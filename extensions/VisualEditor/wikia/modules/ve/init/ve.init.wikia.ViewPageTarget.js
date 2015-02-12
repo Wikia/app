@@ -217,7 +217,7 @@ ve.init.wikia.ViewPageTarget.prototype.hideSpinner = function () {
 		$fade.css( 'opacity', 1 );
 
 		if ( this.timeout ) {
-			setTimeout ( ve.bind( this.afterSpinnerFadeOpacityIn, this, $spinner, $throbber ), this.timeout );
+			setTimeout ( this.afterSpinnerFadeOpacityIn.bind( this, $spinner, $throbber ), this.timeout );
 		} else {
 			this.afterSpinnerFadeOpacityIn( $spinner, $throbber );
 		}

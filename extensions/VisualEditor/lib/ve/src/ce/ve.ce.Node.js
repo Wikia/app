@@ -55,6 +55,18 @@ ve.ce.Node.static.splitOnEnter = false;
  */
 ve.ce.Node.static.primaryCommandName = null;
 
+/**
+ * Whether this node handles its own rendering
+ *
+ * If false, ve.ce.Branchnode onSplice method will append this node's child elements to its element.
+ * If true, this node must handle rendering its children.
+ *
+ * @static
+ * @property {boolean}
+ * @inheritable
+ */
+ve.ce.Node.static.handlesOwnRendering = false;
+
 /* Static Methods */
 
 /**
@@ -137,6 +149,15 @@ ve.ce.Node.prototype.isContent = function () {
  */
 ve.ce.Node.prototype.isFocusable = function () {
 	return this.model.isFocusable();
+};
+
+/**
+ * Check if the node renders its own children
+ *
+ * @returns {boolean} Node renders its own children
+ */
+ve.ce.Node.prototype.handlesOwnRendering = function () {
+	return this.constructor.static.handlesOwnRendering;
 };
 
 /**

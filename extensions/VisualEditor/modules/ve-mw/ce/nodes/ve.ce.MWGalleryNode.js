@@ -46,6 +46,18 @@ ve.ce.MWGalleryNode.prototype.onSetup = function () {
 };
 
 /**
+ * @inheritdoc
+ */
+ve.ce.MWGalleryNode.prototype.doneGenerating = function ( generatedContents ) {
+	var $generatedContents = this.$( generatedContents ),
+		alternativeRendering = $generatedContents.data( 'mw' ).alternativeRendering || null;
+	if ( alternativeRendering ) {
+		generatedContents = [ this.$( alternativeRendering )[0] ];
+	}
+	ve.ce.MWGalleryNode.super.prototype.doneGenerating.apply( this, arguments );
+};
+
+/**
  * @inheritdoc ve.ce.GeneratedContentNode
  */
 ve.ce.MWGalleryNode.prototype.getFocusableElement = function () {
