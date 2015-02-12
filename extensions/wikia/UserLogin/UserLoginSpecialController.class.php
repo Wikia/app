@@ -612,14 +612,22 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->pageHeading = wfMessage('resetpass')->escaped();
 		$this->initializeTemplate();
 
+		$username = $this->request->getVal( 'username', '' );
+		$editToken = $this->request->getVal( 'editToken', '' );
+		$password = $this->request->getVal( 'password', '' );
+		$newPassword = $this->request->getVal( 'newpassword', '' );
+		$retype = $this->request->getVal( 'retype', '' );
+		$loginToken = $this->request->getVal( 'loginToken', '' );
+		$returnto = $this->request->getVal( 'returnto', '' );
+
 		$this->response->setData([
-			'username' => $this->request->getVal( 'username', '' ),
-			'password' => $this->request->getVal( 'password', '' ),
-			'newpassword' => $this->request->getVal( 'newpassword', '' ),
-			'retype' => $this->request->getVal( 'retype', '' ),
-			'editToken' => $this->request->getVal( 'editToken', '' ),
-			'loginToken' => $this->request->getVal( 'loginToken', '' ),
-			'returnto' => $this->request->getVal( 'returnto', '' ),
+			'username' => $username,
+			'password' => $password,
+			'newpassword' => $newPassword,
+			'retype' => $retype,
+			'editToken' => $editToken,
+			'loginToken' => $loginToken,
+			'returnto' => $returnto,
 		]);
 
 		// since we don't support ajax GET, use of this parameter simulates a get request
@@ -644,14 +652,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			if( $this->wg->User->matchEditToken( $this->editToken ) ) {
 
 				if ( $this->wg->User->isAnon()
-					&& $this->loginToken !== UserLoginHelper::getLoginToken()
+					&& $loginToken !== UserLoginHelper::getLoginToken()
 				) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'sessionfailure' )->escaped();
 					return;
 				}
 
-				$user =  User::newFromName( $this->username );
+				$user =  User::newFromName( $username );
 
 				if( !$user || $user->isAnon() ) {
 					$this->result = 'error';
@@ -659,36 +667,36 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					return;
 				}
 
-				if( $this->newpassword !== $this->retype ) {
+				if( $newPassword !== $retype ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'badretype' )->escaped();
-					wfRunHooks( 'PrefsPasswordAudit', array( $user, $this->newpassword, 'badretype' ) );
+					wfRunHooks( 'PrefsPasswordAudit', array( $user, $newPassword, 'badretype' ) );
 					return;
 				}
 
 				// from attemptReset() in SpecialResetpass
-				if( !$user->checkTemporaryPassword($this->password) && !$user->checkPassword($this->password) ) {
+				if( !$user->checkTemporaryPassword($password) && !$user->checkPassword($password) ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-					wfRunHooks( 'PrefsPasswordAudit', array( $user, $this->newpassword, 'wrongpassword' ) );
+					wfRunHooks( 'PrefsPasswordAudit', array( $user, $newPassword, 'wrongpassword' ) );
 					return;
 				}
 
-				$valid = $user->getPasswordValidity( $this->newpassword );
+				$valid = $user->getPasswordValidity( $newPassword );
 				if ( $valid !== true ) {
 					$this->result = 'error';
 					$this->msg = wfMessage( $valid, $this->wg->MinimalPasswordLength )->text();
 					return;
 				}
 
-				$user->setPassword( $this->newpassword );
-				wfRunHooks( 'PrefsPasswordAudit', array( $user, $this->newpassword, 'success' ) );
+				$user->setPassword( $newPassword );
+				wfRunHooks( 'PrefsPasswordAudit', array( $user, $newPassword, 'success' ) );
 				$user->saveSettings();
 
 				$this->result = 'ok';
 				$this->msg = wfMessage( 'resetpass_success' )->escaped();
 
-				$this->wg->request->setVal( 'password', $this->newpassword );
+				$this->wg->request->setVal( 'password', $newPassword );
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
 				$result = $response->getVal( 'result', '' );

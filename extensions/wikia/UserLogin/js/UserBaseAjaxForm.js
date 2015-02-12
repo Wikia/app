@@ -1,4 +1,4 @@
-/*global WikiaForm */
+/*global WikiaForm, UserSignupAjaxValidation */
 (function () {
 	'use strict';
 
@@ -7,6 +7,13 @@
 	 * @abstract
 	 * @param {HTMLElement|jQuery} el Wrapper element for form
 	 * @param {Object} options
+	 * - ajaxLogin
+	 * - ajaxValidation
+	 * - skipFocus
+	 * - usernameInputName
+	 * - passwordInputName
+	 * - callback
+	 * - retrieveTemplateCallback
 	 * @constructor
 	 */
 	var UserBaseAjaxForm = function (el, options) {
@@ -28,6 +35,10 @@
 
 		if (!this.options.skipFocus) {
 			this.inputs[this.usernameInputName].focus();
+		}
+
+		if (this.options.ajaxValidation) {
+			this.setupAjaxValidation();
 		}
 	};
 
@@ -67,6 +78,32 @@
 	 * @abstract
 	 */
 	UserBaseAjaxForm.prototype.ajaxLogin = function () {};
+
+	/**
+	 * Setting up simple validation for username, password, and email.
+	 * We may want to extend this at some point to pass in the form fields to validate. For now, only
+	 * supports onblur of text-like inputs (not select or checkbox).
+	 */
+	UserBaseAjaxForm.prototype.setupAjaxValidation = function () {
+		var inputsToValidate = [this.usernameInputName, this.passwordInputName],
+			inputs = this.wikiaForm.inputs,
+			validator;
+
+		if (inputs.email) {
+			inputsToValidate.push('email');
+		}
+
+		validator = new UserSignupAjaxValidation({
+			wikiaForm: this.wikiaForm,
+			submitButton: inputs.submit,
+			inputsToValidate: inputsToValidate
+		});
+
+		inputsToValidate.forEach(function (inputName) {
+			this.inputs[inputName]
+				.on('blur', validator.validateInput.bind(validator));
+		}, this);
+	};
 
 	/**
 	 * Callback after ajax login
