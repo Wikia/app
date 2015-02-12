@@ -107,7 +107,11 @@ class PBLoginForm extends LoginForm {
 		wfRunHooks( 'PiggybackLogIn', array( $wgUser, $u ) );
 
 		$log = new LogPage( 'piggyback' );
-		$log->addEntry( 'piggyback', SpecialPage::getTitleFor( 'Piggyback' ), "login " . $wgUser->getName() . " to " . $u->getName(), array() );
+		$log->addEntry(
+			'piggyback',
+			SpecialPage::getTitleFor( 'Piggyback' ),
+			"login " . $wgUser->getName() . " to " . $u->getName()
+		);
 
 		$this->switchUser( $u );
 	}

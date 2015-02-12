@@ -29,7 +29,7 @@
 			<tr>
 				<td class="mw-label"><label for='wpName1'><?= wfMessage( 'yourname' )->escaped() ?></label></td>
 				<td class="mw-input">
-					<input type='text' class='loginText' name="wpName" id="wpName1" value="<?= $name ?>" size='20'/>
+					<input type='text' class='loginText' name="wpName" id="wpName1" value="<?= htmlspecialchars($name) ?>" size='20'/>
 				</td>
 			</tr>
 			<tr>
@@ -52,7 +52,7 @@
 			</tr>
 		</table>
 		<?php if ( !empty( $uselang ) ): ?>
-			<input type="hidden" name="uselang" value="<?= $uselang; ?>" />
+			<input type="hidden" name="uselang" value="<?= htmlspecialchars($uselang); ?>" />
 		<?php endif ?>
 	</form>
 </div>
