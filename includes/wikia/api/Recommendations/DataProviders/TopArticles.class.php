@@ -9,7 +9,7 @@ namespace Wikia\Api\Recommendations\DataProviders;
  *
  * Class TopArticles
  * @package Wikia\Api\Recommendations\DataProviders
- * @author Maciej Brench <macbre@wikia-inc.com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  * @author Damian Jozwiak <damian@wikia-inc.com>
  * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  */
@@ -22,7 +22,7 @@ class TopArticles implements IDataProvider {
 	 */
 	const MAX_LIMIT = 10;
 
-	const MCACHE_VERSION = '1.01';
+	const MCACHE_VERSION = '1.03';
 
 	/**
 	 * @param int $articleId
@@ -107,6 +107,8 @@ class TopArticles implements IDataProvider {
 			}
 		}
 
+		wfDebug( sprintf( "%s: returning %s items\n", __METHOD__, count($topArticles) ) );
+
 		wfProfileOut( __METHOD__ );
 		return $topArticles;
 	}
@@ -149,14 +151,22 @@ class TopArticles implements IDataProvider {
 			if ( !empty( $response['items'][$articleId] ) ) {
 				$articleDetails =  $response['items'][$articleId];
 
+				$media = [
+					'thumbUrl' => $articleDetails['thumbnail'],
+					'originalWidth' => !empty( $articleDetails['original_dimensions']['width'])
+							? (int) $articleDetails['original_dimensions']['width']
+							: null,
+					'originalHeight' => !empty( $articleDetails['original_dimensions']['height'])
+							? (int) $articleDetails['original_dimensions']['height']
+							: null,
+				];
+
 				$out[] = [
 					'type' => self::RECOMMENDATION_TYPE,
 					'title' => $wikiData->city_title . ' - ' . $articleDetails['title'],
 					'url' => $response['basepath'] . $articleDetails['url'],
 					'description' => $articleDetails['abstract'],
-					'media' => [
-						'thumbUrl' => $articleDetails['thumbnail']
-					],
+					'media' => $media,
 					'source' => self::RECOMMENDATION_ENGINE
 				];
 			}

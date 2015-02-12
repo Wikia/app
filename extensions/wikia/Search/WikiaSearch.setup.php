@@ -85,4 +85,5 @@ $wgExtensionCredits['other'][] = array(
 	'version'			=> '3.0',
 	'author'			=> '[http://wikia.com/wiki/User:Relwell Robert Elwell]',
 	'descriptionmsg'	=> 'wikia-search-desc',
+	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Search'
 );

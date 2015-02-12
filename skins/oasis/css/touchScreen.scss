@@ -1,11 +1,6 @@
 //fixes for touch screen devices
 //Jakub Olek
 
-#labelFor_wpRemember2Ajax {
-	position: relative;
-	top: -9px;
-}
-
 //make bigger inputs for finger
 input,
 input[type=button],
@@ -43,48 +38,6 @@ td.mw-input,
 
 td.mw-label {
 	vertical-align: middle;
-}
-
-//hide facebook description
-#AjaxLoginConnectMarketing div {
-	h1:nth-of-type(2), ul {
-		display: none;
-	}
-}
-
-//fixes for register form
-//TODO: Remove the hacks and do it properly
-#wpName2, #wpEmail, #uselang, #wpBirthYear {
-	position: absolute !important;
-	left: 35px !important;
-}
-#wpBirthMonth {
-	position: absolute !important;
-	left: 120px !important;
-}
-#wpBirthDay {
-	position: absolute !important;
-	left: 205px !important;
-}
-
-#userRegisterAjax {
-	.mw-input label {
-		position: relative;
-		top: -9px;
-	}
-	.wpAjaxLoginInput {
-		padding-bottom: 10px;
-	}
-	.captcha {
-		img {
-			position: relative;
-			left: 20px;
-		}
-		#wpCaptchaWord, .captchadesc {
-			position: relative;
-			top: -60px;
-		}
-	}
 }
 
 // Play buttons should always show on touch-enabled devices

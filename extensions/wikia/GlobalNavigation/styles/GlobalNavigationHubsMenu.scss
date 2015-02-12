@@ -4,6 +4,13 @@
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
+@import 'GlobalNavigationMixins';
+
+$hub-menu-icon-width: 16px;
+$hub-menu-icon-arrow-space: 6px;
+$hub-menu-icon-left-padding-small: 16px;
+$hub-menu-icon-left-padding-medium: 13px;
+$hub-menu-icon-left-padding-large: 8px;
 
 @mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
 	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
@@ -19,7 +26,18 @@
 	}
 
 	.icon {
-		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* base64 */
+		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* inline */
+	}
+}
+
+.hubs-container {
+	padding-left: 15px;
+	padding-right: 10px;
+	position: relative;
+	white-space: normal;
+
+	&.active {
+		background-color: $global-navigation-background-color;
 	}
 }
 
@@ -28,22 +46,22 @@
 }
 
 .hubs-entry-point {
-	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
-	background-position: 16px center;
+	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* inline */
+	background-position: 0 center;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	padding: 0 17px 0 38px;
+	display: inline-block;
+	height: $global-navigation-height;
+	width: 30px;
 
 	&:after {
-		border: 5px solid $global-wikia-background-color;
-		border-top-color: $nav-border-color;
-		content: ' ';
-		display: inline-block;
-		margin-top: 12px;
+		@include global-nav-chevron;
+		margin-left: $hub-menu-icon-width + 5px;
+		margin-top: 21px;
 	}
 }
 
-.global-navigation-item.active {
+.hubs-container.active {
 	.hubs-menu {
 		display: block;
 	}
@@ -249,11 +267,12 @@
 }
 
 @media #{$small-only} {
-	.hubs-entry-point {
-		padding-right: 22px;
+	.hubs-container {
+		position: static;
 	}
 
 	.hubs-menu {
+		right: 0;
 		.hub-link {
 			&.active {
 				&:before {
@@ -274,10 +293,6 @@
 }
 
 @media #{$large-up} {
-	.hubs-entry-point {
-		padding-right: 23px;
-	}
-
 	.hubs-menu {
 		width: 788px;
 

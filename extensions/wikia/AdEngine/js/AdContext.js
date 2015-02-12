@@ -3,7 +3,11 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'wikia.window', 'wikia.document', 'wikia.geo', require.optional('wikia.instantGlobals'),  require.optional('wikia.abTest')
+	'wikia.window',
+	'wikia.document',
+	'wikia.geo',
+	'wikia.instantGlobals',
+	require.optional('wikia.abTest')
 ], function (w, doc, geo, instantGlobals, abTest) {
 	'use strict';
 
@@ -42,23 +46,37 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
+		if (context.providers.sevenOneMedia) {
+			context.opts.usePostScribe = true;
+		}
+
+		// Always call DART in specific countries
+		// TODO: make mobile code compatible with desktop (currently one uses opts and the other providers)
+		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
+			alwaysCallDartInCountriesMobile = instantGlobals.wgAdDriverAlwaysCallDartInCountriesMobile || [];
+
+		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
+			context.opts.alwaysCallDart = true;
+		}
+
+		if (alwaysCallDartInCountriesMobile.indexOf(geo.getCountryCode()) > -1) {
+			context.providers.remnantGptMobile = true;
+		}
 
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
-		// Always call DART in specific countries
-		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [];
-		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
-			context.opts.alwaysCallDart = true;
+		// Krux integration
+		if (instantGlobals.wgSitewideDisableKrux) {
+			context.targeting.enableKruxTargeting = false;
 		}
 
 		// Taboola integration
 		if (context.providers.taboola) {
 			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
-				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+			(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
 		// Export the context back to ads.context
@@ -68,57 +86,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 	}
 
-	setContext(w.ads ? w.ads.context : {
-		opts: {
-			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
-			adsInHead: w.wgLoadAdsInHead,
-			disableLateQueue: w.wgAdEngineDisableLateQueue,
-			lateAdsAfterPageLoad: w.wgLoadLateAdsAfterPageLoad,
-			pageType: w.adEnginePageType,
-			showAds: w.wgShowAds,
-			usePostScribe: w.wgUsePostScribe,
-			trackSlotState: w.wgAdDriverTrackState
-		},
-
-		targeting: {
-			enableKruxTargeting: w.wgEnableKruxTargeting,
-			kruxCategoryId: w.wgKruxCategoryId,
-
-			pageArticleId: w.wgArticleId,
-			pageIsArticle: !!w.wgArticleId,
-			pageIsHub: w.wikiaPageIsHub,
-			pageName: w.wgPageName,
-			pageType: w.wikiaPageType,
-
-			sevenOneMediaSub2Site: w.wgAdDriverSevenOneMediaOverrideSub2Site,
-			skin: w.skin,
-
-			wikiCategory: w.cityShort,
-			wikiCustomKeyValues: w.wgDartCustomKeyValues,
-			wikiDbName: w.wgDBname,
-			wikiDirectedAtChildren: w.wgWikiDirectedAtChildren,
-			wikiIsTop1000: w.wgAdDriverWikiIsTop1000,
-			wikiLanguage: w.wgContentLanguage,
-			wikiVertical: w.cscoreCat
-		},
-
-		providers: {
-			sevenOneMedia: w.wgAdDriverUseSevenOneMedia,
-			sevenOneMediaCombinedUrl: w.wgAdDriverSevenOneMediaCombinedUrl,
-			remnantGptMobile: w.wgAdDriverEnableRemnantGptMobile,
-			taboola: w.wgAdDriverUseTaboola
-		},
-
-		slots: {
-			bottomLeaderboardImpressionCapping: w.wgAdDriverBottomLeaderboardImpressionCapping
-		},
-
-		// TODO: make it like forceadprovider=liftium
-		forceProviders: {
-			directGpt: w.wgAdDriverForceDirectGptAd,
-			liftium: w.wgAdDriverForceLiftiumAd
-		}
-	});
+	setContext(w.ads ? w.ads.context : {});
 
 	return {
 		getContext: getContext,

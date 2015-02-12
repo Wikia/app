@@ -1,11 +1,5 @@
 <div id="WikiaUserPagesHeader" class="WikiaUserPagesHeader">
 
-<?php if ($fbAccessRequestURL) { ?>
-<a data-href="<?= $fbAccessRequestURL?>" data-id="syncprofile" class="wikia-button sync-profile-button" accesskey="s">
-	<img src="<?= $wg->StylePath ?>/oasis/images/icon_fb_sync.png" class="popout"><?=wfMsg('fb-sync-button')?></a>
-<?php } ?>
-
-
 	<!-- User Identity Box /BEGIN -->
 	<?php echo F::app()->renderView( 'UserProfilePage', 'renderUserIdentityBox' ); ?>
 	<!-- User Identity Box /END -->

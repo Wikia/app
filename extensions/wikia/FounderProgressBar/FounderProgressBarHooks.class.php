@@ -171,21 +171,6 @@ class FounderProgressBarHooks {
 	}
 
 	/**
-	 * @desc Sends a request to update facebook connect founder progress bar task
-	 *
-	 * @return bool true because it's a hook
-	 */
-	public static function onFacebookConnect() {
-		// Quick exit if tasks are all completed
-		if( self::allTasksComplete() ) {
-			return true;
-		}
-
-		F::app()->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_FB_CONNECT']));
-		return true;
-	}
-
-	/**
 	 * @desc Sends a request to update add video founder progress bar task
 	 *
 	 * @return bool true because it's a hook

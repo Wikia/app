@@ -27,6 +27,7 @@ $wgExtensionCredits['special'][] = array(
 	'name' => 'SpecialCacheEpoch',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 	'description-msg' => 'cacheepoch-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialCacheEpoch'
 );
 
 // @todo FIXME: split off to class page.

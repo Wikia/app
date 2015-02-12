@@ -17,11 +17,12 @@ $dir = dirname( __FILE__ );
 $wgExtensionCredits['other'][] =
 	array(
 		"name" => "WikiaMobile",
-		"description" => "Mobile Skin for Wikia",
+		"descriptionmsg" => "wikiamobile-desc",
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
 			'Jakub Olek <jakubolek(at)wikia-inc.com>'
-		)
+		),
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaMobile'
 	);
 
 /**
@@ -143,7 +144,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 
 			//ads legacy -- should be removed at some point
 			'adEnginePageType',
-			'cityShort',
 			'wgAdDriverUseAdsAfterInfobox',
 			'wgAdDriverWikiIsTop1000',
 			'wgDartCustomKeyValues',
@@ -205,6 +205,9 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			//login
 			'fbAppId',
 			'wgLoginToken',
+
+			//signup
+			'wgUserLoginDisableCaptcha',
 
 			//AbTesting
 			'wgCdnApiUrl',

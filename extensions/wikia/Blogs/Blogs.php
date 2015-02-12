@@ -12,7 +12,7 @@ $wgExtensionCredits['other'][] = array(
 	"name" => "BlogArticles",
 	"description" => "Blog Articles",
 	"descriptionmsg" => "blogs-desc",
-	"url" => "http://help.wikia.com/wiki/Help:Blog_article",
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/Blogs",
 	"svn-date" => '$LastChangedDate$',
 	"svn-revision" => '$LastChangedRevision$',
 	"author" => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Piotr Molski', 'Adrian Wieczorek', '[http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
@@ -142,6 +142,7 @@ $wgHooks[ 'AfterCategoriesUpdate'][] = 'BlogArticle::clearCountCache';
 $wgHooks[ 'SpecialSearchProfiles' ][] = 'BlogsHelper::OnSpecialSearchProfiles';
 $wgHooks[ 'ParserBeforeInternalParse' ][] = 'BlogsHelper::OnParserBeforeInternalParse';
 $wgHooks[ 'ArticleInsertComplete' ][] = 'BlogsHelper::OnArticleInsertComplete';
+$wgHooks[ 'TitleMoveComplete' ][] = 'BlogsHelper::onTitleMoveComplete';
 
 //Usages of images on blogs on file pages
 $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageSingleLink';

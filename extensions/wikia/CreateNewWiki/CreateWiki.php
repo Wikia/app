@@ -85,16 +85,17 @@ class CreateWiki {
 		$this->mStarters = array(
 			"*" => array(
 				"*"  => "aastarter",
-				"en" => "starter",
-				"ja" => "jastarter",
 				"de" => "destarter",
-				"fr" => "frstarter",
-				"nl" => "nlstarter",
+				"en" => "starter",
 				"es" => "esstarter",
+				"fi" => "fistarter",
+				"fr" => "starterbeta",
+				"it" => "italianstarter",
+				"ja" => "jastarter",
+				"ko" => "starterko",
+				"nl" => "nlstarter",
 				"pl" => "plstarter",
 				"ru" => "rustarter",
-				"it" => "italianstarter",
-				'fi' => 'fistarter',
 			)
 		);
 
@@ -149,10 +150,10 @@ class CreateWiki {
 	/**
 	 * main entry point, create wiki with given parameters
 	 *
-	 * @return integer status of operation, 0 for success, non 0 for error
+	 * @throw CreateWikiException an exception with status of operation set
 	 */
 	public function create() {
-		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB, $wgUser;
+		global $wgExternalSharedDB, $wgSharedDB, $wgUser;
 
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
@@ -163,32 +164,32 @@ class CreateWiki {
 
 		if ( wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_READONLY;
+			throw new CreateWikiException('DB is read only', self::ERROR_READONLY);
 		}
 
 		if ( wfIsDBLightMode() ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DBLIGHTMODE;
+			throw new CreateWikiException('DB is in light mode', self::ERROR_DBLIGHTMODE);
 		}
 
 		// check founder
 		if ( $this->mFounder->isAnon() ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_USER_IN_ANON;
+			throw new CreateWikiException('Founder is anon', self::ERROR_USER_IN_ANON);
 		}
 
 		// check executables
 		$status = $this->checkExecutables();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
-			return $status;
+			throw new CreateWikiException('checkExecutables() failed', $status);
 		}
 
 		// check domains
 		$status = $this->checkDomain();
 		if( $status != 0 ) {
 			wfProfileOut( __METHOD__ );
-			return $status;
+			throw new CreateWikiException('Check domain failed', $status);
 		}
 
 		// prepare all values needed for creating wiki
@@ -197,7 +198,7 @@ class CreateWiki {
 		// prevent domain to be registered more than once
 		if ( !AutoCreateWiki::lockDomain($this->mDomain) ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DOMAIN_NAME_TAKEN;
+			throw new CreateWikiException('Domain name taken', self::ERROR_DOMAIN_NAME_TAKEN);
 		}
 
 		// start counting time
@@ -222,9 +223,8 @@ class CreateWiki {
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
 		if( !$this->canCreateDatabase() ) {
-			wfDebugLog( "createwiki", "Database {$this->mNewWiki->dbname} exists\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DATABASE_ALREADY_EXISTS;
+			throw new CreateWikiException('DB exists - ' . $this->mNewWiki->dbname, self::ERROR_DATABASE_ALREADY_EXISTS);
 		}
 		else {
 			$this->mNewWiki->dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mNewWiki->dbname ) );
@@ -238,15 +238,14 @@ class CreateWiki {
 		if ( ! $this->addToCityList() ) {
 			wfDebugLog( "createwiki", __METHOD__ .": Cannot set data in city_list table\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN;
+			throw new CreateWikiException('Cannot add wiki to city_list', self::ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN);
 		}
 
 		// set new city_id
 		$this->mNewWiki->city_id = $this->mDBw->insertId();
 		if ( empty( $this->mNewWiki->city_id ) ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Cannot set data in city_list table. city_id is empty after insert\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN;
+			throw new CreateWikiException('Cannot set data in city_list table. city_id is empty after insert', self::ERROR_DATABASE_WIKI_FACTORY_TABLES_BROKEN);
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added added into city_list table, city_id = {$this->mNewWiki->city_id}\n", true );
@@ -255,9 +254,8 @@ class CreateWiki {
 		 * add domain and www.domain to the city_domains table
 		 */
 		if ( ! $this->addToCityDomains() ) {
-			wfDebugLog( "createwiki", __METHOD__ .": Cannot set data in city_domains table\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN;
+			throw new CreateWikiException('Cannot set data in city_domains table', self::ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN);
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Row added into city_domains table, city_id = {$this->mNewWiki->city_id}\n", true );
@@ -295,9 +293,8 @@ class CreateWiki {
 		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mNewWiki->dbname );
 
 		if ( !$this->createTables() ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_SQL_FILE_BROKEN;
+			throw new CreateWikiException('Creating tables not finished', self::ERROR_SQL_FILE_BROKEN);
 		}
 
 		/**
@@ -305,7 +302,7 @@ class CreateWiki {
 		 */
 		if ( !$this->importStarter() ) {
 			wfProfileOut( __METHOD__ );
-			return self::ERROR_SQL_FILE_BROKEN;
+			throw new CreateWikiException('Starter import failed', self::ERROR_SQL_FILE_BROKEN);
 		}
 
 		/**
@@ -464,11 +461,6 @@ class CreateWiki {
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
 
 		wfProfileOut( __METHOD__ );
-
-		/**
-		 * return success
-		 */
-		return 0;
 	}
 
 
@@ -720,10 +712,14 @@ class CreateWiki {
 	 * @return string Sanitized name
 	 */
 	private static function sanitizeS3BucketName( $name ) {
-		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?\$/";
+		if ( $name == 'admin' ) {
+			$name .= 'x';
+		}
+
+		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
 		# check if it's already valid
 		$name = mb_strtolower($name);
-		if ( preg_match( $RE_VALID, $name ) ) {
+		if ( preg_match( $RE_VALID, $name ) && strlen($name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
 			return $name;
 		}
 
@@ -732,7 +728,7 @@ class CreateWiki {
 		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
 			$check_name .= '0';
 		}
-		if ( preg_match( $RE_VALID, $check_name ) ) {
+		if ( preg_match( $RE_VALID, $check_name ) && strlen($check_name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
 			return $check_name;
 		}
 
@@ -992,9 +988,6 @@ class CreateWiki {
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
-		if ( $this->mNewWiki->language == 'en' ) {
-			$this->mWFSettingVars['wgEnableNjordExt'] = true;
-		}
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {

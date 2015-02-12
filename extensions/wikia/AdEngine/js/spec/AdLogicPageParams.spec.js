@@ -1,10 +1,10 @@
 /*global describe, it, expect, modules*/
 /*jshint camelcase:false*/
+/*jshint maxlen:200*/
 describe('AdLogicPageParams', function () {
 	'use strict';
 
-	var logMock = function () {},
-		undef;
+	var logMock = function () { return; };
 
 	function mockAdContext(targeting) {
 		return {
@@ -18,10 +18,15 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockWindow(hostname, amzn_targs) {
+	function mockWindow(document, hostname, amzn_targs) {
+
+		hostname = hostname || 'example.org';
+
 		return {
-			location: {hostname: hostname || 'example.org'},
-			amzn_targs: amzn_targs
+			document: document || {},
+			location: { origin: 'http://' + hostname, hostname: hostname },
+			amzn_targs: amzn_targs,
+			wgCookieDomain: hostname.substr(hostname.indexOf('.'))
 		};
 	}
 
@@ -31,8 +36,34 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
+	function mockAmazonMatch(amazonPageParams) {
+		return {
+			getPageParams: function () {
+				return amazonPageParams;
+			},
+			wasCalled: function () {
+				return !!amazonPageParams;
+			},
+			trackState: function () {
+				return;
+			}
+		};
+	}
+
+	function mockAmazonMatchOld(enabled) {
+		return {
+			wasCalled: function () {
+				return !!enabled;
+			},
+			trackState: function () {
+				return;
+			}
+		};
+	}
+
 	/**
 	 * Keys for opts:
+	 *  - amazonPageParams
 	 *  - amzn_targs
 	 *  - kruxSegments
 	 *  - abExperiments
@@ -43,26 +74,28 @@ describe('AdLogicPageParams', function () {
 	function getParams(targeting, opts) {
 		opts = opts || {};
 
-		var adLogicPageDimensionsMock = {
-			},
-			kruxMock = {
+		var kruxMock = {
 				segments: opts.kruxSegments || []
 			},
 			abTestMock = opts.abExperiments ? {
 				getExperiments: function () {
 					return opts.abExperiments || [];
 				},
-				getGroup: function () { }
-			} : undef;
+				getGroup: function () { return; }
+			} : undefined,
+			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			logMock,
-			mockWindow(opts.hostname, opts.amzn_targs),
+			windowMock,
+			windowMock.document,
+			windowMock.location,
+			abTestMock,
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
-			kruxMock,
-			adLogicPageDimensionsMock,
-			abTestMock
+			mockAmazonMatch(opts.amazonPageParams),
+			mockAmazonMatchOld(!!opts.amzn_targs),
+			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
 
@@ -112,11 +145,10 @@ describe('AdLogicPageParams', function () {
 	});
 
 	it('getPageLevelParams wpage param', function () {
-		var undef,
-			params;
+		var params;
 
 		params = getParams({});
-		expect(params.wpage).toBe(undef, 'undef');
+		expect(params.wpage).toBe(undefined, 'undefined');
 
 		params = getParams({pageName: 'Muppet_Wiki'});
 		expect(params.wpage).toBe('muppet_wiki', 'Muppet_Wiki');
@@ -166,7 +198,13 @@ describe('AdLogicPageParams', function () {
 		expect(params.key3).toEqual(['value3', 'value4'], 'key3=value3;key3=value4');
 	});
 
-	it('getPageLevelParams Amazon Direct Targeted Buy params', function () {
+	it('getPageLevelParams Amazon Match params (new)', function () {
+		var params = getParams({}, {amazonPageParams: {amznslots: ['a300x250p1', 'a728x90p2']}});
+
+		expect(params.amznslots).toEqual(['a300x250p1', 'a728x90p2']);
+	});
+
+	it('getPageLevelParams Amazon Match params (old)', function () {
 		var params = getParams({}, {amzn_targs: 'amzn_300x250=1;amzn_728x90=1;'});
 
 		expect(params.amzn_300x250).toEqual(['1']);
@@ -353,5 +391,74 @@ describe('AdLogicPageParams', function () {
 		var params = getParams({}, {pvCount: 13});
 
 		expect(params.pv).toBe('13');
+	});
+
+	it('getPageLevelParams ref param', function () {
+		var params;
+
+
+		params = getParams({}, { document: {
+			referrer: ''
+		}});
+
+		expect(params.ref).toBe('direct');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gta.wikia.com/wiki/Special:Search?search=text' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wiki_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gta.wikia.com/wiki/Other_PAGE' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wiki');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gaming.wikia.com/wiki/Special:Search?search=text' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://wikia.com/wiki/Special:Search?search=text' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gaming.wikia.com/wiki/Other_PAGE' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia');
+
+		params = getParams({}, {
+			document: { referrer: 'http://wowwiki.com/' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia');
+
+		params = getParams({}, {
+			document: { referrer: 'http://www.google.com/' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('external_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://yahoo.com/' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('external');
+
+
 	});
 });

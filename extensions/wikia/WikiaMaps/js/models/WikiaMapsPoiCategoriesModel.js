@@ -3,7 +3,7 @@ define('wikia.maps.poiCategories.model',
 		'jquery',
 		'wikia.maps.utils'
 	],
-	function($, utils) {
+	function ($, utils) {
 		'use strict';
 
 		var poiCategoriesOriginalData,
@@ -184,7 +184,7 @@ define('wikia.maps.poiCategories.model',
 		 * @returns {object|null} - updated POI category or null
 		 */
 		function getUpdatedPoiCategory(poiCategoryOriginal, poiCategoriesToUpdate, poiCategoriesUpdated) {
-			var poiCategoryUpdated;
+			var poiCategoryUpdated = null;
 
 			if (utils.inArray(poiCategoriesUpdated, poiCategoryOriginal.id)) {
 				poiCategoryUpdated = findPoiCategoryById(poiCategoryOriginal.id, poiCategoriesToUpdate);

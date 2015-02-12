@@ -368,7 +368,6 @@ class EditAccount extends SpecialPage {
 	 * @return boolean               true on success, false on failure
 	 */
 	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '', $keepEmail = true ) {
-		global $wgEnableFacebookConnectExt;
 		if ( empty( $user ) ) {
 			throw new Exception( 'User object is invalid.' );
 		}
@@ -395,11 +394,11 @@ class EditAccount extends SpecialPage {
 			}
 		}
 
-		# close account and invalidate cache + cluster data
+		// close account and invalidate cache + cluster data
 		Wikia::invalidateUser( $user, true, $keepEmail, true );
-		if ( !empty( $wgEnableFacebookConnectExt ) ) {
-			self::disconnectFBConnect( $user );
-		}
+
+		// if they are connected from facebook, disconnect them
+		self::disconnectFromFacebook( $user );
 
 		if ( $user->getEmail() == '' ) {
 			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
@@ -421,15 +420,13 @@ class EditAccount extends SpecialPage {
 	}
 
 	/**
-	 * Disconnect Facebook account from Wikia account
+	 * Make sure a wikia user account is disconnected from their facebook account.
 	 *
-	 * @param  User   $user The user account to disconnect
-	 * @return void
+	 * @param  User $user The user account to disconnect
 	 */
-	public static function disconnectFBConnect( User $user ) {
-		$fbIds = FBConnectDB::getFacebookIDs( $user );
-		if ( !empty( $fbIds ) ) {
-			FBConnectDB::removeFacebookID( $user );
+	public static function disconnectFromFacebook( User $user ) {
+		if ( !empty( F::app()->wg->EnableFacebookClientExt ) ) {
+			FacebookMapModel::deleteFromWikiaID( $user->getId() );
 		}
 	}
 

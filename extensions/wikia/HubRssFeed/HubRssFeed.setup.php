@@ -5,7 +5,18 @@ if ( !defined('MEDIAWIKI') ) {
 	exit(1);
 }
 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'HubRssFeed',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'hubrssfeed-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/HubRssFeed',
+);
+
 $dir = dirname(__FILE__) . '/';
+
+//i18n
+$wgExtensionMessagesFiles['HubRssFeed'] = $dir . 'i18n/HubRssFeed.i18n.php';
+
 $wgAutoloadClasses['HubRssFeedSpecialController']	= $dir . 'HubRssFeedSpecialController.class.php';
 $wgAutoloadClasses['HubRssFeedModel']	= $dir . 'models/external/HubRssFeedModel.class.php';
 $wgAutoloadClasses['RssFeedService']	= $dir . 'RssFeedService.class.php';

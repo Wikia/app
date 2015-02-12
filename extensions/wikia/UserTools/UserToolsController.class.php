@@ -12,11 +12,15 @@ class UserToolsController extends WikiaController {
 
 	public function executeToolbarSave( $params ) {
 		$status = false;
-		$service = $this->getToolbarService();
-		if ( isset( $params['toolbar'] ) && is_array( $params['toolbar'] ) ) {
-			$data = $service->jsonToList( $params['toolbar'] );
-			if ( !empty( $data ) ) {
-				$status = $service->save( $data );
+		if ( $this->request->wasPosted()
+			&& $this->wg->User->matchEditToken( $this->request->getVal( 'token' ) )
+		) {
+			$service = $this->getToolbarService();
+			if ( isset( $params['toolbar'] ) && is_array( $params['toolbar'] ) ) {
+				$data = $service->jsonToList( $params['toolbar'] );
+				if ( !empty( $data ) ) {
+					$status = $service->save( $data );
+				}
 			}
 		}
 		$this->response->setVal( 'status', $status );
@@ -60,6 +64,12 @@ class UserToolsController extends WikiaController {
 			'user-tools-edit-save' => wfMessage( 'user-tools-edit-save' )->text(),
 			'user-tools-edit-cancel' => wfMessage( 'user-tools-edit-cancel' )->text(),
 		] );
+	}
+
+	//Method used in SpecialPageUserCommand class
+	public function executeToolbarGetList() {
+		$service = $this->getToolbarService();
+		$this->allOptions = $service->listToJson($service->getAllList());
 	}
 
 	public function ToolbarConfigurationPopup() {

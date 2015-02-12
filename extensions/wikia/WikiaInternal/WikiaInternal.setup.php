@@ -10,6 +10,13 @@ EOT;
 
 $dir = dirname(__FILE__) . '/';
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'WikiaInternal',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'wikia-internal-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaInternal',
+);
+
 /**
  * classes
  */

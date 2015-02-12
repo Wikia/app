@@ -253,7 +253,7 @@
 			// BugId:2823
 			$( window ).trigger( 'editTitleUpdated', [window.wgEditedTitle] );
 
-			this.titleNode.children( 'a' ).attr( 'href', wgArticlePath.replace( '$1', window.wgEditedTitle ) ).attr( 'title', $.htmlentities( window.wgEditedTitle ) ).html( window.wgEditedTitle );
+			this.titleNode.children( 'a' ).attr( 'href', wgArticlePath.replace( '$1', window.wgEditedTitle ) ).attr( 'title', $.htmlentities( window.wgEditedTitle ) ).text( window.wgEditedTitle );
 
 			$( '#EditPageHeader' ).find( '.hiddenTitle' ).show();
 		},
@@ -310,7 +310,7 @@
 					$( '#HiddenFieldsDialog label' ).children().focus();
 
 					//add press "Enter" = submit form functionality - BugId: 38480
-					$( '#HiddenFieldsDialog input[name="wpTitle"]' ).keyup( function ( event ) {
+					$( '#HiddenFieldsDialog input[name="wpTitle"]' ).keypress( function ( event ) {
 						if ( event.keyCode == 13 ) {
 							$( '#ok' ).click();
 						}

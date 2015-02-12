@@ -485,7 +485,7 @@ class WallHooksHelper {
 					$userWallTitle = static::getWallTitle();
 
 					if( $userWallTitle instanceof Title ) {
-						$tabs[$key]['link'] = '<a href="'.$userWallTitle->getLocalUrl().'" title="'. $userWallTitle->getPrefixedText() .'">' . wfMessage( 'wall-message-wall' )->escaped() .'</a>';
+						$tabs[$key]['link'] = Xml::element( 'a', [ 'href' => $userWallTitle->getLocalUrl(), 'title' => $userWallTitle->getPrefixedText() ], wfMessage( 'wall-message-wall' )->text() );
 						$tabs[$key]['data-id'] = 'wall';
 
 						if( $namespace === NS_USER_WALL ) {
@@ -1501,9 +1501,9 @@ class WallHooksHelper {
 		if( $watchTitle instanceof Title ) {
 			$wl = new WatchedItem;
 			$wl->mTitle = $watchTitle;
-			$wl->id = $user->getId();
-			$wl->ns = $watchTitle->getNamespace();
-			$wl->ti = $watchTitle->getDBkey();
+			$wl->userID = $user->getId();
+			$wl->nameSpace = $watchTitle->getNamespace();
+			$wl->databaseKey = $watchTitle->getDBkey();
 
 			if( $action === 'add' ) {
 				$wl->addWatch();

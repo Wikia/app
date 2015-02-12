@@ -51,8 +51,18 @@ define('ext.wikia.adEngine.adConfig', [
 		'HOME_TOP_LEADERBOARD': true,
 		'HOME_TOP_RIGHT_BOXAD': true,
 		'HUB_TOP_LEADERBOARD': true,
-		'INCONTENT_BOXAD_1': true,
-		'INCONTENT_BOXAD_2': true,
+		'INCONTENT_1A': true,
+		'INCONTENT_1B': true,
+		'INCONTENT_1C': true,
+		'INCONTENT_2A': true,
+		'INCONTENT_2B': true,
+		'INCONTENT_2C': true,
+		'INCONTENT_3A': true,
+		'INCONTENT_3B': true,
+		'INCONTENT_3C': true,
+		'INCONTENT_LEADERBOARD_1': true,
+		'INCONTENT_LEADERBOARD_2': true,
+		'INCONTENT_LEADERBOARD_3': true,
 		'INVISIBLE_SKIN': true,
 		'LEFT_SKYSCRAPER_2': true,
 		'MIDDLE_RIGHT_BOXAD': true,
@@ -62,12 +72,11 @@ define('ext.wikia.adEngine.adConfig', [
 		'MODAL_INTERSTITIAL_2': true,
 		'MODAL_INTERSTITIAL_3': true,
 		'MODAL_INTERSTITIAL_4': true,
+		'MODAL_INTERSTITIAL_5': true,
 		'TEST_HOME_TOP_RIGHT_BOXAD': true,
 		'TEST_TOP_RIGHT_BOXAD': true,
-		'TOP_INCONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
-		'WIKIA_BAR_BOXAD_1': true,
 		'GPT_FLUSH': true
 	};
 
@@ -95,15 +104,8 @@ define('ext.wikia.adEngine.adConfig', [
 		}
 
 		// All SevenOne Media ads are handled in the Later queue
-		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
-		// TOP_BUTTON is always handled in Later queue, so we need to exclude
-		// only WIKIA_BAR_BOXAD_1.
-		// Also we need to add an exception for GPT_FLUSH, so that WIKIA_BAR_BOXAD_1
-		// is actually requested.
-		if (context.providers.sevenOneMedia &&
-				slotname !== 'WIKIA_BAR_BOXAD_1' &&
-				slotname !== 'GPT_FLUSH'
-				) {
+		// beside GPT_FLUSH which needs to be handled by GPT
+		if (context.providers.sevenOneMedia && slotname !== 'GPT_FLUSH') {
 			log(['getProvider', slotname, 'Later (SevenOneMedia)'], 'info', logGroup);
 			return [adProviderLater];
 		}
@@ -141,10 +143,6 @@ define('ext.wikia.adEngine.adConfig', [
 				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { 'rp_tier': rtpTier });
 			}
 		}
-	}
-
-	if (amazonMatch && amazonMatch.wasCalled()) {
-		amazonMatch.trackState();
 	}
 
 	return {

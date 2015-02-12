@@ -1,5 +1,10 @@
-/* global UserLoginFacebook:true, UserLoginAjaxForm:true */
-require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browserDetect'], function ($, scrollFix, win, browserDetect) {
+/* global FacebookLogin:true, UserLoginAjaxForm:true */
+require([
+	'jquery',
+	'GlobalNavigationiOSScrollFix',
+	'wikia.window',
+	'wikia.browserDetect'
+], function ($, scrollFix, win, browserDetect) {
 	'use strict';
 	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
 
@@ -9,15 +14,20 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browse
 	function openMenu() {
 		$entryPoint.addClass('active');
 		win.transparentOut.show();
+		initLoginForm();
+		$('#globalNavigation').trigger('user-login-menu-opened');
+	}
 
-		if (!loginAjaxForm) {
+	/**
+	 * Initialize the login form for logged out users
+	 */
+	function initLoginForm () {
+		if (!loginAjaxForm && !window.wgUserName) {
 			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {
 				skipFocus: true
 			});
-			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
+			FacebookLogin.init(FacebookLogin.origins.DROPDOWN);
 		}
-
-		$('#globalNavigation').trigger('user-login-menu-opened');
 	}
 
 	/**
@@ -44,13 +54,14 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browse
 		win.transparentOut.bindClick(closeMenu);
 
 		$entryPoint = $('#AccountNavigation');
-		$entryPoint.on('click', '.ajaxLogin', function (ev) {
+		$entryPoint.on('click', '.links-container', function (ev) {
+			var $this = $(this);
 			ev.preventDefault();
 			ev.stopImmediatePropagation();
 
 			if ($entryPoint.hasClass('active')) {
 				if (!!win.wgUserName) {
-					win.location = $(this).attr('href');
+					win.location = $this.attr('href') || $this.children('a').attr('href');
 				} else {
 					closeMenu();
 				}
@@ -74,7 +85,8 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browse
 
 		if (!win.Wikia.isTouchScreen()) {
 			win.delayedHover(
-				$entryPoint.get(0), {
+				$entryPoint.get(0),
+				{
 					checkInterval: 100,
 					maxActivationDistance: 20,
 					onActivate: openMenu,

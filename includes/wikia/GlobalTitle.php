@@ -18,6 +18,11 @@
 class GlobalTitle extends Title {
 
 	/**
+	 * Default wgArticlePath
+	 */
+	const DEFAULT_ARTICLE_PATH = '/wiki/$1';
+
+	/**
 	 * public, used in static constructor
 	 */
 	public $mText = false;
@@ -155,6 +160,20 @@ class GlobalTitle extends Title {
 	}
 
 	/**
+	 * @param $wikiId
+	 * @return string
+	 */
+	protected static function getWgArticlePath( $wikiId ) {
+		$destinationWgArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wikiId );
+
+		if ( !isset( $destinationWgArticlePath ) ) {
+			$destinationWgArticlePath = self::DEFAULT_ARTICLE_PATH;
+		}
+
+		return $destinationWgArticlePath;
+	}
+
+	/**
 	 * loadAll
 	 *
 	 *  constructor doesnt load anything from database. This is the place
@@ -269,7 +288,7 @@ class GlobalTitle extends Title {
 	 * Get a real URL referring to this title
 	 *
 	 * @param string $query an optional query string
-	 * @param string $variant language variant of url (for sr, zh..)
+	 * @param string|bool $variant language variant of url (for sr, zh..)
 	 *
 	 * @return string the URL
 	 */
@@ -301,7 +320,7 @@ class GlobalTitle extends Title {
 	 * getInternalUrl from Title is not working corretly with GlobalTitle so it is fixed by getting FullURL
 	 *
 	 * @param string $query an optional query string
-	 * @param string $query2 (deprecated) language variant of url (for sr, zh..)
+	 * @param string|bool $query2 (deprecated) language variant of url (for sr, zh..)
 	 *
 	 * @return string
 	 */
@@ -313,7 +332,7 @@ class GlobalTitle extends Title {
 	 * local url doesn't make sense in this context. we always return full URL
 	 *
 	 * @param string $query an optional query string
-	 * @param string $variant language variant of url (for sr, zh..)
+	 * @param string|bool $variant language variant of url (for sr, zh..)
 	 *
 	 * @return string
 	 */
@@ -568,7 +587,7 @@ class GlobalTitle extends Title {
 		if ( isset( $queryParts['title'] ) ) {
 			$articleName = $queryParts['title'];
 		} else {
-			$destinationWgArticlePath = WikiFactory::getVarByName('wgArticlePath', $wikiId);
+			$destinationWgArticlePath = self::getWgArticlePath( $wikiId );
 			$articleName = self::stripArticlePath($urlParts['path'], $destinationWgArticlePath );
 		}
 
@@ -585,11 +604,10 @@ class GlobalTitle extends Title {
 		return preg_replace( '!^' . $articlePath . '/!i', '', $path );
 	}
 
-
 	/**
 	 * check if page exists
 	 *
-	 * @return 0/1
+	 * @return int 0/1
 	 */
 	public function exists() {
 		$this->loadAll();
@@ -802,15 +820,7 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		global $wgSharedDB, $wgDevelEnvironmentName;
-
-		$parts = array( $wgSharedDB, "globaltitle", $this->mCityId );
-
-		if (!empty($wgDevelEnvironmentName)) {
-			$parts[] = $wgDevelEnvironmentName;
-		}
-
-		return implode(":", $parts);
+		return wfSharedMemcKey( 'globaltitle', $this->mCityId );
 	}
 
 	/**

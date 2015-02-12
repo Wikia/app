@@ -1,6 +1,7 @@
 <?php
 
 use \Wikia\Logger\WikiaLogger;
+use \Wikia\Util\GlobalStateWrapper;
 
 class VenusHooks {
 
@@ -127,5 +128,55 @@ class VenusHooks {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check if venus skin can be show and set it if all conditions are met
+	 *
+	 * @param string $userSkin skin chosen by SkinChooser
+	 * @param string $useskin skin name passed via useskin parameter in url
+	 * @param Title $title page title
+	 * @return bool
+	 */
+	public static function onBeforeSkinLoad( &$userSkin, $useskin, Title $title ) {
+		if ( ( !$useskin || $useskin == 'venus' ) && self::showVenusSkin( $title ) ) {
+			$userSkin = 'venus';
+		}
+
+		return true;
+	}
+
+	/**
+     * Check if the current page should be rendered using Venus
+     *
+     * @param Title $title
+     * @return bool
+	 */
+	public static function showVenusSkin( Title $title ) {
+		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
+
+		$wrapper = new GlobalStateWrapper( [
+			'wgTitle' => $title,
+		] );
+
+		$isSearch = false;
+		$isArticlePage = false;
+
+		$wrapper->wrap( function () use ( &$isSearch, &$isArticlePage ) {
+			$isSearch = WikiaPageType::isSearch();
+			$isArticlePage = WikiaPageType::isArticlePage();
+		} );
+
+		$action = $wgRequest->getVal( 'action' );
+		$diff = $wgRequest->getVal( 'diff' );
+
+		$isSpecialSearch = $isSearch && $wgEnableVenusSpecialSearch;
+		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
+		$isVenusArticle = $isArticlePage  &&
+			$wgEnableVenusArticle &&
+			( empty( $action ) || $action == 'view' ) &&
+			empty( $diff );
+
+		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest || $isVenusArticle );
 	}
 }

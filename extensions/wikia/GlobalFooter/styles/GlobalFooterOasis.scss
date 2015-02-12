@@ -1,6 +1,8 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/color';
 
+$branding-color: #000;
+
 .global-footer {
 	box-sizing: content-box;
 	clear: left;
@@ -11,82 +13,74 @@
 		@include clearfix;
 		margin-top: 15px;
 		position: relative;
-
-		> h1 {
-			display: none;
-		}
 	}
 
 	.branding {
-		background: transparent;
 		left: 10px;
-		padding: 1px;
 		position: absolute;
-		top: 0;
 
-		&.black {
-			background: black;
-		}
-
-		.wordmark {
-			float: left;
-			position: relative;
-			width: 66px;
+		.wikia-logo {
+			display: inline-block;
+			text-decoration: none;
 
 			img {
 				background-color: transparent;
-				background-image: url('/extensions/wikia/GlobalFooter/images/sprite.png'); /* $wgCdnStylePath */
+				background-position: center;
 				background-repeat: no-repeat;
-
-				height: 16px;
-				margin: 4px 5px 0;
-				width: 54px;
+				background-size: 60px 15px;
+				height: 25px;
+				vertical-align: middle;
+				width: 66px;
 			}
 
-			.wordmark9 { //lifestyle
-				background-position: -159px 0;
-			}
-
-			.wordmark2 { //video games
-				background-position: -53px 0;
-			}
-
-			.wordmark3 { //entertainment
-				background-position: -106px 0;
-			}
-
-			//"default" logo -- com logo
-			.wordmark4 {
-				background-position: 0 0;
-			}
-		}
-
-		.hub {
-			background: $color-page;
-			float: left;
-			height: 10px;
-			padding: 5px 6px 8px;
-
-			.hub2,
-			.hub3,
-			.hub9 {
+			span {
 				font-size: 10px;
 				font-weight: bold;
 				letter-spacing: -.5px;
-				text-decoration: none;
+				line-height: 22px;
+				margin: 0 8px 0 5px;
 				text-transform: uppercase;
+				vertical-align: bottom;
+			}
+		}
+
+		&.black {
+			border: 1px solid $branding-color;
+
+			.wikia-logo {
+				color: #fff;
+
+				img {
+					background: $branding-color center / 60px 15px no-repeat url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
+				}
 			}
 
-			.hub2 {
-				color: $color-wikiahome-videogames;
+			&.vertical-books a {
+				background-color: $color-vertical-books;
 			}
 
-			.hub3 {
-				color: $color-wikiahome-entertainment;
+			&.vertical-comics a {
+				background-color: $color-vertical-comics;
 			}
 
-			.hub9 {
-				color: $color-wikiahome-lifestyle;
+			&.vertical-games a {
+				background-color: $color-vertical-games;
+			}
+
+			&.vertical-lifestyle a {
+				background-color: $color-vertical-lifestyle;
+			}
+
+			&.vertical-movies a {
+				background-color: $color-vertical-movies;
+			}
+
+			&.vertical-music a {
+				background-color: $color-vertical-music;
+			}
+
+			&.vertical-tv a {
+				background-color: $color-vertical-tv;
 			}
 		}
 	}

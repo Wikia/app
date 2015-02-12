@@ -196,13 +196,13 @@ class SkinChooser {
 		$request = $context->getRequest();
 		$title = $context->getTitle();
 		$user = $context->getUser();
-		$useskin = $request->getVal( 'useskin' );
+		$useskin = $request->getVal( 'useskin', null );
 
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin unless there is useskin param in url
 		 * @author eloy, requested by artur
 		 */
-		if ( !$useskin && function_exists( 'apache_request_headers' ) ) {
+		if ( is_null( $useskin ) && function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 
 			if ( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "venus",
@@ -244,13 +244,8 @@ class SkinChooser {
 
 		if ( !$user->isLoggedIn() ) { # If user is not logged in
 			if ( $wgDefaultSkin == 'oasis' ) {
-				if ( self::showVenusSkin( $title ) ) {
-					$userSkin = 'venus';
-					$userTheme = null;
-				} else {
-					$userSkin = $wgDefaultSkin;
-					$userTheme = null;
-				}
+				$userSkin = $wgDefaultSkin;
+				$userTheme = null;
 			} else if ( !empty( $wgAdminSkin ) && !$isOasisPublicBeta ) {
 				$adminSkinArray = explode( '-', $wgAdminSkin );
 				$userSkin = isset( $adminSkinArray[0] ) ? $adminSkinArray[0] : null;
@@ -274,14 +269,8 @@ class SkinChooser {
 					$userSkin = isset( $adminSkinArray[0] ) ? $adminSkinArray[0] : null;
 					$userTheme = isset( $adminSkinArray[1] ) ? $adminSkinArray[1] : null;
 				} else {
-					if ( self::showVenusSkin( $title ) ) {
-						$userSkin = 'venus';
-					} else {
-						$userSkin = 'oasis';
-					}
+					$userSkin = 'oasis';
 				}
-			} else if ( $userSkin == 'oasis' && self::showVenusSkin( $title ) ) {
-				$userSkin = 'venus';
 			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'venus' && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook' ) {
 				$adminSkinArray = explode( '-', $wgAdminSkin );
 				$userSkin = isset( $adminSkinArray[0] ) ? $adminSkinArray[0] : null;
@@ -291,14 +280,15 @@ class SkinChooser {
 
 		wfProfileOut( __METHOD__ . '::GetSkinLogic' );
 
-		if ( !$useskin ) {
-			$useskin = $userSkin;
-		}
+		$chosenSkin = !is_null( $useskin ) ? $useskin : $userSkin;
 
-		$elems = explode( '-', $useskin );
+		$elems = explode( '-', $chosenSkin );
+
 		$userSkin = ( array_key_exists( 0, $elems ) ) ? ( ( empty( $wgEnableAnswers ) && $elems[ 0 ] == 'answers' ) ? 'oasis' : $elems[ 0 ] ) : null;
 		$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : $userTheme;
 		$userTheme = $request->getVal( 'usetheme', $userTheme );
+
+		wfRunHooks( 'BeforeSkinLoad', [ &$userSkin, $useskin, $title ] );
 
 		$skin = Skin::newFromKey( $userSkin );
 
@@ -335,28 +325,6 @@ class SkinChooser {
 
 		wfProfileOut( __METHOD__ );
 		return false;
-	}
-
-	/**
-	 * Check if the current page should be rendered using Venus
-	 *
-	 * @param Title $title
-	 * @return bool
-	 */
-	private static function showVenusSkin( Title $title ) {
-		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
-
-		$action = $wgRequest->getVal('action');
-		$diff = $wgRequest->getVal('diff');
-
-		$isSpecialSearch = WikiaPageType::isSearch() && $wgEnableVenusSpecialSearch;
-		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
-		$isVenusArticle = WikiaPageType::isArticlePage() &&
-			$wgEnableVenusArticle &&
-			(empty($action) || $action == 'view') &&
-			empty($diff);
-
-		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest || $isVenusArticle );
 	}
 
 	/**

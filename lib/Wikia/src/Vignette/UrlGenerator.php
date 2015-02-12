@@ -27,6 +27,8 @@ class UrlGenerator {
 	const FORMAT_WEBP = "webp";
 	const FORMAT_JPG = "jpg";
 
+	const ZONE_TEMP = "temp";
+
 	const REVISION_LATEST = 'latest';
 
 	/** @var UrlConfig */
@@ -247,6 +249,10 @@ class UrlGenerator {
 		return $this->format(self::FORMAT_JPG);
 	}
 
+	public function fromStash() {
+		return $this->zone(self::ZONE_TEMP);
+	}
+
 	public function avatar() {
 		return $this->imageType(self::IMAGE_TYPE_AVATAR);
 	}
@@ -279,6 +285,10 @@ class UrlGenerator {
 		}
 
 		return $this->domainShard( $imagePath );
+	}
+
+	public function config() {
+		return $this->config;
 	}
 
 	/**
@@ -322,6 +332,10 @@ class UrlGenerator {
 		return $revision;
 	}
 
+	public function getMode() {
+		return $this->mode;
+	}
+
 	public function __toString() {
 		return $this->url();
 	}
@@ -332,13 +346,18 @@ class UrlGenerator {
 	 * @param string $mode one of the MODE_ constants defined above
 	 * @return $this
 	 */
-	private function mode($mode) {
+	public function mode($mode) {
 		$this->mode = $mode;
 		return $this;
 	}
 
-	private function format($format) {
+	public function format($format) {
 		$this->query['format'] = $format;
+		return $this;
+	}
+
+	public function zone($zone) {
+		$this->query['zone'] = $zone;
 		return $this;
 	}
 

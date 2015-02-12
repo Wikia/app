@@ -1,40 +1,116 @@
-var UserSignup = {
-	inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
-	notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-	captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
-	invalidInputs: {},
-	init: function () {
-		'use strict';
+/* global WikiaForm, UserSignupAjaxValidation, UserSignupMixin */
+(function () {
+	'use strict';
 
-		$('.wikia_terms > a').on('click', function (event) {
-			var url = $(this).attr('href');
-			event.preventDefault();
-			window.open(url, '_blank');
-		});
+	/**
+	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
+	 */
+	var UserSignup = {
+		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
+		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
+		invalidInputs: {},
 
-		this.wikiaForm = new WikiaForm('#WikiaSignupForm');
-		this.signupAjaxForm = new UserSignupAjaxForm(
-			this.wikiaForm,
-			this.inputsToValidate,
-			this.wikiaForm.inputs['submit'],
-			this.notEmptyFields,
-			this.captchaField
-		);
-		this.wikiaForm.el
-			.find('input[name=userloginext01], input[name=email], input[name=userloginext02]')
-			.on('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
-		this.wikiaForm.el
-			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
-			.on('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
+		/**
+		 * WikiaMobile, Wikia One, and some automated tests do not use captcha
+		 */
+		useCaptcha: !window.wgUserLoginDisableCaptcha,
 
-		// dom pre-cache
-		this.submitButton = this.wikiaForm.inputs['submit'];
-		if( window.wgUserLoginDisableCaptcha !== true && this.wikiaForm.inputs['recaptcha_response_field']) {
-			this.wikiaForm.inputs['recaptcha_response_field'].on('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
+		/**
+		 * Enable user signup form with ajax validation
+		 */
+		init: function () {
+			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
+			this.submitButton = this.wikiaForm.inputs.submit;
+
+			this.loadCaptcha();
+			this.setupValidation();
+
+			// imported via UserSignupMixin
+			this.setCountryValue(this.wikiaForm);
+			this.initOptIn(this.wikiaForm);
+		},
+
+		loadCaptcha: function () {
+			if (this.useCaptcha) {
+				$.loadReCaptcha().fail(this.handleCaptchaLoadError.bind(this));
+			}
+		},
+
+		/**
+		 * Captcha is required for signup, so if it fails to load (possibly b/c google is blocked in China)
+		 * inform the user with a modal. Note, this is different from when a user fails the captcha test itself.
+		 */
+		handleCaptchaLoadError: function () {
+			require(['wikia.ui.factory'], function (uiFactory) {
+				$.when(uiFactory.init('modal'))
+					.then(this.createCaptchaLoadErrorModal.bind(this));
+			}.bind(this));
+
+			Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.ERROR,
+				category: 'user-sign-up',
+				label: 'captcha-load-fail',
+				trackingMethod: 'both',
+				country: Wikia.geo.getCountryCode()
+			});
+		},
+
+		createCaptchaLoadErrorModal: function (uiModal) {
+			var modalConfig = {
+				vars: {
+					id: 'catchaLoadErrorModal',
+					classes: ['captcha-load-error-modal'],
+					size: 'medium',
+					title: $.msg('usersignup-page-captcha-load-fail-title'),
+					content: $.msg('usersignup-page-captcha-load-fail-text')
+				}
+			};
+
+			uiModal.createComponent(modalConfig, function (captchaErrorModal) {
+				captchaErrorModal.show();
+			});
+		},
+
+		/**
+		 * Applying ajax validation to the form fields that have been cached via WikiaForm
+		 */
+		setupValidation: function () {
+			var inputs = this.wikiaForm.inputs;
+
+			this.validator = new UserSignupAjaxValidation({
+				wikiaForm: this.wikiaForm,
+				inputsToValidate: this.inputsToValidate,
+				submitButton: this.submitButton,
+				notEmptyFields: this.notEmptyFields
+			});
+
+			inputs.userloginext01
+				.add(inputs.email)
+				.add(inputs.userloginext02)
+				.on('blur.UserSignup', this.validator.validateInput.bind(this.validator));
+
+			inputs.birthday
+				.add(inputs.birthmonth)
+				.add(inputs.birthyear)
+				.on('change.UserSignup', this.validator.validateBirthdate.bind(this.validator));
+
+			if (
+				window.wgUserLoginDisableCaptcha !== true &&
+				inputs['g-recaptcha-response']
+			) {
+				inputs['g-recaptcha-response']
+					.on('keyup.UserSignup', this.validator.activateSubmit.bind(this.validator));
+			}
 		}
-    }
-};
+	};
 
-$( window ).on('load', function() {
-	UserSignup.init();
-});
+	// Add common user signup mixin functions for use in this class
+	UserSignupMixin.call(UserSignup);
+
+	// expose global
+	window.UserSignup = UserSignup;
+
+	$(function () {
+		UserSignup.init();
+	});
+})();

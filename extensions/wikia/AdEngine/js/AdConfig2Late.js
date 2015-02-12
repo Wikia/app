@@ -14,7 +14,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	require.optional('ext.wikia.adEngine.provider.taboola'),
-	require.optional('wikia.abTest')
+
+	require.optional('ext.wikia.adEngine.adDecoratorTopInContent')
 ], function (
 	// regular dependencies
 	log,
@@ -30,7 +31,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
 	adProviderTaboola,
-	abTest
+
+	adDecoratorTopInContent
 ) {
 	'use strict';
 
@@ -49,9 +51,12 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'PREFOOTER_LEFT_BOXAD': true,
 			'PREFOOTER_RIGHT_BOXAD': true
 		},
-		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt;
+		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt,
+		decorators = adDecoratorTopInContent ? [adDecoratorTopInContent] : [];
 
 	function getProviderList(slotname) {
+		var evolveProvidersForSlot;
+
 		log('getProvider', 5, logGroup);
 		log(slotname, 5, logGroup);
 
@@ -82,7 +87,19 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			log(['getProvider', slotname, 'Evolve'], 'info', logGroup);
-			return [adProviderEvolve, adProviderLiftium];
+			evolveProvidersForSlot = [adProviderRemnantGpt, adProviderLiftium];
+
+			if (adProviderEvolve.canHandleSlot(slotname)) {
+				evolveProvidersForSlot.unshift(adProviderEvolve);
+				return evolveProvidersForSlot;
+			}
+
+			if (dartDirectBtfSlots[slotname]) {
+				evolveProvidersForSlot.unshift(adProviderDirectGpt);
+				return evolveProvidersForSlot;
+			}
+
+			return evolveProvidersForSlot;
 		}
 
 		if (alwaysCallDart) {
@@ -92,7 +109,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return [adProviderRemnantGpt, adProviderLiftium];
 		}
 
-		if (context.targeting.skin === 'venus' && slotname === 'INCONTENT_BOXAD_1') {
+		// Load GPT and Liftium ads in TOP_INCONTENT_BOXAD
+		if (context.targeting.skin === 'venus' && slotname.indexOf('INCONTENT') !== -1) {
 			return [];
 		}
 
@@ -100,7 +118,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	}
 
 	return {
-		getDecorators: function () { return []; },
+		getDecorators: function () { return decorators; },
 		getProviderList: getProviderList
 	};
 });

@@ -1,6 +1,7 @@
 <?php
 
 class ExternalUser_Wikia extends ExternalUser {
+	static private $recentlyUpdated = array();
 	private $mRow, $mDb, $mUser;
 
 	protected function initFromName( $name ) {
@@ -30,13 +31,25 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		wfDebug( __METHOD__ . ": init User from cond: " . wfArrayToString( $cond ) . " \n" );
 
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$row = $this->mDb->selectRow(
-			'`user`',
-			array( '*' ),
-			$cond,
-			__METHOD__
-		);
+		# PLATFORM-624: do not use slave if we just updated this user
+		if ( array_key_exists('user_id',$cond) && isset(self::$recentlyUpdated[$cond['user_id']]) ) {
+			$row = null;
+		} else {
+			$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+			$row = $this->mDb->selectRow(
+				'`user`',
+				array( '*' ),
+				$cond,
+				__METHOD__
+			);
+		}
+
+		# PLATFORM-624: force read from master for users updated recently
+		# note: if we had a condition for name we could still have fetched a user that
+		# was recently updated
+		if ( $row && isset(self::$recentlyUpdated[$row->user_id]) ) {
+			$row = null;
+		}
 
 		if( !$row ) {
 			$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -185,14 +198,31 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_birthdate;
 	}
 
-	public function authenticate( $password ) {
-		/** PLATFORM-508 - logging for Helios project - begin */
-		\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
-		/** PLATFORM-508 - logging for Helios project - end */
-		# This might be wrong if anyone actually uses the UserComparePasswords hook
-		# (on either end), so don't use this if you those are incompatible.
-		wfDebug( __METHOD__ . ": " . $this->getId() . " \n" );
-		return User::comparePasswords( $this->getPassword(), $password, $this->getId() );
+	public function authenticate( $sPassword ) {
+		// Authenticate with Helios if enabled.
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			$bHeliosResult = \Wikia\Helios\User::authenticate( $this->getName(), $sPassword );
+
+			// Terminate unless in the shadow mode.
+			global $wgHeliosLoginShadowMode;
+			if ( !$wgHeliosLoginShadowMode ) {
+				return $bHeliosResult;
+			}
+		}
+
+		// Authenticate with MediaWiki.
+		$bMediaWikiResult = User::comparePasswords( $this->getPassword(), $sPassword, $this->getId() );
+		// Detect discrepancies between Helios and MediaWiki results.
+		if ( $wgEnableHeliosExt && (  $bHeliosResult != $bMediaWikiResult ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'HELIOS_LOGIN',
+				[ 'helios' => $bHeliosResult, 'mediawiki' => $bMediaWikiResult,
+				 'user_id' => $this->getId(), 'username' => $this->getName() ]
+			);
+		}
+
+		return $bMediaWikiResult;
 	}
 
 	public function getPref( $pref ) {
@@ -396,6 +426,10 @@ class ExternalUser_Wikia extends ExternalUser {
 				__METHOD__
 			);
 			$dbw->commit( __METHOD__ );
+
+			if ( $this->mUser->mId ) { // sanity check
+				self::$recentlyUpdated[$this->mUser->mId] = true;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 	}

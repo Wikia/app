@@ -8,7 +8,7 @@ var GlobalNotification = {
 
 	defaultTimeout: 10000,
 	/**
-	 * Used for introspection in the browser, has no affect on this code
+	 * All the possible class names and colors this module supports
 	 */
 	options: {
 		'notify': 'blue',
@@ -29,8 +29,10 @@ var GlobalNotification = {
 			this.setUpClose();
 		}
 
-		// Float notification (BugId:33365)
-		this.wikiaHeaderHeight = $('#WikiaHeader').height();
+		this.pageContainer = $('.WikiaPageContentWrapper');
+		this.pageContainerElem = this.pageContainer[0];
+		this.wikiaHeader = $('#globalNavigation');
+		this.headerHeight = this.wikiaHeader.height();
 	},
 
 	/**
@@ -40,6 +42,7 @@ var GlobalNotification = {
 	 */
 	createDom: function (element, isModal) {
 		'use strict';
+
 		// create and store dom
 		if (!GlobalNotification.dom.length) {
 			GlobalNotification.dom = $('<div class="global-notification">' +
@@ -54,17 +57,13 @@ var GlobalNotification = {
 		if (element instanceof jQuery) {
 			element.prepend(GlobalNotification.dom).show();
 
-		// handle standard modal implementation
+		// handle modal implementations
 		} else if (isModal) {
 			GlobalNotification.modal.prepend(GlobalNotification.dom);
 
 		// handle non-modal implementation
 		} else {
-			if ($('.oasis-split-skin').length) {
-				$('.WikiaHeader').after(GlobalNotification.dom);
-			} else {
-				$('.WikiaPageContentWrapper').prepend(GlobalNotification.dom);
-			}
+			this.pageContainer.prepend(GlobalNotification.dom);
 		}
 
 		GlobalNotification.msg = GlobalNotification.dom.find('.msg');
@@ -73,14 +72,15 @@ var GlobalNotification = {
 	/**
 	 * Main entry point for this feature - shows the notification
 	 * @param {string} content - message to be displayed
-	 * @param {string} type - 'notify' (blue), 'confirm' (green), 'error' (red), 'warn' (yellow)
+	 * @param {string} type - See GlobalNotification.options for supported types
 	 * @param {jQuery} [element] Element to prepend notification to
 	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
 	 */
 	show: function (content, type, element, timeout) {
 		'use strict';
 
-		var isModal;
+		var isModal,
+			classes = Object.keys(GlobalNotification.options).join(' ');
 		GlobalNotification.content = content;
 
 		function callback() {
@@ -93,7 +93,7 @@ var GlobalNotification = {
 
 			GlobalNotification.createDom(element, isModal);
 			GlobalNotification.msg.html(GlobalNotification.content);
-			GlobalNotification.dom.removeClass('confirm, error, notify, warn').addClass(type);
+			GlobalNotification.dom.removeClass(classes).addClass(type);
 
 			// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
 			if (window.WikiaFooterApp) {
@@ -165,19 +165,25 @@ var GlobalNotification = {
 	},
 
 	/**
-	 * Hack to share the scroll event with WikiaFooter.js
-	 * @param {number} scrollTop
+	 * Pin the notification to the top of the screen when scrolled down the page.
+	 * Shares the scroll event with WikiaFooter.js
 	 */
-	onScroll: function (scrollTop) {
+	onScroll: function () {
 		'use strict';
-		if (GlobalNotification.dom && GlobalNotification.dom.length) {
-			var minTop = GlobalNotification.wikiaHeaderHeight;
-			if (scrollTop > minTop) {
-				GlobalNotification.dom.addClass('float');
-			} else {
-				GlobalNotification.dom.removeClass('float');
-			}
 
+		var containerTop;
+
+		if (!GlobalNotification.dom || !GlobalNotification.dom.length) {
+			return;
+		}
+
+		// get the position of the wrapper element relative to the top of the viewport
+		containerTop = GlobalNotification.pageContainerElem.getBoundingClientRect().top;
+
+		if (containerTop < GlobalNotification.headerHeight) {
+			GlobalNotification.dom.addClass('float');
+		} else {
+			GlobalNotification.dom.removeClass('float');
 		}
 	}
 };
@@ -186,11 +192,3 @@ $(function () {
 	'use strict';
 	GlobalNotification.init();
 });
-
-// ajax failure notification event registration
-if (typeof wgAjaxFailureMsg !== 'undefined') {
-	$(document).ajaxError(function () {
-		'use strict';
-		GlobalNotification.show(window.wgAjaxFailureMsg, 'error');
-	});
-}
