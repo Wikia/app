@@ -18,7 +18,7 @@
 						for='wpName1'><?= wfMessage( 'piggyback-otherusername' )->escaped() ?></label></td>
 				<td class="mw-input">
 					<input type='text' class='loginText' name="wpOtherName" id="wpOtherName1"
-						   value="<?= $otherName ?>" size='20'/>
+						   value="<?= htmlspecialchars($otherName) ?>" size='20'/>
 				</td>
 			</tr>
 		</table>
