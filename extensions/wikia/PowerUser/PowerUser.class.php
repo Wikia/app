@@ -7,6 +7,8 @@ class PowerUser {
 	const TYPE_FREQUENT = 'poweruser_frequent';
 	const TYPE_LIFETIME = 'poweruser_lifetime';
 
+	const MIN_LIFETIME_EDITS = 2000;
+
 	public static $aPowerUserProperties = [
 		self::TYPE_ADMIN,
 		self::TYPE_FREQUENT,
@@ -22,7 +24,7 @@ class PowerUser {
 	public function addPowerUserProperty( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
 			$this->oUser->setOption( $sProperty, true );
-			$this->oUser->saveOptions();
+			$this->oUser->saveSettings();
 			return true;
 		}
 		return false;
@@ -33,7 +35,7 @@ class PowerUser {
 			$this->oUser->getBoolOption( $sProperty ) === true
 		) {
 			$this->oUser->setOption( $sProperty, NULL );
-			$this->oUser->saveOptions();
+			$this->oUser->saveSettings();
 			return true;
 		}
 		return false;

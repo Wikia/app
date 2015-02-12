@@ -32,8 +32,6 @@ function incEditCount( $article, $revision, $baseRevId ) {
 		$stats->incStatField( 'edit' );
 	}
 
-	wfRunHooks( 'EditCountIncreased', [ $wgUser ] );
-
 	return true;
 }
 
