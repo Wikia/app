@@ -217,10 +217,12 @@ Podrobnosti:$2',
 
 /** German (Deutsch)
  * @author George Animal
+ * @author Metalhead64
  * @author PtM
  * @author Tiin
  */
 $messages['de'] = array(
+	'imagelightbox-desc' => 'Ergänzt eine Leuchtkastenvorschau für Bilder innerhalb Artikeln',
 	'lightbox_details_tooltip' => 'Foto-Details anzeigen',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard-Link',
@@ -281,7 +283,7 @@ $messages['diq'] = array(
 	'lightbox-share-button-www' => 'Vıla ke',
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
-	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
+	'lightbox-share-email-ok-caption' => 'Tesdiq',
 	'lightbox-share-email-error-caption' => 'Xeta',
 );
 
@@ -303,6 +305,7 @@ $messages['eo'] = array(
  * @author Vivaelcelta
  */
 $messages['es'] = array(
+	'imagelightbox-desc' => 'Añade una caja de vista previa para imágenes dentro del artículo',
 	'lightbox_details_tooltip' => 'Ver detalles de la imagen',
 	'lightbox-forum' => 'Foro',
 	'lightbox-standard-link' => 'Enlace estándar',
@@ -423,6 +426,7 @@ Smálutir: $2',
  * @author Wyz
  */
 $messages['fr'] = array(
+	'imagelightbox-desc' => 'Ajouter un aperçu dans lightbox des images dans l’article',
 	'lightbox_details_tooltip' => 'Afficher les détails de l’image',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Lien standard',
@@ -744,6 +748,7 @@ $1
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'imagelightbox-desc' => 'Tambahkan previu lightbox untuk imej dalam rencana',
 	'lightbox_details_tooltip' => 'Lihat butiran gambar',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Pautan standard',
@@ -1014,6 +1019,7 @@ Detalhes: $2',
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'imagelightbox-desc' => "Aggiunge 'n'anderprime leggere pe l'immaggine jndr'à vôsce",
 	'lightbox_details_tooltip' => "'Ndruche le dettaglie d'a fote",
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Collegamende standàrd',
@@ -1279,8 +1285,10 @@ Thông tin chi tiết:$2',
  * @author Hydra
  * @author Liuxinyu970226
  * @author Sam Wang
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'imagelightbox-desc' => '为条目内的图像添加灯箱预览',
 	'lightbox_details_tooltip' => '查看图片细节',
 	'lightbox-forum' => '论坛',
 	'lightbox-standard-link' => '普通链接',

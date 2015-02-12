@@ -44,7 +44,8 @@ class Walls extends WikiaModel {
 				'page_wikia_props.page_id = page.page_id'
 			),
 			__METHOD__,
-			array( 'ORDER BY' => 'page_title' )
+			array( 'ORDER BY' => 'page_title' ),
+			$db
 		);
 
 		wfProfileOut( __METHOD__ );

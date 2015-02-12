@@ -47,7 +47,7 @@ describe('MediaGalleries gallery', function () {
 			interval: 2
 		};
 
-		spyOn(Mustache, 'render').andReturn('okay');
+		spyOn(Mustache, 'render').and.returnValue('okay');
 		bucky = modules['bucky.mock'];
 		templates = modules['mediaGallery.templates.mustache'];
 		Toggler = modules['mediaGallery.views.toggler'](templates);

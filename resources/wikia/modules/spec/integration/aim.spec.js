@@ -1,11 +1,10 @@
-/*global describe, it, runs, waitsFor, expect, require, document*/
-describe("AIM", function () {
+/*global describe, it, getBody, expect, document*/
+describe('AIM', function () {
 	'use strict';
 
-	var async = new AsyncSpec(this),
-		aim = modules['wikia.aim'](window.jQuery);
+	var aim = modules['wikia.aim'](window.jQuery);
 
-	it('should be defined', function() {
+	it('should be defined', function () {
 		// jQuery "namespace" API
 		expect(window.jQuery.AIM).toBeDefined();
 		expect(typeof window.jQuery.AIM.submit).toBe('function');
@@ -15,14 +14,14 @@ describe("AIM", function () {
 		expect(typeof aim.submit).toBe('function');
 	});
 
-	async.it('onStart() should be called', function(done) {
+	it('onStart() should be called', function (done) {
 		var form = document.createElement('form'),
 			body = getBody();
 
 		body.appendChild(form);
 
 		aim.submit(form, {
-			onStart: function() {
+			onStart: function () {
 				var iFrameName = form.getAttribute('target');
 
 				expect(iFrameName).toContain('aim');
@@ -33,16 +32,16 @@ describe("AIM", function () {
 		});
 	});
 
-	async.it('onComplete() should be called', function(done) {
+	it('onComplete() should be called', function (done) {
 		var form = document.createElement('form');
 		getBody().appendChild(form);
 
 		aim.submit(form, {
-			onStart: function() {
+			onStart: function () {
 				form.setAttribute('action', '');
 				form.submit();
 			},
-			onComplete: function(resp) {
+			onComplete: function (resp) {
 				expect(resp).toBeDefined();
 				expect(typeof resp).toBe('string');
 				done();

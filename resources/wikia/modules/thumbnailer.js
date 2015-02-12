@@ -32,7 +32,7 @@
 		function getThumbURL(url, type, width, height) {
 			url = url || '';
 			height = height || 0;
-			width = (width || 50) + (height ? '' : 'px');
+			width = (width || 50);
 
 			if (isLegacyThumbnailerUrl(url)) {
 				// URL points to a thumbnail, remove crop and size
@@ -93,7 +93,7 @@
 		 * @returns {boolean}
 		 */
 		function isThumbnailerUrl(url) {
-			return url && /\/\/vignette\d?\.wikia/.test(url);
+			return url && /\/\/vignette(-poz|\d?)\.wikia/.test(url);
 		}
 
 		/**
@@ -218,7 +218,7 @@
 			// on the tokenization here.
 			tokens.push(
 				width +
-				(height ? 'x' + height : '-') +
+				(height ? 'x' + height : 'px-') +
 				((type === 'video' || type === 'nocrop') ? '-' :  'x2-') +
 				last +
 				'.png'
@@ -229,7 +229,8 @@
 		return {
 			getThumbURL: getThumbURL,
 			getImageURL: getImageURL,
-			isThumbUrl: isThumbUrl
+			isThumbUrl: isThumbUrl,
+			isLegacyThumbnailerUrl: isLegacyThumbnailerUrl
 		};
 	}
 

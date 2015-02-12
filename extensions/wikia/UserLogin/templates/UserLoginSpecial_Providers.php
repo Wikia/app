@@ -1,4 +1,4 @@
-	<div class="sso-login">
+	<div class="sso-login hidden">
 		<div class="sso-login-divider">
 			<span><?= wfMessage('userlogin-provider-or')->escaped() ?></span>
 		</div>

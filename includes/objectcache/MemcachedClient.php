@@ -73,6 +73,9 @@
  */
 
 class MWMemcached {
+
+	use Wikia\Logger\Loggable; // Wikia change
+
 	// {{{ properties
 	// {{{ public
 
@@ -98,6 +101,7 @@ class MWMemcached {
 
 	// }}}
 
+	const MEMCACHED_ITEM_MAX_SIZE = 1048576; // 1MB
 
 	/**
 	 * Command statistics
@@ -245,6 +249,18 @@ class MWMemcached {
 	 * This data will be used to generate the list of hot keys an top misses
 	 */
 	var $keys_stats;
+
+	/**
+	 * @@author macbre
+	 * The currently used memcache server
+	 */
+	private $_current_host = false;
+
+	/**
+	 * @@author macbre
+	 * The currently issued memcache command
+	 */
+	private $_current_cmd = false;
 
 	// }}}
 	// }}}
@@ -575,24 +591,24 @@ class MWMemcached {
 		// Wikia change - end
 
 		$sock_keys = array();
-
+		$socks = array();
 		foreach ( $keys as $key ) {
 			$sock = $this->get_sock( $key, $host );
 			if ( !is_resource( $sock ) ) {
 				continue;
 			}
 			$key = is_array( $key ) ? $key[1] : $key;
-			if ( !isset( $sock_keys[$sock] ) ) {
-				$sock_keys[$sock] = array();
+			if ( !isset( $sock_keys[intval( $sock )] ) ) {
+				$sock_keys[intval( $sock )] = array();
 				$socks[] = $sock;
 			}
-			$sock_keys[$sock][] = $key;
+			$sock_keys[intval( $sock )][] = $key;
 		}
 
 		// Send out the requests
 		foreach ( $socks as $sock ) {
 			$cmd = 'get';
-			foreach ( $sock_keys[$sock] as $key ) {
+			foreach ( $sock_keys[intval( $sock )] as $key ) {
 				$cmd .= ' ' . $key;
 			}
 			$cmd .= "\r\n";
@@ -852,6 +868,13 @@ class MWMemcached {
 			if ( $this->_debug ) {
 				$this->_debugprint( "Error connecting to $host: $errstr\n" );
 			}
+
+			// Wikia change - begin
+			$this->error( 'MemcachedClient: socket connection failed', [
+				'host' => $host,
+				'exception' => new Exception( $errstr, $errno ),
+			]);
+			// Wikia change - end
 			return false;
 		}
 
@@ -874,10 +897,12 @@ class MWMemcached {
 	 * @param $sock String: socket to mark as dead
 	 *
 	 * @access  private
+	 * @return false
 	 */
 	function _dead_sock( $sock ) {
 		$host = array_search( $sock, $this->_cache_sock );
 		$this->_dead_host( $host );
+		return false;
 	}
 
 	function _dead_host( $host ) {
@@ -887,11 +912,14 @@ class MWMemcached {
 		$this->_host_dead[$host] = $this->_host_dead[$ip];
 		// Wikia change - @author: mech - begin
 		// log memcache problems
-		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient - dead host' , [ 'host' => $host ] );
-		}
+		$this->error( 'MemcachedClient: dead host' , [
+			'host' => $host,
+			'exception' => new Exception(),
+		] );
 		// Wikia change - end
 		unset( $this->_cache_sock[$host] );
+
+		return false;
 	}
 
 	// }}}
@@ -1073,8 +1101,18 @@ class MWMemcached {
 			} else {
 				$this->_debugprint( "Error parsing memcached response\n" );
 				// Wikia change - begin
-				// @author macbre (BugId:27916)
-				Wikia::logBacktrace(__METHOD__);
+				// @author macbre (BugId:27916 / PLATFORM-774)
+				$method = explode( ':', wfGetCallerClassMethod( __CLASS__ ) ); // eg. MemcachedPhpBagOStuff::get
+				$caller = wfGetCallerClassMethod( [ __CLASS__, 'MemcachedPhpBagOStuff' ] ); // eg. WikiFactory::getWikiByDB
+
+				$this->error( 'MemcachedClient: error parsing the response', [
+					'caller'    => $caller,
+					'cmd'       => substr( $this->_current_cmd, 0, 1024 ), // e.g. get foo:bar\r\n
+					'operation' => end( $method ), // eg. get
+					'response'  => $decl,
+					'exception' => new Exception(),
+					'host'      => $this->_current_host,
+				]);
 				// Wikia change - end
 				return 0;
 			}
@@ -1157,6 +1195,19 @@ class MWMemcached {
 				$flags |= self::COMPRESSED;
 			}
 		}
+		// Wikia change - begin - @author: wladek
+		// Log details if we try to store value that will not fit the default item_max_size
+		if ( $len > self::MEMCACHED_ITEM_MAX_SIZE - 2 ) {
+			// default item_max_size is 1mb, 2 characters are reserved for trailing "\r\n"
+			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient: large value' , [
+					'exception' => new Exception(),
+					'key' => $key,
+					'len' => $len,
+				] );
+			}
+		}
+		// Wikia change - end
 		if ( !$this->_safe_fwrite( $sock, $host, "$cmd $key $flags $exp $len\r\n$val\r\n" ) ) {
 			return $this->_dead_sock( $sock );
 		}
@@ -1169,6 +1220,18 @@ class MWMemcached {
 		if ( $line == "STORED" ) {
 			return true;
 		}
+
+		// Wikia change - begin
+		// @author macbre (PLATFORM-774)
+		$this->error( 'MemcachedClient: store failed', [
+			'cmd'       => $cmd,
+			'key'       => $key,
+			'val_size'  => strlen( $val ),
+			'line'      => $line,
+			'exception' => new Exception(),
+			'host'      => $host,
+		]);
+		// Wikia change - end
 		return false;
 	}
 
@@ -1184,6 +1247,10 @@ class MWMemcached {
 	 * @access private
 	 */
 	function sock_to_host( $host ) {
+		// Wikia change - begin
+		$this->_current_host = $host;
+		// Wikia change - end
+
 		if ( isset( $this->_cache_sock[$host] ) ) {
 			return $this->_cache_sock[$host];
 		}
@@ -1242,6 +1309,8 @@ class MWMemcached {
 	 * Original behaviour
 	 */
 	function _safe_fwrite( $f, $host, $buf, $len = false ) {
+		$this->_current_cmd = $buf;
+
 		if ( $len === false ) {
 			$bytesWritten = fwrite( $f, $buf );
 		} else {

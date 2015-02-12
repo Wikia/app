@@ -404,6 +404,7 @@ $messages['cy'] = array(
  * @author The Evil IP address
  */
 $messages['de'] = array(
+	'lookupcontribs-desc' => 'Zeigt die Benutzerbeiträge auf mehreren Wikis an',
 	'lookupcontribs' => 'Beiträge ansehen',
 	'lookupcontribstitle' => 'Beiträge ansehen',
 	'lookupcontribsrecentcontributions' => 'Kürzliche Beiträge von $1',
@@ -510,6 +511,7 @@ $messages['eo'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'lookupcontribs-desc' => 'Muestra las contribuciones de los usuarios en múltiples wikis',
 	'lookupcontribs' => 'Búsqueda de Contribuciones',
 	'lookupcontribstitle' => 'Búsqueda de Contribuciones',
 	'lookupcontribsrecentcontributions' => 'Contribuciones recientes para $1',
@@ -568,6 +570,8 @@ $messages['eu'] = array(
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Izenburua',
 	'lookupcontribswikioptions' => 'Aukerak',
+	'lookupcontribsnext' => 'hurrengoa',
+	'lookupcontribsprevious' => 'aurrekoa',
 );
 
 /** Persian (فارسی)
@@ -664,6 +668,7 @@ $messages['fo'] = array(
  * @author Peter17
  */
 $messages['fr'] = array(
+	'lookupcontribs-desc' => 'Affiche les contributions de l’utilisateur sur plusieurs wikis',
 	'lookupcontribs' => 'Recherche de contributions',
 	'lookupcontribstitle' => 'Recherche de contributions',
 	'lookupcontribsrecentcontributions' => 'Contributions récentes de $1',
@@ -1011,6 +1016,8 @@ $messages['ko'] = array(
 	'lookupcontribscontribs' => '기여',
 	'lookupcontribshist' => '역사',
 	'lookupcontribsdiff' => '차이',
+	'right-lookupcontribs' => '해당 사용자의 전역 편집 보기',
+	'lookupcontribsshowpages' => '모든 문서 ($1 이름공간)',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1153,6 +1160,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'lookupcontribs-desc' => 'Memaparkan sumbangan pengguna pada pelbagai wiki',
 	'lookupcontribs' => 'Carian Sumbangan',
 	'lookupcontribstitle' => 'Carian Sumbangan',
 	'lookupcontribsrecentcontributions' => 'Sumbangan terkini untuk $1',
@@ -1404,9 +1412,11 @@ $messages['pfl'] = array(
 );
 
 /** Polish (polski)
+ * @author Matik7
  * @author Sovq
  */
 $messages['pl'] = array(
+	'lookupcontribs-desc' => 'Pokazuje wkład użytkowników na wielu wiki',
 	'lookupcontribs' => 'LookupContribs',
 	'lookupcontribstitle' => 'LookupContribs',
 	'lookupcontribsrecentcontributions' => 'Najnowsze edycje $1',
@@ -1777,6 +1787,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'lookupcontribs-desc' => 'Visar en användares bidrag på flera wikis',
 	'lookupcontribs' => 'Kolla upp bidrag',
 	'lookupcontribstitle' => 'Kolla upp bidrag',
 	'lookupcontribsrecentcontributions' => 'Senaste bidrag för $1',
@@ -2111,6 +2122,7 @@ $messages['yi'] = array(
  * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
+	'lookupcontribs-desc' => '显示多个wiki上的用户贡献',
 	'lookupcontribs' => '查阅维基贡献',
 	'lookupcontribstitle' => '查阅维基贡献',
 	'lookupcontribsrecentcontributions' => '最近$1的贡献',

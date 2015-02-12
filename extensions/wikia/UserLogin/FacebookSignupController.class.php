@@ -13,10 +13,14 @@ class FacebookSignupController extends WikiaController {
 	/** @var \FacebookClientFactory */
 	protected $fbClientFactory;
 
+	/** @var \UserLoginHelper $userLoginHelper */
+	protected $userLoginHelper;
+
 	public function __construct() {
 		parent::__construct();
 
 		$this->fbClientFactory = new \FacebookClientFactory();
+		$this->userLoginHelper = new \UserLoginHelper();
 	}
 
 	/**
@@ -30,43 +34,79 @@ class FacebookSignupController extends WikiaController {
 		$fbUserId = $this->getFacebookUserId();
 
 		// try to get connected Wikia account
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$user = FacebookClient::getInstance()->getWikiaUser( $fbUserId );
-		} else {
-			$user = FBConnectDB::getUser( $fbUserId );
-		}
+		$user = FacebookClient::getInstance()->getWikiaUser( $fbUserId );
 
 		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
-			$this->errorMsg = '';
+			$errorMsg = '';
 
 			if ( $this->isAccountDisabled( $user ) ) {
 				// User account was disabled, abort the login
-				$this->loginAborted = true;
-				$this->errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
+				$errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
+
+				$this->response->setData( [
+					'loginAborted' => true,
+					'errorMsg' => $errorMsg,
+				] );
 			} elseif ( $this->isAccountUnconfirmed( $user ) ) {
-				$this->unconfirmed = true;
-				$this->userName = $user->getName();
 				LoginForm::clearLoginToken();
-				$userLoginHelper = new UserLoginHelper();
-				$userLoginHelper->setNotConfirmedUserSession( $user->getId() );
-				$userLoginHelper->clearPasswordThrottle( $this->userName );
-			} elseif ( !wfRunHooks( 'FacebookUserLoginSuccess', [ $user, &$this->errorMsg ] ) ) {
-				$this->loginAborted = true;
+
+				$name = $user->getName();
+				$this->userLoginHelper->setNotConfirmedUserSession( $user->getId() );
+				$this->userLoginHelper->clearPasswordThrottle( $name );
+
+				$this->response->setData( [
+					'unconfirmed' => true,
+					'userName' => $name,
+					'errorMsg' => $errorMsg,
+				] );
+			} elseif ( !wfRunHooks( 'FacebookUserLoginSuccess', [ $user, &$errorMsg ] ) ) {
+				$this->response->setData( [
+					'loginAborted' => true,
+					'errorMsg' => $errorMsg,
+				] );
 			} else {
 				// account is connected - log the user in
 				$user->setCookies();
-				$this->loggedIn = true;
-				$this->userName = $user->getName();
+
+				$this->response->setData( [
+					'loggedIn' => true,
+					'userName' => $user->getName(),
+					'returnUrl' => $this->userLoginHelper->getRedirectUrl(),
+					'errorMsg' => '',
+				] );
+
+				// Retrieve user email from Facebook if missing
+				$email = $user->getEmail();
+				if ( empty( $email ) ) {
+					$this->saveEmailAsynchronously( $user->getId() );
+				}
 			}
 		} else {
-			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
-			$title = $this->sendRequest('FacebookSignup', 'modalHeader')->__toString();
+			$modal = $this->sendRequest( 'FacebookSignup', 'modal' )->__toString();
+			$title = $this->sendRequest( 'FacebookSignup', 'modalHeader' )->__toString();
+
+			if ( empty( $modal ) ) {
+				$modal = wfMessage( 'usersignup-facebook-problem' )->escaped();
+			}
 
 			// no account connected - show FB sign up modal
-			$this->htmlTitle = $title;
-			$this->modal = !empty($modal) ? $modal : wfMessage('usersignup-facebook-problem')->escaped();
-			$this->cancelMsg = wfMessage('cancel')->escaped();
+			$this->response->setData( [
+				'htmlTitle' => $title,
+				'modal' => $modal,
+				'cancelMsg' => wfMessage( 'cancel' )->escaped(),
+			] );
 		}
+	}
+
+	/**
+	 * Kick off an asynch job to update user's email to be what's reported by Facebook
+	 * @param $userId
+	 */
+	protected function saveEmailAsynchronously( $userId ) {
+		$task = new \Wikia\Tasks\Tasks\FacebookTask();
+		$task->dupCheck();
+		$task->call( 'updateEmailFromFacebook', $userId );
+		$task->queue();
 	}
 
 	/**
@@ -97,55 +137,32 @@ class FacebookSignupController extends WikiaController {
 		$fbUserId = $this->getFacebookUserId();
 		if ( empty( $fbUserId ) ) {
 			$this->skipRendering();
-			return false;
+			return;
 		}
 
 		// get an email from Facebook API
-		$resp = $this->sendRequest( 'FacebookSignup', 'getFacebookData', [
-			'fbUserId' => $fbUserId,
-		] );
-
+		$userInfo = \FacebookClient::getInstance()->getUserInfo( $fbUserId );
 		// BugId:24400
-		$data = $resp->getData();
-		if ( empty( $data ) ) {
+		if ( !$userInfo ) {
 			$this->skipRendering();
-			return false;
+			return;
 		}
 
-		// The new FB SDK doesn't define contact_email
-		if ( $this->wg->EnableFacebookClientExt ) {
-			$this->fbEmail = $resp->getVal( 'email', false );
-		} else {
-			$this->fbEmail = $resp->getVal( 'contact_email', false );
-			$email = $resp->getVal( 'email', false );
-
-			// check for proxy email
-			if ( $this->fbEmail != $email ) {
-				$this->fbEmail = wfMessage( 'usersignup-facebook-proxy-email' )->escaped();
-			}
-		}
+		$returnToUrl = $this->userLoginHelper->getRedirectUrl( 'fbconnected=1' );
 
 		$returnTo = $this->wg->request->getVal( 'returnto' );
 		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
-
-		// Temporary code until we switch fully to FacebookClient
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
-		} else {
-			$returnToUrl = FBConnect::getReturnToUrl( $returnTo, $returnToQuery );
-		}
-
 		$returnToParams = 'returnto=' . $returnTo;
 		if ( $returnToQuery ) {
 			$returnToParams .= '&returntoquery=' . htmlspecialchars( $returnToQuery );
 		}
 
-		// query string is neaded for redirects after Special:FacebookConnect
-		$this->queryString = $returnToParams;
-		// return to url is needed for modal signup completion
-		$this->returnToUrl = $returnToUrl;
-
-		$this->loginToken = UserLoginHelper::getSignupToken();
+		$this->response->setData( [
+			'fbEmail' => $userInfo->getProperty( 'email' ),
+			'returnToUrl' => $returnToUrl,
+			'queryString' => $returnToParams,
+			'loginToken' => UserLoginHelper::getSignupToken(),
+		] );
 	}
 
 	public function modalHeader() {
@@ -153,7 +170,6 @@ class FacebookSignupController extends WikiaController {
 
 		$this->signupMsg = wfMessage( 'usersignup-facebook-signup-header' )->escaped();
 		$this->loginMsg = wfMessage( 'usersignup-facebook-login-header' )->escaped();
-		$this->orMsg = wfMessage( 'usersignup-facebook-or-header' )->escaped();
 	}
 
 	/**
@@ -201,8 +217,12 @@ class FacebookSignupController extends WikiaController {
 		$signupForm->addNewAccount();
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
-		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
-			$result = 'unconfirm';
+		if ( $result == 'ok' ) {
+			\FacebookClientHelper::track( 'facebook-signup-join-wikia' );
+
+			if ( !$signupForm->getHasConfirmedEmail() ) {
+				$result = 'unconfirm';
+			}
 		}
 
 		$this->response->setData( [
@@ -254,39 +274,6 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
-	 * Return Facebook account data like email, gender, real name
-	 */
-	public function getFacebookData() {
-		$fbUserId = $this->request->getVal( 'fbUserId' );
-
-		if ( $fbUserId > 0 ) {
-
-			// Toggle on new/old FB client
-			if ( F::app()->wg->EnableFacebookClientExt ) {
-				$data = FacebookClient::getInstance()->getUserInfoAsArray( $fbUserId );
-			} else {
-				// call Facebook API
-				$FBApi = new FBConnectAPI();
-				$data  = $FBApi->getUserInfo( $this->fbUserId, array(
-					'first_name',
-					'name',
-					'sex',
-					'timezone',
-					'locale',
-					'username',
-					'contact_email',
-					'email',
-				) );
-			}
-
-			// BugId:24400
-			if ( !empty( $data ) ) {
-				$this->response->setData($data);
-			}
-		}
-	}
-
-	/**
 	 * Retrieve and validate Facebook user id
 	 *
 	 * @return int|null
@@ -309,27 +296,25 @@ class FacebookSignupController extends WikiaController {
 	 * @return null|User
 	 */
 	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
+
 		if ( !$wikiaUserName ) {
-			$messageCode = 'userlogin-error-noname';
-			$errorParam = self::SIGNUP_USERNAME_KEY;
-		} else if ( !$wikiaPassword ) {
-			$messageCode = 'userlogin-error-wrongpasswordempty';
-			$errorParam = self::SIGNUP_PASSWORD_KEY;
-		} else {
-			$user = \User::newFromName( $wikiaUserName );
-			if ( !$user ) {
-				$messageCode = 'userlogin-error-nosuchuser';
-				$errorParam = self::SIGNUP_USERNAME_KEY;
-			} else {
-				if ( !$user->checkPassword( $wikiaPassword ) ) {
-					$messageCode = 'userlogin-error-wrongpassword';
-					$errorParam = self::SIGNUP_PASSWORD_KEY;
-				}
-			}
+			$this->setErrorResponse( 'userlogin-error-noname', [], self::SIGNUP_USERNAME_KEY);
+			return null;
 		}
 
-		if ( $messageCode ) {
-			$this->setErrorResponse( $messageCode, [], $errorParam );
+		if ( !$wikiaPassword ) {
+			$this->setErrorResponse( 'userlogin-error-wrongpasswordempty', [], self::SIGNUP_PASSWORD_KEY );
+			return null;
+		}
+
+		$user = \User::newFromName( $wikiaUserName );
+		if ( empty( $user ) ) {
+			$this->setErrorResponse( 'userlogin-error-nosuchuser', [], self::SIGNUP_USERNAME_KEY );
+			return null;
+		}
+
+		if ( !$user->checkPassword( $wikiaPassword ) ) {
+			$this->setErrorResponse( 'userlogin-error-wrongpassword', [], self::SIGNUP_PASSWORD_KEY );
 			return null;
 		}
 
@@ -376,13 +361,6 @@ class FacebookSignupController extends WikiaController {
 	 * If no user is logged in, then an ID of 0 is returned.
 	 */
 	private function getFacebookUserId() {
-		// Toggle on new/old FB client
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			return FacebookClient::getInstance()->getUserId();
-		} else {
-			$fbApi = new FBConnectAPI();
-
-			return $fbApi->user();
-		}
+		return FacebookClient::getInstance()->getUserId();
 	}
 }

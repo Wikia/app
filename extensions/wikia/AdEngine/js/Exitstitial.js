@@ -55,7 +55,7 @@ require([
 
 				// Show ads
 				$modalAd.html($('<div></div>').html($ad));
-				window.adslots2.push([adSlot]);
+				window.adslots2.push(adSlot);
 
 				// Skip ads after N seconds
 				setTimeout(function () {

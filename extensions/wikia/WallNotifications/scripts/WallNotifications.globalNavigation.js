@@ -20,13 +20,15 @@ require(
 				this.$notificationsCount = $('.notifications-count');
 
 				this.$notifications = $('#notifications');
+				this.$notificationsEntryPoint = $('#notificationsEntryPoint');
 				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
 				this.$notificationsContainer = $('#notificationsContainer');
 				this.$notificationsMessages = $('> ul', this.$notificationsContainer);
 
 				this.globalNavigationHeight = $('#globalNavigation').outerHeight();
+				this.notificationsMarkAsReadHeight = 0;
 				this.notificationsHeaderHeight = 0;
-				this.notificationsBottomPadding = 15;
+				this.notificationsBottomPadding = 20;
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
@@ -35,32 +37,30 @@ require(
 					.mouseenter( this.proxy( this.fetchForCurrentWiki ) );
 
 				this.$wallNotifications.add( $('#pt-wall-notifications') )
-					.on('click', '#markasread-sub', this.proxy( this.markAllAsReadPrompt ))
-					.on('click', '#markasread-this-wiki', this.proxy( this.markAllAsRead ))
-					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
+					.on('click', '.notifications-markasread', this.proxy( this.markAllAsReadAllWikis ));
 
-
-				$('#AccountNavigation .user-menu').one('mouseenter', this.proxy(this.setNotificationsHeight));
-
-				this.$window.on('resize', $.throttle(100, this.proxy(this.setNotificationsHeight)));
+				$(window).on('resize', $.throttle(50, function() {
+					WallNotifications.setNotificationsHeight();
+				}));
 			},
 
 			openNotifications: function() {
-				if ( this.getAttribute('id') === 'notifications' ) {
+				if ( this.getAttribute('id') === 'notificationsEntryPoint' ) {
+					$(this).addClass('active');
 					WallNotifications.$wallNotifications.addClass('show');
+					WallNotifications.setNotificationsHeight();
 				}
 				$('#globalNavigation').trigger('notifications-menu-opened');
+				window.transparentOut.show();
 			},
 
-			closeNotifications: function() {
-				if ( !WallNotifications.unreadCount ) {
-					WallNotifications.$wallNotifications.removeClass('show');
-				}
+			closeNotificationsDropdown: function() {
+				WallNotifications.$notificationsEntryPoint.removeClass('active');
 			},
 
 			toggleNotifications: function() {
-				if ( WallNotifications.$wallNotifications.hasClass('show') ) {
-					WallNotifications.closeNotifications();
+				if ( WallNotifications.$notificationsEntryPoint.hasClass('active') ) {
+					WallNotifications.closeNotificationsDropdown();
 				} else {
 					WallNotifications.openNotifications.apply(this);
 				}
@@ -184,15 +184,6 @@ require(
 						this.bucky.timer.stop('markAllAsReadRequest');
 					})
 				});
-			},
-
-			markAllAsReadPrompt: function(e) {
-				$(e.target).parent().addClass('show');
-			},
-
-			markAllAsRead: function(e) {
-				this.markAllAsReadRequest( false );
-				return false;
 			},
 
 			markAllAsReadAllWikis: function(e) {
@@ -359,7 +350,12 @@ require(
 					msgHeight = 0;
 
 				if ( isDropdownOpen ) {
-					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding;
+
+					if ( this.notificationsMarkAsReadHeight === 0 ) {
+						this.notificationsMarkAsReadHeight = $('.notifications-markasread').outerHeight();
+					}
+
+					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding - this.notificationsMarkAsReadHeight;
 					msgHeight = this.$notificationsMessages.height();
 
 					if ( !msgHeight ) {
@@ -380,34 +376,32 @@ require(
 						this.$notificationsContainer.css('height', 'auto').removeClass('scrollable');
 					}
 				}
+			},
+
+			closeDropdown: function() {
+				if (WallNotifications.$notificationsEntryPoint.hasClass('active')) {
+					WallNotifications.$notificationsEntryPoint.removeClass('active');
+				}
 			}
 		};
 
 		$(function () {
 			WallNotifications.init();
-
-			window.menuAim(
-				document.querySelector('.user-menu'), {
-					activeRow: '#notifications',
-					rowSelector: '> li',
-					tolerance: 85,
-					submenuDirection: 'left',
-					deactivate: WallNotifications.closeNotifications,
-					exitMenu: WallNotifications.closeNotifications
-			});
+			window.transparentOut.bindClick(WallNotifications.closeNotificationsDropdown);
 
 			if ( !Wikia.isTouchScreen() ) {
 				window.delayedHover(
-					document.getElementById('notifications'),
+					document.getElementById('notificationsEntryPoint'),
 					{
 						checkInterval: 200,
 						maxActivationDistance: 20,
 						onActivate: WallNotifications.openNotifications,
+						onDeactivate: WallNotifications.closeDropdown,
 						activateOnClick: false
 					}
 				);
 			} else {
-				WallNotifications.$notifications.on('click', WallNotifications.toggleNotifications);
+				WallNotifications.$notificationsEntryPoint.on('click', WallNotifications.toggleNotifications);
 			}
 
 		});

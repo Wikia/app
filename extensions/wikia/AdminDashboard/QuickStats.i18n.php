@@ -491,6 +491,7 @@ $messages['et'] = array(
 $messages['eu'] = array(
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-photos' => 'Argazkiak',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ikusi estatistika gehiago]]',
 	'quickstats-number-shortening' => '$1 K',
 	'quickstats-number-shortening-millions' => '$1 M',
 );

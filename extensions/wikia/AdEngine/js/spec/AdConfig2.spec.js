@@ -55,7 +55,7 @@ describe('AdConfig2', function () {
 			wasCalled: function () {
 				return false;
 			},
-			call: function() {}
+			call: function () {}
 		},
 		rtpMock = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }),
 		rtpMockWithTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true, 5),
@@ -257,7 +257,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(gptSlotConfigMock.extendSlotParams.calls.length).toBe(0);
+		expect(gptSlotConfigMock.extendSlotParams.calls.count()).toBe(0);
 	});
 
 	it('getProviderList RTP integration -- RTP called without tier info', function () {
@@ -280,7 +280,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(gptSlotConfigMock.extendSlotParams.calls.length).toBe(0);
+		expect(gptSlotConfigMock.extendSlotParams.calls.count()).toBe(0);
 		expect(rtpMockWithoutTier.trackState).toHaveBeenCalled();
 	});
 

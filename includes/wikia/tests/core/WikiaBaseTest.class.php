@@ -215,7 +215,8 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $retVal mixed result to be returned by mocked method
 	 */
 	protected function mockStaticMethod($className, $methodName, $retVal) {
-		$this->getMockProxy()->getStaticMethod($className,$methodName)
+		$this->getMockProxy()
+			->getStaticMethod($className, $methodName)
 			->willReturn($retVal);
 	}
 
@@ -451,5 +452,19 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		} else {
 			return [ ltrim( substr( $functionName, 0, $last + 1 ), '\\' ), substr( $functionName, $last + 1 ) ];
 		}
+	}
+
+	/**
+	 * Mocks global $wgMemc->get() so it always returns null
+	 */
+	protected function disableMemCache() {
+		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get' ] )
+			->getMock();
+		$wgMemcMock->expects( $this->any() )
+			->method( 'get' )
+			->willReturn( null );
+		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
 	}
 }

@@ -130,8 +130,13 @@ class ImagesService extends Service {
 		}
 
 		if (VignetteRequest::isVignetteUrl($thumbUrl)) {
-			$thumbUrl = VignetteRequest::setThumbnailFormat($thumbUrl, $newExtension);
-		} elseif (!self::imageUrlHasExtension($thumbUrl, $newExtension) && !self::isDataTagImage($thumbUrl)) {
+			$vignetteUrl = VignetteRequest::setThumbnailFormat( $thumbUrl, $newExtension );
+			if ( $vignetteUrl ) {
+				return $vignetteUrl;
+			}
+		}
+
+		if (!self::imageUrlHasExtension($thumbUrl, $newExtension) && !self::isDataTagImage($thumbUrl)) {
 			$thumbUrl .= $newExtension;
 		}
 

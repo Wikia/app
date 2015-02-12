@@ -1674,7 +1674,7 @@ Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas e
 'reuploaddesc' => 'Cancelar o envio e retornar ao formulário de upload',
 'upload-tryagain' => 'Enviar descrição de arquivo modificada',
 'uploadnologin' => 'Não autenticado',
-'uploadnologintext' => 'É necessário estar [[Special:UserLogin|autenticado]] para enviar arquivos.',
+'uploadnologintext' => 'Você deve $1 para carregar arquivos e inserir vídeos.',
 'upload_directory_missing' => 'O diretório de upload ($1) não existe e não pôde ser criado pelo servidor.',
 'upload_directory_read_only' => 'O diretório de upload ($1) não tem permissões de escrita para o servidor.',
 'uploaderror' => 'Erro ao enviar arquivo',

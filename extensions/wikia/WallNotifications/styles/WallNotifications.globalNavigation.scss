@@ -5,57 +5,100 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationColors';
+@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationMixins';
 
-$header-bg-color: #092140;
+$black-half-transparent: rgba(0, 0, 0, .6);
+$black-transparent: rgba(0, 0, 0, 0);
 $border-color: #c7d1d8;
-$wiki-header-color: #2b54b5;
-$wiki-header-bg-color: rgba(113, 133, 148, .2);
+$header-bg-color: #092140;
+$markasread-bg-color: rgb(9, 35, 68);
+$markasread-color: #fff;
 $notification-hover: rgba(164, 182, 191, .2);
+$notifications-divider-color: rgb(197, 206, 217);
+$notifications-header-bg-color: rgb(230, 235, 242);
+$notifications-header-color: rgb(57, 66, 77);
+$time-color: rgba($notifications-header-color, .5);
+$notification-bubble-color: rgb(101, 110, 120);
 $white-transparent: rgba(255, 255, 255, 0);
 $white: #fff;
-$black-transparent: rgba(0, 0, 0, 0);
-$black-half-transparent: rgba(0, 0, 0, .6);
+$wiki-header-bg-color: rgba(113, 133, 148, .2);
+$wiki-header-color: #2b54b5;
 
+.notifications-container {
+	position: relative;
 
-.bubbles {
-	background-color: $white;
-	border-radius: 10px;
-	display: none;
-	height: 20px;
-	left: 21px;
-	min-width: 20px;
-	padding: 2px;
-	position: absolute;
-	top: 5px;
+	.notifications-entry-point {
+		background-image: url('/extensions/wikia/GlobalNavigation/images/notifications_icon.svg'); /** inline */
+		background-position: center;
+		background-size: 22px;
+		background-repeat: no-repeat;
+		display: inline-block;
+		height: $global-navigation-height;
+		position: relative;
+		width: 72px;
 
-	&.show {
-		display: block;
+		&:after {
+			@include global-nav-chevron;
+			margin-left: 48px;
+			margin-top: 22px;
+		}
+	}
+
+	.bubbles {
+		@include calc('right', '50% + 2px');
+		background-color: $notification-bubble-color;
+		//border-radius needs to be in pixels
+		//to handle 3 and more digits situation correctly
+		border-radius: 9px;
+		display: none;
+		height: 18px;
+		min-width: 18px;
+		padding: 1px;
+		position: absolute;
+		top: 10px;
+		z-index: 1;
+
+		&.show {
+			display: block;
+		}
+	}
+
+	.bubbles-count {
+		background-color: $white;
+		//border-radius needs to be in pixels
+		//to handle 3 and more digits situation correctly
+		border-radius: 8px;
+		color: $notification-bubble-color;
+		font-size: 10px;
+		font-weight: bold;
+		height: 16px;
+		line-height: 17px;
+		min-width: 16px;
+		padding: 0 2px;
+		text-align: center;
+	}
+
+	.notifications-container {
+		display: none;
+	}
+
+	&.active {
+		background-color: $global-navigation-background-color;
+
+		.notifications-container {
+			display: block;
+		}
 	}
 }
 
-.bubbles-count {
-	@include font-size-xxs;
-	background-color: red;
-	border-radius: 8px;
-	color: $white;
-	font-weight: normal;
-	height: 16px;
-	line-height: 16px;
-	min-width: 16px;
-	padding: 0 2px;
-	text-align: center;
-}
-
 #notifications {
-	position: relative;
-
 	> a > span {
 		float: right;
 	}
 }
 
 #GlobalNavigationWallNotifications {
-	@include grid-position('medium', 2, 'right', $medium-content-padding - 2);
 	@include grid-column-width('medium', 4, $medium-content-padding);
 	background-color: $white;
 	border: 1px solid $border-color;
@@ -64,10 +107,11 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 	overflow: hidden;
 	padding: 0;
 	position: absolute;
+	right: 0;
+	top: 100%;
 
 	#notificationsContainer {
-		@include grid-column-width('medium', 4, $medium-content-padding + 18);
-
+		margin-right: -18px; //NOTE: Hide native scrollbar
 		overflow: auto;
 
 		&::-webkit-scrollbar {
@@ -102,6 +146,10 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 				padding-right: 20px;
 			}
 		}
+
+		&.scrollable .chevron {
+			right: 25px;
+		}
 	}
 
 	&.show {
@@ -111,8 +159,7 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 	header {
 		font-weight: bold;
 		height: auto;
-		min-height: 51px;
-		padding: 15px 20px 0;
+		padding: 12px 20px;
 	}
 
 	ul {
@@ -125,29 +172,21 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 
 	.notifications-header {
 		@include clearfix;
-		background-color: $header-bg-color;
-		color: $border-color;
+		background-color: $notifications-header-bg-color;
+		color: $notifications-header-color;
 	}
 
 	.notifications-markasread {
 		@include font-size-xxs;
-		float: right;
+		background-color: $markasread-bg-color;
+		border-top: 1px solid $notifications-divider-color;
+		color: $markasread-color;
+		cursor: pointer;
+		height: 40px;
+		line-height: 40px;
 		font-weight: normal;
-		text-align: right;
-
-		span {
-			cursor: pointer;
-			margin-left: 10px;
-		}
-
-		div {
-			display: none;
-			margin: 10px 0;
-		}
-
-		&.show div {
-			display: block;
-		}
+		padding: 0;
+		text-align: center;
 	}
 
 	.notifications-for-wiki {
@@ -159,7 +198,7 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 			}
 
 			.notifications-wiki-header:hover .chevron {
-				border-bottom-color: $wiki-header-color;
+				border-bottom-color: $notifications-header-color;
 			}
 
 			.notifications-for-wiki-list {
@@ -171,19 +210,25 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 			border: 5px solid transparent;
 			border-bottom: 0;
 			border-top-color: $border-color;
-			float: right;
-			margin-top: 10px;
+			position: absolute;
+			right: 42px;
+			top: 50%;
 		}
 
 		.notifications-wiki-header {
-			background-color: $wiki-header-bg-color;
-			border-top: 1px solid $border-color;
-			color: $wiki-header-color;
+			background-color: $notifications-header-bg-color;
+			border-top: 1px solid $notifications-divider-color;
+			color: rgb(26, 94, 184);
 			cursor: pointer;
+			font-weight: bold;
+			height: 40px;
+			padding-left: 20px;
 			padding-right: 38px;
+			padding-top:10px;
+			position: relative;
 
 			&:hover .chevron {
-				border-top-color: $wiki-header-color;
+				color: $notifications-header-color;
 			}
 		}
 
@@ -198,46 +243,64 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 	}
 
 	.notification {
-		border-top: 1px solid $border-color;
-		line-height: 22px;
-		padding: 20px 0;
+		@include font-size-xxs;
+		border-top: 1px solid $notifications-divider-color;
+		line-height: 20px;
+		padding: 12px 0;
 		position: relative;
 
 		.notification-message {
-			@include grid-column-width('medium', 3);
-
-			display: inline-block;
+			padding-left: 60px;
+			padding-right: 38px; //38px because of -18px margin
+			white-space: normal;
 
 			p {
+				font-size: 12px;
+				line-height: 16px;
 				margin: 0;
 			}
 		}
 
 		.avatars {
-			@include grid-column-width('medium', 1);
-
 			display: inline-block;
+			left: 20px;
+			max-width: 38px;
+			position: absolute;
 			text-align: center;
+			top: 12px;
 			vertical-align: top;
+			overflow: hidden;
 
 			.avatar {
+				border: none;
 				border-radius: 50%;
 			}
 		}
 
 		h4 {
-			@include font-size-s;
+			@include font-size-xs;
 			font-weight: bold;
+			line-height: 18px;
 			margin: 0;
 		}
 
 		time {
-			@include font-size-xxs;
-			color: $border-color;
+			color: $time-color;
+			font-size: 12px;
+			line-height: 12px;
 		}
 
 		&.empty, &.admin-notification {
-			padding: 17px 25px 17px 20px;
+			height: 80px;
+			line-height: 80px;
+			padding: 0;
+			text-align: center;
+		}
+
+		&.empty {
+			background-color: rgb(230, 235, 242);
+			color: rgb(9, 35, 68);
+			font-size: 14px;
 		}
 
 		&.admin-notification {
@@ -275,53 +338,15 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 }
 
 @media #{$small-only} {
-	.bubbles {
-		left: 8px;
-	}
-
 	#GlobalNavigationWallNotifications {
-		@include grid-position('small', 3, 'right', $small-content-padding - 2);
 		@include grid-column-width('small', 6, $small-content-padding);
-
-		#notificationsContainer {
-			@include grid-column-width('small', 6, $small-content-padding + 18);
-		}
-
-		.notification {
-			.avatars {
-				@include grid-column-width('small', 1);
-			}
-
-			.notification-message {
-				@include grid-column-width('small', 5);
-			}
-		}
 	}
 }
 
 
 
 @media #{$large-up} {
-	.bubbles {
-		left: 30px;
-	}
-
 	#GlobalNavigationWallNotifications {
-		@include grid-position('large', 2, 'right', $large-content-padding - 2);
 		@include grid-column-width('large', 4, $large-content-padding);
-
-		#notificationsContainer {
-			@include grid-column-width('large', 4, $large-content-padding + 18);
-		}
-
-		.notification {
-			.avatars {
-				@include grid-column-width('large', 1);
-			}
-
-			.notification-message {
-				@include grid-column-width('large', 3);
-			}
-		}
 	}
 }

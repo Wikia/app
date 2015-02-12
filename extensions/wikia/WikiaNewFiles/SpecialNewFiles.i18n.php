@@ -96,6 +96,13 @@ $messages['es'] = array(
 	'wikianewfiles-more' => 'más...',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikianewfiles-more' => 'gehiago...',
+);
+
 /** French (français)
  * @author Gomoko
  */
@@ -226,6 +233,17 @@ $messages['pt-br'] = array(
 	'wikianewfiles-uploadby' => 'por {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Postado em',
 	'wikianewfiles-more' => 'mais...',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikianewfiles-title' => 'File nuève sus a sta uicchi',
+	'wikianewfiles-desc' => "Estende 'na [[Special:NewFiles|pàgena speciale]] pe sovrascrivere quacche formattazzione d'a testate",
+	'wikianewfiles-uploadby' => 'da {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Mannate',
+	'wikianewfiles-more' => 'de cchiù...',
 );
 
 /** Russian (русский)

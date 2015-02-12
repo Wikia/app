@@ -19,7 +19,7 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 		return [
 			[
 				'empty content',
-				'',
+				[],
 				[ ]
 			],
 			[

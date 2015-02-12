@@ -9693,11 +9693,12 @@ $PAGEURL
 Wikia团队',
 	'founderemails-email-first-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-first-edit-headline' => '好的！$EDITORNAME 成功在 $WIKINAME 上做出了第一次编辑。',
+	'founderemails-email-first-edit-content' => '到$PAGETITLE去看看他们添加了什么。',
 	'founderemails-email-first-edit-signature' => 'Wikia团队',
 	'founderemails-email-first-edit-button' => '去查看！',
-	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hey $USERNAME,<br /><br />
-注册用户$EDITORNAME刚刚在你的维基上作出了首次编辑哦！何不访问TA的<a href="$EDITORTALKPAGEURL">对话页</a> 去打个招呼？<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia团队</div>',
+	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => '嗨，$USERNAME<br /><br />
+注册用户$EDITORNAME刚刚在您的维基上作出了首次编辑哦！为何不去他的<a href="$EDITORTALKPAGEURL">讨论页</a>打个招呼呢？<br /><br />
+<div style="font-style: italic; font-size: 120%;">——Wikia团队</div>',
 	'founderemails-email-page-edited-reg-user-subject' => '$WIKINAME 有新编辑！',
 	'founderemails-email-page-edited-reg-user-body' => '嗨！$USERNAME
 
@@ -9710,6 +9711,7 @@ $PAGEURL
 Wikia团队',
 	'founderemails-email-general-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-general-edit-headline' => '$EDITORNAME刚刚在$WIKINAME作出了对$PAGETITLE的其他编辑。',
+	'founderemails-email-general-edit-content' => '到$PAGETITLE去看看他们添加了什么。',
 	'founderemails-email-general-edit-signature' => 'Wikia团队',
 	'founderemails-email-general-edit-button' => '去查看！',
 	'founderemails-email-page-edited-reg-user-body-HTML' => '嗨！$USERNAME<br /><br />
@@ -9726,6 +9728,7 @@ $PAGEURL
 Wikia团队',
 	'founderemails-email-anon-edit-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-anon-edit-headline' => '一位匿名贡献者刚刚在$WIKINAME上对$PAGETITLE做出了编辑。',
+	'founderemails-email-anon-edit-content' => '有一个未登录Wikia账号的贡献者做了点编辑。快来看看这个神秘的家伙添加了什么吧！',
 	'founderemails-email-anon-edit-signature' => 'Wikia团队',
 	'founderemails-email-anon-edit-button' => '去查看！',
 	'founderemails-email-page-edited-anon-body-HTML' => '嗨！$USERNAME<br /><br />
@@ -9742,6 +9745,14 @@ Wikia团队',
 	'founderemails-answers-email-0-days-passed-body' => '祝贺创建$WIKINAME——您现在是Wikia社区的一部分了！',
 	'founderemails-answers-email-0-days-passed-body-HTML' => '祝贺您创建了<strong>$WIKINAME</strong>——您现在是Wikia社群一员了！<br /><br /><div style="font-style: italic; font-size: 120%;">--Wikia团队</div>',
 	'founderemails-answers-email-3-days-passed-subject' => '登记',
+	'founderemails-answers-email-3-days-passed-body' => '嗨，$USERNAME
+
+您来到您的wiki已经有几天了，我们想您也许想看看您可以做的其他事情。
+
+——Wikia团队',
+	'founderemails-answers-email-3-days-passed-body-HTML' => '嗨，$USERNAME<br /><br />
+您来到您的wiki已经有几天了，我们想您也许想看看您可以做的其他事情。<br /><br />
+<div style="font-style: italic; font-size: 120%;">——Wikia团队</div>',
 	'founderemails-answers-email-10-days-passed-subject' => '您的wiki最近如何？',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => '注册用户第一次更改了您的网站！',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => '嘿！$USERNAME，
@@ -9756,16 +9767,14 @@ Wikia团队',
 
 -- Wikia团队',
 	'founderemails-answers-email-page-edited-anon-subject' => '您的站点被人修改过了！',
-	'founderemails-answers-email-page-edited-anon-body' => 'Hey $USERNAME，
+	'founderemails-answers-email-page-edited-anon-body' => '嗨，$USERNAME，
 
-似乎已经有人参与编辑你的wiki了~ 不妨去$MYHOMEURL查看一下？
+看起来已经有人参与编辑您的wiki了！不妨去$MYHOMEURL查看一下？
 
--- Wikia团队',
-	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hey $USERNAME，<br /><br />
-
-似乎已经有人参与编辑你的wiki了~ 不妨去<a href="$MYHOMEURL">查看</a>一下？<br /><br />
-
-<div style="font-style: italic; font-size: 120%;">-- Wikia团队</div>',
+——Wikia团队',
+	'founderemails-answers-email-page-edited-anon-body-HTML' => '嗨，$USERNAME<br /><br />
+看起来已经有人参与编辑您的wiki了！不妨去<a href="$MYHOMEURL">查看</a>一下？<br /><br />
+<div style="font-style: italic; font-size: 120%;">——Wikia团队</div>',
 	'founderemails-lot-happening-subject' => '$WIKINAME正在热力升温！',
 	'founderemails-email-lot-happening-greeting' => '嗨，$USERNAME，',
 	'founderemails-email-lot-happening-headline' => '恭喜您，今天在 $WIKINAME 有很多变动！',

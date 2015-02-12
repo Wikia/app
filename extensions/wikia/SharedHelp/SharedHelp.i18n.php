@@ -445,6 +445,8 @@ $messages['roa-tara'] = array(
 	'sharedhelp-autotalkcreate-summary' => "Pàgene de le 'ngazzaminde ccrejate automaticamende",
 	'sharedhelp-searchprofile' => "Pàgene d'ajute",
 	'sharedhelp-searchprofile-tooltip' => 'Cirche le pàggene de ajute',
+	'shared_help_info' => "Domande? Cirche sus a 'u [[w:Special:Forum|Forum d'a Comunitate]].",
+	'shared_help_was_redirect' => 'Sta pàgene jè redirezionate sus a $1',
 );
 
 /** Russian (русский)

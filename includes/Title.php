@@ -1095,6 +1095,30 @@ class Title {
 	}
 
 	/**
+	 * Is this a .js page?
+	 *
+	 * @return Bool
+	 */
+	public function isJsPage() {
+		$retval = $this->mNamespace == NS_MEDIAWIKI
+			&& preg_match( '!\.(js)$!u', $this->mTextform ) > 0;
+
+		return $retval;
+	}
+
+	/**
+	 * Is this a .css page?
+	 *
+	 * @return Bool
+	 */
+	public function isCssPage() {
+		$retval = $this->mNamespace == NS_MEDIAWIKI
+			&& preg_match( '!\.(css)$!u', $this->mTextform ) > 0;
+
+		return $retval;
+	}
+
+	/**
 	 * Is this a .css subpage of a user page?
 	 *
 	 * @return Bool
