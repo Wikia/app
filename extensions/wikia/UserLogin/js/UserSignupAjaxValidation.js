@@ -34,6 +34,7 @@
 		this.deferred = $.nirvana.sendRequest({
 			controller: this.controller,
 			method: this.method,
+			type: 'GET',
 			data: params,
 			callback: this.validationHandler.bind(this, paramName)
 		});
@@ -66,6 +67,7 @@
 		this.deferred = $.nirvana.sendRequest({
 			controller: this.controller,
 			method: this.method,
+			type: 'GET',
 			data: params,
 			callback: this.validationHandler.bind(this, paramName)
 		});
