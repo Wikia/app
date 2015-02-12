@@ -46,7 +46,8 @@ class Piggyback extends SpecialPage {
  */
 
 class PBLoginForm extends LoginForm {
-	var $mOtherName, $templateData;
+	private $mOtherName = '';
+	private $templateData = [];
 
 	function __construct( &$request ) {
 		global $wgUser;
