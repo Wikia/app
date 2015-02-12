@@ -19,7 +19,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 }
 
 .search-form-wrapper {
-	margin: 10px 0 8px;
+	margin: 8px 0;
 	width: 100%;
 
 	.search-form {
@@ -149,7 +149,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		background-repeat: no-repeat;
 		border: 0;
 		border-radius: 0;
-		height: 28px;
+		height: 26px;
 		outline: none;
 		position: absolute;
 		right: 1px;
