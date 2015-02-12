@@ -101,7 +101,7 @@ $more-z-index: 10000;
 
 	.hub-list {
 		float: left;
-		width: 230px;
+		width: 226px;
 
 		&.backface-off {
 			*, *:before, *:after {
@@ -114,8 +114,8 @@ $more-z-index: 10000;
 		@include font-size-base;
 		background-color: $global-wikia-background-color;
 		display: block;
-		height: 60px;
-		line-height: 60px;
+		height: 50px;
+		line-height: 50px;
 		position: relative;
 
 		&.active {
@@ -124,24 +124,25 @@ $more-z-index: 10000;
 
 			&:before {
 				content: ' ';
-				height: 60px;
+				height: 50px;
 				left: 0;
 				position: absolute;
 				top: 0;
-				width: 60px;
+				width: 50px;
 			}
 
 			&:after {
 				background-color: $hubsmenu-background-color;
 				border-color: transparent;
 				border-style: solid;
-				border-width: 30px 0 30px 16px;
+				border-width: 25px 0 25px 12px;
 				height: 0;
 				width: 0;
 			}
 
 			.label {
 				border: 0;
+				color: #fff;
 			}
 		}
 
@@ -149,8 +150,8 @@ $more-z-index: 10000;
 			background-color: $hubsmenu-background-color;
 			content: ' ';
 			float: right;
-			height: 60px;
-			width: 16px;
+			height: 50px;
+			width: 12px;
 		}
 
 		.icon {
@@ -158,20 +159,21 @@ $more-z-index: 10000;
 			background-repeat: no-repeat;
 			display: inline-block;
 			float: left;
-			height: 60px;
+			height: 50px;
 			position: relative;
-			width: 60px;
+			width: 50px;
 		}
 
 		.label {
 			background-color: $global-wikia-background-color;
 			border-bottom: 1px solid $hubsmenu-background-color;
+			color: $global-navigation-active-color;
 			display: inline-block;
 			float: left;
-			font-size: $font-size-base-big-screen;
-			height: 60px;
+			font-size: $font-size-base;
+			height: 50px;
 			padding-left: 20px;
-			width: 154px;
+			width: 164px;
 		}
 	}
 
@@ -189,16 +191,17 @@ $more-z-index: 10000;
 		display: none;
 		float: left;
 		line-height: 17px;
-		min-height: 480px;
+		min-height: 409px;
 		padding-bottom: 60px;
 		padding-left: 22px;
+		padding-right: 20px;
 		position: relative;
 		width: 464px;
 
 		.hub-menu-columns {
 			@include column-count(2);
-			@include column-gap(36px);
-			margin-top: -10px;
+			@include column-gap(40px);
+			margin-top: -11px;
 		}
 
 		&.active {
@@ -224,15 +227,19 @@ $more-z-index: 10000;
 		a {
 			color: rgb(57, 66, 77);
 			display: block;
-			padding: 10px 0;
+			padding: 8px 7px;
 
 			&:hover {
 				color: rgb(26, 94, 184);
 				text-decoration: none;
+
+				&:after {
+					color: rgb(26, 94, 184);
+				}
 			}
 
 			&.more {
-				@include right-chevron();
+				@include right-chevron($color: 'inherit');
 				border-top: 1px solid $nav-border-color;
 				bottom: 0;
 				font-weight: bold;
@@ -247,6 +254,14 @@ $more-z-index: 10000;
 
 				&:after {
 					margin-left: 6px;
+				}
+
+				&:hover {
+					color: $global-navigation-active-color;
+
+					&:after {
+						border-color: $global-navigation-active-color;
+					}
 				}
 			}
 		}
