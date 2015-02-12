@@ -2,18 +2,25 @@
 (function (context) {
 	'use strict';
 
+	context.Bucky = context.Weppy;
+
 	if (context.define && context.define.amd) {
-		context.define('bucky', [], Bucky);
+		context.define('bucky', [], function() {
+			return context.Weppy;
+		});
+		context.define('weppy', [], function() {
+			return context.Weppy;
+		});
 	}
 
 	$(function () {
-		var config = $.extend({}, context.wgBuckyConfig, {
+		var config = $.extend({}, context.wgWeppyConfig, {
 			'context': context.wgTransactionContext
 		});
-		Bucky.setOptions(config);
+		Weppy.setOptions(config);
 		$(context).load(function () {
 			setTimeout(function () {
-				Bucky.sendPagePerformance(false);
+				Weppy.sendPagePerformance(false);
 			}, 0);
 		});
 	});
