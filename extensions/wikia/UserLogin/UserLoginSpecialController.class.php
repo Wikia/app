@@ -613,12 +613,16 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->initializeTemplate();
 
 		$username = $this->request->getVal( 'username', '' );
-		$editToken = $this->request->getVal( 'editToken', '' );
 		$password = $this->request->getVal( 'password', '' );
 		$newPassword = $this->request->getVal( 'newpassword', '' );
 		$retype = $this->request->getVal( 'retype', '' );
 		$loginToken = $this->request->getVal( 'loginToken', '' );
 		$returnto = $this->request->getVal( 'returnto', '' );
+
+		// TODO: figure out why we were setting editToken twice, once via request var and once
+		// via wgUser->getEditToken. (SOC-351)
+		$editToken = $this->wg->User->getEditToken(); // $this->request->getVal( 'editToken', '' );
+		$this->editToken = $editToken;
 
 		$this->response->setData([
 			'username' => $username,
@@ -634,8 +638,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		// in reality, it is being posted
 		$fakeGet = $this->request->getVal('fakeGet', '');
 
-		// TODO: why are we setting editToken twice?
-		$this->editToken = $this->wg->User->getEditToken();
 
 		if ( $this->wg->request->wasPosted() && empty($fakeGet) ) {
 			if( !$this->wg->Auth->allowPasswordChange() ) {
