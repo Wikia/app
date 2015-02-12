@@ -16,6 +16,10 @@ class HelperController extends \WikiaController
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			return;
+		}
+
 		$sName = $this->getVal( 'username' );
 
 		// Allow the given user name if the AntiSpoof extension is disabled.
@@ -39,6 +43,10 @@ class HelperController extends \WikiaController
 	{
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			return;
+		}
 
 		$sName = $this->getVal( 'username' );
 
