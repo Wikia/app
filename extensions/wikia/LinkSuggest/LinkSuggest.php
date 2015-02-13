@@ -45,6 +45,7 @@ $wgLinkSuggestLimit = 6;
 
 // classes
 $wgAutoloadClasses['LinkSuggest'] = __DIR__ . '/LinkSuggest.class.php';
+$wgAutoloadClasses['LinkSuggestLoader'] = __DIR__ . '/LinkSuggestLoader.class.php';
 $wgAutoloadClasses['LinkSuggestHooks'] = __DIR__ . '/LinkSuggestHooks.class.php';
 
 // i18n
@@ -53,6 +54,7 @@ $wgExtensionMessagesFiles['LinkSuggest'] = __DIR__ . '/LinkSuggest.i18n.php';
 // hooks
 $wgHooks['GetPreferences'][] = 'LinkSuggestHooks::onGetPreferences' ;
 $wgHooks['EditForm::MultiEdit:Form'][] = 'LinkSuggestHooks::onEditFormMultiEditForm';
+$wgHooks['UploadForm:initial'][] = 'LinkSuggestHooks::onUploadFormInitial'; // VOLDEV-121: add LinkSuggest to Special:Upload and MultipleUpload
 
 // AJAX interface
 $wgAjaxExportList[] = 'getLinkSuggest';
