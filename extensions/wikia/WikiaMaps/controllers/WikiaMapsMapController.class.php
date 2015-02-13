@@ -11,7 +11,10 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 	 * @return Array
 	 */
 	public function getTileSets() {
-		$params = [];
+		$params = [
+			'sort' => 'desc',
+			'limit' => 50
+		];
 		$searchTerm = $this->request->getVal( 'searchTerm', null );
 
 		if ( !is_null( $searchTerm ) ) {
