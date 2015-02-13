@@ -4,6 +4,9 @@
  * AJAX entry points for actions connected to map creation
  */
 class WikiaMapsMapController extends WikiaMapsBaseController {
+	// number of tilesets to be fetched from maps service. We want to have 50 items in the list in UI and the first
+	// item is create new tileset button. That's why the number is 49
+	const TILE_SET_ITEM_COUNT = 49;
 
 	/**
 	 * Gets list of tile sets
@@ -13,7 +16,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 	public function getTileSets() {
 		$params = [
 			'sort' => 'desc',
-			'limit' => 49
+			'limit' => TILE_SET_ITEM_COUNT
 		];
 		$searchTerm = $this->request->getVal( 'searchTerm', null );
 
