@@ -6,18 +6,17 @@
  * @package MediaWiki
  * @addtopackage maintenance
  *
- * @author Adam Karmiński <adamk@wikia-inc.com>fac
- * 
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ *
  *
  */
 
 require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
 use Wikia\PowerUser\PowerUser;
+use Wikia\Logger\WikiaLogger;
 
 class PowerUserRemoveAdminsMaintenance extends Maintenance {
-	use Wikia\Logger\Loggable;
-
 	/**
 	 * Do the actual work. All child classes will need to implement this
 	 */
@@ -28,9 +27,9 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 		foreach ( $aFormerAdminsIds as $iFormerAdminId ) {
 			$oPowerUser = new PowerUser( User::newFromId( $iFormerAdminId ) );
 			if ( $oPowerUser->removePowerUserProperty( PowerUser::TYPE_ADMIN ) ) {
-				$this->info( 'PowerUsers', [
+				WikiaLogger::instance()->info( PowerUser::LOG_MESSAGE, [
 					'type' => PowerUser::TYPE_ADMIN,
-					'action' => 'removed'
+					'action' => 'remove',
 				]);
 			}
 		}

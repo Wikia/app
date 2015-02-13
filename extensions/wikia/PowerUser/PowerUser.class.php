@@ -8,6 +8,9 @@ class PowerUser {
 	const TYPE_LIFETIME = 'poweruser_lifetime';
 
 	const MIN_LIFETIME_EDITS = 2000;
+	const MIN_FREQUENT_EDITS = 140;
+
+	const LOG_MESSAGE = 'PowerUsersLog';
 
 	public static $aPowerUserProperties = [
 		self::TYPE_ADMIN,
