@@ -1,9 +1,9 @@
 require(
 [
 	'jquery', 'wikia.window', 'wikia.globalnavigation.lazyload',
-	'wikia.menuaim', 'wikia.browserDetect', 'wikia.delayedhover'
+	'wikia.menuaim', 'wikia.browserDetect', 'wikia.delayedhover', 'wikia.globalNavigationDropdowns'
 ],
-function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover) {
+function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdowns) {
 	'use strict';
 
 	var $entryPoint = $('#hubsEntryPoint'),
@@ -41,26 +41,12 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover) {
 			.removeClass('active');
 	}
 
-	/**
-	 * @desc opens global nav menu
-	 */
-	function openMenu() {
-		$entryPoint.addClass('active');
-		w.transparentOut.show();
-
+	function onDropdownOpen() {
 		if (!GlobalNavLazyLoad.isMenuWorking()) {
 			GlobalNavLazyLoad.getHubLinks();
 		}
 
 		$('#globalNavigation').trigger('hubs-menu-opened');
-	}
-
-	/**
-	 * @desc closes global nav menu
-	 */
-	function closeMenu() {
-		$entryPoint.removeClass('active');
-		w.transparentOut.hide();
 	}
 
 	$(function () {
@@ -70,6 +56,11 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover) {
 		if (browserDetect.isAndroid()) {
 			$verticals.addClass('backface-off');
 		}
+
+		dropdowns.attachDropdown($entryPoint, {
+			onOpen: onDropdownOpen,
+			onClick: dropdowns.openDropdown
+		});
 
 		//Menu-aim should be attached for both touch and not touch screens.
 		//It handles opening and closing submenu on click
@@ -87,13 +78,10 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover) {
 			$entryPoint.get(0), {
 				checkInterval: 100,
 				maxActivationDistance: 20,
-				onActivate: openMenu,
-				onDeactivate: closeMenu,
+				onActivate: dropdowns.openDropdown,
+				onDeactivate: dropdowns.closeDropdown,
 				activateOnClick: false
 			}
 		);
-
-		$entryPoint.click(openMenu);
-		w.transparentOut.bindClick(closeMenu);
 	});
 });

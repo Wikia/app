@@ -1186,13 +1186,6 @@ $config['wall_notifications_js'] = array(
 	)
 );
 
-$config['wall_notifications_global_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/WallNotifications/scripts/WallNotifications.globalNavigation.js',
-	)
-);
-
 $config['wall_mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(

@@ -205,6 +205,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
 		'//extensions/wikia/Venus/scripts/layout.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationDropdownsHandler.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
@@ -216,12 +217,18 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAccountNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
-		//This asset is only for prototype version. It shouldn't be loaded by default.
-		//It is used for Optimizely A/B tests
-//		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAutoHide.js'
+		'//resources/wikia/libraries/bootstrap/tooltip.js'
 	]
 ];
+
+$VenusConfig['wall_notifications_global_navigation_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationNotifications.js',
+	]
+];
+
 
 $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
