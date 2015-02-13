@@ -3529,6 +3529,10 @@ abstract class DatabaseBase implements DatabaseType {
 	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
 		global $wgDBcluster;
 
+		if ( $ret === false ) {
+			return;
+		}
+
 		if ($this->getSampler()->shouldSample()) {
 			$this->getWikiaLogger()->info( "SQL $sql", [
 				'method'      => $fname,
