@@ -20,25 +20,25 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is not a valid entry point to MediaWiki.' );
 }
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'path' => __FILE__,
 	'name' => 'LinkSuggest',
 	'version' => '2.0',
-	'author' => array(
+	'author' => [
 		'Inez Korczyński', 'Bartek Łapiński', 'Łukasz Garczewski', 'Maciej Brencz',
 		'Jesús Martínez Novo', 'Jack Phoenix', 'Sean Colombo', 'Robert Elwell',
-	),
+	],
 	'descriptionmsg' => 'linksuggest-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LinkSuggest'
-);
+];
 
 // ResourceLoader support (MW 1.17+)
-$wgResourceModules['ext.wikia.LinkSuggest'] = array(
+$wgResourceModules['ext.wikia.LinkSuggest'] = [
 	'scripts' => 'js/jquery.wikia.linksuggest.js',
-	'dependencies' => array( 'jquery.ui.autocomplete' ),
+	'dependencies' => [ 'jquery.ui.autocomplete' ],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/LinkSuggest'
-);
+];
 
 // config
 $wgLinkSuggestLimit = 6;

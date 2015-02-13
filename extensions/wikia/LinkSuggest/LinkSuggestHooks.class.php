@@ -13,11 +13,11 @@ class LinkSuggestHooks {
 	 * @return bool
 	 */
 	static function onGetPreferences($user, &$preferences) {
-		$preferences['disablelinksuggest'] = array(
+		$preferences['disablelinksuggest'] = [
 			'type' => 'toggle',
 			'section' => 'editing/editing-experience',
 			'label-message' => 'tog-disablelinksuggest',
-		);
+		];
 		return true;
 	}
 
