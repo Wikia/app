@@ -13,7 +13,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 	public function getTileSets() {
 		$params = [
 			'sort' => 'desc',
-			'limit' => 50
+			'limit' => 49
 		];
 		$searchTerm = $this->request->getVal( 'searchTerm', null );
 
