@@ -30,9 +30,12 @@
 		/**
 		 * Initialize functionality needed to log in or sign up for a new account with facebook
 		 * @param {Object} origin Possible values are from FacebookLogin.origins. For tracking how a user got here.
+		 * @param {jQuery} [$el] Optional wrapper element for facebook button
 		 */
-		init: function (origin) {
-			var self = this;
+		init: function (origin, $el) {
+			var self = this,
+				fbWrapperSelector = '.sso-login',
+				$fbWrapper;
 
 			if (this.initialized || window.wgUserName) {
 				return;
@@ -63,7 +66,12 @@
 				// load when the login dropdown is shown or specific page is loaded
 				$.loadFacebookAPI()
 					.done(function () {
-						$('.sso-login').removeClass('hidden');
+						if ($el instanceof jQuery) {
+							$fbWrapper = $el.find(fbWrapperSelector);
+						} else {
+							$fbWrapper = $(fbWrapperSelector);
+						}
+						$fbWrapper.removeClass('hidden');
 					});
 
 				self.log('init');

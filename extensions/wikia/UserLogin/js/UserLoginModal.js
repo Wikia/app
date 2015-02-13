@@ -41,10 +41,6 @@
 					self.uiFactory = uiFactory;
 					self.packagesData = packagesData;
 
-					if (window.FacebookLogin) {
-						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL);
-					}
-
 					self.buildModal(options);
 					self.bucky.timer.stop('initModal');
 				});
@@ -76,6 +72,11 @@
 					UserLoginModal.$modal = loginModal;
 
 					var $loginModal = loginModal.$element;
+
+					// Init facebook button inside login modal
+					if (window.FacebookLogin) {
+						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL, $loginModal);
+					}
 
 					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
 						ajaxLogin: true,
