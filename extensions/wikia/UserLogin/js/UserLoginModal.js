@@ -75,6 +75,11 @@
 
 					// Init facebook button inside login modal
 					if (window.FacebookLogin) {
+						// SOC-273 remove 'hidden' class even if element isn't in the DOM yet
+						$.loadFacebookAPI()
+							.done(function () {
+								$loginModal.find('.sso-login').removeClass('hidden');
+							});
 						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL, $loginModal);
 					}
 
