@@ -37,8 +37,6 @@ $more-z-index: 10000;
 }
 
 .hubs-container {
-	padding-left: 15px;
-	padding-right: 10px;
 	position: relative;
 	white-space: normal;
 
@@ -53,17 +51,17 @@ $more-z-index: 10000;
 
 .hubs-entry-point {
 	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* inline */
-	background-position: 0 center;
+	background-position: 13px 17px;
 	background-repeat: no-repeat;
 	cursor: pointer;
 	display: inline-block;
 	height: $global-navigation-height;
-	width: 30px;
+	width: 50px;
 
 	&:after {
 		@include global-nav-chevron;
-		margin-left: $hub-menu-icon-width + 5px;
-		margin-top: 21px;
+		margin-left: 33px;
+		margin-top: 22px;
 	}
 }
 
