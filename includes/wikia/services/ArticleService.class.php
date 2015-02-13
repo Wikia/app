@@ -30,9 +30,9 @@ class ArticleService extends WikiaObject {
 	);
 	private $patterns = array(
 		// strip decimal entities
-		'/&#\d{2,5};/ue' => '',
+		'/&#\d{2,5};/u' => '',
 		// strip hex entities
-		'/&#x[a-fA-F0-7]{2,8};/ue' => '',
+		'/&#x[a-fA-F0-7]{2,8};/u' => '',
 		// this should be always the last
 		'/\s+/' => ' '
 	);
