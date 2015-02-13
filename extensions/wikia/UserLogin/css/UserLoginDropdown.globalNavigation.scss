@@ -22,7 +22,8 @@
 	padding: 0 0 $large-content-padding 0;
 	position: absolute;
 	right: 0;
-	top: 100%;
+	//box shadow below global navigation takes 2px and it should be covered by dropdown
+	top: 96%;
 	white-space: normal;
 	z-index: 5000100;
 

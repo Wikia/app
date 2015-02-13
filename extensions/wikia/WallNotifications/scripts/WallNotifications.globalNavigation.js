@@ -56,6 +56,7 @@ require(
 
 			closeNotificationsDropdown: function() {
 				WallNotifications.$notificationsEntryPoint.removeClass('active');
+				window.transparentOut.hide();
 			},
 
 			toggleNotifications: function() {
