@@ -7,7 +7,7 @@ trait PowerUserTrait {
 	abstract function getBoolOption();
 
 	public function isPowerUser() {
-		foreach ( $this->aPowerUserProperties as $sProperty ) {
+		foreach ( PowerUser::$aPowerUserProperties as $sProperty ) {
 			if ( $this->getBoolOption( $sProperty ) ) {
 				return true;
 			}

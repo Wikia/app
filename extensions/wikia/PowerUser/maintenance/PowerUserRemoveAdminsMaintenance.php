@@ -62,7 +62,6 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 				->SELECT( 'user_id', 'all_groups' )
 				->FROM( 'events_local_users' )
 				->WHERE( 'user_id' )->EQUAL_TO( $iAdminId )
-				->LIMIT( 1 )
 				->runLoop( $oDB, function( &$iFormerAdminId, $oRow ) {
 					/**
 					 * If all_groups is not a string it means that
