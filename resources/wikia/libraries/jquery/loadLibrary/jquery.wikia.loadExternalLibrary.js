@@ -64,6 +64,8 @@
 				cookie: true,
 				version: 'v2.1'
 			});
+
+			$('.sso-login').removeClass('hidden');
 			// resolve after FB has finished inititalizing
 			$deferred.resolve();
 		};
