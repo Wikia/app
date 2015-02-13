@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.window', 'wikia.nirvana'],
-	function($, window, nirvana) {
+	['jquery', 'wikia.window', 'wikia.nirvana', 'wikia.delayedhover'],
+	function($, window, nirvana, delayedHover) {
 		'use strict';
 
 		var WallNotifications = {
@@ -388,23 +388,18 @@ require(
 
 		$(function () {
 			WallNotifications.init();
+			delayedHover.attach(
+				document.getElementById('notificationsEntryPoint'),
+				{
+					checkInterval: 200,
+					maxActivationDistance: 20,
+					onActivate: WallNotifications.openNotifications,
+					onDeactivate: WallNotifications.closeDropdown,
+					activateOnClick: false
+				}
+			);
+			WallNotifications.$notificationsEntryPoint.on('click', WallNotifications.toggleNotifications);
 			window.transparentOut.bindClick(WallNotifications.closeNotificationsDropdown);
-
-			if ( !Wikia.isTouchScreen() ) {
-				window.delayedHover(
-					document.getElementById('notificationsEntryPoint'),
-					{
-						checkInterval: 200,
-						maxActivationDistance: 20,
-						onActivate: WallNotifications.openNotifications,
-						onDeactivate: WallNotifications.closeDropdown,
-						activateOnClick: false
-					}
-				);
-			} else {
-				WallNotifications.$notificationsEntryPoint.on('click', WallNotifications.toggleNotifications);
-			}
-
 		});
 	}
 );

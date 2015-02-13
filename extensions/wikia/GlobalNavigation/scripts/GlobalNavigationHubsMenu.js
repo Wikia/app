@@ -1,6 +1,9 @@
 require(
-['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload', 'wikia.menuaim', 'wikia.browserDetect'],
-function ($, w, GlobalNavLazyLoad, menuAim, browserDetect) {
+[
+	'jquery', 'wikia.window', 'wikia.globalnavigation.lazyload',
+	'wikia.menuaim', 'wikia.browserDetect', 'wikia.delayedhover'
+],
+function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover) {
 	'use strict';
 
 	var $entryPoint = $('#hubsEntryPoint'),
@@ -68,8 +71,6 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect) {
 			$verticals.addClass('backface-off');
 		}
 
-		w.transparentOut.bindClick(closeMenu);
-
 		//Menu-aim should be attached for both touch and not touch screens.
 		//It handles opening and closing submenu on click
 		menuAim.attach(
@@ -82,19 +83,17 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect) {
 			}
 		);
 
-		if (!browserDetect.isTouchScreen()) {
-			w.delayedHover(
-				$entryPoint.get(0), {
-					checkInterval: 100,
-					maxActivationDistance: 20,
-					onActivate: openMenu,
-					onDeactivate: closeMenu,
-					activateOnClick: false
-				}
-			);
+		delayedHover.attach(
+			$entryPoint.get(0), {
+				checkInterval: 100,
+				maxActivationDistance: 20,
+				onActivate: openMenu,
+				onDeactivate: closeMenu,
+				activateOnClick: false
+			}
+		);
 
-		} else {
-			$entryPoint.click(openMenu);
-		}
+		$entryPoint.click(openMenu);
+		w.transparentOut.bindClick(closeMenu);
 	});
 });

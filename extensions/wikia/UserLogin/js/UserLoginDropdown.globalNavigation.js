@@ -3,10 +3,11 @@ require([
 	'jquery',
 	'GlobalNavigationiOSScrollFix',
 	'wikia.window',
-	'wikia.browserDetect'
-], function ($, scrollFix, win, browserDetect) {
+	'wikia.browserDetect',
+	'wikia.delayedhover'
+], function ($, scrollFix, win, browserDetect, delayedHover) {
 	'use strict';
-	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
+	var $entryPoint, loginAjaxForm = false;
 
 	/**
 	 * Open user login dropdown by adding active class
@@ -43,13 +44,15 @@ require([
 	 */
 	function closeMenuIfNotFocused() {
 		var id = document.activeElement.id;
+
 		if (!(id === 'usernameInput' || id === 'passwordInput')) {
 			closeMenu();
 		}
 	}
 
 	$(function () {
-		var $globalNav = $('#globalNavigation');
+		var $globalNav = $('#globalNavigation'),
+			$userLoginDropdown = $('#UserLoginDropdown');
 
 		win.transparentOut.bindClick(closeMenu);
 
@@ -71,7 +74,16 @@ require([
 
 		});
 
-		$userLoginDropdown = $('#UserLoginDropdown');
+		delayedHover.attach(
+			$entryPoint.get(0),
+			{
+				checkInterval: 100,
+				maxActivationDistance: 20,
+				onActivate: openMenu,
+				onDeactivate: ($userLoginDropdown.length ? closeMenuIfNotFocused : closeMenu),
+				activateOnClick: false
+			}
+		);
 
 		if (browserDetect.isIOS7orLower()) {
 			$userLoginDropdown
@@ -81,19 +93,6 @@ require([
 				.on('blur', '#usernameInput, #passwordInput', function () {
 					scrollFix.restoreScrollY($globalNav);
 				});
-		}
-
-		if (!browserDetect.isTouchScreen()) {
-			win.delayedHover(
-				$entryPoint.get(0),
-				{
-					checkInterval: 100,
-					maxActivationDistance: 20,
-					onActivate: openMenu,
-					onDeactivate: ($userLoginDropdown.length ? closeMenuIfNotFocused : closeMenu),
-					activateOnClick: false
-				}
-			);
 		}
 	});
 });
