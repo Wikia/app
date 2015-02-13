@@ -118,6 +118,21 @@ class WikiaPhotoGallery extends ImageGallery {
 			'hideoverflow' => false,
 			'sliderbar' => array('bottom','left')
 		);
+
+		$this->mAvalaibleUniqueParams = array_values(
+			array_unique(
+				array_reduce(
+					array_filter(
+						array_values( $this->mAvalaibleGalleryParams ),
+						function ($var) {
+							return !empty($var);
+						}
+					),
+					array_merge,
+					[]
+				)
+			)
+		);
 	}
 
 	/**
@@ -394,6 +409,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			// search for caption and link= param
 			$captionParts = array();
 			$link = $linktext = $shorttext = '';
+
 			foreach ($parts as $part) {
 				if (substr($part, 0, 5) == 'link=') {
 					$link = substr($part, 5);
@@ -402,13 +418,17 @@ class WikiaPhotoGallery extends ImageGallery {
 				} else if (substr($part, 0, 10) == 'shorttext=') {
 					$shorttext = substr($part, 10);
 				} else {
-					$captionParts[] = trim($part);
+					$tempPart = trim($part);
+
+					//If it looks like Gallery param don't treat it as a caption part
+					if (!in_array($tempPart, $this->mAvalaibleUniqueParams)) {
+						$captionParts[] = $tempPart;
+					}
 				}
 			}
 
 			// support captions with internal links with pipe (Foo.jpg|link=Bar|[[test|link]])
 			$caption = implode('|', $captionParts);
-
 			$imageItem = array(
 				'name' => $imageName,
 				'caption' => $caption,
