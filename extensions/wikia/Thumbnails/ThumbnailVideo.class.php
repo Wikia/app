@@ -160,12 +160,6 @@ class ThumbnailVideo extends ThumbnailImage {
 			$linkAttribs['id'] = $options['id'];
 		}
 
-		if ( $useRDFData ) { // bugId: #46621
-			$linkAttribs['itemprop'] = 'video';
-			$linkAttribs['itemscope'] = '';
-			$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';
-		}
-
 		// let extension override any link attributes
 		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
 			$linkAttribs = array_merge( $linkAttribs, $options['linkAttribs'] );
@@ -190,11 +184,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			'data-video-key' => htmlspecialchars( urlencode( $videoTitle->getDBKey() ) ),
 		);
 
-		if ( $useRDFData ) {
-			$attribs['itemprop'] = 'thumbnail';
-		}
-
-        // lazy loading
+		// lazy loading
 		if ( !empty( $options['usePreloading'] ) ) {
 			$attribs['data-src'] = $this->url;
 		}
@@ -225,13 +215,6 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		if ( isset( $options['duration'] ) && $options['duration'] == true ) {
 			$duration = WikiaFileHelper::formatDuration( $this->file->getMetadataDuration() );
-		}
-
-		if ( !empty( $duration ) ) {
-			$timerProp = array( 'class'=>'timer' );
-			if ( $useRDFData ) {
-				$timerProp['itemprop'] = 'duration';
-			}
 		}
 
 		// WikiaMobile completely reconstructs the html
