@@ -147,7 +147,7 @@ class PBLoginForm extends LoginForm {
 			$cUserId = User::idFromName( $this->mUsername );
 
 			if ( $wgUser->getID() != $cUserId ) {
-				$this->mainLoginForm( wfMessage( 'piggyback-wronguser' )->escaped() );
+				$this->mainLoginForm( wfMessage( 'piggyback-wronguser', $this->mUsername )->escaped() );
 				return;
 			}
 
