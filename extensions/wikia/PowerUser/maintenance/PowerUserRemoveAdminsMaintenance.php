@@ -14,7 +14,6 @@
 require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
 use Wikia\PowerUser\PowerUser;
-use Wikia\Logger\WikiaLogger;
 
 class PowerUserRemoveAdminsMaintenance extends Maintenance {
 	/**
@@ -26,12 +25,7 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 
 		foreach ( $aFormerAdminsIds as $iFormerAdminId ) {
 			$oPowerUser = new PowerUser( User::newFromId( $iFormerAdminId ) );
-			if ( $oPowerUser->removePowerUserProperty( PowerUser::TYPE_ADMIN ) ) {
-				WikiaLogger::instance()->info( PowerUser::LOG_MESSAGE, [
-					'type' => PowerUser::TYPE_ADMIN,
-					'action' => 'remove',
-				]);
-			}
+			$oPowerUser->removePowerUserProperty( PowerUser::TYPE_ADMIN );
 		}
 	}
 

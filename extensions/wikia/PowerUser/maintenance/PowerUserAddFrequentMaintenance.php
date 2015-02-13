@@ -14,7 +14,6 @@
 require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
 use Wikia\PowerUser\PowerUser;
-use Wikia\Logger\WikiaLogger;
 
 class PowerUserAddFrequentMaintenance extends Maintenance {
 	const PERIOD_INTERVAL = '-60 days';
@@ -27,12 +26,7 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 		foreach ( $aPotentialPowerUsersIds as $iUserId ) {
 			if ( $this->isNewFrequentPowerUser( $iUserId ) ) {
 				$oPowerUser = new PowerUser( User::newFromId( $iUserId ) );
-				if ( $oPowerUser->addPowerUserProperty( PowerUser::TYPE_FREQUENT ) ) {
-					WikiaLogger::instance()->info( PowerUser::LOG_MESSAGE, [
-						'type' => PowerUser::TYPE_FREQUENT,
-						'action' => 'add',
-					]);
-				}
+				$oPowerUser->addPowerUserProperty( PowerUser::TYPE_FREQUENT );
 			}
 		}
 	}

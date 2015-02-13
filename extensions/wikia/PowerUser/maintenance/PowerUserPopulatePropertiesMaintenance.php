@@ -1,0 +1,80 @@
+<?php
+/**
+ * Maintenance script for populating user_properties tables
+ * with initial data on power users.
+ *
+ * @package MediaWiki
+ * @addtopackage maintenance
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ *
+ *
+ */
+
+require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
+
+use Wikia\PowerUser\PowerUser;
+
+class PowerUserPopulatePropertiesMaintenance extends Maintenance {
+
+	private
+		$iPowerUsersLifetimeCounter = 0,
+		$iPowerUsersAdminCounter = 0;
+	/**
+	 * Do the actual work. All child classes will need to implement this
+	 */
+	public function execute() {
+		print 'Populating with PowerUsers for lifetime edits... \n';
+		$this->populatePowerUsersLifetime();
+		print 'Populating with PowerUsers for admin rights... \n';
+		$this->populatePowerUsersAdmin();
+	}
+
+	private function populatePowerUsersLifetime() {
+		global $wgExternalSharedDB;
+		$oDB = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+		$aPowerUsersLifetimeIds = ( new WikiaSQL() )
+			->SELECT( 'user_id' )
+			->FROM( 'user' )
+			->WHERE( 'user_editcount' )->GREATER_THAN_OR_EQUAL( PowerUser::MIN_LIFETIME_EDITS )
+			->runLoop( $oDB, function( &$aPowerUsersLifetimeIds, $oRow ) {
+				$aPowerUsersLifetimeIds[] = $oRow->user_id;
+			});
+
+		foreach ( $aPowerUsersLifetimeIds as $iUserId ) {
+			$oPowerUser = new PowerUser( User::newFromId( $iUserId ) );
+			if ( $oPowerUser->addPowerUserProperty( PowerUser::TYPE_LIFETIME ) ) {
+				$this->iPowerUsersLifetimeCounter++;
+			}
+		}
+
+		print "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersLifetimeCounter}\n";
+	}
+
+	private function populatePowerUsersAdmin() {
+		global $wgSpecialsDB;
+		$oDB = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
+
+		$aPowerUsersAdminIds = ( new WikiaSQL() )
+			->SELECT( 'user_id' )
+			->FROM( 'events_local_users' )
+			->WHERE( 'all_groups' )->LIKE( 'sysop' )
+			->GROUP_BY( 'user_id' )
+			->runLoop( $oDB, function( &$aPowerUsersAdminIds, $oRow ) {
+				$aPowerUsersAdminIds[] = $oRow->user_id;
+			});
+
+		foreach ( $aPowerUsersAdminIds as $iUserId ) {
+			$oPowerUser = new PowerUser( User::newFromId( $iUserId ) );
+			if ( $oPowerUser->addPowerUserProperty( PowerUser::TYPE_ADMIN ) ) {
+				$this->iPowerUsersAdminCounter++;
+			}
+		}
+
+		print "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersAdminCounter}\n";
+	}
+}
+
+$maintClass = "PowerUserAddFrequentMaintenance";
+require_once( RUN_MAINTENANCE_IF_MAIN );
