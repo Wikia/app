@@ -46,7 +46,7 @@
 	 * @returns {jQuery} Returns a jQuery promise
 	 * @see https://developers.facebook.com/docs/javascript/quickstart/v2.2
 	 */
-	$.loadFacebookAPI = function (callback) {
+	$.loadFacebookSDK = function (callback) {
 		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred(),
 			url = window.fbScript || '//connect.facebook.net/en_US/sdk.js';

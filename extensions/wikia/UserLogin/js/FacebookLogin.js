@@ -61,7 +61,7 @@
 				self.bindEvents();
 
 				// load when the login dropdown is shown or specific page is loaded
-				$.loadFacebookAPI();
+				$.loadFacebookSDK();
 
 				self.log('init');
 				self.bucky.timer.stop('init');
