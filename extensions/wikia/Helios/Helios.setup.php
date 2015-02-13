@@ -15,6 +15,7 @@ $wgExtensionCredits['other'][] = [
 $wgAutoloadClasses["Wikia\\Helios\\User"]   = __DIR__ . "/User.class.php";
 $wgAutoloadClasses["Wikia\\Helios\\Client"] = __DIR__ . "/Client.class.php";
 $wgAutoloadClasses["Wikia\\Helios\\SampleController"] = __DIR__ . "/SampleController.class.php";
+$wgAutoloadClasses["Wikia\\Helios\\HelperController"] = __DIR__ . "/HelperController.class.php";
 
 /**
  * Internationalisation.
