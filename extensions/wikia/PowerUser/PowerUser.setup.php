@@ -15,7 +15,7 @@
 $wgExtensionCredits['other'][] = array(
 	'path'              => __FILE__,
 	'name'              => 'PowerUser',
-	'descriptionmsg'    => 'poweruser-description',
+	'descriptionmsg'    => 'poweruser-ext-description',
 	'version'           => '1.0',
 	'author'            => [
 		'Adam Karminski <adamk@wikia-inc.com>'
