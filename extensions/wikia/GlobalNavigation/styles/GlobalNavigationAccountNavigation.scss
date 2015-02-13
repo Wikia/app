@@ -12,7 +12,7 @@
 .AccountNavigation {
 	cursor: pointer;
 	height: $global-navigation-height;
-	padding: 0 20px;
+	padding: 0 21px;
 	margin: 0;
 
 	&.active {
@@ -32,21 +32,21 @@
 
 			.chevron {
 				@include global-nav-chevron;
-				left: 45px;
-				margin-left: 2px;
-				margin-top: 15px;
+				left: 50px;
+				margin-left: 3px;
+				margin-top: 13px;
 				position: absolute;
 			}
 
 			&.anon .chevron {
+				left: 45px;
+				margin-left: 3px;
 				position: static;
 			}
 		}
 
 		.avatar-container {
-			height: $avatar-size;
 			overflow: hidden;
-			width: 20px;
 
 			&.anon-avatar-placeholder,
 			&.logged-avatar-placeholder {
@@ -55,11 +55,18 @@
 				background-repeat: no-repeat;
 			}
 
+			&.anon-avatar-placeholder {
+				height: 16px;
+				width: 18px;
+			}
+
 			&.logged-avatar,
 			&.logged-avatar-placeholder {
+				border: rgb(199, 209, 216) 1px solid;
+				height: 30px;
 				border-radius: 50%;
-				margin-left: 6px;
-				margin-right: 6px;
+				margin: 0;
+				width: 30px;
 			}
 		}
 	}
@@ -84,7 +91,7 @@
 		padding: 0;
 		position: absolute;
 		right: 0;
-		top: 100%;
+		top: 96%;
 		white-space: normal;
 
 		> li {
