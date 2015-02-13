@@ -43,8 +43,9 @@
 	max-height: 480px;
 }
 
-#ve-ui-mwSaveDialog-captcha #recaptcha_area {
+#ve-ui-mwSaveDialog-captcha > div {
 	margin: 5px auto 0 auto;
+	width: 50%;
 }
 
 .oo-ui-dialog .oo-ui-window-frame.ve-ui-noAnimation {
