@@ -2,8 +2,8 @@
 	<div class="hub-menu-section <?= $sections['specialAttr'] ?>-links active">
 		<div class="hub-menu-columns">
 			<? foreach( $sections['children'] as $category ): ?>
+				<strong><?= $category['text'] ?></strong>
 				<ul>
-					<strong><?= $category['text'] ?></strong>
 					<? foreach( $category['children'] as $node ): ?>
 						<li>
 							<a href="<?= $node['href'] ?>"><?= $node['text'] ?></a>

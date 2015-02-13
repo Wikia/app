@@ -157,6 +157,7 @@ $more-z-index: 10000;
 		.icon {
 			background-position: center center;
 			background-repeat: no-repeat;
+			background-size: 40px;
 			display: inline-block;
 			float: left;
 			height: 50px;
@@ -193,7 +194,7 @@ $more-z-index: 10000;
 		line-height: 17px;
 		min-height: 409px;
 		padding-bottom: 60px;
-		padding-left: 22px;
+		padding-left: 20px;
 		padding-right: 20px;
 		position: relative;
 		width: 464px;
@@ -201,7 +202,6 @@ $more-z-index: 10000;
 		.hub-menu-columns {
 			@include column-count(2);
 			@include column-gap(40px);
-			margin-top: -11px;
 		}
 
 		&.active {
@@ -210,7 +210,7 @@ $more-z-index: 10000;
 
 		ul {
 			display: inline-block;
-			padding-top: 20px;
+			margin-bottom: 30px;
 			width: 100%;
 		}
 
@@ -220,14 +220,14 @@ $more-z-index: 10000;
 			font-weight: bold;
 			line-height: 17px;
 			margin: 0;
-			padding: 10px 0;
+			padding: 20px 0 10px 0;
 			text-transform: uppercase;
 		}
 
 		a {
 			color: rgb(57, 66, 77);
 			display: block;
-			padding: 8px 7px;
+			padding: 8px 0 7px;
 
 			&:hover {
 				color: rgb(26, 94, 184);
