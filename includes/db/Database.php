@@ -3529,15 +3529,20 @@ abstract class DatabaseBase implements DatabaseType {
 	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
 		global $wgDBcluster;
 
-		if ( is_bool( $ret ) ) {
-			return;
+		if ( $ret instanceof ResultWrapper ) {
+			$num_rows = $ret->numRows();
+		} elseif ( is_resource( $ret ) ) {
+			$num_rows = mysql_num_rows( $ret );
+		} else {
+			// INSERT, UPDATE, DELETE, DROP queries do not report num_rows
+			$num_rows = false;
 		}
 
 		if ($this->getSampler()->shouldSample()) {
 			$this->getWikiaLogger()->info( "SQL $sql", [
 				'method'      => $fname,
 				'elapsed'     => $elapsedTime,
-				'num_rows'    => ( $ret instanceof ResultWrapper ? $ret->numRows() : mysql_num_rows( $ret ) ),
+				'num_rows'    => $num_rows,
 				'cluster'     => $wgDBcluster,
 				'server'      => $this->mServer,
 				'server_role' => $isMaster ? 'master' : 'slave',
