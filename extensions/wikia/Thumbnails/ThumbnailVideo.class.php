@@ -149,15 +149,20 @@ class ThumbnailVideo extends ThumbnailImage {
 			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
-
 		$videoTitle = $this->file->getTitle();
-
+		$useRDFData = ( !empty( $options['disableRDF'] ) && $options['disableRDF'] == true ) ? false : true;
 		$linkAttribs = array(
 			'href' => $videoTitle->getLocalURL(),
 		);
 
 		if ( !empty( $options['id'] ) ) {
 			$linkAttribs['id'] = $options['id'];
+		}
+
+		if ( $useRDFData ) { // bugId: #46621
+			$linkAttribs['itemprop'] = 'video';
+			$linkAttribs['itemscope'] = '';
+			$linkAttribs['itemtype'] = 'http://schema.org/VideoObject';
 		}
 
 		// let extension override any link attributes
@@ -183,6 +188,10 @@ class ThumbnailVideo extends ThumbnailImage {
 			'data-video-name' => htmlspecialchars( $videoTitle->getText() ),
 			'data-video-key' => htmlspecialchars( urlencode( $videoTitle->getDBKey() ) ),
 		);
+
+		if ( $useRDFData ) {
+			$attribs['itemprop'] = 'thumbnail';
+		}
 
 		// lazy loading
 		if ( !empty( $options['usePreloading'] ) ) {
@@ -215,6 +224,13 @@ class ThumbnailVideo extends ThumbnailImage {
 
 		if ( isset( $options['duration'] ) && $options['duration'] == true ) {
 			$duration = WikiaFileHelper::formatDuration( $this->file->getMetadataDuration() );
+		}
+
+		if ( !empty( $duration ) ) {
+			$timerProp = array( 'class'=>'timer' );
+			if ( $useRDFData ) {
+				$timerProp['itemprop'] = 'duration';
+			}
 		}
 
 		// WikiaMobile completely reconstructs the html
