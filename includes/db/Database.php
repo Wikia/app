@@ -3522,14 +3522,14 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * @param string $sql the query
 	 * @param ResultWrapper|resource $ret database results
-	 * @param string $fname the function name
+	 * @param string $fname the name of the function that made this query
 	 * @param bool $isMaster is this against the master
 	 * @return void
 	 */
 	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
 		global $wgDBcluster;
 
-		if ( $ret === false ) {
+		if ( is_bool( $ret ) ) {
 			return;
 		}
 
