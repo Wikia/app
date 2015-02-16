@@ -43,8 +43,10 @@ class HelperController extends \WikiaController
 	{
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( 'success', false );
 
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -52,7 +54,7 @@ class HelperController extends \WikiaController
 
 		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
 			$oSpoofUser = new \SpoofUser( $sName );
-			$oSpoofUser->record();
+			return $this->response->setVal( 'success', $oSpoofUser->record() );
 		}
 	}
 
