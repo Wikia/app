@@ -11,6 +11,8 @@
 
 namespace Wikia\PowerUser;
 
+use Wikia\Logger\Loggable;
+
 class PowerUser {
 	use Loggable;
 
