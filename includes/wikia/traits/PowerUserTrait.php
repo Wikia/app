@@ -34,11 +34,7 @@ trait PowerUserTrait {
 	 * @return bool
 	 */
 	public function isSpecificPowerUser( $sProperty ) {
-		if ( in_array( $sProperty, PowerUser::$aPowerUserProperties ) &&
-			$this->getBoolOption( $sProperty )
-		) {
-			return true;
-		}
-		return false;
+		return in_array( $sProperty, PowerUser::$aPowerUserProperties ) &&
+			$this->getBoolOption( $sProperty );
 	}
 }
