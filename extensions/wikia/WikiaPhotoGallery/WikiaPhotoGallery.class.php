@@ -53,7 +53,12 @@ class WikiaPhotoGallery extends ImageGallery {
 	/**
 	 * Array of supported (and default) values of parameters
 	 */
-	private $mAvalaibleGalleryParams = array();
+	private $mAvailableGalleryParams = [];
+
+	/**
+	 * Array of all available values of parameters
+	 */
+	private $mAvailableUniqueParams = [];
 
 	/**
 	 * Is slideshow / gallery using "crop" attribute
@@ -103,7 +108,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// list of supported gallery parameters with list of valid values
 		// default are the first values, false for params with no defined list of values (colors, etc)
-		$this->mAvalaibleGalleryParams = array(
+		$this->mAvailableGalleryParams = array(
 			'bordercolor' => false,
 			'bordersize' => array('small', 'medium', 'large', 'none'),
 			'captionalign' => array('left', 'center', 'right'),
@@ -119,11 +124,11 @@ class WikiaPhotoGallery extends ImageGallery {
 			'sliderbar' => array('bottom','left')
 		);
 
-		$this->mAvalaibleUniqueParams = array_values(
+		$this->mAvailableUniqueParams = array_values(
 			array_unique(
 				array_reduce(
 					array_filter(
-						array_values( $this->mAvalaibleGalleryParams ),
+						array_values( $this->mAvailableGalleryParams ),
 						function ($var) {
 							return !empty($var);
 						}
@@ -185,7 +190,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		wfProfileIn(__METHOD__);
 		$defaults = array();
 
-		foreach ($this->mAvalaibleGalleryParams as $paramName => $paramValues) {
+		foreach ($this->mAvailableGalleryParams as $paramName => $paramValues) {
 			if (is_array($paramValues)) {
 				$defaults[$paramName] = $paramValues[0];
 			}
@@ -291,7 +296,7 @@ class WikiaPhotoGallery extends ImageGallery {
 			}
 
 			// loop through list of supported gallery parameters and use default value if none is set
-			foreach ($this->mAvalaibleGalleryParams as $paramName => $values) {
+			foreach ($this->mAvailableGalleryParams as $paramName => $values) {
 				if (!empty($values)) {
 					if (isset($params[$paramName])) {
 						// parameter is set, but wrong value is used - get default one
@@ -421,7 +426,7 @@ class WikiaPhotoGallery extends ImageGallery {
 					$tempPart = trim($part);
 
 					//If it looks like Gallery param don't treat it as a caption part
-					if (!in_array($tempPart, $this->mAvalaibleUniqueParams)) {
+					if (!in_array($tempPart, $this->mAvailableUniqueParams)) {
 						$captionParts[] = $tempPart;
 					}
 				}
