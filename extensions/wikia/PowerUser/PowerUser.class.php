@@ -60,7 +60,7 @@ class PowerUser {
 	/**
 	 * Adds a given PowerUser property to a user
 	 *
-	 * @param $sProperty string One of the types in consts
+	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
 	public function addPowerUserProperty( $sProperty ) {
@@ -70,7 +70,7 @@ class PowerUser {
 			$this->logSuccess( $sProperty, self::ACTION_ADD, $this->oUser->getId() );
 			return true;
 		} else {
-			$this->logError($sProperty, self::ACTION_ADD, $this->oUser->getId());
+			$this->logError( $sProperty, self::ACTION_ADD, $this->oUser->getId() );
 			return false;
 		}
 	}
@@ -78,19 +78,19 @@ class PowerUser {
 	/**
 	 * Removes a given PowerUser property from a user
 	 *
-	 * @param $sProperty string One of the types in consts
+	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
 	public function removePowerUserProperty( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) &&
 			$this->oUser->getBoolOption( $sProperty ) === true
 		) {
-			$this->oUser->setOption( $sProperty, NULL );
+			$this->oUser->setOption( $sProperty, null );
 			$this->oUser->saveSettings();
 			$this->logSuccess( $sProperty, self::ACTION_REMOVE, $this->oUser->getId() );
 			return true;
 		} else {
-			$this->logError($sProperty, self::ACTION_REMOVE, $this->oUser->getId());
+			$this->logError( $sProperty, self::ACTION_REMOVE, $this->oUser->getId() );
 			return false;
 		}
 	}
@@ -98,30 +98,30 @@ class PowerUser {
 	/**
 	 * Logs a successful action
 	 *
-	 * @param $sType string One of the types in consts
-	 * @param $sAction string One of the actions in consts
-	 * @param $iUserId int A user's ID
+	 * @param string $sType One of the types in consts
+	 * @param string $sAction One of the actions in consts
+	 * @param int $iUserId A user's ID
 	 */
 	private function logSuccess( $sType, $sAction, $iUserId ) {
 		WikiaLogger::instance()->info( self::LOG_MESSAGE, [
 			'type' => $sType,
 			'action' => $sAction,
 			'user_id' => $iUserId,
-		]);
+		] );
 	}
 
 	/**
 	 * Logs a failed action
 	 *
-	 * @param $sType string One of the types in consts
-	 * @param $sAction string One of the actions in consts
-	 * @param $iUserId int A user's ID
+	 * @param string $sType One of the types in consts
+	 * @param string $sAction One of the actions in consts
+	 * @param int $iUserId A user's ID
 	 */
 	private function logError( $sType, $sAction, $iUserId ) {
 		WikiaLogger::instance()->error( self::LOG_MESSAGE, [
 			'type' => $sType,
 			'action' => $sAction,
 			'user_id' => $iUserId,
-		]);
+		] );
 	}
 }

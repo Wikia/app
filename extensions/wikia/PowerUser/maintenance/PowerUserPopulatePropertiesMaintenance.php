@@ -11,7 +11,7 @@
  *
  */
 
-require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 use Wikia\PowerUser\PowerUser;
 
@@ -27,9 +27,9 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 	 * 2. Populate the table with PowerUser properties of an admin type
 	 */
 	public function execute() {
-		print 'Populating with PowerUsers for lifetime edits... \n';
+		$this->output( "Populating with PowerUsers for lifetime edits... \n" );
 		$this->populatePowerUsersLifetime();
-		print 'Populating with PowerUsers for admin rights... \n';
+		$this->output( "Populating with PowerUsers for admin rights... \n" );
 		$this->populatePowerUsersAdmin();
 	}
 
@@ -43,7 +43,7 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 			->WHERE( 'user_editcount' )->GREATER_THAN_OR_EQUAL( PowerUser::MIN_LIFETIME_EDITS )
 			->runLoop( $oDB, function( &$aPowerUsersLifetimeIds, $oRow ) {
 				$aPowerUsersLifetimeIds[] = $oRow->user_id;
-			});
+			} );
 
 		foreach ( $aPowerUsersLifetimeIds as $iUserId ) {
 			$oPowerUser = new PowerUser( User::newFromId( $iUserId ) );
@@ -52,7 +52,7 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 			}
 		}
 
-		print "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersLifetimeCounter}\n";
+		$this->output( "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersLifetimeCounter}\n" );
 	}
 
 	private function populatePowerUsersAdmin() {
@@ -66,7 +66,7 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 			->GROUP_BY( 'user_id' )
 			->runLoop( $oDB, function( &$aPowerUsersAdminIds, $oRow ) {
 				$aPowerUsersAdminIds[] = $oRow->user_id;
-			});
+			} );
 
 		foreach ( $aPowerUsersAdminIds as $iUserId ) {
 			$oPowerUser = new PowerUser( User::newFromId( $iUserId ) );
@@ -75,9 +75,9 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 			}
 		}
 
-		print "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersAdminCounter}\n";
+		$this->output( "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersAdminCounter}\n" );
 	}
 }
 
-$maintClass = "PowerUserPopulatePropertiesMaintenance";
+$maintClass = 'PowerUserPopulatePropertiesMaintenance';
 require_once( RUN_MAINTENANCE_IF_MAIN );

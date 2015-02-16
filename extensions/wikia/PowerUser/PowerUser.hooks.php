@@ -24,7 +24,7 @@ class PowerUserHooks {
 	 * @param $oArticle
 	 * @param $oRevision
 	 * @param $iBaseRevId
-	 * @param User $oUser
+	 * @param \User $oUser
 	 * @return bool
 	 */
 	public function onNewRevisionFromEditComplete( $oArticle, $oRevision, $iBaseRevId, \User $oUser ) {
@@ -43,8 +43,8 @@ class PowerUserHooks {
 	/**
 	 * Gives a user a PowerUser property of an admin type.
 	 *
-	 * @param User $oUser
-	 * @param $sGroup string One of the groups from PowerUser.class.php
+	 * @param \User $oUser
+	 * @param string $sGroup One of the groups from PowerUser.class.php
 	 * @return bool
 	 */
 	public function onUserAddGroup( \User $oUser, $sGroup ) {

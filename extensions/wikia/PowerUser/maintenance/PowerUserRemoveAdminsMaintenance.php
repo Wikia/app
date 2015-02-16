@@ -11,7 +11,7 @@
  *
  */
 
-require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 use Wikia\PowerUser\PowerUser;
 
@@ -50,7 +50,7 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 			->AND_( 'up_value' )->EQUAL_TO( '1' )
 			->runLoop( $oDB, function( &$aAdminsIds, $oRow ) {
 				$aAdminsIds[] = intval( $oRow->up_user );
-			});
+			} );
 
 		return $aAdminsIds;
 	}
@@ -58,7 +58,7 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 	/**
 	 * Check the PUs IDs against specials/events_local_users
 	 *
-	 * @param $aAdminsIds Array An array of PUs IDs
+	 * @param Array $aAdminsIds An array of PUs IDs
 	 * @return Array An array of former admins IDs for the property removal
 	 */
 	private function getFormerAdmins( $aAdminsIds ) {
@@ -82,7 +82,7 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 					) {
 						$iFormerAdminId = intval( $oRow->user_id );
 					}
-				});
+				} );
 
 			if ( intval( $iFormerAdminId ) > 0 ) $aFormerAdminsIds[] = $iFormerAdminId;
 		}
@@ -91,5 +91,5 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 	}
 }
 
-$maintClass = "PowerUserRemoveAdminsMaintenance";
+$maintClass = 'PowerUserRemoveAdminsMaintenance';
 require_once( RUN_MAINTENANCE_IF_MAIN );

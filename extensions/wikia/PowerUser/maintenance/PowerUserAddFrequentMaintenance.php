@@ -11,7 +11,7 @@
  *
  */
 
-require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 use Wikia\PowerUser\PowerUser;
 
@@ -56,12 +56,11 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 			->SELECT( 'user_id' )
 			->FROM( 'user' )
 			->WHERE( 'user_editcount' )->GREATER_THAN_OR_EQUAL( PowerUser::MIN_FREQUENT_EDITS )
-			->AND_( null )
-				->NOT_EXISTS( $oSubQuery )
+			->AND_( null )->NOT_EXISTS( $oSubQuery )
 			->ORDER_BY( [ 'user_id', 'DESC' ] )
 			->runLoop( $oDB, function( &$aPotentialPowerUsersIds, $oRow ) {
 				$aPotentialPowerUsersIds[] = $oRow->user_id;
-			});
+			} );
 
 		return $aPotentialPowerUsersIds;
 	}
@@ -70,7 +69,7 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 	 * Checks if a user has made a minimum of edits
 	 * in a specified period.
 	 *
-	 * @param $iUserId int A user's ID
+	 * @param int $iUserId A user's ID
 	 * @return bool
 	 * @throws Exception
 	 *
@@ -98,5 +97,5 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 	}
 }
 
-$maintClass = "PowerUserAddFrequentMaintenance";
+$maintClass = 'PowerUserAddFrequentMaintenance';
 require_once( RUN_MAINTENANCE_IF_MAIN );
