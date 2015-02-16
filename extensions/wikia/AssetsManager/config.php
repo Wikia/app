@@ -2282,3 +2282,12 @@ $config['facebook_client_preferences_scss'] = [
 		'//extensions/wikia/FacebookClient/styles/preferences.scss',
 	]
 ];
+
+$config['banner_notifications_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['monobook'],
+	'assets' => [
+		'//extensions/wikia/BannerNotifications/css/BannerNotifications.scss',
+		'//extensions/wikia/BannerNotifications/css/BannerNotifications.monobook.scss',
+	]
+];

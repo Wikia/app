@@ -415,4 +415,24 @@ class BannerNotificationsController extends WikiaController {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
+
+	/**
+	 * Adds assets for BannerNotifications on the bottom of the body on Monobook
+	 *
+	 * @param {String} $skin
+	 * @param {String} $text
+	 *
+	 * @return bool
+	 */
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+
+		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
+			$styles = AssetsManager::getInstance()->getURL( 'banner_notifications_scss' );
+
+			foreach ( $styles as $style ) {
+				$text .= Html::linkedStyle( $style );
+			}
+		}
+		return true;
+	}
 }

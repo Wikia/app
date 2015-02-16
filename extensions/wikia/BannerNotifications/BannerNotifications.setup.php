@@ -27,6 +27,7 @@ $wgHooks['ArticleUndelete'][] = 'BannerNotificationsController::addPageUndeleted
 $wgHooks['SpecialMovepageAfterMove'][] = 'BannerNotificationsController::addPageMovedConfirmation';
 $wgHooks['SpecialPreferencesOnRender'][] = 'BannerNotificationsController::addPreferencesConfirmation';
 $wgHooks['UserLogoutComplete'][] = 'BannerNotificationsController::addLogOutConfirmation';
+$wgHooks['SkinAfterBottomScripts'][] = 'BannerNotificationsController::onSkinAfterBottomScripts';
 
 // notifications
 $wgHooks['AchievementsNotification'][] = 'BannerNotificationsController::addBadgeNotification';

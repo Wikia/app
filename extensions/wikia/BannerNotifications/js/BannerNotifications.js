@@ -52,9 +52,11 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 * Called once to instantiate this feature
 	 */
 	function init() {
+		var pageContainerSelector =
+			window.skin === 'monobook' ? '#content' : '.WikiaPageContentWrapper';
 		setUpClose();
 
-		pageContainer = $('.WikiaPageContentWrapper')[0];
+		pageContainer = $(pageContainerSelector)[0];
 		wikiaHeader = $('#globalNavigation');
 		headerHeight = wikiaHeader.height();
 	}
@@ -93,6 +95,19 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 				hide(id);
 			}, timeout);
 		}
+	}
+
+	/**
+	 * Shows the notification after hiding all the existing ones
+	 * @param {string} id - unique id used for DOM markup of the notification
+	 * @param {string} content - message to be displayed
+	 * @param {string} type - See BannerNotifications.options for supported types
+	 * @param {jQuery} [$element] Element to prepend notification to
+	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
+	 */
+	function showOnly(id, content, type, $element, timeout) {
+		hideAll();
+		show.apply(null, arguments);
 	}
 
 	/**
@@ -144,6 +159,11 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
+	/**
+	 * Validates if id and content of a notification are correct
+	 * @param {String} id
+	 * @param {String} content
+	 */
 	function validate(id, content) {
 		if (!id || document.getElementById(id)) {
 			throw new Error('Either empty or already existing notification ID supplied');
@@ -152,6 +172,10 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
+	/**
+	 * Hides all displayed notifications
+	 * @param {Function} callback
+	 */
 	function hideAll (callback) {
 		removeFromDOM($('.global-notification'), callback);
 	}
@@ -200,6 +224,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		init: init,
 		onScroll: onScroll,
 		show: show,
+		showOnly: showOnly,
 		hide: hide,
 		hideAll: hideAll,
 		isModal: isModalShown,
