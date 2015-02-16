@@ -3500,14 +3500,14 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $fname the function name
 	 * @param bool $isMaster is this against the master
 	 *
-	 * @return ResultWrapper see doQuery
+	 * @return ResultWrapper|resource|bool see doQuery
 	 */
 	protected function executeAndProfileQuery( $sql, $fname, $isMaster ) {
 		$queryId = MWDebug::query( $sql, $fname, $isMaster );
 		$start = microtime(true);
 
 		// Wikia change: DatabaseMysql returns a resource instead of ResultWrapper instance
-		/* @var $ret resource */
+		/* @var $ret resource|bool */
 		$ret = $this->doQuery( $sql );
 
 		$this->logSql( $sql, $ret, $fname, microtime(true) - $start, $isMaster );
@@ -3521,7 +3521,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * at the rate defined in self::QUERY_SAMPLE_RATE.
 	 *
 	 * @param string $sql the query
-	 * @param ResultWrapper|resource $ret database results
+	 * @param ResultWrapper|resource|bool $ret database results
 	 * @param string $fname the name of the function that made this query
 	 * @param bool $isMaster is this against the master
 	 * @return void
