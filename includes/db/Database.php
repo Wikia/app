@@ -3534,7 +3534,7 @@ abstract class DatabaseBase implements DatabaseType {
 			$num_rows = $ret->numRows();
 		} elseif ( is_resource( $ret ) ) {
 			// for SELECT queries report how many rows are sent to the client
-			$num_rows = mysql_num_rows($ret);
+			$num_rows = mysql_num_rows( $ret );
 		} elseif ( $ret === true ) {
 			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
 			$num_rows = $this->affectedRows();
