@@ -11,9 +11,9 @@
 
 namespace Wikia\PowerUser;
 
-use Wikia\Logger\WikiaLogger;
-
 class PowerUser {
+	use Loggable;
+
 	/**
 	 * Names of properties used to described PowerUsers
 	 */
@@ -103,7 +103,7 @@ class PowerUser {
 	 * @param int $iUserId A user's ID
 	 */
 	private function logSuccess( $sType, $sAction, $iUserId ) {
-		WikiaLogger::instance()->info( self::LOG_MESSAGE, [
+		$this->info( self::LOG_MESSAGE, [
 			'type' => $sType,
 			'action' => $sAction,
 			'user_id' => $iUserId,
@@ -118,7 +118,7 @@ class PowerUser {
 	 * @param int $iUserId A user's ID
 	 */
 	private function logError( $sType, $sAction, $iUserId ) {
-		WikiaLogger::instance()->error( self::LOG_MESSAGE, [
+		$this->error( self::LOG_MESSAGE, [
 			'type' => $sType,
 			'action' => $sAction,
 			'user_id' => $iUserId,
