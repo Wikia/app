@@ -19,7 +19,11 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 	const PERIOD_INTERVAL = '-60 days';
 
 	/**
-	 * Do the actual work. All child classes will need to implement this
+	 * Workflow:
+	 * 1. Get potential new PowerUsers of a type frequent
+	 *    (min. of edits and a poweruser property set to false)
+	 * 2. Check each one against statsdb/rollup_wiki_user_events
+	 * 3. Add the property to the new frequent PUs
 	 */
 	public function execute() {
 		$aPotentialPowerUsersIds = $this->getPotentialNewFrequentPowerUsers();
@@ -31,6 +35,13 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 		}
 	}
 
+	/**
+	 * Gets an array of IDs of potential new frequebt PowerUsers
+	 * who has made a minimum of frequent edits overall and
+	 * are not PUs yet
+	 *
+	 * @return Array An array of potential PUs IDs
+	 */
 	private function getPotentialNewFrequentPowerUsers() {
 		global $wgExternalSharedDB;
 		$oDB = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
@@ -41,7 +52,7 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 			->WHERE( 'up_property' )->EQUAL_TO( PowerUser::TYPE_FREQUENT )
 			->AND_( 'up_value' )->EQUAL_TO( '1' );
 
-		$aPotentialPowerUsersIds = ( new WikiaSQL() )->cacheGlobal( WikiaResponse::CACHE_STANDARD )
+		$aPotentialPowerUsersIds = ( new WikiaSQL() )
 			->SELECT( 'user_id' )
 			->FROM( 'user' )
 			->WHERE( 'user_editcount' )->GREATER_THAN_OR_EQUAL( PowerUser::MIN_FREQUENT_EDITS )
@@ -55,20 +66,32 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 		return $aPotentialPowerUsersIds;
 	}
 
+	/**
+	 * Checks if a user has made a minimum of edits
+	 * in a specified period.
+	 *
+	 * @param $iUserId int A user's ID
+	 * @return bool
+	 * @throws Exception
+	 *
+	 */
 	private function isNewFrequentPowerUser( $iUserId ) {
 		global $wgDWStatsDB;
-		$oDB = wfGetDB( DB_MASTER, [], $wgDWStatsDB );
+		$oDB = wfGetDB( DB_SLAVE, [], $wgDWStatsDB );
 		$sCurrentPeriodBeginning = date( 'Y-m-d H:i:s', strtotime( self::PERIOD_INTERVAL ) );
 
 		$iCurrentPeriodEdits = ( new WikiaSQL() )
 			->SELECT( 'user_id' )
 			->SUM( 'edits' )->AS_( 'edits' )
+			->SUM( 'creates' )->AS_( 'creates' )
 			->FROM( 'rollup_wiki_user_events' )
 			->WHERE( 'user_id' )->EQUAL_TO( $iUserId )
 			->AND_( 'time_id' )->GREATER_THAN_OR_EQUAL( $sCurrentPeriodBeginning )
 			->AND_( 'period_id' )->EQUAL_TO( DataMartService::PERIOD_ID_DAILY )
 			->runLoop( $oDB, function( &$iCurrentPeriodEdits, $oRow ) {
-				$iCurrentPeriodEdits = intval( $oRow->edits );
+				$iEdits = intval( $oRow->edits );
+				$iCreates = intval( $oRow->creates );
+				$iCurrentPeriodEdits = $iCreates + $iEdits;
 			} );
 
 		return ( $iCurrentPeriodEdits >= PowerUser::MIN_FREQUENT_EDITS );

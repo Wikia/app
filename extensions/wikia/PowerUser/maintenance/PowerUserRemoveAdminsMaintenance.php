@@ -16,8 +16,12 @@ require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 use Wikia\PowerUser\PowerUser;
 
 class PowerUserRemoveAdminsMaintenance extends Maintenance {
+
 	/**
-	 * Do the actual work. All child classes will need to implement this
+	 * Workflow:
+	 * 1. Get IDs of users who are PowerUsers of an admin type
+	 * 2. Check them against a specials/events_local_users table
+	 * 3. Remove the property for former admins
 	 */
 	public function execute() {
 		$aAdminsIds = $this->getPowerUserAdminsIds();
@@ -29,6 +33,11 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 		}
 	}
 
+	/**
+	 * Get IDs of PowerUsers of an admin type
+	 *
+	 * @return Array An array of PUs IDs
+	 */
 	private function getPowerUserAdminsIds() {
 		global $wgExternalSharedDB;
 
@@ -46,6 +55,12 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 		return $aAdminsIds;
 	}
 
+	/**
+	 * Check the PUs IDs against specials/events_local_users
+	 *
+	 * @param $aAdminsIds Array An array of PUs IDs
+	 * @return Array An array of former admins IDs for the property removal
+	 */
 	private function getFormerAdmins( $aAdminsIds ) {
 		global $wgSpecialsDB;
 		$oDB = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );

@@ -20,8 +20,11 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 	private
 		$iPowerUsersLifetimeCounter = 0,
 		$iPowerUsersAdminCounter = 0;
+
 	/**
-	 * Do the actual work. All child classes will need to implement this
+	 * Workflow:
+	 * 1. Populate the table with PowerUser properties of a lifetime type
+	 * 2. Populate the table with PowerUser properties of an admin type
 	 */
 	public function execute() {
 		print 'Populating with PowerUsers for lifetime edits... \n';
@@ -76,5 +79,5 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 	}
 }
 
-$maintClass = "PowerUserAddFrequentMaintenance";
+$maintClass = "PowerUserPopulatePropertiesMaintenance";
 require_once( RUN_MAINTENANCE_IF_MAIN );

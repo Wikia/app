@@ -1,4 +1,10 @@
 <?php
+/**
+ * Hook PowerUser management actions to given events
+ *
+ * @package PowerUser
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ */
 
 namespace Wikia\PowerUser;
 
@@ -10,7 +16,18 @@ class PowerUserHooks {
 		\Hooks::register( 'UserAddGroup', [ $oPowerUserHooks, 'onUserAddGroup' ] );
 	}
 
-	public function onNewRevisionFromEditComplete( $oArticle, $oRevision, $iBaseRevId, $oUser ) {
+	/**
+	 * Related to PowerUser lifetime type. It is triggered
+	 * on every edit and checks if a user has enough edits
+	 * to become a PowerUser (see PowerUser.class.php).
+	 *
+	 * @param $oArticle
+	 * @param $oRevision
+	 * @param $iBaseRevId
+	 * @param User $oUser
+	 * @return bool
+	 */
+	public function onNewRevisionFromEditComplete( $oArticle, $oRevision, $iBaseRevId, \User $oUser ) {
 		$oUserStatsService = new \UserStatsService( $oUser->getId() );
 
 		if ( !$oUser->isSpecificPowerUser( PowerUser::TYPE_LIFETIME ) &&
@@ -23,6 +40,13 @@ class PowerUserHooks {
 		return true;
 	}
 
+	/**
+	 * Gives a user a PowerUser property of an admin type.
+	 *
+	 * @param User $oUser
+	 * @param $sGroup string One of the groups from PowerUser.class.php
+	 * @return bool
+	 */
 	public function onUserAddGroup( \User $oUser, $sGroup ) {
 		if ( !$oUser->isSpecificPowerUser( PowerUser::TYPE_ADMIN ) &&
 			in_array( $sGroup, PowerUser::$aPowerUserAdminGroups )
