@@ -3530,11 +3530,16 @@ abstract class DatabaseBase implements DatabaseType {
 		global $wgDBcluster;
 
 		if ( $ret instanceof ResultWrapper ) {
+			// NOP for MySQL driver
 			$num_rows = $ret->numRows();
 		} elseif ( is_resource( $ret ) ) {
-			$num_rows = mysql_num_rows( $ret );
+			// for SELECT queries report how many rows are sent to the client
+			$num_rows = mysql_num_rows($ret);
+		} elseif ( $ret === true ) {
+			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
+			$num_rows = $this->affectedRows();
 		} else {
-			// INSERT, UPDATE, DELETE, DROP queries do not report num_rows
+			// failed queries
 			$num_rows = false;
 		}
 
