@@ -99,7 +99,8 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$sMemKey = $this->getMemKeyConfirmationEmailsSent( $oUser->getId() );
+		$userLoginHelper = ( new \UserLoginHelper );
+		$sMemKey = $userLoginHelper->getMemKeyConfirmationEmailsSent( $oUser->getId() );
 		$iEmailSent = intval( $this->wg->Memc->get( $sMemKey ) );
 
 		if ( $oUser->isEmailConfirmationPending() &&
