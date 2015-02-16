@@ -58,9 +58,6 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		 * End remove
 		 */
 	}
-	$vars['wikiaIsPowerUserAdmin'] = $user->isSpecificPowerUser( \Wikia\PowerUser\PowerUser::TYPE_ADMIN );
-	$vars['wikiaIsPowerUserFrequent'] = $user->isSpecificPowerUser( \Wikia\PowerUser\PowerUser::TYPE_FREQUENT );
-	$vars['wikiaIsPowerUserLifetime'] = $user->isSpecificPowerUser( \Wikia\PowerUser\PowerUser::TYPE_LIFETIME );
 
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();

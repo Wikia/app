@@ -57,4 +57,19 @@ class PowerUserHooks {
 
 		return true;
 	}
+
+	/**
+	 * Sets a JS variable if a user is a specific PU
+	 *
+	 * @param array $vars
+	 * @param $scripts
+	 * @return bool
+	 */
+	public function onWikiaSkinTopScripts( Array &$vars, &$scripts ) {
+		foreach ( PowerUser::$aPowerUserJSVariables as $sProperty => $sVarName ) {
+			if ( $user->isSpecificPowerUser( $sProperty ) ) $vars[ $sVarName ] = true;
+		}
+
+		return true;
+	}
 }

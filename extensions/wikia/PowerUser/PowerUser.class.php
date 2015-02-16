@@ -43,6 +43,15 @@ class PowerUser {
 	];
 
 	/**
+	 * A table mapping PU properties to JS variables names
+	 */
+	public static $aPowerUserJSVariables = [
+		self::TYPE_ADMIN => 'wikiaIsPowerUserAdmin',
+		self::TYPE_FREQUENT => 'wikiaIsPowerUserFrequent',
+		self::TYPE_LIFETIME => 'wikiaIsPowerUserLifetime',
+	];
+
+	/**
 	 * An array of the names of groups defining
 	 * PowerUsers of an admin type
 	 * @var array
