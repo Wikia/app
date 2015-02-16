@@ -1,6 +1,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/calc';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
@@ -76,6 +77,8 @@ $more-z-index: 10000;
 }
 
 .hubs-menu-wrapper {
+	@include calc(top, "100% - 2px");
+
 	position: absolute;
 	left: 0;
 }
