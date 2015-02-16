@@ -1,10 +1,10 @@
 require(
-	['jquery', 'wikia.window', 'wikia.nirvana', 'wikia.delayedhover'],
-	function($, window, nirvana, delayedHover) {
+	['jquery', 'wikia.window', 'wikia.nirvana', 'wikia.delayedhover', 'wikia.globalNavigationDropdowns'],
+	function($, window, nirvana, delayedHover, dropdowns) {
 		'use strict';
 
 		var WallNotifications = {
-			init: function() {
+			init: function () {
 				this.bucky = window.Bucky('WallNotifications');
 				this.updateInProgress = false; // we only want 1 update simultaneously
 				this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
@@ -13,7 +13,7 @@ require(
 				this.currentWikiId = 0; // updated after fetching Notification counts for the 1st time
 				this.cityId = parseInt(window.wgCityId, 10);
 
-				setTimeout( this.proxy( this.updateCounts ), 300);
+				setTimeout(this.proxy(this.updateCounts), 300);
 
 				this.$window = $(window);
 
@@ -33,89 +33,66 @@ require(
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
 				this.$notifications
-					.mouseenter( this.proxy( this.updateCounts ) )
-					.mouseenter( this.proxy( this.fetchForCurrentWiki ) );
+					.mouseenter(this.proxy(this.updateCounts))
+					.mouseenter(this.proxy(this.fetchForCurrentWiki));
 
-				this.$wallNotifications.add( $('#pt-wall-notifications') )
-					.on('click', '.notifications-markasread', this.proxy( this.markAllAsReadAllWikis ));
+				this.$wallNotifications.add($('#pt-wall-notifications'))
+					.on('click', '.notifications-markasread', this.proxy(this.markAllAsReadAllWikis));
 
-				$(window).on('resize', $.throttle(50, function() {
+				$(window).on('resize', $.throttle(50, function () {
 					WallNotifications.setNotificationsHeight();
 				}));
 			},
 
-			openNotifications: function() {
-				if ( this.getAttribute('id') === 'notificationsEntryPoint' ) {
-					$(this).addClass('active');
-					WallNotifications.$wallNotifications.addClass('show');
-					WallNotifications.setNotificationsHeight();
-				}
-				$('#globalNavigation').trigger('notifications-menu-opened');
-				window.transparentOut.show();
-			},
-
-			closeNotificationsDropdown: function() {
-				WallNotifications.$notificationsEntryPoint.removeClass('active');
-				window.transparentOut.hide();
-			},
-
-			toggleNotifications: function() {
-				if ( WallNotifications.$notificationsEntryPoint.hasClass('active') ) {
-					WallNotifications.closeNotificationsDropdown();
-				} else {
-					WallNotifications.openNotifications.apply(this);
-				}
-			},
-
-			checkIfFromMessageBubble: function() {
-				function urlParam(name){
+			checkIfFromMessageBubble: function () {
+				function urlParam(name) {
 					var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-					if (!results){
+					if (!results) {
 						return 0;
 					}
 					return results[1] || 0;
 				}
-				if(urlParam('showNotifications')) {
+
+				if (urlParam('showNotifications')) {
 					this.$notifications.trigger('mouseenter');
 					this.$wallNotifications.addClass('show');
 				}
 			},
 
-			updateCounts: function() {
+			updateCounts: function () {
 				this.bucky.timer.start('updateCounts');
 				var data,
-					callback = this.proxy(function(data) {
-					if (data.status !== true || data.html === '') {
-						return;
-					}
+					callback = this.proxy(function (data) {
+						if (data.status !== true || data.html === '') {
+							return;
+						}
 
-					if (data.count) {
-						this.$notifications.removeClass('prehide');
-					}
+						if (data.count) {
+							this.$notifications.removeClass('prehide');
+						}
 
-					this.updateCountsHtml(data);
+						this.updateCountsHtml(data);
 
-					// if we already have data for some Wikis, show it
-					this.restoreFromCache();
+						// if we already have data for some Wikis, show it
+						this.restoreFromCache();
 
-					// make sure at least 1 element is visible
-					this.showFirst();
+						// make sure at least 1 element is visible
+						this.showFirst();
 
-					// on first updateCounts show notifications if user
-					// came from Notification bubble on non-wall Wiki
-					this.checkIfFromMessageBubble();
+						// on first updateCounts show notifications if user
+						// came from Notification bubble on non-wall Wiki
+						this.checkIfFromMessageBubble();
 
-					// do not update for next 10s
-					setTimeout( this.proxy(function() {
-						this.updateInProgress = false;
-					}), 10000 );
+						// do not update for next 10s
+						setTimeout(this.proxy(function () {
+							this.updateInProgress = false;
+						}), 10000);
 
-					this.bucky.timer.stop('updateCounts');
-				});
+						this.bucky.timer.stop('updateCounts');
+					});
 
 
-
-				if ( this.updateInProgress ===  false ) {
+				if (this.updateInProgress === false) {
 					this.updateInProgress = true;
 
 					data = this.getUrlParams();
@@ -130,33 +107,33 @@ require(
 				}
 			},
 
-			fetchForCurrentWiki: function() {
+			fetchForCurrentWiki: function () {
 				this.bucky.timer.start('fetchForCurrentWiki');
-				if ( this.fetchedCurrent === false ) {
+				if (this.fetchedCurrent === false) {
 					var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
 						firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
-					if ( firstWikiId !== undefined ) {
+					if (firstWikiId !== undefined) {
 						wikiEl.addClass('show');
 						this.fetchedCurrent = true;
 						this.currentWikiId = firstWikiId;
-						this.wikiShown[ firstWikiId ] = true;
-						this.updateWiki( firstWikiId );
+						this.wikiShown[firstWikiId] = true;
+						this.updateWiki(firstWikiId);
 						this.bucky.timer.stop('fetchForCurrentWiki');
 					}
 				}
 			},
 
-			restoreFromCache: function() {
+			restoreFromCache: function () {
 				// after updating counts we update DOM, so all notifications are empty
 				// we update them from cache for all those that still have the same
 				// amount of unread notifications and fetch all the others
 				for (var wikiId in this.notificationsCache) {
-					this.updateWiki( parseInt(wikiId, 10) );
+					this.updateWiki(parseInt(wikiId, 10));
 				}
 			},
 
-			markAllAsReadRequest: function(forceAll) {
+			markAllAsReadRequest: function (forceAll) {
 				this.bucky.timer.start('markAllAsReadRequest');
 				nirvana.sendRequest({
 					controller: 'WallNotificationsExternalController',
@@ -166,7 +143,7 @@ require(
 						username: window.wgTitle,
 						forceAll: forceAll
 					},
-					callback: this.proxy(function(data) {
+					callback: this.proxy(function (data) {
 						if (data.status !== true) {
 							return;
 						}
@@ -187,23 +164,23 @@ require(
 				});
 			},
 
-			markAllAsReadAllWikis: function(e) {
-				this.markAllAsReadRequest( 'FORCE' );
+			markAllAsReadAllWikis: function (e) {
+				this.markAllAsReadRequest('FORCE');
 				return false;
 			},
 
-			showFirst: function() {
+			showFirst: function () {
 				var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
 					firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
-				if ( firstWikiId !== undefined ) {
+				if (firstWikiId !== undefined) {
 					wikiEl.addClass('show');
 					this.wikiShown = {};
-					this.wikiShown[ firstWikiId ] = true;
+					this.wikiShown[firstWikiId] = true;
 				}
 			},
 
-			updateCountsHtml: function(data) {
+			updateCountsHtml: function (data) {
 				var self = this,
 					element;
 
@@ -218,51 +195,51 @@ require(
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 
-				this.$wallNotifications.find('.notifications-wiki-header').click( this.proxy( this.wikiClick ) );
+				this.$wallNotifications.find('.notifications-wiki-header').click(this.proxy(this.wikiClick));
 
 				this.setNotificationsHeight();
 			},
 
-			wikiClick: function(e) {
+			wikiClick: function (e) {
 				var wikiEl = $(e.target).closest('.notifications-for-wiki'),
 					wikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
-				if( wikiEl.hasClass('show') ) {
+				if (wikiEl.hasClass('show')) {
 					wikiEl.removeClass('show');
-					delete this.wikiShown[ wikiId ];
+					delete this.wikiShown[wikiId];
 					this.setNotificationsHeight();
 				} else {
 					wikiEl.addClass('show');
-					this.wikiShown[ wikiId ] = true;
+					this.wikiShown[wikiId] = true;
 					this.updateWiki(wikiId);
 				}
 
 				return false;
 			},
 
-			updateWiki: function(wikiId) {
-				if( !(wikiId in this.notificationsCache) ) {
+			updateWiki: function (wikiId) {
+				if (!(wikiId in this.notificationsCache)) {
 					// nothing in cache, just fetch
-					this.updateWikiFetch( wikiId );
+					this.updateWikiFetch(wikiId);
 					return;
 				}
-				var data = this.notificationsCache[ wikiId ],
-					wikiCount = parseInt( this.$wallNotifications.find(
+				var data = this.notificationsCache[wikiId],
+					wikiCount = parseInt(this.$wallNotifications.find(
 						'li[data-wiki-id=' + wikiId + ']'
 					).data('unread-count'), 10);
 				// no change in notifications, update from cache
-				if ( wikiCount === data[ 'unread' ] ) {
-					this.updateWikiHtml( wikiId, data );
+				if (wikiCount === data['unread']) {
+					this.updateWikiHtml(wikiId, data);
 
-				// different number of unread, fetch from server
-				// in the meantime, show old data
+					// different number of unread, fetch from server
+					// in the meantime, show old data
 				} else {
-					this.updateWikiHtml( wikiId, data );
-					this.updateWikiFetch( wikiId );
+					this.updateWikiHtml(wikiId, data);
+					this.updateWikiFetch(wikiId);
 				}
 			},
 
-			updateWikiFetch: function(wikiId) {
+			updateWikiFetch: function (wikiId) {
 				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1',
 					data = {
 						username: window.wgTitle,
@@ -276,36 +253,38 @@ require(
 					controller: 'WallNotificationsExternalController',
 					method: 'getUpdateWiki',
 					data: data,
-					callback: this.proxy(function(data) {
-						if(data.status !== true || data.html === '') { return; }
+					callback: this.proxy(function (data) {
+						if (data.status !== true || data.html === '') {
+							return;
+						}
 						this.updateWikiHtml(wikiId, data);
-						this.notificationsCache[ wikiId ] = data;
+						this.notificationsCache[wikiId] = data;
 					}),
-					onErrorCallback: this.proxy(function(jqXHR, textStatus, errorThrown) {
-						if( jqXHR !== undefined && jqXHR.status !== undefined && jqXHR.status === 501) {
+					onErrorCallback: this.proxy(function (jqXHR, textStatus, errorThrown) {
+						if (jqXHR !== undefined && jqXHR.status !== undefined && jqXHR.status === 501) {
 							var data = {};
 							data.html = '<li class="notifications-empty">' + $.msg('wall-notifications-wall-disabled') + '</li>';
 							this.updateWikiHtml(wikiId, data);
-							this.notificationsCache[ wikiId ] = data;
+							this.notificationsCache[wikiId] = data;
 						}
 					})
 				});
 			},
 
-			updateWikiHtml: function( wikiId, data ) {
+			updateWikiHtml: function (wikiId, data) {
 				var wikiEl = this.$wallNotifications.find('li[data-wiki-id=' + wikiId + ']'),
 					wikiLi = wikiEl.find('.notifications-for-wiki-list');
 
 				wikiLi.html(data.html);
 
-				if ( this.wikiShown[ wikiId ] ) {
+				if (this.wikiShown[wikiId]) {
 					wikiEl.addClass('show');
 				}
 
 				wikiLi.find('time').timeago();
 
 				// hijack links for other wikis - open them in new window
-				if ( wikiId !== this.currentWikiId ) {
+				if (wikiId !== this.currentWikiId) {
 					wikiEl.find('a').attr('target', '_blank');
 
 					// temporary fix, should be changed on server side
@@ -315,61 +294,61 @@ require(
 				this.setNotificationsHeight();
 			},
 
-			getLastSeenCount: function() {
-				return $.cookies.get( 'WallUnreadCount' ) || 0;
+			getLastSeenCount: function () {
+				return $.cookies.get('WallUnreadCount') || 0;
 			},
 
-			setLastSeenCount: function( val ) {
-				$.cookies.set( 'WallUnreadCount', val );
+			setLastSeenCount: function (val) {
+				$.cookies.set('WallUnreadCount', val);
 			},
 
-			proxy: function( func ) {
-				return $.proxy( func, this );
+			proxy: function (func) {
+				return $.proxy(func, this);
 			},
 
-			getUrlParams: function() {
+			getUrlParams: function () {
 				var data = {},
 					qs = Wikia.Querystring(),
 					lang, skin;
 
-				skin = qs.getVal( 'useskin' );
-				if( skin ) {
+				skin = qs.getVal('useskin');
+				if (skin) {
 					data.useskin = skin;
 				}
 
-				lang = qs.getVal( 'uselang' );
-				if( lang ) {
+				lang = qs.getVal('uselang');
+				if (lang) {
 					data.uselang = lang;
 				}
 
 				return data;
 			},
 
-			setNotificationsHeight: function() {
+			setNotificationsHeight: function () {
 				var isDropdownOpen = this.$wallNotifications.hasClass('show'),
 					height = 0,
 					msgHeight = 0;
 
-				if ( isDropdownOpen ) {
+				if (isDropdownOpen) {
 
-					if ( this.notificationsMarkAsReadHeight === 0 ) {
+					if (this.notificationsMarkAsReadHeight === 0) {
 						this.notificationsMarkAsReadHeight = $('.notifications-markasread').outerHeight();
 					}
 
 					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding - this.notificationsMarkAsReadHeight;
 					msgHeight = this.$notificationsMessages.height();
 
-					if ( !msgHeight ) {
+					if (!msgHeight) {
 						this.$notificationsContainer = $('#notificationsContainer');
 						this.$notificationsMessages = $('> ul', this.$notificationsContainer);
 						msgHeight = this.$notificationsMessages.height();
 					}
 
-					if ( this.notificationsHeaderHeight <= 0 ) {
+					if (this.notificationsHeaderHeight <= 0) {
 						this.notificationsHeaderHeight = $('.notifications-header', this.$wallNotifications).outerHeight();
 					}
 
-					if ( height < msgHeight + this.notificationsHeaderHeight ) {
+					if (height < msgHeight + this.notificationsHeaderHeight) {
 						this.$notificationsContainer
 							.css('height', height - this.notificationsHeaderHeight)
 							.addClass('scrollable');
@@ -379,27 +358,32 @@ require(
 				}
 			},
 
-			closeDropdown: function() {
-				if (WallNotifications.$notificationsEntryPoint.hasClass('active')) {
-					WallNotifications.$notificationsEntryPoint.removeClass('active');
-				}
+			onNotificationsOpen: function () {
+				WallNotifications.$wallNotifications.addClass('show');
+				WallNotifications.setNotificationsHeight();
+				$('#globalNavigation').trigger('notifications-menu-opened');
 			}
 		};
 
 		$(function () {
 			WallNotifications.init();
+
+			dropdowns.attachDropdown(
+				WallNotifications.$notificationsEntryPoint, {
+					onOpen: WallNotifications.onNotificationsOpen
+				}
+			);
+
 			delayedHover.attach(
 				document.getElementById('notificationsEntryPoint'),
 				{
 					checkInterval: 200,
 					maxActivationDistance: 20,
-					onActivate: WallNotifications.openNotifications,
-					onDeactivate: WallNotifications.closeDropdown,
+					onActivate: dropdowns.openDropdown,
+					onDeactivate: dropdowns.closeDropdown,
 					activateOnClick: false
 				}
 			);
-			WallNotifications.$notificationsEntryPoint.on('click', WallNotifications.toggleNotifications);
-			window.transparentOut.bindClick(WallNotifications.closeNotificationsDropdown);
 		});
 	}
 );

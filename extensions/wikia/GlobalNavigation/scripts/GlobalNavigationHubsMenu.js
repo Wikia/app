@@ -58,8 +58,7 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdow
 		}
 
 		dropdowns.attachDropdown($entryPoint, {
-			onOpen: onDropdownOpen,
-			onClick: dropdowns.openDropdown
+			onOpen: onDropdownOpen
 		});
 
 		//Menu-aim should be attached for both touch and not touch screens.
