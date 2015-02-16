@@ -110,7 +110,7 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		if ( ! Sanitizer::validateEmail( $user->getEmail() ) ) {
+		if ( ! \Sanitizer::validateEmail( $oUser->getEmail() ) ) {
 			$this->response->setVal( 'message', 'invalid email' );
 			return;
 		}
