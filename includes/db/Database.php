@@ -684,7 +684,7 @@ abstract class DatabaseBase implements DatabaseType {
 		$dbType = strtolower( $dbType );
 		$class = 'Database' . ucfirst( $dbType );
 
-		if( in_array( $dbType, $canonicalDBTypes ) || ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) ) {
+		if ( in_array( $dbType, $canonicalDBTypes ) || ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) ) {
 			return new $class(
 				isset( $p['host'] ) ? $p['host'] : false,
 				isset( $p['user'] ) ? $p['user'] : false,
@@ -858,7 +858,7 @@ abstract class DatabaseBase implements DatabaseType {
 		# Wikia change - begin
 		# @author macbre
 		# Add profiling data to queries like BEGIN or COMMIT (preg_replace above will not handle them)
-		if (strpos($sql, ' ') === false) {
+		if ( strpos( $sql, ' ' ) === false ) {
 			$commentedSql = "{$sql} /* {$fname} {$userName} */";
 		}
 		# Wikia change - end
@@ -2382,7 +2382,7 @@ abstract class DatabaseBase implements DatabaseType {
 			$rows = array( $rows );
 		}
 
-		foreach( $rows as $row ) {
+		foreach ( $rows as $row ) {
 			# Delete rows which collide
 			if ( $uniqueIndexes ) {
 				$sql = "DELETE FROM $quotedTable WHERE ";
@@ -2551,10 +2551,10 @@ abstract class DatabaseBase implements DatabaseType {
 			}
 			$sql .= ' WHERE ' . $conds;
 		}
-		
+
 		if ( strpos( $sql, '`user`' ) !== false ) {
 			global $wgDBname, $wgUser;
-			error_log( sprintf( "MOLI: (%s), user: %d: %s", $wgDBname, ( !empty($wgUser) ) ? $wgUser->getId() : 0, $sql ) );
+			error_log( sprintf( "MOLI: (%s), user: %d: %s", $wgDBname, ( !empty( $wgUser ) ) ? $wgUser->getId() : 0, $sql ) );
 		}
 
 		return $this->query( $sql, $fname );
@@ -3433,11 +3433,11 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @since 1.18
 	 */
 	public function dropTable( $tableName, $fName = 'DatabaseBase::dropTable' ) {
-		if( !$this->tableExists( $tableName, $fName ) ) {
+		if ( !$this->tableExists( $tableName, $fName ) ) {
 			return false;
 		}
 		$sql = "DROP TABLE " . $this->tableName( $tableName );
-		if( $this->cascadingDeletes() ) {
+		if ( $this->cascadingDeletes() ) {
 			$sql .= " CASCADE";
 		}
 		return $this->query( $sql, $fName );
@@ -3504,13 +3504,13 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	protected function executeAndProfileQuery( $sql, $fname, $isMaster ) {
 		$queryId = MWDebug::query( $sql, $fname, $isMaster );
-		$start = microtime(true);
+		$start = microtime( true );
 
 		// Wikia change: DatabaseMysql returns a resource instead of ResultWrapper instance
 		/* @var $ret resource|bool */
 		$ret = $this->doQuery( $sql );
 
-		$this->logSql( $sql, $ret, $fname, microtime(true) - $start, $isMaster );
+		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
 
 		MWDebug::queryTime( $queryId );
 		return $ret;
@@ -3543,7 +3543,7 @@ abstract class DatabaseBase implements DatabaseType {
 			$num_rows = false;
 		}
 
-		if ($this->getSampler()->shouldSample()) {
+		if ( $this->getSampler()->shouldSample() ) {
 			$this->getWikiaLogger()->info( "SQL $sql", [
 				'method'      => $fname,
 				'elapsed'     => $elapsedTime,
@@ -3553,19 +3553,19 @@ abstract class DatabaseBase implements DatabaseType {
 				'server_role' => $isMaster ? 'master' : 'slave',
 				'db_name'     => $this->mDBname,
 				'exception'   => new Exception(), // log the backtrace
-			]);
+			] );
 		}
 	}
 
 	public function getSampler() {
-		if (!isset($this->sampler)) {
-			$this->sampler = new BernoulliTrial(self::QUERY_SAMPLE_RATE);
+		if ( !isset( $this->sampler ) ) {
+			$this->sampler = new BernoulliTrial( self::QUERY_SAMPLE_RATE );
 		}
 
 		return $this->sampler;
 	}
 
-	public function setSampler(BernoulliTrial $sampler) {
+	public function setSampler( BernoulliTrial $sampler ) {
 		$this->sampler = $sampler;
 	}
 
