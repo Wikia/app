@@ -67,10 +67,10 @@ class PowerUser {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
 			$this->oUser->setOption( $sProperty, true );
 			$this->oUser->saveSettings();
-			$this->logSuccess( $sProperty, self::ACTION_REMOVE, $this->oUser->getId() );
+			$this->logSuccess( $sProperty, self::ACTION_ADD, $this->oUser->getId() );
 			return true;
 		} else {
-			$this->logError($sProperty, self::ACTION_REMOVE, $this->oUser->getId());
+			$this->logError($sProperty, self::ACTION_ADD, $this->oUser->getId());
 			return false;
 		}
 	}
