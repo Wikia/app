@@ -68,5 +68,5 @@ class LocalNavigationController extends WikiaController {
 		$this->setVal( 'wordmarkFontSize', $settings['wordmark-font-size'] );
 		$this->setVal( 'wordmarkUrl', $wordmarkURL );
 		$this->setVal( 'wordmarkStyle', $wordmarkStyle );
-		}
+	}
 }
