@@ -199,9 +199,11 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function authenticate( $sPassword ) {
+
 		// Authenticate with Helios if enabled.
 		global $wgEnableHeliosExt;
 		if ( $wgEnableHeliosExt ) {
+
 			$bHeliosResult = \Wikia\Helios\User::authenticate( $this->getName(), $sPassword );
 
 			// Terminate unless in the shadow mode.
@@ -215,6 +217,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		$bMediaWikiResult = User::comparePasswords( $this->getPassword(), $sPassword, $this->getId() );
 		// Detect discrepancies between Helios and MediaWiki results.
 		if ( $wgEnableHeliosExt && (  $bHeliosResult != $bMediaWikiResult ) ) {
+			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'HELIOS_LOGIN',
 				[ 'helios' => $bHeliosResult, 'mediawiki' => $bMediaWikiResult,
