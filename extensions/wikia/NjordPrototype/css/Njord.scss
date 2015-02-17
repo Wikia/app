@@ -565,7 +565,6 @@
 .mainpage {
 	.wordmark-container {
 		&.wordmark-icon {
-			background-color: $color-page;
 			height: 80px;
 			left: -1px;
 			padding-left: 10px;
@@ -573,6 +572,19 @@
 			position: absolute;
 			top: -80px;
 			z-index: 1;
+
+			&:before {
+				background-color: $color-page;
+				content: '';
+				display: block;
+				height: 100%;
+				left: 0;
+				opacity: $page-opacity;
+				position: absolute;
+				width: 100%;
+				top: 0;
+				z-index: -1;
+			}
 		}
 
 		.wordmark {
