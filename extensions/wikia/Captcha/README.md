@@ -5,10 +5,6 @@
 The Catpcha extension is how we generte captchas for all login, registration and edit/update events.  It is based on the
 MediaWiki ConfirmEdit extension, but has been updated to conform to current Wikia code and design guidelines.
 
-```php
-FacebookClient::getInstance()
-```
-
 ## Documentation
 
 * [Wikia One Feature Page](https://one.wikia-inc.com/wiki/Social/Product/ReCaptcha)
