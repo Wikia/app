@@ -14,6 +14,7 @@ class PowerUserHooks {
 		$oPowerUserHooks = new self();
 		\Hooks::register( 'NewRevisionFromEditComplete', [ $oPowerUserHooks, 'onNewRevisionFromEditComplete' ] );
 		\Hooks::register( 'UserAddGroup', [ $oPowerUserHooks, 'onUserAddGroup' ] );
+		\Hooks::register( 'WikiaSkinTopScripts', [ $oPowerUserHooks, 'onWikiaSkinTopScripts' ] );
 	}
 
 	/**
@@ -66,8 +67,10 @@ class PowerUserHooks {
 	 * @return bool
 	 */
 	public function onWikiaSkinTopScripts( Array &$vars, &$scripts ) {
+		global $wgUser;
+
 		foreach ( PowerUser::$aPowerUserJSVariables as $sProperty => $sVarName ) {
-			if ( $user->isSpecificPowerUser( $sProperty ) ) {
+			if ( $wgUser->isSpecificPowerUser( $sProperty ) ) {
 				$vars[ $sVarName ] = true;
 			}
 		}
