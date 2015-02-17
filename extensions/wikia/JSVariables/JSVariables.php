@@ -58,7 +58,6 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		 * End remove
 		 */
 	}
-
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();
 	}

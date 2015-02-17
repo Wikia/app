@@ -84,7 +84,9 @@ class PowerUserRemoveAdminsMaintenance extends Maintenance {
 					}
 				} );
 
-			if ( intval( $iFormerAdminId ) > 0 ) $aFormerAdminsIds[] = $iFormerAdminId;
+			if ( intval( $iFormerAdminId ) > 0 ) {
+				$aFormerAdminsIds[] = $iFormerAdminId;
+			}
 		}
 
 		return $aFormerAdminsIds;

@@ -67,7 +67,9 @@ class PowerUserHooks {
 	 */
 	public function onWikiaSkinTopScripts( Array &$vars, &$scripts ) {
 		foreach ( PowerUser::$aPowerUserJSVariables as $sProperty => $sVarName ) {
-			if ( $user->isSpecificPowerUser( $sProperty ) ) $vars[ $sVarName ] = true;
+			if ( $user->isSpecificPowerUser( $sProperty ) ) {
+				$vars[ $sVarName ] = true;
+			}
 		}
 
 		return true;
