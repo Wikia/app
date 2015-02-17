@@ -108,16 +108,18 @@ class GetRevisionWithTags extends Maintenance {
 
 			$dbh->beginTransaction();
 
-			$stmt = $dbh->prepare("INSERT IGNORE INTO editorstats (wiki_id, revision_id, editor)
- 				VALUES (:wiki_id, :revision_id, :editor)");
+			$stmt = $dbh->prepare("INSERT IGNORE INTO editorstats (wiki_id, revision_id, editor, user_groups)
+ 				VALUES (:wiki_id, :revision_id, :editor, :user_groups)");
 			$stmt->bindParam(':wiki_id', $wiki_id);
 			$stmt->bindParam(':revision_id', $revision_id);
 			$stmt->bindParam(':editor', $editor);
+			$stmt->bindParam(':user_groups', $user_groups);
 
 			foreach ($data as $rev) {
 				$wiki_id = $rev['wiki_id'];
 				$revision_id = $rev['revision_id'];
 				$editor = $rev['editor'];
+				$user_groups = $rev['user_groups'];
 
 				$stmt->execute();
 			}
