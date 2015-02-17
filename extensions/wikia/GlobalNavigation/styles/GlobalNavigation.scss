@@ -1,6 +1,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'skins/shared/mixins/calc';
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
 
@@ -32,8 +33,7 @@ $start-a-wikia-logo-size: 30px;
 	}
 
 	.wikia-logo-container {
-		//-15px because additional left padding 15px is added to hubs entry point container
-		padding-right: $global-navigation-items-spacing - 15px;
+		padding-right: 15px;
 
 		.wikia-logo img {
 			background-position: right center;
@@ -41,21 +41,30 @@ $start-a-wikia-logo-size: 30px;
 		}
 	}
 
-	.start-wikia {
-		@include font-size-xxs;
-		border: solid 1px $global-navigation-text-color;
-		color: $global-navigation-text-color;
-		display: inline-block;
-		height: $start-a-wikia-logo-size;
-		line-height: 28px;
-		margin-bottom: $global-navigation-margin-size + 1px;
-		margin-top: $global-navigation-margin-size + 1px;
-		padding: 1px 10px 0;
+	.start-wikia-container {
+		padding-left: 10px;
 
-		&:hover {
-			background-color: $global-navigation-active-color;
-			color: $global-wikia-background-color;
-			text-decoration: none;
+		.start-wikia {
+			@include font-size-xxs;
+			border: solid 1px $global-navigation-text-color;
+			color: $global-navigation-text-color;
+			display: inline-block;
+			height: $start-a-wikia-logo-size;
+			line-height: 28px;
+			margin-bottom: $global-navigation-margin-size + 1px;
+			margin-top: $global-navigation-margin-size + 1px;
+			padding: 0 10px;
+
+			&:hover {
+				background-color: $global-navigation-active-color;
+				color: $global-wikia-background-color;
+				text-decoration: none;
+			}
+
+			span {
+				display: inline-block;
+				padding-top: 1px;
+			}
 		}
 	}
 }
@@ -66,23 +75,29 @@ $start-a-wikia-logo-size: 30px;
 }
 
 @media #{$small-only} {
-	.start-wikia {
-		width: $start-a-wikia-logo-size;
-		//-2px because of borders
-		line-height: $start-a-wikia-logo-size - 2px;
-		&:after {
-			content: '+';
-			display: block;
+	.global-navigation {
+		.start-wikia-container {
+			padding-left: 21px;
+
+			.start-wikia {
+				width: $start-a-wikia-logo-size;
+				//-2px because of borders
+				line-height: $start-a-wikia-logo-size - 2px;
+				&:after {
+					content: '+';
+					display: block;
+				}
+
+				span {
+					display: none;
+				}
+			}
 		}
 
-		span {
-			display: none;
+		.page-width {
+			@include width-calc("100% - 20px");
+			margin: 0 10px;
 		}
-	}
-
-	.global-navigation .page-width {
-		margin: 0 10px;
-		width: calc(100% - 20px);
 	}
 }
 

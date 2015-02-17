@@ -8,8 +8,6 @@ use Wikia\Measurements\Time;
 
 class JsonFormatSimplifier {
 
-	const SNIPPET_PARAGRPHS_COUNT = 2;
-
 	protected function getParagraphs( \JsonFormatContainerNode $containerNode, &$contentElements ) {
 		foreach( $containerNode->getChildren() as $childNode ) {
 			if ( $childNode->getType() == 'section' ) {
@@ -174,56 +172,5 @@ class JsonFormatSimplifier {
 		return [
 			"sections" => $returnSections
 		];
-	}
-
-	public function simplifyToSnippet( \JsonFormatRootNode $rootNode ) {
-		$timer = Time::start([__CLASS__, __METHOD__]);
-		$result = [];
-		$listsSections = [];
-		$sections = [];
-		$this->findSections( $rootNode, $sections );
-
-		foreach( $sections as $section ) {
-			$sectionResult = [];
-			$content = [];
-			$containList = false;
-			$this->getParagraphs( $section, $content );
-			$this->clearParagraphs( $content );
-			foreach( $content as $node ) {
-				if( $node['type'] == 'paragraph' ) {
-					$sectionResult[] = $node['text'];
-				}
-				if( $node['type'] == 'list' ) {
-					$sectionResult[] = $this->getElements( $node );
-					$containList = true;
-				}
-			}
-			if( $containList ) {
-				$listsSections = array_merge($listsSections, $sectionResult);
-			} else {
-				$result = array_merge($result, $sectionResult);
-				if ( count($result) >= static::SNIPPET_PARAGRPHS_COUNT ) {
-					break;
-				}
-			}
-		}
-
-		$output = array_slice( array_merge( $result, $listsSections ), 0, static::SNIPPET_PARAGRPHS_COUNT );
-		$res = implode( ' ', $output);
-		$timer->stop();
-		return $res;
-	}
-
-	protected function getElements( $node ) {
-		$result = [];
-		foreach( $node['elements'] as $element ) {
-			//unicode trim
-			$text = [ preg_replace( '/^[\pZ\pC]+|[\pZ\pC]+$/u', '', $element['text'] ) ];
-			if( !empty($element['elements']) ) {
-				$text[] = '(' . $this->getElements( $element ) . ')';
-			}
-			$result[] = implode( ' ', $text );
-		}
-		return implode(', ', $result);
 	}
 }
