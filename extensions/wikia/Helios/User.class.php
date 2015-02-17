@@ -8,6 +8,23 @@ namespace Wikia\Helios;
 class User {
 
 	/**
+	 * Logs character encoding data for the given password.
+	 */
+	public static function debugLogin( $sPassword, $sCallingMethod )
+	{
+		$sDetectedEncoding = mb_detect_encoding( $sPassword );
+		$sInternalEncoding = mb_internal_encoding();
+
+		\Wikia\Logger\WikiaLogger::instance()->info( $sCallingMethod, [
+			'byte_length'			=> strlen( $sPassword ),
+			'character_length_detected'	=> mb_strlen( $sPassword, $sDetectedEncoding ),
+			'character_length_internal'	=> mb_strlen( $sPassword, $sInternalEncoding ),
+			'detected_encoding'		=> $sDetectedEncoding,
+			'internal_encoding'		=> $sInternalEncoding,
+		] );
+	}
+
+	/**
 	 * Creates a MediaWiki User object based on the token given in the HTTP request.
 	 */
 	public static function newFromToken( \WebRequest $oRequest )
@@ -53,6 +70,8 @@ class User {
 	{
 		$oLogger = \Wikia\Logger\WikiaLogger::instance();
 		$oLogger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__, 'username' => $sUserName ] );
+
+		self::debugLogin( $sPassword, __METHOD__ );
 
 		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
