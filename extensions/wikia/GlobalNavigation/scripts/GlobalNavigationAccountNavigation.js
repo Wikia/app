@@ -21,6 +21,7 @@ require([
 		var $this = $(event.currentTarget);
 		event.preventDefault();
 		event.stopImmediatePropagation();
+		
 		if ($entryPoint.hasClass('active')) {
 			win.location = $this.attr('href') || $this.children('a').attr('href');
 		} else {
@@ -30,6 +31,7 @@ require([
 
 	function onDropdownOpen() {
 		$globalNavigation.trigger('user-login-menu-opened');
+		
 		if (!win.wgUserName && !loginAjaxForm) {
 			loginAjaxForm = new win.UserLoginAjaxForm($entryPoint, {
 				skipFocus: true
@@ -40,6 +42,7 @@ require([
 
 	function onDropdownClose() {
 		var activeElementId = document.activeElement.id;
+		
 		if (!win.wgUserName) {
 			if (activeElementId === 'usernameInput' || activeElementId === 'passwordInput') {
 				//don't close menu if one of inputs is focused
