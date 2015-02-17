@@ -79,8 +79,8 @@ $more-z-index: 10000;
 .hubs-menu-wrapper {
 	@include calc(top, "100% - 2px");
 
+	left: -105px;
 	position: absolute;
-	left: 0;
 }
 
 .hubs-menu {
