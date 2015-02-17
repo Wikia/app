@@ -163,7 +163,6 @@
 	}
 
 	&.hero-image-wrapper {
-		margin: -1px -1px 0;
 		overflow: hidden;
 	}
 
@@ -567,7 +566,7 @@
 		&.wordmark-icon {
 			background-color: $color-page;
 			height: 80px;
-			left: -1px;
+			left: 0;
 			padding-left: 10px;
 			padding-right: 10px;
 			position: absolute;
@@ -598,4 +597,8 @@
 			margin-right: 20px;
 		}
 	}
+}
+
+.mainpage .WikiaPage {
+	border: none;
 }
