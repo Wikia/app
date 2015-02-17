@@ -12,10 +12,10 @@ require([
 		loginAjaxForm = false;
 
 	/**
-	 * Handle click on entry point for logged in users.
+	 * @desc Handle click on entry point for logged in users.
 	 * Second click on entry point for logged in users is redirecting to user profile page.
 	 * This method should be removed after we unify the ux for anon and logged in.
-	 * @param event
+	 * @param {Event} event
 	 */
 	function onEntryPointClick(event) {
 		var $this = $(event.currentTarget);

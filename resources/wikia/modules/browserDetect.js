@@ -50,10 +50,6 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		return !!userAgent.match(/iPad.+OS.[6,7].\d.+like.Mac.OS.+Safari/i);
 	}
 
-	function isTouchScreen() {
-		return ('ontouchstart' in window);
-	}
-
 	function isAndroid() {
 		return userAgent.toLowerCase().indexOf('android') > -1;
 	}
@@ -67,7 +63,6 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		isFirefox: isFirefox,
 		isIPad: isIPad,
 		isIOS7orLower: isIOS7orLower,
-		isTouchScreen: isTouchScreen,
 		isAndroid: isAndroid
 	};
 });

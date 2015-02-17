@@ -37,7 +37,7 @@ require(
 					.mouseenter(this.proxy(this.fetchForCurrentWiki));
 
 				this.$wallNotifications.add($('#pt-wall-notifications'))
-					.on('click', '.notifications-markasread', this.proxy(this.markAllAsReadAllWikis));
+					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));
 
 				$(window).on('resize', $.throttle(50, function () {
 					WallNotifications.setNotificationsHeight();
@@ -195,7 +195,7 @@ require(
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
 
-				this.$wallNotifications.find('.notifications-wiki-header').click(this.proxy(this.wikiClick));
+				this.$wallNotifications.find('.notifications-wiki-header').click(this.wikiClick.bind(this));
 
 				this.setNotificationsHeight();
 			},

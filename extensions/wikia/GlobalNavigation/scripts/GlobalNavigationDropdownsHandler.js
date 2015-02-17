@@ -33,12 +33,12 @@ define('wikia.globalNavigationDropdowns', ['wikia.window', 'jquery'], function(w
 	}
 
 	/**
-	 * Close dropdown passed as argument.
+	 * @desc Close dropdown passed as argument.
 	 * If dropdown's onClose method returns false - this method's body is not executed.
 	 * This can be overridden by passing forceClose as true - it ignores onClose method return value.
-	 * @param jQueryObject $dropdown - jquery object representing dropdown
-	 * @param Object dropdownOpts - dropdown options
-	 * @param Boolean forceClose - if forceClose is passed ignore return value of onClose dropdown's method
+	 * @param {jQuery} $dropdown - jquery object representing dropdown
+	 * @param {Object} dropdownOpts - dropdown options
+	 * @param {Boolean} forceClose - if forceClose is passed ignore return value of onClose dropdown's method
 	 */
 	function closeSelectedDropdown($dropdown, dropdownOpts, forceClose) {
 		var onCloseReturnVal;

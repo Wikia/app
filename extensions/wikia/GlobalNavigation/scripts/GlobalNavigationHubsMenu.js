@@ -20,7 +20,7 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdow
 			verticalClass = '.' + $row.data('vertical') + '-links';
 
 		// prevent URL redirection when tapping on section link on touch devices
-		if (browserDetect.isTouchScreen()) {
+		if (w.Wikia.isTouchScreen()) {
 			if (!$row.hasClass('active')) {
 				event.preventDefault();
 			}
