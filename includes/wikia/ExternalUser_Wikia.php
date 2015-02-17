@@ -216,8 +216,8 @@ class ExternalUser_Wikia extends ExternalUser {
 		// Detect discrepancies between Helios and MediaWiki results.
 		if ( $wgEnableHeliosExt && (  $bHeliosResult != $bMediaWikiResult ) ) {
 			
-			$sMWHashFirst = substr( $this->getPassword, 0, 3 ); // The first three bytes.
-			$sMWHashLast  = substr( $this->getPassword(), -3 ); // The last three bytes.
+			$sMWHashFirst = substr( $this->getPassword(), 0, 3 ); // The first three bytes.
+			$sMWHashLast  = substr( $this->getPassword(),   -3 ); // The last three bytes.
 
 			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
 			\Wikia\Logger\WikiaLogger::instance()->error(
