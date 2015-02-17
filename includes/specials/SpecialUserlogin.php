@@ -95,7 +95,16 @@ class LoginForm extends SpecialPage {
 
 		global $wgEnableHeliosExt;
 		if ( $wgEnableHeliosExt ) {
-			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
+			// The line below duplicates what WebRequest::__construct() does. The reason for that
+			// is that raw and unprocessed data are required here for debugging purposes. This will
+			// provided the information whether the original user input is somehow malformed
+			// before it is passed to hashing methods.
+			$aData = $_POST + $_GET;
+			if ( isset( $aData['wpPassword'] ) ) {
+				\Wikia\Helios\User::debugLogin( $aData['wpPassword'], __METHOD__ );
+			}
+			unset( $aData );
+			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ );
 		}
 
 		$this->mRetype = $request->getText( 'wpRetype' );
