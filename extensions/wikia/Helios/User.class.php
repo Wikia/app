@@ -13,7 +13,7 @@ class User {
 	public static function debugLogin( $sPassword, $sCallingMethod )
 	{
 		$sDetectedEncoding = mb_detect_encoding( $sPassword );
-		$sInternalEncodong = mb_internal_encoding();
+		$sInternalEncoding = mb_internal_encoding();
 
 		\Wikia\Logger\WikiaLogger::instance()->info( $sCallingMethod, [
 			'byte_length'			=> strlen( $sPassword ),
