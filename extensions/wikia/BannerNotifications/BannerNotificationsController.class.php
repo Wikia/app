@@ -422,7 +422,7 @@ class BannerNotificationsController extends WikiaController {
 	 * @param {String} $skin
 	 * @param {String} $text
 	 *
-	 * @return bool
+	 * @return true
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 
@@ -433,6 +433,26 @@ class BannerNotificationsController extends WikiaController {
 				$text .= Html::linkedStyle( $style );
 			}
 		}
+
+		return true;
+	}
+
+	/**
+	 * Registering and adding JS package for front-end usage
+	 *
+	 * @param object $out
+	 * @param string $text
+	 *
+	 * @return true
+	 */
+	function onOutputPageBeforeHTML( &$out, &$text ) {
+		//Registering package here as setup for this extension occurs
+		//too soon for JSMessages to be ready
+		JSMessages::registerPackage( 'BannerNotifications', [
+			'bannernotifications-general-ajax-failure'
+		] );
+
+		JSMessages::enqueuePackage('BannerNotifications', JSMessages::EXTERNAL);
 		return true;
 	}
 }

@@ -22,6 +22,12 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		modal,
 		isModal;
 
+	/**
+	 * Constructs jQuery element with the notification
+	 * @param {String} content
+	 * @param {String} [type]
+	 * @returns {jQuery}
+	 */
 	function createMarkup(content, type) {
 		return $('<div class="global-notification">' +
 			'<button class="close wikia-chiclet-button">' +
@@ -65,10 +71,18 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	function show(content, type, $parent, timeout) {
 		var bannerNotification;
 
+		/**
+		 * Removes notification with a fade-out animation
+		 * @param {Function} callback
+		 */
 		function hide(callback) {
 			removeFromDOM(bannerNotification.$element, callback);
 		}
 
+		/**
+		 * Changes content of the notification to the provided one
+		 * @param {String} content
+		 */
 		function setContent(content) {
 			bannerNotification
 				.$element
@@ -76,6 +90,10 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 				.html(content);
 		}
 
+		/**
+		 * Changes type of the notification to the provided one
+		 * @param {String} type
+		 */
 		function setType(type) {
 			if (types.hasOwnProperty(type)) {
 				bannerNotification
@@ -119,6 +137,17 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		}
 
 		return bannerNotification;
+	}
+
+	/**
+	 * Shows notification informing about an AJAX connection error
+	 * @returns {Object}
+	 */
+	function showConnectionError() {
+		return show(
+			$.msg('bannernotifications-general-ajax-failure'),
+			'error'
+		);
 	}
 
 	/**
@@ -218,11 +247,12 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		}
 	}
 
-	//Attachment to window is for legacy reasons
+	//Window global stays for legacy reasons
 	window.BannerNotifications = {
 		init: init,
 		onScroll: onScroll,
 		show: show,
+		showConnectionError: showConnectionError,
 		hideAll: hideAll,
 		isModal: isModalShown,
 		types: types
