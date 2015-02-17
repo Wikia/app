@@ -452,7 +452,7 @@ class BannerNotificationsController extends WikiaController {
 			'bannernotifications-general-ajax-failure'
 		] );
 
-		JSMessages::enqueuePackage('BannerNotifications', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage('BannerNotifications', JSMessages::INLINE);
 		return true;
 	}
 }
