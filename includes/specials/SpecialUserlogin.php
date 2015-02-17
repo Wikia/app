@@ -101,10 +101,10 @@ class LoginForm extends SpecialPage {
 			// before it is passed to hashing methods.
 			$aData = $_POST + $_GET;
 			if ( isset( $aData['wpPassword'] ) ) {
-				\Wikia\Helios\User::debugLogin( $aData['wpPassword'], __METHOD__ );
+				\Wikia\Helios\User::debugLogin( $aData['wpPassword'], __METHOD__ . '-raw' );
 			}
 			unset( $aData );
-			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ );
+			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ . '-getText' );
 		}
 
 		$this->mRetype = $request->getText( 'wpRetype' );
