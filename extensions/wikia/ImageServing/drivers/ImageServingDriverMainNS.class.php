@@ -197,11 +197,11 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		// - update with the data from query cache
 		$result = array_fill_keys( $imageNames, 1 );
 
-		foreach($ret as $row) {
+		foreach ( $ret as $row ) {
 			/* @var mixed $row */
 			$popularity = intval( $row->popularity );
 
-			if ($popularity > $limit) {
+			if ( $popularity > $limit ) {
 				unset( $result[ $row->image ] );
 				wfDebug( __METHOD__ . ": filtered out {$row->image} - used {$popularity} time(s)\n" );
 			}
