@@ -80,7 +80,7 @@
 							.done(function () {
 								$loginModal.find('.sso-login').removeClass('hidden');
 							});
-						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL, $loginModal);
+						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL);
 					}
 
 					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
