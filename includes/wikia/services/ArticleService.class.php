@@ -8,6 +8,7 @@ class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
 	const CACHE_VERSION = 9;
 	const SOLR_SNIPPETS_FIELD = 'snippet_s';
+	const SOLR_ARTICLE_TYPE_FIELD = 'article_type_s';
 
 	/** @var Article $article */
 	private $article = null;
@@ -248,6 +249,32 @@ class ArticleService extends WikiaObject {
 				$text = $document[ static::SOLR_SNIPPETS_FIELD ];
 			} elseif ( isset( $document[$htmlField] ) ) {
 				$text = $document[$htmlField];
+			}
+		}
+		return $text;
+	}
+
+	/**
+	 * Gets the article type using Solr.
+	 * Since SolrDocumentService uses memoization, we will NOT do an additional Solr request
+	 * because of this method - both snippet and article type can use the same memoized
+	 * result
+	 *
+	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
+	 */
+	public function getArticleType() {
+		if ( !($this->article instanceof Article ) ) {
+			return '';
+		}
+
+		$service = new SolrDocumentService();
+		$service->setArticleId( $this->article->getId() );
+		$document = $service->getResult();
+
+		$text = '';
+		if ( $document !== null ) {
+			if ( !empty( $document[ static::SOLR_ARTICLE_TYPE_FIELD] ) ) {
+				$text = $document[ static::SOLR_ARTICLE_TYPE_FIELD];
 			}
 		}
 		return $text;
