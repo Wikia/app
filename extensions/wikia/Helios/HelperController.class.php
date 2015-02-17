@@ -17,6 +17,8 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'allow', false );
+			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -43,8 +45,10 @@ class HelperController extends \WikiaController
 	{
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( 'success', false );
 
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -52,7 +56,7 @@ class HelperController extends \WikiaController
 
 		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
 			$oSpoofUser = new \SpoofUser( $sName );
-			$oSpoofUser->record();
+			return $this->response->setVal( 'success', $oSpoofUser->record() );
 		}
 	}
 
@@ -95,7 +99,8 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$sMemKey = $this->getMemKeyConfirmationEmailsSent( $oUser->getId() );
+		$oUserLoginHelper = ( new \UserLoginHelper );
+		$sMemKey = $oUserLoginHelper->getMemKeyConfirmationEmailsSent( $oUser->getId() );
 		$iEmailSent = intval( $this->wg->Memc->get( $sMemKey ) );
 
 		if ( $oUser->isEmailConfirmationPending() &&
@@ -106,7 +111,7 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		if ( ! Sanitizer::validateEmail( $user->getEmail() ) ) {
+		if ( ! \Sanitizer::validateEmail( $oUser->getEmail() ) ) {
 			$this->response->setVal( 'message', 'invalid email' );
 			return;
 		}
