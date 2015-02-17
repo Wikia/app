@@ -92,6 +92,12 @@ class LoginForm extends SpecialPage {
 		$this->mType = $request->getText( 'type' );
 		$this->mUsername = $request->getText( 'wpName' );
 		$this->mPassword = $request->getText( 'wpPassword' );
+
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
+		}
+
 		$this->mRetype = $request->getText( 'wpRetype' );
 		$this->mDomain = $request->getText( 'wpDomain' );
 		$this->mReason = $request->getText( 'wpReason' );
@@ -648,6 +654,11 @@ class LoginForm extends SpecialPage {
 		}
 
 		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
+		}
 
 		global $wgExternalAuthType;
 		if ( $wgExternalAuthType
