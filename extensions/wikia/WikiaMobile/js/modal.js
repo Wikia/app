@@ -240,8 +240,11 @@ define( 'modal', ['throbber', 'jquery'], function modal ( throbber, $ ){
 	}
 
 	function setCaption ( cap ) {
+		var escapedCaption;
 		if ( typeof cap === 'string' && cap !== '' ) {
-			caption.innerHTML = cap;
+			escapedCaption = document.createTextNode(cap);
+			caption.innerHTML = '';
+			caption.appendChild(escapedCaption);
 			caption.style.display = 'block';
 		} else {
 			caption.style.display = 'none';
