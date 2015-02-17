@@ -4,8 +4,9 @@
  */
 define('videopageadmin.views.featured', [
 	'videopageadmin.views.editbase',
-	'videopageadmin.views.thumbnailupload'
-], function (EditBaseView, ThumbnailUploader) {
+	'videopageadmin.views.thumbnailupload',
+	'BannerNotifications'
+], function (EditBaseView, ThumbnailUploader, BannerNotifications) {
 	'use strict';
 
 	var FeaturedVideo = EditBaseView.extend({
@@ -107,7 +108,7 @@ define('videopageadmin.views.featured', [
 								// close VET modal
 								vet.close();
 							} else {
-								window.BannerNotifications.show(json.msg, 'error');
+								BannerNotifications.show(json.msg, 'error');
 							}
 						}
 					});

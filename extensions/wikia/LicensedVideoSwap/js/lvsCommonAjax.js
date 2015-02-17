@@ -7,8 +7,9 @@ define('lvs.commonajax', [
 	'lvs.ellipses',
 	'lvs.videocontrols',
 	'wikia.window',
-	'lvs.tracker'
-], function (suggestions, ellipses, controls, window, tracker) {
+	'lvs.tracker',
+	'BannerNotifications'
+], function (suggestions, ellipses, controls, window, tracker, BannerNotifications) {
 	'use strict';
 
 	var $body,
@@ -34,10 +35,10 @@ define('lvs.commonajax', [
 	// ajax success callback
 	function success(data, trackingLabel) {
 		if (data.result === 'error') {
-			window.BannerNotifications.show(data.msg, 'error');
+			BannerNotifications.show(data.msg, 'error');
 			stopLoadingGraphic();
 		} else {
-			windowBannerNotifications.show(data.msg, 'confirm');
+			BannerNotifications.show(data.msg, 'confirm');
 			// update the grid and trigger the reset event for JS garbage collection
 			$container.html(data.html).trigger('contentReset');
 			suggestions.init($container);

@@ -7,7 +7,8 @@ define('videohomepage.views.featured', [
 	'wikia.tracker',
 	// module specific deps
 	'videohomepage.collections.featuredslides',
-], function ($, Nirvana, VideoBootstrap, Tracker, FeaturedSlidesCollection) {
+	'BannerNotifications'
+], function ($, Nirvana, VideoBootstrap, Tracker, FeaturedSlidesCollection, BannerNotifications) {
 	'use strict';
 	var track, FeaturedVideosView;
 
@@ -232,7 +233,7 @@ define('videohomepage.views.featured', [
 
 			$.when(data).done(function (json) {
 				if (json.error) {
-					window.BannerNotifications.show(json.error, 'error', null, 4000);
+					BannerNotifications.show(json.error, 'error', null, 4000);
 				} else {
 					// cache embed data
 					model.set({

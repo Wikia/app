@@ -4,7 +4,12 @@
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
  */
 
-define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
+define('wikia.vet', [
+	'wikia.videoBootstrap',
+	'jquery',
+	'wikia.window',
+	'BannerNotifications'
+], function (VideoBootstrap, $, window, BannerNotifications) {
 	'use strict';
 
 	var curSourceId = 0,

@@ -187,7 +187,7 @@
 									statusMsg.fadeOut(1000);
 								}, 4000);
 							} else {
-							BannerNotificationsn.show('Something is wrong', 'error');
+								BannerNotifications.show('Something is wrong', 'error');
 							}
 						});
 					});

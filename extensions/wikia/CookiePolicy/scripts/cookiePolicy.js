@@ -4,8 +4,9 @@ require([
 	'mw',
 	'wikia.window',
 	'wikia.cookies',
-	'wikia.geo'
-], function ($, mw, window, cookies, geo) {
+	'wikia.geo',
+	'BannerNotifications'
+], function ($, mw, window, cookies, geo, BannerNotifications) {
 	'use strict';
 
 	/**

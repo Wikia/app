@@ -1,13 +1,12 @@
-/*global BannerNotifications*/
-
 /**
  * AJAX interrupter for Licensed Video Swap undo workflow
  * @author Kenneth Kouot <kenneth@wikia-inc.com>
  */
 require([
 	'jquery',
-	'lvs.commonajax'
-], function ($, commonAjax) {
+	'lvs.commonajax',
+	'BannerNotifications'
+], function ($, commonAjax, BannerNotifications) {
 	'use strict';
 
 	function LVSHistoryPage(opts) {
