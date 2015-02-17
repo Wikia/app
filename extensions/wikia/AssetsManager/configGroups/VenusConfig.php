@@ -187,8 +187,8 @@ $VenusConfig[ 'global_navigation_scss' ] = [
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationSearch.scss',
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationAccountNavigation.scss',
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationHubsMenu.scss',
-		'//extensions/wikia/UserLogin/css/UserLoginDropdown.globalNavigation.scss',
-		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationUserLoginDropdown.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss',
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationInverse.scss',
 		'//skins/shared/styles/transparent-out.scss'
 	]
@@ -198,10 +198,8 @@ $VenusConfig[ 'global_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
-		'//resources/wikia/libraries/menu-aim/menu-aim.js',
-		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
-		'//resources/wikia/modules/menuAim.js',
-		'//resources/wikia/modules/delayedHover.js',
+		'#group_menu_aim_js',
+		'#group_delayed_hover_js',
 		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
 		'//extensions/wikia/Venus/scripts/layout.js',

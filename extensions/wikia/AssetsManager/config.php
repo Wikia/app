@@ -2275,3 +2275,21 @@ $config['facebook_client_preferences_scss'] = [
 		'//extensions/wikia/FacebookClient/styles/preferences.scss',
 	]
 ];
+
+$config['delayed_hover_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
+		'//resources/wikia/modules/delayedHover.js'
+	]
+];
+
+$config['menu_aim_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/menu-aim/menu-aim.js',
+		'//resources/wikia/modules/menuAim.js'
+	]
+];
