@@ -666,7 +666,7 @@ class LoginForm extends SpecialPage {
 
 		global $wgEnableHeliosExt;
 		if ( $wgEnableHeliosExt ) {
-			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
+			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ );
 		}
 
 		global $wgExternalAuthType;
