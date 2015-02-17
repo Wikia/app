@@ -10,10 +10,10 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['AnalyticsEngine'] = __DIR__ . '/i18n/AnalyticsEngine.i18n.php';
 
 // autoloaded classes
+$wgAutoloadClasses['AnalyticsEngineController'] = __DIR__ . '/AnalyticsEngineController.class.php';
 $wgAutoloadClasses['iAnalyticsProvider'] = __DIR__ . '/iAnalyticsProvider.php';
 $wgAutoloadClasses['AnalyticsEngine'] = __DIR__ . '/AnalyticsEngine.php';
 $wgAutoloadClasses['AnalyticsProviderQuantServe'] = __DIR__ . '/AnalyticsProviderQuantServe.php';
-$wgAutoloadClasses['AnalyticsProviderGA_Urchin'] = __DIR__ . '/AnalyticsProviderGA_Urchin.php';
 $wgAutoloadClasses['AnalyticsProviderComscore'] = __DIR__ . '/AnalyticsProviderComscore.php';
 $wgAutoloadClasses['AnalyticsProviderExelate'] = __DIR__ . '/AnalyticsProviderExelate.php';
 $wgAutoloadClasses['AnalyticsProviderGAS'] = __DIR__ . '/AnalyticsProviderGAS.php';

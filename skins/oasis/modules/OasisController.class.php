@@ -203,41 +203,9 @@ class OasisController extends WikiaController {
 		// setup loading of JS/CSS
 		$this->loadJs();
 
-		// FIXME: create separate module for stats stuff?
-		// load Google Analytics code
-		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
-		// onewiki GA
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-
-		// track page load time
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-
-		// track browser height TODO NEF no browser height tracking code anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
-
-		// record which varnish this page was served by
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
-
-		// TODO NEF not used, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
-
-		// TODO NEF we dont do AB this way anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
-
-		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
-		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
-
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
-			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->rubiconRtp = AnalyticsEngine::track('RubiconRTP', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->tracking = $this->sendRequest( 'AnalyticsEngine', 'track' );
 		}
 
 		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
