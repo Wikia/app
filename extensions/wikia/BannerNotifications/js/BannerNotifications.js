@@ -15,15 +15,15 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 			'error': 'red',
 			'warn': 'yellow'
 		},
-		dom,
+		classes = Object.keys(types).join(' '),
 		pageContainer,
 		wikiaHeader,
 		headerHeight,
 		modal,
 		isModal;
 
-	function createMarkup(id, content, type) {
-		return $('<div id="' + id + '" class="global-notification">' +
+	function createMarkup(content, type) {
+		return $('<div class="global-notification">' +
 			'<button class="close wikia-chiclet-button">' +
 			'<img src="' + window.stylepath + '/oasis/images/icon_close.png">' +
 			'</button><div class="msg">' + content + '</div></div>')
@@ -31,21 +31,94 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 			.hide();
 	}
 
-	function addToDOM(markup, $elementBefore) {
+	/**
+	 * Adds given markup to DOM
+	 * @param {jQuery} $element
+	 * @param {jQuery} $parentElement
+	 */
+	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
-		if ($elementBefore instanceof jQuery) {
-			$elementBefore.prepend(markup);
+		if ($parentElement instanceof jQuery) {
+			$parentElement.prepend($element);
 
 			// handle modal implementations
 		} else if (isModal) {
-			modal.prepend(markup);
+			modal.prepend($element);
 
 			// handle non-modal implementation
 		} else {
-			$(pageContainer).prepend(markup);
+			$(pageContainer).prepend($element);
 		}
 
-		markup.fadeIn('slow');
+		$element.fadeIn('slow');
+	}
+
+	/**
+	 * Main entry point for this feature - shows the notification
+	 * and returns the notification instance
+	 * @param {string} content - message to be displayed
+	 * @param {string} type - See BannerNotifications.options for supported types
+	 * @param {jQuery} [$parent] Element to prepend notification to
+	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
+	 */
+
+	function show(content, type, $parent, timeout) {
+		var bannerNotification;
+
+		function hide(callback) {
+			removeFromDOM(bannerNotification.$element, callback);
+		}
+
+		function setContent(content) {
+			bannerNotification
+				.$element
+				.find('.msg')
+				.html(content);
+		}
+
+		function setType(type) {
+			if (types.hasOwnProperty(type)) {
+				bannerNotification
+					.$element
+					.removeClass(classes)
+					.addClass(type);
+			}
+		}
+
+		bannerNotification = {
+			$element: createMarkup(content, type),
+			hide: hide,
+			setContent: setContent,
+			setType: setType
+		};
+
+		isModal = isModalShown();
+
+		// Modal notifications have no close button so set a timeout
+		if (isModal && typeof timeout !== 'number') {
+			timeout = defaultTimeout;
+		}
+
+		bannerNotification.setType(type);
+
+		addToDOM(
+			bannerNotification.$element,
+			$parent
+		);
+
+		// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
+		if (window.WikiaFooterApp) {
+			window.WikiaFooterApp.addScrollEvent();
+		}
+
+		// Close notification after specified amount of time
+		if (typeof timeout === 'number') {
+			setTimeout(function () {
+				hide();
+			}, timeout);
+		}
+
+		return bannerNotification;
 	}
 
 	/**
@@ -62,59 +135,10 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	/**
-	 * Main entry point for this feature - shows the notification
-	 * @param {string} id - unique id used for DOM markup of the notification
-	 * @param {string} content - message to be displayed
-	 * @param {string} type - See BannerNotifications.options for supported types
-	 * @param {jQuery} [$element] Element to prepend notification to
-	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
-	 */
-	function show(id, content, type, $element, timeout) {
-
-		validate(id, content);
-		isModal = isModalShown();
-
-		// Modal notifications have no close button so set a timeout
-		if (isModal && typeof timeout !== 'number') {
-			timeout = defaultTimeout;
-		}
-
-		addToDOM(
-			createMarkup(id, content, type),
-			$element
-		);
-
-		// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
-		if (window.WikiaFooterApp) {
-			window.WikiaFooterApp.addScrollEvent();
-		}
-
-		// Close notification after specified amount of time
-		if (typeof timeout === 'number') {
-			setTimeout(function () {
-				hide(id);
-			}, timeout);
-		}
-	}
-
-	/**
-	 * Shows the notification after hiding all the existing ones
-	 * @param {string} id - unique id used for DOM markup of the notification
-	 * @param {string} content - message to be displayed
-	 * @param {string} type - See BannerNotifications.options for supported types
-	 * @param {jQuery} [$element] Element to prepend notification to
-	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
-	 */
-	function showOnly(id, content, type, $element, timeout) {
-		hideAll();
-		show.apply(null, arguments);
-	}
-
-	/**
 	 * Determine if a modal is present and visible so we can apply the notification to the modal instead of the page.
 	 * @returns {boolean}
 	 */
-	function isModalShown () {
+	function isModalShown() {
 		// handle all types of modals since the begining of time!
 		modal = $('.modalWrapper, .yui-panel, .modal');
 
@@ -127,7 +151,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 * @param {jQuery} $elements - elements to be removed from DOM
 	 * @param {function} [callback]
 	 */
-	function removeFromDOM ($elements, callback) {
+	function removeFromDOM($elements, callback) {
 		if ($elements.length) {
 			$elements.animate({
 				'height': 0,
@@ -139,19 +163,6 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 					callback();
 				}
 			});
-		}
-	}
-
-	/**
-	 * Hides the notification and executes an optional callback
-	 * @param {String} id - ID of the notification element to hide
-	 * @param {Function} [callback] - Optional callback to be triggered after the action
-	 */
-	function hide (id, callback) {
-		var $element = $('#' + id);
-
-		if ($element.length) {
-			removeFromDOM($element, callback);
 		} else {
 			if (typeof callback === 'function') {
 				callback();
@@ -160,30 +171,17 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	/**
-	 * Validates if id and content of a notification are correct
-	 * @param {String} id
-	 * @param {String} content
-	 */
-	function validate(id, content) {
-		if (!id || document.getElementById(id)) {
-			throw new Error('Either empty or already existing notification ID supplied');
-		} else if (!content) {
-			throw new Error('Empty notification content supplied');
-		}
-	}
-
-	/**
 	 * Hides all displayed notifications
 	 * @param {Function} callback
 	 */
-	function hideAll (callback) {
+	function hideAll(callback) {
 		removeFromDOM($('.global-notification'), callback);
 	}
 
 	/**
 	 * Bind close event to close button
 	 */
-	function setUpClose () {
+	function setUpClose() {
 		$(document.body).on('click', '.close', onCloseClicked);
 	}
 
@@ -191,7 +189,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 * Handles click event on the 'close' button
 	 * @param {Event} event
 	 */
-	function onCloseClicked (event) {
+	function onCloseClicked(event) {
 		removeFromDOM(
 			$(event.target).closest('.global-notification')
 		);
@@ -202,10 +200,11 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 * Pin the notification to the top of the screen when scrolled down the page.
 	 * Shares the scroll event with WikiaFooter.js
 	 */
-	function onScroll () {
-		var containerTop;
+	function onScroll() {
+		var containerTop,
+			notificationElements = $('.global-notification');
 
-		if (!dom || !dom.length) {
+		if (!notificationElements || !notificationElements.length) {
 			return;
 		}
 
@@ -213,9 +212,9 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		containerTop = pageContainer.getBoundingClientRect().top;
 
 		if (containerTop < headerHeight) {
-			dom.addClass('float');
+			notificationElements.addClass('float');
 		} else {
-			dom.removeClass('float');
+			notificationElements.removeClass('float');
 		}
 	}
 
@@ -224,8 +223,6 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		init: init,
 		onScroll: onScroll,
 		show: show,
-		showOnly: showOnly,
-		hide: hide,
 		hideAll: hideAll,
 		isModal: isModalShown,
 		types: types
