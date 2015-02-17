@@ -63,7 +63,7 @@ class GetRevisionWithTags extends Maintenance {
 
 		return (new WikiaSQL())
 			->SELECT()
-			->FIELD( 'rev_id' )
+			->FIELD( 'rev_id', 'rev_user' )
 			->FROM( 'page' )
 			->JOIN( 'revision' )
 			->ON( 'rev_page', 'page_id' )
@@ -79,7 +79,8 @@ class GetRevisionWithTags extends Maintenance {
 		return [
 			'wiki_id' => $_SERVER['SERVER_ID'],
 			'revision_id' => $row->rev_id,
-			'editor' => $this->sanitizeRevisionTag($row->ts_tags)
+			'editor' => $this->sanitizeRevisionTag($row->ts_tags),
+			'user_groups' => implode(',',User::newFromId($row->rev_user)->getEffectiveGroups())
 		];
 	}
 
