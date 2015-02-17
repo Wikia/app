@@ -15,9 +15,9 @@ class HelperController extends \WikiaController
 	{
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
-		$this->response->setVal( 'allow', false );
 
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'allow', false );
 			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
@@ -99,8 +99,8 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$userLoginHelper = ( new \UserLoginHelper );
-		$sMemKey = $userLoginHelper->getMemKeyConfirmationEmailsSent( $oUser->getId() );
+		$oUserLoginHelper = ( new \UserLoginHelper );
+		$sMemKey = $oUserLoginHelper->getMemKeyConfirmationEmailsSent( $oUser->getId() );
 		$iEmailSent = intval( $this->wg->Memc->get( $sMemKey ) );
 
 		if ( $oUser->isEmailConfirmationPending() &&
