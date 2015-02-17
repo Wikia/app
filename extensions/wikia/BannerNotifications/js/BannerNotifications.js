@@ -233,7 +233,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		var containerTop,
 			notificationElements = $('.banner-notification');
 
-		if (!notificationElements || !notificationElements.length) {
+		if (!pageContainer || !notificationElements || !notificationElements.length) {
 			return;
 		}
 
