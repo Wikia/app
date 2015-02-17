@@ -33,12 +33,11 @@ require([
 	 * Display the cookie policy message to the user
 	 */
 	function showBanner() {
-		var message = mw.message('cookie-policy-notification-message').parse();
-
-		BannerNotifications.show(message, 'notify');
+		var message = mw.message('cookie-policy-notification-message').parse(),
+			notification = BannerNotifications.show(message, 'notify');
 
 		// currently, mw.message doesn't support the #NewWindowLink magic word, so we'll have to use JS
-		BannerNotifications.msg.find('a').on('click', function (event) {
+		notification.$element.find('a').on('click', function (event) {
 			var url = $(this).attr('href');
 			event.preventDefault();
 			window.open(url, '_blank');

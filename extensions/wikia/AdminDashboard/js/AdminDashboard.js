@@ -44,7 +44,7 @@ var AdminDashboard = {
 						{ url: url },
 						// success callback
 						function( formRes ) {
-							window.BannerNotifications.hide();
+							window.BannerNotifications.hideAll();
 							if ( formRes.error ) {
 								window.BannerNotifications.show( formRes.error, 'error' );
 							} else {
@@ -54,7 +54,10 @@ var AdminDashboard = {
 						},
 						// error callback
 						function() {
-							window.BannerNotifications.show( $.msg('vet-error-while-loading'), 'error' );
+							window.BannerNotifications.show(
+								$.msg('vet-error-while-loading'),
+								'error'
+							);
 						}
 					);
 					// Don't move on to second VET screen.  We're done.

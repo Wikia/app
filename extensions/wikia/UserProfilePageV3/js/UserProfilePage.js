@@ -296,7 +296,7 @@ var UserProfilePage = {
 							userId: UserProfilePage.userId
 						};
 						UserProfilePage.wasDataChanged = true;
-						window.BannerNotifications.hide();
+						window.BannerNotifications.hideAll();
 					} else {
 						if (typeof (response.result.error) !== 'undefined') {
 							UserProfilePage.error(response.result.error);
@@ -411,7 +411,7 @@ var UserProfilePage = {
 			msg = $.msg('oasis-generic-error');
 		}
 
-		windowBannerNotificationsn.show(msg, 'error');
+		window.BannerNotifications.show(msg, 'error');
 	},
 
 	getFormData: function () {

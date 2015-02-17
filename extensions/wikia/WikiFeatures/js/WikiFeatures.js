@@ -211,7 +211,7 @@
 			if (res.result === 'ok') {
 				lockedFeatures[featureName] = false;
 			} else {
-		BannerNotificationson.show(res.error, 'error');
+				BannerNotifications.show(res.error, 'error');
 			}
 		});
 	}

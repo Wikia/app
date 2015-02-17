@@ -53,12 +53,12 @@ require([
 		},
 		handleUndoFail: function (msg) {
 			commonAjax.stopLoadingGraphic();
-		BannerNotificationsn.show(msg, 'error');
+			BannerNotifications.show(msg, 'error');
 		},
 		handleUndoSuccess: function (msg, target) {
 			$(target).closest('li').remove();
 			commonAjax.stopLoadingGraphic();
-	BannerNotificationson.show(msg, 'confirm');
+			BannerNotifications.show(msg, 'confirm');
 		},
 		// restore clobbered constructor
 		constructor: LVSHistoryPage

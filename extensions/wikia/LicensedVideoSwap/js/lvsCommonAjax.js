@@ -37,7 +37,7 @@ define('lvs.commonajax', [
 			window.BannerNotifications.show(data.msg, 'error');
 			stopLoadingGraphic();
 		} else {
-			windowBannerNotificationsn.show(data.msg, 'confirm');
+			windowBannerNotifications.show(data.msg, 'confirm');
 			// update the grid and trigger the reset event for JS garbage collection
 			$container.html(data.html).trigger('contentReset');
 			suggestions.init($container);

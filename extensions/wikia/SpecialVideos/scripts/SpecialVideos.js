@@ -64,9 +64,9 @@ $(function () {
 							},
 							// success callback
 							function (formRes) {
-								windowBannerNotificationsn.hide();
+								window.BannerNotifications.hideAll();
 								if (formRes.error) {
-									windoBannerNotificationson.show(formRes.error, 'error');
+									window.BannerNotifications.show(formRes.error, 'error');
 								} else {
 									VET.close();
 									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
@@ -74,7 +74,7 @@ $(function () {
 							},
 							// error callback
 							function () {
-								windBannerNotificationsion.show($.msg('vet-error-while-loading'), 'error');
+								window.BannerNotifications.show($.msg('vet-error-while-loading'), 'error');
 							}
 						);
 						// Don't move on to second VET screen.  We're done.
@@ -113,7 +113,7 @@ $(function () {
 										// reload page with cb
 										(new Wikia.Querystring(window.location)).addCb().goTo();
 									} else {
-						BannerNotificationstion.show(json.msg, 'error');
+										BannerNotifications.show(json.msg, 'error');
 									}
 
 								}
@@ -121,7 +121,7 @@ $(function () {
 						}
 					});
 				} else {
-BannerNotificationsation.show($.msg('oasis-generic-error'), 'error');
+					BannerNotifications.show($.msg('oasis-generic-error'), 'error');
 				}
 			});
 		}

@@ -534,7 +534,7 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 					$('body').trigger('userToolsItemAdded', [data.toolbar]);
 					this.modal.trigger( 'close' );
 				} else {
-					winBannerNotificationsn.show( status, 'error' );
+					win.BannerNotifications.show(status, 'error');
 				}
 			}
 

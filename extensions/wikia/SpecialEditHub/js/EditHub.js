@@ -37,7 +37,7 @@
 
 								window.BannerNotifications.hide();
 								if (response.error) {
-									windowBannerNotificationsn.show(response.error, 'error');
+									window.BannerNotifications.show(response.error, 'error');
 								} else {
 									if (selectedModule === parseInt(window.wgEditHubModuleIdFeaturedVideo)) {
 										box = $this.parents('.module-box:first');

@@ -157,7 +157,7 @@ $( document ).ready( function() {
 
 				// Wikia Start - Liz
 				//mw.util.jsMessage( html, 'ajaxwatch' );
-			BannerNotificationsn.show(html, 'error');
+				BannerNotifications.show(html, 'error');
 				return true;
 				// Wikia End - Liz
 

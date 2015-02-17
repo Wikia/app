@@ -115,7 +115,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			var extraData, caption;
 
 			if (json.status === 'fail') {
-			BannerNotificationsn.show(json.errMsg, 'error', null, notificationTimout);
+				BannerNotifications.show(json.errMsg, 'error', null, notificationTimout);
 			} else {
 				// setup metadata
 				extraData = {};
@@ -278,7 +278,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			query;
 
 		if (!$urlInput.val()) {
-	BannerNotificationson.show($.msg('vet-warn2'), 'error', null, notificationTimout);
+			BannerNotifications.show($.msg('vet-warn2'), 'error', null, notificationTimout);
 			return false;
 		} else {
 			query = $urlInput.val();
@@ -332,7 +332,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		});
 
 		if ($errorBox.length) {
-BannerNotificationsion.show($errorBox.html(), 'error', null, notificationTimout);
+			BannerNotifications.show($errorBox.html(), 'error', null, notificationTimout);
 		}
 
 		if ($('#VideoEmbedMain').html() === '') {
@@ -356,7 +356,13 @@ BannerNotificationsion.show($errorBox.html(), 'error', null, notificationTimout)
 
 		e.preventDefault();
 
-		if (!$nameInput.length || $nameInput.val() === '') {BannerNotificationstion.show($.msg('vet-warn3'), 'error', null, notificationTimout);
+		if (!$nameInput.length || $nameInput.val() === '') {
+			BannerNotifications.show(
+				$.msg('vet-warn3'),
+				'error',
+				null,
+				notificationTimout
+			);
 			return;
 		}
 
@@ -392,7 +398,13 @@ BannerNotificationsion.show($errorBox.html(), 'error', null, notificationTimout)
 		callback = function (data, status) {
 			var wikitext, options, screenType;
 
-			if (status === 'error') {BannerNotificationsation.show($.msg('vet-insert-error'), 'error', null, notificationTimout);
+			if (status === 'error') {
+				BannerNotifications.show(
+					$.msg('vet-insert-error'),
+					'error',
+					null,
+					notificationTimout
+				);
 			} else if (status === 'success') {
 				screenType = jqXHR.getResponseHeader('X-screen-type');
 				if (typeof screenType === 'undefined') {
@@ -401,7 +413,12 @@ BannerNotificationsion.show($errorBox.html(), 'error', null, notificationTimout)
 				switch ($.trim(screenType)) {
 					case 'error':
 						data.responseText = data.responseText.replace(/<script.*script>/, '');
-BannerNotificationscation.show(data.responseText, 'error', null, notificationTimout);
+						BannerNotifications.show(
+							data.responseText,
+							'error',
+							null,
+							notificationTimout
+						);
 						break;
 					case 'summary':
 						switchScreen('Summary');
@@ -523,7 +540,13 @@ BannerNotificationscation.show(data.responseText, 'error', null, notificationTim
 					screenType = jqXHR.getResponseHeader('X-Screen-Type');
 				}
 
-				if ($.trim(screenType) === 'error') BannerNotificationsication.show(data.responseText, 'error', null, notificationTimout);
+				if ($.trim(screenType) === 'error') {
+					BannerNotificationsication.show(
+						data.responseText,
+						'error',
+						null,
+						notificationTimout
+					);
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();

@@ -171,7 +171,7 @@
 				}
 			// some error occurred
 			} else if (response.loginAborted) {
-				windowBannerNotificationsn.show(response.errorMsg, 'error');
+				window.BannerNotifications.show(response.errorMsg, 'error');
 			} else if (response.unconfirmed) {
 				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
@@ -194,7 +194,7 @@
 		 */
 		setupModal: function (response) {
 			if (!response.modal) {
-		BannerNotificationson.show($.msg('oasis-generic-error'), 'error');
+				BannerNotifications.show($.msg('oasis-generic-error'), 'error');
 				return;
 			}
 

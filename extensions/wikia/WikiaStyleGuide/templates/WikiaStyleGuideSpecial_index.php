@@ -260,7 +260,7 @@ $(function() {
 	$('#UISGBannerNotification').toggle(function() {
 		BannerNotifications.show('Hello there, I am Banner Notification', 'notify');
 	}, function() {
-		BannerNotifications.hide();
+		BannerNotifications.hideAll();
 	});
 });
 </script>
@@ -273,6 +273,6 @@ javascript:
 $('#UISGBannerNotification').toggle(function() {
 	BannerNotifications.show('Hello there, I am Banner Notification', 'notify');
 }, function() {
-	BannerNotifications.hide();
+	BannerNotifications.hideAll();
 });
 </pre>
