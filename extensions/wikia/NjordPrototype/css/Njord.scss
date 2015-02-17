@@ -1,5 +1,6 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/flexbox";
 @import "skins/oasis/css/core/responsive-variables";
 @import "extensions/wikia/Venus/styles/fonts/venus-icons";
 @import "extensions/wikia/Venus/styles/mixins";
@@ -167,13 +168,14 @@
 		overflow: hidden;
 	}
 
-	& + nav.wikia-menu-button, {
-		background-color: $color-page;
+	& + nav.wikia-menu-button {
+		@include flexbox();
+
+		background-color: transparent;
 		background-image: none;
 		border: none;
 		border-radius: 0;
 		cursor: auto;
-		display: block;
 		margin-bottom: 30px;
 		margin-right: 320px;
 		position: relative;
@@ -187,8 +189,8 @@
 			content: '';
 			display: block;
 			height: 1px;
-			position: absolute;
-			top: 7px;
+			margin-left: 1px;
+			margin-top: 7px;
 			width: 100%;
 		}
 
@@ -199,30 +201,28 @@
 
 		.chevron,
 		.chevron:hover {
-			background-color: $color-page;
+			background-color: transparent;
 			border-top-color: $color-links;
 			padding-right: 2px;
 		}
 
 		.drop {
-			background-color: $color-page;
+			background-color: transparent;
 			cursor: pointer;
-			float: left;
 			position: relative;
 			z-index: 1;
 		}
 
 		.drop:hover,
 		> a:hover {
-			background-color: $color-page;
+			background-color: transparent;
 			background-image: none;
 		}
 
 		> a {
-			background-color: $color-page;
+			background-color: transparent;
 			border: none;
 			border-radius: 0;
-			float: left;
 			font-weight: bold;
 			color: $color-links;
 			padding-left: 42px;
