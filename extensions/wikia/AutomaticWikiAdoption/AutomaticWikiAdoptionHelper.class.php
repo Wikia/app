@@ -338,13 +338,13 @@ class AutomaticWikiAdoptionHelper {
 		if ( F::app()->checkSkin( 'oasis' ) && (self::isAllowedToAdopt($wgCityId, $wgUser) == self::USER_ALLOWED )  && !self::getDismissNotificationState($wgUser)) {
 
 			BannerNotificationsController::addNotification(
-				wfMsg('wikiadoption-notification',
+				wfMsg( 'wikiadoption-notification',
 						$wgSitename,
-						Wikia::SpecialPageLink('WikiAdoption','wikiadoption-adopt-inquiry')),
+						Wikia::SpecialPageLink( 'WikiAdoption','wikiadoption-adopt-inquiry' ) ),
 				array(
 					'name' => 'AutomaticWikiAdoption',
 					'dismissUrl' => $wgScript . '?action=ajax&rs=AutomaticWikiAdoptionAjax&method=dismiss',
-			), BannerNotificationsController::NOTIFICATION_CUSTOM);
+			), BannerNotificationsController::NOTIFICATION_CUSTOM );
 		}
 
 		wfProfileOut(__METHOD__);
