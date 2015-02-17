@@ -102,24 +102,23 @@ require(
 		}
 
 		function displayNotification(message) {
-			BannerNotifications.show(message, 'notify');
-
-			// Track a view of the notification
-			var trackingParams = {
-				trackingMethod: 'ga',
-				category: 'wikia-in-your-lang',
-				action: tracker.ACTIONS.VIEW,
-				label: targetLanguage + '-notification-view',
-			};
+			var notification = BannerNotifications.show(message, 'notify'),
+				// Track a view of the notification
+				trackingParams = {
+					trackingMethod: 'ga',
+					category: 'wikia-in-your-lang',
+					action: tracker.ACTIONS.VIEW,
+					label: targetLanguage + '-notification-view',
+				};
 
 			tracker.track(trackingParams);
 
 			// Bind tracking of clicks on a link and events on close
-			bindEvents();
+			bindEvents(notification.$element);
 		}
 
-		function bindEvents() {
-			$('.global-notification.notify')
+		function bindEvents($element) {
+			$element
 				.on('click', '.close', function() {
 					onNotificationClosed();
 				})

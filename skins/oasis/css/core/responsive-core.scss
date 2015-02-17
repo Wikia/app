@@ -13,19 +13,19 @@
 		min-width: $width-outside-min;
 	}
 
-	.skin-oasis > .global-notification,
+	.skin-oasis > .banner-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		max-width: $width-outside-max;
 	}
 
-	.global-notification,
+	.banner-notification,
 	.WikiaHeader .page-width-container {
 		@include box-sizing(border-box);
 		width: $width-outside;
 	}
 
-	.global-notification {
+	.banner-notification {
 		&.float {
 			margin-left: -515px;
 		}
@@ -230,7 +230,7 @@
 			width: auto;
 		}
 
-		.global-notification {
+		.banner-notification {
 			width: 100%;
 
 			&.float {

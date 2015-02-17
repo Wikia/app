@@ -29,7 +29,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 * @returns {jQuery}
 	 */
 	function createMarkup(content, type) {
-		return $('<div class="global-notification">' +
+		return $('<div class="banner-notification">' +
 			'<button class="close wikia-chiclet-button">' +
 			'<img src="' + window.stylepath + '/oasis/images/icon_close.png">' +
 			'</button><div class="msg">' + content + '</div></div>')
@@ -204,7 +204,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 * @param {Function} callback
 	 */
 	function hideAll(callback) {
-		removeFromDOM($('.global-notification'), callback);
+		removeFromDOM($('.banner-notification'), callback);
 	}
 
 	/**
@@ -220,7 +220,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 */
 	function onCloseClicked(event) {
 		removeFromDOM(
-			$(event.target).closest('.global-notification')
+			$(event.target).closest('.banner-notification')
 		);
 		event.stopPropagation();
 	}
@@ -231,7 +231,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 */
 	function onScroll() {
 		var containerTop,
-			notificationElements = $('.global-notification');
+			notificationElements = $('.banner-notification');
 
 		if (!notificationElements || !notificationElements.length) {
 			return;

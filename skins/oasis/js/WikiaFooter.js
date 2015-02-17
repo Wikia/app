@@ -12,7 +12,7 @@ var WikiaFooterApp = {
 			this.footer = $( '#WikiaFooter' );
 		}
 		this.toolbar = this.footer.children( '.toolbar' );
-		this.gn = $( '.global-notification' );
+		this.gn = $( '.banner-notification' );
 		this.windowObj = $( window );
 		this.originalWidth = this.toolbar.width();
 

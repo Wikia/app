@@ -5,7 +5,7 @@
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .wikia-grid {
-	.global-notification {
+	.banner-notification {
 		width: 988px;
 
 		&.float {
@@ -23,7 +23,7 @@
 
 /* end temp transistion code */
 
-.modalWrapper > .global-notification {
+.modalWrapper > .banner-notification {
 	@include box-shadow(0, 0, 0, #000);
 	margin: auto;
 	width: auto;
@@ -45,7 +45,7 @@
 	}
 }
 
-.modal > .global-notification {
+.modal > .banner-notification {
 	width: 100%;
 
 	.close {
@@ -55,7 +55,7 @@
 
 // VisualEditor specific notification styling
 .ve-ui-window-body {
-	.global-notification {
+	.banner-notification {
 		@include box-sizing-border-box;
 		position: absolute;
 		width: 100%;

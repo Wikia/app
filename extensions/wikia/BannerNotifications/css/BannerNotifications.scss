@@ -3,7 +3,7 @@
 @import 'skins/shared/mixins/box-shadow';
 @import 'extensions/wikia/Venus/styles/variables';
 
-.global-notification {
+.banner-notification {
 	@include box-shadow(0, 2px, 5px, darken($color-page, 12%));
 	margin: 0 auto;
 	padding: 8px 10px;

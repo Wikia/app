@@ -393,7 +393,7 @@
 						$( '#publish' ).remove();
 						// TODO: use mustache and promise pattern along with .getMessages
 						notifications =
-							'<div class="global-notification error">' +
+							'<div class="banner-notification error">' +
 							'<div class="msg">' + errorMessages.join( '</br>' ) + '</div>' +
 							'</div>';
 
