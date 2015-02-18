@@ -4,12 +4,12 @@ This directory contains some Unicode normalization routines. These routines
 are meant to be reusable in other projects, so I'm not tying them to the
 MediaWiki utility functions.
 
-The main function to care about is UtfNormal::toNFC(); this will convert
+The main function to care about is ```UtfNormal::toNFC()``` this will convert
 a given UTF-8 string to Normalization Form C if it's not already such.
 The function assumes that the input string is already valid UTF-8; if there
 are corrupt characters this may produce erroneous results.
 
-To also check for illegal characters, use UtfNormal::cleanUp(). This will
+To also check for illegal characters, use ```UtfNormal::cleanUp()```. This will
 strip illegal UTF-8 sequences and characters that are illegal in XML, and
 if necessary convert to normalization form C.
 
@@ -22,26 +22,28 @@ extra slow).
 
 ## Regenerating data tables
 
-UtfNormalData.inc and UtfNormalDataK.inc are generated from the Unicode
-Character Database by the script UtfNormalGenerate.php. On a *nix system
-'make' should fetch the necessary files and regenerate it if the scripts
+```UtfNormalData.inc``` and ```UtfNormalDataK.inc``` are generated from the Unicode
+Character Database by the script ```UtfNormalGenerate.php```. On a *nix system
+```make``` should fetch the necessary files and regenerate it if the scripts
 have been changed or you remove it.
 
 
 ## Testing
 
-'make test' will run the conformance test (UtfNormalTest.php), fetching the
+```make test``` will run the conformance test (UtfNormalTest.php), fetching the
 data from from the net if necessary. If it reports failure, something is
 going wrong!
 
 You may have to set up PHPUnit first.
 
+```bash
 $ pear channel-discover pear.phpunit.de
 $ pear install phpunit/PHPUnit
+```
 
 ## Benchmarks
 
-Run 'make bench' to download some sample texts from Wikipedia and run some
+Run ```make bench``` to download some sample texts from Wikipedia and run some
 cheap benchmarks of some of the functions. Take all numbers with large
 grains of salt.
 
@@ -54,8 +56,8 @@ PHP code. This is in the 'normal' directory in MediaWiki's CVS extensions
 module. It is known to work with PHP 4.3.8 and 5.0.2 on Linux/x86 but hasn't
 been thoroughly tested on other configurations.
 
-If the php_normal.so module is loaded in php.ini, the normalization functions
-will automatically use it. If you can't (or don't want to) load it in php.ini,
-you may be able to load it using the dl() function before include()ing or
-require()ing UtfNormal.php, and it will be picked up.
+If the ```php_normal.so``` module is loaded in ```php.ini```, the normalization functions
+will automatically use it. If you can't (or don't want to) load it in ```php.ini```,
+you may be able to load it using the ```dl()``` function before include()ing or
+require()ing ```UtfNormal.php```, and it will be picked up.
 
