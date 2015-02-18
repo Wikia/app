@@ -1,23 +1,33 @@
 $(function () {
 	'use strict';
 
-	var track = Wikia.Tracker.buildTrackingFunction({
-		action: Wikia.Tracker.ACTIONS.IMPRESSION,
-		category: 'article-content-length-test',
-		trackingMethod: 'ga'
-	});
-	var $ = jQuery,
-		$article = $ ('.WikiaArticle'),
-		windowWidth = $(window).width(),
+	var $article = $ ('.WikiaArticle'),
 		articleLength = $article.height(),
-		lenghtLabel = 'short';
-
+		label = '',
+		lengthBorder = 800,
+		sampling = 1,
+		scale = 100,
+		track,
+		windowWidth = $(window).width(),
+		widthCategory = Math.floor(windowWidth/scale);
+		
 	console.log("szerokosc i wysokosc: ", windowWidth, articleLength)
-	if (articleLength > 800) {
-		lengthLabel = 'long';
+
+	if (articleLength > lengthBorder) {
+		label = 'long-' + widthCategory;
+	} else {
+		label = 'short-' + widthCategory;
 	};
-	
-	track({
-		label: lengthLabel
-	})
+	console.log("label:", label)
+
+	if (Math.random() * 100 < sampling) {
+		track = Wikia.Tracker.buildTrackingFunction({
+			action: Wikia.Tracker.ACTIONS.IMPRESSION,
+			category: 'article-content-length-test',
+			trackingMethod: 'ga'
+		});
+		track({
+			label: label
+		})
+	}
 });
