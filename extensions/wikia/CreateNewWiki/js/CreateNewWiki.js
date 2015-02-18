@@ -1,4 +1,4 @@
-/*global UserLoginFacebook: true, UserLoginAjaxForm: true, WikiBuilderCfg: true, ThemeDesigner */
+/*global FacebookLogin: true, UserLoginAjaxForm: true, WikiBuilderCfg: true, ThemeDesigner */
 
 (function () {
 	'use strict';
@@ -83,15 +83,19 @@
 								}
 							)
 						};
-						UserLoginFacebook.callbacks['login-success'] = function () {
+						FacebookLogin.callbacks['login-success'] = function () {
 							self.transition('UserAuth', true, '+');
-							UserLoginFacebook.closeSignupModal();
+							FacebookLogin.closeSignupModal();
 						};
 					}
+
+					self.transition('NameWiki', true, '+');
+
 					// Load facebook assets before going to the login form
-					$.loadFacebookAPI(function () {
-						self.transition('NameWiki', true, '+');
-					});
+					$.loadFacebookAPI()
+						.done(function () {
+							$('.sso-login').removeClass('hidden');
+						});
 				}
 			});
 			this.wikiDomain.keyup(function () {
@@ -531,8 +535,6 @@
 					WikiBuilder.init(stringHelper);
 				});
 			});
-		$('#AjaxLoginButtons').hide();
-		$('#AjaxLoginLoginForm').show();
 
 		if (window.wgOasisResponsive) {
 			ThemeDesigner.slideByDefaultWidth = 500;

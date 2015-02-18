@@ -334,6 +334,7 @@ $messages['ce'] = array(
  * @author Metalhead64
  */
 $messages['de'] = array(
+	'preferences-v2-desc' => 'Benutzereinstellungen v2',
 	'prefs-personal' => 'Meine Informationen',
 	'preferences-v2-username' => 'Mein Benutzername:',
 	'preferences-v2-usergroups' => 'Meine Benutzergruppen:',
@@ -428,6 +429,7 @@ $messages['diq'] = array(
  * @author Vivaelcelta
  */
 $messages['es'] = array(
+	'preferences-v2-desc' => 'Preferencias de usuario v2',
 	'prefs-personal' => 'Información básica',
 	'preferences-v2-username' => 'Mi nombre de usuario:',
 	'preferences-v2-usergroups' => 'Pertenezco a los grupos:',
@@ -479,6 +481,18 @@ $messages['es'] = array(
 	'tog-editsectiononrightclick-v2' => 'Editar las secciones haciendo clic derecho en los títulos',
 	'tog-editondblclick-v2' => 'Editar las páginas con doble clic',
 	'tog-hidefollowedpages-v2' => 'Ocultar mi lista de páginas seguidas para los demás',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'preferences-v2-gender' => 'Nire sexua:',
+	'preferences-v2-password' => 'Nire pasahitza:',
+	'preferences-v2-fancysig-help-page-name' => 'Help:Sinadura',
+	'prefs-appearance' => 'Itxura',
+	'preferences-v2-date' => 'Data-formatua:',
+	'preferences-v2-time' => 'Ordu-eremua:',
 );
 
 /** Persian (فارسی)
@@ -566,6 +580,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'preferences-v2-desc' => 'Préférences utilisateur v2',
 	'prefs-personal' => 'Mes infos',
 	'preferences-v2-username' => 'Nom d’utilisateur :',
 	'preferences-v2-usergroups' => 'Groupes d’utilisateurs :',
@@ -740,12 +755,18 @@ $messages['ko'] = array(
 	'preferences-v2-username' => '내 사용자 이름:',
 	'preferences-v2-gender' => '내 성별:',
 	'preferences-v2-password' => '나의 비밀번호:',
+	'preferences-v2-date' => '날짜 형식:',
+	'preferences-v2-time' => '시간대:',
 	'prefs-emailv2' => '이메일',
+	'preferences-v2-redirect-wiki-activity' => '위키 활동 내역',
 	'preferences-v2-redirect-main-page' => '대문',
+	'prefs-monobookv2' => '모노북',
 	'tog-showAdsv2' => '광고:',
+	'prefs-addressv2' => '주소',
 	'preferences-v2-watchdefault' => '편집',
 	'preferences-v2-watchmoves' => '옮기기',
 	'preferences-v2-watchdeletion' => '삭제',
+	'prefs-patrolled-editsv2' => '검열된 편집',
 	'tog-editondblclick-v2' => '두번 클릭하여 이 문서 편집',
 );
 
@@ -862,6 +883,7 @@ $messages['mk'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'preferences-v2-desc' => 'Keutamaan Pengguna v2',
 	'prefs-personal' => 'Maklumat saya',
 	'preferences-v2-username' => 'Nama samaran saya:',
 	'preferences-v2-usergroups' => 'Kumpulan pengguna saya:',
@@ -1585,6 +1607,7 @@ $messages['vo'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'preferences-v2-desc' => '用户参数设置v2',
 	'prefs-personal' => '我的信息',
 	'preferences-v2-username' => '我的用户名：',
 	'preferences-v2-usergroups' => '我的用户组：',
@@ -1615,6 +1638,7 @@ $messages['zh-hans'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Wiki活动',
 	'preferences-v2-redirect-main-page' => '首页',
 	'preferences-v2-redirect-recent-changes' => '最近更改',
+	'preferences-v2-redirect-explanation' => '登陆页面选项允许您选择当您在浏览器中输入$1后最终抵达的页面。',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => '高级选项',
 	'prefs-recent-changesv2' => '最近的变化、历史和日志',
@@ -1638,6 +1662,7 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Citizen01
  * @author Cwlin0416
  * @author EagerLin
  * @author Ffaarr
@@ -1684,6 +1709,7 @@ $messages['zh-hant'] = array(
 	'tog-highlightbrokenv2' => '顯示損壞的連結為紅色，而不帶問號標記。',
 	'tog-showAdsv2' => '廣告：',
 	'prefs-addressv2' => '地址',
+	'prefs-followed-pages-iv2' => '關注頁面當我……',
 	'preferences-v2-watchdefault' => '編輯',
 	'preferences-v2-watchmoves' => '移動',
 	'preferences-v2-watchdeletion' => '刪除',

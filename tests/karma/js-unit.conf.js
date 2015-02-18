@@ -19,9 +19,6 @@ module.exports = function (config) {
 			'resources/wikia/ui_components/**/node_modules/**/*.js',
 		],
 		files: [
-			'tests/lib/jasmine/jasmine.async.js',
-			'tests/lib/jasmine/jasmine.dataprovider.js',
-
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
@@ -67,6 +64,8 @@ module.exports = function (config) {
 
 			// Performance
 			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
+			'extensions/wikia/Bucky/js/bucky_resources_timing.js',
+			'extensions/wikia/Bucky/js/spec/*.spec.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
@@ -93,7 +92,6 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
 			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
-			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
@@ -189,7 +187,11 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/views/media.js',
 			'extensions/wikia/MediaGallery/scripts/views/toggler.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
-			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js'
+			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
+
+			// User Login and Signup
+			'extensions/wikia/UserLogin/js/MarketingOptIn.js',
+			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js'
 		]
 	});
 };

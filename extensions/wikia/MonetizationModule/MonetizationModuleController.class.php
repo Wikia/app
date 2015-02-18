@@ -24,7 +24,6 @@ class MonetizationModuleController extends WikiaController {
 
 		$params = [
 			's_id' => $this->wg->CityId,
-			'page_id' => $this->wg->Title->getArticleID(),
 			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
 			'vertical' => $helper->getWikiVertical(),
 			'cache' => $helper->getCacheVersion(),

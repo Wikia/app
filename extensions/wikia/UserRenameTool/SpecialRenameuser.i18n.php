@@ -109,7 +109,7 @@ $messages['qqq'] = array(
 	'userrenametool-encoded' => 'Label for URL encoded version of new username',
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-warnings' => '{{Identical|Warning}}',
-	'userrenametool-submit' => '{{Identical|Submit}}',
+	'userrenametool-submit' => '{{Identical|Change username}}',
 	'userrenametool-error-antispoof-conflict' => 'Message to show when similarity conflict occurs for new username.',
 	'userrenametool-error-antispoof-notinstalled' => 'Message to show when AntiSpoof extension is not installed.',
 	'userrenametool-errorblocked' => '* $1 - Username of blocked user.
@@ -1325,6 +1325,7 @@ $messages['et'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  * @author Theklan
  * @author Xabier Armendaritz
  */
@@ -1340,6 +1341,8 @@ $messages['eu'] = array(
 	'userrenametool-errorinvalid' => '"<nowiki>$1</nowiki>" erabiltzaile izena okerra da',
 	'userrenametool-errortoomany' => '"<nowiki>$1</nowiki>" lankideak $2 {{PLURAL:$2|ekarpen|ekarpen}} ditu, $3 baino {{PLURAL:$3|ekarpen|ekarpen}} gehiago dituen lankide baten izena aldatzeak gunearen errendimenduan eragin txarrak izan ditzake.',
 	'userrenametool-success' => '"<nowiki>$1</nowiki>" lankidearen izen berria "<nowiki>$2</nowiki>" da',
+	'userrenametool-confirm-yes' => 'Bai',
+	'userrenametool-confirm-no' => 'Ez',
 	'userrenametool-page-exists' => 'Badago $1 orrialdea, eta ezin da automatikoki gainidatzi.',
 	'userrenametool-page-moved' => '«$1» orria «$2» izenera aldatu da.',
 	'userrenametool-page-unmoved' => 'Ezin izan da $1 orrialdea $2(e)ra mugitu.',
@@ -1358,6 +1361,7 @@ $messages['ext'] = array(
 
 /** Persian (فارسی)
  * @author Alirezaaa
+ * @author Calak
  * @author Ebraminio
  * @author Huji
  * @author Mjbmr
@@ -1392,7 +1396,7 @@ $messages['fa'] = array(
 	'userrenametool-logpagetext' => 'این سیاههٔ تغییر نام کاربران است',
 	'userrenametool-logentry' => 'نام $1 را به $2 تغییر داد',
 	'userrenametool-log' => '{{PLURAL:$1|۱ ویرایش|$1 ویرایش}}. دلیل: $2',
-	'userrenametool-move-log' => 'صفحه در ضمن تغییر نام «[[User:$1|$1]]» به «[[User:$2|$2]]» به طور خودکار انتقال داده شد.',
+	'userrenametool-move-log' => 'صفحه در ضمن تغییر نام کاربر «[[User:$1|$1]]» به «[[User:$2|$2]]» به طور خودکار منتقل شد',
 	'right-renameuser' => 'تغییر نام کاربران',
 	'action-renameuser' => 'تغییر نام کاربران',
 );
@@ -4847,7 +4851,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-old' => '当前用户名：',
 	'userrenametool-new' => '新用户名：',
 	'userrenametool-encoded' => 'URL 编码：',
-	'userrenametool-reason' => '重命名的原因:',
+	'userrenametool-reason' => '重命名的原因：',
 	'userrenametool-move' => '移动用户页及其对话页（包括各子页）到新的名字',
 	'userrenametool-reserve' => '封禁旧用户名，使之不能在日后使用',
 	'userrenametool-notify-renamed' => '完成时发邮件给被重命名的用户',
@@ -4857,7 +4861,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-previously-renamed' => '用户 $1 已经要求了重命名',
 	'userrenametool-phalanx-matches' => 'Phalanx过滤器匹配$1：',
 	'userrenametool-confirm' => '是，为用户重命名',
-	'userrenametool-submit' => '提交',
+	'userrenametool-submit' => '更改用户名',
 	'userrenametool-error-antispoof-conflict' => 'AntiSpoof警告 - 现已有一个用户名和“<nowiki>$1</nowiki>”相似。',
 	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof未安装。',
 	'userrenametool-errordoesnotexist' => '用户"<nowiki>$1</nowiki>"不存在',

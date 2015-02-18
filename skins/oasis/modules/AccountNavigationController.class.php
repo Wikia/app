@@ -56,7 +56,7 @@ class AccountNavigationController extends WikiaController {
 	 * Modify personal URLs list
 	 */
 	private function setupPersonalUrls() {
-		global $wgUser, $wgComboAjaxLogin;
+		global $wgUser;
 
 		// Import the starting set of urls from the skin template
 		$this->personal_urls = F::app()->getSkinTemplateObj()->data['personal_urls'];

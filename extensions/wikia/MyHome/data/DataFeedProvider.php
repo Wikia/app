@@ -10,6 +10,8 @@ class DataFeedProvider {
 	const UPLOAD_THUMB_WIDTH = 150;
 	const VIDEO_THUMB_WIDTH = 150;
 
+	const HIDDEN_CATEGORIES_LIMIT = 500;
+
 	public static function getThumb($imageName, &$imageObj="") {
 		wfProfileIn(__METHOD__);
 		$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
@@ -282,10 +284,10 @@ class DataFeedProvider {
 		wfProfileIn(__METHOD__);
 		$fname = __METHOD__;
 		if (!is_array(self::$hiddenCategories)) {
-			self::$hiddenCategories = WikiaDataAccess::cacheWithLock(wfMemcKey('hidden-categories-v2'),60*60,
+			self::$hiddenCategories = WikiaDataAccess::cacheWithLock(wfMemcKey('hidden-categories-v2'), WikiaResponse::CACHE_SHORT /* 3 hours */,
 				function() use ($fname) {
 					$dbr = wfGetDB(DB_SLAVE);
-					$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';",$fname);
+					$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat' LIMIT " . self::HIDDEN_CATEGORIES_LIMIT, $fname);
 					$hiddenCategories = array();
 					while($row = $dbr->fetchObject($res)) {
 						$hiddenCategories[] = $row->page_title;

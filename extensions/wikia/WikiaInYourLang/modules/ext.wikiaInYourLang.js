@@ -19,21 +19,26 @@ require(
 		'use strict';
 
 		// Get user's geographic data and a country code
-		var targetLanguage = getTargetLanguage();
+		var targetLanguage = getTargetLanguage(),
+			// Per request we should unify dialects like pt and pt-br
+			// @see CE-1220
+			contentLanguage = w.wgContentLanguage.split('-')[0],
+			// Cache version
+			cacheVersion = '1.01';
 
 		function init() {
-			if (targetLanguage !== false && targetLanguage !== w.wgContentLanguage) {
+			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
-				if (cache.get('wikiaInYourLangRequestSent') !== true && cache.get('wikiaInYourLangNotificationShown') !== true) {
+				if (cache.get('wikiaInYourLangRequestSent' + cacheVersion) !== true && cache.get('wikiaInYourLangNotificationShown' + cacheVersion) !== true) {
 					// Update JS cache and set the notification shown indicator to true
-					var ttl = 60 * 60 * 24 * 30; // Cache for a month
-					cache.set('wikiaInYourLangRequestSent', true, ttl);
+					// Cache for a day
+					cache.set('wikiaInYourLangRequestSent' + cacheVersion, true, cache.CACHE_STANDARD);
 
 					getNativeWikiaInfo();
-				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage') === 'string') {
-					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage'));
+				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion) === 'string') {
+					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion));
 				}
 			}
 		}
@@ -50,7 +55,7 @@ require(
 			}
 			else if (typeof browserLanguage === 'string') {
 				// Check if a browser's language is accessible
-				targetLanguage = browserLanguage.substr(0, 2);
+				targetLanguage = browserLanguage.split('-')[0];
 			} else if (typeof geoCountryCode === 'string') {
 				// Check if a langcode from Geo cookie is accessible
 				targetLanguage = geoCountryCode;
@@ -59,7 +64,9 @@ require(
 				targetLanguage = false;
 			}
 
-			return targetLanguage;
+			// Per request we should unify dialects like pt and pt-br
+			// @see CE-1220
+			return targetLanguage.split('-')[0];
 		}
 
 		function getNativeWikiaInfo() {
@@ -86,7 +93,8 @@ require(
 						displayNotification(results.message);
 
 						// Save the message in cache to display until a user closes it
-						cache.set(targetLanguage + 'WikiaInYourLangMessage', results.message);
+						// Cache for a day
+						cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, results.message, cache.CACHE_STANDARD);
 					}
 				}
 			});
@@ -110,14 +118,13 @@ require(
 		}
 
 		function bindEvents() {
-			$('.global-notification.notify').click(function (event) {
-				var $target = $(event.target);
-				if ($target.parent().hasClass('close')) {
+			$('.global-notification.notify')
+				.on('click', '.close', function() {
 					onNotificationClosed();
-				} else if ($target.hasClass('text')) {
+				})
+				.on('click', '.text', function() {
 					onLinkClick();
-				}
-			})
+				});
 		}
 
 		function onNotificationClosed() {
@@ -130,8 +137,9 @@ require(
 			};
 			tracker.track(trackingParams);
 
-			cache.set(targetLanguage + 'WikiaInYourLangMessage', null);
-			cache.set('wikiaInYourLangNotificationShown', true);
+			cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, null);
+			// Cache for a month
+			cache.set('wikiaInYourLangNotificationShown' + cacheVersion, true, cache.CACHE_LONG);
 		}
 
 		function onLinkClick() {
@@ -146,6 +154,8 @@ require(
 			tracker.track(trackingParams);
 		}
 
-		$(init);
+		if (!w.wikiaPageIsCorporate) {
+			$(init);
+		}
 	}
 );

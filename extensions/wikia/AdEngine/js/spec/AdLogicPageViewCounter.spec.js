@@ -32,9 +32,9 @@ describe('AdLogicPageViewCounter', function () {
 			expect(pvCounter.increment()).toBe(expectedPv);
 
 			expect(cacheMock.set).toHaveBeenCalled();
-			expect(cacheMock.set.calls[0].args[1]).toEqual({pvs: expectedPv, since: expectedSince});
-			expect(cacheMock.set.calls[0].args[2]).toBe(expectedTtl);
-			expect(cacheMock.set.calls[0].args[3].getTime()).toBe(dateNow.getTime());
+			expect(cacheMock.set.calls.first().args[1]).toEqual({pvs: expectedPv, since: expectedSince});
+			expect(cacheMock.set.calls.first().args[2]).toBe(expectedTtl);
+			expect(cacheMock.set.calls.first().args[3].getTime()).toBe(dateNow.getTime());
 		});
 	}
 

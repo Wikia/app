@@ -915,7 +915,9 @@ class Dump7ZipOutput extends DumpPipeOutput {
 	}
 
 	function setup7zCommand( $file ) {
-		$command = "7za a -bd -si " . wfEscapeShellArg( $file );
+		// Wikia change - begin - @upstream: I07ab5f93ecd6d706460691db5181de89ef31cbea
+		$command = "7za a -bd -si -mx=4 " . wfEscapeShellArg( $file );
+		// Wikia change - end
 		// Suppress annoying useless crap from p7zip
 		// Unfortunately this could suppress real error messages too
 		$command .= ' >' . wfGetNull() . ' 2>&1';

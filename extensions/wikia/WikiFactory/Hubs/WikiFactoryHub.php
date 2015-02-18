@@ -81,10 +81,11 @@ class WikiFactoryHub extends WikiaModel {
 	 *
 	 * @access public
 	 *
-	 * @param $active boolean flag to return old or new categories, by default load the old ones while we are in transition phase
+	 * @param $new boolean flag to return old OR new categories, by default load the old ones while we are in transition phase
+	 * @param $both boolean flag to return old AND new categories, $new must be false for this to work
 	 * @return array category names and ids from city_cats table
 	 */
-	public function getAllCategories( $new = false ) {
+	public function getAllCategories( $new = false, $both = false ) {
 
 		if (empty($this->mNewCategories) || empty($this->mOldCategories)) {
 			$this->loadCategories();
@@ -92,6 +93,9 @@ class WikiFactoryHub extends WikiaModel {
 
 		if ( $new ) {
 			return $this->mNewCategories;
+		} else if ( $both ) {
+			// return both old and new
+			return $this->mAllCategories;
 		} else {
 			// Deprecated/old categories
 			return $this->mOldCategories;
@@ -174,6 +178,10 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return Integer vertical_id
 	 */
 	public function getVerticalId( $city_id ) {
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			$city_id = 11;
+		}
 
 		$id = (new WikiaSQL())
 			->SELECT( "city_vertical" )

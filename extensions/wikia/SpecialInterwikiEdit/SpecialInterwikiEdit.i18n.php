@@ -173,6 +173,7 @@ $messages['cs'] = array(
  * @author Metalhead64
  */
 $messages['de'] = array(
+	'interwikiedit-desc' => 'Special:InterwikiEdit für eine webbasierte Verwaltung von Interwiki-Links',
 	'interwikiedit' => 'Interwiki-Editor',
 	'iwedit-title' => 'Interwiki-Editor',
 	'iwedit-language-interwikis' => 'nur Sprach-Interwikis',
@@ -201,6 +202,7 @@ $messages['diq'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'interwikiedit-desc' => 'Especial:InterwikiEdit para la web basado en el manejo de interwikis',
 	'interwikiedit' => 'Editor de interwikis',
 	'iwedit-title' => 'Editor de Interwiki',
 	'iwedit-language-interwikis' => 'sólo interwikis de idioma',
@@ -254,6 +256,7 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'interwikiedit-desc' => 'Special:InterwikiEdit pour la gestion des liens interwiki basée sur le web',
 	'interwikiedit' => 'Éditeur interwiki',
 	'iwedit-title' => 'Éditeur Interwiki',
 	'iwedit-language-interwikis' => 'interwikis de langues seulement',
@@ -261,8 +264,8 @@ $messages['fr'] = array(
 	'iwedit-update' => 'Mettre à jour',
 	'iwedit-error' => 'Une erreur est survenue.',
 	'iwedit-success' => 'Le lien a été créé avec succès.',
-	'iwedit-local' => 'Interwiki uniquement local (c’est-à-dire non global) ?',
-	'iwedit-trans' => 'Activer la traduction qui fait peur',
+	'iwedit-local' => 'Interwiki uniquement local (i.e. non global) ?',
+	'iwedit-trans' => 'Activer la super-inclusion',
 );
 
 /** Galician (galego)
@@ -431,6 +434,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'interwikiedit-desc' => 'Special:InterwikiEdit untuk pengendalian pautan antarawiki berasaskan web',
 	'interwikiedit' => 'Penyunting Antara Wiki',
 	'iwedit-title' => 'Penyunting Antara Wiki',
 	'iwedit-language-interwikis' => 'antara wiki bahasa sahaja',
@@ -484,10 +488,13 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Matik7
+ * @author Pio387
  * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'interwikiedit-desc' => 'Special:InterwikiEdit służąca do obsługi linków interwiki',
 	'interwikiedit' => 'Edycja interwiki',
 	'iwedit-title' => 'Edycja interwiki',
 	'iwedit-language-interwikis' => 'tylko interwiki języków',
@@ -495,6 +502,7 @@ $messages['pl'] = array(
 	'iwedit-update' => 'Aktualizacja',
 	'iwedit-error' => 'Wystąpił błąd.',
 	'iwedit-success' => 'Utworzono link.',
+	'iwedit-local' => 'Lokalna interwiki? (tzn. nie globalna)',
 );
 
 /** Piedmontese (Piemontèis)
@@ -558,6 +566,7 @@ $messages['qu'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'interwikiedit-desc' => "Special:InterwikiEdit pa gestione web de le collegaminde 'mbrà uicchi",
 	'interwikiedit' => 'Cangiatore InderUicchi',
 	'iwedit-title' => 'Cangiatore InderUicchi',
 	'iwedit-language-interwikis' => 'sulamende lènghe de inderuicchi',
@@ -565,6 +574,8 @@ $messages['roa-tara'] = array(
 	'iwedit-update' => 'Aggiorne',
 	'iwedit-error' => "S'ha verificate 'n'errore.",
 	'iwedit-success' => 'Collegamende ccrejate cu successe.',
+	'iwedit-local' => 'Sulamende inderuicchi locale? (p.e. none globbale)',
+	'iwedit-trans' => "Abbilite 'nglusione paurose",
 );
 
 /** Russian (русский)
@@ -686,16 +697,19 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
-	'interwikiedit' => '跨维基连接编辑器',
-	'iwedit-title' => '跨维基连接编辑器',
-	'iwedit-language-interwikis' => '只有语言跨维基链接而已',
+	'interwikiedit-desc' => 'Special:InterwikiEdit提供基于网页的跨维基链接处理',
+	'interwikiedit' => '跨维基链接编辑器',
+	'iwedit-title' => '跨维基链接编辑器',
+	'iwedit-language-interwikis' => '仅语言相关的跨维基链接',
 	'iwedit-all-interwikis' => '所有跨维基链接',
 	'iwedit-update' => '更新',
 	'iwedit-error' => '发生错误。',
 	'iwedit-success' => '链接创建成功。',
-	'iwedit-local' => '本地限定的跨wiki链接？（也就是说不是全域的）',
+	'iwedit-local' => '仅本地的跨wiki链接？（即不是全域的）',
+	'iwedit-trans' => '启用危险的嵌入（scary transclusion）',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

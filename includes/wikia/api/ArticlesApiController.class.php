@@ -730,7 +730,8 @@ class ArticlesApiController extends WikiaApiController {
 				} else {
 					$dataLog = [
 						'titleText' => $t->getText(),
-						'articleId' => $t->getArticleID()
+						'articleId' => $t->getArticleID(),
+						'revId' => $revId
 					];
 
 					WikiaLogger::instance()->info( 'No revision found for article', $dataLog );

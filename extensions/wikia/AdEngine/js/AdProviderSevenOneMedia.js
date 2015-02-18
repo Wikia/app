@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.provider.sevenOneMedia', [
 
 			if (height >= 90 && height <= 95 && width === 728) {
 				log('fullbanner2 has standard size, enabling TOP_BUTTON_WIDE', 'debug', logGroup);
-				window.adslots2.push(['TOP_BUTTON_WIDE.force']);
+				window.adslots2.push('TOP_BUTTON_WIDE.force');
 			}
 		}
 	}

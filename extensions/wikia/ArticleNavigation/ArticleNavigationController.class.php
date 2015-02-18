@@ -116,6 +116,7 @@ class ArticleNavigationController extends WikiaController {
 					$data['title'] = $commentsTalk['title'] . " <span class='comments-talk-counter'>" . $commentsTalk['formattedCount'] . "</span>";
 					$data['href'] = $commentsTalk['href'];
 					$data['tooltip'] = $commentsTalk['title'];
+					$data['rawTitle'] = true;
 				}
 
 				if ( isset( $contentAction['rel'] ) ) {

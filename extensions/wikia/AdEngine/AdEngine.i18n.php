@@ -151,6 +151,7 @@ $messages['de'] = array(
 	'adengine-exitstitial-redirecting' => 'Dein Browser leitet dich in wenigen Sekunden auf die angeforderte Seite weiter.',
 	'adengine-exitstitial-go-back' => 'Zurück gehen?',
 	'adengine-exitstitial-button' => 'Diese Anzeige überspringen',
+	'adengine-desc' => 'Anzeigenengine von Wikia',
 );
 
 /** Greek (Ελληνικά)
@@ -173,6 +174,7 @@ $messages['es'] = array(
 	'adengine-exitstitial-redirecting' => 'Tu navegador te redirigirá a la página que solicitaste en unos segundos.',
 	'adengine-exitstitial-go-back' => '¿Quieres regresar?',
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
+	'adengine-desc' => "Wikia's Ad Engine",
 );
 
 /** Estonian (eesti)
@@ -183,6 +185,14 @@ $messages['et'] = array(
 	'adengine-exitstitial-redirecting' => 'Kohe suunab brauser sind soovitud lehele.',
 	'adengine-exitstitial-go-back' => 'Soovid minna tagasi?',
 	'adengine-exitstitial-button' => 'Jäta see reklaam vahele',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'adengine-advertisement' => 'iragarkia',
+	'adengine-exitstitial-go-back' => 'Itzuli nahi duzu?',
 );
 
 /** Persian (فارسی)
@@ -228,6 +238,7 @@ $messages['fr'] = array(
 	'adengine-exitstitial-redirecting' => 'Votre navigateur vous redirigera vers la page demandée dans quelques secondes.',
 	'adengine-exitstitial-go-back' => 'Revenir en arrière ?',
 	'adengine-exitstitial-button' => 'Passer cette publicité',
+	'adengine-desc' => 'Moteur d’annonces de Wikia',
 );
 
 /** Galician (galego)
@@ -343,10 +354,12 @@ $messages['kn'] = array(
  * @author 한글화담당
  */
 $messages['ko'] = array(
+	'adengine-advertisement' => '광고',
 	'adengine-exitstitial-title-template' => '$1 떠나는 중…',
 	'adengine-exitstitial-redirecting' => '브라우저가 몇 초 뒤에 요청한 페이지로 넘어갑니다.',
 	'adengine-exitstitial-go-back' => '돌아가시겠습니까?',
 	'adengine-exitstitial-button' => '광고 건너뛰기',
+	'adengine-desc' => '위키아 광고 엔진',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -455,6 +468,7 @@ $messages['ms'] = array(
 	'adengine-exitstitial-redirecting' => 'Pelayar anda akan membawa anda ke halaman yang anda minta dalam beberapa saat.',
 	'adengine-exitstitial-go-back' => 'Ingin kembali?',
 	'adengine-exitstitial-button' => 'Langkau iklan ini',
+	'adengine-desc' => 'Enjin Iklan Wikia',
 );
 
 /** Maltese (Malti)
@@ -520,6 +534,7 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Matik7
  * @author Pio387
  * @author Sovq
  */
@@ -529,6 +544,7 @@ $messages['pl'] = array(
 	'adengine-exitstitial-redirecting' => 'Twoja przeglądarka przekieruje Cię na pożądaną stronę za kilka sekund.',
 	'adengine-exitstitial-go-back' => 'Chcesz wrócić na wiki?',
 	'adengine-exitstitial-button' => 'Zamknij reklamę',
+	'adengine-desc' => 'Silnik reklam Wikii',
 );
 
 /** Pashto (پښتو)
@@ -543,8 +559,10 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Leon saudanha
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
+	'adengine-advertisement' => 'anúncio',
 	'adengine-exitstitial-title-template' => 'Está a sair da wiki $1...',
 	'adengine-exitstitial-redirecting' => 'O browser vai reencaminhá-lo para a página solicitada dentro de segundos.',
 	'adengine-exitstitial-go-back' => 'Quer regressar?',
@@ -574,6 +592,7 @@ $messages['roa-tara'] = array(
 	'adengine-exitstitial-redirecting' => "'U browser te adda mannà a 'a pàgene ca è cercate jndr'à quacche seconde.",
 	'adengine-exitstitial-go-back' => 'Vue ccù tuèrne rrete?',
 	'adengine-exitstitial-button' => 'Zumbe sta pubblecetà',
+	'adengine-desc' => 'AD Engine de Uicchia',
 );
 
 /** Russian (русский)
@@ -628,6 +647,7 @@ $messages['sv'] = array(
 	'adengine-exitstitial-redirecting' => 'Din webbläsare kommer att omdirigera dig till den sida du begärt inom några sekunder.',
 	'adengine-exitstitial-go-back' => 'Vill du gå tillbaka?',
 	'adengine-exitstitial-button' => 'Hoppa över denna annons',
+	'adengine-desc' => 'Wikias annonsmotor',
 );
 
 /** Silesian (ślůnski)
@@ -713,6 +733,7 @@ $messages['zh'] = array(
  * @author Byfserag
  * @author Duolaimi
  * @author Liuxinyu970226
+ * @author Yfdyh000
  * @author 御坂美琴
  */
 $messages['zh-hans'] = array(
@@ -721,10 +742,17 @@ $messages['zh-hans'] = array(
 	'adengine-exitstitial-redirecting' => '您的浏览器将在几秒钟后重定向至您请求的页面。',
 	'adengine-exitstitial-go-back' => '想要返回吗？',
 	'adengine-exitstitial-button' => '跳过这个广告',
+	'adengine-desc' => 'Wikia的广告引擎',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Citizen01
  */
 $messages['zh-hant'] = array(
 	'adengine-advertisement' => '廣告',
+	'adengine-exitstitial-title-template' => '您正離開 $1 ……',
+	'adengine-exitstitial-redirecting' => '您的瀏覽器幾秒鐘內將重新導向到您請求的頁面。',
+	'adengine-exitstitial-go-back' => '想要返回嗎？',
+	'adengine-exitstitial-button' => '跳過廣告',
+	'adengine-desc' => 'Wikia 的廣告引擎',
 );

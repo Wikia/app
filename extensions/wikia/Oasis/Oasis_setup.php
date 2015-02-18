@@ -58,7 +58,6 @@ function wfOasisSetup() {
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMessageNotification';
 
 	// misc
-	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
 
 	// support "noexternals" URL param
@@ -76,10 +75,10 @@ function wfOasisSetup() {
 	));
 
 	// Generic messages that can be used by all extensions such as error messages
-	$jsMessages->registerPackage('Oasis-generic', array(
+	$jsMessages->registerPackage( 'Oasis-generic', [
 		'oasis-generic-error',
-	));
-	$jsMessages->enqueuePackage('Oasis-generic', JSMessages::EXTERNAL);
+	] );
+	$jsMessages->enqueuePackage( 'Oasis-generic', JSMessages::EXTERNAL );
 }
 
 

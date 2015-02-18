@@ -29,11 +29,11 @@ describe('Method ext.wikia.adEngine.wikiaGptAdDetect.onAdLoad', function () {
 			gptHop.onAdLoad(slotName, gptEvent, {}, mocks.success, mocks.hop);
 
 			if (successOrHop === 'success') {
-				expect(mocks.success.calls.length).toBe(1, 'Success callback should be called once');
-				expect(mocks.hop.calls.length).toBe(0, 'Hop callback should not be called');
+				expect(mocks.success.calls.count()).toBe(1, 'Success callback should be called once');
+				expect(mocks.hop.calls.count()).toBe(0, 'Hop callback should not be called');
 			} else {
-				expect(mocks.success.calls.length).toBe(0, 'Success callback should not be called');
-				expect(mocks.hop.calls.length).toBe(1, 'Hop callback should be called');
+				expect(mocks.success.calls.count()).toBe(0, 'Success callback should not be called');
+				expect(mocks.hop.calls.count()).toBe(1, 'Hop callback should be called');
 			}
 		});
 	}
@@ -81,11 +81,11 @@ describe('Method ext.wikia.adEngine.wikiaGptAdDetect.onAdLoad', function () {
 			gptHop.onAdLoad(slotName, gptEvent, mocks.iframe, mocks.success, mocks.hop);
 
 			if (successOrHop === 'success') {
-				expect(mocks.success.calls.length).toBe(1, 'Success callback should be called once');
-				expect(mocks.hop.calls.length).toBe(0, 'Hop callback should not be called');
+				expect(mocks.success.calls.count()).toBe(1, 'Success callback should be called once');
+				expect(mocks.hop.calls.count()).toBe(0, 'Hop callback should not be called');
 			} else {
-				expect(mocks.success.calls.length).toBe(0, 'Success callback should not be called');
-				expect(mocks.hop.calls.length).toBe(1, 'Hop callback should be called');
+				expect(mocks.success.calls.count()).toBe(0, 'Success callback should not be called');
+				expect(mocks.hop.calls.count()).toBe(1, 'Hop callback should be called');
 			}
 		});
 	}

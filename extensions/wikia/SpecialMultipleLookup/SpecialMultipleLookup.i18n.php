@@ -592,6 +592,8 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'multilookupnext' => '다음',
+	'multilookupprevious' => '이전',
 	'multilookupwiki' => '위키',
 	'multilookupwikidbname' => '데이터베이스 이름',
 	'multilookupwikiurl' => 'URL',

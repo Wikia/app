@@ -9,7 +9,6 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 
 			return function () {
 				if (!initialized) {
-					//see fbconnect.js
 					window.FB.init({
 						appId: window.fbAppId,
 						status: true, // Check login status
@@ -23,14 +22,16 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 			};
 		})();
 
-	btn.disabled = false;
-	btn.addEventListener('click', function () {
-		fbInit();
+		if (window.FB) {
+			btn.disabled = false;
+			btn.addEventListener('click', function () {
+				fbInit();
 
-		window.FB.login(loginCallback, {
-			scope: 'email'
-		});
-	});
+				window.FB.login(loginCallback, {
+					scope: 'email'
+				});
+			});
+		}
 
 	function loginCallback(response) {
 		if (response && response.status === 'connected') {
