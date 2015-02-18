@@ -45,10 +45,15 @@ class ReCaptcha extends BaseCaptcha {
 			$response = json_decode( $responseObj->getContent() );
 
 			if ( $response->success === true ) {
+				$this->log( "verification passed" );
 				return true;
+			} else {
+				$this->log( "verification failed" );
+				return false;
 			}
 		}
 
+		$this->log( "verification failed - bad status returned from Google" );
 		return false;
 	}
 
