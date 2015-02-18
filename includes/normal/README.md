@@ -1,3 +1,5 @@
+# Unicode Normalization
+
 This directory contains some Unicode normalization routines. These routines
 are meant to be reusable in other projects, so I'm not tying them to the
 MediaWiki utility functions.
@@ -18,7 +20,7 @@ particularly for Korean text (the hangul decomposition/composition code is
 extra slow).
 
 
-# Regenerating data tables
+## Regenerating data tables
 
 UtfNormalData.inc and UtfNormalDataK.inc are generated from the Unicode
 Character Database by the script UtfNormalGenerate.php. On a *nix system
@@ -37,14 +39,14 @@ You may have to set up PHPUnit first.
 $ pear channel-discover pear.phpunit.de
 $ pear install phpunit/PHPUnit
 
-# Benchmarks
+## Benchmarks
 
 Run 'make bench' to download some sample texts from Wikipedia and run some
 cheap benchmarks of some of the functions. Take all numbers with large
 grains of salt.
 
 
-# PHP module extension
+## PHP module extension
 
 There's an experimental PHP extension module which wraps the ICU library's
 normalization functions. This is *MUCH* faster than doing this work in pure
