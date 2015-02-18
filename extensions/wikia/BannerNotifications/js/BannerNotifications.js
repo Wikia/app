@@ -5,7 +5,11 @@
  * BannerNotifications.show('Some success message', 'confirm')
  * BannerNotifications.show('Some error message', 'error', $('.myDiv'), 3000)
  */
-define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
+define('BannerNotifications', [
+	'jquery',
+	'wikia.window',
+	'wikia.onScroll'
+], function ($, window, onScroll) {
 	'use strict';
 
 	var defaultTimeout = 10000,
@@ -16,7 +20,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 			'warn': 'yellow'
 		},
 		classes = Object.keys(types).join(' '),
-		pageContainer,
+		$pageContainer,
 		wikiaHeader,
 		headerHeight,
 		modal,
@@ -44,7 +48,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 */
 	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
-		var $parent = $parentElement || isModalShown() ? modal : pageContainer,
+		var $parent = $parentElement || isModalShown() ? modal : $pageContainer,
 			$bannerNotificationsWrapper = $parent.find('.banner-notifications-wrapper');
 		if (!$bannerNotificationsWrapper.length) {
 			$bannerNotificationsWrapper = $('<div></div>').addClass('banner-notifications-wrapper');
@@ -145,11 +149,11 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		var pageContainerSelector =
 			window.skin === 'monobook' ? '#content' : '.WikiaPageContentWrapper';
 		createBackendNotification();
+		onScroll.bind(scrollHandler);
 
-		pageContainer = $(pageContainerSelector);
+		$pageContainer = $(pageContainerSelector);
 		wikiaHeader = $('#globalNavigation');
 		headerHeight = wikiaHeader.height();
-		window.addEventListener('scroll', onScroll);
 	}
 
 	function createBackendNotification() {
@@ -213,16 +217,16 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 * Pin the notification to the top of the screen when scrolled down the page.
 	 * Shares the scroll event with WikiaFooter.js
 	 */
-	function onScroll() {
+	function scrollHandler() {
 		var containerTop,
-			notificationWrapper = pageContainer.children('.banner-notifications-wrapper');
+			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper');
 
-		if (!pageContainer.length || !notificationWrapper.length) {
+		if (!$pageContainer.length || !notificationWrapper.length) {
 			return;
 		}
 
 		// get the position of the wrapper element relative to the top of the viewport
-		containerTop = pageContainer[0].getBoundingClientRect().top;
+		containerTop = $pageContainer[0].getBoundingClientRect().top;
 
 		if (containerTop < headerHeight) {
 			notificationWrapper.addClass('float');

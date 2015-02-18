@@ -1,4 +1,7 @@
-/*global ToolbarCustomize:true*/
+/**
+* global ToolbarCustomize:true
+* global require
+**/
 var WikiaFooterApp = {
 
 	init: function() {
@@ -73,11 +76,6 @@ var WikiaFooterApp = {
 		} else if ( scroll < line && !WikiaFooterApp.footer.hasClass( 'float' ) ) {
 			WikiaFooterApp.footer.addClass( 'float' );
 			WikiaFooterApp.centerBar();
-		}
-
-		//BannerNotifications use same scroll event for performance reasons (BugId:33365)
-		if ( window.BannerNotifications && !window.BannerNotifications.isModal() ) {
-			window.BannerNotifications.onScroll( scrollTop );
 		}
 	}
 };

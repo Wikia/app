@@ -1,3 +1,6 @@
+/**
+ * Interface for applying handlers to the single scroll event on window
+ */
 define('wikia.onScroll', ['wikia.window'], function () {
 	'use strict';
 	var handlers = [];

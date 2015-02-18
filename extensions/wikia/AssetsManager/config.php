@@ -383,6 +383,8 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
 		'//skins/oasis/js/Tracking.js',
 
+		'//skins/shared/scripts/onScroll.js',
+
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
 	)
 );
@@ -923,6 +925,7 @@ $config['monobook_js'] = array(
 		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
 		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
+		'//skins/shared/scripts/onScroll.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
