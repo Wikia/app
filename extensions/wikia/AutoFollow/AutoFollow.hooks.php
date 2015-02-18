@@ -25,7 +25,6 @@ class AutoFollowHooks {
 		global $wgAutoFollowLangCityIdMap;
 		// Check only a core of the language code
 		$sUserLanguage = explode( '-', $oUser->getOption( 'language' ) )[0];
-
 		if ( isset( $wgAutoFollowLangCityIdMap[ $sUserLanguage ] ) &&
 			$this->checkAutoFollowConditions( $oUser )
 		) {
@@ -45,8 +44,7 @@ class AutoFollowHooks {
 	 */
 	private function checkAutoFollowConditions( \User $oUser ) {
 		global $wgAutoFollowFlag;
-
-		if ( intval( $oUser->getBoolOption( $wgAutoFollowFlag ) ) === true ) {
+		if ( $oUser->getBoolOption( $wgAutoFollowFlag ) === true ) {
 			return false;
 		} elseif ( $oUser->getBoolOption( 'marketingallowed' ) === false ) {
 			return false;
