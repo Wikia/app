@@ -2218,13 +2218,7 @@ class WallHooksHelper {
 	 * @return bool
 	 */
 	public static function onGetTalkPage( $title, &$talkPageTitle ) {
-		global $wgEnableWallExt;
-
-		if (
-			!$title->isSubpage() &&
-			$title->getNamespace() == NS_USER &&
-			!empty( $wgEnableWallExt )
-		) {
+		if ( !$title->isSubpage() && $title->getNamespace() == NS_USER ) {
 			$talkPageTitle = Title::makeTitle( NS_USER_WALL, $title->getDBkey() );
 		}
 
