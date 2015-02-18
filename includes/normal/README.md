@@ -28,7 +28,7 @@ Character Database by the script UtfNormalGenerate.php. On a *nix system
 have been changed or you remove it.
 
 
-# Testing
+## Testing
 
 'make test' will run the conformance test (UtfNormalTest.php), fetching the
 data from from the net if necessary. If it reports failure, something is
