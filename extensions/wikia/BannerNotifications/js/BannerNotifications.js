@@ -77,6 +77,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		 */
 		function hide(callback) {
 			removeFromDOM(bannerNotification.$element, callback);
+			return this;
 		}
 
 		/**
@@ -88,6 +89,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 				.$element
 				.find('.msg')
 				.html(content);
+			return this;
 		}
 
 		/**
@@ -101,6 +103,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 					.removeClass(classes)
 					.addClass(type);
 			}
+			return this;
 		}
 
 		bannerNotification = {
@@ -211,7 +214,7 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 * Bind close event to close button
 	 */
 	function setUpClose() {
-		$(document.body).on('click', '.close', onCloseClicked);
+		$(document.body).on('click', '.banner-notification .close', onCloseClicked);
 	}
 
 	/**
