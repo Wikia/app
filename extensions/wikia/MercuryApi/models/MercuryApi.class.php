@@ -112,6 +112,7 @@ class MercuryApi {
 			'cookieDomain' => $wg->CookieDomain,
 			'cookiePath' => $wg->CookiePath,
 			'dbName' => $wg->DBname,
+			'defaultSkin' => $wg->defaultSkin,
 			'id' => (int) $wg->CityId,
 			'language' => [
 				'user' => $wg->Lang->getCode(),
