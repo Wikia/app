@@ -2044,7 +2044,7 @@ $config['bucky_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'venus' ],
 	'assets' => array(
-		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
+		'//extensions/wikia/Bucky/vendor/Weppy/dist/weppy.js',
 		'//extensions/wikia/Bucky/js/bucky_init.js',
 		'//extensions/wikia/Bucky/js/bucky_resources_timing.js',
 		'//extensions/wikia/Bucky/js/bucky_metrics.js',

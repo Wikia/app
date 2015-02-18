@@ -55,6 +55,19 @@ class WikiaPageType {
 	}
 
 	/**
+	 * Get article type (as in: games, tv series, etc)
+	 * of current page
+	 *
+	 * @return string
+	 */
+	public static function getArticleType() {
+		global $wgTitle;
+
+		$articleService = new ArticleService( $wgTitle );
+		return $articleService->getArticleType();
+	}
+
+	/**
 	 * Check if current page is main page
 	 *
 	 * @return bool
