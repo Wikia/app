@@ -18,18 +18,8 @@ class LatestPhotosController extends WikiaController {
 	 */
 	const MEMC_KEY_VER = '1.1';
 
-	public function executeIndex() {
-		global $wgUser, $wgMemc;
-
-		$this->isUserLoggedIn = $wgUser->isLoggedIn();
-
-		// get the count of images on this wiki
-		$wikiService = (new WikiService);
-		$this->total = $wikiService->getTotalImages();
-
-		// Pull the list of images from memcache first
-		// FIXME: create and use service (see RT #79288)
-
+	public function getLatestThumbsUrls() {
+		global $wgMemc;
 		$this->thumbUrls = $wgMemc->get( LatestPhotosController::memcacheKey() );
 		if (empty($this->thumbUrls)) {
 			// api service
@@ -67,18 +57,6 @@ class LatestPhotosController extends WikiaController {
 
 			$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
 			$wgMemc->set( LatestPhotosController::memcacheKey(), $this->thumbUrls);
-		}
-
-		if (count($this->thumbUrls) < 3) {
-			$this->enableScroll = false;
-		} else {
-			$this->enableScroll = true;
-		}
-
-		if (count($this->thumbUrls)  <= 0) {
-			$this->enableEmptyGallery = true;
-		} else {
-			$this->enableEmptyGallery = false;
 		}
 	}
 
@@ -307,5 +285,4 @@ class LatestPhotosController extends WikiaController {
 			$wikiService->invalidateCacheTotalImages();
 		}
 	}
-
 }
