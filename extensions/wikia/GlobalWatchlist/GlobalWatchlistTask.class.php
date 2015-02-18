@@ -154,6 +154,16 @@ class GlobalWatchlistTask extends BaseTask {
 	 */
 	public function renameTitleInGlobalWatchlist( array $oldTitleValues, array $newTitleValues ) {
 		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
+
+		// If the rename is overwriting an existing page, delete those records so we don't
+		// run into conflicts from the update below.
+		( new WikiaSQL() )
+			->DELETE()->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_TITLE )->EQUAL_TO( $newTitleValues['databaseKey'] )
+			->AND_( GlobalWatchlistTable::COLUMN_NAMESPACE )->EQUAL_TO( $newTitleValues['nameSpace'] )
+			->AND_( GlobalWatchlistTable::COLUMN_CITY_ID )->EQUAL_TO( \F::app()->wg->CityId )
+			->run( $db );
+
 		( new WikiaSQL() )
 			->UPDATE( GlobalWatchlistTable::TABLE_NAME )
 			->SET( GlobalWatchlistTable::COLUMN_TITLE, $newTitleValues['databaseKey'] )
