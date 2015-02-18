@@ -11,14 +11,11 @@ $(function () {
 		windowWidth = $(window).width(),
 		widthCategory = Math.floor(windowWidth/scale);
 		
-	console.log("szerokosc i wysokosc: ", windowWidth, articleLength)
-
 	if (articleLength > lengthBorder) {
 		label = 'long-' + widthCategory;
 	} else {
 		label = 'short-' + widthCategory;
 	};
-	console.log("label:", label)
 
 	if (Math.random() * 100 < sampling) {
 		track = Wikia.Tracker.buildTrackingFunction({
