@@ -168,8 +168,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	 *
 	 * Example:
 	 *
-	 * $imageNames = [ 'IMG_7303.jpg', 'Koziołki.jpg' ]
-	 * Result: [ 'IMG_7303.jpg' => 1, 'Koziołki.jpg' => 2 ]
+	 * $imageNames = [ 'IMG_7303.jpg', 'Goats.jpg' ]
+	 * Result: [ 'IMG_7303.jpg' => 1, 'Goats.jpg' => 2 ]
 	 *
 	 * @param string[] $imageNames
 	 * @param int $limit
