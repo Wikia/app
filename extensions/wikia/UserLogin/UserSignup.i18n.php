@@ -24,7 +24,7 @@ $messages['en'] = array(
 	'usersignup-error-throttled-email' => "Oops, you've requested too many confirmation emails be sent to you today. Try again in a little while.",
 	'usersignup-error-too-many-changes' => "You've reached the maximum limit for email changes today. Please try again later.",
 	'usersignup-error-password-length' => "Oops, your password is too long. Please choose a password that's 50 characters or less.",
-	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your email address for $1!  Check our your [$2 user profile].', // why is this an external link? should be internal, use interwiki if needed
+	'usersignup-error-confirmed-user' => 'Looks like you\'ve already confirmed your email address for $1!  Check out your [$2 user profile].', // why is this an external link? should be internal, use interwiki if needed
 
 	// Facebook sign-up
 	'usersignup-facebook-heading' => 'Finish Signing Up',
