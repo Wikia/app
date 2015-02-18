@@ -56,25 +56,28 @@
 			$deferred.done(callback);
 		}
 
-		// This is invoked by Facebook once the SDK is loaded.
-		window.fbAsyncInit = function () {
-			window.FB.init({
-				appId: window.fbAppId,
-				xfbml: true,
-				cookie: true,
-				version: 'v2.1'
-			});
-
-			// show facebook login button
-			$('.sso-login').removeClass('hidden');
-			// resolve after FB has finished initializing
+		if (typeof window.FB === 'object') {
+			// Since we have our own deferred object, we need to resolve it if FB is already loaded.
+			// We can't rely on the type check inside $.loadExternalLibrary.
 			$deferred.resolve();
-		};
+		} else {
+			// This is invoked by Facebook once the SDK is loaded.
+			window.fbAsyncInit = function () {
+				window.FB.init({
+					appId: window.fbAppId,
+					xfbml: true,
+					cookie: true,
+					version: 'v2.1'
+				});
+				// resolve after FB has finished inititalizing
+				$deferred.resolve();
+			};
 
-		$.when($.loadExternalLibrary('FacebookSDK', url, typeof window.FB))
-			.fail(function () {
-				$deferred.reject();
-			});
+			$.when($.loadExternalLibrary('FacebookSDK', url, typeof window.FB))
+				.fail(function () {
+					$deferred.reject();
+				});
+		}
 
 		return $deferred;
 	};
