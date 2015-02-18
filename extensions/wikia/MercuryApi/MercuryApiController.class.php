@@ -70,8 +70,12 @@ class MercuryApiController extends WikiaController {
 	 * @return mixed
 	 */
 	private function getArticleDetails( $articleId ){
-		return $this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
+		$articleDetails = $this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
 			->getData()[ 'items' ][ $articleId ];
+
+		$articleDetails[ 'abstract' ] = htmlspecialchars( $articleDetails[ 'abstract' ] );
+
+		return $articleDetails;
 	}
 
 	/**
@@ -83,10 +87,14 @@ class MercuryApiController extends WikiaController {
 	private function getArticleJson( $articleId ) {
 		$redirect = $this->request->getVal('redirect');
 
-		return $this->sendRequest( 'ArticlesApi', 'getAsJson', [
+		$articleAsJson = $this->sendRequest( 'ArticlesApi', 'getAsJson', [
 			'id' => $articleId,
 			'redirect' => $redirect
 		] )->getData();
+
+		$articleAsJson[ 'description' ] = htmlspecialchars( $articleAsJson[ 'description' ] );
+
+		return $articleAsJson;
 	}
 
 	/**

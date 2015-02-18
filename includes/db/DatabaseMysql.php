@@ -24,7 +24,10 @@ class DatabaseMysql extends DatabaseBase {
 
 	/**
 	 * @param $sql string
-	 * @return resource
+	 * @return true|false|resource
+	 *
+	 * For SELECT, SHOW, DESCRIBE, EXPLAIN and other statements returning resultset, mysql_query() returns a resource on success, or FALSE on error.
+	 * For other type of SQL statements, INSERT, UPDATE, DELETE, DROP, etc, mysql_query() returns TRUE on success or FALSE on error.
 	 */
 	protected function doQuery( $sql ) {
 		$this->installErrorHandler();
