@@ -2,19 +2,34 @@
 
 /**
  * Render FB XML tags emebedded into wikitext
- * This file is loaded via ResourceLoader only when FB XML tags are present on the page
  */
 $(function () {
 	'use strict';
 
 	// load api on page load and on demand
 	mw.hook('wikipage.content').add(function ($content) {
-		$.loadFacebookAPI()
-			.done(function () {
-				$('.sso-login').removeClass('hidden');
 
-				// scan the new content for any fb tags
-				FB.XFBML.parse($content[0]);
-			});
+		if ((xfbmlTagsOnPage())) {
+			if (facebookSDKNotLoaded()) {
+				// XFBML tags rendered automatically when SDK loads
+				$.loadFacebookSDK();
+			} else {
+				renderXFBMLTags();
+			}
+		}
+
+		function xfbmlTagsOnPage() {
+			var numOfXFBMLTags = $content.find('[data-type="xfbml-tag"]').length;
+			return numOfXFBMLTags > 0;
+		}
+
+		function facebookSDKNotLoaded() {
+			return typeof FB === 'undefined';
+		}
+
+		function renderXFBMLTags() {
+			FB.XFBML.parse($content[0]);
+		}
+
 	});
 });
