@@ -20,7 +20,8 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		wikiaHeader,
 		headerHeight,
 		modal,
-		isModal;
+		isModal,
+		backendNotification;
 
 	/**
 	 * Constructs jQuery element with the notification
@@ -44,114 +45,101 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 */
 	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
-		if ($parentElement instanceof jQuery) {
-			$parentElement.prepend($element);
-
-			// handle modal implementations
-		} else if (isModal) {
-			modal.prepend($element);
-
-			// handle non-modal implementation
-		} else {
-			$(pageContainer).prepend($element);
+		var $parent = $parentElement || isModalShown() ? modal : pageContainer,
+			$bannerNotificationsWrapper = $parent.find('.banner-notifications-wrapper');
+		if (!$bannerNotificationsWrapper.length) {
+			$bannerNotificationsWrapper = $('<div></div>').addClass('banner-notifications-wrapper');
+			$parent.prepend($bannerNotificationsWrapper);
 		}
+		$bannerNotificationsWrapper.prepend($element);
 
 		$element.fadeIn('slow');
 	}
 
-	/**
-	 * Main entry point for this feature - shows the notification
-	 * and returns the notification instance
-	 * @param {string} content - message to be displayed
-	 * @param {string} type - See BannerNotifications.options for supported types
-	 * @param {jQuery} [$parent] Element to prepend notification to
-	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
-	 */
+	function BannerNotification(content, type, $parent, timeout) {
+		if (content instanceof jQuery && content.hasClass('banner-notification')) {
+			//create a notification object from already existing markup
+			this.content = content.find('.msg').html();
+			this.$element = content;
+			this.$parent = content.parent();
+			this.hidden = false;
+		} else {
+			this.content = content;
+			this.$element = createMarkup(this.content, this.type);
+			this.$parent = $parent;
+			this.hidden = true;
+			this.type = type;
+			this.timeout = timeout;
+		}
+	}
 
-	function show(content, type, $parent, timeout) {
-		var bannerNotification;
-
-		/**
-		 * Removes notification with a fade-out animation
-		 * @param {Function} callback
-		 */
-		function hide(callback) {
-			removeFromDOM(bannerNotification.$element, callback);
+	BannerNotification.prototype.show = function () {
+		var self;
+		if (!this.hidden) {
 			return this;
 		}
-
-		/**
-		 * Changes content of the notification to the provided one
-		 * @param {String} content
-		 */
-		function setContent(content) {
-			bannerNotification
-				.$element
-				.find('.msg')
-				.html(content);
-			return this;
+		if (!this.$element) {
+			this.$element = createMarkup(this.content, this.type);
 		}
+		this.setType(this.type);
 
-		/**
-		 * Changes type of the notification to the provided one
-		 * @param {String} type
-		 */
-		function setType(type) {
-			if (types.hasOwnProperty(type)) {
-				bannerNotification
-					.$element
-					.removeClass(classes)
-					.addClass(type);
-			}
-			return this;
-		}
-
-		bannerNotification = {
-			$element: createMarkup(content, type),
-			hide: hide,
-			setContent: setContent,
-			setType: setType
-		};
+		setUpClose(this);
 
 		isModal = isModalShown();
 
 		// Modal notifications have no close button so set a timeout
-		if (isModal && typeof timeout !== 'number') {
-			timeout = defaultTimeout;
+		if (isModal && typeof this.timeout !== 'number') {
+			this.timeout = defaultTimeout;
 		}
 
-		bannerNotification.setType(type);
+		addToDOM(this.$element, this.$parent);
 
-		addToDOM(
-			bannerNotification.$element,
-			$parent
-		);
-
-		// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
-		if (window.WikiaFooterApp) {
-			window.WikiaFooterApp.addScrollEvent();
-		}
+		this.hidden = false;
 
 		// Close notification after specified amount of time
-		if (typeof timeout === 'number') {
+		if (typeof this.timeout === 'number') {
+			self = this;
 			setTimeout(function () {
-				hide();
-			}, timeout);
+				self.hide();
+			}, this.timeout);
 		}
+		return this;
+	};
 
-		return bannerNotification;
-	}
+	BannerNotification.prototype.hide = function (callback) {
+		if (!this.hidden) {
+			removeFromDOM(this.$element, callback);
+			this.$element = null;
+			this.hidden = true;
+		}
+		return this;
+	};
 
-	/**
-	 * Shows notification informing about an AJAX connection error
-	 * @returns {Object}
-	 */
-	function showConnectionError() {
-		return show(
-			$.msg('bannernotifications-general-ajax-failure'),
-			'error'
-		);
-	}
+	BannerNotification.prototype.setType = function (type) {
+		if (type !== this.type && types.hasOwnProperty(type) && this.$element) {
+			this.$element
+				.removeClass(classes)
+				.addClass(type);
+			this.type = type;
+		}
+		return this;
+	};
+
+	BannerNotification.prototype.setContent = function (content) {
+		if (content && content !== this.content) {
+			this.$element
+				.find('.msg')
+				.html(content);
+		}
+		return this;
+	};
+
+	BannerNotification.prototype.showConnectionError = function () {
+		return this
+			.setType('error')
+			.setContent($.msg('bannernotifications-general-ajax-failure'))
+			.show();
+	};
 
 	/**
 	 * Called once to instantiate this feature
@@ -159,11 +147,22 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	function init() {
 		var pageContainerSelector =
 			window.skin === 'monobook' ? '#content' : '.WikiaPageContentWrapper';
-		setUpClose();
+		createBackendNotification();
 
-		pageContainer = $(pageContainerSelector)[0];
+		pageContainer = $(pageContainerSelector);
 		wikiaHeader = $('#globalNavigation');
 		headerHeight = wikiaHeader.height();
+		window.addEventListener('scroll', onScroll);
+	}
+
+	function createBackendNotification() {
+		var $notification = $('.banner-notification'),
+			i;
+
+		for (i = 0; i < $notification.length; i++) {
+			backendNotification = new BannerNotification($notification);
+			setUpClose(backendNotification);
+		}
 	}
 
 	/**
@@ -203,29 +202,12 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	/**
-	 * Hides all displayed notifications
-	 * @param {Function} callback
-	 */
-	function hideAll(callback) {
-		removeFromDOM($('.banner-notification'), callback);
-	}
-
-	/**
 	 * Bind close event to close button
 	 */
-	function setUpClose() {
-		$(document.body).on('click', '.banner-notification .close', onCloseClicked);
-	}
-
-	/**
-	 * Handles click event on the 'close' button
-	 * @param {Event} event
-	 */
-	function onCloseClicked(event) {
-		removeFromDOM(
-			$(event.target).closest('.banner-notification')
-		);
-		event.stopPropagation();
+	function setUpClose(notification) {
+		$(notification.$element).on('click', '.close', function () {
+			notification.hide();
+		});
 	}
 
 	/**
@@ -234,39 +216,25 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	 */
 	function onScroll() {
 		var containerTop,
-			notificationElements = $('.banner-notification');
+			notificationWrapper = pageContainer.children('.banner-notifications-wrapper');
 
-		if (!pageContainer || !notificationElements || !notificationElements.length) {
+		if (!pageContainer.length || !notificationWrapper.length) {
 			return;
 		}
 
 		// get the position of the wrapper element relative to the top of the viewport
-		containerTop = pageContainer.getBoundingClientRect().top;
+		containerTop = pageContainer[0].getBoundingClientRect().top;
 
 		if (containerTop < headerHeight) {
-			notificationElements.addClass('float');
+			notificationWrapper.addClass('float');
 		} else {
-			notificationElements.removeClass('float');
+			notificationWrapper.removeClass('float');
 		}
 	}
 
 	//Window global stays for legacy reasons
-	window.BannerNotifications = {
-		init: init,
-		onScroll: onScroll,
-		show: show,
-		showConnectionError: showConnectionError,
-		hideAll: hideAll,
-		isModal: isModalShown,
-		types: types
-	};
+	window.BannerNotification = BannerNotification;
 
-	return window.BannerNotifications;
-});
-
-$(function () {
-	'use strict';
-	require(['BannerNotifications'], function (bannerNotifications) {
-		bannerNotifications.init();
-	});
+	init();
+	return BannerNotification;
 });

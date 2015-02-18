@@ -7,7 +7,9 @@
 .wikia-grid {
 	.banner-notification {
 		width: 988px;
+	}
 
+	.banner-notifications-wrapper {
 		&.float {
 			margin-left: -505px;
 
@@ -23,7 +25,7 @@
 
 /* end temp transistion code */
 
-.modalWrapper > .banner-notification {
+.modalWrapper .banner-notification {
 	@include box-shadow(0, 0, 0, #000);
 	margin: auto;
 	width: auto;
@@ -45,7 +47,7 @@
 	}
 }
 
-.modal > .banner-notification {
+.modal .banner-notification {
 	width: 100%;
 
 	.close {
