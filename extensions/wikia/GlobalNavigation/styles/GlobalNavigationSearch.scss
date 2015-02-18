@@ -4,6 +4,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'skins/shared/mixins/calc';
 
 $autocomplete-item-height: 44px;
 $autocomplete-border-bottom: rgb(230, 235, 250);
@@ -19,7 +20,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 }
 
 .search-form-wrapper {
-	margin: ($global-navigation-margin-size + 1px) 0;
+	margin: 8px 0;
 	width: 100%;
 
 	.search-form {
@@ -93,8 +94,8 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 
 	.chevron {
 		@include global-nav-chevron;
-		left: 100%;
-		margin-top: 12px;
+		@include calc(left, "100% + 1px");
+		margin-top: 10px;
 		position: relative;
 		width: 0;
 	}
@@ -112,7 +113,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		font-weight: bold;
 		height: $search-input-height;
 		outline: none;
-		padding-left: 42px;
+		padding-left: 40px;
 		width: 100%;
 
 		&::-webkit-input-placeholder {
@@ -132,7 +133,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		background-color: transparent;
 		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* inline */
 		background-position: center;
-		background-size: 24px;
+		background-size: 26px;
 		background-repeat: no-repeat;
 		border: 0;
 		height: $search-input-height;
@@ -149,7 +150,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		background-repeat: no-repeat;
 		border: 0;
 		border-radius: 0;
-		height: 28px;
+		height: 26px;
 		outline: none;
 		position: absolute;
 		right: 1px;

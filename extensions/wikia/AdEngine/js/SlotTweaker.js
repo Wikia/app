@@ -115,7 +115,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	 */
 	function hackChromeRefresh(slotId) {
 		var parent = document.getElementById(slotId).parentElement;
-		if (parent) {
+		if (parent && slotId.search('INCONTENT') > -1) {
 			parent.style.display = 'none';
 			parent.offsetHeight;
 			parent.style.display = '';

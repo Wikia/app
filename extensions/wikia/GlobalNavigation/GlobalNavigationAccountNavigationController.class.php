@@ -32,7 +32,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 				$this->avatarContainerAdditionalClass = ' logged-avatar-placeholder';
 			} else {
 				$this->avatarContainerAdditionalClass = ' logged-avatar';
-				$this->profileAvatar = AvatarService::renderAvatar( $this->username, AvatarService::AVATAR_SIZE_SMALL );
+				$this->profileAvatar = AvatarService::renderAvatar( $this->username, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 			}
 
 			$possibleItems = [ 'mytalk', 'following', 'preferences' ];
