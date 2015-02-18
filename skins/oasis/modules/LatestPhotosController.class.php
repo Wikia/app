@@ -20,8 +20,8 @@ class LatestPhotosController extends WikiaController {
 
 	public function getLatestThumbsUrls() {
 		global $wgMemc;
-		$this->thumbUrls = $wgMemc->get( LatestPhotosController::memcacheKey() );
-		if (empty($this->thumbUrls)) {
+		$thumbUrls = $wgMemc->get( LatestPhotosController::memcacheKey() );
+		if (empty($thumbUrls)) {
 			// api service
 
 			$params = array(
@@ -35,7 +35,7 @@ class LatestPhotosController extends WikiaController {
 			$apiData = ApiService::call($params);
 
 			if (empty($apiData)) {
-				return false;
+				$this->response->setVal('thumbUrls', false);
 			}
 			$imageList = $apiData['query']['logevents'];
 
@@ -55,9 +55,10 @@ class LatestPhotosController extends WikiaController {
 				if (count($uniqueList) > 10) break;
 			}
 
-			$this->thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
-			$wgMemc->set( LatestPhotosController::memcacheKey(), $this->thumbUrls);
+			$thumbUrls = array_map(array($this, 'getTemplateData'), $uniqueList);
+			$wgMemc->set( LatestPhotosController::memcacheKey(), $thumbUrls);
 		}
+		$this->response->setVal('thumbUrls', array_map(array($this, 'getTemplateData'), $uniqueList));
 	}
 
 	private function getTemplateData($element) {
