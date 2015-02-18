@@ -9,10 +9,10 @@ class HealthController extends WikiaController {
 
 	private $current = '';
 
-	private $clusters = [ ];
-	private $errors = [ ];
-	private $messages = [ ];
-	private $status = [ ];
+	private $clusters = [];
+	private $errors = [];
+	private $messages = [];
+	private $status = [];
 
 	/**
 	 * Get status of database clusters
@@ -63,8 +63,8 @@ class HealthController extends WikiaController {
 				$serverCount = $loadBalancer->getServerCount();
 
 				$roles = [
-					'master' => [ ],
-					'slave' => [ ],
+					'master' => [],
+					'slave' => [],
 				];
 				for ( $i = 0; $i < $serverCount; $i++ ) {
 					$serverName = $loadBalancer->getServerName( $i );
