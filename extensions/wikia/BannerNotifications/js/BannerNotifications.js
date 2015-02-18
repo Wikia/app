@@ -20,7 +20,6 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 		wikiaHeader,
 		headerHeight,
 		modal,
-		isModal,
 		backendNotification;
 
 	/**
@@ -85,10 +84,8 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 
 		setUpClose(this);
 
-		isModal = isModalShown();
-
 		// Modal notifications have no close button so set a timeout
-		if (isModal && typeof this.timeout !== 'number') {
+		if (isModalShown() && typeof this.timeout !== 'number') {
 			this.timeout = defaultTimeout;
 		}
 
@@ -156,13 +153,8 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	function createBackendNotification() {
-		var $notification = $('.banner-notification'),
-			i;
-
-		for (i = 0; i < $notification.length; i++) {
-			backendNotification = new BannerNotification($notification);
-			setUpClose(backendNotification);
-		}
+		backendNotification = new BannerNotification($('.banner-notification'));
+		setUpClose(backendNotification);
 	}
 
 	/**
@@ -189,7 +181,14 @@ define('BannerNotifications', ['jquery', 'wikia.window'], function ($, window) {
 				'padding': 0,
 				'opacity': 0
 			}, 400, function () {
-				$elements.remove();
+				var $parent = $elements.parent();
+				if ($parent.hasClass('.banner-notifications-wrapper') &&
+					$parent.children().length === 1) {
+
+					$parent.remove();
+				} else {
+					$elements.remove();
+				}
 				if (typeof callback === 'function') {
 					callback();
 				}
