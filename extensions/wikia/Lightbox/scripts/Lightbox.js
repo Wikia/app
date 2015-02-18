@@ -10,7 +10,7 @@
 		current: {
 			type: '', // image or video
 			title: '', // currently displayed file name
-			carouselType: '', // articleMedia or latestPhotos
+			carouselType: '', // articleMedia or videosModule
 			index: -1, // ex: LightboxLoader.cache[Lightbox.current.carouselType][Lightbox.current.index]
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
@@ -1381,13 +1381,6 @@
 
 					carouselType = 'articleMedia';
 					trackingCarouselType = 'article';
-					break;
-
-				case 'LatestPhotosModule':
-					clickSource = clickSource || VPS.LP;
-
-					carouselType = 'latestPhotos';
-					trackingCarouselType = 'latest-photos';
 					break;
 
 				case 'videosModule':
