@@ -78,10 +78,10 @@ class PowerUser {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
 			$this->oUser->setOption( $sProperty, true );
 			$this->oUser->saveSettings();
-			$this->logSuccess( $sProperty, self::ACTION_ADD, $this->oUser->getId() );
+			$this->logSuccess( $sProperty, self::ACTION_ADD );
 			return true;
 		} else {
-			$this->logError( $sProperty, self::ACTION_ADD, $this->oUser->getId() );
+			$this->logError( $sProperty, self::ACTION_ADD );
 			return false;
 		}
 	}
@@ -98,12 +98,22 @@ class PowerUser {
 		) {
 			$this->oUser->setOption( $sProperty, null );
 			$this->oUser->saveSettings();
-			$this->logSuccess( $sProperty, self::ACTION_REMOVE, $this->oUser->getId() );
+			$this->logSuccess( $sProperty, self::ACTION_REMOVE );
 			return true;
 		} else {
-			$this->logError( $sProperty, self::ACTION_REMOVE, $this->oUser->getId() );
+			$this->logError( $sProperty, self::ACTION_REMOVE );
 			return false;
 		}
+	}
+
+	/**
+	 * Sets a basic context for logging
+	 * @return array
+	 */
+	protected function getLoggerContext() {
+		return [
+			'user_id' => $this->oUser->getId(),
+		];
 	}
 
 	/**
@@ -113,11 +123,10 @@ class PowerUser {
 	 * @param string $sAction One of the actions in consts
 	 * @param int $iUserId A user's ID
 	 */
-	private function logSuccess( $sType, $sAction, $iUserId ) {
+	private function logSuccess( $sType, $sAction ) {
 		$this->info( self::LOG_MESSAGE, [
 			'type' => $sType,
 			'action' => $sAction,
-			'user_id' => $iUserId,
 		] );
 	}
 
@@ -128,11 +137,10 @@ class PowerUser {
 	 * @param string $sAction One of the actions in consts
 	 * @param int $iUserId A user's ID
 	 */
-	private function logError( $sType, $sAction, $iUserId ) {
+	private function logError( $sType, $sAction ) {
 		$this->error( self::LOG_MESSAGE, [
 			'type' => $sType,
 			'action' => $sAction,
-			'user_id' => $iUserId,
 		] );
 	}
 }
