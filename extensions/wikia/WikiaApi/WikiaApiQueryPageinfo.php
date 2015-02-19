@@ -1,19 +1,9 @@
 <?php
 
-if (!defined('MEDIAWIKI')) {
-	// Eclipse helper - will be ignored in production
-	require_once ("ApiQueryBase.php");
-}
-
 /**
- * A query module to generate pageviews .
- *
+ * A query module to generate pageviews
  */
 class WikiaApiQueryPageinfo extends ApiQueryInfo {
-
-	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName);
-	}
 
 	public function execute() {
 		$prop = array();
@@ -35,7 +25,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 		parent :: execute(); 
 	}
 	
-	private function getPageViews(&$result) {
+	private function getPageViews(ApiResult $result) {
 		$res = $result->getData();
 		
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
@@ -64,7 +54,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 		}
 	}
 
-	private function getCreateDate(&$result) {
+	private function getCreateDate(ApiResult $result) {
 		$res = $result->getData();
 		
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
@@ -95,7 +85,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 		}
 	}
 
-	private function getRevCount(&$result) {
+	private function getRevCount(ApiResult $result) {
 		$res = $result->getData();
 		$db = $this->getDB();
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
@@ -108,10 +98,8 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 		}
 	}
 	
-	private function getRedirectName(&$result) {
-		global $wgContLang;
+	private function getRedirectName(ApiResult $result) {
 		$res = &$result->getData();
-		$db = $this->getDB();
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
 			foreach ($this->getPageSet()->getGoodTitles() as $page_id => $oTitle) {
 				$res['query']['pages'][$page_id]['redirectto'] = ""; 
