@@ -23,6 +23,7 @@ class GetRevisionWithTags extends Maintenance {
 	 */
 	private static $editorTags = [
 		'visualeditor',
+		'sourceedit',
 		'rte-wysiwyg',
 		'rte-source',
 		'mobileedit',

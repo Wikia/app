@@ -80,10 +80,4 @@ class JsonFormatService extends \WikiaService {
 		return $jsonSimple;
 	}
 
-	public function getArticleSnippet( $html ) {
-		$jsonSimple = $this->htmlParser->parse( $html );
-		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier();
-		$text = $simplifier->simplifyToSnippet( $jsonSimple );
-		return $text;
-	}
 }

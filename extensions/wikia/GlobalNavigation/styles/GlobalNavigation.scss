@@ -33,8 +33,7 @@ $start-a-wikia-logo-size: 30px;
 	}
 
 	.wikia-logo-container {
-		//-15px because additional left padding 15px is added to hubs entry point container
-		padding-right: $global-navigation-items-spacing - 15px;
+		padding-right: 15px;
 
 		.wikia-logo img {
 			background-position: right center;
@@ -43,7 +42,7 @@ $start-a-wikia-logo-size: 30px;
 	}
 
 	.start-wikia-container {
-		padding-left: 20px;
+		padding-left: 10px;
 
 		.start-wikia {
 			@include font-size-xxs;
@@ -61,6 +60,11 @@ $start-a-wikia-logo-size: 30px;
 				color: $global-wikia-background-color;
 				text-decoration: none;
 			}
+
+			span {
+				display: inline-block;
+				padding-top: 1px;
+			}
 		}
 	}
 }
@@ -73,7 +77,7 @@ $start-a-wikia-logo-size: 30px;
 @media #{$small-only} {
 	.global-navigation {
 		.start-wikia-container {
-			padding-left: 9px;
+			padding-left: 21px;
 
 			.start-wikia {
 				width: $start-a-wikia-logo-size;

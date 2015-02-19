@@ -454,6 +454,23 @@ $messages['bg'] = array(
 	'cnw-error-torblock' => 'Създаването на укита чрез Tor мрежа не е позволено.',
 );
 
+/** Western Balochi (بلوچی رخشانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bgn'] = array(
+	'cnw-next' => 'دیگرین',
+	'cnw-back' => 'بیئرگشت',
+	'cnw-or' => 'یا',
+	'cnw-name-wiki-headline' => 'یک ویکی ئی شرو کورتین',
+	'cnw-name-wiki-label' => 'شمی ویکی ئی نام',
+	'cnw-name-wiki-wiki' => 'ویکی',
+	'cnw-signup' => 'کار زوروکین حسابئ جوڑ کورتین',
+	'cnw-userauth-creative' => 'داخل بوتین',
+	'cnw-userauth-marketing-heading' => 'شما کار زوروکین حسابئ نداریت؟',
+	'cnw-desc-headline' => 'شمی ویکی بئ چه موریدا اینت؟',
+	'cnw-desc-lang' => 'زبان',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Fulup
@@ -1134,6 +1151,7 @@ $messages['fy'] = array(
 	'cnw-back' => 'Foarige',
 	'cnw-or' => 'of',
 	'cnw-name-wiki-wiki' => 'Wiki',
+	'cnw-login' => 'Oanmelde',
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-lang' => 'Taal',
 );
@@ -2715,23 +2733,23 @@ $messages['pt-br'] = array(
 	'cnw-desc-default-lang' => 'Sua wikia será em $1',
 	'cnw-desc-change-lang' => 'alterar',
 	'cnw-desc-lang' => 'Idioma',
-	'cnw-desc-wiki-submit-error' => 'Escolha uma categoria, por favor',
+	'cnw-desc-wiki-submit-error' => 'Por favor, escolha uma categoria',
 	'cnw-theme-headline' => 'Escolha um tema',
 	'cnw-theme-creative' => 'Escolha um tema abaixo, você será capaz de ver uma prévia de cada tema, quando você selecioná-lo.',
 	'cnw-theme-instruction' => "Você também pode criar o seu próprio tema mais tarde usando ''Minhas Ferramentas''.",
 	'cnw-welcome-headline' => 'Parabéns! A $1 foi criada',
 	'cnw-welcome-instruction1' => 'Clique no botão abaixo para começar a criar páginas na sua wikia.',
 	'cnw-welcome-instruction2' => 'Você verá este botão em toda a sua wikia, use-o a qualquer momento que você deseja adicionar uma nova página.',
-	'cnw-welcome-help' => 'Encontre respostas, conselhos, e muito mais na <a href="http://comunidade.wikia.com">Central da Comunidade</a>.',
+	'cnw-welcome-help' => 'Encontre respostas, conselhos, e muito mais na <a href="http://comunidade.wikia.com">Central da Comunidade Wikia</a>.',
 	'cnw-error-general' => 'Opa, algo deu errado em nosso sistema! Por favor, tente novamente ou [[Special:Contact|entre em contato]] conosco para obter ajuda.',
 	'cnw-error-general-heading' => 'Nossas desculpas',
 	'cnw-badword-header' => 'Atenção',
 	'cnw-badword-msg' => 'Olá, por favor não use estas palavras grosseiras ou banidas na sua Descrição da Wikia: $1',
-	'cnw-error-wiki-limit-header' => 'Limite de Wikias atingido',
+	'cnw-error-wiki-limit-header' => 'Limite de wikias atingido',
 	'cnw-error-wiki-limit' => 'Olá, você está limitado a {{PLURAL:$1|criar $1 wikia|criar $1 wikias}} por dia. Espere 24 horas antes de criar outra wikia.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
 	'cnw-error-blocked' => 'Você foi bloqueado por $1. O motivo dado foi: $2. (ID de Bloqueio para referência: $3)',
-	'cnw-error-anon-user-header' => 'Por favor, faça logue-se',
+	'cnw-error-anon-user-header' => 'Por favor, faça login',
 	'cnw-error-anon-user' => 'A criação de wikias para usuários anônimos está desativada. Por favor [[Special:UserLogin|faça login]] e tente novamente.',
 	'cnw-error-torblock' => 'Criar wikias usando a rede Tor não é permitido.',
 	'cnw-error-bot' => 'Detectamos que você pode ser um robô. Se cometemos um engano, por favor descreva que você foi erroneamente detectado como um robô, e o ajudaremos a criar sua wikia: [http://www.wikia.com/Special:Contact/Contate-nos geral]',
