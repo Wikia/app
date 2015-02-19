@@ -15,8 +15,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Remove when SOC-217 ABTest is finished
 	 */
 	const NOT_CONFIRMED_LOGIN_OPTION_NAME = 'NotConfirmedLogin';
-	const NOT_CONFIRMED_LOGIN_ALLOWED = 1;
-	const NOT_CONFIRMED_LOGIN_NOT_ALLOWED = 2;
+	const NOT_CONFIRMED_LOGIN_ALLOWED = '1';
+	const NOT_CONFIRMED_LOGIN_NOT_ALLOWED = '2';
 	/*
 	 * end remove
 	 */
