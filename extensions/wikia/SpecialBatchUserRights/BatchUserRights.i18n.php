@@ -354,7 +354,10 @@ $messages['ja'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'batchuserrights' => '일괄 사용자 권한',
 	'batchuserrights-names' => '이 그룹에 추가할 사용자 이름 (줄마다 하나):',
+	'batchuserrights-single-progress-update' => '<strong>$2</strong> 사용자에게 {{PLURAL:$1|그룹|그룹들}}을 추가했습니다.',
+	'batchuserrights-add-groups' => '{{PLURAL:$1|사용자 한 명|사용자 $1명}}을 다음 그룹에 추가했습니다: <strong>$3</strong>', # Fuzzy
 	'batchuserrights-userload-error' => "\"'''\$1'''\" 사용자를 불러올 수 없습니다.",
 	'batchuserrights-no-groups' => '그룹을 선택하지 않았습니다.
 아무것도 수행하지 않습니다.

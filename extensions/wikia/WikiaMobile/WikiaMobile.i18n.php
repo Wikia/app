@@ -1122,7 +1122,13 @@ $messages['ko'] = array(
 	'wikiamobile-profile' => '프로필',
 	'wikiamobile-last-edited-on' => '$1에 마지막으로 편집됨',
 	'wikiamobile-anonymous-edited-by' => '익명 사용자',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|생활]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|엔터테인먼트]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|게임]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|저작권]]',
+	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|개인정보 보호정책]]',
 	'mobile-full-site' => '전체 사이트',
+	'wikiamobile-categories-items-total' => '문서 $1개',
 	'wikiamobile-category-items-more' => '더 불러오기',
 	'wikiamobile-category-items-prev' => '이전 불러오기',
 	'wikiamobile-categories-expand' => '모두 보기',
@@ -1130,7 +1136,9 @@ $messages['ko'] = array(
 	'wikiamobile-categories-blogs' => '블로그 게시물',
 	'wikiamobile-sharing-media-image' => '사진',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-video-views-counter' => '$1회 시청',
 	'wikiamobile-videos' => '동영상',
+	'wikiamobile-toc-header' => '목차',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)

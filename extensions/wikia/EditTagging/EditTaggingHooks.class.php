@@ -6,6 +6,7 @@
 class EditTaggingHooks {
 	const API_EDIT_TAG = 'apiedit';
 	const CATEGORYSELECT_EDIT_TAG = 'categoryselect';
+	const ROLLBACK_TAG = 'rollback';
 	const RTE_SOURCE_MODE = 'source';
 	const RTE_WYSIWYG_MODE = 'wysiwyg';
 	const RTE_SOURCE_MODE_TAG = 'rte-source';
@@ -15,6 +16,7 @@ class EditTaggingHooks {
 	static $tagBlacklist = [
 		self::API_EDIT_TAG,
 		self::CATEGORYSELECT_EDIT_TAG,
+		self::ROLLBACK_TAG,
 		self::RTE_SOURCE_MODE_TAG,
 		self::RTE_WYSIWYG_MODE_TAG,
 		self::SOURCE_EDIT_TAG
@@ -73,6 +75,22 @@ class EditTaggingHooks {
 		self::tagRevisionIfSourceEdit( $revision_id, $request );
 		self::tagRevisionIfRTESourceEdit( $revision_id, $rte_mode );
 		self::tagRevisionIfRTEWysiwygEdit( $revision_id, $rte_mode );
+
+		return true;
+	}
+
+	/**
+	 * @param WikiPage $wikiPage
+	 * @param User $user
+	 * @param $revision
+	 * @param $current
+	 * @return bool
+	 */
+	public static function onArticleRollbackComplete( WikiPage $wikiPage, User $user, $revision, $current ) {
+		if($revision instanceof Revision) {
+			$revision_id = $revision->getId();
+			self::AddRevisionTag( $revision_id, self::ROLLBACK_TAG );
+		}
 
 		return true;
 	}

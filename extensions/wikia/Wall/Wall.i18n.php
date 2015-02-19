@@ -866,6 +866,7 @@ $messages['ang'] = array(
  * @author Achraf94
  * @author Claw eg
  * @author Gagnabil
+ * @author Sonic N800
  * @author زكريا
  */
 $messages['ar'] = array(
@@ -1033,7 +1034,7 @@ $messages['ar'] = array(
 	'wall-recentchanges-deleted-thread' => 'حذف النقاش "[[$1|$2]]" من [[$3|جدار $4]]',
 	'wall-recentchanges-deleted-reply' => 'حذف الرد من [[$1|$2]]" من [[$3|جدار $4]]',
 	'wall-recentchanges-closed-thread' => 'أغلق النقاش "[[$1|$2]] في [[$3|جدار $4]]"',
-	'wall-recentchanges-reopened-thread' => 'أعاد فتح النقاش "[[$1|$2]] في [[$3|جدار $4]]"', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'أعاد فتح النقاش "[[$1|$2]]" في [[$3|جدار $4]]',
 	'wall-recentchanges-deleted-reply-title' => 'رد على جدار الرسائل',
 	'wall-recentchanges-wall-created-title' => 'تم إنشاء جدار الرسائل',
 	'wall-recentchanges-namespace-selector-message-wall' => 'جدار الرسائل',
@@ -1429,6 +1430,7 @@ $messages['bs'] = array(
 /** Catalan (català)
  * @author BroOk
  * @author Erdemaslancan
+ * @author Macofe
  * @author Marcmpujol
  * @author Unapersona
  */
@@ -1716,6 +1718,8 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Editar temes',
 	'wall-topic-edit-save' => 'Desa',
 	'wall-topic-edit-cancel' => 'Cancel·lar',
+	'group-threadmoderator' => 'Moderadors',
+	'group-threadmoderator-member' => 'Moderador',
 );
 
 /** Chechen (нохчийн)
@@ -2832,6 +2836,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Ebraminio
  * @author Reza1615
  * @author ZxxZxxZ
@@ -2865,7 +2870,7 @@ $messages['fa'] = array(
 	'wall-action-restore-confirm-ok' => 'احیا',
 	'wall-action-move-thread-ok' => 'انتقال موضوع',
 	'wall-notifications' => 'اطلاعیه‌ها',
-	'wall-notifications-markasread' => 'نشان‌گذاری همه به‌عنوان خوانده‌شده',
+	'wall-notifications-markasread' => 'نشان‌گذاری همه به عنوان خوانده‌شده',
 	'wall-notifications-markasread-all-wikis' => 'تمام ویکی‌های',
 	'wall-notifications-markasread-this-wiki' => 'این ویکی',
 	'wall-sorting-most-active' => 'فعال ترین',
@@ -4135,6 +4140,13 @@ ___________________________________________<br />
 	'wall-topic-edit-cancel' => 'Mégse',
 );
 
+/** Armenian (Հայերեն)
+ * @author Աշոտ1997
+ */
+$messages['hy'] = array(
+	'group-threadmoderator-member' => 'Մոդերատոր',
+);
+
 /** Interlingua (interlingua)
  * @author McDutchie
  */
@@ -4773,6 +4785,7 @@ $messages['ko'] = array(
 	'wall-thread-isnotifyeveryone' => '강조하기',
 	'wall-thread-deleted' => '삭제됨',
 	'wall-thread-closed' => '폐쇄됨',
+	'wall-button-to-preview-comment' => '미리 보기',
 	'wall-button-to-cancel-preview' => '편집',
 	'wall-button-cancel-changes' => '취소',
 	'wall-button-done-source' => '완료',
@@ -4783,11 +4796,44 @@ $messages['ko'] = array(
 	'wall-delete-error-title' => '오류',
 	'wall-action-remove-confirm-ok' => '제거',
 	'wall-action-admin-confirm-ok' => '삭제',
+	'wn-user1-reply-you-your-wall' => '귀하의 메시지 담벼락에 $1 사용자가 귀하에게 댓글을 남겼습니다',
+	'wn-user3-reply-you-your-wall' => '귀하의 메시지 담벼락에 $1 사용자 및 그 외 사용자가 귀하에게 댓글을 남겼습니다',
+	'wn-user2-reply-self-your-wall' => '$1 사용자와 $2 사용자가 귀하의 메시지 담벼락에 댓글을 남겼습니다',
+	'wn-user3-reply-self-your-wall' => '$1 사용자 및 그 외 사용자가 귀하의 메시지 담벼락에 댓글을 남겼습니다',
+	'wn-user1-reply-other-your-wall' => '$1 사용자가 귀하의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-user2-reply-other-your-wall' => '$1 사용자와 $2 사용자가 귀하의 메시지 담벼락에서 $3 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-user3-reply-other-your-wall' => '$1 사용자와 및 그 외 사용자가 귀하의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-user1-reply-you-other-wall' => '$2 사용자의 메시지 담벼락에 $1 사용자가 귀하에게 댓글을 남겼습니다',
+	'wn-user2-reply-you-other-wall' => '$1 사용자와 $2 사용자가 $3 사용자의 메시지 담벼락에서 귀하에게 댓글을 남겼습니다',
+	'wn-user3-reply-you-other-wall' => '$3 사용자의 메시지 담벼락에 $1 사용자 및 그 외 사용자가 귀하에게 댓글을 남겼습니다',
+	'wn-user1-reply-self-other-wall' => '$1 사용자가 $2 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
+	'wn-user2-reply-self-other-wall' => '$1 사용자와 $2 사용자가 $3 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
+	'wn-user3-reply-self-other-wall' => '$1 사용자 및 그 외 사용자가 $2 사용자의 메시지 담벼락에서 댓글을 남겼습니다',
+	'wn-user1-reply-other-other-wall' => '$1 사용자가 $3 사용자의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-user2-reply-other-other-wall' => '$1 사용자와 $2 사용자가 $4 사용자의 메시지 담벼락에서 $3 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-user3-reply-other-other-wall' => '$1 사용자 및 그 외 사용자가 $3 사용자의 메시지 담벼락에서 $2 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-user1-reply-you-a-wall' => '$1 사용자가 귀하의 메시지에 댓글을 남겼습니다',
+	'wn-user2-reply-you-a-wall' => '$1 사용자와 $2 사용자가 귀하의 메시지에 댓글을 남겼습니다',
+	'wn-user3-reply-you-a-wall' => '$1 사용자 및 그 외 사용자가 귀하의 메시지에 댓글을 남겼습니다',
+	'wn-user1-reply-self-a-wall' => '$1 사용자가 메시지에 댓글을 남겼습니다',
+	'wn-user2-reply-self-a-wall' => '$1 사용자와 $2 사용자가 메시지에 댓글을 남겼습니다',
+	'wn-user3-reply-self-a-wall' => '$1 사용자 및 그 외 사용자가 메시지에 댓글을 남겼습니다',
+	'wn-user1-reply-other-a-wall' => '$1 사용자가 $2 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-user2-reply-other-a-wall' => '$1 사용자와 $2 사용자가 $3 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-user3-reply-other-a-wall' => '$1 사용자 및 그 외 사용자가 $3 사용자의 메시지에 댓글을 남겼습니다',
+	'wn-newmsg-onmywall' => '$1 사용자가 귀하의 메시지 담벼락에 새 메시지를 남겼습니다',
+	'wn-newmsg' => '귀하가 $1 사용자의 메시지 담벼락에 새 메시지를 남겼습니다',
+	'wn-newmsg-on-followed-wall' => '$1 사용자가 $2 사용자의 메시지 담벼락에 새 메시지를 남겼습니다',
+	'wn-admin-thread-deleted' => '$1 사용자의 메시지 담벼락에서 글이 삭제되었습니다',
+	'wn-admin-reply-deleted' => '$1 사용자의 메시지 담벼락에서 댓글이 삭제되었습니다',
+	'wn-owner-thread-deleted' => '귀하의 메시지 담벼락에서 글이 삭제되었습니다',
+	'wn-owner-reply-deleted' => '귀하의 메시지 담벼락에서 댓글이 삭제되었습니다',
 	'wall-sorting-archived' => '보존됨',
 	'wall-recentchanges-namespace-selector-message-wall' => '메시지 담벼락',
 	'wall-recentchanges-history-link' => '담벼락 역사',
 	'wall-recentchanges-thread-history-link' => '토론 역사',
 	'wall-history' => '역사',
+	'wall-history-title' => '담벼락 역사',
 	'wall-history-who-involved-wall-title' => '이 담벼락에 메시지를 남긴 사용자',
 	'wall-history-thread-created' => '$2에 의한 $1 게시글 생성',
 	'wall-history-thread-removed' => '$2에 의한 $1 게시글 삭제',
@@ -4817,7 +4863,39 @@ $messages['ko'] = array(
 	'wall-thread-history-thread-reopened' => '$2 사용자가 이 게시글을 다시 엶',
 	'wall-history-action-restore-reply' => '댓글 되살리기',
 	'wall-history-action-restore-thread' => '게시글 되살리기',
+	'mail-notification-new-your' => '$WIKI에서 $AUTHOR_NAME 사용자가 귀하에게 새 메시지를 남겼습니다.',
+	'mail-notification-reply-your' => '$WIKI에서 $AUTHOR_NAME 사용자가 귀하에게 댓글을 남겼습니다.',
 	'mail-notification-html-greeting' => '안녕하세요, $1 님.',
+	'mail-notification-html-button' => '대화 내역 보기',
+	'mail-notification-html-footer-line1' => '위키아의 최근 소식을 확인하고 싶으시다면 <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>를 방문해주세요',
+	'mail-notification-html-footer-line2' => '알림을 받고 싶지 않으신가요? <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">환경설정</a>에서 알림 설정을 변경할 수 있습니다',
+	'mail-notification-body' => '안녕하세요, $WATCHER 사용자 님?
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+대화를 확인하세요: ($MESSAGE_LINK)
+
+위키아 팀
+
+___________________________________________
+* 중앙 커뮤니티에서 도움을 구하세요: http://community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: http://community.wikia.com/Special:Preferences',
+	'mail-notification-body-HTML' => '안녕하세요, $WATCHER 사용자 님?
+			<p>$SUBJECT</p>
+			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+			<p>$MESSAGE_NO_HTML</p>
+			<p>-- $AUTHOR_SIGNATURE</p>
+			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">대화를 확인하세요</a></p>
+			<p>위키아 팀</p>
+___________________________________________<br />
+* 중앙 커뮤니티에서 도움을 구하세요: http://community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: http://community.wikia.com/Special:Preferences',
 	'prefs-email-wall-v2' => '메시지 담벼락과 포럼',
 	'wall-votes-modal-title' => '추천',
 	'wall-quote-author' => '$1의 말:',
@@ -5863,6 +5941,7 @@ endre e-post-innstillingene dine her: http://community.wikia.com/Special:Prefere
  * @author AvatarTeam
  * @author Flightmare
  * @author Randykitty
+ * @author Robin0van0der0vliet
  * @author SPQRobin
  * @author Saruman
  * @author Siebrand
@@ -6153,6 +6232,8 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'wall-topic-edit' => 'Onderwerpen bewerken',
 	'wall-topic-edit-save' => 'Opslaan',
 	'wall-topic-edit-cancel' => 'Annuleren',
+	'group-threadmoderator' => 'Moderators',
+	'group-threadmoderator-member' => 'Moderator',
 );
 
 /** Norwegian Nynorsk (norsk nynorsk)
