@@ -1,5 +1,10 @@
 @import 'skins/shared/color';
 
+.tooltip-icon-wrapper {
+	align-items: center;
+	display: inline-flex;
+}
+
 %tooltip-icon {
 	background-color: $color-buttons;
 	border-radius: 6px;
@@ -9,6 +14,7 @@
 	font-size: 10px;
 	height: 12px;
 	line-height: 12px;
+	margin: 0 3px;
 	text-align: center;
 	width: 12px;
 }
