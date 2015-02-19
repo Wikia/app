@@ -129,8 +129,8 @@ $config['VideoPageTool'] = array(
 
 $config['MonetizationModule'] = array(
 	'name'   => 'MonetizationModule',
-	'source' => "$IP/extensions/wikia/MonetizationModule/images/sprite-MonetizationModule/",
-	'sprite' => "$IP/extensions/wikia/MonetizationModule/images/sprite-MonetizationModule.png",
-	'scss'   => "$IP/extensions/wikia/MonetizationModule/styles/mixins/_sprite-MonetizationModule.scss"
+	'source' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module/",
+	'sprite' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module.png",
+	'scss'   => "$IP/extensions/wikia/MonetizationModule/styles/mixins/_sprite-monetization-module.scss"
 
 );
