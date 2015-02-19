@@ -6,7 +6,11 @@
 $wgExtensionCredits['bannernotifications'][] = array(
 	'name' => 'BannerNotifications',
 	'descriptionmsg' => 'bannernotifications-desc',
-	'author' => 'Hyun Lim',
+	'author' => [
+		'Hyun Lim',
+		'Maciej Brencz',
+		'Bartłomiej (Bart) Kowalczyk'
+	],
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/BannerNotifications'
 );
 
