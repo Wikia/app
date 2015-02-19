@@ -77,14 +77,12 @@ class LightboxHelper extends WikiaModel {
 			$latestPhotos = array();
 			if ( !empty( $thumbUrls ) && is_array( $thumbUrls ) ) {
 				foreach ( $thumbUrls as $thumb ) {
-					$title = Title::newFromText( $thumb['image_filename'] );
 					$latestPhotos[] = array(
-						'title' => $title->getDBKey(),
+						'title' => $thumb['image_key'],
 						'type' => 'image',
 					);
 				}
 			}
-
 			$this->wg->Memc->set( $memKey, $latestPhotos, self::CACHE_TTL );
 		}
 
