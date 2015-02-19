@@ -613,8 +613,10 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
+	'category-exhibition-desc' => 'Novo visual na página de categoria',
 	'category-exhibition-sorttype' => 'Tipo de ordenação:',
 	'category-exhibition-alphabetical' => 'Alfabética',
 	'category-exhibition-mostvisited' => 'Mais visitas',

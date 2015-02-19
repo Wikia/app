@@ -437,7 +437,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		wpTextbox0.id = 'wpTextbox0';
 
 		wpTextbox1 = textarea;
-		wpTextbox1.id = 'wpTextboxWrapper';
+		wpTextbox1.id = 'wpTextbox1';
+		wpTextbox1.classList.add('highlighted');
 
 		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
 

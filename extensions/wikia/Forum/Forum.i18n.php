@@ -2219,6 +2219,33 @@ $messages['ko'] = array(
 	'forum-specialpage-board-lastpostby' => '마지막 글 작성:',
 	'forum-specialpage-policies-edit' => '편집',
 	'forum-specialpage-policies' => '포럼 정책 및 FAQ',
+	'forum-policies-and-faq' => "==포럼 운영 정책==
+{{SITENAME}} 포럼에 참여하시기 전에 다음 사항들에 주의해주세요.
+
+'''토론에 참여하는 다른 사용자들을 존중해주세요.'''
+:불특정 다수가 이 위키의 내용을 보고 기여하며 토론에 참여합니다. 여느 협업 프로젝트가 그렇듯이 모든 사람이 늘 한 의견에 동의하지는 않습니다. 항상 열린 마음으로 냉정하게 토론에 임해주시기 바랍니다. 이 위키에 기여해주시는 사용자 분들은 모두 한 주제에 대해 열정을 가지고 계시기 때문에 모였습니다.
+
+'''이미 진행중인 토론이 있다면 새 주제가 아니라 그 곳에서 토론에 참여해주세요. 토론 주제가 아직 만들어지지 않았다면 새 주제를 만들어주시면 됩니다.'''
+:새 토론을 시작하기 전에 {{SITENAME}} 포럼에 이미 존재하는 토론이 있는지 살펴봐주세요. 이미 진행중인 토론이 있다면 그 곳에 참여하는 것이 여러 사람들의 의견을 하나로 모으기에 더 좋습니다. 만약 찾는 토론이 없다면 바로 새 주제를 시작해주시면 됩니다.
+
+'''도움이 필요하다면 도움을 요청하세요.'''
+:질문이 있으시거나 뭔가 올바르지 않은 상황을 목격하셨나요? 포럼에서 다른 사용자에게 도움을 요청하세요! 만약 위키아 스탭의 도움이 필요한 경우 문의 양식을 통해 도움을 요청할 수 있습니다.
+
+'''즐기세요!'''
+:{{SITENAME}} 포럼에서 선호하는 주제를 공유하는 사람들과 즐거운 시간 보내시기 바랍니다!
+
+==포럼에 대해 자주 묻는 질문==
+'''관심 있는 주제를 주시하려면 어떻게 해야 하나요?'''
+:위키아에 계정이 있다면 주제를 '주시'해서 해당 주제의 변경점을 이메일이나 사이트에서 바로 알림받을 수 있습니다.
+
+'''문서 훼손 행위를 되돌리려면 어떻게 해야 하나요?'''
+:포럼 글에 스팸 등의 문서 훼손 행위를 목격하셨다면 해당 글에 마우스를 올린 후에 나타나는 '도구' 버튼을 눌러주세요. '도구' 버튼을 누른 후에 나타나는 메뉴에서 '숨기기' 메뉴를 선택하시면 문서 훼손 행위를 없앨 수 있고 추가적으로 관리자에게 알릴 수도 있습니다.
+
+'''추천 기능에 대해 알려주세요.'''
+:흥미로운 주제나 질 좋은 답글이 있다면 '추천' 버튼을 눌러 다른 사용자들에게 추천할 수 있습니다.
+
+'''태그 기능에 대해 알려주세요.'''
+:위키 내의 특정한 문서에 대하여 토론하고 있다면 해당 글을 토론 주제에 '태그'할 수 있습니다. 이렇게 태그한 토론 주제들은 해당 문서 아래에 보여지게 되며 다른 사용자들이 참여하기에 용이하게 해주고 포럼을 좀 더 조직적으로 관리할 수 있도록 해줍니다. 예를 들어 '볼드모트 경'을 토론 주제에 태그한다면 해당 글은 '볼드모트 경' 문서 아래에 보여지게 됩니다.", # Fuzzy
 	'forum-board-title' => '$1 게시판',
 	'forum-board-topic-title' => '$1에 대한 토론',
 	'forum-board-topics' => '주제',
@@ -3194,6 +3221,7 @@ ___________________________________________<br />
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author Fasouzafreitas
  * @author TheGabrielZaum
  * @author Tuliouel
  */
@@ -3260,6 +3288,7 @@ $messages['pt-br'] = array(
 	'forum-related-discussion-new-post-button' => 'Iniciar uma Discussão',
 	'forum-related-discussion-new-post-tooltip' => 'Iniciar uma nova discussão sobre $1',
 	'forum-related-discussion-total-replies' => '$1 mensagens',
+	'forum-related-discussion-see-more' => 'Veja mais discussões',
 	'forum-confirmation-board-deleted' => '"$1" foi excluído.',
 );
 
@@ -3441,6 +3470,8 @@ ___________________________________________<br />
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'forum-desc' => 'Wikia-tillägget Special:Forum',
+	'forum-disabled-desc' => 'Wikia-tillägget Special:Forum; inaktiverat',
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|aktiv diskussion|aktiva diskussioner}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|aktiv diskussion|aktiva diskussioner}} om: '''[[$2]]'''",

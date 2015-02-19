@@ -45,7 +45,7 @@ class AutoFollowTask extends BaseTask {
 
 	/**
 	 * Sets the 'autowatched-already' option to 1
-	 * @param User $oUser A user's object
+	 * @param \User $oUser A user's object
 	 */
 	private function setFlag( \User $oUser ) {
 		global $wgAutoFollowFlag;
@@ -56,9 +56,9 @@ class AutoFollowTask extends BaseTask {
 
 	/**
 	 * Logs the results of all add-to-watchlist actions
-	 * @param  User   $oUser         A user's object
-	 * @param  Array  $aWatchSuccess An array of successfully watched articles' titles
-	 * @param  Array  $aWatchFail    An array of articles' titles that failed from being watched
+	 * @param \User $oUser A user's object
+	 * @param Array $aWatchSuccess An array of successfully watched articles' titles
+	 * @param Array $aWatchFail An array of articles' titles that failed from being watched
 	 */
 	private function logResults( \User $oUser, Array $aWatchSuccess, Array $aWatchFail ) {
 		global $wgSitename;
