@@ -32,6 +32,7 @@ class SnappytvApiWrapperTest extends WikiaBaseTest {
 	 * please contact video product owner if test is failing
 	 *
 	 * @group Infrastructure
+	 * @group Broken
 	 */
 	public function testgetDataFromValidHtmlResponse() {
 		// setup
