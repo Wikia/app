@@ -253,7 +253,7 @@ class UserLoginForm extends LoginForm {
 
 	/**
 	 * Apply a validation message (defaults to error message) to this form instance
-	 * @param $msg
+	 * @param string $msg
 	 * @param string $msgType
 	 * @param string $errParam
 	 */
