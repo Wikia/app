@@ -2463,6 +2463,9 @@ $messages['ka'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'usersignup-page-captcha-label' => '보안 문자',
+	'usersignup-page-captcha-load-fail-title' => '캡차를 불러오는 데에 실패했습니다',
+	'usersignup-user-pref-emailauthenticated' => '회원님의 이메일 주소는 $2 $3에 인증되었습니다.',
 	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => '이런! 당신의 이메일은 인증되지 않았습니다. 이메일 주소를 인증하기 전까지 이메일과 관련된 기능은 작동하지 않을 것입니다.',
 	'usersignup-confirmation-email-greeting' => '안녕하세요, $USERNAME 님.',
 	'usersignup-confirmation-email-signature' => '위키아 팀',
@@ -3903,9 +3906,14 @@ $messages['pt-br'] = array(
 	'usersignup-page-title' => 'Junte-se à comunidade Wikia',
 	'usersignup-page-title-wikiamobile' => 'Criar uma conta',
 	'usersignup-page-captcha-label' => 'Palavra Obscura',
+	'usersignup-page-captcha-load-fail-title' => 'Captcha não carregado',
+	'usersignup-page-captcha-load-fail-text' => 'Desculpe, o teste da palavra embaçada falhou ao carregar, e isso é necessário para criar uma conta. Ele pode não estar disponível em sua região. Por favor, tente novamente mais tarde.',
 	'usersignup-error-invalid-user' => 'Usuário inválido. Por favor, autentique-se primeiro.',
 	'usersignup-error-invalid-email' => 'Por favor, insira um endereço de e-mail válido.',
 	'usersignup-error-symbols-in-username' => 'Ops, seu nome de usuário pode conter apenas letras e números.',
+	'usersignup-error-empty-email' => 'Opa, por favor preencha o seu endereço de e-mail.',
+	'usersignup-error-empty-username' => 'Opa, por favor preencha o campo nome de usuário.',
+	'usersignup-error-already-confirmed' => 'Você já confirmou este endereço de e-mail.',
 	'usersignup-facebook-heading' => 'Concluir o Registro',
 	'usersignup-facebook-create-account' => 'Criar conta',
 	'usersignup-facebook-have-an-account-heading' => 'Já tem uma conta?',

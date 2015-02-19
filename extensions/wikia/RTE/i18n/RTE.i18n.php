@@ -435,6 +435,7 @@ $messages['ko'] = array(
 	'rte-edgecase-comment' => 'HTML 댓글',
 	'rte-edgecase-triplecurls' => '틀 매개변수',
 	'rte-edgecase-redirect' => '넘겨주기',
+	'rte-edgecase-unclosed-tags' => 'HTML 태그가 닫히지 않음',
 );
 
 /** Colognian (Ripoarisch)
@@ -897,4 +898,11 @@ $messages['zh-hans'] = array(
 	'rte-enablerichtexteditormessage' => 'RTF编辑器启用！',
 	'rte-first-run-notice' => '我们对编辑器做出了一些改进。[http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news 点此]了解更多。',
 	'prefs-rte' => 'RTF编辑器',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'rte-edgecase-triplecurls' => '模板參數',
 );
