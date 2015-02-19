@@ -2714,6 +2714,9 @@ OO.ui.WindowManager.static.sizes = {
 	},
 	'712px': {
 		width: 712
+	},
+	'717px': {
+		width: 717
 	}
 };
 

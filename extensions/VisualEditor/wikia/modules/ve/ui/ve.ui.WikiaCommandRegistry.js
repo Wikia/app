@@ -27,3 +27,10 @@ ve.ui.commandRegistry.register(
 		{ args: ['wikiaSingleMedia'] }
 	)
 );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaMapInsert', 'window', 'open',
+		{ args: ['wikiaMapInsert'] }
+	)
+);
