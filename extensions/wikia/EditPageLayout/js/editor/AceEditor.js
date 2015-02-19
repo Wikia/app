@@ -83,11 +83,11 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 	}
 
 	/**
-	 * Make sure that user doesn't left the page by accident
+	 * Make sure that user doesn't leave the page by accident
 	 */
 	function beforeUnload() {
-		$(win).bind( 'beforeunload', function() {
-			if ( !disableBeforeUnload && editorInitContent !== ace.getContent() ) {
+		$(win).bind('beforeunload', function () {
+			if (!disableBeforeUnload && editorInitContent !== ace.getContent()) {
 				return $.msg('wikia-editor-leaveconfirm-message');
 			}
 		});
