@@ -23,8 +23,3 @@ $wgHooks['MessageCacheReplace'][] = 'LatestPhotosHooks::onMessageCacheReplace';
 $wgHooks['UploadComplete'][] = 'LatestPhotosController::onImageUploadComplete';
 $wgHooks['FileUpload'][] = 'LatestPhotosController::onImageUpload';
 $wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosController::onImageRenameCompleated';
-
-
-
-$wgExtensionMessagesFiles[ 'LatestPhotos' ] = __DIR__ . '/LatestPhotos.i18n.php';
-
