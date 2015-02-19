@@ -430,7 +430,7 @@ class UserProfilePageController extends WikiaController {
 				$userData->website = 'http://' . $userData->website;
 			}
 
-			if ( !empty( $userData->fbPage ) && strpos( $userData->website, self::FBPAGE_PREFIX ) !== 0 ) {
+			if ( !empty( $userData->fbPage ) && strpos( $userData->fbPage, self::FBPAGE_PREFIX ) !== 0 ) {
 				$userData->fbPage = self::FBPAGE_PREFIX . $userData->fbPage;
 			}
 
