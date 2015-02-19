@@ -187,9 +187,9 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
 
 		if ( $mapDeleted && $this->app->checkSkin( 'oasis' ) ) {
-			NotificationsController::addConfirmation(
+			BannerNotificationsController::addConfirmation(
 				wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
-				NotificationsController::CONFIRMATION_WARN
+				BannerNotificationsController::CONFIRMATION_WARN
 			);
 		}
 

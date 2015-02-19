@@ -5,7 +5,7 @@
  * @author Maciej Brencz
  */
 
-class NotificationsController extends WikiaController {
+class BannerNotificationsController extends WikiaController {
 
 	const SESSION_KEY = 'oasisConfirmation';
 
@@ -413,6 +413,46 @@ class NotificationsController extends WikiaController {
 		}
 
 		wfProfileOut(__METHOD__);
+		return true;
+	}
+
+	/**
+	 * Adds assets for BannerNotifications on the bottom of the body on Monobook
+	 *
+	 * @param {String} $skin
+	 * @param {String} $text
+	 *
+	 * @return true
+	 */
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+
+		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
+			$styles = AssetsManager::getInstance()->getURL( 'banner_notifications_scss' );
+
+			foreach ( $styles as $style ) {
+				$text .= Html::linkedStyle( $style );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Registering and adding JS package for front-end usage
+	 *
+	 * @param object $out
+	 * @param string $text
+	 *
+	 * @return true
+	 */
+	function onOutputPageBeforeHTML( &$out, &$text ) {
+		//Registering package here as setup for this extension occurs
+		//too soon for JSMessages to be ready
+		JSMessages::registerPackage( 'BannerNotifications', [
+			'bannernotifications-general-ajax-failure'
+		] );
+
+		JSMessages::enqueuePackage('BannerNotifications', JSMessages::INLINE);
 		return true;
 	}
 }

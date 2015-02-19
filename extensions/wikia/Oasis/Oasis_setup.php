@@ -42,21 +42,6 @@ function wfOasisSetup() {
 	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosController::onImageRenameCompleated';
 	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationController::onWikiFactoryChanged';
 
-	// confirmations
-	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
-	$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
-	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
-	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
-	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
-	$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
-
-	// notifications
-	$wgHooks['AchievementsNotification'][] = 'NotificationsController::addBadgeNotification';
-	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsController::addCommunityMessagesNotification';
-	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsController::addEditSimilarNotification';
-	$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsController::addSiteWideMessageNotification';
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMessageNotification';
-
 	// misc
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
 

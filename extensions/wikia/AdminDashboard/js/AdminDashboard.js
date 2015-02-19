@@ -18,6 +18,7 @@ var AdminDashboard = {
 		AdminDashboard.section.advanced = $('#AdminDashboardAdvanced');
 		AdminDashboard.section.contentarea = $('#AdminDashboardContentArea');
 		AdminDashboard.wikiaArticle = $('#WikiaArticle');
+		AdminDashboard.bannerNotification = new window.BannerNotification().setType('error');
 
 		// events
 		AdminDashboard.allControls.hover(function() {
@@ -44,9 +45,11 @@ var AdminDashboard = {
 						{ url: url },
 						// success callback
 						function( formRes ) {
-							window.GlobalNotification.hide();
+							AdminDashboard.bannerNotification.hide();
 							if ( formRes.error ) {
-								window.GlobalNotification.show( formRes.error, 'error' );
+								AdminDashboard.bannerNotification
+									.setContent(formRes.error)
+									.show();
 							} else {
 								VET.close();
 								window.location = addVideoButtonReturnUrl;
@@ -54,7 +57,9 @@ var AdminDashboard = {
 						},
 						// error callback
 						function() {
-							window.GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+							AdminDashboard.BannerNotifications
+								.setContent($.msg('vet-error-while-loading'))
+								.show();
 						}
 					);
 					// Don't move on to second VET screen.  We're done.

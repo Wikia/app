@@ -14,8 +14,9 @@ require(
 		'wikia.geo',
 		'wikia.cache',
 		'wikia.tracker',
+		'BannerNotification'
 	],
-	function ($, mw, w, geo, cache, tracker) {
+	function ($, mw, w, geo, cache, tracker, BannerNotification) {
 		'use strict';
 
 		// Get user's geographic data and a country code
@@ -101,24 +102,23 @@ require(
 		}
 
 		function displayNotification(message) {
-			w.GlobalNotification.show(message, 'notify');
-
-			// Track a view of the notification
-			var trackingParams = {
-				trackingMethod: 'ga',
-				category: 'wikia-in-your-lang',
-				action: tracker.ACTIONS.VIEW,
-				label: targetLanguage + '-notification-view',
-			};
+			var notification = new BannerNotification(message, 'notify').show(),
+				// Track a view of the notification
+				trackingParams = {
+					trackingMethod: 'ga',
+					category: 'wikia-in-your-lang',
+					action: tracker.ACTIONS.VIEW,
+					label: targetLanguage + '-notification-view'
+				};
 
 			tracker.track(trackingParams);
 
 			// Bind tracking of clicks on a link and events on close
-			bindEvents();
+			bindEvents(notification.$element);
 		}
 
-		function bindEvents() {
-			$('.global-notification.notify')
+		function bindEvents($element) {
+			$element
 				.on('click', '.close', function() {
 					onNotificationClosed();
 				})

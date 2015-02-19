@@ -237,7 +237,7 @@ $VenusConfig[ 'article_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'#group_banner_notifications.js',
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavUserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/edit.js',

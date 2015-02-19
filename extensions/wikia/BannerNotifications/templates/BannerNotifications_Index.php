@@ -9,7 +9,7 @@
 <?php
 			switch($notification['type']) {
 				// render badge notification
-				case NotificationsController::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE:
+				case BannerNotificationsController::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE:
 ?>
 		<div data-type="<?= $notification['type'] ?>" class="WikiaBadgeNotification">
 			<a class="sprite close-notification"></a>
@@ -24,9 +24,9 @@
 					break;
 
 				// render talk page / edit similar / community message notification
-				case NotificationsController::NOTIFICATION_TALK_PAGE_MESSAGE:
-				case NotificationsController::NOTIFICATION_EDIT_SIMILAR:
-				case NotificationsController::NOTIFICATION_COMMUNITY_MESSAGE:
+				case BannerNotificationsController::NOTIFICATION_TALK_PAGE_MESSAGE:
+				case BannerNotificationsController::NOTIFICATION_EDIT_SIMILAR:
+				case BannerNotificationsController::NOTIFICATION_COMMUNITY_MESSAGE:
 ?>
 		<div data-type="<?= $notification['type'] ?>">
 			<a class="sprite close-notification"></a>
@@ -35,7 +35,7 @@
 <?php
 					break;
 
-				case NotificationsController::NOTIFICATION_SITEWIDE:
+				case BannerNotificationsController::NOTIFICATION_SITEWIDE:
 					$first = 1;
 					foreach ($notification['message'] as $msgId => $data) {
 ?>
@@ -47,7 +47,7 @@
 					}
 					break;
 
-				case NotificationsController::NOTIFICATION_CUSTOM:
+				case BannerNotificationsController::NOTIFICATION_CUSTOM:
 ?>
 		<div data-type="<?= $notification['type'] ?>" data-name="<?= $notification['data']['name'] ?>">
 <?php

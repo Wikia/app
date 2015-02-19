@@ -1,4 +1,4 @@
-/* global UserLoginModal, wgScriptPath, GlobalNotification */
+/* global UserLoginModal, wgScriptPath, BannerNotification */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -7,7 +7,11 @@
 (function () {
 	'use strict';
 
-	var tracker, QueryString, uiFactory, FacebookLogin;
+	var tracker,
+		QueryString,
+		uiFactory,
+		FacebookLogin,
+		bannerNotification;
 
 	FacebookLogin = {
 		modal: false,
@@ -50,6 +54,7 @@
 				tracker = t;
 				QueryString = qs;
 				uiFactory = uf;
+				bannerNotification = new BannerNotification().setType('error');
 				self.actions = tracker.ACTIONS;
 				self.track = tracker.buildTrackingFunction({
 					category: 'user-sign-up',
@@ -171,7 +176,7 @@
 				}
 			// some error occurred
 			} else if (response.loginAborted) {
-				window.GlobalNotification.show(response.errorMsg, 'error');
+				bannerNotification.setContent(response.errorMsg).show();
 			} else if (response.unconfirmed) {
 				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
@@ -194,7 +199,7 @@
 		 */
 		setupModal: function (response) {
 			if (!response.modal) {
-				GlobalNotification.show($.msg('oasis-generic-error'), 'error');
+				bannerNotification.setContent($.msg('oasis-generic-error')).show();
 				return;
 			}
 
