@@ -5,7 +5,7 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, window, tracker
 		ARTICLE_LENGTH_THRESHOLD = 800,
 		SCALE = 100;
 		
-	if (Math.random() * 100 < WIDTH_SAMPLING_RATIO) {
+	if (Math.random() * 100 < WIDTH_SAMPLING_RATIO && window.wgIsArticle)  {
 		var label, trackFunction,
 			$article = $('.WikiaArticle'),
 			windowWidth = Math.floor($(window).width() / SCALE),
@@ -21,7 +21,7 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, window, tracker
 		} else {
 			label = 'short-';
 		};
-		track({
+		tracker.track({
 			label: label + windowWidth
 		})
 	}	
