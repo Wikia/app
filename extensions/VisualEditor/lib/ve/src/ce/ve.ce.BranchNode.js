@@ -207,27 +207,31 @@ ve.ce.BranchNode.prototype.onSplice = function ( index ) {
 		}
 		for ( i = args.length - 1; i >= 2; i-- ) {
 			args[i].attach( this );
-			if ( index ) {
-				// DOM equivalent of $anchor.after( args[i].$element );
-				afterAnchor = $anchor[0].nextSibling;
-				parentNode = $anchor[0].parentNode;
-				for ( j = 0, length = args[i].$element.length; j < length; j++ ) {
-					parentNode.insertBefore( args[i].$element[j], afterAnchor );
+			if ( !this.handlesOwnRendering() ) {
+				if ( index ) {
+					// DOM equivalent of $anchor.after( args[i].$element );
+					afterAnchor = $anchor[0].nextSibling;
+					parentNode = $anchor[0].parentNode;
+					for ( j = 0, length = args[i].$element.length; j < length; j++ ) {
+						parentNode.insertBefore( args[i].$element[j], afterAnchor );
+					}
+				} else {
+					// DOM equivalent of this.$element.prepend( args[j].$element );
+					node = this.$element[0];
+					for ( j = args[i].$element.length - 1; j >= 0; j-- ) {
+						node.insertBefore( args[i].$element[j], node.firstChild );
+					}
 				}
-			} else {
-				// DOM equivalent of this.$element.prepend( args[j].$element );
-				node = this.$element[0];
-				for ( j = args[i].$element.length - 1; j >= 0; j-- ) {
-					node.insertBefore( args[i].$element[j], node.firstChild );
+				if ( this.live !== args[i].isLive() ) {
+					args[i].setLive( this.live );
 				}
-			}
-			if ( this.live !== args[i].isLive() ) {
-				args[i].setLive( this.live );
 			}
 		}
 	}
 
-	this.setupSlugs();
+	if ( !this.handlesOwnRendering() ) {
+		this.setupSlugs();
+	}
 };
 
 /**
@@ -303,8 +307,10 @@ ve.ce.BranchNode.prototype.getSlugAtOffset = function ( offset ) {
  */
 ve.ce.BranchNode.prototype.setLive = function ( live ) {
 	ve.ce.Node.prototype.setLive.call( this, live );
-	for ( var i = 0; i < this.children.length; i++ ) {
-		this.children[i].setLive( live );
+	if ( !this.handlesOwnRendering() ) {
+		for ( var i = 0; i < this.children.length; i++ ) {
+			this.children[i].setLive( live );
+		}
 	}
 };
 
