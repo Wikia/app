@@ -31,7 +31,7 @@ $wiki-header-color: #2b54b5;
 	.notifications-entry-point {
 		background-image: url('/extensions/wikia/GlobalNavigation/images/notifications_icon.svg'); /** inline */
 		background-position: center;
-		background-size: 22px;
+		background-size: 19px;
 		background-repeat: no-repeat;
 		display: inline-block;
 		height: $global-navigation-height;
@@ -40,7 +40,7 @@ $wiki-header-color: #2b54b5;
 
 		&:after {
 			@include global-nav-chevron;
-			margin-left: 48px;
+			margin-left: 46px;
 			margin-top: 22px;
 		}
 	}
@@ -108,7 +108,7 @@ $wiki-header-color: #2b54b5;
 	padding: 0;
 	position: absolute;
 	right: 0;
-	top: 100%;
+	top: -1px;
 
 	#notificationsContainer {
 		margin-right: -18px; //NOTE: Hide native scrollbar

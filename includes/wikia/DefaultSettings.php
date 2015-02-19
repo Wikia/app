@@ -683,13 +683,6 @@ $wgSkipOldSkins = array(
 );
 
 /**
- * @name wgReleaseNumber
- * release number is used for building links
- */
-$HeadURL = explode('/', '$HeadURL$');
-$wgReleaseNumber = (!isset($HeadURL[4]) || $HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
-
-/**
  * @name $wgBiggestCategoriesBlacklist
  * Lists phrases that disqualify a category from appearing in
  * the biggest category list (Monaco sidebar)

@@ -367,7 +367,8 @@ class GameGuidesController extends WikiaController {
 	private function getContentSource() {
 		$content = null;
 		if ( $this->wg->EnableCuratedContentExt ) {
-			$content = $this->curatedContentToGameGuides( $this->wg->WikiaCuratedContent );
+			$wikiaCuratedContent = $this->wg->WikiaCuratedContent;
+			$content = $this->curatedContentToGameGuides( empty( $wikiaCuratedContent ) ? [ ] : $wikiaCuratedContent );
 		} else {
 			$content = $this->wg->WikiaGameGuidesContent;
 		}
