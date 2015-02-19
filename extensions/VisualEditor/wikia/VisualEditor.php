@@ -84,6 +84,7 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaGalleryItemCaptionNode.js',
 			've/dm/ve.dm.WikiaGalleryItemNode.js',
 			've/dm/ve.dm.WikiaGalleryNode.js',
+			've/dm/ve.dm.WikiaMapNode.js',
 
 			// ce
 			've/ce/ve.ce.WikiaVideoNode.js',
@@ -97,6 +98,7 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaGalleryItemCaptionNode.js',
 			've/ce/ve.ce.WikiaGalleryItemNode.js',
 			've/ce/ve.ce.WikiaGalleryNode.js',
+			've/ce/ve.ce.WikiaMapNode.js',
 
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
