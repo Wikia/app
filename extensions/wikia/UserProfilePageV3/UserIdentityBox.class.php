@@ -516,7 +516,7 @@ class UserIdentityBox {
 
 		$result = true;
 
-		$fieldsToCheck = array('location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'topWikis');
+		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis' ];
 
 		foreach ($data as $property => $value) {
 			if (in_array($property, $fieldsToCheck) && !empty($value)) {
