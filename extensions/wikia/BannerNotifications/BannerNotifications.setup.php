@@ -27,7 +27,6 @@ $wgAutoloadClasses[ 'BannerNotificationsController' ] = $dir . 'BannerNotificati
 // confirmations
 $wgHooks['ArticleDeleteComplete'][] = 'BannerNotificationsController::addPageDeletedConfirmation';
 $wgHooks['ArticleUndelete'][] = 'BannerNotificationsController::addPageUndeletedConfirmation';
-#$wgHooks['EditPageSuccessfulSave'][] = 'BannerNotificationsController::addSaveConfirmation'; // BugId:10129
 $wgHooks['SpecialMovepageAfterMove'][] = 'BannerNotificationsController::addPageMovedConfirmation';
 $wgHooks['SpecialPreferencesOnRender'][] = 'BannerNotificationsController::addPreferencesConfirmation';
 $wgHooks['UserLogoutComplete'][] = 'BannerNotificationsController::addLogOutConfirmation';

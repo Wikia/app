@@ -14,7 +14,7 @@ module.exports = function( grunt ) {
 			options: {
 				// define as an AMD module
 				prefix: 'define( \'BannerNotifications.templates.mustache\', [], function() { \'use strict\'; return ',
-				postfix: '; });',
+				postfix: '; });\n',
 				verbose: true
 			}
 		}
