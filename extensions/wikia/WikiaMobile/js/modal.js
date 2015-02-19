@@ -241,7 +241,7 @@ define( 'modal', ['throbber', 'jquery'], function modal ( throbber, $ ){
 
 	function setCaption ( cap ) {
 		if ( typeof cap === 'string' && cap !== '' ) { 			
-			caption.innerText = cap.replace(/<(?:.|\n)*?>/gm, '');	
+			caption.innerText = $('<i>').html(cap).text();	
 			caption.style.display = 'block';
 		} else {
 			caption.style.display = 'none';
