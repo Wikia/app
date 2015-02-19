@@ -131,7 +131,7 @@ var importArticleMissing = (function() {
 		}
 
 		// Use BannerNotifications to show the error to the user
-		if ( window.BannerNotifications && ( missingLength = missing.length ) ) {
+		if (window.BannerNotification && (missingLength = missing.length)) {
 			var moreLength = missingLength - 1,
 				message = missingText[ missingLength < 2 ? 'single' : 'multiple' ],
 				more = moreText[ moreLength < 2 ? 'single' : 'multiple' ];
@@ -140,7 +140,7 @@ var importArticleMissing = (function() {
 				.replace( '%1s', '"' + missing[ 0 ] + '"' )
 				.replace( '%2s', more.replace( '%d', moreLength ) );
 
-			BannerNotifications.show( message, 'error' );
+			new window.BannerNotification(message, 'error').show();
 		}
 	}
 }());

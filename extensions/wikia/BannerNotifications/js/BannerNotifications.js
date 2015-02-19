@@ -5,7 +5,7 @@
  * BannerNotifications.show('Some success message', 'confirm')
  * BannerNotifications.show('Some error message', 'error', $('.myDiv'), 3000)
  */
-define('BannerNotifications', [
+define('BannerNotification', [
 	'jquery',
 	'wikia.window',
 	'wikia.onScroll'
@@ -68,7 +68,7 @@ define('BannerNotifications', [
 			this.hidden = false;
 		} else {
 			this.content = content;
-			this.$element = createMarkup(this.content, this.type);
+			this.$element = null;
 			this.$parent = $parent;
 			this.hidden = true;
 			this.type = type;
@@ -117,20 +117,25 @@ define('BannerNotifications', [
 	};
 
 	BannerNotification.prototype.setType = function (type) {
-		if (type !== this.type && types.hasOwnProperty(type) && this.$element) {
-			this.$element
-				.removeClass(classes)
-				.addClass(type);
+		if (type !== this.type && types.hasOwnProperty(type)) {
 			this.type = type;
+			if (this.$element) {
+				this.$element
+					.removeClass(classes)
+					.addClass(type);
+			}
 		}
 		return this;
 	};
 
 	BannerNotification.prototype.setContent = function (content) {
 		if (content && content !== this.content) {
-			this.$element
-				.find('.msg')
-				.html(content);
+			this.content = content;
+			if (this.$element) {
+				this.$element
+					.find('.msg')
+					.html(content);
+			}
 		}
 		return this;
 	};

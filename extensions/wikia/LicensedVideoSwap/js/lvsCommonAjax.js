@@ -8,16 +8,18 @@ define('lvs.commonajax', [
 	'lvs.videocontrols',
 	'wikia.window',
 	'lvs.tracker',
-	'BannerNotifications'
-], function (suggestions, ellipses, controls, window, tracker, BannerNotifications) {
+	'BannerNotification'
+], function (suggestions, ellipses, controls, window, tracker, BannerNotification) {
 	'use strict';
 
 	var $body,
-		$container;
+		$container,
+		bannerNotification;
 
 	function init($elem) {
 		$body = $('body');
 		$container = $elem;
+		bannerNotification = new BannerNotification();
 	}
 
 	// add loading graphic
@@ -35,10 +37,10 @@ define('lvs.commonajax', [
 	// ajax success callback
 	function success(data, trackingLabel) {
 		if (data.result === 'error') {
-			BannerNotifications.show(data.msg, 'error');
+			bannerNotification.setContent(data.msg).setType('error').show();
 			stopLoadingGraphic();
 		} else {
-			BannerNotifications.show(data.msg, 'confirm');
+			bannerNotification.setContent(data.msg).setType('confirm').show();
 			// update the grid and trigger the reset event for JS garbage collection
 			$container.html(data.html).trigger('contentReset');
 			suggestions.init($container);

@@ -212,11 +212,11 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
 	if ( data.error ) {
 		errorMsg = this.displayMessages[data.error.code] || this.displayMessages.mediaqueryfailed;
 
-		mw.config.get( 'BannerNotifications' ).show(
+		mw.config.get( 'BannerNotifications' )(
 			errorMsg,
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
-		);
+		).show();
 
 		this.requestSearch();
 	} else {

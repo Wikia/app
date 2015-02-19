@@ -33,7 +33,7 @@ var WikiaFooterApp = {
 	},
 	addScrollEvent: function() {
 		'use strict';
-		WikiaFooterApp.windowObj.off( 'scroll.FooterAp' ); // BannerNotifications could be re-binding this event.
+		WikiaFooterApp.windowObj.off( 'scroll.FooterAp' );
 		WikiaFooterApp.windowObj.on( 'scroll.FooterAp', WikiaFooterApp.resolvePosition ).triggerHandler( 'scroll' );
 	},
 	addResizeEvent: function (){

@@ -5,15 +5,16 @@ define('wikia.toolsCustomization', [
 	'jquery',
 	'wikia.ui.factory',
 	'mw',
-	'BannerNotifications'
-], function(win, browserDetect, $, uiFactory, mw, BannerNotifications) {
+	'BannerNotification'
+], function(win, browserDetect, $, uiFactory, mw, BannerNotification) {
 	'use strict';
 
 		win.ToolbarCustomize = win.ToolbarCustomize || {};
 
 		var TC = win.ToolbarCustomize,
 			isIPad = false,
-			wgBlankImgUrl = win.wgBlankImgUrl;
+			wgBlankImgUrl = win.wgBlankImgUrl,
+			bannerNotification = new BannerNotification().setType('error');
 
 			isIPad = browserDetect.isIPad();
 
@@ -286,7 +287,7 @@ define('wikia.toolsCustomization', [
 			},
 
 			onLoadFailure: function( req, textStatus, errorThrown ) {
-				BannerNotifications.show( errorThrown, 'error' );
+				bannerNotification.setContent(errorThrown).show();
 			},
 
 			checkLoad: function() {
@@ -541,7 +542,7 @@ define('wikia.toolsCustomization', [
 					$('body').trigger('userToolsItemAdded', [data.toolbar]);
 					this.modal.trigger( 'close' );
 				} else {
-					BannerNotifications.show(status, 'error');
+					bannerNotification.setContent(status).show();
 				}
 			}
 

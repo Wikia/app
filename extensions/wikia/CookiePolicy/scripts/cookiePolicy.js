@@ -5,8 +5,8 @@ require([
 	'wikia.window',
 	'wikia.cookies',
 	'wikia.geo',
-	'BannerNotifications'
-], function ($, mw, window, cookies, geo, BannerNotifications) {
+	'BannerNotification'
+], function ($, mw, window, cookies, geo, BannerNotification) {
 	'use strict';
 
 	/**
@@ -35,7 +35,7 @@ require([
 	 */
 	function showBanner() {
 		var message = mw.message('cookie-policy-notification-message').parse(),
-			notification = BannerNotifications.show(message, 'notify');
+			notification = new BannerNotification(message, 'notify').show();
 
 		// currently, mw.message doesn't support the #NewWindowLink magic word, so we'll have to use JS
 		notification.$element.find('a').on('click', function (event) {
@@ -66,8 +66,6 @@ require([
 	}
 
 	$(function () {
-		// Allow other JS like BannerNotifications to execute beforehand.
-		// setTimeout hack can hopefully be removed with UC-174, BannerNotifications refactor
-		window.setTimeout(initCookieNotification, 0);
+		initCookieNotification();
 	});
 });

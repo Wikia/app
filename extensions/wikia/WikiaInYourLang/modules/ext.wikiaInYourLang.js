@@ -14,9 +14,9 @@ require(
 		'wikia.geo',
 		'wikia.cache',
 		'wikia.tracker',
-		'BannerNotifications'
+		'BannerNotification'
 	],
-	function ($, mw, w, geo, cache, tracker, BannerNotifications) {
+	function ($, mw, w, geo, cache, tracker, BannerNotification) {
 		'use strict';
 
 		// Get user's geographic data and a country code
@@ -102,13 +102,13 @@ require(
 		}
 
 		function displayNotification(message) {
-			var notification = BannerNotifications.show(message, 'notify'),
+			var notification = new BannerNotification(message, 'notify').show(),
 				// Track a view of the notification
 				trackingParams = {
 					trackingMethod: 'ga',
 					category: 'wikia-in-your-lang',
 					action: tracker.ACTIONS.VIEW,
-					label: targetLanguage + '-notification-view',
+					label: targetLanguage + '-notification-view'
 				};
 
 			tracker.track(trackingParams);

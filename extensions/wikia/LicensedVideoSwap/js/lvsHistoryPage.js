@@ -5,8 +5,8 @@
 require([
 	'jquery',
 	'lvs.commonajax',
-	'BannerNotifications'
-], function ($, commonAjax, BannerNotifications) {
+	'BannerNotification'
+], function ($, commonAjax, BannerNotification) {
 	'use strict';
 
 	function LVSHistoryPage(opts) {
@@ -52,12 +52,12 @@ require([
 		},
 		handleUndoFail: function (msg) {
 			commonAjax.stopLoadingGraphic();
-			BannerNotifications.show(msg, 'error');
+			new BannerNotification(msg, 'error').show();
 		},
 		handleUndoSuccess: function (msg, target) {
 			$(target).closest('li').remove();
 			commonAjax.stopLoadingGraphic();
-			BannerNotifications.show(msg, 'confirm');
+			new BannerNotification(msg, 'confirm').show();
 		},
 		// restore clobbered constructor
 		constructor: LVSHistoryPage

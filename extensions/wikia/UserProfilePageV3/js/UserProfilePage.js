@@ -11,6 +11,7 @@ var UserProfilePage = {
 	forceRedirect: false,
 	reloadUrl: false,
 	bucky: window.Bucky('UserProfilePage'),
+	bannerNotification: new BannerNotification().setType('error'),
 
 	// reference to modal UI component
 	modalComponent: {},
@@ -296,7 +297,7 @@ var UserProfilePage = {
 							userId: UserProfilePage.userId
 						};
 						UserProfilePage.wasDataChanged = true;
-						window.BannerNotifications.hideAll();
+						bannerNotification.hide();
 					} else {
 						if (typeof (response.result.error) !== 'undefined') {
 							UserProfilePage.error(response.result.error);
@@ -411,7 +412,7 @@ var UserProfilePage = {
 			msg = $.msg('oasis-generic-error');
 		}
 
-		window.BannerNotifications.show(msg, 'error');
+		UserProfilePage.bannerNotifications.setContent(msg).show();
 	},
 
 	getFormData: function () {

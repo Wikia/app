@@ -1,4 +1,4 @@
-/* global BannerNotifications */
+/* global BannerNotification */
 
 /*
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
@@ -8,8 +8,8 @@ define('wikia.vet', [
 	'wikia.videoBootstrap',
 	'jquery',
 	'wikia.window',
-	'BannerNotifications'
-], function (VideoBootstrap, $, window, BannerNotifications) {
+	'BannerNotification'
+], function (VideoBootstrap, $, window, BannerNotification) {
 	'use strict';
 
 	var curSourceId = 0,
@@ -22,7 +22,7 @@ define('wikia.vet', [
 		prevScreen = null,
 		wysiwygStart = 1,
 		// Show notifications for this long and then hide them
-		notificationTimout = 4000,
+		notificationTimeout = 4000,
 		vetOptions = {},
 		embedPresets = false,
 		callbackAfterSelect = $.noop,
@@ -32,6 +32,7 @@ define('wikia.vet', [
 		DEFAULT_WIDTH = 335,
 		thumbSize = DEFAULT_WIDTH,
 		videoInstance = null,
+		bannerNotification = new BannerNotification('', 'error', null, notificationTimeout),
 		tracking,
 		VETExtended,
 		VET;
@@ -120,7 +121,7 @@ define('wikia.vet', [
 			var extraData, caption;
 
 			if (json.status === 'fail') {
-				BannerNotifications.show(json.errMsg, 'error', null, notificationTimout);
+				bannerNotification.setContent(json.errMsg).show();
 			} else {
 				// setup metadata
 				extraData = {};
@@ -283,7 +284,7 @@ define('wikia.vet', [
 			query;
 
 		if (!$urlInput.val()) {
-			BannerNotifications.show($.msg('vet-warn2'), 'error', null, notificationTimout);
+			bannerNotification.setContent($.msg('vet-warn2')).show();
 			return false;
 		} else {
 			query = $urlInput.val();
@@ -337,7 +338,7 @@ define('wikia.vet', [
 		});
 
 		if ($errorBox.length) {
-			BannerNotifications.show($errorBox.html(), 'error', null, notificationTimout);
+			bannerNotification.setContent($errorBox.html()).show();
 		}
 
 		if ($('#VideoEmbedMain').html() === '') {
@@ -362,12 +363,7 @@ define('wikia.vet', [
 		e.preventDefault();
 
 		if (!$nameInput.length || $nameInput.val() === '') {
-			BannerNotifications.show(
-				$.msg('vet-warn3'),
-				'error',
-				null,
-				notificationTimout
-			);
+			bannerNotification.setContent($.msg('vet-warn3')).show();
 			return;
 		}
 
@@ -404,12 +400,7 @@ define('wikia.vet', [
 			var wikitext, options, screenType;
 
 			if (status === 'error') {
-				BannerNotifications.show(
-					$.msg('vet-insert-error'),
-					'error',
-					null,
-					notificationTimout
-				);
+				bannerNotification.setContent($.msg('vet-insert-error')).show();
 			} else if (status === 'success') {
 				screenType = jqXHR.getResponseHeader('X-screen-type');
 				if (typeof screenType === 'undefined') {
@@ -418,12 +409,7 @@ define('wikia.vet', [
 				switch ($.trim(screenType)) {
 					case 'error':
 						data.responseText = data.responseText.replace(/<script.*script>/, '');
-						BannerNotifications.show(
-							data.responseText,
-							'error',
-							null,
-							notificationTimout
-						);
+						bannerNotification.setContent(data.responseText).show();
 						break;
 					case 'summary':
 						switchScreen('Summary');
@@ -546,12 +532,7 @@ define('wikia.vet', [
 				}
 
 				if ($.trim(screenType) === 'error') {
-					BannerNotificationsication.show(
-						data.responseText,
-						'error',
-						null,
-						notificationTimout
-					);
+					bannerNotification.setContent(data.responseText).show();
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();

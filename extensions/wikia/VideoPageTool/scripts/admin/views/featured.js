@@ -5,14 +5,15 @@
 define('videopageadmin.views.featured', [
 	'videopageadmin.views.editbase',
 	'videopageadmin.views.thumbnailupload',
-	'BannerNotifications'
-], function (EditBaseView, ThumbnailUploader, BannerNotifications) {
+	'BannerNotification'
+], function (EditBaseView, ThumbnailUploader, BannerNotification) {
 	'use strict';
 
 	var FeaturedVideo = EditBaseView.extend({
 		initialize: function () {
 			EditBaseView.prototype.initialize.call(this, arguments);
 			this.$fieldsToValidate = this.$el.find('.description, .display-title, .video-key, .alt-thumb');
+			this.bannerNotification = new BannerNotification().setType('error');
 
 			_.bindAll(this, 'initAddVideo', 'initValidator', 'clearForm');
 
@@ -108,7 +109,7 @@ define('videopageadmin.views.featured', [
 								// close VET modal
 								vet.close();
 							} else {
-								BannerNotifications.show(json.msg, 'error');
+								bannerNotification.setContent(json.msg).show();
 							}
 						}
 					});
