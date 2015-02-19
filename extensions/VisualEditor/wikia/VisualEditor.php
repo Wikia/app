@@ -106,6 +106,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSingleMediaDialog.js',
+			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
@@ -124,6 +125,7 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaSingleMediaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaSingleMediaCartSelectWidget.js',
 			've/ui/widgets/ve.ui.WikiaSingleMediaCartOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaMapOptionWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
