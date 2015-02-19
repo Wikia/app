@@ -118,7 +118,7 @@ if( !empty( $showActionsButton ) ){ ?>
 <!-- TODO: no excanvas.pack.js !! -->
 <!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.pack.js"></script><![endif]-->
 <? global $wgExtensionsPath ?>
-<script language="javascript" type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/WikiFactory/js/SpecialNewWikisGraph.js"></script>
+<script language="javascript" type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/SpecialPageViews/js/SpecialPageViews.js"></script>
 <?
 $jsParams = array(
 	'chartId' => $number,
