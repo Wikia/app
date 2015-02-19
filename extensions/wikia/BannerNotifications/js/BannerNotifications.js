@@ -8,8 +8,10 @@
 define('BannerNotification', [
 	'jquery',
 	'wikia.window',
-	'wikia.onScroll'
-], function ($, window, onScroll) {
+	'wikia.onScroll',
+	'BannerNotifications.templates.mustache',
+	'wikia.mustache'
+], function ($, window, onScroll, templates, mustache) {
 	'use strict';
 
 	var defaultTimeout = 10000,
@@ -20,6 +22,7 @@ define('BannerNotification', [
 			'warn': 'yellow'
 		},
 		classes = Object.keys(types).join(' '),
+		closeImageSource = window.stylepath + '/oasis/images/icon_close.png',
 		$pageContainer,
 		wikiaHeader,
 		headerHeight,
@@ -33,12 +36,12 @@ define('BannerNotification', [
 	 * @returns {jQuery}
 	 */
 	function createMarkup(content, type) {
-		return $('<div class="banner-notification">' +
-			'<button class="close wikia-chiclet-button">' +
-			'<img src="' + window.stylepath + '/oasis/images/icon_close.png">' +
-			'</button><div class="msg">' + content + '</div></div>')
-			.addClass(type)
-			.hide();
+		return $(
+			mustache.render(templates.BannerNotifications, {
+				imageSource: closeImageSource,
+				content: content
+			})
+		).addClass(type).hide();
 	}
 
 	/**
