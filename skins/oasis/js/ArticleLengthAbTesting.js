@@ -9,12 +9,11 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, window, tracker
 		var label, trackFunction,
 			$article = $('.WikiaArticle'),
 			windowWidth = Math.floor($(window).width() / SCALE),
-
-		trackFunction = tracker.buildTrackingFunction({
-			action: tracker.ACTIONS.IMPRESSION,
-			category: 'articleContentLengthTest',
-			trackingMethod: 'ga'
-		});
+			trackFunction = tracker.buildTrackingFunction({
+				action: tracker.ACTIONS.IMPRESSION,
+				category: 'articleContentLengthTest',
+				trackingMethod: 'ga'
+			});
 
 		if ($article.height() > ARTICLE_LENGTH_THRESHOLD) {
 			label = 'long-';
