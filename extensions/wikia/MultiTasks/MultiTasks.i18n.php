@@ -135,6 +135,7 @@ $messages['qqq'] = array(
 	'multiwikifinder-desc' => '{{desc}}',
 	'multidelete-desc' => '{{desc}}',
 	'multiedit-desc' => '{{desc}}',
+	'multitasks-link-back-label' => '{{Identical|Here}}',
 	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
 	'multiwikiedit_minoredit_caption' => '{{Identical|Minor edit}}',
@@ -1877,6 +1878,7 @@ $messages['ko'] = array(
 	'multiwikiedit_list_caption' => '위키 목록',
 	'multiwikiedit_minoredit_caption' => '사소한 편집',
 	'multiwikiedit_botedit_caption' => '봇 (숨겨진) 편집',
+	'multiwikiedit_summary_text' => '편집 요약',
 	'multidelete_select_all' => '모두 선택',
 	'multidelete_brazilian_portuguese_wikis' => '모든 브라질 포르투갈어 위키',
 	'multidelete_hebrew_wikis' => '모든 히브리어 위키',
@@ -1894,6 +1896,10 @@ $messages['ko'] = array(
 	'multidelete_french_wikis' => '모든 프랑스어 위키',
 	'multidelete_swedish_wikis' => '모든 스웨덴어 위키',
 	'multidelete_german_wikis' => '모든 독일어 위키',
+	'multiwikifinder' => '문서 이름 찾기',
+	'multiwikifindpagenames' => '문서 이름 찾기',
+	'multiwikienterpagename' => '문서 이름 입력:',
+	'multiwikirecords' => '위키 $1개 발견',
 	'multiwikifinder-redirect' => '넘겨주기',
 );
 

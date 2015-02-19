@@ -1510,6 +1510,7 @@ $messages['ko'] = array(
 	'scavengerhunt-button-disable' => '비활성화',
 	'scavengerhunt-button-enable' => '활성화',
 	'scavengerhunt-button-delete' => '삭제',
+	'scavengerhunt-quit-game-button-quit' => '종료',
 	'scavengerhunt-quit-game-button-cancel' => '취소',
 	'scavengerhunt-label-entry-form-email' => '사용자 이메일',
 	'scavengerhunt-label-entry-form-username' => '사용자 이름',
