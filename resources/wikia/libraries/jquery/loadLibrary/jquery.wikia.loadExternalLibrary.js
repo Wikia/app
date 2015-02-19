@@ -56,6 +56,11 @@
 			$deferred.done(callback);
 		}
 
+		// If the FB SDK successfully loads, show the fb login button
+		$deferred.done(function () {
+			$('.sso-login').removeClass('hidden');
+		});
+
 		if (typeof window.FB === 'object') {
 			// Since we have our own deferred object, we need to resolve it if FB is already loaded.
 			// We can't rely on the type check inside $.loadExternalLibrary.
@@ -69,8 +74,6 @@
 					version: 'v2.1'
 				});
 
-				// show facebook login button
-				$('.sso-login').removeClass('hidden');
 				// resolve after FB has finished inititalizing
 				$deferred.resolve();
 			};
