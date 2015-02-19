@@ -109,10 +109,8 @@ class MercuryApi {
 		$wg = F::app()->wg;
 		return [
 			'cacheBuster' => (int) $wg->CacheBuster,
-			'cookieDomain' => $wg->CookieDomain,
-			'cookiePath' => $wg->CookiePath,
 			'dbName' => $wg->DBname,
-			'defaultSkin' => $wg->defaultSkin,
+			'defaultSkin' => $wg->DefaultSkin,
 			'id' => (int) $wg->CityId,
 			'language' => [
 				'user' => $wg->Lang->getCode(),
