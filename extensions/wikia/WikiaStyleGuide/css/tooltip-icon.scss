@@ -5,7 +5,7 @@
 	display: inline-flex;
 }
 
-%tooltip-icon {
+.tooltip-icon {
 	background-color: $color-buttons;
 	border-radius: 6px;
 	color: white;
@@ -17,8 +17,4 @@
 	margin: 0 3px;
 	text-align: center;
 	width: 12px;
-}
-
-.tooltip-icon {
-	@extend %tooltip-icon;
 }
