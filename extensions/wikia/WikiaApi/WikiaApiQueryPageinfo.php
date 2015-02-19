@@ -26,10 +26,22 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 	}
 	
 	private function getPageViews(ApiResult $result) {
+		/**
+		 * Do not run for an empty set of pages
+		 *
+		 * Otherwise we run the query without the WHERE that results with all wiki articles being returned to PHP:
+		 * SELECT article_id,count as page_counter  FROM `page_visited`
+		 *
+		 * @see PLATFORM-913
+		 */
+		$aTitles = $this->getPageSet()->getGoodTitles();
+		if ( empty( $aTitles ) ) {
+			return;
+		}
+
 		$res = $result->getData();
 		
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
-			$aTitles = $this->getPageSet()->getGoodTitles();
 			#---
 			$this->resetQueryParams();
 			$this->addFields( array( 'article_id', 'count as page_counter' ) );
