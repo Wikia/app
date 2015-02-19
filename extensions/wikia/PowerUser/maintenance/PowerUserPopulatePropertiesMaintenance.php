@@ -42,15 +42,11 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 			->FROM( 'user' )
 			->WHERE( 'user_editcount' )->GREATER_THAN_OR_EQUAL( PowerUser::MIN_LIFETIME_EDITS )
 			->runLoop( $oDB, function( &$aPowerUsersLifetimeIds, $oRow ) {
-				$aPowerUsersLifetimeIds[] = $oRow->user_id;
+				$oPowerUser = new PowerUser( User::newFromId( $oRow->user_id ) );
+				if ( $oPowerUser->addPowerUserProperty( PowerUser::TYPE_LIFETIME ) ) {
+					$this->iPowerUsersLifetimeCounter++;
+				}
 			} );
-
-		foreach ( $aPowerUsersLifetimeIds as $iUserId ) {
-			$oPowerUser = new PowerUser( User::newFromId( $iUserId ) );
-			if ( $oPowerUser->addPowerUserProperty( PowerUser::TYPE_LIFETIME ) ) {
-				$this->iPowerUsersLifetimeCounter++;
-			}
-		}
 
 		$this->output( "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersLifetimeCounter}\n" );
 	}
@@ -65,15 +61,11 @@ class PowerUserPopulatePropertiesMaintenance extends Maintenance {
 			->WHERE( 'all_groups' )->LIKE( 'sysop' )
 			->GROUP_BY( 'user_id' )
 			->runLoop( $oDB, function( &$aPowerUsersAdminIds, $oRow ) {
-				$aPowerUsersAdminIds[] = $oRow->user_id;
+				$oPowerUser = new PowerUser( User::newFromId( $oRow->city_id ) );
+				if ( $oPowerUser->addPowerUserProperty( PowerUser::TYPE_ADMIN ) ) {
+					$this->iPowerUsersAdminCounter++;
+				}
 			} );
-
-		foreach ( $aPowerUsersAdminIds as $iUserId ) {
-			$oPowerUser = new PowerUser( User::newFromId( $iUserId ) );
-			if ( $oPowerUser->addPowerUserProperty( PowerUser::TYPE_ADMIN ) ) {
-				$this->iPowerUsersAdminCounter++;
-			}
-		}
 
 		$this->output( "PowerUsers for lifetime edits populated! Count: {$this->iPowerUsersAdminCounter}\n" );
 	}
