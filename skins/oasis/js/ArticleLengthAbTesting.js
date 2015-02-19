@@ -1,7 +1,7 @@
 require(['jquery', 'wikia.window', 'wikia.tracker'], function($, window, tracker) {	
 	'use strict';
 
-	var WIDTH_SAMPLING_RATIO = 100;
+	var WIDTH_SAMPLING_RATIO = 1;
 		
 	if (Math.random() * 100 < WIDTH_SAMPLING_RATIO) {
 	
