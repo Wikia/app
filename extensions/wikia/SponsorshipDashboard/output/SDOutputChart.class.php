@@ -126,7 +126,6 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		}
 
 		$ret = $oTmpl->render( '../../templates/output/'.self::TEMPLATE_CHART );
-
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -177,7 +176,6 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 				'yaxis' => in_array($key, $aSecondYAxis) ? 2 : 1
 			);
 		}
-
 		return array(
 			'serie' => $aSerie,
 			SponsorshipDashboardReport::SD_RETURNPARAM_TICKS => $result['date'],
@@ -188,9 +186,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	public function getChartData() {
 		$aData = array();
 		$aLabel = array();
-
 		foreach ( $this->report->reportSources as $reportSource ) {
-
 			$reportSource->getData();
 			$this->actualDate = $reportSource->actualDate;
 

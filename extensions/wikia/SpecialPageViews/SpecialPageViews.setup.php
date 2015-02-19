@@ -21,8 +21,10 @@ $wgExtensionCredits['specialpage'][] = [
 ];
 
 $wgAutoloadClasses['SpecialPageViewsController'] = $dir . 'SpecialPageViewsController.class.php';
+$wgAutoloadClasses['SpecialPageViewsOutput'] = $dir . 'output/SpecialPageViewsOutput.class.php';
+$wgAutoloadClasses['SpecialPageViewsSourceDatabase'] = $dir . 'SpecialPageViewsSourceDatabase.class.php';
 
 $wgSpecialPages['PageViews'] = 'SpecialPageViewsController';
 $wgSpecialPageGroups['PageViews'] = 'wikia';
 
-$wgExtensionMessagesFiles['SpecialStyleguide'] = $dir . 'SpecialPageViews.i18n.php';
+$wgExtensionMessagesFiles['SpecialPageViews'] = $dir . 'SpecialPageViews.i18n.php';

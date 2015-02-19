@@ -21,14 +21,12 @@ class SpecialPageViewsSourceDatabase extends SponsorshipDashboardSourceDatabase 
 		$res = $dbr->query( $sql, __METHOD__ );
 
 		while ( $row = $res->fetchObject( $res ) ) {
-			$sDate = $row->creation_date;
+			$sDate = $row->pv_date;
 			$sDate = $this->frequency->formatDateByString( $sDate );
 			$this->dataAll[ $sDate ][ 'date' ] = $sDate;
-			$this->dataAll[ $sDate ][ 'a'.md5( $this->serieName ) ] = $row->number;
+			$this->dataAll[ $sDate ][ 'a'.md5( $this->serieName ) ] = $row->pageviews;
 		}
 
 		$this->dataTitles[ 'a'.md5( $this->serieName ) ] = $this->serieName;
-
-		$numberOfRecords = count( $this->dataAll );
 	}
 }
