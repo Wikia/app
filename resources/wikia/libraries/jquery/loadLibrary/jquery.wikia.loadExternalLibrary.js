@@ -68,6 +68,9 @@
 					cookie: true,
 					version: 'v2.1'
 				});
+
+				// show facebook login button
+				$('.sso-login').removeClass('hidden');
 				// resolve after FB has finished inititalizing
 				$deferred.resolve();
 			};
