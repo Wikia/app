@@ -290,20 +290,19 @@ $wiki-header-color: #2b54b5;
 			line-height: 12px;
 		}
 
-		&.empty, &.admin-notification {
-			padding: 0;
-		}
-
 		&.empty {
 			background-color: rgb(230, 235, 242);
 			color: rgb(9, 35, 68);
 			font-size: 14px;
 			height: 80px;
 			line-height: 80px;
+			padding: 0;
 			text-align: center;
 		}
 
 		&.admin-notification {
+			padding: 17px 25px 17px 20px;
+
 			.notification-message {
 				width: auto;
 			}
