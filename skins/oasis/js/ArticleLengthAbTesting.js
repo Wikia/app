@@ -14,8 +14,8 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, window, tracker
 			windowWidth = $(window).width(),
 			widthCategory = Math.floor(windowWidth / SCALE);
 
-		track = Wikia.Tracker.buildTrackingFunction({
-			action: Wikia.Tracker.ACTIONS.IMPRESSION,
+		track = tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.IMPRESSION,
 			category: 'articleContentLengthTest',
 			trackingMethod: 'ga'
 		});
