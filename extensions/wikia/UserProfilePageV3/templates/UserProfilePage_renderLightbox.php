@@ -13,7 +13,8 @@
 
 	<ul class="tab-content">
 		<li class="avatar">
-			<form id="usersAvatar" class="WikiaForm" name="usersAvatar" method="post" enctype="multipart/form-data" action="/wikia.php?controller=UserProfilePage&method=onSubmitUsersAvatar&format=json&userId=<?= $userId; ?>">
+			<form id="usersAvatar" class="WikiaForm" name="usersAvatar" method="post" enctype="multipart/form-data"
+				action="<?= UserProfilePageController::getLocalUrl('onSubmitUsersAvatar', [ 'userId' => $userId ], 'json'); ?>">
 
 				<?= $avatar; ?>
 
