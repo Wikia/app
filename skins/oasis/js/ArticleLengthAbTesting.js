@@ -6,22 +6,24 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, window, tracker
 		SCALE = 100;
 		
 	if (Math.random() * 100 < WIDTH_SAMPLING_RATIO && window.wgIsArticle)  {
-		var label, trackFunction,
+		var labelPrefix,
+			trackFunction,
 			$article = $('.WikiaArticle'),
-			windowWidth = Math.floor($(window).width() / SCALE),
-			trackFunction = tracker.buildTrackingFunction({
-				action: tracker.ACTIONS.IMPRESSION,
-				category: 'articleContentLengthTest',
-				trackingMethod: 'ga'
-			});
+			windowWidth = Math.floor($(window).width() / SCALE);
+			
+		trackFunction = tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.IMPRESSION,
+			category: 'articleContentLengthTest',
+			trackingMethod: 'ga'
+		});
 
 		if ($article.height() > ARTICLE_LENGTH_THRESHOLD) {
-			label = 'long-';
+			labelPrefix = 'long-';
 		} else {
-			label = 'short-';
+			labelPrefix = 'short-';
 		};
 		tracker.track({
-			label: label + windowWidth
+			label: labelPrefix + windowWidth
 		})
 	}	
 });
