@@ -307,7 +307,7 @@ $config['oasis_jquery'] = array(
 		'//skins/oasis/js/GlobalHeader.js',
 
 		//Article length & screen width tracking
-		'//skins/oasis/js/ArticleLength.js',
+		'//skins/oasis/js/ArticleLengthAbTesting.js',
 
 		// Lazy rail
 		'#group_lazy_rail_js',

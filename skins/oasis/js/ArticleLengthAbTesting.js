@@ -1,4 +1,4 @@
-$(function () {
+require(['jquery', 'wikia.window', 'wikia.tracker'], function($, window, tracker) {	
 	'use strict';
 
 	var WIDTH_SAMPLING_RATIO = 100;
@@ -16,7 +16,7 @@ $(function () {
 
 		track = Wikia.Tracker.buildTrackingFunction({
 			action: Wikia.Tracker.ACTIONS.IMPRESSION,
-			category: 'article-content-length-test',
+			category: 'articleContentLengthTest',
 			trackingMethod: 'ga'
 		});
 
