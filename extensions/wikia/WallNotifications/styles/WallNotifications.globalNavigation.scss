@@ -291,16 +291,16 @@ $wiki-header-color: #2b54b5;
 		}
 
 		&.empty, &.admin-notification {
-			height: 80px;
-			line-height: 80px;
 			padding: 0;
-			text-align: center;
 		}
 
 		&.empty {
 			background-color: rgb(230, 235, 242);
 			color: rgb(9, 35, 68);
 			font-size: 14px;
+			height: 80px;
+			line-height: 80px;
+			text-align: center;
 		}
 
 		&.admin-notification {
