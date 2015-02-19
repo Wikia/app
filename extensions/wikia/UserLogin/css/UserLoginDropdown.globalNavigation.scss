@@ -21,8 +21,8 @@
 	list-style: none;
 	padding: 0 0 $large-content-padding 0;
 	position: absolute;
-	right: 30px;
-	// -2px because of global navigation border which in case 48px high is ~ 4%
+	right: 0;
+	//box shadow below global navigation takes 2px and it should be covered by dropdown
 	top: 96%;
 	white-space: normal;
 	z-index: 5000100;
@@ -220,7 +220,6 @@
 @media #{$small-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('small', 3, - $small-grid-column-padding + $small-content-padding);
-		right: 20px;
 
 		.sso-login {
 			padding: 0 $small-content-padding;

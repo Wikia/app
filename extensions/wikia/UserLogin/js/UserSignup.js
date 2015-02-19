@@ -10,7 +10,7 @@
 		/**
 		 * WikiaMobile, Wikia One, and some automated tests do not use captcha
 		 */
-		useCaptcha: !window.wgUserLoginDisableCaptcha,
+		useCaptcha: !window.wgUserSignupDisableCaptcha,
 
 		/**
 		 * Enable user signup form with ajax validation

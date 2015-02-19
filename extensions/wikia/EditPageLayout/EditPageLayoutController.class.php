@@ -173,7 +173,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->notificationsLink =
 			( count( $this->notices ) == 0 )
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
-			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->escaped();
+			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode

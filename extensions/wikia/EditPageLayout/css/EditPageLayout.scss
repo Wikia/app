@@ -1,39 +1,40 @@
-@import "skins/shared/color";
-@import "skins/oasis/css/core/layout";
-@import "skins/shared/mixins/bodytext";
-@import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/gradient";
-@import "skins/shared/mixins/multiple-box-shadow";
-@import "skins/shared/mixins/wordmark";
-@import "skins/shared/mixins/ellipses";
-@import "extensions/wikia/UserLogin/mixins/tooltip-icon";
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/shared/mixins/bodytext';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/multiple-box-shadow';
+@import 'skins/shared/mixins/wordmark';
+@import 'skins/shared/mixins/ellipses';
+@import 'extensions/wikia/WikiaStyleGuide/css/tooltip-icon';
 // Colors
-@import "core/colors";
+@import 'core/colors';
 // Mixins
-@import "mixins/button-resize";
-@import "mixins/gradients";
-@import "mixins/inputs";
-@import "mixins/splotch";
-@import "mixins/sprite-edit-page";
-@import "mixins/sprite-edit-mw-toolbar";
+@import 'mixins/button-resize';
+@import 'mixins/gradients';
+@import 'mixins/inputs';
+@import 'mixins/splotch';
+@import 'mixins/sprite-edit-page';
+@import 'mixins/sprite-edit-mw-toolbar';
 // Core
-@import "core/buttons";
-@import "core/codepage";
-@import "core/dimensions";
-@import "core/dropdowns";
-@import "core/header";
-@import "core/modals";
-@import "core/modules";
-@import "core/notices";
-@import "core/tabs";
-@import "core/toolbar";
-@import "core/wide";
-@import "skins/oasis/css/core/responsive-core";
-@import "skins/oasis/css/core/responsive-variables";
+@import 'core/buttons';
+@import 'core/dimensions';
+@import 'core/dropdowns';
+@import 'core/header';
+@import 'core/modals';
+@import 'core/modules';
+@import 'core/notices';
+@import 'core/syntaxhighlighting';
+@import 'core/tabs';
+@import 'core/toolbar';
+@import 'core/wide';
+@import 'skins/oasis/css/core/responsive-core';
+@import 'skins/oasis/css/core/responsive-variables';
 
 body {
 	padding: 0;
+
 	&.EditPageScrollable {
 		overflow-y: auto;
 	}
@@ -69,6 +70,7 @@ body {
 	b {
 		font-weight: bold;
 	}
+
 	i {
 		font-style: italic;
 	}
@@ -151,6 +153,7 @@ body {
 		> .editpage-intro-wrapper {
 			max-height: 150px;
 			overflow: auto;
+
 			> div {
 				// give space for "less" link
 				padding-bottom: 35px;
@@ -171,12 +174,15 @@ body {
 		padding: 5px;
 		right: 15px;
 		text-align: center;
+
 		&:hover {
 			text-decoration: none;
 		}
+
 		> label {
 			cursor: pointer;
 		}
+
 		> span {
 			font-size: 14px;
 			font-weight: bold;
@@ -304,25 +310,24 @@ body {
 		position: absolute;
 		top: 50%;
 	}
+
 	&.preview {
 		> h1 {
 			float: left;
 			margin-right: 20px;
 		}
+
 		> form {
 			float: left;
 			margin-top: 20px;
 			position: relative;
 		}
-		.tooltip-icon {
-			@include tooltip-icon;
-			right: -17px;
-			top: 6px;
-		}
+
 		.modalContent {
 			border-color: transparent;
 			clear: both;
 			padding: 0;
+
 			.ArticlePreview {
 				-webkit-overflow-scrolling:touch;
 				border: 1px solid $color-page-border;
@@ -330,6 +335,7 @@ body {
 				min-height: 320px;
 				padding: 10px;
 				position: relative;
+
 				.global-notification {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
@@ -345,6 +351,7 @@ body {
 						weight: normal;
 					}
 				}
+
 				ul {
 					list-style: none;
 				}
@@ -364,6 +371,7 @@ body {
 	float: left;
 	margin-top: 20px;
 	@include ellipses();
+
 	> p {
 		line-height: 18px;
 	}
@@ -381,19 +389,23 @@ body {
 	.EditPageRail {
 		> .module {
 			display: none;
+
 			&.module_page_controls {
 				@include gradient-module;
 				display: block;
 				height: 300px;
+
 				> .module_content {
 					visibility: hidden;
 				}
 			}
+
 			&.module_license {
 				display: block;
 			}
 		}
 	}
+
 	.editpage-sourcewidemode-on {
 		.EditPageRail {
 			> .module_page_controls {
@@ -408,7 +420,8 @@ body {
 	input {
 		display: block;
 	}
-	input[type="text"],
+
+	input[type='text'],
 	textarea {
 		width: 100%;
 	}
@@ -462,12 +475,15 @@ body {
 					right: 20px;
 					top: 40px;
 				}
+
 				#wpSummaryLabel {
 					clear: none;
 				}
+
 				.EditPageToolbar {
 					height: 70px;
 				}
+
 				.EditPageRail {
 					.module_page_controls {
 						.wikia-menu-button {
@@ -475,16 +491,19 @@ body {
 							right: 145px;
 							top: 40px;
 						}
+
 						.checkboxes {
 							position: absolute;
 							right: 275px;
 							top: 37px;
+
 							label {
 								float: right;
 								margin: 0 0 0 10px;
 								position: static;
 							}
 						}
+
 						textarea {
 							float: right;
 							margin: 0 0 0 10px;

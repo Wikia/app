@@ -45,6 +45,13 @@ class ImageServingUnitTest extends WikiaBaseTest {
 		$this->assertTrue( $is->hasArticleIds( $articles ) );
 	}
 
+	function testHasEmptyArticleIds() {
+		$is = new ImageServing(null, 200, 100);
+		$articles = array( null );
+		$is->setArticleIds( $articles );
+		$this->assertFalse( $is->hasArticleIds( [ 0 ] ) );
+	}
+
 	function testHasArticleIdsDiff() {
 		$is = new ImageServing(null, 200, 100);
 		$is->setArticleIds( array( 1234 ) );
