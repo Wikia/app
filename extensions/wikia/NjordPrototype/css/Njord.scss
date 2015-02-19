@@ -261,14 +261,21 @@
 	}
 
 	.title-wrap {
-		margin: 30px 330px 20px 30px;
+		margin: 0;
+		margin: 30px 330px 25px 30px;
 		text-align: left;
 
+		&.edit-state {
+			border-bottom: 1px solid $color-page-border-subtle;
+			margin: 0px 330px 0px 20px;
+			padding: 30px 0px 25px 10px;
+		}
+
 		.edit-box {
-			background-color: rgba(0, 0, 0, .03);
 			bottom: -64px;
 			display: none;
 			width: 100%;
+			text-transform: uppercase;
 		}
 		.hero-title {
 			min-height: 44px;
@@ -323,15 +330,22 @@
 		display: -webkit-flex;
 		justify-content: flex-end;
 		padding: 10px 15px;
-		box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
 		-webkit-justify-content: flex-end;
 		-webkit-align-items: center;
 	}
 
 	.edit-box {
-		background-color: rgba(0, 0, 0, .03);
 		display: none;
+
+		.btn-bar {
+			border: none;
+			margin-top: 50px;
+			padding: 20px;
+		}
+
 		.edited-text {
+			font-size: 16px;
+			font-weight: normal;
 			outline: none;
 			min-height: 1.2em;
 			display: block;
@@ -593,6 +607,10 @@
 	.hero-description {
 		margin: 20px 320px 50px 30px;
 		word-wrap: break-word;
+
+		&.edit-state {
+			margin-top: 25px;
+		}
 
 		@media screen and (max-width: $breakpoint-small) {
 			margin-right: 20px;
