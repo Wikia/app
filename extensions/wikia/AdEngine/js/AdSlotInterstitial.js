@@ -41,8 +41,8 @@ define('ext.wikia.adEngine.slot.interstitial', [
 		doc.body.appendChild(slotDiv);
 
 		win.adslots2.push({
-			slotname: slotName,
-			success: onAdSuccess
+			slotName: slotName,
+			onSuccess: onAdSuccess
 		});
 	}
 
