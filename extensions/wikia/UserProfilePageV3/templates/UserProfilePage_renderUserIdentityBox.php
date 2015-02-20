@@ -1,8 +1,3 @@
-<?php if ( empty( $wg->EnableGlobalNavExt ) ): ?>
-	<div id="UserProfileMastheadSearch" class="UserProfileMastheadSearch">
-		<?php echo F::app()->renderView('Search', 'Index'); ?>
-	</div>
-<?php endif ?>
 <input type="hidden" id="reloadUrl" value="<?= $reloadUrl; ?>">
 <section id="UserProfileMasthead" class="UserProfileMasthead <?= $zeroStateCssClass ?>" itemscope itemtype="http://schema.org/Person">
 	<div class="masthead-avatar">
