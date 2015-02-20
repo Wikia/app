@@ -32,14 +32,14 @@ require(
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
+				this.$notificationsEntryPoint.one('mouseenter', this.proxy(this.setNotificationsHeight));
+
 				this.$notificationsEntryPoint
 					.mouseenter(this.proxy(this.updateCounts))
 					.mouseenter(this.proxy(this.fetchForCurrentWiki));
 
 				this.$wallNotifications.add($('#pt-wall-notifications'))
 					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));
-
-				this.$notificationsEntryPoint.one('mouseenter', this.proxy(this.setNotificationsHeight));
 
 				$(window).on('resize', $.throttle(50, function () {
 					WallNotifications.setNotificationsHeight();
