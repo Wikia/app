@@ -208,7 +208,7 @@ var SponsorshipDashboard = function(){
 
         var table = [ ];
 
-        var header = [ 'date', 'created' ];
+        var header = [ 'date', 'page views' ];
         table.push( header );
 
         // Pick date bounds from UI
@@ -417,7 +417,7 @@ var SponsorshipDashboard = function(){
             toData = toData + '-' + $('#sd-day-to').val();
         }
 
-        var fulltickAsInt = 0;
+        var fulltickAsInt;
         var minDate = 99999999;
         var maxDate = 0;
 
