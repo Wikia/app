@@ -1,6 +1,6 @@
 <a class="hubs-entry-point"></a>
 <div class="hubs-menu-wrapper">
-	<nav id="hubs" class="hubs-menu">
+	<nav id="hubs" class="hubs-menu global-nav-dropdown">
 		<ul class="hub-list">
 			<? foreach( $menuNodes as $index => $hub ): ?>
 				<li>

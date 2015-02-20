@@ -1172,13 +1172,6 @@ $config['wall_notifications_js'] = array(
 	)
 );
 
-$config['wall_notifications_global_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/WallNotifications/scripts/WallNotifications.globalNavigation.js',
-	)
-);
-
 $config['wall_mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -2248,5 +2241,23 @@ $config['facebook_client_preferences_scss'] = [
 	'skin' => ['oasis', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/FacebookClient/styles/preferences.scss',
+	]
+];
+
+$config['delayed_hover_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
+		'//resources/wikia/modules/delayedHover.js'
+	]
+];
+
+$config['menu_aim_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/menu-aim/menu-aim.js',
+		'//resources/wikia/modules/menuAim.js'
 	]
 ];
