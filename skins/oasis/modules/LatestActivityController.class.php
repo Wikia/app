@@ -1,10 +1,6 @@
 <?php
 class LatestActivityController extends WikiaController {
 
-	public function init() {
-		$this->userName = '';
-	}
-
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 		$maxElements = 4;
@@ -12,10 +8,9 @@ class LatestActivityController extends WikiaController {
 		global $wgLang, $wgContentNamespaces, $wgMemc, $wgUser;
 		$this->moduleHeader = wfMsg('oasis-activity-header');
 		
-		if( empty($this->userName) ) {
-			$mKey = wfMemcKey('mOasisLatestActivity');
-			$feedData = $wgMemc->get($mKey);
-		}
+		
+		$mKey = wfMemcKey('mOasisLatestActivity');
+		$feedData = $wgMemc->get($mKey);
 		
 		if (empty($feedData)) {
 			// data provider
@@ -29,19 +24,15 @@ class LatestActivityController extends WikiaController {
 				'includeNamespaces' => $includeNamespaces
 			);
 			
-			$feedProxy = new ActivityFeedAPIProxy($includeNamespaces, $this->userName);
+			$feedProxy = new ActivityFeedAPIProxy($includeNamespaces);
 			$feedProvider = new DataFeedProvider($feedProxy, 1, $parameters);
 			$feedData = $feedProvider->get($maxElements);
-			if( empty($this->userName) ) {
-				$wgMemc->set($mKey, $feedData);
-			}
+			$wgMemc->set($mKey, $feedData);
 		}
 		
 		// Time strings are slow to calculate, but we still want them to update frequently (60 seconds)
-		if( empty($this->userName)) {
-			$mKeyTimes = wfMemcKey('mOasisLatestActivity_times', $wgLang->getCode());
-			$this->changeList = $wgMemc->get($mKeyTimes, array());
-		}
+		$mKeyTimes = wfMemcKey('mOasisLatestActivity_times', $wgLang->getCode());
+		$this->changeList = $wgMemc->get($mKeyTimes, array());
 		
 		if(empty($this->changeList) && !empty($feedData) && is_array($feedData['results'])) {
 			$changeList = array();
@@ -67,16 +58,8 @@ class LatestActivityController extends WikiaController {
 					case 'new':
 					case 'edit':
 					case 'delete':
-						// different formatting for User Profile Pages
-						if( !empty( $this->userName ) ) {
-							$item['page_href'] = wfMsg("userprofilepage-activity-{$change['type']}", $item['page_href']);
-							$item['changemessage'] = $item['time_ago'];
-						}
-						else {
-							// format message (RT #144814)
-							$item['changemessage'] = wfMsg("oasis-latest-activity-{$change['type']}-details", $item['user_href'], $item['time_ago']);
-						}
-						
+						// format message (RT #144814)
+						$item['changemessage'] = wfMsg("oasis-latest-activity-{$change['type']}-details", $item['user_href'], $item['time_ago']);
 						$item['changeicon'] = $change['type'];
 						break;
 					default:
@@ -87,9 +70,7 @@ class LatestActivityController extends WikiaController {
 				$changeList[] = $item;
 			}
 			$this->changeList = $changeList;
-			if( empty($this->userName) ) {
-				$wgMemc->set($mKeyTimes, $this->changeList, 60);
-			}
+			$wgMemc->set($mKeyTimes, $this->changeList, 60);
 		}
 
 		// Cache the response in CDN and browser
