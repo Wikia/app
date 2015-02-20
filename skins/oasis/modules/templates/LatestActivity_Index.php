@@ -1,19 +1,13 @@
 <section class="WikiaActivityModule module" id="WikiaRecentActivity">
-	<h1 class="activity-heading"><?= $moduleHeader ?></h1>
+	<h1 class="activity-heading"><?= wfMessage( 'oasis-activity-header' )->escaped() ?></h1>
 	<ul>
-<?php
-	if(!empty($changeList)){
-		foreach ($changeList as $item) {
-?>
+	<? foreach ( $changeList as $item ) { ?>
 		<li>
-			<img src="<?= $wg->BlankImgUrl ?>" class="sprite <?= $item['changeicon'] ?>" height="20" width="20">
-			<em><?= $item['page_href'] ?></em>
-			<div class="edited-by"><?= $item['changemessage'] ?></div>
+			<img src="<?= $wg->BlankImgUrl ?>" class="sprite <?= $item['type'] ?>" height="20" width="20">
+			<em><a href="<?= $item['url'] ?>"><?= $item['title'] ?></a></em>
+			<div class="edited-by"><?= $item['change'] ?></div>
 		</li>
-<?php
-		}
-	}
-?>
+	<? } ?>
 	</ul>
-	<?= Wikia::specialPageLink('WikiActivity', 'oasis-more', 'more') ?>
+	<?= Wikia::specialPageLink( 'WikiActivity', 'oasis-more', 'more' ) ?>
 </section>
