@@ -85,8 +85,6 @@ class BannerNotificationsController extends WikiaController {
 			OasisController::addBodyClass('notifications');
 		}
 
-		#var_dump($this->notifications);
-
 		wfProfileOut(__METHOD__);
 	}
 

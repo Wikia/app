@@ -257,10 +257,12 @@ echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $uisgS
 <!-- Banner Notification Sample Code -->
 <script>
 $(function() {
+	var bannerNotification =
+		new BannerNotification('Hello there, I am a Banner Notification', 'notify');
 	$('#UISGBannerNotification').toggle(function() {
-		BannerNotifications.show('Hello there, I am Banner Notification', 'notify');
+		bannerNotification.show();
 	}, function() {
-		BannerNotifications.hideAll();
+		bannerNotification.hide();
 	});
 });
 </script>
@@ -270,9 +272,12 @@ html:
 &lt;div id=&quot;UISGBannerNotification&quot; class=&quot;uisg-sample-pane&quot;&gt;<br/>	Click me to toggle Notification near top of the window.<br/>&lt;/div&gt;
 
 javascript:
-$('#UISGBannerNotification').toggle(function() {
-	BannerNotifications.show('Hello there, I am Banner Notification', 'notify');
-}, function() {
-	BannerNotifications.hideAll();
+	var bannerNotification =
+		new BannerNotification('Hello there, I am a Banner Notification', 'notify');
+	$('#UISGBannerNotification').toggle(function() {
+		bannerNotification.show();
+	}, function() {
+		bannerNotification.hide();
+	});
 });
 </pre>

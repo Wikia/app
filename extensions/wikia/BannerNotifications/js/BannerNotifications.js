@@ -24,10 +24,186 @@ define('BannerNotification', [
 		classes = Object.keys(types).join(' '),
 		closeImageSource = window.stylepath + '/oasis/images/icon_close.png',
 		$pageContainer,
-		wikiaHeader,
 		headerHeight,
 		modal,
 		backendNotification;
+
+	/**
+	 * Creates a new banner notifications instance (doesn't show it yet though!)
+	 * @param {String} [content] Content of the notification
+	 * @param {String} [type] One of notification classes / types
+	 * @param {jQuery} [$parent] Element to pin the notification to
+	 * @param {Number} [timeout] If set, notification will hide after given time
+	 * @constructor
+	 */
+	function BannerNotification(content, type, $parent, timeout) {
+		if (content instanceof jQuery && content.hasClass('banner-notification')) {
+			//create a notification object from already existing markup
+			this.content = content.find('.msg').html();
+			this.$element = content;
+			this.$parent = content.parent();
+			this.hidden = false;
+		} else {
+			this.content = content;
+			this.$element = null;
+			this.$parent = $parent;
+			this.hidden = true;
+			this.type = type;
+			this.timeout = timeout;
+		}
+		this.onCloseHandler = null;
+	}
+
+	/**
+	 * Creates DOM element and reveals the notification
+	 * @returns {BannerNotification}
+	 */
+	BannerNotification.prototype.show = function () {
+		if (!this.hidden) {
+			return this;
+		}
+		if (!this.$element) {
+			this.$element = createMarkup(this.content, this.type);
+		}
+		this.setType(this.type);
+
+		setUpClose(this);
+
+		// Modal notifications have no close button so set a timeout
+		if (isModalShown() && typeof this.timeout !== 'number') {
+			this.timeout = defaultTimeout;
+		}
+
+		addToDOM(this.$element, this.$parent);
+
+		this.hidden = false;
+
+		// Close notification after specified amount of time
+		if (typeof this.timeout === 'number') {
+			setTimeout(function () {
+				this.hide();
+			}.bind(this), this.timeout);
+		}
+		return this;
+	};
+
+	/**
+	 * Hides a notification and removes an instance of a DOM element
+	 * @returns {BannerNotification}
+	 */
+	BannerNotification.prototype.hide = function () {
+		if (!this.hidden) {
+			removeFromDOM(this.$element);
+			this.$element = null;
+			this.hidden = true;
+		}
+		return this;
+	};
+
+	/**
+	 * Overrides the type of the notification
+	 * @param {String} type
+	 * @returns {BannerNotification}
+	 */
+	BannerNotification.prototype.setType = function (type) {
+		if (type !== this.type && types.hasOwnProperty(type)) {
+			this.type = type;
+			if (this.$element) {
+				this.$element
+					.removeClass(classes)
+					.addClass(type);
+			}
+		}
+		return this;
+	};
+
+	/**
+	 * Overrides the content of the notification
+	 * @param {String} content
+	 * @returns {BannerNotification}
+	 */
+	BannerNotification.prototype.setContent = function (content) {
+		if (content && content !== this.content) {
+			this.content = content;
+			if (this.$element) {
+				this.$element
+					.find('.msg')
+					.html(content);
+			}
+		}
+		return this;
+	};
+
+	/**
+	 * Generic method for indicating problem with AJAX connection
+	 * @returns {BannerNotification}
+	 */
+	BannerNotification.prototype.showConnectionError = function () {
+		return this
+			.setType('error')
+			.setContent($.msg('bannernotifications-general-ajax-failure'))
+			.show();
+	};
+
+	/**
+	 * Allows to attach a handler to a notification close event
+	 * @param {Function} callback
+	 * @returns {BannerNotification}
+	 */
+	BannerNotification.prototype.onClose = function (callback) {
+		if (typeof callback === 'function') {
+			this.onCloseHandler = callback;
+		}
+		return this;
+	};
+
+	/**
+	 * Called once to instantiate this feature
+	 */
+	function init() {
+		if (window.skin === 'monobook') {
+			$pageContainer = $('#content');
+			headerHeight = 0;
+		} else {
+			$pageContainer = $('.WikiaPageContentWrapper');
+			headerHeight = $('#globalNavigation').height();
+		}
+		createBackendNotification();
+		onScroll.bind(handleScrolling);
+	}
+
+	/**
+	 * Creates an instance of a notification sets on the backend side
+	 * (if such one exists)
+	 */
+	function createBackendNotification() {
+		var $backendNotification = $('.banner-notification');
+		if ($backendNotification.length) {
+			backendNotification = new BannerNotification();
+			setUpClose(backendNotification);
+		}
+	}
+
+	/**
+	 * Pins the notification to the top of the screen when scrolled down the page.
+	 */
+	function handleScrolling() {
+		var containerTop,
+			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper');
+
+		if (!$pageContainer.length || !notificationWrapper.length) {
+			return;
+		}
+
+		// get the position of the wrapper element relative to the top of the viewport
+		containerTop = $pageContainer[0].getBoundingClientRect().top;
+
+		if (containerTop < headerHeight) {
+			notificationWrapper.addClass('float');
+		} else {
+			notificationWrapper.removeClass('float');
+		}
+	}
 
 	/**
 	 * Constructs jQuery element with the notification
@@ -62,115 +238,21 @@ define('BannerNotification', [
 		$element.fadeIn('slow');
 	}
 
-	function BannerNotification(content, type, $parent, timeout) {
-		if (content instanceof jQuery && content.hasClass('banner-notification')) {
-			//create a notification object from already existing markup
-			this.content = content.find('.msg').html();
-			this.$element = content;
-			this.$parent = content.parent();
-			this.hidden = false;
-		} else {
-			this.content = content;
-			this.$element = null;
-			this.$parent = $parent;
-			this.hidden = true;
-			this.type = type;
-			this.timeout = timeout;
-		}
-	}
-
-	BannerNotification.prototype.show = function () {
-		var self;
-		if (!this.hidden) {
-			return this;
-		}
-		if (!this.$element) {
-			this.$element = createMarkup(this.content, this.type);
-		}
-		this.setType(this.type);
-
-		setUpClose(this);
-
-		// Modal notifications have no close button so set a timeout
-		if (isModalShown() && typeof this.timeout !== 'number') {
-			this.timeout = defaultTimeout;
-		}
-
-		addToDOM(this.$element, this.$parent);
-
-		this.hidden = false;
-
-		// Close notification after specified amount of time
-		if (typeof this.timeout === 'number') {
-			self = this;
-			setTimeout(function () {
-				self.hide();
-			}, this.timeout);
-		}
-		return this;
-	};
-
-	BannerNotification.prototype.hide = function (callback) {
-		if (!this.hidden) {
-			removeFromDOM(this.$element, callback);
-			this.$element = null;
-			this.hidden = true;
-		}
-		return this;
-	};
-
-	BannerNotification.prototype.setType = function (type) {
-		if (type !== this.type && types.hasOwnProperty(type)) {
-			this.type = type;
-			if (this.$element) {
-				this.$element
-					.removeClass(classes)
-					.addClass(type);
-			}
-		}
-		return this;
-	};
-
-	BannerNotification.prototype.setContent = function (content) {
-		if (content && content !== this.content) {
-			this.content = content;
-			if (this.$element) {
-				this.$element
-					.find('.msg')
-					.html(content);
-			}
-		}
-		return this;
-	};
-
-	BannerNotification.prototype.showConnectionError = function () {
-		return this
-			.setType('error')
-			.setContent($.msg('bannernotifications-general-ajax-failure'))
-			.show();
-	};
-
 	/**
-	 * Called once to instantiate this feature
+	 * Bind close event to close button
 	 */
-	function init() {
-		var pageContainerSelector =
-			window.skin === 'monobook' ? '#content' : '.WikiaPageContentWrapper';
-		createBackendNotification();
-		onScroll.bind(scrollHandler);
-
-		$pageContainer = $(pageContainerSelector);
-		wikiaHeader = $('#globalNavigation');
-		headerHeight = wikiaHeader.height();
-	}
-
-	function createBackendNotification() {
-		backendNotification = new BannerNotification($('.banner-notification'));
-		setUpClose(backendNotification);
+	function setUpClose(notification) {
+		$(notification.$element).on('click', '.close', function (event) {
+			notification.hide();
+			if (notification.onCloseHandler) {
+				notification.onCloseHandler(event);
+			}
+		});
 	}
 
 	/**
-	 * Determine if a modal is present and visible so we can apply the notification to the modal instead of the page.
+	 * Determine if a modal is present and visible so we can apply the
+	 * notification to the modal instead of the page.
 	 * @returns {boolean}
 	 */
 	function isModalShown() {
@@ -184,9 +266,8 @@ define('BannerNotification', [
 	/**
 	 * Removes notification element from DOM and executes callback
 	 * @param {jQuery} $elements - elements to be removed from DOM
-	 * @param {function} [callback]
 	 */
-	function removeFromDOM($elements, callback) {
+	function removeFromDOM($elements) {
 		if ($elements.length) {
 			$elements.animate({
 				'height': 0,
@@ -201,45 +282,7 @@ define('BannerNotification', [
 				} else {
 					$elements.remove();
 				}
-				if (typeof callback === 'function') {
-					callback();
-				}
 			});
-		} else {
-			if (typeof callback === 'function') {
-				callback();
-			}
-		}
-	}
-
-	/**
-	 * Bind close event to close button
-	 */
-	function setUpClose(notification) {
-		$(notification.$element).on('click', '.close', function () {
-			notification.hide();
-		});
-	}
-
-	/**
-	 * Pin the notification to the top of the screen when scrolled down the page.
-	 * Shares the scroll event with WikiaFooter.js
-	 */
-	function scrollHandler() {
-		var containerTop,
-			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper');
-
-		if (!$pageContainer.length || !notificationWrapper.length) {
-			return;
-		}
-
-		// get the position of the wrapper element relative to the top of the viewport
-		containerTop = $pageContainer[0].getBoundingClientRect().top;
-
-		if (containerTop < headerHeight) {
-			notificationWrapper.addClass('float');
-		} else {
-			notificationWrapper.removeClass('float');
 		}
 	}
 
