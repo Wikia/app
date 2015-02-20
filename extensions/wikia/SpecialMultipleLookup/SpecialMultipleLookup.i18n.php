@@ -592,14 +592,21 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'multilookup' => 'IP 활동 기록',
+	'multilookupselectuser' => '특정 IP 주소 사용자의 위키아 전역 활동을 추적합니다:',
 	'multilookupnext' => '다음',
 	'multilookupprevious' => '이전',
+	'multilookupnbrresult' => '결과 수:',
+	'multilookupnoresultfound' => '결과를 찾을 수 없습니다!',
 	'multilookupwiki' => '위키',
+	'multilookupdetails' => '자세한 내용',
 	'multilookupwikidbname' => '데이터베이스 이름',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => '제목',
 	'multilookupwikioptions' => '설정',
 	'multilookuplastedithdr' => '마지막 편집',
+	'multilookuprecordspager' => "전체 '''$3'''개 중 '''$1'''번부터 '''$2'''번까지 표시 중",
+	'right-multilookup' => '특정 사용자의 전역 기록 열람',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
