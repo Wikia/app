@@ -96,7 +96,7 @@ class MercuryApiController extends WikiaController {
 
 		$articleType = WikiaPageType::getArticleType( $title );
 
-		if ( !empty($articleType) ) {
+		if ( !empty( $articleType ) ) {
 			$articleAsJson[ 'type' ] = $articleType;
 		}
 
