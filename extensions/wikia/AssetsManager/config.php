@@ -303,9 +303,6 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
 
-		// Global Header tracking
-		'//skins/oasis/js/GlobalHeader.js',
-
 		// Lazy rail
 		'#group_lazy_rail_js',
 	)
@@ -391,17 +388,6 @@ $config['oasis_nojquery_shared_js'] = array(
 // Note: Owen moved getSiteJS call from both anon_js and user_js to OasisController::loadJS
 // so that common.js is loaded last so it has less chance of breaking other things
 $config['oasis_anon_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'#group_user_login_js_anon',
-		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
-		'//skins/oasis/js/LatestActivity.js',
-	]
-];
-
-// TODO: cleanup this after Global Navigation global release
-$config['oasis_anon_with_new_global_nav_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_user_login_js_anon',
@@ -2233,24 +2219,6 @@ $config[ 'local_navigation_oasis_scss' ] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/styles/LocalNavigationOasis.scss'
-	]
-];
-
-/** these packs should be loaded only if GlobalNavigation extension is disabled */
-$config['global_header_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//skins/oasis/css/core/AccountNavigation.scss',
-		'//extensions/wikia/UserLogin/css/UserLoginDropdown.scss'
-	]
-];
-
-$config['global_header_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//skins/oasis/js/hoverMenu.js',
 	]
 ];
 
