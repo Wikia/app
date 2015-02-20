@@ -12,7 +12,7 @@
 			<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 		</div>
 		<?php if ( !$isAnon ): ?>
-		<ul class="user-menu subnav">
+		<ul class="user-menu subnav global-nav-dropdown">
 			<?php foreach( $userDropdown as $link ): ?>
 				<li><?= $link ?></li>
 			<?php endforeach; ?>
