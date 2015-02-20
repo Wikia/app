@@ -32,7 +32,7 @@ require(
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
-				this.$notifications
+				this.$notificationsEntryPoint
 					.mouseenter(this.proxy(this.updateCounts))
 					.mouseenter(this.proxy(this.fetchForCurrentWiki));
 
