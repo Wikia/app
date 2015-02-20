@@ -28,10 +28,10 @@ class LatestActivityController extends WikiaController {
 
 				foreach ( $feedData['results'] as &$item ) {
 					$timeAgo = wfTimeFormatAgoOnlyRecent( $item['timestamp'] );
-					// change this to fix below message
-					// needs to return something that isn't a anchor tag
 					$userHref = AvatarService::renderLink( $item['username'] );
+					
 					// @todo change message so it can be parsed or escaped
+					//       caused by AvatarServce::renderLink returning html
 					$item['change'] = wfMessage( "oasis-latest-activity-{$item['type']}-details" )
 						->params( $userHref, $timeAgo )
 						->text();
@@ -45,6 +45,13 @@ class LatestActivityController extends WikiaController {
 							$item['url'] = $title->getLocalUrl();
 						}
 					}
+
+					// VOLDEV-75
+					// add in beakpoints after colons and slashes
+					// (namespace and subpage separators)
+					$item['title'] = htmlspecialchars( $item['title'] );
+					$item['title'] = implode( '/<wbr>', explode( '/', $item['title'] ) );
+					$item['title'] = implode( ':<wbr>', explode( ':', $item['title'] ) );
 				}
 
 				return $feedData['results'];
