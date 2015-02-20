@@ -44,10 +44,10 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 		if ( !empty( $cookie ) && $cookie == self::OPT_IN ) {
 			// OPTED IN
 			$this->setVal( 'buttonAction', 'out' );
-			$this->setVal( 'buttonLabel', 'Opt out' );
+			$this->setVal( 'buttonLabel', wfMessage('mercury-opt-out-label')->text() );
 		} else {
 			$this->setVal( 'buttonAction', 'in' );
-			$this->setVal( 'buttonLabel', 'Opt in' );
+			$this->setVal( 'buttonLabel', wfMessage('mercury-opt-in-label')->text() );
 		}
 
 		$this->setVal( 'pageName', self::PAGE_NAME );
