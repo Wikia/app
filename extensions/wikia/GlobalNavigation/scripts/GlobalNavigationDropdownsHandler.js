@@ -10,8 +10,8 @@ define('wikia.globalNavigationDropdowns', ['wikia.window', 'jquery'], function(w
 		if (activeDropdown && activeDropdown !== this.id) {
 			closeActiveDropdown();
 		}
-		dropdownOpts.onOpen.call(this, event);
 		$this.addClass('active');
+		dropdownOpts.onOpen.call(this, event);
 		win.transparentOut.show();
 		activeDropdown = this.id
 	}

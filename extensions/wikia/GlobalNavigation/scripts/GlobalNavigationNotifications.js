@@ -32,8 +32,6 @@ require(
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
-				this.$notificationsEntryPoint.one('mouseenter', this.proxy(this.setNotificationsHeight));
-
 				this.$notificationsEntryPoint
 					.mouseenter(this.proxy(this.updateCounts))
 					.mouseenter(this.proxy(this.fetchForCurrentWiki));
@@ -362,6 +360,7 @@ require(
 
 			onNotificationsOpen: function () {
 				WallNotifications.$wallNotifications.addClass('show');
+				WallNotifications.setNotificationsHeight();
 				$('#globalNavigation').trigger('notifications-menu-opened');
 			}
 		};
