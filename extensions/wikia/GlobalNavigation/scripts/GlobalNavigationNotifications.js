@@ -39,6 +39,8 @@ require(
 				this.$wallNotifications.add($('#pt-wall-notifications'))
 					.on('click', '.notifications-markasread', this.markAllAsReadAllWikis.bind(this));
 
+				this.$notificationsEntryPoint.one('mouseenter', this.proxy(this.setNotificationsHeight));
+
 				$(window).on('resize', $.throttle(50, function () {
 					WallNotifications.setNotificationsHeight();
 				}));
@@ -360,7 +362,6 @@ require(
 
 			onNotificationsOpen: function () {
 				WallNotifications.$wallNotifications.addClass('show');
-				WallNotifications.setNotificationsHeight();
 				$('#globalNavigation').trigger('notifications-menu-opened');
 			}
 		};
