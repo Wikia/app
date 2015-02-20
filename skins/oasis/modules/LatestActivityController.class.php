@@ -29,15 +29,13 @@ class LatestActivityController extends WikiaController {
 				foreach ( $feedData['results'] as &$item ) {
 					$timeAgo = wfTimeFormatAgoOnlyRecent( $item['timestamp'] );
 					$userHref = AvatarService::renderLink( $item['username'] );
-					
+
 					// @todo change message so it can be parsed or escaped
-					//       caused by AvatarServce::renderLink returning html
+					//       blocked by AvatarSerivce::renderLink returning html
 					$item['change'] = wfMessage( "oasis-latest-activity-{$item['type']}-details" )
 						->params( $userHref, $timeAgo )
 						->text();
 
-					// @todo is this right?
-					//       test with article comments
 					if ( !empty( $item['articleComment'] ) ) {
 						$title = Title::newFromText( $item['title'], $item['ns'] );
 
