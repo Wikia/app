@@ -124,6 +124,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 
 		before = true;
 		css = '';
+		lastColor = '';
 		spanNumber = 0;
 
 		/* Highlighting bold or italic markup presents a special challenge
