@@ -16,12 +16,26 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		global $wgCookiePath, $wgCookieDomain;
+
 		$opt = $this->request->getVal( 'opt' );
 		if ( !empty( $opt ) ) {
 			if ( $opt === 'in' ) {
-				$this->request->setCookie( self::COOKIE_NAME, self::OPT_IN, time() + 86400 * self::COOKIE_EXPIRE_DAYS );
+				$this->request->setCookie(
+					self::COOKIE_NAME,
+					self::OPT_IN,
+					time() + 86400 * self::COOKIE_EXPIRE_DAYS,
+					$wgCookiePath,
+					$wgCookieDomain
+				);
 			} elseif ( $opt === 'out' ) {
-				$this->request->setCookie( self::COOKIE_NAME, '', time() - 3600 );
+				$this->request->setCookie(
+					self::COOKIE_NAME,
+					'',
+					time() - 3600,
+					$wgCookiePath,
+					$wgCookieDomain
+				);
 			}
 			$this->response->redirect( SpecialPage::getTitleFor( self::PAGE_NAME )->getFullUrl() );
 		}
