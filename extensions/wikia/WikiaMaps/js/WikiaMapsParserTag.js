@@ -3,7 +3,7 @@ require([
 	'wikia.mustache',
 	'wikia.tracker',
 	'wikia.loader',
-	require.optional('ext.wikia.adEngine.slot.interactiveMaps')
+	//require.optional('ext.wikia.adEngine.slot.interactiveMaps')
 ], function ($, mustache, tracker, loader, mapAds) {
 	'use strict';
 
