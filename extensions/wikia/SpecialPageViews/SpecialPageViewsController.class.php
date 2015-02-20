@@ -21,18 +21,6 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 		$oOutput->set( $this->getReport( $startDate, $endDate ) );
 		$sReturnChart = $oOutput->getHTML();
-
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-
-		$oTmpl->set_vars(
-			array(
-				"tabs"		=> [],
-				"other"		=> [],
-				"active"	=> '',
-				"path"		=> SpecialPageFactory::getPage( self::SPECIALPAGE_NAME )->getTitle()->getFullURL(),
-			)
-		);
-
 		F::app()->wg->out->addHTML( $sReturnChart );
 
 		wfProfileOut( __METHOD__ );
@@ -45,7 +33,7 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 	}
 
 	private function getReport( $startDate, $endDate ) {
-		$oReport = (new SponsorshipDashboardReport);
+		$oReport = ( new SponsorshipDashboardReport );
 		$oReport->name = wfMsg( 'special-pageviews-report-title' );
 		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
 		$oReport->tmpSource = $this->getSource( $startDate, $endDate );

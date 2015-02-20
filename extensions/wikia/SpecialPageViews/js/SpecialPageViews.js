@@ -109,7 +109,7 @@ var SponsorshipDashboard = function(){
             self.plot.setSelection(ranges);
         });
 
-        $('.datepicker').bind('change', self.dataFromPickers);
+        $('.submitDatePickers').bind('click', self.dataFromPickers);
 
         //first draw
         self.plotAccordingToChoices();

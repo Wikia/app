@@ -13,6 +13,8 @@ class SpecialPageViewsSourceDatabase extends SponsorshipDashboardSourceDatabase 
 		$this->loadData();
 	}
 
+
+
 	protected function getResults() {
 
 		$sql = sprintf( $this->sQuery, $this->startDate, $this->endDate );

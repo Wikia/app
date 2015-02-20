@@ -72,9 +72,12 @@ if( isset( $showActionsButton ) ){ ?>
 			?>
 		</select>
 		<? } ?>
+		<p>
+			<a href="#" class="submitDatePickers">Redraw the chart</a>
+		</p>
 	</div>
 	<div class="datepicker">
-		<div id="overviewLabel<?= $number ?>" class="overviewLabel"><?= wfMsg('sponsorship-dashboard-to-label') ?></div>
+		<div id="overviewLabel<?= $number ?>" class="overviewLabel"><?= wfMessage( 'sponsorship-dashboard-to-label' )->escaped() ?></div>
 		<select id="sd-year-to" class="sd-datepicker">
 			<?
 				for ( $i = $fromYear; $i <= $currentYear; $i++ ) {
