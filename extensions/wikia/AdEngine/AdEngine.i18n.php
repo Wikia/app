@@ -241,6 +241,13 @@ $messages['fr'] = array(
 	'adengine-desc' => 'Moteur d’annonces de Wikia',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'adengine-advertisement' => 'advertinsje',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
@@ -512,6 +519,7 @@ $messages['ne'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author NielsAC
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -520,6 +528,7 @@ $messages['nl'] = array(
 	'adengine-exitstitial-redirecting' => 'Uw browser leidt u over een paar seconden om naar de pagina die u gevraagd.',
 	'adengine-exitstitial-go-back' => 'Wilt u terug?',
 	'adengine-exitstitial-button' => 'Advertentie overslaan',
+	'adengine-desc' => "Wikia's advertentie-engine",
 );
 
 /** Occitan (occitan)

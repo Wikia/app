@@ -383,6 +383,15 @@ $messages['kn'] = array(
 	'iwedit-all-interwikis' => 'ಎಲ್ಲಾ ಇಂಟರ್ವಿಕಿಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'interwikiedit' => '인터위키 편집기',
+	'iwedit-title' => '인터위키 편집기',
+	'iwedit-all-interwikis' => '모든 인터위키',
+);
+
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Iltever
  */

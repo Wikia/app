@@ -84,7 +84,7 @@ class MercuryApiController extends WikiaController {
 	 * @param int $articleId
 	 * @return array
 	 */
-	private function getArticleJson( $articleId ) {
+	private function getArticleJson( $articleId, Title $title ) {
 		$redirect = $this->request->getVal('redirect');
 
 		$articleAsJson = $this->sendRequest( 'ArticlesApi', 'getAsJson', [
@@ -93,6 +93,12 @@ class MercuryApiController extends WikiaController {
 		] )->getData();
 
 		$articleAsJson[ 'description' ] = htmlspecialchars( $articleAsJson[ 'description' ] );
+
+		$articleType = WikiaPageType::getArticleType( $title );
+
+		if ( !empty( $articleType ) ) {
+			$articleAsJson[ 'type' ] = $articleType;
+		}
 
 		return $articleAsJson;
 	}
@@ -261,7 +267,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
 
-			$articleAsJson = $this->getArticleJson( $articleId );
+			$articleAsJson = $this->getArticleJson( $articleId, $title );
 
 			$data = [
 				'details' => $this->getArticleDetails( $articleId ),
