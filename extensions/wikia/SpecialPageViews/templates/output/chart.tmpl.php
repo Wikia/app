@@ -5,21 +5,30 @@
 	<?= isset( $description ) ? $description : '' ?>
 </div>
 <?php
-if( !empty( $showActionsButton ) ){ ?>
+if( isset( $showActionsButton ) ){ ?>
 	<div class="sponsorship-dashboard-actions">
-		<?
-			$dropdown = array(
-				array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-chart'), "id" => 'sponsorshipDashboardDownloadChartPNG'),
-				array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-csv'), "id" => 'sponsorshipDashboardDownloadChartCSV')
-			);
+		<?php
+			$dropdown = [
+				[
+					"href" => "#",
+					"text" => wfMessage( 'sponsorship-dashboard-download-chart' )->escaped(),
+					"id" => 'sponsorshipDashboardDownloadChartPNG',
+				],
+				[
+					"href" => "#",
+					"text" => wfMessage( 'sponsorship-dashboard-download-csv' )->escaped(),
+					"id" => 'sponsorshipDashboardDownloadChartCSV',
+				]
+			];
 		?>
-		<?= F::app()->renderView('MenuButton',
+		<?=
+			F::app()->renderView( 'MenuButton',
 				'Index',
-				array(
-					'action' => array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download')),
+				[
+					'action' => [ "href" => "#", "text" => wfMessage( 'sponsorship-dashboard-download' )->escaped() ],
 					'dropdown' => $dropdown
-				)
-			) ?>
+				] );
+		?>
 	</div>
 <?php } ?>
 <div class="sponsorship-dashboard-panel">
@@ -29,7 +38,7 @@ if( !empty( $showActionsButton ) ){ ?>
 </div>
 <div class="sponsorship-dashboard-panel-header">
 	<div class="datepicker left">
-		<div id="overviewLabel<?= $number ?>" class="overviewLabel"><?= wfMsg('sponsorship-dashboard-from-label') ?></div>
+		<div id="overviewLabel<?= $number ?>" class="overviewLabel"><?= wfMessage( 'sponsorship-dashboard-from-label' )->escaped() ?></div>
 		<select id="sd-year-from" class="sd-datepicker">
 			<?
 				$currentYear = date('Y');
@@ -98,21 +107,21 @@ if( !empty( $showActionsButton ) ){ ?>
 		<? } ?>
 	</div>
 	<div id="overviewWrapper<?= $number ?>" class="overviewWrapper" >
-		<div id="overviewLabel<?= $number ?>" class="overviewLabel"><?= wfMsg('sponsorship-dashboard-overview-label') ?></div>
+		<div id="overviewLabel<?= $number ?>" class="overviewLabel"><?= wfMessage( 'sponsorship-dashboard-overview-label' )->escaped() ?></div>
 		<div id="overview<?= $number ?>" class="overview" ></div>
 	</div>
 </div>
 <div class="sponsorship-dashboard-panel-variables">
-	<h3 id="show<?= $number ?>" class="sponsorship-dashboard-show"><?= wfMsg('sponsorship-dashboard-variables') ?></h3>
+	<h3 id="show<?= $number ?>" class="sponsorship-dashboard-show"><?= wfMessage( 'sponsorship-dashboard-variables' )->escaped() ?></h3>
 	<div id="choices<?= $number ?>" class="sponsorship-dashboard-choices" ><div class="sd-variable-wrapper">
 		<div class="colorHolder">
 			<input id="sponsorshipDashboardShowTrends" type="checkbox" value="1" />
 		</div>
-		<label><?= wfMsg('sponsorship-dashboard-from-checkbox-show-trends') ?></label>
+		<label><?= wfMessage( 'sponsorship-dashboard-from-checkbox-show-trends' )->escaped() ?></label>
 	</div></div>
 	<div class="sd-select-deselect-all">
-		<a class="wikia-button secondary" href="#" id="sponsorship-dashboard-select<?= $number ?>"><?= wfMsg('sponsorship-dashboard-select-all') ?></a>
-		<a class="wikia-button secondary" href="#" id="sponsorship-dashboard-deselect<?= $number ?>"><?= wfMsg('sponsorship-dashboard-deselect-all') ?></a>
+		<a class="wikia-button secondary" href="#" id="sponsorship-dashboard-select<?= $number ?>"><?= wfMessage('sponsorship-dashboard-select-all')->escaped() ?></a>
+		<a class="wikia-button secondary" href="#" id="sponsorship-dashboard-deselect<?= $number ?>"><?= wfMessage('sponsorship-dashboard-deselect-all')->escaped() ?></a>
 	</div>
 </div>
 <!-- TODO: no excanvas.pack.js !! -->
@@ -120,22 +129,21 @@ if( !empty( $showActionsButton ) ){ ?>
 <? global $wgExtensionsPath ?>
 <script language="javascript" type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/SpecialPageViews/js/SpecialPageViews.js"></script>
 <?
-$jsParams = array(
+$jsParams = [
 	'chartId' => $number,
 	'datasets' => $datasets,
 	'fullTicks' => $fullTicks,
 	'hiddenSeries' => $hiddenSeries,
 	'monthly' => $monthly,
 	'ticks' => $ticks,
-        'param' => $active
-);
+];
 ?>
-<script id="source<?= $number ?>" language="javascript" type="text/javascript">
+<script id="source<?= Sanitizer::encodeAttribute( $number ) ?>" language="javascript" type="text/javascript">
 var sd = new SponsorshipDashboard();
 sd.init(
-<?= json_encode($jsParams) ?>
+<?= json_encode( $jsParams ) ?>
 );
 </script>
-<div class="sponsorship-dashboard-panel-cachedate"><?= isset( $date ) ? wfMsg('sponsorship-dashboard-cachedate-label', $date) : '' ?></div>
+<div class="sponsorship-dashboard-panel-cachedate"><?= isset( $date ) ? wfMessage( 'sponsorship-dashboard-cachedate-label', $date )->escaped() : '' ?></div>
 <!-- END OF MAIN-PAGE -->
 <!-- e:<?= __FILE__ ?> -->

@@ -12,7 +12,7 @@ $dir = dirname( __FILE__ ) . '/';
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Special:PageViews',
 	'description' => 'Extension to present data on page views for a given wikia',
-	'descriptionmsg' => 'pageviews-special-desc',
+	'descriptionmsg' => 'special-pageviews-special-desc',
 	'authors' => [
 		'Adam Karmiński',
 	],

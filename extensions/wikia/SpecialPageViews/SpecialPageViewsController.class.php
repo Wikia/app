@@ -33,15 +33,20 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 			)
 		);
 
-		F::app()->wg->out->addHTML( $oTmpl->render( "PageViewsMenu" ) );
 		F::app()->wg->out->addHTML( $sReturnChart );
 
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function setHeaders() {
+		$oOut = F::app()->wg->Out;
+		$oOut->setRobotPolicy( 'noindex,nofollow' );
+		$oOut->setPageTitle( wfMessage( 'special-pageviews-title' )->escaped() );
+	}
+
 	private function getReport( $startDate, $endDate ) {
 		$oReport = (new SponsorshipDashboardReport);
-		$oReport->name = wfMsg( 'pageviews-report-title' );
+		$oReport->name = wfMsg( 'special-pageviews-report-title' );
 		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
 		$oReport->tmpSource = $this->getSource( $startDate, $endDate );
 		$oReport->setLastDateUnits( $startDate->diff( $endDate )->days );
@@ -53,7 +58,7 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 	private function getSource( $startDate, $endDate ) {
 		$oSource = new SpecialPageViewsSourceDatabase( 'pageviews' );
-		$oSource->serieName = wfMsg( 'pageviews-report-serie' );
+		$oSource->serieName = wfMsg( 'special-pageviews-report-serie' );
 		$oSource->setDatabase( wfGetDB( DB_SLAVE, array(), F::app()->wg->DWStatsDB ) );
 
 		$sql = "SELECT pageviews, DATE( time_id ) as pv_date FROM rollup_wiki_pageviews WHERE period_id='1' AND time_id >= '%s' AND time_id <= '%s' AND wiki_id = " . F::app()->wg->CityId . ";";
