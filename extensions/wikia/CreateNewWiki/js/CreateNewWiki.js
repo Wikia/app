@@ -92,10 +92,7 @@
 					self.transition('NameWiki', true, '+');
 
 					// Load facebook assets before going to the login form
-					$.loadFacebookAPI()
-						.done(function () {
-							$('.sso-login').removeClass('hidden');
-						});
+					$.loadFacebookSDK();
 				}
 			});
 			this.wikiDomain.keyup(function () {
