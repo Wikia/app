@@ -46,7 +46,7 @@
 	 * @returns {jQuery} Returns a jQuery promise
 	 * @see https://developers.facebook.com/docs/javascript/quickstart/v2.2
 	 */
-	$.loadFacebookAPI = function (callback) {
+	$.loadFacebookSDK = function (callback) {
 		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred(),
 			url = window.fbScript || '//connect.facebook.net/en_US/sdk.js';
@@ -55,6 +55,11 @@
 		if (typeof callback === 'function') {
 			$deferred.done(callback);
 		}
+
+		// If the FB SDK successfully loads, show the fb login button
+		$deferred.done(function () {
+			$('.sso-login').removeClass('hidden');
+		});
 
 		if (typeof window.FB === 'object') {
 			// Since we have our own deferred object, we need to resolve it if FB is already loaded.
@@ -65,10 +70,10 @@
 			window.fbAsyncInit = function () {
 				window.FB.init({
 					appId: window.fbAppId,
-					xfbml: true,
 					cookie: true,
 					version: 'v2.1'
 				});
+
 				// resolve after FB has finished inititalizing
 				$deferred.resolve();
 			};
