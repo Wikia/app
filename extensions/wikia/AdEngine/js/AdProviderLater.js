@@ -5,12 +5,11 @@ define('ext.wikia.adEngine.provider.later', [
 ], function (log, lateAdsQueue) {
 	'use strict';
 
-	function fillInSlot(slotname, success) {
+	function fillInSlot(slotname, success, error) {
 		log(['fillInSlot', slotname, success], 5, 'ext.wikia.adEngine.provider.later');
 		setTimeout(function () {
-			lateAdsQueue.push(slotname);
+			lateAdsQueue.push({slotName: slotname, onSuccess: success, onError: error});
 		}, 0);
-		success();
 	}
 
 	function canHandleSlot() {
