@@ -33,6 +33,7 @@ $wiki-header-color: #2b54b5;
 		background-position: center;
 		background-size: 19px;
 		background-repeat: no-repeat;
+		cursor: pointer;
 		display: inline-block;
 		height: $global-navigation-height;
 		position: relative;
@@ -104,6 +105,7 @@ $wiki-header-color: #2b54b5;
 	border: 1px solid $border-color;
 	border-top: 0;
 	display: none;
+	margin: 0;
 	overflow: hidden;
 	padding: 0;
 	position: absolute;
@@ -290,20 +292,19 @@ $wiki-header-color: #2b54b5;
 			line-height: 12px;
 		}
 
-		&.empty, &.admin-notification {
+		&.empty {
+			background-color: rgb(230, 235, 242);
+			color: rgb(9, 35, 68);
+			font-size: 14px;
 			height: 80px;
 			line-height: 80px;
 			padding: 0;
 			text-align: center;
 		}
 
-		&.empty {
-			background-color: rgb(230, 235, 242);
-			color: rgb(9, 35, 68);
-			font-size: 14px;
-		}
-
 		&.admin-notification {
+			padding: 17px 25px 17px 20px;
+
 			.notification-message {
 				width: auto;
 			}
