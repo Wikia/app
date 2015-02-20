@@ -29,9 +29,14 @@ require([
 		}
 	}
 
-	function onDropdownOpen() {
+	function onDropdownOpen(event) {
 		$globalNavigation.trigger('user-login-menu-opened');
-		
+		if (event) {
+			event.preventDefault();
+			//Stop propagation has to be called in order to avoid opening userLoginModal
+			event.stopPropagation();
+		}
+
 		if (!win.wgUserName && !loginAjaxForm) {
 			loginAjaxForm = new win.UserLoginAjaxForm($entryPoint, {
 				skipFocus: true

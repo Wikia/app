@@ -4,13 +4,13 @@ define('wikia.globalNavigationDropdowns', ['wikia.window', 'jquery'], function(w
 	var registeredDropdowns = {},
 		activeDropdown;
 
-	function openDropdown() {
+	function openDropdown(event) {
 		var $this = $(this),
 			dropdownOpts = registeredDropdowns[this.id];
 		if (activeDropdown && activeDropdown !== this.id) {
 			closeActiveDropdown();
 		}
-		dropdownOpts.onOpen();
+		dropdownOpts.onOpen.call(this, event);
 		$this.addClass('active');
 		win.transparentOut.show();
 		activeDropdown = this.id
@@ -43,7 +43,7 @@ define('wikia.globalNavigationDropdowns', ['wikia.window', 'jquery'], function(w
 	function closeSelectedDropdown($dropdown, dropdownOpts, forceClose) {
 		var onCloseReturnVal;
 		if (dropdownOpts) {
-			onCloseReturnVal = dropdownOpts.onClose();
+			onCloseReturnVal = dropdownOpts.onClose.call(this);
 		}
 		if (forceClose || onCloseReturnVal !== false) {
 			$dropdown.removeClass('active');
@@ -61,10 +61,10 @@ define('wikia.globalNavigationDropdowns', ['wikia.window', 'jquery'], function(w
 		if (activeDropdown) {
 			closeActiveDropdown();
 			if (this.id !== activeDropdown) {
-				openDropdown.call(this);
+				openDropdown.call(this, event);
 			}
 		} else {
-			openDropdown.call(this);
+			openDropdown.call(this, event);
 		}
 	}
 
