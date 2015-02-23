@@ -14,35 +14,35 @@ class LatestPhotosController extends WikiaController {
 	 * Just a string concatenated with other in creation of Memc Key
 	 * @var String
 	 */
-	const MEMC_KEY_VER = '1.1';
+	const MEMC_KEY_VER = '1.2';
 
 	public function getLatestThumbsUrls() {
 		global $wgMemc;
 		$thumbUrls = $wgMemc->get( LatestPhotosController::memcacheKey() );
-		if (empty($thumbUrls)) {
+		if ( empty( $thumbUrls ) ) {
 			// api service
 			$helper = new LatestPhotosHelper();
-			$params = array(
+			$params = [
 				'action' => 'query',
 				'list' => 'logevents',
 				'letype' => 'upload',
 				'leprop' => 'title',
 				'lelimit' => 50,
-			);
+			];
 
 			$apiData = ApiService::call($params);
 
-			if (empty($apiData)) {
+			if ( empty( $apiData ) ) {
 				$this->response->setVal('thumbUrls', false);
 			}
 			$imageList = $apiData['query']['logevents'];
 
-			$fileList = array_map(array($helper, "getImageData"), $imageList);
-			$fileList = array_filter($fileList, array($helper, "filterImages"));
+			$fileList = array_map([$helper, "getImageData"], $imageList);
+			$fileList = array_filter($fileList, [$helper, "filterImages"]);
 
 			// make sure the list of images is unique and limited to 11 images (12 including the see all image)
-			$shaList = array();
-			$uniqueList = array();
+			$shaList = [];
+			$uniqueList = [];
 
 			foreach ($fileList as $data) {
 				$sha = $data['file']->sha1;
