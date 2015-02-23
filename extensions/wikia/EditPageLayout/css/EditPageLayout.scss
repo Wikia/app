@@ -64,6 +64,17 @@ body {
 	}
 }
 
+#wpDiff {
+	color: $color-links;
+	display: inline-block;
+	font-size: 12px;
+	margin-top: 14px;
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
 .preview_box{
 	h3 {
 		margin: 12px 0 8px;
