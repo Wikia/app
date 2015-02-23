@@ -21,3 +21,6 @@
 .oo-ui-icon-map {
 	@include ve-icon(map, wikia);
 }
+.oo-ui-icon-template-inverted {
+	@include ve-icon(template, mw, $color-page-opposite);
+}

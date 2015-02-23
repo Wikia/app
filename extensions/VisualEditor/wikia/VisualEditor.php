@@ -17,6 +17,9 @@ $wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
 $wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
 $wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
 $wgAutoloadClasses['ApiVideoPreview'] = $dir . 'ApiVideoPreview.php';
+$wgAutoloadClasses['ApiTemplateSearch'] = $dir . 'ApiTemplateSearch.php';
+$wgAutoloadClasses['ApiTemplateSuggestions'] = $dir . 'ApiTemplateSuggestions.php';
+$wgAutoloadClasses['ApiTemplateParameters'] = $dir . 'ApiTemplateParameters.php';
 
 /* API Modules */
 
@@ -24,6 +27,9 @@ $wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
 $wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
 $wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 $wgAPIModules['videopreview'] = 'ApiVideoPreview';
+$wgAPIModules['templatesearch'] = 'ApiTemplateSearch';
+$wgAPIModules['templatesuggestions'] = 'ApiTemplateSuggestions';
+$wgAPIModules['templateparameters'] = 'ApiTemplateParameters';
 
 /* Resource Loader Modules */
 
@@ -85,6 +91,7 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaGalleryItemNode.js',
 			've/dm/ve.dm.WikiaGalleryNode.js',
 			've/dm/ve.dm.WikiaMapNode.js',
+			've/dm/ve.dm.WikiaTransclusionModel.js',
 
 			// ce
 			've/ce/ve.ce.WikiaVideoNode.js',
@@ -107,6 +114,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSingleMediaDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaTemplateInsertDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
@@ -126,6 +134,8 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaSingleMediaCartSelectWidget.js',
 			've/ui/widgets/ve.ui.WikiaSingleMediaCartOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMapOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaTemplateSearchWidget.js',
+			've/ui/widgets/ve.ui.WikiaTemplateOptionWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',

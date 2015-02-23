@@ -34,3 +34,10 @@ ve.ui.commandRegistry.register(
 		{ args: ['wikiaMapInsert'] }
 	)
 );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaTemplateInsert', 'window', 'open',
+		{ args: ['wikiaTemplateInsert'] }
+	)
+);
