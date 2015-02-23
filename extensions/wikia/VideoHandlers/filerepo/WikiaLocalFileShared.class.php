@@ -289,9 +289,19 @@ class WikiaLocalFileShared  {
 			}
 		}
 
-		if ( !empty($this->metadata[$key]) ) {
-			$value = $this->metadata[$key];
+		if ( is_array( $this->metadata ) ) {
+			if ( !empty($this->metadata[$key]) ) {
+				$value = $this->metadata[$key];
+			} else {
+				$value = $default;
+			}
 		} else {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'File metadata not an instance of an array. Expecting array', [
+					'type' => gettype( $this->metadata ),
+					'file' => $this->oFile
+				]
+			);
 			$value = $default;
 		}
 
