@@ -111,12 +111,12 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 					'hiddenSeries'		=> json_encode($this->hiddenSeries),
 					'number'		=> $this->chartNumericId,
 					'path'			=> !empty( $this->groupId )
-									? $wgTitle->getFullURL().'/'.$this->groupId.'/'.$this->report->id.'/csv'
-									: $wgTitle->getFullURL().'/admin/CSVReport/'.$this->report->id,
+						? $wgTitle->getFullURL().'/'.$this->groupId.'/'.$this->report->id.'/csv'
+						: $wgTitle->getFullURL().'/admin/CSVReport/'.$this->report->id,
 					'monthly'		=> $this->report->frequency == SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH,
 					'fromYear'		=> $this->fromYear,
 					'showActionsButton' => $this->showActionsButton,
-                                        'active'                => $this->active,
+					'active'                => $this->active,
 				)
 			);
 
@@ -126,6 +126,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 		}
 
 		$ret = $oTmpl->render( '../../templates/output/'.self::TEMPLATE_CHART );
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -176,6 +177,7 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 				'yaxis' => in_array($key, $aSecondYAxis) ? 2 : 1
 			);
 		}
+
 		return array(
 			'serie' => $aSerie,
 			SponsorshipDashboardReport::SD_RETURNPARAM_TICKS => $result['date'],
@@ -186,7 +188,9 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 	public function getChartData() {
 		$aData = array();
 		$aLabel = array();
+
 		foreach ( $this->report->reportSources as $reportSource ) {
+
 			$reportSource->getData();
 			$this->actualDate = $reportSource->actualDate;
 
