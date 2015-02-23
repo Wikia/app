@@ -620,6 +620,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->errParam = $signupForm->errParam;
 	}
 
+	/**
+	 * Disables User Signup Captcha for automated tests, mobile skin, and sites such as internal
+	 *
+	 * @throws MWException
+	 */
 	private function disableCaptcha() {
 		global $wgHooks;
 
@@ -627,8 +632,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$isAutomatedTest = in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList );
 		$isNoCaptchaTest = $this->wg->Request->getInt( 'nocaptchatest' ) == 1;
 
-		//Disable captcha for automated tests and wikia mobile
-		if ( $isMobile || ( $isAutomatedTest && $isNoCaptchaTest ) ) {
+		//Disable captcha for automated tests and wikia mobile and sites disabling it
+		if ( $isMobile || ( $isAutomatedTest && $isNoCaptchaTest ) || $this->wg->UserSignupDisableCaptcha ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function
@@ -637,7 +642,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				unset( $wgHooks['AbortNewAccount'][$hookArrayKey] );
 			}
 			$this->wg->Out->addJsConfigVars( [
-				'wgUserLoginDisableCaptcha' => true
+				'wgUserSignupDisableCaptcha' => true
 			] );
 		}
 	}
