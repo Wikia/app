@@ -127,26 +127,6 @@ if( isset( $showActionsButton ) ){ ?>
 		<a class="wikia-button secondary" href="#" id="sponsorship-dashboard-deselect<?= $number ?>"><?= wfMessage('sponsorship-dashboard-deselect-all')->escaped() ?></a>
 	</div>
 </div>
-<!-- TODO: no excanvas.pack.js !! -->
-<!--[if IE]><script language="javascript" type="text/javascript" src="excanvas.pack.js"></script><![endif]-->
-<? global $wgExtensionsPath ?>
-<script language="javascript" type="text/javascript" src="<?= $wgExtensionsPath ?>/wikia/SpecialPageViews/js/SpecialPageViews.js"></script>
-<?
-$jsParams = [
-	'chartId' => $number,
-	'datasets' => $datasets,
-	'fullTicks' => $fullTicks,
-	'hiddenSeries' => $hiddenSeries,
-	'monthly' => $monthly,
-	'ticks' => $ticks,
-];
-?>
-<script id="source<?= Sanitizer::encodeAttribute( $number ) ?>" language="javascript" type="text/javascript">
-	var sd = new SponsorshipDashboard();
-	sd.init(
-		<?= json_encode( $jsParams ) ?>
-	);
-</script>
 <div class="sponsorship-dashboard-panel-cachedate"><?= isset( $date ) ? wfMessage( 'sponsorship-dashboard-cachedate-label', $date )->escaped() : '' ?></div>
 <!-- END OF MAIN-PAGE -->
 <!-- e:<?= __FILE__ ?> -->

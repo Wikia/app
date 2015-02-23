@@ -8,18 +8,19 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 	function __construct() {
 		parent::__construct( self::SPECIALPAGE_NAME );
+		$this->wg->Out->addModuleScripts( 'ext.SpecialPageViews' );
 	}
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
 		$this->setHeaders();
-
 		$this->setInitialDates();
 
 		$oOutput = ( new SpecialPageViewsOutput );
 		$oOutput->set( $this->getReport() );
+		$this->setJsVars( $oOutput );
 		$sReturnChart = $oOutput->getHTML();
-		F::app()->wg->out->addHTML( $sReturnChart );
+		$this->wg->Out->addHTML( $sReturnChart );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -49,7 +50,7 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 	}
 
 	public function setHeaders() {
-		$oOut = F::app()->wg->Out;
+		$oOut = $this->wg->Out;
 		$oOut->setRobotPolicy( 'noindex,nofollow' );
 		$oOut->setPageTitle( wfMessage( 'special-pageviews-title' )->escaped() );
 	}
@@ -64,6 +65,19 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 		$oReport->setId( 1 );
 		$oReport->lockSources();
 		return $oReport;
+	}
+
+	private function setJsVars( $oOutput ) {
+		$oRaw = $oOutput->getRaw();
+		$aParams = [
+			'chartId' => $oRaw->chartId,
+			'datasets' => $oRaw->datasets,
+			'fullTicks' => $oRaw->fullTicks,
+			'hiddenSeries' => $oRaw->hiddenSeries,
+			'monthly' => $oRaw->monthly,
+			'ticks' => $oRaw->ticks,
+		];
+		$this->wg->Out->addJsConfigVars( 'SDParams', json_encode( $aParams ) );
 	}
 
 	private function getSource() {

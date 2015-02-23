@@ -471,3 +471,6 @@ var SponsorshipDashboard = function(){
         self.overview.setSelection( {x1: fromDataAfter, x2: toDataAfter} );
     };
 };
+
+var sd = new SponsorshipDashboard();
+sd.init( $.parseJSON( SDParams ) );

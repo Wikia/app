@@ -28,3 +28,9 @@ $wgSpecialPages['PageViews'] = 'SpecialPageViewsController';
 $wgSpecialPageGroups['PageViews'] = 'wikia';
 
 $wgExtensionMessagesFiles['SpecialPageViews'] = $dir . 'SpecialPageViews.i18n.php';
+
+$wgResourceModules['ext.SpecialPageViews'] = [
+	'localBasePath' => __DIR__ . '/js',
+	'remoteExtPath' => 'wikia/SpecialPageViews/js',
+	'scripts' => 'SpecialPageViews.js',
+];
