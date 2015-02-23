@@ -679,7 +679,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	final public static function factory( $dbType, $p = array() ) {
 		$canonicalDBTypes = array(
-			'mysql'    => array( 'mysqli', 'mysql' ),
+			#'mysql'    => array( 'mysqli', 'mysql' ),
+			'mysql'    => array(), // TODO: use mysqli
 			'postgres' => array(),
 			'sqlite'   => array(),
 			'oracle'   => array(),
