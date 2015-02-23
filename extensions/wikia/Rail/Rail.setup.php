@@ -1,6 +1,6 @@
 <?php
 /**
- * (Right) Rail
+ * Rail Extension based on Oasis module
  */
 $dir = dirname(__FILE__) . '/';
 
@@ -10,16 +10,9 @@ $wgExtensionCredits['other'][] = [
 	'authors' => [
 		'Barosz "V." Bentkowski',
 	],
-	'version' => 1
+	'version' => '1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Rail'
 ];
 
 // models
 $wgAutoloadClasses['RailController'] =  __DIR__.'/RailController.class.php';
-
-
-// message files
-//$wgExtensionMessagesFiles['Rail'] = $dir.'Rail.i18n.php';
-//JSMessages::registerPackage( 'Rail', array( 'special-Rail-*' ) );
-
-// hooks
-//$wgHooks['RequestContextCreateSkin'][] = 'RailController::onGetSkin';
