@@ -114,8 +114,10 @@ class FinishCreateWikiController extends WikiaController {
 		$wikiDataModel->description = $this->params['wikiDescription'];
 		$wikiDataModel->storeInProps();
 		$wikiDataModel->storeInPage();
+		$mainPageCoreMarkup = '<mainpage-leftcolumn-start /><mainpage-endcolumn />
+			<mainpage-rightcolumn-start /><mainpage-endcolumn />';
 
-		return '';
+		return $mainPageCoreMarkup;
 	}
 
 	/**
