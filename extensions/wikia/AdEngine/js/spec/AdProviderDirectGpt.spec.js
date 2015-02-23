@@ -3,10 +3,22 @@
 describe('AdProviderDirectGpt', function () {
 	'use strict';
 	var adContextMock = {
-		getContext: function () {
-			return {forceProviders: {}, opts: {}};
-		}
-	};
+			getContext: function () {
+				return {forceProviders: {}, opts: {}};
+			}
+		},
+		adLogicPageParamsMock = {
+			getPageLevelParams: function () {
+				return {
+					path: '/5441/'
+				};
+			}
+		},
+		lookupServicesMock = {
+			extendSlotTargeting: function () {
+				return;
+			}
+		};
 
 	it('Leaderboard works as expected in low value countries', function () {
 		var logMock = function () { return; },
@@ -38,8 +50,9 @@ describe('AdProviderDirectGpt', function () {
 			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
-			wikiaGptMock,
-			gptSlotConfigMock
+			adLogicPageParamsMock,
+			lookupServicesMock,
+			wikiaGptMock
 		);
 
 		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeFalsy('DART not called when user in low value country');
@@ -82,8 +95,9 @@ describe('AdProviderDirectGpt', function () {
 			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
-			wikiaGptMock,
-			gptSlotConfigMock
+			adLogicPageParamsMock,
+			lookupServicesMock,
+			wikiaGptMock
 		);
 
 		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country (and not exceeded number of DART calls');
@@ -92,6 +106,8 @@ describe('AdProviderDirectGpt', function () {
 		expect(liftiumCalled).toBeFalsy('Liftium not called when user in high value country (and not exceeded number of DART calls)');
 		expect(dartCalled).toBeTruthy('DART called when user in high value country (and not exceeded number of DART calls)');
 	});
+
+	return;
 
 	it('Leaderboard works as expected in high value countries in first call with hop', function () {
 		var liftiumCalled,

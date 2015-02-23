@@ -5,10 +5,9 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 	'wikia.window',
 	'wikia.document',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.gptSlotConfig',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptAdDetect'
-], function (log, window, document, adLogicPageParams, gptSlotConfig, slotTweaker, gptAdDetect) {
+], function (log, window, document, adLogicPageParams, slotTweaker, gptAdDetect) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
@@ -16,9 +15,9 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 		slotQueue = [],
 		gptSlots = {},
 		gptCallbacks = {},
-		dataAttribs = {},
 		googletag,
 		pubads,
+		pageLevelParams,
 		fallbackSize = [1, 1]; // Size to return if there are no sizes matching the screen dimensions
 
 	function convertSizesToGpt(slotsize) {
@@ -59,8 +58,9 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 	function setPageLevelParams() {
 		var name,
-			value,
-			pageLevelParams = adLogicPageParams.getPageLevelParams();
+			value;
+
+		pageLevelParams = adLogicPageParams.getPageLevelParams();
 
 		log(['setPageLevelParams', pageLevelParams], 'debug', logGroup);
 
@@ -73,78 +73,6 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 				}
 			}
 		}
-	}
-
-	function defineSlots() {
-		var pageLevelParams = adLogicPageParams.getPageLevelParams(),
-			providerSlotMap = gptSlotConfig.getConfig(),
-			path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
-			slotname,
-			slotnameGpt,
-			sizes,
-			slot,
-			slotMap,
-			slotMapSrc,
-			slotItem,
-			slotPath,
-			name,
-			value;
-
-		log(['defineSlots', providerSlotMap], 'info', logGroup);
-
-		for (slotMapSrc in providerSlotMap) {
-			if (providerSlotMap.hasOwnProperty(slotMapSrc)) {
-
-				slotMap = providerSlotMap[slotMapSrc];
-
-				for (slotname in slotMap) {
-					if (slotMap.hasOwnProperty(slotname) && slotMap[slotname].size) {
-						log(['defineSlots', 'defining slot', slotname], 'debug', logGroup);
-
-						slotnameGpt = slotname + '_' + slotMapSrc;
-						slotItem = slotMap[slotname];
-
-						sizes = convertSizesToGpt(slotItem.size);
-
-						if (slotname.match(/TOP_LEADERBOARD/)) {
-							sizes = filterOutSizesBiggerThanScreenSize(sizes);
-						}
-
-						slotPath = path + '/' + slotnameGpt;
-
-						log(['defineSlots', 'googletag.defineSlot', slotPath, sizes, slotnameGpt], 'debug', logGroup);
-						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
-						slot.addService(pubads);
-
-						delete slotItem.size;
-						slotItem.pos = slotItem.pos || slotname;
-						slotItem.src = slotMapSrc;
-
-						for (name in slotItem) {
-							if (slotItem.hasOwnProperty(name)) {
-								value = slotItem[name];
-								if (value) {
-									log(['defineSlots', 'slot.setTargeting', name, value], 'debug', logGroup);
-									slot.setTargeting(name, value);
-								}
-							}
-						}
-
-						gptSlots[slotnameGpt] = slot;
-
-						dataAttribs[slotnameGpt] = {
-							'data-gpt-page-params': JSON.stringify(pageLevelParams),
-							'data-gpt-slot-params': JSON.stringify(slotItem),
-							'data-gpt-slot-sizes': JSON.stringify(sizes)
-						};
-
-						log(['defineSlots', 'defined slot', slotname, slot], 'debug', logGroup);
-					}
-				}
-			}
-		}
-
-		log(['defineSlots', 'all slots defined'], 'debug', logGroup);
 	}
 
 	function registerGptCallback(slotnameGpt, gptCallback) {
@@ -197,7 +125,6 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 				pubads = googletag.pubads();
 
 				setPageLevelParams();
-				defineSlots();
 
 				pubads.collapseEmptyDivs();
 				pubads.enableSingleRequest();
@@ -211,9 +138,8 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 		}
 	}
 
-	function pushAd(slotname, success, error, slotMapSrc) {
-		var slotnameGpt = slotname + '_' + slotMapSrc,
-			slotDiv; // set in refreshAd
+	function pushAd(slotName, slotPath, slotTargeting, success, error) {
+		var slotDiv; // set in queueAd
 
 		function callSuccess(adInfo) {
 			if (typeof success === 'function') {
@@ -222,42 +148,64 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 		}
 
 		function callError(adInfo) {
-			slotTweaker.hide(slotnameGpt);
+			slotTweaker.hide(slotPath);
 			if (typeof error === 'function') {
 				error(adInfo);
 			}
 		}
 
 		function queueAd() {
-			var attrName;
+			var name, value, sizes, slot;
 
-			slotDiv = document.getElementById(slotnameGpt);
+			slotDiv = document.getElementById(slotPath);
 
 			if (!slotDiv) {
 				// Create a div for the GPT ad
 				slotDiv = document.createElement('div');
-				slotDiv.id = slotnameGpt;
-				document.getElementById(slotname).appendChild(slotDiv);
+				slotDiv.id = slotPath;
+				document.getElementById(slotName).appendChild(slotDiv);
+
+				sizes = convertSizesToGpt(slotTargeting.size);
+
+				if (slotName.match(/TOP_LEADERBOARD/)) {
+					sizes = filterOutSizesBiggerThanScreenSize(sizes);
+				}
+
+				log(['defineSlot', 'googletag.defineSlot', slotPath, sizes], 'debug', logGroup);
+				slot = googletag.defineSlot(slotPath, sizes, slotPath);
+				slot.addService(pubads);
+
+				delete slotTargeting.size;
+
+				for (name in slotTargeting) {
+					if (slotTargeting.hasOwnProperty(name)) {
+						value = slotTargeting[name];
+						if (value) {
+							log(['defineSlot', 'slot.setTargeting', name, value], 'debug', logGroup);
+							slot.setTargeting(name, value);
+						}
+					}
+				}
+
+				gptSlots[slotPath] = slot;
 
 				// Display div through GPT
-				log(['googletag.display', slotnameGpt], 'debug', logGroup);
-				googletag.display(slotnameGpt);
+				log(['googletag.display', slotPath], 'debug', logGroup);
+				googletag.display(slotPath);
+
+				// Save page level and slot level params for easier ad delivery debugging
+				slotDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
+				slotDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
+				slotDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
 			}
 
 			// Some broken ads never fire "success" event, so we show the div now (and maybe hide later)
-			slotTweaker.show(slotnameGpt);
-			slotQueue.push(gptSlots[slotnameGpt]);
-
-			// Save page level and slot level params for easier ad delivery debugging
-			for (attrName in dataAttribs[slotnameGpt]) {
-				if (dataAttribs[slotnameGpt].hasOwnProperty(attrName)) {
-					slotDiv.setAttribute(attrName, dataAttribs[slotnameGpt][attrName]);
-				}
-			}
+			slotTweaker.show(slotPath);
+			slotQueue.push(gptSlots[slotPath]);
 		}
 
 		function gptCallback(event) {
-			log(['gptCallback', slotnameGpt, event], 'info', logGroup);
+			log(['gptCallback', slotPath, event], 'info', logGroup);
 
 			// Add debug info
 			slotDiv.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
@@ -269,14 +217,14 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				gptAdDetect.onAdLoad(slotnameGpt, event, iframe, callSuccess, callError);
+				gptAdDetect.onAdLoad(slotPath, event, iframe, callSuccess, callError);
 			}, 0);
 		}
 
-		log(['pushAd', slotname], 'info', logGroup);
+		log(['pushAd', slotName], 'info', logGroup);
 
 		loadGptOnce();
-		registerGptCallback(slotnameGpt, gptCallback);
+		registerGptCallback(slotPath, gptCallback);
 		googletag.cmd.push(queueAd);
 	}
 

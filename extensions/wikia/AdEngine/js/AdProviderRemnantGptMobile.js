@@ -1,22 +1,34 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.remnantGptMobile', [
 	'wikia.log',
-	'ext.wikia.adEngine.wikiaGptHelper',
-	'ext.wikia.adEngine.gptSlotConfig'
-], function (log, wikiaGpt, gptSlotConfig) {
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.wikiaGptHelper'
+], function (log, adLogicPageParams, wikiaGpt) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.remnantGptMobile',
-		slotMap = gptSlotConfig.getConfig('mobile_remnant');
+		slotMap = {
+			MOBILE_TOP_LEADERBOARD:     {size: '320x50,1x1'},
+			MOBILE_IN_CONTENT:          {size: '300x250,1x1'},
+			MOBILE_PREFOOTER:           {size: '300x250,1x1'}
+		};
 
 	function canHandleSlot(slotname) {
 		return !!slotMap[slotname];
 	}
 
-	function fillInSlot(slotname, success, hop) {
-		log(['fillInSlot', slotname], 5, logGroup);
+	function fillInSlot(slotName, success, hop) {
+		var pageParams = adLogicPageParams.getPageLevelParams(),
+			slotTargeting = slotMap[slotName],
+			slotPath = '/5441/' +
+				'wka.' + pageParams.s0 + '/' + pageParams.s1 + '//' + pageParams.s2 + '/mobile_remnant/' + slotName;
 
-		wikiaGpt.pushAd(slotname, success, hop, 'mobile_remnant');
+		slotTargeting.pos = slotTargeting.pos || slotName;
+		slotTargeting.src = 'mobile_remnant';
+
+		log(['fillInSlot', slotName], 'debug', logGroup);
+
+		wikiaGpt.pushAd(slotName, slotPath, slotTargeting, success, hop);
 		wikiaGpt.flushAds();
 	}
 
