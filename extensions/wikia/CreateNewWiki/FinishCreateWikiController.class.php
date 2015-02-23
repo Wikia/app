@@ -60,7 +60,7 @@ class FinishCreateWikiController extends WikiaController {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function FinishCreate() {
-		global $wgUser, $wgSitename;
+		global $wgUser, $wgSitename, $wgEnableNjordExt;
 
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
@@ -84,17 +84,23 @@ class FinishCreateWikiController extends WikiaController {
 			$mainTitle = Title::newFromText($mainPage);
 			$mainId = $mainTitle->getArticleID();
 			$mainArticle = Article::newFromID($mainId);
+
 			if (!empty($mainArticle)) {
-				global $wgParser;
-				$mainPageText = $mainArticle->getRawText();
-				$matches = array();
-				$description = $this->params['wikiDescription'];
-				if(preg_match('/={2,3}[^=]+={2,3}/', $mainPageText, $matches)) {
-					$newSectionTitle = str_replace('Wiki', $wgSitename, $matches[0]);
-					$description = "{$newSectionTitle}\n{$description}";
+
+				if ( $wgEnableNjordExt ) {
+					$this->initHeroModule($mainPage, $mainArticle);
+				} else {
+					global $wgParser;
+					$mainPageText = $mainArticle->getRawText();
+					$matches = array();
+					$description = $this->params['wikiDescription'];
+					if(preg_match('/={2,3}[^=]+={2,3}/', $mainPageText, $matches)) {
+						$newSectionTitle = str_replace('Wiki', $wgSitename, $matches[0]);
+						$description = "{$newSectionTitle}\n{$description}";
+					}
+					$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
+					$mainArticle->doEdit($newMainPageText, '');
 				}
-				$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
-				$mainArticle->doEdit($newMainPageText, '');
 			}
 		}
 
@@ -105,4 +111,19 @@ class FinishCreateWikiController extends WikiaController {
 		$wgOut->redirect($mainPage.'?wiki-welcome=1');
 	}
 
+	/**
+	 *
+	 * @param $mianPageTitle string
+	 * @param $mainPageArticle Article
+	 */
+	private function initHeroModule( $mianPageTitle, $mainPageArticle ) {
+		global $wgSitename;
+
+		$wikiDataModel = new WikiDataModel( $mianPageTitle );
+		$wikiDataModel->title = $wgSitename;
+		$wikiDataModel->description = $this->params[ 'wikiDescription' ];
+		$wikiDataModel->storeInProps();
+		$wikiDataModel->storeInPage();
+		$mainPageArticle->doEdit('', '');
+	}
 }
