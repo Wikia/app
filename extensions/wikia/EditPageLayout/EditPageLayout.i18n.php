@@ -100,7 +100,7 @@ $messages['en'] = array(
 	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
 
 	// preview-related messages
-	'editpagelayout-preview-best-practices-notice' => "Did you know that '''over 50% of Wikia''' users are reading your content on mobile? Some custom templates are not properly shown on mobile devices. Let's check out wikitext best practices for both mobile and desktop."
+	'editpagelayout-preview-best-practices-notice' => "Did you know that '''over 50% of Wikia''' users are reading your content on mobile? Some custom templates are not properly shown on mobile devices. Let's check out wikitext best practices for both mobile and desktop.",
 	'editpagelayout-preview-best-practices-button' => "Best practices",
 	'editpagelayout-preview-best-practices-button-link' => "http://community.wikia.com/wiki/Some_URL",
 
