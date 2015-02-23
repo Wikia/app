@@ -170,6 +170,7 @@
 			} else if (response.loginAborted) {
 				window.GlobalNotification.show(response.errorMsg, 'error');
 			} else if (response.unconfirmed) {
+
 				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
 					method: 'getUnconfirmedUserRedirectUrl',
@@ -272,6 +273,9 @@
 			this.signupForm = new window.FacebookFormCreateUser($modal.find('.UserLoginFacebookLeft'), {
 				ajaxLogin: true,
 				skipFocus: true,
+				ajaxValidation: true,
+				usernameInputName: 'userloginext01',
+				passwordInputName: 'userloginext02',
 				callback: function () {
 					// Track FB Connect Sign Up
 					self.track({
@@ -298,7 +302,10 @@
 
 			this.loginForm = new window.FacebookFormConnectUser($modal.find('.UserLoginFacebookRight'), {
 				ajaxLogin: true,
+				ajaxValidation: true,
 				skipFocus: true,
+				usernameInputName: 'userloginext01',
+				passwordInputName: 'userloginext02',
 				callback: function () {
 					// Track FB Connect login
 					self.track({

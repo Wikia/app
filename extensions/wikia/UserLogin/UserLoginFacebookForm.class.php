@@ -19,8 +19,14 @@ class UserLoginFacebookForm extends UserLoginForm {
 	function __construct( WebRequest $request ) {
 
 		// put the username and password field in the expected place for validation MAIN-1283
-		$request->setVal( 'userloginext01', $request->getVal( 'username' ) );
-		$request->setVal( 'userloginext02', $request->getVal( 'password' ) );
+		$request->setVal(
+			UserLoginForm::SIGNUP_USERNAME_KEY,
+			$request->getVal( UserLoginForm::SIGNUP_USERNAME_KEY )
+		);
+		$request->setVal(
+			UserLoginForm::SIGNUP_PASSWORD_KEY,
+			$request->getVal( UserLoginForm::SIGNUP_PASSWORD_KEY )
+		);
 
 		$request->setVal( 'email', $this->getUserEmail( $request ) );
 		$request->setVal( 'type', 'signup' );

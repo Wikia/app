@@ -1,4 +1,3 @@
-/* global  wgScriptPath, UserSignup */
 (function () {
 	'use strict';
 
@@ -14,34 +13,31 @@
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
 		this.inputsToValidate = options.inputsToValidate || [];
-		this.notEmptyFields = options.notEmptyFields || [];
 		this.submitButton = $(options.submitButton);
 
-		this.activateSubmit();
-	};
+		this.controller = 'UserSignupSpecial';
+		this.method = 'formAjaxValidation';
 
-	UserSignupAjaxValidation.prototype.activateSubmit = function () {
-		var isvalid = this.checkFieldsValid();
-		if (isvalid) {
-			this.submitButton.removeAttr('disabled');
-		} else {
-			this.submitButton.attr('disabled', 'disabled');
-		}
+		// used for tracking ajax calls in progress
+		this.deferred = false;
 	};
 
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+			params = {
+				field: paramName
+			};
 
-		params.field = paramName;
 		params[paramName] = el.val();
 
-		$.get(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+		this.deferred = $.nirvana.sendRequest({
+			controller: this.controller,
+			method: this.method,
+			type: 'GET',
+			data: params,
+			callback: this.validationHandler.bind(this, paramName)
+		});
 	};
 
 	UserSignupAjaxValidation.prototype.validationHandler = function (paramName, response) {
@@ -50,31 +46,31 @@
 		} else {
 			this.wikiaForm.showInputError(paramName, response.msg);
 		}
-
-		this.activateSubmit();
 	};
 
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+			params;
 
-		if (UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
-			UserSignup.deferred.reject();
+		if (this.deferred && typeof this.deferred.reject === 'function') {
+			this.deferred.reject();
 		}
 
-		$.extend(params, {
+		params = {
 			field: 'birthdate',
 			birthyear: this.wikiaForm.inputs.birthyear.val(),
 			birthmonth: this.wikiaForm.inputs.birthmonth.val(),
 			birthday: this.wikiaForm.inputs.birthday.val()
-		});
+		};
 
-		UserSignup.deferred = $.post(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+		this.deferred = $.nirvana.sendRequest({
+			controller: this.controller,
+			method: this.method,
+			type: 'GET',
+			data: params,
+			callback: this.validationHandler.bind(this, paramName)
+		});
 	};
 
 	/**
@@ -84,14 +80,14 @@
 	UserSignupAjaxValidation.prototype.getDefaultParamsForAjax = function () {
 		return {
 			controller: 'UserSignupSpecial',
-			method: 'formValidation',
+			method: 'formAjaxValidation',
 			format: 'json'
 		};
 	};
 
 	UserSignupAjaxValidation.prototype.checkFieldsValid = function () {
 		var isValid = true,
-			inputsToValidate = this.notEmptyFields,
+			inputsToValidate = this.inputsToValidate,
 			i;
 
 		for (i = 0; i < inputsToValidate.length; i++) {

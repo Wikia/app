@@ -37,7 +37,7 @@ $form = [
 			'value' => htmlspecialchars( $username ),
 			'label' => wfMessage( 'yourname' )->escaped(),
 			'isRequired' => true,
-			'isInvalid' => ( !empty( $errParam ) && $errParam === 'username' ),
+			'isInvalid' => ( !empty( $errParam ) && $errParam === 'userloginext01' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
 		],
 		[
@@ -61,7 +61,7 @@ $form = [
 			'value' => '',
 			'label' => wfMessage( 'yourpassword' )->escaped(),
 			'isRequired' => true,
-			'isInvalid' => ( !empty( $errParam ) && $errParam === 'password' ),
+			'isInvalid' => ( !empty( $errParam ) && $errParam === 'userloginext02' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
 		],
 		[

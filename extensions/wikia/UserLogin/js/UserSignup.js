@@ -6,10 +6,7 @@
 	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
 	 */
 	var UserSignup = {
-		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
-		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-		invalidInputs: {},
-
+		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
 		/**
 		 * WikiaMobile, Wikia One, and some automated tests do not use captcha
 		 */
@@ -23,11 +20,12 @@
 			this.submitButton = this.wikiaForm.inputs.submit;
 
 			this.loadCaptcha();
-			this.setupValidation();
+			this.setupAjaxValidation();
 
 			// imported via UserSignupMixin
 			this.setCountryValue(this.wikiaForm);
 			this.initOptIn(this.wikiaForm);
+
 		},
 
 		loadCaptcha: function () {
@@ -74,18 +72,18 @@
 		/**
 		 * Applying ajax validation to the form fields that have been cached via WikiaForm
 		 */
-		setupValidation: function () {
+		setupAjaxValidation: function () {
 			var inputs = this.wikiaForm.inputs;
 
 			this.validator = new UserSignupAjaxValidation({
 				wikiaForm: this.wikiaForm,
-				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
-				notEmptyFields: this.notEmptyFields
+				inputsToValidate: this.inputsToValidate
 			});
 
 			inputs.userloginext01
 				.add(inputs.email)
+				// TODO: Validate password on the front end so we're not sending passwords back and forth. (SOC-316)
 				.add(inputs.userloginext02)
 				.on('blur.UserSignup', this.validator.validateInput.bind(this.validator));
 
@@ -93,11 +91,6 @@
 				.add(inputs.birthmonth)
 				.add(inputs.birthyear)
 				.on('change.UserSignup', this.validator.validateBirthdate.bind(this.validator));
-
-			if (this.useCaptcha && inputs['g-recaptcha-response']) {
-				inputs['g-recaptcha-response']
-					.on('keyup.UserSignup', this.validator.activateSubmit.bind(this.validator));
-			}
 		}
 	};
 

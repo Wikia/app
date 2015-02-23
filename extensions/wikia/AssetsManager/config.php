@@ -404,6 +404,7 @@ $config['user_login_js_anon'] = [
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',

@@ -48,9 +48,7 @@
 		},
 
 		buildModal: function (options) {
-			var self = this,
-				origin = '',
-				clickAction = this.trackerActions.CLICK;
+			var self = this;
 
 			// start performance tracking
 			this.bucky.timer.start('buildModal');
@@ -69,9 +67,9 @@
 					};
 
 				uiModal.createComponent(modalConfig, function (loginModal) {
-					UserLoginModal.$modal = loginModal;
+					var $loginModal, ajaxFormOptions;
 
-					var $loginModal = loginModal.$element;
+					UserLoginModal.$modal = loginModal;
 
 					// Init facebook button inside login modal
 					if (window.FacebookLogin) {
@@ -80,94 +78,88 @@
 						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL);
 					}
 
-					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
+					$loginModal = loginModal.$element;
+
+					ajaxFormOptions = {
+						usernameInputName: 'userloginext01',
+						passwordInputName: 'userloginext02',
 						ajaxLogin: true,
 						// context is this instance of UserLoginAjaxForm
-						callback: function (res) {
-							window.wgUserName = res.username;
-							var callback = options.callback;
-							if (callback && typeof callback === 'function') {
-								if (!options.persistModal) {
-									UserLoginModal.$modal.trigger('close');
-								}
-								callback();
-							} else {
-								this.reloadPage();
-							}
-						},
-						// context is this instance of UserLoginAjaxForm
-						resetpasscallback: function () {
-							$.nirvana.sendRequest({
-								controller: 'UserLoginSpecial',
-								method: 'changePassword',
-								format: 'html',
-								data: {
-									username: this.inputs.username.val(),
-									password: this.inputs.password.val(),
-									returnto: this.inputs.returnto.val(),
-									fakeGet: 1
-								},
-								callback: function (html) {
-									var content = $('<div style="display:none" />').append(html),
-										heading = content.find('h1'),
-										modal = loginModal,
-										contentBlock = $loginModal.find('.UserLoginModal');
+						retrieveTemplateCallback: function ( html ) {
+							var content = $('<div style="display:none" />').append(html),
+								heading = content.find('h1'),
+								modal = loginModal,
+								contentBlock = $loginModal.find('.UserLoginModal');
 
-									modal.setTitle(heading.text());
-									heading.remove();
+							modal.setTitle(heading.text());
+							heading.remove();
 
-									contentBlock.slideUp(400, function () {
-										contentBlock.html('').html(content);
-										content.show();
-										contentBlock.slideDown(400);
-									});
-								}
+							contentBlock.slideUp(400, function () {
+								contentBlock.html('').html(content);
+								content.show();
+								contentBlock.slideDown(400);
 							});
 						}
-					});
+					};
+
+					// UserLogin.js sends a callback function for reloading the classic editor after forced login
+					if (typeof options.callback === 'function') {
+						ajaxFormOptions.callback = options.callback;
+					}
+
+					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, ajaxFormOptions);
 
 					if (options.modalInitCallback && typeof options.modalInitCallback === 'function') {
 						options.modalInitCallback();
 					}
 
-					if (options.origin) {
-						origin = options.origin;
-					}
+					self.modalTracking($loginModal, options);
 
-					self.track({
-						action: self.trackerActions.OPEN,
-						label: 'from-' + origin
-					});
-
-					// Click tracking
-					$loginModal.on('click', '.forgot-password', function () {
-						self.track({
-							action: clickAction,
-							label: 'forgot-password'
-						});
-					}).on('click', 'input.keep-logged-in', function () {
-						self.track({
-							action: clickAction,
-							label: 'keep-me-logged-in'
-						});
-					}).on('click', '.get-account a', function () {
-						self.track({
-							action: clickAction,
-							label: 'sign-up-from-' + origin
-						});
-					}).on('click', '.sso-login-facebook', function () {
-						self.track({
-							action: clickAction,
-							label: 'facebook-connect'
-						});
-					}).on('click', 'input.login-button', function () {
-						self.track({
-							action: clickAction,
-							label: 'login-from-' + origin
-						});
-					});
 					// End performance tracking
 					self.bucky.timer.stop('buildModal');
+				});
+			});
+		},
+
+		modalTracking: function ($loginModal, options) {
+			var self = this,
+				origin = '',
+				clickAction = this.trackerActions.CLICK;
+
+			if (options.origin) {
+				origin = options.origin;
+			}
+
+			self.track({
+				action: self.trackerActions.OPEN,
+				label: 'from-' + origin
+			});
+
+			// Click tracking
+			$loginModal.on('click', '.forgot-password', function () {
+				self.track({
+					action: clickAction,
+					label: 'forgot-password'
+				});
+			}).on('click', 'input.keep-logged-in', function () {
+				self.track({
+					action: clickAction,
+					label: 'keep-me-logged-in'
+				});
+			}).on('click', '.get-account a', function () {
+				self.track({
+					action: clickAction,
+					label: 'sign-up-from-' + origin
+				});
+			}).on('click', '.sso-login-facebook', function () {
+				self.track({
+					action: clickAction,
+					label: 'facebook-connect'
+				});
+			}).on('click', 'input.login-button', function () {
+				self.track({
+					action: clickAction,
+					label: 'login-from-' + origin
 				});
 			});
 		},
