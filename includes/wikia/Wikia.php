@@ -2311,19 +2311,4 @@ class Wikia {
 
 		return $countryNames;
 	}
-
-	/**
-	 * Get an environment name that should be enough to separate cache containing URLs
-	 *
-	 * @return string
-	 */
-	static public function getEnvironmentName() {
-		global $wgWikiaEnvironment;
-
-		if ( in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY ] ) ) {
-			return $wgWikiaEnvironment;
-		} else {
-			return wfHostname();
-		}
-	}
 }

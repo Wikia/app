@@ -35,7 +35,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		editor.on('dataReady', $.proxy(this.dataReady, this));
 		editor.on('wysiwygModeReady', $.proxy(this.wysiwygModeReady, this));
 		editor.on('sourceModeReady', $.proxy(this.sourceModeReady, this));
-		editor.on('sourceModeReady', $.proxy(this.sourceModeReadyInitSyntaxHighlighting, this));
 	},
 
 	modeSwitch: function(ev) {
@@ -165,18 +164,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	sourceModeReady: function(ev) {
 		RTE.log('sourceModeReady');
-	},
-
-	sourceModeReadyInitSyntaxHighlighting: function(ev) {
-		if (window.wgEnableEditorSyntaxHighlighting === true) {
-			require(['WikiTextSyntaxHighlighter'], function (WikiTextSyntaxHighlighter) {
-				// textarea exists only on switching from Rich Text Editor to Source
-				// and we want to init only in this case
-				if (ev.editor.textarea !== null) {
-					WikiTextSyntaxHighlighter.init(ev.editor.textarea.$);
-				}
-			});
-		}
 	},
 
 	updateModeInfo: function(ev) {

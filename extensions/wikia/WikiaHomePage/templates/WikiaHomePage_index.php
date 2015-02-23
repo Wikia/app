@@ -7,9 +7,6 @@
 		<a class="button create-wiki" href="<?= wfMessage('wikiahome-page-header-create-wiki-button-destination')->text(); ?>">
 			<?= wfMessage('wikiahome-page-header-create-wiki-button')->text(); ?>
 		</a>
-		<? if ( empty( $wg->EnableGlobalNavExt ) ): ?>
-			<?= F::app()->renderView('Search', 'Index', array('noautocomplete' => true, 'nonamespaces' => true)); ?>
-		<? endif ?>
 	</header>
 	<section class="wikiahomepage-wikis">
 		<?= F::app()->renderView('WikiaHomePageController', 'visualization', []); ?>

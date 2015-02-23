@@ -891,13 +891,8 @@ $wgAutoloadLocalClasses = array(
 	'WithoutInterwikiPage' => 'includes/specials/SpecialWithoutinterwiki.php',
 
 	# includes/templates
-	/**
 	'UserloginTemplate' => 'includes/templates/Userlogin.php',
 	'UsercreateTemplate' => 'includes/templates/Usercreate.php',
-	*/
-	'UsercreateTemplate' => 'includes/templates/wikia/Userlogin.php',
-	'UserloginTemplate' => 'includes/templates/wikia/Userlogin.php',
-	'UserAjaxCreateTemplate' => 'includes/templates/wikia/UserAjaxCreate.php',
 
 	# includes/upload
 	'UploadBase' => 'includes/upload/UploadBase.php',

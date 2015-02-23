@@ -94,11 +94,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-		if ( !empty( $this->wg->EnableGlobalNavExt ) ) {
-			$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
-		} else {
-			$this->header = F::app()->renderView( 'GlobalHeader', 'Index' );
-		}
+		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
@@ -173,7 +169,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->notificationsLink =
 			( count( $this->notices ) == 0 )
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
-			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->escaped();
+			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode

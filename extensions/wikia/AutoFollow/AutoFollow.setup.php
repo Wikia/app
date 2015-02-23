@@ -14,7 +14,7 @@
  * @global Array The list of extension credits.
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionCredits
  */
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'path'              => __FILE__,
 	'name'              => 'AutoFollow',
 	'descriptionmsg'    => 'autofollow-ext-description',
@@ -23,14 +23,14 @@ $wgExtensionCredits['other'][] = array(
 		'Adam Karminski <adamk@wikia-inc.com>'
 	],
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutoFollow/',
-);
+];
 
 $wgExtensionMessagesFiles['AutoFollow'] = __DIR__ . '/AutoFollow.i18n.php';
 
 $wgAutoloadClasses['Wikia\AutoFollow\AutoFollowHooks'] = __DIR__ . '/AutoFollow.hooks.php';
 $wgAutoloadClasses['Wikia\AutoFollow\AutoFollowTask'] = __DIR__ . '/AutoFollowTask.class.php';
 
-$wgHooks['SignupConfirmEmailComplete'][] = "Wikia\AutoFollow\AutoFollowHooks::onSignupConfirmEmailComplete";
+$wgHooks['SignupConfirmEmailComplete'][] = 'Wikia\AutoFollow\AutoFollowHooks::onSignupConfirmEmailComplete';
 
 /**
  * @global Array A language code to its community wikia's city_id map

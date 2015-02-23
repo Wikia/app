@@ -19,6 +19,7 @@ class Transaction {
 
 	// Parameters
 	const PARAM_ENVIRONMENT = 'env';
+	const PARAM_HOSTNAME = 'hostname';
 	const PARAM_ENTRY_POINT = 'entry_point';
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
@@ -63,6 +64,7 @@ class Transaction {
 				new TransactionTraceScribe(),
 			) );
 			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
+			$instance->set( self::PARAM_HOSTNAME, wfHostname() );
 		}
 		return $instance;
 	}

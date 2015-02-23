@@ -1,36 +1,35 @@
-@import "../mixins/tooltip-icon";
-
 .ConfirmEmail {
 	margin-bottom: 200px;
 	width: 500px;
+
 	p {
 		margin: 40px 0 0;
 	}
+
 	.email-form {
 		display: none;
 		left: -7px;
 		margin-top: 20px;
 		position: relative;
+
 		&.show {
 			display: block;
 		}
-		input[name=email] {
+
+		[name=email] {
 			width: 200px;
 		}
 	}
+
 	.general-messaging {
 		font-size: 16px;
 		margin: 40px 0 15px;
+
 		p {
 			margin: 0;
 		}
 	}
-	.tooltip-icon-wrapper {
-		position: relative;
-		.tooltip-icon {
-			@include tooltip-icon;
-		}
-	}
+
 	.ResendConfirmation {
 		.input-group {
 			padding: 0;

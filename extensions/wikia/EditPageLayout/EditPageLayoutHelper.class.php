@@ -105,6 +105,7 @@ class EditPageLayoutHelper {
 
 		$this->addJsVariable( 'wgEditPagePopularTemplates', TemplateService::getPromotedTemplates() );
 		$this->addJsVariable( 'wgEditPageIsWidePage', $this->isWidePage() );
+		$this->addJsVariable( 'wgIsDarkTheme', SassUtil::isThemeDark() );
 
 		if ( $user->isLoggedIn() ) {
 			global $wgRTEDisablePreferencesChange;
@@ -195,7 +196,6 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgIsCodePage', true );
-		$this->addJsVariable( 'wgIsDarkTheme', SassUtil::isThemeDark() );
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';

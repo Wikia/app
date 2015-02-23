@@ -427,5 +427,42 @@ TEXT;
 		);
 	}
 
+	/**
+	 * @param string $content
+	 * @param string $expected
+	 * @dataProvider cleanArticleSnippetProvider
+	 */
+	public function testCleanArticleSnippet( $content, $expected ) {
+		/* @var $title Title */
+		$title = $this->mockClassWithMethods( 'Title' );
+		$service = new ArticleService( $title );
+
+		$this->assertEquals($expected, $service->cleanArticleSnippet( $content ) );
+	}
+
+	public function cleanArticleSnippetProvider() {
+		return [
+			[
+				// tags stripping
+				'<h1>foo</h1><p>bar</p><div>text</div>',
+				'bar'
+			],
+			[
+				// removing multiple spaces
+				'<p>test    test</p>',
+				'test test'
+			],
+			[
+				// stripping entities
+				'<p>hard&#160;space</p>',
+				'hardspace'
+			],
+			[
+				// stripping entities
+				'<p>enti&#xFF;ty</p>',
+				'entity'
+			]
+		];
+	}
 
 }

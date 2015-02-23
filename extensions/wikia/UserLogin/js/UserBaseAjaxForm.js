@@ -17,10 +17,15 @@
 	 * @constructor
 	 */
 	var UserBaseAjaxForm = function (el, options) {
+		if (!(el instanceof HTMLElement || el instanceof jQuery || typeof el === 'string')) {
+			throw new Error('This module requires an element or selector as its first argument');
+		}
+
 		this.el = $(el);
 		this.options = options || {};
 		this.usernameInputName = options.usernameInputName || 'username';
 		this.passwordInputName = options.passwordInputName || 'password';
+
 		this.init();
 	};
 
