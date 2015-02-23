@@ -86,21 +86,11 @@ class FinishCreateWikiController extends WikiaController {
 			$mainArticle = Article::newFromID($mainId);
 
 			if (!empty($mainArticle)) {
+				$newMainPageText = $wgEnableNjordExt ?
+					$this->initHeroModule($mainPage) :
+					$this->setupClassicMainPage($mainArticle);
 
-				if ( $wgEnableNjordExt ) {
-					$this->initHeroModule($mainPage, $mainArticle);
-				} else {
-					global $wgParser;
-					$mainPageText = $mainArticle->getRawText();
-					$matches = array();
-					$description = $this->params['wikiDescription'];
-					if(preg_match('/={2,3}[^=]+={2,3}/', $mainPageText, $matches)) {
-						$newSectionTitle = str_replace('Wiki', $wgSitename, $matches[0]);
-						$description = "{$newSectionTitle}\n{$description}";
-					}
-					$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
-					$mainArticle->doEdit($newMainPageText, '');
-				}
+				$mainArticle->doEdit($newMainPageText, '');
 			}
 		}
 
@@ -112,18 +102,41 @@ class FinishCreateWikiController extends WikiaController {
 	}
 
 	/**
-	 *
-	 * @param $mianPageTitle string
-	 * @param $mainPageArticle Article
+	 * initialize hero module on modular main page
+	 * @param $mainPageTitle string
+	 * @returns string - main page article wiki text
 	 */
-	private function initHeroModule( $mianPageTitle, $mainPageArticle ) {
+	private function initHeroModule( $mainPageTitle ) {
 		global $wgSitename;
 
-		$wikiDataModel = new WikiDataModel( $mianPageTitle );
+		$wikiDataModel = new WikiDataModel( $mainPageTitle );
 		$wikiDataModel->title = $wgSitename;
-		$wikiDataModel->description = $this->params[ 'wikiDescription' ];
+		$wikiDataModel->description = $this->params['wikiDescription'];
 		$wikiDataModel->storeInProps();
 		$wikiDataModel->storeInPage();
-		$mainPageArticle->doEdit('', '');
+
+		return '';
+	}
+
+	/**
+	 * setup main page article content for classic main page
+	 * @param $mainArticle Article
+	 * @return string - main page article wiki text
+	 */
+	private function setupClassicMainPage( $mainArticle ) {
+		global $wgParser, $wgSitename;
+
+		$mainPageText = $mainArticle->getRawText();
+		$matches = array();
+		$description = $this->params['wikiDescription'];
+
+		if( preg_match( '/={2,3}[^=]+={2,3}/', $mainPageText, $matches ) ) {
+			$newSectionTitle = str_replace( 'Wiki', $wgSitename, $matches[0] );
+			$description = "{$newSectionTitle}\n{$description}";
+		}
+
+		$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
+
+		return $newMainPageText;
 	}
 }
