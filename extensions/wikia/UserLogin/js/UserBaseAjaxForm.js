@@ -7,16 +7,16 @@
 	 * @abstract
 	 * @param {HTMLElement|jQuery} el Wrapper element for form
 	 * @param {Object} options
-	 * - ajaxLogin
-	 * - ajaxValidation
-	 * - skipFocus
-	 * - usernameInputName
-	 * - passwordInputName
-	 * - callback
-	 * - retrieveTemplateCallback
+	 * - ajaxLogin: Boolean to submit form via ajax
+	 * - ajaxValidation: Boolean to validate with ajax or not
+	 * - skipFocus: Boolean to not focus on the first input upon init
+	 * - usernameInputName: Alias for username input
+	 * - passwordInputName: Alias for password input
+	 * - callback: Function called upon success response
+	 * - modal: UI Modal object where form is located
 	 * @constructor
 	 */
-	var UserBaseAjaxForm = function (el, options) {
+	var UserBaseAjaxForm = function UserBaseAjaxForm(el, options) {
 		if (!(el instanceof HTMLElement || el instanceof jQuery || typeof el === 'string')) {
 			throw new Error('This module requires an element or selector as its first argument');
 		}
@@ -35,6 +35,7 @@
 	UserBaseAjaxForm.prototype.init = function () {
 		this.wikiaForm = new WikiaForm(this.el.find('form'));
 		this.inputs = this.wikiaForm.inputs;
+
 		this.cacheDOM();
 		this.bindEvents();
 

@@ -9,7 +9,7 @@
 	 * @constructor
 	 * @extends UserBaseAjaxForm
 	 */
-	var UserLoginAjaxForm = function (el, options) {
+	var UserLoginAjaxForm = function UserLoginAjaxForm(el, options) {
 		UserBaseAjaxForm.call(this, el, options);
 	};
 
@@ -75,7 +75,7 @@
 			loginToken: this.inputs.loginToken.val(),
 			returnto: this.inputs.returnto.val(),
 			fakeGet: 1
-		}, this.retrieveTemplateCallback.bind(this));
+		}, this.setupChangePasswordForm.bind(this));
 	};
 
 	/**
@@ -92,24 +92,37 @@
 	};
 
 	/**
-	 * Replace modal's content based on HTML sent from the server.
+	 * Replace form's content based on HTML sent from the server.
 	 * @param {string} html
 	 */
-	UserLoginAjaxForm.prototype.retrieveTemplateCallback = function (html) {
-		var content, form;
-
-		if (typeof this.options.retrieveTemplateCallback === 'function') {
-			this.options.retrieveTemplateCallback(html);
-			return;
-		}
+	UserLoginAjaxForm.prototype.setupChangePasswordForm = function (html) {
+		var content, form, heading, modal, contentBlock, duration;
 
 		content = $('<div>').hide().append(html);
-		form = this.form;
+		duration = 400;
 
-		form.slideUp(400, function () {
-			form.replaceWith(content);
-			content.slideDown(400);
-		});
+		// forced login modal needs a new header and some HTML adjustments
+		if (this.options.modal) {
+			heading = content.find('h1');
+			modal = this.options.modal;
+			contentBlock = modal.$element.find('.UserLoginModal');
+
+			modal.setTitle(heading.text());
+			heading.remove();
+
+			contentBlock.slideUp(duration, function () {
+				contentBlock.html('').html(content);
+				content.show();
+				contentBlock.slideDown(duration);
+			});
+		} else {
+			form = this.form;
+
+			form.slideUp(duration, function () {
+				form.replaceWith(content);
+				content.slideDown(duration);
+			});
+		}
 	};
 
 	/**

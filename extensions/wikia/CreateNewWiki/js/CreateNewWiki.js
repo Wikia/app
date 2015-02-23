@@ -76,6 +76,8 @@
 							loginAjaxForm: new UserLoginAjaxForm(
 								'#UserAuth .UserLoginModal',
 								{
+									usernameInputName: 'userloginext01',
+									passwordInputName: 'userloginext02',
 									ajaxLogin: true,
 									callback: function () {
 										self.transition('UserAuth', true, '+');

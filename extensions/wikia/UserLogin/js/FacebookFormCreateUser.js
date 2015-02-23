@@ -2,7 +2,7 @@
 (function () {
 	'use strict';
 
-	var FacebookFormCreateUser = function (el, options) {
+	var FacebookFormCreateUser = function FacebookFormCreateUser(el, options) {
 		UserBaseAjaxForm.call(this, el, options);
 	};
 

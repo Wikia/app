@@ -83,22 +83,7 @@
 							usernameInputName: 'userloginext01',
 							passwordInputName: 'userloginext02',
 							ajaxLogin: true,
-							// context is this instance of UserLoginAjaxForm
-							retrieveTemplateCallback: function (html) {
-								var content = $('<div style="display:none" />').append(html),
-									heading = content.find('h1'),
-									modal = loginModal,
-									contentBlock = $loginModal.find('.UserLoginModal');
-
-								modal.setTitle(heading.text());
-								heading.remove();
-
-								contentBlock.slideUp(400, function () {
-									contentBlock.html('').html(content);
-									content.show();
-									contentBlock.slideDown(400);
-								});
-							}
+							modal: loginModal
 						};
 
 					// UserLogin.js sends a callback function for reloading the classic editor after forced login
