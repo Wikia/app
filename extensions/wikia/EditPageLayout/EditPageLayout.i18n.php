@@ -157,6 +157,18 @@ $messages['qqq'] = array(
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
 	'wikia-editor-preview-editSummary' => 'A text showed on the bottom of preview window when the edit summary was added, the parameter is the added summary',
+
+	'editpagelayout-preview-best-practices-notice' => "A notice shown at the top of the preview dialog, with a button (link) next to the notice"
+	'editpagelayout-preview-best-practices-button' => "A button (link) label which leads to a separate page describing best practices and advice on how to create content for mobile and desktop",
+	'editpagelayout-preview-best-practices-button-link' => "http://community.wikia.com/wiki/Some_URL",
+
+	'editpagelayout-preview-label-desktop' => "A label shown under the desktop icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers the desktop icon",
+	'editpagelayout-preview-label-mobile' => "A label shown under the mobile icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers over the mobile icon",
+
+	'editpagelayout-preview-dropdown-item-mobile' => "An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see",
+	'editpagelayout-preview-dropdown-item-tablet' => "An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see",
+	'editpagelayout-preview-dropdown-item-desktop' => "An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see",
+	'editpagelayout-preview-dropdown-item-desktopxl' => "An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see"
 );
 
 /** Azerbaijani (azərbaycanca)
