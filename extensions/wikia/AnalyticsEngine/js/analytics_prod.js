@@ -174,6 +174,7 @@
 		['_setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3],
 		['_setCustomVar', 17, 'Vertical', window.wgWikiVertical, 3],
 		['_setCustomVar', 18, 'Categories', window.wgWikiCategories.join(','), 3],
+		['_setCustomVar', 19, 'ArticleType', window.wgArticleType, 3],
 
 		/*
 		 * Remove when SOC-217 ABTest is finished
@@ -256,7 +257,8 @@
 		['ads._setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3],
 		['ads._setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3],
 		['ads._setCustomVar', 17, 'Vertical', window.wgWikiVertical, 3],
-		['ads._setCustomVar', 18, 'Categories', window.wgWikiCategories.join(','), 3]
+		['ads._setCustomVar', 18, 'Categories', window.wgWikiCategories.join(','), 3],
+		['ads._setCustomVar', 19, 'ArticleType', window.wgArticleType, 3]
 	);
 
 	/**** Include A/B testing status ****/

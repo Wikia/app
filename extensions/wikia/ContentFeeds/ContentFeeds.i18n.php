@@ -72,6 +72,14 @@ $messages['bg'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Грешка: Тялото на страницата е задължително',
 );
 
+/** Western Balochi (بلوچی رخشانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bgn'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'ئنوان',
+	'contentfeeds-firstfewarticles-tag-next' => 'دیگرین',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D

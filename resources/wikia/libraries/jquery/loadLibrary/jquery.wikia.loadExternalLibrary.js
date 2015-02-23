@@ -46,7 +46,7 @@
 	 * @returns {jQuery} Returns a jQuery promise
 	 * @see https://developers.facebook.com/docs/javascript/quickstart/v2.2
 	 */
-	$.loadFacebookAPI = function (callback) {
+	$.loadFacebookSDK = function (callback) {
 		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred(),
 			url = window.fbScript || '//connect.facebook.net/en_US/sdk.js';
@@ -56,22 +56,33 @@
 			$deferred.done(callback);
 		}
 
-		// This is invoked by Facebook once the SDK is loaded.
-		window.fbAsyncInit = function () {
-			window.FB.init({
-				appId: window.fbAppId,
-				xfbml: true,
-				cookie: true,
-				version: 'v2.1'
-			});
-			// resolve after FB has finished inititalizing
-			$deferred.resolve();
-		};
+		// If the FB SDK successfully loads, show the fb login button
+		$deferred.done(function () {
+			$('.sso-login').removeClass('hidden');
+		});
 
-		$.when($.loadExternalLibrary('FacebookSDK', url, typeof window.FB))
-			.fail(function () {
-				$deferred.reject();
-			});
+		if (typeof window.FB === 'object') {
+			// Since we have our own deferred object, we need to resolve it if FB is already loaded.
+			// We can't rely on the type check inside $.loadExternalLibrary.
+			$deferred.resolve();
+		} else {
+			// This is invoked by Facebook once the SDK is loaded.
+			window.fbAsyncInit = function () {
+				window.FB.init({
+					appId: window.fbAppId,
+					cookie: true,
+					version: 'v2.1'
+				});
+
+				// resolve after FB has finished inititalizing
+				$deferred.resolve();
+			};
+
+			$.when($.loadExternalLibrary('FacebookSDK', url, typeof window.FB))
+				.fail(function () {
+					$deferred.reject();
+				});
+		}
 
 		return $deferred;
 	};

@@ -1087,6 +1087,7 @@ $messages['ko'] = array(
 	'wikiaquiz-moreinfolinktext-label' => '링크 텍스트',
 	'wikiaquiz-question-label' => '질문',
 	'wikiaquiz-image-label' => '그림 (선택 사항)',
+	'wikiaquiz-video-label' => '동영상 (선택 사항. 그림 대용)',
 	'wikiaquiz-explanation-label' => '정답 설명 (선택 사항)',
 	'wikiaquiz-quiz-label' => '퀴즈',
 	'wikiaquiz-questions-label' => '질문',
