@@ -3,6 +3,10 @@ class FinishCreateWikiController extends WikiaController {
 
 	const COOKIE_NAME = 'createnewwiki';
 
+	// initial wiki text markup form main page article with hero image enabled
+	const HERO_IMAGE_MAIN_PAGE_MARKUP = '<mainpage-leftcolumn-start /><mainpage-endcolumn />
+		<mainpage-rightcolumn-start /><mainpage-endcolumn />';
+
 	// form field values
 	var $params;
 
@@ -114,10 +118,8 @@ class FinishCreateWikiController extends WikiaController {
 		$wikiDataModel->description = $this->params['wikiDescription'];
 		$wikiDataModel->storeInProps();
 		$wikiDataModel->storeInPage();
-		$mainPageCoreMarkup = '<mainpage-leftcolumn-start /><mainpage-endcolumn />
-			<mainpage-rightcolumn-start /><mainpage-endcolumn />';
 
-		return $mainPageCoreMarkup;
+		return HERO_IMAGE_MAIN_PAGE_MARKUP;
 	}
 
 	/**
