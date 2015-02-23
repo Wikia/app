@@ -33,4 +33,7 @@ $wgResourceModules['ext.SpecialPageViews'] = [
 	'localBasePath' => __DIR__ . '/js',
 	'remoteExtPath' => 'wikia/SpecialPageViews/js',
 	'scripts' => 'SpecialPageViews.js',
+	'dependencies' => [
+		'jquery.ui.datepicker',
+	]
 ];

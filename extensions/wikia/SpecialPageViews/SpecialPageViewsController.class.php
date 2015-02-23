@@ -8,11 +8,13 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 	function __construct() {
 		parent::__construct( self::SPECIALPAGE_NAME );
-		$this->wg->Out->addModuleScripts( 'ext.SpecialPageViews' );
+		$this->wg->Out->addModules( 'ext.SpecialPageViews' );
 	}
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
+		$this->setResponse( new WikiaResponse() );
+		$this->response->addAsset( '/skins/oasis/css/modules/CorporateDatepicker.scss' );
 		$this->setHeaders();
 		$this->setInitialDates();
 
