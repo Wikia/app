@@ -80,7 +80,7 @@
 		}
 
 		// edit summary
-		textarea {
+		#wpSummary {
 			@include epl-textfield;
 			height: 27px;
 			line-height: 15px;
