@@ -290,7 +290,7 @@ class WikiaLocalFileShared  {
 		}
 
 		if ( is_array( $this->metadata ) ) {
-			if ( !empty($this->metadata[$key]) ) {
+			if ( !empty( $this->metadata[$key] ) ) {
 				$value = $this->metadata[$key];
 			} else {
 				$value = $default;
