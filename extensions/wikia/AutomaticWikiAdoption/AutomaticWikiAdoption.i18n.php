@@ -2367,6 +2367,7 @@ Sètz prèst a passar a las autras etapas per ajudar {{SITENAME}} ?",
  * @author BeginaFelicysym
  * @author Sovq
  * @author Sp5uhe
+ * @author VerMa
  */
 $messages['pl'] = array(
 	'wikiadoption' => 'Automatyczna adopcja wiki',
@@ -2386,11 +2387,11 @@ Czy jesteś gotów aby pomóc {{SITENAME}}?',
 	'wikiadoption-adoption-successed' => 'Gratulacje! Jesteś teraz administratorem na tej wiki!',
 	'wikiadoption-adoption-failed' => 'Przepraszamy. Próbowaliśmy dać Ci uprawnienia administratora, ale coś poszło nie tak. Prosimy [http://community.wikia.com/Special:Contact skontaktuj się z nami], a spróbujemy Ci pomóc.',
 	'wikiadoption-not-allowed' => 'Przepraszamy. Nie możesz teraz adoptować tej wiki.',
-	'wikiadoption-not-enough-edits' => 'Potrzebujesz więcej niż 10 edycji aby adoptować tą wiki.',
+	'wikiadoption-not-enough-edits' => 'Potrzebujesz więcej niż 10 edycji aby adoptować tę wiki.',
 	'wikiadoption-adopted-recently' => 'Ostatnio adoptowałeś inną wiki. Będziesz musiał poczekać, zanim możliwa będzie adopcja kolejnej.',
 	'wikiadoption-log-reason' => 'Automatyczna Adopcja Wiki.',
 	'wikiadoption-notification' => '{{SITENAME}} może być adoptowana. Chcesz zostać administratorem? Adoptuj wiki! $2',
-	'wikiadoption-mail-first-subject' => 'Nie widzieliśmy cię czas jakiś',
+	'wikiadoption-mail-first-subject' => 'Nie widzieliśmy cię jakiś czas',
 	'wikiadoption-mail-first-content' => 'Witaj $1,
 
 Od kilku tygodni na #WIKINAME nie było aktywnych administratorów.Administratorzy są niezbędni aby #WIKINAME mogła poprawnie funkcjonować. Jeśli w dłuższym okresie na wiki nie ma administratorów, może ona zostać udostępniona do adopcji, tak, aby inni aktywni użytkownicy mogli dostać dodatkowe uprawnienia.
@@ -2409,7 +2410,7 @@ Jeśli potrzebujesz pomocy w dbaniu o wiki, możesz pozwolić innym użytkowniko
 Zespół Wikia<br /><br />
 
 Możesz <a href="$3">zrezygnować</a> z otrzymywania powiadomień.',
-	'wikiadoption-mail-second-subject' => '#WIKINAME będzie dostępna do adopcji wkrótce',
+	'wikiadoption-mail-second-subject' => '#WIKINAME będzie wkrótce dostępna do adopcji',
 	'wikiadoption-mail-second-content' => 'Witaj $1,
 
 Minęło 60 dni od momentu, gdy aktywny był administrator na wiki $WIKINAME. Regularna obecność administratorów jest ważna dla poprawnego rozwoju wiki.
@@ -2689,36 +2690,37 @@ Ferramentas Úteis:
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Jefersonmoraes
  * @author 555
  */
 $messages['pt-br'] = array(
 	'wikiadoption' => 'Adoção automática de wikis',
 	'wikiadoption-desc' => 'Uma extensão do MediaWiki para Adoção Automática de Wikis',
-	'wikiadoption-header' => 'Adotar esta wiki',
+	'wikiadoption-header' => 'Adotar esta wikia',
 	'wikiadoption-button-adopt' => 'Sim, eu quero adotar {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Saiba mais!',
 	'wikiadoption-description' => '$1, pronto(a) para adotar a {{SITENAME}}?
 <br /><br />
-Há já algum tempo que o wiki {{SITENAME}} não possui um administrador ativo. Estamos à procura de uma nova liderança, para ajudar a aumentar os conteúdos e comunidade deste wiki! Como você tem contribuído em {{SITENAME}}, gostaríamos de saber se aceita o cargo.
+Há já algum tempo que a wikia {{SITENAME}} não possui um administrador ativo. Estamos à procura de uma nova liderança, para ajudar a aumentar os conteúdos e comunidade desta wikia! Como você tem contribuído em {{SITENAME}}, gostaríamos de saber se aceita o cargo.
 <br /><br />
-Ao adotar a wiki você será promovido a administrador e burocrata, para que tenha acesso às ferramentas necessárias para gerir a comunidade e o conteúdo da wiki. Será possível que também conceda privilégios de administração para ajudar, eliminar, desfazer edições, mover e proteger páginas.
+Ao adotar a wikia você será promovido a administrador e burocrata, para que tenha acesso às ferramentas necessárias para gerir a comunidade e o conteúdo da wikia. Será possível que também conceda privilégios de administração para ajudar, eliminar, desfazer edições, mover e proteger páginas.
 <br /><br />
-Está preparado(a) para dar os próximos passos e ajudar o wiki {{SITENAME}}?',
+Está preparado(a) para dar os próximos passos e ajudar a wikia {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Quer saber mais?',
 	'wikiadoption-know-more-description' => 'Para mais informações visite estes links. E claro, contate-nos se tiver alguma pergunta!',
-	'wikiadoption-adoption-successed' => 'Parabéns! Você se tornou administrador neste wiki!',
+	'wikiadoption-adoption-successed' => 'Parabéns! Você se tornou administrador nesta wikia!',
 	'wikiadoption-adoption-failed' => 'Desculpe-nos. Nós tentamos torná-lo um administrador, mas não deu certo. Por favor [http://comunidade.wikia.com/Especial:Contact contate-nos], e nós vamos tentar ajudá-lo.',
-	'wikiadoption-not-allowed' => 'Desculpe-nos. Você não pode adotar esta wiki agora.',
-	'wikiadoption-not-enough-edits' => 'Oops! Você precisa ter mais de 10 edições para adotar este wiki.',
-	'wikiadoption-adopted-recently' => 'Oops! Você já adotou outro wiki recentemente. Será necessário esperar algum tempo até poder adotar mais um wiki.',
-	'wikiadoption-log-reason' => 'Adoção Automática de Wikis',
-	'wikiadoption-notification' => 'O wiki {{SITENAME}} está preparado para ser adotado. Tem interesse em tornar-se o(a) novo(a) líder? Adote este wiki para começar!  $2',
+	'wikiadoption-not-allowed' => 'Desculpe-nos. Você não pode adotar esta wikia agora.',
+	'wikiadoption-not-enough-edits' => 'Oops! Você precisa ter mais de 10 edições para adotar este wikia.',
+	'wikiadoption-adopted-recently' => 'Oops! Você já adotou outro wikia recentemente. Será necessário esperar algum tempo até poder adotar mais um wikia.',
+	'wikiadoption-log-reason' => 'Adoção Automática de Wikias',
+	'wikiadoption-notification' => 'A wikia {{SITENAME}} está preparada para ser adotada. Tem interesse em tornar-se o(a) novo(a) líder? Adote esta wikia para começar!  $2',
 	'wikiadoption-mail-first-subject' => 'Nós não nos vemos há algum tempo',
 	'wikiadoption-mail-first-content' => 'Olá $1,
 
-Já fazem algumas semanas que nenhum administrador visita o wiki #WIKINAME. Os administradores são parte do wiki #WIKINAME; é importante que tenham uma presença regular. Se por um longo período nenhum administrador estiver ativo, este wiki ficará disponível para adoção, para permitir que outro usuário se torne administrador.
+Já faz algumas semanas que nenhum administrador visita a wikia #WIKINAME. Os administradores são parte da wikia #WIKINAME; é importante que tenham uma presença regular. Se por um longo período nenhum administrador estiver ativo, esta wikia ficará disponível para adoção, para permitir que outro usuário se torne administrador.
 
-Se precisar de ajuda para cuidar do wiki, você pode permitir que outros membros da comunidade também sejam administradores através da página $2. Esperamos que regresse à #WIKINAME dentro de pouco tempo.
+Se precisar de ajuda para cuidar da wikia, você pode permitir que outros membros da comunidade também sejam administradores através da página $2. Esperamos que regresse à #WIKINAME dentro de pouco tempo.
 
 A equipe da Wikia
 
@@ -2735,9 +2737,9 @@ A equipe da Wikia<br /><br />
 	'wikiadoption-mail-second-subject' => 'A #WIKINAME será disponibilizada para adoção em breve',
 	'wikiadoption-mail-second-content' => 'Olá $1,
 
-Infelizmente, há quase 60 dias que nenhum administrador esteve ativo no wiki #WIKINAME. É importante que existam administradores ativos contribuindo no wiki, para que ele continue funcionando sem problemas.
+Infelizmente, há quase 60 dias que nenhum administrador esteve ativo na wikia #WIKINAME. É importante que existam administradores ativos contribuindo na wikia, para que ela continue funcionando sem problemas.
 
-Como já se passaram tantos dias desde a última aparição de um dos administradores, o wiki #WIKINAME será disponibilizado para outros usuários o adotarem.
+Como já se passaram tantos dias desde a última aparição de um dos administradores, a wikia #WIKINAME será disponibilizada para outros usuários a adotarem.
 
 A equipe da Wikia
 

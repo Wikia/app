@@ -62,7 +62,7 @@
 	word-wrap: normal;
 }
 
-#wpTextboxWrapper {
+#wpTextbox1.highlighted {
 	border: 1px inset gray;
 	box-sizing: border-box;
 	line-height: normal;
@@ -73,5 +73,6 @@
 	padding: 0;
 	position: absolute;
 	top: 0;
+	visibility: visible;
 	width: 100%;
 }

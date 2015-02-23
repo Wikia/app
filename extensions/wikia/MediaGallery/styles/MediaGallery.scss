@@ -30,6 +30,11 @@ $media-margin: 2.5px;
 	padding: 1px; // leave room for the image outlines
 	width: auto;
 
+	// galleries don't need a clearfix after them.
+	&:after {
+		clear: none;
+	}
+
 	// default is 8 or more images
 	.media {
 		@include grid-column(3, $float: false);

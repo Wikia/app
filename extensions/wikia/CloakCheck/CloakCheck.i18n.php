@@ -94,6 +94,13 @@ $messages['bg'] = array(
 	'cloakcheck-process-edits-no' => 'Потребителят няма достатъчно редакции.',
 );
 
+/** Western Balochi (بلوچی رخشانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bgn'] = array(
+	'cloakcheck-form-username' => 'کار زوروکین نام:',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
