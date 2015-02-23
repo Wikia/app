@@ -9,6 +9,7 @@ class MercuryApiController extends WikiaController {
 	const NUMBER_CONTRIBUTORS = 5;
 	const DEFAULT_PAGE = 1;
 
+	const WIKIA_VARIABLES_CACHE_TTL = 60;
 	private $mercuryApi = null;
 
 	public function __construct() {
@@ -256,6 +257,9 @@ class MercuryApiController extends WikiaController {
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		//cache wikiaVariables for 1 minute		
+		$this->response->setCacheValidity( self:: WIKIA_VARIABLES_CACHE_TTL);
 	}
 
 	/**
