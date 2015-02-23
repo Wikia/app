@@ -207,7 +207,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgLoginToken',
 
 			//signup
-			'wgUserLoginDisableCaptcha',
+			'wgUserSignupDisableCaptcha',
 
 			//AbTesting
 			'wgCdnApiUrl',
