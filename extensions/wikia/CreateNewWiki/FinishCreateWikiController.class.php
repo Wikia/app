@@ -119,7 +119,7 @@ class FinishCreateWikiController extends WikiaController {
 		$wikiDataModel->storeInProps();
 		$wikiDataModel->storeInPage();
 
-		return HERO_IMAGE_MAIN_PAGE_MARKUP;
+		return self::HERO_IMAGE_MAIN_PAGE_MARKUP;
 	}
 
 	/**
