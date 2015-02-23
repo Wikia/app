@@ -24,24 +24,6 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function setHeaders() {
-		$oOut = F::app()->wg->Out;
-		$oOut->setRobotPolicy( 'noindex,nofollow' );
-		$oOut->setPageTitle( wfMessage( 'special-pageviews-title' )->escaped() );
-	}
-
-	private function getReport() {
-		$oReport = ( new SponsorshipDashboardReport );
-		$oReport->name = wfMsg( 'special-pageviews-report-title' );
-		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
-		$oReport->tmpSource = $this->getSource();
-		$oReport->setLastDateUnits( $this->startDate->diff( $this->endDate )->days );
-		$oReport->acceptSource();
-		$oReport->setId( 1 );
-		$oReport->lockSources();
-		return $oReport;
-	}
-
 	public function getData() {
 		$inStartDate = $this->getVal( 'startDate', date( 'Y-m-d' ) );
 		$inEndDate = $this->getVal( 'endDate', date( 'Y-m-d' ) );
@@ -64,6 +46,24 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 		$this->setVal('hiddenSeries', $mOut->hiddenSeries );
 		$this->setVal('monthly', $mOut->monthly );
 		$this->setVal('ticks', $mOut->ticks );
+	}
+
+	public function setHeaders() {
+		$oOut = F::app()->wg->Out;
+		$oOut->setRobotPolicy( 'noindex,nofollow' );
+		$oOut->setPageTitle( wfMessage( 'special-pageviews-title' )->escaped() );
+	}
+
+	private function getReport() {
+		$oReport = ( new SponsorshipDashboardReport );
+		$oReport->name = wfMsg( 'special-pageviews-report-title' );
+		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
+		$oReport->tmpSource = $this->getSource();
+		$oReport->setLastDateUnits( $this->startDate->diff( $this->endDate )->days );
+		$oReport->acceptSource();
+		$oReport->setId( 1 );
+		$oReport->lockSources();
+		return $oReport;
 	}
 
 	private function getSource() {
