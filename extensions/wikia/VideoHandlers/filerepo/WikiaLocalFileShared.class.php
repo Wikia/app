@@ -236,7 +236,7 @@ class WikiaLocalFileShared  {
 			$handler = new $class();
 			$handler->setVideoId( $this->oFile->videoId );
 
-			$this->oFile->metadata = ( isset( $this->forceMetadata ) ) ? $this->forceMetadata : $handler->getMetadata();
+			$this->oFile->metadata = ( isset( $this->forceMetadata ) ) ? $this->forceMetadata : $handler->getVideoMetadata();
 			$this->oFile->media_type = MEDIATYPE_VIDEO;
 			$this->forceMime = false;
 		}

@@ -846,7 +846,7 @@ class ArticlesApiController extends WikiaApiController {
 				/* @var VideoHandler $handler */
 				$handler = VideoHandler::getHandler( $file->getMimeType() );
 				$typeInfo = explode( '/', $file->getMimeType() );
-				$metadata = ( $handler ) ? $handler->getMetadata( true ) : null;
+				$metadata = ( $handler ) ? $handler->getVideoMetadata( true ) : null;
 				return [
 					'type' => static::VIDEO_TYPE,
 					'provider' => isset( $typeInfo[1] ) ? $typeInfo[1] : static::UNKNOWN_PROVIDER,
