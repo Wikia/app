@@ -163,13 +163,12 @@ define('BannerNotification', [
 	function init() {
 		if (window.skin === 'monobook') {
 			$pageContainer = $('#content');
-			headerHeight = 0;
 		} else {
 			$pageContainer = $('.WikiaPageContentWrapper');
 			headerHeight = $('#globalNavigation').height();
+			onScroll.bind(handleScrolling);
 		}
 		createBackendNotification();
-		onScroll.bind(handleScrolling);
 	}
 
 	/**
@@ -227,7 +226,7 @@ define('BannerNotification', [
 	 */
 	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
-		var $parent = $parentElement || isModalShown() ? modal : $pageContainer,
+		var $parent = $parentElement || (isModalShown() ? modal : $pageContainer),
 			$bannerNotificationsWrapper = $parent.find('.banner-notifications-wrapper');
 		if (!$bannerNotificationsWrapper.length) {
 			$bannerNotificationsWrapper = $('<div></div>').addClass('banner-notifications-wrapper');

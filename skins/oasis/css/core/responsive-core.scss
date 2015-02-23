@@ -13,19 +13,23 @@
 		min-width: $width-outside-min;
 	}
 
-	.skin-oasis > .banner-notification,
+	.skin-oasis > .banner-notifications-wrapper,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		max-width: $width-outside-max;
 	}
 
-	.banner-notification,
+	.banner-notifications-wrapper,
 	.WikiaHeader .page-width-container {
 		@include box-sizing(border-box);
 		width: $width-outside;
 	}
 
 	.banner-notification {
+		@include box-sizing(border-box);
+	}
+
+	.banner-notifications-wrapper {
 		&.float {
 			margin-left: -515px;
 		}
@@ -230,7 +234,7 @@
 			width: auto;
 		}
 
-		.banner-notification {
+		.banner-notifications-wrapper {
 			width: 100%;
 
 			&.float {

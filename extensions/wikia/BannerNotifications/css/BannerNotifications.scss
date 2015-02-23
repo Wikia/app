@@ -5,10 +5,7 @@
 
 .banner-notification {
 	@include box-shadow(0, 2px, 5px, darken($color-page, 12%));
-	margin: 0 auto;
 	padding: 8px 10px;
-	position: relative;
-	width: 958px;
 
 	&.confirm { // Green
 		background: #92CD8E;
@@ -100,6 +97,9 @@
 }
 
 .banner-notifications-wrapper {
+	margin: 0 auto;
+	position: relative;
+	width: 958px;
 	z-index: $zTop + 1;
 
 	&.float {

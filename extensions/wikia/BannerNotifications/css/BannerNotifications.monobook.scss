@@ -1,6 +1,7 @@
 @import 'skins/shared/styles/buttons/buttons-wikia-chiclet';
+@import 'skins/shared/mixins/box-sizing';
 
-.banner-notification {
-	box-sizing: border-box;
+.banner-notifications-wrapper {
+	@include box-sizing(border-box);
 	width: 100%;
 }
