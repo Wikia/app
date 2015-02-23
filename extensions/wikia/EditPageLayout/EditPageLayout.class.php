@@ -442,7 +442,8 @@ class EditPageLayout extends EditPage {
 	}
 
 	public function renderSummaryBox() {
-		$html = Xml::element('textarea', array(
+		$html = Xml::element('input', array(
+			'type' => 'text',
 			'id' => $this->mSummaryBox['name'],
 			'name' => $this->mSummaryBox['name'],
 			'placeholder' => $this->mSummaryBox['placeholder'],
