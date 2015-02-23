@@ -31,6 +31,11 @@
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
+$color-icon: mix($color-text, #fff, 90%);
+@if $is-dark-wiki {
+	$color-icon: mix($color-text, #000, 90%);
+}
+
 body {
 	padding: 0;
 
@@ -56,6 +61,57 @@ body {
 .WikiaHeader {
 	nav:before {
 		background: none;
+	}
+}
+
+.preview_box{
+	h3 {
+		margin: 12px 0 8px;
+	}
+
+	.preview_icon {
+		border: 1px solid $color-page-border;
+		box-sizing: border-box;
+		color: $color-epl-text-secondary;
+		display: block;
+		float: left;
+		font-size: 14px;
+		height: 100px;
+		line-height: 1;
+		text-align: center;
+		width: 128px;
+		&:hover {
+			text-decoration: none;
+		}
+
+		svg {
+			fill: $color-icon;
+
+			&:hover {
+				fill: $color-text;
+			}
+		}
+	}
+	.preview_mobile {
+		margin-right: 4px;
+		padding-top: 19px;
+
+		svg {
+			enable-background:	new 0 0 32 48;
+			height: 48px;
+			margin-bottom: 6px;
+			width: 32px;
+		}
+	}
+	.preview_desktop {
+		padding-top: 25px;
+
+		svg {
+			enable-background:	new 0 0 48 40;
+			height: 40px;
+			margin-bottom: 8px;
+			width: 48px;
+		}
 	}
 }
 
