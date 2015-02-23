@@ -111,12 +111,12 @@ class SponsorshipDashboardOutputChart extends SponsorshipDashboardOutputFormatte
 					'hiddenSeries'		=> json_encode($this->hiddenSeries),
 					'number'		=> $this->chartNumericId,
 					'path'			=> !empty( $this->groupId )
-									? $wgTitle->getFullURL().'/'.$this->groupId.'/'.$this->report->id.'/csv'
-									: $wgTitle->getFullURL().'/admin/CSVReport/'.$this->report->id,
+						? $wgTitle->getFullURL().'/'.$this->groupId.'/'.$this->report->id.'/csv'
+						: $wgTitle->getFullURL().'/admin/CSVReport/'.$this->report->id,
 					'monthly'		=> $this->report->frequency == SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH,
 					'fromYear'		=> $this->fromYear,
 					'showActionsButton' => $this->showActionsButton,
-                                        'active'                => $this->active,
+					'active'                => $this->active,
 				)
 			);
 

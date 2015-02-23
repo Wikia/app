@@ -1,6 +1,6 @@
 <?php
 
-class SpecialNewWikisGraphOutput extends SponsorshipDashboardOutputChart {
+class SpecialPageViewsOutput extends SponsorshipDashboardOutputChart {
 
 	public $active;
 
@@ -9,7 +9,7 @@ class SpecialNewWikisGraphOutput extends SponsorshipDashboardOutputChart {
 	}
 
 	protected function getTemplate() {
-		// TODO: REFACTOR: Use Nirvana instead of EasyTemplate.
+		// TODO:  REFACTOR: Use Nirvana instead of EasyTemplate.
 		return new EasyTemplate( ( dirname( __FILE__ )."/templates/" ) );
 	}
 
