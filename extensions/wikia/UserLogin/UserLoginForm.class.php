@@ -232,7 +232,8 @@ class UserLoginForm extends LoginForm {
 	}
 
 	public function addNewAccountInternal() {
-		if (!$this->initValidationUsername()) {
+		// Since this is a signup action, use the username field alias
+		if (!$this->initValidationUsername( UserSignupSpecialController::SIGNUP_USERNAME_KEY )) {
 			return false;
 		}
 
@@ -240,7 +241,8 @@ class UserLoginForm extends LoginForm {
 			return false;
 		}
 
-		if (!$this->initValidationPassword()) {
+		// Since this is a signup action, use the password field alias
+		if (!$this->initValidationPassword( UserSignupSpecialController::SIGNUP_PASSWORD_KEY )) {
 			return false;
 		}
 

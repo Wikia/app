@@ -239,8 +239,8 @@ class FacebookSignupController extends WikiaController {
 	public function login() {
 		$wg = $this->wg;
 
-		$wikiaUserName = $wg->Request->getVal( UserSignupSpecialController::SIGNUP_USERNAME_KEY );
-		$wikiaPassword = $wg->Request->getVal( UserSignupSpecialController::SIGNUP_PASSWORD_KEY );
+		$wikiaUserName = $wg->Request->getVal( 'username' );
+		$wikiaPassword = $wg->Request->getVal( 'password' );
 
 		$user = $this->getValidWikiaUser( $wikiaUserName, $wikiaPassword );
 		if ( !$user ) {
@@ -297,23 +297,23 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
 
 		if ( !$wikiaUserName ) {
-			$this->setErrorResponse( 'userlogin-error-noname', [], UserSignupSpecialController::SIGNUP_USERNAME_KEY);
+			$this->setErrorResponse( 'userlogin-error-noname', [], 'username' );
 			return null;
 		}
 
 		if ( !$wikiaPassword ) {
-			$this->setErrorResponse( 'userlogin-error-wrongpasswordempty', [], UserSignupSpecialController::SIGNUP_PASSWORD_KEY );
+			$this->setErrorResponse( 'userlogin-error-wrongpasswordempty', [], 'password' );
 			return null;
 		}
 
 		$user = \User::newFromName( $wikiaUserName );
 		if ( empty( $user ) ) {
-			$this->setErrorResponse( 'userlogin-error-nosuchuser', [], UserSignupSpecialController::SIGNUP_USERNAME_KEY );
+			$this->setErrorResponse( 'userlogin-error-nosuchuser', [], 'username' );
 			return null;
 		}
 
 		if ( !$user->checkPassword( $wikiaPassword ) ) {
-			$this->setErrorResponse( 'userlogin-error-wrongpassword', [], UserSignupSpecialController::SIGNUP_PASSWORD_KEY );
+			$this->setErrorResponse( 'userlogin-error-wrongpassword', [], 'password' );
 			return null;
 		}
 
