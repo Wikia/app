@@ -406,7 +406,6 @@ $wgAutoloadLocalClasses = array(
 	'CloneDatabase' => 'includes/db/CloneDatabase.php',
 	'Database' => 'includes/db/DatabaseMysql.php',
 	'DatabaseBase' => 'includes/db/Database.php',
-	'DatabaseIbm_db2' => 'includes/db/DatabaseIbm_db2.php',
 	'DatabaseMssql' => 'includes/db/DatabaseMssql.php',
 	'DatabaseMysql' => 'includes/db/DatabaseMysql.php',
 	'DatabaseMysqli' => 'includes/db/DatabaseMysqli.php',
