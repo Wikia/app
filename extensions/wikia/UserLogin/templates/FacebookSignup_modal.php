@@ -48,13 +48,13 @@ $signupForm = [
 	'inputs' => [
 		[
 			'type' => 'text',
-			'name' => 'userloginext01',
+			'name' => $usernameKey,
 			'isRequired' => true,
 			'label' => wfMessage( 'yourname' )->escaped(),
 		],
 		[
 			'type' => 'password',
-			'name' => 'userloginext02',
+			'name' => $passwordKey,
 			'isRequired' => true,
 			'label' => wfMessage( 'yourpassword' )->escaped(),
 		],
