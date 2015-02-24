@@ -77,11 +77,13 @@ define('ext.wikia.adEngine.adEngine', [
 					provider = providerList.shift();
 
 					if (!provider) {
-						return handleNoAd();
+						handleNoAd();
+						return;
 					}
 
 					if (provider.canHandleSlot(slotName)) {
-						return fillInSlotUsingProvider(slot, provider, nextProvider);
+						fillInSlotUsingProvider(slot, provider, nextProvider);
+						return;
 					}
 
 					log(['fillInSlot', slot, 'skipping provider, cannot handle slot', provider], 'debug', logGroup);
