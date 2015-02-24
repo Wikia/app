@@ -28,7 +28,7 @@
  * @since 1.22
  * @see Database
  */
-class DatabaseMysqli extends DatabaseMysql {
+class DatabaseMysqli extends DatabaseMysqlBase {
 
 	/* @var mysqli $mConn */
 	protected $mConn;
@@ -130,11 +130,19 @@ class DatabaseMysqli extends DatabaseMysql {
 		return $this->mConn->server_info;
 	}
 
+	/**
+	 * @param mysqli_result $res
+	 * @return bool
+	 */
 	protected function mysqlFreeResult( $res ) {
 		$res->free_result();
 		return true;
 	}
 
+	/**
+	 * @param mysqli_result $res
+	 * @return bool|stdClass
+	 */
 	protected function mysqlFetchObject( $res ) {
 		$object = $res->fetch_object();
 		if ( $object === null ) {
@@ -143,6 +151,10 @@ class DatabaseMysqli extends DatabaseMysql {
 		return $object;
 	}
 
+	/**
+	 * @param mysqli_result $res
+	 * @return array|bool
+	 */
 	protected function mysqlFetchArray( $res ) {
 		$array = $res->fetch_array();
 		if ( $array === null ) {
@@ -151,14 +163,27 @@ class DatabaseMysqli extends DatabaseMysql {
 		return $array;
 	}
 
+	/**
+	 * @param mysqli_result $res
+	 * @return int
+	 */
 	protected function mysqlNumRows( $res ) {
 		return $res->num_rows;
 	}
 
+	/**
+	 * @param mysqli_result $res
+	 * @return int
+	 */
 	protected function mysqlNumFields( $res ) {
 		return $res->field_count;
 	}
 
+	/**
+	 * @param mysqli_result $res
+	 * @param int $n
+	 * @return stdClass
+	 */
 	protected function mysqlFetchField( $res, $n ) {
 		$field = $res->fetch_field_direct( $n );
 		$field->not_null = $field->flags & MYSQLI_NOT_NULL_FLAG;
@@ -169,15 +194,29 @@ class DatabaseMysqli extends DatabaseMysql {
 		return $field;
 	}
 
+	/**
+	 * @param mysqli_result $res
+	 * @param int $n
+	 * @return string
+	 */
 	protected function mysqlFieldName( $res, $n ) {
 		$field = $res->fetch_field_direct( $n );
 		return $field->name;
 	}
 
+	/**
+	 * @param mysqli_result $res
+	 * @param int $row
+	 * @return bool
+	 */
 	protected function mysqlDataSeek( $res, $row ) {
 		return $res->data_seek( $row );
 	}
 
+	/**
+	 * @param mysqli|null $conn
+	 * @return string
+	 */
 	protected function mysqlError( $conn = null ) {
 		if ($conn === null) {
 			return mysqli_connect_error();

@@ -660,7 +660,7 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * Given a DB type, construct the name of the appropriate child class of
 	 * DatabaseBase. This is designed to replace all of the manual stuff like:
-	 *	$class = 'Database' . ucfirst( strtolower( $dbType ) );
+	 *    $class = 'Database' . ucfirst( strtolower( $dbType ) );
 	 * as well as validate against the canonical list of DB types we have
 	 *
 	 * This factory function is mostly useful for when you need to connect to a
@@ -668,58 +668,79 @@ abstract class DatabaseBase implements DatabaseType {
 	 * an extension, et cetera). Do not use this to connect to the MediaWiki
 	 * database. Example uses in core:
 	 * @see LoadBalancer::reallyOpenConnection()
-	 * @see ExternalUser_MediaWiki::initFromCond()
 	 * @see ForeignDBRepo::getMasterDB()
-	 * @see WebInstaller_DBConnect::execute()
+	 * @see WebInstallerDBConnect::execute()
+	 *
+	 * @since 1.18
 	 *
 	 * @param string $dbType A possible DB type
 	 * @param array $p An array of options to pass to the constructor.
-	 *    Valid options are: host, user, password, dbname, flags, tablePrefix, driver
-	 * @return DatabaseBase subclass or null
+	 *    Valid options are: host, user, password, dbname, flags, tablePrefix, schema, driver
+	 * @throws MWException If the database driver or extension cannot be found
+	 * @return DatabaseBase|null DatabaseBase subclass or null
 	 */
 	final public static function factory( $dbType, $p = array() ) {
 		$canonicalDBTypes = array(
-			#'mysql'    => array( 'mysqli', 'mysql' ),
-			'mysql'    => array(), // TODO: use mysqli
+			'mysql' => array( 'mysqli', 'mysql' ),
 			'postgres' => array(),
-			'sqlite'   => array(),
-			'oracle'   => array(),
-			'mssql'    => array(),
+			'sqlite' => array(),
+			'oracle' => array(),
+			'mssql' => array(),
 		);
 
+		$driver = false;
 		$dbType = strtolower( $dbType );
 		if ( isset( $canonicalDBTypes[$dbType] ) && $canonicalDBTypes[$dbType] ) {
-			$driver = isset( $p['driver'] ) ? $p['driver'] : null;
 			$possibleDrivers = $canonicalDBTypes[$dbType];
-			if ( $driver ) {
-				if ( in_array( $driver, $possibleDrivers ) ) {
-					$dbType = $driver;
+			if ( !empty( $p['driver'] ) ) {
+				if ( in_array( $p['driver'], $possibleDrivers ) ) {
+					$driver = $p['driver'];
 				} else {
 					throw new MWException( __METHOD__ .
-						" cannot construct Database with type '$dbType' and driver '$driver'" );
+						" cannot construct Database with type '$dbType' and driver '{$p['driver']}'" );
 				}
 			} else {
 				foreach ( $possibleDrivers as $posDriver ) {
 					if ( extension_loaded( $posDriver ) ) {
-						$dbType = $posDriver;
+						$driver = $posDriver;
 						break;
 					}
 				}
-				throw new MWException( __METHOD__ .
-					" no viable database extension found for type '$dbType'" );
 			}
+		} else {
+			$driver = $dbType;
+		}
+		if ( $driver === false ) {
+			throw new MWException( __METHOD__ .
+				" no viable database extension found for type '$dbType'" );
 		}
 
-		$class = 'Database' . ucfirst( $dbType );
+		// Determine schema defaults. Currently Microsoft SQL Server uses $wgDBmwschema,
+		// and everything else doesn't use a schema (e.g. null)
+		// Although postgres and oracle support schemas, we don't use them (yet)
+		// to maintain backwards compatibility
+		$defaultSchemas = array(
+			'mysql' => null,
+			'postgres' => null,
+			'sqlite' => null,
+			'oracle' => null,
+			'mssql' => 'get from global',
+		);
+
+		$class = 'Database' . ucfirst( $driver );
 		if ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) {
-			return new $class(
-				isset( $p['host'] ) ? $p['host'] : false,
-				isset( $p['user'] ) ? $p['user'] : false,
-				isset( $p['password'] ) ? $p['password'] : false,
-				isset( $p['dbname'] ) ? $p['dbname'] : false,
-				isset( $p['flags'] ) ? $p['flags'] : 0,
-				isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global'
+			$params = array(
+				'host' => isset( $p['host'] ) ? $p['host'] : false,
+				'user' => isset( $p['user'] ) ? $p['user'] : false,
+				'password' => isset( $p['password'] ) ? $p['password'] : false,
+				'dbname' => isset( $p['dbname'] ) ? $p['dbname'] : false,
+				'flags' => isset( $p['flags'] ) ? $p['flags'] : 0,
+				'tablePrefix' => isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global',
+				'schema' => isset( $p['schema'] ) ? $p['schema'] : $defaultSchemas[$dbType],
+				'foreign' => isset( $p['foreign'] ) ? $p['foreign'] : false
 			);
+
+			return new $class( $params );
 		} else {
 			return null;
 		}
