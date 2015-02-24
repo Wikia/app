@@ -2,6 +2,7 @@
 
 /**
  * UserLoginForm
+ * @todo The methods in the form are mostly used for signup, not login. Some better organization would be good.
  * @author Hyun
  * @author Saipetch
  *

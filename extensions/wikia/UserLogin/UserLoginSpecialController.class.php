@@ -514,7 +514,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				break;
 			case LoginForm::EMPTY_PASS:
 				$this->response->setVal( 'result', 'error' );
-				$this->response->setVal( 'msg', wfMessage('userlogin-error-wrongpasswordempty')->escaped() );
+				$this->response->setVal( 'msg', wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped() );
 				$this->response->setVal( 'errParam', 'password' );
 				break;
 			case LoginForm::RESET_PASS:
@@ -522,15 +522,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				break;
 			case LoginForm::THROTTLED:
 				$this->response->setVal( 'result', 'error' );
-				$this->response->setVal( 'msg', wfMessage('userlogin-error-login-throttled')->escaped() );
+				$this->response->setVal( 'msg', wfMessage( 'userlogin-error-login-throttled' )->escaped() );
 				break;
 			case LoginForm::CREATE_BLOCKED:
 				$this->response->setVal( 'result', 'error' );
-				$this->response->setVal( 'msg', wfMessage('userlogin-error-cantcreateaccount-text')->escaped() );
+				$this->response->setVal( 'msg', wfMessage( 'userlogin-error-cantcreateaccount-text' )->escaped() );
 				break;
 			case LoginForm::USER_BLOCKED:
 				$this->response->setVal( 'result', 'error' );
-				$this->response->setVal( 'msg', wfMessage('userlogin-error-login-userblocked')->escaped() );
+				$this->response->setVal( 'msg', wfMessage( 'userlogin-error-login-userblocked' )->escaped() );
 				break;
 			default:
 				throw new MWException( "Unhandled case value" );
