@@ -1980,8 +1980,7 @@ $config['lazy_rail_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//skins/oasis/js/LazyRail.js',
-		'//skins/oasis/js/LatestPhotos.js',
+		'//skins/oasis/js/LazyRail.js'
 	]
 ];
 
