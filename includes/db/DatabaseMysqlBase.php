@@ -113,7 +113,10 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 		if ( $wgDBmysql5 ) {
 			$this->query( 'SET NAMES utf8', __METHOD__ );
 		} else {
-			$this->query( 'SET NAMES binary', __METHOD__ );
+			# <Wikia>
+			# Wikia databases use latin1 charset
+			# $this->query( 'SET NAMES binary', __METHOD__ );
+			# </Wikia>
 		}
 		// Set SQL mode, default is turning them all off, can be overridden or skipped with null
 		if ( is_string( $wgSQLMode ) ) {
