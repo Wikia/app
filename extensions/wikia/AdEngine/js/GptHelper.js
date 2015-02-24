@@ -75,21 +75,21 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 	}
 
-	function registerGptCallback(slotnameGpt, gptCallback) {
-		log(['registerGptCallback', slotnameGpt], 'info', logGroup);
-		gptCallbacks[slotnameGpt] = gptCallback;
+	function registerGptCallback(adDivId, gptCallback) {
+		log(['registerGptCallback', adDivId], 'info', logGroup);
+		gptCallbacks[adDivId] = gptCallback;
 	}
 
 	function dispatchGptEvent(event) {
-		var slotnameGpt;
+		var adDivId;
 
 		log(['dispatchGptEvent', event], 'info', logGroup);
 
-		for (slotnameGpt in gptCallbacks) {
-			if (gptCallbacks.hasOwnProperty(slotnameGpt)) {
-				if (gptCallbacks[slotnameGpt] && event.slot && event.slot === gptSlots[slotnameGpt]) {
+		for (adDivId in gptCallbacks) {
+			if (gptCallbacks.hasOwnProperty(adDivId)) {
+				if (gptCallbacks[adDivId] && event.slot && event.slot === gptSlots[adDivId]) {
 					log(['dispatchGptEvent', event, 'Launching registered callback'], 'debug', logGroup);
-					gptCallbacks[slotnameGpt](event);
+					gptCallbacks[adDivId](event);
 					return;
 				}
 			}
@@ -139,7 +139,8 @@ define('ext.wikia.adEngine.gptHelper', [
 	}
 
 	function pushAd(slotName, slotPath, slotTargeting, success, error) {
-		var slotDiv; // set in queueAd
+		var slotDiv, // set in queueAd
+			adDivId = 'wikia_gpt_helper' + slotPath;
 
 		function callSuccess(adInfo) {
 			if (typeof success === 'function') {
@@ -148,8 +149,10 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 
 		function callError(adInfo) {
-			slotTweaker.hide(slotPath);
+			slotTweaker.hide(adDivId);
 			if (typeof error === 'function') {
+				adInfo = adInfo || {};
+				adInfo.method = 'hop';
 				error(adInfo);
 			}
 		}
@@ -157,12 +160,12 @@ define('ext.wikia.adEngine.gptHelper', [
 		function queueAd() {
 			var name, value, sizes, slot;
 
-			slotDiv = document.getElementById(slotPath);
+			slotDiv = document.getElementById(adDivId);
 
 			if (!slotDiv) {
 				// Create a div for the GPT ad
 				slotDiv = document.createElement('div');
-				slotDiv.id = slotPath;
+				slotDiv.id = adDivId;
 				document.getElementById(slotName).appendChild(slotDiv);
 
 				sizes = convertSizesToGpt(slotTargeting.size);
@@ -171,8 +174,8 @@ define('ext.wikia.adEngine.gptHelper', [
 					sizes = filterOutSizesBiggerThanScreenSize(sizes);
 				}
 
-				log(['defineSlot', 'googletag.defineSlot', slotPath, sizes], 'debug', logGroup);
-				slot = googletag.defineSlot(slotPath, sizes, slotPath);
+				log(['defineSlot', 'googletag.defineSlot', slotPath, sizes, adDivId], 'debug', logGroup);
+				slot = googletag.defineSlot(slotPath, sizes, adDivId);
 				slot.addService(pubads);
 
 				delete slotTargeting.size;
@@ -187,11 +190,11 @@ define('ext.wikia.adEngine.gptHelper', [
 					}
 				}
 
-				gptSlots[slotPath] = slot;
+				gptSlots[adDivId] = slot;
 
 				// Display div through GPT
-				log(['googletag.display', slotPath], 'debug', logGroup);
-				googletag.display(slotPath);
+				log(['googletag.display', adDivId], 'debug', logGroup);
+				googletag.display(adDivId);
 
 				// Save page level and slot level params for easier ad delivery debugging
 				slotDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
@@ -200,12 +203,12 @@ define('ext.wikia.adEngine.gptHelper', [
 			}
 
 			// Some broken ads never fire "success" event, so we show the div now (and maybe hide later)
-			slotTweaker.show(slotPath);
-			slotQueue.push(gptSlots[slotPath]);
+			slotTweaker.show(adDivId);
+			slotQueue.push(gptSlots[adDivId]);
 		}
 
 		function gptCallback(event) {
-			log(['gptCallback', slotPath, event], 'info', logGroup);
+			log(['gptCallback', adDivId, event], 'info', logGroup);
 
 			// Add debug info
 			slotDiv.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
@@ -217,14 +220,14 @@ define('ext.wikia.adEngine.gptHelper', [
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				gptAdDetect.onAdLoad(slotPath, event, iframe, callSuccess, callError);
+				gptAdDetect.onAdLoad(adDivId, event, iframe, callSuccess, callError);
 			}, 0);
 		}
 
 		log(['pushAd', slotName], 'info', logGroup);
 
 		loadGptOnce();
-		registerGptCallback(slotPath, gptCallback);
+		registerGptCallback(adDivId, gptCallback);
 		googletag.cmd.push(queueAd);
 	}
 

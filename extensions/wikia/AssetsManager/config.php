@@ -76,6 +76,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+		'//extensions/wikia/AdEngine/js/AdProviderFactoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
@@ -730,6 +731,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/AdProviderFactoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
@@ -787,6 +789,7 @@ $config['interactivemaps_ads_js'] = array(
 		'//resources/wikia/modules/window.js',
 
 		// Advertisement libs
+		'//extensions/wikia/AdEngine/js/AdProviderFactoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMaps.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'

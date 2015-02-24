@@ -1,27 +1,25 @@
-/* jshint maxparams: false, maxlen: 150 */
 /*global define*/
+/*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'wikia.cache',
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
-	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.lookupServices',
-	'ext.wikia.adEngine.gptHelper'
+	'ext.wikia.adEngine.gptHelper',
+	'ext.wikia.adEngine.provider.factory.wikiaGpt',
+	'ext.wikia.adEngine.slotTweaker'
 ], function (
 	cacheStorage,
 	geo,
 	log,
 	window,
 	adContext,
-	slotTweaker,
 	adLogicHighValueCountry,
-	adLogicPageParams,
-	lookups,
-	wikiaGpt
+	gptHelper,
+	factory,
+	slotTweaker
 ) {
 	'use strict';
 
@@ -69,22 +67,24 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country),
 		isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country),
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
-		gptConfig,
 		gptFlushed = false,
-		alwaysCallDart = adContext.getContext().opts.alwaysCallDart;
+		alwaysCallDart = adContext.getContext().opts.alwaysCallDart,
 
-	// TODO: integrate this array to slotMap if it makes sense
-	gptConfig = { // slots to use SRA with
-		CORP_TOP_LEADERBOARD: 'wait',
-		HUB_TOP_LEADERBOARD: 'wait',
-		TOP_LEADERBOARD: 'wait',
-		HOME_TOP_LEADERBOARD: 'wait',
-		INVISIBLE_SKIN: 'wait',
-		CORP_TOP_RIGHT_BOXAD: 'flush',
-		TOP_RIGHT_BOXAD: 'flush',
-		HOME_TOP_RIGHT_BOXAD: 'flush',
-		GPT_FLUSH: 'flushonly'
-	};
+		gptConfig = { // slots to use SRA with
+			CORP_TOP_LEADERBOARD: 'wait',
+			HUB_TOP_LEADERBOARD:  'wait',
+			TOP_LEADERBOARD:      'wait',
+			HOME_TOP_LEADERBOARD: 'wait',
+			INVISIBLE_SKIN:       'wait',
+			CORP_TOP_RIGHT_BOXAD: 'flush',
+			TOP_RIGHT_BOXAD:      'flush',
+			HOME_TOP_RIGHT_BOXAD: 'flush',
+			GPT_FLUSH:            'flushonly'
+		},
+
+		factoryFillInSlot = factory.getFillInSlot(logGroup, 'gpt', slotMap, {
+			noFlush: true
+		});
 
 	// Private methods
 
@@ -113,7 +113,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		log('flushGpt', 'debug', logGroup);
 
 		gptFlushed = true;
-		wikiaGpt.flushAds();
+		gptHelper.flushAds();
 	}
 
 	/**
@@ -196,10 +196,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		log(['fillInSlot', slotName], 'debug', logGroup);
 
 		var noAdStorageKey = getStorageKey('noad', slotName),
-			numCallForSlotStorageKey = getStorageKey('calls', slotName),
-			slotTargeting = slotMap[slotName],
-			pageLevelParams = adLogicPageParams.getPageLevelParams(),
-			slotPath = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2 + '/gpt/' + slotName;
+			numCallForSlotStorageKey = getStorageKey('calls', slotName);
 
 		if (gptConfig[slotName] === 'flushonly') {
 			flushGpt();
@@ -210,31 +207,17 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		incrementItemInStorage(numCallForSlotStorageKey);
 		cacheStorage.del(noAdStorageKey);
 
-		slotTargeting.pos = slotTargeting.pos || slotName;
-		slotTargeting.src = 'gpt';
-
-		lookups.extendSlotTargeting(slotName, slotTargeting);
-
-		wikiaGpt.pushAd(
-			slotName,
-			slotPath,
-			slotTargeting,
-			function (adInfo) { // Success
-				slotTweaker.removeDefaultHeight(slotName);
-				slotTweaker.removeTopButtonIfNeeded(slotName);
-				slotTweaker.adjustLeaderboardSize(slotName);
-
-				success(adInfo);
-			},
-			function (adInfo) { // Hop
-				log(slotName + ' was not filled by DART', 'info', logGroup);
-				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
-
-				// hop to Liftium
-				adInfo.method = 'hop';
-				hop(adInfo);
-			}
-		);
+		factoryFillInSlot(slotName, function (adInfo) {
+			// Success
+			slotTweaker.removeDefaultHeight(slotName);
+			slotTweaker.removeTopButtonIfNeeded(slotName);
+			slotTweaker.adjustLeaderboardSize(slotName);
+			success(adInfo);
+		}, function (adInfo) {
+			// Hop
+			cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
+			hop(adInfo);
+		});
 
 		if (gptConfig[slotName] === 'flush' || gptFlushed) {
 			flushGpt();

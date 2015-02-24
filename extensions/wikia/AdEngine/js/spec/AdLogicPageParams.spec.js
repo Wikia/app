@@ -196,21 +196,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.key3).toEqual(['value3', 'value4'], 'key3=value3;key3=value4');
 	});
 
-	// TODO: reimplement as LookupServices test
-	xit('getPageLevelParams Amazon Match params (new)', function () {
-		var params = getParams({}, {amazonPageParams: {amznslots: ['a300x250p1', 'a728x90p2']}});
-
-		expect(params.amznslots).toEqual(['a300x250p1', 'a728x90p2']);
-	});
-
-	// TODO: reimplement as LookupServices test
-	xit('getPageLevelParams Amazon Match params (old)', function () {
-		var params = getParams({}, {amzn_targs: 'amzn_300x250=1;amzn_728x90=1;'});
-
-		expect(params.amzn_300x250).toEqual(['1']);
-		expect(params.amzn_728x90).toEqual(['1']);
-	});
-
 	it('getPageLevelParams Krux segments', function () {
 		var kruxSegmentsNone = [],
 			kruxSegmentsFew = ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD'],
