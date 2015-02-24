@@ -7,11 +7,6 @@
  *
  */
 class UserLoginForm extends LoginForm {
-
-	// CE-413 changed input names due to signup spam attack
-	const SIGNUP_USERNAME_KEY = 'userloginext01';
-	const SIGNUP_PASSWORD_KEY = 'userloginext02';
-
 	var $msg = '';
 	var $msgType = '';
 	var $errParam = '';
@@ -21,12 +16,12 @@ class UserLoginForm extends LoginForm {
 		parent::load();
 		$request = $this->mOverrideRequest;
 
-		if ( $request->getText( self::SIGNUP_USERNAME_KEY, '' ) != '' ) {
-			$this->mUsername = $request->getText( self::SIGNUP_USERNAME_KEY, '' );
+		if ( $request->getText( UserSignupSpecialController::SIGNUP_USERNAME_KEY, '' ) != '' ) {
+			$this->mUsername = $request->getText( UserSignupSpecialController::SIGNUP_USERNAME_KEY, '' );
 		}
-		if ( $request->getText( self::SIGNUP_PASSWORD_KEY, '' ) != '' ) {
-			$this->mPassword = $request->getText( self::SIGNUP_PASSWORD_KEY );
-			$this->mRetype = $request->getText( self::SIGNUP_PASSWORD_KEY );
+		if ( $request->getText( UserSignupSpecialController::SIGNUP_PASSWORD_KEY, '' ) != '' ) {
+			$this->mPassword = $request->getText( UserSignupSpecialController::SIGNUP_PASSWORD_KEY );
+			$this->mRetype = $request->getText( UserSignupSpecialController::SIGNUP_PASSWORD_KEY );
 		}
 
 		// fake (decoy) username and password fields
@@ -96,14 +91,19 @@ class UserLoginForm extends LoginForm {
 		}
 	}
 
-	// initial validation for username
-	public function initValidationUsername() {
+	/**
+	 * Validation for username
+	 * @param string $fieldName
+	 * @return bool
+	 * @throws MWException
+	 */
+	public function initValidationUsername( $fieldName = 'username' ) {
 		// check empty username
 		if ( $this->mUsername == '' ) {
 			$this->setValidationResponse(
 				wfMessage( 'userlogin-error-noname' )->escaped(),
 				'error',
-				self::SIGNUP_USERNAME_KEY );
+				$fieldName );
 			return false;
 		}
 
@@ -113,7 +113,7 @@ class UserLoginForm extends LoginForm {
 			$this->setValidationResponse(
 				wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped(),
 				'error',
-				self::SIGNUP_USERNAME_KEY );
+				$fieldName );
 			return false;
 		}
 
@@ -122,7 +122,7 @@ class UserLoginForm extends LoginForm {
 			$this->setValidationResponse(
 				wfMessage( 'usersignup-error-symbols-in-username' )->escaped(),
 				'error',
-				self::SIGNUP_USERNAME_KEY
+				$fieldName
 			);
 			return false;
 		}
@@ -138,7 +138,6 @@ class UserLoginForm extends LoginForm {
 		}
 
 		if ( $result !== true ) {
-			$msg = '';
 			if ( $result == 'userlogin-bad-username-taken' ) {
 				$msg = wfMessage('userlogin-error-userexists')->escaped();
 			} else if ( $result == 'userlogin-bad-username-character' ) {
@@ -149,7 +148,7 @@ class UserLoginForm extends LoginForm {
 				$msg = $result;
 			}
 
-			$this->setValidationResponse( $msg, 'error', self::SIGNUP_USERNAME_KEY );
+			$this->setValidationResponse( $msg, 'error', $fieldName );
 			return false;
 		}
 
@@ -157,16 +156,17 @@ class UserLoginForm extends LoginForm {
 	}
 
 	/**
-	 * Initial validation for password
+	 * Validation for password
+	 * @param string $fieldName
 	 * @return bool
 	 */
-	public function initValidationPassword() {
+	public function initValidationPassword( $fieldName = 'password' ) {
 		// check empty password
 		if ( $this->mPassword == '' ) {
 			$this->setValidationResponse(
 				wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped(),
 				'error',
-				self::SIGNUP_PASSWORD_KEY );
+				$fieldName );
 			return false;
 		}
 
@@ -175,7 +175,7 @@ class UserLoginForm extends LoginForm {
 			$this->setValidationResponse(
 				wfMessage( 'usersignup-error-password-length' )->escaped(),
 				'error',
-				self::SIGNUP_PASSWORD_KEY );
+				$fieldName );
 			return false;
 		}
 

@@ -302,7 +302,6 @@
 
 			this.loginForm = new window.FacebookFormConnectUser($modal.find('.UserLoginFacebookRight'), {
 				ajaxLogin: true,
-				ajaxValidation: true,
 				skipFocus: true,
 				usernameInputName: 'userloginext01',
 				passwordInputName: 'userloginext02',

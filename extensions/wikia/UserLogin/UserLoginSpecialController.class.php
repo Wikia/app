@@ -374,8 +374,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 	public function modal() {
 		$this->response->setData( [
-			'usernameKey' => UserLoginForm::SIGNUP_USERNAME_KEY,
-			'passwordKey' => UserLoginForm::SIGNUP_PASSWORD_KEY,
 			'loginToken' => UserLoginHelper::getLoginToken(),
 			'signupUrl' => Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl(),
 		] );

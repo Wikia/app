@@ -73,18 +73,6 @@
 		});
 	};
 
-	/**
-	 * @todo User $.nivana instead
-	 * @returns {{controller: string, method: string, format: string}}
-	 */
-	UserSignupAjaxValidation.prototype.getDefaultParamsForAjax = function () {
-		return {
-			controller: 'UserSignupSpecial',
-			method: 'formAjaxValidation',
-			format: 'json'
-		};
-	};
-
 	UserSignupAjaxValidation.prototype.checkFieldsValid = function () {
 		var isValid = true,
 			inputsToValidate = this.inputsToValidate,

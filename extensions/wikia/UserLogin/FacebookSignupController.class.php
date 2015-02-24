@@ -159,8 +159,8 @@ class FacebookSignupController extends WikiaController {
 			'returnToUrl' => $returnToUrl,
 			'queryString' => $returnToParams,
 			'loginToken' => UserLoginHelper::getSignupToken(),
-			'usernameKey' => UserLoginForm::SIGNUP_USERNAME_KEY,
-			'passwordKey' => UserLoginForm::SIGNUP_PASSWORD_KEY,
+			'usernameKey' => UserSignupSpecialController::SIGNUP_USERNAME_KEY,
+			'passwordKey' => UserSignupSpecialController::SIGNUP_PASSWORD_KEY,
 		] );
 	}
 
@@ -180,7 +180,7 @@ class FacebookSignupController extends WikiaController {
 		$fbId = \FacebookClient::getInstance()->getUserId();
 		if ( $this->fbClientFactory->isFacebookIdInUse( $fbId ) ) {
 			$errorMessageKey = 'fbconnect-error-fb-account-in-use';
-			$messageParams = [ $this->request->getVal( UserLoginForm::SIGNUP_USERNAME_KEY ) ];
+			$messageParams = [ $this->request->getVal( UserSignupSpecialController::SIGNUP_USERNAME_KEY ) ];
 			$this->setErrorResponse( $errorMessageKey, $messageParams );
 			return;
 		}
@@ -239,8 +239,8 @@ class FacebookSignupController extends WikiaController {
 	public function login() {
 		$wg = $this->wg;
 
-		$wikiaUserName = $wg->Request->getVal( UserLoginForm::SIGNUP_USERNAME_KEY );
-		$wikiaPassword = $wg->Request->getVal( UserLoginForm::SIGNUP_PASSWORD_KEY );
+		$wikiaUserName = $wg->Request->getVal( UserSignupSpecialController::SIGNUP_USERNAME_KEY );
+		$wikiaPassword = $wg->Request->getVal( UserSignupSpecialController::SIGNUP_PASSWORD_KEY );
 
 		$user = $this->getValidWikiaUser( $wikiaUserName, $wikiaPassword );
 		if ( !$user ) {
@@ -297,23 +297,23 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
 
 		if ( !$wikiaUserName ) {
-			$this->setErrorResponse( 'userlogin-error-noname', [], UserLoginForm::SIGNUP_USERNAME_KEY);
+			$this->setErrorResponse( 'userlogin-error-noname', [], UserSignupSpecialController::SIGNUP_USERNAME_KEY);
 			return null;
 		}
 
 		if ( !$wikiaPassword ) {
-			$this->setErrorResponse( 'userlogin-error-wrongpasswordempty', [], UserLoginForm::SIGNUP_PASSWORD_KEY );
+			$this->setErrorResponse( 'userlogin-error-wrongpasswordempty', [], UserSignupSpecialController::SIGNUP_PASSWORD_KEY );
 			return null;
 		}
 
 		$user = \User::newFromName( $wikiaUserName );
 		if ( empty( $user ) ) {
-			$this->setErrorResponse( 'userlogin-error-nosuchuser', [], UserLoginForm::SIGNUP_USERNAME_KEY );
+			$this->setErrorResponse( 'userlogin-error-nosuchuser', [], UserSignupSpecialController::SIGNUP_USERNAME_KEY );
 			return null;
 		}
 
 		if ( !$user->checkPassword( $wikiaPassword ) ) {
-			$this->setErrorResponse( 'userlogin-error-wrongpassword', [], UserLoginForm::SIGNUP_PASSWORD_KEY );
+			$this->setErrorResponse( 'userlogin-error-wrongpassword', [], UserSignupSpecialController::SIGNUP_PASSWORD_KEY );
 			return null;
 		}
 

@@ -17,14 +17,14 @@
 			),
 			array(
 				'type' => 'text',
-				'name' => $usernameKey,
+				'name' => 'username',
 				'isRequired' => true,
 				'label' => wfMessage( 'yourname' )->escaped(),
 				'tabindex' => ++$tabIndex,
 			),
 			array(
 				'type' => 'password',
-				'name' => $passwordKey,
+				'name' => 'password',
 				'class' => 'password-input',
 				'isRequired' => true,
 				'label' => wfMessage( 'yourpassword' )->escaped(),

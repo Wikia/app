@@ -8,6 +8,10 @@
  */
 class UserSignupSpecialController extends WikiaSpecialPageController {
 
+	// CE-413 changed input names due to signup spam attack
+	const SIGNUP_USERNAME_KEY = 'userloginext01';
+	const SIGNUP_PASSWORD_KEY = 'userloginext02';
+
 	/** @var UserLoginHelper */
 	private $userLoginHelper = null;
 
@@ -92,9 +96,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs(); // just in case...
 
 		// form params
-		$this->username = $this->request->getVal( UserLoginForm::SIGNUP_USERNAME_KEY, '' );
+		$this->username = $this->request->getVal( self::SIGNUP_USERNAME_KEY, '' );
 		$this->email = $this->request->getVal( 'email', '' );
-		$this->password = $this->request->getVal( UserLoginForm::SIGNUP_PASSWORD_KEY, '' );
+		$this->password = $this->request->getVal( self::SIGNUP_PASSWORD_KEY, '' );
 		$this->birthmonth = $this->request->getVal( 'birthmonth', '' );
 		$this->birthday = $this->request->getVal( 'birthday', '' );
 		$this->birthyear = $this->request->getVal( 'birthyear', '' );
@@ -606,11 +610,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$signupForm->load();
 
 		switch( $field ) {
-			case UserLoginForm::SIGNUP_USERNAME_KEY:
-				$signupForm->initValidationUsername();
+			case self::SIGNUP_USERNAME_KEY:
+				$signupForm->initValidationUsername( self::SIGNUP_USERNAME_KEY );
 				break;
-			case UserLoginForm::SIGNUP_PASSWORD_KEY:
-				$signupForm->initValidationPassword();
+			case self::SIGNUP_PASSWORD_KEY:
+				$signupForm->initValidationPassword( self::SIGNUP_PASSWORD_KEY );
 				break;
 			case 'email':
 				$signupForm->initValidationEmail()

@@ -1,8 +1,50 @@
 <?php
-/**
- * Both login and signup forms share the following inputs
- */
-$baseForm = [
+
+// Form for connecting current user with facebook
+$loginForm = [
+	'inputs' => [
+		[
+			'type' => 'text',
+			'name' => 'username',
+			'isRequired' => true,
+			'label' => wfMessage( 'yourname' )->escaped(),
+		],
+		[
+			'type' => 'password',
+			'name' => 'password',
+			'isRequired' => true,
+			'label' => wfMessage( 'yourpassword' )->escaped(),
+		],
+		[
+			'type' => 'hidden',
+			'name' => 'returntourl',
+			'value' => Sanitizer::encodeAttribute( $returnToUrl ),
+		],
+		[
+			'type' => 'nirvanaview',
+			'controller' => 'UserLogin',
+			'view' => 'forgotPasswordLink',
+			'class' => 'forgot-password-container',
+		],
+		[
+			'type' => 'hidden',
+			'name' => 'loginToken',
+			'value' => Sanitizer::encodeAttribute( $loginToken ),
+		],
+	],
+	'submits' => [
+		[
+			'value' => wfMessage( 'userlogin-login-heading' )->escaped(),
+			'name' => 'action',
+			'class' => 'big login-button',
+		]
+	],
+	'method' => 'post',
+];
+
+
+// Form for creating new user with facebook
+$signupForm = [
 	'inputs' => [
 		[
 			'type' => 'text',
@@ -21,16 +63,19 @@ $baseForm = [
 			'name' => 'returntourl',
 			'value' => Sanitizer::encodeAttribute( $returnToUrl ),
 		],
+		[
+			'type' => 'hidden',
+			'name' => 'wpRegistrationCountry',
+			'value' => '',
+		],
+		[
+			'type' => 'hidden',
+			'name' => 'signupToken',
+			'value' => Sanitizer::encodeAttribute( $loginToken ),
+		],
 	],
 	'method' => 'post',
 ];
-
-$loginForm = $baseForm;
-$signupForm = $baseForm;
-
-/**
- * Add form fields to signup form
- */
 
 // Facebook may or may not provide the user's email
 if ( trim( $fbEmail ) == '' ) {
@@ -63,18 +108,6 @@ if ( trim( $fbEmail ) == '' ) {
 }
 
 $signupForm['inputs'][] = [
-	'type' => 'hidden',
-	'name' => 'wpRegistrationCountry',
-	'value' => '',
-];
-
-$signupForm['inputs'][] = [
-	'type' => 'hidden',
-	'name' => 'signupToken',
-	'value' => Sanitizer::encodeAttribute( $loginToken ),
-];
-
-$signupForm['inputs'][] = [
 	'class' => 'opt-in-container hidden',
 	'type' => 'checkbox',
 	'name' => 'wpMarketingOptIn',
@@ -91,31 +124,6 @@ $signupForm['submits'] = [
 	[
 		'value' => wfMessage( 'createaccount' )->escaped(),
 		'name' => 'submit',
-		'class' => 'big login-button',
-	]
-];
-
-/**
- * Add form fields to login form
- */
-
-$loginForm['inputs'][] = [
-	'type' => 'nirvanaview',
-	'controller' => 'UserLogin',
-	'view' => 'forgotPasswordLink',
-	'class' => 'forgot-password-container',
-];
-
-$loginForm['inputs'][] = [
-	'type' => 'hidden',
-	'name' => 'loginToken',
-	'value' => Sanitizer::encodeAttribute( $loginToken ),
-];
-
-$loginForm['submits'] = [
-	[
-		'value' => wfMessage( 'userlogin-login-heading' )->escaped(),
-		'name' => 'action',
 		'class' => 'big login-button',
 	]
 ];
