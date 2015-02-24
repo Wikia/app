@@ -90,11 +90,9 @@ class FinishCreateWikiController extends WikiaController {
 			$mainArticle = Article::newFromID($mainId);
 
 			if (!empty($mainArticle)) {
-				var_dump($wgEnableNjordExt);
-
-				$newMainPageText = ($wgEnableNjordExt ?
+				$newMainPageText = $wgEnableNjordExt ?
 					$this->initHeroModule($mainPage) :
-					$this->setupClassicMainPage($mainArticle));
+					$this->setupClassicMainPage($mainArticle);
 
 				$mainArticle->doEdit($newMainPageText, '');
 			}
