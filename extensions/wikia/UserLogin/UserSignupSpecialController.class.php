@@ -12,15 +12,16 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	private $userLoginHelper = null;
 
 	public function __construct() {
-		parent::__construct('UserSignup', '', false);
+		parent::__construct( 'UserSignup', '', false );
 
 		$this->disableCaptcha();
 	}
 
 	public function init() {
-		$this->isMonobookOrUncyclo = ( $this->wg->User->getSkin() instanceof SkinMonoBook || $this->wg->User->getSkin() instanceof SkinUncyclopedia );
-		$this->isEn = ($this->wg->Lang->getCode() == 'en') ? true : false;
-		$this->userLoginHelper = (new UserLoginHelper);
+		$skin = $this->wg->User->getSkin();
+		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
+		$this->isEn = ( $this->wg->Lang->getCode() == 'en' );
+		$this->userLoginHelper = ( new UserLoginHelper );
 	}
 
 	/**
@@ -29,7 +30,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * The only logged in user who must not be re-routed away from
 	 * the signup form are those who have the right to create new
 	 * accounts (are members of the createaccount group and therefore
-	 * have the createaccount right. An example use case: Wikia One's
+	 * have the createaccount right). An example use case: Wikia One's
 	 * user accounts can be created by a limited group of Wikia
 	 * employees who have been given the right explicitly.
 	 */
@@ -65,18 +66,20 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function signupForm () {
-		$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title')->plain());
-		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
+		$this->wg->Out->setPageTitle( wfMessage( 'usersignup-page-title' )->plain() );
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserSignup.scss' );
 
-		// TODO: find out why UserSignup.js isn't loaded via assets manager UC-196
-		// In the mean time, MarketingOptIn is being included twice just to be safe
-		if ( F::app()->checkSkin( 'oasis' )) {
-			$this->response->addAsset('extensions/wikia/UserLogin/js/MarketingOptIn.js');
-			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
+		if ( $this->app->checkSkin( 'oasis' ) ) {
+			$this->response->addAsset( 'user_signup_js' );
 		}
 
-		if ( !empty($this->wg->EnableFacebookClientExt ) ) {
-			$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
+		// We're not supporting connecting with facebook from this page while logged in
+		if (
+			!empty( $this->wg->EnableFacebookClientExt ) &&
+			!$this->wg->User->isLoggedIn() &&
+			!$this->isMonobookOrUncyclo
+		) {
+			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 		}
 
 		// hide things in the skin
@@ -102,24 +105,23 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		//fb#38260 -- removed uselang
 		$this->avatars = $this->userLoginHelper->getRandomAvatars();
-		$this->popularWikis = $this->userLoginHelper->getRandomWikis();
 
 		// template params
-		$this->pageHeading = wfMessage('usersignup-heading')->escaped();
-		$this->createAccountButtonLabel = wfMessage('createaccount')->escaped();
-		if($this->byemail) {
-			$this->pageHeading = wfMessage('usersignup-heading-byemail')->escaped();
-			$this->createAccountButtonLabel = wfMessage('usersignup-createaccount-byemail')->escaped();
+		$this->pageHeading = wfMessage( 'usersignup-heading' )->escaped();
+		$this->createAccountButtonLabel = wfMessage( 'createaccount' )->escaped();
+		if( $this->byemail ) {
+			$this->pageHeading = wfMessage( 'usersignup-heading-byemail' )->escaped();
+			$this->createAccountButtonLabel = wfMessage( 'usersignup-createaccount-byemail' )->escaped();
 		}
 
-		if ( $this->app->checkSkin( 'wikiamobile' )) {
-			$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title-wikiamobile')->escaped());
+		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
+			$this->wg->Out->setPageTitle( wfMessage( 'usersignup-page-title-wikiamobile' )->escaped() );
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 
 		// process signup
-		$redirected = $this->request->getVal('redirected', '');
-		if ($this->wg->Request->wasPosted() && empty($redirected)) {
+		$redirected = $this->request->getVal( 'redirected', '' );
+		if ( $this->wg->Request->wasPosted() && empty( $redirected ) ) {
 
 			$response = $this->app->sendRequest( 'UserSignupSpecial', 'signup' );
 
@@ -128,12 +130,43 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->errParam = $response->getVal( 'errParam', '' );
 
 			if ( $this->result == 'ok' ) {
-				$params = array(
-					'method' => 'sendConfirmationEmail',
-					'username' => $this->username,
-					'byemail' => intval($this->byemail),
-				);
-				$redirectUrl = $this->wg->title->getFullUrl( $params );
+
+				/*
+				 * Remove when SOC-217 ABTest is finished
+				 */
+				$signupForm = new UserLoginForm( $this->wg->request );
+
+				if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
+					$user = User::newFromName( $this->username );
+					// Get and clear redirect page
+					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+
+					$user->saveSettings();
+
+					// redirect user
+					if ( !empty( $userSignupRedirect ) ) {
+						// Redirect user to the point where he finished (when signup on create wiki)
+						$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
+						$query = $userSignupRedirect;
+					} else {
+						$title = $user->getUserPage();
+						$query = '';
+					}
+
+					$redirectUrl = $title->getFullURL( $query );
+				} else {
+				/*
+				 * end remove
+				 */
+					$params = [
+						'method' => 'sendConfirmationEmail',
+						'username' => $this->username,
+						'byemail' => intval( $this->byemail ),
+					];
+					$redirectUrl = $this->wg->title->getFullUrl( $params );
+				}
+
 				$this->wg->out->redirect( $redirectUrl );
 			}
 
@@ -142,19 +175,21 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	public function captcha() {
 		$this->rawHtml = '';
-		$captchaObj = self::getCaptchaObj();
-		if(!empty($captchaObj)) {
+		$captchaObj = $this->getCaptchaObj();
+		if ( !empty( $captchaObj ) ) {
 			$this->rawHtml = $captchaObj->getForm();
-			$this->isFancyCaptcha = (class_exists('FancyCaptcha') && $captchaObj instanceof FancyCaptcha);
+			$this->isFancyCaptcha = ( class_exists( 'Captcha\Module\FancyCaptcha' ) && $captchaObj instanceof Captcha\Module\FancyCaptcha );
 		}
 	}
 
 	private function getCaptchaObj() {
 		$captchaObj = null;
-		if( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
-			$captchaObj = ConfirmEditHooks::getInstance();
-		}
 
+		if ( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
+			$captchaObj = ConfirmEditHooks::getInstance();
+		} elseif ( !empty( $this->wg->EnableCaptchaExt ) ) {
+			$captchaObj = Captcha\Factory\Module::getInstance();
+		}
 		return $captchaObj;
 	}
 
@@ -182,7 +217,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		if ( $this->wg->request->getVal( 'type', '' ) == '' ) {
 			$this->wg->request->setVal( 'type', 'signup' );
 		}
-		$signupForm = new UserLoginForm($this->wg->request);
+		$signupForm = new UserLoginForm( $this->wg->request );
 		$signupForm->load();
 
 		if ( !$signupForm->EmptySpamFields() ) {
@@ -202,7 +237,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->errParam = $signupForm->errParam;
 
 		// pass and ID of created account for FBConnect feature
-		if ($ret instanceof User) {
+		if ( $ret instanceof User ) {
 			$this->userId = $ret->getId();
 			$this->userPage = $ret->getUserPage()->getFullUrl();
 		}
@@ -215,7 +250,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getEmailConfirmationMarketingModal() {
 		// TODO: need spam protection here HWL 2011-12-22
-		$response = $this->userLoginHelper->sendConfirmationEmail( $this->request->getVal('username', '') );
+		$response = $this->userLoginHelper->sendConfirmationEmail( $this->request->getVal( 'username', '' ) );
 		$this->result = $response['result'];
 		$this->msg = $response['msg'];
 	}
@@ -232,11 +267,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string subheading
 	 */
 	public function sendConfirmationEmail() {
-		if($this->request->getVal('format', '') !== 'json') {
-			$this->wg->Out->setPageTitle(wfMessage('usersignup-confirm-page-title')->plain());
-			$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
-			$this->response->addAsset('extensions/wikia/UserLogin/css/ConfirmEmail.scss');
-			$this->response->addAsset('extensions/wikia/UserLogin/js/ConfirmEmail.js');
+		if( $this->request->getVal( 'format', '' ) !== 'json' ) {
+			$this->wg->Out->setPageTitle( wfMessage( 'usersignup-confirm-page-title' )->plain() );
+			$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserSignup.scss' );
+			$this->response->addAsset( 'extensions/wikia/UserLogin/css/ConfirmEmail.scss' );
+			$this->response->addAsset( 'extensions/wikia/UserLogin/js/ConfirmEmail.js' );
 
 			// hide things in the skin
 			$this->wg->SuppressWikiHeader = true;
@@ -246,8 +281,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->wg->SuppressToolbar = true;
 		}
 
-		$this->username = $this->request->getVal('username', '');
-		$this->byemail = $this->request->getBool('byemail', false);
+		$this->username = $this->request->getVal( 'username', '' );
+		$this->byemail = $this->request->getBool( 'byemail', false );
 
 		// default heading, subheading, msg
 		// depending on what happens, default will be over written below
@@ -257,45 +292,50 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			if ( ( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
 				$mailTo = $user->getEmail();
 			}
+		} else {
+			// Redirect back to login if we didn't get a valid user
+			$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
+			$this->wg->out->redirect( $titleObj->getFullURL() );
+			return;
 		}
 
 		$this->result = 'ok';
-		$mailTo = htmlspecialchars($mailTo);
+		$mailTo = htmlspecialchars( $mailTo );
 		if ( F::app()->checkskin( 'wikiamobile' ) ) {
-			$this->msg = wfMessage( 'usersignup-confirmation-email-sent-wikiamobile', $mailTo )->parse();
+			$this->msg = wfMessage( 'usersignup-confirmation-email-sent-wikiamobile' )->rawParams( $mailTo )->parse();
 			$this->overrideTemplate( 'WikiaMobileSendConfirmationEmail' );
-			$this->wg->Out->setPageTitle(wfMessage('usersignup-confirm-page-title-wikiamobile')->plain());
+			$this->wg->Out->setPageTitle( wfMessage( 'usersignup-confirm-page-title-wikiamobile' )->plain() );
 		} else {
 			$this->heading = wfMessage( 'usersignup-confirmation-heading' )->escaped();
 			$this->subheading = wfMessage( 'usersignup-confirmation-subheading' )->escaped();
-			$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $mailTo )->parse();
+			$this->msg = wfMessage( 'usersignup-confirmation-email-sent' )->rawParams( $mailTo )->parse();
 			$this->msgEmail = '';
 			$this->errParam = '';
 
-			if ($this->wg->Request->wasPosted()) {
-				$action = $this->request->getVal('action','');
+			if ( $this->wg->Request->wasPosted() ) {
+				$action = $this->request->getVal( 'action','' );
 				if ( $action=='resendconfirmation' ) {
 					$response = $this->userLoginHelper->sendConfirmationEmail( $this->username );
 					$this->result = $response['result'];
 					$this->msg = $response['msg'];
-					$this->heading = wfMessage('usersignup-confirmation-heading-email-resent')->escaped();
+					$this->heading = wfMessage( 'usersignup-confirmation-heading-email-resent' )->escaped();
 				} else if ( $action == 'changeemail' ) {
-					$this->email = $this->request->getVal('email', '');
-					$params = array(
+					$this->email = $this->request->getVal( 'email', '' );
+					$params = [
 						'username' => $this->username,
 						'email' => $this->email
-					);
+					];
 
 					$response = $this->sendSelfRequest( 'changeUnconfirmedUserEmail', $params );
 
 					$this->result = $response->getVal( 'result','' );
 
-					if($this->result == 'ok') {
+					if( $this->result == 'ok' ) {
 						$this->msg = $response->getVal( 'msg','' );
-						$this->heading = wfMessage('usersignup-confirmation-heading-email-resent')->escaped();
-					} else if($this->result == 'error') {
+						$this->heading = wfMessage( 'usersignup-confirmation-heading-email-resent' )->escaped();
+					} else if( $this->result == 'error' ) {
 						$this->msgEmail = $response->getVal( 'msg','' );
-						$this->errParam = $response->getVal( 'errParam', '');
+						$this->errParam = $response->getVal( 'errParam', '' );
 					} else if ( $this->result == 'confirmed' ) {
 						$this->heading = wfMessage( 'usersignup-confirm-page-heading-confirmed-user' )->escaped();
 						$this->subheading = wfMessage( 'usersignup-confirm-page-subheading-confirmed-user' )->escaped();
@@ -312,8 +352,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			} else {
 				if ( $this->byemail == true ) {
 					$this->heading = wfMessage( 'usersignup-account-creation-heading' )->escaped();
-					$this->subheading = wfMessage( 'usersignup-account-creation-subheading', $mailTo )->escaped();
-					$this->msg = wfMessage( 'usersignup-account-creation-email-sent', $mailTo, $this->username )->parse();
+					$this->subheading = wfMessage( 'usersignup-account-creation-subheading' )->rawParams( $mailTo )->escaped();
+					$this->msg = wfMessage( 'usersignup-account-creation-email-sent' )
+						->rawParams( $mailTo, htmlspecialchars( $this->username ) )->parse();
 				}
 			}
 		}
@@ -327,7 +368,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @param $field
 	 * @return bool
 	 */
-	private function setResponseFields($result, $message, $field = false) {
+	private function setResponseFields( $result, $message, $field = false ) {
 		$this->result = $result;
 		$this->msg = $message;
 		if ( $field !== false ) {
@@ -342,7 +383,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @param string $email Email address to check
 	 * @return bool
 	 */
-	private function isValidEmailFieldValue($email) {
+	private function isValidEmailFieldValue( $email ) {
 		// error if empty
 		if ( empty( $email ) ) {
 			return $this->setResponseFields(
@@ -369,7 +410,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @param string $username
 	 * @return bool
 	 */
-	private function isValidUsernameField($username) {
+	private function isValidUsernameField( $username ) {
 		if ( empty( $username ) ) {
 			return $this->setResponseFields(
 				'error',
@@ -561,7 +602,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 */
 	public function formValidation() {
 		$field = $this->request->getVal( 'field', '' );
-		$signupForm = new UserLoginForm($this->wg->request);
+		$signupForm = new UserLoginForm( $this->wg->request );
 		$signupForm->load();
 
 		switch( $field ) {
@@ -585,20 +626,30 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->errParam = $signupForm->errParam;
 	}
 
+	/**
+	 * Disables User Signup Captcha for automated tests, mobile skin, and sites such as internal
+	 *
+	 * @throws MWException
+	 */
 	private function disableCaptcha() {
 		global $wgHooks;
-		//Disable captcha for automated tests and wikia mobile
-		if ( $this->app->checkSkin( 'wikiamobile' ) || (in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1) ) {
+
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
+		$isAutomatedTest = in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList );
+		$isNoCaptchaTest = $this->wg->Request->getInt( 'nocaptchatest' ) == 1;
+
+		//Disable captcha for automated tests and wikia mobile and sites disabling it
+		if ( $isMobile || ( $isAutomatedTest && $isNoCaptchaTest ) || $this->wg->UserSignupDisableCaptcha ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function
 			$hookArrayKey = array_search( 'ConfirmEditHooks::confirmUserCreate', $wgHooks['AbortNewAccount'] );
 			if ( $hookArrayKey !== false ) {
-				unset($wgHooks['AbortNewAccount'][$hookArrayKey]);
+				unset( $wgHooks['AbortNewAccount'][$hookArrayKey] );
 			}
-			$this->wg->Out->addJsConfigVars([
-				'wgUserLoginDisableCaptcha' => true
-			]);
+			$this->wg->Out->addJsConfigVars( [
+				'wgUserSignupDisableCaptcha' => true
+			] );
 		}
 	}
 

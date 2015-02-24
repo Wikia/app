@@ -161,6 +161,7 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'new-look' => '위키아',
+	'site-layout' => '사이트 배치',
 );
 
 /** لوری (لوری)

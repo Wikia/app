@@ -16,11 +16,20 @@
 require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
 
 class GetRevisionWithTags extends Maintenance {
+	/**
+	 * Order of those tags is crucial as the most significant one is used to determine
+	 * what kind of edit a given revision is
+	 * @var array
+	 */
 	private static $editorTags = [
-		'rte-source',
-		'rte-wysiwyg',
 		'visualeditor',
-		'mobileedit'
+		'sourceedit',
+		'rte-wysiwyg',
+		'rte-source',
+		'rollback',
+		'mobileedit',
+		'categoryselect',
+		'apiedit'
 	];
 
 	public function __construct() {
@@ -55,7 +64,7 @@ class GetRevisionWithTags extends Maintenance {
 
 		return (new WikiaSQL())
 			->SELECT()
-			->FIELD( 'rev_id' )
+			->FIELD( 'rev_id', 'rev_user' )
 			->FROM( 'page' )
 			->JOIN( 'revision' )
 			->ON( 'rev_page', 'page_id' )
@@ -71,7 +80,8 @@ class GetRevisionWithTags extends Maintenance {
 		return [
 			'wiki_id' => $_SERVER['SERVER_ID'],
 			'revision_id' => $row->rev_id,
-			'editor' => $this->sanitizeRevisionTag($row->ts_tags)
+			'editor' => $this->sanitizeRevisionTag($row->ts_tags),
+			'user_groups' => implode(',',User::newFromId($row->rev_user)->getEffectiveGroups())
 		];
 	}
 
@@ -99,16 +109,18 @@ class GetRevisionWithTags extends Maintenance {
 
 			$dbh->beginTransaction();
 
-			$stmt = $dbh->prepare("INSERT IGNORE INTO editorstats (wiki_id, revision_id, editor)
- 				VALUES (:wiki_id, :revision_id, :editor)");
+			$stmt = $dbh->prepare("INSERT IGNORE INTO editorstats (wiki_id, revision_id, editor, user_groups)
+ 				VALUES (:wiki_id, :revision_id, :editor, :user_groups)");
 			$stmt->bindParam(':wiki_id', $wiki_id);
 			$stmt->bindParam(':revision_id', $revision_id);
 			$stmt->bindParam(':editor', $editor);
+			$stmt->bindParam(':user_groups', $user_groups);
 
 			foreach ($data as $rev) {
 				$wiki_id = $rev['wiki_id'];
 				$revision_id = $rev['revision_id'];
 				$editor = $rev['editor'];
+				$user_groups = $rev['user_groups'];
 
 				$stmt->execute();
 			}

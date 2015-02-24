@@ -11,13 +11,23 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @const NOT_CONFIRMED_SIGNUP_OPTION_NAME Name of user option saying that user hasn't confirmed email since sign up */
 	const NOT_CONFIRMED_SIGNUP_OPTION_NAME = 'NotConfirmedSignup';
 
+	/*
+	 * Remove when SOC-217 ABTest is finished
+	 */
+	const NOT_CONFIRMED_LOGIN_OPTION_NAME = 'NotConfirmedLogin';
+	const NOT_CONFIRMED_LOGIN_ALLOWED = '1';
+	const NOT_CONFIRMED_LOGIN_NOT_ALLOWED = '2';
+	/*
+	 * end remove
+	 */
+
 	/* @const SIGNUP_REDIRECT_OPTION_NAME Name of user option containing redirect path to return to after email confirmation */
 	const SIGNUP_REDIRECT_OPTION_NAME = 'SignupRedirect';
 
 	/* @const SIGNED_UP_ON_WIKI_OPTION_NAME Name of user option containing id of wiki where user signed up */
 	const SIGNED_UP_ON_WIKI_OPTION_NAME = 'SignedUpOnWiki';
 
-	/* @var $userLoginHelper UserLoginHelper */
+	/* @var UserLoginHelper $userLoginHelper */
 	private $userLoginHelper = null;
 
 	// let's keep this fields private for security reasons
@@ -31,30 +41,29 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$loginTitle = SpecialPage::getTitleFor( 'UserLogin' );
 		$this->formPostAction = $loginTitle->getLocalUrl();
-		$this->isMonobookOrUncyclo = ( $this->wg->User->getSkin() instanceof SkinMonoBook || $this->wg->User->getSkin() instanceof SkinUncyclopedia );
-		$this->userLoginHelper = (new UserLoginHelper);
+
+		$skin = $this->wg->User->getSkin();
+		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
+		$this->userLoginHelper = new UserLoginHelper();
 	}
 
 	private function initializeTemplate() {
-		//Oasis/Monobook, will be filtered in AssetsManager :)
-		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
-
-		if ( !empty( $this->wg->EnableFacebookClientExt ) ) {
+		// Load Facebook JS if extension is enabled and skin supports it
+		if ( !empty( $this->wg->EnableFacebookClientExt ) && !$this->isMonobookOrUncyclo ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebook.js' );
 		}
 
-		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginSpecial.js');
-		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Form.js');
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
+		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginSpecial.js' );
 
-		//Wikiamobile, will be filtered in AssetsManager by config :)
+		// Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset(
 				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookClientExt ) ) ?
 					'userlogin_js_wikiamobile' :
 					'userlogin_js_wikiamobile_fbconnect'
 		);
 
-		//Wikiamobile, will be filtered in AssetsManager by config :)
+		// Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
 		// hide things in the skin
@@ -154,12 +163,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$action === wfMessage('userlogin-forgot-password')->escaped() ||
 				$action === wfMessage('wikiamobile-sendpassword-label')->escaped() ||
 				$type === 'forgotPassword'
-			) {	// send temporary password
+			) {
+				// send temporary password
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
 
 				$this->result = $response->getVal( 'result', '' );
 				$this->msg = $response->getVal( 'msg', '' );
-			} else if ($action === wfMessage('resetpass_submit')->escaped() ) {	// change password
+			} else if ($action === wfMessage('resetpass_submit')->escaped() ) {
+				// change password
 				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
 				$this->loginToken = $this->wg->Request->getVal( 'loginToken', '' );
 				$params = array(
@@ -179,7 +190,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 				$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
 
-			} else {	// login
+			} else {
+				// login
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
 				$this->result = $response->getVal( 'result', '' );
@@ -257,72 +269,70 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @brief renders html version that will be inserted into ajax based login interaction
-	 * @details
-	 *   on GET, template partial for an ajax element will render
+	 * Renders html version that will be inserted into ajax based login interaction.
+	 * On GET, template partial for an ajax element will render
 	 */
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
 
-		if ( isset( $query['password'] ) ) {
-			// remove the password from the params to prevent exposiong in into the URL
-			unset($query['password']);
-		}
-
-		$this->returnto = $this->getReturnToFromQuery( $query );
-		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
+		$this->response->setVal( 'returnto', $this->getReturnToFromQuery( $query ) );
+		$this->response->setVal( 'returntoquery', $this->getReturnToQueryFromQuery( $query ) );
 
 		$requestParams = $this->getRequest()->getParams();
-		if ( !empty( $requestParams[ 'registerLink' ] ) ) {
-			$this->registerLink = $requestParams[ 'registerLink' ];
+		if ( !empty( $requestParams['registerLink'] ) ) {
+			$this->response->setVal( 'registerLink',  $requestParams['registerLink'] );
 		}
-		if ( !empty( $requestParams[ 'template' ] ) ) {
-			$this->overrideTemplate( $requestParams[ 'template' ] );
+
+		if ( !empty( $requestParams['template'] ) ) {
+			$this->overrideTemplate( $requestParams['template'] );
 		}
 	}
 
-	public function getMainPagePartialUrl() {
+	public function getReturnToFromQuery( $query ) {
+		if ( !is_array( $query ) ) {
+			return '';
+		}
+
+		// If there's already a returnto here, use it.
+		if ( isset( $query['returnto'] ) ) {
+			return $query['returnto'];
+		}
+
+		if ( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
+			$returnTo = $query['title'];
+		} else {
+			$returnTo = $this->getMainPagePartialUrl();
+		}
+
+		return $returnTo;
+	}
+
+	private function getMainPagePartialUrl() {
 		return Title::newMainPage()->getPartialURL();
 	}
 
-	/**
-	 * @param String $title
-	 *
-	 * @return Boolean
-	 */
-	public function isTitleBlacklisted( $title ) {
+	private function isTitleBlacklisted( $title ) {
 		return AccountNavigationController::isBlacklisted( $title );
 	}
 
-	private function getReturnToFromQuery( $query ) {
-		if( !is_array( $query ) ) {
-			return '';
-		}
-
-		$returnto = $this->getMainPagePartialUrl();
-		if( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
-			$returnto = $query['title'] ;
-			unset( $query['title'] );
-		}
-
-		return $returnto;
-	}
-
 	private function getReturnToQueryFromQuery( $query ) {
-		if( !is_array( $query ) ) {
+		if ( !is_array( $query ) ) {
 			return '';
 		}
 
-		// CONN-49 an edge-case when while being on Special:UserLogin you fail in logging-in
-		// and because of that the returntoquery gets longer and longer with each failure
-		if( !empty( $query['returntoquery'] ) ) {
-			$prevReturnToQuery = wfCgiToArray( $query['returntoquery'] );
-			$query['returntoquery'] = [];
-		} else {
-			$prevReturnToQuery = [];
+		if ( isset( $query['returnto'] ) ) {
+			// If we're already got a 'returnto' value, make sure to pair it with the 'returntoquery' or
+			// default to blank if there isn't one.
+			return array_key_exists( 'returntoquery', $query ) ? $query['returntoquery'] : '';
+		} elseif ( $this->request->wasPosted() ) {
+			// Don't use any query parameters if this was a POST and we couldn't find
+			// a returntoquery param
+			return '';
 		}
 
-		return wfArrayToCGI( $query, $prevReturnToQuery );
+		// Ignore the title parameter as it would either be used by the returnto or blacklisted
+		unset( $query['title'] );
+		return wfArrayToCGI( $query );
 	}
 
 	public function providers() {
@@ -413,7 +423,15 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if (  $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true ) {
+				if ( $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) &&
+					/*
+					 * Remove when SOC-217 ABTest is finished
+					 */
+					$this->wg->User->getOption( self::NOT_CONFIRMED_LOGIN_OPTION_NAME ) !== self::NOT_CONFIRMED_LOGIN_ALLOWED
+					/*
+					 * end remove
+					 */
+				) {
 					//User not confirmed on signup
 					LoginForm::clearLoginToken();
 					$this->userLoginHelper->setNotConfirmedUserSession( $this->wg->User->getId() );
@@ -671,5 +689,4 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 		}
 	}
-
 }

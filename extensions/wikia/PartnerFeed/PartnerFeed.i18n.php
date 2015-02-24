@@ -403,6 +403,7 @@ $messages['ko'] = array(
 	'feed-title-recent-badges' => '최근 배지',
 	'feed-title-recent-images' => '최근 그림',
 	'feed-title-leaderboard' => '배지 현황판',
+	'feed-title-recentchanges' => '최근 바뀜',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

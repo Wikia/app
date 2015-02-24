@@ -47,7 +47,8 @@ class ImageServingScript extends Maintenance {
 		$wgAllowMemcacheReads = false;
 
 		$im = new ImageServing( array( $title->getArticleID() ), 32, 32 );
-		$images = reset($im->getImages(20));
+		$ret = $im->getImages(20);
+		$images = reset($ret);
 
 		$this->output("\nImages list as returned by ImageServing (min size: 32x32 px):\n");
 

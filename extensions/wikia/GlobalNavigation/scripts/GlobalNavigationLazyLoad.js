@@ -13,8 +13,8 @@ define(
 		function getMenuItemsDone(menuItems) {
 			var $sections = $($.parseHTML(menuItems)).removeClass('active'),
 				$hubs = $('#hubs'),
-				$verticals = $('> .hub-list', $hubs),
-				$hubLinks = $('> .hub-links', $hubs),
+				$verticals = $hubs.children('.hub-list'),
+				$hubLinks = $hubs.children('.hub-links'),
 				subMenuSelector = '.' + $('.active', $verticals).data('vertical') + '-links';
 
 			$('> .active', $hubLinks).removeClass('active');

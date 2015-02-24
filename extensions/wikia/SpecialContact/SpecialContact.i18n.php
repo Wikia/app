@@ -591,6 +591,7 @@ $messages['ko'] = array(
 	'specialcontact-wikia' => '위키아에 문의하기',
 	'specialcontact-pagetitle' => '위키아에 문의하기',
 	'specialcontact-problemdesc' => '메시지',
+	'specialcontact-captchatitle' => '보안 문자',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

@@ -43,4 +43,12 @@ describe('thumbnailer', function () {
 		expect(thumbnailer.getImageURL(thumbnailerUrl)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest?cb=20120214071005');
 		expect(thumbnailer.getImageURL(fullSizeImageUrl)).toBe(fullSizeImageUrl);
 	});
+
+	it('test 0 height image for legacy thumbnail', function () {
+		expect(thumbnailer.getThumbURL(legacyThumbnailerUrl, 'image', 500, 0)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/500px-x2-Gzik.png');
+	});
+
+	it('test 0 height image for vignette thumbnail', function () {
+		expect(thumbnailer.getThumbURL(thumbnailerUrl, 'image', 500, 0)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/zoom-crop/width/500/height/0?cb=20120214071005');
+	});
 });

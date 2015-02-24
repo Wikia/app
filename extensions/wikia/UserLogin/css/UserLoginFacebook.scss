@@ -6,18 +6,9 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/transition';
 
-// local mixins
-@import '../mixins/tooltip-icon';
-
 // variables
 $section-padding: 20px;
 $fieldset-padding: 12px;
-
-$badge-background-color: darken($color-page, 20%);
-
-@if($is-dark-wiki) {
-	$badge-background-color: lighten($color-page, 10%);
-}
 
 // extra .modal tacked on for specificity
 .facebook-signup-modal.modal {
@@ -34,22 +25,7 @@ $badge-background-color: darken($color-page, 20%);
 			padding: 5px 10% 15px;
 			text-align: center;
 			white-space: normal;
-			width: 307px;
-		}
-
-		span {
-			background: $badge-background-color;
-			border-radius: 100%;
-			clear: right;
-			display: block;
-			float: left;
-			font-size: 23px;
-			height: 45px;
-			line-height: 45px;
-			margin: 10px 0 0;
-			text-align: center;
-			visibility: hidden;
-			width: 45px;
+			width: 50%;
 		}
 	}
 
@@ -90,21 +66,12 @@ $badge-background-color: darken($color-page, 20%);
 	.input-group {
 		float: none;
 
-		[type=text],
-		[type=password] {
+		[type='text'],
+		[type='password'],
+		[type='email'] {
 			box-sizing: border-box;
 			width: 100%;
 		}
-	}
-
-	.tooltip-icon-wrapper {
-		line-height: 15px;
-		position: relative;
-	}
-
-	.tooltip-icon {
-		@include tooltip-icon;
-		right: -15px;
 	}
 
 	.email {
@@ -118,17 +85,4 @@ $badge-background-color: darken($color-page, 20%);
 	.hidden {
 		display: none;
 	}
-}
-
-// Special styles for english language formatting
-.facebook-signup-modal.lang-en {
-	.submits, .wikia-terms, .forgot-password-container {
-		width: 60%;
-	}
-
-	// only show the "or" circle for wikis where it makes sense
-	> header span {
-		visibility: visible;
-	}
-
 }
