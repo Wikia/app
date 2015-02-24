@@ -1,4 +1,3 @@
-/* global BannerNotifications */
 require([
 	'jquery',
 	'mw',
@@ -35,10 +34,10 @@ require([
 	 */
 	function showBanner() {
 		var message = mw.message('cookie-policy-notification-message').parse(),
-			notification = new BannerNotification(message, 'notify').show();
+			bannerNotification = new BannerNotification(message, 'notify').show();
 
 		// currently, mw.message doesn't support the #NewWindowLink magic word, so we'll have to use JS
-		notification.$element.find('a').on('click', function (event) {
+		bannerNotification.$element.find('a').on('click', function (event) {
 			var url = $(this).attr('href');
 			event.preventDefault();
 			window.open(url, '_blank');
