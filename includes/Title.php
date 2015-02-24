@@ -1154,7 +1154,7 @@ class Title {
 		// begin wikia change
 		// VOLDEV-66
 		$talkPageTitle = Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
-		wfRunHooks( 'GetTalkPage', array( $this, &$talkPageTitle ) );
+		wfRunHooks( 'GetTalkPage', [$this, &$talkPageTitle] );
 		return $talkPageTitle;
 		// end wikia change
 	}
