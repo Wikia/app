@@ -111,35 +111,6 @@ var SponsorshipDashboard = function(){
 
 		$('.submitDatePickers').bind('click', self.dataFromPickers);
 
-		$.when(
-			// jQuery UI datepicker plugin
-			mw.loader.use(['jquery.ui.datepicker'])
-		).done(
-			$.proxy(function (getResourcesData) {
-				var minDate = new Date( 1422144000 * 1000 ),
-					maxDate = new Date( 1424563200 * 1000 );
-
-				minDate.setMinutes(minDate.getMinutes() + minDate.getTimezoneOffset());
-				maxDate.setMinutes(maxDate.getMinutes() + maxDate.getTimezoneOffset());
-				$('#ChartHumanStartDate').datepicker({
-					showOtherMonths: true,
-					selectOtherMonths: true,
-					minDate: minDate,
-					maxDate: maxDate,
-					altField: '#ChartStartDate',
-					altFormat: '@',
-					dateFormat: 'MM d, yy',
-					onSelect: $.proxy(function () {
-						var $date = $('#ChartStartDate'),
-							timestamp = parseInt($date.val(), 10),
-							currentTimezoneOffset = (new Date(timestamp)).getTimezoneOffset();
-						$date.val((timestamp / 1000) - currentTimezoneOffset * 60);
-						console.log($date);
-						this.dataFromPickers($date);
-					}, this)
-				});
-			}, this)
-		);
 		//first draw
 		self.plotAccordingToChoices();
 	};

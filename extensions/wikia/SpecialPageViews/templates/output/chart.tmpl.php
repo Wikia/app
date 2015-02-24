@@ -39,8 +39,6 @@ if( isset( $showActionsButton ) ){ ?>
 <div class="sponsorship-dashboard-panel-header">
 	<div class="datepicker left">
 		<div id="overviewLabel<?= $number ?>" class="overviewLabel"><?= wfMessage( 'sponsorship-dashboard-from-label' )->escaped() ?></div>
-		<input type="hidden" name="date" id="ChartStartDate" value=""/>
-		<input type="text" id="ChartHumanStartDate" value="February 23, 2015" placeholder="February 23, 2015"/>
 		<select id="sd-year-from" class="sd-datepicker">
 			<?
 			$currentYear = date('Y');
