@@ -12,6 +12,10 @@ class UserLoginForm extends LoginForm {
 	var $errParam = '';
 	var $mExtUser;
 
+	/**
+	 * Setup signup form object with all values entered by the user
+	 * @todo The placement of this method is misleading since it's only called for user signup, not login
+	 */
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
