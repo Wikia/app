@@ -1,0 +1,77 @@
+.codeeditor {
+	#editarea {
+		min-height: 300px;
+		width: 100%;
+	}
+
+	#EditPageToolbar.ace-editor-wide {
+		height: 42px;
+	}
+
+	.editpage-sourcewidemode.mode-source.editpage-sourcewidemode-on .EditPageRail .module_page_controls {
+		.wikia-menu-button {
+			right: 50px;
+			top: 10px;
+		}
+
+		.module_content {
+			width: 600px;
+		}
+
+		#wpSave {
+			position: static;
+		}
+
+		.checkboxes {
+			left: 285px;
+			position: absolute;
+			right: auto;
+			top: 0;
+
+			label {
+				float: none;
+				position: static;
+			}
+		}
+
+		textarea {
+			float: left;
+			width: 250px;
+		}
+	}
+
+	.ace_editor {
+		font-size: 14px;
+	}
+
+	.codepage-publish-button {
+		width: calc(100% - 22px);
+	}
+}
+
+#wpTextbox0 {
+	border: 1px solid transparent;
+	box-sizing: border-box;
+	color: transparent;
+	line-height: normal;
+	margin: 0;
+	overflow-x: auto;
+	overflow-y: scroll;
+	white-space: pre-wrap;
+	width: 100%;
+	word-wrap: normal;
+}
+
+#wpTextbox1.highlighted {
+	border: 1px inset gray;
+	box-sizing: border-box;
+	line-height: normal;
+	left: 0;
+	margin: 0;
+	overflow-x: auto;
+	overflow-y: scroll;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}

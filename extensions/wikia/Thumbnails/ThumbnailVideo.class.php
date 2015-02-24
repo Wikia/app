@@ -149,9 +149,8 @@ class ThumbnailVideo extends ThumbnailImage {
 			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
-
 		$videoTitle = $this->file->getTitle();
-
+		$useRDFData = ( !empty( $options['disableRDF'] ) && $options['disableRDF'] == true ) ? false : true;
 		$linkAttribs = array(
 			'href' => $videoTitle->getLocalURL(),
 		);
@@ -194,7 +193,7 @@ class ThumbnailVideo extends ThumbnailImage {
 			$attribs['itemprop'] = 'thumbnail';
 		}
 
-        // lazy loading
+		// lazy loading
 		if ( !empty( $options['usePreloading'] ) ) {
 			$attribs['data-src'] = $this->url;
 		}

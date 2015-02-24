@@ -4,6 +4,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'skins/shared/mixins/calc';
 
 $autocomplete-item-height: 44px;
 $autocomplete-border-bottom: rgb(230, 235, 250);
@@ -19,7 +20,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 }
 
 .search-form-wrapper {
-	margin: ($global-navigation-margin-size + 1px) 0;
+	margin: 8px 0;
 	width: 100%;
 
 	.search-form {
@@ -93,8 +94,8 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 
 	.chevron {
 		@include global-nav-chevron;
-		left: 100%;
-		margin-top: 12px;
+		@include calc(left, "100% + 1px");
+		margin-top: 10px;
 		position: relative;
 		width: 0;
 	}
@@ -111,7 +112,8 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		color: $search-input-text-color;
 		font-weight: bold;
 		height: $search-input-height;
-		padding-left: 42px;
+		outline: none;
+		padding-left: 40px;
 		width: 100%;
 
 		&::-webkit-input-placeholder {
@@ -127,11 +129,11 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		}
 	}
 
-	.search-submit {
+	.search-icon {
 		background-color: transparent;
 		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* inline */
 		background-position: center;
-		background-size: 24px;
+		background-size: 26px;
 		background-repeat: no-repeat;
 		border: 0;
 		height: $search-input-height;
@@ -139,6 +141,42 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		position: absolute;
 		margin-left: 8px;
 		width: 14px;
+	}
+
+	.search-button {
+		background-color: $search-button-background;
+		background-image: url('/extensions/wikia/GlobalNavigation/images/search_button.svg'); /* inline */
+		background-position: center center;
+		background-repeat: no-repeat;
+		border: 0;
+		border-radius: 0;
+		height: 26px;
+		outline: none;
+		position: absolute;
+		right: 1px;
+		top: 1px;
+		width: 28px;
+	}
+
+	// override Oasis setting up background: XX on hover for submit buttons...
+	.search-button:hover {
+		background-color: $search-button-hover-background;
+		background-image: url('/extensions/wikia/GlobalNavigation/images/search_button.svg'); /* inline */
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+
+	.search-input:hover ~ .search-button {
+		background-color: $search-button-hover-background;
+	}
+
+	.search-input:focus,
+	.search-input:active {
+		border-color: $search-button-active-background;
+
+		& ~ .search-button {
+			background-color: $search-button-active-background;
+		}
 	}
 
 	.autocomplete-container {

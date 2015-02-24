@@ -613,6 +613,7 @@ include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.ph
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
 include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 include_once( "$IP/extensions/wikia/UserTools/UserTools.setup.php" );
+include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -675,13 +676,6 @@ $wgSkipOldSkins = array(
 		'simple',
 		'standard',
 );
-
-/**
- * @name wgReleaseNumber
- * release number is used for building links
- */
-$HeadURL = explode('/', '$HeadURL$');
-$wgReleaseNumber = (!isset($HeadURL[4]) || $HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 
 /**
  * @name $wgBiggestCategoriesBlacklist
@@ -759,7 +753,6 @@ $wgWikiFactoryTags = array();
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
-$wgKnowledgeDB = 'dataknowledge';
 $wgDatamartDB = 'statsdb_mart';
 $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;

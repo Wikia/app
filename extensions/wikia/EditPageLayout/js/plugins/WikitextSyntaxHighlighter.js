@@ -4,12 +4,11 @@
  * @author [[mw:User:Remember_the_dot]]
  */
 
-define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
+define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.log'], function (window, document, log) {
 	'use strict';
 
 	// Variables that are preserved between function calls
-	var attributeObserver,
-		highlightSyntaxIfNeededIntervalID,
+	var highlightSyntaxIfNeededIntervalID,
 		lastText,
 		/**
 		 * @var maxSpanNumber The number of the last span available,
@@ -19,26 +18,27 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		syntaxHighlighterConfig,
 		syntaxStyleTextNode,
 		wpTextbox0,
-		wpTextbox1;
+		wpTextbox1,
 
-	var assumedBold,
+		assumedBold,
 		assumedItalic,
 		before,
 		css,
 		lastColor,
 		parserLocation,
 		spanNumber,
-		text;
+		text,
 
-	// Regex vars
-	var defaultBreakerRegex,
+		// Regex vars
+		defaultBreakerRegex,
 		headingBreakerRegex,
 		namedExternalLinkBreakerRegex,
 		parameterBreakerRegex,
 		tableBreakerRegex,
 		tagBreakerRegexCache,
 		templateBreakerRegex,
-		wikilinkBreakerRegex;
+		wikilinkBreakerRegex,
+		breakerRegexBase;
 
 	/* Define context-specific regexes, one for every common token that ends the
 	current context.
@@ -75,7 +75,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 	Flags: g for global search, m for make ^ match the beginning of each line
 	and $ the end of each line
 	*/
-	var breakerRegexBase = "\\[(?:\\[|(?:https?:|ftp:)?//|mailto:)|\\{(?:\\{\\{?|\\|)|<(?:[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:\\w\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD-\\.\u00B7\u0300-\u036F\u203F-\u203F-\u2040]*(?=/?>| |\n)|!--[^]*?-->\n*)|(?:https?://|ftp://|mailto:)[^\\s\"<>[\\]{-}]*[^\\s\",\\.:;<>[\\]{-}]\n*|^(?:=|[*#:;]+\n*|-{4,}\n*)|\\\\'\\\\'(?:\\\\')?|~{3,5}\n*|&(?:(?:n(?:bsp|dash)|m(?:dash|inus)|lt|e[mn]sp|thinsp|amp|quot|gt|shy|zwn?j|lrm|rlm|Alpha|Beta|Epsilon|Zeta|Eta|Iota|Kappa|[Mm]u|micro|Nu|[Oo]micron|[Rr]ho|Tau|Upsilon|Chi)|#x[0-9a-fA-F]+);\n*";
+	breakerRegexBase = "\\[(?:\\[|(?:https?:|ftp:)?//|mailto:)|\\{(?:\\{\\{?|\\|)|<(?:[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:\\w\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD-\\.\u00B7\u0300-\u036F\u203F-\u203F-\u2040]*(?=/?>| |\n)|!--[^]*?-->\n*)|(?:https?://|ftp://|mailto:)[^\\s\"<>[\\]{-}]*[^\\s\",\\.:;<>[\\]{-}]\n*|^(?:=|[*#:;]+\n*|-{4,}\n*)|\\\\'\\\\'(?:\\\\')?|~{3,5}\n*|&(?:(?:n(?:bsp|dash)|m(?:dash|inus)|lt|e[mn]sp|thinsp|amp|quot|gt|shy|zwn?j|lrm|rlm|Alpha|Beta|Epsilon|Zeta|Eta|Iota|Kappa|[Mm]u|micro|Nu|[Oo]micron|[Rr]ho|Tau|Upsilon|Chi)|#x[0-9a-fA-F]+);\n*";
 
 	function breakerRegexWithPrefix (prefix) {
 		// The stop token has to be at the beginning of the regex so that it takes precedence
@@ -111,6 +111,9 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 	}
 
 	function highlightSyntax () {
+		var startTime, endTime, diffTime,
+			fragment;
+
 		lastText = wpTextbox1.value;
 		/* Backslashes and apostrophes are CSS-escaped at the beginning and all
 		parsing regexes and functions are designed to match. On the other hand,
@@ -138,7 +141,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		assumedItalic = false;
 
 		// Start!
-		var startTime = Date.now(), endTime;
+		startTime = Date.now();
 		highlightBlock('', defaultBreakerRegex);
 
 		// Output the leftovers (if any) to make sure whitespace etc. matches
@@ -148,68 +151,20 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 
 		// If highlighting took too long, disable it.
 		endTime = Date.now();
-		if (endTime - startTime > syntaxHighlighterConfig.timeout) {
+		diffTime = endTime - startTime;
+
+		if (diffTime > syntaxHighlighterConfig.timeout) {
 			clearInterval(highlightSyntaxIfNeededIntervalID);
+
 			wpTextbox1.removeEventListener('input', highlightSyntax);
 			wpTextbox1.removeEventListener('scroll', syncScrollX);
 			wpTextbox1.removeEventListener('scroll', syncScrollY);
-			attributeObserver.disconnect();
+
 			syntaxStyleTextNode.nodeValue = '';
 
-			var errorMessage = {
-				ca: 'S\'ha desactivat el remarcar de sintaxi en aquesta pàgina perquè ha trigat massa temps. El ' +
-					'temps màxim permès per a remarcar és $1ms, i el vostre ordinador ha trigat $2ms. Proveu tancar ' +
-					'algunes pestanyes i programes i fer clic en "Mostra la previsualització" o "Mostra els canvis". ' +
-					'Si no funciona això, proveu un altre navegador web, i si això no funciona, ' +
-					'proveu un ordinador més ràpid.',
-				de: 'Die Syntaxhervorhebung wurde auf dieser Seite deaktiviert, da diese zu lange gedauert hat. ' +
-					'Die maximal erlaubte Zeit zur Hervorhebung beträgt $1ms und dein Computer benötigte $2ms. ' +
-					'Versuche einige Tabs und Programme zu schließen und klicke "Vorschau zeigen" oder ' +
-					'"Änderungen zeigen". Wenn das nicht funktioniert, probiere einen anderen Webbrowser und wenn ' +
-					'immer noch nicht, probiere einen schnelleren Computer.',
-				el: 'Η έμφαση σύνταξης έχει απενεργοποιηθεί σε αυτήν τη σελίδα γιατί αργούσε πολύ. Ο μέγιστος ' +
-					'επιτρεπτός χρόνος για την έμφαση σύνταξης είναι $1ms και ο υπολογιστής σας έκανε $2ms. ' +
-					'Δοκιμάστε να κλείσετε μερικές καρτέλες και προγράμματα και να κάνετε κλικ στην «Εμφάνιση ' +
-					'προεπισκόπησης» ή στην «Εμφάνιση αλλαγών». Αν αυτό δεν δουλέψει, δοκιμάστε έναν διαφορετικό ' +
-					'περιηγητή και αν ούτε αυτό δουλέψει, δοκιμάστε έναν ταχύτερο υπολογιστή.',
-				en: 'Syntax highlighting on this page was disabled because it took too long. The maximum allowed ' +
-					'highlighting time is $1ms, and your computer took $2ms. Try closing some tabs and programs and ' +
-					'clicking "Show preview" or "Show changes". If that doesn\'t work, try a different web browser, ' +
-					'and if that doesn\'t work, try a faster computer.',
-				es: 'Se desactivó el resaltar de sintaxis en esta página porque tardó demasiado. El tiempo máximum ' +
-					'permitido para resaltar es $1ms, y tu ordenador tardó $2ms. Prueba cerrar algunas pestañas y ' +
-					'programas y hacer clic en "Mostrar previsualización" o "Mostrar cambios". Si no funciona esto, ' +
-					'prueba otro navegador web, y si eso no funciona, prueba un ordenador más rápido.',
-				fa: 'از آنجایی که زمان زیادی صرف آن می‌شد، برجسته‌سازی نحو در این صفحه غیرفعال شده است. بیشینهٔ زمان برجسته‌سازی برای ابزار $1ms تعریف شده در حالی که رایانهٔ شما $2ms زمان نیاز داشت. می‌توانید بستن برخی سربرگ‌ها و برنامه‌ها و سپس کلیک‌کردن دکمهٔ «پیش‌نمایش» یا «نمایش تغییرات» را بیازمایید. اگر جواب نداد مرورگر دیگری را امتحان کنید؛ و اگر باز هم جواب نداد، رایانهٔ سریع‌تری را بیازمایید.',
-				fr: 'La coloration syntaxique a été désactivée sur cette page en raison d\'un temps de chargement ' +
-					'trop important ($2ms). Le temps maximum autorisé est $1ms. Vous pouvez essayer de fermer ' +
-					'certains onglets et programmes et cliquez sur "Prévisualisation" ou "Voir mes modifications". ' +
-					'Si cela ne fonctionne pas, essayez un autre navigateur web, et si cela ne fonctionne toujours ' +
-					'pas, essayez un ordinateur plus rapide.',
-				io: 'Sintaxo-hailaitar en ca pagino esis nekapabligata pro ke konsumis tro multa tempo. La maxima ' +
-					'permisata hailaitala tempo es $1ms, e tua ordinatro konsumis $2ms. Probez klozar kelka tabi ' +
-					'e programi e kliktar "Previdar" o "Montrez chanji". Se to ne funcionas, probez altra brauzero, ' +
-					'e se to ne funcionas, probez plu rapida ordinatro.',
-				pt: 'O marcador de sintaxe foi desativado nesta pagina porque demorou demais. O tempo máximo ' +
-					'permitido para marcar e $1ms, e seu computador demorou $2ms. Tenta sair de alguns programas e ' +
-					'clique em "Mostrar previsão" ou "Mostrar alterações". Se isso não funciona, tenta usar uma ' +
-					'outra navegador web, e se ainda não funciona, procura um computador mais rápido.'
-			};
-			var wgUserLanguage = mw.config.get('wgUserLanguage');
-
-			errorMessage = errorMessage[wgUserLanguage] ||
-			errorMessage[wgUserLanguage.substring(0, wgUserLanguage.indexOf('-'))] ||
-			errorMessage.en;
-
-			wpTextbox1.style.backgroundColor = '';
-			wpTextbox1.style.position = '';
-			wpTextbox0.removeAttribute('dir');
-			wpTextbox0.removeAttribute('lang');
-			wpTextbox0.style = 'color:red; font-size:small';
-
-			wpTextbox0.textContent = errorMessage
-				.replace('$1', syntaxHighlighterConfig.timeout)
-				.replace('$2', endTime - startTime);
+			log('Syntax highlighting took too long. The maximum allowed ' +
+				'highlighting time is ' + syntaxHighlighterConfig.timeout +
+				', and your computer took ' + diffTime + '.');
 
 			return;
 		}
@@ -217,7 +172,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		// Do we have enough span elements to match the generated CSS?
 		// This step isn't included in the above benchmark because it takes a highly variable amount of time
 		if (maxSpanNumber < spanNumber) {
-			var fragment = document.createDocumentFragment();
+			fragment = document.createDocumentFragment();
 			do {
 				fragment.appendChild(document.createElement('span')).id = 's' + (++maxSpanNumber);
 			}
@@ -232,7 +187,9 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 	}
 
 	function highlightBlock (color, breakerRegex) {
-		var match;
+		var match, endIndexOfLastColor,
+			tagEnd, tagName,
+			stopAfter, endIndex;
 
 		for (
 			breakerRegex.lastIndex = parserLocation;
@@ -246,7 +203,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 				return;
 			}
 
-			var endIndexOfLastColor = breakerRegex.lastIndex - match[0].length;
+			endIndexOfLastColor = breakerRegex.lastIndex - match[0].length;
 			// Avoid calling writeText with text == '' to improve performance
 			if (parserLocation < endIndexOfLastColor) {
 				writeText(text.substring(parserLocation, endIndexOfLastColor), color);
@@ -311,7 +268,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 					else {
 						// Some other kind of tag, search for its end
 						// the search is made easier because XML attributes may not contain the character '>'
-						var tagEnd = text.indexOf('>', parserLocation) + 1;
+						tagEnd = text.indexOf('>', parserLocation) + 1;
+						tagName = match[0].substring(1);
 						if (tagEnd === 0) {
 							// Not a tag, just a '<' with some text after it
 							writeText('<', color);
@@ -319,7 +277,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 							break;
 						}
 
-						if (text.charAt(tagEnd - 2) === '/') {
+						if (text.charAt(tagEnd - 2) === '/' || tagName === 'br') {
 							// empty tag
 							writeText(
 								text.substring(parserLocation - match[0].length, tagEnd),
@@ -327,41 +285,37 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 							);
 							parserLocation = tagEnd;
 						}
-						else {
-							var tagName = match[0].substring(1);
-
-							// Again, cases are ordered from most common to least common
-							if (/^(?:nowiki|pre|math|syntaxhighlight|source|timeline|hiero)$/.test(tagName)) {
-								//tag that can contain only plain text
-								var stopAfter = '</' + tagName + '>';
-								var endIndex = text.indexOf(stopAfter, parserLocation);
-								if (endIndex === -1) {
-									endIndex = text.length;
-								}
-								else {
-									endIndex += stopAfter.length;
-								}
-								writeText(
-									text.substring(parserLocation - match[0].length, endIndex),
-									syntaxHighlighterConfig.tagColor || color
-								);
-								parserLocation = endIndex;
+						// Again, cases are ordered from most common to least common
+						else if (/^(?:nowiki|pre|math|syntaxhighlight|source|timeline|hiero)$/.test(tagName)) {
+							//tag that can contain only plain text
+							stopAfter = '</' + tagName + '>';
+							endIndex = text.indexOf(stopAfter, parserLocation);
+							if (endIndex === -1) {
+								endIndex = text.length;
 							}
 							else {
-								// ordinary tag
-								writeText(
-									text.substring(parserLocation - match[0].length, tagEnd),
-									syntaxHighlighterConfig.tagColor || color
-								);
-								parserLocation = tagEnd;
-								if (!tagBreakerRegexCache[tagName]) {
-									tagBreakerRegexCache[tagName] = breakerRegexWithPrefix('</' + tagName + '>');
-								}
-								highlightBlock(
-									syntaxHighlighterConfig.tagColor || color,
-									tagBreakerRegexCache[tagName]
-								);
+								endIndex += stopAfter.length;
 							}
+							writeText(
+								text.substring(parserLocation - match[0].length, endIndex),
+								syntaxHighlighterConfig.tagColor || color
+							);
+							parserLocation = endIndex;
+						}
+						else {
+							// ordinary tag
+							writeText(
+								text.substring(parserLocation - match[0].length, tagEnd),
+								syntaxHighlighterConfig.tagColor || color
+							);
+							parserLocation = tagEnd;
+							if (!tagBreakerRegexCache[tagName]) {
+								tagBreakerRegexCache[tagName] = breakerRegexWithPrefix('</' + tagName + '>');
+							}
+							highlightBlock(
+								syntaxHighlighterConfig.tagColor || color,
+								tagBreakerRegexCache[tagName]
+							);
 						}
 					}
 					break;
@@ -452,10 +406,6 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		wpTextbox0.scrollTop = wpTextbox1.scrollTop;
 	}
 
-	function syncTextDirection () {
-		wpTextbox0.dir = wpTextbox1.dir;
-	}
-
 	/**
 	 * This function runs once every 500ms to detect changes to wpTextbox1's text that the input event does not catch.
 	 * This happens when another script changes the text without knowing that the syntax highlighter needs to be
@@ -476,21 +426,6 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		}
 	}
 
-	function configureColor (parameterName, hardcodedFallback) {
-		if (syntaxHighlighterConfig[parameterName] === 'normal') {
-			syntaxHighlighterConfig[parameterName] = hardcodedFallback;
-		}
-		else if (typeof(syntaxHighlighterConfig[parameterName]) !== 'undefined') {
-			return;
-		}
-		else if (typeof(syntaxHighlighterConfig.defaultColor) !== 'undefined') {
-			syntaxHighlighterConfig[parameterName] = syntaxHighlighterConfig.defaultColor;
-		}
-		else {
-			syntaxHighlighterConfig[parameterName] = hardcodedFallback;
-		}
-	}
-
 	function setup (textarea) {
 		var focus,
 			scrollTop,
@@ -499,27 +434,11 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 			wpTextbox1Style;
 
 		wpTextbox0 = document.createElement('div');
+		wpTextbox0.id = 'wpTextbox0';
+
 		wpTextbox1 = textarea;
-
-		if (window.syntaxHighlighterConfig === undefined) {
-			window.syntaxHighlighterConfig = {};
-		}
-		syntaxHighlighterConfig = window.syntaxHighlighterConfig;
-
-		//use 3-digit colors instead of 6-digit colors for performance
-		configureColor('boldOrItalicColor', '#EEE'); //gray
-		configureColor('commentColor', '#EFE'); //green
-		configureColor('entityColor', '#DFD'); //green
-		configureColor('externalLinkColor', '#EFF'); //cyan
-		configureColor('headingColor', '#EEE'); //gray
-		configureColor('hrColor', '#EEE'); //gray
-		configureColor('listOrIndentColor', '#EFE'); //green
-		configureColor('parameterColor', '#FC6'); //orange
-		configureColor('signatureColor', '#FC6'); //orange
-		configureColor('tagColor', '#FEF'); //pink
-		configureColor('tableColor', '#FFC'); //yellow
-		configureColor('templateColor', '#FFC'); //yellow
-		configureColor('wikilinkColor', '#EEF'); //blue
+		wpTextbox1.id = 'wpTextbox1';
+		wpTextbox1.classList.add('highlighted');
 
 		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
 
@@ -529,47 +448,25 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 
 		// The styling of the textbox and the background div must be kept very similar
 		wpTextbox1Style = window.getComputedStyle(wpTextbox1);
+
 		scrollTop = wpTextbox1.scrollTop;
 		focus = (document.activeElement === wpTextbox1);
 
 		wpTextbox0.dir = wpTextbox1.dir;
 		wpTextbox0.lang = wpTextbox1.lang; // Lang determines which font 'monospace' is
+
 		wpTextbox0.style.backgroundColor = wpTextbox1Style.backgroundColor;
-		wpTextbox0.style.border = '1px solid transparent';
-		wpTextbox0.style.boxSizing = 'border-box';
-		wpTextbox0.style.color = 'transparent'; // Makes it look just a little bit smoother
+
 		wpTextbox0.style.fontFamily = wpTextbox1Style.fontFamily;
 		wpTextbox0.style.fontSize = wpTextbox1Style.fontSize;
-		wpTextbox0.style.lineHeight = 'normal';
-		wpTextbox0.style.marginBottom = wpTextbox1Style.marginBottom;
-		wpTextbox0.style.marginLeft = '0';
-		wpTextbox0.style.marginRight = '0';
-		wpTextbox0.style.marginTop = wpTextbox1Style.marginTop;
-		wpTextbox0.style.overflowX = 'auto';
-		wpTextbox0.style.overflowY = 'scroll';
 		// Horizontal resize would look horribly choppy, better to make the user resize the browser window instead
 		wpTextbox0.style.resize = (wpTextbox1Style.resize === 'vertical' ||
 		wpTextbox1Style.resize === 'both' ? 'vertical' : 'none');
 		wpTextbox0.style.tabSize = wpTextbox1Style.tabSize;
-		wpTextbox0.style.whiteSpace = 'pre-wrap';
-		wpTextbox0.style.width = '100%';
-		wpTextbox0.style.wordWrap = 'normal'; // See below
 
-		wpTextbox1.style.backgroundColor = 'transparent';
-		wpTextbox1.style.border = '1px inset gray';
-		wpTextbox1.style.boxSizing = 'border-box';
+		wpTextbox1.style.cssText += 'background-color: transparent !important';
 		wpTextbox1.style.fontSize = wpTextbox1Style.fontSize; // Resolves alignment problems on mobile chrome
-		wpTextbox1.style.lineHeight = 'normal';
-		wpTextbox1.style.left = '0';
-		wpTextbox1.style.margin = '0';
-		wpTextbox1.style.overflowX = 'auto';
-		wpTextbox1.style.overflowY = 'scroll';
-		wpTextbox1.style.padding = '0';
-		wpTextbox1.style.position = 'absolute';
 		wpTextbox1.style.resize = wpTextbox0.style.resize;
-		wpTextbox1.style.top = '0';
-		wpTextbox1.style.width = '100%';
-		wpTextbox1.style.wordWrap = 'normal'; // Overall more visually appealing
 
 		// Lock both heights to pixel values so that the browser zoom feature works better
 		wpTextbox0.style.height = wpTextbox1.offsetHeight + 'px';
@@ -599,8 +496,6 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		});
 		wpTextbox1.addEventListener('scroll', syncScrollX);
 		wpTextbox1.addEventListener('scroll', syncScrollY);
-		attributeObserver = new MutationObserver(syncTextDirection);
-		attributeObserver.observe(wpTextbox1, {attributes: true});
 		highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntaxIfNeeded, 500);
 		highlightSyntax();
 	}
@@ -611,7 +506,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		}, 0);
 	}
 
-	function init (textarea) {
+	function init (textarea, config) {
 		maxSpanNumber = -1;
 
 		defaultBreakerRegex = new RegExp(breakerRegexBase, 'gm');
@@ -622,6 +517,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		tableBreakerRegex = breakerRegexWithPrefix('\\|}');
 		headingBreakerRegex = breakerRegexWithPrefix('\n');
 		tagBreakerRegexCache = {};
+
+		syntaxHighlighterConfig = config;
 
 		/* The highlighter has to run after any other script (such as the
 		editing toolbar) that reparents wpTextbox1. We make sure that

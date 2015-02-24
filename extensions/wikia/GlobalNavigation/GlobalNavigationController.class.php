@@ -18,7 +18,7 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgLang;
+		global $wgLang, $wgUser;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
@@ -31,9 +31,12 @@ class GlobalNavigationController extends WikiaController {
 		$lang = $wgLang->getCode();
 		$centralUrl = $this->helper->getCentralUrlForLang( $lang );
 		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $lang );
+		$userCanRead = $wgUser->isAllowed( 'read' );
 
 		$this->response->setVal( 'centralUrl', $centralUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
+		$this->response->setVal( 'notificationsEnabled', !empty($userCanRead));
+		$this->response->setVal( 'isAnon', $wgUser->isAnon());
 
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
