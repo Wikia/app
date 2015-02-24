@@ -71,18 +71,20 @@ class LightboxHelper extends WikiaModel {
 		$memKey = wfMemcKey( 'lightbox', 'latest_photos' );
 		$latestPhotos = $this->wg->Memc->get( $memKey );
 		if ( !is_array( $latestPhotos ) ) {
-			$response = $this->app->sendRequest( 'LatestPhotosController', 'getLatestThumbsUrls' );
+			$response = $this->app->sendRequest( 'LatestPhotosController', 'executeIndex' );
 			$thumbUrls = $response->getVal( 'thumbUrls', '' );
 
 			$latestPhotos = array();
 			if ( !empty( $thumbUrls ) && is_array( $thumbUrls ) ) {
 				foreach ( $thumbUrls as $thumb ) {
+					$title = Title::newFromText( $thumb['image_filename'] );
 					$latestPhotos[] = array(
-						'title' => $thumb['image_key'],
+						'title' => $title->getDBKey(),
 						'type' => 'image',
 					);
 				}
 			}
+
 			$this->wg->Memc->set( $memKey, $latestPhotos, self::CACHE_TTL );
 		}
 
@@ -134,7 +136,7 @@ class LightboxHelper extends WikiaModel {
 	public function getTimestamp() {
 		wfProfileIn( __METHOD__ );
 
-		$response = $this->app->sendRequest( 'LatestPhotosController', 'getLatestThumbsUrls' );
+		$response = $this->app->sendRequest( 'LatestPhotosController', 'executeIndex' );
 		$latestPhotos = $response->getVal( 'thumbUrls', '' );
 
 		$timestamp = wfTimestamp( TS_MW );

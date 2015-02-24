@@ -22,7 +22,7 @@ var ImageLightbox = {
 		}
 
 		if (window.skin == 'oasis' || window.skin == 'venus') {
-			article = $('#WikiaArticle, #article-comments');
+			article = $('#WikiaArticle, .LatestPhotosModule, #article-comments');
 		}
 		else {
 			article = $('#bodyContent');
