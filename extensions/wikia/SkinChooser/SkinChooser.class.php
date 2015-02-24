@@ -213,6 +213,11 @@ class SkinChooser {
 			}
 		}
 
+		// fallback for Mercury which is actually not a MediaWiki skin but a separate application
+		if ( $useskin === 'mercury' ) {
+			$useskin = 'wikiamobile';
+		}
+
 		if ( !( $title instanceof Title ) || in_array( self::getUserOption( 'skin' ), $wgSkipSkins ) ) {
 			$skin = Skin::newFromKey( isset( $wgDefaultSkin ) ? $wgDefaultSkin : 'monobook' );
 			wfProfileOut( __METHOD__ );
@@ -223,6 +228,7 @@ class SkinChooser {
 		if ( $request->getVal( 'useskin' ) == 'wikia' ) {
 			$request->setVal( 'useskin', 'oasis' );
 		}
+
 		if ( !empty( $wgForceSkin ) ) {
 			$wgForceSkin = $request->getVal( 'useskin', $wgForceSkin );
 			$elems = explode( '-', $wgForceSkin );
