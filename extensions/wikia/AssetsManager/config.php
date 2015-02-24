@@ -1937,7 +1937,7 @@ $config['videos_module_common_js'] = [
 		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
 		'//extensions/wikia/VideosModule/scripts/models/videos.js',
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/views/index.js',
+		'//extensions/wikia/VideosModule/scripts/views/rail.js',
 	]
 ];
 
@@ -1956,6 +1956,7 @@ $config['videos_module_venus_js'] = [
 	'assets' => [
 		'#group_videos_module_common_js',
 		'//extensions/wikia/VideosModule/scripts/controllers/inContent.js',
+		'//extensions/wikia/VideosModule/scripts/views/inContent.js',
 		'//resources/wikia/modules/nodeFinder.js',
 	]
 ];

@@ -4,11 +4,17 @@
  * to leave this in there for now as we may at some point switch back to the bottom position.
  */
 require([
-	'videosmodule.views.index',
+	'videosmodule.views.rail',
 	'videosmodule.models.videos',
-	'bucky'
-], function (RailModule, VideoData, bucky) {
+	'bucky',
+	'wikia.window'
+], function (RailModule, VideoData, bucky, win) {
 	'use strict';
+
+	// Make sure we're on an article page
+	if (!win.wgArticleId) {
+		return;
+	}
 
 	var $rail = $('#WikiaRail');
 
