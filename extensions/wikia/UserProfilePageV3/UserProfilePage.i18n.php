@@ -133,38 +133,164 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
- * @author PtM
- * @author Siebrand
+ * @author Damian <damian@wikia-inc.com>
  */
 $messages['qqq'] = array(
-	'userprofilepage-question-caption' => 'Parameters:
+	'userprofilepage-edit-modal-header' => 'Header for edit profile modal on user profile page.',
+	'userprofilepage-question-caption' => 'Currently not in use!
+	Parameters:
 * $1 is the number of the current question
 * $2 is the total number of questions in the interview.',
-	'userprofilepage-question-list-title' => 'Parameters:
+	'userprofilepage-lightbox-interview-cancel' => "Currently not in use!",
+	'userprofilepage-lightbox-interview-save' => "Currently not in use!",
+	'userprofilepage-interview-edit-new-summary' => "Currently not in use!",
+	'userprofilepage-interview-edit-update-summary' => "Currently not in use!",
+	'userprofilepage-interview-save-error' => "Currently not in use!",
+	'userprofilepage-interview-save-internal-error' => "Currently not in use!",
+	'userprofilepage-answers-stats-title' => 'Currently not in use!',
+	'userprofilepage-add-question' => 'Currently not in use!',
+	'userprofilepage-question-save' => 'Currently not in use!',
+	'userprofilepage-question-list-title' => 'Currently not in use!
+	Parameters:
 * $1 is the number of the current question
 * $2 is the total number of questions in the interview,',
-	'user-identity-box-edit' => 'This is the label of a link leading to profile editing mode. Should be used as a verb phrase.',
-	'user-identity-box-aka-label' => "Parameters:
+	'userprofilepage-interview-section-title' => 'Currently not in use!',
+	'userprofilepage-invalid-user' => 'Error message, appears when user has not sufficient rights to edit user profile page or is not logged in.',
+	'userprofilepage-avatar-error-type' => 'Error message, appears when user uploads avatar picture file in incorrect format (not supported mime type),
+	Parameters
+* $1 is list of supported mime types',
+	'userprofilepage-avatar-error-resolution' => 'Error message, appears when user tries to upload to big avatar file. This message contains information that maximum avatar resolution is 2000x2000px',
+	'user-identity-box-edit' => 'Label for link that opens user profile edit modal.',
+	'user-identity-box-wikia-contributor' => 'Anonymous user "real name". Displayed when we display user profile page for IP address after "aka" phrase.',
+	'user-identity-box-edit-avatar' => 'Label for link which opens user avatar picture edit modal.',
+	'user-identity-box-delete-avatar' => 'Label for link which deletes current user avatar picture, after user click this link confirmation message is displayed.',
+	'user-identity-box-avatar-upload-avatar' => 'Label for form file input on avatar picture edit modal.',
+	'user-identity-box-avatar-fb-import-avatar' => 'Currently not in use!',
+	'user-identity-box-avatar-choose-avatar' => 'Label that encourages user to choose one of default avatar pictures on avatar picture edit modal.',
+	'user-identity-box-avatar-save' => "Label for save button on avatar picture edit modal.",
+	'user-identity-box-avatar-cancel' => 'Label for cancel button on avatar picture edit modal. Click on this button close modal or displays confirmation message if any changes where already made.',
+	'user-identity-box-avatar-anon-user-error' => 'Error message that is displayed when anon user tries to change his avatar. It tells that user needs to login before he change his avatar.',
+	'user-identity-box-hide-edits-wikis' => 'Label for checkbox on user profile edit modal. When this field is checked user favorite wikis are not displayed on user profile page.',
+	'user-identity-box-banned-from-chat' => 'Label for tag displayed just after user login on user profile page which tell that used is banned for using Wikia chat.',
+
+	'user-identity-box-aka-label' => "Message that is displayed below user name on user profile page that shows user real name. In English there is 'aka - also known as' in HTML span tag (it's required for styling).
+	Parameters:
 * $1 is the user's Real Name field entry, e.g. TOR aka Lucas Garczewski",
-	'user-identity-box-location' => 'Parameters:
+	'user-identity-box-my-twitter' => 'Label for link to user twitter account, displayed on user profile page.',
+	'user-identity-box-my-website' => 'Label for link to user website, displayed on user profile page.',
+	'user-identity-box-my-fb-page' => 'Label for link to user facebook profile, displayed on user profile page.',
+	'user-identity-box-fav-wikis' => 'Header for users favorite wikis section on user profile page.',
+	'user-identity-box-location' => 'Message that tells where user lives, shown on user profile page. Requires HTML span tag for styling UI.
+	Parameters:
 * $1 is a location, input by user. Usually a town or country.',
-	'user-identity-box-was-born-on' => 'Parameters:
+	'user-identity-box-was-born-on' => 'Message that tells when user was born, shown on user profile page. Requires HTML span tag for styling UI
+	Parameters:
 * $1 is a month name (genetive)
 * $2 is a day number',
-	'user-identity-box-was-born-in' => 'Parameters:
+	'user-identity-box-was-born-in' => 'Message that tells where user was born, shown on user profile page. Requires HTML span tag for styling UI
+	Parameters:
 * $1 is a user input, usually a town or country.',
-	'user-identity-i-am' => 'Parameters:
-* $1 is free-form user input, usually contains gender but sometimes a more general statement, such as "a rockstar". This is by design.',
-	'user-identity-box-edits-since-joining' => 'Parameters:
+	'user-identity-box-occupation' => 'Message that tells what is user occupation, shown on user profile page. Requires HTML span tag for styling UI
+	Parameters:
+* $1 is a user input, user occupation.',
+	'user-identity-i-am' => 'Message that tells who user is, shown on user profile page. Requires HTML span tag for styling UI
+	Parameters:
+ is free-form user input, usually contains gender but sometimes a more general statement, such as "a rockstar". This is by design.',
+	'user-identity-box-edits-since-joining' => 'Message displayed right after edit counts on user profile page that tells how many edits user performed since he joined this wiki.
+Parameters:
+* $1 is user registration date',
+	'user-identity-box-edits' => 'This message is used to show how many edits user have made already - visible on user profile page. HTML tags are used for styling UI.
+Parameters:
 * $1 is the number of edits',
-	'user-identity-box-group-adminmentor' => 'Group name shown on user profile for users who are Admin Mentors.',
-	'user-identity-box-group-wikiastars' => 'Wikiaster',
-	'user-identity-box-group-voldev' => 'Group name shown on user profile for users who are Volunteer Developers',
-	'user-identity-box-group-threadmoderator' => 'Group name shown on user profile for users who are Moderators',
-	'user-identity-box-join-more-wikis' => 'Message in user profile for when said user has not yet edited in wikis which could be displayed as his favourites',
-	'user-identity-remove-confirmation' => 'appears when user is trying to remove avatar',
-	'user-identity-remove-fail' => 'appears in alert box when there ware some when removing the avatar',
-	'userprofilepage-edit-modal-error' => 'Appears in user profile page edit modal when an unexpected error appears',
+
+	'user-identity-box-group-blocked' => 'Group name shown on user profile page next to user login for users who are "Blocked".',
+	'user-identity-box-group-chatmoderator' => 'Group name shown on user profile page next to user login for users who are "Chat moderator".',
+	'user-identity-box-group-sysop' => 'Group name shown on user profile page next to user login for users who are "Admin".',
+	'user-identity-box-group-bureaucrat' => 'Group name shown on user profile page next to user login for users who are "Bureaucrat".',
+	'user-identity-box-group-founder' => 'Group name shown on user profile page next to user login for users who are "Founder".',
+	'user-identity-box-group-staff' => 'Group name shown on user profile page next to user login for users who are "Staff".',
+	'user-identity-box-group-helper' => 'Group name shown on user profile page next to user login for users who are "Helper".',
+	'user-identity-box-group-vstf' => 'Group name shown on user profile page next to user login for users who are "Volunteer Spam Task Force".',
+	'user-identity-box-group-authenticated' => 'Group name shown on user profile page next to user login for users who are "Authenticated".',
+	'user-identity-box-group-council' => 'Group name shown on user profile page next to user login for users who are "Councilor".',
+	'user-identity-box-group-adminmentor' => 'Group name shown on user profile page next to user login for users who are "Admin Mentor".',
+	'user-identity-box-group-wikiastars' => 'Group name shown on user profile page next to user login for users who are "Wikia Star".',
+	'user-identity-box-group-voldev' => 'Group name shown on user profile page next to user login for users who are "Volunteer Developer".',
+	'user-identity-box-group-threadmoderator' => 'Group name shown on user profile page next to user login for users who are "Moderator".',
+
+	'user-identity-box-zero-state-location' => "Placeholder message on user profile page for user location when user didn't provide it.",
+	'user-identity-box-zero-state-birthday' => "Placeholder message on user profile page for user birthday when user didn't provide it.",
+	'user-identity-box-zero-state-gender' => "Placeholder message on user profile page for user gender when user didn't provide it.",
+	'user-identity-box-zero-state-occupation' => "Placeholder message on user profile page for user occupation when user didn't provide it.",
+	'user-identity-box-zero-state-twitter' => "Placeholder message on user profile page for user twitter account when user didn't provide it.",
+	'user-identity-box-zero-state-website' => "Placeholder message on user profile page for user website when user didn't provide it.",
+	'user-identity-box-zero-state-fb-page' => "Placeholder message on user profile page for user facebook profile when user didn't provide it.",
+
+	'user-identity-box-about-me' => 'Label for tab where user can edit information about his account on user profile page edit modal.',
+	'user-identity-box-avatar' => 'Label for tab where user can edit avatar picture for his account on user profile page edit modal.',
+	'user-identity-box-about-name' => 'Label for user real name form field on user profile edit modal.',
+	'user-identity-box-about-location' => 'Label for user location form field on user profile edit modal.',
+	'user-identity-box-about-birthday' => 'Label for user birthday form field on user profile edit modal.',
+	'user-identity-box-about-occupation' => 'Label for user occupation form field on user profile edit modal.',
+	'user-identity-box-about-gender' => 'Label for user gender form field on user profile edit modal.',
+	'user-identity-box-about-website' => 'Label for user website form field on user profile edit modal.',
+	'user-identity-box-about-tweet' => 'Label for user twitter account name form field on user profile edit modal.',
+	'user-identity-box-about-fb-page' => 'Label for user facebook profile name form field on user profile edit modal.',
+	'user-identity-box-about-fav-wikis' => "Label for form field on user profile edit modal where there are pre-populated names of wikis that user already contributed. User can hide wiki names that he don't want to be displayed on his user profile page",
+	'user-identity-box-about-fav-wikis-refresh' => 'Currently not in use!',
+	'user-identity-box-join-more-wikis' => 'Placeholder message on user profile edit modal in favorite wikis form field that encourages user to join more wikis to have them displayed in this field.',
+
+	'user-identity-box-import-from-fb' => 'Currently not in use!',
+	'user-identity-box-connect-to-fb' => 'Currently not in use!',
+	'user-identity-box-fb-page' => 'Currently not in use!',
+	'user-identity-box-unsyc-fb' => 'Currently not in use!',
+	'user-identity-box-invalid-fb-id-error' => 'Currently not in use!',
+	'user-identity-box-fb-prefs' => 'Currently not in use!',
+
+	'user-identity-box-avatar-error-nofile' => 'Error message, appears on user profile edit avatar modal when user tries to save his avatar settings without any avatar picture.',
+	'user-identity-box-avatar-error-cantwrite' => 'Error message, appears on user profile edit avatar modal when there is internal problem with saving temporary avatar file.',
+	'user-identity-box-avatar-error-size' => 'Error message, appears on user profile edit avatar modal when user tries to upload too big file.
+Parameters:
+* $1 max avatar images size in KB',
+	'user-identity-box-avatar-error' => 'Error message, appears on user profile edit avatar modal when there is internal problem with saving avatar settings.',
+
+	'userprofilepage-lightbox-about-me-cancel' => 'Label for cancel button on user profile edit modal. Click on this button close modal or displays confirmation message if changes where made.',
+	'userprofilepage-lightbox-about-me-save' => 'Label for save button on user profile edit modal.',
+
+	'user-identity-box-saving-error' => 'Error message shown when there is a failure saving user profile info because of user input.',
+	'user-identity-box-saving-internal-error' => 'Error message shown when there is a failure saving user profile info because of internal problems.',
+
+	'userprofilepage-closing-popup-header' => 'Header for cancel confirmation message displayed when user cancels changes on user profile edit modal.',
+	'userprofilepage-closing-popup-info' => "Info on cancel confirmation displayed when user cancels changes on user profile edit modal. This message informs user that there are unsaved changes and asks what he would like to do. Possible options are listed on buttons below this message.",
+	'userprofilepage-closing-popup-discard-and-quit' => 'Label for button on confirmation message displayed when user cancels changes on user profile edit modal. After click on this button changes are reverted and edit modal is closed.',
+	'userprofilepage-closing-popup-save-and-quit' => 'Label for button on confirmation message displayed when user cancels changes on user profile edit modal. After click on this button changes are saved and edit modal is closed.',
+	'userprofilepage-closing-popup-cancel' => 'Label for button on confirmation message displayed when user cancels changes on user profile edit modal. After click on this button user is taken back to edit modal.',
+
+	'user-action-menu-edit' => 'Label for edit option on user profile action dropdown list.',
+	'user-action-menu-edit-profile' => 'Label for edit profile option on user profile action dropdown list.',
+	'user-action-menu-leave-message' => 'Label for leave a message option on user profile action dropdown list.',
+	'user-action-menu-view-source' => 'Label for view source option on user profile action dropdown list.',
+	'user-action-menu-protect' => 'Label for protect profile option on user profile action dropdown list.',
+	'user-action-menu-unprotect' => 'Label for unprotect profile option on user profile action dropdown list.',
+	'user-action-menu-rename' => 'Label for rename profile option on user profile action dropdown list.',
+	'user-action-menu-delete' => 'Label for delete profile option on user profile action dropdown list.',
+	'user-action-menu-history' => 'Label for history profile option on user profile action dropdown list.',
+
+	'usermasthead-log' => 'Currently not in use!',
+	'usermasthead-log-message' => 'Currently not in use!',
+	'usermasthead-log-alt' => 'Currently not in use!',
+	'useravatar-log' => 'Header for user avatar log page',
+	'blog-avatar-changed-log' => "Label for avatar change or add entity on avatar log page",
+	'blog-avatar-removed-log' => "Label for avatar removal entity on avatar log page
+	Parameters:
+* $1 - link to user profile page where avatar was removed",
+	'blog-avatar-alt' => 'Message that describe what avatar log page is. This is the place where all avatar operations for all users are listed.',
+
+	'user-identity-remove-confirmation' => 'Confirmation message displayed after user click remove avatar link on user profile page.',
+	'user-identity-remove-fail' => 'Error message, general error message during avatar picture removal.',
+	'user-identity-avatars-maintenance' => "Info message that avatars are currently under maintenance and can't be modified right now.",
+
+	'userprofilepage-edit-modal-error' => 'General error message for user profile page.',
 );
 
 /** Arabic (العربية)
