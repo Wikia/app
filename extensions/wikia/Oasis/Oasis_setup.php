@@ -32,9 +32,14 @@ function wfOasisSetup() {
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyController::onEditPageRender';
 	$wgHooks['EditPageLayoutModifyPreview'][] = 'WikiNavigationController::onEditPageLayoutModifyPreview';
 	$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'WikiNavigationController::onEditPageMakeGlobalVariablesScript';
+	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosController::onImageDelete';
 	$wgHooks['MakeHeadline'][] = 'ContentDisplayController::onMakeHeadline';
+	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosController::onMessageCacheReplace';
 	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationController::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
+	$wgHooks['UploadComplete'][] = 'LatestPhotosController::onImageUploadComplete';
+	$wgHooks['FileUpload'][] = 'LatestPhotosController::onImageUpload';
+	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosController::onImageRenameCompleated';
 	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationController::onWikiFactoryChanged';
 
 	// confirmations
