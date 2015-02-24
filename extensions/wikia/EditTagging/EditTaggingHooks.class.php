@@ -54,10 +54,11 @@ class EditTaggingHooks {
 
 	/**
 	 * Handle tagging new revisions made from API
+	 * @param $revisionId
 	 * @return bool
 	 */
-	public static function onSuccessfulApiEdit( $revision_id ) {
-		self::AddRevisionTag( $revision_id, self::API_EDIT_TAG );
+	public static function onSuccessfulApiEdit( $revisionId ) {
+		self::AddRevisionTag( $revisionId, self::API_EDIT_TAG );
 		return true;
 	}
 
@@ -72,18 +73,18 @@ class EditTaggingHooks {
 		}
 
 		$request = RequestContext::getMain()->getRequest();
-		$revision_id = $revision->getId();
+		$revisionId = $revision->getId();
 
 		// Iterate over all handlers until out of handlers or a handler returns true
 		// for this request
-		$handler_iterator = self::getHandlers()->getIterator();
-		while ( $handler_iterator->valid() ) {
-			$result = call_user_func( $handler_iterator->current(), $revision_id, $request );
+		$handlerIterator = self::getHandlers()->getIterator();
+		while ( $handlerIterator->valid() ) {
+			$result = call_user_func( $handlerIterator->current(), $revisionId, $request );
 			if ( $result ) {
 				break;
-			} else {
-				$handler_iterator->next();
 			}
+
+			$handlerIterator->next();
 		}
 
 		return true;
@@ -98,8 +99,8 @@ class EditTaggingHooks {
 	 */
 	public static function onArticleRollbackComplete( WikiPage $wikiPage, User $user, $revision, $current ) {
 		if ( $revision instanceof Revision ) {
-			$revision_id = $revision->getId();
-			self::AddRevisionTag( $revision_id, self::ROLLBACK_TAG );
+			$revisionId = $revision->getId();
+			self::AddRevisionTag( $revisionId, self::ROLLBACK_TAG );
 		}
 
 		return true;
@@ -108,27 +109,27 @@ class EditTaggingHooks {
 	/**
 	 * Adds tag to specified revision ID
 	 *
-	 * @param $revision_id integer
+	 * @param $revisionId integer
 	 * @param $tag string
 	 */
-	protected static function AddRevisionTag( $revision_id, $tag ) {
-		if ( !ChangeTags::addTags( $tag, null, $revision_id ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision', [ 'revision_id' => $revision_id, 'tag' => $tag ] );
+	protected static function AddRevisionTag( $revisionId, $tag ) {
+		if ( !ChangeTags::addTags( $tag, null, $revisionId ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision', [ 'revisionId' => $revisionId, 'tag' => $tag ] );
 		}
 	}
 
 	/**
-	 * @param $revision_id
+	 * @param $revisionId
 	 * @param $request WebRequest
 	 * @return bool
 	 */
-	private static function tagRevisionIfCategoryEdit( $revision_id, $request ) {
+	private static function tagRevisionIfCategoryEdit( $revisionId, $request ) {
 		$controller = $request->getVal( 'controller', null );
 		$method = $request->getVal( 'method', null );
-		$is_category_edit = ( $controller === 'CategorySelect' && $method === 'save' );
+		$isCategoryEdit = ( $controller === 'CategorySelect' && $method === 'save' );
 
-		if ( $is_category_edit ) {
-			self::AddRevisionTag( $revision_id, self::CATEGORYSELECT_EDIT_TAG );
+		if ( $isCategoryEdit ) {
+			self::AddRevisionTag( $revisionId, self::CATEGORYSELECT_EDIT_TAG );
 			return true;
 		}
 
@@ -136,14 +137,14 @@ class EditTaggingHooks {
 	}
 
 	/**
-	 * @param $revision_id
+	 * @param $revisionId
 	 * @param $request WebRequest
 	 * @return bool
 	 */
-	private static function tagRevisionIfSourceEdit( $revision_id, $request ) {
-		$is_source_mode = $request->getVal( 'isMediaWikiEditor', null );
-		if ( $is_source_mode ) {
-			self::AddRevisionTag( $revision_id, self::SOURCE_EDIT_TAG );
+	private static function tagRevisionIfSourceEdit( $revisionId, $request ) {
+		$isSourceMode = $request->getVal( 'isMediaWikiEditor', null );
+		if ( $isSourceMode ) {
+			self::AddRevisionTag( $revisionId, self::SOURCE_EDIT_TAG );
 			return true;
 		}
 
@@ -151,13 +152,13 @@ class EditTaggingHooks {
 	}
 
 	/**
-	 * @param $revision_id
+	 * @param $revisionId
 	 * @param $request WebRequest
 	 * @return bool
 	 */
-	private static function tagRevisionIfRTESourceEdit( $revision_id, $request ) {
+	private static function tagRevisionIfRTESourceEdit( $revisionId, $request ) {
 		if ( $request->getVal( 'RTEMode', null ) == self::RTE_SOURCE_MODE ) {
-			self::AddRevisionTag( $revision_id, self::RTE_SOURCE_MODE_TAG );
+			self::AddRevisionTag( $revisionId, self::RTE_SOURCE_MODE_TAG );
 			return true;
 		}
 
@@ -165,13 +166,13 @@ class EditTaggingHooks {
 	}
 
 	/**
-	 * @param $revision_id
+	 * @param $revisionId
 	 * @param $request WebRequest
 	 * @return bool
 	 */
-	private static function tagRevisionIfRTEWysiwygEdit( $revision_id, $request ) {
+	private static function tagRevisionIfRTEWysiwygEdit( $revisionId, $request ) {
 		if ( $request->getVal( 'RTEMode', null ) == self::RTE_WYSIWYG_MODE ) {
-			self::AddRevisionTag( $revision_id, self::RTE_WYSIWYG_MODE_TAG );
+			self::AddRevisionTag( $revisionId, self::RTE_WYSIWYG_MODE_TAG );
 			return true;
 		}
 
@@ -179,24 +180,24 @@ class EditTaggingHooks {
 	}
 
 	/**
-	 * @param $revision_id
+	 * @param $revisionId
 	 * @param $request WebRequest
 	 * @return bool
 	 */
-	private static function tagRevisionIfGalleryEdit( $revision_id, $request ) {
+	private static function tagRevisionIfGalleryEdit( $revisionId, $request ) {
 		$action = $request->getVal( 'action', null );
 		$handler = $request->getVal( 'rs', null );
 		$method = $request->getVal( 'method', null );
-		$is_post_request = $request->wasPosted();
+		$isPostRequest = $request->wasPosted();
 
-		$is_gallery_edit = (
+		$isGalleryEdit = (
 			$action == 'ajax'
 			&& $handler == 'WikiaPhotoGalleryAjax'
 			&& $method == 'saveGalleryData'
-			&& $is_post_request );
+			&& $isPostRequest );
 
-		if ( $is_gallery_edit ) {
-			self::AddRevisionTag( $revision_id, self::GALLERY_EDIT_TAG );
+		if ( $isGalleryEdit ) {
+			self::AddRevisionTag( $revisionId, self::GALLERY_EDIT_TAG );
 			return true;
 		}
 
