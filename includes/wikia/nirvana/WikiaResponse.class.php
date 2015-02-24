@@ -191,6 +191,14 @@ class WikiaResponse {
 	}
 
 	/**
+	 * Adds to response data.  Existing data will only be replaced if new data specifies existing keys
+	 * @param array $data
+	 */
+	public function addData( Array $data ) {
+		$this->data = $this->data ? array_merge( $this->data, $data ) : $data;
+	}
+
+	/**
 	 * get response body
 	 * @return string
 	 */
