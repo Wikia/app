@@ -28,7 +28,10 @@
  * @since 1.22
  * @see Database
  */
-class DatabaseMysqli extends DatabaseMysqlBase {
+class DatabaseMysqli extends DatabaseMysql {
+
+	/* @var mysqli $mConn */
+	protected $mConn;
 
 	/**
 	 * @param $sql string

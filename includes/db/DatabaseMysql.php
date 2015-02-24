@@ -15,6 +15,9 @@
  */
 class DatabaseMysql extends DatabaseBase {
 
+	/* @var resource $mConn */
+	protected $mConn;
+
 	/**
 	 * @return string
 	 */
