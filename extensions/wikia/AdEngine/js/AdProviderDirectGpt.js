@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.lookupServices',
-	'ext.wikia.adEngine.wikiaGptHelper'
+	'ext.wikia.adEngine.gptHelper'
 ], function (
 	cacheStorage,
 	geo,

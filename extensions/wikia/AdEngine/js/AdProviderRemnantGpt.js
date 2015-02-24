@@ -3,7 +3,7 @@
 define('ext.wikia.adEngine.provider.remnantGpt', [
 	'wikia.log',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.wikiaGptHelper',
+	'ext.wikia.adEngine.gptHelper',
 	'ext.wikia.adEngine.adLogicPageParams'
 ], function (log, slotTweaker, wikiaGpt, adLogicPageParams) {
 	'use strict';

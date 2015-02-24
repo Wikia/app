@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.provider.remnantGptMobile', [
 	'wikia.log',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.wikiaGptHelper'
+	'ext.wikia.adEngine.gptHelper'
 ], function (log, adLogicPageParams, wikiaGpt) {
 	'use strict';
 
