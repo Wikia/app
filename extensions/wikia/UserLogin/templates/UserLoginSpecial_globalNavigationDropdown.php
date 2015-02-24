@@ -1,4 +1,4 @@
-<div id="UserLoginDropdown" class="UserLoginDropdown">
+<div id="UserLoginDropdown" class="UserLoginDropdown global-nav-dropdown">
 	<div class="ajaxRegisterContainer"><?= $registerLink ?></div>
 	<?
 	$tabIndex = 0;

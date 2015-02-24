@@ -310,7 +310,7 @@
 					$( '#HiddenFieldsDialog label' ).children().focus();
 
 					//add press "Enter" = submit form functionality - BugId: 38480
-					$( '#HiddenFieldsDialog input[name="wpTitle"]' ).keyup( function ( event ) {
+					$( '#HiddenFieldsDialog input[name="wpTitle"]' ).keypress( function ( event ) {
 						if ( event.keyCode == 13 ) {
 							$( '#ok' ).click();
 						}

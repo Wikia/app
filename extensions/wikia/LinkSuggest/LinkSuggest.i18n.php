@@ -212,6 +212,13 @@ $messages['km'] = array(
 	'tog-disablelinksuggest' => 'កុំបង្ហាញសំណើតំណភ្ជាប់', # Fuzzy
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'tog-disablelinksuggest' => '소스 모드에서 링크 제안을 보이지 않기',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

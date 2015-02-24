@@ -574,15 +574,20 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorNewUser = function ( isAnon ) {
  * Update save dialog on captcha error
  *
  * @method
- * @param {Object} editApi
  */
-ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
+ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
 	// Wikia change: Only support reCAPTCHA
-	this.captcha = {};
-	this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
-		editApi.captcha.key,
+	this.captchaResponse = null;
+	this.saveDialog.$captcha.empty();
+	this.saveDialog.frame.$element[0].contentWindow.grecaptcha.render(
 		've-ui-mwSaveDialog-captcha',
-		{ theme: 'white' }
+		{
+			'sitekey': mw.config.get( 'reCaptchaPublicKey' ),
+			'theme': 'light',
+			'callback': function ( response ) {
+				this.captchaResponse = response;
+			}.bind( this )
+		}
 	);
 	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
 	this.saveDialog.popPending();
@@ -848,8 +853,8 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 	this.emit( 'saveInitiated' );
 
 	// Reset any old captcha data
-	if ( this.captcha ) {
-		delete this.captcha;
+	if ( this.captchaResponse ) {
+		this.captchaResponse = null;
 	}
 
 	if (
@@ -929,16 +934,10 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 				fields[$this.prop( 'name' )] = $this.val();
 			}
 		} );
-	// Inject captcha params here if reCAPTCHA is used
-	if ( this.captcha ) {
-		this.captcha.id = this.saveDialog.$( '#recaptcha_challenge_field' ).val();
-		this.captcha.word = this.saveDialog.$( '#recaptcha_response_field' ).val();
-	}
 
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
-		'wpCaptchaId': this.captcha && this.captcha.id,
-		'wpCaptchaWord': this.captcha && this.captcha.word
+		'g-recaptcha-response': this.captchaResponse
 	} );
 	return fields;
 };
@@ -1193,7 +1192,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	dialogDocument = dialogFrame.contentDocument;
 	$( dialogFrame ).on( 'load', function () {
 		script = dialogDocument.createElement( 'script' );
-		script.src = 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+		script.src = 'https://www.google.com/recaptcha/api.js';
 		dialogDocument.getElementsByTagName( 'head' )[0].appendChild( script );
 	} );
 };

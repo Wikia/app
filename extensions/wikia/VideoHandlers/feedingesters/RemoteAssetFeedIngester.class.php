@@ -90,7 +90,7 @@ abstract class RemoteAssetFeedIngester extends VideoFeedIngester {
 		$ooyalaAsset = new OoyalaAsset();
 		$isExist = $ooyalaAsset->isTitleExist( $this->metaData['assetTitle'], $this->metaData['provider'] );
 		if ( $isExist ) {
-			$msg = "SKIP: Uploading Asset: {$this->metaData['destinationTitle']} ($this->metaData[provider]). ";
+			$msg = "SKIP: Uploading Asset: {$this->metaData['destinationTitle']} ({$this->metaData['provider']}). ";
 			$msg .= "Video already exists in remote assets.\n";
 			$this->logger->videoSkipped( $msg );
 			return 0;

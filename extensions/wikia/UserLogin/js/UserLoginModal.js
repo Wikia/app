@@ -41,10 +41,6 @@
 					self.uiFactory = uiFactory;
 					self.packagesData = packagesData;
 
-					if (window.UserLoginFacebook) {
-						window.UserLoginFacebook.init(window.UserLoginFacebook.origins.MODAL);
-					}
-
 					self.buildModal(options);
 					self.bucky.timer.stop('initModal');
 				});
@@ -76,6 +72,13 @@
 					UserLoginModal.$modal = loginModal;
 
 					var $loginModal = loginModal.$element;
+
+					// Init facebook button inside login modal
+					if (window.FacebookLogin) {
+						// SOC-273 remove 'hidden' class even if element isn't in the DOM yet
+						$.loadFacebookSDK();
+						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL);
+					}
 
 					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
 						ajaxLogin: true,
@@ -175,28 +178,14 @@
 		 * returns: true if modal is shown, false if it is not
 		 */
 		show: function (options) {
-			if (!window.wgComboAjaxLogin) {
-				                               // @lixlux - always true, therefore unneeded?
-				options = options || {};
+			options = options || {};
 
-				options.modalInitCallback = $.proxy(function () {
-					this.$modal.show();
-				}, this);
-				this.initModal(options);
+			options.modalInitCallback = $.proxy(function () {
+				this.$modal.show();
+			}, this);
+			this.initModal(options);
 
-				return true;
-			} else {
-				/* 1st, 2nd, 4th, and 5th vars in this method is not used outside of ajaxlogin itself*/
-				window.showComboAjaxForPlaceHolder(false, false, function () {
-					if (options.callback) {
-						window.AjaxLogin.doSuccess = options.callback;
-					}
-				}, false, true);
-
-				return true;
-			}
-
-			return false;
+			return true;
 		},
 		isPreventingForceLogin: function (element) {
 			if (!(element.closest('span').hasClass('drop')) &&

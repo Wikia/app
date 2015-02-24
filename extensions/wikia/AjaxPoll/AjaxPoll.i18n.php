@@ -696,12 +696,13 @@ $messages['ne'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author NielsAC
  * @author Siebrand
  */
 $messages['nl'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;van alle stemmen',
 	'ajaxpoll-thankyou' => 'Dank u wel voor uw stem!',
-	'ajaxpoll-error' => 'Er is een fount opgetreden tijdens het verwerken van uw stem.
+	'ajaxpoll-error' => 'Er is een fout opgetreden tijdens het verwerken van uw stem.
 Probeer het nog een keer.',
 	'ajaxpoll-summary' => 'De peiling is aangemaakt op $2 om $1 en tot nu toe hebben $3 gebruikers gestemd.',
 	'ajaxpoll-submit' => 'Stemmen!',

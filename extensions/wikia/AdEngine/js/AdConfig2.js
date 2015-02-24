@@ -77,7 +77,6 @@ define('ext.wikia.adEngine.adConfig', [
 		'TEST_TOP_RIGHT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
-		'WIKIA_BAR_BOXAD_1': true,
 		'GPT_FLUSH': true
 	};
 
@@ -105,15 +104,8 @@ define('ext.wikia.adEngine.adConfig', [
 		}
 
 		// All SevenOne Media ads are handled in the Later queue
-		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
-		// TOP_BUTTON is always handled in Later queue, so we need to exclude
-		// only WIKIA_BAR_BOXAD_1.
-		// Also we need to add an exception for GPT_FLUSH, so that WIKIA_BAR_BOXAD_1
-		// is actually requested.
-		if (context.providers.sevenOneMedia &&
-				slotname !== 'WIKIA_BAR_BOXAD_1' &&
-				slotname !== 'GPT_FLUSH'
-				) {
+		// beside GPT_FLUSH which needs to be handled by GPT
+		if (context.providers.sevenOneMedia && slotname !== 'GPT_FLUSH') {
 			log(['getProvider', slotname, 'Later (SevenOneMedia)'], 'info', logGroup);
 			return [adProviderLater];
 		}

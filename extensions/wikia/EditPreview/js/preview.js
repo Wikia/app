@@ -126,7 +126,17 @@ define('wikia.preview', [
 
 		// set iframe height to mach its content
 		$(iframe).one('load', function () {
-			iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+			var iframeBody = doc.body;
+
+			iframe.style.height = iframeBody.scrollHeight + 'px';
+
+			// prevent any click on links and images from opening within the preview iframe (CON-2240)
+			$(iframeBody).on('click', 'a', function(ev) {
+				var target = $(ev.target);
+
+				// links to other pages should be open in new windows
+				target.closest('a').not('[href^="#"]').attr('target', '_blank');
+			});
 		});
 	}
 
