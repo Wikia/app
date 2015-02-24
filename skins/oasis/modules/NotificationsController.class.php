@@ -56,7 +56,7 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		// add testing notification
-
+		/*
 		self::addNotification('test test test test test test test test test test test test test test test test test test test test');
 		self::addNotification('new talk page', array(), self::NOTIFICATION_TALK_PAGE_MESSAGE);
 		self::addNotification('test test <a href="#">test</a> test', array(), self::NOTIFICATION_COMMUNITY_MESSAGE);

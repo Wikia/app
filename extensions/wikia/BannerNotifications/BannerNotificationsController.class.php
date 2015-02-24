@@ -58,7 +58,7 @@ class BannerNotificationsController extends WikiaController {
 		#wfRunHooks('SkinTemplatePageBeforeUserMsg', array(&$ntl));
 
 		// add testing confirmation
-		 self::addConfirmation('test');
+		// self::addConfirmation('test');
 
 		if (!empty($_SESSION[self::SESSION_KEY])) {
 			$entry = $_SESSION[self::SESSION_KEY];
