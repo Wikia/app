@@ -129,12 +129,6 @@
 				width: $width-outside - $page-controls-wide-width-min;
 			}
 		}
-		// save button
-		#wpSave {
-			position: absolute;
-			top: 0;
-			right: 15px;
-		}
 		.EditPageRail {
 			width: auto;
 			.module_page_controls {
@@ -144,35 +138,106 @@
 				// resetting module styling - end
 
 				.module_content {
+					padding-top: 0;
 					position: relative;
-					width: $page-controls-wide-width;
 
-					@media screen and (max-width: $breakpoint-small) {
-						width: $page-controls-wide-width-min;
+					.preview_box{
+						float: left;
+
+						h3 {
+							float: left;
+							font-size: 12px;
+							padding: 0;
+							margin-top: 12px;
+						}
+
+						.preview_icon {
+							border: none;
+							height: auto;
+							margin: 0 8px;
+							width: auto;
+
+							p {
+								display: none;
+							}
+						}
+						.preview_mobile {
+							padding-top: 8px;
+
+							svg {
+								enable-background:	new 0 0 32 48;
+								height: 24px;
+								width: 16px;
+							}
+						}
+						.preview_desktop {
+							padding-top: 10px;
+
+							svg {
+								enable-background:	new 0 0 48 40;
+								height: 20px;
+								width: 24px;
+							}
+						}
+					}
+
+					.preview_box, .buttons,
+					.wpSummaryFields {
+						float: left;
+					}
+
+					#wpSummaryLabel {
+						clear: none;
+						float: left;
+					}
+
+					.checkboxes {
+						float: right;
+						margin: 10px 8px 0;
+					}
+
+					#wpDiff {
+						font-size: 10px;
+						margin-right: 10px;
+						margin-top: 12px;
+					}
+
+					@media screen and (max-width: $width-outside) {
+						.preview_box {
+							clear: both;
+
+							h3 {
+								margin-top: 8px;
+							}
+
+							.preview_mobile {
+								padding-top: 3px;
+							}
+
+							.preview_desktop {
+								padding-top: 5px;
+							}
+						}
+
+						#wpDiff {
+							margin-top: 7px;
+						}
+
+						#wpSave {
+							margin-top: 3px;
+						}
+					}
+
+					@media screen and (max-width: $breakpoint-fluid) {
+						#wpSummary {
+							width: 215px;
+						}
 					}
 				}
 
 				// checkboxes
 				label {
-					left: 285px;
-					position: absolute;
 					text-align: left;
-					top: 10px;
-				}
-				// summary box
-				textarea {
-					position: absolute;
-					top: 9px;
-					left: 3px;
-					height: 15px;
-					padding: 2px;
-					margin: 0;
-				}
-				// preview button
-				.wikia-menu-button {
-					position: absolute;
-					top: 0;
-					right: 140px;
 				}
 			}
 		}

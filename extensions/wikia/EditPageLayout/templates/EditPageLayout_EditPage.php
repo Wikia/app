@@ -87,23 +87,25 @@
 					</noscript>
 					<div class="module module_page_controls">
 						<div class="module_content">
-							<div class="checkboxes">
-								<?php foreach( $customCheckboxes as $i=>$checkbox ): ?>
-									<label class="<?= $checkbox['name'] ?>">
-										<input type="checkbox" name="<?= $checkbox['name'] ?>" tabindex="<?= $i + 2 ?>" id="<?= $checkbox['name'] ?>" <?= $checkbox['checked'] ? ' checked="checked"' : '' ?> />
-										<?= $checkbox['label'] ?>
-									</label>
-								<?php endforeach ?>
-								<?php if ( $canMinorEdit ): ?>
-									<label class="wpMinoredit">
-										<input type="checkbox" tabindex="21" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
-										<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
-									</label>
-								<?php endif ?>
-							</div>
-							<label <?php if ( $canMinorEdit ): ?>class="wpSummary_canMinorEdit"<?php endif ?> for="wpSummary"><?= $wpSummaryLabelText ?></label>
-							<div id="wpSummaryLabel">
-								<?= $summaryBox ?>
+							<div class="wpSummaryFields">
+								<div class="checkboxes">
+									<?php foreach( $customCheckboxes as $i=>$checkbox ): ?>
+										<label class="<?= $checkbox['name'] ?>">
+											<input type="checkbox" name="<?= $checkbox['name'] ?>" tabindex="<?= $i + 2 ?>" id="<?= $checkbox['name'] ?>" <?= $checkbox['checked'] ? ' checked="checked"' : '' ?> />
+											<?= $checkbox['label'] ?>
+										</label>
+									<?php endforeach ?>
+									<?php if ( $canMinorEdit ): ?>
+										<label class="wpMinoredit">
+											<input type="checkbox" tabindex="21" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
+											<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
+										</label>
+									<?php endif ?>
+								</div>
+								<label <?php if ( $canMinorEdit ): ?>class="wpSummary_canMinorEdit"<?php endif ?> for="wpSummary"><?= $wpSummaryLabelText ?></label>
+								<div id="wpSummaryLabel">
+									<?= $summaryBox ?>
+								</div>
 							</div>
 							<div class="preview_box">
 								<h3><?= wfMessage( 'preview' )->escaped() ?></h3>
