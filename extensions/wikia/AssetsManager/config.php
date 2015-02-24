@@ -77,7 +77,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
-		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
@@ -213,13 +212,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'#group_imglzy_js',
-		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-		// We allow logged in users to change login without logging out
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		// We allow logged in users to create account without logging out
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
-		// TODO: do we need to load this for logged-in?
-		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		// needs to load after MiniEditor
 		'#group_articlecomments_js',
@@ -300,6 +292,7 @@ $config['oasis_jquery'] = array(
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
+		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadExternalLibrary.js',
 		'//skins/oasis/js/isTouchScreen.js',
 
 		// jQuery/Oasis specific code
@@ -312,9 +305,6 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
-
-		// Global Header tracking
-		'//skins/oasis/js/GlobalHeader.js',
 
 		// Lazy rail
 		'#group_lazy_rail_js',
@@ -400,41 +390,50 @@ $config['oasis_nojquery_shared_js'] = array(
 //anon JS
 // Note: Owen moved getSiteJS call from both anon_js and user_js to OasisController::loadJS
 // so that common.js is loaded last so it has less chance of breaking other things
-$config['oasis_anon_js'] = array(
+$config['oasis_anon_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
+	'assets' => [
+		'#group_user_login_js_anon',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
-		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
 		'//skins/oasis/js/LatestActivity.js',
-	)
-);
+	]
+];
 
-// TODO: cleanup this after Global Navigation global release
-$config['oasis_anon_with_new_global_nav_js'] = array(
+$config['user_login_js_anon'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/Exitstitial.js',
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
-		'//skins/oasis/js/LatestActivity.js',
-	)
-);
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
+		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
+		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
+	]
+];
 
-//user JS
+/**
+ * We allow logged in users to create account without logging out
+ */
+$config['user_signup_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/UserSignup.js',
+	]
+];
+
+/**
+ * For logged in users in oasis
+ * @todo Remove this and clean up references UC-228
+ */
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-	)
+	'assets' => []
 );
 
 /** GameGuides */
@@ -728,7 +727,6 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
-		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/GptSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -765,6 +763,8 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/geo.js',
 
 		'#group_mobile_base_ads_js',
+
+		'//extensions/wikia/AdEngine/js/mercury.run.js',
 	)
 );
 
@@ -835,9 +835,10 @@ $config['wikiamobile_usersignup_js'] = array(
 	'assets' => array(
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignup.js'
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/UserSignup.js',
 	)
 );
 
@@ -907,7 +908,6 @@ $config['monobook_js'] = array(
 		'//skins/monobook/main.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'#group_imglzy_js',
 		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
@@ -1008,6 +1008,13 @@ $config['relatedpages_wikiamobile_js'] = array(
 );
 
 /** EditPageLayout **/
+$config['editpage_common_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
+	)
+);
+
 $config['rte'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -1018,6 +1025,7 @@ $config['rte'] = array(
 $config['epl'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+			'#group_editpage_common_js',
 			'#function_AssetsConfig::getEPLAssets',
 	)
 );
@@ -1027,6 +1035,16 @@ $config['eplrte'] = array(
 	'assets' => array(
 		'#group_epl',
 		'#group_rte'
+	)
+);
+
+/** Ace Editor **/
+$config['ace_editor_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_editpage_common_js',
+		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
+		'//extensions/wikia/EditPageLayout/js/editor/AceEditor.js',
 	)
 );
 
@@ -1154,13 +1172,6 @@ $config['wall_notifications_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/WallNotifications/scripts/WallNotifications.js',
-	)
-);
-
-$config['wall_notifications_global_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/WallNotifications/scripts/WallNotifications.globalNavigation.js',
 	)
 );
 
@@ -1828,6 +1839,7 @@ $config['licensed_video_swap_js'] = array(
 $config['special_css_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
 		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
@@ -2014,7 +2026,7 @@ $config['bucky_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'venus' ],
 	'assets' => array(
-		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
+		'//extensions/wikia/Bucky/vendor/Weppy/dist/weppy.js',
 		'//extensions/wikia/Bucky/js/bucky_init.js',
 		'//extensions/wikia/Bucky/js/bucky_resources_timing.js',
 		'//extensions/wikia/Bucky/js/bucky_metrics.js',
@@ -2206,24 +2218,6 @@ $config[ 'local_navigation_oasis_scss' ] = [
 	]
 ];
 
-/** these packs should be loaded only if GlobalNavigation extension is disabled */
-$config['global_header_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//skins/oasis/css/core/AccountNavigation.scss',
-		'//extensions/wikia/UserLogin/css/UserLoginDropdown.scss'
-	]
-];
-
-$config['global_header_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//skins/oasis/js/hoverMenu.js',
-	]
-];
-
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'venus'],
@@ -2253,11 +2247,29 @@ $config['facebook_client_preferences_scss'] = [
 	]
 ];
 
-$config['facebook_client_special_connect'] = [
+$config['facebook_client_xfbml_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'monobook'],
 	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/SpecialFacebookConnect.js',
+		'//extensions/wikia/FacebookClient/scripts/FacebookClient.XFBML.js',
+	]
+];
+
+$config['delayed_hover_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
+		'//resources/wikia/modules/delayedHover.js'
+	]
+];
+
+$config['menu_aim_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/menu-aim/menu-aim.js',
+		'//resources/wikia/modules/menuAim.js'
 	]
 ];
 

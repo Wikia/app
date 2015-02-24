@@ -334,21 +334,12 @@ var ImageLightbox = {
 					var source = $(this).attr('data-func');
 					if (source == "email") {
 						if ( window.wgUserName === null ) {
-							if ( window.wgComboAjaxLogin ) {
-								showComboAjaxForPlaceHolder(false, "", function(){
-									AjaxLogin.doSuccess = function() {
-										window.location = $('#lightbox-image-link').val();
-									}
-								});
-							}
-							else {
-								UserLoginModal.show( {
-									origin: 'image-lightbox',
-									callback: function() {
-										window.location = $( '#lightbox-image-link' ).val();
-									}
-								} );
-							}
+							UserLoginModal.show({
+								origin: 'image-lightbox',
+								callback: function () {
+									window.location = $('#lightbox-image-link').val();
+								}
+							});
 							return false;
 						}
 					}

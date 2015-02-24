@@ -50,3 +50,15 @@ $wgAPIModules[ "imagecrop" ] = "WikiaApiCroppedImage";
 // Load the MediaWiki API endpoint for ImageServing
 $wgAutoloadClasses[ "WikiaApiImageServing"         ] = "{$dir}/api//WikiaApiImageServing.php";
 $wgAPIModules['imageserving'] = 'WikiaApiImageServing';
+
+// query page for caching images popularity (see PLAQTFORM-817)
+$wgSpecialPages[ 'MostimagesInContent' ] =  'MostimagesInContentPage';
+$wgSpecialPageGroups['MostimagesInContent'] = 'maintenance';
+
+$wgAutoloadClasses[ 'MostimagesInContentPage' ] = "{$dir}/querypage/MostimagesInContentPage.class.php";
+
+$wgHooks['wgQueryPages'][] = function( Array &$wgQueryPages ) {
+	//                  QueryPage subclass         Special page name
+	$wgQueryPages[] = [ 'MostimagesInContentPage', 'MostimagesInContent' ];
+	return true;
+};

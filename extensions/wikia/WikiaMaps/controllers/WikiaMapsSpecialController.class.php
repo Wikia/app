@@ -319,8 +319,16 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * @param Integer $height
 	 */
 	private function convertImagesToThumbs( &$items, $width, $height ) {
+		/*
+		 FIXME this is a temporary fix for MWEB-1100
+		 We have 404s cached for a week and need to add cache buster until they are expired
+		 This should be removed on 2015-02-16 (first Monday after expiration time)
+		 */
+		$cacheBuster = '?cb=20150206';
+
 		foreach ( $items as $item ) {
-			$item->image = $this->getModel()->createCroppedThumb( $item->image, $width, $height );
+			$thumb = $this->getModel()->createCroppedThumb( $item->image, $width, $height );
+			$item->image = $thumb . $cacheBuster;
 		}
 	}
 
@@ -330,8 +338,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * @param String $selectedSort a sorting option passed in $_GET
 	 */
 	private function prepareTemplateData( $mapsResponse, $selectedSort ) {
-		global $wgEnableGlobalNavExt;
-
 		$isWikiaMobileSkin = $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME );
 
 		$thumbWidth = ( $isWikiaMobileSkin ? self::MAP_MOBILE_THUMB_WIDTH : self::MAP_THUMB_WIDTH );
@@ -357,9 +363,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 				'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
 			] );
 			$this->setVal( 'sortingOptions', $this->getModel()->getSortingOptions( $selectedSort ) );
-			if ( empty( $wgEnableGlobalNavExt ) ) {
-				$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
-			}
 		}
 
 		// template variables shared between skins

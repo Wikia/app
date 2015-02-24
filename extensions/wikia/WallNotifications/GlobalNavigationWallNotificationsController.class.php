@@ -22,13 +22,12 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
 
 		if( $loggedIn && !$suppressWallNotifications ) {
-			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss' );
+			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss' );
 			$this->response->addAsset( 'wall_notifications_global_navigation_js' );
 			$this->response->setVal( 'prehide', ( empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) ) );
 		}
 
 		$this->response->setVal( 'loggedIn', $loggedIn );
-		$this->response->setVal( 'suppressWallNotifications', $suppressWallNotifications );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -171,7 +170,7 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 				'username' => $notify_entity->data->msg_author_username,
 				'avatar' => AvatarService::renderAvatar(
 						$firstNotify->data->msg_author_username,
-						AvatarService::AVATAR_SIZE_SMALL
+						AvatarService::AVATAR_SIZE_SMALL_PLUS
 					)
 			];
 		}

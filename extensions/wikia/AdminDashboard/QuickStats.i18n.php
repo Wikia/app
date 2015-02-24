@@ -1082,6 +1082,7 @@ $messages['ne'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author NielsAC
  * @author SPQRobin
  * @author Siebrand
  */
@@ -1091,7 +1092,7 @@ $messages['nl'] = array(
 	'quickstats-header-views' => 'Weergaven',
 	'quickstats-header-edits' => 'Bewerkingen',
 	'quickstats-header-photos' => 'Afbeeldingen',
-	'quickstats-header-likes' => 'Vind ik leuks',
+	'quickstats-header-likes' => 'Vind-ik-leuks',
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totalen',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Meer statistieken bekijken]]',

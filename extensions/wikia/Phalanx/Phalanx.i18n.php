@@ -1639,6 +1639,7 @@ $messages['ko'] = array(
 	'phalanx-stats-table-wiki-name' => '위키 이름',
 	'phalanx-stats-table-wiki-url' => '위키 URL',
 	'phalanx-stats-table-wiki-last-edited' => '마지막 편집',
+	'right-phalanx' => '전역 차단 및 스팸 필터 관리',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

@@ -206,6 +206,9 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'fbAppId',
 			'wgLoginToken',
 
+			//signup
+			'wgUserSignupDisableCaptcha',
+
 			//AbTesting
 			'wgCdnApiUrl',
 		];

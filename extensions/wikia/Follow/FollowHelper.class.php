@@ -100,17 +100,17 @@ class FollowHelper {
 			}
 		}
 
-
-		foreach ($watchers as $key => $value) {
-			$enotif = new EmailNotification();
-			$title = Title::makeTitle( $namespace, $key );
-			$enotif->notifyOnPageChange( $user, $title,
-				$now,
-				$message,
-				0,
-				0,
-				$action,
-				array('notisnull' => 1, 'childTitle' => $childTitle) );
+		/**
+		 * Selecting all watching users took to long
+		 * and was causing timeouts. It's been moved to a task.
+		 * @see CE-1239 by adamk@wikia-inc.com
+		 */
+		if ( !empty( $watchers ) ) {
+			$oTask = new FollowEmailTask();
+			$oTask->title( $childTitle );
+			$oTask->wikiId( F::app()->wg->CityId );
+			$oTask->call( 'emailFollowNotifications', $watchers, $user->getId(), $namespace, $message, $action );
+			$oTask->queue();
 		}
 
 		wfProfileOut( __METHOD__ );

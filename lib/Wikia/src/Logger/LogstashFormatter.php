@@ -56,6 +56,7 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 		$data = array(
 			'class' => get_class($e),
 			'message' => $e->getMessage(),
+			'code' => $e->getCode(),
 			'file' => $e->getFile().':'.$e->getLine(),
 		);
 

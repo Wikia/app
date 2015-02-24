@@ -29,7 +29,6 @@ class WallRailHelper {
 		
 		if( $action === 'history' && WallHelper::isWallNamespace( $namespace ) ) {
 			$modules = array();
-			$modules[1441] = array('Search', 'Index', null);
 			$modules[1440] = array('WallRail', 'index', null);
 		}
 		

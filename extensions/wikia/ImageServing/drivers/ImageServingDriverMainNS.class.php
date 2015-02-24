@@ -138,6 +138,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			);
 
 			foreach ( $result as $row ) {
+				/* @var mixed $row */
 				if ( $row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth ) {
 					if ( !in_array( $row->img_minor_mime, self::$mimeTypesBlacklist ) ) {
 						$imageDetails[$row->img_name] = $row;
@@ -160,74 +161,55 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function getImagesPopularity( $imageNames, $limit ) {
-		global $wgContentNamespaces;
-
+	/**
+	 * Returns the popularity of given set of images (popularity = the number of articles in content namespaces that use an image)
+	 *
+	 * $limit is applied - images that have popularity that is higher than $limit will not be returned
+	 *
+	 * Example:
+	 *
+	 * $imageNames = [ 'IMG_7303.jpg', 'Goats.jpg' ]
+	 * Result: [ 'IMG_7303.jpg' => 1, 'Goats.jpg' => 2 ]
+	 *
+	 * @param string[] $imageNames
+	 * @param int $limit
+	 * @return array associative array [image name] => [popularity]
+	 */
+	protected function getImagesPopularity( Array $imageNames, $limit ) {
 		wfProfileIn( __METHOD__ );
-		$result = [ ];
 
-		$sqlCount = $limit + 1;
 		$imageNames = array_values( $imageNames );
-		$count = count( $imageNames );;
-		$i = 0;
 
-		$imageLinksTable = $this->db->tableName( 'imagelinks' );
-		$pageTable = $this->db->tableName( 'page' );
-		$redirectTable = $this->db->tableName( 'redirect' );
+		// MostimagesInContentPage generates daily reports with images
+		// that are included at least twice in article in content namespaces
+		$ret = $this->db->select(
+			'querycache',
+			[ 'qc_title as image', 'qc_value as popularity' ],
+			[
+				'qc_type' => 'MostimagesInContent',
+				'qc_title' => $imageNames,
+			],
+			__METHOD__
+		);
 
-		$contentNamespaces = implode( ',', $wgContentNamespaces );
+		// MostimagesInContent includes images used at least twice
+		// - make popularity default to one here
+		// - update with the data from query cache
+		$result = array_fill_keys( $imageNames, 1 );
 
-		while ( $i < $count ) {
-			$batch = array_slice( $imageNames, $i, 100 );
-			$i += 100;
+		foreach ( $ret as $row ) {
+			/* @var mixed $row */
+			$popularity = intval( $row->popularity );
 
-			// get all possible redirects for a given image (BAC-589)
-			$imageRedirectsMap = [ ]; // from image -> to image
-			$sql = [ ];
-			foreach ( $batch as $imageName ) {
-				$imageRedirectsMap[$imageName] = $imageName;
-				$sql[] = "(SELECT page_title, rd_title FROM {$redirectTable} LEFT JOIN {$pageTable} ON page_id = rd_from WHERE rd_namespace = " . NS_FILE . " AND rd_title = {$this->db->addQuotes( $imageName )} LIMIT 5)";
+			if ( $popularity > $limit ) {
+				unset( $result[ $row->image ] );
+				wfDebug( __METHOD__ . ": filtered out {$row->image} - used {$popularity} time(s)\n" );
 			}
-			$sql = implode( ' UNION ALL ', $sql );
-			$batchResult = $this->db->query( $sql, __METHOD__ . '::redirects' );
-
-			foreach ( $batchResult as $row ) {
-				wfDebug( __METHOD__ . ": redirect found - {$row->page_title} -> {$row->rd_title}\n" );
-				$imageRedirectsMap[$row->page_title] = $row->rd_title;
+			else {
+				$result[$row->image] = $popularity;
 			}
-			$batchResult->free();
-
-			// get image usage
-			$sql = [ ];
-			$batchResponse = [ ];
-
-			foreach ( $imageRedirectsMap as $fromImg => $toImg ) {
-				// prepare the results array )see PLATFORM-358)
-				$batchResponse[$toImg] = 0;
-
-				$sql[] = "(SELECT {$this->db->addQuotes( $toImg )} AS il_to FROM {$imageLinksTable} JOIN {$pageTable} on page.page_id = il_from WHERE il_to = {$this->db->addQuotes( $fromImg )} AND page_namespace IN ({$contentNamespaces}) LIMIT {$sqlCount} )";
-			}
-			$sql = implode( ' UNION ALL ', $sql );
-			$batchResult = $this->db->query( $sql, __METHOD__ . '::imagelinks' );
-
-			// do a "group by" on PHP side
-			foreach ( $batchResult as $row ) {
-				$batchResponse[$row->il_to]++;
-			}
-			$batchResult->free();
-
-			// remove rows that exceed usage limit
-			foreach ( $batchResponse as $k => $imageCount ) {
-				if ( $imageCount > $limit ) {
-					wfDebug( __METHOD__ . ": filtered out {$k} - used {$imageCount} time(s)\n" );
-					unset( $batchResponse[$k] );
-				} else {
-					wfDebug( __METHOD__ . ": {$k} - used {$imageCount} time(s)\n" );
-				}
-			}
-
-			$result = array_merge( $result, $batchResponse );
 		}
+
 		wfProfileOut( __METHOD__ );
 
 		return $result;

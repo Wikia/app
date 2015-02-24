@@ -302,6 +302,15 @@ $messages['bg'] = array(
 	'right-editaccount' => 'Редактиране на настройките на други потребители',
 );
 
+/** Western Balochi (بلوچی رخشانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bgn'] = array(
+	'editaccount-frame-usage' => 'نوٹ',
+	'editaccount-label-reason' => 'دلیل:',
+	'editaccount-label-clearemail' => 'ایمیل ادرسی پاک کورتین',
+);
+
 /** bh (bh)
  * @author Ganesh
  */
@@ -2247,6 +2256,7 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Fasouzafreitas
  * @author Giro720
  * @author JM Pessanha
  * @author Jesielt
@@ -2273,6 +2283,7 @@ $messages['pt-br'] = array(
 	'editaccount-label-toggleadopt-prevent' => 'Prevenir auto-adoção',
 	'editaccount-label-toggleadopt-allow' => 'Permitir auto-adoção',
 	'editaccount-label-reason' => 'Motivo:',
+	'editaccount-label-clearemail' => 'Apagar endereço de e-mail',
 	'editaccount-submit-email' => 'Salvar Email',
 	'editaccount-submit-pass' => 'Salvar Senha',
 	'editaccount-submit-realname' => 'Salvar Nome Real',
@@ -2309,6 +2320,9 @@ $messages['pt-br'] = array(
 	'editaccount-status-tempuser' => 'Usuário Temporário',
 	'editaccount-error-tempuser-email' => 'Usuários temp. não podem ter um campo de endereço de email vazio, por favor digite um endereço de email.',
 	'editaccount-email-change-requested' => 'Usuário solicitou a troca de email via Preferências para $1. Para confirmar a solicitação de troca de email para o usuário, digite o endereço de email solicitado no campo abaixo e clique em "Salvar e Confirmar."',
+	'editaccount-submit-clearclosurerequest' => 'Apagar solicitação de fechamento',
+	'editaccount-error-clearclosurerequest' => 'Erro: a conta já está fechada ou não está programada para encerramento.',
+	'editaccount-success-clearclosurerequest' => 'Solicitação de encerramento apagada para 1$.', # Fuzzy
 	'editaccount-log' => 'Use o log de contas',
 	'editaccount-log-header' => 'Essa página lista mudanças feitas nas preferências de usuário pela equipe do Wikia (Wikia Staff).',
 	'editaccount-log-entry-email' => 'email alterado para o usuário $2',
