@@ -80,8 +80,6 @@
 
 					var $loginModal = loginModal.$element,
 						ajaxFormOptions = {
-							usernameInputName: 'userloginext01',
-							passwordInputName: 'userloginext02',
 							ajaxLogin: true,
 							modal: loginModal
 						};

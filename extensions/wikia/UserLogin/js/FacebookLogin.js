@@ -303,8 +303,6 @@
 			this.loginForm = new window.FacebookFormConnectUser($modal.find('.UserLoginFacebookRight'), {
 				ajaxLogin: true,
 				skipFocus: true,
-				usernameInputName: 'userloginext01',
-				passwordInputName: 'userloginext02',
 				callback: function () {
 					// Track FB Connect login
 					self.track({

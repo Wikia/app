@@ -281,11 +281,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function dropdown() {
 		$query = $this->app->wg->Request->getValues();
 
-		$this->response->setData( [
-			'returnto' => $this->getReturnToFromQuery( $query ),
-			'returntoquery' => $this->getReturnToQueryFromQuery( $query ),
-		] );
-
+		$this->response->setVal( 'returnto', $this->getReturnToFromQuery( $query ) );
+		$this->response->setVal( 'returntoquery', $this->getReturnToQueryFromQuery( $query ) );
 
 		$requestParams = $this->getRequest()->getParams();
 		if ( !empty( $requestParams['registerLink'] ) ) {
@@ -373,10 +370,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function modal() {
-		$this->response->setData( [
-			'loginToken' => UserLoginHelper::getLoginToken(),
-			'signupUrl' => Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl(),
-		] );
+		$this->response->setVal( 'loginToken', UserLoginHelper::getLoginToken() );
+		$this->response->setVal( 'signupUrl', Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl() );
 	}
 
 	/**
@@ -475,48 +470,36 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					$this->userLoginHelper->clearPasswordThrottle( $loginForm->mUsername );
 					// we're sure at this point we'll need the private field'
 					// value in the template let's pass them then
-					$this->response->setData( [
-						'username' => $loginForm->mUsername,
-						'result' => 'ok',
-					] );
+					$this->response->setVal( 'username', $loginForm->mUsername );
+					$this->response->setVal( 'result', 'ok' );
 				}
 				break;
 
 			case LoginForm::NEED_TOKEN:
 			case LoginForm::WRONG_TOKEN:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage('userlogin-error-sessionfailure')->escaped(),
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-sessionfailure')->escaped() );
 				break;
 			case LoginForm::NO_NAME:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage('userlogin-error-noname')->escaped(),
-					'errParam' => 'username',
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-noname')->escaped() );
+				$this->response->setVal( 'errParam', 'username' );
 				break;
 			case LoginForm::NOT_EXISTS:
 			case LoginForm::ILLEGAL:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage('userlogin-error-nosuchuser')->escaped(),
-					'errParam' => 'username',
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-nosuchuser')->escaped() );
+				$this->response->setVal( 'errParam', 'username' );
 				break;
 			case LoginForm::WRONG_PLUGIN_PASS:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage('userlogin-error-wrongpassword')->escaped(),
-					'errParam' => 'password',
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-wrongpassword')->escaped() );
+				$this->response->setVal( 'errParam', 'password' );
 				break;
 			case LoginForm::WRONG_PASS:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage('userlogin-error-wrongpassword')->escaped(),
-					'errParam' => 'password',
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-wrongpassword')->escaped() );
+				$this->response->setVal( 'errParam', 'password' );
 
 				$attemptedUser = User::newFromName($loginForm->mUsername);
 				if ( !is_null( $attemptedUser ) ) {
@@ -524,40 +507,30 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					if( !empty($disOpt) ||
 						(defined( 'CLOSED_ACCOUNT_FLAG' ) && $attemptedUser->getRealName() == CLOSED_ACCOUNT_FLAG ) ){
 						#either closed account flag was present, override fail message
-						$this->response->setData( [
-							'msg' => wfMessage('userlogin-error-edit-account-closed-flag')->escaped(),
-							'errParam' => '',
-						] );
+						$this->response->setVal( 'msg', wfMessage('userlogin-error-edit-account-closed-flag')->escaped() );
+						$this->response->setVal( 'errParam', '' );
 					}
 				}
 				break;
 			case LoginForm::EMPTY_PASS:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage('userlogin-error-wrongpasswordempty')->escaped(),
-					'errParam' => 'password',
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-wrongpasswordempty')->escaped() );
+				$this->response->setVal( 'errParam', 'password' );
 				break;
 			case LoginForm::RESET_PASS:
 				$this->response->setVal('result', 'resetpass');
 				break;
 			case LoginForm::THROTTLED:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage('userlogin-error-login-throttled')->escaped(),
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-login-throttled')->escaped() );
 				break;
 			case LoginForm::CREATE_BLOCKED:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage('userlogin-error-cantcreateaccount-text')->escaped(),
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-cantcreateaccount-text')->escaped() );
 				break;
 			case LoginForm::USER_BLOCKED:
-				$this->response->setData( [
-					'result' => 'error',
-					'msg' => wfMessage( 'userlogin-error-login-userblocked' )->escaped(),
-				] );
+				$this->response->setVal( 'result', 'error' );
+				$this->response->setVal( 'msg', wfMessage('userlogin-error-login-userblocked')->escaped() );
 				break;
 			default:
 				throw new MWException( "Unhandled case value" );
@@ -644,15 +617,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$editToken = $this->wg->User->getEditToken(); // $this->request->getVal( 'editToken', '' );
 		$this->editToken = $editToken;
 
-		$this->response->setData([
-			'username' => $username,
-			'password' => $password,
-			'newpassword' => $newPassword,
-			'retype' => $retype,
-			'editToken' => $editToken,
-			'loginToken' => $loginToken,
-			'returnto' => $returnto,
-		]);
+		$this->response->setVal( 'username', $username );
+		$this->response->setVal( 'password', $password );
+		$this->response->setVal( 'newpassword', $newPassword );
+		$this->response->setVal( 'retype', $retype );
+		$this->response->setVal( 'editToken', $editToken );
+		$this->response->setVal( 'loginToken', $loginToken );
+		$this->response->setVal( 'returnto', $returnto );
 
 		// since we don't support ajax GET, use of this parameter simulates a get request
 		// in reality, it is being posted
