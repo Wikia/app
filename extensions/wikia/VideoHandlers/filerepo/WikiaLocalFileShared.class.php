@@ -299,7 +299,8 @@ class WikiaLocalFileShared  {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'File metadata not an instance of an array. Expecting array', [
 					'type' => gettype( $this->metadata ),
-					'file' => $this->oFile
+					'file' => $this->oFile,
+					'exception' => new Exception()
 				]
 			);
 			$value = $default;
