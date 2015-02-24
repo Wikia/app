@@ -1,16 +1,19 @@
 /**
  * Interface for applying handlers to the single scroll event on window
  */
-define('wikia.onScroll', ['wikia.window'], function () {
+define('wikia.onScroll', ['jquery', 'wikia.window'], function ($, window) {
 	'use strict';
-	var handlers = [];
+	var handlers = [],
+		debounceRate = 5;
 
 	/**
 	 * Bind handler to the global scroll event
 	 * @param {Function} handler
 	 */
 	function bind(handler) {
-		handlers.push(handler);
+		if (typeof handler === 'function') {
+			handlers.push(handler);
+		}
 	}
 
 	/**
@@ -36,15 +39,20 @@ define('wikia.onScroll', ['wikia.window'], function () {
 
 	/**
 	 * Binds global scroll event listener
+	 * Handlers are triggered once, at the beginning
+	 * of every debounce rate
 	 */
 	function init() {
-		window.addEventListener('scroll', trigger);
+		window.addEventListener(
+			'scroll',
+			$.debounce(debounceRate, true, trigger)
+		);
 	}
 
 	return {
 		bind: bind,
 		unbind: unbind,
-		init: init,
+		init: init
 	};
 });
 

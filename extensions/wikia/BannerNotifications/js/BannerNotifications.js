@@ -5,7 +5,7 @@
  * BannerNotifications.show('Some success message', 'confirm')
  * BannerNotifications.show('Some error message', 'error', $('.myDiv'), 3000)
  */
-define('BannerNotification', [
+require([
 	'jquery',
 	'wikia.window',
 	'wikia.onScroll',
@@ -51,7 +51,7 @@ define('BannerNotification', [
 			this.type = type;
 			this.timeout = timeout;
 		}
-		this.onCloseHandler = null;
+		this.onCloseHandler = Function.prototype;
 	}
 
 	/**
@@ -93,7 +93,7 @@ define('BannerNotification', [
 	 */
 	BannerNotification.prototype.hide = function () {
 		if (!this.hidden) {
-			removeFromDOM(this.$element);
+			fadeOut(this.$element, removeFromDOM);
 			this.$element = null;
 			this.hidden = true;
 		}
@@ -178,7 +178,7 @@ define('BannerNotification', [
 	function createBackendNotification() {
 		var $backendNotification = $('.banner-notification');
 		if ($backendNotification.length) {
-			backendNotification = new BannerNotification();
+			backendNotification = new BannerNotification($backendNotification);
 			setUpClose(backendNotification);
 		}
 	}
@@ -243,9 +243,7 @@ define('BannerNotification', [
 	function setUpClose(notification) {
 		$(notification.$element).on('click', '.close', function (event) {
 			notification.hide();
-			if (notification.onCloseHandler) {
-				notification.onCloseHandler(event);
-			}
+			notification.onCloseHandler(event);
 		});
 	}
 
@@ -263,31 +261,43 @@ define('BannerNotification', [
 	}
 
 	/**
-	 * Removes notification element from DOM and executes callback
-	 * @param {jQuery} $elements - elements to be removed from DOM
+	 * Animates smooth fading of an element
+	 * @param {jQuery} $element
+	 * @param {Function} callback
 	 */
-	function removeFromDOM($elements) {
-		if ($elements.length) {
-			$elements.animate({
+	function fadeOut($element, callback) {
+		if ($element.length) {
+			$element.animate({
 				'height': 0,
 				'padding': 0,
 				'opacity': 0
 			}, 400, function () {
-				var $parent = $elements.parent();
-				if ($parent.hasClass('.banner-notifications-wrapper') &&
-					$parent.children().length === 1) {
-
-					$parent.remove();
-				} else {
-					$elements.remove();
-				}
+				callback($element);
 			});
 		}
 	}
 
+	/**
+	 * Removes notification element from DOM and executes callback
+	 * @param {jQuery} $element - elements to be removed from DOM
+	 */
+	function removeFromDOM($element) {
+		var $parent = $element.parent();
+		if ($parent.hasClass('.banner-notifications-wrapper') &&
+			$parent.children().length === 1) {
+
+			$parent.remove();
+		} else {
+			$element.remove();
+		}
+	}
+
+	init();
+
 	//Window global stays for legacy reasons
 	window.BannerNotification = BannerNotification;
 
-	init();
-	return BannerNotification;
+	define('BannerNotification', function () {
+		return BannerNotification;
+	});
 });
