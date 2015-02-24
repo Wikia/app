@@ -175,7 +175,7 @@ interface DatabaseType {
 	 *
 	 * @return string: wikitext of a link to the server software's web site
 	 */
-	static function getSoftwareLink();
+	function getSoftwareLink();
 
 	/**
 	 * A string describing the current software version, like from
@@ -585,17 +585,36 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Constructor.
-	 * @param $server String: database server host
-	 * @param $user String: database user name
-	 * @param $password String: database user password
-	 * @param $dbName String: database name
-	 * @param $flags
-	 * @param $tablePrefix String: database table prefixes. By default use the prefix gave in LocalSettings.php
+	 *
+	 * FIXME: It is possible to construct a Database object with no associated
+	 * connection object, by specifying no parameters to __construct(). This
+	 * feature is deprecated and should be removed.
+	 *
+	 * DatabaseBase subclasses should not be constructed directly in external
+	 * code. DatabaseBase::factory() should be used instead.
+	 *
+	 * @param array $params Parameters passed from DatabaseBase::factory()
 	 */
-	function __construct( $server = false, $user = false, $password = false, $dbName = false,
-		$flags = 0, $tablePrefix = 'get from global'
-	) {
+	function __construct( $params = null ) {
 		global $wgDBprefix, $wgCommandLineMode;
+
+		if ( is_array( $params ) ) { // MW 1.22
+			$server = $params['host'];
+			$user = $params['user'];
+			$password = $params['password'];
+			$dbName = $params['dbname'];
+			$flags = $params['flags'];
+			$tablePrefix = $params['tablePrefix'];
+		} else { // legacy calling pattern
+			wfDeprecated( __METHOD__ . " method called without parameter array.", "1.23" );
+			$args = func_get_args();
+			$server = isset( $args[0] ) ? $args[0] : false;
+			$user = isset( $args[1] ) ? $args[1] : false;
+			$password = isset( $args[2] ) ? $args[2] : false;
+			$dbName = isset( $args[3] ) ? $args[3] : false;
+			$flags = isset( $args[4] ) ? $args[4] : 0;
+			$tablePrefix = isset( $args[5] ) ? $args[5] : 'get from global';
+		}
 
 		$this->mFlags = $flags;
 
