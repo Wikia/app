@@ -15,12 +15,11 @@ var WikiaFooterApp = {
 			this.footer = $( '#WikiaFooter' );
 		}
 		this.toolbar = this.footer.children( '.toolbar' );
-		this.bn = $( '.banner-notification' );
 		this.windowObj = $( window );
 		this.originalWidth = this.toolbar.width();
 
 		// avoid stack overflow in IE (RT #98938)
-		if ( this.toolbar.exists() || this.bn.exists() ) {
+		if ( this.toolbar.exists() ) {
 			if (
 				!( navigator.platform in {'iPad':'', 'iPhone':'', 'iPod':''} ||
 					( navigator.userAgent.match( /android/i ) !== null ) )

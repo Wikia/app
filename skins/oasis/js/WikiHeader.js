@@ -390,7 +390,7 @@
 
 					if ( errorMessages.length > 0 ) {
 						$( '#publish' ).remove();
-						// TODO: use mustache and promise pattern along with .getMessages
+						// TODO: use .getMessages
 						new window.BannerNotification(
 							errorMessages.join( '</br>' ),
 							'error',

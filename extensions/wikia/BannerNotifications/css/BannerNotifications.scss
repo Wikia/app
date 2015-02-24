@@ -67,13 +67,6 @@
 		}
 	}
 
-	// global nav doesn't scroll with the page when the page is small
-	@media #{$below-small} {
-		&.float {
-			top: 0;
-		}
-	}
-
 	.msg {
 		font-size: 13px;
 		line-height: 16px;
@@ -90,8 +83,14 @@
 		width: 14px;
 
 		img {
-			height: 11px;
-			width: 12px;
+			background-image: url('/skins/oasis/images/icon_close.png');
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: 12px 11px;
+			content: "";
+			display: block;
+			height: 100%;
+			width: 100%;
 		}
 	}
 }
@@ -107,6 +106,13 @@
 		margin-left: -515px;
 		position: fixed;
 		top: $global-navigation-height;
+	}
+
+	// global nav doesn't scroll with the page when the page is small
+	@media #{$below-small} {
+		&.float {
+			top: 0;
+		}
 	}
 }
 
