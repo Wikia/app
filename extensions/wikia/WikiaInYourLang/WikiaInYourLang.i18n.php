@@ -10,7 +10,7 @@ $messages = array();
  */
 $messages['en'] = [
 	'wikia-in-your-lang-description' => 'Displays a notification if a wikia is available in a user\'s native language. The check is based on Geo cookie and a browser\'s language.',
-	'wikia-in-your-lang-available' => 'The $1 wikia is also available in English. Check it out! [$2 $3]',
+	'wikia-in-your-lang-available' => '$1 is also available in English. Check it out! [$2 $3]',
 ];
 
 /**

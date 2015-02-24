@@ -188,6 +188,7 @@ $messages['aeb'] = array(
  * @author Gagnabil
  * @author Kuwaity26
  * @author Meno25
+ * @author Sonic N800
  */
 $messages['ar'] = array(
 	'wikia-visualeditor-preference-enable' => 'تفعيل المحرر المرئي التجريبي',
@@ -225,7 +226,7 @@ $messages['ar'] = array(
 	'wikia-visualeditor-notification-media-query-failed' => 'عذرًا، لم نتمكن من إيجاد صورة مدعومة أو فيديو مدعوم في عنوان URL ذاك.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'الإذن مرفوض.',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'عذراً، لا يتوفر هذا الفيديو للمعاينة.',
-	'wikia-visualeditor-loading' => 'يتم تحميل المعدل المرئي.',
+	'wikia-visualeditor-loading' => 'يتم تحميل المحرر المرئي...',
 	'wikia-visualeditor-dialog-preference-headline' => 'مرحبا بك يا أيها المعجب!',
 	'wikia-visualeditor-dialog-preference-text' => 'تم تحديث معدلنا لكي يوفر أدوات متطورة لكي يساعدك لإنشاء مقالات أثرى.',
 	'wikia-visualeditor-dialog-preference-link-help' => 'اقرأ عن الخاصيات الجديدة',
@@ -530,8 +531,8 @@ $messages['de'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Medya dek',
-	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Medya dek',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Medya',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Medya cı ke',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Sername',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisans',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Na etiketer wedarne',
@@ -961,11 +962,15 @@ $messages['gu'] = array(
 /** Hebrew (עברית)
  * @author Amire80
  * @author Guycn2
+ * @author YaronSh
  * @author YehudaDe
  */
 $messages['he'] = array(
 	'wikia-visualeditor-preference-enable' => 'הפעלת עורך חזותי (בטא)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'מדיה',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'יצירת מפה',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'ניתן לבחור במפה קיימת או ליצור מפה לצורך הוספתה. <a href="$1" target="_blank">מידע נוסף.</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'עדיין לא נוצרו מפות',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'הוספת מדיה',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'כותרת',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'רישיון',
@@ -977,6 +982,8 @@ $messages['he'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'שגיאה בהעלאת קובץ',
 	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'חשפו משהו או הזינו URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'תצוגה מקדימה תגיע בקרוב!',
+	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'מידע נוסף',
+	'wikia-visualeditor-dialog-drop-target-callout' => 'ניתן לגרור את הקבצים שלך לכאן',
 	'wikia-visualeditor-help-label' => 'בעיות ידועות',
 	'wikia-visualeditor-help-link' => 'Help:עורך חזותי',
 	'wikia-visualeditor-beta-warning' => 'זאת אינטגרציה בגרסת בטא של העורך החזותי בוויקיה. יש פה כמה בעיות, אבל אנחנו מקווים שתאהבו את זה!',
@@ -998,8 +1005,12 @@ $messages['he'] = array(
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'בוויקי הזה אפשר להוסיף רק תוכן עם רישיון מתוך <a href="http://video.wikia.com" target="_blank">Wikia Video Library</a>. נא ללכת אל <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> כדי לחפש סרטים.',
 	'wikia-visualeditor-notification-media-query-failed' => 'סליחה, לא הצלחנו למצוא תמונה או סרט בכתובת הזאת.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'אין ההרשאה',
+	'wikia-visualeditor-notification-video-preview-not-available' => 'התצוגה המקדימה של הווידאו אינה זמינה לצפייה, עמך הסליחה.',
+	'wikia-visualeditor-dialog-orientation-headline' => 'ברוך בואך',
+	'wikia-visualeditor-save-error-generic' => 'אירעה שגיאה בשמירת הנתונים לשרת.',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'מקור',
 	'wikia-visualeditor-dialog-done-button' => 'סיום',
+	'wikia-visualeditor-dialog-cancel-button' => 'ביטול',
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'עדכון התצוגה המקדימה',
 	'wikia-visualeditor-context-transclusion-description' => 'עריכה',
 	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'חיפוש תבנית באמצעות שם או ערך',
@@ -1009,6 +1020,7 @@ $messages['he'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'קריאה על התכונות החדשות',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'ניהול ההעדפות שלך עבור העורך',
 	'wikia-visualeditor-dialog-preference-start-button' => 'הבנתי!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'גלריה',
 );
 
 /** Hungarian (magyar)
@@ -1201,13 +1213,16 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'wikia-visualeditor-preference-enable' => '비쥬얼 에디터 베타 사용',
-	'wikia-visualeditor-help-link' => '도움말:비쥬얼 에디터', # Fuzzy
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '지도',
+	'wikia-visualeditor-help-link' => '도움말:시각 편집기', # Fuzzy
 	'wikia-visualeditor-dialog-transclusion-title' => '편집',
 	'wikia-visualeditor-dialog-transclusion-filter' => '특정 영역, 혹은 값으로 찾기',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => '틀',
 	'wikia-visualeditor-savedialog-label-save' => '저장',
 	'wikia-visualeditor-toolbar-savedialog' => '저장',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => '도움말:위키 문법', # Fuzzy
 	'wikia-visualeditor-loading' => '비쥬얼 에디터 불러오는 중...',
+	'wikia-visualeditor-dialog-map-insert-title' => '지도 삽입',
 	'wikia-visualeditor-dialog-done-button' => '완료',
 	'wikia-visualeditor-dialog-cancel-button' => '취소',
 	'wikia-visualeditor-dialog-transclusion-get-info' => '"$1" 틀에 대한 정보 보기',

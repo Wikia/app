@@ -81,7 +81,7 @@ class SpecialEditTopList extends SpecialPage {
 			$userCanEditItems = $list->checkUserItemsRight( 'edit' );
 			$userCanDeleteItems = $list->checkUserItemsRight( 'delete' );
 
-			if ( $wgRequest->wasPosted() ) {
+			if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
 				TopListHelper::clearSessionItemsErrors();
 
 				$relatedArticleName = $wgRequest->getText( 'related_article_name' );
@@ -402,7 +402,8 @@ class SpecialEditTopList extends SpecialPage {
 				),
 				'removedItems' => $removedItems,
 				'userCanEditItems' => $userCanEditItems,
-				'userCanDeleteItems' => $userCanDeleteItems
+				'userCanDeleteItems' => $userCanDeleteItems,
+				'token' => $wgUser->getEditToken(),
 			) );
 
 			// render template

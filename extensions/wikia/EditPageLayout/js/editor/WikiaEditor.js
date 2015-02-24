@@ -164,7 +164,7 @@
 		};
 	})();
 
-	// reload the edit page (used by AjaxLogin / UserLogin) - BugId:5307
+	// reload the edit page (used by UserLogin) - BugId:5307
 	WE.reloadEditor = function() {
 		var editorInstance = WE.getInstance(),
 			editorForm = editorInstance.ui.getForm();

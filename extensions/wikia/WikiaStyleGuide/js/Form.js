@@ -64,16 +64,16 @@
 	 * Note: this doesn't work with dynamic inputs
 	 */
 	WikiaForm.prototype.setInputs = function () {
-		var inputs, input, i, name;
+		var inputs, $input, i, name;
 
 		this.inputs = {};
 		inputs = this.el.find('input, select, textarea');
 
 		for (i = 0; i < inputs.length; i++) {
-			input = $(inputs[i]);
-			name = input.attr('name');
+			$input = $(inputs[i]);
+			name = $input.attr('name');
 			if (name) {
-				this.inputs[name] = input;
+				this.inputs[name] = $input;
 			}
 		}
 	};

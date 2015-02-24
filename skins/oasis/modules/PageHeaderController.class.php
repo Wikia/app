@@ -145,11 +145,6 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
-	private function isSearchInputDisplayed( $params ) {
-		global $wgEnableGlobalNavExt;
-		return !empty ( $params['showSearchBox'] ) && empty ( $wgEnableGlobalNavExt );
-	}
-
 	public static function formatTimestamp( $stamp ) {
 
 		$diff = time() - strtotime( $stamp );
@@ -370,10 +365,6 @@ class PageHeaderController extends WikiaController {
 			$this->pageType = $this->subtitle;
 			$this->subtitle = '';
 		}
-
-		// if page is rendered using one column layout, show search box as a part of page header
-		// if new global nav is enabled - disable search box
-		$this->showSearchBox = $this->isSearchInputDisplayed( $params );
 
 		if ( !empty( $wgSupressPageTitle ) ) {
 			$this->title = '';
@@ -618,7 +609,6 @@ class PageHeaderController extends WikiaController {
 	 * Render page header for Hubs
 	 *
 	 * @param: array $params
-	 *    key: showSearchBox (default: false)
 	 */
 	public function executeHubs( $params ) {
 		global $wgSupressPageTitle;
@@ -633,9 +623,6 @@ class PageHeaderController extends WikiaController {
 
 		// number of pages on this wiki
 		$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
-
-		// if page is rendered using one column layout, show search box as a part of page header
-		$this->showSearchBox = $this->isSearchInputDisplayed( $params );
 
 		if ( !empty( $wgSupressPageTitle ) ) {
 			$this->title = '';

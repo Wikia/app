@@ -60,7 +60,7 @@ class SpecialCreateTopList extends SpecialPage {
 		$items = null;
 		$userCanEditItems = $userCanDeleteItems = true;
 
-		if( $wgRequest->wasPosted() ) {
+		if( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
 			$listName = $wgRequest->getText( 'list_name' );
 			$relatedArticleName = $wgRequest->getText( 'related_article_name' );
 			$selectedPictureName = $wgRequest->getText( 'selected_picture_name' );
@@ -112,10 +112,10 @@ class SpecialCreateTopList extends SpecialPage {
 
 					if ( empty( $title ) ) {
 						$errors[ 'related_article_name' ] = array( wfMsg( 'toplists-error-invalid-title' )  );
-					} 
+					}
 					elseif ( !wfRunHooks( "PageTitleFilter", array( $title, &$error_msg ) ) ) {
 						$errors[ 'related_article_name' ] = array( ( !empty($error_msg) ) ? $error_msg : wfMsg( 'spamprotectiontext' ) );
-					} 
+					}
 					else {
 						$setResult = $list->setRelatedArticle( $title );
 
@@ -269,7 +269,8 @@ class SpecialCreateTopList extends SpecialPage {
 				$items
 			),
 			'userCanEditItems' => $userCanEditItems,
-			'userCanDeleteItems' => $userCanDeleteItems
+			'userCanDeleteItems' => $userCanDeleteItems,
+			'token' => $wgUser->getEditToken(),
 		) );
 
 		// render template

@@ -1,11 +1,5 @@
 <?php
 class UserWikisFilterUniqueDecorator extends UserWikisFilterDecorator {
-	private $filter;
-
-	public function __construct( UserWikisFilter $filter ) {
-		$this->filter = $filter;
-	}
-
 	public function getFiltered() {
 		$filtered = $this->filter->getFiltered();
 		$ids = [];

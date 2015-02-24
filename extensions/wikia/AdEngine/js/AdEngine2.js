@@ -2,10 +2,10 @@
 define('ext.wikia.adEngine.adEngine', [
 	'wikia.log',
 	'wikia.lazyqueue',
-	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.eventDispatcher',
-	'ext.wikia.adEngine.provider.null'
-], function (log, LazyQueue, slotTracker, eventDispatcher, adProviderNull) {
+	'ext.wikia.adEngine.slotTracker',
+	'ext.wikia.adEngine.slotTweaker'
+], function (log, LazyQueue, eventDispatcher, slotTracker, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';
@@ -67,11 +67,9 @@ define('ext.wikia.adEngine.adEngine', [
 			var slotName = slot.slotname,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
 
-			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
+			slotTweaker.show(slotName);
 
-			function noop() {
-				return;
-			}
+			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
 
 			function nextProvider() {
 				var provider;
@@ -80,13 +78,13 @@ define('ext.wikia.adEngine.adEngine', [
 					provider = providerList.shift();
 
 					if (!provider) {
-						delete slot.success;
+						slotTweaker.hide(slotName);
 
 						if (slot.error) {
-							slot.error(slot, adProviderNull);
+							slot.error(slot);
 						}
 
-						return fillInSlotUsingProvider(slot, adProviderNull, noop);
+						return;
 					}
 
 					if (provider.canHandleSlot(slotName)) {
