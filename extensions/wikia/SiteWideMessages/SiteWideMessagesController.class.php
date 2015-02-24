@@ -16,7 +16,7 @@ class SiteWideMessagesController extends WikiaController  {
 
 		$this->siteWideMessagesCount = count( $msgs );
 		$this->siteWideMessages = $msgs;
-		$this->notificationType = BannerNotificationsController::NOTIFICATION_SITEWIDE;
+		$this->notificationType = NotificationsController::NOTIFICATION_SITEWIDE;
 
 		$this->response->setCacheValidity( self::CACHE_VALIDITY_VARNISH, self::CACHE_VALIDITY_BROWSER );
 	}

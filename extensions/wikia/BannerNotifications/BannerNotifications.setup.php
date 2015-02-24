@@ -24,7 +24,6 @@ $wgAutoloadClasses[ 'BannerNotificationsController' ] = $dir . 'BannerNotificati
 /**
  * Hooks
  */
-// confirmations
 $wgHooks['ArticleDeleteComplete'][] = 'BannerNotificationsController::addPageDeletedConfirmation';
 $wgHooks['ArticleUndelete'][] = 'BannerNotificationsController::addPageUndeletedConfirmation';
 $wgHooks['SpecialMovepageAfterMove'][] = 'BannerNotificationsController::addPageMovedConfirmation';
@@ -32,13 +31,6 @@ $wgHooks['SpecialPreferencesOnRender'][] = 'BannerNotificationsController::addPr
 $wgHooks['UserLogoutComplete'][] = 'BannerNotificationsController::addLogOutConfirmation';
 $wgHooks['SkinAfterBottomScripts'][] = 'BannerNotificationsController::onSkinAfterBottomScripts';
 $wgHooks['OutputPageBeforeHTML'][] = 'BannerNotificationsController::onOutputPageBeforeHTML';
-
-// notifications
-$wgHooks['AchievementsNotification'][] = 'BannerNotificationsController::addBadgeNotification';
-$wgHooks['CommunityMessages::showMessage'][] = 'BannerNotificationsController::addCommunityMessagesNotification';
-$wgHooks['EditSimilar::showMessage'][] = 'BannerNotificationsController::addEditSimilarNotification';
-$wgHooks['SiteWideMessagesNotification'][] = 'BannerNotificationsController::addSiteWideMessageNotification';
-$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'BannerNotificationsController::addMessageNotification';
 
 /**
  * i18n

@@ -42,6 +42,13 @@ function wfOasisSetup() {
 	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosController::onImageRenameCompleated';
 	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationController::onWikiFactoryChanged';
 
+	// notifications
+	$wgHooks['AchievementsNotification'][] = 'NotificationsController::addBadgeNotification';
+	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsController::addCommunityMessagesNotification';
+	$wgHooks['EditSimilar::showMessage'][] = 'NotificationsController::addEditSimilarNotification';
+	$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsController::addSiteWideMessageNotification';
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMessageNotification';
+
 	// misc
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
 

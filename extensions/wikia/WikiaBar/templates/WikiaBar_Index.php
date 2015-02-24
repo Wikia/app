@@ -1,6 +1,6 @@
 <?php if( empty($wgSuppressWikiaBar) ): ?>
 <div id="WikiaBar">
-	<?= F::app()->renderView('BannerNotifications', 'Index'); ?>
+	<?= F::app()->renderView('Notifications', 'Index'); ?>
 	<div id="WikiaBarWrapper" class="WikiaBarWrapper hidden">
 		<? if(!empty($wg->WikiaSeasonsWikiaBar) && $wg->User->isAnon()): ?>
 			<div class="wikia-bar-seasons">
