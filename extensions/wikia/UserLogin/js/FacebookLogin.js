@@ -274,6 +274,8 @@
 				ajaxLogin: true,
 				skipFocus: true,
 				ajaxValidation: true,
+				// Use input aliases b/c it's a signup form, so it will match validation on back
+				// end with other signup forms
 				usernameInputName: 'userloginext01',
 				passwordInputName: 'userloginext02',
 				callback: function () {
