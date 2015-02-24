@@ -120,9 +120,17 @@ $config['LicensedVideoSwap'] = array(
 );
 
 $config['VideoPageTool'] = array(
-	'name' => 'VideoPageTool',
+	'name'   => 'VideoPageTool',
 	'source' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/",
 	'sprite' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool.png",
 	'scss'   => "$IP/extensions/wikia/VideoPageTool/css/mixins/_sprite-VideoPageTool.scss"
+
+);
+
+$config['MonetizationModule'] = array(
+	'name'   => 'MonetizationModule',
+	'source' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module/",
+	'sprite' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module.png",
+	'scss'   => "$IP/extensions/wikia/MonetizationModule/styles/mixins/_sprite-monetization-module.scss"
 
 );

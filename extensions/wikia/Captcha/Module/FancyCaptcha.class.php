@@ -294,7 +294,8 @@ class FancyCaptcha extends BaseCaptcha {
 	}
 
 	/**
-	 * Delete a solved captcha image.
+	 * Determine if a captcha is correct. This will possibly delete the solved captcha image
+	 * if wgCaptchaDeleteOnSolve is true
 	 *
 	 * @return bool
 	 */

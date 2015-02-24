@@ -2243,6 +2243,14 @@ $config['facebook_client_preferences_scss'] = [
 	]
 ];
 
+$config['facebook_client_xfbml_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/scripts/FacebookClient.XFBML.js',
+	]
+];
+
 $config['delayed_hover_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'venus'],
