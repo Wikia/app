@@ -170,7 +170,7 @@
 
 		// handle "Preview" button
 		onPreview: function ( ev ) {
-			this.renderPreview({});
+			this.renderPreview({}, 'current');
 			this.editor.track( 'preview' );
 
 			ev.preventDefault();
