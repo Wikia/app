@@ -8,6 +8,9 @@ $messages['en'] = array(
 	'wikia-editor-preview-mobile-width' => 'Mobile',
 	'wikia-editor-preview-venus-width' => 'Venus',
 	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devices, or your current display.",
+	'wikia-editor-preview-best-practices-notice' => "Did you know that over 50% of Wikia users are reading your content on mobile? Some custom templates are not properly shown on mobile devices. Let's check out wikitext best practices for both mobile and desktop.",
+	'wikia-editor-preview-best-practices-button' => "Best practices",
+	'wikia-editor-preview-best-practices-button-link' => "http://community.wikia.com/wiki/Some_URL",
 );
 
 /** Message Documentation */
@@ -17,6 +20,9 @@ $messages['qqq'] = array(
 	'wikia-editor-preview-min-width' => 'select option; after choosing it a user see preview of the article in minimum supported width (1024px)',
 	'wikia-editor-preview-max-width' => 'select option; after choosing it a user see preview of the article in maximum supported width (1600px)',
 	'wikia-editor-preview-type-tooltip' => 'content of a comics bubble displayed after hovering over small icon with a question mark; it explains what preview type select does',
+	'wikia-editor-preview-best-practices-notice' => "A notice shown at the top of the preview dialog, with a button (link) next to the notice",
+	'wikia-editor-preview-best-practices-button' => "A button (link) label which leads to a separate page describing best practices and advice on how to create content for mobile and desktop",
+	'wikia-editor-preview-best-practices-button-link' => "http://community.wikia.com/wiki/Some_URL",
 );
 
 /** Polish */
