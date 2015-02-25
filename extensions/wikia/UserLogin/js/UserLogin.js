@@ -16,8 +16,11 @@
 			window.onbeforeunload = function () {};
 			UserLoginModal.show({
 				origin: 'editor',
-				persistModal: true,
+				// called after user logs in successfully
 				callback: function () {
+					if (window.UserLoginModal.$modal) {
+						UserLoginModal.$modal.trigger('close');
+					}
 					if (window.WikiaEditor) {
 						WikiaEditor.reloadEditor();
 					}

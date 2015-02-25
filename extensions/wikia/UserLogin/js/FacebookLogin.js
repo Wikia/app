@@ -170,6 +170,7 @@
 			} else if (response.loginAborted) {
 				window.GlobalNotification.show(response.errorMsg, 'error');
 			} else if (response.unconfirmed) {
+
 				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
 					method: 'getUnconfirmedUserRedirectUrl',
@@ -272,6 +273,11 @@
 			this.signupForm = new window.FacebookFormCreateUser($modal.find('.UserLoginFacebookLeft'), {
 				ajaxLogin: true,
 				skipFocus: true,
+				ajaxValidation: true,
+				// Use input aliases b/c it's a signup form, so it will match validation on back
+				// end with other signup forms
+				usernameInputName: 'userloginext01',
+				passwordInputName: 'userloginext02',
 				callback: function () {
 					// Track FB Connect Sign Up
 					self.track({

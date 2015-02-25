@@ -71,8 +71,6 @@
 				uiModal.createComponent(modalConfig, function (loginModal) {
 					UserLoginModal.$modal = loginModal;
 
-					var $loginModal = loginModal.$element;
-
 					// Init facebook button inside login modal
 					if (window.FacebookLogin) {
 						// SOC-273 remove 'hidden' class even if element isn't in the DOM yet
@@ -80,51 +78,18 @@
 						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL);
 					}
 
-					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
-						ajaxLogin: true,
-						// context is this instance of UserLoginAjaxForm
-						callback: function (res) {
-							window.wgUserName = res.username;
-							var callback = options.callback;
-							if (callback && typeof callback === 'function') {
-								if (!options.persistModal) {
-									UserLoginModal.$modal.trigger('close');
-								}
-								callback();
-							} else {
-								this.reloadPage();
-							}
-						},
-						// context is this instance of UserLoginAjaxForm
-						resetpasscallback: function () {
-							$.nirvana.sendRequest({
-								controller: 'UserLoginSpecial',
-								method: 'changePassword',
-								format: 'html',
-								data: {
-									username: this.inputs.username.val(),
-									password: this.inputs.password.val(),
-									returnto: this.inputs.returnto.val(),
-									fakeGet: 1
-								},
-								callback: function (html) {
-									var content = $('<div style="display:none" />').append(html),
-										heading = content.find('h1'),
-										modal = loginModal,
-										contentBlock = $loginModal.find('.UserLoginModal');
+					var $loginModal = loginModal.$element,
+						ajaxFormOptions = {
+							ajaxLogin: true,
+							modal: loginModal
+						};
 
-									modal.setTitle(heading.text());
-									heading.remove();
+					// UserLogin.js sends a callback function for reloading the classic editor after forced login
+					if (typeof options.callback === 'function') {
+						ajaxFormOptions.callback = options.callback;
+					}
 
-									contentBlock.slideUp(400, function () {
-										contentBlock.html('').html(content);
-										content.show();
-										contentBlock.slideDown(400);
-									});
-								}
-							});
-						}
-					});
+					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, ajaxFormOptions);
 
 					if (options.modalInitCallback && typeof options.modalInitCallback === 'function') {
 						options.modalInitCallback();

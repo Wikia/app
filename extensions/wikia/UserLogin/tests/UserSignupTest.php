@@ -114,7 +114,7 @@
 			$mockUserParams1 = null;
 			$mockUserLoginForm1 = null;
 			$expMsg1 = wfMessage( 'userlogin-error-noname' )->escaped();
-			$expErrParam1 = 'username';
+			$expErrParam1 = 'userloginext01';
 
 			// error - username exists in temp user
 			$reqParams2 = array(
@@ -161,7 +161,7 @@
 				'userloginext02' => '',
 			);
 			$expMsg5 = wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped();
-			$expErrParam2 = 'password';
+			$expErrParam2 = 'userloginext02';
 
 			// error - password length exceed limit
 			$reqParams6 = array(

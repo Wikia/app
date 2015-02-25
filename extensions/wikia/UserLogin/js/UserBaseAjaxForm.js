@@ -1,4 +1,4 @@
-/*global WikiaForm */
+/*global WikiaForm, UserSignupAjaxValidation */
 (function () {
 	'use strict';
 
@@ -7,15 +7,24 @@
 	 * @abstract
 	 * @param {HTMLElement|jQuery} el Wrapper element for form
 	 * @param {Object} options
+	 * - ajaxLogin: Boolean to submit form via ajax
+	 * - ajaxValidation: Boolean to validate with ajax or not
+	 * - skipFocus: Boolean to not focus on the first input upon init
+	 * - usernameInputName: Alias for username input
+	 * - passwordInputName: Alias for password input
+	 * - callback: Function called upon success response
+	 * - modal: UI Modal object where form is located
 	 * @constructor
 	 */
-	var UserBaseAjaxForm = function (el, options) {
+	var UserBaseAjaxForm = function UserBaseAjaxForm(el, options) {
 		if (!(el instanceof HTMLElement || el instanceof jQuery || typeof el === 'string')) {
 			throw new Error('This module requires an element or selector as its first argument');
 		}
 
 		this.el = $(el);
 		this.options = options || {};
+		this.usernameInputName = options.usernameInputName || 'username';
+		this.passwordInputName = options.passwordInputName || 'password';
 
 		this.init();
 	};
@@ -26,11 +35,16 @@
 	UserBaseAjaxForm.prototype.init = function () {
 		this.wikiaForm = new WikiaForm(this.el.find('form'));
 		this.inputs = this.wikiaForm.inputs;
+
 		this.cacheDOM();
 		this.bindEvents();
 
 		if (!this.options.skipFocus) {
-			this.inputs.username.focus();
+			this.inputs[this.usernameInputName].focus();
+		}
+
+		if (this.options.ajaxValidation) {
+			this.setupAjaxValidation();
 		}
 	};
 
@@ -67,19 +81,34 @@
 
 	/**
 	 * Make the call to the back end to log the user in via ajax
+	 * @abstract
 	 */
-	UserBaseAjaxForm.prototype.ajaxLogin = function () {
-		$.nirvana.postJson(
-			'UserLoginSpecial',
-			'login',
-			{
-				loginToken: this.loginToken,
-				username: this.inputs.username.val(),
-				password: this.inputs.password.val(),
-				keeploggedin: this.inputs.keeploggedin.is(':checked')
-			},
-			this.submitLoginHandler.bind(this)
-		);
+	UserBaseAjaxForm.prototype.ajaxLogin = function () {};
+
+	/**
+	 * Setting up simple validation for username, password, and email.
+	 * We may want to extend this at some point to pass in the form fields to validate. For now, only
+	 * supports onblur of text-like inputs (not select or checkbox).
+	 */
+	UserBaseAjaxForm.prototype.setupAjaxValidation = function () {
+		var inputsToValidate = [this.usernameInputName, this.passwordInputName],
+			inputs = this.wikiaForm.inputs,
+			validator;
+
+		if (inputs.email) {
+			inputsToValidate.push('email');
+		}
+
+		validator = new UserSignupAjaxValidation({
+			wikiaForm: this.wikiaForm,
+			submitButton: inputs.submit,
+			inputsToValidate: inputsToValidate
+		});
+
+		inputsToValidate.forEach(function (inputName) {
+			this.inputs[inputName]
+				.on('blur', validator.validateInput.bind(validator));
+		}, this);
 	};
 
 	/**
@@ -140,7 +169,7 @@
 			controller: 'UserLoginSpecial',
 			method: 'getUnconfirmedUserRedirectUrl',
 			format: 'json',
-			username: this.inputs.username.val()
+			username: this.inputs[this.usernameInputName].val()
 		}, function (json) {
 			window.location = json.redirectUrl;
 		});
@@ -170,7 +199,7 @@
 			'UserLoginSpecial',
 			'mailPassword',
 			{
-				username: this.inputs.username.val()
+				username: this.inputs[this.usernameInputName].val()
 			},
 			// error validation will show success and error messages in this case
 			this.errorValidation.bind(this)

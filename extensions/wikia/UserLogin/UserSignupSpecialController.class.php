@@ -8,6 +8,10 @@
  */
 class UserSignupSpecialController extends WikiaSpecialPageController {
 
+	// CE-413 changed input names due to signup spam attack
+	const SIGNUP_USERNAME_KEY = 'userloginext01';
+	const SIGNUP_PASSWORD_KEY = 'userloginext02';
+
 	/** @var UserLoginHelper */
 	private $userLoginHelper = null;
 
@@ -92,9 +96,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs(); // just in case...
 
 		// form params
-		$this->username = $this->request->getVal( 'userloginext01', '' );
+		$this->username = $this->request->getVal( self::SIGNUP_USERNAME_KEY, '' );
 		$this->email = $this->request->getVal( 'email', '' );
-		$this->password = $this->request->getVal( 'userloginext02', '' );
+		$this->password = $this->request->getVal( self::SIGNUP_PASSWORD_KEY, '' );
 		$this->birthmonth = $this->request->getVal( 'birthmonth', '' );
 		$this->birthday = $this->request->getVal( 'birthday', '' );
 		$this->birthyear = $this->request->getVal( 'birthyear', '' );
@@ -194,9 +198,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @brief ajax call for signup.  returns status code
-	 * @details
-	 *   for use with ajax call or standalone data call only
+	 * Ajax call for signup.  returns status code
+	 * For use with ajax call or standalone data call only
 	 * @requestParam string userloginext01 //CE-413 signup spam attack - changing username field to userloginext01
 	 * @requestParam string email
 	 * @requestParam string userloginext02 //CE-413 signup spam attack - changing password field to userloginext02
@@ -588,11 +591,12 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * validate form
+	 * Back end for ajax form validation. Not to be used with actual form submission.
+	 * Note: userloginex0* fields are from CE-413 signup spam attack
 	 * @requestParam string field [userloginext01/userloginext02/email/birthdate]
-	 * @requestParam string userloginext01 //CE-413 signup spam attack - changing username field to userloginext01
+	 * @requestParam string userloginext01 (aka username)
 	 * @requestParam string email
-	 * @requestParam string userloginext02 //CE-413 signup spam attack - changing password field to userloginext02
+	 * @requestParam string userloginext02 (aka password)
 	 * @requestParam string birthmonth
 	 * @requestParam string birthday
 	 * @requestParam string birthyear
@@ -600,24 +604,24 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 * @responseParam string errParam - error param
 	 */
-	public function formValidation() {
+	public function formAjaxValidation() {
 		$field = $this->request->getVal( 'field', '' );
 		$signupForm = new UserLoginForm( $this->wg->request );
 		$signupForm->load();
 
 		switch( $field ) {
-			case 'userloginext01' :
-				$response = $signupForm->initValidationUsername();
+			case self::SIGNUP_USERNAME_KEY:
+				$signupForm->initValidationUsername( self::SIGNUP_USERNAME_KEY );
 				break;
-			case 'userloginext02' :
-				$response = $signupForm->initValidationPassword();
+			case self::SIGNUP_PASSWORD_KEY:
+				$signupForm->initValidationPassword( self::SIGNUP_PASSWORD_KEY );
 				break;
-			case 'email' :
-				$response = $signupForm->initValidationEmail()
+			case 'email':
+				$signupForm->initValidationEmail()
 					&& $signupForm->initValidationRegsPerEmail();
 				break;
-			case 'birthdate' :
-				$response = $signupForm->initValidationBirthdate();
+			case 'birthdate':
+				$signupForm->initValidationBirthdate();
 				break;
 		}
 
