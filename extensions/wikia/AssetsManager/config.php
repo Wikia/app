@@ -2303,3 +2303,11 @@ $config['banner_notifications_js'] = [
 		'//extensions/wikia/BannerNotifications/js/templates.mustache.js',
 	]
 ];
+
+$config['wikia_in_your_lang_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/WikiaInYourLang/modules/ext.wikiaInYourLang.js',
+	]
+];

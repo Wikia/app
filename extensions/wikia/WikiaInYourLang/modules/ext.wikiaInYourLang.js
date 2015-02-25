@@ -122,14 +122,10 @@ require(
 
 		function bindEvents(bannerNotification) {
 			bannerNotification
-				.onClose(function () {
-					onNotificationClosed();
-				});
+				.onClose(onNotificationClosed);
 			bannerNotification
 				.$element
-				.on('click', '.text', function () {
-					onLinkClick();
-				});
+				.on('click', '.text', onLinkClick);
 		}
 
 		function onNotificationClosed() {
