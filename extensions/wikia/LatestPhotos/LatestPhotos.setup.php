@@ -20,6 +20,6 @@ $wgAutoloadClasses[ 'LatestPhotosHooks' ] =  __DIR__ . '/LatestPhotosHooks.class
 
 $wgHooks['FileDeleteComplete'][] = 'LatestPhotosHooks::onImageDelete';
 $wgHooks['MessageCacheReplace'][] = 'LatestPhotosHooks::onMessageCacheReplace';
-$wgHooks['UploadComplete'][] = 'LatestPhotosController::onImageUploadComplete';
-$wgHooks['FileUpload'][] = 'LatestPhotosController::onImageUpload';
-$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosController::onImageRenameCompleated';
+$wgHooks['UploadComplete'][] = 'LatestPhotosHooks::onImageUploadComplete';
+$wgHooks['FileUpload'][] = 'LatestPhotosHooks::onImageUpload';
+$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosHooks::onImageRenameCompleated';

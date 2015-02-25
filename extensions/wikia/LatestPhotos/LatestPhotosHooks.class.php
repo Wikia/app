@@ -2,7 +2,7 @@
 
 class LatestPhotosHooks {
 
-	public static function onImageUpload( $image, $reupload, $hasDescription ){
+	public static function onImageUpload( $image, $reupload, $hasDescription ) {
 		self::avoidUpdateRace();
 		self::invalidateCacheWikiTotalImages( $image, $reupload );
 		return true;
@@ -44,9 +44,9 @@ class LatestPhotosHooks {
 		// avoid a race in update event propgation by deleting key after 10 seconds
 		// Memcache delete with a timeout is not implemented, but we can use set to fake it
 		$thumbUrls = $wgMemc->get(LatestPhotosController::memcacheKey());
-
-		if (!empty($thumbUrls))
+		if (!empty($thumbUrls)) {
 			$wgMemc->set(LatestPhotosController::memcacheKey(), $thumbUrls, 10);
+		}
 	}
 
 	protected static function invalidateCacheWikiTotalImages( $file, $reupload ) {
