@@ -224,11 +224,11 @@ class ExternalUser_Wikia extends ExternalUser {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'HELIOS_LOGIN',
 				[ 'helios'         => $bHeliosResult,
-				  'mediawiki'    => $bMediaWikiResult,
+				  'mediawiki'      => $bMediaWikiResult,
 				  'user_id'        => $this->getId(),
-				  'username'     => $this->getName(),
+				  'username'       => $this->getName(),
 				  'mw_hash_first'  => $sMWHashFirst,
-				  'mw_hash_last' => $sMWHashLast,
+				  'mw_hash_last'   => $sMWHashLast,
 				  'mw_hash_length' => $sMWHashLength ]
 			);
 		}
