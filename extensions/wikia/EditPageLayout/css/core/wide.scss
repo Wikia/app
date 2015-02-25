@@ -142,7 +142,11 @@
 					position: relative;
 
 					.preview_box{
+						border-left: 1px solid $color-page-border;
+						border-right: 1px solid $color-page-border;
 						float: left;
+						padding-left: 8px;
+						margin-right: 8px;
 
 						h3 {
 							float: left;
@@ -202,6 +206,7 @@
 
 					@media screen and (max-width: $width-outside) {
 						.preview_box {
+							border: none;
 							clear: both;
 
 							h3 {
