@@ -215,10 +215,21 @@ class ExternalUser_Wikia extends ExternalUser {
 		$bMediaWikiResult = User::comparePasswords( $this->getPassword(), $sPassword, $this->getId() );
 		// Detect discrepancies between Helios and MediaWiki results.
 		if ( $wgEnableHeliosExt && (  $bHeliosResult != $bMediaWikiResult ) ) {
+			
+			$sMWHashFirst  = substr( $this->getPassword(), 0, 3 ); // The first three bytes.
+			$sMWHashLast   = substr( $this->getPassword(),   -3 ); // The last three bytes.
+			$sMWHashLength = strlen( $this->getPassword() );       // The byte-length
+
+			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'HELIOS_LOGIN',
-				[ 'helios' => $bHeliosResult, 'mediawiki' => $bMediaWikiResult,
-				 'user_id' => $this->getId(), 'username' => $this->getName() ]
+				[ 'helios'         => $bHeliosResult,
+				  'mediawiki'      => $bMediaWikiResult,
+				  'user_id'        => $this->getId(),
+				  'username'       => $this->getName(),
+				  'mw_hash_first'  => $sMWHashFirst,
+				  'mw_hash_last'   => $sMWHashLast,
+				  'mw_hash_length' => $sMWHashLength ]
 			);
 		}
 

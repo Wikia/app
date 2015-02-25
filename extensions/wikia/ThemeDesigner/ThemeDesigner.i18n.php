@@ -1902,6 +1902,7 @@ escreve o nome da wiki para guardar.',
  * @author Caio1478
  * @author Dianakc
  * @author Giro720
+ * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  */
@@ -1929,12 +1930,12 @@ $messages['pt-br'] = array(
 	'themedesigner-not-split-background' => 'sem divisão',
 	'themedesigner-rules-not-split-background' => "Se seu gráfico de fundo é maior que $1px você tem uma opção de ''não'' dividir uma imagem.",
 	'themedesigner-transparency' => 'transparência',
-	'themedesigner-tab-theme' => 'Variante',
+	'themedesigner-tab-theme' => 'Tema',
 	'themedesigner-tab-customize' => 'Personalizar',
 	'themedesigner-tab-wordmark' => 'Símbolo',
 	'themedesigner-preview-mode' => 'Modo pré-visualização...',
 	'themedesigner-previous-versions' => 'Versões anteriores',
-	'themedesigner-button-save-im-done' => 'Terminei, gravar',
+	'themedesigner-button-save-im-done' => 'Pronto, salvar',
 	'themedesigner-button-cancel' => 'Cancelar',
 	'themedesigner-pick-a-color' => 'Escolher uma cor',
 	'themedesigner-enter-your-own' => 'Introduzir',
@@ -1952,7 +1953,7 @@ $messages['pt-br'] = array(
 	'themedesigner-button-save' => 'Salvar',
 	'themedesigner-upload-a-graphic' => 'upload de um padrão gráfico',
 	'themedesigner-rules-wordmark' => 'Carregar um arquivo .png que de 250 x 65 pixels ou menos.',
-	'themedesigner-rules-favicon' => 'Envie um arquivo .ico 16x16 pixel. Um favicon é um pequeno ícone que aparece na aba do navegador da sua wiki. [http://comunidade.wikia.com/wiki/Ajuda:Favicon Leia mais.]',
+	'themedesigner-rules-favicon' => 'Envie um arquivo .ico 16x16 pixel. Um favicon é um pequeno ícone que aparece na aba do navegador da sua wikia. [http://comunidade.wikia.com/wiki/Ajuda:Favicon Leia mais.]',
 	'themedesigner-dont-use-a-graphic' => 'remover',
 	'themedesigner-history-item' => '$1 de $2',
 	'themedesigner-button-change-text' => 'Alterar texto',
@@ -1960,12 +1961,12 @@ $messages['pt-br'] = array(
 	'themedesigner-size-error' => 'Tamanho de arquivo incorreto',
 	'themedesigner-dimensions-error' => 'A imagem excede os limites de tamanho',
 	'themedesigner-type-error' => 'Tipo de arquivo incorreto',
-	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Tente novamente, por favor.',
-	'themedesigner-manual-upload-error' => 'Use o Designer de Temas para fazer o upload do wordmark ou fundo da wiki',
+	'themedesigner-unknown-error' => 'Ocorreu um erro que não é possível identificar. Por favor, tente novamente.',
+	'themedesigner-manual-upload-error' => 'Use o Designer de Temas para fazer o upload do wordmark ou fundo da wikia',
 	'themedesigner-favicon-heading' => 'Favicon',
 	'themedesigner-wodmark-preview' => 'Pré-visualizar',
-	'themedesigner-wordmark-preview-error' => 'Ops! O nome da wiki não pode ficar em branco, 
-digite o nome da wiki para salvar.',
+	'themedesigner-wordmark-preview-error' => 'Ops! O nome da wikia não pode ficar em branco, 
+digite o nome da wikia para salvar.',
 	'themedesigner-upload-disabled' => 'Desculpe, nós desativamos os uploads temporariamente. Volte em breve para fazer mudanças',
 );
 

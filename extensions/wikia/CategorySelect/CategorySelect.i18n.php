@@ -508,7 +508,11 @@ $messages['fr'] = array(
  * @author Robin0van0der0vliet
  */
 $messages['fy'] = array(
+	'categoryselect-button-add' => 'Kategory tafoegje',
 	'categoryselect-button-cancel' => 'Annulearje',
+	'categoryselect-category-add' => 'Kategory tafoegje...',
+	'categoryselect-category-edit' => 'Kategory bewurkje',
+	'categoryselect-category-remove' => 'Kategory fuortsmite',
 );
 
 /** Galician (galego)
@@ -750,6 +754,7 @@ $messages['ko'] = array(
 	'categoryselect-modal-category-name' => '분류의 이름 제공:',
 	'categoryselect-modal-category-sortkey' => '선택적으로 이름에 따라 "$1" 분류 문서에 이 문서를 알파벳순으로 정렬할 수 있습니다:',
 	'categoryselect-tooltip-add' => '완료되었으면 엔터, 혹은 백스페이스를 누르세요.',
+	'tog-disablecategoryselect-v2' => '분류 모듈을 비활성화 (에디터 모드가 활성화되어 있지 않을 경우에만 적용됨)',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

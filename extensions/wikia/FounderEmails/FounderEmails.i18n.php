@@ -4594,7 +4594,33 @@ $WIKINAME ($WIKIURL)는 어떻게 돼가시나요?
 위키아 팀
 
 최근 위키아 소식을 알고 싶으시다면, community.wikia.com 를 방문하세요. 받을 이메일 종류를 조정하고 싶으실 땐 이곳을 방문해주세요: http://community.wikia.com/wiki/Special:Preferences',
+	'founderemails-email-3-days-passed-body-HTML' => '안녕하세요, $USERNAME 사용자 님?<br /><br />
+위키를 만든지 어느 정도 시간이 지났습니다. 위키아에서 할 수 있는 것들에 대해 더 알아보고 싶지 않으신가요?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
 	'founderemails-email-10-days-passed-subject' => '위키 개설 10일 째에 들어섰습니다!',
+	'founderemails-email-10-days-passed-body' => '요즘 어떻게 지내시나요, $USERNAME 사용자 님?
+
+시간 참 빠르죠! $WIKINAME ($WIKIURL) 위키를 시작한 지 벌써 열흘이나 지났습니다.
+
+슬슬 프로젝트에 다른 사용자들을 끌어들이고, 귀하가 이뤄낸 멋진 결과물을 사람들에게 자랑해 보세요! 귀하의 위키를 세상에 알리는 방법으로는 다음과 같은 것들이 있습니다:
+
+위키를 공유하세요. 대문이나 문서, 그림 페이지에 위치한 공유 버튼을 눌러 귀하의 멋진 위키를 페이스북, 트위터, 그리고 그 외 다양한 사이트에 있는 친구들과 공유해 보세요.
+
+이메일의 힘을 이용하세요. 아는 지인 중에 위키의 주제에 관심이 있을 만한 사람이 있다면 이메일을 보내 초대해 보세요. 이메일 버튼을 이용해 위키에 있는 특정 그림을 보낼 수도 있습니다.
+
+위키의 주제와 관련된 웹사이트에 가입하세요. 그리고 그곳에서 귀하의 위키를 홍보해 보세요. 또 해당 사이트 관리자에게 위키 주소를 사이트 어딘가에 추가해줄 순 없냐고 물어보는 것도 나쁘지 않습니다.
+
+마지막으로, 중앙 커뮤니티 포럼을 방문해서 다른 사용자들의 도움을 받을 수도 있습니다: http://ko.community.wikia.com
+
+잘하고 있습니다. 계속 진행하세요!
+
+위키아 팀
+
+___________________________________________
+
+중앙 커뮤니티에서 도움을 구하세요: http://ko.community.wikia.com
+알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: http://ko.community.wikia.com/특수기능:환경설정
+다음 주소를 눌러 모든 알림을 받지 않도록 할 수도 있습니다: $UNSUBSCRIBEURL',
 	'founderemails-email-page-edited-reg-user-first-edit-subject' => '$WIKINAME에 새 편집이 있습니다!',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => '$USERNAME님 안녕하세요,
 
@@ -4709,6 +4735,7 @@ $WIKINAME($WIKIURL)에 여러가지 일들이 있었던 것 같군요.
 	'founderemails-email-lot-happening-signature' => '위키아 팀',
 	'founderemails-email-lot-happening-button' => '활동 내역 보기',
 	'founderemails-email-footer-line1' => '위키아의 최근 소식을 확인하고 싶으시다면, <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> 를 방문해주세요',
+	'founderemails-email-footer-line2' => '알림을 받고 싶지 않으신가요? <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">환경설정</a>에서 알림 설정을 변경할 수 있습니다',
 	'founderemails-email-0-day-heading' => '$USERNAME님 만나서 반갑습니다,',
 	'founderemails-email-0-day-congratulations' => '축하드립니다! $HDWIKINAME를 만드셨습니다.',
 	'founderemails-email-0-day-tips-heading' => '위키아에 적응하는 데 도움이 될 만한 팁이 몇 가지 있습니다:',
@@ -4731,7 +4758,13 @@ $WIKINAME($WIKIURL)에 여러가지 일들이 있었던 것 같군요.
 	'founderemails-email-3-day-wikiahelps-signature' => '잘하고 있습니다. 계속 진행하세요!<br />위키아 팀',
 	'founderemails-email-10-day-heading' => '요즘 어떻게 지내시나요, $USERNAME 사용자 님?',
 	'founderemails-email-10-day-congratulations' => '시간 참 빠르죠! $HDWIKINAME 위키를 시작한 지 벌써 열흘이나 지났습니다.',
-	'founderemails-email-10-day-wikiahelps-text' => '<a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> 의 포럼에 글을 남겨 다른 위키아 사용자들에게서 도움을 구할 수도 있습니다.',
+	'founderemails-email-10-day-tips-heading' => '슬슬 프로젝트에 다른 사용자들을 끌어들이고, 귀하가 이뤄낸 멋진 결과물을 사람들에게 자랑해 보세요! 귀하의 위키를 세상에 알리는 방법으로는 다음과 같은 것들이 있습니다:',
+	'founderemails-email-10-day-share-heading' => '위키를 공유하세요.',
+	'founderemails-email-10-day-email-heading' => '이메일의 힘을 이용하세요.',
+	'founderemails-email-10-day-email-content' => '아는 지인 중에 위키의 주제에 관심이 있을 만한 사람이 있다면 이메일을 보내 초대해 보세요. 이메일 버튼을 이용해 위키에 있는 특정 그림을 보낼 수도 있습니다.',
+	'founderemails-email-10-day-join-heading' => '위키의 주제와 관련된 웹사이트에 가입하세요.',
+	'founderemails-email-10-day-join-content' => '그리고 그곳에서 귀하의 위키를 홍보해 보세요. 또 해당 사이트 관리자에게 위키 주소를 사이트 어딘가에 추가해줄 순 없냐고 물어보는 것도 나쁘지 않습니다.',
+	'founderemails-email-10-day-wikiahelps-text' => '마지막으로, 중앙 커뮤니티 포럼을 방문해서 다른 사용자들의 도움을 받을 수도 있습니다: <a style="color:#2a87d5;text-decoration:none;" href="http://ko.community.wikia.com">ko.community.wikia.com</a>',
 	'founderemails-email-10-day-wikiahelps-signature' => '잘하고 있습니다. 계속 진행하세요!<br />위키아 팀',
 	'founderemails-email-views-digest-subject' => '$WIKINAME의 오늘 하루 조회수',
 	'founderemails-email-views-digest-body' => '안녕하세요, $USERNAME 사용자 님?
@@ -4786,6 +4819,8 @@ $WIKINAME에서 일어난 재밌는 일들은 언제든지 위키 활동 내역�
 	'founderemails-pref-complete-digest' => '$1 일간 활동 요약을 메일로 받기',
 	'founderemails-pref-joins-v2' => '...누군가 참가했습니다',
 	'founderemails-pref-edits-v2' => '...누군가 편집했습니다',
+	'founderemails-pref-views-digest-v2' => '조회수에 대한 일간 알림 메일 받기',
+	'founderemails-pref-complete-digest-v2' => '위키 일간 활동에 대한 요약을 메일로 받기',
 );
 
 /** Colognian (Ripoarisch)
@@ -7388,6 +7423,7 @@ A equipa da Wikia',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author Fasouzafreitas
  * @author Fúlvio
  * @author JM Pessanha
  * @author Jefersonmoraes
@@ -7568,9 +7604,23 @@ Agora que você já está há alguns dias na sua wiki, nós pensamos que você t
 Agora que você já está há alguns dias na sua wiki, nós pensamos que você talvez queira verificar algumas outras coisas que pode fazer.<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipe Wikia</div>',
 	'founderemails-answers-email-10-days-passed-subject' => 'Como vão as coisas na sua wiki?',
+	'founderemails-answers-email-10-days-passed-body' => 'Olá, $USERNAME,
+
+Já faz algum tempo que criou uma wiki na Wikia - esperamos que tudo esteja correndo bem! Queríamos partilhar mais algumas coisinhas finais para ajudá-lo a sentir-se em casa em sua wiki.
+
+-- A Equipe Wikia',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Usuário registrado alterou seu site pela primeira vez!',
+	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Olá $USERNAME,
+
+Parece que o usuário registrado $EDITORNAME editou a sua wiki pela primeira vez! Que tal ir à página de discussão ($EDITORTALKPAGEURL) e dizer-lhe olá?
+
+-- A Equipe Wikia',
+	'founderemails-answers-email-page-edited-reg-user-subject' => 'Um usuário registrado alterou seu site!',
 	'founderemails-email-lot-happening-greeting' => 'Olá $USERNAME,',
+	'founderemails-email-lot-happening-signature' => 'A Equipe Wikia',
 	'founderemails-email-lot-happening-button' => 'Ver atividades',
 	'founderemails-email-0-day-heading' => 'Prazer em te conhecer $USERNAME,',
+	'founderemails-email-0-day-congratulations' => 'Parabéns por ter criado a wiki $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Aqui estão algumas dicas úteis para você começar:',
 	'founderemails-email-0-day-addpages-heading' => 'Adicionar páginas.',
 	'founderemails-email-0-day-addpages-button' => 'Adicionar uma página',
