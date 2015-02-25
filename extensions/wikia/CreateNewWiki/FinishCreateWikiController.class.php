@@ -45,7 +45,6 @@ class FinishCreateWikiController extends WikiaController {
 		$this->title = wfMessage( 'cnw-welcome-headline', $this->app->wg->Sitename )->text();
 		$this->instruction1 = wfMessage( 'cnw-welcome-instruction1' )->text();
 		$this->button = \Wikia\UI\Factory::getInstance()->init( 'button' )->render( $buttonParams );
-		$this->instruction2 = wfMessage( 'cnw-welcome-instruction2' )->text();
 		$this->help = wfMessage( 'cnw-welcome-help' )->text();
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
