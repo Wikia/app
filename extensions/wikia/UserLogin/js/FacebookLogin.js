@@ -1,4 +1,4 @@
-/* global UserLoginModal, wgScriptPath, GlobalNotification */
+/* global UserLoginModal, wgScriptPath, GlobalNotification, UserSignupAjaxValidation */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -286,6 +286,30 @@
 						window.location.href = this.returnToUrl;
 					}
 				}
+			});
+
+			this.initSignupFormValidation();
+		},
+
+		initSignupFormValidation: function () {
+			var validator,
+				wikiaForm = this.signupForm.wikiaForm,
+				inputs = wikiaForm.inputs,
+				inputsToValidate = ['username', 'password'];
+
+			if (inputs.email) {
+				inputsToValidate.push('email');
+			}
+
+			validator = new UserSignupAjaxValidation({
+				wikiaForm: wikiaForm,
+				inputsToValidate: inputsToValidate,
+				submitButton: inputs.submit
+			});
+
+			// Add validation on blur event for all inputs to validate
+			inputsToValidate.forEach(function (inputName) {
+				inputs[inputName].on('blur', validator.validateMappedInput.bind(validator));
 			});
 		},
 
