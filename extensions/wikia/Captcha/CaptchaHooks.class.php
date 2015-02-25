@@ -58,4 +58,12 @@ class Hooks {
 	public static function APIGetParamDescription( &$module, &$desc ) {
 		return Factory\Module::getInstance()->APIGetParamDescription( $module, $desc );
 	}
+
+	// Temporarily load captcha library on every page until we have on demand loading set up.
+	// Remove with https://wikia-inc.atlassian.net/browse/SOC-288
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		$script = \AssetsManager::getInstance()->getURL( 'captcha_js' );
+		$text .= \Html::linkedScript( $script[0] );
+		return true;
+	}
 }

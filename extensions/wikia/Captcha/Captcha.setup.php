@@ -115,6 +115,7 @@ $wgHooks['LoginAuthenticateAudit'][] = 'Captcha\Hooks::triggerUserLogin';
 $wgHooks['UserLoginForm'][] = 'Captcha\Hooks::injectUserLogin';
 $wgHooks['EmailUserForm'][] = 'Captcha\Hooks::injectEmailUser';
 $wgHooks['EmailUser'][] = 'Captcha\Hooks::confirmEmailUser';
+$wgHooks['SkinAfterBottomScripts'][] = 'Captcha\Hooks::onSkinAfterBottomScripts';
 
 // Register API hook
 $wgHooks['APIEditBeforeSave'][] = 'Captcha\Hooks::confirmEditAPI';

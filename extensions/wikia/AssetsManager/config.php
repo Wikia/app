@@ -12,7 +12,6 @@ $config['oasis_shared_core_js'] = array(
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
-		'//extensions/wikia/UserLogin/js/Captcha.js',
 		'#group_ui_repo_api_js',
 	),
 );
@@ -2270,5 +2269,13 @@ $config['menu_aim_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/menu-aim/menu-aim.js',
 		'//resources/wikia/modules/menuAim.js'
+	]
+];
+
+$config['captcha_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Captcha/scripts/Captcha.js',
 	]
 ];
