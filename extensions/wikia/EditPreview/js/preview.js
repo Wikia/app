@@ -74,7 +74,23 @@ define('wikia.preview', [
 			window.stylepath +
 			'/common/images/ajax.gif" class="loading"></div></div>';
 
-		$.showCustomModal(title, content, options);
+		loader({
+			type: loader.MULTI,
+			resources: {
+				mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
+			}
+		}).done(function (response) {
+			var params = {
+				bestPracticesMsg: msg('wikia-editor-preview-best-practices-notice'),
+				bestPracticesLinkText: msg('wikia-editor-preview-best-practices-button'),
+				bestPracticesLinkUrl: msg('wikia-editor-preview-best-practices-button-link')
+			};
+			var template = response.mustache[0];
+			var html = mustache.render(template, params);
+
+			content = html+content;
+			$.showCustomModal(title, content, options);
+		});
 	}
 
 	/**
