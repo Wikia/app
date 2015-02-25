@@ -293,6 +293,9 @@ define('wikia.preview', [
 		isRailDropped = !!options.isRailDropped;
 		isWidePage = !!options.isWidePage;
 		getPreviewTypes(isWidePage);
+		if (typeof options.currentTypeName !== 'undefined') {
+			currentTypeName = options.currentTypeName;
+		}
 
 		var dialogOptions = {
 			buttons: [{
