@@ -80,6 +80,7 @@ $btn-bar-color: mix($color-page, #000, 90);
 		position: relative;
 	}
 	.position-info {
+		box-sizing: border-box;
 		cursor: move;
 		display: none;
 		height: 100%;
