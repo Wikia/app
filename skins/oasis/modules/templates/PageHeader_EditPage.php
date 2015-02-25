@@ -11,4 +11,8 @@
 	}
 ?>
 	<p><?= $subtitle ?></p>
+
+	<? if ( empty( $wg->EnableGlobalNavExt ) ): ?>
+		<?= F::app()->renderView('Search', 'Index') ?>
+	<? endif ?>
 </div>

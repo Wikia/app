@@ -21,7 +21,6 @@
  * @property Title mTitle
  * @method exists
  * @method getID
- * @method getRedirectTarget
  * //Wikia Change End
  */
 class Article extends Page {

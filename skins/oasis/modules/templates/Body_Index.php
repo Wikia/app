@@ -10,7 +10,11 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
+<? if ( !empty( $wg->EnableGlobalNavExt ) ): ?>
+	<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
+<? else: ?>
+	<?= $app->renderView( 'GlobalHeader', 'Index' ) ?>
+<? endif ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 
 <?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>

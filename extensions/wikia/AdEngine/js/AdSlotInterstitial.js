@@ -23,11 +23,12 @@ define('ext.wikia.adEngine.slot.interstitial', [
 
 	function onAdSuccess() {
 		uiFactory.init('modal').then(function (uiModal) {
-			uiModal.createComponent(modalConfig, function (modal) {
-				modal.$content[0].children[0].appendChild(slotDiv);
-				slotDiv.removeAttribute('style');
-				modal.show();
-			});
+			uiModal.createComponent(modalConfig, function(modal) {
+					modal.$content[0].children[0].appendChild(slotDiv);
+					slotDiv.removeAttribute('style');
+					modal.show();
+				}
+			);
 		});
 	}
 
@@ -41,8 +42,8 @@ define('ext.wikia.adEngine.slot.interstitial', [
 		doc.body.appendChild(slotDiv);
 
 		win.adslots2.push({
-			slotName: slotName,
-			onSuccess: onAdSuccess
+			slotname: slotName,
+			success: onAdSuccess
 		});
 	}
 

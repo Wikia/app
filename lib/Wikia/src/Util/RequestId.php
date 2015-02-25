@@ -15,7 +15,6 @@ namespace Wikia\Util;
 class RequestId {
 
 	const REQUEST_HEADER_NAME = 'X-Request-Id';
-	const REQUEST_HEADER_ORIGIN_HOST = 'X-Request-Origin-Host';
 	private $requestId = false;
 
 	/**

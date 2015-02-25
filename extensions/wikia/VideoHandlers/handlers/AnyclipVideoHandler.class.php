@@ -8,7 +8,7 @@ class AnyclipVideoHandler extends VideoHandler {
 	protected static $providerHomeUrl = 'http://www.anyclip.com';
 
 	public function getProviderDetailUrl() {
-		$metadata = $this->getVideoMetadata( true );
+		$metadata = $this->getMetadata( true );
 		$url = $metadata['videoUrl'];
 
 		return $url;

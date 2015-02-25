@@ -152,16 +152,16 @@ abstract class BaseCaptcha extends \WikiaObject {
 		$info = $this->retrieveCaptcha();
 		if ( $info ) {
 			if ( $this->keyMatch( $this->wg->Request->getVal( 'wpCaptchaWord' ), $info ) ) {
-				$this->log( "verification passed" );
+				$this->log( "passed" );
 				$this->clearCaptcha( $info );
 				return true;
 			} else {
 				$this->clearCaptcha( $info );
-				$this->log( "verification failed" );
+				$this->log( "bad form input" );
 				return false;
 			}
 		} else {
-			$this->log( "verification failed - stored captcha not found" );
+			$this->log( "new captcha session" );
 			return false;
 		}
 	}

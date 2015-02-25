@@ -165,7 +165,7 @@ class ApiPageSet extends ApiQueryBase {
 
 	/**
 	 * Title objects that were found in the database.
-	 * @return Title[] page_id (int) => Title (obj)
+	 * @return array page_id (int) => Title (obj)
 	 */
 	public function getGoodTitles() {
 		return $this->mGoodTitles;

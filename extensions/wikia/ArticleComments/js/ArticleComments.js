@@ -624,7 +624,8 @@
 
 			$element.find('blockquote').addClass('current');
 
-			if ($('#globalNavigation').css('position') === 'fixed') {
+			// if new GlobalNavigation is enabled and it's fixed...
+			if ($('#globalNavigation').length && $('#globalNavigation').css('position') === 'fixed') {
 				window.GlobalNavigationScrollToElement(element);
 			} else {
 				// in any other case

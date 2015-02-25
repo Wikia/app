@@ -22,6 +22,22 @@ define('wikia.scrollToLink',
 		}
 
 		/**
+		 * @desc Disable browser jump to hash that occurs on page load
+		 * @source http://stackoverflow.com/questions/3659072/jquery-disable-anchor-jump-when-loading-a-page
+		 */
+		function disableBrowserJump() {
+			// do the test straight away
+			if (win.location.hash) {
+				// execute it straight away
+				win.scrollTo(0, 0);
+				// run it a bit later also for browser compatibility
+				win.setTimeout(function() {
+					win.scrollTo(0, 0);
+				}, 1);
+			}
+		}
+
+		/**
 		 * @desc Scroll screen to given element
 		 * @param {Element} element
 		 * @param {Number} offsetToScroll
@@ -61,6 +77,7 @@ define('wikia.scrollToLink',
 		// return API
 		return {
 			handleScrollTo: handleScrollTo,
-			scrollToElement: scrollToElement
+			scrollToElement: scrollToElement,
+			disableBrowserJump: disableBrowserJump
 		};
 });

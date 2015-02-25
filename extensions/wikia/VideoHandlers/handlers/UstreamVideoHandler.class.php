@@ -36,7 +36,7 @@ EOT;
 	 * @return string
 	 */
 	protected function getEmbedVideoId() {
-		$metadata = $this->getVideoMetadata(true);
+		$metadata = $this->getMetadata(true);
 
 		if ( !empty( $metadata['altVideoId'] ) ) {
 			return $metadata['altVideoId'];

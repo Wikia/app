@@ -91,7 +91,7 @@
 		public function __construct( CategoryPage $categoryPage ) {
 			$this->categoryPage = $categoryPage;
 
-			global $wgCategoryGalleryEnabledByDefault, $wgCategoryGalleryImageWidth, $wgCategoryGalleryImageHeight, $wgCategoryGalleryImagesCount;
+			global $wgCategoryGalleryEnabledByDefault, $wgCategoryGalleryImageWidth, $wgCategoryGalleryImagesCount;
 			if (!is_null($wgCategoryGalleryEnabledByDefault)) { // allow false values to be caught
 				$this->confEnabledByDefault = (bool)$wgCategoryGalleryEnabledByDefault;
 			}

@@ -25,6 +25,13 @@ require(
 			offset = -(win.document.getElementById('globalNavigation').offsetHeight +
 				layout.normalTextFontSize); // also scroll a bit, so element won't be sticked to GlobalNavigation
 
+			scrollToLink.disableBrowserJump();
+
+			// setTimeout after 1 second is needed here because of Chrome which sometimes scrolls to top on end of DOM load
+			win.setTimeout(function() {
+				scrollToLink.handleScrollTo(win.location.hash, offset);
+			}, 1000);
+
 			$(win).on('hashchange', hashChangeHandler);
 		}
 
@@ -33,7 +40,7 @@ require(
 		 * @param {Element} element
 		 */
 		win.GlobalNavigationScrollToElement = function(element) {
-			scrollToLink.scrollToElement(element, offset);
+			scrollToLink.scrollToElement(element, offset)
 		};
 
 

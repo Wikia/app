@@ -1,4 +1,5 @@
 /* global UserBaseAjaxForm */
+
 (function () {
 	'use strict';
 

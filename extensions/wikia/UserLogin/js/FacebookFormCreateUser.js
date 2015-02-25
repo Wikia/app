@@ -20,7 +20,7 @@
 	};
 
 	/**
-	 * Send ajax login request to FB controller.
+	 * Send ajax login request to FB controller. Overrides parent method.
 	 */
 	FacebookFormCreateUser.prototype.ajaxLogin = function () {
 		var formData = this.wikiaForm.form.serialize();

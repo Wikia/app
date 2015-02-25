@@ -61,7 +61,10 @@
 				self.bindEvents();
 
 				// load when the login dropdown is shown or specific page is loaded
-				$.loadFacebookSDK();
+				$.loadFacebookAPI()
+					.done(function () {
+						$('.sso-login').removeClass('hidden');
+					});
 
 				self.log('init');
 				self.bucky.timer.stop('init');

@@ -24,8 +24,9 @@
 			$disconnectButton = $('.fb-disconnect');
 			$connectLink = $('.sso-login-facebook');
 
-			$.loadFacebookSDK()
+			$.loadFacebookAPI()
 				.done(function () {
+					$('.sso-login').removeClass('hidden');
 					bindEvents();
 				})
 				.fail(facebookError);

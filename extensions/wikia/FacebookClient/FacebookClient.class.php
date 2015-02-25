@@ -110,6 +110,7 @@ class FacebookClient {
 
 	private function getSessionFromMemcached() {
 		$memc = F::app()->wg->memc;
+		$log = WikiaLogger::instance();
 
 		// Get the access token for this user
 		$accessToken = $memc->get( $this->getTokenMemcKey() );
@@ -121,39 +122,31 @@ class FacebookClient {
 				$session->validate();
 				$this->session = $session;
 			} catch ( \Exception $ex ) {
-				$this->logInvalidSession( __METHOD__, $ex->getMessage() );
+				$log->warning( __CLASS__ . ': Invalid Facebook session found', [
+					'fbUserId' => $this->facebookUserId,
+					'method' => __METHOD__,
+					'message' => $ex->getMessage(),
+				] );
 			}
 		}
 	}
 
 	private function getSessionFromCookie() {
 		$memc = F::app()->wg->memc;
+		$log = WikiaLogger::instance();
+
 		$session = $this->facebookAPI->getSession();
-
-		if ( empty( $session ) ) {
-			$this->logInvalidSession( __METHOD__, 'Session object empty' );
-			return;
-		}
-
 		try {
 			$session->validate();
 			$this->session = $session;
 			$memc->set( $this->getTokenMemcKey(), $session->getAccessToken(), self::TOKEN_TTL );
 		} catch ( \Exception $ex ) {
-			$this->logInvalidSession( __METHOD__, $ex->getMessage() );
+			$log->warning( __CLASS__ . ': Invalid Facebook session found', [
+				'fbUserId' => $this->facebookUserId,
+				'method' => __METHOD__,
+				'message' => $ex->getMessage(),
+			] );
 		}
-	}
-
-	/**
-	 * @param string $method
-	 * @param string $message
-	 */
-	private function logInvalidSession( $method, $message ) {
-		WikiaLogger::instance()->warning( __CLASS__ . ': Invalid Facebook session found', [
-			'fbUserId' => $this->facebookUserId,
-			'method' => $method,
-			'message' => $message,
-		] );
 	}
 
 	private function getTokenMemcKey() {

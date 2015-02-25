@@ -1,0 +1,1 @@
+<a href="http://www.gamestar.de/" rel="nofollow" target="_blank" class="GameStarLogo"></a>

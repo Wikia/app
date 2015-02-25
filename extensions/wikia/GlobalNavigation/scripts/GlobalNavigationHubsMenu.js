@@ -1,14 +1,9 @@
-require(
-[
-	'jquery', 'wikia.window', 'wikia.globalnavigation.lazyload',
-	'wikia.menuaim', 'wikia.browserDetect', 'wikia.delayedhover', 'wikia.globalNavigationDropdowns'
-],
-function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdowns) {
+require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload'], function ($, w, GlobalNavLazyLoad) {
 	'use strict';
 
 	var $entryPoint,
-		$hubs,
 		$hubLinks,
+		$hubs,
 		$verticals;
 
 	/**
@@ -41,7 +36,13 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdow
 			.removeClass('active');
 	}
 
-	function onDropdownOpen() {
+	/**
+	 * @desc opens global nav menu
+	 */
+	function openMenu() {
+		$entryPoint.addClass('active');
+		w.transparentOut.show();
+
 		if (!GlobalNavLazyLoad.isMenuWorking()) {
 			GlobalNavLazyLoad.getHubLinks();
 		}
@@ -49,23 +50,42 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdow
 		$('#globalNavigation').trigger('hubs-menu-opened');
 	}
 
+	/**
+	 * @desc closes global nav menu
+	 */
+	function closeMenu() {
+		$entryPoint.removeClass('active');
+		w.transparentOut.hide();
+	}
+
 	$(function () {
 		$hubs = $('#hubs');
-		$hubLinks = $hubs.children('.hub-links');
-		$verticals = $hubs.children('.hub-list');
+		$hubLinks = $hubs.find('> .hub-links');
+		$verticals = $hubs.find('> .hub-list');
 		$entryPoint = $('#hubsEntryPoint');
 
-		if (browserDetect.isAndroid()) {
+		w.transparentOut && w.transparentOut.bindClick(closeMenu);
+
+		if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
 			$verticals.addClass('backface-off');
 		}
 
-		dropdowns.attachDropdown($entryPoint, {
-			onOpen: onDropdownOpen
+		$entryPoint.on('click', '.hubs-entry-point', function (ev) {
+			ev.preventDefault();
+			ev.stopPropagation();
+
+			if ($entryPoint.hasClass('active')) {
+				closeMenu();
+			} else {
+				openMenu();
+			}
 		});
 
-		//Menu-aim should be attached for both touch and not touch screens.
-		//It handles opening and closing submenu on click
-		menuAim.attach(
+		/**
+		 * menuAim is a method from an external module to handle dropdown menus with very good user experience
+		 * @see https://github.com/Wikia/js-menu-aim
+		 */
+		w.menuAim(
 			$verticals.get(0), {
 				activeRow: $verticals.find('.active').get(0),
 				rowSelector: '.hub-link',
@@ -75,14 +95,20 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdow
 			}
 		);
 
-		delayedHover.attach(
-			$entryPoint.get(0), {
-				checkInterval: 100,
-				maxActivationDistance: 20,
-				onActivate: dropdowns.openDropdown,
-				onDeactivate: dropdowns.closeDropdown,
-				activateOnClick: false
-			}
-		);
+		w.transparentOut.bindClick(closeMenu);
+
+		if (!w.ontouchstart) {
+			w.delayedHover(
+				$entryPoint.get(0), {
+					checkInterval: 100,
+					maxActivationDistance: 20,
+					onActivate: openMenu,
+					onDeactivate: closeMenu,
+					activateOnClick: false
+				}
+			);
+		} else {
+			$entryPoint.click(openMenu);
+		}
 	});
 });

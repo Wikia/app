@@ -16,26 +16,12 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		global $wgCookiePath, $wgCookieDomain;
-
 		$opt = $this->request->getVal( 'opt' );
 		if ( !empty( $opt ) ) {
 			if ( $opt === 'in' ) {
-				$this->request->setCookie(
-					self::COOKIE_NAME,
-					self::OPT_IN,
-					time() + 86400 * self::COOKIE_EXPIRE_DAYS,
-					$wgCookiePath,
-					$wgCookieDomain
-				);
+				$this->request->setCookie( self::COOKIE_NAME, self::OPT_IN, time() + 86400 * self::COOKIE_EXPIRE_DAYS );
 			} elseif ( $opt === 'out' ) {
-				$this->request->setCookie(
-					self::COOKIE_NAME,
-					'',
-					time() - 3600,
-					$wgCookiePath,
-					$wgCookieDomain
-				);
+				$this->request->setCookie( self::COOKIE_NAME, '', time() - 3600 );
 			}
 			$this->response->redirect( SpecialPage::getTitleFor( self::PAGE_NAME )->getFullUrl() );
 		}
@@ -44,10 +30,10 @@ class MercurySpecialPageController extends WikiaSpecialPageController {
 		if ( !empty( $cookie ) && $cookie == self::OPT_IN ) {
 			// OPTED IN
 			$this->setVal( 'buttonAction', 'out' );
-			$this->setVal( 'buttonLabel', wfMessage('mercury-opt-out-label')->text() );
+			$this->setVal( 'buttonLabel', 'Opt out' );
 		} else {
 			$this->setVal( 'buttonAction', 'in' );
-			$this->setVal( 'buttonLabel', wfMessage('mercury-opt-in-label')->text() );
+			$this->setVal( 'buttonLabel', 'Opt in' );
 		}
 
 		$this->setVal( 'pageName', self::PAGE_NAME );

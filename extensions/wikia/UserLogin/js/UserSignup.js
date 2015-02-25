@@ -13,7 +13,7 @@
 		/**
 		 * WikiaMobile, Wikia One, and some automated tests do not use captcha
 		 */
-		useCaptcha: !window.wgUserSignupDisableCaptcha,
+		useCaptcha: !window.wgUserLoginDisableCaptcha,
 
 		/**
 		 * Enable user signup form with ajax validation
@@ -94,7 +94,10 @@
 				.add(inputs.birthyear)
 				.on('change.UserSignup', this.validator.validateBirthdate.bind(this.validator));
 
-			if (this.useCaptcha && inputs['g-recaptcha-response']) {
+			if (
+				window.wgUserLoginDisableCaptcha !== true &&
+				inputs['g-recaptcha-response']
+			) {
 				inputs['g-recaptcha-response']
 					.on('keyup.UserSignup', this.validator.activateSubmit.bind(this.validator));
 			}

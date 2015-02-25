@@ -1,30 +1,20 @@
 /* global FB */
 
 /**
- * Render XFBML tags emebedded into wikitext
+ * Render FB XML tags emebedded into wikitext
+ * This file is loaded via ResourceLoader only when FB XML tags are present on the page
  */
-mw.hook('wikipage.content').add(function ($content) {
+$(function () {
 	'use strict';
 
-	// TODO This can be uncommented and lines 18 through 20 can be deleted 2 weeks after this is released.
-	// We need to wait for parser cache to be cleared so that "data-type='xfbml-tag'" will be added to the
-	// tags during parsing.
-	//	if ((xfbmlTagsOnPage())) {
-	//		$.loadFacebookSDK().done(function () {
-	//			renderXFBMLTags();
-	//		});
-	//	}
+	// load api on page load and on demand
+	mw.hook('wikipage.content').add(function ($content) {
+		$.loadFacebookAPI()
+			.done(function () {
+				$('.sso-login').removeClass('hidden');
 
-	$.loadFacebookSDK().done(function () {
-		renderXFBMLTags();
+				// scan the new content for any fb tags
+				FB.XFBML.parse($content[0]);
+			});
 	});
-
-	function xfbmlTagsOnPage() {
-		var numOfXFBMLTags = $content.find('[data-type="xfbml-tag"]').length;
-		return numOfXFBMLTags > 0;
-	}
-
-	function renderXFBMLTags() {
-		FB.XFBML.parse($content[0]);
-	}
 });

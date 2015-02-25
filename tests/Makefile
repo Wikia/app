@@ -13,7 +13,6 @@ CMD_KARMA=../node_modules/karma/bin/karma start \
 
 # set up an environment
 export SERVER_DBNAME=firefly
-unexport MW_INSTALL_PATH
 
 all help:
 	# Consult README.md file

@@ -110,7 +110,6 @@ class MercuryApi {
 		return [
 			'cacheBuster' => (int) $wg->CacheBuster,
 			'dbName' => $wg->DBname,
-			'defaultSkin' => $wg->DefaultSkin,
 			'id' => (int) $wg->CityId,
 			'language' => [
 				'user' => $wg->Lang->getCode(),

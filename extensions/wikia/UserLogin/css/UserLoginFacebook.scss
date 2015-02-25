@@ -6,6 +6,9 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/transition';
 
+// local mixins
+@import '../mixins/tooltip-icon';
+
 // variables
 $section-padding: 20px;
 $fieldset-padding: 12px;
@@ -72,6 +75,16 @@ $fieldset-padding: 12px;
 			box-sizing: border-box;
 			width: 100%;
 		}
+	}
+
+	.tooltip-icon-wrapper {
+		line-height: 15px;
+		position: relative;
+	}
+
+	.tooltip-icon {
+		@include tooltip-icon;
+		right: -15px;
 	}
 
 	.email {

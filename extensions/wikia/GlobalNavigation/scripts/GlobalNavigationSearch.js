@@ -1,18 +1,32 @@
 require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], function ($, browserDetect, scrollFix) {
 	'use strict';
-	var $selectElement = $('#searchSelect'),
-		$searchInput = $('#searchInput'),
+	var $selectElement,
+		$searchInput,
+		$globalNav,
+		$inputResultLang,
+		$formElement,
+		isLocalSearchDisabled,
 		$autocompleteObj;
+
+	/**
+	 * Look up elements in global navigation's search form
+	 */
+	function setElements() {
+		$inputResultLang = $('#searchInputResultLang');
+		$formElement = $('#searchForm');
+		$selectElement = $('#searchSelect');
+		isLocalSearchDisabled = !!$selectElement.length;
+		$searchInput = $('#searchInput');
+		$globalNav = $('#globalNavigation');
+	}
 
 	/**
 	 * Set options on search form
 	 */
 	function setFormOptions() {
-		var $selectedOption = $selectElement.find('option:selected'),
-			isLocalSearchDisabled = !!$selectElement.length;
-
+		var $selectedOption = $selectElement.find('option:selected');
 		$searchInput.attr('placeholder', $selectedOption.data('placeholder'));
-		$('#searchForm').attr('action', $selectedOption.attr('data-search-url'));
+		$formElement.attr('action', $selectedOption.attr('data-search-url'));
 		//Setting reference to jQuery search autocomplete object
 		$autocompleteObj = $autocompleteObj || $searchInput.data('autocomplete');
 		if ($selectedOption.val() === 'global' || isLocalSearchDisabled) {
@@ -27,7 +41,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	 * @param {boolean} enable - should autocomplete be enabled and lang input disabled
 	 */
 	function setPropertiesOnInput(enable) {
-		$('#searchInputResultLang').prop('disabled', enable);
+		$inputResultLang.prop('disabled', enable);
 		if ($autocompleteObj) {
 			if (enable) {
 				$autocompleteObj.enable();
@@ -38,7 +52,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	}
 
 	$(function () {
-		var $globalNav = $('#globalNavigation');
+		setElements();
 
 		if ($selectElement) {
 			setFormOptions();

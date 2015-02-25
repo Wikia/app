@@ -22,12 +22,8 @@ if( !defined( 'MEDIAWIKI' ) )
 require_once("skins/MonoBook.php");
 
 class SkinUncyclopedia extends SkinMonoBook {
-	/**
-	 * Using monobook.
-	 *
-	 * @param OutputPage $out
-	 */
-	function initPage( OutputPage $out ) {
+	/** Using monobook. */
+	function initPage( &$out ) {
 		parent::initPage( $out );
 		$this->skinname  = 'uncyclopedia';
 		$this->stylename = 'uncyclopedia';
