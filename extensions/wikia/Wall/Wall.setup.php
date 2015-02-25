@@ -151,6 +151,10 @@ $wgHooks['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 $wgHooks['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
 $wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
 
+// Fix User_talk links for profile page diff on wall enabled wikis
+// VOLDEV-66
+$wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
+
 JSMessages::registerPackage('Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
