@@ -39,6 +39,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 			parent = slot.parentNode;
 
 			if (parent.classList && parent.classList.contains('ad-in-content')) {
+				log('hide ad-in-content slot (' + slotname + ') setting its clear rule to none', 6, logGroup);
+
 				parent.style.clear = 'none';
 			}
 		}
