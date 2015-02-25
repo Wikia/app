@@ -17,10 +17,16 @@
 		this.submitButton = $(options.submitButton);
 	};
 
+	/**
+	 * Call back end for validation of input where user action occurred
+	 * @param {Event} e Browser event like input blur
+	 */
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
 			params = this.getDefaultParamsForAjax();
+
+		console.log(typeof e);
 
 		params.field = paramName;
 		params[paramName] = el.val();
@@ -32,6 +38,11 @@
 		);
 	};
 
+	/**
+	 * Call back end for validation of input where user action occurred
+	 * @todo This was copied from validateInput with some added input name mapping. Clean this up in a separate ticket.
+	 * @param {Event} e Browser event like input blur
+	 */
 	UserSignupAjaxValidation.prototype.validateMappedInput = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
