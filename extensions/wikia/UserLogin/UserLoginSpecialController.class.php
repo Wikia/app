@@ -60,7 +60,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset(
 				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookClientExt ) ) ?
 					'userlogin_js_wikiamobile' :
-					'userlogin_js_wikiamobile_fbconnect'
+					'userlogin_facebook_js_wikiamobile'
 		);
 
 		// Wikiamobile, will be filtered in AssetsManager by config :)
