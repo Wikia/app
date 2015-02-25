@@ -6,8 +6,8 @@ require(
 function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdowns) {
 	'use strict';
 
-	var $entryPoint = $('#hubsEntryPoint'),
-		$hubs = $('#hubs'),
+	var $entryPoint,
+		$hubs,
 		$hubLinks,
 		$verticals;
 
@@ -50,8 +50,10 @@ function ($, w, GlobalNavLazyLoad, menuAim, browserDetect, delayedHover, dropdow
 	}
 
 	$(function () {
+		$hubs = $('#hubs');
 		$hubLinks = $hubs.children('.hub-links');
 		$verticals = $hubs.children('.hub-list');
+		$entryPoint = $('#hubsEntryPoint');
 
 		if (browserDetect.isAndroid()) {
 			$verticals.addClass('backface-off');

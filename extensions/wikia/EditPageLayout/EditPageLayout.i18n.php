@@ -158,7 +158,7 @@ $messages['qqq'] = array(
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
 	'wikia-editor-preview-editSummary' => 'A text showed on the bottom of preview window when the edit summary was added, the parameter is the added summary',
 
-	'editpagelayout-preview-best-practices-notice' => "A notice shown at the top of the preview dialog, with a button (link) next to the notice"
+	'editpagelayout-preview-best-practices-notice' => "A notice shown at the top of the preview dialog, with a button (link) next to the notice",
 	'editpagelayout-preview-best-practices-button' => "A button (link) label which leads to a separate page describing best practices and advice on how to create content for mobile and desktop",
 	'editpagelayout-preview-best-practices-button-link' => "http://community.wikia.com/wiki/Some_URL",
 
