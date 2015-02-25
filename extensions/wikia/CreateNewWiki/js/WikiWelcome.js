@@ -40,7 +40,7 @@ var WikiWelcome = {
 					uiModal.createComponent( modalConfig, function ( wikiWelcomeModal ) {
 						wikiWelcomeModal.bind( 'createpage', function ( event ) {
 							event.preventDefault();
-							window.CreatePage.requestDialog( event );
+							window.CreatePage.openDialog( event );
 							wikiWelcomeModal.trigger( 'close' );
 							return false;
 						} );
