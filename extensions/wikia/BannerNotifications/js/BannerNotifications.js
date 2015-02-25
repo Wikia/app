@@ -1,9 +1,12 @@
+/* global require, define*/
 /*
  * Handles the color-coded notification messages that generally appear
  * at the top of the screen or inside a modal.
+ *
+ * AMD module is defined at the bottom of the 'require' block
+ *
  * Use like:
- * BannerNotifications.show('Some success message', 'confirm')
- * BannerNotifications.show('Some error message', 'error', $('.myDiv'), 3000)
+ * new BannerNotification('Content', 'error').show().hide();
  */
 require([
 	'jquery',
@@ -172,7 +175,7 @@ require([
 	}
 
 	/**
-	 * Creates an instance of a notification sets on the backend side
+	 * Creates an instance of a notification set on the backend side
 	 * (if such one exists)
 	 */
 	function createBackendNotification() {
