@@ -77,6 +77,7 @@
 
 			// attach events
 			$( '#wpPreview' ).bind( 'click', this.proxy( this.onPreview ) );
+			$( '#wpPreviewMobile' ).bind( 'click', this.proxy( this.onPreviewMobile ) );
 
 			// Wikia change (bugid:5667) - begin
 			if ( $.browser.msie ) {
@@ -145,6 +146,14 @@
 		onPreview: function ( ev ) {
 			this.renderPreview({});
 			this.editor.track( 'preview' );
+
+			ev.preventDefault();
+		},
+
+		// handle "PreviewMobile" button
+		onPreviewMobile: function ( ev ) {
+			this.renderPreview({}, 'mobile');
+			this.editor.track( 'preview-mobile' );
 
 			ev.preventDefault();
 		},
@@ -469,6 +478,7 @@
 
 				// pass info about if it's a wide page (main page or page without right rail)
 				previewOptions.isWidePage = config.isWidePage;
+				previewOptions.currentTypeName = type;
 
 				require( ['wikia.preview'], function ( preview ) {
 					preview.renderPreview( previewOptions );
