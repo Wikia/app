@@ -791,6 +791,7 @@ $config['interactivemaps_ads_js'] = array(
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/AdProviderFactoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMaps.js',
+		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js'
 	)
