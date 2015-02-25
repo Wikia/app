@@ -1196,6 +1196,6 @@ class CreateWiki {
 	 * @return bool
 	 */
 	private function setInitialNjordExtValue() {
-		return intval( $this->mNewWiki->city_id ) % 10 === 1 && $this->mNewWiki->language === 'en' ? true : false;
+		return rand( 0, 9 ) % 10 === 1 && $this->mNewWiki->language === 'en' ? true : false;
 	}
 }
