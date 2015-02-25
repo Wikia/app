@@ -50,7 +50,7 @@ class FancyCaptcha extends BaseCaptcha {
 		}
 		$index = $this->storeCaptcha( $info );
 
-		$resultArr['captcha']['type'] = 'image';
+		$resultArr['captcha']['type'] = 'fancyCaptcha';
 		$resultArr['captcha']['mime'] = 'image/png';
 		$resultArr['captcha']['id'] = $index;
 		$resultArr['captcha']['url'] = $this->getImageURL( $index );
@@ -103,6 +103,13 @@ class FancyCaptcha extends BaseCaptcha {
 				'name'  => 'wpCaptchaId',
 				'id'    => 'wpCaptchaId',
 				'value' => $index,
+			] ) .
+			"<p>" .
+			\Xml::element( 'input', [
+				'type'  => 'hidden',
+				'name'  => 'wpCaptchaClass',
+				'id'    => 'wpCaptchaClass',
+				'value'    => '\Captcha\Module\FancyCaptcha',
 			] ) .
 			"<p>" .
 			\Html::element( 'input', [

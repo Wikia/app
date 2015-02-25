@@ -668,7 +668,7 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 	// API for different things in the UI. At this point we only support the FancyCaptha which we
 	// very intuitively detect by the presence of a "url" property.
 	// Wikia-only change: support only reCAPTCHA
-	if ( editApi && editApi.captcha && editApi.captcha.type === 'recaptcha' ) {
+	if ( editApi && editApi.captcha && (editApi.captcha.type === 'recaptcha' || editApi.captcha.type ==='fancyCaptcha')) {
 		this.emit( 'saveErrorCaptcha', editApi );
 		return;
 	}

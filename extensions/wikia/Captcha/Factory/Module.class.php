@@ -9,6 +9,8 @@ namespace Captcha\Factory;
  */
 class Module {
 
+	const DEFAULT_CAPTCHA = 'Captcha\Module\ReCaptcha';
+
 	/** @var \Captcha\Module\BaseCaptcha */
 	protected static $instance;
 
@@ -18,17 +20,9 @@ class Module {
 	 * @return \Captcha\Module\BaseCaptcha
 	 */
 	public static function getInstance() {
-		if ( self::$instance ) {
-			return self::$instance;
-		}
-
-		foreach ( \F::app()->wg->CaptchaPrecedence as $captchaClass ) {
-			self::$instance = new $captchaClass;
-
-			// Check to see if this captcha can be used
-			if ( self::$instance->isValid() ) {
-				break;
-			}
+		if ( !self::$instance ) {
+			$captchaClass = \F::app()->wg->request->getVal( 'wpCaptchaClass', self::DEFAULT_CAPTCHA );
+			self::$instance = new $captchaClass();
 		}
 
 		return self::$instance;

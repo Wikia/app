@@ -579,7 +579,8 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
 	// Wikia change: Only support reCAPTCHA
 	this.captchaResponse = null;
 	this.saveDialog.$captcha.empty();
-	this.saveDialog.frame.$element[0].contentWindow.grecaptcha.render(
+	if (this.saveDialog.frame.$element[0].contentWindow.grecaptcha !== undefined) {
+		this.saveDialog.frame.$element[0].contentWindow.grecaptcha.render(
 		've-ui-mwSaveDialog-captcha',
 		{
 			'sitekey': mw.config.get( 'reCaptchaPublicKey' ),
@@ -587,8 +588,17 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
 			'callback': function ( response ) {
 				this.captchaResponse = response;
 			}.bind( this )
-		}
-	);
+		});
+	} else {
+		$.nirvana.sendRequest({
+			controller: 'CaptchaController',
+			method: 'getFancyCaptcha',
+			type: 'GET',
+			callback: function (data) {
+				this.saveDialog.$captcha.append(data.form);
+			}.bind(this)
+		});
+	}
 	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
 	this.saveDialog.popPending();
 
@@ -937,7 +947,10 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
-		'g-recaptcha-response': this.captchaResponse
+		'g-recaptcha-response': this.captchaResponse,
+		'wpCaptchaClass': this.saveDialog.$('#wpCaptchaClass').val(),
+		'wpCaptchaId': this.saveDialog.$('#wpCaptchaId').val(),
+		'wpCaptchaWord': this.saveDialog.$('#wpCaptchaWord').val()
 	} );
 	return fields;
 };

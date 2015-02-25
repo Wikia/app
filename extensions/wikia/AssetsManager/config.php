@@ -12,6 +12,7 @@ $config['oasis_shared_core_js'] = array(
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
+		'//extensions/wikia/UserLogin/js/Captcha.js',
 		'#group_ui_repo_api_js',
 	),
 );
