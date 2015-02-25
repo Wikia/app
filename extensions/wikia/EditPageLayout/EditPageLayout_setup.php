@@ -74,6 +74,8 @@ JSMessages::registerPackage('EditPageLayout', array(
 	'editpagelayout-more',
 	'editpagelayout-less',
 	'editpagelayout-pageControls-changes',
+	'editpagelayout-preview-label-desktop',
+	'editpagelayout-preview-label-mobile',
 	'editpagelayout-loadingStates-*',
 	'editpagelayout-modules-*',
 	'wikia-editor-*',

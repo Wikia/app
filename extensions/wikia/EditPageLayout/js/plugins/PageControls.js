@@ -54,7 +54,8 @@
 
 		// init page controls widget
 		init: function () {
-			var pageControls = $( '#EditPageRail .module_page_controls' );
+			var pageControls = $( '#EditPageRail .module_page_controls'),
+				editPage = $('#EditPage');
 
 			this.categories = $( '#categories' );
 			this.textarea = pageControls.find( 'textarea' );
@@ -76,8 +77,33 @@
 			} ) );
 
 			// attach events
-			$( '#wpPreview' ).bind( 'click', this.proxy( this.onPreview ) );
-			$( '#wpPreviewMobile' ).bind( 'click', this.proxy( this.onPreviewMobile ) );
+			$( '#wpPreview' ).bind(
+				'click', this.proxy( this.onPreview )
+			).popover({
+				placement: 'top',
+				content: $.msg('editpagelayout-preview-label-desktop'),
+				trigger: 'manual'
+			}).on('mouseenter', function() {
+				if (editPage.hasClass('mode-source') && editPage.hasClass('editpage-sourcewidemode-on')) {
+					$(this).popover('show');
+				}
+			}).on('mouseleave', function() {
+				$(this).popover('hide');
+			});
+
+			$( '#wpPreviewMobile' ).bind(
+				'click', this.proxy( this.onPreviewMobile )
+			).popover({
+				placement: 'top',
+				content: $.msg('editpagelayout-preview-label-mobile'),
+				trigger: 'manual'
+			}).on('mouseenter', function() {
+				if (editPage.hasClass('mode-source') && editPage.hasClass('editpage-sourcewidemode-on')) {
+					$(this).popover('show');
+				}
+			}).on('mouseleave', function() {
+				$(this).popover('hide');
+			});
 
 			// Wikia change (bugid:5667) - begin
 			if ( $.browser.msie ) {

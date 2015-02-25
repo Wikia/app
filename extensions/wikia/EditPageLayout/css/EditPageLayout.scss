@@ -31,6 +31,11 @@
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
+
+.popover-inner {
+	padding: 3px 8px;
+}
+
 body {
 	padding: 0;
 
