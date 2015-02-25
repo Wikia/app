@@ -16,12 +16,13 @@ module.exports = function (config) {
 	config.set({
 		exclude: [
 			'resources/wikia/ui_components/**/Gruntfile.js',
-			'resources/wikia/ui_components/**/node_modules/**/*.js',
+			'resources/wikia/ui_components/**/node_modules/**/*.js'
 		],
 		files: [
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
+			'resources/wikia/polyfills/bind.js',
 
 			//JSMessages
 			'extensions/wikia/JSMessages/js/JSMessages.js',
@@ -82,6 +83,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
 			'extensions/wikia/AdEngine/js/AdContext.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
+			'extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
 			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
@@ -191,7 +193,9 @@ module.exports = function (config) {
 
 			// User Login and Signup
 			'extensions/wikia/UserLogin/js/MarketingOptIn.js',
-			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js'
+			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js',
+			'extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+			'extensions/wikia/UserLogin/js/spec/UserBaseAjaxForm.spec.js',
 		]
 	});
 };
