@@ -139,8 +139,11 @@ define('ext.wikia.adEngine.gptHelper', [
 	}
 
 	function pushAd(slotName, slotPath, slotTargeting, success, error) {
-		var slotDiv, // set in queueAd
+		var slotDiv = document.getElementById(slotName),
+			adDiv, // set in queueAd
 			adDivId = 'wikia_gpt_helper' + slotPath;
+
+		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
 		function callSuccess(adInfo) {
 			if (typeof success === 'function') {
@@ -157,16 +160,26 @@ define('ext.wikia.adEngine.gptHelper', [
 			}
 		}
 
+		function hideOldDivs() {
+			var oldDivs = slotDiv.querySelectorAll('[id^="wikia_gpt_helper"]'),
+				i,
+				len;
+
+			for (i = 0, len = oldDivs.length; i < len; i += 1) {
+				slotTweaker.hide(oldDivs[i].id);
+			}
+		}
+
 		function queueAd() {
 			var name, value, sizes, slot;
 
-			slotDiv = document.getElementById(adDivId);
+			adDiv = document.getElementById(adDivId);
 
-			if (!slotDiv) {
+			if (!adDiv) {
 				// Create a div for the GPT ad
-				slotDiv = document.createElement('div');
-				slotDiv.id = adDivId;
-				document.getElementById(slotName).appendChild(slotDiv);
+				adDiv = document.createElement('div');
+				adDiv.id = adDivId;
+				slotDiv.appendChild(adDiv);
 
 				sizes = convertSizesToGpt(slotTargeting.size);
 
@@ -197,10 +210,13 @@ define('ext.wikia.adEngine.gptHelper', [
 				googletag.display(adDivId);
 
 				// Save page level and slot level params for easier ad delivery debugging
-				slotDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
-				slotDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
-				slotDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
+				adDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
+				adDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
+				adDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
 			}
+
+			// Quick hack/fix for Mercury:
+			hideOldDivs();
 
 			// Some broken ads never fire "success" event, so we show the div now (and maybe hide later)
 			slotTweaker.show(adDivId);
@@ -211,11 +227,11 @@ define('ext.wikia.adEngine.gptHelper', [
 			log(['gptCallback', adDivId, event], 'info', logGroup);
 
 			// Add debug info
-			slotDiv.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
-			slotDiv.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
-			slotDiv.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
+			adDiv.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
+			adDiv.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
+			adDiv.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));
 
-			var iframe = slotDiv.querySelector('div[id*="_container_"] iframe');
+			var iframe = adDiv.querySelector('div[id*="_container_"] iframe');
 
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
