@@ -3,8 +3,9 @@ define(
 	[
 		'wikia.window',
 		'ponto',
-		require.optional('ext.wikia.adEngine.adContext'),
-		require.optional('ext.wikia.adEngine.adLogicPageParams')
+		//FIXME: Temporary P2 fix for DAT-2546, proper fix - ADEN-1784
+		//require.optional('ext.wikia.adEngine.adContext'),
+		//require.optional('ext.wikia.adEngine.adLogicPageParams')
 	],
 	function (w, ponto, adContext, adParams) {
 

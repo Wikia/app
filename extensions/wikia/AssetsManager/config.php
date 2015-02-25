@@ -61,6 +61,7 @@ $config['adengine2_js'] = array(
 		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
+		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/LateAdsQueue.js',
@@ -306,6 +307,9 @@ $config['oasis_jquery'] = array(
 		// Global Header tracking
 		'//skins/oasis/js/GlobalHeader.js',
 
+		// Article length & screen width tracking
+		'//skins/oasis/js/ArticleLengthAbTesting.js',
+
 		// Lazy rail
 		'#group_lazy_rail_js',
 	)
@@ -391,17 +395,6 @@ $config['oasis_nojquery_shared_js'] = array(
 // Note: Owen moved getSiteJS call from both anon_js and user_js to OasisController::loadJS
 // so that common.js is loaded last so it has less chance of breaking other things
 $config['oasis_anon_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'#group_user_login_js_anon',
-		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
-		'//skins/oasis/js/LatestActivity.js',
-	]
-];
-
-// TODO: cleanup this after Global Navigation global release
-$config['oasis_anon_with_new_global_nav_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_user_login_js_anon',
@@ -734,6 +727,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdContext.js',
+		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
@@ -1183,13 +1177,6 @@ $config['wall_notifications_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/WallNotifications/scripts/WallNotifications.js',
-	)
-);
-
-$config['wall_notifications_global_navigation_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/WallNotifications/scripts/WallNotifications.globalNavigation.js',
 	)
 );
 
@@ -2236,24 +2223,6 @@ $config[ 'local_navigation_oasis_scss' ] = [
 	]
 ];
 
-/** these packs should be loaded only if GlobalNavigation extension is disabled */
-$config['global_header_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//skins/oasis/css/core/AccountNavigation.scss',
-		'//extensions/wikia/UserLogin/css/UserLoginDropdown.scss'
-	]
-];
-
-$config['global_header_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//skins/oasis/js/hoverMenu.js',
-	]
-];
-
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'venus'],
@@ -2280,5 +2249,31 @@ $config['facebook_client_preferences_scss'] = [
 	'skin' => ['oasis', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/FacebookClient/styles/preferences.scss',
+	]
+];
+
+$config['facebook_client_xfbml_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/scripts/FacebookClient.XFBML.js',
+	]
+];
+
+$config['delayed_hover_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
+		'//resources/wikia/modules/delayedHover.js'
+	]
+];
+
+$config['menu_aim_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/menu-aim/menu-aim.js',
+		'//resources/wikia/modules/menuAim.js'
 	]
 ];
