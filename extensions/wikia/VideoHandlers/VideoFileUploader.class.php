@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Class VideoFileUploader
@@ -87,7 +88,17 @@ class VideoFileUploader {
 		try {
 			$upload = $this->uploadBestThumbnail( $this->getApiWrapper()->getThumbnailUrl() );
 		} catch ( Exception $e ) {
-			Wikia::Log( __METHOD__, false, $e->getMessage() );
+			WikiaLogger::instance()->error( 'Upload failed', [
+				'targetFile' => $this->sTargetTitle,
+				'description' => $this->sDescription,
+				'undercover' => $this->bUndercover,
+				'overrideMetadata' => $this->aOverrideMetadata,
+				'externalURL' => $this->sExternalUrl,
+				'videoID' => $this->sVideoId,
+				'provider' => $this->sProvider,
+				'apiWrapper' => $this->oApiWrapper,
+				'exception' => $e
+			]);
 
 			return Status::newFatal( $e->getMessage() );
 		}
