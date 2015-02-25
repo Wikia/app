@@ -26,8 +26,6 @@
 			paramName = el.attr('name'),
 			params = this.getDefaultParamsForAjax();
 
-		console.log(typeof e);
-
 		params.field = paramName;
 		params[paramName] = el.val();
 
@@ -47,16 +45,17 @@
 		var el = $(e.target),
 			paramName = el.attr('name'),
 			params = this.getDefaultParamsForAjax(),
-			mappedParamName;
+			mappedParamName,
+			map;
 
-		if (paramName === 'username') {
-			mappedParamName = 'userloginext01';
-		} else if (paramName === 'password') {
-			mappedParamName = 'userloginext02';
-		} else {
-			mappedParamName = paramName;
-		}
+		// back end validation expects these fields to match the user signup form, so we'll map them to those values
+		// before sending.
+		map = {
+			'username': 'userloginext01',
+			'password': 'userloginext02'
+		};
 
+		mappedParamName = map[paramName] || paramName;
 		params.field = mappedParamName;
 		params[mappedParamName] = el.val();
 
