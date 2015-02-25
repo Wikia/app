@@ -5,6 +5,11 @@
 @import "extensions/wikia/Venus/styles/fonts/venus-icons";
 @import "extensions/wikia/Venus/styles/mixins";
 
+$btn-bar-color: mix($color-page, #000, 90);
+@if $is-dark-wiki {
+	$btn-bar-color: mix($color-page, #fff, 90);
+}
+
 .MainPageHero {
 	background-color: $color-buttons;
 	max-height: 400px;
@@ -17,8 +22,8 @@
 
 	.btn-bar {
 		align-items: center;
-		border: 1px solid #092140;
-		background-color: white;
+		border: 1px solid $color-page-border-subtle;
+		background-color: $btn-bar-color;
 		display: flex;
 		display: -webkit-flex;
 		justify-content: flex-end;
@@ -79,16 +84,15 @@
 		display: none;
 		height: 100%;
 		position: absolute;
-		padding-top: 15px;
+		padding-top: 106px;
 		width: 100%;
 		z-index: 2;
 		.position-text {
-			background-color: #C7D1D8;
-			border-radius: 3px;
-			color: #092140;
+			color: #fff;
 			display: inline-block;
+			font-size: 24px;
 			padding: 5px 10px;
-			text-transform: uppercase;
+			text-shadow: rgba(0,0,0,0.8) 0 1px 3px;
 		}
 	}
 
@@ -322,9 +326,9 @@
 
 	.btn-bar {
 		align-items: center;
+		background-color: $btn-bar-color;
 		border-top: 1px solid $color-page-border;
 		border-bottom: 1px solid $color-page-border;
-		background-color: $color-page;
 		display: flex;
 		display: -webkit-flex;
 		justify-content: flex-end;
@@ -365,7 +369,6 @@
 		border-bottom: 1px solid $color-page-border;
 		box-shadow: 4px 4px 10px rgba(0, 0, 0, .25);
 		box-sizing: border-box;
-		background-color: white;
 		display: none;
 		justify-content: flex-end;
 		padding: 10px 15px 10px 10px;
@@ -386,7 +389,7 @@
 
 	.new-btn {
 		background-image: none;
-		border: 1px solid #092140;
+		border: 1px solid $color-buttons;
 		border-radius: 0;
 		cursor: pointer;
 		display: block;
@@ -405,20 +408,20 @@
 		}
 	}
 	.new-btn.discard-btn {
-		background-color: #FFFFFF;
-		color: #092140;
+		background-color: transparent;
+		color: $color-buttons;
 		&:hover {
-			background-color: #0a5fa3;
-			border: 1px solid #0a5fa3;
-			color: #fff;
+			background-color: $color-button-highlight;
+			border: 1px solid $color-button-highlight;
+			color: $color-button-text;
 		}
 	}
 	.new-btn.save-btn {
-		background-color: #092140;
-		color: #fff;
+		background-color: $color-buttons;
+		color: $color-button-text;
 		&:hover {
-			background-color: #0a5fa3;
-			border: 1px solid #0a5fa3;
+			background-color: $color-button-highlight;
+			border: 1px solid $color-button-highlight;
 		}
 	}
 	.sg-main {
