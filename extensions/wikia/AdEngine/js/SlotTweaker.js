@@ -28,26 +28,15 @@ define('ext.wikia.adEngine.slotTweaker', [
 	function hide(slotname) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
 
-		var slot = document.getElementById(slotname),
-			parent;
+		var slot = document.getElementById(slotname);
 
 		if (slot) {
 			slot.className += ' hidden';
 		}
-
-		if (slot.parentNode) {
-			parent = slot.parentNode;
-
-			if (parent.classList && parent.classList.contains('ad-in-content')) {
-				log('hide ad-in-content slot (' + slotname + ') setting its clear rule to none', 6, logGroup);
-
-				parent.style.clear = 'none';
-			}
-		}
 	}
 
 	function show(slotname) {
-		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+		log('show ' + slotname + ' removing class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
