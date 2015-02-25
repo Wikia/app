@@ -31,6 +31,11 @@
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
+
+.popover-inner {
+	padding: 3px 8px;
+}
+
 body {
 	padding: 0;
 
@@ -468,8 +473,6 @@ body {
 					// fix for touch devices, because in touchScreen.scss height is set to 30px !important
 					height: 21px !important;
 					margin: 0;
-					right: 20px;
-					top: 40px;
 				}
 
 				#wpSummaryLabel {
@@ -486,25 +489,6 @@ body {
 							margin: 0;
 							right: 145px;
 							top: 40px;
-						}
-
-						.checkboxes {
-							position: absolute;
-							right: 275px;
-							top: 37px;
-
-							label {
-								float: right;
-								margin: 0 0 0 10px;
-								position: static;
-							}
-						}
-
-						textarea {
-							float: right;
-							margin: 0 0 0 10px;
-							position: static;
-							width: 350px;
 						}
 					}
 				}
