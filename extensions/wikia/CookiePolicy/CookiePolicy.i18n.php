@@ -22,7 +22,7 @@ $messages['es'] = array(
 );
 
 $messages['fr'] = array(
-	'cookie-policy-description' => "Aux États-Unis, une loi stipule que l'utilisateur doit être averti de l'utilisation des cookies sur un site lorsqu'il le visite pour la première fois. Cette extension permet à Wikia d'être en conformité avec cette loi.",
+	'cookie-policy-description' => "Dans l'Union européenne, une loi stipule que l'utilisateur doit être averti de l'utilisation des cookies sur un site lorsqu'il le visite pour la première fois. Cette extension permet à Wikia d'être en conformité avec cette loi.",
 	'cookie-policy-notification-message' => "Wikia utilise des cookies pour vous offrir la meilleure expérience sur notre site. En continuant d'utiliser Wikia, nous considérons que vous acceptez que nous utilisions des cookies. [[homepage:fr:Politique de confidentialité#Cookies|En savoir plus sur les cookies]]",
 );
 
