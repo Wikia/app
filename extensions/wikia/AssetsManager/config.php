@@ -231,10 +231,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		// handlebars - uncomment this when introducing first client-side rendered handlebars template
 		// '//resources/wikia/libraries/handlebars/handlebars.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
-
-		'//resources/wikia/libraries/menu-aim/menu-aim.js',
-		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
+		'//extensions/wikia/JSSnippets/js/JSSnippets.js'
 	)
 );
 
