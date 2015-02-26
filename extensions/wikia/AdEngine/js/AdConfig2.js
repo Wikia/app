@@ -60,6 +60,7 @@ define('ext.wikia.adEngine.adConfig', [
 		'INCONTENT_3A': true,
 		'INCONTENT_3B': true,
 		'INCONTENT_3C': true,
+		'INCONTENT_BOXAD_1': true,
 		'INCONTENT_LEADERBOARD_1': true,
 		'INCONTENT_LEADERBOARD_2': true,
 		'INCONTENT_LEADERBOARD_3': true,
