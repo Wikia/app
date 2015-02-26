@@ -117,17 +117,9 @@
 		}
 	}
 
-	/* page controls styling */
-	$page-controls-wide-width: 600px;
-	$page-controls-wide-width-min: 350px;
-
 	&.editpage-sourcewidemode-on {
 		.cke_toolbar_source {
-			width: $width-outside - $page-controls-wide-width;
-
-			@media screen and (max-width: $breakpoint-small) {
-				width: $width-outside - $page-controls-wide-width-min;
-			}
+			width: 410px;
 		}
 		.EditPageRail {
 			width: auto;
@@ -193,6 +185,12 @@
 						float: left;
 					}
 
+					#wpSummary {
+						height: 20px;
+						padding: 3px 5px;
+						width: 215px;
+					}
+
 					.checkboxes {
 						float: right;
 						margin: 10px 8px 0;
@@ -228,12 +226,6 @@
 
 						#wpSave {
 							margin-top: 3px;
-						}
-					}
-
-					@media screen and (max-width: $breakpoint-fluid) {
-						#wpSummary {
-							width: 215px;
 						}
 					}
 				}

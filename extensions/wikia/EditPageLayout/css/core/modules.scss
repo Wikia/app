@@ -62,6 +62,7 @@ $color-icon: mix($color-text, #fff, 90%);
 			clear: right;
 			display: block;
 			float: left;
+			font-size: 14px;
 			margin: 0 0 7px 0;
 			&.wpSummary_canMinorEdit {
 				margin-top: -17px;
@@ -134,6 +135,7 @@ $color-icon: mix($color-text, #fff, 90%);
 
 		.preview_box{
 			h3 {
+				font-size: 14px;
 				margin: 12px 0 8px;
 			}
 
