@@ -13,8 +13,13 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
-		$this->setResponse( new WikiaResponse() );
-		$this->response->addAsset( '/skins/oasis/css/modules/CorporateDatepicker.scss' );
+		$this->wg->Out->setPageTitle( wfMessage( 'admindashboard-title' )->escaped() );
+
+		if ( !$this->wg->User->isAllowed( 'pageviews' ) ) {
+			$this->displayRestrictionError();
+			return false;  // skip rendering
+		}
+
 		$this->setHeaders();
 		$this->setInitialDates();
 
