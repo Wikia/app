@@ -83,20 +83,32 @@ class VideoFileUploader {
 	 * @throws Exception
 	 */
 	public function upload( &$oTitle ) {
-		// Some providers will sometimes return error codes when attempting
-		// to fetch a thumbnail
+		$apiWrapper = $this->getApiWrapper();
+		$thumbnailUrl = null;
+		//Catch exception in case API Wrapper returns corrupted object and log it to Kibana
 		try {
-			$upload = $this->uploadBestThumbnail( $this->getApiWrapper()->getThumbnailUrl() );
-		} catch ( Exception $e ) {
-			WikiaLogger::instance()->error( 'Upload failed', [
+			$thumbnailUrl = $apiWrapper->getThumbnailUrl();
+		} catch (Exception $e) {
+			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
 				'targetFile' => $this->sTargetTitle,
-				'description' => $this->sDescription,
-				'undercover' => $this->bUndercover,
 				'overrideMetadata' => $this->aOverrideMetadata,
 				'externalURL' => $this->sExternalUrl,
 				'videoID' => $this->sVideoId,
 				'provider' => $this->sProvider,
-				'apiWrapper' => $this->oApiWrapper,
+				'apiWrapper' => $apiWrapper,
+				'exception' => $e
+			]);
+		}
+		// Some providers will sometimes return error codes when attempting
+		// to fetch a thumbnail
+		try {
+			$upload = $this->uploadBestThumbnail( $thumbnailUrl );
+		} catch ( Exception $e ) {
+			WikiaLogger::instance()->error( 'Video upload failed', [
+				'targetFile' => $this->sTargetTitle,
+				'externalURL' => $this->sExternalUrl,
+				'videoID' => $this->sVideoId,
+				'provider' => $this->sProvider,
 				'exception' => $e
 			]);
 
