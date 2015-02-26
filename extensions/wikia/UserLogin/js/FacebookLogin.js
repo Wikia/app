@@ -295,7 +295,8 @@
 			var validator,
 				wikiaForm = this.signupForm.wikiaForm,
 				inputs = wikiaForm.inputs,
-				inputsToValidate = ['username', 'password'];
+				inputsToValidate = ['username', 'password'],
+				$filteredInputs = $();
 
 			if (inputs.email) {
 				inputsToValidate.push('email');
@@ -309,8 +310,9 @@
 
 			// Add validation on blur event for all inputs to validate
 			inputsToValidate.forEach(function (inputName) {
-				inputs[inputName].on('blur', validator.validateMappedInput.bind(validator));
+				$filteredInputs = $filteredInputs.add(inputs[inputName]);
 			});
+			$filteredInputs.on('blur', validator.validateMappedInput.bind(validator));
 		},
 
 		/**
