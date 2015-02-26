@@ -2270,3 +2270,19 @@ $config['menu_aim_js'] = [
 		'//resources/wikia/modules/menuAim.js'
 	]
 ];
+
+$config['upload_photos_dialog_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaNewFiles/scripts/uploadPhotosDialog.js'
+	]
+];
+
+$config['upload_photos_dialog_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaNewFiles/styles/UploadPhotoDialog.scss'
+	]
+];
