@@ -510,7 +510,7 @@ class ApiVisualEditor extends ApiBase {
 			case 'parsefragment':
 				$wikitext = $params['wikitext'];
 				if ( $params['pst'] ) {
-					$wikitext = $this->pstWikitext( $page, $wikitext );
+					//$wikitext = $this->pstWikitext( $page, $wikitext );
 				}
 				$content = $this->parseWikitextFragment( $page, $wikitext );
 				if ( $content === false ) {

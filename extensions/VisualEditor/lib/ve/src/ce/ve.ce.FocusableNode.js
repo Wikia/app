@@ -548,3 +548,16 @@ ve.ce.FocusableNode.prototype.getStartAndEndRects = function () {
 	}
 	return this.startAndEndRects;
 };
+
+/**
+ * Get which side of the article the node is biased toward
+ *
+ * @return {string} 'left' or 'right'
+ */
+ve.ce.FocusableNode.prototype.getHorizontalBias = function () {
+	var boundingRect = this.getBoundingRect(),
+		width = boundingRect.right - boundingRect.left,
+		nodeCenter = boundingRect.left + width / 2,
+		articleCenter = this.surface.$element.width() / 2;
+	return ( nodeCenter <= articleCenter ) ? 'left' : 'right';
+};

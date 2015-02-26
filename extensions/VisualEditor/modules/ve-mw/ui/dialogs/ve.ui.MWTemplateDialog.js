@@ -71,7 +71,8 @@ ve.ui.MWTemplateDialog.static.actions = [
  */
 ve.ui.MWTemplateDialog.static.bookletLayoutConfig = {
 	continuous: true,
-	outlined: false
+	outlined: false,
+	autoFocus: false
 };
 
 /* Methods */
@@ -140,7 +141,8 @@ ve.ui.MWTemplateDialog.prototype.onReplacePart = function ( removed, added ) {
 			if ( added instanceof ve.dm.MWTemplateModel && this.loaded ) {
 				// Prevent selection changes
 				this.preventReselection = true;
-				addedCount = added.addPromptedParameters();
+				//addedCount = added.addPromptedParameters();
+				addedCount = added.addUnusedParameters();
 				this.preventReselection = false;
 				names = added.getParameterNames();
 				params = added.getParameters();
@@ -169,7 +171,7 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
 	var page;
 
 	if ( param.getName() ) {
-		page = new ve.ui.MWParameterPage( param, param.getId(), { $: this.$ } );
+		page = new ve.ui.WikiaParameterPage( param, param.getId(), { $: this.$ } );
 	} else {
 		page = new ve.ui.MWParameterPlaceholderPage( param, param.getId(), { $: this.$ } );
 	}
@@ -184,16 +186,16 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
 	this.$body.find( '.ve-ui-mwParameterPage' ).each( function ( index ) {
 		$( this )
 			.find( '.ve-ui-mwParameterPage-field > .oo-ui-textInputWidget > textarea' )
-				.attr( 'tabindex', index * 3 + 1 )
-			.end()
-			.find( '.ve-ui-mwParameterPage-infoButton' )
 				.attr( 'tabindex', index * 3 + 2 )
 			.end()
-			.find( '.ve-ui-mwParameterPage-removeButton' )
+			.find( '.ve-ui-mwParameterPage-infoButton' )
 				.attr( 'tabindex', index * 3 + 3 )
 			.end()
+			.find( '.ve-ui-mwParameterPage-removeButton' )
+				.attr( 'tabindex', index * 3 + 4 )
+			.end()
 			.find( '.ve-ui-mwParameterPage-more' )
-				.attr( 'tabindex', index * 3 + 4 );
+				.attr( 'tabindex', index * 3 + 5 );
 	} );
 };
 
@@ -433,7 +435,7 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 
 			// Properties
 			this.loaded = false;
-			this.transclusionModel = new ve.dm.MWTransclusionModel();
+			this.transclusionModel = new ve.dm.WikiaTransclusionModel();
 
 			// Events
 			this.transclusionModel.connect( this, { replace: 'onReplacePart' } );

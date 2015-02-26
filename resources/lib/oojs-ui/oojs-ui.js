@@ -2369,6 +2369,14 @@ OO.ui.Dialog.static.escapable = true;
 
 /* Methods */
 
+OO.ui.Dialog.prototype.setOverlayless = function () {
+	this.$element.addClass( 'oo-ui-dialog-overlayless' );
+};
+
+OO.ui.Dialog.prototype.unsetOverlayless = function () {
+	this.$element.removeClass( 'oo-ui-dialog-overlayless' );
+};
+
 /**
  * Handle frame document key down events.
  *

@@ -61,7 +61,7 @@ OO.inheritClass( ve.dm.MWTemplateModel, ve.dm.MWTransclusionPartModel );
  */
 ve.dm.MWTemplateModel.newFromData = function ( transclusion, data ) {
 	var key,
-		template = new ve.dm.MWTemplateModel( transclusion, data.target, 'data' );
+		template = new ve.dm.WikiaTemplateModel( transclusion, data.target, 'data' );
 
 	for ( key in data.params ) {
 		template.addParameter(
@@ -95,7 +95,7 @@ ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
 	}
 	if ( title !== null ) {
 		href = title.getPrefixedText();
-		return new ve.dm.MWTemplateModel( transclusion, { href: href, wt: name }, 'user' );
+		return new ve.dm.WikiaTemplateModel( transclusion, { href: href, wt: name }, 'user' );
 	}
 
 	return null;

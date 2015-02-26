@@ -31,7 +31,7 @@ OO.inheritClass( ve.ui.MWTransclusionDialog, ve.ui.MWTemplateDialog );
 ve.ui.MWTransclusionDialog.static.name = 'transclusion';
 
 ve.ui.MWTransclusionDialog.static.title =
-	OO.ui.deferMsg( 'visualeditor-dialog-transclusion-title' );
+	OO.ui.deferMsg( 'wikia-visualeditor-dialog-transclusion-title' );
 
 ve.ui.MWTransclusionDialog.static.actions = ve.ui.MWTemplateDialog.static.actions.concat( [
 	{
