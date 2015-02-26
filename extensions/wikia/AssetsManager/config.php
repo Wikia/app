@@ -217,7 +217,6 @@ $config['oasis_noads_extensions_js'] = array(
 		// needs to load after MiniEditor
 		'#group_articlecomments_js',
 
-		//'#group_banner_notifications_js',
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
@@ -925,7 +924,6 @@ $config['monobook_js'] = array(
 		'#group_imglzy_js',
 		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
-		//'#group_banner_notifications_js',
 		'//skins/shared/scripts/onScroll.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',

@@ -145,7 +145,8 @@ require([
 		return this
 			.setType('error')
 			.setContent(
-				$.msg('bannernotifications-general-ajax-failure')
+				window.mw.message('bannernotifications-general-ajax-failure')
+					.escaped()
 			)
 			.show();
 	};

@@ -280,21 +280,12 @@ class BannerNotificationsController extends WikiaController {
 	}
 
 	/**
-	 * Registering and adding JS package for front-end usage
-	 *
-	 * @param object $out
-	 * @param string $text
-	 *
-	 * @return true
+	 * Add JS message to the ResourceLoader output
+	 * @param \OutputPage $out
+	 * @return bool
 	 */
-	public static function onOutputPageBeforeHTML( &$out, &$text ) {
-		//Registering package here as setup for this extension occurs
-		//too soon for JSMessages to be ready
-		JSMessages::registerPackage( 'BannerNotifications', [
-			'bannernotifications-general-ajax-failure'
-		] );
-
-		JSMessages::enqueuePackage('BannerNotifications', JSMessages::INLINE);
+	public static function onBeforePageDisplay( \OutputPage $out ) {
+		$out->addModules( 'ext.bannerNotifications' );
 		return true;
 	}
 }

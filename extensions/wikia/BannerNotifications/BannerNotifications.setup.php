@@ -30,9 +30,18 @@ $wgHooks['SpecialMovepageAfterMove'][] = 'BannerNotificationsController::addPage
 $wgHooks['SpecialPreferencesOnRender'][] = 'BannerNotificationsController::addPreferencesConfirmation';
 $wgHooks['UserLogoutComplete'][] = 'BannerNotificationsController::addLogOutConfirmation';
 $wgHooks['SkinAfterBottomScripts'][] = 'BannerNotificationsController::onSkinAfterBottomScripts';
-$wgHooks['OutputPageBeforeHTML'][] = 'BannerNotificationsController::onOutputPageBeforeHTML';
+$wgHooks['BeforePageDisplay'][] = 'BannerNotificationsController::onBeforePageDisplay';
 
 /**
  * i18n
  */
 $wgExtensionMessagesFiles['BannerNotification'] = $dir . 'BannerNotifications.i18n.php';
+
+/**
+ * ResourceLoader module
+ */
+$wgResourceModules['ext.bannerNotifications'] = [
+	'messages' => [
+		'bannernotifications-general-ajax-failure',
+	]
+];
