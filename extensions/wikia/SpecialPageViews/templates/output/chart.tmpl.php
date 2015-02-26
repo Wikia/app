@@ -1,5 +1,8 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- MAIN-PAGE -->
+<div class="pageviews-dashboard-beta-info">
+	<strong><?= wfMessage( 'special-pageviews-beta-info' )->escaped() ?></strong>
+</div>
 <div class="sponsorship-dashboard-description">
 	<strong class="bigFont"><?= isset( $title ) ? $title : '' ?></strong>
 	<?= isset( $description ) ? $description : '' ?>
@@ -111,7 +114,7 @@ if( isset( $showActionsButton ) ){ ?>
 	</div>
 	<div id="overviewWrapper<?= $number ?>" class="overviewWrapper" >
 		<div id="overviewLabel<?= $number ?>" class="overviewLabel"><?= wfMessage( 'sponsorship-dashboard-overview-label' )->escaped() ?></div>
-		<div id="overview<?= $number ?>" class="overview" ></div>
+		<div id="overview<?= $number ?>" class="overview"></div>
 	</div>
 </div>
 <div class="sponsorship-dashboard-panel-variables">
