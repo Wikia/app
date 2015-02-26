@@ -95,7 +95,7 @@ class VideoFileUploader {
 				'externalURL' => $this->sExternalUrl,
 				'videoID' => $this->sVideoId,
 				'provider' => $this->sProvider,
-				'apiWrapper' => $apiWrapper,
+				'apiWrapper' => get_class( $apiWrapper ),
 				'exception' => $e
 			]);
 		}
