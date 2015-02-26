@@ -110,7 +110,7 @@
 				type: 'POST',
 				callback: function (data) {
 					if (data.status === 'ok') {
-						bannerNotifications
+						bannerNotification
 							.setType('confirm')
 							.setContent($.msg(disconnectMsg))
 							.show();

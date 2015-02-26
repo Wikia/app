@@ -128,7 +128,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 	fileErrors = this.constructor.static.validateFile( file );
 
 	if ( fileErrors.length ) {
-		mw.config.get( 'BannerNotifications' )(
+		mw.config.get( 'BannerNotification' )(
 			// show filetype message first if multiple errors exist
 			ve.msg(
 				'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ][ 0 ],

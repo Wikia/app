@@ -299,7 +299,7 @@ var UserProfilePage = {
 							userId: UserProfilePage.userId
 						};
 						UserProfilePage.wasDataChanged = true;
-						bannerNotification.hide();
+						UserProfilePage.bannerNotification.hide();
 					} else {
 						if (typeof (response.result.error) !== 'undefined') {
 							UserProfilePage.error(response.result.error);
@@ -414,7 +414,7 @@ var UserProfilePage = {
 			msg = $.msg('oasis-generic-error');
 		}
 
-		UserProfilePage.bannerNotifications.setContent(msg).show();
+		UserProfilePage.bannerNotification.setContent(msg).show();
 	},
 
 	getFormData: function () {
@@ -636,8 +636,6 @@ var UserProfilePage = {
 };
 
 $(function () {
-	setTimeout(function(){
-		UserProfilePage.init();
-	}, 0);
 	'use strict';
+	UserProfilePage.init();
 });

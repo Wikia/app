@@ -130,7 +130,7 @@ var importArticleMissing = (function() {
 			missing = [ missing ];
 		}
 
-		// Use BannerNotifications to show the error to the user
+		// Use BannerNotification to show the error to the user
 		if (window.BannerNotification && (missingLength = missing.length)) {
 			var moreLength = missingLength - 1,
 				message = missingText[ missingLength < 2 ? 'single' : 'multiple' ],

@@ -57,7 +57,7 @@ var AdminDashboard = {
 						},
 						// error callback
 						function() {
-							AdminDashboard.BannerNotifications
+							AdminDashboard.BannerNotification
 								.setContent($.msg('vet-error-while-loading'))
 								.show();
 						}
