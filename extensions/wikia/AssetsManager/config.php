@@ -232,6 +232,9 @@ $config['oasis_noads_extensions_js'] = array(
 		// handlebars - uncomment this when introducing first client-side rendered handlebars template
 		// '//resources/wikia/libraries/handlebars/handlebars.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
+
+		'//resources/wikia/libraries/menu-aim/menu-aim.js',
+		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
 	)
 );
 
@@ -2269,3 +2272,20 @@ $config['menu_aim_js'] = [
 		'//resources/wikia/modules/menuAim.js'
 	]
 ];
+
+$config['njord_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/jquery.ui/jquery.ui.core.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.position.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.draggable.js',
+		'//resources/jquery.ui/jquery.ui.droppable.js',
+		'//extensions/wikia/NjordPrototype/scripts/jquery.caret.js',
+		'//extensions/wikia/NjordPrototype/scripts/Njord.js'
+	]
+];
+
+
