@@ -53,6 +53,7 @@ class Client
 		// Request execution.
 		$oRequest = \MWHttpRequest::factory( $sUri, $aOptions );
 		$oRequest->setHeader(RequestId::REQUEST_HEADER_NAME, RequestId::instance()->getRequestId());
+		$oRequest->setHeader(RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname());
 		$oStatus = $oRequest->execute();
 
 		// Response handling.
