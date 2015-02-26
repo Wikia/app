@@ -2,9 +2,9 @@
 /** English */
 $messages['en'] = array(
 	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
-	'wikia-editor-preview-current-width' => 'Current width',
-	'wikia-editor-preview-min-width' => 'Minimum width',
-	'wikia-editor-preview-max-width' => 'Maximum width',
+	'wikia-editor-preview-current-width' => 'Desktop',
+	'wikia-editor-preview-min-width' => 'Tablet Portrait',
+	'wikia-editor-preview-max-width' => 'Desktop XL',
 	'wikia-editor-preview-mobile-width' => 'Mobile',
 	'wikia-editor-preview-venus-width' => 'Venus',
 	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devices, or your current display.",
