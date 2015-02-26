@@ -1448,10 +1448,10 @@ $wgAdDriverRubiconRTPConfig = null;
 $wgAdDriverRubiconRTPCountries = null;
 
 /**
- * @name $wgAdDriverEnableKruxOnMobile
+ * @name $wgEnableKruxOnMobile
  * Whether to enable Krux on wikiamobile skin
  */
-$wgEnableKruxOnMobile = false;
+$wgEnableKruxOnMobile = true;
 
 /**
  * @name $wgHighValueCountries
