@@ -10,6 +10,7 @@ namespace Captcha\Factory;
 class Module {
 
 	const DEFAULT_CAPTCHA = 'Captcha\Module\ReCaptcha';
+	const FALLBACK_CAPTCHA = 'Captcha\Module\FancyCaptcha';
 
 	/** @var \Captcha\Module\BaseCaptcha */
 	protected static $instance;
@@ -22,9 +23,23 @@ class Module {
 	public static function getInstance() {
 		if ( !self::$instance ) {
 			$captchaClass = \F::app()->wg->request->getVal( 'wpCaptchaClass', self::DEFAULT_CAPTCHA );
+			self::verifyCaptchaClass( $captchaClass );
 			self::$instance = new $captchaClass();
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Make sure the Captcha class we are about to instantiate is what we expect. Either the default or fallback
+	 * version. This is especially important since 'wpwpCaptchaClass' is passed in by the client.
+	 *
+	 * @param $captchaClass
+	 * @throws \Exception
+	 */
+	public static function verifyCaptchaClass( $captchaClass ) {
+		if ( $captchaClass != self::DEFAULT_CAPTCHA || $captchaClass != self::FALLBACK_CAPTCHA ) {
+			throw new \Exception( "Invalid Captcha class: " . $captchaClass );
+		}
 	}
 }
