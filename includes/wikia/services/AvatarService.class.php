@@ -269,8 +269,7 @@ class AvatarService extends Service {
 				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
 			}
 		} else { // default avatar
-			$defaultAvatars = $masthead->getDefaultAvatars( 'thumb/' );
-			$legacyDefaultUrl = array_shift( $defaultAvatars );
+			$legacyDefaultUrl = $masthead->getDefaultAvatars( 'thumb/' )[0];
 			$bucket = VignetteRequest::parseBucket( $legacyDefaultUrl );
 			$relativePath = VignetteRequest::parseRelativePath( $legacyDefaultUrl );
 			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
