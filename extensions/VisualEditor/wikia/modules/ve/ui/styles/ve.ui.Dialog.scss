@@ -10,3 +10,7 @@
 	float: right;
 	position: static;
 }
+
+.oo-ui-windowManager-modal > .oo-ui-dialog-overlayless {
+	background-color: transparent;
+}

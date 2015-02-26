@@ -91,7 +91,7 @@ ve.ui.WikiaFocusWidget.prototype.setNode = function ( node ) {
 	this.node = node;
 	this.adjustLayout();
 	this.$element.addClass( 've-ui-wikiaFocusWidget-node' );
-	this.toolbar.disableFloatable();
+	//this.toolbar.disableFloatable();
 };
 
 /**
@@ -105,7 +105,7 @@ ve.ui.WikiaFocusWidget.prototype.unsetNode = function () {
 	this.node = null;
 	this.adjustLayout();
 
-	this.toolbar.enableFloatable();
+	//this.toolbar.enableFloatable();
 	// The page may already be scrolled, so trigger the scroll handler
 	this.toolbar.onWindowScroll();
 
