@@ -137,6 +137,7 @@
 						border-left: 1px solid $color-page-border;
 						border-right: 1px solid $color-page-border;
 						float: left;
+						height: 39px;
 						padding-left: 8px;
 						margin-right: 8px;
 
@@ -155,6 +156,10 @@
 
 							p {
 								display: none;
+							}
+
+							svg {
+								margin-bottom: 0;
 							}
 						}
 						.preview_mobile {
