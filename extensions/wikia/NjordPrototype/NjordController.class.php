@@ -52,9 +52,6 @@ class NjordController extends WikiaController {
 		global $wgTitle, $wgUser, $wgBlankImgUrl;
 		$wikiDataModel = self::$wikiDataModel;
 
-		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
-			return $this->skipRendering();
-		}
 		$this->wg->SupressPageTitle = true;
 
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
