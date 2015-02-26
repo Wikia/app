@@ -54,30 +54,30 @@
 
 		// init page controls widget
 		init: function () {
-			var pageControls = $( '#EditPageRail .module_page_controls'),
+			var $pageControls = $( '#EditPageRail .module_page_controls'),
 				editPage = $('#EditPage');
 
 			this.categories = $( '#categories' );
-			this.textarea = pageControls.find( 'textarea' );
+			this.textarea = $pageControls.find( 'textarea' );
 			this.scrollbarWidth = getScrollbarWidth();
 
 			// set up the caption of summary field
 			this.textarea.placeholder();
 
 			// pressing enter in edit summary should initiate publish button
-			this.textarea.bind( 'keypress', this.proxy( this.onSummaryKeypress ) );
+			this.textarea.on( 'keypress', this.proxy( this.onSummaryKeypress ) );
 
-			this.minorEditCheck = pageControls.find( '#wpMinoredit' );
+			this.minorEditCheck = $pageControls.find( '#wpMinoredit' );
 
 			// pressing enter on minor edit checkbox should not save the edition
-			this.minorEditCheck.bind( 'keypress', this.proxy( this.onMinorEditKeypress ) );
+			this.minorEditCheck.on( 'keypress', this.proxy( this.onMinorEditKeypress ) );
 
-			this.minorEditCheck.bind( 'change', this.proxy( function () {
+			this.minorEditCheck.on( 'change', this.proxy( function () {
 				this.editor.track( 'minor-edit' );
 			} ) );
 
 			// attach events
-			$( '#wpPreview' ).bind(
+			$( '#wpPreview' ).on(
 				'click', this.proxy( this.onPreview )
 			).popover({
 				placement: 'top',
@@ -91,7 +91,7 @@
 				$(this).popover('hide');
 			});
 
-			$( '#wpPreviewMobile' ).bind(
+			$( '#wpPreviewMobile' ).on(
 				'click', this.proxy( this.onPreviewMobile )
 			).popover({
 				placement: 'top',
@@ -107,17 +107,17 @@
 
 			// Wikia change (bugid:5667) - begin
 			if ( $.browser.msie ) {
-				$( window ).bind( 'keydown', function ( e ) {
+				$( window ).on( 'keydown', function ( e ) {
 					if ( e.altKey && String.fromCharCode( e.keyCode ) == $( '#wpPreview' ).attr( 'accesskey' ).toUpperCase() ) {
 						$( '#wpPreview' ).click();
 					}
 				} );
 			}
 
-			$( '#wpDiff' ).bind( 'click', this.proxy( this.onDiff ) );
+			$( '#wpDiff' ).on( 'click', this.proxy( this.onDiff ) );
 
 			// remove placeholder text when user submits the form without providing the summary
-			this.editform = $( '#editform' ).bind( 'submit', this.proxy( this.onSave ) );
+			this.editform = $( '#editform' ).on( 'submit', this.proxy( this.onSave ) );
 
 			// hidden form fields / page title in the header
 			this.hiddenFields = $( '#EditPageHiddenFields' );
@@ -127,7 +127,7 @@
 			// show "Edit title" button and attach handler for it (when we have custom fields attached to this edit form)
 			if ( $( '#EditPageHiddenFields input[type="text"]' ).exists() ) {
 				$( '#EditPageTitle' ).// show it only when hovering over #EditPageHeader
-					addClass( 'enabled' ).bind( 'click', this.proxy( function () {
+					addClass( 'enabled' ).on( 'click', this.proxy( function () {
 						this.renderHiddenFieldsDialog();
 					} ) );
 
@@ -213,7 +213,7 @@
 
 			// prevent submitting immediately so we can track this event
 			event.preventDefault();
-			this.editform.unbind( 'submit' );
+			this.editform.off( 'submit' );
 			setTimeout( this.proxy(function () {
 				this.editform.submit();
 			}), 100 );
@@ -529,7 +529,7 @@
 					uiModal.createComponent( previewModalConfig, function( previewModal ) {
 						previewModal.deactivate();
 
-						previewModal.$content.bind( 'click', function( event ) {
+						previewModal.$content.on( 'click', function( event ) {
 							var target = $( event.target );
 							target.closest( 'a' ).not( '[href^="#"]' ).attr( 'target', '_blank' );
 						});
