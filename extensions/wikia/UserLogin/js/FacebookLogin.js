@@ -48,8 +48,9 @@
 			require([
 				'wikia.tracker',
 				'wikia.querystring',
-				'wikia.ui.factory'
-			], function (t, qs, uf) {
+				'wikia.ui.factory',
+				'BannerNotification'
+			], function (t, qs, uf, BannerNotification) {
 
 				tracker = t;
 				QueryString = qs;

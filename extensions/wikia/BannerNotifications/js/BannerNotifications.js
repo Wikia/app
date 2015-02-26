@@ -144,7 +144,9 @@ require([
 	BannerNotification.prototype.showConnectionError = function () {
 		return this
 			.setType('error')
-			.setContent($.msg('bannernotifications-general-ajax-failure'))
+			.setContent(
+				$.msg('bannernotifications-general-ajax-failure')
+			)
 			.show();
 	};
 

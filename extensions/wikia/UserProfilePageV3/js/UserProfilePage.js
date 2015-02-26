@@ -11,7 +11,7 @@ var UserProfilePage = {
 	forceRedirect: false,
 	reloadUrl: false,
 	bucky: window.Bucky('UserProfilePage'),
-	bannerNotification: new BannerNotification().setType('error'),
+	bannerNotification: null,
 
 	// reference to modal UI component
 	modalComponent: {},
@@ -20,9 +20,11 @@ var UserProfilePage = {
 		'use strict';
 
 		var $userIdentityBoxEdit = $('#userIdentityBoxEdit');
-
 		UserProfilePage.userId = $('#user').val();
 		UserProfilePage.reloadUrl = $('#reloadUrl').val();
+		require(['BannerNotification'], function (BannerNotification) {
+			UserProfilePage.bannerNotification = new BannerNotification().setType('error');
+		});
 
 		if (UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false) {
 			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName;
@@ -634,6 +636,8 @@ var UserProfilePage = {
 };
 
 $(function () {
+	setTimeout(function(){
+		UserProfilePage.init();
+	}, 0);
 	'use strict';
-	UserProfilePage.init();
 });

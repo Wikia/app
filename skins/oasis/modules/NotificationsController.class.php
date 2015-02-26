@@ -29,8 +29,8 @@ class NotificationsController extends WikiaController {
 	/**
 	 * Add notification message to the stack
 	 */
-	public static function addNotification($message, $data = array(), $type = 0) {
-		wfProfileIn(__METHOD__);
+	public static function addNotification( $message, $data = array(), $type = 0 ) {
+		wfProfileIn( __METHOD__ );
 
 		self::$notificationsStack[] = array(
 			'message' => $message,
@@ -38,8 +38,9 @@ class NotificationsController extends WikiaController {
 			'type' => $type,
 		);
 
-		wfDebug(__METHOD__ . " - " . (is_array( $message ) ) ? json_encode($message) : $message . "\n" );
-		wfProfileOut(__METHOD__);
+		wfDebug(__METHOD__ . " - " . ( is_array( $message ) ) ?
+			json_encode( $message ) : $message . "\n" );
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -53,60 +54,48 @@ class NotificationsController extends WikiaController {
 	 * Show notifications
 	 */
 	public function executeIndex() {
-		wfProfileIn(__METHOD__);
-
-		// add testing notification
-		/*
-		self::addNotification('test test test test test test test test test test test test test test test test test test test test');
-		self::addNotification('new talk page', array(), self::NOTIFICATION_TALK_PAGE_MESSAGE);
-		self::addNotification('test test <a href="#">test</a> test', array(), self::NOTIFICATION_COMMUNITY_MESSAGE);
-		self::addNotification('test test test test test <details>test <a href="#">test</a> test</details>', array('points' => 10, 'picture' => '', 'name' => 'foo bar'), self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE);
-		self::addNotification('custom notifiation', array(
-			'name' => 'foo-bar',
-			'dismissUrl' => '/index.php?action=test',
-		), self::NOTIFICATION_CUSTOM);
-		/**/
+		wfProfileIn( __METHOD__ );
 
 		// render notifications
 		$this->notifications = self::$notificationsStack;
 
 		// add CSS class to <body> (add padding to the bottom of article content)
-		if (!empty($this->notifications)) {
-			OasisController::addBodyClass('notifications');
+		if ( !empty( $this->notifications ) ) {
+			OasisController::addBodyClass( 'notifications' );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Handle notifications about new message(s)
 	 */
-	public static function addMessageNotification(&$skin, &$tpl) {
-		wfProfileIn(__METHOD__);
+	public static function addMessageNotification( &$skin, &$tpl ) {
+		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			// Add talk page notificaations
 			$msg = $tpl->data['usernewmessages'];
-			if ($msg != '') {
-				self::addNotification($msg, null, self::NOTIFICATION_TALK_PAGE_MESSAGE);
+			if ( $msg != '' ) {
+				self::addNotification( $msg, null, self::NOTIFICATION_TALK_PAGE_MESSAGE );
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
 	 * Handle notifications from the SiteWide messaging tool
 	 */
-	public static function addSiteWideMessageNotification($msgs) {
-		wfProfileIn(__METHOD__);
+	public static function addSiteWideMessageNotification( $msgs ) {
+		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
-			self::addNotification($msgs, null, self::NOTIFICATION_SITEWIDE);
+			self::addNotification( $msgs, null, self::NOTIFICATION_SITEWIDE );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -116,8 +105,8 @@ class NotificationsController extends WikiaController {
 	 * @param $user User
 	 * @param $badge AchBadge
 	 */
-	public static function addBadgeNotification($user, $badge, &$html) {
-		wfProfileIn(__METHOD__);
+	public static function addBadgeNotification( $user, $badge, &$html ) {
+		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			// clear old-style notification
@@ -127,29 +116,41 @@ class NotificationsController extends WikiaController {
 			$data = array(
 				'name' => $badge->getName(),
 				'picture' => $badge->getPictureUrl(90),
-				'points' => wfMsg('achievements-points', AchConfig::getInstance()->getLevelScore($badge->getLevel())),
+				'points' => wfMessage(
+					'achievements-points',
+					AchConfig::getInstance()->getLevelScore( $badge->getLevel() )
+				)->escaped(),
 				'reason' => $badge->getPersonalGivenFor(),
 				'userName' => $user->getName(),
 				'userPage' => $user->getUserPage()->getLocalUrl(),
 			);
-			#var_dump($data);
 
-			$message = wfMsg('oasis-badge-notification', $data['userName'], $data['name'], $data['reason']);
-			self::addNotification($message, $data, self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE);
+			$message = wfMessage(
+				'oasis-badge-notification',
+				$data['userName'],
+				$data['name'],
+				$data['reason']
+			)->escaped();
+
+			self::addNotification(
+				$message,
+				$data,
+				self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE
+			);
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
 	 * Handle notifications with edit suggestions
 	 */
-	public static function addEditSimilarNotification(&$html) {
-		wfProfileIn(__METHOD__);
+	public static function addEditSimilarNotification( &$html ) {
+		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
-			self::addNotification($html, array(), self::NOTIFICATION_EDIT_SIMILAR);
+			self::addNotification( $html, array(), self::NOTIFICATION_EDIT_SIMILAR );
 
 			// stop hook processing - don't show default message from extensions
 			$ret = false;
@@ -158,18 +159,18 @@ class NotificationsController extends WikiaController {
 			$ret = true;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
 	/**
 	 * Handle notifications about updated community message
 	 */
-	public static function addCommunityMessagesNotification(&$msg) {
-		wfProfileIn(__METHOD__);
+	public static function addCommunityMessagesNotification( &$msg ) {
+		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
-			self::addNotification($msg, array(), self::NOTIFICATION_COMMUNITY_MESSAGE);
+			self::addNotification( $msg, array(), self::NOTIFICATION_COMMUNITY_MESSAGE );
 		}
 
 		wfProfileOut(__METHOD__);
