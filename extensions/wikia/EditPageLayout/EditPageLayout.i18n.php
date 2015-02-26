@@ -98,6 +98,19 @@ $messages['en'] = array(
 	'tog-editwidth' => 'Widen the Source mode edit box to fill the entire screen',
 	'tog-minordefault' => 'Mark all edits as "minor" by default',
 	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
+
+	// preview-related messages
+	'editpagelayout-preview-best-practices-notice' => "Did you know that '''over 50% of Wikia''' users are reading your content on mobile? Some custom templates are not properly shown on mobile devices. Let's check out wikitext best practices for both mobile and desktop.",
+	'editpagelayout-preview-best-practices-button' => "Best practices",
+	'editpagelayout-preview-best-practices-button-link' => "http://community.wikia.com/wiki/Some_URL",
+
+	'editpagelayout-preview-label-desktop' => "Desktop",
+	'editpagelayout-preview-label-mobile' => "Mobile",
+
+	'editpagelayout-preview-dropdown-item-mobile' => "Mobile",
+	'editpagelayout-preview-dropdown-item-tablet' => "Tablet Portrait",
+	'editpagelayout-preview-dropdown-item-desktop' => "Desktop",
+	'editpagelayout-preview-dropdown-item-desktopxl' => "Desktop XL"
 );
 
 /** Message documentation (Message documentation)
