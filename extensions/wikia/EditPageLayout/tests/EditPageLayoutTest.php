@@ -111,7 +111,7 @@ class EditPageLayoutTest extends WikiaBaseTest {
 			$editPage->renderHiddenFields());
 
 		// summary box
-		$this->assertStringStartsWith('<textarea id="wpSummary" name="wpSummary" placeholder=', $editPage->renderSummaryBox());
+		$this->assertStringStartsWith('<input type="text" id="wpSummary" name="wpSummary" placeholder=', $editPage->renderSummaryBox());
 	}
 
 	/**

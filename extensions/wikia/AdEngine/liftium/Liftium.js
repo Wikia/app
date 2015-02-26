@@ -69,7 +69,7 @@ Liftium.addEventListener = function(item, eventName, callback){
 
 Liftium.beaconCall = function (url, cb){
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(beaconCall) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 	// Create an image and call the beacon
@@ -254,7 +254,7 @@ Liftium.buildQueryString = function(nvpairs, sep){
 
 Liftium.callAd = function (sizeOrSlot, slotPlacement) {
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(callAd) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 
@@ -433,7 +433,7 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 	Liftium.d("Calling injected Iframe Ad for " + sizeOrSlot, 1);
 
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(callInjectedIframeAd) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 
@@ -1428,7 +1428,7 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
 
 Liftium.init = function (callback) {
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(init) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 
@@ -1797,7 +1797,7 @@ Liftium.normalizeColor = function(input){
 Liftium.onLoadHandler = function () {
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(onLoadHandler) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 

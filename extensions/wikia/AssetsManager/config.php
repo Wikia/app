@@ -61,6 +61,7 @@ $config['adengine2_js'] = array(
 		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
+		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/LateAdsQueue.js',
@@ -302,6 +303,12 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
+
+		// Global Header tracking
+		'//skins/oasis/js/GlobalHeader.js',
+
+		// Article length & screen width tracking
+		'//skins/oasis/js/ArticleLengthAbTesting.js',
 
 		// Lazy rail
 		'#group_lazy_rail_js',
@@ -720,6 +727,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdContext.js',
+		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
