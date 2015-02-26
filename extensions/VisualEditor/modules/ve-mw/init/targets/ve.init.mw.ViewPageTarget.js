@@ -969,10 +969,10 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
-		'g-recaptcha-response': this.captchaResponse,
-		'wpCaptchaClass': this.saveDialog.$('#wpCaptchaClass').val(),
-		'wpCaptchaId': this.saveDialog.$('#wpCaptchaId').val(),
-		'wpCaptchaWord': this.saveDialog.$('#wpCaptchaWord').val()
+		'g-recaptcha-response': this.captchaResponse, // reCaptcha
+		'wpCaptchaClass': this.saveDialog.$('#wpCaptchaClass').val(), // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaId': this.saveDialog.$('#wpCaptchaId').val(), // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaWord': this.saveDialog.$('#wpCaptchaWord').val() // FancyCaptcha (fallback if reCaptcha fails to load)
 	} );
 	return fields;
 };

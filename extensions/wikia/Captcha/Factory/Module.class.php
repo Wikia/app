@@ -9,8 +9,8 @@ namespace Captcha\Factory;
  */
 class Module {
 
-	const DEFAULT_CAPTCHA = 'Captcha\Module\ReCaptcha';
-	const FALLBACK_CAPTCHA = 'Captcha\Module\FancyCaptcha';
+	const DEFAULT_CAPTCHA = '\Captcha\Module\ReCaptcha';
+	const FALLBACK_CAPTCHA = '\Captcha\Module\FancyCaptcha';
 
 	/** @var \Captcha\Module\BaseCaptcha */
 	protected static $instance;
@@ -38,7 +38,7 @@ class Module {
 	 * @throws \Exception
 	 */
 	public static function verifyCaptchaClass( $captchaClass ) {
-		if ( $captchaClass != self::DEFAULT_CAPTCHA || $captchaClass != self::FALLBACK_CAPTCHA ) {
+		if ( $captchaClass != self::DEFAULT_CAPTCHA && $captchaClass != self::FALLBACK_CAPTCHA ) {
 			throw new \Exception( "Invalid Captcha class: " . $captchaClass );
 		}
 	}

@@ -6,7 +6,7 @@
 class CaptchaController extends WikiaController {
 
 	/**
-	 * Displays a captcha image
+	 * Displays a captcha image. This is used exclusively by FancyCaptcha.
 	 */
 	public function showImage() {
 		$fancyCaptcha = new \Captcha\Module\FancyCaptcha();
@@ -17,6 +17,10 @@ class CaptchaController extends WikiaController {
 		}
 	}
 
+	/**
+	 * Get the FancyCaptcha form. This is used as a fallback when reCaptcha
+	 * fails to load.
+	 */
 	public function getFancyCaptcha() {
 		$fancyCaptcha = new \Captcha\Module\FancyCaptcha();
 		$this->response->setData(
@@ -24,10 +28,10 @@ class CaptchaController extends WikiaController {
 		);
 	}
 
-	/** TODO Make sure this can be deleted
+	/**
 	 * Display information about how this captcha works
 	 */
-//	public function showHelp() {
-//		$this->captcha->showHelp();
-//	}
+	public function showHelp() {
+		\Captcha\Factory\Module::getInstance()->showHelp();
+	}
 }

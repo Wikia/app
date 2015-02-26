@@ -1,9 +1,9 @@
-/* global WikiaForm, UserSignupAjaxValidation, UserSignupMixin */
 $(function () {
 	'use strict';
 
 	/**
-	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
+	 * JS for handling captchas We default to using reCaptcha, however if we encounter any problems, will
+	 * fall back to using Fancy Captcha instead.
 	 */
 	var Captcha = {
 		/**
