@@ -6,12 +6,24 @@ var UploadPhotos = {
 	status: false,
 	libinit: false,
 	init: function() {
-		// LatestPhotos module and Special:NewFiles
-		if (!!wgUserName) {
-			$(".mw-special-Newimages").on('click', '.upphotos', $.proxy(this.showDialog, this));
-		}
+		$(".mw-special-Newimages").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
 	},
-
+	loginBeforeShowDialog: function(evt) {
+		var UserLoginModal = window.UserLoginModal;
+		if (( wgUserName == null ) && ( !UserLogin.forceLoggedIn )) {
+			UserLoginModal.show( {
+				origin: 'latest-photos',
+				callback: $.proxy(function() {
+					UserLogin.forceLoggedIn = true;
+					this.showDialog(evt);
+				}, this)
+			});
+		}
+		else {
+			this.showDialog(evt);
+		}
+		evt.preventDefault();
+	},
 	showDialog: function(evt) {
 		if(evt) {
 			evt.preventDefault();

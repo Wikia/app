@@ -196,7 +196,7 @@
 		},
 		init: function () {
 			// attach event handler
-			var editpromptable = $('#te-editanon, .loginToEditProtectedPage, .upphotoslogin, .upphotos');
+			var editpromptable = $('#te-editanon, .loginToEditProtectedPage, .upphotoslogin');
 
 			// add .editsection on wikis with anon editing disabled
 			if (window.wgDisableAnonymousEditing) {

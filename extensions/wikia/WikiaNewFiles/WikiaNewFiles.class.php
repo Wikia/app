@@ -7,13 +7,10 @@
 
 class WikiaNewFiles extends SpecialNewFiles {
 	function execute( $par ) {
-		global $wgUser;
 		$this->mName  = 'WikiaNewFiles';
 		$this->setHeaders();
-		if (!$wgUser->isAnon()) {
-			Wikia::addAssetsToOutput('upload_photos_dialog_js');
-			Wikia::addAssetsToOutput('upload_photos_dialog_scss');
-		}
+		Wikia::addAssetsToOutput('upload_photos_dialog_js');
+		Wikia::addAssetsToOutput('upload_photos_dialog_scss');
 		wfSpecialWikiaNewFiles( $par, $this );
 	}
 
