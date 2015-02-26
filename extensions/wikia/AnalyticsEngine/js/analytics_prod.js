@@ -11,21 +11,25 @@
 
 (function (window, undefined) {
 	'use strict';
-	var possibleDomains, i, cookieExists;
+	var possibleDomains, i, cookieExists, isProductionEnv;
 	/**
 	 * Main Tracker
 	 *
 	 * To be used for everything that is not advertisement
 	 */
 	window._gaq = window._gaq || [];
+	isProductionEnv = (window.wgTransactionContext.env === 'prod');
 
 	cookieExists = function (cookieName) {
 		return document.cookie.indexOf(cookieName) > -1;
 	};
 
-	// Main Roll-up Account - UA-32129070-1
-	window._gaq.push(['_setAccount', 'UA-32129070-1']); // PROD
-	//window._gaq.push(['_setAccount', 'UA-32129070-2']); // DEV
+	// Main Roll-up Account - UA-32129070-1/UA-32129070-2
+	if (isProductionEnv) {
+		window._gaq.push(['_setAccount', 'UA-32129070-1']); // PROD
+	} else {
+		window._gaq.push(['_setAccount', 'UA-32129070-2']); // DEV
+	}
 
 	if (!cookieExists('qualaroo_survey_submission')) {
 		window._gaq.push(['_setSampleRate', '10']);
@@ -35,14 +39,20 @@
 	}
 
 	if (window.wgIsGASpecialWiki) {
-		// Special Wikis account - UA-32132943-1
-		window._gaq.push(['special._setAccount', 'UA-32132943-1']); // PROD
-		//window._gaq.push(['special._setAccount', 'UA-32132943-2']); // DEV
+		// Special Wikis account - UA-32132943-1/UA-32132943-2
+		if (isProductionEnv) {
+			window._gaq.push(['special._setAccount', 'UA-32132943-1']); // PROD
+		} else {
+			window._gaq.push(['special._setAccount', 'UA-32132943-2']); // DEV
+		}
+
 		window._gaq.push(['special._setSampleRate', '100']); // No Sampling
 	}
 
-	window._gaq.push(['ve._setAccount', 'UA-32132943-4']); // PROD
-	window._gaq.push(['ve._setSampleRate', '100']); // No Sampling
+	if (isProductionEnv) {
+		window._gaq.push(['ve._setAccount', 'UA-32132943-4']); // PROD
+		window._gaq.push(['ve._setSampleRate', '100']); // No Sampling
+	}
 
 	/**
 	 * Wrapper function to a generic _gaq push
@@ -238,9 +248,12 @@
 	 *
 	 * To be used for all ad impression and click events
 	 */
-	// Advertisment Account UA-32129071-1
-	window._gaq.push(['ads._setAccount', 'UA-32129071-1']); // PROD
-	//window._gaq.push(['ads._setAccount', 'UA-32129071-2']); // DEV
+	// Advertisment Account UA-32129071-1/UA-32129071-2
+	if (isProductionEnv) {
+		window._gaq.push(['ads._setAccount', 'UA-32129071-1']); // PROD
+	} else {
+		window._gaq.push(['ads._setAccount', 'UA-32129071-2']); // DEV
+	}
 
 	// Try to use the full domain to get a different cookie domain
 	window._gaq.push(['ads._setDomainName', document.location.hostname]);
