@@ -44,7 +44,7 @@
 				'ga_label',
 				'ga_value'
 			],
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
+			// @see /extensions/wikia/AnalyticsEngine/js/analytics.js
 			gaTrackAdEvent = window.gaTrackAdEvent,
 			gaTrackEvent = window.gaTrackEvent,
 			logGroup = 'Wikia.Tracker',
@@ -305,7 +305,7 @@
 				' [' + trackingMethod + ' track]', 'info', logGroup );
 
 			// No-interactive = true
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
+			// @see /extensions/wikia/AnalyticsEngine/js/analytics.js
 			gaqArgs.push( true );
 
 			if ( tracking.ad && gaTrackAdEvent ) {

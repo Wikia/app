@@ -37,7 +37,7 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 		if ( !( $app->checkSkin( array( 'wikiamobile', 'oasis', 'venus' ), $skin ) ) ) {
 			//needs to be added unprocessed as per Cardinal Path's request
 			//so AssetsManager is not an option here
-			$scripts .= "\n<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/AnalyticsEngine/js/analytics_prod.js\"></script>";
+			$scripts .= "\n<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/AnalyticsEngine/js/analytics.js\"></script>";
 		}
 
 		return true;
