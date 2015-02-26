@@ -8,8 +8,8 @@ require([
 ], function ($, scrollFix, win, browserDetect, delayedHover, dropdowns) {
 	'use strict';
 	var $globalNavigation = $('#globalNavigation'),
-		$entryPoint = $('#AccountNavigation'),
-		loginAjaxForm = false;
+		loginAjaxForm = false,
+		$entryPoint;
 
 	/**
 	 * @desc Handle click on entry point for logged in users.
@@ -58,6 +58,7 @@ require([
 
 	$(function () {
 		var $userLoginDropdown = $('#UserLoginDropdown');
+		$entryPoint = $('#AccountNavigation');
 
 		dropdowns.attachDropdown($entryPoint, {
 			onOpen: onDropdownOpen,
