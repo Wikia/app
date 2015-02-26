@@ -115,7 +115,7 @@
 									</svg>
 									<p><?= wfMessage('editpagelayout-preview-label-mobile')->escaped() ?></p>
 								</a>
-								<a id="wpPreview" class="preview_desktop preview_icon" href="#">
+								<a accesskey="e" id="wpPreview" class="preview_desktop preview_icon" href="#">
 									<svg xmlns="http://www.w3.org/2000/svg" version="1.0" x="0px" y="0px" viewBox="0 0 48 40" xml:space="preserve">
 										<path d="M48 34V0H0.1L0 34h18v4h-8v2h28v-2c0 0-8 0.3-8 0v-4H48z M2 30 V2h44v28H2z"/>
 									</svg>
