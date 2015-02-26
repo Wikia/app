@@ -133,7 +133,7 @@
 					padding-top: 0;
 					position: relative;
 
-					.preview_box{
+					.preview_box {
 						border-left: 1px solid $color-page-border;
 						border-right: 1px solid $color-page-border;
 						float: left;
@@ -144,12 +144,12 @@
 						h3 {
 							float: left;
 							font-size: 12px;
-							padding: 0;
 							margin-top: 12px;
+							padding: 0;
 						}
 
 						.preview_icon {
-							border: none;
+							border: 0;
 							height: auto;
 							margin: 0 8px;
 							width: auto;
@@ -162,6 +162,7 @@
 								margin-bottom: 0;
 							}
 						}
+
 						.preview_mobile {
 							padding-top: 8px;
 
@@ -170,6 +171,7 @@
 								width: 16px;
 							}
 						}
+
 						.preview_desktop {
 							padding-top: 10px;
 

@@ -92,8 +92,8 @@ define('wikia.preview', [
 				bestPracticesLinkText: msg('wikia-editor-preview-best-practices-button'),
 				bestPracticesLinkUrl: msg('wikia-editor-preview-best-practices-button-link')
 			};
-			var template = response.mustache[0];
-			var html = mustache.render(template, params);
+			var template = response.mustache[0],
+				html = mustache.render(template, params);
 
 			content = html+content;
 			$.showCustomModal(title, content, options);

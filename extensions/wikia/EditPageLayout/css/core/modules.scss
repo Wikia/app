@@ -133,7 +133,7 @@ $color-icon: mix($color-text, #fff, 90%);
 			}
 		}
 
-		.preview_box{
+		.preview_box {
 			h3 {
 				font-size: 14px;
 				margin: 12px 0 8px;
@@ -150,6 +150,7 @@ $color-icon: mix($color-text, #fff, 90%);
 				line-height: 1;
 				text-align: center;
 				width: 128px;
+
 				&:hover {
 					text-decoration: none;
 				}
@@ -162,6 +163,7 @@ $color-icon: mix($color-text, #fff, 90%);
 					}
 				}
 			}
+
 			.preview_mobile {
 				margin-right: 4px;
 				padding-top: 19px;
@@ -173,6 +175,7 @@ $color-icon: mix($color-text, #fff, 90%);
 					width: 32px;
 				}
 			}
+
 			.preview_desktop {
 				padding-top: 25px;
 
