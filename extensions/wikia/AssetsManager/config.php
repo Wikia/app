@@ -1986,8 +1986,7 @@ $config['lazy_rail_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//skins/oasis/js/LazyRail.js',
-		'//skins/oasis/js/LatestPhotos.js',
+		'//skins/oasis/js/LazyRail.js'
 	]
 ];
 
@@ -2275,5 +2274,21 @@ $config['menu_aim_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/menu-aim/menu-aim.js',
 		'//resources/wikia/modules/menuAim.js'
+	]
+];
+
+$config['upload_photos_dialog_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaNewFiles/scripts/uploadPhotosDialog.js'
+	]
+];
+
+$config['upload_photos_dialog_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaNewFiles/styles/UploadPhotoDialog.scss'
 	]
 ];
