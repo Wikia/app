@@ -65,6 +65,12 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 		},
 		slotsQueue = [];
 
+	if (!window.wgOasisResponsive) {
+		// turn off skyscrapers if it's not responsive Oasis view i.e. hubs pages (ADEN-1792)
+		slotVars.skyscraper1.SOI_SC1 = false;
+		slotVars.skyscraper1.SOI_SB = false;
+	}
+
 	function track(action) {
 		log(['track', action], 'info', logGroup);
 
@@ -322,8 +328,8 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	 * beforeFinish (optional) is a callback that will be run before calling myAd.finishAd
 	 * afterFinish (optional) is a callback that will be run after myAd.finishAd
 	 *
-	 * @param slotname
-	 * @param params {beforeFinish: callback, afterFinish: callback}
+	 * @param {String} slotname
+	 * @param {Object} params {beforeFinish: callback, afterFinish: callback}
 	 */
 	function pushAd(slotname, params) {
 		log(['pushAd', slotname, params], 'info', logGroup);
