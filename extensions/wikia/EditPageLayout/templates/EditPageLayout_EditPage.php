@@ -17,7 +17,7 @@
 			<h1>
 				<a href="<?= htmlspecialchars($title->getLocalUrl()) ?>" class="<?= $hideTitle ? 'hiddenTitle' : '' ?>" title="<?= htmlspecialchars($titleText) ?>"><?= htmlspecialchars($titleText) ?></a>
 			</h1>
-			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMsg('editpagelayout-edit-title') ?>">
+			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMessage('editpagelayout-edit-title')->escaped() ?>">
 				<img class="sprite edit-pencil-small" src="<?= $wg->BlankImgUrl ?>">
 			</a>
 			<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>
@@ -62,7 +62,7 @@
 												</div>
 											</div>
 											<a class="expand">
-												<label><?= wfMsg('editpagelayout-more') ?></label>
+												<label><?= wfMessage('editpagelayout-more')->escaped() ?></label>
 												<span>+</span>
 											</a>
 										</div>
@@ -89,7 +89,7 @@
 						<div class="module_content">
 							<div class="wpSummaryFields">
 								<div class="checkboxes">
-									<?php foreach( $customCheckboxes as $i=>$checkbox ): ?>
+									<?php foreach ( $customCheckboxes as $i => $checkbox ): ?>
 										<label class="<?= $checkbox['name'] ?>">
 											<input type="checkbox" name="<?= $checkbox['name'] ?>" tabindex="<?= $i + 2 ?>" id="<?= $checkbox['name'] ?>" <?= $checkbox['checked'] ? ' checked="checked"' : '' ?> />
 											<?= $checkbox['label'] ?>
@@ -97,8 +97,8 @@
 									<?php endforeach ?>
 									<?php if ( $canMinorEdit ): ?>
 										<label class="wpMinoredit">
-											<input type="checkbox" tabindex="21" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMsg('accesskey-minoredit');?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
-											<?= wfMsg('editpagelayout-pageControls-minorEdit') ?>
+											<input type="checkbox" tabindex="21" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMessage('accesskey-minoredit')->escaped() ;?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
+											<?= wfMessage('editpagelayout-pageControls-minorEdit')->escaped() ?>
 										</label>
 									<?php endif ?>
 								</div>

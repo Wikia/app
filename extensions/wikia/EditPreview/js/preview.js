@@ -47,7 +47,14 @@ define('wikia.preview', [
 	function renderDialog(title, options, callback) {
 		options = $.extend({
 			callback: function () {
-				var contentNode = $('#EditPageDialog').find('.ArticlePreviewInner');
+				var contentNode = $('#EditPageDialog').find('.ArticlePreviewInner'),
+					modalHeight = options.height,
+					modalHeightModifier = 0;
+
+				if (!modalHeight) {
+					modalHeightModifier = -250 -($('#EditPageDialog').find('.preview-modal-msg').outerHeight() || 0);
+					modalHeight = $(window).height() + modalHeightModifier;
+				}
 
 				// block all clicks
 				contentNode.bind('click', function (ev) {
@@ -56,7 +63,7 @@ define('wikia.preview', [
 					//links to other pages should be open in new windows
 					target.closest('a').not('[href^="#"]').attr('target', '_blank');
 				}).closest('.ArticlePreview').css({
-					'height': options.height || ($(window).height() - 250),
+					'height': modalHeight,
 					'overflow': 'auto',
 					'overflow-x': 'hidden'
 				});
@@ -85,8 +92,8 @@ define('wikia.preview', [
 				bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
 				bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
 			};
-			var template = response.mustache[0];
-			var html = mustache.render(template, params);
+			var template = response.mustache[0],
+				html = mustache.render(template, params);
 
 			content = html+content;
 			$.showCustomModal(title, content, options);
