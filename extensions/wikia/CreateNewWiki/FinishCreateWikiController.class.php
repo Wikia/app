@@ -63,17 +63,14 @@ class FinishCreateWikiController extends WikiaController {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function FinishCreate() {
-		global $wgUser, $wgSitename, $wgEnableNjordExt;
+		global $wgUser, $wgOut, $wgEnableNjordExt;
 
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
 		}
 
 		$this->skipRendering();
-
-		global $wgOut;
 		$this->LoadState();
-
 		$mainPage = wfMsgForContent( 'mainpage' );
 
 		// set theme
