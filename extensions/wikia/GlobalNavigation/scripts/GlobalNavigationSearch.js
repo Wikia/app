@@ -9,7 +9,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	 */
 	function setFormOptions() {
 		var $selectedOption = $selectElement.find('option:selected'),
-			isLocalSearchDisabled = !!$selectElement.length;
+			isLocalSearchDisabled = !$selectElement.length;
 
 		$searchInput.attr('placeholder', $selectedOption.data('placeholder'));
 		$('#searchForm').attr('action', $selectedOption.attr('data-search-url'));

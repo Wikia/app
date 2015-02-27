@@ -13,23 +13,9 @@
 			<script type="text/javascript">document.getElementById('wpSave').disabled=true;</script>
 			<?php break ?>
 		<?php case 'preview': ?>
-			<?php
-			$dropdown = array(array(
-				"id" => "wpDiff",
-				"accesskey" => wfMessage('accesskey-diff')->escaped(),
-				"text" => wfMessage('showdiff')->escaped()
-			));
-			?>
-			<?= $app->renderView( 'MenuButton', 'Index', array(
-				'action' => array(
-					'href' => '#',
-					'text' => wfMessage( 'preview' )->escaped(),
-					'id' => 'wpPreview',
-					'tabindex' => 23
-				),
-				'class' => 'secondary '.$buttonClasses,
-				'dropdown' => $dropdown
-			)) ?>
+			<a href="#" id="wpDiff" accesskey="<?= wfMessage('accesskey-diff')->escaped() ?>">
+				<?= wfMessage('showdiff')->escaped() ?>
+			</a>
 			<?php break ?>
 		<?php default: ?>
 			<input class="<?=$buttonClasses?>"<?= !empty($button['disabled']) ? ' disabled="disabled"' : '' ?> id="<?=$button['name']?>" name="<?=$button['name']?>" type="<?=$buttonType?>" value="<?=$button['caption']?>" />

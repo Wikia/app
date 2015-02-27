@@ -3,6 +3,10 @@ class FinishCreateWikiController extends WikiaController {
 
 	const COOKIE_NAME = 'createnewwiki';
 
+	// initial wiki text markup form main page article with hero image enabled
+	const HERO_IMAGE_MAIN_PAGE_MARKUP = '<mainpage-leftcolumn-start /><mainpage-endcolumn />
+		<mainpage-rightcolumn-start /><mainpage-endcolumn />';
+
 	// form field values
 	var $params;
 
@@ -59,7 +63,7 @@ class FinishCreateWikiController extends WikiaController {
 	 * The values are read from the session and only accessible by the admin.
 	 */
 	public function FinishCreate() {
-		global $wgUser, $wgSitename;
+		global $wgUser, $wgSitename, $wgEnableNjordExt;
 
 		if ( !$wgUser->isAllowed( 'finishcreate' ) ) {
 			return false;
@@ -83,16 +87,12 @@ class FinishCreateWikiController extends WikiaController {
 			$mainTitle = Title::newFromText($mainPage);
 			$mainId = $mainTitle->getArticleID();
 			$mainArticle = Article::newFromID($mainId);
+
 			if (!empty($mainArticle)) {
-				global $wgParser;
-				$mainPageText = $mainArticle->getRawText();
-				$matches = array();
-				$description = $this->params['wikiDescription'];
-				if(preg_match('/={2,3}[^=]+={2,3}/', $mainPageText, $matches)) {
-					$newSectionTitle = str_replace('Wiki', $wgSitename, $matches[0]);
-					$description = "{$newSectionTitle}\n{$description}";
-				}
-				$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
+				$newMainPageText = $wgEnableNjordExt ?
+					$this->initHeroModule($mainPage) :
+					$this->setupClassicMainPage($mainArticle);
+
 				$mainArticle->doEdit($newMainPageText, '');
 			}
 		}
@@ -104,4 +104,42 @@ class FinishCreateWikiController extends WikiaController {
 		$wgOut->redirect($mainPage.'?wiki-welcome=1');
 	}
 
+	/**
+	 * initialize hero module on modular main page
+	 * @param $mainPageTitle string
+	 * @returns string - main page article wiki text
+	 */
+	private function initHeroModule( $mainPageTitle ) {
+		global $wgSitename;
+
+		$wikiDataModel = new WikiDataModel( $mainPageTitle );
+		$wikiDataModel->title = $wgSitename;
+		$wikiDataModel->description = $this->params['wikiDescription'];
+		$wikiDataModel->storeInProps();
+		$wikiDataModel->storeInPage();
+
+		return self::HERO_IMAGE_MAIN_PAGE_MARKUP;
+	}
+
+	/**
+	 * setup main page article content for classic main page
+	 * @param $mainArticle Article
+	 * @return string - main page article wiki text
+	 */
+	private function setupClassicMainPage( $mainArticle ) {
+		global $wgParser, $wgSitename;
+
+		$mainPageText = $mainArticle->getRawText();
+		$matches = array();
+		$description = $this->params['wikiDescription'];
+
+		if( preg_match( '/={2,3}[^=]+={2,3}/', $mainPageText, $matches ) ) {
+			$newSectionTitle = str_replace( 'Wiki', $wgSitename, $matches[0] );
+			$description = "{$newSectionTitle}\n{$description}";
+		}
+
+		$newMainPageText = $wgParser->replaceSection( $mainPageText, 1, $description );
+
+		return $newMainPageText;
+	}
 }
