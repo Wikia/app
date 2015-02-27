@@ -10,7 +10,7 @@ $autocomplete-item-height: 44px;
 $autocomplete-border-bottom: rgb(230, 235, 250);
 $search-input-background-color: rgb(242, 246, 250);
 $search-input-border-color: rgb(197, 206, 217);
-$search-input-text-color: rgba(101, 110, 120, 0.75);
+$search-input-text-color: rgba(101, 110, 120, .75);
 $search-input-height: $global-navigation-height-without-margin - 2px;
 
 .search-container {
@@ -30,8 +30,8 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 	.autocomplete {
 		@include font-size-xs;
 		background-color: $global-wikia-background-color;
-		border: 2px solid rgba(0, 0, 0, 0.7);
-		border-top: none;
+		border: 2px solid rgba(0, 0, 0, .7);
+		border-top: 0;
 		color: $global-navigation-active-color;
 		line-height: 18px;
 		margin-top: 10px;
@@ -87,14 +87,14 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 
 	.search-select-underlay {
 		display: inline-block;
+		height: $search-input-height;
 		position: relative;
 		width: 22px;
-		height: $search-input-height;
 	}
 
 	.chevron {
 		@include global-nav-chevron;
-		@include calc(left, "100% + 1px");
+		@include calc(left, '100% + 1px');
 		margin-top: 10px;
 		position: relative;
 		width: 0;
@@ -127,19 +127,32 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		&:-ms-input-placeholder {
 			font-weight: normal;
 		}
+
+		&:focus,
+		&:active {
+			border-color: $search-button-active-background;
+
+			~ .search-button {
+				background-color: $search-button-active-background;
+			}
+		}
+
+		~ .search-button:hover {
+			background-color: $search-button-hover-background;
+		}
 	}
 
 	.search-icon {
 		background-color: transparent;
 		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* inline */
 		background-position: center;
-		background-size: 26px;
 		background-repeat: no-repeat;
+		background-size: 26px;
 		border: 0;
 		height: $search-input-height;
+		margin-left: 8px;
 		padding: 0;
 		position: absolute;
-		margin-left: 8px;
 		width: 14px;
 	}
 
@@ -156,26 +169,12 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		right: 1px;
 		top: 1px;
 		width: 28px;
-	}
 
-	// override Oasis setting up background: XX on hover for submit buttons...
-	.search-button:hover {
-		background-color: $search-button-hover-background;
-		background-image: url('/extensions/wikia/GlobalNavigation/images/search_button.svg'); /* inline */
-		background-position: center center;
-		background-repeat: no-repeat;
-	}
-
-	.search-input:hover ~ .search-button {
-		background-color: $search-button-hover-background;
-	}
-
-	.search-input:focus,
-	.search-input:active {
-		border-color: $search-button-active-background;
-
-		& ~ .search-button {
-			background-color: $search-button-active-background;
+		// override Oasis setting up background: XX on hover for submit buttons...
+		&:hover {
+			background-image: url('/extensions/wikia/GlobalNavigation/images/search_button.svg'); /* inline */
+			background-position: center center;
+			background-repeat: no-repeat;
 		}
 	}
 
