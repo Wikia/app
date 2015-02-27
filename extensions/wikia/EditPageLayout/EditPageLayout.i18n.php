@@ -100,13 +100,13 @@ $messages['en'] = array(
 	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
 
 	// preview-related messages
-	'editpagelayout-preview-label-desktop' => "Desktop",
-	'editpagelayout-preview-label-mobile' => "Mobile",
+	'editpagelayout-preview-label-desktop' => 'Desktop',
+	'editpagelayout-preview-label-mobile' => 'Mobile',
 
-	'editpagelayout-preview-dropdown-item-mobile' => "Mobile",
-	'editpagelayout-preview-dropdown-item-tablet' => "Tablet Portrait",
-	'editpagelayout-preview-dropdown-item-desktop' => "Desktop",
-	'editpagelayout-preview-dropdown-item-desktopxl' => "Desktop XL"
+	'editpagelayout-preview-dropdown-item-mobile' => 'Mobile',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Tablet Portrait',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Desktop',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop XL'
 );
 
 /** Message documentation (Message documentation)

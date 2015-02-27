@@ -66,14 +66,14 @@
 			this.textarea.placeholder();
 
 			// pressing enter in edit summary should initiate publish button
-			this.textarea.bind('keypress', this.proxy(this.onSummaryKeypress));
+			this.textarea.on('keypress', this.proxy(this.onSummaryKeypress));
 
 			this.minorEditCheck = $pageControls.find('#wpMinoredit');
 
 			// pressing enter on minor edit checkbox should not save the edition
-			this.minorEditCheck.bind('keypress', this.proxy(this.onMinorEditKeypress));
+			this.minorEditCheck.on( 'keypress', this.proxy( this.onMinorEditKeypress ) );
 
-			this.minorEditCheck.bind('change', this.proxy(function () {
+			this.minorEditCheck.on('change', this.proxy(function () {
 				this.editor.track('minor-edit');
 			}));
 
@@ -82,7 +82,7 @@
 				'click', this.proxy(this.onPreview)
 			).popover({
 				placement: 'top',
-				content: $.msg('editpagelayout-preview-label-desktop'),
+				content: $.htmlentities($.msg('editpagelayout-preview-label-desktop')),
 				trigger: 'manual'
 			}).on('mouseenter', function() {
 				if ($editPage.hasClass('mode-source') && $editPage.hasClass('editpage-sourcewidemode-on')) {
@@ -96,7 +96,7 @@
 				'click', this.proxy(this.onPreviewMobile)
 			).popover({
 				placement: 'top',
-				content: $.msg('editpagelayout-preview-label-mobile'),
+				content: $.htmlentities($.msg('editpagelayout-preview-label-mobile')),
 				trigger: 'manual'
 			}).on('mouseenter', function() {
 				if ($editPage.hasClass('mode-source') && $editPage.hasClass('editpage-sourcewidemode-on')) {
@@ -108,17 +108,17 @@
 
 			// Wikia change (bugid:5667) - begin
 			if ($.browser.msie) {
-				$(window).bind('keydown', function (e) {
+				$(window).on('keydown', function (e) {
 					if (e.altKey && String.fromCharCode(e.keyCode) == $('#wpPreview').attr('accesskey').toUpperCase()) {
 						$('#wpPreview').click();
 					}
 				});
 			}
 
-			$('#wpDiff').bind('click', this.proxy(this.onDiff));
+			$('#wpDiff').on('click', this.proxy(this.onDiff));
 
 			// remove placeholder text when user submits the form without providing the summary
-			this.editform = $('#editform').bind('submit', this.proxy(this.onSave));
+			this.editform = $('#editform').on('submit', this.proxy(this.onSave));
 
 			// hidden form fields / page title in the header
 			this.hiddenFields = $('#EditPageHiddenFields');
@@ -128,7 +128,7 @@
 			// show "Edit title" button and attach handler for it (when we have custom fields attached to this edit form)
 			if ($('#EditPageHiddenFields input[type="text"]').exists()) {
 				$('#EditPageTitle').// show it only when hovering over #EditPageHeader
-					addClass('enabled').bind('click', this.proxy(function () {
+					addClass('enabled').on('click', this.proxy(function () {
 						this.renderHiddenFieldsDialog();
 					}));
 
@@ -214,7 +214,7 @@
 
 			// prevent submitting immediately so we can track this event
 			event.preventDefault();
-			this.editform.unbind('submit');
+			this.editform.off('submit');
 			setTimeout(this.proxy(function () {
 				this.editform.submit();
 			}), 100);
@@ -318,7 +318,7 @@
 					{
 						id: 'ok',
 						defaultButton: true,
-						message: $.msg('ok'),
+						message: $.htmlentities($.msg('ok')),
 						handler: function () {
 							var dialog = $('#HiddenFieldsDialog');
 
@@ -365,8 +365,8 @@
 			var self = this, dialogTitle = document.title;
 
 			// update modal's title when showing a captcha
-			if ($('#wpCaptchaWord').exists()) {
-				dialogTitle = $.msg('editpagelayout-captcha-title');
+			if ( $('#wpCaptchaWord').exists() ) {
+				dialogTitle = $.htmlentities($.msg('editpagelayout-captcha-title'));
 			}
 
 			$.showCustomModal(dialogTitle, '<div class="fields"></div>', {
@@ -376,7 +376,7 @@
 					{
 						id: 'ok',
 						defaultButton: true,
-						message: $.msg('savearticle'),
+						message: $.htmlentities($.msg('savearticle')),
 						handler: function () {
 							var dialog = $('#HiddenFieldsDialog');
 
@@ -521,7 +521,7 @@
 					var previewModalConfig = {
 						vars: {
 							id: 'EditPageDialog',
-							title: $.msg('editpagelayout-pageControls-changes'),
+							title: $.htmlentities($.msg('editpagelayout-pageControls-changes')),
 							content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
 								'</div></div>',
 							size: 'large'
@@ -530,7 +530,7 @@
 					uiModal.createComponent(previewModalConfig, function(previewModal) {
 						previewModal.deactivate();
 
-						previewModal.$content.bind('click', function(event) {
+						previewModal.$content.on('click', function(event) {
 							var target = $(event.target);
 							target.closest('a').not('[href^="#"]').attr('target', '_blank');
 						});
