@@ -20,18 +20,20 @@
 	<div class="WikiaPageContentWrapper">
 		<?= $app->renderView( 'Notifications', 'Confirmation' ) ?>
 		<?php
+			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
+
+			if ( $runNjord ) {
+				echo $app->renderView( 'Njord', 'Index' );
+
+			}
+
 			if ( empty( $wg->SuppressWikiHeader ) ) {
-				if ( empty( $wg->EnableLocalNavExt ) ) {
-					echo $app->renderView( 'WikiHeader', 'Index' );
-				} else {
+				if ( !empty( $wg->EnableLocalNavExt ) || $runNjord ) {
 					echo $app->renderView( 'LocalNavigation', 'Index' );
+				} else {
+					echo $app->renderView( 'WikiHeader', 'Index' );
 				}
 			}
-		?>
-		<?php
-		if ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() ) {
-			echo $app->renderView( 'Njord', 'Index' );
-		}
 		?>
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
@@ -81,7 +83,9 @@
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}
 						} else {
-							echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+							if ( !$runNjord ) {
+								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+							}
 						}
 					}
 				?>
@@ -107,7 +111,13 @@
 						}
 					?>
 					</div>
+					<?php
+					if ( $runNjord ) {
+						echo $app->renderView( 'Njord', 'Summary' );
+						echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
 
+					}
+					?>
 					<?php
 					// for InfoBox-Testing
 					if ( $wg->EnableInfoBoxTest ) {

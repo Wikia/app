@@ -232,7 +232,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		// handlebars - uncomment this when introducing first client-side rendered handlebars template
 		// '//resources/wikia/libraries/handlebars/handlebars.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
+		'//extensions/wikia/JSSnippets/js/JSSnippets.js'
 	)
 );
 
@@ -303,6 +303,12 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.DomUpdater.js',
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
+
+		// Global Header tracking
+		'//skins/oasis/js/GlobalHeader.js',
+
+		// Article length & screen width tracking
+		'//skins/oasis/js/ArticleLengthAbTesting.js',
 
 		// Lazy rail
 		'#group_lazy_rail_js',
@@ -1980,8 +1986,7 @@ $config['lazy_rail_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//skins/oasis/js/LazyRail.js',
-		'//skins/oasis/js/LatestPhotos.js',
+		'//skins/oasis/js/LazyRail.js'
 	]
 ];
 
@@ -2271,3 +2276,35 @@ $config['menu_aim_js'] = [
 		'//resources/wikia/modules/menuAim.js'
 	]
 ];
+
+$config['njord_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/jquery.ui/jquery.ui.core.js',
+		'//resources/jquery.ui/jquery.ui.widget.js',
+		'//resources/jquery.ui/jquery.ui.position.js',
+		'//resources/jquery.ui/jquery.ui.mouse.js',
+		'//resources/jquery.ui/jquery.ui.draggable.js',
+		'//resources/jquery.ui/jquery.ui.droppable.js',
+		'//extensions/wikia/NjordPrototype/scripts/jquery.caret.js',
+		'//extensions/wikia/NjordPrototype/scripts/Njord.js'
+	]
+];
+
+$config['upload_photos_dialog_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaNewFiles/scripts/uploadPhotosDialog.js'
+	]
+];
+
+$config['upload_photos_dialog_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/WikiaNewFiles/styles/UploadPhotoDialog.scss'
+	]
+];
+
