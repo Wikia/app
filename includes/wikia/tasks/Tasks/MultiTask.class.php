@@ -202,7 +202,7 @@ class MultiTask extends BaseTask {
 			'pages',
 			'page_wikia_id as wiki_id',
 			[
-				'page_title_lower' => str_replace( ' ', '_', mb_strtolower( $title->getText() ) ),
+				'page_title_lower' => $title->getDBkey(),
 				'page_namespace'   => $title->getNamespace()
 			],
 			__METHOD__
