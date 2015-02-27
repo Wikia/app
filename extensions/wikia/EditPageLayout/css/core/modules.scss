@@ -99,7 +99,11 @@ $color-icon: mix($color-text, #fff, 90%);
 			@include clearfix;
 		}
 
-		#wpDiff {
+		#wpPreview {
+			text-align: center;
+		}
+
+		#wpDiff.diff-link {
 			color: $color-links;
 			display: inline-block;
 			font-size: 12px;
