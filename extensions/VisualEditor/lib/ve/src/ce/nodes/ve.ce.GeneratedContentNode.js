@@ -18,10 +18,7 @@ ve.ce.GeneratedContentNode = function VeCeGeneratedContentNode() {
 
 	// Events
 	this.model.connect( this, { update: 'onGeneratedContentNodeUpdate' } );
-	this.connect( this, {
-		setup: 'onGeneratedContentSetup',
-		teardown: 'onGeneratedContentTeardown'
-	} );
+	this.connect( this, { teardown: 'abortGenerating' } );
 
 	// Initialization
 	this.update();
@@ -82,21 +79,6 @@ ve.ce.GeneratedContentNode.prototype.generateContents = function () {
  */
 ve.ce.GeneratedContentNode.prototype.onGeneratedContentNodeUpdate = function () {
 	this.update();
-};
-
-/**
- * Handler for the setup event
- */
-ve.ce.GeneratedContentNode.prototype.onGeneratedContentSetup = function () {
-	this.$element.addClass( 've-ce-noHighlight' );
-};
-
-/**
- * Handler for the teardown event
- */
-ve.ce.GeneratedContentNode.prototype.onGeneratedContentTeardown = function () {
-	this.$element.removeClass( 've-ce-noHighlight' );
-	this.abortGenerating();
 };
 
 /**
