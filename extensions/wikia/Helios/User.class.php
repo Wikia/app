@@ -121,7 +121,7 @@ class User {
 
 		try {
 			$oRegistration = $oHelios->register( $sUserName, $sPassword, $sEmail );
-			$bResult = !empty( $oRegistration>success );
+			$bResult = !empty( $oRegistration->success );
 
 			if ( !empty( $oRegistration->error ) ) {
 				$oLogger->error(
