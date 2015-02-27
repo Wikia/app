@@ -102,16 +102,26 @@ class User {
 		return $bResult;
 	}
 
+	/**
+	 * Called in ExternalUser_Wikia registers a user.
+	 *
+	 * @param string $sUserName string of the user name
+	 * @param string $sPassword string of the plaintext password the user entered
+	 * @param string $sEmail string of the user email
+	 *
+	 * @return boolean true on success, false otherwise
+	 */
 	public static function register( $sUserName, $sPassword, $sEmail )
 	{
 		$oLogger = \Wikia\Logger\WikiaLogger::instance();
+		$oLogger->info( 'HELIOS_REGISTRATION', [ 'method' => __METHOD__ ] );
 
 		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 		try {
 			$oRegistration = $oHelios->register( $sUserName, $sPassword, $sEmail );
-			$bResult = false;
+			$bResult = !empty( $oRegistration>success );
 
 			if ( !empty( $oRegistration->error ) ) {
 				$oLogger->error(
