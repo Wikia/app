@@ -56,7 +56,7 @@ ve.ce.MWExtensionNode.prototype.generateContents = function ( config ) {
 		// XML-like tags in wikitext are not actually XML and don't expect their contents to be escaped.
 		wikitext = mw.html.element( tagName, attrs, new mw.html.Raw( extsrc ) );
 
-	if ( !this.constructor.static.rendersEmpty && extsrc.trim() !== '' ) {
+	if ( !this.constructor.static.rendersEmpty && wikitext.trim() !== '' ) {
 		xhr = ve.init.target.constructor.static.apiRequest( {
 			action: 'visualeditor',
 			paction: 'parsefragment',
