@@ -6,15 +6,7 @@ var UploadPhotos = {
 	status: false,
 	libinit: false,
 	init: function() {
-		// LatestPhotos module and Special:NewFiles
-		$(".WikiaRail,.mw-special-Newimages").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
-
-		// LatestPhotos module only
-		$(".WikiaRail").on('afterLoad.rail', function() {
-			$('#LatestPhotosModule').find('.upphotos, .upphotoslogin').tooltip({
-				delay: { show: 500, hide: 100 }
-			});
-		});
+		$(".mw-special-Newimages").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
 	},
 	loginBeforeShowDialog: function(evt) {
 		var UserLoginModal = window.UserLoginModal;
@@ -209,16 +201,6 @@ var UploadPhotos = {
 	}
 };
 
-var LatestPhotos = {
-	init: function () {
-		this.carousel = $('.LatestPhotosModule').find('.carousel-container');
-		this.carousel.carousel({attachBlindImages: true})
-	}
-};
-
 $(function () {
-	$(".WikiaRail").on('afterLoad.rail', function () {
-		LatestPhotos.init();
-	});
 	UploadPhotos.init();
 });
