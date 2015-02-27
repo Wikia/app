@@ -6,11 +6,6 @@
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/mixins/calc';
 
-$autocomplete-item-height: 44px;
-$autocomplete-border-bottom: rgb(230, 235, 250);
-$search-input-background-color: rgb(242, 246, 250);
-$search-input-border-color: rgb(197, 206, 217);
-$search-input-text-color: rgba(101, 110, 120, .75);
 $search-input-height: $global-navigation-height-without-margin - 2px;
 
 .search-container {
@@ -40,7 +35,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 			@include font-size-xs;
 			border-bottom: 1px solid $autocomplete-border-bottom;
 			cursor: pointer;
-			height: $autocomplete-item-height;
+			height: 44px;
 			line-height: 23px;
 			padding: 12px 10px 8px 42px;
 			white-space: normal;
