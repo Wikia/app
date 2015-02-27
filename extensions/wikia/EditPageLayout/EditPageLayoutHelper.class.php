@@ -193,11 +193,11 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	public function showMobilePreview( Title $title ) {
-		$blacklistedPages = self::isCodePage( $title )
+		$blacklistedPage = self::isCodePage( $title )
 				|| $title->isMainPage()
 				|| NavigationModel::isWikiNavMessage( $title );
 
-		return !$blacklistedPages;
+		return !$blacklistedPage;
 	}
 
 	/**
