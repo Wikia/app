@@ -659,36 +659,7 @@ jQuery(function ($) {
 			label: 'chat-join'
 		}, trackWithEventData);
 
-		/** photos-module **/
-
-		$wikiaRail.find('.LatestPhotosModule').on('mousedown', 'a', function (e) {
-			var label,
-				el = $(e.target);
-
-			// Primary mouse button only
-			if (e.which !== 1) {
-				return;
-			}
-
-			if (el.hasClass('thumbimage')) {
-				label = 'photos-module-thumbnail';
-			} else if (el.hasClass('upphotos')) {
-				label = 'photos-module-add';
-			} else if (el.hasClass('more')) {
-				label = 'photos-module-more';
-			}
-
-			if (label !== undefined) {
-				track({
-					browserEvent: e,
-					category: 'photos-module',
-					label: label
-				});
-			}
-		});
-
 		/** recent-wiki-activity **/
-
 		$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function (e) {
 			var label,
 				el = $(e.target);
