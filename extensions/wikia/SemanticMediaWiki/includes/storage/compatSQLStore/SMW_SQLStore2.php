@@ -1662,7 +1662,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		include_once( "$smwgIP/includes/storage/compatSQLStore/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER ) );
+		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER, 'smw' ) );
 		$result = $qe->refreshConceptCache( $concept );
 
 		wfProfileOut( 'SMWSQLStore2::refreshConceptCache (SMW)' );
@@ -1681,7 +1681,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		include_once( "$smwgIP/includes/storage/compatSQLStore/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER ) );
+		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_MASTER, 'smw' ) );
 		$result = $qe->deleteConceptCache( $concept );
 
 		wfProfileOut( 'SMWSQLStore2::deleteConceptCache (SMW)' );
