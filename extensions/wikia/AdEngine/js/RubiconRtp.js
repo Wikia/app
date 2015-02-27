@@ -14,7 +14,8 @@ define('ext.wikia.adEngine.rubiconRtp', [
 		rubiconCalled = false,
 		rtpResponse,
 		rtpTier,
-		rtpConfig;
+		rtpConfig,
+		trackedAlready = false;
 
 	function trackState(trackEnd) {
 		log(['trackState', rtpResponse], 'debug', logGroup);
@@ -93,6 +94,10 @@ define('ext.wikia.adEngine.rubiconRtp', [
 
 	function getTier() {
 		log(['getTier', rtpTier], 'debug', logGroup);
+		if (!trackedAlready) {
+			trackedAlready = true;
+			trackState();
+		}
 		return rtpTier;
 	}
 
