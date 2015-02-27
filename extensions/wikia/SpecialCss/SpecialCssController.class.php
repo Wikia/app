@@ -42,12 +42,14 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 				if (!$status) {
 					BannerNotificationsController::addConfirmation(
-						wfMessage('special-css-merge-error')->plain(),
+						wfMessage('special-css-merge-error')->escaped(),
 						BannerNotificationsController::CONFIRMATION_ERROR
 					);
 					$this->diff = $this->app->sendRequest(__CLASS__, 'getDiff', ['wikitext' => $content])->getVal('diff');
 				} else if ($status->isOk()) {
-					BannerNotificationsController::addConfirmation( wfMessage('special-css-save-message')->plain() );
+					BannerNotificationsController::addConfirmation(
+						wfMessage('special-css-save-message')->escaped()
+					);
 					$this->wg->Out->redirect($this->specialPage->getTitle()->getLocalURL());
 					wfProfileOut(__METHOD__);
 					return false; // skip rendering
@@ -62,7 +64,7 @@ class SpecialCssController extends WikiaSpecialPageController {
 
 		if ($this->request->getVal('oldid', null) !== null) {
 			BannerNotificationsController::addConfirmation(
-				wfMessage('special-css-oldid-message')->plain(),
+				wfMessage('special-css-oldid-message')->escaped(),
 				BannerNotificationsController::CONFIRMATION_WARN
 			);
 		}

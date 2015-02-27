@@ -7,6 +7,9 @@
  *
  * Use like:
  * new BannerNotification('Content', 'error').show().hide();
+ *
+ * NOTE: this module does not escape content of the notifications by itself
+ * it should be used only with content that is considered safe (escaped)
  */
 require([
 	'jquery',
@@ -178,7 +181,8 @@ require([
 	}
 
 	/**
-	 * Creates an instance of a notification set on the backend side
+	 * Create instances of BannerNotification based on HTML
+	 * passed from the server on page load.
 	 * (if such one exists)
 	 */
 	function createBackendNotification() {

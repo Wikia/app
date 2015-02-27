@@ -1,5 +1,4 @@
 @import 'layout';
-@import 'skins/shared/mixins/box-sizing-border-box';
 @import 'skins/shared/mixins/calc';
 @import 'extensions/wikia/BannerNotifications/css/BannerNotifications';
 
@@ -56,7 +55,7 @@
 // VisualEditor specific notification styling
 .ve-ui-window-body {
 	.banner-notifications-wrapper {
-		@include box-sizing-border-box;
+		box-sizing: border-box;
 		position: absolute;
 		width: 100%;
 

@@ -1,13 +1,13 @@
 <?php
 /**
- * Handles adding and rendering of confirmations (green stripe below global nav) and notifications (blue bubble boxes just above the fold)
+ * Handles adding and rendering of confirmations (green stripe below global nav)
  *
  * @author Maciej Brencz
  */
 
 class BannerNotificationsController extends WikiaController {
 
-	const SESSION_KEY = 'oasisConfirmation';
+	const SESSION_KEY = 'bannerConfirmation';
 
 	// confirmation types
 	const CONFIRMATION_CONFIRM = 'confirm'; // Green
@@ -15,7 +15,6 @@ class BannerNotificationsController extends WikiaController {
 	const CONFIRMATION_ERROR = 'error'; // Red
 	const CONFIRMATION_WARN = 'warn'; // Yellow
 
-	// HTML of user messages notification (rendered by MW core -- skin variable)
 
 	public function init() {
 		$this->confirmation = null;
@@ -45,15 +44,13 @@ class BannerNotificationsController extends WikiaController {
 	 */
 
 	public static function clearConfirmation() {
-		$_SESSION[self::SESSION_KEY] = null;
+		unset( $_SESSION[self::SESSION_KEY] );
 	}
 
 	/**
 	 * Show confirmation stored in user session
 	 */
 	public function executeConfirmation() {
-		wfProfileIn( __METHOD__ );
-
 		if ( !empty( $_SESSION[self::SESSION_KEY] ) ) {
 			$entry = $_SESSION[self::SESSION_KEY];
 
@@ -61,12 +58,11 @@ class BannerNotificationsController extends WikiaController {
 			$this->confirmationClass = $entry['type'];
 
 			// clear confirmation stack
-			unset( $_SESSION[self::SESSION_KEY] );
+			self::clearConfirmation();
 
 			wfDebug( __METHOD__ . " - {$this->confirmation}\n" );
 		}
 
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
