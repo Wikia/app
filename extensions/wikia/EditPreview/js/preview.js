@@ -88,11 +88,11 @@ define('wikia.preview', [
 			}
 		}).done(function (response) {
 			var params = {
-				bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
-				bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
-				bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
-			};
-			var template = response.mustache[0],
+					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
+					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
+					bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+				},
+				template = response.mustache[0],
 				html = mustache.render(template, params);
 
 			content = html+content;
