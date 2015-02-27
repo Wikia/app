@@ -40,8 +40,8 @@ class WikiDataModel {
 		$pageId = Title::newFromText( $this->pageName )->getArticleId();
 
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId, $this->imageName );
-		wfSetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId, $this->title );
-		wfSetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId, $this->description );
+		wfSetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId, trim($this->title) );
+		wfSetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId, trim($this->description) );
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId, $this->cropPosition );
 	}
 
@@ -69,19 +69,41 @@ class WikiDataModel {
 		$imageTitle = Title::newFromText( $this->imageName, NS_FILE );
 		$file = wfFindFile( $imageTitle );
 		if ( $file && $file->exists() ) {
-			$this->imagePath = $file->getThumbUrl(
-				$this->getThumbSuffix(
-					$file,
-					self::WIKI_HERO_IMAGE_MAX_WIDTH,
-					self::WIKI_HERO_IMAGE_MAX_HEIGHT,
-					$cropPosition
-				) );
-			$this->originalImagePath = $file->getFullUrl();
+			$fullUrl = $file->getFullUrl();
+
+			if (VignetteRequest::isVignetteUrl($fullUrl)) {
+				$this->imagePath = $this->createVignetteThumbnail($file, $cropPosition);
+			} else {
+				$this->createOldThumbnail($file, $cropPosition);
+			}
+
+			$this->originalImagePath = $fullUrl;
 		} else {
 			$this->imageName = null;
 			$this->imagePath = null;
 			$this->originalImagePath = null;
 		}
+	}
+
+	private function createVignetteThumbnail($file, $cropPosition) {
+		return VignetteRequest::fromUrl($file->getFullUrl())
+			->windowCrop()
+			->width(self::WIKI_HERO_IMAGE_MAX_WIDTH)
+			->xOffset(0)
+			->yOffset(round($file->getHeight() * $cropPosition))
+			->windowWidth($file->getWidth())
+			->windowHeight(round($file->getWidth() / 4))
+			->url();
+	}
+
+	private function createOldThumbnail($file, $cropPosition) {
+		return $file->getThumbUrl(
+			$this->getThumbSuffix(
+				$file,
+				self::WIKI_HERO_IMAGE_MAX_WIDTH,
+				self::WIKI_HERO_IMAGE_MAX_HEIGHT,
+				$cropPosition
+			) );
 	}
 
 	private function getThumbSuffix( File $file, $expectedWidth, $expectedHeight, $crop ) {
