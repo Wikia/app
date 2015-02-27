@@ -6,12 +6,12 @@ $messages = [];
  * Message documentation.
  */
 $messages['qqq'] = [
-    'helios-desc' => 'A brief plain text description of the extension used on the Special:Version page.',
+    'helios-desc' => 'Helios extension to support authorization against a separate OAuth2 service.',
 ];
 
 /**
  * English.
  */
 $messages['en'] = [
-    'helios-desc' => 'Wikia approach to user authentication.',
+    'helios-desc' => 'OAuth2 authorization in ExternalUser',
 ];
