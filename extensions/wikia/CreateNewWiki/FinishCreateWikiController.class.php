@@ -3,10 +3,6 @@ class FinishCreateWikiController extends WikiaController {
 
 	const COOKIE_NAME = 'createnewwiki';
 
-	// initial wiki text markup form main page article with hero image enabled
-	const HERO_IMAGE_MAIN_PAGE_MARKUP = '<mainpage-leftcolumn-start /><mainpage-endcolumn />
-		<mainpage-rightcolumn-start /><mainpage-endcolumn />';
-
 	// form field values
 	var $params;
 
@@ -81,16 +77,19 @@ class FinishCreateWikiController extends WikiaController {
 
 		// set description on main page
 		if(!empty($this->params['wikiDescription'])) {
-			$mainTitle = Title::newFromText($mainPage);
+			$mainTitle = Title::newFromText( $mainPage );
 			$mainId = $mainTitle->getArticleID();
-			$mainArticle = Article::newFromID($mainId);
+			$mainArticle = Article::newFromID( $mainId );
 
-			if (!empty($mainArticle)) {
-				$newMainPageText = $wgEnableNjordExt ?
-					$this->initHeroModule($mainPage) :
-					$this->setupClassicMainPage($mainArticle);
+			if ( !empty( $mainArticle ) ) {
+				if ( !empty( $wgEnableNjordExt ) ) {
+					$newMainPageText = $this->getMoMMainPage( $mainArticle );
+				} else {
+					$newMainPageText = $this->getClassicMainPage( $mainArticle );
+				}
 
-				$mainArticle->doEdit($newMainPageText, '');
+				$mainArticle->doEdit( $newMainPageText, '' );
+				$this->initHeroModule( $mainPage );
 			}
 		}
 
@@ -104,7 +103,6 @@ class FinishCreateWikiController extends WikiaController {
 	/**
 	 * initialize hero module on modular main page
 	 * @param $mainPageTitle string
-	 * @returns string - main page article wiki text
 	 */
 	private function initHeroModule( $mainPageTitle ) {
 		global $wgSitename;
@@ -114,8 +112,15 @@ class FinishCreateWikiController extends WikiaController {
 		$wikiDataModel->description = $this->params['wikiDescription'];
 		$wikiDataModel->storeInProps();
 		$wikiDataModel->storeInPage();
+	}
 
-		return self::HERO_IMAGE_MAIN_PAGE_MARKUP;
+	/**
+	 * Gets markup for empty Modular Main Page
+	 * @returns string - main page article wiki text
+	 */
+	private function getMoMMainPage( $mainPageTitle ) {
+		return 	'<mainpage-leftcolumn-start /><mainpage-endcolumn />
+				<mainpage-rightcolumn-start /><mainpage-endcolumn />';
 	}
 
 	/**
@@ -123,14 +128,14 @@ class FinishCreateWikiController extends WikiaController {
 	 * @param $mainArticle Article
 	 * @return string - main page article wiki text
 	 */
-	private function setupClassicMainPage( $mainArticle ) {
+	private function getClassicMainPage( $mainArticle ) {
 		global $wgParser, $wgSitename;
 
 		$mainPageText = $mainArticle->getRawText();
 		$matches = array();
 		$description = $this->params['wikiDescription'];
 
-		if( preg_match( '/={2,3}[^=]+={2,3}/', $mainPageText, $matches ) ) {
+		if ( preg_match( '/={2,3}[^=]+={2,3}/', $mainPageText, $matches ) ) {
 			$newSectionTitle = str_replace( 'Wiki', $wgSitename, $matches[0] );
 			$description = "{$newSectionTitle}\n{$description}";
 		}
