@@ -52,11 +52,11 @@
 			<form id="userData" class="WikiaForm" name="userData">
 				<div class="input-group">
 					<label for="name"><?= wfMessage( 'user-identity-box-about-name' )->escaped(); ?></label>
-					<input type="text" name="name" value="<?= $user['realName']; ?>" maxlength="<?= $charLimits['name']; ?>"/>
+					<input type="text" id="name" name="name" value="<?= $user['realName']; ?>" maxlength="<?= $charLimits['name']; ?>"/>
 				</div>
 				<div class="input-group">
 					<label for="location"><?= wfMessage( 'user-identity-box-about-location' )->escaped(); ?></label>
-					<input type="text" name="location" value="<?= $user['location']; ?>" maxlength="<?= $charLimits['location']; ?>"/>
+					<input type="text" id="location" name="location" value="<?= $user['location']; ?>" maxlength="<?= $charLimits['location']; ?>"/>
 				</div>
 				<div class="input-group">
 					<label for="month"><?= wfMessage( 'user-identity-box-about-birthday' )->escaped(); ?></label>
@@ -83,25 +83,25 @@
 				</div>
 				<div class="input-group">
 					<label for="occupation"><?= wfMessage( 'user-identity-box-about-occupation' )->escaped(); ?></label>
-					<input type="text" name="occupation" value="<?= $user['occupation']; ?>" maxlength="<?= $charLimits['occupation']; ?>"/>
+					<input type="text" id="occupation" name="occupation" value="<?= $user['occupation']; ?>" maxlength="<?= $charLimits['occupation']; ?>"/>
 				</div>
 				<div class="input-group">
 					<label for="gender"><?= wfMessage( 'user-identity-box-about-gender' )->escaped(); ?></label>
-					<input type="text" name="gender" value="<?= $user['gender']; ?>" maxlength="<?= $charLimits['gender']; ?>"/>
+					<input type="text" id="gender" name="gender" value="<?= $user['gender']; ?>" maxlength="<?= $charLimits['gender']; ?>"/>
 				</div>
 				<div class="input-group">
 					<label for="website"><?= wfMessage( 'user-identity-box-about-website' )->escaped(); ?></label>
-					<input type="text" name="website" value="<?= $user['website']; ?>">
+					<input type="text" id="website" name="website" value="<?= $user['website']; ?>">
 				</div>
 				<div class="input-group">
 					<label for="twitter"><?= wfMessage( 'user-identity-box-about-tweet' )->escaped(); ?></label>
-					<span class="tweet-at">@</span>
-					<input type="text" name="twitter" value="<?= $user['twitter']; ?>">
+					<label for="twitter" class="tweet-at">twitter.com/</label>
+					<input type="text" id="twitter" name="twitter" value="<?= $user['twitter']; ?>">
 				</div>
 				<div class="input-group">
 					<label for="fbPage"><?= wfMessage( 'user-identity-box-about-fb-page' )->escaped(); ?></label>
-					<span class="fb-start">facebook.com/</span>
-					<input type="text" name="fbPage" value="<?= $user['fbPage']; ?>">
+					<label for="fbPage" class="fb-start">facebook.com/</label>
+					<input type="text" id="fbPage" name="fbPage" value="<?= $user['fbPage']; ?>">
 				</div>
 				<div class="input-group">
 					<label><?= wfMessage( 'user-identity-box-about-fav-wikis' )->escaped(); ?></label>
