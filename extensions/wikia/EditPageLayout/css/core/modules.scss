@@ -79,6 +79,7 @@ $color-icon: mix($color-text, #fff, 90%);
 				font-size: 10px;
 				margin-bottom: 5px;
 				input {
+					height: 16px;
 					margin: 0 5px 0 0;
 					vertical-align: middle;
 				}
@@ -169,7 +170,7 @@ $color-icon: mix($color-text, #fff, 90%);
 				padding-top: 19px;
 
 				svg {
-					enable-background:	new 0 0 32 48;
+					enable-background: new 0 0 32 48;
 					height: 48px;
 					margin-bottom: 6px;
 					width: 32px;
@@ -180,7 +181,7 @@ $color-icon: mix($color-text, #fff, 90%);
 				padding-top: 25px;
 
 				svg {
-					enable-background:	new 0 0 48 40;
+					enable-background: new 0 0 48 40;
 					height: 40px;
 					margin-bottom: 8px;
 					width: 48px;
