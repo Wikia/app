@@ -77,11 +77,11 @@
 			} ) );
 
 			// attach events
-			$( '#wpPreview' ).on(
-				'click', this.proxy( this.onPreview )
+			$('#wpPreview').on(
+				'click', this.proxy(this.onPreview)
 			).popover({
 				placement: 'top',
-				content: $.msg('editpagelayout-preview-label-desktop'),
+				content: $.htmlentities($.msg('editpagelayout-preview-label-desktop')),
 				trigger: 'manual'
 			}).on('mouseenter', function() {
 				if (editPage.hasClass('mode-source') && editPage.hasClass('editpage-sourcewidemode-on')) {
@@ -91,11 +91,11 @@
 				$(this).popover('hide');
 			});
 
-			$( '#wpPreviewMobile' ).on(
-				'click', this.proxy( this.onPreviewMobile )
+			$('#wpPreviewMobile').on(
+				'click', this.proxy(this.onPreviewMobile)
 			).popover({
 				placement: 'top',
-				content: $.msg('editpagelayout-preview-label-mobile'),
+				content: $.htmlentities($.msg('editpagelayout-preview-label-mobile')),
 				trigger: 'manual'
 			}).on('mouseenter', function() {
 				if (editPage.hasClass('mode-source') && editPage.hasClass('editpage-sourcewidemode-on')) {
@@ -134,7 +134,7 @@
 				// update the tooltip if there are two or more fields (BugId:6726)
 				var noFields = $( '#EditPageHiddenFields' ).find( 'input[type!="hidden"]' ).length;
 				if ( noFields >= 2 ) {
-					$( '#EditPageTitle' ).attr( 'title', $.msg( 'editpagelayout-edit-info' ) );
+					$('#EditPageTitle').attr('title', $.htmlentities($.msg('editpagelayout-edit-info')));
 				}
 			}
 
@@ -169,17 +169,17 @@
 		},
 
 		// handle "Preview" button
-		onPreview: function ( ev ) {
+		onPreview: function (ev) {
 			this.renderPreview({}, 'current');
-			this.editor.track( 'preview' );
+			this.editor.track('preview');
 
 			ev.preventDefault();
 		},
 
 		// handle "PreviewMobile" button
-		onPreviewMobile: function ( ev ) {
+		onPreviewMobile: function (ev) {
 			this.renderPreview({}, 'mobile');
-			this.editor.track( 'preview-mobile' );
+			this.editor.track('preview-mobile');
 
 			ev.preventDefault();
 		},
@@ -317,7 +317,7 @@
 					{
 						id: 'ok',
 						defaultButton: true,
-						message: $.msg( 'ok' ),
+						message: $.htmlentities($.msg('ok')),
 						handler: function () {
 							var dialog = $( '#HiddenFieldsDialog' );
 
@@ -365,7 +365,7 @@
 
 			// update modal's title when showing a captcha
 			if ( $( '#wpCaptchaWord' ).exists() ) {
-				dialogTitle = $.msg( 'editpagelayout-captcha-title' );
+				dialogTitle = $.htmlentities($.msg('editpagelayout-captcha-title'));
 			}
 
 			$.showCustomModal( dialogTitle, '<div class="fields"></div>', {
@@ -375,7 +375,7 @@
 					{
 						id: 'ok',
 						defaultButton: true,
-						message: $.msg( 'savearticle' ),
+						message: $.htmlentities($.msg('savearticle')),
 						handler: function () {
 							var dialog = $( '#HiddenFieldsDialog' );
 
@@ -520,7 +520,7 @@
 					var previewModalConfig = {
 						vars: {
 							id: 'EditPageDialog',
-							title: $.msg( 'editpagelayout-pageControls-changes' ),
+							title: $.htmlentities($.msg('editpagelayout-pageControls-changes')),
 							content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
 								'</div></div>',
 							size: 'large'
