@@ -25,8 +25,6 @@ class BannerNotificationsController extends WikiaController {
 	 * Add confirmation message to the user session (so it persists between redirects)
 	 */
 	public static function addConfirmation( $message, $type = self::CONFIRMATION_CONFIRM ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( !empty( $message ) ) {
 			$_SESSION[self::SESSION_KEY] = array(
 				'message' => $message,
@@ -35,8 +33,6 @@ class BannerNotificationsController extends WikiaController {
 
 			wfDebug( __METHOD__ . " - {$message}\n" );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -70,7 +66,6 @@ class BannerNotificationsController extends WikiaController {
 	 */
 	public static function addPreferencesConfirmation( &$prefs ) {
 		global $wgRequest;
-		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			if ( $wgRequest->getCheck( 'success' ) ) {
@@ -88,7 +83,6 @@ class BannerNotificationsController extends WikiaController {
 			$wgRequest->setVal( 'success', null );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -99,7 +93,6 @@ class BannerNotificationsController extends WikiaController {
 	 * @param $nt Title
 	 */
 	public static function addPageMovedConfirmation( &$form, &$ot, &$nt ) {
-		wfProfileIn( __METHOD__ );
 		global $wgOut;
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -127,7 +120,6 @@ class BannerNotificationsController extends WikiaController {
 			$wgOut->redirect( $newUrl );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -137,7 +129,6 @@ class BannerNotificationsController extends WikiaController {
 	 * @param WikiPage $article
 	 */
 	public static function addPageDeletedConfirmation( &$article, &$user, $reason, $articleId ) {
-		wfProfileIn( __METHOD__ );
 		global $wgOut;
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -152,7 +143,6 @@ class BannerNotificationsController extends WikiaController {
 					wfMessage( 'oasis-confirmation-comment-deleted' )->escaped()
 				);
 
-				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
@@ -172,7 +162,6 @@ class BannerNotificationsController extends WikiaController {
 			$wgOut->redirect( Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ) );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -182,7 +171,6 @@ class BannerNotificationsController extends WikiaController {
 	 * @param $title Title
 	 */
 	public static function addPageUndeletedConfirmation( $title, $create ) {
-		wfProfileIn( __METHOD__ );
 		global $wgOut;
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
@@ -194,7 +182,6 @@ class BannerNotificationsController extends WikiaController {
 			$wgOut->redirect( $title->getFullUrl() );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -202,7 +189,6 @@ class BannerNotificationsController extends WikiaController {
 	 * Handle confirmations when user logs out
 	 */
 	public static function addLogOutConfirmation( &$user, &$injected_html, $oldName ) {
-		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgRequest;
 
 		if ( F::app()->checkSkin( 'oasis' ) || F::app()->checkSkin( 'venus' ) ) {
@@ -234,7 +220,6 @@ class BannerNotificationsController extends WikiaController {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -243,14 +228,12 @@ class BannerNotificationsController extends WikiaController {
 	 */
 	public static function addSaveConfirmation( $editPage, $code ) {
 		global $wgUser;
-		wfProfileIn( __METHOD__ );
 
 		// as for now only add it for logged-in (BugId:1317)
 		if ( F::app()->checkSkin( 'oasis' ) && $wgUser->isLoggedIn() ) {
 			self::addConfirmation( wfMessage( 'oasis-edit-saved' )->escaped() );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 

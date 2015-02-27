@@ -30,7 +30,6 @@ class NotificationsController extends WikiaController {
 	 * Add notification message to the stack
 	 */
 	public static function addNotification( $message, $data = array(), $type = 0 ) {
-		wfProfileIn( __METHOD__ );
 
 		self::$notificationsStack[] = array(
 			'message' => $message,
@@ -40,7 +39,6 @@ class NotificationsController extends WikiaController {
 
 		wfDebug(__METHOD__ . " - " . ( is_array( $message ) ) ?
 			json_encode( $message ) : $message . "\n" );
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -54,8 +52,6 @@ class NotificationsController extends WikiaController {
 	 * Show notifications
 	 */
 	public function executeIndex() {
-		wfProfileIn( __METHOD__ );
-
 		// render notifications
 		$this->notifications = self::$notificationsStack;
 
@@ -63,16 +59,12 @@ class NotificationsController extends WikiaController {
 		if ( !empty( $this->notifications ) ) {
 			OasisController::addBodyClass( 'notifications' );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * Handle notifications about new message(s)
 	 */
 	public static function addMessageNotification( &$skin, &$tpl ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			// Add talk page notificaations
 			$msg = $tpl->data['usernewmessages'];
@@ -80,8 +72,6 @@ class NotificationsController extends WikiaController {
 				self::addNotification( $msg, null, self::NOTIFICATION_TALK_PAGE_MESSAGE );
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -89,13 +79,9 @@ class NotificationsController extends WikiaController {
 	 * Handle notifications from the SiteWide messaging tool
 	 */
 	public static function addSiteWideMessageNotification( $msgs ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			self::addNotification( $msgs, null, self::NOTIFICATION_SITEWIDE );
 		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -106,8 +92,6 @@ class NotificationsController extends WikiaController {
 	 * @param $badge AchBadge
 	 */
 	public static function addBadgeNotification( $user, $badge, &$html ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			// clear old-style notification
 			$html = '';
@@ -138,8 +122,6 @@ class NotificationsController extends WikiaController {
 				self::NOTIFICATION_NEW_ACHIEVEMENTS_BADGE
 			);
 		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -147,8 +129,6 @@ class NotificationsController extends WikiaController {
 	 * Handle notifications with edit suggestions
 	 */
 	public static function addEditSimilarNotification( &$html ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			self::addNotification( $html, array(), self::NOTIFICATION_EDIT_SIMILAR );
 
@@ -158,8 +138,6 @@ class NotificationsController extends WikiaController {
 		else {
 			$ret = true;
 		}
-
-		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
@@ -167,13 +145,9 @@ class NotificationsController extends WikiaController {
 	 * Handle notifications about updated community message
 	 */
 	public static function addCommunityMessagesNotification( &$msg ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			self::addNotification( $msg, array(), self::NOTIFICATION_COMMUNITY_MESSAGE );
 		}
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 }
