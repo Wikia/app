@@ -102,4 +102,34 @@ class User {
 		return $bResult;
 	}
 
+	public static function register( $sUserName, $sPassword, $sEmail )
+	{
+		$oLogger = \Wikia\Logger\WikiaLogger::instance();
+
+		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+		$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+
+		try {
+			$oRegistration = $oHelios->register( $sUserName, $sPassword, $sEmail );
+			$bResult = false;
+
+			if ( !empty( $oRegistration->error ) ) {
+				$oLogger->error(
+					'HELIOS_REGISTRATION',
+					[ 'method' => __METHOD__ ]
+				);
+			}
+		}
+
+		catch ( \Wikia\Helios\ClientException $e ) {
+			$oLogger->error(
+				'HELIOS_REGISTRATION',
+				[ 'exception' => $e, 'method' => __METHOD__ ]
+			);
+			$bResult = false;
+		}
+
+		return $bResult;
+	}
+
 }
