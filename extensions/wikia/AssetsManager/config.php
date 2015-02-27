@@ -304,9 +304,6 @@ $config['oasis_jquery'] = array(
 		'//extensions/wikia/Search/js/SearchAbTest.Context.js',
 		'//extensions/wikia/Search/js/SearchAbTest.js',
 
-		// Global Header tracking
-		'//skins/oasis/js/GlobalHeader.js',
-
 		// Article length & screen width tracking
 		'//skins/oasis/js/ArticleLengthAbTesting.js',
 
