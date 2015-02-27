@@ -22,8 +22,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 		'HOME_TOP_LEADERBOARD': {'size': '728x90'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'INCONTENT_BOXAD_1': {'size': '300x250'},
-		'INVISIBLE_1': {'size': '0x0', 'useGw': true},
-		'INVISIBLE_2': {'size': '0x0', 'useGw': true},
 		'LEFT_SKYSCRAPER_2': {'size': '160x600'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600'},
 		'TEST_TOP_RIGHT_BOXAD': {'size': '300x250'},
