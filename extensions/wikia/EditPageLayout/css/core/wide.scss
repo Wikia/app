@@ -138,8 +138,8 @@
 						border-right: 1px solid $color-page-border;
 						float: left;
 						height: 39px;
-						padding-left: 8px;
 						margin-right: 8px;
+						padding-left: 8px;
 
 						h3 {
 							float: left;
@@ -211,7 +211,7 @@
 
 					@media screen and (max-width: $width-outside) {
 						.preview_box {
-							border: none;
+							border: 0;
 							clear: both;
 
 							h3 {
