@@ -81,9 +81,9 @@ define('wikia.preview', [
 			}
 		}).done(function (response) {
 			var params = {
-				bestPracticesMsg: msg('wikia-editor-preview-best-practices-notice'),
-				bestPracticesLinkText: msg('wikia-editor-preview-best-practices-button'),
-				bestPracticesLinkUrl: msg('wikia-editor-preview-best-practices-button-link')
+				bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
+				bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
+				bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
 			};
 			var template = response.mustache[0];
 			var html = mustache.render(template, params);
@@ -246,25 +246,25 @@ define('wikia.preview', [
 			params = {
 				options: [{
 					value: previewTypes.current.name,
-					name: msg('wikia-editor-preview-current-width')
+					name: $.htmlentities(msg('wikia-editor-preview-current-width'))
 				}, {
 					value: previewTypes.min.name,
-					name: msg('wikia-editor-preview-min-width')
+					name: $.htmlentities(msg('wikia-editor-preview-min-width'))
 				}, {
 					value: previewTypes.max.name,
-					name: msg('wikia-editor-preview-max-width')
+					name: $.htmlentities(msg('wikia-editor-preview-max-width'))
 				}, {
 					value: previewTypes.mobile.name,
-					name: msg('wikia-editor-preview-mobile-width')
+					name: $.htmlentities(msg('wikia-editor-preview-mobile-width'))
 				}],
-				toolTipMessage: msg('wikia-editor-preview-type-tooltip')
+				toolTipMessage: $.htmlentities(msg('wikia-editor-preview-type-tooltip'))
 			},
 			html;
 
 		if (window.wgEnableVenusArticle) {
 			params.options.push({
 				value: previewTypes.venus.name,
-				name: msg('wikia-editor-preview-venus-width')
+				name: $.htmlentities(msg('wikia-editor-preview-venus-width'))
 			});
 		}
 
@@ -316,7 +316,7 @@ define('wikia.preview', [
 		var dialogOptions = {
 			buttons: [{
 				id: 'close',
-				message: msg('back'),
+				message: $.htmlentities(msg('back')),
 				handler: function () {
 					$('#EditPageDialog').closeModal();
 					$(window).trigger('EditPagePreviewClosed');
@@ -324,7 +324,7 @@ define('wikia.preview', [
 			}, {
 				id: 'publish',
 				defaultButton: true,
-				message: msg('savearticle'),
+				message: $.htmlentities(msg('savearticle')),
 				handler: options.onPublishButton
 			}],
 			// set modal width based on screen size
@@ -340,7 +340,7 @@ define('wikia.preview', [
 		// allow extension to modify the preview dialog
 		$(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
-		renderDialog(msg('preview'), dialogOptions, function (contentNode) {
+		renderDialog($.htmlentities(msg('preview')), dialogOptions, function (contentNode) {
 			// cache selector for other functions in this module
 			$article = contentNode;
 
