@@ -16,7 +16,7 @@ class MultiTask extends BaseTask {
 	 */
 	public function move( $params ) {
 		/** @var \Title $oldTitle */
-		list($_, $impersonatedUsername, $oldTitle) = $this->parseCommon($params);
+		list( , $impersonatedUsername, $oldTitle) = $this->parseCommon($params);
 		$newTitle = isset($params['newpage']) ? \Title::newFromText($params['newpage']) : null;
 
 		if (!is_object($oldTitle) || !is_object($newTitle)) {
@@ -101,6 +101,12 @@ class MultiTask extends BaseTask {
 			$commandParams['r'] = $params['reason'];
 		}
 
+		// no wiki ID was provided, get the list of wikis where this task should be run on
+		// using the provided article's title
+		if ( $params['selwikia'] === 0 ) {
+			$params['selwikia'] = $this->getWikisWherePageExists( $page );
+		}
+
 		$result = $this->runOnWikis(
 			$params['wikis'],
 			$params['lang'],
@@ -119,7 +125,7 @@ class MultiTask extends BaseTask {
 	 */
 	public function edit( $params ) {
 		/** @var \Title $page */
-		list($_, $impersonatedUsername, $page) = $this->parseCommon($params);
+		list( , $impersonatedUsername, $page) = $this->parseCommon($params);
 
 		if (!is_object($page)) {
 			$this->error('page is invalid, terminating task', [
@@ -174,8 +180,54 @@ class MultiTask extends BaseTask {
 
 		return [$createdBy, $impersonatedName, $page];
 	}
-	
-	private function runOnWikis($wikiInputRaw, $lang, $cat, $wikiId, $action, $commandParams) {
+
+	/**
+	 * Get the list of wikis where the given article exists
+	 *
+	 * Run this query to get the list of wikis where MultiTask should be run
+	 * instead of executing the task on all active wikis
+	 *
+	 * Example: SELECT * FROM pages WHERE page_title_lower = 'tomyvilu' AND page_namespace = 2;
+	 *
+	 * @see PLATFORM-783
+	 *
+	 * @param \Title $title
+	 * @return array
+	 */
+	private function getWikisWherePageExists(\Title $title) {
+		global $wgExternalDatawareDB;
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
+		$res = $dbr->select(
+			'pages',
+			'page_wikia_id as wiki_id',
+			[
+				'page_title_lower' => str_replace( ' ', '_', mb_strtolower( $title->getText() ) ),
+				'page_namespace'   => $title->getNamespace()
+			],
+			__METHOD__
+		);
+
+		$wikis = [];
+		foreach($res as $row) {
+			/* @var mixed $row */
+			$wikis[] = intval( $row->wiki_id );
+		}
+
+		return $wikis;
+	}
+
+	/**
+	 * @param $wikiInputRaw
+	 * @param $lang
+	 * @param $cat
+	 * @param array|int $wikisId
+	 * @param $action
+	 * @param $commandParams
+	 * @return bool|mixed
+	 * @throws \Exception
+	 */
+	private function runOnWikis($wikiInputRaw, $lang, $cat, $wikisId, $action, $commandParams) {
 		global $wgExternalSharedDB ;
 		$db = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 
@@ -188,7 +240,15 @@ class MultiTask extends BaseTask {
 				}
 			}
 		}
-		
+
+		if ( !is_array( $wikisId ) ) {
+			$wikisId = [ $wikisId ];
+		}
+
+		$this->info( sprintf( 'Running "%s" action of %d wiki(s)', $action, count( $wikisId ) ), [
+			'wikis' => join(', ', $wikisId)
+		] );
+
 		// Get a count of articles in a category.  Give at least a very small cache TTL
 		$query = (new \WikiaSQL())->cacheGlobal( 60 )
 			->SELECT( 'city_list.city_id', 'city_list.city_dbname', 'city_list.city_url' )
@@ -200,7 +260,7 @@ class MultiTask extends BaseTask {
 		}
 
 		if (!empty($wikiId)) {
-			$query->AND_('city_list.city_id')->EQUAL_TO($wikiId);
+			$query->AND_('city_list.city_id')->IN($wikisId);
 		}
 
 		if (!empty($cat)) {
