@@ -38,15 +38,15 @@ class WikiaSpecialVersionController extends WikiaSpecialPageController {
 		$this->setVal( 'softwareInformation', $this->wg->Parser->parse( $this->version->softwareInformation(), $title, $popts )->getText() );
 		$this->setVal( 'extensionCredit', $this->wg->Parser->parse( $this->version->getExtensionCredits(), $title, $popts )->getText() );
 		$this->setVal( 'ip', str_replace( '--', ' - ', htmlspecialchars( $this->getContext()->getRequest()->getIP() ) ) );
-		$this->setVal( 'wikiaCodeMessage', wfMessage( 'wikia-version-code' )->text() );
+		$this->setVal( 'wikiaCodeMessage', wfMessage( 'wikia-version-code' )->escaped() );
 		$this->setVal( 'wikiaCodeVersion', $this->version->getWikiaCodeVersion() );
-		$this->setVal( 'wikiaConfigMessage', wfMessage( 'wikia-version-config' )->text() );
+		$this->setVal( 'wikiaConfigMessage', wfMessage( 'wikia-version-config' )->escaped() );
 		$this->setVal( 'wikiaConfigVersion', $this->version->getWikiaConfigVersion() );
-		$this->setVal( 'versionLicenseMessage', wfMessage( 'version-license' )->text() );
+		$this->setVal( 'versionLicenseMessage', wfMessage( 'version-license' )->escaped() );
 		$this->setVal( 'versionLicenseInfoMessage', wfMessage( 'version-license-info' )->parse() );
-		$this->setVal( 'versionSoftwareMessage', wfMessage( 'version-software' )->text() );
-		$this->setVal( 'versionSoftwareProductMessage', wfMessage( 'version-software-product' )->text() );
-		$this->setVal( 'versionSoftwareVersionMessage', wfMessage( 'version-software-version' )->text() );
+		$this->setVal( 'versionSoftwareMessage', wfMessage( 'version-software' )->escaped() );
+		$this->setVal( 'versionSoftwareProductMessage', wfMessage( 'version-software-product' )->escaped() );
+		$this->setVal( 'versionSoftwareVersionMessage', wfMessage( 'version-software-version' )->escaped() );
 		$this->setVal( 'versionSoftwareList', $softwareListPrepped );
 
 	}
