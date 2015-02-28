@@ -302,7 +302,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgEnableGlobalNavExt, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -345,18 +345,10 @@ class OasisController extends WikiaController {
 
 		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
 
-		if ( empty( $wgEnableGlobalNavExt ) ) {
-			$assetGroups[] = 'global_header_js';
-		}
-
 		if ( $isLoggedIn ) {
 			$assetGroups[] = 'oasis_user_js';
 		} else {
-			if ( empty( $wgEnableGlobalNavExt ) ) {
-				$assetGroups[] = 'oasis_anon_js';
-			} else {
-				$assetGroups[] = 'oasis_anon_with_new_global_nav_js';
-			}
+			$assetGroups[] = 'oasis_anon_js';
 		}
 
 

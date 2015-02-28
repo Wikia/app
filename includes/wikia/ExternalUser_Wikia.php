@@ -198,11 +198,42 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_birthdate;
 	}
 
-	public function authenticate( $password ) {
-		# This might be wrong if anyone actually uses the UserComparePasswords hook
-		# (on either end), so don't use this if you those are incompatible.
-		wfDebug( __METHOD__ . ": " . $this->getId() . " \n" );
-		return User::comparePasswords( $this->getPassword(), $password, $this->getId() );
+	public function authenticate( $sPassword ) {
+		// Authenticate with Helios if enabled.
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			$bHeliosResult = \Wikia\Helios\User::authenticate( $this->getName(), $sPassword );
+
+			// Terminate unless in the shadow mode.
+			global $wgHeliosLoginShadowMode;
+			if ( !$wgHeliosLoginShadowMode ) {
+				return $bHeliosResult;
+			}
+		}
+
+		// Authenticate with MediaWiki.
+		$bMediaWikiResult = User::comparePasswords( $this->getPassword(), $sPassword, $this->getId() );
+		// Detect discrepancies between Helios and MediaWiki results.
+		if ( $wgEnableHeliosExt && (  $bHeliosResult != $bMediaWikiResult ) ) {
+			
+			$sMWHashFirst  = substr( $this->getPassword(), 0, 3 ); // The first three bytes.
+			$sMWHashLast   = substr( $this->getPassword(),   -3 ); // The last three bytes.
+			$sMWHashLength = strlen( $this->getPassword() );       // The byte-length
+
+			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'HELIOS_LOGIN',
+				[ 'helios'         => $bHeliosResult,
+				  'mediawiki'      => $bMediaWikiResult,
+				  'user_id'        => $this->getId(),
+				  'username'       => $this->getName(),
+				  'mw_hash_first'  => $sMWHashFirst,
+				  'mw_hash_last'   => $sMWHashLast,
+				  'mw_hash_length' => $sMWHashLength ]
+			);
+		}
+
+		return $bMediaWikiResult;
 	}
 
 	public function getPref( $pref ) {

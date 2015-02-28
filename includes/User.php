@@ -57,6 +57,15 @@ class PasswordError extends MWException {
  * of the database.
  */
 class User {
+
+	# WIKIA CHANGE BEGIN
+	# adamk@wikia-inc.com
+	/**
+	 * Traits extending the class
+	 */
+	use PowerUserTrait;
+	# WIKIA CHANGE END
+
 	/**
 	 * Global constants made accessible as class constants so that autoloader
 	 * magic can be used.
@@ -4241,9 +4250,7 @@ class User {
 
 		$result = false;
 
-		$bHeliosCheck = false;
-
-		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result, &$bHeliosCheck ) ) ) {
+		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
 			return $result;
 		}
 
@@ -4258,8 +4265,6 @@ class User {
 			# Old-style
 			$bCheck = self::oldCrypt( $password, $userId ) === $hash;
 		}
-
-		wfRunHooks( 'UserAfterComparePasswords', array( $bHeliosCheck, $bCheck, $result, $type, $hash, $userId ) );
 
 		return $bCheck;
 	}

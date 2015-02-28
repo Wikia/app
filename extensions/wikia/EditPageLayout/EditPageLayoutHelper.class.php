@@ -105,6 +105,7 @@ class EditPageLayoutHelper {
 
 		$this->addJsVariable( 'wgEditPagePopularTemplates', TemplateService::getPromotedTemplates() );
 		$this->addJsVariable( 'wgEditPageIsWidePage', $this->isWidePage() );
+		$this->addJsVariable( 'wgIsDarkTheme', SassUtil::isThemeDark() );
 
 		if ( $user->isLoggedIn() ) {
 			global $wgRTEDisablePreferencesChange;
@@ -182,6 +183,24 @@ class EditPageLayoutHelper {
 	}
 
 	/**
+	 * Check if we should show mobile and desktop preview icon
+	 * Excluded pages:
+	 * - Main page
+	 * - Code page (CSS, JS and Lua)
+	 * - MediaWiki:Wiki-navigation
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public function showMobilePreview( Title $title ) {
+		$blacklistedPage = self::isCodePage( $title )
+				|| $title->isMainPage()
+				|| NavigationModel::isWikiNavMessage( $title );
+
+		return !$blacklistedPage;
+	}
+
+	/**
 	 * Prepare variables to init and support edit code pages
 	 *
 	 * @param Title $title
@@ -195,7 +214,6 @@ class EditPageLayoutHelper {
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
 		$this->addJsVariable( 'wgIsCodePage', true );
-		$this->addJsVariable( 'wgIsDarkTheme', SassUtil::isThemeDark() );
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';

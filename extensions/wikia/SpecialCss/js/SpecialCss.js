@@ -44,7 +44,8 @@ $(function() {
 
 	require(['wikia.ace.editor'], function(ace){
 		var options = {
-				showPrintMargin: false
+				showPrintMargin: false,
+				fontFamily: 'Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace'
 			},
 			// aceScriptsPath is set in PHP controller SpecialCssController.class.php:99
 			config = {

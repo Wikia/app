@@ -155,6 +155,8 @@ require(
 			tracker.track(trackingParams);
 		}
 
-		$(init);
+		if (!w.wikiaPageIsCorporate) {
+			$(init);
+		}
 	}
 );

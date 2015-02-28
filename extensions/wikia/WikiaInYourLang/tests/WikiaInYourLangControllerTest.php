@@ -12,6 +12,7 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 	 */
 	public function testGetWikiDomain( $sDomainToParse, $sParsedDomain ) {
 		$oController = new WikiaInYourLangController();
+		$oController->response = $this->getMock( 'WikiaResponse', [], [ 'json' ] );
 		$this->assertSame( $sParsedDomain, $oController->getWikiDomain( $sDomainToParse ) );
 	}
 
@@ -20,7 +21,7 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 	 */
 	public function testGetLanguageCore( $sFullLanguageCode, $sLanguageCore ) {
 		$oController = new WikiaInYourLangController();
-		$this->assertSame( $sLanguageCore, $oController->getLanguageCore( $sLanguageCore ) );
+		$this->assertSame( $sLanguageCore, $oController->getLanguageCore( $sFullLanguageCode ) );
 	}
 
 	public function getDomainsList() {

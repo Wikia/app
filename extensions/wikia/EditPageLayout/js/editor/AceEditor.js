@@ -10,7 +10,9 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 		$editPage = $('#EditPage'),
 		$editPageToolbar = $('#EditPageToolbar'),
 		wideClassName = 'editpage-sourcewidemode-on',
-		narrowClassName = 'editpage-sourcewidemode-off';
+		narrowClassName = 'editpage-sourcewidemode-off',
+		editorInitContent,
+		disableBeforeUnload = false;
 
 	function init() {
 		chooseTheme();
@@ -21,6 +23,8 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 		initStyles();
 		ace.setTheme(theme);
 		ace.setMode(win.codePageType);
+
+		editorInitContent = ace.getContent();
 
 		initEvents();
 	}
@@ -47,7 +51,8 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 	 */
 	function initOptions() {
 		var options = {
-			showPrintMargin: false
+			showPrintMargin: false,
+			fontFamily: 'Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace'
 		};
 
 		ace.setOptions(options);
@@ -69,9 +74,22 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 		$('#editform').submit(function(e) {
 			var hiddenInput = ace.getInput().val(ace.getContent());
 
+			disableBeforeUnload = true;
+
 			$(this).unbind('submit').append(hiddenInput).submit();
 
 			e.preventDefault();
+		});
+	}
+
+	/**
+	 * Make sure that user doesn't leave the page by accident
+	 */
+	function beforeUnload() {
+		$(win).bind('beforeunload', function () {
+			if (!disableBeforeUnload && editorInitContent !== ace.getContent()) {
+				return $.msg('wikia-editor-leaveconfirm-message');
+			}
 		});
 	}
 
@@ -188,6 +206,7 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 	function initEvents() {
 		initSubmit();
 		initDiffModal();
+		beforeUnload();
 
 		$('.editpage-widemode-trigger').click(editorModeChange);
 	}

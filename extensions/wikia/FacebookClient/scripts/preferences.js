@@ -24,13 +24,11 @@
 			$disconnectLink = $('#fbDisconnectLink').find('a');
 			$disconnectButton = $('.fb-disconnect');
 			$connectLink = $('.sso-login-facebook');
-
 			//reusable banner notification
 			bannerNotification = new window.BannerNotification();
 
 			$.loadFacebookAPI()
 				.done(function () {
-					$('.sso-login').removeClass('hidden');
 					bindEvents();
 				})
 				.fail(facebookError);

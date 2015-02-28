@@ -304,6 +304,7 @@ $messages['kn'] = array(
 $messages['ko'] = array(
 	'spellchecker-info-spellcheck-languages' => '언어',
 	'spellchecker-info-spellcheck-submit' => '맞춤법 검사',
+	'spellchecker-info-spellcheck-suggestions' => '"$1"에 대한 스펠링 추천: $2',
 );
 
 /** Colognian (Ripoarisch)
