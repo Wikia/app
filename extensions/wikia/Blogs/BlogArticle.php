@@ -422,7 +422,7 @@ class BlogArticle extends Article {
 
 	/**
 	 * Hook
-	 * @param CategoryViewer 
+	 * @param CategoryViewer
 	 */
 	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
 		global $wgContLang;
@@ -668,12 +668,12 @@ class BlogArticle extends Article {
 		 * create Blog:Recent posts page if not exists
 		 */
 		$recentPosts = wfMessage( 'create-blog-post-recent-listing' )->text();
-		if( $recentPosts ) {
+		if ( $recentPosts ) {
 			$recentPostsKey = "Creating {$recentPosts}";
 			$oTitle = Title::newFromText( $recentPosts,  NS_BLOG_LISTING );
-			if( $oTitle ) {
-				$page = new WikiPage( $oTitle, 0 );
-				if( !$page->exists( ) ) {
+			if ( $oTitle ) {
+				$page = new WikiPage( $oTitle );
+				if ( !$page->exists( ) ) {
 					$page->doEdit(
 						'<bloglist summary="true" count=50><title>'
 						. wfMessage( 'create-blog-post-recent-listing-title ')->text()
@@ -695,12 +695,12 @@ class BlogArticle extends Article {
 		 * create Category:Blog page if not exists
 		 */
 		$catName = wfMessage( 'create-blog-post-category' )->text();
-		if( $catName && $catName !== "-" ) {
+		if ( $catName && $catName !== "-" ) {
 			$catNameKey = "Creating {$catName}";
 			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
-			if( $oTitle ) {
-				$page = new WikiPage( $oTitle, 0 );
-				if( !$page->exists( ) ) {
+			if ( $oTitle ) {
+				$page = new WikiPage( $oTitle );
+				if ( !$page->exists( ) ) {
 					$page->doEdit(
 						wfMessage( 'create-blog-post-category-body' )->text(),
 						wfMessage( 'create-blog-post-category-log' )->text(),
