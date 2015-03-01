@@ -37,27 +37,23 @@ function wfSpiderableBadArtists(){
 ////
 // Given a title, gives us a chance to create an article for it before MediaWiki takes its normal approach.
 ////
-function wfSpiderableBadArtists_outputPage(&$out, &$text){
+function wfSpiderableBadArtists_outputPage( OutputPage &$out, &$text ){
 	GLOBAL $wgTitle;
 
 	// For "virtual pages" that the spiders can index.
 	if(isset($_GET['virtPage'])){
-		$subTitle = $out->mSubtitle;
-		$matches = array();
-		if(0 < preg_match("/Redirected from <a href=\"[^\"]+&amp;redirect=no\" title=\"([^\"]+)\"/i", $subTitle, $matches)){
-			$redirFrom = $matches[1];
-			if(false === strpos($redirFrom, ":")){
-				$redirFrom = str_replace(" ", "_", $redirFrom);
-				$redirFrom = urlencode($redirFrom);
-				$from = $wgTitle->mUrlform;
-				if(strtolower($from) != strtolower($redirFrom)){
-					$text = str_replace("\"/$from", "\"/$redirFrom", $text);
-					$text = str_replace("\"$from", "\"$redirFrom", $text);
-				}
+		$vars = $out->getJSVars();
+		$redirFrom = $vars['wgRedirectedFrom'];
+		if((!empty($redirFrom)) && (false === strpos($redirFrom, ":"))){
+			$redirFrom = str_replace(" ", "_", $redirFrom);
+			$redirFrom = urlencode($redirFrom);
+			$from = $wgTitle->mUrlform;
+			if(strtolower($from) != strtolower($redirFrom)){
+				$text = str_replace("\"/$from", "\"/$redirFrom", $text);
+				$text = str_replace("\"$from", "\"$redirFrom", $text);
 			}
 		}
 	}
 
 	return true;
 } // end wfSpiderableBadArtists_outputPage()
-
