@@ -109,12 +109,10 @@ define('ext.wikia.adEngine.lookupServices', [
 
 		if (amazonMatch && amazonMatch.wasCalled() && Object.keys) {
 			amazonParams = amazonMatch.getPageParams();
-			Object.keys(amazonParams).forEach(function (key, i) {
-				// Only return 10 first params from Amazon
-				// TODO: Fix with ADEN-1770
-				if (i < 10) {
-					pageTargeting[key] = amazonParams[key];
-				}
+			amazonParams.amznslots = amazonMatch.filterSlots(amazonParams.amznslots);
+
+			Object.keys(amazonParams).forEach(function (key) {
+				pageTargeting[key] = amazonParams[key];
 			});
 		}
 	}
