@@ -26,14 +26,15 @@ class HelperController extends \WikiaController
 
 		// Allow the given user name if the AntiSpoof extension is disabled.
 		if ( empty( $this->wg->EnableAntiSpoofExt ) ) {
-			return $this->response->setVal( 'allow', true );
+			$this->response->setVal( 'allow', true );
+			return;
 		}
 
 		$oSpoofUser = new \SpoofUser( $sName );
-		$aConflicts = $oSpoofUser->getConflicts();
 
 		// Allow the given user name if it is legal and does not conflict with other names.
-		return $this->response->setVal( 'allow', $oSpoofUser->isLegal() && ! $oSpoofUser->getConflicts() );
+		$this->response->setVal( 'allow', $oSpoofUser->isLegal() && ! $oSpoofUser->getConflicts() );
+		return;
 	}
 
 	/**
@@ -56,7 +57,8 @@ class HelperController extends \WikiaController
 
 		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
 			$oSpoofUser = new \SpoofUser( $sName );
-			return $this->response->setVal( 'success', $oSpoofUser->record() );
+			$this->response->setVal( 'success', $oSpoofUser->record() );
+			return;
 		}
 	}
 
@@ -81,7 +83,7 @@ class HelperController extends \WikiaController
 
 		$sName = $this->getVal( 'username' );
 
-		$this->wf->WaitForSlaves( $this->wg->ExternalSharedDB );
+		wfWaitForSlaves( $this->wg->ExternalSharedDB );
 		$oUser = \User::newFromName( $sName );
 
 		if ( ! $oUser instanceof \User ) {
