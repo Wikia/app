@@ -245,7 +245,7 @@ class MultiTask extends BaseTask {
 			$wikisId = [ $wikisId ];
 		}
 
-		$this->info( sprintf( 'Running "%s" action of %d wiki(s)', $action, count( $wikisId ) ), [
+		$this->info( sprintf( 'Running "%s" action on %d wiki(s)', $action, count( $wikisId ) ), [
 			'wikis' => join( ', ', $wikisId )
 		] );
 
@@ -259,8 +259,13 @@ class MultiTask extends BaseTask {
 			$query->AND_( 'city_list.city_lang' )->EQUAL_TO( $lang );
 		}
 
-		if ( !empty( $wikiId ) ) {
+		if ( !empty( $wikisId ) ) {
 			$query->AND_( 'city_list.city_id' )->IN( $wikisId );
+		}
+		else {
+			$this->error( 'Called with empty $wikisId', [
+				'action' => $action
+			] );
 		}
 
 		if ( !empty( $cat ) ) {
