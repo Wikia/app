@@ -76,7 +76,7 @@ if( isset( $showActionsButton ) ){ ?>
 		</select>
 		<? } ?>
 		<p>
-			<a href="#" class="submitDatePickers">Redraw the chart</a>
+			<a href="#" class="submitDatePickers"><?= wfMessage( 'special-pageviews-redraw-link-text' )->escaped() ?></a>
 		</p>
 	</div>
 	<div class="datepicker">

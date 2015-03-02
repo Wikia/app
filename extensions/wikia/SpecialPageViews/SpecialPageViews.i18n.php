@@ -11,6 +11,7 @@ $messages['en'] = [
 	'special-pageviews-report-title' => 'Page views for this wikia',
 	'special-pageviews-report-serie' => 'Page views',
 	'special-pageviews-beta-info' => 'This is a beta version of the dashboard.',
+	'special-pageviews-redraw-link-text' => 'Redraw the chart',
 ];
 
 /** Message documentation
@@ -22,4 +23,5 @@ $messages['qqq'] = [
 	'special-pageviews-report-title' => 'A page views chart title',
 	'special-pageviews-report-serie' => 'A name for the series of page views number',
 	'special-pageviews-beta-info' => 'An information about the extension being in a development stage',
+	'special-pageviews-redraw-link-text' => 'A text to show as a link that redraws the chart',
 ];
