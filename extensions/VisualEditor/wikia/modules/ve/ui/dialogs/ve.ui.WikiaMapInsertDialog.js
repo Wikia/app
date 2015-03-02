@@ -82,7 +82,7 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
 	var $headline = this.$( '<div>' ),
 		$headlineText = this.$( '<div>' ),
-		headlineButton = new OO.ui.ButtonWidget( { label: ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-create-button' ) } );
+		headlineButton = new OO.ui.ButtonWidget( { label: ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-create-button' ), flags: 'primary' } );
 
 	$headline.addClass( 've-ui-wikiaMapInsertDialog-results-headline' );
 
