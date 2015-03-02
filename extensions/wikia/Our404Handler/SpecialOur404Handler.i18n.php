@@ -829,8 +829,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Per
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'our404handler-desc' => 'Vår 404-hanterare för obefintliga sidor',
 	'our404handler' => 'Fel 404: Sidan hittades inte!',
 	'our404handler-oops' => 'Detta är inte sidorna du letade efter. Vänligen fortsätt.',
 	'message404' => "'''Vi är verkligen bedrövade, men utav någon anledning så finns inte sidan du frågade efter.'''

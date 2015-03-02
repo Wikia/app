@@ -1616,7 +1616,7 @@ class WikiFactory {
 		$dbr = self::db( DB_MASTER );
 
 		$oRes = $dbr->select(
-			array( "city_variables_pool", "city_variables_groups" ), /*from*/
+			array( "city_variables_groups" ), /*from*/
 			array( "cv_group_id", "cv_group_name" ), /*what*/
 			array( "cv_group_id in (select cv_variable_group from city_variables_pool)"	), /*where*/
 			__METHOD__

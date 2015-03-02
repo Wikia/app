@@ -45,7 +45,7 @@ class AdEngine2Hooks {
 		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
-		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile );
+		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
 
 		return true;
 	}

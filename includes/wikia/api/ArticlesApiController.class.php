@@ -358,18 +358,20 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = array_unique( $ns );
 		}
 
-		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) , $minArticleQuality ] );
+		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) , $minArticleQuality, $limit ] );
 		$results = $this->wg->Memc->get( $key );
 		if ( $results === false ) {
-			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT, $minArticleQuality );
+			$solrResults = $this->getNewArticlesFromSolr( $ns, $limit, $minArticleQuality );
 			if ( empty( $solrResults ) ) {
 				$results = [];
 			} else {
 				$articles = array_keys( $solrResults );
+				$articles = array_slice( $articles, 0, $limit );
+
 				$rev = new RevisionService();
 				$revisions = $rev->getFirstRevisionByArticleId( $articles );
 				$creators = $this->getUserDataForArticles( $articles, $revisions );
-				$thumbs = $this->getArticlesThumbnails( array_keys( $solrResults ) );
+				$thumbs = $this->getArticlesThumbnails( $articles );
 
 				$results = [];
 				foreach ( $solrResults as $id => $item ) {
@@ -392,7 +394,6 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$results = array_slice( $results, 0, $limit );
 		$this->setResponseData(
 			[ 'items' => $results, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url', 'avatar' ] ],
@@ -667,6 +668,7 @@ class ArticlesApiController extends WikiaApiController {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
+		$resultingCollectionIds = [];
 		$titles = [];
 		foreach ( $articles as $i ) {
 			//data is cached on a per-article basis
@@ -678,6 +680,7 @@ class ArticlesApiController extends WikiaApiController {
 				$ids[] = $i;
 			} else {
 				$collection[$i] = $cache;
+				$resultingCollectionIds []= $i;
 			}
 		}
 
@@ -694,6 +697,7 @@ class ArticlesApiController extends WikiaApiController {
 				}
 			}
 		}
+
 		if ( !empty( $titles ) ) {
 			foreach ( $titles as $t ) {
 				$fileData = [];
@@ -725,7 +729,7 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 					//add file data
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
-					$articles[] = $id;
+					$resultingCollectionIds []= $id;
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
 				} else {
 					$dataLog = [
@@ -746,7 +750,7 @@ class ArticlesApiController extends WikiaApiController {
 		//make the thumbnail's size parametrical without
 		//invalidating the titles details' cache
 		//or the need to duplicate it
-		$thumbnails = $this->getArticlesThumbnails( $articles, $width, $height );
+		$thumbnails = $this->getArticlesThumbnails( $resultingCollectionIds, $width, $height );
 
 		$articles = null;
 
@@ -846,7 +850,7 @@ class ArticlesApiController extends WikiaApiController {
 				/* @var VideoHandler $handler */
 				$handler = VideoHandler::getHandler( $file->getMimeType() );
 				$typeInfo = explode( '/', $file->getMimeType() );
-				$metadata = ( $handler ) ? $handler->getMetadata( true ) : null;
+				$metadata = ( $handler ) ? $handler->getVideoMetadata( true ) : null;
 				return [
 					'type' => static::VIDEO_TYPE,
 					'provider' => isset( $typeInfo[1] ) ? $typeInfo[1] : static::UNKNOWN_PROVIDER,

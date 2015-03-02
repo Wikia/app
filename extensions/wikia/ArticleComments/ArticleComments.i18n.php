@@ -495,6 +495,20 @@ $messages['bg'] = array(
 	'wikiamobile-article-comments-post-fail' => 'Неуспех при съхраняването на коментара, опитайте отново по-късно',
 );
 
+/** Western Balochi (بلوچی رخشانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bgn'] = array(
+	'article-comments-cancel' => 'کنسیل',
+	'article-comments-delete' => 'پاک کورتین',
+	'article-comments-edit' => 'ایڈیٹ',
+	'article-comments-history' => 'تاریخچه',
+	'article-comments-reply' => 'جواب',
+	'article-comments-prev-page' => 'دیمتیرین',
+	'article-comments-next-page' => 'دیگرین',
+	'article-comments-page-spacer' => '&#160...&#160',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  * @author Tauhid16
@@ -1459,12 +1473,17 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
  * @author Robin0van0der0vliet
  */
 $messages['fy'] = array(
+	'article-comments-comments' => 'Opmerkings ($1)',
 	'article-comments-cancel' => 'Annulearje',
+	'article-comments-delete' => 'fuortsmite',
 	'article-comments-edit' => 'bewurkje',
 	'article-comments-history' => 'skiednis',
+	'article-comments-toc-item' => 'Opmerkings',
 	'article-comments-prev-page' => 'Foarige',
 	'article-comments-next-page' => 'Folgjende',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|opmerking|opmerkings}}',
+	'wikiamobile-article-comments-header' => 'Opmerkings',
 	'wikiamobile-article-comments-more' => 'Mear laden',
 );
 
@@ -3066,6 +3085,7 @@ $messages['pfl'] = array(
  * @author BeginaFelicysym
  * @author Pio387
  * @author Sovq
+ * @author VerMa
  * @author Wedkarski
  * @author Woytecr
  */
@@ -3099,7 +3119,7 @@ $messages['pl'] = array(
 	'article-comments-delete-reason' => 'Główny artykuł / komentarz został usunięty',
 	'article-comments-empty-comment' => "Nie możesz zapisać pustego komentarza <a href='$1'>Usunąć?</a>",
 	'article-comments-show-more' => 'Załaduj więcej komentarzy',
-	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Komentarz|Komentarze}}',
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Komentarz|Komentarze|Komentarzy}}',
 	'wikiamobile-article-comments-header' => 'Komentarze',
 	'wikiamobile-article-comments-more' => 'Załaduj więcej',
 	'wikiamobile-article-comments-prev' => 'Załaduj poprzednie',
@@ -3316,6 +3336,7 @@ ___________________________________________
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Fasouzafreitas
  * @author Guilhermemau
  * @author JM Pessanha
  * @author Luckas
@@ -3323,6 +3344,7 @@ ___________________________________________
  * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
+	'article-comments-desc' => 'Comentários de artigos para páginas wiki',
 	'article-comments-file-page' => "<a href='$1'>Comentário de $2</a> em <a href='$3'>$4</a>",
 	'article-blog-comments-file-page' => "<a href='$1'>Comentário de $2</a> na publicação <a href='$3'>$4</a> do blog <a href='$5'> $6's</a>",
 	'article-comments-anonymous' => 'Usuário anônimo',

@@ -75,7 +75,7 @@ class GlobalWatchlistHooks {
 	 * @param $timestamp Datetime or null
 	 * @return bool (always true)
 	 */
-	public static function updateGlobalWatchList( WatchedItem $watchedItem, $watchers, $timestamp ) {
+	public static function updateGlobalWatchList( WatchedItem $watchedItem, $watchers, $timestamp = null ) {
 		$watchers = wfReturnArray( $watchers );
 		if ( is_null( $timestamp ) ) {
 			self::removeWatchers( $watchedItem, $watchers );

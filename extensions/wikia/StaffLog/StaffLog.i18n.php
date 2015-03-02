@@ -350,6 +350,7 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'stafflog' => '스태프 로그',
+	'right-stafflog' => '스태프 로그 열람',
 	'stafflog-filter-label' => '필터',
 	'stafflog-filter-user' => '사용자:',
 	'stafflog-filter-type' => '유형:',

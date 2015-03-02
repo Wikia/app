@@ -205,12 +205,21 @@ class SkinChooser {
 		if ( is_null( $useskin ) && function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 
-			if ( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "venus",
-					"wikia", "wikiamobile", "uncyclopedia" ) ) ) {
-				$skin = Skin::newFromKey( $headers[ "X-Skin" ] );
+			if ( isset( $headers[ 'X-Skin' ] ) ) {
+				if ( in_array( $headers[ 'X-Skin' ], array( 'monobook', 'oasis', 'venus', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
+					$skin = Skin::newFromKey( $headers[ 'X-Skin' ] );
+				// X-Skin header fallback for Mercury which is actually not a MediaWiki skin but a separate application
+				} elseif ( $headers[ 'X-Skin' ] === 'mercury') {
+					$skin = Skin::newFromKey( 'wikiamobile' );
+				}
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
+		}
+
+		// useskin query param fallback for Mercury which is actually not a MediaWiki skin but a separate application
+		if ( $useskin === 'mercury' ) {
+			$useskin = 'wikiamobile';
 		}
 
 		if ( !( $title instanceof Title ) || in_array( self::getUserOption( 'skin' ), $wgSkipSkins ) ) {
@@ -223,6 +232,7 @@ class SkinChooser {
 		if ( $request->getVal( 'useskin' ) == 'wikia' ) {
 			$request->setVal( 'useskin', 'oasis' );
 		}
+
 		if ( !empty( $wgForceSkin ) ) {
 			$wgForceSkin = $request->getVal( 'useskin', $wgForceSkin );
 			$elems = explode( '-', $wgForceSkin );

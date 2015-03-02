@@ -108,6 +108,7 @@ class FollowHelper {
 		if ( !empty( $watchers ) ) {
 			$oTask = new FollowEmailTask();
 			$oTask->title( $childTitle );
+			$oTask->wikiId( F::app()->wg->CityId );
 			$oTask->call( 'emailFollowNotifications', $watchers, $user->getId(), $namespace, $message, $action );
 			$oTask->queue();
 		}

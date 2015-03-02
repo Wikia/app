@@ -17,6 +17,8 @@ class HelperController extends \WikiaController
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'allow', false );
+			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -24,14 +26,15 @@ class HelperController extends \WikiaController
 
 		// Allow the given user name if the AntiSpoof extension is disabled.
 		if ( empty( $this->wg->EnableAntiSpoofExt ) ) {
-			return $this->response->setVal( 'allow', true );
+			$this->response->setVal( 'allow', true );
+			return;
 		}
 
 		$oSpoofUser = new \SpoofUser( $sName );
-		$aConflicts = $oSpoofUser->getConflicts();
 
 		// Allow the given user name if it is legal and does not conflict with other names.
-		return $this->response->setVal( 'allow', $oSpoofUser->isLegal() && ! $oSpoofUser->getConflicts() );
+		$this->response->setVal( 'allow', $oSpoofUser->isLegal() && ! $oSpoofUser->getConflicts() );
+		return;
 	}
 
 	/**
@@ -43,8 +46,10 @@ class HelperController extends \WikiaController
 	{
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
+		$this->response->setVal( 'success', false );
 
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken ) {
+			$this->response->setVal( 'message', 'invalid secret' );
 			return;
 		}
 
@@ -52,7 +57,8 @@ class HelperController extends \WikiaController
 
 		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
 			$oSpoofUser = new \SpoofUser( $sName );
-			$oSpoofUser->record();
+			$this->response->setVal( 'success', $oSpoofUser->record() );
+			return;
 		}
 	}
 
@@ -77,7 +83,7 @@ class HelperController extends \WikiaController
 
 		$sName = $this->getVal( 'username' );
 
-		$this->wf->WaitForSlaves( $this->wg->ExternalSharedDB );
+		wfWaitForSlaves( $this->wg->ExternalSharedDB );
 		$oUser = \User::newFromName( $sName );
 
 		if ( ! $oUser instanceof \User ) {
@@ -95,7 +101,8 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$sMemKey = $this->getMemKeyConfirmationEmailsSent( $oUser->getId() );
+		$oUserLoginHelper = ( new \UserLoginHelper );
+		$sMemKey = $oUserLoginHelper->getMemKeyConfirmationEmailsSent( $oUser->getId() );
 		$iEmailSent = intval( $this->wg->Memc->get( $sMemKey ) );
 
 		if ( $oUser->isEmailConfirmationPending() &&
@@ -106,7 +113,7 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		if ( ! Sanitizer::validateEmail( $user->getEmail() ) ) {
+		if ( ! \Sanitizer::validateEmail( $oUser->getEmail() ) ) {
 			$this->response->setVal( 'message', 'invalid email' );
 			return;
 		}

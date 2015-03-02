@@ -1,5 +1,6 @@
 <?php
 namespace Wikia\Helios;
+use Wikia\Util\RequestId;
 
 /**
  * A client for Wikia authentication service.
@@ -51,6 +52,8 @@ class Client
 
 		// Request execution.
 		$oRequest = \MWHttpRequest::factory( $sUri, $aOptions );
+		$oRequest->setHeader(RequestId::REQUEST_HEADER_NAME, RequestId::instance()->getRequestId());
+		$oRequest->setHeader(RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname());
 		$oStatus = $oRequest->execute();
 
 		// Response handling.
@@ -123,7 +126,7 @@ class ClientException extends \Exception
 {
 	use \Wikia\Logger\Loggable;
 
-	public function __construct( $message = null, $code = 0, Exception $previous = null, $data = null ) {
+	public function __construct( $message = null, $code = 0, \Exception $previous = null, $data = null ) {
 		parent::__construct( $message, $code, $previous );
 		$this->error( 'HELIOS_CLIENT' , [ 'exception' => $this, 'context' => $data ] );
 	}
