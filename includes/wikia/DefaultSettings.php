@@ -374,7 +374,6 @@ $wgAutoloadClasses['WikiHeaderController'] = $IP.'/skins/oasis/modules/WikiHeade
 $wgAutoloadClasses['SearchController'] = $IP.'/skins/oasis/modules/SearchController.class.php';
 $wgAutoloadClasses['PageHeaderController'] = $IP.'/skins/oasis/modules/PageHeaderController.class.php';
 $wgAutoloadClasses['LatestActivityController'] = $IP.'/skins/oasis/modules/LatestActivityController.class.php';
-$wgAutoloadClasses['LatestPhotosController'] = $IP.'/skins/oasis/modules/LatestPhotosController.class.php';
 $wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterController.class.php';
 $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
 $wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/AchievementsController.class.php';
@@ -612,6 +611,7 @@ include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.ph
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
 include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 include_once( "$IP/extensions/wikia/UserTools/UserTools.setup.php" );
+include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 
@@ -1448,10 +1448,10 @@ $wgAdDriverRubiconRTPConfig = null;
 $wgAdDriverRubiconRTPCountries = null;
 
 /**
- * @name $wgAdDriverEnableKruxOnMobile
+ * @name $wgEnableKruxOnMobile
  * Whether to enable Krux on wikiamobile skin
  */
-$wgEnableKruxOnMobile = false;
+$wgEnableKruxOnMobile = true;
 
 /**
  * @name $wgHighValueCountries

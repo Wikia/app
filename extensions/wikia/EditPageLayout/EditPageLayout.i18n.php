@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'editpagelayout-pageControls-back' => 'Back to editor',
 	'editpagelayout-pageControls-changes' => 'Changes',
 	'editpagelayout-blocked-user' => 'Your user name or IP address has been blocked',
-	'editpagelayout-edit-summary-label' => 'Edit Summary',
+	'editpagelayout-edit-summary-label' => 'Edit summary',
 	'editpagelayout-subject-headline-label' => 'Subject/headline:',
 
 	'wikia-editor-media-image' => 'Photo',
@@ -98,6 +98,15 @@ $messages['en'] = array(
 	'tog-editwidth' => 'Widen the Source mode edit box to fill the entire screen',
 	'tog-minordefault' => 'Mark all edits as "minor" by default',
 	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
+
+	// preview-related messages
+	'editpagelayout-preview-label-desktop' => 'Desktop',
+	'editpagelayout-preview-label-mobile' => 'Mobile',
+
+	'editpagelayout-preview-dropdown-item-mobile' => 'Mobile',
+	'editpagelayout-preview-dropdown-item-tablet' => 'Tablet Portrait',
+	'editpagelayout-preview-dropdown-item-desktop' => 'Desktop',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop XL'
 );
 
 /** Message documentation (Message documentation)
@@ -144,6 +153,14 @@ $messages['qqq'] = array(
 	'prefs-starting-an-edit' => 'This is a heading in Special:Preferences',
 	'prefs-editing-experience' => 'This is a heading in Special:Preferences',
 	'wikia-editor-preview-editSummary' => 'A text showed on the bottom of preview window when the edit summary was added, the parameter is the added summary',
+
+	'editpagelayout-preview-label-desktop' => 'A label shown under the desktop icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers the desktop icon',
+	'editpagelayout-preview-label-mobile' => 'A label shown under the mobile icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers over the mobile icon',
+
+	'editpagelayout-preview-dropdown-item-mobile' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-tablet' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-desktop' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see',
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'An item in a dropdown menu near the top of the preview modal dialog, allows the user to select the type of preview they want to see'
 );
 
 /** Azerbaijani (azərbaycanca)

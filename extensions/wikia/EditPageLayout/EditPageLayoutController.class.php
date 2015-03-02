@@ -42,6 +42,9 @@ class EditPageLayoutController extends WikiaController {
 
 		// extra buttons
 		$this->buttons = $editPage->getControlButtons();
+
+		// Should show mobile preview icon
+		$this->showMobilePreview = $this->request->getVal('showMobilePreview');
 	}
 
 	/**
@@ -110,6 +113,9 @@ class EditPageLayoutController extends WikiaController {
 
 		// Text for Edit summary label
 		$wpSummaryLabelText = 'editpagelayout-edit-summary-label';
+
+		// Should show mobile preview icon
+		$this->showMobilePreview = $helper->showMobilePreview( $editPage->getTitle() );
 
 		if ($section == 'new') {
 			$msgKey = 'editingcomment';

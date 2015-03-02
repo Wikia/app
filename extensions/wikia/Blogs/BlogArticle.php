@@ -422,7 +422,7 @@ class BlogArticle extends Article {
 
 	/**
 	 * Hook
-	 * @param CategoryViewer 
+	 * @param CategoryViewer
 	 */
 	static public function addCategoryPage( &$catView, &$title, &$row, $sortkey ) {
 		global $wgContLang;
@@ -658,72 +658,55 @@ class BlogArticle extends Article {
 	 * @static
 	 */
 	static public function wfMaintenance() {
-		global $wgTitle;
 
 		$results = [];
+
+		// VOLDEV-96: Do not credit edits to localhost
+		$wikiaUser = User::newFromName( 'Wikia' );
+
 		/**
 		 * create Blog:Recent posts page if not exists
 		 */
-		$recentPosts = wfMsg("create-blog-post-recent-listing");
-		if( $recentPosts ) {
+		$recentPosts = wfMessage( 'create-blog-post-recent-listing' )->text();
+		if ( $recentPosts ) {
 			$recentPostsKey = "Creating {$recentPosts}";
 			$oTitle = Title::newFromText( $recentPosts,  NS_BLOG_LISTING );
-			if( $oTitle ) {
-				$wgTitle = $oTitle;
-				$oArticle = new Article( $oTitle, 0 );
-				if( !$oArticle->exists( ) ) {
-					$oArticle->doEdit(
+			if ( $oTitle ) {
+				$page = new WikiPage( $oTitle );
+				if ( !$page->exists( ) ) {
+					$page->doEdit(
 						'<bloglist summary="true" count=50><title>'
-						. wfMsg("create-blog-post-recent-listing-title")
+						. wfMessage( 'create-blog-post-recent-listing-title ')->text()
 						.'</title><type>plain</type><order>date</order></bloglist>',
-						wfMsg("create-blog-post-recent-listing-log"),
-						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
+						wfMessage( 'create-blog-post-recent-listing-log' )->text(),
+						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT,  # flags
+						false,
+						$wikiaUser
 					);
 					$results[$recentPostsKey] = 'done';
 				}
 				else {
 					$results[$recentPostsKey] = 'already exists';
 				}
-				/**
-				 * Edit sidebar, add link to recent blog posts
-				 */
-				$sidebar = wfMsg('Monaco-sidebar');
-				$sidebarKey = 'Updating Monaco sidebar';
-				$newline = sprintf("\n* %s|%s", $oTitle->getPrefixedText(), wfMsg("create-blog-post-recent-listing-title") );
-				if( strpos( $sidebar, $newline ) !== false ) {
-					$sidebar .= $newline;
-					$msgTitle = Title::newFromText( 'Monaco-sidebar', NS_MEDIAWIKI );
-					if( $msgTitle ) {
-						$oArticle = new Article( $msgTitle, 0 );
-						$oArticle->doEdit(
-							$sidebar,
-							wfMsg("create-blog-post-recent-listing-log"),
-							EDIT_MINOR | EDIT_FORCE_BOT  # flags
-						);
-					}
-					$results[$sidebarKey] = 'done';
-				}
-				else {
-					$results[$sidebarKey] = 'already added';
-				}
-
 			}
 		}
 
 		/**
 		 * create Category:Blog page if not exists
 		 */
-		$catName = wfMsg("create-blog-post-category");
-		if( $catName && $catName !== "-" ) {
+		$catName = wfMessage( 'create-blog-post-category' )->text();
+		if ( $catName && $catName !== "-" ) {
 			$catNameKey = "Creating {$catName}";
 			$oTitle = Title::newFromText( $catName, NS_CATEGORY );
-			if( $oTitle ) {
-				$oArticle = new Article( $oTitle, 0 );
-				if( !$oArticle->exists( ) ) {
-					$oArticle->doEdit(
-						wfMsg( "create-blog-post-category-body" ),
-						wfMsg( "create-blog-post-category-log" ),
-						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
+			if ( $oTitle ) {
+				$page = new WikiPage( $oTitle );
+				if ( !$page->exists( ) ) {
+					$page->doEdit(
+						wfMessage( 'create-blog-post-category-body' )->text(),
+						wfMessage( 'create-blog-post-category-log' )->text(),
+						EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT,  # flags
+						false,
+						$wikiaUser
 					);
 					$results[$catNameKey] = 'done';
 				}

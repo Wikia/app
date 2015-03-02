@@ -87,19 +87,17 @@ describe('AdLogicPageParams', function () {
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			logMock,
-			windowMock,
 			windowMock.document,
 			windowMock.location,
-			abTestMock,
 			mockAdContext(targeting),
+			abTestMock,
 			mockPageViewCounter(opts.pvCount),
-			mockAmazonMatch(opts.amazonPageParams),
-			mockAmazonMatchOld(!!opts.amzn_targs),
+			undefined,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
 
-	it('getPageLevelParams Simple params correct', function () {
+	it('getPageLevelParams simple params correct', function () {
 		var params = getParams({
 			wikiCategory: 'category',
 			wikiDbName: 'dbname',
@@ -196,19 +194,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.key1).toEqual(['value1'], 'key1=value1');
 		expect(params.key2).toEqual(['value2'], 'key2=value2');
 		expect(params.key3).toEqual(['value3', 'value4'], 'key3=value3;key3=value4');
-	});
-
-	it('getPageLevelParams Amazon Match params (new)', function () {
-		var params = getParams({}, {amazonPageParams: {amznslots: ['a300x250p1', 'a728x90p2']}});
-
-		expect(params.amznslots).toEqual(['a300x250p1', 'a728x90p2']);
-	});
-
-	it('getPageLevelParams Amazon Match params (old)', function () {
-		var params = getParams({}, {amzn_targs: 'amzn_300x250=1;amzn_728x90=1;'});
-
-		expect(params.amzn_300x250).toEqual(['1']);
-		expect(params.amzn_728x90).toEqual(['1']);
 	});
 
 	it('getPageLevelParams Krux segments', function () {

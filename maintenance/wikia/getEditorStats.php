@@ -28,6 +28,7 @@ class GetRevisionWithTags extends Maintenance {
 		'rte-source',
 		'rollback',
 		'mobileedit',
+		'gallery',
 		'categoryselect',
 		'apiedit'
 	];

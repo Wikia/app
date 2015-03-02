@@ -183,6 +183,24 @@ class EditPageLayoutHelper {
 	}
 
 	/**
+	 * Check if we should show mobile and desktop preview icon
+	 * Excluded pages:
+	 * - Main page
+	 * - Code page (CSS, JS and Lua)
+	 * - MediaWiki:Wiki-navigation
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	public function showMobilePreview( Title $title ) {
+		$blacklistedPage = self::isCodePage( $title )
+				|| $title->isMainPage()
+				|| NavigationModel::isWikiNavMessage( $title );
+
+		return !$blacklistedPage;
+	}
+
+	/**
 	 * Prepare variables to init and support edit code pages
 	 *
 	 * @param Title $title

@@ -117,23 +117,9 @@
 		}
 	}
 
-	/* page controls styling */
-	$page-controls-wide-width: 600px;
-	$page-controls-wide-width-min: 350px;
-
 	&.editpage-sourcewidemode-on {
 		.cke_toolbar_source {
-			width: $width-outside - $page-controls-wide-width;
-
-			@media screen and (max-width: $breakpoint-small) {
-				width: $width-outside - $page-controls-wide-width-min;
-			}
-		}
-		// save button
-		#wpSave {
-			position: absolute;
-			top: 0;
-			right: 15px;
+			width: 410px;
 		}
 		.EditPageRail {
 			width: auto;
@@ -144,35 +130,116 @@
 				// resetting module styling - end
 
 				.module_content {
+					padding-top: 0;
 					position: relative;
-					width: $page-controls-wide-width;
 
-					@media screen and (max-width: $breakpoint-small) {
-						width: $page-controls-wide-width-min;
+					.preview_box {
+						border-left: 1px solid $color-page-border;
+						border-right: 1px solid $color-page-border;
+						float: left;
+						height: 39px;
+						margin-right: 8px;
+						padding-left: 8px;
+
+						h3 {
+							float: left;
+							font-size: 12px;
+							margin-top: 12px;
+							padding: 0;
+						}
+
+						.preview_icon {
+							border: 0;
+							height: auto;
+							margin: 0 8px;
+							width: auto;
+
+							p {
+								display: none;
+							}
+
+							svg {
+								margin-bottom: 0;
+							}
+						}
+
+						.preview_mobile {
+							padding-top: 8px;
+
+							svg {
+								height: 24px;
+								width: 16px;
+							}
+						}
+
+						.preview_desktop {
+							padding-top: 10px;
+
+							svg {
+								height: 20px;
+								width: 24px;
+							}
+						}
+					}
+
+					.preview_box, .buttons,
+					.wpSummaryFields {
+						float: left;
+					}
+
+					#wpSummaryLabel {
+						clear: none;
+						float: left;
+					}
+
+					#wpSummary {
+						height: 20px;
+						padding: 3px 5px;
+						width: 215px;
+					}
+
+					.checkboxes {
+						float: right;
+						margin: 10px 8px 0;
+					}
+
+					#wpDiff {
+						font-size: 10px;
+						margin-right: 10px;
+						margin-top: 12px;
+					}
+
+					@media screen and (max-width: $width-outside) {
+						.preview_box {
+							border: 0;
+							clear: both;
+
+							h3 {
+								margin-top: 8px;
+							}
+
+							.preview_mobile {
+								padding-top: 3px;
+							}
+
+							.preview_desktop {
+								padding-top: 5px;
+							}
+						}
+
+						#wpDiff {
+							margin-top: 7px;
+						}
+
+						#wpSave {
+							margin-top: 3px;
+						}
 					}
 				}
 
 				// checkboxes
 				label {
-					left: 285px;
-					position: absolute;
 					text-align: left;
-					top: 10px;
-				}
-				// summary box
-				textarea {
-					position: absolute;
-					top: 9px;
-					left: 3px;
-					height: 15px;
-					padding: 2px;
-					margin: 0;
-				}
-				// preview button
-				.wikia-menu-button {
-					position: absolute;
-					top: 0;
-					right: 140px;
 				}
 			}
 		}
