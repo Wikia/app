@@ -14,7 +14,7 @@
 				</div>
 			</div>
 			<input id="searchInput" accesskey="f" autocomplete="off" class="search-input" name="search" placeholder="<?= Sanitizer::encodeAttribute($defaultSearchPlaceholder); ?>" type="text" value="<?= Sanitizer::encodeAttribute( $query ); ?>"/>
-			<input type="submit" id="searchSubmit" class="search-button" value="" />
+			<input type="submit" id="searchSubmit" class="search-button" value="" disabled/>
 			<input name="fulltext" type="hidden" value="<?= Sanitizer::encodeAttribute( $fulltext ) ?>"/>
 			<input disabled id="searchInputResultLang" type="hidden" name="resultsLang" value="<?= Sanitizer::encodeAttribute( $lang ); ?>"/>
 		</div>

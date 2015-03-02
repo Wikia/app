@@ -10,7 +10,6 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	function setFormOptions() {
 		var $selectedOption = $selectElement.find('option:selected'),
 			isLocalSearchDisabled = !$selectElement.length;
-
 		$searchInput.attr('placeholder', $selectedOption.data('placeholder'));
 		$('#searchForm').attr('action', $selectedOption.attr('data-search-url'));
 		//Setting reference to jQuery search autocomplete object
@@ -20,6 +19,15 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		} else {
 			setPropertiesOnInput(true);
 		}
+
+		//Disables search button until the user has entered at least one character.
+		$searchInput.keyup(function () {
+			if ($searchInput.val()) {
+				$('#searchSubmit').removeAttr('disabled');
+			} else {
+				$('#searchSubmit').attr('disabled', true)
+			}
+		})
 	}
 
 	/**
