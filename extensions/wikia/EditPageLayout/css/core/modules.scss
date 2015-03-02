@@ -89,7 +89,7 @@ $color-icon: mix($color-text, #fff, 90%);
 		// edit summary
 		#wpSummary {
 			@include epl-textfield;
-			height: 27px;
+			height: 23px;
 			line-height: 15px;
 			margin: 5px 0;
 			resize: none; /* remove resize grip in Webkit / Fx4 */
@@ -99,7 +99,11 @@ $color-icon: mix($color-text, #fff, 90%);
 			@include clearfix;
 		}
 
-		#wpDiff {
+		#wpPreview {
+			text-align: center;
+		}
+
+		#wpDiff.diff-link {
 			color: $color-links;
 			display: inline-block;
 			font-size: 12px;
