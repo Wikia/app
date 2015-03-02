@@ -9,7 +9,7 @@
 <div class="video-page-caption">
 	<div class="inner">
 		<p class="video-provider"><?= $providerPhrase ?></p>
-		<? if (!empty($viewCount)): ?>
+		<? if ( !empty( $viewCount ) ): ?>
 			<p class="video-views"><?= wfMessage( 'video-page-views' )->numParams( $viewCount )->parse() ?></p>
 		<? endif; ?>
 		<? if ( $regionalRestrictions ) : ?>
