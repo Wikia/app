@@ -23,14 +23,15 @@ $margin: 0.1em 0;
 		@extend .button;
 		padding: 0.2em 0.8em;
 		margin: 0.1em 0;
-
-		&.oo-ui-buttonElement-active {
-			@extend .button.active;
-		}
 		&:hover {
 			.oo-ui-iconElement-icon {
 				opacity: 1;
 			}
+		}
+	}
+	&.oo-ui-buttonElement-active {
+		.oo-ui-buttonElement-button {
+			@extend .button.active;
 		}
 	}
 }

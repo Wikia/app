@@ -3753,6 +3753,10 @@ OO.ui.ButtonElement = function OoUiButtonElement( config ) {
 	this.setTabIndex( config.tabIndex || 0 );
 	this.setAccessKey( config.accessKey );
 	this.setButtonElement( config.$button || this.$( '<a>' ) );
+
+	if ( !config.flags || ( config.flags && config.flags.indexOf( 'primary' ) === -1 ) ) {
+		this.$button.addClass( 'secondary' );
+	}
 };
 
 /* Setup */
@@ -5177,9 +5181,6 @@ OO.ui.FlaggedElement.prototype.setFlags = function ( flags ) {
 				changes[flag] = true;
 				this.flags[flag] = true;
 				add.push( className );
-			}
-			if ( flag === 'secondary' && this.$button ) {
-				this.$button.addClass( 'secondary' );
 			}
 		}
 	} else if ( OO.isPlainObject( flags ) ) {
