@@ -17,7 +17,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
 	const ENTERTAINMENT_SLOTS_VAR_NAME = 'wgWikiaHomePageEntertainmentSlots';
 	const LIFESTYLE_SLOTS_VAR_NAME = 'wgWikiaHomePageLifestyleSlots';
-	const CORPORATE_ON_HUB_ENABLED = 'wgDisableWAMOnHubs';
+	const CORPORATE_ON_HUB_ENABLED = 'wgTreatAsCorporate';
 	const SLOTS_IN_TOTAL = 17;
 
 	const SLOTS_BIG = 2;

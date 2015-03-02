@@ -1676,6 +1676,11 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
+/* @name wgTreatAsCorporate
+ * Treat a wiki as if it was a corporate wiki
+ */
+$wgTreatAsCorporate = false;
+
 /**
  * Force ImageServing to return an empty list
  * see PLATFORM-392
