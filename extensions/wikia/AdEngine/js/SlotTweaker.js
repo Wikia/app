@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function show(slotname) {
-		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+		log('show ' + slotname + ' removing class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
