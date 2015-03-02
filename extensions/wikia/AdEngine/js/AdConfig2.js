@@ -54,7 +54,6 @@ define('ext.wikia.adEngine.adConfig', [
 			'INCONTENT_LEADERBOARD_3': true,
 			'INVISIBLE_SKIN': true,
 			'LEFT_SKYSCRAPER_2': true,
-			'MIDDLE_RIGHT_BOXAD': true,
 			'MODAL_RECTANGLE': true,
 			'MODAL_INTERSTITIAL': true,
 			'MODAL_INTERSTITIAL_1': true,

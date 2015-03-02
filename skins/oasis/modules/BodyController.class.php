@@ -278,7 +278,6 @@ class BodyController extends WikiaController {
 			'slotName' => 'TOP_RIGHT_BOXAD',
 			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
 		]);
-		$railModuleList[1291] = array('Ad', 'Index', ['slotName' => 'MIDDLE_RIGHT_BOXAD']);
 		$railModuleList[1100] = array('Ad', 'Index', [
 			'slotName' => 'LEFT_SKYSCRAPER_2',
 			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER']) ? $wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER'] : null
