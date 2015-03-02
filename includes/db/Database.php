@@ -3600,6 +3600,10 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( $ret instanceof ResultWrapper ) {
 			// NOP for MySQL driver
 			$num_rows = $ret->numRows();
+		} elseif ( $ret instanceof mysqli_result) {
+			// for SELECT queries report how many rows are sent to the client
+			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
+			$num_rows = $ret->num_rows ?: $this->affectedRows();
 		} elseif ( is_resource( $ret ) ) {
 			// for SELECT queries report how many rows are sent to the client
 			$num_rows = mysql_num_rows( $ret );
