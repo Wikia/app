@@ -1,4 +1,4 @@
-/* global GlobalNotification */
+/* global BannerNotification */
 
 /**
  * JS file for Special:Videos page. Runs on Monobook and Oasis.
@@ -10,6 +10,7 @@ $(function () {
 	var SpecialVideos = {
 		init: function () {
 			this.$wrapper = $('.special-videos-grid');
+			this.bannerNotification = new window.BannerNotification().setType('error');
 			this.initEllipses();
 			this.initDropdown();
 			this.initAddVideo();
@@ -64,9 +65,11 @@ $(function () {
 							},
 							// success callback
 							function (formRes) {
-								window.GlobalNotification.hide();
+								SpecialVideos.bannerNotification.hide();
 								if (formRes.error) {
-									window.GlobalNotification.show(formRes.error, 'error');
+									SpecialVideos.bannerNotification
+										.setContent(formRes.error)
+										.show();
 								} else {
 									VET.close();
 									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
@@ -74,7 +77,8 @@ $(function () {
 							},
 							// error callback
 							function () {
-								window.GlobalNotification.show($.msg('vet-error-while-loading'), 'error');
+								bannerNotification.setContent($.msg('vet-error-while-loading'))
+									.show();
 							}
 						);
 						// Don't move on to second VET screen.  We're done.
@@ -113,7 +117,7 @@ $(function () {
 										// reload page with cb
 										(new Wikia.Querystring(window.location)).addCb().goTo();
 									} else {
-										GlobalNotification.show(json.msg, 'error');
+										bannerNotification.setContent(json.msg).show();
 									}
 
 								}
@@ -121,7 +125,7 @@ $(function () {
 						}
 					});
 				} else {
-					GlobalNotification.show($.msg('oasis-generic-error'), 'error');
+					bannerNotification.setContent($.msg('oasis-generic-error')).show();
 				}
 			});
 		}

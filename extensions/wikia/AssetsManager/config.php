@@ -12,6 +12,7 @@ $config['oasis_shared_core_js'] = array(
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
+		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
 	),
 );
@@ -217,7 +218,6 @@ $config['oasis_noads_extensions_js'] = array(
 		// needs to load after MiniEditor
 		'#group_articlecomments_js',
 
-		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
@@ -383,6 +383,8 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
 		'//skins/oasis/js/Tracking.js',
+
+		'//skins/shared/scripts/onScroll.js',
 
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
 	)
@@ -915,7 +917,7 @@ $config['monobook_js'] = array(
 		'#group_imglzy_js',
 		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
-		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//skins/shared/scripts/onScroll.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
@@ -2250,6 +2252,32 @@ $config['facebook_client_preferences_scss'] = [
 	]
 ];
 
+$config['banner_notifications_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['monobook'],
+	'assets' => [
+		'//extensions/wikia/BannerNotifications/css/BannerNotifications.scss',
+		'//extensions/wikia/BannerNotifications/css/BannerNotifications.monobook.scss',
+	]
+];
+
+$config['banner_notifications_js'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'monobook', 'venus'],
+	'assets' => [
+		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
+		'//extensions/wikia/BannerNotifications/js/templates.mustache.js',
+	]
+];
+
+$config['wikia_in_your_lang_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/WikiaInYourLang/modules/ext.wikiaInYourLang.js',
+	]
+];
+
 $config['facebook_client_xfbml_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'monobook'],
@@ -2306,4 +2334,3 @@ $config['upload_photos_dialog_scss'] = [
 		'//extensions/wikia/WikiaNewFiles/styles/UploadPhotoDialog.scss'
 	]
 ];
-

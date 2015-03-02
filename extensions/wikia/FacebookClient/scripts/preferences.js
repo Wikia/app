@@ -1,5 +1,5 @@
 /* global jQuery, mediaWiki */
-(function ($, mw) {
+(function (window, $, mw) {
 	'use strict';
 
 	var fbPreferences = (function () {
@@ -10,7 +10,8 @@
 			$disconnectWrapper,
 			$disconnectLink,
 			$disconnectButton,
-			$connectLink;
+			$connectLink,
+			bannerNotification;
 
 		/**
 		 * Create single instance. Call after DOM is ready.
@@ -23,8 +24,10 @@
 			$disconnectLink = $('#fbDisconnectLink').find('a');
 			$disconnectButton = $('.fb-disconnect');
 			$connectLink = $('.sso-login-facebook');
+			//reusable banner notification
+			bannerNotification = new window.BannerNotification();
 
-			$.loadFacebookSDK()
+			$.loadFacebookAPI()
 				.done(function () {
 					bindEvents();
 				})
@@ -53,7 +56,10 @@
 				callback: function (data) {
 					if (data.status === 'ok') {
 
-						window.GlobalNotification.show($.msg('fbconnect-preferences-connected'), 'confirm');
+						bannerNotification
+							.setContent($.msg('fbconnect-preferences-connected'))
+							.setType('confirm')
+							.show();
 
 						window.Wikia.Tracker.track({
 							category: 'user-sign-up',
@@ -102,7 +108,10 @@
 				type: 'POST',
 				callback: function (data) {
 					if (data.status === 'ok') {
-						window.GlobalNotification.show($.msg(disconnectMsg), 'confirm');
+						bannerNotification
+							.setType('confirm')
+							.setContent($.msg(disconnectMsg))
+							.show();
 						window.Wikia.Tracker.track({
 							category: 'user-sign-up',
 							trackingMethod: 'both',
@@ -137,7 +146,7 @@
 				msg = $.msg('oasis-generic-error');
 			}
 
-			window.GlobalNotification.show(msg, 'error');
+			bannerNotification.setContent(msg).setType('error').show();
 		}
 
 		function facebookError() {
@@ -188,4 +197,4 @@
 
 	// instantiate singleton on DOM ready
 	$(fbPreferences.getInstance);
-})(jQuery, mediaWiki);
+})(window, jQuery, mediaWiki);

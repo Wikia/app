@@ -116,9 +116,9 @@ $( document ).ready( function() {
 				var	otherAction = action === 'watch' ? 'unwatch' : 'watch',
 					$li = $link.closest( 'li' );
 
-				/* Wikia Start - Liz */
+				/* Wikia Start - Liz, Bart */
 				//mw.util.jsMessage( watchResponse.message, 'ajaxwatch' );
-				GlobalNotification.show(watchResponse.message, 'confirm');
+				new BannerNotification(watchResponse.message, 'confirm').show();
 				/* Wikia End - Liz */
 
 				// Set link to opposite
@@ -155,9 +155,9 @@ $( document ).ready( function() {
 
 				// Report to user about the error
 
-				// Wikia Start - Liz
+				// Wikia Start - Liz, Bart
 				//mw.util.jsMessage( html, 'ajaxwatch' );
-				GlobalNotification.show(html, 'error');
+				new BannerNotification(html, 'error').show();
 				return true;
 				// Wikia End - Liz
 
