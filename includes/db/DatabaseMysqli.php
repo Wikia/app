@@ -34,7 +34,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	protected $mConn;
 
 	/**
-	 * @param $sql string
+	 * @param string $sql
 	 * @return resource
 	 */
 	protected function doQuery( $sql ) {
@@ -46,12 +46,38 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 		return $ret;
 	}
 
+	/**
+	 * @param string $realServer
+	 * @return bool|mysqli
+	 * @throws DBConnectionError
+	 */
 	protected function mysqlConnect( $realServer ) {
+		global $wgDBmysql5;
+
 		# Fail now
 		# Otherwise we get a suppressed fatal error, which is very hard to track down
 		if ( !function_exists( 'mysqli_init' ) ) {
 			throw new DBConnectionError( $this, "MySQLi functions missing,"
 				. " have you compiled PHP with the --with-mysqli option?\n" );
+		}
+
+		// Other than mysql_connect, mysqli_real_connect expects an explicit port
+		// and socket parameters. So we need to parse the port and socket out of
+		// $realServer
+		$port = null;
+		$socket = null;
+		$hostAndPort = IP::splitHostAndPort( $realServer );
+		if ( $hostAndPort ) {
+			$realServer = $hostAndPort[0];
+			if ( $hostAndPort[1] ) {
+				$port = $hostAndPort[1];
+			}
+		} elseif ( substr_count( $realServer, ':' ) == 1 ) {
+			// If we have a colon and something that's not a port number
+			// inside the hostname, assume it's the socket location
+			$hostAndSocket = explode( ':', $realServer );
+			$realServer = $hostAndSocket[0];
+			$socket = $hostAndSocket[1];
 		}
 
 		$connFlags = 0;
@@ -66,17 +92,22 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 		}
 
 		$mysqli = mysqli_init();
-		$numAttempts = 2;
+		if ( $wgDBmysql5 ) {
+			// Tell the server we're communicating with it in UTF-8.
+			// This may engage various charset conversions.
+			$mysqli->options( MYSQLI_SET_CHARSET_NAME, 'utf8' );
+		} else {
+			# <Wikia>
+			# Wikia databases use latin1 charset
+			# $mysqli->options( MYSQLI_SET_CHARSET_NAME, 'binary' );
+			# </Wikia>
+		}
+		$mysqli->options( MYSQLI_OPT_CONNECT_TIMEOUT, 3 );
 
-		for ( $i = 0; $i < $numAttempts; $i++ ) {
-			if ( $i > 1 ) {
-				usleep( 1000 );
-			}
-			if ( $mysqli->real_connect( $realServer, $this->mUser,
-				$this->mPassword, $this->mDBname, null, null, $connFlags ) )
-			{
-				return $mysqli;
-			}
+		if ( $mysqli->real_connect( $realServer, $this->mUser,
+			$this->mPassword, $this->mDBname, $port, $socket, $connFlags )
+		) {
+			return $mysqli;
 		}
 
 		return false;
@@ -205,7 +236,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	}
 
 	/**
-	 * @param mysqli_result $res
+	 * @param mysqli_result|ResultWrapper $res
 	 * @param int $row
 	 * @return bool
 	 */
@@ -218,13 +249,18 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return string
 	 */
 	protected function mysqlError( $conn = null ) {
-		if ($conn === null) {
+		if ( $conn === null ) {
 			return mysqli_connect_error();
 		} else {
 			return $conn->error;
 		}
 	}
 
+	/**
+	 * Escapes special characters in a string for use in an SQL statement
+	 * @param string $s
+	 * @return string
+	 */
 	protected function mysqlRealEscapeString( $s ) {
 		return $this->mConn->real_escape_string( $s );
 	}
@@ -233,4 +269,18 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 		return $this->mConn->ping();
 	}
 
+	/**
+	 * Give an id for the connection
+	 *
+	 * mysql driver used resource id, but mysqli objects cannot be cast to string.
+	 * @return string
+	 */
+	public function __toString() {
+		if ( $this->mConn instanceof Mysqli ) {
+			return (string)$this->mConn->thread_id;
+		} else {
+			// mConn might be false or something.
+			return (string)$this->mConn;
+		}
+	}
 }
