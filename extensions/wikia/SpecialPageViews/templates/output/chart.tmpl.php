@@ -1,6 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- MAIN-PAGE -->
-<div class="special-pageviews-info">
+<div class="special-pageviews-beta-info">
 	<strong><?= wfMessage( 'special-pageviews-beta-info' )->escaped() ?></strong>
 </div>
 <div class="sponsorship-dashboard-description">

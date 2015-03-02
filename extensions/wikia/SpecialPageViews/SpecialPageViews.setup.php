@@ -36,11 +36,6 @@ $wgGroupPermissions['helper']['pageviews'] = true;
 $wgExtensionMessagesFiles['SpecialPageViews'] = $dir . 'SpecialPageViews.i18n.php';
 
 $wgResourceModules['ext.SpecialPageViews'] = [
-	'localBasePath' => __DIR__ . '/modules',
-	'remoteExtPath' => 'wikia/SpecialPageViews/modules',
-	'scripts' => 'SpecialPageViews.js',
-	'styles' => 'SpecialPageViews.scss',
-	'dependencies' => [
-		'jquery.ui.datepicker',
-	]
+	'scripts' => '/extensions/wikia/SpecialPageViews/modules/SpecialPageViews.js',
+	'styles' => '/extensions/wikia/SpecialPageViews/modules/SpecialPageViews.scss'
 ];
