@@ -1,22 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.directGptMaps', [
-	'wikia.log',
-	'wikia.document',
-	'ext.wikia.adEngine.wikiaGptHelper'
-], function (log, document, wikiaGpt) {
+	'ext.wikia.adEngine.provider.factory.wikiaGpt'
+], function (factory) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.directGptMobile';
-
-	function fillInSlot(slotname, success, hop) {
-		log(['fillInSlot', slotname], 'debug', logGroup);
-
-		wikiaGpt.pushAd(slotname, success, hop, 'maps');
-		wikiaGpt.flushAds();
-	}
-
-	return {
-		name: 'DirectGptMaps',
-		fillInSlot: fillInSlot
-	};
+	return factory.createProvider(
+		'ext.wikia.adEngine.provider.directGptMaps',
+		'DirectGptMaps',
+		'maps',
+		{
+			'MAPS_BUTTON': {size: '320x50,1x1'}
+		}
+	);
 });

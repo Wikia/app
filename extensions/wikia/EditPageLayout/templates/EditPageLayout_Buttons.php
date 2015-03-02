@@ -14,22 +14,28 @@
 			<?php break ?>
 		<?php case 'preview': ?>
 			<?php
-			$dropdown = array(array(
+			$diff = [[
 				"id" => "wpDiff",
 				"accesskey" => wfMessage('accesskey-diff')->escaped(),
 				"text" => wfMessage('showdiff')->escaped()
-			));
-			?>
-			<?= $app->renderView( 'MenuButton', 'Index', array(
-				'action' => array(
-					'href' => '#',
-					'text' => wfMessage( 'preview' )->escaped(),
-					'id' => 'wpPreview',
-					'tabindex' => 23
-				),
-				'class' => 'secondary '.$buttonClasses,
-				'dropdown' => $dropdown
-			)) ?>
+			]];
+
+			if ( $showMobilePreview ): ?>
+				<a href="#" id="<?= $diff[0]['id'] ?>" class="diff-link" accesskey="<?= $diff[0]['accesskey'] ?>">
+					<?= $diff[0]['text'] ?>
+				</a>
+			<?php else: ?>
+				<?= $app->renderView( 'MenuButton', 'Index', [
+					'action' => [
+						'href' => '#',
+						'text' => wfMessage( 'preview' )->escaped(),
+						'id' => 'wpPreview',
+						'tabindex' => 23
+					],
+					'class' => 'secondary '.$buttonClasses,
+					'dropdown' => $diff
+				]) ?>
+			<?php endif ?>
 			<?php break ?>
 		<?php default: ?>
 			<input class="<?=$buttonClasses?>"<?= !empty($button['disabled']) ? ' disabled="disabled"' : '' ?> id="<?=$button['name']?>" name="<?=$button['name']?>" type="<?=$buttonType?>" value="<?=$button['caption']?>" />
