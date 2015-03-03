@@ -79,14 +79,10 @@
 		this.validationHandler(inputName, response);
 	};
 
-	UserSignupAjaxValidation.prototype.validationHandler = function (inputName, response) {
-		if (response.result === 'ok') {
-			this.wikiaForm.clearInputError(inputName);
-		} else {
-			this.wikiaForm.showInputError(inputName, response.msg);
-		}
-	};
-
+	/**
+	 * Handle birthday validation as a collection of inputs as opposed to one input.
+	 * @param {Event} e Browser event like select element blur
+	 */
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
 		var $el, inputName, data;
 
@@ -105,6 +101,19 @@
 
 		this.deferred = this.sendRequest(data)
 			.done(this.validationHandler.bind(this, inputName));
+	};
+
+	/**
+	 * Apply error and success handling via WikiaForm instance
+	 * @param {string} inputName Name of input to handle messaging
+	 * @param {object} response Data for error/success handling
+	 */
+	UserSignupAjaxValidation.prototype.validationHandler = function (inputName, response) {
+		if (response.result === 'ok') {
+			this.wikiaForm.clearInputError(inputName);
+		} else {
+			this.wikiaForm.showInputError(inputName, response.msg);
+		}
 	};
 
 	/**
