@@ -23,7 +23,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 # web. Change it if required ($wgScriptPath is the path to the base directory
 # of your wiki). No final slash.
 ##
-$smwgScriptPath = ( $wgExtensionAssetsPath === false ? $wgScriptPath . '/extensions' : $wgExtensionAssetsPath ) . '/SemanticMediaWiki';
+// Wikia change - move to within extensions/wikia while we're running two versions
+$smwgScriptPath = ( $wgExtensionAssetsPath === false ? $wgScriptPath . '/extensions/wikia' : $wgExtensionAssetsPath ) . '/SemanticMediaWiki';
 ##
 
 ###
