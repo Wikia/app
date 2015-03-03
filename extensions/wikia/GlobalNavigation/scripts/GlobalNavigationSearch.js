@@ -23,11 +23,11 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		}
 
 		//Disables search button until the user has entered at least one character.
-		$searchInput.keyup(function () {
+		$searchInput.keydown(function () {
 			if ($searchInput.val()) {
-				$searchSubmit.removeAttr('disabled');
+				$searchSubmit.prop('disabled', false);
 			} else {
-				$searchSubmit.attr('disabled', true);
+				$searchSubmit.prop('disabled', 'disabled');
 			}
 		})
 	}
