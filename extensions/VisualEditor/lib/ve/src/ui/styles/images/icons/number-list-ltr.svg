@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <g id="number-list-ltr">
+    <g id="number-list-ltr" style="opacity:0.75;">
         <path id="bottom_dot" d="M3 16v1h1.993l.03 1h-1.023v1h1v1h-2v1h2.023l.977-1.002v-1l-.955-.531.955-.5v-.969l-1.007-.998z"/>
         <path id="middle_dot" d="M3 9v1h2.117l-2.117 2.187v1.811l3-.062v-.936h-2.118l2.118-2.188v-1.032l-.668-.78z"/>
         <path id="top_dot" d="M4.993 2h-.648l-1.327 1.391.031.609h1.025l-.068 2h-1.006v1h3v-1h-1.037z"/>

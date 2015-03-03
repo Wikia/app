@@ -1441,7 +1441,7 @@ $wgResourceModules += array(
 		),
 		'targets' => array( 'desktop', 'mobile' ),
 	),
-
+	/*
 	'ext.visualEditor.icons' => $wgVisualEditorResourceTemplate + array(
 		'styles' => array(
 			'lib/ve/src/ui/styles/ve.ui.Icons.css',
@@ -1449,6 +1449,7 @@ $wgResourceModules += array(
 		),
 		'targets' => array( 'desktop', 'mobile' ),
 	),
+	*/
 );
 
 /* Extend MediaWiki configuration */

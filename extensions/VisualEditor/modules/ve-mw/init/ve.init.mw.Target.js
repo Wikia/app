@@ -53,7 +53,7 @@ ve.init.mw.Target = function VeInitMwTarget( pageName, revisionId ) {
 		'ext.visualEditor.mwreference',
 		'ext.visualEditor.mwtransclusion'
 	]
-		.concat( this.constructor.static.iconModuleStyles )
+		//.concat( this.constructor.static.iconModuleStyles )
 		.concat( conf.pluginModules || [] );
 
 	this.pluginCallbacks = [];
