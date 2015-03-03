@@ -9,7 +9,6 @@ class SpecialPageViewsOutput extends SponsorshipDashboardOutputChart {
 	}
 
 	protected function getTemplate() {
-		// TODO:  REFACTOR: Use Nirvana instead of EasyTemplate.
 		return new EasyTemplate( ( dirname( __FILE__ )."/templates/" ) );
 	}
 
@@ -20,9 +19,9 @@ class SpecialPageViewsOutput extends SponsorshipDashboardOutputChart {
 		$oOut = new StdClass;
 
 		$oOut->chartId      = 1;
-		$oOut->datasets     = isset( $aData['serie'] )     ? $aData['serie']     : array();
-		$oOut->ticks        = isset( $aData['ticks'] )     ? $aData['ticks']     : array();
-		$oOut->fullTicks    = isset( $aData['fullTicks'] ) ? $aData['fullTicks'] : array();
+		$oOut->datasets     = isset( $aData['serie'] )     ? $aData['serie']     : [];
+		$oOut->ticks        = isset( $aData['ticks'] )     ? $aData['ticks']     : [];
+		$oOut->fullTicks    = isset( $aData['fullTicks'] ) ? $aData['fullTicks'] : [];
 		$oOut->hiddenSeries = $this->hiddenSeries;
 		$oOut->monthly      = $this->report->frequency == SponsorshipDashboardDateProvider::SD_FREQUENCY_MONTH;
 

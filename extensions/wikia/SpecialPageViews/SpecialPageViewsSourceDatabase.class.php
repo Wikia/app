@@ -15,7 +15,7 @@ class SpecialPageViewsSourceDatabase extends SponsorshipDashboardSourceDatabase 
 	}
 
 	public function setupSource( $startDate, $endDate ) {
-		$this->serieName = wfMessage( 'special-pageviews-report-serie' )->escaped();
+		$this->serieName = wfMessage( 'special-pageviews-report-series' )->escaped();
 		$this->setDatabase( wfGetDB( DB_SLAVE, array(), F::app()->wg->DWStatsDB ) );
 
 		$this->setStartDate( $startDate->format( 'Y-m-d' ) );
@@ -31,7 +31,7 @@ class SpecialPageViewsSourceDatabase extends SponsorshipDashboardSourceDatabase 
 			->FROM( 'rollup_wiki_pageviews' )
 			->WHERE( 'period_id' )->EQUAL_TO( DataMartService::PERIOD_ID_DAILY )
 			->AND_( 'time_id' )->BETWEEN( $this->startDate, $this->endDate )
-			->AND_( 'wiki_id' )->EQUAL_TO( F::app()->wg->CityId )
+			->AND_( 'wiki_id' )->EQUAL_TO( $this->App->wg->CityId )
 			->runLoop( $dbr, function( &$aDataContainer, $oRow ) {
 				$oDateTime = new DateTime( $oRow->time_id );
 				$sDate = $oDateTime->format( 'Y-m-d' );
