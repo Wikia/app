@@ -50,15 +50,6 @@
 	 */
 	isProductionEnv = (window.wgTransactionContext.env === 'prod');
 
-    // Setting up the cross domain autolink
-    // [@see: https://developers.google.com/analytics/devguides/collection/analyticsjs/cross-domain#autolink]
-    window.ga('require', 'linker');
-    window.ga('linker:autoLink', [
-        'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
-        'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
-        'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
-    ]);
-
 	cookieExists = function (cookieName) {
 		return document.cookie.indexOf(cookieName) > -1;
 	};
@@ -121,6 +112,17 @@
         );
 	}
 
+    // Setting up the cross domain autolink
+    // [@see: https://developers.google.com/analytics/devguides/collection/analyticsjs/cross-domain#autolink]
+    _gaWikiaPush(
+        ['require', 'linker'],
+        ['linker:autoLink', [
+            'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
+            'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
+            'websitewiki.de', 'wowwiki.com', 'yoyowiki.org']
+        ]
+    );
+
 	/**
 	 * Wrapper function to a generic ga() function call.
 	 *
@@ -145,8 +147,7 @@
                 window.ga(args[i]);
 				continue;
 			}
-
-			window.ga(args[i]);
+			window.ga.apply(window, args[i]);
 
 			// Push to specific namespaces if method not already namespaced
 			if (args[i][0].indexOf('.') === -1) {
@@ -154,14 +155,14 @@
 					spec = args[i].slice();
 					// Send to Special Wikis Account
 					spec[0] = 'special.' + spec[0];
-                    window.ga(spec);
+                    window.ga.apply(window, spec);
 				}
 
 				// If category is editor-ve, track for VE account
 				if (args[i][1] && args[i][1] === 'editor-ve') {
 					spec = args[i].slice();
 					spec[0] = 've.' + spec[0];
-                    window.ga(spec);
+                    window.ga.apply(window, spec);
 				}
 			}
 		}
@@ -316,6 +317,9 @@
         );
     }
 
+    window.ga('ads.require', 'linker');
+    window.ga('ads.linker:autoLink', [document.location.hostname]);
+
 	/* Ads Account Custom Dimensions */
     window.ga('ads.set', 'dimension1', window.wgDBname);                                // DBname
     window.ga('ads.set', 'dimension2', window.wgContentLanguage);                       // ContentLanguage
@@ -336,7 +340,7 @@
 	/**** Include A/B testing status ****/
 	if (window.Wikia && window.Wikia.AbTest) {
 		if (abCustomVarsForAds.length) {
-            window.ga(abCustomVarsForAds);
+            window.ga.apply(window, abCustomVarsForAds);
 		}
 	}
 
@@ -362,7 +366,7 @@
 			args = Array.prototype.slice.call(arguments);
 			args.unshift('ads.send');
 			try {
-                window.ga(args);
+                window.ga.apply(window, args);
 			} catch (e) {}
 		}
 	};
