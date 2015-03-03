@@ -9,7 +9,7 @@ ve.ui.sequenceRegistry.register(
 	new ve.ui.Sequence( 'wikitextLink', 'link', '[[', 2 )
 );
 ve.ui.sequenceRegistry.register(
-	new ve.ui.Sequence( 'wikitextTemplate', 'transclusion', '{{', 2 )
+	new ve.ui.Sequence( 'wikitextTemplate', 'wikiaTemplateInsert', '{{', 2 )
 );
 ve.ui.sequenceRegistry.register(
 	new ve.ui.Sequence( 'wikitextItalic', 'mwWikitextWarning', '\'\'' )
