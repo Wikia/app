@@ -8,26 +8,25 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 	function __construct() {
 		parent::__construct( self::SPECIALPAGE_NAME );
-		$this->wg->Out->addModules( 'ext.SpecialPageViews' );
+		$this->getOutput()->addModules( 'ext.SpecialPageViews' );
 	}
 
 	public function execute() {
 		wfProfileIn( __METHOD__ );
-		$this->wg->Out->setPageTitle( wfMessage( 'admindashboard-title' )->escaped() );
+		$this->setHeaders();
 
-		if ( !$this->wg->User->isAllowed( 'pageviews' ) ) {
+		if ( !$this->getUser()->isAllowed( 'pageviews' ) ) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
 
-		$this->setHeaders();
 		$this->setInitialDates();
 
-		$oOutput = ( new SpecialPageViewsOutput );
+		$oOutput = new SpecialPageViewsOutput;
 		$oOutput->set( $this->getReport() );
 		$this->setJsVars( $oOutput );
 		$sReturnChart = $oOutput->getHTML();
-		$this->wg->Out->addHTML( $sReturnChart );
+		$this->getOutput()->addHTML( $sReturnChart );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -44,27 +43,27 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 			$this->setInitialDates();
 		}
 
-		$oOutput = ( new SpecialPageViewsOutput );
+		$oOutput = new SpecialPageViewsOutput;
 		$oOutput->set( $this->getReport( $this->startDate, $this->endDate ) );
 
 		$mOut = $oOutput->getRaw();
-		$this->setVal('chartId', $mOut->chartId );
-		$this->setVal('datasets', $mOut->datasets );
-		$this->setVal('fullTicks', $mOut->fullTicks );
-		$this->setVal('hiddenSeries', $mOut->hiddenSeries );
-		$this->setVal('monthly', $mOut->monthly );
-		$this->setVal('ticks', $mOut->ticks );
+		$this->setVal( 'chartId', $mOut->chartId );
+		$this->setVal( 'datasets', $mOut->datasets );
+		$this->setVal( 'fullTicks', $mOut->fullTicks );
+		$this->setVal( 'hiddenSeries', $mOut->hiddenSeries );
+		$this->setVal( 'monthly', $mOut->monthly );
+		$this->setVal( 'ticks', $mOut->ticks );
 	}
 
 	public function setHeaders() {
-		$oOut = $this->wg->Out;
+		$oOut = $this->getOutput();
 		$oOut->setRobotPolicy( 'noindex,nofollow' );
 		$oOut->setPageTitle( wfMessage( 'special-pageviews-title' )->escaped() );
 	}
 
 	private function getReport() {
-		$oReport = ( new SponsorshipDashboardReport );
-		$oReport->name = wfMsg( 'special-pageviews-report-title' );
+		$oReport = new SponsorshipDashboardReport;
+		$oReport->name = $this->msg( 'special-pageviews-report-title' )->escaped();
 		$oReport->frequency = SponsorshipDashboardDateProvider::SD_FREQUENCY_DAY;
 		$oReport->tmpSource = $this->getSource();
 		$oReport->setLastDateUnits( $this->startDate->diff( $this->endDate )->days );
@@ -84,7 +83,7 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 			'monthly' => $oRaw->monthly,
 			'ticks' => $oRaw->ticks,
 		];
-		$this->wg->Out->addJsConfigVars( 'SDParams', json_encode( $aParams ) );
+		$this->getOutput()->addJsConfigVars( 'SDParams', json_encode( $aParams ) );
 	}
 
 	private function getSource() {
