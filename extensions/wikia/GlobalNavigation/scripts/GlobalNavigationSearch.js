@@ -21,15 +21,6 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		} else {
 			setPropertiesOnInput(true);
 		}
-
-		//Disables search button until the user has entered at least one character.
-		$searchInput.keydown(function () {
-			if ($searchInput.val()) {
-				$searchSubmit.prop('disabled', false);
-			} else {
-				$searchSubmit.prop('disabled', 'disabled');
-			}
-		})
 	}
 
 	/**
@@ -50,7 +41,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	$(function () {
 		var $globalNav = $('#globalNavigation');
 
-		//Disables search button until the user has entered at least one character.
+		//Checks whether the searchInput is empty and prevents any action if true
 		$searchForm.submit(function (e) {
 			if (!$searchInput.val()) {
 				e.preventDefault();
