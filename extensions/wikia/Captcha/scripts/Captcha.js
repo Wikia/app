@@ -7,7 +7,8 @@ $(function () {
 	 */
 	var Captcha = {
 		/**
-		 * WikiaMobile, Wikia One, and some automated tests do not use captcha
+		 * WikiaMobile, Wikia One, and some automated tests do not use captcha. This is specific to the
+		 * user signup extension.
 		 */
 		useCaptcha: !window.wgUserSignupDisableCaptcha,
 
@@ -27,8 +28,9 @@ $(function () {
 		},
 
 		/**
-		 * Captcha is required for signup, so if it fails to load (possibly b/c google is blocked in China)
-		 * inform the user with a modal. Note, this is different from when a user fails the captcha test itself.
+		 * If the user is performing an action where captcha is required (eg registerinn, including an external link
+		 * when editing as anon, etc) and it fails to load (possibly b/c google is blocked in China), fall back
+		 * to Fancy Captcha. Note, this is different from when a user fails the captcha test itself.
 		 */
 		handleCaptchaLoadError: function () {
 			this.loadAndInsertFancyCaptcha();
@@ -36,14 +38,20 @@ $(function () {
 		},
 
 		loadAndInsertFancyCaptcha: function () {
-			$.nirvana.sendRequest({
-				controller: 'CaptchaController',
-				method: 'getFancyCaptcha',
-				type: 'GET',
-				callback: function (data) {
-					this.insertFancyCaptcha(data);
-				}.bind(this)
-			});
+			$.when(
+				$.getResources([
+					$.getSassCommonURL('extensions/wikia/Captcha/styles/FancyCaptcha.scss')
+				])
+			).done(
+				$.nirvana.sendRequest({
+					controller: 'CaptchaController',
+					method: 'getFancyCaptcha',
+					type: 'GET',
+					callback: function (data) {
+						this.insertFancyCaptcha(data);
+					}.bind(this)
+				})
+			);
 		},
 
 		insertFancyCaptcha: function (data) {
@@ -53,7 +61,7 @@ $(function () {
 		trackFailedReCaptcha: function () {
 			Wikia.Tracker.track({
 				action: Wikia.Tracker.ACTIONS.ERROR,
-				category: 'user-sign-up',
+				category: 'captcha',
 				label: 'captcha-load-fail',
 				trackingMethod: 'both',
 				country: Wikia.geo.getCountryCode()

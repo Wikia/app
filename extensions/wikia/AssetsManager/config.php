@@ -2300,3 +2300,11 @@ $config['captcha_js'] = [
 		'//extensions/wikia/Captcha/scripts/Captcha.js',
 	]
 ];
+
+$config['fancycaptcha_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Captcha/styles/FancyCaptcha.scss',
+	]
+];

@@ -617,14 +617,20 @@ ve.init.mw.ViewPageTarget.prototype.renderReCaptcha = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.loadAndRenderFancyCaptcha = function () {
-	$.nirvana.sendRequest({
-		controller: 'CaptchaController',
-		method: 'getFancyCaptcha',
-		type: 'GET',
-		callback: function (data) {
-			this.saveDialog.$captcha.append(data.form);
-		}.bind(this)
-	});
+	$.when(
+		$.getResources([
+			$.getSassCommonURL('extensions/wikia/Captcha/styles/FancyCaptcha.scss')
+		])
+	).done(
+		$.nirvana.sendRequest({
+			controller: 'CaptchaController',
+			method: 'getFancyCaptcha',
+			type: 'GET',
+			callback: function ( data ) {
+				this.saveDialog.$captcha.append( data.form );
+			}.bind( this )
+		})
+	);
 };
 
 /**
@@ -970,9 +976,9 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
 		'g-recaptcha-response': this.captchaResponse, // reCaptcha
-		'wpCaptchaClass': this.saveDialog.$('#wpCaptchaClass').val(), // FancyCaptcha (fallback if reCaptcha fails to load)
-		'wpCaptchaId': this.saveDialog.$('#wpCaptchaId').val(), // FancyCaptcha (fallback if reCaptcha fails to load)
-		'wpCaptchaWord': this.saveDialog.$('#wpCaptchaWord').val() // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaClass': this.saveDialog.$( '#wpCaptchaClass' ).val(), // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaId': this.saveDialog.$( '#wpCaptchaId' ).val(), // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaWord': this.saveDialog.$( '#wpCaptchaWord' ).val() // FancyCaptcha (fallback if reCaptcha fails to load)
 	} );
 	return fields;
 };

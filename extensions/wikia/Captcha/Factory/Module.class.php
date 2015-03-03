@@ -27,12 +27,13 @@ class Module {
 			self::$instance = new $captchaClass();
 		}
 
+		self::addCaptchaJS();
 		return self::$instance;
 	}
 
 	/**
 	 * Make sure the Captcha class we are about to instantiate is what we expect. Either the default or fallback
-	 * version. This is especially important since 'wpwpCaptchaClass' is passed in by the client.
+	 * version. This is especially important since 'wpCaptchaClass' is passed in by the client.
 	 *
 	 * @param $captchaClass
 	 * @throws \Exception
@@ -41,5 +42,9 @@ class Module {
 		if ( $captchaClass != self::DEFAULT_CAPTCHA && $captchaClass != self::FALLBACK_CAPTCHA ) {
 			throw new \Exception( "Invalid Captcha class: " . $captchaClass );
 		}
+	}
+
+	public static function addCaptchaJS() {
+		\Wikia::addAssetsToOutput( 'captcha_js' );
 	}
 }

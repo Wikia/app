@@ -90,28 +90,13 @@ class FancyCaptcha extends BaseCaptcha {
 
 		$this->log( "Captcha id $index using hash ${info['hash']}, salt ${info['salt']}.\n" );
 
-		return "<p>" .
+		return "<div class='fancy-captcha'>" .
 			\Xml::element( 'img', [
 				'src'    => $this->getImageURL( $index ),
 				'width'  => $info['width'],
 				'height' => $info['height'],
 				'alt'    => '',
 			] ) .
-			"</p>\n" .
-			\Xml::element( 'input', [
-				'type'  => 'hidden',
-				'name'  => 'wpCaptchaId',
-				'id'    => 'wpCaptchaId',
-				'value' => $index,
-			] ) .
-			"<p>" .
-			\Xml::element( 'input', [
-				'type'  => 'hidden',
-				'name'  => 'wpCaptchaClass',
-				'id'    => 'wpCaptchaClass',
-				'value'    => '\Captcha\Module\FancyCaptcha',
-			] ) .
-			"<p>" .
 			\Html::element( 'input', [
 				'name' => 'wpCaptchaWord',
 				'id'   => 'wpCaptchaWord',
@@ -121,7 +106,19 @@ class FancyCaptcha extends BaseCaptcha {
 				'class' => $class,
 				'placeholder' => wfMessage( 'captcha-input-placeholder' )->escaped(),
 			] ) .
-			"</p>\n";
+			\Xml::element( 'input', [
+				'type'  => 'hidden',
+				'name'  => 'wpCaptchaId',
+				'id'    => 'wpCaptchaId',
+				'value' => $index,
+			] ) .
+			\Xml::element( 'input', [
+				'type'  => 'hidden',
+				'name'  => 'wpCaptchaClass',
+				'id'    => 'wpCaptchaClass',
+				'value'    => '\Captcha\Module\FancyCaptcha',
+			] ) .
+			"</div>\n";
 	}
 
 	/**
