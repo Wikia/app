@@ -25,48 +25,6 @@ define('ext.wikia.adEngine.lookupServices', [
 		amazonLookupTracked = false,
 		amazonOldLookupTracked = false;
 
-	// Copied from AdLogicPageParams
-	function extend(target, obj) {
-		var key;
-
-		for (key in obj) {
-			if (obj.hasOwnProperty(key)) {
-				target[key] = obj[key];
-			}
-		}
-
-		return target;
-	}
-
-	// Copied from AdLogicPageParams
-	// No longer needed when AmazonOld is removed
-	function decodeLegacyDartParams(dartString) {
-		var params = {},
-			kvs,
-			kv,
-			key,
-			value,
-			i,
-			len;
-
-		log(['decodeLegacyDartParams', dartString], 9, logGroup);
-
-		if (typeof dartString === 'string') {
-			kvs = dartString.split(';');
-			for (i = 0, len = kvs.length; i < len; i += 1) {
-				kv = kvs[i].split('=');
-				key = kv[0];
-				value = kv[1];
-				if (key && value) {
-					params[key] = params[key] || [];
-					params[key].push(value);
-				}
-			}
-		}
-
-		return params;
-	}
-
 	function trackState(module) {
 		if (module && module.wasCalled()) {
 			module.trackState();
@@ -107,15 +65,49 @@ define('ext.wikia.adEngine.lookupServices', [
 		}
 	}
 
+	// Copied from AdLogicPageParams
+	// No longer needed when AmazonOld is removed
+	function decodeLegacyDartParams(dartString) {
+		var params = {},
+			kvs,
+			kv,
+			key,
+			value,
+			i,
+			len;
+
+		log(['decodeLegacyDartParams', dartString], 'debug', logGroup);
+
+		if (typeof dartString === 'string') {
+			kvs = dartString.split(';');
+			for (i = 0, len = kvs.length; i < len; i += 1) {
+				kv = kvs[i].split('=');
+				key = kv[0];
+				value = kv[1];
+				if (key && value) {
+					params[key] = params[key] || [];
+					params[key].push(value);
+				}
+			}
+		}
+
+		return params;
+	}
+
 	// No longer needed when AmazonOld is removed
 	function extendPageTargeting(pageTargeting) {
+		var amazonParams;
+
 		if (!amazonOldLookupTracked) {
 			amazonOldLookupTracked  = true;
 			trackState(amazonMatchOld);
 		}
 
 		if (amazonMatchOld && amazonMatchOld.wasCalled()) {
-			extend(pageTargeting, decodeLegacyDartParams(win.amzn_targs));
+			amazonParams = decodeLegacyDartParams(win.amzn_targs);
+			Object.keys(amazonParams).forEach(function (key) {
+				pageTargeting[key] = amazonParams[key];
+			});
 		}
 	}
 
