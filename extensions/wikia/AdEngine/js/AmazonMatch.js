@@ -55,7 +55,7 @@ define('ext.wikia.adEngine.amazonMatch', [
 			amazonResponse = response.ads;
 		}
 
-		if (amazonResponse) {
+		if (amazonResponse && Object.keys) {
 			var targetingParams = Object.keys(amazonResponse);
 			Object.keys(slotMapping).forEach(function (slotNamePattern) {
 				var i, len, points = [], m, param, amazonSize = slotMapping[slotNamePattern];
