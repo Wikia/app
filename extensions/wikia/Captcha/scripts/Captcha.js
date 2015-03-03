@@ -2,7 +2,7 @@ $(function () {
 	'use strict';
 
 	/**
-	 * JS for handling captchas We default to using reCaptcha, however if we encounter any problems, will
+	 * JS for handling captchas. We default to using reCaptcha, however if we encounter any problems, will
 	 * fall back to using Fancy Captcha instead.
 	 */
 	var Captcha = {
