@@ -11,13 +11,7 @@
  * NOTE: this module does not escape content of the notifications by itself
  * it should be used only with content that is considered safe (escaped)
  */
-require([
-	'jquery',
-	'wikia.window',
-	'wikia.onScroll',
-	'BannerNotifications.templates.mustache',
-	'wikia.mustache'
-], function ($, window, onScroll, templates, mustache) {
+(function (window, $, mustache) {
 	'use strict';
 
 	var defaultTimeout = 10000,
@@ -32,7 +26,8 @@ require([
 		$pageContainer,
 		headerHeight,
 		modal,
-		backendNotification;
+		backendNotification,
+		template = '<div class="banner-notification"><button class="close wikia-chiclet-button"><img></button><div class="msg">{{{content}}}</div></div>';
 
 	/**
 	 * Creates a new banner notifications instance (doesn't show it yet though!)
@@ -175,7 +170,9 @@ require([
 		} else {
 			$pageContainer = $('.WikiaPageContentWrapper');
 			headerHeight = $('#globalNavigation').height();
-			onScroll.bind(handleScrolling);
+			require(['wikia.onScroll'], function (onScroll) {
+				onScroll.bind(handleScrolling);
+			});
 		}
 		createBackendNotification();
 	}
@@ -222,7 +219,7 @@ require([
 	 */
 	function createMarkup(content, type) {
 		return $(
-			mustache.render(templates.BannerNotifications, {
+			mustache.render(template, {
 				imageSource: closeImageSource,
 				content: content
 			})
@@ -310,4 +307,5 @@ require([
 	define('BannerNotification', function () {
 		return BannerNotification;
 	});
-});
+
+})(window, $, window.Mustache);
