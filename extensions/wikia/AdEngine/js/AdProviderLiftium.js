@@ -3,11 +3,10 @@
 define('ext.wikia.adEngine.provider.liftium', [
 	'wikia.document',
 	'wikia.log',
-	'wikia.scriptwriter',
 	'wikia.window',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('wikia.instantGlobals')
-], function (doc, log, scriptWriter, win, slotTweaker, instantGlobals) {
+], function (doc, log, win, slotTweaker, instantGlobals) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.liftium',
@@ -22,8 +21,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 		'HOME_TOP_LEADERBOARD': {'size': '728x90'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'INCONTENT_BOXAD_1': {'size': '300x250'},
-		'INVISIBLE_1': {'size': '0x0', 'useGw': true},
-		'INVISIBLE_2': {'size': '0x0', 'useGw': true},
 		'LEFT_SKYSCRAPER_2': {'size': '160x600'},
 		'LEFT_SKYSCRAPER_3': {'size': '160x600'},
 		'TEST_TOP_RIGHT_BOXAD': {'size': '300x250'},
@@ -82,17 +79,10 @@ define('ext.wikia.adEngine.provider.liftium', [
 		}
 
 		var slotsize = slotMap[slotname].size,
-			useGw = slotMap[slotname].useGw,
 			adDiv = doc.createElement('div'),
 			adIframe = doc.createElement('iframe'),
-			s = slotsize && slotsize.split('x'),
-			script;
+			s = slotsize && slotsize.split('x');
 
-		if (useGw) {
-			log('using ghostwriter for #' + slotname, 'debug', logGroup);
-			script = 'Liftium.callAd(' + JSON.stringify(slotsize) + ', ' + JSON.stringify(slotname) + ');';
-			scriptWriter.injectScriptByText(slotname, script);
-		} else {
 			log('using iframe for #' + slotname, 'debug', logGroup);
 			// TODO: move the following to Liftium.js and refactor
 			adNum += 1;
@@ -114,7 +104,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 			Liftium.callInjectedIframeAd(slotsize, doc.getElementById(slotname + '_iframe'), slotname);
 
 			slotTweaker.removeDefaultHeight(slotname);
-		}
 
 		// Fake success, because we don't have the success event in Liftium
 		success();

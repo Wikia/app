@@ -65,7 +65,7 @@ class UserTest extends \WikiaBaseTest {
 
 		$oUser = new \StdClass;
 
-		$oClientMock = $this->getMock( 'Client', [ 'info' ], [], '', false );
+		$oClientMock = $this->getMock( 'Wikia\Helios\Client', [ 'info' ], [], '', false );
 		$oClientMock->expects( $this->once() )
 			->method( 'info' )
 			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
@@ -81,11 +81,10 @@ class UserTest extends \WikiaBaseTest {
 		$sUserName = 'SomeName';
 		$sPassword = 'Password';
 
-
-		$oClient = $this->getMock( 'Client', [ 'login' ], [], '', false );
+		$oClient = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
 		$oClient->expects( $this->once() )
 			->method( 'login' )
-			->with( 'SomeName', 'Password' )
+			->with( $sUserName, $sPassword )
 			->willReturn( new \StdClass );
 		$this->mockClass( 'Wikia\Helios\Client', $oClient );
 
@@ -97,10 +96,10 @@ class UserTest extends \WikiaBaseTest {
 		$sUserName = 'SomeName';
 		$sPassword = 'Password';
 
-		$oClient = $this->getMock( 'Client', [ 'login' ], [], '', false );
+		$oClient = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
 		$oClient->expects( $this->once() )
 			->method( 'login' )
-			->with( 'SomeName', 'Password' )
+			->with( $sUserName, $sPassword )
 			->will( $this->throwException( new ClientException ) );
 		$this->mockClass( 'Wikia\Helios\Client', $oClient );
 
@@ -115,10 +114,10 @@ class UserTest extends \WikiaBaseTest {
 		$oLogin = new \StdClass;
 		$oLogin->access_token = 'orvb9pM6wX';
 
-		$oClient = $this->getMock( 'Client', [ 'login' ], [], '', false );
+		$oClient = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
 		$oClient->expects( $this->once() )
 			->method( 'login' )
-			->with( 'SomeName', 'Password' )
+			->with( $sUserName, $sPassword )
 			->willReturn( $oLogin );
 		$this->mockClass( 'Wikia\Helios\Client', $oClient );
 

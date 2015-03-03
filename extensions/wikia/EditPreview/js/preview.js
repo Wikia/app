@@ -47,7 +47,14 @@ define('wikia.preview', [
 	function renderDialog(title, options, callback) {
 		options = $.extend({
 			callback: function () {
-				var contentNode = $('#EditPageDialog').find('.ArticlePreviewInner');
+				var contentNode = $('#EditPageDialog').find('.ArticlePreviewInner'),
+					modalHeight = options.height,
+					modalHeightModifier = 0;
+
+				if (!modalHeight) {
+					modalHeightModifier = -250 -($('#EditPageDialog').find('.preview-modal-msg').outerHeight() || 0);
+					modalHeight = $(window).height() + modalHeightModifier;
+				}
 
 				// block all clicks
 				contentNode.bind('click', function (ev) {
@@ -56,7 +63,7 @@ define('wikia.preview', [
 					//links to other pages should be open in new windows
 					target.closest('a').not('[href^="#"]').attr('target', '_blank');
 				}).closest('.ArticlePreview').css({
-					'height': options.height || ($(window).height() - 250),
+					'height': modalHeight,
 					'overflow': 'auto',
 					'overflow-x': 'hidden'
 				});
@@ -74,7 +81,23 @@ define('wikia.preview', [
 			window.stylepath +
 			'/common/images/ajax.gif" class="loading"></div></div>';
 
-		$.showCustomModal(title, content, options);
+		loader({
+			type: loader.MULTI,
+			resources: {
+				mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
+			}
+		}).done(function (response) {
+			var params = {
+					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
+					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
+					bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+				},
+				template = response.mustache[0],
+				html = mustache.render(template, params);
+
+			content = html+content;
+			$.showCustomModal(title, content, options);
+		});
 	}
 
 	/**
@@ -230,25 +253,25 @@ define('wikia.preview', [
 			params = {
 				options: [{
 					value: previewTypes.current.name,
-					name: msg('wikia-editor-preview-current-width')
+					name: $.htmlentities(msg('wikia-editor-preview-current-width'))
 				}, {
 					value: previewTypes.min.name,
-					name: msg('wikia-editor-preview-min-width')
+					name: $.htmlentities(msg('wikia-editor-preview-min-width'))
 				}, {
 					value: previewTypes.max.name,
-					name: msg('wikia-editor-preview-max-width')
+					name: $.htmlentities(msg('wikia-editor-preview-max-width'))
 				}, {
 					value: previewTypes.mobile.name,
-					name: msg('wikia-editor-preview-mobile-width')
+					name: $.htmlentities(msg('wikia-editor-preview-mobile-width'))
 				}],
-				toolTipMessage: msg('wikia-editor-preview-type-tooltip')
+				toolTipMessage: $.htmlentities(msg('wikia-editor-preview-type-tooltip'))
 			},
 			html;
 
 		if (window.wgEnableVenusArticle) {
 			params.options.push({
 				value: previewTypes.venus.name,
-				name: msg('wikia-editor-preview-venus-width')
+				name: $.htmlentities(msg('wikia-editor-preview-venus-width'))
 			});
 		}
 
@@ -293,11 +316,14 @@ define('wikia.preview', [
 		isRailDropped = !!options.isRailDropped;
 		isWidePage = !!options.isWidePage;
 		getPreviewTypes(isWidePage);
+		if (typeof options.currentTypeName !== 'undefined') {
+			currentTypeName = options.currentTypeName;
+		}
 
 		var dialogOptions = {
 			buttons: [{
 				id: 'close',
-				message: msg('back'),
+				message: $.htmlentities(msg('back')),
 				handler: function () {
 					$('#EditPageDialog').closeModal();
 					$(window).trigger('EditPagePreviewClosed');
@@ -305,7 +331,7 @@ define('wikia.preview', [
 			}, {
 				id: 'publish',
 				defaultButton: true,
-				message: msg('savearticle'),
+				message: $.htmlentities(msg('savearticle')),
 				handler: options.onPublishButton
 			}],
 			// set modal width based on screen size
@@ -321,7 +347,7 @@ define('wikia.preview', [
 		// allow extension to modify the preview dialog
 		$(window).trigger('EditPageRenderPreview', [dialogOptions]);
 
-		renderDialog(msg('preview'), dialogOptions, function (contentNode) {
+		renderDialog($.htmlentities(msg('preview')), dialogOptions, function (contentNode) {
 			// cache selector for other functions in this module
 			$article = contentNode;
 

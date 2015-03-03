@@ -250,8 +250,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 		return !!(
 			slotsOnlyOnLongPages[slotname] ||
-				slotsToHideOnMediaQuery[slotname] ||
-				slotsOnlyWithRail[slotname]
+			slotsToHideOnMediaQuery[slotname] ||
+			slotsOnlyWithRail[slotname]
 		);
 	}
 

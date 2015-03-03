@@ -238,10 +238,14 @@ class AsyncTaskList {
 
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = gethostname();
+			$executionMethod = 'http';
 
 			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host, $matches ) ) {
-				$executionMethod = 'http';
 				$executionRunner = ["http://tasks.{$matches[1]}.wikia-dev.com/proxy.php"];
+			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
+				$executionRunner = ["http://{$host}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
+			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
+				$executionRunner = ["http://{$wgWikiaEnvironment}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} else { // in other environments or when apache isn't available, ssh into this exact node to execute
 				$executionMethod = 'remote_shell';
 				$executionRunner = [

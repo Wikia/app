@@ -187,11 +187,6 @@
 	}
 }
 
-/** Invisible ads **/
-#INVISIBLE_1, #INVISIBLE_2 {
-	position: absolute;
-}
-
 /** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
 body >a >img[src$="noad.gif"] {
 	position: absolute;

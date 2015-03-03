@@ -50,18 +50,11 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.usePostScribe = true;
 		}
 
-		// Always call DART in specific countries
+		// Always call DART
 		// TODO: make mobile code compatible with desktop (currently one uses opts and the other providers)
-		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
-			alwaysCallDartInCountriesMobile = instantGlobals.wgAdDriverAlwaysCallDartInCountriesMobile || [];
-
-		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
-			context.opts.alwaysCallDart = true;
-		}
-
-		if (alwaysCallDartInCountriesMobile.indexOf(geo.getCountryCode()) > -1) {
-			context.providers.remnantGptMobile = true;
-		}
+		// TODO: clean up in ADEN-1785
+		context.opts.alwaysCallDart = true;
+		context.providers.remnantGptMobile = true;
 
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {

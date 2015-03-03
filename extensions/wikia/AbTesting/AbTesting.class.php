@@ -152,11 +152,16 @@ class AbTesting extends WikiaObject {
 	}
 
 	protected function getConfig() {
-		return $this->generateConfigObj();
+		$data = $this->wg->memc->get($this->getMemcKey());
+		if ( empty($data) ) {
+			$data = $this->generateConfigObj();
+		}
+		return $data;
 	}
 
-	protected function generateConfigObj() {
+	protected function generateConfigObj( $useMaster = false ) {
 		$dataClass = new AbTestingData();
+		$dataClass->setUseMaster($useMaster);
 		$memcKey = $this->getMemcKey();
 		// find last modification time
 		$lastModified = $dataClass->getLastEffectiveChangeTime(self::VARNISH_CACHE_TIME);
@@ -202,8 +207,7 @@ class AbTesting extends WikiaObject {
 	}
 
 	public function invalidateCache() {
-		//$this->wg->memc->delete($this->getMemcKey());
-		$this->generateConfigObj();
+		$this->generateConfigObj( /* useMaster */ true );
 	}
 
 	/**

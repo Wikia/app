@@ -12,22 +12,18 @@ class ClientTest extends \WikiaBaseTest {
 
 	public function testCannotMakeRequests()
 	{
+		$this->setExpectedException('Wikia\Util\AssertionException');
+
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', false );
 
-		try {
-			$oClient = new Client( 'http://example.com', 'id', 'secret' );
-			$oClient->request( 'resource', [], [], [] );
-		}
-
-		catch ( \Wikia\Util\AssertionException $e ) {
-			return;
-		}
-
-		$this->fail( 'An expected exception has not been raised.' );
+		$oClient = new Client( 'http://example.com', 'id', 'secret' );
+		$oClient->request( 'resource', [], [], [] );
 	}
 
 	public function testRequestFailed()
 	{
+		$this->setExpectedException('Wikia\Helios\ClientException','Request failed.');
+
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 
 		$oStatusMock = $this->getMock( '\Status', [ 'isGood' ], [], '', true );
@@ -42,23 +38,14 @@ class ClientTest extends \WikiaBaseTest {
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'factory', $oRequestMock );
 
-		try {
-			$oClient = new Client( 'http://example.com', 'id', 'secret' );
-			$oClient->request( 'resource', [], [], [] );
-		}
-
-		catch ( \Wikia\Helios\ClientException $e ) {
-			if ( $e->getMessage() == 'Request failed.' ) {
-				return;
-			}
-			$this->fail( "Wrong exception message. Expected: 'Request failed., actual: '{$e->getMessage()}'." );
-		}
-
-		$this->fail( 'An expected exception has not been raised.' );
+		$oClient = new Client( 'http://example.com', 'id', 'secret' );
+		$oClient->request( 'resource', [], [], [] );
 	}
 
 	public function testInvalidResponse()
 	{
+		$this->setExpectedException('Wikia\Helios\ClientException','Invalid response.');
+
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 
 		$oStatusMock = $this->getMock( '\Status', [ 'isGood' ], [], '', true );
@@ -76,19 +63,8 @@ class ClientTest extends \WikiaBaseTest {
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'factory', $oRequestMock );
 
-		try {
-			$oClient = new Client( 'http://example.com', 'id', 'secret' );
-			$oClient->request( 'resource', [], [], [] );
-		}
-
-		catch ( \Wikia\Helios\ClientException $e ) {
-			if ( $e->getMessage() == 'Invalid response.' ) {
-				return;
-			}
-			$this->fail( "Wrong exception message. Expected: 'Invalid response., actual: '{$e->getMessage()}'." );
-		}
-
-		$this->fail( 'An expected exception has not been raised.' );
+		$oClient = new Client( 'http://example.com', 'id', 'secret' );
+		$oClient->request( 'resource', [], [], [] );
 	}
 
 	public function testSuccess()

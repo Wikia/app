@@ -9,27 +9,17 @@
 	}
 
 	.editpage-sourcewidemode.mode-source.editpage-sourcewidemode-on .EditPageRail .module_page_controls {
-		.wikia-menu-button {
-			right: 50px;
-			top: 10px;
-		}
-
 		.module_content {
 			width: 600px;
 		}
 
-		#wpSave {
+		.wikia-menu-button {
+			height: 21px;
+			margin-top: 8px;
 			position: static;
-		}
 
-		.checkboxes {
-			left: 285px;
-			position: absolute;
-			right: auto;
-			top: 0;
-
-			label {
-				float: none;
+			#wpSave {
+				margin-top: 0;
 				position: static;
 			}
 		}

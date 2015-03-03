@@ -31,6 +31,11 @@
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
+
+.popover-inner {
+	padding: 3px 8px;
+}
+
 body {
 	padding: 0;
 
@@ -326,6 +331,7 @@ body {
 
 			.ArticlePreview {
 				border: 1px solid $color-page-border;
+				clear: both;
 				min-height: 320px;
 				-webkit-overflow-scrolling: touch;
 				overflow-y: scroll;
@@ -335,6 +341,25 @@ body {
 				.global-notification {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
+				}
+			}
+
+			.preview-modal-msg {
+				border: 1px solid $color-page-border;
+				border-bottom: 0;
+				box-sizing: border-box;
+				display: table;
+				padding: 18px;
+				width: 100%;
+
+				.preview-message {
+					display: table-cell;
+				}
+
+				.preview-link {
+					display: table-cell;
+					padding-left: 18px;
+					text-align: right;
 				}
 			}
 
@@ -468,8 +493,6 @@ body {
 					// fix for touch devices, because in touchScreen.scss height is set to 30px !important
 					height: 21px !important;
 					margin: 0;
-					right: 20px;
-					top: 40px;
 				}
 
 				#wpSummaryLabel {
@@ -486,25 +509,6 @@ body {
 							margin: 0;
 							right: 145px;
 							top: 40px;
-						}
-
-						.checkboxes {
-							position: absolute;
-							right: 275px;
-							top: 37px;
-
-							label {
-								float: right;
-								margin: 0 0 0 10px;
-								position: static;
-							}
-						}
-
-						textarea {
-							float: right;
-							margin: 0 0 0 10px;
-							position: static;
-							width: 350px;
 						}
 					}
 				}
