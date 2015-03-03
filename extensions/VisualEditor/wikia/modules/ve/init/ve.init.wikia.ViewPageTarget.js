@@ -175,7 +175,7 @@ ve.init.wikia.ViewPageTarget.prototype.showPageContent = function () {
 
 ve.init.wikia.ViewPageTarget.prototype.setupToolbarCancelButton = function () {
 	this.toolbarCancelButton = new OO.ui.ButtonWidget( {
-		label: ve.msg( 'wikia-visualeditor-toolbar-cancel' ),
+		label: ve.msg( 'visualeditor-dialog-action-cancel' ),
 		flags: [ 'secondary' ]
 	} );
 	this.toolbarCancelButton.$element.addClass( 've-ui-toolbar-cancelButton' );
