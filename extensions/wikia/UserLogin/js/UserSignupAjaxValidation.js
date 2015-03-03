@@ -1,4 +1,4 @@
-/* global  wgScriptPath */
+/* global  wgScriptPath, wgWikiaMaxNameChars, wgMinimalPasswordLength */
 (function () {
 	'use strict';
 
@@ -9,6 +9,7 @@
 	 * - wikiaForm: instance of WikiaForm
 	 * - inputsToValide: array of input names to be ok'ed before submission
 	 * - submitButton: pointer to main submit button of the form
+	 * - passwordInputName: input name attribute for form's password input
 	 * @constructor
 	 */
 	var UserSignupAjaxValidation = function (options) {
@@ -16,6 +17,7 @@
 		this.inputsToValidate = options.inputsToValidate || [];
 		this.submitButton = $(options.submitButton);
 		this.deferred = false;
+		this.passwordInputName = options.passwordInputName || 'password';
 	};
 
 	/**
@@ -23,16 +25,51 @@
 	 * @param {Event} e Browser event like input blur
 	 */
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
-		var el = $(e.target),
-			paramName = el.attr('name'),
-			params = {};
+		var $el = $(e.target),
+			paramName = $el.attr('name'),
+			params = {},
+			value = $el.val();
 
-		params.field = paramName;
-		params[paramName] = el.val();
+		// don't send password values to the server, validated them here in JS
+		if (paramName === this.passwordInputName) {
+			this.validatePassword(value);
+		} else {
+			params.field = paramName;
+			params[paramName] = value;
 
-		this.sendRequest(params)
-			.done(this.validationHandler.bind(this, paramName));
+			this.sendRequest(params)
+				.done(this.validationHandler.bind(this, paramName));
+		}
+	};
 
+	/**
+	 * Client side validation that mirrors server side validation for password input. (SOC-316)
+	 * Validating client side reduces passwords being sent over HTTP in plain text.
+	 * @param {string} password
+	 */
+	UserSignupAjaxValidation.prototype.validatePassword = function (password) {
+		var pwLength = password.length,
+			msg = '',
+			paramName = this.passwordInputName,
+			response = {};
+
+		// check password isn't too short (defaults to 1 char)
+		if (pwLength < wgMinimalPasswordLength) {
+			msg = mw.message('userlogin-error-wrongpasswordempty').escaped();
+
+		// check password isn't too long (defaults to 50 chars)
+		} else if (pwLength > wgWikiaMaxNameChars) {
+			msg = mw.message('usersignup-error-password-length').escaped();
+		}
+
+		if (msg !== '') {
+			response.msg = msg;
+			response.result = 'error';
+		} else {
+			response.result = 'ok';
+		}
+
+		this.validationHandler(paramName, response);
 	};
 
 	/**
@@ -41,25 +78,30 @@
 	 * @param {Event} e Browser event like input blur
 	 */
 	UserSignupAjaxValidation.prototype.validateMappedInput = function (e) {
-		var el = $(e.target),
-			paramName = el.attr('name'),
+		var $el = $(e.target),
+			paramName = $el.attr('name'),
 			params = {},
+			value = $el.val(),
 			mappedParamName,
 			map;
 
-		// back end validation expects these fields to match the user signup form, so we'll map them to those values
-		// before sending.
-		map = {
-			'username': 'userloginext01',
-			'password': 'userloginext02'
-		};
+		// don't send password values to the server, validated them here in JS
+		if (paramName === this.passwordInputName) {
+			this.validatePassword(value);
+		} else {
+			// back end validation expects these fields to match the user signup form, so we'll map them to those values
+			// before sending.
+			map = {
+				'username': 'userloginext01'
+			};
 
-		mappedParamName = map[paramName] || paramName;
-		params.field = mappedParamName;
-		params[mappedParamName] = el.val();
+			mappedParamName = map[paramName] || paramName;
+			params.field = mappedParamName;
+			params[mappedParamName] = value;
 
-		this.sendRequest(params)
-			.done(this.validationHandler.bind(this, paramName));
+			this.sendRequest(params)
+				.done(this.validationHandler.bind(this, paramName));
+		}
 	};
 
 	/**
@@ -85,8 +127,8 @@
 	};
 
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
-		var el = $(e.target),
-			paramName = el.attr('name'),
+		var $el = $(e.target),
+			paramName = $el.attr('name'),
 			params = this.getDefaultParamsForAjax();
 
 		if (this.deferred && typeof this.deferred.reject === 'function') {

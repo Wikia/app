@@ -80,6 +80,7 @@
 				wikiaForm: this.wikiaForm,
 				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
+				passwordInputName: 'userloginext02'
 			});
 
 			inputs.userloginext01

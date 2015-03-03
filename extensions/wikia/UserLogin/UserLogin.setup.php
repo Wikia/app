@@ -51,6 +51,8 @@ JSMessages::registerPackage('UserLogin', ['userlogin-login-*']);
 JSMessages::registerPackage('UserSignup', [
 	'usersignup-page-captcha-load-fail-title',
 	'usersignup-page-captcha-load-fail-text',
+	'usersignup-error-password-length',
+	'userlogin-error-wrongpasswordempty',
 ]);
 
 // special pages

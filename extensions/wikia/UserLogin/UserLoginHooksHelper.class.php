@@ -130,9 +130,15 @@ class UserLoginHooksHelper {
 	 * @return bool
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+		$app = F::app();
+
+		if ( $app->checkSkin( 'wikiamobile' ) ) {
 			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();
 		}
+
+		// Max and min password lengths for JS validation
+		$vars['wgWikiaMaxNameChars'] = $app->wg->WikiaMaxNameChars;
+		$vars['wgMinimalPasswordLength'] = $app->wg->MinimalPasswordLength;
 
 		return true;
 	}
