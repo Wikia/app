@@ -2,7 +2,6 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	'use strict';
 	var $selectElement = $('#searchSelect'),
 		$searchInput = $('#searchInput'),
-		$searchForm = $('#searchForm'),
 		$autocompleteObj;
 
 	/**
@@ -13,7 +12,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 			isLocalSearchDisabled = !$selectElement.length;
 
 		$searchInput.attr('placeholder', $selectedOption.data('placeholder'));
-		$searchForm.attr('action', $selectedOption.attr('data-search-url'));
+		$('#searchForm').attr('action', $selectedOption.attr('data-search-url'));
 		//Setting reference to jQuery search autocomplete object
 		$autocompleteObj = $autocompleteObj || $searchInput.data('autocomplete');
 		if ($selectedOption.val() === 'global' || isLocalSearchDisabled) {
@@ -39,13 +38,13 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	}
 
 	$(function () {
-		var $globalNav = $('#globalNavigation');
+		var $globalNav = $('#globalNavigation'),
+			$searchForm = $('#searchForm');
 
 		//Checks whether the searchInput is empty and prevents any action if true
 		$searchForm.submit(function (e) {
 			if (!$searchInput.val()) {
-				e.preventDefault();
-				e.stopPropagation();
+				return false;
 			}
 		})
 
