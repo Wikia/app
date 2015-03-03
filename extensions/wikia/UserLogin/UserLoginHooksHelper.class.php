@@ -222,5 +222,15 @@ class UserLoginHooksHelper {
 		}
 		return true;
 	}
+
+	/**
+	 * Add JS messages to the output
+	 * @param \OutputPage $out An output object passed from a hook
+	 * @return bool
+	 */
+	public static function onBeforePageDisplay( \OutputPage $out ) {
+		$out->addModules( 'ext.userLogin' );
+		return true;
+	}
 }
 
