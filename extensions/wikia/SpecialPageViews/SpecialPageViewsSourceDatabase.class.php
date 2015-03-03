@@ -1,4 +1,5 @@
 <?php
+
 class SpecialPageViewsSourceDatabase extends SponsorshipDashboardSourceDatabase {
 
 	public function setStartDate( $date ) {
