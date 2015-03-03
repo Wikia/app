@@ -14,96 +14,26 @@ define('ext.wikia.adEngine.amazonMatch', [
 		amazonResponse,
 		amazonTiming,
 		amazonCalled = false,
-		targetingParams = [],
-		amazonSlotsPattern = /^a([0-9]x[0-9])(p[0-9]+)$/;
-
-	/**
-	 * Returns price point from Amazon's slot name if it isn't found then return 0
-	 *
-	 * @param {string} slotName matching amazonSlotsPattern i.e. a1x6p14
-	 * @returns {number}
-	 */
-	function getPricePoint(slotName) {
-		var m = slotName.match(amazonSlotsPattern),
-			res = 0;
-
-		if (m && typeof m[2] !== undefined) {
-			res = ~~m[2].substring(1);
-		}
-
-		return res;
-	}
-
-	/**
-	 * Sorts Amazon's slot names by price point; use this function as an argument for sort() method
-	 *
-	 * @param {string} a first slot name
-	 * @param {string} b second slot name
-	 * @returns {number}
-	 */
-	function sortSlots(a, b) {
-		var res = 0,
-			indexA = getPricePoint(a),
-			indexB = getPricePoint(b);
-
-		if (indexA > indexB) {
-			res = 1;
-		}
-
-		if (indexA < indexB) {
-			res = -1;
-		}
-
-		return res;
-	}
-
-	/**
-	 * Filters out slots - leaves only most valuable slots for each sizes
-	 *
-	 * @param {Array} slots
-	 * @returns {Array}
-	 */
-	function filterSlots(slots) {
-		var slotsBySize = {},
-			filteredSlots = [],
-			m;
-
-		log(['filterSlots()::slots', slots], 'debug', logGroup);
-
-		slots.sort(sortSlots);
-		Object.keys(slots).forEach(function (key) {
-			m = slots[key].match(amazonSlotsPattern);
-			if (m && !slotsBySize[m[1]]) {
-				slotsBySize[m[1]] = true;
-				filteredSlots.push(m[0]);
-			}
-		});
-
-		log(['filterSlots()::filteredSlots', filteredSlots], 'debug', logGroup);
-
-		return filteredSlots;
-	}
+		amazonParamPattern = /^a([0-9]x[0-9])(p([0-9]+))$/,
+		slotMapping = {
+			'LEADERBOARD': 'a7x9',
+			'BOXAD': 'a3x2',
+			'SKYSCRAPER': 'a1x6'
+		},
+		slotTiers = {};
 
 	function trackState(trackEnd) {
 		log(['trackState', amazonResponse], 'debug', logGroup);
 
 		var eventName,
-			m,
 			key,
 			data = {};
 
 		if (amazonResponse) {
 			eventName = 'lookupSuccess';
-			for (key in amazonResponse) {
-				if (amazonResponse.hasOwnProperty(key)) {
-					targetingParams.push(key);
-					m = key.match(amazonSlotsPattern);
-					if (m) {
-						if (!data[m[2]]) {
-							data[m[2]] = [];
-						}
-						data[m[2]].push(m[1]);
-					}
+			for (key in slotMapping) {
+				if (slotMapping.hasOwnProperty(key) && slotTiers[key]) {
+					data[slotMapping[key]] = 'p' + slotTiers[key];
 				}
 			}
 		} else {
@@ -123,6 +53,25 @@ define('ext.wikia.adEngine.amazonMatch', [
 
 		if (response.status === 'ok') {
 			amazonResponse = response.ads;
+		}
+
+		if (amazonResponse) {
+			var targetingParams = Object.keys(amazonResponse);
+			Object.keys(slotMapping).forEach(function (slotNamePattern) {
+				var i, len, points = [], m, param, amazonSize = slotMapping[slotNamePattern];
+
+				for (i = 0, len = targetingParams.length; i < len; i += 1) {
+					param = targetingParams[i];
+					m = param.match(amazonParamPattern);
+					if (m && param.search(amazonSize) === 0) {
+						points.push(parseInt(m[3], 10));
+					}
+				}
+
+				if (points.length) {
+					slotTiers[slotNamePattern] = Math.min.apply(Math, points);
+				}
+			});
 		}
 
 		trackState(true);
@@ -150,7 +99,9 @@ define('ext.wikia.adEngine.amazonMatch', [
 			s = doc.createElement('script'),
 			cb = Math.round(Math.random() * 10000000);
 
-		try { url = encodeURIComponent(win.top.location.href); } catch (ignore) {}
+		try {
+			url = encodeURIComponent(win.top.location.href);
+		} catch (ignore) {}
 
 		s.id = logGroup;
 		s.async = true;
@@ -164,17 +115,34 @@ define('ext.wikia.adEngine.amazonMatch', [
 		return amazonCalled;
 	}
 
-	function getPageParams() {
-		log(['getPageParams', targetingParams], 'debug', logGroup);
-		return {
-			amznslots: targetingParams
-		};
+	function getSlotParams(slotName) {
+		log(['getSlotParams'], 'debug', logGroup);
+
+		var ret = {};
+
+		// No Object.keys on IE8
+		if (!Object.keys) {
+			log(['filterSlots()', 'no Object.keys (IE8?)'], 'error', logGroup);
+			return {};
+		}
+
+		Object.keys(slotMapping).forEach(function (slotNamePattern) {
+			var amazonSize = slotMapping[slotNamePattern],
+				amazonTier = slotTiers[slotNamePattern];
+
+			if (slotName.search(slotNamePattern) > -1 && amazonTier) {
+				ret = {
+					amznslots: amazonSize + 'p' + amazonTier
+				};
+			}
+		});
+
+		return ret;
 	}
 
 	return {
 		call: call,
-		getPageParams: getPageParams,
-		filterSlots: filterSlots,
+		getSlotParams: getSlotParams,
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled
 	};

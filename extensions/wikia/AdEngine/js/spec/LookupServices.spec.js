@@ -1,57 +1,64 @@
+/*global describe, it, modules, expect, spyOn*/
 describe('Method ext.wikia.adEngine.lookupServices', function () {
 	'use strict';
 
-	var logMock = function () { return; },
-		winMock = {};
+	var mocks;
+
+	function noop() {
+		return;
+	}
+
+	mocks = {
+		amazon: {
+			trackState: noop,
+			wasCalled: noop,
+			getPageParams: noop,
+			getSlotParams: noop
+		},
+		log: noop,
+		rtp: {
+			trackState: noop,
+			wasCalled: noop,
+			getConfig: noop,
+			getTier: noop
+		},
+		window: {}
+	};
 
 	it('extends slot targeting for Rubicon', function () {
-		var rtpMock = {
-				trackState: function () { return; },
-				wasCalled: function () { return true; },
-				getConfig: function () {
-					return { slotname: ['TOP_LEADERBOARD'] };
-				},
-				getTier: function () {
-					return 6;
-				}
-			},
-			lookup = modules['ext.wikia.adEngine.lookupServices'](
-				logMock,
-				winMock,
-				rtpMock
+		var lookup = modules['ext.wikia.adEngine.lookupServices'](
+				mocks.log,
+				mocks.window,
+				mocks.rtp
 			),
 			slotTargetingMock = {},
 			expectedSlotTargeting = { 'rp_tier': 6 };
+
+		spyOn(mocks.rtp, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.rtp, 'getConfig').and.returnValue({slotname: ['TOP_LEADERBOARD']});
+		spyOn(mocks.rtp, 'getTier').and.returnValue(6);
 
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
 	});
 
-	it('extends page targeting for Amazon', function () {
-		var amazonMatchMock = {
-				trackState: function () { return; },
-				wasCalled: function () { return true; },
-				getPageParams: function () {
-					return {
-						amznslots: ['a7x9p5', 'a7x9p11', 'a1x6p6', 'a1x6p5', 'a3x2p9', 'a1x6p14', 'a7x9p6', 'a3x2p14']
-					};
-				},
-				filterSlots: function () {
-					return ['a1x6p5', 'a3x2p9', 'a7x9p5'];
-				}
-			},
-			lookup = modules['ext.wikia.adEngine.lookupServices'](
-				logMock,
-				winMock,
+	it('extends slot targeting for Amazon', function () {
+		var lookup = modules['ext.wikia.adEngine.lookupServices'](
+				mocks.log,
+				mocks.window,
 				undefined,
-				amazonMatchMock
+				mocks.amazon
 			),
-			pageTargetingMock = {},
+			slotTargetingMock = {a: 'b'},
 			expectedPageTargeting = {
+				a: 'b',
 				amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']
 			};
 
-		lookup.extendPageTargeting(pageTargetingMock);
-		expect(pageTargetingMock).toEqual(expectedPageTargeting);
+		spyOn(mocks.amazon, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.amazon, 'getSlotParams').and.returnValue({amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']});
+
+		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock);
+		expect(slotTargetingMock).toEqual(expectedPageTargeting);
 	});
 });

@@ -22,10 +22,10 @@ define('ext.wikia.adEngine.lookupServices', [
 
 	var logGroup = 'ext.wikia.adEngine.lookupServices',
 		rtpLookupTracked = false,
-		amazonLookupTracked = false;
+		amazonLookupTracked = false,
+		amazonOldLookupTracked = false;
 
 	// Copied from AdLogicPageParams
-	// TODO: DRY
 	function extend(target, obj) {
 		var key;
 
@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.lookupServices', [
 	}
 
 	// Copied from AdLogicPageParams
-	// TODO: DRY
+	// No longer needed when AmazonOld is removed
 	function decodeLegacyDartParams(dartString) {
 		var params = {},
 			kvs,
@@ -76,11 +76,16 @@ define('ext.wikia.adEngine.lookupServices', [
 	function extendSlotTargeting(slotName, slotTargeting) {
 		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
 
-		var rtpSlots, rtpTier;
+		var rtpSlots, rtpTier, amazonParams;
 
 		if (!rtpLookupTracked) {
 			rtpLookupTracked = true;
 			trackState(rtp);
+		}
+
+		if (!amazonLookupTracked) {
+			amazonLookupTracked  = true;
+			trackState(amazonMatch);
 		}
 
 		if (rtp && rtp.wasCalled()) {
@@ -92,28 +97,25 @@ define('ext.wikia.adEngine.lookupServices', [
 				}
 			}
 		}
+
+		if (amazonMatch && amazonMatch.wasCalled() && Object.keys) {
+			amazonParams = amazonMatch.getSlotParams(slotName);
+
+			Object.keys(amazonParams).forEach(function (key) {
+				slotTargeting[key] = amazonParams[key];
+			});
+		}
 	}
 
+	// No longer needed when AmazonOld is removed
 	function extendPageTargeting(pageTargeting) {
-		var amazonParams;
-
-		if (!amazonLookupTracked) {
-			amazonLookupTracked  = true;
-			trackState(amazonMatch);
+		if (!amazonOldLookupTracked) {
+			amazonOldLookupTracked  = true;
 			trackState(amazonMatchOld);
 		}
 
 		if (amazonMatchOld && amazonMatchOld.wasCalled()) {
 			extend(pageTargeting, decodeLegacyDartParams(win.amzn_targs));
-		}
-
-		if (amazonMatch && amazonMatch.wasCalled() && Object.keys) {
-			amazonParams = amazonMatch.getPageParams();
-			amazonParams.amznslots = amazonMatch.filterSlots(amazonParams.amznslots);
-
-			Object.keys(amazonParams).forEach(function (key) {
-				pageTargeting[key] = amazonParams[key];
-			});
 		}
 	}
 
