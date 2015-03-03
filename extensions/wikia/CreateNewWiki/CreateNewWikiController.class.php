@@ -172,7 +172,7 @@ class CreateNewWikiController extends WikiaController {
 			$categoriesSet = [];
 			foreach($categoriesOrder as $categoryId => $categoryData) {
 				$categoryData = $allCategories[$categoryId];
-				$categoryData['name'] = wfMessage( 'oasis-label-category-id-' . $categoryData['id'] )->escaped();
+				$categoryData['name'] = wfMessage( 'oasis-label-wiki-category-id-' . $categoryData['id'] )->escaped();
 				$categoriesSet[] = $categoryData;
 			}
 			$this->categoriesSets[$setId] = $categoriesSet;
