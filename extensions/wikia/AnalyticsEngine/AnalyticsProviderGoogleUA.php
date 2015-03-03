@@ -5,22 +5,9 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		return '';
 	}
 
-	public function trackEvent($event, $eventDetails=array()){
-		switch ($event){
-			case "lyrics":
-			case AnalyticsEngine::EVENT_PAGEVIEW:
-			case 'hub':
-			case 'onewiki':
-			case 'pagetime':
-			case "varnish-stat":
-				return ''; // NOP
-
-			case "usertiming":
-				return $this->userTiming();
-
-			default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
-		}
-	}
+    public function trackEvent($event, $eventDetails=array()){
+        return '';
+    }
 
 	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ){
 		//should be added unprocessed as per Cardinal Path's request
@@ -52,66 +39,5 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		// this is only called in Oasis, so there's no need to double-check it
 		$jsAssetGroups[] = 'universal_analytics_js';
 		return true;
-	}
-
-	/**
-	 * GA UserTiming experiment
-	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
-	 * Please ask before doing anything, thanks :)
-	 */
-	private function userTiming(){
-		wfProfileIn( __METHOD__ );
-
-		$app = F::app();
-		//global Memcache key, this code doesn't change on a per-wiki base
-		//uses cachebuster to allow for easier purging
-		$key = implode( ':', array( __METHOD__, $app->wg->StyleVersion ) );
-		$code = $app->wg->Memc->get( $key );
-
-		if ( empty( $code ) ) {
-			$code = <<<JSCODE
-(function(c){
-	var u,//shortcut for undefined :)
-		e,
-		l,
-		p = c.performance,
-		t = (p) ? p.timing : u,
-		t2;
-
-	/**
-	 * @private
-	 */
-	function f(){
-		setTimeout(function(){
-			if(p){
-				t2 = p.timing;
-				e = t2.loadEventEnd - t2.domLoading;
-				l = 'client';
-			}else if(c.wgNow){
-				e = (new Date()).getTime() - c.wgNow.getTime();
-				l = 'client_approx';
-			}
-
-            ga(['send', 'timing', 'wikia', 'performance', l, e, c.skin]);
-			p = t2 = e = l = null;//allow garbage collection
-		}, 0);
-	}
-
-	if (c.addEventListener){
-      c.addEventListener('load', f);
-	}else if(c.attachEvent){
-      c.attachEvent('onload', f);
-	}
-
-    t && ga(['send', 'timing', 'wikia', 'performance', 'server', t.responseEnd - t.requestStart, c.skin]);
-}(window));
-JSCODE;
-			$code = Html::inlineScript( AssetsManagerBaseBuilder::minifyJs( $code ) );
-			//cache it as minification is expensive
-			$app->wg->Memc->set( $key, $code, 2592000 /* 30 days */);
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $code;
 	}
 }
