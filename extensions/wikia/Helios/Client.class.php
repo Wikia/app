@@ -26,7 +26,7 @@ class Client
 	/**
 	 * The general method for handling the communication with the service.
 	 */
-	public function request( $resourceName, $getParams = [], $postData = [], $requestOptions = [] )
+	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] )
 	{
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
@@ -48,10 +48,10 @@ class Client
 			'returnInstance'	=> true
 		];
 
-		$aOptions = array_merge( $defaultOptions, $requestOptions );
+		$requestOptions = array_merge( $defaultOptions, $extraRequestOptions );
 
 		// Request execution.
-		$request = \MWHttpRequest::factory( $uri, $aOptions );
+		$request = \MWHttpRequest::factory( $uri, $requestOptions );
 		$request->setHeader(RequestId::REQUEST_HEADER_NAME, RequestId::instance()->getRequestId());
 		$request->setHeader(RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname());
 		$status = $request->execute();
