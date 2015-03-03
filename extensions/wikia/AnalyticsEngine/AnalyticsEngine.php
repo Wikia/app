@@ -43,6 +43,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderExelate();
 			case 'GAS':
 				return new AnalyticsProviderGAS();
+            case 'GoogleUA':
+                return new AnalyticsProviderGoogleUA();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
 			case 'DynamicYield':
