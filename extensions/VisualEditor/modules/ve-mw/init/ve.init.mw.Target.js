@@ -32,6 +32,7 @@ ve.init.mw.Target = function VeInitMwTarget( pageName, revisionId ) {
 	// if we do, PostEdit will give us a 'page restored' message
 	this.requestedRevId = revisionId;
 	this.revid = revisionId || mw.config.get( 'wgCurRevisionId' );
+	this.wikitext = null;
 
 	this.restoring = !!revisionId;
 	this.editToken = mw.user.tokens.get( 'editToken' );
