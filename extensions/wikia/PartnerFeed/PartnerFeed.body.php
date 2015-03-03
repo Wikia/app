@@ -130,6 +130,7 @@ class PartnerFeed extends SpecialPage {
 						/** @var Revision $revision */
 						$firstRevision = $levelOne->mFirstRevision;
 						if ( !$firstRevision instanceof Revision ) {
+							$tmpArticleComment['mFirstRevision'] = $firstRevision;
 							$this->logError( 'Comment has no first revision', $tmpArticleComment );
 							break;
 						}
