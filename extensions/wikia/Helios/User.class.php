@@ -56,6 +56,8 @@ class User {
 				}
 			}
 		}
+
+		return null;
 	}
 
 	/**
@@ -78,7 +80,6 @@ class User {
 
 		// Authenticate with username and password.
 		try {
-			global $wgHeliosLoginShadowMode;
 			$oLogin = $oHelios->login( $sUserName, $sPassword );
 			$bResult = !empty( $oLogin->access_token ); 
 	

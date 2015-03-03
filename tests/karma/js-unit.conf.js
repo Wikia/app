@@ -98,7 +98,6 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
 			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
-			'extensions/wikia/AdEngine/js/GptSlotConfig.js',
 			'extensions/wikia/AdEngine/js/MessageListener.js',
 			'extensions/wikia/AdEngine/js/AdTracker.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',

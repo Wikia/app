@@ -126,7 +126,7 @@ class ClientException extends \Exception
 {
 	use \Wikia\Logger\Loggable;
 
-	public function __construct( $message = null, $code = 0, Exception $previous = null, $data = null ) {
+	public function __construct( $message = null, $code = 0, \Exception $previous = null, $data = null ) {
 		parent::__construct( $message, $code, $previous );
 		$this->error( 'HELIOS_CLIENT' , [ 'exception' => $this, 'context' => $data ] );
 	}
