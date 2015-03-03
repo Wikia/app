@@ -1,4 +1,4 @@
-/* global  wgScriptPath, UserSignup */
+/* global  wgScriptPath */
 (function () {
 	'use strict';
 
@@ -15,6 +15,7 @@
 		this.wikiaForm = options.wikiaForm;
 		this.inputsToValidate = options.inputsToValidate || [];
 		this.submitButton = $(options.submitButton);
+		this.deferred = false;
 	};
 
 	/**
@@ -24,16 +25,14 @@
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+			params = {};
 
 		params.field = paramName;
 		params[paramName] = el.val();
 
-		$.get(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+		this.sendRequest(params)
+			.done(this.validationHandler.bind(this, paramName));
+
 	};
 
 	/**
@@ -44,7 +43,7 @@
 	UserSignupAjaxValidation.prototype.validateMappedInput = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax(),
+			params = {},
 			mappedParamName,
 			map;
 
@@ -59,11 +58,22 @@
 		params.field = mappedParamName;
 		params[mappedParamName] = el.val();
 
-		$.get(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+		this.sendRequest(params)
+			.done(this.validationHandler.bind(this, paramName));
+	};
+
+	/**
+	 * Shared AJAX helper method
+	 * @param {object} data
+	 * @returns {jQuery} Promise
+	 */
+	UserSignupAjaxValidation.prototype.sendRequest = function (data) {
+		return $.nirvana.sendRequest({
+			controller: 'UserSignupSpecial',
+			method: 'formValidation',
+			type: 'GET',
+			data: data
+		});
 	};
 
 	UserSignupAjaxValidation.prototype.validationHandler = function (paramName, response) {
@@ -79,8 +89,8 @@
 			paramName = el.attr('name'),
 			params = this.getDefaultParamsForAjax();
 
-		if (UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
-			UserSignup.deferred.reject();
+		if (this.deferred && typeof this.deferred.reject === 'function') {
+			this.deferred.reject();
 		}
 
 		$.extend(params, {
@@ -90,7 +100,7 @@
 			birthday: this.wikiaForm.inputs.birthday.val()
 		});
 
-		UserSignup.deferred = $.post(
+		this.deferred = $.post(
 			wgScriptPath + '/wikia.php',
 			params,
 			this.validationHandler.bind(this, paramName)
