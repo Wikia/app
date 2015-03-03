@@ -44,6 +44,9 @@ class Module {
 		}
 	}
 
+	/**
+	 * Load Captcha.js on demand when we're getting an instance of a Captcha.
+	 */
 	public static function addCaptchaJS() {
 		\Wikia::addAssetsToOutput( 'captcha_js' );
 	}
