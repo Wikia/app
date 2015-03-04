@@ -105,7 +105,8 @@
 									username: this.inputs.username.val(),
 									password: this.inputs.password.val(),
 									returnto: this.inputs.returnto.val(),
-									fakeGet: 1
+									fakeGet: 1,
+									loginToken: this.loginToken
 								},
 								callback: function (html) {
 									var content = $('<div style="display:none" />').append(html),

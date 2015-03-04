@@ -63,7 +63,8 @@
 				username: this.inputs.username.val(),
 				password: this.inputs.password.val(),
 				returnto: this.inputs.returnto.val(),
-				fakeGet: 1
+				fakeGet: 1,
+				loginToken: this.loginToken
 			}, this.retrieveTemplateCallback.bind(this));
 		}
 	};
