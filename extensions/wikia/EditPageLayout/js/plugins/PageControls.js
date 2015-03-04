@@ -172,7 +172,7 @@
 		// handle "Preview" button
 		onPreview: function (ev) {
 			this.renderPreview({}, 'current');
-			this.editor.track('preview');
+			this.editor.track('preview-desktop');
 
 			ev.preventDefault();
 		},
