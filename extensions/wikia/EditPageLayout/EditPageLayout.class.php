@@ -448,7 +448,8 @@ class EditPageLayout extends EditPage {
 			'name' => $this->mSummaryBox['name'],
 			'placeholder' => $this->mSummaryBox['placeholder'],
 			'tabindex' => '1', // BugId:5327
-		), $this->summary, false /* $allowShortTag */);
+			'value' =>  $this->summary
+		), '', false /* $allowShortTag */);
 
 		return $html;
 	}
