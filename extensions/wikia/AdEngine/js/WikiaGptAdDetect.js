@@ -118,20 +118,22 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		gptEmpty = gptEvent.isEmpty;
 
 		if (gptEmpty || height <= 1) {
-			log(['getAdType', slotName, 'ad is empty (GPT event)', 'empty'], 'error', logGroup);
+			log(['getAdType', slotName, 'ad is empty (GPT event)', 'empty'], 'info', logGroup);
 			return 'empty';
 		}
 
 		if (!isMobile()) {
-			log(['getAdType', slotName, 'not mobile', 'always_success'], 'error', logGroup);
+			log(['getAdType', slotName, 'not mobile', 'always_success'], 'info', logGroup);
 			return 'always_success';
 		}
 
 		if (!iframeOk) {
-			log(['getAdType', slotName, 'running ad callback (!iframeOk)', 'always_success'], 'error', logGroup);
+			log(['getAdType', slotName, 'running ad callback (!iframeOk)', 'always_success'], 'info', logGroup);
 			return 'always_success';
 		}
 
+		// A special case for AdSense/AdX. They serve with creative and line item ids null
+		// Most of the time their iframes are inspectable, but when inspecting the inner height is 0
 		if (gptEvent.creativeId === null && gptEvent.lineItemId === null) {
 			log(['getAdType', slotName, 'creativeId and lineItemId are null', 'always_success'], 'error', logGroup);
 			return 'always_success';
@@ -143,7 +145,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return 'always_success';
 		}
 
-		log(['getAdType', slotName, 'inspect_iframe'], 'error', logGroup);
+		log(['getAdType', slotName, 'inspect_iframe'], 'info', logGroup);
 		return 'inspect_iframe';
 	}
 
