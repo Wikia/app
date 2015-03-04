@@ -11,42 +11,43 @@ class SampleController extends \WikiaController
 	 */
 	public function edit()
 	{
-		$oResponseData = new \StdClass;
-		$oResponseData->success = false;
-		$oResponseData->title = null;
-		$oResponseData->text = null;
-		$oResponseData->summary = null;
-		$oResponseData->user_id = 0;
-		$oResponseData->user_name = null;
+		$responseData = new \StdClass;
+		$responseData->success = false;
+		$responseData->title = null;
+		$responseData->text = null;
+		$responseData->summary = null;
+		$responseData->user_id = 0;
+		$responseData->user_name = null;
 		
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
 		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken || ! $this->request->wasPosted() ) {
-			$this->response->setVal( 'data', $oResponseData );
+			$this->response->setVal( 'data', $responseData );
 			return;
 		}
 
-		$sTitle = $this->getVal( 'title' );
-		$oResponseData->title = $sTitle;
-		$oTitle = \Title::newFromText( $sTitle );
-		\Wikia\Util\Assert::true( $oTitle instanceof \Title );
+		$titleText = $this->getVal( 'title' );
+		$responseData->title = $titleText;
 
-		$oArticle = new \Article( $oTitle );
-		\Wikia\Util\Assert::true( $oArticle instanceof \Article );
+		$title = \Title::newFromText( $titleText );
+		\Wikia\Util\Assert::true( $title instanceof \Title );
 
-		$sText = $this->getVal( 'text' );
-		$oResponseData->text = $sText;
+		$article = new \Article( $title );
+		\Wikia\Util\Assert::true( $article instanceof \Article );
 
-		$sSummary = $this->getVal( 'summary' );
-		$oResponseData->summary = $sSummary;
+		$text = $this->getVal( 'text' );
+		$responseData->text = $text;
+
+		$summary = $this->getVal( 'summary' );
+		$responseData->summary = $summary;
 
 		if ( $this->wg->User->isLoggedIn() ) {
-			$oResponseData->user_id = $this->wg->User->getId();
-			$oResponseData->user_name = $this->wg->User->getName();
-			$oResponseData->success = $oArticle->doEdit( $sText, $sSummary )->isOK();
+			$responseData->user_id = $this->wg->User->getId();
+			$responseData->user_name = $this->wg->User->getName();
+			$responseData->success = $article->doEdit( $text, $summary )->isOK();
 		}
 
-		$this->response->setVal( 'data', $oResponseData );
+		$this->response->setVal( 'data', $responseData );
 	}
 }

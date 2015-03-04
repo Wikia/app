@@ -6,8 +6,7 @@
 	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
 	 */
 	var UserSignup = {
-		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
-		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
+		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
 		invalidInputs: {},
 
 		/**
@@ -81,7 +80,6 @@
 				wikiaForm: this.wikiaForm,
 				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
-				notEmptyFields: this.notEmptyFields
 			});
 
 			inputs.userloginext01
@@ -93,11 +91,6 @@
 				.add(inputs.birthmonth)
 				.add(inputs.birthyear)
 				.on('change.UserSignup', this.validator.validateBirthdate.bind(this.validator));
-
-			if (this.useCaptcha && inputs['g-recaptcha-response']) {
-				inputs['g-recaptcha-response']
-					.on('keyup.UserSignup', this.validator.activateSubmit.bind(this.validator));
-			}
 		}
 	};
 
