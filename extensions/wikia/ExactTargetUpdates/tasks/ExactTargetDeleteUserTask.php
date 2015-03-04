@@ -23,9 +23,11 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 		if ( !$this->isEmailInUse( $sUserEmail, $iUserId ) ) {
 			$oHelper = $this->getUserHelper();
 			$aApiParams = $oHelper->prepareSubscriberDeleteData( $sUserEmail );
-			return $this->doDeleteSubscriber( $aApiParams );
+			$deleteResult = $this->doDeleteSubscriber( $aApiParams );
+			$this->info( __METHOD__ . ' OverallStatus: ' . $deleteResult->OverallStatus );
+			$this->info( __METHOD__ . ' result: ' . json_encode( (array)$deleteResult ) );
 		}
-		return 'Email in use by different account (record). Removal skipped.';
+		$this->info(__METHOD__ . ': Email in use by different account (record). Removal skipped.');
 	}
 
 	/**

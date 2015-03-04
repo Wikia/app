@@ -12,28 +12,19 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
-		$deleteTaskResult = $oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
-		$this->info( 'deleteSubscriber OverallStatus: ' . $deleteTaskResult->OverallStatus );
-		$this->info( 'deleteSubscriber result: ' . json_encode( (array)$deleteTaskResult ) );
+		$oDeleteUserTask->taskId( $this->getTaskId() );
+		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
 
 		/* Create Subscriber with new email */
-		$createSubscriberResult = $this->createSubscriber( $aUserData['user_email'] );
-		$this->info( 'createSubscriber OverallStatus: ' . $createSubscriberResult->OverallStatus );
-		$this->info( 'createSubscriber result: ' . json_encode( (array)$createSubscriberResult ) );
+		$this->createSubscriber( $aUserData['user_email'] );
 
 		/* Create User DataExtension with new email */
-		$createUserResult = $this->createUser( $aUserData );
-		$this->info( 'createUser OverallStatus: ' . $createUserResult->OverallStatus );
-		$this->info( 'createUser result: ' . json_encode( (array)$createUserResult ) );
+		$this->createUser( $aUserData );
 
 		/* Create User Properties DataExtension with new email */
-		$createUserPropertiesResult =  $this->createUserProperties( $aUserData['user_id'], $aUserProperties );
-		$this->info( 'createUserProperties OverallStatus: ' . $createUserPropertiesResult->OverallStatus );
-		$this->info( 'createUserProperties result: ' . json_encode( (array)$createUserPropertiesResult ) );
-		return (
-			$createUserPropertiesResult->OverallStatus !== 'Error'
-			&& $createUserResult->OverallStatus !== 'Error'
-		);
+		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
+
+		return 'OK';
 	}
 
 	/**
@@ -44,7 +35,11 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareSubscriberData( $sUserEmail );
 		$oApiDataExtension = $this->getApiSubscriber();
-		return $oApiDataExtension->createRequest( $aApiParams );
+
+		$createSubscriberResult = $oApiDataExtension->createRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $createSubscriberResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$createSubscriberResult ) );
 	}
 
 	/**
@@ -55,7 +50,17 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
-		return $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+
+		$oCreateUserResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oCreateUserResult ) );
+
+		if ( $oCreateUserResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error on createUser: ' . $oCreateUserResult->Results->StatusMessage
+			);
+		}
 	}
 
 	/**
@@ -67,8 +72,16 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties );
 		$oApiDataExtension = $this->getApiDataExtension();
-		return $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
-	}
+		$oCreateUserPropertiesResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserPropertiesResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oCreateUserPropertiesResult ) );
+
+		if ( $oCreateUserPropertiesResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error on createUser: ' . $oCreateUserPropertiesResult->Results->StatusMessage
+			);
+		}
+	}
 
 }
