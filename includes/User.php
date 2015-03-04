@@ -3382,6 +3382,15 @@ class User {
 			return false;
 		}
 
+		// Wikia change - begin - @author: wladek
+		// Helios integration
+		$result = null;
+		wfRunHooks( 'UserCheckPassword', [ $this->mId, $this->mName, $this->mPassword, $password, &$result ] );
+		if ( $result !== null ) {
+			return $result;
+		}
+		// Wikia change - end
+
 		if( $wgAuth->authenticate( $this->getName(), $password ) ) {
 			return true;
 		} elseif( $wgAuth->strict() ) {
