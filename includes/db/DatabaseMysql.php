@@ -680,7 +680,7 @@ class DatabaseMysql extends DatabaseBase {
 	/**
 	 * @return string
 	 */
-	public static function getSoftwareLink() {
+	public function getSoftwareLink() {
 		return '[http://www.mysql.com/ MySQL]';
 	}
 
@@ -967,9 +967,9 @@ class Database extends DatabaseMysql {}
  */
 class MySQLField implements Field {
 	private $name, $tablename, $default, $max_length, $nullable,
-		$is_pk, $is_unique, $is_multiple, $is_key, $type;
+		$is_pk, $is_unique, $is_multiple, $is_key, $type, $binary;
 
-	function __construct ( $info ) {
+	function __construct( $info ) {
 		$this->name = $info->name;
 		$this->tablename = $info->table;
 		$this->default = $info->def;
@@ -980,6 +980,7 @@ class MySQLField implements Field {
 		$this->is_multiple = $info->multiple_key;
 		$this->is_key = ( $this->is_pk || $this->is_unique || $this->is_multiple );
 		$this->type = $info->type;
+		$this->binary = isset( $info->binary ) ? $info->binary : false;
 	}
 
 	/**
@@ -1026,6 +1027,10 @@ class MySQLField implements Field {
 	 */
 	function isMultipleKey() {
 		return $this->is_multiple;
+	}
+
+	function isBinary() {
+		return $this->binary;
 	}
 }
 

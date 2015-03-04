@@ -226,7 +226,7 @@ class MediaQueryService extends WikiaService {
 					'title' => $media->getText(),
 					'desc' => $articleService->getTextSnippet( $length ),
 					'type' => ( $isVideo ? self::MEDIA_TYPE_VIDEO : self::MEDIA_TYPE_IMAGE ),
-					'meta' => ( $videoHandler ? array_merge( $videoHandler->getMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
+					'meta' => ( $videoHandler ? array_merge( $videoHandler->getVideoMetadata(true), $videoHandler->getEmbedSrcData() ) : array() ),
 					'thumbUrl' => ( !empty($thumb) ? $thumb->getUrl() : false
 				));
 			}

@@ -989,6 +989,10 @@ class CreateWiki {
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
 
+		if ( $this->getInitialNjordExtValue() ) {
+			$this->mWFSettingVars['wgEnableNjordExt'] = true;
+		}
+
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {
 			$this->mWFSettingVars['wgMetaNamespace'] = str_replace( array( ':', ' ' ), array( '', '_' ), $this->mWFSettingVars['wgSitename'] );
@@ -1187,5 +1191,14 @@ class CreateWiki {
 	public function getWikiInfo($key) {
 		$ret = $this->mNewWiki->$key;
 		return $ret;
+	}
+
+	/**
+	 * gets initial value for wgEnableNjordExt for new created wiki
+	 * TODO: for first phase of prototype set to true for 10% of new created english wikis only
+	 * @return bool
+	 */
+	private function getInitialNjordExtValue() {
+		return rand( 0, 9 ) % 10 === 1 && $this->mNewWiki->language === 'en' ? true : false;
 	}
 }

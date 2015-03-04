@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function show(slotname) {
-		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+		log('show ' + slotname + ' removing class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
@@ -117,9 +117,10 @@ define('ext.wikia.adEngine.slotTweaker', [
 	 * @param {string} slotId
 	 */
 	function hackChromeRefresh(slotId) {
-		var parent = document.getElementById(slotId).parentElement;
+		var slot = document.getElementById(slotId),
+			parent = slot && slot.parentElement;
 
-		if (parent && slotId.search('INCONTENT') > -1) {
+		if (parent && slotId.match(/^INCONTENT/)) {
 			parent.style.display = 'none';
 			noop(parent.offsetHeight);
 			parent.style.display = '';

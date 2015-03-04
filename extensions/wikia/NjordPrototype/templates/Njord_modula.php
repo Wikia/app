@@ -12,10 +12,10 @@
 		<div class="mom-bar-content"><?= $title ?></div>
 		<div class="mom-bar-info"></div>
 		<div class="btn-group-right">
-			<div class="mom-edit-btn new-btn">Edit</div>
-			<div class="mom-delete-btn new-btn">X</div>
-			<div class="mom-discard-btn new-btn">Discard</div>
-			<div class="mom-save-btn new-btn">Publish</div>
+			<div class="mom-edit-btn new-btn"><?= wfMessage('hero-image-edit-btn')->escaped(); ?></div>
+			<div class="mom-delete-btn new-btn"><?= wfMessage('hero-image-delete-btn')->escaped(); ?></div>
+			<div class="mom-discard-btn new-btn"><?= wfMessage('hero-image-discard-btn')->escaped(); ?></div>
+			<div class="mom-save-btn new-btn"><?= wfMessage('hero-image-publish-btn')->escaped(); ?></div>
 		</div>
 	</div>
 	<div class="mom-overlay"></div>

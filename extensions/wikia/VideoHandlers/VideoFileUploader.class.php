@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Class VideoFileUploader
@@ -82,16 +83,33 @@ class VideoFileUploader {
 	 * @throws Exception
 	 */
 	public function upload( &$oTitle ) {
-		// Some providers will sometimes return error codes when attempting
-		// to fetch a thumbnail
-		try {
-			$upload = $this->uploadBestThumbnail( $this->getApiWrapper()->getThumbnailUrl() );
-		} catch ( Exception $e ) {
-			Wikia::Log( __METHOD__, false, $e->getMessage() );
-
-			return Status::newFatal( $e->getMessage() );
+		$apiWrapper = $this->getApiWrapper();
+		$thumbnailUrl = null;
+		if ( method_exists( $apiWrapper, 'getThumbnailUrl' ) ) {
+			// Some providers will sometimes return error codes when attempting
+			// to fetch a thumbnail
+			try {
+				$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+			} catch ( Exception $e ) {
+				WikiaLogger::instance()->error('Video upload failed', [
+					'targetFile' => $this->sTargetTitle,
+					'externalURL' => $this->sExternalUrl,
+					'videoID' => $this->sVideoId,
+					'provider' => $this->sProvider,
+					'exception' => $e
+				]);
+				return Status::newFatal($e->getMessage());
+			}
+		} else {
+			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
+				'targetFile' => $this->sTargetTitle,
+				'overrideMetadata' => $this->aOverrideMetadata,
+				'externalURL' => $this->sExternalUrl,
+				'videoID' => $this->sVideoId,
+				'provider' => $this->sProvider,
+				'apiWrapper' => get_class( $apiWrapper )
+			]);
 		}
-
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
 		// Check if the user has the proper permissions

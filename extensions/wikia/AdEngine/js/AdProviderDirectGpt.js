@@ -1,43 +1,90 @@
-/* jshint maxparams: false, maxlen: 150 */
 /*global define*/
+/*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'wikia.cache',
 	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
-	'ext.wikia.adEngine.wikiaGptHelper',
-	'ext.wikia.adEngine.gptSlotConfig'
-], function (cacheStorage, Geo, log, window, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+	'ext.wikia.adEngine.gptHelper',
+	'ext.wikia.adEngine.provider.factory.wikiaGpt',
+	'ext.wikia.adEngine.slotTweaker'
+], function (
+	cacheStorage,
+	geo,
+	log,
+	window,
+	adContext,
+	adLogicHighValueCountry,
+	gptHelper,
+	factory,
+	slotTweaker
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
-		srcName = 'gpt',
-		slotMap = slotMapConfig.getConfig(srcName),
+		slotMap = {
+			BOTTOM_LEADERBOARD:         {size: '728x90,300x250', loc: 'bottom'},
+			CORP_TOP_LEADERBOARD:       {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
+			CORP_TOP_RIGHT_BOXAD:       {size: '300x250,300x600,300x1050', loc: 'top'},
+			EXIT_STITIAL_BOXAD_1:       {size: '300x250,600x400,800x450,550x480', loc: 'exit'},
+			HOME_TOP_LEADERBOARD:       {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
+			HOME_TOP_RIGHT_BOXAD:       {size: '300x250,300x600,300x1050', loc: 'top'},
+			HUB_TOP_LEADERBOARD:        {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
+			INCONTENT_1A:               {size: '300x250', loc: 'middle', pos: 'incontent_1'},
+			INCONTENT_1B:               {size: '300x250,160x600', loc: 'middle', pos: 'incontent_1'},
+			INCONTENT_1C:               {size: '300x250,160x600,300x600', loc: 'middle', pos: 'incontent_1'},
+			INCONTENT_2A:               {size: '300x250', loc: 'middle', pos: 'incontent_2'},
+			INCONTENT_2B:               {size: '300x250,160x600', loc: 'middle', pos: 'incontent_2'},
+			INCONTENT_2C:               {size: '300x250,160x600,300x600', loc: 'middle', pos: 'incontent_2'},
+			INCONTENT_3A:               {size: '300x250', loc: 'middle', pos: 'incontent_3'},
+			INCONTENT_3B:               {size: '300x250,160x600', loc: 'middle', pos: 'incontent_3'},
+			INCONTENT_3C:               {size: '300x250,160x600,300x600', loc: 'middle', pos: 'incontent_3'},
+			INCONTENT_BOXAD_1:          {size: '300x250', loc: 'middle'},
+			INCONTENT_LEADERBOARD_1:    {size: '728x90,468x90', loc: 'middle'},
+			INCONTENT_LEADERBOARD_2:    {size: '728x90,468x90', loc: 'middle'},
+			INCONTENT_LEADERBOARD_3:    {size: '728x90,468x90', loc: 'middle'},
+			INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
+			LEFT_SKYSCRAPER_2:          {size: '160x600', loc: 'middle'},
+			LEFT_SKYSCRAPER_3:          {size: '160x600', loc: 'footer'},
+			MODAL_INTERSTITIAL:         {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
+			MODAL_INTERSTITIAL_1:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
+			MODAL_INTERSTITIAL_2:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
+			MODAL_INTERSTITIAL_3:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
+			MODAL_INTERSTITIAL_4:       {size: '300x250,600x400,800x450,550x480', loc: 'modal'},
+			MODAL_INTERSTITIAL_5:       {size: '300x250,300x600,728x90,970x250,160x600', loc: 'modal'},
+			MODAL_RECTANGLE:            {size: '300x100', loc: 'modal'},
+			PREFOOTER_LEFT_BOXAD:       {size: '300x250', loc: 'footer'},
+			PREFOOTER_RIGHT_BOXAD:      {size: '300x250', loc: 'footer'},
+			TOP_LEADERBOARD:            {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
+			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'},
+			GPT_FLUSH: 'flushonly'
+		},
 		forgetAdsShownAfterTime = 3600, // an hour
-		country = Geo.getCountryCode(),
+		country = geo.getCountryCode(),
 		now = window.wgNow || new Date(),
 		maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country),
 		isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country),
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
-		gptConfig,
 		gptFlushed = false,
-		alwaysCallDart = adContext.getContext().opts.alwaysCallDart;
+		alwaysCallDart = adContext.getContext().opts.alwaysCallDart,
 
-	// TODO: integrate this array to slotMap if it makes sense
-	gptConfig = { // slots to use SRA with
-		CORP_TOP_LEADERBOARD: 'wait',
-		HUB_TOP_LEADERBOARD: 'wait',
-		TOP_LEADERBOARD: 'wait',
-		HOME_TOP_LEADERBOARD: 'wait',
-		INVISIBLE_SKIN: 'wait',
-		CORP_TOP_RIGHT_BOXAD: 'flush',
-		TOP_RIGHT_BOXAD: 'flush',
-		HOME_TOP_RIGHT_BOXAD: 'flush',
-		GPT_FLUSH: 'flushonly'
-	};
+		gptConfig = { // slots to use SRA with
+			CORP_TOP_LEADERBOARD: 'wait',
+			HUB_TOP_LEADERBOARD:  'wait',
+			TOP_LEADERBOARD:      'wait',
+			HOME_TOP_LEADERBOARD: 'wait',
+			INVISIBLE_SKIN:       'wait',
+			CORP_TOP_RIGHT_BOXAD: 'flush',
+			TOP_RIGHT_BOXAD:      'flush',
+			HOME_TOP_RIGHT_BOXAD: 'flush',
+			GPT_FLUSH:            'flushonly'
+		},
+
+		factoryFillInSlot = factory.getFillInSlot(logGroup, 'gpt', slotMap, {
+			noFlush: true
+		});
 
 	// Private methods
 
@@ -66,7 +113,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		log('flushGpt', 'debug', logGroup);
 
 		gptFlushed = true;
-		wikiaGpt.flushAds();
+		gptHelper.flushAds();
 	}
 
 	/**
@@ -145,13 +192,13 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		return canHandle;
 	}
 
-	function fillInSlot(slotname, success, hop) {
-		log(['fillInSlot', slotname], 'debug', logGroup);
+	function fillInSlot(slotName, success, hop) {
+		log(['fillInSlot', slotName], 'debug', logGroup);
 
-		var noAdStorageKey = getStorageKey('noad', slotname),
-			numCallForSlotStorageKey = getStorageKey('calls', slotname);
+		var noAdStorageKey = getStorageKey('noad', slotName),
+			numCallForSlotStorageKey = getStorageKey('calls', slotName);
 
-		if (gptConfig[slotname] === 'flushonly') {
+		if (gptConfig[slotName] === 'flushonly') {
 			flushGpt();
 			success();
 			return;
@@ -160,27 +207,19 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		incrementItemInStorage(numCallForSlotStorageKey);
 		cacheStorage.del(noAdStorageKey);
 
-		wikiaGpt.pushAd(
-			slotname,
-			function (adInfo) { // Success
-				slotTweaker.removeDefaultHeight(slotname);
-				slotTweaker.removeTopButtonIfNeeded(slotname);
-				slotTweaker.adjustLeaderboardSize(slotname);
+		factoryFillInSlot(slotName, function (adInfo) {
+			// Success
+			slotTweaker.removeDefaultHeight(slotName);
+			slotTweaker.removeTopButtonIfNeeded(slotName);
+			slotTweaker.adjustLeaderboardSize(slotName);
+			success(adInfo);
+		}, function (adInfo) {
+			// Hop
+			cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
+			hop(adInfo);
+		});
 
-				success(adInfo);
-			},
-			function (adInfo) { // Hop
-				log(slotname + ' was not filled by DART', 'info', logGroup);
-				cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
-
-				// hop to Liftium
-				adInfo.method = 'hop';
-				hop(adInfo);
-			},
-			srcName
-		);
-
-		if (gptConfig[slotname] === 'flush' || gptFlushed) {
+		if (gptConfig[slotName] === 'flush' || gptFlushed) {
 			flushGpt();
 		}
 	}
