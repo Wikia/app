@@ -146,6 +146,8 @@
 			if (typeof args[i] === 'function') {
                 window.ga(args[i]);
 				continue;
+			} else if (args[i][0] === 'send' && args[i].length === 7) {
+				args[i][6] = {'nonInteraction': args[i][6]};
 			}
 			window.ga.apply(window, args[i]);
 
@@ -352,7 +354,7 @@
 	 *
 	 * Has the same parameters as _trackEvent.
 	 * eg:
-	 *    gaTrackAdEvent('Impression', 'Top Banner', 'AdId');
+	 *    guaTrackAdEvent('Impression', 'Top Banner', 'AdId');
 	 *
 	 * @param {string} category Event Category.
 	 * @param {string} action Event Action.
@@ -360,11 +362,16 @@
 	 * @param {number} [opt_value=0] Event Value. Have to be an integer.
 	 * @param {boolean} [opt_noninteractive=false] Event noInteractive.
 	 */
-	window.gaTrackAdEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
+	window.guaTrackAdEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
 		var args, adHitSample = 1; //1%
 		if (Math.random() * 100 <= adHitSample) {
 			args = Array.prototype.slice.call(arguments);
-			args.unshift('ads.send');
+
+			if (args.length === 7) {
+				args[6] = {'nonInteraction': args[6]};
+			}
+
+			args.unshift('ads.send', 'event');
 			try {
                 window.ga.apply(window, args);
 			} catch (e) {}
@@ -387,9 +394,13 @@
 	 * @param {number} [opt_value=0] Event Value. Have to be an integer.
 	 * @param {boolean} [opt_noninteractive=false] Event noInteractive.
 	 */
-	window.gaTrackEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
+	window.guaTrackEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
 		var args = Array.prototype.slice.call(arguments);
-		args.unshift('send');
+		if (args.length === 7) {
+			args[6] = {'nonInteraction': args[6]};
+		}
+
+		args.unshift('send', 'event');
 		try {
 			_gaWikiaPush(args);
 		} catch (e) {}
@@ -401,9 +412,9 @@
 	 * @param {string} fakePage The fake URL to track. This should begin with a leading '/'.
 	 * @param {string} opt_namespace Namespace of the pageview. Used in GA reporting.
 	 */
-	window.gaTrackPageview = function (fakePage, opt_namespace) {
+	window.guaTrackPageview = function (fakePage, opt_namespace) {
 		var nsPrefix = (opt_namespace) ? opt_namespace + '.' : '';
-		_gaWikiaPush([nsPrefix + 'send', fakePage]);
+		_gaWikiaPush([nsPrefix + 'send', 'pageview', fakePage]);
 	};
 
 }(window));
