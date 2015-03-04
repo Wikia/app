@@ -12,6 +12,8 @@ class UserTest extends \WikiaBaseTest {
 		$this->webRequestMock = $this->getMock( '\WebRequest', [ 'getHeader' ], [], '', false );
 		$this->mockGlobalVariable( 'wgHeliosLoginSamplingRate', 100 );
 		$this->mockGlobalVariable( 'wgHeliosLoginShadowMode', false );
+		User::purgeAuthenticationCache();
+
 		parent::setUp();
 	}
 
