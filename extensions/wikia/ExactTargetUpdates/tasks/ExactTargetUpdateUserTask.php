@@ -26,6 +26,8 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		/* Subscriber list contains unique emails
 		 * Assuming email may be new - try to create subscriber object using the email */
 		$oCreateUserTask = $this->getCreateUserTask();
+		// Pass task ID to have all logs under one task
+		$oCreateUserTask->taskId( $this->getTaskId() );
 		$oCreateUserTask->createSubscriber( $sUserEmail );
 
 		/* Update email in user data extension */
@@ -35,8 +37,20 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		];
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateRequest( $aApiParams );
+		$oUpdateUserEmailResult = $oApiDataExtension->updateRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUserEmailResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateUserEmailResult ) );
+
+		if ( $oUpdateUserEmailResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oUpdateUserEmailResult->Results->StatusMessage
+			);
+		}
+
+		return $oUpdateUserEmailResult->Results->StatusMessage;
 	}
 
 	/**

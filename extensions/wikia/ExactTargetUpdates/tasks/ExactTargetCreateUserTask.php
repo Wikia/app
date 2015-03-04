@@ -12,6 +12,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
+		// Pass task ID to have all logs under one task
 		$oDeleteUserTask->taskId( $this->getTaskId() );
 		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
 
