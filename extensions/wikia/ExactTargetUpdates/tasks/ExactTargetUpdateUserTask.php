@@ -61,8 +61,20 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	public function addUserGroup( $iUserId, $sGroup ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserGroupCreateParams( $iUserId, [ $sGroup ] );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->createRequest( $aApiParams );
+		$oAddUserGroupResult = $oApiDataExtension->createRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oAddUserGroupResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oAddUserGroupResult ) );
+
+		if ( $oAddUserGroupResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oAddUserGroupResult->Results->StatusMessage
+			);
+		}
+
+		return $oAddUserGroupResult->Results->StatusMessage;
 	}
 
 	/**
@@ -73,8 +85,20 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	public function removeUserGroup( $iUserId, $sGroup ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserGroupRemoveParams( $iUserId, [ $sGroup ] );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->deleteRequest( $aApiParams );
+		$oRemoveUserGroupResult = $oApiDataExtension->deleteRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oRemoveUserGroupResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oRemoveUserGroupResult ) );
+
+		if ( $oRemoveUserGroupResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oRemoveUserGroupResult->Results->StatusMessage
+			);
+		}
+
+		return $oRemoveUserGroupResult->Results->StatusMessage;
 	}
 
 	/**
@@ -85,8 +109,20 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	public function updateUserPropertiesData( $aUserData, $aUserProperties ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $aUserData['user_id'], $aUserProperties );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateRequest( $aApiParams );
+		$oUpdateUserPropertiesResult = $oApiDataExtension->updateRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUserPropertiesResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateUserPropertiesResult ) );
+
+		if ( $oUpdateUserPropertiesResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oUpdateUserPropertiesResult->Results[0]->StatusMessage
+			);
+		}
+
+		return $oUpdateUserPropertiesResult->Results[0]->StatusMessage;
 	}
 
 	/**
@@ -121,7 +157,19 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		// Send update request to update number of edits
 		$oApiDataExtension = $this->getApiDataExtension();
 		$aApiParams = $oHelper->prepareUserEditsUpdateParams( $aUsersEditsData );
-		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
+		$oUpdateUsersEditsResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUsersEditsResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateUsersEditsResult ) );
+
+		if ( $oUpdateUsersEditsResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oUpdateUsersEditsResult->Results[0]->StatusMessage
+			);
+		}
+
+		return $oUpdateUsersEditsResult->Results[0]->StatusMessage;
 	}
 
 }
