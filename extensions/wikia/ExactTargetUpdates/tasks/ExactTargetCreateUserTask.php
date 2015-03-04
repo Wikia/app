@@ -12,13 +12,28 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
-		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
+		$deleteTaskResult = $oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
+		$this->info( 'deleteSubscriber OverallStatus: ' . $deleteTaskResult->OverallStatus );
+		$this->info( 'deleteSubscriber result: ' . json_encode( (array)$deleteTaskResult ) );
+
 		/* Create Subscriber with new email */
-		$this->createSubscriber( $aUserData['user_email'] );
+		$createSubscriberResult = $this->createSubscriber( $aUserData['user_email'] );
+		$this->info( 'createSubscriber OverallStatus: ' . $createSubscriberResult->OverallStatus );
+		$this->info( 'createSubscriber result: ' . json_encode( (array)$createSubscriberResult ) );
+
 		/* Create User DataExtension with new email */
-		$this->createUser( $aUserData );
+		$createUserResult = $this->createUser( $aUserData );
+		$this->info( 'createUser OverallStatus: ' . $createUserResult->OverallStatus );
+		$this->info( 'createUser result: ' . json_encode( (array)$createUserResult ) );
+
 		/* Create User Properties DataExtension with new email */
-		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
+		$createUserPropertiesResult =  $this->createUserProperties( $aUserData['user_id'], $aUserProperties );
+		$this->info( 'createUserProperties OverallStatus: ' . $createUserPropertiesResult->OverallStatus );
+		$this->info( 'createUserProperties result: ' . json_encode( (array)$createUserPropertiesResult ) );
+		return (
+			$createUserPropertiesResult->OverallStatus !== 'Error'
+			&& $createUserResult->OverallStatus !== 'Error'
+		);
 	}
 
 	/**
@@ -29,7 +44,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareSubscriberData( $sUserEmail );
 		$oApiDataExtension = $this->getApiSubscriber();
-		$oApiDataExtension->createRequest( $aApiParams );
+		return $oApiDataExtension->createRequest( $aApiParams );
 	}
 
 	/**
@@ -40,7 +55,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+		return $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 	}
 
 	/**
@@ -52,7 +67,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+		return $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 	}
 
 
