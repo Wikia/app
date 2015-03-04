@@ -16,7 +16,9 @@ require([
 		adSlotsInContent.init(elementsBeforeSlots, maxSlots);
 	}
 
-	if (adContext.getContext().opts.pageType !== 'corporate') {
+	var context = adContext.getContext();
+
+	if (context.opts.pageType !== 'corporate' && context.targeting.pageType !== 'home') {
 		$(doc).ready(init);
 	}
 });
