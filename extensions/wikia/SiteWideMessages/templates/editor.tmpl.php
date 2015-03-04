@@ -166,6 +166,29 @@
 
 						<tr>
 							<td>
+								<input name="mSendModeUsers" id="mSendModeUsersPU" type="radio" value="POWERUSER"<?= $formData['sendModeUsers'] == 'POWERUSER' ? ' checked="checked"' : ''?>/>
+							</td>
+							<td>
+								<label for="mSendModeUsersPU"><?= wfMessage( 'swm-label-mode-users-poweruser' )->escaped() ?></label>
+							</td>
+							<td>
+								<select name="mPowerUserTypeS" id="mPowerUserTypeS">
+									<?php
+									foreach ( $formData['powerUserTypes'] as $powerUserType ) {
+										$powerUserType = Sanitizer::escapeHtmlAllowEntities( $powerUserType );
+										$selected = $powerUserType == $formData['powerUserTypeS'] ? ' selected="selected"' : '';
+										echo "\t\t\t\t\t\t\t\t<option value=\"$powerUserType\"$selected>$powerUserType</option>\n";
+									}
+									?>
+								</select>
+							</td>
+							<td class="swm-hint">
+								<?= wfMessage( 'swm-label-mode-users-poweruser-hint' )->parse() ?>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
 								<input name="mSendModeUsers" id="mSendModeUsersU" type="radio" value="USER"<?= $formData['sendModeUsers'] == 'USER' ? ' checked="checked"' : ''?>/>
 							</td>
 							<td>
