@@ -70,7 +70,7 @@ define('wikia.preview', [
 					'overflow-x': 'hidden'
 				});
 
-				$previewMsgNode.on('click', 'a', function(){
+				$previewMsgNode.on('click', 'a', function () {
 					tracker.track({
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'edit-preview',
