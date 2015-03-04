@@ -34,6 +34,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function createSubscriber( $sUserEmail ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareSubscriberData( $sUserEmail );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiSubscriber();
 
 		$createSubscriberResult = $oApiDataExtension->createRequest( $aApiParams );
@@ -49,6 +50,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function createUser( $aUserData ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
 
 		$oCreateUserResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
@@ -58,7 +60,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 
 		if ( $oCreateUserResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
-				'Error on createUser: ' . $oCreateUserResult->Results->StatusMessage
+				'Error in ' . __METHOD__ . ': ' . $oCreateUserResult->Results->StatusMessage
 			);
 		}
 	}
@@ -71,6 +73,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function createUserProperties( $iUserId, array $aUserProperties ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oCreateUserPropertiesResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 
@@ -79,7 +82,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 
 		if ( $oCreateUserPropertiesResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
-				'Error on createUser: ' . $oCreateUserPropertiesResult->Results->StatusMessage
+				'Error in ' . __METHOD__ . ': ' . $oCreateUserPropertiesResult->Results[0]->StatusMessage
 			);
 		}
 	}

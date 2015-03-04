@@ -23,9 +23,12 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 		if ( !$this->isEmailInUse( $sUserEmail, $iUserId ) ) {
 			$oHelper = $this->getUserHelper();
 			$aApiParams = $oHelper->prepareSubscriberDeleteData( $sUserEmail );
-			$deleteResult = $this->doDeleteSubscriber( $aApiParams );
-			$this->info( __METHOD__ . ' OverallStatus: ' . $deleteResult->OverallStatus );
-			$this->info( __METHOD__ . ' result: ' . json_encode( (array)$deleteResult ) );
+			$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
+
+			$oDeleteSubscriberResult = $this->doDeleteSubscriber( $aApiParams );
+
+			$this->info( __METHOD__ . ' OverallStatus: ' . $oDeleteSubscriberResult->OverallStatus );
+			$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oDeleteSubscriberResult ) );
 		}
 		$this->info(__METHOD__ . ': Email in use by different account (record). Removal skipped.');
 	}
@@ -36,7 +39,7 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	 */
 	private function doDeleteSubscriber( array $aApiParams ) {
 		$oApiSubscriber = $this->getApiSubscriber();
-		$oApiSubscriber->deleteRequest( $aApiParams );
+		return $oApiSubscriber->deleteRequest( $aApiParams );
 	}
 
 	/**
@@ -47,8 +50,13 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	public function deleteUser( $iUserId ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserDeleteParams( $iUserId );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->deleteRequest( $aApiParams );
+
+		$oDeleteUserResult = $oApiDataExtension->deleteRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oDeleteUserResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oDeleteUserResult ) );
 	}
 
 	/**
@@ -59,8 +67,13 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	public function deleteUserProperties( $iUserId ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesDeleteParams( $iUserId );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->deleteRequest( $aApiParams );
+
+		$oDeleteUserPropertiesResult = $oApiDataExtension->deleteRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oDeleteUserPropertiesResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oDeleteUserPropertiesResult ) );
 	}
 
 	/**
