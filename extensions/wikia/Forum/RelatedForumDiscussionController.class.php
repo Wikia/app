@@ -88,10 +88,10 @@ class RelatedForumDiscussionController extends WikiaController {
 			WikiaDataAccess::cachePurge( $key );
 			// VOLDEV-46: Update module by purging page, not via AJAX
 			$wikiaPage = WikiPage::newFromID( $id );
-			if ( !empty( $wikiaPage ) ) {
+			if ( $wikiaPage ) {
 				$wikiaPage->doPurge();
 			} else {
-				self::logError( "doPurge() attempted on non-object", [ "articleID" => $id ] );
+				self::logError( "Found a null related wikipage on thread purge", [ "articleID" => $id, "threadID" => $threadId ] );
 			}
 		}
 	}
