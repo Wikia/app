@@ -233,5 +233,6 @@
 	"visualeditor-viewpage-savewarning-title": "Είσαι σίγουρος;",
 	"visualeditor-wikitext-warning": "Χρησιμοποιείτε τον VisualEditor - Ο [[{{MediaWiki:visualeditor-wikitext-warning-link}}|κώδικας wiki]] δεν λειτουργεί εδώ. Για να γυρίσετε σε επεξεργασία κώδικα σε οποιαδήποτε στιγμή χωρίς να χάσετε τις αλλαγές σας, ανοίξτε το πτυσσόμενο μενού δίπλα από το \"{{int:visualeditor-toolbar-savedialog}}\" και επιλέξτε \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "Help:Κώδικας wiki",
-	"visualeditor-wikitext-warning-title": "Ανιχνεύθηκε πηγαίος κώδικας (wikitext)"
+	"visualeditor-wikitext-warning-title": "Ανιχνεύθηκε πηγαίος κώδικας (wikitext)",
+	"visualeditor-dialog-media-insert-title": "Εισαγωγή πολυμέσου"
 }

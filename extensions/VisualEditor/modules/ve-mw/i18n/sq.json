@@ -199,5 +199,6 @@
 	"visualeditor-viewpage-savewarning": "Dësironi të ktheheni në modalitetin e vizualizimit pa kryer ndryshimet?",
 	"visualeditor-wikitext-warning": "Jeni duke përdorur VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiteksti]] nuk suprtohet nga ky mjet. Shtyp \"{{int:visualeditor-ca-editsource}}\" për të redaktuar tekstin burimor të faqes – ndryshimet e paruajtura do të fshihen.",
 	"visualeditor-wikitext-warning-link": "Help:Sintaksa wiki",
-	"visualeditor-wikitext-warning-title": "U zbulua wikitekst"
+	"visualeditor-wikitext-warning-title": "U zbulua wikitekst",
+	"visualeditor-dialog-media-insert-title": "Shto skedarë multimedialë"
 }

@@ -178,5 +178,6 @@
 	"visualeditor-viewpage-savewarning": "É-lo sigur ëd vorèj andé andré a la manera preuva sensa salvé prima?",
 	"visualeditor-wikitext-warning": "A l'é an camin ch'a deuvra l'Editor visual - ël [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitest]] a marcia nen ambelessì. Ch'a sgnaca su «{{int:visualeditor-ca-editsource}}» për modifiché la pàgina an manera wikitest - le modìfiche nen salvà a saran përdùe.",
 	"visualeditor-wikitext-warning-link": "Help:Wiki markup",
-	"visualeditor-wikitext-warning-title": "Tichëttagi wikitest trovà"
+	"visualeditor-wikitext-warning-title": "Tichëttagi wikitest trovà",
+	"visualeditor-dialog-media-insert-title": "Anserì ël mojen"
 }

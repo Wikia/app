@@ -82,5 +82,6 @@
 	"visualeditor-savedialog-title-save": "Съхраняване на промените",
 	"visualeditor-saveerror": "Грешка при съхраняване на данните на сървъра: $1",
 	"visualeditor-serializeerror": "Грешка при зареждане на данните от сървъра: $1",
-	"visualeditor-toolbar-savedialog": "Съхраняване на страницата"
+	"visualeditor-toolbar-savedialog": "Съхраняване на страницата",
+	"visualeditor-dialog-media-insert-title": "Вмъкване на мултимедия"
 }

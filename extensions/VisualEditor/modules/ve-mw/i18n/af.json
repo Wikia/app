@@ -87,5 +87,6 @@
 	"visualeditor-saveerror": "Fout tydens stoor van data na die bediener: $1.",
 	"visualeditor-serializeerror": "Fout tydens laai van data vanaf die bediener: $1",
 	"visualeditor-toolbar-savedialog": "Stoor bladsy",
-	"visualeditor-usernamespacepagelink": "Project:Gebruikersnaamruimte"
+	"visualeditor-usernamespacepagelink": "Project:Gebruikersnaamruimte",
+	"visualeditor-dialog-media-insert-title": "Voeg media by"
 }

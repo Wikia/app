@@ -217,5 +217,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Jätka redigeerimist",
 	"visualeditor-viewpage-savewarning-title": "Kas oled kindel?",
 	"visualeditor-wikitext-warning": "Kasutad VisualEditori. [[{{MediaWiki:visualeditor-wikitext-warning-link}}|Vikitekst]] siin ei tööta. Et minna tagasi lähteteksti redigeerimise režiimi iga hetk ilma muudatusi kaotamata, ava nupu \"{{int:visualeditor-toolbar-savedialog}}\" kõrval rippmenüü ja vali \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "Tuvastatud vikiteksti märgistus"
+	"visualeditor-wikitext-warning-title": "Tuvastatud vikiteksti märgistus",
+	"visualeditor-dialog-media-insert-title": "Meediafaili lisamine"
 }

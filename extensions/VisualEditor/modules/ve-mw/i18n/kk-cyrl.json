@@ -222,5 +222,6 @@
 	"visualeditor-viewpage-savewarning-title": "Сенімдісіз бе?",
 	"visualeditor-wikitext-warning": "Сіз VisualEditor қолданудасыз - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|уикимәтін]] мұнда жұмыс істемейді. Кез келген уақытта қайнарын өңдеуге ауыса алысыз, бірақ жасаған өзгерістеріңіз жоғалады. Келесі сырмалыны ашыңыз \"{{int:visualeditor-toolbar-savedialog}}\" және \"{{int:visualeditor-mweditmodesource-title}}\" дегенді таңдаңыз.",
 	"visualeditor-wikitext-warning-link": "Help:Wiki markup",
-	"visualeditor-wikitext-warning-title": "Уикимәтін белгі салуы табылды"
+	"visualeditor-wikitext-warning-title": "Уикимәтін белгі салуы табылды",
+	"visualeditor-dialog-media-insert-title": "Медиа кірістіру"
 }

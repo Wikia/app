@@ -153,5 +153,6 @@
 	"visualeditor-savedialog-warning-dirty": "Etdiyiniz dəyişikliklərdə səhv ola bilər – lütfən yadda saxlamazdan əvvəl yoxlayın.",
 	"visualeditor-saveerror": "Yaddaşda qeyd edilərkən xəta oldu: $1.",
 	"visualeditor-serializeerror": "Yaddaşda yüklənərkən xəta oldu: $1.",
-	"visualeditor-toolbar-savedialog": "Yadda saxla"
+	"visualeditor-toolbar-savedialog": "Yadda saxla",
+	"visualeditor-dialog-media-insert-title": "Media-faylın daxil edilməsi"
 }

@@ -199,5 +199,6 @@
 	"visualeditor-viewpage-savewarning": "क्या आप सचमुच सहेजे बिना दृश्य मोड में वापिस जाना चाहते हैं?",
 	"visualeditor-wikitext-warning": "आप यथादृश्य संपादिका का प्रयोग कर रहे हैं। इसमें [[{{MediaWiki:visualeditor-wikitext-warning-link}}|विकिपाठ]] काम नहीं करता है। पृष्ठ के विकिपाठ में किये सम्पादनों को खोये बिना स्रोत सम्पादित करने के लिए \"{{int:visualeditor-toolbar-savedialog}}\" अगला ड्रोप-डाउन मेन्यु खोलें और \"{{int:visualeditor-mweditmodesource-title}}\" को चुनें।",
 	"visualeditor-wikitext-warning-link": "Help:विकि विन्यास",
-	"visualeditor-wikitext-warning-title": "विकिपाठ विन्यास पाया गया"
+	"visualeditor-wikitext-warning-title": "विकिपाठ विन्यास पाया गया",
+	"visualeditor-dialog-media-insert-title": "मीडिया सम्मिलित करें"
 }

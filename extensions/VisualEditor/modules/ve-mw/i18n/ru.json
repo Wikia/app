@@ -260,5 +260,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Продолжить редактирование",
 	"visualeditor-viewpage-savewarning-title": "Вы уверены?",
 	"visualeditor-wikitext-warning": "Вы используете Визуальный редактор — [[{{MediaWiki:visualeditor-wikitext-warning-link}}|вики-разметка]] здесь не работает. НЧтобы в любое время переключиться назад на редактирование исходного текста без потери изменений, откройте раскрывающийся список рядом с «{{int:visualeditor-toolbar-savedialog}}» и выберите «{{int:visualeditor-mweditmodesource-title}}».",
-	"visualeditor-wikitext-warning-title": "Обнаружена вики-разметка"
+	"visualeditor-wikitext-warning-title": "Обнаружена вики-разметка",
+	"visualeditor-dialog-media-insert-title": "Вставка медиа-файла"
 }

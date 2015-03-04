@@ -249,5 +249,6 @@
 	"visualeditor-viewpage-savewarning-title": "Weet u het zeker?",
 	"visualeditor-wikitext-warning": "U bevindt zich in de visuele tekstverwerker. [[{{MediaWiki:visualeditor-wikitext-warning-link}}|Wikitekst]] werkt hier niet. Om op elk moment over te schakelen naar de wikitekstmodus zonder uw veranderingen te verliezen, opent u het uitklaplijstje naast \"{{int:visualeditor-toolbar-savedialog}}\" en selecteert u \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "Help:Wikitekst",
-	"visualeditor-wikitext-warning-title": "Wikitekst gedetecteerd"
+	"visualeditor-wikitext-warning-title": "Wikitekst gedetecteerd",
+	"visualeditor-dialog-media-insert-title": "Media invoegen"
 }

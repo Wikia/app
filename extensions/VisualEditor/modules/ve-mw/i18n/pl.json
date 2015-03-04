@@ -252,5 +252,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Kontynuuj edycję",
 	"visualeditor-viewpage-savewarning-title": "Na pewno?",
 	"visualeditor-wikitext-warning": "Używasz teraz VisualEditora –  a tu [[{{MediaWiki:visualeditor-wikitext-warning-link}}|znaczniki kodu źródłowego]] nie działają. W każdej chwili bez utraty zmian możesz przełączyć się na edycję kodu źródłowego. Aby przełączyć, otwórz rozwijalne menu obok „{{int:visualeditor-toolbar-savedialog}}” i kliknij „{{int:visualeditor-mweditmodesource-title}}”.",
-	"visualeditor-wikitext-warning-title": "Znaleziono znaczniki kodu źródłowego"
+	"visualeditor-wikitext-warning-title": "Znaleziono znaczniki kodu źródłowego",
+	"visualeditor-dialog-media-insert-title": "Wstaw multimedia"
 }

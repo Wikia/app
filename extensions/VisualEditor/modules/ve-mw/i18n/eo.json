@@ -117,5 +117,6 @@
 	"visualeditor-serializeerror": "Eraro dum ŝutado de datumoj de servilo: $1.",
 	"visualeditor-toolbar-savedialog": "Konservi paĝon",
 	"visualeditor-usernamespacepagelink": "Project:Ĉefa nomspaco",
-	"visualeditor-viewpage-savewarning": "Ĉu vi vere volas reveni al montra reĝimo sen konservo?"
+	"visualeditor-viewpage-savewarning": "Ĉu vi vere volas reveni al montra reĝimo sen konservo?",
+	"visualeditor-dialog-media-insert-title": "Enigi aŭdvidaĵon"
 }

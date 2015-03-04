@@ -259,5 +259,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Continuar a editar",
 	"visualeditor-viewpage-savewarning-title": "Tem a certeza?",
 	"visualeditor-wikitext-warning": "Está a utilizar o Editor Visual - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|códigos wiki]] não funcionam aqui. Para regressar ao modo de edição do código a qualquer momento sem perder as suas alterações, abra o menu suspenso perto de \"{{int:visualeditor-toolbar-savedialog}}\" e seleccione \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "Código de wikitexto detectado"
+	"visualeditor-wikitext-warning-title": "Código de wikitexto detectado",
+	"visualeditor-dialog-media-insert-title": "Inserir média"
 }

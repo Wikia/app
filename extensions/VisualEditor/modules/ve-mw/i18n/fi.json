@@ -244,5 +244,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Jatka muokkaamista",
 	"visualeditor-viewpage-savewarning-title": "Oletko varma?",
 	"visualeditor-wikitext-warning": "Käytät Visuaalista muokkainta – [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiteksti]] ei toimi täällä. Vaihtaaksesi wikitekstin muokkautilaan milloin tahansa ilman, että menetät tekemiäsi muutoksia, avaa \"{{int:visualeditor-toolbar-savedialog}}\"-painikkeen vieressä oleva alasvetovalikko ja valitse \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "Wikikoodia havaittu"
+	"visualeditor-wikitext-warning-title": "Wikikoodia havaittu",
+	"visualeditor-dialog-media-insert-title": "Lisää mediatiedosto"
 }

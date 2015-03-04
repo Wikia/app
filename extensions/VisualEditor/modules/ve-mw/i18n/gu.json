@@ -187,5 +187,6 @@
 	"visualeditor-viewpage-savewarning-title": "શું તમે ચોક્કસ છો?",
 	"visualeditor-wikitext-warning": "તમે વિઝ્યુલસંપાદક ઉપયોગ કરી રહ્યા છો - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|વિકિલખાણ]] અહીં કામ કરશે નહી. \"{{int:visualeditor-ca-editsource}}\" પર ક્લિક કરી પાનાંને વિકિલખાણ સ્થિતિમાં સંપાદિત કરો – ન સાચવેલ ફેરફારો નાશ પામશે.",
 	"visualeditor-wikitext-warning-link": "Help:વિકિ માર્કઅપ",
-	"visualeditor-wikitext-warning-title": "વિકિલખાણ માર્કઅપ દેખાયું"
+	"visualeditor-wikitext-warning-title": "વિકિલખાણ માર્કઅપ દેખાયું",
+	"visualeditor-dialog-media-insert-title": "મીડિયા ઉમેરો"
 }

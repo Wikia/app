@@ -198,5 +198,6 @@
 	"visualeditor-viewpage-savewarning": "സേവ് ചെയ്യാതെ തന്നെ കണ്ടുനോക്കൽ തലത്തിലേയ്ക്ക് തിരിച്ചു പോകണം എന്ന് താങ്കൾക്കുറപ്പാണോ?",
 	"visualeditor-wikitext-warning": "താങ്കൾ കണ്ടുതിരുത്തൽ സൗകര്യമാണ് ഉപയോഗിക്കുന്നത് - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|വിക്കി എഴുത്തുകൾ]] ഇവിടെ പ്രവർത്തിക്കുകയില്ല. താൾ വിക്കി എഴുത്ത് രീതിയിൽ തിരുത്തുവാൻ \"{{int:visualeditor-ca-editsource}}\" ഞെക്കുക - സേവ് ചെയ്യാത്ത മാറ്റങ്ങൾ നഷ്ടമാവുന്നതാണ്.",
 	"visualeditor-wikitext-warning-link": "Help:വിക്കി ഭാഷ",
-	"visualeditor-wikitext-warning-title": "വിക്കി എഴുത്തുകൾ ഉണ്ട്"
+	"visualeditor-wikitext-warning-title": "വിക്കി എഴുത്തുകൾ ഉണ്ട്",
+	"visualeditor-dialog-media-insert-title": "മീഡിയ ചേർക്കുക"
 }

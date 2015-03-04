@@ -261,5 +261,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Agtuloy nga agurnos",
 	"visualeditor-viewpage-savewarning-title": "Siguradoka kadi?",
 	"visualeditor-wikitext-warning": "Agus-usarka ti VisualEditor - ti [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] ket saan a mabalin ditoy. Ti agsubli iti panagurnos iti taudan iti aniaman a panawen a saan a makapukaw kadagiti binaliwam, lukatan ti agpababa nga asideg ti \"{{int:visualeditor-toolbar-savedialog}}\" ken pilien ti \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "nakadukatal ti wikitext a panagsurat"
+	"visualeditor-wikitext-warning-title": "nakadukatal ti wikitext a panagsurat",
+	"visualeditor-dialog-media-insert-title": "Isengngat ti midia"
 }

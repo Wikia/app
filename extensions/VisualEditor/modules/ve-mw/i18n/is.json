@@ -123,5 +123,6 @@
 	"visualeditor-usernamespacepagelink": "Project:Notandanafnrými",
 	"visualeditor-viewpage-savewarning": "Ertu viss um að þú viljir fara í skoðunarham án þess að vista fyrst ?",
 	"visualeditor-wikitext-warning": "Þú ert að nota Visual Editor — [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitexti]] virkar ekki hér. Smelltu á „{{int:visualeditor-ca-editsource}}“ til að breyta wikitexta síðunnar — óvistuðum breytingum verður eytt.",
-	"visualeditor-wikitext-warning-title": "Wixitextakóði fannst"
+	"visualeditor-wikitext-warning-title": "Wixitextakóði fannst",
+	"visualeditor-dialog-media-insert-title": "Setja inn margmiðlunarskrá"
 }

@@ -253,5 +253,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Continuă editarea",
 	"visualeditor-viewpage-savewarning-title": "Sunteți sigur(ă)?",
 	"visualeditor-wikitext-warning": "Folosiți EditorulVizual — [[{{MediaWiki:visualeditor-wikitext-warning-link}}|textul wiki]] nu funcționează aici. Pentru a reveni în orice moment la editarea codului sursă fără a pierde modificările, deschideți meniul de lângă „{{int:visualeditor-toolbar-savedialog}}” și selectați „{{int:visualeditor-mweditmodesource-title}}”.",
-	"visualeditor-wikitext-warning-title": "Limbaj de text wiki detectat"
+	"visualeditor-wikitext-warning-title": "Limbaj de text wiki detectat",
+	"visualeditor-dialog-media-insert-title": "Inserare element media"
 }

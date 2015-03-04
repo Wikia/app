@@ -273,5 +273,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Weiter bearbeiten",
 	"visualeditor-viewpage-savewarning-title": "Bist du sicher?",
 	"visualeditor-wikitext-warning": "Du benutzt VisualEditor. [[{{MediaWiki:visualeditor-wikitext-warning-link}}|Wikitext]] funktioniert hier nicht. Um jederzeit ohne Verlust deiner Änderungen zur Quelltextbearbeitung zu wechseln, öffne das Dropdown-Menü neben „{{int:visualeditor-toolbar-savedialog}}“ und wähle „{{int:visualeditor-mweditmodesource-title}}“ aus. Verlustfrei zum VisualEditor zurückzuwechseln ist derzeit nicht möglich.",
-	"visualeditor-wikitext-warning-title": "Wikitext entdeckt"
+	"visualeditor-wikitext-warning-title": "Wikitext entdeckt",
+	"visualeditor-dialog-media-insert-title": "Medium einfügen"
 }

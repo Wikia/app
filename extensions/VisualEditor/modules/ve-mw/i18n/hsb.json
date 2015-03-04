@@ -190,5 +190,6 @@
 	"visualeditor-viewpage-savewarning": "Chceš so woprawdźe k napohladowemu modusej wróćić, bjeztoho zo by prjedy składował?",
 	"visualeditor-wikitext-warning": "Wužiwaš VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitekst]] tu njefunguje. Klikń na \"{{int:visualeditor-ca-editsource}}\", zo by stronu we wikitekstowym modusu wobdźěłał – njeskładowane změny so zhubja.",
 	"visualeditor-wikitext-warning-link": "Help:Wikitekst",
-	"visualeditor-wikitext-warning-title": "Wikitekst namakany"
+	"visualeditor-wikitext-warning-title": "Wikitekst namakany",
+	"visualeditor-dialog-media-insert-title": "Medij zasadźić"
 }

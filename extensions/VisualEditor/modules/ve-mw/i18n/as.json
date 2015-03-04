@@ -212,5 +212,6 @@
 	"visualeditor-viewpage-savewarning-keep": "সম্পাদনা অব্যাহত ৰাখক",
 	"visualeditor-wikitext-warning": "আপুনি ভিজুৱেল‌এডিটৰ ব্যৱহাৰ কৰি আছে - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|ৱিকিপাঠ্য]]ই ইয়াত কাম নকৰে। আপোনাৰ সালসমনিসমূহ হেৰাই নোযোৱাকৈ উৎস সম্পাদনালৈ ঘূৰি যাবৰ বাবে \"{{int:visualeditor-toolbar-savedialog}}\"-ৰ কাষৰ ড্ৰপ্‌ডাউন মেনুত ক্লিক কৰক আৰু \"{{int:visualeditor-mweditmodesource-title}}\" বাছনি কৰক।",
 	"visualeditor-wikitext-warning-link": "Help:ৱিকি মাৰ্কাআপ",
-	"visualeditor-wikitext-warning-title": "ৱিকিপাঠ্য মাৰ্কআপ চিনাক্ত কৰা হৈছে"
+	"visualeditor-wikitext-warning-title": "ৱিকিপাঠ্য মাৰ্কআপ চিনাক্ত কৰা হৈছে",
+	"visualeditor-dialog-media-insert-title": "মিডিয়া যোগ কৰক"
 }

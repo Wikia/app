@@ -207,5 +207,6 @@
 	"visualeditor-viewpage-savewarning-title": "איר זענט זיכער?",
 	"visualeditor-wikitext-warning": "איר ניצט וויזועל־רעדאקטירער - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|וויקיטעקסט]] ארבעט נישט דא.  כדי אריבערצוגיין צו קוואלטעקסט־רעדאקטירונג נאר ווען, אן צו פארלירן אײַערע ענדערונגען, עפנט דעם אראפלאז-מעניו לעבן \"{{int:visualeditor-toolbar-savedialog}}\" און קלויבט \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "Help:Wiki markup",
-	"visualeditor-wikitext-warning-title": "וויקי־קאד געטראפֿן"
+	"visualeditor-wikitext-warning-title": "וויקי־קאד געטראפֿן",
+	"visualeditor-dialog-media-insert-title": "ארײַנגעבן מעדיע"
 }

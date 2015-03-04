@@ -109,5 +109,6 @@
 	"visualeditor-viewpage-savewarning": "Da li ste sigurni da se želite vratiti na mod pregledavanja prije nego što snimite?",
 	"visualeditor-wikitext-warning": "Koristite VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] ovdje ne radi. Kliknite \"{{int:visualeditor-ca-editsource}}\" da uredite stranicu u wikitext modu – nesnimljene izmjene će biti izgubljene.",
 	"visualeditor-wikitext-warning-link": "Help:Wiki markup",
-	"visualeditor-wikitext-warning-title": "Zamijećen wikitext markup"
+	"visualeditor-wikitext-warning-title": "Zamijećen wikitext markup",
+	"visualeditor-dialog-media-insert-title": "Ubacite medijsku datoteku"
 }

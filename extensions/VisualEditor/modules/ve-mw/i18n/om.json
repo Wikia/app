@@ -210,5 +210,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Gulaaluu itti fufi",
 	"visualeditor-viewpage-savewarning-title": "Dhugaa jettaa?",
 	"visualeditor-wikitext-warning": "Amma Viizyuwaal'Ediiterii fayyadamaa jirta - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] asitti hin hojjatu. Fuula kana lakkaddaan jijjiiruf, baafata gad-buusaa kan \"{{int:visualeditor-toolbar-savedialog}}\" bukkee jiru erga bantee booda \"{{int:visualeditor-mweditmodesource-title}}\" filadhu",
-	"visualeditor-wikitext-warning-title": "Maarkaappiin Wiikiitekestii argame"
+	"visualeditor-wikitext-warning-title": "Maarkaappiin Wiikiitekestii argame",
+	"visualeditor-dialog-media-insert-title": "Miidiyaa galchi"
 }

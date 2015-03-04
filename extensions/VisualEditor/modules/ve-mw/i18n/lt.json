@@ -141,5 +141,6 @@
 	"visualeditor-usernamespacepagelink": "Vikipedija:Dalyvio puslapis",
 	"visualeditor-viewpage-savewarning": "Esate tikri, jog norite grįžti į peržiūros režimą, pirma neišsaugoję pakeitimų?",
 	"visualeditor-wikitext-warning": "Jūs naudojate VisualEditor, todėl [[{{MediaWiki:visualeditor-wikitext-warning-link}}|vikisintaksė]] čia neveikia. Spauskite\"{{int:visualeditor-ca-editsource}}\", norėdami redaguoti puslapio kodą. Neišsaugoti pakeitimai bus prarasti.",
-	"visualeditor-wikitext-warning-title": "Aptikta vikisintaksė"
+	"visualeditor-wikitext-warning-title": "Aptikta vikisintaksė",
+	"visualeditor-dialog-media-insert-title": "Įterpti failą"
 }

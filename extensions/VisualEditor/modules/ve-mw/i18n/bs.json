@@ -194,5 +194,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Nastavi s uređivanjem",
 	"visualeditor-viewpage-savewarning-title": "Da li ste sigurni?",
 	"visualeditor-wikitext-warning": "Koristite vizualni uređivač - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] ovdje ne radi. Kliknite \"{{int:visualeditor-ca-editsource}}\" da uredite stranicu u wikitext načinu – nesačuvane izmjene bit će izgubljene.",
-	"visualeditor-wikitext-warning-title": "Detektovan wiki kôd"
+	"visualeditor-wikitext-warning-title": "Detektovan wiki kôd",
+	"visualeditor-dialog-media-insert-title": "Ubacite medijsku datoteku"
 }

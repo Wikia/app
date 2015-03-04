@@ -41,5 +41,6 @@
 	"visualeditor-savedialog-title-nochanges": "Өзгөртүүлөр жок",
 	"visualeditor-savedialog-title-review": "Өзгөртүүлөрдү карап чыгуу",
 	"visualeditor-savedialog-title-save": "Өзгөртүүлөрдү сактоо",
-	"visualeditor-toolbar-savedialog": "Баракты сактоо"
+	"visualeditor-toolbar-savedialog": "Баракты сактоо",
+	"visualeditor-dialog-media-insert-title": "Медиа-файл коюу"
 }

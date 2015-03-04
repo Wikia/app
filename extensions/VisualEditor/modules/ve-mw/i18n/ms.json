@@ -234,5 +234,6 @@
 	"visualeditor-viewpage-savewarning-title": "Adakah anda pasti?",
 	"visualeditor-wikitext-warning": "Anda sedang menggunakan VisualEditor – [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiteks]] tidak boleh digunakan di sini. Klik \"{{int:visualeditor-ca-editsource}}\" untuk beralih ke mod wikiteks – sebarang suntingan yang belum disimpan akan disingkirkan.",
 	"visualeditor-wikitext-warning-link": "Help:Penanda Wiki",
-	"visualeditor-wikitext-warning-title": "Penanda Wiki dikesan"
+	"visualeditor-wikitext-warning-title": "Penanda Wiki dikesan",
+	"visualeditor-dialog-media-insert-title": "Sisipkan media"
 }

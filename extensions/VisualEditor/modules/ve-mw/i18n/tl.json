@@ -218,5 +218,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Magpatuloy sa pamamatnugot",
 	"visualeditor-viewpage-savewarning-title": "Nakatitiyak ka ba?",
 	"visualeditor-wikitext-warning": "Ginagamit mo ang VisualEditor - hindi gumagana rito ang [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiteksto]]. Upang magpalit anumang oras sa batayang pamamatnugot nang hindi mawawala ang iyong mga pagbabago, buksan ang talang pahila-pababa na katabi ng \"{{int:visualeditor-toolbar-savedialog}}\" at piliin ang \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "May natuklasang wikisintaksis"
+	"visualeditor-wikitext-warning-title": "May natuklasang wikisintaksis",
+	"visualeditor-dialog-media-insert-title": "Maglagay ng midya"
 }

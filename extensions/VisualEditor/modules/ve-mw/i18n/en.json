@@ -286,5 +286,6 @@
 	"visualeditor-viewpage-savewarning-title": "Are you sure?",
 	"visualeditor-wikitext-warning": "You are using VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] does not work here. To switch to source editing at any time without losing your changes, open the dropdown menu next to \"{{int:visualeditor-toolbar-savedialog}}\" and select \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "mediawikiwiki:Special:MyLanguage/Help:Formatting",
-	"visualeditor-wikitext-warning-title": "Wikitext markup detected"
+	"visualeditor-wikitext-warning-title": "Wikitext markup detected",
+	"visualeditor-dialog-media-insert-title": "Insert media"
 }

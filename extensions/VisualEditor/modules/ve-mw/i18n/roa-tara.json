@@ -154,5 +154,6 @@
 	"visualeditor-viewpage-savewarning": "Sì secure ca vuè ccu tuèrne rrete a 'u mode de 'ndrucà senze ca è reggistrate?",
 	"visualeditor-wikitext-warning": "Tu ste ause VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|uicchiteste]] non ge funzione aqquà. Cazze \"{{int:visualeditor-ca-editsource}}\" pe cangià 'a pàgene jndr'à 'u mode uicchiteste - le cangiaminde non reggistrate avènene perdute.",
 	"visualeditor-wikitext-warning-link": "Help:Uicchi segnaposte",
-	"visualeditor-wikitext-warning-title": "Segnaposte de uicchiteste acchiate"
+	"visualeditor-wikitext-warning-title": "Segnaposte de uicchiteste acchiate",
+	"visualeditor-dialog-media-insert-title": "Mitte 'nu media"
 }

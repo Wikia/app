@@ -119,5 +119,6 @@
 	"visualeditor-saveerror": "Hitilafu ya kuhifadhi data katika seva: $1.",
 	"visualeditor-serializeerror": "Hitilafu ya kupakua data kutoka katika seva: $1.",
 	"visualeditor-toolbar-savedialog": "Hifadhi ukurasa",
-	"visualeditor-usernamespacepagelink": "Project:Eneo la wiki la mtumiaji"
+	"visualeditor-usernamespacepagelink": "Project:Eneo la wiki la mtumiaji",
+	"visualeditor-dialog-media-insert-title": "Ingiza faili"
 }

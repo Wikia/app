@@ -206,5 +206,6 @@
 	"visualeditor-viewpage-savewarning-title": "Ste si istí?",
 	"visualeditor-wikitext-warning": "Používate VisualEditor – [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] tu nefunguje. Kliknutím na „{{int:visualeditor-ca-editsource}}“ môžete stránku upravovať v režime zdrojového kódu – o neuložené zmeny však prídete.",
 	"visualeditor-wikitext-warning-link": "Help:Prehľad editácie stránok",
-	"visualeditor-wikitext-warning-title": "Zistená syntax wikitextu"
+	"visualeditor-wikitext-warning-title": "Zistená syntax wikitextu",
+	"visualeditor-dialog-media-insert-title": "Vložiť obrázok (zvuk, video)"
 }

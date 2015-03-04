@@ -282,5 +282,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Lanjutkan penyuntingan",
 	"visualeditor-viewpage-savewarning-title": "Apakah Anda yakin?",
 	"visualeditor-wikitext-warning": "Anda menggunakan VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|teks wiki]] tidak berfungsi di sini. Untuk beralih kembali ke penyuntingan sumber tanpa kehilangan perubahan Anda kapan pun, buka menu turun bawah di samping \"{{int:visualeditor-toolbar-savedialog}}\" lalu pilih \"{{int:visualeditor-mweditmodesource-tool}}\".",
-	"visualeditor-wikitext-warning-title": "Markah teks wiki terdeteksi"
+	"visualeditor-wikitext-warning-title": "Markah teks wiki terdeteksi",
+	"visualeditor-dialog-media-insert-title": "Masukkan media"
 }

@@ -214,5 +214,6 @@
 	"visualeditor-viewpage-savewarning-title": "Biztos vagy benne?",
 	"visualeditor-wikitext-warning": "Most a VisualEditorral szerkesztesz - a [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiszöveg]] itt nem működik. A forráskód nézetre való váltáshoz - ha nem akarod elveszíteni a változtatásaidat, - kattints a lenyíló menüre a „{{int:visualeditor-toolbar-savedialog}}” gomb mellett, és válaszd a „{{int:visualeditor-mweditmodesource-title}}” lehetőséget.",
 	"visualeditor-wikitext-warning-link": "Help:Wiki leírónyelv",
-	"visualeditor-wikitext-warning-title": "Wikiszöveg leírónyelv észlelve"
+	"visualeditor-wikitext-warning-title": "Wikiszöveg leírónyelv észlelve",
+	"visualeditor-dialog-media-insert-title": "Média beillesztése"
 }

@@ -251,5 +251,6 @@
 	"visualeditor-viewpage-savewarning-keep": "ادامه دادن به ویرایش",
 	"visualeditor-viewpage-savewarning-title": "آیا مطمئن هستید؟",
 	"visualeditor-wikitext-warning": "شما از ویرایشگر دیداری استفاده می‌کنید - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|ویکی‌متن]] در اینجا عمل نخواهد کرد. برای رفتن به ویرایش کد در هر زمان بدون گم‌شدن تغییراتتان، منوی به پایین‌رونده را در کنار «{{int:visualeditor-toolbar-savedialog}}» را باز کرده و «{{int:visualeditor-mweditmodesource-title}}» را انتخاب کنید.",
-	"visualeditor-wikitext-warning-title": "نشانه‌گذاری ویکی‌متن شناسایی شد"
+	"visualeditor-wikitext-warning-title": "نشانه‌گذاری ویکی‌متن شناسایی شد",
+	"visualeditor-dialog-media-insert-title": "درج رسانه"
 }

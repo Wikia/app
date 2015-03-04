@@ -227,5 +227,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Düzenlemeye devam",
 	"visualeditor-wikitext-warning": "Eğer görsel düzenleyiciyi kullanıyorsanız - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wiki metin editörü]] bu alanda çalışmamaktadır. Wiki metin modunda sayfayı düzenlemek için lütfen \"{{int:visualeditor-ca-editsource}}\" buraya tıklayın – ancak kaydedilmemiş değişiklikleriniz kaybolacaktır.",
 	"visualeditor-wikitext-warning-link": "Help:Biçimsel Rehber",
-	"visualeditor-wikitext-warning-title": "Vikimetin biçimlendirmesi algılandı"
+	"visualeditor-wikitext-warning-title": "Vikimetin biçimlendirmesi algılandı",
+	"visualeditor-dialog-media-insert-title": "Dosya ekle"
 }

@@ -112,5 +112,6 @@
 	"visualeditor-viewpage-savewarning": "Һеҙ ысынлап та үҙгәртеүҙәрҙе һаҡламайынса ҡарау режимына ҡайтырға теләйһегеҙме?",
 	"visualeditor-wikitext-warning": "Һеҙ ҡулланған Күҙләгес мөхәррир - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] бында эшләмәй. Викитекст режимында мөхәррирләү өсөн \"{{MediaWiki:visualeditor-ca-editsource}}\" төймәһенә баҫығыҙ – һаҡланмаған үҙгәртеүҙәр юғаласаҡ.",
 	"visualeditor-wikitext-warning-link": "Help:Вики тамғалар",
-	"visualeditor-wikitext-warning-title": "Тамғаланған Викияҙма табылған"
+	"visualeditor-wikitext-warning-title": "Тамғаланған Викияҙма табылған",
+	"visualeditor-dialog-media-insert-title": "Медиа өҫтәү"
 }

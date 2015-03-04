@@ -141,5 +141,6 @@
 	"visualeditor-viewpage-savewarning": "Vossia è sicuru ca voli arriturnari â mudalitati littura senza arriggistrari?",
 	"visualeditor-wikitext-warning": "Vossia sta usannu VisualEditor - lu [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitestu]] ccà nun funziona. Clicca \"{{MediaWiki:visualeditor-ca-editsource}}\" pi canciari la pàggina usannu  wikitestu (li canciamenti nun sarbati sunnu persi).",
 	"visualeditor-wikitext-warning-link": "Help:Markup",
-	"visualeditor-wikitext-warning-title": "Wikitestu rilivatu"
+	"visualeditor-wikitext-warning-title": "Wikitestu rilivatu",
+	"visualeditor-dialog-media-insert-title": "Nsirisci nu file multimidiali"
 }

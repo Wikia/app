@@ -203,5 +203,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Cuntinuèr l'editasiòun",
 	"visualeditor-wikitext-warning": "A sî dré a druèr VisualEditor - Al [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] al ne funsiòuna brìsa chè. Andè a clichèr \"{{int:visualeditor-ca-editsource}}\" per cambièr la pàgina in dla manéra wikitexte (i cambiamèint mìa salvè i andràn pèrs)",
 	"visualeditor-wikitext-warning-link": "Help:La marcadûra wiki",
-	"visualeditor-wikitext-warning-title": "Controlèda la marcadûra dal wikitext"
+	"visualeditor-wikitext-warning-title": "Controlèda la marcadûra dal wikitext",
+	"visualeditor-dialog-media-insert-title": "Mèt dèinter i 'file multimedia'"
 }

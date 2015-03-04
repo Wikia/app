@@ -234,5 +234,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Virufuere mat Änneren",
 	"visualeditor-viewpage-savewarning-title": "Sidd Dir sécher?",
 	"visualeditor-wikitext-warning": "Dir benotzt VisualEditor -  [[{{MediaWiki:visualeditor-wikitext-warning-link}}|Wikitext]] funktionéiert hei net. Fir all Ament an d'Ännere vum Quellcode ze wiesselen ouni Är Ännerungen ze verléieren, maacht den Dropdown-Menü niewent \"{{int:visualeditor-toolbar-savedialog}}\" op a gitt op \"{{int:visualeditor-mweditmodesource-title}}\"",
-	"visualeditor-wikitext-warning-title": "Wikitext entdeckt"
+	"visualeditor-wikitext-warning-title": "Wikitext entdeckt",
+	"visualeditor-dialog-media-insert-title": "Media derbäisetzen"
 }

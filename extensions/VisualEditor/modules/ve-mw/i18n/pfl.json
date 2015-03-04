@@ -185,5 +185,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Waida schaffe",
 	"visualeditor-wikitext-warning": "Du schaffschd middm VisualEditor. [[{{MediaWiki:visualeditor-wikitext-warning-link}}|Wikitegschd]] ged do nedd. Gligg uff „{{int:visualeditor-ca-editsource}}“, um onde Said im Wikitegschdmodus zu schaffe. Uugsischade Ännarunge sinn valore.",
 	"visualeditor-wikitext-warning-link": "Help:Wikitegschd",
-	"visualeditor-wikitext-warning-title": "Wikitegschd gfunne"
+	"visualeditor-wikitext-warning-title": "Wikitegschd gfunne",
+	"visualeditor-dialog-media-insert-title": "‎Medium oifiesche"
 }

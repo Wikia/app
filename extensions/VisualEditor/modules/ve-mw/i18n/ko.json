@@ -235,5 +235,6 @@
 	"visualeditor-viewpage-savewarning-keep": "편집 계속",
 	"visualeditor-viewpage-savewarning-title": "확실합니까?",
 	"visualeditor-wikitext-warning": "시각편집기를 사용하고 있으며 [[{{MediaWiki:visualeditor-wikitext-warning-link}}|위키텍스트]]는 여기서 작동하지 않습니다. 변경한 것을 잃어버리지 않고 위키텍스트 모드에서 문서를 편집하려면 언제든지\"{{MediaWiki:visualeditor-ca-editsource}}\"을 클릭하세요.",
-	"visualeditor-wikitext-warning-title": "위키텍스트 문법이 감지됨"
+	"visualeditor-wikitext-warning-title": "위키텍스트 문법이 감지됨",
+	"visualeditor-dialog-media-insert-title": "미디어 넣기"
 }

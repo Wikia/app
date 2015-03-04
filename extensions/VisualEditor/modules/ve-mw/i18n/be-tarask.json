@@ -118,5 +118,6 @@
 	"visualeditor-viewpage-savewarning": "Вы ўпэўненыя, што жадаеце перайсьці ў рэжым прагляду без папярэдняга захаваньня?",
 	"visualeditor-wikitext-warning": "Вы карыстаецеся візуальным рэдактарам — [[{{MediaWiki:visualeditor-wikitext-warning-link}}|вікітэкст]] тут не працуе. Пстрыкніце «{{MediaWiki:visualeditor-ca-editsource}}», каб рэдагаваць старонку ў рэжыме вікітэксту — незахаваныя зьмены будуць страчаныя.",
 	"visualeditor-wikitext-warning-link": "Help:Вікі-фарматаваньне",
-	"visualeditor-wikitext-warning-title": "Выяўленае ўжываньне вікітэксту"
+	"visualeditor-wikitext-warning-title": "Выяўленае ўжываньне вікітэксту",
+	"visualeditor-dialog-media-insert-title": "Уставіць мэдыя"
 }
