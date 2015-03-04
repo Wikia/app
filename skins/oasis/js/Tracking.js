@@ -20,7 +20,7 @@ jQuery(function ($) {
 
 	track = Wikia.Tracker.buildTrackingFunction({
 		action: Wikia.Tracker.ACTIONS.CLICK,
-		trackingMethod: 'ga'
+		trackingMethod: 'analytics'
 	});
 
 	trackWithEventData = function (e) {
@@ -365,7 +365,6 @@ jQuery(function ($) {
 					browserEvent: e,
 					category: category,
 					label: label,
-					trackingMethod: 'both'
 				});
 			}).on('mousedown', '.Results .wiki-thumb-tracking', function (e) {
 				var el = $(e.currentTarget),
@@ -377,7 +376,6 @@ jQuery(function ($) {
 					browserEvent: e,
 					category: category,
 					label: label,
-					trackingMethod: 'both'
 				});
 			}).on('mousedown', '.thumb-tracking', function (e) {
 				var el = $(e.currentTarget),
@@ -388,7 +386,6 @@ jQuery(function ($) {
 					browserEvent: e,
 					category: category,
 					label: label,
-					trackingMethod: 'both'
 				});
 			}).on('mousedown', '.image', function (e) {
 				var $currentTarget = $(e.currentTarget),

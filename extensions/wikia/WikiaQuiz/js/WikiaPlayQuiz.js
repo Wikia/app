@@ -296,7 +296,7 @@ var WikiaQuiz = {
 			category: 'wikia-quiz',
 			href: href,
 			label: WikiaQuiz.trackerLabelPrefix + label,
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		};
 		if ( value > -1 ) {
 			params.value = value;

@@ -94,7 +94,7 @@ define('wikia.articleNavUserTools', [
 	 */
 	function trackUserTools() {
 		var track = tracker.buildTrackingFunction({
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		});
 
 		$('#userToolsDropdown').on('mousedown touchstart', 'a', function (e) {
