@@ -81,25 +81,28 @@ class HubService extends Service {
 	}
 
 	/**
-	 * Get canonical vertical for given cityId.
+	 * Get canonical vertical name for given cityId.
 	 * For Lifestyle and Gaming return their names.
 	 * For rest of values return Entertainment.
 	 * @param $cityId
-	 * @return int
+	 * @return Boolean|String
 	 */
-	public static function getVerticalInfoForCity($cityId) {
-		$factoryHubInstance = WikiFactoryHub::getInstance();
-		$verticalId = $factoryHubInstance->getVerticalId($cityId);
+	public static function getVerticalNameForComscore($cityId) {
+		$verticalId = WikiFactoryHub::getInstance()->getVerticalId($cityId);
 		$canonicalVerticalId = self::getCanonicalVerticalID($verticalId);
-		$allVerticals = $factoryHubInstance->getAllCategories();
-		$currentVertical = false;
-		foreach ($allVerticals as $vertical) {
-			if ($vertical['id'] == $canonicalVerticalId) {
-				$currentVertical = $vertical;
-				break;
-			}
+
+		switch ($canonicalVerticalId) {
+			case WikiFactoryHub::CATEGORY_ID_GAMING:
+				return 'gaming';
+			case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+				return 'entertainment';
+			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
+				return 'lifestyle';
+			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
+				return 'wikia';
+			default:
+				return false;
 		}
-		return $currentVertical;
 	}
 
 	/**

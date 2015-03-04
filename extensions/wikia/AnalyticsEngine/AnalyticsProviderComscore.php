@@ -39,11 +39,9 @@ _comscore.push({ c1: "2", c2: "'.self::$PARTNER_ID.'",
 	private function getC7Value() {
 		global $wgCityId;
 
-		$vertical = HubService::getVerticalInfoForCity($wgCityId);
-
-		return 'wikiacsid_' . strtolower($vertical['name']);
+		return 'wikiacsid_' . HubService::getVerticalNameForComscore($wgCityId);
 	}
-	
+
 	private function getC7ParamAndValue() {
 		global $wgRequest;
 		
