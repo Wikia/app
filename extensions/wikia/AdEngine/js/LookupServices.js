@@ -103,7 +103,7 @@ define('ext.wikia.adEngine.lookupServices', [
 			trackState(amazonMatchOld);
 		}
 
-		if (amazonMatchOld && amazonMatchOld.wasCalled()) {
+		if (amazonMatchOld && amazonMatchOld.wasCalled() && Object.keys) {
 			amazonParams = decodeLegacyDartParams(win.amzn_targs);
 			Object.keys(amazonParams).forEach(function (key) {
 				pageTargeting[key] = amazonParams[key];
