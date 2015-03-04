@@ -44,6 +44,26 @@ class HubService extends Service {
 	}
 
 	/**
+	 * Return varticalId.
+	 * For Lifestyle, Gaming and Corporate return passed id.
+	 * For rest return Entertainment id.
+	 *
+	 * @param $verticalId
+	 * @return int
+	 */
+	public static function getCanonicalVerticalID($verticalId) {
+		switch ($verticalId) {
+			case WikiFactoryHub::CATEGORY_ID_GAMING:
+			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
+			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
+				return $verticalId;
+
+			default:
+				return WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
+		}
+	}
+
+	/**
 	 * Get current wikia's Cannonical Category name
 	 *
 	 * @return string current Cannonical Category's Name
@@ -58,6 +78,28 @@ class HubService extends Service {
 		return !empty( $categoryId )
 			? self::$canonicalCategoryNames[ self::getCanonicalCategoryId( $categoryId ) ]
 			: '' ;
+	}
+
+	/**
+	 * Get canonical vertical for given cityId.
+	 * For Lifestyle and Gaming return their names.
+	 * For rest of values return Entertainment.
+	 * @param $cityId
+	 * @return int
+	 */
+	public static function getVerticalInfoForCity($cityId) {
+		$factoryHubInstance = WikiFactoryHub::getInstance();
+		$verticalId = $factoryHubInstance->getVerticalId($cityId);
+		$canonicalVerticalId = self::getCanonicalVerticalID($verticalId);
+		$allVerticals = $factoryHubInstance->getAllCategories();
+		$currentVertical = false;
+		foreach ($allVerticals as $vertical) {
+			if ($vertical['id'] == $canonicalVerticalId) {
+				$currentVertical = $vertical;
+				break;
+			}
+		}
+		return $currentVertical;
 	}
 
 	/**
