@@ -627,14 +627,6 @@ class LoginForm extends SpecialPage {
 			return self::NO_NAME;
 		}
 
-		// Wikia change - begin - author: @wladek
-		// Don't bother going down the road if the password is invalid. Exit early.
-		if( !$this->getUser()->isValidPassword( $this->mPassword ) ) {
-			return ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
-		}
-		// Wikia change - end
-
-
 		// We require a login token to prevent login CSRF
 		// Handle part of this before incrementing the throttle so
 		// token-less login attempts don't count towards the throttle
