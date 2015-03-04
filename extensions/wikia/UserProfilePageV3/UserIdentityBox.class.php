@@ -124,7 +124,7 @@ class UserIdentityBox {
 		$keysToSanitize = [ 'gender', 'location', 'occupation', 'realName', 'twitter', 'fbPage', 'website' ];
 		foreach( $keysToSanitize as $key ) {
 			if ( !empty( $data[ $key ] ) ) {
-				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ) );
+				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ), ENT_QUOTES );
 			}
 		}
 
