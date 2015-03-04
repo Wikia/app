@@ -1106,7 +1106,7 @@ class CreateWiki {
 			wfShellExec( $cmd );
 
 			wfDebugLog( "createwiki", __METHOD__ . ": Import {$this->mIP}/maintenance/cleanupStarter.sql \n", true );
-			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql" );
+			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql", false, false, __METHOD__ );
 			if ($error !== true) {
 				wfDebugLog( "createwiki", __METHOD__ . ": Import starter failed\n", true );
 				return false;
