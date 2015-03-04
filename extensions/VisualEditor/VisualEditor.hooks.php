@@ -10,10 +10,18 @@
 
 class VisualEditorHooks {
 
-	// Wikia change
 	public static function isAvailable( $skin ) {
 		global $wgVisualEditorSupportedSkins;
-		return in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins );
+		static $isAvailable = null;
+		if ( is_null( $isAvailable ) ) {
+			$isAvailable = in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins );
+		}
+		return $isAvailable;
+	}
+
+	public static function isVisible( $skin ) {
+		global $wgEnableVisualEditorUI;
+		return $wgEnableVisualEditorUI && self::isAvailable( $skin );
 	}
 
 	public static function onSetup() {
@@ -79,10 +87,7 @@ class VisualEditorHooks {
 	 */
 	public static function onSkinTemplateNavigation( SkinTemplate &$skin, array &$links ) {
 		// Only do this if the user has VE enabled
-		if (
-			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
-			$skin->getUser()->getOption( 'visualeditor-betatempdisable' )
-		) {
+		if ( !self::isVisible( $skin ) ) {
 			return true;
 		}
 
@@ -221,6 +226,7 @@ class VisualEditorHooks {
 		// (and we're not in parserTests)
 		// (and we're not on a foreign file description page)
 		if (
+			!self::isVisible( $skin ) ||
 			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] ) ||
 			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
 			$skin->getUser()->getOption( 'visualeditor-betatempdisable' ) ||

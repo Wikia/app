@@ -84,8 +84,8 @@ $wgConfigRegistry['visualeditor'] = 'GlobalVarConfig::newInstance';
 $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
 $wgHooks['ContentHandlerDefaultModelFor'][] = 'VisualEditorHooks::onContentHandlerDefaultModelFor';
 $wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
-$wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
-$wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
+//$wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
+//$wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
 $wgHooks['ListDefinedTags'][] = 'VisualEditorHooks::onListDefinedTags';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorHooks::onMakeGlobalVariablesScript';
 $wgHooks['RedirectSpecialArticleRedirectParams'][] =
@@ -98,8 +98,6 @@ $wgHooks['ParserTestGlobals'][] = 'VisualEditorHooks::onParserTestGlobals';
 $wgHooks['EditPage::showEditForm:fields'][] = 'VisualEditorHooks::onEditPageShowEditFormFields';
 $wgHooks['PageContentSaveComplete'][] = 'VisualEditorHooks::onPageContentSaveComplete';
 $wgHooks['BeforeInitialize'][] = 'VisualEditorHooks::onBeforeInitialize';
-// Wikia change - There is no need to register VisualEditorHooks::onSetup as it is only responsible
-// for checking if MediaWiki version is compatible with VisualEditor.
 //$wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
 
 // Register resource modules
@@ -1558,14 +1556,16 @@ $wgVisualEditorTabMessages = array(
 	'edit' => null,
 	// i18n message key to use for the old edit tab
 	// If null, the tab's caption will not be changed
-	'editsource' => 'visualeditor-ca-editsource',
+	//'editsource' => 'visualeditor-ca-editsource',
+	'editsource' => 'visualeditor-ca-classiceditor',
 	// i18n message key to use for the VisualEditor create tab
 	// If null, the default create tab caption will be used
 	// The 'visualeditor-ca-ve-create' message is available for this
 	'create' => null,
 	// i18n message key to use for the old create tab
 	// If null, the tab's caption will not be changed
-	'createsource' => 'visualeditor-ca-createsource',
+	//'createsource' => 'visualeditor-ca-createsource',
+	'createsource' => 'visualeditor-ca-classiceditor',
 	// i18n message key to use for the old create tab on pages for files in foreign repos
 	// If null, the tab's caption will not be changed
 	'editlocaldescriptionsource' => 'visualeditor-ca-editlocaldescriptionsource',
