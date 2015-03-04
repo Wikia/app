@@ -1406,16 +1406,6 @@ $config['userlogin_js_wikiamobile'] = array(
 	)
 );
 
-$config['userlogin_js_wikiamobile_fbconnect'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'#external_http://connect.facebook.net/en_US/all.js',
-		'#group_userlogin_js_wikiamobile',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
-	)
-);
-
 $config['userlogin_facebook_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
