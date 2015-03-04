@@ -71,6 +71,8 @@ class SiteWideMessages extends SpecialPage {
 		$formData['wikiCreationDateTwo'] = $wgRequest->getVal( 'mWikiCreationDateTwo' );
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
+		$formData['powerUserType'] = $wgRequest->getText('mPowerUserType');
+		$formData['powerUserTypeS'] = $wgRequest->getText('mPowerUserTypeS');
 		$formData['userName'] = $wgRequest->getText('mUserName');
 		$formData['listUserNames'] = $wgRequest->getText( 'mUserNames' );
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
@@ -129,6 +131,11 @@ class SiteWideMessages extends SpecialPage {
 		$groupList = $wgGroupPermissions;
 		unset($groupList['*']);
 		$formData['groupNames'] = array_keys($groupList);
+
+		/**
+		 * Fetch Power Users types
+		 */
+		$formData['powerUserTypes'] = \Wikia\PowerUser\PowerUser::$aPowerUserProperties;
 
 		//handle different submit buttons in one form
 		$button = $wgRequest->getVal('mAction');
@@ -304,6 +311,7 @@ class SiteWideMessages extends SpecialPage {
 		$mWikiName = $formData['wikiName'];
 		$mRecipientName = $formData['userName'];
 		$mGroupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
+		$mPowerUserType = $formData['powerUserType'] == '' ? $formData['powerUserTypeS'] : $formData['powerUserType'];
 		$mSendModeWikis = $formData['sendModeWikis'];
 		$mSendModeUsers = $formData['sendModeUsers'];
 		$mHubId = $formData['hubId'];
@@ -347,30 +355,41 @@ class SiteWideMessages extends SpecialPage {
 			case 'ACTIVE':
 				$mRecipientName = '';
 				$mGroupName = '';
+				$mPowerUserType = '';
 				break;
 			case 'GROUP':
 				$mRecipientName = '';
+				$mPowerUserType = '';
+				break;
+			case 'POWERUSER':
+				$mRecipientName = '';
+				$mGroupName = '';
 				break;
 			case 'USER':
 				$mGroupName = '';
+				$mPowerUserType = '';
 				$mLang = MSG_LANG_ALL;
 				break;
 			case 'USERS':
 				$mRecipientName = count( $mUserNamesArr ) . ' users';
 				$mGroupName = '';
+				$mPowerUserType = '';
 				$mLang = MSG_LANG_ALL;
 				break;
 			case 'ANONS':
 				$mRecipientName = MSG_RECIPIENT_ANON;
 				$mGroupName = '';
+				$mPowerUserType = '';
 				break;
 			case 'REGISTRATION':
 				$mRecipientName = '';
 				$mGroupName = '';
+				$mPowerUserType = '';
 				break;
 			case 'EDITCOUNT':
 				$mRecipientName = '';
 				$mGroupName = '';
+				$mPowerUserType = '';
 				break;
 		}
 

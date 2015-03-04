@@ -172,7 +172,7 @@
 								<label for="mSendModeUsersPU"><?= wfMessage( 'swm-label-mode-users-poweruser' )->escaped() ?></label>
 							</td>
 							<td>
-								<select name="mPowerUserTypeS" id="mPowerUserTypeS">
+								<select name="mPowerUserTypeS" id="mPowerUserTypeS" class="swm-select-multiple" multiple>
 									<?php
 									foreach ( $formData['powerUserTypes'] as $powerUserType ) {
 										$powerUserType = Sanitizer::escapeHtmlAllowEntities( $powerUserType );
