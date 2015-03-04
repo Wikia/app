@@ -2308,3 +2308,10 @@ $config['upload_photos_dialog_scss'] = [
 	]
 ];
 
+$config['oasis_global_footer_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter'
+	]
+];

@@ -1,113 +1,102 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/box-sizing';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
 
 $branding-color: #000;
 
 .global-footer {
-	box-sizing: content-box;
-	clear: left;
-	font-size: 11px;
-	padding-bottom: 10px;
+	@include box-sizing(border-box);
 
-	nav {
-		@include clearfix;
-		margin-top: 15px;
-		position: relative;
+	*, *::before, *::after {
+		@include box-sizing(inherit);
+	}
+}
+
+$global-footer-color-border: #c7d1d8;
+$global-footer-vertical-spacing: 30px;
+
+.global-footer {
+	background-color: $global-wikia-background-color;
+	border: $content-border-width solid $color-page-border;
+	border-bottom: 0;
+	border-top: 1px solid $global-footer-color-border;
+	color: $color-text-dark;
+	padding-top: $global-footer-vertical-spacing;
+	position: relative;
+	text-align: center;
+
+	&:after {
+		background-color: $color-wikiahome-community;
+		content: '';
+		display: block;
+		height: 10px;
 	}
 
-	.branding {
-		left: 10px;
-		position: absolute;
+	&.vertical-books:after {
+		background-color: $color-vertical-books;
+	}
 
-		.wikia-logo {
-			display: inline-block;
-			text-decoration: none;
+	&.vertical-comics:after {
+		background-color: $color-vertical-comics;
+	}
 
-			img {
-				background-color: transparent;
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: 60px 15px;
-				height: 25px;
-				vertical-align: middle;
-				width: 66px;
-			}
+	&.vertical-games:after {
+		background-color: $color-vertical-games;
+	}
 
-			span {
-				font-size: 10px;
-				font-weight: bold;
-				letter-spacing: -.5px;
-				line-height: 22px;
-				margin: 0 8px 0 5px;
-				text-transform: uppercase;
-				vertical-align: bottom;
-			}
-		}
+	&.vertical-lifestyle:after {
+		background-color: $color-vertical-lifestyle;
+	}
 
-		&.black {
-			border: 1px solid $branding-color;
+	&.vertical-movies:after {
+		background-color: $color-vertical-movies;
+	}
 
-			.wikia-logo {
-				color: #fff;
+	&.vertical-music:after {
+		background-color: $color-vertical-music;
+	}
 
-				img {
-					background: $branding-color center / 60px 15px no-repeat url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
-				}
-			}
+	&.vertical-tv:after {
+		background-color: $color-vertical-tv;
+	}
 
-			&.vertical-books a {
-				background-color: $color-vertical-books;
-			}
+	.wikia-logo {
+		display: inline-block;
+		line-height: 0; /* Get rid of uncontrollable vertical margins for inline-block */
+		margin: 0 auto $global-footer-vertical-spacing + 5;
+	}
 
-			&.vertical-comics a {
-				background-color: $color-vertical-comics;
-			}
-
-			&.vertical-games a {
-				background-color: $color-vertical-games;
-			}
-
-			&.vertical-lifestyle a {
-				background-color: $color-vertical-lifestyle;
-			}
-
-			&.vertical-movies a {
-				background-color: $color-vertical-movies;
-			}
-
-			&.vertical-music a {
-				background-color: $color-vertical-music;
-			}
-
-			&.vertical-tv a {
-				background-color: $color-vertical-tv;
-			}
-		}
+	a {
+		color: $color-links-default;
 	}
 
 	ul {
 		list-style: none;
-		margin: 0 0 8px 167px;
-		padding-right: 8px;
-		text-align: right;
+		margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width $global-footer-vertical-spacing;
+		padding: 0 $medium-grid-column-padding;
 
-		li {
-			border-left: solid 1px $color-links;
-			display: inline-block;
-			margin-top: 8px;
-			padding: 0 8px;
+		@media #{$large-up} {
+			margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width $global-footer-vertical-spacing;
+			padding: 0 $large-grid-column-padding;
+		}
 
-			&:first-child {
-				border: 0;
-			}
+		@media #{$small-only} {
+			margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $global-footer-vertical-spacing;
+			padding: 0 $small-grid-column-padding;
+		}
+	}
 
-			&:last-child {
-				padding-right: 0;
-			}
+	li {
+		border-right: 1px solid $global-footer-color-border;
+		display: inline-block;
+		line-height: 18px;
+		padding: 0 8px 0 4px;
+		white-space: nowrap;
 
-			a {
-				color: $color-links;
-			}
+		&:last-child {
+			border: 0;
 		}
 	}
 }

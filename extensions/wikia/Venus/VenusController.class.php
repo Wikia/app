@@ -246,7 +246,7 @@ class VenusController extends WikiaController {
 		global $wgEnableGlobalFooterExt;
 
 		return !empty( $wgEnableGlobalFooterExt ) ?
-			$this->app->renderView('GlobalFooter', 'indexVenus') :
+			$this->app->renderView('GlobalFooter', 'index') :
 			'';
 	}
 
