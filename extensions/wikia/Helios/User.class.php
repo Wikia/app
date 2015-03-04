@@ -156,7 +156,7 @@ class User {
 			$mediawikiResult = \User::comparePasswords( $hash, $password, $id );
 
 			// Detect discrepancies between Helios and MediaWiki results.
-			if ( $result != $mediawikiResult ) {
+			if ( $heliosResult != $mediawikiResult ) {
 				\Wikia\Helios\User::debugLogin( $password, __METHOD__ );
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'HELIOS_LOGIN check_password_discrepancy',
