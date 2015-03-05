@@ -163,7 +163,6 @@
 								<?= wfMsg('swm-label-mode-users-group-hint') ?>
 							</td>
 						</tr>
-
 						<tr>
 							<td>
 								<input name="mSendModeUsers" id="mSendModeUsersPU" type="radio" value="POWERUSER"<?= $formData['sendModeUsers'] == 'POWERUSER' ? ' checked="checked"' : ''?>/>
@@ -172,15 +171,18 @@
 								<label for="mSendModeUsersPU"><?= wfMessage( 'swm-label-mode-users-poweruser' )->escaped() ?></label>
 							</td>
 							<td>
-								<select name="mPowerUserTypeS" id="mPowerUserTypeS" class="swm-select-multiple" multiple>
-									<?php
-									foreach ( $formData['powerUserTypes'] as $powerUserType ) {
-										$powerUserType = Sanitizer::escapeHtmlAllowEntities( $powerUserType );
-										$selected = $powerUserType == $formData['powerUserTypeS'] ? ' selected="selected"' : '';
-										echo "\t\t\t\t\t\t\t\t<option value=\"$powerUserType\"$selected>$powerUserType</option>\n";
+								<?php
+									foreach	( $formData['powerUserTypes'] as $powerUserType ) {
+										$label = '<label for="mPowerUserType_' . $powerUserType . '">' . $powerUserType . '</label><br>';
+										$html = '<input type="checkbox" name="mPowerUserType[]" id="mPowerUserType_' . $powerUserType . '" value="' . $powerUserType . '"';
+										if ( isset( $formData['mPowerUserType'] ) && in_array( $powerUserType, $formData['mPowerUserType'] ) ) {
+											$html .= ' checked="checked"';
+										}
+										$html .= '>';
+										echo $html;
+										echo $label;
 									}
-									?>
-								</select>
+								?>
 							</td>
 							<td class="swm-hint">
 								<?= wfMessage( 'swm-label-mode-users-poweruser-hint' )->parse() ?>
