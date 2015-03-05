@@ -105,17 +105,17 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
 	if ( mw.Title.newFromText( this.value ) ) {
 		var propsJqXhr,
 			searchJqXhr = ve.init.mw.Target.static.apiRequest( {
-				'action': 'opensearch',
-				'search': this.value,
-				'namespace': 0,
-				'suggest': ''
+				action: 'opensearch',
+				search: this.value,
+				namespace: 0,
+				suggest: ''
 			} );
 		return searchJqXhr.then( function ( data ) {
 			propsJqXhr = ve.init.mw.Target.static.apiRequest( {
-				'action': 'query',
-				'prop': 'info|pageprops',
-				'titles': ( data[1] || [] ).join( '|' ),
-				'ppprop': 'disambiguation'
+				action: 'query',
+				prop: 'info|pageprops',
+				titles: ( data[1] || [] ).join( '|' ),
+				ppprop: 'disambiguation'
 			} );
 			return propsJqXhr;
 		} ).promise( { abort: function () {
