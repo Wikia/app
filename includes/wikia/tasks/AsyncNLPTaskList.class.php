@@ -1,16 +1,16 @@
 <?php
 
 /**
- * BackendAsyncTaskList
+ * AsyncNLPTaskList
  *
- * Lets us generate a list of async tasks to be run by the backend
+ * Lets us generate a list of async tasks to be run by the NLP backend
  *
  * @author Robert Elwell <robert@wikia-inc.com>
  */
 
 namespace Wikia\Tasks;
 
-class AsyncBackendTaskList extends AsyncTaskList
+class AsyncNLPTaskList extends AsyncTaskList
 {
 	/**
 	 * @var str it's useful to have the base URL for the wiki for making API calls, etc.
