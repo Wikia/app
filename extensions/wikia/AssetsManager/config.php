@@ -768,6 +768,7 @@ $config['mercury_ads_js'] = array(
 		'#group_mobile_base_ads_js',
 
 		'//extensions/wikia/AdEngine/js/mercury.run.js',
+		'//extensions/wikia/AdEngine/js/Krux.js',
 	)
 );
 
