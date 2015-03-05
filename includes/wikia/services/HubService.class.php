@@ -54,14 +54,13 @@ class HubService extends Service {
 	 */
 	public static function getCanonicalVerticalID($verticalId) {
 		switch ($verticalId) {
-			case WikiFactoryHub::CATEGORY_ID_GAMING:
-			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
-			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
+			case WikiFactoryHub::HUB_ID_VIDEO_GAMES:
+			case WikiFactoryHub::HUB_ID_LIFESTYLE:
 				return $verticalId;
 			case 0:
-				return WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
+				return WikiFactoryHub::HUB_ID_LIFESTYLE;
 			default:
-				return WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
+				return WikiFactoryHub::FALLBACK_ID_ENTERTAINMENT;
 		}
 	}
 
@@ -94,14 +93,12 @@ class HubService extends Service {
 		$canonicalVerticalId = self::getCanonicalVerticalID($verticalId);
 
 		switch ($canonicalVerticalId) {
-			case WikiFactoryHub::CATEGORY_ID_GAMING:
+			case WikiFactoryHub::HUB_ID_VIDEO_GAMES:
 				return 'gaming';
-			case WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT:
+			case WikiFactoryHub::FALLBACK_ID_ENTERTAINMENT:
 				return 'entertainment';
-			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
+			case WikiFactoryHub::HUB_ID_LIFESTYLE:
 				return 'lifestyle';
-			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
-				return 'wikia';
 			default:
 				return false;
 		}

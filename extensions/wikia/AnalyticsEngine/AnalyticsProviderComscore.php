@@ -39,7 +39,14 @@ _comscore.push({ c1: "2", c2: "'.self::$PARTNER_ID.'",
 	private function getC7Value() {
 		global $wgCityId;
 
-		return 'wikiacsid_' . HubService::getVerticalNameForComscore($wgCityId);
+		$verticalName = HubService::getVerticalNameForComscore( $wgCityId );
+		if ( !$verticalName ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Vertical not set for comscore', [
+				'cityId' => $wgCityId,
+				'esception' => new Exception()
+			] );
+		}
+		return 'wikiacsid_' . $verticalName;
 	}
 
 	private function getC7ParamAndValue() {
