@@ -15,15 +15,51 @@ class ExactTargetUpdateCityCatMappingTask extends ExactTargetTask {
 		$oHelper = $this->getWikiHelper();
 		$oApiDataExtension = $this->getApiDataExtension();
 
+		// Retrieve city category mapping data for removal
 		$aCityCatMappingDataForRetrieve = $oHelper->prepareCityCatMappingDataExtensionForRetrieve( $aParams['city_id'] );
+		$this->info( 'RetrieveCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForRetrieve ) );
 		$oResults = $oApiDataExtension->retrieveRequest( $aCityCatMappingDataForRetrieve );
+		$this->info( 'RetrieveCityCatMapping' . ' OverallStatus: ' . $oResults->OverallStatus );
+		$this->info( 'RetrieveCityCatMapping' . ' result: ' . json_encode( (array)$oResults ) );
 
-		$aCityCatMappingDataForDelete = $oHelper->prepareCityCatMappingDataExtensionForDelete( $oResults );
-		$oApiDataExtension->deleteRequest( $aCityCatMappingDataForDelete );
+		if ( $oResults->OverallStatus !== 'OK' ) {
+			throw new \Exception(
+				'Error in ' . 'RetrieveCityCatMapping' . ': ' . $oResults->OverallStatus
+			);
+		}
 
+		if ( isset( $oResults->Results ) ) {
+			// Delete city category mapping
+			$aCityCatMappingDataForDelete = $oHelper->prepareCityCatMappingDataExtensionForDelete( $oResults );
+			$this->info( 'RetrieveCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForDelete ) );
+			$oCityCatMappingDeleteResult = $oApiDataExtension->deleteRequest( $aCityCatMappingDataForDelete );
+			$this->info( 'DeleteCityCatMapping' . ' OverallStatus: ' . $oCityCatMappingDeleteResult->OverallStatus );
+			$this->info( 'DeleteCityCatMapping' . ' result: ' . json_encode( (array)$oCityCatMappingDeleteResult ) );
+
+			if ( $oCityCatMappingDeleteResult->OverallStatus === 'Error' ) {
+				throw new \Exception(
+					'Error in ' . 'DeleteCityCatMapping' . ': ' . $oCityCatMappingDeleteResult->Results->StatusMessage
+				);
+			}
+		} else {
+			$this->info('No city cats found for the wiki, no cats deleted.');
+		}
+
+		// Delete wiki data
 		$aCityCatMappingDataForCreate = [];
 		$aCityCatMappingDataForCreate['DataExtension'] = $oHelper->prepareCityCatMappingDataExtensionForCreate( $aParams['city_id'] );
-		$oApiDataExtension->createRequest( $aCityCatMappingDataForCreate );
+		$this->info( 'RetrieveCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForCreate ) );
+		$oWikiCreateResult = $oApiDataExtension->createRequest( $aCityCatMappingDataForCreate );
+		$this->info( 'CreateWikiData' . ' OverallStatus: ' . $oWikiCreateResult->OverallStatus );
+		$this->info( 'CreateWikiData' . ' result: ' . json_encode( (array)$oWikiCreateResult ) );
+
+		if ( $oWikiCreateResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . 'CreateWikiData' . ': ' . $oWikiCreateResult->Results->StatusMessage
+			);
+		}
+
+		return $oWikiCreateResult->Results->StatusMessage;
 	}
 
 }
