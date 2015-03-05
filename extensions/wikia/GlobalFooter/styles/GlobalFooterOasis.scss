@@ -1,27 +1,23 @@
-@import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/box-sizing';
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
+@import 'skins/oasis/css/core/responsive-variables';
 
 $branding-color: #000;
-
-.global-footer {
-	@include box-sizing(border-box);
-
-	*, *::before, *::after {
-		@include box-sizing(inherit);
-	}
-}
-
 $global-footer-color-border: #c7d1d8;
 $global-footer-vertical-spacing: 30px;
 
 .global-footer {
-	background-color: $global-wikia-background-color;
-	border: $content-border-width solid $color-page-border;
-	border-bottom: 0;
-	border-top: 1px solid $global-footer-color-border;
+	@include box-sizing(border-box);
+
+	*, *::after {
+		@include box-sizing(inherit);
+	}
+}
+
+
+.global-footer {
+	background-color: #FFF;
+	border: 0;
 	color: $color-text-dark;
 	padding-top: $global-footer-vertical-spacing;
 	position: relative;
@@ -74,17 +70,17 @@ $global-footer-vertical-spacing: 30px;
 
 	ul {
 		list-style: none;
-		margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width $global-footer-vertical-spacing;
-		padding: 0 $medium-grid-column-padding;
+		margin: 0 101px 30px;
+		padding: 0 10px;
 
-		@media #{$large-up} {
-			margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width $global-footer-vertical-spacing;
-			padding: 0 $large-grid-column-padding;
+		@media #{$large-range} {
+			margin: 0 113px 30px;
+			padding: 0 12px;
 		}
 
-		@media #{$small-only} {
-			margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $global-footer-vertical-spacing;
-			padding: 0 $small-grid-column-padding;
+		@media #{$small-range} {
+			margin: 0 77px 30px;
+			padding: 0 8px;
 		}
 	}
 

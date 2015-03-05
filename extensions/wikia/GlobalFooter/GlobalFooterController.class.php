@@ -9,6 +9,17 @@ class GlobalFooterController extends WikiaController {
 		global $wgLang;
 		$globalNavHelper = new GlobalNavigationHelper();
 		Wikia::addAssetsToOutput('oasis_global_footer_scss');
+		Wikia::addAssetsToOutput('global_footer_js');
+		$this->response->setVal( 'centralUrl', $globalNavHelper->getCentralUrlForLang( $wgLang->getCode() ) );
+		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
+		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
+		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
+	}
+
+	public function venusIndex() {
+		global $wgLang;
+		$globalNavHelper = new GlobalNavigationHelper();
+		Wikia::addAssetsToOutput('venus_global_footer_scss');
 		$this->response->setVal( 'centralUrl', $globalNavHelper->getCentralUrlForLang( $wgLang->getCode() ) );
 		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );

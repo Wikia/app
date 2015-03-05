@@ -1,6 +1,6 @@
-<footer class="global-footer vertical-<?= $verticalShort ?>">
+<footer class="global-footer vertical-<?= $verticalShort ?> page-width">
 	<a href="<?= htmlspecialchars( $centralUrl ) ?>" class="wikia-logo" rel="nofollow">
-		<img src="<?= $wg->BlankImgUrl ?>" height="37" width="134" alt="<?= wfMessage('oasis-global-page-header')->escaped() ?>" title="<?= wfMessage('oasis-global-page-header')->escaped() ?>">
+		<img src="<?= $wg->BlankImgUrl ?>" height="37" width="134" alt="<?= wfMessage('venus-wikia')->escaped() ?>" title="<?= wfMessage('venus-wikia')->escaped() ?>">
 	</a>
 	<ul class="footer-links">
 		<?php
