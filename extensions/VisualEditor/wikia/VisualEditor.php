@@ -53,7 +53,15 @@ $wgResourceModules += array(
 			'ext.visualEditor.track'
 		),
 		'messages' => array(
-			'wikia-visualeditor-loading'
+			'wikia-visualeditor-loading',
+			'accesskey-ca-editsource',
+			'accesskey-ca-ve-edit',
+			'accesskey-save',
+			'pipe-separator',
+			'tooltip-ca-createsource',
+			'tooltip-ca-editsource',
+			'tooltip-ca-ve-edit',
+			'visualeditor-ca-editsource-section',
 		),
 		'position' => 'top'
 	),
