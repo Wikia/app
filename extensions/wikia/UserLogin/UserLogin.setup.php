@@ -61,7 +61,7 @@ JSMessages::registerPackage('UserSignup', [
  */
 $wgResourceModules['ext.userLogin'] = [
 	'localBasePath' => __DIR__ . '/scripts',
-	'remoteExtPath' => 'wikia/CookiePolicy/scripts',
+	'remoteExtPath' => 'wikia/UserLogin/js',
 	'messages' => [
 		'usersignup-error-password-length',
 		'userlogin-error-wrongpasswordempty',
