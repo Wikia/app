@@ -486,6 +486,20 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	 */
 	function ping() {
 		$ping = $this->mysqlPing();
+
+		// Wikia change - begin
+		// @see PLATFORM-949
+		if ( $this->getSampler()->shouldSample() ) {
+			$this->getWikiaLogger()->info( "mysql ping", [
+				'server'      => $this->mServer,
+				'server_role' => $isMaster ? 'master' : 'slave',
+				'db_name'     => $this->mDBname,
+				'exception'   => new Exception(), // log the backtrace
+				'res'         => (bool) $ping
+			] );
+		}
+		// Wikia change - end
+
 		if ( $ping ) {
 			return true;
 		}
