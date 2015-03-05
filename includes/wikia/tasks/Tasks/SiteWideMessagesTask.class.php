@@ -45,6 +45,10 @@ class SiteWideMessagesTask extends BaseTask {
 						$result = $this->sendMessageToGroup($args);
 						break;
 
+					case 'POWERUSER':
+						$result = $this->sendMessageToPowerUsers( $args );
+						break;
+
 					case 'USERS':
 						$result = $this->sendMessageToList( $args );
 						break;
@@ -154,6 +158,41 @@ class SiteWideMessagesTask extends BaseTask {
 		$result = $this->sendMessageHelperToGroup($wikisDB, $params);
 
 		return $result;
+	}
+
+	private function sendMessageToPowerUsers( $params ) {
+		global $wgExternalSharedDB;
+
+		$DB = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+		$this->info('make list of power user ids from given params', [
+			'params' => $params
+		]);
+
+		$powerUsersTypesArr = explode( ',', $params['powerUserType'] );
+
+		$sqlValues = ( new \WikiaSQL() )
+			->SELECT( 'up_user' )
+			->FROM( 'user_properties' )
+			->WHERE( 'up_property' )->IN( $powerUsersTypesArr )
+			->runLoop( $DB, function( &$sqlValues, $row, $params ) {
+				$sqlValues[] = [ 0, $row->up_user, $params[ 'messageId' ], MSG_STATUS_UNSEEN ];
+			});
+
+		$this->info('add records about new message to users', [
+			'num_users' => count( $sqlValues )
+		]);
+
+		$this->info('power users', [
+			'sqlValues' => $sqlValues,
+		]);
+
+		return $sqlValues;
+
+//		$result = $this->sendMessageHelperToUsers( $sqlValues );
+//
+//		unset( $sqlValues );
+//		return $result;
 	}
 
 	/**
