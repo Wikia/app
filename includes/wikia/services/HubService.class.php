@@ -46,6 +46,7 @@ class HubService extends Service {
 	/**
 	 * Return varticalId.
 	 * For Lifestyle, Gaming and Corporate return passed id.
+	 * If vertical is not set - return Lifestyle.
 	 * For rest return Entertainment id.
 	 *
 	 * @param $verticalId
@@ -57,7 +58,8 @@ class HubService extends Service {
 			case WikiFactoryHub::CATEGORY_ID_LIFESTYLE:
 			case WikiFactoryHub::CATEGORY_ID_CORPORATE:
 				return $verticalId;
-
+			case 0:
+				return WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 			default:
 				return WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT;
 		}
