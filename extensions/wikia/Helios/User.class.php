@@ -10,44 +10,44 @@ class User {
 	/**
 	 * Logs character encoding data for the given password.
 	 */
-	public static function debugLogin( $sPassword, $sCallingMethod )
+	public static function debugLogin( $password, $callingMethod )
 	{
-		$sDetectedEncoding = mb_detect_encoding( $sPassword );
-		$sInternalEncoding = mb_internal_encoding();
+		$detectedEncoding = mb_detect_encoding( $password );
+		$internalEncoding = mb_internal_encoding();
 
-		\Wikia\Logger\WikiaLogger::instance()->info( $sCallingMethod, [
-			'byte_length'			=> strlen( $sPassword ),
-			'character_length_detected'	=> mb_strlen( $sPassword, $sDetectedEncoding ),
-			'character_length_internal'	=> mb_strlen( $sPassword, $sInternalEncoding ),
-			'detected_encoding'		=> $sDetectedEncoding,
-			'internal_encoding'		=> $sInternalEncoding,
+		\Wikia\Logger\WikiaLogger::instance()->info( $callingMethod, [
+			'byte_length'			=> strlen( $password ),
+			'character_length_detected'	=> mb_strlen( $password, $detectedEncoding ),
+			'character_length_internal'	=> mb_strlen( $password, $internalEncoding ),
+			'detected_encoding'		=> $detectedEncoding,
+			'internal_encoding'		=> $internalEncoding,
 		] );
 	}
 
 	/**
 	 * Creates a MediaWiki User object based on the token given in the HTTP request.
 	 */
-	public static function newFromToken( \WebRequest $oRequest )
+	public static function newFromToken( \WebRequest $request )
 	{
 
-		$sHeader = $oRequest->getHeader( 'AUTHORIZATION' );
+		$header = $request->getHeader( 'AUTHORIZATION' );
 
-		if ( $sHeader ) {
+		if ( $header ) {
 
-			$aMatches = [];
-			preg_match( '/^Bearer\s*(\S*)$/', $sHeader, $aMatches );
+			$matches = [];
+			preg_match( '/^Bearer\s*(\S*)$/', $header, $matches );
 
-			if ( !empty( $aMatches[1] ) ) {
+			if ( !empty( $matches[1] ) ) {
 
 				global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 
-				$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+				$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 				try {
 					// Authenticate with the token and create a MediaWiki User object.
-					$oInfo = $oHelios->info( $aMatches[1] );
-					if ( !empty( $oInfo->user_id ) ) {
-						return \User::newFromId( $oInfo->user_id );
+					$tokenInfo = $heliosClient->info( $matches[1] );
+					if ( !empty( $tokenInfo->user_id ) ) {
+						return \User::newFromId( $tokenInfo->user_id );
 					}
 				}
 
@@ -63,44 +63,44 @@ class User {
 	/**
 	 * Called in ExternalUser_Wikia::authenticate() authenticates a user.
 	 *
-	 * @param string &$sUserName string of the user name
-	 * @param string &$sPassword string of the plaintext password the user entered
+	 * @param string &$username string of the user name
+	 * @param string &$password string of the plaintext password the user entered
 	 *
 	 * @return boolean true on success, false otherwise
 	 */
-	public static function authenticate( $sUserName, $sPassword )
+	public static function authenticate( $username, $password )
 	{
-		$oLogger = \Wikia\Logger\WikiaLogger::instance();
-		$oLogger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__, 'username' => $sUserName ] );
+		$logger = \Wikia\Logger\WikiaLogger::instance();
+		$logger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__, 'username' => $username ] );
 
-		self::debugLogin( $sPassword, __METHOD__ );
+		self::debugLogin( $password, __METHOD__ );
 
 		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
-		$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+		$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 		// Authenticate with username and password.
 		try {
-			$oLogin = $oHelios->login( $sUserName, $sPassword );
-			$bResult = !empty( $oLogin->access_token ); 
+			$loginInfo = $heliosClient->login( $username, $password );
+			$result = !empty( $loginInfo->access_token );
 	
-			if ( !empty( $oLogin->error ) ) {
-				$oLogger->error(
+			if ( !empty( $loginInfo->error ) ) {
+				$logger->error(
 					'HELIOS_LOGIN',
-					[ 'response' => $oLogin, 'username' => $sUserName, 'method' => __METHOD__ ]
+					[ 'response' => $loginInfo, 'username' => $username, 'method' => __METHOD__ ]
 				);
-				$bResult = false;
+				$result = false;
 			}
 		}
 
 		catch ( \Wikia\Helios\ClientException $e ) {
-			$oLogger->error(
+			$logger->error(
 				'HELIOS_LOGIN',
-				[ 'exception' => $e, 'username' => $sUserName, 'method' => __METHOD__ ]
+				[ 'exception' => $e, 'username' => $username, 'method' => __METHOD__ ]
 			);
-			$bResult = false;
+			$result = false;
 		}
 
-		return $bResult;
+		return $result;
 	}
 
 }
