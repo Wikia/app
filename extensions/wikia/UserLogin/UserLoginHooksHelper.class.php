@@ -60,7 +60,7 @@ class UserLoginHooksHelper {
 	}
 
 	// get email authentication for Preferences::profilePreferences
-	public static function onGetEmailAuthentication( User &$user, RequestContext $context, &$disableEmailPrefs, &$emailauthenticated ) {
+	public static function onGetEmailAuthentication( User &$user, IContextSource $context, &$disableEmailPrefs, &$emailauthenticated ) {
 		if ( $user->getEmail() ) {
 			$emailTimestamp = $user->getEmailAuthenticationTimestamp();
 			$optionNewEmail = $user->getOption( 'new_email' );
