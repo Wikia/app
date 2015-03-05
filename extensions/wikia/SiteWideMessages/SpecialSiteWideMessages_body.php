@@ -131,11 +131,6 @@ class SiteWideMessages extends SpecialPage {
 		unset($groupList['*']);
 		$formData['groupNames'] = array_keys($groupList);
 
-		/**
-		 * Fetch Power Users types
-		 */
-		$formData['powerUserTypes'] = \Wikia\PowerUser\PowerUser::$aPowerUserProperties;
-
 		//handle different submit buttons in one form
 		$button = $wgRequest->getVal('mAction');
 		switch ($button) {
