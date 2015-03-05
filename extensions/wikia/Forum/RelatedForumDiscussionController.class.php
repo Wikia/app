@@ -111,6 +111,6 @@ class RelatedForumDiscussionController extends WikiaController {
 	}
 
 	private static function logError( $message, array $param = [] ) {
-			WikiaLogger::instance()->error( 'RelatedForumDiscussionController: ' . $message, $param );
+		WikiaLogger::instance()->error( 'RelatedForumDiscussionController: ' . $message, $param );
 	}
 }
