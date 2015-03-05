@@ -190,7 +190,7 @@ class SiteWideMessagesTask extends BaseTask {
 			->AND_( 'up_value' )->EQUAL_TO( 1 )
 			->runLoop( $DB, function( &$userIds, $row ) {
 				$userIds[] = $row->up_user;
-			});
+			} );
 
 		/**
 		 * Create a messages_status record for each ID
@@ -201,7 +201,7 @@ class SiteWideMessagesTask extends BaseTask {
 
 		$this->info('add records about new message to users', [
 			'num_users' => count( $sqlValues )
-		]);
+		] );
 
 		/**
 		 * Insert records into messages_status
