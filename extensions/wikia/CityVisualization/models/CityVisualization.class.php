@@ -978,7 +978,7 @@ class CityVisualization extends WikiaModel {
 					return WikiFactory::getListOfWikisWithVar($wikiFactoryVarId, 'bool', '=', true);
 				}
 				else {
-					return array();
+					return [];
 				}
 			}
 		);
