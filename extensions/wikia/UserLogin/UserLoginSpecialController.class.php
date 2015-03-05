@@ -627,8 +627,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 */
 	public function changePassword() {
-		$this->wg->Out->setPageTitle(wfMessage('userlogin-password-page-title')->plain());
-		$this->pageHeading = wfMessage('resetpass')->escaped();
+		$this->wg->Out->setPageTitle( wfMessage( 'userlogin-password-page-title' )->plain() );
+		$this->response->setVal( 'pageHeading', wfMessage( 'resetpass' )->escaped() );
 		$this->initializeTemplate();
 
 		$username = $this->request->getVal( 'username', '' );
