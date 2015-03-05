@@ -304,7 +304,6 @@
 
 			validator = new UserSignupAjaxValidation({
 				wikiaForm: wikiaForm,
-				inputsToValidate: inputsToValidate,
 				submitButton: inputs.submit
 			});
 

@@ -7,14 +7,12 @@
 	 *
 	 * @param {object} options
 	 * - wikiaForm: instance of WikiaForm
-	 * - inputsToValide: array of input names to be ok'ed before submission
 	 * - submitButton: pointer to main submit button of the form
 	 * - passwordInputName: input name attribute for form's password input
 	 * @constructor
 	 */
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
-		this.inputsToValidate = options.inputsToValidate || [];
 		this.submitButton = $(options.submitButton);
 		this.deferred = false;
 		this.passwordInputName = options.passwordInputName || 'password';
