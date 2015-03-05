@@ -7,8 +7,7 @@
 	function getScrollbarWidth () {
 		var inner = document.createElement('p'),
 			outer = document.createElement('div'),
-			w1 = inner.offsetWidth,
-			w2 = inner.offsetWidth;
+			w1, w2;
 
 		inner.style.width = '100%';
 		inner.style.height = '100px';
@@ -23,7 +22,10 @@
 		outer.appendChild(inner);
 
 		document.body.appendChild(outer);
+
+		w1 = inner.offsetWidth;
 		outer.style.overflow = 'scroll';
+		w2 = inner.offsetWidth;
 
 		if (w1 == w2) {
 			w2 = outer.clientWidth;
