@@ -22,7 +22,6 @@ class CityVisualization extends WikiaModel {
 	 * @const String name of variable in city_variables table which enables WikiaHomePage extension
 	 */
 	const WIKIA_HOME_PAGE_WF_VAR_NAME = 'wgEnableWikiaHomePageExt';
-	static $wikiFactoryVarId = null;
 
 	protected $verticalMap = array(
 		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'lifestyle',
@@ -964,30 +963,25 @@ class CityVisualization extends WikiaModel {
 	}
 
 	/**
-	 * @desc Gets id of WF variable and then loads and returns list of corporate sites
+	 * @desc Gets id of wgEnableWikiaHomePageExt variable and then loads and returns list of corporate sites
 	 * @return array
 	 */
 	protected function getCorporateSitesList() {
-		$wikiFactoryList = array();
-		self::$wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
+		return WikiaDataAccess::cache(
+			wfSharedMemcKey('corporate_pages_list', self::CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION),
+			WikiaResponse::CACHE_STANDARD,
+			function() {
+				// loads list of corporate sites (sites which have $wgEnableWikiaHomePageExt WF variable set to true)
+				$wikiFactoryVarId = WikiFactory::getVarIdByName(self::WIKIA_HOME_PAGE_WF_VAR_NAME);
 
-		if( is_int(self::$wikiFactoryVarId) ) {
-			$wikiFactoryList = WikiaDataAccess::cache(
-				wfMemcKey('corporate_pages_list', self::CITY_VISUALIZATION_CORPORATE_PAGE_LIST_MEMC_VERSION, __METHOD__),
-				24 * 60 * 60,
-				array($this, 'loadCorporateSitesList')
-			);
-		}
-
-		return $wikiFactoryList;
-	}
-
-	/**
-	 * @desc Loads list of corporate sites (sites which have $wgEnableWikiaHomePageExt WF variable set to true)
-	 * @return array
-	 */
-	public function loadCorporateSitesList() {
-		return WikiFactory::getListOfWikisWithVar(self::$wikiFactoryVarId, 'bool', '=', true);
+				if (is_int($wikiFactoryVarId)) {
+					return WikiFactory::getListOfWikisWithVar($wikiFactoryVarId, 'bool', '=', true);
+				}
+				else {
+					return [];
+				}
+			}
+		);
 	}
 
 	/**

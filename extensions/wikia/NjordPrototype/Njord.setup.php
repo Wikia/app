@@ -15,10 +15,8 @@ $wgExtensionMessagesFiles[ 'Njord' ] = $dir . '/Njord.i18n.php';
  */
 
 $wgAutoloadClasses['NjordModel'] =  $dir . '/models/NjordModel.class.php';
-$wgAutoloadClasses['WikiDataModel'] =  $dir . '/models/WikiDataModel.class.php';
 $wgAutoloadClasses['NjordController'] =  $dir . '/NjordController.class.php';
 
-$wgHooks[ 'ParserFirstCallInit' ][ ] = 'NjordHooks::onParserFirstCallInit';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'NjordHooks::onSkinAfterBottomScripts';
 
 

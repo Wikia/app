@@ -378,7 +378,6 @@ $wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterControl
 $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
 $wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/AchievementsController.class.php';
 $wgAutoloadClasses['AccountNavigationController'] = $IP.'/skins/oasis/modules/AccountNavigationController.class.php';
-$wgAutoloadClasses['RailController'] = $IP.'/skins/oasis/modules/RailController.class.php';
 $wgAutoloadClasses['AdController'] = $IP.'/skins/oasis/modules/AdController.class.php';
 $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/FollowedPagesController.class.php';
 $wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
@@ -615,6 +614,7 @@ include_once( "$IP/extensions/wikia/BannerNotifications/BannerNotifications.setu
 include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
+include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 
 /**
  * @name $wgSkipSkins

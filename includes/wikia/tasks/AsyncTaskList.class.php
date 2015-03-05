@@ -19,6 +19,7 @@ use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\NlpPipelineQueue;
+use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
@@ -95,6 +96,9 @@ class AsyncTaskList {
 				break;
 			case SMWQueue::NAME:
 				$queue = new SMWQueue();
+				break;
+			case PurgeQueue::NAME:
+				$queue = new PurgeQueue();
 				break;
 			default:
 				$queue = new Queue();

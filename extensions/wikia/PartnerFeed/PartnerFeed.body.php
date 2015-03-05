@@ -8,6 +8,8 @@
  * Returns formated RSS / Atom Feeds
  */
 
+use Wikia\Logger\WikiaLogger;
+
 class PartnerFeed extends SpecialPage {
 	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
@@ -15,37 +17,31 @@ class PartnerFeed extends SpecialPage {
 	var $err;
 
 	function  __construct() {
-		parent::__construct( "PartnerFeed" , '' /*restriction*/);
-	}
-	private function shortenString($sString, $length){
-		return substr($sString,0,$length);
+		parent::__construct( "PartnerFeed" , '' /*restriction*/ );
 	}
 
 	function execute() {
-		global $wgLang, $wgRequest, $wgOut;
+		$req = $this->getRequest();
 
-		$this->mName = $wgRequest->getText( 'wpName' );
-		$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
-		$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName' );
-		$this->mProblem = $wgRequest->getText( 'wpContactProblem' );
-		$this->mProblemDesc = $wgRequest->getText( 'wpContactProblemDesc' );
-		$this->mPosted = $wgRequest->wasPosted();
-		$this->mAction = $wgRequest->getVal( 'action' );
-		$this->mEmail = $wgRequest->getText( 'wpEmail' );
-		$this->mBrowser = $wgRequest->getText( 'wpBrowser' );
-		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
+		$this->mName = $req->getText( 'wpName' );
+		$this->mRealName = $req->getText( 'wpContactRealName' );
+		$this->mWhichWiki = $req->getText( 'wpContactWikiName' );
+		$this->mProblem = $req->getText( 'wpContactProblem' );
+		$this->mProblemDesc = $req->getText( 'wpContactProblemDesc' );
+		$this->mPosted = $req->wasPosted();
+		$this->mAction = $req->getVal( 'action' );
+		$this->mEmail = $req->getText( 'wpEmail' );
+		$this->mBrowser = $req->getText( 'wpBrowser' );
+		$this->mCCme = $req->getCheck( 'wgCC' );
 
-		$feed = $wgRequest->getText( "feed", false );
-		$feedType = $wgRequest->getText ( "type", false );
-		if (	$feed
-			&& $feedType
-			&& in_array( $feed, array( "rss", "atom" ) )
-		) {
+		$feed = $req->getText( "feed", false );
+		$feedType = $req->getText ( "type", false );
+		if ( $feed && $feedType && in_array( $feed, [ "rss", "atom" ] ) ) {
 			// Varnish cache controll. Cache max for 12h.
-			header( "Cache-Control: s-maxage=".( 60*60*12 ) );
-			header( "X-Pass-Cache-Control: max-age=".( 60*60*12 ) );
+			header( "Cache-Control: s-maxage=" . ( 60 * 60 * 12 ) );
+			header( "X-Pass-Cache-Control: max-age=" . ( 60 * 60 * 12 ) );
 			$isFeed = true;
-			switch( $feedType ){
+			switch( $feedType ) {
 				case 'AchivementsLeaderboard':
 					$this->FeedAchivementsLeaderboard( $feed );
 				break;
@@ -56,7 +52,7 @@ class PartnerFeed extends SpecialPage {
 					$this->FeedRecentBadges( $feed );
 				break;
 				case 'HotContent':
-					$this->FeedHotContent( $feed, true );
+					$this->FeedHotContent( $feed );
 				break;
 				case 'RecentBlogPosts':
 					$this->FeedRecentBlogPosts( $feed );
@@ -73,7 +69,7 @@ class PartnerFeed extends SpecialPage {
 				break;
 			}
 			if ( $isFeed ) {
-				header("Content-Type: application/rss+xml");
+				header( "Content-Type: application/rss+xml" );
 			}
 		} else {
 			$this->showMenu();
@@ -81,100 +77,106 @@ class PartnerFeed extends SpecialPage {
 		return false;
 	}
 
-
-	private function showMenu(){
-
-		global $wgOut, $wgEnableAchievementsExt, $wgEnableBlogArticles;
+	private function showMenu() {
+		$wg = F::app()->wg;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars(
-			array (
-			    'displayBlogs' => (!empty($wgEnableBlogArticles)),
-			    'displayAchievements' => (!empty($wgEnableAchievementsExt))
-			)
-		);
-		$wgOut->addHTML( $oTmpl->render( "main-page" ) );
+		$oTmpl->set_vars( [
+			'displayBlogs' => !empty( $wg->EnableBlogArticles ),
+			'displayAchievements' => !empty( $wg->EnableAchievementsExt )
+		] );
+		$wg->Out->addHTML( $oTmpl->render( "main-page" ) );
 	}
 
-/**
- * @author Jakub Kurcek
- * @param format string 'rss' or 'atom'
- *
- */
-	private function FeedRecentBlogComments ( $format ){
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * @param string $format 'rss' or 'atom'
+	 *
+	 * @throws MWException
+	 */
+	private function FeedRecentBlogComments ( $format ) {
+		$wg = F::app()->wg;
 
-		global	$wgEnableBlogArticles, $wgParser, $wgUser, $wgServer,
-			$wgOut, $wgExtensionsPath, $wgRequest;
-
-		if (empty($wgEnableBlogArticles)){
+		if ( empty( $wg->EnableBlogArticles ) ) {
 			$this->showMenu();
 		} else {
-
 			// local settings
 			$maxNumberOfBlogComments = 10;
 			$userAvatarSize = 48;
 
-			$sBlogPost = $wgRequest->getText ( "blogpost", false );
-			$oTitle = Title::newFromText( $sBlogPost , 500);
-			if ( $oTitle->getArticleID() > 0 ){
+			$sBlogPost = $wg->Request->getText ( "blogpost", false );
+			$oTitle = Title::newFromText( $sBlogPost , 500 );
+			if ( $oTitle && $oTitle->getArticleID() > 0 ) {
 
-				$articleCommentList = ArticleCommentList::newFromTitle($oTitle);
+				$articleCommentList = ArticleCommentList::newFromTitle( $oTitle );
 				$articleCommentList->newFromTitle( $oTitle );
 				$aCommentPages = $articleCommentList->getCommentPages();
 
-				$counter = $maxNumberOfBlogComments;
-				$feedArray = array();
-				foreach ($aCommentPages as $commentPage){
+				$feedArray = [];
+				foreach ( $aCommentPages as $commentPage ) {
 
-					if ( ( $maxNumberOfBlogComments-- ) == 0){
+					if ( ( $maxNumberOfBlogComments-- ) == 0 ) {
 						break;
 					}
-					//make sure all data is loaded
-					if ( $commentPage[ 'level1' ]->load() ) {
-						$tmpArticleComment = $commentPage[ 'level1' ]->getData();
 
-						$feedArray[ ] = array(
+					/** @var ArticleComment $levelOne */
+					$levelOne = $commentPage['level1'];
+
+					// make sure all data is loaded
+					if ( $levelOne->load() ) {
+						$tmpArticleComment = $levelOne->getData();
+
+						/** @var Revision $revision */
+						$firstRevision = $levelOne->mFirstRevision;
+						if ( !$firstRevision instanceof Revision ) {
+							$tmpArticleComment['mFirstRevision'] = $firstRevision;
+							$this->logError( 'Comment has no first revision', $tmpArticleComment );
+							break;
+						}
+
+						/** @var User $commentAuthor */
+						$commentAuthor = $tmpArticleComment[ 'author' ];
+						$feedArray[] = [
 							'title' => '',
 							'description' => $tmpArticleComment[ 'text' ],
 							'url' => $oTitle->getFullURL(),
-							'date' => $commentPage[ 'level1' ]->mFirstRevision->getTimestamp(),
-							'author' => $tmpArticleComment[ 'author' ]->getName(),
-							'otherTags' => array(
-								'image' => AvatarService::getAvatarUrl( $commentPage[ 'level1' ]->mUser->getName(), $userAvatarSize )
-							)
-						);
+							'date' => $firstRevision->getTimestamp(),
+							'author' => $commentAuthor->getName(),
+							'otherTags' => [
+								'image' => AvatarService::getAvatarUrl( $levelOne->mUser->getName(), $userAvatarSize )
+							]
+						];
 					} else {
-						\Wikia\Logger\WikiaLogger::instance()->error('Comment page loading failed', $commentPage);
+						$this->logError( 'Comment page loading failed', $commentPage );
 					}
 				}
 
-				$this->showFeed( $format , wfMsg( 'feed-title-blogcomments', $oTitle->getFullText() ),  $feedArray);
-
+				$this->showFeed(
+					$format,
+					wfMessage( 'feed-title-blogcomments', $oTitle->getFullText() )->text(),
+					$feedArray
+				);
 			} else {
-
 				$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-				$oTmpl->set_vars( array(
-					"blogPostName"		=> $sBlogPost
-				));
-				$wgOut->addHTML( $oTmpl->render( "error-page-blog-comments" ) );
+				$oTmpl->set_vars( [ "blogPostName" => $sBlogPost ] );
+				$wg->Out->addHTML( $oTmpl->render( "error-page-blog-comments" ) );
 			}
 		}
 	}
 
-/**
- * @author Jakub Kurcek
- * @param format string 'rss' or 'atom'
- *
- */
-	private function FeedRecentChanges ( $format ){
-
-		global	$wgEnableBlogArticles, $wgParser, $wgUser, $wgServer,
-			$wgOut, $wgExtensionsPath, $wgRequest;
-
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * @param string $format 'rss' or 'atom'
+	 *
+	 * @throws MWException
+	 */
+	private function FeedRecentChanges ( $format ) {
 		$userAvatarSize = 48;
 
 		$aReturn = ApiService::call(
-			array(
+			[
 				'action' => 'query',
 				'list' => 'recentchanges',
 				'rclimit' => '30',
@@ -182,46 +184,46 @@ class PartnerFeed extends SpecialPage {
 				'rctype' => 'new|edit',
 				'rcshow' => '!anon|!bot',
 				'rcnamespace' => '0'
-			)
+			]
 		);
 
-		$feedArray = array();
-		foreach( $aReturn['query']['recentchanges'] as $val ){
+		$feedArray = [];
+		foreach ( $aReturn['query']['recentchanges'] as $val ) {
 
 			$oTitle = Title::newFromText( $val['title'] );
 
-			if ( $val['type'] == 'edit' ){
+			if ( $val['type'] == 'edit' ) {
 				$action = 'edited';
 			} else {
 				$action = 'created';
 			};
 
-			$feedArray[] = array(
+			$feedArray[] = [
 				'title' => $val['title'],
-				'description' => $val['user'].' '.$action.' the '.$val['title'],
+				'description' => $val['user'] . ' ' . $action . ' the ' . $val['title'],
 				'url' => $oTitle->getFullURL(),
 				'date' => $val['timestamp'],
 				'author' => $val['user'],
-				'otherTags' => array(
+				'otherTags' => [
 					'image' => AvatarService::getAvatarUrl( $val['user'], $userAvatarSize )
-				)
-			);
+				]
+			];
 		}
 
-		$this->showFeed( $format , wfMsg('feed-title-recentchanges'), $feedArray);
+		$this->showFeed( $format, wfMessage( 'feed-title-recentchanges' )->text(), $feedArray );
 	}
 
-/**
- * @author Jakub Kurcek
- * @param format string 'rss' or 'atom'
- *
- */
-	private function FeedRecentBlogPosts ( $format ){
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * @param string $format 'rss' or 'atom'
+	 *
+	 * @throws MWException
+	 */
+	private function FeedRecentBlogPosts ( $format ) {
+		$wg = F::app()->wg;
 
-		global	$wgParser, $wgUser, $wgServer, $wgOut, $wgExtensionsPath,
-			$wgRequest, $wgEnableBlogArticles;
-
-		if ( empty($wgEnableBlogArticles) ){
+		if ( empty( $wg->EnableBlogArticles ) ) {
 			$this->showMenu();
 		} else {
 			// local settings
@@ -230,152 +232,151 @@ class PartnerFeed extends SpecialPage {
 			$userAvatarSize = 48;
 
 			// If blog listing does not exit treats parameter as empty;
-			$sListing = $wgRequest->getVal( 'listing' );
+			$sListing = $wg->Request->getVal( 'listing' );
 			$title = Title::newFromText( $sListing, NS_BLOG_LISTING );
-			if ( !empty( $sListing ) && ($title == null || !$title->exists() )){
-				unset($sListing);
+			if ( !empty( $sListing ) && ( $title == null || !$title->exists() ) ) {
+				unset( $sListing );
 			};
 
 			$oBlogListing = new CreateBlogListingPage;
-			$oBlogListing->setFormData('listingAuthors', '');
-			$oBlogListing->setFormData('tagContent', '');
-			if ( !empty( $sListing ) ){
+			$oBlogListing->setFormData( 'listingAuthors', '' );
+			$oBlogListing->setFormData( 'tagContent', '' );
+			if ( !empty( $sListing ) ) {
 				$oBlogListing->parseTag( urldecode( $sListing ) );
-				$subTitleName = wfMsg('blog-posts-from-listing', $sListing);
+				$subTitleName = wfMessage( 'blog-posts-from-listing', $sListing )->text();
 			} else {
-				$oBlogListing->setFormData('listingCategories', '');
-				$subTitleName = wfMsg('all-blog-posts');
+				$oBlogListing->setFormData( 'listingCategories', '' );
+				$subTitleName = wfMessage( 'all-blog-posts' )->text();
 			}
 
 			$input = $oBlogListing->buildTagContent();
 
-			$db = wfGetDB( DB_SLAVE, 'dpl' );
-
-			$params = array (
+			$params = [
 				"summary" => true,
 				"timestamp" => true,
 				"count" => $maxNumberOfBlogPosts,
-			);
+			];
 
-			$result = BlogTemplateClass::parseTag( $input, $params, $wgParser, null, true );
-			$feedArray = array();
+			$result = BlogTemplateClass::parseTag( $input, $params, $wg->Parser, null, true );
+			$feedArray = [];
 
-			foreach( $result as $val ){
-				$oTitle = Title::newFromID($val['page']);
+			foreach ( $result as $val ) {
+				$oTitle = Title::newFromID( $val['page'] );
 
-				$aValue = explode('/' , $oTitle->getText());
-				$feedArray[] = array(
+				$aValue = explode( '/' , $oTitle->getText() );
+				$feedArray[] = [
 					'title' => $aValue[1],
 					'description' => substr( str_replace( '&nbsp;', ' ', strip_tags( $val['text'] ) ), 0, $postCharacterLimit ),
 					'url' => $oTitle->getFullURL(),
 					'date' => $val['date'],
 					'author' => $val['username'],
-					'otherTags' => array(
-						'image' => AvatarService::getAvatarUrl($val['username'], $userAvatarSize)
-					)
-				);
+					'otherTags' => [
+						'image' => AvatarService::getAvatarUrl( $val['username'], $userAvatarSize )
+					]
+				];
 			}
-			$this->showFeed( $format , wfMsg('feed-title-blogposts').' - '.$subTitleName, $feedArray);
+			$this->showFeed(
+				$format,
+				wfMessage( 'feed-title-blogposts' )->text() . ' - ' . $subTitleName,
+				$feedArray
+			);
 		}
 	}
 
-/**
- * @author Jakub Kurcek
- * @param format string 'rss' or 'atom'
- */
-	private function FeedRecentBadges ( $format ){
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * @param string $format 'rss' or 'atom'
+	 */
+	private function FeedRecentBadges ( $format ) {
+		$wg = F::app()->wg;
 
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgServer, $wgEnableAchievementsExt;
-
-		if ( empty ($wgEnableAchievementsExt) ){
+		if ( empty ( $wg->EnableAchievementsExt ) ) {
 			$this->showMenu();
 		} else {
 			// local settings
 			$howOld = 30;
 			$maxBadgesToDisplay = 6;
 			$badgeImageSize = 56;
-			$userNameLength = 22;
-			$badgeNameLength = 29;
 			$rankingService = new AchRankingService();
 
 			// ignore welcome badges
-			$blackList = array(BADGE_WELCOME);
+			$blackList = [ BADGE_WELCOME ];
 
 			$awardedBadges = $rankingService->getRecentAwardedBadges( null, $maxBadgesToDisplay, $howOld, $blackList );
 
-			$recents = array();
+			$recents = [];
 			$count = 1;
 
-			$feedArray = array();
+			$feedArray = [];
 			// getRecentAwardedBadges can sometimes return more than $max items
 			foreach ( $awardedBadges as $badgeData ) {
 				$recents[] = $badgeData;
-				$descriptionText = $badgeData['badge']->getName().$badgeData['badge']->getGiveFor();
+
+				/** @var AchBadge $badge */
+				$badge = $badgeData['badge'];
+				$descriptionText = $badge->getName() . $badge->getGiveFor();
 				$descriptionText = preg_replace( '/<br\s*\/*>/i', "$1 $2", $descriptionText );
 				$descriptionText = strip_tags( $descriptionText );
-				$imgURL = $badgeData['badge']->getPictureUrl( $badgeImageSize );
-				if ( strpos( $imgURL, 'http' ) === false ){
-					$imgURL = sprintf( "%s/%s", $wgServer, $imgURL );
+				$imgURL = $badge->getPictureUrl( $badgeImageSize );
+				if ( strpos( $imgURL, 'http' ) === false ) {
+					$imgURL = sprintf( "%s/%s", $wg->Server, $imgURL );
 				}
-				$feedArray[] = array (
-					'title' => $badgeData['user']->getName(),
+
+				/** @var User $badgeUser */
+				$badgeUser = $badgeData['user'];
+				$feedArray[] = [
+					'title' => $badgeUser->getName(),
 					'description' => $descriptionText,
-				    	'url' => $badgeData['user']->getUserPage()->getFullURL(),
+				    	'url' => $badgeUser->getUserPage()->getFullURL(),
 					'date' => $badgeData['date'],
 					'author' => '',
-					'otherTags' => array(
+					'otherTags' => [
 					    'image' => $imgURL,
-					    'earnedby' => $badgeData['user']->getName(),
+					    'earnedby' => $badgeUser->getName(),
 					    'nicedate' => wfTimeFormatAgo( $badgeData['date'] )
-					)
-				);
+					]
+				];
 
-				if ( $count++ >= $maxBadgesToDisplay ){
+				if ( $count++ >= $maxBadgesToDisplay ) {
 					break;
 				}
 			}
-			$this->showFeed( $format , wfMsg('feed-title-recent-badges'),  $feedArray);
+			$this->showFeed( $format, wfMessage( 'feed-title-recent-badges' )->text(), $feedArray );
 		}
-
 	}
 
-/**
- * @author Jakub Kurcek
- * @param format string 'rss' or 'atom'
- */
-	private function FeedRecentImages ( $format ){
-
-		global $wgTitle, $wgLang, $wgRequest;
-
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * @param string $format 'rss' or 'atom'
+	 *
+	 * @throws MWException
+	 */
+	private function FeedRecentImages ( $format ) {
 		// local settings
 		$maxImagesNumber = 20;
 		$defaultWidth = 124;
 		$defaultHeight = 72;
 
-		$imageServing = new ImageServing( array(), $defaultWidth, array( "w" => $defaultWidth, "h" => $defaultHeight ) );
+		$imageServing = new ImageServing( [], $defaultWidth, [ "w" => $defaultWidth, "h" => $defaultHeight ] );
 		$dbw = wfGetDB( DB_SLAVE );
 
 		$res = $dbw->select( 'image',
-				array( "img_name", "img_user_text", "img_size", "img_width", "img_height" ),
-				array(
+				[ "img_name", "img_user_text", "img_size", "img_width", "img_height" ],
+				[
 					"img_media_type != 'VIDEO'",
 					"img_width > 32",
 					"img_height > 32"
-				),
+				],
 				false,
-				array(
+				[
 					"ORDER BY" => "img_timestamp DESC",
 					"LIMIT" => $maxImagesNumber
-				)
+				]
 		);
 
-		$thumbSize = $wgRequest->getText ( "size", false );
-
-		if ( $defaultWidth ){
-			$thumbSize = ( integer )$thumbSize;
-		}
-
-		$feedArray = array();
+		$feedArray = [];
 
 		while ( $row = $dbw->fetchObject( $res ) ) {
 
@@ -386,158 +387,66 @@ class PartnerFeed extends SpecialPage {
 
 			$testImage = wfReplaceImageServer(
 				$image->getThumbUrl(
-					$imageServing->getCut($row->img_width, $row->img_height)."-".$image->getName()
+					$imageServing->getCut( $row->img_width, $row->img_height ) . "-" . $image->getName()
 				)
 			);
 
-			$feedArray[] = array (
+			$feedArray[] = [
 				'title' => '',
 				'description' => $row->img_name,
 				'url' => $tmpTitle->getFullURL(),
 				'date' => $image->getTimestamp(),
 				'author' => $row->img_user_text,
-				'otherTags' => array(
+				'otherTags' => [
 						'image' => $testImage
-					)
-			);
+				]
+			];
 		}
 
-		$this->showFeed( $format , wfMsg( 'feed-title-recent-images' ),  $feedArray);
+		$this->showFeed( $format, wfMessage( 'feed-title-recent-images' )->text(), $feedArray );
 	}
 
-/**
- * @author Jakub Kurcek
- * @param format string 'rss' or 'atom'
- */
-	private function FeedHotContent ( $format, $forceReload = false ) {
-		global $wgRequest;
-		# this method should be redesign
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * @param string $format 'rss' or 'atom'
+	 *
+	 * @throws MWException
+	 */
+	private function FeedHotContent ( $format ) {
+		# this method should be redesigned
 
-		$defaultHubTitle ='tv';
+		$defaultHubTitle = 'tv';
 
-		$hubTitle = $wgRequest->getVal( 'hub' );
+		$hubTitle = $this->getRequest()->getVal( 'hub' );
 		$allowedHubs = $this->allowedHubs();
 
-		if ( isset( $allowedHubs[ $hubTitle ] ) && !is_array( $allowedHubs[ $hubTitle ] ) ){
+		if ( isset( $allowedHubs[ $hubTitle ] ) && !is_array( $allowedHubs[ $hubTitle ] ) ) {
 			$oTitle = Title::newFromText( $hubTitle, 150 );
 		} else {
 			$oTitle = Title::newFromText( $defaultHubTitle, 150 );
 		}
-		$this->showFeed( $format, wfMsg( 'feed-title-hot-content', $oTitle->getText() ), array() );
+		$this->showFeed( $format, wfMessage( 'feed-title-hot-content', $oTitle->getText() )->text(), [] );
 	}
 
-/**
- * @author Jakub Kurcek
- * @param hubId integer
- * @param forceRefresh boolean - if true clears the cache and creates new one.
- *
- * Returns data for feed creation. If no cache - creates one.
- */
-	private function PrepareHotContentFeed ( $hubId, $forceRefresh = false ){
-		# this method used the WikiaStatsAutoHubsConsumer class as data feed. 
-		# Class WikiaStatsAutoHubsConsumer was removed, so this method should be reimplemented
-		return array();
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * Returns array of accepted hubs.
+	 */
+	public function allowedHubs () {
+		return F::app()->wg->HubsPages['en'];
 	}
 
-/**
- * @author Jakub Kurcek
- * @param url string url to data source
- */
-	private function getDataFromApi( $url ){
-
-		global $wgDevelEnvironment, $wgHTTPProxy;
-
-		$retry = 0;
-
-		// #rt:68146 retries to prevent empty results caused by error 503
-
-		while( $retry <= 3 ) {
-
-			if ( !empty( $wgDevelEnvironment ) ){
-				$httpResult = Http::get( $url, 15, array(CURLOPT_PROXY => $wgHTTPProxy) );
-			}else{
-				$httpResult = Http::get( $url, 15 );
-			}
-			$httpResultArr = json_decode( $httpResult );
-
-			// in case of proper data ( even empty )
-			if ( isset( $httpResultArr->image->imagecrop ) ){
-				return $httpResultArr->image->imagecrop;
-			};
-			$retry++;
-		}
-		// in case of error returns empty string
-		return '';
-
-	}
-/**
- * @author Jakub Kurcek
- * @param hubId integer
- *
- * Public controller for forced caching of specified hub results. Used for maintance script.
- */
-	public function ReloadHotContentFeed ( $hubId ){
-
-		$this->PrepareHotContentFeed( (integer) $hubId , true);
-
-	}
-
-/**
- * @author Jakub Kurcek
- * @param hubId integer
- * @param content array
- *
- * Caching functions.
- */
-	private function getKey( $hubId ) {
-
-		return wfSharedMemcKey( 'widgetbox_hub_hotcontent', $hubId );
-	}
-
-	private function saveToCache( $hubId, $content ) {
-
-		global $wgMemc;
-		$memcData = $this->getFromCache( $hubId );
-		if ( $memcData == null ){
-			$wgMemc->set( $this->getKey( $hubId ), $content, 60*60*12);
-			return false;
-		}
-		return true;
-	}
-
-	private function getFromCache ( $hubId ){
-
-		global $wgMemc;
-		return $wgMemc->get( $this->getKey( $hubId ) );
-	}
-
-	private function clearCache ( $hubId ){
-
-		global $wgMemc;
-		return $wgMemc->delete( $this->getKey( $hubId ) );
-	}
-
-/**
- * @author Jakub Kurcek
- *
- * Returns array of accepted hubs.
- */
-
-	public function allowedHubs (){
-
-		global $wgHubsPages;
-		return $wgHubsPages['en'];
-	}
-
-/**
- * @author Jakub Kurcek
- * @param format string 'rss' or 'atom'
- */
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * @param string $format 'rss' or 'atom'
+	 */
 	private function FeedAchivementsLeaderboard ( $format ) {
+		$wg = F::app()->wg;
 
-		global	$wgEnableAchievementsExt, $wgLang;
-
-		if ( empty($wgEnableAchievementsExt) ){
+		if ( empty( $wg->EnableAchievementsExt ) ) {
 			$this->showMenu();
 		} else {
 
@@ -549,21 +458,21 @@ class PartnerFeed extends SpecialPage {
 			$rankingService = new AchRankingService();
 			$ranking = $rankingService->getUsersRanking( 20 );
 
-			$levels = array( BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE );
-			$recents = array();
+			$levels = [ BADGE_LEVEL_PLATINUM, BADGE_LEVEL_GOLD, BADGE_LEVEL_SILVER, BADGE_LEVEL_BRONZE ];
+			$recents = [];
 
-			$specialPage = SpecialPageFactory::getPage('Leaderboard');
+			$specialPage = SpecialPageFactory::getPage( 'Leaderboard' );
 			$specialPageTitle = $specialPage->getTitle();
 			$pageUrl = $specialPageTitle->getFullUrl();
 
-			foreach( $levels as $level ) {
+			foreach ( $levels as $level ) {
 				$limit = 3;
 				$blackList = null;
-				if( $level == BADGE_LEVEL_BRONZE ) {
-					if( $maxEntries <= 0 ) break;
+				if ( $level == BADGE_LEVEL_BRONZE ) {
+					if ( $maxEntries <= 0 ) break;
 
 					$limit = $maxEntries;
-					$blackList = array( BADGE_WELCOME );
+					$blackList = [ BADGE_WELCOME ];
 				}
 
 				$awardedBadges = $rankingService->getRecentAwardedBadges( $level, $limit, $howOld, $blackList );
@@ -573,40 +482,48 @@ class PartnerFeed extends SpecialPage {
 					$maxEntries -= $total;
 				}
 			}
-			$feedArray = array();
-			foreach( $ranking as $rank => $rankedUser ){
-				++$rank;
+			$feedArray = [];
+			foreach ( $ranking as $rank => $rankedUser ) {
+				/** @var AchRankedUser $rankedUser */
 				$name = htmlspecialchars( $rankedUser->getName() );
-				$feedArray[] = array(
+				$feedArray[] = [
 					'title' =>  $name,
-					'description' => $wgLang->formatNum( $rankedUser->getScore() ),
+					'description' => $wg->Lang->formatNum( $rankedUser->getScore() ),
 					'url' => $pageUrl,
 					'date' => time(),
 					'author' => '',
 					'',
-					'otherTags' => array(
-						'media:thumbnail' =>AvatarService::getAvatarUrl( $rankedUser->getName(), $userAvatarSize ),
-					)
-				);
+					'otherTags' => [
+						'media:thumbnail' => AvatarService::getAvatarUrl( $rankedUser->getName(), $userAvatarSize ),
+					]
+				];
 			}
-			$this->showFeed( $format , wfMsg('feed-title-leaderboard'),  $feedArray);
+			$this->showFeed( $format, wfMessage( 'feed-title-leaderboard' )->text(), $feedArray );
 		}
 	}
 
-/**
- * @author Jakub Kurcek
- * @param format string 'rss' or 'atom'
- * @param subtitle string
- * @param feedData array
- *
- * returns RSS/Atom feed
- */
+	/**
+	 * @author Jakub Kurcek
+	 *
+	 * @param string $format
+	 * @param string $subtitle
+	 * @param array $feedData
+	 *
+	 * @internal param string $format 'rss' or 'atom'
+	 * @internal param string $subtitle
+	 * @internal param array $feedData returns RSS/Atom feed*
+	 * returns RSS/Atom feed
+	 */
 	private function showFeed( $format, $subtitle, $feedData ) {
-		global $wgOut, $wgRequest, $wgParser, $wgMemc, $wgTitle, $wgSitename;
-
 		wfProfileIn( __METHOD__ );
 		$sFeedName = self::getFeedClass( $format );
-		$feed = new $sFeedName( wfMsg('feed-main-title'),  $subtitle, $wgTitle->getFullUrl() );
+
+		/** @var ChannelFeed $feed */
+		$feed = new $sFeedName(
+			wfMessage( 'feed-main-title' )->text(),
+			$subtitle,
+			F::app()->wg->Title->getFullUrl()
+		);
 		$feed->outHeader();
 		foreach ( $feedData as $val ) {
 			$item = new ExtendedFeedItem(
@@ -625,13 +542,16 @@ class PartnerFeed extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private static function getFeedClass ( $format ){
-
-		if ( $format == 'atom' ){
+	private static function getFeedClass ( $format ) {
+		if ( $format == 'atom' ) {
 			return 'PartnerAtomFeed';
 		} else {
 			return 'PartnerRSSFeed';
 		}
+	}
+
+	private function logError ( $message, $param = null ) {
+		WikiaLogger::instance()->error( 'PartnerFeed: ' . $message, $param );
 	}
 }
 

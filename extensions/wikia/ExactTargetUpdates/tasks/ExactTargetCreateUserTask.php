@@ -12,13 +12,20 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
+		// Pass task ID to have all logs under one task
+		$oDeleteUserTask->taskId( $this->getTaskId() );
 		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
+
 		/* Create Subscriber with new email */
 		$this->createSubscriber( $aUserData['user_email'] );
+
 		/* Create User DataExtension with new email */
 		$this->createUser( $aUserData );
+
 		/* Create User Properties DataExtension with new email */
 		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
+
+		return 'OK';
 	}
 
 	/**
@@ -28,8 +35,13 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function createSubscriber( $sUserEmail ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareSubscriberData( $sUserEmail );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiSubscriber();
-		$oApiDataExtension->createRequest( $aApiParams );
+
+		$createSubscriberResult = $oApiDataExtension->createRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $createSubscriberResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$createSubscriberResult ) );
 	}
 
 	/**
@@ -39,8 +51,19 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function createUser( $aUserData ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+
+		$oCreateUserResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oCreateUserResult ) );
+
+		if ( $oCreateUserResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oCreateUserResult->Results->StatusMessage
+			);
+		}
 	}
 
 	/**
@@ -51,9 +74,18 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function createUserProperties( $iUserId, array $aUserProperties ) {
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
-	}
+		$oCreateUserPropertiesResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserPropertiesResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oCreateUserPropertiesResult ) );
+
+		if ( $oCreateUserPropertiesResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oCreateUserPropertiesResult->Results[0]->StatusMessage
+			);
+		}
+	}
 
 }

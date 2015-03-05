@@ -307,8 +307,8 @@ $config['oasis_jquery'] = array(
 		// Article length & screen width tracking
 		'//skins/oasis/js/ArticleLengthAbTesting.js',
 
-		// Lazy rail
-		'#group_lazy_rail_js',
+		// rail
+		'#group_rail_js',
 	)
 );
 
@@ -410,6 +410,7 @@ $config['user_login_js_anon'] = [
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
@@ -1407,16 +1408,6 @@ $config['userlogin_js_wikiamobile'] = array(
 	)
 );
 
-$config['userlogin_js_wikiamobile_fbconnect'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'#external_http://connect.facebook.net/en_US/all.js',
-		'#group_userlogin_js_wikiamobile',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
-	)
-);
-
 $config['userlogin_facebook_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -1983,11 +1974,11 @@ $config['imglzy_js'] = [
 	]
 ];
 
-$config['lazy_rail_js'] = [
+$config['rail_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//skins/oasis/js/LazyRail.js'
+		'//extensions/wikia/Rail/scripts/Rail.js',
 	]
 ];
 
