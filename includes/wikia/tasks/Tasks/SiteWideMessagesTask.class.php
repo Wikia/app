@@ -160,39 +160,56 @@ class SiteWideMessagesTask extends BaseTask {
 		return $result;
 	}
 
+	/**
+	 * Sends a message to Power Users (the ones that
+	 * have one of the selected properties set to 1)
+	 * @param $params An array of task args
+	 * @return bool A result of the adding records to messages_status
+	 */
 	private function sendMessageToPowerUsers( $params ) {
 		global $wgExternalSharedDB;
 
 		$DB = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		$this->info('make list of power user ids from given params', [
-			'params' => $params
-		]);
+		/**
+		 * Select all power users by default
+		 */
+		if ( !empty( $params[ 'powerUserType' ] ) )
+			$powerUsersTypesArr = explode( ',', $params[ 'powerUserType' ] );
+		else {
+			$powerUsersTypesArr = \Wikia\PowerUser\PowerUser::$aPowerUserProperties;
+		}
 
-		$powerUsersTypesArr = explode( ',', $params['powerUserType'] );
-
-		$sqlValues = ( new \WikiaSQL() )
-			->SELECT( 'up_user' )
+		/**
+		 * Get IDs of users with the specified properties
+		 */
+		$userIds = ( new \WikiaSQL() )
+			->SELECT()->DISTINCT( 'up_user' )
 			->FROM( 'user_properties' )
 			->WHERE( 'up_property' )->IN( $powerUsersTypesArr )
-			->runLoop( $DB, function( &$sqlValues, $row, $params ) {
-				$sqlValues[] = [ 0, $row->up_user, $params[ 'messageId' ], MSG_STATUS_UNSEEN ];
+			->AND_( 'up_value' )->EQUAL_TO( 1 )
+			->runLoop( $DB, function( &$userIds, $row ) {
+				$userIds[] = $row->up_user;
 			});
+
+		/**
+		 * Create a messages_status record for each ID
+		 */
+		foreach ( $userIds as $userId ) {
+			$sqlValues[] = [ 0, $userId, $params[ 'messageId' ], MSG_STATUS_UNSEEN ];
+		}
 
 		$this->info('add records about new message to users', [
 			'num_users' => count( $sqlValues )
 		]);
 
-		$this->info('power users', [
-			'sqlValues' => $sqlValues,
-		]);
+		/**
+		 * Insert records into messages_status
+		 */
+		$result = $this->sendMessageHelperToUsers( $sqlValues );
 
-		return $sqlValues;
-
-//		$result = $this->sendMessageHelperToUsers( $sqlValues );
-//
-//		unset( $sqlValues );
-//		return $result;
+		unset( $sqlValues );
+		return $result;
 	}
 
 	/**
