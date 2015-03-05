@@ -2,16 +2,14 @@
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
-	'wikia.window',
 	'wikia.document',
 	'wikia.location',
-	require.optional('wikia.abTest'),
 	'ext.wikia.adEngine.adContext',
+	require.optional('wikia.abTest'),
 	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
-	require.optional('ext.wikia.adEngine.amazonMatch'),
-	require.optional('ext.wikia.adEngine.amazonMatchOld'),
+	require.optional('ext.wikia.adEngine.lookupServices'),
 	require.optional('ext.wikia.adEngine.krux')
-], function (log, win, doc, loc, abTest, adContext, pvCounter, amazonMatch, amazonMatchOld, Krux) {
+], function (log, doc, loc, adContext, abTest, pvCounter, lookups, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
@@ -238,9 +236,9 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = dbName;
 		}
 
-		if (Krux && !targeting.wikiDirectedAtChildren) {
-			params.u = Krux.user;
-			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
+		if (krux && !targeting.wikiDirectedAtChildren) {
+			params.u = krux.user;
+			params.ksgmnt = krux.segments && krux.segments.slice(0, maxNumberOfKruxSegments);
 		}
 
 		if (targeting.wikiIsTop1000) {
@@ -248,19 +246,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+		if (lookups) {
+			lookups.extendPageTargeting(params);
+		}
 
 		if (!params.esrb) {
 			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
-		}
-
-		if (amazonMatch && amazonMatch.wasCalled()) {
-			amazonMatch.trackState();
-			extend(params, amazonMatch.getPageParams());
-		}
-
-		if (amazonMatchOld && amazonMatchOld.wasCalled()) {
-			amazonMatchOld.trackState();
-			extend(params, decodeLegacyDartParams(win.amzn_targs));
 		}
 
 		log(params, 9, logGroup);

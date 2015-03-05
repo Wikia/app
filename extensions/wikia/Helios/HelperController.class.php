@@ -22,18 +22,19 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$sName = $this->getVal( 'username' );
+		$username = $this->getVal( 'username' );
 
 		// Allow the given user name if the AntiSpoof extension is disabled.
 		if ( empty( $this->wg->EnableAntiSpoofExt ) ) {
-			return $this->response->setVal( 'allow', true );
+			$this->response->setVal( 'allow', true );
+			return;
 		}
 
-		$oSpoofUser = new \SpoofUser( $sName );
-		$aConflicts = $oSpoofUser->getConflicts();
+		$spoofUser = new \SpoofUser( $username );
 
 		// Allow the given user name if it is legal and does not conflict with other names.
-		return $this->response->setVal( 'allow', $oSpoofUser->isLegal() && ! $oSpoofUser->getConflicts() );
+		$this->response->setVal( 'allow', $spoofUser->isLegal() && ! $spoofUser->getConflicts() );
+		return;
 	}
 
 	/**
@@ -52,11 +53,12 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$sName = $this->getVal( 'username' );
+		$username = $this->getVal( 'username' );
 
 		if ( !empty( $this->wg->EnableAntiSpoofExt ) ) {
-			$oSpoofUser = new \SpoofUser( $sName );
-			return $this->response->setVal( 'success', $oSpoofUser->record() );
+			$spoofUser = new \SpoofUser( $username );
+			$this->response->setVal( 'success', $spoofUser->record() );
+			return;
 		}
 	}
 
@@ -79,47 +81,47 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$sName = $this->getVal( 'username' );
+		$username = $this->getVal( 'username' );
 
-		$this->wf->WaitForSlaves( $this->wg->ExternalSharedDB );
-		$oUser = \User::newFromName( $sName );
+		wfWaitForSlaves( $this->wg->ExternalSharedDB );
+		$user = \User::newFromName( $username );
 
-		if ( ! $oUser instanceof \User ) {
+		if ( ! $user instanceof \User ) {
 			$this->response->setVal( 'message', 'unable to create a \User object from name' );
 			return;
 		}
 
-		if ( ! $oUser->getId() ) {
+		if ( ! $user->getId() ) {
 			$this->response->setVal( 'message', 'no such user' );
 			return;
 		}
 
-		if ( $oUser->isEmailConfirmed() ) {
+		if ( $user->isEmailConfirmed() ) {
 			$this->response->setVal( 'message', 'already confirmed' );
 			return;
 		}
 
-		$oUserLoginHelper = ( new \UserLoginHelper );
-		$sMemKey = $oUserLoginHelper->getMemKeyConfirmationEmailsSent( $oUser->getId() );
-		$iEmailSent = intval( $this->wg->Memc->get( $sMemKey ) );
+		$userLoginHelper = ( new \UserLoginHelper );
+		$memcKey = $userLoginHelper->getMemKeyConfirmationEmailsSent( $user->getId() );
+		$emailsSent = intval( $this->wg->Memc->get( $memcKey ) );
 
-		if ( $oUser->isEmailConfirmationPending() &&
-			strtotime( $oUser->mEmailTokenExpires ) - strtotime( '+6 days' ) > 0 &&
-			$iEmailSent >= \UserLoginHelper::LIMIT_EMAILS_SENT
+		if ( $user->isEmailConfirmationPending() &&
+			strtotime( $user->mEmailTokenExpires ) - strtotime( '+6 days' ) > 0 &&
+			$emailsSent >= \UserLoginHelper::LIMIT_EMAILS_SENT
 		) {
 			$this->response->setVal( 'message', 'confirmation emails limit reached' );
 			return;
 		}
 
-		if ( ! \Sanitizer::validateEmail( $oUser->getEmail() ) ) {
+		if ( ! \Sanitizer::validateEmail( $user->getEmail() ) ) {
 			$this->response->setVal( 'message', 'invalid email' );
 			return;
 		}
 
-		$sTemplate = $this->app->renderView( 'UserLogin', 'GeneralMail', [ 'language' => $oUser->getOption( 'language' ), 'type' => 'confirmation-email' ] );
-		$oResponse = $oUser->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $sTemplate );
+		$mailTemplate = $this->app->renderView( 'UserLogin', 'GeneralMail', [ 'language' => $user->getOption( 'language' ), 'type' => 'confirmation-email' ] );
+		$mailStatus = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $mailTemplate );
 
-		if ( ! $oResponse->isGood() ) {
+		if ( ! $mailStatus->isGood() ) {
 			$this->response->setVal( 'message', 'could not send an email message' );
 			return;
 		}

@@ -139,7 +139,6 @@ class BodyController extends WikiaController {
 
 		$railModuleList = array();
 
-		$latestPhotosKey = $wgUser->isAnon() ? 1300 : 1250;
 		$latestActivityKey = $wgUser->isAnon() ? 1250 : 1300;
 		$huluVideoPanelKey = $wgUser->isAnon() ? 1390 : 1280;
 
@@ -171,7 +170,6 @@ class BodyController extends WikiaController {
 					$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
 					if( empty( $wgEnableWikiAnswers ) ) {
-						$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 						if ($wgEnableHuluVideoPanel) {
 							$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 						}
@@ -198,7 +196,6 @@ class BodyController extends WikiaController {
 				$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
 				if( empty( $wgEnableWikiAnswers ) ) {
-					$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 					if ($wgEnableHuluVideoPanel) {
 						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 					}
@@ -227,7 +224,6 @@ class BodyController extends WikiaController {
 			$railModuleList[1450] = array('PagesOnWiki', 'Index', null);
 
 			if( empty( $wgEnableWikiAnswers ) ) {
-				$railModuleList[$latestPhotosKey] = array('LatestPhotos', 'Index', null);
 				if ($wgEnableHuluVideoPanel) {
 					$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 				}
@@ -282,7 +278,6 @@ class BodyController extends WikiaController {
 			'slotName' => 'TOP_RIGHT_BOXAD',
 			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
 		]);
-		$railModuleList[1291] = array('Ad', 'Index', ['slotName' => 'MIDDLE_RIGHT_BOXAD']);
 		$railModuleList[1100] = array('Ad', 'Index', [
 			'slotName' => 'LEFT_SKYSCRAPER_2',
 			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER']) ? $wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER'] : null
