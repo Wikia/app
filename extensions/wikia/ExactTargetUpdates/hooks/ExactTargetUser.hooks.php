@@ -160,7 +160,7 @@ class ExactTargetUserHooks {
 
 	/**
 	 * A simple getter for an object of ExactTargetUserHooksHelper class
-	 * @return  object ExactTargetUserHooksHelper
+	 * @return ExactTargetUserHooksHelper
 	 */
 	private function getUserHelper() {
 		return new ExactTargetUserHooksHelper();

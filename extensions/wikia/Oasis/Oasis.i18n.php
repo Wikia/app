@@ -181,6 +181,39 @@ ___________________________________________
 * Find help and advice on Community Central: http://community.wikia.com
 * Want to receive fewer messages from us? You can unsubscribe or change
 your email preferences here: http://community.wikia.com/Special:Preferences',
+	
+	// Labels for Verticals
+	'oasis-label-wiki-vertical-id-0' => 'Other',
+	'oasis-label-wiki-vertical-id-1' => 'TV',
+	'oasis-label-wiki-vertical-id-2' => 'Video Games',
+	'oasis-label-wiki-vertical-id-3' => 'Books',
+	'oasis-label-wiki-vertical-id-4' => 'Comics',
+	'oasis-label-wiki-vertical-id-5' => 'Lifestyle',
+	'oasis-label-wiki-vertical-id-6' => 'Music',
+	'oasis-label-wiki-vertical-id-7' => 'Movies',
+	// Labels for Categories
+	'oasis-label-wiki-category-id-1' => 'Humor',
+	'oasis-label-wiki-category-id-5' => 'Toys',
+	'oasis-label-wiki-category-id-6' => 'Food and Drink',
+	'oasis-label-wiki-category-id-7' => 'Travel',
+	'oasis-label-wiki-category-id-8' => 'Education',
+	'oasis-label-wiki-category-id-10' => 'Finance',
+	'oasis-label-wiki-category-id-11' => 'Politics',
+	'oasis-label-wiki-category-id-12' => 'Technology',
+	'oasis-label-wiki-category-id-13' => 'Science',
+	'oasis-label-wiki-category-id-14' => 'Philosophy',
+	'oasis-label-wiki-category-id-15' => 'Sports',
+	'oasis-label-wiki-category-id-16' => 'Music',
+	'oasis-label-wiki-category-id-17' => 'Creative',
+	'oasis-label-wiki-category-id-18' => 'Auto',
+	'oasis-label-wiki-category-id-21' => 'TV',
+	'oasis-label-wiki-category-id-22' => 'Video Games',
+	'oasis-label-wiki-category-id-23' => 'Books',
+	'oasis-label-wiki-category-id-24' => 'Comics',
+	'oasis-label-wiki-category-id-25' => 'Fanon',
+	'oasis-label-wiki-category-id-26' => 'Home and Garden',
+	'oasis-label-wiki-category-id-27' => 'Movies',
+	'oasis-label-wiki-category-id-28' => 'Anime',
 );
 
 /** Message documentation (Message documentation)

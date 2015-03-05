@@ -14,28 +14,26 @@ define('ext.wikia.adEngine.amazonMatch', [
 		amazonResponse,
 		amazonTiming,
 		amazonCalled = false,
-		targetingParams = [];
+		amazonParamPattern = /^a([0-9]x[0-9])(p([0-9]+))$/,
+		slotMapping = {
+			'LEADERBOARD': 'a7x9',
+			'BOXAD': 'a3x2',
+			'SKYSCRAPER': 'a1x6'
+		},
+		slotTiers = {};
 
 	function trackState(trackEnd) {
 		log(['trackState', amazonResponse], 'debug', logGroup);
 
 		var eventName,
-			m,
 			key,
 			data = {};
 
 		if (amazonResponse) {
 			eventName = 'lookupSuccess';
-			for (key in amazonResponse) {
-				if (amazonResponse.hasOwnProperty(key)) {
-					targetingParams.push(key);
-					m = key.match(/^a([0-9]x[0-9])(p[0-9]+)$/);
-					if (m) {
-						if (!data[m[2]]) {
-							data[m[2]] = [];
-						}
-						data[m[2]].push(m[1]);
-					}
+			for (key in slotMapping) {
+				if (slotMapping.hasOwnProperty(key) && slotTiers[key]) {
+					data[slotMapping[key]] = 'p' + slotTiers[key];
 				}
 			}
 		} else {
@@ -55,6 +53,25 @@ define('ext.wikia.adEngine.amazonMatch', [
 
 		if (response.status === 'ok') {
 			amazonResponse = response.ads;
+		}
+
+		if (amazonResponse && Object.keys) {
+			var targetingParams = Object.keys(amazonResponse);
+			Object.keys(slotMapping).forEach(function (slotNamePattern) {
+				var i, len, points = [], m, param, amazonSize = slotMapping[slotNamePattern];
+
+				for (i = 0, len = targetingParams.length; i < len; i += 1) {
+					param = targetingParams[i];
+					m = param.match(amazonParamPattern);
+					if (m && param.search(amazonSize) === 0) {
+						points.push(parseInt(m[3], 10));
+					}
+				}
+
+				if (points.length) {
+					slotTiers[slotNamePattern] = Math.min.apply(Math, points);
+				}
+			});
 		}
 
 		trackState(true);
@@ -82,7 +99,9 @@ define('ext.wikia.adEngine.amazonMatch', [
 			s = doc.createElement('script'),
 			cb = Math.round(Math.random() * 10000000);
 
-		try { url = encodeURIComponent(win.top.location.href); } catch (ignore) {}
+		try {
+			url = encodeURIComponent(win.top.location.href);
+		} catch (ignore) {}
 
 		s.id = logGroup;
 		s.async = true;
@@ -96,16 +115,34 @@ define('ext.wikia.adEngine.amazonMatch', [
 		return amazonCalled;
 	}
 
-	function getPageParams() {
-		log(['getPageParams', targetingParams], 'debug', logGroup);
-		return {
-			amznslots: targetingParams
-		};
+	function getSlotParams(slotName) {
+		log(['getSlotParams'], 'debug', logGroup);
+
+		var ret = {};
+
+		// No Object.keys on IE8
+		if (!Object.keys) {
+			log(['filterSlots()', 'no Object.keys (IE8?)'], 'error', logGroup);
+			return {};
+		}
+
+		Object.keys(slotMapping).forEach(function (slotNamePattern) {
+			var amazonSize = slotMapping[slotNamePattern],
+				amazonTier = slotTiers[slotNamePattern];
+
+			if (slotName.search(slotNamePattern) > -1 && amazonTier) {
+				ret = {
+					amznslots: amazonSize + 'p' + amazonTier
+				};
+			}
+		});
+
+		return ret;
 	}
 
 	return {
 		call: call,
-		getPageParams: getPageParams,
+		getSlotParams: getSlotParams,
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled
 	};

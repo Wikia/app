@@ -98,7 +98,7 @@
 									<?php if ( $canMinorEdit ): ?>
 										<label class="wpMinoredit">
 											<input type="checkbox" tabindex="21" name="wpMinoredit" id="wpMinoredit" accesskey="<?=wfMessage('accesskey-minoredit')->escaped() ;?>"<?= $minorEditCheckbox ? ' checked="checked"' : '' ?> />
-											<?= wfMessage('editpagelayout-pageControls-minorEdit')->escaped() ?>
+											<span><?= wfMessage('editpagelayout-pageControls-minorEdit')->escaped() ?></span>
 										</label>
 									<?php endif ?>
 								</div>
