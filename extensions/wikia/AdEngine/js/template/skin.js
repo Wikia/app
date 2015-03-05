@@ -9,13 +9,14 @@ define('ext.wikia.adEngine.template.skin', [
 	var logGroup = 'ext.wikia.adengine.template.skin';
 
 	/**
-	 * @param params {
-	 *   skinImage
-	 *   backgroundColor
-	 *   middleColor
-	 *   destUrl
-	 *   pixels
-	 * }
+	 * Show the skin ad
+	 *
+	 * @param {Object} params
+	 * @param {string} params.destUrl - URL to go when the background is clicked
+	 * @param {string} params.skinImage - URL of the 1700x800 image to show in the background
+	 * @param {string} params.backgroundColor - background color to use (rrggbb, without leading #)
+	 * @param {string} [params.middleColor] - color to use in the middle (rrggbb, without leading #)
+	 * @param {Array} params.pixels - URLs of tracking pixels to append when showing the skin
 	 */
 	function show(params) {
 		win.wgAfterContentAndJS.push(function () {
