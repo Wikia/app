@@ -9,9 +9,16 @@ define('ext.wikia.adEngine.template.interstitial', [
 
 	var logGroup = 'ext.wikia.adEngine.template.interstitial',
 		modalId = 'ext-wikia-adEngine-template-interstitial',
-		modalPadding = 20,
 		pollingInterval = 1000; // 1s
 
+	/**
+	 * Show the interstitial ad
+	 *
+	 * @param {Object} params
+	 * @param {string} params.slot - ID of the slot to put into Lightbox
+	 * @param {string} params.elem - selector of the element to pull from the GPT iframe
+	 * @param {number} [params.width] - desired width of the Lightbox
+	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
 
@@ -23,7 +30,7 @@ define('ext.wikia.adEngine.template.interstitial', [
 			var modalConfig = {
 					vars: {
 						id: modalId,
-						size: params.size || 'medium',
+						size: 'medium',
 						content: element.outerHTML,
 						title: 'Advertisement',
 						closeText: 'Close',
@@ -33,8 +40,8 @@ define('ext.wikia.adEngine.template.interstitial', [
 
 			uiFactory.init('modal').then(function (uiModal) {
 				uiModal.createComponent(modalConfig, function (modal) {
-					var width = params.width || modal.$content[0].querySelector(selector).clientWidth;
-					modal.$element.width(width + 2 * modalPadding);
+					var width = params.width || 'auto';
+					modal.$element.width(width);
 					modal.show();
 				});
 			});
