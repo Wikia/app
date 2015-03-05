@@ -71,7 +71,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['wikiCreationDateTwo'] = $wgRequest->getVal( 'mWikiCreationDateTwo' );
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
-		$formData['powerUserType'] = $wgRequest->getArray('mPowerUserType');
+		$formData[ 'powerUserType' ] = $wgRequest->getArray( 'mPowerUserType' );
 		$formData['userName'] = $wgRequest->getText('mUserName');
 		$formData['listUserNames'] = $wgRequest->getText( 'mUserNames' );
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
@@ -130,6 +130,11 @@ class SiteWideMessages extends SpecialPage {
 		$groupList = $wgGroupPermissions;
 		unset($groupList['*']);
 		$formData['groupNames'] = array_keys($groupList);
+
+		/**
+		 * Fetch types of power users to generate checkboxes
+		 */
+		$formData[ 'powerUserTypes' ] = \Wikia\PowerUser\PowerUser::$aPowerUserProperties;
 
 		//handle different submit buttons in one form
 		$button = $wgRequest->getVal('mAction');
@@ -596,8 +601,8 @@ class SiteWideMessages extends SpecialPage {
 									break;
 
 								case 'POWERUSER':
-									$result['taskId'] = $this->queueTask([
-										'messageId'		=> $result['msgId'],
+									$result[ 'taskId' ] = $this->queueTask( [
+										'messageId'		=> $result[ 'msgId' ],
 										'sendModeWikis'	=> $mSendModeWikis,
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
@@ -607,7 +612,7 @@ class SiteWideMessages extends SpecialPage {
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
 										'clusterId'     => $mClusterId,
-									]);
+									] );
 									break;
 
 								case 'REGISTRATION':
@@ -764,8 +769,8 @@ class SiteWideMessages extends SpecialPage {
 									break;
 
 								case 'POWERUSER':
-									$result['taskId'] = $this->queueTask([
-										'messageId'		=> $result['msgId'],
+									$result[ 'taskId' ] = $this->queueTask( [
+										'messageId'		=> $result[ 'msgId' ],
 										'sendModeWikis'	=> $mSendModeWikis,
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
@@ -775,7 +780,7 @@ class SiteWideMessages extends SpecialPage {
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
 										'clusterId'     => $mClusterId,
-									]);
+									] );
 									break;
 
 								case 'EDITCOUNT':

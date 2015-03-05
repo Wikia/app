@@ -172,9 +172,12 @@
 							</td>
 							<td>
 								<?php
-									foreach	( $formData['powerUserTypes'] as $powerUserType ) {
-										$label = '<label for="mPowerUserType_' . $powerUserType . '">' . $powerUserType . '</label><br>';
-										$html = '<input type="checkbox" name="mPowerUserType[]" id="mPowerUserType_' . $powerUserType . '" value="' . $powerUserType . '"';
+									foreach	( $formData[ 'powerUserTypes' ] as $powerUserType ) {
+										$label = '<label for="mPowerUserType_' . Sanitizer::encodeAttribute( $powerUserType ) . '">';
+											$label .= Sanitizer::escapeHtmlAllowEntities( $powerUserType ) . '</label><br>';
+										$html = '<input type="checkbox" name="mPowerUserType[]"';
+											$html .= 'id="mPowerUserType_' . Sanitizer::encodeAttribute( $powerUserType ) . '"';
+											$html .= 'value="' . Sanitizer::encodeAttribute( $powerUserType ) . '"';
 										if ( isset( $formData['mPowerUserType'] ) && in_array( $powerUserType, $formData['mPowerUserType'] ) ) {
 											$html .= ' checked="checked"';
 										}
