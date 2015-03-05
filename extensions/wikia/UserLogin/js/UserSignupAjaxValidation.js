@@ -42,7 +42,7 @@
 				data[inputName] = value;
 			}
 
-			this.sendRequest(data)
+			this.sendValidationRequest(data)
 				.done(this.validationHandler.bind(this, inputName));
 		}
 	};
@@ -97,7 +97,7 @@
 			birthday: this.wikiaForm.inputs.birthday.val()
 		};
 
-		this.deferred = this.sendRequest(data)
+		this.deferred = this.sendValidationRequest(data)
 			.done(this.validationHandler.bind(this, inputName));
 	};
 
@@ -119,7 +119,7 @@
 	 * @param {object} data
 	 * @returns {jQuery} Promise
 	 */
-	UserSignupAjaxValidation.prototype.sendRequest = function (data) {
+	UserSignupAjaxValidation.prototype.sendValidationRequest = function (data) {
 		return $.nirvana.sendRequest({
 			controller: 'UserSignupSpecial',
 			method: 'formValidation',
