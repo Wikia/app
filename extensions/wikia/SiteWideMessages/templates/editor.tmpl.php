@@ -381,6 +381,14 @@ jQuery( document ).ready( function ( $ ) {
 					$( '#mSendModeUsersC' ).prop( 'checked', true );
 				}
 				break;
+			case 'mSendModeUsersPU':
+				$( '#mSendModeWikisA' ).prop( 'disabled', true );
+				$( '#mSendModeWikisC' ).prop( 'disabled', true );
+				$( '#mSendModeWikisH' ).prop( 'disabled', true );
+				$( '#mSendModeWikisW' ).prop( 'disabled', true );
+				$( '#mSendModeWikisM' ).prop( 'disabled', true );
+				$( '#mSendModeWikisD' ).prop( 'disabled', true );
+				break;
 			case 'mSendModeUsersU':
 			case 'mSendModeUsersM':
 				$( '#mSendModeWikisA' ).prop( 'disabled', true );
@@ -435,8 +443,9 @@ jQuery( document ).ready( function ( $ ) {
 	$( '#mSendModeWikisA' ).add( '#mSendModeWikisH' ).add( '#mSendModeWikisC' )
 		.add( '#mSendModeWikisW' ).add( '#mSendModeWikisM' ).add( '#mSendModeWikisD' )
 		.add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' )
-		.add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' ).add( '#mSendModeUsersIP' )
-		.add( '#mSendModeUsersReg' ).add( '#mSendModeUsersEC' ).bind( 'click', grayOut );
+		.add( '#mSendModeUsersPU' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' )
+		.add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' ).add( '#mSendModeUsersEC' )
+		.bind( 'click', grayOut );
 
 	$( '#mRegistrationS' ).change( function () {
 		if ( $( this ).val() === 'between' ) {
