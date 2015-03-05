@@ -95,6 +95,7 @@ class UserTest extends \WikiaBaseTest {
 
 	public function testAuthenticateAuthenticationImpossible()
 	{
+		$this->setExpectedException('Wikia\Helios\ClientException','test');
 		$username = 'SomeName';
 		$password = 'Password';
 
@@ -102,10 +103,10 @@ class UserTest extends \WikiaBaseTest {
 		$client->expects( $this->once() )
 			->method( 'login' )
 			->with( $username, $password )
-			->will( $this->throwException( new ClientException ) );
+			->will( $this->throwException( new ClientException( 'test' ) ) );
 		$this->mockClass( 'Wikia\Helios\Client', $client );
 
-		$this->assertFalse( User::authenticate( $username, $password ) );
+		User::authenticate( $username, $password );
 	}
 
 	public function testAuthenticateAuthenticationSucceded()
