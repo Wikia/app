@@ -173,17 +173,16 @@
 							<td>
 								<?php
 									foreach	( $formData[ 'powerUserTypes' ] as $powerUserType ) {
-										$label = '<label for="mPowerUserType_' . Sanitizer::encodeAttribute( $powerUserType ) . '">';
-											$label .= Sanitizer::escapeHtmlAllowEntities( $powerUserType ) . '</label><br>';
-										$html = '<input type="checkbox" name="mPowerUserType[]"';
-											$html .= 'id="mPowerUserType_' . Sanitizer::encodeAttribute( $powerUserType ) . '"';
-											$html .= 'value="' . Sanitizer::encodeAttribute( $powerUserType ) . '"';
-										if ( isset( $formData['mPowerUserType'] ) && in_array( $powerUserType, $formData['mPowerUserType'] ) ) {
-											$html .= ' checked="checked"';
-										}
-										$html .= '>';
+										$html = '<label for="mPowerUserType_' . Sanitizer::encodeAttribute( $powerUserType ) . '">';
+											$html .= '<input type="checkbox" name="mPowerUserType[]"';
+												$html .= 'id="mPowerUserType_' . Sanitizer::encodeAttribute( $powerUserType ) . '"';
+												$html .= 'value="' . Sanitizer::encodeAttribute( $powerUserType ) . '"';
+											if ( isset( $formData['mPowerUserType'] ) && in_array( $powerUserType, $formData['mPowerUserType'] ) ) {
+												$html .= ' checked="checked"';
+											}
+											$html .= '>';
+										$html .= Sanitizer::escapeHtmlAllowEntities( $powerUserType ) . '</label><br>';
 										echo $html;
-										echo $label;
 									}
 								?>
 							</td>
@@ -448,7 +447,7 @@ jQuery( document ).ready( function ( $ ) {
 		.add( '#mSendModeUsersA' ).add( '#mSendModeUsersC' ).add( '#mSendModeUsersG' )
 		.add( '#mSendModeUsersPU' ).add( '#mSendModeUsersU' ).add( '#mSendModeUsersM' )
 		.add( '#mSendModeUsersIP' ).add( '#mSendModeUsersReg' ).add( '#mSendModeUsersEC' )
-		.bind( 'click', grayOut );
+		.on( 'click', grayOut );
 
 	$( '#mRegistrationS' ).change( function () {
 		if ( $( this ).val() === 'between' ) {
