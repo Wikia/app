@@ -264,5 +264,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Продолжи со уредување",
 	"visualeditor-viewpage-savewarning-title": "Дали сте сигурни?",
 	"visualeditor-wikitext-warning": "Користите ВизуеленУредник — тука не работи [[{{MediaWiki:visualeditor-wikitext-warning-link}}|викитекст]]. За да се префрлите на изворно уредување во секое време без да ги изгубите направените измени, отворете го паѓачкото мени веднаш до „{{int:visualeditor-toolbar-savedialog}}“ и изберете „{{int:visualeditor-mweditmodesource-title}}“.",
-	"visualeditor-wikitext-warning-title": "Пронаоѓање на викитекст"
+	"visualeditor-wikitext-warning-title": "Пронаоѓање на викитекст",
+	"visualeditor-dialog-media-insert-title": "Вметни слика/снимка"
 }

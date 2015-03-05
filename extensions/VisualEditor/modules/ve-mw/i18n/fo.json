@@ -125,5 +125,6 @@
 	"visualeditor-viewpage-savewarning": "Ert tú vís/ur í at tú ynskir at venda aftur til sýningarstøðu uttan at goyma fyrst?",
 	"visualeditor-wikitext-warning": "Tú brúkar VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] virkar ikki her. Trýst á \"{{int:visualeditor-ca-editsource}}\" fyri at rætta síðuna í wikitekst-støðu – ikki goymdar rættingar verða mistar.",
 	"visualeditor-wikitext-warning-link": "Help:Wikitekstur",
-	"visualeditor-wikitext-warning-title": "Wikitekst markering er funnin"
+	"visualeditor-wikitext-warning-title": "Wikitekst markering er funnin",
+	"visualeditor-dialog-media-insert-title": "Innset miðil"
 }

@@ -207,5 +207,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Редакторлукъ этиуню бардыр",
 	"visualeditor-wikitext-warning": "Сиз Визуал редакторну хайырландырасыз — [[{{MediaWiki:visualeditor-wikitext-warning-link}}|вики-текст]] былайда ишлемейди. Вики-текст режимге кёчер ючюн «{{MediaWiki:visualeditor-ca-editsource}}» тиекден басыгъыз. Сакъланмагъан тюрлениуле тас боллукъдула.",
 	"visualeditor-wikitext-warning-link": "Help:Вики-текст",
-	"visualeditor-wikitext-warning-title": "Вики-текст табылды"
+	"visualeditor-wikitext-warning-title": "Вики-текст табылды",
+	"visualeditor-dialog-media-insert-title": "Джюрютген занты сал"
 }

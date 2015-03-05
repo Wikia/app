@@ -124,5 +124,6 @@
 	"visualeditor-usernamespacepagelink": "Project:Gebrukersnaamruumte",
 	"visualeditor-viewpage-savewarning": "Bi'j der wisse van da'j weerumme gaon willen naor de naokiekmodus zonder eerst op te slaon?",
 	"visualeditor-wikitext-warning": "Je gebruken de visuele tekstverwarker - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitekste]] warkt hier niet. Um over te gaon naor t bewarken in wikitekste, zonder dat wiezigingen verleuren gaon, du'j t keuzemenu los naost \"{{int:visualeditor-toolbar-savedialog}}\" en klik op \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "Wikitekstopmaak evunnen"
+	"visualeditor-wikitext-warning-title": "Wikitekstopmaak evunnen",
+	"visualeditor-dialog-media-insert-title": "Media derbie zetten"
 }

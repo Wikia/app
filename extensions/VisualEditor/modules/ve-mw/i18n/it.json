@@ -256,5 +256,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Prosegui nella modifica",
 	"visualeditor-viewpage-savewarning-title": "Sei sicuro?",
 	"visualeditor-wikitext-warning": "Stai utilizzando VisualEditor - il [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitesto]] non funziona qui. Per passare a \"{{int:visualeditor-ca-editsource}}\" in qualsiasi momento senza perdere le modifiche, aprire il menu a tendina vicino a \"{{int:visualeditor-toolbar-savedialog}}\" e selezionare \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "Rilevato wikitesto"
+	"visualeditor-wikitext-warning-title": "Rilevato wikitesto",
+	"visualeditor-dialog-media-insert-title": "Inserisci file multimediale"
 }

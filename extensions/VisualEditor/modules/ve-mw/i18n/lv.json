@@ -179,5 +179,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Turpināt labošanu",
 	"visualeditor-wikitext-warning": "Jūs lietojat vizuālo redaktoru - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] šeit nedarbosies. Lai labotu lapu wikitext režīmā, nospiediet \"{{int:visualeditor-ca-editsource}}\" - nesaglabātas izmaiņas tiks pazaudētas.",
 	"visualeditor-wikitext-warning-link": "Help:Wiki iezīmes",
-	"visualeditor-wikitext-warning-title": "Atklātas wikitext iezīmes"
+	"visualeditor-wikitext-warning-title": "Atklātas wikitext iezīmes",
+	"visualeditor-dialog-media-insert-title": "Ievietot medijus"
 }

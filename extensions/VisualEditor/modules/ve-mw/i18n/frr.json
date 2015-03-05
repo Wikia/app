@@ -192,5 +192,6 @@
 	"visualeditor-viewpage-savewarning": "Wel dü würelk turag tu't uunlukin-muude, saner tu seekrin?",
 	"visualeditor-wikitext-warning": "Dü brükst VisualEditor. [[{{MediaWiki:visualeditor-wikitext-warning-link}}|Wikitext]] werket heer ei. Trak üüb „{{int:visualeditor-ca-editsource}}“, am det sidj uun Wikitext-muude tu bewerkin. Wat noch ei seekert wurden as, gongt ferleesen.",
 	"visualeditor-wikitext-warning-link": "Help:Wikitext",
-	"visualeditor-wikitext-warning-title": "Wikitext as fünjen wurden"
+	"visualeditor-wikitext-warning-title": "Wikitext as fünjen wurden",
+	"visualeditor-dialog-media-insert-title": "Meedium iinsaat"
 }

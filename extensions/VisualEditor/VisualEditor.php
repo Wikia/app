@@ -1004,6 +1004,7 @@ $wgResourceModules += array(
 			'ext.visualEditor.mwimage.core',
 		),
 		'messages' => array(
+			'visualeditor-dialog-media-insert-title',
 			'visualeditor-dialog-media-alttext-section',
 			'visualeditor-dialog-media-change-image',
 			'visualeditor-dialog-media-content-section',

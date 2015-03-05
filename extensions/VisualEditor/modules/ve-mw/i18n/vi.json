@@ -256,5 +256,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Sửa tiếp",
 	"visualeditor-viewpage-savewarning-title": "Bạn có chắc chắn?",
 	"visualeditor-wikitext-warning": "Bạn đang sử dụng Trình soạn thảo trực quan – [[{{MediaWiki:visualeditor-wikitext-warning-link}}|mã wiki]] không phù hợp với trình soạn này. Để quay về chế độ sửa đổi mã wiki bất cứ lúc nào mà không mất các thay đổi của bạn, thả xuống trình đơn bên cạnh “{{int:visualeditor-toolbar-savedialog}}” và chọn “{{int:visualeditor-mweditmodesource-title}}”.",
-	"visualeditor-wikitext-warning-title": "Phát hiện mã wiki"
+	"visualeditor-wikitext-warning-title": "Phát hiện mã wiki",
+	"visualeditor-dialog-media-insert-title": "Chèn phương tiện"
 }

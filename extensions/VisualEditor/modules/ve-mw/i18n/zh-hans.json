@@ -282,5 +282,6 @@
 	"visualeditor-viewpage-savewarning-keep": "继续编辑",
 	"visualeditor-viewpage-savewarning-title": "您确定么？",
 	"visualeditor-wikitext-warning": "您正在使用可视化编辑器——[[{{MediaWiki:visualeditor-wikitext-warning-link}}|wiki文本]]不适用于此。要回到源代码编辑而不丢失您的更改，请打开“{{int:visualeditor-toolbar-savedialog}}”之后的下拉菜单，然后选择“{{int:visualeditor-mweditmodesource-title}}”。",
-	"visualeditor-wikitext-warning-title": "检测到wiki文本标记"
+	"visualeditor-wikitext-warning-title": "检测到wiki文本标记",
+	"visualeditor-dialog-media-insert-title": "插入媒体文件"
 }

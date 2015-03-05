@@ -185,5 +185,6 @@
 	"visualeditor-viewpage-savewarning": "Er du sikker på du ønsker at gå forlade editoren uden at gemme først?",
 	"visualeditor-wikitext-warning": "Du bruger VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitekst]] virker ikke her. Klik på \"{{MediaWiki:visualeditor-ca-editsource}}\"  for at redigere siden i wikitekst tilstand – ændringer der ikke er gemt vil gå tabt.",
 	"visualeditor-wikitext-warning-link": "Help:Wikitext",
-	"visualeditor-wikitext-warning-title": "Wikitekst markup opdaget"
+	"visualeditor-wikitext-warning-title": "Wikitekst markup opdaget",
+	"visualeditor-dialog-media-insert-title": "Indsæt medie"
 }

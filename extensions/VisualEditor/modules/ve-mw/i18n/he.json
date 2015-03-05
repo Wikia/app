@@ -277,5 +277,6 @@
 	"visualeditor-viewpage-savewarning-keep": "המשך עריכה",
 	"visualeditor-viewpage-savewarning-title": "בטוח?",
 	"visualeditor-wikitext-warning": "זהו עורך חזותי – [[{{MediaWiki:visualeditor-wikitext-warning-link}}|קוד ויקי]] לא יעבוד כאן. כדי לעבור חזרה לעריכת קוד מקור בכל זמן בלי לאבד את השינויים שלך, יש לפתוח את התפריט ליד \"{{int:visualeditor-toolbar-savedialog}}\" ולבחור באפשרות \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "נראה שיש כאן קוד ויקי"
+	"visualeditor-wikitext-warning-title": "נראה שיש כאן קוד ויקי",
+	"visualeditor-dialog-media-insert-title": "הוספת מדיה"
 }

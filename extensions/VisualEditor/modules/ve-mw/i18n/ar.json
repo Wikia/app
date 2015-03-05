@@ -248,5 +248,6 @@
 	"visualeditor-viewpage-savewarning-keep": "واصل التعديل",
 	"visualeditor-viewpage-savewarning-title": "متأكد؟",
 	"visualeditor-wikitext-warning": "أنت تستخدم المحرر المرئي، و[[{{MediaWiki:visualeditor-wikitext-warning-link}}|نص الويكي]] لا يعمل هنا. للاحتفاظ بتعديلاتك وإكمال التحرير عن طريق المصدر، افتح المنسدلة بجانب \"{{int:visualeditor-toolbar-savedialog}}\" واختر \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "يوجد نص ويكي"
+	"visualeditor-wikitext-warning-title": "يوجد نص ويكي",
+	"visualeditor-dialog-media-insert-title": "إدراج ملفات"
 }

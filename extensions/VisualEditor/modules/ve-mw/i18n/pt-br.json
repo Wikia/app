@@ -207,5 +207,6 @@
 	"visualeditor-viewpage-savewarning": "Tem certeza que deseja voltar para a página sem salvar a edição?",
 	"visualeditor-wikitext-warning": "Você está usando o Editor Visual - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|código wiki]] não funciona aqui. Clique \"{{MediaWiki:visualeditor-ca-editsource}}\" para editar a página no modo de código wiki – as alterações não-salvas serão perdidas.",
 	"visualeditor-wikitext-warning-link": "Help:Marcação wiki",
-	"visualeditor-wikitext-warning-title": "Código de wikitexto detectado"
+	"visualeditor-wikitext-warning-title": "Código de wikitexto detectado",
+	"visualeditor-dialog-media-insert-title": "Inserir mídia"
 }

@@ -201,5 +201,6 @@
 	"visualeditor-viewpage-savewarning": "আপনি কি নিশ্চিত যে আপনি সংরক্ষণ ছাড়াই প্রদর্শন মোডে ফিরে যেতে ইচ্ছুক?",
 	"visualeditor-wikitext-warning": "আপনি ভিজ্যুয়ালএডিটর ব্যবহার করছেন - এখানে [[{{MediaWiki:visualeditor-wikitext-warning-link}}|উইকিটেক্সট]] কাজ করে না। উইকিটেক্সট মোডে পাতা সম্পাদনা করার জন্য \"{{MediaWiki:visualeditor-ca-editsource}}য়\" ক্লিক করুন - আপনার অসংরক্ষিত পরিবর্তনগুলি হারিয়ে যাবে।",
 	"visualeditor-wikitext-warning-link": "Help:উইকি মার্কআপ",
-	"visualeditor-wikitext-warning-title": "উইকিটেক্সট মার্কআপ সনাক্ত"
+	"visualeditor-wikitext-warning-title": "উইকিটেক্সট মার্কআপ সনাক্ত",
+	"visualeditor-dialog-media-insert-title": "মিডিয়া যোগ"
 }

@@ -249,5 +249,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Continua editant",
 	"visualeditor-viewpage-savewarning-title": "N'esteu segur?",
 	"visualeditor-wikitext-warning": "Esteu utilitzant l'Editor Visual - el [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] no funciona aquí. Per canviar a l'editor de wikitexts sense perdre els canvis obriu el menú desplegable del costat de \"{{int:visualeditor-toolbar-savedialog}}\" i seleccioneu \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "S'ha detectat sintaxi wiki"
+	"visualeditor-wikitext-warning-title": "S'ha detectat sintaxi wiki",
+	"visualeditor-dialog-media-insert-title": "Insereix fitxers multimèdia"
 }

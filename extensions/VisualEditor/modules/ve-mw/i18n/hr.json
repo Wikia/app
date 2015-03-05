@@ -237,5 +237,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Nastavi s uređivanjem",
 	"visualeditor-viewpage-savewarning-title": "Jeste li sigurni?",
 	"visualeditor-wikitext-warning": "Koristite VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] ne radi ovdje. Kako bi se prebacili u uređivanje izvornog koda u bilo koje vrijeme bez da se promjene izgube, otvorite izbornik pored \"{{int:visualeditor-toolbar-savedialog}}\" i odaberite \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "Wikitext opažen"
+	"visualeditor-wikitext-warning-title": "Wikitext opažen",
+	"visualeditor-dialog-media-insert-title": "Umetni medijsku datoteku"
 }

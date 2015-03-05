@@ -217,5 +217,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Continuar a modificar",
 	"visualeditor-wikitext-warning": "Tu usa le editor visual; le [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitexto]] non functiona hic. Pro cambiar al modification in modo de codice fonte a omne tempore sin perder tu modificationes, aperi le menu disrolante al latere de \"{{int:visualeditor-toolbar-savedialog}}\" e selige \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "Help:Marcation wiki",
-	"visualeditor-wikitext-warning-title": "Marcation wikitexto detegite"
+	"visualeditor-wikitext-warning-title": "Marcation wikitexto detegite",
+	"visualeditor-dialog-media-insert-title": "Inserer multimedia"
 }

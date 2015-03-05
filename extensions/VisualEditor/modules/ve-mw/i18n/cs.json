@@ -273,5 +273,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Pokračovat v editování",
 	"visualeditor-viewpage-savewarning-title": "Jste si {{GENDER:|jist|jista|jisti}}?",
 	"visualeditor-wikitext-warning": "Používáte VisualEditor – [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] zde nefunguje. Kdykoli se můžete bez ztráty provedených změn přepnout do režimu editace zdrojového textu tím, že otevřete rozbalovací menu vedle „{{int:visualeditor-toolbar-savedialog}}“ a kliknete na „{{int:visualeditor-mweditmodesource-title}}“.",
-	"visualeditor-wikitext-warning-title": "Detekována syntaxe wikitextu"
+	"visualeditor-wikitext-warning-title": "Detekována syntaxe wikitextu",
+	"visualeditor-dialog-media-insert-title": "Vložit média"
 }

@@ -214,5 +214,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Кхин дӀа тае",
 	"visualeditor-viewpage-savewarning-title": "Бакъалла лаьий хӀуна?",
 	"visualeditor-wikitext-warning": "Ахьа лелош ю Визуальни тадар — [[{{MediaWiki:visualeditor-wikitext-warning-link}}|вики-билгало]] кхузахь болхбеш яц. Бина хийцамаш хӀаллак цахуьлуьйтуш чухулара таран кор схьадела белла «{{int:visualeditor-toolbar-savedialog}}» хӀара могӀам тӀакха харжа «{{int:visualeditor-mweditmodesource-title}}».",
-	"visualeditor-wikitext-warning-title": "Карина вики-билгало"
+	"visualeditor-wikitext-warning-title": "Карина вики-билгало",
+	"visualeditor-dialog-media-insert-title": "Медиа-файл чуйилар"
 }

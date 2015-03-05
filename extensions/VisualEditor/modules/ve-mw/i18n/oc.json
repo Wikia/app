@@ -194,5 +194,6 @@
 	"visualeditor-viewpage-savewarning": "Sètz segur que volètz tornar al mòde de lectura sens enregistrar ?",
 	"visualeditor-wikitext-warning": "Utilizatz l'EditorVisual - lo [[{{MediaWiki:visualeditor-wikitext-warning-link}}|còde wiki]] fonciona pas aicí. Clicatz sus \"{{int:visualeditor-ca-editsource}}\" per modificar la pagina en mòde font - las modificacions qu'auriatz pas enregistradas seriàn perdudas.",
 	"visualeditor-wikitext-warning-link": "Help:Balisatge wiki",
-	"visualeditor-wikitext-warning-title": "Balisatge de Wikitèxte detectat"
+	"visualeditor-wikitext-warning-title": "Balisatge de Wikitèxte detectat",
+	"visualeditor-dialog-media-insert-title": "Inserir lo supòrt"
 }

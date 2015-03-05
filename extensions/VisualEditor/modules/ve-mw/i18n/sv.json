@@ -269,5 +269,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Fortsätt redigera",
 	"visualeditor-viewpage-savewarning-title": "Är du säker?",
 	"visualeditor-wikitext-warning": "Du använder VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitext]] fungerar inte här. För att byta till redigering i wikitext-läge, utan att förlora dina ändringar, kan du när som helst öppna rullgardinsmenyn bredvid \"{{int:visualeditor-toolbar-savedialog}}\" och välja \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "Wikitext upptäckt"
+	"visualeditor-wikitext-warning-title": "Wikitext upptäckt",
+	"visualeditor-dialog-media-insert-title": "Infoga media"
 }

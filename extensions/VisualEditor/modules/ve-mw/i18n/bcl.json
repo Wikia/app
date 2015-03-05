@@ -120,5 +120,6 @@
 	"visualeditor-viewpage-savewarning": "Nakakaseguro ka na gusto mong bumalik sa kamugtakan nin pagtanaw na dae nagtatagamang enot?",
 	"visualeditor-wikitext-warning": "Ika naggagamit nin Biswal-na-Paraliwat - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikiteksto]] dae naggagana digde. Sa pagbalikwat pasiring sa ginikanan nin pagliliwat dawa noarin na dae mawawara an saimong mga kaliwatan, bukasi an pabagsak na lista na sunod a \"{{int:visualeditor-toolbar-savedialog}}\" asin pilion an \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "Help:Markang pataas kan Wiki",
-	"visualeditor-wikitext-warning-title": "Markang pataas na Wikiteksto detektado"
+	"visualeditor-wikitext-warning-title": "Markang pataas na Wikiteksto detektado",
+	"visualeditor-dialog-media-insert-title": "Isingit an midya"
 }

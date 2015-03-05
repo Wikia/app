@@ -227,5 +227,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Nadaljuj z urejanjem",
 	"visualeditor-viewpage-savewarning-title": "Ste prepričani?",
 	"visualeditor-wikitext-warning": "Uporabljate VisualEditor – [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikibesedilo]] tukaj ne deluje. Da kadar koli preklopite v način urejanja kode brez izgub sprememb, odprite spustni meni ob »{{int:visualeditor-toolbar-savedialog}}« in izberite »{{int:visualeditor-mweditmodesource-title}}«.",
-	"visualeditor-wikitext-warning-title": "Zaznali smo označevanje wikibesedila"
+	"visualeditor-wikitext-warning-title": "Zaznali smo označevanje wikibesedila",
+	"visualeditor-dialog-media-insert-title": "Vstavi predstavnost"
 }

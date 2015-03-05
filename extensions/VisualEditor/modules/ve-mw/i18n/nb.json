@@ -246,5 +246,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Fortsett å redigere",
 	"visualeditor-viewpage-savewarning-title": "Er du sikker?",
 	"visualeditor-wikitext-warning": "Du bruker VisualEditor - [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitekst]] virker ikke her. For å bytte til kilderedigering uten å miste endringene du har gjort, kan du åpne menyen ved siden av «{{int:visualeditor-toolbar-savedialog}}» og velge \"{{int:visualeditor-mweditmodesource-title}}\".",
-	"visualeditor-wikitext-warning-title": "Fant wikitekst"
+	"visualeditor-wikitext-warning-title": "Fant wikitekst",
+	"visualeditor-dialog-media-insert-title": "Sett inn mediefil"
 }

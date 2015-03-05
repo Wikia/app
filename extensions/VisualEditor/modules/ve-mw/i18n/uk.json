@@ -252,5 +252,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Продовжити редагування",
 	"visualeditor-viewpage-savewarning-title": "Ви впевнені?",
 	"visualeditor-wikitext-warning": "Ви використовуєте Візуальний редактор — [[{{MediaWiki:visualeditor-wikitext-warning-link}}|вікірозмітка]] тут не працює. Щоб у будь-який час перемкнутися на редагування коду без втрати своїх змін, відкрийте випадне меню поряд із «{{int:visualeditor-toolbar-savedialog}}» і оберіть «{{int:visualeditor-mweditmodesource-title}}».",
-	"visualeditor-wikitext-warning-title": "Виявлена вікірозмітка"
+	"visualeditor-wikitext-warning-title": "Виявлена вікірозмітка",
+	"visualeditor-dialog-media-insert-title": "Вставити мультимедіа"
 }

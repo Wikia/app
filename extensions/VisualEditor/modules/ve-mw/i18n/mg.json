@@ -78,5 +78,6 @@
 	"visualeditor-linkinspector-suggest-external-link": "Rohy ivelany",
 	"visualeditor-linkinspector-suggest-matching-page": "Pejy miady aminy{{PLURAL:$1|$1}}",
 	"visualeditor-linkinspector-suggest-new-page": "Pejy vaova",
-	"visualeditor-mwgalleryinspector-title": "Galeria"
+	"visualeditor-mwgalleryinspector-title": "Galeria",
+	"visualeditor-dialog-media-insert-title": "Hampiditra haino aman-jery"
 }

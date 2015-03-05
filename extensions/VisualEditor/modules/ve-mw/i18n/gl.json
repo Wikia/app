@@ -223,5 +223,6 @@
 	"visualeditor-viewpage-savewarning-title": "Está seguro?",
 	"visualeditor-wikitext-warning": "Está usando o editor visual; o [[{{MediaWiki:visualeditor-wikitext-warning-link}}|texto wiki]] non funciona aquí. Para cambiar ao modo de edición de texto wiki en calquera momento sen perder os cambios, abra o menú despregable que está ao carón de \"{{int:visualeditor-toolbar-savedialog}}\" e seleccione \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-link": "Help:Texto wiki",
-	"visualeditor-wikitext-warning-title": "Detectouse texto wiki"
+	"visualeditor-wikitext-warning-title": "Detectouse texto wiki",
+	"visualeditor-dialog-media-insert-title": "Inserir un ficheiro multimedia"
 }

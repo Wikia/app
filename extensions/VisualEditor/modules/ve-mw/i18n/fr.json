@@ -280,5 +280,6 @@
 	"visualeditor-viewpage-savewarning-keep": "Continuer l’édition",
 	"visualeditor-viewpage-savewarning-title": "Êtes-vous sûr ?",
 	"visualeditor-wikitext-warning": "Vous utilisez l’ÉditeurVisuel — le [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitexte]] ne fonctionne pas ici. Pour basculer à tout moment vers l’édition en wikitexte sans perdre vos modifications, ouvrez la liste déroulante près de « {{int:visualeditor-toolbar-savedialog}} » et sélectionnez « {{int:visualeditor-mweditmodesource-title}} ».",
-	"visualeditor-wikitext-warning-title": "Balisage wikitexte détecté"
+	"visualeditor-wikitext-warning-title": "Balisage wikitexte détecté",
+	"visualeditor-dialog-media-insert-title": "Insérer un média"
 }

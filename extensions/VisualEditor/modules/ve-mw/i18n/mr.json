@@ -163,5 +163,6 @@
 	"visualeditor-viewpage-savewarning": "संपादन प्रथम जतन न करता, 'वाचा' कडेच जाण्याबद्दल आपला हा निर्णय नक्की आहे ना ?",
 	"visualeditor-wikitext-warning": "आपण यथादृश्यसंपादक वापरत आहात - येथे [[{{MediaWiki:Visualeditor-wikitext-warning-link}}|विकिविन्यास]] काम करत नाही.  संपन्नसंपादन पद्धतीने लेखपान संपादीत करण्यासाठी,येथे  \"{{MediaWiki:Visualeditor-ca-editsource}}\" टिचकी मारा – आपले सध्याचे, जतन न केलेले बदल हरवतील.",
 	"visualeditor-wikitext-warning-link": "Help:विकि विन्यास",
-	"visualeditor-wikitext-warning-title": "विकिटेक्स्ट मार्कअप सापडला"
+	"visualeditor-wikitext-warning-title": "विकिटेक्स्ट मार्कअप सापडला",
+	"visualeditor-dialog-media-insert-title": "संचिका जोडा"
 }
