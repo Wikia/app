@@ -103,7 +103,9 @@ ve.ui.WikiaTransclusionDialog.prototype.getSetupProcess = function ( data ) {
 					this.setOverlayless();
 
 					// Focus
-					this.surface.getFocusWidget().setNode( this.selectedViewNode );
+					if ( this.selectedViewNode.getHorizontalBias() !== null ) {
+						this.surface.getFocusWidget().setNode( this.selectedViewNode );
+					}
 					this.surface.getModel().setSelection( new ve.dm.NullSelection( this.surface.getModel().getDocument() ) );
 
 					// Preview button
