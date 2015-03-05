@@ -614,6 +614,7 @@ include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
+include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 
 /**
  * @name $wgSkipSkins

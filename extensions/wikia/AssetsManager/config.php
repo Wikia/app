@@ -2298,3 +2298,18 @@ $config['upload_photos_dialog_scss'] = [
 	]
 ];
 
+$config['page_share_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PageShare/scripts/init.js'
+	]
+];
+
+$config['page_share_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PageShare/styles/share.scss'
+	]
+];
