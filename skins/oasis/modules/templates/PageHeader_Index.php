@@ -50,6 +50,7 @@
 					<?= $tallyMsg ?>
 				</div>
 			<?php
+				echo F::app()->renderView('PageShare', 'index');
 			}
 
 			// render page type line
