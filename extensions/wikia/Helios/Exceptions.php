@@ -17,6 +17,16 @@ class Exception extends \Exception
 		$this->logMe();
 	}
 
+	public function getLoggerContext() {
+		$data = $this->getData();
+		if ( $data === null ) {
+			$data = [];
+		} elseif ( !is_array($data) ) {
+			$data = [ 'data' => $data ];
+		}
+		return array_merge( [ 'exception' => $this ], $data );
+	}
+
 	public function getData() {
 		return $this->data;
 	}
@@ -33,13 +43,13 @@ class Exception extends \Exception
 class ClientException extends Exception
 {
 	protected function logMe() {
-		$this->error( 'HELIOS_CLIENT client_exception' , [ 'exception' => $this, 'context' => $this->getData() ] );
+		$this->error( 'HELIOS_CLIENT client_exception' );
 	}
 }
 
 class LoginFailureException extends Exception
 {
 	protected function logMe() {
-		$this->info( 'HELIOS_CLIENT login_failure' , [ 'exception' => $this, 'context' => $this->getData() ] );
+		$this->info( 'HELIOS_CLIENT login_failure' );
 	}
 }

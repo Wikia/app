@@ -105,7 +105,6 @@ class User {
 				'HELIOS_LOGIN authentication_failed',
 				[ 'response' => $e->getResponse(), 'username' => $username, 'method' => __METHOD__ ]
 			);
-			$result = false;
 		}
 		catch ( ClientException $e )
 		{
@@ -160,7 +159,7 @@ class User {
 		$heliosResult = null;
 		$heliosException = null;
 		try {
-			$heliosResult = \Wikia\Helios\User::authenticate( $username, $password );
+			$heliosResult = self::authenticate( $username, $password );
 		}
 		catch ( ClientException $e )
 		{
@@ -173,7 +172,7 @@ class User {
 
 			// Detect discrepancies between Helios and MediaWiki results.
 			if ( $heliosResult !== null && $heliosResult != $mediawikiResult ) {
-				\Wikia\Helios\User::debugLogin( $password, __METHOD__ );
+				self::debugLogin( $password, __METHOD__ );
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'HELIOS_LOGIN check_password_discrepancy',
 					[	'helios'         => $heliosResult,
@@ -186,9 +185,9 @@ class User {
 			$result = $mediawikiResult;
 		} else { // pure-Helios mode
 			if ( $heliosException ) {
-
 				$errorMessageKey = 'login-abort-service-unavailable';
 			}
+
 			$result = $heliosResult;
 		}
 
