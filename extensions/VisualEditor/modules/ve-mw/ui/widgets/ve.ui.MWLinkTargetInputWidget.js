@@ -103,6 +103,33 @@ ve.ui.MWLinkTargetInputWidget.prototype.isValid = function () {
  */
 ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
 	if ( mw.Title.newFromText( this.value ) ) {
+		var propsJqXhr,
+			searchJqXhr = ve.init.mw.Target.static.apiRequest( {
+				action: 'opensearch',
+				search: this.value,
+				namespace: 0,
+				suggest: ''
+			} );
+		return searchJqXhr.then( function ( data ) {
+			propsJqXhr = ve.init.mw.Target.static.apiRequest( {
+				action: 'query',
+				prop: 'info|pageprops',
+				titles: ( data[1] || [] ).join( '|' ),
+				ppprop: 'disambiguation'
+			} );
+			return propsJqXhr;
+		} ).promise( { abort: function () {
+			searchJqXhr.abort();
+			if ( propsJqXhr ) {
+				propsJqXhr.abort();
+			}
+		} } );
+	} else {
+		return $.Deferred().resolve( {} ).promise( { abort: function () {
+		} } );
+	}
+	/*
+	if ( mw.Title.newFromText( this.value ) ) {
 		return ve.init.target.constructor.static.apiRequest( {
 			action: 'query',
 			generator: 'prefixsearch',
@@ -118,6 +145,7 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
 			// Do nothing. This is just so OOUI doesn't break due to abort being undefined.
 		} } );
 	}
+	*/
 };
 
 /**
