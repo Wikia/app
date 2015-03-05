@@ -3,6 +3,7 @@
 class ExternalUser_Wikia extends ExternalUser {
 	static private $recentlyUpdated = array();
 	private $mRow, $mDb, $mUser;
+	private $lastAuthenticationError;
 
 	protected function initFromName( $name ) {
 		wfDebug( __METHOD__ . ": init User from name: $name \n" );
@@ -198,12 +199,22 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_birthdate;
 	}
 
-	public function authenticate( $password ) {
-		$result = null;
+	public function getLastAuthenticationError() {
+		return $this->lastAuthenticationError;
+	}
 
-		wfRunHooks( 'UserCheckPassword', [ $this->getId(), $this->getName(), $this->getPassword(), $password, &$result ] );
+	public function authenticate( $password ) {
+		$this->lastAuthenticationError = null;
+
+		$result = null;
+		$errorMessageKey = null;
+
+		wfRunHooks( 'UserCheckPassword', [ $this->getId(), $this->getName(), $this->getPassword(), $password, &$result, &$errorMessageKey ] );
 		if ( $result === null ) {
 			$result = User::comparePasswords( $this->getPassword(), $password, $this->getId() );
+		}
+		if ( $errorMessageKey ) {
+			$this->lastAuthenticationError = $errorMessageKey;
 		}
 
 		return $result;

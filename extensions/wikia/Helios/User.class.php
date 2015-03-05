@@ -63,10 +63,9 @@ class User {
 	}
 
 	/**
-	 * Uses Helios to authenticate user credentials.
+	 * Performs authentication request to Helios
 	 *
-	 * Due to MediaWiki flow during authentication results are cached within the request
-	 * to prevent spamming Helios backend with the same calls.
+	 * @throws ClientException
 	 *
 	 * @param string &$username string of the user name
 	 * @param string &$password string of the plaintext password the user entered
@@ -76,7 +75,11 @@ class User {
 	public static function authenticate( $username, $password ) {
 		// check the local cache
 		if ( @self::$authenticationCache[$username][$password] !== null ) {
-			return self::$authenticationCache[$username][$password];
+			$resultData = self::$authenticationCache[$username][$password];
+			if ( $resultData[ 'exception' ] ) {
+				throw $resultData[ 'exception' ];
+			}
+			return $resultData[ 'result' ];
 		}
 
 		$logger = \Wikia\Logger\WikiaLogger::instance();
@@ -87,38 +90,41 @@ class User {
 		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
+		$result = false;
+		$throwException = null;
+
 		// Authenticate with username and password.
 		try {
 			$loginInfo = $heliosClient->login( $username, $password );
 			$result = !empty( $loginInfo->access_token );
-	
-			if ( !empty( $loginInfo->error ) ) {
-				if ( $loginInfo->error === "access_denied" ) {
-					// normal case: password incorrect, log it as info
-					$logger->info(
-						'HELIOS_LOGIN access_denied',
-						[ 'response' => $loginInfo, 'username' => $username, 'method' => __METHOD__ ]
-					);
-				} else {
-					$logger->error(
-						'HELIOS_LOGIN response_error',
-						[ 'response' => $loginInfo, 'username' => $username, 'method' => __METHOD__ ]
-					);
-				}
-				$result = false;
-			}
 		}
-
-		catch ( \Wikia\Helios\ClientException $e ) {
-			$logger->error(
-				'HELIOS_LOGIN client_exception',
-				[ 'exception' => $e, 'username' => $username, 'method' => __METHOD__ ]
+		catch ( LoginFailureException $e )
+		{
+			// normal case: password incorrect, log it as info
+			$logger->info(
+				'HELIOS_LOGIN authentication_failed',
+				[ 'response' => $e->getResponse(), 'username' => $username, 'method' => __METHOD__ ]
 			);
 			$result = false;
 		}
+		catch ( ClientException $e )
+		{
+			$logger->error(
+				'HELIOS_LOGIN authentication_error',
+				[ 'exception' => $e, 'response' => $e->getResponse(), 'username' => $username, 'method' => __METHOD__ ]
+			);
+			$throwException = $e;
+		}
 
 		// save in local cache
-		self::$authenticationCache[$username][$password] = $result;
+		self::$authenticationCache[$username][$password] = [
+			'result'=> $result,
+			'exception' => $throwException
+		];
+
+		if ( $throwException ) {
+			throw $throwException;
+		}
 
 		return $result;
 	}
@@ -144,19 +150,29 @@ class User {
 	 * @param string $username Username
 	 * @param string $hash Password hash
 	 * @param string $password Password
-	 * @param bool &$result Authentication result
+	 * @param bool &$result (out) Authentication result
+	 * @param string &$errorMessageKey (out) Error message
 	 * @return bool true - hook handler
 	 */
-	public static function onUserCheckPassword( $id, $username, $hash, $password, &$result ) {
+	public static function onUserCheckPassword( $id, $username, $hash, $password, &$result, &$errorMessageKey ) {
 		global $wgHeliosLoginShadowMode;
-		$heliosResult = \Wikia\Helios\User::authenticate( $username, $password );
+
+		$heliosResult = null;
+		$heliosException = null;
+		try {
+			$heliosResult = \Wikia\Helios\User::authenticate( $username, $password );
+		}
+		catch ( ClientException $e )
+		{
+			$heliosException = $e;
+		}
 
 		// If we are in shadow mode calculate mediawiki response and log comparison result
 		if ( $wgHeliosLoginShadowMode ) {
 			$mediawikiResult = \User::comparePasswords( $hash, $password, $id );
 
 			// Detect discrepancies between Helios and MediaWiki results.
-			if ( $heliosResult != $mediawikiResult ) {
+			if ( $heliosResult !== null && $heliosResult != $mediawikiResult ) {
 				\Wikia\Helios\User::debugLogin( $password, __METHOD__ );
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'HELIOS_LOGIN check_password_discrepancy',
@@ -169,6 +185,10 @@ class User {
 
 			$result = $mediawikiResult;
 		} else { // pure-Helios mode
+			if ( $heliosException ) {
+
+				$errorMessageKey = 'login-abort-service-unavailable';
+			}
 			$result = $heliosResult;
 		}
 

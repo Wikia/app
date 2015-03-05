@@ -678,6 +678,16 @@ class LoginForm extends SpecialPage {
 			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
 		}
 
+		// Wikia change - begin - author: @wladek
+		if ( $wgExternalAuthType
+			&& is_object( $this->mExtUser )
+			&& $this->mExtUser->getLastAuthenticationError() )
+		{
+			$this->mAbortLoginErrorMsg = $this->mExtUser->getLastAuthenticationError();
+			return self::ABORTED;
+		}
+		// Wikia change - end
+
 		# TODO: Allow some magic here for invalid external names, e.g., let the
 		# user choose a different wiki name.
 		$u = User::newFromName( $this->mUsername );
@@ -702,7 +712,12 @@ class LoginForm extends SpecialPage {
 		}
 
 		global $wgBlockDisablesLogin;
-		if ( !$u->checkPassword( $this->mPassword ) ) {
+		$abortedMessageKey = null;
+		if ( !$u->checkPassword( $this->mPassword, $abortedMessageKey ) ) {
+			if ( $abortedMessageKey ) {
+				$this->mAbortLoginErrorMsg = $abortedMessageKey;
+				return self::ABORTED;
+			}
 			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
 				// The e-mailed temporary password should not be used for actu-
 				// al logins; that's a very sloppy habit, and insecure if an

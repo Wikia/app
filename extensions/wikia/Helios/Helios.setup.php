@@ -17,6 +17,10 @@ $wgAutoloadClasses["Wikia\\Helios\\Client"] = __DIR__ . "/Client.class.php";
 $wgAutoloadClasses["Wikia\\Helios\\SampleController"] = __DIR__ . "/SampleController.class.php";
 $wgAutoloadClasses["Wikia\\Helios\\HelperController"] = __DIR__ . "/HelperController.class.php";
 
+$wgAutoloadClasses["Wikia\\Helios\\Exception"]   = __DIR__ . "/Exceptions.php";
+$wgAutoloadClasses["Wikia\\Helios\\ClientException"]   = __DIR__ . "/Exceptions.php";
+$wgAutoloadClasses["Wikia\\Helios\\LoginFailureException"]   = __DIR__ . "/Exceptions.php";
+
 /**
  * Internationalisation.
  */
