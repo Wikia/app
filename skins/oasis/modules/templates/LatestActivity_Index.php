@@ -1,4 +1,4 @@
-<section class="WikiaActivityModule module" id="<?= !empty( $userName ) ? 'WikiaRecentActivityUser' : 'WikiaRecentActivity'; ?>">
+<section class="recent-wiki-activity WikiaActivityModule module" id="<?= !empty( $userName ) ? 'WikiaRecentActivityUser' : 'WikiaRecentActivity'; ?>">
 	<h1 class="activity-heading"><?= $moduleHeader ?></h1>
 	<ul>
 <?php
