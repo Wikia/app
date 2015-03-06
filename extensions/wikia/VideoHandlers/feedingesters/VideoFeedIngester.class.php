@@ -518,12 +518,11 @@ abstract class VideoFeedIngester {
 			'city_variables_pool',
 			'city_list',
 		];
-		$varName = mysql_real_escape_string( self::WIKI_INGESTION_DATA_VARNAME );
 		$aWhere = [ 'city_id = cv_city_id', 'cv_id = cv_variable_id' ];
 
 		$aWhere[] = "cv_value is not null";
 
-		$aWhere[] = "cv_name = '$varName'";
+		$aWhere['cv_name'] = self::WIKI_INGESTION_DATA_VARNAME;
 
 
 		$oRes = $dbr->select(
