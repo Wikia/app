@@ -8,10 +8,6 @@ $global-footer-vertical-spacing: 30px;
 
 .global-footer {
 	@include box-sizing(border-box);
-}
-
-
-.global-footer {
 	background-color: #FFF;
 	border: 0;
 	color: $color-text-dark;
