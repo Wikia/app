@@ -7,7 +7,8 @@
 			"Maidis",
 			"Rapsar",
 			"Talha Samil Cakir",
-			"TurkishStyles"
+			"TurkishStyles",
+			"Sayginer"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Görsel Düzenleyici]]",
@@ -17,5 +18,5 @@
 	"visualeditor-feedback-link": "Project:Görsel Düzenleyici/Geri bildirim",
 	"visualeditor-feedback-tool": "Geri bildirim bırak",
 	"visualeditor-help-label": "Kullanıcı kılavuzunu okuyun",
-	"visualeditor-help-title": "Editörü nasıl kullanacağınız hakkında kullanım kılavuzu"
+	"visualeditor-help-title": "Editörü nasıl kullanacağınız hakkındaki kılavuz"
 }

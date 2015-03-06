@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jfblanc",
+			"Cedric31"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorVisual]]",
+	"tag-visualeditor-description": "Modificacion facha amb l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorVisual]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorVisual: de verificar]]",
+	"tag-visualeditor-needcheck-description": "Modificacion facha en utilizant l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|EditorVisual]] ont lo sistèma a detectat que lo tèxte wiki aviá de modificacions probablament involontàrias.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ÉditorVisual : bascuolat]]",
+	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
+	"visualeditor-feedback-tool": "Daissar un comentari",
+	"visualeditor-help-label": "Legir lo manual de l'utilizaire",
+	"visualeditor-help-title": "Manual de l'utilizaire de l'Editor"
+}

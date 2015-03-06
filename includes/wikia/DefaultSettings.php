@@ -66,7 +66,6 @@ if($wgDBname != 'uncyclo') {
  */
 global $wgAutoloadClasses;
 
-
 /**
  * Nirvana framework classes
  */
@@ -533,6 +532,13 @@ $wgAutoloadClasses[ "WikiaValidatorDependent"       ] = "$IP/includes/wikia/vali
 $wgAutoloadClasses[ 'WikiaValidatorRestrictiveUrl'  ] = "$IP/includes/wikia/validators/WikiaValidatorRestrictiveUrl.class.php";
 $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/validators/WikiaValidatorUsersUrl.class.php";
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
+
+/**
+ * MediaWiki Config
+ */
+$wgAutoloadClasses['Config'] = $IP . '/includes/config/Config.php';
+$wgAutoloadClasses['ConfigFactory'] = $IP . '/includes/config/ConfigFactory.php';
+$wgAutoloadClasses['GlobalVarConfig'] = $IP . '/includes/config/GlobalVarConfig.php';
 
 /**
  * registered API methods

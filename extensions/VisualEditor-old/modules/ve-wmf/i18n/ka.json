@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"BRUTE",
+			"David1010",
+			"Gleki",
+			"ITshnik",
+			"MIKHEIL",
+			"NoiX180",
+			"Pras"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორი]]",
+	"tag-visualeditor-description": "რედაქტირება შესრულებულია [[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორის]] საშუალებით",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორი: შემოწმება]]",
+	"tag-visualeditor-needcheck-description": "რედაქტირება შესრულებულია [[{{MediaWiki:visualeditor-descriptionpagelink}}|ვიზუალური რედაქტორის]] საშუალებით, რომელშიც სისტემამ აღმოაჩინა, შესაძლოა უნებლიეთ შეცვლილი ვიკი-ტექსტი.",
+	"visualeditor-feedback-link": "Project:ვიზუალური რედაქტორი/შეფასება",
+	"visualeditor-feedback-tool": "გამოხმაურების დატოვება",
+	"visualeditor-help-label": "გაეცანით მომხმარებლის სახელმძღვანელოს",
+	"visualeditor-help-title": "მომხმარებლის სახელმძღვანელო რედაქტორის გამოყენებისათვის"
+}

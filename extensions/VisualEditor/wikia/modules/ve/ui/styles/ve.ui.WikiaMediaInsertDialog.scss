@@ -124,7 +124,7 @@ $width-cart: 120px;
 		}
 	}
 
-	.oo-ui-labeledElement-label {
+	.oo-ui-labelElement-label {
 		display: none;
 	}
 }
@@ -137,7 +137,7 @@ $width-cart: 120px;
 		margin-left: $width-media-item-max + $width-gutter;
 	}
 
-	.oo-ui-labeledElement-label {
+	.oo-ui-labelElement-label {
 		padding-top: 0;
 	}
 
@@ -230,14 +230,17 @@ $width-cart: 120px;
 	top: 0;
 	right: 0;
 
-	.ve-ui-wikiaMediaOptionWidget-check {
+	.oo-ui-buttonElement-framed.ve-ui-wikiaMediaOptionWidget-check {
 		cursor: pointer;
 		position: absolute;
 		right: 0;
 		top: 0;
 
-		.oo-ui-buttonedElement-button {
-			.oo-ui-iconedElement-icon {
+		.oo-ui-buttonElement-button {
+			border: 0;
+			margin: 0;
+			padding: 0;
+			.oo-ui-iconElement-icon {
 				@if lightness($color-page) < 50 {
 					background-color: lighten($color-page, 9%);
 				} @else {
@@ -262,7 +265,7 @@ $width-cart: 120px;
 		margin: 0 10px 60px 0;
 		overflow: visible;
 
-		.oo-ui-labeledElement-label {
+		.oo-ui-labelElement-label {
 			background: $color-page;
 			bottom: auto;
 			color: $color-text;

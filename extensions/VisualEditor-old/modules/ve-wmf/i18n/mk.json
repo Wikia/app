@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06",
+			"Brest",
+			"Iwan Novirion"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ВизуеленУредник]]",
+	"tag-visualeditor-description": "Уредувањето е направено со e [[{{MediaWiki:visualeditor-descriptionpagelink}}|ВизуеленУредник]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ВизуеленУредник: Проверка]]",
+	"tag-visualeditor-needcheck-description": "Уредување направено со [[{{MediaWiki:visualeditor-descriptionpagelink}}|ВизуеленУредник]] при кое системот утврдил дека викитекстот може да има ненамерни измени.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ВизуеленУредник: Префрлено]]",
+	"tag-visualeditor-switched-description": "Корисникот почнал да уредува со ВизуеленУредник, но потоа се префрлил на уредникот на викитекст.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Мислења",
+	"visualeditor-feedback-tool": "Дајте мислење",
+	"visualeditor-help-label": "Прочитајте го корисничкиот водич",
+	"visualeditor-help-title": "Кориснички водич за употреба на уредникот"
+}

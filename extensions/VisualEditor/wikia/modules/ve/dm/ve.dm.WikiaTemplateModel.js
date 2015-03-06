@@ -37,7 +37,7 @@ ve.dm.WikiaTemplateModel.prototype.addUnusedParameters = function () {
 ve.dm.WikiaTemplateModel.prototype.serialize = function () {
 	var name,
 		template = ve.extendObject(
-			{}, this.originalData, { 'target': this.getTarget(), 'params': {} }
+			{}, this.originalData, { target: this.getTarget(), params: {} }
 		),
 		params = this.getParameters();
 
@@ -52,10 +52,10 @@ ve.dm.WikiaTemplateModel.prototype.serialize = function () {
 		if ( params[name].getValue() === '' && template.originalParams.indexOf( name ) === -1 ) {
 			continue;
 		}
-		template.params[params[name].getOriginalName()] = { 'wt': params[name].getValue() };
+		template.params[params[name].getOriginalName()] = { wt: params[name].getValue() };
 	}
 
-	return { 'template': template };
+	return { template: template };
 };
 
 /**

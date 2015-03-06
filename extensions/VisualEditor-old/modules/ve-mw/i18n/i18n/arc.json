@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Basharh"
+		]
+	},
+	"visualeditor-beta-label": "ܒܝܛܐ",
+	"visualeditor-dialog-meta-categories-category": "ܣܕܪܐ",
+	"visualeditor-dialog-meta-categories-data-label": "ܣܕܪ̈ܐ",
+	"visualeditor-dialog-meta-categories-input-placeholder": "ܐܘܣܦ ܣܕܪܐ",
+	"visualeditor-dialog-meta-categories-options": "ܓܒܝܬ̈ܐ",
+	"visualeditor-dialog-meta-categories-section": "ܣܕܪ̈ܐ",
+	"visualeditor-dialog-meta-languages-label": "ܠܫܢ̈ܐ",
+	"visualeditor-dialog-meta-languages-section": "ܠܫܢ̈ܐ",
+	"visualeditor-dialog-meta-settings-label": "ܛܘܝܒ̈ܐ ܕܦܐܬܐ",
+	"visualeditor-dialog-reference-insert-button": "ܣܢܘܦ ܡܒܘܥܐ",
+	"visualeditor-dialog-reference-insert-title": "ܣܢܘܦ ܡܒܘܥܐ",
+	"visualeditor-dialogbutton-meta-tooltip": "ܛܘܝܒ̈ܐ ܕܦܐܬܐ",
+	"visualeditor-dialogbutton-reference-tooltip": "ܡܒܘܥܐ",
+	"visualeditor-dialogbutton-referencelist-tooltip": "ܡܟܬܒܘܬܐ ܕܡܒܘܥ̈ܐ",
+	"visualeditor-dialogbutton-transclusion-tooltip": "ܡܚܫܫܬ̈ܐ",
+	"visualeditor-linkinspector-suggest-new-page": "ܦܐܬܐ ܚܕܬܐ",
+	"visualeditor-meta-tool": "ܓܒܝܬ̈ܐ",
+	"visualeditor-savedialog-label-error": "ܦܘܕܐ",
+	"visualeditor-toolbar-cancel": "ܒܛܘܠ",
+	"visualeditor-toolbar-savedialog": "ܠܒܘܟ ܦܐܬܐ"
+}

@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Milicevic01"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizuelni uređivač]]",
+	"tag-visualeditor-description": "Izmena načinjena [[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizuelnim uređivačem]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Potrebna provera]]",
+	"tag-visualeditor-needcheck-description": "Izmena načinjena [[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizuelnim uređivačem]] gde je sistem detektovao vikitekst s mogućim neželjenim izmenama.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizuelni uređivač: Isključen]]",
+	"tag-visualeditor-switched-description": "Uređivanje početo Vizuelnim uređivačem pa pređeno na izvorno uređivanje",
+	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
+	"visualeditor-feedback-tool": "Ostavite povratnu informaciju",
+	"visualeditor-help-label": "Pročitajte korisnički vodič",
+	"visualeditor-help-title": "Korisnički vodič sa uputstvom za korišćenje uređivača"
+}

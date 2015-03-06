@@ -7,7 +7,9 @@
 			"Laketown",
 			"Palnatoke",
 			"Simeondahl",
-			"Tehnix"
+			"Tehnix",
+			"Thomsen",
+			"Sarrus"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
@@ -17,5 +19,5 @@
 	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
 	"visualeditor-feedback-tool": "Giv feedback",
 	"visualeditor-help-label": "Læs brugervejledningen",
-	"visualeditor-help-title": "Brugervejledning til hvordan du bruger editoren"
+	"visualeditor-help-title": "Vejledning til hvordan du bruger editoren"
 }
