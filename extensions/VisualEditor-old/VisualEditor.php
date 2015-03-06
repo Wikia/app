@@ -75,7 +75,7 @@ $wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
 
 $wgVisualEditorResourceTemplate = array(
 	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'VisualEditor',
+	'remoteExtPath' => 'VisualEditor-old',
 );
 
 $wgResourceModules += array(

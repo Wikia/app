@@ -21,7 +21,7 @@ ve.init.mw.Platform = function VeInitMwPlatform() {
 
 	// Properties
 	this.externalLinkUrlProtocolsRegExp = new RegExp( '^(' + mw.config.get( 'wgUrlProtocols' ) + ')' );
-	this.modulesUrl = mw.config.get( 'wgExtensionAssetsPath' ) + '/VisualEditor/modules';
+	this.modulesUrl = mw.config.get( 'wgExtensionAssetsPath' ) + '/VisualEditor-old/modules';
 	this.parsedMessages = {};
 	this.linkCache = new ve.init.mw.LinkCache();
 };

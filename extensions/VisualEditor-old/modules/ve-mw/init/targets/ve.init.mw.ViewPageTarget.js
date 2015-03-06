@@ -574,20 +574,63 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorNewUser = function ( isAnon ) {
  * Update save dialog on captcha error
  *
  * @method
- * @param {Object} editApi
  */
-ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
-	// Wikia change: Only support reCAPTCHA
-	this.captcha = {};
-	this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
-		editApi.captcha.key,
-		've-ui-mwSaveDialog-captcha',
-		{ theme: 'white' }
-	);
+ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
+	// Wikia change: Only support reCAPTCHA and FancyCaptcha
+	this.captchaResponse = null;
+	this.saveDialog.$captcha.empty();
+
+	// reCaptcha loaded without any problems
+	if (this.saveDialog.frame.$element[0].contentWindow.grecaptcha !== undefined) {
+		this.renderReCaptcha();
+	} else {
+		this.loadAndRenderFancyCaptcha();
+	}
+
 	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
 	this.saveDialog.popPending();
 
 	this.events.trackSaveError( 'captcha' );
+};
+
+/**
+ * Render reCaptcha
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.renderReCaptcha = function () {
+	this.saveDialog.frame.$element[0].contentWindow.grecaptcha.render(
+		've-ui-mwSaveDialog-captcha',
+		{
+			'sitekey': mw.config.get( 'reCaptchaPublicKey' ),
+			'theme': 'light',
+			'callback': function ( response ) {
+				this.captchaResponse = response;
+			}.bind( this )
+		});
+};
+
+/**
+ * If reCaptcha failed to load (eg, the user is in China and google is blocked),
+ * load Fancy Captcha and render it instead.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.loadAndRenderFancyCaptcha = function () {
+	$.when(
+		$.getResources([
+			$.getSassCommonURL('extensions/wikia/Captcha/styles/FancyCaptcha.scss')
+		])
+	).done(
+		$.nirvana.sendRequest({
+			controller: 'CaptchaController',
+			method: 'getFancyCaptcha',
+			type: 'GET',
+			callback: function ( data ) {
+				this.saveDialog.$captcha.append( data.form );
+			}.bind( this )
+		})
+	);
 };
 
 /**
@@ -848,8 +891,8 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 	this.emit( 'saveInitiated' );
 
 	// Reset any old captcha data
-	if ( this.captcha ) {
-		delete this.captcha;
+	if ( this.captchaResponse ) {
+		this.captchaResponse = null;
 	}
 
 	if (
@@ -929,16 +972,13 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 				fields[$this.prop( 'name' )] = $this.val();
 			}
 		} );
-	// Inject captcha params here if reCAPTCHA is used
-	if ( this.captcha ) {
-		this.captcha.id = this.saveDialog.$( '#recaptcha_challenge_field' ).val();
-		this.captcha.word = this.saveDialog.$( '#recaptcha_response_field' ).val();
-	}
 
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
-		'wpCaptchaId': this.captcha && this.captcha.id,
-		'wpCaptchaWord': this.captcha && this.captcha.word
+		'g-recaptcha-response': this.captchaResponse, // reCaptcha
+		'wpCaptchaClass': this.saveDialog.$( '#wpCaptchaClass' ).val(), // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaId': this.saveDialog.$( '#wpCaptchaId' ).val(), // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaWord': this.saveDialog.$( '#wpCaptchaWord' ).val() // FancyCaptcha (fallback if reCaptcha fails to load)
 	} );
 	return fields;
 };
@@ -1193,7 +1233,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	dialogDocument = dialogFrame.contentDocument;
 	$( dialogFrame ).on( 'load', function () {
 		script = dialogDocument.createElement( 'script' );
-		script.src = 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+		script.src = 'https://www.google.com/recaptcha/api.js';
 		dialogDocument.getElementsByTagName( 'head' )[0].appendChild( script );
 	} );
 };

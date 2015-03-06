@@ -108,6 +108,46 @@ $wgVisualEditorResourceTemplate = array(
 );
 
 $wgResourceModules += array(
+	'oojs' => $wgVisualEditorResourceTemplate + array(
+		'scripts' => array(
+			'../../resources/lib/oojs/oojs.jquery.js',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+	'oojs-ui' => $wgVisualEditorResourceTemplate + array(
+		'scripts' => array(
+			'../../resources/lib/oojs-ui/oojs-ui.js',
+		),
+		'skinScripts' => array(
+			'default' => '../../resources/lib/oojs-ui/oojs-ui-mediawiki.js',
+		),
+		'dependencies' => array(
+			'oojs',
+			'oojs-ui.styles',
+		),
+		'messages' => array(
+			'ooui-dialog-message-accept',
+			'ooui-dialog-message-reject',
+			'ooui-dialog-process-continue',
+			'ooui-dialog-process-dismiss',
+			'ooui-dialog-process-error',
+			'ooui-dialog-process-retry',
+			'ooui-outline-control-move-down',
+			'ooui-outline-control-move-up',
+			'ooui-outline-control-remove',
+			'ooui-toolbar-more',
+			'ooui-toolgroup-collapse',
+			'ooui-toolgroup-expand',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+	'oojs-ui.styles' => $wgVisualEditorResourceTemplate + array(
+		'position' => 'top',
+		'skinStyles' => array(
+			'default' => '../../resources/lib/oojs-ui/oojs-ui-apex.svg.css',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
 	'jquery.visibleText' => $wgVisualEditorResourceTemplate + array(
 		'scripts' => array(
 			'lib/ve/lib/jquery/jquery.visibleText.js',
