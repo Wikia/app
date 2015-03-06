@@ -91,7 +91,7 @@ class AutomatedDeadWikisDeletionMaintenance {
 			),
 		)
 	);
-	static protected $FETCH_TIME_LIMIT = '-243 days';
+	static protected $FETCH_TIME_LIMIT = '-50 days';
 
 	protected $options = array();
 	protected $flags = array(
