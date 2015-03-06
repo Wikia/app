@@ -385,14 +385,14 @@ $messages['ja'] = array(
 	'fbconnect-error-fb-account-in-use' => 'このFacebookアカウントは既にウィキアの別のユーザーアカウントにコネクトされています。別のFacebookアカウントとコネクトするか、$1 のアカウントをコネクトする前に、Facebookアカウントでログインして元のウィキアアカウントのコネクトを解除してください。',
 	'fbconnect-error-fb-unavailable-title' => 'Facebookへのコネクトエラー',
 	'fbconnect-error-fb-unavailable-text' => '現在Facebookはご利用いただけないようです。しばらくしてからもう一度お試しください。',
-	'fbconnect-desc' => 'ユーザーの [http://www.facebook.com Facebook]  アカウントとの [[Special:FacebookConnect|コネクト]] を有効にします。FacebookのグループとウィキアテキストにおけるFBMLの使用に基づいて認証を提供します。',
+	'fbconnect-desc' => 'ユーザーの [http://www.facebook.com Facebook]  アカウントとの [[Special:FacebookConnect|コネクト]] を有効にします。FacebookのグループとウィキテキストにおけるFBMLの使用に基づいて認証を提供します。',
 	'fbconnect-connect' => 'Log in with Facebook Connect',
 	'fbconnect-connect-simple' => 'Connect',
 	'fbconnect-convert' => 'このアカウントとFacebookをコネクトする',
 	'fbconnect-or' => 'または',
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
-	'fbconnect-disconnect-account-link' => 'お使いのウィキアアカウントは現在Facebookにコネクトされています。ウィキアアカウントとFacebookの [[#|コネクトを解除]] することもできます。コネクトを解除しても、ウィキアアカウントは引き続き通常どおりにお使いいただけ、編集、ポイント、アチーブメントなどの履歴もそのまま残ります。',
+	'fbconnect-disconnect-account-link' => 'お使いのウィキアアカウントは現在Facebookにコネクトされています。ウィキアアカウントとFacebookの [[#|コネクトを解除]] することもできます。コネクトを解除しても、ウィキアアカウントは引き続き通常どおりにご利用いただくことができ、編集、ポイント、アチーブメントなどの履歴もそのまま残ります。',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
 	'fbconnect-disconnect-info-existing' => 'コネクトの解除が完了しました。今後も通常どおり、ユーザー名とパスワードを使用してログインしていただけます。',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
@@ -414,7 +414,7 @@ The Wikia Community Team",
 	'fbconnect-passwordremindertext-exist' => 'こんにちは。
 ウィキアアカウントとFacebookアカウントのコネクトが解除されたようです。ただし、編集、ポイント、アチーブメントなどの履歴はすべて保持されていますので、ご安心ください。
 
-今後もログイン時は、コネクト前に使用されたのと同じユーザー名とパスワードをお使いいただけます。
+今後もログイン時は、コネクト前に使用されたものと同じユーザー名とパスワードをお使いいただけます。
 
 今後ともウィキアをよろしくお願いいたします。
 
@@ -426,7 +426,7 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'ウィキアアカウントとFacebookアカウントをコネクトしました。',
-	'fbconnect-preferences-connected-error' => '申し訳ありませんが、コネクトを完了できませんでした。ウィキアアカウントにログイン済みであることと、Facebookへのコネクトをウィキアに許可していることをご確認ください。',
+	'fbconnect-preferences-connected-error' => '申し訳ありませんが、コネクトを完了できませんでした。ウィキアアカウントにログイン済みであることと、ウィキアのFacebookへのコネクトを許可していることをご確認ください。',
 	'fbconnect-connect-msg' => 'ウィキアアカウントとFacebookアカウントをコネクトしました。',
 );
 
@@ -485,6 +485,120 @@ The Wikia Community Team",
 	'fbconnect-preferences-connected' => '축하드립니다! 귀하의 위키아 계정과 페이스북 계정이 성공적으로 연동되었습니다.',
 	'fbconnect-preferences-connected-error' => '죄송합니다. 계정 연동에 실패했습니다. 위키아 계정으로 로그인해 있는지, 또 페이스북 계정과 연동할 수 있는 위키아 권한이 있는지 확인해 주세요.',
 	'fbconnect-connect-msg' => '축하드립니다! 귀하의 위키아 계정과 페이스북 계정이 성공적으로 연동되었습니다.',
+);
+
+$messages['nl'] = array(
+	'fbconnect-connect-existing' => 'Account koppelen met Facebook',
+	'fbconnect-connect-login-legend' => 'Log in op jouw bestaande account',
+	'fbconnect-connect-username-label' => 'Gebruikersnaam:',
+	'fbconnect-connect-password-label' => 'Wachtwoord:',
+	'fbconnect-wrong-pass-msg' => 'Het wachtwoord dat je hebt ingevoerd is onjuist',
+	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
+	'prefs-fbconnect-disconnect-prefstext' => 'Verbinding met Facebook verbreken',
+	'fbconnect-error-already-connected' => 'This Wikia account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
+	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another Wikia user account. Please connect with a different account or log in with Facebook and disconnect the original Wikia account prior to connecting the $1 account.',
+	'fbconnect-error-fb-unavailable-title' => 'Error connecting to Facebook',
+	'fbconnect-error-fb-unavailable-text' => 'Facebook seems to be unavailable at this time. Please try again later.',
+	'fbconnect-desc' => 'Enables users to [[Special:FacebookConnect|Connect]] with their [http://www.facebook.com Facebook] accounts. Offers authentification based on Facebook groups and the use of FBML in wiki text.',
+	'fbconnect-connect' => 'Log in with Facebook Connect',
+	'fbconnect-connect-simple' => 'Connect',
+	'fbconnect-convert' => 'Koppel dit account met Facebook',
+	'fbconnect-or' => 'OF',
+	'fbconnect-error' => 'Verification error',
+	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
+	'fbconnect-disconnect-account-link' => 'Your Wikia account is currently connected to Facebook. You can [[#|disconnect]] your Wikia account from Facebook. You will be able to continue using your Wikia account as usual, with your history (edits, points, achievements) intact.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info-existing' => 'Disconnect complete. You can still log in using your user name and password, as usual.',
+	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertext' => "Hi,
+It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+
+You can use the same username as before, and we've generated a new password for you to use. Here are your details:
+
+Username: $2
+Password: $3
+
+The replacement password has been sent only to you at this email address.
+
+Thanks,
+
+The Wikia Community Team",
+	'fbconnect-passwordremindertext-exist' => "Hi,
+It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+
+You can use the same username and password as you did before you connected.
+
+Thanks,
+
+The Wikia Community Team",
+	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-logout-confirm' => 'Choosing to cancel will log you out of Wikia and Facebook. Do you want to continue?',
+	'prefs-fbconnect-prefstext' => 'Facebook Connect',
+	'prefs-fbconnect-status-prefstext' => 'Status',
+	'fbconnect-cancel' => 'Action cancelled',
+	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
+	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
+	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
+	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
+);
+
+$messages['pl'] = array(
+	'fbconnect-connect-existing' => 'Połącz konto z Facebookiem',
+	'fbconnect-connect-login-legend' => 'Zaloguj się na istniejące konto',
+	'fbconnect-connect-username-label' => 'Nazwa użytkownika:',
+	'fbconnect-connect-password-label' => 'Hasło:',
+	'fbconnect-wrong-pass-msg' => 'Podane hasło jest nieprawidłowe',
+	'fbconnect-graphapi-not-configured' => 'W konfiguracji brakuje App ID oraz App Secret Facebooka.',
+	'prefs-fbconnect-disconnect-prefstext' => 'Odłącz od Facebooka',
+	'fbconnect-error-already-connected' => 'To konto Wikia jest obecnie połączone z Facebookiem. Proszę odłączyć oryginalne konto Facebooka przed połączeniem kolejnego konta.',
+	'fbconnect-error-fb-account-in-use' => 'To konto Facebooka jest już podłączone do innego konta użytkownika Wikii. Proszę połącz się z innym kontem lub zaloguj się na Facebooka i odłącz oryginalne konto Wikia zanim podłączysz konto $1.',
+	'fbconnect-error-fb-unavailable-title' => 'Wystąpił błąd przy łączeniu z Facebookiem',
+	'fbconnect-error-fb-unavailable-text' => 'Facebook wydaje się być obecnie niedostępny. Spróbuj ponownie później.',
+	'fbconnect-desc' => 'Pozwala użytkownikom na [[Special:FacebookConnect|Połączenie]] z ich kontem na [http://www.facebook.com Facebooku]. Umożliwia potwierdzanie tożsamości przy wykorzystaniu grup na Facebooku i korzystanie FBML na wiki.',
+	'fbconnect-connect' => 'Log in with Facebook Connect',
+	'fbconnect-connect-simple' => 'Connect',
+	'fbconnect-convert' => 'Połącz to konto z Facebookiem',
+	'fbconnect-or' => 'LUB',
+	'fbconnect-error' => 'Verification error',
+	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
+	'fbconnect-disconnect-account-link' => 'Twoja konto Wikia jest obecnie połączone z Facebookiem. Możesz [[#|odłączyć]] swoje konto Wikia od Facebooka. W dalszym ciągu będziesz mógł używać swojego konta, twoja historia (edycje, punkty, odznaki) zostaną nienaruszone.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info-existing' => 'Odłączanie zakończone. Możesz nadal zalogować się wykorzystując istniejącą nazwę i hasło.',
+	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertext' => "Hi,
+It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+
+You can use the same username as before, and we've generated a new password for you to use. Here are your details:
+
+Username: $2
+Password: $3
+
+The replacement password has been sent only to you at this email address.
+
+Thanks,
+
+The Wikia Community Team",
+	'fbconnect-passwordremindertext-exist' => 'Witaj,
+Twoje konto na Wikii zostało odłączone od Facebooka. Zachowaliśmy całą historię Twoich edycji, otrzymane odznaczenia i punkty.
+
+Możesz używać tej samej nazwy użytkownika co poprzednio.
+
+Pozdrawiamy,
+
+Zespół Wikii',
+	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-logout-confirm' => 'Anulowanie spowoduje wylogowanie Cię z Wikii i Facebooka. Czy chcesz kontynuować?',
+	'prefs-fbconnect-prefstext' => 'Połącz z Facebookiem',
+	'prefs-fbconnect-status-prefstext' => 'Status',
+	'fbconnect-cancel' => 'Action cancelled',
+	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
+	'fbconnect-preferences-connected' => 'Gratulacje! Twoje konta Wikia i Facebooka zostały połączone.',
+	'fbconnect-preferences-connected-error' => 'Przykro nam, nie mogliśmy wykonać połączenia. Upewnij się, że zalogowałeś się do konta Wikia i posiadasz dostęp, aby połączyć konto Wikia z Facebookiem.',
+	'fbconnect-connect-msg' => 'Gratulacje! Twoje konta na Wikii i Facebooku są połączone.',
 );
 
 $messages['pt'] = array(
@@ -605,6 +719,63 @@ The Wikia Community Team",
 	'fbconnect-preferences-connected' => 'Поздравляем! Вы подключили учётную запись Викия к Facebook.',
 	'fbconnect-preferences-connected-error' => 'Мы сожалеем, но подключение завершить не удалось. Убедитесь, что вы вошли в свою учётную запись Викия и дали разрешение соединить её с Facebook.',
 	'fbconnect-connect-msg' => 'Поздравляем! Вы подключили учётную запись Викия к Facebook.',
+);
+
+$messages['vi'] = array(
+	'fbconnect-connect-existing' => 'Kết nối tài khoản với Facebook',
+	'fbconnect-connect-login-legend' => 'Đăng nhập vào tài khoản hiện có của bạn',
+	'fbconnect-connect-username-label' => 'Tên thành viên:',
+	'fbconnect-connect-password-label' => 'Mật khẩu:',
+	'fbconnect-wrong-pass-msg' => 'Mật khẩu bạn đã nhập không chính xác',
+	'fbconnect-graphapi-not-configured' => 'Ứng dụng ID và ứng dụng bí mật trên Facebook bị thiếu từ cấu hình.',
+	'prefs-fbconnect-disconnect-prefstext' => 'Ngắt kết nối khỏi Facebook',
+	'fbconnect-error-already-connected' => 'Tài khoản Wikia này đã được kết nối với Facebook. Vui lòng ngắt kết nối tài khoản Facebook ban đầu trước khi kết nối với tài khoản khác.',
+	'fbconnect-error-fb-account-in-use' => 'Tài khoản Facebook này đã được kết nối với tài khoản người dùng Wikia khác. Xin vui lòng kết nối với một tài khoản khác hoặc đăng nhập với Facebook và ngắt kết nối với tài khoản Wikia ban đầu trước khi kết nối tài khoản $1.',
+	'fbconnect-error-fb-unavailable-title' => 'Lỗi kết nối với Facebook',
+	'fbconnect-error-fb-unavailable-text' => 'Facebook có vẻ không có sẵn tại thời điểm này. Xin vui lòng thử lại sau.',
+	'fbconnect-desc' => 'Cho phép người dùng [[Special:FacebookConnect|Kết nối]] với tài khoản [http://www.facebook.com Facebook] của họ. Cung cấp xác thực dựa trên nhóm Facebook và việc sử dụng FBML trong văn bản wiki.',
+	'fbconnect-connect' => 'Log in with Facebook Connect',
+	'fbconnect-connect-simple' => 'Connect',
+	'fbconnect-convert' => 'Kết nối tài khoản này với Facebook',
+	'fbconnect-or' => 'Hoặc',
+	'fbconnect-error' => 'Verification error',
+	'fbconnect-errortext' => "Yikes! It looks like that didn't work out. Please try again.",
+	'fbconnect-disconnect-account-link' => 'Tài khoản Wikia của bạn hiện đang được kết nối với Facebook. Bạn có thể [[#|ngắt kết nối]] tài khoản Wikia của bạn khỏi Facebook. Bạn sẽ có thể tiếp tục sử dụng tài khoản Wikia như thường lệ, với lịch sử (sửa đổi, điểm, thành tựu) còn nguyên vẹn.',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
+	'fbconnect-disconnect-info-existing' => 'Ngắt kết nối hoàn tất. Bạn vẫn có thể đăng nhập bằng tên người dùng và mật khẩu của bạn như bình thường.',
+	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertitle-exist' => 'Your Wikia account is now disconnected from Facebook!',
+	'fbconnect-passwordremindertext' => "Hi,
+It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
+
+You can use the same username as before, and we've generated a new password for you to use. Here are your details:
+
+Username: $2
+Password: $3
+
+The replacement password has been sent only to you at this email address.
+
+Thanks,
+
+The Wikia Community Team",
+	'fbconnect-passwordremindertext-exist' => 'Xin chào,
+Có vẻ như bạn vừa ngắt kết nối tài khoản Wikia của mình khỏi Facebook. Chúng tôi sẽ giữ lịch sử, số sửa đổi và điểm thành tựu của bạn, vậy nên đừng lo!
+
+Bạn có thể sử dụng tên thành viên và mật khẩu như trước.
+
+Xin cảm ơn,
+
+Wikia Community Team',
+	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-logout-confirm' => 'Lựa chọn hủy bỏ sẽ đăng xuất bạn khỏi Wikia và Facebook. Bạn có muốn tiếp tục?',
+	'prefs-fbconnect-prefstext' => 'Kết nối Facebook',
+	'prefs-fbconnect-status-prefstext' => 'Tình trạng',
+	'fbconnect-cancel' => 'Action cancelled',
+	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
+	'fbconnect-preferences-connected' => 'Chúc mừng! Tài khoản Wikia và Facebook của bạn hiện đã được kết nối.',
+	'fbconnect-preferences-connected-error' => 'Chúng tôi rất tiếc, chúng tôi không thể hoàn tất kết nối của bạn. Hãy chắc chắn rằng bạn đang đăng nhập vào tài khoản Wikia và cho phép Wikia kết nối với Facebook.',
+	'fbconnect-connect-msg' => 'Chúc mừng! Tài khoản Wikia và Facebook của bạn hiện đã được kết nối.',
 );
 
 $messages['zh-hans'] = array(
