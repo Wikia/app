@@ -625,7 +625,8 @@ include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
-include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
+//TODO Enable this (and remove $wgEnablePageShareExt from config after release of the PageShare
+//include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 
 /**
  * Includes that are needed for Mercury to work
