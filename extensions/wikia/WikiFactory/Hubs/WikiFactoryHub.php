@@ -57,8 +57,6 @@ class WikiFactoryHub extends WikiaModel {
 	const CATEGORY_ID_MOVIES = 27;
 	const CATEFORY_ID_ANIME = 28;
 
-	const FALLBACK_ID_ENTERTAINMENT = 100;
-
 	/**
 	 * getInstance
 	 *
