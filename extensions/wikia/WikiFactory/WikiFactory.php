@@ -3146,7 +3146,7 @@ class WikiFactory {
 		$selectedVal = serialize( $val );
 		$aTables = array( 'city_variables', 'city_list' );
 		$aWhere = array(
-			'city_id' => cv_city_id,
+			'city_id = cv_city_id',
 			'cv_variable_id' => $varId,
 		);
 
