@@ -2325,3 +2325,19 @@ $config['upload_photos_dialog_scss'] = [
 		'//extensions/wikia/WikiaNewFiles/styles/UploadPhotoDialog.scss'
 	]
 ];
+
+$config['captcha_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Captcha/scripts/Captcha.js',
+	]
+];
+
+$config['fancycaptcha_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Captcha/styles/FancyCaptcha.scss',
+	]
+];
