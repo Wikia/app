@@ -12,8 +12,7 @@
 		init: function () {
 			var validator,
 				initThis = this,
-				editHubMain = $('.EditHubMain'),
-				bannerNotification = new window.BannerNotification().setType('error');
+				editHubMain = $('.EditHubMain');
 
 			$('#EditHubPublish').click($.proxy(this.publishHub, this));
 
@@ -36,9 +35,9 @@
 								var selectedModule = parseInt(window.wgEditHubModuleIdSelected),
 									box;
 
-								bannerNotification.hide();
 								if (response.error) {
-									bannerNotification.setContent(response.error).show();
+									new window.BannerNotification(response.error, 'error')
+										.show();
 								} else {
 									if (selectedModule === parseInt(window.wgEditHubModuleIdFeaturedVideo)) {
 										box = $this.parents('.module-box:first');

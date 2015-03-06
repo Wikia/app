@@ -10,8 +10,7 @@
 			$disconnectWrapper,
 			$disconnectLink,
 			$disconnectButton,
-			$connectLink,
-			bannerNotification;
+			$connectLink;
 
 		/**
 		 * Create single instance. Call after DOM is ready.
@@ -24,10 +23,8 @@
 			$disconnectLink = $('#fbDisconnectLink').find('a');
 			$disconnectButton = $('.fb-disconnect');
 			$connectLink = $('.sso-login-facebook');
-			//reusable banner notification
-			bannerNotification = new window.BannerNotification();
 
-			$.loadFacebookAPI()
+			$.loadFacebookSDK()
 				.done(function () {
 					bindEvents();
 				})
@@ -56,7 +53,7 @@
 				callback: function (data) {
 					if (data.status === 'ok') {
 
-						bannerNotification
+						new window.BannerNotification()
 							.setContent($.msg('fbconnect-preferences-connected'))
 							.setType('confirm')
 							.show();
@@ -108,7 +105,7 @@
 				type: 'POST',
 				callback: function (data) {
 					if (data.status === 'ok') {
-						bannerNotification
+						new window.BannerNotification()
 							.setType('confirm')
 							.setContent($.msg(disconnectMsg))
 							.show();
@@ -146,7 +143,8 @@
 				msg = $.msg('oasis-generic-error');
 			}
 
-			bannerNotification.setContent(msg).setType('error').show();
+			new window.BannerNotification(msg, 'error')
+				.show();
 		}
 
 		function facebookError() {
