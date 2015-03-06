@@ -43,7 +43,7 @@ _comscore.push({ c1: "2", c2: "'.self::$PARTNER_ID.'",
 		if ( !$verticalName ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Vertical not set for comscore', [
 				'cityId' => $wgCityId,
-				'esception' => new Exception()
+				'exception' => new Exception()
 			] );
 		}
 		return 'wikiacsid_' . $verticalName;
