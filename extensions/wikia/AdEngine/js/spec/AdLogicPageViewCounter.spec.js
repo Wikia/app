@@ -30,6 +30,7 @@ describe('AdLogicPageViewCounter', function () {
 
 			spyOn(cacheMock, 'set');
 			expect(pvCounter.increment()).toBe(expectedPv);
+			expect(pvCounter.get()).toBe(expectedPv);
 
 			expect(cacheMock.set).toHaveBeenCalled();
 			expect(cacheMock.set.calls.first().args[1]).toEqual({pvs: expectedPv, since: expectedSince});

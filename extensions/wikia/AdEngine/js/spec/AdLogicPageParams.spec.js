@@ -32,7 +32,8 @@ describe('AdLogicPageParams', function () {
 
 	function mockPageViewCounter(pvCount) {
 		return {
-			increment: function () { return pvCount; }
+			get: function () { return pvCount || 0; },
+			increment: function () { return pvCount || 1; }
 		};
 	}
 
@@ -373,7 +374,7 @@ describe('AdLogicPageParams', function () {
 	});
 
 	it('getPageLevelParams pv param', function () {
-		var params = getParams({}, {pvCount: 13});
+		var params = getParams({skin: 'oasis'}, {pvCount: 13});
 
 		expect(params.pv).toBe('13');
 	});
