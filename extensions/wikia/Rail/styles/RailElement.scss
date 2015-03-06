@@ -6,6 +6,17 @@ $color-rail-background: mix($color-page, black, 90%);
 }
 
 .WikiaRail .recent-wiki-activity {
+
+    a {
+        color: $color-links-default;
+    }
+
+    a:hover {
+        text-decoration: underline;
+        color: $color-links-default;
+        text-shadow: initial;
+    }
+
     background-color: $color-rail-background;
 	padding: 20px;
 	font-size: 12px;
@@ -51,15 +62,28 @@ $color-rail-background: mix($color-page, black, 90%);
     }
 
     .video-thumbnail img {
-        margin-bottom: 10px;
         margin-top: 16px;
     }
 
-    .thumbnails .title {
-        font-size: 12px;
+    .thumbnails {
 
-        a {
-            margin: 0;
+        a:first-of-type {
+            color: $color-links-default;
+            margin-bottom: 10px;
+        }
+
+        a:first-of-type:hover {
+            text-decoration: underline;
+            color: $color-links-default;
+            text-shadow: initial;
+        }
+
+        .title {
+            font-size: 12px;
+
+            a {
+              margin: 0;
+            }
         }
     }
 }
