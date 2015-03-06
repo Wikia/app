@@ -854,7 +854,7 @@ class CityVisualization extends WikiaModel {
 		$db = wfGetDB(DB_SLAVE, array(), $this->wg->ExternalSharedDB);
 		$table = $this->getTablesForStaffTool($opt);
 		$fields = array('count( ' . self::CITY_VISUALIZATION_TABLE_NAME . '.city_id ) as count');
-		$conds = $this->getConditionsForStaffTool($opt);
+		$conds = $this->getConditionsForStaffTool($opt, $db);
 		$options = $this->getOptionsForStaffTool($opt);
 		$joinConds = $this->getJoinsForStaffTool($opt);
 
@@ -875,7 +875,7 @@ class CityVisualization extends WikiaModel {
 			'city_list.city_title',
 			self::CITY_VISUALIZATION_TABLE_NAME . '.city_flags',
 		);
-		$conds = $this->getConditionsForStaffTool($opt);
+		$conds = $this->getConditionsForStaffTool($opt, $db);
 		$options = $this->getOptionsForStaffTool($opt);
 		$joinConds = $this->getJoinsForStaffTool($opt);
 
@@ -906,7 +906,7 @@ class CityVisualization extends WikiaModel {
 		return $joinConds;
 	}
 
-	protected function getConditionsForStaffTool($options) {
+	protected function getConditionsForStaffTool($options, DatabaseBase $db) {
 		$sqlOptions = array();
 
 		if( isset($options->lang) ) {
@@ -914,7 +914,7 @@ class CityVisualization extends WikiaModel {
 		}
 
 		if( !empty($options->wikiHeadline) ) {
-			$sqlOptions[] = 'city_list.city_title like "%' . mysql_real_escape_string($options->wikiHeadline) . '%"';
+			$sqlOptions[] = 'city_list.city_title like "%' . $db->strencode($options->wikiHeadline) . '%"';
 		}
 
 		if ( !empty($options->verticalId) ) {
