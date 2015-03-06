@@ -24,14 +24,21 @@ class PowerUser {
 	const TYPE_LIFETIME = 'poweruser_lifetime';
 
 	/**
+	 * Name of a group rights given to PowerUsers
+	 */
+	const GROUP_NAME = 'poweruser';
+
+	/**
 	 * Requirement to meet to become a PowerUser
 	 */
 	const MIN_LIFETIME_EDITS = 2000;
 	const MIN_FREQUENT_EDITS = 140;
 
 	const LOG_MESSAGE = 'PowerUsersLog';
-	const ACTION_ADD = 'add';
-	const ACTION_REMOVE = 'remove';
+	const ACTION_ADD_SET_OPTION = 'Add option';
+	const ACTION_ADD_GROUP = 'Add group';
+	const ACTION_REMOVE_SET_OPTION = 'Remove option';
+	const ACTION_REMOVE_GROUP = 'Remove group';
 
 	/**
 	 * A table of all poweruser properties' names
@@ -62,6 +69,16 @@ class PowerUser {
 		'sysop',
 	];
 
+	/**
+	 * An array with names of properties that
+	 * give users the PowerUser group right
+	 * @var array
+	 */
+	public static $aPowerUsersRightsMapping = [
+		self::TYPE_FREQUENT,
+		self::TYPE_LIFETIME
+	];
+
 	private $oUser;
 
 	function __construct( \User $oUser ) {
@@ -69,39 +86,100 @@ class PowerUser {
 	}
 
 	/**
-	 * Adds a given PowerUser property to a user
+	 * Perform all actions to make a user a PowerUser
 	 *
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
 	public function addPowerUserProperty( $sProperty ) {
+		return ( $this->addPowerUserSetOption( $sProperty ) &&
+			$this->addPowerUserAddGroup( $sProperty ) );
+	}
+
+	/**
+	 * Sets a specified PowerUser option to 1 in user_properties
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool
+	 */
+	private function addPowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
 			$this->oUser->setOption( $sProperty, true );
 			$this->oUser->saveSettings();
-			$this->logSuccess( $sProperty, self::ACTION_ADD );
+			$this->logSuccess( $sProperty, self::ACTION_ADD_SET_OPTION );
 			return true;
 		} else {
-			$this->logError( $sProperty, self::ACTION_ADD );
+			$this->logError( $sProperty, self::ACTION_ADD_SET_OPTION );
 			return false;
 		}
 	}
 
 	/**
-	 * Removes a given PowerUser property from a user
+	 * Adds group rights to a user if the property's name
+	 * matches one in the aPowerUsersRightsMapping array
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool
+	 */
+	private function addPowerUserAddGroup( $sProperty ) {
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
+			$this->oUser->addGroup( self::GROUP_NAME );
+			$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
+			return true;
+		} else {
+			$this->logError( $sProperty, self::ACTION_ADD_GROUP );
+			return false;
+		}
+	}
+
+	/**
+	 * Performs all actions to downgrade a PowerUser to a user
 	 *
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
 	public function removePowerUserProperty( $sProperty ) {
+		return ( $this->removePowerUserSetOption( $sProperty ) &&
+			$this->removePowerUserRemoveGroup( $sProperty ) );
+	}
+
+	/**
+	 * Sets a specified PowerUser option to 0 in user_properties
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool
+	 */
+	private function removePowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) &&
 			$this->oUser->getBoolOption( $sProperty ) === true
 		) {
 			$this->oUser->setOption( $sProperty, null );
 			$this->oUser->saveSettings();
-			$this->logSuccess( $sProperty, self::ACTION_REMOVE );
+			$this->logSuccess( $sProperty, self::ACTION_REMOVE_SET_OPTION );
 			return true;
 		} else {
-			$this->logError( $sProperty, self::ACTION_REMOVE );
+			$this->logError( $sProperty, self::ACTION_REMOVE_SET_OPTION );
+			return false;
+		}
+	}
+
+	/**
+	 * Removes group rights from a user if the property's name
+	 * matches one in the aPowerUsersRightsMapping array and
+	 * a user actually has it
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool
+	 */
+	private function removePowerUserRemoveGroup( $sProperty ) {
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) &&
+			in_array( self::GROUP_NAME, $this->oUser->getGroups() ) )
+		{
+			$this->oUser->removeGroup( self::GROUP_NAME );
+			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
+			return true;
+		} else {
+			$this->logError( $sProperty, self::ACTION_REMOVE_GROUP );
 			return false;
 		}
 	}
@@ -121,7 +199,6 @@ class PowerUser {
 	 *
 	 * @param string $sType One of the types in consts
 	 * @param string $sAction One of the actions in consts
-	 * @param int $iUserId A user's ID
 	 */
 	private function logSuccess( $sType, $sAction ) {
 		$this->info( self::LOG_MESSAGE, [
@@ -135,7 +212,6 @@ class PowerUser {
 	 *
 	 * @param string $sType One of the types in consts
 	 * @param string $sAction One of the actions in consts
-	 * @param int $iUserId A user's ID
 	 */
 	private function logError( $sType, $sAction ) {
 		$this->error( self::LOG_MESSAGE, [
