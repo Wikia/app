@@ -49,7 +49,7 @@ define('wikia.preview', [
 			callback: function () {
 				var $editPageDialog = $('#EditPageDialog'),
 					$contentNode = $editPageDialog.find('.ArticlePreviewInner'),
-					$previewMsgNode = $editPageDialog.find('.preview-modal-msg'),
+					$previewMsgNode = $editPageDialog.find('.preview-modal-msg-wrapper'),
 					modalHeight = options.height,
 					modalHeightModifier = 0;
 
