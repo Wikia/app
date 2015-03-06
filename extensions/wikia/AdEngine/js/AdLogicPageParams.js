@@ -16,7 +16,11 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		hostname = loc.hostname,
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
-		pvs = pvCounter && pvCounter.increment();
+		skin = adContext.getContext().targeting.skin;
+
+	if (skin && skin !== 'mercury') {
+		pvCounter.increment();
+	}
 
 	function getDartHubName() {
 		var context = adContext.getContext();
@@ -197,7 +201,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1,
 			zone2,
 			params,
-			targeting = adContext.getContext().targeting;
+			targeting = adContext.getContext().targeting,
+			pvs = pvCounter.get().toString();
 
 		options = options || {};
 
@@ -228,8 +233,11 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			ref: getRefParam()
 		};
 
-		if (pvs) {
-			params.pv = pvs.toString();
+		if (skin && skin !== 'mercury') {
+			params.pv = pvs;
+		} else {
+			// this is a temporary solution to test if Mercury handles pvs well without affecting actual ads
+			params.mpv = pvs;
 		}
 
 		if (options.includeRawDbName) {
