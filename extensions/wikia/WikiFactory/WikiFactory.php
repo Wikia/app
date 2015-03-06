@@ -3145,10 +3145,9 @@ class WikiFactory {
 
 		$selectedVal = serialize( $val );
 		$aTables = array( 'city_variables', 'city_list' );
-		$varId = mysql_real_escape_string( $varId );
 		$aWhere = array(
-			'city_id = cv_city_id',
-			"cv_variable_id = '$varId'"
+			'city_id' => cv_city_id,
+			'cv_variable_id' => $varId,
 		);
 
 		if ( 'full' == $type ) {
