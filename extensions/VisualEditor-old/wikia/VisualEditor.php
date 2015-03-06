@@ -35,7 +35,7 @@ $wgAPIModules['templatesearch'] = 'ApiTemplateSearch';
 
 $wgVisualEditorWikiaResourceTemplate = array(
 	'localBasePath' => $dir . 'modules',
-	'remoteExtPath' => 'VisualEditor/wikia/modules',
+	'remoteExtPath' => 'VisualEditor-old/wikia/modules',
 );
 
 $wgResourceModules += array(

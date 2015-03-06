@@ -19,7 +19,7 @@ ve.init.sa.Platform = function VeInitSaPlatform() {
 
 	// Properties
 	this.externalLinkUrlProtocolsRegExp = /^https?\:\/\//;
-	this.modulesUrl = '/extensions/VisualEditor/modules';
+	this.modulesUrl = '/extensions/VisualEditor-old/modules';
 	this.parsedMessages = {};
 	this.userLanguages = ['en'];
 };

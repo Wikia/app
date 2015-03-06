@@ -655,7 +655,7 @@ class VisualEditorHooks {
 				'ext.visualEditor.viewPageTarget',
 			),
 			'localBasePath' => __DIR__,
-			'remoteExtPath' => 'VisualEditor',
+			'remoteExtPath' => 'VisualEditor-old',
 		);
 
 		return true;

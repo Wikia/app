@@ -105,9 +105,9 @@
 
 		if ( isVenus() ) {
 			targetModule = 'ext.visualEditor.venusViewPageTarget';
-			resources.push( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor-Venus.scss' ) );
+			resources.push( $.getSassCommonURL( '/extensions/VisualEditor-old/wikia/VisualEditor-Venus.scss' ) );
 		} else {
-			resources.push( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor-Oasis.scss' ) );
+			resources.push( $.getSassCommonURL( '/extensions/VisualEditor-old/wikia/VisualEditor-Oasis.scss' ) );
 		}
 
 		/* Optimizely */
