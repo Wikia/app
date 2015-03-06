@@ -5,6 +5,8 @@ class UserProfilePageController extends WikiaController {
 	const AVATAR_MAX_SIZE = 512000;
 	const MAX_TOP_WIKIS = 4;
 
+	const FBPAGE_BASE_URL = 'https://www.facebook.com/';
+
 	/**
 	 * @var $profilePage UserProfilePage
 	 */
@@ -424,8 +426,12 @@ class UserProfilePageController extends WikiaController {
 			 */
 			$userIdentityBox = new UserIdentityBox( $user );
 
-			if ( !empty( $userData->website ) && 0 !== strpos( $userData->website, 'http' ) ) {
+			if ( !empty( $userData->website ) && strpos( $userData->website, 'http' ) !== 0 ) {
 				$userData->website = 'http://' . $userData->website;
+			}
+
+			if ( !empty( $userData->fbPage ) && strpos( $userData->fbPage, self::FBPAGE_BASE_URL ) !== 0 ) {
+				$userData->fbPage = self::FBPAGE_BASE_URL . $userData->fbPage;
 			}
 
 			if ( !$userIdentityBox->saveUserData( $userData ) ) {
@@ -854,6 +860,10 @@ class UserProfilePageController extends WikiaController {
 		$userIdentityBox = new UserIdentityBox( $user );
 
 		$userData = $userIdentityBox->getFullData();
+
+		if ( !empty( $userData['fbPage'] ) ) {
+			$userData['fbPage'] = str_replace( self::FBPAGE_BASE_URL, '', $userData['fbPage'] );
+		}
 
 		$this->setVal( 'user', $userData );
 
