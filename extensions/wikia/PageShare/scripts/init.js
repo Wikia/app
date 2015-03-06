@@ -18,8 +18,8 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 		var service = $(event.target).closest('a'),
 			url = service.prop('href'),
 			title = service.prop('title'),
-			h = (win.innerHeight / 2 | 0),
-			w = (win.innerWidth / 2 | 0);
+			h = (win.innerHeight / 2 | 0), // round down
+			w = (win.innerWidth / 2 | 0);  // round down
 
 		win.open(url, title, 'width=' + w + ',height=' + h);
 	}
