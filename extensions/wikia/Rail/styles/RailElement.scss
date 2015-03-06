@@ -5,9 +5,9 @@
 	font-weight: bold;
 
 	.activity-heading {
-		font-size: 24px;
-		margin-bottom: 20px;
+        font-size: 24px;
         font-weight: bold;
+        margin-bottom: 20px;
 	}
 	
 	li em a {
@@ -17,12 +17,15 @@
 	}
 
 	.more {
-		text-transform: uppercase;	
+        font-size: 12px;
+        margin-top: 30px;
+        text-transform: uppercase;
 	}
 
     .edited-by {
         font-size: 12px;
         font-weight: normal;
+        margin-top: 10px;
 
         a {
             font-size: 12px;
