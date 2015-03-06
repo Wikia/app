@@ -2382,7 +2382,7 @@ $messages['pl'] = array(
 	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => 'Volunteer Developer',
 	'user-identity-box-group-threadmoderator' => 'Moderator',
-	'user-identity-box-about-fb-page' => 'Jaka jest link do Twojego profilu na Facebooku?',
+	'user-identity-box-about-fb-page' => 'Jaki jest link do Twojego profilu na Facebooku?',
 	'user-identity-avatars-maintenance' => 'Przesyłanie i usuwanie avatarów tymczasowo wyłączone na czas konserwacji!',
 	'userprofilepage-edit-modal-error' => 'Wystąpił nieznany błąd',
 );
