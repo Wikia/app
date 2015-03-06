@@ -44,27 +44,6 @@ class HubService extends Service {
 	}
 
 	/**
-	 * Return varticalId.
-	 * For Lifestyle, Gaming and Corporate return passed id.
-	 * If vertical is not set - return Lifestyle.
-	 * For rest return Entertainment id.
-	 *
-	 * @param $verticalId
-	 * @return int
-	 */
-	public static function getCanonicalVerticalID($verticalId) {
-		switch ($verticalId) {
-			case WikiFactoryHub::HUB_ID_VIDEO_GAMES:
-			case WikiFactoryHub::HUB_ID_LIFESTYLE:
-				return $verticalId;
-			case 0:
-				return WikiFactoryHub::HUB_ID_LIFESTYLE;
-			default:
-				return WikiFactoryHub::FALLBACK_ID_ENTERTAINMENT;
-		}
-	}
-
-	/**
 	 * Get current wikia's Cannonical Category name
 	 *
 	 * @return string current Cannonical Category's Name
@@ -88,20 +67,32 @@ class HubService extends Service {
 	 * @param $cityId
 	 * @return Boolean|String
 	 */
-	public static function getVerticalNameForComscore($cityId) {
-		$verticalId = WikiFactoryHub::getInstance()->getVerticalId($cityId);
-		$canonicalVerticalId = self::getCanonicalVerticalID($verticalId);
+	public static function getVerticalNameForComscore( $cityId ) {
+		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $cityId );
 
-		switch ($canonicalVerticalId) {
+		switch ($verticalId) {
 			case WikiFactoryHub::HUB_ID_VIDEO_GAMES:
 				return 'gaming';
-			case WikiFactoryHub::FALLBACK_ID_ENTERTAINMENT:
-				return 'entertainment';
 			case WikiFactoryHub::HUB_ID_LIFESTYLE:
 				return 'lifestyle';
+			case WikiFactoryHub::HUB_ID_OTHER:
+				if ( self::isWikiCorporate( $cityId ) ) {
+					return false;
+				} else {
+					return 'lifestyle';
+				}
 			default:
-				return false;
+				return 'entertainment';
 		}
+	}
+
+	private static function isWikiCorporate( $cityId ) {
+		$varId = WikiFactory::getVarByName( 'wgEnableWikiaHomePageExt', $cityId );
+		return (
+			array_key_exists(
+				intval( $cityId ), WikiFactory::getListOfWikisWithVar( $varId->cv_id, 'bool', '=', true )
+			)
+		);
 	}
 
 	/**
