@@ -3,7 +3,7 @@
 class PageShareController extends WikiaController {
 
 	/**
-	 * @var ArticleNavigationHelper
+	 * @var PageShareHelper
 	 */
 	private $helper;
 
@@ -24,17 +24,17 @@ class PageShareController extends WikiaController {
 	}
 
 	/**
-	 * Prepare and normalize data from $wgArticleNavigationShareServices
+	 * Prepare and normalize data from $wgPageShareServices
 	 *
 	 * @return Array
 	 */
 	private function prepareShareServicesData() {
-		global $wgPageShareServices;
+		global $wgPageShareServices, $wgLang;
 
 		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
 		$location = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 		$services = [];
-		$lang = $this->helper->getUserLanguageCode( $this->request );
+		$lang = $this->request->getVal( 'lang', $wgLang->getCode() );
 
 		foreach ( $wgPageShareServices as $service ) {
 			if ( $this->helper->isValidShareService( $service, $lang ) ) {
