@@ -1676,10 +1676,10 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
-/* @name wgTreatAsCorporate
- * Treat a wiki as if it was a corporate wiki
+/* @name wgIncludeWikiInCorporateFooterDropdown
+ * Include link to this wiki in the Corporate Footer dropdown (the one with flags).
  */
-$wgTreatAsCorporate = false;
+$wgIncludeWikiInCorporateFooterDropdown = false;
 
 /**
  * Force ImageServing to return an empty list
