@@ -150,7 +150,7 @@ class ThumbnailHelper extends WikiaModel {
 		if ( !empty( $options['custom-url-link'] ) ) {
 			$href = $options['custom-url-link'];
 			if ( !empty( $options['title'] ) ) {
-				$title = Sanitizer::encodeAttribute( $options['title'] );
+				$title = $options['title'];
 			}
 			if ( !empty( $options['custom-target-link'] ) ) {
 				$target = $options['custom-target-link'];
@@ -160,14 +160,12 @@ class ThumbnailHelper extends WikiaModel {
 			/** @var Title $title */
 			$titleObj = $options['custom-title-link'];
 			$href = $titleObj->getLinkURL();
-			$title = Sanitizer::encodeAttribute(
-				empty( $options['title'] ) ? $titleObj->getFullText() : $options['title']
-			);
+			$title = empty( $options['title'] ) ? $titleObj->getFullText() : $options['title'];
 
 		} elseif ( !empty( $options['desc-link'] ) ) {
 			$href = self::getContextualFileUrl( $thumb );
 			if ( !empty( $options['title'] ) ) {
-				$title = Sanitizer::encodeAttribute( $options['title'] );
+				$title = $options['title'];
 			}
 
 		} elseif ( !empty( $options['file-link'] ) ) {
