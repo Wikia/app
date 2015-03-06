@@ -86,6 +86,21 @@ class PowerUser {
 	}
 
 	/**
+	 * Gets current PowerUser types for a user
+	 *
+	 * @return array
+	 */
+	public function getTypesForUser() {
+		$aUserTypes = [];
+		foreach ( self::$aPowerUserProperties as $sProperty ) {
+			if ( $this->oUser->isSpecificPowerUser( $sProperty ) ) {
+				$aUserTypes[] = $sProperty;
+			}
+		}
+		return $aUserTypes;
+	}
+
+	/**
 	 * Perform all actions to make a user a PowerUser
 	 *
 	 * @param string $sProperty One of the types in consts
@@ -102,7 +117,7 @@ class PowerUser {
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
-	private function addPowerUserSetOption( $sProperty ) {
+	public function addPowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
 			$this->oUser->setOption( $sProperty, true );
 			$this->oUser->saveSettings();
@@ -121,8 +136,10 @@ class PowerUser {
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
-	private function addPowerUserAddGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
+	public function addPowerUserAddGroup( $sProperty ) {
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) &&
+			!in_array( self::GROUP_NAME, $this->oUser->getGroups() ) )
+		{
 			$this->oUser->addGroup( self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
 			return true;
@@ -149,7 +166,7 @@ class PowerUser {
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
-	private function removePowerUserSetOption( $sProperty ) {
+	public function removePowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) &&
 			$this->oUser->getBoolOption( $sProperty ) === true
 		) {
@@ -171,9 +188,9 @@ class PowerUser {
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
-	private function removePowerUserRemoveGroup( $sProperty ) {
+	public function removePowerUserRemoveGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) &&
-			in_array( self::GROUP_NAME, $this->oUser->getGroups() ) )
+			$this->isGroupForRemoval( $sProperty ) )
 		{
 			$this->oUser->removeGroup( self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
@@ -182,6 +199,25 @@ class PowerUser {
 			$this->logError( $sProperty, self::ACTION_REMOVE_GROUP );
 			return false;
 		}
+	}
+
+	/**
+	 * Checks if removal of a property should remove a group
+	 * and if a user still has a PowerUser type that qualifies him
+	 * to have the 'poweruser' group
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool
+	 */
+	private function isGroupForRemoval( $sProperty ) {
+		foreach ( self::$aPowerUsersRightsMapping as $sMappedProperty ) {
+			if ( $sMappedProperty !== $sProperty &&
+				$this->oUser->isSpecificPowerUser( $sMappedProperty ) ) {
+				return false;
+			}
+		}
+
+		return in_array( self::GROUP_NAME, $this->oUser->getGroups() );
 	}
 
 	/**
