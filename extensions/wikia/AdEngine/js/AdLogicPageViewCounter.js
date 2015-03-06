@@ -30,6 +30,16 @@ define('ext.wikia.adEngine.adLogicPageViewCounter', [
 		return true;
 	}
 
+	function get() {
+		var val = cache.get(cacheKey, now);
+
+		if (!isValidValue(val)) {
+			val = initialValue;
+		}
+
+		return val.pvs;
+	}
+
 	function increment() {
 		var val, age, ttlLeft;
 
@@ -49,6 +59,7 @@ define('ext.wikia.adEngine.adLogicPageViewCounter', [
 	}
 
 	return {
+		get: get,
 		increment: increment
 	};
 });
