@@ -1,22 +1,33 @@
 /* RailElement class*/
-.recent-wiki-activity {
+.WikiaRail .recent-wiki-activity {
 	padding: 20px;
 	font-size: 12px;
 	font-weight: bold;
 
 	.activity-heading {
 		font-size: 24px;
+		margin-bottom: 20px;
+        font-weight: bold;
 	}
 	
-	li em {
+	li em a {
 		font-size: 16px;
 		font-weight: bold;
 		margin-top: 20px;
 	}
 
-	.see-more {
+	.more {
 		text-transform: uppercase;	
 	}
+
+    .edited-by {
+        font-size: 12px;
+        font-weight: normal;
+
+        a {
+            font-size: 12px;
+        }
+    }
 }
 
 
