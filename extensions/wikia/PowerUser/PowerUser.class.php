@@ -107,8 +107,8 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function addPowerUserProperty( $sProperty ) {
-		return ( $this->addPowerUserSetOption( $sProperty ) &&
-			$this->addPowerUserAddGroup( $sProperty ) );
+		return ( $this->addPowerUserSetOption( $sProperty )
+			&& $this->addPowerUserAddGroup( $sProperty ) );
 	}
 
 	/**
@@ -137,8 +137,8 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function addPowerUserAddGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) &&
-			!in_array( self::GROUP_NAME, $this->oUser->getGroups() ) )
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& !in_array( self::GROUP_NAME, $this->oUser->getGroups() ) )
 		{
 			$this->oUser->addGroup( self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
@@ -156,8 +156,8 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function removePowerUserProperty( $sProperty ) {
-		return ( $this->removePowerUserSetOption( $sProperty ) &&
-			$this->removePowerUserRemoveGroup( $sProperty ) );
+		return ( $this->removePowerUserSetOption( $sProperty )
+			&& $this->removePowerUserRemoveGroup( $sProperty ) );
 	}
 
 	/**
@@ -167,8 +167,8 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function removePowerUserSetOption( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUserProperties ) &&
-			$this->oUser->getBoolOption( $sProperty ) === true
+		if ( in_array( $sProperty, self::$aPowerUserProperties )
+			&& $this->oUser->getBoolOption( $sProperty ) === true
 		) {
 			$this->oUser->setOption( $sProperty, null );
 			$this->oUser->saveSettings();
@@ -189,8 +189,8 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function removePowerUserRemoveGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) &&
-			$this->isGroupForRemoval( $sProperty ) )
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& $this->isGroupForRemoval( $sProperty ) )
 		{
 			$this->oUser->removeGroup( self::GROUP_NAME );
 			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
@@ -211,8 +211,8 @@ class PowerUser {
 	 */
 	private function isGroupForRemoval( $sProperty ) {
 		foreach ( self::$aPowerUsersRightsMapping as $sMappedProperty ) {
-			if ( $sMappedProperty !== $sProperty &&
-				$this->oUser->isSpecificPowerUser( $sMappedProperty ) ) {
+			if ( $sMappedProperty !== $sProperty
+				&& $this->oUser->isSpecificPowerUser( $sMappedProperty ) ) {
 				return false;
 			}
 		}
