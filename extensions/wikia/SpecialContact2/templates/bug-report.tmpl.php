@@ -45,7 +45,7 @@ echo wfMessage( 'specialcontact-intro-bug' )->parseAsBlock();
 
 <p>
 <label for="wpScreenshot1"><?= wfMessage( 'specialcontact-label-screenshot' )->escaped() ?></label>
-<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" />
+<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" multiple />
 </p>
 
 <p class="additionalScreenShot">
