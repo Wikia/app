@@ -62,7 +62,7 @@
             {
                 'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
                 'allowLinker': true,
-                'userId': window.wgUserName
+                'userId': window.wgGAUserIdHash
 
             }
         );
@@ -73,7 +73,7 @@
             {
                 'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
                 'allowLinker': true,
-                'userId': window.wgUserName
+                'userId': window.wgGAUserIdHash
             }
         );
     }
@@ -88,7 +88,7 @@
                     'name': 'special',
                     'sampleRate': 100,
                     'allowLinker': true,
-                    'userId': window.wgUserName
+                    'userId': window.wgGAUserIdHash
                 }
             );
         } else {
@@ -99,7 +99,7 @@
                     'name': 'special',
                     'sampleRate': 100,
                     'allowLinker': true,
-                    'userId': window.wgUserName
+                    'userId': window.wgGAUserIdHash
                 }
             );
         }
@@ -113,7 +113,7 @@
                 'name': 've',
                 'sampleRate': 100,
                 'allowLinker': true,
-                'userId': window.wgUserName
+                'userId': window.wgGAUserIdHash
             }
         );
     }
@@ -312,7 +312,7 @@
                 'name': 'ads',
                 'sampleRate': 100,
                 'allowLinker': true,
-                'userId': window.wgUserName
+                'userId': window.wgGAUserIdHash
             }
         );
     } else {
@@ -322,7 +322,7 @@
                 'name': 'ads',
                 'sampleRate': 100,
                 'allowLinker': true,
-                'userId': window.wgUserName
+                'userId': window.wgGAUserIdHash
             }
         );
     }
