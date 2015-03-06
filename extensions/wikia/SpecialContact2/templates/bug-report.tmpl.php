@@ -48,16 +48,6 @@ echo wfMessage( 'specialcontact-intro-bug' )->parseAsBlock();
 <input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" multiple />
 </p>
 
-<p class="additionalScreenShot">
-<label for="wpScreenshot2"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
-<input id="wpScreenshot2" name="wpScreenshot[]" type="file" accept="image/*" />
-</p>
-
-<p class="additionalScreenShot">
-<label for="wpScreenshot3"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
-<input id="wpScreenshot3" name="wpScreenshot[]" type="file" accept="image/*" />
-</p>
-         
 <?php
 if( !$isLoggedIn && (isset($captchaForm)) ) {
 	echo "<div class='captcha'>" .
