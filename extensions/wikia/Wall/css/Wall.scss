@@ -1,6 +1,5 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/box-shadow";
 
 @import "BreadCrumbs";
@@ -189,9 +188,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	textarea:-moz-placeholder { color: $color-wall-text-placeholder }
 	textarea::-webkit-input-placeholder { color: $color-wall-text-placeholder }
 	textarea {
-		@include box-sizing;
 		background: $color-wall-input;
 		border-radius: $wall-border-radius-inputs;
+		box-sizing: border-box;
 		color: $color-text;
 		border: none;
 		outline: none;

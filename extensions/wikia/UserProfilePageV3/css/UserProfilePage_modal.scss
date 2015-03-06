@@ -1,7 +1,6 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/responsive-variables";
 @import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/box-sizing-border-box";
 
 .UPPLightbox {
 
@@ -19,7 +18,7 @@
 
 		input[type="text"],
 		.favorite-wikis {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			width: 100%;
 		}
 	}

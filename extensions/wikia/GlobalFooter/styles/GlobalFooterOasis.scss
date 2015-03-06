@@ -1,5 +1,4 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/box-sizing';
 @import 'skins/oasis/css/core/responsive-variables';
 
 $branding-color: #000;
@@ -7,7 +6,12 @@ $global-footer-color-border: #c7d1d8;
 $global-footer-vertical-spacing: 30px;
 
 .global-footer {
-	@include box-sizing(border-box);
+	box-sizing: border-box;
+}
+
+
+.global-footer {
+>>>>>>> CONCF-191 remove box-sizing mixin as -moz-box-sizing is obsolete
 	background-color: #FFF;
 	border: 0;
 	color: $color-text-dark;
