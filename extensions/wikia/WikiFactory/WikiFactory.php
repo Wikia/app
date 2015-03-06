@@ -3086,7 +3086,7 @@ class WikiFactory {
 			'city_variables',
 			'city_list',
 		);
-		$varId = intval($varId);
+		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
 
 		$aOptions = array( 'ORDER BY' => 'city_title ASC' );
