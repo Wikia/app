@@ -1,5 +1,12 @@
-/* RailElement class*/
+@import "skins/shared/color";
+
+$color-rail-background: mix($color-page, black, 90%);
+@if $is-dark-wiki {
+    $color-rail-background: mix($color-page, white, 90%);
+}
+
 .WikiaRail .recent-wiki-activity {
+    background-color: $color-rail-background;
 	padding: 20px;
 	font-size: 12px;
 	font-weight: bold;
@@ -33,4 +40,27 @@
     }
 }
 
+.WikiaRail .must-watch-videos{
+    background-color: $color-rail-background;
+    padding: 20px;
+
+    h1 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 0px;
+    }
+
+    .video-thumbnail img {
+        margin-bottom: 10px;
+        margin-top: 16px;
+    }
+
+    .thumbnails .title {
+        font-size: 12px;
+
+        a {
+            margin: 0;
+        }
+    }
+}
 
