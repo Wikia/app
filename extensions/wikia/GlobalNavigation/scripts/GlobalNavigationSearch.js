@@ -42,7 +42,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 			$searchForm = $('#searchForm');
 
 		//Checks whether the searchInput is empty and prevents any action if true
-		$searchForm.submit(function (e) {
+		$searchForm.submit(function () {
 			if (!$searchInput.val()) {
 				return false;
 			}
