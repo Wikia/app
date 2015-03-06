@@ -307,8 +307,8 @@ $config['oasis_jquery'] = array(
 		// Article length & screen width tracking
 		'//skins/oasis/js/ArticleLengthAbTesting.js',
 
-		// Lazy rail
-		'#group_lazy_rail_js',
+		// rail
+		'#group_rail_js',
 	)
 );
 
@@ -1406,16 +1406,6 @@ $config['userlogin_js_wikiamobile'] = array(
 	)
 );
 
-$config['userlogin_js_wikiamobile_fbconnect'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => array(
-		'#external_http://connect.facebook.net/en_US/all.js',
-		'#group_userlogin_js_wikiamobile',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.wikiamobile.js',
-	)
-);
-
 $config['userlogin_facebook_js_wikiamobile'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -1982,11 +1972,11 @@ $config['imglzy_js'] = [
 	]
 ];
 
-$config['lazy_rail_js'] = [
+$config['rail_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//skins/oasis/js/LazyRail.js'
+		'//extensions/wikia/Rail/scripts/Rail.js',
 	]
 ];
 
@@ -2321,5 +2311,19 @@ $config['old_global_footer_scss'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+
+$config['captcha_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Captcha/scripts/Captcha.js',
+	]
+];
+
+$config['fancycaptcha_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Captcha/styles/FancyCaptcha.scss',
 	]
 ];

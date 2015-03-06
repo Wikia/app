@@ -1304,34 +1304,6 @@ if (!function_exists('http_build_url')) {
 }
 
 /**
- * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
- * maintanance scripts while something is wrong with performance
- *
- * @author Piotr Molski (moli) <moli at wikia-inc.com>
- * @param int $maxSleep
- * @return null
- */
-function wfDBLightMode( $maxSleep ) {
-	global $wgExternalSharedDB;
-
-	if ( !$maxSleep ) return false;
-
-	while ( WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ) ) ) {
-		Wikia::log( __METHOD__, "info", "All crons works in DBLightMode ( sleep $maxSleep ) ..." );
-		sleep($maxSleep);
-	}
-
-	return true;
-}
-
-function wfIsDBLightMode() {
-	global $wgExternalSharedDB;
-
-	$dbLightMode = WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ) );
-	return (bool) $dbLightMode;
-}
-
-/**
  * return status code if the last failure was due to the database being read-only.
  *
  * @author Piotr Molski (moli) <moli at wikia-inc.com>

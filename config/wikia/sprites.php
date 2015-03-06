@@ -3,7 +3,7 @@
   Configuration file for automatically generated sprites.
 
   To regenerate the chosen sprite issue this command on your devbox (replace SPRITE_NAME with one of the configured below):
-    SERVER_ID=177 php /usr/wikia/source/wiki/maintenance/wikia/generateSprites.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php --sprite SPRITE_NAME
+    SERVER_ID=177 php /usr/wikia/source/wiki/maintenance/wikia/generateSprites.php --sprite SPRITE_NAME
   However if you skip the sprite parameter the script will go through entire configuration file and regenerate them.
 
 */
@@ -128,7 +128,7 @@ $config['VideoPageTool'] = array(
 );
 
 $config['MonetizationModule'] = array(
-	'name'   => 'MonetizationModule',
+	'name'   => 'monetization-module',
 	'source' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module/",
 	'sprite' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module.png",
 	'scss'   => "$IP/extensions/wikia/MonetizationModule/styles/mixins/_sprite-monetization-module.scss"
