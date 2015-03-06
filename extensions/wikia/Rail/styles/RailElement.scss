@@ -88,3 +88,17 @@ $color-rail-background: mix($color-page, black, 90%);
     }
 }
 
+.WikiaRail .live-chat {
+    padding: 20px;
+
+    p {
+        color: mix($color-text, $color-page, 60%);
+        font-size: 12px;
+    }
+
+    .chat-headline .chat-live {
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
+
