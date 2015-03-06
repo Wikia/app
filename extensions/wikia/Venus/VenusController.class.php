@@ -243,11 +243,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getGlobalFooter() {
-		global $wgEnableGlobalFooterExt;
-
-		return !empty( $wgEnableGlobalFooterExt ) ?
-			$this->app->renderView('GlobalFooter', 'venusIndex') :
-			'';
+		return $this->app->renderView('GlobalFooter', 'venusIndex');
 	}
 
 	public function getRecentWikiActivity() {

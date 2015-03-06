@@ -180,7 +180,11 @@
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
 		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<?= $app->renderView( 'GlobalFooter', 'index' ) ?>
+		<? if ( empty( $wg->EnableNewGlobalFooter ) ):
+			echo $app->renderView( 'GlobalFooter', 'index' );
+		else:
+			echo $app->renderView( 'GlobalFooter', 'oasisIndex' );
+		endif; ?>
 	</div>
 </section><!--WikiaPage-->
 

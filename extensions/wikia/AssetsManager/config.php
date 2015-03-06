@@ -2315,3 +2315,11 @@ $config['oasis_global_footer_scss'] = [
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooterOasis.scss'
 	]
 ];
+
+$config['old_global_footer_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	]
+];
