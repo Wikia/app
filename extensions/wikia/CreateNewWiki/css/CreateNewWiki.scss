@@ -451,31 +451,6 @@ $color-borders: #CECECE;
 	}
 }
 
-/*
- * TODO: Fix CSSJanus
- */
-html[dir='rtl'] {
-	#DescWiki {
-		ol {
-			@if ($responsive-layout-enabled) {
-
-			} @else {
-				left: auto;
-				right: 515px;
-			}
-		}
-
-		.select-container {
-			float: right;
-		}
-
-		.categories-set span {
-			margin-left: auto;
-			margin-right: 1.75em;
-		}
-	}
-}
-
 .hidden {
 	display: none;
 }
