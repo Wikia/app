@@ -8,10 +8,6 @@ $global-footer-vertical-spacing: 30px;
 
 .global-footer {
 	@include box-sizing(border-box);
-
-	*, *::after {
-		@include box-sizing(inherit);
-	}
 }
 
 
