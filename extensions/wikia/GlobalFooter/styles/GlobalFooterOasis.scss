@@ -6,51 +6,46 @@ $global-footer-color-border: #c7d1d8;
 $global-footer-vertical-spacing: 30px;
 
 .global-footer {
-	box-sizing: border-box;
-}
-
-
-.global-footer {
->>>>>>> CONCF-191 remove box-sizing mixin as -moz-box-sizing is obsolete
 	background-color: #FFF;
 	border: 0;
+	box-sizing: border-box;
 	color: $color-text-dark;
 	padding-top: $global-footer-vertical-spacing;
 	position: relative;
 	text-align: center;
 
-	&:after {
+	&::after {
 		background-color: $color-wikiahome-community;
 		content: '';
 		display: block;
 		height: 10px;
 	}
 
-	&.vertical-books:after {
+	&.vertical-books::after {
 		background-color: $color-vertical-books;
 	}
 
-	&.vertical-comics:after {
+	&.vertical-comics::after {
 		background-color: $color-vertical-comics;
 	}
 
-	&.vertical-games:after {
+	&.vertical-games::after {
 		background-color: $color-vertical-games;
 	}
 
-	&.vertical-lifestyle:after {
+	&.vertical-lifestyle::after {
 		background-color: $color-vertical-lifestyle;
 	}
 
-	&.vertical-movies:after {
+	&.vertical-movies::after {
 		background-color: $color-vertical-movies;
 	}
 
-	&.vertical-music:after {
+	&.vertical-music::after {
 		background-color: $color-vertical-music;
 	}
 
-	&.vertical-tv:after {
+	&.vertical-tv::after {
 		background-color: $color-vertical-tv;
 	}
 

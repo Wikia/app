@@ -2311,6 +2311,8 @@ $config['old_global_footer_scss'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	]
+];
 
 $config['captcha_js'] = [
 	'type' => AssetsManager::TYPE_JS,
