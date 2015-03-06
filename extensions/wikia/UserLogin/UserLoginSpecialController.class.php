@@ -56,14 +56,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginSpecial.js' );
 
-		// Wikiamobile, will be filtered in AssetsManager by config :)
-		$this->response->addAsset(
-				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookClientExt ) ) ?
-					'userlogin_js_wikiamobile' :
-					'userlogin_js_wikiamobile_fbconnect'
-		);
+		// Assets including 'wikiamobile' in the name will be included by AssetsManager when showing the mobile skin
+		$this->response->addAsset( 'userlogin_js_wikiamobile' );
 
-		// Wikiamobile, will be filtered in AssetsManager by config :)
+		if ( $this->wg->EnableFacebookClientExt ) {
+			$this->response->addAsset( 'userlogin_facebook_js_wikiamobile' );
+		}
+
 		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
 		// hide things in the skin

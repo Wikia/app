@@ -12,7 +12,20 @@ class ExactTargetUpdateWikiTask extends ExactTargetTask {
 		$oHelper = $this->getWikiHelper();
 		$oApiDataExtension = $this->getApiDataExtension();
 		$aDataExtensions = $oHelper->prepareWikiDataExtensionForUpdate( $iCityId );
-		$oApiDataExtension->updateRequest( $aDataExtensions );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aDataExtensions ) );
+
+		$oUpdateWikiDataResult = $oApiDataExtension->updateRequest( $aDataExtensions );
+
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateWikiDataResult->OverallStatus );
+		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateWikiDataResult ) );
+
+		if ( $oUpdateWikiDataResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oUpdateWikiDataResult->Results->StatusMessage
+			);
+		}
+
+		return $oUpdateWikiDataResult->Results->StatusMessage;
 	}
 
 }

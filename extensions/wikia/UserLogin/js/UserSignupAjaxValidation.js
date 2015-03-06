@@ -14,21 +14,13 @@
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
 		this.inputsToValidate = options.inputsToValidate || [];
-		this.notEmptyFields = options.notEmptyFields || [];
 		this.submitButton = $(options.submitButton);
-
-		this.activateSubmit();
 	};
 
-	UserSignupAjaxValidation.prototype.activateSubmit = function () {
-		var isvalid = this.checkFieldsValid();
-		if (isvalid) {
-			this.submitButton.removeAttr('disabled');
-		} else {
-			this.submitButton.attr('disabled', 'disabled');
-		}
-	};
-
+	/**
+	 * Call back end for validation of input where user action occurred
+	 * @param {Event} e Browser event like input blur
+	 */
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
@@ -44,14 +36,42 @@
 		);
 	};
 
+	/**
+	 * Call back end for validation of input where user action occurred
+	 * @todo This was copied from validateInput with some added input name mapping. Clean this up in a separate ticket.
+	 * @param {Event} e Browser event like input blur
+	 */
+	UserSignupAjaxValidation.prototype.validateMappedInput = function (e) {
+		var el = $(e.target),
+			paramName = el.attr('name'),
+			params = this.getDefaultParamsForAjax(),
+			mappedParamName,
+			map;
+
+		// back end validation expects these fields to match the user signup form, so we'll map them to those values
+		// before sending.
+		map = {
+			'username': 'userloginext01',
+			'password': 'userloginext02'
+		};
+
+		mappedParamName = map[paramName] || paramName;
+		params.field = mappedParamName;
+		params[mappedParamName] = el.val();
+
+		$.get(
+			wgScriptPath + '/wikia.php',
+			params,
+			this.validationHandler.bind(this, paramName)
+		);
+	};
+
 	UserSignupAjaxValidation.prototype.validationHandler = function (paramName, response) {
 		if (response.result === 'ok') {
 			this.wikiaForm.clearInputError(paramName);
 		} else {
 			this.wikiaForm.showInputError(paramName, response.msg);
 		}
-
-		this.activateSubmit();
 	};
 
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
@@ -91,7 +111,7 @@
 
 	UserSignupAjaxValidation.prototype.checkFieldsValid = function () {
 		var isValid = true,
-			inputsToValidate = this.notEmptyFields,
+			inputsToValidate = this.inputsToValidate,
 			i;
 
 		for (i = 0; i < inputsToValidate.length; i++) {

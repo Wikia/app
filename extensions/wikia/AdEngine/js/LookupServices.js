@@ -22,24 +22,51 @@ define('ext.wikia.adEngine.lookupServices', [
 
 	var logGroup = 'ext.wikia.adEngine.lookupServices',
 		rtpLookupTracked = false,
-		amazonLookupTracked = false;
+		amazonLookupTracked = false,
+		amazonOldLookupTracked = false;
 
-	// Copied from AdLogicPageParams
-	// TODO: DRY
-	function extend(target, obj) {
-		var key;
+	function trackState(module) {
+		if (module && module.wasCalled()) {
+			module.trackState();
+		}
+	}
 
-		for (key in obj) {
-			if (obj.hasOwnProperty(key)) {
-				target[key] = obj[key];
+	function extendSlotTargeting(slotName, slotTargeting) {
+		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
+
+		var rtpSlots, rtpTier, amazonParams;
+
+		if (!rtpLookupTracked) {
+			rtpLookupTracked = true;
+			trackState(rtp);
+		}
+
+		if (!amazonLookupTracked) {
+			amazonLookupTracked  = true;
+			trackState(amazonMatch);
+		}
+
+		if (rtp && rtp.wasCalled()) {
+			rtpSlots = rtp.getConfig().slotname;
+			if (rtpSlots.length && rtpSlots.indexOf(slotName) !== -1) {
+				rtpTier = rtp.getTier();
+				if (rtpTier) {
+					slotTargeting.rp_tier = rtpTier;
+				}
 			}
 		}
 
-		return target;
+		if (amazonMatch && amazonMatch.wasCalled() && Object.keys) {
+			amazonParams = amazonMatch.getSlotParams(slotName);
+
+			Object.keys(amazonParams).forEach(function (key) {
+				slotTargeting[key] = amazonParams[key];
+			});
+		}
 	}
 
 	// Copied from AdLogicPageParams
-	// TODO: DRY
+	// No longer needed when AmazonOld is removed
 	function decodeLegacyDartParams(dartString) {
 		var params = {},
 			kvs,
@@ -49,7 +76,7 @@ define('ext.wikia.adEngine.lookupServices', [
 			i,
 			len;
 
-		log(['decodeLegacyDartParams', dartString], 9, logGroup);
+		log(['decodeLegacyDartParams', dartString], 'debug', logGroup);
 
 		if (typeof dartString === 'string') {
 			kvs = dartString.split(';');
@@ -67,54 +94,19 @@ define('ext.wikia.adEngine.lookupServices', [
 		return params;
 	}
 
-	function trackState(module) {
-		if (module && module.wasCalled()) {
-			module.trackState();
-		}
-	}
-
-	function extendSlotTargeting(slotName, slotTargeting) {
-		log(['extendSlotTargeting', slotName, slotTargeting], 'debug', logGroup);
-
-		var rtpSlots, rtpTier;
-
-		if (!rtpLookupTracked) {
-			rtpLookupTracked = true;
-			trackState(rtp);
-		}
-
-		if (rtp && rtp.wasCalled()) {
-			rtpSlots = rtp.getConfig().slotname;
-			if (rtpSlots.length && rtpSlots.indexOf(slotName) !== -1) {
-				rtpTier = rtp.getTier();
-				if (rtpTier) {
-					slotTargeting.rp_tier = rtpTier;
-				}
-			}
-		}
-	}
-
+	// No longer needed when AmazonOld is removed
 	function extendPageTargeting(pageTargeting) {
 		var amazonParams;
 
-		if (!amazonLookupTracked) {
-			amazonLookupTracked  = true;
-			trackState(amazonMatch);
+		if (!amazonOldLookupTracked) {
+			amazonOldLookupTracked  = true;
 			trackState(amazonMatchOld);
 		}
 
-		if (amazonMatchOld && amazonMatchOld.wasCalled()) {
-			extend(pageTargeting, decodeLegacyDartParams(win.amzn_targs));
-		}
-
-		if (amazonMatch && amazonMatch.wasCalled() && Object.keys) {
-			amazonParams = amazonMatch.getPageParams();
-			Object.keys(amazonParams).forEach(function (key, i) {
-				// Only return 10 first params from Amazon
-				// TODO: Fix with ADEN-1770
-				if (i < 10) {
-					pageTargeting[key] = amazonParams[key];
-				}
+		if (amazonMatchOld && amazonMatchOld.wasCalled() && Object.keys) {
+			amazonParams = decodeLegacyDartParams(win.amzn_targs);
+			Object.keys(amazonParams).forEach(function (key) {
+				pageTargeting[key] = amazonParams[key];
 			});
 		}
 	}

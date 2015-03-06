@@ -47,17 +47,19 @@ define('wikia.preview', [
 	function renderDialog(title, options, callback) {
 		options = $.extend({
 			callback: function () {
-				var contentNode = $('#EditPageDialog').find('.ArticlePreviewInner'),
+				var $editPageDialog = $('#EditPageDialog'),
+					$contentNode = $editPageDialog.find('.ArticlePreviewInner'),
+					$previewMsgNode = $editPageDialog.find('.preview-modal-msg-wrapper'),
 					modalHeight = options.height,
 					modalHeightModifier = 0;
 
 				if (!modalHeight) {
-					modalHeightModifier = -250 -($('#EditPageDialog').find('.preview-modal-msg').outerHeight() || 0);
+					modalHeightModifier = -250 -($previewMsgNode.outerHeight() || 0);
 					modalHeight = $(window).height() + modalHeightModifier;
 				}
 
 				// block all clicks
-				contentNode.bind('click', function (ev) {
+				$contentNode.on('click', function (ev) {
 					var target = $(ev.target);
 
 					//links to other pages should be open in new windows
@@ -68,8 +70,17 @@ define('wikia.preview', [
 					'overflow-x': 'hidden'
 				});
 
+				$previewMsgNode.on('click', 'a', function () {
+					tracker.track({
+						action: Wikia.Tracker.ACTIONS.CLICK,
+						category: 'edit-preview',
+						label: 'button-best-practices',
+						trackingMethod: 'both'
+					});
+				});
+
 				if (typeof callback === 'function') {
-					callback(contentNode);
+					callback($contentNode);
 				}
 			},
 			id: 'EditPageDialog',

@@ -1,9 +1,9 @@
 <? if ( $isAside ): ?>
-<aside>
+	<aside>
 <? endif; ?>
-<div id="WikiaRail" class="WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>">
+	<div id="WikiaRail" class="WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>">
 
-	<?php
+		<?php
 		// sort in reverse order (highest priority displays first)
 		krsort($railModuleList);
 
@@ -15,12 +15,12 @@
 				$callSpec[2]  // method's params
 			);
 		}
-	?>
-	<? if ($loadLazyRail): ?>
-		<div class="loading"></div>
-	<? endif ?>
+		?>
+		<? if ($loadLazyRail): ?>
+			<div class="loading"></div>
+		<? endif ?>
 
-</div>
+	</div>
 <? if ( $isAside ): ?>
-</aside>
+	</aside>
 <? endif; ?>

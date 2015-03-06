@@ -576,9 +576,29 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorNewUser = function ( isAnon ) {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
-	// Wikia change: Only support reCAPTCHA
+	// Wikia change: Only support reCAPTCHA and FancyCaptcha
 	this.captchaResponse = null;
 	this.saveDialog.$captcha.empty();
+
+	// reCaptcha loaded without any problems
+	if (this.saveDialog.frame.$element[0].contentWindow.grecaptcha !== undefined) {
+		this.renderReCaptcha();
+	} else {
+		this.loadAndRenderFancyCaptcha();
+	}
+
+	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
+	this.saveDialog.popPending();
+
+	this.events.trackSaveError( 'captcha' );
+};
+
+/**
+ * Render reCaptcha
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.renderReCaptcha = function () {
 	this.saveDialog.frame.$element[0].contentWindow.grecaptcha.render(
 		've-ui-mwSaveDialog-captcha',
 		{
@@ -587,12 +607,30 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
 			'callback': function ( response ) {
 				this.captchaResponse = response;
 			}.bind( this )
-		}
-	);
-	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
-	this.saveDialog.popPending();
+		});
+};
 
-	this.events.trackSaveError( 'captcha' );
+/**
+ * If reCaptcha failed to load (eg, the user is in China and google is blocked),
+ * load Fancy Captcha and render it instead.
+ *
+ * @method
+ */
+ve.init.mw.ViewPageTarget.prototype.loadAndRenderFancyCaptcha = function () {
+	$.when(
+		$.getResources([
+			$.getSassCommonURL('extensions/wikia/Captcha/styles/FancyCaptcha.scss')
+		])
+	).done(
+		$.nirvana.sendRequest({
+			controller: 'CaptchaController',
+			method: 'getFancyCaptcha',
+			type: 'GET',
+			callback: function ( data ) {
+				this.saveDialog.$captcha.append( data.form );
+			}.bind( this )
+		})
+	);
 };
 
 /**
@@ -937,7 +975,10 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
-		'g-recaptcha-response': this.captchaResponse
+		'g-recaptcha-response': this.captchaResponse, // reCaptcha
+		'wpCaptchaClass': this.saveDialog.$( '#wpCaptchaClass' ).val(), // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaId': this.saveDialog.$( '#wpCaptchaId' ).val(), // FancyCaptcha (fallback if reCaptcha fails to load)
+		'wpCaptchaWord': this.saveDialog.$( '#wpCaptchaWord' ).val() // FancyCaptcha (fallback if reCaptcha fails to load)
 	} );
 	return fields;
 };
