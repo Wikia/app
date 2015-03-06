@@ -620,18 +620,17 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		switch ( $field ) {
 			case 'userloginext01' :
-				$response = $signupForm->initValidationUsername();
-				break;
-			case 'userloginext02' :
-				$response = $signupForm->initValidationPassword();
+				$signupForm->initValidationUsername();
 				break;
 			case 'email' :
-				$response = $signupForm->initValidationEmail()
+				$signupForm->initValidationEmail()
 					&& $signupForm->initValidationRegsPerEmail();
 				break;
 			case 'birthdate' :
-				$response = $signupForm->initValidationBirthdate();
+				$signupForm->initValidationBirthdate();
 				break;
+			default:
+				throw new MWException( "Unhandled case value" );
 		}
 
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';
