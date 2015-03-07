@@ -689,7 +689,9 @@ class WallHooksHelper {
 	static public function onRecentChangeBeforeSave( RecentChange &$rc ) {
 		$app = F::app();
 
-		if (  MWNamespace::isTalk( $rc->getAttribute( 'rc_namespace' ) ) && in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
+		if ( MWNamespace::isTalk( $rc->getAttribute( 'rc_namespace' ) ) &&
+			in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' )), $app->wg->WallNS )
+		) {
 			$wm = new WallMessage( $rc->getTitle() );
 			$wm->load();
 
@@ -703,12 +705,14 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onRecentChangeSave( $recentChange ){
+	static public function onRecentChangeSave( RecentChange $recentChange ){
 		wfProfileIn( __METHOD__ );
 		// notifications
 		$app = F::app();
 
-		if(  MWNamespace::isTalk( $recentChange->getAttribute('rc_namespace') ) && in_array( MWNamespace::getSubject($recentChange->getAttribute('rc_namespace')), $app->wg->WallNS ) ) {
+		if(  MWNamespace::isTalk( $recentChange->getAttribute( 'rc_namespace' ) )
+			&& in_array( MWNamespace::getSubject($recentChange->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS )
+		) {
 			$rcType = $recentChange->getAttribute('rc_type');
 
 			//FIXME: WallMessage::remove() creates a new RC but somehow there is no rc_this_oldid
@@ -925,7 +929,8 @@ class WallHooksHelper {
 					'title' => $title
 				];
 
-				$articleLink = ' ' . Html::element( 'a', $attribs, $title ) . ' ' . $list->msg( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', $titleText, $pageText )->parse();
+				$articleLink = ' ' . Html::element( 'a', $attribs, $title ) . ' '
+					. $list->msg( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', $titleText, $pageText )->parse();
 
 				# VOLDEV-3: Bolden pages watched by this user
 				$user = $list->getUser();
@@ -1333,9 +1338,6 @@ class WallHooksHelper {
 			$threadLink = Linker::link( $titleObj, htmlspecialchars( $titleData['articleTitleTxt'] ),
 				[ 'title' => $titleData['articleTitleTxt'] ] );
 
-			$wm->load();
-			$wallMsgTitle = $wm->getMetaTitle();
-
 			$headerTitle = wfMessage( static::getMessagePrefix( $namespace ) . '-thread-group' )
 				->rawParams( $threadLink )
 				->params( $titleData['wallTitleTxt'], $titleData['wallPageName'] )
@@ -1343,14 +1345,8 @@ class WallHooksHelper {
 
 			// VOLDEV-3: Bolden pages watched by this user
 			$user = $oChangeList->getUser();
-			// bolding on Watchlist can be removed, on RC, it can not
-			$isWatchlist = $oChangeList->getTitle()->equals( SpecialPage::getTitleFor( 'Watchlist' ) );
-			if ( F::app()->wg->ShowUpdatedMarker && !$user->isAnon()
-				&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
-				&& ( ( $isWatchlist && ( $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) ) )
-					|| !$isWatchlist
-				)
-			) {
+			$specialPageTitle = $oChangeList->getTitle();
+			if ( self::boldenFollowedLink( $user, $specialPageTitle, $titleObj ) ) {
 				$headerTitle = '<strong class="mw-watched">' . $headerTitle . '</strong>';
 			}
 
@@ -2267,6 +2263,24 @@ class WallHooksHelper {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Determine whether a link pointing to a followed thread should be bold
+	 * A link should be bold if it's followed by the user, we are on Special:Watchlist
+	 * and the page was changed since the user's last visit
+	 * @param User $user
+	 * @param Title $title Title of the special page (RecentChanges or Watchlist)
+	 * @param WallMessage $wm
+	 * @return bool Whether to bolden the link
+	 */
+	private static function boldenFollowedLink( User $user, Title $title, WallMessage $wm ) {
+		$isWatchlist = $title->isSpecial( 'Watchlist' );
+		return ( F::app()->wg->ShowUpdatedMarker && !$user->isAnon()
+			&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
+			&& ( ( $isWatchlist && ( $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) ) )
+				|| !$isWatchlist
+			) );
 	}
 
 }
