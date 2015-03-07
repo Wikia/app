@@ -932,16 +932,10 @@ class WallHooksHelper {
 				$articleLink = ' ' . Html::element( 'a', $attribs, $title ) . ' '
 					. $list->msg( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', $titleText, $pageText )->parse();
 
-				# VOLDEV-3: Bolden pages watched by this user
+				// VOLDEV-3: Bolden pages watched by this user
 				$user = $list->getUser();
-				# bolding on Watchlist can be removed, on RC, it can not
-				$isWatchlist = $list->getTitle()->equals( SpecialPage::getTitleFor( 'Watchlist' ) );
-				if ( $app->wg->ShowUpdatedMarker && !$user->isAnon()
-					&& ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) || $wm->isWallOwner( $user ) )
-					&& ( ( $isWatchlist && ( $wm->getTitle()->getNotificationTimestamp( $user ) || $wm->getArticleTitle()->getNotificationTimestamp( $user ) ) )
-						|| !$isWatchlist
-					)
-				) {
+				$specialPageTitle = $list->getTitle();
+				if ( self::boldenFollowedLink( $user, $specialPageTitle, $wm ) ) {
 					$articleLink = '<strong class="mw-watched">' . $articleLink . '</strong>';
 				}
 			}
@@ -1346,7 +1340,7 @@ class WallHooksHelper {
 			// VOLDEV-3: Bolden pages watched by this user
 			$user = $oChangeList->getUser();
 			$specialPageTitle = $oChangeList->getTitle();
-			if ( self::boldenFollowedLink( $user, $specialPageTitle, $titleObj ) ) {
+			if ( self::boldenFollowedLink( $user, $specialPageTitle, WallMessage::newFromTitle( $oTitle ) ) ) {
 				$headerTitle = '<strong class="mw-watched">' . $headerTitle . '</strong>';
 			}
 
