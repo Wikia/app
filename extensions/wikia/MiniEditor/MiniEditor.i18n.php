@@ -201,11 +201,25 @@ $messages['it'] = array(
 	'minieditor-placeholder-reply' => 'Rispondi qui al messaggio',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'minieditor-reply' => '返信',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'minieditor-reply' => 'ಉತ್ತರಿಸಿ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'minieditor-reply' => '댓글',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -479,4 +493,16 @@ $messages['zh-hans'] = array(
 	'minieditor-message-edit' => '该消息已存在',
 	'minieditor-reply' => '回复',
 	'minieditor-placeholder-reply' => '在这里回复消息',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ * @author LNDDYL
+ */
+$messages['zh-hant'] = array(
+	'minieditor-new-heading' => '建立新訊息',
+	'minieditor-placeholder-new' => '在此輸入您的訊息',
+	'minieditor-message-edit' => '該訊息已存在',
+	'minieditor-reply' => '回覆',
+	'minieditor-placeholder-reply' => '在這裡回覆訊息',
 );

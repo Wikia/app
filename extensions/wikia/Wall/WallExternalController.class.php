@@ -277,6 +277,10 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'remove':
+				if ( !$mw->canModerate( $this->wg->User ) ) {
+					$mw->load(); // must do this to allow checking for wall owner/message author - data not loaded otherwise
+				}
+
 				if( $mw->canRemove($this->wg->User) ) {
 					$this->response->setVal('status', $result);
 					$result = $mw->remove($this->wg->User, $reason, $notify);
@@ -366,6 +370,10 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
+		if ( !$mw->canModerate( $this->wg->User ) ) {
+			$mw->load();
+		}
+
 		if($mw->isAdminDelete() && $mw->isRemove() && $mw->canRestore($this->wg->User)) {
 			$mw->undoAdminDelete($this->wg->User);
 			$this->response->setVal('status', true);
@@ -394,6 +402,9 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
+		if ( !$mw->canModerate( $this->wg->User ) ) {
+			$mw->load();
+		}
 		if($mw->canRestore($this->wg->User)) {
 			$formassoc = $this->processModalForm($this->request);
 
@@ -656,7 +667,7 @@ class WallExternalController extends WikiaController {
 	 * @return string status - success/failure
 	 */
 	public function getFormattedQuoteText() {
-		$messageId = $this->request->getVal('messageId', '');
+		$messageId = $this->request->getVal( 'messageId', '' );
 		$markup = '';
 		$status = 'failure';
 
@@ -664,24 +675,30 @@ class WallExternalController extends WikiaController {
 		 * @var $mw WallMessage
 		 */
 		$mw = WallMessage::newFromId($messageId);
-		$mw->load();
+		if ( !empty( $mw ) ) {
+			$mw->load();
 
-		if(!empty($mw)) {
 			$username = $mw->getUser()->getName();
 
-			$convertToFormat = $this->request->getVal('convertToFormat', '');
+			$convertToFormat = $this->request->getVal( 'convertToFormat', '' );
 
-			if($convertToFormat == 'wikitext') {
-				$markup = '<div class="quote">' . "\n" . wfMsgForContent('wall-quote-author', $username) . "\n" . $mw->getRawText() . "\n</div>\n";
+			if ( $convertToFormat == 'wikitext' ) {
+				$markup = '<div class="quote">'
+					. "\n" . wfMessage( 'wall-quote-author', $username )
+						->inContentLanguage()->escaped()
+					. "\n" . $mw->getRawText() . "\n</div>\n";
 			} else {
-				$markup = $this->getConvertedContent('<div class="quote">' . wfMsgForContent('wall-quote-author', $username) . "<br>" . $mw->getRawText() . "\n</div><br>");
+				$markup = $this->getConvertedContent( '<div class="quote">'
+					. wfMessage( 'wall-quote-author', $username )
+						->inContentLanguage()->escaped()
+					. "<br>" . $mw->getRawText() . "\n</div><br>");
 			}
 
 			$status = 'success';
 		}
 
-		$this->response->setVal('markup', $markup);
-		$this->response->setVal('status', $status);
+		$this->response->setVal( 'markup', $markup );
+		$this->response->setVal( 'status', $status );
 	}
 
 	/**

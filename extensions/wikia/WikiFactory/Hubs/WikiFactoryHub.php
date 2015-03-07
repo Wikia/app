@@ -57,29 +57,6 @@ class WikiFactoryHub extends WikiaModel {
 	const CATEGORY_ID_MOVIES = 27;
 	const CATEFORY_ID_ANIME = 28;
 
-	private $mCategoryKruxMap = array(
-	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
-	    self::CATEGORY_ID_GAMING		=> 'Hi0kJsuv',
-	    self::CATEGORY_ID_ENTERTAINMENT	=> 'Hi0kPhMT',
-	    self::CATEGORY_ID_CORPORATE		=> 'HixzfXzM',
-	    self::CATEGORY_ID_TOYS		=> 'Hixy7C6A',
-	    self::CATEGORY_ID_FOODANDDRINK	=> 'HixwQQcI',
-	    self::CATEGORY_ID_TRAVEL		=> 'HixzKvV0',
-	    self::CATEGORY_ID_EDUCATION		=> 'Hixv3Pm6',
-	    self::CATEGORY_ID_LIFESTYLE		=> 'HixxTik3',
-	    self::CATEGORY_ID_FINANCE		=> 'HixwC0-o',
-	    self::CATEGORY_ID_POLITICS		=> 'Hixx8x9B',
-	    self::CATEGORY_ID_TECHNOLOGY	=> 'HixyqEjH',
-	    self::CATEGORY_ID_SCIENCE		=> 'HixyJ7zV',
-	    self::CATEGORY_ID_PHILOSOPHY	=> 'HixxvJVY',
-	    self::CATEGORY_ID_SPORTS		=> 'HixyZtmZ',
-	    self::CATEGORY_ID_MUSIC		=> 'HixxfWsd',
-	    self::CATEGORY_ID_CREATIVE		=> 'HixvqnFP',
-	    self::CATEGORY_ID_AUTO		=> 'Hixvb8MR',
-	    self::CATEGORY_ID_GREEN		=> 'Hixwf6fL',
-	    self::CATEGORY_ID_ANSWERS		=> 'Hix9Xb-P'
-	);
-
 	/**
 	 * getInstance
 	 *
@@ -104,10 +81,11 @@ class WikiFactoryHub extends WikiaModel {
 	 *
 	 * @access public
 	 *
-	 * @param $active boolean flag to return old or new categories, by default load the old ones while we are in transition phase
+	 * @param $new boolean flag to return old OR new categories, by default load the old ones while we are in transition phase
+	 * @param $both boolean flag to return old AND new categories, $new must be false for this to work
 	 * @return array category names and ids from city_cats table
 	 */
-	public function getAllCategories( $new = false ) {
+	public function getAllCategories( $new = false, $both = false ) {
 
 		if (empty($this->mNewCategories) || empty($this->mOldCategories)) {
 			$this->loadCategories();
@@ -115,6 +93,9 @@ class WikiFactoryHub extends WikiaModel {
 
 		if ( $new ) {
 			return $this->mNewCategories;
+		} else if ( $both ) {
+			// return both old and new
+			return $this->mAllCategories;
 		} else {
 			// Deprecated/old categories
 			return $this->mOldCategories;
@@ -196,8 +177,11 @@ class WikiFactoryHub extends WikiaModel {
 	 * @param  $city_id Wiki Id
 	 * @return Integer vertical_id
 	 */
-
 	public function getVerticalId( $city_id ) {
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			$city_id = 11;
+		}
 
 		$id = (new WikiaSQL())
 			->SELECT( "city_vertical" )
@@ -207,6 +191,42 @@ class WikiFactoryHub extends WikiaModel {
 			->run( $this->getSharedDB(), function( $result ) { return $result->fetchObject(); });
 
 		return $id->city_vertical;
+	}
+
+	public function getVerticalNameMessage( $verticalId ) {
+		$message = false;
+		$verticals = $this->getAllVerticals();
+		if ( isset( $verticals[$verticalId] ) ) {
+			/*
+			 * Possible message keys: vertical-tv, vertical-games, vertical-books, vertical-comics,
+			 * vertical-lifestyle, vertical-music, vertical-movies
+			 */
+			$message = wfMessage( 'vertical-' . $verticals[$verticalId]['short'] );
+		}
+
+		return $message;
+	}
+
+	/**
+	 * Similar to getWikiCategories, this gets the vertical id and metadata for one wiki
+	 * Uses the getAllVerticals() function as a helper, which is a little inefficient, but it is
+	 *   cached globally for all wikis so it should always be in cache
+	 * @param  int $city_id
+	 * @return array of "id", "name", "short", "url" mapping
+	 */
+	public function getWikiVertical( $city_id ) {
+
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			$city_id = 11;
+		}
+
+		$vertical_id = $this->getVerticalId( $city_id );
+		$all_verticals = $this->getAllVerticals();
+		$vertical = $all_verticals[$vertical_id];
+		$vertical["id"] = $vertical_id;
+
+		return $vertical;
 	}
 
 	/**
@@ -250,6 +270,11 @@ class WikiFactoryHub extends WikiaModel {
 	 */
 	public function getWikiCategories( $city_id, $active = 1 ) {
 
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			$city_id = 11;
+		}
+
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
 			->SELECT( "*" )
@@ -265,6 +290,23 @@ class WikiFactoryHub extends WikiaModel {
 		return $categories;
 
 	}
+
+	/**
+	 * Gets list of wiki category names
+	 *
+	 * @param Int $cityId CityId
+	 * @param Int $active Active status of categories to return
+	 * @return array Array of wiki category names
+	 */
+	public function getWikiCategoryNames( $cityId, $active = 1 ) {
+		$wikiCategoryNames = [];
+		$categories = $this->getWikiCategories( $cityId, $active );
+		foreach( $categories as $category ) {
+			$wikiCategoryNames[] = $category['cat_short'];
+		}
+		return $wikiCategoryNames;
+	}
+
 
 	/**
 	 * get single category name for a wiki
@@ -380,6 +422,11 @@ class WikiFactoryHub extends WikiaModel {
 		$name = $verticals[$vertical_id]['name'];
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
 
+		$aHookParams = [
+			'city_id' => $city_id,
+			'vertical_id' => $vertical_id,
+		];
+		wfRunHooks( "WikiFactoryVerticalSet", array( $aHookParams ) );
 	}
 
 	/**
@@ -408,6 +455,12 @@ class WikiFactoryHub extends WikiaModel {
 			$dbw->commit();
 
 			$this->clearCache( $city_id );
+
+			$aHookParams = [
+				'city_id' => $city_id,
+				'categories' => $categories,
+			];
+			wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 		}
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
@@ -422,7 +475,6 @@ class WikiFactoryHub extends WikiaModel {
 		}
 
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
-
 	}
 
 	// Add 1 category
@@ -445,39 +497,6 @@ class WikiFactoryHub extends WikiaModel {
 				->AND( 'cat_id', $category )
 			->run( $this->getSharedDB( DB_MASTER ) );
 
-	}
-
-	/**
-	 * setCategory
-	 *
-	 * remove previous value in database and insert new one
-	 *
-	 * @param integer   $city_id    identifier from city_list
-	 * @param integer   $cat_id     category identifier
-	 * @param string    $reason     optional extra reason string for logging
-	 *
-	 * @deprecated This function is deprecated.  Now that there are multiple categories, we have to add/remove them with a new interface
-	 */
-
-	public function setCategory( $city_id, $cat_id, $reason='' ) {
-		global $wgExternalSharedDB;
-		wfProfileIn( __METHOD__ );
-
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-
-		$dbw->begin();
-		$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
-		$dbw->insert( "city_cat_mapping", array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
-		$dbw->commit();
-
-		$this->clearCache( $city_id );
-
-		if( !empty($reason) ) {
-			$reason = " (" . (string)$reason . ")";
-		}
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]['name']}".$reason, $city_id );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -513,18 +532,5 @@ class WikiFactoryHub extends WikiaModel {
 	public function getCategory($id, $new = false) {
 		$categories = $this->getAllCategories($new);
 		return $categories[$id];
-	}
-
-	/**
-	 * Get Krux id for given category
-	 * @param int $categoryId
-	 * @return string Krux category id
-	 */
-	public function getKruxId($categoryId) {
-		if (isset($this->mCategoryKruxMap[$categoryId])) {
-			return $this->mCategoryKruxMap[$categoryId];
-		}
-
-		return '';
 	}
 }

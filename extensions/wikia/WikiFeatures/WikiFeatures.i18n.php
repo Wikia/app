@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikifeatures-desc' => 'Allows privileged users to toggle Wikia\'s optional features',
 	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Features',
@@ -85,10 +86,6 @@ $messages['en'] = array(
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:community:Help:Blogs|Blogs]] allow users on your wiki to create their own blog posts on their profile page and can also be used as a great way to communicate news and events to your wiki community.',
 
-	// VisualEditor
-	'wikifeatures-feature-heading-wgEnableVisualEditorUI' => 'The New VisualEditor',
-	'wikifeatures-feature-description-wgEnableVisualEditorUI' => 'Wikia\'s new [[Help:VisualEditor|VisualEditor]] was built from the ground up to make all Wikia contributors more successful, whether they\'re making their first or their thousandth edit. The VisualEditor replaces the existing rich-text editing mode on article pages and retains the ability for all users to use source if they prefer.',
-
 	// InteractiveMaps
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Maps',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Wikia Maps allows users to create interactive maps for real world places, images, or fictional worlds. Map pins can be added, edited and customized by the community to create a rich mapping experience. These maps can also be embedded in Wikia articles or external websites.',
@@ -100,6 +97,14 @@ $messages['en'] = array(
 	// GameGuides
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Game Guides Content',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the [[w:c:community:Help:Game Guides|Game Guides]] mobile app. Expand your potential audience!',
+
+	// Modular Main Pages - hero image prototype
+	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Hero Image',
+	'wikifeatures-feature-description-wgEnableNjordExt' => 'Make your wiki more attractive by uploading an image to represent it on its home page!',
+
+	// CuratedContent
+	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Curated Content',
+	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Use the Special:CuratedContent page of your wiki to manage content which appears in the mobile app. Expand your potential audience!',
 
 	// Empty lab message
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
@@ -115,6 +120,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'wikifeatures-desc' => '{{desc}}',
 	'wikifeatures-feature-description-wgEnableChat' => 'Feel free not to translate "lol omg rolfl" if there is no proper equivalent in your language. These are acronyms for Laughing Out Loud, Oh My God, and Rolling On The Floor Laughing.',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Heading title for the Maps feature.',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Description text for the Maps feature.',

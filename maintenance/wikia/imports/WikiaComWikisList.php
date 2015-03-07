@@ -114,7 +114,7 @@ class WikiaComWikisListImport {
 
 				if( $wikiId > 0 ) {
 					$wikiHeadline = $element[1];
-					$wikiVerticalId = HubService::getComscoreCategory($wikiId)->cat_id;
+					$wikiVerticalId = HubService::getCategoryInfoForCity($wikiId)->cat_id;
 
 					$wikiMainImageUrl = $element[4];
 					$wikiDesc = $element[5];
@@ -187,7 +187,7 @@ class WikiaComWikisListImport {
 				}
 
 				if( $wikiId > 0 ) {
-					$wikiCityVertical = HubService::getComscoreCategory($wikiId);
+					$wikiCityVertical = HubService::getCategoryInfoForCity($wikiId);
 
 					$sliderUploadedImages = (!empty($sliderUploadedImages)) ? json_encode($sliderUploadedImages) : null;
 					$this->addToVisualizationTable(
@@ -393,7 +393,7 @@ class WikiaComWikisListImport {
 	}
 
 	protected function addToVisualizationTable($wikiData) {
-		global $wgSharedKeyPrefix;
+		global $wgSharedDB;
 		wfProfileIn(__METHOD__);
 
 		$wikiId = intval($wikiData['city_id']);
@@ -405,7 +405,7 @@ class WikiaComWikisListImport {
 			$this->wikisPerVertical[$wikiVertical->cat_name] = 1;
 		}
 
-		$db = wfGetDb(DB_MASTER, array(), $wgSharedKeyPrefix);
+		$db = wfGetDb(DB_MASTER, array(), $wgSharedDB);
 		$row = $db->selectRow('wikicities.city_visualization',
 			array('city_id'),
 			array('city_id' => $wikiId)

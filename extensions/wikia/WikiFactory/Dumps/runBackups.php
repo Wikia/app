@@ -43,7 +43,7 @@ function runBackups( $from, $to, $full, $options ) {
 	/**
 	 * store backup in the system tmp dir
 	 */
-	$basedir = isset( $options['tmp'] ) ? sys_get_temp_dir() : '';
+	$use_temp = isset( $options['tmp'] );
 
 	/**
 	 * send backup to Amazon S3 and delete the local copy
@@ -120,12 +120,11 @@ function runBackups( $from, $to, $full, $options ) {
 		 * build command
 		 */
 		$status  = false;
-		
-		if ( '' == $basedir ) {
-			$basedir = getDirectory( $row->city_dbname, $hide );
-		}
+
+		$basedir = getDirectory( $row->city_dbname, $hide, $use_temp );
+
 		if( $full || $both ) {
-			$path = sprintf("%s/%s_pages_full.xml.gz", $basedir, $row->city_dbname );
+			$path = sprintf("%s/%s_pages_full.xml.7z", $basedir, $row->city_dbname );
 			$time = wfTime();
 			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true );
 			$cmd = array(
@@ -138,7 +137,7 @@ function runBackups( $from, $to, $full, $options ) {
 				"--xml",
 				"--quiet",
 				"--server=$server",
-				"--output=gzip:{$path}"
+				"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
@@ -149,7 +148,7 @@ function runBackups( $from, $to, $full, $options ) {
 
 		}
 		if( !$full || $both ) {
-			$path = sprintf("%s/%s_pages_current.xml.gz", $basedir, $row->city_dbname );
+			$path = sprintf("%s/%s_pages_current.xml.7z", $basedir, $row->city_dbname );
 			$time = wfTime();
 			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}", true, true);
 			$cmd = array(
@@ -162,7 +161,7 @@ function runBackups( $from, $to, $full, $options ) {
 				"--xml",
 				"--quiet",
 				"--server=$server",
-				"--output=gzip:{$path}"
+				"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
@@ -179,11 +178,10 @@ function runBackups( $from, $to, $full, $options ) {
  *
  * <root>/<first letter>/<two first letters>/<database>
  */
-function getDirectory( $database, $hide = false ) {
-	global $wgDevelEnvironment;
+function getDirectory( $database, $hide = false, $use_temp = false ) {
 
-	$folder     = empty( $wgDevelEnvironment ) ?  "raid" : "tmp";
-	$subfolder = $hide ? "dumps-hidden" : "dumps";
+	$folder     = $use_temp ?  sys_get_temp_dir() : "data";
+	$subfolder  = $hide ? "dumps-hidden" : "dumps";
 	$database   = strtolower( $database );
 
 	$directory = sprintf(

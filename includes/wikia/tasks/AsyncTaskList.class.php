@@ -20,11 +20,15 @@ use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\NlpPipelineQueue;
 use Wikia\Tasks\Queues\Queue;
+use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */
 	const DEFAULT_WIKI_ID = 177;
+
+	/** which config to grab when figuring out the executor (on the job queue side) */
+	const EXECUTOR_APP_NAME = 'mediawiki';
 
 	/** @var AMQPConnection connection to message broker */
 	protected $connection;
@@ -39,7 +43,7 @@ class AsyncTaskList {
 	protected $calls = [];
 
 	/** @var string celery task type */
-	protected $taskType = 'celery_workers.mediawiki.task';
+	protected $taskType = 'celery_workers.external.execute';
 
 	/** @var mixed user id and name of the user executing the task */
 	protected $createdBy = null;
@@ -88,6 +92,9 @@ class AsyncTaskList {
 				break;
 			case NlpPipelineQueue::NAME:
 				$queue = new NlpPipelineQueue();
+				break;
+			case SMWQueue::NAME:
+				$queue = new SMWQueue();
 				break;
 			default:
 				$queue = new Queue();
@@ -210,11 +217,12 @@ class AsyncTaskList {
 			$taskList [] = $serialized;
 			$this->workId['tasks'] [] = $serialized;
 		}
-		return [
-				$this->wikiId,
-				$this->calls,
-				$taskList,
-			];
+		return [[
+			'wiki_id' => $this->wikiId,
+			'call_order' => $this->calls,
+			'task_list' => $taskList,
+			'created_by' => $this->createdBy,
+		]];
 	}
 
 
@@ -224,7 +232,9 @@ class AsyncTaskList {
 	 */
 	protected function getExecutor() {
 		global $IP, $wgWikiaEnvironment;
-		$executor = null;
+		$executor = [
+			'app' => self::EXECUTOR_APP_NAME,
+		];
 
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = gethostname();
@@ -236,13 +246,13 @@ class AsyncTaskList {
 				$executionMethod = 'remote_shell';
 				$executionRunner = [
 					$host,
+					'php',
 					realpath( $IP . '/maintenance/wikia/task_runner.php' ),
 				];
 			}
-			$executor = [
-				'method' => $executionMethod,
-				'runner' => $executionRunner
-			];
+
+			$executor['method'] = $executionMethod;
+			$executor['runner'] = $executionRunner;
 		}
 
 		return $executor;
@@ -272,7 +282,6 @@ class AsyncTaskList {
 			'args' => $this->payloadArgs(),
 			'kwargs' => (object) [
 				'created_ts' => time(),
-				'created_by' => $this->createdBy,
 				'work_id' => sha1( json_encode( $this->workId ) ),
 				'force' => !$this->dupCheck,
 				'executor' => $this->getExecutor()
@@ -294,10 +303,10 @@ class AsyncTaskList {
 		] );
 
 		if ( $channel === null ) {
-			$exception = null;
-			$connection = $this->connection();
-			$channel = $connection->channel();
+			$exception = $connection = null;
 			try {
+				$connection = $this->connection();
+				$channel = $connection->channel();
 				$channel->basic_publish( $message, '', $this->getQueue()->name() );
 			} catch ( AMQPRuntimeException $e ) {
 				$exception = $e;
@@ -305,8 +314,13 @@ class AsyncTaskList {
 				$exception = $e;
 			}
 
-			$channel->close();
-			$connection->close();
+			if ( $channel !== null ) {
+				$channel->close();
+			}
+
+			if ( $connection !== null ) {
+				$connection->close();
+			}
 
 			if ( $exception !== null ) {
 				WikiaLogger::instance()->critical( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
@@ -321,6 +335,8 @@ class AsyncTaskList {
 
 	/**
 	 * @return AMQPConnection connection to message broker
+	 * @throws AMQPRuntimeException
+	 * @throws AMQPTimeoutException
 	 */
 	protected function connection() {
 		global $wgTaskBroker;
@@ -336,7 +352,19 @@ class AsyncTaskList {
 	 * @return Queue queue this task list will go into
 	 */
 	protected function getQueue() {
-		return $this->queue == null ? new Queue() : $this->queue;
+		if ( $this->queue == null ) {
+			global $wgEnableSemanticMediaWikiExt;
+
+			if ( $wgEnableSemanticMediaWikiExt ) {
+				$queue = new SMWQueue();
+			} else {
+				$queue = new Queue();
+			}
+		} else {
+			$queue = $this->queue;
+		}
+
+		return $queue;
 	}
 
 	private function generateId() {

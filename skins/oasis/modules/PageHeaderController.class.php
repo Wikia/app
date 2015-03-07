@@ -14,7 +14,6 @@ class PageHeaderController extends WikiaController {
 
 	public function init() {
 		$this->isMainPage = null;
-		$this->likes = null;
 		$this->tallyMsg = null;
 
 		$this->action = null;
@@ -231,9 +230,6 @@ class PageHeaderController extends WikiaController {
 		$this->comments = $service->getCommentsCount();
 
 		if ( $this->pageExists ) {
-
-			// show likes
-			$this->likes = true;
 
 			// mainpage?
 			if ( WikiaPageType::isMainPage() ) {

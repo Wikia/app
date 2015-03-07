@@ -27,6 +27,14 @@ $messages['ar'] = array(
 	'globalnotification-general-ajax-failure' => 'تعذر على المتصفح الدخول إلى ويكيا.  حاول مرة أخرى لاحقاً.',
 );
 
+/** Asturian (asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'globalnotification-desc' => 'Amuesa avisos del sistema pa socesos tales como fallos de AJAX',
+	'globalnotification-general-ajax-failure' => 'El restolador nun pudo coneutase con Wikia. Vuelvi a intentalo más sero.',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */
@@ -136,9 +144,11 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author William Surya Permana
  */
 $messages['id'] = array(
 	'globalnotification-desc' => 'Tampilkan pemberitahuan sistem untuk kejadian-kejadian seperti kegagalan AJAX',
+	'globalnotification-general-ajax-failure' => 'Peramban tidak dapat terhubung dengan Wikia. Coba lagi nanti.',
 );
 
 /** Italian (italiano)

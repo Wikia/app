@@ -4,9 +4,9 @@
 class WallNotificationAdminEntity {
 	public function __construct($wikiId, $data) {
 		$this->data = new stdClass;
-		
+
 		$this->data->type = 'ADMIN';
-		
+
 		$this->data->wiki_id = $wikiId;
 		$this->data->parent_page_id = $data['parentPageId'];
 		$this->data->timestamp = wfTimestampNow();
@@ -21,9 +21,9 @@ class WallNotificationAdminEntity {
 		} else {
 			$this->data->hide_for_userid = [ $data['userIdRemoving'] => true, $data['userIdWallOwner'] => true ];
 		}
-		
+
 		$this->data->parent_id = $data['parentId'];
 		$this->data->reason = $data['reason'];
-		
+
 	}
 }

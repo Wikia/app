@@ -12,7 +12,7 @@ class TransactionTraceScribe {
 	/**
 	 * Installs request shutdown handler to send all events via Scribe
 	 *
-	 * @param string $type
+	 * @param string $event
 	 */
 	public function onEvent( $event ) {
 		self::install();
@@ -24,25 +24,29 @@ class TransactionTraceScribe {
 	public static function install() {
 		if ( !self::$installed ) {
 			self::$installed = true;
-			register_shutdown_function( array( __CLASS__, 'send' ) );
+			register_shutdown_function( array( __CLASS__, 'onShutdown' ) );
 		}
 	}
 
 	/**
-	 * Sends all events via Scribe
+	 * Send a set of events with a provided context
+	 *
+	 * @param array $events set of events to be sent
+	 * @param array $context request context to be attached to each event (can be empty)
 	 */
-	public static function send() {
-		// Check dependencies (perform autoload if required)
-		if ( !is_callable( 'Transaction::getAttributes' ) || !is_callable( 'WScribeClient::singleton' ) ) {
+	private static function send(Array $events, Array $context = array()) {
+		// no data to send
+		if (empty($events)) {
 			return;
 		}
 
-		$data = array(
+		$data = [
 			'time' => microtime( true ),
-			'app' => 'mediawiki',
-			'context' => Transaction::getAttributes(),
-			'events' => Transaction::getEvents(),
-		);
+			'app' => Transaction::APP_NAME,
+			'context' => $context,
+			'events' => $events,
+		];
+
 		$data = json_encode( $data );
 
 		try {
@@ -52,7 +56,25 @@ class TransactionTraceScribe {
 				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 			}
 		}
+	}
 
+	/**
+	 * Sends all events via Scribe
+	 */
+	public static function onShutdown() {
+		// Check dependencies (perform autoload if required)
+		if ( !is_callable( 'Transaction::getAttributes' ) || !is_callable( 'WScribeClient::singleton' ) ) {
+			return;
+		}
+
+		// send events with full context data
+		self::send(Transaction::getEvents(), Transaction::getAttributes());
+
+		// send raw events with the minimal context
+		self::send(Transaction::getRawEvents(), [
+			Transaction::PSEUDO_PARAM_TYPE => Transaction::getType(),
+			Transaction::PARAM_ENVIRONMENT => Transaction::getAttribute(Transaction::PARAM_ENVIRONMENT),
+		]);
 	}
 
 }

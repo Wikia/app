@@ -2,88 +2,90 @@
  * JS file for Monetization Module.
  */
 
-require(['wikia.tracker'], function (Tracker) {
+require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 	'use strict';
 
 	var track;
 
 	track = Tracker.buildTrackingFunction({
 		trackingMethod: 'internal',
-		action: Tracker.ACTIONS.CLICK
+		category: 'monetization-module',
+		geo: geo.getCountryCode()
 	});
 
 	var MonetizationModule = {
 		init: function () {
-			// track impression for each placement
-			$('.monetization-module').each(function() {
-				var trackCategory,
-					type;
+			var $container = $('.monetization-module');
 
-				type = $(this).attr('class').split(' ')[1];
-				trackCategory = $(this).attr('id');
+			this.trackImpression($container);
+			this.trackClickEvent($container);
+		},
+		trackImpression: function ($container) {
+			// track impression for each placement
+			$container.each(function () {
+				var $this = $(this),
+					value = $this.children().children().length,	// check if the ad is blocked
+					monType = $this.attr('data-mon-type'),
+					slot = $this.attr('data-mon-slot'),
+					label = 'monetization-' + monType + '-' + slot;
 
 				track({
-					category: trackCategory,
-					label: 'module-impression',
-					action: Tracker.ACTIONS.IMPRESSION,
-					type: type
+					action: 'module-impression',
+					label: label,
+					value: value,
+					type: monType,
+					slot: slot
 				});
-			});
 
-			this.initEllipses();
-			this.initClickTrackingEcommerce();
-		},
-		initEllipses: function() {
-			$(window)
-				.on('resize.monetizationmodule', function () {
-					$('.monetization-module').find('.placard a').ellipses({
-						maxLines: 3
+				// track impression for each product
+				if (monType === 'ecommerce' || monType === 'amazon_video') {
+					$this.find('.affiliate').each(function (idx, element) {
+						var $element = $(element);
+						track({
+							label: $element.attr('data-mon-ptag'),
+							action: 'product-impression-' + label,
+							value: idx,
+							type: monType,
+							slot: slot,
+							pid: $element.attr('data-mon-pid')
+						});
 					});
-				})
-				.trigger('resize.monetizationmodule');
+				}
+			});
 		},
-		initClickTrackingEcommerce: function() {
+		trackClickEvent: function ($container) {
 			var elements = [
-				'.prod-thumb',
-				'.prod-name',
-				'.vendor-logo',
-				'.vendor-button',
-				'.vendor-price'
+				'.module-title',
+				'.product-thumb',
+				'.product-name',
+				'.product-price',
+				'.amazon-logo',
+				'.product-btn'
 			];
 
-			$('.monetization-module.ecommerce').on('click', elements.join(', '), function () {
-				var $products,
-					$productThumb,
-					$module,
-					trackCategory,
-					trackLabel,
-					trackValue,
-					type,
-					vendor,
-					productName,
-					productId,
-					productUrl;
+			$container.on('click', elements.join(', '), function () {
+				var $this = $(this),
+					$module = $this.closest('.monetization-module'),
+					$products = $module.find('.affiliate'),
+					monType = $module.attr('data-mon-type'),
+					slot = $module.attr('data-mon-slot'),
+					elementName = $this.attr('class'),
+					productUrl = $this.attr('href') || $this.find('a').attr('href'),
+					$product = $products.first();
 
-				$products = $(this).closest('.affiliate');
-				$productThumb = $products.find('.prod-thumb img');
-				$module = $(this).closest('.monetization-module');
-				trackCategory = $module.attr('id');
-				trackLabel = $(this).attr('class').split(' ')[0];
-				trackValue = $products.index();
-				vendor = $products.find('.vendor').attr('class').split(' ')[0];
-				type = $module.attr('class').split(' ')[1];
-				productName = $productThumb.attr('data-prod-name');
-				productId = $productThumb.attr('data-prod-id');
-				productUrl = $(this).attr('href');
+				if (monType !== 'amazon_video' && elementName !== 'module-title') {
+					$product = $this.parent();
+				}
 
 				track({
-					category: trackCategory,
-					label: trackLabel,
-					value: trackValue,
-					title: productName,
-					pid: productId,
-					vendor: vendor,
-					type: type,
+					action: Tracker.ACTIONS.CLICK + '-monetization-' + monType + '-' + slot + '-' + elementName,
+					label: $product.attr('data-mon-ptag'),
+					value: $products.index($product),
+					type: monType,
+					slot: slot,
+					title: $product.attr('data-mon-pname'),
+					pid: $product.attr('data-mon-pid'),
+					element: elementName,
 					url: productUrl
 				});
 			});

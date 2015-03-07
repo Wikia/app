@@ -36,9 +36,14 @@ class NavigationModel extends WikiaModel {
 	//errors
 	const ERR_MAGIC_WORD_IN_LEVEL_1 = 'Magic word at level 1';
 
-	const LEVEL_1_ITEMS_COUNT = 7;
-	const LEVEL_2_ITEMS_COUNT = 4;
-	const LEVEL_3_ITEMS_COUNT = 4;
+	const LOCALNAV_LEVEL_1_ITEMS_COUNT = 4;
+	const LOCALNAV_LEVEL_2_ITEMS_COUNT = 7;
+	const LOCALNAV_LEVEL_3_ITEMS_COUNT = 10;
+
+	const GLOBALNAV_LEVEL_1_ITEMS_COUNT = 7;
+	const GLOBALNAV_LEVEL_2_ITEMS_COUNT = 4;
+	const GLOBALNAV_LEVEL_3_ITEMS_COUNT = 4;
+
 	const MEMC_VERSION = 2;
 
 	private $menuNodes;
@@ -72,8 +77,8 @@ class NavigationModel extends WikiaModel {
 	 *
 	 * City ID can be specified to return key for different wiki
 	 *
-	 * @param string $name message / variable name
-	 * @param int $cityId city ID (false - default to current wiki)
+	 * @param string $messageName message / variable name
+	 * @param int|bool $cityId city ID (false - default to current wiki)
 	 * @return string memcache key
 	 */
 	private function getMemcKey( $messageName, $cityId = false ) {
@@ -98,6 +103,15 @@ class NavigationModel extends WikiaModel {
 		$this->wg->Memc->delete(
 			$this->getMemcKey( $key, $city_id )
 		);
+	}
+
+	/**
+	 * Refresh local navigation cache
+	 *
+	 * Called by LocalNavigationHooks::onMessageCacheReplace
+	 */
+	public function clearNavigationTreeCache() {
+		$this->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE, true /* $refreshCache */ );
 	}
 
 	private function setShouldTranslateContent($shouldTranslateContent) {
@@ -165,18 +179,71 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
-	public function getTree( $messageName ) {
+	public function getGlobalNavigationTree( $messageName ) {
+		return $this->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			[
+				self::GLOBALNAV_LEVEL_1_ITEMS_COUNT,
+				self::GLOBALNAV_LEVEL_2_ITEMS_COUNT,
+				self::GLOBALNAV_LEVEL_3_ITEMS_COUNT
+			]
+		);
+	}
+
+	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {
+		return $this->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			[
+				self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
+			],
+			true,
+			$refreshCache
+		);
+	}
+
+	public function getOnTheWikiNavigationTree( $variableName, $refreshCache = false ) {
+		return $this->getTree(
+			NavigationModel::TYPE_VARIABLE,
+			$variableName,
+			[
+				1,
+				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
+			],
+			true,
+			$refreshCache
+		);
+	}
+
+	private function getTreeMemcKey( /* args */ ) {
+		return $this->getMemcKey(implode('-', func_get_args() + [self::MEMC_VERSION]));
+	}
+
+	/**
+	 * @param string $type
+	 * @param string $source
+	 * @param array $maxChildrenAtLevel
+	 * @param bool $forContent
+	 * @param bool $refreshCache pass true to refresh the cache which stores parsed navigation tree
+	 * @return Mixed|null
+	 */
+	public function getTree( $type, $source, Array $maxChildrenAtLevel = [], $forContent = false, $refreshCache = false ) {
 		$menuData = WikiaDataAccess::cache(
-			$this->getMemcKey( $messageName . '-tree-' . self::MEMC_VERSION ),
-			1800,
-			function() use ( $messageName ) {
+			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-'), $forContent ),
+			self::CACHE_TTL /* 3 hours */,
+			function() use ( $type, $source, $maxChildrenAtLevel, $forContent ) {
 				$menuData = [];
 
 				$this->menuNodes = $this->parse(
-					NavigationModel::TYPE_MESSAGE,
-					$messageName,
-					[self::LEVEL_1_ITEMS_COUNT, self::LEVEL_2_ITEMS_COUNT, self::LEVEL_3_ITEMS_COUNT],
-					1800 /* 3 hours */
+					$type,
+					$source,
+					$maxChildrenAtLevel,
+					self::CACHE_TTL /* 3 hours */,
+					$forContent
 				);
 
 				foreach( $this->menuNodes[0]['children'] as $id ) {
@@ -184,7 +251,8 @@ class NavigationModel extends WikiaModel {
 				}
 
 				return $menuData;
-			}
+			},
+			( $refreshCache === true ) ? WikiaDataAccess::REFRESH_CACHE : WikiaDataAccess::USE_CACHE
 		);
 
 		return $menuData;
@@ -209,10 +277,17 @@ class NavigationModel extends WikiaModel {
 		$node = $this->menuNodes[$index];
 		$returnValue = [
 			'text' => $node['text'],
+			'textEscaped' => htmlspecialchars( $node['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
 			'href' => $node['href'],
 		];
 		if ( !empty( $node['specialAttr'] ) ) {
 			$returnValue['specialAttr'] = $node['specialAttr'];
+		}
+		if ( !empty( $node['canonicalName'] ) ) {
+			$returnValue['canonicalName'] = $node['canonicalName'];
+			$returnValue['canonicalAttr'] = 'data-canonical="' . strtolower( $node['canonicalName'] ) . '" ';
+		} else {
+			$returnValue['canonicalAttr'] = null;
 		}
 
 		if ( isset( $node['children'] ) ) {
@@ -245,6 +320,10 @@ class NavigationModel extends WikiaModel {
 		$this->forContent = $forContent;
 
 		$cacheKey = $this->getMemcKey( $source );
+		if ( $forContent === false) {
+			$cacheKey .= ':forUserLang';
+		}
+
 		$nodes = $this->wg->Memc->get( $cacheKey );
 
 		if ( empty( $nodes ) ) {
@@ -646,5 +725,15 @@ class NavigationModel extends WikiaModel {
 		}
 
 		return isset( $this->biggestCategories[$index-1] ) ? $this->biggestCategories[$index-1] : null;
+	}
+
+	/**
+	 * Check if given title refers to wiki nav messages
+	 *
+	 * @param $title Title title to check
+	 * @return bool
+	 */
+	public static function isWikiNavMessage(Title $title) {
+		return ($title->getNamespace() === NS_MEDIAWIKI) && ($title->getText() === self::WIKI_LOCAL_MESSAGE);
 	}
 }

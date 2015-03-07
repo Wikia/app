@@ -3,16 +3,16 @@
 $messages = [];
 
 $messages['en'] = [
-	//Oasis
-	'oasis-corporatefooter-navigation-header' => 'Wikia Inc Navigation',
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Video_Games',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://www.wikia.com/Video_Games',
-	'oasis-corporatefooter-hub-Videospiele-link' => 'http://de.wikia.com/Videospiele',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
+	'global-footer-vertical-tv-link' => 'http://tvhub.wikia.com/wiki/TV_Hub',
+	'global-footer-vertical-comics-link' => 'http://comicshub.wikia.com/wiki/Comics_Hub',
+	'global-footer-vertical-movies-link' => 'http://movieshub.wikia.com/wiki/Movies_Hub',
+	'global-footer-vertical-music-link' => 'http://musichub.wikia.com/wiki/Music_Hub',
+	'global-footer-vertical-books-link' => 'http://bookshub.wikia.com/wiki/Books_Hub',
+	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
+	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
+	'global-footer-desc' => 'GlobalFooter',
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>About</span>
-		*http://www.community.wikia.com|<span>Community Central</span>
+		*http://community.wikia.com|<span>Community Central</span>
 		*http://www.wikia.com/Careers|Careers
 		*http://www.wikia.com/Advertising|Advertise
 		*http://api.wikia.com/|<span>API</span>
@@ -30,13 +30,13 @@ $messages['en'] = [
 ];
 
 $messages['de'] = [
-	//Oasis
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://de.wikia.com/wiki/Entertainment',
-	'oasis-corporatefooter-hub-Food_and_Drink-link' => 'http://de.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://de.wikia.com/wiki/Videospiele',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://de.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://de.wikia.com/Videospiele',
-	'oasis-corporatefooter-navigation-header' => 'Wikia Inc-Navigation',
+	'global-footer-vertical-tv-link' => 'http://de.tvhub.wikia.com/wiki/TV_Hub',
+	'global-footer-vertical-comics-link' => 'http://de.comicshub.wikia.com/wiki/Comics_Hub',
+	'global-footer-vertical-movies-link' => 'http://de.filmhub.wikia.com/wiki/Film_Hub',
+	'global-footer-vertical-music-link' => 'http://de.musikhub.wikia.com/wiki/Musik_Hub',
+	'global-footer-vertical-books-link' => 'http://de.literaturhub.wikia.com/wiki/Literatur_Hub',
+	'global-footer-vertical-games-link' => 'http://de.videospielehub.wikia.com/wiki/Videospiele_Hub',
+	'global-footer-vertical-lifestyle-link' => 'http://de.lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'shared-Oasis-footer-wikia-links' => '*http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
 		*http://de.community.wikia.com|Community-Wiki
 		*http://de.wikia.com/Stellen|Stellenangebote
@@ -56,11 +56,11 @@ $messages['de'] = [
 ];
 
 $messages['fr'] = [
-	//Oasis
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://fr.wikia.com/Divertissement',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://fr.wikia.com/Jeux_vid%C3%A9o',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://fr.wikia.com/Mode_de_vie',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://fr.wikia.com/Jeux_vid%C3%A9o',
+	'global-footer-vertical-tv-link' => 'http://portail-divertissement.wikia.com/wiki/Portail_divertissement',
+	'global-footer-vertical-movies-link' => 'http://portail-divertissement.wikia.com/wiki/Portail_divertissement',
+	'global-footer-vertical-books-link' => 'http://portail-divertissement.wikia.com/wiki/Portail_divertissement',
+	'global-footer-vertical-games-link' => 'http://portail-jeuxvideo.wikia.com/wiki/Portail_jeux_vid%C3%A9o',
+	'global-footer-vertical-lifestyle-link' => 'http://portail-modedevie.wikia.com/wiki/Portail_mode_de_vie',
 	'shared-Oasis-footer-wikia-links' => '*http://fr.wikia.com/À_propos|<span>À propos</span>
 		*http://communaute.wikia.com|<span>Wiki des communautés</span>
 		*http://www.wikia.com/Careers|Emplois
@@ -80,11 +80,13 @@ $messages['fr'] = [
 ];
 
 $messages['pl'] = [
-	//Oasis
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://pl.wikia.com/Rozrywka',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://pl.wikia.com/Gry',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://pl.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://pl.wikia.com/Gry',
+	'global-footer-vertical-tv-link' => 'http://rozrywkahub.wikia.com/wiki/Rozrywka',
+	'global-footer-vertical-comics-link' => 'http://pl.animehub.wikia.com/wiki/Anime',
+	'global-footer-vertical-movies-link' => 'http://rozrywkahub.wikia.com/wiki/Rozrywka',
+	'global-footer-vertical-music-link' => 'http://rozrywkahub.wikia.com/wiki/Rozrywka',
+	'global-footer-vertical-books-link' => 'http://pl.lifestylehub.wikia.com/wiki/Lifestyle',
+	'global-footer-vertical-games-link' => 'http://gryhub.wikia.com/wiki/Gry',
+	'global-footer-vertical-lifestyle-link' => 'http://pl.lifestylehub.wikia.com/wiki/Lifestyle',
 	'shared-Oasis-footer-wikia-links' => '*http://pl.wikia.com/O_nas|O nas
 		*http://www.spolecznosc.wikia.com|Centrum Społeczności
 		*http://www.wikia.com/Careers|Kariera
@@ -105,10 +107,13 @@ $messages['pl'] = [
 ];
 
 $messages['es'] = [
-	//Oasis
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://es.wikia.com/Entretenimiento',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://es.wikia.com/Videojuegos',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://es.wikia.com/Estilo_de_vida',
+	'global-footer-vertical-tv-link' => 'http://es.tvhub.wikia.com/wiki/Wiki_TV_Hub',
+	'global-footer-vertical-comics-link' => 'http://es.comicshub.wikia.com/wiki/Wiki_C%C3%B3mics_Hub',
+	'global-footer-vertical-movies-link' => 'http://es.filmhub.wikia.com/wiki/Wiki_Pel%C3%ADculas_Hub',
+	'global-footer-vertical-music-link' => 'http://es.musichub.wikia.com/wiki/Wiki_M%C3%BAsica_Hub',
+	'global-footer-vertical-books-link' => 'http://es.bookshub.wikia.com/wiki/Wiki_Libros_Hub',
+	'global-footer-vertical-games-link' => 'http://es.gameshub.wikia.com/wiki/Wiki_Videojuegos_Hub',
+	'global-footer-vertical-lifestyle-link' => 'http://es.lifestylehub.wikia.com/wiki/Wiki_Estilo_de_vida_Hub',
 	'shared-Oasis-footer-wikia-links' => '*http://es.wikia.com/Sobre_nosotros|<span>Sobre Wikia</span>
 		*http://comunidad.wikia.com|<span>Comunidad Central</span>
 		*http://www.wikia.com/Hiring|Contrataciones
@@ -127,17 +132,12 @@ $messages['es'] = [
 		* [http://mediakit.wikia.com/wiki/Contact Publicidad]',
 ];
 
-$messages['ia'] = [
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=ia',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=ia',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=ia',
-	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=ia',
-];
-
 $messages['ja'] = [
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://ja.wikia.com/エンタテインメント',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://ja.wikia.com/ゲーム',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://ja.wikia.com/ライフスタイル',
+	'global-footer-vertical-tv-link' => 'http://ja.entertainmenthub.wikia.com/wiki/%E3%82%A8%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%86%E3%82%A4%E3%83%A1%E3%83%B3%E3%83%88%E3%83%8F%E3%83%96_Wiki',
+	'global-footer-vertical-comics-link' => 'http://ja.entertainmenthub.wikia.com/wiki/%E3%82%A8%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%86%E3%82%A4%E3%83%A1%E3%83%B3%E3%83%88%E3%83%8F%E3%83%96_Wiki',
+	'global-footer-vertical-movies-link' => 'http://ja.entertainmenthub.wikia.com/wiki/%E3%82%A8%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%86%E3%82%A4%E3%83%A1%E3%83%B3%E3%83%88%E3%83%8F%E3%83%96_Wiki',
+	'global-footer-vertical-books-link' => 'http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Gurgate/%E6%80%A7%E6%A0%BC%E8%A8%BA%E6%96%AD%E3%83%86%E3%82%B9%E3%83%88%E3%82%92%E3%82%84%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86',
+	'global-footer-vertical-games-link' => 'http://ja.videogameshub.wikia.com/wiki/%E3%83%93%E3%83%87%E3%82%AA%E3%82%B2%E3%83%BC%E3%83%A0%E3%83%8F%E3%83%96_Wiki',
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>ウィキアについて</span>
 		*http://www.wikia.com/Hiring|キャリア
 		*http://www.wikia.com/Advertising|広告
@@ -146,28 +146,6 @@ $messages['ja'] = [
 		*http://www.wikia.com/Privacy_Policy|Privacy Policy　
 		*http://www.wikia.com/Special:CreateWiki|Create a wiki
 		*_LICENSE_',
-];
-
-$messages['mk'] = [
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=mk',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=mk',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://www.wikia.com/Video_Games?uselang=mk',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=mk',
-	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=mk',
-];
-
-$messages['sr-ec'] = [
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment?uselang=sr-ec',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Gaming?uselang=sr-ec',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle?uselang=sr-ec',
-	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=sr-ec',
-];
-
-$messages['sv'] = [
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
-	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Video_Games',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'http://www.wikia.com/Video_Games',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
 ];
 
 $messages['it'] = [
@@ -244,6 +222,13 @@ $messages['fa'] = [
 ];
 
 $messages['pt-br'] = [
+	'global-footer-vertical-tv-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'global-footer-vertical-comics-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'global-footer-vertical-movies-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'global-footer-vertical-music-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'global-footer-vertical-books-link' => 'http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida',
+	'global-footer-vertical-games-link' => 'http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub',
+	'global-footer-vertical-lifestyle-link' => 'http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida',
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>Sobre nós</span>
 		*http://www.wikia.com/Hiring|Carreiras
 		*http://www.wikia.com/Advertising|Advertise
@@ -275,13 +260,14 @@ $messages['gl'] = [
 ];
 
 $messages['qqq'] = [
-	'oasis-corporatefooter-navigation-header' => 'Global footer navigation header',
-	'oasis-corporatefooter-hub-Entertainment-link' => 'Link to Entertainment hub',
-	'oasis-corporatefooter-hub-Gaming-link' => 'Link to Gaming hub',
-	'oasis-corporatefooter-hub-Video_Games-link' => 'Link to Video Games hub',
-	'oasis-corporatefooter-hub-Videospiele-link' => 'Link to Videospiele hub',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'Link to Lifestyle hub',
-	'oasis-corporatefooter-hub-Food and Drink-link' => 'Link to Recipes hub',
+	'global-footer-vertical-tv-link' => 'URL to tv hub wiki',
+	'global-footer-vertical-comics-link' => 'URL to comics hub wiki',
+	'global-footer-vertical-movies-link' => 'URL to movies hub wiki',
+	'global-footer-vertical-music-link' => 'URL to music hub wiki',
+	'global-footer-vertical-books-link' => 'URL to books hub wiki',
+	'global-footer-vertical-games-link' => 'URL to games hub wiki',
+	'global-footer-vertical-lifestyle-link' => 'URL to lifestyle hub wiki',
+	'global-footer-desc' => '{{desc}}',
 	'shared-Oasis-footer-wikia-links' => 'All global footer links written in wiki text',
 	'shared-Monobook-footer-wikia-links' => 'All global footer links written
 	in wiki text displayed on Monobook skin'

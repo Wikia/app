@@ -10,8 +10,12 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'AutoMainpageFixer',
 	'author' => array('[http://central.wikia.com/wiki/User:Uberfuzzy Chris Stafford (uberfuzzy)]', ),
 	'version' => '1.0',
-	'description' => 'Keeps MediaWiki:Mainpage upto date as the main page is moved.',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutoMainpageFixer',
+	'descriptionmsg' => 'automainpagefixer-desc',
 );
+
+//i18n
+$wgExtensionMessagesFiles['AutoMainpageFixer'] = __DIR__ . '/AutoMainpageFixer.i18n.php';
 
 $wgHooks['TitleMoveComplete'][] = 'fnAutoMWMainpageFixer';
 
@@ -41,3 +45,4 @@ function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {
 	wfProfileOut(__METHOD__);
 	return true;
 }
+

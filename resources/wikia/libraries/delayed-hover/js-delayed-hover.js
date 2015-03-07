@@ -55,7 +55,7 @@
 	 * Module core
 	 */
 	DelayedHoverModule = function() {
-		var getSquaredMoveDistance,
+		var getSquaredMoveDistance, eventHandler,
 			mouseEnterHandler, mouseLeaveHandler, mouseMoveHandler,
 			lastLocation, lastCheckedLocation, options, possiblyActivate, timeoutId;
 
@@ -84,17 +84,35 @@
 		 * Function that checks mouse speed  activates callback when conditions are met
 		 */
 		possiblyActivate = function() {
+			var context = this;
 			if ( lastLocation && getSquaredMoveDistance() <= options.maxSquaredActivationDistance ) {
-				options.onActivate();
+				options.onActivate.apply(context, arguments);
 			} else {
 				if ( timeoutId ) {
 					clearTimeout( timeoutId );
 				}
-				timeoutId = setTimeout( possiblyActivate, options.checkInterval );
+				timeoutId = setTimeout(
+					function() {
+						possiblyActivate.apply(context, arguments);
+					}, options.checkInterval
+				);
 			}
 
 			if ( lastLocation ) {
 				lastCheckedLocation = lastLocation;
+			}
+		};
+
+		eventHandler = function(target, event, handler) {
+			var i, targetsCount;
+
+			targetsCount = target.length;
+			if (targetsCount > 1) {
+				for (i=0; i < targetsCount; i++) {
+					target[i].addEventListener(event, handler);
+				}
+			} else {
+				target.addEventListener(event, handler);
 			}
 		};
 
@@ -108,7 +126,7 @@
 		mouseEnterHandler = function( e ) {
 			lastCheckedLocation = {x: e.pageX, y: e.pageY};
 			lastLocation = null;
-			possiblyActivate();
+			possiblyActivate.apply(this, arguments);
 		};
 
 		mouseLeaveHandler = function() {
@@ -116,7 +134,7 @@
 				clearTimeout( timeoutId );
 			}
 
-			options.onDeactivate();
+			options.onDeactivate.apply(this, arguments);
 		};
 
 		/**
@@ -127,11 +145,12 @@
 			options.maxSquaredActivationDistance = options.maxActivationDistance * options.maxActivationDistance;
 
 			if ( options.activateOnClick ) {
-				elem.addEventListener( 'click', options.onActivate );
+				eventHandler(elem, 'click', options.onActivate);
 			}
-			elem.addEventListener( 'mouseenter', mouseEnterHandler );
-			elem.addEventListener( 'mouseleave', mouseLeaveHandler );
-			elem.addEventListener( 'mousemove', mouseMoveHandler );
+
+			eventHandler(elem, 'mouseenter', mouseEnterHandler);
+			eventHandler(elem, 'mouseleave', mouseLeaveHandler);
+			eventHandler(elem, 'mousemove', mouseMoveHandler);
 
 			return this;
 		};

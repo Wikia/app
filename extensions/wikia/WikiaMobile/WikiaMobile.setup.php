@@ -17,11 +17,12 @@ $dir = dirname( __FILE__ );
 $wgExtensionCredits['other'][] =
 	array(
 		"name" => "WikiaMobile",
-		"description" => "Mobile Skin for Wikia",
+		"descriptionmsg" => "wikiamobile-desc",
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
 			'Jakub Olek <jakubolek(at)wikia-inc.com>'
-		)
+		),
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaMobile'
 	);
 
 /**
@@ -76,6 +77,7 @@ $wgAutoloadClasses['WikiaMobileController'] = "{$dir}/WikiaMobileController.clas
 $wgExtensionMessagesFiles['WikiaMobile'] = "{$dir}/WikiaMobile.i18n.php";
 
 JSMessages::registerPackage( 'WkMbl', array(
+	'adengine-advertisement',
 	'wikiamobile-hide-section',
 	'wikiamobile-sharing-media-image',
 	'wikiamobile-sharing-page-text',
@@ -126,7 +128,7 @@ if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
 	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles' );
 }
 
-//black list of JS globals
+// white list of JS globals
 if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 	$wgWikiaMobileIncludeJSGlobals =
 		[
@@ -137,16 +139,23 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
+			'ads',
+			'wgGaHasAds',
+
+			//ads legacy -- should be removed at some point
 			'adEnginePageType',
-			'cityShort',
+			'wgAdDriverUseAdsAfterInfobox',
 			'wgAdDriverWikiIsTop1000',
-			'wgAdVideoTargeting',
 			'wgDartCustomKeyValues',
 			'wgShowAds',
 			'wgUsePostScribe',
 			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',
+
+			//vertical&categories
+			'wgWikiVertical',
+			'wgWikiCategories',
 
 			//server/wiki
 			'wgServer',
@@ -195,7 +204,12 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 
 			//login
 			'fbAppId',
-			'fbUseMarkup',
-			'wgLoginToken'
+			'wgLoginToken',
+
+			//signup
+			'wgUserLoginDisableCaptcha',
+
+			//AbTesting
+			'wgCdnApiUrl',
 		];
 }

@@ -232,7 +232,7 @@ Dies ist eine gute Möglichkeit um noch mehr Spaß rund um die Auszeichnungen zu
 	'activeuserstitle' => 'Aktive Benutzer',
 	'add_comment' => 'Kommentieren',
 	'addedwatchtext' => 'Die Seite „$1“ wurde zu Deiner [[{{ns:special}}:Watchlist|Beobachtungsliste]] hinzugefügt. <br />
-Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werden dort gelistet und die Seite wird in der [[{{ns:special}}:Recentchanges|Liste der letzten Änderungen]] in \'\'\'Fettschrift\'\'\' angezeigt. 
+Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werden dort gelistet und die Seite wird in der [[{{ns:special}}:Recentchanges|Liste der letzten Änderungen]] in \'\'\'Fettschrift\'\'\' angezeigt.
 Wenn Du die Seite wieder von der Beobachtungsliste entfernen möchtest, klicke auf der jeweiligen Seite auf „Nicht beobachten“.',
 	'addnewtalksection-link' => 'Neuen Abschnitt erstellen',
 	'addsection' => 'Kommentieren',
@@ -347,7 +347,7 @@ verlieren sollten, kannst du das Wikia Community-Team unter der
 Adresse http://de.wikia.com/wiki/Spezial:Kontakt erreichen und
 wir senden ein neues Passwort an deine E-Mail-Adresse.
 
--- 
+--
 Das Wikia Team',
 	'adss-welcome-subject' => '[AdSS] Vielen Dank für dein Sponsoring!',
 	'adss-wikia' => 'Wikia',
@@ -371,10 +371,10 @@ Das Wikia Team',
 |<div style="float:right">http://images.wikia.com/de/images/4/47/Allpages-summary-de.png</div>
 <span style="font-weight:bold; font-size:140%;">Inhalt von A–Z</span>
 
-Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersicht aller Seiten\'\'\' in diesem Wiki. Aktuell gibt es bereits \'\'\'{{NUMBEROFARTICLES}} Seiten\'\'\', die als „Artikel“ gelten. 
+Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersicht aller Seiten\'\'\' in diesem Wiki. Aktuell gibt es bereits \'\'\'{{NUMBEROFARTICLES}} Seiten\'\'\', die als „Artikel“ gelten.
 
 * Mit dem Auswahlfeld lassen sich Seiten in bestimmten [[w:c:hilfe:Hilfe:Namensräume|Namensräumen]] anzeigen.
-* \'\'Kursiv\'\' dargestellte Einträge sind Weiterleitungen auf andere Seitentitel. 
+* \'\'Kursiv\'\' dargestellte Einträge sind Weiterleitungen auf andere Seitentitel.
 * Alternativ zu dieser automatisch erstellten Auflistung gibt es noch die [[:Kategorie:Inhalt|\'\'\'Kategorienübersicht\'\'\' als thematisch gegliederten Einstieg]].
 |}',
 	'allpagesbadtitle' => 'Der angegeben Seitentitel war ungültig oder hatte einen Interlanguage- oder Interwiki-Präfix. Eventuell enthält er auch ein Zeichen, das nicht in einem Seitentitel verwendet werden kann.',
@@ -383,7 +383,7 @@ Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersi
 	'already_bureaucrat' => 'Dieser Benutzer ist bereits Bürokrat.',
 	'already_sysop' => 'Dieser Benutzer ist bereits Administrator.',
 	'alreadyloggedin' => '\'\'\'Benutzer $1, Du bist bereits angemeldet!\'\'\'<br />',
-	'alreadyrolled' => 'Das Zurücksetzen der Änderungen von [[{{ns:user}}:$2|$2]] <span style=\'font-size: smaller\'>([[{{ns:user_talk}}:$2|Diskussion]], [[{{ns:special}}:Contributions/$2|Beiträge]])</span> am Artikel [[:$1]] war nicht erfolgreich, da in der Zwischenzeit bereits ein anderer Benutzer 
+	'alreadyrolled' => 'Das Zurücksetzen der Änderungen von [[{{ns:user}}:$2|$2]] <span style=\'font-size: smaller\'>([[{{ns:user_talk}}:$2|Diskussion]], [[{{ns:special}}:Contributions/$2|Beiträge]])</span> am Artikel [[:$1]] war nicht erfolgreich, da in der Zwischenzeit bereits ein anderer Benutzer
 Änderungen an diesem Artikel vorgenommen hat.<br />Die letzte Änderung stammt von [[{{ns:user}}:$3|$3]] <span style=\'font-size: smaller\'>([[{{ns:user_talk}}:$3|Diskussion]])</span>.',
 	'ancientpages-summary' => 'Diese Spezialseite zeigt eine Liste von Artikeln, die sehr lange nicht mehr geändert wurden. Sie ist hilfreich, um Artikel zu finden, die gegebenenfalls aktualisiert werden müssen.',
 	'anoneditwarning' => '<table align=center width=75% cellpadding=5 style="background: #D3E1F2; border: 1px solid #aaa; color: black;">
@@ -401,7 +401,7 @@ Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersi
 <br />',
 	'anontalkpagetext' => '<br style="clear:both;" />
 ----
-{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 | \'\'\'Diese Seite dient dazu, einem nicht angemeldeten Benutzer an seine [[wikipedia:de:IP-Adresse|IP-Adresse]] Nachrichten zu hinterlassen.\'\'\'
 
 Einige IP-Adressen wechseln dynamisch und können von mehreren Nutzern belegt werden. Falls du ein nicht-angemeldeter Nutzer bist, solltest du ein [[{{ns:Special}}:Signup|Benutzerkonto erstellen]] oder dich anmelden um nicht mit anderen Nutzern verwechselt zu werden. Nach einer Anmeldung wird deine IP-Adresse auch nicht mehr angezeigt.
@@ -672,9 +672,9 @@ Jetzt hast du eine ganze Webseite, die du mit Informationen, Bildern und Videos 
 
 Und im Anschluss mach einfach weiter! Leute mögen große Wikis, wenn man viel entdecken kann. Also füge weiterhin Inhalte hinzu, und du wirst neue Leser und Benutzer anziehen. Es gibt viel zu tun, aber sei unbesorgt - heute ist dein erster Tag, und du hast genügend Zeit. Jedes Wiki fängt auf die selbe Weise an - es braucht nur ein bisschen Zeit, und nach den ersten paar Seiten, wird das Wiki in  einer Weile wird das Wiki zu einer großen und beliebten Seite heranwachsen.
 
-Falls du Hilfe benötigst (und glaub mir: die haben wir alle gebraucht) findest du unsere Hilfe-Seiten in unserem [[w:c:de.community|Community-Wiki]]. 
+Falls du Hilfe benötigst (und glaub mir: die haben wir alle gebraucht) findest du unsere Hilfe-Seiten in unserem [[w:c:de.community|Community-Wiki]].
 
-Wenn du weitere Hilfe brauchst, kannst du 
+Wenn du weitere Hilfe brauchst, kannst du
 *uns eine Mail über unser [[Special:Contact|Kontaktformular]] schreiben,
 *unseren [http://de.c.wikia.com/wiki/Special:Chat Community-Chat] besuchen,
 *oder dich bei Fragen an unsere Foren wenden - das [[w:c:de.c:Special:Forum|Community-Forum]] für alle möglichen Themen und das [[w:c:de.c:Admin-Forum:Übersicht|Admin-Forum]] speziell für Fragen rund ums Admin-sein.
@@ -692,9 +692,9 @@ Jetzt hast du eine ganze Webseite, die du mit Informationen, Bildern und Videos 
 
 Und im Anschluss mach einfach weiter! Leute mögen große Wikis, wenn man viel entdecken kann. Also füge weiterhin Inhalte hinzu, und du wirst neue Leser und Benutzer anziehen. Es gibt viel zu tun, aber sei unbesorgt - heute ist dein erster Tag, und du hast genügend Zeit. Jedes Wiki fängt auf die selbe Weise an - es braucht nur ein bisschen Zeit, und nach den ersten paar Seiten, wird das Wiki in  einer Weile wird das Wiki zu einer großen und beliebten Seite heranwachsen.
 
-Falls du Hilfe benötigst (und glaub mir: die haben wir alle gebraucht) findest du unsere Hilfe-Seiten unter [[w:c:hilfe:Hilfe:Übersicht|hilfe.wikia.com]] oder direkt hier im Wiki unter [[Hilfe:Übersicht]]. 
+Falls du Hilfe benötigst (und glaub mir: die haben wir alle gebraucht) findest du unsere Hilfe-Seiten unter [[w:c:hilfe:Hilfe:Übersicht|hilfe.wikia.com]] oder direkt hier im Wiki unter [[Hilfe:Übersicht]].
 
-Wenn du weitere Hilfe brauchst, kannst du 
+Wenn du weitere Hilfe brauchst, kannst du
 *uns eine Mail über unser [[Special:Contact|Kontaktformular]] schreiben,
 *unseren [http://de.c.wikia.com/wiki/Special:Chat Community-Chat] besuchen,
 *oder dich bei Fragen an unsere Foren wenden - das [[w:c:de.c:Forum:Index|Community-Forum]] für alle möglichen Themen und das [[w:c:de.c:Admin-Forum:Übersicht|Admin-Forum]] speziell für Fragen rund ums Admin-sein.
@@ -1435,7 +1435,7 @@ Avatar6.jpg',
 
 Wikia Blogs ermöglichen es dir in deinem Wiki deinen Blog-Beitrag zu den [[Blog:Letzte Beiträge|Blogs der Wiki-Gemeinschaft]] hinzuzufügen.
 
-Blogs werden von Wiki-Gemeinschaften für Fanfictions, News und Ankündigungen, Fragen oder Anforderungen an die Community genutzt. Schau dir die folgenden Beispielblogs an! 
+Blogs werden von Wiki-Gemeinschaften für Fanfictions, News und Ankündigungen, Fragen oder Anforderungen an die Community genutzt. Schau dir die folgenden Beispielblogs an!
 *<span class="plainlinks">[http://bit.ly/animanga-newsblog Newsblog des Animanga-Wikis]</span>
 *[http://de.bakugan.wikia.com/wiki/Blog:Bakugan-Newsblog Bakupedia News-Blog]
 *[http://de.gta.wikia.com/wiki/Blog:GTA_Wiki_News GTA Wiki News]',
@@ -1479,7 +1479,7 @@ Blogs werden von Wiki-Gemeinschaften für Fanfictions, News und Ankündigungen, 
 	'captcha-input-placeholder' => 'Text eingeben',
 	'captcha-short' => 'Deine Bearbeitung enthält neue externe Links. Zum Schutz vor automatisiertem Spamming ist es nötig, dass du das Nebenstehende abtippst bzw. die Aufgabe löst. Klicke dann erneut auf „Seite speichern“.<br />
 ([[{{ns:special}}:Captcha/help|Was soll das?]])',
-	'captchahelp-text' => 'Dieses Projekt ist ein offenes Wiki. Das bedeutet, dass praktisch jeder Beiträge einstellen kann. Solche Projekte sind daher häufiges Ziel von Spammern, die spezielle Programme benutzen, um automatisiert Weblinks zu anderen Internetseiten zu platzieren. Da diese unerwünschten Links einzeln wieder entfernt werden müssen, können sie die Arbeit an diesem Projekt enorm beeinträchtigen. 
+	'captchahelp-text' => 'Dieses Projekt ist ein offenes Wiki. Das bedeutet, dass praktisch jeder Beiträge einstellen kann. Solche Projekte sind daher häufiges Ziel von Spammern, die spezielle Programme benutzen, um automatisiert Weblinks zu anderen Internetseiten zu platzieren. Da diese unerwünschten Links einzeln wieder entfernt werden müssen, können sie die Arbeit an diesem Projekt enorm beeinträchtigen.
 
 Um zu verhindern, dass so genannte „Spam-“ oder „Vandal-Bots“ automatisch externe Links einfügen oder zahllose neue Benutzerkonten für spätere Spam- oder Vandalismusattacken registrieren können, verwendet Wikia sogenannte „Captchas“ (kleine Aufgaben, die für Menschen gut, für Bots aber nur schwer lösbar sind).
 
@@ -1576,10 +1576,10 @@ Leider bereitet diese Methode für einige Benutzer Unannehmlichkeiten, besonders
 	'chat-user-permanently-disconnected' => 'Deine Verbindung zum Chat wurde getrennt. Prüfe bitte deine Internetverbindung und lade die Seite in deinem Browser erneut.',
 	'checkuser' => 'CheckUser',
 	'cite_error_-3' => 'Interner Fehler: Ungültiger „name“',
-	'clearyourcache' => '\'\'\'Hinweis - Leere nach dem Speichern den Browser-Cache, um die Änderungen sehen zu können:\'\'\' 
+	'clearyourcache' => '\'\'\'Hinweis - Leere nach dem Speichern den Browser-Cache, um die Änderungen sehen zu können:\'\'\'
 *\'\'\'Mozilla/Firefox/Safari:\'\'\' \'\'Shift\'\' gedrückt halten und auf \'\'Aktualisieren\'\' klicken oder alternativ entweder \'\'Strg-F5\'\' oder \'\'Strg-R\'\' (\'\'Befehlstaste-R\'\' bei Macintosh) drücken;
-*\'\'\'Konqueror: \'\'\'Auf \'\'Aktualisieren\'\' klicken oder \'\'F5\'\' drücken; 
-*\'\'\'Opera:\'\'\' Cache unter \'\'Extras → Einstellungen\'\' leeren; 
+*\'\'\'Konqueror: \'\'\'Auf \'\'Aktualisieren\'\' klicken oder \'\'F5\'\' drücken;
+*\'\'\'Opera:\'\'\' Cache unter \'\'Extras → Einstellungen\'\' leeren;
 *\'\'\'Internet Explorer:\'\'\' \'\'Strg-F5\'\' drücken oder \'\'Strg\'\' gedrückt halten und dabei \'\'Aktualisieren\'\' anklicken.
 *\'\'\'Chrome:\'\'\' \'\'\'Strg\'\'\' und \'\'\'F5\'\'\';',
 	'click_stats' => 'Klick Statistik',
@@ -1660,7 +1660,7 @@ Leider bereitet diese Methode für einige Benutzer Unannehmlichkeiten, besonders
 	'comboajaxlogin-createlog' => 'Melde dich bitte an oder registriere dich.',
 	'comboajaxlogin-readonlytext' => '<h2>Entschuldige!</h2>
 <p>Du kannst momentan kein Benutzerkonto erstellen - wir sollten in Kürze wieder erreichbar sein. Sieh nach was los ist:<br /><em>$1</em></p>
-<p>Bitte schau bei <a href="http://twitter.com/wikia_de">Twitter</a> oder <a href="http://facebook.com/wikia.de">Facebook</a> für weitere Informationen. 
+<p>Bitte schau bei <a href="http://twitter.com/wikia_de">Twitter</a> oder <a href="http://facebook.com/wikia.de">Facebook</a> für weitere Informationen.
 <br />
  (Wenn du bereits ein Benutzerkonto hast, kannst du dich <a href="#">einloggen</a> wie sonst auch, wirst aber nichts bearbeiten können.)</p>',
 	'comments-only-delete-thread' => 'Thema löschen',
@@ -1673,17 +1673,17 @@ Leider bereitet diese Methode für einige Benutzer Unannehmlichkeiten, besonders
 /* </pre></nowiki> */',
 	'common.js' => '/* Jedes JavaScript hier wird für alle Benutzer für jede Seite geladen. */
 
- // Import [[MediaWiki:Onlyifuploading.js]] 
- 
+ // Import [[MediaWiki:Onlyifuploading.js]]
+
  if ( wgCanonicalSpecialPageName == "Upload" ) {
       document.write(\'<script type="text/javascript" src="/index.php?title=MediaWiki:Onlyifuploading.js&action=raw&ctype=text/javascript&dontcountme=s"></script>\');
  }
 
 importScriptPage(\'ShowHide/code.js\', \'dev\');
 
-var ShowHideConfig = { 
-    autoCollapse: 3, 
-    userLang: false, 
+var ShowHideConfig = {
+    autoCollapse: 3,
+    userLang: false,
     en: {
 	show: "anzeigen",
 	hide: "ausblenden",
@@ -1695,7 +1695,7 @@ var ShowHideConfig = {
 
 Hier findest du aktuelle Nachrichten, die dir dabei helfen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
-Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel: 
+Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel:
 
 * Einige Seiten aufführen, die jeder sehen sollte.
 * Ein Projekt organisieren, um einen neuen Bereich im Wiki aufzubauen.
@@ -1732,13 +1732,13 @@ Wenn diese E-Mail-Adresse *nicht* zu dem genannten Benutzerkonto gehört, folge 
 </p>',
 	'confirmemail_body' => 'Hallo,
 
-dies ist eine automatisch erstellte Nachricht. 
+dies ist eine automatisch erstellte Nachricht.
 
 Jemand mit der IP-Adresse $1, wahrscheinlich Du selbst, hat eine Bestätigung dieser E-Mail-Adresse für das Benutzerkonto "$2" für {{SITENAME}} angefordert.
 
 Um die E-Mail-Funktion für {{SITENAME}} (wieder) zu aktivieren und um zu bestätigen, dass dieses Benutzerkonto wirklich zu Deiner E-Mail-Adresse und damit zu Dir gehört, öffne bitte folgenden Link in Deinem Browser: $3
 
-Sollte der vorstehende Link in Deinem E-Mail-Programm über mehrere Zeilen gehen, musst du ihn eventuell per Hand in die URL-Zeile des Browsers einfügen. 
+Sollte der vorstehende Link in Deinem E-Mail-Programm über mehrere Zeilen gehen, musst du ihn eventuell per Hand in die URL-Zeile des Browsers einfügen.
 
 Der Bestätigungscode ist bis zum folgenden Zeitpunkt gültig: $4
 
@@ -2013,7 +2013,7 @@ Links werden mit ein oder zwei eckigen Klammern erzeugt.
 <nowiki>[http://www.example.com Link-Beschreibung]</nowiki>
 =Überschrift hinzufügen=
 
-Überschriften werden durch Gleich-Zeichen markiert. Je mehr "=", desto kleiner die Überschrift. 
+Überschriften werden durch Gleich-Zeichen markiert. Je mehr "=", desto kleiner die Überschrift.
 Überschrift 1 ist für den Titel der Seite reserviert.
 
 <br />
@@ -2187,7 +2187,7 @@ $PAGESUMMARY $PAGEMINOREDIT
 
 Dein freundliches {{SITENAME}}-Benachrichtigungssystem
 
--- 
+--
 Um die Einstellungen deiner Beobachtungsliste anzupassen, besuche: {{fullurl:Special:Watchlist/edit}}
 
 Folge Wikia auf
@@ -2218,11 +2218,11 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem
 $PAGEEDITOR hat einen Kommentar auf der Seite "$PAGETITLE" hinterlassen.
 
 Um alle Kommentare zu sehen, folge diesem Link:
-$PAGETITLE_URL 
+$PAGETITLE_URL
 
 Dein freundliches {{SITENAME}}-Benachrichtigungssystem
 
--- 
+--
 Um die Einstellungen deiner Beobachtungsliste anzupassen, besuche: {{fullurl:Special:Watchlist/edit}}
 
 Folge Wikia auf
@@ -2231,13 +2231,13 @@ Facebook: http://facebook.com/wikia.de
 
 Twitter: http://twitter.com/wikia_de',
 	'enotif_body_blogpost-HTML' => '<p> Hallo $WATCHINGUSERNAME, <br /><br /> Ein neuer Blog wurde zu einer Blogaggregationsseite die du in  {{SITENAME}} verfolgst hinzugefügt.. <br /><br /> Siehe <a href="$PAGETITLE_URL">$PAGETITLE</a> für den neuen Blog. <br /><br /><hr />Um die Einstellungen deiner Verfolgeliste anzupassen, besuche <a href="{{fullurl:{{ns:special}}:Preferences}}">deine Benutzereinstellungen</a></p>',
-	'enotif_body_blogpost' => 'Hallo $WATCHINGUSERNAME, 
+	'enotif_body_blogpost' => 'Hallo $WATCHINGUSERNAME,
 
-Ein Blog in einer Blogaggregationsseite die du in {{SITENAME}} verfolgst ist bearbeitet worden. 
+Ein Blog in einer Blogaggregationsseite die du in {{SITENAME}} verfolgst ist bearbeitet worden.
 
-Siehe "$PAGETITLE_URL" für den neuen Post. 
+Siehe "$PAGETITLE_URL" für den neuen Post.
 
--- 
+--
 Um die Einstellungen deiner Verfolgeliste anzupassen, besuche: {{fullurl:Special:Preferences}}',
 	'enotif_body_blogs_comment' => 'Hallo $WATCHINGUSERNAME,
 
@@ -2269,7 +2269,7 @@ Siehe "$PAGETITLE_URL" für die neue Seite.
 
 Dein freundliches {{SITENAME}}-Benachrichtigungssystem
 
--- 
+--
 Um die Einstellungen deiner Verfolgeliste anzupassen, besuche: {{fullurl:Special:Preferences}}',
 	'enotif_body_delete-HTML' => '<p>
 Hallo $WATCHINGUSERNAME,<br />
@@ -2600,53 +2600,23 @@ ___________________________________________
 	'fancycaptcha-createaccount' => 'Tippe bitte den Text aus dem Bild ab.',
 	'fast-adv' => 'Werbeanzeige',
 	'fastcat-edit-comment' => 'FastCat: Kategorie hinzugefügt',
-	'fb-sync-birthday' => 'Geburtstag',
-	'fb-sync-button' => 'Mein Profil synchronisieren',
-	'fb-sync-currentlocation' => 'Aktueller Wohnort',
-	'fb-sync-education' => 'Schulbildung',
-	'fb-sync-educationwith' => ' mit:',
-	'fb-sync-gender' => 'Geschlecht',
-	'fb-sync-hometown' => 'Heimatstadt',
-	'fb-sync-interestedin' => 'Interessiert an',
-	'fb-sync-languages' => 'Sprachen',
-	'fb-sync-permissionerror' => 'Bitte erlaube Wikia auf dein Facebook-Profil zuzugreifen, um deine Profile zu synchronisieren.',
-	'fb-sync-politicalviews' => 'Politische Ansichten',
-	'fb-sync-realname' => 'Echter Name',
-	'fb-sync-relationshipstatus' => 'Beziehungsstatus',
-	'fb-sync-religiousviews' => 'Religiöse Ansichten',
-	'fb-sync-save' => 'In meinem Wikia-Profil speichern',
-	'fb-sync-success-message' => 'Dein Profil wurde mit dem von Facebook synchronisiert.',
-	'fb-sync-website' => 'Webseite',
-	'fb-sync-work-at' => ' bei',
-	'fb-sync-work' => 'Arbeit',
 	'fbconnect-alreadyloggedin-title' => 'Bereits verbunden',
 	'fbconnect-alreadyloggedin' => '\'\'\'Du bist bereits angemeldet und mit Facebook verknüpft, $1!\'\'\'',
 	'fbconnect-cancel' => 'Aktion abgebrochen',
 	'fbconnect-canceltext' => 'Die vorherige Aktion wurde durch den Nutzer abgebrochen.',
-	'fbconnect-chooseauto' => 'Ein automatisch generierter Name ($1)',
-	'fbconnect-chooseexisting' => 'Ein bestehendes Konto in diesem Wiki',
-	'fbconnect-choosefirst' => 'Dein Vorname ($1)',
-	'fbconnect-choosefull' => 'Dein kompletter Name ($1)',
-	'fbconnect-chooseinstructions' => 'Alle Nutzer brauchen einen Benutzernamen - du kannst einen aus den folgenden Vorschlägen wählen.',
-	'fbconnect-chooselegend' => 'Wahl des Benutzernamens',
-	'fbconnect-choosemanual' => 'Ein von dir frei gewählter Name:',
-	'fbconnect-choosenick' => 'Name deines Facebook-Profils ($1)',
-	'fbconnect-choosepassword' => 'Passwort:',
-	'fbconnect-chooseusername' => 'Benutzername:',
 	'fbconnect-click-to-connect-existing' => 'Klicke diese Schaltfläche, um deinen Facebook-Account mit $1 zu verbinden',
 	'fbconnect-click-to-login' => 'Klicke diesen Knopf um dich mit Facebook an diesem Angebot anzumelden',
 	'fbconnect-comm' => 'Kommunikation',
 	'fbconnect-commdesc' => 'Facebook Connect-Nutzer haben eine ganz neue Möglichkeit sich zu vernetzen. Schau nach, welcher von deinen Freunden das Wiki nutzt und teile deine Aktionen im Wiki via Pinnwand-Einträgen mit deinen Freunden (optional).',
 	'fbconnect-connect-error-msg' => 'Fehler beim Abgleich <br /> Beim Abgleich mit Facebook Connect ist ein Fehler aufgetreten.',
-	'fbconnect-connect-msg-sync-profile' => 'Glückwunsch! Dein Wikia- und Facebook-Profil sind nun verbunden. <br /> Schau in <a href=\'$1\'>deinen Einstellungen</a> nach um Einzustellen, welche Statusmeldungen in deinem Facebook-Profil angezeigt werden. Synchronisiere dein Facebook-Profil mit dem bei <a href=\'$2\'>Wikia</a>.',
-	'fbconnect-connect-msg' => 'Herzlichen Glückwunsch! Deine Wikia- und Facebook-Benutzerkonten sind jetzt verknüpft. <br /> Überprüfe deine <a href=\'$1\'>Einstellungen</a> um auszuwählen, welche Aktivitäten auf deiner Pinnwand angezeigt werden sollen.',
+	'fbconnect-connect-msg' => 'Herzlichen Glückwunsch! Deine Wikia- und Facebook-Benutzerkonten sind jetzt verknüpft.',
 	'fbconnect-connect-next' => 'Weiter >>',
 	'fbconnect-connect-simple' => 'Anmelden',
 	'fbconnect-connect' => 'Mit Facebook Connect anmelden',
 	'fbconnect-conv' => 'Einfachheit',
 	'fbconnect-convdesc' => 'Mit Facebook Connect verbundene Nutzer werden automatisch angemeldet. Eine entsprechende Erlaubnis vorausgesetzt, kann dieses Wiki Facebook sogar als E-Mail-Proxy nutzern, so dass du wichtige Informationen erhalten kannst, ohne deine E-Mail-Adresse angeben zu müssen.',
 	'fbconnect-convert' => 'Dieses Benutzerkonto mit Facebook verknüpfen',
-	'fbconnect-desc' => 'Erlaubt Nutzern die [[Special:Connect|Verbindung]] mit ihren [http://www.facebook.com Facebook]-Benutzerkonten. Ermöglicht eine Authentifizierung auf Basis von Facebook-Gruppen und der Benutzung von FBML im Wikitext.',
+	'fbconnect-desc' => 'Erlaubt Nutzern die verbindung mit ihren [http://www.facebook.com Facebook]-Benutzerkonten. Ermöglicht eine Authentifizierung auf Basis von Facebook-Gruppen und der Benutzung von FBML im Wikitext.',
 	'fbconnect-disconnect-done' => 'Löse Verknüpfung... <span id=\'fbConnectDisconnectDone\'>fertig!</span>',
 	'fbconnect-disconnect-info-existing' => 'Du kannst dich nach wie vor mit deinem Benutzernamen und Passwort anmelden.',
 	'fbconnect-disconnect-info' => 'Wir haben dir ein neues Passwort für dein Benutzerkonto geschickt - du kannst dich mit dem gleichen Benutzernamen wie vorher anmelden. Hurra!',
@@ -2656,9 +2626,6 @@ ___________________________________________
 	'fbconnect-error-user-creation-hook-aborted' => 'Ein Hook (von einer Erweiterung) hat die Erstellung des Kontos mit folgender Nachricht abgebrochen: $1',
 	'fbconnect-error' => 'Fehler bei der Überprüfung',
 	'fbconnect-errortext' => 'Beim Abgleich mit Facebook Connect ist ein Fehler aufgetreten.',
-	'fbconnect-fbid-connected-to' => 'Der Name des bereits mit dieser Facebook-ID verknüpften Benutzerkontos ist <strong>$1</strong>.',
-	'fbconnect-fbid-is-already-connected-title' => 'Dieses Facebook-Konto wird bereits genutzt',
-	'fbconnect-fbid-is-already-connected' => 'Du versuchst ein Facebook-Konto mit einem Wikia-Konto zu verknüpfen, das bereits mit einem anderen Wikia-Konto verknüpft wurde. Wenn du dein aktuelles Benutzerkonto mit dieser Facebook-ID verknüpfen möchtest, dann löse zuerst die Verknüpfung zum anderen Benutzernamen. Dies kannst du im "Facebook Connect"-Reiter in deinen Einstellungen tun.',
 	'fbconnect-fbmldesc' => 'Facebook bietet eine Reihe von vorgegebenen Tags an, die dynamische Daten zu Verfügung stellen. Viele dieser Tags können im Wikitext verwendet werden und werden dann abhängig vom jeweiligen Nutzer dargestellt.',
 	'fbconnect-fullname' => 'Voller Name',
 	'fbconnect-intro' => 'Dieses Wiki unterstützt Facebook Connect. Dies ermöglicht dir die Nutzung einer Reihe von Funktionen, zusätzlich zu den normalen [[Wikipedia:de:Hilfe:Anmelden#Vorteile|Vorteilen]] einer Anmeldung...',
@@ -2667,7 +2634,6 @@ ___________________________________________
 	'fbconnect-invalidname' => 'Der von dir gewählte Name ist bereits vergeben oder kein gültiger Benutzername. Wähle bitte einen anderen.',
 	'fbconnect-invalidtext' => 'Die auf der vorherigen Seite gewählten Werte sind ungültig.',
 	'fbconnect-language' => 'Sprache',
-	'fbconnect-link-to-profile' => 'Facebook-Profil',
 	'fbconnect-link' => 'Zurück zu facebook.com',
 	'fbconnect-listusers-header' => 'Die Rechte $1 und $2 werden automatisch von den Moderatoren- und Administrator-Titeln der Facebook-Gruppe $3 übernommen.\n\nFalls du weitere Fragen hast, wende dich bitte an den Gruppen-Ersteller $4.',
 	'fbconnect-log-in' => 'Anmelden',
@@ -2679,24 +2645,13 @@ ___________________________________________
 	'fbconnect-merge' => 'Verknüpfe deine Wiki-Benutzerkonto mit deiner Facebook-ID',
 	'fbconnect-modal-headmsg' => 'Fast fertig!',
 	'fbconnect-modal-title' => 'Beende die Erstellung deines Kontos',
-	'fbconnect-msg-OnAchBadge-short' => 'hat eine Auszeichnung erhalten ($WIKINAME)!',
-	'fbconnect-msg-OnAddBlogPost-short' => 'hat einen Blog-Beitrag veröffentlicht ($WIKINAME)!',
-	'fbconnect-msg-OnAddImage-short' => 'hat ein Bild zu einem Artikel hinzugefügt ($WIKINAME)!',
-	'fbconnect-msg-OnAddImage' => 'Schau dir auch mal das restliche Wiki an!',
-	'fbconnect-msg-OnAddVideo-short' => 'hat ein Video zu einem Artikel hinzugefügt ($WIKINAME)!',
-	'fbconnect-msg-OnAddVideo' => 'Schau dir auch mal das restliche Wiki an!',
-	'fbconnect-msg-OnArticleComment-short' => 'hat einen Artikel kommentiert ($WIKINAME)!',
-	'fbconnect-msg-OnBlogComment-short' => 'hat einen Blog-Beitrag kommentiert ($WIKINAME)!',
-	'fbconnect-msg-OnLargeEdit-short' => 'hat eine große Bearbeitung an einem Artikel durchgeführt ($WIKINAME)!',
-	'fbconnect-msg-OnRateArticle-short' => 'hat einen Artikel bewertet ($WIKINAME)!',
-	'fbconnect-msg-OnWatchArticle-short' => 'verfolgt einen Beitrag ($WIKINAME)!',
 	'fbconnect-msg-for-existing-users' => '<p>Bist du bereits Wikianer?</p><br /><br />Wenn du dieses Facebook-Konto mit einem bestehenden Wikia-Konto verknüpfen möchtest, dann <a class=\'loginAndConnect\' href=\'$1\'>melde dich bitte zuerst an</a>.',
 	'fbconnect-nickname' => 'Benutzername',
 	'fbconnect-or' => 'ODER',
 	'fbconnect-passwordremindertext-exist' => 'Hallo,
 es scheint als hättest du gerade die Verbindung mit deinem Facebook-Account gelöst. Keine Panik! Alle deine Wikia-Daten, darunter deine Bearbeitungen, deine verdienten Auszeichnungen und alles andere sind weiterhin intakt.
 
-Du kannst dich mit dem selben Benutzernamen und dem dazugehörigen Passwort anmelden, wie zuvor. 
+Du kannst dich mit dem selben Benutzernamen und dem dazugehörigen Passwort anmelden, wie zuvor.
 
 Dein Wikia-Team',
 	'fbconnect-passwordremindertext' => 'Hi,
@@ -2733,8 +2688,6 @@ das Wikia Community-Team',
 	'fbconnect-usernameprefix' => 'FacebookNutzer',
 	'fbconnect-welcome' => 'Hallo, Facebook Connect-Nutzer!',
 	'fbconnect-wikia-login-bullets' => '<ul><li>Melde dich mit ein paar Klicks an.</li><li>Du kannst selbst bestimmen, welche Aktivitäten veröffentlicht werden.</li></ul>',
-	'fbconnect-wikia-login-or-create' => 'Anmelden / Konto erstellen',
-	'fbconnect-wikia-login-w-facebook' => 'Anmelden / Konto erstellen mit Facebook Connect',
 	'fbconnect-wikia-signup-w-facebook' => 'Mit Facebook anmelden',
 	'featured' => 'Vorgestellt',
 	'feed-title-blogcomments' => 'Kommentare zu $1',
@@ -2757,7 +2710,7 @@ das Wikia Community-Team',
 	'fileexists' => 'Eine Datei mit diesem Namen existiert bereits.
 Bitte prüfe {{#NewWindowLink:$1}} (öffnet ein neues Fenster), wenn du dir nicht sicher bist, ob du sie ändern willst.',
 	'filename-prefix-blacklist' => ' #<!-- Belasse diese Zeile genau so wie sie ist --> <pre>
-# Die Syntax lautet wie folgt: 
+# Die Syntax lautet wie folgt:
 #   * Alles vom "#"-Zeichen bis zum Ende der Zeile ist ein Kommentar
 #   * Jede nicht-leere Zeile ist ein Prefix für typische Dateinamen, die automatisch durch Digitalkameras vergeben werden
 CIMG # Casio
@@ -3451,12 +3404,12 @@ Du findest $2s Seite hier: $3
 
 Du hast keine Lust mehr auf E-Mail von uns?
 
-Klicke $4 
+Klicke $4
 und ändere deine Einstellungen um E-Mail-Benachrichtigungen abzuschalten.',
 	'foe_accept_subject' => '$1 hat deinen Feindschaftserklärung bestätigt!',
 	'foe_removed_body' => 'Hi $1:
 
-$2 hat das Kriegsbeil auf {{SITENAME}} wieder begraben!  
+$2 hat das Kriegsbeil auf {{SITENAME}} wieder begraben!
 
 Vielleicht werdet ihr in Zukunft sogar Freunde?
 
@@ -3719,7 +3672,7 @@ Wir wollten nachfragen, wie es so mit $WIKINAME läuft. Es ist 3 Tage her, dass 
 
 Schmücke deine Hauptseite aus. Die Hauptseite ist eines der ersten Dinge, das Leute sehen, wenn sie $WIKINAME besuchen. Hinterlasse einen guten Eindruck bei ihnen, indem du eine kleine Zusammenfassung über dein Thema einfügst, eine Slideshow oder eine Bilder-Galerie einfügst.
 
-Füge noch mehr Bilder ein. Einer der besten Wege deine Seiten ansprechend zu gestalten ist Bilder einzufügen. 
+Füge noch mehr Bilder ein. Einer der besten Wege deine Seiten ansprechend zu gestalten ist Bilder einzufügen.
 
 Finde eine Inspirationsquelle. Zögere nicht, dir auch andere Wikis anzuschauen. Manchmal findet sich dort etwas Interessantes, das du auf für dein Wiki nutzen kannst. Hier sind einige unserer Favoriten: Desperate Housewives Wiki (http://de.desperatehousewives.wikia.com), Valve Wiki (http://de.valve.wikia.com), Glee Wiki (http://de.glee.wikia.com)
 
@@ -3950,8 +3903,6 @@ Wikia
 	'group-fb-groupie' => 'Gruppenmitglieder',
 	'group-fb-officer-member' => 'Gruppenmoderator',
 	'group-fb-officer' => 'Gruppenmoderatoren',
-	'group-fb-user-member' => 'Facebook Connect-Nutzer',
-	'group-fb-user' => 'Facebook Connect-Nutzer',
 	'group-helper-member' => 'Helfer',
 	'group-helper' => 'Helfer',
 	'group-janitor' => 'Hausmeister',
@@ -3966,7 +3917,6 @@ Wikia
 	'grouppage-fb-admin' => '{{ns:project}}:Gruppenadministratoren',
 	'grouppage-fb-groupie' => '{{ns:project}}:Gruppenmitglieder',
 	'grouppage-fb-officer' => '{{ns:project}}:Gruppenmoderatoren',
-	'grouppage-fb-user' => '{{ns:project}}:Facebook Connect-Nutzer',
 	'grouppage-helper' => 'w:de:Helfer',
 	'grouppage-oversight' => 'w:Wikia:Oversight',
 	'grouppage-staff' => 'w:de:Wikia_Staff',
@@ -4252,27 +4202,27 @@ Details: $1',
 	'magic_answer_yes' => 'Ja, benutzte das zum Ausbauen',
 	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
 	'mail-notification-body-HTML' => 'Hi $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Zur Diskussion</a></p>
 			<p>Das Wikia-Team</p>
 ___________________________________________<br>
 * Hilfe und Tipps findest du im Community-Wiki: http://de.community.wikia.com
 * Du möchtest weniger Mails von uns bekommen? Hier kannst du deine E-Mail-Einstellungen ändern (oder alle Mails abbestellen): http://de.wikia.com/Spezial:Einstellungen',
 	'mail-notification-body' => 'Hi $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Zur Diskussion($MESSAGE_LINK)
- 
+
 Das Wikia-Team
 
 ___________________________________________
@@ -4342,7 +4292,7 @@ und ändere deine Einstellungen um E-Mail-Benachrichtigungen abzuschalten.',
 	'mobile-full-site' => 'Desktopversion',
 	'mobile-hide' => 'ausblenden',
 	'mobile-show' => 'anzeigen',
-	'mobileproducts-gameguides-description' => 'Die Wikia Game Guides-Application gibt dir detaillierte Informationen über deinen Game-Favorit, zur Verfügung gestellt von der bestmöglichen Quelle - echten Spielern und echten Fans. Finde die neusten Tipps, Tricks und Chats in unseren Gaming-Wikis direkt auf deinem Handy. 
+	'mobileproducts-gameguides-description' => 'Die Wikia Game Guides-Application gibt dir detaillierte Informationen über deinen Game-Favorit, zur Verfügung gestellt von der bestmöglichen Quelle - echten Spielern und echten Fans. Finde die neusten Tipps, Tricks und Chats in unseren Gaming-Wikis direkt auf deinem Handy.
 
 Darunter die folgenden 30 Game-Guides, mit täglich neu hinzugefügten:
 *Dragon Age
@@ -4447,8 +4397,8 @@ Darunter die folgenden 30 Game-Guides, mit täglich neu hinzugefügten:
 
 /*** Fetter Bearbeiten-Link ***/
 
-#ca-edit a { 
-    font-weight: bold !important; 
+#ca-edit a {
+    font-weight: bold !important;
 }
 
 
@@ -4492,56 +4442,56 @@ Darunter die folgenden 30 Game-Guides, mit täglich neu hinzugefügten:
 
 /*** Forum-Formatierung (von -Algorithm und -Splarka) ***/
 
-.forumheader { 
-    border:1px solid #a3bfb1; background:darkseagreen; color:#000; font-size:120%; font-weight:bold; text-align:left; -moz-border-radius:0.2em; margin-top: 0.5em; padding: 10px; 
+.forumheader {
+    border:1px solid #a3bfb1; background:darkseagreen; color:#000; font-size:120%; font-weight:bold; text-align:left; -moz-border-radius:0.2em; margin-top: 0.5em; padding: 10px;
 }
-.forumlist td.forum_edited a { 
+.forumlist td.forum_edited a {
      color: black; text-decoration: none;
 }
-.forumlist td.forum_title a { 
-     padding-left: 20px; 
+.forumlist td.forum_title a {
+     padding-left: 20px;
 }
-.forumlist td.forum_title a.forum_new {  
-     font-weight: bold; background: url(/images/4/4e/Forum_new.gif) center left no-repeat; padding-left: 20px; 
+.forumlist td.forum_title a.forum_new {
+     font-weight: bold; background: url(/images/4/4e/Forum_new.gif) center left no-repeat; padding-left: 20px;
 }
-.forumlist td.forum_title a.forum_new:visited { 
-     font-weight: normal; background: none; padding-left: 20px; 
+.forumlist td.forum_title a.forum_new:visited {
+     font-weight: normal; background: none; padding-left: 20px;
 }
-.forumlist th.forum_title { 
-     padding-left: 20px; 
+.forumlist th.forum_title {
+     padding-left: 20px;
 }
 
  /* Markierung von Weiterleitungen in [[Special:Allpages]]  */
- 
+
  .allpagesredirect {
      background-color:#F5F5F5;
      font-style: italic;
  }
 
 /*** (± Zahl) wird in den letzen Änderungen bei minus rot dargestellt, bei plus grün ***/
- span.mw-plusminus-pos {color: #006400;} 
+ span.mw-plusminus-pos {color: #006400;}
  span.mw-plusminus-neg {color: #8B0000;}
 
 /*** font class für \'hellklick\' in Balkennavigation ***/
 
-.hellklick a, .hellklick a:visited { 
+.hellklick a, .hellklick a:visited {
      text-decoration: underline; color: #fefefe !important;
 }
-.hellklick a:hover, .hellklick a:active { 
+.hellklick a:hover, .hellklick a:active {
      color: #9ad9ff !important;
 }
 
 /*** font class für \'hellklick2\' in Tutorial ***/
 
-.hellklick2 a, .hellklick2 a:visited { 
+.hellklick2 a, .hellklick2 a:visited {
      text-decoration: none; color: #fefefe !important;
 }
-.hellklick2 a:hover, .hellklick2 a:active { 
+.hellklick2 a:hover, .hellklick2 a:active {
      color: #9ad9ff !important; text-decoration: underline;
 }
 
 /* Ausklappen per Mauklick (s.a. [[MediaWiki:Common.js]]  */
- 
+
  .klapp {
       cursor: pointer;
  }
@@ -4550,11 +4500,11 @@ Darunter die folgenden 30 Game-Guides, mit täglich neu hinzugefügten:
       color: #002bb8;
       background: none;
       }
- 
+
  span.klapp:hover {
       text-decoration: underline;
       }
- 
+
  /* Drag & Drop */
  .jstest{
       position:relative;
@@ -4756,7 +4706,7 @@ Dritter Artikelabschnitt. Vergiss nicht den Artikel in eine Kategorie einzuordne
 	'no_related_unanswered_questions' => 'Es gibt keine vergleichbaren unbeantworteten Fragen.',
 	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Diese Seite braucht Informationen. <br>Du kannst uns helfen, indem du einen Satz oder ein Bild einfügst!\'\'\'</p>
 
-<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Erstelle diese Seite!</span>]</span></center>  
+<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Erstelle diese Seite!</span>]</span></center>
 <br>',
 	'nocontributors' => 'Diese Seite hat keine Bearbeiter',
 	'nodata' => 'Keine Daten verfügbar',
@@ -4937,20 +4887,8 @@ Ersetzte diesen Text durch deinen Artikel!',
 	'oasis-share' => 'Artikel teilen',
 	'oasis-spotlights-footer-title' => 'Aus dem Wikia-Netzwerk',
 	'oasis-spotlights-rail-title' => 'Entdecke',
-	'oasis-toolbar-customize' => 'Anpassen',
-	'oasis-toolbar-edit-advanced-tools' => '[[w:c:hilfe:Hilfe:Werkzeugleiste/Werkzeuge|Liste aller Werkzeuge]]',
 	'oasis-toolbar-edit-cancel' => 'Abbrechen',
-	'oasis-toolbar-edit-find-a-tool' => 'Werkzeug finden',
-	'oasis-toolbar-edit-hide-tools' => 'Werkzeuge verbergen',
-	'oasis-toolbar-edit-popular-tools' => 'Beliebte Werkzeuge',
-	'oasis-toolbar-edit-rename-item' => 'Eintrag umbenennen',
-	'oasis-toolbar-edit-reset-defaults' => 'Standard wiederherstellen',
-	'oasis-toolbar-edit-save' => 'Speichern',
-	'oasis-toolbar-edit-search-for-tool' => 'Suche ein Werkzeug',
-	'oasis-toolbar-edit-title' => 'Werkzeugkasten bearbeiten',
-	'oasis-toolbar-edit-toolbar-list' => 'Dein Werkzeugkasten',
 	'oasis-toolbar-for-admins-only' => 'Dieses Werkzeug kann von Administratoren verwendet werden.',
-	'oasis-toolbar-more' => 'mehr...',
 	'oasis-toolbar-not-enabled-here' => 'Dieses Werkzeug ist in diesem Wiki nicht verfügbar.',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Seite|Seiten}} in<br />diesem Wiki</span>',
 	'oasis-upload-photos-advanced' => 'Weitere Optionen',
@@ -5314,7 +5252,7 @@ Berichte, die über dieses Formular abgeschickt werden, sind für jeden [[Specia
 	'prefs-help-blurmesg' => 'Captcha',
 	'prefs-help-email' => 'Die Angabe deiner E-Mail dient dazu, auf dem Laufenden über deine verfolgten Seiten zu bleiben oder ein Ersatzpasswort anzufordern, falls du dein Passwort vergisst.',
 	'prefs-help-mailmesg' => 'E-Mail',
-	'prefs-help-terms' => 'Durch das Klicken auf den Knopf bestätigst du, dass du den [[w:Wikia:Terms of use|Nutzungsbedingungen]] zustimmst.',
+	'prefs-help-terms' => 'Durch das Klicken auf den Knopf bestätigst du, dass du den {{#NewWindowLink: w:Wikia:Terms of use|Nutzungsbedingungen}} zustimmst.',
 	'prefs-layout' => 'Aussehen',
 	'prefs-myhome' => 'Startseite',
 	'prefs-patrolled-editsv2' => 'Patrouillierte Bearbeitungen',
@@ -5957,7 +5895,7 @@ Auf dieser Seite solltest du einen eigenen Text oder Kommentare hinzufügen, die
 	'sitemap_type' => 'Sitemap Typ',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 === Seiten-Statistiken ===
 {{SITENAME}} hat \'\'\'[[Special:Allpages|insgesamt $1 Seiten]]\'\'\' ([[Special:Newpages|neue Seiten]]):
 
@@ -5993,7 +5931,7 @@ Weitere, wesentlich detaillierte Statistiken sind auf der \'\'\'[[Wikia:Wikia:St
 	'slowpagesblacklist-title' => 'Inhalt nicht verfügbar',
 	'smw-paramdesc-searchlabel' => 'Der Text zum Anzeigen weiterer Abfrageergebnisse (Standard ist „…weitere Ergebnisse“)',
 	'smw_iq_moreresults' => '…weitere Ergebnisse',
-	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 | \'\'\'Dies ist die Beitragsseite für unangemeldete Benutzer, die noch keine Benutzerkonto erstellt haben oder es nicht benutzen. Sie werden durch ihre [[wikipedia:de:IP-Adresse|IP-Adresse]] identifiziert.\'\'\'
 
 Einige IP-Adressen werden dynamisch vergeben und können von verschiedenen Nutzern geteilt werden. Als anonymous Nutzer kannst du [[{{ns:Special}}:Userlogin|ein Benutzerkonto erstellen oder dich einloggen]] um zu vermeiden, mit anderen unangemeldeten Nutzern verwechselt zu werden. Bei Benutzerkonten wird die IP-Adresse versteckt. [[w:c:help:Help:Why create an account|Why create an account?]] ([[w:c:help:Help:Create an account|How to create an account]])
@@ -6145,9 +6083,9 @@ Sofern du eine gültige E-Mail-Adresse angegeben hast und die Nachricht dies erf
 	'specialpages-group-wikia' => 'Wikia-spezifische Seiten',
 	'specialpages-summary' => '{|cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color:black;"
 |<div style="float:right">http://images3.wikia.nocookie.net/starter/de/images/6/6c/Applications-system-small.png</div>
-Diese Seite bietet einen Überblick aller [[w:c:hilfe:Hilfe:Spezialseiten|Spezialseiten]]. 
+Diese Seite bietet einen Überblick aller [[w:c:hilfe:Hilfe:Spezialseiten|Spezialseiten]].
 
-Spezialseiten werden automatisch erstellt und sind nicht direkt zu bearbeiten. 
+Spezialseiten werden automatisch erstellt und sind nicht direkt zu bearbeiten.
 |}',
 	'specialvideos-meta-description-corporate' => '$1 hat neue und topaktuelle Videos. Schau sie dir gleich an!',
 	'specialvideos-meta-description-entertainment' => '$1 hat neue und topaktuelle Videos, darunter Filmvorschauen, Musikvideos und noch viel mehr. Schau sie dir gleich an!',
@@ -6394,7 +6332,7 @@ Wirf mal einen Blick drauf!',
 
 Mit diesem Formular kannst du Dateien hochladen. Mögliche Dateiformate sind für Bilder \'\'jpg, jpeg, png, gif, svg\'\' und für Ton- bzw. Videodateien \'\'ogg\'\'.
 
-Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hilfe:Bilder|Hilfe „Bilder“]]\'\'\'. 
+Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hilfe:Bilder|Hilfe „Bilder“]]\'\'\'.
 
 === Kurzanleitung ([[w:c:hilfe:Hilfe:Hochladen|ausführliche Anleitung]]) ===
 
@@ -6416,10 +6354,10 @@ Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hil
 &#125;&#125;</nowiki></pre>
 | width="80%" |
 * \'\'\'Beschreibung:\'\'\' Was ist dargestellt, worum handelt es sich?
-* \'\'\'Datum:\'\'\' Wann ist die Datei entstanden? 
+* \'\'\'Datum:\'\'\' Wann ist die Datei entstanden?
 * \'\'\'Autor:\'\'\' Wer ist der Urheber (Fotograf/Zeichner)? (ggf. mit 3 Tilden <nowiki>~~~</nowiki> signieren)
-* \'\'\'Quelle:\'\'\' Woher genau stammt die Datei? (exakte URL oder ggf. \'\'selbst fotografiert\'\') 
-* \'\'\'Lizenz:\'\'\' Unter welcher freien Lizenz steht die Datei? Dokumentiere ggf. die genaue Freigabe-Genehmigung. 
+* \'\'\'Quelle:\'\'\' Woher genau stammt die Datei? (exakte URL oder ggf. \'\'selbst fotografiert\'\')
+* \'\'\'Lizenz:\'\'\' Unter welcher freien Lizenz steht die Datei? Dokumentiere ggf. die genaue Freigabe-Genehmigung.
 * \'\'\'Sonstiges:\'\'\' Feld für Anmerkungen (kann frei- oder weggelassen werden)
 |}
 
@@ -6725,7 +6663,7 @@ Die Nachricht auf seiner Diskussionsseiten ist von dem [[Special:ListUsers/sysop
 
 Admins in diesem Wiki können die Begrüßung auf verschiedene Weise beeinflussen.
 
-Standardmäßig werden die Begrüßungen von Benutzer:Wikia als Bot-Bearbeitungen vorgenommen, so dass sie nicht in den Letzten Änderungen auftauchen. Dies ist auch dann der Fall, wenn der Benutzer:Wikia nicht in der Bot-Gruppe ist. Wenn du die Bearbeitungen trotzdem anzeigen lassen möchtest, dann bearbeite die Nachricht [[MediaWiki:Welcome-bot-flag]] und ersetze den Text @bot durch einen Strich: -. 
+Standardmäßig werden die Begrüßungen von Benutzer:Wikia als Bot-Bearbeitungen vorgenommen, so dass sie nicht in den Letzten Änderungen auftauchen. Dies ist auch dann der Fall, wenn der Benutzer:Wikia nicht in der Bot-Gruppe ist. Wenn du die Bearbeitungen trotzdem anzeigen lassen möchtest, dann bearbeite die Nachricht [[MediaWiki:Welcome-bot-flag]] und ersetze den Text @bot durch einen Strich: -.
 
 Du kannst die Begrüßungsnachrichten an den Nutzer mit folgenden MediaWiki-Systemnachrichten anpassen:
 
@@ -6821,7 +6759,7 @@ Falls du Fragen zur Begrüßungshilfe von Wikia hast, wende dich an einen [[Spec
 
 gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$3"
 
-Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher. 
+Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher.
 
 Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren: http://de.community.wikia.com/wiki/Special:Contact/account-issue
 
@@ -6832,7 +6770,7 @@ Bleib auf dem Laufenden und besuche unser Community-Wiki: http://de.community.wi
 Möchtest du deine E-Mail-Einstellungen ändern? Besuche {{fullurl:{{ns:special}}:Preferences}}',
 	'userlogin-password-email-content' => 'Gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$NEWPASSWORD"
 <br /><br />
-Falls du kein neues Passwort beantragt hast, kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immer noch sicher. 
+Falls du kein neues Passwort beantragt hast, kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immer noch sicher.
 <br /><br />
 Bei Fragen oder Bedenken kannst du uns jederzeit <a href="http://de.community.wikia.com/wiki/Special:Contact/account-issue">kontaktieren</a>.',
 	'userlogin-unable-info' => 'Es tut uns leid, aber wir können deine Anmeldung momentan nicht bearbeiten.',
@@ -6885,7 +6823,7 @@ Bei Fragen oder Bedenken kannst du uns jederzeit <a href="http://de.community.wi
 	'userprofilepage-users-notes-title' => 'Über mich',
 	'userrenametool-confirm-intro' => 'Willst du das wirklich tun?',
 	'userrenametool-finished-email-subject' => 'Umbenennung des Benutzerkontos ist abgeschlossen für [$1]',
-	'userrenametool-warn-repeat' => 'Achtung! Der Benutzer "<nowiki>$1</nowiki>" wurde bereits umbenannt in "<nowiki>$2</nowiki>". 
+	'userrenametool-warn-repeat' => 'Achtung! Der Benutzer "<nowiki>$1</nowiki>" wurde bereits umbenannt in "<nowiki>$2</nowiki>".
 Setze den Prozess nur fort, wenn du fehlende Informationen hinzufügen musst.',
 	'users' => 'Benutzer',
 	'usersignup-account-creation-email-body' => 'Hallo,
@@ -7109,11 +7047,11 @@ Gib hier eine Beschreibung an.',
 	'wall-button-to-submit-comment-no-topic' => 'Ohne Betreff senden',
 	'wall-button-to-submit-comment' => 'Senden',
 	'wall-button-to-submit-reply' => 'Antworten',
-	'wall-confirm-monobook-admin' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
+	'wall-confirm-monobook-admin' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest.
 
 Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
 	'wall-confirm-monobook-lack-of-reason' => 'Bitte gib eine Zusammenfassung an, warum du diese Diskussion/Antwort entfernen möchtest.',
-	'wall-confirm-monobook-remove' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
+	'wall-confirm-monobook-remove' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest.
 
 Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
 	'wall-confirm-monobook-restore' => 'Bitte beschreibe kurz, warum du diesen Text wiederherstellen möchtest.',
@@ -7338,7 +7276,7 @@ Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach 
 Falls du Hilfe brauchst und keine aktiven Admins im Wiki findest, kannst du auch unser [[w:c:de.community:Forum:Index|Forum im Community-Wiki]] besuchen. Wenn du an aktuellen Informationen rund um Wikia interessiert bist, dann solltest du das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia Deutschland News-Blog]] lesen.
 
 Viel Spaß im Wiki!',
-	'welcome-message-wall-user' => 'Hi, Willkommen im {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]]. 
+	'welcome-message-wall-user' => 'Hi, Willkommen im {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
 
 Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach eine Nachricht.',
 	'welcome-user-page' => '== Über mich ==
@@ -8104,7 +8042,7 @@ Du kannst weitere Informationen über die Änderungen <a href="http://de.communi
 	'wikifeatures-feature-description-wgEnableWallExt' => 'Die Kommunikation der Autoren in deinem Wiki ist ein wichtiger Bestandteil beim Aufbau deines Wikis. Die Nachrichtenseiten bieten Diskussionsfäden und ein Benachrichtigungssystem an, mit dem du genau steuern kannst, welchen Diskussionen du folgen möchtest. Keine verpassten Nachrichten mehr!',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Aktiviert die Spezialseite Spezial:GameGuidesContent in deinem Wiki. Diese ermöglicht dir einzustellen, welche Kategorien für die Darstellung in der mobilen [[w:c:de.community:Hilfe:Game_Guides|Game Guides App]] genutzt werden. Eine weitere Möglichkeit, noch mehr Leser für dein Wiki zu gewinnen!',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Hiermit hast du die Möglichkeit mehr Links in deiner Wiki-Navigation zu nutzen, eine Vorschau-Funktion zu bekommen, ein zentrales Menü mit Links einzublenden, das es Benutzern ermöglicht direkt am Wiki teilzunehmen und du erhältst einen neuen "Im Wiki"-Eintrag, der Links zu wichtigen Community-Funktionen bietet.',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top 10-Listen erlauben es jedem in deinem Wiki eine Top-Liste zu erstellen. Diese Listen können ganz einfach angelegt werden und noch einfacher kann man dort dann seine Stimme abgeben. Du kannst auch Bilder und Links einfügen um sie noch spannender zu gestalten. 
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Top 10-Listen erlauben es jedem in deinem Wiki eine Top-Liste zu erstellen. Diese Listen können ganz einfach angelegt werden und noch einfacher kann man dort dann seine Stimme abgeben. Du kannst auch Bilder und Links einfügen um sie noch spannender zu gestalten.
 
 Top 10-Listen sind eine gute Möglichkeit um neuen Autoren eine Möglichkeit zu geben, untereinander und mit dem Wiki zu interagieren. Wenn du diese Funktion anschaltest, findest du einen neuen Eintrag "Top 10 Liste", wenn du "Seite erstellen" anklickst.',
 	'wikifeatures-feature-heading-wgEnableVisualEditorExt' => 'Der neue VisualEditor',
@@ -8520,8 +8458,6 @@ Füge deine Sticker dort als Listeneinträge hinzu und sie erscheinen auf der St
 	'wva-add' => 'Hinzufügen',
 	'wva-failure' => 'Gib bitte gültige Parameter an.',
 	'wva-name' => 'Name des Videos:',
-	'wva-notallowed' => 'Du kannst in diesem Wiki keine Videos hinzufügen.',
-	'wva-notlogged' => 'Du musst dich anmelden oder ein Konto erstellen um Videos hinzuzufügen.',
 	'wva-url' => 'URL des Videos:',
 	'wysiwyg-edgecase-comment' => 'HTML-Kommentare',
 	'wysiwyg-edgecase-complex-description' => 'eine externe URL (oder eine Vorlage) innerhalb einer Link-Beschreibung',
@@ -8868,7 +8804,7 @@ Si tienes un programa gráfico, puedes arreglar la imagen para poner la parte m�
 ¡Si no tienes un programa gráfico, puedes probar con diferentes imágenes hasta que encuentres la que funcione mejor!
 Si no has elegido aún la imagen para poner, haz clic en "{{int:achievements-revert}}" para volver a la imagen original.
 
-También puedes dar nuevos nombres a los logros para que estén relacionados con el tema del wiki. 
+También puedes dar nuevos nombres a los logros para que estén relacionados con el tema del wiki.
 Cuando hayas cambiado el nombre de los logros, haz clic en "{{int:achievements-save}}" para guardar los cambios.
 ¡Diviértete!',
 	'achievements-activityfeed-info' => 'Ganó el <strong><a href="$3" class="badgeName">$1</a></strong> logro<br />$2',
@@ -8995,7 +8931,7 @@ Cuando hayas cambiado el nombre de los logros, haz clic en "{{int:achievements-s
 	'adss-create-billing-agreement' => 'Crear acuerdo de facturación',
 	'adss-desc' => 'Servicio Automático de Publicidad',
 	'adss-edit-thanks' => 'Tus cambios en la publicidad han sido guardados y estarán en línea después del aprobado manual (en menos de 48 horas).',
-	'adss-error' => 'Se produjo un error. Por favor, inténtelo de nuevo más tarde. 
+	'adss-error' => 'Se produjo un error. Por favor, inténtelo de nuevo más tarde.
 
 Volver al [[Special:ADS|{{int:ADS}}]].',
 	'adss-form-auth-errormsg' => 'La dirección de email o la contraseña introducida es incorrecta',
@@ -9044,7 +8980,7 @@ Esto te permite atraer más audiencia al mostrar tu anuncio en otras wikis del m
 ¡Convierte ahora tu anuncio en una suscripción trimestral<br>y paga $$1 en lugar de $$2 (33% de descuento)!',
 	'adss-upsell-thanks' => '¡Gracias por escoger la oferta!',
 	'adss-upsell-yes' => 'Sí, ¡la quiero!',
-	'adss-welcome-body' => 'Hola, 
+	'adss-welcome-body' => 'Hola,
 
 Felicidades, tu cuenta está configurada y tus anuncios comenzarán a funcionar en 48 horas. Puedes identificarte usando los detalles de abajo para comprobar de nuevo el texto de tus anuncios, comprar más anuncios o comprobar tu factura. Las facturas de Wikia son enviadas a través de PayPal siempre que hayas gastado $$4 o más.
 
@@ -9200,9 +9136,9 @@ ___________________________________________
 -- [[User:$2|$3]] <staff /></div>',
 	'autocreatewiki-welcometalk-wall-title' => '¡Uno más en la familia!',
 	'autocreatewiki-welcometalk-wall' => '<div style="float:right; margin-left:15px;margin-top:15px">http://images3.wikia.nocookie.net/__cb20130107120821/es/images/thumb/3/3c/Wikia-logo-navy-tag-ES.png/250px-Wikia-logo-navy-tag-ES.png</div>
-¡Hola! 
+¡Hola!
 
-Nos alegramos mucho de que {{SITENAME}} forme parte de la comunidad de Wikia. Además de darte las gracias por formar parte de Wikia, nos gustaría, de parte de todo el equipo de Wikia, darte algunos consejos que pueden ayudarte en tus primeros pasos. 
+Nos alegramos mucho de que {{SITENAME}} forme parte de la comunidad de Wikia. Además de darte las gracias por formar parte de Wikia, nos gustaría, de parte de todo el equipo de Wikia, darte algunos consejos que pueden ayudarte en tus primeros pasos.
 
 Incluso si no es la primera comunidad en la que participas, o si ya has creado algún wiki anteriormente, estos consejos te seguirán siendo de mucha ayuda.
 
@@ -9240,7 +9176,7 @@ Hola $1. ¡Estamos muy felices de que \'\'\'$4\'\'\' forme parte de la comunidad
    <createbox>
 width=30
 </createbox></div>
-3. \'\'\'Crea tus 10 primeros artículos\'\'\': usa la caja de la derecha para crear diez páginas, comenzando cada una con unos pocos párrafos. Por ejemplo, si estás iniciando un wiki sobre un programa de TV, podrías crear un artículo para cada uno de los personajes principales. 
+3. \'\'\'Crea tus 10 primeros artículos\'\'\': usa la caja de la derecha para crear diez páginas, comenzando cada una con unos pocos párrafos. Por ejemplo, si estás iniciando un wiki sobre un programa de TV, podrías crear un artículo para cada uno de los personajes principales.
 
 4. \'\'\'Edita la Portada\'\'\': incluye enlaces internos (<nowiki>[[de esta forma]]</nowiki>) hacia los artículos que acabas de crear y añade alguna imagen para que se vea mejor.
 
@@ -9420,7 +9356,7 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 También se pueden obtener los usuarios y las ediciones de un cliente IP vía XFF añadiendo "/xff" al final de la IP. IPv4 (CIDR 16-32) y IPv6 (CIDR 96-128) funcionan.
 No se muestran más de 5000 ediciones por motivos de rendimiento.
 Usa esta herramienta de acuerdo con las políticas correspondientes.',
-	'checkuser-toollinks' => '<span class="plainlinks">&#91;[[Special:Contributions/$1|contribs]] · 
+	'checkuser-toollinks' => '<span class="plainlinks">&#91;[[Special:Contributions/$1|contribs]] ·
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://www.dnsstuff.com/tools/tracert.ch?ip=$1 Traceroute] ·
@@ -9532,7 +9468,7 @@ $2
 
 ¡Esperamos verte pronto!
 
-El Equipo Comunitario de Wikia 
+El Equipo Comunitario de Wikia
 www.wikia.com',
 	'confirmemailreminder_subject' => 'Recordatorio de Wikia',
 	'confirmrecreate' => 'El usuario [[User:$1|$1]] ([[User talk:$1|discusión]]) borró este artículo después de que tú empezaras a editarlo y dio esta razón: \'\'$2\'\' Por favor, confirma que realmente deseas crear de nuevo el artículo.',
@@ -9635,7 +9571,7 @@ Si no necesitas esta cuenta, puedes ignorar este mensaje o contactar con nosotro
 </p>',
 	'createaccount-text' => 'Hola,
 
-Alguien creó una cuenta de usuario en {{SITENAME}} con el nombre "$2" y la contraseña "$3". 
+Alguien creó una cuenta de usuario en {{SITENAME}} con el nombre "$2" y la contraseña "$3".
 
 Por favor, identifícate en $4
 
@@ -9906,7 +9842,7 @@ Puedes hacer clic en el carácter que quieras insertar.<br />
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'Griego:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -9989,11 +9925,11 @@ $PAGESUMMARY
 </p>',
 	'enotif_body' => 'Hola $WATCHINGUSERNAME,
 
-Una de las páginas que estás siguiendo en {{SITENAME}}, $PAGETITLE, ha sido editada por $PAGEEDITOR. 
+Una de las páginas que estás siguiendo en {{SITENAME}}, $PAGETITLE, ha sido editada por $PAGEEDITOR.
 
 ¿Quieres ver qué ha cambiado? Visita "$PAGETITLE_URL" para ver la versión actual de la página.
 
-$NEWPAGE 
+$NEWPAGE
 
 $PAGESUMMARY
 
@@ -10052,7 +9988,7 @@ ___________________________________________
 <br /><br />
 $PAGEEDITOR ha añadido un nuevo comentario a la entrada de blog "$BLOGTITLE"
 <br /><br />
-Visita <a href="$PAGETITLE_URL#comments">la entrada de blog</a> para ver los nuevos comentarios. 
+Visita <a href="$PAGETITLE_URL#comments">la entrada de blog</a> para ver los nuevos comentarios.
 <br /><br />
 - Equipo comunitario de Wikia
 <br /><hr />
@@ -10101,7 +10037,7 @@ ___________________________________________
 * ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'enotif_body_delete-HTML' => 'Hola $WATCHINGUSERNAME,
 <br /><br />
-Una de las páginas que seguías en {{SITENAME}} ha sido borrada. La página se encontraba antes en <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+Una de las páginas que seguías en {{SITENAME}} ha sido borrada. La página se encontraba antes en <a href="$PAGETITLE_URL">$PAGETITLE</a>
 <br /><br />
 $PAGESUMMARY
 <br /><br />
@@ -10193,7 +10129,7 @@ $PAGESUMMARY
 
 Una de las páginas que estabas siguiendo en {{SITENAME}} y que había sido borrada anteriormente, ha sido restaurada. Visita $PAGETITLE_URL para ver la versión actual.
 
-$PAGESUMMARY 
+$PAGESUMMARY
 
 - Equipo comunitario de Wikia
 
@@ -10393,7 +10329,7 @@ ___________________________________________
 **Washington
 **West Virginia
 **Wisconsin
-**Wyoming 
+**Wyoming
 *Sociedad
 **Asociaciones
 **Clubes
@@ -10471,7 +10407,7 @@ ___________________________________________
 **Periódicos
 **Radio
 **Editoriales
-**TV 
+**TV
 *Naturaleza
 **Medio ambiente
 **Jardinería
@@ -10509,7 +10445,7 @@ ___________________________________________
 **Zapatos
 **Equipos deportivos
 **Textiles
-**Relojes 
+**Relojes
 *Viajes
 **Vacaciones de aventura
 **Campamento
@@ -10561,7 +10497,7 @@ ___________________________________________
 **Perros
 **Peces
 **Caballos
-**Reptiles 
+**Reptiles
 *Vehículos
 **Auto club
 **Aviones
@@ -10583,29 +10519,19 @@ ___________________________________________
 	'fbconnect-alreadyloggedin' => '\'\'\'¡Ya estás identificado y conectado a Facebook, $1!\'\'\'',
 	'fbconnect-cancel' => 'Acción cancelada',
 	'fbconnect-canceltext' => 'La acción anterior fue cancelada por el usuario.',
-	'fbconnect-chooseauto' => 'Un nombre generado automáticamente ($1)',
-	'fbconnect-chooseexisting' => 'Una cuenta existente en este wiki',
-	'fbconnect-choosefirst' => 'Tu nombre ($1)',
-	'fbconnect-choosefull' => 'Tu nombre completo ($1)',
-	'fbconnect-chooseinstructions' => 'Todos los usuarios necesitan un nombre, puedes elegir una de las opciones de debajo.',
-	'fbconnect-chooselegend' => 'Elige nombre de usuario',
-	'fbconnect-choosemanual' => 'Un nombre de tu elección:',
-	'fbconnect-choosenick' => 'Tu nombre de perfil en Facebook ($1)',
-	'fbconnect-choosepassword' => 'Contraseña:',
-	'fbconnect-chooseusername' => 'Nombre de usuario:',
 	'fbconnect-click-to-connect-existing' => 'Haz clic en este botón para conectar tu cuenta de Facebook a $1',
 	'fbconnect-click-to-login' => 'Haz clic en este botón para identificarte en sitio a través de Facebook',
 	'fbconnect-comm' => 'Comunicación',
 	'fbconnect-commdesc' => 'Facebook Connect marca un nuevo nivel en la red. Entérate de cuándo usan un wiki tus amigos, y comparte tus acciones con ellos a través del Muro de noticias de Facebook.',
 	'fbconnect-connect-error-msg' => 'Error en la verificación <br/> Ha ocurrido un error con Facebook Connect durante la verificación.',
-	'fbconnect-connect-msg' => '¡Felicidades! Tus cuentas de Wikia y de Facebook ya están conectadas. <br/> Comprueba tus <a href=\'$1\'>preferencias</a> para controlar qué eventos deben aparecer en tu Muro en Facebook.',
+	'fbconnect-connect-msg' => '¡Felicidades! Tus cuentas de Wikia y de Facebook ya están conectadas.',
 	'fbconnect-connect-next' => 'Siguiente >>',
 	'fbconnect-connect-simple' => 'Conectar',
 	'fbconnect-connect' => 'Identifícate con Facebook Connect',
 	'fbconnect-conv' => 'Conveniente',
 	'fbconnect-convdesc' => 'Los usuarios conectados se identifican automáticamente. Si los permisos necesarios están dados, el wiki puede usar Facebook como proxy para los emails, pudiendo recibir las notificaciones más importantes sin necesidad de revelar tu dirección de correo electrónico.',
 	'fbconnect-convert' => 'Conectar esta cuenta con Facebook',
-	'fbconnect-desc' => 'Permite a los usuarios [[Special:Connect|Conectarse]] con sus cuentas de usuario de [http://www.facebook.com Facebook]. Ofrece un sistema de identificación basado en los grupos de Facebook y el uso de FBML en el texto wiki.',
+	'fbconnect-desc' => 'Permite a los usuarios conectarse con sus cuentas de usuario de [http://www.facebook.com Facebook]. Ofrece un sistema de identificación basado en los grupos de Facebook y el uso de FBML en el texto wiki.',
 	'fbconnect-disconnect-done' => 'Desconectando <span id=\'fbConnectDisconnectDone\'>... ¡hecho! </span>',
 	'fbconnect-disconnect-info' => 'Hemos enviado una nueva contraseña para que la uses con tu cuenta - puedes identificarte con el mismo nombre de usuario que antes.',
 	'fbconnect-disconnect-link' => 'También puedes <a id=\'fbConnectDisconnect\' href=\'#\'> desconectar tu cuenta de Wikia de Facebook.</a> Podrás continuar usando tu cuenta de Wikia normalmente, con tu historial (ediciones, puntos, logros) intacto.',
@@ -10614,9 +10540,6 @@ ___________________________________________
 	'fbconnect-error-user-creation-hook-aborted' => 'Una extensión abortó la creación de la cuenta de usuario con el mensaje: $1',
 	'fbconnect-error' => 'Error en la verificación',
 	'fbconnect-errortext' => '¡Rayos y centellas! Parece que no ha funcionado. Por favor, inténtalo de nuevo.',
-	'fbconnect-fbid-connected-to' => 'El nombre de usuario que está conectado actualmente a esta id de Facebook es <strong>$1</strong>.',
-	'fbconnect-fbid-is-already-connected-title' => 'Esa cuenta de Facebook ya está en uso',
-	'fbconnect-fbid-is-already-connected' => 'La cuenta de Facebook que querías conectar a tu cuenta de Wikia, ya está conectada a una cuenta diferente. Si quieres conectar tu cuenta de Wikia actual a esa Id de Facebook, por favor, desconecta la cuenta de Facebook de tu otro nombre de usuario antes de continuar, visitando la pestaña "Facebook Connect" de tu página de preferencias.',
 	'fbconnect-fbml' => 'Idioma elegido en Facebook',
 	'fbconnect-fbmldesc' => 'Facebook ofrece montones de etiquetas predefinidas que se adaptan a los datos dinámicos. Muchas de estas etiquetas pueden ser incluidas en texto wiki, y se pondrán de forma diferente dependiendo de qué usuario conectado esté viendo el texto.',
 	'fbconnect-fullname' => 'Nombre completo',
@@ -10626,7 +10549,6 @@ ___________________________________________
 	'fbconnect-invalidname' => 'El nombre que has elegido es incorrecto o alguien lo ha elegido ya. Elige uno diferente, por favor.',
 	'fbconnect-invalidtext' => 'La selección hecha en la página anterior era incorrecta.',
 	'fbconnect-language' => 'Idioma',
-	'fbconnect-link-to-profile' => 'Perfil de Facebook',
 	'fbconnect-link' => 'Volver a Facebook.com',
 	'fbconnect-listusers-header' => 'Los privilegios de $1 y $2 se transfieren automáticamente desde los títulos de Coordinador y Administrador del grupo de Facebook $3.\n\nPara más información, contacta por favor con el creador del grupo $4.',
 	'fbconnect-logged-in-now-connect-title' => '¡Casi está hecho!',
@@ -10637,19 +10559,6 @@ ___________________________________________
 	'fbconnect-merge' => 'Fusiona tu cuenta de usuario con tu ID de Facebook',
 	'fbconnect-modal-headmsg' => '¡Casi está hecho!',
 	'fbconnect-modal-title' => 'Termina de configurar tu cuenta de usuario',
-	'fbconnect-msg-OnAchBadge-short' => 'ha conseguido un logro en $WIKINAME!',
-	'fbconnect-msg-OnAddBlogPost-short' => 'ha escrito una entrada de blog en $WIKINAME!',
-	'fbconnect-msg-OnAddImage-short' => 'ha añadido una imagen en $WIKINAME!',
-	'fbconnect-msg-OnAddImage' => '¡Revisa el resto del wiki!',
-	'fbconnect-msg-OnAddVideo-short' => 'ha añadido un vídeo en $WIKINAME!',
-	'fbconnect-msg-OnAddVideo' => '¡Revisa el resto del wiki!',
-	'fbconnect-msg-OnArticleComment-short' => 'ha añadido un comentario en $WIKINAME!',
-	'fbconnect-msg-OnBlogComment-short' => 'ha escrito un comentario de blog en $WIKINAME!',
-	'fbconnect-msg-OnLargeEdit-short' => 'ha hecho un gran cambio en un artículo en $WIKINAME!',
-	'fbconnect-msg-OnRateArticle-short' => 'ha calificado un artículo en $WIKINAME',
-	'fbconnect-msg-OnWatchArticle-link' => '$ARTICLENAME',
-	'fbconnect-msg-OnWatchArticle-short' => 'está siguiendo un artículo en $WIKINAME!',
-	'fbconnect-msg-OnWatchArticle' => '$TEXT',
 	'fbconnect-msg-for-existing-users' => '<p>¿Ya eres usuario de Wikia?</p><br/><br/>Si quieres conectarte desde tu cuenta de Facebook a una cuenta de usuario de Wikia existente, por favor <a class=\'loginAndConnect\' href=\'$1\'>identifícate</a> antes.',
 	'fbconnect-nickname' => 'Nombre de usuario',
 	'fbconnect-optional' => 'Opcional',
@@ -10701,8 +10610,6 @@ El Equipo Comunitario de Wikia',
 	'fbconnect-usernameprefix' => 'Facebookuser',
 	'fbconnect-welcome' => '¡Bienvenido, usuario de Facebook Connect!',
 	'fbconnect-wikia-login-bullets' => '<ul><li>Regístrate con unos pocos clics</li><li>Tendrás el control de lo que quieres mostrar en tu muro</li></ul>',
-	'fbconnect-wikia-login-or-create' => 'Identificarse / Crear una cuenta',
-	'fbconnect-wikia-login-w-facebook' => 'Identifícate o regístrate con Facebook Connect',
 	'featured' => 'Destacado',
 	'feed-title-leaderboard' => 'Tablón de líderes del wiki',
 	'fewestrevisions' => 'Páginas con menos ediciones',
@@ -11001,7 +10908,6 @@ Antes de contribuir en el foro de {{SITENAME}} ten en cuenta las siguientes prá
 	'founderprogressbar-commcorner-edit-description' => 'Al editar el Rincón de la Comunidad se genera una notificación para las personas que editan tu wiki. Es un buen lugar para que explicar qué tipo de comunidad es o cómo pueden ayudar y para hacer otro tipo de anuncios.',
 	'founderprogressbar-completion-message' => '¡Felicidades! Has hecho un grandioso trabajo completando todas las tareas al 100%. Has encaminado tu wiki hacia el éxito. ¡Sigue trabajando así!',
 	'founderprogressbar-credits' => 'Un centro de trabajo y guías para fundadores de nuevos wikis',
-	'founderprogressbar-fb-connect-description' => '¡Enséñales qué estás haciendo! Conectar tu cuenta con Facebook te permitirá compartir las acciones que llevas a cabo en tu wiki con tus amigos en Facebook. Puedes personalizar qué acciones te gustaría publicar en Facebook. Solo es necesario que un administrador habilite esta función para completar la tarea.',
 	'founderprogressbar-fb-likes3-action' => 'Ir a la portada',
 	'founderprogressbar-fb-likes3-label' => 'Consigue $1 "Me Gusta" de Facebook',
 	'founderprogressbar-gallery-add-description' => 'Las galería de imágenes son una excelente manera de mostrar varias imágenes en una sola área de la página. Además, es divertido utilizar las galerías para mostrar imágenes en tu wiki, así haces más interesantes las páginas para quienes las visitan.',
@@ -11112,8 +11018,6 @@ ___________________________________________
 	'group-fb-groupie' => 'Miembros del grupo',
 	'group-fb-officer-member' => 'Coordinador del grupo',
 	'group-fb-officer' => 'Coordinadores del grupo',
-	'group-fb-user-member' => 'usuario con Facebook Connect',
-	'group-fb-user' => 'Usuarios con Facebook Connect',
 	'group-helper-member' => 'helper',
 	'group-rollback-member' => 'reversor',
 	'group-rollback' => 'Reversores',
@@ -11127,7 +11031,6 @@ ___________________________________________
 	'grouppage-fb-admin' => '{{ns:project}}:Administradores del grupo',
 	'grouppage-fb-groupie' => '{{ns:project}}:Miembros del grupo',
 	'grouppage-fb-officer' => '{{ns:project}}:Coordinadores del grupo',
-	'grouppage-fb-user' => 'w:c:ayuda:Ayuda:Conexión_con_Facebook',
 	'grouppage-helper' => 'w:c:es:Helpers',
 	'grouppage-oversight' => 'w:c:ayuda:Ayuda:Niveles_de_acceso_de_los_usuarios',
 	'grouppage-staff' => 'w:c:es:Staff_de_Wikia',
@@ -11263,7 +11166,7 @@ Por favor, introduzca una dirección válida.',
 * #wikia-transformice-es
 * #wikia-wcw
 * #wikidex
-* #yu-gi-oh-es 
+* #yu-gi-oh-es
 *group-end',
 	'its_easy' => '...es fácil y gratis',
 	'landingpage-buttons-about-make-the-move-link' => 'http://comunidad.wikia.com/wiki/Guía_de_transición',
@@ -11364,27 +11267,27 @@ Puede haber información adicional sobre privilegios individuales en [[{{MediaWi
 	'magic_answer_yes' => 'Sí, úsala como punto de partida',
 	'magicfooterlinks' => '<b>Páginas destacadas</b>',
 	'mail-notification-body-HTML' => 'Hola $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Ver la conversación</a></p>
 			<p>El equipo de Wikia</p>
 ___________________________________________<br>
 * Encuentra la ayuda y los consejos que necesitas en la Central de Wikia en español: http://comunidad.wikia.com
 * ¿Quieres recibir menos mensajes de nosotros? Puedes cambiar tus preferencias con respecto a los emails aquí: http://comunidad.wikia.com/wiki/Especial:Preferencias',
 	'mail-notification-body' => 'Hola $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Ver la conversación($MESSAGE_LINK)
- 
+
 El equipo de Wikia
 
 ___________________________________________
@@ -11491,11 +11394,11 @@ Ten en cuenta que usar los enlaces de navegación borrará las selecciones de es
 	'movepage-moved' => '\'\'\'"$1" ha sido renombrada a "$2".\'\'\'',
 	'movepage-page-moved' => 'La página $1 ha sido renombrada a $2.',
 	'movepage-page-unmoved' => 'La página $1 no se ha podido renombrar a $2.',
-	'movepagetext' => 'Usando el siguiente formulario se renombrará una página, moviendo todo su historial al nuevo nombre. 
+	'movepagetext' => 'Usando el siguiente formulario se renombrará una página, moviendo todo su historial al nuevo nombre.
 
-El título anterior se convertirá en una redirección al nuevo título. Los enlaces al antiguo título de la página no se cambiarán. Asegúrate de no dejar [[Special:DoubleRedirects|redirecciones dobles]] o [[Special:BrokenRedirects|rotas]]. 
+El título anterior se convertirá en una redirección al nuevo título. Los enlaces al antiguo título de la página no se cambiarán. Asegúrate de no dejar [[Special:DoubleRedirects|redirecciones dobles]] o [[Special:BrokenRedirects|rotas]].
 
-Eres responsable de hacer que los enlaces sigan apuntando adonde se supone que deberían hacerlo. Recuerda que la página \'\'\'no\'\'\' será renombrada si ya existe una página con el nuevo título, a no ser que sea una página vacía o una redirección sin historial. Esto significa que podrás renombrar una página a su título original si has cometido un error, pero que no podrás sobrescribir una página existente. 
+Eres responsable de hacer que los enlaces sigan apuntando adonde se supone que deberían hacerlo. Recuerda que la página \'\'\'no\'\'\' será renombrada si ya existe una página con el nuevo título, a no ser que sea una página vacía o una redirección sin historial. Esto significa que podrás renombrar una página a su título original si has cometido un error, pero que no podrás sobrescribir una página existente.
 
 \'\'\'¡Advertencia!\'\'\' Este puede ser un cambio drástico e inesperado para una página popular; por favor, asegúrate de entender las consecuencias del procedimiento antes de seguir adelante.',
 	'movethispage' => 'Renombrar esta página',
@@ -11531,7 +11434,7 @@ Eres responsable de hacer que los enlaces sigan apuntando adonde se supone que d
 	'new-edit-page-preview-notice' => 'Modo de previsualización: ¡Los cambios no han sido guardados aún! Desplazate hacia abajo para continuar editando.',
 	'new-look' => 'Wikia',
 	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|Ver esta plantilla]]\'\'</small></div>
-\'\'\'Estás comenzando un nuevo artículo. Genial, ¿no?\'\'\' 
+\'\'\'Estás comenzando un nuevo artículo. Genial, ¿no?\'\'\'
 * Revisa \'\'\'[[Ayuda:Edición]]\'\'\' para conocer más información sobre cómo editar páginas wiki.
 * ¡No olvides \'\'\'categorizar este artículo\'\'\' añadiendo <nowiki>[[Categoría:Nombre]]</nowiki> al final de esta página! Puedes encontrar una lista de categorías en [[Special:Categories|Especial:Categorías]].<br/><br/>',
 	'newmessagesdifflink' => 'diferencias',
@@ -11580,9 +11483,9 @@ Escribe la segunda sección de tu artículo aquí.',
 	'newsite' => 'Nuevo sitio',
 	'no_related_answered_questions' => 'Todavía no hay preguntas relacionadas.',
 	'no_related_unanswered_questions' => 'No hay preguntas relacionadas',
-	'noarticletext' => '\'\'\'¡Recórcholis! {{SITENAME}} no tiene una página {{NAMESPACE}} con este nombre.\'\'\' 
+	'noarticletext' => '\'\'\'¡Recórcholis! {{SITENAME}} no tiene una página {{NAMESPACE}} con este nombre.\'\'\'
 
-* \'\'\'<span class="plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit}} Haz clic aquí para comenzar esta página]</span>\'\'\' o \'\'\'<span class="plainlinks">[{{fullurl:Special:Search|search={{PAGENAMEE}}}} aquí para buscar esta frase en el wiki]</span>\'\'\'. 
+* \'\'\'<span class="plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit}} Haz clic aquí para comenzar esta página]</span>\'\'\' o \'\'\'<span class="plainlinks">[{{fullurl:Special:Search|search={{PAGENAMEE}}}} aquí para buscar esta frase en el wiki]</span>\'\'\'.
 * Si una página con este mismo título existía previamente, por favor revisa el \'\'\'<span class="plainlinks">[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} registro de borrados]</span>\'\'\'.',
 	'nocontributors' => 'Nadie ha contribuido en esta página',
 	'nodiff' => 'Sin cambios',
@@ -11724,11 +11627,6 @@ $1 te envió esta página desde {{SITENAME}} en Wikia:
 	'oasis-sharing-toolbar-mail-subject' => '$1 te ha enviado un enlace desde Wikia',
 	'oasis-spotlights-footer-title' => 'Spotlights de otras wikias <br /><a href="http://comunidad.wikia.com/wiki/Project:Spotlights"><span style="font-style: italic;font-size:80%">Solicita el tuyo aquí</span></a>',
 	'oasis-spotlights-rail-title' => 'Spotlights',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:Mis Herramientas|lista de herramientas avanzadas]]',
-	'oasis-toolbar-edit-find-a-tool' => 'Encontrar una herramienta',
-	'oasis-toolbar-edit-reset-defaults' => 'poner valores por defecto',
-	'oasis-toolbar-edit-title' => 'Personalizar barra de herramientas',
-	'oasis-toolbar-edit-toolbar-list' => 'Lista de herramientas',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|página en el wiki|páginas en el wiki}}</span>',
 	'oasis-upload-photos-advanced' => 'Opciones avanzadas',
 	'oasis-upload-photos-caption' => 'Pie de imagen',
@@ -11750,10 +11648,10 @@ $1 te envió esta página desde {{SITENAME}} en Wikia:
 	'owb-headline' => 'Hola,',
 	'owb-new-pages-text' => '[[File:Placeholder|right|300px]] Escribe el primer párrafo de tu artículo aquí.
 
-==Encabezado de sección== 
+==Encabezado de sección==
 Escribe la primera sección de tu artículo aquí. Recuerda incluir enlaces a otras páginas del wiki.
 
-==Encabezado de sección== 
+==Encabezado de sección==
 Escribe la segunda sección de tu artículo aquí. No olvides añadir una categoría, para ayudar a que la gente encuentre el artículo.',
 	'owb-readonly-try-again' => 'Este wiki está actualmente en modo de solo lectura. Por favor inténtalo de nuevo más tarde.',
 	'owb-step1-instruction' => 'Escribe una pequeña introducción para tu página de inicio. No seas aburrido y pon algo divertido que anime a los demás a contribuir.',
@@ -12016,7 +11914,7 @@ Los bugs de software puede ser informados en los [[w:c:comunidad:foro:index|foro
 	'prefs-help-email' => 'Usaremos esta dirección de email para alertarte de nuevos mensajes o ediciones a páginas que estés siguiendo. No haremos spam ¡Lo prometemos! Odiamos el spam tanto como tú.',
 	'prefs-help-mailmesg' => 'Correo electrónico',
 	'prefs-help-signature' => 'Los comentarios en páginas de discusión deberían estar firmados con "~~{{{~|~}}}~", que se convertirá en tu firma y fecha.',
-	'prefs-help-terms' => 'Haciendo clic en el botón "Cree una nueva cuenta", aceptas los [[w:c:comunidad:Project:Términos de uso|Términos de uso de Wikia]]',
+	'prefs-help-terms' => 'Haciendo clic en el botón "Cree una nueva cuenta", aceptas los {{#NewWindowLink: w:c:comunidad:Project:Términos de uso|Términos de uso de Wikia}}',
 	'prefs-layout' => 'Diseño de Wikia',
 	'prefs-personal' => 'Personal',
 	'prefs-recent-changesv2' => 'Cambios recientes, historiales y registros',
@@ -12491,7 +12389,7 @@ ___________________________________________
 ***w:c:es.lostpedia|Lostpedia
 ***w:c:es.disney|Disney
 
-*w:c:comunidad:Lista_de_Wikis|Estilo de vida|community-vertical-color 
+*w:c:comunidad:Lista_de_Wikis|Estilo de vida|community-vertical-color
 
 **w:c:respuestas|WikiRespuestas
 ***w:c:pokemon.respuestas|Pokémon Respuestas
@@ -12540,7 +12438,7 @@ Deberías añadir textos a esta página si deseas explicar usos, estilos y polí
 ** currentevents-url|currentevents
 ** recentchanges-url|recentchanges
 ** randompage-url|randompage
-** forum-url|forum 
+** forum-url|forum
 ** helppage|help',
 	'signup-mail' => 'Correo electrónico -',
 	'signup-moreinfo' => 'más información',
@@ -12553,7 +12451,7 @@ Deberías añadir textos a esta página si deseas explicar usos, estilos y polí
 	'sitenotice-desc' => 'Permitir a los usuarios cerrar las noticias del sitio',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 === Estadísticas de páginas ===
 \'\'\'$1 [[Special:Allpages|páginas en total]]\'\'\' en  {{SITENAME}} ([[Special:Newpages|páginas nuevas]]):
 
@@ -12588,7 +12486,7 @@ También existe estadísticas más detalladas que pueden ser de interés para lo
 	'smw_ask_embed_instr' => 'Para incluir esta consulta en línea dentro de un wiki use el código siguiente:',
 	'smw_ask_queryhead' => 'Consulta',
 	'smw_ask_sortby' => 'Ordenar por columna (opcional)',
-	'smw_exportrdf_docu' => 'En esta página, las partes de contenido de un artículo pueden ser exportadas a formato RDF. 
+	'smw_exportrdf_docu' => 'En esta página, las partes de contenido de un artículo pueden ser exportadas a formato RDF.
 Para exportar páginas, introduzca el nombre de las páginas deseadas en el cuadro de texto que se encuentra debajo, un nombre por línea.',
 	'smw_exportrdf_recursive' => 'Exportar igualmente todas las páginas pertinentes de forma recurrente.
 Nota: ¡Esta opción puede tener un gran número de resultados!',
@@ -12614,7 +12512,7 @@ Las propiedades faltantes pueden encontrarse en la [[Special:WantedProperties|li
 Esto puede ser útil para reparar la información destruida o para volver a cargar la información si el formato interno ha cambiado a causa de alguna actualización de software.
 La actualización se ejecuta página a página y no se completará de inmediato.
 Lo siguiente muestra es hay una actualización en progreso y le permite iniciar o detener actualizaciones (a menos que esta característica haya sido inhabilitada por el administrador del sitio).',
-	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 | \'\'\'Esta es la página de contribuciones de un usuario anónimo que no ha creado una cuenta aún o que no la usa, se identifica con una [[wikipedia:IP address|dirección IP]] numérica.\'\'\'
 
 Algunas direcciones IP cambian periódicamente, y pueden ser usadas por usuarios malintencionados. si eres un usuario anónimo, deberías [[{{ns:Special}}:Userlogin|crearte una cuenta de usuario o identificarte]] para evitar futuras confusiones con usuarios anónimos. Registrandote también evitarás que se vea tu dirección IP. [[w:es:¿Por qué crear una cuenta?|¿Por qué crear una cuenta?]] ([[Ayuda:Registrar una cuenta|Cómo crear una cuenta]])
@@ -12672,7 +12570,7 @@ Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:S
 *Recuerda que los nombres de usuario son sensibles a mayúsculas y minúsculas
 *¿Está tu navegador actualizado?
 *¿Has confirmado tu dirección de correo electrónico?
-*¿Estás intentando identificarte a través de Facebook Connect? Asegúrate de seguir los pasos según explicamos [[Help:Facebook_Connect|aquí]]. 
+*¿Estás intentando identificarte a través de Facebook Connect? Asegúrate de seguir los pasos según explicamos [[Help:Facebook_Connect|aquí]].
 *¿No puedes crear una cuenta? Puede ser que estés escogiendo un nombre no permitido. Lee los [[w:c:comunidad:Project:Términos_de_uso#Membresía|términos de uso]] para más detalles.
 *¿Perdiste tu contraseña? Puedes solicitar una nueva contraseña desde [[Special:Signup|aquí]]. Una vez en esa página, introduce tu nombre de usaurio, y haz clic en "Enviar una nueva contraseña por correo electrónico". Recibirás una contraseña temporal en tu correo para poder cambiar la contraseña
 
@@ -12719,14 +12617,14 @@ Si piensas que este wiki trata sobre un tema que no interesará a otros usuarios
 Esperamos que encuentres otro wiki que forme parte de Wikia, en el que participar construyendo una fantástica fuente de información sobre cualquier tema que te apasione.
 
 ¡Diviértete editando!',
-	'specialcontact-intro-content-issue' => 'El contenido de este wiki es creado por su comunidad, y controlado por los [[Special:ListAdmins|administradores locales]], no por Wikia. si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los [[Special:ListAdmins|administradores que hay aquí]]. 
+	'specialcontact-intro-content-issue' => 'El contenido de este wiki es creado por su comunidad, y controlado por los [[Special:ListAdmins|administradores locales]], no por Wikia. si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los [[Special:ListAdmins|administradores que hay aquí]].
 
 Si piensas que el contenido viola nuestros [http://comunidad.wikia.com/wiki/Project:Términos_de_uso Términos de uso], puedes contactar con el staff de Wikia directamente [[Special:Contact/general|desde aquí]].',
 	'specialcontact-intro-design' => 'El diseño de la comunidad puede ser cambiado por cualquier administrador local de tu wikia usando el [[Ayuda:Diseñador de Temas|Diseñador de temas]]. Si no eres administrador y quieres ayudar con el diseño de la comunidad, debes contactar antes con los [[Special:ListAdmins|administradores locales]].
 
 Si necesitas ayuda avanzada, puedes solicitar en la [[w:c:es.c|Comunidad Central]] un diseño personalizado para tu wikia [[w:c:comunidad:Wikia:Diseños y portadas|en la página de diseños y portadas]].
 
-Si piensas que has encontrado un bug mientras actualizabas el diseño de tu wikia, por favor, envíanos un informe detallado desde [[Special:Contact/bug|aquí]]. 
+Si piensas que has encontrado un bug mientras actualizabas el diseño de tu wikia, por favor, envíanos un informe detallado desde [[Special:Contact/bug|aquí]].
 
 ¡Diviértete editando!',
 	'specialcontact-intro-features' => 'Wikia ofrece muchas funcionalidades, la mayoría de ellas están activas en todos los wikis de Wikia por defecto.
@@ -12738,7 +12636,7 @@ Los administradores interesados en probar nuevas funcionalidades que están aún
 ¿Quieres estar al tanto de las nuevas funcionalidades y mejoras que hacemos? Para y echa un vistazo al [[w:c:comunidad:Blog:Noticias_de_Wikia|blog de Wikia en español]] para estar informado.
 
 ¡Diviértete editando!',
-	'specialcontact-intro-feedback' => '¿Tienes alguna sugerencia? ¡Nos encanta oírlas! Por favor, dinos lo que piensas a través del formulario de debajo. Si tienes algún comentario sobre un producto del Laboratorio de Wikia, déjanos el comentario [[Special:WikiaLabs|allí]]. 
+	'specialcontact-intro-feedback' => '¿Tienes alguna sugerencia? ¡Nos encanta oírlas! Por favor, dinos lo que piensas a través del formulario de debajo. Si tienes algún comentario sobre un producto del Laboratorio de Wikia, déjanos el comentario [[Special:WikiaLabs|allí]].
 
 ¡Gracias por tus sugerencias y diviértete editando!',
 	'specialcontact-intro-general' => 'Contacta con el [[w:c:comunidad:Staff_de_Wikia|Staff de Wikia]] usando este formulario. Los administradores de este wiki pueden ser encontrados [[Special:ListAdmins|aquí]].
@@ -12761,7 +12659,7 @@ Si necesitas ayuda, primero contacta con tus [[Special:ListAdmins|administradore
 ¡Y no olvides que los wikis son para divertirse mientras se edita!',
 	'specialcontact-intro-using-wikia' => 'Ahora que formas parte de la comunidad, puedes editar y contribuir en cualquier página de Wikia. Comprueba nuestras [[Ayuda:Contenidos|páginas de ayuda]] para obtener una introducción de ayuda. Son un magnífico lugar donde aprender los conceptos básicos para editar, dar formato y mucho más.
 
-Si tienes preguntas sobre un wiki en específico, comienza [[Special:ListAdmins|contactando con tus administradores locales]]. 
+Si tienes preguntas sobre un wiki en específico, comienza [[Special:ListAdmins|contactando con tus administradores locales]].
 Puedes hacer preguntas generales a los miembros del wiki central de Wikia en español en el [[w:c:comunidad:Foro:Índice|foro de ayuda]].
 
 Recuerda que los wikis no pueden romperse, así que no tengas miedo de empezar. ¡Diviértete mientras editas!',
@@ -13360,7 +13258,7 @@ Para incluir un archivo en una página, utilice en el formulario los enlaces
 
 Si has recibido una bienvenida desde esta cuenta, significa que eres un nuevo editor de este wiki. ¡Hola!
 
-Si buscas ayuda, puedes dejar un mensaje a la persona que te dejó el mensaje de bienvenida. Sigue el enlace a su página de discusión y después edita la página para escribir tu mensaje. También puedes darle al botón de \'\'dejar un mensaje\'\'. 
+Si buscas ayuda, puedes dejar un mensaje a la persona que te dejó el mensaje de bienvenida. Sigue el enlace a su página de discusión y después edita la página para escribir tu mensaje. También puedes darle al botón de \'\'dejar un mensaje\'\'.
 
 Para ayuda en general sobre Wikia, visita [[w:c:help|Wikia Help]] (la [[w:c:ayuda|versión en español]] aún no está terminada) y [[Special:Contact|contacta con el staff]] si tienes preguntas.
 
@@ -13537,7 +13435,7 @@ $2 necesitará hacer clic en el enlace del correo electrónico que le enviamos p
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-greeting' => 'Hola $USERNAME,',
 	'usersignup-confirmation-email-sent' => 'Enviamos un correo electrónico a \'\'\'$1\'\'\'.
-	
+
 Haz clic en el enlace de confirmación en el correo electrónico para terminar el proceso de creación de tu cuenta.',
 	'usersignup-confirmation-email-signature' => 'El equipo de Wikia',
 	'usersignup-confirmation-email_body-html' => 'Hola $1,
@@ -13563,7 +13461,7 @@ El equipo de Wikia
 
 ___________________________________________
 
-Para revisar qué es lo último que ha sucedido en Wikia, visita http://comunidad.wikia.com/ 
+Para revisar qué es lo último que ha sucedido en Wikia, visita http://comunidad.wikia.com/
 ¿Quieres controlar qué correos electrónicos vas a recibir? Ve a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-confirmation-email_subject' => '¡Casi está hecho! Venga, confirma tu cuenta en Wikia',
 	'usersignup-confirmation-heading-email-resent' => 'Enviado nuevo correo electrónico',
@@ -13575,7 +13473,7 @@ Para revisar qué es lo último que ha sucedido en Wikia, visita http://comunida
 Si no confirmas tu cuenta en 23 días, $USERNAME, el nick quedará libre para que otro usuario lo escoja, ¡no esperes más!',
 	'usersignup-confirmation-reminder-email_body-HTML' => 'Hola $1,
 
-Han pasado algunos días, pero parece que no terminaste de crear tu cuenta en Wikia aún. Es fácil. Solo tienes que hacer clic en el enlace de confirmación de abajo: 
+Han pasado algunos días, pero parece que no terminaste de crear tu cuenta en Wikia aún. Es fácil. Solo tienes que hacer clic en el enlace de confirmación de abajo:
 
 <a style="color:#2C85D5;" href="$2">$2</a>
 
@@ -14907,8 +14805,8 @@ Ce peut être ne grosse opération pour laquelle il sera difficile de revenir en
 }',
 	'common.js' => '/* Tout JavaScript ici sera chargé avec chaque page accédée par n’importe quel utilisateur. */
 
- // Import [[MediaWiki:Onlyifuploading.js]] 
- 
+ // Import [[MediaWiki:Onlyifuploading.js]]
+
  if ( wgCanonicalSpecialPageName == "Upload" ) {
       document.write(\'<script type="text/javascript" src="/index.php?title=MediaWiki:Onlyifuploading.js&action=raw&ctype=text/javascript&dontcountme=s"></script>\');
  }
@@ -14916,11 +14814,11 @@ Ce peut être ne grosse opération pour laquelle il sera difficile de revenir en
  // ============================================================
  // BEGIN import Onlyifediting-functions
  // SEE ALSO [[MediaWiki:Onlyifediting.js]]
- 
+
  if (document.URL.indexOf("action=edit") > 0 || document.URL.indexOf("action=submit") > 0) {
      document.write(\'<script type="text/javascript" src="/wiki/index.php?title=MediaWiki:Onlyifediting.js&action=raw&ctype=text/javascript&dontcountme=s"></script>\');
  }
- 
+
  // END import Onlyifediting-functions
  // ============================================================',
 	'community' => 'Communauté',
@@ -14951,26 +14849,26 @@ Un nouveau code peut être envoyé via [[Special:ConfirmEmail|cette page]].',
 	'confirmemail_subject' => 'Veuillez confirmer votre compte Wikia',
 	'confirmemailreminder_body-HTML' => 'Bonjour $1,
 
-La semaine dernière vous avez rejoint Wikia, mais vous devez cependant confirmer votre compte. 
+La semaine dernière vous avez rejoint Wikia, mais vous devez cependant confirmer votre compte.
 
 Vous pouvez le faire en cliquant sur <a href="$2">ce lien</a>.
 
-À très bientôt. 
+À très bientôt.
 -----------
-L\'équipe de la communauté Wikia. 
+L\'équipe de la communauté Wikia.
 
 <a href="http://www.wikia.com/">www.wikia.com</a>',
 	'confirmemailreminder_body' => 'Bonjour $1,
 
-La semaine dernière vous avez rejoint Wikia, mais vous devez cependant confirmer votre compte. 
+La semaine dernière vous avez rejoint Wikia, mais vous devez cependant confirmer votre compte.
 
-Vous pouvez le faire en cliquant sur le lien ci-dessous : 
+Vous pouvez le faire en cliquant sur le lien ci-dessous :
 
-$2 
+$2
 
-À très bientôt. 
+À très bientôt.
 -----------
-L\'équipe de la communauté Wikia. 
+L\'équipe de la communauté Wikia.
 
 www.wikia.com',
 	'confirmemailreminder_subject' => 'Rappel de Wikia (confirmation de création de compte).',
@@ -15214,31 +15112,31 @@ Caractères spéciaux :
 
 ----
 <small><span id="edittools_wikimarkup">\'\'\'Syntaxe wiki :\'\'\'
-<charinsert><nowiki>{{</nowiki>+<nowiki>}}</nowiki> </charinsert>  &nbsp; 
-<charinsert><nowiki>|</nowiki></charinsert>  &nbsp; 
-<charinsert>[+]</charinsert>  &nbsp; 
-<charinsert>[[+]]</charinsert>  &nbsp; 
-<charinsert>[[Catégorie:+]] [[Fichier:+]] [[Media:+]] · [[Commons:+<nowiki>|</nowiki>]] [[wikt:+|]] [[w:c:+:|]</charinsert> · &nbsp; 
-<charinsert><nowiki>#REDIRECT&#32;[[+]]</nowiki></charinsert>  &nbsp; 
-<charinsert> <>+</> <code>+</code> <math>+</math> <small>+</small> </charinsert> &nbsp; • 
+<charinsert><nowiki>{{</nowiki>+<nowiki>}}</nowiki> </charinsert>  &nbsp;
+<charinsert><nowiki>|</nowiki></charinsert>  &nbsp;
+<charinsert>[+]</charinsert>  &nbsp;
+<charinsert>[[+]]</charinsert>  &nbsp;
+<charinsert>[[Catégorie:+]] [[Fichier:+]] [[Media:+]] · [[Commons:+<nowiki>|</nowiki>]] [[wikt:+|]] [[w:c:+:|]</charinsert> · &nbsp;
+<charinsert><nowiki>#REDIRECT&#32;[[+]]</nowiki></charinsert>  &nbsp;
+<charinsert> <>+</> <code>+</code> <math>+</math> <small>+</small> </charinsert> &nbsp; •
 <charinsert><nowiki><br></nowiki>  <nowiki><br /></nowiki> </charinsert> •
-<charinsert><s>+</s></charinsert>  &nbsp; 
-<charinsert><sup>+</sup></charinsert>  &nbsp; 
-<charinsert><sub>+</sub></charinsert>  &nbsp; 
-<charinsert><blockquote>+</blockquote></charinsert>  &nbsp; 
-<charinsert><ref>+</ref></charinsert>  &nbsp; 
-<charinsert><nowiki>{{</nowiki>Reflist<nowiki>}}</nowiki></charinsert>  &nbsp; 
-<charinsert><references/></charinsert>  &nbsp; 
-<charinsert><includeonly>+</includeonly></charinsert>  &nbsp; 
-<charinsert><noinclude>+</noinclude></charinsert>  &nbsp; 
-<charinsert><nowiki>{{</nowiki>DEFAULTSORT:+<nowiki>}}</nowiki></charinsert>  &nbsp; 
-<charinsert>&lt;nowiki>+</nowiki></charinsert>  &nbsp; 
-<charinsert><nowiki><!-- </nowiki>+<nowiki> --></nowiki></charinsert> &nbsp; 
+<charinsert><s>+</s></charinsert>  &nbsp;
+<charinsert><sup>+</sup></charinsert>  &nbsp;
+<charinsert><sub>+</sub></charinsert>  &nbsp;
+<charinsert><blockquote>+</blockquote></charinsert>  &nbsp;
+<charinsert><ref>+</ref></charinsert>  &nbsp;
+<charinsert><nowiki>{{</nowiki>Reflist<nowiki>}}</nowiki></charinsert>  &nbsp;
+<charinsert><references/></charinsert>  &nbsp;
+<charinsert><includeonly>+</includeonly></charinsert>  &nbsp;
+<charinsert><noinclude>+</noinclude></charinsert>  &nbsp;
+<charinsert><nowiki>{{</nowiki>DEFAULTSORT:+<nowiki>}}</nowiki></charinsert>  &nbsp;
+<charinsert>&lt;nowiki>+</nowiki></charinsert>  &nbsp;
+<charinsert><nowiki><!-- </nowiki>+<nowiki> --></nowiki></charinsert> &nbsp;
 <charinsert><nowiki><span class="plainlinks"></nowiki>+<nowiki></span></nowiki></charinsert><br/></span>
-<span id="edittools_symbols">\'\'\'Symboles :\'\'\' <charinsert> ~ | ¡ ¿ † ↔ ↑ ↓ • ¶</charinsert>  &nbsp; 
-<charinsert> # ¹ ² ³ ½ ⅓ ⅔ ¼ ¾ ∞ </charinsert>  &nbsp; 
-<charinsert> „+“ ’ ‚+‘ “+” «+» »+« ›+‹</charinsert>  &nbsp; 
-<charinsert> $ € № </charinsert>  &nbsp; 
+<span id="edittools_symbols">\'\'\'Symboles :\'\'\' <charinsert> ~ | ¡ ¿ † ↔ ↑ ↓ • ¶</charinsert>  &nbsp;
+<charinsert> # ¹ ² ³ ½ ⅓ ⅔ ¼ ¾ ∞ </charinsert>  &nbsp;
+<charinsert> „+“ ’ ‚+‘ “+” «+» »+« ›+‹</charinsert>  &nbsp;
+<charinsert> $ € № </charinsert>  &nbsp;
 <charinsert> ♠ ♣ ♥ ♦ </charinsert> • Signature: <charinsert> ~~~ ~~~~ ~~~~~ </charinsert> ...<br/></span>
 
 </small>
@@ -15271,7 +15169,7 @@ Une des pages que vous suivez sur {{SITENAME}}, $PAGETITLE, a été modifiée pa
 
 Consultez $PAGETITLE_URL pour voir la version actuelle.
 
-$NEWPAGE 
+$NEWPAGE
 
 $PAGESUMMARY
 
@@ -15285,7 +15183,7 @@ ___________________________________________
 <br /><br />
 Un nouveau commentaire a été laissé sur le billet de blog « $BLOGTITLE » par $PAGEEDITOR.
 <br /><br />
-Venez voir <a href="$PAGETITLE_URL#comments">ce qui se dit</a>. 
+Venez voir <a href="$PAGETITLE_URL#comments">ce qui se dit</a>.
 <br /><br />
 — L’équipe Wikia</p>
 <br /><hr />
@@ -15338,7 +15236,7 @@ ___________________________________________
 * Cliquez sur le lien suivant pour vous désabonner de tous les courriels de Wikia : $UNSUBSCRIBEURL',
 	'enotif_body_delete-HTML' => '<p>$WATCHINGUSERNAME,
 <br /><br />
-Une page que vous suivez sur Messaging Wiki a été supprimée. L’adresse de la page était <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+Une page que vous suivez sur Messaging Wiki a été supprimée. L’adresse de la page était <a href="$PAGETITLE_URL">$PAGETITLE</a>
 <br /><br />
 $PAGESUMMARY
 <br /><br />
@@ -15437,7 +15335,7 @@ $PAGESUMMARY
 
 Une page que vous suivez sur {{SITENAME}} qui a été précédemment supprimée a été restaurée. Consultez $PAGETITLE_URL pour la version actuelle.
 
-$PAGESUMMARY 
+$PAGESUMMARY
 
 — L’équipe Wikia
 
@@ -15552,54 +15450,25 @@ ___________________________________________
 	'fancycaptcha-createaccount' => 'Veuillez saisir le texte dans l’image.',
 	'fastcat-edit-comment' => 'RapidCat : catégorie $1 ajoutée',
 	'fastcat-marker-category' => 'Aucune',
-	'fb-sync-birthday' => 'Anniversaire',
-	'fb-sync-currentlocation' => 'Emplacement actuel',
-	'fb-sync-education' => 'Études',
-	'fb-sync-educationwith' => ' avec :',
-	'fb-sync-gender' => 'Sexe',
-	'fb-sync-hometown' => 'Ville natale',
-	'fb-sync-interestedin' => 'Intérêts',
-	'fb-sync-languages' => 'Langues',
-	'fb-sync-permissionerror' => 'Veuillez donner l’accès à Wikia sur Facebook afin de synchroniser votre profil.',
-	'fb-sync-politicalviews' => 'Orientation politique',
-	'fb-sync-realname' => 'Nom réel',
-	'fb-sync-relationshipstatus' => 'Statut marital',
-	'fb-sync-religiousviews' => 'Orientation religieuse',
-	'fb-sync-save' => 'Enregistrer dans mon profil Wikia',
-	'fb-sync-success-message' => 'Votre profil a été synchronisé avec Facebook.',
-	'fb-sync-website' => 'Site Web',
-	'fb-sync-work-at' => ' chez',
-	'fb-sync-work' => 'Carrière',
 	'fbconnect-alreadyloggedin-title' => 'Déjà connecté',
 	'fbconnect-alreadyloggedin' => '\'\'\'Vous êtes déjà connecté et relié à Facebook, $1 !\'\'\'',
 	'fbconnect-cancel' => 'Action annulée',
 	'fbconnect-canceltext' => 'L’action précédente a été annulée par l’utilisateur.',
-	'fbconnect-chooseauto' => 'Un nom créé automatiquement ($1)',
-	'fbconnect-chooseexisting' => 'Un compte existant sur ce wiki',
-	'fbconnect-choosefirst' => 'Votre prénom ($1)',
-	'fbconnect-choosefull' => 'Votre nom complet ($1)',
-	'fbconnect-chooseinstructions' => 'Tous les utilisateurs ont besoin d’un pseudonyme ; vous pouvez en choisir un à partir des choix ci-dessous.',
-	'fbconnect-chooselegend' => 'Choix du nom d’utilisateur',
-	'fbconnect-choosemanual' => 'Un nom de votre choix :',
-	'fbconnect-choosenick' => 'Votre nom de profil Facebook ($1)',
-	'fbconnect-choosepassword' => 'Mot de passe :',
-	'fbconnect-chooseusername' => 'Nom d’utilisateur :',
 	'fbconnect-click-to-connect-existing' => 'Cliquez ici pour connecter votre compte Facebook à $1',
 	'fbconnect-click-to-login' => 'Cliquez pour accéder à ce site via Facebook',
 	'fbconnect-comm' => 'Communication',
 	'fbconnect-commdesc' => 'Facebook Connect inaugure un tout nouveau niveau de mise en réseau.
 Voyez qui de vos amis utilisent le wiki, et éventuellement partagez vos actions avec vos amis par l\'intermédiaire du fil de nouvelles Facebook.',
 	'fbconnect-connect-error-msg' => 'Nous sommes désolé, nous n’avons pas pu effectuer la connexion à défaut de la permission de poster sur votre compte Facebook. Après le paramétrage vous avez le contrôle total sur ce qui est posté dans votre flux d’activité. Veuillez réessayer.',
-	'fbconnect-connect-msg-sync-profile' => 'Félicitations ! Vos comptes Wikia et Facebook sont maintenant reliés.<br />Vérifiez vos <a href=\'$1\'>préférences</a> pour contrôler les évènements qui doivent apparaître sur le flux Facebook. Synchronisez votre <a href=\'$2\'>profil Wikia</a> avec Facebook.',
-	'fbconnect-connect-msg' => 'Félicitations ! Vos comptes Wikia et Facebook sont maintenant reliés.<br />Vérifiez vos <a href=\'$1\'>préférences</a> pour contrôler les évènements qui doivent apparaître sur le flux Facebook.',
+	'fbconnect-connect-msg' => 'Félicitations ! Vos comptes Wikia et Facebook sont maintenant reliés.',
 	'fbconnect-connect-next' => 'Suite >>',
 	'fbconnect-connect-simple' => 'Relier',
 	'fbconnect-connect' => 'Se connecter avec Facebook Connect',
 	'fbconnect-conv' => 'Commodité',
-	'fbconnect-convdesc' => 'Les utilisateurs connectés sont automatiquement inscrits. 
+	'fbconnect-convdesc' => 'Les utilisateurs connectés sont automatiquement inscrits.
 Si l’autorisation est donnée, alors ce wiki peut même utiliser Facebook en tant que mandataire de messagerie afin que vous puissiez continuer à recevoir les notifications importantes sans révéler votre adresse courriel.',
 	'fbconnect-convert' => 'Relier ce compte avec Facebook',
-	'fbconnect-desc' => 'Permet aux utilisateurs de [[Special:Connect|se connecter]] avec leur compte [http://www.facebook.com Facebook]. Offre une authentification basée sur les groupes Facebook et l’utilisation de FBML dans le texte wiki',
+	'fbconnect-desc' => 'Permet aux utilisateurs de se connecter avec leur compte [http://www.facebook.com Facebook]. Offre une authentification basée sur les groupes Facebook et l’utilisation de FBML dans le texte wiki',
 	'fbconnect-disconnect-done' => 'Retrait de la liaison <span id=\'fbConnectDisconnectDone\'>... effectuée ! </span>',
 	'fbconnect-disconnect-info' => 'Nous vous avons envoyé un nouveau mot de passe à utiliser avec votre compte par courriel - vous pouvez vous connecter avec le même nom d’utilisateur qu’auparavant.',
 	'fbconnect-disconnect-link' => 'Vous pouvez aussi <a id=\'fbConnectDisconnect\' href=\'#\'>retirer la liaison entre votre compte Wikia et Facebook</a>. Vous pourrez continuer à utiliser votre compte Wikia normalement, avec votre historique (modifications, points, distinctions) préservée.',
@@ -15608,11 +15477,8 @@ Si l’autorisation est donnée, alors ce wiki peut même utiliser Facebook en t
 	'fbconnect-error-user-creation-hook-aborted' => 'Un crochet (extension) a abandonné la création de compte avec le message : $1',
 	'fbconnect-error' => 'Erreur de vérification',
 	'fbconnect-errortext' => 'Une erreur s’est produite lors de la vérification avec Facebook Connect.',
-	'fbconnect-fbid-connected-to' => 'Le nom d’utilisateur Wikia qui est actuellement relié à cet id Facebook est <strong>$1</strong>.',
-	'fbconnect-fbid-is-already-connected-title' => 'Le compte Facebook est déjà utilisé',
-	'fbconnect-fbid-is-already-connected' => 'Le compte Facebook que vous essayez de relier à votre compte Wikia est déjà relié à un autre compte Wikia. Si vous souhaitez connecter votre compte Wikia actuel à cet id Facebook, veuillez d’abord retirer la liaison entre votre compte Facebook et l\'autre compte Wikia en allant sur l’onglet « Facebook Connect » dans vos préférences.',
 	'fbconnect-fbml' => 'Langage de balisage Facebook',
-	'fbconnect-fbmldesc' => 'Facebook a fourni un tas de balises intégrées qui va afficher des données dynamiques. 
+	'fbconnect-fbmldesc' => 'Facebook a fourni un tas de balises intégrées qui va afficher des données dynamiques.
 Nombre de ces balises peuvent être incluses dans le texte wiki et seront rendues différemment selon l’utilisateur connecté qui les visualisent.',
 	'fbconnect-fullname' => 'Nom complet',
 	'fbconnect-intro' => 'Ce wiki est activé avec Facebook Connect, une évolution récente de la plateforme Facebook.
@@ -15623,7 +15489,6 @@ Cela signifie que lorsque vous êtes connecté, en plus des [[Wikipedia:Help:Log
 Veuillez en choisir un autre.',
 	'fbconnect-invalidtext' => 'La sélection faite à la page précédente était invalide.',
 	'fbconnect-language' => 'Langue',
-	'fbconnect-link-to-profile' => 'Profil Facebook',
 	'fbconnect-link' => 'Retour à Facebook.com',
 	'fbconnect-listusers-header' => 'Les privilèges $1 et $2 sont automatiquement transférés depuis les titres d’administrateurs et responsables du groupe Facebook $3.
 
@@ -15641,17 +15506,6 @@ Cela permettra également de vous déconnecter de Facebook et tous les sites rel
 	'fbconnect-merge' => 'Fusionner votre compte wiki avec votre identifiant Facebook',
 	'fbconnect-modal-headmsg' => 'Presque fini !',
 	'fbconnect-modal-title' => 'Terminer le paramétrage de votre compte',
-	'fbconnect-msg-OnAchBadge-short' => 'a gagné un badge sur $WIKINAME !',
-	'fbconnect-msg-OnAddBlogPost-short' => 'a écrit un billet de blog sur $WIKINAME !',
-	'fbconnect-msg-OnAddImage-short' => 'a ajouté une image sur $WIKINAME !',
-	'fbconnect-msg-OnAddImage' => 'Consultez le reste du wiki !',
-	'fbconnect-msg-OnAddVideo-short' => 'a ajouté une vidéo sur $WIKINAME !',
-	'fbconnect-msg-OnAddVideo' => 'Consultez le reste du wiki !',
-	'fbconnect-msg-OnArticleComment-short' => 'a laissé un commentaire sur $WIKINAME !',
-	'fbconnect-msg-OnBlogComment-short' => 'a commenté un billet sur $WIKINAME !',
-	'fbconnect-msg-OnLargeEdit-short' => 'a modifié sensiblement un article sur $WIKINAME !',
-	'fbconnect-msg-OnRateArticle-short' => 'a évalué un article sur $WIKINAME !',
-	'fbconnect-msg-OnWatchArticle-short' => 'suit un article sur $WIKINAME !',
 	'fbconnect-msg-for-existing-users' => '<p>Déjà un utilisateur de Wikia ?</p><br/><br/>Si vous souhaitez relier ce compte Facebook à un compte Wikia existant, veuillez d’abord vous <a class=\'loginAndConnect\' href=\'$1\'>connecter</a>.',
 	'fbconnect-nickname' => 'Pseudonyme',
 	'fbconnect-or' => 'OU',
@@ -15703,8 +15557,6 @@ Pour vous connecter aller à : $1',
 	'fbconnect-usernameprefix' => 'UtilisateurFacebook',
 	'fbconnect-welcome' => 'Bienvenue, utilisateur de Facebook Connect !',
 	'fbconnect-wikia-login-bullets' => '<ul><li>Inscrivez-vous en quelques clics</li><li>Vous avez le contrôle sur ce qui va sur votre flux</li></ul>',
-	'fbconnect-wikia-login-or-create' => 'Se connecter / Créer un compte',
-	'fbconnect-wikia-login-w-facebook' => 'Se connecter / S’inscrire avec Facebook Connect',
 	'fbconnect-wikia-signup-w-facebook' => 'Se connecter avec Facebook',
 	'featured' => 'En vedette',
 	'file-page-replace-button' => 'Remplacer',
@@ -15717,7 +15569,7 @@ Pour vous connecter aller à : $1',
 | \'\'Voir l’information sur Flickr (cf. « Source »). Ajoutez la date de création manuellement, si nécessaire.\'\'
 |-
 ! style="background:#8da5cc; text-align:right; vertical-align:middle; padding-right:0.5em;" | Auteur
-| [http://flickr.com/people/{{{4|{{{3}}}}}}/ {{{3}}}] 
+| [http://flickr.com/people/{{{4|{{{3}}}}}}/ {{{3}}}]
 |-
 ! style="background:#8da5cc; text-align:right; vertical-align:middle; padding-right:0.5em;" | Source
 | [http://flickr.com/photos/{{{2}}}/{{{1}}}/ Ce fichier sur \'\'\'flickr.com\'\'\']
@@ -15942,7 +15794,7 @@ Avant de contribuer sur les forums de {{SITENAME}}, veuillez vous rappeler ces q
 	'founderemails-email-footer-line3' => '<a href="http://twitter.com/wikia_fr" style="text-decoration:none">
 <img alt="twitter" src="http://images.wikia.com/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
 </a>
- 
+
 <a href="http://facebook.com/wikia.fr" style="text-decoration:none">
 <img alt="facebook" src="http://images.wikia.com/wikianewsletter/images/5/55/Facebook.png" style="border:none">
 </a>
@@ -15950,11 +15802,11 @@ Avant de contribuer sur les forums de {{SITENAME}}, veuillez vous rappeler ces q
 <a href="https://plus.google.com/u/0/102929967599324609587/posts" style="text-decoration:none">
 <img alt="google+" src="http://images.wikia.com/wikianewsletter/images/5/51/Google.png" style="border:none">
 </a>
- 
+
 <a href="http://www.youtube.com/wikia" style="text-decoration:none">
 <img alt="youtube" src="http://images.wikia.com/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
- 
+
 <a href="http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia" style="text-decoration:none">
 <img alt="wikia" src="http://images.wikia.com/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
@@ -16012,8 +15864,6 @@ ___________________________________________
 	'group-fb-groupie' => 'Membres de groupe',
 	'group-fb-officer-member' => '{{GENDER:$1|responsable de groupe}}',
 	'group-fb-officer' => 'Responsables de groupe',
-	'group-fb-user-member' => '{{GENDER:$1|utilisateur Facebook Connect|utilisatrice Facebook Connect}}',
-	'group-fb-user' => 'Utilisateurs Facebook Connect',
 	'group-helper-member' => '{{GENDER:$1|Assistant|Assistante}}',
 	'group-helper' => 'Assistants',
 	'group-janitor-member' => 'agent d’entretien',
@@ -16034,7 +15884,6 @@ ___________________________________________
 	'grouppage-fb-admin' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur',
 	'grouppage-fb-groupie' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur',
 	'grouppage-fb-officer' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur',
-	'grouppage-fb-user' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur',
 	'grouppage-helper' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur#Assistants',
 	'grouppage-oversight' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur',
 	'grouppage-reviewer' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur',
@@ -16130,7 +15979,7 @@ ___________________________________________
 * Propre image
 ** Moi|Cette image est de moi seul
 * Wikimedia
-** De Wikimedia|J\'ai pris ce fichier de Wikipédia ou d\'un autre projet de Wikimedia 
+** De Wikimedia|J\'ai pris ce fichier de Wikipédia ou d\'un autre projet de Wikimedia
 * Licences libres
 ** CC-BY|Ce fichier est sous licence Creative Commons Attribution
 ** CC-BY-SA|Ce fichier est sous licence Creative Commons Attribution-Share Alike
@@ -16231,27 +16080,27 @@ $1
 	'lvs-undo-swap' => 'Annuler',
 	'lvs-zero-state' => 'Actuellement, nous n\'avons aucune vidéo de Wikia qui correspond aux vidéos de votre wiki. Revenez dans quelques temps !',
 	'mail-notification-body-HTML' => 'Bonjour $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>— $AUTHOR_SIGNATURE<p> 			
+			<p>— $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Voir la conversation</a></p>
 			<p>L’équipe Wikia</p>
 ___________________________________________<br>
 * Trouvez de l’aide et des conseils sur le wiki des communautés : http://communaute.wikia.com
 * Vous souhaitez recevoir moins de messages de notre part ? Vous pouvez vous désinscrire ou modifier vos préférence de courriel ici : http://communaute.wikia.com/Special:Preferences',
 	'mail-notification-body' => 'Bonjour $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 — $AUTHOR
 
 voir la conversation($MESSAGE_LINK)
- 
+
 L’équipe Wikia
 
 ___________________________________________
@@ -16262,7 +16111,7 @@ ___________________________________________
 	'mail-notification-html-footer-line3' => '<a href="http://twitter.com/wikia_fr" style="text-decoration:none">
 <img alt="twitter" src="http://images.wikia.com/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
 </a>
- 
+
 <a href="http://facebook.com/wikia.fr" style="text-decoration:none">
 <img alt="facebook" src="http://images.wikia.com/wikianewsletter/images/5/55/Facebook.png" style="border:none">
 </a>
@@ -16270,11 +16119,11 @@ ___________________________________________
 <a href="https://plus.google.com/u/0/102929967599324609587/posts" style="text-decoration:none">
 <img alt="google+" src="http://images.wikia.com/wikianewsletter/images/5/51/Google.png" style="border:none">
 </a>
- 
+
 <a href="http://www.youtube.com/wikia" style="text-decoration:none">
 <img alt="youtube" src="http://images.wikia.com/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
- 
+
 <a href="http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia" style="text-decoration:none">
 <img alt="wikia" src="http://images.wikia.com/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
@@ -16515,7 +16364,6 @@ Essayez en utilisant le préfixe \'\'all:\'\' pour rechercher dans tout le conte
 	'oasis-navigation-v2-new-photos' => 'Images',
 	'oasis-navigation-v2-validation-caption' => 'L’aperçu recherchera des erreurs sur le menu. Si c’est bon, vous pourrez publier à partir de la fenêtre d’aperçu. Sinon, un bouton « Retour » vous permettra de poursuivre la modification.',
 	'oasis-spotlights-footer-title' => 'Wikis de Wikia <a href="http://communaute.wikia.com/wiki/Project:%C3%80_la_une">à la une</a>',
-	'oasis-toolbar-edit-advanced-tools' => '[[w:c:communaute:Aide:Barre d\'outils/Liste des outils disponibles|liste des outils pour les contributeurs avancés]]',
 	'oasis-upload-photos-overwrite-file' => 'Remplacer fichier',
 	'oasis-upload-photos-title' => 'Importer une image sur le wiki',
 	'old_skins' => 'Anciens habillages',
@@ -16622,7 +16470,7 @@ pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br
 	'prefs-help-blurmesg' => 'Mot flouté',
 	'prefs-help-email' => 'Nous utiliserons cette adresse de courriel pour vous alerter de nouveaux messages ou de modifications sur les pages que vous suivez. Pas de spam, promis !',
 	'prefs-help-mailmesg' => 'Courriel',
-	'prefs-help-terms' => 'En créant un compte, vous acceptez les [[w:c:fr:Conditions d\'utilisation|Conditions d’utilisation de Wikia]].',
+	'prefs-help-terms' => 'En créant un compte, vous acceptez les {{#NewWindowLink: w:c:fr:Conditions d\'utilisation|Conditions d’utilisation de Wikia}}.',
 	'prefs-layout' => 'Apparence',
 	'prefs-personal' => 'Mes infos',
 	'prefs-recent-changesv2' => 'Modifications récentes, historiques et journaux',
@@ -16852,7 +16700,7 @@ Veuillez consulter [$2 sa page de description] pour plus d’informations.',
 	'size-kilobytes' => '$1 Ko',
 	'size-megabytes' => '$1 Mo',
 	'skinchooser-customcss' => 'Pour des thèmes personnalisés, sélectionnez l’option « personnalisé » dans le menu ci-dessus et spécifiez le code CSS personnalisé dans [[MediaWiki:Wikia.css]].',
-	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 | \'\'\'Ceci est la page des contributions d\'un utilisateur anonyme qui n\'a pas encore créé de compte ou qui n\'en utilise pas, identifié par son [[wikipedia:fr:adresse IP|adresse IP]] numérique.\'\'\'
 
 Certaines adresses IP changent de façon périodiques et peuvent être partagées par plusieurs utilisateurs. Si vous êtes un utilisateur anonyme, vous devriez [[{{ns:Special}}:Userlogin|créer un compte ou vous connecter]] pour éviter à l\'avenir des confusions avec d\'autres utilisateurs anonymes. S\'enregistrer masque aussi votre adresse IP. ([[w:c:communaute:Aide:Créer un compte|Comment créer un compte]])
@@ -17636,7 +17484,7 @@ N’oublie pas de personnaliser tes [[Special:Preferences|préférences sur {{SI
 **#category3#
 *Project:Accueil|Communauté
 **Blog:Billets_récents|Billets de blog récents
-**Forum:Index|Forum 
+**Forum:Index|Forum
 **w:c:communaute|Wiki des communautés',
 	'wikia-days-ago' => 'il y a $1 {{PLURAL:$1|jour|jours}}',
 	'wikia-editor-modules-plb-insert-title' => 'Modules',
@@ -18058,14 +17906,14 @@ Questa funzione aggiungerà divertimento alla conquista delle medaglie. Provala!
 	'autocreatewiki-welcomebody-HTML' => '<p>Ciao $2,<br /><br />
 La wiki che hai creato ora è disponibile su <a href="$1">$1</a>. Ci auguriamo di vedere presto i tuoi contributi!<br /><br />
 Abbiamo aggiunto alcune informazioni e suggerimenti nella tua <a href="$5">pagina di discussione</a> per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o leggere le pagine di aiuto sulla <a href="http://it.community.wikia.com/wiki/Aiuto:Contenuti">Wiki della Community</a>.<br /><br />
-Buona fortuna per il tuo progetto,<br /><br /> 
+Buona fortuna per il tuo progetto,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia Community Team<br /></p>',
-	'autocreatewiki-welcomebody' => 'Ciao $2, 
+	'autocreatewiki-welcomebody' => 'Ciao $2,
 
-La wiki che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br> Abbiamo aggiunto alcune informazioni e suggerimenti nella tua pagina di discussione (<$5>) per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o leggere le pagine di aiuto sulla [[w:c:it.community:Aiuto:Contenuti|Wiki della Community]]. 
+La wiki che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br> Abbiamo aggiunto alcune informazioni e suggerimenti nella tua pagina di discussione (<$5>) per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o leggere le pagine di aiuto sulla [[w:c:it.community:Aiuto:Contenuti|Wiki della Community]].
 
-Buona fortuna per il tuo progetto, 
+Buona fortuna per il tuo progetto,
 
 $3 Wikia Community Support <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcomesubject' => '$1 è stata creata!',
@@ -18240,7 +18088,7 @@ Sfortunatamente, queste misure di sicurezza possono mettere in difficoltà gli u
 	'chat-you-are-banned-text' => 'Ci dispiace, non hai il permesso di chattare in questa wiki. Se pensi che si tratti di un errore o vuoi essere riabilitato, per favore contatta un amministratore.',
 	'chat-you-are-banned' => 'Errore nei permessi.',
 	'chat' => 'Chat',
-	'checkuser-toollinks' => '<span class="plainlinks">&#91;[[Special:Contributions/$1|contribs]] · 
+	'checkuser-toollinks' => '<span class="plainlinks">&#91;[[Special:Contributions/$1|contribs]] ·
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] ·
@@ -18427,7 +18275,7 @@ Se l\'account è stato creato per errore, si può ignorare questo messaggio.',
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'Greco:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -18495,8 +18343,6 @@ Per dare il tuo feedback e ricevere ulteriore assistenza: <a href="{{fullurl:Hel
 	'fancycaptcha-createaccount' => 'Inserisci il testo che visualizzi nell\'immagine.',
 	'fbconnect-log-in' => 'Login',
 	'fbconnect-wikia-login-bullets' => '<ul><li>Registrati con pochi click</li><li>Puoi controllare cosa visualizzare nelle tue notizie</li></ul>',
-	'fbconnect-wikia-login-or-create' => 'Login / Crea un account',
-	'fbconnect-wikia-login-w-facebook' => 'Login / Registrati con Facebook Connect',
 	'fbconnect-wikia-signup-w-facebook' => 'Registrati con Facebook',
 	'file-page-more-links' => 'Vedi lista completa',
 	'file-page-replace-button' => 'Sostituisci',
@@ -18725,9 +18571,6 @@ Prima di scrivere nel Forum di {{SITENAME}}, per favore tieni a mente alcune buo
 	'founderprogressbar-commcorner-edit-label' => 'Modifica l\'Angolo della Community',
 	'founderprogressbar-completion-message' => 'Complimenti! Hai svolto un lavoro incredibile e hai completato tutti gli obiettivi fino al 100%. La tua wiki è sulla buona strada per il successo o addirittura vi è già arrivata. Continua così!',
 	'founderprogressbar-credits' => 'Un\'area di obiettivi e una guida per i nuovi fondatori di wiki',
-	'founderprogressbar-fb-connect-action' => 'Collegamento con Facebook',
-	'founderprogressbar-fb-connect-description' => 'Condividi il lavoro che stai svolgendo! Il Collegamento con Facebook ti permette di condividere le azioni effettuate nella tua wiki con i tuoi amici di Facebook. È possibile personalizzare quali azioni si desidera pubblicare su Facebook. Per completare l\'obiettivo basta che un solo amministratore attivi questa opzione.',
-	'founderprogressbar-fb-connect-label' => 'Collegamento con Facebook',
 	'founderprogressbar-fb-likes3-action' => 'Vai alla Pagina Principale',
 	'founderprogressbar-fb-likes3-description' => 'La condivisione è sinonimo di interesse e può davvero aiutare a far pubblicità alla tua wiki nel resto del mondo. Incoraggia i tuoi membri e lettori a cliccare su Facebook il tasto "Mi piace" relativo alla pagina principale della tua wiki per spargere parola.',
 	'founderprogressbar-fb-likes3-label' => 'Ottieni $1 "Mi piace" su Facebook',
@@ -19108,7 +18951,7 @@ Se il link è stato aperto per errore, è sufficiente fare clic sul pulsante \'\
 	'oasis-edit-saved' => 'La tua modifica è stata salvata!',
 	'oasis-edit-this-menu' => 'Modifica questo menù',
 	'oasis-editpage-readonlywarning' => '<h2>Ci dispiace!</h2>
-<p>Non puoi modificare questa pagina al momento. Dovremmo di nuovo essere attivi e funzionali a breve. 
+<p>Non puoi modificare questa pagina al momento. Dovremmo di nuovo essere attivi e funzionali a breve.
 Ecco cosa sta succedendo:<br /><em>$1</em></p>
 <p>Controlla <a href="http://twitter.com/wikia">Twitter</a> o <a href="https://www.facebook.com/pages/Wikia-Italia/244544338901256">Facebook</a> per ulteriori informazioni.</p>',
 	'oasis-edits-counter' => '$1 <sup>{{PLURAL:$1|modifica fatta|modifiche fatte}}</sup>',
@@ -19212,21 +19055,9 @@ Goditela!
 	'oasis-skip-to-wiki-navigation' => 'Passa alla navigazione della wiki',
 	'oasis-spotlights-footer-title' => 'Nella rete di Wikia',
 	'oasis-spotlights-rail-title' => 'In evidenza su',
-	'oasis-toolbar-customize' => 'Personalizza',
 	'oasis-toolbar-devinfo' => 'Informazioni sullo sviluppatore',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|lista degli strumenti avanzati]]',
 	'oasis-toolbar-edit-cancel' => 'Annulla',
-	'oasis-toolbar-edit-find-a-tool' => 'Trova uno strumento',
-	'oasis-toolbar-edit-hide-tools' => 'Nascondi strumenti',
-	'oasis-toolbar-edit-popular-tools' => 'Strumenti popolari',
-	'oasis-toolbar-edit-rename-item' => 'Rinomina',
-	'oasis-toolbar-edit-reset-defaults' => 'ripristina default',
-	'oasis-toolbar-edit-save' => 'Salva',
-	'oasis-toolbar-edit-search-for-tool' => 'Cerca uno strumento',
-	'oasis-toolbar-edit-title' => 'Personalizza la Barra degli strumenti',
-	'oasis-toolbar-edit-toolbar-list' => 'Lista degli strumenti',
 	'oasis-toolbar-for-admins-only' => 'Questo strumento può essere usato solo dagli amministratori della wiki.',
-	'oasis-toolbar-more' => 'altri&hellip;',
 	'oasis-toolbar-not-enabled-here' => 'Questo strumento non è disponibile in questa wiki.',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|pagina in<br /> questa wiki|pagine in<br /> questa wiki}}</span>',
 	'oasis-upload-photos-caption' => 'Didascalia',
@@ -19300,7 +19131,7 @@ Se non sei stato tu a fare la richiesta, oppure hai ritrovato la password e non 
 	'prefs-help-email' => 'Useremo questo indirizzo email per avvisarti dei nuovi messaggi o delle modifiche alle pagine che stai seguendo. Niente spam, promesso!',
 	'prefs-help-mailmesg' => 'E-mail',
 	'prefs-help-signature' => 'I commenti nelle pagine di discussione devono essere firmati con "~~{{{~|~}}}~" che verrà convertito nella propria firma seguita dalla data.',
-	'prefs-help-terms' => 'Creando un account, accetti le [[w:Terms of Use| condizioni di utilizzo di Wikia]]',
+	'prefs-help-terms' => 'Creando un account, accetti le {{#NewWindowLink: w:Terms of Use| condizioni di utilizzo di Wikia}}',
 	'prefs-help-watchlist-token' => 'Compilando questo campo con una chiave segreta verrà generato un feed RSS per le proprie pagine seguite. Chiunque conosca la chiave in questo campo potrà leggere le pagine seguite, quindi assicurarsi di inserire un valore sicuro. Si può usare anche il seguente valore generato casualmente: $1',
 	'prefs-layout' => 'Layout globale',
 	'prefs-monobook-layout' => 'Solo skin Monobook',
@@ -19672,14 +19503,14 @@ Se invece si vogliono spiegare le linee guida sull\'uso, lo stile e la politica 
 *Non riesci a creare un account? Può essere che al momento tu non possa avere un account: per ulteriori dettagli vedi i [[w:c:wikia:Wikia:Terms_of_use#Membership|Termini di utilizzo]].
 *Hai perso la tua password? Puoi richiedere una nuova password [[Special:UserLogin|qui]]. Inserisci il tuo username nel modulo che appare e clicca sul link "Hai dimenticato la password?". Riceverai un\'email con una password temporanea che potrai usare per effettuare il login e poi in seguito cambiare con un\'altra password a tua scelta.
 
-Se hai controllato quanto sopra e hai ancora problemi, per favore inviaci una segnalazione dettagliata qui sotto. Ti risponderemo il prima possibile per aiutarti a risolvere la questione. 
+Se hai controllato quanto sopra e hai ancora problemi, per favore inviaci una segnalazione dettagliata qui sotto. Ti risponderemo il prima possibile per aiutarti a risolvere la questione.
 
 Buon editing!',
 	'specialcontact-intro-adoption' => 'Vuoi diventare un amministratore di questa wiki? In caso di risposta affermativa, per favore controlla se [[Special:ListAdmins|gli amministratori locali]] sono attivi. Se lo sono, lascia loro un messaggio con la tua richiesta. È una buona idea anche parlare con altri utenti della tua richiesta per avere il loro supporto. Potresti iniziare pubblicando un post nel forum della tua community.
 
 Se gli amministratori locali non sono attivi, puoi sottoporre una richiesta per ottenere i diritti di admin. Per favore leggi la [[w:c:it.community:Wiki_della_Community:Richieste_di_adozione|pagina delle adozioni]] per ulteriori informazioni. Ricordati di fornire sempre un link alla wiki che vuoi adottare.
 
-Se nella wiki che vuoi adottare c\'è una community di utenti attiva, per favore apri una discussione nella wiki stessa riguardo a chi sono i più adatti a svolgere il ruolo di amministratori e sul perché vuoi diventare uno di loro. Per favore inserisci un link a questa discussione nella [[w:c:it.community:Wiki_della_Community:Richieste_di_adozione|pagina delle adozioni]]. 
+Se nella wiki che vuoi adottare c\'è una community di utenti attiva, per favore apri una discussione nella wiki stessa riguardo a chi sono i più adatti a svolgere il ruolo di amministratori e sul perché vuoi diventare uno di loro. Per favore inserisci un link a questa discussione nella [[w:c:it.community:Wiki_della_Community:Richieste_di_adozione|pagina delle adozioni]].
 
 Buona fortuna e buon editing!',
 	'specialcontact-intro-bad-ad' => 'Ci dispiace che tu abbia trovato un annuncio pubblicitario non consono su Wikia. Se ci puoi fornire ulteriori dettagli qui sotto, li condivideremo con il responsabile della pubblicità che verificherà l\'annuncio ed eventualmente lo rimuoverà dal sistema.
@@ -19736,7 +19567,7 @@ Se sei un admin e pensi che una determinata funzione non vada bene per la tua wi
 
 Gli amministratori interessati a testare le nostre nuove funzioni ancora in via di sviluppo possono controllare la sezione Wikia Labs delle [[Special:WikiFeatures|Wiki Funzioni]].
 
-Vuoi essere sempre aggiornato sulle nuove funzioni e sui miglioramenti alle attuali? Leggi e segui 
+Vuoi essere sempre aggiornato sulle nuove funzioni e sui miglioramenti alle attuali? Leggi e segui
 [[w:c:it.community:Blog:Blog ufficiale di Wikia Italia|il blog ufficiale di Wikia Italia]].',
 	'specialcontact-intro-feedback' => 'Hai un feedback? Siamo lieti di riceverlo! Per favore inviaci i tuoi commenti dettagliati qui sotto. Se il feedback riguarda una funzione di Wikia Labs, per favore invialo direttamente [[Special:WikiFeatures|lì]].
 
@@ -19759,7 +19590,7 @@ Buon editing!',
 Se hai bisogno di aiuto, prima di tutto contatta gli [[Special:ListAdmins|amministratori locali]]. Gli amministratori locali sono gli utenti esperti sull\'argomento e sulla community di una wiki, perciò è meglio parlare con loro. Se gli amministratori non sono in grado di aiutarti o pensi che un utente stia violando i [http://www.wikia.com/Terms_of_Use Termini di utilizzo di Wikia], puoi contattare direttamente lo staff di Wikia [[Special:Contact/general|qui]].
 
 Buon editing!',
-	'specialcontact-intro-using-wikia' => 'Ora che fai parte della community, hai la possibilità di modificare e contribuire a quasi tutte le pagine presenti su Wikia. Per iniziare, controlla 
+	'specialcontact-intro-using-wikia' => 'Ora che fai parte della community, hai la possibilità di modificare e contribuire a quasi tutte le pagine presenti su Wikia. Per iniziare, controlla
 [[w:c:Aiuto:Aiuto:Nozioni_di_base|queste pagine di aiuto]]. Sono un modo molto utile per imparare le basi dell\'editing, della formattazione e molto altro.
 
 Se hai domande specifiche su questa wiki, prova a [[Special:ListAdmins|contattare gli amministratori locali]]. Puoi anche fare domande generali agli altri utenti nel nostro [[w:c:it.community:Special:Forum|forum della community]].
@@ -20073,15 +19904,15 @@ per favore immetti il nome della wiki per salvare.',
 	'user_Wikia' => '<div style="float:right; margin-left:15px; margin-bottom:15px">http://images.wikia.com/central/images/c/ca/Wikiawelcomelogo.png</div>
 <h2 style="overflow:auto">Benvenuto su Wikia!</h2>
 
-Se hai ricevuto un benvenuto da questo account, allora sei un nuovo collaboratore di questa wiki. Ciao! 
+Se hai ricevuto un benvenuto da questo account, allora sei un nuovo collaboratore di questa wiki. Ciao!
 
-Se sei in cerca di assistenza, lascia un messaggio all\'utente che ha firmato il messaggio di benvenuto. Segui il collegamento per la sua pagina di discussione, quindi modificala per scrivere il tuo messaggio. 
+Se sei in cerca di assistenza, lascia un messaggio all\'utente che ha firmato il messaggio di benvenuto. Segui il collegamento per la sua pagina di discussione, quindi modificala per scrivere il tuo messaggio.
 
-Per un aiuto generico su Wikia, visita [[w:c:aiuto|Aiuto Wiki]] e [[Special:Contact|contatta lo staff]] se vuoi chiedere qualcosa. 
+Per un aiuto generico su Wikia, visita [[w:c:aiuto|Aiuto Wiki]] e [[Special:Contact|contatta lo staff]] se vuoi chiedere qualcosa.
 
 ==Informazioni e aiuto sullo strumento di benvenuto==
 
-Lo strumento di benvenuto di Wikia aiuta la comunità ad accogliere nuovi collaboratori. È molto importante dare un benvenuto adeguato ai nuovi collaboratori sia per fare in modo che questi si accorgano della presenza di una community nella wiki sia per fornire loro un contatto a cui rivolgersi in caso di dubbi. 
+Lo strumento di benvenuto di Wikia aiuta la comunità ad accogliere nuovi collaboratori. È molto importante dare un benvenuto adeguato ai nuovi collaboratori sia per fare in modo che questi si accorgano della presenza di una community nella wiki sia per fornire loro un contatto a cui rivolgersi in caso di dubbi.
 
 Quando un collaboratore effettua la sua prima modifica, lo strumento di benvenuto di Wikia gli lascia un messaggio specifico nella pagina di discussione e crea una nuova pagina utente.
 
@@ -20120,7 +19951,7 @@ Lo strumento di benvenuto può essere personalizzato tramite le seguenti imposta
 ;Controllo del bot
 :
 :Di default, le modifiche degli utenti al benvenuto di User:Wikia sono impostate come bot e nascoste dalle modifiche recenti. Questo avviene anche se User:Wikia non è nel gruppo bot. Se vuoi che queste modifiche siano mostrate di nuovo, semplicemente modifica [[MediaWiki:Welcome-user|<span style="color:black; background:white;">MediaWiki:Welcome-user</span>]] e sostituisci "@bot" con "-".
-:Puoi disabilitare i messaggi di benvenuto inserendo "@disabled" in [[MediaWiki:Welcome-user|<span style="color:black; background:white;">MediaWiki:Welcome-user</span>]]. 
+:Puoi disabilitare i messaggi di benvenuto inserendo "@disabled" in [[MediaWiki:Welcome-user|<span style="color:black; background:white;">MediaWiki:Welcome-user</span>]].
 
 Se hai qualsiasi domanda sullo strumento di benvenuto di Wikia, puoi [[Special:Contact|contattare lo staff di Wikia]].',
 	'useravatar-log' => 'Log dell\'avatar dell\'utente',
@@ -20695,7 +20526,7 @@ Lascia un messaggio sulla [[$2|pagina delle mie discussioni]], se posso esserti 
 
 Ciao, benvenuto/a su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
 
-Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita 
+Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita
 [[w:c:it.community:Special:Forum|i forum sulla Wiki della Community]] $3',
 	'welcome-message-user' => '== Benvenuto ==
 Ciao $4, benvenuto su {{SITENAME}}! Grazie per la tua modifica sulla pagina [[:$1]].
@@ -20832,8 +20663,8 @@ L\'account è stato creato correttamente. Non dimenticare di personalizzare le t
 	'wikiaPhotoGallery-choice-slideshow' => 'Crea slideshow',
 	'wikiaPhotoGallery-choice-title' => 'Inserisci uno slideshow o una galleria',
 	'wikiaPhotoGallery-conflict-edit' => 'Visita la modalità di modifica',
-	'wikiaPhotoGallery-conflict-help' => 'Abbiamo fornito il codice wiki per la tua ultima modifica, in basso. 
-È possibile copiare questo testo, fare clic su "$1" e incollarlo nella posizione corretta al fine di ripristinare le modifiche. 
+	'wikiaPhotoGallery-conflict-help' => 'Abbiamo fornito il codice wiki per la tua ultima modifica, in basso.
+È possibile copiare questo testo, fare clic su "$1" e incollarlo nella posizione corretta al fine di ripristinare le modifiche.
 In alternativa, è possibile fare clic su "$2" per vedere la pagina nella sua forma attuale.',
 	'wikiaPhotoGallery-conflict-title' => 'Si è verificato un conflitto di modifica',
 	'wikiaPhotoGallery-conflict-view' => 'Visualizza la pagina attuale',
@@ -21292,7 +21123,7 @@ __NOEDITSECTION__',
 	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Aiuta i collaboratori della tua wiki a creare delle pagine di bell\'aspetto in poco tempo. Layout Builder consente agli amministratori della wiki di impostare dei modelli di pagine che gli utenti possono scegliere nel momento in cui creano una nuova pagina.',
 	'wikifeatures-feature-description-wgEnableVisualEditorExt' => 'Il nuovo [[Aiuto:VisualEditor|VisualEditor]] di Wikia è stato sviluppato da zero per aiutare tutti gli utenti ad aver successo, che stiano facendo la loro prima modifica o la millesima. Il VisualEditor sostituisce l\'editor RTE esistente e mantiene la possibilità per tutti gli utenti di usare il codice sorgente se preferiscono.',
 	'wikifeatures-feature-description-wgEnableWallExt' => 'Comunicare con i collaboratori della tua wiki è essenziale nella creazione e nel rafforzamento della tua community. La Bacheca utilizza un formato di conversazione strutturato e un sistema di notifiche che ti permettono di controllare quali discussioni vuoi seguire. Niente più messaggi persi!',
-	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Usa la pagina Special:GameGuidesContent della tua wiki per decidere quali categorie 
+	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Usa la pagina Special:GameGuidesContent della tua wiki per decidere quali categorie
 far apparire nell\'applicazione per dispositivi mobili Game Guides.
 Amplia il tuo potenziale pubblico!',
 	'wikifeatures-feature-description-wgOasisNavV2' => 'Ottieni più link, un nuovo strumento di anteprima, un set già consolidato di link per contribuire e il nuovo menu "Nella wiki" che mette in evidenza funzioni importanti per il tuo contenuto e per la tua community.',
@@ -21582,7 +21413,7 @@ $messages["ko"] = array(
 오타가 있나요?
 두려워하지 마세요.
 "{{int:edit}}" 버튼을 눌러 과감하게 고쳐주세요.',
-	'achievements-badge-to-get-edit-plus-category-details' => '<strong>$1</strong>개의 문서가 회원님의 도움을 필요로 합니다. 
+	'achievements-badge-to-get-edit-plus-category-details' => '<strong>$1</strong>개의 문서가 회원님의 도움을 필요로 합니다.
 아무 문서에서나 \'{{int:edit}}\' 버튼을 눌러 그 문서에 기여해주세요.',
 	'achievements-badge-to-get-introduction-details' => '아직 사용자 문서를 만들지 않으셨나요?
 페이지 상단의 계정 이름을 클릭해보세요.
@@ -21611,7 +21442,7 @@ $messages["ko"] = array(
 
 커스터마이징을 완료하셨다면 \'{{int:achievements-enable-track}}\'에 체크하신 후 \'{{int:achievements-save}}\' 버튼을 눌러 트랙을 활성화하면 됩니다.
 트랙이 활성화되면 위키의 사용자들은 새 트랙이 그들의 사용자 문서에 나타나는 것을 볼 수 있게 되며 그 분류에 속해있는 문서를 편집할 때 해당하는 배지를 받을 수 있습니다.
-나중에 더 이상 필요가 없다고 생각하신다면 생성한 트랙을 비활성화할 수도 있습니다. 
+나중에 더 이상 필요가 없다고 생각하신다면 생성한 트랙을 비활성화할 수도 있습니다.
 허나 비활성화해도 사용자들이 기존에 그 트랙에서 받은 배지는 그대로 유지됩니다.
 
 새 트랙을 만드셔서 새로운 차원의 즐거움을 누리시기 바랍니다.',
@@ -22116,11 +21947,11 @@ PayPal을 통해 한 달에 $4.95를 지불하시면 광고를 제거해드립�
 위키아 커뮤니티 팀 드림<br />
 <a href="http://www.wikia.com/">www.wikia.com</a>
 </p>',
-	'confirmemailreminder_body' => '$1님 안녕하세요. 
+	'confirmemailreminder_body' => '$1님 안녕하세요.
 
 지난 주에 위키아에 가입하셨지만 아직 계정 인증을 하지 않으셨습니다. 다음 링크를 통해 계정 인증을 해주시기 바랍니다.
 
-$2 
+$2
 
 조만간 위키아에서 만나뵐 수 있기를 기대합니다.
 
@@ -22399,50 +22230,21 @@ $2
 	'facebook_signed_in' => 'Facebook 연동 기능을 사용하여 로그인했습니다.',
 	'fancycaptcha-createaccount' => '프로그램이 다량으로 계정을 생성하는 것을 방지하기 위해 다음 그림에 있는 글자를 입력해주시기 바랍니다.',
 	'fast-adv' => '광고',
-	'fb-sync-birthday' => '생일',
-	'fb-sync-button' => '프로필 연동하기',
-	'fb-sync-currentlocation' => '현재 위치',
-	'fb-sync-education' => '학력',
-	'fb-sync-educationwith' => '함께한 사람:',
-	'fb-sync-gender' => '성별',
-	'fb-sync-hometown' => '출신지',
-	'fb-sync-interestedin' => '취미',
-	'fb-sync-languages' => '언어',
-	'fb-sync-permissionerror' => '프로필을 Facebook과 연동하려면 Wikia의 접근을 허가해주셔야 합니다.',
-	'fb-sync-politicalviews' => '정치관',
-	'fb-sync-realname' => '실명',
-	'fb-sync-relationshipstatus' => '관계',
-	'fb-sync-religiousviews' => '종교관',
-	'fb-sync-save' => '내 Wikia 프로필에 저장하기',
-	'fb-sync-success-message' => '프로필이 Facebook과 연동되었습니다.',
-	'fb-sync-website' => '웹사이트',
-	'fb-sync-work' => '이력',
 	'fbconnect-alreadyloggedin-title' => '이미 연동됨',
 	'fbconnect-alreadyloggedin' => '\'\'\'$1님, 당신은 이미 로그인되어 있으며 Facebook과도 연동되어 있습니다.\'\'\'',
 	'fbconnect-cancel' => '작업 취소됨',
 	'fbconnect-canceltext' => '이전 작업이 사용자에 의해 취소되었습니다.',
-	'fbconnect-chooseauto' => '자동으로 만들어진 이름 ($1)',
-	'fbconnect-chooseexisting' => '이 위키에 이미 존재하는 계정입니다.',
-	'fbconnect-choosefirst' => '당신의 이름(성 제외) ($1)',
-	'fbconnect-choosefull' => '당신의 이름 ($1)',
-	'fbconnect-chooseinstructions' => '모든 사용자들에게 닉네임이 요구됩니다. 아래 중에서 하나를 선택하세요.',
-	'fbconnect-chooselegend' => '계정 이름 선택',
-	'fbconnect-choosemanual' => '이름 선택:',
-	'fbconnect-choosenick' => '당신의 Facebook 프로필 이름 ($1)',
-	'fbconnect-choosepassword' => '비밀번호:',
-	'fbconnect-chooseusername' => '계정 이름:',
 	'fbconnect-click-to-connect-existing' => '이 버튼을 클릭해서 당신의 Facebook 계정을 $1에 연동하세요',
 	'fbconnect-click-to-login' => '이 버튼을 클릭하여 Facebook을 통해 이 사이트에 로그인하세요',
 	'fbconnect-connect-error-msg' => '죄송하지만 당신의 Facebook 편집 권한 없이 연동 작업을 완료할 수 없습니다. 편집 권한 설정 이후에 [[w:c:help:Help:Facebook_Connect#Sharing_with_your_Facebook_activity_feed|Facebook에 내보낼 기여]]를 선택할 수 있습니다. 다시 시도해 주세요.',
-	'fbconnect-connect-msg-sync-profile' => '축하드립니다! 회원님의 위키아 계정과 Facebook 계정이 연동되었습니다. <br /> <a href=\'$1\'>사용자 환경 설정</a>에서 더 자세한 설정을 하실 수 있습니다. <a href=\'$2\'>사용자 문서</a>를 Facebook과 연동해보세요.',
-	'fbconnect-connect-msg' => '축하합니다! 당신의 위키아 계정과 Facebook 계정이 연동되었습니다. <br /> Check your <a href=\'$1\'>사용자 환경 설정</a>에서 Facebook과 공유할 기여를 관리하세요.',
+	'fbconnect-connect-msg' => '축하합니다! 당신의 위키아 계정과 Facebook 계정이 연동되었습니다.',
 	'fbconnect-connect-next' => '다음 >>',
 	'fbconnect-connect-simple' => '연동하기',
 	'fbconnect-connect' => 'Facebook 연동 기능을 통해 로그인',
 	'fbconnect-conv' => '편리한 점',
 	'fbconnect-convdesc' => 'Facebook과 연동된 사용자는 자동으로 로그인됩니다. 만약 권한이 주어졌다면, 이 위키는 Facebook을 이메일 프록시로 사용하여 당신의 이메일 주소를 통해 중요한 알림을 계속 전달받을 수 있도록 합니다.',
 	'fbconnect-convert' => '이 계정을  Facebook과 연동하기',
-	'fbconnect-desc' => '사용자 계정을 [http://www.facebook.com Facebook]과 [[Special:Connect|연동]]할 수 있게 하고 Facebook 그룹에 대한 인증 정보를 제공하며 Facebook 태그를 위키텍스트로 사용할 수 있도록 합니다.',
+	'fbconnect-desc' => '사용자 계정을 [http://www.facebook.com Facebook]과 연동할 수 있게 하고 Facebook 그룹에 대한 인증 정보를 제공하며 Facebook 태그를 위키텍스트로 사용할 수 있도록 합니다.',
 	'fbconnect-disconnect-done' => '연동 해제 작업이 <span id=\'fbConnectDisconnectDone\'>... 완료되었습니다! </span>',
 	'fbconnect-disconnect-info' => '새 비밀번호를 이메일로 보냈습니다. 새 비밀번호를 통해 이전에 사용하던 계정 이름으로 로그인할 수 있습니다.',
 	'fbconnect-disconnect-link' => '당신의 위키아 계정과 Facebook 계정의 연동을 <a id=\'fbConnectDisconnect\' href=\'#\'>해제</a>할 수 있습니다. 연동을 해제하셔도 종전에 사용하시던 위키아 계정 이름으로 위키아를 그대로 이용하실 수 있습니다.',
@@ -22451,9 +22253,6 @@ $2
 	'fbconnect-error-user-creation-hook-aborted' => '추가 기능에 의해 계정 생성이 취소되었습니다. 다음 메시지를 확인하세요: $1',
 	'fbconnect-error' => '인증 오류',
 	'fbconnect-errortext' => '연동 작업 도중 오류가 발생했습니다. 다시 시도해 주세요.',
-	'fbconnect-fbid-connected-to' => '이 Facebook 계정과 연동되어 있는 위키아 계정 이름은 <strong>$1</strong>입니다.',
-	'fbconnect-fbid-is-already-connected-title' => 'Facebook 계정이 이미 연동됨',
-	'fbconnect-fbid-is-already-connected' => '위키아 계정과 연동을 시도하신 Facebook 계정은 이미 다른 위키아 계정과 연동되어 있습니다. 이 위키아 계정과 연동하시려면 \'사용자 환경 설정\' 메뉴에서 이미 연동되어 있는 위키아 계정과의 연동을 해제하시기 바랍니다.',
 	'fbconnect-fbml' => 'Facebook 마크업 언어',
 	'fbconnect-fbmldesc' => 'Facebook은 동적인 정보를 보여주는 다양한 태그를 제공합니다. 이러한 많은 태그들은 위키텍스트로 작성될 수 있으며 페이지를 보는 사람에 따라 보이는 정보가 달라질 수 있습니다.',
 	'fbconnect-fullname' => '전체 이름',
@@ -22463,7 +22262,6 @@ $2
 	'fbconnect-invalidname' => '입력하신 닉네임은 이미 다른 사용자가 사용하고 있거나 적절하지 않은 닉네임입니다. 다른 닉네임으로 바꿔서 시도해주세요.',
 	'fbconnect-invalidtext' => '이전 페이지에 부적절한 옵션이 포함되어 있습니다.',
 	'fbconnect-language' => '언어',
-	'fbconnect-link-to-profile' => 'Facebook 프로필',
 	'fbconnect-link' => 'facebook.com으로 돌아가기',
 	'fbconnect-log-in' => '로그인',
 	'fbconnect-logged-in-now-connect-title' => '연동 작업 완료',
@@ -22478,17 +22276,6 @@ $1',
 	'fbconnect-merge' => '당신의 Facebook 계정과 위키아 계정을 연동하세요',
 	'fbconnect-modal-headmsg' => '연동 작업 완료',
 	'fbconnect-modal-title' => '계정 설정 마치기',
-	'fbconnect-msg-OnAchBadge-short' => '님께서 $WIKINAME에서 배지를 획득하셨습니다!',
-	'fbconnect-msg-OnAddBlogPost-short' => '님께서 $WIKINAME에서 블로그 글을 작성하셨습니다!',
-	'fbconnect-msg-OnAddImage-short' => '님께서 $WIKINAME에 그림을 추가하셨습니다!',
-	'fbconnect-msg-OnAddImage' => '위키에서 확인해보세요!',
-	'fbconnect-msg-OnAddVideo-short' => '님께서 $WIKINAME에 동영상을 추가하셨습니다!',
-	'fbconnect-msg-OnAddVideo' => '위키에서 확인해보세요!',
-	'fbconnect-msg-OnArticleComment-short' => '님께서 $WIKINAME의 문서에 댓글을 작성하셨습니다!',
-	'fbconnect-msg-OnBlogComment-short' => '님께서 $WIKINAME의 블로그 글에 댓글을 작성하셨습니다!',
-	'fbconnect-msg-OnLargeEdit-short' => '님께서 $WIKINAME의 문서에 큰 기여를 해주셨습니다!',
-	'fbconnect-msg-OnRateArticle-short' => '님께서 $WIKINAME의 문서에 평점을 매기셨습니다!',
-	'fbconnect-msg-OnWatchArticle-short' => '님께서 $WIKINAME의 문서을 주시문서 목록에 추가하셨습니다!',
 	'fbconnect-msg-for-existing-users' => '<p>이미 위키아 계정을 가지고 계십니까?</p><br/><br/>만약 위키아 계정을 Facebook과 연동하고 싶으시다면 먼저 <a class=\'loginAndConnect\' href=\'$1\'>로그인</a>을 해주세요.',
 	'fbconnect-nickname' => '닉네임',
 	'fbconnect-or' => '또는',
@@ -22535,8 +22322,6 @@ $1',
 	'fbconnect-updateuserinfo' => '다음의 개인적인 정보를 업데이트합니다:',
 	'fbconnect-welcome' => 'Facebook 연동 회원님, 환영합니다!',
 	'fbconnect-wikia-login-bullets' => '<ul><li>몇 번의 클릭으로 연동</li><li>연동하는 피드를 관리</li></ul>',
-	'fbconnect-wikia-login-or-create' => '로그인 / 계정 만들기',
-	'fbconnect-wikia-login-w-facebook' => 'Facebook 연동 기능을 통해 위키아에 로그인하거나 가입하세요',
 	'fbconnect-wikia-signup-w-facebook' => 'Facebook 계정으로 가입',
 	'fbconnect' => 'Facebook 연동',
 	'feed-main-title' => '위키아 파트너 피드',
@@ -22692,7 +22477,7 @@ ___________________________________________
 : 포럼 글에 스팸 등의 문서 훼손 행위를 목격하셨다면 해당 글에 마우스를 올린 후에 나타나는 \'도구\' 버튼을 눌러주세요. \'도구\' 버튼을 누른 후에 나타나는 메뉴에서 \'숨기기\' 메뉴를 선택하시면 문서 훼손 행위를 없앨 수 있고 추가적으로 관리자에게 알릴 수도 있습니다.
 
 \'\'\'추천 기능에 대해 알려주세요.\'\'\'
-: 흥미로운 주제나 질 좋은 답글이 있다면 \'추천\' 버튼을 눌러 다른 사용자들에게 추천할 수 있습니다. 
+: 흥미로운 주제나 질 좋은 답글이 있다면 \'추천\' 버튼을 눌러 다른 사용자들에게 추천할 수 있습니다.
 
 \'\'\'태그 기능에 대해 알려주세요.\'\'\'
 : 위키 내의 특정한 문서에 대하여 토론하고 있다면 해당 글을 토론 주제에 \'태그\'할 수 있습니다. 이렇게 태그한 토론 주제들은 해당 문서 아래에 보여지게 되며 다른 사용자들이 참여하기에 용이하게 해주고 포럼을 좀 더 조직적으로 관리할 수 있도록 해줍니다. 예를 들어 \'볼드모트 경\'을 토론 주제에 태그한다면 해당 글은 \'볼드모트 경\' 문서 아래에 보여지게 됩니다.',
@@ -22748,7 +22533,7 @@ ___________________________________________
 <div style="font-style: italic; font-size: 120%;">-- 위키아 팀 드림</div>',
 	'founderemails-answers-email-10-days-passed-body' => '안녕하세요, $USERNAME님.
 
-위키아에서 위키를 생성한 지 열흘이 되어가는군요. 위키가 잘 성장하고 있기를 바랍니다. 
+위키아에서 위키를 생성한 지 열흘이 되어가는군요. 위키가 잘 성장하고 있기를 바랍니다.
 
 -- 위키아 팀 드림',
 	'founderemails-answers-email-10-days-passed-subject' => '위키가 잘 성장하고 있나요?',
@@ -22832,9 +22617,6 @@ ___________________________________________
 	'founderprogressbar-commcorner-edit-description' => '커뮤니티 코너를 편집하게 되면 사용자들에게 알림이 전송됩니다. 이 문서에 위키에서 주로 다루는 내용, 도움을 줄 수 있는 방법, 위키 전체에 알리는 내용 등을 적으세요.',
 	'founderprogressbar-commcorner-edit-label' => '커뮤니티 코너 편집하기',
 	'founderprogressbar-completion-message' => '축하합니다! 주어진 과제를 모두 달성하였습니다. 회원님의 위키는 성공으로 향하는 길에 접어들었거나 이미 성공하였을 것입니다. 앞으로도 꾸준한 노력 부탁드립니다.',
-	'founderprogressbar-fb-connect-action' => 'Facebook과 연동하기',
-	'founderprogressbar-fb-connect-description' => '위키에 하는 기여 내역을 친구들과 공유해보세요! Facebook 친구들과 공유하고 싶은 기여 내역을 관리할 수 있습니다. 이 과제를 달성하기 위해서는 위키의 관리자만 Facebook 연동 기능을 사용하면 됩니다.',
-	'founderprogressbar-fb-connect-label' => 'Facebook 연동',
 	'founderprogressbar-fb-likes3-action' => '대문으로 가기',
 	'founderprogressbar-fb-likes3-description' => '공유가 미덕이며 이는 위키를 알리는 데 큰 힘이 됩니다. 위키의 사용자들과 방문자들에게 대문에 있는 \'좋아요\' 버튼을 누를 수 있도록 장려하여 회원님의 위키의 존재가 널리 퍼지도록 해주세요.',
 	'founderprogressbar-fb-likes3-label' => 'Facebook 좋아요 $1회 달성하기',
@@ -22928,8 +22710,6 @@ ___________________________________________
 	'group-bannedfromchat' => '채팅에서 추방된 사용자',
 	'group-chatmoderator-member' => '채팅 관리자',
 	'group-chatmoderator' => '채팅 관리자',
-	'group-fb-user-member' => 'Facebook 연동 사용자',
-	'group-fb-user' => 'Facebook 연동 사용자',
 	'hub-Entertainment' => '엔터테인먼트',
 	'hub-Food_and_Drink' => '음식과 음료',
 	'hub-Gaming' => '게임',
@@ -22989,11 +22769,11 @@ ___________________________________________
 	'lightbox-share-button-www' => '공유',
 	'lightbox-share-description-video' => '$2의 $1 문서에 있는 동영상',
 	'lightbox-share-description' => '$2의 $1 문서에 있는 그림',
-	'lightbox-share-email-body-video' => '안녕하세요. 
+	'lightbox-share-email-body-video' => '안녕하세요.
 
-누군가가 당신에게 위키아 산하 위키의 동영상을 보여주고 싶어합니다. 다음을 확인해보세요: 
+누군가가 당신에게 위키아 산하 위키의 동영상을 보여주고 싶어합니다. 다음을 확인해보세요:
 
-$1 
+$1
 
 - 위키아 드림',
 	'lightbox-share-email-body' => '안녕하세요. 누군가가 당신에게 위키아 산하 위키의 그림을 보여주고 싶어합니다. 다음을 확인해보세요: $1 - 위키아 드림',
@@ -23111,7 +22891,7 @@ $1
 	'mobileproducts-gameguides-title' => '게임 가이드',
 	'mobileproducts-language' => '언어',
 	'mobileproducts-lyricwiki-description' => '이 애플리케이션은 공동체 기반의 150만 곡 이상의 가사를 보유한 리릭위키의 공식 앱입니다.
-이 무료 애플리케이션은 어떤 곡이라도 가사에 아티스트별, 앨범별, 곡별로 빠르게 접근할 수 있도록 도와줍니다. 
+이 무료 애플리케이션은 어떤 곡이라도 가사에 아티스트별, 앨범별, 곡별로 빠르게 접근할 수 있도록 도와줍니다.
 검색어 자동 완성 기능이 찾으시는 가사를 더욱 빠르고 용이하게 볼 수 있도록 할 것입니다.
 
 == 기능 ==
@@ -23286,7 +23066,7 @@ $1
 	'oasis-create-page' => '이 위키에 새 문서 만들기',
 	'oasis-edit-my-tools-about' => '마이 툴이란?',
 	'oasis-edit-my-tools-addtool' => '특수 문서 추가하기',
-	'oasis-edit-my-tools-desc' => '글 상자에 추가하고자 하는 특수 문서에 이름을 입력하시면 원하는 특수 문서를 마이 툴에 추가하실 수 있습니다. 이미 추가된 특수 문서를 다시 배치하거나 제거하실 수도 있습니다. 
+	'oasis-edit-my-tools-desc' => '글 상자에 추가하고자 하는 특수 문서에 이름을 입력하시면 원하는 특수 문서를 마이 툴에 추가하실 수 있습니다. 이미 추가된 특수 문서를 다시 배치하거나 제거하실 수도 있습니다.
 
 [[도움말:MyTools|추가 가능한 특수 문서의 목록 보기 >]]',
 	'oasis-edit-my-tools-link' => '마이 툴 편집하기',
@@ -23391,21 +23171,9 @@ $1
 	'oasis-skip-to-site-navigation' => '위키 내비게이션으로 가기',
 	'oasis-spotlights-footer-title' => '다른 위키 둘러보기',
 	'oasis-spotlights-rail-title' => '다른',
-	'oasis-toolbar-customize' => '설정',
 	'oasis-toolbar-devinfo' => '개발자 정보',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|특수 문서 목록]]',
 	'oasis-toolbar-edit-cancel' => '취소',
-	'oasis-toolbar-edit-find-a-tool' => '특수 문서 찾기',
-	'oasis-toolbar-edit-hide-tools' => '목록 가리기',
-	'oasis-toolbar-edit-popular-tools' => '인기 있는 특수 문서',
-	'oasis-toolbar-edit-rename-item' => '이름 변경',
-	'oasis-toolbar-edit-reset-defaults' => '기본값으로 되돌리기',
-	'oasis-toolbar-edit-save' => '저장',
-	'oasis-toolbar-edit-search-for-tool' => '찾을 특수 문서의 이름을 여기에 입력하세요',
-	'oasis-toolbar-edit-title' => '내 도구 설정',
-	'oasis-toolbar-edit-toolbar-list' => '설정된 특수 문서 목록',
 	'oasis-toolbar-for-admins-only' => '이 특수 문서는 위키의 관리자만 사용할 수 있습니다.',
-	'oasis-toolbar-more' => '더 보기...',
 	'oasis-toolbar-not-enabled-here' => '이 특수 기능은 위키에 설치되지 않았습니다.',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">총 문서<br />개 보유</span>',
 	'oasis-upload-photos-advanced' => '고급 옵션',
@@ -23482,7 +23250,7 @@ $1
 	'prefs-help-birthmesg' => '왜 생년월일을 입력해야 합니까?',
 	'prefs-help-blurmesg' => '보안문자',
 	'prefs-help-mailmesg' => '이메일',
-	'prefs-help-terms' => '가입하시면 [[w:Terms of Use|위키아 서비스 약관 (영어)]]에 동의하시는 것으로 간주합니다.',
+	'prefs-help-terms' => '가입하시면 {{#NewWindowLink: w:Terms of Use|위키아 서비스 약관 (영어)}}에 동의하시는 것으로 간주합니다.',
 	'prefs-layout' => '스킨',
 	'prefs-monobookv2' => '모노북',
 	'prefs-myhome' => '마이 홈',
@@ -23810,11 +23578,11 @@ $1
 
 위키아의 새 기능과 개선 사항에 대한 최근 소식을 얻고 싶으시다면 [[w:Blog:Wikia_New_Features|새 기능에 관한 위키아 스탭 블로그 (영어)]]를 주시문서 목록에 추가해보세요.',
 	'specialcontact-intro-feedback' => '피드백을 제공하고 싶으신가요? 아래에 자세한 내용을 기술해주세요. 만약 위키아 랩에 있는 기능에 관한 피드백이라면 [[Special:WikiaLabs|위키아 랩 자체의 피드백 기능]]을 사용해주세요.',
-	'specialcontact-intro-general' => '이 양식을 통해 [[w:project:Staff|위키아 스탭]]에게 문의하실 수 있습니다. 이 위키의 관리자 목록은 [[Special:ListAdmins|여기]]에 있습니다. 
+	'specialcontact-intro-general' => '이 양식을 통해 [[w:project:Staff|위키아 스탭]]에게 문의하실 수 있습니다. 이 위키의 관리자 목록은 [[Special:ListAdmins|여기]]에 있습니다.
 
-문제가 발생했을 때 이를 보고하는 방법에 대해서는 [[w:project:Report_a_problem|여기 (영어)]]를 참조해주세요. 몇몇 문제는 [[w:c:ko:포럼:중앙 커뮤니티 포럼|한국어 중앙 위키아의 포럼]]에서 활동하는 사용자에게서도 도움을 받으실 수 있습니다. 
+문제가 발생했을 때 이를 보고하는 방법에 대해서는 [[w:project:Report_a_problem|여기 (영어)]]를 참조해주세요. 몇몇 문제는 [[w:c:ko:포럼:중앙 커뮤니티 포럼|한국어 중앙 위키아의 포럼]]에서 활동하는 사용자에게서도 도움을 받으실 수 있습니다.
 
-만약 첨부할 파일이 있다면 [mailto:community@wikia.com community@wikia.com]으로 메일을 보내주세요. 
+만약 첨부할 파일이 있다면 [mailto:community@wikia.com community@wikia.com]으로 메일을 보내주세요.
 
 <b>주의사항:</b> 위키아에는 한국어를 구사할 수 있는 스탭이 없으므로 문의할 때는 꼭 <b>영어</b>로 해주셔야 합니다. 영어 구사에 대해 도움을 받으시려면 [[w:c:ko:포럼:중앙 커뮤니티 포럼|한국어 중앙 위키아의 포럼]]으로 해주세요.',
 	'specialcontact-intro-main-foot' => '\'\'\'이 문서가 문제를 해결하는데 도움이 되었나요?\'\'\' 만약 그렇지 않다면 [[Special:contact/general|여기]]에서 위키아 스탭에게 문의해주세요. 그 전에 \'\'\'[[w:c:help|위키아 도움말 (영어)]]\'\'\', [[w:c:community:Blog:Wikia_Staff_Blog|위키아 스탭 블로그 (영어)]]를 확인해보시거나 \'\'\'[[w:c:ko:포럼:중앙 커뮤니티 포럼|중앙 커뮤니티 포럼]]\'\'\'에 글을 올려주세요. 만약 관리자의 일에 관해 도움을 받고 싶으시다면 [[w:c:community:Admin_Central:Main_Page|설립자 & 관리자 커뮤니티 (영어)]]를 들르시는 것도 좋습니다.',
@@ -24202,7 +23970,7 @@ $1
 
 안녕하세요! 당신이 제게서 환영 메시지를 받으셨다면 당신은 이 위키의 새로운 편집자가 되신 것입니다.
 
-도움이 필요하시다면, 환영 메시지에 서명한 사용자의 토론 문서에 메시지를 남겨주세요. 그의 토론 문서 링크를 클릭하셔서 나오는 편집 창에서 새로운 메시지를 남겨주시면 됩니다. 
+도움이 필요하시다면, 환영 메시지에 서명한 사용자의 토론 문서에 메시지를 남겨주세요. 그의 토론 문서 링크를 클릭하셔서 나오는 편집 창에서 새로운 메시지를 남겨주시면 됩니다.
 
 위키아의 일반적인 도움을 구하신다면, [[w:c:help|위키아 도움말]]을 방문하시거나 위키아 스탭에게 [[Special:Contact|문의]]를 해주세요.
 
@@ -24376,7 +24144,7 @@ ___________________________________________
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-greeting' => '$USERNAME님 안녕하세요.',
 	'usersignup-confirmation-email-sent' => '\'\'\'$1\'\'\'(으)로 보낸 이메일을 확인해주세요.
-	
+
 해당 메일에 동봉된 링크를 클릭하셔서 계정 생성 절차를 마치시기 바랍니다.',
 	'usersignup-confirmation-email-signature' => '위키아 드림',
 	'usersignup-confirmation-email_body-html' => '$1님 안녕하세요.
@@ -24403,7 +24171,7 @@ $3
 
 ___________________________________________
 
-위키아에 무슨 일이 일어나고 있는지 궁금하시다면 http://ko.wikia.com 를 방문해보세요. 
+위키아에 무슨 일이 일어나고 있는지 궁금하시다면 http://ko.wikia.com 를 방문해보세요.
 위키아에서 발송하는 이메일에 관한 설정은 다음 링크에서 해주세요. {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-confirmation-email_subject' => '거의 다 왔습니다. 위키아 계정을 인증하세요.',
 	'usersignup-confirmation-heading-email-resent' => '새 이메일 보냄',
@@ -25507,7 +25275,7 @@ ___________________________________________
 	'wikistickies-admins-hd' => '관리자 전용',
 	'wikistickies-admins-msg' => '이들은 당신의 전형적인 포스트잇이 아닙니다. 이들은 관리자들을 통해서만 다른 사람들이 볼 수 있도록 허용될 수 있습니다.',
 	'wikistickies-custom-hd' => '위키만의 위키붙임쪽지 만들기',
-	'wikistickies-custom-msg' => '<big>\'\'\'[[MediaWiki:CommunityStickies|CommunityStickies 메시지 문서]]를 편집하셔서 새로운 위키붙임쪽지를 만드실 수 있습니다!\'\'\'</big> 
+	'wikistickies-custom-msg' => '<big>\'\'\'[[MediaWiki:CommunityStickies|CommunityStickies 메시지 문서]]를 편집하셔서 새로운 위키붙임쪽지를 만드실 수 있습니다!\'\'\'</big>
 
 도움이 필요한 문서들을 넣으시면 \'마이 홈\'과 이 문서에 보여집니다.',
 	'wikistickies-hide' => '숨기기',
@@ -25634,8 +25402,6 @@ ___________________________________________
 	'wn-user3-reply-you-your-wall' => '$1님과 다른 회원들이 회원님의 담벼락에 남긴 회원님의 메시지에 답글을 달았습니다.',
 	'wva-failure' => '모든 빈 칸을 채워주셔야 합니다.',
 	'wva-name' => '동영상 이름:',
-	'wva-notallowed' => '이 위키에 동영상을 추가할 수 있는 권한이 없습니다.',
-	'wva-notlogged' => '동영상을 추가하기 위해서는 로그인한 상태여야 합니다.',
 	'wva-protected' => '이 동영상은 보호되어 있습니다.',
 	'wva-success-replaced' => '[[:$1]] 동영상 문서를 새 버전으로 갱신했습니다.',
 	'wva-success' => '[[:$1]] 동영상 문서가 성공적으로 생성되었습니다.',
@@ -25654,10 +25420,10 @@ $messages["pl"] = array(
 Kliknij na przycisk "Dodaj kategorię" na dole strony, aby dodać ją do kategorii.',
 	'achievements-create-edit-plus-category-content' => 'Możesz utworzyć nowy zestaw odznaczeń przyznawanych użytkownikom za edycje w poszczególnych kategoriach, aby wskazać obszary wiki, które potrzebują edytorów.
 Możesz utworzyć więcej zestawów, więc spróbuj zachęcić użytkowników o rożnych zakresach umiejętności i wiedzy.
-Zainicjuj konkurencję pomiędzy użytkownikami wolącymi Wampiry i tymi, wolącymi Wilkołaki, wolącymi Magów lub Wojowników, Autoboty czy Decepticony. 
+Zainicjuj konkurencję pomiędzy użytkownikami wolącymi Wampiry i tymi, wolącymi Wilkołaki, wolącymi Magów lub Wojowników, Autoboty czy Decepticony.
 
 Aby utworzyć nową grupę odznaczeń dla poszczególnych kategorii, wprowadź nazwę kategorii poniżej.
-Standardowy zestaw odznaczeń pozostanie bez zmian - ta opcja utworzy dodatkowy zestaw, który można dostosowywać oddzielnie. 
+Standardowy zestaw odznaczeń pozostanie bez zmian - ta opcja utworzy dodatkowy zestaw, który można dostosowywać oddzielnie.
 
 Kiedy zestaw zostanie utworzony, nowe odznaczenia pojawią się na liście po lewej, pod standardowym zestawem.
 Dostosuj nazwy i obrazy dla nowych odznaczeń aby użytkownicy zobaczyli różnice!
@@ -25801,7 +25567,7 @@ Blogi wykorzystywane mogą być przez użytkowników do publikowania własnych p
 	'chat-user-menu-message-wall' => 'Tablica wiadomości',
 	'chat-user-menu-talk-page' => 'Strona dyskusji',
 	'checkuser-contribs' => 'CheckUser',
-	'checkuser-toollinks' => '<span class="plainlinks">&#91;[[Special:Contributions/$1|contribs]] · 
+	'checkuser-toollinks' => '<span class="plainlinks">&#91;[[Special:Contributions/$1|contribs]] ·
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] ·
@@ -25944,7 +25710,7 @@ Możesz zignorować tę wiadomość, jeśli konto zostało utworzone przez pomy�
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'Alfabet grecki:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -26005,11 +25771,11 @@ $PAGESUMMARY
 </p>',
 	'enotif_body' => 'Witaj $WATCHINGUSERNAME,
 
-Strona $PAGETITLE na {{GRAMMAR:MS.lp|{{SITENAME}}}} została zmieniona przez użytkownika $PAGEEDITOR. 
+Strona $PAGETITLE na {{GRAMMAR:MS.lp|{{SITENAME}}}} została zmieniona przez użytkownika $PAGEEDITOR.
 
 Zobacz na stronie $PAGETITLE_URL aktualną wersję.
 
-$NEWPAGE 
+$NEWPAGE
 
 $PAGESUMMARY
 
@@ -26081,30 +25847,19 @@ W zasadzie rozwijane jest prawie wszystko w podwójnych nawiasach klamrowych.',
 	'fbconnect-alreadyloggedin' => '\'\'\'Jesteś już połączony z Facebookiem, $1!\'\'\'',
 	'fbconnect-cancel' => 'Anulowano',
 	'fbconnect-canceltext' => 'Poprzedni wybór został anulowany przez użytkownika.',
-	'fbconnect-chooseauto' => 'Nazwa wygenerowana automatycznie ($1)',
-	'fbconnect-chooseexisting' => 'Istniejące konto na tej wiki',
-	'fbconnect-choosefirst' => 'Twoje imię ($1)',
-	'fbconnect-choosefull' => 'Twoje nazwisko ($1)',
-	'fbconnect-chooseinstructions' => 'Możesz wybrać jedną z poniższych nazw użytkownika.',
-	'fbconnect-chooselegend' => 'Wybór nazwy użytkownika',
-	'fbconnect-choosemanual' => 'Twoja sugerowana nazwa użytkownika:',
-	'fbconnect-choosenick' => 'Nazwa Twojego profilu na Facebooku ($1)',
-	'fbconnect-choosepassword' => 'Hasło:',
-	'fbconnect-chooseusername' => 'Nazwa użytkownika:',
 	'fbconnect-click-to-connect-existing' => 'Użyj tego przycisku aby połączyć Twoje konto na Facebooku z $1',
 	'fbconnect-click-to-login' => 'Kliknij na ten przycisk aby zalogować się przez Facebooka',
 	'fbconnect-comm' => 'Komunikacja',
 	'fbconnect-commdesc' => 'Połączenie z Facebookiem pozwala wkroczyć na nowy poziom współpracy z innymi. Zobacz, którzy z Twoich znajomych korzystają z wiki i dziel się z nimi swoimi edycjami.',
 	'fbconnect-connect-error-msg' => 'Nie udało się połączyć bez zgody na publikowanie na Twoim profilu na Facebooku. Po skonfigurowaniu konta masz [[w:c:help:Help:Facebook_Connect#Sharing_with_your_Facebook_activity_feed|pełną kontrolę]] nad tym co publikowane będzie na Twoim profilu. Spróbuj ponownie.',
-	'fbconnect-connect-msg-sync-profile' => 'Gratulacje! Twoje konta na Wikii i Facebooku zostały połączone. <br/> W swoich <a href=\'$1\'>preferencjach</a> możesz kontrolować co ma być publikowane na Facebooku. Zsynchronizuj swój <a href=\'$2\'>profil na Wikii</a> z Facebookiem.',
-	'fbconnect-connect-msg' => 'Gratulacje! Twoje konta na Wikii i Facebooku zostały połączone. <br/> W swoich <a href=\'$1\'>preferencjach</a> możesz kontrolować co ma być publikowane na Facebooku.',
+	'fbconnect-connect-msg' => 'Gratulacje! Twoje konta na Wikii i Facebooku zostały połączone.',
 	'fbconnect-connect-next' => 'Dalej >>',
 	'fbconnect-connect-simple' => 'Połącz',
 	'fbconnect-connect' => 'Zaloguj się z Facebookiem',
 	'fbconnect-conv' => 'Wygoda',
 	'fbconnect-convdesc' => 'Połączeni użytkownicy są automatycznie zalogowani. Po udzieleniu zgody, mogą także wykorzystywać konto na Facebooku do otrzymywania ważnych powiadomień bez konieczności ujawniania swojego adresu e-mail.',
 	'fbconnect-convert' => 'Połącz to konto z Facebookiem',
-	'fbconnect-desc' => 'Pozwala użytkownikom na [[Special:Connect|Połączenie]] z ich kontem na [http://www.facebook.com Facebooku]. Umożliwia potwierdzanie tożsamości przy wykorzystaniu grup na Facebooku i korzystanie FBML na wiki.',
+	'fbconnect-desc' => 'Pozwala użytkownikom na Połączenie z ich kontem na [http://www.facebook.com Facebooku]. Umożliwia potwierdzanie tożsamości przy wykorzystaniu grup na Facebooku i korzystanie FBML na wiki.',
 	'fbconnect-disconnect-done' => 'Trwa rozłączanie <span id=\'fbConnectDisconnectDone\'>... gotowe! </span>',
 	'fbconnect-disconnect-info-existing' => 'Możesz nadal zalogować się wykorzystując istniejącą nazwę i hasło.',
 	'fbconnect-disconnect-info' => 'Wysłaliśmy e-mail z nowym hasłem do Twojego konta. Możesz zalogować się przy użyciu tej samej nazwy użytkownika co poprzednio.',
@@ -26114,9 +25869,6 @@ W zasadzie rozwijane jest prawie wszystko w podwójnych nawiasach klamrowych.',
 	'fbconnect-error-user-creation-hook-aborted' => 'Tworzenie konta zostało anulowane przez jedno z rozszerzeń, komunikat błędu: $1',
 	'fbconnect-error' => 'Błąd z weryfikacją',
 	'fbconnect-errortext' => 'Wystąpił błąd. Spróbuj ponownie.',
-	'fbconnect-fbid-connected-to' => 'Konto na Wikii, które jest połączone z tym ID na Facebooku to <strong>$1</strong>.',
-	'fbconnect-fbid-is-already-connected-title' => 'Konto na Facebooku jest już wykorzystywane',
-	'fbconnect-fbid-is-already-connected' => 'Konto na Facebooku, które próbujesz połączyć z kontem na Wikii jest już połączone z innym kontem. Jeśli chcesz połączyć obecne konto na Wikii z Facebookiem, najpierw odłącz poprzednie konto w swoich preferencjach.',
 	'fbconnect-fbml' => 'Facebook Markup Language',
 	'fbconnect-fbmldesc' => 'Facebook udostępnia szereg znaczników, które generować będą dynamiczne dane. Wiele z tych znaczników może zostać dodanych do stron na wiki, a to co generują zależeć będzie od tego kto ogląda stronę, która je zawiera.',
 	'fbconnect-fullname' => 'Pełne nazwisko',
@@ -26126,7 +25878,6 @@ W zasadzie rozwijane jest prawie wszystko w podwójnych nawiasach klamrowych.',
 	'fbconnect-invalidname' => 'Wybrana nazwa jest już zajęta lub zawiera niedozwolone znaki. Wybierz inną.',
 	'fbconnect-invalidtext' => 'Wybór dokonany na poprzedniej stronie był nieprawidłowy.',
 	'fbconnect-language' => 'Język',
-	'fbconnect-link-to-profile' => 'Profil',
 	'fbconnect-link' => 'Wróć na facebook.com',
 	'fbconnect-listusers-header' => 'Uprawnienia $1 i $2 zostaną automatycznie przeniesione z tytułów Officer i Admin z grupy $3.\n\nAby dowiedzieć się więcej, skontaktuj się z twórcą grupy - $4.',
 	'fbconnect-log-in' => 'Logowanie',
@@ -26142,15 +25893,6 @@ Zostaniesz także wylogowany z Facebooka i wszystkich połączonych stron, włą
 	'fbconnect-merge' => 'Połącz konto na wiki ze swoim Facebook ID',
 	'fbconnect-modal-headmsg' => 'Prawie gotowe!',
 	'fbconnect-modal-title' => 'Zakończ konfigurowanie konta',
-	'fbconnect-msg-OnAchBadge-short' => 'otrzymał(a) odznaczenie na $WIKINAME!',
-	'fbconnect-msg-OnAddImage-short' => 'dodał(a) obraz do $WIKINAME!',
-	'fbconnect-msg-OnAddVideo-short' => 'dodał(a) film do $WIKINAME!',
-	'fbconnect-msg-OnAddVideo' => 'Odwiedź resztę wiki!',
-	'fbconnect-msg-OnArticleComment-short' => 'dodał(a) komentarz na $WIKINAME!',
-	'fbconnect-msg-OnBlogComment-short' => 'skomentował(a) wpis na blogu na $WIKINAME',
-	'fbconnect-msg-OnLargeEdit-short' => 'dokonał(a) dużej edycji na $WIKINAME!',
-	'fbconnect-msg-OnRateArticle-short' => 'ocenił(a) artykuł na $WIKINAME!',
-	'fbconnect-msg-OnWatchArticle-short' => 'obserwuje artykuł na $WIKINAME!',
 	'fbconnect-msg-for-existing-users' => '<p>Jesteś już użytkownikiem Wikii?</p><br/><br/>Jeśli chcesz połączyć konto na Facebooku z istniejącym kontem na Wikii, <a class=\'loginAndConnect\' href=\'$1\'>zaloguj się</a>.',
 	'fbconnect-nickname' => 'Nazwa użytkownika',
 	'fbconnect-or' => 'LUB',
@@ -26181,7 +25923,7 @@ Zespół Wikii',
 	'fbconnect-prefs-post' => 'Publikuj na Facebooku gdy:',
 	'fbconnect-prefs-show' => 'Pokaż ustawienia >>',
 	'fbconnect-prefsheader' => 'Domyślnie, niektóre informacje o wydarzeniach na wiki zostaną opublikowane na Facebooku. Możesz dostosować ustawienia publikacji w swoich preferencjach.',
-	'fbconnect-reclamation-body-error' => 'Wystąpił błąd w trakcie odłączania konta od Facebooka lub konto zostało odłączone już wcześniej. 
+	'fbconnect-reclamation-body-error' => 'Wystąpił błąd w trakcie odłączania konta od Facebooka lub konto zostało odłączone już wcześniej.
 											<br/><br/> Aby się zalogować, wejdź na: $1',
 	'fbconnect-reclamation-body' => 'Twoje konto zostało odłączone od Facebooka! <br/><br/>  Wysłaliśmy e-mail zawierający nowe hasło - możesz logować się przy użyciu tej samej nazwy użytkownika.
 											<br/><br/> Aby się zalogować, wejdź na: $1',
@@ -26197,8 +25939,6 @@ Zespół Wikii',
 	'fbconnect-updateuserinfo' => 'Zaktualizuj następujące informacje:',
 	'fbconnect-welcome' => 'Witaj!',
 	'fbconnect-wikia-login-bullets' => '<ul><li>Zarejestruj się w kilku kliknięciach</li><li>Masz pełną kontrolę nad tym co ma być publikowane na Facebooku</li></ul>',
-	'fbconnect-wikia-login-or-create' => 'Zaloguj się / Utwórz konto',
-	'fbconnect-wikia-login-w-facebook' => 'Zaloguj się / Zarejestruj się przez Facebooka',
 	'fbconnect-wikia-signup-w-facebook' => 'Zarejestruj się poprzez Facebooka',
 	'file-nohires' => '<small>Obraz w wyższej rozdzielczości jest niedostępny.</small>',
 	'file-page-more-links' => 'Zobacz pełną listę',
@@ -26315,10 +26055,10 @@ Wpisz nazwę pliku bez prefiksu „{{ns:file}}:”.',
 	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Aktywny<br> wątek|Aktywne<br> wątki|Aktywnych<br> wątków}}</span>',
 	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Wątek<br> na tym forum|Wątki<br> na tym forum|Wątków<br> na tym forum}}</span>',
 	'forum-mail-notification-body-HTML' => 'Witaj $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 			
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Przejdź do wiadomości</a></p>
 <p>Zespół Wikii</p>
 ___________________________________________<br>
@@ -26335,7 +26075,7 @@ $MESSAGE_NO_HTML
 -- $AUTHOR
 
 Przejdź do wiadomości($MESSAGE_LINK)
- 
+
 Zespół Wikii
 
 ___________________________________________
@@ -26438,22 +26178,21 @@ Zanim rozpoczniesz dyskusję na forum, pamiętaj o przestrzeganiu kilku zasad:
 	'founderemails-email-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
 </a>
- 
+
 <a href="http://www.facebook.com/wikiapl" style="text-decoration:none">
 <img alt="facebook" src="http://images2.wikia.nocookie.net/wikianewsletter/images/5/55/Facebook.png" style="border:none">
 </a>
- 
+
 <a href="http://www.youtube.com/wikia" style="text-decoration:none">
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
- 
+
 <a href="http://spolecznosc.wikia.com/wiki/" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
 	'founderemails-email-page-edited-anon-subject' => 'Niezarejestrowany użytkownik dokonał zmian na $WIKINAME',
 	'founderprogressbar-browse-page-name' => 'Strona główna',
 	'founderprogressbar-category-add5-label' => 'Osiągnij $1 {{PLURAL:$1|kategorię|kategorie|kategorii}}',
-	'founderprogressbar-fb-connect-description' => 'Podziel się tym co robisz! Facebook Connect pozawala na dzielenie się z Twoimi przyjaciółmi na Facebooku Twoją pracą na wiki. Możesz wybrać, co powinno być publikowane. Wystarczy, że jeden administrator włączy tą opcję aby ukończyć zadanie',
 	'founderprogressbar-list-description2' => 'Obszar zadań to lista wszystkich zadań wymagających ukończenia. Jeśli ominiesz któreś zadanie, zostanie ono przesunięte do sekcji Pominięte zadania ale będzie dostępne w dowolnej chwili. Jest jakieś zadanie, które nie pasuje do Twojej wiki? Nie martw się, jeżeli w Pominiętych zadaniach pozostają jakieś cele do osiągnięcia, możesz wykonać Dodatkowe zadania. Ich ukończenie także wpływa na pasek postępu, więc możesz osiągnąć 100% nawet jeżeli nie wykonasz wszystkich zadań.',
 	'founderprogressbar-user-add5-url' => 'http://spolecznosc.wikia.com/wiki/Blog_użytkownika:Sovq/Daj_innym_się_znaleźć',
 	'gamingcalendar-cancel' => 'Anuluj',
@@ -26498,8 +26237,6 @@ Odwiedź wiki aby wziąć udział w edycji
 	'group-council' => 'Council',
 	'group-emailconfirmed-member' => 'Potwierdzony e-mailem',
 	'group-emailconfirmed' => 'Potwierdzeni e-mailem',
-	'group-fb-user-member' => 'Facebook Connect',
-	'group-fb-user' => 'Facebook Connect',
 	'group-helper-member' => 'Helper',
 	'group-helper' => 'Helperzy',
 	'group-lookupcontribs-member' => 'LookupContribs',
@@ -26530,7 +26267,6 @@ Odwiedź wiki aby wziąć udział w edycji
 	'grouppage-fb-admin' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
 	'grouppage-fb-groupie' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
 	'grouppage-fb-officer' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
-	'grouppage-fb-user' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
 	'grouppage-helper' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
 	'grouppage-lookupcontribs' => 'w:c:pl.help:Help:Uprawnienia_grup_użytkowników',
 	'grouppage-lookupuser' => 'w:c:pl.help:Help:Uprawnienia_grup_użytkowników',
@@ -26677,27 +26413,27 @@ Odwiedź wiki aby wziąć udział w edycji
 	'lvs-error-permission' => 'Nie możesz wymienić tego filmu.',
 	'lvs-new-flag' => 'Nowy',
 	'mail-notification-body-HTML' => 'Witaj $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 			
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Przejdź do wiadomości</a></p>
 <p>Zespół Wikia</p>
 ___________________________________________<br />
 * Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
 * Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body' => 'Witaj $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Przejdź do wiadomości($MESSAGE_LINK)
- 
+
 Zespół Wikia
 
 ___________________________________________
@@ -26706,15 +26442,15 @@ ___________________________________________
 	'mail-notification-html-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
 </a>
- 
+
 <a href="http://www.facebook.com/wikiapl" style="text-decoration:none">
 <img alt="facebook" src="http://images2.wikia.nocookie.net/wikianewsletter/images/5/55/Facebook.png" style="border:none">
 </a>
- 
+
 <a href="http://www.youtube.com/wikia" style="text-decoration:none">
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
- 
+
 <a href="http://spolecznosc.wikia.com/wiki/" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
@@ -26853,7 +26589,6 @@ ___________________________________________
 	'oasis-navigation-v2-level2-validation' => 'Poziom 2 menu jest zbyt długi. Skróć jego elementy by dało się ich użyć.',
 	'oasis-navigation-v2-new-photos' => 'Obrazy',
 	'oasis-navigation-v2-validation-caption' => 'Podgląd zweryfikuje ewentualne błędy. Jeśli wszystko gra, można publikować z poziomu podglądu. Jeśli nie, przycisk Wstecz pozwala kontynuować edycję.',
-	'oasis-toolbar-edit-advanced-tools' => '[http://spolecznosc.wikia.com/wiki/Pomoc:Pasek_narzędzi/Lista_dostępnych_narzędzi lista zaawansowanych narzędzi]',
 	'oasis-toolbar-edit-cancel' => 'Anuluj',
 	'oasis-upload-photos-overwrite-file' => 'Zastąp plik',
 	'ogg-long-audio' => 'plik dźwiękowy Ogg $1, długość $2, $3',
@@ -27252,12 +26987,12 @@ Jeśli uważasz, że dyskusja o Twojej blokadzie jest konieczna, skontaktuj się
 *Inne ważne szczegóły
 
 Dziękujemy za zgłoszenie!',
-	'specialcontact-intro-close-account' => 'Przykro nam, że chcesz wyłączyć swoje konto. Jeśli napotkałeś problem na swojej wiki, spróbuj skontaktować się z [[Special:Listusers/sysop|lokalnymi administratorami]] aby uzyskać pomoc i wsparcie. 
+	'specialcontact-intro-close-account' => 'Przykro nam, że chcesz wyłączyć swoje konto. Jeśli napotkałeś problem na swojej wiki, spróbuj skontaktować się z [[Special:Listusers/sysop|lokalnymi administratorami]] aby uzyskać pomoc i wsparcie.
 
 Jeśli na pewno chcesz wyłączyć swoje konto, musisz wiedzieć, że nie ma możliwości jego usunięcia, można je jedynie wyłączyć. Wyłączenie konta sprawi, że nie będzie dało się już z niego korzystać. Procesu tego nie można cofnąć, więc jeśli później zdecydujesz dołączyć do Wikii, konieczne będzie założenie nowego konta. Wyłączenie konta nie usunie dokonanych przez Ciebie edycji.
 
 Jeśli mimo to chcesz wyłączyć swoje konto, użyj poniższego formularza.',
-	'specialcontact-intro-close-wiki' => 'Dziękujemy za skontaktowanie się z Wikią. Wiki generalnie nie są usuwane - należą do tworzących je społeczności, a wiki, której nie zamierasz już edytować, może zostać adoptowana przez kogoś innego w przyszłości. 
+	'specialcontact-intro-close-wiki' => 'Dziękujemy za skontaktowanie się z Wikią. Wiki generalnie nie są usuwane - należą do tworzących je społeczności, a wiki, której nie zamierasz już edytować, może zostać adoptowana przez kogoś innego w przyszłości.
 
 Jeśli chcesz zmienić nazwę wiki lub "zacząć od nowa" możesz użyć dostępnych narzędzi, takich jak kreator motywu lub zmiana nazwy wybranych stron, bez kłopotu rozpoczynania pracy od początku. Jeśli chcesz zmienić adres swojej wiki [[Special:Contact/general|skontaktuj się z nami]] - chętnie pomożemy.
 
@@ -27374,7 +27109,7 @@ Kontakt z zespołem Wikii odbywa się w języku angielskim, jeśli wolisz kontak
 	'specialcontact-sectitle-wiki-name-change' => 'Zmiana nazwy wiki',
 	'specialcontact-sectitle' => 'Wsparcie Wikii - $1',
 	'specialpages-group-wikia' => 'Narzędzia Wikia',
-	'specialpages-note' => '---- 
+	'specialpages-note' => '----
 * Normalne strony specjalne.
 * <span class="mw-specialpagerestricted">Zastrzeżone strony specjalne.</span>',
 	'specialvideos-html-title' => 'Filmy na {{SITENAME}}',
@@ -27495,7 +27230,7 @@ Aby uzyskać ogólną pomoc odwiedź [http://pomoc.wikia.com/wiki/Pomoc:Zawarto%
 
 == Informacje o narzędziach powitania i pomocy ==
 
-Narzędzia powitalne wiki pomagają społeczności przyjmować nowych edytorów. Powitanie nowych użytkowników jest istotne po to, aby mogli zobaczyć, że na wiki jest aktywna społeczność i wiedzieli gdzie skierować swoje pytania. 
+Narzędzia powitalne wiki pomagają społeczności przyjmować nowych edytorów. Powitanie nowych użytkowników jest istotne po to, aby mogli zobaczyć, że na wiki jest aktywna społeczność i wiedzieli gdzie skierować swoje pytania.
 
 Kiedy użytkownik dokona pierwszej edycji, narzędzie powitania wiki zostawia wiadomość na stronie dyskusji lub tablicy oraz tworzy stronę użytkownika.
 
@@ -27504,23 +27239,23 @@ Wiadomość na stronie dyskusji lub tablicy, jest podpisana przez administratora
 Narzędzia powitania można dostosować stosując następujące ustawienia:
 
 ;[[MediaWiki:Welcome-message-user]] (Strony dyskusji) lub<br />
-;[[MediaWiki:Welcome-message-wall-user]] (Tablica Wiadomości) 
+;[[MediaWiki:Welcome-message-wall-user]] (Tablica Wiadomości)
 :Powitalna wiadomość dla zalogowanych użytkowników
 ;[[MediaWiki:Welcome-message-anon]] (Strony dyskusji) lub<br />
-;[[MediaWiki:Welcome-message-wall-anon]] (Tablica Wiadomości) 
-:Powitalna wiadomość dla niezarejestrowanych użytkowników 
+;[[MediaWiki:Welcome-message-wall-anon]] (Tablica Wiadomości)
+:Powitalna wiadomość dla niezarejestrowanych użytkowników
 ;[[MediaWiki:Welcome-message-user-staff]] (Strony dyskusji) lub<br />
 ;[[MediaWiki:Welcome-message-wall-user-staff]] (Tablica Wiadomości)
 :Powitalna wiadomość dla zalogowanych użytkowników podpisana przez personel Wikii, w przypadku gdy na wiki nie było aktywnego administratora przez przynajmniej 60 dni.
 ;[[MediaWiki:Welcome-message-anon-staff]] (Strony dyskusji) lub<br />
 ;[[MediaWiki:Welcome-message-wall-anon-staff]] (Tablica Wiadomości)
 :Powitalna wiadomość dla niezarejestrowanych użytkowników podpisana przez personel Wikii, w przypadku gdy na wiki nie było aktywnego administratora przez przynajmniej 60 dni.
-;[[MediaWiki:Welcome-user-page]] 
-:Strona użytkownika dla zalogowanych użytkowników 
-;[[MediaWiki:Welcome-message-log]] 
-:Edytuj podsumowania użwane kiedy zostawiasz wiadomość 
-;[[MediaWiki:Welcome-user]] 
-:Użyj do wyłączenia ustawień i zmiany opcji kto pozostawia wiadomość 
+;[[MediaWiki:Welcome-user-page]]
+:Strona użytkownika dla zalogowanych użytkowników
+;[[MediaWiki:Welcome-message-log]]
+:Edytuj podsumowania użwane kiedy zostawiasz wiadomość
+;[[MediaWiki:Welcome-user]]
+:Użyj do wyłączenia ustawień i zmiany opcji kto pozostawia wiadomość
 
 :Dodaj @latest dla wiadomości podpisanej przez najczęściej udzielającego się administratora.
 :Dodaj indywidualną nazwę użytkownika (nie podpis) dla wszystkich powitań pozostawionych przez tego użytkownika.
@@ -27556,15 +27291,15 @@ Jeśli masz jakieś pytania dotyczące narzędzi powitalnych, prosimy o [[Specia
 	'userlogin-email-footer-line3' => '<a href="http://www.twitter.com/wikia" style="text-decoration:none">
 <img alt="twitter" src="http://images4.wikia.nocookie.net/wikianewsletter/images/f/f7/Twitter.png" style="border:none">
 </a>
- 
+
 <a href="http://www.facebook.com/wikiapl" style="text-decoration:none">
 <img alt="facebook" src="http://images2.wikia.nocookie.net/wikianewsletter/images/5/55/Facebook.png" style="border:none">
 </a>
- 
+
 <a href="http://www.youtube.com/wikia" style="text-decoration:none">
 <img alt="youtube" src="http://images3.wikia.nocookie.net/wikianewsletter/images/a/af/Youtube.png" style="border:none">
 </a>
- 
+
 <a href="http://spolecznosc.wikia.com/wiki/" style="text-decoration:none">
 <img alt="wikia" src="http://images1.wikia.nocookie.net/wikianewsletter/images/b/be/Wikia_blog.png" style="border:none">
 </a>',
@@ -27742,7 +27477,7 @@ Dodaj opis w tym miejscu.',
 	'wampage-breadcrumb-back-to-wam' => 'Punktacja WAM',
 	'wampage-content' => 'Wikia Activity Monitor (WAM) to wskaźnik stanu wiki. Został stworzony przez Wikię aby uchwycić szereg niezależnych informacji dotyczących danej wiki w jednym indeksie.
 
-WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Pozycja w rankingu zależy od wielu czynników, które nieustannie się zmieniają, więc aby być na bieżąco z aktualnymi trendami, należy regularnie śledzić ranking. Odwiedź 3 huby - [[w:c:pl:Gry|Gry]], [[w:c:pl:Rozrywka|Rozrywka]] i [[w:c:pl:Lifestyle|Lifestyle]] - aby dowiedzieć się więcej o wiki z poszczególnych kategorii. 
+WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Pozycja w rankingu zależy od wielu czynników, które nieustannie się zmieniają, więc aby być na bieżąco z aktualnymi trendami, należy regularnie śledzić ranking. Odwiedź 3 huby - [[w:c:pl:Gry|Gry]], [[w:c:pl:Rozrywka|Rozrywka]] i [[w:c:pl:Lifestyle|Lifestyle]] - aby dowiedzieć się więcej o wiki z poszczególnych kategorii.
 
 [[$1|FAQ]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Jak liczony jest WAM?===
@@ -27837,7 +27572,7 @@ Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.',
 	'wiki-navigation' => '*<nowiki>Artykuły</nowiki>
 **#category1#
 **#category2#
-**#category3# 
+**#category3#
 *<nowiki>Społeczność</nowiki>
 **Blog:Ostatnie_wpisy|Ostatnie wpisy na blogach
 *Pomoc:Zawartość|Pomoc
@@ -28296,7 +28031,7 @@ $messages["ru"] = array(
 	'article-comments-toc-item' => 'Комментарии',
 	'ask_a_question-widget' => 'Задать вопрос…',
 	'ask_a_question' => 'Задать вопрос…',
-	'autoblockedtext' => 'Ваш IP-адрес автоматически заблокирован в связи с тем, что он ранее использовался кем-то из участников, заблокированных {{GENDER:$4|участником|участницей}} $1. 
+	'autoblockedtext' => 'Ваш IP-адрес автоматически заблокирован в связи с тем, что он ранее использовался кем-то из участников, заблокированных {{GENDER:$4|участником|участницей}} $1.
 Была указана следующая причина блокировки:
 
 : «$2».
@@ -28524,11 +28259,11 @@ $PAGESUMMARY
 </p>',
 	'enotif_body' => 'Уважаемый $WATCHINGUSERNAME.
 
-Одна из страниц, которую Вы отслеживаете, $PAGETITLE на {{SITENAME}}, была отредактирована $PAGEEDITOR. Хотите узнать, что изменилось? 
+Одна из страниц, которую Вы отслеживаете, $PAGETITLE на {{SITENAME}}, была отредактирована $PAGEEDITOR. Хотите узнать, что изменилось?
 
 Смотрите "$PAGETITLE_URL", чтобы увидеть текущую версию страницы.
 
-$NEWPAGE 
+$NEWPAGE
 
 $PAGESUMMARY
 
@@ -28561,7 +28296,7 @@ $PAGETITLE_URL
 <br /><br />
 Новый блог был добавлен к <a href="$BLOGLISTING_URL">$BLOGLISTING</a> на {{SITENAME}}.
 <br /><br />
-Перейдите на <a href="$PAGETITLE_URL">$PAGETITLE</a>, чтобы прочитать новый блог 
+Перейдите на <a href="$PAGETITLE_URL">$PAGETITLE</a>, чтобы прочитать новый блог
 <br /><br />
 - Команда Викия
 <br /><hr />
@@ -28608,7 +28343,7 @@ ___________________________________________
 ___________________________________________
 * Найти помощь и совет можно на Community Central (http://community.wikia.com) и Вики Сообщества (http://ru.community.wikia.com)
 * Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на странице личных настроек: http://community.wikia.com/Special:Preferences',
-	'enotif_lastvisited-HTML' => 'Чтобы просмотреть все изменения, произошедшие с вашего последнего посещения 
+	'enotif_lastvisited-HTML' => 'Чтобы просмотреть все изменения, произошедшие с вашего последнего посещения
 это страницы, <a href="$1">нажмите здесь</a>',
 	'enotif_no_summary' => 'Участник не дал пояснений к данной правке',
 	'enotif_subject' => 'Страница $PAGETITLE на {{SITENAME}} была отредактирована $PAGEEDITOR',
@@ -28618,7 +28353,6 @@ ___________________________________________
 	'enterconfirmcode' => 'Ввести код',
 	'exitstitial-title' => 'Выйти',
 	'fbconnect-convert' => 'Связать учётную запись с аккаунтом в Facebook',
-	'fbconnect-wikia-login-or-create' => 'Войти / Создать учётную запись',
 	'file-page-more-links' => 'См. полный список',
 	'file-page-replace-button' => 'Заменить',
 	'file-page-tab-about' => 'О файле',
@@ -28805,7 +28539,7 @@ ___________________________________________
 	'founderemails-email-10-day-wikiahelps-text' => 'Вы также можете попросить помочь участников других вики-проектов, разместив сообщение на форуме <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>.',
 	'founderemails-email-10-days-passed-body' => 'Как дела $USERNAME?
 
-Время летит! Уже прошло 10 дней, как вы начали $WIKINAME, $WIKIURL.  
+Время летит! Уже прошло 10 дней, как вы начали $WIKINAME, $WIKIURL.
 
 Заполучите других участников, кто будет участвовать в проекте, и покажите им ту удивительную работу, которую вы делаете! Вот несколько способов рассказать о своей вики:
 
@@ -28830,17 +28564,17 @@ ___________________________________________
 
 Мы хотели проверить и посмотреть, как идут дела на $WIKINAME, $WIKIURL.
 
-Прошло 3 дня, как вы начали, и мы подумали, что могли бы 
+Прошло 3 дня, как вы начали, и мы подумали, что могли бы
 предложить ещё несколько советов по созданию вики:
 
 Украсить Заглавную страницу. Заглавная страница является одной из первых страниц,
 которую люди видят, когда они посещают $WIKINAME. Создайте хорошее первое впечатление,
 написав подробно о вашей теме, добавьте
 слайдшоу, галерею или слайдер.
-  
+
 Добавьте ещё больше фотографий. Один из лучших способов сделать ваши страницы интереснее -
 это нажать на ссылку «добавить фото».
-  
+
 Найдите вдохновение. Не бойтесь посмотреть на другие вики-проекты, чтобы узнать, как
 их участники работали над своей Заглавной страницей, страницами статей и другими страницами. Вот
 некоторые из хороших вики-проектов: Muppet Wiki, Pop Tarts Wiki, Monster High Wiki.
@@ -29016,27 +28750,27 @@ $3 {{PLURAL:$3|участник присоединился|участника п
 	'lvs-zero-state' => 'В настоящий момент на вашей вики нет видео, которое можно было бы заменить на лицензионное видео из Библиотеки Викия. Проверьте эту страницу позже!',
 	'magicfooterlinks' => '<b>Избранные страницы</b>',
 	'mail-notification-body-HTML' => 'Здравствуйте, $WATCHER,
-			<p>$SUBJECT.</p> 
+			<p>$SUBJECT.</p>
 			<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 			<p>$MESSAGE_HTML</p>
-			<p>-- $AUTHOR_SIGNATURE<p> 			
+			<p>-- $AUTHOR_SIGNATURE<p>
 			<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Посмотреть обсуждение</a></p>
 			<p>Команда Викия</p>
 ___________________________________________<br>
 * Найти помощь или совет можно на Вики Сообщества: http://ru.community.wikia.com
 * Хотите получать меньше писем? Вы можете отписаться от уведомлений или изменить их настройки здесь: http://community.wikia.com/Special:Preferences',
 	'mail-notification-body' => 'Здравствуйте, $WATCHER,
-	
+
 $SUBJECT
-			
+
 $METATITLE
-		
+
 $MESSAGE_NO_HTML
-			
+
 -- $AUTHOR
 
 Посмотреть обсуждение($MESSAGE_LINK)
- 
+
 Команда Викия
 
 ___________________________________________
@@ -29113,7 +28847,7 @@ ___________________________________________
 	'newwikisgraph' => 'Новый график вики',
 	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'В настоящий момент текст на данной странице отсутствует.<br>Вы можете наполнить её текстом и изображениями!\'\'\'</p>
 
-<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Создать эту статью!</span>]</span></center>  
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Создать эту статью!</span>]</span></center>
 <br>',
 	'nocontributors' => 'Эта страница не имеет вкладчиков',
 	'nodiff' => 'Нет изменений',
@@ -29181,7 +28915,7 @@ ___________________________________________
 	'prefs-help-birthday' => 'Почему я должен указывать это?',
 	'prefs-help-birthinfo' => 'Викия просит всех участников указывать свою дату рождения в качестве меры предосторожности и чтобы соблюсти федеральное законодательство.',
 	'prefs-help-birthmesg' => 'Почему я должен указать дату своего рождения?',
-	'prefs-help-terms' => 'Чтобы создать учётную запись, вы должны быть согласны с [[w:Terms of Use| Условиями использования Викия]]',
+	'prefs-help-terms' => 'Чтобы создать учётную запись, вы должны быть согласны с {{#NewWindowLink: w:Terms of Use| Условиями использования Викия}}',
 	'prefs-patrolled-editsv2' => 'Проверенные правки',
 	'prefs-personal' => 'Личные',
 	'prefs-recent-changesv2' => 'Свежие правки, история страниц и журналы',
@@ -29485,7 +29219,7 @@ ___________________________________________
 	'specialcontact-intro-content-issue-mobile' => 'Контент на этой вики был создан её участниками, а не сотрудниками Викия. Если вы хотите обсудить материалы опубликованные здесь, сначала обратитесь к администраторам вики.
 
 Если вы считаете, что контент на вики нарушает Условия Использования Вики, свяжитесь с сотрудниками Викия.',
-	'specialcontact-intro-content-issue' => 'Содержимое этой вики было создано сообществом и управляется  [[Special:ListAdmins|местными администраторам]], а не Викия. Если вы хотите обсудить это, то сначала обратитесь к [[Special:ListAdmins|местным администраторам]]. 
+	'specialcontact-intro-content-issue' => 'Содержимое этой вики было создано сообществом и управляется  [[Special:ListAdmins|местными администраторам]], а не Викия. Если вы хотите обсудить это, то сначала обратитесь к [[Special:ListAdmins|местным администраторам]].
 
 Если вы считаете, что данное содержимое нарушает [http://www.wikia.com/Terms_of_Use Условия использования], свяжитесь с сотрудниками Викия через [[Special:Contact/general|эту страницу]].',
 	'specialcontact-intro-design' => 'Дизайн вики может обновить любой местный администратор, используя [[Справка:Конструктор тем|Конструктор тем]]. Если вы не являетесь администратором и хотите помочь с дизайном вашей вики, сначала обратитесь к [[Special:ListAdmins|местным администраторам]].
@@ -29723,7 +29457,7 @@ ___________________________________________
 Когда участник делает свою первую правку, Wikia Welcome tool оставляет приветствие на его странице обсуждения и создает страницу участника.
 
 Страница обсуждения подписывается администратором, staff member или helper, который делал правки на этой Викия последним, и новый участник знает, к кому он может обратиться за помощью.
- 
+
 Автоматическое приветствие может быть настроено следующим образом:
 
 ;[[MediaWiki:Welcome-message-user|<span style="color:black; background:white;">MediaWiki:Welcome-message-user</span>]]
@@ -29745,7 +29479,7 @@ ___________________________________________
 :"page-user message-anon message-user" включает все функции.
 : Уберите "page-user", если вы не хотите, чтобы создавались страницы участников.
 : Уберите "message-anon", если вы не хотите, чтобы создавалось автоматическое приветствие для анонимных участников.
-: Уберите "message-user", если вы не хотите, чтобы создавалось автоматическое приветствие для зарегистрированных участников. 
+: Уберите "message-user", если вы не хотите, чтобы создавалось автоматическое приветствие для зарегистрированных участников.
 
 ; Приветственное сообщение имеет следующие переменные
 :
@@ -29999,11 +29733,11 @@ ___________________________________________
 	'wall-button-to-submit-comment-no-topic' => 'Оставить сообщение без заголовка',
 	'wall-button-to-submit-comment' => 'Оставить сообщение',
 	'wall-button-to-submit-reply' => 'Оставить ответ',
-	'wall-confirm-monobook-admin' => 'Пожалуйста, напишите, почему вы хотите удалить это. 
+	'wall-confirm-monobook-admin' => 'Пожалуйста, напишите, почему вы хотите удалить это.
 
 Оригинал сообщения и ваш комментарий останутся в истории вики.',
 	'wall-confirm-monobook-lack-of-reason' => 'Пожалуйста, оставьте комментарий к удалению темы/ответа.',
-	'wall-confirm-monobook-remove' => 'Пожалуйста, напишите, почему вы хотите удалить это. 
+	'wall-confirm-monobook-remove' => 'Пожалуйста, напишите, почему вы хотите удалить это.
 
 Оригинал сообщения и ваш комментарий останутся в истории вики.',
 	'wall-confirm-monobook-restore' => 'Пожалуйста, напишите, почему вы хотите восстановить это',
@@ -30620,8 +30354,6 @@ __NOEDITSECTION__',
 	'wn-user3-reply-you-your-wall' => '$1 и другие ответили на ваше сообщение на вашей стене',
 	'wva-failure' => 'Просьба ввести правильные параметры.',
 	'wva-name' => 'Введите название:',
-	'wva-notallowed' => 'Вы не можете добавлять видеоролики на этой вики.',
-	'wva-notlogged' => 'Для добавления видеороликов необходимо зарегистрироваться или зайти под своей учётной записью.',
 	'wva-success-replaced' => 'Страница с видеороликом "$1" была успешно перезаписана.',
 	'wva-success' => 'Страница с видеороликом "$1" была успешно добавлена.',
 	'wva-title' => 'Быстрое добавление видеоролика через адрес URL',
@@ -31206,7 +30938,7 @@ $messages["no"] = array(
 	'prefs-help-blurmesg' => 'Uklart ord',
 	'prefs-help-email' => 'Å angi e-postadresse er valgfritt, men lar deg motta et nytt passord om du glemmer det gamle.
 Du kan også velge å la andre brukere kontakte deg via brukersiden din uten å røpe egen identiteten.',
-	'prefs-help-terms' => 'Ved å opprette en bruker, godtar du [[w:Terms of Use| Wikias Brukervilkår]]',
+	'prefs-help-terms' => 'Ved å opprette en bruker, godtar du {{#NewWindowLink: w:Terms of Use| Wikias Brukervilkår}}',
 	'prev_page' => '&laquo; Forrige',
 	'print.css' => '/* CSS plassert her vil påvirke utskriften */',
 	'prlog_removedentry' => 'fjernet problem $1',
@@ -31238,12 +30970,12 @@ $3
 
 Merknad: Denne bekreftelseslenken vil utgå etter syv dager.
 
-Med tusen av fellesskap på Wikia, er det mange måter å ha det gøy på. 
-Bruk litt tid på å bli kjent med Wikia ved å besøke hjemmesiden 
+Med tusen av fellesskap på Wikia, er det mange måter å ha det gøy på.
+Bruk litt tid på å bli kjent med Wikia ved å besøke hjemmesiden
 (www.wikia.com), og gå gjennom læringsprogrammet vårt på
-http://www.wikia.com/wiki/Help:Tutorial_1 , les interessante og 
+http://www.wikia.com/wiki/Help:Tutorial_1 , les interessante og
 kule artikler, skriv om favorittemnene dine, eller møt andre
-medlemmer av fellesskapet. 
+medlemmer av fellesskapet.
 
 Vi ser frem til å treffe deg på Wikia!
 
@@ -31452,7 +31184,7 @@ running within 48 hours. You can login using the details below to
 double check your ad text, purchase additional ads, edit your ad or review your
 bill. Wikia bills are sent via Paypal every time you have spent
 $50 or every 30 days, whichever happens first.
-	
+
 URL: $1
 Username: $2
 Password: $3
@@ -31461,7 +31193,7 @@ Please save your password in a secure spot.  If you lose it, you can
 contact customer support at: http://www.wikia.com/wiki/Special:Contact
 and we will send you the password to your email address on file.
 
--- 
+--
 Wikia Team',
 	'adss-welcome-subject' => '[AdSS] Wikia Thanks You For Your Sponsorship',
 	'allowemail' => 'Enable email from other users',
@@ -31471,7 +31203,7 @@ The last revision was by [[User:$3|$3]] ([[User talk:$3|talk]] · [[Special:Cont
 	'anoneditwarning' => 'You are not logged in.',
 	'anontalkpagetext' => '<br style="clear:both;" />
 ----
-{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 | \'\'\'This is the discussion page for an anonymous user  who has not created an account yet or who does not use it, identified by the user\'s numerical [[wikipedia:IP address|IP address]].\'\'\'
 
 Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Signup|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address.
@@ -31568,9 +31300,9 @@ Some IP addresses change periodically, and may be shared by several users. If yo
 	'autocreatewiki-step6-error' => 'Cannot set default tables in database.',
 	'autocreatewiki-step7-error' => 'Cannot copy starter database for language.',
 	'autocreatewiki-subname-answers' => 'Answers',
-	'autocreatewiki-welcomebody' => 'Hello $2, 
+	'autocreatewiki-welcomebody' => 'Hello $2,
 
-The Wikia you created is now available at <$1>.  We hope to see you editing there soon! 
+The Wikia you created is now available at <$1>.  We hope to see you editing there soon!
 
 We\'ve added some information and tips on your user talk Page (<$5>) to help you get started. If you have any questions, just reply to this email or browse our help pages at <http://help.wikia.com>. You can also check our Staff blog to keep up-to-date with the latest news and events around Wikia, which can be found here: <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>
 
@@ -31607,7 +31339,7 @@ We\'re excited to have \'\'\'$4\'\'\' as part of the Wikia community! There\'s s
 *Be sure to check out [[Special:WikiFeatures|Wiki Features]] to see what features you can enable on your wiki.
 *Visit our [[w:c:community:Help:Contents|Help Pages]] to answer any specific question you may have or explore our [[w:c:community:Forum:Index|forums]] to get help from other wiki editors.
 *Take a look at our [[w:c:community:Webinars|webinar series]]  -- where you can sign up to interact with Wikia staff, as well as watch past sessions.
-*Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to your wiki. 
+*Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to your wiki.
 
 All of the above links are a great place to start exploring Wikia. If you get stuck or have a question you can\'t find the answer to -- please contact us [[Special:Contact|here]]. But most importantly, have fun! :)
 
@@ -31625,7 +31357,7 @@ Happy editing!
 
 * \'\'\'Create a few links to your site!\'\'\' To get Google to know you\'re out there, link to your Q+A site from your myspace page, your blog or twitter account, or any discussion boards you\'re active on. It\'s important to let the search engines know you\'re ready for passionate people with questions to come visit.
 
-* \'\'\'When you\'re ready -- tell your friends!\'\'\' Once you\'ve started a bunch of pages, linked them together with categories and added some pictures, you\'ll be ready to start showing off your new baby to the world. You probably know people who are interested in the same thing that you are, so tell your friends to check out your new site. Those are your first readers and potential contributors, so give them lots of encouragement. 
+* \'\'\'When you\'re ready -- tell your friends!\'\'\' Once you\'ve started a bunch of pages, linked them together with categories and added some pictures, you\'ll be ready to start showing off your new baby to the world. You probably know people who are interested in the same thing that you are, so tell your friends to check out your new site. Those are your first readers and potential contributors, so give them lots of encouragement.
 
 A good way to stay up-to-date with the latest news and events around Wikia is to visit our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]]. If at any time you get stuck, feel free to write to us through our [[Special:Contact|contact form]] -- we\'re happy to help!
 
@@ -32221,7 +31953,7 @@ Blogs are used by wiki communities for fan fiction or original work, news and an
 	'checkuser-log-ipedits-xff' => '$1 got edits for XFF <a href="http://community.wikia.com/wiki/Special:MultiLookup?target=$2">$2</a>',
 	'checkuser-log-ipusers' => '$1 got users for <a href="http://community.wikia.com/wiki/Special:MultiLookup?target=$2">$2</a>',
 	'checkuser-log-ipusers-xff' => '$1 got users for XFF <a href="http://community.wikia.com/wiki/Special:MultiLookup?target=$2">$2</a>',
-	'checkuser-toollinks' => '<span class="plainlinks">&#91;[[Special:Contributions/$1|contribs]] · 
+	'checkuser-toollinks' => '<span class="plainlinks">&#91;[[Special:Contributions/$1|contribs]] ·
 [http://whatismyipaddress.com/ip/$1 WHOIS] ·
 [http://www.robtex.com/ip/$1.html#whois rDNS] ·
 [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] ·
@@ -32259,9 +31991,9 @@ Blogs are used by wiki communities for fan fiction or original work, news and an
 .watchlistredir {
    font-style: italic;
 }',
-	'community-corner' => '\'\'\'Welcome to My Home!\'\'\' 
+	'community-corner' => '\'\'\'Welcome to My Home!\'\'\'
 
-This page helps you stay up to date with what\'s happening on the wiki. 
+This page helps you stay up to date with what\'s happening on the wiki.
 
 If you\'re the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
 
@@ -32276,7 +32008,7 @@ If you\'re the founder or an admin on this wiki, you can change this message to 
 * Or just post some words of encouragement!',
 	'communityStickies' => 'You can create your own CommunityStickies that appear on My Home and the WikiStickies page! These will appear at the top of the stack of notes on My Home, in random order.
 
-\'\'\'Make a list of sticky notes below this text, using bullets to separate the items.\'\'\' You can put links in the sticky notes the same way that you do on articles. 
+\'\'\'Make a list of sticky notes below this text, using bullets to separate the items.\'\'\' You can put links in the sticky notes the same way that you do on articles.
 
 Here\'s a couple tips: WikiStickies are designed to help the newer contributors find interesting tasks to help out with. The best WikiStickies are \'\'\'specific\'\'\' -- a particular task on a particular page -- so that a contributor isn\'t intimidated by the size of the task. The task should also be \'\'\'practical\'\'\' -- something that an average editor can do, without being a super-expert. Have fun!
 
@@ -32326,13 +32058,13 @@ Have fun!<br>
 	'confirmemail_invalid' => '<center>Thanks for confirming your email, but your confirmation code has expired or is invalid.<br/>
 You will need to receive a new code to confirm your account.
 
-<span class="wikia-button big">[[Special:ConfirmEmail|<span>Request new code via email</span>]]</span></center>  
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>Request new code via email</span>]]</span></center>
 <br>',
 	'confirmemail_loggedin' => '\'\'\'Your e-mail address has now been confirmed.\'\'\'
 
 Welcome!
 
-With thousands of communities on Wikia, there are many ways to have fun here. 
+With thousands of communities on Wikia, there are many ways to have fun here.
 
 Spend some time getting to know Wikia by [[w:c:help:Help:Contents|visiting our help wiki]], reading interesting and cool pages, writing content on your favorite subjects, or meeting other members of the community.
 
@@ -32386,7 +32118,7 @@ Please confirm that you really want to recreate this article.',
 	'create_an_account' => 'Sign up',
 	'createaccount-text' => 'Hello,
 
-An account has been created for you created on {{SITENAME}} with the username "$2" and password "$3". 
+An account has been created for you created on {{SITENAME}} with the username "$2" and password "$3".
 
 Please log in at $4
 
@@ -32425,7 +32157,7 @@ Write the first paragraph of your article here.
 
 ==Section heading==
 
-Write the first section of your article here. 
+Write the first section of your article here.
 
 ==Section heading==
 
@@ -32703,7 +32435,7 @@ Visit [[w:c:help:Help:Video demos|Video demos]]!',
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'Greek:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -32887,11 +32619,11 @@ ___________________________________________
 	'enotif_anon_editor' => 'a user',
 	'enotif_body' => 'Hi $WATCHINGUSERNAME,
 
-One of the pages you\'re following, $PAGETITLE on {{SITENAME}}, has been edited by $PAGEEDITOR. Interested in seeing what\'s changed? 
+One of the pages you\'re following, $PAGETITLE on {{SITENAME}}, has been edited by $PAGEEDITOR. Interested in seeing what\'s changed?
 
 See "$PAGETITLE_URL" for the current version.
 
-$NEWPAGE 
+$NEWPAGE
 
 $PAGESUMMARY
 
@@ -32957,7 +32689,7 @@ ___________________________________________
 <br /><br />
 A new blog post has been added to <a href="$BLOGLISTING_URL">$BLOGLISTING</a> on {{SITENAME}}.
 <br /><br />
-Go to <a href="$PAGETITLE_URL">$PAGETITLE</a> to read the new post. 
+Go to <a href="$PAGETITLE_URL">$PAGETITLE</a> to read the new post.
 <br /><br />
 - Wikia Community Support
 <br /><hr />
@@ -32969,7 +32701,7 @@ Go to <a href="$PAGETITLE_URL">$PAGETITLE</a> to read the new post.
 </p>',
 	'enotif_body_blogs_comment' => 'Hi $WATCHINGUSERNAME,
 
-A new comment has been added to the blog post "$BLOGTITLE" by $PAGEEDITOR. 
+A new comment has been added to the blog post "$BLOGTITLE" by $PAGEEDITOR.
 
 Come see where the conversation is going: <$PAGETITLE_URL#comments>
 
@@ -32980,9 +32712,9 @@ ___________________________________________
 * Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_blogs_comment-HTML' => 'Hi $WATCHINGUSERNAME,
 <br /><br />
-A new comment has been added to the blog post "$BLOGTITLE" by $PAGEEDITOR. 
+A new comment has been added to the blog post "$BLOGTITLE" by $PAGEEDITOR.
 <br /><br />
-Come see <a href="$PAGETITLE_URL#comments">where the conversation is going</a>. 
+Come see <a href="$PAGETITLE_URL#comments">where the conversation is going</a>.
 <br /><br />
 - Wikia Community Support
 <br /><hr />
@@ -33034,7 +32766,7 @@ ___________________________________________
 * Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'enotif_body_delete-HTML' => 'Hi $WATCHINGUSERNAME,
 <br /><br />
-A page you\'re following on {{SITENAME}} has been deleted. This page was previously located at <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+A page you\'re following on {{SITENAME}} has been deleted. This page was previously located at <a href="$PAGETITLE_URL">$PAGETITLE</a>
 <br /><br />
 $PAGESUMMARY
 <br /><br />
@@ -33093,7 +32825,7 @@ A problem has been updated for a page you are watching on {{SITENAME}}. See <a h
 <br /><br />
 For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:ProblemReports}}">{{ns:special}}:ProblemReports</a>
 <br /><br />
-Thanks for being part of the {{SITENAME}} community and helping to improve the wiki! 
+Thanks for being part of the {{SITENAME}} community and helping to improve the wiki!
 <br /><br />
 - Wikia Community Team
 <br /><hr />
@@ -33124,7 +32856,7 @@ A problem has been reported for a page you are following on {{SITENAME}}.
 <br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the page. For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:ProblemReports}}">{{ns:special}}:ProblemReports</a>
 <br /><br />
-Thanks for being part of the {{SITENAME}} community and helping to improve the wiki! 
+Thanks for being part of the {{SITENAME}} community and helping to improve the wiki!
 <br /><br />
 - Wikia Community Team
 <br /><hr />
@@ -33163,7 +32895,7 @@ $PAGESUMMARY
 
 A page you\'re following on {{SITENAME}} that was previously deleted has now been restored. See $PAGETITLE_URL for the current version.
 
-$PAGESUMMARY 
+$PAGESUMMARY
 
 - Wikia Community Support
 
@@ -33189,7 +32921,7 @@ User rights on {{SITENAME}} have been changed the following user: $PAGETITLE_URL
 
 $PAGESUMMARY
 
-See {{fullurl:{{ns:special}}:Log/rights}} for a log of all recent user rights changes. 
+See {{fullurl:{{ns:special}}:Log/rights}} for a log of all recent user rights changes.
 
 - Wikia Community Support
 
@@ -33202,7 +32934,7 @@ User rights on {{SITENAME}} have been changed for the following user: <a href="$
 <br /><br />
 $PAGESUMMARY
 <br /><br />
-<a href="{{fullurl:{{ns:special}}:Log/rights}}">Click here</a> for a log of all recent user rights changes. 
+<a href="{{fullurl:{{ns:special}}:Log/rights}}">Click here</a> for a log of all recent user rights changes.
 <br /><br />
 - Wikia Community Support
 <br /><hr />
@@ -33252,7 +32984,7 @@ Please visit and edit often...
 ___________________________________________
 * Have you checked out our hubs? <http://www.wikia.com/wiki/Category:Hubs>
 
-* Want to control which emails you receive? 
+* Want to control which emails you receive?
 Go to: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_body_upload-HTML' => '<p>
 Dear $WATCHINGUSERNAME,
@@ -33341,7 +33073,7 @@ Please visit and edit often...
 **  RATING:  TV-14
 **  MOREINFO: http://onetreehill.wikia.com/wiki/One_Tree_Hill_Wikia',
 	'entcalendar-20120112' => '*  30 Rock|"Dance Like Nobody\'s Watching"
-**  DESCRIPTION: NBC, TV Series, Comedy: As Tracy becomes frustrated in his attempts to anger Liz, Jack questions the family friendliness of NBC\'s new talent competition and Kenneth prepares for the Rapture.  
+**  DESCRIPTION: NBC, TV Series, Comedy: As Tracy becomes frustrated in his attempts to anger Liz, Jack questions the family friendliness of NBC\'s new talent competition and Kenneth prepares for the Rapture.
 **  IMAGE: http://images3.wikia.nocookie.net/__cb20120104000151/30rock/images/2/29/120103_30rock1.jpg
 **  SYSTEMS: Season 6 Premiere: 8 PM
 **  RATING:  TV-14
@@ -33402,7 +33134,7 @@ Please visit and edit often...
 **  RATING:  TV-14
 **  MOREINFO: http://royalpains.wikia.com/wiki/Royal_Pains_Wiki',
 	'entcalendar-20120119' => '*  Archer|"The Man from Jupiter"
-**  DESCRIPTION: FX, Animated, Comedy: Burt Reynolds starts dating Archer\'s mom and boss, Malory. 
+**  DESCRIPTION: FX, Animated, Comedy: Burt Reynolds starts dating Archer\'s mom and boss, Malory.
 **  IMAGE: http://images2.wikia.nocookie.net/__cb20111129235028/archer/images/7/74/The_Man_From_Jupiter.jpg
 **  SYSTEMS: Mid-Season 3 Premiere: 10:30 PM
 **  RATING:  TV-14
@@ -33425,7 +33157,7 @@ Please visit and edit often...
 **  RATING:  TV-14
 **  MOREINFO: http://chuck-nbc.wikia.com/wiki/Episode_513:_Chuck_Versus_the_Goodbye',
 	'entcalendar-20120129' => '*  Luck|"Pilot"
-**  DESCRIPTION: HBO, TV Series, Drama: Luck follows several characters and their experiences while frequenting a horse racing track. Luck stars Dustin Hoffman as Chester "Ace" Bernstein, a shrewd man in his late 60s who has recently been released from jail. 
+**  DESCRIPTION: HBO, TV Series, Drama: Luck follows several characters and their experiences while frequenting a horse racing track. Luck stars Dustin Hoffman as Chester "Ace" Bernstein, a shrewd man in his late 60s who has recently been released from jail.
 **  IMAGE: http://images1.wikia.nocookie.net/__cb20120104183526/luck/images/4/44/Mainpage.jpg
 **  SYSTEMS: Series Premiere: 9 PM
 **  RATING:  MA
@@ -33434,7 +33166,7 @@ Please visit and edit often...
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?\'http\':\'https\';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>',
 	'exif-fnumber' => 'F Number',
 	'fancycaptcha-badlogin' => 'To help protect against automated password cracking, please enter the words that appear below in the box:',
-	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected. <br> Check your <a href=\'$1\'>preferences</a> to control which events appear in Facebook feed.',
+	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 	'fbconnect-msg-OnAddImage-short' => 'has added a photo to $WIKINAME!',
 	'feed-title-recent-images' => 'Recent photos',
 	'feed-watom' => 'Atom2',
@@ -33531,7 +33263,7 @@ Thanks',
 }).render().setUser(\'WikiaGames\').start(); </script>',
 	'gamingcalendar-20110803' => '* Insanely Twisted Shadow Planet
 ** SYSTEMS: XBLA
-** DESCRIPTION: Insanely Twisted Shadow Planet is a side-scrolling adventure that is a fusion of art, classical animation, and captivating gameplay, created by artist, Michel Gagné, and game industry veteran, Joe Olson. It is developed by Shadow Planet Productions (Fuelcell Games and Gagne International). 
+** DESCRIPTION: Insanely Twisted Shadow Planet is a side-scrolling adventure that is a fusion of art, classical animation, and captivating gameplay, created by artist, Michel Gagné, and game industry veteran, Joe Olson. It is developed by Shadow Planet Productions (Fuelcell Games and Gagne International).
 ** IMAGE: http://images2.wikia.nocookie.net/__cb20110801180123/messaging/images/2/22/Shadowplanet.jpg|45px
 ** MOREINFO: http://michelgagne.blogspot.com/
 
@@ -33618,7 +33350,7 @@ Thanks',
 
 * The Sims Medieval:|Pirates & Nobles
 ** SYSTEMS: PC, Mac
-** DESCRIPTION: The Sims Medieval Pirates & Nobles Adventure Pack introduces new quests, treasure hunting, and hundreds of new objects for your medieval kingdom! Your epic story starts when the Pirates of Aarbyville and the Nobles of Tredony arrive in your kingdom, followed quickly by sword fights, love affairs, grand adventures and mysteries. Go treasure hunting to uncover hidden objects. Embark on new quests to help your kingdom achieve a new ambition. Stylize your kingdom and Sims with new pirate and nobility themed objects and wardrobe. 
+** DESCRIPTION: The Sims Medieval Pirates & Nobles Adventure Pack introduces new quests, treasure hunting, and hundreds of new objects for your medieval kingdom! Your epic story starts when the Pirates of Aarbyville and the Nobles of Tredony arrive in your kingdom, followed quickly by sword fights, love affairs, grand adventures and mysteries. Go treasure hunting to uncover hidden objects. Embark on new quests to help your kingdom achieve a new ambition. Stylize your kingdom and Sims with new pirate and nobility themed objects and wardrobe.
 ** IMAGE: http://images3.wikia.nocookie.net/__cb20110707231429/sims/images/2/2d/P%26N_Cover.jpg|45px
 ** MOREINFO: http://sims.wikia.com/wiki/The_Sims_Medieval:_Pirates_and_Nobles',
 	'gamingcalendar-20110906' => '* Warhammer 40,000: Space Marine
@@ -33664,7 +33396,7 @@ Thanks',
 ** PREORDER: http://www.amazon.com/gp/product/B002I0H79C/ref=as_li_qf_sp_asin_tl?ie=UTF8&tag=wikia-20&linkCode=as2&camp=217145&creative=399381&creativeASIN=B002I0H79C
 * Fallout: New Vegas|Lonesome Road
 ** SYSTEMS: PC, PS3, Xbox 360
-** DESCRIPTION: Lonesome Road brings the Courier\'s story full circle when you are contacted by the original "courier six", a man by the name of Ulysses who refused to deliver the Platinum chip at the start of the main storyline in Fallout: New Vegas. 
+** DESCRIPTION: Lonesome Road brings the Courier\'s story full circle when you are contacted by the original "courier six", a man by the name of Ulysses who refused to deliver the Platinum chip at the start of the main storyline in Fallout: New Vegas.
 ** IMAGE: http://images2.wikia.nocookie.net/__cb20110920153960/fallout/images/b/bd/Lonesome_Road_DLC_cover_art.jpg|45px
 ** MOREINFO: http://fallout.wikia.com/wiki/Lonesome_Road',
 	'gamingcalendar-20110922' => '* Might & Magic|Clash of Heroes
@@ -33681,7 +33413,7 @@ Thanks',
 ** SYSTEMS: PC
 ** DESCRIPTION: A brand new expansion for The Lord of the Rings Online. It will include three new regions, a new raid for up to 24 players, as well as the ability to advance you epic characters as high as to level 75.
 ** IMAGE: http://images4.wikia.nocookie.net/__cb20110721191514/lotr/images/b/b7/Lotro_2.jpeg|45px
-** MOREINFO: http://www.lotro.com 
+** MOREINFO: http://www.lotro.com
 
 * X-Men:|Destiny
 ** SYSTEMS: PS3, Xbox 360, Wii, DS
@@ -33710,7 +33442,7 @@ Thanks',
 	'gamingcalendar-20110928' => '',
 	'gamingcalendar-20111004' => '* Rage
 ** SYSTEMS: PC, PS3, Xbox 360
-** DESCRIPTION: Rage is a brand new first-person shooter and racing game in development by id Software. The game takes place in a post-apocalyptic world similar to that of other popular videogames such as Fallout and Borderlands. The user plays as a member from an Ark (a world-wide movement which took scientists and other significant people and froze them underground in cryogenic pods so they could rebuild Earth) that comes to realize that his Ark has malfunctioned, and that he is the only survivor. 
+** DESCRIPTION: Rage is a brand new first-person shooter and racing game in development by id Software. The game takes place in a post-apocalyptic world similar to that of other popular videogames such as Fallout and Borderlands. The user plays as a member from an Ark (a world-wide movement which took scientists and other significant people and froze them underground in cryogenic pods so they could rebuild Earth) that comes to realize that his Ark has malfunctioned, and that he is the only survivor.
 ** IMAGE: http://images4.wikia.nocookie.net/__cb20100621202352/rage/images/1/1e/Rage_Logo.jpg|45px
 ** MOREINFO: http://rage.wikia.com
 ** PREORDER: http://www.amazon.com/gp/product/B00354NAYG/ref=as_li_qf_sp_asin_tl?ie=UTF8&tag=wikia-20&linkCode=as2&camp=217145&creative=399381&creativeASIN=B00354NAYG',
@@ -33733,7 +33465,7 @@ Thanks',
 
 * Stronghold 3
 ** SYSTEMS: PC
-** DESCRIPTION: A new installment of a popular strategy series. Your castle walls are being smashed by siege engines, an enemy catapult surrounded by troops is rumbling ever closer, your villagers are starving, wolves have been spotted in a nearby cave, your barracks are desperately empty... just another typical day for a medieval lord in FireFly Studios\' Stronghold 3. 
+** DESCRIPTION: A new installment of a popular strategy series. Your castle walls are being smashed by siege engines, an enemy catapult surrounded by troops is rumbling ever closer, your villagers are starving, wolves have been spotted in a nearby cave, your barracks are desperately empty... just another typical day for a medieval lord in FireFly Studios\' Stronghold 3.
 ** IMAGE: http://images3.wikia.nocookie.net/__cb20100625195813/stronghold/images/c/ca/Sh3logo.jpg|45px
 ** MOREINFO: http://stronghold.wikia.com/wiki/Stronghold_3',
 	'gamingcalendar-20111024' => '* Kirby\'s Return to Dreamland
@@ -33859,7 +33591,7 @@ Thanks',
 ** DESCRIPTION: Mario and Sonic are at it again, this time in London. Compete in all of your favorite Olympic sports with Mario, Sonic, and the rest of the gang.
 ** IMAGE: http://images4.wikia.nocookie.net/messaging/images/3/31/MarioSonicLondonBox.jpg|45px
 ** MOREINFO: http://mario.wikia.com/wiki/Mario_%26_Sonic_at_the_London_2012_Olympic_Games
-** PREORDER: http://www.amazon.com/Mario-Sonic-London-Olympics-Nintendo-Wii/dp/B004XV9EWW/ref=sr_1_1?s=videogames&ie=UTF8&qid=1319585376&sr=1-1 
+** PREORDER: http://www.amazon.com/Mario-Sonic-London-Olympics-Nintendo-Wii/dp/B004XV9EWW/ref=sr_1_1?s=videogames&ie=UTF8&qid=1319585376&sr=1-1
 
 * Rayman Origins
 ** SYSTEMS: 3DS, PC, PS3, Wii, Xbox 360
@@ -33907,7 +33639,7 @@ Thanks',
 ** PREORDER: http://www.amazon.com/Just-Dance-3-Nintendo-Wii/dp/B0053BG26C/ref=sr_1_1?s=videogames&ie=UTF8&qid=1319587502&sr=1-1',
 	'gamingcalendar-20111213' => '* Gears of War 3: Raam\'s Shadow
 ** SYSTEMS: Xbox 360
-** DESCRIPTION: Acting as a prequel, Raam\'s Shadow adds more than three hours of campaign to the Gears franchise that takes place before the events of the first game. 
+** DESCRIPTION: Acting as a prequel, Raam\'s Shadow adds more than three hours of campaign to the Gears franchise that takes place before the events of the first game.
 ** IMAGE: http://images2.wikia.nocookie.net/messaging/images/f/fa/RAAM.jpg|45px
 ** MOREINFO: http://gearsofwar.wikia.com/wiki/RAAM%27s_Shadow',
 	'gamingcalendar-20111220' => '* Star Wars:| The Old Republic
@@ -34206,7 +33938,6 @@ Thanks for your participation on Wikia!
 	'grouppage-checkuser' => 'w:c:help:Help:CheckUser',
 	'grouppage-checkuser-global' => 'w:c:help:Help:CheckUser',
 	'grouppage-council' => '',
-	'grouppage-fb-user' => 'Help:Facebook_Connect',
 	'grouppage-helper' => 'Help:Helper Group',
 	'grouppage-janitor' => 'w:Wikia Janitors',
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
@@ -34274,7 +34005,7 @@ Thanks for your participation on Wikia!
 ** CC-BY-SA|This is licensed under the Creative Commons Attribution-Share Alike License
 ** Other free|This is licensed under another free license
 * Other
-** PD|This is in the public domain 
+** PD|This is in the public domain
 ** Permission|This is copyrighted, but use is permitted by the copyright holder',
 	'lifestyleTwitterWidget' => '<script src="http://widgets.twimg.com/j/2/widget.js"></script> <script> new TWTR.Widget({
 
@@ -34417,8 +34148,8 @@ If you click Publish again, your edit will be published without one.',
 
 /*** Bold \'edit this page\' link to encourage newcomers ***/
 
-#ca-edit a { 
-    font-weight: bold !important; 
+#ca-edit a {
+    font-weight: bold !important;
 }
 
 /* Infobox template style */
@@ -34628,7 +34359,7 @@ Return to [[Special:MultiDelete]]',
 	'myhome-hot-spots-feed-empty' => 'This wiki is waiting for you to get involved. Click on \'\'\'[[Special:CreatePage|New page]]\'\'\' to start writing!',
 	'myhome-log-in' => '<center>The My Home feature is only available if you\'re logged in.<br><br><big>\'\'\'[{{fullurl:Special:Signup|$1}} Please log in to see this page!]\'\'\'</big></center>',
 	'myhome-switch-to-monaco' => 'The Wiki Activity feature is only available if you\'re using the Wikia skin. If you\'d like to see Wiki Activity, please visit \'\'\'[[Special:Preferences|your Preferences]]\'\'\' to change your skin.',
-	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any page. Everybody can make changes, add information or correct a mistake. 
+	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any page. Everybody can make changes, add information or correct a mistake.
 
 The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
 	'myhome-user-contributions-feed' => 'My contributions',
@@ -34654,7 +34385,7 @@ Write the text of your article here!',
 	'no_related_unanswered_questions' => 'There are no related questions.',
 	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'This page needs content. You can help by adding a sentence or a photo!\'\'\'</p>
 
-<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Add to this page!</span>]</span></center>  
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Add to this page!</span>]</span></center>
 <br>',
 	'noexactmatch' => '<div class="emptymwmsg mediawiki_noexactmatch"></div>',
 	'noexactmatch-nocreate' => '<div class="emptymwmsg mediawiki_noexactmatch"></div>',
@@ -34706,18 +34437,18 @@ do not yet add translations of this to messaging.wikia.com
 <div class="plainlinks" style="background-color:#FFFFFF;">
 <div style="text-align:center;margin:1em;padding:1em;">
 <div style="font-weight:bold;font-size:200%;color:#0065CB;"> OOPS, was that the right address? </div>
-<div style="font-weight:bold;font-size:150%;color:#000000;"> 
+<div style="font-weight:bold;font-size:150%;color:#000000;">
 Which wiki are you trying to find?
 <inputbox>
 type=search
-</inputbox> 
+</inputbox>
 </div>
 <div style="font-weight:bold;">\'\'For non-English wikis, go to [[Wikia languages|Wikia languages]].\'\'<br>
 \'\'To start your own wiki, visit the [[Special:CreateWiki|Create wiki form]]!\'\'</div>
 </div>
 </div>
 
-{| style="width:95%;margin:auto" 
+{| style="width:95%;margin:auto"
 !|[[Image:Galaxy.jpg|none|40px|link=Hub:Big wikis]]
 !|[[Image:newwikis.jpg|none|40px|link=Special:Newwikis]]
 !|[[Image:ghost.jpg|none|40px|link=Gaming]]
@@ -34734,7 +34465,7 @@ type=search
 !|[[Hub:Sports|Sports]]
 !|[[Hub:Education|Education]]
 |}
-{| style="width:95%;margin:auto" 
+{| style="width:95%;margin:auto"
 !|[[Image:quarter.jpg|none|40px|link=Hub:Finance]]
 !|[[Image:Healthhub.png|none|40px|link=Hub:Lifestyle]]
 !|[[Image:Hobby.jpg|none|40px|link=Hub:Lifestyle]]
@@ -34751,7 +34482,7 @@ type=search
 !|[[Hub:Performing Arts|Performing Arts]]
 !|[[Hub:Philosophy|Philosophy]]
 |}
-{| style="width:95%;margin:auto" 
+{| style="width:95%;margin:auto"
 !|[[Image:Vote.jpg|none|40px|link=Hub:Politics]]
 !|[[Image:Science.jpg|none|40px|link=Hub:Science]]
 !|[[Image:Wookieepedia.png|none|40px|link=Hub:Sci-Fi]]
@@ -34769,7 +34500,7 @@ type=search
 
 ----
 
-{| style="width:95%;margin:auto" 
+{| style="width:95%;margin:auto"
 
 | style="width:33%" valign="top" |<!-- ---------------------------------------------------------- -->
 <div style="font-weight:bold;color:#000000">[[:Category:Hubs|<span style="font-size:130%;text-align:center;color:#000000;text-decoration:underline;">Wikia\'s hubs</span>]]</div>
@@ -34881,9 +34612,9 @@ type=search
 |}',
 	'notextmatches' => '<div style="margin-top: -40px;" class="emptymwmsg mediawiki_notextmatches"></div>',
 	'notitlematches' => '<div style="margin-top: -40px;" class="emptymwmsg mediawiki_notitlematches"></div>',
-	'nowantedimages' => 'WikiStickies uses a feed of article pages that don\'t have images. You can take a page out of that feed by listing it here. 
+	'nowantedimages' => 'WikiStickies uses a feed of article pages that don\'t have images. You can take a page out of that feed by listing it here.
 
-Make a list of article names below this text, using * for bullets. 
+Make a list of article names below this text, using * for bullets.
 
 You can just list the article names; don\'t use brackets to make the items into links.',
 	'nstab-main' => 'Article',
@@ -34897,7 +34628,6 @@ Write the text of your article here!',
 	'oasis-navigation-v2-validation-next' => 'Next',
 	'oasis-page-header-edit-profile' => 'Edit page',
 	'oasis-page-header-history-link' => 'Page history',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:Toolbar/List of available tools|list of advanced contributor tools]]',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|page on<br /> this wiki|pages on<br /> this wiki}}</span>',
 	'on-the-wiki' => 'On The Wiki',
 	'outbound-screen-text' => 'You are now leaving Wikia. Please click here to continue.',
@@ -34928,15 +34658,15 @@ Write the text of your article here!',
 * websitewiki.de
 * yoyowiki.org
 * uncyclopedia.org
-* marveldatabase.com 
-* dcdatabaseproject.com 
-* wikiality.com 
+* marveldatabase.com
+* dcdatabaseproject.com
+* wikiality.com
 * wikicities.com
 * lyricwiki.org
 * camerapedia.org
 * harrypotterwiki.de
 * siwiki.sportsillustrated.cnn.com
-* armchairgm.com 
+* armchairgm.com
 * nocookie.net
 * openserving.com
 * mediawiki.org
@@ -34962,75 +34692,75 @@ If your wikia covers multiple types of media (example: multiple versions of a ga
 
 [http://elderscrolls.wikia.com/wiki/MediaWiki:ParentFilter Elder Scrolls ParentFilter] included multiple versions of the game.
 
-[http://layton.wikia.com/wiki/MediaWiki:ParentFilter Professor Layton ParentFilter] included information about multiple games and a film. 
+[http://layton.wikia.com/wiki/MediaWiki:ParentFilter Professor Layton ParentFilter] included information about multiple games and a film.
 
- 
+
 
 ==Video Game==
 <pre style="width:200px">
 {{Parent Filter VG
-|title = 
-|publisher = 
+|title =
+|publisher =
 |description =
-|similar = 
-|genre = 
-|length = 
-|difficulty = 
-|security = 
-|onlinemulti = 
-|localmulti = 
-|voice = 
-|connectivity = 
-|age = 
-|attitude = 
-|esrb = 
-|pegi = 
-|acb = 
-|content = 
-|violence =
-|language =
-|sexual-themes =
-|drugs-alcohol =
-|crude-humor =
-|subscription = 
-|purchases = 
-|gambling = 
-}}</pre>
-
-==TV series==
-<pre style="width:200px">
-{{Parent Filter TV
-|title = 
-|network = 
-|startdate = 
-|enddate =  
-|length = 
-|description = 
-|characters = 
-|similar = 
-|availability = 
-|rating = 
+|similar =
+|genre =
+|length =
+|difficulty =
+|security =
+|onlinemulti =
+|localmulti =
+|voice =
+|connectivity =
+|age =
+|attitude =
+|esrb =
+|pegi =
+|acb =
 |content =
 |violence =
 |language =
 |sexual-themes =
 |drugs-alcohol =
-|crude-humor = 
+|crude-humor =
+|subscription =
+|purchases =
+|gambling =
+}}</pre>
+
+==TV series==
+<pre style="width:200px">
+{{Parent Filter TV
+|title =
+|network =
+|startdate =
+|enddate =
+|length =
+|description =
+|characters =
+|similar =
+|availability =
+|rating =
+|content =
+|violence =
+|language =
+|sexual-themes =
+|drugs-alcohol =
+|crude-humor =
 }}</pre>
 
 ==Film==
 <pre style="width:200px">
 {{Parent Filter Film
-|title = 
-|studio = 
-|release = 
-|length = 
-|description = 
-|characters = 
-|similar = 
-|availability = 
-|rating = 
-|content = 
+|title =
+|studio =
+|release =
+|length =
+|description =
+|characters =
+|similar =
+|availability =
+|rating =
+|content =
 |violence =
 |language =
 |sexual-themes =
@@ -35057,65 +34787,65 @@ If your wikia covers multiple types of media (example: multiple versions of a ga
 
 [http://elderscrolls.wikia.com/wiki/MediaWiki:ParentFilter Elder Scrolls ParentFilter] included multiple versions of the game.
 
-[http://layton.wikia.com/wiki/MediaWiki:ParentFilter Professor Layton ParentFilter] included information about multiple games and a film. 
+[http://layton.wikia.com/wiki/MediaWiki:ParentFilter Professor Layton ParentFilter] included information about multiple games and a film.
 
- 
+
 
 ==Video Game==
 <pre style="width:200px">
 {{Parent Filter VG
-|title = 
-|publisher = 
+|title =
+|publisher =
 |description =
-|similar = 
-|genre = 
-|length = 
-|difficulty = 
-|security = 
-|onlinemulti = 
-|localmulti = 
-|voice = 
-|connectivity = 
-|age = 
-|attitude = 
-|esrb = 
-|pegi = 
-|acb = 
-|content = 
-|subscription = 
-|purchases = 
-|gambling = 
+|similar =
+|genre =
+|length =
+|difficulty =
+|security =
+|onlinemulti =
+|localmulti =
+|voice =
+|connectivity =
+|age =
+|attitude =
+|esrb =
+|pegi =
+|acb =
+|content =
+|subscription =
+|purchases =
+|gambling =
 }}</pre>
 
 ==TV series==
 <pre style="width:200px">
 {{Parent Filter TV
-|title = 
-|network = 
-|startdate = 
-|enddate =  
-|length = 
-|description = 
-|characters = 
-|similar = 
-|availability = 
-|rating = 
-|content = 
+|title =
+|network =
+|startdate =
+|enddate =
+|length =
+|description =
+|characters =
+|similar =
+|availability =
+|rating =
+|content =
 }}</pre>
 
 ==Film==
 <pre style="width:200px">
 {{Parent Filter Film
-|title = 
-|studio = 
-|release = 
-|length = 
-|description = 
-|characters = 
-|similar = 
-|availability = 
-|rating = 
-|content = 
+|title =
+|studio =
+|release =
+|length =
+|description =
+|characters =
+|similar =
+|availability =
+|rating =
+|content =
 }}</pre>',
 	'passwordremindertext' => '$1,
 
@@ -35144,7 +34874,7 @@ Didn\'t request a new password? Don\'t worry, your account is secure; the replac
 </ul>
 </p>',
 	'phalanx-help-type-answers-words' => 'This filter prevents questions (pages) from being displayed in a number of outputs (widgets, lists, tag-generated listings). It does not prevent those articles from being created.
-	
+
 	Note: works only on Answers-type wikis',
 	'phalanx-user-block-reason-exact' => 'This username or IP address is prevented from editing across the entire Wikia network due to spam, vandalism or other disruption.
 If you believe this is in error, please [[Special:Contact|contact Wikia]].',
@@ -35166,7 +34896,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.',
 	'prefs-help-email' => 'We will use this email address to alert you of new messages or edits to pages you are following. No spam, we promise!',
 	'prefs-help-realname' => 'Name will be shown publicly if entered.',
 	'prefs-help-signature' => 'Comments on talk pages should be signed with "~~<!---->~~" which will be converted into your signature and a timestamp.',
-	'prefs-help-terms' => 'By creating an account, you agree to [[homepage:Terms of use|Wikia\'s Terms of Use]].',
+	'prefs-help-terms' => 'By creating an account, you agree to {{#NewWindowLink: homepage:Terms of use|Wikia\'s Terms of Use}}.',
 	'prefs-watchlist' => 'Followed pages',
 	'prefslogintext' => 'You are logged in as "$1". Your internal ID number is $2.
 
@@ -35315,9 +35045,9 @@ During the move process the user will be globally blocked from editing. See [[Sp
 ***homepage:Video_Games|More...
 
 **#|Free to Play
-***w:c:warframe|Warframe 
+***w:c:warframe|Warframe
 ***w:c:leagueoflegends|League of Legends
-***w:c:clashofclans|Clash of Clans 
+***w:c:clashofclans|Clash of Clans
 ***w:c:puzzle-dragons-global|Puzzle & Dragons
 ***homepage:Video_Games|More...
 
@@ -35364,8 +35094,8 @@ During the move process the user will be globally blocked from editing. See [[Sp
 **#|Fashion and Beauty
 ***w:c:fashion:Fashion_Wiki|Fashion
 ***w:c:haircolor:Haircolor_Wiki|Haircolor
-***w:c:makeup:Makeup_Wiki|Makeup 
-***w:c:nails:Nails_Wiki|Nails 
+***w:c:makeup:Makeup_Wiki|Makeup
+***w:c:nails:Nails_Wiki|Nails
 ***homepage:Lifestyle|More...
 
 **#|Food
@@ -35389,7 +35119,7 @@ During the move process the user will be globally blocked from editing. See [[Sp
 	'showpreview' => 'Preview',
 	'sidebar' => '* Content Navigation
 ** mainpage|mainpage
-** content-url|content 
+** content-url|content
 ** randompage-url|randompage
 * Community
 ** portal-url|portal
@@ -35407,7 +35137,7 @@ During the move process the user will be globally blocked from editing. See [[Sp
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" style="width:100%;"
 |- valign="top"
-| style="width:50%;" | 
+| style="width:50%;" |
 ===Page statistics===
 \'\'\'$1 [[Special:Allpages|total pages]]\'\'\' on  {{SITENAME}} ([[Special:Newpages|new pages]]):
 
@@ -35441,7 +35171,7 @@ See also:
 	'sitetitle' => '{{SITENAME}}',
 	'skinchooser-customcss' => 'For custom themes, select the "custom" option in the menu above and specify custom CSS in [[MediaWiki:Monaco.css]].',
 	'skinchooser-customcss-answers2' => 'For custom themes, select the "custom" option in the menu above and specify custom CSS in [[MediaWiki:Answers.css]].',
-	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 | \'\'\'This is the contributions page for an anonymous user  who has not created an account yet or who does not use it, identified by the user\'s numerical [[wikipedia:IP address|IP address]].\'\'\'
 
 Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Userlogin|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address. [[Help:Why create an account?|Why create an account?]] ([[Help:Create an account|How to create an account]])
@@ -35495,7 +35225,7 @@ If you have done all of these and are still having an issue - please send us a d
 Happy editing!',
 	'specialcontact-intro-blocked' => 'Account blocks are usually set by the local admins, and not by Wikia. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the "my talk" link at the top right of any page.
 
-However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand Wikia wikis available. 
+However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand Wikia wikis available.
 
 If you feel you still need to discuss this block further with Wikia staff, please contact us [[Special:Contact/general|here]].',
 	'specialcontact-intro-general' => 'You can contact [[w:project:Staff|Wikia Staff]] using this form. Admins of this wiki can be found [[Special:ListAdmins|here]].
@@ -35882,19 +35612,19 @@ If the problem persists, [[special:contact|contact Wikia staff]].',
 |style="padding:5px;"| <helper />
 |}</onlyinclude>',
 	'user_Register_Text' => '===What is {{SITENAME}}?===
-   
+
 {{SITENAME}} is the best place to learn everything about the game we all love.  The {{SITENAME}} community is powered by die-hard fans.  We live, breathe, and die the game.
 
 ===Why is {{SITENAME}} awesome?===
- 
+
 We\'re a wiki!  What this means is that you could be an important author on {{SITENAME}}. Are you an expert who knows all the tricks and nuances of the game?  Are you a casual player who found something really interesting? Help us create the ultimate resource!
 
 ===How much does it cost?===
- 
+
 {{SITENAME}} is absolutely free.
 
 ===We respect your privacy===
- 
+
 We are serious about keeping your private information private.  We do not disclose your email address to third parties.
 
 __NOTOC__ __NOEDITSECTION__',
@@ -35919,15 +35649,15 @@ __NOTOC__ __NOEDITSECTION__',
 	'user_Wikia' => '<div style="float:right; margin-left:15px; margin-bottom:15px">http://images.wikia.com/central/images/c/ca/Wikiawelcomelogo.png</div>
 <h2 style="overflow:auto">Welcome to Wikia!</h2>
 
-If you got a welcome from this account, then you\'re a new editor on this wiki. Hi! 
+If you got a welcome from this account, then you\'re a new editor on this wiki. Hi!
 
-If you\'re looking for assistance, you can leave a message for the person that signed the welcome message. Follow the link to their talk page, and then edit the page to write your message. 
+If you\'re looking for assistance, you can leave a message for the person that signed the welcome message. Follow the link to their talk page, and then edit the page to write your message.
 
-For general Wikia help, please visit the [[w:c:help|Wikia Help]] and [[Special:Contact|contact staff]] if you have questions. 
+For general Wikia help, please visit the [[w:c:help|Wikia Help]] and [[Special:Contact|contact staff]] if you have questions.
 
 ==Welcome tool information and help==
 
-The Wikia Welcome tool helps the community to welcome new editors. It\'s important to welcome new contributors so that they can see that there\'s a community on the wiki -- and to give them a point of contact so they know where to go if they have questions. 
+The Wikia Welcome tool helps the community to welcome new editors. It\'s important to welcome new contributors so that they can see that there\'s a community on the wiki -- and to give them a point of contact so they know where to go if they have questions.
 
 When a contributor makes their first edit, the Wikia Welcome tool leaves a talk page message for them, and creates a user page.
 
@@ -35935,29 +35665,29 @@ The talk page message is signed by the [[Special:Listusers/sysop|admin]], helper
 
 The welcome tool can be customized using the following settings:
 
-;[[MediaWiki:Welcome-message-user|<span style="color:black; background:white;">MediaWiki:Welcome-message-user</span>]]: welcome message for logged-in contributors. 
+;[[MediaWiki:Welcome-message-user|<span style="color:black; background:white;">MediaWiki:Welcome-message-user</span>]]: welcome message for logged-in contributors.
 ;[[MediaWiki:Welcome-message-anon|<span style="color:black; background:white;">MediaWiki:Welcome-message-anon</span>]]: welcome message for unregistered contributors.
 ;[[MediaWiki:Welcome-user-page|<span style="color:black; background:white;">MediaWiki:Welcome-user-page</span>]]: user page for logged-in contributors.
 ;[[MediaWiki:Welcome-message-log|<span style="color:black; background:white;">MediaWiki:Welcome-message-log</span>]]: edit summary used when leaving messages.
 ;[[MediaWiki:Welcome-user|<span style="color:black; background:white;">MediaWiki:Welcome-user</span>]]: used to disable the feature and change who leaves the message.
 : Add @latest for the message to be signed by the most recently active admin.
 : Add a specific username (not signature) for all welcomes to be left by a specific person.
-: Add @sysop to always sign the message as an admin and not as a staff member or helper, even if the staff member or helper is the most recent contributor. 
+: Add @sysop to always sign the message as an admin and not as a staff member or helper, even if the staff member or helper is the most recent contributor.
 : Add @disabled to turn off the entire feature.
-;[[MediaWiki:Welcome-enabled|<span style="color:black; background:white;">MediaWiki:Welcome-enabled</span>]]: control which parts of the feature are in use. 
+;[[MediaWiki:Welcome-enabled|<span style="color:black; background:white;">MediaWiki:Welcome-enabled</span>]]: control which parts of the feature are in use.
 :"page-user message-anon message-user" enables everything.
 :Taking out "page-user" will stop the welcome tool from creating user pages.
 :Taking out "message-anon" will stop the tool from leaving welcome messages for unregistered user.
-:Taking out "message-user" will stop the tool from leaving welcome messages for logged-in contributors. 
+:Taking out "message-user" will stop the tool from leaving welcome messages for logged-in contributors.
 
 ;The welcome messages have four special variables:
 :$1 is the page the new editor edited or created
 :$2 is a link to the talk page of the person leaving the welcome
-:$3 is the signature 
+:$3 is the signature
 :$4 is the name of the person being welcomed
 
 ;Controlling the bot:
-:To hide the welcome edits from your wiki\'s recent changes, [[special:contact|contact us]] to flag User:Wikia as a bot. 
+:To hide the welcome edits from your wiki\'s recent changes, [[special:contact|contact us]] to flag User:Wikia as a bot.
 :You can disable the welcome messages by adding @disabled to [[MediaWiki:Welcome-user|<span style="color:black; background:white;">MediaWiki:Welcome-user</span>]].
 
 If you have any questions about the Wikia Welcome tool, please [[Special:Contact|contact Wikia staff]].',
@@ -36013,11 +35743,11 @@ Hi, welcome to {{SITENAME}}. Thanks for your edit to the [[:$1]] page.
 
 \'\'\'[[Special:Userlogin|Please sign in and create a user name]]\'\'\'. It\'s an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
-If you need help, read through our [[w:c:community:Help:Contents|help pages]] or contact a [[Special:Listusers/sysop|local admin]]. If there are no active admins here, stop by [[w:c:community:main page|Community Central]] and check out our [[w:c:community:Forum:Index|forums]]. 
+If you need help, read through our [[w:c:community:Help:Contents|help pages]] or contact a [[Special:Listusers/sysop|local admin]]. If there are no active admins here, stop by [[w:c:community:main page|Community Central]] and check out our [[w:c:community:Forum:Index|forums]].
 
-Looking for live help? Then join us for an upcoming [[w:c:community:Webinars|webinar]] to chat with staff and other Wikia editors. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to the wiki. 
+Looking for live help? Then join us for an upcoming [[w:c:community:Webinars|webinar]] to chat with staff and other Wikia editors. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to the wiki.
 
-All of these links are a great way to start exploring Wikia. 
+All of these links are a great way to start exploring Wikia.
 
 
 Happy editing, $3',
@@ -36032,34 +35762,34 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! $3',
 	'welcome-message-user-answers2' => '==Welcome to {{SITENAME}}!==
 Welcome to {{SITENAME}}, $4. Thanks for [[Special:Contributions/$4|contributing]]! I hope you join in and ask or answer some more questions. You can find the new questions on the [[Special:WikiActivity|WikiActivity]] page. If you need any help, have a look at [[Help:Wikianswers]]. $3',
 	'welcome-message-user-staff' => '==Welcome==
-Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page. If you need help, read through our [[w:c:community:Help:Contents|help pages]] or contact a [[Special:Listusers/sysop|local admin]]. If there are no active admins here, stop by [[w:c:community:main page|Community Central]] and check out our [[w:c:community:Forum:Index|forums]]. 
+Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page. If you need help, read through our [[w:c:community:Help:Contents|help pages]] or contact a [[Special:Listusers/sysop|local admin]]. If there are no active admins here, stop by [[w:c:community:main page|Community Central]] and check out our [[w:c:community:Forum:Index|forums]].
 
-Looking for live help? Then join us for an upcoming [[w:c:community:Webinars|webinar]] to chat with staff and other Wikia editors. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to the wiki. 
+Looking for live help? Then join us for an upcoming [[w:c:community:Webinars|webinar]] to chat with staff and other Wikia editors. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to the wiki.
 
-All of these links are a great way to start exploring Wikia. 
+All of these links are a great way to start exploring Wikia.
 
 Happy editing, $3',
 	'welcome-message-user-staff-answers2' => '==Welcome to {{SITENAME}}!==
-Welcome to {{SITENAME}}, $4. Thanks for [[Special:Contributions/$4|contributing]]! I hope you join in and ask or answer some more questions. You can find the new questions on the [[Special:WikiActivity|WikiActivity]] page.  If you need any help, have a look at [[Help:Wikianswers]] or [[Special:Contact|contact Wikia staff]]. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. 
+Welcome to {{SITENAME}}, $4. Thanks for [[Special:Contributions/$4|contributing]]! I hope you join in and ask or answer some more questions. You can find the new questions on the [[Special:WikiActivity|WikiActivity]] page.  If you need any help, have a look at [[Help:Wikianswers]] or [[Special:Contact|contact Wikia staff]]. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia.
 
 Happy editing, $3',
 	'welcome-message-wall-anon-staff' => 'Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
 
 \'\'\'[[Special:Userlogin|Please sign in and create a user name]]\'\'\'. It\'s an easy way to keep track of your contributions and helps you communicate with the rest of the community.
 
-If you need help, read through our [[w:c:community:Help:Contents|help pages]] or contact a [[Special:Listusers/sysop|local admin]]. If there are no active admins here, stop by [[w:c:community:main page|Community Central]] and check out our [[w:c:community:Forum:Index|forums]]. 
+If you need help, read through our [[w:c:community:Help:Contents|help pages]] or contact a [[Special:Listusers/sysop|local admin]]. If there are no active admins here, stop by [[w:c:community:main page|Community Central]] and check out our [[w:c:community:Forum:Index|forums]].
 
-Looking for live help? Then join us for an upcoming [[w:c:community:Webinars|webinar]] to chat with staff and other Wikia editors. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to the wiki. 
+Looking for live help? Then join us for an upcoming [[w:c:community:Webinars|webinar]] to chat with staff and other Wikia editors. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to the wiki.
 
 Please leave me a message if I can help with anything!',
 	'welcome-message-wall-user' => 'Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page.
 
 Please leave me a message if I can help with anything!',
-	'welcome-message-wall-user-staff' => 'Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page. If you need help, read through our [[w:c:community:Help:Contents|help pages]] or contact a [[Special:Listusers/sysop|local admin]]. If there are no active admins here, stop by [[w:c:community:main page|Community Central]] and check out our [[w:c:community:Forum:Index|forums]]. 
+	'welcome-message-wall-user-staff' => 'Hi, welcome to {{SITENAME}}! Thanks for your edit to the [[:$1]] page. If you need help, read through our [[w:c:community:Help:Contents|help pages]] or contact a [[Special:Listusers/sysop|local admin]]. If there are no active admins here, stop by [[w:c:community:main page|Community Central]] and check out our [[w:c:community:Forum:Index|forums]].
 
-Looking for live help? Then join us for an upcoming [[w:c:community:Webinars|webinar]] to chat with staff and other Wikia editors. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to the wiki. 
+Looking for live help? Then join us for an upcoming [[w:c:community:Webinars|webinar]] to chat with staff and other Wikia editors. You can also check our [[w:c:community:Blog:Wikia_Staff_Blog|Staff blog]] to keep up-to-date with the latest news and events around Wikia. Lastly, check out the [[w:c:video|Wikia Video Library]], where you can find premium licensed videos to add to the wiki.
 
-All of these links are a great way to start exploring Wikia. 
+All of these links are a great way to start exploring Wikia.
 
 
 Happy editing!',
@@ -36200,7 +35930,7 @@ features: {
 	'wikialabs-list-project-warning-box' => 'Welcome to Wikia Labs. Below, you\'ll find some ideas we\'re playing with. Customize your wiki by activating any of the features. Play around a little - you can always turn off the tools you don\'t want. <br /><br />We know they still have their kinks, and we would love to receive your feedback on the good, the bad, and the downright quirky behavior of these projects. Thanks, and have fun!',
 	'wikialabs-list-project-warning-box-no-admin' => 'Welcome to Wikia Labs. Below, you\'ll find some ideas we\'re playing with. Admins can customize this wiki by activating any of the features. <br /><br />We know they still have their kinks, and we would love to receive your feedback on the good, the bad, and the downright quirky behavior of these projects. Thanks!',
 	'wikialabs-problem-with-project' => 'I want to report a problem',
-	'wikialabs-projects-description-1' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet augue vitae neque consequat in blandit risus rhoncus. Donec quis urna lectus. 
+	'wikialabs-projects-description-1' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet augue vitae neque consequat in blandit risus rhoncus. Donec quis urna lectus.
 
 Nullam eu odio justo. Aliquam sit amet sem lacus, id placerat nisi. Nullam scelerisque dolor eu diam ornare.',
 	'wikialabs-projects-description-2' => 'Top 10 Lists allow anyone on your wiki to create a votable list. They are a good way to get your junior editors to interact with the wiki. Create a new list at Special:CreateTopList',
@@ -36332,7 +36062,7 @@ $messages["zh"] = array(
 	'ask_a_question-widget' => '發問一條問題',
 	'ask_a_question' => '發問一條問題',
 	'autocreatewiki-info-language' => '的預設語文',
-	'autocreatewiki-welcomebody' => '嗨 $2, 
+	'autocreatewiki-welcomebody' => '嗨 $2,
 
 歡迎加入Wikia社群。相信很快能看到你對此站的貢獻。
 
@@ -36378,7 +36108,7 @@ Wikia 社群團隊',
 	'block-log-flags-nocreate' => '创建账户已禁用',
 	'blocked-mailpassword' => '你的IP地址已经被查封而无法编辑，为了防止滥用而停用了你的密码恢复功能。',
 	'blockededitsource' => '你对\'\'\'$1\'\'\'进行\'\'\'编辑\'\'\'的文字如下:',
-	'blocklogtext' => '这是关于用户查封和解封操作的日志。 
+	'blocklogtext' => '这是关于用户查封和解封操作的日志。
 被自动查封的IP地址没有被列出。请参看[[Special:Ipblocklist|被查封的IP地址和用户列表]]。',
 	'blog-avatar-defaults' => 'Avatar.jpg
 Avatar2.jpg
@@ -36402,9 +36132,9 @@ Avatar6.jpg',
 	'captcha-createaccount' => '为了防止程序自动添加垃圾链接。你需要输入以下图片中显示的文字才能注册帐户：<br />([[Special:Captcha/help|这是什么？]])',
 	'captchahelp-text' => '象本站一样，对公众开放编辑的站点经常被垃圾链接骚扰。那些人使用自动化垃圾程序将他们的链接张贴到很多站点。虽然这些链接可以被清除，但是这些东西确实令人十分讨厌。
 
-有时，特别是当给一个页面添加新的网页链接时，本站会让你看一幅有颜色的或者有变形文字的图像，并且要你输入所显示的文字。因为这是难以自动完成的一项任务，它将允许人保存他们的编辑，同时阻止大多数发送垃圾邮件者和其他机器人的攻击。 
+有时，特别是当给一个页面添加新的网页链接时，本站会让你看一幅有颜色的或者有变形文字的图像，并且要你输入所显示的文字。因为这是难以自动完成的一项任务，它将允许人保存他们的编辑，同时阻止大多数发送垃圾邮件者和其他机器人的攻击。
 
-令人遗憾是，这会使得视力不好的人，或者使用基于文本或者基于声音的浏览器的用户感到不便。而目前我们还没有提供的音频的选择。如果这正好阻止你进行正常的编辑，请和管理员联系获得帮助。 
+令人遗憾是，这会使得视力不好的人，或者使用基于文本或者基于声音的浏览器的用户感到不便。而目前我们还没有提供的音频的选择。如果这正好阻止你进行正常的编辑，请和管理员联系获得帮助。
 
 单击你浏览器中的“后退”按钮返回你所编辑的页面。',
 	'captchahelp-title' => 'Captcha 帮助',
@@ -36413,7 +36143,7 @@ Avatar6.jpg',
 [[Image:Icono archivo borrar.png|80px|right|]]
 如果您正在搜寻关于这个题目的信息，你可以[http://zh.wikipedia.org/wiki/Special:Search?search={{FULLPAGENAMEE}}&fulltext=Search 搜索“{{FULLPAGENAME}}”]其他条目。
 
-*删除的原因请参见[[Wikipedia:可以快速删除的条目的标准|可以快速删除的条目的标准]]，[[Wikipedia:删除投票/侵权]]，[[Wikipedia:删除投票和请求|删除投票和请求]]。 
+*删除的原因请参见[[Wikipedia:可以快速删除的条目的标准|可以快速删除的条目的标准]]，[[Wikipedia:删除投票/侵权]]，[[Wikipedia:删除投票和请求|删除投票和请求]]。
 *本页被删除的历史记录可以在\'\'\'[{{fullurl:Special:Log|page={{FULLPAGENAMEE}}}} 它的活动日志]\'\'\'中找到。或者也可以联系保护本页的[[wikipedia:管理员|管理员]]了解详情。
 *如果你是从其他条目的链接中来到本页，你可以帮助维基百科移除这个[[Special:Whatlinkshere/{{FULLPAGENAME}}|错误的链接]]。
 *恢复或者编辑这个条目，请在{{#switch:{{NAMESPACE}}
@@ -36590,7 +36320,7 @@ MySQL返回错误“$3: $4”。',
 <br />
 \'\'\'改變外部鏈結字樣:\'\'\'
 
-<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
+<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki>
 
 = 如何增加標題 =
 使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
@@ -36713,7 +36443,7 @@ MySQL返回错误“$3: $4”。',
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'希臘字母:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -36775,7 +36505,7 @@ $NEWPAGE
 除非您访问该页, 否则我们不会再发出下一次更改通知. 你对您的监视列表中需要通知的页面重置通知标签.
 
 
-真诚的,             
+真诚的,
     {{SITENAME}} 邮件通知系统
 
 --
@@ -36971,13 +36701,6 @@ $NEWPAGE
 	'oasis-on-the-wiki' => '本维基',
 	'oasis-popular-blogs-title' => '流行博客帖子',
 	'oasis-spotlights-footer-title' => '更多维基',
-	'oasis-toolbar-customize' => '自定义',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|高级编辑工具列表]]',
-	'oasis-toolbar-edit-find-a-tool' => '查找工具',
-	'oasis-toolbar-edit-hide-tools' => '隐藏工具列表',
-	'oasis-toolbar-edit-popular-tools' => '常用工具',
-	'oasis-toolbar-edit-reset-defaults' => '设置为默认',
-	'oasis-toolbar-edit-toolbar-list' => '工具栏列表',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|page on<br /> this wiki|个页面创建 <br /> 于此维基上}}</span>',
 	'pagecategories' => '类别',
 	'permalink' => '固定链结',
@@ -37025,7 +36748,7 @@ $NEWPAGE
 	'signup-password' => '密码：',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 ===頁面統計===
 \'\'\'{{SITENAME}}共有$1 [[Special:Allpages|頁面]]\'\'\' ([[Special:Newpages|新文章]]):
 
@@ -37348,7 +37071,7 @@ MySQL返回错误“$3: $4”。',
 <br />
 \'\'\'改变外部链结字樣:\'\'\'
 
-<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki> 
+<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki>
 
 = 如何增加标题 =
 使用 =(等号)就可以帮你建立次标题和三级标题。前后一个等号的标题等级和页面名称等级相同。
@@ -37471,7 +37194,7 @@ MySQL返回错误“$3: $4”。',
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'希腊字母:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -37533,7 +37256,7 @@ $NEWPAGE
 除非您访问该页, 否则我们不会再发出下一次更改通知. 你对您的监视列表中需要通知的页面重置通知标签.
 
 
-真诚的,             
+真诚的,
     {{SITENAME}} 邮件通知系统
 
 --
@@ -37881,7 +37604,7 @@ $NEWPAGE
 	'signup-password' => '密码：',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 ===页面统计===
 \'\'\'{{SITENAME}}共有$1 [[Special:Allpages|页面]]\'\'\' ([[Special:Newpages|新文章]]):
 
@@ -38490,7 +38213,7 @@ Als je je bewerking opslaat, gaan alle wijzigingen die na deze versie gemaakt zi
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'Grieks:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -38571,7 +38294,7 @@ Feedback en andere assistentie:
 <br /><br />
 $ PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE".
 <br /><br />
-Je kunt de discussie bekijken via de volgende verwijzing: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+Je kunt de discussie bekijken via de volgende verwijzing: <a href="$PAGETITLE_URL">$PAGETITLE</a>
 <br /><br />
 Kom alsjeblieft vaak langs en bewerk veelvuldig...
 <br /><br />
@@ -38606,8 +38329,8 @@ Kom alsjeblieft vaak langs om bewerkingen te maken...
 
 {{SITENAME}}
 
-___________________________________________ 
-* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com 
+___________________________________________
+* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com
 
  * Wil je bepalen welke e-mails je ontvangt?
 Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
@@ -38636,10 +38359,10 @@ Kom alsjeblieft vaak langs om bewerkingen te maken...
 
 {{SITENAME}}
 
-___________________________________________ 
-* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com 
+___________________________________________
+* Kom kijken op onze uitgelichte wiki\'s! http://www.wikia.com
 
- * Wil je bepalen welke e-mails je ontvangt? 
+ * Wil je bepalen welke e-mails je ontvangt?
 Ga naar: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_lastvisited' => 'Zie $1 voor alle wijzigingen sinds je laatste bezoek.',
 	'explainconflict' => 'Een andere gebruiker heeft deze pagina bewerkt sinds je met je bewerking bent begonnen.
@@ -39058,7 +38781,7 @@ Software bugs kunnen gemeld worden op de forums. Meldingen die hier gemaakt word
 	'pr_table_reporter_name' => 'Reporter naam',
 	'pr_table_status' => 'Status',
 	'pr_table_wiki_name' => 'Wiki naam',
-	'pr_thank_you' => 'Bedankt voor het melden van een probleem! 
+	'pr_thank_you' => 'Bedankt voor het melden van een probleem!
 
 [[Special:ProblemReports/$1|Je kan de status van het oplossen ervan volgen.]]',
 	'pr_thank_you_error' => 'Een fout trad op toen het probleem verstuurd was, probeer het a.u.b. later nog een keer...',
@@ -39529,8 +39252,6 @@ Deze wiki is alleen-lezen.',
 	'wmu-warn1' => 'Je moet eerst een zoekopdracht selecteren!',
 	'wmu-warn2' => 'Je moet eerst een bestand selecteren!',
 	'wmu-warn3' => 'Je moet eerst een bestandsnaam selecteren!',
-	'wva-notallowed' => 'Je kunt geen video\'s toevoegen in deze wiki.',
-	'wva-notlogged' => 'Je moet aanmelden of registreren om video\'s te kunnen toevoegen.',
 	'youhavenewmessages' => 'Je hebt $1 ($2).',
 	'youhavenewmessagesmulti' => 'Je hebt nieuwe berichten op $1',
 	'yourdomainname' => 'Je domein:',
@@ -39805,7 +39526,7 @@ Try it out!',
 	'anontalk' => 'このIP利用者の会話',
 	'anontalkpagetext' => '<br style="clear:both;" />
 ----
-{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 |\'\'\'これはアカウントをまだ作成していないか、あるいは使っていない匿名利用者のための会話ページです。\'\'\'
 
 {{SITENAME}}では匿名利用者の識別は利用者名のかわりにIPアドレスを用います。IPアドレスは何人かで共有されることがあります。もしも、あなたが匿名利用者で無関係なコメントがここに寄せられる場合は、[[Special:Userlogin|アカウントを作成するかログインして]]他の匿名利用者と間違えられないようにしてくださるようお願いします。詳細は、[[w:c:ja:Help:アカウントを作る理由|Help:アカウントを作る理由]]をお読みください。
@@ -40350,7 +40071,7 @@ Avatar6.jpg',
 <p>現在、以下の理由によりアカウントを作成できなくなっています。<br /><em>$1</em></p>
 <p>さらに詳しい情報については <a href="http://twitter.com/wikia">Twitter</a> や <a href="http://facebook.com/wikia">Facebook</a> をご覧ください。<br />
 （既にアカウントをお持ちであれば、通常通り<a href="#">ログイン</a>はできますが、編集はできません。）</p>',
-	'community-corner' => '\'\'\'My Home にようこそ！\'\'\' 
+	'community-corner' => '\'\'\'My Home にようこそ！\'\'\'
 
 このページは、ウィキで何が起きているのかをわかりやすく示し、あなたがこのウィキに居続ける手助けとするためのものです。
 
@@ -40734,7 +40455,7 @@ wiki文法をつかうか、HTMLで装飾できます。
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'ギリシャ文字:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -40886,7 +40607,7 @@ $PAGETITLE_URL
 	'fastcat-categories-list' => '* Parked
 ** 工事中
 ** エラーページ
-** アダルト 
+** アダルト
 * 仕事
 ** キャリア
 ** 求人
@@ -40926,7 +40647,7 @@ $PAGETITLE_URL
 ** デザート
 ** レストラン
 * レジャー
-** 自転車 
+** 自転車
 ** テレビ
 ** テレビゲーム
 ** ゲーム
@@ -40958,7 +40679,7 @@ $PAGETITLE_URL
 ** 展覧会
 ** 映画
 ** 映画祭
-** 博物館 
+** 博物館
 ** 映画館
 * 芸術
 ** 文学
@@ -41039,20 +40760,16 @@ $PAGETITLE_URL
 ** プログラミング',
 	'fastcat-edit-comment' => 'FastCat: カテゴリ「$1」を追加',
 	'fastcat-marker-category' => '未分類',
-	'fbconnect-connect-msg-sync-profile' => 'ウィキアと Facebook のアカウントを接続しました。<br /><a href=\'$1\'>個人設定</a>を確認し、どのイベントを Facebook のフィードに表示させるか設定してください。<a href=\'$2\'>ウィキアのプロフィール</a>を Facebook と同期してください。',
-	'fbconnect-connect-msg' => 'ウィキアと Facebook のアカウントを接続しました。<br /><a href=\'$1\'>個人設定</a>を確認し、どのイベントを Facebook のフィードに表示させるか設定してください。',
+	'fbconnect-connect-msg' => 'ウィキアと Facebook のアカウントを接続しました。',
 	'fbconnect-connect-next' => '次へ &raquo;',
 	'fbconnect-connect-simple' => 'コネクト',
 	'fbconnect-convert' => 'このアカウントを Facebook に接続する',
 	'fbconnect-disconnect-done' => '接続を解除しています… <span id=\'fbConnectDisconnectDone\'>完了しました</span>',
 	'fbconnect-disconnect-info' => 'あなたのアカウントの新しいバスワードをメールで送信しました。以前と同じ利用者名でログインできます。',
 	'fbconnect-disconnect-link' => '<a id=\'fbConnectDisconnect\' href=\'#\'>ウィキアのアカウントと Facebook の接続を解除する</a>こともできます。ウィキアのアカウントは変わらず使い続けることができ、あなたの履歴（編集、ポイント、達成度）に影響を与えることはありません。',
-	'fbconnect-link-to-profile' => 'Facebook のプロフィール',
 	'fbconnect-logged-in-now-connect' => 'アカウントにログインしました。ログインボタンをクリックし、アカウントと Facebook を接続してください。',
 	'fbconnect-or' => 'もしくは',
 	'fbconnect-prefs-post' => '以下のアクション時に Facebook のニュースフィードに投稿する:',
-	'fbconnect-wikia-login-or-create' => 'ログインもしくはアカウントの作成',
-	'fbconnect-wikia-login-w-facebook' => 'Facebookコネクトを使ってログイン・サインアップ',
 	'fbconnect-wikia-signup-w-facebook' => 'Facebook を利用してサインアップ',
 	'featured' => 'お薦めウィキ',
 	'file-info-size' => '$1 × $2 ピクセル、ファイルサイズ: $3、 MIMEタイプ: $4',
@@ -41067,7 +40784,7 @@ $PAGETITLE_URL
 より高精細な画像をお持ちの場合は、フルサイズ版をアップロードしてください。そうでない場合はファイル名を変更してください。',
 	'filepage-desc' => 'MediaWiki標準のファイルページを動画に対応させる',
 	'filetype-badmime' => 'MIME タイプ "$1" のファイルのアップロードは許可されていません。',
-	'filetype-badtype' => '\'\'\'".$1\'\'\'"は許可されないファイルタイプです。 
+	'filetype-badtype' => '\'\'\'".$1\'\'\'"は許可されないファイルタイプです。
 : 許可されているファイルタイプは以下の通りです。: $2',
 	'filetype-missing' => 'ファイルに拡張子 (".jpg" など）がありません。',
 	'findspam-ip' => 'IPアドレス',
@@ -41186,7 +40903,7 @@ $PAGETITLE_URL
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">スレッドを見る</a></p>
 <p>ウィキア</p>
 ___________________________________________<br />
-* ウィキアの最新情報は ja.community.wikia.com で確認できます。<br />	
+* ウィキアの最新情報は ja.community.wikia.com で確認できます。<br />
 * メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
 	'forum-mail-notification-body' => '$WATCHER さん、
 
@@ -41202,7 +40919,7 @@ $MESSAGE_NO_HTML
 
 ウィキア
 ___________________________________________
-* ウィキアの最新情報は ja.community.wikia.com で確認できます。	
+* ウィキアの最新情報は ja.community.wikia.com で確認できます。
 * メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
 	'forum-mail-notification-new-someone' => '$AUTHOR_NAME が $WIKI の $BOARDNAME板 で新しいスレッドを作成しました。',
 	'forum-mail-notification-new-your' => '$AUTHOR_NAME が $WIKI の $BOARDNAME板 で新しいスレッドを作成しました。',
@@ -42073,20 +41790,8 @@ http://ja.wikia.com/wiki/Special:Following',
 	'oasis-share' => 'この記事を共有',
 	'oasis-spotlights-footer-title' => 'ウィキアネットワーク',
 	'oasis-spotlights-rail-title' => 'ウィキアスポットライト',
-	'oasis-toolbar-customize' => '設定',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:マイツール|上級者向けのツール一覧]]',
 	'oasis-toolbar-edit-cancel' => '中止',
-	'oasis-toolbar-edit-find-a-tool' => 'ツールを探す',
-	'oasis-toolbar-edit-hide-tools' => '非表示',
-	'oasis-toolbar-edit-popular-tools' => 'よく使われるツール',
-	'oasis-toolbar-edit-rename-item' => '名前を変更',
-	'oasis-toolbar-edit-reset-defaults' => '既定に戻す',
-	'oasis-toolbar-edit-save' => '保存',
-	'oasis-toolbar-edit-search-for-tool' => 'ツールを検索',
-	'oasis-toolbar-edit-title' => 'ツールバーを設定',
-	'oasis-toolbar-edit-toolbar-list' => 'ツールの一覧',
 	'oasis-toolbar-for-admins-only' => 'このツールはウィキの管理者が利用できます。',
-	'oasis-toolbar-more' => 'さらに表示&hellip;',
 	'oasis-toolbar-not-enabled-here' => 'このウィキではまだこの機能を利用できません。',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em> <span>件の記事が<br />このウィキにあります</span>',
 	'oasis-user-page-change-avatar' => 'アバターを変更',
@@ -42220,7 +41925,7 @@ http://ja.wikia.com/wiki/Special:Following',
 	'prefs-help-blurmesg' => '画像認証',
 	'prefs-help-mailmesg' => 'メールアドレス',
 	'prefs-help-realname' => '* 本名 (任意): 本名を入力すると、ページ・クレジットに利用者名（アカウント名）の代わりに本名が表示されます。',
-	'prefs-help-terms' => 'アカウントを作成することで、[[w:c:ja:利用規約|ウィキアの利用規約]]に同意することになります。',
+	'prefs-help-terms' => 'アカウントを作成することで、{{#NewWindowLink: w:c:ja:利用規約|ウィキアの利用規約}}に同意することになります。',
 	'prefs-layout' => 'サイトの外装',
 	'prefs-monobook-layout' => 'MonoBook のみ',
 	'prefs-myhome' => 'ウィキアクティビティ',
@@ -42473,7 +42178,7 @@ Wikia
 	'sf-link-popup' => 'この記事を共有',
 	'sf-link-tooltip' => 'この記事を友人と共有',
 	'sf-link' => 'この記事を共有',
-	'shared-Globalnavigation' => '* w:c:ja|人気・おすすめウィキ|video-games-vertical-color 
+	'shared-Globalnavigation' => '* w:c:ja|人気・おすすめウィキ|video-games-vertical-color
 ** w:c:ja.game|ゲーム
 *** w:c:ja.eq2|EverQuest 2
 *** w:c:ja.lotro|Lord of the Rings Online
@@ -42511,7 +42216,7 @@ Wikia $2 での変更は、「すべて」のウィキアに対して適用さ�
 	'site-layout' => 'サイトの外装',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 ===サイトに関する統計===
 {{SITENAME}}には\'\'\'$1 [[Special:Allpages|ページ]]\'\'\'のコンテンツがあります ([[Special:Newpages|新規ページ]]含む)
 
@@ -42546,7 +42251,7 @@ Wikia $2 での変更は、「すべて」のウィキアに対して適用さ�
 	'skinchooser-customcss' => 'テーマを自分たちで作成する場合は、上記メニューで「Custom」を設定し、[[MediaWiki:Monaco.css]]でCSSを作成してください。',
 	'skinchooser-desc' => '利用者が個人設定で外装を変更できるようにする',
 	'sourcefilename' => 'ファイル名',
-	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 | \'\'\'これは、アカウントを取得していないか、または利用していない匿名利用者のための投稿履歴ページです。この利用者は、[[wikipedia:ja:IPアドレス|IPアドレス]]により識別されます。\'\'\'
 
 IPアドレスは、時折変更されることもあり、複数人で共有されます。もし、まだ匿名で利用しているなら、混乱を避けるため是非とも[[{{ns:Special}}:Userlogin|アカウントの作成、またはログイン]]することをお勧めします。登録することで、IPアドレスを隠すことができます。[[w:c:ja:Help:アカウントを作る理由|Help:アカウントを作る理由]]をご覧の上、[[w:c:ja:Help:アカウントを作成する|Help:アカウントを作成する]]というページを参考にアカウントをお作りください。
@@ -43278,7 +42983,7 @@ ___________________________________________
 	'usersignup-marketing-wikia' => 'それぞれが知っていること、好きなことを共有するために世界中から集まった人々と協力して、ウィキを作り上げてきましょう。',
 	'usersignup-page-title' => 'ウィキアに参加しましょう',
 	'usersignup-reconfirmation-email-content' => 'ウィキアで変更したメールアドレスを認証するには以下のリンクをクリックしてください。 <br /><br />
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a><br /><br /> 
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a><br /><br />
 認証が完了するまでは、変更前のメールアドレスでメールを受け取り続けられます。',
 	'usersignup-reconfirmation-email-greeting' => '$USERNAME さん、',
 	'usersignup-reconfirmation-email_body' => '$2 さん、
@@ -44755,10 +44460,10 @@ Voit yhdistää näitä määritteitä lisäämällä pystyviivan "|" niiden vä
 	'nwb-logo-uploaded' => 'Logo Tallennettu',
 	'nwb-logout-successful' => 'Uloskirjautuminen onnistui',
 	'nwb-must-be-logged-in' => 'Sinun pitää kirjautua sisään käyttäeksesi tätä toimintoa',
-	'nwb-new-pages-text' => '[[File:Placeholder|right|300px]]  Kirjoita ensimmäinen kappale artikkelistasi tähän 
-==Osion otsikko== 
-Kirjoita ensimmäinen osio artikkelistasi tähän. Muista tehdä linkit muihin wikin sivuille. 
-==Osion otsikko== 
+	'nwb-new-pages-text' => '[[File:Placeholder|right|300px]]  Kirjoita ensimmäinen kappale artikkelistasi tähän
+==Osion otsikko==
+Kirjoita ensimmäinen osio artikkelistasi tähän. Muista tehdä linkit muihin wikin sivuille.
+==Osion otsikko==
 Kirjoita toinen osio artikkelistasi tähän. Älä unohda lisätä luokkaa, se auttaa ihmisiä löytämään artikkelin.',
 	'nwb-new-pages' => 'Uudet sivut',
 	'nwb-no-more-pages' => 'Enempää sivuja ei voi luoda',
@@ -44841,7 +44546,7 @@ Ohjelmistobugeista voi raportoida foorumeilla. Tämän lomakkeen kautta tehdyt r
 	'prefs-help-blurmesg' => 'Epäselvä sana',
 	'prefs-help-email' => 'Me vihaamme roskapostia yhtä paljon kuin sinä. Me EMME myy sinun sähköpostiosoitettasi.',
 	'prefs-help-mailmesg' => 'Sähköposti',
-	'prefs-help-terms' => 'Luomalla käyttäjän, hyväksyt [[w:Terms of Use| Wikian käyttöehdot]]',
+	'prefs-help-terms' => 'Luomalla käyttäjän, hyväksyt {{#NewWindowLink: w:Terms of Use| Wikian käyttöehdot}}',
 	'prlog_changedentry' => 'merkkasi ongelmalle $1 tilan "$2"',
 	'prlog_removedentry' => 'poisti ongelman $1',
 	'prlog_reportedentry' => 'raportoi ongelman sivussa $1 ($2)',
@@ -45034,42 +44739,42 @@ Jos olet sannut tämän tervetulotoivotuksen, niin olet tämä wikin uusi muokka
 
 Mikäli haet apua, niin voit ottaa yhteyttä henkilöön, joka allekirjoitti tervetuliaisviestin. Seuraa linkkiä hänen keskustelusivulleen ja kirjoita viesti hänelle.
 
-Yleistä Wikia-apua saat [[w:c:help|Wikia Help]]-wikistä ja [[Special:Contact|ota yhteyttä henkilökuntaan]], jos sinulla on kysymyksiä. 
+Yleistä Wikia-apua saat [[w:c:help|Wikia Help]]-wikistä ja [[Special:Contact|ota yhteyttä henkilökuntaan]], jos sinulla on kysymyksiä.
 
 ==Tervetuloa-työkalun tiedot ja ohjeet==
 
-Wikian tervetuloa-työkalu auttaa toivottamaan wikin uudet muokkaajat tervetulleiksi. On tärkeää toivottaa uudet muokkaajat tervetulleiksi, jotta he näkisivät, että he näkisivät wikin yhteisön -- ja antaa heille yhteshenkilö , johon voi otttaa yhteyttä, jos heille tulee kysyttävää. 
+Wikian tervetuloa-työkalu auttaa toivottamaan wikin uudet muokkaajat tervetulleiksi. On tärkeää toivottaa uudet muokkaajat tervetulleiksi, jotta he näkisivät, että he näkisivät wikin yhteisön -- ja antaa heille yhteshenkilö , johon voi otttaa yhteyttä, jos heille tulee kysyttävää.
 
-Kun muokkaaja tekee ensimmäisen muokkauksensa, niin Wikia tervetuloa-työkalu jättää viestin hänen keskustelusivulleen ja luo hänelle käyttäjäsivun. 
+Kun muokkaaja tekee ensimmäisen muokkauksensa, niin Wikia tervetuloa-työkalu jättää viestin hänen keskustelusivulleen ja luo hänelle käyttäjäsivun.
 
 Keskustelusivun viestin allekirjoittaa (automaattisesti) [[Special:Listusers/sysop|ylläpitäjä]], apulainen tai henkilökunnan jäsen, joka on viimeksi muokannut wikiä, niin muokkaaja tietää minne mennä, kun tarvitsee apua.
 
 Tervetuloa-työkalua voi muokata seuraamalla seuraavia asetuksia:
 
-;[[MediaWiki:Welcome-message-user|<span style="color:black; background:white;">MediaWiki:Welcome-message-user</span>]]: Tervetuloa-viesti sisäänkirjautuneille muokkaajille. 
-;[[MediaWiki:Welcome-message-anon|<span style="color:black; background:white;">MediaWiki:Welcome-message-anon</span>]]: 
+;[[MediaWiki:Welcome-message-user|<span style="color:black; background:white;">MediaWiki:Welcome-message-user</span>]]: Tervetuloa-viesti sisäänkirjautuneille muokkaajille.
+;[[MediaWiki:Welcome-message-anon|<span style="color:black; background:white;">MediaWiki:Welcome-message-anon</span>]]:
 : Tervetuloa-viesti rekisteröimättömille muokkaajalle.
-;[[MediaWiki:Welcome-user-page|<span style="color:black; background:white;">MediaWiki:Welcome-user-page</span>]]: käyttäjäsivu sisäänkirjautuneille muokkaajille. 
+;[[MediaWiki:Welcome-user-page|<span style="color:black; background:white;">MediaWiki:Welcome-user-page</span>]]: käyttäjäsivu sisäänkirjautuneille muokkaajille.
 ;[[MediaWiki:Welcome-message-log|<span style="color:black; background:white;">MediaWiki:Welcome-message-log</span>]]:                                                        Muokkauksen yhteenveto viestin jättämisessä.
 ;[[MediaWiki:Welcome-user|<span style="color:black; background:white;">MediaWiki:Welcome-user</span>]]: käytetään ominaisuuden pois kytkentään ja viestin lähettäjän valintaan.
 : Lisää @latest, jotta viimeksi aktiivisena ollut ylläpitäjä allekirjoittaa viestin.
 : Lisää tietty käyttäjänimi (ei allekirjoitusta), jotta kaikki tervetuloa-viestit allekirjoitetaan tietyllä käyttäjänimellä.
-: Lisää @sysop, jotta allekirjoittaja on aina ylläpitäjä, eikä henkilökunnan jäsen tai apulainen, vaikka viimeksi wikiä muokannut olisikin henkilökunnan jäsen tai apulainen. 
-: Lisää @disabled kytkeäksesi toiminnon pois. 
-;[[MediaWiki:Welcome-enabled|<span style="color:black; background:white;">MediaWiki:Welcome-enabled</span>]]: hallitse, mitkä osat ominaisuudesta ovat käytössä. 
-:"page-user message-anon message-user" sallii kaikki. 
+: Lisää @sysop, jotta allekirjoittaja on aina ylläpitäjä, eikä henkilökunnan jäsen tai apulainen, vaikka viimeksi wikiä muokannut olisikin henkilökunnan jäsen tai apulainen.
+: Lisää @disabled kytkeäksesi toiminnon pois.
+;[[MediaWiki:Welcome-enabled|<span style="color:black; background:white;">MediaWiki:Welcome-enabled</span>]]: hallitse, mitkä osat ominaisuudesta ovat käytössä.
+:"page-user message-anon message-user" sallii kaikki.
 :Poista kohta "page-user", jotta työkalu ei luo käyttöjäsivuja.
 :poista kohta "message-anon", jotta työkalu ei lähetä viestiä rekisteröimättömille käyttäjille.
 :Poista kohta "message-user", Jotta työkalu ei lähetä viestiä sisäänkirjaituneile.
 
 ;Tervetuliaisviesteillä on neljä muuttujaa:
 :$1 on sivun sivun uusi muokkaaja, muokannut sivua tai luonut sivun
-:$2 on linkki henkilön keskustelusivulle, joka jätti tervetuliaisviestin 
-:$3 on allekirjoitus 
+:$2 on linkki henkilön keskustelusivulle, joka jätti tervetuliaisviestin
+:$3 on allekirjoitus
 :$4 on henkilön nimi, joka on toivotettu tervetulleeksi
 
 ;Hallitse bottia:
-:Piilottaaksesi tervetuliaismuokkaukset tuoreat muutokset-lokista , [[special:contact|ota yhteyttä wikiaan]]  lippukäyttäjälle:Wikia on botti. 
+:Piilottaaksesi tervetuliaismuokkaukset tuoreat muutokset-lokista , [[special:contact|ota yhteyttä wikiaan]]  lippukäyttäjälle:Wikia on botti.
 :Voit estää tervetuliaisviestit lisäämäällä koodin @disabled  [[MediaWiki:Welcome-user|<span style="color:black; background:white;">MediaWiki:Welcome-user</span>]]-sivulle.
 
 Jos sinulle tulee kysyttävää Wikian tervetuloa-työkalusta , ole hyvä ja [[Special:Contact|ota yhteyttä Wikian henkilökuntaan]].',
@@ -45342,8 +45047,6 @@ Ole hyvä ja vaihda <a href="./Special:Preferences">asetuksiasi</a> käyttäekse
 	'wt_shoutbox_initial_message' => 'Hei... tervetuloa chattiin!',
 	'wva-failure' => 'Anna kelvolliset parametrit.',
 	'wva-name' => 'Syötä nimi:',
-	'wva-notallowed' => 'Et voi lisätä videoita tässä wikissä.',
-	'wva-notlogged' => 'Sinun pitää kirjautua sisään tai rekisteröityä lisätäksesi videoita.',
 	'wva-success-replaced' => 'Video sivu $1 on korvattu onnistuneesti',
 	'wva-success' => 'Video sivu $1 on lisätty onnistuneesti',
 	'wva-title' => 'Nopea Videon Lisäys URL Osoitteesta',
@@ -45481,7 +45184,7 @@ $messages["zh-hans"] = array(
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'希腊字母:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -45569,7 +45272,7 @@ $messages["zh-hans"] = array(
 	'signup-password' => '密码：',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 ===页面统计===
 \'\'\'{{SITENAME}}共有$1 [[Special:Allpages|页面]]\'\'\' ([[Special:Newpages|新文章]]):
 
@@ -45696,7 +45399,7 @@ $messages["zh-hant"] = array(
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'希臘字母:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -45795,7 +45498,7 @@ $messages["zh-hant"] = array(
 	'signup-password' => '您的密碼:',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 ===頁面統計===
 \'\'\'{{SITENAME}}共有$1 [[Special:Allpages|頁面]]\'\'\' ([[Special:Newpages|新文章]]):
 
@@ -45874,9 +45577,9 @@ Avatar6.jpg',
 	'captcha-createaccount' => '為了防止程序自動添加垃圾鏈接。你需要輸入以下圖片中顯示的文字才能注册帳户：<br />([[Special:Captcha/help|這是什麽？]])',
 	'captchahelp-text' => '象本站一様，對公衆開放編輯的站點經常被垃圾鏈接騷擾。那些人使用自動化垃圾程序將他們的鏈接張貼到很多站點。雖然這些鏈接可以被清除，但是這些東西確實令人十分討厭。
 
-有時，特彆是當給一個頁面添加新的網頁鏈接時，本站會讓你看一幅有顔色的或者有變形文字的圖像，并且要你輸入所顯示的文字。因為這是難以自動完成的一項任務，它將允許人保存他們的編輯，同時阻止大多數發送垃圾郵件者和其他機器人的攻撃。 
+有時，特彆是當給一個頁面添加新的網頁鏈接時，本站會讓你看一幅有顔色的或者有變形文字的圖像，并且要你輸入所顯示的文字。因為這是難以自動完成的一項任務，它將允許人保存他們的編輯，同時阻止大多數發送垃圾郵件者和其他機器人的攻撃。
 
-令人遺憾是，這會使得視力不好的人，或者使用基于文本或者基于聲音的瀏覧器的用户感到不便。而目前我們還没有提供的音頻的選擇。如果這正好阻止你進行正常的編輯，請和管理員聯系獲得幫助。 
+令人遺憾是，這會使得視力不好的人，或者使用基于文本或者基于聲音的瀏覧器的用户感到不便。而目前我們還没有提供的音頻的選擇。如果這正好阻止你進行正常的編輯，請和管理員聯系獲得幫助。
 
 單撃你瀏覧器中的“後退”按鈕返回你所編輯的頁面。',
 	'captchahelp-title' => 'Captcha 幫助',
@@ -45885,7 +45588,7 @@ Avatar6.jpg',
 [[Image:Icono archivo borrar.png|80px|right|]]
 如果您正在搜尋關于這個題目的信息，你可以[http://zh-hk.wikipedia.org/wiki/Special:Search?search={{FULLPAGENAMEE}}&fulltext=Search 搜索“{{FULLPAGENAME}}”]其他條目。
 
-*删除的原因請參見[[Wikipedia:可以快速删除的條目的標准|可以快速删除的條目的標准]]，[[Wikipedia:删除投票/侵權]]，[[Wikipedia:删除投票和請求|删除投票和請求]]。 
+*删除的原因請參見[[Wikipedia:可以快速删除的條目的標准|可以快速删除的條目的標准]]，[[Wikipedia:删除投票/侵權]]，[[Wikipedia:删除投票和請求|删除投票和請求]]。
 *本頁被删除的歷史記録可以在\'\'\'[{{fullurl:Special:Log|page={{FULLPAGENAMEE}}}} 它的活動日志]\'\'\'中找到。或者也可以聯系保護本頁的[[wikipedia:管理員|管理員]]了解詳情。
 *如果你是從其他條目的鏈接中來到本頁，你可以幫助維基百科移除這個[[Special:Whatlinkshere/{{FULLPAGENAME}}|錯誤的鏈接]]。
 *恢復或者編輯這個條目，請在{{#switch:{{NAMESPACE}}
@@ -46044,7 +45747,7 @@ MySQL返回錯誤“$3: $4”。',
 <br />
 \'\'\'改變外部鏈結字樣:\'\'\'
 
-<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
+<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki>
 
 = 如何增加標題 =
 使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
@@ -46167,7 +45870,7 @@ MySQL返回錯誤“$3: $4”。',
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'希臘字母:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -46229,7 +45932,7 @@ $NEWPAGE
 除非您訪問該頁, 否則我們不會再發出下一次更改通知. 你對您的監視列表中需要通知的頁面重置通知標簽.
 
 
-真誠的,             
+真誠的,
     {{SITENAME}} 郵件通知系統
 
 --
@@ -46558,7 +46261,7 @@ $NEWPAGE
 	'signup-password' => '您的密碼:',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 ===頁面統計===
 \'\'\'{{SITENAME}}共有$1 [[Special:Allpages|頁面]]\'\'\' ([[Special:Newpages|新文章]]):
 
@@ -46816,7 +46519,7 @@ MySQL返回錯誤“$3: $4”。',
 <br />
 \'\'\'改變外部鏈結字樣:\'\'\'
 
-<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
+<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki>
 
 = 如何增加標題 =
 使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
@@ -46939,7 +46642,7 @@ MySQL返回錯誤“$3: $4”。',
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'希臘字母:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -47001,7 +46704,7 @@ $NEWPAGE
 除非您訪問該頁, 否則我們不會再發出下一次更改通知. 你對您的監視列表中需要通知的頁面重置通知標簽.
 
 
-真誠的,             
+真誠的,
     {{SITENAME}} 郵件通知系統
 
 --
@@ -47367,7 +47070,7 @@ $NEWPAGE
 	'signup-password' => '您的密碼:',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 ===頁面統計===
 \'\'\'{{SITENAME}}共有$1 [[Special:Allpages|頁面]]\'\'\' ([[Special:Newpages|新文章]]):
 
@@ -47707,9 +47410,9 @@ $messages["fa"] = array(
 <p>-- تیم جامعه ویکیا</p>',
 	'autocreatewiki-reminder-body' => '$1 عزیز:
 
-شروع ویکی جدید {{SITENAME}} را به شما تبریک می‌گوییم. شما با مراجعه به $2 می‌توانید به ویکی خود بازگشته و مطالب بیشتری به آن اضافه کنید. 
+شروع ویکی جدید {{SITENAME}} را به شما تبریک می‌گوییم. شما با مراجعه به $2 می‌توانید به ویکی خود بازگشته و مطالب بیشتری به آن اضافه کنید.
 
-این یک پروژه جدید است، اگر سوالی داشتید حتما با ما در میان بگذارید! 
+این یک پروژه جدید است، اگر سوالی داشتید حتما با ما در میان بگذارید!
 
 -- تیم جامعه ویکیا',
 	'autocreatewiki-step7-error' => 'نسخه‌برداری از پایگاه آغازگر ویکی با موفقیت انجام نشد!',
@@ -47725,7 +47428,7 @@ $messages["fa"] = array(
 
 ویکیایی که شما درخواست کرده‌بودید در <$1> قابل دسترسی است. ما امیدواریم به زودی شاهد ویرایش شما در آن‌جا باشیم!
 
-ما یکسری اطلاعات و نکته‌هایی در صحفه بحثتان (<$5>) اضافه کرده‌ایم تا به شما برای شروع ویکیتان کمک کند. اگر سوالی دارید، به این ایمیل پاسخ دهید یا در صفحات راهنمای ویکیا در <http://help.wikia.com> جستجو کنید. 
+ما یکسری اطلاعات و نکته‌هایی در صحفه بحثتان (<$5>) اضافه کرده‌ایم تا به شما برای شروع ویکیتان کمک کند. اگر سوالی دارید، به این ایمیل پاسخ دهید یا در صفحات راهنمای ویکیا در <http://help.wikia.com> جستجو کنید.
 
 
 $3
@@ -47738,7 +47441,7 @@ $3
 سلام $1، ما از داشتن \'\'\'$4\'\'\' در بین دیگر ویکیاهای ویکیا بسیار خوشحالیم!
 
 شروع کردن ویکی جدید می‌تواند کار بزرگی باشد، ولی نگران نباشید، [[wikia:Community Team|تیم اجتماع ویکیا]] برای کمک اینجاست! ما راهنمایی‌هایی برای کمک به شروع ویکی جدید آماده کرده‌ایم. در کنار راهنمایی‌های ویکیا می‌توانید به ویکی‌های دیگر در [[w:c:fa:شرکت ویکیا|ویکیا]] برای گرفتن ایده جهت قالب بندی، رده بندی، و غیره سر بزنید. همه ما عضوی از خانواده بزرگ ویکیا هستیم که برای خوش گذرانی در اینجا با هم مشارکت می‌کنیم!
-* [[w:c:help:Help:Starting this wiki|راهنمای شروع ویکی]] ما ۵ نکته به شما می‌دهد تا همین الان ویکی خود را به بهترین وجه تنظیم نمایید. 
+* [[w:c:help:Help:Starting this wiki|راهنمای شروع ویکی]] ما ۵ نکته به شما می‌دهد تا همین الان ویکی خود را به بهترین وجه تنظیم نمایید.
 *ما همچنین [[w:c:help:Advice:Advice on starting a wiki| توصیه‌هایی برای شروع ویکی]] آماده  کرده‌ایم که اطلاعات عمیق‌تری برای ساخت ویکی جدید به شما می‌دهد.
 *اگر شما کاربر جدید ویکیا هستید، ما به شما توصیه می‌کنیم که به [[w:c:fa:پرسش‌های رایج|پرسش‌های رایج کاربران جدید]]  مراجعه کنید.
 اگر کمکی نیاز داشتید، می‌توانید به [[w:c:help|راهنمای ویکیا]] مراجعه کنید و یا از طریق [[Special:Contact|فرم تماس]] به ما پست الکترونیکی بزنید.
@@ -47858,22 +47561,22 @@ $3
 
 یک نگاهی به تمام فعالیت‌های اخیر جامعه‌ای که پیوسته‌اید بکنید! فعالیت خود را با گذاشتن پیغام و یا ویرایش صفحات آغاز کنید.
 
-ویدیوی ویکیا را در http://wikia.com/go تماشا کنید و و شروع کنید به کاوش‌کردن در یکی از ویکی‌های مورد علاقۀ ما در بازی‌ها، سرگرمی‌ها، و شیوۀ زندگی.  
+ویدیوی ویکیا را در http://wikia.com/go تماشا کنید و و شروع کنید به کاوش‌کردن در یکی از ویکی‌های مورد علاقۀ ما در بازی‌ها، سرگرمی‌ها، و شیوۀ زندگی.
 
 با جامعۀ ویکیا دیدار داشته‌باشید، آنچه در حال اتفاق افتادن است را بیاموزید، و کمک پیدا کنید - همه را در ویکیای مرکزی.
 
 خوش باشید!
 
-- بخش پشتبانی جامعۀ ویکیا 
+- بخش پشتبانی جامعۀ ویکیا
 
 ___________________________________________
 * Find help and advice on Community Central: http://community.wikia.com
 * Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}.
 * Click the following link to unsubscribe from all Wikia emails: $UNSUBSCRIBEURL',
 	'confirmemail_invalid' => '<center>متشکر از تأییدکردن آدرس الکترونیکی خود، ولی کد تأیید شما منقضی شده یا نامعتبر می‌باشد.<br/>
-شما برای تأیید حساب کاربری خود نیاز به کد جدید دارید.  
+شما برای تأیید حساب کاربری خود نیاز به کد جدید دارید.
 
-<span class="wikia-button big">[[Special:ConfirmEmail|<span>کد تایید جدید را از طریق پست الکترونیکی درخواست کنید</span>]]</span></center>  
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>کد تایید جدید را از طریق پست الکترونیکی درخواست کنید</span>]]</span></center>
 <br>',
 	'confirmemail_subject' => 'لطفا حساب کاربری ویکیای خود را تایید کنید',
 	'contact' => 'تماس با ویکیا',
@@ -47916,9 +47619,9 @@ ___________________________________________
 
 <br /><nowiki>\'\'کج\'\'</nowiki> به صورت \'\'کج\'\' نمایش می‌یابد.
 
-<br /><nowiki>\'\'\'پُررنگ\'\'\'</nowiki> به صورت \'\'\'پُررنگ\'\'\' نمایش می‌یابد. 
+<br /><nowiki>\'\'\'پُررنگ\'\'\'</nowiki> به صورت \'\'\'پُررنگ\'\'\' نمایش می‌یابد.
 
-<br /><nowiki>\'\'\'\'\'پررنگ کج\'\'\'\'\'</nowiki> به صورت \'\'\'\'\'پررنگ کج\'\'\'\'\'نمایش می‌یابد. 
+<br /><nowiki>\'\'\'\'\'پررنگ کج\'\'\'\'\'</nowiki> به صورت \'\'\'\'\'پررنگ کج\'\'\'\'\'نمایش می‌یابد.
 
 ----
 <br />
@@ -47966,7 +47669,7 @@ ___________________________________________
 <nowiki>====یک پله پایین‌تر====</nowiki>
 
 =تورفتگی=
-تورفتگی‌ها به سه صورت :تورفتگی ساده،نشانهٔ نکته و خطوط شماره‌گذاری شده می‌باشد. 
+تورفتگی‌ها به سه صورت :تورفتگی ساده،نشانهٔ نکته و خطوط شماره‌گذاری شده می‌باشد.
 <br />
 <nowiki> تورفتگی ساده</nowiki><br />
 <nowiki>: کمی تورفتگی</nowiki><br />
@@ -48111,7 +47814,7 @@ ___________________________________________
 
 بسیار خوب! اندکی پیش $USERNAME اولین ویرایش خود را در $WIKINAME انجام داد.
 
-برای بررسی تغییر اعمال شده به صفحۀ $PAGETITLE سر بزنید. 
+برای بررسی تغییر اعمال شده به صفحۀ $PAGETITLE سر بزنید.
 
 گروه ویکیا',
 	'founderemails-email-page-edited-reg-user-subject' => 'ویرایش جدید در $WIKINAME!',
@@ -48219,7 +47922,7 @@ ___________________________________________
 	'mu_login' => 'برای بار کردن پرونده‌ها باید [[Special:UserLogin|وارد سیستم شوید]].',
 	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'این صفحه نیاز به مطلب دارد. شما می‌توانید با اضافه کردن چند جمله و یا یک عکس کمک کنید!\'\'\'</p>
 
-<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>ایجاد مقاله!</span>]</span></center>  
+<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>ایجاد مقاله!</span>]</span></center>
 <br>',
 	'oasis-add-page' => 'افزودن یک صفحه',
 	'oasis-add-photo' => 'افزودن یک تصویر',
@@ -48282,20 +47985,8 @@ ___________________________________________
 	'oasis-share' => 'به‌اشتراک‌گذاشتن',
 	'oasis-spotlights-footer-title' => 'در اطراف شبکهٔ ویکیا',
 	'oasis-spotlights-rail-title' => 'بیشتر از',
-	'oasis-toolbar-customize' => 'سفارشی‌سازی',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|فهرست ابزارهای مشارکتی پیشرفته]]',
 	'oasis-toolbar-edit-cancel' => 'لغو',
-	'oasis-toolbar-edit-find-a-tool' => 'یافتن ابزار A',
-	'oasis-toolbar-edit-hide-tools' => 'پنهان‌کردن ابزارها',
-	'oasis-toolbar-edit-popular-tools' => 'ابزار رایج',
-	'oasis-toolbar-edit-rename-item' => 'تغییرنام مورد',
-	'oasis-toolbar-edit-reset-defaults' => 'تنظیم مجدد به پیش‌فرض‌ها',
-	'oasis-toolbar-edit-save' => 'ذخیره‌سازی',
-	'oasis-toolbar-edit-search-for-tool' => 'جستجو برای ابزار',
-	'oasis-toolbar-edit-title' => 'سفارشی‌کردن نوارابزار',
-	'oasis-toolbar-edit-toolbar-list' => 'فهرست نوارابزار',
 	'oasis-toolbar-for-admins-only' => 'این ابزار می‌تواند توسط مدیران استفاده شود.',
-	'oasis-toolbar-more' => 'بیشتر...',
 	'oasis-toolbar-not-enabled-here' => 'این ابزار در این ویکی در دسترس نمی‌باشد.',
 	'oasis-user-page-change-avatar' => 'تغییر آواتار',
 	'outbound-screen-text-with-redirect' => 'شما در حال خروج از وبگاه ویکیا هستید. برای ادامه لطفا بر اینجا کلیک کنید، یا $1 ثانیه صبر کنید تا تغییر مسیر داده‌شوید.',
@@ -48307,7 +47998,7 @@ ___________________________________________
 	'prefs-help-blurmesg' => 'کلمه تار',
 	'prefs-help-email' => 'ما هم مانند شما از هرزنامه‌ها بیزاریم. ما آدرس پست‌الکترونیکی شما را به فروش نخواهیم رساند.',
 	'prefs-help-mailmesg' => 'پست الکترونیکی',
-	'prefs-help-terms' => 'با ایجاد حساب کابری، شما با [[w:Terms of Use| شرایط استفاده از ویکیا]] موافقت می‌کنید',
+	'prefs-help-terms' => 'با ایجاد حساب کابری، شما با {{#NewWindowLink: w:Terms of Use| شرایط استفاده از ویکیا}} موافقت می‌کنید',
 	'problemreports' => 'فهرست گزارش‌ اشکال‌ها',
 	'protect-text' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_protect-text"></div>',
 	'randomincategory-toolbox' => 'صفحهٔ تصادفی',
@@ -48366,8 +48057,8 @@ ___________________________________________
 **w:c:www:Movie|Movies
 ***w:c:amazingspiderman:Amazing_Spider-Man_Wiki|The Amazing Spider-Man
 ***w:c:avp:Prometheus_(Film)|Prometheus
-***w:c:pixar:Brave|Brave 
-***w:c:movies:Magic_Mike|Magic Mike 
+***w:c:pixar:Brave|Brave
+***w:c:movies:Magic_Mike|Magic Mike
 ***w:c:www:Movie|More...
 
 **w:c:www:TV|TV
@@ -48378,8 +48069,8 @@ ___________________________________________
 ***w:c:www:TV|More...
 
 **w:c:www:Music|Music
-***w:c:music:User_blog:Porterfield/2012_Concert_Series_-_Aerosmith|Aerosmith on Tour 
-***w:c:music:User_blog:Porterfield/Summer_Albums_Guide_2012|Summer Albums Guide  
+***w:c:music:User_blog:Porterfield/2012_Concert_Series_-_Aerosmith|Aerosmith on Tour
+***w:c:music:User_blog:Porterfield/Summer_Albums_Guide_2012|Summer Albums Guide
 ***w:c:lyrics:Carly_Rae_Jepsen|Carly Rae Jepsen
 ***w:c:katyperry:Main_Page|Katy Perry
 ***w:c:www:Music|More...
@@ -48389,8 +48080,8 @@ ___________________________________________
 **w:c:www:Recipes|Body
 ***w:c:recipes:Recipes_Wiki|BBQ Recipes
 ***w:c:athletics:Athlepedia_Home|Athlepedia
-***w:c:healthyrecipes:Healthy_Recipes_Wiki|Healthy Recipes 
-***w:c:nails:Nails_Wiki|Nail Color 
+***w:c:healthyrecipes:Healthy_Recipes_Wiki|Healthy Recipes
+***w:c:nails:Nails_Wiki|Nail Color
 ***w:c:www:Recipes|More...
 
 **w:c:www:humanscience|Mind
@@ -48402,9 +48093,9 @@ ___________________________________________
 
 **w:c:Travel:Wikia_Travel|Soul
 ***w:c:art:Main_Page|Art
-***w:c:toys:Main_Page|Toys 
-***w:c:gardening:Gardening_Wiki|Gardening 
-***w:c:travel:Travel_Wiki|Travel 
+***w:c:toys:Main_Page|Toys
+***w:c:gardening:Gardening_Wiki|Gardening
+***w:c:travel:Travel_Wiki|Travel
 ***w:c:www:Lifestyle|More...
 
 **http://www.wikia.com/Lifestyle|Of Note
@@ -48444,7 +48135,7 @@ ___________________________________________
 *آیا مرورگر شما به روز است؟
 *آیا امکان ایجاد دوباره این مشکل هست و آیا می‌توانید اسکیرن‌شات آن را در اختیار بگذارید؟
 
-در اختیار گذاشتن این اطلاعات به ما در حل مشکل شما کمک خواهد کرد. اگر مایل هستید از پست الکترونیکی معمولی استفاده کنید و یا پرونده‌ای را ضمیمه کنید، می‌توانید با ما در [mailto:community@wikia.com community@wikia.com] تماس بگیرید.  
+در اختیار گذاشتن این اطلاعات به ما در حل مشکل شما کمک خواهد کرد. اگر مایل هستید از پست الکترونیکی معمولی استفاده کنید و یا پرونده‌ای را ضمیمه کنید، می‌توانید با ما در [mailto:community@wikia.com community@wikia.com] تماس بگیرید.
 
 |<div style="font-size:150%; text-align:right;">\'\'\'پرسش و پاسخ\'\'\'</div>
 #[[w:c:help:Help:Local issues|سوالات مرتبط با این ویکی؟]]
@@ -48483,19 +48174,19 @@ ___________________________________________
 
 اگر شما نیاز به کمک دارید، می‌توانید از کاربری که پیغام خوش‌آمدگویی شما را امضا کرده‌است بپرسید. بوسیلۀ پیوند داده‌شده به صفحۀ بحث او رفته، و بعد صفحه را ویرایش کرده و پیغام خود را برای او بنویسید.
 
-برای راهنمای عمومی، لطفا به [[w:c:help|راهنمای ویکیا]] مراجعه کنید و یا اگر سوالی دارید با پرسنل ویکیا [[Special:Contact|تماس بگیرید]]. 
+برای راهنمای عمومی، لطفا به [[w:c:help|راهنمای ویکیا]] مراجعه کنید و یا اگر سوالی دارید با پرسنل ویکیا [[Special:Contact|تماس بگیرید]].
 
 ==اطلاعاتی در مورد ابزار خوش‌آمدگویی و نحوۀ تنظیم آن==
 
 ابزار خوش‌آمدگویی ویکیا به اجتماع کمک می‌کند که به کاربران جدید خوش‌آمد گویند. بسیار مهم است که به کاربران جدید خودآمد گفت تا آنها متوجه شوند که اجتماعی در این ویکی موجود است -- و به آنها فردی را نشان دهد که اگر سوالی داشتند از او بپرسند.
-  
-وقتی کاربری اولین ویرایشش  را انجام می‌دهد، ابزار خوش‌آمدگویی ویکیا به آن‌ها در صفحه بحثشان خوش‌آمد می‌گوید، و صفحۀ کاربری برای آن‌ها ایجاد می‌کند.  
 
-پیغام صفحۀ بحث توسط مدیر، یاور، یا پرسنلی که اخیرا در ویکی ویرایش انجام داده‌است امضا می‌شود. 
+وقتی کاربری اولین ویرایشش  را انجام می‌دهد، ابزار خوش‌آمدگویی ویکیا به آن‌ها در صفحه بحثشان خوش‌آمد می‌گوید، و صفحۀ کاربری برای آن‌ها ایجاد می‌کند.
+
+پیغام صفحۀ بحث توسط مدیر، یاور، یا پرسنلی که اخیرا در ویکی ویرایش انجام داده‌است امضا می‌شود.
 
 ابزار خوش‌آمدگویی به صورت زیر قابل تغییر و بهبودسازی است:
 
-;[[مدیاویکی:Welcome-message-user|<span style="color:black; background:white;">مدیاویکی:Welcome-message-user</span>]]: پیغام خوش‌آمدگویی برای کاربران ثبت‌نام‌کرده. 
+;[[مدیاویکی:Welcome-message-user|<span style="color:black; background:white;">مدیاویکی:Welcome-message-user</span>]]: پیغام خوش‌آمدگویی برای کاربران ثبت‌نام‌کرده.
 ;[[مدیاویکی:Welcome-message-anon|<span style="color:black; background:white;">مدیاویکی:Welcome-message-anon</span>]]: پیغام خوش‌آمدگویی برای کاربران ناشناس.
 ;[[مدیاویکی:Welcome-user-page|<span style="color:black; background:white;">مدیاویکی:Welcome-user-page</span>]]: صفحۀ کاربری برای کاربران ثبت‌نام‌کرده.
 ;[[مدیاویکی:Welcome-message-log|<span style="color:black; background:white;">مدیاویکی:Welcome-message-log</span>]]: خلاصۀ ویرایش هنگام خوش‌آمدگویی.
@@ -48504,16 +48195,16 @@ ___________________________________________
 :برای این‌که پیغام فقط توسط یک فرد امضا شود، نام کاربری (نه امضا) کاربر را اضافه کنید.
 :برای این‌که فقط توسط مدیران امضا کند و نه پرسنل ویکیا و یا یاوران، اگرچه پرسنل ویکیا و یاوری اخیرا ویکی را ویرایش کرده‌باشد، @sysop را اضافه کنید.
 :برای خاموش‌کردن ابزار @disabled را اضافه کنید.
-;[[مدیاویکی:Welcome-enabled|<span style="color:black; background:white;">مدیاویکی:Welcome-enabled</span>]]: تنظیم می‌کند که چه قسمتی از ابزار کار کند. 
+;[[مدیاویکی:Welcome-enabled|<span style="color:black; background:white;">مدیاویکی:Welcome-enabled</span>]]: تنظیم می‌کند که چه قسمتی از ابزار کار کند.
 :«page-user message-anon message-user» همۀ قسمت‌ها را فعال می‌کند.
 :برای متوقف کردن ابزار از ساختن صفحۀ کاربری، «page-user» را حذف کنید.
-:برای متوقف کردن خوش‌آمدگویی کاربران ناشناس، «message-anon» را حذف کنید. 
+:برای متوقف کردن خوش‌آمدگویی کاربران ناشناس، «message-anon» را حذف کنید.
 :برای متوقف کردن خوش‌آمدگویی کاربران ثبت‌نام‌کرده، «message-user» را حذف کنید.
- 
+
 ;پیغام‌های خوش‌آمدگویی چهار مقدار ویژه دارد:
 :$1 صفحه‌ای است که کاربر جدید ویرایش کرده‌است.
 :$2 پیوند به صفحۀ بحث کاربری است که پیغام را امضا می‌کند.
-:$3 امضای پیغام خوش‌آمد گویی است. 
+:$3 امضای پیغام خوش‌آمد گویی است.
 :$4 نام فردی‌است که پیغام خوش‌آمد گویی برای او گذاشته می‌شود.
 
 ;کنترل کردن ربات:
@@ -48635,27 +48326,27 @@ div.tright {
 .watchlistredir {
   font-style: italic;
 }
-/* 
-=== Forum formatting -Algorithm & -Splaka === 
+/*
+=== Forum formatting -Algorithm & -Splaka ===
 */
- 
-.forumheader { 
-  border: 1px solid #aaa; background-color: #f9f9f9; color: #000; margin-top: 1em; padding: 6px; 
+
+.forumheader {
+  border: 1px solid #aaa; background-color: #f9f9f9; color: #000; margin-top: 1em; padding: 6px;
 }
-.forumlist td.forum_edited a { 
-  color: black; text-decoration: none 
+.forumlist td.forum_edited a {
+  color: black; text-decoration: none
 }
-.forumlist td.forum_title a { 
-  padding-left: 20px; 
+.forumlist td.forum_title a {
+  padding-left: 20px;
 }
-.forumlist td.forum_title a.forum_new {  
-  font-weight: bold; background: url(\'http://images3.wikia.nocookie.net/central/images/4/4e/Forum_new.gif?1\') center left no-repeat; padding-left: 20px; 
+.forumlist td.forum_title a.forum_new {
+  font-weight: bold; background: url(\'http://images3.wikia.nocookie.net/central/images/4/4e/Forum_new.gif?1\') center left no-repeat; padding-left: 20px;
 }
-.forumlist td.forum_title a.forum_new:visited { 
-  font-weight: normal; background: none; padding-left: 20px; 
+.forumlist td.forum_title a.forum_new:visited {
+  font-weight: normal; background: none; padding-left: 20px;
 }
-.forumlist th.forum_title { 
-  padding-left: 20px; 
+.forumlist th.forum_title {
+  padding-left: 20px;
 }',
 	'wikia_messages' => 'پیغام‌های ویکیا',
 	'wikiactivity' => 'فعالیت ویکی',
@@ -48855,7 +48546,7 @@ MySQL返回错误“$3: $4”。',
 <br />
 \'\'\'改变外部链结字樣:\'\'\'
 
-<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki> 
+<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki>
 
 = 如何增加标题 =
 使用 =(等号)就可以帮你建立次标题和三级标题。前后一个等号的标题等级和页面名称等级相同。
@@ -48978,7 +48669,7 @@ MySQL返回错误“$3: $4”。',
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'希腊字母:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -49040,7 +48731,7 @@ $NEWPAGE
 除非您访问该页, 否则我们不会再发出下一次更改通知. 你对您的监视列表中需要通知的页面重置通知标签.
 
 
-真诚的,             
+真诚的,
     {{SITENAME}} 邮件通知系统
 
 --
@@ -49341,7 +49032,7 @@ $NEWPAGE
 	'signup-password' => '密码：',
 	'sitestatstext' => '__NOTOC__
 {| class="plainlinks" align="top" width="100%"
-| valign="top" width="50%" | 
+| valign="top" width="50%" |
 ===页面统计===
 \'\'\'{{SITENAME}}共有$1 [[Special:Allpages|页面]]\'\'\' ([[Special:Newpages|新文章]]):
 
@@ -49387,7 +49078,7 @@ $messages["sv"] = array(
 </table>',
 	'anontalkpagetext' => '<br style="clear:both;" />
 ----
-{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;"
 | \'\'\'Detta är en diskussionssida för en anonym användare som inte skapat ett konto ännu, eller som inte använder det, som identifierats av användarens numeriska [[wikipedia:IP address|IP-adress]].\'\'\'
 
 Vissa IP-adresser ändras regelbundet, och kan delas av flera användare. Om du är en anonym användare kan du [[{{ns:Special}}:Userlogin|skapa ett konto eller logga in]] för att undvika framtida förväxlingar användare. Registrera också döljer din IP-adress.
@@ -49537,7 +49228,7 @@ Ha kul!
 * \'\'\'Allt din just nu - njuta av det!\'\'\' När din wiki tar fart, kommer massor av människor läser vad ni skriver. Just nu, ingen tittar över axeln ännu, så känn dig fri att prova saker och göra misstag.
 
 
-* \'\'\'Gör många korta sidor!\'\'\' Det svåraste med att skriva är att titta på en tom sida och inte veta var man skall börja. Det är mycket enklare när du skriver ner dina första meningar. Så ta ett djupt andetag och hoppa i -- gör tio väldigt korta sidor, en direkt efter varandra. När du väl har börjat kan du bygga sidorna upp långsamt, lägga en liten bit i taget 
+* \'\'\'Gör många korta sidor!\'\'\' Det svåraste med att skriva är att titta på en tom sida och inte veta var man skall börja. Det är mycket enklare när du skriver ner dina första meningar. Så ta ett djupt andetag och hoppa i -- gör tio väldigt korta sidor, en direkt efter varandra. När du väl har börjat kan du bygga sidorna upp långsamt, lägga en liten bit i taget
 
 
 * \'\'\'Länka dina sidor tillsammans!\'\'\' Länkar hjälpa dig och dina läsare ta sig från en sida till en annan, så när du nämner frågan om en annan sida, använda "Lägg till en länk" för att skapa en länk till den sidan. Du bör även använda framsidan att länka till alla de viktigaste sidorna på din wiki. Beskriv vad din wiki handlar om på huvudsidan och innehåller länkar för att hjälpa dina läsare finna sig till rätta.
@@ -49659,7 +49350,7 @@ Den här sidan hjälper dig att hålla dig uppdaterad med vad som händer på wi
 
 Om du är grundaren eller en administratör på denna wiki kan du ändra detta budskap att tala med community om viktiga saker som händer på sajten. Till exempel kan du:
 
-* Ordna ett projekt för att bygga upp ett område i wiki 
+* Ordna ett projekt för att bygga upp ett område i wiki
 
 * Visa upp några nya sidor som alla borde se
 
@@ -49670,7 +49361,7 @@ Om du är grundaren eller en administratör på denna wiki kan du ändra detta b
 * Eller bara lägga upp några uppmuntrande ord!',
 	'communityStickies' => 'Du kan skapa egna CommunityIhåg-lappar som visas på My Home och WikiIhåg-lappar sidan! Dessa kommer att visas överst i bunten med anteckningar om mitt hem, i slumpmässig ordning.
 
-\'\'\'Gör en lista över klisterlappar under denna text med hjälp av kulor att separera objekt.\'\'\' Du kan sätta in länkar i klisterlappar på samma sätt som du gör på artiklar. 
+\'\'\'Gör en lista över klisterlappar under denna text med hjälp av kulor att separera objekt.\'\'\' Du kan sätta in länkar i klisterlappar på samma sätt som du gör på artiklar.
 
 Här är ett par tips: WikiIhåg-lappar är avsedda att hjälpa de nyare bidragsgivarna hitta intressanta uppgifter att hjälpa till med. De bästa WikiIhåg-lappar är \'\'\'specifik\'\'\' - en särskild uppgift på en viss sida - så att en medarbetare inte skrämmas av storleken på uppgiften. Uppgiften bör också \'\'\'praktisk\'\'\' - något som en genomsnittlig redaktör kan göra, utan att vara en super-expert. Ha så kul!
 
@@ -49802,7 +49493,7 @@ Sidan har även en \'\'\'[[{{TALKPAGENAME}}|diskussionsida]]\'\'\' (<small class
 <charinsert> Æ æ Ø ø Å å </charinsert> &nbsp;
 <charinsert> Ə ə </charinsert></span>&nbsp;<br/></span>
 <span id="edittools_greek">\'\'\'Grekiska:\'\'\'
-<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp; 
+<charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert> &nbsp;
 <charinsert> Α α Β β Γ γ Δ δ </charinsert> &nbsp;
 <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert> &nbsp;
 <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert> &nbsp;
@@ -49988,7 +49679,7 @@ Sidan har även en \'\'\'[[{{TALKPAGENAME}}|diskussionsida]]\'\'\' (<small class
 	'newsite' => 'Ny webbplats',
 	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Denna sida kräver innehåll. Du kan hjälpa till genom att lägga till en mening eller en bild!\'\'\'</p>
 
-<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Lägg till denna sida!</span>]</span></center>  
+<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Lägg till denna sida!</span>]</span></center>
 <br>',
 	'nonefound' => 'Inga sökresultat för den termen.',
 	'nospecialpagetext' => 'Du har begärt en särskild sida som inte erkänns av {{SITENAME}}. En lista över alla särskilda erkända sidor finns på [[{{ns:-1}}:Specialpages|Specialsidor]].',
@@ -50091,7 +49782,7 @@ ___________________________________________________________
 	'prefs-help-birthmesg' => 'Varför måste jag ge min födelsedag?',
 	'prefs-help-blurmesg' => 'Suddiga ord',
 	'prefs-help-mailmesg' => 'E-post',
-	'prefs-help-terms' => 'Genom att skapa ett konto samtycker du till [[w:Terms of Use| Wikia användarvillkor]]',
+	'prefs-help-terms' => 'Genom att skapa ett konto samtycker du till {{#NewWindowLink: w:Terms of Use| Wikia användarvillkor}}',
 	'prefslogintext' => 'Du är inloggad som "$1". Ditt interna ID-nummer är $2.
 
 Se [[Help:Preferences|Hjälp:Inställningar]] för att få hjälp att dechiffrera alternativ.',
@@ -50148,7 +49839,7 @@ www.wikia.com',
 	'spamprotectiontext' => 'Sidan du ville spara blockerades av spamfiltret.
 Detta orsakades troligen av en svartlistad länk eller sidnamn.',
 	'specialcontact-intro' => '{| cellpadding="20"
-|- valign="top"  
+|- valign="top"
 | style="width:55%;" |
 Hej. Söker du hjälp? Wikia gemenskapet är här för dig!
 
@@ -50199,14 +49890,14 @@ Om du fick ett välkommet från detta konto, då är du en ny redigera på denna
 
 Om du letar efter hjälp, kan du lämna ett meddelande till den person som undertecknat välkomstmeddelande. Följ länken till sin diskussionssida och sedan redigera sidan för att skriva ditt meddelande.
 
-För allmänna Wikia hjälp kan du besöka [[w:c:help|Wikia Hjälp]] och [[Special:Contact|kontakta personalen]] om du har frågor. 
+För allmänna Wikia hjälp kan du besöka [[w:c:help|Wikia Hjälp]] och [[Special:Contact|kontakta personalen]] om du har frågor.
 
 == Välkomst verktyg information och hjälp ==
-Wikia Välkomst verktyget hjälper community att välkomna nya redigera. Det är viktigt att välkomna nya bidragsgivare så att de kan se att det finns en gemenskap på wikin - och ge dem en kontaktperson så att de vet vart de skall vända om de har frågor. 
- 
-När en bidragsgivare gör sin första redigeringen, den Wikia Välkomst verktyget lämnar ett meddelande diskussionssida för dem, och skapar en användare sida. 
- 
-Samtalstiden meddelande undertecknas av admin, hjälpare, eller anställd som redigerat wiki senast, så att den bidrar vet vart man vänder sig för hjälp. 
+Wikia Välkomst verktyget hjälper community att välkomna nya redigera. Det är viktigt att välkomna nya bidragsgivare så att de kan se att det finns en gemenskap på wikin - och ge dem en kontaktperson så att de vet vart de skall vända om de har frågor.
+
+När en bidragsgivare gör sin första redigeringen, den Wikia Välkomst verktyget lämnar ett meddelande diskussionssida för dem, och skapar en användare sida.
+
+Samtalstiden meddelande undertecknas av admin, hjälpare, eller anställd som redigerat wiki senast, så att den bidrar vet vart man vänder sig för hjälp.
 
 Välkomst verktyget kan anpassas med hjälp av följande inställningar:
 
@@ -50509,9 +50200,9 @@ $messages["uk"] = array(
 	'contris_s' => 'Внесок',
 	'editpagelayout-pageControls-minorEdit' => 'Незначне редагування',
 	'edittools' => '<!-- Розміщений тут текст буде відображатися під формою редагування і формою завантаження. -->
- <div style="margin-top:3em; margin-bottom:0.7em;">Нижче розташовані найбільш вживані символи на Вікія. Просто натисніть на потрібний вам символ, і він з\'явиться в полі редактора.</div> <div id="editpage-specialchars" class="plainlinks" style="border:1px solid #aaaaaa; padding:2px;"> 
+ <div style="margin-top:3em; margin-bottom:0.7em;">Нижче розташовані найбільш вживані символи на Вікія. Просто натисніть на потрібний вам символ, і він з\'явиться в полі редактора.</div> <div id="editpage-specialchars" class="plainlinks" style="border:1px solid #aaaaaa; padding:2px;">
 <span id="edittools_main">\'\'\'Вставка:\'\'\' <charinsert>– — … ° ≈ ≠ ≤ ≥ ± − × ÷ ← → · § </charinsert></span><span id="edittools_name">  \'\'\'Підпис:\'\'\' <charinsert>~~~~</charinsert></span>
----- 
+----
 <span id="edittools_wikimarkup">\'\'\'Вікі-розмітка:\'\'\' <charinsert><nowiki>{{</nowiki>+<nowiki>}}</nowiki> </charinsert>   <charinsert><nowiki>|</nowiki></charinsert>   <charinsert>[+]</charinsert>   <charinsert>[[+]]</charinsert>   <charinsert>[[Category:+]]</charinsert>   <charinsert><nowiki>#REDIRECT [[+]]</nowiki></charinsert>   <charinsert><s>+</s></charinsert>   <charinsert><sup>+</sup></charinsert>   <charinsert><sub>+</sub></charinsert>   <charinsert><code>+</code></charinsert>   <charinsert><blockquote>+</blockquote></charinsert>   <charinsert><ref>+</ref></charinsert>   <charinsert><nowiki>{{</nowiki>Reflist<nowiki>}}</nowiki></charinsert>   <charinsert><references/></charinsert>   <charinsert><includeonly>+</includeonly></charinsert>   <charinsert><noinclude>+</noinclude></charinsert>   <charinsert><nowiki>{{</nowiki>DEFAULTSORT:+<nowiki>}}</nowiki></charinsert>   <charinsert><nowiki>+</nowiki></charinsert>   <charinsert><nowiki><!-- </nowiki>+<nowiki> --></nowiki></charinsert>  <charinsert><nowiki><span class="plainlinks"></nowiki>+<nowiki></span></nowiki></charinsert><br/></span> <span id="edittools_symbols">\'\'\'Символи:\'\'\' <charinsert> ~ | ¡ ¿ † ‡ ↔ ↑ ↓ • ¶</charinsert>   <charinsert> # ¹ ² ³ ½ ⅓ ⅔ ¼ ¾ ⅛ ⅜ ⅝ ⅞ ∞ </charinsert>   <charinsert> ‘ “ ’ ” «+»</charinsert>   <charinsert> ¤ ₳ ฿ ₵ ¢ ₡ ₢ $ ₫ ₯ € ₠ ₣ ƒ ₴ ₭ ₤ ℳ ₥ ₦ № ₧ ₰ £ ៛ ₨ ₪ ৳ ₮ ₩ ¥ </charinsert>   <charinsert> ♠ ♣ ♥ ♦ </charinsert><br/>\'\'\'Latinx:\'\'\' <span class="latinx"> <charinsert> Á á Ć ć É é Í í Ĺ ĺ Ń ń Ó ó Ŕ ŕ Ś ś Ú ú Ý ý Ź ź </charinsert>   <charinsert> À à È è Ì ì Ò ò Ù ù </charinsert>   <charinsert> Â â Ĉ ĉ Ê ê Ĝ ĝ Ĥ ĥ Î î Ĵ ĵ Ô ô Ŝ ŝ Û û Ŵ ŵ Ŷ ŷ </charinsert>   <charinsert> Ä ä Ë ë Ï ï Ö ö Ü ü Ÿ ÿ </charinsert>   <charinsert> ß </charinsert>   <charinsert> Ã ã Ẽ ẽ Ĩ ĩ Ñ ñ Õ õ Ũ ũ Ỹ ỹ</charinsert>   <charinsert> Ç ç Ģ ģ Ķ ķ Ļ ļ Ņ ņ Ŗ ŗ Ş ş Ţ ţ </charinsert>   <charinsert> Đ đ </charinsert>   <charinsert> Ů ů </charinsert>   <charinsert> Ǎ ǎ Č č Ď ď Ě ě Ǐ ǐ Ľ ľ Ň ň Ǒ ǒ Ř ř Š š Ť ť Ǔ ǔ Ž ž </charinsert>   <charinsert> Ā ā Ē ē Ī ī Ō ō Ū ū Ȳ ȳ Ǣ ǣ </charinsert>   <charinsert> ǖ ǘ ǚ ǜ </charinsert>   <charinsert> Ă ă Ĕ ĕ Ğ ğ Ĭ ĭ Ŏ ŏ Ŭ ŭ </charinsert>   <charinsert> Ċ ċ Ė ė Ġ ġ İ ı Ż ż </charinsert>   <charinsert> Ą ą Ę ę Į į Ǫ ǫ Ų ų </charinsert>   <charinsert> Ḍ ḍ Ḥ ḥ Ḷ ḷ Ḹ ḹ Ṃ ṃ Ṇ ṇ Ṛ ṛ Ṝ ṝ Ṣ ṣ Ṭ ṭ </charinsert>   <charinsert> Ł ł </charinsert>   <charinsert> Ő ő Ű ű </charinsert>   <charinsert> Ŀ ŀ </charinsert>   <charinsert> Ħ ħ </charinsert>   <charinsert> Ð ð Þ þ </charinsert>   <charinsert> Œ œ </charinsert>   <charinsert> Æ æ Ø ø Å å </charinsert>   <charinsert> Ə ə </charinsert></span> <br/></span> <span id="edittools_greek">\'\'\'Грецький алфавіт:\'\'\' <charinsert> Ά ά Έ έ Ή ή Ί ί Ό ό Ύ ύ Ώ ώ </charinsert>   <charinsert> Α α Β β Γ γ Δ δ </charinsert>   <charinsert> Ε ε Ζ ζ Η η Θ θ </charinsert>   <charinsert> Ι ι Κ κ Λ λ Μ μ </charinsert>   <charinsert> Ν ν Ξ ξ Ο ο Π π </charinsert>   <charinsert> Ρ ρ Σ σ ς Τ τ Υ υ </charinsert>   <charinsert> Φ φ Χ χ Ψ ψ Ω ω </charinsert>  <br/></span> <span id="edittools_cyrillic">\'\'\'Кирилиця:\'\'\' <charinsert> А а Б б В в Г г </charinsert>   <charinsert> Ґ ґ Ѓ ѓ Д д Ђ ђ </charinsert>   <charinsert> Е е Ё ё Є є Ж ж </charinsert>   <charinsert> З з Ѕ ѕ И и І і </charinsert>   <charinsert> Ї ї Й й Ј ј К к </charinsert>   <charinsert> Ќ ќ Л л Љ љ М м </charinsert>   <charinsert> Н н Њ њ О о П п </charinsert>   <charinsert> Р р С с Т т Ћ ћ </charinsert>   <charinsert> У у Ў ў Ф ф Х х </charinsert>   <charinsert> Ц ц Ч ч Џ џ Ш ш </charinsert>   <charinsert> Щ щ Ъ ъ Ы ы Ь ь </charinsert>   <charinsert> Э э Ю ю Я я </charinsert>  <br/></span> <span id="edittools_ipa">\'\'\'IPA:\'\'\' <span class="IPA"><charinsert>t̪ d̪ ʈ ɖ ɟ ɡ ɢ ʡ ʔ </charinsert>   <charinsert> ɸ ʃ ʒ ɕ ʑ ʂ ʐ ʝ ɣ ʁ ʕ ʜ ʢ ɦ </charinsert>   <charinsert> ɱ ɳ ɲ ŋ ɴ </charinsert>   <charinsert> ʋ ɹ ɻ ɰ </charinsert>   <charinsert> ʙ ʀ ɾ ɽ </charinsert>   <charinsert> ɫ ɬ ɮ ɺ ɭ ʎ ʟ </charinsert>   <charinsert> ɥ ʍ ɧ </charinsert>   <charinsert> ɓ ɗ ʄ ɠ ʛ </charinsert>   <charinsert> ʘ ǀ ǃ ǂ ǁ </charinsert>   <charinsert> ɨ ʉ ɯ </charinsert>   <charinsert> ɪ ʏ ʊ </charinsert>   <charinsert> ɘ ɵ ɤ </charinsert>   <charinsert> ə ɚ </charinsert>   <charinsert> ɛ ɜ ɝ ɞ ʌ ɔ </charinsert>   <charinsert> ɐ ɶ ɑ ɒ </charinsert>   <charinsert> ʰ ʷ ʲ ˠ ˤ ⁿ ˡ </charinsert>    </span><br/></span> </div>',
 	'forum-active-threads-on-topic' => '{{FORMATNUM:$1}} {{PLURAL:$1|Активна дискусія|активних дискусії|Активних дискусій}}, пов\'язаних з $2',
 	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Активна дискусія|Активних дискусій}}',
@@ -50704,19 +50395,8 @@ ___________________________________________
 	'oasis-global-nav-create-wiki-alt' => 'Створити вікі',
 	'oasis-on-the-wiki' => 'На цій вікі',
 	'oasis-spotlights-footer-title' => 'Відвідайте інші вікіпроекти на Вікія!',
-	'oasis-toolbar-customize' => 'Налаштування',
 	'oasis-toolbar-devinfo' => 'Інформація для розробників',
-	'oasis-toolbar-edit-advanced-tools' => '[[Help:MyTools|доступні інструменти]]',
-	'oasis-toolbar-edit-find-a-tool' => 'Знайти інструмент',
-	'oasis-toolbar-edit-hide-tools' => 'Приховати інструменти',
-	'oasis-toolbar-edit-popular-tools' => 'Популярні інструменти',
-	'oasis-toolbar-edit-rename-item' => 'Переіменувати інструмент',
-	'oasis-toolbar-edit-reset-defaults' => 'Повернути за замовчуванням',
-	'oasis-toolbar-edit-search-for-tool' => 'Пошук інструмента',
-	'oasis-toolbar-edit-title' => 'Налаштувати інструменти',
-	'oasis-toolbar-edit-toolbar-list' => 'Перелік інструментів',
 	'oasis-toolbar-for-admins-only' => 'Цим інструментом може користуватися тільки адміністратор вікі',
-	'oasis-toolbar-more' => 'більше...',
 	'oasis-toolbar-not-enabled-here' => 'Цей інструмент не можна застосовувати на цій вікі',
 	'shared-Globalnavigation' => '*w:c:www:Entertainment|Кіно та серіали
 
@@ -50892,7 +50572,7 @@ Esta pagina tambem tem uma \'\'\'[[{{TALKPAGENAME}}|pagina de discussão]]\'\'\'
 ** Pedido do autor
 ** Violação de direitos de autor
 ** Vandalismo
-** SPAM 
+** SPAM
 ** Texto sem sentido
 ** Duplicado
 ** Obscenidade / Cconteudo inapropriado
@@ -51003,15 +50683,15 @@ Categoria:Esportes|Esportes
 	'user_Wikia' => '<div style="float:right; margin-left:15px; margin-bottom:15px">http://images.wikia.com/central/images/c/ca/Wikiawelcomelogo.png</div>
 <h2 style="overflow:auto">Bem vindo a Wikia!</h2>
 
-Se voce está recebendo uma mensagem desta conta, então voce é um novo editor desta wiki. Olá! 
+Se voce está recebendo uma mensagem desta conta, então voce é um novo editor desta wiki. Olá!
 
-Se voce precisa de ajuda, pode deixar uma mensagem para a pessoa que assina a  mensagem de boas vindas. Siga o link para sua pagina de discussão, e então edite a pagina para deixar sua mensagem. 
+Se voce precisa de ajuda, pode deixar uma mensagem para a pessoa que assina a  mensagem de boas vindas. Siga o link para sua pagina de discussão, e então edite a pagina para deixar sua mensagem.
 
-Para ajuda geral sobre Wikia, por favor visite a [[w:c:help|Wikia Help]] e [[Special:Contact|contate a equipe]] se tiver duvidas. 
+Para ajuda geral sobre Wikia, por favor visite a [[w:c:help|Wikia Help]] e [[Special:Contact|contate a equipe]] se tiver duvidas.
 
 ==Informação sobre a mensagem de Boas vindas e ajuda==
 
-A mensagem de boas vindas ajuda a comunidade a sudar seus novos editores. É importante saudá-los, para que eles saibam que existe uma comunidade na wikia -- e lhes dar um ponto de contato para que saibam onde ir se tiverem duvidas. 
+A mensagem de boas vindas ajuda a comunidade a sudar seus novos editores. É importante saudá-los, para que eles saibam que existe uma comunidade na wikia -- e lhes dar um ponto de contato para que saibam onde ir se tiverem duvidas.
 
 Quando um contribuidor faz sua primeira edição, a ferramenta de boas vindas deixa uma mensagem na pagina de discussão para eles, e cria uma pagina de usuário.
 
@@ -51019,35 +50699,35 @@ A pagina de discussão é assinada pelo [[Special:Listusers/sysop|admin]], helpe
 
 A ferramenta de boas vindas pode ser padronizada e adequada a sua wikia usando os seguintes controles:
 
-;[[MediaWiki:Welcome-message-user|MediaWiki:Welcome-message-user]]: mensagem de boas vindas para contribuintes logados. 
+;[[MediaWiki:Welcome-message-user|MediaWiki:Welcome-message-user]]: mensagem de boas vindas para contribuintes logados.
 ;[[MediaWiki:Welcome-message-anon|MediaWiki:Welcome-message-anon]]: mensagem de boas vindas para contribuintes não resgistrados.
 ;[[MediaWiki:Welcome-user-page|MediaWiki:Welcome-user-page]]: pagina de usuário para contribuintes  logados.
 ;[[MediaWiki:Welcome-message-log|MediaWiki:Welcome-message-log]]: resumo de edição usado quando deixando mensagens.
 ;[[MediaWiki:Welcome-user|MediaWiki:Welcome-user]]: usado para desativar o sistema e mudar quem envia a mensagem.
 : Adicione @latest para a mensagem ser assinada pelo admim ativo mais recente.
 : Adicione um nome especifico(não a assinatura) para todas as boas vindas serem feitas por uma pessoa especifica.
-: Adicione @sysop para sempre assinar a mensagem como um admin e não por um membro da equipe ou helper, mesmo se um deles for o contribuinte mais recente. 
+: Adicione @sysop para sempre assinar a mensagem como um admin e não por um membro da equipe ou helper, mesmo se um deles for o contribuinte mais recente.
 : Adicione @disabled para desligar totalmente o sistema de boas vindas.
-;[[MediaWiki:Welcome-enabled|MediaWiki:Welcome-enabled]]: controla que partes do sistema estão em uso. 
+;[[MediaWiki:Welcome-enabled|MediaWiki:Welcome-enabled]]: controla que partes do sistema estão em uso.
 :"page-user message-anon message-user" ativa tudo .
 :Retirar "page-user" irá parar a ferramenta de criar paginas de usuário.
 :Retirar "message-anon" irá parar a ferramenta de deixar mensagens de boas vindas para usuários não registrados.
-:Retirar "message-user" irá parar a ferramenta de deixar mensagens de boas vindas para usuários registrados. 
+:Retirar "message-user" irá parar a ferramenta de deixar mensagens de boas vindas para usuários registrados.
 
 ;As paginas de boas vindas tem quatro variáveis especiais:
 :$1 é a página criada ou editada do novo editor
 :$2 é um link para a pagina de discussão da pessoa deixando a mensagem de boas vindas
-:$3 é a assinatura 
+:$3 é a assinatura
 :$4 é o nome da pessoa sendo recebida
 
 ;Controlando o bot:
-:Para ocultar as mensagem de boas vindas das mudanças recentes na sua wiki,[[special:contact|entre em contato conosco]] para marcar a User:Wikia como um bot. 
+:Para ocultar as mensagem de boas vindas das mudanças recentes na sua wiki,[[special:contact|entre em contato conosco]] para marcar a User:Wikia como um bot.
 :Voce pode desativar as mensagens de boas vindas adicionando @disabled a [[MediaWiki:Welcome-user|MediaWiki:Welcome-user]].
 
 Se voce tem qualquer duvida sobre a ferramenta de boas vindas da Wikia Welcome, por favor [[Special:Contact|contate a equipe da Wikia]].',
 	'vet-see-all' => 'Ver todas',
 	'welcome-enabled' => 'page-user message-anon message-user',
-	'welcome-message-anon' => 'Ola, benvindo(a) a {{SITENAME}}! Muito obrigado por sua edição em [[:$1]]. 
+	'welcome-message-anon' => 'Ola, benvindo(a) a {{SITENAME}}! Muito obrigado por sua edição em [[:$1]].
 
 Porque não \'\'\'[[Special:Userlogin|cria uma conta e se identifica]]\'\'\'?  Desta forma será muito máis fácil saber qué páginas voce editou e o trabalho será atribuido a voce na wiki, alem do mais será de grande ajuda na hora de se comunicar com o resto da comunidade.
 
@@ -51107,7 +50787,7 @@ Esta pagina tambem tem uma \'\'\'[[{{TALKPAGENAME}}|pagina de discussão]]\'\'\'
 ** Pedido do autor
 ** Violação de direitos de autor
 ** Vandalismo
-** SPAM 
+** SPAM
 ** Texto sem sentido
 ** Duplicado
 ** Obscenidade / Cconteudo inapropriado
@@ -51203,15 +50883,15 @@ Categoria:Esportes|Esportes
 	'user_Wikia' => '<div style="float:right; margin-left:15px; margin-bottom:15px">http://images.wikia.com/central/images/c/ca/Wikiawelcomelogo.png</div>
 <h2 style="overflow:auto">Bem vindo a Wikia!</h2>
 
-Se voce está recebendo uma mensagem desta conta, então voce é um novo editor desta wiki. Olá! 
+Se voce está recebendo uma mensagem desta conta, então voce é um novo editor desta wiki. Olá!
 
-Se voce precisa de ajuda, pode deixar uma mensagem para a pessoa que assina a  mensagem de boas vindas. Siga o link para sua pagina de discussão, e então edite a pagina para deixar sua mensagem. 
+Se voce precisa de ajuda, pode deixar uma mensagem para a pessoa que assina a  mensagem de boas vindas. Siga o link para sua pagina de discussão, e então edite a pagina para deixar sua mensagem.
 
-Para ajuda geral sobre Wikia, por favor visite a [[w:c:help|Wikia Help]] e [[Special:Contact|contate a equipe]] se tiver duvidas. 
+Para ajuda geral sobre Wikia, por favor visite a [[w:c:help|Wikia Help]] e [[Special:Contact|contate a equipe]] se tiver duvidas.
 
 ==Informação sobre a mensagem de Boas vindas e ajuda==
 
-A mensagem de boas vindas ajuda a comunidade a sudar seus novos editores. É importante saudá-los, para que eles saibam que existe uma comunidade na wikia -- e lhes dar um ponto de contato para que saibam onde ir se tiverem duvidas. 
+A mensagem de boas vindas ajuda a comunidade a sudar seus novos editores. É importante saudá-los, para que eles saibam que existe uma comunidade na wikia -- e lhes dar um ponto de contato para que saibam onde ir se tiverem duvidas.
 
 Quando um contribuidor faz sua primeira edição, a ferramenta de boas vindas deixa uma mensagem na pagina de discussão para eles, e cria uma pagina de usuário.
 
@@ -51219,35 +50899,35 @@ A pagina de discussão é assinada pelo [[Special:Listusers/sysop|admin]], helpe
 
 A ferramenta de boas vindas pode ser padronizada e adequada a sua wikia usando os seguintes controles:
 
-;[[MediaWiki:Welcome-message-user|MediaWiki:Welcome-message-user]]: mensagem de boas vindas para contribuintes logados. 
+;[[MediaWiki:Welcome-message-user|MediaWiki:Welcome-message-user]]: mensagem de boas vindas para contribuintes logados.
 ;[[MediaWiki:Welcome-message-anon|MediaWiki:Welcome-message-anon]]: mensagem de boas vindas para contribuintes não resgistrados.
 ;[[MediaWiki:Welcome-user-page|MediaWiki:Welcome-user-page]]: pagina de usuário para contribuintes  logados.
 ;[[MediaWiki:Welcome-message-log|MediaWiki:Welcome-message-log]]: resumo de edição usado quando deixando mensagens.
 ;[[MediaWiki:Welcome-user|MediaWiki:Welcome-user]]: usado para desativar o sistema e mudar quem envia a mensagem.
 : Adicione @latest para a mensagem ser assinada pelo admim ativo mais recente.
 : Adicione um nome especifico(não a assinatura) para todas as boas vindas serem feitas por uma pessoa especifica.
-: Adicione @sysop para sempre assinar a mensagem como um admin e não por um membro da equipe ou helper, mesmo se um deles for o contribuinte mais recente. 
+: Adicione @sysop para sempre assinar a mensagem como um admin e não por um membro da equipe ou helper, mesmo se um deles for o contribuinte mais recente.
 : Adicione @disabled para desligar totalmente o sistema de boas vindas.
-;[[MediaWiki:Welcome-enabled|MediaWiki:Welcome-enabled]]: controla que partes do sistema estão em uso. 
+;[[MediaWiki:Welcome-enabled|MediaWiki:Welcome-enabled]]: controla que partes do sistema estão em uso.
 :"page-user message-anon message-user" ativa tudo .
 :Retirar "page-user" irá parar a ferramenta de criar paginas de usuário.
 :Retirar "message-anon" irá parar a ferramenta de deixar mensagens de boas vindas para usuários não registrados.
-:Retirar "message-user" irá parar a ferramenta de deixar mensagens de boas vindas para usuários registrados. 
+:Retirar "message-user" irá parar a ferramenta de deixar mensagens de boas vindas para usuários registrados.
 
 ;As paginas de boas vindas tem quatro variáveis especiais:
 :$1 é a página criada ou editada do novo editor
 :$2 é um link para a pagina de discussão da pessoa deixando a mensagem de boas vindas
-:$3 é a assinatura 
+:$3 é a assinatura
 :$4 é o nome da pessoa sendo recebida
 
 ;Controlando o bot:
-:Para ocultar as mensagem de boas vindas das mudanças recentes na sua wiki,[[special:contact|entre em contato conosco]] para marcar a User:Wikia como um bot. 
+:Para ocultar as mensagem de boas vindas das mudanças recentes na sua wiki,[[special:contact|entre em contato conosco]] para marcar a User:Wikia como um bot.
 :Voce pode desativar as mensagens de boas vindas adicionando @disabled a [[MediaWiki:Welcome-user|MediaWiki:Welcome-user]].
 
 Se voce tem qualquer duvida sobre a ferramenta de boas vindas da Wikia Welcome, por favor [[Special:Contact|contate a equipe da Wikia]].',
 	'vet-see-all' => 'Ver todas',
 	'welcome-enabled' => 'page-user message-anon message-user',
-	'welcome-message-anon' => 'Ola, benvindo(a) a {{SITENAME}}! Muito obrigado por sua edição em [[:$1]]. 
+	'welcome-message-anon' => 'Ola, benvindo(a) a {{SITENAME}}! Muito obrigado por sua edição em [[:$1]].
 
 Porque não \'\'\'[[Special:Userlogin|cria uma conta e se identifica]]\'\'\'?  Desta forma será muito máis fácil saber qué páginas voce editou e o trabalho será atribuido a voce na wiki, alem do mais será de grande ajuda na hora de se comunicar com o resto da comunidade.
 
@@ -51506,7 +51186,7 @@ Una vegada que hages realitzat aquestes 4 tasques, hauràs creat allò que et se
 
 Segueix així! Mentre més pàgines crees i enllaços a altres, més ràpid aconseguiràs que qui busque per "$4" trobe el teu projecte als motors de cerca, llegeixin el teu contingut i s\'unisquen a l\'edició d\'articles.
 
-Si tens més preguntes, hem creat un complet conjunt de [[ayuda:Contenidos|pàgines d\'ajuda]] per a que consultes. També pots enviar-nos altre correu electrònic a través d\'aquest [[Special:Contact|formulari de contacte]]. No oblides revisar altres wikis de [[w:c:ca:Wikia|Wikia] per a que veges més idees de disseny, organització de pàgines i molts altres detalls. Gaudix-lo! 
+Si tens més preguntes, hem creat un complet conjunt de [[ayuda:Contenidos|pàgines d\'ajuda]] per a que consultes. També pots enviar-nos altre correu electrònic a través d\'aquest [[Special:Contact|formulari de contacte]]. No oblides revisar altres wikis de [[w:c:ca:Wikia|Wikia] per a que veges més idees de disseny, organització de pàgines i molts altres detalls. Gaudix-lo!
 
 I si vols estar al dia amb totes les novetats de Wikia, noves funcionalitats, notícies, concursos o projectes, no oblides subscriure\'t al nostre [http://lists.wikia.com/mailman/listinfo/wikia-es maillist]!!
 
@@ -51589,7 +51269,7 @@ Els millors desitjos, [[User:$2|$3]] <staff />',
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veure la conversació</a></p>
 <p>L\'Equip de Wikia</p>
 ___________________________________________<br>
-* Troba ajuda i consells a la Central de Wikia: http://ca.wikia.com 
+* Troba ajuda i consells a la Central de Wikia: http://ca.wikia.com
 * Vols rebre menys missatges de Wikia? Pots modificar les teves subscripcions a email aquí: http://ca.wikia.com/Especial:Preferències',
 	'forum-mail-notification-body' => 'Hola $WATCHER,
 
@@ -51734,8 +51414,6 @@ Abans de contribuir al fòrum de {{SITENAME}} tingues en compte les següents pr
 	'oasis-random-wiki' => 'Wiki aleatori',
 	'oasis-share' => 'Compartir',
 	'oasis-spotlights-footer-title' => 'Més wikis de Wikia.',
-	'oasis-toolbar-customize' => 'Personalitzar',
-	'oasis-toolbar-more' => 'més...',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|pàgina en<br /> aquest wiki|pàgines en<br /> aquest wiki}}</span>',
 	'prefs-rte' => 'Editor de text enriquit',
 	'profile' => 'Perfil',
@@ -52219,31 +51897,31 @@ Caractères spéciaux :
 
 ----
 <small><span id="edittools_wikimarkup">\'\'\'Wiki Syntax:\'\'\'
-<charinsert><nowiki>{{</nowiki>+<nowiki>}}</nowiki> </charinsert>  &nbsp; 
-<charinsert><nowiki>|</nowiki></charinsert>  &nbsp; 
-<charinsert>[+]</charinsert>  &nbsp; 
-<charinsert>[[+]]</charinsert>  &nbsp; 
-<charinsert>[[Catégorie:+]] [[Image:+]] [[Media:+]] · [[Commons:+<nowiki>|</nowiki>]] [[wikt:+|]] [[wikia:c:+|]</charinsert> · &nbsp; 
-<charinsert>#REDIRECT&#32;[[+]]</charinsert>  &nbsp; 
-<charinsert> <>+</> <code>+</code> <math>+</math> <small>+</small> </charinsert> &nbsp; • 
+<charinsert><nowiki>{{</nowiki>+<nowiki>}}</nowiki> </charinsert>  &nbsp;
+<charinsert><nowiki>|</nowiki></charinsert>  &nbsp;
+<charinsert>[+]</charinsert>  &nbsp;
+<charinsert>[[+]]</charinsert>  &nbsp;
+<charinsert>[[Catégorie:+]] [[Image:+]] [[Media:+]] · [[Commons:+<nowiki>|</nowiki>]] [[wikt:+|]] [[wikia:c:+|]</charinsert> · &nbsp;
+<charinsert>#REDIRECT&#32;[[+]]</charinsert>  &nbsp;
+<charinsert> <>+</> <code>+</code> <math>+</math> <small>+</small> </charinsert> &nbsp; •
 <charinsert><nowiki><br></nowiki>  <nowiki><br /></nowiki> </charinsert> •
-<charinsert><s>+</s></charinsert>  &nbsp; 
-<charinsert><sup>+</sup></charinsert>  &nbsp; 
-<charinsert><sub>+</sub></charinsert>  &nbsp; 
-<charinsert><blockquote>+</blockquote></charinsert>  &nbsp; 
-<charinsert><ref>+</ref></charinsert>  &nbsp; 
-<charinsert><nowiki>{{</nowiki>Reflist<nowiki>}}</nowiki></charinsert>  &nbsp; 
-<charinsert><references/></charinsert>  &nbsp; 
-<charinsert><includeonly>+</includeonly></charinsert>  &nbsp; 
-<charinsert><noinclude>+</noinclude></charinsert>  &nbsp; 
-<charinsert><nowiki>{{</nowiki>DEFAULTSORT:+<nowiki>}}</nowiki></charinsert>  &nbsp; 
-<charinsert>&lt;nowiki>+</nowiki></charinsert>  &nbsp; 
-<charinsert><nowiki><!-- </nowiki>+<nowiki> --></nowiki></charinsert> &nbsp; 
+<charinsert><s>+</s></charinsert>  &nbsp;
+<charinsert><sup>+</sup></charinsert>  &nbsp;
+<charinsert><sub>+</sub></charinsert>  &nbsp;
+<charinsert><blockquote>+</blockquote></charinsert>  &nbsp;
+<charinsert><ref>+</ref></charinsert>  &nbsp;
+<charinsert><nowiki>{{</nowiki>Reflist<nowiki>}}</nowiki></charinsert>  &nbsp;
+<charinsert><references/></charinsert>  &nbsp;
+<charinsert><includeonly>+</includeonly></charinsert>  &nbsp;
+<charinsert><noinclude>+</noinclude></charinsert>  &nbsp;
+<charinsert><nowiki>{{</nowiki>DEFAULTSORT:+<nowiki>}}</nowiki></charinsert>  &nbsp;
+<charinsert>&lt;nowiki>+</nowiki></charinsert>  &nbsp;
+<charinsert><nowiki><!-- </nowiki>+<nowiki> --></nowiki></charinsert> &nbsp;
 <charinsert><nowiki><span class="plainlinks"></nowiki>+<nowiki></span></nowiki></charinsert><br/></span>
-<span id="edittools_symbols">\'\'\'Symboles:\'\'\' <charinsert> ~ | ¡ ¿ † ↔ ↑ ↓ • ¶</charinsert>  &nbsp; 
-<charinsert> # ¹ ² ³ ½ ⅓ ⅔ ¼ ¾ ∞ </charinsert>  &nbsp; 
-<charinsert> „+“ ’ ‚+‘ “+” «+» »+« ›+‹</charinsert>  &nbsp; 
-<charinsert> $ € № </charinsert>  &nbsp; 
+<span id="edittools_symbols">\'\'\'Symboles:\'\'\' <charinsert> ~ | ¡ ¿ † ↔ ↑ ↓ • ¶</charinsert>  &nbsp;
+<charinsert> # ¹ ² ³ ½ ⅓ ⅔ ¼ ¾ ∞ </charinsert>  &nbsp;
+<charinsert> „+“ ’ ‚+‘ “+” «+» »+« ›+‹</charinsert>  &nbsp;
+<charinsert> $ € № </charinsert>  &nbsp;
 <charinsert> ♠ ♣ ♥ ♦ </charinsert> • Signature: <charinsert> ~~~ ~~~~ ~~~~~ </charinsert> ...<br/></span>
 
 </small></div>
@@ -52300,7 +51978,7 @@ $messages["tr"] = array(
 <charinsert> „+“ ’ ‚+‘ “+” «+» »+« ›+‹</charinsert> &nbsp;
 <charinsert> $ € № </charinsert> &nbsp;
 <charinsert> ♠ ♣ ♥ ♦ </charinsert><br/></span>
-<span id="edittools_characters">\'\'\'Türkçe harfler:\'\'\' 
+<span id="edittools_characters">\'\'\'Türkçe harfler:\'\'\'
 <span class="latinx">
 <charinsert> Ç ç Ğ ğ I ı Ş ş</charinsert><br/></span>
 <span id="edittools_characters">\'\'\'Diğer harfler:\'\'\'

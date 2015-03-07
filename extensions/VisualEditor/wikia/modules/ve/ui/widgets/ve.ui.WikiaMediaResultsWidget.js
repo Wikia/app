@@ -21,8 +21,7 @@ ve.ui.WikiaMediaResultsWidget = function VeUiWikiaMediaResultsWidget( config ) {
 	// Events
 	this.results.connect( this, {
 		'highlight': 'onResultsHighlight',
-		'select': 'onResultsSelect',
-		'check': 'onResultsCheck'
+		'select': 'onResultsSelect'
 	} );
 	this.$element.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
 
@@ -51,7 +50,29 @@ OO.inheritClass( ve.ui.WikiaMediaResultsWidget, OO.ui.Widget );
  * @param {ve.ui.WikiaMediaOptionWidget} item Item whose state is changing
  */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
-	this.emit( 'check', item.getData() );
+	this.emit( 'check', item );
+};
+
+/**
+ * Handle metadata event
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item that fired the event
+ * @param {jQuery.Event} event jQuery Event
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsMetadata = function ( item, event ) {
+	this.emit( 'metadata', item, event );
+};
+
+/**
+ * Handle label event
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item that fired the event
+ * @param {jQuery.Event} event jQuery Event
+ */
+ve.ui.WikiaMediaResultsWidget.prototype.onResultsLabel = function ( item, event ) {
+	this.emit( 'label', item, event );
 };
 
 /**
@@ -63,7 +84,7 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsSelect = function ( item ) {
 	if ( item ) {
 		this.results.selectItem( null );
-		this.emit( 'preview', item );
+		this.emit( 'select', item );
 	}
 };
 
@@ -78,7 +99,11 @@ ve.ui.WikiaMediaResultsWidget.prototype.addItems = function ( items ) {
 		results = [];
 	for ( i = 0; i < items.length; i++ ) {
 		optionWidget = ve.ui.WikiaMediaOptionWidget.newFromData( items[i], { '$': this.$, 'size': this.size } );
-		optionWidget.on( 'check', this.onResultsCheck, [ optionWidget ], this );
+		optionWidget.connect( this, {
+			'check': 'onResultsCheck',
+			'metadata': 'onResultsMetadata',
+			'label': 'onResultsLabel'
+		} );
 		results.push(
 			optionWidget
 		);

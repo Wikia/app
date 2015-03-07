@@ -190,8 +190,8 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 
 			$devbox_dbs = array_merge(getDevBoxOverrideDatabases($db1), getDevBoxOverrideDatabases($db2));
 			if (array_search($dbname, $devbox_dbs) === false) {
-				echo "<pre>Fatal Error: No local copy of database [$dbname] was found.</pre>";
-				exit(); // fatal error
+				header('HTTP/1.1 503');
+				die("<pre>Fatal Error: No local copy of database [$dbname] was found.</pre>");
 			}
 		}
 
@@ -300,6 +300,7 @@ function getForcedWikiValue(){
 
 
 /**
+ * @param DatabaseMysql $db
  * @return array - databases which are available on this cluster
  *					  use the writable devbox server instead of the production slaves.
  */
@@ -308,10 +309,9 @@ function getDevBoxOverrideDatabases(DatabaseMysql $db){
 	$IGNORE_DBS = array('information_schema', 'mysql', '#mysql50#lost+found', 'wikicities_c2');
 	$retval = array();
 
-	$info = $db->getLBInfo();
-	$connection = mysql_connect($info['host'], $info['user'], $info['password']);
-	$res = mysql_query('SHOW DATABASES', $connection);
-	while ($row = mysql_fetch_object($res)) {
+	$res = $db->query( 'SHOW DATABASES', __METHOD__ );
+
+	while( $row = $res->fetchObject() ) {
 		$retval[] = $row->Database;
 	}
 

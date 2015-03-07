@@ -402,10 +402,12 @@ class Wikia {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param String $method     -- use __METHOD__
-	 * @param String $sub        -- sub-section name (if more than one in same method); default false
+	 * @param String|bool $sub   -- sub-section name (if more than one in same method); default false
 	 * @param String $message    -- additional message; default false
 	 * @param Boolean $always    -- skip checking of $wgErrorLog and write log (or not); default false
 	 * @param Boolean $timestamp -- write timestamp before line; default false
+	 *
+	 * @deprecated use WikiaLogger instead
 	 *
 	 */
 	static public function log( $method, $sub = false, $message = '', $always = false, $timestamp = false ) {
@@ -444,6 +446,8 @@ class Wikia {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 *
 	 * @param String $method - use __METHOD__
+	 *
+	 * @deprecated use WikiaLogger instead
 	 */
 	static public function logBacktrace($method) {
 		$backtrace = trim(strip_tags(wfBacktrace()));
@@ -464,6 +468,8 @@ class Wikia {
 	 * @author Piotr Molski <moli@wikia-inc.com>
 	 *
 	 * @param String $method - use __METHOD__ as default
+	 *
+	 * @deprecated use WikiaLogger instead
 	 */
 	static public function debugBacktrace($method) {
 		$backtrace = wfDebugBacktrace();
@@ -823,12 +829,6 @@ class Wikia {
 	static public function setupAfterCache() {
 		global $wgTTCache;
 		$wgTTCache = wfGetSolidCacheStorage();
-
-		# setup externalAuth
-		global $wgExternalAuthType, $wgAutocreatePolicy;
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			$wgAutocreatePolicy = 'view';
-		}
 		return true;
 	}
 
@@ -1149,11 +1149,7 @@ class Wikia {
 	 * hooked up to AddNewAccount
 	 */
 	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgStatsDBEnabled, $wgExternalDatawareDB;
-
-		if ( empty( $wgStatsDBEnabled ) ) {
-			return true;
-		}
+		global $wgExternalDatawareDB;
 
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
 			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
@@ -2314,5 +2310,20 @@ class Wikia {
 		}
 
 		return $countryNames;
+	}
+
+	/**
+	 * Get an environment name that should be enough to separate cache containing URLs
+	 *
+	 * @return string
+	 */
+	static public function getEnvironmentName() {
+		global $wgWikiaEnvironment;
+
+		if ( in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY ] ) ) {
+			return $wgWikiaEnvironment;
+		} else {
+			return wfHostname();
+		}
 	}
 }

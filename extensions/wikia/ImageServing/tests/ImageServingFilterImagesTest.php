@@ -2,6 +2,7 @@
 
 /**
  * Test ImageServingDriverMainNS::filterImages
+ * @group MediaFeatures
  */
 
 // proxy class to allow unit testing of ImageServingDriverMainNS class
@@ -17,12 +18,12 @@ class ImageServingDriverMainNSProxy extends ImageServingDriverMainNS {
 		return $res;
 	}
 
-	public function filterImages( $imagesList = []) {
-		parent::filterImages( $imagesList );
+	public function loadImageDetails( $imageNames = []) {
+		parent::loadImageDetails( $imageNames );
 	}
 
 	public function getFilteredOut() {
-		return $this->filterdOut;
+		return $this->filteredImages;
 	}
 
 }
@@ -56,7 +57,7 @@ class ImageServingFilterImagesTest extends WikiaBaseTest {
 
 		// run ImageServing
 		$driver = new ImageServingDriverMainNSProxy($db, $this->im, null);
-		$driver->filterImages([self::FAKE_NAME => []]);
+		$driver->loadImageDetails([self::FAKE_NAME]);
 
 		// filter images out
 		$list = $driver->getFilteredOut();

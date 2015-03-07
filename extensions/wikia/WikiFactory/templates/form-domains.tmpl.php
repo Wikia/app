@@ -43,7 +43,9 @@
 				<?php
 					endforeach;
 				?>
-				</select>
+				</select><br />
+				<label for="wk-status-reason"><?= wfMessage( 'wikifactory-label-reason' )->parse(); ?></label>
+				<input type="text" id="wk-status-reason" name="wpReason" value="" size="24" /><br />
 				<input type="submit" name="wk-status-submit" value="Confirm change" />
 			</form>
 		</li>
@@ -51,7 +53,9 @@
 			<form action="<?php echo $title->getFullUrl() ?>" method="post">
 				<input type="hidden" name="wpAction" value="protect" />
 				<input type="checkbox" name="wpProtected" id="wp-protected" <?php echo $protected ? "checked" : "" ?> />
-				<label for="wp-protected">Protect Site (never delete)</label>
+				<label for="wp-protected">Protect Site (never delete)</label><br />
+				<label for="wk-protect-reason"><?= wfMessage( 'wikifactory-label-reason' )->parse(); ?></label>
+				<input type="text" id="wk-protect-reason" name="wpReason" value="" size="24" /><br />
 				<input type="submit" name="wk-protect-submit" value="Confirm change" />
 			</form>
 		</li>
@@ -75,7 +79,10 @@
 					<?php endforeach ?>
 				</ol>
 				<div>
-					<input type="text" size="24" maxlength="255" id="wk-domain-add" name="wk-domain-add" />
+					<label for="wk-domain-add"><?= wfMessage( 'wikifactory-label-domain' )->parse(); ?></label>
+					<input type="text" size="24" maxlength="255" id="wk-domain-add" name="wk-domain-add" /><br />
+					<label for="wk-domain-reason"><?= wfMessage( 'wikifactory-label-reason' )->parse(); ?></label>
+					<input type="text" id="wk-domain-reason" name="wk-domain-reason" value="" size="24" /><br />
 					<input type="button" id="wk-domain-add-submit" value="Add new domain" />
 				</div>
 			</li>

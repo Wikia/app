@@ -26,15 +26,20 @@ class MonetizationModuleController extends WikiaController {
 			's_id' => $this->wg->CityId,
 			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
 			'vertical' => $helper->getWikiVertical(),
+			'cache' => $helper->getCacheVersion(),
 		];
 
 		$mcachePurge = $this->wg->request->getVal( 'mcache', false );
-
 		if ( $mcachePurge ) {
 			$params['mcache'] = $mcachePurge;
 		}
 
 		$this->data = $helper->getMonetizationUnits( $params );
+
+		// check if the article page is blocked
+		if ( !empty( $this->data['blocked_pages'] ) && in_array( $this->wg->title->getArticleID(), $this->data['blocked_pages'] ) ) {
+			$this->data = '';
+		}
 
 		wfProfileOut( __METHOD__ );
 	}

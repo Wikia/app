@@ -23,7 +23,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AutomaticWikiAdoption',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description' => 'TODO',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutomaticWikiAdoption',
 	'description-msg' => 'wikiadoption-desc',
 );
 

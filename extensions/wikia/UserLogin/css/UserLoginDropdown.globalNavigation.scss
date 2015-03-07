@@ -4,7 +4,8 @@
 @import 'skins/shared/mixins/placeholder';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/GlobalNavigation/css/GlobalNavigationColors';
+@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationColors';
+@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables';
 
 .AccountNavigation.active .UserLoginDropdown {
 	display: block;
@@ -12,15 +13,18 @@
 
 .UserLoginDropdown {
 	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
-	background-color: $nav-background-color;
+	background-color: $global-wikia-background-color;
 	border: 1px solid $nav-border-color;
 	color: $nav-foreground-alternative-color;
 	display: none;
 	font-size: 12px;
 	list-style: none;
-	padding: 0;
-	position: relative;
-	right: $large-grid-column + $large-grid-gutter + $large-grid-column-padding + 1;
+	padding: 0 0 $large-content-padding 0;
+	position: absolute;
+	right: 0;
+	//box shadow below global navigation takes 2px and it should be covered by dropdown
+	top: 96%;
+	white-space: normal;
 	z-index: 5000100;
 
 	.ajaxRegisterContainer {
@@ -32,7 +36,7 @@
 
 		.ajaxRegister {
 			background-color: $nav-foreground-bright-color;
-			color: $nav-background-color;
+			color: $global-wikia-background-color;
 			display: table-cell;
 			font-weight: bold;
 			height: 40px;
@@ -66,7 +70,7 @@
 			@include box-sizing;
 			line-height: inherit;
 			margin: 0;
-			padding: 0px;
+			padding: 0;
 			width: 100%;
 
 			&.login-button {
@@ -125,11 +129,10 @@
 		}
 
 		input[type=submit] {
-			@include clear-linear-gradient;
-			background-color: $nav-foreground-dark-color;
+			@include clear-linear-gradient($nav-foreground-dark-color);
 			border: 0;
 			border-radius: 0;
-			color: $nav-background-color;
+			color: $global-wikia-background-color;
 			font-weight: bold;
 			line-height: 16px;
 			min-height: 40px;
@@ -158,7 +161,7 @@
 	}
 
 	.sso-login {
-		padding: 0 $large-content-padding $large-content-padding;
+		padding: 0 $large-content-padding;
 
 		.sso-login-divider {
 			border-top: solid 1px $nav-border-color;
@@ -167,7 +170,7 @@
 			text-align: center;
 
 			span {
-				background-color: $nav-background-color;
+				background-color: $global-wikia-background-color;
 				color: $nav-border-color;
 				display: inline-block;
 				font-weight: bold;
@@ -181,7 +184,7 @@
 		.wikia-button-facebook {
 			border: 0;
 			border-radius: 0;
-			color: $nav-background-color;
+			color: $global-wikia-background-color;
 			display: block;
 			font-weight: bold;
 			height: 40px;
@@ -192,8 +195,7 @@
 			text-transform: uppercase;
 
 			&, &:hover, &:active {
-				@include clear-linear-gradient;
-				background-color: $facebook-background-color;
+				@include clear-linear-gradient($facebook-background-color);
 				text-decoration: none;
 			}
 
@@ -203,7 +205,7 @@
 		}
 
 		.sprite.facebook {
-			background-image: url('/extensions/wikia/UserLogin/images/facebook_icon.png'); /* base64 */
+			background-image: url('/extensions/wikia/UserLogin/images/facebook_icon.png'); /* inline */
 			background-position: 15px bottom;
 			background-repeat: no-repeat;
 			border-right: 1px solid $facebook-button-divider-color;
@@ -218,10 +220,9 @@
 @media #{$small-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('small', 3, - $small-grid-column-padding + $small-content-padding);
-		right: 2 * $small-grid-column + 1;
 
 		.sso-login {
-			padding: 0 $small-content-padding $small-content-padding;
+			padding: 0 $small-content-padding;
 		}
 
 		.ajaxRegisterContainer {
@@ -237,10 +238,9 @@
 @media #{$medium-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('medium', 2, $medium-grid-column-padding + $medium-grid-gutter + $medium-content-padding);
-		right: $medium-grid-column + $medium-grid-gutter + $medium-grid-column-padding + 1;
 
 		.sso-login {
-			padding: 0 $medium-content-padding $medium-content-padding;
+			padding: 0 $medium-content-padding;
 		}
 
 		.ajaxRegisterContainer {

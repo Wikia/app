@@ -1,6 +1,7 @@
 var $window = $(window);
 var WallNotifications = $.createClass(Object, {
 	constructor: function() {
+		this.bucky = window.Bucky('WallNotifications');
 		this.isMonobook = false;
 		this.updateInProgress = false; // we only want 1 update simultaneously
 		this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
@@ -82,7 +83,9 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	updateCounts: function() {
-		var callback = this.proxy(function(data) {
+		this.bucky.timer.start('updateCounts');
+		var data,
+			callback = this.proxy(function(data) {
 
 			if (data.status != true || data.html == '') {
 				return;
@@ -108,21 +111,27 @@ var WallNotifications = $.createClass(Object, {
 			setTimeout( this.proxy(function() {
 				this.updateInProgress = false;
 			}), 10000 );
+
+			this.bucky.timer.stop('updateCounts');
 		});
 
 		if ( this.updateInProgress == false ) {
 			this.updateInProgress = true;
 
+			data = this.getUrlParams();
+
 			$.nirvana.sendRequest({
 				controller: 'WallNotificationsExternalController',
 				method: 'getUpdateCounts',
 				format: 'json',
+				data: data,
 				callback: callback
 			});
 		}
 	},
 
 	fetchForCurrentWiki: function() {
+		this.bucky.timer.start('fetchForCurrentWiki');
 		if ( this.fetchedCurrent == false ) {
 			var wikiEl = ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotifications ).find('.notifications-for-wiki').first(),
 				firstWikiId = wikiEl.attr('data-wiki-id');
@@ -133,6 +142,7 @@ var WallNotifications = $.createClass(Object, {
 				this.currentWikiId = firstWikiId;
 				this.wikiShown[ firstWikiId ] = true;
 				this.updateWiki( firstWikiId );
+				this.bucky.timer.stop('fetchForCurrentWiki');
 			}
 		}
 	},
@@ -164,6 +174,7 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	markAllAsReadRequest: function(forceAll) {
+		this.bucky.timer.start('markAllAsReadRequest');
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'markAllAsRead',
@@ -187,12 +198,13 @@ var WallNotifications = $.createClass(Object, {
 				//	= tray is hidden (because there are no other wikis with notifications)
 				//  = no ability to show notifications, no tray)
 				this.showFirst();
+
+				this.bucky.timer.stop('markAllAsReadRequest');
 			})
 		});
 	},
 
 	markAllAsReadPrompt: function(e) {
-		e.preventDefault();
 		$('#wall-notifications-markasread-sub-opts').show();
 		$('#wall-notifications-dropdown').show();
 		var $markAsRead = $('#wall-notifications-markasread');
@@ -204,13 +216,11 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	markAllAsRead: function(e) {
-		e.preventDefault();
 		this.markAllAsReadRequest( false );
 		return false;
 	},
 
 	markAllAsReadAllWikis: function(e) {
-		e.preventDefault();
 		this.markAllAsReadRequest( 'FORCE' );
 		return false;
 	},
@@ -249,7 +259,6 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	wikiClick: function(e) {
-		e.preventDefault();
 		var wikiEl = $(e.target).closest('.notifications-for-wiki');
 		if(wikiEl.hasClass('show') ) {
 			wikiEl.removeClass('show');
@@ -287,15 +296,19 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	updateWikiFetch: function(wikiId) {
-		var isCrossWiki = (wikiId == wgCityId) ? '0' : '1';
-		$.nirvana.sendRequest({
-			controller: 'WallNotificationsExternalController',
-			method: 'getUpdateWiki',
-			data: {
+		var isCrossWiki = (wikiId == wgCityId) ? '0' : '1',
+			data = {
 				username: wgTitle,
 				wikiId: wikiId,
 				isCrossWiki: isCrossWiki
-			},
+			};
+
+		$.extend(data, this.getUrlParams(data));
+
+		$.nirvana.sendRequest({
+			controller: 'WallNotificationsExternalController',
+			method: 'getUpdateWiki',
+			data: data,
 			callback: this.proxy(function(data) {
 				if(data.status != true || data.html == '') return;
 				this.updateWikiHtml(wikiId, data);
@@ -364,6 +377,24 @@ var WallNotifications = $.createClass(Object, {
 
 	proxy: function( func ) {
 		return $.proxy( func, this );
+	},
+
+	getUrlParams: function() {
+		var data = {},
+			qs = Wikia.Querystring(),
+			lang, skin;
+
+		skin = qs.getVal( 'useskin' );
+		if( skin ) {
+			data.useskin = skin;
+		}
+
+		lang = qs.getVal( 'uselang' );
+		if( lang ) {
+			data.uselang = lang;
+		}
+
+		return data;
 	}
 });
 

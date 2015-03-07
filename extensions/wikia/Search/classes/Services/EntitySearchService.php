@@ -14,7 +14,7 @@ class EntitySearchService {
 	/** @var \Solarium_Client client */
 	protected $client;
 	protected $categories;
-	protected $filters = [];
+	protected $filters = [ ];
 	protected $hosts;
 	protected $hubs;
 	protected $ids;
@@ -25,6 +25,18 @@ class EntitySearchService {
 	protected $sorts;
 	protected $urls;
 	protected $wikiId;
+
+	/**
+	 * @var BlacklistFilter
+	 */
+	private $blacklist;
+
+	public function getBlacklist() {
+		if ( empty( $this->blacklist ) ) {
+			$this->blacklist = new BlacklistFilter( $this->getCore() );
+		}
+		return $this->blacklist;
+	}
 
 	/**
 	 * @param mixed $filters
@@ -74,6 +86,7 @@ class EntitySearchService {
 	public function getSorts() {
 		return $this->sorts;
 	}
+
 	/**
 	 * @param mixed $host
 	 */
@@ -101,6 +114,7 @@ class EntitySearchService {
 	public function getCategories() {
 		return $this->categories;
 	}
+
 	/**
 	 * @param mixed $ids
 	 */
@@ -115,15 +129,17 @@ class EntitySearchService {
 	public function getIds() {
 		return $this->ids;
 	}
-	
+
 	public function __construct( $client = null ) {
 		$config = $this->getConfig();
 		$core = $this->getCore();
+		$this->blacklist = new BlacklistFilter( $core );
 		if ( $core ) {
-			$config[ 'adapteroptions' ][ 'core' ] = $core;
+			$config['adapteroptions']['core'] = $core;
 		}
 		$this->client = ( $client !== null ) ? $client : new \Solarium_Client( $config );
 	}
+
 
 	public function query( $phrase ) {
 		$select = $this->prepareQuery( $phrase );
@@ -197,7 +213,7 @@ class EntitySearchService {
 	}
 
 	protected function getCore() {
-		return false; //defaults to main
+		return SearchCores::CORE_MAIN; //defaults to main
 	}
 
 	protected function getSelect() {
@@ -217,7 +233,7 @@ class EntitySearchService {
 		return $field . '_' . $lang;
 	}
 
-	public function replaceHostUrl( $url ) { 
+	public function replaceHostUrl( $url ) {
 		global $wgStagingEnvironment, $wgDevelEnvironment;
 		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
 			return preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $url );
@@ -226,6 +242,6 @@ class EntitySearchService {
 	}
 
 	protected function replaceHost( $details ) {
-		return $details[ 1 ] . WikiFactory::getCurrentStagingHost( $details[ 4 ], $details[ 3 ] );
+		return $details[1] . WikiFactory::getCurrentStagingHost( $details[4], $details[3] );
 	}
 }

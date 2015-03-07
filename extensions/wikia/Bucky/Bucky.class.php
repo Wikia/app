@@ -2,16 +2,22 @@
 
 /**
  * Hook handlers for loading the required scripts and bootstrapping Bucky RUM reporting.
- * Currently works only on Oasis.
  */
 class Bucky {
 
 	const DEFAULT_SAMPLING = 1; // percentage
 	const BASE_URL = '//speed.wikia.net/__rum';
 
-	static public function onWikiaSkinTopScripts( array &$vars, &$scripts ) {
+	/**
+	 * Adds wgWeppyConfig global JS variable
+	 *
+	 * @param array $vars
+	 * @param OutputPage $out
+	 * @return bool true - it's a hook
+	 */
+	static public function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		$app = F::app();
-		if ( $app->checkSkin( 'oasis' ) ) {
+		if ( $app->checkSkin( $app->wg->BuckyEnabledSkins ) ) {
 			// todo: find better place for it
 			$wgBuckySampling = $app->wg->BuckySampling;
 			$url = self::BASE_URL; // "/v1/send" is automatically appended
@@ -22,19 +28,11 @@ class Bucky {
 				'host' => $url,
 				'sample' => $sample,
 				'aggregationInterval' => 1000,
-				'protocol' => 2,
 			);
 
-			$vars['wgBuckyConfig'] = $config;
+			$vars['wgWeppyConfig'] = $config;
 		}
 
 		return true;
 	}
-
-	static public function onOasisSkinAssetGroups( &$assetGroups ) {
-		$assetGroups[] = 'bucky_js';
-
-		return true;
-	}
-
 }

@@ -526,6 +526,7 @@ class WikiFactoryPage extends SpecialPage {
 	private function doUpdateDomains( &$request ) {
 		$action = $request->getText( "wpAction", null );
 		$reason = $request->getText( "wpReason", wfMsg( 'wikifactory-public-status-change-default-reason' ) );
+
 		$message = "";
 		switch( $action ) {
 			case "status":
@@ -538,10 +539,10 @@ class WikiFactoryPage extends SpecialPage {
 				$protect = $request->getCheck( "wpProtected", false);
 				if ($protect) {
 					$message = "Wiki protected";
-					WikiFactory::setFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED );
+					WikiFactory::setFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED, false, $reason );
 				} else {
 					$message = "Wiki un-protected";
-					WikiFactory::resetFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED );
+					WikiFactory::resetFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED, false, $reason );
 				}
 			break;
 		}

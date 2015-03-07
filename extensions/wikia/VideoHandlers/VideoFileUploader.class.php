@@ -79,30 +79,20 @@ class VideoFileUploader {
 	 *
 	 * @param $oTitle - A title object that will be set if this call is successful
 	 * @return FileRepoStatus|Status - A status object representing the result of this call
+	 * @throws Exception
 	 */
 	public function upload( &$oTitle ) {
-
-		wfProfileIn(__METHOD__);
-
 		// Some providers will sometimes return error codes when attempting
-		// to fetch a thumbnnail
+		// to fetch a thumbnail
 		try {
 			$upload = $this->uploadBestThumbnail( $this->getApiWrapper()->getThumbnailUrl() );
 		} catch ( Exception $e ) {
-			Wikia::Log(__METHOD__, false, $e->getMessage());
+			Wikia::Log( __METHOD__, false, $e->getMessage() );
 
-			wfProfileOut(__METHOD__);
 			return Status::newFatal( $e->getMessage() );
 		}
 
-		/* create a reference to article that will contain uploaded file */
-		$titleText =  $this->getDestinationTitle();
-		if ( !($this->getApiWrapper()->isIngestion() ) ) {
-			// only sanitize name for external uploads
-			// video ingestion handles sanitization by itself
-			$titleText = self::sanitizeTitle( $titleText );
-		}
-		$oTitle = Title::newFromText( $titleText, NS_FILE );
+		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
 		// Check if the user has the proper permissions
 		// Mimicks Special:Upload's behavior
@@ -119,7 +109,6 @@ class VideoFileUploader {
 			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
 			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
 			$msgKey = array_shift( $permErrors[0] );
-			wfProfileOut( __METHOD__ );
 			throw new Exception( wfMessage( $msgKey, $permErrors[0] )->parse()  );
 		}
 
@@ -149,22 +138,63 @@ class VideoFileUploader {
 
 		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
 		if ( $this->getApiWrapper()->isIngestion() ) {
-			$meta = $this->getApiWrapper()->getMetadata();
-			$file->forceMetadata( serialize($meta) );
+			$file->forceMetadata( serialize( $this->getNormalizedMetadata() ) );
 		}
 
+		$file->getMetadata();
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
 			wfMessage( 'videos-initial-upload-edit-summary' )->inContentLanguage()->text(),
-			$this->getDescription(),
+			\UtfNormal::toNFC( $this->getDescription() ),
 			File::DELETE_SOURCE
 		);
 
 		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
 
-		wfProfileOut(__METHOD__);
 		return $result;
+	}
+
+	/**
+	 * Get the normalized composed version of ApiWrapper metadata
+	 *
+	 * @return string
+	 */
+	public function getNormalizedMetadata() {
+		$metadata = $this->getApiWrapper()->getMetadata();
+
+		// Flatten metadata, normalize it, and restore in original structure
+		$metadata = json_encode( $metadata );
+		$metadata = \UtfNormal::toNFC( $metadata );
+
+		return json_decode( $metadata, true );
+	}
+
+	/**
+	 * Get the normalized composed version of the title
+	 *
+	 * @return string
+	 */
+	public function getNormalizedDestinationTitle() {
+		return \UtfNormal::toNFC( $this->getSanitizedTitleText() );
+	}
+
+	/**
+	 * Get the sanitized title caption
+	 *
+	 * @return string
+	 */
+	public function getSanitizedTitleText() {
+		$isIngestion = $this->getApiWrapper()->isIngestion();
+		// Create a reference to article that will contain uploaded file
+		$titleText = $this->getDestinationTitle();
+		if ( !$isIngestion ) {
+			// only sanitize name for external uploads
+			// video ingestion handles sanitization by itself
+			$titleText = self::sanitizeTitle( $titleText );
+		}
+
+		return $titleText;
 	}
 
 	/**
@@ -236,6 +266,7 @@ class VideoFileUploader {
 			$delay = UpdateThumbnailTask::getDelay( $provider, $delayIndex );
 			$task = ( new UpdateThumbnailTask() )->wikiId( F::app()->wg->CityId );
 			$task->delay( $delay );
+			$task->dupCheck();
 			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider, $this->sVideoId );
 			$task->queue();
 		}

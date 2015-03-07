@@ -6,7 +6,7 @@ CMD_PHPUNIT=php run-test.php \
 	--configuration=phpunit.xml
 
 # command to run karma
-CMD_KARMA=karma start \
+CMD_KARMA=../node_modules/karma/bin/karma start \
 	--single-run \
 	--no-auto-watch \
 	--reporters progress,junit,coverage
@@ -51,6 +51,11 @@ phpunit-slow-list: prepare
 	${CMD_PHPUNIT} \
 		--exclude-group=Infrastructure,Integration,Broken,Stub,Monitoring,Hack \
 		--slow-list
+
+# run tests for a specific group
+phpunit-group: prepare
+	${CMD_PHPUNIT} \
+                --group $(GROUP)
 
 #
 # JavaScript TESTS

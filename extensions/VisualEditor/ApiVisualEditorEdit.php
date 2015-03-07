@@ -30,12 +30,8 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		// FIXME add some way that the user's preferences can be respected
 		$apiParams['watchlist'] = $params['watch'] ? 'watch' : 'unwatch';
 
-		if ( $params['captchaid'] ) {
-			$apiParams['captchaid'] = $params['captchaid'];
-		}
-
-		if ( $params['captchaword'] ) {
-			$apiParams['captchaword'] = $params['captchaword'];
+		if ( $params['g-recaptcha-response'] ) {
+			$apiParams['g-recaptcha-response'] = $params['g-recaptcha-response'];
 		}
 
 		$api = new ApiMain(
@@ -112,7 +108,7 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 
 			// Return result of parseWikitext instead of saveWikitext so that the
 			// frontend can update the page rendering without a refresh.
-			$result = $this->parseWikitext( $page );
+			$result = $this->parseWikitext( $page, $params['useskin'] );
 			if ( $result === false ) {
 				$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
 			}
@@ -147,8 +143,6 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			'watch' => null,
 			'html' => null,
 			'summary' => null,
-			'captchaid' => null,
-			'captchaword' => null,
 			'cachekey' => null,
 		);
 	}
@@ -183,8 +177,6 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 			'token' => 'Edit token',
 			'needcheck' => 'When saving, set this parameter if the revision might have roundtrip'
 				. ' problems. This will result in the edit being tagged.',
-			'captchaid' => 'Captcha ID (when saving with a captcha response).',
-			'captchaword' => 'Answer to the captcha (when saving with a captcha response).',
 			'cachekey' => 'Use the result of a previous serializeforcache request with this key.'
 				. 'Overrides html.',
 		);

@@ -8,6 +8,7 @@ use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\QueryService\DependencyContainer;
 use Wikia\Util\GlobalStateWrapper;
+use Wikia\Logger\WikiaLogger;
 
 class ArticlesApiController extends WikiaApiController {
 
@@ -19,7 +20,6 @@ class ArticlesApiController extends WikiaApiController {
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
-	const TOP_WIKIS_FOR_HUB = 10;
 	const LANGUAGES_LIMIT = 10;
 	const MAX_NEW_ARTICLES_LIMIT = 100;
 	const DEFAULT_NEW_ARTICLES_LIMIT = 20;
@@ -68,12 +68,20 @@ class ArticlesApiController extends WikiaApiController {
 		'height'
 	];
 
+	/**
+	 * @var CrossOriginResourceSharingHeaderHelper
+	 */
+	protected $cors;
+
 	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
 
 	private $excludeNamespacesFromCategoryMembersDBQuery = false;
 
 	public function __construct(){
 		parent::__construct();
+		$this->cors = new CrossOriginResourceSharingHeaderHelper();
+		$this->cors->readConfig();
+
 		$this->setOutputFieldTypes(
 			[
 				"width" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
@@ -88,6 +96,7 @@ class ArticlesApiController extends WikiaApiController {
 			$app->wg->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )) {
 			return PalantirApiController::METADATA_CACHE_EXPIRATION;
 		}
+
 		return self::CLIENT_CACHE_VALIDITY;
 	}
 
@@ -108,6 +117,7 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	public function getTop() {
 		wfProfileIn( __METHOD__ );
+		$this->cors->setHeaders($this->response);
 
 		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
@@ -150,20 +160,6 @@ class ArticlesApiController extends WikiaApiController {
 			false,
 			self::MAX_ITEMS + 1 //compensation for Main Page
 		);
-
-		if ( empty( $articles ) ) {
-			$fallbackDate = DataMartService::findLastRollupsDate( DataMartService::PERIOD_ID_WEEKLY );
-			if ( $fallbackDate ) {
-				$articles = DataMartService::getTopArticlesByPageview(
-					$this->wg->CityId,
-					$ids,
-					$namespaces,
-					false,
-					self::MAX_ITEMS + 1, //compensation for Main Page
-					$fallbackDate
-				);
-			}
-		}
 
 		$collection = [];
 
@@ -322,70 +318,11 @@ class ArticlesApiController extends WikiaApiController {
 				throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 			}
 
-			//fetch the top 10 wikis on a weekly pageviews basis
-			//this has it's own cache
-			$wikis = DataMartService::getTopWikisByPageviews(
-				DataMartService::PERIOD_ID_WEEKLY,
-				self::TOP_WIKIS_FOR_HUB,
-				$langs,
-				$hub,
-				1 /* only pubic */
-			);
+			$res = DataMartService::getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces );
 
-			$wikisCount = count( $wikis );
-
-			if ( $wikisCount < 1 ) {
-				wfProfileOut( __METHOD__ );
-				throw new NotFoundApiException();
-			}
-
-			$found = 0;
-			$articlesPerWiki = ceil( self::MAX_ITEMS / $wikisCount );
-			$res = array();
-
-			//fetch $articlesPerWiki articles from each wiki
-			//see FB#73094 for performance review
-			foreach ( $wikis as $wikiId => $data ) {
-				//this has it's own cache
-				$articles = DataMartService::getTopArticlesByPageview(
-					$wikiId,
-					null,
-					$namespaces,
-					false,
-					$articlesPerWiki
-				);
-
-				if ( count( $articles ) == 0 ) {
-					continue;
-				}
-
-				$item = [
-					'wiki' => [
-						'id' => $wikiId,
-						//WF data has it's own cache
-						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
-						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
-						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
-					],
-					'articles' => []
-				];
-
-				foreach ( $articles as $articleId => $article ) {
-					$found++;
-					$item['articles'][] = [
-						'id' => $articleId,
-						'ns' => $article['namespace_id']
-					];
-				}
-
-				$res[] = $item;
-				$articles = null;
-			}
-
-			$wikis = null;
 			wfProfileOut( __METHOD__ );
 
-			if ( $found == 0 ) {
+			if ( empty( $res ) ) {
 				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
@@ -790,6 +727,14 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
 					$articles[] = $id;
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
+				} else {
+					$dataLog = [
+						'titleText' => $t->getText(),
+						'articleId' => $t->getArticleID(),
+						'revId' => $revId
+					];
+
+					WikiaLogger::instance()->info( 'No revision found for article', $dataLog );
 				}
 
 			}
@@ -989,6 +934,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	public function getAsSimpleJson() {
+		$this->cors->setHeaders($this->response);
 		$articleId = (int) $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
 		if( empty($articleId) ) {
 			throw new InvalidParameterApiException( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME );
@@ -1038,7 +984,12 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
-				$article = Article::newFromTitle( $article->getPage()->followRedirect(), RequestContext::getMain() );
+				// false, Title object of local target or string with URL
+				$followRedirect = $article->getPage()->followRedirect();
+
+				if ( $followRedirect && !is_string( $followRedirect ) ) {
+					$article = Article::newFromTitle( $followRedirect, RequestContext::getMain() );
+				}
 			}
 
 			//Response is based on wikiamobile skin as this already removes inline style
@@ -1052,7 +1003,11 @@ class ArticlesApiController extends WikiaApiController {
 
 			$parsedArticle = $article->getParserOutput();
 
-			$articleContent = json_decode( $parsedArticle->getText() );
+			if ( $parsedArticle instanceof ParserOutput ) {
+				$articleContent = json_decode( $parsedArticle->getText() );
+			} else {
+				throw new ArticleAsJsonParserException( 'Parser is currently not available' );
+			}
 
 			$wgArticleAsJson = false;
 			$categories = [];
@@ -1061,8 +1016,8 @@ class ArticlesApiController extends WikiaApiController {
 				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
 
 				$categories[] = [
-					"title" => $categoryTitle->getText(),
-					"url" => $categoryTitle->getLocalURL()
+					'title' => $categoryTitle->getText(),
+					'url' => $categoryTitle->getLocalURL()
 				];
 			}
 
@@ -1071,6 +1026,7 @@ class ArticlesApiController extends WikiaApiController {
 				'media' => $articleContent->media,
 				'users' => $articleContent->users,
 				'categories' => $categories,
+				'description' => $this->getArticleDescription( $article )
 			];
 
 			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
@@ -1119,7 +1075,6 @@ class ArticlesApiController extends WikiaApiController {
 		);
 
 	}
-
 
 	protected function expandArticlesDetails( $articles ) {
 		$articleIds = [ ];
@@ -1397,5 +1352,35 @@ class ArticlesApiController extends WikiaApiController {
 			$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
 			throw new BadRequestApiException( $message );
 		}
+	}
+
+	/**
+	 * Returns description for the article's meta tag.
+	 *
+	 * This is mostly copied from the ArticleMetaDescription extension.
+	 *
+	 * @param Article $article
+	 * @param int $descLength
+	 * @return string
+	 * @throws WikiaException
+	 */
+	protected function getArticleDescription( Article $article, $descLength = 100 ) {
+		$title = $article->getTitle();
+		$sMessage = null;
+
+		if ( $title->isMainPage() ) {
+			// we're on Main Page, check MediaWiki:Description message
+			$sMessage = wfMessage( 'Description' )->text();
+		}
+
+		if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
+			$articleService = new ArticleService( $article );
+			$description = $articleService->getTextSnippet( $descLength );
+		} else {
+			// MediaWiki:Description message found, use it
+			$description = $sMessage;
+		}
+
+		return $description;
 	}
 }

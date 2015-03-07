@@ -6,6 +6,7 @@
  * retriving thumbnails of those images which are scaled either by an aspect-ratio
  * or specific dimensions.
  */
+
 class ImageServing {
 	private $articles = array();
 	private $width;
@@ -59,7 +60,7 @@ class ImageServing {
 		$this->app = F::app();
 		$this->width = $width;
 		$this->memc =  $this->app->wg->Memc;
-		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
+		$this->imageServingDrivers = $this->app->wg->ImageServingDrivers;
 
 		$this->db = $db;
 	}
@@ -90,7 +91,7 @@ class ImageServing {
 	 *
 	 * @return mixed array of images for each requested article
 	 */
-	public function getImages( $limit = 5, $driver = null) {
+	public function getImages( $limit = 5, $driverName = null) {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
@@ -147,12 +148,12 @@ class ImageServing {
 
 			wfProfileOut( __METHOD__  . '::fetchMetadata');
 
-			if(empty($driver)) {
+			if(empty($driverName)) {
 				foreach($this->imageServingDrivers as $key => $value ) {
 					if(!empty($this->articlesByNS[$key])) {
 						/* @var ImageServingDriverBase $driver */
 						$driver = new $value($db, $this, $this->proportionString);
-						$driver->setArticlesList($this->articlesByNS[$key]);
+						$driver->setArticles($this->articlesByNS[$key]);
 						unset($this->articlesByNS[$key]);
 						$out = $out + $driver->execute($limit);
 					}
@@ -160,12 +161,12 @@ class ImageServing {
 
 				$driver = new ImageServingDriverMainNS($db, $this, $this->proportionString);
 			} else {
-				$driver = new $driver($db, $this, $this->proportionString);
+				$driver = new $driverName($db, $this, $this->proportionString);
 			}
 
 			//rest of article in MAIN name spaces
 			foreach( $this->articlesByNS as $value ) {
-				$driver->setArticlesList( $value );
+				$driver->setArticles( $value );
 				$out = $out + $driver->execute();
 			}
 
@@ -273,6 +274,8 @@ class ImageServing {
 	 * @return  string url for image
 	 */
 	public function getUrl( $name, $width = 1, $height = 1 ) {
+		global $wgEnableVignette;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( $name instanceof File || $name instanceof GlobalFile ) {
@@ -287,6 +290,46 @@ class ImageServing {
 			}
 		}
 
+		if (WikiaFileHelper::isVideoFile($img)) {
+			$H = ( float )( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
+			$this->tmpDeltaY = 0.5 - $H / $height / 2;
+		}
+
+		if ($wgEnableVignette) {
+			$url = $this->getVignetteUrl($img, $width, $height);
+		} else {
+			$url = $this->getLegacyUrl($img, $width, $height);
+		}
+
+		return $url;
+	}
+
+	/**
+	 * @param File|GlobalFile $image
+	 * @param $width
+	 * @param $height
+	 * @return string
+	 */
+	private function getVignetteUrl(URLGeneratorInterface $image, $width, $height) {
+		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height);
+
+		return $image->getUrlGenerator()
+			->windowCrop()
+			->width($this->width)
+			->xOffset($left)
+			->yOffset($top)
+			->windowWidth($right - $left)
+			->windowHeight($bottom - $top)
+			->url();
+	}
+
+	/**
+	 * @param File $img
+	 * @param $width
+	 * @param $height
+	 * @return String
+	 */
+	private function getLegacyUrl($img, $width, $height) {
 		$issvg = false;
 		$mime = strtolower( $img->getMimeType() );
 		if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
@@ -297,9 +340,6 @@ class ImageServing {
 		if ( WikiaFileHelper::isVideoFile( $img ) ) {
 			// videos has different thumbnail markup
 			$sPrefix = 'v,000000,';
-			// they need to be literally centered
-			$H = ( float )( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
-			$this->tmpDeltaY = 0.5 - $H / $height / 2;
 		}
 
 		$url = wfReplaceImageServer( $img->getThumbUrl( $sPrefix . $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
@@ -314,13 +354,16 @@ class ImageServing {
 	 * @param $width int
 	 * @param $height int
 	 * @param $align string "center", "origin"
-	 *
+	 * @param $issvg bool
 	 *
 	 * @return string prefix for thumb image
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
-		wfProfileIn( __METHOD__ );
+		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height, $align, $issvg);
+		return "{$this->width}px-$left,$right,$top,$bottom";
+	}
 
+	private function getCutParams($width, $height, $align="center", $issvg=false) {
 		//rescale of png always use width 512;
 		if( $issvg ) {
 			$height = round( ( 512 * $height) / $width );
@@ -374,8 +417,7 @@ class ImageServing {
 			$right = $width;
 		}
 
-		wfProfileOut( __METHOD__ );
-		return "{$this->width}px-$left,$right,$top,$bottom";
+		return [$top, $right, $bottom, $left];
 	}
 
 	public function getDeltaY() {
@@ -393,7 +435,10 @@ class ImageServing {
 		if( is_array( $articleIds ) ) {
 			foreach ( $articleIds as $article ) {
 				$articleId = ( int ) $article;
-				$this->articles[ $articleId ] = $articleId;
+
+				if ($articleId > 0) {
+					$this->articles[$articleId] = $articleId;
+				}
 			}
 		}
 	}

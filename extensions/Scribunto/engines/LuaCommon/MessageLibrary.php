@@ -21,7 +21,11 @@ class Scribunto_LuaMessageLibrary extends Scribunto_LuaLibraryBase {
 	}
 
 	private function makeMessage( $data, $setParams ) {
-		$msg = Message::newFallbackSequence( $data['keys'] );
+		if ( isset( $data['rawMessage'] ) ) {
+			$msg = new RawMessage( $data['rawMessage'] );
+		} else {
+			$msg = Message::newFallbackSequence( $data['keys'] );
+		}
 		$msg->inLanguage( $data['lang'] )
 			->useDatabase( $data['useDB'] );
 		if ( $setParams ) {

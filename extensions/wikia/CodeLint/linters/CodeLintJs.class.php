@@ -25,7 +25,6 @@ class CodeLintJs extends CodeLint {
 		$this->knownGlobals = array(
 			'$',
 			'$G',
-			'AjaxLogin',
 			'CKEDITOR',
 			'define',
 			'FB',

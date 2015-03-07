@@ -26,7 +26,7 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 		//should be added unprocessed as per Cardinal Path's request
 		//but screw it, that's an additional single request that adds overhead
 		//and the main experiment is done on Oasis :P
-		$jsStaticPackages[] = 'analytics_gas_js';
+		array_unshift( $jsStaticPackages, 'analytics_gas_js' );
 		return true;
 	}
 

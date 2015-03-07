@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Class ImageServingUnitTest
+ *
+ * @group MediaFeatures
+ */
 class ImageServingUnitTest extends WikiaBaseTest {
 
 	public function setUp() {
@@ -37,6 +43,13 @@ class ImageServingUnitTest extends WikiaBaseTest {
 		$articles = array( 1234 );
 		$is->setArticleIds( $articles );
 		$this->assertTrue( $is->hasArticleIds( $articles ) );
+	}
+
+	function testHasEmptyArticleIds() {
+		$is = new ImageServing(null, 200, 100);
+		$articles = array( null );
+		$is->setArticleIds( $articles );
+		$this->assertFalse( $is->hasArticleIds( [ 0 ] ) );
 	}
 
 	function testHasArticleIdsDiff() {

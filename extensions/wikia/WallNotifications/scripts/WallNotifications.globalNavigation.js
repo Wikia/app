@@ -5,6 +5,7 @@ require(
 
 		var WallNotifications = {
 			init: function() {
+				this.bucky = window.Bucky('WallNotifications');
 				this.updateInProgress = false; // we only want 1 update simultaneously
 				this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
 				this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
@@ -19,13 +20,15 @@ require(
 				this.$notificationsCount = $('.notifications-count');
 
 				this.$notifications = $('#notifications');
+				this.$notificationsEntryPoint = $('#notificationsEntryPoint');
 				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
 				this.$notificationsContainer = $('#notificationsContainer');
 				this.$notificationsMessages = $('> ul', this.$notificationsContainer);
 
 				this.globalNavigationHeight = $('#globalNavigation').outerHeight();
+				this.notificationsMarkAsReadHeight = 0;
 				this.notificationsHeaderHeight = 0;
-				this.notificationsBottomPadding = 15;
+				this.notificationsBottomPadding = 20;
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
@@ -34,19 +37,34 @@ require(
 					.mouseenter( this.proxy( this.fetchForCurrentWiki ) );
 
 				this.$wallNotifications.add( $('#pt-wall-notifications') )
-					.on('click', '#markasread-sub', this.proxy( this.markAllAsReadPrompt ))
-					.on('click', '#markasread-this-wiki', this.proxy( this.markAllAsRead ))
-					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
+					.on('click', '.notifications-markasread', this.proxy( this.markAllAsReadAllWikis ));
+
+				$(window).on('resize', $.throttle(50, function() {
+					WallNotifications.setNotificationsHeight();
+				}));
 			},
 
-			openNotifications: function(row) {
-				if ( row.getAttribute('id') === 'notifications' ) {
-					$('#GlobalNavigationWallNotifications').addClass('show');
+			openNotifications: function() {
+				if ( this.getAttribute('id') === 'notificationsEntryPoint' ) {
+					$(this).addClass('active');
+					WallNotifications.$wallNotifications.addClass('show');
+					WallNotifications.setNotificationsHeight();
 				}
+				$('#globalNavigation').trigger('notifications-menu-opened');
+				window.transparentOut.show();
 			},
 
-			closeNotifications: function() {
-				$('#GlobalNavigationWallNotifications').removeClass('show');
+			closeNotificationsDropdown: function() {
+				WallNotifications.$notificationsEntryPoint.removeClass('active');
+				window.transparentOut.hide();
+			},
+
+			toggleNotifications: function() {
+				if ( WallNotifications.$notificationsEntryPoint.hasClass('active') ) {
+					WallNotifications.closeNotificationsDropdown();
+				} else {
+					WallNotifications.openNotifications.apply(this);
+				}
 			},
 
 			checkIfFromMessageBubble: function() {
@@ -64,7 +82,9 @@ require(
 			},
 
 			updateCounts: function() {
-				var callback = this.proxy(function(data) {
+				this.bucky.timer.start('updateCounts');
+				var data,
+					callback = this.proxy(function(data) {
 					if (data.status !== true || data.html === '') {
 						return;
 					}
@@ -89,6 +109,8 @@ require(
 					setTimeout( this.proxy(function() {
 						this.updateInProgress = false;
 					}), 10000 );
+
+					this.bucky.timer.stop('updateCounts');
 				});
 
 
@@ -96,16 +118,20 @@ require(
 				if ( this.updateInProgress ===  false ) {
 					this.updateInProgress = true;
 
+					data = this.getUrlParams();
+
 					nirvana.sendRequest({
 						controller: 'WallNotificationsExternalController',
 						method: 'getUpdateCounts',
 						format: 'json',
+						data: data,
 						callback: callback
 					});
 				}
 			},
 
 			fetchForCurrentWiki: function() {
+				this.bucky.timer.start('fetchForCurrentWiki');
 				if ( this.fetchedCurrent === false ) {
 					var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
 						firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
@@ -116,6 +142,7 @@ require(
 						this.currentWikiId = firstWikiId;
 						this.wikiShown[ firstWikiId ] = true;
 						this.updateWiki( firstWikiId );
+						this.bucky.timer.stop('fetchForCurrentWiki');
 					}
 				}
 			},
@@ -130,6 +157,7 @@ require(
 			},
 
 			markAllAsReadRequest: function(forceAll) {
+				this.bucky.timer.start('markAllAsReadRequest');
 				nirvana.sendRequest({
 					controller: 'WallNotificationsExternalController',
 					method: 'markAllAsRead',
@@ -153,22 +181,13 @@ require(
 						//	= tray is hidden (because there are no other wikis with notifications)
 						//  = no ability to show notifications, no tray)
 						this.showFirst();
+
+						this.bucky.timer.stop('markAllAsReadRequest');
 					})
 				});
 			},
 
-			markAllAsReadPrompt: function(e) {
-				$(e.target).parent().addClass('show');
-			},
-
-			markAllAsRead: function(e) {
-				e.preventDefault();
-				this.markAllAsReadRequest( false );
-				return false;
-			},
-
 			markAllAsReadAllWikis: function(e) {
-				e.preventDefault();
 				this.markAllAsReadRequest( 'FORCE' );
 				return false;
 			},
@@ -193,6 +212,8 @@ require(
 
 				if (data.count > 0) {
 					this.$notificationsCount.html(data.count).parent('.bubbles').addClass('show');
+					this.fetchForCurrentWiki();
+					this.$wallNotifications.addClass('show');
 				} else {
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
@@ -203,7 +224,6 @@ require(
 			},
 
 			wikiClick: function(e) {
-				e.preventDefault();
 				var wikiEl = $(e.target).closest('.notifications-for-wiki'),
 					wikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
@@ -243,15 +263,19 @@ require(
 			},
 
 			updateWikiFetch: function(wikiId) {
-				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1';
-				nirvana.sendRequest({
-					controller: 'WallNotificationsExternalController',
-					method: 'getUpdateWiki',
-					data: {
+				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1',
+					data = {
 						username: window.wgTitle,
 						wikiId: wikiId,
 						isCrossWiki: isCrossWiki
-					},
+					};
+
+				$.extend(data, this.getUrlParams());
+
+				nirvana.sendRequest({
+					controller: 'WallNotificationsExternalController',
+					method: 'getUpdateWiki',
+					data: data,
 					callback: this.proxy(function(data) {
 						if(data.status !== true || data.html === '') { return; }
 						this.updateWikiHtml(wikiId, data);
@@ -303,13 +327,36 @@ require(
 				return $.proxy( func, this );
 			},
 
+			getUrlParams: function() {
+				var data = {},
+					qs = Wikia.Querystring(),
+					lang, skin;
+
+				skin = qs.getVal( 'useskin' );
+				if( skin ) {
+					data.useskin = skin;
+				}
+
+				lang = qs.getVal( 'uselang' );
+				if( lang ) {
+					data.uselang = lang;
+				}
+
+				return data;
+			},
+
 			setNotificationsHeight: function() {
 				var isDropdownOpen = this.$wallNotifications.hasClass('show'),
 					height = 0,
 					msgHeight = 0;
 
 				if ( isDropdownOpen ) {
-					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding;
+
+					if ( this.notificationsMarkAsReadHeight === 0 ) {
+						this.notificationsMarkAsReadHeight = $('.notifications-markasread').outerHeight();
+					}
+
+					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding - this.notificationsMarkAsReadHeight;
 					msgHeight = this.$notificationsMessages.height();
 
 					if ( !msgHeight ) {
@@ -330,23 +377,34 @@ require(
 						this.$notificationsContainer.css('height', 'auto').removeClass('scrollable');
 					}
 				}
+			},
+
+			closeDropdown: function() {
+				if (WallNotifications.$notificationsEntryPoint.hasClass('active')) {
+					WallNotifications.$notificationsEntryPoint.removeClass('active');
+				}
 			}
 		};
 
 		$(function () {
 			WallNotifications.init();
+			window.transparentOut.bindClick(WallNotifications.closeNotificationsDropdown);
 
-			window.menuAim(
-				document.querySelector('.user-menu'), {
-					activeRow: '#notifications',
-					rowSelector: '> li',
-					tolerance: 85,
-					submenuDirection: 'left',
-					activate: WallNotifications.openNotifications,
-					deactivate: WallNotifications.closeNotifications,
-					enter: WallNotifications.openNotifications,
-					exitMenu: WallNotifications.closeNotifications
-			});
+			if ( !Wikia.isTouchScreen() ) {
+				window.delayedHover(
+					document.getElementById('notificationsEntryPoint'),
+					{
+						checkInterval: 200,
+						maxActivationDistance: 20,
+						onActivate: WallNotifications.openNotifications,
+						onDeactivate: WallNotifications.closeDropdown,
+						activateOnClick: false
+					}
+				);
+			} else {
+				WallNotifications.$notificationsEntryPoint.on('click', WallNotifications.toggleNotifications);
+			}
+
 		});
 	}
 );

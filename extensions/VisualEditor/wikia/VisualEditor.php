@@ -65,6 +65,15 @@ $wgResourceModules += array(
 			'ext.visualEditor.viewPageTarget'
 		)
 	),
+	'ext.visualEditor.venusViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
+		'scripts' => array(
+			've/init/ve.init.mw.WikiaViewPageTarget.js',
+			've/init/ve.init.mw.VenusViewPageTarget.js'
+		),
+		'dependencies' => array(
+			'ext.visualEditor.viewPageTarget'
+		)
+	),
 	'ext.visualEditor.wikiaCore' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/ve.track.js',
@@ -79,7 +88,13 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaInlineVideoNode.js',
 			've/dm/ve.dm.WikiaCart.js',
 			've/dm/ve.dm.WikiaCartItem.js',
+			've/dm/ve.dm.WikiaImageCartItem.js',
+			've/dm/ve.dm.WikiaGalleryItemCaptionNode.js',
+			've/dm/ve.dm.WikiaGalleryItemNode.js',
+			've/dm/ve.dm.WikiaGalleryNode.js',
 			've/dm/ve.dm.WikiaMapNode.js',
+			've/dm/ve.dm.WikiaTemplateModel.js',
+			've/dm/ve.dm.WikiaTransclusionModel.js',
 
 			// ce
 			've/ce/ve.ce.WikiaMediaCaptionNode.js',
@@ -91,6 +106,9 @@ $wgResourceModules += array(
 			've/ce/ve.ce.WikiaBlockVideoNode.js',
 			've/ce/ve.ce.WikiaInlineVideoNode.js',
 			've/ce/ve.ce.WikiaMapNode.js',
+			've/ce/ve.ce.WikiaGalleryItemCaptionNode.js',
+			've/ce/ve.ce.WikiaGalleryItemNode.js',
+			've/ce/ve.ce.WikiaGalleryNode.js',
 
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
@@ -101,6 +119,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaReferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
+			've/ui/dialogs/ve.ui.WikiaSingleMediaDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
 			've/ui/dialogs/ve.ui.WikiaPreferenceDialog.js',
@@ -132,7 +151,11 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaPreviewWidget.js',
 			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js',
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
-			've/ui/widgets/ve.ui.WikiaCategoryInputWidget.js'
+			've/ui/widgets/ve.ui.WikiaCategoryInputWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaCartWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaCartSelectWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaCartOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaQueryWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
@@ -192,6 +215,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-save-error-generic',
 			'wikia-visualeditor-dialogbutton-wikiasourcemode',
 			'wikia-visualeditor-dialog-done-button',
+			'wikia-visualeditor-dialog-cancel-button',
 			'wikia-visualeditor-dialog-transclusion-get-info',
 			'wikia-visualeditor-dialog-transclusion-preview-button',
 			'wikia-visualeditor-context-transclusion-description',
@@ -203,6 +227,13 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-preference-link-help',
 			'wikia-visualeditor-dialog-preference-link-preferences',
 			'wikia-visualeditor-dialog-preference-start-button',
+			'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip',
+			'wikia-visualeditor-dialog-wikiasinglemedia-title',
+			'wikia-visualeditor-dialog-wikiasinglemedia-search',
+			'wikia-visualeditor-wikiamediaoptionwidget-preview-photo',
+			'wikia-visualeditor-wikiamediaoptionwidget-preview-video',
+			'wikia-visualeditor-media-photo-policy',
+			'wikia-visualeditor-media-video-policy',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',

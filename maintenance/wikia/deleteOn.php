@@ -88,9 +88,6 @@ if ( $removed == 0 ) {
 	$page_id = $page->getArticleID();
 	$art = new Article( $page );
 	$success = $art->doDeleteArticle( $reason, $suppress );
-	if ( $success ) {
-		wfRunHooks('ArticleDeleteComplete', array(&$art, &$wgUser, $reason, $page_id));
-	}
 }
 $dbw->commit();
 
@@ -103,4 +100,4 @@ if ( $success ) {
 if ( $interval ) {
 	sleep( $interval );
 }
-wfWaitForSlaves( 5 );
+wfWaitForSlaves();

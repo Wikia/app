@@ -46,6 +46,10 @@ function TOCimprovementsInit() {
  * too see TOC (which is now hidden by default)
  */
 function TOCcssfornoscript( OutputPage &$out, &$skin ) {
+	// Do not add this asset on VenusSkin
+	if ( $skin instanceof SkinVenus ) {
+		return true;
+	}
 	$out->addHtml( '<noscript><link rel="stylesheet" href="' . F::app()->wg->ExtensionsPath . '/wikia/TOCimprovements/TOCNoScript.css" /></noscript>' );
 	return true;
 }

@@ -32,6 +32,17 @@ class WikisApiController extends WikiaApiController {
 	private $wikiDetails;
 
 	/**
+	 * @var CrossOriginResourceSharingHeaderHelper
+	 */
+	protected $cors;
+
+	public function __construct(){
+		parent::__construct();
+		$this->cors = new CrossOriginResourceSharingHeaderHelper();
+		$this->cors->readConfig();
+	}
+
+	/**
 	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
 	 *
 	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
@@ -159,6 +170,8 @@ class WikisApiController extends WikiaApiController {
 
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
+		$this->cors->setHeaders($this->response);
+
 		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
 		if ( !empty( $ids ) ) {

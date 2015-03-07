@@ -4,6 +4,8 @@
  * Class Transaction defines various constants and gives access to TransactionTrace singleton object
  */
 class Transaction {
+	const APP_NAME = 'mediawiki';
+
 	// Transaction names
 	const ENTRY_POINT_PAGE = 'page';
 	const ENTRY_POINT_SPECIAL_PAGE = 'special_page';
@@ -12,9 +14,12 @@ class Transaction {
 	const ENTRY_POINT_NIRVANA = 'api/nirvana';
 	const ENTRY_POINT_AJAX = 'api/ajax';
 	const ENTRY_POINT_API = 'api/api';
+	const ENTRY_POINT_API_V1 = 'api/v1';
+	const ENTRY_POINT_MAINTENANCE = 'maintenance';
 
 	// Parameters
 	const PARAM_ENVIRONMENT = 'env';
+	const PARAM_HOSTNAME = 'hostname';
 	const PARAM_ENTRY_POINT = 'entry_point';
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
@@ -39,7 +44,10 @@ class Transaction {
 	const SIZE_CATEGORY_AVERAGE = 'average';
 	const SIZE_CATEGORY_COMPLEX = 'complex';
 
+	// Definition of different events
 	const EVENT_ARTICLE_PARSE = 'article_parse';
+	const EVENT_MEMCACHE_STATS_COUNTERS = 'memcache_stats_counters';
+	const EVENT_MEMCACHE_STATS_KEYS = 'memcache_stats_keys';
 
 	/**
 	 * Returns TransactionTrace singleton instance
@@ -56,6 +64,7 @@ class Transaction {
 				new TransactionTraceScribe(),
 			) );
 			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
+			$instance->set( self::PARAM_HOSTNAME, wfHostname() );
 		}
 		return $instance;
 	}
@@ -103,8 +112,18 @@ class Transaction {
 	 * @param string $event Event name
 	 * @param array $data Event data
 	 */
-	public static function addEvent( $event, $data ) {
+	public static function addEvent( $event, Array $data ) {
 		self::getInstance()->addEvent( $event, $data );
+	}
+
+	/**
+	 * Records a raw event
+	 *
+	 * @param string $event Event name
+	 * @param array $data Event data
+	 */
+	public static function addRawEvent( $event, Array $data ) {
+		self::getInstance()->addRawEvent( $event, $data );
 	}
 
 	/**
@@ -126,12 +145,32 @@ class Transaction {
 	}
 
 	/**
+	 * Return required attribute
+	 *
+	 * @param $name string attribute name
+	 * @return mixed|null attribute value or null when not set
+	 */
+	public static function getAttribute($name) {
+		$attributes = self::getAttributes();
+		return isset( $attributes[$name] ) ? $attributes[$name] : null;
+	}
+
+	/**
 	 * Returns all events recorded during current transaction
 	 *
 	 * @return array
 	 */
 	public static function getEvents() {
 		return self::getInstance()->getEvents();
+	}
+
+	/**
+	 * Returns all raw events recorded during current transaction
+	 *
+	 * @return array
+	 */
+	public static function getRawEvents() {
+		return self::getInstance()->getRawEvents();
 	}
 
 	/**

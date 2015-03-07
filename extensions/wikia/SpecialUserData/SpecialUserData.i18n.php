@@ -45,6 +45,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'userdata' => "Obtenir dades d'usuari",
@@ -52,6 +53,10 @@ $messages['ca'] = array(
 	'userdata-submit' => 'Obtenir dades',
 	'specialuserdata-desc' => 'Proporciona una interfície per canviar wgUserData per wiki.',
 	'userdata-header' => 'Augmentar wgUserData',
+	'userdata-updated' => 'wgUserData actualitzat a "$1".',
+	'userdata-not-updated' => "No s'ha pogut actualitzar wgUserData.",
+	'userdata-wf-reason' => 'Valor actualitzat a través de [[Special:UserData|UserData]]',
+	'userdata-no-wf' => 'WikiFactory no està habilitat en aquest wiki. No es pot alterar el wgCacheEpoch.',
 );
 
 /** Czech (čeština)
@@ -99,6 +104,13 @@ $messages['es'] = array(
 	'userdata-not-updated' => 'Error al actualizar wgUserData.',
 	'userdata-wf-reason' => 'Valor actualizado a través de [[Special:UserData|UserData]]',
 	'userdata-no-wf' => 'WikiFactory no está habilitado en esta wiki. No se puede alterar wgUserData.',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'userdata-submit' => 'دریافت اطلاعات',
 );
 
 /** Faroese (føroyskt)
@@ -466,9 +478,10 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'userdata' => '獲取使用者資料',
 	'userdata-userid-label' => '提供使用者 ID：',
-	'userdata-submit' => '獲取資料',
+	'userdata-submit' => '取得資料',
 );

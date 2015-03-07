@@ -1221,11 +1221,22 @@ function wfLogProfilingData() {
 	if ( $wgUser->isItemLoaded( 'id' ) && $wgUser->isAnon() ) {
 		$forward .= ' anon';
 	}
-	$log = sprintf( "%s\t%04.3f\t%s\n",
-		gmdate( 'YmdHis' ), $elapsed,
-		urldecode( $wgRequest->getRequestURL() . $forward ) );
 
-	wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
+	// Wikia change - begin - FauxRequest::getRequestURL() is not implemented and throws exception
+	// in maintenance scripts
+	try {
+		$log = sprintf( "%s\t%04.3f\t%s\n",
+			gmdate( 'YmdHis' ), $elapsed,
+			urldecode( $wgRequest->getRequestURL() . $forward ) );
+
+		wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
+	} catch (MWException $e) {
+		// double-check it is the case
+		if ( $e->getMessage() !== "FauxRequest::getRequestURL() not implemented" ) {
+			throw $e;
+		}
+	}
+	// Wikia change - end
 }
 
 /**
@@ -2874,11 +2885,11 @@ function wfEscapeShellArg( ) {
  * Execute a shell command, with time and memory limits mirrored from the PHP
  * configuration if supported.
  * @param $cmd String Command line, properly escaped for shell.
- * @param &$retval optional, will receive the program's exit code.
+ * @param &$retval int optional, will receive the program's exit code.
  *                 (non-zero is usually failure)
  * @param $environ Array optional environment variables which should be
  *                 added to the executed command environment.
- * @return collected stdout as a string (trailing newlines stripped)
+ * @return string collected stdout as a string (trailing newlines stripped)
  */
 function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	global $IP, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
@@ -2959,6 +2970,17 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	if ( $retval == 127 ) {
 		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
 	}
+
+	// Wikia change - begin
+	if ( $retval > 0 ) {
+		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
+			'exception' => new Exception( $cmd, $retval ),
+			'output' => $output,
+			'load_avg' => implode( ', ', sys_getloadavg() ),
+		]);
+	}
+	// Wikia change - end
+
 	return $output;
 }
 
@@ -3761,10 +3783,9 @@ function wfGetNull() {
  *
  * Wikia note: provide external DB name in $wiki parameter to wait for external DB
  *
- * @param $maxLag Integer (deprecated)
  * @param $wiki mixed Wiki identifier accepted by wfGetLB
  */
-function wfWaitForSlaves( $maxLag = false, $wiki = false ) {
+function wfWaitForSlaves( $wiki = false ) {
 	$lb = wfGetLB( $wiki );
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
@@ -3772,7 +3793,7 @@ function wfWaitForSlaves( $maxLag = false, $wiki = false ) {
 		/* Wikia change - added array() and $wiki parameters to getConnection to be able to wait for various DBs */
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
-		$lb->waitForAll( $pos );
+		$lb->waitForAll( $pos, $wiki );
 	}
 }
 

@@ -72,9 +72,18 @@ $namespaces['it'] = array(
  * Japanese (日本語)
  */
 $namespaces['ja'] = array(
-	NS_USER_WALL			=> 'メッセージ_ウォール',
+	NS_USER_WALL			=> 'メッセージウォール',
 	NS_USER_WALL_MESSAGE		=> 'スレッド',
-	NS_USER_WALL_MESSAGE_GREETING	=> 'メッセージ_ウォール_挨拶',
+	NS_USER_WALL_MESSAGE_GREETING	=> 'メッセージウォール・グリーティング',
+);
+
+/**
+ * Korean (한국어)
+ */
+$namespaces['ko'] = array(
+	NS_USER_WALL			=> '메시지_담벼락',
+	NS_USER_WALL_MESSAGE		=> '게시글',
+	NS_USER_WALL_MESSAGE_GREETING	=> '메시지_담벼락_환영',
 );
 
 /**
@@ -132,10 +141,29 @@ $namespaces['ru'] = array(
 );
 
 /**
+ * Vietnamese (Tiếng Việt)
+ */
+$namespaces['vi'] = array(
+	NS_USER_WALL			=> 'Tường_tin_nhắn',
+	NS_USER_WALL_MESSAGE		=> 'Luồng',
+	NS_USER_WALL_MESSAGE_GREETING	=> 'Thông_điệp_Tường_tin_nhắn',
+);
+
+/**
  * Chinese (中文)
  */
 $namespaces['zh'] = array(
 	NS_USER_WALL			=> '留言墙',
 	NS_USER_WALL_MESSAGE		=> '帖子',
 	NS_USER_WALL_MESSAGE_GREETING	=> '问候语',
+);
+
+/**
+ * Aliases
+ */
+$namespaceAliases = array(
+	// Japanese (日本語)
+	// VOLDEV-90
+	'メッセージ_ウォール'		=> NS_USER_WALL,
+	'メッセージ_ウォール_挨拶'	=> NS_USER_WALL_MESSAGE_GREETING,
 );

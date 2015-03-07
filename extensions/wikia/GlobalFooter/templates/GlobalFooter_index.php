@@ -1,28 +1,27 @@
 <footer class="global-footer row">
 	<nav>
-		<h1><?= wfMessage('oasis-corporatefooter-navigation-header')->text(); ?></h1>
-		<div class="branding <?= (!$isCorporate ? 'black' : ''); ?>">
-			<div class="wordmark">
-				<img src="<?= $wg->BlankImgUrl; ?>" class="wordmark<?= $hub->cat_id ?>">
-			</div>
-			<?php if(!$isCorporate): ?>
-				<div class="hub"><a class="hub<?= $hub->cat_id; ?>" href="<?=$hub->cat_link?>">[ <?=$hub->cat_name?> ]</a></div>
-			<?php endif; ?>
+		<div class="branding <?= ( !empty( $verticalShort ) ? 'vertical-' . $verticalShort : '' ); ?> <?= ( !$isCorporate ? 'black' : '' ); ?>">
+			<a class="wikia-logo" href="<?=Sanitizer::encodeAttribute( $logoLink ); ?>">
+				<img src="<?= $wg->BlankImgUrl; ?>">
+				<?php if( !$isCorporate && !empty( $verticalShort ) ): ?>
+					<span><?=$verticalNameMessage->escaped(); ?></span>
+				<?php endif; ?>
+			</a>
 		</div>
 		<ul>
 			<?php
-			foreach ($footer_links as $link) {
+			foreach ($footerLinks as $link):
 				?>
 				<li>
 					<?php
 					if ($link['isLicense']) {
 						echo $copyright;
 					} else {?>
-						<a<?= ( !empty( $link[ 'id' ] ) ) ? " id=\"{$link[ 'id' ]}\"" : null ;?> href="<?= $link["href"]; ?>"<?= ( !empty( $link[ 'nofollow' ] ) ) ? ' rel="nofollow"' : null ;?>><?= $link["text"]; ?></a>
+						<a<?= ( !empty( $link[ 'id' ] ) ) ? " id=\"{$link[ 'id' ]}\"" : '' ;?> href="<?= $link["href"]; ?>"<?= ( !empty( $link[ 'nofollow' ] ) ) ? ' rel="nofollow"' : '' ;?>><?= $link["text"]; ?></a>
 					<?php } ?>
 				</li>
 			<?php
-			}
+			endforeach;
 			?>
 		</ul>
 	</nav>

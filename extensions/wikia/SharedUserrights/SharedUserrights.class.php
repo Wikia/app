@@ -86,6 +86,8 @@ class UserRights {
 					array( 'IGNORE' ) );
 		}
 
+		wfRunHooks( 'AfterUserAddGlobalGroup', array( $user, $group ) );
+
 		// return false to prevent group from being added to local DB
 		return false;
 	}
@@ -111,6 +113,8 @@ class UserRights {
 				     ),
 				__METHOD__,
 				array( 'IGNORE' ) );
+
+		wfRunHooks( 'AfterUserRemoveGlobalGroup', array( $user, $group ) );
 
 		// return true to let the User class clean up any residual staff rights stored locally
 		return true;

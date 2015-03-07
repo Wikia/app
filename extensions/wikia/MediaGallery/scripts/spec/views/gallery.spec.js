@@ -5,12 +5,16 @@ describe('MediaGalleries gallery', function () {
 	var i,
 		Gallery,
 		Media,
+		Toggler,
 		Caption,
 		templates,
 		instance,
 		options,
+		bucky,
 		tracker = {
-			buildTrackingFunction: $.noop,
+			buildTrackingFunction: function () {
+				return $.noop;
+			},
 			ACTIONS: {
 				CLICK: 'click'
 			}
@@ -38,51 +42,63 @@ describe('MediaGalleries gallery', function () {
 			$el: $('<div></div>'),
 			$wrapper: $('.media-gallery-wrapper'),
 			model: model,
+			idx: 0,
 			origVisibleCount: 1,
 			interval: 2
 		};
 
-		spyOn(Mustache, 'render').andReturn('okay');
+		spyOn(Mustache, 'render').and.returnValue('okay');
+		bucky = modules['bucky.mock'];
 		templates = modules['mediaGallery.templates.mustache'];
+		Toggler = modules['mediaGallery.views.toggler'](templates);
 		Caption = modules['mediaGallery.views.caption']();
 		Media = modules['mediaGallery.views.media'](Caption, templates);
-		Gallery = modules['mediaGallery.views.gallery'](Media, templates, tracker);
+		Gallery = modules['mediaGallery.views.gallery'](Media, Toggler, tracker, bucky);
+
+		instance = new Gallery(options).init();
 	});
 
 	it('should export a function', function () {
-		instance = new Gallery(options);
 		expect(typeof Gallery).toBe('function');
 	});
 
 	it('should create media', function () {
-		instance = new Gallery(options);
 		expect(instance.media.length).toBe(model.media.length);
 	});
 
-	it('should render', function () {
-		instance = new Gallery(options);
+	it('should render with parameters', function () {
+		// passing values to render
 		instance.render(1);
 		expect(instance.visibleCount).toBe(1);
 		instance.render(2);
 		expect(instance.visibleCount).toBe(3);
+	});
+
+	it('should render without parameters', function () {
+		// not passing value, default interval should be used
 		instance.render();
-		expect(instance.visibleCount).toBe(3);
+		expect(instance.visibleCount).toBe(options.origVisibleCount);
 	});
 
 	it('should init toggler', function () {
+		// recreate instance with different options
 		options.origVisibleCount = 2;
 		instance = new Gallery(options);
-		expect(instance.$toggler).toBeDefined();
+		instance.init();
+
+		expect(instance.toggler).toBeDefined();
 	});
 
 	it('should not init toggler', function () {
+		// recreate instance with different options
 		options.origVisibleCount = 4;
 		instance = new Gallery(options);
-		expect(instance.$toggler).not.toBeDefined();
+		instance.init();
+
+		expect(instance.toggler).not.toBeDefined();
 	});
 
 	it('should show more and show less', function () {
-		instance = new Gallery(options);
 		instance.showMore();
 		expect(instance.visibleCount).toBe(options.interval);
 		spyOn(instance, 'scrollToTop');
@@ -91,7 +107,6 @@ describe('MediaGalleries gallery', function () {
 	});
 
 	it('should not error at arbitrary render count', function () {
-		instance = new Gallery(options);
 		instance.render(model.media.length + 2);
 		expect(instance.media.length).toBe(model.media.length);
 	});

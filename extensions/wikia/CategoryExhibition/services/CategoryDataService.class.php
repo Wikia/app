@@ -88,36 +88,6 @@ class CategoryDataService extends Service {
 	}
 
 	/**
-	 * Return a list of articles in a particular category, ordered by their last edit date
-	 *
-	 * @param string $sCategoryDBKey
-	 * @param string $mNamespace
-	 * @param bool $negative
-	 * @return array
-	 */
-	public static function getRecentlyEdited( $sCategoryDBKey, $mNamespace, $negative = false  ) {
-		wfProfileIn( __METHOD__ );
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			array( 'page', 'revision', 'categorylinks' ),
-			array( 'page_id', 'page_title' ),
-			array(
-				'cl_to' => $sCategoryDBKey,
-				'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-			),
-			__METHOD__,
-			array(	'ORDER BY' => 'rev_timestamp DESC, page_title' ),
-			array(	'revision'  => array( 'LEFT JOIN', 'rev_page = page_id' ),
-				'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
-		);
-
-		wfProfileOut( __METHOD__ );
-
-		return self::tableFromResult( $res );
-	}
-
-	/**
 	 * @param string $sCategoryDBKey
 	 * @param array $mNamespace
 	 * @param bool $limit

@@ -254,7 +254,7 @@ class CheckUser extends SpecialPage {
 			# Lets not go *too* fast
 			if ( $blockSize >= 20 ) {
 				$blockSize = 0;
-				wfWaitForSlaves( 5 );
+				wfWaitForSlaves();
 			}
 			$u = User::newFromName( $name, false );
 			// If user doesn't exist, it ought to be an IP then

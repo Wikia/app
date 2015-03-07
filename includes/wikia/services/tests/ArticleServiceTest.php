@@ -18,7 +18,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 		$mockTitle = $this->getMock( 'Title' );
 		$mockCache = $this->getMock( 'MemCachedClientforWiki', array( 'get', 'set' ), array( array() ) );
 		$mockPage = $this->getMock( 'WikiPage', array( 'getParserOutput', 'makeParserOptions' ), array( $mockTitle ) );
-		$mockOutput = $this->getMock( 'OutputPage', array( 'getText' ), array() );
+		$mockOutput = $this->getMock( 'ParserOutput', array( 'getText' ), array() );
 		$mockArticle = $this->getMock( 'Article', array( 'getPage', 'getID' ), array( $mockTitle ) );
 
 		$mockCache->expects( $this->any() )

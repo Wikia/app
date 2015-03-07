@@ -26,7 +26,7 @@
 <?php
 			}
 			else if ($actionName == 'submit') { ?>
-				<input class="<?= $action['class'] ?>" type="submit" value="<?= $action['text'] ?>"/>
+				<input id="<?= $action['id'] ?>" class="<?= $action['class'] ?>" type="submit" value="<?= $action['text'] ?>"/>
 <?php
 			}
 			// render menu without URL defined for a button

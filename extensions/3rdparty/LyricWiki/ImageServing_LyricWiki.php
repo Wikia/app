@@ -32,17 +32,7 @@ $wgHooks['ImageServing::fallbackOnNoResults'][] = 'lw_ImageServingFallback';
 function lw_ImageServingFallback(ImageServing $imageServing, $n, &$out){
 	wfProfileIn( __METHOD__ );
 
-	// For Gracenote pages (since they don't have their own images), fall back to the NS_MAIN pages with the same titles.
 	$articleTitlesToTry = array();
-	if(isset($imageServing->articlesByNS[NS_GRACENOTE])){
-		$gnArticles = $imageServing->articlesByNS[ NS_GRACENOTE ];
-		foreach($gnArticles as $gnArticleData){
-			$title = $gnArticleData['title'];
-
-			// Just pass the page title in directly. By not passing the Gracenote namespace in, we'll get the main-namespace equivalent.
-			$articleTitlesToTry[] = $title;
-		}
-	}
 
 	// For main namespace pages, fall back from song to album to artist.
 	if(isset($imageServing->articlesByNS[NS_MAIN])){

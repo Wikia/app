@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 				$slot.hide();
 				$slot.appendTo('.WikiaSiteWrapper');
 
-				window.adslots2.push([slotName]);
+				window.adslots2.push(slotName);
 			} else {
 				log(['Impression capped. Not requesting the ad', slotName], 'debug', logGroup);
 
@@ -96,11 +96,11 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 		return false;
 	}
 
-	function fillInSlotCallback(slot) {
+	function fillInSlotCallback(slotname) {
 
 		var skyscraperOffset;
 
-		if (slot[0] === 'LEFT_SKYSCRAPER_2') {
+		if (slotname === 'LEFT_SKYSCRAPER_2') {
 
 			skyscraperOffset = $('#LEFT_SKYSCRAPER_2').offset() || {};
 

@@ -32,7 +32,6 @@ $dir = dirname( __FILE__ ) . '/';
 $wgExtensionCredits['other'][] = array(
 	'path'              => __FILE__,
 	'name'              => 'HAWelcome',
-	'description'       => 'Sends a welcome message to users after their first edits.',
 	'descriptionmsg'    => 'welcome-description',
 	'version'           => 1009,
 	'author'            => array(
@@ -45,7 +44,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAvailableRights[] = 'welcomeexempt';
 $wgGroupPermissions['bot']['welcomeexempt'] = true;
-
+$wgGroupPermissions['staff']['welcomeexempt'] = true;
 
 $wgExtensionMessagesFiles[ 'HAWelcome' ] = $dir . '/HAWelcome.i18n.php';
 

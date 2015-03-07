@@ -275,7 +275,8 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgRequest;
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
+		if ( F::app()->checkSkin( 'oasis' ) || F::app()->checkSkin( 'venus' )) {
+
 			self::addConfirmation(wfMsg('oasis-confirmation-user-logout'));
 
 			// redirect the page user has been on when he clicked "log out" link
@@ -294,51 +295,6 @@ class NotificationsController extends WikiaController {
 				$wgOut->redirect($redirectUrl);
 
 				wfDebug(__METHOD__ . " - {$redirectUrl}\n");
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
-	 * Handle confirmations from Facebook Connect
-	 */
-	public static function addFacebookConnectConfirmation(&$html) {
-		wfProfileIn(__METHOD__);
-		global $wgRequest, $wgUser;
-
-
-		// FBConnect messages
-		if ( F::app()->checkSkin( 'oasis' ) && class_exists('FBConnectHooks')) {
-
-			$preferencesUrl = SpecialPage::getTitleFor('Preferences')->getFullUrl();
-			$fbStatus = $wgRequest->getVal('fbconnected');
-
-			switch($fbStatus) {
-				// success
-				case 1:
-					$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
-					if (count($id) > 0) {
-
-						global $wgEnableFacebookSync;
-						if ($wgEnableFacebookSync == true) {
-							$userURL = AvatarService::getUrl($wgUser->mName);
-							self::addConfirmation(wfMsg('fbconnect-connect-msg-sync-profile', $preferencesUrl, $userURL));
-						}
-						else {
-							self::addConfirmation(wfMsg('fbconnect-connect-msg', $preferencesUrl));
-						}
-					}
-					break;
-
-				// error
-				case 2:
-					$fb = new FBConnectAPI();
-					if (strlen($fb->user()) < 1) {
-						self::addConfirmation(wfMsgExt('fbconnect-connect-error-msg', array('parseinline'), $preferencesUrl), self::CONFIRMATION_ERROR);
-					}
-					break;
 			}
 		}
 

@@ -70,6 +70,14 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
 
+	# vertical names
+	'vertical-tv' => 'TV',
+	'vertical-games' => 'Videospiele',
+	'vertical-books' => 'Literatur',
+	'vertical-comics' => 'Comics',
+	'vertical-lifestyle' => 'Lifestyle',
+	'vertical-movies' => 'Filme',
+
 	'shared-Globalnavigation' => "*w:c:de:Videospiele|Videospiele|video-games-vertical-color
 
 **w:c:de:Videospiele|Großartiges

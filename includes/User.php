@@ -972,7 +972,6 @@ class User {
 	 * @return Bool True if the user is logged in, false otherwise.
 	 */
 	private function loadFromSession() {
-		global $wgExternalAuthType, $wgAutocreatePolicy;
 		$result = null;
 		wfRunHooks( 'UserLoadFromSession', array( $this, &$result ) );
 		if ( $result !== null ) {
@@ -1010,13 +1009,14 @@ class User {
 			return false;
 		}
 
-		// wikia change start
-		if ( $wgExternalAuthType && $wgAutocreatePolicy == 'view' ) {
-			$extUser = ExternalUser::newFromCookie();
-			if ( $extUser ) {
-				$extUser->linkToLocal( $sId );
-			}
-		}
+                // Wikia change start
+                global $wgExternalAuthType;
+                if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
+                    $extUser = ExternalUser::newFromCookie();
+                    if ( $extUser ) {
+                            $extUser->linkToLocal( $sId );
+                    }
+                }
 
 		$passwordCorrect = FALSE;
 		// wikia change end
@@ -4240,21 +4240,24 @@ class User {
 		$type = substr( $hash, 0, 3 );
 
 		$result = false;
+
 		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
 			return $result;
 		}
 
 		if ( $type == ':A:' ) {
 			# Unsalted
-			return md5( $password ) === substr( $hash, 3 );
+			$bCheck = md5( $password ) === substr( $hash, 3 );
 		} elseif ( $type == ':B:' ) {
 			# Salted
 			list( $salt, $realHash ) = explode( ':', substr( $hash, 3 ), 2 );
-			return md5( $salt.'-'.md5( $password ) ) === $realHash;
+			$bCheck = md5( $salt.'-'.md5( $password ) ) === $realHash;
 		} else {
 			# Old-style
-			return self::oldCrypt( $password, $userId ) === $hash;
+			$bCheck = self::oldCrypt( $password, $userId ) === $hash;
 		}
+
+		return $bCheck;
 	}
 
 	/**

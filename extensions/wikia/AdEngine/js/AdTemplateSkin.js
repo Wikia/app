@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.template.skin', [
 			var adSkin = document.getElementById('ad-skin'),
 				adSkinStyle = adSkin.style,
 				wikiaSkin = document.getElementById('WikiaPageBackground'),
-				wikiaSkinStyle = wikiaSkin.style,
+				wikiaSkinStyle = wikiaSkin && wikiaSkin.style,
 				i,
 				len,
 				pixelElement,
@@ -54,6 +54,8 @@ define('ext.wikia.adEngine.template.skin', [
 				adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 			}
 
+			document.body.className += ' background-ad';
+
 			adSkinStyle.position = 'fixed';
 			adSkinStyle.height = '100%';
 			adSkinStyle.width = '100%';
@@ -62,7 +64,9 @@ define('ext.wikia.adEngine.template.skin', [
 			adSkinStyle.zIndex = 0;
 			adSkinStyle.cursor = 'pointer';
 
-			wikiaSkinStyle.opacity = 1;
+			if (wikiaSkinStyle) {
+				wikiaSkinStyle.opacity = 1;
+			}
 
 			adSkin.onclick = function () {
 				log('Click on skin', 'user', logGroup);

@@ -1,11 +1,10 @@
-/*global setTimeout, define, require*/
+/*global setTimeout, define*/
 /*jshint camelcase:false, maxparams:5*/
 
 define('ext.wikia.adEngine.slotTracker', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
-	require.optional('wikia.abTest')
-], function (adContext, adTracker, abTest) {
+	'ext.wikia.adEngine.adTracker'
+], function (adContext, adTracker) {
 	'use strict';
 
 	var timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
@@ -25,6 +24,18 @@ define('ext.wikia.adEngine.slotTracker', [
 			INVISIBLE_1:            'pixel',
 			INVISIBLE_2:            'pixel',
 			INVISIBLE_SKIN:         'pixel',
+			INCONTENT_1A:           'incontent',
+			INCONTENT_1B:           'incontent',
+			INCONTENT_1C:           'incontent',
+			INCONTENT_2A:           'incontent',
+			INCONTENT_2B:           'incontent',
+			INCONTENT_2C:           'incontent',
+			INCONTENT_3A:           'incontent',
+			INCONTENT_3B:           'incontent',
+			INCONTENT_3C:           'incontent',
+			INCONTENT_LEADERBOARD_1:'incontent',
+			INCONTENT_LEADERBOARD_2:'incontent',
+			INCONTENT_LEADERBOARD_3:'incontent',
 			MOBILE_IN_CONTENT:      'mobile_content',
 			MOBILE_TOP_LEADERBOARD: 'mobile_leaderboard',
 			MOBILE_PREFOOTER:       'mobile_prefooter',
@@ -33,18 +44,16 @@ define('ext.wikia.adEngine.slotTracker', [
 			MODAL_INTERSTITIAL_2:   'interstitial',
 			MODAL_INTERSTITIAL_3:   'interstitial',
 			MODAL_INTERSTITIAL_4:   'interstitial',
+			MODAL_INTERSTITIAL_5:   'interstitial',
 			LEFT_SKYSCRAPER_2:      'skyscraper',
 			LEFT_SKYSCRAPER_3:      'skyscraper',
 			PREFOOTER_LEFT_BOXAD:   'prefooter',
 			PREFOOTER_RIGHT_BOXAD:  'prefooter',
 			TOP_BUTTON_WIDE:        'button',
 			TOP_LEADERBOARD:        'leaderboard',
-			TOP_INCONTENT_BOXAD:    'medrec',
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
-		},
-		adsInHead = context.opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
-		adsAfterPageLoad = context.opts.lateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
+		};
 
 	// The filtering function
 	function isInteresting(eventName, data) {
@@ -102,8 +111,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			len;
 
 		function trackState(timeCheckPoint) {
-			var eventName = 'state/' + timeCheckPoint + 's',
-				experimentName = [];
+			var eventName = 'state/' + timeCheckPoint + 's';
 
 			setTimeout(function () {
 				trackEvent(

@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 abstract class BaseRssModel extends WikiaService {
 
 	const FIELD_TIMESTAMP = 'timestamp';
@@ -76,7 +78,9 @@ abstract class BaseRssModel extends WikiaService {
 		}
 	}
 
-
+	/**
+	 * @return DatabaseBase
+	 */
 	protected function getDbSlave() {
 		static $db = null;
 		if ( $db === null ) {
@@ -86,6 +90,9 @@ abstract class BaseRssModel extends WikiaService {
 		return $db;
 	}
 
+	/**
+	 * @return DatabaseBase
+	 */
 	protected function getDbMaster() {
 		static $db = null;
 		if ( $db === null ) {
@@ -234,6 +241,17 @@ abstract class BaseRssModel extends WikiaService {
 		return $wikisData;
 	}
 
+	protected function deleteRow( $wikiaId, $pageId, $feed ){
+		$feed = self::getStagingPrefix() . $feed;
+		$db = $this->getDbMaster();
+		( new WikiaSQL() )
+			->DELETE( "wikia_rss_feeds" )
+			->WHERE( "wrf_wikia_id" )->EQUAL_TO( $wikiaId )
+			->AND_( 'wrf_page_id' )->EQUAL_TO( $pageId )
+			->AND_( 'wrf_feed' )->EQUAL_TO( $feed )
+			->run( $db );
+	}
+
 	protected function getWikiService() {
 		return new WikiService();
 	}
@@ -323,6 +341,7 @@ abstract class BaseRssModel extends WikiaService {
 
 		foreach ( $rawData as $key => $item ) {
 			if ( array_key_exists( $item[ 'url' ], $duplicates ) ) {
+				WikiaLogger::instance()->info( __METHOD__, [ 'item' => $item ] );
 				unset( $rawData[ $key ] );
 			}
 		}
@@ -385,27 +404,43 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function findIdForUrls( $urls, $source = null ) {
 		$data = [ ];
+
 		if ( !empty( $urls ) ) {
-			$f2 = new \Wikia\Search\Services\FeedEntitySearchService();
-			$f2->setUrls( array_keys( $urls ) );
-			$res = $f2->query( '' );
-			foreach ( $res as $item ) {
-				$key = $item[ 'url' ];
-				if ( array_key_exists( $key, $urls ) ) {
-					$newItem = $urls[ $key ];
-					$newItem[ 'wikia_id' ] = $item[ 'wid' ];
-					$newItem[ 'page_id' ] = $item[ 'pageid' ];
-					$newItem[ 'source' ] = $source;
-					$data[ ] = $newItem;
+			foreach ( $urls as $item ) {
+				$url = $item['url'];
+
+				$result = GlobalTitle::explodeURL( $url );
+				$wikia_id = $result['wikiId'];
+				$articleName = $result['articleName'];
+
+				if ( !( empty( $wikia_id ) || empty( $articleName ) ) ) {
+					$res = ApiService::foreignCall(WikiFactory::IDtoDB($wikia_id),[
+						'action' => 'query',
+						'titles' => $articleName,
+						'indexpageids',
+						'format' => 'json'
+					]);
+
+					if(!empty($res['query']['pages'])) {
+						$pages = array_keys( $res['query']['pages'] );
+						$page_id = array_shift( $pages );
+						$newItem = $item;
+						$newItem[ 'wikia_id' ] = $wikia_id;
+						$newItem[ 'page_id' ] = $page_id;
+						$newItem[ 'source' ] = $source;
+						$data[ ] = $newItem;
+					}
 				}
 			}
 		}
+
 		return $data;
 	}
 
 	protected function finalizeRecords( $rawData, $feedName ) {
-		$out = $this->processItems( $rawData );
-		return $this->addFeedsToDb( $out, $feedName );
+		$this->cleanDeadUrlsInDB( $feedName );
+		$items = $this->processItems( $rawData );
+		return $this->addFeedsToDb( $items, $feedName );
 	}
 
 	protected function makeBlogTitle( $item ) {
@@ -512,6 +547,30 @@ abstract class BaseRssModel extends WikiaService {
 			$newTimestamp++;
 		}
 		return $newTimestamp;
+	}
+
+	/**
+	 * Checks if response code is different than 404. WE don't care about 503 etc as they might change
+	 * @param $wikiaid
+	 * @param $pageid
+	 * @return bool
+	 */
+	protected function checkTitleExists( $wikiaid, $pageid  ) {
+		$t = GlobalTitle::newFromId( $pageid , $wikiaid);
+		return ($t instanceof GlobalTitle) && $t->exists();
+	}
+
+	/**
+	 * Removes "dead" urls from DB
+	 * @param $feedName
+	 */
+	protected function cleanDeadUrlsInDB( $feedName ) {
+		$urlsMap = $this->getFeedData();
+		foreach ( $urlsMap as $url => $item ) {
+			if ( $item[ 'wikia_id' ] && $item[ 'page_id' ] && !$this->checkTitleExists(  $item[ 'wikia_id' ], $item[ 'page_id' ]  ) ) {
+				$this->deleteRow( $item[ 'wikia_id' ], $item[ 'page_id' ], $feedName );
+			}
+		}
 	}
 
 }

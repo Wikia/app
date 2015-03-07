@@ -1,0 +1,113 @@
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'skins/shared/mixins/calc';
+@import 'GlobalNavigationColors';
+@import 'GlobalNavigationVariables';
+
+$start-a-wikia-logo-size: 30px;
+
+.global-navigation {
+	background-color: $global-wikia-background-color;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+	color: $nav-foreground-dark-color;
+	height: $global-navigation-height;
+	position: fixed;
+	transition-duration: .5s;
+	width: 100%;
+	z-index: $global-navigation-z-index;
+
+	&.static {
+		position: absolute;
+	}
+
+	.page-width {
+		@include clearfix;
+		display: table;
+		white-space: nowrap;
+	}
+
+	.table-cell {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	.wikia-logo-container {
+		padding-right: 15px;
+
+		.wikia-logo img {
+			background-position: right center;
+			vertical-align: sub;
+		}
+	}
+
+	.start-wikia-container {
+		padding-left: 10px;
+
+		.start-wikia {
+			@include font-size-xxs;
+			border: solid 1px $global-navigation-text-color;
+			color: $global-navigation-text-color;
+			display: inline-block;
+			height: $start-a-wikia-logo-size;
+			line-height: 28px;
+			margin-bottom: $global-navigation-margin-size + 1px;
+			margin-top: $global-navigation-margin-size + 1px;
+			padding: 0 10px;
+
+			&:hover {
+				background-color: $global-navigation-active-color;
+				color: $global-wikia-background-color;
+				text-decoration: none;
+			}
+
+			span {
+				display: inline-block;
+				padding-top: 1px;
+			}
+		}
+	}
+}
+
+.ve .global-navigation {
+	position: absolute;
+	z-index: $global-navigation-z-index - 1;
+}
+
+@media #{$small-only} {
+	.global-navigation {
+		.start-wikia-container {
+			padding-left: 21px;
+
+			.start-wikia {
+				width: $start-a-wikia-logo-size;
+				//-2px because of borders
+				line-height: $start-a-wikia-logo-size - 2px;
+				&:after {
+					content: '+';
+					display: block;
+				}
+
+				span {
+					display: none;
+				}
+			}
+		}
+
+		.page-width {
+			@include width-calc("100% - 20px");
+			margin: 0 10px;
+		}
+	}
+}
+
+@media #{$below-small} {
+	.global-navigation {
+		min-width: 767px;
+		position: relative;
+	}
+}
+
+.sso-login.hidden {
+	display: none;
+}

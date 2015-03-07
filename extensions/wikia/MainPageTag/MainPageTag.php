@@ -11,6 +11,16 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'MainPageTag',
+	'author' => 'Christian Williams',
+	'descriptionmsg' => 'mainpagetag-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MainPageTag',
+);
+
+//i18n
+$wgExtensionMessagesFiles['MainPageTag'] = __DIR__ . '/MainPageTag.i18n.php';
+
 $wgHooks['ParserFirstCallInit'][] = 'wfMainPageTag';
 
 // Set to "true" once the right column parser tag has run. Used to establish the order in which the column tags were called.

@@ -1,12 +1,12 @@
 <?php
 
-use Wikia\Util\GlobalStateWrapper;
-
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
 
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
+
+	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
 	 * Aggregated list of comments users
@@ -106,21 +106,39 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgLanguageCode,
-			   $wgCityId,
-			   $wgDBname,
-			   $wgSitename,
-			   $wgCacheBuster;
-
+		$wg = F::app()->wg;
 		return [
-			'cacheBuster' => (int) $wgCacheBuster,
-			'dbName' => $wgDBname,
-			'id' => (int) $wgCityId,
-			'language' => $wgLanguageCode,
-			'namespaces' => MWNamespace::getCanonicalNamespaces(),
-			'siteName' => $wgSitename,
-			'theme' => SassUtil::getOasisSettings()
+			'cacheBuster' => (int) $wg->CacheBuster,
+			'dbName' => $wg->DBname,
+			'id' => (int) $wg->CityId,
+			'language' => [
+				'user' => $wg->Lang->getCode(),
+				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
+				'content' => $wg->LanguageCode,
+				'contentDir' => $wg->ContLang->getDir()
+			],
+			'namespaces' => $wg->ContLang->getNamespaces(),
+			'siteName' => $this->getSiteName(),
+			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
+			'theme' => SassUtil::getOasisSettings(),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
 		];
+	}
+
+	/**
+	 * @desc Gets a wikia sitename either from the message or WF variable
+	 *
+	 * @return null|String
+	 */
+	public function getSiteName() {
+		$siteName = F::app()->wg->Sitename;
+		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
+
+		if( !$msg->isDisabled() ) {
+			$siteName = $msg->text();
+		}
+
+		return $siteName;
 	}
 
 	/**
@@ -171,6 +189,11 @@ class MercuryApi {
 			return null;
 		}
 		$commentData = $articleComment->getData();
+		// According to `extensions/wikia/ArticleComments/classes/ArticleComment.class.php:179`
+		// no revision data means that the comment should be ignored
+		if ( $commentData === false ) {
+			return null;
+		}
 		return [
 			'id' => $commentData['id'],
 			'text' => $commentData['text'],
@@ -236,78 +259,8 @@ class MercuryApi {
 	 * @param array $articleCategories List of Categories
 	 * @return array Article Ad context
 	 */
-	public function getAdsContext( Title $title, WikiaGlobalRegistry $wg, Array $articleCategories ) {
-		$wrapper = new GlobalStateWrapper(
-			[ 'wgTitle' => $title ]
-		);
-		$categories = $this->getArticleCategoriesTitles( $articleCategories );
-
-		return $wrapper->wrap(function () use ($title, $wg, $categories) {
-
-			// This function modifies wgDartCustomKeyValues
-			if ( $wg->EnableWikiaNLPExt && $wg->EnableTopicsForDFP ) {
-				(new Wikia\NLP\Entities\WikiEntitiesService)->registerLdaTopicsWithDFP();
-			}
-
-			$requestContext = RequestContext::newExtraneousContext( $title );
-
-			// Get article to find out if the page is an article
-			$article = Article::newFromTitle( $title, $requestContext );
-
-			// Get AdEngine variables
-			$adEngineVariables = AdEngine2Service::getTopJsVariables();
-
-			return [
-				'opts' => [
-					'adsInHead' => $adEngineVariables[ 'wgLoadAdsInHead' ],
-					'disableLateQueue' => $adEngineVariables[ 'wgAdEngineDisableLateQueue' ],
-					'lateAdsAfterPageLoad' => $adEngineVariables[ 'wgLoadLateAdsAfterPageLoad' ],
-					'pageType' => $adEngineVariables[ 'adEnginePageType' ],
-					'showAds' => $adEngineVariables[ 'wgShowAds' ],
-					'usePostScribe' => $adEngineVariables[ 'wgUsePostScribe' ],
-					'trackSlotState' => $adEngineVariables[ 'wgAdDriverTrackState' ],
-				],
-				'targeting' => [
-					'enableKruxTargeting' => $adEngineVariables[ 'wgEnableKruxTargeting' ],
-					'kruxCategoryId' => isset( $adEngineVariables[ 'wgKruxCategoryId' ] ) ?
-							$adEngineVariables['wgKruxCategoryId'] :
-							0,
-					'pageArticleId' => $title->getArticleId(),
-					'pageCategories' => $adEngineVariables[ 'wgAdDriverUseCatParam' ] ?
-							$categories :
-							[],
-					'pageIsArticle' => $article instanceof Article,
-					'pageIsHub' => $adEngineVariables[ 'wikiaPageIsHub' ],
-					'pageName' => $title->getPrefixedDBKey(),
-					'pageType' => $adEngineVariables[ 'wikiaPageType' ],
-					'sevenOneMediaSub2Site' => $adEngineVariables[ 'wgAdDriverSevenOneMediaOverrideSub2Site' ],
-					'skin' => self::MERCURY_SKIN_NAME,
-					'wikiCategory' => $adEngineVariables[ 'cityShort' ],
-					'wikiCustomKeyValues' => $adEngineVariables[ 'wgDartCustomKeyValues' ],
-					'wikiDbName' => $wg->DBname,
-					'wikiDirectedAtChildren' => $adEngineVariables[ 'wgWikiDirectedAtChildren' ],
-					'wikiLanguage' => $title->getPageLanguage()->getCode(),
-					'wikiVertical' => $adEngineVariables[ 'cscoreCat' ],
-				],
-				'providers' => [
-					'sevenOneMedia' => $adEngineVariables[ 'wgAdDriverUseSevenOneMedia' ],
-					'sevenOneMediaCombinedUrl' => isset( $adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] ) ?
-							$adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] :
-							null,
-					'remnantGptMobile' => $wg->AdDriverEnableRemnantGptMobile,
-				],
-				'slots' => [
-					'bottomLeaderboardImpressionCapping' => isset(
-						$adEngineVariables[ 'wgAdDriverBottomLeaderboardImpressionCapping ']
-						) ?
-							$adEngineVariables[ 'wgAdDriverBottomLeaderboardImpressionCapping '] :
-							null
-				],
-				'forceProviders' => [
-					'directGpt' => $adEngineVariables[ 'wgAdDriverForceDirectGptAd' ],
-					'liftium' => $adEngineVariables[ 'wgAdDriverForceLiftiumAd' ],
-				]
-			];
-		});
+	public function getAdsContext( Title $title ) {
+		$adContext = new AdEngine2ContextService();
+		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}
 }

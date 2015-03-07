@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'EditorPreference',
 	'author'         => 'Matt Klucsarits',
 	'descriptionmsg' => 'editorpreference-desc',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditorPreference'
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -22,8 +23,4 @@ $wgExtensionMessagesFiles['EditorPreference'] = $dir . 'EditorPreference.i18n.ph
 $wgHooks['EditingPreferencesBefore'][] = 'EditorPreference::onEditingPreferencesBefore';
 $wgHooks['SkinTemplateNavigation'][] = 'EditorPreference::onSkinTemplateNavigation';
 $wgHooks['MakeGlobalVariablesScript'][] = 'EditorPreference::onMakeGlobalVariablesScript';
-$wgHooks['AddNewAccount'][] = 'EditorPreference::onAddNewAccount';
 $wgHooks['UserProfilePageAfterGetActionButtonData'][] = 'EditorPreference::onUserProfilePageAfterGetActionButtonData';
-
-// Default preference
-$wgDefaultUserOptions[PREFERENCE_EDITOR] = 0;

@@ -35,6 +35,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.saveDialog = null;
 	this.onBeforeUnloadFallback = null;
 	this.onBeforeUnloadHandler = null;
+	this.timeout = null;
 	this.active = false;
 	this.activating = false;
 	this.deactivating = false;
@@ -204,18 +205,9 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function () {
 	// Parent method
 	ve.init.mw.Target.prototype.setupToolbar.call( this );
 
-	// Keep it hidden so that we can slide it down smoothly (avoids sudden
-	// offset flash when original content is hidden, and replaced in-place with a
-	// similar-looking surface).
-	// FIXME: This is not ideal, the parent class creates it and appends
-	// to target (visibly), only for us to hide it again 0ms later.
-	// Though we can't hide it by default because it needs visible dimensions
-	// to compute stuff during setup.
-	this.toolbar.$bar.hide();
-
 	this.toolbar.enableFloatable();
 	this.toolbar.$element
-		.addClass( 've-init-mw-viewPageTarget-toolbar' );
+		.addClass( 've-init-mw-viewPageTarget-toolbar transition' );
 
 	// Move the toolbar to before #firstHeading if it exists
 	$firstHeading = $( '#WikiaPageHeader' );
@@ -223,14 +215,8 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function () {
 		this.toolbar.$element.insertAfter( $firstHeading );
 	}
 
-	this.toolbar.$bar.slideDown( 'fast', ve.bind( function () {
-		// Check the surface wasn't torn down while the toolbar was animating
-		if ( this.surface ) {
-			this.toolbar.initialize();
-			this.surface.getView().emit( 'position' );
-			this.surface.getContext().update();
-		}
-	}, this ) );
+	this.surface.getView().emit( 'position' );
+	this.surface.getContext().update();
 };
 
 /**
@@ -409,20 +395,42 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 		this.surface.mwTocWidget = new ve.ui.MWTocWidget( this.surface );
 	}
 
+	this.setupToolbarButtons();
+	this.attachToolbarButtons();
+
 	// Update UI
+	this.hideSpinner();
+	if ( this.timeout ) {
+		setTimeout( ve.bind( this.afterHideSpinner, this ), this.timeout );
+	} else {
+		this.afterHideSpinner();
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 	this.transformPageTitle();
 	this.changeDocumentTitle();
 	this.hidePageContent();
-	this.hideSpinner();
-
+	this.toolbar.initialize();
+	this.surface.getFocusWidget().$element.show();
 	this.surface.getView().focus();
-
-	this.setupToolbarButtons();
-	this.attachToolbarButtons();
 	this.restoreScrollPosition();
 	this.restoreEditSection();
 	this.setupBeforeUnloadHandler();
 	this.maybeShowDialogs();
+
+	$( '.ve-spinner-fade' ).css( 'opacity', 0 );
+	if ( this.timeout ) {
+		setTimeout( ve.bind( this.afterSpinnerFadeOpacityOut, this ), this.timeout );
+	} else {
+		this.afterSpinnerFadeOpacityOut();
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.afterSpinnerFadeOpacityOut = function () {
+	this.toolbar.$element.removeClass( 'transition' );
+	$( '.ve-spinner-fade' ).hide();
+
 	if ( window.veTrack ) {
 		veTrack( { action: 've-edit-page-stop' } );
 	}
@@ -566,15 +574,20 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorNewUser = function ( isAnon ) {
  * Update save dialog on captcha error
  *
  * @method
- * @param {Object} editApi
  */
-ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
+ve.init.mw.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
 	// Wikia change: Only support reCAPTCHA
-	this.captcha = {};
-	this.saveDialog.frame.$element[0].contentWindow.Recaptcha.create(
-		editApi.captcha.key,
+	this.captchaResponse = null;
+	this.saveDialog.$captcha.empty();
+	this.saveDialog.frame.$element[0].contentWindow.grecaptcha.render(
 		've-ui-mwSaveDialog-captcha',
-		{ theme: 'white' }
+		{
+			'sitekey': mw.config.get( 'reCaptchaPublicKey' ),
+			'theme': 'light',
+			'callback': function ( response ) {
+				this.captchaResponse = response;
+			}.bind( this )
+		}
 	);
 	this.saveDialog.$frame.addClass( 'oo-ui-window-frame-captcha' );
 	this.saveDialog.popPending();
@@ -840,8 +853,8 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 	this.emit( 'saveInitiated' );
 
 	// Reset any old captcha data
-	if ( this.captcha ) {
-		delete this.captcha;
+	if ( this.captchaResponse ) {
+		this.captchaResponse = null;
 	}
 
 	if (
@@ -921,16 +934,10 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 				fields[$this.prop( 'name' )] = $this.val();
 			}
 		} );
-	// Inject captcha params here if reCAPTCHA is used
-	if ( this.captcha ) {
-		this.captcha.id = this.saveDialog.$( '#recaptcha_challenge_field' ).val();
-		this.captcha.word = this.saveDialog.$( '#recaptcha_response_field' ).val();
-	}
 
 	ve.extendObject( fields, {
 		'wpSummary': this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
-		'wpCaptchaId': this.captcha && this.captcha.id,
-		'wpCaptchaWord': this.captcha && this.captcha.word
+		'g-recaptcha-response': this.captchaResponse
 	} );
 	return fields;
 };
@@ -1185,7 +1192,7 @@ ve.init.mw.ViewPageTarget.prototype.setupSaveDialog = function () {
 	dialogDocument = dialogFrame.contentDocument;
 	$( dialogFrame ).on( 'load', function () {
 		script = dialogDocument.createElement( 'script' );
-		script.src = 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js';
+		script.src = 'https://www.google.com/recaptcha/api.js';
 		dialogDocument.getElementsByTagName( 'head' )[0].appendChild( script );
 	} );
 };
