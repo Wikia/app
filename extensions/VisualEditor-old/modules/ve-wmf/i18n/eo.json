@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Happy5214",
+			"KuboF",
+			"Shirayuki",
+			"Yekrats"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VidRedaktilo]]",
+	"tag-visualeditor-description": "Redakto farita per [[{{MediaWiki:visualeditor-descriptionpagelink}}|VidRedaktilo]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VidRedaktilo:Kontroli]]",
+	"visualeditor-feedback-link": "Project:VidRedaktilo/Rimarkoj",
+	"visualeditor-feedback-tool": "Lasi rimarkon",
+	"visualeditor-help-label": "Legu gvidilon por uzantoj",
+	"visualeditor-help-title": "Gvidilo por uzantoj pri kiel uzi la redaktilon"
+}

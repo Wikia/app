@@ -429,6 +429,17 @@ $messages['bg'] = array(
 	'chat-edit-count' => '{{PLURAL:$1|$1 редакция|$1 редакции}}',
 );
 
+/** Western Balochi (بلوچی رخشانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bgn'] = array(
+	'chat' => 'چت وهبر',
+	'chat-ban-modal-label-reason' => 'دلیل',
+	'chat-log-reason-undo' => 'بیئرگردینتین',
+	'chat-ban-undolink' => 'بیئرگردینتین',
+	'chat-ban-modal-button-cancel' => 'کنسیل',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */
@@ -1379,6 +1390,7 @@ $messages['fr'] = array(
  * @author Robin0van0der0vliet
  */
 $messages['fy'] = array(
+	'chat' => 'Petear',
 	'chat-ban-modal-label-reason' => 'Reden',
 	'chat-ban-modal-button-cancel' => 'Annulearje',
 	'chat-ban-option-list' => '2 oeren:2 hours,1 dei:1 day,3 dagen:3 days,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moannen:3 months,6 moannen:6 months,1 jier:1 year,ûnbeheind:infinite',

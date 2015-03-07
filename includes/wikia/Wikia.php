@@ -21,7 +21,6 @@ $wgHooks['SetupAfterCache']          [] = "Wikia::setupAfterCache";
 $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
 $wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
-$wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
 $wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
@@ -1287,25 +1286,6 @@ class Wikia {
 		return $params;
 	}
 
-
-	/**
-	 * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
-	 * maintanance scripts while something is wrong with performance
-	 *
-	 * @static
-	 * @author Piotr Molski (moli) <moli at wikia-inc.com>
-	 * @param int $maxSleep
-	 * @return null
-	 */
-	static function switchDBToLightMode( $WFLoader ) {
-		// commandline scripts only
-		if ( $WFLoader->mCommandLine ) {
-			// switch db to light mode
-			wfDBLightMode(60);
-		}
-		return true;
-	}
-
 	static public function getAllHeaders() {
 		if ( function_exists( 'getallheaders' ) ) {
 			$headers = getallheaders();
@@ -2310,20 +2290,5 @@ class Wikia {
 		}
 
 		return $countryNames;
-	}
-
-	/**
-	 * Get an environment name that should be enough to separate cache containing URLs
-	 *
-	 * @return string
-	 */
-	static public function getEnvironmentName() {
-		global $wgWikiaEnvironment;
-
-		if ( in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY ] ) ) {
-			return $wgWikiaEnvironment;
-		} else {
-			return wfHostname();
-		}
 	}
 }

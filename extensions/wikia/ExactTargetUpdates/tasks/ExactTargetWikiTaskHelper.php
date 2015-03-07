@@ -169,7 +169,7 @@ class ExactTargetWikiTaskHelper {
 
 		$aCityCatMappingDataForRetrieve = [
 			'DataExtension' => [
-				'ObjectType' => "DataExtension[{$aCustomerKeys['city_cat_mapping']}]",
+				'ObjectType' => "DataExtensionObject[{$aCustomerKeys['city_cat_mapping']}]",
 				'Properties' => [ 'city_id', 'cat_id' ],
 			],
 			'SimpleFilterPart' => [

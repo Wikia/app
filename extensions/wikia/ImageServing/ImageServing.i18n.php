@@ -76,9 +76,11 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
 	'imageserving-desc' => 'Wählt Bilder von einer Auswahl von Seiten entsprechend der visuellen Anforderungen aus',
+	'mostimagesincontent' => 'Meistverlinkte Dateien in Inhaltsnamensräumen',
 );
 
 /** Spanish (español)

@@ -27,7 +27,7 @@ ve.ce.WikiaBlockMediaNode = function VeCeWikiaBlockMediaNode( model, config ) {
 	this.rebuild();
 
 	// Events
-	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
+	this.model.connect( this, { attributeChange: 'onAttributeChange' } );
 
 	// Mixin constructors
 	ve.ce.MWImageNode.call( this, this.$element, this.$image );
@@ -52,17 +52,17 @@ ve.ce.WikiaBlockMediaNode.static.renderHtmlAttributes = false;
 ve.ce.WikiaBlockMediaNode.static.transition = false;
 
 ve.ce.WikiaBlockMediaNode.static.cssClasses = {
-	'default': {
-		'left': 'tleft',
-		'right': 'tright',
-		'center': 'tnone',
-		'none': 'tnone'
+	default: {
+		left: 'tleft',
+		right: 'tright',
+		center: 'tnone',
+		none: 'tnone'
 	},
-	'none': {
-		'left': 'floatleft',
-		'right': 'floatright',
-		'center': 'floatnone',
-		'none': 'floatnone'
+	none: {
+		left: 'floatleft',
+		right: 'floatright',
+		center: 'floatnone',
+		none: 'floatnone'
 	}
 };
 
@@ -217,7 +217,7 @@ ve.ce.WikiaBlockMediaNode.prototype.rebuild = function () {
 		// Caption
 		captionModel = this.model.children[ 0 ];
 		captionView = ve.ce.nodeFactory.create( captionModel.getType(), captionModel );
-		captionModel.connect( this, { 'update': 'onModelUpdate' } );
+		captionModel.connect( this, { update: 'onModelUpdate' } );
 		this.children.push( captionView );
 		captionView.attach( this );
 		captionView.$element.appendTo( $thumb );

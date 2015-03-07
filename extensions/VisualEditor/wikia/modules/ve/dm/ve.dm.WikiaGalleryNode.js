@@ -16,11 +16,16 @@
 ve.dm.WikiaGalleryNode = function VeDmWikiaGalleryNode() {
 	// Parent constructor
 	ve.dm.WikiaGalleryNode.super.apply( this, arguments );
+
+	// Mixin constructors
+	ve.dm.FocusableNode.call( this );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.dm.WikiaGalleryNode, ve.dm.BranchNode );
+
+OO.mixinClass( ve.dm.WikiaGalleryNode, ve.dm.FocusableNode );
 
 /* Static Properties */
 
@@ -53,12 +58,12 @@ ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements ) {
 	}
 
 	return {
-		'type': this.name,
-		'attributes': {
-			'mw': mwData,
-			'originalMw': mwDataJSON,
-			'expand': expandValue,
-			'originalExpand': expandValue
+		type: this.name,
+		attributes: {
+			mw: mwData,
+			originalMw: mwDataJSON,
+			expand: expandValue,
+			originalExpand: expandValue
 		}
 	};
 };

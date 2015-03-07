@@ -22,7 +22,7 @@ class InlineImageFilter extends Filter {
 	public function process( $contents ) {
 		wfProfileIn( __METHOD__ );
 
-		$contents = preg_replace_callback( "/([, ]url[^\n]*?\))([^\n]*?)(\s*\/\*\s*(base64|inline)\s*\*\/)/is", [$this, 'processMatches'], $contents );
+		$contents = preg_replace_callback( "/([, ]url[^\n]*?\))([^\n]*?)(\s*\/\*\s*inline\s*\*\/)/is", [$this, 'processMatches'], $contents );
 
 		wfProfileOut( __METHOD__ );
 

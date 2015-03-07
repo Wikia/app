@@ -1,4 +1,4 @@
-/* global UserLoginModal, wgScriptPath, GlobalNotification */
+/* global UserLoginModal, wgScriptPath, GlobalNotification, UserSignupAjaxValidation */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -61,10 +61,7 @@
 				self.bindEvents();
 
 				// load when the login dropdown is shown or specific page is loaded
-				$.loadFacebookAPI()
-					.done(function () {
-						$('.sso-login').removeClass('hidden');
-					});
+				$.loadFacebookSDK();
 
 				self.log('init');
 				self.bucky.timer.stop('init');
@@ -290,6 +287,31 @@
 					}
 				}
 			});
+
+			this.initSignupFormValidation();
+		},
+
+		initSignupFormValidation: function () {
+			var validator,
+				wikiaForm = this.signupForm.wikiaForm,
+				inputs = wikiaForm.inputs,
+				inputsToValidate = ['username', 'password'],
+				$filteredInputs = $();
+
+			if (inputs.email) {
+				inputsToValidate.push('email');
+			}
+
+			validator = new UserSignupAjaxValidation({
+				wikiaForm: wikiaForm,
+				submitButton: inputs.submit
+			});
+
+			// Add validation on blur event for all inputs to validate
+			inputsToValidate.forEach(function (inputName) {
+				$filteredInputs = $filteredInputs.add(inputs[inputName]);
+			});
+			$filteredInputs.on('blur', validator.validateInput.bind(validator));
 		},
 
 		/**

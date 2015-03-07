@@ -411,6 +411,8 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'places-editor-search' => '검색',
+	'places-geolocation-button-label' => '장소 추가',
+	'places-geolocation-modal-add-title' => '장소 추가',
 	'places-geolocation-modal-error-title' => '오류',
 	'places-geolocation-modal-not-available' => '이런! 이 기능은 아직 모바일 환경에서만 이용할 수 있습니다.<br /><br />이 기능을 이용하고 싶으시면 모바일을 통해 접속해 주세요.',
 );

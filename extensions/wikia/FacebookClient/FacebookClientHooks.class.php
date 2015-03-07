@@ -135,5 +135,11 @@ class FacebookClientHooks {
 		return true;
 	}
 
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 
+		$script = AssetsManager::getInstance()->getURL( 'facebook_client_xfbml_js' );
+		$text .= Html::linkedScript( $script[0] );
+
+		return true;
+	}
 }

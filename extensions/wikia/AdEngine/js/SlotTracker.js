@@ -21,8 +21,6 @@ define('ext.wikia.adEngine.slotTracker', [
 			HOME_TOP_RIGHT_BOXAD:   'medrec',
 			HUB_TOP_LEADERBOARD:    'leaderboard',
 			INCONTENT_BOXAD_1:      'medrec',
-			INVISIBLE_1:            'pixel',
-			INVISIBLE_2:            'pixel',
 			INVISIBLE_SKIN:         'pixel',
 			INCONTENT_1A:           'incontent',
 			INCONTENT_1B:           'incontent',

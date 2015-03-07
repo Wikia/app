@@ -1403,6 +1403,31 @@ $messages['ka'] = array(
 $messages['ko'] = array(
 	'userlogin-login-heading' => '로그인',
 	'userlogin-error-invalidfacebook' => '페이스북 계정에 문제가 생긴것 같아요; 페이스북에 로그인한 후 다시 시도하세요.',
+	'userlogin-oldpassword' => '기존 비밀번호',
+	'userlogin-newpassword' => '새 비밀번호',
+	'userlogin-password-email-greeting' => '안녕하세요, $USERNAME 님.',
+	'userlogin-password-email-content' => '위키아에 로그인하시려면 다음 임시 비밀번호를 사용해 주세요: "$NEWPASSWORD"
+<br /><br />
+임시 비밀번호를 요청한 적이 없으신가요? 그래도 걱정하지 마세요! 귀하의 계정은 여전히 안전합니다. 그냥 이 메일은 무시하고 기존의 비밀번호로 로그인하세요.
+<br /><br />
+질문이나 의견이 있으신가요? 언제든지 저희에게 <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">연락</a>해 주세요.',
+	'userlogin-password-email-signature' => '위키아 커뮤니티 지원팀',
+	'userlogin-password-email-body' => '안녕하세요 $2 님.
+
+위키아에 로그인하시려면 다음 임시 비밀번호를 사용해 주세요: "$3"
+
+임시 비밀번호를 요청한 적이 없으신가요? 그래도 걱정하지 마세요! 귀하의 계정은 여전히 안전합니다. 그냥 이 메일은 무시하고 기존의 비밀번호로 로그인하세요.
+
+질문이나 의견이 있으신가요? 언제든지 저희에게 연락해 주세요: http://community.wikia.com/wiki/Special:Contact/account-issue
+
+위키아 커뮤니티 지원팀
+
+
+___________________________________________
+
+중앙 커뮤니티에서 도움을 구하세요: http://ko.community.wikia.com
+알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: {{fullurl:{{ns:special}}:Preferences}}',
+	'userlogin-email-footer-line2' => '알림을 받고 싶지 않으신가요? <a href="{{fullurl:{{ns:special}}:Preferences}}" style="color:#2a87d5;text-decoration:none;">환경설정</a>에서 알림 설정을 변경할 수 있습니다',
 	'userlogin-loginreqlink' => '로그인',
 );
 

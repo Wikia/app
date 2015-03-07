@@ -16,3 +16,13 @@
 	float: right;
 	font-size: 0.9em;
 }
+
+.swm-hint {
+	font-style: italic;
+}
+
+.swm-select-multiple {
+	overflow: hidden;
+	padding: 3px 5px;
+	width: 100%;
+}

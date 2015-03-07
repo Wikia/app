@@ -60,7 +60,7 @@ class UserLoginHooksHelper {
 	}
 
 	// get email authentication for Preferences::profilePreferences
-	public static function onGetEmailAuthentication( User &$user, RequestContext $context, &$disableEmailPrefs, &$emailauthenticated ) {
+	public static function onGetEmailAuthentication( User &$user, IContextSource $context, &$disableEmailPrefs, &$emailauthenticated ) {
 		if ( $user->getEmail() ) {
 			$emailTimestamp = $user->getEmailAuthenticationTimestamp();
 			$optionNewEmail = $user->getOption( 'new_email' );
@@ -130,9 +130,15 @@ class UserLoginHooksHelper {
 	 * @return bool
 	 */
 	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+		$app = F::app();
+
+		if ( $app->checkSkin( 'wikiamobile' ) ) {
 			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();
 		}
+
+		// Max and min password lengths for JS validation
+		$vars['wgWikiaMaxNameChars'] = $app->wg->WikiaMaxNameChars;
+		$vars['wgMinimalPasswordLength'] = $app->wg->MinimalPasswordLength;
 
 		return true;
 	}
@@ -196,6 +202,34 @@ class UserLoginHooksHelper {
 			$scssPackages[] = 'wikiamobile_usersignup_scss';
 		}
 
+		return true;
+	}
+
+	/**
+	 * Hook introducing additional control over account creation
+	 * Currently forbids to create an account if username contains
+	 * circled latin characters, e.g. Ⓐ or ⓜ
+	 * @param User $user
+	 * @param String $message
+	 * @return bool
+	 */
+	static public function onAbortNewAccount( $user, &$message ) {
+		$username = $user->getName();
+		$forbiddenCharactersRegex = '/[\x{24B6}-\x{24E9}]|[\x{1F150}-\x{1F169}]/u';
+		if ( preg_match( $forbiddenCharactersRegex, $username ) ) {
+			$message = wfMessage( 'usersignup-error-symbols-in-username' )->escaped();
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Add JS messages to the output
+	 * @param \OutputPage $out An output object passed from a hook
+	 * @return bool
+	 */
+	public static function onBeforePageDisplay( \OutputPage $out ) {
+		$out->addModules( 'ext.userLogin' );
 		return true;
 	}
 }

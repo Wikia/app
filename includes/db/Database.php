@@ -175,7 +175,7 @@ interface DatabaseType {
 	 *
 	 * @return string: wikitext of a link to the server software's web site
 	 */
-	static function getSoftwareLink();
+	function getSoftwareLink();
 
 	/**
 	 * A string describing the current software version, like from
@@ -585,17 +585,36 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Constructor.
-	 * @param $server String: database server host
-	 * @param $user String: database user name
-	 * @param $password String: database user password
-	 * @param $dbName String: database name
-	 * @param $flags
-	 * @param $tablePrefix String: database table prefixes. By default use the prefix gave in LocalSettings.php
+	 *
+	 * FIXME: It is possible to construct a Database object with no associated
+	 * connection object, by specifying no parameters to __construct(). This
+	 * feature is deprecated and should be removed.
+	 *
+	 * DatabaseBase subclasses should not be constructed directly in external
+	 * code. DatabaseBase::factory() should be used instead.
+	 *
+	 * @param array $params Parameters passed from DatabaseBase::factory()
 	 */
-	function __construct( $server = false, $user = false, $password = false, $dbName = false,
-		$flags = 0, $tablePrefix = 'get from global'
-	) {
+	function __construct( $params = null ) {
 		global $wgDBprefix, $wgCommandLineMode;
+
+		if ( is_array( $params ) ) { // MW 1.22
+			$server = $params['host'];
+			$user = $params['user'];
+			$password = $params['password'];
+			$dbName = $params['dbname'];
+			$flags = $params['flags'];
+			$tablePrefix = $params['tablePrefix'];
+		} else { // legacy calling pattern
+			wfDeprecated( __METHOD__ . " method called without parameter array.", "1.23" );
+			$args = func_get_args();
+			$server = isset( $args[0] ) ? $args[0] : false;
+			$user = isset( $args[1] ) ? $args[1] : false;
+			$password = isset( $args[2] ) ? $args[2] : false;
+			$dbName = isset( $args[3] ) ? $args[3] : false;
+			$flags = isset( $args[4] ) ? $args[4] : 0;
+			$tablePrefix = isset( $args[5] ) ? $args[5] : 'get from global';
+		}
 
 		$this->mFlags = $flags;
 
@@ -660,7 +679,7 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * Given a DB type, construct the name of the appropriate child class of
 	 * DatabaseBase. This is designed to replace all of the manual stuff like:
-	 *	$class = 'Database' . ucfirst( strtolower( $type ) );
+	 *    $class = 'Database' . ucfirst( strtolower( $dbType ) );
 	 * as well as validate against the canonical list of DB types we have
 	 *
 	 * This factory function is mostly useful for when you need to connect to a
@@ -668,31 +687,79 @@ abstract class DatabaseBase implements DatabaseType {
 	 * an extension, et cetera). Do not use this to connect to the MediaWiki
 	 * database. Example uses in core:
 	 * @see LoadBalancer::reallyOpenConnection()
-	 * @see ExternalUser_MediaWiki::initFromCond()
 	 * @see ForeignDBRepo::getMasterDB()
-	 * @see WebInstaller_DBConnect::execute()
+	 * @see WebInstallerDBConnect::execute()
 	 *
-	 * @param $dbType String A possible DB type
-	 * @param $p Array An array of options to pass to the constructor.
-	 *    Valid options are: host, user, password, dbname, flags, tablePrefix
-	 * @return DatabaseBase subclass or null
+	 * @since 1.18
+	 *
+	 * @param string $dbType A possible DB type
+	 * @param array $p An array of options to pass to the constructor.
+	 *    Valid options are: host, user, password, dbname, flags, tablePrefix, schema, driver
+	 * @throws MWException If the database driver or extension cannot be found
+	 * @return DatabaseBase|null DatabaseBase subclass or null
 	 */
-	public final static function factory( $dbType, $p = array() ) {
+	final public static function factory( $dbType, $p = array() ) {
 		$canonicalDBTypes = array(
-			'mysql', 'postgres', 'sqlite', 'oracle', 'mssql', 'ibm_db2'
+			'mysql' => array( 'mysqli', 'mysql' ),
+			'postgres' => array(),
+			'sqlite' => array(),
+			'oracle' => array(),
+			'mssql' => array(),
 		);
-		$dbType = strtolower( $dbType );
-		$class = 'Database' . ucfirst( $dbType );
 
-		if( in_array( $dbType, $canonicalDBTypes ) || ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) ) {
-			return new $class(
-				isset( $p['host'] ) ? $p['host'] : false,
-				isset( $p['user'] ) ? $p['user'] : false,
-				isset( $p['password'] ) ? $p['password'] : false,
-				isset( $p['dbname'] ) ? $p['dbname'] : false,
-				isset( $p['flags'] ) ? $p['flags'] : 0,
-				isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global'
+		$driver = false;
+		$dbType = strtolower( $dbType );
+		if ( isset( $canonicalDBTypes[$dbType] ) && $canonicalDBTypes[$dbType] ) {
+			$possibleDrivers = $canonicalDBTypes[$dbType];
+			if ( !empty( $p['driver'] ) ) {
+				if ( in_array( $p['driver'], $possibleDrivers ) ) {
+					$driver = $p['driver'];
+				} else {
+					throw new MWException( __METHOD__ .
+						" cannot construct Database with type '$dbType' and driver '{$p['driver']}'" );
+				}
+			} else {
+				foreach ( $possibleDrivers as $posDriver ) {
+					if ( extension_loaded( $posDriver ) ) {
+						$driver = $posDriver;
+						break;
+					}
+				}
+			}
+		} else {
+			$driver = $dbType;
+		}
+		if ( $driver === false ) {
+			throw new MWException( __METHOD__ .
+				" no viable database extension found for type '$dbType'" );
+		}
+
+		// Determine schema defaults. Currently Microsoft SQL Server uses $wgDBmwschema,
+		// and everything else doesn't use a schema (e.g. null)
+		// Although postgres and oracle support schemas, we don't use them (yet)
+		// to maintain backwards compatibility
+		$defaultSchemas = array(
+			'mysql' => null,
+			'postgres' => null,
+			'sqlite' => null,
+			'oracle' => null,
+			'mssql' => 'get from global',
+		);
+
+		$class = 'Database' . ucfirst( $driver );
+		if ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) {
+			$params = array(
+				'host' => isset( $p['host'] ) ? $p['host'] : false,
+				'user' => isset( $p['user'] ) ? $p['user'] : false,
+				'password' => isset( $p['password'] ) ? $p['password'] : false,
+				'dbname' => isset( $p['dbname'] ) ? $p['dbname'] : false,
+				'flags' => isset( $p['flags'] ) ? $p['flags'] : 0,
+				'tablePrefix' => isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global',
+				'schema' => isset( $p['schema'] ) ? $p['schema'] : $defaultSchemas[$dbType],
+				'foreign' => isset( $p['foreign'] ) ? $p['foreign'] : false
 			);
+
+			return new $class( $params );
 		} else {
 			return null;
 		}
@@ -858,7 +925,7 @@ abstract class DatabaseBase implements DatabaseType {
 		# Wikia change - begin
 		# @author macbre
 		# Add profiling data to queries like BEGIN or COMMIT (preg_replace above will not handle them)
-		if (strpos($sql, ' ') === false) {
+		if ( strpos( $sql, ' ' ) === false ) {
 			$commentedSql = "{$sql} /* {$fname} {$userName} */";
 		}
 		# Wikia change - end
@@ -1536,17 +1603,18 @@ abstract class DatabaseBase implements DatabaseType {
 		# as to avoid crashing php on some large strings.
 		# $sql = preg_replace ( "/'([^\\\\']|\\\\.)*'|\"([^\\\\\"]|\\\\.)*\"/", "'X'", $sql);
 
-		$sql = str_replace ( "\\\\", '', $sql );
-		$sql = str_replace ( "\\'", '', $sql );
-		$sql = str_replace ( "\\\"", '', $sql );
-		$sql = preg_replace ( "/'.*'/s", "'X'", $sql );
-		$sql = preg_replace ( '/".*"/s', "'X'", $sql );
+		$sql = str_replace( "\\\\", '', $sql );
+		$sql = str_replace( "\\'", '', $sql );
+		$sql = str_replace( "\\\"", '', $sql );
+		$sql = preg_replace( "/'.*'/s", "'X'", $sql );
+		$sql = preg_replace( '/".*"/s', "'X'", $sql );
 
 		# All newlines, tabs, etc replaced by single space
-		$sql = preg_replace ( '/\s+/', ' ', $sql );
+		$sql = preg_replace( '/\s+/', ' ', $sql );
 
 		# All numbers => N
-		$sql = preg_replace ( '/-?[0-9]+/s', 'N', $sql );
+		$sql = preg_replace( '/-?\d+(,-?\d+)+/s', 'N,...,N', $sql );
+		$sql = preg_replace( '/-?\d+/s', 'N', $sql );
 
 		return $sql;
 	}
@@ -2382,7 +2450,7 @@ abstract class DatabaseBase implements DatabaseType {
 			$rows = array( $rows );
 		}
 
-		foreach( $rows as $row ) {
+		foreach ( $rows as $row ) {
 			# Delete rows which collide
 			if ( $uniqueIndexes ) {
 				$sql = "DELETE FROM $quotedTable WHERE ";
@@ -2551,10 +2619,10 @@ abstract class DatabaseBase implements DatabaseType {
 			}
 			$sql .= ' WHERE ' . $conds;
 		}
-		
+
 		if ( strpos( $sql, '`user`' ) !== false ) {
 			global $wgDBname, $wgUser;
-			error_log( sprintf( "MOLI: (%s), user: %d: %s", $wgDBname, ( !empty($wgUser) ) ? $wgUser->getId() : 0, $sql ) );
+			error_log( sprintf( "MOLI: (%s), user: %d: %s", $wgDBname, ( !empty( $wgUser ) ) ? $wgUser->getId() : 0, $sql ) );
 		}
 
 		return $this->query( $sql, $fname );
@@ -3433,11 +3501,11 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @since 1.18
 	 */
 	public function dropTable( $tableName, $fName = 'DatabaseBase::dropTable' ) {
-		if( !$this->tableExists( $tableName, $fName ) ) {
+		if ( !$this->tableExists( $tableName, $fName ) ) {
 			return false;
 		}
 		$sql = "DROP TABLE " . $this->tableName( $tableName );
-		if( $this->cascadingDeletes() ) {
+		if ( $this->cascadingDeletes() ) {
 			$sql .= " CASCADE";
 		}
 		return $this->query( $sql, $fName );
@@ -3500,17 +3568,17 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $fname the function name
 	 * @param bool $isMaster is this against the master
 	 *
-	 * @return ResultWrapper see doQuery
+	 * @return ResultWrapper|resource|bool see doQuery
 	 */
 	protected function executeAndProfileQuery( $sql, $fname, $isMaster ) {
 		$queryId = MWDebug::query( $sql, $fname, $isMaster );
-		$start = microtime(true);
+		$start = microtime( true );
 
 		// Wikia change: DatabaseMysql returns a resource instead of ResultWrapper instance
-		/* @var $ret resource */
+		/* @var $ret resource|bool */
 		$ret = $this->doQuery( $sql );
 
-		$this->logSql( $sql, $ret, $fname, microtime(true) - $start, $isMaster );
+		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
 
 		MWDebug::queryTime( $queryId );
 		return $ret;
@@ -3521,41 +3589,55 @@ abstract class DatabaseBase implements DatabaseType {
 	 * at the rate defined in self::QUERY_SAMPLE_RATE.
 	 *
 	 * @param string $sql the query
-	 * @param ResultWrapper|resource $ret database results
-	 * @param string $fname the function name
+	 * @param ResultWrapper|resource|bool $ret database results
+	 * @param string $fname the name of the function that made this query
 	 * @param bool $isMaster is this against the master
 	 * @return void
 	 */
 	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
 		global $wgDBcluster;
 
-		if ( $ret === false ) {
-			return;
+		if ( $ret instanceof ResultWrapper ) {
+			// NOP for MySQL driver
+			$num_rows = $ret->numRows();
+		} elseif ( $ret instanceof mysqli_result) {
+			// for SELECT queries report how many rows are sent to the client
+			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
+			$num_rows = $ret->num_rows ?: $this->affectedRows();
+		} elseif ( is_resource( $ret ) ) {
+			// for SELECT queries report how many rows are sent to the client
+			$num_rows = mysql_num_rows( $ret );
+		} elseif ( $ret === true ) {
+			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
+			$num_rows = $this->affectedRows();
+		} else {
+			// failed queries
+			$num_rows = false;
 		}
 
-		if ($this->getSampler()->shouldSample()) {
+		if ( $this->getSampler()->shouldSample() ) {
 			$this->getWikiaLogger()->info( "SQL $sql", [
 				'method'      => $fname,
 				'elapsed'     => $elapsedTime,
-				'num_rows'    => ( $ret instanceof ResultWrapper ? $ret->numRows() : mysql_num_rows( $ret ) ),
+				'num_rows'    => $num_rows,
 				'cluster'     => $wgDBcluster,
 				'server'      => $this->mServer,
 				'server_role' => $isMaster ? 'master' : 'slave',
 				'db_name'     => $this->mDBname,
 				'exception'   => new Exception(), // log the backtrace
-			]);
+			] );
 		}
 	}
 
 	public function getSampler() {
-		if (!isset($this->sampler)) {
-			$this->sampler = new BernoulliTrial(self::QUERY_SAMPLE_RATE);
+		if ( !isset( $this->sampler ) ) {
+			$this->sampler = new BernoulliTrial( self::QUERY_SAMPLE_RATE );
 		}
 
 		return $this->sampler;
 	}
 
-	public function setSampler(BernoulliTrial $sampler) {
+	public function setSampler( BernoulliTrial $sampler ) {
 		$this->sampler = $sampler;
 	}
 

@@ -8,6 +8,7 @@ class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
 	const CACHE_VERSION = 9;
 	const SOLR_SNIPPETS_FIELD = 'snippet_s';
+	const SOLR_ARTICLE_TYPE_FIELD = 'article_type_s';
 
 	/** @var Article $article */
 	private $article = null;
@@ -29,11 +30,11 @@ class ArticleService extends WikiaObject {
 			'h6'
 	);
 	private $patterns = array(
-		//strip decimal entities
-		'/&#\d{2,5};/ue' => '',
-		//strip hex entities
-		'/&#x[a-fA-F0-7]{2,8};/ue' => '',
-		//this should be always the last
+		// strip decimal entities
+		'/&#\d{2,5};/u' => '',
+		// strip hex entities
+		'/&#x[a-fA-F0-7]{2,8};/u' => '',
+		// this should be always the last
 		'/\s+/' => ' '
 	);
 	private static $localCache = array();
@@ -79,20 +80,21 @@ class ArticleService extends WikiaObject {
 	 * @param integer $articleId A valid article ID from which
 	 * an Article instance will be constructed to be used as a
 	 * source of content
+	 * @return ArticleService fluent interface
 	 */
 	public function setArticleById( $articleId ) {
-		$this->article = Article::newFromID($articleId);
+		$this->article = Article::newFromID( $articleId );
 		return $this;
 	}
 
 	/**
 	 * Sets the Article instance via Title object
-	 * @param Title $article Title object
+	 * @param Title $title Title object
 	 * class to use as a source of content
 	 * @return ArticleService fluent interface
 	 */
 	public function setArticleByTitle( Title $title ) {
-		$this->article = new Article($title);
+		$this->article = new Article( $title );
 		return $this;
 	}
 
@@ -118,7 +120,7 @@ class ArticleService extends WikiaObject {
 	 * $snippet = $service->getTextSnippet();
 	 */
 	public function getTextSnippet( $length = 100 ) {
-		//don't allow more than the maximum to avoid flooding Memcached
+		// don't allow more than the maximum to avoid flooding Memcached
 		if ( $length > self::MAX_LENGTH ) {
 			throw new WikiaException( 'Maximum allowed length is ' . self::MAX_LENGTH );
 		}
@@ -138,9 +140,9 @@ class ArticleService extends WikiaObject {
 			return '';
 		}
 
-		//memoize to avoid Memcache access overhead
-		//when the same article needs to be processed
-		//more than once in the same process
+		// memoize to avoid Memcache access overhead
+		// when the same article needs to be processed
+		// more than once in the same process
 		if ( array_key_exists( $id, self::$localCache ) ) {
 			$text = self::$localCache[$id];
 		} else {
@@ -149,7 +151,7 @@ class ArticleService extends WikiaObject {
 			$text = self::$localCache[$id] = WikiaDataAccess::cache(
 				$key,
 				86400 /*24h*/,
-				function() use ( $service, $fname ){
+				function() use ( $service, $fname ) {
 					wfProfileIn( $fname . '::CacheMiss' );
 
 					$content = '';
@@ -178,41 +180,52 @@ class ArticleService extends WikiaObject {
 	 * Accesses a snippet from MediaWiki.
 	 * @return string
 	 */
-	public function getUncachedSnippetFromArticle() {
-		//get standard parser cache for anons,
-		//99% of the times it will be available but
-		//generate it in case is not
+	public function getUncachedSnippetFromArticle()
+	{
+		// get standard parser cache for anons,
+		// 99% of the times it will be available but
+		// generate it in case is not
 		$content = '';
 		$page = $this->article->getPage();
 		$opts = $page->makeParserOptions( new User() );
 		$parserOutput = $page->getParserOutput( $opts );
 		try {
-			$content = $this->getContentFromParser($parserOutput);
+			$content = $this->getContentFromParser( $parserOutput );
 		} catch ( Exception $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'ArticleService, not parser output object found',
-				[ 'parserOutput' => $parserOutput, 'parserOptions' => $opts, 'page' => $page, 'exception' => $e ]
+				['parserOutput' => $parserOutput, 'parserOptions' => $opts, 'page' => $page, 'exception' => $e]
 			);
 		}
 
-		//Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
+		// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
 		wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->article, &$content, ArticleService::MAX_LENGTH ) );
 
+		return $this->cleanArticleSnippet( $content );
+	}
+
+	/**
+	 * Cleans up the content of the article snippet
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function cleanArticleSnippet( $content ) {
 		if ( mb_strlen( $content ) > 0 ) {
-			//remove all unwanted tag pairs and their contents
+			// remove all unwanted tag pairs and their contents
 			foreach ( $this->tags as $tag ) {
 				$content = preg_replace( "/<{$tag}\b[^>]*>.*<\/{$tag}>/imsU", '', $content );
 			}
 
-			//cleanup remaining tags
+			// cleanup remaining tags
 			$content = strip_tags( $content );
 
-			//apply some replacements
+			// apply some replacements
 			foreach ( $this->patterns as $reg => $rep ) {
 				$content = preg_replace( $reg, $rep, $content );
 			}
 
-			//decode entities
+			// decode entities
 			$content = html_entity_decode( $content );
 			$content = trim( $content );
 
@@ -223,7 +236,7 @@ class ArticleService extends WikiaObject {
 		return $content;
 	}
 
-	private function getContentFromParser(ParserOutput $output) {
+	private function getContentFromParser( ParserOutput $output ) {
 		return $output->getText();
 	}
 
@@ -248,6 +261,32 @@ class ArticleService extends WikiaObject {
 				$text = $document[ static::SOLR_SNIPPETS_FIELD ];
 			} elseif ( isset( $document[$htmlField] ) ) {
 				$text = $document[$htmlField];
+			}
+		}
+		return $text;
+	}
+
+	/**
+	 * Gets the article type using Solr.
+	 * Since SolrDocumentService uses memoization, we will NOT do an additional Solr request
+	 * because of this method - both snippet and article type can use the same memoized
+	 * result
+	 *
+	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
+	 */
+	public function getArticleType() {
+		if ( !($this->article instanceof Article ) ) {
+			return '';
+		}
+
+		$service = new SolrDocumentService();
+		$service->setArticleId( $this->article->getId() );
+		$document = $service->getResult();
+
+		$text = '';
+		if ( $document !== null ) {
+			if ( !empty( $document[ static::SOLR_ARTICLE_TYPE_FIELD] ) ) {
+				$text = $document[ static::SOLR_ARTICLE_TYPE_FIELD];
 			}
 		}
 		return $text;

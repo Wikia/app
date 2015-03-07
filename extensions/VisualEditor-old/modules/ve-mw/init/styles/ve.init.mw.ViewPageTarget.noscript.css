@@ -1,0 +1,42 @@
+/*!
+ * VisualEditor MediaWiki ViewPageTarget noscript styles
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+/*csslint ids:false */
+
+/* Hide VE edit tab and section edit things for noscript users.
+ * For script users they're always visible unless and until ve-not-available is added.
+ */
+.client-nojs #ca-ve-edit,
+.client-nojs .mw-editsection-divider,
+.client-nojs .mw-editsection-visualeditor,
+.ve-not-available #ca-ve-edit,
+.ve-not-available .mw-editsection-divider,
+.ve-not-available .mw-editsection-visualeditor {
+	display: none;
+}
+
+/* For script users, expand brackets by default, unless and until ve-not-available is added */
+
+/* @noflip */
+.client-js .mw-content-ltr .mw-editsection-bracket:first-of-type,
+.client-js .mw-content-rtl .mw-editsection-bracket:not(:first-of-type) {
+	margin-right: 0.25em;
+	color: #555;
+}
+
+/* @noflip */
+.client-js .mw-content-rtl .mw-editsection-bracket:first-of-type,
+.client-js .mw-content-ltr .mw-editsection-bracket:not(:first-of-type) {
+	margin-left: 0.25em;
+	color: #555;
+}
+
+/* Must have the same, or higher, specificity (4x class/pseudo-class) as the rule above */
+.client-js.ve-not-available .mw-content-ltr .mw-editsection-bracket,
+.client-js.ve-not-available .mw-content-rtl .mw-editsection-bracket {
+	margin-left: 0;
+	margin-right: 0;
+}

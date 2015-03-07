@@ -9,6 +9,8 @@ class MercuryApiController extends WikiaController {
 	const NUMBER_CONTRIBUTORS = 5;
 	const DEFAULT_PAGE = 1;
 
+	const WIKI_VARIABLES_CACHE_TTL = 60;
+	
 	private $mercuryApi = null;
 
 	public function __construct() {
@@ -84,7 +86,7 @@ class MercuryApiController extends WikiaController {
 	 * @param int $articleId
 	 * @return array
 	 */
-	private function getArticleJson( $articleId ) {
+	private function getArticleJson( $articleId, Title $title ) {
 		$redirect = $this->request->getVal('redirect');
 
 		$articleAsJson = $this->sendRequest( 'ArticlesApi', 'getAsJson', [
@@ -93,6 +95,12 @@ class MercuryApiController extends WikiaController {
 		] )->getData();
 
 		$articleAsJson[ 'description' ] = htmlspecialchars( $articleAsJson[ 'description' ] );
+
+		$articleType = WikiaPageType::getArticleType( $title );
+
+		if ( !empty( $articleType ) ) {
+			$articleAsJson[ 'type' ] = $articleType;
+		}
 
 		return $articleAsJson;
 	}
@@ -250,6 +258,9 @@ class MercuryApiController extends WikiaController {
 
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		//cache wikiVariables for 1 minute
+		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
 	/**
@@ -261,7 +272,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
 
-			$articleAsJson = $this->getArticleJson( $articleId );
+			$articleAsJson = $this->getArticleJson( $articleId, $title );
 
 			$data = [
 				'details' => $this->getArticleDetails( $articleId ),

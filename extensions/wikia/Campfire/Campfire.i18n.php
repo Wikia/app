@@ -147,6 +147,13 @@ $messages['fr'] = array(
 	'campfire-licensed-under' => 'Sous licence $1',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'campfire-page-header' => '$1 fan $2',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

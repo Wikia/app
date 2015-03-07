@@ -18,7 +18,8 @@ define('ext.wikia.adEngine.amazonMatchOld', [
 		log(['trackState', amazonTargs], 'debug', logGroup);
 
 		var eventName,
-			i, j,
+			i,
+			j,
 			data,
 			matches;
 
@@ -28,7 +29,7 @@ define('ext.wikia.adEngine.amazonMatchOld', [
 			if (matches) {
 				data = {};
 
-				for(i = matches.length - 1; i > -1; i -= 1) {
+				for (i = matches.length - 1; i > -1; i -= 1) {
 					j = matches[i].split('_');
 					data[j[1]] = data[j[1]] || [];
 					data[j[1]].push(j[0]);

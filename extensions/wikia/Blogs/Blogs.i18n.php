@@ -652,6 +652,22 @@ $messages['bg'] = array(
 	'blogs-searchprofile' => 'Блогове',
 );
 
+/** Western Balochi (بلوچی رخشانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bgn'] = array(
+	'create-blog-categories-submit' => 'ثبت کورتین',
+	'create-blog-save' => 'ای تاکدیم ذخیره بیئت',
+	'create-blog-preview' => 'دیم دیست',
+	'create-blog-listing-preview' => 'دیم دیست',
+	'create-blog-listing-sortby-author' => 'نویسوک',
+	'blog-comment-delete' => 'پاک کورتین',
+	'blog-comment-hide' => 'چیهر داتین',
+	'blog-comment-history' => 'تاریخچه',
+	'blog-comment-edit' => 'ایڈیٹ',
+	'blog-refresh-label' => 'نوک کورتین',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */
@@ -2002,8 +2018,12 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
  */
 $messages['fy'] = array(
 	'create-blog-listing-sortby-author' => 'Auteur',
+	'blog-comment-delete' => 'fuortsmite',
 	'blog-comment-history' => 'skiednis',
 	'blog-comment-edit' => 'bewurkje',
+	'blog-avatar-preferences-title' => 'Avatar',
+	'blog-fromsitename' => 'Fan $1',
+	'blog-by' => '$1 troch $2',
 );
 
 /** Galician (galego)
@@ -4181,6 +4201,7 @@ $messages['pfl'] = array(
  * @author Pio387
  * @author Sovq
  * @author Sp5uhe
+ * @author VerMa
  * @author Woytecr
  */
 $messages['pl'] = array(
@@ -4224,7 +4245,7 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'create-blog-listing-preview' => 'Podgląd',
 	'create-blog-listing-authors' => 'Znajdź wpisy tych autorów (rozdziel przecinkami)',
 	'create-blog-listing-blog-post-categories-title' => 'Znajdź wpisy z tych kategorii',
-	'create-blog-listing-page-categories-title' => 'Dodaj tą listę do tych kategorii',
+	'create-blog-listing-page-categories-title' => 'Dodaj tę listę do tych kategorii',
 	'create-blog-listing-matches' => 'Wyniki',
 	'create-blog-listing-matches-calculate' => 'Oblicz',
 	'create-blog-listing-matches-recalculate' => 'Oblicz ponownie',

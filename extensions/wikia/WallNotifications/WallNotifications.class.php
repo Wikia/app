@@ -135,13 +135,11 @@ class WallNotifications {
 	 * 	$output = array(
 	 * 		array(
 	 * 			'id' => 831,
-	 * 			'wgServer' => "http://muppet.wikia.com",
 	 * 			'sitename' => "Muppet Wiki",
 	 * 			'unread' => 5
 	 * 		),
 	 * 		array (
 	 * 			'id' => 5915,
-	 * 			'wgServer' => "http://poznan.wikia.com",
 	 * 			'sitename' => "Poznańska Wiki",
 	 * 			'unread' => 1
 	 * 		)
@@ -225,7 +223,6 @@ class WallNotifications {
 			unset( $val[ $wgCityId ] );
 			$output = [ [
 				'id' => $wgCityId,
-				'wgServer' => $this->getWgServer($wgCityId),
 				'sitename' => $wgSitename] ];
 		} else {
 			$output = [];
@@ -234,31 +231,12 @@ class WallNotifications {
 		foreach ( $val as $wikiId => $wikiSitename ) {
 			$output[] = [
 				'id' => $wikiId,
-				'wgServer' => $this->getWgServer( $wikiId ),
 				'sitename' => $wikiSitename
 			];
 		}
 		return $output;
 
 	}
-
-	/**
-	 * @desc Helper method to get devbox urls for notifications
-	 *
-	 * @param Integer $id wiki id
-	 * @return String
-	 */
-	private function getWgServer( $id ) {
-		global $wgDevelEnvironment, $wgDevelEnvironmentName;
-
-		$url = WikiFactory::getVarValueByName( "wgServer", $id );
-		if ( !empty( $wgDevelEnvironment ) ) {
-			$url = str_replace( 'wikia.com', $wgDevelEnvironmentName . '.wikia-dev.com', $url );
-		}
-
-		return $url;
-	}
-
 
 	private function addWikiToList( $userId, $wikiId, $wikiSitename ) {
 		global $wgMemc;

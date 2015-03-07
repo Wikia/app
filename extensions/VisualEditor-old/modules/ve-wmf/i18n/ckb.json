@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Calak",
+			"Muhammed taha"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|دەستکاریکەری دیداری]]",
+	"tag-visualeditor-description": "دەستکاری بە [[{{MediaWiki:visualeditor-descriptionpagelink}}|دەستکاریکەری دیداری]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|دەستکاریکەری دیداری: تاوتوێ]]",
+	"visualeditor-help-label": "ڕێنوێنیی بەکارھێنەر بخوێنەرەوە"
+}
