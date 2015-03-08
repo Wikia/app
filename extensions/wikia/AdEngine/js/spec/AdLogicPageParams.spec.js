@@ -14,6 +14,9 @@ describe('AdLogicPageParams', function () {
 					targeting: targeting || {},
 					forceProviders: {}
 				};
+			},
+			addCallback: function () {
+				return;
 			}
 		};
 	}
@@ -91,8 +94,8 @@ describe('AdLogicPageParams', function () {
 			windowMock.document,
 			windowMock.location,
 			mockAdContext(targeting),
-			abTestMock,
 			mockPageViewCounter(opts.pvCount),
+			abTestMock,
 			undefined,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);

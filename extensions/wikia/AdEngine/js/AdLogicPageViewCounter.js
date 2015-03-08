@@ -54,8 +54,6 @@ define('ext.wikia.adEngine.adLogicPageViewCounter', [
 		val.pvs += 1;
 
 		cache.set(cacheKey, val, ttlLeft, now);
-
-		return val.pvs;
 	}
 
 	return {
