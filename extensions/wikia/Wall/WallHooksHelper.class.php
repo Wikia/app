@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Hooks for Message Wall.
+ *
+ * All of these hooks will be executed when Forums are enabled
+ * even if Message Wall is disabled, so appropriate checks are
+ * needed if the hook should only take effect if Wall is enabled.
+ */
 class WallHooksHelper {
 	const RC_WALL_COMMENTS_MAX_LEN = 50;
 	const RC_WALL_SECURENAME_PREFIX = 'WallMessage_';
@@ -2218,8 +2225,7 @@ class WallHooksHelper {
 	 * @return bool
 	 */
 	public static function onGetTalkPage( Title $title, Title &$talkPageTitle ) {
-		global $wgEnableWallExt;
-		if ( !empty( $wgEnableWallExt )
+		if ( !empty( F::app()->wg->EnableWallExt )
 			&& !$title->isSubpage()
 			&& $title->getNamespace() == NS_USER
 		) {
