@@ -125,7 +125,7 @@ class UrlGenerator {
 	 * @param int $frame the frame to capture, from 0
 	 * @return $this
 	 */
-	public function frame($frame) {
+	public function frame($frame=0) {
 		$this->query['frame'] = $frame;
 		return $this;
 	}
