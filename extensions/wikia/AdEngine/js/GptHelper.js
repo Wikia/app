@@ -4,11 +4,10 @@ define('ext.wikia.adEngine.gptHelper', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document',
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptAdDetect'
-], function (log, window, document, adContext, adLogicPageParams, slotTweaker, gptAdDetect) {
+], function (log, window, document, adLogicPageParams, slotTweaker, gptAdDetect) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
