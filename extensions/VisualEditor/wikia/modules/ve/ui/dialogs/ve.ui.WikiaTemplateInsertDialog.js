@@ -129,7 +129,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onParseSuccess = function ( response )
 	// method instead of having to do a code duplication. It's not a prefect approach
 	// and it is a subject to change - based on the future discussion.
 	var deferred = $.Deferred();
-	ve.ce.MWTransclusionNode.prototype.onParseSuccess( deferred, response );
+	ve.ce.MWTransclusionNode.prototype.onParseSuccess.call( this, deferred, response );
 	deferred.done( function ( contents ) {
 		var isInline = this.constructor.static.isHybridInline( contents ),
 			type = isInline ? 'mwTransclusionInline' : 'mwTransclusionBlock',
