@@ -557,6 +557,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					'msg' => wfMessage('userlogin-error-login-userblocked')->escaped(),
 				] );
 				break;
+			case LoginForm::ABORTED:
+				$this->result = 'error';
+				$this->msg = wfMessage( $loginForm->mAbortLoginErrorMsg )->escaped();
+				break;
 			default:
 				throw new MWException( "Unhandled case value" );
 		}

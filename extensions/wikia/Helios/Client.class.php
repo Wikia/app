@@ -26,7 +26,7 @@ class Client
 	/**
 	 * The general method for handling the communication with the service.
 	 */
-	public function request( $resourceName, $getParams = [], $postData = [], $requestOptions = [] )
+	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] )
 	{
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
@@ -48,10 +48,10 @@ class Client
 			'returnInstance'	=> true
 		];
 
-		$aOptions = array_merge( $defaultOptions, $requestOptions );
+		$requestOptions = array_merge( $defaultOptions, $extraRequestOptions );
 
 		// Request execution.
-		$request = \MWHttpRequest::factory( $uri, $aOptions );
+		$request = \MWHttpRequest::factory( $uri, $requestOptions );
 		$request->setHeader(RequestId::REQUEST_HEADER_NAME, RequestId::instance()->getRequestId());
 		$request->setHeader(RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname());
 		$status = $request->execute();
@@ -72,6 +72,9 @@ class Client
 
 	/**
 	 * A shortcut method for login requests.
+	 *
+	 * @throws LoginFailureException
+	 * @throws ClientException
 	 */
 	public function login( $username, $password )
 	{
@@ -84,12 +87,22 @@ class Client
 			'password'	=> $password
 		]);
 
-		return $this->request(
+		$response = $this->request(
 			'token',
 			[ 'grant_type'	=> 'password' ],
 			$postData,
 			[ 'method'	=> 'POST' ]
 		);
+
+		if ( !empty( $response->error ) ) {
+			if ( $response->error === 'access_denied' ) {
+				throw new LoginFailureException( 'Login failed.', 0, null, [ 'response' => $response ] );
+			} else {
+				throw new ClientException( 'Response error: ' . $response->error, 0, null, [ 'response' => $response ] );
+			}
+		}
+
+		return $response;
 	}
 
 	/**
@@ -117,17 +130,4 @@ class Client
 		);
 	}
 
-}
-
-/**
- * An exception class for the client.
- */
-class ClientException extends \Exception
-{
-	use \Wikia\Logger\Loggable;
-
-	public function __construct( $message = null, $code = 0, \Exception $previous = null, $data = null ) {
-		parent::__construct( $message, $code, $previous );
-		$this->error( 'HELIOS_CLIENT' , [ 'exception' => $this, 'context' => $data ] );
-	}
 }
