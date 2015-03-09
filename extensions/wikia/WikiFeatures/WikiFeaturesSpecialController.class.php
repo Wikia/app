@@ -97,7 +97,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 	public function toggleFeature() {
 		$enabled = $this->getVal('enabled', null);
 		$feature = $this->getVal('feature', null);
-		var_dump($feature);
 
 		wfrunHooks( 'WikiFeatures::onToggleFeature', [
 			'name' => $feature,
