@@ -3,34 +3,35 @@
 $padding: 0.2em 0.8em;
 $margin: 0.1em 0;
 
-.oo-ui-buttonedElement-framed {
-	&.oo-ui-flaggableElement-constructive,
-	&.oo-ui-flaggableElement-primary {
-		.oo-ui-buttonedElement-button {
+.oo-ui-buttonElement-framed {
+	&.oo-ui-flaggedElement-constructive,
+	&.oo-ui-flaggedElement-primary {
+		.oo-ui-buttonElement-button {
 			@extend .button;
 			padding: 0.2em 0.8em;
 			margin: 0.1em 0;
 		}
 	}
 	&.oo-ui-widget-disabled {
-		.oo-ui-buttonedElement-button {
+		.oo-ui-buttonElement-button {
 			@extend .button[disabled];
 			padding: 0.2em 0.8em;
 			margin: 0.1em 0;
 		}
 	}
-	.oo-ui-buttonedElement-button {
+	.oo-ui-buttonElement-button {
 		@extend .button;
 		padding: 0.2em 0.8em;
 		margin: 0.1em 0;
-
-		&.oo-ui-buttonedElement-active {
-			@extend .button.active;
-		}
 		&:hover {
-			.oo-ui-iconedElement-icon {
+			.oo-ui-iconElement-icon {
 				opacity: 1;
 			}
+		}
+	}
+	&.oo-ui-buttonElement-active {
+		.oo-ui-buttonElement-button {
+			@extend .button.active;
 		}
 	}
 }

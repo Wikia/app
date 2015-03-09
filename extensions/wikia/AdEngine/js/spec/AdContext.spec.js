@@ -1,4 +1,4 @@
-/*global describe, it, modules, expect*/
+/*global describe, it, modules, expect, spyOn*/
 /*jshint maxlen:200*/
 describe('AdContext', function () {
 	'use strict';
@@ -184,5 +184,21 @@ describe('AdContext', function () {
 		});
 		// TODO: clean up in ADEN-1785
 		//expect(adContext.getContext().providers.remnantGptMobile).toBeFalsy();
+	});
+
+	it('calls whoever registered with addCallback each time setContext is called', function () {
+		var adContext,
+			mocks = {
+				callback: function () {
+					return;
+				}
+			};
+
+		spyOn(mocks, 'callback');
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {});
+		adContext.addCallback(mocks.callback);
+		adContext.setContext({});
+		expect(mocks.callback).toHaveBeenCalled();
 	});
 });

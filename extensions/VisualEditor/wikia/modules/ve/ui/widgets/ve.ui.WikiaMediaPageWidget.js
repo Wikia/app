@@ -26,23 +26,23 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 
 	// Properties
 	this.editable = !!config.editable;
-	this.fieldset = new OO.ui.FieldsetLayout( { '$': this.$ } );
+	this.fieldset = new OO.ui.FieldsetLayout( { $: this.$ } );
 	this.image = null;
 	this.model = model;
 	this.removeButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'flags': ['destructive', 'secondary'],
-		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' )
+		$: this.$,
+		flags: ['destructive', 'secondary'],
+		label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' )
 	} );
 	this.title = new OO.ui.TextInputWidget( {
-		'$': this.$,
-		'readOnly': !this.editable,
-		'value': this.model.basename
+		$: this.$,
+		readOnly: !this.editable,
+		value: this.model.basename
 	} );
 	this.titleLabel = new OO.ui.LabelWidget( {
-		'$': this.$,
-		'input': this.title,
-		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' )
+		$: this.$,
+		input: this.title,
+		label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' )
 	} );
 
 	this.$extension = this.$( '<span>' );
@@ -54,10 +54,10 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.$overlay = null;
 
 	// Events
-	this.$itemWrapper.on( 'click', ve.bind( this.onItemClick, this ) );
-	this.removeButton.connect( this, { 'click': 'onRemoveButtonClick' } );
+	this.$itemWrapper.on( 'click', this.onItemClick.bind( this ) );
+	this.removeButton.connect( this, { click: 'onRemoveButtonClick' } );
 	if ( this.editable ) {
-		this.title.$input.on( 'keyup', ve.bind( this.onTitleKeyup, this ) );
+		this.title.$input.on( 'keyup', this.onTitleKeyup.bind( this ) );
 	}
 
 	// Initialization
@@ -165,13 +165,13 @@ ve.ui.WikiaMediaPageWidget.prototype.setupImage = function () {
 	this.image = new Image();
 	this.$item = this.$( this.image );
 
-	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
+	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
 		// TODO: (nice to have) be able to calculate the bounding box without hardcoded
 		// values but we would need to know bounding box size up front for that.
 		this.image.src = thumbnailer.getThumbURL( this.model.url, 'image', 365 );
-	}, this ) );
+	}.bind( this ) );
 
-	this.$item.load( ve.bind( this.onImageLoad, this ) );
+	this.$item.load( this.onImageLoad.bind( this ) );
 	this.$itemWrapper
 		.addClass( 've-ui-texture-pending' )
 		.append( this.$item );
@@ -191,7 +191,7 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
 	this.$licenseSelect = $license;
 
 	// Events
-	this.$licenseSelect.on( 'change', ve.bind( this.onLicenseSelectChange, this ) );
+	this.$licenseSelect.on( 'change', this.onLicenseSelectChange.bind( this ) );
 
 	// Select the first option that isn't 'No license' or a disabled 'heading' option
 	this.$licenseSelect

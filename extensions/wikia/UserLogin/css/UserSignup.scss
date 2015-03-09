@@ -129,28 +129,6 @@
 			width: 299px;
 		}
 
-		.fancy-captcha {
-
-			p {
-				margin: 0;
-			}
-
-			#wpCaptchaWord {
-				@include wikia-form-input-field;
-				display: inline;
-				width: 105px;
-			}
-
-			img {
-				background-color: white;
-				border: 1px solid $color-page-border;
-				float: right;
-				height: 32px;
-				text-align: center;
-				width: 122px;
-			}
-		}
-
 		.submit-pane {
 			@include submitpane;
 		}

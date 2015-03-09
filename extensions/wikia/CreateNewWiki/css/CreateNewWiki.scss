@@ -250,10 +250,6 @@ $color-borders: #CECECE;
 		@if ($responsive-layout-enabled) {
 
 		} @else {
-			/*
-			 * Both left and right are specified for proper ltr and rtl positioning.
-			 * TODO: Fix CSSJanus
-			 */
 			left: 515px;
 			position: absolute;
 			right: 515px;
@@ -447,31 +443,6 @@ $color-borders: #CECECE;
 			font-size: 15px;
 			line-height: 25px;
 			width: 200px;
-		}
-	}
-}
-
-/*
- * TODO: Fix CSSJanus
- */
-html[dir='rtl'] {
-	#DescWiki {
-		ol {
-			@if ($responsive-layout-enabled) {
-
-			} @else {
-				left: auto;
-				right: 515px;
-			}
-		}
-
-		.select-container {
-			float: right;
-		}
-
-		.categories-set span {
-			margin-left: auto;
-			margin-right: 1.75em;
 		}
 	}
 }

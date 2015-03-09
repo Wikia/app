@@ -1,7 +1,7 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/responsive-variables";
+@import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/box-sizing-border-box";
 
 .UPPLightbox {
 
@@ -15,12 +15,21 @@
 
 	.input-group {
 		float: none;
-		position: relative;
 
 		input[type="text"],
 		.favorite-wikis {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			width: 100%;
+		}
+
+		.tweet-at, .fb-start {
+			float: left;
+			margin-top: 10px;
+			width: 110px;
+		}
+
+		input[name="fbPage"], input[name="twitter"] {
+			@include width-calc('100% - 110px');
 		}
 	}
 
@@ -38,17 +47,6 @@
 			float: left;
 			margin: 0 10px 10px 0;
 
-		}
-	}
-
-	.tweet-at {
-		font-family: 'Lucida Grande', sans-serif;
-		left: 15px;
-		position: absolute;
-		top: 35px;
-
-		+ input[type="text"] {
-			padding-left: 20px;
 		}
 	}
 
@@ -103,10 +101,10 @@
 		img {
 			background: url(/extensions/wikia/UserProfilePageV3/images/icon-return.png); /* $wgCdnStylePath */
 			height: 12px;
-			width: 14px;		
+			width: 14px;
 		}
 	}
-	
+
 	#facebookPage a {
 		display: block;
 		font-size: 11px;

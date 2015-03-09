@@ -1,3 +1,12 @@
+// Generated automatically by Sprite Generator.
+//
+// Do not edit anything between @autopsrite directives manually
+// or your changes will be lost next time someone regenerates the file!
+//
+// Use maintenance/wikia/generateSprites.php to update sprite mixins and/or images.
+// Config file is config/wikia/sprites.php
+//
+
 
 // @autosprite-start
 @mixin sprite-monetization-module-base() {
@@ -199,6 +208,7 @@
 
 @mixin sprite-monetization-module-deep($width: 0, $height: 0) {
 	@include sprite-monetization-module-base;
+
 	&.amazon-logo-black {
 		@include sprite-monetization-module('amazon-logo-black', $width, $height);
 	}
@@ -242,6 +252,7 @@
 
 @mixin sprite-monetization-module-deep-embed($width: 0, $height: 0) {
 	@include sprite-monetization-module-base-embed;
+
 	&.amazon-logo-black {
 		@include sprite-monetization-module-embed('amazon-logo-black', $width, $height);
 	}

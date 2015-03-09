@@ -5,22 +5,25 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.document',
 	'wikia.location',
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageViewCounter',
 	require.optional('wikia.abTest'),
-	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
 	require.optional('ext.wikia.adEngine.lookupServices'),
 	require.optional('ext.wikia.adEngine.krux')
-], function (log, doc, loc, adContext, abTest, pvCounter, lookups, krux) {
+], function (log, doc, loc, adContext, pvCounter, abTest, lookups, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		hostname = loc.hostname,
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
-		pvs = pvCounter && pvCounter.increment();
+		skin = adContext.getContext().targeting.skin,
+		context = {};
+
+	function updateContext() {
+		context = adContext.getContext();
+	}
 
 	function getDartHubName() {
-		var context = adContext.getContext();
-
 		if (context.targeting.wikiVertical === 'Entertainment') {
 			return 'ent';
 		}
@@ -57,7 +60,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getCategories() {
-		var categories = adContext.getContext().targeting.pageCategories,
+		var categories = context.targeting.pageCategories,
 			outCategories;
 
 		if (categories instanceof Array && categories.length > 0) {
@@ -197,7 +200,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1,
 			zone2,
 			params,
-			targeting = adContext.getContext().targeting;
+			targeting = context.targeting,
+			pvs = pvCounter.get();
 
 		options = options || {};
 
@@ -257,6 +261,13 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		log(params, 9, logGroup);
 		return params;
 	}
+
+	if (skin && skin !== 'mercury') {
+		pvCounter.increment();
+	}
+
+	updateContext();
+	adContext.addCallback(updateContext);
 
 	return {
 		getPageLevelParams: getPageLevelParams

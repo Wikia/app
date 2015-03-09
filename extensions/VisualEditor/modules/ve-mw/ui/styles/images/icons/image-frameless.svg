@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
-	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-	<g id="image-frameless" style="opacity:0.75">
-		<polygon id="mountains" points="11.828,12.312 10.516,13.406 11.391,14.438 15.5,11 18,13 18,16 6,16 6,13.5 9.5,10" />
-		<polygon id="sky" points="12.562,11.016 15.5,9 18,11 18,7 6,7 6,12 9.516,7.844" />
-	</g>
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="image-frameless" style="opacity:0.75;">
+        <path id="mountains" d="M11.828 12.312l-1.312 1.094.875 1.032 4.109-3.438 2.5 2v3h-12v-2.5l3.5-3.5z"/>
+        <path id="sky" d="M12.562 11.016l2.938-2.016 2.5 2v-4h-12v5l3.516-4.156z"/>
+    </g>
 </svg>

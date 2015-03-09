@@ -4,162 +4,164 @@
 		<img src="<?= $user['avatar']; ?>" itemprop="image" class="avatar">
 
 		<div class="avatar-controls">
-			<? if( $canEditProfile ): ?>
+			<? if ( $canEditProfile ): ?>
 				<span>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"> <a href="#" id="userAvatarEdit"><?= wfMsg('user-identity-box-edit-avatar'); ?></a>
+					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil">
+					<a href="#" id="userAvatarEdit"><?= wfMessage( 'user-identity-box-edit-avatar' )->escaped(); ?></a>
 				</span>
 			<? endif; ?>
-			<?php if( $canRemoveAvatar ): ?>
+			<?php if ( $canRemoveAvatar ): ?>
 				<span>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite trash"> <a id="UserAvatarRemove" data-name="<?= $user['name']; ?>"  href="#" data-confirm="<?= htmlspecialchars(wfMsg('user-identity-remove-confirmation')); ?>"><?= wfMsg('user-identity-box-delete-avatar'); ?></a>
+					<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
+					<a id="UserAvatarRemove" data-name="<?= $user['name']; ?>" href="#" data-confirm="<?= wfMessage( 'user-identity-remove-confirmation' )->escaped(); ?>">
+						<?= wfMessage( 'user-identity-box-delete-avatar' )->escaped(); ?>
+					</a>
 				</span>
 			<?php endif; ?>
 		</div>
 	</div>
-	
+
 	<div class="masthead-info">
 		<hgroup>
-			<? if( !empty($user['realName']) ): ?>
-				<h1 itemprop="name"><?= htmlspecialchars($user['name']); ?></h1>
-				<h2><?= wfMsg('user-identity-box-aka-label', array('$1' => $user['realName']) ); ?></h2>
-			<? else: ?>
-				<h1 itemprop="name"><?= htmlspecialchars($user['name']); ?></h1>
+			<h1 itemprop="name"><?= htmlspecialchars( $user['name'] ); ?></h1>
+			<? if ( !empty( $user['realName'] ) ): ?>
+				<h2><?= wfMessage( 'user-identity-box-aka-label', $user['realName'] )->plain(); ?></h2>
 			<? endif; ?>
-			<? if( !empty($user['tags']) ): ?>
-				<?php foreach($user['tags'] as $tag): ?>
+			<? if ( !empty( $user['tags'] ) ): ?>
+				<?php foreach ( $user['tags'] as $tag ): ?>
 					<span class="tag"><?= $tag; ?></span>
 				<?php endforeach; ?>
 			<? endif; ?>
 		</hgroup>
 
-		<? if( $canEditProfile ): ?>
+		<? if ( $canEditProfile ): ?>
 			<span id="userIdentityBoxEdit">
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#"><?= wfMsg('user-identity-box-edit'); ?></a>
+				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil">
+				<a href="#"><?= wfMessage( 'user-identity-box-edit' )->escaped(); ?></a>
 			</span>
-			<input type="hidden" id="user" value="<?= $user['id']; ?>" />
+			<input type="hidden" id="user" value="<?= $user['id']; ?>"/>
 		<? endif; ?>
 		<div class="masthead-info-lower">
 			<div class="tally">
-				<? if( !empty($user['registration']) ): ?>
-					<? if( !empty($user['edits']) || (empty($user['edits']) && !empty($user['registration'])) ): ?>
+				<? if ( !empty( $user['registration'] ) ): ?>
+					<? if ( !empty( $user['edits'] ) || ( empty( $user['edits'] ) && !empty( $user['registration'] ) ) ): ?>
 						<em><?= $user['edits'] ?></em>
 						<span>
-							<?= wfMsg('user-identity-box-edits-since-joining', array( $user['registration'] ) ) ?>
+							<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->plain() ?>
 						</span>
 					<? else: ?>
-						<?php if( $user['edits'] >= 0 ): ?>
-							<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
+						<?php if ( $user['edits'] >= 0 ): ?>
+							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
 						<?php else: ?>
-							<br />
+							<br/>
 						<?php endif; ?>
 					<?php endif; ?>
 				<? else: ?>
-					<?php if( $user['edits'] >= 0 ): ?>
-						<?= wfMsg('user-identity-box-edits', array( '$1' => $user['edits'] ) ); ?>
+					<?php if ( $user['edits'] >= 0 ): ?>
+						<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->plain(); ?>
 					<?php else: ?>
-						<br />
+						<br/>
 					<?php endif; ?>
 				<? endif; ?>
 			</div>
 
-			<? if( !$isBlocked ): ?>
-			<ul class="links">
-				<? if( !empty($user['twitter']) ): ?>
-					<li class="twitter">
-						<a href="http://twitter.com/<?= $user['twitter'] ?>" rel="nofollow">
-							<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
-							<?= wfMsg('user-identity-box-my-twitter' ); ?>
-						</a>
-					</li>
-				<? else: ?>
-					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
-					<li class="zero">
-						<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
-						<?= wfMsg('user-identity-box-zero-state-twitter'); ?>
-					</li>
+			<? if ( !$isBlocked ): ?>
+				<ul class="links">
+					<? if ( !empty( $user['twitter'] ) ): ?>
+						<li class="twitter">
+							<a href="http://twitter.com/<?= $user['twitter'] ?>" rel="nofollow">
+								<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
+								<?= wfMessage( 'user-identity-box-my-twitter' )->escaped(); ?>
+							</a>
+						</li>
+					<? else: ?>
+						<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+							<li class="zero">
+								<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
+								<?= wfMessage( 'user-identity-box-zero-state-twitter' )->escaped(); ?>
+							</li>
+						<? endif; ?>
 					<? endif; ?>
-				<? endif; ?>
-				
-				<? if( !empty($user['website']) ): ?>
-					<li class="website">
-						<a href="<?= $user['website'] ?>" rel="nofollow">
-							<img src="<?= $wgBlankImgUrl ?>" class="website icon">
-							<?= wfMsg('user-identity-box-my-website' ); ?>
-						</a>
-					</li>
-				<? else: ?>
-					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
-					<li class="zero">
-						<img src="<?= $wgBlankImgUrl ?>" class="website icon">
-						<?= wfMsg('user-identity-box-zero-state-website'); ?>
-					</li>
+
+					<? if ( !empty( $user['website'] ) ): ?>
+						<li class="website">
+							<a href="<?= $user['website'] ?>" rel="nofollow">
+								<img src="<?= $wgBlankImgUrl ?>" class="website icon">
+								<?= wfMessage( 'user-identity-box-my-website' )->escaped(); ?>
+							</a>
+						</li>
+					<? else: ?>
+						<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+							<li class="zero">
+								<img src="<?= $wgBlankImgUrl ?>" class="website icon">
+								<?= wfMessage( 'user-identity-box-zero-state-website' )->escaped(); ?>
+							</li>
+						<? endif; ?>
 					<? endif; ?>
-				<? endif; ?>
-				
-				<? if( !empty($user['fbPage']) ): ?>
-					<li class="facebook">
-						<a href="<?= $user['fbPage'] ?>" rel="nofollow">
-							<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
-							<?= wfMsg('user-identity-box-my-fb-page' ); ?>
-						</a>
-					</li>
-				<? else: ?>
-					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
-					<li class="zero">
-						<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
-						<?= wfMsg('user-identity-box-zero-state-fb-page'); ?>
-					</li>
+
+					<? if ( !empty( $user['fbPage'] ) ): ?>
+						<li class="facebook">
+							<a href="<?= $user['fbPage'] ?>" rel="nofollow">
+								<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
+								<?= wfMessage( 'user-identity-box-my-fb-page' )->escaped(); ?>
+							</a>
+						</li>
+					<? else: ?>
+						<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+							<li class="zero">
+								<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
+								<?= wfMessage( 'user-identity-box-zero-state-fb-page' )->escaped(); ?>
+							</li>
+						<? endif; ?>
 					<? endif; ?>
-				<? endif; ?>
-			</ul>
+				</ul>
 			<? endif; ?>
 
-			<? if( (!array_key_exists('hideEditsWikis', $user) || !$user['hideEditsWikis']) && !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
-			<ul class="wikis">
-				<span><?= wfMsg('user-identity-box-fav-wikis'); ?></span>
-				<ul>
-				<? foreach($user['topWikis'] as $wiki): ?>
-					<li><a href="<?= $wiki['wikiUrl']; ?>"><?= $wiki['wikiName']; ?></a></li>
-				<? endforeach; ?>
+			<? if ( ( !array_key_exists( 'hideEditsWikis', $user ) || !$user['hideEditsWikis'] ) && !empty( $user['topWikis'] ) && is_array( $user['topWikis'] ) ): ?>
+				<ul class="wikis">
+					<span><?= wfMessage( 'user-identity-box-fav-wikis' )->escaped(); ?></span>
+					<ul>
+						<? foreach ( $user['topWikis'] as $wiki ): ?>
+							<li><a href="<?= $wiki['wikiUrl']; ?>"><?= $wiki['wikiName']; ?></a></li>
+						<? endforeach; ?>
+					</ul>
 				</ul>
-			</ul>
 			<? endif; ?>
 		</div>
 		<div>
 			<ul class="details">
-				<? if( !empty($user['location']) ): ?>
-					<li itemprop="address"><?= wfMsg('user-identity-box-location', array( '$1' => $user['location'] )); ?></li>
+				<? if ( !empty( $user['location'] ) ): ?>
+					<li itemprop="address"><?= wfMessage( 'user-identity-box-location', $user['location'] )->plain(); ?></li>
 				<? else: ?>
-					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
-					<li><?= wfMsg('user-identity-box-zero-state-location'); ?></li>
+					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+						<li><?= wfMessage( 'user-identity-box-zero-state-location' )->escaped(); ?></li>
 					<? endif; ?>
 				<? endif; ?>
-				
-				<? if( !empty($user['birthday']) && intval( $user['birthday']['month'] ) > 0 && intval( $user['birthday']['month'] ) < 13 ): ?>
-					<li><?= wfMsg('user-identity-box-was-born-on', array( '$1' => F::app()->wg->Lang->getMonthName( intval($user['birthday']['month']) ), '$2' => $user['birthday']['day'] )); ?></li>
+
+				<? if ( !empty( $user['birthday'] ) && intval( $user['birthday']['month'] ) > 0 && intval( $user['birthday']['month'] ) < 13 ): ?>
+					<li><?= wfMessage( 'user-identity-box-was-born-on', F::app()->wg->Lang->getMonthName( intval( $user['birthday']['month'] ) ), $user['birthday']['day'] )->plain(); ?></li>
 				<? else: ?>
-					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
-					<li><?= wfMsg('user-identity-box-zero-state-birthday'); ?></li>
+					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+						<li><?= wfMessage( 'user-identity-box-zero-state-birthday' )->escaped(); ?></li>
 					<? endif; ?>
 				<? endif; ?>
-				
-				<? if( !empty($user['occupation']) ): ?>
-					<li><?= wfMsg('user-identity-box-occupation', array( '$1' => $user['occupation'] )); ?></li>
-				<? elseif( !empty($user['showZeroStates']) ): ?>
-					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
-					<li><?= wfMsg('user-identity-box-zero-state-occupation'); ?></li>
+
+				<? if ( !empty( $user['occupation'] ) ): ?>
+					<li><?= wfMessage( 'user-identity-box-occupation', $user['occupation'] )->plain(); ?></li>
+				<? elseif ( !empty( $user['showZeroStates'] ) ): ?>
+					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+						<li><?= wfMessage( 'user-identity-box-zero-state-occupation' )->escaped(); ?></li>
 					<? endif; ?>
 				<? endif; ?>
-				
-				<? if( !empty($user['gender']) ): ?>
-					<li><?= wfMsg('user-identity-i-am', array( '$1' => $user['gender'] )); ?></li>
+
+				<? if ( !empty( $user['gender'] ) ): ?>
+					<li><?= wfMessage( 'user-identity-i-am', $user['gender'] )->plain(); ?></li>
 				<? else: ?>
-					<? if( $user['showZeroStates'] && ($isUserPageOwner || $canEditProfile) ): ?>
-					<li><?= wfMsg('user-identity-box-zero-state-gender'); ?></li>
+					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
+						<li><?= wfMessage( 'user-identity-box-zero-state-gender' )->escaped(); ?></li>
 					<? endif; ?>
 				<? endif; ?>
 			</ul>
 		</div>
-		
 	</div>
 </section>

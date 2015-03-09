@@ -74,7 +74,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderFactoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
-		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
@@ -88,6 +87,8 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+		'//extensions/wikia/AdEngine/js/template/interstitial.js',
+		'//extensions/wikia/AdEngine/js/template/skin.js',
 
 		// for low see adengine2_late_js
 	),
@@ -766,8 +767,11 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/geo.js',
 
 		'#group_mobile_base_ads_js',
-
+		'//resources/wikia/modules/cache.js',
+		'//resources/wikia/modules/localStorage.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/mercury.run.js',
+		'//extensions/wikia/AdEngine/js/Krux.js',
 	)
 );
 
@@ -2311,5 +2315,37 @@ $config['page_share_scss'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/PageShare/styles/share.scss'
+	],
+];
+
+$config['oasis_global_footer_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooterOasis.scss'
+	],
+];
+
+$config['old_global_footer_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	]
+];
+
+$config['captcha_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Captcha/scripts/Captcha.js',
+	]
+];
+
+$config['fancycaptcha_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Captcha/styles/FancyCaptcha.scss',
 	]
 ];

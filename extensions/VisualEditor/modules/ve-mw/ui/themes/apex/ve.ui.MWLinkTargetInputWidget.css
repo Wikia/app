@@ -7,25 +7,14 @@
 
 .ve-ui-mwLinkTargetInputWidget-menu {
 	width: 20em;
-	margin-top: -7px;
+	/*margin-top: -7px;*/
 }
 
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuWidget-item {
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuSelectWidget-item {
 	padding: 0.33em 1.25em;
 	color: #0645AD;
 }
 
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=newPage] {
-	color: #BA0000;
-}
-
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=externalLink] {
+.ve-ui-mwLinkTargetInputWidget-extlink {
 	color: #36b;
-}
-
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=existingPage],
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=matchingPage],
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=disambigPage],
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=redirectPage] {
-	color: #0645AD;
 }

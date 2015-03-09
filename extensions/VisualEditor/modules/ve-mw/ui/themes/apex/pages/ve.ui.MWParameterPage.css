@@ -98,6 +98,10 @@
 	height: 2.5em;
 }
 
+.ve-ui-mwParameterPage .oo-ui-textInputWidget.oo-ui-flaggedElement-invalid textarea:required {
+	border-color: red;
+}
+
 .ve-ui-mwParameterPage-more {
 	display: none;
 	margin: 1em 0 0.5em 0;

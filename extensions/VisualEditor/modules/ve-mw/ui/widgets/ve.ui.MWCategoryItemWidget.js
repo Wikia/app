@@ -11,23 +11,24 @@
  * @class
  * @abstract
  * @extends OO.ui.Widget
- * @mixins OO.ui.IndicatedElement
+ * @mixins OO.ui.IndicatorElement
  *
  * @constructor
  * @param {Object} [config] Configuration options
  * @cfg {Object} [item] Category item
  * @cfg {boolean} [hidden] Whether the category is hidden or not
+ * @cfg {boolean} [missing] Whether the category's description page is missing
  * @cfg {string} [redirectTo] The name of the category this category's page redirects to.
  */
 ve.ui.MWCategoryItemWidget = function VeUiMWCategoryItemWidget( config ) {
-	// Config intialization
-	config = ve.extendObject( { 'indicator': 'down' }, config );
+	// Config initialization
+	config = ve.extendObject( { indicator: 'down' }, config );
 
 	// Parent constructor
 	OO.ui.Widget.call( this, config );
 
 	// Mixin constructors
-	OO.ui.IndicatedElement.call( this, this.$( '<span>' ), config );
+	OO.ui.IndicatorElement.call( this, config );
 
 	// Properties
 	this.name = config.item.name;
@@ -35,20 +36,30 @@ ve.ui.MWCategoryItemWidget = function VeUiMWCategoryItemWidget( config ) {
 	this.sortKey = config.item.sortKey || '';
 	this.metaItem = config.item.metaItem;
 	this.isHidden = config.hidden;
+	this.isMissing = config.missing;
 	this.menuOpen = false;
 	this.$label = this.$( '<span>' );
 	this.$categoryItem = this.$( '<div>' );
 
 	// Events
 	this.$categoryItem.on( {
-		'click': ve.bind( this.onClick, this ),
-		'mousedown': ve.bind( this.onMouseDown, this )
+		click: this.onClick.bind( this ),
+		mousedown: this.onMouseDown.bind( this )
 	} );
 
 	// Initialization
 	this.$label
 		.addClass( 've-ui-mwCategoryItemWidget-label' )
 		.text( config.redirectTo || this.value );
+	if ( config.redirectTo ) {
+		ve.init.platform.linkCache.styleElement( mw.Title.newFromText(
+			config.redirectTo,
+			mw.config.get( 'wgNamespaceIds' ).category
+		).getPrefixedText(), this.$label );
+	} else {
+		ve.init.platform.linkCache.styleElement( this.name, this.$label );
+	}
+
 	this.$categoryItem
 		.addClass( 've-ui-mwCategoryItemWidget-button' )
 		.append( this.$label, this.$indicator );
@@ -61,7 +72,7 @@ ve.ui.MWCategoryItemWidget = function VeUiMWCategoryItemWidget( config ) {
 
 OO.inheritClass( ve.ui.MWCategoryItemWidget, OO.ui.Widget );
 
-OO.mixinClass( ve.ui.MWCategoryItemWidget, OO.ui.IndicatedElement );
+OO.mixinClass( ve.ui.MWCategoryItemWidget, OO.ui.IndicatorElement );
 
 /* Events */
 

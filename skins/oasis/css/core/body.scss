@@ -1,6 +1,16 @@
-@import "skins/shared/color";
 @import "layout";
 @import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
+
+html {
+	box-sizing: content-box;
+
+}
+
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
 
 body {
 	color: $color-text;

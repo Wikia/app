@@ -2,11 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Vacio",
-			"Xelgen"
+			"Xelgen",
+			"Դավիթ Սարոյան"
 		]
 	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ՎիզուալԽմբագրիչ]]",
 	"visualeditor-feedback-link": "Նախագիծ:ՎիզուալԽմբագրիչ/Ֆիդբեք",
 	"visualeditor-feedback-tool": "Կարծիք հայտնել",
 	"visualeditor-help-label": "Օգտագործողի ձեռնարկ",
-	"visualeditor-help-title": "Խմբագրման ուղեցույց"
+	"visualeditor-help-title": "ՎիքիԽմբագրիչի օգտագործման ուղեցույց"
 }

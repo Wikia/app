@@ -10,15 +10,14 @@
  * @extends ve.ui.WikiaMediaOptionWidget
  *
  * @constructor
- * @param {Mixed} data Item data
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaVideoOptionWidget = function VeUiWikiaVideoOptionWidget( data, config ) {
+ve.ui.WikiaVideoOptionWidget = function VeUiWikiaVideoOptionWidget( config ) {
 	var $icon, $duration;
 
 	// Parent constructor
-	ve.ui.WikiaVideoOptionWidget.super.call( this, data, config );
+	ve.ui.WikiaVideoOptionWidget.super.call( this, config );
 
 	// Initialization
 	$icon = this.$( '<span>' )

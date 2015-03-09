@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Supasate",
+			"Taweetham"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-aliennode-tooltip": "ขออภัย ในปัจจุบันองค์ประกอบนี้แก้ไขได้เฉพาะในโหมดรหัสต้นฉบับ",
+	"visualeditor-annotationbutton-bold-tooltip": "ตัวหนา",
+	"visualeditor-annotationbutton-code-tooltip": "รหัสคอมพิวเตอร์",
+	"visualeditor-annotationbutton-italic-tooltip": "ตัวเอน",
+	"visualeditor-annotationbutton-link-tooltip": "ลิงก์",
+	"visualeditor-clearbutton-tooltip": "ล้างการจัดรูปแบบ",
+	"visualeditor-dialog-action-apply": "ใช้การเปลี่ยนแปลง",
+	"visualeditor-dialog-action-cancel": "ยกเลิก",
+	"visualeditor-dialog-action-goback": "ย้อนกลับ",
+	"visualeditor-formatdropdown-format-heading1": "หัวเรื่อง 1",
+	"visualeditor-formatdropdown-format-heading2": "หัวเรื่อง 2",
+	"visualeditor-formatdropdown-format-heading3": "หัวเรื่อง 3",
+	"visualeditor-formatdropdown-format-heading4": "หัวเรื่อง 4",
+	"visualeditor-formatdropdown-format-heading5": "หัวเรื่อง 5",
+	"visualeditor-formatdropdown-format-heading6": "หัวเรื่อง 6",
+	"visualeditor-formatdropdown-format-paragraph": "ย่อหน้า",
+	"visualeditor-formatdropdown-format-preformatted": "จัดรูปแบบไว้ล่วงหน้า",
+	"visualeditor-formatdropdown-title": "เปลี่ยนการจัดรูปแบบ",
+	"visualeditor-historybutton-redo-tooltip": "ทำซ้ำ",
+	"visualeditor-historybutton-undo-tooltip": "เลิกทำ",
+	"visualeditor-indentationbutton-indent-tooltip": "เพิ่มการเยื้อง",
+	"visualeditor-indentationbutton-outdent-tooltip": "ลดการเยื้อง",
+	"visualeditor-inspector-close-tooltip": "ปิด",
+	"visualeditor-inspector-remove-tooltip": "นำออก",
+	"visualeditor-linkinspector-title": "เชื่อมโยงหลายมิติ",
+	"visualeditor-listbutton-bullet-tooltip": "รายการสัญลักษณ์",
+	"visualeditor-listbutton-number-tooltip": "รายการลำดับเลข"
+}

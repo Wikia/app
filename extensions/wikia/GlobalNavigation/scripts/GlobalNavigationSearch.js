@@ -38,7 +38,15 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	}
 
 	$(function () {
-		var $globalNav = $('#globalNavigation');
+		var $globalNav = $('#globalNavigation'),
+			$searchForm = $('#searchForm');
+
+		//Checks whether the searchInput is empty and prevents any action if true
+		$searchForm.submit(function () {
+			if (!$searchInput.val()) {
+				return false;
+			}
+		})
 
 		if ($selectElement) {
 			setFormOptions();

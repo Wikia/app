@@ -1,5 +1,4 @@
 @import 'skins/shared/mixins/box-shadow';
-@import 'skins/shared/mixins/box-sizing';
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/placeholder';
 @import 'extensions/wikia/Venus/styles/variables';
@@ -67,7 +66,7 @@
 		}
 
 		.input-group {
-			@include box-sizing;
+			box-sizing: border-box;
 			line-height: inherit;
 			margin: 0;
 			padding: 0;
@@ -98,7 +97,6 @@
 
 		input[type=text],
 		input[type=password] {
-			@include box-sizing;
 			@include clear-box-shadow;
 
 			@include placeholder {
@@ -107,6 +105,7 @@
 			}
 
 			border:none;
+			box-sizing: border-box;
 			color: $nav-foreground-dark-color;
 			font-size: 15px;
 			height: 25px;

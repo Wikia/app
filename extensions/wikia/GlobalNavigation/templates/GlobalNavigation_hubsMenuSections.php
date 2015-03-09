@@ -3,16 +3,16 @@
 		<div class="hub-menu-columns">
 			<? if ( array_key_exists( 'children', $sections ) ) : ?>
 				<? foreach( $sections['children'] as $category ): ?>
-					<strong><?= $category['text'] ?></strong>
-					<? if ( array_key_exists( 'children', $category ) ) : ?>
-						<ul>
+					<ul>
+						<li><strong><?= $category['text'] ?></strong></li>
+						<? if ( array_key_exists( 'children', $category ) ) : ?>
 							<? foreach( $category['children'] as $node ): ?>
 								<li>
 									<a href="<?= $node['href'] ?>"><?= $node['text'] ?></a>
 								</li>
 							<? endforeach; ?>
-						</ul>
-					<? endif; ?>
+						<? endif; ?>
+					</ul>
 				<? endforeach; ?>
 			<? endif; ?>
 		</div>
