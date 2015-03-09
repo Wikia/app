@@ -201,7 +201,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone2,
 			params,
 			targeting = context.targeting,
-			pvs = pvCounter.get().toString();
+			pvs = pvCounter.get();
 
 		options = options || {};
 
@@ -232,11 +232,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			ref: getRefParam()
 		};
 
-		if (skin && skin !== 'mercury') {
-			params.pv = pvs;
-		} else {
-			// this is a temporary solution to test if Mercury handles pvs well without affecting actual ads
-			params.mpv = pvs;
+		if (pvs) {
+			params.pv = pvs.toString();
 		}
 
 		if (options.includeRawDbName) {
