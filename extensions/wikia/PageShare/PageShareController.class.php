@@ -2,9 +2,6 @@
 
 class PageShareController extends WikiaController {
 
-	public function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	 * render index
