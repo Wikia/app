@@ -376,8 +376,14 @@ describe('AdLogicPageParams', function () {
 		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
 	});
 
-	it('getPageLevelParams pv param', function () {
+	it('getPageLevelParams pv param - oasis', function () {
 		var params = getParams({skin: 'oasis'}, {pvCount: 13});
+
+		expect(params.pv).toBe('13');
+	});
+
+	it('getPageLevelParams pv param - mercury', function () {
+		var params = getParams({skin: 'mercury'}, {pvCount: 13});
 
 		expect(params.pv).toBe('13');
 	});
