@@ -68,13 +68,13 @@ $color-rail-background: mix($color-page, black, 90%);
     .thumbnails {
 
         a:first-of-type {
-            color: $color-links-default;
+            color: $color-links;
             margin-bottom: 10px;
         }
 
         a:first-of-type:hover {
             text-decoration: underline;
-            color: $color-links-default;
+            color: $color-links;
             text-shadow: initial;
         }
 
@@ -89,6 +89,7 @@ $color-rail-background: mix($color-page, black, 90%);
 }
 
 .WikiaRail .live-chat {
+    background-color: $color-rail-background;
     padding: 20px;
 
     p {
@@ -96,9 +97,133 @@ $color-rail-background: mix($color-page, black, 90%);
         font-size: 12px;
     }
 
-    .chat-headline .chat-live {
-        font-size: 18px;
-        font-weight: bold;
+    .chat-headline {
+
+        .chat-live {
+            font-size: 18px;
+            font-weight: bold;
+            color: $color-text;
+        }
+
+        .chat-total {
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            padding: 2px;
+            border: 1px solid #666;
+            text-align: center;
+            font-size: 10px;
+            margin: -5px 0 0 3px;
+            background-color: pink;
+        }
     }
+
+    .chat-join {
+        height: 100%;
+
+        button {
+            color: #FFF;
+            height:100%;
+            text-transform: uppercase;
+            border-radius: 0;
+            border: none;
+        }
+
+        button:before {
+            display: none;
+        }
+    }
+
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .avatar {
+        background-position: 50%;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-right: 14px;
+    }
+
+    .avatar:hover {
+        opacity: 1;
+    }
+
+    .chat-whos-here {
+        border: none;
+        margin: 20px 0;
+        padding: 0;
+
+        .arrow-left {
+            padding-left: 0;
+
+            img {
+                border-color: transparent;
+                border-right-color: $color-links;
+            }
+        }
+
+        .arrow-right {
+            padding-right: 0;
+
+            img {
+                border-color: transparent;
+                border-left-color: $color-links;
+            }
+        }
+
+
+        .carousel-container {
+            left: 16px;
+            width: 260px;
+
+            li {
+                width: 32px;
+            }
+        }
+
+        .UserStatsMenu {
+            border-width: 2px;
+            border-style: solid;
+            border-color: white;
+
+            .actions ul {
+                margin: 0;
+
+                li {
+                    cursor: pointer;
+                    margin: 0;
+                    padding: 0;
+                    white-space: nowrap;
+                    height: 44px;
+                    border-bottom-color: #E6EBF2;
+                    border-bottom-width: thin;
+                    border-bottom-style: solid;
+
+                    .label {
+                        padding-left: 10px;
+                        line-height: 44px;
+                    }
+                }
+            }
+
+            .info {
+                padding: 10px;
+
+                ul .username {
+                    margin-bottom: 10px;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                }
+            }
+        }
+
+    }
+
+
+
+
 }
 
