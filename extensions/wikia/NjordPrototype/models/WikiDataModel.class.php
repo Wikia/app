@@ -74,7 +74,7 @@ class WikiDataModel {
 			if (VignetteRequest::isVignetteUrl($fullUrl)) {
 				$this->imagePath = $this->createVignetteThumbnail($file, $cropPosition);
 			} else {
-				$this->createOldThumbnail($file, $cropPosition);
+				$this->imagePath = $this->createOldThumbnail($file, $cropPosition);
 			}
 
 			$this->originalImagePath = $fullUrl;
