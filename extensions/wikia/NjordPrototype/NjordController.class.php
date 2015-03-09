@@ -330,7 +330,7 @@ class NjordController extends WikiaController {
 
 	static public function purgeMainPage( $args ) {
 		if ( $args['name'] === 'wgEnableNjordExt' ) {
-			Article::newFromTitle( Title::newFromText( self::MAINPAGE_PAGE ), RequestContext::getMain() )->purge();
+			Article::newFromTitle( Title::newFromText( self::MAINPAGE_PAGE ), RequestContext::getMain() )->doPurge();
 		}
 
 		return true;
