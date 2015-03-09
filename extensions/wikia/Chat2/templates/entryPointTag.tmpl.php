@@ -1,4 +1,4 @@
-<section class="live-chat ChatModule <?=($isEntryPoint)?'ChatEntryPoint':'module'?> ChatModuleUninitialized">
+<section class="ChatModule <?=($isEntryPoint)?'ChatEntryPoint':'module'?> ChatModuleUninitialized">
 	<div class="chat-contents">
 		<h1 class="chat-headline">
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
