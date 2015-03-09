@@ -122,13 +122,33 @@ class SquidUpdate {
 			return;
 		}
 
-		global $wgPurgeSquidViaCelery;
+		global $wgPurgeSquidViaCelery, $wgPurgeVignetteUsingSurrogateKeys;
 		if ( $wgPurgeSquidViaCelery == true ) {
-			( new AsyncCeleryTask() )
-					->taskType('celery_workers.purger.purge')
-					->setArgs( $urlArr, [] )
-					->setPriority( PurgeQueue::NAME )
-					->queue();
+			if ( $wgPurgeVignetteUsingSurrogateKeys == true ) {
+				// Filter array for vignette urls and split them into separate task
+				$vignetteUrls = [];
+				foreach ( $urlArr as $index => $url ) {
+					if ( VignetteRequest::isVignetteUrl($url) ) {
+						$vignetteUrls[] = $url;
+						unset($urlArr[$index]);
+					}
+				}
+				if ( !empty($vignetteUrls) ) {
+					( new AsyncCeleryTask() )
+							->taskType('celery_workers.purger.purge')
+							->setArgs( $vignetteUrls, [], 'vignette' )
+							->setPriority( PurgeQueue::NAME )
+							->queue();
+				}
+			}
+			if ( !empty($urlArr) ) {
+				// Remaining image/page urls are okay to purge together
+				( new AsyncCeleryTask() )
+						->taskType('celery_workers.purger.purge')
+						->setArgs( $urlArr, [] )
+						->setPriority( PurgeQueue::NAME )
+						->queue();
+			}
 			return;
 		}
 		// wikia change end
