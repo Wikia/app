@@ -8,11 +8,11 @@
  * @class
  * @extends ve.dm.WikiaMediaCaptionNode
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.WikiaVideoCaptionNode = function VeDmWikiaVideoCaptionNode( length, element ) {
-	ve.dm.WikiaVideoCaptionNode.super.call( this, length, element );
+ve.dm.WikiaVideoCaptionNode = function VeDmWikiaVideoCaptionNode() {
+	ve.dm.WikiaVideoCaptionNode.super.apply( this, arguments );
 };
 
 /* Inheritance */

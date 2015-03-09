@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * Dialog listing all command keyboard shortcuts.
  *
@@ -38,8 +36,8 @@ ve.ui.MWCommandHelpDialog.static.getCommandGroups = function () {
 	if ( save !== '-' && save !== '' ) {
 		commandGroups.other.commands.push(
 			{
-				'shortcuts': [ accessKeyPrefix + save.toUpperCase() ],
-				'msg': 'visualeditor-savedialog-label-save'
+				shortcuts: [ accessKeyPrefix + save.toUpperCase() ],
+				msg: 'visualeditor-savedialog-label-save'
 			}
 		);
 	}

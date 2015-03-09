@@ -1,0 +1,45 @@
+/*!
+ * VisualEditor ContentEditable TableCellNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ce-tableCellNode {
+	border: 1px dotted #ccc;
+	padding: 0.25em 0.5em;
+}
+
+.ve-ce-tableCellNode-editing {
+	cursor: text;
+}
+
+.ve-ce-tableCellNode-editing:focus {
+	outline: none;
+}
+
+.ve-ce-tableCellNode a {
+	pointer-events: none;
+}
+
+.ve-ce-tableCellNode-editing a {
+	pointer-events: auto;
+}
+
+/* Use child selectors to avoid making nested tables look active */
+.ve-ce-tableNode-active > thead > tr > .ve-ce-tableCellNode,
+.ve-ce-tableNode-active > tfoot > tr > .ve-ce-tableCellNode,
+.ve-ce-tableNode-active > tbody > tr > .ve-ce-tableCellNode {
+	border-style: solid;
+}
+
+.ve-ce-tableCellNode {
+	min-width: 1em;
+}
+
+.ve-ce-tableCellNode .ve-ce-paragraphNode {
+	margin: 0;
+}
+
+.ve-ce-tableCellNode-header {
+	background: #e7e7e7;
+}

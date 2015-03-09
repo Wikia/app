@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw*/
-
 /**
  * MediaWiki meta dialog Languages page.
  *
@@ -23,19 +21,19 @@ ve.ui.MWLanguagesPage = function VeUiMWLanguagesPage( name, config ) {
 
 	// Properties
 	this.languagesFieldset = new OO.ui.FieldsetLayout( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-meta-languages-label' ),
-		'icon': 'language'
+		$: this.$,
+		label: ve.msg( 'visualeditor-dialog-meta-languages-label' ),
+		icon: 'language'
 	} );
 
 	// Initialization
 	this.languagesFieldset.$element.append(
 		this.$( '<span>' )
-			.text( ve.msg( 'wikia-visualeditor-dialog-meta-languages-readonlynote' ) )
+			.text( ve.msg( 'visualeditor-dialog-meta-languages-readonlynote' ) )
 	);
 	this.$element.append( this.languagesFieldset.$element );
 
-	this.getAllLanguageItems().done( ve.bind( this.onLoadLanguageData, this ) );
+	this.getAllLanguageItems().done( this.onLoadLanguageData.bind( this ) );
 };
 
 /* Inheritance */
@@ -62,7 +60,7 @@ ve.ui.MWLanguagesPage.prototype.onLoadLanguageData = function ( languages ) {
 	var i, $languagesTable = this.$( '<table>' ), languageslength = languages.length;
 
 	$languagesTable
-		.addClass( 've-ui-MWLanguagesPage-languages-table' )
+		.addClass( 've-ui-mwLanguagesPage-languages-table' )
 		.append( this.$( '<tr>' )
 			.append(
 				this.$( '<th>' )
@@ -110,10 +108,10 @@ ve.ui.MWLanguagesPage.prototype.onAllLanguageItemsSuccess = function ( deferred,
 	if ( langlinks ) {
 		for ( i = 0, iLen = langlinks.length; i < iLen; i++ ) {
 			languages.push( {
-				'lang': langlinks[i].lang,
-				'langname': langlinks[i].langname,
-				'title': langlinks[i]['*'],
-				'metaItem': null
+				lang: langlinks[i].lang,
+				langname: langlinks[i].langname,
+				title: langlinks[i]['*'],
+				metaItem: null
 			} );
 		}
 	}
@@ -129,10 +127,10 @@ ve.ui.MWLanguagesPage.prototype.onAllLanguageItemsSuccess = function ( deferred,
 ve.ui.MWLanguagesPage.prototype.getLanguageItemFromMetaListItem = function ( metaItem ) {
 	// TODO: get real values from metaItem once Parsoid actually provides them - bug 48970
 	return {
-		'lang': 'lang',
-		'langname': 'langname',
-		'title': 'title',
-		'metaItem': metaItem
+		lang: 'lang',
+		langname: 'langname',
+		title: 'title',
+		metaItem: metaItem
 	};
 };
 
@@ -164,12 +162,12 @@ ve.ui.MWLanguagesPage.prototype.getAllLanguageItems = function () {
 	var deferred = $.Deferred();
 	// TODO: Detect paging token if results exceed limit
 	ve.init.target.constructor.static.apiRequest( {
-		'action': 'visualeditor',
-		'paction': 'getlanglinks',
-		'page': mw.config.get( 'wgPageName' )
+		action: 'visualeditor',
+		paction: 'getlanglinks',
+		page: mw.config.get( 'wgPageName' )
 	} )
-		.done( ve.bind( this.onAllLanguageItemsSuccess, this, deferred ) )
-		.fail( ve.bind( this.onAllLanguageItemsError, this, deferred ) );
+		.done( this.onAllLanguageItemsSuccess.bind( this, deferred ) )
+		.fail( this.onAllLanguageItemsError.bind( this, deferred ) );
 	return deferred.promise();
 };
 

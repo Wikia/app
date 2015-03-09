@@ -1,0 +1,14 @@
+# Editors
+*~
+*.kate-swp
+.*.swp
+sublime-*
+.project
+.settings
+
+# Install and build artifacts
+/docs
+node_modules
+
+# OS
+.DS_Store
