@@ -7,8 +7,8 @@ class PageShareHelperTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testIsValidShareService() {
-		$testCases = [
+	public function IsValidShareServiceProvider() {
+		return [
 			[
 				'service' => [
 					'title' => 'Service',
@@ -74,12 +74,16 @@ class PageShareHelperTest extends WikiaBaseTest {
 				'out' => false,
 			],
 		];
+	}
 
-		foreach($testCases as $testCase) {
-			$this->assertEquals(
-				$testCase['out'],
-				PageShareHelper::isValidShareService($testCase['service'], $testCase['language'])
-			);
-		}
+
+	/**
+	 * @dataProvider IsValidShareServiceProvider
+	 */
+	public function testIsValidShareService($data) {
+		$this->assertEquals(
+			$data['out'],
+			PageShareHelper::isValidShareService( $data['service'], $data['language'] )
+		);
 	}
 }
