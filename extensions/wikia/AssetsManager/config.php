@@ -767,7 +767,9 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/geo.js',
 
 		'#group_mobile_base_ads_js',
-
+		'//resources/wikia/modules/cache.js',
+		'//resources/wikia/modules/localStorage.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/mercury.run.js',
 		'//extensions/wikia/AdEngine/js/Krux.js',
 	)
