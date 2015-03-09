@@ -1,9 +1,8 @@
 @import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/box-sizing";
 
 .ve-ce-resizableNode-handles div {
 	@include box-shadow( 0, 0, .2em, rgba(0,0,0,.75) );
-	@include box-sizing( border-box );
+	box-sizing: border-box;
 	background-color: #FFF;
 	background-image: none;
 	border-color: #6DA9F7;

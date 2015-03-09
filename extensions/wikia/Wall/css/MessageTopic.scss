@@ -1,6 +1,5 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/menus";
 @import "skins/shared/mixins/transform";
@@ -16,9 +15,9 @@
 		margin-bottom: 5px;
 	}
 	input[type=text] {
-		@include box-sizing;
 		background-color: $color-wall-input-new;
 		border: 1px solid $color-page-border;
+		box-sizing: border-box;
 		color: $color-text;
 
 		// Chrome needs this to get rid of empty space below textarea
