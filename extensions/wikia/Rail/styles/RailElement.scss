@@ -27,12 +27,22 @@ $color-rail-background: mix($color-page, black, 90%);
         font-weight: bold;
         margin-bottom: 20px;
 	}
-	
-	li em a {
-		font-size: 16px;
-		font-weight: bold;
-		margin-top: 20px;
-	}
+
+    .sprite-edit {
+        background-position: -366px 0px;
+        background-image: url("http://slot1.images.wikia.nocookie.net/__cb1425468034/common/extensions/wikia/Chat2/images/sprite-Chat.png");
+        background-repeat: no-repeat;
+        display: inline-block;
+        height: 18px;
+        opacity: .4;
+        width: 19px;
+    }
+
+    li em a {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+    }
 
 	.more {
         font-size: 12px;
@@ -100,40 +110,40 @@ $color-rail-background: mix($color-page, black, 90%);
     .chat-headline {
 
         .chat-live {
+            color: $color-text;
             font-size: 18px;
             font-weight: bold;
-            color: $color-text;
         }
 
         .chat-total {
-            border-radius: 50%;
-            width: 12px;
-            height: 12px;
-            padding: 2px;
+            background-color: $color-rail-background;
             border: 1px solid #666;
-            text-align: center;
+            border-radius: 50%;
             font-size: 10px;
+            height: 12px;
             margin: -5px 0 0 3px;
-            background-color: pink;
+            padding: 2px;
+            text-align: center;
+            width: 12px;
         }
     }
 
     .chat-join {
-        height: 100%;
+        height: 42px;
 
         button {
+            background-image: none;
+            border: none;
+            border-radius: 0;
             color: #FFF;
             height:100%;
             text-transform: uppercase;
-            border-radius: 0;
-            border: none;
         }
 
         button:before {
             display: none;
         }
     }
-
 
     a:hover {
         text-decoration: none;
@@ -142,9 +152,9 @@ $color-rail-background: mix($color-page, black, 90%);
     .avatar {
         background-position: 50%;
         border-radius: 50%;
-        width: 30px;
         height: 30px;
         margin-right: 14px;
+        width: 30px;
     }
 
     .avatar:hover {
@@ -174,6 +184,12 @@ $color-rail-background: mix($color-page, black, 90%);
             }
         }
 
+        .arrow-left .disabled, .arrow-right .disabled {
+            color: mix($color-links, $color-page, 30%);
+            cursor: pointer;
+            opacity: .5;
+        }
+
 
         .carousel-container {
             left: 16px;
@@ -193,18 +209,18 @@ $color-rail-background: mix($color-page, black, 90%);
                 margin: 0;
 
                 li {
+                    border-bottom-color: #E6EBF2;
+                    border-bottom-style: solid;
+                    border-bottom-width: thin;
                     cursor: pointer;
+                    height: 44px;
                     margin: 0;
                     padding: 0;
                     white-space: nowrap;
-                    height: 44px;
-                    border-bottom-color: #E6EBF2;
-                    border-bottom-width: thin;
-                    border-bottom-style: solid;
 
                     .label {
-                        padding-left: 10px;
                         line-height: 44px;
+                        padding-left: 10px;
                     }
                 }
             }
@@ -213,9 +229,9 @@ $color-rail-background: mix($color-page, black, 90%);
                 padding: 10px;
 
                 ul .username {
+                    font-weight: bold;
                     margin-bottom: 10px;
                     text-transform: uppercase;
-                    font-weight: bold;
                 }
             }
         }
