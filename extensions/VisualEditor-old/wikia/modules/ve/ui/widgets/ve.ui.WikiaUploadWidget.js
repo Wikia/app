@@ -118,7 +118,8 @@ ve.ui.WikiaUploadWidget.prototype.onClick = function () {
  */
 ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 	var fileErrors,
-			form;
+		form,
+		BannerNotification;
 
 	file = file || this.$file[0].files[0];
 	if ( !file ) {
@@ -128,7 +129,8 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 	fileErrors = this.constructor.static.validateFile( file );
 
 	if ( fileErrors.length ) {
-		mw.config.get( 'GlobalNotification' ).show(
+		BannerNotification = mw.config.get( 'BannerNotification' );
+		new BannerNotification(
 			// show filetype message first if multiple errors exist
 			ve.msg(
 				'wikia-visualeditor-dialog-wikiamediainsert-upload-error-' + fileErrors[ fileErrors.length - 1 ][ 0 ],
@@ -136,7 +138,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 			),
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
-		);
+		).show();
 	} else {
 		form = new FormData( document.createElement( 'form' ) );
 		form.append( 'file', file );
