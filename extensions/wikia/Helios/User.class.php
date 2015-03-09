@@ -96,15 +96,19 @@ class User {
 		// Authenticate with username and password.
 		try {
 			$loginInfo = $heliosClient->login( $username, $password );
+
+			if ( !empty($loginInfo->error) ) {
+				if ( $loginInfo->error === 'access_denied' ) {
+					$logger->info(
+						'HELIOS_LOGIN authentication_failed',
+						[ 'response' => $loginInfo, 'username' => $username, 'method' => __METHOD__ ]
+					);
+				} else {
+					throw new ClientException( 'Response error: ' . $loginInfo->error, 0, null, [ 'response' => $loginInfo ] );
+				}
+			}
+
 			$result = !empty( $loginInfo->access_token );
-		}
-		catch ( LoginFailureException $e )
-		{
-			// normal case: password incorrect, log it as info
-			$logger->info(
-				'HELIOS_LOGIN authentication_failed',
-				[ 'response' => $e->getResponse(), 'username' => $username, 'method' => __METHOD__ ]
-			);
 		}
 		catch ( ClientException $e )
 		{
