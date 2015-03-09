@@ -19,12 +19,12 @@ class RedirectServiceTest extends WikiaBaseTest {
 	 * @dataProvider getRedirectsDataProvider
 	 */
 	public function testGetRedirects($redirects, $expected) {
-		$redirectService = new RedirectService();
+		$redirectService = new RedirectService(null);
 		$redirectService->setRedirects($redirects);
 
 		$redirects = $redirectService->getRedirects();
 
-		$this->assertEquals($redirects, $expected);
+		$this->assertEquals($expected, $redirects);
 	}
 
 	/**
@@ -40,88 +40,80 @@ class RedirectServiceTest extends WikiaBaseTest {
 	}
 
 	public function getRedirectsForPageTypeDataProvider() {
-		return array(
-			array(
-				array(
+		return [
+			[
+				[
 					'Old title' => 'New title',
 					'Other old Title' => 'Other new Title',
 					'Wiki/Title' => 'http://muppet.wikia.com'
-				),
+				],
 				'type',
-				array(
-					'old title' => 'New title',
-					'other old title' => 'Other new Title',
-					'wiki/title' => 'http://muppet.wikia.com'
-				)
-			),
-			array(
-				array(
-					'WAM' => array(
+				[]
+			],
+			[
+				[
+					'WAM' => [
 						'WamPageTitle' => 'WAM',
 						'WAM wikis' => 'WAM wikias'
-					),
-					'HubsV2' => array(
+					],
+					'HubsV2' => [
 						'Video Games' => 'http://videogames.wikia.com'
-					)
-				),
+					]
+				],
 				'WAM',
-				array(
+				[
 					'wampagetitle' => 'WAM',
 					'wam wikis' => 'WAM wikias'
-				)
-			),
-			array(
-				array(),
+				]
+			],
+			[
+				[],
 				'Wam',
-				array()
-			),
-			array(
-				array(
-					'WAM' => array(
+				[]
+			],
+			[
+				[
+					'WAM' => [
 						'WamPageTitle' => 'WAM',
 						'WAM wikis' => 'WAM wikias'
-					),
-					'HubsV2' => array(
+					],
+					'HubsV2' => [
 						'Video Games' => 'http://videogames.wikia.com'
-					)
-				),
+					]
+				],
 				'hubsV2',
-				array(
+				[
 					'video games' => 'http://videogames.wikia.com'
-				)
-			),
-			array(
-				array(
-					'WAM' => array(
+				]
+			],
+			[
+				[
+					'WAM' => [
 						'WamPageTitle' => 'WAM',
 						'WAM wikis' => 'WAM wikias'
-					),
-					'HubsV2' => array(
+					],
+					'HubsV2' => [
 						'Video Games' => 'http://videogames.wikia.com'
-					)
-				),
+					]
+				],
 				'wikia',
-				array(
-					'wam' => array(
-						'wampagetitle' => 'WAM',
-						'wam wikis' => 'WAM wikias'
-					),
-					'hubsv2' => array(
-						'video games' => 'http://videogames.wikia.com'
-					)
-				)
-			),
-		);
+				[]
+			]
+		];
 	}
 
 	/**
 	 * @dataProvider getRedirectURLDataProvider
 	 */
 	public function testGetRedirectURL($redirects, $title, $expected) {
-		$wgTitleMock = $this->getMock('Title', array('getText'));
-		$titleMock = $this->getMock('Title', array('getLocalURL'));
+		$wgTitleMock = $this->getMock('Title', ['getText']);
+		$titleMock = $this->getMock('Title', ['getLocalURL']);
 
-		$redirectMock = $this->getMock('RedirectService', array('getTitleFromText'));
+		$redirectMock = $this->getMockBuilder('RedirectService')
+			->setConstructorArgs(['test'])
+			->setMethods(['getTitleFromText'])
+			->getMock();
+
 		$redirectMock->setRedirects($redirects);
 
 		$redirects = $redirectMock->getRedirects();
@@ -151,35 +143,30 @@ class RedirectServiceTest extends WikiaBaseTest {
 	}
 
 	public function getRedirectURLDataProvider() {
-		return array(
-			array(
-				array(
-					'Old title' => 'New title',
-					'Other old Title' => 'Other new Title',
-					'Wiki/Title' => 'http://muppet.wikia.com'
-				),
-				'Wiki/Title',
-				'http://muppet.wikia.com'
-			),
-			array(
-				array(
-					'Old title' => 'New title',
-					'Other old Title' => 'Other new Title',
-					'Wiki/Title' => 'http://muppet.wikia.com'
-				),
+		return [
+			[
+				[
+					'test' => [
+						'Old title' => 'New title',
+						'Other old Title' => 'Other new Title',
+						'Wiki/Title' => 'http://muppet.wikia.com'
+					]
+				],
 				'other old Title',
 				self::MOCKED_DOMAIN . 'Other_new_Title'
-			),
-			array(
-				array(
-					'Old title' => 'New title',
-					'Other old Title' => 'Other new Title',
-					'Wiki/Title' => 'http://muppet.wikia.com'
-				),
+			],
+			[
+				[
+					'test' => [
+						'Old title' => 'New title',
+						'Other old Title' => 'Other new Title',
+						'Wiki/Title' => 'http://muppet.wikia.com'
+					]
+				],
 				'not existing Title',
 				null
-			)
-		);
+			]
+		];
 	}
 
 	private function getFakeUrlFromTitle($title) {
@@ -190,54 +177,42 @@ class RedirectServiceTest extends WikiaBaseTest {
 	 * @dataProvider getRedirectsDataProvider
 	 */
 	public function testPrepareRedirects($redirects, $expected) {
-		$redirectService = new RedirectService();
+		$redirectService = new RedirectService('wam');
 		$redirectService->setRedirects($redirects);
 
 		$prepare = $this->getReflectionMethod( 'prepareRedirects' );
 
 		$preparedRedirects = $prepare->invoke($redirectService);
 
-		$this->assertEquals($preparedRedirects, $expected);
+		$this->assertEquals($expected, $preparedRedirects);
 	}
 
 	public function getRedirectsDataProvider() {
-		return array(
-			array(
-				array(
-					'Old title' => 'New title',
-					'Other old Title' => 'Other new Title',
-					'Wiki/Title' => 'http://muppet.wikia.com'
-				),
-				array(
-					'old title' => 'New title',
-					'other old title' => 'Other new Title',
-					'wiki/title' => 'http://muppet.wikia.com'
-				)
-			),
-			array(
-				array(
-					'WAM' => array(
+		return [
+			[
+				[
+					'WAM' => [
 						'WamPageTitle' => 'WAM',
 						'WAM wikis' => 'WAM wikias'
-					),
-					'HubsV2' => array(
+					],
+					'HubsV2' => [
 						'Video Games' => 'http://videogames.wikia.com'
-					)
-				),
-				array(
-					'wam' => array(
+					]
+				],
+				[
+					'wam' => [
 						'wampagetitle' => 'WAM',
 						'wam wikis' => 'WAM wikias'
-					),
-					'hubsv2' => array(
+					],
+					'hubsv2' => [
 						'video games' => 'http://videogames.wikia.com'
-					)
-				)
-			),
-			array(
-				array(),
-				array()
-			)
-		);
+					]
+				]
+			],
+			[
+				[],
+				[]
+			]
+		];
 	}
 }

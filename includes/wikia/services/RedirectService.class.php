@@ -10,11 +10,6 @@
  *
  * Examples:
  *
- * 		$this->redirects = array(
- * 					'Old/Title' => 'Old/New title'
- * 					'next old title' => 'http://muppet.wikia.com/wiki/Some_page'
- * 				);
- *
  * If page type is set, it expects multidimensional array with page type on first level.
  *
  *		$this->redirects = array(
@@ -51,7 +46,7 @@ class RedirectService extends WikiaService {
 	 */
 	private $isFormatted;
 
-	public function __construct( $pageType = null, $httpStatus = null ) {
+	public function __construct( $pageType, $httpStatus = null ) {
 		if ( !is_null( $httpStatus ) && is_numeric( $httpStatus ) ) {
 			$this->httpStatus = $httpStatus;
 		} else {
@@ -84,7 +79,7 @@ class RedirectService extends WikiaService {
 		}
 
 
-		if ( isset( $this->pageType ) ) {
+		if ( !empty( $this->pageType ) ) {
 			if (
 				isset( $this->redirects[ $this->pageType ] )
 				&& is_array( $this->redirects[ $this->pageType ])
@@ -104,7 +99,7 @@ class RedirectService extends WikiaService {
 	 *
 	 * @param array $redirects
 	 */
-	public function setRedirects(Array $redirects ) {
+	public function setRedirects( Array $redirects ) {
 		$this->redirects = $redirects;
 		$this->isFormatted = false;
 	}
