@@ -18,25 +18,15 @@ $color-rail-background: mix($color-page, black, 90%);
     }
 
     background-color: $color-rail-background;
-	padding: 20px;
-	font-size: 12px;
-	font-weight: bold;
+    padding: 20px;
+    font-size: 12px;
+    font-weight: bold;
 
-	.activity-heading {
+    .activity-heading {
         font-size: 24px;
         font-weight: bold;
         margin-bottom: 20px;
 	}
-
-    .sprite-edit {
-        background-position: -366px 0px;
-        background-image: url("http://slot1.images.wikia.nocookie.net/__cb1425468034/common/extensions/wikia/Chat2/images/sprite-Chat.png");
-        background-repeat: no-repeat;
-        display: inline-block;
-        height: 18px;
-        opacity: .4;
-        width: 19px;
-    }
 
     li em a {
             font-size: 16px;
@@ -44,7 +34,7 @@ $color-rail-background: mix($color-page, black, 90%);
             margin-top: 20px;
     }
 
-	.more {
+    .more {
         font-size: 12px;
         margin-top: 30px;
         text-transform: uppercase;
@@ -83,8 +73,8 @@ $color-rail-background: mix($color-page, black, 90%);
         }
 
         a:first-of-type:hover {
-            text-decoration: underline;
             color: $color-links;
+            text-decoration: underline;
             text-shadow: initial;
         }
 
