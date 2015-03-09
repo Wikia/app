@@ -2,14 +2,8 @@
 
 class PageShareController extends WikiaController {
 
-	/**
-	 * @var PageShareHelper
-	 */
-	private $helper;
-
 	public function __construct() {
 		parent::__construct();
-		$this->helper = new PageShareHelper();
 	}
 
 	/**
@@ -37,9 +31,9 @@ class PageShareController extends WikiaController {
 		$lang = $this->request->getVal( 'lang', $wgLang->getCode() );
 
 		foreach ( $wgPageShareServices as $service ) {
-			if ( $this->helper->isValidShareService( $service, $lang ) ) {
+			if ( PageShareHelper::isValidShareService( $service, $lang ) ) {
 				$service['href'] = str_replace( '$1', urlencode( $location ), $service['url'] );
-				$service['icon'] = $this->helper->getIcon( $service['name'] );
+				$service['icon'] = PageShareHelper::getIcon( $service['name'] );
 				$services[] = $service;
 			}
 		}

@@ -15,29 +15,20 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 	function shareLinkClick(event) {
 		event.stopPropagation();
 		event.preventDefault();
+
 		var service = $(event.target).closest('a'),
 			url = service.prop('href'),
 			title = service.prop('title'),
 			h = (win.innerHeight / 2 | 0), // round down
 			w = (win.innerWidth / 2 | 0);  // round down
 
-		win.open(url, title, 'width=' + w + ',height=' + h);
-	}
+		trackFunc({label: service.data('share-service')});
 
-	/**
-	 * @desc Share link tracking handler
-	 *
-	 * @param {Event} event
-	 */
-	function shareLinkTrack(event) {
-		trackFunc({label: $(event.target).closest('a').data('share-service')});
+		win.open(url, title, 'width=' + w + ',height=' + h);
 	}
 
 	// bind events to links
 	$(function(){
-		$('#PageShareToolbar')
-			.find('.page-share a')
-				.on('click', shareLinkClick)
-				.on('touchstart mousedown', shareLinkTrack);
+		$('#PageShareToolbar').on('click', '.page-share a', shareLinkClick);
 	});
 });
