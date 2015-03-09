@@ -137,11 +137,11 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function addPowerUserAddGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
-			&& !in_array( self::GROUP_NAME, $this->oUser->getGroups() ) )
-		{
-			$this->oUser->addGroup( self::GROUP_NAME );
-			$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
+			if ( !in_array( self::GROUP_NAME, $this->oUser->getGroups() ) ) {
+				$this->oUser->addGroup(self::GROUP_NAME);
+				$this->logSuccess($sProperty, self::ACTION_ADD_GROUP);
+			}
 			return true;
 		} else {
 			$this->logError( $sProperty, self::ACTION_ADD_GROUP );
@@ -167,12 +167,12 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function removePowerUserSetOption( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUserProperties )
-			&& $this->oUser->getBoolOption( $sProperty ) === true
-		) {
-			$this->oUser->setOption( $sProperty, null );
-			$this->oUser->saveSettings();
-			$this->logSuccess( $sProperty, self::ACTION_REMOVE_SET_OPTION );
+		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
+			if ( $this->oUser->getBoolOption( $sProperty ) === true ) {
+				$this->oUser->setOption($sProperty, null);
+				$this->oUser->saveSettings();
+				$this->logSuccess($sProperty, self::ACTION_REMOVE_SET_OPTION);
+			}
 			return true;
 		} else {
 			$this->logError( $sProperty, self::ACTION_REMOVE_SET_OPTION );
@@ -189,11 +189,11 @@ class PowerUser {
 	 * @return bool
 	 */
 	public function removePowerUserRemoveGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
-			&& $this->isGroupForRemoval( $sProperty ) )
-		{
-			$this->oUser->removeGroup( self::GROUP_NAME );
-			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
+			if ( $this->isGroupForRemoval( $sProperty ) ) {
+				$this->oUser->removeGroup(self::GROUP_NAME);
+				$this->logSuccess($sProperty, self::ACTION_REMOVE_GROUP);
+			}
 			return true;
 		} else {
 			$this->logError( $sProperty, self::ACTION_REMOVE_GROUP );
