@@ -14,17 +14,13 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMapInsertDialog = function VeUiWikiaMapInsertDialog( config ) {
-	config =  $.extend( config, {
-		width: '717px'
-	} );
-
 	// Parent constructor
 	ve.ui.WikiaMapInsertDialog.super.call( this, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaMapInsertDialog, ve.ui.Dialog );
+OO.inheritClass( ve.ui.WikiaMapInsertDialog, ve.ui.FragmentDialog );
 
 /* Static Properties */
 
@@ -32,11 +28,19 @@ ve.ui.WikiaMapInsertDialog.static.name = 'wikiaMapInsert';
 
 ve.ui.WikiaMapInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-map-insert-title' );
 
-ve.ui.WikiaMapInsertDialog.static.icon = 'map';
+// as in OO.ui.WindowManager.static.sizes
+ve.ui.WikiaMapInsertDialog.static.size = '717px';
 
 ve.ui.WikiaMapInsertDialog.static.learnMoreUrl = 'http://maps.wikia.com/wiki/Maps_Wiki';
 
 /* Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaMapInsertDialog.prototype.getBodyHeight = function () {
+	return 600;
+};
 
 /**
  * @inheritdoc
@@ -46,16 +50,16 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 	ve.ui.WikiaMapInsertDialog.super.prototype.initialize.call( this );
 
 	this.panels = {
-		'loading': new OO.ui.PanelLayout( { '$': this.$ } ),
-		'empty': new OO.ui.PanelLayout( { '$': this.$ } ),
-		'results': new OO.ui.PanelLayout( { '$': this.$ } )
+		loading: new OO.ui.PanelLayout( { $: this.$ } ),
+		empty: new OO.ui.PanelLayout( { $: this.$ } ),
+		results: new OO.ui.PanelLayout( { $: this.$ } )
 	};
 
 	//this.setupLoadingPanel();
 	this.setupEmptyPanel();
 	this.setupResultsPanel();
 
-	this.stackLayout = new OO.ui.StackLayout( { '$': this.$ } );
+	this.stackLayout = new OO.ui.StackLayout( { $: this.$ } );
 	this.stackLayout.addItems( [
 		this.panels.loading,
 		this.panels.empty,
@@ -63,22 +67,22 @@ ve.ui.WikiaMapInsertDialog.prototype.initialize = function () {
 	] );
 
 	this.stackLayout.$element.appendTo( this.$body );
-	this.frame.$content.addClass( 've-ui-wikiaMapInsertDialog' );
+	this.$content.addClass( 've-ui-wikiaMapInsertDialog' );
 
 	if ( localStorage ) {
-		this.$( window ).on( 'storage', ve.bind( function ( e ) {
+		this.$( window ).on( 'storage', function ( e ) {
 			if ( e.originalEvent.key === 'mapCreated' && e.originalEvent.newValue ) {
 				this.gettingMaps = null;
-				this.load();
+				this.loadMaps();
 			}
-		}, this ) );
+		}.bind( this ) );
 	}
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
 	var $headline = this.$( '<div>' ),
 		$headlineText = this.$( '<div>' ),
-		headlineButton = new OO.ui.ButtonWidget( { 'label': ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-create-button' ) } );
+		headlineButton = new OO.ui.ButtonWidget( { label: ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-create-button' ), flags: 'primary' } );
 
 	$headline.addClass( 've-ui-wikiaMapInsertDialog-results-headline' );
 
@@ -90,10 +94,10 @@ ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
 	headlineButton.$element
 		.addClass( 've-ui-wikiaMapInsertDialog-results-headline-button' )
 		.appendTo( $headline );
-	headlineButton.on( 'click', ve.bind( this.onCreateClick, this ) );
+	headlineButton.on( 'click', this.onCreateClick.bind( this ) );
 
-	this.resultsWidget = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
-	this.resultsWidget.on( 'select', ve.bind( this.onMapSelect, this ) );
+	this.resultsWidget = new ve.ui.WikiaMediaResultsWidget( { $: this.$ } );
+	this.resultsWidget.on( 'select', this.onMapSelect.bind( this ) );
 	this.selectWidget = this.resultsWidget.getResults();
 
 	this.panels.results.$element.append( $headline, this.resultsWidget.$element );
@@ -104,9 +108,9 @@ ve.ui.WikiaMapInsertDialog.prototype.setupEmptyPanel = function () {
 		$headline = this.$( '<div>' ),
 		$text = this.$( '<div>' ),
 		button = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'label': ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-create-button' ),
-			'flags': [ 'primary' ]
+			$: this.$,
+			label: ve.msg( 'wikia-visualeditor-dialog-wikiamapinsert-create-button' ),
+			flags: [ 'primary' ]
 		} );
 
 	$content.addClass( 've-ui-wikiaMapInsertDialog-empty-content' );
@@ -124,7 +128,7 @@ ve.ui.WikiaMapInsertDialog.prototype.setupEmptyPanel = function () {
 	button.$element
 		.addClass( 've-ui-wikiaMapInsertDialog-empty-button' )
 		.appendTo( $content );
-	button.on( 'click', ve.bind( this.onCreateClick, this ) );
+	button.on( 'click', this.onCreateClick.bind( this ) );
 
 	$content.appendTo( this.panels.empty.$element );
 };
@@ -137,12 +141,12 @@ ve.ui.WikiaMapInsertDialog.prototype.getSetupProcess = function ( data ) {
 		.next( function () {
 			this.inserting = null;
 			this.stackLayout.setItem( this.panels.loading );
-			this.load();
+			this.loadMaps();
 		}, this );
 };
 
-ve.ui.WikiaMapInsertDialog.prototype.load = function () {
-	this.getMaps().done( ve.bind( this.showResults, this ) );
+ve.ui.WikiaMapInsertDialog.prototype.loadMaps = function () {
+	this.getMaps().done( this.showResults.bind( this ) );
 };
 
 ve.ui.WikiaMapInsertDialog.prototype.getMaps = function () {
@@ -188,7 +192,7 @@ ve.ui.WikiaMapInsertDialog.prototype.showResults = function ( data ) {
 ve.ui.WikiaMapInsertDialog.prototype.onMapSelect = function ( option ) {
 	if ( !this.inserting ) {
 		this.inserting = true;
-		this.getFragment().collapseRangeToEnd().insertContent( [
+		this.getFragment().collapseToEnd().insertContent( [
 			{
 				type: 'wikiaMap',
 				attributes: {
@@ -203,8 +207,8 @@ ve.ui.WikiaMapInsertDialog.prototype.onMapSelect = function ( option ) {
 		] );
 		this.close();
 		ve.track( 'wikia', {
-			'action': ve.track.actions.ADD,
-			'label': 'dialog-map-insert'
+			action: ve.track.actions.ADD,
+			label: 'dialog-map-insert'
 		} );
 	}
 };
@@ -212,8 +216,8 @@ ve.ui.WikiaMapInsertDialog.prototype.onMapSelect = function ( option ) {
 ve.ui.WikiaMapInsertDialog.prototype.onCreateClick = function () {
 	window.open( new mw.Title( 'Special:Maps' ).getUrl() + '#createMap' );
 	ve.track( 'wikia', {
-		'action': ve.track.actions.ADD,
-		'label': 'dialog-map-create'
+		action: ve.track.actions.ADD,
+		label: 'dialog-map-create'
 	} );
 };
 

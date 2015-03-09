@@ -310,7 +310,6 @@
 
 			validator = new UserSignupAjaxValidation({
 				wikiaForm: wikiaForm,
-				inputsToValidate: inputsToValidate,
 				submitButton: inputs.submit
 			});
 
@@ -318,7 +317,7 @@
 			inputsToValidate.forEach(function (inputName) {
 				$filteredInputs = $filteredInputs.add(inputs[inputName]);
 			});
-			$filteredInputs.on('blur', validator.validateMappedInput.bind(validator));
+			$filteredInputs.on('blur', validator.validateInput.bind(validator));
 		},
 
 		/**

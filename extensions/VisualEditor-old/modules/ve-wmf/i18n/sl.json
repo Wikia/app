@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dbc334",
+			"Eleassar",
+			"Pinky sl",
+			"Yerpo"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Urejanje, napravljeno z [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditorjem]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Preveri]]",
+	"tag-visualeditor-needcheck-description": "Urejanje, napravljeno z [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditorjem]], pri katerem je sistem zaznal, da ima wikibesedilo morda neželene spremembe.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Preklopljeno]]",
+	"tag-visualeditor-switched-description": "Uporabnik je začel urejati z VisualEditorjem, nato je preklopil na urejevalnik wikibesedila",
+	"visualeditor-feedback-link": "Project:VisualEditor/Povratne informacije",
+	"visualeditor-feedback-tool": "Pustite povratno informacijo",
+	"visualeditor-help-label": "Preberite uporabniški priročnik",
+	"visualeditor-help-title": "Uporabniški priročnik za uporabo urejevalnika"
+}

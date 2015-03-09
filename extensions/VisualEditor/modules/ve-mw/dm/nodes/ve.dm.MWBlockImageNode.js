@@ -4,7 +4,6 @@
  * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-/*global mw */
 
 /**
  * DataModel MediaWiki image node.
@@ -12,6 +11,7 @@
  * @class
  * @extends ve.dm.BranchNode
  * @mixins ve.dm.MWImageNode
+ * @mixins ve.dm.ClassAttributeNode
  *
  * @constructor
  * @param {Object} [element] Reference to element in linear model
@@ -23,6 +23,7 @@ ve.dm.MWBlockImageNode = function VeDmMWBlockImageNode() {
 
 	// Mixin constructors
 	ve.dm.MWImageNode.call( this );
+	ve.dm.ClassAttributeNode.call( this );
 };
 
 /* Inheritance */
@@ -33,6 +34,8 @@ OO.inheritClass( ve.dm.MWBlockImageNode, ve.dm.BranchNode );
 OO.mixinClass( ve.dm.MWBlockImageNode, ve.dm.GeneratedContentNode );
 
 OO.mixinClass( ve.dm.MWBlockImageNode, ve.dm.MWImageNode );
+
+OO.mixinClass( ve.dm.MWBlockImageNode, ve.dm.ClassAttributeNode );
 
 /* Static Properties */
 
@@ -46,7 +49,7 @@ ve.dm.MWBlockImageNode.static.rdfaToType = {
 ve.dm.MWBlockImageNode.static.name = 'mwBlockImage';
 
 ve.dm.MWBlockImageNode.static.storeHtmlAttributes = {
-	'blacklist': [ 'typeof', 'class', 'src', 'resource', 'width', 'height', 'href', 'rel' ]
+	blacklist: [ 'typeof', 'class', 'src', 'resource', 'width', 'height', 'href', 'rel' ]
 };
 
 ve.dm.MWBlockImageNode.static.handlesOwnChildren = true;
@@ -63,67 +66,47 @@ ve.dm.MWBlockImageNode.static.getMatchRdfaTypes = function () {
 	return ve.getObjectKeys( this.rdfaToType );
 };
 
+ve.dm.MWBlockImageNode.static.classAttributes = {
+	'mw-image-border': { borderImage: true },
+	'mw-halign-left': { align: 'left' },
+	'mw-halign-right': { align: 'right' },
+	'mw-halign-center': { align: 'center' },
+	'mw-halign-none': { align: 'none' },
+	'mw-default-size': { defaultSize: true }
+};
+
 ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter ) {
-	var dataElement,
+	var dataElement, newDimensions,
 		$figure = $( domElements[0] ),
 		// images with link='' have a span wrapper instead
 		$imgWrapper = $figure.children( 'a, span' ).eq( 0 ),
 		$img = $imgWrapper.children( 'img' ).eq( 0 ),
 		$caption = $figure.children( 'figcaption' ).eq( 0 ),
+		classAttr = $figure.attr( 'class' ),
 		typeofAttr = $figure.attr( 'typeof' ),
-		classes = $figure.attr( 'class' ),
-		recognizedClasses = [],
 		attributes = {
 			type: this.rdfaToType[typeofAttr],
 			href: $imgWrapper.attr( 'href' ) || '',
 			src: $img.attr( 'src' ),
-			resource: $img.attr( 'resource' ),
-			originalClasses: classes
+			resource: $img.attr( 'resource' )
 		},
 		width = $img.attr( 'width' ),
 		height = $img.attr( 'height' ),
-		altText = $img.attr( 'alt' ),
-		defaultThumbWidth = mw.config.get( 'wgVisualEditorConfig' )
-			.defaultUserOptions.defaultthumbsize;
+		altText = $img.attr( 'alt' );
 
 	if ( altText !== undefined ) {
 		attributes.alt = altText;
 	}
 
-	// Extract individual classes
-	classes = typeof classes === 'string' ? classes.trim().split( /\s+/ ) : [];
+	this.setClassAttributes( attributes, classAttr );
 
-	// Deal with border flag
-	if ( classes.indexOf( 'mw-image-border' ) !== -1 ) {
-		attributes.borderImage = true;
-		recognizedClasses.push( 'mw-image-border' );
-	}
-
-	// Horizontal alignment
-	if ( classes.indexOf( 'mw-halign-left' ) !== -1 ) {
-		attributes.align = 'left';
-		recognizedClasses.push( 'mw-halign-left' );
-	} else if ( classes.indexOf( 'mw-halign-right' ) !== -1 ) {
-		attributes.align = 'right';
-		recognizedClasses.push( 'mw-halign-right' );
-	} else if ( classes.indexOf( 'mw-halign-center' ) !== -1 ) {
-		attributes.align = 'center';
-		recognizedClasses.push( 'mw-halign-center' );
-	} else if ( classes.indexOf( 'mw-halign-none' ) !== -1 ) {
-		attributes.align = 'none';
-		recognizedClasses.push( 'mw-halign-none' );
-	} else {
-		attributes.align = 'default';
-	}
+	attributes.align = attributes.align || 'default';
 
 	attributes.width = width !== undefined && width !== '' ? Number( width ) : null;
 	attributes.height = height !== undefined && height !== '' ? Number( height ) : null;
 
 	// Default-size
-	if ( classes.indexOf( 'mw-default-size' ) !== -1 ) {
-		// Flag as default size
-		attributes.defaultSize = true;
-		recognizedClasses.push( 'mw-default-size' );
+	if ( attributes.defaultSize ) {
 		// Force wiki-default size for thumb and frameless
 		if (
 			attributes.type === 'thumb' ||
@@ -138,37 +121,29 @@ ve.dm.MWBlockImageNode.static.toDataElement = function ( domElements, converter 
 			// rather than default MediaWiki configuration dimensions.
 			// We must force local wiki default in edit mode for default
 			// size images.
-			// Only change the image size to default if the image isn't
-			// smaller than the default size
-			if (
-				attributes.width > defaultThumbWidth
-			) {
-				if ( attributes.height !== null ) {
-					attributes.height = Math.round( ( attributes.height / attributes.width ) * defaultThumbWidth );
-				}
-				attributes.width = defaultThumbWidth;
+			newDimensions = ve.dm.MWImageNode.static.scaleToThumbnailSize( attributes );
+			if ( newDimensions ) {
+				attributes.width = newDimensions.width;
+				attributes.height = newDimensions.height;
 			}
 		}
 	}
 
-	// Store unrecognized classes so we can restore them on the way out
-	attributes.unrecognizedClasses = OO.simpleArrayDifference( classes, recognizedClasses );
-
-	dataElement = { 'type': this.name, 'attributes': attributes };
+	dataElement = { type: this.name, attributes: attributes };
 
 	this.storeGeneratedContents( dataElement, dataElement.attributes.src, converter.getStore() );
 
 	if ( $caption.length === 0 ) {
 		return [
 			dataElement,
-			{ 'type': this.captionNodeType },
-			{ 'type': '/' + this.captionNodeType },
-			{ 'type': '/' + this.name }
+			{ type: this.captionNodeType },
+			{ type: '/' + this.captionNodeType },
+			{ type: '/' + this.name }
 		];
 	} else {
 		return [ dataElement ].
-			concat( converter.getDataFromDomClean( $caption[0], { 'type': this.captionNodeType } ) ).
-			concat( [ { 'type': '/' + this.name } ] );
+			concat( converter.getDataFromDomClean( $caption[0], { type: this.captionNodeType } ) ).
+			concat( [ { type: '/' + this.name } ] );
 	}
 };
 
@@ -182,8 +157,7 @@ ve.dm.MWBlockImageNode.static.toDomElements = function ( data, doc, converter ) 
 		imgWrapper = doc.createElement( dataElement.attributes.href !== '' ? 'a' : 'span' ),
 		img = doc.createElement( 'img' ),
 		wrapper = doc.createElement( 'div' ),
-		classes = [],
-		originalClasses = dataElement.attributes.originalClasses,
+		classAttr = this.getClassAttrFromAttributes( dataElement.attributes ),
 		captionData = data.slice( 1, -1 );
 
 	if ( !this.typeToRdfa ) {
@@ -195,43 +169,11 @@ ve.dm.MWBlockImageNode.static.toDomElements = function ( data, doc, converter ) 
 
 	// Type
 	figure.setAttribute( 'typeof', this.typeToRdfa[dataElement.attributes.type] );
-	if ( dataElement.attributes.borderImage === true ) {
-		classes.push( 'mw-image-border' );
+
+	if ( classAttr ) {
+		figure.className = classAttr;
 	}
 
-	// Apply classes if size is default
-	if ( dataElement.attributes.defaultSize === true ) {
-		classes.push( 'mw-default-size' );
-	}
-
-	// Horizontal alignment
-	switch ( dataElement.attributes.align ) {
-		case 'left':
-			classes.push( 'mw-halign-left' );
-			break;
-		case 'right':
-			classes.push( 'mw-halign-right' );
-			break;
-		case 'center':
-			classes.push( 'mw-halign-center' );
-			break;
-		case 'none':
-			classes.push( 'mw-halign-none' );
-			break;
-	}
-
-	if ( dataElement.attributes.unrecognizedClasses ) {
-		classes = OO.simpleArrayUnion( classes, dataElement.attributes.unrecognizedClasses );
-	}
-
-	if (
-		originalClasses &&
-		ve.compare( originalClasses.trim().split( /\s+/ ).sort(), classes.sort() )
-	) {
-		figure.className = originalClasses;
-	} else if ( classes.length > 0 ) {
-		figure.className = classes.join( ' ' );
-	}
 	if ( dataElement.attributes.href !== '' ) {
 		imgWrapper.setAttribute( 'href', dataElement.attributes.href );
 	}

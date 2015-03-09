@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gitartha.bordoloi"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলএডিটৰ]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলেডিটৰ]]ৰে কৰা সম্পাদনা",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলেডিটৰ: পৰীক্ষা কৰক]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজুৱেলেডিটৰ]]ৰে সম্পাদনা কৰা হৈছে য'ত প্ৰণালীয়ে সম্ভাব্য অনিচ্ছাকৃতভাৱে সালসলনি হোৱা ৱিকিপাঠ্য চিনাক্ত কৰিছে।",
+	"visualeditor-feedback-link": "Project:ভিজুৱেলেডিটৰ/প্ৰতিক্ৰিয়া",
+	"visualeditor-feedback-tool": "আপোনাৰ মন্তব্য জনাওক",
+	"visualeditor-help-label": "ব্যৱহাৰকাৰী নিৰ্দেশিকা পঢ়ক",
+	"visualeditor-help-title": "কিদৰে এডিটৰ ব্যৱহাৰ কৰিব তাৰ বাবে ব্যৱহাৰকাৰী নিৰ্দেশিকা"
+}

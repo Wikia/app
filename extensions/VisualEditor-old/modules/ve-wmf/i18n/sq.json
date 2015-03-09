@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Euriditi",
+			"Amire80"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Redaktim i kryer duke përdorur [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Kontrollo]]",
+	"tag-visualeditor-needcheck-description": "Redaktim i kryer duke përdorur [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] ku sistemi zbuloi wikitekst i cili ndoshta ka ndryshime të padëshiruara.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: është ndryshuar]]",
+	"tag-visualeditor-switched-description": "Përdoruesi ka filluar editimin me VisualEditor pastai ka ndryshuar në wikitest editor.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Komente",
+	"visualeditor-feedback-tool": "Lër një koment",
+	"visualeditor-help-label": "Lexo guidën e përdoruesit",
+	"visualeditor-help-title": "Lexo guidën e përdoruesit për të mësuar se si të përdorni redaktorin"
+}

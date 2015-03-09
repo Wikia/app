@@ -3,9 +3,13 @@
 		"authors": [
 			"Jdforrester",
 			"Shirayuki",
-			"Felicilijonas"
+			"Felicilijonas",
+			"Captaindogfish"
 		]
 	},
+	"visualeditor-dialog-beta-welcome-content": "This is our new, easier way to edit. It's still in beta, which means you might find parts of the page you can't edit, or encounter issues that need to be fixed. We encourage you to review your changes, and we welcome reports about any issues you might encounter in using VisualEditor (click the \"{{int:visualeditor-help-tool}}\" button to submit feedback). You can switch to the wikitext editor at any time by clicking on the \"$1\" tab, keeping any changes you have made.",
 	"visualeditor-dialog-media-position-center": "Centre",
+	"visualeditor-dialog-meta-categories-defaultsort-help": "You can over-ride how this page is sorted when displayed within a category by setting a different index to sort with instead. This is often used to make pages about people show by last name, but be named with their first name shown first.",
+	"visualeditor-dialog-meta-settings-displaytitle-help": "You can over-ride how this page's title is displayed by setting a different label to show instead.",
 	"visualeditor-loadwarning-token": "Error loading edit token from server: $1. Would you like to try again?"
 }

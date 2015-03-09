@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Astralnet",
+			"Dipa1965",
+			"Evropi",
+			"FocalPoint",
+			"Geraki",
+			"Glavkos",
+			"Nikosguard",
+			"Tifa93"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Επεξεργασία που έγινε με χρήση του [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Check]]",
+	"tag-visualeditor-needcheck-description": "Επεξεργασία που έγινε μέσω του [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]], όπου το σύστημα ανίχνευσε πιθανές μη ηθελημένες αλλαγές στον πηγαίο κώδικα.",
+	"tag-visualeditor-switched-description": "Ο χρήστης άρχισε να επεξεργάζεται χρησιμοποιώντας το VisualEditor και στη συνέχεια άλλαξε σε επεξεργαστή wikitext.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Ανατροφοδότηση",
+	"visualeditor-feedback-tool": "Αφήστε σχόλια",
+	"visualeditor-help-label": "Διαβάστε τον οδηγό χρήστη",
+	"visualeditor-help-title": "Οδηγίες χρήσης του επεξεργαστή"
+}

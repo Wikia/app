@@ -1,0 +1,26 @@
+/*!
+ * VisualEditor ContentEditable AlienNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ce-alienNode-highlight {
+	background-color: #95d14f;
+	background-image: -ms-repeating-linear-gradient(-45deg, white 0px, white 5px, #95d14f 5px, #95d14f 10px );
+	background-image: -webkit-repeating-linear-gradient(-45deg, white 0px, white 5px, #95d14f 5px, #95d14f 10px );
+	background-image: -moz-repeating-linear-gradient(-45deg, white 0px, white 5px, #95d14f 5px, #95d14f 10px);
+	background-image: repeating-linear-gradient(-45deg, white 0px, white 5px, #95d14f 5px, #95d14f 10px );
+	background-size: 14px 14px;
+	cursor: not-allowed;
+}
+
+.ve-ce-surface-highlights-focused .ve-ce-alienNode-highlight {
+	background-image: -ms-repeating-linear-gradient(-45deg, #6da9f7 0px, #6da9f7 5px, #95d14f 5px, #95d14f 10px );
+	background-image: -webkit-repeating-linear-gradient(-45deg, #6da9f7 0px, #6da9f7 5px, #95d14f 5px, #95d14f 10px );
+	background-image: -moz-repeating-linear-gradient(-45deg, #6da9f7 0px, #6da9f7 5px, #95d14f 5px, #95d14f 10px);
+	background-image: repeating-linear-gradient(-45deg, #6da9f7 0px, #6da9f7 5px, #95d14f 5px, #95d14f 10px );
+}
+
+.ve-ce-surface-highlights-blurred .ve-ce-alienNode-highlights {
+	opacity: 0.5;
+}

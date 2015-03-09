@@ -427,6 +427,7 @@ var UserProfilePage = {
 				gender: null,
 				website: null,
 				twitter: null,
+				fbPage: null,
 				year: null,
 				month: null,
 				day: null

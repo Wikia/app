@@ -18,9 +18,9 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 	ve.ui.WikiaUploadWidget.super.call( this, config );
 
 	uploadButtonConfig = {
-		'$': this.$,
-		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
-		'flags': ['constructive']
+		$: this.$,
+		label: ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-upload-button' ),
+		flags: ['primary']
 	};
 	if ( config.icon ) {
 		uploadButtonConfig.icon = 'upload-small';
@@ -37,14 +37,14 @@ ve.ui.WikiaUploadWidget = function VeUiWikiaUploadWidget( config ) {
 
 	this.$form = this.$( '<form>' );
 	this.$file = this.$( '<input>' ).attr( {
-		'type': 'file',
-		'name': 'file'
+		type: 'file',
+		name: 'file'
 	} );
 
 	// Events
-	this.$element.on( 'click', ve.bind( this.onClick, this ) );
-	this.uploadButton.on( 'click', ve.bind( this.onClick, this ) );
-	this.$file.on( 'change', ve.bind( this.onFileChange, this ) );
+	this.$element.on( 'click', this.onClick.bind( this ) );
+	this.uploadButton.on( 'click', this.onClick.bind( this ) );
+	this.$file.on( 'change', this.onFileChange.bind( this ) );
 
 	// Initialization
 	this.$form.append( this.$file );
@@ -144,14 +144,14 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 		form.append( 'file', file );
 
 		$.ajax( {
-			'url': mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
-			'type': 'post',
-			'cache': false,
-			'contentType': false,
-			'processData': false,
-			'data': form,
-			'success': ve.bind( this.onUploadSuccess, this ),
-			'error': ve.bind( this.onUploadError, this )
+			url: mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
+			type: 'post',
+			cache: false,
+			contentType: false,
+			processData: false,
+			data: form,
+			success: this.onUploadSuccess.bind( this ),
+			error: this.onUploadError.bind( this )
 		} );
 		this.showUploadAnimation();
 	}

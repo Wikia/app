@@ -4,16 +4,15 @@
 
 /**
  * @class
- * @extends OO.ui.OptionWidget
+ * @extends OO.ui.DecoratedOptionWidget
  *
  * @constructor
- * @param {Mixed} data Option data
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaTemplateOptionWidget = function VeUiWikiaMapOptionWidget( data, config ) {
+ve.ui.WikiaTemplateOptionWidget = function VeUiWikiaMapOptionWidget( config ) {
 	// Parent constructor
-	ve.ui.WikiaTemplateOptionWidget.super.call( this, data, config );
+	ve.ui.WikiaTemplateOptionWidget.super.call( this, config );
 
 	// Properties
 	this.$appears = this.$( '<div>' )
@@ -22,8 +21,8 @@ ve.ui.WikiaTemplateOptionWidget = function VeUiWikiaMapOptionWidget( data, confi
 		.addClass( 've-ui-wikiaTemplateOptionWidget-gradient' );
 
 	// Initialization
-	if ( config.appears ) {
-		this.setAppears( config.appears );
+	if ( config.data.uses ) {
+		this.setAppears( config.data.uses );
 	}
 	this.$element
 		.addClass( 've-ui-wikiaTemplateOptionWidget' )
@@ -34,7 +33,7 @@ ve.ui.WikiaTemplateOptionWidget = function VeUiWikiaMapOptionWidget( data, confi
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaTemplateOptionWidget, OO.ui.OptionWidget );
+OO.inheritClass( ve.ui.WikiaTemplateOptionWidget, OO.ui.DecoratedOptionWidget );
 
 /* Methods */
 

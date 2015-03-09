@@ -26,7 +26,7 @@ ve.ui.MWTocItemWidget = function VeCeMWTocItemWidget( config ) {
 	OO.ui.Widget.call( this, config );
 
 	// Mixin Constructor
-	OO.ui.GroupElement.call( this, this.$( '<ul>' ), config );
+	OO.ui.GroupElement.call( this, $.extend( {}, config, { $group: this.$( '<ul>' ) } ) );
 
 	config = config || {};
 
@@ -50,7 +50,7 @@ ve.ui.MWTocItemWidget = function VeCeMWTocItemWidget( config ) {
 			.append( this.$( '<a>' ).append( this.$tocNumber, this.$tocText ) );
 
 		// Monitor node events
-		this.node.model.connect( this, { 'update': 'onUpdate' } );
+		this.node.model.connect( this, { update: 'onUpdate' } );
 	}
 	this.$element.append( this.$group );
 };
@@ -73,9 +73,9 @@ ve.ui.MWTocItemWidget.static.tagName = 'li';
  */
 ve.ui.MWTocItemWidget.prototype.onUpdate = function () {
 	// Timeout needed to let the dom element actually update
-	setTimeout( ve.bind( function () {
+	setTimeout( function () {
 		this.$tocText.text( this.node.$element.text() );
-	}, this ), 0 );
+	}.bind( this ), 0 );
 };
 
 /**
