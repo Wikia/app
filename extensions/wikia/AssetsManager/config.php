@@ -74,7 +74,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderFactoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
-		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
@@ -88,6 +87,8 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+		'//extensions/wikia/AdEngine/js/template/interstitial.js',
+		'//extensions/wikia/AdEngine/js/template/skin.js',
 
 		// for low see adengine2_late_js
 	),
