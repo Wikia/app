@@ -3369,7 +3369,7 @@ class User {
 	 * @param $password String: user password.
 	 * @return Boolean: True if the given password is correct, otherwise False.
 	 */
-	public function checkPassword( $password ) {
+	public function checkPassword( $password, &$errorMessageKey = null ) {
 		global $wgAuth, $wgLegacyEncoding;
 		$this->load();
 
@@ -3381,6 +3381,15 @@ class User {
 		if( !$this->isValidPassword( $password ) ) {
 			return false;
 		}
+
+		// Wikia change - begin - @author: wladek
+		// Helios integration
+		$result = null;
+		wfRunHooks( 'UserCheckPassword', [ $this->mId, $this->mName, $this->mPassword, $password, &$result, &$errorMessageKey ] );
+		if ( $result !== null ) {
+			return $result;
+		}
+		// Wikia change - end
 
 		if( $wgAuth->authenticate( $this->getName(), $password ) ) {
 			return true;
