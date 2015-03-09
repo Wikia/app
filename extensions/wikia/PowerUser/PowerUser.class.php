@@ -139,8 +139,8 @@ class PowerUser {
 	public function addPowerUserAddGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
 			if ( !in_array( self::GROUP_NAME, $this->oUser->getGroups() ) ) {
-				$this->oUser->addGroup(self::GROUP_NAME);
-				$this->logSuccess($sProperty, self::ACTION_ADD_GROUP);
+				$this->oUser->addGroup( self::GROUP_NAME );
+				$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
 			}
 			return true;
 		} else {
@@ -169,9 +169,9 @@ class PowerUser {
 	public function removePowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
 			if ( $this->oUser->getBoolOption( $sProperty ) === true ) {
-				$this->oUser->setOption($sProperty, null);
+				$this->oUser->setOption( $sProperty, null );
 				$this->oUser->saveSettings();
-				$this->logSuccess($sProperty, self::ACTION_REMOVE_SET_OPTION);
+				$this->logSuccess( $sProperty, self::ACTION_REMOVE_SET_OPTION );
 			}
 			return true;
 		} else {
@@ -191,8 +191,8 @@ class PowerUser {
 	public function removePowerUserRemoveGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
 			if ( $this->isGroupForRemoval( $sProperty ) ) {
-				$this->oUser->removeGroup(self::GROUP_NAME);
-				$this->logSuccess($sProperty, self::ACTION_REMOVE_GROUP);
+				$this->oUser->removeGroup( self::GROUP_NAME );
+				$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
 			}
 			return true;
 		} else {
