@@ -73,6 +73,7 @@ class RedirectService extends WikiaService {
 	public function getRedirects() {
 		if ( empty( $this->redirects ) ) {
 			global $wgRedirectPages;
+
 			if ( !empty( $wgRedirectPages ) ) {
 				$this->redirects = $wgRedirectPages;
 			}
@@ -82,11 +83,17 @@ class RedirectService extends WikiaService {
 			$this->redirects = $this->prepareRedirects();
 		}
 
-		if ( isset( $this->pageType )
-			&& isset( $this->redirects[ $this->pageType ] )
-			&& is_array( $this->redirects[ $this->pageType ]) )
-		{
-			return $this->redirects[ $this->pageType ];
+
+		if ( isset( $this->pageType ) ) {
+			if (
+				isset( $this->redirects[ $this->pageType ] )
+				&& is_array( $this->redirects[ $this->pageType ])
+			) {
+				return $this->redirects[ $this->pageType ];
+			} else {
+				//If we don't find redirects for this pageType
+				$this->redirects = [];
+			}
 		}
 
 		return $this->redirects;
