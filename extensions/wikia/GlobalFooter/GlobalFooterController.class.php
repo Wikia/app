@@ -3,6 +3,7 @@
 class GlobalFooterController extends WikiaController {
 
 	const MEMC_KEY_GLOBAL_FOOTER_LINKS = 'mGlobalFooterLinks';
+	const MEMC_KEY_GLOBAL_FOOTER_VERSION = 'v1';
 	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links';
 
 	public function index() {
@@ -44,15 +45,21 @@ class GlobalFooterController extends WikiaController {
 
 		wfProfileIn( __METHOD__ );
 
-		$catId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
-		$memcKey = wfMemcKey( self::MEMC_KEY_GLOBAL_FOOTER_LINKS, $wgContLang->getCode(), $wgLang->getCode(), $catId );
+		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $wgCityId );
+		$memcKey = wfSharedMemcKey(
+			self::MEMC_KEY_GLOBAL_FOOTER_LINKS,
+			$wgContLang->getCode(),
+			$wgLang->getCode(),
+			$verticalId,
+			self::MEMC_KEY_GLOBAL_FOOTER_VERSION
+		);
 
 		$globalFooterLinks = $wgMemc->get( $memcKey );
 		if ( !empty( $globalFooterLinks ) ) {
 			return $globalFooterLinks;
 		}
 
-		if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS . '-' . $catId ) ) ) {
+		if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS . '-' . $verticalId ) ) ) {
 			if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS ) ) ) {
 				wfProfileOut( __METHOD__ );
 
