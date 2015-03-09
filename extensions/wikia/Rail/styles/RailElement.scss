@@ -198,6 +198,10 @@ $color-rail-background: mix($color-page, black, 90%);
             .actions ul {
                 margin: 0;
 
+                li:hover {
+                    background-color: $color-buttons;
+                }
+
                 li {
                     border-bottom-color: #E6EBF2;
                     border-bottom-style: solid;
@@ -205,18 +209,19 @@ $color-rail-background: mix($color-page, black, 90%);
                     cursor: pointer;
                     height: 44px;
                     margin: 0;
-                    padding: 0;
                     white-space: nowrap;
 
                     .label {
                         line-height: 44px;
                         padding-left: 10px;
+                        color: mix($color-text, $color-links, 80%);
                     }
                 }
             }
 
             .info {
                 padding: 10px;
+                background: mix($color-text, $color-links, 80%);
 
                 ul .username {
                     font-weight: bold;
