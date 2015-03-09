@@ -45,14 +45,14 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	// list of verticals
 	protected static $verticals = [
-		WikiFactoryHub::HUB_ID_OTHER       => 'other',
-		WikiFactoryHub::HUB_ID_TV          => 'tv',
-		WikiFactoryHub::HUB_ID_VIDEO_GAMES => 'gaming',
-		WikiFactoryHub::HUB_ID_BOOKS       => 'book',
-		WikiFactoryHub::HUB_ID_COMICS      => 'comics',
-		WikiFactoryHub::HUB_ID_LIFESTYLE   => 'lifestyle',
-		WikiFactoryHub::HUB_ID_MUSIC       => 'music',
-		WikiFactoryHub::HUB_ID_MOVIES      => 'movies',
+		WikiFactoryHub::VERTICAL_ID_OTHER       => 'other',
+		WikiFactoryHub::VERTICAL_ID_TV          => 'tv',
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES => 'gaming',
+		WikiFactoryHub::VERTICAL_ID_BOOKS       => 'book',
+		WikiFactoryHub::VERTICAL_ID_COMICS      => 'comics',
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE   => 'lifestyle',
+		WikiFactoryHub::VERTICAL_ID_MUSIC       => 'music',
+		WikiFactoryHub::VERTICAL_ID_MOVIES      => 'movies',
 	];
 
 	/**
@@ -91,7 +91,7 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $this->wg->CityId );
 		if ( empty( self::$verticals[$verticalId] ) ) {
-			$verticalId = WikiFactoryHub::HUB_ID_OTHER;
+			$verticalId = WikiFactoryHub::VERTICAL_ID_OTHER;
 		}
 
 		$name = self::$verticals[$verticalId];

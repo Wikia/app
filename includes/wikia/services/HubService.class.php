@@ -71,12 +71,12 @@ class HubService extends Service {
 		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $cityId );
 
 		switch ($verticalId) {
-			case WikiFactoryHub::HUB_ID_VIDEO_GAMES:
+			case WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES:
 				return 'gaming';
-			case WikiFactoryHub::HUB_ID_LIFESTYLE:
+			case WikiFactoryHub::VERTICAL_ID_LIFESTYLE:
 				return 'lifestyle';
-			case WikiFactoryHub::HUB_ID_OTHER:
-				if ( self::isWikiCorporate( $cityId ) ) {
+			case WikiFactoryHub::VERTICAL_ID_OTHER:
+				if ( WikiaPageType::isCorporatePage() ) {
 					return false;
 				} else {
 					return 'lifestyle';
@@ -84,15 +84,6 @@ class HubService extends Service {
 			default:
 				return 'entertainment';
 		}
-	}
-
-	private static function isWikiCorporate( $cityId ) {
-		$varId = WikiFactory::getVarByName( 'wgEnableWikiaHomePageExt', $cityId );
-		return (
-			array_key_exists(
-				intval( $cityId ), WikiFactory::getListOfWikisWithVar( $varId->cv_id, 'bool', '=', true )
-			)
-		);
 	}
 
 	/**

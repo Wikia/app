@@ -13,25 +13,25 @@ class WAMService extends Service {
 	const MEMCACHE_VER = '1.06';
 
 	protected $verticalIds = [
-		WikiFactoryHub::HUB_ID_OTHER,
-		WikiFactoryHub::HUB_ID_TV,
-		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
-		WikiFactoryHub::HUB_ID_BOOKS,
-		WikiFactoryHub::HUB_ID_COMICS,
-		WikiFactoryHub::HUB_ID_LIFESTYLE,
-		WikiFactoryHub::HUB_ID_MUSIC,
-		WikiFactoryHub::HUB_ID_MOVIES,
+		WikiFactoryHub::VERTICAL_ID_OTHER,
+		WikiFactoryHub::VERTICAL_ID_TV,
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES,
+		WikiFactoryHub::VERTICAL_ID_BOOKS,
+		WikiFactoryHub::VERTICAL_ID_COMICS,
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
+		WikiFactoryHub::VERTICAL_ID_MUSIC,
+		WikiFactoryHub::VERTICAL_ID_MOVIES,
 	];
 
 	protected static $verticalNames = [
-		WikiFactoryHub::HUB_ID_OTHER => 'Other',
-		WikiFactoryHub::HUB_ID_TV => 'TV',
-		WikiFactoryHub::HUB_ID_VIDEO_GAMES => 'Games',
-		WikiFactoryHub::HUB_ID_BOOKS => 'Books',
-		WikiFactoryHub::HUB_ID_COMICS => 'Comics',
-		WikiFactoryHub::HUB_ID_LIFESTYLE => 'Lifestyle',
-		WikiFactoryHub::HUB_ID_MUSIC => 'Music',
-		WikiFactoryHub::HUB_ID_MOVIES => 'Movies',
+		WikiFactoryHub::VERTICAL_ID_OTHER => 'Other',
+		WikiFactoryHub::VERTICAL_ID_TV => 'TV',
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES => 'Games',
+		WikiFactoryHub::VERTICAL_ID_BOOKS => 'Books',
+		WikiFactoryHub::VERTICAL_ID_COMICS => 'Comics',
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE => 'Lifestyle',
+		WikiFactoryHub::VERTICAL_ID_MUSIC => 'Music',
+		WikiFactoryHub::VERTICAL_ID_MOVIES => 'Movies',
 	];
 
 	protected $defaultIndexOptions = array(
