@@ -53,6 +53,15 @@ class ExactTargetTask extends BaseTask {
 	protected function getUserHelper() {
 		return new ExactTargetUserTaskHelper();
 	}
+
+	/**
+	 * Returns an instance of ExactTargetUserDataVerificator class
+	 * @return ExactTargetUserDataVerificator
+	 */
+	protected function getUserDataVerificatorTask() {
+		return new ExactTargetUserDataVerificatorTask();
+	}
+
 	/**
 	 * A simple getter for an object of an ExactTargetWikiTaskHelper class
 	 * @return ExactTargetWikiTaskHelper
