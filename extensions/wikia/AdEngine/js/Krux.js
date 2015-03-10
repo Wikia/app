@@ -1,3 +1,4 @@
+'use strict';
 // TODO: ADEN-1332-ize
 
 // krux ad targeting. must come before dart urls are constructed
@@ -5,18 +6,33 @@
 window.Krux || ((Krux = function () {
 	Krux.q.push(arguments);
 }).q = []);
+
 Krux.load = function (confid) {
-	var k = document.createElement('script');
+	var k, m, src, s;
+	k = document.createElement('script');
 	k.type = 'text/javascript';
 	k.async = true;
-	var m, src = (m = location.href.match(/\bkxsrc=([^&]+)\b/)) && decodeURIComponent(m[1]);
+	src = (m = location.href.match(/\bkxsrc=([^&]+)\b/)) && decodeURIComponent(m[1]);
 	k.src = src || (location.protocol === 'https:' ? 'https:' : 'http:') + '//cdn.krxd.net/controltag?confid=' + confid;
-	var s = document.getElementsByTagName('script')[0];
+	s = document.getElementsByTagName('script')[0];
 	s.parentNode.insertBefore(k, s);
 };
 
 (function () {
-	'use strict';
+	function initKruxGlobalVars() {
+		require(['ext.wikia.adEngine.adLogicPageParams'], function (adLogicPageParams) {
+			var params, value;
+
+			// Export page level params, so Krux can read them
+			params = adLogicPageParams.getPageLevelParams();
+			Object.keys(params).forEach(function (key) {
+				value = params[key];
+				if (value) {
+					window['kruxDartParam_' + key] = value.toString();
+				}
+			});
+		});
+	}
 
 	function initKrux() {
 		function retrieve(n) {
@@ -50,6 +66,7 @@ Krux.load = function (confid) {
 	} catch (ignore) {}
 
 	if (enableKrux) {
+		initKruxGlobalVars();
 		initKrux();
 	} else {
 		Krux.dartKeyValues = '';
@@ -57,7 +74,18 @@ Krux.load = function (confid) {
 }());
 
 define('ext.wikia.adEngine.krux', function () {
-	'use strict';
-
 	return Krux;
+});
+
+define('ext.wikia.adEngine.kruxPageParamsDecorator', function () {
+	var maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
+
+	function extendPageParams (params) {
+		params.u = Krux.user;
+		params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
+	}
+
+	return {
+		extendPageParams: extendPageParams
+	};
 });
