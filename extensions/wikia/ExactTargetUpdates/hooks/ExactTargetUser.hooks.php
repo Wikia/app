@@ -132,12 +132,11 @@ class ExactTargetUserHooks {
 	public function onUserSaveSettings( \User $user ) {
 		/* Prepare params */
 		$oUserHelper = $this->getUserHelper();
-		$aUserData = $oUserHelper->prepareUserParams( $user );
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $user );
 
 		/* Get and run the task */
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
+		$task = $oUserHelper->getCreateUserTask();
+		$task->call( 'createUserProperties', $user->getId(), $aUserProperties );
 		$task->queue();
 		return true;
 	}

@@ -96,6 +96,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 				'Error in ' . __METHOD__ . ': ' . $oCreateUserPropertiesResult->Results[0]->StatusMessage
 			);
 		}
+		return $oCreateUserPropertiesResult->OverallStatus;
 	}
 
 }
