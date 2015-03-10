@@ -584,6 +584,12 @@ class RenameUserProcess {
 
 			if ( $wgExternalAuthType ) {
 				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
+                /**
+                 * @wladekb
+                 * \Wikia\Helios\User::register()
+                 * $u = \ExternalUser_Wikia::newFromName();
+                 * $u->saveSettings()
+                 */
 			} else {
 				$fakeUser->addToDatabase();
 			}

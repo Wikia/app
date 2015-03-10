@@ -532,6 +532,12 @@ class LoginForm extends SpecialPage {
 		self::clearCreateaccountToken();
 		$u->mBirthDate = date( 'Y-m-d', $this->wpUserBirthDay );
 		$u = $this->initUser( $u, false );
+        /**
+         * @wladekb
+         * \Wikia\Helios\User::register()
+         * $u = \ExternalUser_Wikia::newFromName();
+         * $u->saveSettings()
+         */
 		$user_id = $u->getID();
 		if( !empty($user_id) ) {
 			$dbw = wfGetDB(DB_MASTER);
