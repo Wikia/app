@@ -371,7 +371,7 @@ ve.init.wikia.ViewPageTarget.prototype.maybeShowDialogs = function () {
 /**
  * @inheritdoc
  */
-ve.init.wikia.ViewPageTarget.prototype.onSaveErrorCaptcha = function ( editApi ) {
+ve.init.wikia.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
 	var $captchaDiv = $( '<div>' ).addClass( 've-ui-mwSaveDialog-captcha' );
 
 	if ( grecaptcha ) {
