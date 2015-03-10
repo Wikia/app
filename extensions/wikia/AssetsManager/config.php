@@ -124,14 +124,6 @@ $config['spotlights_js'] = array(
 	),
 );
 
-$config['adengine2_interstitial_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdSlotInterstitial.js',
-		'//extensions/wikia/AdEngine/js/AdSlotInterstitial.run.js',
-	),
-);
-
 $config['adengine2_taboola_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'venus', 'wikiamobile' ],
