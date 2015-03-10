@@ -121,6 +121,16 @@ class UrlGenerator {
 	}
 
 	/**
+	 * for animated gifs, capture a specific frame of animation
+	 * @param int $frame the frame to capture, from 0
+	 * @return $this
+	 */
+	public function frame($frame=0) {
+		$this->query['frame'] = $frame;
+		return $this;
+	}
+
+	/**
 	 * original image
 	 * @return $this
 	 */
