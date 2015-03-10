@@ -1687,3 +1687,8 @@ $wgDisableWAMOnHubs = false;
  * see PLATFORM-392
  */
 $wgImageServingForceNoResults = false;
+
+/**
+ * Add poweruser to implicit groups
+ */
+$wgImplicitGroups[] = 'poweruser';
