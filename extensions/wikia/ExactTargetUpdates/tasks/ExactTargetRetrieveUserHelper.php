@@ -43,8 +43,9 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserResult = $oApiDataExtension->retrieveRequest( $aApiParams );
-		if ( isset( $oUserResult->Results->Properties->Property )
-			&& is_array( $oUserResult->Results->Properties->Property ) ) {
+		if ( !empty( $oUserResult->Results->Properties->Property )
+			&& is_array( $oUserResult->Results->Properties->Property )
+		) {
 			$aProperties = $oUserResult->Results->Properties->Property;
 			foreach ( $aProperties as $value ) {
 				$oExactTargetUserData[$value->Name] = $value->Value;
