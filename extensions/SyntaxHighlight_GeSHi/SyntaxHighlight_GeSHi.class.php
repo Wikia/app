@@ -280,7 +280,9 @@ class SyntaxHighlight_GeSHi {
 		$geshi->enable_keyword_links( false );
 
 		// Wikia change start
-		if( $wgTitle instanceof Title && EditPageLayoutHelper::isCodePage( $wgTitle ) ) {
+		if( $wgTitle instanceof Title && EditPageLayoutHelper::isCodePage( $wgTitle )
+			&& EditPageLayoutHelper::isSyntaxHighlightingEnabled()
+		) {
 			$theme = 'solarized-light';
 			if( SassUtil::isThemeDark() ) {
 				$theme = 'solarized-dark';

@@ -710,7 +710,7 @@ class Preferences {
 	 * @param $defaultPreferences Array
 	 */
 	static function editingPreferences( $user, IContextSource $context, &$defaultPreferences ) {
-		global $wgUseExternalEditor, $wgLivePreview, $wgAllowUserCssPrefs;
+		global $wgUseExternalEditor, $wgLivePreview, $wgAllowUserCssPrefs, $wgEnableEditorSyntaxHighlighting;
 
 		/* Wikia change begin - @author: Macbre */
 		wfRunHooks( 'EditingPreferencesBefore', array($user, &$defaultPreferences ) );
@@ -810,6 +810,14 @@ class Preferences {
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-forceeditsummary',
 		);
+
+		if ( $wgEnableEditorSyntaxHighlighting ) {
+			$defaultPreferences['disablesyntaxhighlighting'] = array(
+				'type' => 'toggle',
+				'section' => 'editing/advancedediting',
+				'label-message' => 'tog-disablesyntaxhighlighting',
+			);
+		}
 
 		if ( $wgLivePreview ) {
 			$defaultPreferences['uselivepreview'] = array(
