@@ -28,7 +28,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		/* Verify data */
 		$oUserDtaVerificatorTask = $this->getUserDataVerificatorTask();
 		$oUserDtaVerificatorTask->taskId( $this->getTaskId() );
-		$sUserDataVerificationResult = $oUserDtaVerificatorTask->execute( 'verifyUserData', [$aUserData['user_id']] );
+		$sUserDataVerificationResult = $oUserDtaVerificatorTask->execute( 'verifyUserData', [ $aUserData['user_id'] ] );
 		if ( $sUserDataVerificationResult != 'OK' ) {
 			throw new \Exception( $sUserDataVerificationResult );
 		} else {

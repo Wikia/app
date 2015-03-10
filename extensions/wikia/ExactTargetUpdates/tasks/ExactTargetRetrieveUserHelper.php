@@ -88,10 +88,10 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 			 * ExactTargetUserTaskHelper::prepareUserEditsRetrieveParams
 			 * 'Properties' => [ 'user_id', 'wiki_id', 'contributions' ],
 			 */
-			$iUserId = $aProperty[ 0 ]->Value;
-			$iWikiId = $aProperty[ 1 ]->Value;
-			$iContributions = $aProperty[ 2 ]->Value;
-			$aUserEditsDataFromET[ $iUserId ][ $iWikiId ] = intval( $iContributions );
+			$iUserId = $aProperty[0]->Value;
+			$iWikiId = $aProperty[1]->Value;
+			$iContributions = $aProperty[2]->Value;
+			$aUserEditsDataFromET[$iUserId][$iWikiId] = intval( $iContributions );
 		}
 		return $aUserEditsDataFromET;
 	}
@@ -117,9 +117,9 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	 *      );
 	 */
 	public function retrieveUserIdsByEmail( $sEmail ) {
-		$aProperties = [ 'user_id' ];
+		$aProperties = ['user_id'];
 		$sFilterProperty = 'user_email';
-		$aFilterValues = [ $sEmail ];
+		$aFilterValues = [$sEmail];
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
 

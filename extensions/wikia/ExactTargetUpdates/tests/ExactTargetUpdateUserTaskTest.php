@@ -117,7 +117,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			->will( $this->returnValue( $mockDeleteUserTask ) );
 
 		/* Run tested method */
-		$mockUpdateUserTask->updateUserEmail( $aUserData[ 'user_id' ], $aUserData[ 'user_email' ] );
+		$mockUpdateUserTask->updateUserEmail( $aUserData['user_id'], $aUserData['user_email'] );
 	}
 
 
@@ -145,10 +145,10 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 				0 => [
 					'CustomerKey' => $sCustomerKey,
 					'Properties' => [
-						'up_value' => $aUserProperties[ 'property_name' ]
+						'up_value' => $aUserProperties['property_name']
 					],
 					'Keys' => [
-						'up_user' => $aUserData1[ 'user_id' ],
+						'up_user' => $aUserData1['user_id'],
 						'up_property' => 'property_name'
 					]
 				]
@@ -195,10 +195,10 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 				0 => [
 					'CustomerKey' => $sCustomerKey,
 					'Properties' => [
-						'user_email' => $aUserData[ 'user_email']
+						'user_email' => $aUserData['user_email']
 					],
 					'Keys' => [
-						'user_id' => $aUserData[ 'user_id'],
+						'user_id' => $aUserData['user_id'],
 					]
 				]
 			]
