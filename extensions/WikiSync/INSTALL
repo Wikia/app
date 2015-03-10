@@ -1,8 +1,0 @@
-MediaWiki extension WikiSync, version 0.3.2
-
-* download the latest available version and extract it to your wiki extension directory. 
-* add the following line to LocalSettings.php 
-require_once( "$IP/extensions/WikiSync/WikiSync.php" );
-* check out Special:Version page to verify the installation 
-
-See http://www.mediawiki.org/wiki/Extension:WikiSync for further details.
