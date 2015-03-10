@@ -1,9 +1,0 @@
-Work in progress. :)
-
-Batch-testing tools loading the parsing code into node.js, and going through a MediaWiki XML export dump to run round-trip tests over it. Currently not much will succeed as there's bad handling of newlines. ;)
-
-Need npm modules:
-* jquery
-* diff
-* libxmljs (requires native compilation)
-* webworker
