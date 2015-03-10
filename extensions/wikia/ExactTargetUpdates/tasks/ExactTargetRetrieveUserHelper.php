@@ -26,6 +26,36 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 		return null;
 	}
 
+	public function retrieveUserDataById( $iUserId ) {
+		$aProperties = [
+			'user_id',
+			'user_name',
+			'user_real_name',
+			'user_email',
+			'user_email_authenticated',
+			'user_registration',
+			'user_editcount',
+			'user_touched'
+		];
+
+		$sFilterProperty = 'user_id';
+		$aFilterValues = [ $iUserId ];
+		$oHelper = $this->getUserHelper();
+		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
+
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oUserResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+		if ( isset( $oUserResult->Results->Properties->Property ) ) {
+			$aProperties = $oUserResult->Results->Properties->Property;
+			foreach ( $aProperties as $value ) {
+				$oExactTargetUserData[ $value->Name ] = $value->Value;
+			}
+			return $oExactTargetUserData;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Retrieve user edits on wikis from ExactTarget
 	 * @param array $aUsersIds
