@@ -8,8 +8,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adLogicPageViewCounter',
 	require.optional('wikia.abTest'),
 	require.optional('ext.wikia.adEngine.lookupServices'),
-	require.optional('ext.wikia.adEngine.kruxPageParamsDecorator')
-], function (log, doc, loc, adContext, pvCounter, abTest, lookups, kruxDecorator) {
+	require.optional('ext.wikia.krux')
+], function (log, doc, loc, adContext, pvCounter, abTest, lookups, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
@@ -238,8 +238,9 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = dbName;
 		}
 
-		if (kruxDecorator && !targeting.wikiDirectedAtChildren) {
-			kruxDecorator.extendPageParams(params);
+		if (krux && !targeting.wikiDirectedAtChildren) {
+			params.u = krux.getParams('user');
+			params.ksgmnt = krux.getParams('segments') && krux.getParams('segments').slice(0, krux.getDartSegmentsLimit());
 		}
 
 		if (targeting.wikiIsTop1000) {
