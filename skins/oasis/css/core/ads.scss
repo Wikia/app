@@ -248,18 +248,6 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-#BOTTOM_LEADERBOARD {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 1;
-  text-align: center;
-
-  & > div {
-    display: inline-block;
-  }
-}
-
 #NATIVE_TABOOLA {
   max-width: 700px;
 }

@@ -124,14 +124,6 @@ $config['spotlights_js'] = array(
 	),
 );
 
-$config['adengine2_bottom_leaderboard_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.js',
-		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.run.js',
-	),
-);
-
 $config['adengine2_interstitial_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(

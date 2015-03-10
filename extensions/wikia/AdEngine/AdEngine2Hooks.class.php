@@ -118,8 +118,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseInterstitial, $wgAdDriverUseBottomLeaderboard,
-			$wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
+		global $wgAdDriverUseInterstitial, $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
 		$coreGroupIndex = array_search( self::ASSET_GROUP_CORE, $jsAssets );
 		if ( $coreGroupIndex === false ) {
@@ -150,10 +149,6 @@ class AdEngine2Hooks {
 
 		if ( $wgAdDriverUseTopInContentBoxad ) {
 			$jsAssets[] = self::ASSET_GROUP_OASIS_ADS;
-		}
-
-		if ( $wgAdDriverUseBottomLeaderboard === true ) {
-			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
 		}
 
 		if ( $wgAdDriverUseTaboola === true ) {

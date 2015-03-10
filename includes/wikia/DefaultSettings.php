@@ -1305,12 +1305,6 @@ $wgAdDriverAlwaysCallDartInCountries = [];
 $wgAdDriverAlwaysCallDartInCountriesMobile = [];
 
 /**
- * @name $wgAdDriverUseBottomLeaderboard
- * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
- */
-$wgAdDriverUseBottomLeaderboard = false;
-
-/**
  * @name $wgAdDriverUseInterstitial
  * Whether to enable new interstitial ad MODAL_INTERSTITIAL_5
  */
@@ -1321,12 +1315,6 @@ $wgAdDriverUseInterstitial = false;
  * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
 $wgAdDriverUseTopInContentBoxad = true;
-
-/**
- * @name $wgAdDriverBottomLeaderboardImpressionCapping
- * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
- */
-$wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgSitewideDisableGpt

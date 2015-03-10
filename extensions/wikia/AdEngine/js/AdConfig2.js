@@ -34,7 +34,6 @@ define('ext.wikia.adEngine.adConfig', [
 		country = geo.getCountryCode(),
 		decorators = [adDecoratorPageDimensions],
 		highValueSlots = {
-			'BOTTOM_LEADERBOARD': true,
 			'CORP_TOP_LEADERBOARD': true,
 			'CORP_TOP_RIGHT_BOXAD': true,
 			'EXIT_STITIAL_BOXAD_1': true,
