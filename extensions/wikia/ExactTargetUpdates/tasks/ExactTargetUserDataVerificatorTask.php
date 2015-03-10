@@ -24,7 +24,7 @@ class ExactTargetUserDataVerificatorTask extends ExactTargetTask {
 		// Compare results
 		$aDiffWikiaDB = array_diff( $oExactTargetUserData, $oWikiaUserData );
 
-		if ( count( $aDiffWikiaDB ) == 1 && isset( $aDiff1['user_touched'] ) ) {
+		if ( count( $aDiffWikiaDB ) == 1 && isset( $aDiffWikiaDB['user_touched'] ) ) {
 			// Return OK status if user_touched field is only difference
 			return 'OK';
 		} elseif ( count( $aDiffWikiaDB ) > 0 ) {
@@ -34,8 +34,8 @@ class ExactTargetUserDataVerificatorTask extends ExactTargetTask {
 			$sDiffRes[] = "--- Expected (Wikia DB)";
 			$sDiffRes[] = "+++ Actual (ExactTarget)";
 			foreach ( $aDiffExactTarget as $key => $val ) {
-				$sDiffRes[] .= "- '$key' => '{$aDiffExactTarget[$key]}'";
-				$sDiffRes[] .= "+ '$key' => '{$aDiffWikiaDB[$key]}'";
+				$sDiffRes[] = "- '$key' => '{$aDiffExactTarget[$key]}'";
+				$sDiffRes[] = "+ '$key' => '{$aDiffWikiaDB[$key]}'";
 			}
 			$this->debug( __METHOD__ . ' ' . json_encode( $sDiffRes ) );
 			throw new \Exception( __METHOD__ . " Verification failed, User record in ExactTarget doesn't match record in Wikia database.");

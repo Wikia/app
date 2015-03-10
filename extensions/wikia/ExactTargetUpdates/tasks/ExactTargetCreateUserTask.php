@@ -32,7 +32,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		if ( $sUserDataVerificationResult != 'OK' ) {
 			throw new \Exception( $sUserDataVerificationResult );
 		} else {
-			$this->info('Verification passed. User record in ExactTarget match record in Wikia database');
+			$this->info( 'Verification passed. User record in ExactTarget match record in Wikia database' );
 		}
 
 		return 'OK';

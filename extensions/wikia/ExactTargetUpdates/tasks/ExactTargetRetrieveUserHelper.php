@@ -38,14 +38,13 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 			'user_touched'
 		];
 
-		$sFilterProperty = 'user_id';
-		$aFilterValues = [ $iUserId ];
 		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
+		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, 'user_id', [ $iUserId ] );
 
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserResult = $oApiDataExtension->retrieveRequest( $aApiParams );
-		if ( isset( $oUserResult->Results->Properties->Property ) ) {
+		if ( isset( $oUserResult->Results->Properties->Property )
+			&& is_array( $oUserResult->Results->Properties->Property ) ) {
 			$aProperties = $oUserResult->Results->Properties->Property;
 			foreach ( $aProperties as $value ) {
 				$oExactTargetUserData[ $value->Name ] = $value->Value;
