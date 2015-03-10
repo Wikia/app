@@ -48,6 +48,12 @@ class BodyController extends WikiaController {
 	 * Returns if current layout should be applying gridlayout
 	 */
 	public static function isGridLayoutEnabled() {
+		global $wgOasisBreakpoints;
+
+		if ( !empty( $wgOasisBreakpoints ) ) {
+			return false;
+		}
+
 		$app = F::app();
 
 		// Don't enable when responsive layout is enabled
@@ -77,9 +83,9 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
-		global $wgOasisResponsive;
+		global $wgOasisResponsive, $wgOasisBreakpoints;
 
-		return !empty( $wgOasisResponsive );
+		return empty( $wgOasisBreakpoints ) && !empty( $wgOasisResponsive );
 	}
 
 	/**
