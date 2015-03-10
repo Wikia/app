@@ -47,7 +47,7 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 			&& is_array( $oUserResult->Results->Properties->Property ) ) {
 			$aProperties = $oUserResult->Results->Properties->Property;
 			foreach ( $aProperties as $value ) {
-				$oExactTargetUserData[ $value->Name ] = $value->Value;
+				$oExactTargetUserData[$value->Name] = $value->Value;
 			}
 			return $oExactTargetUserData;
 		}
