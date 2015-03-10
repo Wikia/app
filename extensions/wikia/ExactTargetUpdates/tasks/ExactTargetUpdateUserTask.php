@@ -39,7 +39,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oUpdateUserEmailResult = $oApiDataExtension->updateRequest( $aApiParams );
+		$oUpdateUserEmailResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUserEmailResult->OverallStatus );
 		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateUserEmailResult ) );
