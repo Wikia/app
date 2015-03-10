@@ -98,7 +98,7 @@ var ChatEntryPoint = {
         //chat couldn't be tested on devbox/sandbox
         // so we'll see how it behaves on production
         if (window.wgTitle == 'Chat test diana') {
-            $t.find('section .ChatModule').addClasss('live-chat');
+            $('#WikiaRail').addClass('new-chat');
         }
 	},
 
