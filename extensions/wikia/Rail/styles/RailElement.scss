@@ -1,240 +1,240 @@
 @import "skins/shared/color";
 
-$color-rail-background: mix($color-page, black, 90%);
+$black: #000;
+$white: #FFF;
+$color-divider: #E6EBF2;
+$color-rail-background: mix($color-page, $black, 90%);
 @if $is-dark-wiki {
-    $color-rail-background: mix($color-page, white, 90%);
+    $color-rail-background: mix($color-page, $white, 90%);
 }
 
-.WikiaRail .recent-wiki-activity {
 
-    a {
-        color: $color-links-default;
-    }
-
-    a:hover {
-        text-decoration: underline;
-        color: $color-links-default;
-        text-shadow: initial;
-    }
-
+@mixin wikia-rail-element() {
     background-color: $color-rail-background;
     padding: 20px;
-    font-size: 12px;
-    font-weight: bold;
+}
 
-    .activity-heading {
-        font-size: 24px;
+.wikia-rail {
+
+    .WikiaActivityModule {
+
+        @include wikia-rail-element;
+        font-size: 12px;
         font-weight: bold;
-        margin-bottom: 20px;
-	}
-
-    li em a {
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 20px;
-    }
-
-    .more {
-        font-size: 12px;
-        margin-top: 30px;
-        text-transform: uppercase;
-	}
-
-    .edited-by {
-        font-size: 12px;
-        font-weight: normal;
-        margin-top: 10px;
 
         a {
-            font-size: 12px;
-        }
-    }
-}
-
-.WikiaRail .must-watch-videos{
-    background-color: $color-rail-background;
-    padding: 20px;
-
-    h1 {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 0px;
-    }
-
-    .video-thumbnail img {
-        margin-top: 16px;
-    }
-
-    .thumbnails {
-
-        a:first-of-type {
-            color: $color-links;
-            margin-bottom: 10px;
+            color: $color-links-default;
         }
 
-        a:first-of-type:hover {
-            color: $color-links;
+        a:hover {
+            color: $color-links-default;
             text-decoration: underline;
             text-shadow: initial;
         }
 
-        .title {
-            font-size: 12px;
-
-            a {
-              margin: 0;
-            }
-        }
-    }
-}
-
-.WikiaRail .live-chat {
-    background-color: $color-rail-background;
-    padding: 20px;
-
-    p {
-        color: mix($color-text, $color-page, 60%);
-        font-size: 12px;
-    }
-
-    .chat-headline {
-
-        .chat-live {
-            color: $color-text;
-            font-size: 18px;
+        .activity-heading {
+            font-size: 24px;
             font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .chat-total {
-            background-color: $color-rail-background;
-            border: 1px solid #666;
-            border-radius: 50%;
-            font-size: 10px;
-            height: 12px;
-            margin: -5px 0 0 3px;
-            padding: 2px;
-            text-align: center;
-            width: 12px;
+        li em a {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
         }
-    }
 
-    .chat-join {
-        height: 42px;
-
-        button {
-            background-image: none;
-            border: none;
-            border-radius: 0;
-            color: #FFF;
-            height:100%;
+        .more {
+            font-size: 12px;
+            margin-top: 30px;
             text-transform: uppercase;
         }
 
-        button:before {
-            display: none;
-        }
-    }
+        .edited-by {
+            font-size: 12px;
+            font-weight: normal;
+            margin-top: 10px;
 
-    a:hover {
-        text-decoration: none;
-    }
-
-    .avatar {
-        background-position: 50%;
-        border-radius: 50%;
-        height: 30px;
-        margin-right: 14px;
-        width: 30px;
-    }
-
-    .avatar:hover {
-        opacity: 1;
-    }
-
-    .chat-whos-here {
-        border: none;
-        margin: 20px 0;
-        padding: 0;
-
-        .arrow-left {
-            padding-left: 0;
-
-            img {
-                border-color: transparent;
-                border-right-color: $color-links;
+            a {
+                font-size: 12px;
             }
         }
+    }
 
-        .arrow-right {
-            padding-right: 0;
+    .videos-module-rail {
 
-            img {
-                border-color: transparent;
-                border-left-color: $color-links;
+        @include wikia-rail-element;
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        .video-thumbnail img {
+            margin-top: 16px;
+        }
+
+        .thumbnails {
+
+            a:first-of-type {
+                color: $color-links;
+                margin-bottom: 10px;
             }
-        }
 
-        .arrow-left .disabled, .arrow-right .disabled {
-            color: mix($color-links, $color-page, 30%);
-            cursor: pointer;
-            opacity: .5;
-        }
-
-
-        .carousel-container {
-            left: 16px;
-            width: 260px;
-
-            li {
-                width: 32px;
+            a:first-of-type:hover {
+                color: $color-links;
+                text-decoration: underline;
+                text-shadow: initial;
             }
-        }
 
-        .UserStatsMenu {
-            border-width: 2px;
-            border-style: solid;
-            border-color: white;
+            .title {
+                font-size: 12px;
 
-            .actions ul {
-                margin: 0;
-
-                li:hover {
-                    background-color: $color-buttons;
+                a {
+                    margin: 0;
                 }
+            }
+        }
+    }
+
+    .ChatModule .live-chat {
+
+        @include wikia-rail-element;
+
+        p {
+            color: mix($color-text, $color-page, 60%);
+            font-size: 12px;
+        }
+
+        .chat-headline {
+
+            .chat-live {
+                color: $color-text;
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .chat-total {
+                background-color: $color-rail-background;
+                border: 1px solid;
+                border-radius: 50%;
+                font-size: 10px;
+                height: 12px;
+                margin: -5px 0 0 3px;
+                padding: 2px;
+                text-align: center;
+                width: 12px;
+            }
+        }
+
+        .chat-join {
+            height: 42px;
+
+            button {
+                background-image: none;
+                border: 0;
+                border-radius: 0;
+                color: $white;
+                height: 100%;
+                text-transform: uppercase;
+            }
+
+            button:before {
+                display: none;
+            }
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .avatar {
+            background-position: 50%;
+            border-radius: 50%;
+            height: 30px;
+            margin-right: 14px;
+            width: 30px;
+        }
+
+        .avatar:hover {
+            opacity: 1;
+        }
+
+        .chat-whos-here {
+            border: 0;
+            margin: 20px 0;
+            padding: 0;
+
+            .arrow-left {
+                padding-left: 0;
+
+                img {
+                    border-color: transparent;
+                    border-right-color: $color-links;
+                }
+            }
+
+            .arrow-right {
+                padding-right: 0;
+
+                img {
+                    border-color: transparent;
+                    border-left-color: $color-links;
+                }
+            }
+
+            .arrow-left .disabled, .arrow-right .disabled {
+                color: mix($color-links, $color-page, 30%);
+                cursor: pointer;
+                opacity: .5;
+            }
+
+            .carousel-container {
+                left: 16px;
+                width: 260px;
 
                 li {
-                    border-bottom-color: #E6EBF2;
-                    border-bottom-style: solid;
-                    border-bottom-width: thin;
-                    cursor: pointer;
-                    height: 44px;
-                    margin: 0;
-                    white-space: nowrap;
+                    width: 32px;
+                }
+            }
 
-                    .label {
-                        line-height: 44px;
-                        padding-left: 10px;
-                        color: mix($color-text, $color-links, 80%);
+            .UserStatsMenu {
+                border: $white solid 2px;
+
+                .actions ul {
+                    margin: 0;
+
+                    li:hover {
+                        background-color: $color-buttons;
+                    }
+
+                    li {
+                        border-bottom: $color-divider solid thin;
+                        cursor: pointer;
+                        height: 44px;
+                        margin: 0;
+                        white-space: nowrap;
+
+                        .label {
+                            color: mix($color-text, $color-links, 80%);
+                            line-height: 44px;
+                            padding-left: 10px;
+                        }
+                    }
+                }
+
+                .info {
+                    background: mix($color-text, $color-links, 80%);
+                    padding: 10px;
+
+                    ul .username {
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                        text-transform: uppercase;
                     }
                 }
             }
-
-            .info {
-                padding: 10px;
-                background: mix($color-text, $color-links, 80%);
-
-                ul .username {
-                    font-weight: bold;
-                    margin-bottom: 10px;
-                    text-transform: uppercase;
-                }
-            }
         }
-
     }
-
-
-
-
 }
-

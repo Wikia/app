@@ -1,7 +1,7 @@
 <? if ( $isAside ): ?>
 	<aside>
 <? endif; ?>
-	<div id="WikiaRail" class="WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>">
+	<div id="WikiaRail" class="wikia-rail WikiaRail<?= !empty($isGridLayoutEnabled) ? ' grid-2' : '' ?>">
 
 		<?php
 		// sort in reverse order (highest priority displays first)
