@@ -93,6 +93,13 @@ var ChatEntryPoint = {
 			var $e = $(this);
 			$e.html($.msg($e.data('msg-id'), $e.data('msg-param')));
 		});
+
+        //enables live-chat styling only on one page -
+        //chat couldn't be tested on devbox/sandbox
+        // so we'll see how it behaves on production
+        if (window.wgTitle == 'Chat test diana') {
+            $t.find('section .ChatModule').addClasss('live-chat');
+        }
 	},
 
 	// based on the template and user information, return a filled-in element
