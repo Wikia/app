@@ -1,1 +1,0 @@
-console.log( 'ext.resourceLoaderTests.b' );
