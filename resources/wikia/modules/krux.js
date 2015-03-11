@@ -1,11 +1,11 @@
-'use strict';
-
 /*global Krux,define*/
 window.Krux || ((Krux = function () {
 	Krux.q.push(arguments);
 }).q = []);
 
-define('wikia.krux', function () {
+define('wikia.krux', ['wikia.window'], function (win) {
+	'use strict';
+
 	var maxNumberOfKruxSegments = 27;
 
 	function load(confid) {
@@ -24,7 +24,7 @@ define('wikia.krux', function () {
 				Object.keys(params).forEach(function (key) {
 					value = params[key];
 					if (value) {
-						window['kruxDartParam_' + key] = value.toString();
+						win['kruxDartParam_' + key] = value.toString();
 					}
 				});
 
@@ -41,20 +41,24 @@ define('wikia.krux', function () {
 
 	function getParams(n) {
 		var k = 'kx' + n;
-		if (window.localStorage) {
-			return window.localStorage[k] || '';
+		if (win.localStorage) {
+			return win.localStorage[k] || '';
 		} else {
 			return '';
 		}
 	}
 
-	function getDartSegmentsLimit() {
-		return maxNumberOfKruxSegments;
+	function getSegments() {
+		return getParams('segments') && getParams('segments').slice(0, maxNumberOfKruxSegments);
+	}
+
+	function getUser() {
+		return getParams('user');
 	}
 
 	return {
 		load: load,
-		getParams: getParams,
-		getDartSegmentsLimit: getDartSegmentsLimit
+		getSegments: getSegments,
+		getUser: getUser
 	};
 });
