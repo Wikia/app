@@ -1,6 +1,0 @@
-As of MediaWiki 1.16.0 this extension is obsolete due to core functionality.
-It will be deleted from subversion on the 1.17.0 release, you
-are advised to migrate to the core functionality - this extension will no longer
-be updated or supported except for critical security issues.
-
-http://www.mediawiki.org/wiki/Manual:$wgBlockDisablesLogin
