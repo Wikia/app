@@ -34,7 +34,7 @@ class WikiaView {
 	 *
 	 * @return WikiaView
 	 */
-	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = array(), $format = WikiaResponse::FORMAT_HTML ) {
+	public static function newFromControllerAndMethodName( $controllerName, $methodName, Array $data = [], $format = WikiaResponse::FORMAT_HTML ) {
 		// Service classes must be dispatched by full name otherwise we default to a controller.
 		$controllerClassName = self::normalizeControllerClass( $controllerName );
 
