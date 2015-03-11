@@ -1695,3 +1695,8 @@ $wgImageServingForceNoResults = false;
  * todo Remove when removing responsive
  */
 $wgOasisBreakpoints = false;
+
+/**
+ * Add poweruser to implicit groups
+ */
+$wgImplicitGroups[] = 'poweruser';

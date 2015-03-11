@@ -34,6 +34,10 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(
 			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
 			(new UrlGenerator($config))->avatar()->scaleToWidth(200)->url());
+
+		$this->assertEquals(
+			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345&frame=3',
+			(new UrlGenerator($config))->avatar()->scaleToWidth(200)->frame(3)->url());
 	}
 
 	public function testOldUrl() {
