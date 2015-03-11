@@ -195,29 +195,32 @@ Class WikiFactoryChangedHooks {
 	}
 
 	static public function VisualEditor($cv_name, $wiki_id, $value) {
-		global $wgOut;
 		if ($cv_name == 'wgEnableNewVisualEditorExt') {
 			Wikia::log(__METHOD__, $wiki_id, "{$cv_name} = {$value}");
-
-			// get resource loader url
-			$link = $wgOut->makeResourceLoaderLink('startup', ResourceLoaderModule::TYPE_SCRIPTS);
-			if ($link != null) {
-			// extract the url from the link src
-				preg_match("/\"(.*)\"/", $link, $matches);
-				if ( isset($matches[1]) ) {
-					$urls[]= $matches[1];
-				}
-			}
-
-			// parsed resource loader URL
-			$resourceLoaderURL = parse_url( $urls[0] );
 			// parsed wiki URL
 			$wikiURL = parse_url( GlobalTitle::newFromText( 'Version', NS_SPECIAL, $wiki_id )->getFullURL() );
-			// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
-			$purgeURL = $wikiURL['scheme'] . '://' . $wikiURL['host'] . $resourceLoaderURL['path'];
-
+			$getStartupURL = function($extraData = array()) use ($wikiURL) {
+				global $wgOut;
+				// get resource loader url
+				$link = $wgOut->makeResourceLoaderLink('startup', ResourceLoaderModule::TYPE_SCRIPTS, true, $extraData);
+				if ($link != null) {
+					// extract the url from the link src
+					preg_match("/\"(.*)\"/", $link, $matches);
+					if ( isset($matches[1]) ) {
+						$urls[]= $matches[1];
+					}
+				}
+				// parsed resource loader URL
+				$resourceLoaderURL = parse_url( $urls[0] );
+				// URL to purge (constructed from $resourceLoaderURL and $wikiURL)
+				return $wikiURL['scheme'] . '://' . $wikiURL['host'] . $resourceLoaderURL['path'];
+			};
 			// purge
-			$u = new SquidUpdate( [$purgeURL] );
+			$u = new SquidUpdate( [
+				$getStartupURL(),
+				$getStartupURL(array('ve'=>1)),
+				$getStartupURL(array('newve'=>1))
+			] );
 			$u->doUpdate();
 		}
 		return true;
