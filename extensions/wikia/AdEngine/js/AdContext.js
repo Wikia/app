@@ -77,6 +77,18 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
+		// Turtle
+		if (context.forceProviders.turtle) {
+			context.providers.turtle = true;
+		}
+
+		if (instantGlobals.wgAdDriverUseTurtleInCountries &&
+				instantGlobals.wgAdDriverUseTurtleInCountries.indexOf &&
+				instantGlobals.wgAdDriverUseTurtleInCountries.indexOf(geo.getCountryCode()) > -1
+					) {
+			context.providers.turtle = true;
+		}
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {

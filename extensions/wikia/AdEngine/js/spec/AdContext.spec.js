@@ -175,7 +175,7 @@ describe('AdContext', function () {
 		var adContext;
 
 		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
-			wgAdDriverAlwaysCallDartInCountriesMobile: ['XX']
+			wgAdDriverAlwaysCallDartInCountriesMobile: ['XX', 'ZZ']
 		});
 		expect(adContext.getContext().providers.remnantGptMobile).toBeTruthy();
 
@@ -184,6 +184,20 @@ describe('AdContext', function () {
 		});
 		// TODO: clean up in ADEN-1785
 		//expect(adContext.getContext().providers.remnantGptMobile).toBeFalsy();
+	});
+
+	it('makes providers.turtle true when country in instantGlobals.wgAdDriverUseTurtleInCountries', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgAdDriverUseTurtleInCountries: ['XX', 'ZZ']
+		});
+		expect(adContext.getContext().providers.turtle).toBeTruthy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgAdDriverUseTurtleInCountries: ['YY']
+		});
+		expect(adContext.getContext().providers.turtle).toBeFalsy();
 	});
 
 	it('calls whoever registered with addCallback each time setContext is called', function () {
