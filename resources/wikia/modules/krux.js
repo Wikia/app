@@ -1,11 +1,11 @@
 'use strict';
 
-/*global Krux,define,unescape*/
+/*global Krux,define*/
 window.Krux || ((Krux = function () {
 	Krux.q.push(arguments);
 }).q = []);
 
-define('ext.wikia.krux', function () {
+define('wikia.krux', function () {
 	var maxNumberOfKruxSegments = 27;
 
 	function load(confid) {

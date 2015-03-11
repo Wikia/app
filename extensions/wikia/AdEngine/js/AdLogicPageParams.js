@@ -1,15 +1,15 @@
 /*jshint camelcase:false*/
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adLogicPageViewCounter',
-	require.optional('wikia.abTest'),
 	require.optional('ext.wikia.adEngine.lookupServices'),
-	require.optional('ext.wikia.krux')
-], function (log, doc, loc, adContext, pvCounter, abTest, lookups, krux) {
+	require.optional('wikia.abTest'),
+	require.optional('wikia.krux')
+], function (adContext, pvCounter, log, doc, loc, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',

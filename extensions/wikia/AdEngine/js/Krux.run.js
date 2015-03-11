@@ -2,13 +2,13 @@
 /*jshint camelcase:false*/
 require([
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.krux',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'jquery',
+	'wikia.krux',
 	'wikia.log',
 	'wikia.scriptwriter',
 	'wikia.window'
-], function (adContext, krux, adLogicPageParams, $, log, scriptWriter, window) {
+], function (adContext, adLogicPageParams, $, krux, log, scriptWriter, win) {
 	'use strict';
 
 	var skinSites = {
@@ -17,7 +17,7 @@ require([
 			wikiamobile: 'JTKzTN3f'
 		};
 
-	$(window).on('load', function () {
+	$(win).on('load', function () {
 		var targeting = adContext.getContext().targeting,
 			siteId = skinSites[targeting.skin];
 

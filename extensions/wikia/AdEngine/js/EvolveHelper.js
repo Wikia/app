@@ -1,11 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.evolveHelper', [
-	'wikia.log',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.krux',
-	'ext.wikia.adEngine.dartUrl'
-], function (log, adContext, adLogicPageParams, krux, dartUrl) {
+	'ext.wikia.adEngine.dartUrl',
+	'wikia.krux',
+	'wikia.log'
+], function (adContext, adLogicPageParams, dartUrl, krux, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.evolveHelper',

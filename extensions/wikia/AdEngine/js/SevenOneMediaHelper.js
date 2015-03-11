@@ -1,15 +1,15 @@
 /* jshint camelcase:false, maxparams:false */
 /*global define,require*/
 define('ext.wikia.adEngine.sevenOneMediaHelper', [
-	'jquery',
-	'wikia.log',
-	'wikia.window',
-	'wikia.tracker',
-	'wikia.scriptwriter',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	require.optional('ext.wikia.krux')
-], function ($, log, window, tracker, scriptWriter, adContext, adLogicPageParams, krux) {
+	'jquery',
+	require.optional('wikia.krux'),
+	'wikia.log',
+	'wikia.scriptwriter',
+	'wikia.tracker',
+	'wikia.window'
+], function (adContext, adLogicPageParams, $, krux, log, scriptWriter, tracker, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
