@@ -7,11 +7,6 @@ html {
 
 }
 
-*, *::before, *::after {
-	box-sizing: inherit;
-}
-
-
 body {
 	color: $color-text;
 	font-family: Helvetica, Arial, sans-serif;
