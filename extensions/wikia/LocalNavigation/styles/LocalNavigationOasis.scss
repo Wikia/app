@@ -6,6 +6,10 @@
 
 .local-navigation {
 	box-sizing: border-box;
+
+	*, *::before, *::after {
+		box-sizing: inherit;
+	}
 }
 
 // removing .wikinav2 class disables rules from skins/oasis/css/core/PageHeader.scss starting line #99
