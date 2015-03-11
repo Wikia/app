@@ -895,7 +895,10 @@ abstract class DatabaseBase implements DatabaseType {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
 			}
-			wfDebugLog( 'database', "DB readonly mode: $sql" );
+			WikiaLogger::instance()->error( 'DB readonly mode', [
+				'exception' => new Exception( $sql ),
+				'server'    => $this->mServer
+			] );
 			return false;
 		}
 		# </Wikia>
