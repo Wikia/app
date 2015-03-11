@@ -1594,8 +1594,6 @@ class Wikia {
 		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
 		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
-		$wgOasisBreakpoints = $request->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
-		$wgOasisTypography = $request->getBool( 'oasistypography', $wgOasisTypography ) !== false;
 
 		return true;
 	}

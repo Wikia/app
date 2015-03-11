@@ -123,8 +123,8 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		$aApiParams = [ 'DataExtension' => [] ];
 		$aApiParams[ 'DataExtension' ][] = [
 			'CustomerKey' => 'user',
-			'Keys' => [ 'user_id' => $aUserData[ 'user_id' ] ],
-			'Properties' => [ 'user_email' => $aUserData[ 'user_email' ] ]
+			'Keys' => [ 'user_id' => $aUserData['user_id'] ],
+			'Properties' => [ 'user_email' => $aUserData['user_email'] ]
 		];
 
 		/* Mock api class */
