@@ -212,7 +212,7 @@ $color-rail-background: mix($color-page, $black, 90%);
                     }
                 }
 
-                .arrow-left .disabled, .arrow-right .disabled {
+                .arrow-left.disabled, .arrow-right.disabled {
                     color: mix($color-links, $color-page, 30%);
                     cursor: pointer;
                     opacity: .5;
