@@ -158,7 +158,7 @@
 
 		input,
 		.input-group {
-			@include box-sizing( border-box );
+			box-sizing: border-box;
 			width: 100%;
 		}
 	}

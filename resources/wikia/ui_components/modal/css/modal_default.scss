@@ -2,7 +2,6 @@
 @import "skins/oasis/css/core/responsive-variables";
 @import "skins/shared/mixins/transition";
 @import "skins/shared/mixins/blackout";
-@import "skins/shared/mixins/box-sizing-border-box";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/flexbox";
 @import "skins/shared/mixins/calc";
@@ -29,10 +28,10 @@ $large-modal-margin: 50px;
 	@include box-shadow( 1px, 2px, 5px, rgba(0, 0, 0, .7) );
 	@include flexbox();
 	@include flex-direction(column);
-	@include box-sizing-border-box;
 
 	background-color: $color-page;
 	border-radius: 2px;
+	box-sizing: border-box;
 	max-height: $modal-max-height;
 	min-height: $modal-min-height;
 	margin: 0;
@@ -52,7 +51,7 @@ $large-modal-margin: 50px;
 	> header,
 	> section,
 	> footer {
-		@include box-sizing-border-box;
+		box-sizing: border-box;
 	}
 
 	> section {

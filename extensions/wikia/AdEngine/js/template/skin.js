@@ -3,36 +3,37 @@ define('ext.wikia.adEngine.template.skin', [
 	'wikia.document',
 	'wikia.window',
 	'wikia.log'
-], function (document, window, log, backgroundchanger) {
+], function (doc, win, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adengine.template.skin';
 
 	/**
-	 * @param params {
-	 *   skinImage
-	 *   backgroundColor
-	 *   middleColor
-	 *   destUrl
-	 *   pixels
-	 * }
+	 * Show the skin ad
+	 *
+	 * @param {Object} params
+	 * @param {string} params.destUrl - URL to go when the background is clicked
+	 * @param {string} params.skinImage - URL of the 1700x800 image to show in the background
+	 * @param {string} params.backgroundColor - background color to use (rrggbb, without leading #)
+	 * @param {string} [params.middleColor] - color to use in the middle (rrggbb, without leading #)
+	 * @param {Array} params.pixels - URLs of tracking pixels to append when showing the skin
 	 */
 	function show(params) {
-		window.wgAfterContentAndJS.push(function () {
+		win.wgAfterContentAndJS.push(function () {
 			log(params, 'debug', logGroup);
 
 			params = params || {};
 
-			var adSkin = document.getElementById('ad-skin'),
+			var adSkin = doc.getElementById('ad-skin'),
 				adSkinStyle = adSkin.style,
-				wikiaSkin = document.getElementById('WikiaPageBackground'),
+				wikiaSkin = doc.getElementById('WikiaPageBackground'),
 				wikiaSkinStyle = wikiaSkin && wikiaSkin.style,
 				i,
 				len,
 				pixelElement,
 				pixelUrl;
 
-			if (window.wgOasisResponsive || window.skin === 'venus') {
+			if (win.wgOasisResponsive || win.skin === 'venus') {
 				require(['wikia.backgroundchanger'], function (backgroundchanger) {
 					var bcParams = {
 						skinImage: params.skinImage,
@@ -54,7 +55,7 @@ define('ext.wikia.adEngine.template.skin', [
 				adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 			}
 
-			document.body.className += ' background-ad';
+			doc.body.className += ' background-ad';
 
 			adSkinStyle.position = 'fixed';
 			adSkinStyle.height = '100%';
@@ -70,10 +71,10 @@ define('ext.wikia.adEngine.template.skin', [
 
 			adSkin.onclick = function () {
 				log('Click on skin', 'user', logGroup);
-				window.open(params.destUrl);
+				win.open(params.destUrl);
 			};
 
-			window.wgAdSkinPresent = true;
+			win.wgAdSkinPresent = true;
 
 			log('Skin set', 5, logGroup);
 
@@ -82,7 +83,7 @@ define('ext.wikia.adEngine.template.skin', [
 					pixelUrl = params.pixels[i];
 					if (pixelUrl) {
 						log('Adding tracking pixel ' + pixelUrl, 'debug', logGroup);
-						pixelElement = document.createElement('img');
+						pixelElement = doc.createElement('img');
 						pixelElement.src = pixelUrl;
 						pixelElement.width = 1;
 						pixelElement.height = 1;

@@ -134,19 +134,16 @@ class PowerUser {
 	 * matches one in the aPowerUsersRightsMapping array
 	 *
 	 * @param string $sProperty One of the types in consts
-	 * @return bool
+	 * @return bool Always return true until the groups is only companion
 	 */
 	public function addPowerUserAddGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
-			if ( !in_array( self::GROUP_NAME, $this->oUser->getGroups() ) ) {
-				$this->oUser->addGroup( self::GROUP_NAME );
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& !in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) )
+		) {
+				\UserRights::addGlobalGroup( $this->oUser, self::GROUP_NAME );
 				$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
-			}
-			return true;
-		} else {
-			$this->logError( $sProperty, self::ACTION_ADD_GROUP );
-			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -186,19 +183,16 @@ class PowerUser {
 	 * a user actually has it
 	 *
 	 * @param string $sProperty One of the types in consts
-	 * @return bool
+	 * @return bool Always return true until the groups is only companion
 	 */
 	public function removePowerUserRemoveGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
-			if ( $this->isGroupForRemoval( $sProperty ) ) {
-				$this->oUser->removeGroup( self::GROUP_NAME );
-				$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
-			}
-			return true;
-		} else {
-			$this->logError( $sProperty, self::ACTION_REMOVE_GROUP );
-			return false;
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& $this->isGroupForRemoval( $sProperty )
+		) {
+			\UserRights::removeGlobalGroup( $this->oUser, self::GROUP_NAME );
+			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
 		}
+		return true;
 	}
 
 	/**
@@ -209,15 +203,15 @@ class PowerUser {
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
-	private function isGroupForRemoval( $sProperty ) {
+	public function isGroupForRemoval( $sProperty ) {
 		foreach ( self::$aPowerUsersRightsMapping as $sMappedProperty ) {
 			if ( $sMappedProperty !== $sProperty
-				&& $this->oUser->isSpecificPowerUser( $sMappedProperty ) ) {
+				&& $this->oUser->isSpecificPowerUser( $sMappedProperty )
+			) {
 				return false;
 			}
 		}
-
-		return in_array( self::GROUP_NAME, $this->oUser->getGroups() );
+		return in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) );
 	}
 
 	/**

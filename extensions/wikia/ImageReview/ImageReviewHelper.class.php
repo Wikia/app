@@ -361,7 +361,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		return $imageList;
 	}
 
-	private function imageListAdditionalAction( $sType, DatabaseMysql $oDB, Array $aValues, Array $aWhere ) {
+	private function imageListAdditionalAction( $sType, DatabaseBase $oDB, Array $aValues, Array $aWhere ) {
 		$iCount = count( $aWhere );
 		if ( $iCount > 0 ) {
 			$oDatabaseHelper = $this->getDatabaseHelper();

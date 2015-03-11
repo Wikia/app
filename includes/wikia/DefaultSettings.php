@@ -620,6 +620,7 @@ include_once( "$IP/extensions/wikia/BannerNotifications/BannerNotifications.setu
 include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
+include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 
 /**
@@ -1688,3 +1689,8 @@ $wgDisableWAMOnHubs = false;
  * see PLATFORM-392
  */
 $wgImageServingForceNoResults = false;
+
+/**
+ * Add poweruser to implicit groups
+ */
+$wgImplicitGroups[] = 'poweruser';
