@@ -79,7 +79,15 @@ describe('AdLogicPageParams', function () {
 		opts = opts || {};
 
 		var kruxMock = {
-				segments: opts.kruxSegments || []
+				getParams: function (n) {
+					switch(n) {
+						case 'segments':
+							return opts.kruxSegments || [];
+						default:
+							return '';
+					}
+				},
+				getDartSegmentsLimit: function () { return 27; }
 			},
 			abTestMock = opts.abExperiments ? {
 				getExperiments: function () {
@@ -90,13 +98,13 @@ describe('AdLogicPageParams', function () {
 			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
+			mockAdContext(targeting),
+			mockPageViewCounter(opts.pvCount),
 			logMock,
 			windowMock.document,
 			windowMock.location,
-			mockAdContext(targeting),
-			mockPageViewCounter(opts.pvCount),
-			abTestMock,
 			undefined,
+			abTestMock,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
