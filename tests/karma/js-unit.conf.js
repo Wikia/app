@@ -91,10 +91,6 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
-			'extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
-			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-			'extensions/wikia/AdEngine/js/AdProviderLater.js',
-			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 			'extensions/wikia/AdEngine/js/AdTracker.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',
@@ -105,6 +101,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+			'extensions/wikia/AdEngine/js/provider/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',
 
