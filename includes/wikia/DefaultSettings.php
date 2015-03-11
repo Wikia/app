@@ -1688,3 +1688,10 @@ $wgDisableWAMOnHubs = false;
  * see PLATFORM-392
  */
 $wgImageServingForceNoResults = false;
+
+/**
+ * Force new breakpoints $wgOasisBreakpoints
+ * see CONCF-186
+ * todo Remove when removing responsive
+ */
+$wgOasisBreakpoints = false;
