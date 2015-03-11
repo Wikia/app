@@ -2,11 +2,6 @@
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/color";
 
-html {
-	box-sizing: content-box;
-
-}
-
 body {
 	color: $color-text;
 	font-family: Helvetica, Arial, sans-serif;
