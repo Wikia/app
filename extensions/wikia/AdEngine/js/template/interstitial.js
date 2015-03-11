@@ -14,6 +14,8 @@ define('ext.wikia.adEngine.template.interstitial', [
 	/**
 	 * Show the interstitial ad
 	 *
+	 * @deprecated use ext.wikia.adEngine.template.modal instead
+	 *
 	 * @param {Object} params
 	 * @param {string} params.slot - ID of the slot to put into Lightbox
 	 * @param {string} params.elem - selector of the element to pull from the GPT iframe
