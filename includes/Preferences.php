@@ -811,13 +811,11 @@ class Preferences {
 			'label-message' => 'tog-forceeditsummary',
 		);
 
-		if ( $wgEnableEditorSyntaxHighlighting ) {
-			$defaultPreferences['disablesyntaxhighlighting'] = array(
-				'type' => 'toggle',
-				'section' => 'editing/advancedediting',
-				'label-message' => 'tog-disablesyntaxhighlighting',
-			);
-		}
+		$defaultPreferences['disablesyntaxhighlighting'] = array(
+			'type' => 'toggle',
+			'section' => 'editing/advancedediting',
+			'label-message' => 'tog-disablesyntaxhighlighting',
+		);
 
 		if ( $wgLivePreview ) {
 			$defaultPreferences['uselivepreview'] = array(

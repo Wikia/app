@@ -9,7 +9,7 @@ class EditorSyntaxHighlightingHooks {
 	 * @return bool
 	 */
 	public static function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
-		$aVars['enableSyntaxHighlighting'] = \EditPageLayoutHelper::isSyntaxHighlightingEnabled();
+		$aVars['enableWikitextSyntaxHighlighting'] = \EditPageLayoutHelper::isWikitextSyntaxHighlightingEnabled();
 
 		return true;
 	}

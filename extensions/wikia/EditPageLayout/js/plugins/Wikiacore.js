@@ -5,7 +5,7 @@
 			'widemodemanager', 'railminimumheight', 'tracker', 'cssloadcheck', 'preloads',
 			'leaveconfirm', 'addfile', 'editorsurvey'];
 
-	if (window.enableSyntaxHighlighting === true) {
+	if (window.enableWikitextSyntaxHighlighting === true) {
 		requires.push('syntaxhighlighterqueueinit');
 	}
 

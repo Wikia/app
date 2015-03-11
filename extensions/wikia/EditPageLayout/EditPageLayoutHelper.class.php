@@ -84,7 +84,7 @@ class EditPageLayoutHelper {
 		}
 
 		// Add variables for pages to edit code (css, js, lua)
-		if ( $this->isCodePage( $editedArticleTitle ) && $this->isSyntaxHighlightingEnabled() ) {
+		if ( $this->isCodeSyntaxHighlightingEnabled( $editedArticleTitle ) ) {
 			$this->prepareVarsForCodePage( $editedArticleTitle );
 		}
 
@@ -180,13 +180,25 @@ class EditPageLayoutHelper {
 	}
 
 	/**
-	 * Check if syntax highlighting is enabled, so
+	 * Check if code syntax highlighting is enabled
+	 *
+	 * @param Title $articleTitle page title
+	 * @return bool
+	 */
+	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
+		global $wgEnableEditorSyntaxHighlighting;
+
+		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+	}
+
+	/**
+	 * Check if wikitext syntax highlighting is enabled, so
 	 * - $wgEnableEditorSyntaxHighlighting is set to true
 	 * - user doesn't disable syntax highlighting in preferences
 	 *
 	 * @return bool
 	 */
-	static public function isSyntaxHighlightingEnabled() {
+	static public function isWikitextSyntaxHighlightingEnabled() {
 		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
 		return $wgEnableEditorSyntaxHighlighting

@@ -98,7 +98,7 @@ $messages['en'] = array(
 	'tog-editwidth' => 'Widen the Source mode edit box to fill the entire screen',
 	'tog-minordefault' => 'Mark all edits as "minor" by default',
 	'tog-forceeditsummary' => 'Prompt me if I leave a blank edit summary',
-	'tog-disablesyntaxhighlighting' => 'Disable syntax highlighting',
+	'tog-disablesyntaxhighlighting' => 'Do not show syntax highlighting in Source mode',
 
 	// preview-related messages
 	'editpagelayout-preview-label-desktop' => 'Desktop',
@@ -159,7 +159,7 @@ $messages['qqq'] = array(
 	'tog-editwidth' => 'A label for checkbox to widen the Source mode edit box to fill the entire screen',
 	'tog-minordefault' => 'A label for checkbox to mark all edits as "minor" by default',
 	'tog-forceeditsummary' => 'A label for checkbox to prompt user if leave a blank edit summary',
-	'tog-disablesyntaxhighlighting' => 'A label for checkbox to disable syntax highlighting',
+	'tog-disablesyntaxhighlighting' => 'A label for checkbox to dont show syntax highlighting in source mode',
 
 	'editpagelayout-preview-label-desktop' => 'A label shown under the desktop icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers the desktop icon',
 	'editpagelayout-preview-label-mobile' => 'A label shown under the mobile icon in the preview section of the edit interface, clicking changes the type of preview (toggle between mobile and desktop). Also displayed as a popup when the user hovers over the mobile icon',
