@@ -789,10 +789,10 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * @param $errno
-	 * @param $errstr
+	 * @param int $errno
+	 * @param string $errstr
 	 */
-	protected function connectionErrorHandler( $errno,  $errstr ) {
+	public function connectionErrorHandler( $errno,  $errstr ) {
 		$this->mPHPError = $errstr;
 	}
 
