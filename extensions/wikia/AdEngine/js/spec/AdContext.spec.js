@@ -186,16 +186,16 @@ describe('AdContext', function () {
 		//expect(adContext.getContext().providers.remnantGptMobile).toBeFalsy();
 	});
 
-	it('makes providers.turtle true when country in instantGlobals.wgAdDriverUseTurtleInCountries', function () {
+	it('makes providers.turtle true when country in instantGlobals.wgAdDriverTurtleCountries', function () {
 		var adContext;
 
 		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
-			wgAdDriverUseTurtleInCountries: ['XX', 'ZZ']
+			wgAdDriverTurtleCountries: ['XX', 'ZZ']
 		});
 		expect(adContext.getContext().providers.turtle).toBeTruthy();
 
 		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
-			wgAdDriverUseTurtleInCountries: ['YY']
+			wgAdDriverTurtleCountries: ['YY']
 		});
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
 	});

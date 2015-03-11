@@ -1444,14 +1444,14 @@ $wgAdDriverEnableAdsInMaps = true;
  *  ]]
  *
  * Rubicon RTP configuration variable.
- * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconRTPConfig = null;
 
 /**
  * @name $wgAdDriverRubiconRTPCountries
  * List of countries RTP call will be issued.
- * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconRTPCountries = null;
 
@@ -1464,9 +1464,16 @@ $wgEnableKruxOnMobile = true;
 /**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
- * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgHighValueCountries = null;
+
+/**
+ * @name $wgAdDriverTurtleCountries
+ * List of countries to call Turtle ad partner in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverTurtleCountries = null;
 
 /**
  * @name $wgAnalyticsProviderPageFair
