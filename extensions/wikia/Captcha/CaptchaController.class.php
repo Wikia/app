@@ -5,6 +5,8 @@
  */
 class CaptchaController extends WikiaController {
 
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
 	/**
 	 * Displays a captcha image. This is used exclusively by FancyCaptcha.
 	 */
