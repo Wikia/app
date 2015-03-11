@@ -3,7 +3,7 @@
 @import 'responsive-variables';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
-@import 'ads-footer';
+@import 'ads-floor';
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {

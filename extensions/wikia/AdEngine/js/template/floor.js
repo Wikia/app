@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.template.footer', [
+define('ext.wikia.adEngine.template.floor', [
 	'jquery',
 	'wikia.log',
 	'wikia.document',
@@ -23,7 +23,12 @@ define('ext.wikia.adEngine.template.footer', [
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
 
-		var $footer = $(footerHtml);
+		var $footer = $(footerHtml),
+			iframe = iframeWriter.getIframe({
+				code: params.code,
+				width: params.width,
+				height: params.height
+			});
 
 		win.WikiaBar.hideContainer();
 
@@ -32,11 +37,15 @@ define('ext.wikia.adEngine.template.footer', [
 			$footer.hide();
 		});
 
-		$footer.find('.ad').append(iframeWriter.getIframe({
-			code: params.code,
-			width: params.width,
-			height: params.height
-		}));
+		$footer.find('.ad').append(iframe);
+
+		if (params.onClick) {
+			$(iframe).on('load', function () {
+				var iframeDoc = iframe.contentWindow.document;
+				$('html', iframeDoc).css('cursor', 'pointer').on('click', params.onClick);
+			});
+		}
+
 		$(doc.body).append($footer);
 	}
 
