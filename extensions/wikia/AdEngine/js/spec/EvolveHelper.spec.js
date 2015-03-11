@@ -112,7 +112,7 @@ describe('EvolveHelper', function () {
 				kruxMock,
 				logMock
 			);
-		
+
 		spyOn(dartUrlMock, 'decorateParam').and.callFake(function (key) {
 			if ( key === 'segments' ) {
 				return 'segments=segment1,segment2;';
