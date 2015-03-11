@@ -35,7 +35,7 @@ class SassUtil {
 			];
 
 			if ( BodyController::isOasisTypography() ) {
-				$params['typography'] = 1;
+				$params['oasisTypography'] = 1;
 			}
 
 			return $params;

@@ -1,6 +1,6 @@
 @import 'breakpoints-variables';
 
-@if $newTypography == 1 {
+@if $oasisTypography == 1 {
 	@media #{$breakpoint-below-large} {
 		.WikiaPage {
 			.WikiaArticle {

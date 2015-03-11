@@ -97,8 +97,9 @@ class BodyController extends WikiaController {
 	}
 
 	public static function isOasisTypography() {
-		global $wgOasisTypography;
+		global $wgOasisTypography, $wgRequest;
 
+		$wgOasisTypography = $wgRequest->getBool( 'oasistypography', $wgOasisTypography ) !== false;
 		return !empty( $wgOasisTypography );
 	}
 
