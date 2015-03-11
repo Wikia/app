@@ -1,8 +1,0 @@
-The goal of this extension is to provide a way to display UK postcodes on Google Maps maps,
-by extending the Maps extension. Since obtaining geocoded postcodes for UK Postcodes via Google
-services is only possible using the Google AJAX search API, the standard geocoding infrastructure
-of Maps could not be used, and this extension should be seen as a sort of hack. Initial
-development for this extension was funded by Neill Mitchell for Prescient Software Ltd.
-
-Version 0.2 is an experimental release, in which multiple issues are expected. I'm hoping to
-polish the whole extension a little more once I have some free time. Bug reports are welcome though.
