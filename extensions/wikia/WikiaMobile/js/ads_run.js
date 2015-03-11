@@ -86,7 +86,7 @@ require(
 				}
 				adSlots.push([mobileTaboola]);
 
-				log('Loading Krux module, site id: ' + kruxSiteId, 'debug', 'ads_run.js');
+				log('Loading Krux module, site id: ' + kruxSiteId, 'debug', 'wikia.krux');
 				krux.load(kruxSiteId);
 			});
 		}

@@ -109,8 +109,7 @@ $config['adengine2_late_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		// Needs to load after krux.js, jQuery and AdEngine2.run.js
-		'//resources/wikia/modules/krux.js',
-		'//extensions/wikia/AdEngine/js/Krux.run.js',
+		'//resources/wikia/modules/krux.js'
 	),
 );
 

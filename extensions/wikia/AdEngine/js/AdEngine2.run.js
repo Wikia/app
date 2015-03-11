@@ -122,13 +122,19 @@ window.AdEngine_loadLateAds = function () {
 			'ext.wikia.adEngine.adEngine',
 			'ext.wikia.adEngine.lateAdsQueue',
 			'ext.wikia.adEngine.adTracker',
+			'wikia.krux',
 			'wikia.log'
-		], function (adConfigLate, adEngine, lateAdsQueue, adTracker, log) {
-			var module = 'AdEngine_loadLateAds';
+		], function (adConfigLate, adEngine, lateAdsQueue, adTracker, krux, log) {
+			var module = 'AdEngine_loadLateAds',
+				kruxSiteId = 'JU3_GW1b';
+
 			log('launching late ads now', 1, module);
 			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
 			adTracker.measureTime('adengine.init', 'queue.late').track();
 			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
+
+			log('Loading Krux module, site id: ' + kruxSiteId, 'debug', 'wikia.krux');
+			krux.load(kruxSiteId);
 		});
 	}
 
