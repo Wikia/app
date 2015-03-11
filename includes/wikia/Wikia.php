@@ -1581,7 +1581,7 @@ class Wikia {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss,
-				$wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling, $wgOasisBreakpoints;
+				$wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling, $wgOasisBreakpoints, $wgOasisTypography;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
@@ -1595,6 +1595,7 @@ class Wikia {
 		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 		$wgOasisBreakpoints = $request->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
+		$wgOasisTypography = $request->getBool( 'oasistypography', $wgOasisTypography ) !== false;
 
 		return true;
 	}
