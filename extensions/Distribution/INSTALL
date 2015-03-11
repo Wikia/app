@@ -1,9 +1,0 @@
-The Distribution extension is dependent on the ExtensionDistributor extension.
-
-Once you have downloaded the code, place the 'Distribution' directory within your MediaWiki 'extensions' directory.
-Then add the following code to your LocalSettings.php file:
-
-# Distribution
-require_once( "$IP/extensions/Distribution/Distribution.php" );
-
-Make sure you place this code after the inclusion of ExtensionDistributor.
