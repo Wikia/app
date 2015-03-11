@@ -196,7 +196,10 @@ class WikiaView {
 	public function getTemplateDir( $controllerClass ) {
 		if ( method_exists( $controllerClass, 'getTemplateDir' ) ) {
 			$dirName = call_user_func( [ $controllerClass, 'getTemplateDir' ] );
-		} else {
+		}
+
+		// If the above fails, or returns a non-existent directory, fallback to the default.
+		if ( empty( $dirName ) || !file_exists( $dirName ) ) {
 			$dirName = dirname( F::app()->wg->AutoloadClasses[ $controllerClass ] ) . '/templates';
 		}
 
