@@ -1,6 +1,0 @@
-# DontSwitchMeOver adds an option to a user's prefernces which can be used when making changes to default preferences
-# on a wiki; the idea being that users who have marked this preference as on would be unaffected by the change.
-
-# Example LocalSettings.php additions
-
-require_once("$IP/extensions/UsabilityInitiative/DontSwitchMeOver/DontSwitchMeOver.php");
