@@ -21,6 +21,8 @@
  * @ingroup Database
  */
 
+use Wikia\Util\Assert;
+
 /**
  * Database abstraction object for PHP extension mysqli.
  *
@@ -166,6 +168,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return bool
 	 */
 	protected function mysqlFreeResult( $res ) {
+		Assert::true( $res instanceof mysqli_result, __METHOD__ );
 		$res->free_result();
 		return true;
 	}
@@ -175,6 +178,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return bool|stdClass
 	 */
 	protected function mysqlFetchObject( $res ) {
+		Assert::true( $res instanceof mysqli_result, __METHOD__ );
 		$object = $res->fetch_object();
 		if ( $object === null ) {
 			return false;
@@ -187,6 +191,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return array|bool
 	 */
 	protected function mysqlFetchArray( $res ) {
+		Assert::true( $res instanceof mysqli_result, __METHOD__ );
 		$array = $res->fetch_array();
 		if ( $array === null ) {
 			return false;
@@ -199,6 +204,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return int
 	 */
 	protected function mysqlNumRows( $res ) {
+		Assert::true( $res instanceof mysqli_result, __METHOD__ );
 		return $res->num_rows;
 	}
 
@@ -207,6 +213,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return int
 	 */
 	protected function mysqlNumFields( $res ) {
+		Assert::true( $res instanceof mysqli_result, __METHOD__ );
 		return $res->field_count;
 	}
 
@@ -216,6 +223,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return stdClass
 	 */
 	protected function mysqlFetchField( $res, $n ) {
+		Assert::true( $res instanceof mysqli_result, __METHOD__ );
 		$field = $res->fetch_field_direct( $n );
 		$field->not_null = $field->flags & MYSQLI_NOT_NULL_FLAG;
 		$field->primary_key = $field->flags & MYSQLI_PRI_KEY_FLAG;
@@ -231,6 +239,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return string
 	 */
 	protected function mysqlFieldName( $res, $n ) {
+		Assert::true( $res instanceof mysqli_result, __METHOD__ );
 		$field = $res->fetch_field_direct( $n );
 		return $field->name;
 	}
