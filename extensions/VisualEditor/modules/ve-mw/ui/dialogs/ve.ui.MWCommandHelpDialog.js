@@ -40,6 +40,12 @@ ve.ui.MWCommandHelpDialog.static.getCommandGroups = function () {
 				msg: 'visualeditor-savedialog-label-save'
 			}
 		);
+		commandGroups.other.commands.push(
+			{
+				shortcuts: [ accessKeyPrefix + '[' ],
+				msg: 'wikia-visualeditor-dialog-wikiasourcemode-title'
+			}
+		);
 	}
 
 	return commandGroups;
