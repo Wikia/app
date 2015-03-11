@@ -11,3 +11,6 @@
 .ve-ui-overlay-global {
 	z-index: $zTop + 4;
 }
+.ve-hidden-ad, .ve-hidden-ad * {
+	display: none !important;
+}
