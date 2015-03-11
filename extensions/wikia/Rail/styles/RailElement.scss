@@ -26,6 +26,10 @@ $color-rail-background: mix($color-page, $black, 90%);
     padding: 0 10px 10px 0;
     width: 300px;
 
+    h1 {
+        padding-left: 0;
+    }
+
     .WikiaActivityModule {
 
         @include wikia-rail-element;
@@ -46,7 +50,6 @@ $color-rail-background: mix($color-page, $black, 90%);
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
-            padding-left: 0;
         }
 
         li em a {
@@ -83,22 +86,20 @@ $color-rail-background: mix($color-page, $black, 90%);
     .videos-module-rail {
 
         @include wikia-rail-element;
+        display: block;
 
         h1 {
             font-size: 24px;
             font-weight: bold;
-            margin-bottom: 0;
+            margin-bottom: 16px;
         }
 
-        .video-thumbnail img {
-            margin-top: 16px;
-        }
 
         .thumbnails {
 
             a:first-of-type {
                 color: $color-links;
-                margin-bottom: 10px;
+                margin-bottom: 0;
             }
 
             a:first-of-type:hover {
@@ -109,9 +110,16 @@ $color-rail-background: mix($color-page, $black, 90%);
 
             .title {
                 font-size: 12px;
+                height: 40px;
+                margin-top: 10px;
 
                 a {
+                    display: block;
                     margin: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    word-wrap: normal;
                 }
             }
         }
