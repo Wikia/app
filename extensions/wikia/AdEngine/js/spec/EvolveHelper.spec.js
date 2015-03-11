@@ -4,10 +4,13 @@ describe('EvolveHelper', function () {
 	var noop = function () { return; },
 		logMock = noop;
 
-	function mockKrux(dartKeyValues) {
+	function mockKrux() {
 		return {
-			getParams: function () {
-				return dartKeyValues;
+			getSegments: function () {
+				return '';
+			},
+			getUser: function () {
+				return '';
 			}
 		};
 	}
@@ -101,15 +104,15 @@ describe('EvolveHelper', function () {
 
 	it('getKruxKeyValues', function () {
 		var dartUrlMock = mockDartUrl(),
-			segmentsMock = ['segment1', 'segment2'],
+			kruxMock = mockKrux(),
 			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
 				mockAdContext(),
 				mockAdLogicPageParams(),
 				dartUrlMock,
-				mockKrux(segmentsMock),
+				kruxMock,
 				logMock
 			);
-
+		
 		spyOn(dartUrlMock, 'decorateParam').and.callFake(function (key) {
 			if ( key === 'segments' ) {
 				return 'segments=segment1,segment2;';
