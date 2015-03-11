@@ -1,7 +1,0 @@
-# Configuration file for rc2udp
-
-[rc2udp]
-port: 4455
-poll-interval: 10
-rclimit: 500
-rcprops: user|comment|flags|timestamp|title|ids|sizes|redirect|loginfo|tags
