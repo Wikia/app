@@ -1,6 +1,0 @@
-Made for trunk
-
-1) To install:
-   require_once( "$IP/extensions/StyleGuideDemo/StyleGuideDemo.php" );
-
-2) Browse to Special:StyleGuideDemo
