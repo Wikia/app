@@ -29,9 +29,7 @@ class SassUtil {
 	 *            Non-settable settings should be driven programmatically.
 	 */
 	public static function getApplicationThemeSettings() {
-		global $wgOasisBreakpoints;
-
-		if ( !empty( $wgOasisBreakpoints ) ) {
+		if ( BodyController::isOasisBreakpoints( ) ) {
 			return [
 				'widthType' => 0,
 			];

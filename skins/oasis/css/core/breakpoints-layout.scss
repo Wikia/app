@@ -1,0 +1,37 @@
+@import 'skins/shared/mixins/calc';
+@import 'breakpoints-variables';
+//todo remove styling by ID after cleanup after removal of responsive layout
+
+@if $widthType == 0 {
+	@media #{$breakpoint-small-only} {
+		#WikiaPage {
+			padding: 0 $padding-width-small;
+			width: $page-width-small;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		#WikiaPage {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		#WikiaPage {
+			padding: 0 $padding-width-large;
+			width: $page-width-large;
+		}
+	}
+
+	// hacks and changes
+	.WikiaMainContent {
+		@include calc(width, '100% - 320px');
+	}
+	.WikiaArticle {
+		padding: 0;
+	}
+	.WikiaRail {
+		padding: 0;
+	}
+}
