@@ -1580,8 +1580,8 @@ class Wikia {
 	 * @author macbre
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
-		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss,
+				$wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling, $wgOasisBreakpoints;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
@@ -1594,6 +1594,7 @@ class Wikia {
 		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
 		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
+		$wgOasisBreakpoints = $request->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
 
 		return true;
 	}

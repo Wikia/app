@@ -80,9 +80,9 @@ class BodyController extends WikiaController {
 	 * @return Boolean
 	 */
 	public static function isOasisBreakpoints() {
-		global $wgOasisBreakpoints, $wgRequest;
+		global $wgOasisBreakpoints;
 
-		return !empty( $wgOasisBreakpoints ) || ($wgRequest->getVal( 'breakpoints' ) == '1');
+		return !empty( $wgOasisBreakpoints );
 	}
 
 	/**
