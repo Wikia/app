@@ -14,6 +14,10 @@ $global-footer-vertical-spacing: 30px;
 	position: relative;
 	text-align: center;
 
+	*, *::before, *::after {
+		box-sizing: inherit;
+	}
+
 	&::after {
 		background-color: $color-wikiahome-community;
 		content: '';

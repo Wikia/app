@@ -127,7 +127,9 @@ class FacebookClientHooks {
 				// check if current user is connected to facebook
 				$map = FacebookClient::getInstance()->getMapping();
 				if ( !empty( $map ) ) {
-					NotificationsController::addConfirmation( wfMessage( 'fbconnect-connect-msg' )->plain() );
+					BannerNotificationsController::addConfirmation(
+						wfMessage( 'fbconnect-connect-msg' )->escaped()
+					);
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-/* global GlobalNotification, Modernizr */
+/* global BannerNotification, Modernizr */
 
 (function (window, $) {
 	'use strict';
@@ -187,7 +187,7 @@
 									statusMsg.fadeOut(1000);
 								}, 4000);
 							} else {
-								GlobalNotification.show('Something is wrong', 'error');
+								new window.BannerNotification('Something is wrong', 'error').show();
 							}
 						});
 					});
@@ -211,7 +211,7 @@
 			if (res.result === 'ok') {
 				lockedFeatures[featureName] = false;
 			} else {
-				GlobalNotification.show(res.error, 'error');
+				new window.BannerNotification(res.error, 'error').show();
 			}
 		});
 	}

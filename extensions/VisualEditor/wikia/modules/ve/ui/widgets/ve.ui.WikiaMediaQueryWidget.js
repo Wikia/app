@@ -206,17 +206,18 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoAlways = function () {
  * @fires requestVideoDone
  */
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
-	var errorMsg;
+	var errorMsg,
+		BannerNotification;
 
 	// Send errors to the user
 	if ( data.error ) {
 		errorMsg = this.displayMessages[data.error.code] || this.displayMessages.mediaqueryfailed;
-
-		mw.config.get( 'GlobalNotification' ).show(
+		BannerNotification = mw.config.get('BannerNotification');
+		new BannerNotification(
 			errorMsg,
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
-		);
+		).show();
 
 		this.requestSearch();
 	} else {

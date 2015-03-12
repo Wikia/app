@@ -80,7 +80,7 @@ ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 		type: 'list',
 		icon: 'menu',
 		indicator: 'down',
-		include: [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp', 'wikiaSourceMode' ]
+		include: [ 'meta', 'categories', 'wikiaHelp', 'commandHelp', 'wikiaSourceMode' ]
 	}
 ];
 

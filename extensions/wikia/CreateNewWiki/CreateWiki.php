@@ -1189,10 +1189,10 @@ class CreateWiki {
 
 	/**
 	 * gets initial value for wgEnableNjordExt for new created wiki
-	 * TODO: for first phase of prototype set to true for 10% of new created english wikis only
+	 * TODO: Prototype - turn on on 10% of new created wikis
 	 * @return bool
 	 */
 	private function getInitialNjordExtValue() {
-		return rand( 0, 9 ) % 10 === 1 && $this->mNewWiki->language === 'en' ? true : false;
+		return rand( 0, 9 ) % 10 === 1 ? true : false;
 	}
 }
