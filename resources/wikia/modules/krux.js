@@ -7,7 +7,7 @@ define('wikia.krux', ['wikia.window', 'wikia.document'], function (win, doc) {
 	'use strict';
 
 	var maxNumberOfKruxSegments = 27,
-		kruxConfigScriptId = 'krux-config-script';
+		kruxConfigScriptId = 'krux-control-tag';
 
 	function load(confid) {
 		require([
