@@ -69,7 +69,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 				noTopButton: 'screen and (max-width: 1030px)',
 				//1404 - 1064 + 2 * 130
 				noSkins: 'screen and (max-width: 1324px)'
-			}
+			};
 		} else {
 			/**
 			 * Slots based on screen width for responsive
@@ -82,7 +82,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 				oneColumn: 'screen and (max-width: 1023px)',
 				noTopButton: 'screen and (max-width: 1030px)',
 				noSkins: 'screen and (max-width: 1260px)'
-			}
+			};
 		}
 
 	function isRightRailPresent() {
