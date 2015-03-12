@@ -9,10 +9,9 @@ require(
 		'wikia.window',
 		'wikia.document',
 		'wikia.krux',
-		'wikia.log',
-		require.optional('wikia.abTest'),
+		'wikia.log'
 	],
-	function ($, msg, adEngine, adConfigMobile, messageListener, win, doc, krux, log, abTest) {
+	function ($, msg, adEngine, adConfigMobile, messageListener, win, doc, krux, log) {
 		'use strict';
 
 		var adLabel = msg('adengine-advertisement'),
@@ -32,7 +31,6 @@ require(
 			$firstSection = $('h2[id]').first(),
 			$footer = $('#wkMainCntFtr'),
 			firstSectionTop = ($firstSection.length && $firstSection.offset().top) || 0,
-			infoboxSelectors = ['table[class*=infobox], div[class*=infobox], div[id*=infobox]'],
 			kruxSiteId = 'JTKzTN3f',
 			logGroup = 'ads_run',
 			logLevel = log.levels.info,
@@ -42,8 +40,6 @@ require(
 			mobileInContent = 'MOBILE_IN_CONTENT',
 			mobilePreFooter = 'MOBILE_PREFOOTER',
 			mobileTaboola = 'NATIVE_TABOOLA',
-		// TODO: clean up wgAdDriverUseAdsAfterInfobox
-			infoboxAdEnabled = win.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
 			showInContent = firstSectionTop > minZerothSectionLength,
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength;
 
@@ -56,21 +52,6 @@ require(
 		if (win.wgArticleId) {
 
 			$(doc).ready(function () {
-				var i, elem;
-
-				if (infoboxAdEnabled) {
-					for (i = 0; i < infoboxSelectors.length; i += 1) {
-						elem = $(infoboxSelectors[i]);
-						if (elem.length) {
-							log('Loading slot: ' + mobileInContent, logLevel, logGroup);
-							showInContent = false;
-							elem.after(createSlot(mobileInContent));
-							adSlots.push([mobileInContent]);
-							break;
-						}
-					}
-				}
-
 				if (showInContent) {
 					log('Loading slot: ' + mobileInContent, logLevel, logGroup);
 					$firstSection.before(createSlot(mobileInContent));
