@@ -125,29 +125,27 @@ class SquidUpdate {
 		global $wgPurgeSquidViaCelery, $wgPurgeVignetteUsingSurrogateKeys;
 		if ( $wgPurgeSquidViaCelery == true ) {
 			if ( $wgPurgeVignetteUsingSurrogateKeys == true ) {
-				// Filter array for vignette urls and split them into separate task
-				$vignetteUrls = [];
-				foreach ( $urlArr as $index => $url ) {
-					if ( VignetteRequest::isVignetteUrl($url) ) {
-						$vignetteUrls[] = $url;
-						unset($urlArr[$index]);
+				// Filter urls into buckets based on service backend
+				$buckets = array_reduce($urlArr, function($carry, $item) {
+					if ( VignetteRequest::isVignetteUrl($item) ) {
+						$carry['vignette'][] = $item;
+					} elseif ( strstr($item, 'MercuryApi') !== false ) {
+						$carry['mercury'][] = $item;
+					} else {
+						$carry['mediawiki'][] = $item;
 					}
-				}
-				if ( !empty($vignetteUrls) ) {
+					return $carry;
+				}, array('vignette' => [], 'mediawiki' => [], 'mercury' => []));
+
+				// Now purge them
+				foreach ( $buckets as $service => $urls) {
+					if ( empty($urls) ) continue;
 					( new AsyncCeleryTask() )
 							->taskType('celery_workers.purger.purge')
-							->setArgs( $vignetteUrls, [], 'vignette' )
+							->setArgs( $urls, [], $service )
 							->setPriority( PurgeQueue::NAME )
 							->queue();
 				}
-			}
-			if ( !empty($urlArr) ) {
-				// Remaining image/page urls are okay to purge together
-				( new AsyncCeleryTask() )
-						->taskType('celery_workers.purger.purge')
-						->setArgs( $urlArr, [] )
-						->setPriority( PurgeQueue::NAME )
-						->queue();
 			}
 			return;
 		}
