@@ -29,18 +29,17 @@ class SassUtil {
 	 *            Non-settable settings should be driven programmatically.
 	 */
 	public static function getApplicationThemeSettings() {
-		if ( BodyController::isOasisBreakpoints( ) ) {
+		if ( class_exists( 'BodyController' ) && BodyController::isOasisBreakpoints( ) ) {
 			$params = [
 				'widthType' => 0,
 			];
-
 			if ( BodyController::isOasisTypography() ) {
 				$params['oasisTypography'] = 1;
 			}
 
 			return $params;
 		} else {
-			$params = array();
+			$params = [];
 
 			global $wgOasisGrid;
 			if ( $wgOasisGrid ) {
