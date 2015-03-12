@@ -50,7 +50,6 @@ require(
 		adSlots.push([mobileTopLeaderBoard]);
 
 		if (win.wgArticleId) {
-
 			$(doc).ready(function () {
 				if (showInContent) {
 					log('Loading slot: ' + mobileInContent, logLevel, logGroup);
