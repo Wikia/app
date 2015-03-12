@@ -81,7 +81,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
 		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/LateAdsQueue.js',
-		'//extensions/wikia/AdEngine/js/LookupServices.js',
+		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -193,7 +193,7 @@ $config['adengine2_rubicon_rtp_js'] = array(
 	'skin' => ['oasis', 'venus'],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/RubiconRtp.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubiconRtp.js',
 	),
 );
 
@@ -201,8 +201,8 @@ $config['adengine2_amazon_match_js'] = array(
 	'skin' => ['oasis', 'venus'],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AmazonMatch.js',
-		'//extensions/wikia/AdEngine/js/AmazonMatchOld.js',
+		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
+		'//extensions/wikia/AdEngine/js/lookup/amazonMatchOld.js',
 	),
 );
 

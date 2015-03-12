@@ -1,5 +1,5 @@
 /*global describe, it, modules, expect, spyOn*/
-describe('Method ext.wikia.adEngine.lookupServices', function () {
+describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	'use strict';
 
 	var mocks, testCases;
@@ -9,7 +9,7 @@ describe('Method ext.wikia.adEngine.lookupServices', function () {
 	}
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.amazonMatch'](
+		return modules['ext.wikia.adEngine.lookup.amazonMatch'](
 			mocks.adTracker,
 			mocks.document,
 			mocks.log,

@@ -1,6 +1,6 @@
 /*global define*/
 /*jshint camelcase:false*/
-define('ext.wikia.adEngine.rubiconRtp', [
+define('ext.wikia.adEngine.lookup.rubiconRtp', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
 	'wikia.log',
@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.rubiconRtp', [
 ], function (adTracker, document, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.rubiconRtp',
+	var logGroup = 'ext.wikia.adEngine.lookup.rubiconRtp',
 		timingEventData = {},
 		rtpTiming,
 		rubiconCalled = false,
@@ -108,4 +108,11 @@ define('ext.wikia.adEngine.rubiconRtp', [
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled
 	};
+});
+
+define('ext.wikia.adEngine.rubiconRtp', [
+	'ext.wikia.adEngine.lookup.rubiconRtp'
+], function (rubiconRtp) {
+	'use strict';
+	return rubiconRtp;
 });

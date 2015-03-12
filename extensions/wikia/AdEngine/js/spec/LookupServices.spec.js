@@ -1,5 +1,5 @@
 /*global describe, it, modules, expect, spyOn*/
-describe('Method ext.wikia.adEngine.lookupServices', function () {
+describe('Method ext.wikia.adEngine.lookup.services', function () {
 	'use strict';
 
 	var mocks;
@@ -26,9 +26,11 @@ describe('Method ext.wikia.adEngine.lookupServices', function () {
 	};
 
 	it('extends slot targeting for Rubicon', function () {
-		var lookup = modules['ext.wikia.adEngine.lookupServices'](
+		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 				mocks.log,
 				mocks.window,
+				undefined,
+				undefined,
 				mocks.rtp
 			),
 			slotTargetingMock = {},
@@ -43,10 +45,9 @@ describe('Method ext.wikia.adEngine.lookupServices', function () {
 	});
 
 	it('extends slot targeting for Amazon', function () {
-		var lookup = modules['ext.wikia.adEngine.lookupServices'](
+		var lookup = modules['ext.wikia.adEngine.lookup.services'](
 				mocks.log,
 				mocks.window,
-				undefined,
 				mocks.amazon
 			),
 			slotTargetingMock = {a: 'b'},
