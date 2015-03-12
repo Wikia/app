@@ -247,7 +247,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 		}
 
 		if( krux ) {
-			kruxSegments = krux.getParams('segments');
+			kruxSegments = krux.getSegments();
 		}
 
 		if (kruxSegments && kruxSegments.length) {
