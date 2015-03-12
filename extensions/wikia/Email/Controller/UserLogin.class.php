@@ -11,8 +11,9 @@ class ForgotPasswordController extends EmailController {
 	public function init() {
 		parent::init();
 
+		// @todo handle exceptions here
 		// Set the recipient user
-		$this->setForgotPasswordTargetUser();
+		$this->setTargetUser();
 	}
 
 	public function assertCanEmail() {
@@ -26,7 +27,7 @@ class ForgotPasswordController extends EmailController {
 
 	protected function getSubject() {
 		$lang = $this->getTargetLang();
-		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $lang );
+		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $lang )->text();
 	}
 
 	/**
@@ -41,7 +42,7 @@ class ForgotPasswordController extends EmailController {
 		wfRunHooks( 'User::mailPasswordInternal', [
 			$this->currentUser,
 			$this->getContext()->getRequest()->getIP(),
-			$this->targetUser
+			$targetUser,
 		] );
 
 		$tempPass = $targetUser->randomPassword();
@@ -61,7 +62,7 @@ class ForgotPasswordController extends EmailController {
 		}
 	}
 
-	protected function setForgotPasswordTargetUser() {
+	protected function setTargetUser() {
 		$username = $this->getRequest()->getVal( 'username' );
 
 		if ( is_null( $username ) ) {

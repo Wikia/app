@@ -11,7 +11,7 @@ abstract class EmailController extends \WikiaController {
 	/** @var \User The user this email will be sent to */
 	protected $targetUser;
 
-	/** @var bool Whether or not to actuall send an email */
+	/** @var bool Whether or not to actually send an email */
 	protected $test;
 
 	/**
@@ -26,6 +26,7 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	public function init() {
+		// @todo lookup user objects for the names passed in here
 		$this->currentUser = $this->getRequest()->getVal( 'currentUser', $this->wg->User );
 		$this->targetUser = $this->getRequest()->getVal( 'targetUser', $this->wg->User );
 		$this->test = $this->getRequest()->getVal( 'test', false );
@@ -153,7 +154,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * @param $user
 	 *
-	 * @throws Fatal
+	 * @throws \Email\Fatal
 	 */
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
@@ -166,7 +167,7 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * @throws Fatal
+	 * @throws \Email\Fatal
 	 */
 	public function assertUserHasEmail() {
 		$email = $this->targetUser->getEmail();
@@ -176,7 +177,7 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * @throws Fatal
+	 * @throws \Email\Fatal
 	 */
 	public function assertHasIP() {
 		$ip = $this->getContext()->getRequest()->getIP();
@@ -189,7 +190,7 @@ abstract class EmailController extends \WikiaController {
 	 * This checks the 'unsubscribed' user option which is linked to the 'Disable all emails from Wikia'
 	 * email preference
 	 *
-	 * @throws Check
+	 * @throws \Email\Check
 	 */
 	public function assertUserWantsEmail() {
 		if ( $this->currentUser->getBoolOption('unsubscribed') ) {
@@ -200,7 +201,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * This checks to see if the current user is blocked
 	 *
-	 * @throws Check
+	 * @throws \Email\Check
 	 */
 	public function assertUserNotBlocked() {
 		if ( $this->currentUser->isBlocked() ) {
