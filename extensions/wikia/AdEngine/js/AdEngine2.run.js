@@ -138,20 +138,7 @@ window.AdEngine_loadLateAds = function () {
 		});
 	}
 
-	require(['ext.wikia.adEngine.adContext', require.optional('wikia.abTest')], function (adContext, abTest) {
-		var adsAfterPageLoad = adContext.getContext().lateAdsAfterPageLoad &&
-			abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
-
-		if (adsAfterPageLoad) {
-			if (document.readyState === 'complete') {
-				setTimeout(loadLateFn, 4);
-			} else {
-				window.addEventListener('load', loadLateFn, false);
-			}
-		} else {
-			window.wgAfterContentAndJS.push(loadLateFn);
-		}
-	});
+	window.wgAfterContentAndJS.push(loadLateFn);
 };
 
 // FPS meter
