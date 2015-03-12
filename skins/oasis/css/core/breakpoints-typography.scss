@@ -1,11 +1,14 @@
 @import 'breakpoints-variables';
 
+$default-body-font-size: 14px;
+$default-body-line-height: 22px;
+
 @if $oasisTypography == 1 {
 	@media #{$breakpoint-below-large} {
 		.WikiaPage {
 			.WikiaArticle {
-				font-size: 14px;
-				line-height: 22px;
+				font-size: $default-body-font-size;
+				line-height: $default-body-line-height;
 			}
 
 			h1 {
@@ -35,6 +38,13 @@
 			.WikiaArticle {
 				font-size: 16px;
 				line-height: 26px;
+
+				//Infoboxes are very sensitive when it comes to font size changes
+				//That's why we decided not to change the font size for infoboxes.
+				.infobox {
+					font-size: $default-body-font-size;
+					line-height: $default-body-line-height;
+				}
 			}
 
 			h1 {
