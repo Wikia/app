@@ -170,12 +170,17 @@ class WikiaView {
 	public function getTemplateOptions( $controllerClass, $methodName ) {
 		$templates = [];
 
-		// See if there is a @template annotation for the method we're generating a view for
-		$reflection = new ReflectionClass( $controllerClass );
-		$method = $reflection->getMethod($methodName );
-		$comment = $method->getDocComment();
-		if ( preg_match( '/@template ([^ ]+)/', $comment, $matches ) ) {
-			$templates[] = trim( $matches[1] );
+		// Make sure this method exists, otherwise the call to getMethod crashes PHP
+		// so badly it can't even log that a problem occurred.
+		if ( method_exists( $controllerClass, $methodName ) ) {
+			// See if there is a @template annotation for the method we're generating a view for
+			$reflection = new ReflectionClass( $controllerClass );
+			$method = $reflection->getMethod( $methodName );
+
+			$comment = $method->getDocComment();
+			if ( preg_match( '/@template ([^ ]+)/', $comment, $matches ) ) {
+				$templates[] = trim( $matches[ 1 ] );
+			}
 		}
 
 		// Add variations on the controller name
