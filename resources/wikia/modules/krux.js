@@ -16,18 +16,13 @@ define('wikia.krux', ['wikia.window'], function (win) {
 			adContext,
 			adLogicPageParams
 		) {
-			var params, value, k, m, src, s;
+			var k, m, src, s;
 
 			if (adContext.getContext().targeting.enableKruxTargeting) {
 				// Export page level params, so Krux can read them
-				params = adLogicPageParams.getPageLevelParams();
-				Object.keys(params).forEach(function (key) {
-					value = params[key];
-					if (value) {
-						win['kruxDartParam_' + key] = value.toString();
-					}
-				});
+				exportPageParams(adLogicPageParams);
 
+				// Add Krux pixel
 				k = document.createElement('script');
 				k.type = 'text/javascript';
 				k.async = true;
@@ -37,6 +32,20 @@ define('wikia.krux', ['wikia.window'], function (win) {
 				s.parentNode.insertBefore(k, s);
 			}
 		});
+	}
+
+	function exportPageParams(adLogicPageParams) {
+		var params, value;
+
+		if (Object.keys) {
+			params = adLogicPageParams.getPageLevelParams();
+			Object.keys(params).forEach(function (key) {
+				value = params[key];
+				if (value) {
+					win['kruxDartParam_' + key] = value.toString();
+				}
+			});
+		}
 	}
 
 	function getParams(n) {
