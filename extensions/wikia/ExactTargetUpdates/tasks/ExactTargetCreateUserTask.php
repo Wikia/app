@@ -51,7 +51,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$createSubscriberResult = $oApiDataExtension->createRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $createSubscriberResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$createSubscriberResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$createSubscriberResult ) );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$oCreateUserResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oCreateUserResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oCreateUserResult ) );
 
 		if ( $oCreateUserResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
@@ -89,7 +89,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$oCreateUserPropertiesResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oCreateUserPropertiesResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oCreateUserPropertiesResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oCreateUserPropertiesResult ) );
 
 		if ( $oCreateUserPropertiesResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
