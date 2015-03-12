@@ -15,7 +15,6 @@ $color-rail-background: mix($color-page, $black, 90%);
     padding: 20px;
     position: relative;
     word-wrap: break-word;
-    zoom: 1;
 }
 
 .wikia-rail {
@@ -26,7 +25,6 @@ $color-rail-background: mix($color-page, $black, 90%);
 
     h1 {
         padding-left: 0;
-        font-weight: bold;
     }
 
     .WikiaActivityModule {
