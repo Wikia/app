@@ -17,9 +17,9 @@
 
 		triggerClassName: 'editpage-widemode-trigger',
 
-		rail: null,
-		toolbar: null,
-		editpage: null,
+		$rail: null,
+		$toolbar: null,
+		$editpage: null,
 		expandedToolbarBreakpoint: null,
 		initialized: false,
 
@@ -28,19 +28,19 @@
 		wide: false,
 
 		initNodes: function() {
-			this.rail = $('#EditPageRail');
-			this.editpage = $('#EditPage');
-			this.toolbar = $('#EditPageToolbar .cke_toolbar_source');
-			this.expandedToolbarBreakpoint =  this.toolbar.width() + this.rail.width();
+			this.$rail = $('#EditPageRail');
+			this.$editpage = $('#EditPage');
+			this.$toolbar = $('#EditPageToolbar .cke_toolbar_source');
+			this.expandedToolbarBreakpoint =  this.$toolbar.width() + this.$rail.width();
 			this.initialized = true;
 		},
 
 		sizeChanged: function() {
 			if ( this.initialized && this.editor.mode == 'source' && this.wide ) {
-				if ( this.editpage.width() > this.expandedToolbarBreakpoint ) {
-					this.editpage.removeClass('toolbar-expanded');
+				if ( this.$editpage.width() > this.expandedToolbarBreakpoint ) {
+					this.$editpage.removeClass('toolbar-expanded');
 				} else {
-					this.editpage.addClass('toolbar-expanded');
+					this.$editpage.addClass('toolbar-expanded');
 				}
 			}
 		},
