@@ -26,23 +26,23 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		/* Subscriber list contains unique emails
 		 * Assuming email may be new - try to create subscriber object using the email */
 		$oCreateUserTask = $this->getCreateUserTask();
-		// Pass task ID to have all logs under one task
-		$oCreateUserTask->taskId( $this->getTaskId() );
+		$oCreateUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
 		$oCreateUserTask->createSubscriber( $sUserEmail );
 
-		/* Update email in user data extension */
-		$aUserData = [
-			'user_id' => $iUserId,
-			'user_email' => $sUserEmail
-		];
+		/* Prepare user fields for update */
+		$oUserHooksHelper = $this->getUserHooksHelper();
+		$aUserData = $oUserHooksHelper->prepareUserParams( \User::newFromId( $iUserId ) );
+
+		/* Prepare user update API params */
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
+
+		/* Update user */
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUpdateUserEmailResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
-
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUserEmailResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateUserEmailResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUpdateUserEmailResult ) );
 
 		if ( $oUpdateUserEmailResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
