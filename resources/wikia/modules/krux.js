@@ -49,7 +49,13 @@ define('wikia.krux', ['wikia.window'], function (win) {
 	}
 
 	function getSegments() {
-		return getParams('segments') && getParams('segments').slice(0, maxNumberOfKruxSegments);
+		var segments = getParams('segments');
+
+		if (segments) {
+			return segments.slice(0, maxNumberOfKruxSegments);
+		}
+
+		return [];
 	}
 
 	function getUser() {
