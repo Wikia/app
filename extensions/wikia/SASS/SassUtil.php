@@ -34,7 +34,7 @@ class SassUtil {
 				'widthType' => 0,
 			];
 		} else {
-			$params = array();
+			$params = [];
 
 			global $wgOasisGrid;
 			if ( $wgOasisGrid ) {

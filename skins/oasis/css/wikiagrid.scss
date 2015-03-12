@@ -22,23 +22,29 @@ $oasisWidthType: get_command_line_param("widthType", 0);
 				margin: 0;
 			}
 		}
+
 		.grid-1 {
 			width: $width-grid-column;
 		}
+
 		.grid-2 {
-			width: ( $width-grid-column * 2 ) + $width-grid-gutter;
+			width: ($width-grid-column * 2) + $width-grid-gutter;
 		}
+
 		.grid-3 {
-			width: ( $width-grid-column * 3 ) + ( $width-grid-gutter * 2 );
+			width: ($width-grid-column * 3) + ($width-grid-gutter * 2);
 		}
+
 		.grid-4 {
-			width: ( $width-grid-column * 4 ) + ( $width-grid-gutter * 3 );
+			width: ($width-grid-column * 4) + ($width-grid-gutter * 3);
 		}
+
 		.grid-5 {
-			width: ( $width-grid-column * 5 ) + ( $width-grid-gutter * 4 );
+			width: ($width-grid-column * 5) + ($width-grid-gutter * 4);
 		}
+
 		.grid-6 {
-			width: ( $width-grid-column * 6 ) + ( $width-grid-gutter * 5 );
+			width: ($width-grid-column * 6) + ($width-grid-gutter * 5);
 		}
 	}
 }
