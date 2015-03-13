@@ -8,6 +8,17 @@ $color-rail-background: mix($color-page, $black, 90%);
     $color-rail-background: mix($color-page, $white, 90%);
 }
 
+@mixin standard-primary-button() {
+    background-image: none;
+    border: 0;
+    border-radius: 0;
+    color: $white;
+    text-transform: uppercase;
+
+        &:before {
+            display: none;
+        }
+}
 
 @mixin wikia-rail-element() {
     background-color: $color-rail-background;
@@ -34,18 +45,12 @@ $color-rail-background: mix($color-page, $black, 90%);
 
         a {
             color: $color-links-default;
-        }
-
-        a:hover {
-            color: $color-links-default;
-            text-decoration: underline;
-            text-shadow: initial;
-        }
-
-        .activity-heading {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            
+            &:hover {
+                color: $color-links-default;
+                text-decoration: underline;
+                text-shadow: initial;
+            }
         }
 
         em a {
@@ -54,12 +59,10 @@ $color-rail-background: mix($color-page, $black, 90%);
             margin-top: 20px;
         }
 
-        .more {
-            float: right;
-            font-size: 12px;
+        .activity-heading {
+            font-size: 24px;
             font-weight: bold;
-            margin-top: 30px;
-            text-transform: uppercase;
+            margin-bottom: 20px;
         }
 
         .edited-by {
@@ -70,6 +73,14 @@ $color-rail-background: mix($color-page, $black, 90%);
             a {
                 font-size: 12px;
             }
+        }
+
+        .more {
+            float: right;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 30px;
+            text-transform: uppercase;
         }
 
         .sprite {
@@ -123,9 +134,34 @@ $color-rail-background: mix($color-page, $black, 90%);
         .ChatModule {
             @include wikia-rail-element;
 
+            a:hover {
+                text-decoration: none;
+            }
+
             p {
                 color: mix($color-text, $color-page, 60%);
                 font-size: 12px;
+            }
+
+            .avatar {
+                background-position: 50%;
+                border-radius: 50%;
+                height: 30px;
+                margin-right: 14px;
+                width: 30px;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .chat-join {
+                height: 42px;
+
+                button {
+                    @include standard-primary-button;
+                    height: 100%;
+                }
             }
 
             .chat-live {
@@ -144,39 +180,6 @@ $color-rail-background: mix($color-page, $black, 90%);
                 padding: 2px;
                 text-align: center;
                 width: 12px;
-            }
-
-            .chat-join {
-                height: 42px;
-
-                button {
-                    background-image: none;
-                    border: 0;
-                    border-radius: 0;
-                    color: $white;
-                    height: 100%;
-                    text-transform: uppercase;
-
-                    &:before {
-                        display: none;
-                    }
-                }
-            }
-
-            a:hover {
-                text-decoration: none;
-            }
-
-            .avatar {
-                background-position: 50%;
-                border-radius: 50%;
-                height: 30px;
-                margin-right: 14px;
-                width: 30px;
-
-                &:hover {
-                    opacity: 1;
-                }
             }
 
             .chat-whos-here {
@@ -220,7 +223,7 @@ $color-rail-background: mix($color-page, $black, 90%);
 
                 .UserStatsMenu {
                     border: $white solid 2px;
-                     width: 200px;
+                    width: 220px;
 
                     .actions ul {
                         margin: 0;
@@ -245,7 +248,7 @@ $color-rail-background: mix($color-page, $black, 90%);
                     }
 
                     .info {
-                        background: mix($color-text, $color-links, 80%);
+                        background: $color-menu-highlight;
                         padding: 10px;
 
                         ul .username {
