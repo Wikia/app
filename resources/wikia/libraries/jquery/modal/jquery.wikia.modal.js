@@ -17,7 +17,7 @@ $.fn.extend({
 	 * @returns {Number} - max height value
 	 */
 	getMaxModalContentHeight: function(modalTopOffset, $headline, $tabs) {
-		return $(window).height() - 2 * modalTopOffset - $headline.outerHeight() - $tabs.outerHeight();
+		return $(window).height() - 2 * modalTopOffset - $headline.outerHeight(true) - $tabs.outerHeight(true);
 	},
 
 	makeModal: function(options) {
