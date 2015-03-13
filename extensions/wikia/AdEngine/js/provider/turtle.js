@@ -7,11 +7,14 @@ define('ext.wikia.adEngine.provider.turtle', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.turtle',
 		slotMap = {
-			HOME_TOP_LEADERBOARD: {size: '728x90,970x250,970x90'},
-			HOME_TOP_RIGHT_BOXAD: {size: '300x250'},
-			LEFT_SKYSCRAPER_2:    {size: '160x600,300x600'},
-			TOP_LEADERBOARD:      {size: '728x90,970x250,970x90'},
-			TOP_RIGHT_BOXAD:      {size: '300x250'}
+			HOME_TOP_LEADERBOARD:    {size: '728x90,970x250,970x90'},
+			HOME_TOP_RIGHT_BOXAD:    {size: '300x250'},
+			LEFT_SKYSCRAPER_2:       {size: '160x600,300x600'},
+			MOBILE_TOP_LEADERBOARD:  {size: '320x50'},
+			MOBILE_IN_CONTENT:       {size: '300x250'},
+			MOBILE_PREFOOTER:        {size: '300x250'},
+			TOP_LEADERBOARD:         {size: '728x90,970x250,970x90'},
+			TOP_RIGHT_BOXAD:         {size: '300x250'}
 		};
 
 	function canHandleSlot(slotName) {
