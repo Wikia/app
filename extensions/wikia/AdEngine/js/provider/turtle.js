@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 			MOBILE_IN_CONTENT:       {size: '300x250'},
 			MOBILE_PREFOOTER:        {size: '300x250'},
 			TOP_LEADERBOARD:         {size: '728x90,970x250,970x90'},
-			TOP_RIGHT_BOXAD:         {size: '300x250'}
+			TOP_RIGHT_BOXAD:         {size: '300x250,300x600'}
 		};
 
 	function canHandleSlot(slotName) {
@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 	function fillInSlot(slotName, success, hop) {
 		log(['fillInSlot', slotName, success, hop], 'debug', logGroup);
 
-		gptHelper.pushAd(slotName, '/98544404/Wikia/Testing/' + slotName, slotMap[slotName], success, hop, 'async');
+		gptHelper.pushAd(slotName, '/98544404/Wikia/Nordics_RoN/' + slotName, slotMap[slotName], success, hop, 'async');
 		gptHelper.flushAds();
 
 		log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
