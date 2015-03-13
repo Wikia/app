@@ -248,6 +248,17 @@ class MWHttpRequest {
 	protected $respStatus = "200 Ok";
 	protected $respHeaders = array();
 
+	// Wikia change - begin - @author: wladek
+	/**
+	 * Send X-Request-Id and X-Request-Origin-Host headers
+	 * @var bool
+	 */
+	protected $internalRequest = false;
+	// Wikia change - end
+
+	/**
+	 * @var Status
+	 */
 	public $status;
 
 	/**
@@ -478,6 +489,15 @@ class MWHttpRequest {
 		if ( !isset( $this->reqHeaders['User-Agent'] ) ) {
 			$this->setUserAgent( Http::userAgent() );
 		}
+
+		// Wikia change - begin - @author: wladek
+		// Append tracking headers: X-Request-Id and the family to internal requests
+		// so we can correlate them in the logs
+		if ( $this->internalRequest && is_callable( [ 'Wikia\\Util\\RequestId', 'instance'])) {
+			$this->setHeader(Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId());
+			$this->setHeader(Wikia\Util\RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname());
+		}
+		// Wikia change - end
 	}
 
 	/**
