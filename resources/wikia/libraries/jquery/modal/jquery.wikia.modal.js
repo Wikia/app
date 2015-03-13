@@ -1,6 +1,5 @@
 //Modal
 $.fn.extend({
-
 	getModalTopOffset: function() {
 		var top = Math.max((($(window).height() - this.outerHeight()) / 2), 20);
 		var opts = this.data('settings');
@@ -8,6 +7,19 @@ $.fn.extend({
 			top = Math.min(top,opts.topMaximum);
 		}
 		return $(window).scrollTop() + top;
+	},
+
+	/**
+	 * @desc calculates max height of modal content
+	 * @param {jQuery} $headline - jQuery collection for modal header
+	 * @param {jQuery} $tabs - jQuery collection for modal tabs
+	 * @returns {Number} - max height value
+	 */
+	getMaxModalContentHeight: function($headline, $tabs) {
+		var winHeight = $(window).height(),
+			margin = 20; // we need some margin from window edges
+
+		return winHeight - 2 * margin - $headline.outerHeight() - $tabs.outerHeight();
 	},
 
 	makeModal: function(options) {
@@ -18,7 +30,7 @@ $.fn.extend({
 			tabsOutsideContent: false,
 			topOffset: 50,
 			escapeToClose: true
-		}, calculatedZIndex, modalWidth, mainContent;
+		}, calculatedZIndex, modalWidth, mainContent, $modalContent;
 
 		if (options) {
 			$.extend(settings, options);
@@ -47,6 +59,8 @@ $.fn.extend({
 			wrapper = this.closest(".modalWrapper");
 			wrapper.appendTo('#positioned_elements');
 		}
+
+		$modalContent = wrapper.find('.modalContent');
 
 		// macbre: addcustom CSS class to popup wrapper
 		if (settings.className) {
@@ -80,9 +94,11 @@ $.fn.extend({
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');
 			if (modalTabs.exists()) {
-				modalTabs.insertBefore(wrapper.find('.modalContent'));
+				modalTabs.insertBefore($modalContent);
 			}
 		}
+
+		$modalContent.css('max-height', this.getMaxModalContentHeight(headline, modalTabs));
 
 		// calculate modal width for oasis
 		if (skin === 'oasis' || skin === 'venus') {
