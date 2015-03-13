@@ -9,14 +9,10 @@
 	}
 
 	.editpage-sourcewidemode.mode-source.editpage-sourcewidemode-on .EditPageRail .module_page_controls {
-		.module_content {
-			width: 600px;
-		}
-
 		.wikia-menu-button {
 			height: 21px;
 			margin-top: 8px;
-			position: static;
+			position: relative;
 
 			#wpSave {
 				margin-top: 0;
