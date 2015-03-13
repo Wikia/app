@@ -36,8 +36,8 @@ $wgGroupPermissions['sysop']['chatadmin'] = true;
 $wgAvailableRights[] = 'chat';
 $wgGroupPermissions['*']['chat'] = false;
 $wgGroupPermissions['staff']['chat'] = true;
-if ( $wgWikiaEnvironment == WIKIA_ENV_PROD ) {
-	$wgGroupPermissions['user']['chat'] = true;
+if ( $wgWikiaEnvironment == WIKIA_ENV_PREVIEW || $wgWikiaEnvironment == WIKIA_ENV_VERIFY ) {
+	$wgGroupPermissions['user']['chat'] = false;
 }
 
 $wgGroupPermissions['util']['chatfailover'] = true;
@@ -103,7 +103,7 @@ $wgSpecialPages['Chat'] = 'SpecialChat';
 
 // i18n
 $wgExtensionMessagesFiles['Chat'] = $dir.'/Chat.i18n.php';
-$wgExtensionMessagesFiles['ChatAliases'] = $dir.'/Chat.aliases.php'; 
+$wgExtensionMessagesFiles['ChatAliases'] = $dir.'/Chat.aliases.php';
 $wgExtensionMessagesFiles['Chatfailover'] = $dir.'/Chatfailover.i18n.php';
 $wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir.'/ChatDefaultEmoticons.i18n.php';
 
