@@ -25,6 +25,16 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		/* Create User Properties DataExtension with new email */
 		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
 
+		/* Verify data */
+		$oUserDtaVerificatorTask = $this->getUserDataVerificatorTask();
+		$oUserDtaVerificatorTask->taskId( $this->getTaskId() );
+		$sUserDataVerificationResult = $oUserDtaVerificatorTask->execute( 'verifyUserData', [ $aUserData['user_id'] ] );
+		if ( $sUserDataVerificationResult != 'OK' ) {
+			throw new \Exception( $sUserDataVerificationResult );
+		} else {
+			$this->info( 'Verification passed. User record in ExactTarget match record in Wikia database' );
+		}
+
 		return 'OK';
 	}
 

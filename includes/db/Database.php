@@ -789,10 +789,10 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * @param $errno
-	 * @param $errstr
+	 * @param int $errno
+	 * @param string $errstr
 	 */
-	protected function connectionErrorHandler( $errno,  $errstr ) {
+	public function connectionErrorHandler( $errno,  $errstr ) {
 		$this->mPHPError = $errstr;
 	}
 
@@ -895,7 +895,10 @@ abstract class DatabaseBase implements DatabaseType {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
 			}
-			wfDebugLog( 'database', "DB readonly mode: $sql" );
+			WikiaLogger::instance()->error( 'DB readonly mode', [
+				'exception' => new Exception( $sql ),
+				'server'    => $this->mServer
+			] );
 			return false;
 		}
 		# </Wikia>

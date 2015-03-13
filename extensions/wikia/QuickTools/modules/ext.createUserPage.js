@@ -5,7 +5,7 @@
  * @author Grunny
  */
 /*global jQuery, mediaWiki, window*/
-( function( $, mw ) {
+(function($, mw, window) {
 	'use strict';
 
 	var QuickCreateUserPage = {
@@ -77,7 +77,7 @@
 				);
 			} else {
 				var resultClass = ( result === 'error' ? 'error' : 'confirm' );
-				window.GlobalNotification.show( mw.msg( message ), resultClass );
+				new window.BannerNotification(mw.msg(message), resultClass).show();
 			}
 		}
 	};
@@ -85,4 +85,4 @@
 	mw.QuickCreateUserPage = QuickCreateUserPage;
 
 	$( QuickCreateUserPage.init );
-}( jQuery, mediaWiki ) );
+}(jQuery, mediaWiki, window));

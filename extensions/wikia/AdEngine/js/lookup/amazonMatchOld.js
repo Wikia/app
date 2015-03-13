@@ -1,6 +1,6 @@
 /*global define*/
 /*jshint camelcase:false*/
-define('ext.wikia.adEngine.amazonMatchOld', [
+define('ext.wikia.adEngine.lookup.amazonMatchOld', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
 	'wikia.log',
@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.amazonMatchOld', [
 ], function (adTracker, doc, log, w) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.amazonMatchOld',
+	var logGroup = 'ext.wikia.adEngine.lookup.amazonMatchOld',
 		amazonId = '3006',
 		amazonTargs,
 		amazonTiming,
@@ -83,4 +83,11 @@ define('ext.wikia.adEngine.amazonMatchOld', [
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled
 	};
+});
+
+define('ext.wikia.adEngine.amazonMatchOld', [
+	'ext.wikia.adEngine.lookup.amazonMatchOld'
+], function (amazonMatchOld) {
+	'use strict';
+	return amazonMatchOld;
 });

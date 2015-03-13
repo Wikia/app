@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw, veTrack, window */
+/*global mw, veTrack, window, grecaptcha */
 
 /**
  * Initialization MediaWiki view page target.
@@ -18,6 +18,9 @@
 ve.init.wikia.ViewPageTarget = function VeInitWikiaViewPageTarget() {
 	// Parent constructor
 	ve.init.wikia.ViewPageTarget.super.call( this );
+
+	// Events
+	this.connect( this, { saveWorkflowBegin: 'onSaveWorkflowBegin' } );
 
 	// Properties
 	this.toolbarSaveButtonEnableTracked = false;
@@ -77,7 +80,7 @@ ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 		type: 'list',
 		icon: 'menu',
 		indicator: 'down',
-		include: [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp', 'wikiaSourceMode' ]
+		include: [ 'meta', 'categories', 'wikiaHelp', 'commandHelp', 'wikiaSourceMode' ]
 	}
 ];
 
@@ -107,6 +110,12 @@ ve.init.wikia.ViewPageTarget.prototype.getNonEditableUIElements = function () {
 	$elements = $elements.add( '.article-categories' );
 
 	return $elements;
+};
+
+ve.init.wikia.ViewPageTarget.prototype.onSaveWorkflowBegin = function () {
+	var script = document.createElement( 'script' );
+	script.src = 'https://www.google.com/recaptcha/api.js';
+	document.getElementsByTagName( 'head' )[0].appendChild( script );
 };
 
 ve.init.wikia.ViewPageTarget.prototype.hidePageContent = function () {
@@ -357,4 +366,65 @@ ve.init.wikia.ViewPageTarget.prototype.maybeShowDialogs = function () {
 		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open( null, null, this.surface );
 	}
 	//this.surface.getDialogs().getWindow( 'wikiaSingleMedia' ).open( null, null, this.surface );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.wikia.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
+	var $captchaDiv = $( '<div>' ).addClass( 've-ui-mwSaveDialog-captcha' );
+
+	if ( grecaptcha ) {
+		this.captchaResponse = null;
+		this.renderReCaptcha( $captchaDiv );
+	} else {
+		this.loadAndRenderFancyCaptcha( $captchaDiv );
+	}
+
+	this.saveDialog.clearMessage( 'api-save-error' );
+	this.saveDialog.showMessage( 'api-save-error', $captchaDiv, { wrap: false } );
+	this.saveDialog.popPending();
+	this.events.trackSaveError( 'captcha' );
+};
+
+/**
+ * Render reCaptcha
+ *
+ * @method
+ * @param {jQuery} $container
+ */
+ve.init.mw.ViewPageTarget.prototype.renderReCaptcha = function ( $container ) {
+	grecaptcha.render( $container[0], {
+		sitekey: mw.config.get( 'reCaptchaPublicKey' ),
+		theme: 'light',
+		callback: function ( response ) {
+			this.captchaResponse = response;
+		}.bind( this )
+	} );
+};
+
+/**
+ * Render Fancy Captcha
+ *
+ * @method
+ * @param {jQuery} $container
+ */
+ve.init.mw.ViewPageTarget.prototype.loadAndRenderFancyCaptcha = function ( $container ) {
+	var getFancyCaptchaDeferred = $.Deferred();
+
+	$.nirvana.sendRequest( {
+		controller: 'CaptchaController',
+		method: 'getFancyCaptcha',
+		type: 'GET',
+		callback: function ( data ) {
+			getFancyCaptchaDeferred.resolve( data );
+		}
+	} );
+
+	$.when(
+		getFancyCaptchaDeferred,
+		$.getResources( [ $.getSassCommonURL('extensions/wikia/Captcha/styles/FancyCaptcha.scss') ] )
+	).done( function ( getFancyCaptchaResolved ) {
+		$container.append( getFancyCaptchaResolved.form );
+	} );
 };

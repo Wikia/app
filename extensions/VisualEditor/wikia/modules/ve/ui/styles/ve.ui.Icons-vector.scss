@@ -412,7 +412,9 @@
 .oo-ui-icon-arrow-circled {
 	@include ve-icon(arrow-circled, wikia);
 }
-
+.oo-ui-icon-keyboard {
+	@include ve-icon(keyboard, wikia);
+}
 
 /*
  * ve.ui.Icons.css

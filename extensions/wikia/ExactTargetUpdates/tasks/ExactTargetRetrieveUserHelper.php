@@ -26,6 +26,34 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 		return null;
 	}
 
+	public function retrieveUserDataById( $iUserId ) {
+		$aProperties = [
+			'user_id',
+			'user_name',
+			'user_real_name',
+			'user_email',
+			'user_email_authenticated',
+			'user_registration',
+			'user_editcount',
+			'user_touched'
+		];
+
+		$oHelper = $this->getUserHelper();
+		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, 'user_id', [ $iUserId ] );
+
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oUserResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+		if ( !empty( $oUserResult->Results->Properties->Property ) ) {
+			$aProperties = $oUserResult->Results->Properties->Property;
+			foreach ( $aProperties as $value ) {
+				$oExactTargetUserData[$value->Name] = $value->Value;
+			}
+			return $oExactTargetUserData;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Retrieve user edits on wikis from ExactTarget
 	 * @param array $aUsersIds
@@ -59,10 +87,10 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 			 * ExactTargetUserTaskHelper::prepareUserEditsRetrieveParams
 			 * 'Properties' => [ 'user_id', 'wiki_id', 'contributions' ],
 			 */
-			$iUserId = $aProperty[ 0 ]->Value;
-			$iWikiId = $aProperty[ 1 ]->Value;
-			$iContributions = $aProperty[ 2 ]->Value;
-			$aUserEditsDataFromET[ $iUserId ][ $iWikiId ] = intval( $iContributions );
+			$iUserId = $aProperty[0]->Value;
+			$iWikiId = $aProperty[1]->Value;
+			$iContributions = $aProperty[2]->Value;
+			$aUserEditsDataFromET[$iUserId][$iWikiId] = intval( $iContributions );
 		}
 		return $aUserEditsDataFromET;
 	}
@@ -88,9 +116,9 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	 *      );
 	 */
 	public function retrieveUserIdsByEmail( $sEmail ) {
-		$aProperties = [ 'user_id' ];
+		$aProperties = ['user_id'];
 		$sFilterProperty = 'user_email';
-		$aFilterValues = [ $sEmail ];
+		$aFilterValues = [$sEmail];
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
 

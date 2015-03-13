@@ -1,16 +1,16 @@
 @import 'layout';
 @import 'skins/shared/mixins/calc';
-@import 'skins/shared/styles/GlobalNotifications';
+@import 'extensions/wikia/BannerNotifications/css/BannerNotifications';
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .wikia-grid {
-	.global-notification {
+	.banner-notifications-wrapper {
 		width: 988px;
 
 		&.float {
 			margin-left: -505px;
 
-			// DAR-2719: Hidden global notification when window shrank
+			// DAR-2719: Hidden banner notification when window shrank
 			@media screen and (max-width: 1020px) {
 				@include calc(width, '100% - 20px');
 				left: 0;
@@ -22,7 +22,7 @@
 
 /* end temp transistion code */
 
-.modalWrapper > .global-notification {
+.modalWrapper .banner-notifications-wrapper {
 	@include box-shadow(0, 0, 0, #000);
 	margin: auto;
 	width: auto;
@@ -44,7 +44,7 @@
 	}
 }
 
-.modal > .global-notification {
+.modal .banner-notifications-wrapper {
 	width: 100%;
 
 	.close {
@@ -54,12 +54,12 @@
 
 // VisualEditor specific notification styling
 .ve-ui-window-body {
-	.global-notification {
+	.banner-notifications-wrapper {
 		box-sizing: border-box;
 		position: absolute;
 		width: 100%;
 
-		> .close {
+		.close {
 			position: absolute;
 			right: 15px;
 		}

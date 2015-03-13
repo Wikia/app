@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
-	require.optional('ext.wikia.adEngine.lookupServices'),
+	require.optional('ext.wikia.adEngine.lookup.services'),
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
 ], function (adContext, pvCounter, log, doc, loc, lookups, abTest, krux) {

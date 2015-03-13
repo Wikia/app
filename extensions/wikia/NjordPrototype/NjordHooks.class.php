@@ -47,4 +47,12 @@ class NjordHooks {
 		}
 		return true;
 	}
+
+	static public function purgeMainPage( $args ) {
+		if ( $args['name'] === 'wgEnableNjordExt' ) {
+			Article::newFromTitle( Title::newFromText( self::MAINPAGE_PAGE ), RequestContext::getMain() )->doPurge();
+		}
+
+		return true;
+	}
 }

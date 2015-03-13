@@ -703,10 +703,8 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 	// API for different things in the UI. At this point we only support the SimpleCaptcha and FancyCaptcha
 	// which we very intuitively detect by the presence of a "url" property.
 	if ( editApi && editApi.captcha && (
-		editApi.captcha.url ||
-		editApi.captcha.type === 'simple' ||
-		editApi.captcha.type === 'math' ||
-		editApi.captcha.type === 'question'
+		editApi.captcha.type === 'recaptcha' ||
+		editApi.captcha.type === 'fancyCaptcha'
 	) ) {
 		this.emit( 'saveErrorCaptcha', editApi );
 		return;

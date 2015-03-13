@@ -111,11 +111,12 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function ( data ) {
  * @method
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function () {
-	mw.config.get( 'GlobalNotification' ).show(
+	var BannerNotification = mw.config.get('BannerNotification');
+	new BannerNotification(
 		ve.msg( 'wikia-visualeditor-notification-video-preview-not-available' ),
 		'error',
 		$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
-	);
+	).show();
 };
 
 /**

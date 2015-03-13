@@ -35,11 +35,12 @@ class ApiVisualEditor extends ApiBase {
 	 * Parsoid HTTP proxy configuration for MWHttpRequest
 	 */
 	protected function getProxyConf() {
+		global $wgDevelEnvironment;
 		$parsoidHTTPProxy = $this->veConfig->get( 'VisualEditorParsoidHTTPProxy' );
 		if ( $parsoidHTTPProxy ) {
 			return array( 'proxy' => $parsoidHTTPProxy );
 		} else {
-			return array( 'noProxy' => true );
+			return array( 'noProxy' => !empty( $wgDevelEnvironment ) );
 		}
 	}
 

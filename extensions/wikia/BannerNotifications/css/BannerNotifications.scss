@@ -3,14 +3,9 @@
 @import 'skins/shared/mixins/box-shadow';
 @import 'extensions/wikia/Venus/styles/variables';
 
-
-.global-notification {
+.banner-notification {
 	@include box-shadow(0, 2px, 5px, darken($color-page, 12%));
-	margin: 0 auto;
 	padding: 8px 10px;
-	position: relative;
-	width: 958px;
-	z-index: $zTop + 1;
 
 	&.confirm { // Green
 		background: #92CD8E;
@@ -72,20 +67,6 @@
 		}
 	}
 
-	&.float {
-		left: 50%;
-		margin-left: -489px;
-		position: fixed;
-		top: $global-navigation-height;
-	}
-
-	// global nav doesn't scroll with the page when the page is small
-	@media #{$below-small} {
-		&.float {
-			top: 0;
-		}
-	}
-
 	.msg {
 		font-size: 13px;
 		line-height: 16px;
@@ -102,8 +83,36 @@
 		width: 14px;
 
 		img {
-			height: 11px;
-			width: 12px;
+			background-image: url('/skins/oasis/images/icon_close.png'); /* inline */
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: 12px 11px;
+			content: "";
+			display: block;
+			height: 100%;
+			width: 100%;
 		}
 	}
 }
+
+.banner-notifications-wrapper {
+	margin: 0 auto;
+	position: relative;
+	width: 958px;
+	z-index: $zTop + 1;
+
+	&.float {
+		left: 50%;
+		margin-left: -515px;
+		position: fixed;
+		top: $global-navigation-height;
+	}
+
+	// global nav doesn't scroll with the page when the page is small
+	@media #{$below-small} {
+		&.float {
+			top: 0;
+		}
+	}
+}
+

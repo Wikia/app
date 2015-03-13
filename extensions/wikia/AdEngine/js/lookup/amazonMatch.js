@@ -1,7 +1,7 @@
 /*global define*/
 /*jshint camelcase:false*/
 /*jshint maxdepth:5*/
-define('ext.wikia.adEngine.amazonMatch', [
+define('ext.wikia.adEngine.lookup.amazonMatch', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
 	'wikia.log',
@@ -9,32 +9,42 @@ define('ext.wikia.adEngine.amazonMatch', [
 ], function (adTracker, doc, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.amazonMatch',
+	var logGroup = 'ext.wikia.adEngine.lookup.amazonMatch',
 		amazonId = '3115',
 		amazonResponse,
 		amazonTiming,
 		amazonCalled = false,
-		amazonParamPattern = /^a([0-9]x[0-9])(p([0-9]+))$/,
-		slotMapping = {
-			'LEADERBOARD': 'a7x9',
-			'BOXAD': 'a3x2',
-			'SKYSCRAPER': 'a1x6'
+		amazonParamPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
+		sizeMapping = {
+			'1x6': 'SKYSCRAPER',
+			'3x2': 'BOXAD',
+			'3x6': 'BOXAD',
+			'7x9': 'LEADERBOARD'
 		},
-		slotTiers = {};
+		bestPricePointForSize = {
+			'1x6': null,
+			'3x2': null,
+			'3x6': null,
+			'7x9': null
+		};
 
 	function trackState(trackEnd) {
 		log(['trackState', amazonResponse], 'debug', logGroup);
 
 		var eventName,
-			key,
 			data = {};
 
 		if (amazonResponse) {
 			eventName = 'lookupSuccess';
-			for (key in slotMapping) {
-				if (slotMapping.hasOwnProperty(key) && slotTiers[key]) {
-					data[slotMapping[key]] = 'p' + slotTiers[key];
-				}
+			if (Object.keys) {
+				Object.keys(sizeMapping).forEach(function (amazonSize) {
+					var pricePoint = bestPricePointForSize[amazonSize];
+					if (pricePoint) {
+						data['a' + amazonSize] = 'p' + pricePoint;
+					}
+				});
+			} else {
+				data.ie8 = 1; // No detailed tracking for IE8, sorry
 			}
 		} else {
 			eventName = 'lookupError';
@@ -56,20 +66,34 @@ define('ext.wikia.adEngine.amazonMatch', [
 		}
 
 		if (amazonResponse && Object.keys) {
-			var targetingParams = Object.keys(amazonResponse);
-			Object.keys(slotMapping).forEach(function (slotNamePattern) {
-				var i, len, points = [], m, param, amazonSize = slotMapping[slotNamePattern];
+			var targetingParams = Object.keys(amazonResponse),
+				allPricePointsForSize = {},
+				i,
+				len,
+				param,
+				m,
+				amazonSize,
+				amazonTier;
 
-				for (i = 0, len = targetingParams.length; i < len; i += 1) {
-					param = targetingParams[i];
-					m = param.match(amazonParamPattern);
-					if (m && param.search(amazonSize) === 0) {
-						points.push(parseInt(m[3], 10));
+			// First identify all correct amazon price points and record them in allPricePointsForSize
+			for (i = 0, len = targetingParams.length; i < len; i += 1) {
+				param = targetingParams[i];
+				m = param.match(amazonParamPattern);
+				if (m) {
+					amazonSize = m[1];
+					amazonTier = parseInt(m[2], 10);
+					if (!allPricePointsForSize[amazonSize]) {
+						allPricePointsForSize[amazonSize] = [];
 					}
+					allPricePointsForSize[amazonSize].push(amazonTier);
 				}
+			}
 
-				if (points.length) {
-					slotTiers[slotNamePattern] = Math.min.apply(Math, points);
+			// Now select the minimal price point for each size we are interested in
+			Object.keys(bestPricePointForSize).forEach(function (amazonSize) {
+				var pricePoints = allPricePointsForSize[amazonSize];
+				if (pricePoints) {
+					bestPricePointForSize[amazonSize] = Math.min.apply(Math, pricePoints);
 				}
 			});
 		}
@@ -118,7 +142,7 @@ define('ext.wikia.adEngine.amazonMatch', [
 	function getSlotParams(slotName) {
 		log(['getSlotParams'], 'debug', logGroup);
 
-		var ret = {};
+		var amznSlots = [];
 
 		// No Object.keys on IE8
 		if (!Object.keys) {
@@ -126,18 +150,22 @@ define('ext.wikia.adEngine.amazonMatch', [
 			return {};
 		}
 
-		Object.keys(slotMapping).forEach(function (slotNamePattern) {
-			var amazonSize = slotMapping[slotNamePattern],
-				amazonTier = slotTiers[slotNamePattern];
+		Object.keys(sizeMapping).forEach(function (amazonSize) {
+			var slotNamePattern = sizeMapping[amazonSize],
+				amazonPricePoint = bestPricePointForSize[amazonSize];
 
-			if (slotName.search(slotNamePattern) > -1 && amazonTier) {
-				ret = {
-					amznslots: amazonSize + 'p' + amazonTier
-				};
+			if (slotName.search(slotNamePattern) > -1 && amazonPricePoint) {
+				amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
 			}
 		});
 
-		return ret;
+		if (amznSlots.length) {
+			return {
+				amznslots: amznSlots
+			};
+		}
+
+		return {};
 	}
 
 	return {
@@ -146,4 +174,11 @@ define('ext.wikia.adEngine.amazonMatch', [
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled
 	};
+});
+
+define('ext.wikia.adEngine.amazonMatch', [
+	'ext.wikia.adEngine.lookup.amazonMatch'
+], function (amazonMatch) {
+	'use strict';
+	return amazonMatch;
 });

@@ -937,9 +937,8 @@ ve.init.mw.ViewPageTarget.prototype.saveDocument = function ( saveDeferred ) {
 	this.emit( 'saveInitiated' );
 
 	// Reset any old captcha data
-	if ( this.captcha ) {
-		this.saveDialog.clearMessage( 'captcha' );
-		delete this.captcha;
+	if ( this.captchaResponse ) {
+		this.captchaResponse = null;
 	}
 
 	if (
@@ -1008,8 +1007,10 @@ ve.init.mw.ViewPageTarget.prototype.getSaveFields = function () {
 		} );
 	ve.extendObject( fields, {
 		wpSummary: this.saveDialog ? this.saveDialog.editSummaryInput.getValue() : this.initialEditSummary,
-		wpCaptchaId: this.captcha && this.captcha.id,
-		wpCaptchaWord: this.captcha && this.captcha.input.getValue()
+		wpCaptchaClass: this.saveDialog.$( '#wpCaptchaClass' ).val(),
+		wpCaptchaId: this.saveDialog.$( '#wpCaptchaId' ).val(),
+		wpCaptchaWord: this.saveDialog.$( '#wpCaptchaWord' ).val(),
+		'g-recaptcha-response': this.captchaResponse
 	} );
 	if ( this.recreating ) {
 		fields.wpRecreate = true;
