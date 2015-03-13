@@ -43,7 +43,8 @@ var Liftium = {
 	hasMoreCalls : LiftiumOptions.hasMoreCalls || 0,
 	slotnames	: [],
 	fingerprint	: 'a',
-	adNum       : 200
+	adNum       : 200,
+	queue       : []
 };
 
 
@@ -89,6 +90,24 @@ Liftium.addAdIframe = function (doc, slotname, slotsize) {
 
 	adDiv.appendChild(adIframe);
 	doc.getElementById(slotname).appendChild(adDiv);
+};
+
+/**
+ * @param {Object} slot - data of the slot to be queued
+ * @param {string} slot.slotsize
+ * @param {Object} slot.htmlElement
+ * @param {string} slot.slotname
+ */
+Liftium.addToQueue = function (slot) {
+	Liftium.queue.push(slot);
+};
+
+Liftium.processQueue = function () {
+	// TODO: replace Object.keys with regular loop because IE8 doesn't know Object.keys() magic ;)
+	Object.keys(Liftium.queue).forEach(function () {
+		var slot = Liftium.queue.shift();
+		Liftium.callInjectedIframeAd(slot.slotsize, window.document.getElementById(slot.slotname + '_iframe'), slot.slotname);
+	});
 };
 
 Liftium.beaconCall = function (url, cb){
@@ -1829,6 +1848,7 @@ Liftium.onLoadHandler = function () {
 	if (!Liftium.e(Liftium.config) && Liftium.iframesLoaded()) {
 		Liftium.sendBeacon();
 	} else if (Liftium.loadDelay < Liftium.maxLoadDelay){
+		Liftium.processQueue();
 		// Check again in a bit. Keep increasing the time
 		Liftium.loadDelay += Liftium.loadDelay;
 		window.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);

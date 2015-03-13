@@ -1,4 +1,4 @@
-/*global window, document, require, setTimeout*/
+/*global window, document, require, setTimeout, Liftium*/
 /*jslint newcap:true */
 /*jshint camelcase:false */
 /*jshint maxlen:200*/
@@ -132,7 +132,11 @@ window.AdEngine_loadLateAds = function () {
 
 	function loadLateFn() {
 		require([
-			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'ext.wikia.adEngine.adTracker', 'wikia.log'
+			'ext.wikia.adEngine.adConfigLate',
+			'ext.wikia.adEngine.adEngine',
+			'ext.wikia.adEngine.lateAdsQueue',
+			'ext.wikia.adEngine.adTracker',
+			'wikia.log'
 		], function (adConfigLate, adEngine, lateAdsQueue, adTracker, log) {
 			var module = 'AdEngine_loadLateAds';
 			log('launching late ads now', 1, module);
