@@ -46,10 +46,3 @@ class ClientException extends Exception
 		$this->error( 'HELIOS_CLIENT client_exception' );
 	}
 }
-
-class LoginFailureException extends Exception
-{
-	protected function logMe() {
-		$this->info( 'HELIOS_CLIENT login_failure' );
-	}
-}

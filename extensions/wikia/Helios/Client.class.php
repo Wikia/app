@@ -73,7 +73,6 @@ class Client
 	/**
 	 * A shortcut method for login requests.
 	 *
-	 * @throws LoginFailureException
 	 * @throws ClientException
 	 */
 	public function login( $username, $password )
@@ -93,14 +92,6 @@ class Client
 			$postData,
 			[ 'method'	=> 'POST' ]
 		);
-
-		if ( !empty( $response->error ) ) {
-			if ( $response->error === 'access_denied' ) {
-				throw new LoginFailureException( 'Login failed.', 0, null, [ 'response' => $response ] );
-			} else {
-				throw new ClientException( 'Response error: ' . $response->error, 0, null, [ 'response' => $response ] );
-			}
-		}
 
 		return $response;
 	}
