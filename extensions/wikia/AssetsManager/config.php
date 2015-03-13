@@ -79,7 +79,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
-		'//extensions/wikia/AdEngine/js/Krux.js',
 		'//extensions/wikia/AdEngine/js/LateAdsQueue.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
@@ -90,6 +89,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
+		'//resources/wikia/modules/krux.js',
 
 		// for low see adengine2_late_js
 	),
@@ -108,9 +108,6 @@ $config['adengine2_late_js'] = array(
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-
-		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
-		'//extensions/wikia/AdEngine/js/Krux.run.js',
 	),
 );
 
@@ -745,15 +742,6 @@ $config['mobile_base_ads_js'] = array(
 	)
 );
 
-$config['mobile_krux_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/modules/scriptwriter.js',
-		'//extensions/wikia/AdEngine/js/Krux.js',
-		'//extensions/wikia/AdEngine/js/Krux.run.js',
-	)
-);
-
 $config['mercury_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -773,7 +761,7 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/localStorage.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/mercury.run.js',
-		'//extensions/wikia/AdEngine/js/Krux.js',
+		'//resources/wikia/modules/krux.js',
 	)
 );
 
@@ -805,6 +793,9 @@ $config['wikiamobile_ads_js'] = array(
 	'skin' => 'wikiamobile',
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+
+		// Krux
+		'//resources/wikia/modules/krux.js',
 
 		'#group_mobile_base_ads_js',
 

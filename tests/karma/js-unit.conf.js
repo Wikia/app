@@ -48,6 +48,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/cookies.js',
 			'resources/wikia/modules/geo.js',
 			'resources/wikia/modules/imageServing.js',
+			'resources/wikia/modules/krux.js',
 			'resources/wikia/modules/lazyqueue.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',
