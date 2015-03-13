@@ -281,6 +281,15 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
+	 * Returns User object for provided user ID
+	 * @param int $iUserId
+	 * @return \User
+	 */
+	public function getUserFromId( $iUserId ) {
+		return \User::newFromId( $iUserId );
+	}
+
+	/**
 	 * Get Customer Keys
 	 * CustomerKey is a key that indicates Wikia table reflected by DataExtension
 	 */

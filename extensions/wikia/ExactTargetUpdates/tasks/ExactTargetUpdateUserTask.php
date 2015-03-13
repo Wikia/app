@@ -30,11 +30,12 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$oCreateUserTask->createSubscriber( $sUserEmail );
 
 		/* Prepare user fields for update */
+		$oHelper = $this->getUserHelper();
 		$oUserHooksHelper = $this->getUserHooksHelper();
-		$aUserData = $oUserHooksHelper->prepareUserParams( \User::newFromId( $iUserId ) );
+		$oUser = $oHelper->getUserFromId( $iUserId );
+		$aUserData = $oUserHooksHelper->prepareUserParams( $oUser );
 
 		/* Prepare user update API params */
-		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 
