@@ -11,15 +11,13 @@ $.fn.extend({
 
 	/**
 	 * @desc calculates max height of modal content
+	 * @param {Number} modalTopOffset
 	 * @param {jQuery} $headline - jQuery collection for modal header
 	 * @param {jQuery} $tabs - jQuery collection for modal tabs
 	 * @returns {Number} - max height value
 	 */
-	getMaxModalContentHeight: function($headline, $tabs) {
-		var winHeight = $(window).height(),
-			margin = 20; // we need some margin from window edges
-
-		return winHeight - 2 * margin - $headline.outerHeight() - $tabs.outerHeight();
+	getMaxModalContentHeight: function(modalTopOffset, $headline, $tabs) {
+		return $(window).height() - 2 * modalTopOffset - $headline.outerHeight() - $tabs.outerHeight();
 	},
 
 	makeModal: function(options) {
@@ -98,7 +96,7 @@ $.fn.extend({
 			}
 		}
 
-		$modalContent.css('max-height', this.getMaxModalContentHeight(headline, modalTabs));
+		$modalContent.css('max-height', this.getMaxModalContentHeight(settings.topOffset, headline, modalTabs));
 
 		// calculate modal width for oasis
 		if (skin === 'oasis' || skin === 'venus') {
