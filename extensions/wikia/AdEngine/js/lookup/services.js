@@ -11,16 +11,16 @@
 
 /*global define, require*/
 /*jshint camelcase:false*/
-define('ext.wikia.adEngine.lookupServices', [
+define('ext.wikia.adEngine.lookup.services', [
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.rubiconRtp'),
-	require.optional('ext.wikia.adEngine.amazonMatch'),
-	require.optional('ext.wikia.adEngine.amazonMatchOld')
-], function (log, win, rtp, amazonMatch, amazonMatchOld) {
+	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
+	require.optional('ext.wikia.adEngine.lookup.amazonMatchOld'),
+	require.optional('ext.wikia.adEngine.lookup.rubiconRtp')
+], function (log, win, amazonMatch, amazonMatchOld, rtp) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.lookupServices',
+	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		rtpLookupTracked = false,
 		amazonLookupTracked = false,
 		amazonOldLookupTracked = false;

@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageViewCounter',
 	require.optional('wikia.abTest'),
-	require.optional('ext.wikia.adEngine.lookupServices'),
+	require.optional('ext.wikia.adEngine.lookup.services'),
 	require.optional('ext.wikia.adEngine.krux')
 ], function (log, doc, loc, adContext, pvCounter, abTest, lookups, krux) {
 	'use strict';
