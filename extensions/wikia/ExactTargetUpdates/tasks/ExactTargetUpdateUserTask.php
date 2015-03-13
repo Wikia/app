@@ -9,6 +9,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 * Task for updating user data in ExactTarget
 	 *
 	 * @info Removed updateUserData method as was unused
+	 * @commit 9efbaa4f3a148445d8fa5cef4d2842184c6ba577
 	 *
 	 * @param array $aUserData Selected fields from Wikia user table
 	 */
