@@ -6,9 +6,15 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, $user ) {
-		if (self::isAnswersWiki())
+	public function enabled ( $wgCityId, User $user ) {
+		if ( self::isAnswersWiki() ) {
 			return false;
+		}
+
+		// disable if all Wikia email disabled
+		if ( $user->getBoolOption( "unsubscribed" ) ) {
+			return false;
+		}
 
 		// If digest mode is enabled, do not create user registration event notifications
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {

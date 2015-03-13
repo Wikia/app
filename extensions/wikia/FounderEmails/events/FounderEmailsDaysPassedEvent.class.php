@@ -6,7 +6,12 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, $user ) {
+	public function enabled ( $wgCityId, User $user ) {
+		// disable if all Wikia email disabled
+		if ( $user->getBoolOption( "unsubscribed" ) ) {
+			return false;
+		}
+
 		// This type of email cannot be disabled or avoided without unsubscribing from all email
 		return true;
 	}
