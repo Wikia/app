@@ -2,7 +2,7 @@
 
 $black: #000;
 $white: #FFF;
-$color-divider: #E6EBF2;
+$color-divider: mix($color-page, $color-text, 80%);
 $color-rail-background: mix($color-page, $black, 90%);
 @if $is-dark-wiki {
     $color-rail-background: mix($color-page, $white, 90%);
@@ -24,8 +24,6 @@ $color-rail-background: mix($color-page, $black, 90%);
     background-color: $color-rail-background;
     margin-bottom: 10px;
     padding: 20px;
-    position: relative;
-    word-wrap: break-word;
 }
 
 .wikia-rail {
@@ -45,7 +43,7 @@ $color-rail-background: mix($color-page, $black, 90%);
 
         a {
             color: $color-links-default;
-            
+
             &:hover {
                 color: $color-links-default;
                 text-decoration: underline;
@@ -222,7 +220,7 @@ $color-rail-background: mix($color-page, $black, 90%);
                 }
 
                 .UserStatsMenu {
-                    border: $white solid 2px;
+                    outline: rgba($color-divider, .3) solid 2px;
                     width: 220px;
 
                     .actions ul {
