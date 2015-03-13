@@ -5,8 +5,8 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, $user ) {
-        if (self::isAnswersWiki()) {
+	public function enabled ( $wgCityId, User $user ) {
+        if ( self::isAnswersWiki() ) {
             return false;
         }
 
