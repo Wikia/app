@@ -3,9 +3,8 @@ require([
 	'mw',
 	'wikia.window',
 	'wikia.cookies',
-	'wikia.geo',
-	'BannerNotification'
-], function ($, mw, window, cookies, geo, BannerNotification) {
+	'wikia.geo'
+], function ($, mw, window, cookies, geo) {
 	'use strict';
 
 	/**
@@ -33,16 +32,18 @@ require([
 	 * Display the cookie policy message to the user
 	 */
 	function showBanner() {
-		var message = mw.message('cookie-policy-notification-message').parse(),
-			bannerNotification = new BannerNotification(message, 'notify').show();
-
-		// currently, mw.message doesn't support the #NewWindowLink magic word, so we'll have to use JS
-		bannerNotification.$element.find('a').on('click', function (event) {
-			var url = $(this).attr('href');
-			event.preventDefault();
-			window.open(url, '_blank');
+		require(['BannerNotification'], function (BannerNotification) {
+			var message = mw.message('cookie-policy-notification-message').parse(),
+				bannerNotification = new BannerNotification(message, 'notify').show();
+			// currently, mw.message doesn't support the #NewWindowLink magic word,
+			// so we'll have to use JS
+			bannerNotification.$element.find('a').on('click', function (event) {
+				var url = $(this).attr('href');
+				event.preventDefault();
+				window.open(url, '_blank');
+			});
+			setCookie();
 		});
-		setCookie();
 	}
 
 	/**
@@ -64,7 +65,5 @@ require([
 		});
 	}
 
-	$(function () {
-		initCookieNotification();
-	});
+	$(initCookieNotification);
 });
