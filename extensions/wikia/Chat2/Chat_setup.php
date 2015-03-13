@@ -35,7 +35,7 @@ $wgGroupPermissions['sysop']['chatadmin'] = true;
 
 $wgAvailableRights[] = 'chat';
 $wgGroupPermissions['*']['chat'] = false;
-$wgGroupPermissions['staff']['chat'] = true;
+$wgGroupPermissions['user']['chat'] = true;
 if ( $wgWikiaEnvironment == WIKIA_ENV_PREVIEW || $wgWikiaEnvironment == WIKIA_ENV_VERIFY ) {
 	$wgGroupPermissions['user']['chat'] = false;
 }
