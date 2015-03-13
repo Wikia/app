@@ -124,28 +124,26 @@ class SquidUpdate {
 
 		global $wgPurgeSquidViaCelery, $wgPurgeVignetteUsingSurrogateKeys;
 		if ( $wgPurgeSquidViaCelery == true ) {
-			if ( $wgPurgeVignetteUsingSurrogateKeys == true ) {
-				// Filter urls into buckets based on service backend
-				$buckets = array_reduce($urlArr, function($carry, $item) {
-					if ( VignetteRequest::isVignetteUrl($item) ) {
-						$carry['vignette'][] = $item;
-					} elseif ( strstr($item, 'MercuryApi') !== false ) {
-						$carry['mercury'][] = $item;
-					} else {
-						$carry['mediawiki'][] = $item;
-					}
-					return $carry;
-				}, array('vignette' => [], 'mediawiki' => [], 'mercury' => []));
-
-				// Now purge them
-				foreach ( $buckets as $service => $urls) {
-					if ( empty($urls) ) continue;
-					( new AsyncCeleryTask() )
-							->taskType('celery_workers.purger.purge')
-							->setArgs( $urls, [], $service )
-							->setPriority( PurgeQueue::NAME )
-							->queue();
+			// Filter urls into buckets based on service backend
+			$buckets = array_reduce($urlArr, function($carry, $item) {
+				if ( $wgPurgeVignetteUsingSurrogateKeys && VignetteRequest::isVignetteUrl($item) ) {
+					$carry['vignette'][] = $item;
+				} elseif ( strstr($item, 'MercuryApi') !== false ) {
+					$carry['mercury'][] = $item;
+				} else {
+					$carry['mediawiki'][] = $item;
 				}
+				return $carry;
+			}, array('mediawiki' => [], 'vignette' => [], 'mercury' => []));
+
+			// Now purge them
+			foreach ( $buckets as $service => $urls) {
+				if ( empty($urls) ) continue;
+				( new AsyncCeleryTask() )
+						->taskType('celery_workers.purger.purge')
+						->setArgs( $urls, [], $service )
+						->setPriority( PurgeQueue::NAME )
+						->queue();
 			}
 			return;
 		}
