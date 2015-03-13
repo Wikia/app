@@ -53,7 +53,7 @@ class Client
 
 		// Request execution.
 		/** @var \MWHttpRequest $request */
-		$request = \Http::request($options['method'],$uri,$options);
+		$request = \Http::request( $options['method'], $uri, $options );
 		$status = $request->status;
 
 		// Response handling.
