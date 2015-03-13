@@ -12,8 +12,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
-		// Pass task ID to have all logs under one task
-		$oDeleteUserTask->taskId( $this->getTaskId() );
+		$oDeleteUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
 		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
 
 		/* Create Subscriber with new email */
@@ -26,14 +25,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
 
 		/* Verify data */
-		$oUserDtaVerificatorTask = $this->getUserDataVerificatorTask();
-		$oUserDtaVerificatorTask->taskId( $this->getTaskId() );
-		$sUserDataVerificationResult = $oUserDtaVerificatorTask->execute( 'verifyUserData', [ $aUserData['user_id'] ] );
-		if ( $sUserDataVerificationResult != 'OK' ) {
-			throw new \Exception( $sUserDataVerificationResult );
-		} else {
-			$this->info( 'Verification passed. User record in ExactTarget match record in Wikia database' );
-		}
+		$this->verifyUserData( $aUserData['user_id'] );
 
 		return 'OK';
 	}
@@ -99,4 +91,14 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		return $oCreateUserPropertiesResult->OverallStatus;
 	}
 
+	protected function verifyUserData( $iUserId ) {
+		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
+		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
+		$sUserDataVerificationResult = $oUserDataVerificationTask->execute( 'verifyUserData', [ $iUserId ] );
+		if ( $sUserDataVerificationResult != 'OK' ) {
+			throw new \Exception( $sUserDataVerificationResult );
+		} else {
+			$this->info( 'Verification passed. User record in ExactTarget match record in Wikia database' );
+		}
+	}
 }
