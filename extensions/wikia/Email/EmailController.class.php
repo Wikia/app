@@ -89,7 +89,7 @@ abstract class EmailController extends \WikiaController {
 			$fromAddress = $this->getFromAddress();
 			$replyToAddress = $this->getReplyToAddress();
 			$subject = $this->getSubject();
-			$body = $this->getBody();
+			$body = [ 'html' => $this->getBody() ];
 
 			if ( !$this->test ) {
 				\UserMailer::send( $toAddress, $fromAddress, $subject, $body, $replyToAddress );
@@ -101,7 +101,7 @@ abstract class EmailController extends \WikiaController {
 		$this->response->setData( [
 			'result' => 'ok',
 			'subject' => $subject,
-			'body' => $body,
+			'body' => $body['html'],
 		] );
 
 		return true;
