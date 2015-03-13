@@ -11,6 +11,8 @@ abstract class EmailController extends \WikiaController {
 	/** @var \User The user this email will be sent to */
 	protected $targetUser;
 
+	protected $hasErrorResponse = false;
+
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
 
@@ -26,10 +28,42 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	public function init() {
-		// @todo lookup user objects for the names passed in here
-		$this->currentUser = $this->getRequest()->getVal( 'currentUser', $this->wg->User );
-		$this->targetUser = $this->getRequest()->getVal( 'targetUser', $this->wg->User );
-		$this->test = $this->getRequest()->getVal( 'test', false );
+		try {
+			$this->assertCanAccessController();
+
+			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
+			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
+			$this->test = $this->getRequest()->getVal( 'test', false );
+
+			$this->initEmail();
+		} catch ( ControllerException $e ) {
+			return $this->setErrorResponse( $e );
+		}
+	}
+
+	/**
+	 * Make sure to only allow authorized use of this extension.
+	 *
+	 * @throws \Email\Fatal
+	 */
+	public function assertCanAccessController() {
+		if ( $this->wg->User->isStaff() ) {
+			return;
+		}
+
+		if ( $this->request->isInternal() ) {
+			return;
+		}
+
+		throw new Fatal( wfMessage( 'emailext-error-restricted-controller' )->escaped() );
+	}
+
+	/**
+	 * Allow child classes to set some initial values.  Added here so its always defined
+	 * but is kept blank so does not need to be called via parent::initEmail()
+	 */
+	public function initEmail() {
+		// Can be overridden in child class
 	}
 
 	/**
@@ -43,6 +77,11 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \MWException
 	 */
 	public function handle() {
+		// If something previously has thrown an error (likely 'init') don't continue
+		if ( $this->hasErrorResponse ) {
+			return true;
+		}
+
 		try {
 			$this->assertCanEmail();
 
@@ -76,6 +115,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return bool
 	 */
 	protected function setErrorResponse( ControllerException $e ) {
+		$this->hasErrorResponse = true;
 		$this->response->setData( [
 			'result' => $e->errorType,
 			'msg' => $e->getMessage(),
@@ -141,10 +181,38 @@ abstract class EmailController extends \WikiaController {
 		return $html;
 	}
 
+	protected function findUserFromRequest( $paramName, \User $default = null ) {
+		$userName = $this->getRequest()->getVal( $paramName );
+		if ( empty( $userName ) ) {
+			return $default;
+		}
+
+		return $this->getUserFromName( $userName );
+	}
+
+	/**
+	 * Return a user object from a username
+	 *
+	 * @param string $username
+	 *
+	 * @return \User
+	 * @throws \Email\Fatal
+	 */
+	protected function getUserFromName( $username ) {
+		if ( is_null( $username ) ) {
+			throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
+		}
+
+		$user = \User::newFromName( $username );
+		$this->assertValidUser( $user );
+
+		return $user;
+	}
+
 	/**
 	 * A basic check to see if we should send this email or not
 	 *
-	 * @throws Check
+	 * @throws \Email\Check
 	 */
 	public function assertCanEmail() {
 		$this->assertUserWantsEmail();
@@ -172,7 +240,7 @@ abstract class EmailController extends \WikiaController {
 	public function assertUserHasEmail() {
 		$email = $this->targetUser->getEmail();
 		if ( empty( $email ) ) {
-			throw new Fatal( wfMessage( 'emailext-noemail' )->escaped() );
+			throw new Fatal( wfMessage( 'emailext-error-noemail' )->escaped() );
 		}
 	}
 

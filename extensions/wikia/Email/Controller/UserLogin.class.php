@@ -8,10 +8,7 @@ use Email\EmailController;
 
 class ForgotPasswordController extends EmailController {
 
-	public function init() {
-		parent::init();
-
-		// @todo handle exceptions here
+	public function initEmail() {
 		// Set the recipient user
 		$this->setTargetUser();
 	}
@@ -58,26 +55,23 @@ class ForgotPasswordController extends EmailController {
 
 	protected function assertCanChangePassword() {
 		if ( !$this->wg->Auth->allowPasswordChange() ) {
-			throw new Fatal( wfMessage( 'emailext-error-reset-pass-forbidden' )->escaped() );
+			throw new Fatal( wfMessage( 'emailext-error-password-reset-forbidden' )->escaped() );
 		}
 	}
 
 	protected function setTargetUser() {
 		$username = $this->getRequest()->getVal( 'username' );
-
-		if ( is_null( $username ) ) {
-			throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
-		}
-
-		$user = \User::newFromName( $username );
-		$this->assertValidUser( $user );
-
-		$this->targetUser = $user;
+		$this->targetUser = $this->getUserFromName( $username );
 	}
 
 	protected function assertPasswordReminderNotThrottled() {
+		// Do not throttle staff
+		if ( $this->wg->User->isStaff() ) {
+			return;
+		}
+
 		if ( $this->targetUser->isPasswordReminderThrottled() ) {
-			$key = 'emailext-error-throttled-mailpassword';
+			$key = 'emailext-error-password-throttled';
 			$param = $this->wg->PasswordReminderResendTime;
 
 			throw new Check( wfMessage( $key, $param )->escaped() );

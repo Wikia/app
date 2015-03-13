@@ -205,7 +205,7 @@ class WikiaView {
 
 		// If the above fails, or returns a non-existent directory, fallback to the default.
 		if ( empty( $dirName ) || !file_exists( $dirName ) ) {
-			$dirName = dirname( F::app()->wg->AutoloadClasses[ $controllerClass ] ) . '/templates';
+			$dirName = dirname( F::app()->wg->AutoloadClasses[$controllerClass] ) . '/templates';
 		}
 
 		return $dirName;
