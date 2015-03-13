@@ -30,9 +30,14 @@ class SassUtil {
 	 */
 	public static function getApplicationThemeSettings() {
 		if ( class_exists( 'BodyController' ) && BodyController::isOasisBreakpoints( ) ) {
-			return [
+			$params = [
 				'widthType' => 0,
 			];
+			if ( BodyController::isOasisTypography() ) {
+				$params['oasisTypography'] = 1;
+			}
+
+			return $params;
 		} else {
 			$params = [];
 

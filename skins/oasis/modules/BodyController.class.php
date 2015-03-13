@@ -96,6 +96,13 @@ class BodyController extends WikiaController {
 		return !self::isOasisBreakpoints() && !empty( $wgOasisResponsive );
 	}
 
+	public static function isOasisTypography() {
+		global $wgOasisTypography, $wgRequest;
+
+		$wgOasisTypography = $wgRequest->getBool( 'oasistypography', $wgOasisTypography ) !== false;
+		return !empty( $wgOasisTypography );
+	}
+
 	/**
 	 * Decide whether to show user pages header on current page
 	 */

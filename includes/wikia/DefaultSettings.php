@@ -1690,6 +1690,13 @@ $wgDisableWAMOnHubs = false;
 $wgImageServingForceNoResults = false;
 
 /**
+ * @name wgOasisTypography
+ * Enable typography changes on oasis breakpoints.
+ * Works only if wgOasisBreakpoints set to true
+ */
+$wgOasisTypography = false;
+
+/**
  * Force new breakpoints $wgOasisBreakpoints
  * see CONCF-186
  * todo Remove when removing responsive
