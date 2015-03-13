@@ -6,6 +6,13 @@ use Email\Check;
 use Email\Fatal;
 use Email\EmailController;
 
+/**
+ * Class ForgotPasswordController
+ *
+ * @requestParam string username : The username to send the password reset email to
+ *
+ * @package Email\Controller
+ */
 class ForgotPasswordController extends EmailController {
 
 	public function initEmail() {
