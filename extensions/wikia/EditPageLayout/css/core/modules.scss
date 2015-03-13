@@ -128,10 +128,9 @@ $color-icon: mix($color-text, #fff, 90%);
 		}
 
 		.wikia-menu-button {
-			//float: left;
 			*z-index: 2;
-			width: 110px; // preview has border 1px wide
 			height: 21px;
+			width: 110px; // preview has border 1px wide
 			& > a {
 				display: inline-block;
 				width: 75px;

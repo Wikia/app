@@ -241,23 +241,22 @@
 	}
 }
 
-#EditPage {
-	&.toolbar-expanded {
+#EditPage.toolbar-expanded {
 		.preview_box {
 			border: 0;
 			clear: both;
+		}
 
-			h3 {
-				margin-top: 8px;
-			}
+		h3.preview-header {
+			margin-top: 8px;
+		}
 
-			.preview_mobile {
-				padding-top: 3px;
-			}
+		.preview_mobile {
+			padding-top: 3px;
+		}
 
-			.preview_desktop {
-				padding-top: 5px;
-			}
+		.preview_desktop {
+			padding-top: 5px;
 		}
 
 		#wpDiff.diff-link {

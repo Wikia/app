@@ -36,8 +36,8 @@
 		},
 
 		sizeChanged: function() {
-			if ( this.initialized && this.editor.mode == 'source' && this.wide ) {
-				if ( this.$editpage.width() > this.expandedToolbarBreakpoint ) {
+			if (this.initialized && this.editor.mode === 'source' && this.wide) {
+				if (this.$editpage.width() > this.expandedToolbarBreakpoint) {
 					this.$editpage.removeClass('toolbar-expanded');
 				} else {
 					this.$editpage.addClass('toolbar-expanded');
@@ -48,7 +48,7 @@
 		activate: function() {
 			this.enabled = true;
 			if (this.enabled) {
-				this.active = this.editor.mode == 'source';
+				this.active = this.editor.mode === 'source';
 				// set up the trigger
 				this.trigger = this.editor.element.find('.'+this.triggerClassName);
 				this.trigger.click(this.proxy(this.toggle));
