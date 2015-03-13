@@ -42,7 +42,8 @@ var Liftium = {
 	isCalledAfterOnload : LiftiumOptions.isCalledAfterOnload || 0,
 	hasMoreCalls : LiftiumOptions.hasMoreCalls || 0,
 	slotnames	: [],
-	fingerprint	: 'a'
+	fingerprint	: 'a',
+	adNum       : 200
 };
 
 
@@ -66,6 +67,29 @@ Liftium.addEventListener = function(item, eventName, callback){
     return false;
 };
 
+Liftium.addAdIframe = function (doc, slotname, slotsize) {
+	'use strict';
+
+	var adDiv = doc.createElement('div'),
+		adIframe = doc.createElement('iframe'),
+		s = slotsize && slotsize.split('x');
+
+	Liftium.adNum++;
+	adDiv.id = 'Liftium_' + slotsize + '_' + Liftium.adNum;
+
+	adIframe.width = s[0];
+	adIframe.height = s[1];
+	adIframe.scrolling = 'no';
+	adIframe.frameBorder = 0;
+	adIframe.marginHeight = 0;
+	adIframe.marginWidth = 0;
+	adIframe.allowTransparency = true; // For IE
+	adIframe.id = slotname + '_iframe';
+	adIframe.style.display = 'block';
+
+	adDiv.appendChild(adIframe);
+	doc.getElementById(slotname).appendChild(adDiv);
+};
 
 Liftium.beaconCall = function (url, cb){
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
