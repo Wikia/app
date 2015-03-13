@@ -2976,11 +2976,16 @@ abstract class DatabaseBase implements DatabaseType {
 	 * End a transaction
 	 *
 	 * @param $fname string
+	 * @return null|bool returns boolean with the result of commit
+	 * 	or null if inside the "nested" transaction
 	 */
 	function commit( $fname = 'DatabaseBase::commit' ) {
 		if ( $this->mTrxLevel ) {
-			$this->query( 'COMMIT', $fname );
+			// Wikia change - begin
+			$res = $this->query( 'COMMIT', $fname );
 			$this->mTrxLevel = 0;
+			return $res === true;
+			// Wikia change - end
 		}
 	}
 
