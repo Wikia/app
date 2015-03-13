@@ -1223,7 +1223,7 @@ class Preferences {
 	 * @param $form HTMLForm
 	 * @return bool|string
 	 */
-	static function validateSignature( $signature, $alldata, $form ) {
+	static function validateSignature( $signature, $alldata, HTMLForm $form ) {
 		global $wgParser, $wgMaxSigChars;
 		if ( mb_strlen( $signature ) > $wgMaxSigChars ) {
 			return Xml::element( 'span', array( 'class' => 'error' ),
