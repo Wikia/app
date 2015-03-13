@@ -338,7 +338,7 @@ body {
 				padding: 10px;
 				position: relative;
 
-				.global-notification {
+				.banner-notifications-wrapper {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
 				}
@@ -492,32 +492,6 @@ body {
 			.EditPageMainContainer {
 				margin-right: 0;
 			}
-
-			@media screen and (max-width: $width-outside) {
-				#wpSave {
-					// fix for touch devices, because in touchScreen.scss height is set to 30px !important
-					height: 21px !important;
-					margin: 0;
-				}
-
-				#wpSummaryLabel {
-					clear: none;
-				}
-
-				.EditPageToolbar {
-					height: 70px;
-				}
-
-				.EditPageRail {
-					.module_page_controls {
-						.wikia-menu-button {
-							margin: 0;
-							right: 145px;
-							top: 40px;
-						}
-					}
-				}
-			}
 		}
 
 		.editpage-widemode-trigger {
@@ -561,6 +535,32 @@ body {
 	// fix for wiki nav bug - DAR-2884
 	.preview .WikiaArticle {
 		overflow: inherit;
+	}
+
+	#EditPage {
+		&.toolbar-expanded {
+			#wpSave {
+				// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+				height: 21px !important;
+				margin: 0;
+			}
+
+			#wpSummaryLabel {
+				clear: none;
+			}
+
+			.EditPageToolbar {
+				height: 70px;
+			}
+
+			.EditPageRail {
+				.module_page_controls {
+					.wikia-menu-button {
+						margin: 0;
+					}
+				}
+			}
+		}
 	}
 }
 // END - edit page fixes

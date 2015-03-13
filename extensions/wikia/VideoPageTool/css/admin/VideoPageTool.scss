@@ -1,6 +1,5 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/arrow-hollow";
-@import "skins/shared/mixins/box-sizing-border-box";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/curation-elements";
 
@@ -72,7 +71,7 @@ $label-padding: 10px 10px 10px 0px;
 		}
 	}
 	.input-group {
-		@include box-sizing-border-box;
+		box-sizing: border-box;
 		clear: none;
 		padding: 5px 0;
 		width: 68%;
@@ -80,7 +79,7 @@ $label-padding: 10px 10px 10px 0px;
 			border-bottom: 1px solid $color-page-border-subtle;
 		}
 		input[type="text"], textarea, select {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			width: 70%;
 		}
 		textarea {
@@ -93,7 +92,7 @@ $label-padding: 10px 10px 10px 0px;
 	}
 
 	label {
-		@include box-sizing-border-box;
+		box-sizing: border-box;
 		float: left;
 		padding: $label-padding;
 		width: 30%;
@@ -162,7 +161,7 @@ $label-padding: 10px 10px 10px 0px;
 			padding-top: 11px;
 		}
 		.video-thumb-wrapper {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			clear: left;
 			float: right;
 			margin-top: 5px;
@@ -207,7 +206,7 @@ $label-padding: 10px 10px 10px 0px;
 			margin: 17px 0 0 10px;
 		}
 		.preview {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			border: 1px solid $color-page-border-subtle;
 			border-top-width: 0;
 			clear: both;

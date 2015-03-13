@@ -18,7 +18,7 @@
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<?= $app->renderView( 'Notifications', 'Confirmation' ) ?>
+		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 		<?php
 			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
 
@@ -180,7 +180,11 @@
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
 		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<? if( !empty( $wg->EnableGlobalFooterExt ) ) echo $app->renderView( 'GlobalFooter', 'index' ) ?>
+		<? if ( empty( $wg->EnableNewGlobalFooter ) ):
+			echo $app->renderView( 'GlobalFooter', 'index' );
+		else:
+			echo $app->renderView( 'GlobalFooter', 'oasisIndex' );
+		endif; ?>
 	</div>
 </section><!--WikiaPage-->
 

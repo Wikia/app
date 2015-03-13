@@ -4,7 +4,6 @@
  */
 @import "skins/shared/color";
 @import "skins/shared/mixins/bodytext";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/clearfix";
 
 .SpeechBubble {
@@ -103,7 +102,7 @@
 	}
 
 	textarea {
-		@include box-sizing;
+		box-sizing: border-box;
 		line-height: 21px;
 		font-family: "Helvetica", "Arial", sans-serif;
 		font-size: 11px;

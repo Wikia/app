@@ -1,15 +1,14 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/box-sizing';
 
 .WikiaPageContentWrapper {
 	padding-top: 0;
 }
 
 .local-navigation {
-	@include box-sizing(border-box);
+	box-sizing: border-box;
 
 	*, *::before, *::after {
-		@include box-sizing(inherit);
+		box-sizing: inherit;
 	}
 }
 

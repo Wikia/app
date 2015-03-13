@@ -14,6 +14,9 @@ describe('AdLogicPageParams', function () {
 					targeting: targeting || {},
 					forceProviders: {}
 				};
+			},
+			addCallback: function () {
+				return;
 			}
 		};
 	}
@@ -32,7 +35,8 @@ describe('AdLogicPageParams', function () {
 
 	function mockPageViewCounter(pvCount) {
 		return {
-			increment: function () { return pvCount; }
+			get: function () { return pvCount || 0; },
+			increment: function () { return pvCount || 1; }
 		};
 	}
 
@@ -90,8 +94,8 @@ describe('AdLogicPageParams', function () {
 			windowMock.document,
 			windowMock.location,
 			mockAdContext(targeting),
-			abTestMock,
 			mockPageViewCounter(opts.pvCount),
+			abTestMock,
 			undefined,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
@@ -372,8 +376,14 @@ describe('AdLogicPageParams', function () {
 		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
 	});
 
-	it('getPageLevelParams pv param', function () {
-		var params = getParams({}, {pvCount: 13});
+	it('getPageLevelParams pv param - oasis', function () {
+		var params = getParams({skin: 'oasis'}, {pvCount: 13});
+
+		expect(params.pv).toBe('13');
+	});
+
+	it('getPageLevelParams pv param - mercury', function () {
+		var params = getParams({skin: 'mercury'}, {pvCount: 13});
 
 		expect(params.pv).toBe('13');
 	});

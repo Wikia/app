@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
-	 height="24px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
-	<g id="image-border" style="opacity:0.75">
-		<path id="mountains" d="M 9.53125,8.84375 6,13 6,14.5 9.5,11 l 2.3125,2.3125 -1.28125,1.09375 0.875,1.03125 L 15.5,12 18,14 18,12 15.5,10 12.5625,12.03125 9.53125,8.84375 z" />
-		<path id="frame" d="M 5,7 5,18 19,18 19,7 z M 18,17 6,17 6,8 18,8 z" />
-	</g>
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="image-border" style="opacity:0.75;">
+        <path id="mountains" d="M9.531 8.844l-3.531 4.156v1.5l3.5-3.5 2.313 2.313-1.281 1.094.875 1.031 4.094-3.438 2.5 2v-2l-2.5-2-2.938 2.031-3.031-3.188z"/>
+        <path id="frame" d="M5 7v11h14v-11zm13 10h-12v-9h12z"/>
+    </g>
 </svg>

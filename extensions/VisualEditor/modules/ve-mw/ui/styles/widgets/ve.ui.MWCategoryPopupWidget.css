@@ -14,7 +14,7 @@
 	padding: 0.75em 0.5em;
 }
 
-.ve-ui-mwCategoryPopupWidget .oo-ui-buttonedElement-frameless {
+.ve-ui-mwCategoryPopupWidget .oo-ui-buttonElement-frameless {
 	display: block;
 	float: left;
 }
@@ -29,10 +29,6 @@
 	background-repeat: no-repeat;
 	padding: 0.5em 0.5em 0.5em 2.25em;
 	margin: -0.4em 0 1em 0.125em;
-}
-
-.ve-ui-mwCategoryPopupWidget .ve-ui-removeButtonLabel:hover {
-	opacity: 1;
 }
 
 .ve-ui-mwCategoryPopupWidget-removeButton {

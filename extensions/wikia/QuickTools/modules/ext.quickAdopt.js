@@ -5,8 +5,8 @@
  *
  * @author Grunny
  */
-/*global jQuery, mediaWiki*/
-( function( $, mw, window ) {
+/*global jQuery, mediaWiki, window*/
+(function($, mw, window) {
 	'use strict';
 
 	var QuickAdopt = {
@@ -76,11 +76,11 @@
 				);
 			} else {
 				var resultClass = ( result === 'error' ? 'error' : 'confirm' );
-				window.GlobalNotification.show( mw.msg( message ), resultClass );
+				new window.BannerNotification(mw.msg(message), resultClass).show();
 			}
 		}
 	};
 
 	$( QuickAdopt.init );
 
-}( jQuery, mediaWiki, this ) );
+}(jQuery, mediaWiki, window));

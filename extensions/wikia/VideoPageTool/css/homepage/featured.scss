@@ -1,5 +1,4 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/box-sizing-border-box';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/transition';
 @import '../mixins/_sprite-VideoPageTool.scss';
@@ -130,7 +129,7 @@ $play-button-overlay-fade-duration: 400ms;
 			position: absolute;
 			z-index: 60; // needs to show over fading images
 			li {
-				@include box-sizing-border-box;
+				box-sizing: border-box;
 				margin: 0;
 				padding: 0 10px;
 				text-align: center;

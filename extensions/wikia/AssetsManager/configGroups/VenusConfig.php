@@ -170,7 +170,7 @@ $VenusConfig[ 'local_navigation_js' ] = [
 ];
 
 /** GlobalFooter extension */
-$VenusConfig[ 'global_footer_scss' ] = [
+$VenusConfig[ 'venus_global_footer_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
@@ -244,7 +244,7 @@ $VenusConfig[ 'article_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'#group_banner_notifications_js',
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavUserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/edit.js',

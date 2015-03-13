@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beluga",
+			"Crt",
+			"Harriv",
+			"Linnea",
+			"Nedergard",
+			"Nike",
+			"Olli",
+			"Pxos",
+			"Samoasambia",
+			"Silvonen",
+			"Skalman",
+			"Stryn",
+			"VezonThunder"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuaalinen muokkain]]",
+	"tag-visualeditor-description": "Muutos tehtiin [[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuaalisella muokkaimella]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuaalinen muokkain]]: Tarkista",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuaalisella muokkaimella]] tehty muokkaus, jossa järjestelmä havaitsi wikitekstissä mahdollisesti olevan tahattomia muutoksia.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Visuaalinen muokkain]]: vaihdettu",
+	"tag-visualeditor-switched-description": "Käyttäjä aloittanut muokkaamisen Visuaalisella muokkaimella, mutta vaihtanut wikitekstin muokkaustilaan.",
+	"visualeditor-feedback-link": "Project:Visuaalinen muokkain/Palaute",
+	"visualeditor-feedback-tool": "Jätä palautetta",
+	"visualeditor-help-label": "Lue käyttöopas",
+	"visualeditor-help-title": "Muokkaimen käyttöopas"
+}

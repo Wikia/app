@@ -1,7 +1,6 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
-@import "skins/shared/mixins/box-sizing";
 @import "WikiaHubsColors";
 @import 'Explore';
 @import 'HubsPopularVideos';
@@ -176,17 +175,18 @@ $wikiahubs-line-height: 16px;
 }
 
 .suggestArticleDialogModal {
-  input[name=articleurl],
-  textarea[name=reason] {
-	@include box-sizing;
+	input[name=articleurl],
+	textarea[name=reason] {
+		box-sizing: border-box;
 
-	margin-bottom: 10px;
-	padding: 7px;
-	width: 100%;
-  }
-  section.hidden {
-	display: none;
-  }
+		margin-bottom: 10px;
+		padding: 7px;
+		width: 100%;
+	}
+
+	section.hidden {
+		display: none;
+	}
 }
 
 .WikiaGrid {

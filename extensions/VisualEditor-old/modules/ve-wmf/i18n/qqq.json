@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80",
+			"Beta16",
+			"Erik Moeller",
+			"Jdforrester",
+			"Lloffiwr",
+			"Mooeypoo",
+			"Mormegil",
+			"Nike",
+			"PoLuX124",
+			"Purodha",
+			"Raymond",
+			"Sagan",
+			"Sayak Sarkar",
+			"Shirayuki",
+			"Siebrand",
+			"Trevor Parscal"
+		]
+	},
+	"tag-visualeditor": "Short description of the visualeditor tag.\n\nShown on lists of changes (history, recentchanges, etc.) for each edit made using VisualEditor.\n\nRefers to {{msg-mw|Visualeditor-descriptionpagelink}}.\n\nSee also:\n* {{msg-mw|Tag-visualeditor-needcheck}}\n{{Related|Tag-visualeditor}}\n{{Identical|VisualEditor}}",
+	"tag-visualeditor-description": "Long description of the visualeditor tag ({{msg-mw|Tag-visualeditor}}).\n\nShown on [[Special:Tags]].\n\nRefers to {{msg-mw|Visualeditor-descriptionpagelink}}.\n\nSee also:\n* {{msg-mw|Tag-visualeditor-needcheck-description}}\n{{Related|Tag-visualeditor}}",
+	"tag-visualeditor-needcheck": "\"Check\" indicates \"Check needed\".\n\nSee {{msg-mw|Tag-visualeditor-needcheck-description}}.\n\nRefers to {{msg-mw|Visualeditor-descriptionpagelink}}.\n\nSee also:\n* {{msg-mw|Tag-visualeditor|similar message}}\n{{Related|Tag-visualeditor}}",
+	"tag-visualeditor-needcheck-description": "Long description of the visualeditor tag ({{msg-mw|Tag-visualeditor-needcheck}}).\n\nShown on [[Special:Tags]].\n\nRefers to {{msg-mw|Visualeditor-descriptionpagelink}}.\n\nSee also:\n* {{msg-mw|Tag-visualeditor-description}}\n{{Related|Tag-visualeditor}}",
+	"tag-visualeditor-switched": "Short description of the visualeditor-switched tag.\n\nShown on lists of changes (history, recentchanges, etc.) for each edit which was started using VisualEditor and then was moved to the wikitext editor.\n\nRefers to {{msg-mw|Visualeditor-descriptionpagelink}}.\n{{Related|Tag-visualeditor}}",
+	"tag-visualeditor-switched-description": "Long description of the visualeditor-switched tag ({{msg-mw|Tag-visualeditor-switched}}).\n\nShown on [[Special:Tags]].\n\nRefers to {{msg-mw|Visualeditor-descriptionpagelink}}.\n\nSee also:\n* {{msg-mw|Tag-visualeditor-description}}\n{{Related|Tag-visualeditor}}",
+	"visualeditor-feedback-link": "Link to a page where users can leave feedback that is automatically posted using this tool. This should be a sub-page of {{msg-mw|visualeditor-descriptionpagelink}}",
+	"visualeditor-feedback-tool": "Text of tool in the toolbar that lets users provide feedback.\n{{Identical|Leave feedback}}",
+	"visualeditor-help-label": "Display text for the link to the user guide.\n{{Identical|User guide}}",
+	"visualeditor-help-link": "{{notranslate}} Link to the user guide for how to use VisualEditor",
+	"visualeditor-help-title": "Title (hover) text for the link to the user guide"
+}

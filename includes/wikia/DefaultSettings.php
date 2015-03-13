@@ -66,7 +66,6 @@ if($wgDBname != 'uncyclo') {
  */
 global $wgAutoloadClasses;
 
-
 /**
  * Nirvana framework classes
  */
@@ -535,6 +534,13 @@ $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/vali
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
 /**
+ * MediaWiki Config
+ */
+$wgAutoloadClasses['Config'] = $IP . '/includes/config/Config.php';
+$wgAutoloadClasses['ConfigFactory'] = $IP . '/includes/config/ConfigFactory.php';
+$wgAutoloadClasses['GlobalVarConfig'] = $IP . '/includes/config/GlobalVarConfig.php';
+
+/**
  * registered API methods
  */
 global $wgAPIListModules;
@@ -610,9 +616,11 @@ include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.ph
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
 include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 include_once( "$IP/extensions/wikia/UserTools/UserTools.setup.php" );
+include_once( "$IP/extensions/wikia/BannerNotifications/BannerNotifications.setup.php" );
 include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
+include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 
 /**
@@ -1676,8 +1684,18 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
+/* @name wgIncludeWikiInCorporateFooterDropdown
+ * Include link to this wiki in the Corporate Footer dropdown (the one with flags).
+ */
+$wgIncludeWikiInCorporateFooterDropdown = false;
+
 /**
  * Force ImageServing to return an empty list
  * see PLATFORM-392
  */
 $wgImageServingForceNoResults = false;
+
+/**
+ * Add poweruser to implicit groups
+ */
+$wgImplicitGroups[] = 'poweruser';

@@ -84,7 +84,7 @@ class EditPageLayoutHelper {
 		}
 
 		// Add variables for pages to edit code (css, js, lua)
-		if ( $this->isCodePage( $editedArticleTitle ) ) {
+		if ( $this->isCodeSyntaxHighlightingEnabled( $editedArticleTitle ) ) {
 			$this->prepareVarsForCodePage( $editedArticleTitle );
 		}
 
@@ -171,15 +171,38 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodePage( Title $articleTitle ) {
-		global $wgEnableEditorSyntaxHighlighting;
-
 		$namespace = $articleTitle->getNamespace();
 
-		return $wgEnableEditorSyntaxHighlighting
-				&& ( $articleTitle->isCssOrJsPage()
+		return $articleTitle->isCssOrJsPage()
 				|| $articleTitle->isCssJsSubpage()
 				// Lua module
-				|| $namespace === NS_MODULE );
+				|| $namespace === NS_MODULE;
+	}
+
+	/**
+	 * Check if code syntax highlighting is enabled
+	 *
+	 * @param Title $articleTitle page title
+	 * @return bool
+	 */
+	static public function isCodeSyntaxHighlightingEnabled( Title $articleTitle ) {
+		global $wgEnableEditorSyntaxHighlighting;
+
+		return self::isCodePage( $articleTitle ) && $wgEnableEditorSyntaxHighlighting;
+	}
+
+	/**
+	 * Check if wikitext syntax highlighting is enabled, so
+	 * - $wgEnableEditorSyntaxHighlighting is set to true
+	 * - user doesn't disable syntax highlighting in preferences
+	 *
+	 * @return bool
+	 */
+	static public function isWikitextSyntaxHighlightingEnabled() {
+		global $wgEnableEditorSyntaxHighlighting, $wgUser;
+
+		return $wgEnableEditorSyntaxHighlighting
+				&& !$wgUser->getOption( 'disablesyntaxhighlighting' );
 	}
 
 	/**
@@ -213,7 +236,7 @@ class EditPageLayoutHelper {
 		$aceUrlParts = parse_url( $aceUrl );
 		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
-		$this->addJsVariable( 'wgIsCodePage', true );
+		$this->addJsVariable( 'wgEnableCodePageEditor', true );
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';

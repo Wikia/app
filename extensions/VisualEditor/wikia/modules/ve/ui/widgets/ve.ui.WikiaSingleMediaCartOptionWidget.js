@@ -9,33 +9,33 @@
  * @extends OO.ui.OptionWidget
  *
  * @constructor
- * @param {ve.dm.WikiaCartItem} model Cart item
+ * @param {Object} [config] Configuration options
  */
-ve.ui.WikiaSingleMediaCartOptionWidget = function VeUiWikiaSingleMediaCartOptionWidget( model ) {
+ve.ui.WikiaSingleMediaCartOptionWidget = function VeUiWikiaSingleMediaCartOptionWidget( config ) {
 	var size = 120, $image, $details;
 
-	ve.ui.WikiaSingleMediaCartOptionWidget.super.call( this, model.getId() );
+	ve.ui.WikiaSingleMediaCartOptionWidget.super.call( this, config );
 
-	this.model = model;
+	this.model = config.model;
 	this.$element.addClass( 've-ui-texture-pending ve-ui-wikiaSingleMediaCartOptionWidget' );
 
 	$details = this.$( '<div>' ).addClass( 've-ui-wikiaSingleMediaCartOptionDetails' );
 
 	$image = this.$( '<img>' )
 		.attr( {
-			'height': size,
-			'width': size
+			height: size,
+			width: size
 		} )
 		.addClass( 've-ui-wikiaSingleMediaCartOptionImage' )
-		.load( ve.bind( function () {
+		.load( function () {
 			this.$element
 				.prepend( $image, $details )
 				.removeClass( 've-ui-texture-pending' );
-		}, this ) );
+		}.bind( this ) );
 
-	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
+	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
 		$image.attr( 'src', thumbnailer.getThumbURL( this.model.url, 'image', size, size ) );
-	}, this ) );
+	}.bind( this ) );
 };
 
 OO.inheritClass( ve.ui.WikiaSingleMediaCartOptionWidget, OO.ui.OptionWidget );

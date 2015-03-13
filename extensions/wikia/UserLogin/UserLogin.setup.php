@@ -40,6 +40,9 @@ $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
 $wgHooks['ConfirmEmailComplete'][] = 'UserLoginHooksHelper::onConfirmEmailComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserLoginHooksHelper::onWikiaMobileAssetsPackages';
 $wgHooks['AbortNewAccount'][] = 'UserLoginHooksHelper::onAbortNewAccount';
+// Add the JavaScript messages to the output
+$wgHooks['BeforePageDisplay'][] = "UserLoginHooksHelper::onBeforePageDisplay";
+
 
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';
@@ -48,6 +51,19 @@ $wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
 
 JSMessages::registerPackage('UserLogin', ['userlogin-login-*']);
+
+/**
+ * Use ResourceLoader to load the JavaScript module
+ */
+$wgResourceModules['ext.userLogin'] = [
+	'localBasePath' => __DIR__ . '/scripts',
+	'remoteExtPath' => 'wikia/UserLogin/js',
+	'messages' => [
+		'usersignup-error-password-length',
+		'userlogin-error-wrongpasswordempty',
+	],
+];
+
 
 // special pages
 $wgSpecialPages['Userlogin'] = 'UserLoginSpecialController';

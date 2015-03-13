@@ -1,0 +1,50 @@
+@import "skins/oasis/css/core/layout";
+@import "skins/shared/mixins/background-opacity";
+@import "mixins/ve-icon";
+
+.ve-ui-wikiaMediaPreviewWidget-overlay {
+	@include background-opacity( #000, 80 );
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: $zTop;
+
+	.ve-ui-wikiaMediaPreviewWidget-titlebar {
+		background: #000;
+		border-bottom: 1px solid #333;
+		color: #DDD;
+		font-size: 14px;
+		font-weight: normal;
+		padding: 9px 35px 9px 15px;
+		position: relative;
+
+		.ve-ui-wikiaMediaPreviewWidget-closeButton {
+			position: absolute;
+			right: 5px;
+			top: 6px;
+		}
+	}
+	.ve-ui-wikiaMediaPreviewWidget-image, .ve-ui-wikiaMediaPreviewWidget-videoWrapper {
+		left: 0;
+		margin: auto;
+		position: absolute;
+		right: 0;
+	}
+	.ve-ui-wikiaMediaPreviewWidget-image, .ve-ui-wikiaMediaPreviewWidget-videoWrapper iframe {
+		border: 2px solid #CCC;
+	}
+	.ve-ui-wikiaMediaPreviewWidget-videoWrapper {
+		// this is an approximate height.  Once we have exact heights, we can update this in the JS. (VID-885)
+		height: 500px;
+		width: 728px;
+	}
+	.oo-ui-icon-close {
+		@include ve-icon( close, oo, #000 );
+	}
+
+	.wikiaThrobber {
+		background-color: transparent;
+	}
+}

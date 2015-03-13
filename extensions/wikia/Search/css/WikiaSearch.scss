@@ -3,7 +3,6 @@
 @import "skins/shared/mixins/bodytext";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
-@import "skins/shared/mixins/box-sizing";
 
 $color-search-form-background: mix($color-page, #000, 97%);
 @if $is-dark-wiki {
@@ -298,10 +297,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 			color: $color-alternate-text;
 		}
 		.wikiPromoteThumbnail {
+			box-sizing: border-box;
 			float: left;
 			padding-left: 10px;
 			padding-top: 3px;
-			@include box-sizing;
 		}
 		.wiki-statistics, .hub {
 			font-size: 12px;
@@ -322,10 +321,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 			margin: 0;
 		}
 		.result-description {
+			box-sizing: border-box;
 			float: left;
 			padding-left: 21px;
 			width: 295px;
-			@include box-sizing;
 		}
 		a.image {
 			position: relative;

@@ -6,7 +6,6 @@
 	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
 	 */
 	var UserSignup = {
-		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
 		invalidInputs: {},
 
 		/**
@@ -31,8 +30,8 @@
 
 			this.validator = new UserSignupAjaxValidation({
 				wikiaForm: this.wikiaForm,
-				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
+				passwordInputName: 'userloginext02'
 			});
 
 			inputs.userloginext01
