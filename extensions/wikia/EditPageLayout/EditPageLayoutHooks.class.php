@@ -104,6 +104,7 @@ class EditPageLayoutHooks {
 			'disablecategoryselect' => 'editing-experience',
 			'editwidth' => 'editing-experience',
 			'disablelinksuggest' => 'editing-experience', // handled in wfLinkSuggestGetPreferences()
+			'disablesyntaxhighlighting' => 'editing-experience',
 
 			// Monobook layout only
 			'showtoolbar' => 'monobook-layout',
