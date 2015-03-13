@@ -385,7 +385,7 @@ $btn-bar-color: mix($color-page, #000, 90);
 	}
 
 	button.new-btn {
-		height: 20px;
+		height: 40px;
 	}
 
 	.new-btn {
@@ -577,33 +577,6 @@ $btn-bar-color: mix($color-page, #000, 90);
 	}
 }
 
-.mainpage {
-	.wordmark-container {
-		&.wordmark-icon {
-			background-color: $color-page;
-			height: 80px;
-			left: 0;
-			padding-left: 10px;
-			padding-right: 10px;
-			position: absolute;
-			top: -80px;
-			z-index: 1;
-		}
-
-		.wordmark {
-			width: auto;
-		}
-
-		&:not(.wordmark-icon) {
-			display: none;
-		}
-	}
-
-	.local-navigation {
-		border-bottom: none;
-		padding-left: 20px;
-	}
-}
 .WikiaArticle {
 	.hero-description {
 		margin: 20px 320px 50px 30px;

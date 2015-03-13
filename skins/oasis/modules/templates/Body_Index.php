@@ -28,11 +28,7 @@
 			}
 
 			if ( empty( $wg->SuppressWikiHeader ) ) {
-				if ( !empty( $wg->EnableLocalNavExt ) || $runNjord ) {
-					echo $app->renderView( 'LocalNavigation', 'Index' );
-				} else {
-					echo $app->renderView( 'WikiHeader', 'Index' );
-				}
+				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
 		<?php
