@@ -249,7 +249,6 @@
 			title: mw.config.get( 'wgPageName' ),
 			question: question
 		};
-
 		var content = getContent();
 		var sentContent = false;
 		if ( !sessionKey || sessionContent !== content ) {
@@ -313,6 +312,12 @@
 	function getContent() {
 		var $textarea = $( '#wpTextbox1' ),
 			context = $textarea.data( 'wikiEditor-context' );
+
+		// Wikia change begin
+		if (window.wgEnableCodePageEditor) {
+			return window.ace.edit('editarea').getSession().getValue();
+		}
+		// Wikia change end
 
 		if ( context === undefined || context.codeEditor === undefined ) {
 			return $textarea.val();
