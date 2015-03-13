@@ -202,7 +202,7 @@ class EditPageLayoutHelper {
 		global $wgEnableEditorSyntaxHighlighting, $wgUser;
 
 		return $wgEnableEditorSyntaxHighlighting
-				&& !$wgUser->getOption('disablesyntaxhighlighting');
+				&& !$wgUser->getOption( 'disablesyntaxhighlighting' );
 	}
 
 	/**
