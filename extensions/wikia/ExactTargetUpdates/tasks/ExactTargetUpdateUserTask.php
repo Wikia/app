@@ -4,15 +4,14 @@ namespace Wikia\ExactTarget;
 class ExactTargetUpdateUserTask extends ExactTargetTask {
 
 	/**
+	 * Here was
+	 * public function updateUserData( $aUserData )
 	 * Task for updating user data in ExactTarget
+	 *
+	 * @info Removed updateUserData method as was unused
+	 *
 	 * @param array $aUserData Selected fields from Wikia user table
 	 */
-	public function updateUserData( $aUserData ) {
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateRequest( $aApiParams );
-	}
 
 	/**
 	 * Sends update of user email to ExactTarget

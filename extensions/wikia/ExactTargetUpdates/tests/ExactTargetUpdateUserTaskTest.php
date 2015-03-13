@@ -179,27 +179,8 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			]
 		];
 
-		/* User update params */
-		$sUpdateUserMethodName = 'updateUserData';
-		$iUserId = 12345;
-		$aUserData2 = [
-			'user_field1' => 'value1',
-			'user_field2' => 'value2',
-		];
-		$aInvokeParamsUser = [ array_merge( $aUserData2, [ 'user_id' => $iUserId ] ) ];
-		$aUserApiParams = [
-			'DataExtension' => [
-				[
-					'CustomerKey' => $sCustomerKey,
-					'Properties' => $aUserData2,
-					'Keys' => [ 'user_id' => $iUserId ]
-				]
-			]
-		];
-
 		return [
 			[ $aInvokeParamsUserProperties, $aUserPropertiesApiParams, $aCustomerKeys, $sUpdateUserPropertiesMethodName ],
-			[ $aInvokeParamsUser, $aUserApiParams, $aCustomerKeys, $sUpdateUserMethodName ],
 		];
 	}
 
