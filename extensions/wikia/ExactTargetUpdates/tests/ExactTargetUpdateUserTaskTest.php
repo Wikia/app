@@ -104,7 +104,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'createSubscriber' );
 
-		/* Mock ExactTargetCreateUserTask */
+		/* Mock ExactTargetDeleteUserTask */
 		$mockDeleteUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetDeleteUserTask' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'deleteSubscriber', 'taskId' ] )
