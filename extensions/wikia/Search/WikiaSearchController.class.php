@@ -607,7 +607,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ) {
-			$response->setData( $searchConfig->getResults()->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) ) );
+			$results = $searchConfig->getResults();
+			if ( $results ) {
+				$response->setData( $results->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) ) );
+			} else {
+				$response->setData( [] );
+			}
 			return;
 		}
 		if ( ! $searchConfig->getInterWiki() ) {
