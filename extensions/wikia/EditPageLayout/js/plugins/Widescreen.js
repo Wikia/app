@@ -81,7 +81,7 @@
 				this.editor.ck.fire('resize');
 			}
 
-			if (!this.initialized && this.editor.mode == 'source' && this.wide) {
+			if (!this.initialized && this.editor.mode === 'source' && this.wide) {
 				this.initNodes();
 			}
 
