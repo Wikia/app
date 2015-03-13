@@ -22,7 +22,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		/* @var ExactTargetDeleteUserTask $addTaskMock mock of ExactTargetDeleteUserTask class */
 		$oDeleteUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetDeleteUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'deleteSubscriber' ] )
+			->setMethods( [ 'deleteSubscriber', 'taskId' ] )
 			->getMock();
 
 		$oDeleteUserTask
@@ -30,11 +30,22 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			->method( 'deleteSubscriber' )
 			->will($this->returnValue(8));
 
+		/* @var ExactTargetUserDataVerificatorTask $oUserDataVerificatorTask mock of ExactTargetUserDataVerificatorTask class */
+		$oMockUserDataVerificatorTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetUserDataVerificatorTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'execute', 'taskId' ] )
+			->getMock();
+
+		$oMockUserDataVerificatorTask
+			->expects( $this->once() )
+			->method( 'execute' )
+			->will( $this->returnValue( 'OK' ) );
+
 		/* Mock tested class /*
 		/* @var ExactTargetCreateUserTask $addTaskMock mock of ExactTargetCreateUserTask class */
 		$addTaskMock = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetCreateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'createSubscriber', 'createUser', 'createUserProperties', 'getDeleteUserTask' ] )
+			->setMethods( [ 'createSubscriber', 'createUser', 'createUserProperties', 'getDeleteUserTask', 'getUserDataVerificatorTask', 'getTaskId' ] )
 			->getMock();
 
 		$addTaskMock
@@ -42,6 +53,10 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			->method( 'getDeleteUserTask' )
 			->will( $this->returnValue( $oDeleteUserTask ) );
 
+		$addTaskMock
+			->expects( $this->once() )
+			->method( 'getUserDataVerificatorTask' )
+			->will( $this->returnValue( $oMockUserDataVerificatorTask ) );
 
 		/* test createSubscriber invoke params */
 		$addTaskMock
