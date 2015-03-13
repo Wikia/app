@@ -212,6 +212,21 @@
 	}
 
 	/**
+	 * Obtains element wrapping contents of the page
+	 * @returns {jQuery}
+	 */
+	function getPageContainer() {
+		if ($pageContainer.length) {
+			return $pageContainer;
+		} else if (window.skin === 'monobook') {
+			$pageContainer = $('#content');
+		} else {
+			$pageContainer = $('.WikiaPageContentWrapper');
+		}
+		return $pageContainer;
+	}
+
+	/**
 	 * Constructs jQuery element with the notification
 	 * @param {String} content
 	 * @param {String} [type]
@@ -233,7 +248,7 @@
 	 */
 	function addToDOM($element, $parentElement) {
 		// allow notification wrapper element to be passed by extension
-		var $parent = $parentElement || (isModalShown() ? modal : $pageContainer),
+		var $parent = $parentElement || (isModalShown() ? modal : getPageContainer()),
 			$bannerNotificationsWrapper = $parent.find('.banner-notifications-wrapper');
 		if (!$bannerNotificationsWrapper.length) {
 			$bannerNotificationsWrapper = $('<div></div>').addClass('banner-notifications-wrapper');
