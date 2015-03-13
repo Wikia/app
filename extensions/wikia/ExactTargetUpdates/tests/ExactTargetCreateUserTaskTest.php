@@ -30,17 +30,6 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			->method( 'deleteSubscriber' )
 			->will($this->returnValue(8));
 
-		/* @var ExactTargetUserDataVerificationTask $oUserDataVerificationTask mock of ExactTargetUserDataVerificationTask class */
-		$oMockUserDataVerificationTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetUserDataVerificationTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'execute', 'taskId' ] )
-			->getMock();
-
-		$oMockUserDataVerificationTask
-			->expects( $this->once() )
-			->method( 'execute' )
-			->will( $this->returnValue( 'OK' ) );
-
 		/* Mock tested class /*
 		/* @var ExactTargetCreateUserTask $addTaskMock mock of ExactTargetCreateUserTask class */
 		$addTaskMock = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetCreateUserTask' )
