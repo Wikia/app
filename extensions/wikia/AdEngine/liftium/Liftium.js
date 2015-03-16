@@ -99,15 +99,23 @@ Liftium.addAdIframe = function (doc, slotname, slotsize) {
  * @param {string} slot.slotname
  */
 Liftium.addToQueue = function (slot) {
+	Liftium.d('Adding to the queue a slot', 1);
 	Liftium.queue.push(slot);
 };
 
 Liftium.processQueue = function () {
-	// TODO: replace Object.keys with regular loop because IE8 doesn't know Object.keys() magic ;)
-	Object.keys(Liftium.queue).forEach(function () {
-		var slot = Liftium.queue.shift();
-		Liftium.callInjectedIframeAd(slot.slotsize, window.document.getElementById(slot.slotname + '_iframe'), slot.slotname);
+	Liftium.d('Processing the queue', 'debug', 1);
+
+	Wikia.LazyQueue.makeQueue(Liftium.queue, function (slot) {
+		Liftium.d('Liftium queue processing a slot', 1);
+		Liftium.callInjectedIframeAd(
+			slot.slotsize,
+			window.document.getElementById(slot.slotname + '_iframe'),
+			slot.slotname
+		);
 	});
+
+	Liftium.queue.start();
 };
 
 Liftium.beaconCall = function (url, cb){
@@ -1485,19 +1493,8 @@ Liftium.init = function (callback) {
 		tracker.measureTime('adengine.init', 'liftium').track();
 	});
 
-	// TODO remove! an ugly hack for AdDriver transparency
-	var callback2 = function() {
-		if (typeof callback === 'function') {
-			callback();
-		}
-		if (window.AdEngine_loadLateAds) {
-			Liftium.d("AdEngine_run_later", 1);
-			window.AdEngine_loadLateAds();
-		}
-	};
-
 	Liftium.pullGeo();
-	Liftium.pullConfig(callback2);
+	Liftium.pullConfig(Liftium.processQueue);
 
 	// Tell the parent window to listen to hop messages
 	if (LiftiumOptions.enableXDM !== false ){
@@ -1848,7 +1845,6 @@ Liftium.onLoadHandler = function () {
 	if (!Liftium.e(Liftium.config) && Liftium.iframesLoaded()) {
 		Liftium.sendBeacon();
 	} else if (Liftium.loadDelay < Liftium.maxLoadDelay){
-		Liftium.processQueue();
 		// Check again in a bit. Keep increasing the time
 		Liftium.loadDelay += Liftium.loadDelay;
 		window.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
