@@ -12,6 +12,9 @@
 	} else {
 		?>
 		<header id="WikiaPageHeader" class="WikiaPageHeader">
+			<?php if ( !empty( $wg->EnablePageShareExt ) ) {
+				echo F::app()->renderView('PageShare', 'index');
+			} ?>
 			<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
 
 			<?php
@@ -42,7 +45,6 @@
 			foreach ($extraButtons as $button) {
 				echo $button;
 			}
-
 			// "pages on this wiki" counter
 			if (!is_null($tallyMsg)) {
 				?>
@@ -50,11 +52,7 @@
 					<?= $tallyMsg ?>
 				</div>
 			<?php
-				if (!empty($wg->EnablePageShareExt)) {
-					echo F::app()->renderView('PageShare', 'index');
-				}
 			}
-
 			// render page type line
 			if (!empty($pageSubtitle)) {
 				?>
