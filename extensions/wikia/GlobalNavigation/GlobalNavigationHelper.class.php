@@ -17,31 +17,6 @@ class GlobalNavigationHelper {
 	}
 
 	/**
-	 * @desc gets corporate page URL for given language.
-	 * Firstly, it checks using GlobalTitle method.
-	 * If entry for given language doesn't exist it checks in $wgLangToCentralMap variable
-	 * If it doesn't exist it fallbacks to english version (default lang) using GlobalTitle method
-	 *
-	 * @param string $lang - language
-	 * @return string - Corporate Wikia Domain for given language
-	 */
-	public function getCentralUrlForLang( $lang ) {
-		global $wgLangToCentralMap;
-		$out = '/';
-
-		$title = $this->getCentralWikiUrlForLangIfExists( $lang );
-		if ( $title ) {
-			$out = $title->getServer();
-		} else if ( !empty( $wgLangToCentralMap[ $lang ] ) ) {
-			$out = $wgLangToCentralMap[ $lang ];
-		} else if ($title = $this->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
-			$out = $title->getServer();
-		}
-
-		return $out;
-	}
-
-	/**
 	 * @desc get central wiki URL for given language.
 	 * If central wiki in given language doesn't exist return default one (english)
 	 *
