@@ -12,7 +12,7 @@ class MustacheServiceTest extends WikiaBaseTest {
 		$this->service = MustacheService::getInstance();
 	}
 
-	public function testExtensionsIsLoader() {
+	public function testExtensionsIsLoaded() {
 		$this->assertTrue( extension_loaded( 'mustache' ), '"mustache" PHP extension needs to be loaded!' );
 	}
 
