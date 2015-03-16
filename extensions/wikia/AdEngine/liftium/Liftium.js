@@ -1489,7 +1489,7 @@ Liftium.injectAd = function (doc, slotname, slotsize) {
 
 
 
-Liftium.init = function (callback) {
+Liftium.init = function () {
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
 		Liftium.d('(init) Liftium Disaster Recovery enabled.', 1);
 		return;
