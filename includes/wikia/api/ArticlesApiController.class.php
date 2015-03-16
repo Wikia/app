@@ -1019,12 +1019,10 @@ class ArticlesApiController extends WikiaApiController {
 			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
 				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
 
-				if ($categoryTitle) {
-					$categories[] = [
-						'title' => $categoryTitle->getText(),
-						'url' => $categoryTitle->getLocalURL()
-					];
-				}
+				$categories[] = [
+					'title' => $categoryTitle->getText(),
+					'url' => $categoryTitle->getLocalURL()
+				];
 			}
 
 			$result = [
