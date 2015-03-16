@@ -165,7 +165,6 @@ class Title {
 				$cachedcount++;
 				Title::$titleCache[$text] =& $t;
 			}
-
 			return $t;
 		} else {
 			$ret = null;
