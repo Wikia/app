@@ -72,7 +72,7 @@
 		}
 	}
 
-	.wikia-main-page-tag-lcs {
+	.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
 		@include width-calc("100% - 300px");
 	}
 	.main-page-tag-rcs {
