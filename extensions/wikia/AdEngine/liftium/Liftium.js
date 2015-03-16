@@ -1478,6 +1478,15 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
     return false;
 };
 
+Liftium.injectAd = function (doc, slotname, slotsize) {
+	Liftium.addAdDiv(doc, slotname, slotsize);
+	Liftium.addToQueue({
+		slotsize: slotsize,
+		htmlElement: doc.getElementById(slotname + '_iframe'),
+		slotname: slotname
+	});
+};
+
 
 
 Liftium.init = function (callback) {

@@ -80,12 +80,7 @@ define('ext.wikia.adEngine.provider.liftium', [
 		var slotsize = slotMap[slotname].size;
 
 			log('using iframe for #' + slotname, 'debug', logGroup);
-			Liftium.addAdDiv(doc, slotname, slotsize);
-			Liftium.addToQueue({
-				slotsize: slotsize,
-				htmlElement: doc.getElementById(slotname + '_iframe'),
-				slotname: slotname
-			});
+			Liftium.injectAd(doc, slotname, slotsize);
 
 			slotTweaker.removeDefaultHeight(slotname);
 
