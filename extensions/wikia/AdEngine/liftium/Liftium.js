@@ -68,15 +68,25 @@ Liftium.addEventListener = function(item, eventName, callback){
     return false;
 };
 
-Liftium.addAdIframe = function (doc, slotname, slotsize) {
+Liftium.addAdDiv = function (doc, slotname, slotsize) {
 	'use strict';
 
 	var adDiv = doc.createElement('div'),
-		adIframe = doc.createElement('iframe'),
-		s = slotsize && slotsize.split('x');
+		adIframe;
 
 	Liftium.adNum++;
 	adDiv.id = 'Liftium_' + slotsize + '_' + Liftium.adNum;
+	adIframe = Liftium.createAdIframe(doc, slotname, slotsize);
+
+	adDiv.appendChild(adIframe);
+	doc.getElementById(slotname).appendChild(adDiv);
+};
+
+Liftium.createAdIframe = function (doc, slotname, slotsize, src) {
+	'use strict';
+
+	var adIframe = doc.createElement('iframe'),
+		s = slotsize && slotsize.split('x');
 
 	adIframe.width = s[0];
 	adIframe.height = s[1];
@@ -88,8 +98,11 @@ Liftium.addAdIframe = function (doc, slotname, slotsize) {
 	adIframe.id = slotname + '_iframe';
 	adIframe.style.display = 'block';
 
-	adDiv.appendChild(adIframe);
-	doc.getElementById(slotname).appendChild(adDiv);
+	if (src) {
+		adIframe.src = src;
+	}
+
+	return adIframe;
 };
 
 /**
@@ -435,19 +448,9 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 		adIframe.src = iframeUrl;
 	} else {
 		// Otherwise, create one and append it to load dive
-		adIframe = document.createElement("iframe");
-		var s = tag.size.split("x");
-		adIframe.src = iframeUrl;
-		adIframe.width = s[0];
-		adIframe.height = s[1];
-		adIframe.scrolling = "no";
-		adIframe.frameBorder = 0;
-		adIframe.marginHeight = 0;
-		adIframe.marginWidth = 0;
-		adIframe.allowTransparency = true; // For IE
+		adIframe = Liftium.createAdIframe(document, slotname, tag.size, iframeUrl);
 		adIframe.id = slotname + '_' + tag.tag_id;
 		adIframe.setAttribute('data-tag-id', tag.tag_id);
-		adIframe.style.display = 'block';
 
 		// expandable slots via in-tag-name magic phrase
 		// eg. 300x250 with "foo 600x250 bar"
