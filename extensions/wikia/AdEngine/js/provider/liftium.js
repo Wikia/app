@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.liftium',
-		adNum = 200, // TODO global-ize it (move to Liftium?)!
 		slotMap,
 		canHandleSlot,
 		fillInSlot;
@@ -78,30 +77,10 @@ define('ext.wikia.adEngine.provider.liftium', [
 			return;
 		}
 
-		var slotsize = slotMap[slotname].size,
-			adDiv = doc.createElement('div'),
-			adIframe = doc.createElement('iframe'),
-			s = slotsize && slotsize.split('x');
+		var slotsize = slotMap[slotname].size;
 
 			log('using iframe for #' + slotname, 'debug', logGroup);
-			// TODO: move the following to Liftium.js and refactor
-			adNum += 1;
-			adDiv.id = 'Liftium_' + slotsize + '_' + adNum;
-
-			adIframe.width = s[0];
-			adIframe.height = s[1];
-			adIframe.scrolling = 'no';
-			adIframe.frameBorder = 0;
-			adIframe.marginHeight = 0;
-			adIframe.marginWidth = 0;
-			adIframe.allowTransparency = true; // For IE
-			adIframe.id = slotname + '_iframe';
-			adIframe.style.display = 'block';
-
-			adDiv.appendChild(adIframe);
-			doc.getElementById(slotname).appendChild(adDiv);
-
-			Liftium.callInjectedIframeAd(slotsize, doc.getElementById(slotname + '_iframe'), slotname);
+			Liftium.injectAd(doc, slotname, slotsize);
 
 			slotTweaker.removeDefaultHeight(slotname);
 
