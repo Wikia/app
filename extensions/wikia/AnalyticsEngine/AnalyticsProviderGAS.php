@@ -1,9 +1,5 @@
 <?php
 
-global $wgHooks;
-
-$wgHooks['MakeGlobalVariablesScript'][] = 'AnalyticsProviderGAS::wfMakeGlobalVariablesScript';
-
 class AnalyticsProviderGAS implements iAnalyticsProvider {
 
 	/**
