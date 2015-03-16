@@ -200,10 +200,6 @@ class BodyController extends WikiaController {
 						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 					}
 				}
-			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
-				$railModuleList = array (
-					1500 => array('PageLayoutBuilderForm', 'Index', null)
-				);
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = array();
