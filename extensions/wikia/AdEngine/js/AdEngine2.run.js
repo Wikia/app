@@ -105,12 +105,12 @@ require([
 	if (adContext.getContext().opts.disableLateQueue) {
 		log('Skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
 	} else {
-		window.AdEngine_loadLateAds();
+		AdEngine_loadLateAds();
 	}
 });
 
 // Load late ads now
-window.AdEngine_loadLateAds = function () {
+function AdEngine_loadLateAds () {
 	'use strict';
 
 	function loadLateFn() {
@@ -136,7 +136,7 @@ window.AdEngine_loadLateAds = function () {
 	}
 
 	window.wgAfterContentAndJS.push(loadLateFn);
-};
+}
 
 // FPS meter
 require(['wikia.querystring', 'wikia.document'], function (qs, doc) {
