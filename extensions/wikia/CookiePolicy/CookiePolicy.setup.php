@@ -21,7 +21,7 @@ $wgAutoloadClasses['Wikia\CookiePolicy\CookiePolicyHooks'] = __DIR__ . '/CookieP
 /**
  * Use ResourceLoader to load the JavaScript module
  */
-$wgResourceModules['ext.cookiePolicy'] = [
+$wgResourceModules['ext.cookiePolicyMessages'] = [
 	'localBasePath' => __DIR__ . '/scripts',
 	'remoteExtPath' => 'wikia/CookiePolicy/scripts',
 	'messages' => [

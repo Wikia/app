@@ -15,7 +15,7 @@ class CookiePolicyHooks {
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
 		// use resource loader for i18n messages in JS
-		$out->addModules( 'ext.cookiePolicy' );
+		$out->addModules( 'ext.cookiePolicyMessages' );
 
 		// use AssetsManager for script loading to avoid race conditions (SOC-528)
 		\Wikia::addAssetsToOutput( 'cookie_policy_js' );
