@@ -71,4 +71,11 @@
 			}
 		}
 	}
+
+	.wikia-main-page-tag-lcs {
+		@include width-calc("100% - 300px");
+	}
+	.main-page-tag-rcs {
+		width: 300px;
+	}
 }
