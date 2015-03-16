@@ -105,32 +105,6 @@ Liftium.createAdIframe = function (doc, slotname, slotsize, src) {
 	return adIframe;
 };
 
-/**
- * @param {Object} slot - data of the slot to be queued
- * @param {string} slot.slotsize
- * @param {Object} slot.htmlElement
- * @param {string} slot.slotname
- */
-Liftium.addToQueue = function (slot) {
-	Liftium.d('Adding to the queue a slot', 1);
-	Liftium.queue.push(slot);
-};
-
-Liftium.processQueue = function () {
-	Liftium.d('Processing the queue', 'debug', 1);
-
-	Wikia.LazyQueue.makeQueue(Liftium.queue, function (slot) {
-		Liftium.d('Liftium queue processing a slot', 1);
-		Liftium.callInjectedIframeAd(
-			slot.slotsize,
-			window.document.getElementById(slot.slotname + '_iframe'),
-			slot.slotname
-		);
-	});
-
-	Liftium.queue.start();
-};
-
 Liftium.beaconCall = function (url, cb){
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
 		Liftium.d('(beaconCall) Liftium Disaster Recovery enabled.', 1);
@@ -1480,7 +1454,7 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
 
 Liftium.injectAd = function (doc, slotname, slotsize) {
 	Liftium.addAdDiv(doc, slotname, slotsize);
-	Liftium.addToQueue({
+	Liftium.queue.push({
 		slotsize: slotsize,
 		htmlElement: doc.getElementById(slotname + '_iframe'),
 		slotname: slotname
@@ -1917,7 +1891,20 @@ Liftium.parseQueryString = function (qs){
 	return ret;
 };
 
+Liftium.processQueue = function () {
+	Liftium.d('Processing the queue', 'debug', 1);
 
+	Wikia.LazyQueue.makeQueue(Liftium.queue, function (slot) {
+		Liftium.d('Liftium queue processing a slot', 1);
+		Liftium.callInjectedIframeAd(
+			slot.slotsize,
+			window.document.getElementById(slot.slotname + '_iframe'),
+			slot.slotname
+		);
+	});
+
+	Liftium.queue.start();
+};
 
 /* Pull the configuration data from our servers */
 Liftium.pullConfig = function (callback){

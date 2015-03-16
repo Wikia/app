@@ -105,37 +105,33 @@ require([
 	if (adContext.getContext().opts.disableLateQueue) {
 		log('Skipping late queue - wgAdEngineDisableLateQueue set to true', 1, module);
 	} else {
-		AdEngine_loadLateAds();
+		window.wgAfterContentAndJS.push(startLateQueue);
 	}
 });
 
 // Load late ads now
-function AdEngine_loadLateAds () {
+function startLateQueue() {
 	'use strict';
 
-	function loadLateFn() {
-		require([
-			'ext.wikia.adEngine.adConfigLate',
-			'ext.wikia.adEngine.adEngine',
-			'ext.wikia.adEngine.lateAdsQueue',
-			'ext.wikia.adEngine.adTracker',
-			'wikia.krux',
-			'wikia.log'
-		], function (adConfigLate, adEngine, lateAdsQueue, adTracker, krux, log) {
-			var module = 'AdEngine_loadLateAds',
-				kruxSiteId = 'JU3_GW1b';
+	require([
+		'ext.wikia.adEngine.adConfigLate',
+		'ext.wikia.adEngine.adEngine',
+		'ext.wikia.adEngine.lateAdsQueue',
+		'ext.wikia.adEngine.adTracker',
+		'wikia.krux',
+		'wikia.log'
+	], function (adConfigLate, adEngine, lateAdsQueue, adTracker, krux, log) {
+		var module = 'AdEngine_loadLateAds',
+			kruxSiteId = 'JU3_GW1b';
 
-			log('launching late ads now', 1, module);
-			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
-			adTracker.measureTime('adengine.init', 'queue.late').track();
-			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
+		log('launching late ads now', 1, module);
+		log('work on lateAdsQueue according to AdConfig2Late', 1, module);
+		adTracker.measureTime('adengine.init', 'queue.late').track();
+		adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 
-			log('Loading Krux module, site id: ' + kruxSiteId, 'debug', 'wikia.krux');
-			krux.load(kruxSiteId);
-		});
-	}
-
-	window.wgAfterContentAndJS.push(loadLateFn);
+		log('Loading Krux module, site id: ' + kruxSiteId, 'debug', 'wikia.krux');
+		krux.load(kruxSiteId);
+	});
 }
 
 // FPS meter
