@@ -89,21 +89,21 @@ $color-rail-background: mix($color-page, $black, 90%);
 
             //Activity Feed
             &.edit {
-                background-image: url(/skins/shared/images/menu-contributions-dark.png);
+                background-image: url(/skins/shared/images/editpen.svg);
                 height: 20px;
-                left: 3px;
+                left: 5px;
                 opacity: .6;
                 top: 8px;
                 width: 19px;
             }
 
             &.new {
-                background-image: url(/skins/shared/images/new_article_icon.png);
-                height: 30px;
+                background-image: url(/skins/shared/images/new_article_icon.svg);
+                height: 27px;
                 left: 0;
                 opacity: .8;
                 top: 2px;
-                width: 30px;
+                width: 27px;
             }
         }
     }
