@@ -36,9 +36,6 @@ require([
 	'use strict';
 
 	var module = 'AdEngine2.run',
-		params,
-		param,
-		value,
 		adsInHead = abTest && abTest.inGroup('ADS_IN_HEAD', 'YES');
 
 	window.AdEngine_getTrackerStats = slotTracker.getStats;
@@ -76,17 +73,6 @@ require([
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
 	window.adSlotTweaker = slotTweaker;
-
-	// Export page level params, so Krux can read them
-	params = adLogicPageParams.getPageLevelParams();
-	for (param in params) {
-		if (params.hasOwnProperty(param)) {
-			value = params[param];
-			if (value) {
-				window['kruxDartParam_' + param] = value.toString();
-			}
-		}
-	}
 
 	// Custom ads (skins, footer, etc)
 	// TODO: loadable modules
@@ -133,29 +119,23 @@ window.AdEngine_loadLateAds = function () {
 			'ext.wikia.adEngine.adEngine',
 			'ext.wikia.adEngine.lateAdsQueue',
 			'ext.wikia.adEngine.adTracker',
+			'wikia.krux',
 			'wikia.log'
-		], function (adConfigLate, adEngine, lateAdsQueue, adTracker, log) {
-			var module = 'AdEngine_loadLateAds';
+		], function (adConfigLate, adEngine, lateAdsQueue, adTracker, krux, log) {
+			var module = 'AdEngine_loadLateAds',
+				kruxSiteId = 'JU3_GW1b';
+
 			log('launching late ads now', 1, module);
 			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
 			adTracker.measureTime('adengine.init', 'queue.late').track();
 			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
+
+			log('Loading Krux module, site id: ' + kruxSiteId, 'debug', 'wikia.krux');
+			krux.load(kruxSiteId);
 		});
 	}
 
-	require(['ext.wikia.adEngine.adContext', require.optional('wikia.abTest')], function (adContext, abTest) {
-		var adsAfterPageLoad = adContext.getContext().lateAdsAfterPageLoad && abTest && abTest.inGroup('ADS_AFTER_PAGE_LOAD', 'YES');
-
-		if (adsAfterPageLoad) {
-			if (document.readyState === 'complete') {
-				setTimeout(loadLateFn, 4);
-			} else {
-				window.addEventListener('load', loadLateFn, false);
-			}
-		} else {
-			window.wgAfterContentAndJS.push(loadLateFn);
-		}
-	});
+	window.wgAfterContentAndJS.push(loadLateFn);
 };
 
 // FPS meter

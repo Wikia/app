@@ -32,11 +32,9 @@ class ClientTest extends \WikiaBaseTest {
 			->willReturn( false );
 
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute' ], [ 'http://example.com' ], '', false );
-		$requestMock->expects( $this->once() )
-			->method( 'execute' )
-			->willReturn( $statusMock );
+		$requestMock->status = $statusMock;
 
-		$this->mockStaticMethod( '\MWHttpRequest', 'factory', $requestMock );
+		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
 		$client = new Client( 'http://example.com', 'id', 'secret' );
 		$client->request( 'resource', [], [], [] );
@@ -54,14 +52,12 @@ class ClientTest extends \WikiaBaseTest {
 			->willReturn( true );
 
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute', 'getContent' ], [ 'http://example.com' ], '', false );
-		$requestMock->expects( $this->once() )
-			->method( 'execute' )
-			->willReturn( $statusMock );
+		$requestMock->status = $statusMock;
 		$requestMock->expects( $this->once() )
 			->method( 'getContent' )
 			->willReturn( null );
 
-		$this->mockStaticMethod( '\MWHttpRequest', 'factory', $requestMock );
+		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
 		$client = new Client( 'http://example.com', 'id', 'secret' );
 		$client->request( 'resource', [], [], [] );
@@ -77,14 +73,12 @@ class ClientTest extends \WikiaBaseTest {
 			->willReturn( true );
 
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute', 'getContent' ], [ 'http://example.com' ], '', false );
-		$requestMock->expects( $this->once() )
-			->method( 'execute' )
-			->willReturn( $statusMock );
+		$requestMock->status = $statusMock;
 		$requestMock->expects( $this->once() )
 			->method( 'getContent' )
 			->willReturn( '{}' );
 
-		$this->mockStaticMethod( '\MWHttpRequest', 'factory', $requestMock );
+		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
 		$client = new Client( 'http://example.com', 'id', 'secret' );
 		$this->assertInternalType( 'object', $client->request( 'resource', [], [], [] ) );

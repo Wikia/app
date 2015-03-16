@@ -1,21 +1,20 @@
 /*jshint camelcase:false*/
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adLogicPageViewCounter',
+	require.optional('ext.wikia.adEngine.lookup.services'),
 	require.optional('wikia.abTest'),
-	require.optional('ext.wikia.adEngine.lookupServices'),
-	require.optional('ext.wikia.adEngine.krux')
-], function (log, doc, loc, adContext, pvCounter, abTest, lookups, krux) {
+	require.optional('wikia.krux')
+], function (adContext, pvCounter, log, doc, loc, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
 		hostname = loc.hostname,
 		maxNumberOfCategories = 3,
-		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
 		skin = adContext.getContext().targeting.skin,
 		context = {};
 
@@ -192,7 +191,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	 */
 	function getPageLevelParams(options) {
 		// TODO: cache results (keep in mind some of them may change while executing page)
-
 		log('getPageLevelParams', 9, logGroup);
 
 		var site,
@@ -241,8 +239,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		if (krux && !targeting.wikiDirectedAtChildren) {
-			params.u = krux.user;
-			params.ksgmnt = krux.segments && krux.segments.slice(0, maxNumberOfKruxSegments);
+			params.u = krux.getUser();
+			params.ksgmnt = krux.getSegments();
 		}
 
 		if (targeting.wikiIsTop1000) {

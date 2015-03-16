@@ -9,6 +9,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 
 	// Variables that are preserved between function calls
 	var highlightSyntaxIfNeededIntervalID,
+		initialized = false,
 		lastText,
 		/**
 		 * @var maxSpanNumber The number of the last span available,
@@ -115,6 +116,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 			fragment;
 
 		lastText = wpTextbox1.value;
+
 		/* Backslashes and apostrophes are CSS-escaped at the beginning and all
 		parsing regexes and functions are designed to match. On the other hand,
 		newlines are not escaped until written so that in the regexes ^ and $
@@ -155,18 +157,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		diffTime = endTime - startTime;
 
 		if (diffTime > syntaxHighlighterConfig.timeout) {
-			clearInterval(highlightSyntaxIfNeededIntervalID);
-
-			wpTextbox1.removeEventListener('input', highlightSyntax);
-			wpTextbox1.removeEventListener('scroll', syncScrollX);
-			wpTextbox1.removeEventListener('scroll', syncScrollY);
-
-			syntaxStyleTextNode.nodeValue = '';
-
-			log('Syntax highlighting took too long. The maximum allowed ' +
-				'highlighting time is ' + syntaxHighlighterConfig.timeout +
-				', and your computer took ' + diffTime + '.');
-
+			resetHighlightSyntax(diffTime);
 			return;
 		}
 
@@ -185,6 +176,24 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		escape newlines. CSS ignores the space after the hex code of the
 		escaped character */
 		syntaxStyleTextNode.nodeValue = css.substring(2).replace(/\n/g, '\\A ') + '\'}';
+	}
+
+	function resetHighlightSyntax(diffTime) {
+		if (initialized) {
+			clearInterval(highlightSyntaxIfNeededIntervalID);
+
+			wpTextbox1.removeEventListener('input', highlightSyntax);
+			wpTextbox1.removeEventListener('scroll', syncScrollX);
+			wpTextbox1.removeEventListener('scroll', syncScrollY);
+
+			syntaxStyleTextNode.nodeValue = '';
+
+			if (diffTime) {
+				log('Syntax highlighting took too long. The maximum allowed ' +
+					'highlighting time is ' + syntaxHighlighterConfig.timeout +
+					', and your computer took ' + diffTime + '.');
+			}
+		}
 	}
 
 	function highlightBlock (color, breakerRegex) {
@@ -499,6 +508,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		wpTextbox1.addEventListener('scroll', syncScrollY);
 		highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntaxIfNeeded, 500);
 		highlightSyntax();
+
+		initialized = true;
 	}
 
 	function queueSetup (textarea) {
@@ -536,6 +547,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	return {
-		init: init
+		init: init,
+		reset: resetHighlightSyntax
 	};
 });
