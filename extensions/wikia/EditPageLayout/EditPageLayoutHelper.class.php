@@ -120,6 +120,10 @@ class EditPageLayoutHelper {
 		$this->addJsVariableRef( 'wgEditPageHasEditPermissionError', $this->editPage->mHasPermissionError );
 		$this->addJsVariableRef( 'wgEditPageSection', $this->editPage->section );
 
+		if ( $this->app->wg->MercuryPreviewUrlPrefix ) {
+			$this->addJsVariable( 'wgEnableMercuryPreview', true );
+		}
+
 		// data for license module (BugId:6967)
 		$titleLicensing = GlobalTitle::newFromText( 'Community_Central:Licensing', null, 177 );
 		$this->addJsVariable( 'wgEditPageLicensingUrl', $titleLicensing->getFullUrl() );

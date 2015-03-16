@@ -25,7 +25,7 @@ class EditPageLayoutController extends WikiaController {
 
 		// adding 'editor' class as a CSS helper
 		OasisController::addBodyClass('editor');
-		
+
 		// temporary grid transition code, remove after transition
 		OasisController::addBodyClass('WikiaGrid');
 
@@ -192,5 +192,15 @@ class EditPageLayoutController extends WikiaController {
 		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Get iframe that pushes the parsed article JSON to Mercury for preview
+	 */
+	public function executeMercuryPreview() {
+		$this->mercuryUrl = $this->request->getVal('mercuryUrl');
+		$this->mwHash = $this->request->getVal('mwHash');
+		$this->parserOutput = $this->request->getVal('parserOutput');
+		$this->title= $this->request->getVal('title');
 	}
 }

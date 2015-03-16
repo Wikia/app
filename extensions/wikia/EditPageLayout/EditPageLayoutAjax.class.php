@@ -6,10 +6,11 @@ class EditPageLayoutAjax {
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
 	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
-		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt;
-		wfProfileIn(__METHOD__);
+		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt, $wgMercuryPreviewUrl, $wgMercuryPreviewMwSalt;
 
-		if ( !empty( $wgEnableSlowPagesBlacklistExt) ) {
+		wfProfileIn( __METHOD__ );
+
+		if ( !empty( $wgEnableSlowPagesBlacklistExt ) ) {
 			global $wgSlowPagesBlacklist;
 			if ( in_array( $wgTitle->getFullURL(), $wgSlowPagesBlacklist ) ) {
 				wfProfileOut( __METHOD__ );
@@ -21,17 +22,27 @@ class EditPageLayoutAjax {
 			}
 		}
 
-		if($wgTitle && class_exists($page)) {
+		if ( $wgTitle && class_exists( $page ) ) {
 			$pageObj = new $page();
-			if(is_a( $pageObj, 'SpecialCustomEditPage' )) {
-				$wikitext = $pageObj->getWikitextFromRequestForPreview($wgRequest->getVal('title', 'empty'));
-				$service = new EditPageService($wgTitle);
-				$html = $pageObj->getOwnPreviewDiff($wikitext, $method);
+			$title = $wgRequest->getVal( 'title', 'empty' );
+			if ( is_a( $pageObj, 'SpecialCustomEditPage' ) ) {
+				$wikitext = $pageObj->getWikitextFromRequestForPreview( $title );
+				$service = new EditPageService( $wgTitle );
+				$html = $pageObj->getOwnPreviewDiff( $wikitext, $method );
 
 				/**
-				 * @val String $type - partial or full - whether to return full skin along with css and js or just a content
+				 * @val String $type - partial, full or mercury
+				 *
+				 * full means content along with CSS and JS
+				 * partial means just the article content
+				 * mercury means previewing the article in Mercury skin (needs $wgMercuryPreviewUrlPrefix)
 				 */
 				$type = $wgRequest->getVal( 'type', 'partial' );
+
+				if ( $type === 'mercury' && ( empty( $wgMercuryPreviewUrl ) || empty( $wgMercuryPreviewMwSalt ) ) ) {
+					// Fall back to regular wikiamobile if Mercury is not available
+					$type = 'full';
+				}
 
 				$res = [];
 
@@ -39,14 +50,25 @@ class EditPageLayoutAjax {
 					$html = '';
 
 					if ( $method == 'preview' ) {
-						list($html, $catbox, $interlanglinks) = $service->getPreview($wikitext);
 
-						// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
-						wfRunHooks('OutputPageBeforeHTML', array(&$wgOut, &$html));
+						$asJson = ( $type === 'mercury' );
+						list( $html, $catbox, $interlanglinks ) = $service->getPreview( $wikitext, $asJson );
+
+						if ( !$asJson ) {
+							// allow extensions to modify preview (BugId:8354) - this hook should only be run on article's content
+							wfRunHooks( 'OutputPageBeforeHTML', array( &$wgOut, &$html ) );
+						}
 
 						if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 							if ( $type === 'full' ) {
 								$res['html'] = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html, 'section' => $section ] );
+							} elseif ( $type === 'mercury' ) {
+								$res['html'] = F::app()->renderView( 'EditPageLayout', 'mercuryPreview', [
+									'parserOutput' => $html,
+									'mercuryUrl' => $wgMercuryPreviewUrl,
+									'title' => $title,
+									'mwHash' => hash_hmac ( 'sha1', $html, $wgMercuryPreviewMwSalt )
+								] );
 							} else {
 								$res['html'] = $html;
 							}
@@ -58,12 +80,12 @@ class EditPageLayoutAjax {
 							}
 						} else {
 							// add page title when not in section edit mode
-							if ($section === '') {
+							if ( $section === '' ) {
 								$html = '<h1 class="pagetitle">' . $wgTitle->getPrefixedText() .  '</h1>' . $html;
 							}
 
 							// allow extensions to modify preview (BugId:6721)
-							wfRunHooks('EditPageLayoutModifyPreview', array($wgTitle, &$html, $wikitext));
+							wfRunHooks( 'EditPageLayoutModifyPreview', array( $wgTitle, &$html, $wikitext ) );
 
 							/**
 							 * bugid: 11407
@@ -78,7 +100,7 @@ class EditPageLayoutAjax {
 								}
 							}
 
-							$html = '<div class="WikiaArticle">'. $html .'</div>';
+							$html = '<div class="WikiaArticle">' . $html . '</div>';
 
 							$res = [
 								'html' => $html,
@@ -92,12 +114,12 @@ class EditPageLayoutAjax {
 					}
 				}
 
-				wfProfileOut(__METHOD__);
+				wfProfileOut( __METHOD__ );
 				return $res;
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return [ 'html' => '' ];
 	}
 
@@ -106,15 +128,15 @@ class EditPageLayoutAjax {
 	 */
 	static private function resolveWikitextFromRequest( $method ) {
 		global $wgRequest;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$content = $wgRequest->getVal('content', '');
-		$mode = $wgRequest->getVal('mode', '');
-		$page = $wgRequest->getVal('page', '');
-		$section = $wgRequest->getVal('section', '');
+		$content = $wgRequest->getVal( 'content', '' );
+		$mode = $wgRequest->getVal( 'mode', '' );
+		$page = $wgRequest->getVal( 'page', '' );
+		$section = $wgRequest->getVal( 'section', '' );
 
-		$wikitext = self::resolveWikitext($content, $mode, $page, $method, $section);
-		wfProfileOut(__METHOD__);
+		$wikitext = self::resolveWikitext( $content, $mode, $page, $method, $section );
+		wfProfileOut( __METHOD__ );
 		return $wikitext;
 	}
 
@@ -123,7 +145,7 @@ class EditPageLayoutAjax {
 	 */
 	static public function preview() {
 		global $wgRequest;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$skin = $wgRequest->getVal( 'skin' );
 
@@ -140,11 +162,11 @@ class EditPageLayoutAjax {
 		$summary = $wgRequest->getText( 'summary' );
 		$summary = RequestContext::getMain()->getSkin()->formatComment( $summary, false );
 
-		if( $summary != '' ) {
+		if ( $summary != '' ) {
 			$res['summary'] = wfMessage( 'wikia-editor-preview-editSummary' )->rawParams( $summary )->parse();
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
@@ -153,18 +175,18 @@ class EditPageLayoutAjax {
 	 */
 	static public function diff() {
 		global $wgRequest, $wgTitle;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$res = self::resolveWikitextFromRequest('diff');
+		$res = self::resolveWikitextFromRequest( 'diff' );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 
 	static private function updatePreferences( $name, $value ) {
 		global $wgUser;
-		if ($wgUser->isLoggedIn()) {
-			$wgUser->setOption($name, $value);
+		if ( $wgUser->isLoggedIn() ) {
+			$wgUser->setOption( $name, $value );
 			$wgUser->saveSettings();
 
 			// commit changes to local db
@@ -173,7 +195,7 @@ class EditPageLayoutAjax {
 
 			// commit changes to shared db
 			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
+			if ( isset( $wgSharedDB ) ) {
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$dbw->commit();
 			}
@@ -187,17 +209,17 @@ class EditPageLayoutAjax {
 	static public function setWidescreen() {
 		global $wgRequest;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$res = false;
 
-		if ($wgRequest->wasPosted()) {
-			$rawState = (bool)$wgRequest->getVal('state');
+		if ( $wgRequest->wasPosted() ) {
+			$rawState = (bool)$wgRequest->getVal( 'state' );
 			// save it
-			$res = self::updatePreferences('editwidth', $rawState);
+			$res = self::updatePreferences( 'editwidth', $rawState );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return array(
 			'result' => $res
 		);
@@ -206,7 +228,7 @@ class EditPageLayoutAjax {
 	static public function getTemplatesList() {
 		global $wgTitle;
 
-		$service = new EditPageService($wgTitle);
+		$service = new EditPageService( $wgTitle );
 		$html = $service->getTemplatesList();
 
 		return array(

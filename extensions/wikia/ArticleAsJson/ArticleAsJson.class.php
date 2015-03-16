@@ -160,7 +160,7 @@ class ArticleAsJson extends WikiaService {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
+		if ( $wgArticleAsJson ) {
 
 			$userName = $parser->getRevisionUser();
 

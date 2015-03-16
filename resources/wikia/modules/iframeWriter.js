@@ -17,6 +17,7 @@ define('wikia.iframeWriter', [
 	 * @param {string} params.code - code to put into the iframe
 	 * @param {number} params.width - desired width of the iframe
 	 * @param {number} params.height - desired height of the iframe
+	 * @param {bool} [params.scrolling] - should iframe have scroll bar or not
 	 */
 	function getIframe(params) {
 		log(['getIframe', params], 'debug', logGroup);
@@ -25,7 +26,7 @@ define('wikia.iframeWriter', [
 			iframe = doc.createElement('iframe');
 
 		iframe.frameborder = 'no';
-		iframe.scrolling = 'no';
+		iframe.scrolling = params.scrolling ? 'yes' : 'no';
 		iframe.width = params.width;
 		iframe.height = params.height;
 		iframe.onload = function () {
