@@ -18,7 +18,7 @@
 	 * To be used for everything that is not advertisement
 	 */
 	window._gaq = window._gaq || [];
-	isProductionEnv = (window.wgTransactionContext.env === 'prod');
+	isProductionEnv = !window.wgGaStaging;
 
 	cookieExists = function (cookieName) {
 		return document.cookie.indexOf(cookieName) > -1;
