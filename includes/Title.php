@@ -147,11 +147,6 @@ class Title {
 
 		$t = new Title();
 		$t->mDbkeyform = str_replace( ' ', '_', $filteredText );
-		# Prevent error when title ends with colon and title
-		# is interpreted as namespace:[empty title]
-		if ( substr($t -> mDbkeyform, -1 ) == ':' ) {
-			$t->mDbkeyform = substr($t -> mDbkeyform, 0, -1);
-		}
 		$t->mDefaultNamespace = $defaultNamespace;
 
 		static $cachedcount = 0 ;
@@ -3172,7 +3167,10 @@ class Title {
 			$m = array();
 			if ( preg_match( $prefixRegexp, $dbkey, $m ) ) {
 				$p = $m[1];
-				if ( ( $ns = $wgContLang->getNsIndex( $p ) ) !== false ) {
+
+				# If it is a string like "User:" (so namespace and empty title)
+				# we treat it like proper name, not like the namespace with an empty title.
+				if ( strcmp($this->mDbkeyform, $p.":") && ( $ns = $wgContLang->getNsIndex( $p ) ) !== false ) {
 					# Ordinary namespace
 					$dbkey = $m[2];
 					$this->mNamespace = $ns;
