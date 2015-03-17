@@ -14,10 +14,10 @@ class ExactTargetUpdateWikiTask extends ExactTargetTask {
 		$aDataExtensions = $oHelper->prepareWikiDataExtensionForUpdate( $iCityId );
 		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aDataExtensions ) );
 
-		$oUpdateWikiDataResult = $oApiDataExtension->updateRequest( $aDataExtensions );
+		$oUpdateWikiDataResult = $oApiDataExtension->updateFallbackCreateRequest( $aDataExtensions );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateWikiDataResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateWikiDataResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUpdateWikiDataResult ) );
 
 		if ( $oUpdateWikiDataResult->OverallStatus === 'Error' ) {
 			throw new \Exception(

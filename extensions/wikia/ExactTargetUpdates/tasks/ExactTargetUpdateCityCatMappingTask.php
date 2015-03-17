@@ -50,15 +50,18 @@ class ExactTargetUpdateCityCatMappingTask extends ExactTargetTask {
 		$this->info( 'RetrieveCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForCreate ) );
 		$oWikiCreateResult = $oApiDataExtension->createRequest( $aCityCatMappingDataForCreate );
 		$this->info( 'CreateWikiData' . ' OverallStatus: ' . $oWikiCreateResult->OverallStatus );
-		$this->info( 'CreateWikiData' . ' result: ' . json_encode( (array)$oWikiCreateResult ) );
+		$this->info( 'CreateWikiData' . ' Result: ' . json_encode( (array)$oWikiCreateResult ) );
 
 		if ( $oWikiCreateResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
-				'Error in ' . 'CreateWikiData' . ': ' . $oWikiCreateResult->Results->StatusMessage
+				'Error in ' . __METHOD__
 			);
 		}
 
-		return $oWikiCreateResult->Results->StatusMessage;
+		// Return OverallStatus if multiple records were inserted and StatusMessage if just one
+		return is_array($oWikiCreateResult->Results)
+			? $oWikiCreateResult->OverallStatus
+			: $oWikiCreateResult->Results->StatusMessage;
 	}
 
 }
