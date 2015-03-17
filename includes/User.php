@@ -3026,6 +3026,13 @@ class User {
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
 
+		// Wikia change - begin (@see PLATFORM-1028)
+		// @author macbre
+		// There's no need to keep the user name (in both session and cookie) when you log out
+		$this->getRequest()->setSessionData( 'wsUserName', null );
+		$this->clearCookie( 'UserName' );
+		// Wikia change - end
+
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );
 	}
