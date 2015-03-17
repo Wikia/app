@@ -45,9 +45,8 @@ class ExactTargetUpdateCityCatMappingTask extends ExactTargetTask {
 			$this->info('No city cats found for the wiki, no cats deleted.');
 		}
 
-		// Delete wiki data
-		$aCityCatMappingDataForCreate = [];
-		$aCityCatMappingDataForCreate['DataExtension'] = $oHelper->prepareCityCatMappingDataExtensionForCreate( $aParams['city_id'] );
+		// Create city category mapping using fresh data from DB
+		$aCityCatMappingDataForCreate = $oHelper->prepareCityCatMappingDataExtensionForCreate( $aParams['city_id'] );
 		$this->info( 'RetrieveCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForCreate ) );
 		$oWikiCreateResult = $oApiDataExtension->createRequest( $aCityCatMappingDataForCreate );
 		$this->info( 'CreateWikiData' . ' OverallStatus: ' . $oWikiCreateResult->OverallStatus );
