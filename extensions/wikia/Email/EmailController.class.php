@@ -274,7 +274,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Check
 	 */
 	public function assertUserWantsEmail() {
-		if ( $this->currentUser->getBoolOption( 'unsubscribed' ) ) {
+		if ( $this->targetUser->getBoolOption( 'unsubscribed' ) ) {
 			throw new Check( wfMessage( 'emailext-error-no-emails' )->escaped() );
 		}
 	}
