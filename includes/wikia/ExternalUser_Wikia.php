@@ -279,6 +279,12 @@ class ExternalUser_Wikia extends ExternalUser {
 			$User->mId = $dbw->insertId();
 			$dbw->commit( __METHOD__ );
 
+			// Logging added in order to identify what does INSERT to wikicities.user.
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				'HELIOS_REGISTRATION_INSERTS',
+				[ 'exception' => new Exception, 'userid' => $User->mId, 'username' => $User->mName ]
+			);
+
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();
 		}
