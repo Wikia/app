@@ -24,7 +24,7 @@ class LanguageServiceTest extends BaseTest {
 	public function getDefaultThresholdDataProvider() {
 		return [
 			[ 'en', 50 ],
-			[ 'ja', 15 ],
+			[ 'ja', 0 ],
 			[ 'pl', 25 ],
 			[ 'de', 25 ]
 		];
