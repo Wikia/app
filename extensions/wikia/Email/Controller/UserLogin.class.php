@@ -25,7 +25,6 @@ class ForgotPasswordController extends EmailController {
 
 		$this->assertCanChangePassword();
 		$this->assertPasswordReminderNotThrottled();
-		$this->assertUserHasEmail();
 		$this->assertHasIP();
 	}
 

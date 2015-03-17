@@ -179,7 +179,7 @@ class WikiaView {
 
 			$comment = $method->getDocComment();
 			if ( preg_match( '/@template ([^ ]+)/', $comment, $matches ) ) {
-				$templates[] = trim( $matches[ 1 ] );
+				$templates[] = trim( $matches[1] );
 			}
 		}
 

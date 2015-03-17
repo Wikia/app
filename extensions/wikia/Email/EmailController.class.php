@@ -72,14 +72,12 @@ abstract class EmailController extends \WikiaController {
 	 *
 	 * @template Email_preview
 	 *
-	 * @return bool
-	 *
 	 * @throws \MWException
 	 */
 	public function handle() {
 		// If something previously has thrown an error (likely 'init') don't continue
 		if ( $this->hasErrorResponse ) {
-			return true;
+			return;
 		}
 
 		try {
@@ -92,10 +90,18 @@ abstract class EmailController extends \WikiaController {
 			$body = [ 'html' => $this->getBody() ];
 
 			if ( !$this->test ) {
-				\UserMailer::send( $toAddress, $fromAddress, $subject, $body, $replyToAddress );
+				$status = \UserMailer::send(
+					$toAddress,
+					$fromAddress,
+					$subject,
+					$body,
+					$replyToAddress
+				);
+				$this->assertGoodStatus( $status );
 			}
 		} catch ( ControllerException $e ) {
-			return $this->setErrorResponse( $e );
+			$this->setErrorResponse( $e );
+			return;
 		}
 
 		$this->response->setData( [
@@ -104,7 +110,7 @@ abstract class EmailController extends \WikiaController {
 			'body' => $body['html'],
 		] );
 
-		return true;
+		return;
 	}
 
 	/**
@@ -112,7 +118,6 @@ abstract class EmailController extends \WikiaController {
 	 *
 	 * @param ControllerException $e
 	 *
-	 * @return bool
 	 */
 	protected function setErrorResponse( ControllerException $e ) {
 		$this->hasErrorResponse = true;
@@ -120,7 +125,7 @@ abstract class EmailController extends \WikiaController {
 			'result' => $e->errorType,
 			'msg' => $e->getMessage(),
 		] );
-		return true;
+		return;
 	}
 
 	protected function getTargetLang() {
@@ -155,7 +160,7 @@ abstract class EmailController extends \WikiaController {
 	protected function getReplyToAddress() {
 		$replyAddr = null;
 		if ( !empty( $this->wg->NoReplyAddress ) ) {
-			$name = wfMessage('emailext-no-reply-name' )->escaped();
+			$name = wfMessage( 'emailext-no-reply-name' )->escaped();
 			$replyAddr = new \MailAddress( $this->wg->NoReplyAddress, $name );
 		}
 
@@ -217,6 +222,14 @@ abstract class EmailController extends \WikiaController {
 	public function assertCanEmail() {
 		$this->assertUserWantsEmail();
 		$this->assertUserNotBlocked();
+		$this->assertUserHasEmail();
+	}
+
+	public function assertGoodStatus( \Status $status ) {
+		if ( !$status->isGood() ) {
+			$msg = wfMessage( "email-error-bad-status", $status->getMessage() )->escaped();
+			throw new Fatal( $msg );
+		}
 	}
 
 	/**
@@ -226,7 +239,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
-			throw new Fatal( wfMessage('emailext-error-not-user' )->escaped() );
+			throw new Fatal( wfMessage( 'emailext-error-not-user' )->escaped() );
 		}
 
 		if ( $user->getId() == 0 ) {
@@ -261,8 +274,8 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Check
 	 */
 	public function assertUserWantsEmail() {
-		if ( $this->currentUser->getBoolOption('unsubscribed') ) {
-			throw new Check( wfMessage('emailext-error-no-emails')->escaped() );
+		if ( $this->currentUser->getBoolOption( 'unsubscribed' ) ) {
+			throw new Check( wfMessage( 'emailext-error-no-emails' )->escaped() );
 		}
 	}
 
@@ -273,7 +286,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	public function assertUserNotBlocked() {
 		if ( $this->currentUser->isBlocked() ) {
-			throw new Check( wfMessage('emailext-error-user-blocked')->escaped() );
+			throw new Check( wfMessage( 'emailext-error-user-blocked' )->escaped() );
 		}
 	}
 }
