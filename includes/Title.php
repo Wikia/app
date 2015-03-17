@@ -3167,10 +3167,7 @@ class Title {
 			$m = array();
 			if ( preg_match( $prefixRegexp, $dbkey, $m ) ) {
 				$p = $m[1];
-
-				# If it is a string like "User:" (so namespace and empty title)
-				# we treat it like proper name, not like the namespace with an empty title.
-				if ( strcmp($this->mDbkeyform, $p.":") && ( $ns = $wgContLang->getNsIndex( $p ) ) !== false ) {
+				if ( ( $ns = $wgContLang->getNsIndex( $p ) ) !== false ) {
 					# Ordinary namespace
 					$dbkey = $m[2];
 					$this->mNamespace = $ns;

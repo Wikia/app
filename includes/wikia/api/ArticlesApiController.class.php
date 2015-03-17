@@ -1018,11 +1018,12 @@ class ArticlesApiController extends WikiaApiController {
 
 			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
 				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
-
-				$categories[] = [
-					'title' => $categoryTitle->getText(),
-					'url' => $categoryTitle->getLocalURL()
-				];
+				if ($categoryTitle) {
+					$categories[] = [
+						'title' => $categoryTitle->getText(),
+						'url' => $categoryTitle->getLocalURL()
+					];
+				}
 			}
 
 			$result = [
@@ -1032,8 +1033,8 @@ class ArticlesApiController extends WikiaApiController {
 				'categories' => $categories,
 				'description' => $this->getArticleDescription( $article )
 			];
-			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 
+			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 		} else {
 			throw new BadRequestApiException( 'This entry point is disabled' );
 		}
