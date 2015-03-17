@@ -78,4 +78,16 @@
 	.main-page-tag-rcs {
 		width: 300px;
 	}
+
+	.WikiHeader > nav.WikiNav {
+		@include width-calc("100% - 250px");
+
+		.navbackground {
+			width: 100%;
+		}
+
+		.subnav-2 {
+			width: auto;
+		}
+	}
 }
