@@ -170,17 +170,9 @@ class WikiaView {
 	public function getTemplateOptions( $controllerClass, $methodName ) {
 		$templates = [];
 
-		// Make sure this method exists, otherwise the call to getMethod crashes PHP
-		// so badly it can't even log that a problem occurred.
-		if ( method_exists( $controllerClass, $methodName ) ) {
-			// See if there is a @template annotation for the method we're generating a view for
-			$reflection = new ReflectionClass( $controllerClass );
-			$method = $reflection->getMethod( $methodName );
-
-			$comment = $method->getDocComment();
-			if ( preg_match( '/@template ([^ ]+)/', $comment, $matches ) ) {
-				$templates[] = trim( $matches[ 1 ] );
-			}
+		$fromAnnotation = $this->getTemplateAnnotation( $controllerClass, $methodName );
+		if ( !empty( $fromAnnotation ) ) {
+			$templates[] = $fromAnnotation;
 		}
 
 		// Add variations on the controller name
@@ -191,6 +183,34 @@ class WikiaView {
 		return $templates;
 	}
 
+	protected function getTemplateAnnotation( $controllerClass, $methodName ) {
+		static $annotations = [];
+		$cacheKey = $controllerClass . '-' . $methodName;
+
+		// Cache the result of this reflection code
+		if ( array_key_exists( $cacheKey, $annotations ) ) {
+			return $annotations[$cacheKey];
+		}
+
+		$template = null;
+
+		// Make sure this method exists, otherwise the call to getMethod crashes PHP
+		// so badly it can't even log that a problem occurred.
+		if ( method_exists( $controllerClass, $methodName ) ) {
+			// See if there is a @template annotation for the method we're generating a view for
+			$reflection = new ReflectionClass( $controllerClass );
+			$method = $reflection->getMethod( $methodName );
+
+			$comment = $method->getDocComment();
+			if ( preg_match( '/@template ([^ ]+)/', $comment, $matches ) ) {
+				$template = trim( $matches[1] );
+			}
+		}
+
+		$annotations[$cacheKey] = $template;
+		return $template;
+	}
+
 	/**
 	 * See if the controller defines a custom template directory, otherwise use the default directory
 	 *
@@ -199,11 +219,9 @@ class WikiaView {
 	 * @return string
 	 */
 	public function getTemplateDir( $controllerClass ) {
-		if ( method_exists( $controllerClass, 'getTemplateDir' ) ) {
-			$dirName = call_user_func( [ $controllerClass, 'getTemplateDir' ] );
-		}
+		$dirName = call_user_func( [ $controllerClass, 'getTemplateDir' ] );
 
-		// If the above fails, or returns a non-existent directory, fallback to the default.
+		// If the above returns null or a non-existent directory, fallback to the default.
 		if ( empty( $dirName ) || !file_exists( $dirName ) ) {
 			$dirName = dirname( F::app()->wg->AutoloadClasses[$controllerClass] ) . '/templates';
 		}
