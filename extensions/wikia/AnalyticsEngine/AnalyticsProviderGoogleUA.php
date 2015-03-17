@@ -27,6 +27,14 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 			$scripts .= "\n<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/AnalyticsEngine/js/universal_analytics.js\"></script>";
 		}
 
+		// setup User-ID hash for Universal Analytics user tracking across different devices
+		$user = $app->wg->User;
+
+		if (!$user->isAnon()) {
+			$vars['wgGAUserIdHash'] = md5($user->getId() . '2eyPRZ8VvrMMui');
+		}
+
+
 		return true;
 	}
 

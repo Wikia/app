@@ -39,12 +39,6 @@ define( 'MW_USER_VERSION', 8 );
 define( 'EDIT_TOKEN_SUFFIX', '+\\' );
 
 /**
- * String Salt used in hashing user identifier for Google Analytics' UserID mapping
- * @ingroup Constants
- */
-define( 'GA_USERID_SALT', '2eyPRZ8VvrMMui' );
-
-/**
  * Thrown by User::setPassword() on error.
  * @ingroup Exception
  */
@@ -79,7 +73,6 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
-	const GA_USERID_SALT = GA_USERID_SALT;
 
 	/**
 	 * Array of Strings List of member variables which are saved to the

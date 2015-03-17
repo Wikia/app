@@ -47,10 +47,8 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$user = $wg->User; /** @var $user User */
 	if ($user->isAnon()) {
 		$vars['wgUserName'] = null;
-		$vars['wgGAUserIdHash'] = null;
 	} else {
 		$vars['wgUserName'] = $user->getName();
-		$vars['wgGAUserIdHash'] = md5($user->getId() . User::GA_USERID_SALT );
 
 		/*
 		 * Remove when SOC-217 ABTest is finished
