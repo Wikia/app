@@ -4,11 +4,12 @@ namespace Wikia\ExactTarget;
 class ExactTargetUpdateWikiTask extends ExactTargetTask {
 
 	/**
-	 * Updates city_list record for a wiki
+	 * Updates city_list data with fallback to create in ExactTarget
+	 * Builds $aDataExtensions array and passes it to a DE API interface.
 	 * @param  int $iCityId  A wiki's ID
 	 * @return void
 	 */
-	public function updateWikiData( $iCityId ) {
+	public function updateFallbackCreateWikiData( $iCityId ) {
 		$oHelper = $this->getWikiHelper();
 		$oApiDataExtension = $this->getApiDataExtension();
 		$aDataExtensions = $oHelper->prepareWikiDataExtensionForUpdate( $iCityId );
