@@ -29,7 +29,7 @@ class LanguageService {
 			self::WIKI_ARTICLE_THRESHOLD => 50
 		],
 		'ja' => [
-			self::WIKI_ARTICLE_THRESHOLD => 15
+			self::WIKI_ARTICLE_THRESHOLD => 0
 		],
 		self::ANY_LANG => [
 			self::WIKI_ARTICLE_THRESHOLD => 25

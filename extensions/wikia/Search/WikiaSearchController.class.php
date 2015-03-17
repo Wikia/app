@@ -584,7 +584,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$wikiArticleThreshold = $languageService->getWikiArticlesThreshold();
 
 			if ( in_array( 'staff', $this->wg->user->getEffectiveGroups() ) ) {
-				$threshold = $request->getVal( 'minArticleCount', $wikiArticleThreshold );
+				$wikiArticleThreshold = $request->getVal( 'minArticleCount', $wikiArticleThreshold );
 			}
 			$searchConfig->setXwikiArticleThreshold( $wikiArticleThreshold );
 		}
