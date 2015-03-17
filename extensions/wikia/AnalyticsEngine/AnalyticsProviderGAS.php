@@ -2,23 +2,6 @@
 
 class AnalyticsProviderGAS implements iAnalyticsProvider {
 
-	/**
-	 * Hook for setting proper Google Analytics JS variables.
-	 *
-	 * @param array $vars JS variables to be added at the bottom of the page
-	 * @return bool return true - it's a hook
-	 */
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		global $wgDevelEnvironment, $wgStagingEnvironment;
-
-		// Enable collecting stats to staging accounts on all dev and staging environments
-		if ($wgDevelEnvironment || $wgStagingEnvironment) {
-			$vars['wgGaStaging'] = true;
-		}
-
-		return true;
-	}
-
 	public function getSetupHtml($params=array()){
 		return '';
 	}
@@ -56,6 +39,13 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 			//needs to be added unprocessed as per Cardinal Path's request
 			//so AssetsManager is not an option here
 			$scripts .= "\n<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/AnalyticsEngine/js/analytics.js\"></script>";
+		}
+
+		global $wgDevelEnvironment, $wgStagingEnvironment;
+
+		// Enable collecting stats to staging accounts on all dev and staging environments
+		if ($wgDevelEnvironment || $wgStagingEnvironment) {
+			$vars['wgGaStaging'] = true;
 		}
 
 		return true;
