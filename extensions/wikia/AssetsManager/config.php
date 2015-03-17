@@ -59,6 +59,7 @@ $config['adengine2_js'] = array(
 	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// core + high prio
+		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/scriptwriter.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdContext.js',
@@ -88,7 +89,9 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/later.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
+		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
+		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//resources/wikia/modules/krux.js',
 
@@ -118,22 +121,6 @@ $config['spotlights_js'] = array(
 		// ads
 		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
 		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
-	),
-);
-
-$config['adengine2_bottom_leaderboard_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.js',
-		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.run.js',
-	),
-);
-
-$config['adengine2_interstitial_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdSlotInterstitial.js',
-		'//extensions/wikia/AdEngine/js/AdSlotInterstitial.run.js',
 	),
 );
 
