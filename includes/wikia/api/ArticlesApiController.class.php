@@ -1018,6 +1018,7 @@ class ArticlesApiController extends WikiaApiController {
 
 			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
 				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
+
 				$categories[] = [
 					'title' => $categoryTitle->getText(),
 					'url' => $categoryTitle->getLocalURL()
@@ -1031,7 +1032,6 @@ class ArticlesApiController extends WikiaApiController {
 				'categories' => $categories,
 				'description' => $this->getArticleDescription( $article )
 			];
-
 			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 
 		} else {
