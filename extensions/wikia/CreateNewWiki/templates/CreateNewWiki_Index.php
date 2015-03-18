@@ -71,7 +71,7 @@
 			</form>
 		</li>
 
-		<? if ( !$isUserLoggedIn || !$isUserEmailConfirmed ): ?>
+		<? if ( !$isUserLoggedIn ): ?>
 		<li id="UserAuth" class="step">
 			<h2 class="headline"><?= wfMessage('cnw-userauth-headline')->escaped() ?></h2>
 			<p class="creative"><?= wfMessage('cnw-userauth-creative')->escaped() ?></p>

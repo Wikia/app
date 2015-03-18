@@ -60,7 +60,7 @@ class UntilTag < CommonTag
       <h3>Until</h3>
       <div class="signature-box"><p>
       This method provides <strong>browser compatibility</strong> for:
-      #{ context[@tagname].map {|tag| tag[:doc] }.join("\n") }
+      #{ context[@tagname].map { |tag| tag[:doc] }.join("\n") }
       </p></div>
     EOHTML
   end
@@ -84,7 +84,7 @@ class SeeTag < CommonTag
     <<-EOHTML
       <h3 class="pa">Related</h3>
       <ul>
-      #{ context[@tagname].map {|tag| tag[:doc] }.join("\n") }
+      #{ context[@tagname].map { |tag| tag[:doc] }.join("\n") }
       </ul>
     EOHTML
   end

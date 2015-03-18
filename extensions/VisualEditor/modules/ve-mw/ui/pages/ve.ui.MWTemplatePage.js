@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * MediaWiki transclusion dialog template page.
  *
@@ -23,7 +21,7 @@ ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
 
 	// Configuration initialization
 	config = ve.extendObject( {
-		'scrollable': false
+		scrollable: false
 	}, config );
 
 	// Parent constructor
@@ -35,43 +33,52 @@ ve.ui.MWTemplatePage = function VeUiMWTemplatePage( template, name, config ) {
 	this.$more = this.$( '<div>' );
 	this.$description = this.$( '<div>' );
 	this.removeButton = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'remove',
-			'title': ve.msg( 'visualeditor-dialog-transclusion-remove-template' ),
-			'flags': ['destructive'],
-			'classes': [ 've-ui-mwTransclusionDialog-removeButton' ]
-		} )
-		.connect( this, { 'click': 'onRemoveButtonClick' } );
+		$: this.$,
+		framed: false,
+		icon: 'remove',
+		title: ve.msg( 'visualeditor-dialog-transclusion-remove-template' ),
+		flags: ['destructive'],
+		classes: [ 've-ui-mwTransclusionDialog-removeButton' ]
+	} )
+		.connect( this, { click: 'onRemoveButtonClick' } );
 	this.infoFieldset = new OO.ui.FieldsetLayout( {
-		'$': this.$,
-		'label': this.spec.getLabel(),
-		'icon': 'template'
+		$: this.$,
+		label: this.spec.getLabel(),
+		icon: 'template'
 	} );
 	this.addButton = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'parameter',
-			'label': ve.msg( 'visualeditor-dialog-transclusion-add-param' ),
-			'tabIndex': -1
-		} )
-		.connect( this, { 'click': 'onAddButtonClick' } );
+		$: this.$,
+		framed: false,
+		icon: 'parameter',
+		label: ve.msg( 'visualeditor-dialog-transclusion-add-param' ),
+		tabIndex: -1
+	} )
+		.connect( this, { click: 'onAddButtonFocus' } );
 
 	// Initialization
 	this.$description.addClass( 've-ui-mwTemplatePage-description' );
 	if ( this.spec.getDescription() ) {
 		this.$description.text( this.spec.getDescription() );
 	} else {
-		title = new mw.Title( this.template.getTitle() );
-		this.$description
-			.addClass( 've-ui-mwTemplatePage-description-missing' )
-			.append( ve.msg(
-				'wikia-visualeditor-dialog-transclusion-no-template-description',
-				title.getNameText(),
-				ve.getHtmlAttributes( { 'target': '_blank', 'href': title.getUrl() } ),
-				mw.user
-			) );
+		title = this.template.getTitle();
+		// The transcluded page may be dynamically generated or unspecified in the DOM
+		// for other reasons (bug 66724). In that case we can't tell the user what
+		// the template is called nor link to the template page.
+		if ( title ) {
+			title = mw.Title.newFromText( title );
+		}
+		if ( title ) {
+			this.$description
+				.addClass( 've-ui-mwTemplatePage-description-missing' )
+				.append( ve.msg(
+					'visualeditor-dialog-transclusion-no-template-description',
+					title.getRelativeText( 10 ),
+					ve.getHtmlAttributes( { target: '_blank', href: title.getUrl() } ),
+					mw.user
+				) );
+		}
 	}
+
 	this.infoFieldset.$element.append( this.$description );
 	this.$more
 		.addClass( 've-ui-mwTemplatePage-more' )
@@ -107,6 +114,6 @@ ve.ui.MWTemplatePage.prototype.onRemoveButtonClick = function () {
 	this.template.remove();
 };
 
-ve.ui.MWTemplatePage.prototype.onAddButtonClick = function () {
+ve.ui.MWTemplatePage.prototype.onAddButtonFocus = function () {
 	this.template.addParameter( new ve.dm.MWParameterModel( this.template ) );
 };

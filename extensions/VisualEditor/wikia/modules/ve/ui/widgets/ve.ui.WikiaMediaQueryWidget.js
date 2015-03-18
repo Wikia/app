@@ -23,21 +23,21 @@ ve.ui.WikiaMediaQueryWidget = function VeUiWikiaMediaQueryWidget( config ) {
 	// Properties
 	this.batch = 1;
 	this.input = new OO.ui.TextInputWidget( {
-		'$': this.$,
-		'icon': 'search',
-		'placeholder': config.placeholder,
-		'value': config.value
+		$: this.$,
+		icon: 'search',
+		placeholder: config.placeholder,
+		value: config.value
 	} );
 	this.request = null;
-	this.requestMediaCallback = ve.bind( this.requestMedia, this );
+	this.requestMediaCallback = this.requestMedia.bind( this );
 	this.timeout = null;
-	this.upload = new ve.ui.WikiaUploadWidget( { '$': this.$, 'icon': true } );
+	this.upload = new ve.ui.WikiaUploadWidget( { $: this.$, icon: true } );
 	this.$outerWrapper = this.$( '<div>' );
 	this.$inputWrapper = this.$( '<div>' );
 	this.$uploadWrapper = this.$( '<div>' );
 
 	// Events
-	this.input.connect( this, { 'change': 'onInputChange' } );
+	this.input.connect( this, { change: 'onInputChange' } );
 
 	// Initialization
 	this.$inputWrapper
@@ -109,15 +109,15 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
  */
 ve.ui.WikiaMediaQueryWidget.prototype.requestVideo = function () {
 	this.request = $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
-			'action': 'addmediatemporary',
-			'url': this.value
+		url: mw.util.wikiScript( 'api' ),
+		data: {
+			format: 'json',
+			action: 'addmediatemporary',
+			url: this.value
 		}
 	} )
-		.always( ve.bind( this.onRequestVideoAlways, this ) )
-		.done( ve.bind( this.onRequestVideoDone, this ) );
+		.always( this.onRequestVideoAlways.bind( this ) )
+		.done( this.onRequestVideoDone.bind( this ) );
 };
 
 /**
@@ -125,19 +125,19 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestVideo = function () {
  */
 ve.ui.WikiaMediaQueryWidget.prototype.requestSearch = function () {
 	this.request = $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
-			'action': 'apimediasearch',
-			'query': this.value,
-			'type': 'photo|video',
-			'mixed': true,
-			'batch': this.batch,
-			'limit': 16
+		url: mw.util.wikiScript( 'api' ),
+		data: {
+			format: 'json',
+			action: 'apimediasearch',
+			query: this.value,
+			type: 'photo|video',
+			mixed: true,
+			batch: this.batch,
+			limit: 16
 		}
 	} )
-		.always( ve.bind( this.onRequestSearchAlways, this ) )
-		.done( ve.bind( this.onRequestSearchDone, this ) );
+		.always( this.onRequestSearchAlways.bind( this ) )
+		.done( this.onRequestSearchDone.bind( this ) );
 };
 
 /**
@@ -206,17 +206,18 @@ ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoAlways = function () {
  * @fires requestVideoDone
  */
 ve.ui.WikiaMediaQueryWidget.prototype.onRequestVideoDone = function ( data ) {
-	var errorMsg;
+	var errorMsg,
+		BannerNotification;
 
 	// Send errors to the user
 	if ( data.error ) {
 		errorMsg = this.displayMessages[data.error.code] || this.displayMessages.mediaqueryfailed;
-
-		mw.config.get( 'GlobalNotification' ).show(
+		BannerNotification = mw.config.get('BannerNotification');
+		new BannerNotification(
 			errorMsg,
 			'error',
 			$( '.ve-ui-frame' ).contents().find( '.ve-ui-window-body' )
-		);
+		).show();
 
 		this.requestSearch();
 	} else {
@@ -248,8 +249,8 @@ ve.ui.WikiaMediaQueryWidget.prototype.hideUpload = function () {
  * @property
  */
 ve.ui.WikiaMediaQueryWidget.prototype.displayMessages = {
-	'mustbeloggedin': ve.msg( 'wikia-visualeditor-notification-media-must-be-logged-in' ),
-	'onlyallowpremium': ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
-	'permissiondenied': ve.msg( 'wikia-visualeditor-notification-media-permission-denied' ),
-	'mediaqueryfailed': ve.msg( 'wikia-visualeditor-notification-media-query-failed' )
+	mustbeloggedin: ve.msg( 'wikia-visualeditor-notification-media-must-be-logged-in' ),
+	onlyallowpremium: ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
+	permissiondenied: ve.msg( 'wikia-visualeditor-notification-media-permission-denied' ),
+	mediaqueryfailed: ve.msg( 'wikia-visualeditor-notification-media-query-failed' )
 };

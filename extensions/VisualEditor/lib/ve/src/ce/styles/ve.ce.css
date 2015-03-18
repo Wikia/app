@@ -1,0 +1,13 @@
+/*!
+ * VisualEditor ContentEditable general styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+/*csslint known-properties:false */
+/* Bug: https://github.com/stubbornella/csslint/issues/436 */
+
+.ve-ce-bidi-isolate {
+	unicode-bidi: isolate;
+	unicode-bidi: -moz-isolate;
+	unicode-bidi: -webkit-isolate;
+}

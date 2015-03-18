@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw */
+/*global EasyDeflate */
 
 /**
  * Initialization MediaWiki target.
@@ -14,16 +14,15 @@
  * @extends ve.init.Target
  *
  * @constructor
- * @param {jQuery} $container Conainter to render target into
  * @param {string} pageName Name of target page
  * @param {number} [revisionId] If the editor should load a revision of the page, pass the
  *  revision id here. Defaults to loading the latest version (see #load).
  */
-ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) {
-	var conf = mw.config.get( 'wgVisualEditorConfig' );
-
+ve.init.mw.Target = function VeInitMwTarget( pageName, revisionId ) {
 	// Parent constructor
-	ve.init.Target.call( this, $container );
+	ve.init.Target.call( this, { shadow: true, actions: true, floatable: true } );
+
+	var conf = mw.config.get( 'wgVisualEditorConfig' );
 
 	// Properties
 	this.pageName = pageName;
@@ -34,29 +33,34 @@ ve.init.mw.Target = function VeInitMwTarget( $container, pageName, revisionId ) 
 	this.requestedRevId = revisionId;
 	this.revid = revisionId || mw.config.get( 'wgCurRevisionId' );
 	this.wikitext = null;
+
 	this.restoring = !!revisionId;
 	this.editToken = mw.user.tokens.get( 'editToken' );
 	this.submitUrl = ( new mw.Uri( mw.util.getUrl( this.pageName ) ) )
-		.extend( { 'action': 'submit' } );
-	this.events = new ve.init.mw.WikiaTargetEvents( this );
+		.extend( { action: 'submit' } );
+	this.events = new ve.init.mw.TargetEvents( this );
+
+	/**
+	 * @property {jQuery.Promise|null}
+	 */
+	this.sanityCheckPromise = null;
 
 	this.modules = [
-			'ext.visualEditor.mwcore',
-			'ext.visualEditor.mwlink',
-			'ext.visualEditor.data',
-			'ext.visualEditor.mwreference'
-		]
-		.concat( this.constructor.static.iconModuleStyles )
+		'ext.visualEditor.mwcore',
+		'ext.visualEditor.mwlink',
+		'ext.visualEditor.data',
+		'ext.visualEditor.mwreference.core',
+		'ext.visualEditor.mwtransclusion.core',
+		'ext.visualEditor.mwreference',
+		'ext.visualEditor.mwtransclusion'
+	]
+		//.concat( this.constructor.static.iconModuleStyles )
 		.concat( conf.pluginModules || [] );
 
 	this.pluginCallbacks = [];
 	this.modulesReady = $.Deferred();
 	this.preparedCacheKeyPromise = null;
 	this.clearState();
-	this.isMobileDevice = (
-		'ontouchstart' in window ||
-			( window.DocumentTouch && document instanceof window.DocumentTouch )
-	);
 };
 
 /* Inheritance */
@@ -122,8 +126,7 @@ OO.inheritClass( ve.init.mw.Target, ve.init.Target );
 /**
  * @event saveErrorNewUser
  * Fired when user is logged in as a new user
- * @param {boolean|undefined} isAnon Is newly logged in user anonymous. If
- *  undefined, user is logged in
+ * @param {string|null} username Name of newly logged-in user, or null if anonymous
  */
 
 /**
@@ -137,6 +140,11 @@ OO.inheritClass( ve.init.mw.Target, ve.init.Target );
  * Fired for any other type of save error
  * @param {Object} editApi
  * @param {Object|null} data API response data
+ */
+
+/**
+ * @event saveErrorPageDeleted
+ * Fired when user tries to save page that was deleted after opening VE
  */
 
 /**
@@ -182,64 +190,76 @@ ve.init.mw.Target.static.citationToolsLimit = 5;
 
 ve.init.mw.Target.static.toolbarGroups = [
 	// History
-	{ 'include': [ 'undo', 'redo' ] },
+	{ include: [ 'undo', 'redo' ] },
 	// Format
 	{
-		'type': 'menu',
-		'indicator': 'down',
-		'title': OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
-		'include': [ { 'group': 'format' } ],
-		'promote': [ 'paragraph' ],
-		'demote': [ 'preformatted', 'heading1' ]
+		type: 'menu',
+		indicator: 'down',
+		title: OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
+		include: [ { group: 'format' } ],
+		promote: [ 'paragraph' ],
+		demote: [ 'preformatted', 'blockquote', 'heading1' ]
 	},
 	// Style
 	{
-		'type': 'list',
-		'icon': 'text-style',
-		'indicator': 'down',
-		'title': OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
-		'include': [ { 'group': 'textStyle' }, 'clear' ],
-		'promote': [ 'bold', 'italic' ],
-		'demote': [ 'strikethrough', 'code', 'underline', 'clear' ]
+		type: 'list',
+		icon: 'text-style',
+		indicator: 'down',
+		title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+		include: [ { group: 'textStyle' }, 'language', 'clear' ],
+		forceExpand: [ 'bold', 'italic', 'clear' ],
+		promote: [ 'bold', 'italic' ],
+		demote: [ 'strikethrough', 'code', 'underline', 'language', 'clear' ]
 	},
 	// Link
-	{ 'include': [ 'link' ] },
+	{ include: [ 'link' ] },
 	// Cite
 	{
-		'type': 'list',
-		'label': OO.ui.deferMsg( 'visualeditor-toolbar-cite-label' ),
-		'indicator': 'down',
-		'include': [ { 'group': 'cite' } ]
+		type: 'list',
+		label: OO.ui.deferMsg( 'visualeditor-toolbar-cite-label' ),
+		indicator: 'down',
+		include: [ { group: 'cite' }, 'reference', 'reference/existing' ],
+		demote: [ 'reference', 'reference/existing' ]
 	},
 	// Structure
 	{
-		'type': 'list',
-		'icon': 'bullet-list',
-		'indicator': 'down',
-		'include': [ { 'group': 'structure' } ],
-		'demote': [ 'outdent', 'indent' ]
+		type: 'list',
+		icon: 'bullet-list',
+		indicator: 'down',
+		include: [ { group: 'structure' } ],
+		demote: [ 'outdent', 'indent' ]
 	},
 	// Insert
 	{
-		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
-		'indicator': 'down',
-		'include': '*',
-		'promote': [ 'reference', 'mediaInsert' ],
-		'demote': [ 'language', 'specialcharacter' ]
+		label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+		indicator: 'down',
+		include: '*',
+		forceExpand: [ 'media', 'transclusion', 'insertTable' ],
+		promote: [ 'media', 'transclusion' ],
+		demote: [ 'specialcharacter' ]
+	},
+	// Table
+	{
+		header: OO.ui.deferMsg( 'visualeditor-toolbar-table' ),
+		type: 'list',
+		icon: 'table-insert',
+		indicator: 'down',
+		include: [ { group: 'table' } ],
+		demote: [ 'deleteTable' ]
 	}
 ];
 
-ve.init.mw.Target.static.pasteRules = {
-	'external': {
-		'blacklist': [
+ve.init.mw.Target.static.importRules = {
+	external: {
+		blacklist: [
 			// Annotations
 			'link', 'textStyle/span', 'textStyle/underline',
 			// Nodes
-			'image', 'div', 'alienInline', 'alienBlock'
+			'inlineImage', 'blockImage', 'div', 'alienInline', 'alienBlock', 'comment'
 		],
-		'removeHtmlAttributes': true
+		removeHtmlAttributes: true
 	},
-	'all': null
+	all: null
 };
 
 /**
@@ -250,7 +270,6 @@ ve.init.mw.Target.static.pasteRules = {
  * @property {string[]} iconModuleStyles Modules that should be loaded to provide the icons
  */
 ve.init.mw.Target.static.iconModuleStyles = [
-	'ext.visualEditor.viewPageTarget.icons',
 	'ext.visualEditor.icons'
 ];
 
@@ -262,6 +281,14 @@ ve.init.mw.Target.static.iconModuleStyles = [
  * @inheritable
  */
 ve.init.mw.Target.static.name = 'mwTarget';
+
+/**
+ * Type of integration. Used by ve.init.mw.trackSubscriber.js for event tracking.
+ * @static
+ * @property {string}
+ * @inheritable
+ */
+ve.init.mw.Target.static.integrationType = 'page';
 
 /* Static Methods */
 
@@ -279,15 +306,15 @@ ve.init.mw.Target.static.name = 'mwTarget';
 ve.init.mw.Target.static.apiRequest = function ( data, settings ) {
 	var key, formData;
 	data = ve.extendObject( {
-		'format': 'json',
-		'uselang': mw.config.get( 'wgUserLanguage' )
+		format: 'json',
+		uselang: mw.config.get( 'wgUserLanguage' )
 	}, data );
 	settings = ve.extendObject( {
-		'url': mw.util.wikiScript( 'api' ),
-		'dataType': 'json',
-		'type': 'GET',
+		url: mw.util.wikiScript( 'api' ),
+		dataType: 'json',
+		type: 'GET',
 		// Wait up to 100 seconds
-		'timeout': 100000
+		timeout: 100000
 	}, settings );
 
 	// If multipart/form-data has been requested and emulation is possible, emulate it
@@ -394,11 +421,8 @@ ve.init.mw.Target.onLoad = function ( response ) {
 			this, null, 'No HTML content in response from server', null
 		);
 	} else {
-		// Wikia tracking if the anoneditwarning was shown
-		window.anoneditwarning = response.visualeditor.anoneditwarning;
-
 		this.originalHtml = data.content;
-		this.doc = ve.createDocumentFromHtml( this.originalHtml );
+		this.doc = ve.parseXhtml( this.originalHtml );
 
 		// Parsoid outputs a protocol-relative <base> tag, so absolutize it
 		this.constructor.static.fixBase( this.doc, document );
@@ -428,7 +452,7 @@ ve.init.mw.Target.onLoad = function ( response ) {
 		}
 
 		// Everything worked, the page was loaded, continue as soon as the modules are loaded
-		this.modulesReady.done( ve.bind( this.onReady, this ) );
+		this.modulesReady.done( this.onReady.bind( this ) );
 	}
 };
 
@@ -492,10 +516,10 @@ ve.init.mw.Target.prototype.onReady = function () {
 	this.onNoticesReady();
 	this.loading = false;
 	this.edited = false;
-	this.setupSurface( this.doc, ve.bind( function () {
+	this.setupSurface( this.doc, function () {
 		this.startSanityCheck();
 		this.emit( 'surfaceReady' );
-	}, this ) );
+	}.bind( this ) );
 };
 
 /**
@@ -546,7 +570,16 @@ ve.init.mw.Target.onSave = function ( doc, saveData, response ) {
 	} else if ( typeof data.content !== 'string' ) {
 		this.onSaveError( doc, saveData, null, 'Invalid HTML content in response from server', response );
 	} else {
-		this.emit( 'save', data.content, data.categorieshtml, data.newrevid, data.isRedirect );
+		this.emit(
+			'save',
+			data.content,
+			data.categorieshtml,
+			data.newrevid,
+			data.isRedirect,
+			data.displayTitleHtml,
+			data.lastModified,
+			data.contentSub
+		);
 	}
 };
 
@@ -569,7 +602,7 @@ ve.init.mw.Target.onSave = function ( doc, saveData, response ) {
  */
 ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, status, data ) {
 	var api, editApi,
-		viewPage = this;
+		target = this;
 	this.saving = false;
 
 	// Handle empty response
@@ -599,17 +632,17 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 			// action=query&meta=userinfo and action=tokens&type=edit can't be combined
 			// but action=query&meta=userinfo and action=query&prop=info can, however
 			// that means we have to give it titles and deal with page ids.
-			'action': 'query',
-			'meta': 'userinfo',
-			'prop': 'info',
+			action: 'query',
+			meta: 'userinfo',
+			prop: 'info',
 			// Try to send the normalised form so that it is less likely we get extra data like
 			// data.normalised back that we don't need.
-			'titles': new mw.Title( viewPage.pageName ).toText(),
-			'indexpageids': '',
-			'intoken': 'edit'
+			titles: new mw.Title( target.pageName ).toText(),
+			indexpageids: '',
+			intoken: 'edit'
 		} )
 			.always( function () {
-				viewPage.emit( 'saveErrorBadToken' );
+				target.emit( 'saveErrorBadToken' );
 			} )
 			.done( function ( data ) {
 				var userMsg,
@@ -617,10 +650,10 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 					pageInfo = data.query && data.query.pages && data.query.pageids &&
 						data.query.pageids[0] && data.query.pages[ data.query.pageids[0] ],
 					editToken = pageInfo && pageInfo.edittoken,
-					isAnon = mw.user.anonymous();
+					isAnon = mw.user.isAnon();
 
 				if ( userInfo && editToken ) {
-					viewPage.editToken = editToken;
+					target.editToken = editToken;
 
 					if (
 						( isAnon && userInfo.anon !== undefined ) ||
@@ -629,34 +662,36 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 							mw.config.get( 'wgUserId' ) === userInfo.id
 					) {
 						// New session is the same user still
-						viewPage.save( doc, saveData );
+						target.save( doc, saveData );
 					} else {
 						// The now current session is a different user
-						if ( isAnon ) {
+						if ( userInfo.anon !== undefined ) {
 							// New session is an anonymous user
 							mw.config.set( {
 								// wgUserId is unset for anonymous users, not set to null
-								'wgUserId': undefined,
+								wgUserId: undefined,
 								// wgUserName is explicitly set to null for anonymous users,
 								// functions like mw.user.isAnon rely on this.
-								'wgUserName': null
+								wgUserName: null
 							} );
+							target.emit( 'saveErrorNewUser', null );
 						} else {
 							// New session is a different user
-							mw.config.set( { 'wgUserId': userInfo.id, 'wgUserName': userInfo.name } );
+							mw.config.set( { wgUserId: userInfo.id, wgUserName: userInfo.name } );
 							userMsg = 'visualeditor-savedialog-identify-user---' + userInfo.name;
 							mw.messages.set(
 								userMsg,
 								mw.messages.get( 'visualeditor-savedialog-identify-user' )
 									.replace( /\$1/g, userInfo.name )
 							);
+							target.emit( 'saveErrorNewUser', userInfo.name );
 						}
-						viewPage.emit( 'saveErrorNewUser', isAnon );
 					}
-
 				}
 			} );
 		return;
+	} else if ( data.error && data.error.code === 'pagedeleted' ) {
+		this.emit( 'saveErrorPageDeleted' );
 	}
 
 	// Handle captcha
@@ -665,10 +700,12 @@ ve.init.mw.Target.prototype.onSaveError = function ( doc, saveData, jqXHR, statu
 	// the user solved the captcha.
 	// TODO: ConfirmEdit API is horrible, there is no reliable way to know whether it is a "math",
 	// "question" or "fancy" type of captcha. They all expose differently named properties in the
-	// API for different things in the UI. At this point we only support the FancyCaptha which we
-	// very intuitively detect by the presence of a "url" property.
-	// Wikia-only change: support only reCAPTCHA
-	if ( editApi && editApi.captcha && editApi.captcha.type === 'recaptcha' ) {
+	// API for different things in the UI. At this point we only support the SimpleCaptcha and FancyCaptcha
+	// which we very intuitively detect by the presence of a "url" property.
+	if ( editApi && editApi.captcha && (
+		editApi.captcha.type === 'recaptcha' ||
+		editApi.captcha.type === 'fancyCaptcha'
+	) ) {
 		this.emit( 'saveErrorCaptcha', editApi );
 		return;
 	}
@@ -811,10 +848,10 @@ ve.init.mw.Target.prototype.generateCitationFeatures = function () {
 		tools = JSON.parse( mw.message( 'visualeditor-cite-tool-definition.json' ).plain() );
 	} catch ( e ) { }
 
-	if ( ve.isArray( tools ) ) {
+	if ( Array.isArray( tools ) ) {
 		for ( i = 0, len = Math.min( limit, tools.length ); i < len; i++ ) {
 			item = tools[i];
-			data = { 'template': item.template };
+			data = { template: item.template };
 			// Generate transclusion tool
 			name = 'cite-transclusion-' + item.name;
 			tool = function GeneratedMWTransclusionDialogTool( toolbar, config ) {
@@ -831,7 +868,10 @@ ve.init.mw.Target.prototype.generateCitationFeatures = function () {
 			tool.static.autoAddToGroup = true;
 			ve.ui.toolFactory.register( tool );
 			ve.ui.commandRegistry.register(
-				new ve.ui.Command( name, 'window', 'open', 'transclusion', data )
+				new ve.ui.Command(
+					name, 'window', 'open',
+					{ args: ['transclusion', data], supportedSelections: ['linear'] }
+				)
 			);
 			// Generate citation tool
 			name = 'cite-' + item.name;
@@ -849,7 +889,10 @@ ve.init.mw.Target.prototype.generateCitationFeatures = function () {
 			tool.static.autoAddToGroup = true;
 			ve.ui.toolFactory.register( tool );
 			ve.ui.commandRegistry.register(
-				new ve.ui.Command( name, 'window', 'open', name, data )
+				new ve.ui.Command(
+					name, 'window', 'open',
+					{ args: [name, data], supportedSelections: ['linear'] }
+				)
 			);
 			// Generate dialog
 			dialog = function GeneratedMWCitationDialog( config ) {
@@ -916,7 +959,19 @@ ve.init.mw.Target.prototype.getHtml = function ( newDoc ) {
 	copyAttributes( oldDoc.documentElement, newDoc.documentElement );
 	copyAttributes( oldDoc.head, newDoc.head );
 	copyAttributes( oldDoc.body, newDoc.body );
-	return '<!doctype html>' + ve.properOuterHtml( newDoc.documentElement );
+	$( newDoc )
+		.remove( 'div[id = myEventWatcherDiv]' ) // Bug 51423
+		.remove( 'embed[type = "application/iodbc"]' ) // Bug 51521
+		.remove( 'embed[type = "application/x-datavault"]' ) // Bug 52791
+		.remove( 'script[id = FoxLingoJs]' ) // Bug 52884
+		.remove( 'style[id = _clearly_component__css]' ) // Bug 53252
+		.remove( 'div[id = sendToInstapaperResults]' ) // Bug 61776
+		.remove( 'embed[id ^= xunlei_com_thunder_helper_plugin]' ) // Bug 63121
+		.remove( 'object[type = cosymantecnisbfw], script[id=NortonInternetSecurityBF]' ) // Bug 63229
+		.remove( 'div[id = kloutify]' ) // Bug 67006
+		.remove( 'div[id ^= mittoHidden]' ); // Bug 68900#c1
+	// Add doctype manually
+	return '<!doctype html>' + ve.serializeXhtml( newDoc );
 };
 
 /**
@@ -927,9 +982,10 @@ ve.init.mw.Target.prototype.getHtml = function ( newDoc ) {
  * A side-effect of calling this method is that it requests {this.modules} be loaded.
  *
  * @method
+ * @param {string[]} [additionalModules=[]] Resource loader modules
  * @returns {boolean} Loading has been started
 */
-ve.init.mw.Target.prototype.load = function () {
+ve.init.mw.Target.prototype.load = function ( additionalModules ) {
 	var data, start, xhr, target = this;
 
 	// Prevent duplicate requests
@@ -939,14 +995,15 @@ ve.init.mw.Target.prototype.load = function () {
 	this.events.timings.activationStart = ve.now();
 	// Start loading the module immediately
 	mw.loader.using(
-		this.modules,
-		ve.bind( ve.init.mw.Target.onModulesReady, this )
+		// Wait for site and user JS before running plugins
+		this.modules.concat( additionalModules || [] ),
+		ve.init.mw.Target.onModulesReady.bind( this )
 	);
 
 	data = {
-		'action': 'visualeditor',
-		'paction': 'parse',
-		'page': this.pageName
+		action: 'visualeditor',
+		paction: 'parse',
+		page: this.pageName
 	};
 
 	// Only request the API to explicitly load the currently visible revision if we're restoring
@@ -961,18 +1018,20 @@ ve.init.mw.Target.prototype.load = function () {
 	start = ve.now();
 
 	xhr = this.constructor.static.apiRequest( data );
-	this.loading = xhr.then( function ( data, status, jqxhr ) {
+	this.loading = xhr.then(
+		function ( data, status, jqxhr ) {
 			target.events.track( 'performance.system.domLoad', {
-				'bytes': $.byteLength( jqxhr.responseText ),
-				'duration': ve.now() - start,
-				'cacheHit': /hit/i.test( jqxhr.getResponseHeader( 'X-Cache' ) ),
-				'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
+				bytes: $.byteLength( jqxhr.responseText ),
+				duration: ve.now() - start,
+				cacheHit: /hit/i.test( jqxhr.getResponseHeader( 'X-Cache' ) ),
+				parsoid: jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
 			} );
 			return jqxhr;
-		} )
-		.done( ve.bind( ve.init.mw.Target.onLoad, this ) )
-		.fail( ve.bind( ve.init.mw.Target.onLoadError, this ) )
-		.promise( { 'abort': xhr.abort } );
+		}
+	)
+		.done( ve.init.mw.Target.onLoad.bind( this ) )
+		.fail( ve.init.mw.Target.onLoadError.bind( this ) )
+		.promise( { abort: xhr.abort } );
 
 	return true;
 };
@@ -1021,16 +1080,17 @@ ve.init.mw.Target.prototype.prepareCacheKey = function ( doc ) {
 	}
 	this.clearPreparedCacheKey();
 
-	html = this.getHtml( doc );
+	html = EasyDeflate.deflate( this.getHtml( doc ) );
+
 	xhr = this.constructor.static.apiRequest( {
-		'action': 'visualeditor',
-		'paction': 'serializeforcache',
-		'html': html,
-		'page': this.pageName,
-		'oldid': this.revid
-	}, { 'type': 'POST' } )
+		action: 'visualeditor',
+		paction: 'serializeforcache',
+		html: html,
+		page: this.pageName,
+		oldid: this.revid
+	}, { type: 'POST' } )
 		.done( function ( response ) {
-			var trackData = { 'duration': ve.now() - start };
+			var trackData = { duration: ve.now() - start };
 			if ( response.visualeditor && typeof response.visualeditor.cachekey === 'string' ) {
 				target.events.track( 'performance.system.serializeforcache', trackData );
 				deferred.resolve( response.visualeditor.cachekey );
@@ -1040,14 +1100,14 @@ ve.init.mw.Target.prototype.prepareCacheKey = function ( doc ) {
 			}
 		} )
 		.fail( function () {
-			target.events.track( 'performance.system.serializeforcache.fail', { 'duration': ve.now() - start } );
+			target.events.track( 'performance.system.serializeforcache.fail', { duration: ve.now() - start } );
 			deferred.reject();
 		} );
 
 	this.preparedCacheKeyPromise = deferred.promise( {
-		'abort': xhr.abort,
-		'html': html,
-		'doc': doc
+		abort: xhr.abort,
+		html: html,
+		doc: doc
 	} );
 	return this.preparedCacheKeyPromise;
 };
@@ -1093,7 +1153,7 @@ ve.init.mw.Target.prototype.clearPreparedCacheKey = function () {
  */
 ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, eventName ) {
 	var data, preparedCacheKey = this.getPreparedCacheKey( doc ), target = this;
-	data = ve.extendObject( {}, options, { 'format': 'json' } );
+	data = ve.extendObject( {}, options, { format: 'json' } );
 
 	function ajaxRequest( cachekey ) {
 		var start = ve.now();
@@ -1101,16 +1161,16 @@ ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, e
 			data.cachekey = cachekey;
 		} else {
 			// Getting a cache key failed, fall back to sending the HTML
-			data.html = preparedCacheKey && preparedCacheKey.html || target.getHtml( doc );
+			data.html = preparedCacheKey && preparedCacheKey.html || EasyDeflate.deflate( target.getHtml( doc ) );
 			// If using the cache key fails, we'll come back here with cachekey still set
 			delete data.cachekey;
 		}
-		return target.constructor.static.apiRequest( data, { 'type': 'POST' } )
+		return target.constructor.static.apiRequest( data, { type: 'POST' } )
 			.then( function ( response, status, jqxhr ) {
 				var fullEventName, eventData = {
-					'bytes': $.byteLength( jqxhr.responseText ),
-					'duration': ve.now() - start,
-					'parsoid': jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
+					bytes: $.byteLength( jqxhr.responseText ),
+					duration: ve.now() - start,
+					parsoid: jqxhr.getResponseHeader( 'X-Parsoid-Performance' )
 				};
 				if ( response.error && response.error.code === 'badcachekey' ) {
 					// Log the failure if eventName was set
@@ -1144,7 +1204,7 @@ ve.init.mw.Target.prototype.tryWithPreparedCacheKey = function ( doc, options, e
  *
  * This method performs an asynchronous action and uses a callback function to handle the result.
  *
- *     target.save( dom, { 'summary': 'test', 'minor': true, 'watch': false } );
+ *     target.save( dom, { summary: 'test', minor: true, watch: false } );
  *
  * @method
  * @param {HTMLDocument} doc Document to save
@@ -1162,21 +1222,17 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
 	}
 
 	data = ve.extendObject( {}, options, {
-		'action': 'visualeditoredit',
-		'page': this.pageName,
-		'basetimestamp': this.baseTimeStamp,
-		'starttimestamp': this.startTimeStamp,
-		'token': this.editToken,
-		'useskin': mw.config.get( 'skin' )
+		action: 'visualeditoredit',
+		page: this.pageName,
+		oldid: this.revid,
+		basetimestamp: this.baseTimeStamp,
+		starttimestamp: this.startTimeStamp,
+		token: this.editToken
 	} );
-	if ( this.wikitext !== null ) {
-		data.oldwt = this.wikitext;
-	} else {
-		data.oldid = this.revid;
-	}
+
 	this.saving = this.tryWithPreparedCacheKey( doc, data, 'save' )
-		.done( ve.bind( ve.init.mw.Target.onSave, this, doc, data ) )
-		.fail( ve.bind( this.onSaveError, this, doc, data ) );
+		.done( ve.init.mw.Target.onSave.bind( this, doc, data ) )
+		.fail( this.onSaveError.bind( this, doc, data ) );
 
 	return true;
 };
@@ -1189,24 +1245,17 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
  * @returns {boolean} Diffing has been started
 */
 ve.init.mw.Target.prototype.showChanges = function ( doc ) {
-	var data;
 	if ( this.diffing ) {
 		return false;
 	}
-
-	data = {
-		'action': 'visualeditor',
-		'paction': 'diff',
-		'page': this.pageName
-	};
-	if ( this.wikitext !== null ) {
-		data.oldwt = this.wikitext;
-	} else {
-		data.oldid = this.revid;
-	}
-	this.diffing = this.tryWithPreparedCacheKey( doc, data, 'diff' )
-		.done( ve.bind( ve.init.mw.Target.onShowChanges, this ) )
-		.fail( ve.bind( ve.init.mw.Target.onShowChangesError, this ) );
+	this.diffing = this.tryWithPreparedCacheKey( doc, {
+		action: 'visualeditor',
+		paction: 'diff',
+		page: this.pageName,
+		oldid: this.revid
+	}, 'diff' )
+		.done( ve.init.mw.Target.onShowChanges.bind( this ) )
+		.fail( ve.init.mw.Target.onShowChangesError.bind( this ) );
 
 	return true;
 };
@@ -1216,12 +1265,12 @@ ve.init.mw.Target.prototype.showChanges = function ( doc ) {
  *
  * This method performs a synchronous action and will take the user to a new page when complete.
  *
- *     target.submit( wikitext, { 'wpSummary': 'test', 'wpMinorEdit': 1, 'wpSave': 1 } );
+ *     target.submit( wikitext, { wpSummary: 'test', wpMinorEdit: 1, wpSave: 1 } );
  *
  * @method
  * @param {string} wikitext Wikitext to submit
  * @param {Object} fields Other form fields to add (e.g. wpSummary, wpWatchthis, etc.). To actually
- *  save the wikitext, add { 'wpSave': 1 }. To go to the diff view, add { 'wpDiff': 1 }.
+ *  save the wikitext, add { wpSave: 1 }. To go to the diff view, add { wpDiff: 1 }.
  * @returns {boolean} Submitting has been started
 */
 ve.init.mw.Target.prototype.submit = function ( wikitext, fields ) {
@@ -1234,17 +1283,17 @@ ve.init.mw.Target.prototype.submit = function ( wikitext, fields ) {
 	var key,
 		$form = $( '<form method="post" enctype="multipart/form-data" style="display: none;"></form>' ),
 		params = ve.extendObject( {
-			'format': 'text/x-wiki',
-			'model': 'wikitext',
-			'oldid': this.requestedRevId,
-			'wpStarttime': this.startTimeStamp,
-			'wpEdittime': this.baseTimeStamp,
-			'wpTextbox1': wikitext,
-			'wpEditToken': this.editToken
+			format: 'text/x-wiki',
+			model: 'wikitext',
+			oldid: this.requestedRevId,
+			wpStarttime: this.startTimeStamp,
+			wpEdittime: this.baseTimeStamp,
+			wpTextbox1: wikitext,
+			wpEditToken: this.editToken
 		}, fields );
 	// Add params as hidden fields
 	for ( key in params ) {
-		$form.append( $( '<input>' ).attr( { 'type': 'hidden', 'name': key, 'value': params[key] } ) );
+		$form.append( $( '<input>' ).attr( { type: 'hidden', name: key, value: params[key] } ) );
 	}
 	// Submit the form, mimicking a traditional edit
 	// Firefox requires the form to be attached
@@ -1270,35 +1319,20 @@ ve.init.mw.Target.prototype.submit = function ( wikitext, fields ) {
  * @returns {boolean} Serializing has been started
 */
 ve.init.mw.Target.prototype.serialize = function ( doc, callback ) {
-	var data;
 	// Prevent duplicate requests
 	if ( this.serializing ) {
 		return false;
 	}
 	this.serializeCallback = callback;
-	data = {
-		'action': 'visualeditor',
-		'paction': 'serialize',
-		'page': this.pageName,
-		'oldid': this.revid
-	};
-	if ( this.wikitext !== null ) {
-		data.oldwt = this.wikitext;
-	} else {
-		data.oldid = this.revid;
-	}
-	this.serializing = this.tryWithPreparedCacheKey( doc, data, 'serialize' )
-		.done( ve.bind( ve.init.mw.Target.onSerialize, this ) )
-		.fail( ve.bind( ve.init.mw.Target.onSerializeError, this ) );
+	this.serializing = this.tryWithPreparedCacheKey( doc, {
+		action: 'visualeditor',
+		paction: 'serialize',
+		page: this.pageName,
+		oldid: this.revid
+	}, 'serialize' )
+		.done( ve.init.mw.Target.onSerialize.bind( this ) )
+		.fail( ve.init.mw.Target.onSerializeError.bind( this ) );
 	return true;
-};
-
-/**
- * @method
- * @param {string} wikitext
- */
-ve.init.mw.Target.prototype.setWikitext = function ( wikitext ) {
-	this.wikitext = wikitext;
 };
 
 /**
@@ -1331,25 +1365,20 @@ ve.init.mw.Target.prototype.setupSurface = function ( doc, callback ) {
 		);
 		setTimeout( function () {
 			// Create ui.Surface (also creates ce.Surface and dm.Surface and builds CE tree)
-			var surface = target.createSurface( dmDoc, { focusMode: true } );
-			target.surface = surface;
-			surface.$element.addClass( 've-init-mw-viewPageTarget-surface' )
-				.addClass( target.protectedClasses );
-			surface.addCommands( target.constructor.static.surfaceCommands );
+			var surface = target.addSurface( dmDoc, { focusMode: true } );
+			surface.$element
+				.addClass( 've-init-mw-viewPageTarget-surface' )
+				.addClass( target.protectedClasses )
+				.appendTo( target.$element );
+			target.setSurface( surface );
+
 			setTimeout( function () {
 				var surfaceView = surface.getView(),
 					$documentNode = surfaceView.getDocument().getDocumentNode().$element;
 
 				// Initialize surface
-				surface.getContext().hide();
-				// Wikia change
-				// Was previously prepended:
-				// https://github.com/Wikia/app/commit/45982569ef4381319e238ef973c49f57f96caf72
-				target.surface.$element.insertAfter( '#mw-content-text' );
-				target.setupToolbar();
-				if ( ve.debug ) {
-					target.setupDebugBar();
-				}
+				surface.getContext().toggle( false );
+
 				// Apply mw-body-content to the view (ve-ce-surface).
 				// Not to surface (ve-ui-surface), since that contains both the view
 				// and the overlay container, and we don't want inspectors to
@@ -1370,14 +1399,6 @@ ve.init.mw.Target.prototype.setupSurface = function ( doc, callback ) {
 };
 
 /**
- * @inheritdoc
- */
-ve.init.mw.Target.prototype.setupToolbar = function () {
-	// Parent method
-	ve.init.Target.prototype.setupToolbar.call( this, { 'shadow': true, 'actions': true } );
-};
-
-/**
  * Fire off the sanity check. Must be called before the surface is activated.
  *
  * To access the result, check whether #sanityCheckPromise has been resolved or rejected
@@ -1389,15 +1410,15 @@ ve.init.mw.Target.prototype.setupToolbar = function () {
 ve.init.mw.Target.prototype.startSanityCheck = function () {
 	// We have to get a copy of the data now, before we unlock the surface and let the user edit,
 	// but we can defer the actual conversion and comparison
-	var viewPage = this,
-		doc = viewPage.surface.getModel().getDocument(),
+	var target = this,
+		doc = this.getSurface().getModel().getDocument(),
 		data = new ve.dm.FlatLinearData( doc.getStore().clone(), ve.copy( doc.getFullData() ) ),
-		oldDom = viewPage.doc,
+		oldDom = this.doc,
 		d = $.Deferred();
 
 	// Reset
-	viewPage.sanityCheckFinished = false;
-	viewPage.sanityCheckVerified = false;
+	this.sanityCheckFinished = false;
+	this.sanityCheckVerified = false;
 
 	setTimeout( function () {
 		// We can't compare oldDom.body and newDom.body directly, because the attributes on the
@@ -1424,15 +1445,15 @@ ve.init.mw.Target.prototype.startSanityCheck = function () {
 		d.resolve();
 	} );
 
-	viewPage.sanityCheckPromise = d.promise()
+	this.sanityCheckPromise = d.promise()
 		.done( function () {
 			// If we detect no roundtrip errors,
 			// don't emphasize "review changes" to the user.
-			viewPage.sanityCheckVerified = true;
+			target.sanityCheckVerified = true;
 		})
 		.always( function () {
-			viewPage.sanityCheckFinished = true;
-			viewPage.emit( 'sanityCheckComplete' );
+			target.sanityCheckFinished = true;
+			target.emit( 'sanityCheckComplete' );
 		} );
 };
 
@@ -1443,49 +1464,67 @@ ve.init.mw.Target.prototype.startSanityCheck = function () {
  * @method
  */
 ve.init.mw.Target.prototype.restoreEditSection = function () {
-	if ( this.section !== undefined ) {
-		var offset, offsetNode, nextNode,
-			target = this,
-			surfaceView = this.surface.getView(),
-			surfaceModel = surfaceView.getModel(),
+	if ( this.section !== undefined && this.section > 0 ) {
+		var surfaceView = this.getSurface().getView(),
 			$documentNode = surfaceView.getDocument().getDocumentNode().$element,
 			$section = $documentNode.find( 'h1, h2, h3, h4, h5, h6' ).eq( this.section - 1 ),
-			headingNode = $section.data( 'view' ),
-			lastHeadingLevel = -1;
+			headingNode = $section.data( 'view' );
 
-		if ( $section.length ) {
+		if ( $section.length && new mw.Uri().query.summary === undefined ) {
 			this.initialEditSummary = '/* ' +
 				ve.graphemeSafeSubstring( $section.text(), 0, 244 ) + ' */ ';
 		}
 
 		if ( headingNode ) {
-			// Find next sibling which isn't a heading
-			offsetNode = headingNode;
-			while ( offsetNode instanceof ve.ce.HeadingNode && offsetNode.getModel().getAttribute( 'level' ) > lastHeadingLevel ) {
-				lastHeadingLevel = offsetNode.getModel().getAttribute( 'level' );
-				// Next sibling
-				nextNode = offsetNode.parent.children[ve.indexOf( offsetNode, offsetNode.parent.children ) + 1];
-				if ( !nextNode ) {
-					break;
-				}
-				offsetNode = nextNode;
-			}
-			offset = surfaceModel.getDocument().data.getNearestContentOffset(
-				offsetNode.getModel().getOffset(), 1
-			);
-			// onDocumentFocus is debounced, so wait for that to happen before setting
-			// the model selection, otherwise it will get reset
-			this.surface.getView().once( 'focus', function () {
-				surfaceModel.setSelection( new ve.Range( offset ) );
-			} );
-			// Scroll to heading:
-			// Wait for toolbar to animate in so we can account for its height
-			setTimeout( function () {
-				var $window = $( OO.ui.Element.getWindow( target.$element ) );
-				$window.scrollTop( headingNode.$element.offset().top - target.toolbar.$element.height() );
-			}, 200 );
+			this.goToHeading( headingNode );
 		}
 
 		this.section = undefined;
 	}
+};
+
+/**
+ * Move the cursor to a given heading and scroll to it.
+ *
+ * @method
+ * @param {ve.ce.HeadingNode} headingNode Heading node to scroll to
+ */
+ve.init.mw.Target.prototype.goToHeading = function ( headingNode ) {
+	var nextNode, offset,
+		target = this,
+		offsetNode = headingNode,
+		surfaceModel = this.getSurface().getView().getModel(),
+		lastHeadingLevel = -1;
+
+	// Find next sibling which isn't a heading
+	while ( offsetNode instanceof ve.ce.HeadingNode && offsetNode.getModel().getAttribute( 'level' ) > lastHeadingLevel ) {
+		lastHeadingLevel = offsetNode.getModel().getAttribute( 'level' );
+		// Next sibling
+		nextNode = offsetNode.parent.children[ve.indexOf( offsetNode, offsetNode.parent.children ) + 1];
+		if ( !nextNode ) {
+			break;
+		}
+		offsetNode = nextNode;
+	}
+	offset = surfaceModel.getDocument().data.getNearestContentOffset(
+		offsetNode.getModel().getOffset(), 1
+	);
+	// onDocumentFocus is debounced, so wait for that to happen before setting
+	// the model selection, otherwise it will get reset
+	this.getSurface().getView().once( 'focus', function () {
+		surfaceModel.setLinearSelection( new ve.Range( offset ) );
+		target.scrollToHeading( headingNode );
+	} );
+};
+
+/**
+ * Scroll to a given heading in the document.
+ *
+ * @method
+ * @param {ve.ce.HeadingNode} headingNode Heading node to scroll to
+ */
+ve.init.mw.Target.prototype.scrollToHeading = function ( headingNode ) {
+	var $window = $( OO.ui.Element.static.getWindow( this.$element ) );
+
+	$window.scrollTop( headingNode.$element.offset().top - this.getToolbar().$element.height() );
 };

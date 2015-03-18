@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * MediaWiki template specification.
  *
@@ -25,6 +23,7 @@ ve.dm.MWTemplateSpecModel = function VeDmMWTemplateSpecModel( template ) {
 	this.params = {};
 	this.paramOrder = [];
 	this.sets = [];
+	this.maps = {};
 
 	// Initialization
 	this.fill();
@@ -51,7 +50,7 @@ ve.dm.MWTemplateSpecModel.prototype.extend = function ( data ) {
 	if ( data.description !== null ) {
 		this.description = data.description;
 	}
-	if ( ve.isArray( data.paramOrder ) ) {
+	if ( Array.isArray( data.paramOrder ) ) {
 		this.paramOrder = data.paramOrder.slice();
 	}
 	if ( ve.isPlainObject( data.params ) ) {
@@ -72,6 +71,7 @@ ve.dm.MWTemplateSpecModel.prototype.extend = function ( data ) {
 		}
 	}
 	this.sets = data.sets;
+	this.maps = data.maps;
 };
 
 /**
@@ -99,15 +99,15 @@ ve.dm.MWTemplateSpecModel.prototype.fill = function () {
  */
 ve.dm.MWTemplateSpecModel.prototype.getDefaultParameterSpec = function ( name ) {
 	return {
-		'label': name,
-		'description': null,
-		'default': '',
-		'type': 'string',
-		'aliases': [],
-		'name': name,
-		'required': false,
-		'suggested': false,
-		'deprecated': false
+		label: name,
+		description: null,
+		default: '',
+		type: 'string',
+		aliases: [],
+		name: name,
+		required: false,
+		suggested: false,
+		deprecated: false
 	};
 };
 
@@ -125,13 +125,7 @@ ve.dm.MWTemplateSpecModel.prototype.getLabel = function () {
 		try {
 			// Normalize and remove namespace prefix if in the Template: namespace
 			titleObj = new mw.Title( title );
-			if ( titleObj.getNamespaceId() === 10 ) {
-				// Template namespace, remove namespace prefix
-				title = titleObj.getNameText();
-			} else {
-				// Other namespace, already has a prefix
-				title = titleObj.getPrefixedText();
-			}
+			title = titleObj.getRelativeText( 10 );
 		} catch ( e ) { }
 	}
 
@@ -213,6 +207,16 @@ ve.dm.MWTemplateSpecModel.prototype.getParameterDescription = function ( name, l
  */
 ve.dm.MWTemplateSpecModel.prototype.getParameterDefaultValue = function ( name ) {
 	return this.params[name]['default'];
+};
+
+/**
+ * Get a parameter auto value.
+ *
+ * @param {string} name Parameter name
+ * @returns {string} Auto-value for the parameter
+ */
+ve.dm.MWTemplateSpecModel.prototype.getParameterAutoValue = function ( name ) {
+	return this.params[name].autovalue;
 };
 
 /**
@@ -317,10 +321,10 @@ ve.dm.MWTemplateSpecModel.prototype.getParameterSets = function () {
 };
 
 /**
- * Get template
+ * Get map describing relationship between another content type and the parameters.
  *
- * @returns VeDmMWTemplateModel
+ * @return {Object} Object with application property maps to parameters keyed to application name.
  */
- ve.dm.MWTemplateSpecModel.prototype.getTemplate = function () {
-	return this.template;
+ve.dm.MWTemplateSpecModel.prototype.getMaps = function () {
+	return this.maps;
 };

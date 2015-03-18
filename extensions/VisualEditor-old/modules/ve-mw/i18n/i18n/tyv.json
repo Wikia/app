@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Agilight"
+		]
+	},
+	"tooltip-ca-createsource": "Үндезин сөзүглелдер \"эдикчизи\"-биле арынны чаяар",
+	"tooltip-ca-editsource": "Арынның үндезин сөзүглелин эдер",
+	"tooltip-ca-ve-edit": "Ук арынны визуалдыг(?) эдикчи-биле эдер",
+	"visualeditor-beta-appendix": "beta",
+	"visualeditor-beta-label": "beta",
+	"visualeditor-ca-createsource": "Чаяар",
+	"visualeditor-ca-editsource": "Үндезин сөзүглелин эдер",
+	"visualeditor-ca-editsource-section": "Үндезин сөзүглелин эдер",
+	"visualeditor-ca-ve-edit": "Визуалдыг эдикчи",
+	"visualeditor-ca-ve-edit-section": "Визуалдыг эдикчи",
+	"visualeditor-categories-tool": "Аңгылалдар",
+	"visualeditor-desc": "MediaWiki-ге херек Визуалдыг эдикчи",
+	"visualeditor-dialog-meta-categories-category": "Аңгылал",
+	"visualeditor-dialog-meta-categories-data-label": "Аңгылалдар",
+	"visualeditor-savedialog-label-create": "Арын чаяар",
+	"visualeditor-savedialog-label-error": "Алдаг",
+	"visualeditor-savedialog-label-restore": "Арынны катап тургузар",
+	"visualeditor-savedialog-label-save": "Арын шыгжаар",
+	"visualeditor-savedialog-label-warning": "Кичээңгей",
+	"visualeditor-toolbar-cancel": "Ойталал"
+}

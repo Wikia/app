@@ -248,6 +248,14 @@ class LoadBalancer {
 							'while the slave database servers catch up to the master';
 						$i = $this->pickRandom( $currentLoads );
 						$laggedSlaveMode = true;
+
+						// Wikia change - begin
+						Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
+							'exception' => new Exception(),
+							'group'     => $group,
+							'wiki'      => $wiki
+						] );
+						// Wikia change - end
 					}
 				}
 
@@ -735,11 +743,6 @@ class LoadBalancer {
 			$db = $e->db;
 		}
 
-		if ( $db->isOpen() ) {
-			wfDebug( "Connected to $host $dbname.\n" );
-		} else {
-			wfDebug( "Connection failed to $host $dbname.\n" );
-		}
 		$db->setLBInfo( $server );
 		if ( isset( $server['fakeSlaveLag'] ) ) {
 			$db->setFakeSlaveLag( $server['fakeSlaveLag'] );
@@ -747,6 +750,7 @@ class LoadBalancer {
 		if ( isset( $server['fakeMaster'] ) ) {
 			$db->setFakeMaster( true );
 		}
+
 		return $db;
 	}
 

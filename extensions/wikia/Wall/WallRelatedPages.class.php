@@ -206,7 +206,8 @@ class WallRelatedPages extends WikiaModel {
 			$row['displayName'] = $wallMessage->getUserDisplayName();
 			$row['userName'] = $wallMessage->getUser()->getName();
 			$row['userUrl'] = $wallMessage->getUserWallUrl();
-			$row['messageBody'] = $helper->shortenText($helper->strip_wikitext($wallMessage->getRawText()));
+			$strippedText = $helper->strip_wikitext( $wallMessage->getRawText(), $wallMessage->getTitle() );
+			$row['messageBody'] = $helper->shortenText( $strippedText );
 			$row['timeStamp'] = $wallMessage->getCreateTime();
 			
 			$row['replies'] = array();
@@ -214,15 +215,17 @@ class WallRelatedPages extends WikiaModel {
 			$replies = array_reverse($wallThread->getRepliesWallMessages(2, "DESC"));
 			
 			foreach($replies as $reply) {
+				/** @var WallMessage $reply */
 				$reply->load();
 				$update[] = $reply->getCreateTime(TS_UNIX);
 				
 				if(!$reply->isRemove() && !$reply->isAdminDelete()) {
+					$strippedText = $helper->strip_wikitext( $reply->getRawText(), $reply->getTitle() );
 					$replyRow = array(
 						'displayName' =>  $reply->getUserDisplayName(),
 						'userName' => $reply->getUser()->getName(),
 						'userUrl' => $reply->getUserWallUrl(),
-						'messageBody' => $helper->shortenText($helper->strip_wikitext($reply->getRawText())),
+						'messageBody' => $helper->shortenText( $strippedText ),
 						'timeStamp' => $reply->getCreateTime()
 					);
 					$row['replies'][] = $replyRow;

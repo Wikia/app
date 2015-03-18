@@ -194,46 +194,41 @@
 
 					#wpSummary {
 						height: 20px;
+						margin-top: 8px;
 						padding: 3px 5px;
-						width: 215px;
+						width: 210px;
 					}
 
 					.checkboxes {
 						float: right;
-						margin: 10px 8px 0;
+						margin: 0 8px;
+
+						label {
+							margin-bottom: 0;
+						}
+
+						label:only-child {
+							display: inline-block;
+							margin-top: 10px;
+
+							input {
+								vertical-align: top;
+							}
+						}
+
+						span {
+							display: inline-block;
+							line-height: 1;
+							width: 60px;
+							word-wrap: break-word;
+						}
 					}
 
-					#wpDiff {
+					.diff-link {
 						font-size: 10px;
-						margin-right: 10px;
-						margin-top: 12px;
-					}
-
-					@media screen and (max-width: $width-outside) {
-						.preview_box {
-							border: 0;
-							clear: both;
-
-							h3 {
-								margin-top: 8px;
-							}
-
-							.preview_mobile {
-								padding-top: 3px;
-							}
-
-							.preview_desktop {
-								padding-top: 5px;
-							}
-						}
-
-						#wpDiff {
-							margin-top: 7px;
-						}
-
-						#wpSave {
-							margin-top: 3px;
-						}
+						line-height: 1;
+						margin: 10px 10px 0 0;
+						width: 55px;
 					}
 				}
 
@@ -243,6 +238,33 @@
 				}
 			}
 		}
+	}
+}
+
+#EditPage.toolbar-expanded {
+	.preview_box {
+		border: 0;
+		clear: both;
+	}
+
+	.preview-header {
+		margin-top: 8px;
+	}
+
+	.preview_mobile {
+		padding-top: 3px;
+	}
+
+	.preview_desktop {
+		padding-top: 5px;
+	}
+
+	.diff-link {
+		margin-top: 5px;
+	}
+
+	#wpSave {
+		margin-top: 3px;
 	}
 }
 

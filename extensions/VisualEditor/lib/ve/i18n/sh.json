@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"OC Ripper"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-aliennode-tooltip": "Žalimo, ovaj element se zasada može uređivati samo u izvornom modu.",
+	"visualeditor-annotationbutton-bold-tooltip": "Podebljano",
+	"visualeditor-annotationbutton-code-tooltip": "Kompjuterski kod",
+	"visualeditor-annotationbutton-italic-tooltip": "Kurziv",
+	"visualeditor-annotationbutton-language-tooltip": "Jezik",
+	"visualeditor-annotationbutton-link-tooltip": "Poveznica (link)",
+	"visualeditor-clearbutton-tooltip": "Izbrišite formatiranje",
+	"visualeditor-dialog-action-apply": "Primijenite promjene",
+	"visualeditor-dialog-action-cancel": "Odustani",
+	"visualeditor-dialog-action-goback": "Vrati se",
+	"visualeditor-formatdropdown-format-heading1": "Naslov 1",
+	"visualeditor-formatdropdown-format-heading2": "Naslov 2",
+	"visualeditor-formatdropdown-format-heading3": "Naslov 3",
+	"visualeditor-formatdropdown-format-heading4": "Naslov 4",
+	"visualeditor-formatdropdown-format-heading5": "Naslov 5",
+	"visualeditor-formatdropdown-format-heading6": "Naslov 6",
+	"visualeditor-formatdropdown-format-paragraph": "Odlomak",
+	"visualeditor-formatdropdown-format-preformatted": "Preformatirano",
+	"visualeditor-formatdropdown-title": "Promijenite format",
+	"visualeditor-historybutton-redo-tooltip": "Ponovi",
+	"visualeditor-historybutton-undo-tooltip": "Povrati",
+	"visualeditor-indentationbutton-indent-tooltip": "Povećaj uvlačenje",
+	"visualeditor-indentationbutton-outdent-tooltip": "Smanji uvlačenje",
+	"visualeditor-inspector-close-tooltip": "Zatvori",
+	"visualeditor-inspector-remove-tooltip": "Ukloni",
+	"visualeditor-languageinspector-title": "Jezik",
+	"visualeditor-languageinspector-widget-changelang": "Promijeni jezik",
+	"visualeditor-languageinspector-widget-label-direction": "Smjer",
+	"visualeditor-languageinspector-widget-label-langcode": "Kod jezika",
+	"visualeditor-languageinspector-widget-label-language": "Jezik",
+	"visualeditor-linkinspector-title": "Hiperveza",
+	"visualeditor-listbutton-bullet-tooltip": "Spisak s grafičkim oznakama",
+	"visualeditor-listbutton-number-tooltip": "Numerisani spisak"
+}

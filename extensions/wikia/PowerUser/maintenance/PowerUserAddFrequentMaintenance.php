@@ -49,7 +49,8 @@ class PowerUserAddFrequentMaintenance extends Maintenance {
 		$oSubQuery = ( new WikiaSQL() )
 			->SELECT( 'up_user' )
 			->FROM( 'user_properties' )
-			->WHERE( 'up_property' )->EQUAL_TO( PowerUser::TYPE_FREQUENT )
+			->WHERE( 'user_id' )->EQUAL_TO_FIELD( 'up_user' )
+			->AND_( 'up_property' )->EQUAL_TO( PowerUser::TYPE_FREQUENT )
 			->AND_( 'up_value' )->EQUAL_TO( '1' );
 
 		$aPotentialPowerUsersIds = ( new WikiaSQL() )

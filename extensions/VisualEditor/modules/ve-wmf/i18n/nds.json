@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Zylbath"
+			"Zylbath",
+			"Muhammad Shuaib",
+			"Jdforrester"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",

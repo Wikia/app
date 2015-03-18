@@ -66,7 +66,6 @@ if($wgDBname != 'uncyclo') {
  */
 global $wgAutoloadClasses;
 
-
 /**
  * Nirvana framework classes
  */
@@ -378,7 +377,6 @@ $wgAutoloadClasses['FooterController'] = $IP.'/skins/oasis/modules/FooterControl
 $wgAutoloadClasses['ArticleCategoriesController'] = $IP.'/skins/oasis/modules/ArticleCategoriesController.class.php';
 $wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/AchievementsController.class.php';
 $wgAutoloadClasses['AccountNavigationController'] = $IP.'/skins/oasis/modules/AccountNavigationController.class.php';
-$wgAutoloadClasses['RailController'] = $IP.'/skins/oasis/modules/RailController.class.php';
 $wgAutoloadClasses['AdController'] = $IP.'/skins/oasis/modules/AdController.class.php';
 $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/FollowedPagesController.class.php';
 $wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
@@ -536,6 +534,13 @@ $wgAutoloadClasses[ 'WikiaValidatorUsersUrl'        ] = "$IP/includes/wikia/vali
 include_once("$IP/includes/wikia/validators/WikiaValidatorsExceptions.php");
 
 /**
+ * MediaWiki Config
+ */
+$wgAutoloadClasses['Config'] = $IP . '/includes/config/Config.php';
+$wgAutoloadClasses['ConfigFactory'] = $IP . '/includes/config/ConfigFactory.php';
+$wgAutoloadClasses['GlobalVarConfig'] = $IP . '/includes/config/GlobalVarConfig.php';
+
+/**
  * registered API methods
  */
 global $wgAPIListModules;
@@ -611,9 +616,13 @@ include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.ph
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
 include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
 include_once( "$IP/extensions/wikia/UserTools/UserTools.setup.php" );
+include_once( "$IP/extensions/wikia/BannerNotifications/BannerNotifications.setup.php" );
 include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
+include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
+include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
+include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1297,28 +1306,10 @@ $wgAdDriverAlwaysCallDartInCountries = [];
 $wgAdDriverAlwaysCallDartInCountriesMobile = [];
 
 /**
- * @name $wgAdDriverUseBottomLeaderboard
- * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
- */
-$wgAdDriverUseBottomLeaderboard = false;
-
-/**
- * @name $wgAdDriverUseInterstitial
- * Whether to enable new interstitial ad MODAL_INTERSTITIAL_5
- */
-$wgAdDriverUseInterstitial = false;
-
-/**
  * @name $wgAdDriverUseTopInContentBoxad
- * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
+ * Whether to enable the in-content ads for Oasis (for narrow screens)
  */
 $wgAdDriverUseTopInContentBoxad = true;
-
-/**
- * @name $wgAdDriverBottomLeaderboardImpressionCapping
- * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
- */
-$wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgSitewideDisableGpt
@@ -1436,14 +1427,14 @@ $wgAdDriverEnableAdsInMaps = true;
  *  ]]
  *
  * Rubicon RTP configuration variable.
- * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconRTPConfig = null;
 
 /**
  * @name $wgAdDriverRubiconRTPCountries
  * List of countries RTP call will be issued.
- * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconRTPCountries = null;
 
@@ -1456,9 +1447,16 @@ $wgEnableKruxOnMobile = true;
 /**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
- * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgHighValueCountries = null;
+
+/**
+ * @name $wgAdDriverTurtleCountries
+ * List of countries to call Turtle ad partner in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverTurtleCountries = null;
 
 /**
  * @name $wgAnalyticsProviderPageFair
@@ -1676,8 +1674,18 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
+/* @name wgIncludeWikiInCorporateFooterDropdown
+ * Include link to this wiki in the Corporate Footer dropdown (the one with flags).
+ */
+$wgIncludeWikiInCorporateFooterDropdown = false;
+
 /**
  * Force ImageServing to return an empty list
  * see PLATFORM-392
  */
 $wgImageServingForceNoResults = false;
+
+/**
+ * Add poweruser to implicit groups
+ */
+$wgImplicitGroups[] = 'poweruser';

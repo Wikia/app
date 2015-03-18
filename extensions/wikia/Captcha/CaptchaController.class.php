@@ -5,31 +5,35 @@
  */
 class CaptchaController extends WikiaController {
 
-	/** @var Captcha\Module\BaseCaptcha */
-	private $captcha;
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	public function __construct() {
-		$this->captcha = Captcha\Factory\Module::getInstance();
-		parent::__construct();
+	/**
+	 * Displays a captcha image. This is used exclusively by FancyCaptcha.
+	 */
+	public function showImage() {
+		$fancyCaptcha = new \Captcha\Module\FancyCaptcha();
+		if ( !$fancyCaptcha->showImage() ) {
+			$this->response->setData( [
+				'error' => wfMessage( 'captcha-no-image' )->escaped(),
+			] );
+		}
 	}
 
 	/**
-	 * Displays a captcha image
+	 * Get the FancyCaptcha form. This is used as a fallback when reCaptcha
+	 * fails to load.
 	 */
-	public function showImage() {
-		if ( method_exists( $this->captcha, 'showImage' ) ) {
-			if ( !$this->captcha->showImage() ) {
-				$this->response->setData( [
-					'error' => wfMessage( 'captcha-no-image' )->escaped(),
-				] );
-			}
-		}
+	public function getFancyCaptcha() {
+		$fancyCaptcha = new \Captcha\Module\FancyCaptcha();
+		$this->response->setData(
+			[ 'form' => $fancyCaptcha->getForm() ]
+		);
 	}
 
 	/**
 	 * Display information about how this captcha works
 	 */
 	public function showHelp() {
-		$this->captcha->showHelp();
+		\Captcha\Factory\Module::getInstance()->showHelp();
 	}
 }

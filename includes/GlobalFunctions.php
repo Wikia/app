@@ -2967,10 +2967,6 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	$output = ob_get_contents();
 	ob_end_clean();
 
-	if ( $retval == 127 ) {
-		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
-	}
-
 	// Wikia change - begin
 	if ( $retval > 0 ) {
 		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
@@ -2980,6 +2976,10 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 		]);
 	}
 	// Wikia change - end
+
+	if ( $retval == 127 ) {
+		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
+	}
 
 	return $output;
 }

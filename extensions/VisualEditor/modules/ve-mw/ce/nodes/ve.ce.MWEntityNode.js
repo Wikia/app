@@ -24,7 +24,7 @@ ve.ce.MWEntityNode = function VeCeMWEntityNode( model, config ) {
 	this.$element.prop( 'contentEditable', 'false' );
 
 	// Events
-	this.model.connect( this, { 'update': 'onUpdate' } );
+	this.model.connect( this, { update: 'onUpdate' } );
 
 	// Initialization
 	this.onUpdate();

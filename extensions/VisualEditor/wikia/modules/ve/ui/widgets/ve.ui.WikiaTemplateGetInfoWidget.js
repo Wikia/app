@@ -19,14 +19,14 @@ ve.ui.WikiaTemplateGetInfoWidget = function VeUiWikiaTemplateGetInfoWidget( conf
 	// Properties
 	this.template = config.template;
 	this.templateInfoButton = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'arrow-circled',
-			'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-get-info', this.template.getSpec().getLabel() ),
-			'tabIndex': -1,
-			'classes': [ 've-ui-wikiaTemplateGetInfoWidget-templateInfoButton' ]
+			$: this.$,
+			framed: false,
+			icon: 'arrow-circled',
+			label: ve.msg( 'wikia-visualeditor-dialog-transclusion-get-info', this.template.getSpec().getLabel() ),
+			tabIndex: -1,
+			classes: [ 've-ui-wikiaTemplateGetInfoWidget-templateInfoButton' ]
 		} )
-		.connect( this, { 'click': 'onTemplateInfoButtonClick' } );
+		.connect( this, { click: 'onTemplateInfoButtonClick' } );
 
 	// Events
 
@@ -46,7 +46,7 @@ OO.inheritClass( ve.ui.WikiaTemplateGetInfoWidget, OO.ui.Widget );
 ve.ui.WikiaTemplateGetInfoWidget.prototype.onTemplateInfoButtonClick = function () {
 	window.open( new mw.Title( this.template.getTitle() ).getUrl() );
 	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-template-get-info'
+		action: ve.track.actions.CLICK,
+		label: 'dialog-template-get-info'
 	} );
 };

@@ -7,15 +7,20 @@
 			"Pginer",
 			"QuimGil",
 			"SMP",
-			"Vriullop"
+			"Vriullop",
+			"Davidpar",
+			"Kippelboy",
+			"Unapersona"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual]]",
 	"tag-visualeditor-description": "Modificació feta amb l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor visual: a comprovar]]",
 	"tag-visualeditor-needcheck-description": "Edició feta amb l'[[{{MediaWiki:visualeditor-descriptionpagelink}}|editor visual]], en la qual el sistema ha detectat que el text wiki pot contenir canvis no desitjats.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual: Canviat]]",
+	"tag-visualeditor-switched-description": "L'usuari va començar a editar utilitzant VisualEditor i després va canviar a l'editor wikitext.",
 	"visualeditor-feedback-link": "Project:Editor visual/Comentaris",
 	"visualeditor-feedback-tool": "Comentaris",
 	"visualeditor-help-label": "Llegiu la guia d'usuari",
-	"visualeditor-help-title": "Guia d'usuari sobre la utilització de l'editor"
+	"visualeditor-help-title": "Guia sobre la utilització de l'editor"
 }

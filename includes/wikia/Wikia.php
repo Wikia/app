@@ -21,7 +21,6 @@ $wgHooks['SetupAfterCache']          [] = "Wikia::setupAfterCache";
 $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
 $wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
-$wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
 $wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
@@ -1285,25 +1284,6 @@ class Wikia {
 
 		wfProfileOut( __METHOD__ );
 		return $params;
-	}
-
-
-	/**
-	 * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
-	 * maintanance scripts while something is wrong with performance
-	 *
-	 * @static
-	 * @author Piotr Molski (moli) <moli at wikia-inc.com>
-	 * @param int $maxSleep
-	 * @return null
-	 */
-	static function switchDBToLightMode( $WFLoader ) {
-		// commandline scripts only
-		if ( $WFLoader->mCommandLine ) {
-			// switch db to light mode
-			wfDBLightMode(60);
-		}
-		return true;
 	}
 
 	static public function getAllHeaders() {

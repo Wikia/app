@@ -332,33 +332,38 @@ body {
 			.ArticlePreview {
 				border: 1px solid $color-page-border;
 				clear: both;
-				min-height: 320px;
+				min-height: 140px;
 				-webkit-overflow-scrolling: touch;
 				overflow-y: scroll;
 				padding: 10px;
 				position: relative;
 
-				.global-notification {
+				.banner-notifications-wrapper {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
 				}
 			}
 
-			.preview-modal-msg {
+			.preview-modal-msg-wrapper {
 				border: 1px solid $color-page-border;
 				border-bottom: 0;
 				box-sizing: border-box;
-				display: table;
-				padding: 18px;
+				max-height: 100px;
+				overflow-y: auto;
 				width: 100%;
+			}
+
+			.preview-modal-msg {
+				display: table;
 
 				.preview-message {
 					display: table-cell;
+					padding: 18px;
 				}
 
 				.preview-link {
 					display: table-cell;
-					padding-left: 18px;
+					padding: 0 18px;
 					text-align: right;
 				}
 			}
@@ -487,32 +492,6 @@ body {
 			.EditPageMainContainer {
 				margin-right: 0;
 			}
-
-			@media screen and (max-width: $width-outside) {
-				#wpSave {
-					// fix for touch devices, because in touchScreen.scss height is set to 30px !important
-					height: 21px !important;
-					margin: 0;
-				}
-
-				#wpSummaryLabel {
-					clear: none;
-				}
-
-				.EditPageToolbar {
-					height: 70px;
-				}
-
-				.EditPageRail {
-					.module_page_controls {
-						.wikia-menu-button {
-							margin: 0;
-							right: 145px;
-							top: 40px;
-						}
-					}
-				}
-			}
 		}
 
 		.editpage-widemode-trigger {
@@ -556,6 +535,32 @@ body {
 	// fix for wiki nav bug - DAR-2884
 	.preview .WikiaArticle {
 		overflow: inherit;
+	}
+
+	#EditPage {
+		&.toolbar-expanded {
+			#wpSave {
+				// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+				height: 21px !important;
+				margin: 0;
+			}
+
+			#wpSummaryLabel {
+				clear: none;
+			}
+
+			.EditPageToolbar {
+				height: 70px;
+			}
+
+			.EditPageRail {
+				.module_page_controls {
+					.wikia-menu-button {
+						margin: 0;
+					}
+				}
+			}
+		}
 	}
 }
 // END - edit page fixes

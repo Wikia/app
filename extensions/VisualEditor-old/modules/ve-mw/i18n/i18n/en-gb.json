@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jdforrester",
+			"Shirayuki",
+			"Felicilijonas"
+		]
+	},
+	"visualeditor-dialog-media-position-center": "Centre",
+	"visualeditor-loadwarning-token": "Error loading edit token from server: $1. Would you like to try again?"
+}

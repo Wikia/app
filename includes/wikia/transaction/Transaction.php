@@ -20,6 +20,7 @@ class Transaction {
 	// Parameters
 	const PARAM_ENVIRONMENT = 'env';
 	const PARAM_HOSTNAME = 'hostname';
+	const PARAM_PHP_VERSION = 'php_version';
 	const PARAM_ENTRY_POINT = 'entry_point';
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
@@ -65,6 +66,7 @@ class Transaction {
 			) );
 			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
 			$instance->set( self::PARAM_HOSTNAME, wfHostname() );
+			$instance->set( self::PARAM_PHP_VERSION, explode( '-', phpversion() )[0] ); // report "5.4.17-1~precise+1" as "5.4.17"
 		}
 		return $instance;
 	}

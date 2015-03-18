@@ -1,0 +1,49 @@
+@import 'skins/shared/mixins/image-replacement';
+
+$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
+
+#ext-wikia-adEngine-template-footer {
+	bottom: 0;
+	display: block;
+	position: fixed;
+	width: 100%;
+	z-index: $zTop;
+
+	a.close {
+		background-color: #000;
+		bottom: 0;
+		display: block;
+		padding: 35px 5px;
+		position: absolute;
+		right: 0;
+
+		span {
+			@include image-replacement();
+			background: url($close-image);
+			background-size: 20px 20px;
+			display: block;
+			float: right;
+			height: 20px;
+			outline: none;
+			width: 20px;
+		}
+	}
+
+	.ad {
+		padding-right: 30px;
+	}
+
+	.ad iframe {
+		display: block;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.background {
+		background: rgba(0, 0, 0, 0.4);
+		bottom: 0;
+		height: 90px;
+		position: absolute;
+		width: 100%;
+	}
+}

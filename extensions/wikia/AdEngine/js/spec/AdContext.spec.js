@@ -1,4 +1,4 @@
-/*global describe, it, modules, expect*/
+/*global describe, it, modules, expect, spyOn*/
 /*jshint maxlen:200*/
 describe('AdContext', function () {
 	'use strict';
@@ -175,7 +175,7 @@ describe('AdContext', function () {
 		var adContext;
 
 		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
-			wgAdDriverAlwaysCallDartInCountriesMobile: ['XX']
+			wgAdDriverAlwaysCallDartInCountriesMobile: ['XX', 'ZZ']
 		});
 		expect(adContext.getContext().providers.remnantGptMobile).toBeTruthy();
 
@@ -184,5 +184,35 @@ describe('AdContext', function () {
 		});
 		// TODO: clean up in ADEN-1785
 		//expect(adContext.getContext().providers.remnantGptMobile).toBeFalsy();
+	});
+
+	it('makes providers.turtle true when country in instantGlobals.wgAdDriverTurtleCountries', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgAdDriverTurtleCountries: ['XX', 'ZZ']
+		});
+		expect(adContext.getContext().providers.turtle).toBeTruthy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgAdDriverTurtleCountries: ['YY']
+		});
+		expect(adContext.getContext().providers.turtle).toBeFalsy();
+	});
+
+	it('calls whoever registered with addCallback each time setContext is called', function () {
+		var adContext,
+			mocks = {
+				callback: function () {
+					return;
+				}
+			};
+
+		spyOn(mocks, 'callback');
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {});
+		adContext.addCallback(mocks.callback);
+		adContext.setContext({});
+		expect(mocks.callback).toHaveBeenCalled();
 	});
 });

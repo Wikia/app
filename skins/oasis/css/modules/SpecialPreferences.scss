@@ -1,6 +1,5 @@
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/color";
-@import "skins/shared/mixins/box-sizing";
 
 #preftoc {
 	@include clearfix;
@@ -26,7 +25,7 @@
 	margin: 40px 0;
 	padding: 0;
 	legend {
-		@include box-sizing;
+		box-sizing: border-box;
 		border-bottom: solid 1px $color-headline-border;
 		display: block;
 		font-size: 18px;

@@ -3,6 +3,7 @@
 class ExternalUser_Wikia extends ExternalUser {
 	static private $recentlyUpdated = array();
 	private $mRow, $mDb, $mUser;
+	private $lastAuthenticationError;
 
 	protected function initFromName( $name ) {
 		wfDebug( __METHOD__ . ": init User from name: $name \n" );
@@ -198,42 +199,25 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_birthdate;
 	}
 
-	public function authenticate( $sPassword ) {
-		// Authenticate with Helios if enabled.
-		global $wgEnableHeliosExt;
-		if ( $wgEnableHeliosExt ) {
-			$bHeliosResult = \Wikia\Helios\User::authenticate( $this->getName(), $sPassword );
+	public function getLastAuthenticationError() {
+		return $this->lastAuthenticationError;
+	}
 
-			// Terminate unless in the shadow mode.
-			global $wgHeliosLoginShadowMode;
-			if ( !$wgHeliosLoginShadowMode ) {
-				return $bHeliosResult;
-			}
+	public function authenticate( $password ) {
+		$this->lastAuthenticationError = null;
+
+		$result = null;
+		$errorMessageKey = null;
+
+		wfRunHooks( 'UserCheckPassword', [ $this->getId(), $this->getName(), $this->getPassword(), $password, &$result, &$errorMessageKey ] );
+		if ( $result === null ) {
+			$result = User::comparePasswords( $this->getPassword(), $password, $this->getId() );
+		}
+		if ( $errorMessageKey ) {
+			$this->lastAuthenticationError = $errorMessageKey;
 		}
 
-		// Authenticate with MediaWiki.
-		$bMediaWikiResult = User::comparePasswords( $this->getPassword(), $sPassword, $this->getId() );
-		// Detect discrepancies between Helios and MediaWiki results.
-		if ( $wgEnableHeliosExt && (  $bHeliosResult != $bMediaWikiResult ) ) {
-			
-			$sMWHashFirst  = substr( $this->getPassword(), 0, 3 ); // The first three bytes.
-			$sMWHashLast   = substr( $this->getPassword(),   -3 ); // The last three bytes.
-			$sMWHashLength = strlen( $this->getPassword() );       // The byte-length
-
-			\Wikia\Helios\User::debugLogin( $sPassword, __METHOD__ );
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'HELIOS_LOGIN',
-				[ 'helios'         => $bHeliosResult,
-				  'mediawiki'      => $bMediaWikiResult,
-				  'user_id'        => $this->getId(),
-				  'username'       => $this->getName(),
-				  'mw_hash_first'  => $sMWHashFirst,
-				  'mw_hash_last'   => $sMWHashLast,
-				  'mw_hash_length' => $sMWHashLength ]
-			);
-		}
-
-		return $bMediaWikiResult;
+		return $result;
 	}
 
 	public function getPref( $pref ) {
@@ -264,10 +248,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		} else {
 			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
 
-			/** PLATFORM-508 - logging for Helios project - begin */
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
-			/** PLATFORM-508 - logging for Helios project - end */
-
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 			$User->setToken();
@@ -294,6 +274,12 @@ class ExternalUser_Wikia extends ExternalUser {
 			);
 			$User->mId = $dbw->insertId();
 			$dbw->commit( __METHOD__ );
+
+			// Logging added in order to identify what does INSERT to wikicities.user.
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				'HELIOS_REGISTRATION_INSERTS',
+				[ 'exception' => new Exception, 'userid' => $User->mId, 'username' => $User->mName ]
+			);
 
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();

@@ -1,8 +1,7 @@
 /*!
  * VisualEditor standalone demo
  *
- * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
- * @license The MIT License (MIT); see LICENSE.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
  */
 
 body {
@@ -15,31 +14,75 @@ body {
 
 /* Demo */
 
-.ve-demo-menu {
-	list-style: none;
-	margin: 0;
-	padding: 0.75em 1.5em;
-	display: inline-block;
+.ve-demo-logo {
+	float: right;
+	margin: -0.4em -0.3em 0 0;
+	background: url('VisualEditor-logo.svg') no-repeat;
+	background-size: contain;
+	width: 8.6em;
+	height: 3em;
 }
 
-.ve-demo-menu li {
-	list-style: none;
-	margin: 0 0.75em 0 0;
-	padding: 0;
+.ve-demo-menu {
+	padding: 0.75em 1.5em;
+}
+
+.ve-demo-menu .oo-ui-dropdownWidget {
+	min-width: 10em;
+}
+
+.ve-demo-menu .oo-ui-dropdownWidget .oo-ui-labelElement-label {
+	text-transform: capitalize;
+}
+
+.ve-demo-menu .ve-ui-languageInputWidget .oo-ui-fieldLayout-body > .oo-ui-labelElement-label {
+	display: none;
+}
+
+.ve-demo-menu .ve-ui-languageInputWidget-directionSelect {
+	margin: 0;
+}
+
+.ve-demo-menu-commands > .oo-ui-widget > .oo-ui-fieldLayout {
 	display: inline-block;
+	margin: 0;
+}
+
+.ve-demo-menu-commands {
+	font-size: 0.8em;
+}
+
+.ve-demo-menu-commands > .oo-ui-widget,
+.ve-demo-menu-commands > .oo-ui-widget > .oo-ui-fieldLayout > .oo-ui-fieldLayout-body > .oo-ui-fieldLayout-field,
+.ve-demo-menu-divider {
+	width: auto;
+	float: none;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 1em;
+}
+
+.ve-demo-menu .oo-ui-textInputWidget {
+	width: 4em;
+}
+
+.ve-demo-menu-divider {
+	border-right: 1px solid #ddd;
+	padding-left: 0.2em;
+	width: 0;
 }
 
 .ve-demo-source {
-	width: 100%;
+	max-width: none;
 }
 
 .ve-demo-source textarea {
 	font-family: monospace;
-	border: 0;
 }
 
-.ve-demo-source.oo-ui-widget-enabled textarea:focus {
-	box-shadow: none;
+.ve-demo-read {
+	padding: 0.75em 1.5em;
+	font-size: 0.8em;
 }
 
 /* Editor */
@@ -50,4 +93,29 @@ body {
 
 .ve-ui-debugBar {
 	padding: 1.5em;
+	margin-bottom: 1em;
+}
+
+.ve-ui-debugBar-filibuster {
+	padding: 1.5em;
+}
+
+.ve-filibuster-changes {
+	border: solid red 1px;
+}
+
+.ve-filibuster-frame {
+	list-style: none;
+}
+
+.ve-filibuster-frame-expandable:before, .ve-filibuster-frame-collapsed:before {
+	content: '+';
+}
+
+.ve-filibuster-frame-expanded:before {
+	content: '-';
+}
+
+.ve-filibuster-frame-collapsed ul {
+	display: none;
 }

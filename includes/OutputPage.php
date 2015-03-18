@@ -2830,12 +2830,10 @@ $templates
 	 * @return String: HTML fragment
 	 */
 	function getHeadScripts() {
-		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableVisualEditorExt;
+		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableNewVisualEditorExt;
 		// Achtung! Achtung!
-		// This is a temporary fix for https://wikia-inc.atlassian.net/browse/VE-688 while we are working
-		// on more permanent and long term solution.
-		if ( !empty( $wgEnableVisualEditorExt ) ) {
-			$extraData = array( 've' => 1 );
+		if ( !empty( $wgEnableNewVisualEditorExt ) ) {
+			$extraData = array( 'newve' => 1 );
 		} else {
 			$extraData = array();
 		}

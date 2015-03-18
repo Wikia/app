@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * ContentEditable MediaWiki image node.
  *
@@ -23,8 +21,8 @@
  */
 ve.ce.MWImageNode = function VeCeMWImageNode( $figure, $image, config ) {
 	config = ve.extendObject( {
-		'enforceMax': false,
-		'minDimensions': { 'width': 1, 'height': 1 }
+		enforceMax: false,
+		minDimensions: { width: 1, height: 1 }
 	}, config );
 
 	// Parent constructor
@@ -38,7 +36,7 @@ ve.ce.MWImageNode = function VeCeMWImageNode( $figure, $image, config ) {
 	ve.ce.MWResizableNode.call( this, this.$image, config );
 
 	// Events
-	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
+	this.model.connect( this, { attributeChange: 'onAttributeChange' } );
 };
 
 /* Inheritance */
@@ -54,7 +52,7 @@ OO.mixinClass( ve.ce.MWImageNode, ve.ce.MWResizableNode );
 
 /* Static Properties */
 
-ve.ce.MWImageNode.static.primaryCommandName = 'mediaEdit';
+ve.ce.MWImageNode.static.primaryCommandName = 'media';
 
 /* Static Methods */
 
@@ -63,7 +61,7 @@ ve.ce.MWImageNode.static.primaryCommandName = 'mediaEdit';
  */
 ve.ce.MWImageNode.static.getDescription = function ( model ) {
 	var title = new mw.Title( model.getFilename() );
-	return title.getMain();
+	return title.getMainText();
 };
 
 /* Methods */
@@ -84,15 +82,15 @@ ve.ce.MWImageNode.prototype.generateContents = function () {
 	var xhr, deferred = $.Deferred();
 
 	xhr = ve.init.target.constructor.static.apiRequest( {
-			'action': 'query',
-			'prop': 'imageinfo',
-			'iiprop': 'url',
-			'iiurlwidth': this.getModel().getAttribute( 'width' ),
-			'iiurlheight': this.getModel().getAttribute( 'height' ),
-			'titles': this.getModel().getFilename()
+		action: 'query',
+		prop: 'imageinfo',
+		iiprop: 'url',
+		iiurlwidth: this.getModel().getAttribute( 'width' ),
+		iiurlheight: this.getModel().getAttribute( 'height' ),
+		titles: this.getModel().getFilename()
 	} )
-		.done( ve.bind( this.onParseSuccess, this, deferred ) )
-		.fail( ve.bind( this.onParseError, this, deferred ) );
+		.done( this.onParseSuccess.bind( this, deferred ) )
+		.fail( this.onParseError.bind( this, deferred ) );
 
 	return deferred.promise( { abort: xhr.abort } );
 };
@@ -118,8 +116,9 @@ ve.ce.MWImageNode.prototype.onParseSuccess = function ( deferred, response ) {
 };
 
 /** */
-ve.ce.MWImageNode.prototype.render = function ( generateContents ) {
-	this.$image.attr( 'src', ve.resolveUrl( generateContents, this.getModelHtmlDocument() ) );
+ve.ce.MWImageNode.prototype.render = function ( generatedContents ) {
+	this.$image.attr( 'src', ve.resolveUrl( generatedContents, this.getModelHtmlDocument() ) );
+
 	if ( this.live ) {
 		this.afterRender();
 	}

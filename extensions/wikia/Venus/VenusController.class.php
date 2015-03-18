@@ -107,7 +107,7 @@ class VenusController extends WikiaController {
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->categorySelect = $this->getCategorySelect();
-		$this->notifications = $this->app->renderView('Notifications', 'Confirmation');
+		$this->notifications = $this->app->renderView('BannerNotifications', 'Confirmation');
 
 		if ($this->isUserLoggedIn) {
 			$this->recentWikiActivity = $this->getRecentWikiActivity();
@@ -243,11 +243,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getGlobalFooter() {
-		global $wgEnableGlobalFooterExt;
-
-		return !empty( $wgEnableGlobalFooterExt ) ?
-			$this->app->renderView('GlobalFooter', 'indexVenus') :
-			'';
+		return $this->app->renderView('GlobalFooter', 'venusIndex');
 	}
 
 	public function getRecentWikiActivity() {

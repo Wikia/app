@@ -554,6 +554,12 @@ class WikiaResponse {
 
 	// @codeCoverageIgnoreStart
 	protected function sendHeader( $header, $replace ) {
+		if ( strpos( $header, "\n" ) !== false ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'New line in header detected', [
+				'header' => $header,
+				'exception' => new Exception()
+			] );
+		}
 		header( $header, $replace );
 	}
 	// @codeCoverageIgnoreEnd

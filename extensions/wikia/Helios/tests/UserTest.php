@@ -4,124 +4,127 @@ namespace Wikia\Helios;
 
 class UserTest extends \WikiaBaseTest {
 
-	private $oRequest;
+	private $webRequestMock;
 
 	public function setUp()
 	{
 		$this->setupFile =  __DIR__ . '/../Helios.setup.php';
-		$this->oRequest = $this->getMock( '\WebRequest', [ 'getHeader' ], [], '', false );
+		$this->webRequestMock = $this->getMock( '\WebRequest', [ 'getHeader' ], [], '', false );
 		$this->mockGlobalVariable( 'wgHeliosLoginSamplingRate', 100 );
 		$this->mockGlobalVariable( 'wgHeliosLoginShadowMode', false );
+		User::purgeAuthenticationCache();
+
 		parent::setUp();
 	}
 
 	public function testNewFromTokenNoAuthorizationHeader()
 	{
-		$this->oRequest->expects( $this->once() )
+		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( false );
 
-		$this->assertNull( User::newFromToken( $this->oRequest ) );
+		$this->assertNull( User::newFromToken( $this->webRequestMock ) );
 	}
 
 	public function testNewFromTokenMalformedAuthorizationHeader()
 	{
-		$this->oRequest->expects( $this->once() )
+		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( 'Malformed' );
 
-		$this->assertNull( User::newFromToken( $this->oRequest ) );
+		$this->assertNull( User::newFromToken( $this->webRequestMock ) );
 	}
 
 	public function testNewFromTokenAuthorizationGranted()
 	{
-		$this->oRequest->expects( $this->once() )
+		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( 'Bearer qi8H8R7OM4xMUNMPuRAZxlY' );
 
-		$oUser = new \StdClass;
-		$oUser->user_id = 1;
+		$userInfo = new \StdClass;
+		$userInfo->user_id = 1;
 
 		$oClientMock = $this->getMock( 'Client', [ 'info' ], [], '', false );
 		$oClientMock->expects( $this->once() )
 			->method( 'info' )
 			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
-			->willReturn( $oUser );
+			->willReturn( $userInfo );
 
 		$this->mockClass( 'Wikia\Helios\Client', $oClientMock );
 
-		$this->assertEquals( User::newFromToken( $this->oRequest ), \User::newFromId( 1 ) );
+		$this->assertEquals( User::newFromToken( $this->webRequestMock ), \User::newFromId( 1 ) );
 	}
 
 	public function testNewFromTokenAuthorizationDeclined()
 	{
-		$this->oRequest->expects( $this->once() )
+		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( 'Bearer qi8H8R7OM4xMUNMPuRAZxlY' );
 
-		$oUser = new \StdClass;
+		$userInfo = new \StdClass;
 
-		$oClientMock = $this->getMock( 'Wikia\Helios\Client', [ 'info' ], [], '', false );
-		$oClientMock->expects( $this->once() )
+		$clientMock = $this->getMock( 'Wikia\Helios\Client', [ 'info' ], [], '', false );
+		$clientMock->expects( $this->once() )
 			->method( 'info' )
 			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
-			->willReturn( $oUser );
+			->willReturn( $userInfo );
 
-		$this->mockClass( 'Wikia\Helios\Client', $oClientMock );
+		$this->mockClass( 'Wikia\Helios\Client', $clientMock );
 
-		$this->assertNull( User::newFromToken( $this->oRequest ) );
+		$this->assertNull( User::newFromToken( $this->webRequestMock ) );
 	}
 
 	public function testAuthenticateAuthenticationFailed()
 	{
-		$sUserName = 'SomeName';
-		$sPassword = 'Password';
+		$username = 'SomeName';
+		$password = 'Password';
 
-		$oClient = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
-		$oClient->expects( $this->once() )
+		$client = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
+		$client->expects( $this->once() )
 			->method( 'login' )
-			->with( $sUserName, $sPassword )
+			->with( $username, $password )
 			->willReturn( new \StdClass );
-		$this->mockClass( 'Wikia\Helios\Client', $oClient );
+		$this->mockClass( 'Wikia\Helios\Client', $client );
 
-		$this->assertFalse( User::authenticate( $sUserName, $sPassword ) );
+		$this->assertFalse( User::authenticate( $username, $password ) );
 	}
 
 	public function testAuthenticateAuthenticationImpossible()
 	{
-		$sUserName = 'SomeName';
-		$sPassword = 'Password';
+		$this->setExpectedException('Wikia\Helios\ClientException','test');
+		$username = 'SomeName';
+		$password = 'Password';
 
-		$oClient = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
-		$oClient->expects( $this->once() )
+		$client = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
+		$client->expects( $this->once() )
 			->method( 'login' )
-			->with( $sUserName, $sPassword )
-			->will( $this->throwException( new ClientException ) );
-		$this->mockClass( 'Wikia\Helios\Client', $oClient );
+			->with( $username, $password )
+			->will( $this->throwException( new ClientException( 'test' ) ) );
+		$this->mockClass( 'Wikia\Helios\Client', $client );
 
-		$this->assertFalse( User::authenticate( $sUserName, $sPassword ) );
+		User::authenticate( $username, $password );
 	}
 
 	public function testAuthenticateAuthenticationSucceded()
 	{
-		$sUserName = 'SomeName';
-		$sPassword = 'Password';
+		$username = 'SomeName';
+		$password = 'Password';
 
-		$oLogin = new \StdClass;
-		$oLogin->access_token = 'orvb9pM6wX';
+		$loginInfo = new \StdClass;
+		$loginInfo->access_token = 'orvb9pM6wX';
 
-		$oClient = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
-		$oClient->expects( $this->once() )
+		$client = $this->getMock( 'Wikia\Helios\Client', [ 'login' ], [], '', false );
+		$client->expects( $this->once() )
 			->method( 'login' )
-			->with( $sUserName, $sPassword )
-			->willReturn( $oLogin );
-		$this->mockClass( 'Wikia\Helios\Client', $oClient );
+			->with( $username, $password )
+			->willReturn( $loginInfo );
+		$this->mockClass( 'Wikia\Helios\Client', $client );
 
-		$this->assertTrue( User::authenticate( $sUserName, $sPassword ) );
+		$this->assertTrue( User::authenticate( $username, $password ) );
 	}
 
 }

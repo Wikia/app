@@ -19,14 +19,14 @@ class WikiFactoryHub extends WikiaModel {
 	private $mAllCatefories = array();
 	private $cache_ttl = 86400;  // 1 day
 
-	const HUB_ID_OTHER = 0;
-	const HUB_ID_TV = 1;
-	const HUB_ID_VIDEO_GAMES = 2;
-	const HUB_ID_BOOKS = 3;
-	const HUB_ID_COMICS = 4;
-	const HUB_ID_LIFESTYLE = 5;
-	const HUB_ID_MUSIC = 6;
-	const HUB_ID_MOVIES = 7;
+	const VERTICAL_ID_OTHER = 0;
+	const VERTICAL_ID_TV = 1;
+	const VERTICAL_ID_VIDEO_GAMES = 2;
+	const VERTICAL_ID_BOOKS = 3;
+	const VERTICAL_ID_COMICS = 4;
+	const VERTICAL_ID_LIFESTYLE = 5;
+	const VERTICAL_ID_MUSIC = 6;
+	const VERTICAL_ID_MOVIES = 7;
 
 	const CATEGORY_ID_HUMOR = 1;
 	const CATEGORY_ID_GAMING = 2;

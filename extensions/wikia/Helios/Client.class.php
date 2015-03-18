@@ -9,125 +9,116 @@ use Wikia\Util\RequestId;
  */
 class Client
 {
-	protected $sBaseUri;
-	protected $sClientId;
-	protected $sClientSecret;
+	protected $baseUri;
+	protected $clientId;
+	protected $clientSecret;
 	
 	/**
 	 * The constructor.
 	 */
-	public function __construct( $sBaseUri, $sClientId, $sClientSecret )
+	public function __construct( $baseUri, $clientId, $clientSecret )
 	{
-		$this->sBaseUri = $sBaseUri;
-		$this->sClientId = $sClientId;
-		$this->sClientSecret = $sClientSecret;
+		$this->baseUri = $baseUri;
+		$this->clientId = $clientId;
+		$this->clientSecret = $clientSecret;
 	}
 
 	/**
 	 * The general method for handling the communication with the service.
 	 */
-	public function request( $sResource, $aGetData = [], $mPostData = [], $aCustomOptions = [] )
+	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] )
 	{
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
 
 		// Add client_id and client_secret to the GET data.
-		$aGetData['client_id'] = $this->sClientId;
-		$aGetData['client_secret'] = $this->sClientSecret;
+		$getParams['client_id'] = $this->clientId;
+		$getParams['client_secret'] = $this->clientSecret;
 		
 		// Request URI pre-processing.
-		$sUri = "{$this->sBaseUri}{$sResource}?" . http_build_query($aGetData);
+		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
 		
 		// Request options pre-processing.
-		$aDefaultOptions = [
-			'method'		=> 'GET',
-			'timeout'		=> 5,
-			'postData'		=> $mPostData,
-			'noProxy'		=> true,
-			'followRedirects'	=> false,
-			'returnInstance'	=> true
+		$options = [
+			'method'          => 'GET',
+			'timeout'         => 5,
+			'postData'        => $postData,
+			'noProxy'         => true,
+			'followRedirects' => false,
+			'returnInstance'  => true,
+			'internalRequest' => true,
 		];
 
-		$aOptions = array_merge( $aDefaultOptions, $aCustomOptions );
+		$options = array_merge( $options, $extraRequestOptions );
 
 		// Request execution.
-		$oRequest = \MWHttpRequest::factory( $sUri, $aOptions );
-		$oRequest->setHeader(RequestId::REQUEST_HEADER_NAME, RequestId::instance()->getRequestId());
-		$oRequest->setHeader(RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname());
-		$oStatus = $oRequest->execute();
+		/** @var \MWHttpRequest $request */
+		$request = \Http::request( $options['method'], $uri, $options );
+		$status = $request->status;
 
 		// Response handling.
-		if ( !$oStatus->isGood() ) {
-			throw new ClientException( 'Request failed.', 0, null, $oStatus->getErrorsArray() );
+		if ( !$status->isGood() ) {
+			throw new ClientException( 'Request failed.', 0, null, $status->getErrorsArray() );
 		}
 
-		$sOutput = json_decode( $oRequest->getContent() );
+		$output = json_decode( $request->getContent() );
 		
-		if ( !$sOutput ) {
+		if ( !$output ) {
 			throw new ClientException( 'Invalid response.' );
 		}
 
-		return $sOutput;
+		return $output;
 	}
 
 	/**
 	 * A shortcut method for login requests.
+	 *
+	 * @throws ClientException
 	 */
-	public function login( $sUsername, $sPassword )
+	public function login( $username, $password )
 	{
 		// Convert the array to URL-encoded query string, so the Content-Type
 		// for the POST request is application/x-www-form-urlencoded.
 		// It would be multipart/form-data which is not supported
 		// by the Helios service.
-		$sPostData = http_build_query([
-			'username'	=> $sUsername,
-			'password'	=> $sPassword
+		$postData = http_build_query([
+			'username'	=> $username,
+			'password'	=> $password
 		]);
 
-		return $this->request(
+		$response = $this->request(
 			'token',
 			[ 'grant_type'	=> 'password' ],
-			$sPostData,
+			$postData,
 			[ 'method'	=> 'POST' ]
 		);
+
+		return $response;
 	}
 
 	/**
 	 * A shortcut method for info requests
 	 */
-	public function info( $sToken )
+	public function info( $token )
 	{
 		return $this->request(
 			'info',
-			[ 'code' => $sToken ]
+			[ 'code' => $token ]
 		);
 	}
 
 	/**
 	 * A shortcut method for refresh token requests.
 	 */
-	public function refreshToken( $sToken )
+	public function refreshToken( $token )
 	{
 		return $this->request(
 			'token',
 			[
 				'grant_type'	=> 'refresh_token',
-				'refresh_token'	=> $sToken
+				'refresh_token'	=> $token
 			]
 		);
 	}
 
-}
-
-/**
- * An exception class for the client.
- */
-class ClientException extends \Exception
-{
-	use \Wikia\Logger\Loggable;
-
-	public function __construct( $message = null, $code = 0, \Exception $previous = null, $data = null ) {
-		parent::__construct( $message, $code, $previous );
-		$this->error( 'HELIOS_CLIENT' , [ 'exception' => $this, 'context' => $data ] );
-	}
 }

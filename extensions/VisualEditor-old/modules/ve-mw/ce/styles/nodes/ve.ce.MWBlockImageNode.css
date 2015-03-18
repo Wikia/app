@@ -1,0 +1,22 @@
+/*!
+ * VisualEditor ContentEditable MediaWiki MWBlockImageNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+/*csslint regex-selectors:false, overqualified-elements:false */
+
+/* Hide outer shield for centered images */
+figure[typeof~='mw:Image'].mw-halign-center + .ve-ce-focusableNode-shield {
+	display: none;
+}
+
+/* Override border on shields for images */
+.ve-ce-mwBlockImageNode .ve-ce-focusableNode-shield {
+	border: none;
+}
+
+/* Override paragraph margins inside of captions */
+.ve-ce-mwBlockImageNode figcaption p {
+	margin: 0 !important;
+}

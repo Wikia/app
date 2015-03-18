@@ -1,4 +1,4 @@
-/* global UserLoginModal, wgScriptPath, GlobalNotification */
+/* global UserLoginModal, wgScriptPath, BannerNotification, UserSignupAjaxValidation */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -7,7 +7,11 @@
 (function () {
 	'use strict';
 
-	var tracker, QueryString, uiFactory, FacebookLogin;
+	var tracker,
+		QueryString,
+		uiFactory,
+		FacebookLogin,
+		bannerNotification;
 
 	FacebookLogin = {
 		modal: false,
@@ -44,12 +48,14 @@
 			require([
 				'wikia.tracker',
 				'wikia.querystring',
-				'wikia.ui.factory'
-			], function (t, qs, uf) {
+				'wikia.ui.factory',
+				'BannerNotification'
+			], function (t, qs, uf, BannerNotification) {
 
 				tracker = t;
 				QueryString = qs;
 				uiFactory = uf;
+				bannerNotification = new BannerNotification().setType('error');
 				self.actions = tracker.ACTIONS;
 				self.track = tracker.buildTrackingFunction({
 					category: 'user-sign-up',
@@ -168,7 +174,7 @@
 				}
 			// some error occurred
 			} else if (response.loginAborted) {
-				window.GlobalNotification.show(response.errorMsg, 'error');
+				bannerNotification.setContent(response.errorMsg).show();
 			} else if (response.unconfirmed) {
 				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
@@ -191,7 +197,7 @@
 		 */
 		setupModal: function (response) {
 			if (!response.modal) {
-				GlobalNotification.show($.msg('oasis-generic-error'), 'error');
+				bannerNotification.setContent($.msg('oasis-generic-error')).show();
 				return;
 			}
 
@@ -287,6 +293,31 @@
 					}
 				}
 			});
+
+			this.initSignupFormValidation();
+		},
+
+		initSignupFormValidation: function () {
+			var validator,
+				wikiaForm = this.signupForm.wikiaForm,
+				inputs = wikiaForm.inputs,
+				inputsToValidate = ['username', 'password'],
+				$filteredInputs = $();
+
+			if (inputs.email) {
+				inputsToValidate.push('email');
+			}
+
+			validator = new UserSignupAjaxValidation({
+				wikiaForm: wikiaForm,
+				submitButton: inputs.submit
+			});
+
+			// Add validation on blur event for all inputs to validate
+			inputsToValidate.forEach(function (inputName) {
+				$filteredInputs = $filteredInputs.add(inputs[inputName]);
+			});
+			$filteredInputs.on('blur', validator.validateInput.bind(validator));
 		},
 
 		/**

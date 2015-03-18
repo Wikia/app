@@ -3086,7 +3086,6 @@ class WikiFactory {
 			'city_variables',
 			'city_list',
 		);
-		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
 
 		$aOptions = array( 'ORDER BY' => 'city_title ASC' );
@@ -3105,7 +3104,7 @@ class WikiFactory {
 			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
 		}
 
-		$aWhere[] = "cv_variable_id = '$varId'";
+		$aWhere['cv_variable_id'] = $varId;
 
 
 		$oRes = $dbr->select(
@@ -3146,10 +3145,9 @@ class WikiFactory {
 
 		$selectedVal = serialize( $val );
 		$aTables = array( 'city_variables', 'city_list' );
-		$varId = mysql_real_escape_string( $varId );
 		$aWhere = array(
 			'city_id = cv_city_id',
-			"cv_variable_id = '$varId'"
+			'cv_variable_id' => $varId,
 		);
 
 		if ( 'full' == $type ) {

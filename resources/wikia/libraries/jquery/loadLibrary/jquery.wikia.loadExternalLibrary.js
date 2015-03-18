@@ -92,8 +92,4 @@
 		return $.loadExternalLibrary('ReCaptcha', url, typeof window.grecaptcha);
 	};
 
-	// Temporarily load captcha library on every page until we have on demand loading set up.
-	// Remove with https://wikia-inc.atlassian.net/browse/SOC-288
-	$.loadReCaptcha();
-
 })(jQuery);

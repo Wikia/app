@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajdar"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуаль мөхәррир]]",
+	"tag-visualeditor-description": "Үзгәртү [[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуаль мөхәррир]] ярдәмендә башкарылган",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуаль мөхәррир: Тикшерү]]",
+	"visualeditor-feedback-link": "Project:Визуаль мөхәррир/Фикерләр",
+	"visualeditor-feedback-tool": "Бәяләмә калдырыгыз",
+	"visualeditor-help-label": "Кулланманы укыгыз",
+	"visualeditor-help-title": "Мөхәррир белән эшләү буенча катнашучы кулланмасы"
+}

@@ -1,0 +1,11 @@
+{
+	"name": "BannerNotifications",
+	"version": "0.0.0",
+	"description": "Extension for displaying notifications",
+	"main": "BannerNotifications.js",
+	"author": "",
+	"dependencies": {
+		"grunt-mustache": "~0.1.5",
+		"grunt": "~0.4.2"
+	}
+}

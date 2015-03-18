@@ -41,17 +41,7 @@ if ( !empty($err) ) {
 
 <p>
 <label for="wpScreenshot1"><?= wfMessage( 'specialcontact-label-screenshot' )->escaped() ?></label>
-<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" />
-</p>
-
-<p class="additionalScreenShot">
-<label for="wpScreenshot2"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
-<input id="wpScreenshot2" name="wpScreenshot[]" type="file" accept="image/*" />
-</p>
-
-<p class="additionalScreenShot">
-<label for="wpScreenshot3"><?= wfMessage( 'specialcontact-label-additionalscreenshot' )->escaped() ?></label>
-<input id="wpScreenshot3" name="wpScreenshot[]" type="file" accept="image/*" />
+<input id="wpScreenshot1" name="wpScreenshot[]" type="file" accept="image/*" multiple />
 </p>
 
 <?php	

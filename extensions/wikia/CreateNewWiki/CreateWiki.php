@@ -35,7 +35,6 @@ class CreateWiki {
 	const ERROR_DATABASE_WRITE_TO_CITY_DOMAINS_BROKEN  = 11;
 	const ERROR_USER_IN_ANON                           = 12;
 	const ERROR_READONLY                               = 13;
-	const ERROR_DBLIGHTMODE                            = 14;
 	const ERROR_DATABASE_WRITE_TO_CITY_LIST_BROKEN     = 15;
 
 	const IMGROOT              = "/images/";
@@ -165,11 +164,6 @@ class CreateWiki {
 		if ( wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
 			throw new CreateWikiException('DB is read only', self::ERROR_READONLY);
-		}
-
-		if ( wfIsDBLightMode() ) {
-			wfProfileOut( __METHOD__ );
-			throw new CreateWikiException('DB is in light mode', self::ERROR_DBLIGHTMODE);
 		}
 
 		// check founder
@@ -1106,7 +1100,7 @@ class CreateWiki {
 			wfShellExec( $cmd );
 
 			wfDebugLog( "createwiki", __METHOD__ . ": Import {$this->mIP}/maintenance/cleanupStarter.sql \n", true );
-			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql" );
+			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql", false, false, __METHOD__ );
 			if ($error !== true) {
 				wfDebugLog( "createwiki", __METHOD__ . ": Import starter failed\n", true );
 				return false;
@@ -1195,10 +1189,10 @@ class CreateWiki {
 
 	/**
 	 * gets initial value for wgEnableNjordExt for new created wiki
-	 * TODO: for first phase of prototype set to true for 10% of new created english wikis only
+	 * TODO: Prototype - turn on on 10% of new created wikis
 	 * @return bool
 	 */
 	private function getInitialNjordExtValue() {
-		return rand( 0, 9 ) % 10 === 1 && $this->mNewWiki->language === 'en' ? true : false;
+		return rand( 0, 9 ) % 10 === 1 ? true : false;
 	}
 }

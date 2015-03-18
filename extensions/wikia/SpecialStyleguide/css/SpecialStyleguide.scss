@@ -1,5 +1,4 @@
 @import "skins/shared/color";
-@import "skins/shared/mixins/box-sizing";
 
 $alter-background-color: mix($color-page, #000, 90%);
 $page-width: 1030px;
@@ -201,7 +200,7 @@ h2 {
 
 .styleguide-home-page-body {
 	section {
-		@include box-sizing();
+		box-sizing: border-box;
 		float: left;
 		padding: 0 65px 65px;
 		text-align: center;
@@ -268,8 +267,8 @@ h2 {
 }
 
 .styleguide-subnav {
-	@include box-sizing();
 	border: 1px solid $color-page-border;
+	box-sizing: border-box;
 	float: left;
 	margin-right: 60px;
 	width: 270px;

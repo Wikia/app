@@ -1,7 +1,6 @@
 @import 'layout';
 @import 'responsive-variables';
 
-@import 'skins/shared/mixins/box-sizing';
 @import 'skins/shared/mixins/calc';
 
 @if ($responsive-layout-enabled) {
@@ -13,19 +12,23 @@
 		min-width: $width-outside-min;
 	}
 
-	.skin-oasis > .global-notification,
+	.skin-oasis > .banner-notifications-wrapper,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		max-width: $width-outside-max;
 	}
 
-	.global-notification,
+	.banner-notifications-wrapper,
 	.WikiaHeader .page-width-container {
-		@include box-sizing(border-box);
+		box-sizing: border-box;
 		width: $width-outside;
 	}
 
-	.global-notification {
+	.banner-notification {
+		box-sizing: border-box;
+	}
+
+	.banner-notifications-wrapper {
 		&.float {
 			margin-left: -515px;
 		}
@@ -138,7 +141,6 @@
 
 			.module,
 			.admin-dashboard-module {
-				-moz-box-sizing: border-box;
 				box-sizing: border-box;
 
 				-moz-column-break-inside: avoid;
@@ -182,7 +184,7 @@
 			width: auto;
 
 			input[type="text"] {
-				@include box-sizing(border-box);
+				box-sizing: border-box;
 				font-size: 15pt;
 				height: 40px !important;
 				left: 0;
@@ -230,7 +232,7 @@
 			width: auto;
 		}
 
-		.global-notification {
+		.banner-notifications-wrapper {
 			width: 100%;
 
 			&.float {

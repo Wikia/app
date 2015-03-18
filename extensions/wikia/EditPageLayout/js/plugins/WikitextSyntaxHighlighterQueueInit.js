@@ -6,13 +6,20 @@
 (function ( window, $ ) {
 		'use strict';
 
-		var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
+		var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable()),
+			WikiTextSyntaxHighlighter;
 
 		WE.plugins.syntaxhighlighterqueueinit = $.createClass(WE.plugin, {
 
 			init: function () {
 				this.editor.on('mode', this.proxy(this.initSyntaxHighlighting));
 				this.editor.on('editorReady', this.proxy(this.initSyntaxHighlighting));
+
+				require(['WikiTextSyntaxHighlighter'], this.proxy(function (syntaxHighlighter) {
+					WikiTextSyntaxHighlighter = syntaxHighlighter;
+
+					this.initSyntaxHighlighting();
+				}));
 			},
 
 			initConfig: function () {
@@ -28,12 +35,15 @@
 			},
 
 			initSyntaxHighlighting: function () {
-				if (this.editor.mode === 'source') {
-					var textarea = this.editor.getEditbox()[0],
-						config = this.initConfig();
-					require(['WikiTextSyntaxHighlighter'], function (WikiTextSyntaxHighlighter) {
+				if (WikiTextSyntaxHighlighter) {
+					if (this.editor.mode === 'source') {
+						var textarea = this.editor.getEditbox()[0],
+							config = this.initConfig();
+
 						WikiTextSyntaxHighlighter.init(textarea, config);
-					});
+					} else {
+						WikiTextSyntaxHighlighter.reset();
+					}
 				}
 			},
 
@@ -57,19 +67,19 @@
 
 			initLightThemeColors: function() {
 				return {
-					boldOrItalicColor: '#e8e9ff',
-					commentColor: '#ffb8b6',
-					entityColor: '#c5cf86',
-					externalLinkColor: '#97d8d2',
-					headingColor: '#e8e9ff',
-					hrColor: '#e8e9ff',
-					listOrIndentColor: '#ffb8b6',
-					parameterColor: '#ffb692',
-					signatureColor: '#ffb692',
-					tagColor: '#ffc0e8',
-					tableColor: '#ecddb1',
-					templateColor: '#ecddb1',
-					wikilinkColor: '#b0e8ff'
+					boldOrItalicColor: '#e4e5f3',
+					commentColor: '#f8dbda',
+					entityColor: '#e8ebda',
+					externalLinkColor: '#dbeceb',
+					headingColor: '#e4e5f3',
+					hrColor: '#e4e5f3',
+					listOrIndentColor: '#f8dbda',
+					parameterColor: '#f5e0d8',
+					signatureColor: '#f5e0d8',
+					tagColor: '#f6dde9',
+					tableColor: '#f0ebdb',
+					templateColor: '#f0ebdb',
+					wikilinkColor: '#d9eaf6'
 				};
 			}
 		});

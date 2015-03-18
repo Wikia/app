@@ -1,0 +1,58 @@
+/*!
+ * VisualEditor UserInterface Context styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-desktopContext {
+	position: absolute;
+}
+
+.ve-ui-desktopContext-menu {
+	position: absolute;
+	font-size: 0.8em;
+}
+
+.ve-ui-desktopContext-menu .oo-ui-toolbar-bar {
+	white-space: nowrap;
+	border: none;
+	background: none;
+}
+
+.ve-ui-desktopContext-menu .oo-ui-toolGroup {
+	border: none;
+	margin: 0;
+}
+
+.ve-ui-desktopContext-menu .oo-ui-tool,
+.ve-ui-desktopContext-menu .oo-ui-tool:hover {
+	border: none;
+}
+
+.ve-ui-desktopContext-menu .oo-ui-tool:active,
+.ve-ui-desktopContext-menu .oo-ui-tool-active {
+	background-image: none;
+}
+
+.ve-ui-desktopContext > .oo-ui-popupWidget:not(.oo-ui-popupWidget-anchored) .oo-ui-popupWidget-popup {
+	margin-top: 0.25em;
+}
+
+/* @noflip */
+.ve-ui-surface-dir-ltr .ve-ui-desktopContext > .oo-ui-popupWidget:not(.oo-ui-popupWidget-anchored) .oo-ui-popupWidget-popup {
+	margin-left: -0.5em;
+}
+
+/* @noflip */
+.ve-ui-surface-dir-rtl .ve-ui-desktopContext > .oo-ui-popupWidget:not(.oo-ui-popupWidget-anchored) .oo-ui-popupWidget-popup {
+	margin-left: 0.5em;
+}
+
+.ve-ui-desktopContext > .oo-ui-popupWidget:not(.oo-ui-popupWidget-anchored) .oo-ui-context-menu {
+	right: 0;
+}
+
+/* HACK: Compensate for oo-ui-window-content setting the font size to 0.8em */
+.oo-ui-window-content .ve-ui-desktopContext .oo-ui-popupWidget {
+	font-size: 1.25em;
+}

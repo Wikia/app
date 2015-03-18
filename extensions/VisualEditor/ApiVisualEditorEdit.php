@@ -10,6 +10,10 @@
 
 class ApiVisualEditorEdit extends ApiVisualEditor {
 
+	public function __construct( ApiMain $main, $name /*, Config $config */ ) {
+		parent::__construct( $main, $name, $config );
+	}
+
 	protected function saveWikitext( $title, $wikitext, $params ) {
 		$apiParams = array(
 			'action' => 'edit',
@@ -49,24 +53,25 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 	}
 
 	public function execute() {
-		global $wgVisualEditorNamespaces, $wgVisualEditorUseChangeTagging;
-
 		$user = $this->getUser();
 		$params = $this->extractRequestParams();
 		$page = Title::newFromText( $params['page'] );
 		if ( !$page ) {
 			$this->dieUsageMsg( 'invalidtitle', $params['page'] );
 		}
-		if ( !in_array( $page->getNamespace(), $wgVisualEditorNamespaces ) ) {
+		if ( !in_array( $page->getNamespace(), $this->veConfig->get( 'VisualEditorNamespaces' ) ) ) {
 			$this->dieUsage( "VisualEditor is not enabled in namespace " .
 				$page->getNamespace(), 'novenamespace' );
 		}
 
 		$parserParams = array();
-		if ( isset( $params['oldwt'] ) ) {
-			$parserParams['oldwt'] = $params['oldwt'];
-		} else if ( isset( $params['oldid'] ) ) {
+		if ( isset( $params['oldid'] ) ) {
 			$parserParams['oldid'] = $params['oldid'];
+		}
+
+		$html = $params['html'];
+		if ( substr( $html, 0, 11 ) === 'rawdeflate,' ) {
+			$html = gzinflate( base64_decode( substr( $html, 11 ) ) );
 		}
 
 		if ( $params['cachekey'] !== null ) {
@@ -75,7 +80,7 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 				$this->dieUsage( 'No cached serialization found with that key', 'badcachekey' );
 			}
 		} else {
-			$wikitext = $this->postHTML( $page, $params['html'], $parserParams );
+			$wikitext = $this->postHTML( $page, $html, $parserParams );
 			if ( $wikitext === false ) {
 				$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
 			}
@@ -93,7 +98,9 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 
 		// Success
 		} else {
-			if ( isset( $saveresult['edit']['newrevid'] ) && $wgVisualEditorUseChangeTagging ) {
+			if ( isset( $saveresult['edit']['newrevid'] )
+				&& $this->veConfig->get( 'VisualEditorUseChangeTagging' )
+			) {
 				ChangeTags::addTags( 'visualeditor', null,
 					intval( $saveresult['edit']['newrevid'] ),
 					null
@@ -108,11 +115,44 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 
 			// Return result of parseWikitext instead of saveWikitext so that the
 			// frontend can update the page rendering without a refresh.
-			$result = $this->parseWikitext( $page, $params['useskin'] );
+			$result = $this->parseWikitext( $page );
 			if ( $result === false ) {
 				$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
 			}
+
 			$result['isRedirect'] = $page->isRedirect();
+
+			if ( class_exists( 'FlaggablePageView' ) ) {
+				$view = FlaggablePageView::singleton();
+
+				// Defeat !$this->isPageView( $request ) || $request->getVal( 'oldid' ) check in setPageContent
+				$view->getContext()->setRequest( new DerivativeRequest(
+					$this->getRequest(),
+					array(
+						'diff' => null,
+						'oldid' => '',
+						'action' => 'view'
+					) + $this->getRequest()->getValues()
+				) );
+
+				// The two parameters here are references but we don't care
+				// about what FlaggedRevs does with them.
+				$outputDone = null;
+				$useParserCache = null;
+				$view->setPageContent( $outputDone, $useParserCache );
+				$view->displayTag();
+			}
+			$result['contentSub'] = $this->getOutput()->getSubtitle();
+			$lang = $this->getLanguage();
+
+			if ( isset( $saveresult['edit']['newtimestamp'] ) ) {
+				$ts = $saveresult['edit']['newtimestamp'];
+
+				$result['lastModified'] = array(
+					'date' => $lang->userDate( $ts, $user ),
+					'time' => $lang->userTime( $ts, $user )
+				);
+			}
 
 			if ( isset( $saveresult['edit']['newrevid'] ) ) {
 				$result['newrevid'] = intval( $saveresult['edit']['newrevid'] );
@@ -148,7 +188,7 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 	}
 
 	public function needsToken() {
-		return true;
+		return 'csrf';
 	}
 
 	public function getTokenSalt() {
@@ -163,6 +203,9 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		return true;
 	}
 
+	/**
+	 * @deprecated since MediaWiki core 1.25
+	 */
 	public function getParamDescription() {
 		return array(
 			'page' => 'The page to perform actions on.',
@@ -182,6 +225,9 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		);
 	}
 
+	/**
+	 * @deprecated since MediaWiki core 1.25
+	 */
 	public function getDescription() {
 		return 'Save an HTML5 page to MediaWiki (converted to wikitext via the Parsoid service).';
 	}

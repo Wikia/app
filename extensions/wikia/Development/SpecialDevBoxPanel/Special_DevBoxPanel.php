@@ -304,7 +304,7 @@ function getForcedWikiValue(){
  * @return array - databases which are available on this cluster
  *					  use the writable devbox server instead of the production slaves.
  */
-function getDevBoxOverrideDatabases(DatabaseMysql $db){
+function getDevBoxOverrideDatabases(DatabaseBase $db){
 
 	$IGNORE_DBS = array('information_schema', 'mysql', '#mysql50#lost+found', 'wikicities_c2');
 	$retval = array();

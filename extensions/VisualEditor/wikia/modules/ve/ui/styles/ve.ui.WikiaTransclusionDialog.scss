@@ -2,48 +2,9 @@
 	.ve-ui-mwParameterPage-infoButton,
 	.ve-ui-mwParameterPage-removeButton,
 	.ve-ui-mwParameterPage-addButton,
-	.ve-ui-mwTransclusionDialog-modeButton,
 	.ve-ui-mwTemplatePage-description {
 		display: none;
 	}
-
-	.ve-ui-mwParameterPage {
-		&.oo-ui-pageLayout:last-of-type {
-			margin-bottom: 0;
-		}
-	}
-
-	.ve-ui-mwParameterPage-info {
-		padding-left: 0.5em;
-	}
-
-	.ve-ui-mwParameterPage-actions {
-		padding-right: 0.5em;
-	}
-
-	.ve-ui-mwParameterPage-field {
-		padding: 0.75em 0.5em;
-	}
-
-	.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
-		.oo-ui-buttonedElement-button {
-			.oo-ui-iconedElement-icon {
-				float: right;
-				height: 18px;
-				margin-left: 5px;
-				width: 18px;
-			}
-		}
-
-		.oo-ui-labeledElement-label {
-			line-height: 18px;
-		}
-	}
-
-	.oo-ui-window-foot .ve-ui-wikiaTransclusionDialog-cancelButton {
-		float: right;
-	}
-
 	.ve-ui-mwTemplateDialog-filter {
 		background: $color-page;
 		border-bottom: 1px solid $color-page-border;
@@ -56,9 +17,19 @@
 			width: 100%;
 		}
 	}
+	.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
+		.oo-ui-buttonElement-button {
+			.oo-ui-iconElement-icon {
+				float: right;
+				height: 18px;
+				margin-left: 5px;
+				width: 18px;
+			}
+		}
 
-	.oo-ui-buttonedElement-frameless .oo-ui-buttonedElement-button > .oo-ui-labeledElement-label {
-		color: $color-text;
+		.oo-ui-labelElement-label {
+			line-height: 18px;
+		}
 	}
 }
 
@@ -70,30 +41,11 @@
 		.ve-ui-mwTemplatePage {
 			display: none;
 		}
-		.oo-ui-bookletLayout-stackLayout {
-			box-sizing: border-box;
-			padding-top: 1.5em;
-		}
 	}
-
-	&.ve-ui-mwTransclusionDialog-multiple {
-		.oo-ui-bookletLayout-stackLayout {
-			/* Layout is set programmatically by OO.ui.GridLayout. */
-			bottom: 0 !important;
-			height: auto !important;
-			top: 5.6em !important;
-		}
-		.ve-ui-mwTemplateDialog-filter {
-			left: 33%;
-			margin-left: 1px;
-		}
-	}
-
 	&.ve-ui-wikiaTransclusionDialog-zeroState {
 		.oo-ui-gridLayout {
 			margin-top: 0;
 		}
-
 		.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
 			margin-top: 1em;
 

@@ -175,7 +175,7 @@ interface DatabaseType {
 	 *
 	 * @return string: wikitext of a link to the server software's web site
 	 */
-	static function getSoftwareLink();
+	function getSoftwareLink();
 
 	/**
 	 * A string describing the current software version, like from
@@ -585,17 +585,36 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * Constructor.
-	 * @param $server String: database server host
-	 * @param $user String: database user name
-	 * @param $password String: database user password
-	 * @param $dbName String: database name
-	 * @param $flags
-	 * @param $tablePrefix String: database table prefixes. By default use the prefix gave in LocalSettings.php
+	 *
+	 * FIXME: It is possible to construct a Database object with no associated
+	 * connection object, by specifying no parameters to __construct(). This
+	 * feature is deprecated and should be removed.
+	 *
+	 * DatabaseBase subclasses should not be constructed directly in external
+	 * code. DatabaseBase::factory() should be used instead.
+	 *
+	 * @param array $params Parameters passed from DatabaseBase::factory()
 	 */
-	function __construct( $server = false, $user = false, $password = false, $dbName = false,
-		$flags = 0, $tablePrefix = 'get from global'
-	) {
+	function __construct( $params = null ) {
 		global $wgDBprefix, $wgCommandLineMode;
+
+		if ( is_array( $params ) ) { // MW 1.22
+			$server = $params['host'];
+			$user = $params['user'];
+			$password = $params['password'];
+			$dbName = $params['dbname'];
+			$flags = $params['flags'];
+			$tablePrefix = $params['tablePrefix'];
+		} else { // legacy calling pattern
+			wfDeprecated( __METHOD__ . " method called without parameter array.", "1.23" );
+			$args = func_get_args();
+			$server = isset( $args[0] ) ? $args[0] : false;
+			$user = isset( $args[1] ) ? $args[1] : false;
+			$password = isset( $args[2] ) ? $args[2] : false;
+			$dbName = isset( $args[3] ) ? $args[3] : false;
+			$flags = isset( $args[4] ) ? $args[4] : 0;
+			$tablePrefix = isset( $args[5] ) ? $args[5] : 'get from global';
+		}
 
 		$this->mFlags = $flags;
 
@@ -660,7 +679,7 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * Given a DB type, construct the name of the appropriate child class of
 	 * DatabaseBase. This is designed to replace all of the manual stuff like:
-	 *	$class = 'Database' . ucfirst( strtolower( $type ) );
+	 *    $class = 'Database' . ucfirst( strtolower( $dbType ) );
 	 * as well as validate against the canonical list of DB types we have
 	 *
 	 * This factory function is mostly useful for when you need to connect to a
@@ -668,31 +687,79 @@ abstract class DatabaseBase implements DatabaseType {
 	 * an extension, et cetera). Do not use this to connect to the MediaWiki
 	 * database. Example uses in core:
 	 * @see LoadBalancer::reallyOpenConnection()
-	 * @see ExternalUser_MediaWiki::initFromCond()
 	 * @see ForeignDBRepo::getMasterDB()
-	 * @see WebInstaller_DBConnect::execute()
+	 * @see WebInstallerDBConnect::execute()
 	 *
-	 * @param $dbType String A possible DB type
-	 * @param $p Array An array of options to pass to the constructor.
-	 *    Valid options are: host, user, password, dbname, flags, tablePrefix
-	 * @return DatabaseBase subclass or null
+	 * @since 1.18
+	 *
+	 * @param string $dbType A possible DB type
+	 * @param array $p An array of options to pass to the constructor.
+	 *    Valid options are: host, user, password, dbname, flags, tablePrefix, schema, driver
+	 * @throws MWException If the database driver or extension cannot be found
+	 * @return DatabaseBase|null DatabaseBase subclass or null
 	 */
-	public final static function factory( $dbType, $p = array() ) {
+	final public static function factory( $dbType, $p = array() ) {
 		$canonicalDBTypes = array(
-			'mysql', 'postgres', 'sqlite', 'oracle', 'mssql', 'ibm_db2'
+			'mysql' => array( 'mysqli', 'mysql' ),
+			'postgres' => array(),
+			'sqlite' => array(),
+			'oracle' => array(),
+			'mssql' => array(),
 		);
-		$dbType = strtolower( $dbType );
-		$class = 'Database' . ucfirst( $dbType );
 
-		if ( in_array( $dbType, $canonicalDBTypes ) || ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) ) {
-			return new $class(
-				isset( $p['host'] ) ? $p['host'] : false,
-				isset( $p['user'] ) ? $p['user'] : false,
-				isset( $p['password'] ) ? $p['password'] : false,
-				isset( $p['dbname'] ) ? $p['dbname'] : false,
-				isset( $p['flags'] ) ? $p['flags'] : 0,
-				isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global'
+		$driver = false;
+		$dbType = strtolower( $dbType );
+		if ( isset( $canonicalDBTypes[$dbType] ) && $canonicalDBTypes[$dbType] ) {
+			$possibleDrivers = $canonicalDBTypes[$dbType];
+			if ( !empty( $p['driver'] ) ) {
+				if ( in_array( $p['driver'], $possibleDrivers ) ) {
+					$driver = $p['driver'];
+				} else {
+					throw new MWException( __METHOD__ .
+						" cannot construct Database with type '$dbType' and driver '{$p['driver']}'" );
+				}
+			} else {
+				foreach ( $possibleDrivers as $posDriver ) {
+					if ( extension_loaded( $posDriver ) ) {
+						$driver = $posDriver;
+						break;
+					}
+				}
+			}
+		} else {
+			$driver = $dbType;
+		}
+		if ( $driver === false ) {
+			throw new MWException( __METHOD__ .
+				" no viable database extension found for type '$dbType'" );
+		}
+
+		// Determine schema defaults. Currently Microsoft SQL Server uses $wgDBmwschema,
+		// and everything else doesn't use a schema (e.g. null)
+		// Although postgres and oracle support schemas, we don't use them (yet)
+		// to maintain backwards compatibility
+		$defaultSchemas = array(
+			'mysql' => null,
+			'postgres' => null,
+			'sqlite' => null,
+			'oracle' => null,
+			'mssql' => 'get from global',
+		);
+
+		$class = 'Database' . ucfirst( $driver );
+		if ( class_exists( $class ) && is_subclass_of( $class, 'DatabaseBase' ) ) {
+			$params = array(
+				'host' => isset( $p['host'] ) ? $p['host'] : false,
+				'user' => isset( $p['user'] ) ? $p['user'] : false,
+				'password' => isset( $p['password'] ) ? $p['password'] : false,
+				'dbname' => isset( $p['dbname'] ) ? $p['dbname'] : false,
+				'flags' => isset( $p['flags'] ) ? $p['flags'] : 0,
+				'tablePrefix' => isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global',
+				'schema' => isset( $p['schema'] ) ? $p['schema'] : $defaultSchemas[$dbType],
+				'foreign' => isset( $p['foreign'] ) ? $p['foreign'] : false
 			);
+
+			return new $class( $params );
 		} else {
 			return null;
 		}
@@ -722,10 +789,10 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * @param $errno
-	 * @param $errstr
+	 * @param int $errno
+	 * @param string $errstr
 	 */
-	protected function connectionErrorHandler( $errno,  $errstr ) {
+	public function connectionErrorHandler( $errno,  $errstr ) {
 		$this->mPHPError = $errstr;
 	}
 
@@ -828,7 +895,10 @@ abstract class DatabaseBase implements DatabaseType {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
 			}
-			wfDebugLog( 'database', "DB readonly mode: $sql" );
+			WikiaLogger::instance()->error( 'DB readonly mode', [
+				'exception' => new Exception( $sql ),
+				'server'    => $this->mServer
+			] );
 			return false;
 		}
 		# </Wikia>
@@ -1536,17 +1606,18 @@ abstract class DatabaseBase implements DatabaseType {
 		# as to avoid crashing php on some large strings.
 		# $sql = preg_replace ( "/'([^\\\\']|\\\\.)*'|\"([^\\\\\"]|\\\\.)*\"/", "'X'", $sql);
 
-		$sql = str_replace ( "\\\\", '', $sql );
-		$sql = str_replace ( "\\'", '', $sql );
-		$sql = str_replace ( "\\\"", '', $sql );
-		$sql = preg_replace ( "/'.*'/s", "'X'", $sql );
-		$sql = preg_replace ( '/".*"/s', "'X'", $sql );
+		$sql = str_replace( "\\\\", '', $sql );
+		$sql = str_replace( "\\'", '', $sql );
+		$sql = str_replace( "\\\"", '', $sql );
+		$sql = preg_replace( "/'.*'/s", "'X'", $sql );
+		$sql = preg_replace( '/".*"/s', "'X'", $sql );
 
 		# All newlines, tabs, etc replaced by single space
-		$sql = preg_replace ( '/\s+/', ' ', $sql );
+		$sql = preg_replace( '/\s+/', ' ', $sql );
 
 		# All numbers => N
-		$sql = preg_replace ( '/-?[0-9]+/s', 'N', $sql );
+		$sql = preg_replace( '/-?\d+(,-?\d+)+/s', 'N,...,N', $sql );
+		$sql = preg_replace( '/-?\d+/s', 'N', $sql );
 
 		return $sql;
 	}
@@ -3532,6 +3603,10 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( $ret instanceof ResultWrapper ) {
 			// NOP for MySQL driver
 			$num_rows = $ret->numRows();
+		} elseif ( $ret instanceof mysqli_result) {
+			// for SELECT queries report how many rows are sent to the client
+			// for INSERT, UPDATE, DELETE, DROP queries report affected rows
+			$num_rows = $ret->num_rows ?: $this->affectedRows();
 		} elseif ( is_resource( $ret ) ) {
 			// for SELECT queries report how many rows are sent to the client
 			$num_rows = mysql_num_rows( $ret );

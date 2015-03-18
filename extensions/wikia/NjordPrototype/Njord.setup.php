@@ -13,12 +13,13 @@ $wgExtensionMessagesFiles[ 'Njord' ] = $dir . '/Njord.i18n.php';
 /**
  * classes
  */
-
 $wgAutoloadClasses['NjordModel'] =  $dir . '/models/NjordModel.class.php';
-$wgAutoloadClasses['WikiDataModel'] =  $dir . '/models/WikiDataModel.class.php';
 $wgAutoloadClasses['NjordController'] =  $dir . '/NjordController.class.php';
 
-$wgHooks[ 'ParserFirstCallInit' ][ ] = 'NjordHooks::onParserFirstCallInit';
+/**
+ * Hooks
+ */
+$wgHooks['WikiFeatures::onToggleFeature'][] = 'NjordHooks::purgeMainPage';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'NjordHooks::onSkinAfterBottomScripts';
 
 
@@ -31,3 +32,5 @@ $wgGroupPermissions[ 'bureaucrat' ][ 'njordeditmode' ] = true;
 $wgGroupPermissions[ 'helper' ][ 'njordeditmode' ] = true;
 
 NjordHooks::$templateDir = $dir . '/templates';
+
+

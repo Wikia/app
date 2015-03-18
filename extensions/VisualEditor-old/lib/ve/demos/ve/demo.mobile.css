@@ -1,0 +1,25 @@
+/*!
+ * VisualEditor mobile demo
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* Editor */
+
+.ve-ce-documentNode {
+	border-top: 1px solid #ccc;
+}
+
+.ve-init-sa-target-toolbar .oo-ui-toolbar-bar {
+	border-top: 1px solid #ccc;
+}
+
+.ve-init-sa-target-toolbar.ve-ui-toolbar-floating .oo-ui-toolbar-bar {
+	border-top: none;
+}
+
+.ve-ui-debugBar {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}

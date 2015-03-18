@@ -1,0 +1,208 @@
+@import "skins/shared/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/shared/mixins/transition";
+@import "color";
+
+/* Button */
+
+.oo-ui-buttonWidget {
+	white-space: nowrap;
+}
+
+// Is this used any longer?
+.oo-ui-iconButtonWidget .oo-ui-buttonWidget-button {
+	&:hover,
+	&:focus {
+		> .oo-ui-labeledElement-label {
+			color: $color-text;
+		}
+	}
+
+	.oo-ui-iconedElement-icon {
+		opacity: 1;
+	}
+}
+
+/* Categories */
+
+.ve-ui-mwCategoryItemButton {
+	background: $color-ve-hover;
+	border-color: $color-page-border;
+
+	span {
+		color: $color-text;
+	}
+}
+
+/* Input */
+
+.oo-ui-inputWidget {
+	input,
+	input:focus,
+	input:focus[readonly],
+	textarea,
+	textarea:focus,
+	textarea:focus[readonly] {
+		background-color: $color-ve-page-secondary;
+		border-color: $color-page-border;
+		box-shadow: 0 0 0 $color-ve-gradient-light, 0 0.1em 0.2em $color-ve-gradient-shadow inset;
+		color: $color-text;
+
+		&:focus {
+			background-color: $color-ve-hover;
+			border-color: $color-page-border;
+			box-shadow: 0 0 0 $color-ve-gradient-light, 0 0.1em 0.2em $color-ve-gradient-shadow inset;
+		}
+
+		&.oo-ui-widget-disabled {
+			color: $color-ve-text-secondary;
+			text-shadow: $color-ve-gradient-shadow 0px 1px 1px;
+		}
+	}
+
+	input[readonly],
+	textarea[readonly] {
+		color: $color-text;
+		text-shadow: $color-ve-gradient-shadow 0px 1px 1px;
+	}
+}
+
+/* Menu */
+
+.oo-ui-menuWidget {
+	background: $color-page;
+	border-color: $color-page-border;
+}
+
+.oo-ui-menuItemWidget {
+	.oo-ui-icon-check {
+		@include ve-icon(check, oo);
+	}
+
+	&:hover {
+		background: $color-ve-hover;
+	}
+
+	&.oo-ui-optionWidget-selected,
+	&.oo-ui-optionWidget-highlighted {
+		background-color: $color-ve-page-secondary;
+	}
+}
+
+.oo-ui-menuSectionItemWidget {
+	color: $color-text;
+}
+
+/* Options */
+
+.oo-ui-optionWidget-highlighted,
+.oo-ui-optionWidget-selected {
+	background-color: $color-ve-gradient-light;
+	box-shadow: 0 0 0.3em $color-ve-gradient-light, 0 0 0 $color-page;
+}
+
+/* Outline */
+
+.oo-ui-outlineControlsWidget {
+	background: $color-page;
+}
+
+.oo-ui-selectWidget {
+	.oo-ui-outlineItemWidget {
+		&.oo-ui-optionWidget-selected, &.oo-ui-optionWidget-pressed {
+			background: $color-ve-hover;
+			text-shadow: $color-ve-gradient-shadow 0px 1px 1px;
+		}
+	}
+}
+
+/* Parameter Results */
+
+.ve-ui-mwParameterResultWidget-name {
+	background-color: $color-page;
+	border-color: $color-page-border;
+}
+
+/* Popup */
+
+.oo-ui-popupWidget-body {
+	background-color: $color-page;
+}
+
+.oo-ui-popupWidget-popup {
+	background-color: $color-ve-gradient-light;
+	border-color: $color-page-border;
+}
+
+.oo-ui-popupWidget-tailed .oo-ui-popupWidget-tail {
+	background: none;
+	height: 0;
+	width: 0;
+
+	&:before, &:after {
+		border-style: solid;
+		content: '';
+		height: 0;
+		position: absolute;
+		width: 0;
+	}
+
+	&:before {
+		border-width: 7px;
+		border-color: transparent transparent $color-page-border;
+		margin-left: 1px;
+		margin-top: -6px;
+	}
+
+	&:after {
+		border-width: 6px;
+		border-color: transparent transparent $color-ve-gradient-light;
+		margin-left: 2px;
+		margin-top: -4px;
+	}
+}
+
+/* Surface Toolbar */
+
+.ve-ui-surfaceWidget-toolbar .oo-ui-toolbar-bar {
+	border-color: $color-page-border;
+}
+
+/* Focus Widget */
+.ve-ui-wikiaFocusWidget {
+	left: 0;
+	opacity: .5;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: $zTop;
+
+	/* When focusing on a node, increase z-index to cover toolbar and animate shields */
+	&.ve-ui-wikiaFocusWidget-node {
+		z-index: $zTop + 4;
+		.ve-ui-wikiaFocusWidget-shield {
+			@include transition-shorthand( all 250ms ease-in-out );
+		}
+	}
+
+	.ve-ui-wikiaFocusWidget-shield {
+		background-color: #000;
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+	.ve-ui-wikiaFocusWidget-rightShield {
+		left: auto;
+		right: 0;
+	}
+	.ve-ui-wikiaFocusWidget-stroke {
+		background-color: $color-page-border;
+		position: absolute;
+	}
+	.ve-ui-wikiaFocusWidget-leftStroke, .ve-ui-wikiaFocusWidget-rightStroke {
+		width: 1px;
+	}
+	.ve-ui-wikiaFocusWidget-topStroke, .ve-ui-wikiaFocusWidget-bottomStroke {
+		height: 1px;
+	}
+}
