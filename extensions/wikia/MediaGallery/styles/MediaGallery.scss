@@ -75,7 +75,7 @@ $media-margin: 2.5px;
 	}
 
 	&.count-5 .media {
-		@include grid-column(6, $float: false);
+		@include grid-column(6);
 
 		&:nth-child(n+2) {
 			@include grid-column(3, $float: false);
