@@ -22,51 +22,20 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
  */
 class sendWeeklyDigest extends Maintenance {
 
-	private $dryRun = false;
-
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Send the weekly digest";
-		$this->addOption( 'dryRun', 'Do a test run of the script without actually sending the digest', false, false, 'd' );
 	}
 
 	public function execute() {
-		$this->dryRun = $this->hasOption( "dryRun" );
-
 		$this->logRunTime();
-		$userIDs = $this->getUserIDs();
-		$this->sendDigestToUsers( $userIDs );
-	}
-
-	private function getUserIDs() {
-		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
-		$userIDs = ( new WikiaSQL() )
-			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_USER_ID )
-			->FROM( GlobalWatchlistTable::TABLE_NAME )
-			->runLoop( $db, function ( &$userIDs, $row ) {
-				$userIDs[] = $row->gwa_user_id;
-			} );
-
-		return $userIDs;
-	}
-
-	private function sendDigestToUsers( array $userIDs ) {
-		$watchlistTask = new GlobalWatchlistTask();
-		foreach ( $userIDs as $userID ) {
-			$this->output( "Sending weekly digest to user: " . $userID . "\n" );
-			if ( !$this->isDryRun() ) {
-				$watchlistTask->sendWeeklyDigest( $userID );
-			}
-		}
+		$watchlistBot = new GlobalWatchlistBot();
+		$watchlistBot->sendWeeklyDigest();
 	}
 
 	private function logRunTime() {
 		$message = "sendWeeklyDigest script run at " . date( "F j, Y, g:i a" ) . "\n";
 		$this->output( $message );
-	}
-
-	private function isDryRun() {
-		return $this->dryRun;
 	}
 }
 
