@@ -1,5 +1,10 @@
 <?php
 class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
+	static private function isEnabled() {
+		global $wgCityId;
+
+		return WikiFactory::getVarValueByName( 'wgAnalyticsProviderUseUA', $wgCityId );
+	}
 
 	public function getSetupHtml($params=array()){
 		return '';
@@ -13,11 +18,18 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		//should be added unprocessed as per Cardinal Path's request
 		//but screw it, that's an additional single request that adds overhead
 		//and the main experiment is done on Oasis :P
-		array_unshift( $jsStaticPackages, 'universal_analytics_js' );
+		if (self::isEnabled()) {
+			array_unshift( $jsStaticPackages, 'universal_analytics_js' );
+		}
+
 		return true;
 	}
 
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ){
+		if (!self::isEnabled()) {
+			return true;
+		}
+
 		$app = F::app();
 
 		//do not proceed if skin is WikiaMobile, see onWikiaMobileAssetsPackages
@@ -39,13 +51,18 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 	}
 
 	static public function onVenusAssetsPackages( &$jsHeadGroups, &$jsBodyGroups, &$cssGroups) {
-		$jsHeadGroups[] = 'universal_analytics_js';
+		if (self::isEnabled()) {
+			$jsHeadGroups[] = 'universal_analytics_js';
+		}
+
 		return true;
 	}
 
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		// this is only called in Oasis, so there's no need to double-check it
-		$jsAssetGroups[] = 'universal_analytics_js';
+		if (self::isEnabled()) {
+			$jsAssetGroups[] = 'universal_analytics_js';
+		}
 		return true;
 	}
 }
