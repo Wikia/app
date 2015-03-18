@@ -37,7 +37,7 @@ abstract class EmailController extends \WikiaController {
 
 			$this->initEmail();
 		} catch ( ControllerException $e ) {
-			return $this->setErrorResponse( $e );
+			$this->setErrorResponse( $e );
 		}
 	}
 
@@ -109,8 +109,6 @@ abstract class EmailController extends \WikiaController {
 			'subject' => $subject,
 			'body' => $body['html'],
 		] );
-
-		return;
 	}
 
 	/**
@@ -125,7 +123,6 @@ abstract class EmailController extends \WikiaController {
 			'result' => $e->errorType,
 			'msg' => $e->getMessage(),
 		] );
-		return;
 	}
 
 	protected function getTargetLang() {
