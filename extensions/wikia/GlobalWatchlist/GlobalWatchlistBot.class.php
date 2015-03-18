@@ -20,7 +20,6 @@ class GlobalWatchlistBot {
 	public function sendDigestToUser( $userID ) {
 
 		if ( $this->shouldNotSendDigest( $userID, $sendLogging = true ) ) {
-			$this->clearUserFromGlobalWatchlist( $userID );
 			return;
 		}
 
@@ -206,17 +205,6 @@ class GlobalWatchlistBot {
 		if ( !$user->getBoolOption( 'watchlistdigest' ) ) {
 			throw new Exception( 'Not subscribed to weekly digest' );
 		}
-	}
-
-	/**
-	 * @param $userID
-	 */
-	private function clearUserFromGlobalWatchlist( $userID ) {
-		$task = new GlobalWatchlistTask();
-		( new AsyncTaskList() )
-			->wikiId( F::app()->wg->CityId )
-			->add( $task->call( 'clearGlobalWatchlistAll', $userID ) )
-			->queue();
 	}
 
 	/**

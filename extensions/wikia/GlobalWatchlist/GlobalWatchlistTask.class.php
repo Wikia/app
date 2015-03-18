@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\Tasks\Tasks\BaseTask;
-use \Wikia\Tasks\AsyncTaskList;
 
 class GlobalWatchlistTask extends BaseTask {
 
@@ -90,44 +89,27 @@ class GlobalWatchlistTask extends BaseTask {
 	 */
 	public function addWatchers( $databaseKey, $nameSpace, array $watchers ) {
 		$titleObj = Title::newFromText( $databaseKey, $nameSpace );
-		if ( $titleObj instanceof Title && $titleObj->exists() ) {
-			$revision = Revision::newFromTitle( $titleObj );
-			$globalWatchlistBot = new GlobalWatchlistBot();
+		$revision = Revision::newFromTitle( $titleObj );
+		$globalWatchlistBot = new GlobalWatchlistBot();
 
-			$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
-			foreach ( $watchers as $watcherID ) {
-				if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
-					$this->clearGlobalWatchlistAll( $watcherID );
-					continue;
-				}
-
-				( new WikiaSQL() )
-					->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME )
-					->SET( GlobalWatchlistTable::COLUMN_USER_ID, $watcherID )
-					->SET( GlobalWatchlistTable::COLUMN_CITY_ID, \F::app()->wg->CityId )
-					->SET( GlobalWatchlistTable::COLUMN_TITLE, $databaseKey )
-					->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $nameSpace )
-					->SET( GlobalWatchlistTable::COLUMN_REVISION_ID, $revision->getId() )
-					->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
-					->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
-					->run( $db );
-				$this->scheduleWeeklyDigest( $watcherID );
+		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
+		foreach ( $watchers as $watcherID ) {
+			if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
+				$this->clearGlobalWatchlistAll( $watcherID );
+				continue;
 			}
-		}
-	}
 
-	/**
-	 * Schedules the weekly digest to be sent to the given user in 7 days. A dedup check is
-	 * performed to prevent additional weekly digests from being scheduled.
-	 * @param $userID
-	 */
-	private function scheduleWeeklyDigest( $userID ) {
-		$task = new self();
-		( new AsyncTaskList() )
-			->add( $task->call( 'sendWeeklyDigest', $userID ) )
-			->delay( '7 days' )
-			->dupCheck()
-			->queue();
+			( new WikiaSQL() )
+				->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME )
+				->SET( GlobalWatchlistTable::COLUMN_USER_ID, $watcherID )
+				->SET( GlobalWatchlistTable::COLUMN_CITY_ID, \F::app()->wg->CityId )
+				->SET( GlobalWatchlistTable::COLUMN_TITLE, $databaseKey )
+				->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $nameSpace )
+				->SET( GlobalWatchlistTable::COLUMN_REVISION_ID, $revision->getId() )
+				->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
+				->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
+				->run( $db );
+		}
 	}
 
 	/**
