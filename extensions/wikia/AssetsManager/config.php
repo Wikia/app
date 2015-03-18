@@ -1628,7 +1628,7 @@ $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'wikiamobile', 'venus' ],
 	'assets' => [
-		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
+		'//extensions/wikia/AnalyticsEngine/js/analytics.js'
 	]
 );
 
