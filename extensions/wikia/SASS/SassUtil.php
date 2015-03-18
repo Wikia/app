@@ -200,6 +200,15 @@ class SassUtil {
 	private static function rgb2hsl($rgbhex){
 		wfProfileIn(__METHOD__);
 
+		// We need to convert hex shorthand format
+		if (strlen($rgbhex) == 4) {
+			$rgbhex[6] = $rgbhex[3];
+			$rgbhex[5] = $rgbhex[3];
+			$rgbhex[4] = $rgbhex[2];
+			$rgbhex[3] = $rgbhex[2];
+			$rgbhex[2] = $rgbhex[1];
+		}
+
 		// convert HEX color to rgb values
 		// #474646 -> 71, 70, 70
 		$rgb = str_split(substr($rgbhex, 1), 2);

@@ -90,7 +90,23 @@ class SassUtilTest extends WikiaBaseTest {
 				'isDark' => true
 			],
 			[
+				'color' => '#000',
+				'isDark' => true
+			],
+			[
 				'color' => '#ffffff',
+				'isDark' => false
+			],
+			[
+				'color' => '#fff',
+				'isDark' => false
+			],
+			[
+				'color' => '#ffdddd',
+				'isDark' => false
+			],
+			[
+				'color' => '#fdd',
 				'isDark' => false
 			]
 		];
