@@ -23,8 +23,10 @@ class ChatRailController extends WikiaController {
 
 		if ( !empty($this->totalInRoom) ) {
 			$this->buttonText = wfMsg('chat-join-the-chat');
+			ChatHelper::info( __METHOD__ . ': Method called - existing room');
 		} else {
 			$this->buttonText = wfMsg('chat-start-a-chat');
+			ChatHelper::info( __METHOD__ . ': Method called - new room');
 		}
 		$this->linkToSpecialChat = SpecialPage::getTitleFor("Chat")->escapeLocalUrl();
 
@@ -59,6 +61,11 @@ class ChatRailController extends WikiaController {
 						' ' . $this->chatters[$i]['since_year'];
 				}
 			}
+
+			ChatHelper::info( __METHOD__ . ': Method called', [
+				'chatters' => $this->totalInRoom,
+				'loggedIn' => $this->isLoggedIn,
+			] );
 		}
 
 		// Cache the entire call in varnish (and browser).
@@ -71,11 +78,15 @@ class ChatRailController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 		$this->users = ChatEntryPoint::getChatUsersInfo();
 		if ( count( $this->users ) === 0 ) {
+			ChatHelper::info( __METHOD__ . ': Method called - no users' );
 			// CONN-436: If there are no users in the chat, cache the response in varnish for CACHE_STANDARD and on the
 			// browser for the default CACHE_DURATION time;
 			// Note: Varnish cache will be purged when user opens the chat page
 			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, self::CACHE_DURATION );
 		} else {
+			ChatHelper::info( __METHOD__ . ': Method called - found users', [
+				'chatters' => count( $this->users ),
+			] );
 			// If there are users in the chat, cache both in varnish and browser for default CACHE_DURATION;
 			$this->response->setCacheValidity( self::CACHE_DURATION );
 		}

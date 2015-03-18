@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class ChatHelper {
 	private static $serversBasket = "wgChatServersBasket";
 	private static $operationMode = "wgChatOperationMode";
@@ -79,8 +81,11 @@ class ChatHelper {
 
 	/**
 	 *
-	 * laod Config of chat from json file (we need to use jsone file becasue w)
+	 * Load Config of chat from json file
+	 *
 	 * @param string $name
+	 *
+	 * @return bool
 	 */
 	static function getChatConfig($name) {
 		global $wgWikiaEnvironment;
@@ -291,5 +296,13 @@ class ChatHelper {
 		}
 
 		return wfMsg('chat-'.$action.'-log-entry', $link, $time, $endon );
+	}
+
+	static public function info( $message, Array $params = [] ) {
+		WikiaLogger::instance()->info( 'CHAT: ' . $message, $params );
+	}
+
+	static public function debug( $message, Array $params = [] ) {
+		WikiaLogger::instance()->debug( 'CHAT: ' . $message, $params );
 	}
 }
