@@ -15,7 +15,7 @@
 ini_set( 'display_errors', 'stderr' );
 ini_set( 'error_reporting', E_ALL );
 
-require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
+require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
 
 /**
  * Class sendWeeklyDigest
