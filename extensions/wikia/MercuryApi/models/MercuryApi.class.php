@@ -127,19 +127,12 @@ class MercuryApi {
 	}
 
 	/**
-	 * @desc Gets a wikia sitename either from the message or WF variable
+	 * @desc Gets a wikia sitename from WF variable
 	 *
 	 * @return null|String
 	 */
 	public function getSiteName() {
-		$siteName = F::app()->wg->Sitename;
-		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
-
-		if( !$msg->isDisabled() ) {
-			$siteName = $msg->text();
-		}
-
-		return $siteName;
+		return F::app()->wg->Sitename;
 	}
 
 	/**
