@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 				success(adInfo);
 			},
 			hop,
-			'async'
+			'turtle'
 		);
 		gptHelper.flushAds();
 
