@@ -167,7 +167,6 @@ class NjordController extends WikiaController {
 	}
 
 	public function saveTitleAndDescription() {
-		//$title = $this->getRequest()->getVal( 'title', false );
 		$description = $this->getRequest()->getVal( 'description', false );
 
 		$success = false;
