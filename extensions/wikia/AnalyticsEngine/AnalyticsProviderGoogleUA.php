@@ -30,6 +30,8 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 			return true;
 		}
 
+		global $wgGAUserIdSalt;
+
 		$app = F::app();
 
 		//do not proceed if skin is WikiaMobile, see onWikiaMobileAssetsPackages
@@ -43,7 +45,7 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		$user = $app->wg->User;
 
 		if (!$user->isAnon()) {
-			$vars['wgGAUserIdHash'] = md5($user->getId() . '2eyPRZ8VvrMMui');
+			$vars['wgGAUserIdHash'] = md5($user->getId() . $wgGAUserIdSalt);
 		}
 
 
