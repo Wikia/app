@@ -46,7 +46,7 @@ class WebResponse {
 	 * @param $prefix String: Prefix to use, if not $wgCookiePrefix (use '' for no prefix)
 	 * @param @domain String: Cookie domain to use, if not $wgCookieDomain
 	 */
-	public function setcookie( $name, $value, $expire = 0, $prefix = null, $domain = null ) {
+	public function setcookie( $name, $value, $expire = 0, $prefix = null, $domain = null, $httpOnly = true ) {
 		global $wgCookiePath, $wgCookiePrefix, $wgCookieDomain;
 		global $wgCookieSecure,$wgCookieExpiration, $wgCookieHttpOnly;
 		if ( $expire == 0 ) {
@@ -58,7 +58,11 @@ class WebResponse {
 		if( $domain === null ) {
 			$domain = $wgCookieDomain;
 		}
-		$httpOnlySafe = wfHttpOnlySafe() && $wgCookieHttpOnly;
+		if ( $httpOnly ) {
+			$httpOnlySafe = wfHttpOnlySafe() && $wgCookieHttpOnly;
+		} else {
+			$httpOnlySafe = $httpOnly;
+		}
 		wfDebugLog( 'cookie',
 			'setcookie: "' . implode( '", "',
 				array(
@@ -149,6 +153,7 @@ class FauxResponse extends WebResponse {
 	 * @return string
 	 */
 	public function getcookie( $name )  {
+		wfDebug( 'PowerUserLog: ' . 'Get cookie ' . $name . "\n" );
 		if ( isset( $this->cookies[$name] ) ) {
 			return $this->cookies[$name];
 		}

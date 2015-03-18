@@ -15,6 +15,9 @@ class PowerUserHooks {
 		\Hooks::register( 'NewRevisionFromEditComplete', [ $oPowerUserHooks, 'onNewRevisionFromEditComplete' ] );
 		\Hooks::register( 'UserAddGroup', [ $oPowerUserHooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'WikiaSkinTopScripts', [ $oPowerUserHooks, 'onWikiaSkinTopScripts' ] );
+		\Hooks::register( 'UserLoginComplete', [ $oPowerUserHooks, 'onUserLoginComplete' ] );
+		\Hooks::register( 'UserLogoutComplete', [ $oPowerUserHooks, 'onUserLogoutComplete' ] );
+		\Hooks::register( 'BeforePageDisplay', [ $oPowerUserHooks, 'onBeforePageDisplay' ] );
 	}
 
 	/**
@@ -75,6 +78,40 @@ class PowerUserHooks {
 			}
 		}
 
+		return true;
+	}
+
+	public function onUserLoginComplete( \User $oUser, &$injected_html ) {
+		wfDebug( 'PowerUserLog: ' . 'Login complete' . "\n" );
+		if ( $oUser->isPowerUser() ) {
+			$oPowerUser = new PowerUser( $oUser );
+			wfDebug( 'PowerUserLog: ' . 'Cookie to be set' . "\n" );
+			$oPowerUser->pageViewsSetCookie();
+		}
+		return true;
+	}
+
+	public function onUserLogoutComplete( \User $oUser, &$injected_html, $sOldName ) {
+		wfDebug( 'PowerUserLog: ' . 'Logout complete' . "\n" );
+		$oPowerUser = new PowerUser( $oUser );
+		if ( $oUser->isPowerUser() && $oPowerUser->pageViewsIsSetCookie() ) {
+			wfDebug( 'PowerUserLog: ' . 'Cookie to be cleared' . "\n" );
+			$oPowerUser->pageViewsClearCookie();
+		}
+		return true;
+	}
+
+	public function onBeforePageDisplay( \OutputPage $out ) {
+		global $wgUser;
+		wfDebug( 'PowerUserLog: ' . 'BeforePageDisplay' . "\n" );
+		if ( $wgUser instanceof \User ) {
+			wfDebug( 'PowerUserLog: ' . 'Is user' . "\n" );
+			$oPowerUser = new PowerUser( $wgUser );
+			if ( $oPowerUser->pageViewsIsSetCookie() ) {
+				wfDebug( 'PowerUserLog: ' . 'Add asset' . "\n" );
+				\Wikia::addAssetsToOutput('poweruser_pageviews');
+			}
+		}
 		return true;
 	}
 }
