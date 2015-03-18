@@ -1,9 +1,9 @@
 <?php
 class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 	static private function isEnabled() {
-		global $wgCityId;
+		global $wgAnalyticsProviderUseUA;
 
-		return WikiFactory::getVarValueByName( 'wgAnalyticsProviderUseUA', $wgCityId );
+		return !empty($wgAnalyticsProviderUseUA);
 	}
 
 	public function getSetupHtml($params=array()){
