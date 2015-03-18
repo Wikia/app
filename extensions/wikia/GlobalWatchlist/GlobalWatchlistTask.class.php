@@ -1,7 +1,6 @@
 <?php
 
 use Wikia\Tasks\Tasks\BaseTask;
-use \Wikia\Tasks\AsyncTaskList;
 
 class GlobalWatchlistTask extends BaseTask {
 
@@ -110,22 +109,7 @@ class GlobalWatchlistTask extends BaseTask {
 				->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
 				->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
 				->run( $db );
-			$this->scheduleWeeklyDigest( $watcherID );
 		}
-	}
-
-	/**
-	 * Schedules the weekly digest to be sent to the given user in 7 days. A dedup check is
-	 * performed to prevent additional weekly digests from being scheduled.
-	 * @param $userID
-	 */
-	private function scheduleWeeklyDigest( $userID ) {
-		$task = new self();
-		( new AsyncTaskList() )
-			->add( $task->call( 'sendWeeklyDigest', $userID ) )
-			->delay( '7 days' )
-			->dupCheck()
-			->queue();
 	}
 
 	/**
