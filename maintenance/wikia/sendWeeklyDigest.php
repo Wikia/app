@@ -17,7 +17,6 @@ ini_set( 'error_reporting', E_ALL );
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
-
 /**
  * Class sendWeeklyDigest
  */
@@ -54,7 +53,7 @@ class sendWeeklyDigest extends Maintenance {
 	private function sendDigestToUsers( array $userIDs ) {
 		$watchlistTask = new GlobalWatchlistTask();
 		foreach ( $userIDs as $userID ) {
-			$this->log( "Sending weekly digest to user: " . $userID );
+			$this->output( "Sending weekly digest to user: " . $userID . "\n" );
 			if ( !$this->isDryRun() ) {
 				$watchlistTask->sendWeeklyDigest( $userID );
 			}
@@ -62,12 +61,8 @@ class sendWeeklyDigest extends Maintenance {
 	}
 
 	private function logRunTime() {
-		$message = "sendDeeklyDigest script run at " . date( "F j, Y, g:i a" );
-		$this->log( $message );
-	}
-
-	private function log( $msg ) {
-			echo $msg . "\n";
+		$message = "sendWeeklyDigest script run at " . date( "F j, Y, g:i a" ) . "\n";
+		$this->output( $message );
 	}
 
 	private function isDryRun() {
