@@ -6,8 +6,6 @@ class MercuryApi {
 
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
 
-	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
-
 	/**
 	 * Aggregated list of comments users
 	 *
