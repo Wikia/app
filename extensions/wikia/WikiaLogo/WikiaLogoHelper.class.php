@@ -44,12 +44,11 @@ class WikiaLogoHelper {
 	 * @param String $lang - language code
 	 * @return bool|GlobalTitle
 	 */
-	protected function getCentralWikiUrlForLangIfExists( $lang ) {
+	public function getCentralWikiUrlForLangIfExists( $lang ) {
 		try {
-			$title = GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
+			return GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
 		} catch ( Exception $ex ) {
 			return false;
 		}
-		return $title;
 	}
 }

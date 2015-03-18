@@ -11,9 +11,15 @@ class GlobalNavigationHelper {
 	 */
 	private $wikiCorporateModel;
 
+	/**
+	 * @var WikiaLogoHelper
+	 */
+	private $wikiaLogoHelper;
+
 
 	public function __construct() {
 		$this->wikiCorporateModel = new WikiaCorporateModel();
+		$this->wikiaLogoHelper = new WikiaLogoHelper();
 	}
 
 	/**
@@ -26,10 +32,10 @@ class GlobalNavigationHelper {
 	public function getCentralUrlFromGlobalTitle( $lang ) {
 		$out = '/';
 
-		$title = $this->getCentralWikiUrlForLangIfExists($lang);
+		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists($lang);
 		if ($title) {
 			$out = $title->getServer();
-		} else if ( $title = $this->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
+		} else if ( $title =$this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
 			$out = $title->getServer();
 		}
 
@@ -79,22 +85,6 @@ class GlobalNavigationHelper {
 		} else {
 			return $wgLanguageCode;
 		}
-	}
-
-	/**
-	 * @desc get central wiki URL for given language.
-	 * If wiki in given language doesn't exist GlobalTitle method is throwing an exception and this method returns false
-	 *
-	 * @param String $lang - language code
-	 * @return bool|GlobalTitle
-	 */
-	protected function getCentralWikiUrlForLangIfExists( $lang ) {
-		try {
-			$title = GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
-		} catch ( Exception $ex ) {
-			return false;
-		}
-		return $title;
 	}
 
 	protected function createCNWUrlFromGlobalTitle() {
