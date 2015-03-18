@@ -5,63 +5,15 @@ use Wikia\Tasks\Tasks\BaseTask;
 class GlobalWatchlistTask extends BaseTask {
 
 	/**
-	 * Sends the weekly digest to the user
-	 * @param $userID
+	 * Clear all watched pages from all wikis for the given user in
+	 * the global_watchlist table. This logic was already implemented in
+	 * the GlobalWatchListBot class since it's needed when we send out
+	 # the weekly digest.
+	 * @param $watcherID
 	 */
-	public function sendWeeklyDigest( $userID ) {
-		$globalWatchlistBot = new GlobalWatchlistBot();
-		$globalWatchlistBot->sendDigestToUser( $userID );
-		$this->clearWatchLists( $userID );
-	}
-
-	/**
-	 * Clear the global_watchlist and local watchlists for a given user.
-	 * This is done after we send them the weekly digest which effectively
-	 * means they have "seen" all the watched pages and will receive notifications
-	 * for new edits.
-	 * @param $userID
-	 */
-	private function clearWatchLists( $userID ) {
-		$this->clearLocalWatchlists( $userID );
-		$this->clearGlobalWatchlistAll( $userID );
-	}
-
-	/**
-	 * Clears the local watchlist tables for a given user.
-	 * @param $userID
-	 */
-	private function clearLocalWatchlists( $userID ) {
-		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
-		$wikiIDs = ( new WikiaSQL() )
-			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_CITY_ID )
-			->FROM( GlobalWatchlistTable::TABLE_NAME )
-			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
-			->AND_( GlobalWatchlistTable::COLUMN_TIMESTAMP )->IS_NOT_NULL()
-			->runLoop( $db, function ( &$wikiIDs, $row ) {
-				$wikiIDs[] = $row->gwa_city_id;
-			} );
-
-		foreach ( $wikiIDs as $wikiID ) {
-			$db = wfGetDB( DB_MASTER, [], WikiFactory::IDtoDB( $wikiID ) );
-			( new WikiaSQL() )
-				->UPDATE( 'watchlist' )
-				->SET( 'wl_notificationtimestamp', null )
-				->WHERE( 'wl_user' )->EQUAL_TO( $userID )
-				->run( $db );
-		}
-	}
-
-	/**
-	 * Clears all watched pages from all wikis for the given user in
-	 * the global_watchlist table.
-	 * @param $userID
-	 */
-	public function clearGlobalWatchlistAll( $userID ) {
-		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
-		( new WikiaSQL() )
-			->DELETE()->FROM( GlobalWatchlistTable::TABLE_NAME )
-			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
-			->run( $db );
+	public function clearGlobalWatchlistAll( $watcherID ) {
+		$watchlistBot = new GlobalWatchlistBot();
+		$watchlistBot->clearGlobalWatchlistAll( $watcherID );
 	}
 
 	/**
