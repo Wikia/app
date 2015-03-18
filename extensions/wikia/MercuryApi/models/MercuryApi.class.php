@@ -117,20 +117,11 @@ class MercuryApi {
 				'contentDir' => $wg->ContLang->getDir()
 			],
 			'namespaces' => $wg->ContLang->getNamespaces(),
-			'siteName' => $this->getSiteName(),
+			'siteName' => $wg->Sitename,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
 		];
-	}
-
-	/**
-	 * @desc Gets a wikia sitename from WF variable
-	 *
-	 * @return null|String
-	 */
-	public function getSiteName() {
-		return F::app()->wg->Sitename;
 	}
 
 	/**
