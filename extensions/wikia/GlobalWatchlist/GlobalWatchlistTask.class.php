@@ -8,7 +8,7 @@ class GlobalWatchlistTask extends BaseTask {
 	 * Clear all watched pages from all wikis for the given user in
 	 * the global_watchlist table. This logic was already implemented in
 	 * the GlobalWatchListBot class since it's needed when we send out
-	 # the weekly digest.
+	 * the weekly digest.
 	 * @param $watcherID
 	 */
 	public function clearGlobalWatchlistAll( $watcherID ) {
