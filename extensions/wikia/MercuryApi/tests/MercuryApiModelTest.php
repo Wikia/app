@@ -89,49 +89,4 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$result = $mercuryApi->getAdsContext( $title );
 		$this->assertEquals( $expected, $result );
 	}
-
-	/**
-	 * @dataProvider getSitenameDataProvider
-	 */
-	public function testGetSiteName( $expected, $isDisabled, $textMock, $wgSitenameMock ) {
-		$messageMock = $this->getMockBuilder( 'Message' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'inContentLanguage', 'isDisabled', 'text' ] )
-			->getMock();
-
-		$messageMock->expects( $this->once() )
-			->method( 'isDisabled' )
-			->willReturn( $isDisabled );
-
-		$messageMock->expects( $this->any() )
-			->method( 'text' )
-			->willReturn( $textMock );
-
-		$messageMock->expects( $this->once() )
-			->method( 'inContentLanguage' )
-			->willReturn( $messageMock );
-
-		$this->mockGlobalVariable( 'wgSitename', $wgSitenameMock );
-		$this->mockGlobalFunction( 'wfMessage', $messageMock );
-
-		$mercuryApi = new MercuryApi();
-		$this->assertEquals( $expected, $mercuryApi->getSitename() );
-	}
-
-	public function getSiteNameDataProvider() {
-		return [
-			[
-				'$expected' => 'Test Wiki',
-				'$isDisabled' => false,
-				'$textMock' => 'Test Wiki',
-				'$wgSitenameMock' => 'A test wikia'
-			],
-			[
-				'$expected' => 'A test wikia',
-				'$isDisabled' => true,
-				'$textMock' => 'Test Wiki',
-				'$wgSitenameMock' => 'A test wikia'
-			]
-		];
-	}
 }
