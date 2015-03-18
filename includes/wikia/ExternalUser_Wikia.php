@@ -249,13 +249,12 @@ class ExternalUser_Wikia extends ExternalUser {
 			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 			$User->setToken();
 
 			$dbw->insert(
 				'`user`',
 				array(
-					'user_id' => $seqVal,
+					'user_id' => null,
 					'user_name' => $User->mName,
 					'user_password' => $User->mPassword,
 					'user_newpassword' => $User->mNewpassword,
