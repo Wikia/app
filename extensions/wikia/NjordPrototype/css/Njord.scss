@@ -200,6 +200,8 @@ $btn-bar-color: mix($color-page, #000, 90);
 			outline: none;
 			min-height: 1.2em;
 			display: block;
+			padding-left: 30px;
+			padding-right: 20px;
 		}
 	}
 
@@ -208,9 +210,13 @@ $btn-bar-color: mix($color-page, #000, 90);
 	}
 
 	.hero-description-text {
-		word-wrap: break-word;
+		display: block;
 		font-size: 16px;
+		font-weight: bold;
 		line-height: 26px;
+		margin-bottom: 5px;
+		word-wrap: break-word;
+
 	}
 
 	.image-save-bar {
@@ -432,46 +438,34 @@ $btn-bar-color: mix($color-page, #000, 90);
 	}
 }
 
+header.MainPageHeroHeader {
+	&:after {
+		border-bottom: solid 1px $color-page-border;
+		content: '';
+		display: block;
+		margin: 6px 320px 10px 0;
+	}
+
+	+ nav {
+		margin-bottom: 15px;
+	}
+}
+
 .WikiaArticle {
 	.hero-description {
-		margin: 20px 320px 50px 30px;
+		margin: 49px 320px 50px 30px;
 		word-wrap: break-word;
 
-		.title-edit-btn {
-			cursor: pointer;
-			display: inline-block;
-			position: relative;
-			top: -25px;
-			left: 3px;
-
-			&::before {
-				background-color: $color-links;
-				border-radius: 50px;
-				content: '';
-				display: block;
-				height: 35px;
-				left: 0;
-				position: absolute;
-				width: 35px;
-			}
-
-			&::after {
-				@include venus-icons-font;
-
-				color: $color-page;
-				content: '\f002';
-				display: block;
-				font-size: 49px;
-				left: -7px;
-				padding: 8px 0;
-				position: absolute;
-				top: -1px;
-			}
-
-		}
+	.title-edit-btn {
+		display: inline-block;
+		padding-left: 6px;
+		padding-right: 6px;
+	}
 
 		&.edit-state {
-			margin-top: 25px;
+			border: 1px solid #ccc;
+			padding: 49px 0 0 0;
+			margin: 0 320px 40px 0;
 
 			.title-edit-btn {
 				display: none;
@@ -486,11 +480,4 @@ $btn-bar-color: mix($color-page, #000, 90);
 
 .mainpage .WikiaPage {
 	border: none;
-
-	.mw-content-text:before {
-		border-top: solid 1px $color-page-border;
-		content: '';
-		display: block;
-		margin: 6px 320px 10px 0;
-	}
 }
