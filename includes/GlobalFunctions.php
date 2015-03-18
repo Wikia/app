@@ -3463,7 +3463,7 @@ function wfResetSessionID() {
 	$oldSessionId = session_id();
 	$cookieParams = session_get_cookie_params();
 	if ( wfCheckEntropy() && $wgCookieSecure == $cookieParams['secure'] ) {
-		session_regenerate_id( false );
+		session_regenerate_id( true ); // Wikia - $delete_old_session = true
 	} else {
 		$tmp = $_SESSION;
 		session_destroy();
