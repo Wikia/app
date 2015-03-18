@@ -17,6 +17,7 @@ class NjordUsage extends Maintenance {
 	const NJORD_ARTICLE_PROP_TITLE = 'TITLE';
 	const NJORD_ARTICLE_PROP_DESCR = 'DESCRIPTION';
 	const NJORD_ARTICLE_PROP_IMAGE = 'IMAGE';
+	const WIKI_CREATION_DATE = 'WIKI_CREATION_DATE';
 
 	/**
 	 * @param $cityId
@@ -41,13 +42,14 @@ class NjordUsage extends Maintenance {
 	 */
 	public function execute() {
 		$city_list_with_njord_ext = $this->getWikiIDsWithNjordExt();
+		$date_created = $this->getWikiCreationDates( $city_list_with_njord_ext );
 
 		if ( count( $city_list_with_njord_ext ) > 0 ) {
 			$outputCSV = [];
 			$outputHTML = [];
 			foreach ( $city_list_with_njord_ext as $cityId ) {
 				$njordData = $this->getNjordData( $cityId );
-				$outputCSV[ ] = $this->formatOutputRowCSV( $cityId, $njordData );
+				$outputCSV[ ] = $this->formatOutputRowCSV( $cityId, $njordData, $date_created[ $cityId ] );
 				$outputHTML[ ] = $this->formatOutputRowHTML( $cityId, $njordData );
 			}
 			$this->exportToCSV( $outputCSV );
@@ -55,6 +57,22 @@ class NjordUsage extends Maintenance {
 		} else {
 			echo "COULD NOT FIND WIKIS WITH NJORD ENABLED!";
 		}
+	}
+
+	public function getWikiCreationDates( $city_list ) {
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+
+		$sql = 'SELECT city_id, city_created FROM city_list
+				WHERE city_id IN (' . implode( ", ", $city_list ) . ')';
+
+		$res = $dbr->query( $sql );
+
+		$wikis = array();
+		while($row = $dbr->fetchObject($res)) {
+			$wikis[$row->city_id] = $row->city_created;
+		}
+		return $wikis;
 	}
 
 	/**
@@ -101,9 +119,9 @@ class NjordUsage extends Maintenance {
 	private function exportToCSV( $data ) {
 		if ( count( $data ) > 0 ) {
 			$fp = fopen( $this->getOutputFileName(), 'w' );
-			fputcsv( $fp, array_keys( $data[ 0 ] ), ";" );
+			fputcsv( $fp, array_keys( $data[ 0 ] ), "\t" );
 			foreach ( $data as $fields ) {
-				fputcsv( $fp, $fields, ";" );
+				fputcsv( $fp, $fields, "\t" );
 			}
 			fclose( $fp );
 			echo "DONE: " . $this->getOutputFileName() . "\n";
@@ -167,7 +185,7 @@ class NjordUsage extends Maintenance {
 	 * @param $data
 	 * @return array
 	 */
-	private function formatOutputRowCSV( $cityId, $data ) {
+	private function formatOutputRowCSV( $cityId, $data, $date_created ) {
 		$njordProps = $this->getNjordPropIds();
 
 		$row = [];
@@ -182,6 +200,8 @@ class NjordUsage extends Maintenance {
 
 		$row[ self::NJORD_ARTICLE_PROP_IMAGE . "_EXISTS" ] =
 			(int) !empty( $data[ $njordProps[ self::NJORD_ARTICLE_PROP_IMAGE ] ] );
+
+		$row[ self::WIKI_CREATION_DATE ] = $date_created;
 
 		return $row;
 	}

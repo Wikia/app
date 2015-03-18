@@ -78,7 +78,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			}
 
 			$expUser = User::newFromConfirmationCode( $this->code );
-			if ( !is_object( $expUser ) ) {
+			if ( !$expUser instanceof User ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'wikiaconfirmemail-error-invalid-code' )->escaped();
 				return;
@@ -86,6 +86,12 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 			// User - activate user, confirm email and redirect to user page or create new wiki
 			$user = User::newFromName( $this->username );
+			if ( !$user instanceof User ) {
+				$this->result = 'error';
+				$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
+				return;
+			}
+
 			if ( $user->getId() != $expUser->getId() ) {
 				$this->result = 'error';
 				$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->parse();

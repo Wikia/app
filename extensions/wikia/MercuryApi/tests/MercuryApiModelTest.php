@@ -12,7 +12,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 */
 	private function setupGlobals() {
 		$this->mockGlobalVariable('wgLoadAdsInHead', true);
-		$this->mockGlobalVariable('wgAdDriverBottomLeaderboardImpressionCapping', false);
 		$this->mockGlobalVariable('wgAdDriverEnableRemnantGptMobile', true);
 		$this->mockGlobalVariable('wgAdDriverSevenOneMediaOverrideSub2Site', true);
 		$this->mockGlobalVariable('wgAdDriverTrackState', true);

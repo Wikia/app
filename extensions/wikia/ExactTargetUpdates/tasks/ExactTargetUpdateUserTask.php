@@ -20,6 +20,11 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 * @param string $iUserEmail
 	 */
 	public function updateUserEmail( $iUserId, $sUserEmail ) {
+
+		if ( empty( $sUserEmail ) ) {
+			throw new \Exception( 'No user email address provided in params' );
+		}
+
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
 		$oDeleteUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task

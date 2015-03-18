@@ -299,6 +299,7 @@ class WallHelper {
 		$items = array();
 		$i = 0;
 		foreach($comments as $wm) {
+			/** @var WallMessage $wm */
 			$data = $wm->getData(false, null, 30);
 
 			if( !($data['author'] instanceof User) ) {
@@ -328,7 +329,8 @@ class WallHelper {
 			}
 
 			$items[$i]['author'] = $data['username'];
-			$items[$i]['wall-comment'] = $this->shortenText($this->strip_wikitext($data['rawtext'])).'&nbsp;';
+			$strippedText = $this->strip_wikitext( $data['rawtext'], $wm->getTitle() );
+			$items[$i]['wall-comment'] = $this->shortenText( $strippedText ).'&nbsp;';
 			if( User::isIP( $data['username']) ) {
 				$items[$i]['user-profile-url'] = Skin::makeSpecialUrl('Contributions').'/'.$data['username'];
 				$items[$i]['real-name'] = wfMessage( 'oasis-anon-user' )->escaped();
@@ -408,7 +410,7 @@ class WallHelper {
 		return false;
 	}
 
-	public function strip_wikitext($text) {
+	public function strip_wikitext( $text, Title $title = null ) {
 		$app = F::app();
 
 		// use memcached on top of Parser
@@ -421,8 +423,12 @@ class WallHelper {
 
 
 		$text = str_replace('*', '&asterix;', $text);
+		if ( empty( $title ) ) {
+			$title = $app->wg->Title;
+		}
+
 		//local parser to fix the issue fb#17907
-		$text = ParserPool::parse($text, $app->wg->Title, $app->wg->Out->parserOptions())->getText();
+		$text = ParserPool::parse($text, $title, $app->wg->Out->parserOptions())->getText();
 		// BugId:31034 - I had to give ENT_COMPAT and UTF-8 explicitly.
 		// Prior PHP 5.4 the defaults are ENT_COMPAT and ISO-8859-1 (not UTF-8)
 		// and cause HTML entities in an actual UTF-8 string to be decoded incorrectly
