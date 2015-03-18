@@ -25,6 +25,8 @@ class Chat {
 	 * on lyrics.wikia.com, but interestingly, isn't in document.cookie in the javascript on lyrics.wikia.com).
 	 */
 	static public function echoCookies(){
+		ChatHelper::info( __METHOD__ . ': Method called' );
+
 		global $wgUser, $wgMemc;
 		if( !$wgUser->isLoggedIn() ) {
 			return array("key" => false ) ;
@@ -47,6 +49,13 @@ class Chat {
 	 * Returns true on success, returns an error message as a string on failure.
 	 */
 	static public function banUser($userNameToKickBan, $kickingUser, $time, $reason){
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'userNameToKickBan' => $userNameToKickBan,
+			'kickingUser' => $kickingUser,
+			'time' => $time,
+			'reason' => $reason,
+		] );
+
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		$errorMsg = "";
@@ -69,6 +78,11 @@ class Chat {
 	} // end banUser()
 
 	public static function blockPrivate($username, $dir = 'add', $kickingUser) {
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'username' => $username,
+			'dir' => $dir,
+			'kickingUser' => $kickingUser,
+		] );
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
@@ -107,6 +121,14 @@ class Chat {
 
 	//TODO: move it to some data base table
 	public static function banUserDB($cityId, $banUser, $adminUser, $time, $reason, $dir = 'add') {
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'cityId' => $cityId,
+			'banUser' => $banUser,
+			'adminUser' => $adminUser,
+			'time' => $time,
+			'reason' => $reason,
+			'dir' => $dir,
+		] );
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
@@ -173,6 +195,10 @@ class Chat {
 	 * Return ban information if user is not ban return false;
 	 */
 	public static function getBanInformation($cityId, $banUser) {
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'cityId' => $cityId,
+			'banUser' => $banUser,
+		] );
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
@@ -226,6 +252,7 @@ class Chat {
 	}
 
 	public static function getListOfBlockedPrivate() {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgUser, $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
@@ -270,9 +297,16 @@ class Chat {
 	 * Attempts to add the 'chatmoderator' group to the user whose name is provided
 	 * in 'userNameToPromote'.
 	 *
-	 * Returns true on success, returns an error message as a string on failure.
+	 * @param string $userNameToPromote
+	 * @param string $promotingUser
+	 *
+	 * @return bool true on success, returns an error message as a string on failure.
 	 */
-	static public function promoteChatModerator($userNameToPromote, $promottingUser) {
+	static public function promoteChatModerator($userNameToPromote, $promotingUser) {
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'userNameToPromote' => $userNameToPromote,
+			'promotingUser' => $promotingUser
+		] );
 		wfProfileIn( __METHOD__ );
 		$CHAT_MOD_GROUP = 'chatmoderator';
 
@@ -290,8 +324,8 @@ class Chat {
 		if( in_array($CHAT_MOD_GROUP, $userToPromote->getEffectiveGroups()) ) {
 			$errorMsg = wfMsg("chat-err-already-chatmod", $userNameToPromote, $CHAT_MOD_GROUP);
 		} else {
-			$changeableGroups = $promottingUser->changeableGroups();
-			$promottingUserName = $promottingUser->getName();
+			$changeableGroups = $promotingUser->changeableGroups();
+			$promottingUserName = $promotingUser->getName();
 			$isSelf = ($userToPromote->getName() == $promottingUserName);
 			$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : array() );
 
@@ -312,7 +346,7 @@ class Chat {
 				$newGroups = array_merge($oldGroups, array($CHAT_MOD_GROUP));
 
 				// Log the rights-change.
-				Chat::addLogEntry($userToPromote, $promottingUser, array(
+				Chat::addLogEntry($userToPromote, $promotingUser, array(
 					Chat::makeGroupNameListForLog( $oldGroups ),
 					Chat::makeGroupNameListForLog( $newGroups )
 				),'chatmoderator');
@@ -424,7 +458,7 @@ class Chat {
 		if( $wgDevelEnvironment ) {
 		//devbox
 			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		//production
@@ -514,6 +548,8 @@ class Chat {
 	 * need for confusing double-negatives in the code.
 	 *
 	 * @param userObject - an object of class User (such as wgUser).
+	 *
+	 * @return bool
 	 */
 	public static function canChat($userObject){
 		global $wgCityId;
@@ -586,6 +622,4 @@ class Chat {
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
-
-
 } // end class Chat
