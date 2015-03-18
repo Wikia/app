@@ -80,6 +80,8 @@ class GlobalFooterController extends WikiaController {
 			}
 		}
 
+		$wgMemc->set($memcKey, $parsedLinks);
+
 		wfProfileOut( __METHOD__ );
 
 		return $parsedLinks;
