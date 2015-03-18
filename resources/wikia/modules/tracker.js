@@ -47,6 +47,8 @@
 			// @see /extensions/wikia/AnalyticsEngine/js/analytics.js
 			gaTrackAdEvent = window.gaTrackAdEvent,
 			gaTrackEvent = window.gaTrackEvent,
+			guaTrackEvent = window.guaTrackEvent,
+			guaTrackAdEvent = window.guaTrackAdEvent,
 			logGroup = 'Wikia.Tracker',
 			// These keys will be removed from tracking data before it gets sent to
 			// GA or the internal datawarehouse.
