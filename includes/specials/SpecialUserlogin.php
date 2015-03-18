@@ -532,16 +532,6 @@ class LoginForm extends SpecialPage {
 		self::clearCreateaccountToken();
 		$u->mBirthDate = date( 'Y-m-d', $this->wpUserBirthDay );
 		$u = $this->initUser( $u, false );
-		$user_id = $u->getID();
-		if( !empty($user_id) ) {
-			$dbw = wfGetDB(DB_MASTER);
-			$dbw->update(
-				'user',
-				array( 'user_birthdate' => date( 'Y-m-d', $this->wpUserBirthDay ) ),
-				array( 'user_id' => $user_id ),
-				__METHOD__
-			);
-		}
 		return $u;
 	}
 
