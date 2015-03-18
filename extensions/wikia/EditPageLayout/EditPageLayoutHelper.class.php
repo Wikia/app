@@ -120,7 +120,7 @@ class EditPageLayoutHelper {
 		$this->addJsVariableRef( 'wgEditPageHasEditPermissionError', $this->editPage->mHasPermissionError );
 		$this->addJsVariableRef( 'wgEditPageSection', $this->editPage->section );
 
-		if ( $this->app->wg->MercuryPreviewUrlPrefix ) {
+		if ( $this->app->wg->EditPreviewMercury ) {
 			$this->addJsVariable( 'wgEnableMercuryPreview', true );
 		}
 

@@ -6,7 +6,7 @@ class EditPageLayoutAjax {
 	 * Perform reverse parsing on given HTML (when needed)
 	 */
 	static private function resolveWikitext( $content, $mode, $page, $method, $section ) {
-		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt, $wgMercuryPreviewUrl, $wgMercuryPreviewMwSalt;
+		global $wgRequest, $wgTitle, $wgOut, $wgEnableSlowPagesBlacklistExt, $wgEditPreviewMercury;
 
 		wfProfileIn( __METHOD__ );
 
@@ -35,11 +35,11 @@ class EditPageLayoutAjax {
 				 *
 				 * full means content along with CSS and JS
 				 * partial means just the article content
-				 * mercury means previewing the article in Mercury skin (needs $wgMercuryPreviewUrlPrefix)
+				 * mercury means previewing the article in Mercury skin (needs $wgEditPreviewMercuryUrlPrefix)
 				 */
 				$type = $wgRequest->getVal( 'type', 'partial' );
 
-				if ( $type === 'mercury' && ( empty( $wgMercuryPreviewUrl ) || empty( $wgMercuryPreviewMwSalt ) ) ) {
+				if ( $type === 'mercury' && empty( $wgEditPreviewMercury ) ) {
 					// Fall back to regular wikiamobile if Mercury is not available
 					$type = 'full';
 				}
@@ -65,9 +65,8 @@ class EditPageLayoutAjax {
 							} elseif ( $type === 'mercury' ) {
 								$res['html'] = F::app()->renderView( 'EditPageLayout', 'mercuryPreview', [
 									'parserOutput' => $html,
-									'mercuryUrl' => $wgMercuryPreviewUrl,
-									'title' => $title,
-									'mwHash' => hash_hmac ( 'sha1', $html, $wgMercuryPreviewMwSalt )
+									'mercuryUrl' => $wgEditPreviewMercury['mercuryUrl'],
+									'mwHash' => hash_hmac ( 'sha1', $html, $wgEditPreviewMercury['mwSalt'] ),
 								] );
 							} else {
 								$res['html'] = $html;

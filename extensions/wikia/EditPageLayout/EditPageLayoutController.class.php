@@ -201,6 +201,5 @@ class EditPageLayoutController extends WikiaController {
 		$this->mercuryUrl = $this->request->getVal('mercuryUrl');
 		$this->mwHash = $this->request->getVal('mwHash');
 		$this->parserOutput = $this->request->getVal('parserOutput');
-		$this->title= $this->request->getVal('title');
 	}
 }

@@ -475,11 +475,6 @@ require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 include_once( "$IP/extensions/wikia/TimeAgoMessaging/TimeAgoMessaging_setup.php" );
 
 /**
- * Updated layout for edit pages (Oasis only)
- */
-//include_once("$IP/extensions/wikia/EditPageLayout/EditPageLayout_setup.php");
-
-/**
  * MW messages in JS
  */
 include_once("$IP/extensions/wikia/JSMessages/JSMessages_setup.php");
@@ -1723,3 +1718,12 @@ $wgImplicitGroups[] = 'poweruser';
  * Enable updated GlobalFooter
  */
 $wgEnableUpdatedGlobalFooter = false;
+
+/**
+ * @name wgEditPreviewMercury
+ * Structure holding: [
+ *   "mercuryUrl" => URL of the Mercury preview endpoint
+ *   "mwSalt" => Salt used to prove HTML generated comes from Media Wiki
+ * ]
+ */
+$wgEditPreviewMercury = null;

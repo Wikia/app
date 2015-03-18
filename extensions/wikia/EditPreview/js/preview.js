@@ -212,6 +212,7 @@ define('wikia.preview', [
 
 					// set current width of the article
 					previewTypes.current.value = previewTypes.mobile.value = $article.width();
+					previewTypes.current.value = previewTypes.mercury.value = $article.width();
 
 					// get width of article Wrapper
 					// subtract scrollbar width to get correct width needed as reference point for scaling
