@@ -242,7 +242,9 @@ class WikiaView {
 
 	/**
 	 * render view
+	 *
 	 * @return string
+	 * @throws WikiaException
 	 */
 	public function render() {
 		if( empty( $this->response ) ) {
