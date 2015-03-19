@@ -130,6 +130,15 @@
 		}
 	}
 
+	@media #{$small-only} {
+		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
+			margin: 0 1px;
+		}
+		.EditPageToolbar .cke_toolbar_widescreen .cke_toolbar_insert {
+			padding: 0;
+		}
+	}
+
 	.EditPage.editpage-visualwidemode .EditPageMain {
 		width: 100%;
 	}
