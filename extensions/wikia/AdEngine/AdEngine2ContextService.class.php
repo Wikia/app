@@ -28,8 +28,8 @@ class AdEngine2ContextService {
 
 			return [
 				'opts' => $this->filterOutEmptyItems( [
-					'adsInContent' => !!$wg->EnableAdsInContent,
-					'adsInHead' => !!$wg->LoadAdsInHead,
+					'adsInContent' => $wg->EnableAdsInContent,
+					'adsInHead' => $wg->LoadAdsInHead,
 					'alwaysCallDart' => $wg->AdDriverAlwaysCallDart,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
@@ -59,18 +59,18 @@ class AdEngine2ContextService {
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
-					'remnantGptMobile' => !!$wg->AdDriverEnableRemnantGptMobile,
-					'sevenOneMedia' => !!$wg->AdDriverUseSevenOneMedia,
+					'remnantGptMobile' => $wg->AdDriverEnableRemnantGptMobile,
+					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
-					'taboola' => !!$wg->AdDriverUseTaboola,
+					'taboola' => $wg->AdDriverUseTaboola,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
-					'bottomLeaderboardImpressionCapping' => $wg->AdDriverBottomLeaderboardImpressionCapping
 				] ),
 				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [
 					'directGpt' => $wg->AdDriverForceDirectGptAd,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
+					'turtle' => $wg->AdDriverForceTurtleAd,
 				] ),
 			];
 		} );

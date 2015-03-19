@@ -10,7 +10,7 @@ class WikiaInYourLangHooks {
 
 	/**
 	 * Add JS assets package to the output
-	 * @param  \OutputPage $out  An output object passed from a hook
+	 * @param \OutputPage $out  An output object passed from a hook
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {

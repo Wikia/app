@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 		'RemnantGpt',
 		'remnant',
 		{
-			BOTTOM_LEADERBOARD: {size: '728x90,300x250', loc: 'bottom'},
 			EXIT_STITIAL_BOXAD_1: {size: '300x250,600x400,800x450,550x480', loc: 'exit'},
 			HOME_TOP_LEADERBOARD: {
 				size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150',

@@ -342,6 +342,7 @@ ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
 		this.elementsThatHadOurAccessKey.attr( 'accesskey', ve.msg( 'accesskey-save' ) );
 	}
 	this.restorePage();
+	this.hideSpinner();
 	this.showReadOnlyContent();
 
 	$( document ).off( 'keydown', this.onDocumentKeyDownHandler );
@@ -417,7 +418,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
 		// Something weird happened? Deactivate
 		// TODO: how does this handle load errors triggered from
 		// calling this.loading.abort()?
-		this.activating = false;
+		// this.activating = false;
 		// Not passing trackMechanism because we don't know what happened
 		// and this is not a user action
 		this.deactivate( true );

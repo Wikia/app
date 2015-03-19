@@ -22,7 +22,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		/* @var ExactTargetDeleteUserTask $addTaskMock mock of ExactTargetDeleteUserTask class */
 		$oDeleteUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetDeleteUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'deleteSubscriber' ] )
+			->setMethods( [ 'deleteSubscriber', 'taskId' ] )
 			->getMock();
 
 		$oDeleteUserTask
@@ -34,14 +34,13 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		/* @var ExactTargetCreateUserTask $addTaskMock mock of ExactTargetCreateUserTask class */
 		$addTaskMock = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetCreateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'createSubscriber', 'createUser', 'createUserProperties', 'getDeleteUserTask' ] )
+			->setMethods( [ 'createSubscriber', 'createUser', 'createUserProperties', 'getDeleteUserTask', 'verifyUserData', 'getTaskId' ] )
 			->getMock();
 
 		$addTaskMock
 			->expects( $this->once() )
 			->method( 'getDeleteUserTask' )
 			->will( $this->returnValue( $oDeleteUserTask ) );
-
 
 		/* test createSubscriber invoke params */
 		$addTaskMock

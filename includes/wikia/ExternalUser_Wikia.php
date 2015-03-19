@@ -248,10 +248,6 @@ class ExternalUser_Wikia extends ExternalUser {
 		} else {
 			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
 
-			/** PLATFORM-508 - logging for Helios project - begin */
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
-			/** PLATFORM-508 - logging for Helios project - end */
-
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
 			$User->setToken();
@@ -278,6 +274,12 @@ class ExternalUser_Wikia extends ExternalUser {
 			);
 			$User->mId = $dbw->insertId();
 			$dbw->commit( __METHOD__ );
+
+			// Logging added in order to identify what does INSERT to wikicities.user.
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				'HELIOS_REGISTRATION_INSERTS',
+				[ 'exception' => new Exception, 'userid' => $User->mId, 'username' => $User->mName ]
+			);
 
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();

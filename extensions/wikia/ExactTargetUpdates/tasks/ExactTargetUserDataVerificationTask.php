@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-class ExactTargetUserDataVerificatorTask extends ExactTargetTask {
+class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 
 	/**
 	 * Retrieves data from ExactTarget and compares it with data in Wikia database

@@ -621,6 +621,7 @@ include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
+include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 
 /**
@@ -1305,28 +1306,10 @@ $wgAdDriverAlwaysCallDartInCountries = [];
 $wgAdDriverAlwaysCallDartInCountriesMobile = [];
 
 /**
- * @name $wgAdDriverUseBottomLeaderboard
- * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
- */
-$wgAdDriverUseBottomLeaderboard = false;
-
-/**
- * @name $wgAdDriverUseInterstitial
- * Whether to enable new interstitial ad MODAL_INTERSTITIAL_5
- */
-$wgAdDriverUseInterstitial = false;
-
-/**
  * @name $wgAdDriverUseTopInContentBoxad
- * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
+ * Whether to enable the in-content ads for Oasis (for narrow screens)
  */
 $wgAdDriverUseTopInContentBoxad = true;
-
-/**
- * @name $wgAdDriverBottomLeaderboardImpressionCapping
- * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
- */
-$wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
  * @name $wgSitewideDisableGpt
@@ -1444,14 +1427,14 @@ $wgAdDriverEnableAdsInMaps = true;
  *  ]]
  *
  * Rubicon RTP configuration variable.
- * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconRTPConfig = null;
 
 /**
  * @name $wgAdDriverRubiconRTPCountries
  * List of countries RTP call will be issued.
- * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconRTPCountries = null;
 
@@ -1464,9 +1447,16 @@ $wgEnableKruxOnMobile = true;
 /**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
- * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgHighValueCountries = null;
+
+/**
+ * @name $wgAdDriverTurtleCountries
+ * List of countries to call Turtle ad partner in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverTurtleCountries = null;
 
 /**
  * @name $wgAnalyticsProviderPageFair
@@ -1560,6 +1550,7 @@ $wgApiAccess = [
 	],
 	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
 	'TvApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'MercuryApiController' => ApiAccessService::ALWAYS_HIDDEN,
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
@@ -1683,6 +1674,11 @@ $wgProfilerSendViaScribe = true;
  * Disable WAM module on hub pages
  */
 $wgDisableWAMOnHubs = false;
+
+/* @name wgIncludeWikiInCorporateFooterDropdown
+ * Include link to this wiki in the Corporate Footer dropdown (the one with flags).
+ */
+$wgIncludeWikiInCorporateFooterDropdown = false;
 
 /**
  * Force ImageServing to return an empty list

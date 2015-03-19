@@ -83,7 +83,7 @@ class ExactTargetWikiHooks {
 	 */
 	private function addTheUpdateWikiTask( $iCityId ) {
 		$oTask = $this->getExactTargetUpdateWikiTask();
-		$oTask->call( 'updateWikiData', $iCityId );
+		$oTask->call( 'updateFallbackCreateWikiData', $iCityId );
 		$oTask->queue();
 	}
 

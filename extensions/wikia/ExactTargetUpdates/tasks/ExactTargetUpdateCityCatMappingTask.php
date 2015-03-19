@@ -45,21 +45,23 @@ class ExactTargetUpdateCityCatMappingTask extends ExactTargetTask {
 			$this->info('No city cats found for the wiki, no cats deleted.');
 		}
 
-		// Delete wiki data
-		$aCityCatMappingDataForCreate = [];
-		$aCityCatMappingDataForCreate['DataExtension'] = $oHelper->prepareCityCatMappingDataExtensionForCreate( $aParams['city_id'] );
+		// Create city category mapping using fresh data from DB
+		$aCityCatMappingDataForCreate = $oHelper->prepareCityCatMappingDataExtensionForCreate( $aParams['city_id'] );
 		$this->info( 'RetrieveCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForCreate ) );
 		$oWikiCreateResult = $oApiDataExtension->createRequest( $aCityCatMappingDataForCreate );
 		$this->info( 'CreateWikiData' . ' OverallStatus: ' . $oWikiCreateResult->OverallStatus );
-		$this->info( 'CreateWikiData' . ' result: ' . json_encode( (array)$oWikiCreateResult ) );
+		$this->info( 'CreateWikiData' . ' Result: ' . json_encode( (array)$oWikiCreateResult ) );
 
 		if ( $oWikiCreateResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
-				'Error in ' . 'CreateWikiData' . ': ' . $oWikiCreateResult->Results->StatusMessage
+				'Error in ' . __METHOD__
 			);
 		}
 
-		return $oWikiCreateResult->Results->StatusMessage;
+		// Return OverallStatus if multiple records were inserted and StatusMessage if just one
+		return is_array($oWikiCreateResult->Results)
+			? $oWikiCreateResult->OverallStatus
+			: $oWikiCreateResult->Results->StatusMessage;
 	}
 
 }

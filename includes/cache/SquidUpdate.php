@@ -122,13 +122,29 @@ class SquidUpdate {
 			return;
 		}
 
-		global $wgPurgeSquidViaCelery;
+		global $wgPurgeSquidViaCelery, $wgPurgeVignetteUsingSurrogateKeys;
 		if ( $wgPurgeSquidViaCelery == true ) {
-			( new AsyncCeleryTask() )
-					->taskType('celery_workers.purger.purge')
-					->setArgs( $urlArr, [] )
-					->setPriority( PurgeQueue::NAME )
-					->queue();
+			// Filter urls into buckets based on service backend
+			$buckets = array_reduce($urlArr, function($carry, $item) {
+				if ( $wgPurgeVignetteUsingSurrogateKeys && VignetteRequest::isVignetteUrl($item) ) {
+					$carry['vignette'][] = $item;
+				} elseif ( strstr($item, 'MercuryApi') !== false ) {
+					$carry['mercury'][] = $item;
+				} else {
+					$carry['mediawiki'][] = $item;
+				}
+				return $carry;
+			}, array('mediawiki' => [], 'vignette' => [], 'mercury' => []));
+
+			// Now purge them
+			foreach ( $buckets as $service => $urls) {
+				if ( empty($urls) ) continue;
+				( new AsyncCeleryTask() )
+						->taskType('celery_workers.purger.purge')
+						->setArgs( $urls, [], $service )
+						->setPriority( PurgeQueue::NAME )
+						->queue();
+			}
 			return;
 		}
 		// wikia change end

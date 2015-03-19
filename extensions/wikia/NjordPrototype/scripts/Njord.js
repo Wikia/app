@@ -84,7 +84,6 @@
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
 		$heroPositionText = $('#MainPageHero .position-info'),
-		$wordmark = $('#localNavigation .wordmark-icon'),
 
 		$wikiaArticle = $('#WikiaArticle'),
 
@@ -127,7 +126,6 @@
 		},
 		saveImage = function () {
 			States.setState($imageSaveElement, 'filled-state');
-			$wordmark.css('top', '+=64');
 			$imageElement.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
@@ -177,7 +175,6 @@
 				States.setState($imageElement, 'filled-state');
 				States.setState($imageSaveElement, 'filled-state');
 			}
-			$wordmark.css('top', '+=64');
 		},
 		editTitle = function () {
 			States.setState($titleElement, 'edit-state');
@@ -336,7 +333,6 @@
 					if ($imageElement.hasClass('zero-state')) {
 						$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
 					}
-					$wordmark.css('top', '-=64');
 					States.setState($imageElement, 'upload-state');
 					States.setState($imageSaveElement, 'upload-state');
 					$heroModule.trigger('enableDragging');

@@ -108,12 +108,11 @@ class BannerNotificationsController extends WikiaController {
 			self::addConfirmation(
 				wfMessage(
 					'movepage-moved',
-					array('parseinline'),
 					$oldLink,
 					$newLink,
 					$oldText,
 					$newText
-				)->inContentLanguage()->escaped()
+				)->inContentLanguage()->parse()
 			);
 
 			// redirect to page with new title
@@ -150,9 +149,8 @@ class BannerNotificationsController extends WikiaController {
 
 			$message = wfMessage(
 				'oasis-confirmation-page-deleted',
-				array( 'parseinline' ),
 				$pageName
-			)->inContentLanguage()->escaped();
+			)->inContentLanguage()->parse();
 
 			wfRunHooks( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
 
