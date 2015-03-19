@@ -35,14 +35,6 @@ class PowerUser {
 	const MIN_FREQUENT_EDITS = 140;
 
 	/**
-	 * Page views tracking
-	 */
-	const PAGEVIEWS_COOKIE_PREFIX = 'pu';
-	const PAGEVIEWS_COOKIE_NAME = 'PageViews';
-	const PAGEVIEWS_COOKIE_DEF_VALUE = 0;
-	const PAGEVIEWS_COOKIE_TTL = 3600;
-
-	/**
 	 * Logging parameters
 	 */
 	const LOG_MESSAGE = 'PowerUsersLog';
@@ -223,33 +215,6 @@ class PowerUser {
 			}
 		}
 		return in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) );
-	}
-
-	/**
-	 * First page views tracking methods
-	 */
-	public function pageViewsIsSetCookie() {
-		$cookie = $this->oUser->getRequest()->getCookie( self::PAGEVIEWS_COOKIE_NAME,
-			self::PAGEVIEWS_COOKIE_PREFIX );
-		return $cookie !== null && $cookie !== '';
-	}
-
-	public function pageViewsSetCookie() {
-		wfDebug( 'PowerUserLog: ' . 'Set cookie' . "\n" );
-		$this->oUser->getRequest()->response()->setcookie( self::PAGEVIEWS_COOKIE_NAME,
-			self::PAGEVIEWS_COOKIE_DEF_VALUE,
-			time() + self::PAGEVIEWS_COOKIE_TTL,
-			self::PAGEVIEWS_COOKIE_PREFIX,
-			null,
-			false
-		);
-	}
-
-	public function pageViewsClearCookie() {
-		wfDebug( 'PowerUserLog: ' . 'Clear cookie' . "\n" );
-		$pastTtl = time() - 86400;
-		$this->oUser->getRequest()->response()->setcookie( self::PAGEVIEWS_COOKIE_NAME,
-			'', $pastTtl, self::PAGEVIEWS_COOKIE_PREFIX	);
 	}
 
 	/**
