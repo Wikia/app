@@ -239,11 +239,14 @@ class ExternalUser_Wikia extends ExternalUser {
 	 *
 	 * @return bool
 	 */
-	protected function addToDatabase( $User, $password, $email, $realname ) {
+	// TODO pass the User object by reference and return boolean as the status of the operation.
+	protected function addToDatabase( User $User, $password, $email, $realname ) {
 		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
+		// TODO Verify whether the "if we implement that" dream has come true already.
 		if( wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
+			// TODO Currently we silently return unchanged user object when in read-only mode. How cool!
 			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " [ " . $User->getId() . " ] (that's bad... fix the calling code)\n" );
 		} else {
 			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
@@ -251,6 +254,7 @@ class ExternalUser_Wikia extends ExternalUser {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$User->setToken();
 
+			// TODO This insert should be wrapped with try so the IGNORE can be safely removed.
 			$dbw->insert(
 				'`user`',
 				array(
@@ -271,6 +275,7 @@ class ExternalUser_Wikia extends ExternalUser {
 				__METHOD__,
 				array( 'IGNORE' )
 			);
+			// TODO If the above insert fails, we should rollback the transaction rather than commit that anyway (what we do with INSERT IGNORE).
 			$User->mId = $dbw->insertId();
 			$dbw->commit( __METHOD__ );
 
@@ -284,6 +289,7 @@ class ExternalUser_Wikia extends ExternalUser {
 			$User->clearInstanceCache();
 		}
 
+		// TODO Return true if the insert succeeded, false otherwise. The user object has been passed by reference.
 		wfProfileOut( __METHOD__ );
 		return $User;
 	}

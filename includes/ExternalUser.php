@@ -132,6 +132,7 @@ abstract class ExternalUser {
 	 * @param $user User
 	 * @return mixed User or false
 	 */
+	// TODO The method should only return boolean, as the user object has been passed by reference and can be modified.
 	public static function addUser( &$User, $password, $email, $realname ) {
 		global $wgExternalAuthType;
 		if ( is_null( $wgExternalAuthType ) ) {
@@ -139,6 +140,7 @@ abstract class ExternalUser {
 		}
 
 		$obj = new $wgExternalAuthType;
+		// TODO Perhaps here we should pass the User instance by reference? Probably yes!
 		if ( !$obj->addToDatabase( $User, $password, $email, $realname ) ) {
 			return false;
 		}

@@ -67,7 +67,7 @@ class UserLoginForm extends LoginForm {
 			$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
 			$this->mainLoginForm( $result['msg'], $result['result'] );
 		}
-		// TODO Currently, we are not sure if UserSignupSpecialController::signup() knows about false here.
+		// TODO Currently, we are not sure if UserSignupSpecialController::signup() knows about false here; and here is the last chance!
 		return $u;
 	}
 
@@ -243,6 +243,7 @@ class UserLoginForm extends LoginForm {
 		$this->errParam = $errParam;
 	}
 
+	// TODO The method should receive the user object as a reference in order to change it and a boolean value should be returned as the status.
 	public function initUser( $u, $autocreate, $skipConfirm = false ) {
 		global $wgCityId;
 		$u = parent::initUser( $u, $autocreate );
@@ -289,6 +290,7 @@ class UserLoginForm extends LoginForm {
 		 * end remove
 		 */
 
+		// TODO true should be returned here
 		return $u;
 	}
 
