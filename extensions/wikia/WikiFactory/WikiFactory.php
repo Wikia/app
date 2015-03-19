@@ -1849,6 +1849,8 @@ class WikiFactory {
 			__METHOD__
 		);
 
+		wfRunHooks( 'WikiFactoryPublicStatusChanged', array( &$city_public, &$city_id, $reason ) );
+
 		self::log( self::LOG_STATUS, $sLogMessage, $city_id );
 
 		wfProfileOut( __METHOD__ );
