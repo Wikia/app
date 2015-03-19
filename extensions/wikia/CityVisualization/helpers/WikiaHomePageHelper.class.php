@@ -802,6 +802,10 @@ class WikiaHomePageHelper extends WikiaModel {
 		return false;
 	}
 
+	public function getVisualizationWikisData() {
+		return $this->getVisualization()->getVisualizationWikisData();
+	}
+
 	public function getWikisIncludedInCorporateFooterDropdown() {
 		$wikiFactoryList = [];
 		$varId = WikiFactory::getVarIdByName( self::IS_WIKI_INCLUDED_IN_CORPORATE_FOOTER_DROPDOWN_VAR_NAME );
