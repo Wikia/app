@@ -2988,7 +2988,7 @@ abstract class DatabaseBase implements DatabaseType {
 			// Wikia change - end
 		}
 		else {
-			wfDebug( __METHOD__ . ": skipped\n" );
+			wfDebug( __METHOD__ . ": skipped [$fname]\n" );
 		}
 	}
 
@@ -3002,6 +3002,9 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( $this->mTrxLevel ) {
 			$this->query( 'ROLLBACK', $fname, true );
 			$this->mTrxLevel = 0;
+		}
+		else {
+			wfDebug( __METHOD__ . ": skipped [$fname]\n" );
 		}
 	}
 
