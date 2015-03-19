@@ -232,54 +232,46 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	/**
+	 * Adds the User object to the shared database
+	 *
 	 * @param User $User
 	 * @param String $password
 	 * @param String $email
 	 * @param String $realname
 	 *
-	 * @return bool
+	 * @return bool success
 	 */
-	// TODO return boolean as the status of the operation.
 	protected function addToDatabase( User &$User, $password, $email, $realname ) {
-		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
-		// TODO Verify whether the "if we implement that" dream has come true already.
-		if( wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
-			// TODO Currently we silently return unchanged user object when in read-only mode. How cool!
-			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " [ " . $User->getId() . " ] (that's bad... fix the calling code)\n" );
-		} else {
-			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
+		$User->setToken();
 
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			$User->setToken();
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
-			// TODO This insert should be wrapped with try so the IGNORE can be safely removed.
+		try {
 			$dbw->insert(
 				'`user`',
-				array(
+				[
 					'user_id' => null,
 					'user_name' => $User->mName,
 					'user_password' => $User->mPassword,
 					'user_newpassword' => $User->mNewpassword,
-					'user_newpass_time' => $dbw->timestamp( $User->mNewpassTime ),
+					'user_newpass_time' => $dbw->timestamp($User->mNewpassTime),
 					'user_email' => $email,
-					'user_email_authenticated' => $dbw->timestampOrNull( $User->mEmailAuthenticated ),
+					'user_email_authenticated' => $dbw->timestampOrNull($User->mEmailAuthenticated),
 					'user_real_name' => $realname,
 					'user_options' => '',
 					'user_token' => $User->mToken,
-					'user_registration' => $dbw->timestamp( $User->mRegistration ),
+					'user_registration' => $dbw->timestamp($User->mRegistration),
 					'user_editcount' => 0,
 					'user_birthdate' => $User->mBirthDate
-				),
-				__METHOD__,
-				array( 'IGNORE' )
+				],
+				__METHOD__
 			);
-			// TODO If the above insert fails, we should rollback the transaction rather than commit that anyway (what we do with INSERT IGNORE).
 			$User->mId = $dbw->insertId();
 			$dbw->commit( __METHOD__ );
 
-			// Logging added in order to identify what does INSERT to wikicities.user.
 			\Wikia\Logger\WikiaLogger::instance()->info(
 				'HELIOS_REGISTRATION_INSERTS',
 				[ 'exception' => new Exception, 'userid' => $User->mId, 'username' => $User->mName ]
@@ -287,11 +279,22 @@ class ExternalUser_Wikia extends ExternalUser {
 
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();
+
+			$ret = true;
 		}
 
-		// TODO Return true if the insert succeeded, false otherwise. The user object has been passed by reference.
+		catch ( Exception $e ) {
+			// TODO determine the exact exception class to catch here and handle it properly.
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				__METHOD__,
+				[ 'exception' => $e, 'username' => $User->mName ]
+			);
+			$dbw->rollback( __METHOD__ );
+			$ret = false;
+		}
+
 		wfProfileOut( __METHOD__ );
-		return $User;
+		return $ret;
 	}
 
 	/**
