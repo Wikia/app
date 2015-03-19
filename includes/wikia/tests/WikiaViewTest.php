@@ -37,10 +37,10 @@ class WikiaViewTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function setTemplateDataProvider() {
-		return array(
-		 array( true, 'Test' ),
-		 array( false, 'NonExistent' )
-		);
+		return [
+			[ true, 'Test' ],
+			[ false, 'NonExistent' ],
+		];
 	}
 
 	/**

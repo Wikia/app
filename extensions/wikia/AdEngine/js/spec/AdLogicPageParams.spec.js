@@ -79,7 +79,12 @@ describe('AdLogicPageParams', function () {
 		opts = opts || {};
 
 		var kruxMock = {
-				segments: opts.kruxSegments || []
+				getSegments: function () {
+					return opts.kruxSegments || [];
+				},
+				getUser: function () {
+					return '';
+				}
 			},
 			abTestMock = opts.abExperiments ? {
 				getExperiments: function () {
@@ -90,13 +95,13 @@ describe('AdLogicPageParams', function () {
 			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
+			mockAdContext(targeting),
+			mockPageViewCounter(opts.pvCount),
 			logMock,
 			windowMock.document,
 			windowMock.location,
-			mockAdContext(targeting),
-			mockPageViewCounter(opts.pvCount),
-			abTestMock,
 			undefined,
+			abTestMock,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
@@ -203,19 +208,6 @@ describe('AdLogicPageParams', function () {
 	it('getPageLevelParams Krux segments', function () {
 		var kruxSegmentsNone = [],
 			kruxSegmentsFew = ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD'],
-			kruxSegmentsLots = ['kxsgmnt1', 'kxsgmnt2', 'kxsgmnt3', 'kxsgmnt4', 'kxsgmnt5',
-					'kxsgmnt6', 'kxsgmnt7', 'kxsgmnt8', 'kxsgmnt9', 'kxsgmnt10', 'kxsgmnt11',
-					'kxsgmnt12', 'kxsgmnt13', 'kxsgmnt14', 'kxsgmnt15', 'kxsgmnt16', 'kxsgmnt17',
-					'kxsgmnt18', 'kxsgmnt19', 'kxsgmnt20', 'kxsgmnt21', 'kxsgmnt22', 'kxsgmnt23',
-					'kxsgmnt24', 'kxsgmnt25', 'kxsgmnt26', 'kxsgmnt27', 'kxsgmnt28', 'kxsgmnt29',
-					'kxsgmnt30', 'kxsgmnt31', 'kxsgmnt32', 'kxsgmnt33', 'kxsgmnt34', 'kxsgmnt35'
-				],
-			kruxSegments27 = ['kxsgmnt1', 'kxsgmnt2', 'kxsgmnt3', 'kxsgmnt4', 'kxsgmnt5',
-					'kxsgmnt6', 'kxsgmnt7', 'kxsgmnt8', 'kxsgmnt9', 'kxsgmnt10', 'kxsgmnt11',
-					'kxsgmnt12', 'kxsgmnt13', 'kxsgmnt14', 'kxsgmnt15', 'kxsgmnt16', 'kxsgmnt17',
-					'kxsgmnt18', 'kxsgmnt19', 'kxsgmnt20', 'kxsgmnt21', 'kxsgmnt22', 'kxsgmnt23',
-					'kxsgmnt24', 'kxsgmnt25', 'kxsgmnt26', 'kxsgmnt27'
-				],
 			params;
 
 		params = getParams({}, {kruxSegments: kruxSegmentsNone});
@@ -223,9 +215,6 @@ describe('AdLogicPageParams', function () {
 
 		params = getParams({}, {kruxSegments: kruxSegmentsFew});
 		expect(params.ksgmnt).toEqual(kruxSegmentsFew, 'A few segments');
-
-		params = getParams({}, {kruxSegments: kruxSegmentsLots});
-		expect(params.ksgmnt).toEqual(kruxSegments27, 'A lot of segments (stripped to first 27 segments)');
 	});
 
 	it('getPageLevelParams Page categories', function () {

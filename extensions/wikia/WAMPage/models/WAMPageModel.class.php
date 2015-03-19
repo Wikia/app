@@ -25,14 +25,14 @@ class WAMPageModel extends WikiaModel {
 	protected $pagesMap = null;
 
 	static protected $verticalIds = [
-		WikiFactoryHub::HUB_ID_OTHER,
-		WikiFactoryHub::HUB_ID_COMICS,
-		WikiFactoryHub::HUB_ID_TV,
-		WikiFactoryHub::HUB_ID_MOVIES,
-		WikiFactoryHub::HUB_ID_MUSIC,
-		WikiFactoryHub::HUB_ID_BOOKS,
-		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
-		WikiFactoryHub::HUB_ID_LIFESTYLE,
+		WikiFactoryHub::VERTICAL_ID_OTHER,
+		WikiFactoryHub::VERTICAL_ID_COMICS,
+		WikiFactoryHub::VERTICAL_ID_TV,
+		WikiFactoryHub::VERTICAL_ID_MOVIES,
+		WikiFactoryHub::VERTICAL_ID_MUSIC,
+		WikiFactoryHub::VERTICAL_ID_BOOKS,
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES,
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
 	];
 
 	public function __construct() {
@@ -207,12 +207,12 @@ class WAMPageModel extends WikiaModel {
 	 */
 	public function getVerticalsShorts() {
 		$aVerticalsShorts = [
-			WikiFactoryHub::HUB_ID_OTHER => 'all',
+			WikiFactoryHub::VERTICAL_ID_OTHER => 'all',
 		];
 		$oWikiFactoryHub = WikiFactoryHub::getInstance();
 		$aVerticals = $oWikiFactoryHub->getAllVerticals();
 		foreach ( $aVerticals as $iVerticalId => $aVerticalData ) {
-			if ( $iVerticalId !== WikiFactoryHub::HUB_ID_OTHER ) {
+			if ( $iVerticalId !== WikiFactoryHub::VERTICAL_ID_OTHER ) {
 				$aVerticalsShorts[$iVerticalId] = $aVerticalData['short'];
 			}
 		}

@@ -2967,10 +2967,6 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	$output = ob_get_contents();
 	ob_end_clean();
 
-	if ( $retval == 127 ) {
-		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
-	}
-
 	// Wikia change - begin
 	if ( $retval > 0 ) {
 		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
@@ -2980,6 +2976,10 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 		]);
 	}
 	// Wikia change - end
+
+	if ( $retval == 127 ) {
+		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
+	}
 
 	return $output;
 }
@@ -3451,6 +3451,29 @@ function wfFixSessionID() {
 		'new_session_id' => $sNewSessionId,
 	];
 	session_id( $sNewSessionId );
+}
+
+/**
+ * Reset the session_id
+ *
+ * Backported from MW 1.22
+ */
+function wfResetSessionID() {
+	global $wgCookieSecure;
+	$oldSessionId = session_id();
+	$cookieParams = session_get_cookie_params();
+	if ( wfCheckEntropy() && $wgCookieSecure == $cookieParams['secure'] ) {
+		session_regenerate_id( true ); // Wikia - $delete_old_session = true
+	} else {
+		$tmp = $_SESSION;
+		session_destroy();
+		wfSetupSession( MWCryptRand::generateHex( 32 ) );
+		$_SESSION = $tmp;
+	}
+	$newSessionId = session_id();
+	Hooks::run( 'ResetSessionID', array( $oldSessionId, $newSessionId ) );
+
+	wfDebug( sprintf( "%s: new ID is '%s'\n", __METHOD__, $newSessionId ) );
 }
 
 /**

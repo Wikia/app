@@ -11,7 +11,8 @@ define('ext.wikia.adEngine.adConfig', [
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
-	'ext.wikia.adEngine.provider.later'
+	'ext.wikia.adEngine.provider.later',
+	'ext.wikia.adEngine.provider.turtle'
 ], function (
 	// regular dependencies
 	log,
@@ -24,7 +25,8 @@ define('ext.wikia.adEngine.adConfig', [
 
 	// adProviders
 	adProviderDirectGpt,
-	adProviderLater
+	adProviderLater,
+	adProviderTurtle
 ) {
 	'use strict';
 
@@ -32,7 +34,6 @@ define('ext.wikia.adEngine.adConfig', [
 		country = geo.getCountryCode(),
 		decorators = [adDecoratorPageDimensions],
 		highValueSlots = {
-			'BOTTOM_LEADERBOARD': true,
 			'CORP_TOP_LEADERBOARD': true,
 			'CORP_TOP_RIGHT_BOXAD': true,
 			'EXIT_STITIAL_BOXAD_1': true,
@@ -108,6 +109,11 @@ define('ext.wikia.adEngine.adConfig', [
 			if (instantGlobals.wgSitewideDisableGpt) {
 				log(['getProvider', slotname, 'wgSitewideDisableGpt ON skipping DirectGPT'], 'warning', logGroup);
 				return [adProviderLater];
+			}
+
+			if (context.providers.turtle) {
+				log(['getProvider', slotname, 'Turtle->Later'], 'info', logGroup);
+				return [adProviderTurtle, adProviderLater];
 			}
 
 			log(['getProvider', slotname, 'DirectGpt->Later'], 'info', logGroup);

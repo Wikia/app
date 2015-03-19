@@ -125,7 +125,7 @@ class ListusersData {
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
-		if ( 1 && empty($cached) && !empty($this->mDBEnable) ) {
+		if ( empty($cached) && !empty($this->mDBEnable) ) {
 			/* db handle */
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
@@ -138,6 +138,15 @@ class ListusersData {
 				foreach ( $this->mFilterGroup as $group ) {
 					if ( !empty($group) ) {
 						if ( $group == Listusers::DEF_GROUP_NAME ) {
+							/**
+							 * @see CE-1487
+							 * Until poweruser group is still being evaluated
+							 * and developed - we consider it as 'invisible'
+							 * and include it in the No group checkbox
+							 */
+							$powerUserGroupName = \Wikia\PowerUser\PowerUser::GROUP_NAME;
+							$whereGroup[] = " single_group = '{$powerUserGroupName}' ";
+
 							$whereGroup[] = " all_groups = '' ";
 						} else {
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );

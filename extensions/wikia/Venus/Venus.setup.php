@@ -66,7 +66,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'VenusHooks::onMakeGlobalVariablesScri
 $wgHooks['ParserAfterTidy'][] = 'VenusHooks::onParserAfterTidy';
 $wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
 $wgHooks['MakeHeadline'][] = 'VenusHooks::onMakeHeadline';
-$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
+$wgHooks['UserLogoutComplete'][] = 'BannerNotificationsController::addLogOutConfirmation';
 $wgHooks['BeforeSkinLoad'][] = 'VenusHooks::onBeforeSkinLoad';
 
 //404 Pages

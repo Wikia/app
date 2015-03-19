@@ -4,15 +4,15 @@ namespace Wikia\ExactTarget;
 class ExactTargetUpdateUserTask extends ExactTargetTask {
 
 	/**
+	 * Here was
+	 * public function updateUserData( $aUserData )
 	 * Task for updating user data in ExactTarget
+	 *
+	 * @info Removed updateUserData method as was unused
+	 * @commit 9efbaa4f3a148445d8fa5cef4d2842184c6ba577
+	 *
 	 * @param array $aUserData Selected fields from Wikia user table
 	 */
-	public function updateUserData( $aUserData ) {
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateRequest( $aApiParams );
-	}
 
 	/**
 	 * Sends update of user email to ExactTarget
@@ -20,29 +20,36 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 * @param string $iUserEmail
 	 */
 	public function updateUserEmail( $iUserId, $sUserEmail ) {
+
+		if ( empty( $sUserEmail ) ) {
+			throw new \Exception( 'No user email address provided in params' );
+		}
+
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
+		$oDeleteUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
 		$oDeleteUserTask->deleteSubscriber( $iUserId );
 		/* Subscriber list contains unique emails
 		 * Assuming email may be new - try to create subscriber object using the email */
 		$oCreateUserTask = $this->getCreateUserTask();
-		// Pass task ID to have all logs under one task
-		$oCreateUserTask->taskId( $this->getTaskId() );
+		$oCreateUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
 		$oCreateUserTask->createSubscriber( $sUserEmail );
 
-		/* Update email in user data extension */
-		$aUserData = [
-			'user_id' => $iUserId,
-			'user_email' => $sUserEmail
-		];
+		/* Prepare user fields for update */
 		$oHelper = $this->getUserHelper();
+		$oUserHooksHelper = $this->getUserHooksHelper();
+		$oUser = $oHelper->getUserFromId( $iUserId );
+		$aUserData = $oUserHooksHelper->prepareUserParams( $oUser );
+
+		/* Prepare user update API params */
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oUpdateUserEmailResult = $oApiDataExtension->updateRequest( $aApiParams );
 
+		/* Update user */
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oUpdateUserEmailResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUserEmailResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateUserEmailResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUpdateUserEmailResult ) );
 
 		if ( $oUpdateUserEmailResult->OverallStatus === 'Error' ) {
 			throw new \Exception(

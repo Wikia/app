@@ -147,4 +147,15 @@ abstract class WikiaController extends WikiaDispatchableObject {
 	public function isAnonAccessAllowedInCurrentContext() {
 		return false;
 	}
+
+	/**
+	 * Allow controllers to define an alternate location for where templates can be found.
+	 * This base definition returns null so by default WikiaView.class.php will determine
+	 * this directory.
+	 *
+	 * @return null
+	 */
+	public function getTemplateDir() {
+		return null;
+	}
 }

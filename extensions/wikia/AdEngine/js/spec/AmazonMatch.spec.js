@@ -1,5 +1,5 @@
 /*global describe, it, modules, expect, spyOn*/
-describe('Method ext.wikia.adEngine.lookupServices', function () {
+describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	'use strict';
 
 	var mocks, testCases;
@@ -9,7 +9,7 @@ describe('Method ext.wikia.adEngine.lookupServices', function () {
 	}
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.amazonMatch'](
+		return modules['ext.wikia.adEngine.lookup.amazonMatch'](
 			mocks.adTracker,
 			mocks.document,
 			mocks.log,
@@ -42,10 +42,24 @@ describe('Method ext.wikia.adEngine.lookupServices', function () {
 	};
 
 	testCases = [
+		// Empty
 		{input: [], expected: {}},
-		{input: {'a1x6p14': 1}, expected: {skyscraper: 'a1x6p14'}},
-		{input: {'a7x9p14': 1}, expected: {leaderboard: 'a7x9p14'}},
-		{input: {'a1x6p14': 1, 'a1x6p5': 1, 'a1x6p12': 1}, expected: {skyscraper: 'a1x6p5'}},
+		{input: ['invalid-input'], expected: {}},
+
+		// Single values
+		{input: {'a1x6p14': 1}, expected: {skyscraper: ['a1x6p14']}},
+		{input: {'a3x2p14': 1}, expected: {medrec: ['a3x2p14']}},
+		{input: {'a3x6p14': 1}, expected: {medrec: ['a3x6p14']}},
+		{input: {'a7x9p14': 1}, expected: {leaderboard: ['a7x9p14']}},
+
+		// Pick the lowest price point (single size)
+		{input: {'a1x6p14': 1, 'a1x6p5': 1, 'a1x6p12': 1}, expected: {skyscraper: ['a1x6p5']}},
+		{input: {'a3x2p12': 1, 'a3x2p10': 1}, expected: {medrec: ['a3x2p10']}},
+
+		// Medrec should get both 3x2 and 3x6 sizes
+		{input: {'a3x2p12': 1, 'a3x2p13': 1, 'a3x6p14': 1, 'a3x6p5': 1}, expected: {medrec: ['a3x2p12', 'a3x6p5']}},
+
+		// More complete example
 		{
 			input: {
 				'a1x6p14': 1,
@@ -55,15 +69,18 @@ describe('Method ext.wikia.adEngine.lookupServices', function () {
 				'a7x9p14': 1,
 				'a3x2p5': 1,
 				'a3x2p8': 1,
-				'a3x2p6': 1
+				'a3x2p6': 1,
+				'a3x6p10': 1,
+				'a3x6p8': 1,
+				'a3x6p12': 1,
+				'xxx': 17
 			},
 			expected: {
-				leaderboard: 'a7x9p4',
-				skyscraper: 'a1x6p3',
-				medrec: 'a3x2p5'
+				leaderboard: ['a7x9p4'],
+				skyscraper: ['a1x6p3'],
+				medrec: ['a3x2p5', 'a3x6p8']
 			}
-		},
-		{input: ['invalid-input'], expected: {}}
+		}
 	];
 
 	Object.keys(testCases).forEach(function (k) {
