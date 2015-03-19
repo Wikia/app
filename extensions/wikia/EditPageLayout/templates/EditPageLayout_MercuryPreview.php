@@ -12,7 +12,6 @@
 <form method="POST" action="<?= htmlspecialchars($mercuryUrl); ?>">
 	<textarea name="parserOutput"><?= htmlspecialchars($parserOutput) ?></textarea>
 	<textarea name="mwHash"><?= htmlspecialchars($mwHash) ?></textarea>
-	<button type="submit">Go</button>
 </form>
 <script>
 	var img = new Image();

@@ -48,7 +48,7 @@ class EditPageService extends Service {
 	public function getPreview($wikitext, $asJson = false) {
 
 		// TODO: use wgParser here because some parser hooks initialize themselves on wgParser (should on provided parser instance)
-		global $wgParser, $wgUser, $wgRequest, $wgArticleAsJson;
+		global $wgParser, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
 
 		$wg = $this->app->wg;
@@ -71,6 +71,10 @@ class EditPageService extends Service {
 		$wrapper->wrap( function () use ( &$out, $wgParser, $wikitext, $title, $parserOptions ) {
 			$out = $wgParser->parse( $wikitext, $title, $parserOptions )->getText();
 		});
+
+		if ( !$asJson ) {
+			$out = EditPageService::wrapBodyText($this->mTitle, $wgRequest, $out);
+		}
 
 		// we should also render categories and interlanguage links
 		$parserOutput = $wgParser->getOutput();

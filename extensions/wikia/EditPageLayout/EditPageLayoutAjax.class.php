@@ -24,9 +24,8 @@ class EditPageLayoutAjax {
 
 		if ( $wgTitle && class_exists( $page ) ) {
 			$pageObj = new $page();
-			$title = $wgRequest->getVal( 'title', 'empty' );
 			if ( is_a( $pageObj, 'SpecialCustomEditPage' ) ) {
-				$wikitext = $pageObj->getWikitextFromRequestForPreview( $title );
+				$wikitext = $pageObj->getWikitextFromRequestForPreview( $wgRequest->getVal( 'title', 'empty' ) );
 				$service = new EditPageService( $wgTitle );
 				$html = $pageObj->getOwnPreviewDiff( $wikitext, $method );
 
@@ -61,19 +60,31 @@ class EditPageLayoutAjax {
 
 						if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 							if ( $type === 'full' ) {
-								$res['html'] = F::app()->renderView( 'WikiaMobileService', 'preview', [ 'content' => $html, 'section' => $section ] );
+								$res['html'] = F::app()->renderView(
+									'WikiaMobileService',
+									'preview',
+									[ 'content' => $html, 'section' => $section ]
+								);
 							} elseif ( $type === 'mercury' ) {
-								$res['html'] = F::app()->renderView( 'EditPageLayout', 'mercuryPreview', [
-									'parserOutput' => $html,
-									'mercuryUrl' => $wgEditPreviewMercury['mercuryUrl'],
-									'mwHash' => hash_hmac ( 'sha1', $html, $wgEditPreviewMercury['mwSalt'] ),
-								] );
+								$hash = hash_hmac ( 'sha1', $html, $wgEditPreviewMercury['mwSalt'] );
+								$res['html'] = F::app()->renderView(
+									'EditPageLayout',
+									'mercuryPreview', [
+										'parserOutput' => $html,
+										'mercuryUrl' => $wgEditPreviewMercury['mercuryUrl'],
+										'mwHash' => $hash,
+									]
+								);
 							} else {
 								$res['html'] = $html;
 							}
 						} elseif ( F::app()->checkSkin( 'venus' ) ) {
 							if ( $type === 'full' ) {
-								$res['html'] = F::app()->renderView( 'VenusController', 'preview', [ 'content' => $html, 'section' => $section ] );
+								$res['html'] = F::app()->renderView(
+									'VenusController',
+									'preview',
+									[ 'content' => $html, 'section' => $section ]
+								);
 							} else {
 								$res['html'] = $html;
 							}
