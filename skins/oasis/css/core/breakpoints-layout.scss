@@ -142,4 +142,14 @@
 	.EditPageRail {
 		width: 300px;
 	}
+
+	.global-notification {
+		width: auto;
+
+		&.float {
+			left: 0;
+			margin: 0;
+			right: 0;
+		}
+	}
 }
