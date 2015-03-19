@@ -248,7 +248,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		// At this point, when the account creation fails for any reason,
 		// we must have $signupForm->msgType set to 'error' and $signupForm->msg
 		// containing a relevant message. As for $ret, we expect an instance of
-		// User on success; null or false otherwise.
+		// User on success; false otherwise.
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';
 		$this->msg = $signupForm->msg;
 		$this->errParam = $signupForm->errParam;

@@ -205,6 +205,13 @@ class UserLoginForm extends LoginForm {
 		return $result;
 	}
 
+	/**
+	 * Adds a user account going through all MW built-in checks.
+	 *
+	 * @return bool|User an instance of User on success, boolean false otherwise.
+	 * @throws PermissionsError
+	 * @throws ReadOnlyError
+	 */
 	public function addNewAccountInternal() {
 		if (!$this->initValidationUsername()) {
 			return false;
