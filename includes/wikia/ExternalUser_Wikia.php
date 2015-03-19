@@ -239,8 +239,8 @@ class ExternalUser_Wikia extends ExternalUser {
 	 *
 	 * @return bool
 	 */
-	// TODO pass the User object by reference and return boolean as the status of the operation.
-	protected function addToDatabase( User $User, $password, $email, $realname ) {
+	// TODO return boolean as the status of the operation.
+	protected function addToDatabase( User &$User, $password, $email, $realname ) {
 		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 

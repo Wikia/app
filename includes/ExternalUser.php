@@ -129,21 +129,26 @@ abstract class ExternalUser {
 	/**
 	 * add new User object to database
 	 * 
-	 * @param $user User
+	 * @param $User User an instance of User to add
+	 * @param $password string user's password
+	 * @param $email string user's email
+	 * @param $realname string user's real name
 	 * @return mixed User or false
 	 */
 	// TODO The method should only return boolean, as the user object has been passed by reference and can be modified.
 	public static function addUser( User &$User, $password, $email, $realname ) {
 		global $wgExternalAuthType;
+
 		if ( is_null( $wgExternalAuthType ) ) {
 			return false;
 		}
 
 		$obj = new $wgExternalAuthType;
-		// TODO Perhaps here we should pass the User instance by reference? Probably yes!
+
 		if ( !$obj->addToDatabase( $User, $password, $email, $realname ) ) {
 			return false;
 		}
+
 		return $User;
 	}
 
@@ -193,10 +198,13 @@ abstract class ExternalUser {
 	/**
 	 * Add user to the central database
 	 *
-	 * @param $user object
-	 * @return bool
+	 * @param $User User an instance of User to add
+	 * @param $password string user's password
+	 * @param $email string user's email
+	 * @param $realname string user's real name
+	 * @return mixed User or false
 	 */
-	protected abstract function addToDatabase( User $User, $password, $email, $realname );
+	protected abstract function addToDatabase( User &$User, $password, $email, $realname );
 	
 	/**
 	 * This must return some identifier that stably, uniquely identifies the
