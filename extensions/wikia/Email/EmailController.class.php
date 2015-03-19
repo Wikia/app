@@ -120,7 +120,7 @@ abstract class EmailController extends \WikiaController {
 	protected function setErrorResponse( ControllerException $e ) {
 		$this->hasErrorResponse = true;
 		$this->response->setData( [
-			'result' => $e->errorType,
+			'result' => $e->getErrorType(),
 			'msg' => $e->getMessage(),
 		] );
 	}
@@ -201,7 +201,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Fatal
 	 */
 	protected function getUserFromName( $username ) {
-		if ( is_null( $username ) ) {
+		if ( !$username ) {
 			throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
 		}
 

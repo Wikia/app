@@ -2,14 +2,20 @@
 
 namespace Email;
 
-class ControllerException extends \Exception {
-	public $errorType = 'error';
+abstract class ControllerException extends \Exception {
+	abstract public function getErrorType();
 }
 
 class Check extends ControllerException {
-	public $errorType = 'checkError';
+	const ERROR_TYPE = 'checkError';
+	public function getErrorType() {
+		return self::ERROR_TYPE;
+	}
 };
 
 class Fatal extends ControllerException {
-	public $errorType = 'fatalError';
+	const ERROR_TYPE = 'fatalError';
+	public function getErrorType() {
+		return self::ERROR_TYPE;
+	}
 };
