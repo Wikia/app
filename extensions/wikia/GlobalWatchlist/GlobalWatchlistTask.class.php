@@ -9,7 +9,7 @@ class GlobalWatchlistTask extends BaseTask {
 	 * the global_watchlist table. This logic was already implemented in
 	 * the GlobalWatchListBot class since it's needed when we send out
 	 * the weekly digest.
-	 * @param $watcherID
+	 * @param $watcherID integer
 	 */
 	public function clearGlobalWatchlistAll( $watcherID ) {
 		$watchlistBot = new GlobalWatchlistBot();
@@ -19,7 +19,7 @@ class GlobalWatchlistTask extends BaseTask {
 	/**
 	 * Clears all watched pages from the current wiki for the given
 	 * user in the global_watchlist table.
-	 * @param $userID
+	 * @param $userID integer
 	 */
 	public function clearGlobalWatchlist( $userID ) {
 		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
