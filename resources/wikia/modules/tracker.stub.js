@@ -221,9 +221,16 @@ function veTrack( data ) {
 			defaultData.anonEditWarning = !!window.anoneditwarning ? 'yes' : 'no';
 		}
 
+		// new/old VE
+		try {
+			defaultData.whichVE = ( 'showLoading' in mw.libs.ve ) ? 'new' : 'old';
+		} catch ( e ) {
+			defaultData.whichVE = 'unknown';
+		}
+
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };
 	}
-	syslogReport( 6, 'veTrack-v5', finalData );
+	syslogReport( 6, 'veTrack-v6', finalData );
 }
