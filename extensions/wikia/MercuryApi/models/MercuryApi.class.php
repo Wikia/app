@@ -106,23 +106,32 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		$wg = F::app()->wg;
+		global $wgCacheBuster;
+		global $wgCityId;
+		global $wgContLang;
+		global $wgDBname;
+		global $wgDefaultSkin;
+		global $wgLang;
+		global $wgLanguageCode;
+		global $wgSitewideDisableAdsOnMercury;
+
 		return [
-			'cacheBuster' => (int) $wg->CacheBuster,
-			'dbName' => $wg->DBname,
-			'defaultSkin' => $wg->DefaultSkin,
-			'id' => (int) $wg->CityId,
+			'cacheBuster' => (int) $wgCacheBuster,
+			'dbName' => $wgDBname,
+			'defaultSkin' => $wgDefaultSkin,
+			'id' => (int) $wgCityId,
 			'language' => [
-				'user' => $wg->Lang->getCode(),
+				'user' => $wgLang->getCode(),
 				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
-				'content' => $wg->LanguageCode,
-				'contentDir' => $wg->ContLang->getDir()
+				'content' => $wgLanguageCode,
+				'contentDir' => $wgContLang->getDir()
 			],
-			'namespaces' => $wg->ContLang->getNamespaces(),
+			'namespaces' => $wgContLang->getNamespaces(),
 			'siteName' => $this->getSiteName(),
+			'sitewideDisableAdsOnMercury' => $wgSitewideDisableAdsOnMercury,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
 		];
 	}
 

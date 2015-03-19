@@ -1311,6 +1311,12 @@ $wgAdDriverAlwaysCallDartInCountriesMobile = [];
  */
 $wgAdDriverUseTopInContentBoxad = true;
 
+/** @name $wgSitewideDisableAdsOnMercury
+ * Disable ads on Mercury if set to true.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgSitewideDisableAdsOnMercury = false;
+
 /**
  * @name $wgSitewideDisableGpt
  * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
