@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\GlobalStateWrapper;
+
 class ArticleAsJson extends WikiaService {
 	static $media = [];
 	static $users = [];
@@ -88,7 +90,12 @@ class ArticleAsJson extends WikiaService {
 				$caption = $image['caption'];
 
 				if ( !empty( $caption ) ) {
-					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
+					$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => false] );
+					$wrapper->wrap( function () use ( &$caption, $parser, $title, $parserOptions ) {
+						$caption = $parser
+							->parse( $caption, $title, $parserOptions, false )
+							->getText();
+					});
 				}
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
 				$media[] = self::createMediaObj( $details, $image['name'], $caption, $linkHref );

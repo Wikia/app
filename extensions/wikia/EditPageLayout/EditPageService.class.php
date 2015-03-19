@@ -66,17 +66,11 @@ class EditPageService extends Service {
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
 		$wikitext = $wgParser->preSaveTransform($wikitext, $this->mTitle, $this->app->getGlobal('wgUser'), $parserOptions);
 
-		if ( $asJson ) {
-			// parse wikitext using MW parser with articleAsJson global ON
-			$wgArticleAsJson = true;
-			$out = $wgParser->parse( $wikitext, $this->mTitle, $parserOptions )->getText();
-			$wgArticleAsJson = false;
-		} else {
-			// parse wikitext using MW parser
-			$out = $wgParser->parse($wikitext, $this->mTitle, $parserOptions)->getText();
-
-			$out = EditPageService::wrapBodyText($this->mTitle, $wgRequest, $out);
-		}
+		$title = $this->mTitle;
+		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => $asJson] );
+		$wrapper->wrap( function () use ( &$out, $wgParser, $wikitext, $title, $parserOptions ) {
+			$out = $wgParser->parse( $wikitext, $title, $parserOptions )->getText();
+		});
 
 		// we should also render categories and interlanguage links
 		$parserOutput = $wgParser->getOutput();
