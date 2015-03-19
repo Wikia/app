@@ -2987,6 +2987,9 @@ abstract class DatabaseBase implements DatabaseType {
 			return $res === true;
 			// Wikia change - end
 		}
+		else {
+			wfDebug( __METHOD__ . ": skipped\n" );
+		}
 	}
 
 	/**
