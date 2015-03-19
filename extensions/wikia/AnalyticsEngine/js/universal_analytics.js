@@ -293,7 +293,7 @@
             abOnLoadHandler = function () {
                 var renderTime = (new Date()).getTime() - abRenderStart.getTime();
                 setTimeout(function () {
-                    window.gaTrackEvent('ABtest', 'ONLOAD', 'TIME', renderTime);
+                    window.guaTrackEvent('ABtest', 'ONLOAD', 'TIME', renderTime);
                 }, 10);
             };
             // @see: http://stackoverflow.com/q/3763080/
