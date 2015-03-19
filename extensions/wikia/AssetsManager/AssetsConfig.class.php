@@ -40,15 +40,16 @@ class AssetsConfig {
 	}
 
 	public static function getEPLAssets( $combine ) {
-		global $wgOasisResponsive, $wgEnableVenusArticle;
+		global $wgOasisResponsive, $wgEnableVenusArticle, $wgOasisBreakpoints;
 
 		$files = [];
 
 		if ( class_exists( 'EditPageLayoutHelper' ) ) {
 			$files = EditPageLayoutHelper::getAssets();
 		}
+
 		// $wgOasisResponsive determines if the EditPreview extension is loaded
-		if ( !empty( $wgOasisResponsive ) || !empty( $wgEnableVenusArticle ) ) {
+		if ( !empty( $wgOasisBreakpoints ) || !empty( $wgOasisResponsive ) || !empty( $wgEnableVenusArticle ) ) {
 			array_push( $files, 'extensions/wikia/EditPreview/js/preview.js' );
 		}
 
