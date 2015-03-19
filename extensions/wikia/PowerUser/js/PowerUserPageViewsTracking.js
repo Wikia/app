@@ -24,8 +24,9 @@ require(
 
 			if (pvGetCookieCounter() <= maxCounter) {
 				pvLaunchTracking();
-				pvIncreaseCookieCounter();
 			}
+
+			pvIncreaseCookieCounter();
 		}
 
 		function pvIsCookieSet() {
