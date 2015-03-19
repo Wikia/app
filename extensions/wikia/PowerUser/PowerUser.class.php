@@ -34,6 +34,9 @@ class PowerUser {
 	const MIN_LIFETIME_EDITS = 2000;
 	const MIN_FREQUENT_EDITS = 140;
 
+	/**
+	 * Logging parameters
+	 */
 	const LOG_MESSAGE = 'PowerUsersLog';
 	const ACTION_ADD_SET_OPTION = 'Add option';
 	const ACTION_ADD_GROUP = 'Add group';
