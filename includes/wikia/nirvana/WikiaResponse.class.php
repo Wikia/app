@@ -97,6 +97,9 @@ class WikiaResponse {
 		$this->request = $request;
 	}
 
+	/**
+	 * @return WikiaRequest
+	 */
 	public function getRequest() {
 		return $this->request;
 	}
@@ -404,7 +407,7 @@ class WikiaResponse {
 	}
 
 	/**
-	 * @return WikiaException
+	 * @return WikiaException|WikiaHttpException
 	 */
 	public function getException() {
 		return $this->exception;

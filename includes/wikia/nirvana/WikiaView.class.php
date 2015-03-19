@@ -109,7 +109,7 @@ class WikiaView {
 			}
 
 			// Service classes must be dispatched by full name otherwise we default to a controller.
-			$controllerClass = $this->normalizeControllerClass( $controllerClass );
+			$controllerClass = self::normalizeControllerClass( $controllerClass );
 
 			$templateExists = false;
 			$templatePath = '';
@@ -137,13 +137,13 @@ class WikiaView {
 	 * For legacy reasons we sometimes get a $controllerClass name that doesn't end with
 	 * 'Controller' or 'Service'.  Normalize to this form.
 	 *
-	 * @param $controllerClass
+	 * @param string $controllerClass
 	 *
 	 * @return string
 	 *
 	 * @throws WikiaException
 	 */
-	public static function normalizeControllerClass( $controllerClass ) {
+	private static function normalizeControllerClass( $controllerClass ) {
 		$app = F::app();
 		$controllerBaseName = $app->getBaseName( $controllerClass );
 		if ( $app->isService( $controllerClass ) ) {
@@ -162,12 +162,12 @@ class WikiaView {
 	/**
 	 * Generates a list of possible template names ordered by preference
 	 *
-	 * @param $controllerClass
-	 * @param $methodName
+	 * @param string $controllerClass
+	 * @param string $methodName
 	 *
 	 * @return array
 	 */
-	public function getTemplateOptions( $controllerClass, $methodName ) {
+	private function getTemplateOptions( $controllerClass, $methodName ) {
 		$templates = [];
 
 		$fromAnnotation = $this->getTemplateAnnotation( $controllerClass, $methodName );
@@ -214,11 +214,11 @@ class WikiaView {
 	/**
 	 * See if the controller defines a custom template directory, otherwise use the default directory
 	 *
-	 * @param $controllerClass
+	 * @param string $controllerClass
 	 *
 	 * @return string
 	 */
-	public function getTemplateDir( $controllerClass ) {
+	private function getTemplateDir( $controllerClass ) {
 		$dirName = call_user_func( [ $controllerClass, 'getTemplateDir' ] );
 
 		// If the above returns null or a non-existent directory, fallback to the default.
@@ -242,7 +242,9 @@ class WikiaView {
 
 	/**
 	 * render view
+	 *
 	 * @return string
+	 * @throws WikiaException
 	 */
 	public function render() {
 		if( empty( $this->response ) ) {
