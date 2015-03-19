@@ -9,7 +9,7 @@ class GlobalWatchlistTask extends BaseTask {
 	 * the global_watchlist table. This logic was already implemented in
 	 * the GlobalWatchListBot class since it's needed when we send out
 	 * the weekly digest.
-	 * @param $watcherID integer
+	 * @param int $watcherID
 	 */
 	public function clearGlobalWatchlistAll( $watcherID ) {
 		$watchlistBot = new GlobalWatchlistBot();
@@ -19,7 +19,7 @@ class GlobalWatchlistTask extends BaseTask {
 	/**
 	 * Clears all watched pages from the current wiki for the given
 	 * user in the global_watchlist table.
-	 * @param $userID integer
+	 * @param int $userID
 	 */
 	public function clearGlobalWatchlist( $userID ) {
 		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
@@ -35,9 +35,9 @@ class GlobalWatchlistTask extends BaseTask {
 	 * also kicks off a job to send the weekly digest 7 days from now. Since
 	 * that job does a dedup check, any subsequent attempts to schedule that
 	 * weekly digest job will be ignored until the initial one is sent.
-	 * @param $databaseKey String
-	 * @param $nameSpace String
-	 * @param $watchers
+	 * @param String $databaseKey
+	 * @param String $nameSpace
+	 * @param array $watchers
 	 */
 	public function addWatchers( $databaseKey, $nameSpace, array $watchers ) {
 		$titleObj = Title::newFromText( $databaseKey, $nameSpace );
@@ -67,8 +67,8 @@ class GlobalWatchlistTask extends BaseTask {
 	/**
 	 * Clears all records in the global_watchlist table with the given name, namespace,
 	 * and watchers.
-	 * @param $databaseKey
-	 * @param $nameSpace
+	 * @param String $databaseKey
+	 * @param String $nameSpace
 	 * @param array $watchers
 	 */
 	public function removeWatchers( $databaseKey, $nameSpace, array $watchers ) {
@@ -85,8 +85,8 @@ class GlobalWatchlistTask extends BaseTask {
 	/**
 	 * Updates records in the global_watchlist table when a page has been renamed,
 	 * aka, moved.
-	 * @param $oldTitleValues array
-	 * @param $newTitleValues array
+	 * @param array $oldTitleValues
+	 * @param array $newTitleValues
 	 */
 	public function renameTitleInGlobalWatchlist( array $oldTitleValues, array $newTitleValues ) {
 		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
