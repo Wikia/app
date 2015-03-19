@@ -159,7 +159,17 @@ class VideoFileUploader {
 			$file->forceMetadata( serialize( $this->getNormalizedMetadata() ) );
 		}
 
+
+		$forceMime = $file->forceMime;
+
 		$file->getMetadata();
+
+		//In case of video replacement - Title already exists - preserve forceMime value
+		//By default it is changed to false in WikiaLocalFileShared::afterSetProps method
+		if ( $oTitle->exists() ) {
+			$file->forceMime = $forceMime;
+		}
+
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
