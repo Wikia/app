@@ -130,8 +130,12 @@
 		}
 	}
 
-	.EditPageMain {
-		margin-right: -300px;
+	.EditPage.editpage-visualwidemode .EditPageMain {
+		width: 100%;
+	}
+
+	.EditPage.editpage-sourcewidemode-off .EditPageMain {
+		margin-right: -310px;
 		padding: 0;
 		width: 100%;
 
