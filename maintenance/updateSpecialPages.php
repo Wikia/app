@@ -121,7 +121,7 @@ class UpdateSpecialPages extends Maintenance {
 					}
 
 					# Commit the results
-					$res = $dbw->commit();
+					$res = $dbw->commit( __METHOD__ );
 
 					# Reopen any connections that have closed
 					if ( $res === false ) {
