@@ -23,7 +23,7 @@
 			<span class="hero-description-default-text sg-main"><?= wfMessage('hero-image-default-description')->escaped(); ?></span>
 		<? } ?>
 		<? if ($isAllowedToEdit): ?>
-			<span class="title-edit-btn wikia-menu-button">
+			<span class="title-edit-btn">
 				<img alt="" class="sprite edit-pencil" height="16" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="22">
 				<?= wfMessage('hero-image-edit-btn')->escaped(); ?>
 			</span>
