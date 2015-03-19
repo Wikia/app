@@ -437,7 +437,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	function debounceHighlightSyntax() {
-		$.debounce(50, highlightSyntax);
+		$.debounce(100, highlightSyntax);
 	}
 
 	function setup (textarea) {
