@@ -128,4 +128,17 @@
 			}
 		}
 	}
+
+	.EditPageMain {
+		margin-right: -300px;
+		padding: 0;
+		width: 100%;
+
+		.EditPageMainContainer {
+			margin-right: 300px;
+		}
+	}
+	.EditPageRail {
+		width: 300px;
+	}
 }
