@@ -371,6 +371,8 @@ class User {
 		$key = wfMemcKey( 'user', 'id', $this->mId );
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
+
+		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -2031,6 +2033,8 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
+			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
+			$this->saveToCache();
 			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = wfSharedMemcKey( "user_touched", $this->mId );
