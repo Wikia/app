@@ -360,6 +360,11 @@ class LoginForm extends SpecialPage {
 	 * @private
 	 * Wikia change - add new param ($errParam) to function mainLoginForm()
 	 * Wikia change - add prefix to message key for User Login Ext
+	 *
+	 * @return bool|User User on success; false otherwise.
+	 *
+	 * @throws ReadOnlyError
+	 * @throws PermissionsError
 	 */
 	function addNewAccountInternal() {
 		global $wgAuth, $wgMemc, $wgAccountCreationThrottle,
