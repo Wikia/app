@@ -196,7 +196,7 @@ abstract class ExternalUser {
 	 * @param $user object
 	 * @return bool
 	 */
-	protected abstract function addToDatabase( $User, $password, $email, $realname );
+	protected abstract function addToDatabase( User $User, $password, $email, $realname );
 	
 	/**
 	 * This must return some identifier that stably, uniquely identifies the
