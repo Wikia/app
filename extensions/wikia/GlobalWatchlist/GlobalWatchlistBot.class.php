@@ -44,7 +44,7 @@ class GlobalWatchlistBot {
 	 * This is done after we send them the weekly digest which effectively
 	 * means they have "seen" all the watched pages and will receive notifications
 	 * for new edits.
-	 * @param $userID
+	 * @param $userID integer
 	 */
 	public function clearWatchLists( $userID ) {
 		$this->clearLocalWatchlists( $userID );
@@ -53,19 +53,10 @@ class GlobalWatchlistBot {
 
 	/**
 	 * Clears the local watchlist tables for a given user.
-	 * @param $userID
+	 * @param $userID integer
 	 */
 	public function clearLocalWatchlists( $userID ) {
-		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
-		$wikiIDs = ( new WikiaSQL() )
-			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_CITY_ID )
-			->FROM( GlobalWatchlistTable::TABLE_NAME )
-			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
-			->AND_( GlobalWatchlistTable::COLUMN_TIMESTAMP )->IS_NOT_NULL()
-			->runLoop( $db, function ( &$wikiIDs, $row ) {
-				$wikiIDs[] = $row->gwa_city_id;
-			} );
-
+		$wikiIDs = $this->getWikisWithWatchedPagesForUser( $userID );
 		foreach ( $wikiIDs as $wikiID ) {
 			$db = wfGetDB( DB_MASTER, [], WikiFactory::IDtoDB( $wikiID ) );
 			( new WikiaSQL() )
@@ -77,9 +68,29 @@ class GlobalWatchlistBot {
 	}
 
 	/**
+	 * Get all wikis that a user has a watched item on. We'll use this list
+	 * to clear those watched pages in the local watchlist table.
+	 * @param $userID integer
+	 * @return array
+	 */
+	private function getWikisWithWatchedPagesForUser( $userID ) {
+		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
+		$wikiIDs = ( new WikiaSQL() )
+			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_CITY_ID )
+			->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
+			->AND_( GlobalWatchlistTable::COLUMN_TIMESTAMP )->IS_NOT_NULL()
+			->runLoop( $db, function ( &$wikiIDs, $row ) {
+				$wikiIDs[] = $row->gwa_city_id;
+			} );
+
+		return $wikiIDs;
+	}
+
+	/**
 	 * Clears all watched pages from all wikis for the given user in
 	 * the global_watchlist table.
-	 * @param $userID
+	 * @param $userID integer
 	 */
 	public function clearGlobalWatchlistAll( $userID ) {
 		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
@@ -93,6 +104,7 @@ class GlobalWatchlistBot {
 	/**
 	 * send email to user
 	 * TODO Break this method up a bit. It does way way too many things.
+	 * @param $userID integer
 	 */
 	public function sendDigestToUser( $userID ) {
 
@@ -200,8 +212,8 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $userID
-	 * @param $sendLogging
+	 * @param $userID integer
+	 * @param $sendLogging boolean
 	 * @return bool
 	 */
 	public function shouldNotSendDigest( $userID, $sendLogging = false ) {
@@ -224,7 +236,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $userID
+	 * @param $userID integer
 	 * @return null|User
 	 */
 	private function getUserObject( $userID ) {
@@ -245,7 +257,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user
+	 * @param $user User
 	 * @throws Exception
 	 */
 	private function checkIfValidUser( $user ) {

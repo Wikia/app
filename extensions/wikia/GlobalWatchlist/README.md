@@ -98,7 +98,7 @@ So if they were to visit the MuppetTestPage, the table would then look like:
 	|     88 |    23910443 |       26337 |             0 | GleeTestPage   |    2540196 | 20150202184358 | 20150202184358    | User A
 	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
 
-The Weekly Digest itself is sent out on Sunday night via a cronjob. The job queries the `global_watchlist` table for all
+The Weekly Digest itself is sent out weekly via a cronjob. The job queries the `global_watchlist` table for all
 users, then the digest is prepared and sent out to each one. Once we send the weekly digest to a user all their rows in
 the `global_watchlist` table are deleted, and the corresponding rows in the local watchlist tables have their `wl_notificationtimestamp`
 fields set to null (which means the user will be notified about the next change going forward).
