@@ -100,6 +100,7 @@
 
 		@media #{$breakpoint-small-only} {
 			// this is copied from responsive-core.scss
+			clear: both;
 			float: none;
 			margin: 0;
 			padding: 13px 10px 0;
