@@ -44,7 +44,7 @@ class GlobalWatchlistBot {
 	 * This is done after we send them the weekly digest which effectively
 	 * means they have "seen" all the watched pages and will receive notifications
 	 * for new edits.
-	 * @param $userID integer
+	 * @param int $userID
 	 */
 	public function clearWatchLists( $userID ) {
 		$this->clearLocalWatchlists( $userID );
@@ -53,7 +53,7 @@ class GlobalWatchlistBot {
 
 	/**
 	 * Clears the local watchlist tables for a given user.
-	 * @param $userID integer
+	 * @param int $userID
 	 */
 	public function clearLocalWatchlists( $userID ) {
 		$wikiIDs = $this->getWikisWithWatchedPagesForUser( $userID );
@@ -70,7 +70,7 @@ class GlobalWatchlistBot {
 	/**
 	 * Get all wikis that a user has a watched item on. We'll use this list
 	 * to clear those watched pages in the local watchlist table.
-	 * @param $userID integer
+	 * @param int $userID
 	 * @return array
 	 */
 	private function getWikisWithWatchedPagesForUser( $userID ) {
@@ -90,7 +90,7 @@ class GlobalWatchlistBot {
 	/**
 	 * Clears all watched pages from all wikis for the given user in
 	 * the global_watchlist table.
-	 * @param $userID integer
+	 * @param int $userID
 	 */
 	public function clearGlobalWatchlistAll( $userID ) {
 		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
@@ -212,8 +212,8 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $userID integer
-	 * @param $sendLogging boolean
+	 * @param int $userID
+	 * @param bool $sendLogging
 	 * @return bool
 	 */
 	public function shouldNotSendDigest( $userID, $sendLogging = false ) {
@@ -236,7 +236,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $userID integer
+	 * @param int $userID
 	 * @return null|User
 	 */
 	private function getUserObject( $userID ) {
@@ -257,7 +257,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user User
+	 * @param User $user
 	 * @throws Exception
 	 */
 	private function checkIfValidUser( $user ) {
@@ -267,7 +267,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user User
+	 * @param User $user
 	 * @throws Exception
 	 */
 	private function checkIfEmailUnSubscribed( \User $user ) {
@@ -277,7 +277,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user User
+	 * @param User $user
 	 * @throws Exception
 	 */
 	private function checkIfEmailConfirmed( \User $user ) {
@@ -287,7 +287,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user User
+	 * @param User $user
 	 * @throws Exception
 	 */
 	private function checkIfSubscribedToWeeklyDigest( \User $user ) {
