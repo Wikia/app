@@ -32,10 +32,10 @@ class GlobalFooterController extends WikiaController {
 
 	public function oasisIndex() {
 		global $wgLang;
-		$globalNavHelper = new GlobalNavigationHelper();
+		$wikiaLogoHelper = new WikiaLogoHelper();
 		Wikia::addAssetsToOutput('oasis_global_footer_scss');
 		Wikia::addAssetsToOutput('global_footer_js');
-		$this->response->setVal( 'centralUrl', $globalNavHelper->getCentralUrlForLang( $wgLang->getCode() ) );
+		$this->response->setVal( 'centralUrl', $wikiaLogoHelper->getCentralUrlForLang( $wgLang->getCode() ) );
 		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
 		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
@@ -43,9 +43,9 @@ class GlobalFooterController extends WikiaController {
 
 	public function venusIndex() {
 		global $wgLang;
-		$globalNavHelper = new GlobalNavigationHelper();
+		$wikiaLogoHelper = new WikiaLogoHelper();
 		Wikia::addAssetsToOutput('venus_global_footer_scss');
-		$this->response->setVal( 'centralUrl', $globalNavHelper->getCentralUrlForLang( $wgLang->getCode() ) );
+		$this->response->setVal( 'centralUrl', $wikiaLogoHelper->getCentralUrlForLang( $wgLang->getCode() ) );
 		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
 		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
@@ -108,7 +108,7 @@ class GlobalFooterController extends WikiaController {
 
 		if ( WikiaPageType::isWikiaHomePage() || $verticalShortName === null ) {
 			global $wgLang;
-			$link = ( new GlobalNavigationHelper() )->getCentralUrlForLang( $wgLang->getCode() );
+			$link = ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLang->getCode() );
 		} else {
 			/* possible message keys: global-footer-vertical-tv-link, global-footer-vertical-comics-link,
 			global-footer-vertical-movies-link, global-footer-vertical-music-link, global-footer-vertical-books-link,
