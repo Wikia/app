@@ -2350,9 +2350,10 @@ $config['fancycaptcha_scss'] = [
 	]
 ];
 
-$config['poweruser_pageviews'] = [
+$config['poweruser'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/PowerUser/js/PowerUserPageViewsTracking.js',
+		'//extensions/wikia/PowerUser/js/pageViewTracking.js',
+		'//extensions/wikia/PowerUser/js/powerUser.run.js',
 	]
 ];

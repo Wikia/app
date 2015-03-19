@@ -1,15 +1,16 @@
-require(
+define(
+	'ext.wikia.powerUser.pageViewTracking',
 	[
 		'wikia.window',
 		'wikia.cookies',
 		'wikia.tracker'
 	],
-	function (w, c, tracker) {
+	function (w, cookies, tracker) {
 		'use strict';
 
 		var maxCounter = 5,
 			cookieName = 'puspvs',
-			cookieDefaultValue = 1,
+			cookieSetupValue = 0,
 			/**
 			 * If a user is not active for 3 hours
 			 * we treat his return as a new session
@@ -17,28 +18,16 @@ require(
 			 */
 			cookieExpires = 1000 * 60 * 60 * 3;
 
-		function init() {
-			if (!pvIsCookieSet()) {
-				pvSetCookieCounter(cookieDefaultValue);
-			}
-
-			if (pvGetCookieCounter() <= maxCounter) {
-				pvLaunchTracking();
-			}
-
-			pvIncreaseCookieCounter();
-		}
-
 		function pvIsCookieSet() {
-			return c.get(cookieName) !== null;
+			return cookies.get(cookieName) !== null;
 		}
 
 		function pvGetCookieCounter() {
-			return parseInt(c.get(cookieName));
+			return parseInt(cookies.get(cookieName));
 		}
 
 		function pvSetCookieCounter(cookieValue) {
-			c.set(cookieName, cookieValue, {
+			cookies.set(cookieName, cookieValue, {
 				expires: cookieExpires,
 				domain: w.wgCookieDomain,
 				path: w.wgCookiePath
@@ -51,16 +40,29 @@ require(
 		}
 
 		function pvLaunchTracking() {
-			var trackingParams = {
+			tracker.track({
 				trackingMethod: 'internal',
 				category: 'poweruser-pageviews',
 				action: w.wikiaPageType,
 				label: w.wgPageName,
 				value: pvGetCookieCounter()
-			};
-			tracker.track(trackingParams);
+			});
 		}
 
-		init();
+		function init() {
+			if (!pvIsCookieSet()) {
+				pvSetCookieCounter(cookieSetupValue);
+			}
+
+			pvIncreaseCookieCounter();
+
+			if (pvGetCookieCounter() <= maxCounter) {
+				pvLaunchTracking();
+			}
+		}
+
+		return {
+			init: init
+		};
 	}
 );
