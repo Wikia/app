@@ -283,8 +283,7 @@ class ExternalUser_Wikia extends ExternalUser {
 			$ret = true;
 		}
 
-		catch ( Exception $e ) {
-			// TODO determine the exact exception class to catch here and handle it properly.
+		catch ( DBQueryError $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->info(
 				__METHOD__,
 				[ 'exception' => $e, 'username' => $User->mName ]
