@@ -78,8 +78,8 @@ class ApiHooks {
 												  $baseRevId ) {
 		ArticlesApiController::purgeCache( $wikiPage->getTitle()->getArticleID() );
 		ArticlesApiController::purgeMethods( [
-			'getAsJson', [ 'id' => $wikiPage->getId() ],
-			'getAsJson', [ 'title' => $wikiPage->getTitle()->getPartialURL() ]
+			[ 'getAsJson', ['id' => $wikiPage->getId()] ],
+			[ 'getAsJson', ['title' => $wikiPage->getTitle()->getPartialURL()] ]
 		] );
 		return true;
 	}
@@ -93,10 +93,10 @@ class ApiHooks {
 	 */
 	public static function onArticleRollbackComplete( $article, $user, $revision, $current ) {
 		ArticlesApiController::purgeCache( $article->getTitle()->getArticleID() );
-		ArticlesApiController::purgeMethods([
-			'getAsJson', ['id' => $article->getId()],
-			'getAsJson', ['title' => $article->getTitle()->getPartialURL()]
-		]);
+		ArticlesApiController::purgeMethods( [
+			[ 'getAsJson', ['id' => $article->getId()] ],
+			[ 'getAsJson', ['title' => $article->getTitle()->getPartialURL()] ]
+		] );
 		return true;
 	}
 
