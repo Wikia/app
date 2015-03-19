@@ -189,6 +189,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 			syntaxStyleTextNode.nodeValue = '';
 
 			if (diffTime) {
+				console.log('diff', diffTime);
+
 				log('Syntax highlighting took too long. The maximum allowed ' +
 					'highlighting time is ' + syntaxHighlighterConfig.timeout +
 					', and your computer took ' + diffTime + '.');
@@ -454,7 +456,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		wpTextbox1.id = 'wpTextbox1';
 		wpTextbox1.classList.add('highlighted');
 
-		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
+		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 100;
 
 		textboxContainer = document.createElement('div');
 		syntaxStyleElement = document.createElement('style');
