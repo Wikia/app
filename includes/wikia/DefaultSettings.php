@@ -1550,7 +1550,6 @@ $wgApiAccess = [
 	],
 	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
 	'TvApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'MercuryApiController' => ApiAccessService::ALWAYS_HIDDEN,
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,

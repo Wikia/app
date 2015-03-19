@@ -6,8 +6,7 @@ class ApiAccessService {
 	const ENV_SANDBOX = 2;
 	const WIKIA_CORPORATE = 32;
 	const WIKIA_NON_CORPORATE = 64;
-	const URL_TEST = 128;
-	const ALWAYS_HIDDEN = 256;
+	const URL_TEST = 128;	
 
 	/**
 	 * @var WikiaRequest
