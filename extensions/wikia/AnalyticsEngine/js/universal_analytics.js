@@ -103,6 +103,9 @@
                 }
             );
         }
+
+        // Enable Demographics and Interests Reports
+        window.ga('special.require', 'displayfeatures');
     }
 
     if (isProductionEnv) {
@@ -116,7 +119,13 @@
                 'userId': window.wgGAUserIdHash
             }
         );
+
+        // Enable Demographics and Interests Reports
+        window.ga('ve.require', 'displayfeatures');
     }
+
+    // Enable Demographics and Interests Reports
+    window.ga('require', 'displayfeatures');
 
     // Setting up the cross domain autolink
     // [@see: https://developers.google.com/analytics/devguides/collection/analyticsjs/cross-domain#autolink]
@@ -326,6 +335,9 @@
             }
         );
     }
+
+    // Enable Demographics and Interests Reports
+    window.ga('ads.require', 'displayfeatures');
 
     window.ga('ads.require', 'linker');
     window.ga('ads.linker:autoLink', [document.location.hostname]);
