@@ -182,7 +182,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		if (initialized) {
 			clearInterval(highlightSyntaxIfNeededIntervalID);
 
-			wpTextbox1.removeEventListener('input', highlightSyntax);
+			wpTextbox1.removeEventListener('input', debounceHighlightSyntax);
 			wpTextbox1.removeEventListener('scroll', syncScrollX);
 			wpTextbox1.removeEventListener('scroll', syncScrollY);
 
@@ -436,6 +436,10 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		}
 	}
 
+	function debounceHighlightSyntax() {
+		$.debounce(50, highlightSyntax);
+	}
+
 	function setup (textarea) {
 		var focus,
 			scrollTop,
@@ -501,9 +505,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 
 		document.head.appendChild(syntaxStyleElement);
 
-		$(wpTextbox1).on('input', function () {
-			highlightSyntax();
-		});
+		$(wpTextbox1).on('input', debounceHighlightSyntax);
 		wpTextbox1.addEventListener('scroll', syncScrollX);
 		wpTextbox1.addEventListener('scroll', syncScrollY);
 		highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntaxIfNeeded, 500);
