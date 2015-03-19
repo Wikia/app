@@ -26,7 +26,7 @@ class ExactTargetUserHooks {
 	 */
 	public function onArticleSaveComplete( \WikiPage $article, \User $oUser ) {
 		if ( !$oUser->isAnon() ) {
-			$this->addTheUpdateCreateUserTask($oUser);
+			$this->addTheUpdateCreateUserTask( $oUser );
 		}
 		return true;
 	}
