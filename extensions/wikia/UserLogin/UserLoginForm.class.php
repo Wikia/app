@@ -52,17 +52,22 @@ class UserLoginForm extends LoginForm {
 		$this->wpUserBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
 	}
 
-	// add new account
+	/**
+	 * Adds a new user account and sends a confirmation email.
+	 *
+	 * @return bool|User an instance of User on success; boolean false otherwise.
+	 * @throws PermissionsError
+	 * @throws ReadOnlyError
+	 */
 	public function addNewAccount() {
 		$u = $this->addNewAccountInternal();
-		if( $u == null )
-			return false;
-
-		// send confirmation email
-		$userLoginHelper = new UserLoginHelper();
-		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
-		$this->mainLoginForm( $result['msg'], $result['result'] );
-
+		if ( $u instanceof User ) {
+			// send confirmation email
+			$userLoginHelper = new UserLoginHelper();
+			$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
+			$this->mainLoginForm( $result['msg'], $result['result'] );
+		}
+		// TODO Currently, we are not sure if UserSignupSpecialController::signup() knows about false here.
 		return $u;
 	}
 
