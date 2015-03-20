@@ -6,8 +6,6 @@ class MercuryApi {
 
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
 
-	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
-
 	/**
 	 * Aggregated list of comments users
 	 *
@@ -106,40 +104,32 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		$wg = F::app()->wg;
+		global $wgCacheBuster;
+		global $wgCityId;
+		global $wgContLang;
+		global $wgDBname;
+		global $wgDefaultSkin;
+		global $wgLang;
+		global $wgLanguageCode;
+		global $wgSitename;
+
 		return [
-			'cacheBuster' => (int) $wg->CacheBuster,
-			'dbName' => $wg->DBname,
-			'defaultSkin' => $wg->DefaultSkin,
-			'id' => (int) $wg->CityId,
+			'cacheBuster' => (int) $wgCacheBuster,
+			'dbName' => $wgDBname,
+			'defaultSkin' => $wgDefaultSkin,
+			'id' => (int) $wgCityId,
 			'language' => [
-				'user' => $wg->Lang->getCode(),
+				'user' => $wgLang->getCode(),
 				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
-				'content' => $wg->LanguageCode,
-				'contentDir' => $wg->ContLang->getDir()
+				'content' => $wgLanguageCode,
+				'contentDir' => $wgContLang->getDir()
 			],
-			'namespaces' => $wg->ContLang->getNamespaces(),
-			'siteName' => $this->getSiteName(),
+			'namespaces' => $wgContLang->getNamespaces(),
+			'siteName' => $wgSitename,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
 		];
-	}
-
-	/**
-	 * @desc Gets a wikia sitename either from the message or WF variable
-	 *
-	 * @return null|String
-	 */
-	public function getSiteName() {
-		$siteName = F::app()->wg->Sitename;
-		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
-
-		if( !$msg->isDisabled() ) {
-			$siteName = $msg->text();
-		}
-
-		return $siteName;
 	}
 
 	/**
