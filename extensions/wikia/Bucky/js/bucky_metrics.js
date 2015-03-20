@@ -27,7 +27,7 @@ require([
 	 *
 	 * Bind to onDOMReady, windowLoad and five-seconds-after-windowLoad events
 	 * and send ResourceTiming statistics for resources fetched before these events
-	 */
+	 *
 	if (!resourceTiming.isSupported()) {
 		return;
 	}
@@ -43,4 +43,5 @@ require([
 			resourceTiming.reportToBucky('AfterWindowLoad');
 		}, 5000);
 	});
+	 **/
 });
