@@ -1,0 +1,182 @@
+@import 'skins/shared/mixins/calc';
+@import 'breakpoints-variables';
+//todo remove styling by ID after cleanup after removal of responsive layout
+
+@if $widthType == 0 {
+	// consider using https://github.com/stowball/mqGenie for release
+	@media #{$breakpoint-small-only} {
+		.WikiaPage {
+			padding: 0 $padding-width-small;
+			width: $page-width-small;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		.WikiaPage {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		.WikiaPage {
+			padding: 0 $padding-width-large;
+			width: $page-width-large;
+		}
+	}
+
+	// hacks and changes
+	// here be dragons
+
+	// two following declarations fix scrollbar blinking while preview (and probably some other cases)
+	// see CONCF-345
+	html {
+		overflow-y: auto;
+	}
+	body {
+		overflow: hidden;
+		position: relative;
+	}
+
+	.WikiaMainContent {
+		width: 100%;
+
+		@media #{$breakpoint-medium-up} {
+			@include calc(width, '100% - 320px');
+		}
+	}
+
+	.WikiaArticle {
+		padding: 0;
+	}
+
+	.oasis-one-column .WikiaMainContent {
+		width: 100%;
+	}
+
+	.wikinav2.oasis-one-column .WikiaPageHeader .tally {
+		@media #{$breakpoint-small-only} {
+			right: 0;
+		}
+	}
+
+	@media #{$breakpoint-small-only} {
+		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+			width: 100%;
+		}
+
+		.WikiHeader {
+			min-height: 145px;
+
+			> nav {
+				left: 0;
+				top: 90px;
+			}
+
+			.buttons {
+				top: 57px;
+			}
+		}
+
+		.WikiNav li.nav-item:first-child {
+			margin-left: 10px;
+		}
+
+		.wikinav2.oasis-one-column .WikiaPageHeader {
+			padding: 0;
+		}
+	}
+
+	@media #{$breakpoint-medium-up} {
+		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+			@include width-calc("100% - 320px");
+		}
+
+		.main-page-tag-rcs {
+			width: 300px;
+		}
+
+		.WikiHeader > nav.WikiNav {
+			@include width-calc("100% - 250px");
+
+			.navbackground {
+				width: 100%;
+			}
+
+			.subnav-2 {
+				width: auto;
+			}
+		}
+	}
+
+	.WikiaRail, .main-page-tag-rcs {
+		padding: 0;
+
+		@media #{$breakpoint-small-only} {
+			// this is copied from responsive-core.scss
+			clear: both;
+			float: none;
+			margin: 0;
+			padding: 13px 10px 0;
+			width: auto;
+
+			&.loaded,
+			&.AdminDashboardRail {
+				-moz-column-count: 2;
+				-webkit-column-count: 2;
+				column-count: 2;
+			}
+
+			.module,
+			.admin-dashboard-module {
+				box-sizing: border-box;
+
+				-moz-column-break-inside: avoid;
+				-webkit-column-break-inside: avoid;
+				column-break-inside: avoid;
+
+				// fallback, because column-break-inside is currently NYI
+				display: inline-block;
+				position: static;
+				width: 100%;
+
+			}
+		}
+	}
+
+	@media #{$small-only} {
+		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
+			margin: 0 1px;
+		}
+		.EditPageToolbar .cke_toolbar_widescreen .cke_toolbar_insert {
+			padding: 0;
+		}
+	}
+
+	.EditPage.editpage-visualwidemode .EditPageMain {
+		width: 100%;
+	}
+
+	.EditPage.editpage-sourcewidemode-off .EditPageMain {
+		margin-right: -310px;
+		padding: 0;
+		width: 100%;
+
+		.EditPageMainContainer {
+			margin-right: 300px;
+		}
+	}
+	.EditPageRail {
+		width: 300px;
+	}
+
+	.global-notification {
+		width: auto;
+
+		&.float {
+			left: 0;
+			margin: 0;
+			right: 0;
+		}
+	}
+}

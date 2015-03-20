@@ -29,20 +29,30 @@ class SassUtil {
 	 *            Non-settable settings should be driven programmatically.
 	 */
 	public static function getApplicationThemeSettings() {
-		global $wgOasisGrid;
+		if ( class_exists( 'BodyController' ) && BodyController::isOasisBreakpoints( ) ) {
+			$params = [
+				'widthType' => 0,
+			];
+			if ( BodyController::isOasisTypography() ) {
+				$params['oasisTypography'] = 1;
+			}
 
-		$params = array();
+			return $params;
+		} else {
+			$params = [];
 
-		if ( $wgOasisGrid ) {
-			$params['widthType'] = 3;
+			global $wgOasisGrid;
+			if ( $wgOasisGrid ) {
+				$params['widthType'] = 3;
+			}
+
+			// Should be last so it can override wgOasisGrid
+			if ( class_exists( 'BodyController' ) && BodyController::isResponsiveLayoutEnabled() ) {
+				$params['widthType'] = 2;
+			}
+
+			return $params;
 		}
-
-		// Should be last so it can override wgOasisGrid
-		if ( class_exists( 'BodyController' ) && BodyController::isResponsiveLayoutEnabled() ) {
-			$params['widthType'] = 2;
-		}
-
-		return $params;
 	}
 
 	/**

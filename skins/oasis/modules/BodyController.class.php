@@ -48,6 +48,10 @@ class BodyController extends WikiaController {
 	 * Returns if current layout should be applying gridlayout
 	 */
 	public static function isGridLayoutEnabled() {
+		if ( self::isOasisBreakpoints( ) ) {
+			return false;
+		}
+
 		$app = F::app();
 
 		// Don't enable when responsive layout is enabled
@@ -73,13 +77,30 @@ class BodyController extends WikiaController {
 	}
 
 	/**
+	 * @return Boolean
+	 */
+	public static function isOasisBreakpoints() {
+		global $wgOasisBreakpoints, $wgRequest;
+
+		$wgOasisBreakpoints = $wgRequest->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
+		return !empty( $wgOasisBreakpoints );
+	}
+
+	/**
 	 * Decide on which pages responsive / liquid layout should be turned on.
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
 		global $wgOasisResponsive;
 
-		return !empty( $wgOasisResponsive );
+		return !self::isOasisBreakpoints() && !empty( $wgOasisResponsive );
+	}
+
+	public static function isOasisTypography() {
+		global $wgOasisTypography, $wgRequest;
+
+		$wgOasisTypography = $wgRequest->getBool( 'oasistypography', $wgOasisTypography ) !== false;
+		return !empty( $wgOasisTypography );
 	}
 
 	/**
