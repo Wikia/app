@@ -536,8 +536,12 @@ class LoginForm extends SpecialPage {
 
 		self::clearCreateaccountToken();
 		$u->mBirthDate = date( 'Y-m-d', $this->wpUserBirthDay );
-		// TODO Make sure that if the code below fails, proper message and message type are passed back to the calling method.
-		$u = $this->initUser( $u, false );
+
+		if ( $this->initUser( $u, false ) ) {
+			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'externaldberror' )->text() );
+			return false;
+		}
+
 		return $u;
 	}
 
