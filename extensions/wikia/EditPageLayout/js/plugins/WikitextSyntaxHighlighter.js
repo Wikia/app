@@ -8,8 +8,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	'use strict';
 
 	// Variables that are preserved between function calls
-	var highlightSyntaxIfNeededIntervalID,
-		highlightSyntaxInputIntervalID,
+	var highlightSyntaxIfNeededIntervalId,
+		highlightSyntaxInputTimeoutId,
 		initialized = false,
 		lastText,
 		/**
@@ -181,9 +181,9 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 
 	function resetHighlightSyntax(diffTime) {
 		if (initialized) {
-			clearInterval(highlightSyntaxIfNeededIntervalID);
+			clearInterval(highlightSyntaxIfNeededIntervalId);
 
-			wpTextbox1.removeEventListener('input', debounceHighlightSyntax);
+			wpTextbox1.removeEventListener('input', debouncedHighlightSyntax);
 			wpTextbox1.removeEventListener('scroll', syncScrollX);
 			wpTextbox1.removeEventListener('scroll', syncScrollY);
 
@@ -417,17 +417,18 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		wpTextbox0.scrollTop = wpTextbox1.scrollTop;
 	}
 
-	function debounceHighlightSyntax(e) {
+	function debouncedHighlightSyntax(e) {
 		var key = e.which;
 
-		if (highlightSyntaxInputIntervalID) {
-			clearInterval(highlightSyntaxInputIntervalID);
+		if (highlightSyntaxInputTimeoutId) {
+			clearTimeout(highlightSyntaxInputTimeoutId);
 		}
 
+		// If 'Enter' or 'Backspace'
 		if (key === 13 || key === 8) {
 			setTimeout(highlightSyntax, 0);
 		} else {
-			highlightSyntaxInputIntervalID = setTimeout(highlightSyntax, 100);
+			highlightSyntaxInputTimeoutId = setTimeout(highlightSyntax, 100);
 		}
 	}
 
@@ -515,10 +516,10 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		$('.tool-select *').css({zIndex: 5});
 
 		document.head.appendChild(syntaxStyleElement);
-		$(wpTextbox1).on('keydown', debounceHighlightSyntax);
+		$(wpTextbox1).on('keydown', debouncedHighlightSyntax);
 		wpTextbox1.addEventListener('scroll', syncScrollX);
 		wpTextbox1.addEventListener('scroll', syncScrollY);
-		highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntaxIfNeeded, 500);
+		highlightSyntaxIfNeededIntervalId = setInterval(highlightSyntaxIfNeeded, 500);
 		highlightSyntax();
 
 		initialized = true;
