@@ -247,15 +247,6 @@ class ThumbnailImage extends MediaTransformOutput {
 	}
 
 	function renderView( array $options = [] ) {
-		WikiaLogger::instance()->debug( 'Media method '.__METHOD__.' called',
-			array_merge( $options, [
-				'url'       => $this->url,
-				'method'    => __METHOD__,
-				'page'      => $this->page,
-				'mediaType' => $this->mediaType(),
-				'fileType'  => get_class( $this->file )
-			] ) );
-
 		// Make sure to trim the output so that there is no leading whitespace.  The output of this method
 		// may be fed back into code that will be parsed for wikitext and leading whitespace will be
 		// wrap this HTML in <pre> tags.  VID-1819
@@ -301,15 +292,6 @@ class ThumbnailImage extends MediaTransformOutput {
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
 		}
-
-		WikiaLogger::instance()->debug('Media method '.__METHOD__.' called',
-			array_merge( $options, [
-				'url'       => $this->url,
-				'method'    => __METHOD__,
-				'page'      => $this->page,
-				'mediaType' => $this->mediaType(),
-				'fileType'  => get_class( $this->file )
-			] ) );
 
 		$alt = empty( $options['alt'] ) ? '' : $options['alt'];
 
