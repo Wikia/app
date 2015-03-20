@@ -108,7 +108,7 @@ class CreateNewWikiController extends WikiaController {
 		$allCategories = WikiFactoryHub::getInstance()->getAllCategories( true );
 
 		// Defines order in which verticals are going to be displayed in the <select>
-		$verticalsOrder = array( 2, 7, 4, 3, 1, 6, 5, 0 );
+		$verticalsOrder = array( 2, 7, 4, 3, 1, 6, 5 );
 
 		// Defines sets of categories and order of categories in each set
 		$categoriesSetsOrder = array(
@@ -117,11 +117,11 @@ class CreateNewWikiController extends WikiaController {
 		);
 
 		// Defines mapping between vertical and categories set
-		$verticalToCategoriesSetMapping = array( 2 => 1, 7 => 1, 4 => 1, 3 => 1, 1 => 1, 6 => 1, 5 => 2, 0 => 2 );
+		$verticalToCategoriesSetMapping = array( 2 => 1, 7 => 1, 4 => 1, 3 => 1, 1 => 1, 6 => 1, 5 => 2 );
 
 		/**
 		 * Current keys for translating Vertical ID to string:
-		 * 'oasis-label-wiki-vertical-id-0' => 'Other',
+		 * 'oasis-label-wiki-vertical-id-0' => 'Other', // removed from CNW dialog
 		 * 'oasis-label-wiki-vertical-id-1' => 'TV',
 		 * 'oasis-label-wiki-vertical-id-2' => 'Video Games',
 		 * 'oasis-label-wiki-vertical-id-3' => 'Books',
