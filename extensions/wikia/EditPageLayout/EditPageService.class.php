@@ -4,6 +4,8 @@
  * Service providing interface for generating previews and diffs
  */
 
+use Wikia\Util\GlobalStateWrapper;
+
 class EditPageService extends Service {
 
 	private $app;
