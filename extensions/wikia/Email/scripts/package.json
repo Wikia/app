@@ -1,0 +1,10 @@
+{
+	"name": "Email",
+	"version": "0.0.0",
+	"description": "HTML emails",
+	"author": "Liz Lee",
+	"dependencies": {
+		"grunt": "~0.4.5",
+		"grunt-email-builder": "~2.0.11"
+	}
+}
