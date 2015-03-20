@@ -2,6 +2,7 @@ module.exports = function (grunt) {
 	'use strict';
 
 	grunt.loadNpmTasks('grunt-email-builder');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.initConfig({
 		emailBuilder: {
@@ -12,6 +13,12 @@ module.exports = function (grunt) {
 					dest: '../templates/compiled',
 					flatten: true
 				}]
+			}
+		},
+		watch: {
+			scripts: {
+				files: ['../templates/src/*.mustache'],
+				tasks: ['emailBuilder']
 			}
 		}
 	});
