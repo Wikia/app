@@ -735,6 +735,7 @@ $config['mobile_base_ads_js'] = array(
 $config['mercury_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// Common modules
 		'//resources/wikia/libraries/modil/modil.js',
 		'#group_tracker_js',
 		'//resources/wikia/modules/log.js',
@@ -749,7 +750,12 @@ $config['mercury_ads_js'] = array(
 		'#group_mobile_base_ads_js',
 		'//resources/wikia/modules/cache.js',
 		'//resources/wikia/modules/localStorage.js',
+
+		// Advertisement libs
+		'//resources/wikia/modules/iframeWriter.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
+		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/mercury.run.js',
 		'//resources/wikia/modules/krux.js',
 	)

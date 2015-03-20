@@ -1,11 +1,6 @@
 /*global require*/
 /*jshint maxlen:200*/
-define('ext.wikia.adEngine.customAdsLoader', [
-	'wikia.log'
-],
-function (
-	log
-) {
+define('ext.wikia.adEngine.customAdsLoader', ['wikia.log'], function (log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.customAdsLoader';
