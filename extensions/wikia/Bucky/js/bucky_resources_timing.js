@@ -161,6 +161,9 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 		sink = bucky('resource_timing::' + eventName);
 		debug('Sending stats', eventName);
 
+		// flush pending Bucky data to avoid HTTP 756 response code (Too long request string)
+		sink.flush();
+
 		for (key in stats) {
 			for (subkey in stats[key]) {
 				value = Math.round(stats[key][subkey]);
