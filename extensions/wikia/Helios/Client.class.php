@@ -97,6 +97,29 @@ class Client
 	}
 
 	/**
+	 * A shortcut method for register requests.
+	 */
+	public function register( $username, $password, $email )
+	{
+		// Convert the array to URL-encoded query string, so the Content-Type
+		// for the POST request is application/x-www-form-urlencoded.
+		// It would be multipart/form-data which is not supported
+		// by the Helios service.
+		$postData = http_build_query([
+			'username'	=> $username,
+			'password'	=> $password,
+			'email'		=> $email
+		]);
+
+		return $this->request(
+			'register',
+			[],
+			$postData,
+			[ 'method'	=> 'POST' ]
+		);
+	}
+
+	/**
 	 * A shortcut method for info requests
 	 */
 	public function info( $token )

@@ -133,6 +133,46 @@ class User {
 	}
 
 	/**
+	 * Called in ExternalUser_Wikia registers a user.
+	 *
+	 * @param string $username string of the user name
+	 * @param string $password string of the plaintext password the user entered
+	 * @param string $email string of the user email
+	 *
+	 * @return boolean true on success, false otherwise
+	 */
+	public static function register( $username, $password, $email )
+	{
+		$logger = \Wikia\Logger\WikiaLogger::instance();
+		$logger->info( 'HELIOS_REGISTRATION', [ 'method' => __METHOD__ ] );
+
+		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+		$helios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+
+		try {
+			$registration = $helios->register( $username, $password, $email );
+			$result = !empty( $registration->success );
+
+			if ( !empty( $registration->error ) ) {
+				$logger->error(
+					'HELIOS_REGISTRATION',
+					[ 'method' => __METHOD__ ]
+				);
+			}
+		}
+
+		catch ( \Wikia\Helios\ClientException $e ) {
+			$logger->error(
+				'HELIOS_REGISTRATION',
+				[ 'exception' => $e, 'method' => __METHOD__ ]
+			);
+			$result = false;
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Purge the authentication cache. If the username is specified only that username is affected.
 	 *
 	 * @param string $username (optional) Username
