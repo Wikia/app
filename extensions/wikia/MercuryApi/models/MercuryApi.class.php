@@ -6,6 +6,8 @@ class MercuryApi {
 
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
 
+	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
+
 	/**
 	 * Aggregated list of comments users
 	 *
@@ -117,11 +119,28 @@ class MercuryApi {
 				'contentDir' => $wg->ContLang->getDir()
 			],
 			'namespaces' => $wg->ContLang->getNamespaces(),
+			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wg->Sitename,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
 		];
+	}
+
+	/**
+	 * @desc Gets a wikia site message
+	 *
+	 * @return null|String
+	 */
+	public function getSiteMessage() {
+		global $wgSitename;
+
+		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
+
+		if( !$msg->isDisabled() ) {
+			return $msg->text();
+		}
+		return $wgSitename;
 	}
 
 	/**
