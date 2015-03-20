@@ -2,20 +2,29 @@
 @import 'skins/shared/color';
 
 $branding-color: #000;
+$base-line-height: 40px;
+$font-size: 12px;
+$wikia-logo-width: 60px;
+$wikia-logo-height: 20px;
+$elements-spacing: 20px;
+//-1px because we don't want to center it vertically
+//We want to make it 2px above vertical center
+$wikia-logo-vertical-position: (round($wikia-logo-height / 2) - 1px);
+//Elements spacing * 2 - 20px for each side of logo
+$wikia-logo-container-width: $wikia-logo-width + (2 * $elements-spacing);
 
 .global-footer {
-	font-size: 12px;
-	line-height: 40px;
-	padding-bottom: 10px;
+	font-size: $font-size;
+	line-height: $base-line-height;
 
 	nav {
-		margin: 40px 0 20px 0;
+		margin: 40px 0 30px 0;
 		text-align: center;
 	}
 
 	.branding {
-		height: 40px;
 		display: inline-block;
+		height: $base-line-height;
 
 		.wikia-logo {
 			display: inline-block;
@@ -23,26 +32,23 @@ $branding-color: #000;
 
 			img {
 				background-color: transparent;
-				background-position: center;
+				background-position: center $wikia-logo-vertical-position;
 				background-repeat: no-repeat;
-				background-size: 60px 20px;
-				height: 40px;
-				width: 100px;
-				float: left;
+				background-size: $wikia-logo-width $wikia-logo-height;
 				display: inline-block;
+				float: left;
+				height: $base-line-height;
+				width: $wikia-logo-container-width;
 			}
 
 			span {
-				font-size: 14px;
-				font-weight: bold;
-				letter-spacing: -.5px;
-				line-height: 47px;
-				margin: 0 8px 0 5px;
-				text-transform: uppercase;
-				float: left;
 				display: inline-block;
-				height: 40px;
-				min-width: 40px;
+				float: left;
+				font-weight: bold;
+				height: $base-line-height;
+				line-height: 42px;
+				margin: 0 $elements-spacing;
+				text-transform: uppercase;
 			}
 		}
 
@@ -53,7 +59,7 @@ $branding-color: #000;
 				color: #fff;
 
 				img {
-					background: $branding-color center / 60px 20px no-repeat url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
+					background: $branding-color center $wikia-logo-vertical-position / $wikia-logo-width $wikia-logo-height no-repeat url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
 				}
 			}
 
@@ -88,9 +94,9 @@ $branding-color: #000;
 	}
 
 	ul {
+		line-height: $base-line-height;
 		list-style: none;
 		margin: 0 6px;
-		line-height: 40px;
 
 		li {
 			display: inline-block;

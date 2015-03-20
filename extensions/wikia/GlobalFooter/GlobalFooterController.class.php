@@ -18,8 +18,8 @@ class GlobalFooterController extends WikiaController {
 		$this->response->setVal( 'logoLink', $this->getLogoLink() );
 	}
 
-	public function index2() {
-		Wikia::addAssetsToOutput('new_old_global_footer_scss');
+	public function indexUpdated() {
+		Wikia::addAssetsToOutput('updated_global_footer_scss');
 		Wikia::addAssetsToOutput('global_footer_js');
 
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );

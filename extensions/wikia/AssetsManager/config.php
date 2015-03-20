@@ -2334,11 +2334,11 @@ $config['old_global_footer_scss'] = [
 	]
 ];
 
-$config['new_old_global_footer_scss'] = [
+$config['updated_global_footer_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter2.scss'
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooterUpdated.scss'
 	]
 ];
 
