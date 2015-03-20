@@ -26,6 +26,18 @@
 	}
 
 	// hacks and changes
+	// here be dragons
+
+	// two following declarations fix scrollbar blinking while preview (and probably some other cases)
+	// see CONCF-345
+	html {
+		overflow-y: auto;
+	}
+	body {
+		overflow: hidden;
+		position: relative;
+	}
+
 	.WikiaMainContent {
 		width: 100%;
 
