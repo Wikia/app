@@ -9,9 +9,9 @@ $wikia-logo-height: 20px;
 $elements-spacing: 20px;
 //-1px because we don't want to center it vertically
 //We want to make it 2px above vertical center
-$wikia-logo-vertical-position: (round($wikia-logo-height / 2) - 1px);
+$wikia-logo-vertical-position: round($wikia-logo-height / 2) - 1px;
 //Elements spacing * 2 - 20px for each side of logo
-$wikia-logo-container-width: $wikia-logo-width + (2 * $elements-spacing);
+$wikia-logo-container-width: $wikia-logo-width + 2 * $elements-spacing;
 
 .global-footer {
 	font-size: $font-size;
