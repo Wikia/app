@@ -43,7 +43,9 @@
 	}
 
 	.wikinav2.oasis-one-column .WikiaPageHeader .tally {
-		right: 0;
+		@media #{$breakpoint-small-only} {
+			right: 0;
+		}
 	}
 
 	@media #{$breakpoint-small-only} {
