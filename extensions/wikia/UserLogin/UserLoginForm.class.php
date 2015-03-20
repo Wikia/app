@@ -243,10 +243,11 @@ class UserLoginForm extends LoginForm {
 		$this->errParam = $errParam;
 	}
 
-	// TODO The method should receive the user object as a reference in order to change it and a boolean value should be returned as the status.
-	public function initUser( $u, $autocreate, $skipConfirm = false ) {
+	public function initUser( User &$u, $autocreate, $skipConfirm = false ) {
 		global $wgCityId;
-		$u = parent::initUser( $u, $autocreate );
+		if ( ! parent::initUser( $u, $autocreate ) ) {
+			return false;
+		}
 
 		/*
 		 * Remove when SOC-217 ABTest is finished
@@ -290,8 +291,7 @@ class UserLoginForm extends LoginForm {
 		 * end remove
 		 */
 
-		// TODO true should be returned here
-		return $u;
+		return true;
 	}
 
 	public function userNotPrivilegedMessage() {
