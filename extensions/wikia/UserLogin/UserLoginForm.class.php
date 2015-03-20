@@ -61,20 +61,21 @@ class UserLoginForm extends LoginForm {
 	 */
 	public function addNewAccount() {
 		$u = $this->addNewAccountInternal();
+
 		if ( $u instanceof User ) {
 			// send confirmation email
 			$userLoginHelper = new UserLoginHelper();
 			$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
 			$this->mainLoginForm( $result['msg'], $result['result'] );
 		}
-		// TODO Currently, we are not sure if UserSignupSpecialController::signup() knows about false here; and here is the last chance!
+        
 		return $u;
 	}
 
 	// add new accout by proxy
 	public function addNewAccountMailPassword() {
 		$u = $this->addNewAccountInternal();
-		if ($u == null) {
+		if ( ! $u ) {
 			return false;
 		}
 
