@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, Mercury*/
 define('ext.wikia.adEngine.template.modal', [
 	'wikia.log',
 	'wikia.iframeWriter',
@@ -21,17 +21,17 @@ define('ext.wikia.adEngine.template.modal', [
 		log(['showNew', params], 'debug', logGroup);
 
 		if (uiFactory) {
-			createAndShowWikiaModal();
-		} else {
-			// TODO ADEN-1846
-			console.log([
-				'Showing Mercury modal...',
-				params
-			]);
+			log(['showNew desktop modal'], 'debug', logGroup);
+			createAndShowDesktopModal();
+		}
+
+		if (Mercury) {
+			log(['showNew mobile (Mercury) modal'], 'debug', logGroup);
+			Mercury.Modules.Ads.getInstance().openLightbox(params);
 		}
 	}
 
-	function createAndShowWikiaModal() {
+	function createAndShowDesktopModal() {
 		var modalConfig = {
 			vars: {
 				id: modalId,
