@@ -550,8 +550,8 @@ class LoginForm extends SpecialPage {
 	 * @return User object.
 	 * @private
 	 */
-	// TODO The method should receive the user object as a reference in order to change it and a boolean value should be returned as the status.
-	function initUser( $u, $autocreate ) {
+	// TODO A boolean value should be returned as the status.
+	function initUser( User &$u, $autocreate ) {
 		global $wgAuth, $wgExternalAuthType;
 
 		if ( $wgExternalAuthType ) {
