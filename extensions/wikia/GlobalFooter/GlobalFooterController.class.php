@@ -30,27 +30,6 @@ class GlobalFooterController extends WikiaController {
 		$this->response->setVal( 'logoLink', $this->getLogoLink() );
 	}
 
-	public function oasisIndex() {
-		global $wgLang;
-		$wikiaLogoHelper = new WikiaLogoHelper();
-		Wikia::addAssetsToOutput('oasis_global_footer_scss');
-		Wikia::addAssetsToOutput('global_footer_js');
-		$this->response->setVal( 'centralUrl', $wikiaLogoHelper->getCentralUrlForLang( $wgLang->getCode() ) );
-		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
-		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
-		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
-	}
-
-	public function venusIndex() {
-		global $wgLang;
-		$wikiaLogoHelper = new WikiaLogoHelper();
-		Wikia::addAssetsToOutput('venus_global_footer_scss');
-		$this->response->setVal( 'centralUrl', $wikiaLogoHelper->getCentralUrlForLang( $wgLang->getCode() ) );
-		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
-		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
-		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
-	}
-
 	private function getGlobalFooterLinks() {
 		global $wgCityId, $wgContLang, $wgLang, $wgMemc;
 
