@@ -164,8 +164,9 @@ class VideoFileUploader {
 
 		$file->getMetadata();
 
-		//In case of video replacement - Title already exists - preserve forceMime value
+		//In case of video replacement - Title already exists - preserve forceMime value.
 		//By default it is changed to false in WikiaLocalFileShared::afterSetProps method
+		//which is called by $file->getMetadata().
 		if ( $oTitle->exists() ) {
 			$file->forceMime = $forceMime;
 		}
