@@ -121,7 +121,6 @@ class CreateNewWikiController extends WikiaController {
 
 		/**
 		 * Current keys for translating Vertical ID to string:
-		 * 'oasis-label-wiki-vertical-id-0' => 'Other', // removed from CNW dialog
 		 * 'oasis-label-wiki-vertical-id-1' => 'TV',
 		 * 'oasis-label-wiki-vertical-id-2' => 'Video Games',
 		 * 'oasis-label-wiki-vertical-id-3' => 'Books',
