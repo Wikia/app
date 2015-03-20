@@ -133,23 +133,19 @@ abstract class ExternalUser {
 	 * @param $password string user's password
 	 * @param $email string user's email
 	 * @param $realname string user's real name
-	 * @return mixed User or false
+	 * @return boolean true on success; false otherwise
 	 */
-	// TODO The method should only return boolean, as the user object has been passed by reference and can be modified.
 	public static function addUser( User &$User, $password, $email, $realname ) {
 		global $wgExternalAuthType;
 
-		if ( is_null( $wgExternalAuthType ) ) {
-			return false;
+		$ret = false;
+
+		if ( $wgExternalAuthType ) {
+			$obj = new $wgExternalAuthType;
+			$ret = $obj->addToDatabase( $User, $password, $email, $realname );
 		}
 
-		$obj = new $wgExternalAuthType;
-
-		if ( !$obj->addToDatabase( $User, $password, $email, $realname ) ) {
-			return false;
-		}
-
-		return $User;
+		return $ret;
 	}
 
 	/**
