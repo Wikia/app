@@ -251,8 +251,8 @@ class LoginForm extends SpecialPage {
 
 		# Create the account and abort if there's a problem doing so
 		$u = $this->addNewAccountInternal();
-		if( $u == null ) {
-			return;
+		if( ! $u  ) {
+			return false;
 		}
 
 		# If we showed up language selection links, and one was in use, be
