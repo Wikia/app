@@ -427,7 +427,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		if (key === 13 || key === 8) {
 			setTimeout(highlightSyntax, 0);
 		} else {
-			highlightSyntaxInputIntervalID = setTimeout(highlightSyntax, 50);
+			highlightSyntaxInputIntervalID = setTimeout(highlightSyntax, 100);
 		}
 	}
 
