@@ -69,7 +69,9 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 */
 	public function initUser( User &$user, $autocreate ) {
 
-		if ( parent::initUser( $user, $autocreate, $this->hasConfirmedEmail ) ) {
+		$ret = parent::initUser( $user, $autocreate, $this->hasConfirmedEmail );
+
+		if ( $ret ) {
 
 			$this->connectWithFacebook( $user );
 			$this->saveUserGender( $user );
@@ -83,7 +85,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 			}
 		}
 
-		return $user;
+		return $ret;
 	}
 
 	/**
