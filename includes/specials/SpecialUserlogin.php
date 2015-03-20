@@ -547,23 +547,22 @@ class LoginForm extends SpecialPage {
 	 *
 	 * @param $u User object.
 	 * @param $autocreate boolean -- true if this is an autocreation via auth plugin
-	 * @return User object.
+	 * @return boolean true on success; false otherwise
 	 * @private
 	 */
-	// TODO The method should receive the user object as a reference in order to change it and a boolean value should be returned as the status.
-	function initUser( $u, $autocreate ) {
+	function initUser( User &$u, $autocreate ) {
 		global $wgAuth, $wgExternalAuthType;
 
 		if ( $wgExternalAuthType ) {
-			// TODO This method should receive the user object as a reference in order to change it an a boolean value should be return as the status.
-			$u = ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
-			if ( is_object( $u ) ) {
+			if ( ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
 				$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+			} else {
+				// Terminate on failure.
+				return false;
 			}
 		} else {
 			$u->addToDatabase();
 		}
-		// TODO What if the above fails? Should the following code even be executed? Not really! False should be returned here!
 
 		if ( $wgAuth->allowPasswordChange() ) {
 			$u->setPassword( $this->mPassword );
@@ -593,8 +592,7 @@ class LoginForm extends SpecialPage {
 		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
 		$ssUpdate->doUpdate();
 
-		// TODO true should be returned here
-		return $u;
+		return true;
 	}
 
 	/**
