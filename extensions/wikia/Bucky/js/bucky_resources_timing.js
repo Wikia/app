@@ -152,7 +152,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 	 * @param {string} eventName
 	 */
 	function reportToBucky(eventName) {
-		var key, value, subkey, sink, stats;
+		var key, subkey, sink, stats;
 
 		// iterate all resources
 		stats = getResourcesStats(window.performance.getEntriesByType('resource') || []);
@@ -163,10 +163,8 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 
 		for (key in stats) {
 			for (subkey in stats[key]) {
-				value = Math.round(stats[key][subkey]);
-
-				sink.store(key + '.' + subkey, value);
-				debug(key + '.' + subkey, value);
+				sink.send(key + '.' + subkey, Math.round(stats[key][subkey]));
+				debug(key + '.' + subkey, Math.round(stats[key][subkey]));
 			}
 		}
 	}
