@@ -2349,3 +2349,11 @@ $config['fancycaptcha_scss'] = [
 		'//extensions/wikia/Captcha/styles/FancyCaptcha.scss',
 	]
 ];
+
+$config['poweruser'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PowerUser/js/pageViewTracking.js',
+		'//extensions/wikia/PowerUser/js/powerUser.run.js',
+	]
+];
