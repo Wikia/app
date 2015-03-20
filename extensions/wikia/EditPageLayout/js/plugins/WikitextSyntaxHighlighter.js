@@ -181,9 +181,10 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 
 	function resetHighlightSyntax(diffTime) {
 		if (initialized) {
+
 			clearInterval(highlightSyntaxIfNeededIntervalId);
 
-			wpTextbox1.removeEventListener('input', debouncedHighlightSyntax);
+			wpTextbox1.removeEventListener('keydown', debouncedHighlightSyntax);
 			wpTextbox1.removeEventListener('scroll', syncScrollX);
 			wpTextbox1.removeEventListener('scroll', syncScrollY);
 
