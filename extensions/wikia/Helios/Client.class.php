@@ -39,22 +39,22 @@ class Client
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
 		
 		// Request options pre-processing.
-		$defaultOptions = [
-			'method'		=> 'GET',
-			'timeout'		=> 5,
-			'postData'		=> $postData,
-			'noProxy'		=> true,
-			'followRedirects'	=> false,
-			'returnInstance'	=> true
+		$options = [
+			'method'          => 'GET',
+			'timeout'         => 5,
+			'postData'        => $postData,
+			'noProxy'         => true,
+			'followRedirects' => false,
+			'returnInstance'  => true,
+			'internalRequest' => true,
 		];
 
-		$requestOptions = array_merge( $defaultOptions, $extraRequestOptions );
+		$options = array_merge( $options, $extraRequestOptions );
 
 		// Request execution.
-		$request = \MWHttpRequest::factory( $uri, $requestOptions );
-		$request->setHeader(RequestId::REQUEST_HEADER_NAME, RequestId::instance()->getRequestId());
-		$request->setHeader(RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname());
-		$status = $request->execute();
+		/** @var \MWHttpRequest $request */
+		$request = \Http::request( $options['method'], $uri, $options );
+		$status = $request->status;
 
 		// Response handling.
 		if ( !$status->isGood() ) {
@@ -73,7 +73,6 @@ class Client
 	/**
 	 * A shortcut method for login requests.
 	 *
-	 * @throws LoginFailureException
 	 * @throws ClientException
 	 */
 	public function login( $username, $password )
@@ -93,14 +92,6 @@ class Client
 			$postData,
 			[ 'method'	=> 'POST' ]
 		);
-
-		if ( !empty( $response->error ) ) {
-			if ( $response->error === 'access_denied' ) {
-				throw new LoginFailureException( 'Login failed.', 0, null, [ 'response' => $response ] );
-			} else {
-				throw new ClientException( 'Response error: ' . $response->error, 0, null, [ 'response' => $response ] );
-			}
-		}
 
 		return $response;
 	}

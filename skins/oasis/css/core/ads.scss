@@ -3,6 +3,7 @@
 @import 'responsive-variables';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
+@import 'ads-floor';
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
@@ -247,18 +248,6 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-#BOTTOM_LEADERBOARD {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 1;
-  text-align: center;
-
-  & > div {
-    display: inline-block;
-  }
-}
-
 #NATIVE_TABOOLA {
   max-width: 700px;
 }
@@ -306,7 +295,7 @@ body >a >img[src$="noad.gif"] {
 }
 
 @media screen and (max-width: $breakpoint-small) {
-  .home-top-right-ads.top-right-ads-in-content {
-    display: block;
-  }
+	.home-top-right-ads.top-right-ads-in-content {
+		display: block;
+	}
 }

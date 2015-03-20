@@ -103,7 +103,7 @@ $color-icon: mix($color-text, #fff, 90%);
 			text-align: center;
 		}
 
-		#wpDiff.diff-link {
+		.diff-link {
 			color: $color-links;
 			display: inline-block;
 			font-size: 12px;
@@ -128,10 +128,9 @@ $color-icon: mix($color-text, #fff, 90%);
 		}
 
 		.wikia-menu-button {
-			//float: left;
 			*z-index: 2;
+			height: 21px;
 			width: 110px; // preview has border 1px wide
-			height: 19px;
 			& > a {
 				display: inline-block;
 				width: 75px;

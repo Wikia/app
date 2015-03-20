@@ -248,6 +248,14 @@ class LoadBalancer {
 							'while the slave database servers catch up to the master';
 						$i = $this->pickRandom( $currentLoads );
 						$laggedSlaveMode = true;
+
+						// Wikia change - begin
+						Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
+							'exception' => new Exception(),
+							'group'     => $group,
+							'wiki'      => $wiki
+						] );
+						// Wikia change - end
 					}
 				}
 
@@ -984,6 +992,7 @@ class LoadBalancer {
 		foreach ( $this->mConns as $conns2 ) {
 			foreach ( $conns2 as $conns3 ) {
 				foreach ( $conns3 as $conn ) {
+					/* @var DatabaseMysqlBase $conn */
 					if ( !$conn->ping() ) {
 						$success = false;
 					}

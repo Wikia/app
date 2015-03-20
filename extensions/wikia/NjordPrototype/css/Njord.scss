@@ -172,159 +172,6 @@ $btn-bar-color: mix($color-page, #000, 90);
 		overflow: hidden;
 	}
 
-	& + nav.wikia-menu-button {
-		@include flexbox();
-
-		background-color: transparent;
-		background-image: none;
-		border: none;
-		border-radius: 0;
-		cursor: auto;
-		margin-bottom: 30px;
-		margin-right: 320px;
-		position: relative;
-
-		@media screen and (max-width: $breakpoint-small) {
-			margin-right: 20px;
-		}
-
-		&::after {
-			background-color: $color-links;
-			content: '';
-			display: block;
-			height: 1px;
-			margin-left: 1px;
-			margin-top: 7px;
-			width: 100%;
-		}
-
-		ul {
-			left: 0;
-			min-width: 100px !important;
-		}
-
-		.chevron,
-		.chevron:hover {
-			background-color: transparent;
-			border-top-color: $color-links;
-			padding-right: 2px;
-		}
-
-		.drop {
-			background-color: transparent;
-			cursor: pointer;
-			position: relative;
-			z-index: 1;
-		}
-
-		.drop:hover,
-		> a:hover {
-			background-color: transparent;
-			background-image: none;
-		}
-
-		> a {
-			background-color: transparent;
-			border: none;
-			border-radius: 0;
-			font-weight: bold;
-			color: $color-links;
-			padding-left: 42px;
-			position: relative;
-			text-transform: uppercase;
-			z-index: 1;
-
-			&::before {
-				background-color: $color-links;
-				border-radius: 50px;
-				content: '';
-				display: block;
-				height: 35px;
-				left: 0;
-				position: absolute;
-				top: -9px;
-				width: 35px;
-			}
-
-			&::after {
-				@include venus-icons-font;
-
-				color: $color-page;
-				content: '\f002';
-				display: block;
-				font-size: 49px;
-				left: -7px;
-				padding: 8px 0;
-				position: absolute;
-				top: -9px;
-			}
-
-			img {
-				display: none;
-			}
-		}
-	}
-
-	.title-wrap {
-		margin: 30px 330px 25px 30px;
-		text-align: left;
-
-		&.edit-state {
-			border-bottom: 1px solid $color-page-border-subtle;
-			margin: 0px 330px 0px 20px;
-			padding: 30px 0px 25px 10px;
-		}
-
-		.edit-box {
-			bottom: -64px;
-			display: none;
-			text-transform: uppercase;
-			width: 100%;
-		}
-		.hero-title {
-			min-height: 44px;
-			outline: none;
-			word-wrap: break-word;
-		}
-		.title-edit-btn {
-			cursor: pointer;
-			display: inline-block;
-			position: relative;
-			top: -30px;
-			left: 3px;
-
-			&::before {
-				background-color: $color-links;
-				border-radius: 50px;
-				content: '';
-				display: block;
-				height: 35px;
-				left: 0;
-				position: absolute;
-				width: 35px;
-			}
-
-			&::after {
-				@include venus-icons-font;
-
-				color: $color-page;
-				content: '\f002';
-				display: block;
-				font-size: 49px;
-				left: -7px;
-				padding: 8px 0;
-				position: absolute;
-				top: -10px;
-			}
-
-		}
-		.title-text {
-			max-width: 400px;
-			text-transform: uppercase;
-			word-wrap: break-word;
-		}
-	}
-
 	.btn-bar {
 		align-items: center;
 		background-color: $btn-bar-color;
@@ -348,21 +195,28 @@ $btn-bar-color: mix($color-page, #000, 90);
 		}
 
 		.edited-text {
-			font-size: 16px;
-			font-weight: normal;
-			outline: none;
-			min-height: 1.2em;
 			display: block;
+			font-size: 18px;
+			font-weight: normal;
+			line-height: 28px;
+			min-height: 1.2em;
+			outline: none;
+			padding-left: 30px;
+			padding-right: 20px;
 		}
 	}
+
 	.edit-btn {
 		cursor: pointer;
 	}
 
 	.hero-description-text {
+		display: inline;
+		font-size: 18px;
+		line-height: 28px;
+		margin-bottom: 5px;
 		word-wrap: break-word;
-		font-size: 16px;
-		line-height: 26px;
+
 	}
 
 	.image-save-bar {
@@ -385,7 +239,7 @@ $btn-bar-color: mix($color-page, #000, 90);
 	}
 
 	button.new-btn {
-		height: 20px;
+		height: 40px;
 	}
 
 	.new-btn {
@@ -410,6 +264,7 @@ $btn-bar-color: mix($color-page, #000, 90);
 	.new-btn.discard-btn {
 		background-color: transparent;
 		color: $color-buttons;
+
 		&:hover {
 			background-color: $color-button-highlight;
 			border: 1px solid $color-button-highlight;
@@ -419,29 +274,25 @@ $btn-bar-color: mix($color-page, #000, 90);
 	.new-btn.save-btn {
 		background-color: $color-buttons;
 		color: $color-button-text;
+
 		&:hover {
 			background-color: $color-button-highlight;
 			border: 1px solid $color-button-highlight;
 		}
 	}
+
 	.sg-main {
 		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 		font-size: 12px;
 		font-weight: 500;
 		line-height: 28px;
 	}
+
 	.sg-main-small {
 		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 		font-size: 16px;
 		font-weight: 500;
 		line-height: 26px;
-	}
-
-	.sg-title {
-		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-		font-size: 36px;
-		font-weight: 700;
-		line-height: 44px;
 	}
 
 	.sg-sub {
@@ -457,65 +308,69 @@ $btn-bar-color: mix($color-page, #000, 90);
 		font-weight: 700;
 		line-height: 32px;
 	}
+
 	//states
 	&.no-edit-state {
 		.MainPageHero {
 			box-sizing: border-box;
 			padding-top: 25%;
 		}
+
 		.edit-btn {
 			display: none;
 		}
+
 		.image-wrap {
 			height: 100%;
 			position: absolute;
 			width: 100%;
 			top: 0;
 		}
+
 		.title-edit-btn {
 			display: none;
 		}
+
 		.upload-wrap {
 			display: none;
 		}
 	}
+
 	.edit-state {
 		.edit-box {
 			display: block;
 		}
+
 		.title-edit-btn {
 			display: none;
 		}
-		.title-default-text {
-			display: none;
-		}
-		.title-text {
-			display: none;
-		}
+
 		.hero-description-text {
 			display: none;
 		}
+
 		.hero-description-default-text {
 			display: none;
 		}
+
 		.edit-btn {
 			display: none;
 		}
 	}
 
 	.filled-state {
-		.title-default-text {
-			display: none;
-		}
 		.desc-default-text {
 			display: none;
 		}
+
 		.update-btn {
 			display: inherit;
 		}
+
 		.upload-btn {
 			display: none;
 		}
+
 		.upload {
 			display: flex;
 			display: -webkit-flex;
@@ -523,13 +378,16 @@ $btn-bar-color: mix($color-page, #000, 90);
 			position: absolute;
 			width: 100%;
 		}
+
 		.upload-desc {
 			display: none;
 		}
+
 		.upload-group {
 			position: absolute;
 			z-index: 2;
 		}
+
 		.hero-description-default-text {
 			display: none;
 		}
@@ -539,13 +397,16 @@ $btn-bar-color: mix($color-page, #000, 90);
 		.image-window:after {
 			display: none;
 		}
+
 		.position-info {
 			display: block;
 			text-align: center;
 		}
+
 		.upload-wrap {
 			display: none;
 		}
+
 		&.image-save-bar {
 			display: flex;
 			display: -webkit-flex;
@@ -553,12 +414,10 @@ $btn-bar-color: mix($color-page, #000, 90);
 	}
 
 	.zero-state {
-		.title-text {
-			display: none;
-		}
 		.update-btn {
 			display: none;
 		}
+
 		.upload {
 			display: flex;
 			display: -webkit-flex;
@@ -568,49 +427,52 @@ $btn-bar-color: mix($color-page, #000, 90);
 			text-align: center;
 			width: 99.3%;
 		}
+
 		.hero-description-text {
 			display: none;
 		}
+
 		.hero-description-default-text {
 			display: inline-block;
 		}
 	}
 }
 
-.mainpage {
-	.wordmark-container {
-		&.wordmark-icon {
-			background-color: $color-page;
-			height: 80px;
-			left: 0;
-			padding-left: 10px;
-			padding-right: 10px;
-			position: absolute;
-			top: -80px;
-			z-index: 1;
-		}
-
-		.wordmark {
-			width: auto;
-		}
-
-		&:not(.wordmark-icon) {
-			display: none;
-		}
+header.MainPageHeroHeader {
+	&:after {
+		border-bottom: solid 1px $color-page-border;
+		content: '';
+		display: block;
+		margin: 6px 320px 10px 0;
 	}
 
-	.local-navigation {
-		border-bottom: none;
-		padding-left: 20px;
+	+ nav {
+		margin-bottom: 15px;
 	}
 }
+
 .WikiaArticle {
 	.hero-description {
-		margin: 20px 320px 50px 30px;
+		margin: 20px 320px 40px 30px;
 		word-wrap: break-word;
 
+	.title-edit-btn {
+		color: $color-links;
+		cursor: pointer;
+		display: inline;
+		padding-left: 6px;
+		position: relative;
+		top: -3px;
+	}
+
 		&.edit-state {
-			margin-top: 25px;
+			border: 1px solid #ccc;
+			padding: 20px 0 0 0;
+			margin: 0 320px 30px 0;
+
+			.title-edit-btn {
+				display: none;
+			}
 		}
 
 		@media screen and (max-width: $breakpoint-small) {

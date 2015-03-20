@@ -37,14 +37,6 @@ function wfOasisSetup() {
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
 	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationController::onWikiFactoryChanged';
 
-	// confirmations
-	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
-	$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
-	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
-	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
-	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
-	$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
-
 	// notifications
 	$wgHooks['AchievementsNotification'][] = 'NotificationsController::addBadgeNotification';
 	$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsController::addCommunityMessagesNotification';

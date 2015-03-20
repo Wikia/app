@@ -155,7 +155,7 @@ class VideoPageAdminSpecialController extends WikiaSpecialPageController {
 					// redirect to Special:VideoPageAdmin
 					$url = SpecialPage::getTitleFor( 'VideoPageAdmin' )->getLocalURL();
 					$msg = wfMessage( 'videopagetool-success-publish' )->plain();
-					NotificationsController::addConfirmation( $msg, NotificationsController::CONFIRMATION_CONFIRM );
+					BannerNotificationsController::addConfirmation( $msg, BannerNotificationsController::CONFIRMATION_CONFIRM );
 					$this->getContext()->getOutput()->redirect( $url );
 					return false;
 				}

@@ -6,18 +6,9 @@
 mw.hook('wikipage.content').add(function ($content) {
 	'use strict';
 
-	// TODO This can be uncommented and lines 18 through 20 can be deleted 2 weeks after this is released.
-	// We need to wait for parser cache to be cleared so that "data-type='xfbml-tag'" will be added to the
-	// tags during parsing.
-	//	if ((xfbmlTagsOnPage())) {
-	//		$.loadFacebookSDK().done(function () {
-	//			renderXFBMLTags();
-	//		});
-	//	}
-
-	$.loadFacebookSDK().done(function () {
-		renderXFBMLTags();
-	});
+	if ((xfbmlTagsOnPage())) {
+		$.loadFacebookSDK().done(renderXFBMLTags);
+	}
 
 	function xfbmlTagsOnPage() {
 		var numOfXFBMLTags = $content.find('[data-type="xfbml-tag"]').length;

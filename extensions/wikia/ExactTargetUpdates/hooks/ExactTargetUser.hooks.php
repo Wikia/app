@@ -11,38 +11,21 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onUserRenameAfterAccountRename( $iUserId, $sOldUsername, $sNewUsername ) {
-		/* Prepare params */
-		$aUserData = [
-			'user_id' => $iUserId,
-			'user_name' => $sNewUsername
-		];
-
-		/* Get and run the task */
-		$oUserHelper = $this->getUserHelper();
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserData', $aUserData );
-		$task->queue();
+		$oUser = \User::newFromId( $iUserId );
+		$oUser->setName( $sNewUsername ); // Reset new username just in case it's not propagated yet
+		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
 
 	/**
-	 * Adds Task for updating user editcount to job queue
+	 * Adds Task for updating user editcount to job queue.
+	 * Updates whole user record
 	 * @param WikiPage $article
 	 * @param User $user
 	 * @return bool
 	 */
-	public function onArticleSaveComplete( \WikiPage $article, \User $user ) {
-		/* Prepare params */
-		$aUserData = [
-			'user_id' => $user->getId(),
-			'user_editcount' => $user->getEditCount()
-		];
-
-		/* Get and run the task */
-		$oUserHelper = $this->getUserHelper();
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserData', $aUserData );
-		$task->queue();
+	public function onArticleSaveComplete( \WikiPage $article, \User $oUser ) {
+		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
 
@@ -132,12 +115,11 @@ class ExactTargetUserHooks {
 	public function onUserSaveSettings( \User $user ) {
 		/* Prepare params */
 		$oUserHelper = $this->getUserHelper();
-		$aUserData = $oUserHelper->prepareUserParams( $user );
 		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $user );
 
 		/* Get and run the task */
-		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
+		$task = $oUserHelper->getCreateUserTask();
+		$task->call( 'createUserProperties', $user->getId(), $aUserProperties );
 		$task->queue();
 		return true;
 	}

@@ -641,7 +641,20 @@ ve.ui.MWMediaDialog.prototype.attachImageModel = function () {
  */
 ve.ui.MWMediaDialog.prototype.resetCaption = function () {
 	var captionDocument,
-		doc = this.getFragment().getDocument();
+		doc = this.getFragment().getDocument(),
+		toolbarGroups = [
+			// History
+			{ include: [ 'undo' ] },
+			// Style
+			{ include: [ 'bold', 'italic', 'link' ] },
+			{
+				type: 'list',
+				icon: 'text-style',
+				indicator: 'down',
+				title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+				include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
+			}
+		];
 
 	if ( this.captionSurface ) {
 		// Reset the caption surface if it already exists
@@ -691,7 +704,7 @@ ve.ui.MWMediaDialog.prototype.resetCaption = function () {
 		captionDocument,
 		{
 			$: this.$,
-			tools: ve.init.target.constructor.static.toolbarGroups,
+			tools: toolbarGroups,
 			excludeCommands: this.constructor.static.excludeCommands,
 			importRules: this.constructor.static.getImportRules()
 		}

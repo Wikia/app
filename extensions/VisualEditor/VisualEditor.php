@@ -93,7 +93,7 @@ $wgHooks['RedirectSpecialArticleRedirectParams'][] =
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'VisualEditorHooks::onResourceLoaderGetConfigVars';
 $wgHooks['ResourceLoaderRegisterModules'][] = 'VisualEditorHooks::onResourceLoaderRegisterModules';
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorHooks::onResourceLoaderTestModules';
-$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
+//$wgHooks['SkinTemplateNavigation'][] = 'VisualEditorHooks::onSkinTemplateNavigation';
 $wgHooks['ParserTestGlobals'][] = 'VisualEditorHooks::onParserTestGlobals';
 $wgHooks['EditPage::showEditForm:fields'][] = 'VisualEditorHooks::onEditPageShowEditFormFields';
 $wgHooks['PageContentSaveComplete'][] = 'VisualEditorHooks::onPageContentSaveComplete';
@@ -1561,7 +1561,7 @@ $wgVisualEditorEnableTocWidget = false;
 $wgVisualEditorBrowserBlacklist = array(
 	// IE <= 8 has various incompatibilities in layout and feature support
 	// IE10 and 11 have problems but mostly work OK-ish so they're greylisted; IE9 to come
-	'msie' => array ( array( '<=', 9 ) ),
+	'msie' => null,
 	// Android 2.x and below "support" CE but don't trigger keyboard input
 	'android' => array( array( '<', 3 ) ),
 	// Firefox issues in versions 12 and below (bug 50780)
