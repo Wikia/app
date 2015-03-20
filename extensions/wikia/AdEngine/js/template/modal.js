@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.template.modal', [
 	'wikia.log',
 	'wikia.iframeWriter',
-	'wikia.ui.factory'
+	require.optional('wikia.ui.factory')
 ], function (log, iframeWriter, uiFactory) {
 	'use strict';
 
@@ -20,6 +20,18 @@ define('ext.wikia.adEngine.template.modal', [
 	function show(params) {
 		log(['showNew', params], 'debug', logGroup);
 
+		if (uiFactory) {
+			createAndShowWikiaModal();
+		} else {
+			// TODO ADEN-1846
+			console.log([
+				'Showing Mercury modal...',
+				params
+			]);
+		}
+	}
+
+	function createAndShowWikiaModal() {
 		var modalConfig = {
 			vars: {
 				id: modalId,
