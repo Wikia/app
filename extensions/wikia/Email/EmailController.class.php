@@ -23,8 +23,8 @@ abstract class EmailController extends \WikiaController {
 	 *
 	 * @return string
 	 */
-	public static function getTemplateDir() {
-		return dirname( __FILE__ ) . '/templates';
+	public function getTemplateDir() {
+		return dirname( __FILE__ ) . '/templates/compiled';
 	}
 
 	public function init() {
@@ -175,11 +175,18 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getBody() {
-		$html = $this->app->renderView(
+		$modulBody = $this->app->renderView(
 			get_class( $this ),
 			'body',
 			$this->request->getParams()
 		);
+
+		$html = $this->app->renderView(
+			'EmailController',
+			'main',
+			[ 'content' => $modulBody ]
+		);
+
 		return $html;
 	}
 

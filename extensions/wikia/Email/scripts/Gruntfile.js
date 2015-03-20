@@ -7,17 +7,19 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		emailBuilder: {
 			test: {
-				files: [{
-					expand: true,
-					src: ['../templates/src/*.mustache'],
-					dest: '../templates/compiled',
-					flatten: true
-				}]
+				files: [
+					{
+						expand: true,
+						src: ['../templates/src/**/*.mustache'],
+						dest: '../templates/compiled',
+						flatten: true
+					}
+				]
 			}
 		},
 		watch: {
 			scripts: {
-				files: ['../templates/src/*.mustache'],
+				files: ['../templates/src/**/*.mustache', '../styles/*.css'],
 				tasks: ['emailBuilder']
 			}
 		}
