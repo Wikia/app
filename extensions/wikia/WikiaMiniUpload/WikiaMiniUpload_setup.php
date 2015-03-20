@@ -84,8 +84,8 @@ function WMU() {
 
 		\Wikia\Logger\WikiaLogger::instance()->error( $errorMessage );
 
-		$ar = new AjaxResponse();
-		$ar->addText( json_encode( [ 'message' => $errorMessage ] ) );
+		$payload = json_encode( [ 'message' => $errorMessage ] );
+		$ar = new AjaxResponse( $payload );
 		$ar->setResponseCode( '501 Not implemented' );
 		$ar->setContentType( 'application/json; charset=utf-8' );
 	}
