@@ -75,9 +75,20 @@ function WMU() {
 	$method = $wgRequest->getVal('method');
 	$wmu = new WikiaMiniUpload();
 
-	$html = $wmu->$method();
-	$ar = new AjaxResponse($html);
-	$ar->setContentType('text/html; charset=utf-8');
+	if ( method_exists( $wmu, $method ) ) {
+		$html = $wmu->$method();
+		$ar = new AjaxResponse( $html );
+		$ar->setContentType( 'text/html; charset=utf-8' );
+	} else {
+		$errorMessage = 'WMU::' . $method . ' does not exist';
+
+		\Wikia\Logger\WikiaLogger::instance()->error( $errorMessage );
+
+		$ar = new AjaxResponse();
+		$ar->addText( json_encode( [ 'message' => $errorMessage ] ) );
+		$ar->setResponseCode( '501 Not implemented' );
+		$ar->setContentType( 'application/json; charset=utf-8' );
+	}
 	return $ar;
 }
 
