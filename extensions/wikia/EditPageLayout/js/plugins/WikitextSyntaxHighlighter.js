@@ -4,7 +4,7 @@
  * @author [[mw:User:Remember_the_dot]]
  */
 
-define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.log', 'jquery'], function (window, document, log, $) {
+define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.log'], function (window, document, log) {
 	'use strict';
 
 	// Variables that are preserved between function calls
