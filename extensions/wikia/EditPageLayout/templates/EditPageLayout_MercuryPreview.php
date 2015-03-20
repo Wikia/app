@@ -10,7 +10,7 @@
 	}
 </style>
 <form method="POST" action="<?= htmlspecialchars($mercuryUrl); ?>">
-	<textarea name="parserOutput"><?= htmlspecialchars($parserOutput) ?></textarea>
+	<textarea name="parserOutput"><?= htmlspecialchars($parserOutput); ?></textarea>
 	<textarea name="mwHash"><?= htmlspecialchars($mwHash) ?></textarea>
 </form>
 <script>
