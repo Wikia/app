@@ -2976,11 +2976,19 @@ abstract class DatabaseBase implements DatabaseType {
 	 * End a transaction
 	 *
 	 * @param $fname string
+	 * @return null|bool returns boolean with the result of commit
+	 * 	or null if inside the "nested" transaction
 	 */
 	function commit( $fname = 'DatabaseBase::commit' ) {
 		if ( $this->mTrxLevel ) {
-			$this->query( 'COMMIT', $fname );
+			// Wikia change - begin
+			$res = $this->query( 'COMMIT', $fname );
 			$this->mTrxLevel = 0;
+			return $res === true;
+			// Wikia change - end
+		}
+		else {
+			wfDebug( __METHOD__ . ": skipped [$fname]\n" );
 		}
 	}
 
@@ -2994,6 +3002,9 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( $this->mTrxLevel ) {
 			$this->query( 'ROLLBACK', $fname, true );
 			$this->mTrxLevel = 0;
+		}
+		else {
+			wfDebug( __METHOD__ . ": skipped [$fname]\n" );
 		}
 	}
 
