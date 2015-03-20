@@ -111,7 +111,7 @@ class MercuryApi {
 		global $wgDefaultSkin;
 		global $wgLang;
 		global $wgLanguageCode;
-		global $wgSitewideDisableAdsOnMercury;
+		global $wgSitename;
 
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
@@ -125,7 +125,7 @@ class MercuryApi {
 				'contentDir' => $wgContLang->getDir()
 			],
 			'namespaces' => $wgContLang->getNamespaces(),
-			'siteName' => $this->getSiteName(),
+			'siteName' => $wgSitename,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
