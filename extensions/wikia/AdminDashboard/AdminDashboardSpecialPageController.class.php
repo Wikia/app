@@ -29,7 +29,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->urlRecentChanges = Title::newFromText('RecentChanges', NS_SPECIAL)->getFullURL();
 		$this->urlTopNavigation = Title::newFromText('Wiki-navigation', NS_MEDIAWIKI)->getFullURL('action=edit');
 		$this->urlWikiFeatures = Title::newFromText('WikiFeatures', NS_SPECIAL)->getFullURL();
-		$this->urlPageLayoutBuilder = Title::newFromText('PageLayoutBuilder', NS_SPECIAL)->getFullURL('action=list');
 
 		$this->urlListUsers = Title::newFromText('ListUsers', NS_SPECIAL)->getFullURL();
 		$this->urlUserRights = Title::newFromText('UserRights', NS_SPECIAL)->getFullURL();
@@ -54,7 +53,6 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		$this->advancedSection = (string)$this->app->sendRequest( 'AdminDashboardSpecialPage', 'getAdvancedSection', array());
 
 		// icon display logic
-		$this->displayPageLayoutBuilder = !empty($this->wg->EnablePageLayoutBuilder);
 		$this->displayWikiFeatures = !empty($this->wg->EnableWikiFeatures);
 		$this->displaySpecialCss = !empty($this->wg->EnableSpecialCssExt);
 
