@@ -23,7 +23,7 @@ abstract class EmailController extends \WikiaController {
 	 *
 	 * @return string
 	 */
-	public static function getTemplateDir() {
+	public function getTemplateDir() {
 		return dirname( __FILE__ ) . '/templates';
 	}
 
