@@ -251,37 +251,44 @@ class ExternalUser_Wikia extends ExternalUser {
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$User->setToken();
 
+            // The following INSERT is similar (column-wise) to one done by Helios and is going
+            // to be replaced with a request to Helios.
 			$dbw->insert(
 				'`user`',
 				array(
 					'user_id' => null,
-					'user_name' => $User->mName,
-					'user_password' => $User->mPassword,
-					'user_newpassword' => $User->mNewpassword,
-					'user_newpass_time' => $dbw->timestamp( $User->mNewpassTime ),
-					'user_email' => $email,
-					'user_email_authenticated' => $dbw->timestampOrNull( $User->mEmailAuthenticated ),
-					'user_real_name' => $realname,
-					'user_options' => '',
-					'user_token' => $User->mToken,
+                    'user_name' => $User->mName,
+                    'user_password' => $User->mPassword,
+                    'user_email' => $email,
+                    'user_options' => '',
 					'user_registration' => $dbw->timestamp( $User->mRegistration ),
-					'user_editcount' => 0,
-					'user_birthdate' => $User->mBirthDate
+                    'user_editcount' => 0,
+                    'user_birthdate' => $User->mBirthDate
 				),
 				__METHOD__,
 				array( 'IGNORE' )
 			);
 			$User->mId = $dbw->insertId();
-			$dbw->commit( __METHOD__ );
+            $dbw->commit( __METHOD__ );
 
-			// Logging added in order to identify what does INSERT to wikicities.user.
-			\Wikia\Logger\WikiaLogger::instance()->info(
-				'HELIOS_REGISTRATION_INSERTS',
-				[ 'exception' => new Exception, 'userid' => $User->mId, 'username' => $User->mName ]
-			);
+            $newPassword = $User->mNewpassword;
+            $newPasswordTime = $dbw->timestamp( $User->mNewpassTime );
+            $emailAuthenticated = $dbw->timestampOrNull( $User->mEmailAuthenticated );
+            $token = $User->mToken;
 
-			// Clear instance cache other than user table data, which is already accurate
-			$User->clearInstanceCache();
+            // Clear instance cache other than user table data, which is already accurate
+            $User->clearInstanceCache();
+
+            // Here we set some data Helios does not set.
+            $User->mNewpassword = $newPassword;
+            $User->mNewpassTime = $newPasswordTime;
+            $User->mEmailAuthenticated = $emailAuthenticated;
+            $User->mToken = $token;
+            $User->mRealName = $realname;
+            $User->saveSettings();
+
+            // Clear instance cache other than user table data, which is already accurate
+            $User->clearInstanceCache();
 		}
 
 		wfProfileOut( __METHOD__ );
