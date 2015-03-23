@@ -23,6 +23,7 @@ $wikiahubs-line-height: 16px;
 }
 
 .wikinav2 .WikiaPageContentWrapper .WikiaMainContentContainer .WikiaPageHeader {
+	border-bottom: solid 1px $color-page-border;
 	padding: 15px 0;
 	h1 {
 		display: block;
