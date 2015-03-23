@@ -175,16 +175,16 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getBody() {
-		$modulBody = $this->app->renderView(
+		$moduleBody = $this->app->renderView(
 			get_class( $this ),
 			'body',
 			$this->request->getParams()
 		);
 
 		$html = $this->app->renderView(
-			'EmailController',
-			'main',
-			[ 'content' => $modulBody ]
+			'Email\Controller\LayoutController',
+			'body',
+			[ 'content' => $moduleBody ]
 		);
 
 		return $html;
