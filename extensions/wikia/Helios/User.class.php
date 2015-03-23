@@ -1,7 +1,6 @@
 <?php
 
 namespace Wikia\Helios;
-use Predis\ClientException;
 
 /**
  * A helper class for dealing with user-related objects.
