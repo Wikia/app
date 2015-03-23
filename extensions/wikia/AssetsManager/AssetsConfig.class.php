@@ -40,16 +40,11 @@ class AssetsConfig {
 	}
 
 	public static function getEPLAssets( $combine ) {
-		$files = [];
-
 		if ( class_exists( 'EditPageLayoutHelper' ) ) {
-			$files = EditPageLayoutHelper::getAssets();
+			return EditPageLayoutHelper::getAssets();
 		}
 
-		array_push( $files, 'resources/wikia/modules/iframeWriter.js' );
-		array_push( $files, 'extensions/wikia/EditPreview/js/preview.js' );
-
-		return $files;
+		return [];
 	}
 
 	/**

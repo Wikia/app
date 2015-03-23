@@ -326,6 +326,9 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/modules/Templates.js',
 			'extensions/wikia/EditPageLayout/js/modules/ToolbarMediawiki.js',
 			'extensions/wikia/EditPageLayout/js/modules/ToolbarWidescreen.js',
+			// >> preview module
+			'resources/wikia/modules/iframeWriter.js',
+			'extensions/wikia/EditPreview/js/preview.js',
 		);
 	}
 }
