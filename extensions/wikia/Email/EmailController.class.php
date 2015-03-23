@@ -193,6 +193,9 @@ class EmailController extends \WikiaController {
 			$this->request->getParams()
 		);
 
+		// todo: stop grunt-email-builder from adding these extraneous tags in to the partials
+		$moduleBody = preg_replace('/<html>|<body>|<\/html>|<\/body>/', '', $moduleBody);
+
 		$html = $this->app->renderView(
 			get_class( $this ),
 			'main',
