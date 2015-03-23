@@ -83,14 +83,6 @@ class EditPageService extends Service {
 		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
 		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
 
-		/**
-		 * bugid: 47995 -- Treat JavaScript and CSS as raw text wrapped in <pre> tags
-		 * We still rely on the parser for other stuff
-		 */
-		if ( $this->mTitle->isCssOrJsPage() ) {
-			$out = '<pre>' . htmlspecialchars( $originalWikitext ) . '</pre>';
-		}
-
 		wfProfileOut(__METHOD__);
 
 		return array( $out, $catbox, $interlanglinks );
