@@ -26,7 +26,6 @@ $wgAutoloadClasses['Email\EmailController'] =  $dir . 'EmailController.class.php
 $wgAutoloadClasses['Email\ControllerException'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Fatal'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Check'] =  $dir . 'EmailExceptions.class.php';
-$wgAutoloadClasses['Email\Controller\LayoutController'] =  $dir . 'Controller/Layout.class.php';
 $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Controller/UserLogin.class.php';
 
 /**

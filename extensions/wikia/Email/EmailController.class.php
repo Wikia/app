@@ -2,7 +2,7 @@
 
 namespace Email;
 
-abstract class EmailController extends \WikiaController {
+class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/** @var \User The user associated with the current request */
@@ -112,6 +112,15 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
+	 * Render the main layout file
+	 *
+	 * @template main
+	 */
+	public function main() {
+		$this->response->setVal( 'content', $this->getVal( 'content' ) );
+	}
+
+	/**
 	 * Create an error response for any exception thrown while creating this email
 	 *
 	 * @param ControllerException $e
@@ -166,8 +175,11 @@ abstract class EmailController extends \WikiaController {
 
 	/**
 	 * Return the subject used for this email
+	 * Must be overridden in child classes
 	 */
-	abstract protected function getSubject();
+	protected function getSubject() {
+		throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
+	}
 
 	/**
 	 * Renders the 'body' view of the current email controller
@@ -182,8 +194,8 @@ abstract class EmailController extends \WikiaController {
 		);
 
 		$html = $this->app->renderView(
-			'Email\Controller\LayoutController',
-			'body',
+			get_class( $this ),
+			'main',
 			[ 'content' => $moduleBody ]
 		);
 

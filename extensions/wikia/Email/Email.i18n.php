@@ -14,6 +14,7 @@ $messages['en'] = [
 	'emailext-error-noemail' => 'User has no email address',
 	'emailext-error-no-emails' => 'User does not wish to receive email',
 	'emailext-error-user-blocked' => 'User is blocked from taking this action',
+	'emailext-error-no-subject' => 'A subject line is required',
 
 	// Forgot password messages and errors
 	'emailext-password-email-greeting' => 'Hi $1,',
@@ -41,6 +42,7 @@ $messages['qqq'] = [
 	'emailext-error-noemail' => 'Error message given when the user who is the recipient of an email does not have an email address on file',
 	'emailext-error-no-emails' => 'Error message given when has unsubscribed from all Wikia email',
 	'emailext-error-user-blocked' => 'Error message given when the user who triggered the email is blocked',
+	'emailext-error-no-subject' => 'Error message given when no subject line is specified for an email.',
 
 	// Forgot password messages and errors
 	'emailext-password-email-greeting' => 'Greeting for the forgot password email',
