@@ -250,26 +250,35 @@ class ExternalUser_Wikia extends ExternalUser {
 		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
 		try {
-			$dbw->insert(
-				'`user`',
-				[
-					'user_id' => null,
-					'user_name' => $User->mName,
-					'user_password' => $User->mPassword,
-					'user_newpassword' => $User->mNewpassword,
-					'user_newpass_time' => $dbw->timestamp( $User->mNewpassTime ),
-					'user_email' => $email,
-					'user_email_authenticated' => $dbw->timestampOrNull( $User->mEmailAuthenticated ),
-					'user_real_name' => $realname,
-					'user_options' => '',
-					'user_token' => $User->mToken,
-					'user_registration' => $dbw->timestamp( $User->mRegistration ),
-					'user_editcount' => 0,
-					'user_birthdate' => $User->mBirthDate
-				],
-				__METHOD__
-			);
-			$User->mId = $dbw->insertId();
+            $userId = null;
+            $result = null;
+            wfRunHooks( 'ExternalUserWikiaAddToDatabase', [ &$result, &$userId, $User, $password, $email, $realname ] );
+
+            if ( is_null( $result ) ) {
+                $dbw->insert(
+                    '`user`',
+                    [
+                        'user_id' => null,
+                        'user_name' => $User->mName,
+                        'user_password' => $User->mPassword,
+                        'user_email' => $email,
+                        'user_options' => '',
+                        'user_registration' => $dbw->timestamp($User->mRegistration),
+                        'user_editcount' => 0,
+                        'user_birthdate' => $User->mBirthDate
+                    ],
+                    __METHOD__
+                );
+                $userId = $dbw->insertId();
+
+            } else if ( ! $result ) {
+                throw new ExternalUserException();
+            }
+
+            $User->mId = $userId;
+            $User->mRealName = $realname;
+            $User->saveSettings();
+
 			$dbw->commit( __METHOD__ );
 
 			\Wikia\Logger\WikiaLogger::instance()->info(
@@ -291,6 +300,15 @@ class ExternalUser_Wikia extends ExternalUser {
 			$dbw->rollback( __METHOD__ );
 			$ret = false;
 		}
+
+        catch ( ExternalUserException $e ) {
+            \Wikia\Logger\WikiaLogger::instance()->info(
+                __METHOD__,
+                [ 'exception' => $e, 'username' => $User->mName ]
+            );
+            $dbw->rollback( __METHOD__ );
+            $ret = false;
+        }
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -471,3 +489,5 @@ class ExternalUser_Wikia extends ExternalUser {
 		wfProfileOut( __METHOD__ );
 	}
 }
+
+class ExternalUserException extends Exception {}

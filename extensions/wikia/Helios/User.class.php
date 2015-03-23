@@ -1,6 +1,7 @@
 <?php
 
 namespace Wikia\Helios;
+use Predis\ClientException;
 
 /**
  * A helper class for dealing with user-related objects.
@@ -197,6 +198,78 @@ class User {
 
 		return true;
 	}
+
+    /**
+     * Called in ExternalUser_Wikia registers a user.
+     *
+     * @param string $username string of the user name
+     * @param string $password string of the plaintext password the user entered
+     * @param string $email string of the user email
+     *
+     * @return boolean true on success, false otherwise
+     */
+    public static function register( $username, $password, $email )
+    {
+        $logger = \Wikia\Logger\WikiaLogger::instance();
+        $logger->info( 'HELIOS_REGISTRATION', [ 'method' => __METHOD__ ] );
+
+        global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+        $helios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+
+        try {
+            $registration = $helios->register( $username, $password, $email );
+            $result = !empty( $registration->success );
+
+            if ( !empty( $registration->error ) ) {
+                $logger->error(
+                    'HELIOS_REGISTRATION',
+                    [ 'method' => __METHOD__ ]
+                );
+            }
+        }
+
+        catch ( ClientException $e ) {
+            $logger->error(
+                'HELIOS_REGISTRATION',
+                [ 'exception' => $e, 'method' => __METHOD__ ]
+            );
+            $result = false;
+        }
+
+        return $result;
+    }
+
+    public static function onRegister( &$result, &$userId, $User, $password, $email ) {
+
+        $heliosUserId = null;
+        $heliosResult = self::register( $User->mName, $password, $email, $User->mBirthDate );
+        $logger = \Wikia\Logger\WikiaLogger::instance();
+
+        if ( $heliosResult ) {
+
+            global $wgExternalSharedDB;
+            $dbw = \wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+            $heliosUserId = $dbw->selectField( 'user_helios', 'user_id', [ 'user_name' => $User->mName ], __METHOD__ );
+
+            if ( $heliosUserId ) {
+                $logger->info( 'HELIOS_REGISTRATION_SUCCESS', [ 'method' => __METHOD__, 'user_id' => $heliosUserId ] );
+            } else {
+                $logger->info( 'HELIOS_REGISTRATION_FAILURE', [ 'method' => __METHOD__, 'user_id' => null, 'user_name' => $User->mName ] );
+            }
+
+        } else {
+            $logger->info( 'HELIOS_REGISTRATION_FAILURE', [ 'method' => __METHOD__, 'user_id' => $heliosUserId, 'user_name' => $User->mName ] );
+        }
+
+        global $wgHeliosRegistrationShadowMode;
+        if ( ! $wgHeliosRegistrationShadowMode ) {
+            $result = $heliosResult;
+            $userId = $heliosUserId;
+        }
+
+        return true;
+
+    }
 
 
 	/**
