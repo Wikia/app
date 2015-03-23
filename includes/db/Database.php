@@ -1220,6 +1220,48 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
+	 * A SELECT wrapper which returns a list of single field values from result rows.
+	 *
+	 * Usually throws a DBQueryError on failure. If errors are explicitly
+	 * ignored, returns false on failure.
+	 *
+	 * If no result rows are returned from the query, false is returned.
+	 *
+	 * @param string|array $table Table name. See DatabaseBase::select() for details.
+	 * @param string $var The field name to select. This must be a valid SQL
+	 *   fragment: do not use unvalidated user input.
+	 * @param string|array $cond The condition array. See DatabaseBase::select() for details.
+	 * @param string $fname The function name of the caller.
+	 * @param string|array $options The query options. See DatabaseBase::select() for details.
+	 *
+	 * @return bool|array The values from the field, or false on failure
+	 * @since 1.25
+	 */
+	public function selectFieldValues(
+		$table, $var, $cond = '', $fname = __METHOD__, $options = array()
+	) {
+		if ( $var === '*' ) { // sanity
+			throw new DBUnexpectedError( $this, "Cannot use a * field: got '$var'" );
+		}
+
+		if ( !is_array( $options ) ) {
+			$options = array( $options );
+		}
+
+		$res = $this->select( $table, $var, $cond, $fname, $options );
+		if ( $res === false ) {
+			return false;
+		}
+
+		$values = array();
+		foreach ( $res as $row ) {
+			$values[] = $row->$var;
+		}
+
+		return $values;
+	}
+
+	/**
 	 * Returns an optional USE INDEX clause to go after the table, and a
 	 * string to go at the end of the query.
 	 *
