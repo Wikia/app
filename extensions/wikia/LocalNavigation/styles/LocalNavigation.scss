@@ -7,6 +7,7 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/z-index';
+@import 'skins/oasis/css/core/breakpoints-variables';
 
 // style required for Create Page Modal
 // TODO: should be lazy loaded CON-2169
@@ -29,7 +30,9 @@ $local-nav-wordmark-right-spacing-small: 30px;
 	@include font-size-xxs;
 	border-bottom: 1px solid $color-page-border-subtle;
 	height: 80px;
-	padding: 0 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+	@if $widthType != 0 {
+		padding: 0 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+	}
 	position: relative;
 	white-space: nowrap;
 	width: 100%;
@@ -213,8 +216,8 @@ $local-nav-wordmark-right-spacing-small: 30px;
 
 		&.right {
 			.has-more {
-				padding-right: 20px;
 				padding-left: 40px;
+				padding-right: 20px;
 
 				span {
 					left: 40px;
@@ -354,44 +357,46 @@ $local-nav-wordmark-right-spacing-small: 30px;
 	}
 }
 
-@media #{$small-only} {
-	.local-navigation {
-		padding: 0 $small-content-padding + $small-grid-column-padding - $content-border-width;
+@if $widthType != 0 {
+	@media #{$small-only} {
+		.local-navigation {
+			padding: 0 $small-content-padding + $small-grid-column-padding - $content-border-width;
 
-		.wordmark-container {
-			padding: 0 $local-nav-wordmark-right-spacing-small - $local-nav-first-lev-menu-spacing-small 0 0;
-		}
-
-		.first-level-menu > li {
-			> a {
-				padding: 0 $local-nav-first-lev-menu-spacing-small;
+			.wordmark-container {
+				padding: 0 $local-nav-wordmark-right-spacing-small - $local-nav-first-lev-menu-spacing-small 0 0;
 			}
 
-			&:last-child {
-				display: none;
-			}
-		}
+			.first-level-menu > li {
+				> a {
+					padding: 0 $local-nav-first-lev-menu-spacing-small;
+				}
 
-		.dropdown {
-			.second-level-row,
-			.third-level-row {
-				a {
-					@include grid-column-max-width('small', 3);
+				&:last-child {
+					display: none;
+				}
+			}
+
+			.dropdown {
+				.second-level-row,
+				.third-level-row {
+					a {
+						@include grid-column-max-width('small', 3);
+					}
 				}
 			}
 		}
 	}
-}
 
-@media #{$large-up} {
-	.local-navigation {
-		padding: 0 $large-content-padding + $large-grid-column-padding - $content-border-width;
+	@media #{$large-up} {
+		.local-navigation {
+			padding: 0 $large-content-padding + $large-grid-column-padding - $content-border-width;
 
-		.dropdown {
-			.second-level-row,
-			.third-level-row {
-				a {
-					@include grid-column-max-width('large', 3);
+			.dropdown {
+				.second-level-row,
+				.third-level-row {
+					a {
+						@include grid-column-max-width('large', 3);
+					}
 				}
 			}
 		}

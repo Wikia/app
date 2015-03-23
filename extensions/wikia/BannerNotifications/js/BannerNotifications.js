@@ -27,7 +27,10 @@
 		headerHeight,
 		modal,
 		backendNotification,
-		template = '<div class="banner-notification"><button class="close wikia-chiclet-button"><img></button><div class="msg">{{{content}}}</div></div>';
+		template = '<div class="banner-notification">' +
+			'<button class="close wikia-chiclet-button"><img></button>' +
+			'<div class="msg">{{{content}}}</div>' +
+			'</div>';
 
 	/**
 	 * Creates a new banner notifications instance (doesn't show it yet though!)
@@ -314,7 +317,8 @@
 		}
 	}
 
-	init();
+	// run when DOM is loaded
+	$(init);
 
 	//Window global stays for legacy reasons
 	window.BannerNotification = BannerNotification;

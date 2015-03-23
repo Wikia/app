@@ -4944,7 +4944,6 @@ Schreibe hier den zweiten Abschnitt deines Artikels. Vergiss nicht, eine Kategor
 	'owb-step3-your-pages' => 'Namen deiner Seiten',
 	'owb-unable-to-edit-description' => 'Die Beschreibung kann mit dem Wiki Builder nicht bearbeitet werden.',
 	'page-buttons-new-user-link' => 'http://de.wikia.com/wiki/Was_ist_Wikia',
-	'pagelayoutbuilder' => 'Layout-Ersteller',
 	'partner-feed-achievements-leaderboard' => 'Wiki-Rangliste',
 	'partner-feed-hotcontent' => 'Hub/vertikaler "Hot Content" geordnet nach Anzahl der Bearbeiter',
 	'passwordremindertext-HTML' => '<p>
@@ -8028,7 +8027,6 @@ Die beliebtesten acht Seiten sind bereits als Bilder in einer Kategorie angezeig
 
 Du kannst weitere Informationen über die Änderungen <a href="http://de.community.wikia.com/wiki/Benutzer_Blog:Avatar/Probier_den_neuen_Editor_aus">in diesem Blogbeitrag</a> finden.',
 	'wikifeatures-feature-description-wgEnableForumExt' => 'Behalte bei jeder Diskussion den Überblick mithilfe der neuen Wikia-Foren. Motiviere neue Leute an Diskussionen über den Wiki-Inhalt teilzunehmen, und biete den erfahreneren Wikianern eine übersichtliche und effiziente Übersicht aller aktuellen Themen.',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Hilf Autoren in deinem Wiki schick aussehende Seiten in kürzerer Zeit zu erstellen. Der Layout-Ersteller ermöglicht es Admins vor-formatierte Seiten zur Verfügung zu stellen, wenn jemand eine neue Seite im Wiki erstellt.',
 	'wikifeatures-feature-description-wgEnableVisualEditorExt' => 'Wikias neuer [[Hilfe:VisualEditor|VisualEditor]] ist eine komplette Neuentwicklung und soll allen Wikianern ein bessere Bearbeitung ermöglichen - unabhängig davon ob sie ihren ersten oder tausendsten Beitrag bearbeiten. Der VisualEditor ersetzt den bisherigen grafischen Editor auf Artikelseiten während alle Nutzer auch weiterhin den Quelltext-Modus nutzen können, sofern sie diesen bevorzugen.',
 	'wikifeatures-feature-description-wgEnableWallExt' => 'Die Kommunikation der Autoren in deinem Wiki ist ein wichtiger Bestandteil beim Aufbau deines Wikis. Die Nachrichtenseiten bieten Diskussionsfäden und ein Benachrichtigungssystem an, mit dem du genau steuern kannst, welchen Diskussionen du folgen möchtest. Keine verpassten Nachrichten mehr!',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Aktiviert die Spezialseite Spezial:GameGuidesContent in deinem Wiki. Diese ermöglicht dir einzustellen, welche Kategorien für die Darstellung in der mobilen [[w:c:de.community:Hilfe:Game_Guides|Game Guides App]] genutzt werden. Eine weitere Möglichkeit, noch mehr Leser für dein Wiki zu gewinnen!',
@@ -19042,7 +19040,6 @@ Goditela!
 	'on-the-wiki' => 'Nella wiki',
 	'outbound-screen-text-with-redirect' => 'Stai lasciando Wikia per navigare su un altro sito. Clicca qui per continuare, oppure attendi $1 secondi per essere reindirizzato.',
 	'outbound-screen-text' => 'Stai lasciando Wikia per navigare su un altro sito. Clicca qui per continuare.',
-	'pagelayoutbuilder' => 'Layout Builder',
 	'passwordremindertext-HTML' => '<p>
 Qualcuno (probabilmente tu, con indirizzo IP $1) ha richiesto l\'invio di una nuova password di accesso a {{SITENAME}} ($4).<br />
 Una password temporanea per l\'utente "$2" è stata impostata a "$3".<br />
@@ -21091,7 +21088,6 @@ __NOEDITSECTION__',
 	'wikifeatures-feature-description-wgEnableChat' => 'Comunica in tempo reale con altre persone che amano la tua wiki e il suo argomento quanto te! Chiunque abbia un account su Wikia può entrare in chat tramite il pulsante "Inizia a chattare" nell\'area di navigazione a destra della tua wiki.',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'L\'editing è alla base di una wiki e avere un buon strumento per editare è la chiave per aggiungere del contenuto in modo facile e divertente. Per migliorare l\'esperienza di editing, abbiamo riprogettato le nostre pagine di modifica.',
 	'wikifeatures-feature-description-wgEnableForumExt' => 'Tieniti aggiornato su tutte le discussioni nella tua wiki utilizzando il nuovo Forum di Wikia. Attrai nuove persone a partecipare alle conversazioni riguardanti il contenuto della tua wiki e fai in modo che i collaboratori più fedeli siano sempre attivi e coinvolti in tutti gli argomenti del momento.',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Aiuta i collaboratori della tua wiki a creare delle pagine di bell\'aspetto in poco tempo. Layout Builder consente agli amministratori della wiki di impostare dei modelli di pagine che gli utenti possono scegliere nel momento in cui creano una nuova pagina.',
 	'wikifeatures-feature-description-wgEnableVisualEditorExt' => 'Il nuovo [[Aiuto:VisualEditor|VisualEditor]] di Wikia è stato sviluppato da zero per aiutare tutti gli utenti ad aver successo, che stiano facendo la loro prima modifica o la millesima. Il VisualEditor sostituisce l\'editor RTE esistente e mantiene la possibilità per tutti gli utenti di usare il codice sorgente se preferiscono.',
 	'wikifeatures-feature-description-wgEnableWallExt' => 'Comunicare con i collaboratori della tua wiki è essenziale nella creazione e nel rafforzamento della tua community. La Bacheca utilizza un formato di conversazione strutturato e un sistema di notifiche che ti permettono di controllare quali discussioni vuoi seguire. Niente più messaggi persi!',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Usa la pagina Special:GameGuidesContent della tua wiki per decidere quali categorie
@@ -21108,7 +21104,6 @@ Amplia il tuo potenziale pubblico!',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Nuovo Editor',
 	'wikifeatures-feature-heading-wgEnableForumExt' => 'Forum',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Layout Builder',
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => 'Liste Top 10',
 	'wikifeatures-feature-heading-wgEnableVisualEditorExt' => 'Il nuovo VisualEditor',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Bacheca',
@@ -25186,7 +25181,6 @@ ___________________________________________
 	'wikifeatures-feature-description-wgEnableChat' => '위키의 사용자들과 실시간으로 대화를 나누세요. 위키아 계정을 가진 사용자라면 누구나 오른쪽 사이드바의 \'채팅 시작하기\' 버튼을 눌러 참가할 수 있습니다.',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => '편집 기능은 위키의 핵심적인 기능입니다. 위키아에서는 좀 더 나은 편집 환경을 제공해드리기 위해 편집 모드를 업그레이드했습니다.',
 	'wikifeatures-feature-description-wgEnableForumExt' => '이 기능을 활성화시키면 위키 내의 토론을 주시하기 더욱 용이해집니다. 위키의 내용에 대한 토론에 새 사용자들이 참여할 수 있도록 유도할 수 있으며 현재 진행중인 토론에 참여하는 사용자들이 꾸준히 효율적으로 토론에 참여할 수 있도록 도와줍니다.',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => '위키의 사용자들이 문서를 생성하는 데 드는 시간을 단축해보세요. 레이아웃 마법사는 위키의 관리자가 레이아웃을 설정하고 문서를 생성할 때 활용할 수 있도록 해줍니다.',
 	'wikifeatures-feature-description-wgEnableTopListsExt' => '상위 10 목록 기능은 위키에 존재하는 문서를 활용하여 투표로 순위를 결정하는 목록을 만듭니다. 위키의 사용자들과 상호 작용할 수 있기를 원하신다면 이 기능을 활용해보세요. 이 기능을 활성화하면 새 문서를 만들 때 \'상위 10 목록\'을 옵션으로 선택할 수 있습니다.',
 	'wikifeatures-feature-description-wgEnableWallExt' => '다른 기여자들과 소통하는 것은 위키 공동체를 유지하는 데 큰 역할을 합니다. 메시지 담벼락 기능을 사용하면 스레드식 토론 방법을 위키에 도입할 수 있게 되고 회원님과 관련된 소식이나 회원님이 주시하는 소식을 알림을 통해 쉽게 받아볼 수 있습니다. 더 이상 회원님의 메시지를 놓치지 마세요!',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Special:GameGuidesContent 문서를 이용하여 위키아 게임 가이드 앱에 보여질 내용을 손쉽게 관리할 수 있습니다. 잠재적인 방문자들을 관리해보세요!',
@@ -25201,7 +25195,6 @@ ___________________________________________
 	'wikifeatures-feature-heading-wgEnableChat' => '채팅',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => '편집기 리뉴얼',
 	'wikifeatures-feature-heading-wgEnableForumExt' => '포럼',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => '레이아웃 마법사',
 	'wikifeatures-feature-heading-wgEnableTopListsExt' => '상위 10 목록',
 	'wikifeatures-feature-heading-wgEnableWallExt' => '메시지 담벼락',
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => '게임 가이드에 게시할 내용 관리',

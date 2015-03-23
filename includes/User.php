@@ -320,11 +320,16 @@ class User {
 				$_key = wfSharedMemcKey( "user_touched", $this->mId );
 				$_touched = $wgMemc->get( $_key );
 				if( empty( $_touched ) ) {
-					$wgMemc->set( $_key, $data['mTouched'] );
+					$wgMemc->set( $_key, self::newTouchedTimestamp() );
+					wfDebug( "Shared user: miss on shared user_touched\n" );
 				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
 				}
+				else {
+					wfDebug( "Shared user: invalidating local user cache due to shared user_touched\n" );
+				}
 			}
+			# /Wikia
 		}
 
 		if ( !$data || $isExpired ) { # Wikia
@@ -366,6 +371,8 @@ class User {
 		$key = wfMemcKey( 'user', 'id', $this->mId );
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
+
+		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -2026,10 +2033,13 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
+			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
+			$this->saveToCache();
 			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = wfSharedMemcKey( "user_touched", $this->mId );
-				$wgMemc->delete( $memckey );
+				$wgMemc->set( $memckey, self::newTouchedTimestamp() );
+				wfDebug( "Shared user: updating shared user_touched\n" );
 			}
 		}
 	}
@@ -2685,6 +2695,14 @@ class User {
 	}
 
 	/**
+	 * Whether this user is Wikia staff or not
+	 * @return bool
+	 */
+	public function isStaff() {
+		return in_array( 'staff', $this->getEffectiveGroups() );
+	}
+
+	/**
 	 * Check if user is allowed to access a feature / make an action
 	 *
 	 * @internal param \String $varargs permissions to test
@@ -3025,6 +3043,13 @@ class User {
 
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
+
+		// Wikia change - begin (@see PLATFORM-1028)
+		// @author macbre
+		// There's no need to keep the user name (in both session and cookie) when you log out
+		$this->getRequest()->setSessionData( 'wsUserName', null );
+		$this->clearCookie( 'UserName' );
+		// Wikia change - end
 
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );

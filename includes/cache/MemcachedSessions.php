@@ -59,6 +59,8 @@ function memsess_read( $id ) {
 	$memc =& getMemc();
 	$data = $memc->get( memsess_key( $id ) );
 
+	wfDebug( sprintf( "%s[%s]: %s\n", __METHOD__, $id, $data ) );
+
 	if( ! $data ) return '';
 	return $data;
 }
@@ -81,6 +83,7 @@ function memsess_write( $id, $data ) {
 	$memc =& getMemc();
 	$memc->set( memsess_key( $id ), $data, 3600 );
 
+	wfDebug( sprintf( "%s[%s]: %s\n", __METHOD__, $id, $data ) );
 	return true;
 }
 
@@ -93,6 +96,8 @@ function memsess_write( $id, $data ) {
 function memsess_destroy( $id ) {
 	$memc =& getMemc();
 	$memc->delete( memsess_key( $id ) );
+
+	wfDebug( sprintf( "%s[%s]\n", __METHOD__, $id ) );
 	return true;
 }
 

@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.turtle', [
 	'wikia.log',
-	'ext.wikia.adEngine.gptHelper'
-], function (log, gptHelper) {
+	'ext.wikia.adEngine.gptHelper',
+	'ext.wikia.adEngine.slotTweaker'
+], function (log, gptHelper, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.turtle',
@@ -28,7 +29,22 @@ define('ext.wikia.adEngine.provider.turtle', [
 	function fillInSlot(slotName, success, hop) {
 		log(['fillInSlot', slotName, success, hop], 'debug', logGroup);
 
-		gptHelper.pushAd(slotName, '/98544404/Wikia/Nordics_RoN/' + slotName, slotMap[slotName], success, hop, 'async');
+		gptHelper.pushAd(
+			slotName,
+			'/98544404/Wikia/Nordics_RoN/' + slotName,
+			slotMap[slotName],
+			function (adInfo) {
+				// Success
+				// TODO: find a better place for operation below
+				slotTweaker.removeDefaultHeight(slotName);
+				slotTweaker.removeTopButtonIfNeeded(slotName);
+				slotTweaker.adjustLeaderboardSize(slotName);
+
+				success(adInfo);
+			},
+			hop,
+			'turtle'
+		);
 		gptHelper.flushAds();
 
 		log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);

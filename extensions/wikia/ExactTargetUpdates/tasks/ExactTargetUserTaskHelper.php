@@ -271,6 +271,8 @@ class ExactTargetUserTaskHelper {
 
 	/**
 	 * Returns user_id element from $aUserData array and removes it from array
+	 * This for API params preparation. Allows to use user_id separately as key
+	 * and user data as update parameters without user_id
 	 * @param array $aUserData key value data from user table
 	 * @return int
 	 */

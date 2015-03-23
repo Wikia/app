@@ -169,7 +169,14 @@ class Wall extends WikiaModel {
 		wfProfileIn(__METHOD__);
 		$title = Title::newFromText( $this->getUser()->getName(), NS_USER_WALL );
 		wfProfileOut(__METHOD__);
-		return $title->getFullUrl();
+		if ( $title instanceof Title ) {
+			return $title->getFullUrl();
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Wall: no wall title found', [
+				'userName' => $this->getUser()->getName(),
+			] );
+			return '';
+		}
 	}
 
 	public function disableCache() {

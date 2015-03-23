@@ -344,6 +344,10 @@ body {
 				}
 			}
 
+			.ArticlePreviewInner {
+				height: 100%;
+			}
+
 			.preview-modal-msg-wrapper {
 				border: 1px solid $color-page-border;
 				border-bottom: 0;
@@ -569,7 +573,7 @@ body {
 .mobile-preview {
 	border: 1px solid $color-page-border;
 	box-sizing: border-box;
-	height: 480px;
+	height: 100%;
 	margin: 0 auto;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
