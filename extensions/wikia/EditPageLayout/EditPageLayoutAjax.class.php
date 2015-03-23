@@ -67,14 +67,24 @@ class EditPageLayoutAjax {
 								);
 							} elseif ( $type === 'mercury' ) {
 								$hash = hash_hmac ( 'sha1', $html, $wgEditPreviewMercury['mwSalt'] );
-								$res['html'] = F::app()->renderView(
-									'EditPageLayout',
-									'mercuryPreview', [
-										'parserOutput' => $html,
-										'mercuryUrl' => $wgEditPreviewMercury['mercuryUrl'],
-										'mwHash' => $hash,
-									]
-								);
+
+								// Check if the generated JSON is bigger than Mercury can accept in POST message
+								// We can remove this error checking when either CONCF-348 or CONCF-349 is fixed
+								if (strlen(rawurlencode($html)) > 900 * 1024) {
+									$res['html'] = F::app()->renderView(
+										'EditPageLayout',
+										'mercuryPreviewError'
+									);
+								} else {
+									$res['html'] = F::app()->renderView(
+										'EditPageLayout',
+										'mercuryPreview', [
+											'parserOutput' => $html,
+											'mercuryUrl' => $wgEditPreviewMercury['mercuryUrl'],
+											'mwHash' => $hash,
+										]
+									);
+								}
 							} else {
 								$res['html'] = $html;
 							}

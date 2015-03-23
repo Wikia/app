@@ -202,4 +202,10 @@ class EditPageLayoutController extends WikiaController {
 		$this->mwHash = $this->request->getVal('mwHash');
 		$this->parserOutput = $this->request->getVal('parserOutput');
 	}
+
+	/**
+	 * Display an error saying the Mercury preview is not available for this article
+	 */
+	public function executeMercuryPreviewError() {
+	}
 }
