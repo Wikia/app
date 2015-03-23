@@ -11,7 +11,7 @@ use Email\EmailController;
 class LayoutController extends EmailController {
 
 	/**
-	 * @template Layout_body
+	 * @template main
 	 */
 	public function body() {
 		$this->response->setVal( 'content', $this->getVal( 'content' ) );

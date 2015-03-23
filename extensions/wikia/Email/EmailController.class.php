@@ -70,7 +70,7 @@ abstract class EmailController extends \WikiaController {
 	 * This is the main entry point for the email extension.  The template set for this
 	 * method is used for testing only, to preview the email that will be sent.
 	 *
-	 * @template Email_preview
+	 * @template emailPreview
 	 *
 	 * @throws \MWException
 	 */
