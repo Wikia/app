@@ -2311,6 +2311,7 @@ class User {
 	 * @see getIntOption()
 	 */
 	public function getOption( $oname, $defaultOverride = null, $ignoreHidden = false ) {
+		\Wikia\Logger\WikiaLogger::instance()->info( 'user_properties lookup' , array( 'name' => $oname ) );
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
