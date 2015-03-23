@@ -1,4 +1,4 @@
-/*global define, Mercury*/
+/*global define, Mercury, openMercuryAdLightbox*/
 define('ext.wikia.adEngine.template.modal', [
 	'wikia.log',
 	'wikia.iframeWriter',
@@ -22,16 +22,16 @@ define('ext.wikia.adEngine.template.modal', [
 
 		if (uiFactory) {
 			log(['showNew desktop modal'], 'debug', logGroup);
-			createAndShowDesktopModal();
+			createAndShowDesktopModal(params);
 		}
 
-		if (Mercury) {
+		if (Mercury && typeof window.openMercuryAdLightbox === 'function') {
 			log(['showNew mobile (Mercury) modal'], 'debug', logGroup);
-			Mercury.Modules.Ads.getInstance().openLightbox(params);
+			openMercuryAdLightbox(createAdIframe(params));
 		}
 	}
 
-	function createAndShowDesktopModal() {
+	function createAndShowDesktopModal(params) {
 		var modalConfig = {
 			vars: {
 				id: modalId,
@@ -45,16 +45,18 @@ define('ext.wikia.adEngine.template.modal', [
 
 		uiFactory.init('modal').then(function (uiModal) {
 			uiModal.createComponent(modalConfig, function (modal) {
-				var iframe = iframeWriter.getIframe({
-					code: params.code,
-					height: params.height,
-					width: params.width
-				});
-
-				modal.$content.append(iframe);
+				modal.$content.append(createAdIframe(params));
 				modal.$element.width('auto');
 				modal.show();
 			});
+		});
+	}
+
+	function createAdIframe(params) {
+		return iframeWriter.getIframe({
+			code: params.code,
+			height: params.height,
+			width: params.width
 		});
 	}
 
