@@ -21,10 +21,11 @@ class CeleryPurge {
 
 	// Add some urls to the Task
 	static function purge( $urlArr ) {
-		global $wgPurgeVignetteUsingSurrogateKeys;
 
 		// Filter urls into buckets based on service backend
 		$buckets = array_reduce($urlArr, function($carry, $item) {
+			global $wgPurgeVignetteUsingSurrogateKeys;
+
 			if ( isset($wgPurgeVignetteUsingSurrogateKeys) && VignetteRequest::isVignetteUrl($item) ) {
 				$carry['vignette'][] = $item;
 			} elseif ( strstr($item, 'MercuryApi') !== false ) {
