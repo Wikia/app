@@ -387,8 +387,8 @@
         if (Math.random() * 100 <= adHitSample) {
             args = Array.prototype.slice.call(arguments);
 
-            if (args.length === 7) {
-                args[6] = {'nonInteraction': args[6]};
+            if (args.length === 5) {
+                args[4] = {'nonInteraction': args[4]};
             }
 
             args.unshift('ads.send', 'event');
@@ -416,8 +416,8 @@
      */
     window.guaTrackEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
         var args = Array.prototype.slice.call(arguments);
-        if (args.length === 7) {
-            args[6] = {'nonInteraction': args[6]};
+        if (args.length === 5) {
+            args[4] = {'nonInteraction': args[4]};
         }
 
         args.unshift('send', 'event');
