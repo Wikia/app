@@ -10,7 +10,7 @@ module.exports = function (grunt) {
 				files: [
 					{
 						expand: true,
-						src: ['../templates/src/**/*.mustache', '../templates/src/*.mustache'],
+						src: ['../templates/src/*.mustache'],
 						dest: '../templates/compiled',
 						flatten: true
 					}
