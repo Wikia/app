@@ -232,30 +232,28 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	/**
+	 * Adds the User object to the shared database
+	 *
 	 * @param User $User
 	 * @param String $password
 	 * @param String $email
 	 * @param String $realname
 	 *
-	 * @return bool
+	 * @return bool success
 	 */
-	protected function addToDatabase( $User, $password, $email, $realname ) {
-		global $wgExternalSharedDB;
+	protected function addToDatabase( User &$User, $password, $email, $realname ) {
 		wfProfileIn( __METHOD__ );
 
-		if( wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
-			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " [ " . $User->getId() . " ] (that's bad... fix the calling code)\n" );
-		} else {
-			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
+		$User->setToken();
 
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
-			$User->setToken();
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
+		try {
 			$dbw->insert(
 				'`user`',
-				array(
-					'user_id' => $seqVal,
+				[
+					'user_id' => null,
 					'user_name' => $User->mName,
 					'user_password' => $User->mPassword,
 					'user_newpassword' => $User->mNewpassword,
@@ -268,14 +266,12 @@ class ExternalUser_Wikia extends ExternalUser {
 					'user_registration' => $dbw->timestamp( $User->mRegistration ),
 					'user_editcount' => 0,
 					'user_birthdate' => $User->mBirthDate
-				),
-				__METHOD__,
-				array( 'IGNORE' )
+				],
+				__METHOD__
 			);
 			$User->mId = $dbw->insertId();
 			$dbw->commit( __METHOD__ );
 
-			// Logging added in order to identify what does INSERT to wikicities.user.
 			\Wikia\Logger\WikiaLogger::instance()->info(
 				'HELIOS_REGISTRATION_INSERTS',
 				[ 'exception' => new Exception, 'userid' => $User->mId, 'username' => $User->mName ]
@@ -283,10 +279,21 @@ class ExternalUser_Wikia extends ExternalUser {
 
 			// Clear instance cache other than user table data, which is already accurate
 			$User->clearInstanceCache();
+
+			$ret = true;
+		}
+
+		catch ( DBQueryError $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				__METHOD__,
+				[ 'exception' => $e, 'username' => $User->mName ]
+			);
+			$dbw->rollback( __METHOD__ );
+			$ret = false;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $User;
+		return $ret;
 	}
 
 	/**
