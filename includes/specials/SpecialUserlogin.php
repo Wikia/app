@@ -251,8 +251,8 @@ class LoginForm extends SpecialPage {
 
 		# Create the account and abort if there's a problem doing so
 		$u = $this->addNewAccountInternal();
-		if( $u == null ) {
-			return;
+		if( ! $u  ) {
+			return false;
 		}
 
 		# If we showed up language selection links, and one was in use, be
@@ -360,6 +360,11 @@ class LoginForm extends SpecialPage {
 	 * @private
 	 * Wikia change - add new param ($errParam) to function mainLoginForm()
 	 * Wikia change - add prefix to message key for User Login Ext
+	 *
+	 * @return bool|User User on success; false otherwise.
+	 *
+	 * @throws ReadOnlyError
+	 * @throws PermissionsError
 	 */
 	function addNewAccountInternal() {
 		global $wgAuth, $wgMemc, $wgAccountCreationThrottle,
@@ -531,17 +536,12 @@ class LoginForm extends SpecialPage {
 
 		self::clearCreateaccountToken();
 		$u->mBirthDate = date( 'Y-m-d', $this->wpUserBirthDay );
-		$u = $this->initUser( $u, false );
-		$user_id = $u->getID();
-		if( !empty($user_id) ) {
-			$dbw = wfGetDB(DB_MASTER);
-			$dbw->update(
-				'user',
-				array( 'user_birthdate' => date( 'Y-m-d', $this->wpUserBirthDay ) ),
-				array( 'user_id' => $user_id ),
-				__METHOD__
-			);
+
+		if ( ! $this->initUser( $u, false ) ) {
+			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'externaldberror' )->text() );
+			return false;
 		}
+
 		return $u;
 	}
 
@@ -551,18 +551,20 @@ class LoginForm extends SpecialPage {
 	 *
 	 * @param $u User object.
 	 * @param $autocreate boolean -- true if this is an autocreation via auth plugin
-	 * @return User object.
+	 * @return boolean true on success; false otherwise
 	 * @private
 	 */
-	function initUser( $u, $autocreate ) {
+	function initUser( User &$u, $autocreate ) {
 		global $wgAuth, $wgExternalAuthType;
 
 		if ( $wgExternalAuthType ) {
-			$u = ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
-			if ( is_object( $u ) ) {
+			if ( ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
 				$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+			} else {
+				// Terminate on failure.
+				return false;
 			}
-		} else{
+		} else {
 			$u->addToDatabase();
 		}
 
@@ -594,7 +596,7 @@ class LoginForm extends SpecialPage {
 		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
 		$ssUpdate->doUpdate();
 
-		return $u;
+		return true;
 	}
 
 	/**
