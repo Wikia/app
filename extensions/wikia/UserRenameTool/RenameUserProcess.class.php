@@ -583,7 +583,7 @@ class RenameUserProcess {
 			$fakeUser->setName( $this->mOldUsername );
 
 			if ( $wgExternalAuthType ) {
-				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
+				ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
 			} else {
 				$fakeUser->addToDatabase();
 			}

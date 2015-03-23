@@ -364,7 +364,7 @@ define('wikia.preview', [
 
 			loadPreview(previewTypes[currentTypeName].name, true);
 
-			if (window.wgOasisResponsivew || indow.wgOasisBreakpoints) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				// adding type dropdown to preview
 				if (!previewTemplate) {
 					loader({
