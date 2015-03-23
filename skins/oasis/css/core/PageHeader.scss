@@ -2,14 +2,14 @@
 @import "layout";
 
 .WikiaPageHeader {
-	clear: both;
 	margin: 0 10px 10px 10px;
 	position: relative;
-	z-index: 2; //ie7 requirement
+
 	&.separator {
 		border-bottom: 1px solid $color-page-border;
 		padding: 0 0 15px 0;
 	}
+
 	&.editbox {
 		padding: 20px 90px 0 0;
 		margin: 0 0 10px;
@@ -17,6 +17,7 @@
 			margin-top: 4px;
 		}
 	}
+
 	.ns-talk & {
 		padding-right: 10px;
 		.wikia-menu-button {
@@ -24,6 +25,7 @@
 			top: 7px;
 		}
 	}
+
 	.commentslikes {
 		float: right;
 		padding: 1px 0;
@@ -32,13 +34,13 @@
 			padding-top: 1px;
 		}
 	}
+
 	h1 {
 		display: inline;
 		font-size: 26px;
 		margin: 0 10px 0 0;
 		line-height: 27px;
 		word-wrap: break-word;
-		-ms-hyphens: auto;
 		strong {
 			font-weight: bold;
 			margin-right: 5px;
@@ -47,6 +49,7 @@
 			font-style: italic;
 		}
 	}
+
 	.view-source {
 		font-size: 10px;
 		position: relative;
@@ -60,6 +63,7 @@
 			top: 1px;
 		}
 	}
+
 	h2, p {
 		border: none;
 		font-size: 14px;
@@ -98,9 +102,7 @@
 // WikiaNav - begin
 .wikinav2 {
 	.WikiaPageHeader {
-		border-bottom: solid 1px $color-page-border;
 		padding-bottom: 7px;
-		padding-right: 175px;
 		margin-bottom: 10px;
 
 		> .comments {
@@ -165,5 +167,32 @@
 	}
 	details {
 		width: 980px;
+	}
+}
+
+.wikinav2.oasis-one-column .WikiaPageHeader {
+	padding-right: 0;
+}
+
+.WikiaPageHeader {
+	.header-table {
+		border-bottom: solid 1px $color-page-border;
+		display: table;
+
+		.header-column {
+			display: table-cell;
+			padding-bottom: 7px;
+			padding-top: 7px;
+			vertical-align: middle;
+			width: auto;
+
+			&.max-width {
+				width: 100%;
+			}
+		}
+	}
+
+	.wikia-menu-button {
+		margin-top:7px;
 	}
 }

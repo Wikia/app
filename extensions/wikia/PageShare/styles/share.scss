@@ -1,8 +1,8 @@
 #PageShareToolbar {
-	float: right;
+	white-space: nowrap;
 
 	li {
-		float: left;
+		display: inline;
 	}
 
 	svg {
