@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 		},
 		watch: {
 			scripts: {
-				files: ['../templates/src/**/*.mustache', '../styles/*.css'],
+				files: ['../templates/src/*.mustache', '../styles/*.css'],
 				tasks: ['emailBuilder']
 			}
 		}
