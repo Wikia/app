@@ -108,6 +108,11 @@
 			}
 		}
 	}
+	@media #{$breakpoint-large-up} {
+		.WikiHeader > nav.WikiNav .navbackground {
+			@include width-calc("100% + 52px");
+		}
+	}
 
 	.WikiaRail, .main-page-tag-rcs {
 		padding: 0;
