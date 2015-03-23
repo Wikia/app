@@ -170,7 +170,7 @@
 		width: 300px;
 	}
 
-	.global-notification {
+	.banner-notifications-wrapper {
 		width: auto;
 
 		&.float {
@@ -178,5 +178,15 @@
 			margin: 0;
 			right: 0;
 		}
+	}
+
+	.WikiHeader {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.WikiaPageHeader {
+		margin-left: 0;
+		margin-right: 0;
 	}
 }
