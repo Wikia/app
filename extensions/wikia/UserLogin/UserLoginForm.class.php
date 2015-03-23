@@ -55,7 +55,7 @@ class UserLoginForm extends LoginForm {
 	/**
 	 * Adds a new user account and sends a confirmation email.
 	 *
-	 * @return bool|User an instance of User on success; boolean false otherwise.
+	 * @return User an instance of User on success; null otherwise.
 	 * @throws PermissionsError
 	 * @throws ReadOnlyError
 	 */

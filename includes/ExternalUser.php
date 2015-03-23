@@ -129,10 +129,10 @@ abstract class ExternalUser {
 	/**
 	 * add new User object to database
 	 * 
-	 * @param $User User an instance of User to add
-	 * @param $password string user's password
-	 * @param $email string user's email
-	 * @param $realname string user's real name
+	 * @param User $User an instance of User to add
+	 * @param string $password user's password
+	 * @param string $email user's email
+	 * @param string $realname user's real name
 	 * @return boolean true on success; false otherwise
 	 */
 	public static function addUser( User &$User, $password, $email, $realname ) {
@@ -194,10 +194,10 @@ abstract class ExternalUser {
 	/**
 	 * Add user to the central database
 	 *
-	 * @param $User User an instance of User to add
-	 * @param $password string user's password
-	 * @param $email string user's email
-	 * @param $realname string user's real name
+	 * @param User $User an instance of User to add
+	 * @param string $password user's password
+	 * @param string $email string user's email
+	 * @param string $realname user's real name
 	 * @return mixed User or false
 	 */
 	protected abstract function addToDatabase( User &$User, $password, $email, $realname );
