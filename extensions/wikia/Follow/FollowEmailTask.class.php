@@ -13,9 +13,8 @@ class FollowEmailTask extends BaseTask {
 		] );
 
 		foreach ( $aWatchers as $sKey => $sValue ) {
-			$oEmailNotification = new EmailNotification();
 			$oTitle = Title::makeTitle( $iNamespace, $sKey );
-			$oEmailNotification->notifyOnPageChange( $oUser, $oTitle,
+			$oEmailNotification = new EmailNotification( $oUser, $oTitle,
 				$now,
 				$sMessage,
 				0,
@@ -23,6 +22,7 @@ class FollowEmailTask extends BaseTask {
 				$sAction,
 				[ 'notisnull' => 1, 'childTitle' => $this->title ]
 			);
+			$oEmailNotification->notifyOnPageChange();
 		}
 	}
 }
