@@ -101,7 +101,9 @@ define('wikia.preview', [
 			var params = {
 					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
 					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
-					bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					bestPracticesLinkUrl:  window.wgArticlePath.replace(
+						'$1', $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					)
 				},
 				template = response.mustache[0],
 				html = mustache.render(template, params);
