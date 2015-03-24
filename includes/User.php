@@ -320,16 +320,11 @@ class User {
 				$_key = wfSharedMemcKey( "user_touched", $this->mId );
 				$_touched = $wgMemc->get( $_key );
 				if( empty( $_touched ) ) {
-					$wgMemc->set( $_key, self::newTouchedTimestamp() );
-					wfDebug( "Shared user: miss on shared user_touched\n" );
+					$wgMemc->set( $_key, $data['mTouched'] );
 				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
 				}
-				else {
-					wfDebug( "Shared user: invalidating local user cache due to shared user_touched\n" );
-				}
 			}
-			# /Wikia
 		}
 
 		if ( !$data || $isExpired ) { # Wikia
@@ -371,8 +366,6 @@ class User {
 		$key = wfMemcKey( 'user', 'id', $this->mId );
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
-
-		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -2033,13 +2026,10 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
-			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
-			$this->saveToCache();
 			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
 				$memckey = wfSharedMemcKey( "user_touched", $this->mId );
-				$wgMemc->set( $memckey, self::newTouchedTimestamp() );
-				wfDebug( "Shared user: updating shared user_touched\n" );
+				$wgMemc->delete( $memckey );
 			}
 		}
 	}
