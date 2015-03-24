@@ -1497,7 +1497,7 @@ class WikiFactory {
 	 * @param string $id can be either "id:<var id>" or "name:<var name>"
 	 * @return string formatted memcache key
 	 */
-	static private function getVarMetadataKey( $id ) {
+	static protected function getVarMetadataKey( $id ) {
 		return wfSharedMemcKey( 'wikifactory:variables:metadata:v5', $id );
 	}
 
@@ -1508,7 +1508,7 @@ class WikiFactory {
 	 * @param int $var_id variable ID
 	 * @return string formatted memcache key
 	 */
-	static private function getVarValueKey( $city_id, $var_id ) {
+	static protected function getVarValueKey( $city_id, $var_id ) {
 		return wfSharedMemcKey( 'wikifactory:variables:value:v5', $city_id, $var_id );
 	}
 
@@ -3067,7 +3067,7 @@ class WikiFactory {
 	 *
 	 * @return string - variables key for memcached
 	 */
-	static private function getWikiaCacheKey( $city_id ) {
+	static protected function getWikiaCacheKey( $city_id ) {
 		return "wikifactory:wikia:v1:{$city_id}";
 	}
 
@@ -3084,7 +3084,7 @@ class WikiFactory {
 	 *
 	 * @return string - variables key for memcached
 	 */
-	static private function getWikiaDBCacheKey( $city_dbname ) {
+	static protected function getWikiaDBCacheKey( $city_dbname ) {
 		return "wikifactory:wikia:db:v1:{$city_dbname}";
 	}
 
