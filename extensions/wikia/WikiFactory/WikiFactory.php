@@ -7,6 +7,8 @@
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia.com> for Wikia Inc.
  */
 
+use Wikia\Logger\WikiaLogger;
+
 $wgExtensionCredits['other'][] = [
 	"name" => "WikiFactoryLoader",
 	"description" => "MediaWiki configuration loader",
@@ -1486,6 +1488,16 @@ class WikiFactory {
 	}
 
 	/**
+	 * Get memcache key for given WF variable metadata
+	 *
+	 * @param string $id can be either "id:<var id>" or "name:<var name>"
+	 * @return string formatted memcache key
+	 */
+	static private function getVarMetadataKey( $id ) {
+		return wfSharedMemcKey( 'wikifactory:variables:metadata:v5', $id );
+	}
+
+	/**
 	 * getDomainKey
 	 *
 	 * get memcached key for domain info
@@ -1984,20 +1996,39 @@ class WikiFactory {
 		$fname = __METHOD__ . " (from {$caller})";
 
 		if ( $master || !isset( self::$variablesCache[$cacheKey] ) ) {
-			$oRow = $dbr->selectRow(
-				[ "city_variables_pool" ],
-				[
-					"cv_id",
-					"cv_name",
-					"cv_description",
-					"cv_variable_type",
-					"cv_variable_group",
-					"cv_access_level",
-					"cv_is_unique"
-				],
-				$condition,
-				$fname
+			$oRow = WikiaDataAccess::cache(
+				self::getVarMetadataKey( $cacheKey ),
+				WikiaResponse::CACHE_STANDARD,
+				function() use ( $dbr, $condition, $fname ) {
+					$oRow = $dbr->selectRow(
+						[ "city_variables_pool" ],
+						[
+							"cv_id",
+							"cv_name",
+							"cv_description",
+							"cv_variable_type",
+							"cv_variable_group",
+							"cv_access_level",
+							"cv_is_unique"
+						],
+						$condition,
+						$fname
+					);
+
+					// log typos in calls to WikiFactory::loadVariableFromDB
+					if ( !is_object( $oRow ) ) {
+						WikiaLogger::instance()->error('WikiFactory - variable not found', [
+							'condition' => $condition,
+							'exception' => new Exception()
+						]);
+					}
+
+					return $oRow;
+				},
+				// always hit the database when $master set to true
+				$master ? WikiaDataAccess::SKIP_CACHE : WikiaDataAccess::USE_CACHE
 			);
+
 			self::$variablesCache[$cacheKey] = $oRow;
 		}
 		$oRow = self::$variablesCache[$cacheKey];
@@ -2858,6 +2889,9 @@ class WikiFactory {
 			$bStatus = false;
 			throw $e;
 		}
+
+		global $wgMemc;
+		$wgMemc->delete( self::getVarMetadataKey( 'id:' . $cv_variable_id ) );
 
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
