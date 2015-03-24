@@ -434,77 +434,102 @@ class UserMailer {
  *
  */
 class EmailNotification {
-	protected $action;
-	protected $subject, $body, $replyto, $from, $bodyHTML;
-	protected $timestamp, $summary, $minorEdit, $oldid, $composed_common;
-	protected $mailTargets = array();
 
 	/**
 	 * @var Title
 	 */
-	protected $title;
+	private $title;
 
 	/**
 	 * @var User
 	 */
-	protected $editor;
+	private $editor;
+
+	private $action;
+
+	private $subject;
+
+	private $body;
+
+	private $replyto;
+
+	private $from;
+
+	private $bodyHTML;
+
+	private $timestamp;
+
+	private $summary;
+
+	private $minorEdit;
+
+	private $oldid;
+
+	private $composedCommon;
+
+	private $mailTargets = [];
+
+
+	/**
+	* @param $editor User object
+	* @param $title Title object
+	* @param $timestamp string Edit timestamp
+	* @param $summary string Edit summary
+	* @param $minorEdit bool
+	* @param $oldid bool Revision ID
+	* @param $action (Wikia)
+	* @param $otherParam
+	 */
+	public function __construct( $editor, $title, $timestamp, $summary, $minorEdit, $oldid = false, $action = '', $otherParam = [] ) {
+		$this->title = $title;
+		$this->timestamp = $timestamp;
+		$this->summary = $summary;
+		$this->minorEdit = $minorEdit;
+		$this->oldid = $oldid;
+		$this->action = $action;
+		$this->editor = $editor;
+		$this->composedCommon = false;
+		$this->otherParam = $otherParam;
+	}
 
 	/**
 	 * Send emails corresponding to the user $editor editing the page $title.
 	 * Also updates wl_notificationtimestamp.
 	 *
 	 * May be deferred via the job queue.
-	 *
-	 * @param $editor User object
-	 * @param $title Title object
-	 * @param $timestamp
-	 * @param $summary
-	 * @param $minorEdit
-	 * @param $oldid (default: false)
-	 * @param $action(Wikia)
-	 * @param $otherParam(Wikia)
 	 */
-	public function notifyOnPageChange( $editor, $title, $timestamp, $summary, $minorEdit, $oldid = false, $action = '', $otherParam = array() ) {
-		global $wgEnotifWatchlist, $wgShowUpdatedMarker, $wgEnotifMinorEdits,
-			$wgUsersNotifiedOnAllChanges, $wgEnotifUserTalk;
+	public function notifyOnPageChange() {
+		global $wgEnotifWatchlist, $wgShowUpdatedMarker;
 
-		if ( $title->getNamespace() < 0 ) {
-			return;
-		}
-
-		# <Wikia>
-		if( !wfRunHooks( 'AllowNotifyOnPageChange', array( $editor, $title ) ) ) {
+		if ( $this->title->getNamespace() < 0 ) {
 			return false;
 		}
-		
-		if(!empty($otherParam['watchers'])) {
-			$watchers = $otherParam['watchers'];
+
+		if( !wfRunHooks( 'AllowNotifyOnPageChange', array( $this->editor, $this->title ) ) ) {
+			return false;
 		}
-		# </Wikia>
 
 		// Build a list of users to notfiy
-		$watchers = array();
+		$watchers = [];
 		if ( $wgEnotifWatchlist || $wgShowUpdatedMarker ) {
-			/* Wikia change begin - @author: wladek & tomek */
-			/* RT#55604: Add a timeout to the watchlist email block */
+			//Add a timeout to the watchlist email block */
 			global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
 			if ( !empty( $otherParam['notisnull'] ) ) {
 				$notificationTimeoutSql = "1";
 			} elseif ( !empty($wgEnableWatchlistNotificationTimeout) && isset($wgWatchlistNotificationTimeout) ) {
-				$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $timestamp ) - intval( $wgWatchlistNotificationTimeout ) );
+				$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $this->timestamp ) - intval( $wgWatchlistNotificationTimeout ) );
 				$notificationTimeoutSql = "wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout'";
 			} else {
 				$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
 			}
-			/* Wikia change end */
 
 			$dbw = wfGetDB( DB_MASTER );
 			$res = $dbw->select( array( 'watchlist' ),
 				array( 'wl_user' ),
 				array(
-					'wl_title' => $title->getDBkey(),
-					'wl_namespace' => $title->getNamespace(),
-					'wl_user != ' . intval( $editor->getID() ),
+					'wl_title' => $this->title->getDBkey(),
+					'wl_namespace' => $this->title->getNamespace(),
+					'wl_user != ' . intval( $this->editor->getID() ),
 					$notificationTimeoutSql,
 				), __METHOD__
 			);
@@ -514,14 +539,20 @@ class EmailNotification {
 			if ( $watchers ) {
 				// Update wl_notificationtimestamp for all watching users except
 				// the editor
-				$wl = WatchedItem::fromUserTitle( $editor, $title );
-				$wl->updateWatch( $watchers, $timestamp );
+				$wl = WatchedItem::fromUserTitle( $this->editor, $this->title );
+				$wl->updateWatch( $watchers, $this->timestamp );
 			}
 
-			/* Wikia change begin - @author: Jakub Kurcek */
-			wfRunHooks( 'NotifyOnSubPageChange', array ( $watchers, $title, $editor, $notificationTimeoutSql ) );
-			/* Wikia change end */
+			wfRunHooks( 'NotifyOnSubPageChange', array ( $watchers, $this->title, $this->editor, $notificationTimeoutSql ) );
 		}
+
+		if ( $this->shouldSendEmail( $watchers ) ) {
+			$this->actuallyNotifyOnPageChange( $watchers );
+		}
+	}
+
+	private function shouldSendEmail( array $watchers ) {
+		global $wgUsersNotifiedOnAllChanges, $wgEnotifUserTalk, $wgEnotifMinorEdits;
 
 		$sendEmail = true;
 		// If nobody is watching the page, and there are no users notified on all changes
@@ -530,18 +561,15 @@ class EmailNotification {
 		if ( !count( $watchers ) && !count( $wgUsersNotifiedOnAllChanges ) ) {
 			$sendEmail = false;
 			// Only send notification for non minor edits, unless $wgEnotifMinorEdits
-			if ( !$minorEdit || ( $wgEnotifMinorEdits && !$editor->isAllowed( 'nominornewtalk' ) ) ) {
-				$isUserTalkPage = ( $title->getNamespace() == NS_USER_TALK );
-				if ( $wgEnotifUserTalk && $isUserTalkPage && $this->canSendUserTalkEmail( $editor, $title, $minorEdit ) ) {
+			if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
+				$isUserTalkPage = ( $this->title->getNamespace() == NS_USER_TALK );
+				if ( $wgEnotifUserTalk && $isUserTalkPage && $this->canSendUserTalkEmail( $this->editor, $this->title, $this->minorEdit ) ) {
 					$sendEmail = true;
 				}
 			}
 		}
 
-		if ( !$sendEmail ) {
-			return;
-		}
-		$this->actuallyNotifyOnPageChange( $editor, $title, $timestamp, $summary, $minorEdit, $oldid, $watchers, $action, $otherParam );
+		return $sendEmail;
 	}
 
 	/**
@@ -550,17 +578,8 @@ class EmailNotification {
 	 * Send emails corresponding to the user $editor editing the page $title.
 	 * Also updates wl_notificationtimestamp.
 	 *
-	 * @param $editor User object
-	 * @param $title Title object
-	 * @param $timestamp string Edit timestamp
-	 * @param $summary string Edit summary
-	 * @param $minorEdit bool
-	 * @param $oldid int Revision ID
-	 * @param $watchers array of user IDs
-	 * @param $action (Wikia)
-	 * @param $otherParam
 	 */
-	public function actuallyNotifyOnPageChange( $editor, $title, $timestamp, $summary, $minorEdit, $oldid, $watchers, $action='', $otherParam = array() ) {
+	private function actuallyNotifyOnPageChange( $watchers ) {
 		# we use $wgPasswordSender as sender's address
 		global $wgEnotifWatchlist;
 		global $wgEnotifMinorEdits, $wgEnotifUserTalk;
@@ -571,31 +590,21 @@ class EmailNotification {
 		# 1. EmailNotification for pages (other than user_talk pages) must be enabled
 		# 2. minor edits (changes) are only regarded if the global flag indicates so
 
-		$isUserTalkPage = ( $title->getNamespace() == NS_USER_TALK );
+		$isUserTalkPage = ( $this->title->getNamespace() == NS_USER_TALK );
 
-		$this->title = $title;
-		$this->timestamp = $timestamp;
-		$this->summary = $summary;
-		$this->minorEdit = $minorEdit;
-		$this->oldid = $oldid;
-		$this->action = $action;
-		$this->editor = $editor;
-		$this->composed_common = false;
-		$this->other_param = $otherParam;
-		
 		$userTalkId = false;
 
-		if ( !$minorEdit || ( $wgEnotifMinorEdits && !$editor->isAllowed( 'nominornewtalk' ) ) ) {
+		if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
 
-			if ( $wgEnotifUserTalk && $isUserTalkPage && $this->canSendUserTalkEmail( $editor, $title, $minorEdit ) ) {
-				$targetUser = User::newFromName( $title->getText() );
+			if ( $wgEnotifUserTalk && $isUserTalkPage && $this->canSendUserTalkEmail() ) {
+				$targetUser = User::newFromName( $this->title->getText() );
 				$this->compose( $targetUser );
 				$userTalkId = $targetUser->getId();
 
 				/* Wikia change begin - @author: Marooned */
 				/* Send mail to user when comment on his user talk has been added - see RT#44830 */
 				$fakeUser = null;
-				wfRunHooks('UserMailer::NotifyUser', array( $title, &$fakeUser ));
+				wfRunHooks('UserMailer::NotifyUser', array( $this->title, &$fakeUser ));
 				if ( $fakeUser instanceof User && $fakeUser->getOption( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
 					wfDebug( __METHOD__.": sending talk page update notification\n" );
 					$this->compose( $fakeUser );
@@ -607,18 +616,13 @@ class EmailNotification {
 				// Send updates to watchers other than the current editor
 				$userArray = UserArray::newFromIDs( $watchers );
 
+				/* @var $watchingUser User */
 				foreach ( $userArray as $watchingUser ) {
 					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
-						( !$minorEdit || $watchingUser->getOption( 'enotifminoredits' ) ) &&
+						( !$this->minorEdit || $watchingUser->getOption( 'enotifminoredits' ) ) &&
 						$watchingUser->isEmailConfirmed() &&
 						$watchingUser->getID() != $userTalkId
-						/**
-						* WIKIA CHANGE begin - @author adam.karminski@wikia-inc.com
-						**/
 						&& !$watchingUser->getBoolOption( 'unsubscribed' ) )
-						/**
-						* WIKIA CHANGE end
-						**/
 					{
 						$this->compose( $watchingUser );
 					}
@@ -628,7 +632,7 @@ class EmailNotification {
 
 		global $wgUsersNotifiedOnAllChanges;
 		foreach ( $wgUsersNotifiedOnAllChanges as $name ) {
-			if ( $editor->getName() == $name ) {
+			if ( $this->editor->getName() == $name ) {
 				// No point notifying the user that actually made the change!
 				continue;
 			}
@@ -641,24 +645,21 @@ class EmailNotification {
 	}
 
 	/**
-	 * @param $editor User
-	 * @param $title Title bool
-	 * @param $minorEdit
 	 * @return bool
 	 */
-	private function canSendUserTalkEmail( $editor, $title, $minorEdit ) {
+	private function canSendUserTalkEmail() {
 		global $wgEnotifUserTalk;
-		$isUserTalkPage = ( $title->getNamespace() == NS_USER_TALK );
+		$isUserTalkPage = ( $this->title->getNamespace() == NS_USER_TALK );
 
 		if ( $wgEnotifUserTalk && $isUserTalkPage ) {
-			$targetUser = User::newFromName( $title->getText() );
+			$targetUser = User::newFromName( $this->title->getText() );
 
 			if ( !$targetUser || $targetUser->isAnon() ) {
 				wfDebug( __METHOD__ . ": user talk page edited, but user does not exist\n" );
-			} elseif ( $targetUser->getId() == $editor->getId() ) {
+			} elseif ( $targetUser->getId() == $this->editor->getId() ) {
 				wfDebug( __METHOD__ . ": user edited their own talk page, no notification sent\n" );
 			} elseif ( $targetUser->getOption( 'enotifusertalkpages' ) &&
-				( !$minorEdit || $targetUser->getOption( 'enotifminoredits' ) ) )
+				( !$this->minorEdit || $targetUser->getOption( 'enotifminoredits' ) ) )
 			{
 				if ( $targetUser->isEmailConfirmed() ) {
 					wfDebug( __METHOD__ . ": sending talk page update notification\n" );
@@ -682,7 +683,7 @@ class EmailNotification {
 		global $wgEnotifImpersonal, $wgEnotifUseRealName;
 		global $wgLanguageCode;
 
-		$this->composed_common = true;
+		$this->composedCommon = true;
 
 		# <Wikia>
 		$action = strtolower($this->action);
@@ -691,8 +692,8 @@ class EmailNotification {
 			$subject = wfMessage( 'enotif_subject' )->inContentLanguage()->text();
 		}
 		list ( $body, $bodyHTML ) = wfMsgHTMLwithLanguageAndAlternative(
-			'enotif_body' . ( $action == '' ? '' : ( '_' . $action ) ), 
-			'enotif_body', 
+			'enotif_body' . ( $action == '' ? '' : ( '_' . $action ) ),
+			'enotif_body',
 			$wgLanguageCode
 		);
 		# </Wikia>
@@ -711,11 +712,11 @@ class EmailNotification {
 					$this->title->getCanonicalUrl( 'diff=next&oldid=' . $this->oldid ) )->inContentLanguage()->plain();
 			} else {
 				/* WIKIA change, watchlist link tracking, rt#33913 */
-				list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative ( 
-					'enotif_lastvisited', 
-					'enotif_lastvisited', 
-					$wgLanguageCode, 
-					array(), 
+				list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative (
+					'enotif_lastvisited',
+					'enotif_lastvisited',
+					$wgLanguageCode,
+					array(),
 					$this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid )
 				);
 				# </Wikia>
@@ -745,7 +746,7 @@ class EmailNotification {
 		# <Wikia>
 		$keys['$ACTION'] = $this->action;
 
-		wfRunHooks('MailNotifyBuildKeys', array( &$keys, $this->action, $this->other_param ));
+		wfRunHooks('MailNotifyBuildKeys', array( &$keys, $this->action, $this->otherParam ));
 		# </Wikia>
 
 		if ( $this->editor->isAnon() ) {
@@ -764,7 +765,7 @@ class EmailNotification {
 		// RT #1294 Bartek 07.05.2009, use the language of the wiki
 		$summary = ($this->summary == '') ? wfMessage( 'enotif_no_summary' )->inContentLanguage()->plain() : '"' . $this->summary . '"';
 		# </Wikia>
-		
+
 		# Replace this after transforming the message, bug 35019
 		$postTransformKeys['$PAGESUMMARY'] = $summary;
 
@@ -819,7 +820,7 @@ class EmailNotification {
 	function compose( $user ) {
 		global $wgEnotifImpersonal;
 
-		if ( !$this->composed_common )
+		if ( !$this->composedCommon )
 			$this->composeCommonMailtext();
 
 		if ( $wgEnotifImpersonal ) {
@@ -867,8 +868,8 @@ class EmailNotification {
 				$wgContLang->userDate( $this->timestamp, $watchingUser ),
 				$wgContLang->userTime( $this->timestamp, $watchingUser ) ),
 			$this->body );
-			
-		# <Wikia> 
+
+		# <Wikia>
 		if ( $watchingUser->getOption('htmlemails') && !empty($this->bodyHTML) ) {
 			$bodyHTML = str_replace(
 				array( '$WATCHINGUSERNAME',
@@ -878,7 +879,7 @@ class EmailNotification {
 					$wgContLang->userDate( $this->timestamp, $watchingUser ),
 					$wgContLang->userTime( $this->timestamp, $watchingUser ) ),
 				$this->bodyHTML );
-			# now body is array with text and html version of email	
+			# now body is array with text and html version of email
 			$body = array( 'text' => $body, 'html' => $bodyHTML );
 		}
 		# </Wikia>

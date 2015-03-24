@@ -190,13 +190,13 @@ class InterwikiIntegrationRecentChange {
 					$wgUser : User::newFromName( $this->mAttribs['integration_rc_user_text'], false );
 			}
 			# FIXME: this would be better as an extension hook
-			$enotif = new EmailNotification();
 			$title = Title::makeTitle( $this->mAttribs['integration_rc_namespace'], $this->mAttribs['integration_rc_title'] );
-			$enotif->notifyOnPageChange( $editor, $title,
+			$enotif = new EmailNotification( $editor, $title,
 				$this->mAttribs['integration_rc_timestamp'],
 				$this->mAttribs['integration_rc_comment'],
 				$this->mAttribs['integration_rc_minor'],
 				$this->mAttribs['integration_rc_last_oldid'] );
+			$enotif->notifyOnPageChange();
 		}
 	}
 	
