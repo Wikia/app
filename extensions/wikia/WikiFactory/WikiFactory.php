@@ -761,6 +761,10 @@ class WikiFactory {
 
 
 		self::clearCache( $city_id );
+
+		global $wgMemc;
+		$wgMemc->delete( self::getVarValueKey( $city_id, $variable->cv_id ) );
+
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
 	}
@@ -1498,6 +1502,17 @@ class WikiFactory {
 	}
 
 	/**
+	 * Get memcache key for given WF variable data
+	 *
+	 * @param int $city_id wiki ID
+	 * @param int $var_id variable ID
+	 * @return string formatted memcache key
+	 */
+	static private function getVarValueKey( $city_id, $var_id ) {
+		return wfSharedMemcKey( 'wikifactory:variables:value:v5', $city_id, $var_id );
+	}
+
+	/**
 	 * getDomainKey
 	 *
 	 * get memcached key for domain info
@@ -2045,19 +2060,26 @@ class WikiFactory {
 		}
 
 		if ( !empty( $city_id ) ) {
-			$oRow2 = $dbr->selectRow(
-				[ "city_variables" ],
-				[
-					"cv_city_id",
-					"cv_variable_id",
-					"cv_value"
-				],
-				[
-					"cv_variable_id" => $oRow->cv_id,
-					"cv_city_id" => $city_id
-				],
-				$fname
+			$oRow2 = WikiaDataAccess::cache(
+				self::getVarValueKey( $city_id, $oRow->cv_id ),
+				3600,
+				function() use ($dbr, $oRow, $city_id, $fname) {
+					return $dbr->selectRow(
+						[ "city_variables" ],
+						[
+							"cv_city_id",
+							"cv_variable_id",
+							"cv_value"
+						],
+						[
+							"cv_variable_id" => $oRow->cv_id,
+							"cv_city_id" => $city_id
+						],
+						$fname
+					);
+				}
 			);
+
 			if ( isset( $oRow2->cv_variable_id ) ) {
 
 				$oRow->cv_city_id = $oRow2->cv_city_id;
