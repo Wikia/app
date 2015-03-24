@@ -320,7 +320,7 @@ class User {
 				$_key = wfSharedMemcKey( "user_touched", $this->mId );
 				$_touched = $wgMemc->get( $_key );
 				if( empty( $_touched ) ) {
-					$wgMemc->set( $_key, self::newTouchedTimestamp() );
+					$wgMemc->set( $_key, $data['mTouched'] );
 					wfDebug( "Shared user: miss on shared user_touched\n" );
 				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
