@@ -10,12 +10,14 @@ module.exports = function (grunt) {
 	 * @see https://github.com/Automattic/juice
 	 */
 	grunt.registerTask('inlineCSS', 'some logging', function () {
-		grunt.file.recurse('../templates/src', function (absPath, rootDir, subDir, fileName) {
+		var src = '../templates/src';
+
+		grunt.file.recurse(src, function (absPath, rootDir, subDir, fileName) {
 			var html = grunt.file.read(absPath);
 
 			juice.juiceResources(html, {
 					webResources: {
-						relativeTo: '../templates/src'
+						relativeTo: src
 					}
 				},
 				function (err, html) {
