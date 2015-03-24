@@ -40,7 +40,7 @@ class GlobalWatchlistBot {
 					$userIDs[] = $row->gwa_user_id;
 				} );
 		} catch ( Exception $e ) {
-			WikiaLogger::instance()->info( 'Weekly Digest Error', [
+			WikiaLogger::instance()->error( 'Weekly Digest Error', [
 				'exception' => $e->getMessage(),
 			] );
 		}
