@@ -15,12 +15,10 @@ require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 
 	const DAILY_PERIOD = 1;
-	private $aBotsList = NULL;
 
 	/**
 	 * Maintenance script entry point.
 	 * Gathering user edits data from last day and adding update task to job queue.
-	 * Script skips old TempUser relicts and bot accounts.
 	 */
 	public function execute() {
 		global $wgDWStatsDB;
@@ -61,47 +59,21 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 		// Get user edits
 		$aUsersEditsData = [];
 		foreach ( $oUsersListResult as $oUserResult ) {
-			if ( !$this->isUserBot( $oUserResult->user_id ) ) {
-				$aUsersEditsData[ $oUserResult->user_id ] = ( new WikiaSQL() )
-					->SELECT( 'user_id' )
-						->FIELD( 'wiki_id' )
-						->FIELD( 'sum( edits ) + sum( creates )' )->AS_( 'editcount' )
-					->FROM( 'rollup_wiki_user_events' )
-					->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
-					->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
-					->AND_( 'user_id' )->EQUAL_TO( $oUserResult->user_id )
-					->GROUP_BY( 'wiki_id' )
-					->runLoop( $oStatsDBr, function( &$aUsersEditsOnWiki, $oUserEditCountWikiResult ) {
-						$aUsersEditsOnWiki[ $oUserEditCountWikiResult->wiki_id ] =
-							intval( $oUserEditCountWikiResult->editcount );
-					});
-			}
+			$aUsersEditsData[ $oUserResult->user_id ] = ( new WikiaSQL() )
+				->SELECT( 'user_id' )
+					->FIELD( 'wiki_id' )
+					->FIELD( 'sum( edits ) + sum( creates )' )->AS_( 'editcount' )
+				->FROM( 'rollup_wiki_user_events' )
+				->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
+				->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
+				->AND_( 'user_id' )->EQUAL_TO( $oUserResult->user_id )
+				->GROUP_BY( 'wiki_id' )
+				->runLoop( $oStatsDBr, function( &$aUsersEditsOnWiki, $oUserEditCountWikiResult ) {
+					$aUsersEditsOnWiki[ $oUserEditCountWikiResult->wiki_id ] =
+						intval( $oUserEditCountWikiResult->editcount );
+				});
 		}
 		return $aUsersEditsData;
-	}
-
-	private function isUserBot($uId) {
-		$aBotsList = $this->getBotsIds();
-		return array_key_exists( $uId, $aBotsList );
-	}
-
-	private function getBotsIds() {
-		if ( $this->aBotsList === NULL ) {
-			$this->loadBotsIds();
-		}
-		return $this->aBotsList;
-	}
-
-	private function loadBotsIds() {
-		global $wgExternalSharedDB;
-		$oExternalSharedDBr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$this->aBotsList = ( new WikiaSQL() )
-			->SELECT( 'ug_user' )
-			->FROM( 'user_groups' )
-			->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
-			->runLoop( $oExternalSharedDBr, function( &$aResultList, $oBot ) {
-				$aResultList[ $oBot->ug_user ] = true;
-			});
 	}
 
 	private function addEditsUpdateTask( $aUsersEditsData ) {
