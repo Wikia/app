@@ -92,14 +92,16 @@ define('wikia.preview', [
 			window.stylepath +
 			'/common/images/ajax.gif" class="loading"></div></div>';
 
-		msg.getForContent('EditPreviewInContLang').done(function(){
+		$.when(
 			loader({
 				type: loader.MULTI,
 				resources: {
 					mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
 				}
-			}).done(function (response) {
-				var params = {
+			}),
+			msg.getForContent('EditPreviewInContLang')
+		).done(function(response){
+			var params = {
 					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
 					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
 					bestPracticesLinkUrl:  window.wgArticlePath.replace(
@@ -110,9 +112,8 @@ define('wikia.preview', [
 				template = response.mustache[0],
 				html = mustache.render(template, params);
 
-				content = html+content;
-				$.showCustomModal(title, content, options);
-			});
+			content = html+content;
+			$.showCustomModal(title, content, options);
 		});
 	}
 

@@ -38,5 +38,3 @@ JSMessages::registerPackage('EditPreview', [
 JSMessages::registerPackage('EditPreviewInContLang', [
 	'wikia-editor-preview-best-practices-button-link'
 ]);
-
-JSMessages::enqueuePackage('EditPreviewInContLang', JSMessages::INLINE);
