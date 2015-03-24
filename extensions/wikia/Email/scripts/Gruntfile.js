@@ -1,26 +1,35 @@
 module.exports = function (grunt) {
 	'use strict';
 
-	grunt.loadNpmTasks('grunt-email-builder');
+	var juice = require('juice');
+
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
-	grunt.initConfig({
-		emailBuilder: {
-			test: {
-				files: [
-					{
-						expand: true,
-						src: ['../templates/src/*.mustache'],
-						dest: '../templates/compiled',
-						flatten: true
+	/**
+	 * Use Juice to inline css from an external style sheet
+	 * @see https://github.com/Automattic/juice
+	 */
+	grunt.registerTask('inlineCSS', 'some logging', function () {
+		grunt.file.recurse('../templates/src', function (absPath, rootDir, subDir, fileName) {
+			var html = grunt.file.read(absPath);
+
+			juice.juiceResources(html, {
+					webResources: {
+						relativeTo: '../templates/src'
 					}
-				]
-			}
-		},
+				},
+				function (err, html) {
+					var dest = rootDir + '/../compiled/' + fileName;
+					grunt.file.write(dest, html);
+				});
+		});
+	});
+
+	grunt.initConfig({
 		watch: {
 			scripts: {
 				files: ['../templates/src/*.mustache', '../styles/*.css'],
-				tasks: ['emailBuilder']
+				tasks: ['inlineCSS']
 			}
 		}
 	});
