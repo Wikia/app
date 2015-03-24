@@ -60,7 +60,7 @@ $wikia-logo-container-width: $wikia-logo-width + 2 * $elements-spacing;
 				color: $branding-text-color;
 
 				img {
-					background: $branding-background-color center $wikia-logo-vertical-position / $wikia-logo-width $wikia-logo-height no-repeat url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
+					background: $branding-background-color center $wikia-logo-vertical-position / $wikia-logo-width $wikia-logo-height no-repeat url('/extensions/wikia/WikiaLogo/images/wikia_logo_white.svg'); /* inline */
 				}
 			}
 
