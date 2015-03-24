@@ -22,7 +22,11 @@ class BannerNotificationsController extends WikiaController {
 	}
 
 	/**
-	 * Add confirmation message to the user session (so it persists between redirects)
+	 * @desc Add confirmation message to the user session (so it persists between redirects)
+	 *
+	 * @param String $message - message text
+	 * @param String $type - notification type, one of CONFIRMATION_ constants
+	 * @param Bool $force - flag that enforces to override existing notification
 	 */
 	public static function addConfirmation( $message, $type = self::CONFIRMATION_CONFIRM, $force = false ) {
 		//Add confirmation if there was none set yet or if it's forced
