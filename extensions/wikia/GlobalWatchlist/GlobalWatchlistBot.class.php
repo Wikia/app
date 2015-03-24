@@ -1,6 +1,5 @@
 <?php
 
-use \Wikia\Tasks\AsyncTaskList;
 use \Wikia\Logger\WikiaLogger;
 
 class GlobalWatchlistBot {
@@ -31,19 +30,12 @@ class GlobalWatchlistBot {
 	 */
 	private function getUserIDs() {
 		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
-		$userIDs = [];
-		try {
-			$userIDs = ( new WikiaSQL() )
-				->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_USER_ID )
-				->FROM( GlobalWatchlistTable::TABLE_NAME )
-				->runLoop( $db, function ( &$userIDs, $row ) {
-					$userIDs[] = $row->gwa_user_id;
-				} );
-		} catch ( Exception $e ) {
-			WikiaLogger::instance()->error( 'Weekly Digest Error', [
-				'exception' => $e->getMessage(),
-			] );
-		}
+		$userIDs = ( new WikiaSQL() )
+			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_USER_ID )
+			->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->runLoop( $db, function ( &$userIDs, $row ) {
+				$userIDs[] = $row->gwa_user_id;
+			} );
 
 		return $userIDs;
 	}
@@ -88,7 +80,6 @@ class GlobalWatchlistBot {
 			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_CITY_ID )
 			->FROM( GlobalWatchlistTable::TABLE_NAME )
 			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
-			->AND_( GlobalWatchlistTable::COLUMN_TIMESTAMP )->IS_NOT_NULL()
 			->runLoop( $db, function ( &$wikiIDs, $row ) {
 				$wikiIDs[] = $row->gwa_city_id;
 			} );
