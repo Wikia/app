@@ -136,7 +136,10 @@ class MercuryApi {
 	 */
 	public function getSiteMessage() {
 		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
-		return !$msg->isDisabled() && !empty( $msg->text() ) ? $msg->text() : false;
+		if ( !$msg->isDisabled() ) {
+			$msgText = $msg->text();
+			return !empty( $msgText ) ? $msgText : false;
+		}
 	}
 
 	/**
