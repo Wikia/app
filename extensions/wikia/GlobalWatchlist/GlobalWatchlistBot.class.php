@@ -24,17 +24,26 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * Return all users in the global_watchlist table
+	 * Return all users in the global_watchlist table. If there's a problem with the query
+	 * (eg, timing out), log the error. We have a Kibana check which will send out an alert
+	 * if any "Weekly Digest Error" messages are sent.
 	 * @return array
 	 */
 	private function getUserIDs() {
 		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
-		$userIDs = ( new WikiaSQL() )
-			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_USER_ID )
-			->FROM( GlobalWatchlistTable::TABLE_NAME )
-			->runLoop( $db, function ( &$userIDs, $row ) {
-				$userIDs[] = $row->gwa_user_id;
-			} );
+		$userIDs = [];
+		try {
+			$userIDs = ( new WikiaSQL() )
+				->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_USER_ID )
+				->FROM( GlobalWatchlistTable::TABLE_NAME )
+				->runLoop( $db, function ( &$userIDs, $row ) {
+					$userIDs[] = $row->gwa_user_id;
+				} );
+		} catch ( Exception $e ) {
+			WikiaLogger::instance()->info( 'Weekly Digest Error', [
+				'exception' => $e->getMessage(),
+			] );
+		}
 
 		return $userIDs;
 	}
