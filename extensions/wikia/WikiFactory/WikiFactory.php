@@ -3067,7 +3067,7 @@ class WikiFactory {
 	 *
 	 * @return string - variables key for memcached
 	 */
-	static public function getWikiaCacheKey( $city_id ) {
+	static private function getWikiaCacheKey( $city_id ) {
 		return "wikifactory:wikia:v1:{$city_id}";
 	}
 
@@ -3084,7 +3084,7 @@ class WikiFactory {
 	 *
 	 * @return string - variables key for memcached
 	 */
-	static public function getWikiaDBCacheKey( $city_dbname ) {
+	static private function getWikiaDBCacheKey( $city_dbname ) {
 		return "wikifactory:wikia:db:v1:{$city_dbname}";
 	}
 
