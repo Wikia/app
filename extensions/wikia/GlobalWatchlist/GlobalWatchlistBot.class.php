@@ -23,9 +23,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * Return all users in the global_watchlist table. If there's a problem with the query
-	 * (eg, timing out), log the error. We have a Kibana check which will send out an alert
-	 * if any "Weekly Digest Error" messages are sent.
+	 * Return all users in the global_watchlist table.
 	 * @return array
 	 */
 	private function getUserIDs() {
