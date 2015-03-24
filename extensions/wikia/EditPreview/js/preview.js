@@ -101,7 +101,9 @@ define('wikia.preview', [
 			var params = {
 					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
 					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
-					bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					bestPracticesLinkUrl:  window.wgArticlePath.replace(
+						'$1', $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					)
 				},
 				template = response.mustache[0],
 				html = mustache.render(template, params);
@@ -208,7 +210,7 @@ define('wikia.preview', [
 				handleDesktopPreview(data);
 			}
 
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				if (opening) {
 
 					if (isRailDropped || isWidePage) {
@@ -346,7 +348,7 @@ define('wikia.preview', [
 				handler: options.onPublishButton
 			}],
 			// set modal width based on screen size
-			width: ((isRailDropped === false && isWidePage === false) || !window.wgOasisResponsive) ?
+			width: ((isRailDropped === false && isWidePage === false) || !window.wgOasisResponsive || !window.wgOasisBreakpoints) ?
 				options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function () {
@@ -364,7 +366,7 @@ define('wikia.preview', [
 
 			loadPreview(previewTypes[currentTypeName].name, true);
 
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				// adding type dropdown to preview
 				if (!previewTemplate) {
 					loader({

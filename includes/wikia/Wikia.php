@@ -1580,8 +1580,8 @@ class Wikia {
 	 * @author macbre
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
-		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss,
+				$wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {

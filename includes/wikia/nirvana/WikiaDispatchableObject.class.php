@@ -364,4 +364,15 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 
 		return self::purgeMethods( $map );
 	}
+
+	/**
+	 * Allow dispatchable objects to define an alternate location for where templates can be found.
+	 * This base definition returns null so by default WikiaView.class.php will determine
+	 * this directory.
+	 *
+	 * @return null
+	 */
+	public static function getTemplateDir() {
+		return null;
+	}
 }

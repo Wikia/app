@@ -2311,6 +2311,7 @@ class User {
 	 * @see getIntOption()
 	 */
 	public function getOption( $oname, $defaultOverride = null, $ignoreHidden = false ) {
+		\Wikia\Logger\WikiaLogger::instance()->info( 'user_properties lookup' , array( 'name' => $oname ) );
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
@@ -2692,6 +2693,14 @@ class User {
 	 */
 	public function isAnon() {
 		return !$this->isLoggedIn();
+	}
+
+	/**
+	 * Whether this user is Wikia staff or not
+	 * @return bool
+	 */
+	public function isStaff() {
+		return in_array( 'staff', $this->getEffectiveGroups() );
 	}
 
 	/**

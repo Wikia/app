@@ -85,3 +85,9 @@
 @import 'core/responsive-font-sizing';
 @import 'core/responsive-core';
 @import 'core/responsive-mainpage-tag';
+
+// Breakpoints
+// todo Cleanup responsive and old oasis layout files
+@import 'core/breakpoints-variables';
+@import 'core/breakpoints-layout';
+@import 'core/breakpoints-typography';
