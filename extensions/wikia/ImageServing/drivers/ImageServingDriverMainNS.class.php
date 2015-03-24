@@ -137,17 +137,20 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				__METHOD__
 			);
 
-			foreach ( $result as $row ) {
-				/* @var mixed $row */
-				if ( $row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth ) {
-					if ( !in_array( $row->img_minor_mime, self::$mimeTypesBlacklist ) ) {
-						$imageDetails[$row->img_name] = $row;
-					} else {
-						wfDebug( __METHOD__ . ": {$row->img_name} - filtered out because of {$row->img_minor_mime} minor MIME type\n" );
+			if ($result instanceof ResultWrapper && $result->numRows() > 0) {
+				foreach ($result as $row) {
+					/* @var mixed $row */
+					if ($row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth) {
+						if (!in_array($row->img_minor_mime, self::$mimeTypesBlacklist)) {
+							$imageDetails[$row->img_name] = $row;
+						} else {
+							wfDebug(__METHOD__ . ": {$row->img_name} - filtered out because of {$row->img_minor_mime} minor MIME type\n");
+						}
 					}
 				}
+				$result->free();
 			}
-			$result->free();
+
 			$imageNames = array_keys( $imageDetails );
 		}
 
