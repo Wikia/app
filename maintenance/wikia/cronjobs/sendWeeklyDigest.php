@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * sendWeeklyDigest
  *
@@ -30,7 +32,13 @@ class sendWeeklyDigest extends Maintenance {
 	public function execute() {
 		$this->logRunTime();
 		$watchlistBot = new GlobalWatchlistBot();
-		$watchlistBot->sendWeeklyDigest();
+		try {
+			$watchlistBot->sendWeeklyDigest();
+		} catch ( Exception $e ) {
+			WikiaLogger::instance()->error( 'Weekly Digest Error', [
+				'exception' => $e->getMessage(),
+			] );
+		}
 	}
 
 	private function logRunTime() {
