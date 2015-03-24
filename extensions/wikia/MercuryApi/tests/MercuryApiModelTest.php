@@ -121,17 +121,18 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	public function getSiteMessageDataProvider() {
 		return [
 			[
-			'$expected' => 'Test Wiki',
-			'$isDisabled' => false,
-			'$siteMessageMock' => 'Test Wiki',
-			'$wgSitenameMock' => 'A test wikia'
-		],
-			[
-			'$expected' => 'A test wikia',
-			'$isDisabled' => true,
-			'$siteMessageMock' => 'Test Wiki',
-			'$wgSitenameMock' => 'A test wikia'
-		]
+				'$expected' => 'Test Wiki',
+				'$isDisabled' => false,
+				'$siteMessageMock' => 'Test Wiki'
+			], [
+				'$expected' => false,
+				'$isDisabled' => true,
+				'$siteMessageMock' => 'Test Wiki',
+			], [
+				'$expected' => false,
+				'$isDisabled' => false,
+				'$siteMessageMock' => '',
+			]
 		];
 	}
 }

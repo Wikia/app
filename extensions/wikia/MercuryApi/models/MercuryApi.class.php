@@ -106,41 +106,37 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		$wg = F::app()->wg;
+		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin,
+			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId;
 		return [
-			'cacheBuster' => (int) $wg->CacheBuster,
-			'dbName' => $wg->DBname,
-			'defaultSkin' => $wg->DefaultSkin,
-			'id' => (int) $wg->CityId,
+			'cacheBuster' => (int) $wgCacheBuster,
+			'dbName' => $wgDBname,
+			'defaultSkin' => $wgDefaultSkin,
+			'id' => (int) $wgCityId,
 			'language' => [
-				'user' => $wg->Lang->getCode(),
+				'user' => $wgLang->getCode(),
 				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
-				'content' => $wg->LanguageCode,
-				'contentDir' => $wg->ContLang->getDir()
+				'content' => $wgLanguageCode,
+				'contentDir' => $wgContLang->getDir()
 			],
-			'namespaces' => $wg->ContLang->getNamespaces(),
+			'namespaces' => $wgContLang->getNamespaces(),
 			'siteMessage' => $this->getSiteMessage(),
-			'siteName' => $wg->Sitename,
+			'siteName' => $wgSitename,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
 		];
 	}
 
 	/**
 	 * @desc Gets a wikia site message
+	 * When message doesn't exist - return false
 	 *
-	 * @return null|String
+	 * @return Boolean|String
 	 */
 	public function getSiteMessage() {
-		global $wgSitename;
-
 		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
-
-		if( !$msg->isDisabled() ) {
-			return $msg->text();
-		}
-		return $wgSitename;
+		return !$msg->isDisabled() && !empty( $msg->text() ) ? $msg->text() : false;
 	}
 
 	/**
