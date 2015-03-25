@@ -302,7 +302,9 @@
 				externalIds.push(exp.name+'.'+exp.current.id+'.'+exp.group.id);
 			}
 		}
-		if ( externalIds.length > 0 ) {
+
+		//external AB test scripts are currently not supported by Mercury
+		if ( externalIds.length > 0 && !window.Mercury) {
 			log('init', 'Loading external configuration');
 			var url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
 			url += externalIds.join(',');
