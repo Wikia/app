@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Freebiekr",
+			"Hym411",
+			"Kwj2772",
+			"LFM",
+			"아라"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|시각편집기]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|시각편집기]]를 사용한 편집",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|시각편집기: 확인 필요]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|시각편집기]]를 사용해 편집하는 동안 의도하지 않은 바뀜을 갖는 위키텍스트를 시스템이 발견했습니다.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|시각편집기: 전환됨]]",
+	"tag-visualeditor-switched-description": "사용자가 시각편집기를 사용하던 도중 위키텍스트 편집기로 변경했습니다.",
+	"visualeditor-feedback-link": "Project:시각편집기/피드백",
+	"visualeditor-feedback-tool": "피드백 남기기",
+	"visualeditor-help-label": "사용자 가이드 읽기",
+	"visualeditor-help-title": "편집기를 사용하는 방법에 대한 사용자 가이드"
+}

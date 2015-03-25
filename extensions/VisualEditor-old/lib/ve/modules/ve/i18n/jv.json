@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gleki",
+			"NoiX180",
+			"Pras"
+		]
+	},
+	"visualeditor": "PanyuntingVisual",
+	"visualeditor-annotationbutton-bold-tooltip": "Kandel",
+	"visualeditor-annotationbutton-italic-tooltip": "Miring",
+	"visualeditor-annotationbutton-link-tooltip": "Pranala",
+	"visualeditor-clearbutton-tooltip": "Resiki pamormatan",
+	"visualeditor-formatdropdown-format-heading1": "Irah-irahan 1",
+	"visualeditor-formatdropdown-format-heading2": "Irah-irahan 2",
+	"visualeditor-formatdropdown-format-heading3": "Irah-irahan 3",
+	"visualeditor-formatdropdown-format-heading4": "Irah-irahan 4",
+	"visualeditor-formatdropdown-format-heading5": "Irah-irahan 5",
+	"visualeditor-formatdropdown-format-heading6": "Irah-irahan 6",
+	"visualeditor-formatdropdown-format-paragraph": "Paragraf",
+	"visualeditor-formatdropdown-format-preformatted": "Kapraformat",
+	"visualeditor-formatdropdown-title": "Ganti format",
+	"visualeditor-historybutton-redo-tooltip": "Pilih manèh",
+	"visualeditor-historybutton-undo-tooltip": "Batalaké",
+	"visualeditor-indentationbutton-indent-tooltip": "Tambah legokan",
+	"visualeditor-indentationbutton-outdent-tooltip": "Suda legokan",
+	"visualeditor-linkinspector-title": "Sunting pranala",
+	"visualeditor-listbutton-bullet-tooltip": "Daptar poin",
+	"visualeditor-listbutton-number-tooltip": "Daptar angka"
+}

@@ -442,13 +442,14 @@ class EditPageLayout extends EditPage {
 	}
 
 	public function renderSummaryBox() {
-		$html = Xml::element('input', array(
+		$html = Xml::element( 'input', [
 			'type' => 'text',
 			'id' => $this->mSummaryBox['name'],
 			'name' => $this->mSummaryBox['name'],
 			'placeholder' => $this->mSummaryBox['placeholder'],
 			'tabindex' => '1', // BugId:5327
-		), $this->summary, false /* $allowShortTag */);
+			'value' => $this->summary,
+		] );
 
 		return $html;
 	}
@@ -524,18 +525,18 @@ class EditPageLayout extends EditPage {
 
 		parent::showTextbox1($customAttribs, $textoverride );
 	}
-	
+
 	/**
 	 * Add items to loaded content
 	 */
 	function getContent($def_text = '') {
 		$content = parent::getContent();
-		
+
 		$addFile = $this->app->getGlobal('wgRequest')->getVal('addFile');
-		
+
 		if( $addFile ) {
 			$file = wfFindFile( $addFile );
-			
+
 			if( $file ) {
 				$title = $file->getTitle()->getText();
 				$content = "[[File:" . $title . "|right|thumb|335px]] " . $content;
@@ -570,7 +571,7 @@ class EditPageLayout extends EditPage {
 		);
 
 		// All of the following is pasted from EditPage:displayPermissionsError and pruned
-		
+
 		if ( $this->app->wg->Request->getBool( 'redlink' ) ) {
 			// The edit page was reached via a red link.
 			// Redirect to the article page and let them click the edit tab if
@@ -583,7 +584,7 @@ class EditPageLayout extends EditPage {
 
 		$this->app->wg->Out->setPageTitle( wfMessage( 'viewsource-title', $this->getContextTitle()->getPrefixedText() ) );
 		$this->app->wg->Out->addBacklinkSubtitle( $this->getContextTitle() );
-		
+
 		# If the user made changes, preserve them when showing the markup
 		# (This happens when a user is blocked during edit, for instance)
 		if ( !$this->firsttime ) {
@@ -601,7 +602,7 @@ class EditPageLayout extends EditPage {
 		if ( $this->mTitle->exists() ) {
 			$this->app->wg->Out->returnToMain( null, $this->mTitle );
 		}
-		
+
 	}
 
 	public function isReadOnlyPage() {

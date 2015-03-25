@@ -1,0 +1,233 @@
+[
+	{
+		"name": "VisualEditor (MediaWiki extension)",
+		"groups": [
+			{
+				"name": "Initialization",
+				"classes": [
+					"ve.init.mw*",
+					"ve.version"
+				]
+			},
+			{
+				"name": "User Interface",
+				"classes": [
+					"ve.ui.MW*Page"
+				]
+			}
+		]
+	},
+	{
+		"name": "VisualEditor (core)",
+		"groups": [
+			{
+				"name": "General",
+				"classes": [
+					"ve",
+					"ve.Range",
+					"ve.EventSequencer",
+					"ve.Node",
+					"ve.BranchNode",
+					"ve.LeafNode",
+					"ve.Document"
+				]
+			},
+			{
+				"name": "Initialization",
+				"classes": [
+					"ve.init",
+					"ve.init.Platform",
+					"ve.init.Target",
+					"ve.init.sa*"
+				]
+			},
+			{
+				"name": "DataModel",
+				"classes": [
+					"ve.dm",
+					"ve.dm.Model",
+					"ve.dm.AnnotationFactory",
+					"ve.dm.MetaItemFactory",
+					"ve.dm.ModelRegistry",
+					"ve.dm.Converter",
+					"ve.dm.DataString",
+					"ve.dm.DocumentSynchronizer",
+					"ve.dm.IndexValueStore",
+					"ve.dm.Scalable",
+					"ve.dm.NodeFactory",
+					"ve.dm.Surface",
+					"ve.dm.SurfaceFragment",
+					"ve.dm.Transaction",
+					"ve.dm.TransactionProcessor",
+					"ve.dm.TransactionProcessor.processors",
+					"ve.dm.*Annotation",
+					"ve.dm.AnnotationSet",
+					"ve.dm.*MetaItem",
+					"ve.dm.MetaList",
+					"ve.dm.InternalList",
+					"ve.dm.Document*",
+					"ve.dm.*Node",
+					"ve.dm.*LinearData*",
+					"ve.dm.*Model"
+				]
+			},
+			{
+				"name": "ContentEditable",
+				"classes": [
+					"ve.ce",
+					"ve.ce.View",
+					"ve.ce.AnnotationFactory",
+					"ve.ce.NodeFactory",
+					"ve.ce.Surface",
+					"ve.ce.SurfaceObserver",
+					"ve.ce.DomRange",
+					"ve.ce.*Annotation",
+					"ve.ce.Document",
+					"ve.ce.*Node"
+				]
+			},
+			{
+				"name": "User Interface",
+				"classes": [
+					"ve.ui",
+					"ve.ui.Surface",
+					"ve.ui.DesktopSurface",
+					"ve.ui.MobileSurface",
+					"ve.ui.Context",
+					"ve.ui.DesktopContext",
+					"ve.ui.MobileContext",
+					"ve.ui.Toolbar",
+					"ve.ui.TargetToolbar",
+					"ve.ui.DebugBar",
+					"ve.ui.WindowSet",
+					"ve.ui.Action",
+					"ve.ui.Trigger",
+					"ve.ui.Command",
+					"ve.ui.*Action",
+					"ve.ui.*Factory",
+					"ve.ui.*Registry",
+					"ve.ui.*Tool",
+					"ve.ui.*Inspector",
+					"ve.ui.*Widget",
+					"ve.ui.*Dialog"
+				]
+			},
+			{
+				"name": "Tests",
+				"classes": [
+					"ve.QUnit",
+					"ve.QUnit.assert",
+					"ve.ce.TestOffset",
+					"ve.ce.TestRunner"
+				]
+			}
+		]
+	},
+	{
+		"name": "UnicodeJS",
+		"groups": [
+			{
+				"name": "UnicodeJS",
+				"classes": [
+					"unicodeJS",
+					"unicodeJS.TextString",
+					"unicodeJS.wordbreak",
+					"unicodeJS.graphemebreak"
+				]
+			}
+		]
+	},
+	{
+		"name": "OOJS UI",
+		"groups": [
+			{
+				"name": "General",
+				"classes": [
+					"OO.ui",
+					"OO.ui.Element",
+					"OO.ui.Process",
+					"OO.ui.Frame",
+					"OO.ui.Toolbar",
+					"OO.ui.Window",
+					"OO.ui.WindowSet",
+					"OO.ui.Dialog",
+					"OO.ui.ConfirmationDialog"
+				]
+			},
+			{
+				"name": "Factories",
+				"classes": [
+					"OO.ui.*Factory"
+				]
+			},
+			{
+				"name": "Tools",
+				"classes": [
+					"OO.ui.*Tool"
+				]
+			},
+			{
+				"name": "Elements",
+				"classes": [
+					"OO.ui.*Element"
+				]
+			},
+			{
+				"name": "Layouts",
+				"classes": [
+					"OO.ui.*Layout"
+				]
+			},
+			{
+				"name": "Tool groups",
+				"classes": [
+					"OO.ui.*ToolGroup"
+				]
+			},
+			{
+				"name": "Widgets",
+				"classes": [
+					"OO.ui.*Widget"
+				]
+			}
+		]
+	},
+	{
+		"name": "Upstream",
+		"groups": [
+			{
+				"name": "OOJS",
+				"classes": [
+					"OO",
+					"OO.EventEmitter",
+					"OO.Factory",
+					"OO.Registry"
+				]
+			},
+			{
+				"name": "jQuery",
+				"classes": [
+					"jQuery",
+					"jQuery.Event",
+					"jQuery.Promise",
+					"jQuery.Deferred",
+					"jQuery.jqXHR",
+					"QUnit"
+				]
+			},
+			{
+				"name": "JavaScript",
+				"classes": [
+					"Array",
+					"Boolean",
+					"Date",
+					"Function",
+					"Number",
+					"Object",
+					"RegExp",
+					"String"
+				]
+			}
+		]
+	}
+]

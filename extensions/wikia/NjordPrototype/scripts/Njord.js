@@ -2,26 +2,29 @@
 	'use strict';
 
 	$.event.props.push('dataTransfer');
+
 	function placeCaretAtEnd(el) {
 		el.focus();
-		if (typeof window.getSelection != "undefined"
-			&& typeof document.createRange != "undefined") {
+
+		if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
 			var range = document.createRange();
+
 			range.selectNodeContents(el);
 			range.collapse(false);
+
 			var sel = window.getSelection();
 			sel.removeAllRanges();
 			sel.addRange(range);
 		} else if (typeof document.body.createTextRange != "undefined") {
 			var textRange = document.body.createTextRange();
+
 			textRange.moveToElementText(el);
 			textRange.collapse(false);
 			textRange.select();
 		}
-	};
+	}
 
-	var
-		HERO_ASPECT_RATIO = 3.89 / 16,
+	var HERO_ASPECT_RATIO = 3.89 / 16,
 		States = {
 			list: [
 				'zero-state',
@@ -40,8 +43,8 @@
 				}
 			}
 		},
+
 		heroData = {
-			oTitle: null,
 			oDescription: null,
 			oImage: null,
 			oCropposition: 0,
@@ -53,30 +56,22 @@
 			imagechanged: false,
 			datachanged: false
 		},
-	//hero image elements
+
+		//hero image elements
 		$imageElement = $('.MainPageHeroHeader .image-wrap'),
 		$imageSaveElement = $('.MainPageHeroHeader .image-save-bar'),
-		$titleElement = $('.MainPageHeroHeader .title-wrap'),
-		$titleEditElement = $('.MainPageHeroHeader .title-wrap .edit-box'),
-		$titleEditBoxText = $('.MainPageHeroHeader .title-wrap .edit-box .hero-title'),
-
 		$imageDiscardBtn = $('.MainPageHeroHeader .image-save-bar .discard-btn'),
 		$imageSaveBtn = $('.MainPageHeroHeader .image-save-bar .save-btn'),
-
-		$titleEditBtn = $('.MainPageHeroHeader .title-wrap .title-edit-btn'),
-		$titleText = $('.MainPageHeroHeader .title-wrap .title-text'),
-
+		$titleEditBtn = $('.MainPageHeroHeader .title-edit-btn'),
 		$descriptionElement = $('.MainPageHeroHeader .hero-description'),
 		$descriptionSaveBtn = $('.MainPageHeroHeader .hero-description .save-btn'),
 		$descriptionDiscardBtn = $('.MainPageHeroHeader .hero-description .discard-btn'),
 		$descriptionEditBoxText = $('.MainPageHeroHeader .hero-description .edit-box .edited-text'),
 		$descriptionText = $('.hero-description-text'),
-
 		$body = $('body'),
 		$heroHeader = $('.MainPageHeroHeader'),
 		$overlay = $('#MainPageHero .overlay'),
 		$heroModule = $('#MainPageHero'),
-		$heroModuleTitle = $('.MainPageHeroHeader .hero-title'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
 		$heroModuleUploadMask = $('#MainPageHero .upload-mask'),
 		$heroModuleAddButton = $('#MainPageHero .upload .upload-btn'),
@@ -84,8 +79,6 @@
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
 		$heroPositionText = $('#MainPageHero .position-info'),
-		$wordmark = $('#localNavigation .wordmark-icon'),
-
 		$wikiaArticle = $('#WikiaArticle'),
 
 		trackDragOnlyOncePerImage = false,
@@ -93,10 +86,6 @@
 		saveHeroImageLabel = 'publish-hero-image',
 		saveHeroImageFailLabel = 'hero-image-fail',
 		revertHeroImageLabel = 'discard-hero-image',
-		editTitleLabel = 'edit-hero-title',
-		saveTitleLabel = 'publish-hero-title',
-		saveTitleFailLabel = 'hero-title-fail',
-		revertTitleFailLabel = 'discard-hero-title',
 		saveSummaryLabel = 'publish-hero-summary',
 		saveSummaryFailLabel = 'hero-summary-fail',
 		revertSummaryLabel = 'discard-hero-summary',
@@ -122,12 +111,13 @@
 				trackingMethod: 'ga'
 			});
 		},
+
 		trackMom = function (trackLabel, trackAction) {
 			trackHelper(trackLabel, trackAction, 'MOM');
 		},
+
 		saveImage = function () {
 			States.setState($imageSaveElement, 'filled-state');
-			$wordmark.css('top', '+=64');
 			$imageElement.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
@@ -158,6 +148,7 @@
 				}
 			});
 		},
+
 		revertImage = function () {
 			$imageElement.startThrobbing();
 			$heroModuleImage.draggable({disabled: true});
@@ -177,56 +168,38 @@
 				States.setState($imageElement, 'filled-state');
 				States.setState($imageSaveElement, 'filled-state');
 			}
-			$wordmark.css('top', '+=64');
 		},
-		editTitle = function () {
-			States.setState($titleElement, 'edit-state');
-			$heroModuleTitle.change();
-			editDescription();
-			$heroModuleTitle.focus();
-			placeCaretAtEnd($titleEditBoxText.get(0));
-		},
-		revertTitle = function () {
-			$heroModuleTitle.text(heroData.oTitle);
-			$titleText.text(heroData.oTitle);
-			if (heroData.oTitle === "") {
-				States.setState($titleElement, 'zero-state');
-			} else {
-				States.setState($titleElement, 'filled-state');
-			}
-		},
-		saveTitleAndDescription = function() {
-			var title = heroData.title.trim(),
-				description = heroData.description.trim();
 
-			$titleEditElement.startThrobbing();
+		saveDescription = function() {
+			var description = heroData.description.trim();
+
+			$descriptionElement.startThrobbing();
+
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'saveTitleAndDescription',
 				type: 'POST',
 				data: {
-					'title': title,
 					'description': description
 				},
 				callback: function (data) {
 					if (data.success) {
-						$titleText.text(heroData.oTitle = title);
-						States.setState($titleElement, 'filled-state');
 						States.setState($descriptionElement, 'filled-state');
 						heroData.oDescription = description;
 						$descriptionText.text(description);
 					} else {
-						revertDescriptionAndTitle();
+						revertDescription();
 					}
-					$titleEditElement.stopThrobbing();
+					$descriptionElement.stopThrobbing();
 				},
 				onErrorCallback: function () {
-					revertDescriptionAndTitle();
-					$titleEditElement.stopThrobbing();
-					trackMom(saveTitleFailLabel, trackerActionError);
+					revertDescription();
+					$descriptionElement.stopThrobbing();
+					trackMom(saveSummaryFailLabel, trackerActionError);
 				}
 			});
 		},
+
 		editDescription = function () {
 			States.setState($descriptionElement, 'edit-state');
 
@@ -236,7 +209,8 @@
 			$descriptionEditBoxText.change();
 			placeCaretAtEnd($descriptionEditBoxText.get(0));
 		},
-		revertDescriptionAndTitle = function () {
+
+		revertDescription = function () {
 			heroData.description = heroData.oDescription;
 			if (heroData.oDescription == undefined || heroData.oDescription.trim() === "") {
 				States.setState($descriptionElement, 'zero-state');
@@ -244,35 +218,40 @@
 				States.setState($descriptionElement, 'filled-state');
 			}
 			$descriptionEditBoxText.text(heroData.oDescription);
-			revertTitle()
 		},
 
 		initializeData = function () {
-			heroData.title = heroData.oTitle = $heroModuleTitle.text();
 			heroData.description = heroData.oDescription = $descriptionText.text();
 			heroData.imagepath = heroData.oImage = $heroModuleImage.data('fullpath');
 			heroData.cropposition = heroData.oCropposition = $heroModuleImage.data('cropposition');
-		}, onPaste = function (e) {
+		},
+
+		onPaste = function (e) {
 			var $this = $(this);
 			window.setTimeout(function() {
 				$this.html($this.text());
 				placeCaretAtEnd($this.get(0));
 			}, 1);
 			return $this;
-		}, onFocus = function () {
+		},
+
+		onFocus = function () {
 			var $this = $(this);
 			$this.data('before', $this.html());
 			return $this;
-		}, onInput = function () {
+		},
+
+		onInput = function () {
 			var $this = $(this);
 			if ($this.data('before') !== $this.html()) {
 				$this.data('before', $this.html());
 				$this.trigger('change');
 			}
 			return $this;
-		}, onChange = function (event, imagePath, imageName) {
+		},
+
+		onChange = function (event, imagePath, imageName) {
 			var target = $(event.target);
-			heroData.title = $heroModuleTitle.text();
 			heroData.description = $descriptionEditBoxText.text();
 			if (imagePath || imageName) {
 				heroData.imagepath = imagePath;
@@ -282,19 +261,20 @@
 			} else {
 				if (typeof target !== 'undefined' && target.caret === 'function') {
 					var caretSave = target.caret();
-					$heroModuleTitle.text($heroModuleTitle.text());
 					target.caret(caretSave);
 				}
 			}
 
-			if (heroData.title.trim().length === 0 || heroData.description.trim().length === 0) {
+			if (heroData.description.trim().length === 0) {
 				$descriptionSaveBtn.attr("disabled", "disabled");
 			} else {
 				$descriptionSaveBtn.removeAttr("disabled");
 			}
 
 			heroData.changed = true;
-		}, onImageLoad = function () {
+		},
+
+		onImageLoad = function () {
 			var top = -heroData.cropposition * $heroModuleImage.height();
 			if (top + $heroModuleImage.height() >= $heroModule.height()) {
 				$heroModuleImage.css({top: top});
@@ -304,11 +284,15 @@
 			$heroModule.stopThrobbing();
 			$heroModule.trigger('resize');
 			trackDragOnlyOncePerImage = false;
-		}, onResize = function () {
+		},
+
+		onResize = function () {
 			if (!$imageElement.hasClass('zero-state')) {
 				$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
 			}
-		}, onDraggingEnabled = function () {
+		},
+
+		onDraggingEnabled = function () {
 			var heroHeight = $heroModuleImage.height(),
 				heroModuleHeight = $heroModule.height(),
 				heroOffsetTop = $heroModule.offset().top,
@@ -327,16 +311,18 @@
 					}
 				}
 			});
-		}, onDragDisabled = function () {
+		},
+
+		onDragDisabled = function () {
 			return false;
 		},
+
 		onAfterSendForm = function (data) {
 			if (data.isOk) {
 				$heroModuleImage.bind('load', function () {
 					if ($imageElement.hasClass('zero-state')) {
 						$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
 					}
-					$wordmark.css('top', '-=64');
 					States.setState($imageElement, 'upload-state');
 					States.setState($imageSaveElement, 'upload-state');
 					$heroModule.trigger('enableDragging');
@@ -350,10 +336,11 @@
 
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				window.GlobalNotification.show(data.errMessage, 'error');
+				new window.GlobalNotification(data.errMessage, 'error').show();
 				$heroModule.stopThrobbing();
 			}
 		},
+
 		sendForm = function (formdata) {
 			$heroModule.startThrobbing();
 			$.nirvana.sendRequest({
@@ -369,8 +356,9 @@
 				processData: false,
 				contentType: false
 			});
+		},
 
-		}, initializeEditMode = function () {
+		initializeEditMode = function () {
 			//load messages
 			$imageSaveBtn.on('click', saveImage)
 				.on('click', function () {
@@ -380,14 +368,10 @@
 				.on('click', function () {
 					trackMom(revertHeroImageLabel, trackerActionClick);
 				});
-			$titleEditBtn.on('click', editTitle)
+			$titleEditBtn.on('click', editDescription)
 				.on('click', function () {
-					trackMom(editTitleLabel, trackerActionClick);
+					trackMom(editSummaryLabel, trackerActionClick);
 				});
-			$heroModuleTitle.on('focus', onFocus)
-				.on('blur keyup paste input', onInput)
-				.on('paste', onPaste)
-				.on('change', onChange);
 
 			//on(load) on img buged on this jquery
 			$heroModuleImage[0].addEventListener('load', onImageLoad);
@@ -399,11 +383,11 @@
 				.on('blur keyup paste input', onInput)
 				.on('change', onChange);
 
-			$descriptionDiscardBtn.on('click', revertDescriptionAndTitle)
+			$descriptionDiscardBtn.on('click', revertDescription)
 				.on('click', function () {
 					trackMom(revertSummaryLabel, trackerActionClick);
 				});
-			$descriptionSaveBtn.on('click', saveTitleAndDescription)
+			$descriptionSaveBtn.on('click', saveDescription)
 				.on('click', function () {
 					trackMom(saveSummaryLabel, trackerActionClick);
 				});
@@ -418,12 +402,14 @@
 				$heroModuleUploadMask.show();
 				return false;
 			});
+
 			$heroModuleUploadMask.on('dragleave', function (e) {
 				$overlay.hide();
 				$heroModuleUploadMask.hide();
 				e.stopImmediatePropagation();
 				return false;
 			});
+
 			$heroModuleUploadMask.on('dragend', function () {
 				return false;
 			});
@@ -474,21 +460,25 @@
 			$heroPositionText.on('mousedown', function(e) {
 				$heroModuleImage.trigger(e);
 			});
-		}, initializeEditButton = function () {
+		},
+
+		initializeEditButton = function () {
 			var onclose = new MutationObserver(function (m) {
 				$('.MainPageHeroHeader .global-edit-wrap').show();
 				onclose.disconnect();
-			});
-			var onload = new MutationObserver(function (m) {
+			}),
+				onload = new MutationObserver(function (m) {
 				$('.MainPageHeroHeader .global-edit-wrap').hide();
 				onload.disconnect();
 				onclose.observe($wikiaArticle[0], {childList: true});
 			});
+
 			$('#ca-ve-edit').on('click', function () {
 				onload.observe($wikiaArticle[0], {childList: true});
 				//TODO make a distinction between Visual editor and old one
 				trackHelper('edit', 'click', 'article');
 			});
+
 			if (window.location.search.indexOf('veaction=edit') >= 0) {
 				onload.observe($wikiaArticle[0], {childList: true});
 			}
@@ -499,7 +489,9 @@
 		States.clearState($heroHeader);
 		initializeEditMode();
 	}
+
 	initializeEditButton();
+
 	$heroModule.trigger('resize');
 	$(window).resize(onResize);
 })(window, jQuery);

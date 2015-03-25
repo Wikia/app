@@ -1,0 +1,69 @@
+/*!
+ * VisualEditor ContentEditable BranchNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ce-branchNode-blockSlugWrapper,
+.ve-ce-branchNode-blockSlugWrapper-former {
+	background-color: transparent;
+	outline: transparent dashed 1px;
+	outline-offset: 10px;
+	-webkit-transition: background-color 400ms ease-out, outline-color 400ms ease-out, outline-offset 400ms ease-out;
+	-moz-transition: background-color 400ms ease-out, outline-color 400ms ease-out, outline-offset 400ms ease-out;
+	-o-transition: background-color 400ms ease-out, outline-color 400ms ease-out, outline-offset 400ms ease-out;
+	transition: background-color 400ms ease-out, outline-color 400ms ease-out, outline-offset 400ms ease-out;
+}
+
+.ve-ce-branchNode-blockSlugWrapper .ve-ce-branchNode-blockSlug,
+.ve-ce-branchNode-blockSlugWrapper-former p {
+	-webkit-transition: font-size 200ms ease-out, margin 200ms ease-out;
+	-moz-transition: font-size 200ms ease-out, margin 200ms ease-out;
+	-o-transition: font-size 200ms ease-out, margin 200ms ease-out;
+	transition: font-size 200ms ease-out, margin 200ms ease-out;
+}
+
+.ve-ce-branchNode-blockSlugWrapper-unfocused,
+.ve-ce-branchNode-blockSlugWrapper-former-unfocused {
+	margin: 0 0 -0.2em 0;
+	outline-offset: 0;
+}
+
+.ve-ce-branchNode-blockSlugWrapper-unfocused:hover,
+.ve-ce-branchNode-blockSlugWrapper-former-unfocused {
+	outline-color: #ccc;
+	/* rgba(#f1f7fb, 0.5) */
+	background-color: rgba(241, 247, 251, 0.75);
+}
+
+.ve-ce-branchNode-blockSlugWrapper-unfocused .ve-ce-branchNode-blockSlug,
+.ve-ce-branchNode-blockSlugWrapper-former-unfocused p {
+	font-size: 0.8em;
+	margin: 0.2em 0;
+}
+
+/* Pre-formatted node styling */
+
+pre.ve-ce-branchNode {
+	white-space: pre-wrap;
+}
+
+/* Hack for empty headings and paragraphs; can't use min-height because of IE */
+
+.ve-ce-branchNode h1:empty:before,
+.ve-ce-branchNode h2:empty:before,
+.ve-ce-branchNode h3:empty:before,
+.ve-ce-branchNode h4:empty:before,
+.ve-ce-branchNode h5:empty:before,
+.ve-ce-branchNode h6:empty:before,
+.ve-ce-branchNode p:empty:before {
+	content: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+}
+
+/* Emulate the first paragraph in each list item being unwrapped */
+
+/* TODO use CSS class for wrapper paragraph */
+li.ve-ce-branchNode p.ve-ce-branchNode:first-child {
+	margin: 0;
+	padding: 0;
+}

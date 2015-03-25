@@ -36,10 +36,10 @@ ve.ui.MWTocWidget = function VeUiMWTocWidget( surface, config ) {
 
 	// TODO: fix i18n
 	this.toggle = {
-		'hideMsg': ve.msg( 'hidetoc' ),
-		'showMsg': ve.msg( 'showtoc' ),
-		'$link': this.$( '<a class="internal" id="togglelink"></a>' ).text( ve.msg( 'hidetoc' ) ),
-		'open': true
+		hideMsg: ve.msg( 'hidetoc' ),
+		showMsg: ve.msg( 'showtoc' ),
+		$link: this.$( '<a class="internal" id="togglelink"></a>' ).text( ve.msg( 'hidetoc' ) ),
+		open: true
 	};
 	this.$element.addClass( 'toc ve-ui-mwTocWidget' ).append(
 		this.$( '<div>' ).attr( 'id', 'toctitle' ).append(
@@ -52,7 +52,7 @@ ve.ui.MWTocWidget = function VeUiMWTocWidget( surface, config ) {
 	// Integration ignores hiding the TOC widget, though continues to hide the real page TOC
 	$( '#bodyContent' ).append( this.$element );
 
-	this.toggle.$link.on( 'click', ve.bind( function () {
+	this.toggle.$link.on( 'click', function () {
 		if ( this.toggle.open ) {
 			this.toggle.$link.text( this.toggle.showMsg );
 			this.toggle.open = false;
@@ -61,11 +61,11 @@ ve.ui.MWTocWidget = function VeUiMWTocWidget( surface, config ) {
 			this.toggle.open = true;
 		}
 		this.topics.$group.add( this.$tempTopics ).slideToggle();
-	}, this ) );
+	}.bind( this ) );
 
 	this.metaList.connect( this, {
-		'insert': 'onMetaListInsert',
-		'remove': 'onMetaListRemove'
+		insert: 'onMetaListInsert',
+		remove: 'onMetaListRemove'
 	} );
 
 	this.initFromMetaList();
@@ -151,10 +151,10 @@ ve.ui.MWTocWidget.prototype.rebuild = ve.debounce( function () {
 		this.$tempTopics.append( this.topics.$group.children().clone() );
 		this.teardownItems();
 		// Build after transactions
-		setTimeout( ve.bind( function () {
+		setTimeout( function () {
 			this.build();
 			this.$tempTopics.empty();
-		}, this ), 0 );
+		}.bind( this ), 0 );
 	}
 }, 0 );
 
@@ -264,15 +264,15 @@ ve.ui.MWTocWidget.prototype.build = function () {
 			// TODO: Cleanup config generation, merge local vars into config object
 			// Get CE node for the heading
 			headingOuterRange = nodes[i].nodeOuterRange;
-			ceNode = this.surface.getView().getDocument().getNodeFromOffset( headingOuterRange.end );
+			ceNode = this.surface.getView().getDocument().getBranchNodeFromOffset( headingOuterRange.end );
 			config = {
-				'node': ceNode,
-				'tocIndex': tocIndex,
-				'parent': parent,
-				'tocLevel': tocLevel,
-				'tocSection': tocSection,
-				'sectionPrefix': sectionPrefix.join( '.' ),
-				'insertIndex': sectionPrefix[sectionPrefix.length - 1]
+				node: ceNode,
+				tocIndex: tocIndex,
+				parent: parent,
+				tocLevel: tocLevel,
+				tocSection: tocSection,
+				sectionPrefix: sectionPrefix.join( '.' ),
+				insertIndex: sectionPrefix[sectionPrefix.length - 1]
 			};
 			// Add item
 			this.items[sectionPrefix.join( '.' )] = new ve.ui.MWTocItemWidget( config );

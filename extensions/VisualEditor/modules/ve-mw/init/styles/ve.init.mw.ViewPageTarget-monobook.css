@@ -7,23 +7,23 @@
 
 .ve-init-mw-viewPageTarget-toolbar {
 	margin: -0.6em -0.8em 1em -0.8em;
-}
-
-.ve-ui-context-frame-overlay {
-	font-size: 1.25em;
-}
-
-.ve-ui-context,
-.oo-ui-toolbar {
+	/* Correct for Monobook's x-small font on the root toolbar */
 	font-size: 1.25em;
 	line-height: 1.5em;
 }
 
-/* Monobook sets font-size: x-small; on the body. Undo this in frames and overlays */
-.oo-ui-frame-body, body .ve-ui-surface-overlay {
-	font-size: medium;
+.oo-ui-window {
+	/* Correct for Monobook's x-small font on non-isolated windows */
+	/* 0.8em / x-small */
+	font-size: 1em;
 }
 
-.ve-ui-surface-overlay-global {
+.ve-ui-overlay {
+	/* Mimic #globalWrapper */
+	font-size: 127%;
+}
+
+.ve-ui-overlay-global {
+	/* So that the overlay always appears over the site logo, search box and personal tools */
 	z-index: 4;
 }

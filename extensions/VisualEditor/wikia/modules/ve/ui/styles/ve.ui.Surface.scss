@@ -4,9 +4,13 @@
  * #WikiaPage element in Oasis has z-index=1
  *
  */
-.ve-ui-surface-overlay-local {
+
+.ve-ui-overlay-local {
 	z-index: $zTop + 1;
 }
-.ve-ui-surface-overlay-global {
+.ve-ui-overlay-global {
 	z-index: $zTop + 4;
+}
+.ve-hidden-ad, .ve-hidden-ad * {
+	display: none !important;
 }

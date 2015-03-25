@@ -23,10 +23,6 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 */
 	abstract function checkCaptchaField();
 
-	function isValid() {
-		return true;
-	}
-
 	public function getCaptcha() {
 		$a = mt_rand( 0, 100 );
 		$b = mt_rand( 0, 10 );

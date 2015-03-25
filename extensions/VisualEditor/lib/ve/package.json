@@ -1,26 +1,40 @@
 {
   "name": "visualeditor",
   "version": "0.0.0",
+  "description": "Stand-alone contentEditable-based rich Web editor.",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "prepublish": "grunt build"
   },
+  "homepage": "https://www.mediawiki.org/wiki/VisualEditor",
   "repository": {
     "type": "git",
-    "url": "https://gerrit.wikimedia.org/r/p/mediawiki/extensions/VisualEditor.git"
+    "url": "https://gerrit.wikimedia.org/r/p/VisualEditor/VisualEditor.git"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://git.wikimedia.org/blob/mediawiki%2Fextensions%2FVisualEditor.git/master/LICENSE.txt"
+      "url": "https://git.wikimedia.org/blob/VisualEditor%2FVisualEditor.git/master/LICENSE.txt"
     }
   ],
   "devDependencies": {
-    "grunt": "0.4.2",
-    "grunt-contrib-csslint": "0.2.0",
+    "grunt": "0.4.5",
+    "grunt-banana-checker": "0.2.0",
+    "grunt-contrib-clean": "0.6.0",
+    "grunt-contrib-concat": "0.5.0",
+    "grunt-contrib-csslint": "0.3.1",
     "grunt-contrib-jshint": "0.10.0",
-    "grunt-contrib-qunit": "0.4.0",
     "grunt-contrib-watch": "0.6.1",
-    "grunt-banana-checker": "0.1.0",
-    "grunt-jscs-checker": "0.6.0"
+    "grunt-css-url-embed": "1.0.4",
+    "grunt-cssjanus": "0.2.2",
+    "grunt-jscs": "0.8.1",
+    "grunt-karma": "0.9.0",
+    "karma": "0.12.25",
+    "karma-chrome-launcher": "0.1.5",
+    "karma-coverage": "0.2.6",
+    "karma-firefox-launcher": "0.1.3",
+    "karma-qunit": "0.1.4",
+    "karma-sauce-launcher": "0.2.10",
+    "qunitjs": "1.15.0"
   }
 }

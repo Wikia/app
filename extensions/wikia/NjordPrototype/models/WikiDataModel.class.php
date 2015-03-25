@@ -8,7 +8,6 @@ class WikiDataModel {
 	public $description;
 	public $imagePath;
 	public $originalImagePath;
-	public $title;
 
 	const WIKI_HERO_IMAGE_PROP_ID = 10001;
 	const WIKI_HERO_TITLE_PROP_ID = 10002;
@@ -24,12 +23,11 @@ class WikiDataModel {
 	}
 
 	public function isEmpty() {
-		return empty($this->title) || empty($this->description) || empty($this->imagePath);
+		return empty($this->description) || empty($this->imagePath);
 	}
 
 	public function setFromAttributes( $attributes ) {
 		$this->imageName = !empty( $attributes[ 'imagename' ] ) ? $attributes[ 'imagename' ] : null;
-		$this->title = !empty( $attributes[ 'title' ] ) ? $attributes[ 'title' ] : null;
 		$this->description = !empty( $attributes[ 'description' ] ) ? $attributes[ 'description' ] : null;
 		$this->cropPosition = !empty( $attributes[ 'cropposition' ] ) ? $attributes[ 'cropposition' ] : null;
 
@@ -40,7 +38,6 @@ class WikiDataModel {
 		$pageId = Title::newFromText( $this->pageName )->getArticleId();
 
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId, $this->imageName );
-		wfSetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId, trim($this->title) );
 		wfSetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId, trim($this->description) );
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId, $this->cropPosition );
 	}
@@ -49,7 +46,6 @@ class WikiDataModel {
 		$pageId = Title::newFromText( $this->pageName )->getArticleId();
 
 		$this->imageName = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId );
-		$this->title = wfGetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId );
 		$this->description = wfGetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId );
 		$this->cropPosition = floatval(wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId ));
 
@@ -74,7 +70,7 @@ class WikiDataModel {
 			if (VignetteRequest::isVignetteUrl($fullUrl)) {
 				$this->imagePath = $this->createVignetteThumbnail($file, $cropPosition);
 			} else {
-				$this->createOldThumbnail($file, $cropPosition);
+				$this->imagePath = $this->createOldThumbnail($file, $cropPosition);
 			}
 
 			$this->originalImagePath = $fullUrl;
@@ -139,7 +135,6 @@ class WikiDataModel {
 
 		// Prepend the hero tag
 		$heroTag = Xml::element( 'hero', $attribs = [
-			'title' => $this->title,
 			'description' => $this->description,
 			'imagename' => $this->imageName,
 			'cropposition' => $this->cropPosition

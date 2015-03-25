@@ -6,13 +6,20 @@
 (function ( window, $ ) {
 		'use strict';
 
-		var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
+		var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable()),
+			WikiTextSyntaxHighlighter;
 
 		WE.plugins.syntaxhighlighterqueueinit = $.createClass(WE.plugin, {
 
 			init: function () {
 				this.editor.on('mode', this.proxy(this.initSyntaxHighlighting));
 				this.editor.on('editorReady', this.proxy(this.initSyntaxHighlighting));
+
+				require(['WikiTextSyntaxHighlighter'], this.proxy(function (syntaxHighlighter) {
+					WikiTextSyntaxHighlighter = syntaxHighlighter;
+
+					this.initSyntaxHighlighting();
+				}));
 			},
 
 			initConfig: function () {
@@ -28,12 +35,15 @@
 			},
 
 			initSyntaxHighlighting: function () {
-				if (this.editor.mode === 'source') {
-					var textarea = this.editor.getEditbox()[0],
-						config = this.initConfig();
-					require(['WikiTextSyntaxHighlighter'], function (WikiTextSyntaxHighlighter) {
+				if (WikiTextSyntaxHighlighter) {
+					if (this.editor.mode === 'source') {
+						var textarea = this.editor.getEditbox()[0],
+							config = this.initConfig();
+
 						WikiTextSyntaxHighlighter.init(textarea, config);
-					});
+					} else {
+						WikiTextSyntaxHighlighter.reset();
+					}
 				}
 			},
 

@@ -9,20 +9,59 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	 * @return null|string
 	 */
 	public function getUserEmail( $iUserId ) {
+		/* Prepare retrieve params */
 		$aProperties = [ 'user_email' ];
 		$sFilterProperty = 'user_id';
 		$aFilterValues = [ $iUserId ];
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 
 		$oApiDataExtension = $this->getApiDataExtension();
+		/* Send retrieve request */
 		$oEmailResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+		$this->info( __METHOD__ . ' OverallStatus: ' . $oEmailResult->OverallStatus );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oEmailResult ) );
 
-		if ( isset( $oEmailResult->Results->Properties->Property->Value ) ) {
-			return $oEmailResult->Results->Properties->Property->Value;
+		if ( $oEmailResult->OverallStatus === 'Error' ) {
+			throw new \Exception(
+				'Error in ' . __METHOD__ . ': ' . $oEmailResult->Results->StatusMessage
+			);
 		}
 
-		// $this->info( __METHOD__ . ' user DataExtension object not found for user_id = ' . $iUserId );
+		if ( empty( $oEmailResult->Results->Properties->Property->Value ) ) {
+			$this->info( __METHOD__ . ' User DataExtension object not found for user_id = ' . $iUserId );
+			return null;
+		}
+
+		return $oEmailResult->Results->Properties->Property->Value;
+	}
+
+	public function retrieveUserDataById( $iUserId ) {
+		$aProperties = [
+			'user_id',
+			'user_name',
+			'user_real_name',
+			'user_email',
+			'user_email_authenticated',
+			'user_registration',
+			'user_editcount',
+			'user_touched'
+		];
+
+		$oHelper = $this->getUserHelper();
+		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, 'user_id', [ $iUserId ] );
+
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oUserResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+		if ( !empty( $oUserResult->Results->Properties->Property ) ) {
+			$aProperties = $oUserResult->Results->Properties->Property;
+			foreach ( $aProperties as $value ) {
+				$oExactTargetUserData[$value->Name] = $value->Value;
+			}
+			return $oExactTargetUserData;
+		}
+
 		return null;
 	}
 
@@ -35,8 +74,10 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	public function retrieveUserEdits( array $aUsersIds ) {
 		$oHelper = $this->getUserHelper();
 		$aApiRetrieveParams = $oHelper->prepareUserEditsRetrieveParams( $aUsersIds );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiRetrieveParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserEditsResult = $oApiDataExtension->retrieveRequest( $aApiRetrieveParams );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUserEditsResult ) );
 		$aUserEdits = $this->formatUserEditsResult( $oUserEditsResult );
 		return $aUserEdits;
 	}
@@ -59,10 +100,10 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 			 * ExactTargetUserTaskHelper::prepareUserEditsRetrieveParams
 			 * 'Properties' => [ 'user_id', 'wiki_id', 'contributions' ],
 			 */
-			$iUserId = $aProperty[ 0 ]->Value;
-			$iWikiId = $aProperty[ 1 ]->Value;
-			$iContributions = $aProperty[ 2 ]->Value;
-			$aUserEditsDataFromET[ $iUserId ][ $iWikiId ] = intval( $iContributions );
+			$iUserId = $aProperty[0]->Value;
+			$iWikiId = $aProperty[1]->Value;
+			$iContributions = $aProperty[2]->Value;
+			$aUserEditsDataFromET[$iUserId][$iWikiId] = intval( $iContributions );
 		}
 		return $aUserEditsDataFromET;
 	}
@@ -88,9 +129,9 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	 *      );
 	 */
 	public function retrieveUserIdsByEmail( $sEmail ) {
-		$aProperties = [ 'user_id' ];
+		$aProperties = ['user_id'];
 		$sFilterProperty = 'user_email';
-		$aFilterValues = [ $sEmail ];
+		$aFilterValues = [$sEmail];
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
 

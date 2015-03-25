@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ainali",
+			"Haxpett",
+			"Jopparn",
+			"Knuckles",
+			"Magol",
+			"Milicevic01",
+			"Per",
+			"Sendelbach",
+			"Skalman",
+			"WikiPhoenix",
+			"Lokal Profil"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Redigering gjord med hjälp av [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Kontrollera]]",
+	"tag-visualeditor-needcheck-description": "Redigering gjord med [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] där systemet upptäckte att wikitexten möjligen hade oavsiktliga ändringar.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Bytte]]",
+	"tag-visualeditor-switched-description": "Användaren började redigera med VisualEditor men bytte sedan till wikitext-redigering.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Återkoppling",
+	"visualeditor-feedback-tool": "Lämna feedback",
+	"visualeditor-help-label": "Läs användarguiden",
+	"visualeditor-help-title": "Användarguide för hur du använder editorn"
+}

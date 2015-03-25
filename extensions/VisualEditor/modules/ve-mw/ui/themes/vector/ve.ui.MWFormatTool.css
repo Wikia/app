@@ -5,17 +5,25 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-.oo-ui-menuToolGroup .oo-ui-tool-name-heading1 .oo-ui-tool-title,
-.oo-ui-menuToolGroup .oo-ui-tool-name-heading2 .oo-ui-tool-title {
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading1 .oo-ui-tool-title-text,
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading2 .oo-ui-tool-title-text {
 	font-family: 'Linux Libertine', Georgia, Times, serif;
 }
 
-.oo-ui-menuToolGroup .oo-ui-tool-name-heading3 .oo-ui-tool-title {
-	font-size: 94%; /* 80% of Vector's 117% */
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading1 .oo-ui-tool-title-text {
+	font-size: 180%;
 }
 
-.oo-ui-menuToolGroup .oo-ui-tool-name-heading4 .oo-ui-tool-title,
-.oo-ui-menuToolGroup .oo-ui-tool-name-heading5 .oo-ui-tool-title,
-.oo-ui-menuToolGroup .oo-ui-tool-name-heading6 .oo-ui-tool-title {
-	font-size: 80%; /* 20% of Vector's 100% */
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading2 .oo-ui-tool-title-text {
+	font-size: 150%;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading3 .oo-ui-tool-title-text {
+	font-size: 117%;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading4 .oo-ui-tool-title-text,
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading5 .oo-ui-tool-title-text,
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading6 .oo-ui-tool-title-text {
+	font-size: 100%;
 }

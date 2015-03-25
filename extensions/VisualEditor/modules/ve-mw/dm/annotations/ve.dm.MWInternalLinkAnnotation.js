@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * DataModel MediaWiki internal link annotation.
  *
@@ -35,22 +33,42 @@ ve.dm.MWInternalLinkAnnotation.static.name = 'link/mwInternal';
 ve.dm.MWInternalLinkAnnotation.static.matchRdfaTypes = ['mw:WikiLink'];
 
 ve.dm.MWInternalLinkAnnotation.static.toDataElement = function ( domElements, converter ) {
+	var targetData = this.getTargetDataFromHref(
+		domElements[0].getAttribute( 'href' ),
+		converter.getTargetHtmlDocument()
+	);
 
+	return {
+		type: this.name,
+		attributes: {
+			hrefPrefix: targetData.hrefPrefix,
+			title: decodeURIComponent( targetData.title ).replace( /_/g, ' ' ),
+			normalizedTitle: this.normalizeTitle( targetData.title ),
+			lookupTitle: this.getLookupTitle( targetData.title ),
+			origTitle: targetData.title
+		}
+	};
+};
+
+/**
+ * Parse URL to get title it points to.
+ * @param {string} href
+ * @param {HTMLDocument|string} doc Document whose base URL to use, or base URL as a string.
+ * @returns {Object} Plain object with 'title' and 'hrefPrefix' keys.
+ */
+ve.dm.MWInternalLinkAnnotation.static.getTargetDataFromHref = function ( href, doc ) {
 	function regexEscape( str ) {
 		return str.replace( /([.?*+^$[\]\\(){}|-])/g, '\\$1' );
 	}
 
-	var matches, normalizedTitle, lookupTitle,
-		doc = converter.getTargetHtmlDocument(),
-		// Protocol relative base
+	var // Protocol relative base
 		relativeBase = ve.resolveUrl( mw.config.get( 'wgArticlePath' ), doc ).toString().replace( /^https?:/, '' ),
 		relativeBaseRegex = new RegExp( regexEscape( relativeBase ).replace( regexEscape( '$1' ), '(.*)' ) ),
-		href = domElements[0].getAttribute( 'href' ),
 		// Protocol relative href
-		relativeHref = href.replace( /^https?:/, '' );
+		relativeHref = href.replace( /^https?:/, '' ),
+		// Check if this matches the server's article path
+		matches = relativeHref.match ( relativeBaseRegex );
 
-	// Check if this matches the server's article path
-	matches = relativeHref.match ( relativeBaseRegex );
 	if ( matches ) {
 		// Take the relative path
 		href = matches[1];
@@ -60,20 +78,8 @@ ve.dm.MWInternalLinkAnnotation.static.toDataElement = function ( domElements, co
 	// in which case it's preceded by one or more instances of "./" or "../", so strip those
 	/*jshint regexp:false */
 	matches = href.match( /^((?:\.\.?\/)*)(.*)$/ );
-	// Normalize capitalisation and underscores
-	normalizedTitle = this.normalizeTitle( matches[2] );
-	lookupTitle = this.getLookupTitle( matches[2] );
 
-	return {
-		'type': this.name,
-		'attributes': {
-			'hrefPrefix': matches[1],
-			'title': decodeURIComponent( matches[2] ).replace( /_/g, ' ' ),
-			'normalizedTitle': normalizedTitle,
-			'lookupTitle': lookupTitle,
-			'origTitle': matches[2]
-		}
-	};
+	return { title: matches[2], hrefPrefix: matches[1] };
 };
 
 ve.dm.MWInternalLinkAnnotation.static.toDomElements = function ( dataElement, doc ) {
@@ -101,6 +107,7 @@ ve.dm.MWInternalLinkAnnotation.static.getHref = function ( dataElement ) {
 
 /**
  * Normalize title for comparison purposes.
+ * E.g. capitalisation and underscores.
  * @param {string} title Original title
  * @returns {string} Normalized title, or the original if it is invalid
  */
@@ -128,16 +135,18 @@ ve.dm.MWInternalLinkAnnotation.static.getLookupTitle = function ( original ) {
 /* Methods */
 
 /**
- * @returns {Object}
+ * @inheritdoc
  */
 ve.dm.MWInternalLinkAnnotation.prototype.getComparableObject = function () {
 	return {
-		'type': this.getType(),
-		'normalizedTitle': this.getAttribute( 'normalizedTitle' )
+		type: this.getType(),
+		normalizedTitle: this.getAttribute( 'normalizedTitle' )
 	};
 };
 
-/** */
+/**
+ * @inheritdoc
+ */
 ve.dm.MWInternalLinkAnnotation.prototype.getComparableHtmlAttributes = function () {
 	var attributes = ve.dm.Annotation.prototype.getComparableHtmlAttributes.call( this );
 	delete attributes.href;

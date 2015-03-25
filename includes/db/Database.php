@@ -789,10 +789,10 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * @param $errno
-	 * @param $errstr
+	 * @param int $errno
+	 * @param string $errstr
 	 */
-	protected function connectionErrorHandler( $errno,  $errstr ) {
+	public function connectionErrorHandler( $errno,  $errstr ) {
 		$this->mPHPError = $errstr;
 	}
 
@@ -895,7 +895,10 @@ abstract class DatabaseBase implements DatabaseType {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
 			}
-			wfDebugLog( 'database', "DB readonly mode: $sql" );
+			WikiaLogger::instance()->error( 'DB readonly mode', [
+				'exception' => new Exception( $sql ),
+				'server'    => $this->mServer
+			] );
 			return false;
 		}
 		# </Wikia>
@@ -1214,6 +1217,48 @@ abstract class DatabaseBase implements DatabaseType {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * A SELECT wrapper which returns a list of single field values from result rows.
+	 *
+	 * Usually throws a DBQueryError on failure. If errors are explicitly
+	 * ignored, returns false on failure.
+	 *
+	 * If no result rows are returned from the query, false is returned.
+	 *
+	 * @param string|array $table Table name. See DatabaseBase::select() for details.
+	 * @param string $var The field name to select. This must be a valid SQL
+	 *   fragment: do not use unvalidated user input.
+	 * @param string|array $cond The condition array. See DatabaseBase::select() for details.
+	 * @param string $fname The function name of the caller.
+	 * @param string|array $options The query options. See DatabaseBase::select() for details.
+	 *
+	 * @return bool|array The values from the field, or false on failure
+	 * @since 1.25
+	 */
+	public function selectFieldValues(
+		$table, $var, $cond = '', $fname = __METHOD__, $options = array()
+	) {
+		if ( $var === '*' ) { // sanity
+			throw new DBUnexpectedError( $this, "Cannot use a * field: got '$var'" );
+		}
+
+		if ( !is_array( $options ) ) {
+			$options = array( $options );
+		}
+
+		$res = $this->select( $table, $var, $cond, $fname, $options );
+		if ( $res === false ) {
+			return false;
+		}
+
+		$values = array();
+		foreach ( $res as $row ) {
+			$values[] = $row->$var;
+		}
+
+		return $values;
 	}
 
 	/**
@@ -2973,11 +3018,19 @@ abstract class DatabaseBase implements DatabaseType {
 	 * End a transaction
 	 *
 	 * @param $fname string
+	 * @return null|bool returns boolean with the result of commit
+	 * 	or null if inside the "nested" transaction
 	 */
 	function commit( $fname = 'DatabaseBase::commit' ) {
 		if ( $this->mTrxLevel ) {
-			$this->query( 'COMMIT', $fname );
+			// Wikia change - begin
+			$res = $this->query( 'COMMIT', $fname );
 			$this->mTrxLevel = 0;
+			return $res === true;
+			// Wikia change - end
+		}
+		else {
+			wfDebug( __METHOD__ . ": skipped [$fname]\n" );
 		}
 	}
 
@@ -2991,6 +3044,9 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( $this->mTrxLevel ) {
 			$this->query( 'ROLLBACK', $fname, true );
 			$this->mTrxLevel = 0;
+		}
+		else {
+			wfDebug( __METHOD__ . ": skipped [$fname]\n" );
 		}
 	}
 

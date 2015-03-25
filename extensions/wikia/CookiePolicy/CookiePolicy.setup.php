@@ -1,5 +1,4 @@
 <?
-
 /**
  * @global Array $wgExtensionCredits The list of extension credits.
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionCredits
@@ -22,19 +21,13 @@ $wgAutoloadClasses['Wikia\CookiePolicy\CookiePolicyHooks'] = __DIR__ . '/CookieP
 /**
  * Use ResourceLoader to load the JavaScript module
  */
-$wgResourceModules['ext.cookiePolicy'] = [
+$wgResourceModules['ext.cookiePolicyMessages'] = [
 	'localBasePath' => __DIR__ . '/scripts',
 	'remoteExtPath' => 'wikia/CookiePolicy/scripts',
-	'scripts' => 'cookiePolicy.js',
 	'messages' => [
 		'cookie-policy-notification-message',
 	],
 	'dependencies' => [
-		'jquery',
-		'mediawiki',
-		'wikia.window',
-		'wikia.cookies',
-		'wikia.geo',
 		// needed for message wikitext parsing
 		'mediawiki.jqueryMsg',
 	],

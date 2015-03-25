@@ -1,4 +1,4 @@
-/* global  wgScriptPath, UserSignup */
+/* global wgWikiaMaxNameChars, wgMinimalPasswordLength */
 (function () {
 	'use strict';
 
@@ -7,14 +7,15 @@
 	 *
 	 * @param {object} options
 	 * - wikiaForm: instance of WikiaForm
-	 * - inputsToValide: array of input names to be ok'ed before submission
 	 * - submitButton: pointer to main submit button of the form
+	 * - passwordInputName: input name attribute for form's password input
 	 * @constructor
 	 */
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
-		this.inputsToValidate = options.inputsToValidate || [];
 		this.submitButton = $(options.submitButton);
+		this.deferred = false;
+		this.passwordInputName = options.passwordInputName || 'password';
 	};
 
 	/**
@@ -22,111 +23,109 @@
 	 * @param {Event} e Browser event like input blur
 	 */
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
-		var el = $(e.target),
-			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+		var $el = $(e.target),
+			data = {},
+			inputName = $el.attr('name'),
+			value = $el.val(),
+			usernameAlias = 'userloginext01';
 
-		params.field = paramName;
-		params[paramName] = el.val();
+		// don't send password values to the server, validated them here in JS
+		if (inputName === this.passwordInputName) {
+			this.validatePassword(value);
+		} else {
+			// back end expects 'userloginext01' instead of 'username'
+			if (inputName === 'username') {
+				data.field = usernameAlias;
+				data[usernameAlias] = value;
+			} else {
+				data.field = inputName;
+				data[inputName] = value;
+			}
 
-		$.get(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+			this.sendValidationRequest(data)
+				.done(this.validationHandler.bind(this, inputName));
+		}
 	};
 
 	/**
-	 * Call back end for validation of input where user action occurred
-	 * @todo This was copied from validateInput with some added input name mapping. Clean this up in a separate ticket.
-	 * @param {Event} e Browser event like input blur
+	 * Client side validation that mirrors server side validation for password input. (SOC-316)
+	 * Validating client side reduces passwords being sent over HTTP in plain text.
+	 * @param {string} password
 	 */
-	UserSignupAjaxValidation.prototype.validateMappedInput = function (e) {
-		var el = $(e.target),
-			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax(),
-			mappedParamName,
-			map;
+	UserSignupAjaxValidation.prototype.validatePassword = function (password) {
+		var pwLength = password.length,
+			msg = '',
+			inputName = this.passwordInputName,
+			response = {};
 
-		// back end validation expects these fields to match the user signup form, so we'll map them to those values
-		// before sending.
-		map = {
-			'username': 'userloginext01',
-			'password': 'userloginext02'
-		};
+		// check password isn't too short (defaults to 1 char)
+		if (pwLength < wgMinimalPasswordLength) {
+			msg = mw.message('userlogin-error-wrongpasswordempty').escaped();
 
-		mappedParamName = map[paramName] || paramName;
-		params.field = mappedParamName;
-		params[mappedParamName] = el.val();
+		// check password isn't too long (defaults to 50 chars)
+		} else if (pwLength > wgWikiaMaxNameChars) {
+			msg = mw.message('usersignup-error-password-length').escaped();
+		}
 
-		$.get(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
-	};
-
-	UserSignupAjaxValidation.prototype.validationHandler = function (paramName, response) {
-		if (response.result === 'ok') {
-			this.wikiaForm.clearInputError(paramName);
+		if (msg !== '') {
+			response.msg = msg;
+			response.result = 'error';
 		} else {
-			this.wikiaForm.showInputError(paramName, response.msg);
+			response.result = 'ok';
 		}
+
+		this.validationHandler(inputName, response);
 	};
 
+	/**
+	 * Handle birthday validation as a collection of inputs as opposed to one input.
+	 * @param {Event} e Browser event like select element blur
+	 */
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
-		var el = $(e.target),
-			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+		var $el, inputName, data;
 
-		if (UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
-			UserSignup.deferred.reject();
+		if (this.deferred && typeof this.deferred.reject === 'function') {
+			this.deferred.reject();
 		}
 
-		$.extend(params, {
+		$el = $(e.target);
+		inputName = $el.attr('name');
+		data = {
 			field: 'birthdate',
 			birthyear: this.wikiaForm.inputs.birthyear.val(),
 			birthmonth: this.wikiaForm.inputs.birthmonth.val(),
 			birthday: this.wikiaForm.inputs.birthday.val()
-		});
+		};
 
-		UserSignup.deferred = $.post(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+		this.deferred = this.sendValidationRequest(data)
+			.done(this.validationHandler.bind(this, inputName));
 	};
 
 	/**
-	 * @todo User $.nivana instead
-	 * @returns {{controller: string, method: string, format: string}}
+	 * Apply error and success handling via WikiaForm instance
+	 * @param {string} inputName Name of input to handle messaging
+	 * @param {object} response Data for error/success handling
 	 */
-	UserSignupAjaxValidation.prototype.getDefaultParamsForAjax = function () {
-		return {
+	UserSignupAjaxValidation.prototype.validationHandler = function (inputName, response) {
+		if (response.result === 'ok') {
+			this.wikiaForm.clearInputError(inputName);
+		} else {
+			this.wikiaForm.showInputError(inputName, response.msg);
+		}
+	};
+
+	/**
+	 * Shared AJAX helper method
+	 * @param {object} data
+	 * @returns {jQuery} Promise
+	 */
+	UserSignupAjaxValidation.prototype.sendValidationRequest = function (data) {
+		return $.nirvana.sendRequest({
 			controller: 'UserSignupSpecial',
 			method: 'formValidation',
-			format: 'json'
-		};
-	};
-
-	UserSignupAjaxValidation.prototype.checkFieldsValid = function () {
-		var isValid = true,
-			inputsToValidate = this.inputsToValidate,
-			i;
-
-		for (i = 0; i < inputsToValidate.length; i++) {
-			if (this.checkFieldEmpty(this.wikiaForm.inputs[inputsToValidate[i]]) ||
-				this.wikiaForm.getInputGroup(inputsToValidate[i]).hasClass('error')) {
-				isValid = false;
-				break;
-			}
-		}
-
-		return isValid;
-	};
-
-	UserSignupAjaxValidation.prototype.checkFieldEmpty = function (field) {
-		return field && ((field.is('input') && field.val() === '') || (field.is('select') && field.val() === -1));
+			type: 'GET',
+			data: data
+		});
 	};
 
 	window.UserSignupAjaxValidation = UserSignupAjaxValidation;

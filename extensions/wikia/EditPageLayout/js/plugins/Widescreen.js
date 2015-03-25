@@ -17,14 +17,40 @@
 
 		triggerClassName: 'editpage-widemode-trigger',
 
+		$rail: null,
+		$toolbar: null,
+		$editpage: null,
+		expandedToolbarBreakpoint: null,
+		initialized: false,
+
 		enabled: false,
 		trigger: false,
 		wide: false,
 
+		initNodes: function() {
+			this.$rail = $('#EditPageRail');
+			this.$editpage = $('#EditPage');
+			this.$toolbar = $('#EditPageToolbar .cke_toolbar_source');
+			this.expandedToolbarBreakpoint =  this.$toolbar.width() + this.$rail.width();
+			this.initialized = true;
+		},
+
+		sizeChanged: function() {
+			if (this.initialized) {
+				if(this.editor.mode === 'source' && this.wide &&
+					this.$editpage.width() < this.expandedToolbarBreakpoint
+				) {
+					this.$editpage.addClass('toolbar-expanded');
+				} else {
+					this.$editpage.removeClass('toolbar-expanded');
+				}
+			}
+		},
+
 		activate: function() {
 			this.enabled = true;
 			if (this.enabled) {
-				this.active = this.editor.mode == 'source';
+				this.active = this.editor.mode === 'source';
 				// set up the trigger
 				this.trigger = this.editor.element.find('.'+this.triggerClassName);
 				this.trigger.click(this.proxy(this.toggle));
@@ -39,6 +65,8 @@
 
 				// needed on initial load
 				this.editor.on('toolbarsRendered', this.modeChanged, this);
+
+				this.editor.on('sizeChanged', this.sizeChanged, this);
 			}
 		},
 
@@ -53,6 +81,10 @@
 			// resize source mode textarea in IE (BugId:6289)
 			if (this.editor.ck) {
 				this.editor.ck.fire('resize');
+			}
+
+			if (!this.initialized && this.editor.mode === 'source' && this.wide) {
+				this.initNodes();
 			}
 
 			$(window).trigger('resize');
@@ -75,6 +107,7 @@
 					this.editor.log('widescreen::load() - wide[2] = '+(wide?'true':'false'));
 				}
 			}
+
 			this.setState(wide);
 		},
 

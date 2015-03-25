@@ -102,10 +102,6 @@ $messages['en'] = array(
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Hero Image',
 	'wikifeatures-feature-description-wgEnableNjordExt' => 'Make your wiki more attractive by uploading an image to represent it on its home page!',
 
-	// CuratedContent
-	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Curated Content',
-	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Use the Special:CuratedContent page of your wiki to manage content which appears in the mobile app. Expand your potential audience!',
-
 	// Empty lab message
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
@@ -1316,8 +1312,6 @@ $messages['vi'] = array(
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Sửa đổi là nền tảng của một wiki và có được một trình soạn thảo tuyệt vời là chiếc chìa để có một cách dễ dàng và kinh nghiệm thú vị khi thêm vào nội dung. Để cải thiện kinh nghiệm của bạn, chúng tôi đã thiết kế lại các trang sửa đổi của mình.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Bảng thăm dò',
 	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Cho phép bất cứ ai trên wiki của bạn để tạo ra một cuộc thăm dò! Với các cuộc thăm dò cho phép người dùng của bạn có thể sử dụng [http://vi.wikia.com/wiki/Help:Thăm_dò thẻ thăm dò ý kiến] để thêm tính năng gọn gàng này vào bất kỳ trang nào. Tính năng này là một cách tuyệt vời để tăng sự đóng góp vào wiki của bạn.',
-	'wikifeatures-feature-heading-wgEnablePageLayoutBuilder' => 'Xây dựng Bố cục',
-	'wikifeatures-feature-description-wgEnablePageLayoutBuilder' => 'Giúp biên tập viên trên wiki của bạn tạo ra một lượng lớn loại trang theo chủ đề trong thời gian ngắn. Xây dựng Bố cục cho phép các bảo quản viên trên wiki của bạn tạo ra các trang mẫu cho biên tập viên để lựa chọn trong khi tạo trang.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blog',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Blog cho phép thành viên trên wiki của bạn tạo ra bài viết blog trên trang hồ sơ của họ và cũng có thể được sử dụng như là một cách tuyệt vời để giao tiếp tin tức và sự kiện với cộng đồng wiki.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Tường tin nhắn',

@@ -8,8 +8,8 @@
 				<img src="<?= $wg->BlankImgUrl ?>"
 					height="24"
 					width="91"
-					alt="<?= wfMessage( 'venus-wikia' )->escaped() ?>"
-					title="<?= wfMessage( 'venus-wikia' )->escaped() ?>">
+					alt="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>"
+					title="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>">
 			</a>
 		</div>
 		<div class="hubs-container table-cell" id="hubsEntryPoint">

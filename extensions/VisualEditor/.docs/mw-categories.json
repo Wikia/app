@@ -16,5 +16,16 @@
 				]
 			}
 		]
+	},
+	{
+		"name": "Upstream (MediaWiki)",
+		"groups": [
+			{
+				"name": "MediaWiki",
+				"classes": [
+					"mw.Title"
+				]
+			}
+		]
 	}
 ]

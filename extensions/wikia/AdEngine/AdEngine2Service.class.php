@@ -26,10 +26,12 @@ class AdEngine2Service {
 		return in_array( $pageType, $pageTypes );
 	}
 
-
 	public static function shouldLoadLiftium() {
 		global $wgAdEngineDisableLateQueue;
-		return !$wgAdEngineDisableLateQueue;
+
+		$pageType = ( new AdEngine2PageTypeService() )->getPageType();
+
+		return !$wgAdEngineDisableLateQueue && ($pageType !== AdEngine2PageTypeService::PAGE_TYPE_NO_ADS);
 	}
 
 	public static function shouldLoadLateQueue() {

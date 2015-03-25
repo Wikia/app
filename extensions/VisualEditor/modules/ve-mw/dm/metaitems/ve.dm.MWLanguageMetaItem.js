@@ -33,9 +33,9 @@ ve.dm.MWLanguageMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/Language' ];
 ve.dm.MWLanguageMetaItem.static.toDataElement = function ( domElements ) {
 	var href = domElements[0].getAttribute( 'href' );
 	return {
-		'type': this.name,
-		'attributes': {
-			'href': href
+		type: this.name,
+		attributes: {
+			href: href
 		}
 	};
 };

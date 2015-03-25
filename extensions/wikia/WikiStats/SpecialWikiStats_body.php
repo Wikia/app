@@ -52,7 +52,7 @@ class WikiStatsPage extends IncludableSpecialPage
         global $wgUser, $wgOut, $wgRequest, $wgCityId, $wgDBname, $wgLang;
 
         if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
+			throw new UserBlockedError( $this->getUser()->getBlock() );
         }
 
         if ( wfReadOnly() ) {

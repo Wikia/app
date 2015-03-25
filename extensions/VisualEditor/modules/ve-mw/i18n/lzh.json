@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"StephDC",
+			"LNDDYL",
+			"Jason924tw"
+		]
+	},
+	"visualeditor-ca-createsource": "立碼",
+	"visualeditor-ca-editsource": "纂碼",
+	"visualeditor-ca-editsource-section": "纂碼",
+	"visualeditor-categories-tool": "類",
+	"visualeditor-cite-tool-name-book": "書",
+	"visualeditor-cite-tool-name-news": "事",
+	"visualeditor-dialog-media-noresults": "詢中無結",
+	"visualeditor-dialog-media-position-none": "無",
+	"visualeditor-dialog-media-type-thumb": "縮",
+	"visualeditor-dialog-meta-categories-category": "類",
+	"visualeditor-dialog-meta-categories-data-label": "類",
+	"visualeditor-dialog-meta-categories-input-hiddencategorieslabel": "隱類",
+	"visualeditor-dialog-meta-categories-input-placeholder": "加類",
+	"visualeditor-dialog-meta-categories-section": "類",
+	"visualeditor-dialog-meta-languages-code-label": "語之碼",
+	"visualeditor-mweditmodesource-warning-switch": "留纂"
+}

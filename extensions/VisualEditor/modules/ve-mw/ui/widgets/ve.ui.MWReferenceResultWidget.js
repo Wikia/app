@@ -12,16 +12,15 @@
  * @extends OO.ui.OptionWidget
  *
  * @constructor
- * @param {Mixed} data Item data
  * @param {Object} [config] Configuration options
  * @cfg {boolean} [divider] Section divider item, not highlightable or selectable
  */
-ve.ui.MWReferenceResultWidget = function VeUiMWReferenceResultWidget( data, config ) {
-	// Configuration intialization
+ve.ui.MWReferenceResultWidget = function VeUiMWReferenceResultWidget( config ) {
+	// Configuration initialization
 	config = config || {};
 
 	// Parent constructor
-	OO.ui.OptionWidget.call( this, data, config );
+	OO.ui.OptionWidget.call( this, config );
 
 	// Properties
 	this.$shield = this.$( '<div>' );

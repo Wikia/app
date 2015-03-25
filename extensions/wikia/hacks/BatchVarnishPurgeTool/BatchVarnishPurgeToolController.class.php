@@ -85,7 +85,6 @@ class BatchVarnishPurgeToolController extends WikiaSpecialPageController {
 			'city_variables',
 			'city_list'
 		);
-		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
 		
 		if( $type == "full" ) {
@@ -94,7 +93,7 @@ class BatchVarnishPurgeToolController extends WikiaSpecialPageController {
 			$aWhere[] = "cv_value $selectedCond '$selectedVal'";
 		}
 		
-		$aWhere[] = "cv_variable_id = '$varId'";
+		$aWhere['cv_variable_id'] = $varId;
 
 		$oRes = $dbr->select(
 			$aTables,

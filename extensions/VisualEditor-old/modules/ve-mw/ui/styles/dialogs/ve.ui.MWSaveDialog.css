@@ -1,0 +1,92 @@
+/*!
+ * VisualEditor MediaWiki UserInterface MWSaveDialog styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwSaveDialog-panel {
+	margin: 1.25em;
+}
+
+.ve-ui-mwSaveDialog-summaryLabel {
+	padding: 0.25em 0;
+}
+
+.ve-ui-mwSaveDialog-savePanel {
+	/* Make room for input box shadow */
+	padding: 0 0.5em;
+}
+
+.ve-ui-mwSaveDialog-summary {
+	width: 100%;
+	background-color: #fff;
+}
+
+.ve-ui-mwSaveDialog-summary textarea {
+	border-radius: 0.25em 0.25em 0 0;
+	vertical-align: top;
+	margin: 0;
+	padding: 0.5em;
+	resize: none;
+	height: 80px;
+	background-color: transparent;
+}
+
+.ve-ui-mwSaveDialog-foot {
+	margin: 0.5em;
+}
+
+.ve-ui-mwSaveDialog-options {
+	position: relative;
+	background-color: #f7f7f7;
+	border: solid 1px #ccc;
+	border-top: none;
+	border-radius: 0 0 0.25em 0.25em;
+	min-height: 3em;
+}
+
+.ve-ui-mwSaveDialog-checkboxes {
+	margin-right: 3.25em; /* Hack to prevent overlap on edit summary count */
+	line-height: 3em;
+	padding: 0 0.75em;
+}
+
+.ve-ui-mwSaveDialog-checkboxes label {
+	padding-right: 0.75em;
+	vertical-align: middle;
+}
+
+.ve-ui-mwSaveDialog-checkboxes input {
+	vertical-align: middle;
+}
+
+.ve-ui-mwSaveDialog-editSummary-count {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	border-left: solid 1px #eee;
+	line-height: 3em;
+	padding: 0 1em;
+	color: #aaa;
+}
+
+.ve-ui-mwSaveDialog-license,
+.ve-ui-mwSaveDialog-dirtymsg,
+.ve-ui-mwSaveDialog-report-notice {
+	font-size: 0.85em;
+	line-height: 1.25em;
+	padding: 0;
+	margin: 0;
+	color: #999;
+}
+
+.ve-ui-mwSaveDialog-working {
+	background: url(../../../init/styles/images/loading-ltr.gif) no-repeat right center;
+	display: none;
+	float: right;
+	height: 2.5em;
+	width: 128px;
+	margin-right: 1em;
+}

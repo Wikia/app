@@ -82,6 +82,7 @@
 
 					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
 						ajaxLogin: true,
+						modal: loginModal,
 						// context is this instance of UserLoginAjaxForm
 						callback: function (res) {
 							window.wgUserName = res.username;
@@ -94,35 +95,6 @@
 							} else {
 								this.reloadPage();
 							}
-						},
-						// context is this instance of UserLoginAjaxForm
-						resetpasscallback: function () {
-							$.nirvana.sendRequest({
-								controller: 'UserLoginSpecial',
-								method: 'changePassword',
-								format: 'html',
-								data: {
-									username: this.inputs.username.val(),
-									password: this.inputs.password.val(),
-									returnto: this.inputs.returnto.val(),
-									fakeGet: 1
-								},
-								callback: function (html) {
-									var content = $('<div style="display:none" />').append(html),
-										heading = content.find('h1'),
-										modal = loginModal,
-										contentBlock = $loginModal.find('.UserLoginModal');
-
-									modal.setTitle(heading.text());
-									heading.remove();
-
-									contentBlock.slideUp(400, function () {
-										contentBlock.html('').html(content);
-										content.show();
-										contentBlock.slideDown(400);
-									});
-								}
-							});
 						}
 					});
 

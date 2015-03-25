@@ -49,6 +49,8 @@ $messages['en'] = array(
 	'swm-label-mode-users-active'		=> 'Active users',
 	'swm-label-mode-users-group'		=> 'Users belonging to the group',
 	'swm-label-mode-users-group-hint'	=> '<i>Pick a group from drop down or write name by hand to overwrite drop down selection.</i>',
+	'swm-label-mode-users-poweruser' => 'Power users of a type',
+	'swm-label-mode-users-poweruser-hint' => 'Pick types of power users from a list. The message will be sent to All Wikias.',
 	'swm-label-mode-users-user'			=> 'Selected user',
 	'swm-label-mode-users-user-hint'	=> '<i>This option ignores selection in group "Wikis".</i>',
 	'swm-label-mode-users-user-multi' => 'List of users',
@@ -216,6 +218,8 @@ Referred to in:
 {{Identical|Between}}',
 	'swm-label-mode-wikis-created-hint' => 'Message that lets the user know that dates must be in the form 2012-04-01 00:00:00.',
 	'swm-error-created-tobeforefrom' => 'Error message when given wiki creation end date is before start date.',
+	'swm-label-mode-users-poweruser' => 'A label to a list of checkboxes with types of power users to choose from',
+	'swm-label-mode-users-poweruser-hint' => 'A hint that suggests picking one or more of the power users types. Also an info that it works only for the All Wikias option.',
 );
 
 /** Afrikaans (Afrikaans)

@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80",
+			"Умар"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальни тадар]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|Визуальни тадарш]] дечунна гӀонца дина нисдарш",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|Визуальни тадарш дерг]]: хьажа",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:Visualeditor-descriptionpagelink}}|Визуальни тадарш дечун]] гӀонца дина нисдар, цунна чохь ситемин карина нийса боцу вики-йозан хийцамаш.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальни тадар: Юхалатина]]",
+	"tag-visualeditor-switched-description": "Декъашхо VisualEditor-ца болх болийнера, амма тӀакха чухулара тадар чохь болх би цо.",
+	"visualeditor-feedback-tool": "Язде хьайна хетарг",
+	"visualeditor-help-label": "Деша декъашхочун куьйгалла дар",
+	"visualeditor-help-title": "Тадар лело декъашхочун куьйгалла дар"
+}

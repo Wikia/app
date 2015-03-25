@@ -13,7 +13,8 @@ define('ext.wikia.adEngine.adContext', [
 
 	instantGlobals = instantGlobals || {};
 
-	var context;
+	var context,
+		callbacks = [];
 
 	function getContext() {
 		return context;
@@ -32,6 +33,10 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function setContext(newContext) {
+		var i,
+			len;
+
+		// Note: consider copying the value, not the reference
 		context = newContext;
 
 		// Always have objects in all categories
@@ -69,7 +74,19 @@ define('ext.wikia.adEngine.adContext', [
 		// Taboola integration
 		if (context.providers.taboola) {
 			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
-			(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+		}
+
+		// Turtle
+		if (context.forceProviders.turtle) {
+			context.providers.turtle = true;
+		}
+
+		if (instantGlobals.wgAdDriverTurtleCountries &&
+				instantGlobals.wgAdDriverTurtleCountries.indexOf &&
+				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1
+					) {
+			context.providers.turtle = true;
 		}
 
 		// Export the context back to ads.context
@@ -77,11 +94,20 @@ define('ext.wikia.adEngine.adContext', [
 		if (w.ads && w.ads.context) {
 			w.ads.context = context;
 		}
+
+		for (i = 0, len = callbacks.length; i < len; i += 1) {
+			callbacks[i](context);
+		}
+	}
+
+	function addCallback(callback) {
+		callbacks.push(callback);
 	}
 
 	setContext(w.ads ? w.ads.context : {});
 
 	return {
+		addCallback: addCallback,
 		getContext: getContext,
 		setContext: setContext
 	};

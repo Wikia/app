@@ -37,7 +37,7 @@ For other grunt tasks, see:
 $ grunt --help
 ```
 
-To run the tests in a web browser, open `modules/ve/test/index.html`.
+To run the tests in a web browser, open `src/tests/index.html`.
 
 ## Building documentation
 
@@ -117,7 +117,7 @@ When a new javascript class is added, the file must be referenced in a number of
 before it can be used.
 
 Test files:
-* modules/ve/test/index.html.template
+* src/tests/index.html.template
 
 Regular files:
 * .docs/categories.json in General->Utilities (or somewhere more specific)

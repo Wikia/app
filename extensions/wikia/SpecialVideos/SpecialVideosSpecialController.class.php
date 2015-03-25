@@ -16,8 +16,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string sort [ recent/popular/trend/premium ]
 	 * @requestParam integer page - page number
 	 * @requestParam string category
-	 * @requestParam string msg - GlobalNotification message
-	 * @requestParam string msgTitle - for GlobalNotification
+	 * @requestParam string msg - BannerNotifications message
+	 * @requestParam string msgTitle - for BannerNotifications
 	 * @requestParam string provider
 	 * @responseParam integer addVideo [0/1]
 	 * @responseParam string pagination
@@ -68,14 +68,18 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Filter on a comma separated list of providers if given.
 		$providers = $this->request->getVal( 'provider', '' );
 
-		// Add GlobalNotification message after adding a new video. We can abstract this later if we want to add more types of messages
+		// Add BannerNotifications message after adding a new video.
+		// We can abstract this later if we want to add more types of messages
 		$msg = $this->request->getVal( 'msg', '' );
 
 		if ( !empty( $msg ) ) {
 			$msgTitle = $this->request->getVal( 'msgTitle', '' );
 			$msgTitle = urldecode( $msgTitle );
 
-			NotificationsController::addConfirmation( wfMessage( $msg, $msgTitle )->parse(), NotificationsController::CONFIRMATION_CONFIRM );
+			BannerNotificationsController::addConfirmation(
+				wfMessage( $msg, $msgTitle )->parse(),
+				BannerNotificationsController::CONFIRMATION_CONFIRM
+			);
 		}
 
 		if ( !is_numeric($page) ) {

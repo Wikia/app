@@ -7,8 +7,7 @@
 	function getScrollbarWidth () {
 		var inner = document.createElement('p'),
 			outer = document.createElement('div'),
-			w1 = inner.offsetWidth,
-			w2 = inner.offsetWidth;
+			w1, w2;
 
 		inner.style.width = '100%';
 		inner.style.height = '100px';
@@ -23,7 +22,10 @@
 		outer.appendChild(inner);
 
 		document.body.appendChild(outer);
+
+		w1 = inner.offsetWidth;
 		outer.style.overflow = 'scroll';
+		w2 = inner.offsetWidth;
 
 		if (w1 == w2) {
 			w2 = outer.clientWidth;
@@ -450,7 +452,7 @@
 					width += config.extraPageWidth;
 				}
 
-				if (window.wgOasisResponsive) {
+				if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 					var pageWidth = $('#WikiaPage').width(), widthArticlePadding = fluidlayout.getWidthGutter(), railWidth = fluidlayout.getRightRailWidth() + fluidlayout.getWidthPadding(), minWidth = fluidlayout.getMinArticleWidth();
 
 					// don't go below minimum width
@@ -498,7 +500,7 @@
 				};
 
 				// pass info about dropped rail to preview module
-				if (pageWidth <= railBreakPoint && window.wgOasisResponsive) {
+				if (pageWidth <= railBreakPoint && (window.wgOasisResponsive || window.wgOasisBreakpoints)) {
 					// if it's a small screen or wide page pass to preview a flag to drop rail
 					previewOptions.isRailDropped = true;
 				}

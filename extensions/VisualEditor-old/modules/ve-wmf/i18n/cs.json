@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chmee2",
+			"Jkjk",
+			"Juandev",
+			"Koo6",
+			"Littledogboy",
+			"Michaelbrabec",
+			"Mormegil",
+			"Polda18",
+			"Tchoř",
+			"ශ්වෙත"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Editace provedená za použití [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditoru]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Zkontrolovat]]",
+	"tag-visualeditor-needcheck-description": "Editace provedená za použití [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditoru]], u které systém detekoval možné nezamýšlené změny wikitextu.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Přepnuto]]",
+	"tag-visualeditor-switched-description": "Uživatel začal editovat pomocí VisualEditoru, načež se přepnul do editoru wikitextu.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Názory",
+	"visualeditor-feedback-tool": "Zanechte zpětnou vazbu",
+	"visualeditor-help-label": "Přečtěte si uživatelskou příručku",
+	"visualeditor-help-title": "Uživatelská příručka k používání editoru"
+}

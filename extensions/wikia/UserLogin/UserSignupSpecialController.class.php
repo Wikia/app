@@ -239,15 +239,19 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$ret = $signupForm->addNewAccount();
 		}
 
-		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';
-		$this->msg = $signupForm->msg;
-		$this->errParam = $signupForm->errParam;
-
 		// pass and ID of created account for FBConnect feature
 		if ( $ret instanceof User ) {
 			$this->userId = $ret->getId();
 			$this->userPage = $ret->getUserPage()->getFullUrl();
 		}
+
+		// At this point, when the account creation fails for any reason,
+		// we must have $signupForm->msgType set to 'error' and $signupForm->msg
+		// containing a relevant message. As for $ret, we expect an instance of
+		// User on success; false otherwise.
+		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';
+		$this->msg = $signupForm->msg;
+		$this->errParam = $signupForm->errParam;
 	}
 
 	/**
@@ -620,18 +624,17 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		switch ( $field ) {
 			case 'userloginext01' :
-				$response = $signupForm->initValidationUsername();
-				break;
-			case 'userloginext02' :
-				$response = $signupForm->initValidationPassword();
+				$signupForm->initValidationUsername();
 				break;
 			case 'email' :
-				$response = $signupForm->initValidationEmail()
+				$signupForm->initValidationEmail()
 					&& $signupForm->initValidationRegsPerEmail();
 				break;
 			case 'birthdate' :
-				$response = $signupForm->initValidationBirthdate();
+				$signupForm->initValidationBirthdate();
 				break;
+			default:
+				throw new MWException( "Unhandled case value" );
 		}
 
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';

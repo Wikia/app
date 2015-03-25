@@ -19,11 +19,11 @@ OO.inheritClass( ve.dm.WikiaTransclusionModel, ve.dm.MWTransclusionModel );
  */
 ve.dm.WikiaTransclusionModel.prototype.fetchRequest = function ( titles, specs, queue ) {
 	return ve.init.target.constructor.static.apiRequest( {
-		'action': 'templateparameters',
-		'titles': titles.join( '|' )
+		action: 'templateparameters',
+		titles: titles.join( '|' )
 	} )
-		.done( ve.bind( this.fetchRequestDone, this, specs ) )
-		.always( ve.bind( this.fetchRequestAlways, this, queue ) );
+		.done( this.fetchRequestDone.bind( this, specs ) )
+		.always( this.fetchRequestAlways.bind( this, queue ) );
 };
 
 /**
@@ -35,10 +35,10 @@ ve.dm.WikiaTransclusionModel.prototype.fetchRequestDone = function ( specs, data
 		for ( id in data.pages ) {
 			page = data.pages[id];
 			specs[page.title] = {
-				'title': data.pages[id].title,
-				'description': '',
-				'params': {},
-				'paramOrder': page.params
+				title: data.pages[id].title,
+				description: '',
+				params: {},
+				paramOrder: page.params
 			};
 			// Map parameters from flat array to collection where parameter name is the key and value is empty
 			// because later it's extended with ve.dm.MWTemplateSpecModel.prototype.getDefaultParameterSpec

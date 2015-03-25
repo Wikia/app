@@ -15,6 +15,7 @@
 	"tag-visualeditor-description": "أجري التعديل باستخدام [[{{MediaWiki:visualeditor-descriptionpagelink}}|المحرر المرئي]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|المحرر المرئي: تحقق]]",
 	"tag-visualeditor-needcheck-description": "تعديل [[{{MediaWiki:visualeditor-descriptionpagelink}}|بالمحرر المرئي]] وخطأ محتمل في النص الويكي.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|المحرر المرئي: تبديل]]",
 	"visualeditor-feedback-link": "Project:المحرر المرئي/تعليقات",
 	"visualeditor-feedback-tool": "ضع تعليقا",
 	"visualeditor-help-label": "اقرأ دليل المستخدم",

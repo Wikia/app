@@ -1,14 +1,9 @@
 @import "skins/shared/mixins/transition";
 @import "skins/shared/color";
 
-
-.oo-ui-dialog .oo-ui-window-frame {
+.oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {
 	background: $color-page;
 	border-color: $color-page-border;
-}
-
-.oo-ui-window-title {
-	color: $color-text;
 }
 
 @if $is-dark-wiki {
@@ -21,81 +16,24 @@
 	}
 }
 
-.oo-ui-pagedOutlineLayout-outlinePanel {
-	border-color: $color-page-border;
-
-	.oo-ui-outlineControlsWidget {
-		border-top: 1px solid $color-page-border;
-	}
+.oo-ui-dialog-content .oo-ui-window-closeButton {
+  float: right;
+  margin: 0.7em 0.7em;
+  position: relative;
+  z-index: 1;
 }
 
-.oo-ui-dialog-content .oo-ui-window-body {
-	.ve-ui-surface {
-		border-color: $color-page-border;
-	}
-
-	.WikiaArticle {
-		overflow: visible;
-	}
+.oo-ui-processDialog-actions-safe,
+.oo-ui-processDialog-actions-primary {
+	float: right;
+	position: static;
 }
 
-.oo-ui-dialog .oo-ui-window-frame.oo-ui-window-frame-captcha {
-	max-height: 480px;
-}
-
-#ve-ui-mwSaveDialog-captcha > div {
-	margin: 5px auto 0 auto;
-	width: 50%;
-}
-
-.oo-ui-dialog .oo-ui-window-frame.ve-ui-noAnimation {
-	transform: none;
-	transition: none;
-}
-
-.oo-ui-window-head.oo-ui-texture-pending,
-.oo-ui-window-foot.oo-ui-texture-pending {
-	background-image: none;
-}
-
-.oo-ui-dialog-overlayless {
+.oo-ui-windowManager-modal > .oo-ui-dialog-overlayless {
 	background-color: transparent;
 }
 
-.oo-ui-dialog-drag-handle {
-	-webkit-backface-visibility: hidden;
-	cursor: move;
-	height: 18px;
-	left: 50%;
-	margin-left: -17px;
-	opacity: .2;
-	position: absolute;
-	top: .8em;
-	width: 36px;
-}
-.oo-ui-dialog-drag-iframe-fix {
-	bottom: 0;
-	display: none;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
+.ve-ui-mwSaveDialog-captcha > div {
+	margin: 5px auto 0 auto;
 }
 
-/* Draggable */
-.oo-ui-dialog-draggable {
-	> .oo-ui-window-frame {
-		bottom: auto;
-		right: auto;
-	}
-}
-.oo-ui-dialog.oo-ui-dialog-dragging {
-	@include transition-shorthand( none );
-
-	> .oo-ui-window-frame {
-		@include transition-shorthand( none );
-	}
-	.oo-ui-dialog-drag-iframe-fix {
-		display: block;
-	}
-}

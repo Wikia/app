@@ -27,19 +27,9 @@ describe('AdConfigMobile', function () {
 		};
 	}
 
-	it('getProviderList returns GPT in the regular case', function () {
+	it('getProviderList returns DirectGPT, RemnantGPT in the regular case', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
 			mockAdContext(true),
-			adProviderDirectMock,
-			adProviderRemnantMock
-		);
-
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock], 'GPT');
-	});
-
-	it('getProviderList returns GPT + Remnant GPT when remnantGptMobile enabled', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
-			mockAdContext(true, true),
 			adProviderDirectMock,
 			adProviderRemnantMock
 		);

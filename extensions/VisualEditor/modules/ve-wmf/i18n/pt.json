@@ -10,7 +10,8 @@
 			"Jdforrester",
 			"Luckas",
 			"Vitorvicentevalente",
-			"SandroHc"
+			"SandroHc",
+			"He7d3r"
 		]
 	},
 	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Editor Visual]]",
@@ -22,5 +23,5 @@
 	"visualeditor-feedback-link": "Project:Editor Visual/Comentários",
 	"visualeditor-feedback-tool": "Deixar um comentário",
 	"visualeditor-help-label": "Leia o guia do utilizador",
-	"visualeditor-help-title": "Guia do utilizador para aprender a utilizar o editor"
+	"visualeditor-help-title": "Guia para aprender a utilizar o editor"
 }

@@ -1,0 +1,195 @@
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
+@import "skins/shared/mixins/cursor";
+@import "mixins/ve-icon";
+
+$width-dialog: 712px;
+$width-results: 552px;
+
+// Temporary class for hiding the cart toggle
+.ve-ui-wikiaSingleMediaDialog-hide-cart-controls {
+	.ve-ui-wikiaSingleMediaDialog-cartControls {
+		display: none;
+	}
+	.ve-ui-wikiaSingleMediaCartSelectWidget {
+		padding-top: 15px;
+		top: 0;
+	}
+}
+
+.ve-ui-wikiaSingleMediaDialog {
+	.oo-ui-window-body {
+		padding: 0;
+	}
+
+	.oo-ui-window-foot {
+		.oo-ui-buttonedElement {
+			float: right;
+		}
+	}
+
+	.ve-ui-wikiaMediaResultsWidget {
+		height: 100%;
+		left: 0;
+		overflow-y: auto;
+		position: absolute;
+		width: $width-results;
+
+		.oo-ui-selectWidget {
+			margin: 20px 0 20px 24px;
+		}
+
+		.ve-ui-mwMediaResultWidget {
+			cursor: pointer;
+			margin: 0 5px 60px;
+
+			.ve-ui-wikiaMediaOptionWidget-metaData {
+				@include cursor( 'zoom-in' );
+				margin-top: 160px;
+				padding: 2px 0;
+				position: absolute;
+				width: 100%;
+			}
+			.oo-ui-labeledElement-label {
+				@include cursor( 'zoom-in' );
+				margin-top: 178px;
+				padding: 0;
+			}
+		}
+	}
+}
+
+.ve-ui-wikiaSingleMediaQueryWidget {
+	box-shadow: 0 0 0.66em rgba(0, 0, 0, 0.25);
+	box-sizing: border-box;
+	height: 70px;
+	padding: 20px;
+	position: relative;
+	z-index: 1;
+
+	.oo-ui-textInputWidget {
+		width: 100%;
+	}
+}
+
+.ve-ui-wikiaSingleMediaDialog-main {
+	@include transition-shorthand( all 250ms ease-in-out );
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 70px;
+}
+
+/* Foot */
+.ve-ui-wikiaSingleMediaDialog-policy {
+	align-items: center;
+	color: $color-alternate-text;
+	display: flex;
+	font-size: .9em;
+	height: 2.5em;
+	line-height: 1.25em;
+	margin-top: 1px;
+
+	.ve-ui-wikiaSingleMediaDialog-policyInner {
+		margin-right: 4em;
+		max-height: 2.5em;
+		overflow: hidden;
+	}
+}
+
+/* Cart */
+.ve-ui-wikiaSingleMediaCartWidget {
+	background: $color-ve-page-secondary;
+	bottom: 0;
+	left: $width-results;
+	overflow: hidden;
+	padding-top: 35px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.ve-ui-wikiaSingleMediaDialog-cartControls {
+	border-bottom: 1px solid $color-page-border;
+	height: 29px;
+	padding-top: 5px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: $width-dialog;
+}
+
+.ve-ui-wikiaSingleMediaDialog-cartToggle {
+	position: absolute;
+	right: 56px;
+
+	.oo-ui-buttonedElement-button {
+		border-radius: 4px;
+	}
+	.oo-ui-buttonedElement-active {
+		background: $color-alternate-text;
+	}
+}
+.ve-ui-wikiaSingleMediaDialog-cartGridButton .oo-ui-buttonedElement-active .oo-ui-iconedElement-icon {
+	@include ve-icon(cart-grid, wikia, $color-alternate-text);
+}
+.ve-ui-wikiaSingleMediaDialog-cartListButton .oo-ui-buttonedElement-active .oo-ui-iconedElement-icon {
+	@include ve-icon(cart-list, wikia, $color-alternate-text);
+}
+
+.ve-ui-wikiaSingleMediaCartSelectWidget {
+	bottom: 0;
+	left: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	right: 0;
+	top: 35px;
+}
+
+.ve-ui-wikiaSingleMediaCartOptionWidget {
+	box-sizing: border-box;
+	line-height: 0;
+	padding: 5px 20px;
+	width: $width-dialog;
+
+	&.oo-ui-optionWidget-highlighted, &.oo-ui-optionWidget-selected {
+		box-shadow: none;
+		background: transparent;
+	}
+}
+
+.ve-ui-wikiaMediaOptionWidget-preview {
+	float: right;
+	text-transform: uppercase;
+}
+.ve-ui-wikiaMediaOptionWidget-preview-icon {
+	float: left;
+	height: 14px;
+	width: 14px;
+}
+
+.ve-ui-wikiaSingleMediaCartOptionImage {
+	border: 1px solid $color-page-border;
+	box-sizing: border-box;
+	display: inline-block;
+}
+
+.ve-ui-wikiaSingleMediaCartOptionDetails {
+	background: $color-page;
+	border: 1px solid $color-page-border;
+	box-sizing: border-box;
+	display: inline-block;
+	height: 120px;
+	margin-left: 20px;
+	width: 530px;
+}
+
+.ve-ui-wikiaMediaOptionWidget-metaData {
+	color: $color-alternate-text;
+	font-size: .8em;
+	font-weight: bold;
+	margin-top: 162px;
+	position: absolute;
+}

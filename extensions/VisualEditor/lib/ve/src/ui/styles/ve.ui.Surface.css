@@ -1,0 +1,18 @@
+/*!
+ * VisualEditor Surface styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-surface {
+	position: relative;
+}
+
+.ve-ui-surface:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}

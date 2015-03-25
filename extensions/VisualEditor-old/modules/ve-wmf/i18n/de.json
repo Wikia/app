@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"APPER",
+			"G.Hagedorn",
+			"Inkowik",
+			"Jcornelius",
+			"Jdforrester",
+			"Kghbln",
+			"Metalhead64",
+			"Murma174",
+			"Se4598",
+			"Tomabrafix"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Bearbeitet mit dem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Überprüfung]]",
+	"tag-visualeditor-needcheck-description": "Mit dem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] vorgenommene Bearbeitung, bei der das System möglicherweise ungewollte Änderungen im Wikitext entdeckt hat.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Gewechselt]]",
+	"tag-visualeditor-switched-description": "Mit dem Bearbeiten mithilfe des VisualEditors angefangen und dann auf den Wikitext-Editor gewechselt.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Rückmeldungen",
+	"visualeditor-feedback-tool": "Rückmeldungen hinterlassen",
+	"visualeditor-help-label": "Lies das Benutzerhandbuch",
+	"visualeditor-help-title": "Benutzerhandbuch für die Verwendung dieses Editors"
+}

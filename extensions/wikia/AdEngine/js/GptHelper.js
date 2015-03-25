@@ -17,7 +17,6 @@ define('ext.wikia.adEngine.gptHelper', [
 		gptCallbacks = {},
 		googletag,
 		pubads,
-		pageLevelParams,
 		fallbackSize = [1, 1]; // Size to return if there are no sizes matching the screen dimensions
 
 	function convertSizesToGpt(slotsize) {
@@ -56,11 +55,9 @@ define('ext.wikia.adEngine.gptHelper', [
 		return goodSizes;
 	}
 
-	function setPageLevelParams() {
+	function setPageLevelParams(pageLevelParams) {
 		var name,
 			value;
-
-		pageLevelParams = adLogicPageParams.getPageLevelParams();
 
 		log(['setPageLevelParams', pageLevelParams], 'debug', logGroup);
 
@@ -124,8 +121,6 @@ define('ext.wikia.adEngine.gptHelper', [
 			googletag.cmd.push(function () {
 				pubads = googletag.pubads();
 
-				setPageLevelParams();
-
 				pubads.collapseEmptyDivs();
 				pubads.enableSingleRequest();
 				pubads.disableInitialLoad(); // manually request ads using refresh
@@ -138,7 +133,7 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 	}
 
-	function pushAd(slotName, slotPath, slotTargeting, success, error) {
+	function pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType) {
 		var slotDiv = document.getElementById(slotName),
 			adDiv, // set in queueAd
 			adDivId = 'wikia_gpt_helper' + slotPath;
@@ -171,7 +166,13 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 
 		function queueAd() {
-			var name, value, sizes, slot;
+			var name,
+				value,
+				sizes,
+				slot,
+				pageLevelParams = adLogicPageParams.getPageLevelParams();
+
+			setPageLevelParams(pageLevelParams);
 
 			adDiv = document.getElementById(adDivId);
 
@@ -209,11 +210,13 @@ define('ext.wikia.adEngine.gptHelper', [
 				log(['googletag.display', adDivId], 'debug', logGroup);
 				googletag.display(adDivId);
 
-				// Save page level and slot level params for easier ad delivery debugging
+				// Save slot level params for easier ad delivery debugging
 				adDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
 				adDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
-				adDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
 			}
+
+			// Save page level params for easier ad delivery debugging
+			adDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
 
 			// Quick hack/fix for Mercury:
 			hideOldDivs();
@@ -236,7 +239,7 @@ define('ext.wikia.adEngine.gptHelper', [
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				gptAdDetect.onAdLoad(adDivId, event, iframe, callSuccess, callError);
+				gptAdDetect.onAdLoad(adDivId, event, iframe, callSuccess, callError, forcedAdType);
 			}, 0);
 		}
 

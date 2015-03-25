@@ -21,20 +21,21 @@ ve.ui.WikiaSingleMediaQueryWidget = function VeUiWikiaSingleMediaQueryWidget( co
 	ve.ui.WikiaSingleMediaQueryWidget.super.call( this, config );
 
 	// Properties
-	this.input = new OO.ui.ClearableTextInputWidget( {
-		'$': this.$,
-		'icon': 'search',
-		'placeholder': config.placeholder,
-		'value': config.value
+	//this.input = new OO.ui.ClearableTextInputWidget( {
+	this.input = new OO.ui.TextInputWidget( {
+		$: this.$,
+		icon: 'search',
+		placeholder: config.placeholder,
+		value: config.value
 	} );
-	this.requestMediaCallback = ve.bind( this.requestMedia, this );
+	this.requestMediaCallback = this.requestMedia.bind( this );
 	this.request = null;
 	this.value = null;
 	this.timeout = null;
 	this.batch = null;
 
 	// Events
-	this.input.connect( this, { 'change': 'onInputChange' } );
+	this.input.connect( this, { change: 'onInputChange' } );
 
 	// Initialization
 	this.$element
@@ -83,19 +84,19 @@ ve.ui.WikiaSingleMediaQueryWidget.prototype.onInputChange = function () {
 ve.ui.WikiaSingleMediaQueryWidget.prototype.requestMedia = function () {
 	this.input.pushPending();
 	this.request = $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'format': 'json',
-			'action': 'apimediasearch',
-			'query': this.value,
-			'type': 'photo',
-			'mixed': false,
-			'batch': this.batch,
-			'limit': 16
+		url: mw.util.wikiScript( 'api' ),
+		data: {
+			format: 'json',
+			action: 'apimediasearch',
+			query: this.value,
+			type: 'photo',
+			mixed: false,
+			batch: this.batch,
+			limit: 16
 		}
 	} )
-		.always( ve.bind( this.onRequestMediaAlways, this ) )
-		.done( ve.bind( this.onRequestMediaDone, this ) );
+		.always( this.onRequestMediaAlways.bind( this ) )
+		.done( this.onRequestMediaDone.bind( this ) );
 };
 
 /**
