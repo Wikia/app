@@ -1718,3 +1718,8 @@ $wgOasisBreakpoints = false;
  * Add poweruser to implicit groups
  */
 $wgImplicitGroups[] = 'poweruser';
+
+/**
+ * Enable updated GlobalFooter
+ */
+$wgEnableUpdatedGlobalFooter = false;
