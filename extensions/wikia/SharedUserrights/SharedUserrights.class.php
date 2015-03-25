@@ -28,7 +28,7 @@ class UserRights {
 	 * @param User $user
 	 * @return array list of global groups
 	 */
-	static function getGlobalGroups(User $user) {
+	static function getGlobalGroups( User $user ) {
 		if ( $user->isAnon() ) {
 			return [];
 		}
@@ -36,7 +36,7 @@ class UserRights {
 		$fname = __METHOD__;
 		$userId = $user->getId();
 
-		if (!isset(self::$globalGroup[$userId])) {
+		if ( !isset( self::$globalGroup[$userId] ) ) {
 			$globalGroups = WikiaDataAccess::cache(
 				self::getMemcKey( $user ),
 				WikiaResponse::CACHE_LONG,
@@ -53,7 +53,7 @@ class UserRights {
 			);
 
 			global $wgWikiaGlobalUserGroups;
-			self::$globalGroup[$userId] = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
+			self::$globalGroup[$userId] = array_intersect( $globalGroups, $wgWikiaGlobalUserGroups );
 		}
 
 		return self::$globalGroup[$userId];
@@ -89,7 +89,7 @@ class UserRights {
 		}
 
 		$dbw = self::getDB( DB_MASTER );
-		if( $user->getId() ) {
+		if ( $user->getId() ) {
 			$dbw->insert( 'user_groups',
 				[
 					'ug_user'  => $user->getID(),
@@ -163,8 +163,8 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function userEffectiveGroups( User $user, &$groups) {
-		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
+	static function userEffectiveGroups( User $user, &$groups ) {
+		$groups = array_unique( array_merge( $groups, self::getGlobalGroups( $user ) ) );
 		return $groups;
 	}
 
@@ -173,8 +173,8 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function showEditUserGroupsForm( User $user, &$groups) {
-		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
+	static function showEditUserGroupsForm( User $user, &$groups ) {
+		$groups = array_unique( array_merge( $groups, self::getGlobalGroups( $user ) ) );
 
 		return true;
 	}
@@ -184,10 +184,10 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function groupCheckboxes($group, &$disabled, &$irreversible) {
+	static function groupCheckboxes( $group, &$disabled, &$irreversible ) {
 		global $wgWikiaGlobalUserGroups;
 
-		if (!self::isCentralWiki() && in_array($group, $wgWikiaGlobalUserGroups)) {
+		if ( !self::isCentralWiki() && in_array( $group, $wgWikiaGlobalUserGroups ) ) {
 			$disabled = true;
 		}
 		return true;
