@@ -207,21 +207,21 @@ class User {
      *
      * @return boolean true on success, false otherwise
      */
-    public static function register( $username, $password, $email )
+    public static function register( $username, $password, $email, $birthdate )
     {
         $logger = \Wikia\Logger\WikiaLogger::instance();
-        $logger->info( 'HELIOS_REGISTRATION', [ 'method' => __METHOD__ ] );
+        $logger->info( 'HELIOS_REGISTRATION START', [ 'method' => __METHOD__ ] );
 
         global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
         $helios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
         try {
-            $registration = $helios->register( $username, $password, $email );
+            $registration = $helios->register( $username, $password, $email, $birthdate );
             $result = !empty( $registration->success );
 
             if ( !empty( $registration->error ) ) {
                 $logger->error(
-                    'HELIOS_REGISTRATION',
+                    'HELIOS_REGISTRATION ERROR_FROM_SERVICE',
                     [ 'method' => __METHOD__ ]
                 );
             }
@@ -229,7 +229,7 @@ class User {
 
         catch ( ClientException $e ) {
             $logger->error(
-                'HELIOS_REGISTRATION',
+                'HELIOS_REGISTRATION ERROR_FROM_CLIENT',
                 [ 'exception' => $e, 'method' => __METHOD__ ]
             );
             $result = false;
@@ -244,26 +244,31 @@ class User {
         $heliosResult = self::register( $User->mName, $password, $email, $User->mBirthDate );
         $logger = \Wikia\Logger\WikiaLogger::instance();
 
+        global $wgHeliosRegistrationShadowMode;
+
         if ( $heliosResult ) {
 
             global $wgExternalSharedDB;
-            $dbw = \wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-            $heliosUserId = $dbw->selectField( 'user_helios', 'user_id', [ 'user_name' => $User->mName ], __METHOD__ );
+
+            $table = $wgHeliosRegistrationShadowMode ? '`user`' : 'user_helios';
+
+            $dbw = \wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+            $heliosUserId = $dbw->selectField( $table, 'user_id', [ 'user_name' => $User->mName ], __METHOD__ );
 
             if ( $heliosUserId ) {
-                $logger->info( 'HELIOS_REGISTRATION_SUCCESS', [ 'method' => __METHOD__, 'user_id' => $heliosUserId ] );
+
+                if ( ! $wgHeliosRegistrationShadowMode ) {
+                    $result = $heliosResult;
+                    $userId = $heliosUserId;
+                }
+
+                $logger->info( 'HELIOS_REGISTRATION SUCCESS', [ 'method' => __METHOD__, 'user_id' => $heliosUserId, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
             } else {
-                $logger->info( 'HELIOS_REGISTRATION_FAILURE', [ 'method' => __METHOD__, 'user_id' => null, 'user_name' => $User->mName ] );
+                $logger->info( 'HELIOS_REGISTRATION FAILURE FETCH_ID', [ 'method' => __METHOD__, 'user_id' => null, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
             }
 
         } else {
-            $logger->info( 'HELIOS_REGISTRATION_FAILURE', [ 'method' => __METHOD__, 'user_id' => $heliosUserId, 'user_name' => $User->mName ] );
-        }
-
-        global $wgHeliosRegistrationShadowMode;
-        if ( ! $wgHeliosRegistrationShadowMode ) {
-            $result = $heliosResult;
-            $userId = $heliosUserId;
+            $logger->info( 'HELIOS_REGISTRATION FAILURE CALL', [ 'method' => __METHOD__, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
         }
 
         return true;

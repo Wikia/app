@@ -249,7 +249,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		global $wgExternalSharedDB;
 		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
-		try {
+        try {
             $userId = null;
             $result = null;
             wfRunHooks( 'ExternalUserWikiaAddToDatabase', [ &$result, &$userId, $User, $password, $email, $realname ] );
