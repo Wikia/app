@@ -21,8 +21,12 @@ module.exports = function (grunt) {
 					}
 				},
 				function (err, html) {
-					var dest = rootDir + '/../compiled/' + fileName;
-					grunt.file.write(dest, html);
+					if (err) {
+						grunt.log.error(err);
+					} else {
+						var dest = rootDir + '/../compiled/' + fileName;
+						grunt.file.write(dest, html);
+					}
 				});
 		});
 	});

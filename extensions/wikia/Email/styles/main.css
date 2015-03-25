@@ -1,6 +1,46 @@
+/**
+ * This is the css file for the main.mustache template
+ * Note that it's a css file, not scss, so nesting and variables are not supported
+ * Only include styles that directly affect elements inside main.mustache
+ */
+
+.main-wrapper {
+	background-color: #F2F6FA;
+}
+
 .content {
 	padding: 15px;
 	max-width: 600px;
 	margin: 0 auto;
 	display: block;
 }
+
+.main-content {
+	background-color: #FFF;
+	border-bottom: 1px solid #c5ced9;
+	border-top: 1px solid #c5ced9;
+}
+
+.container {
+	display: block !important;
+	max-width: 600px !important;
+	margin: 0 auto !important;
+	clear: both !important;
+}
+
+.head-wrap {
+	text-align: center;
+	width: 100%;
+}
+
+.header {
+}
+
+.body-wrap {
+	width: 100%;
+}
+
+.footer-wrap {
+
+}
+
