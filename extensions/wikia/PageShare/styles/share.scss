@@ -1,6 +1,7 @@
 @import 'skins/shared/color';
 
 .page-share-toolbar {
+	line-height: 20px;
 	white-space: nowrap;
 
 	li {
@@ -14,8 +15,10 @@
 	}
 
 	a {
+		opacity: .7;
+
 		&:hover {
-			opacity: 0.8;
+			opacity: 1;
 			text-decoration: none;
 		}
 	}
