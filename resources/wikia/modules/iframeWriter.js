@@ -28,6 +28,11 @@ define('wikia.iframeWriter', [
 		iframe.scrolling = 'no';
 		iframe.width = params.width;
 		iframe.height = params.height;
+
+		if (iframe.classList) {
+			iframe.classList.add('wikia-ad-iframe');
+		}
+
 		iframe.onload = function () {
 			iframe.contentWindow.document.write(code);
 		};
