@@ -178,6 +178,7 @@
 	.header-table {
 		border-bottom: solid 1px $color-page-border;
 		display: table;
+		margin-bottom: 7px;
 
 		.header-column {
 			display: table-cell;
@@ -190,9 +191,5 @@
 				width: 100%;
 			}
 		}
-	}
-
-	.wikia-menu-button {
-		margin-top:7px;
 	}
 }
