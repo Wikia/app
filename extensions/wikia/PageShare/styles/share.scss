@@ -1,4 +1,6 @@
-#PageShareToolbar {
+@import 'skins/shared/color';
+
+.page-share-toolbar {
 	white-space: nowrap;
 
 	li {
@@ -6,15 +8,15 @@
 	}
 
 	svg {
+		fill: $color-links;
 		margin-left: 2px;
 		width: 24px;
 	}
 
 	a {
-		opacity: .5;
-
 		&:hover {
-			opacity: 1;
+			opacity: 0.8;
+			text-decoration: none;
 		}
 	}
 }
