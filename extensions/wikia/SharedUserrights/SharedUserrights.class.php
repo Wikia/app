@@ -17,12 +17,16 @@
 */
 
 class UserRights {
-	private static $globalGroup;
+
+	private static $globalGroup = [];
 
 	/**
 	 * data provider
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 *
+	 * @param User $user
+	 * @return array list of global groups
 	 */
 	static function getGlobalGroups(User $user) {
 		if ( $user->isAnon() ) {
@@ -37,8 +41,7 @@ class UserRights {
 				self::getMemcKey( $user ),
 				WikiaResponse::CACHE_LONG,
 				function() use ( $userId, $fname ) {
-					global $wgExternalSharedDB;
-					$dbr = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
+					$dbr = self::getDB();
 
 					return $dbr->selectFieldValues(
 						'user_groups',
@@ -79,27 +82,27 @@ class UserRights {
 	 * @return bool false, it's a hook
 	 */
 	static function addGlobalGroup( User $user, $group ) {
-		global $wgExternalSharedDB, $wgWikiaGlobalUserGroups;
+		global $wgWikiaGlobalUserGroups;
 
 		if ( !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
 			return true;
 		}
 
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$dbw = self::getDB( DB_MASTER );
 		if( $user->getId() ) {
 			$dbw->insert( 'user_groups',
-					array(
-						'ug_user'  => $user->getID(),
-						'ug_group' => $group,
-					     ),
-					__METHOD__,
-					array( 'IGNORE' ) );
+				[
+					'ug_user'  => $user->getID(),
+					'ug_group' => $group,
+				 ],
+				__METHOD__
+			);
 		}
 
 		global $wgMemc;
 		$wgMemc->delete( self::getMemcKey( $user ) );
 
-		wfRunHooks( 'AfterUserAddGlobalGroup', array( $user, $group ) );
+		wfRunHooks( 'AfterUserAddGlobalGroup', [ $user, $group ] );
 
 		// return false to prevent group from being added to local DB
 		return false;
@@ -112,31 +115,33 @@ class UserRights {
 	 * @throws DBUnexpectedError
 	 */
 	static function removeGlobalGroup( User $user, $group ) {
-		global $wgExternalSharedDB, $wgWikiaGlobalUserGroups;
+		global $wgWikiaGlobalUserGroups;
 
 		if ( !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
 			return true;
 		}
 
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$dbw = self::getDB( DB_MASTER );
 		$dbw->delete( 'user_groups',
-				array(
+				[
 					'ug_user'  => $user->getID(),
 					'ug_group' => $group,
-				     ), __METHOD__ );
+				     ],
+			__METHOD__
+		);
 		// Remember that the user was in this group
 		$dbw->insert( 'user_former_groups',
-				array(
+				[
 					'ufg_user'  => $user->getID(),
 					'ufg_group' => $group,
-				     ),
-				__METHOD__,
-				array( 'IGNORE' ) );
+				],
+				__METHOD__
+		);
 
 		global $wgMemc;
 		$wgMemc->delete( self::getMemcKey( $user ) );
 
-		wfRunHooks( 'AfterUserRemoveGlobalGroup', array( $user, $group ) );
+		wfRunHooks( 'AfterUserRemoveGlobalGroup', [ $user, $group ] );
 
 		// return true to let the User class clean up any residual staff rights stored locally
 		return true;
@@ -196,5 +201,14 @@ class UserRights {
 	 */
 	static private function getMemcKey( User $user ) {
 		return wfSharedMemcKey( __CLASS__, 'global-groups', $user->getId() );
+	}
+
+	/**
+	 * @param int $db DB_SLAVE or DB_MASTER
+	 * @return DatabaseBase
+	 */
+	static private function getDB( $db = DB_SLAVE ) {
+		global $wgExternalSharedDB;
+		return wfGetDB( $db, [], $wgExternalSharedDB );
 	}
 }
