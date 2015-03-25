@@ -627,6 +627,13 @@ include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 
 /**
+ * Includes that are needed for Mercury to work
+ */
+
+include_once( "$IP/extensions/wikia/ArticleAsJson/ArticleAsJson.setup.php" );
+include_once( "$IP/extensions/wikia/MercuryApi/MercuryApi.setup.php" );
+
+/**
  * @name $wgSkipSkins
  *
  * NOTE: a few wikis may have local override for this var,
