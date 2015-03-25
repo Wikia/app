@@ -131,6 +131,8 @@
 	AbTest.loadExternalData = function( data ) {
 		var index, groupData, html = '';
 		log('init', 'Received external configuration');
+		window.DIANAdata = data;
+		log('Received external configuration: '+ data);
 		for ( index in data ) {
 			groupData = data[index];
 			if ( groupData.styles ) {
@@ -141,7 +143,7 @@
 			}
 		}
 		if ( html != '' ) {
-			document.write(html);
+			//document.write(html);
 		}
 	};
 
@@ -306,9 +308,17 @@
 		//external AB test scripts are currently not supported by Mercury
 		if ( externalIds.length > 0 && !window.Mercury) {
 			log('init', 'Loading external configuration');
+			window.wgCdnApiUrl = 'http://api.wikia.nocookie.net/__cb1427281377';
 			var url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
 			url += externalIds.join(',');
-			document.write('<scr'+'ipt src="'+encodeURI(url)+'"></script>');
+			window.DIANAurl = encodeURI(url);
+
+			var sc = document.createElement("script");
+			sc.setAttribute("src", encodeURI(url));
+			sc.setAttribute("type", "text/javascript");
+			document.head.appendChild(sc);
+			//document.write('<scr'+'ipt src="'+encodeURI(url)+'"></script>');
+			//document.getElementsByTagName("body")[0].innerHTML= '<scr'+'ipt src="'+encodeURI(url)+'"></script>';
 		}
 	})( AbTest.experiments );
 
