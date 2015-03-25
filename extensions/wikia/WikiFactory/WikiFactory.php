@@ -2041,7 +2041,7 @@ class WikiFactory {
 					return $oRow;
 				},
 				// always hit the database when $master set to true
-				$master ? WikiaDataAccess::SKIP_CACHE : WikiaDataAccess::USE_CACHE
+				$master ? WikiaDataAccess::REFRESH_CACHE : WikiaDataAccess::USE_CACHE
 			);
 
 			self::$variablesCache[$cacheKey] = $oRow;
