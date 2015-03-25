@@ -15,37 +15,18 @@ require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 
 	const DAILY_PERIOD = 1;
-	private $aBotsList = NULL;
 
 	/**
 	 * Maintenance script entry point.
 	 * Gathering user edits data from last day and adding update task to job queue.
-	 * Script skips old TempUser relicts and bot accounts.
 	 */
 	public function execute() {
 		global $wgDWStatsDB;
 		// Get DB
 		$oStatsDBr = wfGetDB( DB_SLAVE, [], $wgDWStatsDB );
 		$sStartDate = $this->getLastDayDate();
-		$oUsersListResult = $this->getUsersEditedRecently( $oStatsDBr, $sStartDate );
-		$aUsersEditsData = $this->getUserEdits( $oStatsDBr, $sStartDate, $oUsersListResult );
-		$this->addEditsUpdateTask( $aUsersEditsData );
-	}
-
-	private function getUsersEditedRecently( DatabaseBase $oStatsDBr, $sStartDate ) {
-		// Get list of users that made edits in last period
-		$sql = ( new WikiaSQL() )
-			->SELECT()
-			->DISTINCT( 'user_id' )
-			->FROM( 'rollup_wiki_user_events' )
-			->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
-			->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
-			->AND_( 'user_id' )->NOT_EQUAL_TO( 0 );
-
-		/* @var ResultWrapper $oUsersListResult */
-		$oUsersListResult = $sql->run( $oStatsDBr );
-
-		return $oUsersListResult;
+		$aUsersEditsData = $this->getUserEdits( $oStatsDBr, $sStartDate );
+		$this->addEditsUpdateTasks( $aUsersEditsData );
 	}
 
 	/**
@@ -57,53 +38,31 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 	 * @param boolean|ResultWrapper $oUsersListResult
 	 * @return array
 	 */
-	private function getUserEdits( DatabaseBase $oStatsDBr, $sStartDate, $oUsersListResult ) {
+	private function getUserEdits( DatabaseBase $oStatsDBr, $sStartDate ) {
 		// Get user edits
-		$aUsersEditsData = [];
-		foreach ( $oUsersListResult as $oUserResult ) {
-			if ( !$this->isUserBot( $oUserResult->user_id ) ) {
-				$aUsersEditsData[ $oUserResult->user_id ] = ( new WikiaSQL() )
-					->SELECT( 'user_id' )
-						->FIELD( 'wiki_id' )
-						->FIELD( 'sum( edits ) + sum( creates )' )->AS_( 'editcount' )
-					->FROM( 'rollup_wiki_user_events' )
-					->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
-					->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
-					->AND_( 'user_id' )->EQUAL_TO( $oUserResult->user_id )
-					->GROUP_BY( 'wiki_id' )
-					->runLoop( $oStatsDBr, function( &$aUsersEditsOnWiki, $oUserEditCountWikiResult ) {
-						$aUsersEditsOnWiki[ $oUserEditCountWikiResult->wiki_id ] =
-							intval( $oUserEditCountWikiResult->editcount );
-					});
-			}
-		}
+		$oWikiaSQL = new WikiaSQL();
+		$oWikiaSQL->SELECT( 'user_id' )
+			->FIELD( 'wiki_id' )
+			->FIELD( 'sum( edits ) + sum( creates )' )->AS_( 'editcount' )
+			->FROM( 'rollup_wiki_user_events' )
+			->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
+			->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
+			->AND_( 'user_id' )->NOT_EQUAL_TO( 0 )
+			->GROUP_BY( 'wiki_id' )
+			->GROUP_BY( 'user_id' );
+		$aUsersEditsData = $oWikiaSQL->runLoop( $oStatsDBr, function( &$oUserResult, $oUserEditCountWikiResult ) {
+			$oUserResult[ $oUserEditCountWikiResult->user_id ][ $oUserEditCountWikiResult->wiki_id ] =
+				intval( $oUserEditCountWikiResult->editcount );
+		});
 		return $aUsersEditsData;
 	}
 
-	private function isUserBot($uId) {
-		$aBotsList = $this->getBotsIds();
-		return array_key_exists( $uId, $aBotsList );
-	}
-
-	private function getBotsIds() {
-		if ( $this->aBotsList === NULL ) {
-			$this->loadBotsIds();
+	private function addEditsUpdateTasks( $aUsersEditsData ) {
+		$aUsersEditsData = array_chunk( $aUsersEditsData, \Wikia\ExactTarget\ExactTargetApiDataExtension::OBJECTS_PER_REQUEST_LIMIT, true );
+		foreach ( $aUsersEditsData as $aUsersEditsDataChunk ) {
+			$this->addEditsUpdateTask($aUsersEditsDataChunk);
 		}
-		return $this->aBotsList;
 	}
-
-	private function loadBotsIds() {
-		global $wgExternalSharedDB;
-		$oExternalSharedDBr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$this->aBotsList = ( new WikiaSQL() )
-			->SELECT( 'ug_user' )
-			->FROM( 'user_groups' )
-			->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
-			->runLoop( $oExternalSharedDBr, function( &$aResultList, $oBot ) {
-				$aResultList[ $oBot->ug_user ] = true;
-			});
-	}
-
 	private function addEditsUpdateTask( $aUsersEditsData ) {
 		/* Get and run the task */
 		$task = new \Wikia\ExactTarget\ExactTargetUpdateUserTask();

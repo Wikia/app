@@ -74,8 +74,10 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	public function retrieveUserEdits( array $aUsersIds ) {
 		$oHelper = $this->getUserHelper();
 		$aApiRetrieveParams = $oHelper->prepareUserEditsRetrieveParams( $aUsersIds );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiRetrieveParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserEditsResult = $oApiDataExtension->retrieveRequest( $aApiRetrieveParams );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUserEditsResult ) );
 		$aUserEdits = $this->formatUserEditsResult( $oUserEditsResult );
 		return $aUserEdits;
 	}
