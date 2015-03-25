@@ -12,12 +12,12 @@ $.fn.extend({
 	/**
 	 * @desc calculates max height of modal content
 	 * @param {Number} modalTopOffset
-	 * @param {jQuery} $headline - jQuery collection for modal header
-	 * @param {jQuery} $tabs - jQuery collection for modal tabs
+	 * @param {Number} headlineHeight
+	 * @param {Number} tabsHeight
 	 * @returns {Number} - max height value
 	 */
-	getMaxModalContentHeight: function(modalTopOffset, $headline, $tabs) {
-		return $(window).height() - 2 * modalTopOffset - $headline.outerHeight(true) - $tabs.outerHeight(true);
+	getMaxModalContentHeight: function(modalTopOffset, headlineHeight, tabsHeight) {
+		return $(window).height() - 2 * modalTopOffset - headlineHeight - tabsHeight;
 	},
 
 	makeModal: function(options) {
@@ -28,7 +28,7 @@ $.fn.extend({
 			tabsOutsideContent: false,
 			topOffset: 50,
 			escapeToClose: true
-		}, calculatedZIndex, modalWidth, mainContent, $modalContent;
+		}, calculatedZIndex, modalWidth, mainContent, $modalContent, headline, modalTabs;
 
 		if (options) {
 			$.extend(settings, options);
@@ -74,7 +74,7 @@ $.fn.extend({
 
 		if(!settings.noHeadline) {
 			//set up headline
-			var headline = wrapper.find("h1:first");
+			headline = wrapper.find("h1:first");
 
 			if (headline.exists()) {
 				headline.remove();
@@ -90,13 +90,20 @@ $.fn.extend({
 		// skin === oasis is for backward support
 		if (settings.tabsOutsideContent || skin === 'oasis' || skin === 'venus') {
 			// find tabs with .modal-tabs class and move them outside modal content
-			var modalTabs = wrapper.find('.modal-tabs');
+			modalTabs = wrapper.find('.modal-tabs');
 			if (modalTabs.exists()) {
 				modalTabs.insertBefore($modalContent);
 			}
 		}
 
-		$modalContent.css('max-height', this.getMaxModalContentHeight(settings.topOffset, headline, modalTabs));
+		$modalContent.css(
+			'max-height',
+			this.getMaxModalContentHeight(
+				settings.topOffset,
+				headline instanceof jQuery ? headline.outerHeight(true) : 0 ,
+				modalTabs instanceof jQuery ? modalTabs.outerHeight(true) : 0
+			)
+		);
 
 		// calculate modal width for oasis
 		if (skin === 'oasis' || skin === 'venus') {
