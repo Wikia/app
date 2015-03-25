@@ -1597,7 +1597,7 @@ class WikiPage extends Page {
 			if ( 0 == mt_rand( 0, 99 ) ) {
 				// Flush old entries from the `recentchanges` table
 				// Wikia: use a job backported from MediaWiki 1.25 (@see PLATFORM-965)
-				Wikia\Tasks\Tasks\RecentChangesUpdate::newPurgeTask();
+				Wikia\Tasks\Tasks\RecentChangesUpdateTask::newPurgeTask();
 			}
 		}
 
