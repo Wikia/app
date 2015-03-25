@@ -834,7 +834,10 @@ class WikiFactory {
 					$variable_id);
 				$dbw->commit();
 				$bStatus = true;
+
 				self::clearCache( $wiki );
+				global $wgMemc;
+				$wgMemc->delete( self::getVarValueKey( $wiki, $variable_id ) );
 
 				wfRunHooks( 'WikiFactoryVariableRemoved', [ $variable->cv_name , $wiki ] );
 			}
