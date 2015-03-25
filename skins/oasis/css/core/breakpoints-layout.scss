@@ -86,6 +86,12 @@
 			padding: 0;
 		}
 	}
+	@media #{$breakpoint-small-only} {
+		.WikiHeader > nav.WikiNav .navbackground {
+			left: -24px;
+			width: 772px;
+		}
+	}
 
 	@media #{$breakpoint-medium-up} {
 		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
@@ -106,6 +112,11 @@
 			.subnav-2 {
 				width: auto;
 			}
+		}
+	}
+	@media #{$breakpoint-large-up} {
+		.WikiHeader > nav.WikiNav .navbackground {
+			@include width-calc("100% + 52px");
 		}
 	}
 
@@ -169,8 +180,19 @@
 	.EditPageRail {
 		width: 300px;
 	}
+	.EditPageHeader {
+		& > h1 {
+			margin-left: 5px;
+			margin-top: 2px;
+		}
 
-	.global-notification {
+		& > h2 {
+			display: inline-block;
+			float: left;
+		}
+	}
+
+	.banner-notifications-wrapper {
 		width: auto;
 
 		&.float {
@@ -178,5 +200,15 @@
 			margin: 0;
 			right: 0;
 		}
+	}
+
+	.WikiHeader {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.WikiaPageHeader {
+		margin-left: 0;
+		margin-right: 0;
 	}
 }
