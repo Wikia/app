@@ -1,10 +1,10 @@
 /*global require*/
 require([
-	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.customAdsLoader'
+	'ext.wikia.adEngine.customAdsLoader',
+	'ext.wikia.adEngine.messageListener'
 ], function (
-	messageListener,
-	customAdsLoader
+	customAdsLoader,
+	messageListener
 ) {
 	'use strict';
 	messageListener.init();
