@@ -138,8 +138,8 @@ class MercuryApi {
 		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
 		if ( !$msg->isDisabled() ) {
 			$msgText = $msg->text();
-			return !empty( $msgText ) ? $msgText : false;
 		}
+		return !empty( $msgText ) ? $msgText : false;
 	}
 
 	/**
