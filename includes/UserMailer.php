@@ -465,7 +465,7 @@ class EmailNotification {
 
 	private $oldid;
 
-	private $composedCommon;
+	private $composedCommon = false;
 
 	private $mailTargets = [];
 
@@ -488,7 +488,6 @@ class EmailNotification {
 		$this->oldid = $oldid;
 		$this->action = $action;
 		$this->editor = $editor;
-		$this->composedCommon = false;
 		$this->otherParam = $otherParam;
 	}
 
@@ -509,50 +508,69 @@ class EmailNotification {
 			return false;
 		}
 
-		// Build a list of users to notfiy
+		// Build a list of users to notify
 		$watchers = [];
 		if ( $wgEnotifWatchlist || $wgShowUpdatedMarker ) {
-			//Add a timeout to the watchlist email block */
-			global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
-			if ( !empty( $otherParam['notisnull'] ) ) {
-				$notificationTimeoutSql = "1";
-			} elseif ( !empty($wgEnableWatchlistNotificationTimeout) && isset($wgWatchlistNotificationTimeout) ) {
-				$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $this->timestamp ) - intval( $wgWatchlistNotificationTimeout ) );
-				$notificationTimeoutSql = "wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout'";
-			} else {
-				$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
-			}
-
-			$dbw = wfGetDB( DB_MASTER );
-			$res = $dbw->select( array( 'watchlist' ),
-				array( 'wl_user' ),
-				array(
-					'wl_title' => $this->title->getDBkey(),
-					'wl_namespace' => $this->title->getNamespace(),
-					'wl_user != ' . intval( $this->editor->getID() ),
-					$notificationTimeoutSql,
-				), __METHOD__
-			);
-			foreach ( $res as $row ) {
-				$watchers[] = intval( $row->wl_user );
-			}
+			$notificationTimeoutSql = $this->getTimeOutSql();
+			$watchers = $this->getWatchersToNotify( $notificationTimeoutSql );
 			if ( $watchers ) {
-				// Update wl_notificationtimestamp for all watching users except
-				// the editor
-				$wl = WatchedItem::fromUserTitle( $this->editor, $this->title );
-				$wl->updateWatch( $watchers, $this->timestamp );
+				$this->updateWatchedItem( $watchers );
 			}
-
 			wfRunHooks( 'NotifyOnSubPageChange', array ( $watchers, $this->title, $this->editor, $notificationTimeoutSql ) );
 		}
-
 		if ( $this->shouldSendEmail( $watchers ) ) {
 			$this->actuallyNotifyOnPageChange( $watchers );
 		}
 	}
 
+	/**
+	 * Add a timeout to the watchlist email block
+	 */
+	private function getTimeOutSql(){
+		global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
+
+		if ( !empty( $this->otherParam['notisnull'] ) ) {
+			$notificationTimeoutSql = "1";
+		} elseif ( !empty( $wgEnableWatchlistNotificationTimeout ) && isset( $WatchlistNotificationTimeout ) ) {
+			$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $this->timestamp ) - intval( $wgWatchlistNotificationTimeout ) );
+			$notificationTimeoutSql = "wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout'";
+		} else {
+			$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
+		}
+
+		return $notificationTimeoutSql;
+	}
+
+	private function getWatchersToNotify( $notificationTimeoutSql ) {
+		$watchers = [];
+		$dbw = wfGetDB( DB_MASTER );
+		$res = $dbw->select( [ 'watchlist' ],
+			[ 'wl_user' ],
+			[
+				'wl_title' => $this->title->getDBkey(),
+				'wl_namespace' => $this->title->getNamespace(),
+				'wl_user != ' . intval( $this->editor->getID() ),
+				$notificationTimeoutSql
+			], __METHOD__
+		);
+
+		foreach ( $res as $row ) {
+			$watchers[] = $row->wl_user;
+		}
+
+		return $watchers;
+	}
+
+	/**
+	 * Update wl_notificationtimestamp for all watching users except the editor
+	 */
+	private function updateWatchedItem( $watchers ) {
+		$wl = WatchedItem::fromUserTitle( $this->editor, $this->title );
+		$wl->updateWatch( $watchers, $this->timestamp );
+	}
+
 	private function shouldSendEmail( array $watchers ) {
-		global $wgUsersNotifiedOnAllChanges, $wgEnotifUserTalk, $wgEnotifMinorEdits;
+		global $wgUsersNotifiedOnAllChanges, $wgEnotifMinorEdits, $wgEnotifUserTalk;
 
 		$sendEmail = true;
 		// If nobody is watching the page, and there are no users notified on all changes
@@ -562,8 +580,7 @@ class EmailNotification {
 			$sendEmail = false;
 			// Only send notification for non minor edits, unless $wgEnotifMinorEdits
 			if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
-				$isUserTalkPage = ( $this->title->getNamespace() == NS_USER_TALK );
-				if ( $wgEnotifUserTalk && $isUserTalkPage && $this->canSendUserTalkEmail( $this->editor, $this->title, $this->minorEdit ) ) {
+				if ( $wgEnotifUserTalk && $this->isUserTalkPage() && $this->canSendUserTalkEmail( $this->editor, $this->title, $this->minorEdit ) ) {
 					$sendEmail = true;
 				}
 			}
@@ -580,36 +597,26 @@ class EmailNotification {
 	 *
 	 */
 	private function actuallyNotifyOnPageChange( $watchers ) {
-		# we use $wgPasswordSender as sender's address
 		global $wgEnotifWatchlist;
 		global $wgEnotifMinorEdits, $wgEnotifUserTalk;
-
-		wfProfileIn( __METHOD__ );
 
 		# The following code is only run, if several conditions are met:
 		# 1. EmailNotification for pages (other than user_talk pages) must be enabled
 		# 2. minor edits (changes) are only regarded if the global flag indicates so
-
-		$isUserTalkPage = ( $this->title->getNamespace() == NS_USER_TALK );
-
 		$userTalkId = false;
-
 		if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
 
-			if ( $wgEnotifUserTalk && $isUserTalkPage && $this->canSendUserTalkEmail() ) {
+			if ( $wgEnotifUserTalk && $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
 				$targetUser = User::newFromName( $this->title->getText() );
 				$this->compose( $targetUser );
 				$userTalkId = $targetUser->getId();
 
-				/* Wikia change begin - @author: Marooned */
-				/* Send mail to user when comment on his user talk has been added - see RT#44830 */
+				// Send mail to user when comment on his user talk has been added
 				$fakeUser = null;
 				wfRunHooks('UserMailer::NotifyUser', array( $this->title, &$fakeUser ));
 				if ( $fakeUser instanceof User && $fakeUser->getOption( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
-					wfDebug( __METHOD__.": sending talk page update notification\n" );
 					$this->compose( $fakeUser );
 				}
-				/* Wikia change end */
 			}
 
 			if ( $wgEnotifWatchlist ) {
@@ -629,48 +636,37 @@ class EmailNotification {
 				}
 			}
 		}
+		$this->emailUsersNotifiedOnAllChanges();
+		$this->sendMails();
+	}
 
+	private function emailUsersNotifiedOnAllChanges() {
 		global $wgUsersNotifiedOnAllChanges;
+
 		foreach ( $wgUsersNotifiedOnAllChanges as $name ) {
+			// No point notifying the user that actually made the change!
 			if ( $this->editor->getName() == $name ) {
-				// No point notifying the user that actually made the change!
 				continue;
 			}
 			$user = User::newFromName( $name );
 			$this->compose( $user );
 		}
-
-		$this->sendMails();
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
 	 * @return bool
 	 */
 	private function canSendUserTalkEmail() {
-		global $wgEnotifUserTalk;
-		$isUserTalkPage = ( $this->title->getNamespace() == NS_USER_TALK );
-
-		if ( $wgEnotifUserTalk && $isUserTalkPage ) {
-			$targetUser = User::newFromName( $this->title->getText() );
-
-			if ( !$targetUser || $targetUser->isAnon() ) {
-				wfDebug( __METHOD__ . ": user talk page edited, but user does not exist\n" );
-			} elseif ( $targetUser->getId() == $this->editor->getId() ) {
-				wfDebug( __METHOD__ . ": user edited their own talk page, no notification sent\n" );
-			} elseif ( $targetUser->getOption( 'enotifusertalkpages' ) &&
-				( !$this->minorEdit || $targetUser->getOption( 'enotifminoredits' ) ) )
-			{
-				if ( $targetUser->isEmailConfirmed() ) {
-					wfDebug( __METHOD__ . ": sending talk page update notification\n" );
-					return true;
-				} else {
-					wfDebug( __METHOD__ . ": talk page owner doesn't have validated email\n" );
-				}
-			} else {
-				wfDebug( __METHOD__ . ": talk page owner doesn't want notifications\n" );
+		$targetUser = User::newFromName( $this->title->getText() );
+		if ( $targetUser instanceof User && // user exists
+			!$targetUser->isAnon() && // and they not anonymous
+			$targetUser->getId() != $this->editor->getId() && // and they are not the user who made the edit
+			$targetUser->getOption( 'enotifusertalkpages' ) && // and they want to be notified about talk pages changes
+			( !$this->minorEdit || $targetUser->getOption( 'enotifminoredits' ) ) && // and this is not a minor edit, or they want to know about minor edits
+			$targetUser->isEmailConfirmed() /* and their email is confirmed */ ) {
+				return true;
 			}
-		}
+
 		return false;
 	}
 
@@ -907,4 +903,10 @@ class EmailNotification {
 
 		return UserMailer::send( $addresses, $this->from, $this->subject, $body, $this->replyto );
 	}
+
+	private function isUserTalkPage() {
+		return $this->title->getNamespace() == NS_USER_TALK;
+	}
 } # end of class EmailNotification
+
+class UserMailerException extends Exception {}
