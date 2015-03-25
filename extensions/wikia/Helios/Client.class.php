@@ -131,9 +131,9 @@ class Client
         // It would be multipart/form-data which is not supported
         // by the Helios service.
         $postData = http_build_query( [
-            'username'	=> $username,
-            'password'	=> $password,
-            'email'		=> $email,
+            'username'  => $username,
+            'password'  => $password,
+            'email'     => $email,
             'birthdate' => $birthdate,
         ] );
 
