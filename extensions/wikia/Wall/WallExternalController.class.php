@@ -104,12 +104,17 @@ class WallExternalController extends WikiaController {
 		 */
 		$mw =  WallMessage::newFromId( $this->request->getVal( 'id' ) );
 
-		$this->response->setVal('list',
-			$this->app->renderView( 'WallExternalController', 'votersListItems',
-				array( 'from' => 0, 'mw' => $mw, 'id' => $this->request->getVal('id') )
-		));
+		if ( !empty( $mw ) ) {
+			$this->response->setVal('list',
+				$this->app->renderView( 'WallExternalController', 'votersListItems',
+					array( 'from' => 0, 'mw' => $mw, 'id' => $this->request->getVal('id') )
+				));
 
-		$this->response->setVal('count', $mw->getVoteCount());
+			$this->response->setVal('count', $mw->getVoteCount());
+		} else {
+			$this->wg->Request->response()->header( "HTTP/1.1 404 Not Found" );
+			$this->skipRendering();
+		}
 	}
 
 	public function votersListItems() {
