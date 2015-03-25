@@ -25,29 +25,34 @@ class UserRights {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function getGlobalGroups(User $user) {
+		if ( $user->isAnon() ) {
+			return [];
+		}
+
+		$fname = __METHOD__;
 		$userId = $user->getId();
-		if ( $userId == 0 ) {
-			return array();
-		} elseif (!isset(self::$globalGroup[$userId])) {
-			global $wgWikiaGlobalUserGroups, $wgExternalSharedDB;
 
-			$globalGroups = array();
+		if (!isset(self::$globalGroup[$userId])) {
+			$globalGroups = WikiaDataAccess::cache(
+				self::getMemcKey( $user ),
+				WikiaResponse::CACHE_LONG,
+				function() use ( $userId, $fname ) {
+					global $wgExternalSharedDB;
+					$dbr = wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-
-			$res = $dbr->select(
-				'user_groups',
-				'ug_group',
-				array('ug_user' => $userId),
-				__METHOD__
+					return $dbr->selectFieldValues(
+						'user_groups',
+						'ug_group',
+						[ 'ug_user' => $userId ],
+						$fname
+					);
+				}
 			);
 
-			while ($row = $dbr->fetchObject($res)) {
-				$globalGroups[] = $row->ug_group;
-			}
-			$dbr->freeResult($res);
+			global $wgWikiaGlobalUserGroups;
 			self::$globalGroup[$userId] = array_intersect($globalGroups, $wgWikiaGlobalUserGroups);
 		}
+
 		return self::$globalGroup[$userId];
 	}
 
@@ -58,7 +63,7 @@ class UserRights {
 	 */
 	public static function onUserLoadGroups( User $user ) {
 		$userId = $user->getId();
-		if ( !self::isCentralWiki() || $userId == 0 ) {
+		if ( !self::isCentralWiki() || $user->isAnon() ) {
 			return true;
 		} elseif ( !isset( self::$globalGroup[$userId] ) ) {
 			// Load the global groups into the class variable
@@ -68,7 +73,12 @@ class UserRights {
 		return true;
 	}
 
-	static function addGlobalGroup( $user, $group ) {
+	/**
+	 * @param User $user
+	 * @param $group
+	 * @return bool false, it's a hook
+	 */
+	static function addGlobalGroup( User $user, $group ) {
 		global $wgExternalSharedDB, $wgWikiaGlobalUserGroups;
 
 		if ( !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
@@ -86,13 +96,22 @@ class UserRights {
 					array( 'IGNORE' ) );
 		}
 
+		global $wgMemc;
+		$wgMemc->delete( self::getMemcKey( $user ) );
+
 		wfRunHooks( 'AfterUserAddGlobalGroup', array( $user, $group ) );
 
 		// return false to prevent group from being added to local DB
 		return false;
 	}
 
-	static function removeGlobalGroup( $user, $group ) {
+	/**
+	 * @param User $user
+	 * @param $group
+	 * @return bool true, it's a hook
+	 * @throws DBUnexpectedError
+	 */
+	static function removeGlobalGroup( User $user, $group ) {
 		global $wgExternalSharedDB, $wgWikiaGlobalUserGroups;
 
 		if ( !in_array( $group, $wgWikiaGlobalUserGroups ) ) {
@@ -113,6 +132,9 @@ class UserRights {
 				     ),
 				__METHOD__,
 				array( 'IGNORE' ) );
+
+		global $wgMemc;
+		$wgMemc->delete( self::getMemcKey( $user ) );
 
 		wfRunHooks( 'AfterUserRemoveGlobalGroup', array( $user, $group ) );
 
@@ -136,18 +158,17 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function userEffectiveGroups(&$user, &$groups) {
+	static function userEffectiveGroups( User $user, &$groups) {
 		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
 		return $groups;
 	}
-
 
 	/**
 	 * hook handler
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function showEditUserGroupsForm(&$user, &$groups) {
+	static function showEditUserGroupsForm( User $user, &$groups) {
 		$groups = array_unique(array_merge($groups, self::getGlobalGroups($user)));
 
 		return true;
@@ -165,5 +186,15 @@ class UserRights {
 			$disabled = true;
 		}
 		return true;
+	}
+
+	/**
+	 * Return memcache key used for storing shared groups for a given user
+	 *
+	 * @param User $user
+	 * @return string memcache key
+	 */
+	static private function getMemcKey( User $user ) {
+		return wfSharedMemcKey( __CLASS__, 'global-groups', $user->getId() );
 	}
 }
