@@ -13,9 +13,20 @@ class PageShareHelper {
 
 	public static function getIcon( $service ) {
 		switch ($service) {
-			//TODO: fill after we get icons
-			//case 'facebook':
-			//	return 'venus icon'
+			case 'facebook':
+				return self::readIcon('facebook');
+			case 'googleplus':
+				return self::readIcon('googleplus');
+			case 'twitter':
+				return self::readIcon('twitter');
+			case 'reddit':
+				return self::readIcon('reddit');
+			case 'tumblr':
+				return self::readIcon('tumblr');
+			case 'vkontakte':
+				return self::readIcon('vkontakte');
+			case 'qzone':
+				return self::readIcon('qzone');
 			default:
 				// default share icon
 				return self::readIcon('share');

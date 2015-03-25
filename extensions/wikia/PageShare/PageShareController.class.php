@@ -34,7 +34,6 @@ class PageShareController extends WikiaController {
 				$services[] = $service;
 			}
 		}
-
 		return $services;
 	}
 }
