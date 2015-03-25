@@ -54,6 +54,6 @@ $wgResourceModules['wikia.ext.instantGlobals'] = [
  * overriding tool for InstantGlobals
  */
 $wgResourceModules['wikia.ext.instantGlobalsOverride'] = [
-	'scripts' => "extensions/wikia/InstantGlobals/js/instantGlobalsOverride.js"
+	'scripts' => "extensions/wikia/InstantGlobals/js/instantGlobalsOverride.js",
+	'source'  => 'common',
 ];
-
