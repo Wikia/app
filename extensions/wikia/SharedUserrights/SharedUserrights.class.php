@@ -126,7 +126,7 @@ class UserRights {
 				[
 					'ug_user'  => $user->getID(),
 					'ug_group' => $group,
-				     ],
+				],
 			__METHOD__
 		);
 		// Remember that the user was in this group
@@ -163,7 +163,7 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function userEffectiveGroups( User $user, &$groups ) {
+	static function userEffectiveGroups( User $user, Array &$groups ) {
 		$groups = array_unique( array_merge( $groups, self::getGlobalGroups( $user ) ) );
 		return $groups;
 	}
@@ -173,7 +173,7 @@ class UserRights {
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	static function showEditUserGroupsForm( User $user, &$groups ) {
+	static function showEditUserGroupsForm( User $user, Array &$groups ) {
 		$groups = array_unique( array_merge( $groups, self::getGlobalGroups( $user ) ) );
 
 		return true;
