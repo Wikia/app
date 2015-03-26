@@ -11,7 +11,9 @@
 		<tr>
 			<td></td>
 			<td class="container">
-				<div class="header content">WIKIA LOGO</div>
+				<div class="header content">
+					<a href="" class="logo">WIKIA LOGO</a>
+				</div>
 			</td>
 			<td></td>
 		</tr>
@@ -30,7 +32,15 @@
 	<table class="footer-wrap">
 		<tr>
 			<td></td>
-			<td></td>
+			<td class="container">
+				{{#marketingFooter}}
+					{{> marketingFooter}}
+				{{/marketingFooter}}
+
+				{{^marketingFooter}}
+					{{> footer}}
+				{{/marketingFooter}}
+			</td>
 			<td></td>
 		</tr>
 	</table>

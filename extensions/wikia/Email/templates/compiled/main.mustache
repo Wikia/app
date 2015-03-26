@@ -4,14 +4,16 @@
 	
 	
 </head>
-<body style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;">
+<body style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0;">
 
 <div class="main-wrapper" style="background-color: #F2F6FA; color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;">
 	<table class="head-wrap" style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; width: 100%;">
 		<tr style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;">
 			<td style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;"></td>
 			<td class="container" style="clear: both; color: #656e78; display: block; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0 auto; max-width: 600px;">
-				<div class="header content" style="color: #656e78; display: block; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0 auto; max-width: 600px; padding: 15px;">WIKIA LOGO</div>
+				<div class="header content" style="color: #656e78; display: block; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0 auto; max-width: 600px; padding: 40px;">
+					<a href="" class="logo" style="color: #1a5eB8; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 30px 0 20px; text-decoration: none;">WIKIA LOGO</a>
+				</div>
 			</td>
 			<td style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;"></td>
 		</tr>
@@ -20,17 +22,25 @@
 		<tr style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;">
 			<td style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;"></td>
 			<td class="container" style="clear: both; color: #656e78; display: block; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0 auto; max-width: 600px;">
-				<div class="content main-content" style="background-color: #FFF; border-bottom: 1px solid #c5ced9; border-top: 1px solid #c5ced9; color: #656e78; display: block; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0 auto; max-width: 600px; padding: 15px;">
+				<div class="content main-content" style="background-color: #FFF; border-bottom: 1px solid #c5ced9; border-top: 1px solid #c5ced9; color: #656e78; display: block; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0 auto; max-width: 600px; padding: 50px 40px 80px 40px;">
 					{{{content}}}
 				</div>
 			</td>
 			<td style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;"></td>
 		</tr>
 	</table>
-	<table class="footer-wrap" style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;">
+	<table class="footer-wrap" style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; width: 100%;">
 		<tr style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;">
 			<td style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;"></td>
-			<td style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;"></td>
+			<td class="container" style="clear: both; color: #656e78; display: block; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0 auto; max-width: 600px;">
+				{{#marketingFooter}}
+					{{> marketingFooter}}
+				{{/marketingFooter}}
+
+				{{^marketingFooter}}
+					{{> footer}}
+				{{/marketingFooter}}
+			</td>
 			<td style="color: #656e78; font-family: 'Helvetica Neue', Arial, sans-serif;"></td>
 		</tr>
 	</table>
