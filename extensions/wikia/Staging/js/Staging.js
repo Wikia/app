@@ -8,7 +8,7 @@ if ( window.wgStagingEnvironment ) {
 			i = 0,
 			//match all occurrences of wikia.com between :// and /
 			//use case: links in share icons have wikia.com but as URL parameter not domain name
-			pattern=/:\/\/[^\/]*wikia\.com/gi,
+			pattern=/^\w*:?\/\/[^\/]*wikia\.com/gi,
 			href;
 
 		for ( ; i < links.length; i++ ) {
