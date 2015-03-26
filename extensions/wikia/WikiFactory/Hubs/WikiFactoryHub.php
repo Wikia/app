@@ -237,10 +237,9 @@ class WikiFactoryHub extends WikiaModel {
 	 * @access public
 	 *
 	 * @param $city_id
-	 * @return array of categories (empty if wiki is not in a category)
-	 *
+	 * @param int $active pass 0 if you want to get deprecated categories
+	 * @return array array of categories (empty if wiki is not in a category)
 	 */
-
 	public function getCategoryIds( $city_id, $active = 1 ) {
 		global $wgExternalSharedDB;
 		if( !$wgExternalSharedDB || empty($city_id) ) {
@@ -266,10 +265,10 @@ class WikiFactoryHub extends WikiaModel {
 	 * This function returns the list of categories AND category metadata for a wiki
 	 * get category metadata (id, name, url, short, deprecated, active) for a wiki
 	 * @param  integer $city_id  wiki_id
+	 * @param int $active pass 0 if you want to get deprecated categories
 	 * @return array of keys/values (id, name, url, short, deprecated, active)
 	 */
 	public function getWikiCategories( $city_id, $active = 1 ) {
-
 		global $wgWikiaEnvironment;
 		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
 			$city_id = 11;
