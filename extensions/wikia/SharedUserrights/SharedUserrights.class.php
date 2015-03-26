@@ -99,8 +99,7 @@ class UserRights {
 			);
 		}
 
-		global $wgMemc;
-		$wgMemc->delete( self::getMemcKey( $user ) );
+		WikiaDataAccess::cachePurge( self::getMemcKey( $user ) );
 
 		wfRunHooks( 'AfterUserAddGlobalGroup', [ $user, $group ] );
 
@@ -138,8 +137,7 @@ class UserRights {
 				__METHOD__
 		);
 
-		global $wgMemc;
-		$wgMemc->delete( self::getMemcKey( $user ) );
+		WikiaDataAccess::cachePurge( self::getMemcKey( $user ) );
 
 		wfRunHooks( 'AfterUserRemoveGlobalGroup', [ $user, $group ] );
 
