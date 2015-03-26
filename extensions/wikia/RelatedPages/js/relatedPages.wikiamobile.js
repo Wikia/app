@@ -194,7 +194,7 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 								'related-article',
 								track.IMAGE_LINK,
 								{
-									method: 'ga',
+									method: 'analytics',
 									href: this.href,
 									label: 'section_' + ( sections.getId( this.nextSibling ) )
 								},

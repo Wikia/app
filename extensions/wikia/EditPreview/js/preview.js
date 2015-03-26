@@ -75,7 +75,7 @@ define('wikia.preview', [
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'edit-preview',
 						label: 'button-best-practices',
-						trackingMethod: 'both'
+						trackingMethod: 'analytics'
 					});
 				});
 
