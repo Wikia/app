@@ -86,15 +86,13 @@
 			padding: 0;
 		}
 	}
-<<<<<<< HEAD
-=======
+
 	@media #{$breakpoint-small-only} {
 		.WikiHeader > nav.WikiNav .navbackground {
 			left: -24px;
 			width: 772px;
 		}
 	}
->>>>>>> origin/dev
 
 	@media #{$breakpoint-medium-up} {
 		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
