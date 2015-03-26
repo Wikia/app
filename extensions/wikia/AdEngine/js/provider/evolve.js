@@ -193,6 +193,12 @@ define('ext.wikia.adEngine.provider.evolve', [
 					return;
 				}
 
+				// Success
+				// TODO: find a better place for operation below
+				slotTweaker.removeDefaultHeight(slotname);
+				slotTweaker.removeTopButtonIfNeeded(slotname);
+				slotTweaker.adjustLeaderboardSize(slotname);
+
 				pSuccess();
 			});
 		}
