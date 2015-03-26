@@ -137,6 +137,13 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				__METHOD__
 			);
 
+			// if query was terminated - return and abort the process
+			if ( !$result ) {
+				wfProfileOut( __METHOD__ );
+
+				return;
+			}
+
 			foreach ( $result as $row ) {
 				/* @var mixed $row */
 				if ( $row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth ) {
@@ -147,7 +154,9 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 					}
 				}
 			}
+
 			$result->free();
+
 			$imageNames = array_keys( $imageDetails );
 		}
 
