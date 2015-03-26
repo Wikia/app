@@ -166,7 +166,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		hoppedSlots[sanitizeSlotname(slotname)] = true;
 	}
 
-	function fillInSlot(slotname, pSuccess, pHop) {
+	function fillInSlot(slotname, pSuccess) {
 		log('fillInSlot', 5, logGroup);
 		log(slotname, 5, logGroup);
 
@@ -188,31 +188,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 			);
 		} else {
 			scriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
-				var slot = document.getElementById(slotname),
-					height;
-
-				if (hoppedSlots[slotname]) {
-					pHop({method: 'hop'});
-					return;
-				}
-
-				// Don't rely completely on Evolve hop
-				slotTweaker.removeDefaultHeight(slotname);
-				height = getHeight(slot);
-
-				// Only assume success if > 1x1 ad is returned or there's embed
-				// in the slot (it seems Evolves returns an embed that causes
-				// more HTML to appear after GhostWriter calls finish callback).
-				if (height === undef || height > 1 || hasEmbed(slot)) {
-					// Real success
-					slotTweaker.removeTopButtonIfNeeded(slotname);
-					pSuccess();
-					return;
-				}
-
-				slotTweaker.addDefaultHeight(slotname);
-				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, logGroup);
-				pHop({method: '1x1'});
+				pSuccess();
 			});
 		}
 	}
