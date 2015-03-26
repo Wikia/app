@@ -25,9 +25,9 @@ define('ext.wikia.adEngine.template.modal', [
 			createAndShowDesktopModal(params);
 		}
 
-		if (window.Mercury && typeof window.Mercury.Modules.Ads.openLightbox === 'function') {
+		if (window.Mercury && window.Mercury.Modules && window.Mercury.Modules.Ads) {
 			log(['showNew mobile (Mercury) modal'], 'debug', logGroup);
-			window.Mercury.Modules.Ads.openLightbox(createAdIframe(params));
+			window.Mercury.Modules.Ads.getInstance().openLightbox(createAdIframe(params));
 		}
 	}
 
