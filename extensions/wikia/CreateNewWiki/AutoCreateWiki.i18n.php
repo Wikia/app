@@ -4810,6 +4810,7 @@ $messages['vep'] = array(
 $messages['vi'] = array(
 	'autocreatewiki' => 'Tạo wiki mới',
 	'autocreatewiki-info-terms-agree' => 'Bằng việc tạo ra một wiki và một tài khoản thành viên, bạn đồng ý với <a href="http://www.wikia.com/wiki/Terms_of_use">Điều khoản Sử dụng của Wikia</a>',
+	'autocreatewiki-title-template' => 'Wiki $1',
 );
 
 /** Yiddish (ייִדיש)
