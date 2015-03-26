@@ -1,6 +1,5 @@
 <?php
 
-use \Wikia\Tasks\AsyncTaskList;
 use \Wikia\Logger\WikiaLogger;
 
 class GlobalWatchlistBot {
@@ -24,7 +23,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * Return all users in the global_watchlist table
+	 * Return all users in the global_watchlist table.
 	 * @return array
 	 */
 	private function getUserIDs() {
@@ -79,7 +78,6 @@ class GlobalWatchlistBot {
 			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_CITY_ID )
 			->FROM( GlobalWatchlistTable::TABLE_NAME )
 			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
-			->AND_( GlobalWatchlistTable::COLUMN_TIMESTAMP )->IS_NOT_NULL()
 			->runLoop( $db, function ( &$wikiIDs, $row ) {
 				$wikiIDs[] = $row->gwa_city_id;
 			} );

@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * sendWeeklyDigest
  *
@@ -30,12 +32,26 @@ class sendWeeklyDigest extends Maintenance {
 	public function execute() {
 		$this->logRunTime();
 		$watchlistBot = new GlobalWatchlistBot();
-		$watchlistBot->sendWeeklyDigest();
+		try {
+			$watchlistBot->sendWeeklyDigest();
+		} catch ( Exception $e ) {
+			$this->logError( $e );
+		}
 	}
 
 	private function logRunTime() {
 		$message = "sendWeeklyDigest script run at " . date( "F j, Y, g:i a" ) . "\n";
 		$this->output( $message );
+	}
+
+	/**
+	 * If there's a problem when sending the weekly digest (ie, timing out), log the error. We have
+	 * a Kibana check which will send out an alert if any "Weekly Digest Error" messages are sent.
+	 */
+	private function logError( Exception $exception ) {
+		WikiaLogger::instance()->error( 'Weekly Digest Error', [
+			'exception' => $exception->getMessage(),
+		] );
 	}
 }
 
