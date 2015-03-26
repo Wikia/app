@@ -1,3 +1,4 @@
+/** Base styles **/
 * {
 	font-family: "Helvetica Neue", Arial, sans-serif;
 	color: #656e78;
@@ -8,10 +9,49 @@ a {
 	text-decoration: none;
 }
 
-.subtle {
-	color: #93999f;
+p {
+	font-size: 16px;
+	margin: 0 0 20px 0;
+	padding: 0;
+}
+
+button {
+	border-width: 0;
+	background-color: #1A5EB8;
+	color: #FFF;
+	font-size: 15px;
+	line-height: 45px;
+	padding: 0 28px;
+	text-transform: uppercase;
+}
+
+/** Layout styles **/
+.content {
+	padding: 40px;
+	max-width: 600px;
+	margin: 0 auto;
+	display: block;
+}
+
+td.widest {
+	width: 100%;
+}
+
+.greeting {
+	margin-bottom: 50px;
+}
+
+/** Module styles **/
+.avatar-wrapper {
+	padding-right: 20px;
 }
 
 .avatar {
 	border-radius: 100%;
 }
+
+/** Theme styles **/
+.subtle {
+	color: #93999f;
+}
+
