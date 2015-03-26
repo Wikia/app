@@ -134,4 +134,294 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			]
 		];
 	}
+
+	/**
+	 * @dataProvider getResourceTypeDataProvider
+	 */
+	public function testGetResourceType( $uri, $articlePath, $expected ) {
+		$this->mockGlobalVariable( 'wgArticlePath', $articlePath );
+		$this->mockGlobalVariable( 'wgContentNamespaces', [ '0' ] );
+
+		$mercuryApi = new MercuryApi();
+		$this->assertEquals( $expected, $mercuryApi->getResourceType( $uri ) );
+	}
+
+	public function getResourceTypeDataProvider() {
+		$mainPageTitle = Title::newMainPage()->getPrefixedDBkey();
+
+		return [
+			// wiki/Title
+			[
+				'$uri' => 'wiki/Title',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'Title'
+				]
+			],
+			[
+				'$uri' => 'wiki/Title',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'Title'
+				]
+			],
+			// /wiki/Title
+			[
+				'$uri' => '/wiki/Title',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'Title'
+				]
+			],
+			[
+				'$uri' => '/wiki/Title',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'Title'
+				]
+			],
+			// Title
+			[
+				'$uri' => 'Title',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'Title'
+				]
+			],
+			[
+				'$uri' => 'Title',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'Title'
+				]
+			],
+			// /Title
+			[
+				'$uri' => '/Title',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/Title'
+				]
+			],
+			[
+				'$uri' => '/Title',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/Title'
+				]
+			],
+			// /wiki
+			[
+				'$uri' => '/wiki',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => null
+				]
+			],
+			[
+				'$uri' => '/wiki',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/wiki'
+				]
+			],
+			// wiki
+			[
+				'$uri' => 'wiki',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => null
+				]
+			],
+			[
+				'$uri' => 'wiki',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'Wiki'
+				]
+			],
+			// wiki/
+			[
+				'$uri' => 'wiki/',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => $mainPageTitle
+				]
+			],
+			[
+				'$uri' => 'wiki/',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => $mainPageTitle
+				]
+			],
+			// /wiki/
+			[
+				'$uri' => '/wiki/',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => $mainPageTitle
+				]
+			],
+			[
+				'$uri' => '/wiki/',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => $mainPageTitle
+				]
+			],
+			// WIKI
+			[
+				'$uri' => 'WIKI',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => null
+				]
+			],
+			[
+				'$uri' => 'WIKI',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'WIKI'
+				]
+			],
+			// WIKI/
+			[
+				'$uri' => 'WIKI/',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => null
+				]
+			],
+			[
+				'$uri' => 'WIKI/',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'WIKI/'
+				]
+			],
+			// /WIKI/
+			[
+				'$uri' => '/WIKI/',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => null
+				]
+			],
+			[
+				'$uri' => '/WIKI/',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/WIKI/'
+				]
+			],
+			// wiki/Special:UserLogin
+			[
+				'$uri' => 'wiki/Special:UserLogin',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => 'Special:UserLogin'
+				]
+			],
+			[
+				'$uri' => 'wiki/Special:UserLogin',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => 'Special:UserLogin'
+				]
+			],
+			// /wiki/Special:UserLogin
+			[
+				'$uri' => '/wiki/Special:UserLogin',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => 'Special:UserLogin'
+				]
+			],
+			[
+				'$uri' => '/wiki/Special:UserLogin',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => 'Special:UserLogin'
+				]
+			],
+			// /wiki//Special:UserLogin
+			[
+				'$uri' => '/wiki//Special:UserLogin',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/Special:UserLogin'
+				]
+			],
+			[
+				'$uri' => '/wiki//Special:UserLogin',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/Special:UserLogin'
+				]
+			],
+			// Special:UserLogin
+			[
+				'$uri' => 'Special:UserLogin',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => 'Special:UserLogin'
+				]
+			],
+			[
+				'$uri' => 'Special:UserLogin',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => 'Special:UserLogin'
+				]
+			],
+			// /Special:UserLogin
+			[
+				'$uri' => '/Special:UserLogin',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/Special:UserLogin'
+				]
+			],
+			[
+				'$uri' => '/Special:UserLogin',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/Special:UserLogin'
+				]
+			],
+		];
+	}
 }

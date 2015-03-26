@@ -2,6 +2,7 @@
 
 class MercuryApiController extends WikiaController {
 
+	const PARAM_URI = 'uri';
 	const PARAM_ARTICLE_ID = 'id';
 	const PARAM_PAGE = 'page';
 	const PARAM_ARTICLE_TITLE = 'title';
@@ -181,6 +182,24 @@ class MercuryApiController extends WikiaController {
 		}
 
 		return $title;
+	}
+
+	/**
+	 * @desc Returns resource type for URI
+	 *
+	 * @throws BadRequestApiException
+	 */
+	public function getResourceType() {
+		$uri = $this->request->getVal( self::PARAM_URI, NULL );
+		if ( empty( $uri ) ) {
+			throw new BadRequestApiException( 'You need to pass resource URI' );
+		}
+
+		$resourceType = $this->mercuryApi->getResourceType( $uri );
+
+		$this->response->setVal( 'isArticle', $resourceType[ 'isArticle' ] );
+		$this->response->setVal( 'title', $resourceType[ 'title' ] );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	/**

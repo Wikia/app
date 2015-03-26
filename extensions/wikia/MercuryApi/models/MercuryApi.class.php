@@ -264,4 +264,54 @@ class MercuryApi {
 		$adContext = new AdEngine2ContextService();
 		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}
+	
+	public function getResourceType( $uri ) {
+		$wg = F::app()->wg;
+		
+		// TODO Should we encode $uriWithoutPrefix?
+		// Should it be encoded by client?
+
+		$defaultUriPrefix = '/wiki/';
+
+		if ( !empty( $wg->ArticlePath ) ) {
+			$uriPrefix = str_replace( '$1', '', $wg->ArticlePath );
+		} else {
+			$uriPrefix = $defaultUriPrefix;
+		}
+
+		// Cut all the slashes before 'wiki/' despite if it's a wikia with prefix or not.
+		$uriWithoutPrefix = preg_replace( '/^\/*wiki\//', '', $uri, 1 );
+
+		// Cut everything >= '?'
+		$queryPosition = strpos( $uriWithoutPrefix, '?' );
+		if ( $queryPosition !== false ) {
+			$uriWithoutQuery = substr( $uriWithoutPrefix, 0, $queryPosition );
+		} else {
+			$uriWithoutQuery = $uriWithoutPrefix;
+		}
+
+		// TODO Title::newFromText caches titles with CACHE_MAX = 1000
+		// Is it good for us?
+		if ( $uriPrefix === $defaultUriPrefix && preg_match( '/^\/*wiki$/', $uriWithoutQuery ) ) {
+			$title = '';
+		} elseif ( empty($uriWithoutQuery) ) {
+			$title = Title::newMainPage();
+		} else {
+			$title = Title::newFromText( $uriWithoutQuery, NS_MAIN );
+		}
+
+		if ( $title ) {
+			$namespace = $title->getNamespace();
+			$isArticle = in_array( $namespace, $wg->ContentNamespaces ) && $title->mInterwiki === '';
+			$titleText = $title->getPrefixedDBkey();
+		} else {
+			$isArticle = false;
+			$titleText = null;
+		}
+
+		return [
+			'isArticle' => $isArticle,
+			'title' => $titleText
+		];
+	}
 }
