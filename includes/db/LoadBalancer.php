@@ -992,6 +992,7 @@ class LoadBalancer {
 		foreach ( $this->mConns as $conns2 ) {
 			foreach ( $conns2 as $conns3 ) {
 				foreach ( $conns3 as $conn ) {
+					/* @var DatabaseMysqlBase $conn */
 					if ( !$conn->ping() ) {
 						$success = false;
 					}

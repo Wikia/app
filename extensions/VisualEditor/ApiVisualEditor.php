@@ -394,8 +394,7 @@ class ApiVisualEditor extends ApiBase {
 							# Then it must be protected based on static groups (regular)
 							$noticeMsg = 'protectedpagewarning';
 						}
-						$notices[] = $this->msg( $noticeMsg )->parseAsBlock() .
-						$this->getLastLogEntry( $page, 'protect' );
+						$notices[] = $this->msg( $noticeMsg )->parseAsBlock();
 					}
 
 					// Deal with cascading edit protection
@@ -435,19 +434,10 @@ class ApiVisualEditor extends ApiBase {
 						$notices[] = "<div class=\"mw-userpage-userdoesnotexist error\">\n" .
 							$this->msg( 'userpage-userdoesnotexist', wfEscapeWikiText( $targetUsername ) ) .
 							"\n</div>";
-					} elseif ( $targetUser->isBlocked() ) { // Show log extract if the user is currently blocked
-						$notices[] = $this->msg(
-							'blocked-notice-logextract',
-							$targetUser->getName() // Support GENDER in notice
-						)->parseAsBlock() . $this->getLastLogEntry( $targetUser->getUserPage(), 'block' );
 					}
-				}
-
-				if ( $user->isBlockedFrom( $page ) && $user->getBlock()->prevents( 'edit' ) !== false ) {
-					$notices[] = call_user_func_array(
-						array( $this, 'msg' ),
-						$user->getBlock()->getPermissionsError( $this->getContext() )
-					)->parseAsBlock();
+					// Some upstream code is deleted from here, more information:
+					// https://github.com/Wikia/app/commit/d54b481d3f6e5b092b212a2c98b2cb5452bee26c
+					// https://github.com/Wikia/app/commit/681e7437078206460f7c0cb1837095e656d8ba85
 				}
 
 				if ( class_exists( 'GlobalBlocking' ) ) {

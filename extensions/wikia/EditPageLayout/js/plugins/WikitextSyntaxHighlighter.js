@@ -8,7 +8,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	'use strict';
 
 	// Variables that are preserved between function calls
-	var highlightSyntaxIfNeededIntervalID,
+	var highlightSyntaxIfNeededIntervalId,
+		highlightSyntaxInputTimeoutId,
 		initialized = false,
 		lastText,
 		/**
@@ -180,9 +181,10 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 
 	function resetHighlightSyntax(diffTime) {
 		if (initialized) {
-			clearInterval(highlightSyntaxIfNeededIntervalID);
 
-			wpTextbox1.removeEventListener('input', highlightSyntax);
+			clearInterval(highlightSyntaxIfNeededIntervalId);
+
+			wpTextbox1.removeEventListener('keydown', debouncedHighlightSyntax);
 			wpTextbox1.removeEventListener('scroll', syncScrollX);
 			wpTextbox1.removeEventListener('scroll', syncScrollY);
 
@@ -416,6 +418,21 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		wpTextbox0.scrollTop = wpTextbox1.scrollTop;
 	}
 
+	function debouncedHighlightSyntax(e) {
+		var key = e.which;
+
+		if (highlightSyntaxInputTimeoutId) {
+			clearTimeout(highlightSyntaxInputTimeoutId);
+		}
+
+		// If 'Enter' or 'Backspace'
+		if (key === 13 || key === 8) {
+			setTimeout(highlightSyntax, 0);
+		} else {
+			highlightSyntaxInputTimeoutId = setTimeout(highlightSyntax, 100);
+		}
+	}
+
 	/**
 	 * This function runs once every 500ms to detect changes to wpTextbox1's text that the input event does not catch.
 	 * This happens when another script changes the text without knowing that the syntax highlighter needs to be
@@ -450,7 +467,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		wpTextbox1.id = 'wpTextbox1';
 		wpTextbox1.classList.add('highlighted');
 
-		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
+		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 100;
 
 		textboxContainer = document.createElement('div');
 		syntaxStyleElement = document.createElement('style');
@@ -500,13 +517,10 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		$('.tool-select *').css({zIndex: 5});
 
 		document.head.appendChild(syntaxStyleElement);
-
-		$(wpTextbox1).on('input', function () {
-			highlightSyntax();
-		});
+		$(wpTextbox1).on('keydown', debouncedHighlightSyntax);
 		wpTextbox1.addEventListener('scroll', syncScrollX);
 		wpTextbox1.addEventListener('scroll', syncScrollY);
-		highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntaxIfNeeded, 500);
+		highlightSyntaxIfNeededIntervalId = setInterval(highlightSyntaxIfNeeded, 500);
 		highlightSyntax();
 
 		initialized = true;

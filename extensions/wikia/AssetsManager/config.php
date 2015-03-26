@@ -1628,7 +1628,7 @@ $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'wikiamobile', 'venus' ],
 	'assets' => [
-		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
+		'//extensions/wikia/AnalyticsEngine/js/analytics.js'
 	]
 );
 
@@ -2318,19 +2318,19 @@ $config['upload_photos_dialog_scss'] = [
 	]
 ];
 
-$config['oasis_global_footer_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooterOasis.scss'
-	]
-];
-
 $config['old_global_footer_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+	]
+];
+
+$config['updated_global_footer_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooterUpdated.scss'
 	]
 ];
 
@@ -2347,5 +2347,13 @@ $config['fancycaptcha_scss'] = [
 	'skin' => ['oasis', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/Captcha/styles/FancyCaptcha.scss',
+	]
+];
+
+$config['poweruser'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PowerUser/js/pageViewTracking.js',
+		'//extensions/wikia/PowerUser/js/powerUser.run.js',
 	]
 ];

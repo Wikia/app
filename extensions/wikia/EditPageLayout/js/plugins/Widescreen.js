@@ -36,11 +36,13 @@
 		},
 
 		sizeChanged: function() {
-			if (this.initialized && this.editor.mode === 'source' && this.wide) {
-				if (this.$editpage.width() > this.expandedToolbarBreakpoint) {
-					this.$editpage.removeClass('toolbar-expanded');
-				} else {
+			if (this.initialized) {
+				if(this.editor.mode === 'source' && this.wide &&
+					this.$editpage.width() < this.expandedToolbarBreakpoint
+				) {
 					this.$editpage.addClass('toolbar-expanded');
+				} else {
+					this.$editpage.removeClass('toolbar-expanded');
 				}
 			}
 		},

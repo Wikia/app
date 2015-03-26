@@ -91,4 +91,15 @@ class MercuryApiHooks {
 		}
 		return true;
 	}
+
+	/**
+	 * @desc Add instant global for disabling ads on Mercury
+	 *
+	 * @param array $vars
+	 * @return bool
+	 */
+	static public function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgSitewideDisableAdsOnMercury';
+		return true;
+	}
 }

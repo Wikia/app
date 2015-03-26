@@ -61,6 +61,11 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		*/
 		$wgUser->logout();	 /* wikia change */
 
+		// Wikia change
+		// regenerate session ID on user logout to avoid race conditions with
+		// long running requests logging the user back in (@see PLATFORM-1028)
+		wfResetSessionID();
+
 		$out = $this->getOutput();
 		$out->addWikiMsg( 'logouttext' );
 

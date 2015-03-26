@@ -176,10 +176,10 @@
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
 		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<? if ( empty( $wg->EnableNewGlobalFooter ) ):
+		<? if ( empty ($wg->EnableUpdatedGlobalFooter)):
 			echo $app->renderView( 'GlobalFooter', 'index' );
 		else:
-			echo $app->renderView( 'GlobalFooter', 'oasisIndex' );
+			echo $app->renderView( 'GlobalFooter', 'indexUpdated' );
 		endif; ?>
 	</div>
 </section><!--WikiaPage-->
