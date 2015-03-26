@@ -477,6 +477,11 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 						'username' => $loginForm->mUsername,
 						'result' => 'ok',
 					] );
+
+					// regenerate session ID on user login (the approach MW's core SpecialUserLogin uses)
+					// to avoid race conditions with long running requests logging the user back in & out
+					// @see PLATFORM-1028
+					wfResetSessionID();
 				}
 				break;
 

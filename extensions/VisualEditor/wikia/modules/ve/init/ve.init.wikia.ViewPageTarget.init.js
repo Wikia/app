@@ -18,9 +18,10 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, targetDeferred, enable, userPrefEnabled,
+		init, support, targetDeferred,
 		plugins = [],
-		spinnerTimeoutId = null;
+		spinnerTimeoutId = null,
+		vePreferred;
 
 	function initSpinner() {
 		var $spinner = $( '<div>' )
@@ -121,6 +122,7 @@
 	// On a view page, extend the current URI so parameters like oldid are carried over
 	// On a non-view page, use viewUri
 	veEditUri = ( isViewPage ? uri : viewUri ).clone().extend( { veaction: 'edit' } );
+	vePreferred = !!mw.config.get( 'wgVisualEditorPreferred' );
 
 	support = {
 		es5: !!(
@@ -193,198 +195,12 @@
 			plugins.push( plugin );
 		},
 
-		setupSkin: function () {
-			init.setupTabs();
-			init.setupSectionLinks();
-		},
-
 		setupTabs: function () {
-			// HACK: Remove this when the Education Program offers a proper way to detect and disable.
-			if (
-				// HACK: Work around jscs.requireCamelCaseOrUpperCaseIdentifiers
-				mw.config.get( 'wgNamespaceIds' )[ true && 'education_program' ] === mw.config.get( 'wgNamespaceNumber' )
-			) {
-				return;
-			}
-
-			var caVeEdit,
-				action = pageExists ? 'edit' : 'create',
-				pTabsId = $( '#p-views' ).length ? 'p-views' : 'p-cactions',
-				$caSource = $( '#ca-viewsource' ),
-				$caEdit = $( '#ca-edit' ),
-				$caVeEdit = $( '#ca-ve-edit' ),
-				$caEditLink = $caEdit.find( 'a' ),
-				$caVeEditLink = $caVeEdit.find( 'a' ),
-				reverseTabOrder = $( 'body' ).hasClass( 'rtl' ) && pTabsId === 'p-views',
-				/*jshint bitwise:false */
-				caVeEditNextnode = ( reverseTabOrder ^ conf.tabPosition === 'before' ) ? $caEdit.get( 0 ) : $caEdit.next().get( 0 );
-
-			if ( !$caVeEdit.length ) {
-				// The below duplicates the functionality of VisualEditorHooks::onSkinTemplateNavigation()
-				// in case we're running on a cached page that doesn't have these tabs yet.
-
-				// If there is no edit tab or a view-source tab,
-				// the user doesn't have permission to edit.
-				if ( $caEdit.length && !$caSource.length ) {
-					// Add the VisualEditor tab (#ca-ve-edit)
-					caVeEdit = mw.util.addPortletLink(
-						pTabsId,
-						// Use url instead of '#'.
-						// So that 1) one can always open it in a new tab, even when
-						// onEditTabClick is bound.
-						// 2) when onEditTabClick is not bound (!isViewPage) it will
-						// just work.
-						veEditUri,
-						tabMessages[action] !== null ? mw.msg( tabMessages[action] ) : $caEditLink.text(),
-						'ca-ve-edit',
-						mw.msg( 'tooltip-ca-ve-edit' ),
-						mw.msg( 'accesskey-ca-ve-edit' ),
-						caVeEditNextnode
-					);
-
-					$caVeEdit = $( caVeEdit );
-					$caVeEditLink = $caVeEdit.find( 'a' );
-				}
-			} else if ( $caEdit.length && $caVeEdit.length ) {
-				// Make the state of the page consistent with the config if needed
-				/*jshint bitwise:false */
-				if ( reverseTabOrder ^ conf.tabPosition === 'before' ) {
-					if ( $caEdit[0].nextSibling === $caVeEdit[0] ) {
-						$caVeEdit.after( $caEdit );
-					}
-				} else {
-					if ( $caVeEdit[0].nextSibling === $caEdit[0] ) {
-						$caEdit.after( $caVeEdit );
-					}
-				}
-				if ( tabMessages[action] !== null ) {
-					$caVeEditLink.text( mw.msg( tabMessages[action] ) );
-				}
-			}
-
-			// If the edit tab is hidden, remove it.
-			if ( !( init.isAvailable && userPrefEnabled ) ) {
-				$caVeEdit.remove();
-			}
-
-			// Alter the edit tab (#ca-edit)
-			if ( $( '#ca-view-foreign' ).length ) {
-				if ( tabMessages[action + 'localdescriptionsource'] !== null ) {
-					$caEditLink.text( mw.msg( tabMessages[action + 'localdescriptionsource'] ) );
-				}
-			} else {
-				if ( tabMessages[action + 'source'] !== null ) {
-					$caEditLink.text( mw.msg( tabMessages[action + 'source'] ) );
-				}
-			}
-
-			if ( conf.tabPosition === 'before' ) {
-				$caEdit.addClass( 'collapsible' );
-			} else {
-				$caVeEdit.addClass( 'collapsible' );
-			}
-
-			// Process appendix messages
-			if ( tabMessages[action + 'appendix'] !== null ) {
-				$caVeEditLink.append(
-					$( '<span>' )
-						.addClass( 've-tabmessage-appendix' )
-						.text( mw.msg( tabMessages[action + 'appendix'] ) )
-				);
-			}
-			if ( tabMessages[action + 'sourceappendix'] !== null ) {
-				$caEditLink.append(
-					$( '<span>' )
-						.addClass( 've-tabmessage-appendix' )
-						.text( mw.msg( tabMessages[action + 'sourceappendix'] ) )
-				);
-			}
-
-			if ( isViewPage ) {
-				// Allow instant switching to edit mode, without refresh
-				$caVeEdit.click( init.onEditTabClick );
-			}
+			$( '#ca-ve-edit' ).click( init.onEditTabClick );
 		},
 
 		setupSectionLinks: function () {
-			var $editsections = $( '#mw-content-text .mw-editsection' ),
-				bodyDir = $( 'body' ).css( 'direction' );
-
-			// Match direction of the user interface
-			// TODO: Why is this needed? It seems to work fine without.
-			if ( $editsections.css( 'direction' ) !== bodyDir ) {
-				// Avoid creating inline style attributes if the inherited value is already correct
-				$editsections.css( 'direction', bodyDir );
-			}
-
-			// The "visibility" css construct ensures we always occupy the same space in the layout.
-			// This prevents the heading from changing its wrap when the user toggles editSourceLink.
-			if ( $editsections.find( '.mw-editsection-visualeditor' ).length === 0 ) {
-				// If PHP didn't build the section edit links (because of caching), build them
-				$editsections.each( function () {
-					var $editsection = $( this ),
-						$editSourceLink = $editsection.find( 'a' ).eq( 0 ),
-						$editLink = $editSourceLink.clone(),
-						$divider = $( '<span>' ),
-						dividerText = mw.msg( 'pipe-separator' );
-
-					if ( tabMessages.editsectionsource !== null ) {
-						$editSourceLink.text( mw.msg( tabMessages.editsectionsource ) );
-					}
-					if ( tabMessages.editsection !== null ) {
-						$editLink.text( mw.msg( tabMessages.editsection ) );
-					}
-					$divider
-						.addClass( 'mw-editsection-divider' )
-						.text( dividerText );
-					// Don't mess with section edit links on foreign file description pages
-					// (bug 54259)
-					if ( !$( '#ca-view-foreign' ).length ) {
-						$editLink
-							.attr( 'href', function ( i, val ) {
-								return new mw.Uri( veEditUri ).extend( {
-									vesection: new mw.Uri( val ).query.section
-								} );
-							} )
-							.addClass( 'mw-editsection-visualeditor' );
-						if ( conf.tabPosition === 'before' ) {
-							$editSourceLink.before( $editLink, $divider );
-						} else {
-							$editSourceLink.after( $divider, $editLink );
-						}
-					}
-				} );
-			}
-
-			// Process appendix messages
-			if ( tabMessages.editsectionappendix ) {
-				$editsections.find( '.mw-editsection-visualeditor' )
-					.append(
-						$( '<span>' )
-							.addClass( 've-tabmessage-appendix' )
-							.text( mw.msg( tabMessages.editsectionappendix ) )
-					);
-			}
-			if ( tabMessages.editsectionsourceappendix ) {
-				$editsections.find( 'a:not(.mw-editsection-visualeditor)' )
-					.append(
-						$( '<span>' )
-							.addClass( 've-tabmessage-appendix' )
-							.text( mw.msg( tabMessages.editsectionsourceappendix ) )
-					);
-			}
-
-			if ( isViewPage ) {
-				// Only init without refresh if we're on a view page. Though section edit links
-				// are rarely shown on non-view pages, they appear in one other case, namely
-				// when on a diff against the latest version of a page. In that case we mustn't
-				// init without refresh as that'd initialise for the wrong rev id (bug 50925)
-				// and would preserve the wrong DOM with a diff on top.
-				$editsections
-					.find( '.mw-editsection-visualeditor' )
-						.click( init.onEditSectionLinkClick )
-				;
-			}
+			$( '#mw-content-text' ).find( '.editsection a' ).click( init.onEditSectionLinkClick );
 		},
 
 		onEditTabClick: function ( e ) {
@@ -470,31 +286,6 @@
 		support.svg &&
 		( ( 'vewhitelist' in uri.query ) || !$.client.test( init.blacklist, null, true ) );
 
-	enable = mw.user.options.get( 'visualeditor-enable', conf.defaultUserOptions.enable );
-
-	userPrefEnabled = (
-		// Allow disabling for anonymous users separately from changing the
-		// default preference (bug 50000)
-		!( conf.disableForAnons && mw.config.get( 'wgUserName' ) === null ) &&
-
-		// User has 'visualeditor-enable' preference enabled (for alpha opt-in)
-		// User has 'visualeditor-betatempdisable' preference disabled
-		// Because user.options is embedded in the HTML and cached per-page for anons on wikis
-		// with static caching (e.g. wgUseFileCache or reverse-proxy) ignore user.options for
-		// anons as it is likely outdated.
-		(
-			mw.config.get( 'wgUserName' ) === null ?
-				( conf.defaultUserOptions.enable && !conf.defaultUserOptions.betatempdisable ) :
-				(
-					enable && enable !== '0' &&
-						!mw.user.options.get(
-							'visualeditor-betatempdisable',
-							conf.defaultUserOptions.betatempdisable
-						)
-				)
-		)
-	);
-
 	// Whether VisualEditor should be available for the current user, page, wiki, mediawiki skin,
 	// browser etc.
 	init.isAvailable = (
@@ -506,6 +297,18 @@
 			conf.namespaces
 		) !== -1
 	);
+
+	init.isInValidNamespace = function ( article ) {
+		// Only in enabled namespaces
+		return $.inArray(
+			new mw.Title( article ).getNamespaceId(),
+			conf.namespaces
+		) !== -1;
+	};
+
+	init.canCreatePageUsingVE = function () {
+		return support.visualEditor && vePreferred;
+	};
 
 	// Note: Though VisualEditor itself only needs this exposure for a very small reason
 	// (namely to access init.blacklist from the unit tests...) this has become one of the nicest
@@ -519,16 +322,39 @@
 	// on this page. See above for why it may be false.
 	mw.libs.ve = init;
 
-	if ( init.isAvailable && userPrefEnabled ) {
-		$( 'html' ).addClass( 've-available' );
-	} else {
-		$( 'html' ).addClass( 've-not-available' );
-		// Don't return here because we do want the skin setup to consistently happen
-		// for e.g. "Edit" > "Edit source" even when VE is not available.
+	function setupRedlinks() {
+		$( document ).on(
+			'mouseover click',
+			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
+			function () {
+				var $element = $( this ),
+					href = $element.attr( 'href' ),
+					articlePath = mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
+					redlinkArticle = new mw.Uri( href ).path.replace( articlePath, '' );
+
+				if ( init.isInValidNamespace( decodeURIComponent( redlinkArticle ) ) ) {
+					$element.attr( 'href', href.replace( 'action=edit', 'veaction=edit' ) );
+				}
+			}
+		);
 	}
 
-	$( function () {
-		if ( init.isAvailable ) {
+	function removeVELink() {
+		var $edit = $( '#ca-edit' ),
+			$veEdit = $( '#ca-ve-edit' );
+
+		$( 'html' ).addClass( 've-not-available' );
+		// If VE is the main edit link, clone the href into it
+		if ( vePreferred && $veEdit.length > 0 ) {
+			$veEdit.attr( 'href', $edit.attr( 'href' ) );
+			$edit.parent().remove();
+		} else {
+			$veEdit.parent().remove();
+		}
+	}
+
+	if ( init.isAvailable ) {
+		$( function () {
 			if ( isViewPage && uri.query.veaction === 'edit' ) {
 				var isSection = uri.query.vesection !== undefined;
 				init.showLoading();
@@ -542,10 +368,18 @@
 						.always( init.hideLoading );
 				} );
 			}
-		}
+			if ( isViewPage ) {
+				init.setupTabs();
+				if ( vePreferred ) {
+					init.setupSectionLinks();
+				}
+			}
+			if ( vePreferred ) {
+				setupRedlinks();
+			}
+		} );
+	} else {
+		removeVELink();
+	}
 
-		if ( userPrefEnabled ) {
-			init.setupSkin();
-		}
-	} );
 }() );

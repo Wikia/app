@@ -20,7 +20,7 @@ class ExactTargetDeleteWikiTask extends ExactTargetTask {
 		$this->info( 'RetrieveCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForRetrieve ) );
 		$oResults = $oApiDataExtension->retrieveRequest( $aCityCatMappingDataForRetrieve );
 		$this->info( 'RetrieveCityCatMapping' . ' OverallStatus: ' . $oResults->OverallStatus );
-		$this->info( 'RetrieveCityCatMapping' . ' result: ' . json_encode( (array)$oResults ) );
+		$this->info( 'RetrieveCityCatMapping' . ' Result: ' . json_encode( (array)$oResults ) );
 
 		if ( $oResults->OverallStatus !== 'OK' ) {
 			throw new \Exception(
@@ -34,7 +34,7 @@ class ExactTargetDeleteWikiTask extends ExactTargetTask {
 			$this->info( 'DeleteCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForDelete ) );
 			$oCityCatMappingDeleteResult = $oApiDataExtension->deleteRequest( $aCityCatMappingDataForDelete );
 			$this->info( 'DeleteCityCatMapping' . ' OverallStatus: ' . $oCityCatMappingDeleteResult->OverallStatus );
-			$this->info( 'DeleteCityCatMapping' . ' result: ' . json_encode( (array)$oCityCatMappingDeleteResult ) );
+			$this->info( 'DeleteCityCatMapping' . ' Result: ' . json_encode( (array)$oCityCatMappingDeleteResult ) );
 
 			if ( $oCityCatMappingDeleteResult->OverallStatus === 'Error' ) {
 				throw new \Exception(

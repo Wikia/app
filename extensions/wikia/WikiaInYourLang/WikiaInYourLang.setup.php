@@ -31,20 +31,6 @@ $wgAutoloadClasses['Wikia\WikiaInYourLang\WikiaInYourLangHooks'] = __DIR__ . '/W
 $wgAutoloadClasses['WikiaInYourLangController'] = __DIR__ . '/WikiaInYourLangController.class.php';
 
 /**
- * Use ResourceLoader to load the JavaScript module
- */
-$wgResourceModules['ext.wikiaInYourLang'] = [
-	'localBasePath' => __DIR__ . '/modules',
-	'remoteExtPath' => 'wikia/WikiaInYourLang/modules',
-	'scripts' => 'ext.wikiaInYourLang.js',
-	'dependencies' => [
-		'wikia.cache',
-		'wikia.geo',
-		'wikia.tracker',
-	],
-];
-
-/**
  * Add the JavaScript module to the output
  */
 $wgHooks['BeforePageDisplay'][] = "Wikia\WikiaInYourLang\WikiaInYourLangHooks::onBeforePageDisplay";

@@ -14,8 +14,9 @@ require(
 		'wikia.geo',
 		'wikia.cache',
 		'wikia.tracker',
+		'BannerNotification'
 	],
-	function ($, mw, w, geo, cache, tracker) {
+	function ($, mw, w, geo, cache, tracker, BannerNotification) {
 		'use strict';
 
 		// Get user's geographic data and a country code
@@ -31,7 +32,8 @@ require(
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
-				if (cache.get('wikiaInYourLangRequestSent' + cacheVersion) !== true && cache.get('wikiaInYourLangNotificationShown' + cacheVersion) !== true) {
+				if (cache.get('wikiaInYourLangRequestSent' + cacheVersion) !== true &&
+					cache.get('wikiaInYourLangNotificationShown' + cacheVersion) !== true) {
 					// Update JS cache and set the notification shown indicator to true
 					// Cache for a day
 					cache.set('wikiaInYourLangRequestSent' + cacheVersion, true, cache.CACHE_STANDARD);
@@ -48,12 +50,10 @@ require(
 				geoCountryCode = geo.getCountryCode().toLowerCase(),
 				targetLanguage;
 
-
 			if (w.wgUserName !== null) {
 				// Check if a user is logged and if so - use a lang from settings
 				targetLanguage = w.wgUserLanguage;
-			}
-			else if (typeof browserLanguage === 'string') {
+			} else if (typeof browserLanguage === 'string') {
 				// Check if a browser's language is accessible
 				targetLanguage = browserLanguage.split('-')[0];
 			} else if (typeof geoCountryCode === 'string') {
@@ -94,37 +94,38 @@ require(
 
 						// Save the message in cache to display until a user closes it
 						// Cache for a day
-						cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, results.message, cache.CACHE_STANDARD);
+						cache.set(
+							targetLanguage + 'WikiaInYourLangMessage' + cacheVersion,
+							results.message,
+							cache.CACHE_STANDARD
+						);
 					}
 				}
 			});
 		}
 
 		function displayNotification(message) {
-			w.GlobalNotification.show(message, 'notify');
-
-			// Track a view of the notification
-			var trackingParams = {
-				trackingMethod: 'ga',
-				category: 'wikia-in-your-lang',
-				action: tracker.ACTIONS.VIEW,
-				label: targetLanguage + '-notification-view',
-			};
+			var bannerNotification = new BannerNotification(message, 'notify').show(),
+				// Track a view of the notification
+				trackingParams = {
+					trackingMethod: 'ga',
+					category: 'wikia-in-your-lang',
+					action: tracker.ACTIONS.VIEW,
+					label: targetLanguage + '-notification-view'
+				};
 
 			tracker.track(trackingParams);
 
 			// Bind tracking of clicks on a link and events on close
-			bindEvents();
+			bindEvents(bannerNotification);
 		}
 
-		function bindEvents() {
-			$('.global-notification.notify')
-				.on('click', '.close', function() {
-					onNotificationClosed();
-				})
-				.on('click', '.text', function() {
-					onLinkClick();
-				});
+		function bindEvents(bannerNotification) {
+			bannerNotification
+				.onClose(onNotificationClosed);
+			bannerNotification
+				.$element
+				.on('click', '.text', onLinkClick);
 		}
 
 		function onNotificationClosed() {

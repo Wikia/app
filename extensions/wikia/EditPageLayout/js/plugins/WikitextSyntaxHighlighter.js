@@ -8,7 +8,9 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	'use strict';
 
 	// Variables that are preserved between function calls
-	var highlightSyntaxIfNeededIntervalID,
+	var highlightSyntaxIfNeededIntervalId,
+		highlightSyntaxInputTimeoutId,
+		initialized = false,
 		lastText,
 		/**
 		 * @var maxSpanNumber The number of the last span available,
@@ -115,6 +117,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 			fragment;
 
 		lastText = wpTextbox1.value;
+
 		/* Backslashes and apostrophes are CSS-escaped at the beginning and all
 		parsing regexes and functions are designed to match. On the other hand,
 		newlines are not escaped until written so that in the regexes ^ and $
@@ -124,7 +127,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 
 		before = true;
 		css = '';
-		lastColor = '';
+		lastColor = undefined;
 		spanNumber = 0;
 
 		/* Highlighting bold or italic markup presents a special challenge
@@ -155,18 +158,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		diffTime = endTime - startTime;
 
 		if (diffTime > syntaxHighlighterConfig.timeout) {
-			clearInterval(highlightSyntaxIfNeededIntervalID);
-
-			wpTextbox1.removeEventListener('input', highlightSyntax);
-			wpTextbox1.removeEventListener('scroll', syncScrollX);
-			wpTextbox1.removeEventListener('scroll', syncScrollY);
-
-			syntaxStyleTextNode.nodeValue = '';
-
-			log('Syntax highlighting took too long. The maximum allowed ' +
-				'highlighting time is ' + syntaxHighlighterConfig.timeout +
-				', and your computer took ' + diffTime + '.');
-
+			resetHighlightSyntax(diffTime);
 			return;
 		}
 
@@ -185,6 +177,25 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		escape newlines. CSS ignores the space after the hex code of the
 		escaped character */
 		syntaxStyleTextNode.nodeValue = css.substring(2).replace(/\n/g, '\\A ') + '\'}';
+	}
+
+	function resetHighlightSyntax(diffTime) {
+		if (initialized) {
+
+			clearInterval(highlightSyntaxIfNeededIntervalId);
+
+			wpTextbox1.removeEventListener('keydown', debouncedHighlightSyntax);
+			wpTextbox1.removeEventListener('scroll', syncScrollX);
+			wpTextbox1.removeEventListener('scroll', syncScrollY);
+
+			syntaxStyleTextNode.nodeValue = '';
+
+			if (diffTime) {
+				log('Syntax highlighting took too long. The maximum allowed ' +
+					'highlighting time is ' + syntaxHighlighterConfig.timeout +
+					', and your computer took ' + diffTime + '.');
+			}
+		}
 	}
 
 	function highlightBlock (color, breakerRegex) {
@@ -407,6 +418,21 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		wpTextbox0.scrollTop = wpTextbox1.scrollTop;
 	}
 
+	function debouncedHighlightSyntax(e) {
+		var key = e.which;
+
+		if (highlightSyntaxInputTimeoutId) {
+			clearTimeout(highlightSyntaxInputTimeoutId);
+		}
+
+		// If 'Enter' or 'Backspace'
+		if (key === 13 || key === 8) {
+			setTimeout(highlightSyntax, 0);
+		} else {
+			highlightSyntaxInputTimeoutId = setTimeout(highlightSyntax, 100);
+		}
+	}
+
 	/**
 	 * This function runs once every 500ms to detect changes to wpTextbox1's text that the input event does not catch.
 	 * This happens when another script changes the text without knowing that the syntax highlighter needs to be
@@ -441,7 +467,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		wpTextbox1.id = 'wpTextbox1';
 		wpTextbox1.classList.add('highlighted');
 
-		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
+		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 100;
 
 		textboxContainer = document.createElement('div');
 		syntaxStyleElement = document.createElement('style');
@@ -491,14 +517,13 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 		$('.tool-select *').css({zIndex: 5});
 
 		document.head.appendChild(syntaxStyleElement);
-
-		$(wpTextbox1).on('input', function () {
-			highlightSyntax();
-		});
+		$(wpTextbox1).on('keydown', debouncedHighlightSyntax);
 		wpTextbox1.addEventListener('scroll', syncScrollX);
 		wpTextbox1.addEventListener('scroll', syncScrollY);
-		highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntaxIfNeeded, 500);
+		highlightSyntaxIfNeededIntervalId = setInterval(highlightSyntaxIfNeeded, 500);
 		highlightSyntax();
+
+		initialized = true;
 	}
 
 	function queueSetup (textarea) {
@@ -536,6 +561,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	}
 
 	return {
-		init: init
+		init: init,
+		reset: resetHighlightSyntax
 	};
 });

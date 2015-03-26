@@ -34,6 +34,9 @@ class PowerUser {
 	const MIN_LIFETIME_EDITS = 2000;
 	const MIN_FREQUENT_EDITS = 140;
 
+	/**
+	 * Logging parameters
+	 */
 	const LOG_MESSAGE = 'PowerUsersLog';
 	const ACTION_ADD_SET_OPTION = 'Add option';
 	const ACTION_ADD_GROUP = 'Add group';
@@ -82,7 +85,9 @@ class PowerUser {
 	private $oUser;
 
 	function __construct( \User $oUser ) {
+		global $wgEnableSharedUserRightsExt;
 		$this->oUser = $oUser;
+		$this->bUseGroups = $wgEnableSharedUserRightsExt;
 	}
 
 	/**
@@ -134,19 +139,17 @@ class PowerUser {
 	 * matches one in the aPowerUsersRightsMapping array
 	 *
 	 * @param string $sProperty One of the types in consts
-	 * @return bool
+	 * @return bool Always return true until the groups is only companion
 	 */
 	public function addPowerUserAddGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
-			if ( !in_array( self::GROUP_NAME, $this->oUser->getGroups() ) ) {
-				$this->oUser->addGroup( self::GROUP_NAME );
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& $this->bUseGroups
+			&& !in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) )
+		) {
+				\UserRights::addGlobalGroup( $this->oUser, self::GROUP_NAME );
 				$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
-			}
-			return true;
-		} else {
-			$this->logError( $sProperty, self::ACTION_ADD_GROUP );
-			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -186,19 +189,17 @@ class PowerUser {
 	 * a user actually has it
 	 *
 	 * @param string $sProperty One of the types in consts
-	 * @return bool
+	 * @return bool Always return true until the groups is only companion
 	 */
 	public function removePowerUserRemoveGroup( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping ) ) {
-			if ( $this->isGroupForRemoval( $sProperty ) ) {
-				$this->oUser->removeGroup( self::GROUP_NAME );
-				$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
-			}
-			return true;
-		} else {
-			$this->logError( $sProperty, self::ACTION_REMOVE_GROUP );
-			return false;
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& $this->bUseGroups
+			&& $this->isGroupForRemoval( $sProperty )
+		) {
+			\UserRights::removeGlobalGroup( $this->oUser, self::GROUP_NAME );
+			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
 		}
+		return true;
 	}
 
 	/**
@@ -209,15 +210,15 @@ class PowerUser {
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
-	private function isGroupForRemoval( $sProperty ) {
+	public function isGroupForRemoval( $sProperty ) {
 		foreach ( self::$aPowerUsersRightsMapping as $sMappedProperty ) {
 			if ( $sMappedProperty !== $sProperty
-				&& $this->oUser->isSpecificPowerUser( $sMappedProperty ) ) {
+				&& $this->oUser->isSpecificPowerUser( $sMappedProperty )
+			) {
 				return false;
 			}
 		}
-
-		return in_array( self::GROUP_NAME, $this->oUser->getGroups() );
+		return in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) );
 	}
 
 	/**

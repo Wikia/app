@@ -44,12 +44,11 @@
 @import 'core/successerror';
 @import 'core/SpeechBubble';
 @import 'core/ArticleAfterComments';
-@import 'core/GlobalNotificationOasis';
+@import 'core/BannerNotificationsOasis';
 @import 'core/WikiaBar';
 @import 'core/thumbnails';
 @import 'core/MenuElement';
 @import 'core/visualeditor';
-@import 'skins/shared/styles/logo';
 @import 'skins/shared/styles/jquery.ui.autocomplete'; // TODO: load on demand
 
 // Bootstrap
@@ -57,6 +56,7 @@
 @import 'resources/wikia/libraries/bootstrap/popover';
 
 // Extensions (only include here if used on the majority of page views!)
+@import 'extensions/wikia/WikiaLogo/styles/WikiaLogo';
 @import 'extensions/wikia/Blogs/css/oasis';
 @import 'extensions/wikia/CategorySelect/css/CategorySelect';
 @import 'extensions/wikia/RelatedPages/RelatedPages';
@@ -85,3 +85,9 @@
 @import 'core/responsive-font-sizing';
 @import 'core/responsive-core';
 @import 'core/responsive-mainpage-tag';
+
+// Breakpoints
+// todo Cleanup responsive and old oasis layout files
+@import 'core/breakpoints-variables';
+@import 'core/breakpoints-layout';
+@import 'core/breakpoints-typography';

@@ -13,6 +13,10 @@
 .global-navigation {
 	box-sizing: border-box;
 	margin-top: -$global-navigation-height - 1px;
+
+	*, *::before, *::after {
+		box-sizing: inherit;
+	}
 }
 
 .AccountNavigation {

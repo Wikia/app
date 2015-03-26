@@ -34,8 +34,8 @@ ve.ce.MWTableNode.static.name = 'mwTable';
 
 ve.ce.MWTableNode.prototype.onAttributeChange = function ( key, from, to ) {
 	switch ( key ) {
-		case 'wikitable':
-			this.$element.toggleClass( 'wikitable', !!to );
+		case 'article-table':
+			this.$element.toggleClass( 'article-table', !!to );
 			break;
 		case 'sortable':
 			this.$element.toggleClass( 'sortable', !!to );

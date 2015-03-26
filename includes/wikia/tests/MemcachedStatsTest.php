@@ -44,6 +44,10 @@ class MemcachedStatsTest extends WikiaBaseTest {
 				'key' => self::WIKI_PREFIX . ':favicon-v1',
 				'expected' => '*:favicon-v1'
 			],
+			[
+				'key' => self::WIKI_PREFIX . ':VoteHelper:VoteHelper::getUserCacheKey:123:0:84.77.150.66:VER1',
+				'expected' => '*:VoteHelper:VoteHelper::getUserCacheKey:*:*:*:VER1'
+			],
 			// shared keys
 			[
 				'key' => 'wikifactory:wikia:v1:1031256',

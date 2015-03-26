@@ -338,10 +338,14 @@ body {
 				padding: 10px;
 				position: relative;
 
-				.global-notification {
+				.banner-notifications-wrapper {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
 				}
+			}
+
+			.ArticlePreviewInner {
+				height: 100%;
 			}
 
 			.preview-modal-msg-wrapper {
@@ -492,32 +496,6 @@ body {
 			.EditPageMainContainer {
 				margin-right: 0;
 			}
-
-			@media screen and (max-width: $width-outside) {
-				#wpSave {
-					// fix for touch devices, because in touchScreen.scss height is set to 30px !important
-					height: 21px !important;
-					margin: 0;
-				}
-
-				#wpSummaryLabel {
-					clear: none;
-				}
-
-				.EditPageToolbar {
-					height: 70px;
-				}
-
-				.EditPageRail {
-					.module_page_controls {
-						.wikia-menu-button {
-							margin: 0;
-							right: 145px;
-							top: 40px;
-						}
-					}
-				}
-			}
 		}
 
 		.editpage-widemode-trigger {
@@ -562,6 +540,32 @@ body {
 	.preview .WikiaArticle {
 		overflow: inherit;
 	}
+
+	#EditPage {
+		&.toolbar-expanded {
+			#wpSave {
+				// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+				height: 21px !important;
+				margin: 0;
+			}
+
+			#wpSummaryLabel {
+				clear: none;
+			}
+
+			.EditPageToolbar {
+				height: 70px;
+			}
+
+			.EditPageRail {
+				.module_page_controls {
+					.wikia-menu-button {
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
 }
 // END - edit page fixes
 
@@ -569,7 +573,7 @@ body {
 .mobile-preview {
 	border: 1px solid $color-page-border;
 	box-sizing: border-box;
-	height: 480px;
+	height: 100%;
 	margin: 0 auto;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
