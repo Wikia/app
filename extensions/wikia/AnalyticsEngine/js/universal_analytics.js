@@ -416,9 +416,6 @@
      */
     window.guaTrackEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
         var args = Array.prototype.slice.call(arguments);
-        if (args.length === 5) {
-            args[4] = {'nonInteraction': args[4]};
-        }
 
         args.unshift('send', 'event');
         try {
