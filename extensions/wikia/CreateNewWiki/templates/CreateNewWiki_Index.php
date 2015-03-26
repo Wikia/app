@@ -12,8 +12,15 @@
 			<form name="label-wiki-form">
 				<h3><?= wfMessage( 'cnw-name-wiki-label' )->escaped() ?></h3>
 				<span class="wiki-name-status-icon status-icon"></span>
-				<input type="text" name="wiki-name" value="<?= Sanitizer::encodeAttribute( $params['wikiName'] ) ?>">
-				<?= wfMessage( 'cnw-name-wiki-wiki' )->escaped() ?>
+				<?=
+					wfMessage('autocreatewiki-title-template')->rawParams(
+						Xml::element('input', [
+							'type' => 'text',
+							'name' => 'wiki-name',
+							'value' => $params['wikiName'],
+						])
+					)->escaped()
+				?>
 				<div class="wiki-name-error error-msg"></div>
 				<h3 dir="ltr"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></h3>
 
