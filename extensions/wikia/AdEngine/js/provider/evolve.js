@@ -19,8 +19,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		tile = 0,
 		slotForSkin = 'INVISIBLE_SKIN',
 		hoppedSlots = {},
-		iface,
-		undef;
+		iface;
 
 	slotMap = evolveSlotConfig.getConfig();
 
@@ -34,41 +33,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 		var embedNo = slot.getElementsByTagName('embed').length || slot.getElementsByTagName('object').length;
 		log(['hasEmbed', slot, embedNo], 5, logGroup);
 		return !!embedNo;
-	}
-
-	/**
-	 * Get element height like $.height. For IE get offsetHeight and subtracts margin and padding.
-	 *
-	 * TODO: in future we should rely entirely on offsetHeight, so the actual ad should be loaded
-	 * in a div with no paddings and margins.
-	 *
-	 * @param {Element} slot
-	 * @return {Number}
-	 */
-	function getHeight(slot) {
-		var margins = 0,
-			height,
-			undef;
-
-		log(['getHeight', slot], 5, logGroup);
-
-		if (window.getComputedStyle) {
-			height = parseInt(window.getComputedStyle(slot).getPropertyValue('height'), 10);
-			log(['getHeight (regular browser version)', slot, height], 5, logGroup);
-		}
-
-		// IE8
-		if (height === undef && slot.currentStyle) {
-			margins += parseInt('0' + slot.currentStyle.marginTop, 10);
-			margins += parseInt('0' + slot.currentStyle.marginBottom, 10);
-			margins += parseInt('0' + slot.currentStyle.paddingTop, 10);
-			margins += parseInt('0' + slot.currentStyle.paddingBottom, 10);
-
-			height = slot.offsetHeight - margins;
-			log(['getHeight (IE version)', slot, height], 5, logGroup);
-		}
-
-		return height;
 	}
 
 	function getKv(slotname) {
