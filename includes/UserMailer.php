@@ -171,7 +171,6 @@ class UserMailer {
 	public static function send( $to, $from, $subject, $body, $replyto = null, $contentType = null, $category='UserMailer', $priority = 0,
 	$attachements = array() ) {
 		global $wgSMTP, $wgEnotifMaxRecips, $wgAdditionalMailParams;
-		global $wgErrorString, $wgEnotifImpersonal, $wgForceSendgridEmail;
 
 		if ( !is_array( $to ) ) {
 			$to = array( $to );
@@ -637,7 +636,6 @@ class EmailNotification {
 			}
 		}
 		$this->emailUsersNotifiedOnAllChanges();
-		$this->sendMails();
 	}
 
 	private function emailUsersNotifiedOnAllChanges() {
@@ -676,7 +674,7 @@ class EmailNotification {
 	private function composeCommonMailtext() {
 		global $wgPasswordSender, $wgPasswordSenderName, $wgNoReplyAddress;
 		global $wgEnotifFromEditor, $wgEnotifRevealEditorAddress;
-		global $wgEnotifImpersonal, $wgEnotifUseRealName;
+		global $wgEnotifUseRealName;
 		global $wgLanguageCode;
 
 		$this->composedCommon = true;
@@ -702,21 +700,14 @@ class EmailNotification {
 		$postTransformKeys = array();
 
 		if ( $this->oldid ) {
-			if ( $wgEnotifImpersonal ) {
-				// For impersonal mail, show a diff link to the last revision.
-				$keys['$NEWPAGE'] = wfMessage( 'enotif_lastdiff',
-					$this->title->getCanonicalUrl( 'diff=next&oldid=' . $this->oldid ) )->inContentLanguage()->plain();
-			} else {
-				/* WIKIA change, watchlist link tracking, rt#33913 */
-				list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative (
-					'enotif_lastvisited',
-					'enotif_lastvisited',
-					$wgLanguageCode,
-					array(),
-					$this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid )
-				);
-				# </Wikia>
-			}
+			// WIKIA change, watchlist link tracking
+			list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative (
+				'enotif_lastvisited',
+				'enotif_lastvisited',
+				$wgLanguageCode,
+				array(),
+				$this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid )
+			);
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMessage( 'changed' )->inContentLanguage()->plain();
 		} else {
@@ -814,27 +805,11 @@ class EmailNotification {
 	 * @param $user User
 	 */
 	function compose( $user ) {
-		global $wgEnotifImpersonal;
-
-		if ( !$this->composedCommon )
+		if ( !$this->composedCommon ) {
 			$this->composeCommonMailtext();
-
-		if ( $wgEnotifImpersonal ) {
-			$this->mailTargets[] = new MailAddress( $user );
-		} else {
-			$this->sendPersonalised( $user );
 		}
+		$this->sendPersonalised( $user );
 		wfRunHooks('NotifyOnPageChangeComplete', array( $this->title, $this->timestamp, &$user ));
-	}
-
-	/**
-	 * Send any queued mails
-	 */
-	function sendMails() {
-		global $wgEnotifImpersonal;
-		if ( $wgEnotifImpersonal ) {
-			$this->sendImpersonal( $this->mailTargets );
-		}
 	}
 
 	/**
@@ -880,28 +855,6 @@ class EmailNotification {
 		}
 		# </Wikia>
 		return UserMailer::send( $to, $this->from, $this->subject, $body, $this->replyto );
-	}
-
-	/**
-	 * Same as sendPersonalised but does impersonal mail suitable for bulk
-	 * mailing.  Takes an array of MailAddress objects.
-	 */
-	function sendImpersonal( $addresses ) {
-		global $wgContLang;
-
-		if ( empty( $addresses ) )
-			return;
-
-		$body = str_replace(
-				array( '$WATCHINGUSERNAME',
-					'$PAGEEDITDATE',
-					'$PAGEEDITTIME' ),
-				array( wfMessage( 'enotif_impersonal_salutation' )->inContentLanguage()->text(),
-					$wgContLang->date( $this->timestamp, false, false ),
-					$wgContLang->time( $this->timestamp, false, false ) ),
-				$this->body );
-
-		return UserMailer::send( $addresses, $this->from, $this->subject, $body, $this->replyto );
 	}
 
 	private function isUserTalkPage() {
