@@ -51,6 +51,7 @@ if ( isset( $options['d'] ) ) {
 		}
 	}
 	if ( $d > 2 ) {
+		$wgMemc->setDebug(true);
 		$wgDebugFunctionEntry = true;
 	}
 }
