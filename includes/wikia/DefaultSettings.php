@@ -630,6 +630,7 @@ include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
  * Includes that are needed for Mercury to work
  */
 
+include_once( "$IP/extensions/wikia/WikiaMobile/WikiaMobile.setup.php" );
 include_once( "$IP/extensions/wikia/ArticleAsJson/ArticleAsJson.setup.php" );
 include_once( "$IP/extensions/wikia/MercuryApi/MercuryApi.setup.php" );
 
