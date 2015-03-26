@@ -166,7 +166,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		hoppedSlots[sanitizeSlotname(slotname)] = true;
 	}
 
-	function fillInSlot(slotname, pSuccess) {
+	function fillInSlot(slotname, pSuccess, pHop) {
 		log('fillInSlot', 5, logGroup);
 		log(slotname, 5, logGroup);
 
@@ -188,6 +188,11 @@ define('ext.wikia.adEngine.provider.evolve', [
 			);
 		} else {
 			scriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
+				if (hoppedSlots[slotname]) {
+					pHop({method: 'hop'});
+					return;
+				}
+
 				pSuccess();
 			});
 		}
