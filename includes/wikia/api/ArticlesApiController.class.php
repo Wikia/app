@@ -1012,6 +1012,7 @@ class ArticlesApiController extends WikiaApiController {
 			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
 		}
 
+		$wgArticleAsJson = false;
 		$categories = [];
 
 		foreach( array_keys( $parsedArticle->getCategories() ) as $category ) {
