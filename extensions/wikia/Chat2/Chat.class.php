@@ -444,11 +444,11 @@ class Chat {
 
 		$subtype = '';
 		if( $type === 'chatmoderator' ) {
-			$reason = empty($reasone) ? wfMsgForContent( 'chat-userrightslog-a-made-b-chatmod', $doerName, $user->getName() ) : $reasone;
+			$reason = empty($reason) ? wfMsgForContent( 'chat-userrightslog-a-made-b-chatmod', $doerName, $user->getName() ) : $reason;
 			$type = 'rights';
 			$subtype = $type;
 		} else if(strpos($type, 'ban') === 0) {
-			$reason = empty($reasone) ? wfMsgForContent( 'chat-log-reason-'.$type, $doerName ) : $reasone;
+			$reason = empty($reason) ? wfMsgForContent( 'chat-log-reason-'.$type, $doerName ) : $reason;
 			$subtype = 'chat' . $type;
 			$type =  'chatban';
 		}
