@@ -92,12 +92,15 @@ define('wikia.preview', [
 			window.stylepath +
 			'/common/images/ajax.gif" class="loading"></div></div>';
 
-		loader({
-			type: loader.MULTI,
-			resources: {
-				mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
-			}
-		}).done(function (response) {
+		$.when(
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
+				}
+			}),
+			msg.getForContent('EditPreviewInContLang')
+		).done(function(response){
 			var params = {
 					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
 					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
@@ -105,6 +108,7 @@ define('wikia.preview', [
 						'$1', $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
 					)
 				},
+
 				template = response.mustache[0],
 				html = mustache.render(template, params);
 
