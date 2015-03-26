@@ -6,13 +6,15 @@ if ( window.wgStagingEnvironment ) {
 			stagingURLPart = '://' + stagingEnvName + '.',
 			links = document.getElementsByTagName('a' ),
 			i = 0,
+			//match all occurrences of wikia.com between :// and /
+			//use case: links in share icons have wikia.com but as URL parameter not domain name
+			pattern=/:\/\/[^\/]*wikia\.com/gi,
 			href;
 
 		for ( ; i < links.length; i++ ) {
 			href = links[i].getAttribute('href');
 
-			if ( href && href.indexOf( '://' ) > -1 && href.indexOf( 'wikia.com' ) > -1 &&
-				href.indexOf( stagingURLPart ) === -1 ) {
+			if ( href && href.indexOf( stagingURLPart ) === -1 && pattern.test(href)) {
 				links[i].setAttribute( 'href', href.replace( '://', stagingURLPart ) );
 			}
 
