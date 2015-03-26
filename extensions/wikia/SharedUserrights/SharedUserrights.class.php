@@ -18,7 +18,7 @@
 
 class UserRights {
 
-	private static $globalGroup = [];
+	private static $globalGroups = [];
 
 	/**
 	 * data provider
@@ -36,7 +36,7 @@ class UserRights {
 		$fname = __METHOD__;
 		$userId = $user->getId();
 
-		if ( !isset( self::$globalGroup[$userId] ) ) {
+		if ( !isset( self::$globalGroups[$userId] ) ) {
 			$globalGroups = WikiaDataAccess::cache(
 				self::getMemcKey( $user ),
 				WikiaResponse::CACHE_LONG,
@@ -53,10 +53,10 @@ class UserRights {
 			);
 
 			global $wgWikiaGlobalUserGroups;
-			self::$globalGroup[$userId] = array_intersect( $globalGroups, $wgWikiaGlobalUserGroups );
+			self::$globalGroups[$userId] = array_intersect( $globalGroups, $wgWikiaGlobalUserGroups );
 		}
 
-		return self::$globalGroup[$userId];
+		return self::$globalGroups[$userId];
 	}
 
 	/**
@@ -68,11 +68,11 @@ class UserRights {
 		$userId = $user->getId();
 		if ( !self::isCentralWiki() || $user->isAnon() ) {
 			return true;
-		} elseif ( !isset( self::$globalGroup[$userId] ) ) {
+		} elseif ( !isset( self::$globalGroups[$userId] ) ) {
 			// Load the global groups into the class variable
 			self::getGlobalGroups( $user );
 		}
-		$user->mGroups = array_merge( $user->mGroups, array_diff( self::$globalGroup[$userId], $user->mGroups ) );
+		$user->mGroups = array_merge( $user->mGroups, array_diff( self::$globalGroups[$userId], $user->mGroups ) );
 		return true;
 	}
 
