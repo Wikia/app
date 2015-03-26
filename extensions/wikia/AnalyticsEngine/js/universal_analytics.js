@@ -58,7 +58,7 @@
     if (isProductionEnv) {
         // Production Environment
         window.ga(
-            'create', 'UA-32129070-3', 'auto',
+            'create', 'UA-32129070-4', 'auto',
             {
                 'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
                 'allowLinker': true,
@@ -83,7 +83,7 @@
         if (isProductionEnv) {
             // Production Environment
             window.ga(
-                'create', 'UA-32129070-3', 'auto',
+                'create', 'UA-32129070-4', 'auto',
                 {
                     'name': 'special',
                     'sampleRate': 100,
@@ -111,7 +111,7 @@
     if (isProductionEnv) {
         // VE account - UA-32132943-4'
         window.ga(
-            'create', 'UA-32129070-3', 'auto',
+            'create', 'UA-32129070-4', 'auto',
             {
                 'name': 've',
                 'sampleRate': 100,
@@ -316,7 +316,7 @@
     // Advertisment Account UA-32129071-1/UA-32129071-2
     if (isProductionEnv) {
         window.ga(
-            'create', 'UA-32129070-3', 'auto',
+            'create', 'UA-32129070-4', 'auto',
             {
                 'name': 'ads',
                 'sampleRate': 100,
