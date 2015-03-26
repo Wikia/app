@@ -1439,10 +1439,6 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onComposeCommonBodyMail($title, &$keys, &$body, $editor) {
-		return true;
-	}
-
 	static public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
 		$app = F::app();
 		$title = $article->getTitle();

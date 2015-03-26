@@ -89,7 +89,6 @@ $wgHooks['ArticleDeleteComplete'][] = 'WallHooksHelper::onArticleDeleteComplete'
 $wgHooks['FilePageImageUsageSingleLink'][] = 'WallHooksHelper::onFilePageImageUsageSingleLink';
 
 $wgHooks['getUserPermissionsErrors'][] = 'WallHooksHelper::onGetUserPermissionsErrors';
-$wgHooks['ComposeCommonBodyMail'][] = 'WallHooksHelper::onComposeCommonBodyMail';
 
 //Special:Contributions adjusting
 $wgHooks['ContributionsLineEnding'][] = 'WallHooksHelper::onContributionsLineEnding';
