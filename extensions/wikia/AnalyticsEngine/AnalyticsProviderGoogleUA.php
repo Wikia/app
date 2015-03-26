@@ -52,14 +52,6 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		return true;
 	}
 
-	static public function onVenusAssetsPackages( &$jsHeadGroups, &$jsBodyGroups, &$cssGroups) {
-		if (self::isEnabled()) {
-			$jsHeadGroups[] = 'universal_analytics_js';
-		}
-
-		return true;
-	}
-
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		// this is only called in Oasis, so there's no need to double-check it
 		if (self::isEnabled()) {

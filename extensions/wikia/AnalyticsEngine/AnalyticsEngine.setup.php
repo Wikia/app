@@ -44,4 +44,3 @@ $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderBlueKai::onWikiaMobi
 
 // register hooks for Venus
 $wgHooks['VenusAssetsPackages'][] = 'AnalyticsProviderGAS::onVenusAssetsPackages';
-$wgHooks['VenusAssetsPackages'][] = 'AnalyticsProviderGoogleUA::onVenusAssetsPackages';
