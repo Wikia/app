@@ -55,6 +55,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		//script += '<script type="text/javascript" src="http://cdn.triggertag.gorillanation.com/js/triggertag.js"></script>' + '\n';
 		//script += '<script type="text/javascript">' + '\n';
 		script += "getTrigger('8057');" + '\n';
+		script += 'var evolve_called=false;';
 		//script += '</script>' + '\n';
 
 		//<!-- BEGIN GN Ad Tag for Wikia 1000x1000 entertainment -->
@@ -62,12 +63,13 @@ define('ext.wikia.adEngine.provider.evolve', [
 		script += "if ((typeof(f406815)=='undefined' || f406815 > 0) ) {" + '\n';
 		script += "document.write('<scr'+'ipt src=\"http://n4403ad.doubleclick.net/adj/gn.wikia4.com/";
 		script += kv + "sz=1000x1000;" + getTileKv() + "ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
+		script += 'evolve_called=true;';
 		script += '}' + '\n';
 		//script += '</script>' + '\n';
 
 		//<!-- BEGIN GN Ad Tag for Wikia 47x47 entertainment -->
 		//script += '<script type="text/javascript">' + '\n';
-		script += "if ((typeof(f406785)=='undefined' || f406785 > 0) ) {" + '\n';
+		script += "if ((typeof(f406785)=='undefined' || f406785 > 0) && !evolve_called ) {" + '\n';
 		script += "document.write('<scr'+'ipt src=\"http://n4403ad.doubleclick.net/adj/gn.wikia4.com/";
 		script += kv + "sz=47x47;" + getTileKv() + "ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
 		script += '}' + '\n';
