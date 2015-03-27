@@ -58,6 +58,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
 			'resources/wikia/modules/scrollToLink.js',
+			'resources/wikia/modules/iframeWriter.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
 

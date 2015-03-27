@@ -17,6 +17,7 @@ define('wikia.iframeWriter', [
 	 * @param {string} params.code - code to put into the iframe
 	 * @param {number} params.width - desired width of the iframe
 	 * @param {number} params.height - desired height of the iframe
+	 * @param {string} [params.class] - custom class of the iframe
 	 */
 	function getIframe(params) {
 		log(['getIframe', params], 'debug', logGroup);
@@ -29,8 +30,8 @@ define('wikia.iframeWriter', [
 		iframe.width = params.width;
 		iframe.height = params.height;
 
-		if (iframe.classList) {
-			iframe.classList.add('wikia-ad-iframe');
+		if (params.class && iframe.classList) {
+			iframe.classList.add(params.class);
 		}
 
 		iframe.onload = function () {
