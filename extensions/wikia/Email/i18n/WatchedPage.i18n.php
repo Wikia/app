@@ -9,8 +9,6 @@ $messages['en'] = [
 	'emailext-watchedpage-unfollow-text' => 'No longer interested in receiving these updates?',
 	'emailext-watchedpage-unfollow-link-text' => 'Click here to unfollow $1 on $2.',
 	'emailext-watchedpage-recipient-notice' => 'Email sent to $1 from Wikia',
-	'emailext-watchedpage-update-frequency' => 'To change which emails you receive or their frequency, please visit your [[Special:Preferences|Preferences]] page.',
-	'emailext-watchedpage-unsubscribe' => 'To unsubscribe from all Wikia emails, [[$1|click here]].',
 ];
 
 $messages['qqq'] = [
@@ -21,6 +19,4 @@ $messages['qqq'] = [
 	'emailext-watchedpage-unfollow-text' => 'Asks the user if they want to stop following this page. Question is answered with "emailext-watchedpage-unfollow-link-text"',
 	'emailext-watchedpage-unfollow-link-text' => 'Follows question asked in "emailext-watchedpage-unfollow-text". $1 -> article name, $2 -> wikia name.',
 	'emailext-watchedpage-recipient-notice' => 'Informs the user who the intended recipient of the email is. $1 is the recipient\'s email address.',
-	'emailext-watchedpage-update-frequency' => 'Provides a link for users to update their email preferences',
-	'emailext-watchedpage-unsubscribe' => 'Provides a link for users to opt out of emails altogether. $1 is the unsubscribe link.',
 ];
