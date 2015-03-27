@@ -10,7 +10,13 @@ class CaptchaController extends WikiaController {
 	 */
 	public function showImage() {
 		$fancyCaptcha = new \Captcha\Module\FancyCaptcha();
-		$fancyCaptcha->showImage();
+		if ( $fancyCaptcha->showImage() ) {
+			/*
+			* Stop immediately when captcha is sent to browser.
+			* We don't want to send additional headers and other nirvana stuff
+			*/
+			exit();
+		}
 	}
 
 	/**
