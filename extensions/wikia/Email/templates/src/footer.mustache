@@ -4,13 +4,34 @@
 <div class="footer content">
 	<p>The Social Universe for Fans, By Fans <sup>TM</sup></p>
 	<p class="hubs">
-		<a href="">Comics</a>
-		<a href="">Games</a>
-		<a href="">Movies</a>
-		<a href="">Lifestyle</a>
-		<a href="">Music</a>
-		<a href="">Books</a>
-		<a href="">TV</a>
+		<a href="">
+			{{#fancyHubLinks}}<img src="" class="hub-icon">{{/fancyHubLinks}}
+			Comics
+		</a>
+		<a href="">
+			{{#fancyHubLinks}}<img src="" class="hub-icon">{{/fancyHubLinks}}
+			Games
+		</a>
+		<a href="">
+			{{#fancyHubLinks}}<img src="" class="hub-icon">{{/fancyHubLinks}}
+			Movies
+		</a>
+		<a href="">
+			{{#fancyHubLinks}}<img src="" class="hub-icon">{{/fancyHubLinks}}
+			Lifestyle
+		</a>
+		<a href="">
+			{{#fancyHubLinks}}<img src="" class="hub-icon">{{/fancyHubLinks}}
+			Music
+		</a>
+		<a href="">
+			{{#fancyHubLinks}}<img src="" class="hub-icon">{{/fancyHubLinks}}
+			Books
+		</a>
+		<a href="">
+			{{#fancyHubLinks}}<img src="" class="hub-icon">{{/fancyHubLinks}}
+			TV
+		</a>
 	</p>
 	<p class="social-links">
 		<a href="" >
@@ -23,7 +44,8 @@
 			<img src="../../images/You-Tube.gif" alt="YouTube">
 		</a>
 	</p>
-	<p class="fine-print">First line of fine print</p>
-	<p class="fine-print">Second line of fine print</p>
-	<p class="fine-print">Third line of fine print</p>
+
+	{{#footerMessages}}
+		<p class="fine-print">{{.}}</p>
+	{{/footerMessages}}
 </div>
