@@ -27,6 +27,11 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 	'emailext-password-email-subject' => 'Reset password request',
 	'emailext-error-password-throttled' => 'Too many resend password requests sent',
 	'emailext-error-password-reset-forbidden' => 'This user is not allowed to change their password',
+
+	// Common email template messages (see i18n directory for email-specific messages)
+	'emailext-fanverse-tagline' => 'The Social Universe for Fans by Fans',
+	'emailext-update-frequency' => 'To change which emails you receive or their frequency, please visit your [[Special:Preferences|Preferences]] page.',
+	'emailext-unsubscribe' => 'To unsubscribe from all Wikia emails, click here.',
 ];
 
 $messages['qqq'] = [

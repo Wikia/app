@@ -33,3 +33,4 @@ $wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controll
  * messages
  */
 $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
+$wgExtensionMessagesFiles['WatchedPage'] = $dir . 'WatchedPage.i18n.php';
