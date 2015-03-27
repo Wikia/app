@@ -751,7 +751,6 @@ $config['mercury_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/mercury.run.js',
 		'//resources/wikia/modules/krux.js',
 	)
