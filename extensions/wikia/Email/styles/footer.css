@@ -8,6 +8,10 @@
 	padding: 0 6px;
 }
 
+.social-links a {
+	margin: 0 10px;
+}
+
 .fine-print {
 	font-size: 10px;
 	line-height: 20px;

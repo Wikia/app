@@ -23,6 +23,11 @@ body {
 	width: 100%;
 }
 
+.header {
+	padding-bottom: 20px;
+	padding-top: 12px;
+}
+
 .body-wrap {
 	width: 100%;
 }
@@ -37,14 +42,10 @@ body {
 }
 
 /** Module styles **/
-.logo {
-	padding: 30px 0 20px;
-}
 
 /** Theme styles **/
-
 .main-wrapper {
-	background-color: #F2F6FA;
+	background-color: #E6EBF2;
 }
 
 .main-content {
