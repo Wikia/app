@@ -59,7 +59,8 @@ define('ext.wikia.adEngine.template.modal', [
 		return iframeWriter.getIframe({
 			code: params.code,
 			height: params.height,
-			width: params.width
+			width: params.width,
+			classes: ['wikia-ad-iframe']
 		});
 	}
 
