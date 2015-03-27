@@ -160,23 +160,28 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function switchWatch() {
-		$this->response->setVal('status', false);
-		$isWatched = $this->request->getVal('isWatched');
+		$this->response->setVal( 'status', false );
+		$isWatched = $this->request->getVal( 'isWatched' );
 		/**
 		 * @var $title Title
 		 * @var $wallMessage WallMessage
 		 */
 		$title = Title::newFromId( $this->request->getVal('commentId') );
-		$wallMessage = WallMessage::newFromTitle($title);
 
-		if($this->wg->User->getId() > 0  && !$wallMessage->isWallOwner($this->wg->User) ) {
-			if($isWatched) {
-				$wallMessage->removeWatch($this->wg->User);
-			} else {
-				$wallMessage->addWatch($this->wg->User);
+		if ( empty( $title ) ) {
+			$this->response->setCode( 404 );
+		} else {
+			$wallMessage = WallMessage::newFromTitle( $title );
+
+			if ( $this->wg->User->getId() > 0 && !$wallMessage->isWallOwner( $this->wg->User ) ) {
+				if ( $isWatched ) {
+					$wallMessage->removeWatch( $this->wg->User );
+				} else {
+					$wallMessage->addWatch( $this->wg->User );
+				}
+
+				$this->response->setVal( 'status', true );
 			}
-
-			$this->response->setVal('status', true);
 		}
 	}
 
