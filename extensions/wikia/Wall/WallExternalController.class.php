@@ -112,7 +112,7 @@ class WallExternalController extends WikiaController {
 
 			$this->response->setVal('count', $mw->getVoteCount());
 		} else {
-			$this->wg->Request->response()->header( "HTTP/1.1 404 Not Found" );
+			$this->response->setCode( 404 );
 			$this->skipRendering();
 		}
 	}
