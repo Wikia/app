@@ -36,8 +36,11 @@ $wgGroupPermissions['staff']['gameguidespreview'] = true;
 $wgGroupPermissions['sysop']['gameguidespreview'] = true;
 
 //Special Page for Content Managment Tool
-$wgAutoloadClasses[ 'GameGuidesSpecialContentController'] =  "{$dir}/GameGuidesSpecialContentController.class.php" ;
-$wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
+//Replaced by Special:CuratedContent
+//@author tor
+//@date 2015-03-27
+//$wgAutoloadClasses[ 'GameGuidesSpecialContentController'] =  "{$dir}/GameGuidesSpecialContentController.class.php" ;
+//$wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
 
 $wgGroupPermissions['*']['gameguidescontent'] = false;
 $wgGroupPermissions['staff']['gameguidescontent'] = true;
