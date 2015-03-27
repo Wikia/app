@@ -2,6 +2,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'emailext-watchedpage-subject' => '$1 on $2 has been edited.',
 	'emailext-watchedpage-salutation' => 'Hi $1,',
 	'emailext-watchedpage-article-edited' => '[[$1|$2]] on [[$3|$4]] has been edited. [[$1|Check it out!]]',
 	'emailext-watchedpage-diff-button-text' => 'Compare changes',
@@ -12,6 +13,7 @@ $messages['en'] = [
 ];
 
 $messages['qqq'] = [
+	'emailext-watchedpage-subject' => 'Subject line for watched article email. $1 -> article name, $2 -> wikia name.',
 	'emailext-watchedpage-salutation' => 'Email greeting. $1 is the recipient\'s username.',
 	'emailext-watchedpage-article-edited' => 'Message to the user that an article they are following has been edited. $1 -> article url, $2 -> article title, $3 -> wikia url, $4 -> wikia name ',
 	'emailext-watchedpage-diff-button-text' => 'Text for button that, when clicked, navigates to the diff page referencing this change.',
