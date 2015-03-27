@@ -8,7 +8,7 @@ define('videosmodule.views.titleThumbnail', [
 		this.idx = config.idx;
 		this.trackClick = Tracker.buildTrackingFunction({
 			category: config.trackingCategory,
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: Tracker.ACTIONS.CLICK,
 			label: 'thumbnail-click'
 		});

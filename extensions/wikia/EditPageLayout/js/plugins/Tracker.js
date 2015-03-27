@@ -15,7 +15,7 @@
 	WikiaEditor.plugins.tracker = $.createClass( WikiaEditor.plugin, {
 		config: {
 			action: Wikia.Tracker.ACTIONS.CLICK,
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		},
 
 		init: function() {
