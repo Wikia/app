@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.template.modal', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.log',
 	'wikia.iframeWriter',
+	'wikia.window',
 	require.optional('wikia.ui.factory')
-], function (adContext, log, iframeWriter, uiFactory) {
+], function (adContext, log, iframeWriter, win, uiFactory) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
@@ -29,7 +30,7 @@ define('ext.wikia.adEngine.template.modal', [
 
 		if (skin === 'mercury') {
 			log(['showNew mobile (Mercury) modal'], 'debug', logGroup);
-			window.Mercury.Modules.Ads.getInstance().openLightbox(createAdIframe(params));
+			win.Mercury.Modules.Ads.getInstance().openLightbox(createAdIframe(params));
 		}
 	}
 
