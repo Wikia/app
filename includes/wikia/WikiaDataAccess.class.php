@@ -82,7 +82,10 @@ class WikiaDataAccess {
 		$negativeCacheTTL = isset( $options['negativeCacheTTL'] ) ? $options['negativeCacheTTL'] : $cacheTTL;
 
 		if ( $command == self::SKIP_CACHE ) {
-			Wikia::log( __METHOD__, 'debug', "Cache disabled for key:{$key}, if this is on production please contact the author of the code.", true);
+			WikiaLogger::instance()->error( "WikiaDataAccess: cache disabled" , [
+				'key' => $key,
+				'exception' => new Exception()
+			] );
 		}
 
 		$result = ($command == self::USE_CACHE) ? $wg->Memc->get( $key ) : null;

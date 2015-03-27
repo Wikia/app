@@ -12,7 +12,7 @@ $(function () {
 	track = globalTracker.buildTrackingFunction({
 		action: globalTracker.ACTIONS.CLICK,
 		category: 'file-page',
-		trackingMethod: 'both'
+		trackingMethod: 'analytics'
 	});
 
 	Paginator = function (el) {

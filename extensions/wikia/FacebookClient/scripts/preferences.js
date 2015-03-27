@@ -60,7 +60,7 @@
 
 						window.Wikia.Tracker.track({
 							category: 'user-sign-up',
-							trackingMethod: 'both',
+							trackingMethod: 'analytics',
 							action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 							label: 'facebook-login'
 						});
@@ -111,7 +111,7 @@
 							.show();
 						window.Wikia.Tracker.track({
 							category: 'user-sign-up',
-							trackingMethod: 'both',
+							trackingMethod: 'analytics',
 							action: window.Wikia.Tracker.ACTIONS.CLICK,
 							label: 'fb-disconnect'
 						});

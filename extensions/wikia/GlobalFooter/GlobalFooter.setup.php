@@ -12,6 +12,5 @@ $wgAutoloadClasses['GlobalFooterController'] =  __DIR__ . '/GlobalFooterControll
 $wgAutoloadClasses['GlobalFooterHooks'] =  __DIR__ . '/hooks/GlobalFooterHooks.class.php';
 
 $wgHooks['SkinCopyrightFooter'][] = 'GlobalFooterHooks::onSkinCopyrightFooter';
-$wgHooks['VenusAssetsPackages'][] = 'GlobalFooterHooks::onVenusAssetsPackages';
 
 $wgExtensionMessagesFiles['GlobalFooter'] = __DIR__ . '/GlobalFooter.i18n.php';

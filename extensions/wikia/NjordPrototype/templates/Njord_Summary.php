@@ -4,16 +4,6 @@
 ?>
 
 <header class="MainPageHeroHeader no-edit-state">
-	<h1 class="title-wrap sg-title <?php if ( isset( $wikiData->title ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
-		<div class="edit-box">
-			<div class="hero-title" placeholder="<?= wfMessage('hero-image-default-title')->escaped(); ?>" contenteditable="true"><?= htmlspecialchars( $wikiData->title ) ?></div>
-		</div>
-		<span class="title-text"><?= htmlspecialchars( $wikiData->title ) ?></span>
-		<span class="title-default-text"><?= wfMessage('hero-image-default-title')->escaped(); ?></span>
-		<? if ($isAllowedToEdit): ?>
-			<span class="title-edit-btn"></span>
-		<?endif;?>
-	</h1>
 	<div class="hero-description <?php if ( isset( $wikiData->description ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 		<div class="edit-box">
 			<span class="edited-text sg-main" placeholder="<?= wfMessage('hero-image-default-description')->escaped();
@@ -32,6 +22,12 @@
 		<?php if ( !isset ( $wikiData->description ) ) { ?>
 			<span class="hero-description-default-text sg-main"><?= wfMessage('hero-image-default-description')->escaped(); ?></span>
 		<? } ?>
+		<? if ($isAllowedToEdit): ?>
+			<span class="title-edit-btn">
+				<img alt="" class="sprite edit-pencil" height="16" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" width="22">
+				<?= wfMessage('hero-image-edit-btn')->escaped(); ?>
+			</span>
+		<?endif;?>
 	</div>
 </header>
 

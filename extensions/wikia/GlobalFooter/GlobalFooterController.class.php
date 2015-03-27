@@ -10,7 +10,6 @@ class GlobalFooterController extends WikiaController {
 	const MEMC_EXPIRY = 3600;
 
 	public function index() {
-
 		Wikia::addAssetsToOutput('old_global_footer_scss');
 		Wikia::addAssetsToOutput('global_footer_js');
 
@@ -22,25 +21,16 @@ class GlobalFooterController extends WikiaController {
 		$this->response->setVal( 'logoLink', $this->getLogoLink() );
 	}
 
-	public function oasisIndex() {
-		global $wgLang;
-		$wikiaLogoHelper = new WikiaLogoHelper();
-		Wikia::addAssetsToOutput('oasis_global_footer_scss');
+	public function indexUpdated() {
+		Wikia::addAssetsToOutput('updated_global_footer_scss');
 		Wikia::addAssetsToOutput('global_footer_js');
-		$this->response->setVal( 'centralUrl', $wikiaLogoHelper->getCentralUrlForLang( $wgLang->getCode() ) );
-		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
-		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
-		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
-	}
 
-	public function venusIndex() {
-		global $wgLang;
-		$wikiaLogoHelper = new WikiaLogoHelper();
-		Wikia::addAssetsToOutput('venus_global_footer_scss');
-		$this->response->setVal( 'centralUrl', $wikiaLogoHelper->getCentralUrlForLang( $wgLang->getCode() ) );
-		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
+		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
+		$this->response->setVal( 'isCorporate', WikiaPageType::isWikiaHomePage() );
 		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
+		$this->response->setVal( 'verticalNameMessage', $this->verticalNameMessage() );
+		$this->response->setVal( 'logoLink', $this->getLogoLink() );
 	}
 
 	private function getGlobalFooterLinks() {

@@ -1595,17 +1595,9 @@ class WikiPage extends Page {
 
 		if ( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
 			if ( 0 == mt_rand( 0, 99 ) ) {
-				// Flush old entries from the `recentchanges` table; we do this on
-				// random requests so as to avoid an increase in writes for no good reason
-				global $wgRCMaxAge;
-
-				$dbw = wfGetDB( DB_MASTER );
-				$cutoff = $dbw->timestamp( time() - $wgRCMaxAge );
-				$dbw->delete(
-					'recentchanges',
-					array( "rc_timestamp < '$cutoff'" ),
-					__METHOD__
-				);
+				// Flush old entries from the `recentchanges` table
+				// Wikia: use a job backported from MediaWiki 1.25 (@see PLATFORM-965)
+				Wikia\Tasks\Tasks\RecentChangesUpdateTask::newPurgeTask();
 			}
 		}
 

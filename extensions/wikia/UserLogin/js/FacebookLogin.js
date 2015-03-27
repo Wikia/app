@@ -60,7 +60,7 @@
 				self.track = tracker.buildTrackingFunction({
 					category: 'user-sign-up',
 					value: origin || 0,
-					trackingMethod: 'both'
+					trackingMethod: 'analytics'
 				});
 
 				self.initialized = true;

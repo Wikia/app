@@ -15,7 +15,7 @@ define('videohomepage.views.featured', [
 	track = Tracker.buildTrackingFunction({
 		action: Tracker.ACTIONS.CLICK,
 		category: 'video-home-page',
-		trackingMethod: 'both'
+		trackingMethod: 'analytics'
 	});
 
 	FeaturedVideosView = Backbone.View.extend({

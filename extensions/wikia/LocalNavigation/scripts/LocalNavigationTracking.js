@@ -4,7 +4,7 @@
 
 	track = window.Wikia.Tracker.buildTrackingFunction({
 		action: window.Wikia.Tracker.ACTIONS.CLICK,
-		trackingMethod: 'ga'
+		trackingMethod: 'analytics'
 	});
 
 	$localNav = $('#localNavigation');
