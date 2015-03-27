@@ -1,9 +1,10 @@
-/*global define, Mercury, openMercuryAdLightbox*/
+/*global define*/
 define('ext.wikia.adEngine.template.modal', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.log',
 	'wikia.iframeWriter',
 	require.optional('wikia.ui.factory')
-], function (log, iframeWriter, uiFactory) {
+], function (adContext, log, iframeWriter, uiFactory) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
@@ -19,13 +20,14 @@ define('ext.wikia.adEngine.template.modal', [
 	 */
 	function show(params) {
 		log(['showNew', params], 'debug', logGroup);
+		var skin = adContext.getContext().targeting.skin;
 
-		if (uiFactory) {
+		if (skin === 'oasis') {
 			log(['showNew desktop modal'], 'debug', logGroup);
 			createAndShowDesktopModal(params);
 		}
 
-		if (window.Mercury && window.Mercury.Modules && window.Mercury.Modules.Ads) {
+		if (skin === 'mercury') {
 			log(['showNew mobile (Mercury) modal'], 'debug', logGroup);
 			window.Mercury.Modules.Ads.getInstance().openLightbox(createAdIframe(params));
 		}
