@@ -57,4 +57,8 @@ $messages['qqq'] = [
 	'emailext-error-password-throttled' => 'Error message given when a user has requested a new password too many times',
 	'emailext-error-password-reset-forbidden' => 'Error shown when the user requesting a password reset does not have permission to do so',
 
+	// Common email template messages (see i18n directory for email-specific messages)
+	'emailext-fanverse-tagline' => 'Trademarked tagline for Wikia.',
+	'emailext-update-frequency' => 'Provides a link for users to update their email preferences',
+	'emailext-unsubscribe' => 'Provides a link for users to opt out of emails altogether. $1 is the unsubscribe link.',
 ];
