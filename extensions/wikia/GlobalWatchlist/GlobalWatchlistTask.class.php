@@ -94,7 +94,7 @@ class GlobalWatchlistTask extends BaseTask {
 			$revision = Revision::newFromTitle( $titleObj );
 			$globalWatchlistBot = new GlobalWatchlistBot();
 
-			$db = wfGetDB( DB_MASTER, [ ], \F::app()->wg->ExternalDatawareDB );
+			$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
 			foreach ( $watchers as $watcherID ) {
 				if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
 					$this->clearGlobalWatchlistAll( $watcherID );
