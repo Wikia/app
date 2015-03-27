@@ -6,10 +6,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
-	'wikia.abTest',
 	require.optional('ext.wikia.adEngine.lookup.services'),
+	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, log, doc, loc, abTest, lookups, krux) {
+], function (adContext, pvCounter, log, doc, loc, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
