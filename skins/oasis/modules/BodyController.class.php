@@ -455,8 +455,14 @@ class BodyController extends WikiaController {
 
 		// MonetizationModule Extension
 		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-			$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			if ( empty( $this->wg->AdDriverEnableMonetizationService ) ) {
+				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
+				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			} else {
+				$this->monetizationModules = [
+					'in_content' => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_IN_CONTENT'] )
+				];
+			}
 			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 

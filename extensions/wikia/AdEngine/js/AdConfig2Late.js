@@ -13,6 +13,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
+	'ext.wikia.adEngine.provider.monetizationService',
 	require.optional('ext.wikia.adEngine.provider.taboola'),
 
 	require.optional('ext.wikia.adEngine.adDecoratorTopInContent')
@@ -30,6 +31,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	adProviderDirectGpt,
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
+	adProviderMonetizationService,
 	adProviderTaboola,
 
 	adDecoratorTopInContent
@@ -79,6 +81,14 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 				return [adProviderSevenOneMedia];
 			}
+		}
+
+		if (context.providers.monetizationService) {
+			if (instantGlobals.wgSitewideDisableMonetizationService) {
+				log('MonetizationService disabled by DR. No ads', 'warn', logGroup);
+				return [];
+			}
+			return [adProviderMonetizationService];
 		}
 
 		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotname)) {

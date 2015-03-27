@@ -97,6 +97,11 @@ define('ext.wikia.adEngine.adConfig', [
 			return [adProviderLater];
 		}
 
+		if (context.providers.monetizationService || context.forceProviders.monetizationService) {
+			log(['getProvider', slotname, 'Later (MonetizationService)'], 'info', logGroup);
+			return [adProviderLater];
+		}
+
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			if (evolveSlotConfig.canHandleSlot(slotname)) {
