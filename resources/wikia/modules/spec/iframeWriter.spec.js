@@ -50,9 +50,9 @@ describe('iframeWriter module', function () {
 		var settings = testIframeSettings,
 			iframe;
 
-		settings.class = 'a-class';
+		settings.classes = ['class-one', 'class-two', 'calss-three'];
 		iframe = getModule().getIframe(settings);
 
-		expect(iframe.classList.classes).toEqual(['a-class']);
+		expect(iframe.classList.classes).toEqual(['class-one', 'class-two', 'calss-three']);
 	});
 });
