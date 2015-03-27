@@ -311,12 +311,6 @@ class PageHeaderController extends WikiaController {
 				// remove comments button (fix FB#3404 - Marooned)
 				$this->comments = false;
 
-				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
-				if ( $wgTitle->isSpecial( 'PageLayoutBuilderForm' ) || $wgTitle->isSpecial( 'PageLayoutBuilder' ) ) {
-					$this->displaytitle = true;
-					$this->pageType = "";
-				}
-
 				if ( $wgTitle->isSpecial( 'Newimages' ) ) {
 					$this->isNewFiles = true;
 				}

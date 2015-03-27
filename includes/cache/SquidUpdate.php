@@ -4,8 +4,6 @@
  * @file
  * @ingroup Cache
  */
-use Wikia\Tasks\AsyncCeleryTask;
-use Wikia\Tasks\Queues\PurgeQueue;
 
 /**
  * Handles purging appropriate Squid URLs given a title (or titles)
@@ -122,29 +120,9 @@ class SquidUpdate {
 			return;
 		}
 
-		global $wgPurgeSquidViaCelery, $wgPurgeVignetteUsingSurrogateKeys;
+		global $wgPurgeSquidViaCelery;
 		if ( $wgPurgeSquidViaCelery == true ) {
-			// Filter urls into buckets based on service backend
-			$buckets = array_reduce($urlArr, function($carry, $item) {
-				if ( $wgPurgeVignetteUsingSurrogateKeys && VignetteRequest::isVignetteUrl($item) ) {
-					$carry['vignette'][] = $item;
-				} elseif ( strstr($item, 'MercuryApi') !== false ) {
-					$carry['mercury'][] = $item;
-				} else {
-					$carry['mediawiki'][] = $item;
-				}
-				return $carry;
-			}, array('mediawiki' => [], 'vignette' => [], 'mercury' => []));
-
-			// Now purge them
-			foreach ( $buckets as $service => $urls) {
-				if ( empty($urls) ) continue;
-				( new AsyncCeleryTask() )
-						->taskType('celery_workers.purger.purge')
-						->setArgs( $urls, [], $service )
-						->setPriority( PurgeQueue::NAME )
-						->queue();
-			}
+			CeleryPurge::purge( $urlArr );
 			return;
 		}
 		// wikia change end

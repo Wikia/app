@@ -85,7 +85,7 @@ var AdminDashboard = {
 			action: action,
 			browserEvent: event,
 			label: label,
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			value: value
 		}, params);
 	},

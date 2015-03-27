@@ -73,6 +73,8 @@
 
 // CSS (needs leading slash and file extension)
 @import '/extensions/wikia/CreatePage/css/CreatePage.css';
+//Site Optimizations
+@import 'extensions/wikia/Rail/styles/RailElement';
 
 // Print
 @media print {

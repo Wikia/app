@@ -60,7 +60,7 @@ $(function () {
 							action: Wikia.Tracker.ACTIONS.IMPRESSION,
 							category: 'right-rail',
 							label: 'lazy-loaded',
-							trackingMethod: 'ga',
+							trackingMethod: 'analytics',
 							value: lazyLoadingTime
 						});
 					}

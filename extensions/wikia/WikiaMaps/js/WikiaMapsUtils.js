@@ -406,7 +406,7 @@ define(
 		 */
 		function track(action, label, value) {
 			var trackingParams = {
-				trackingMethod: 'ga',
+				trackingMethod: 'analytics',
 				category: 'map',
 				action: action,
 				label: label
