@@ -1,10 +1,11 @@
 /** Base styles **/
 * {
-	font-family: "Helvetica Neue", Arial, sans-serif;
 	color: #656e78;
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	font-size: 16px;
 }
 
-a {
+a, a * {
 	color: #1a5eB8;
 	text-decoration: none;
 }
@@ -19,9 +20,9 @@ button {
 	border-width: 0;
 	background-color: #1A5EB8;
 	color: #FFF;
-	font-size: 15px;
-	line-height: 45px;
-	padding: 0 28px;
+	font-size: 14px;
+	line-height: 25px;
+	padding: 10px 28px;
 	text-transform: uppercase;
 }
 
