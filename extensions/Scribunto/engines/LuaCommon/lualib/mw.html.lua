@@ -58,7 +58,10 @@ end
 local function getAttr( t, name )
 	for i, attr in ipairs( t.attributes ) do
 		if attr.name == name then
+			-- begin wikia change
+			-- VOLDEV-118
 			return attr, i
+			-- end wikia change
 		end
 	end
 end
@@ -219,7 +222,10 @@ methodtable.attr = function( t, name, val )
 	if type( name ) ~= 'string' and type( name ) ~= 'number' then
 		error( 'Invalid name given: The name must be either a string or a number' )
 	end
+	-- begin wikia change
+	-- VOLDEV-118
 	if val ~= nil and type( val ) ~= 'string' and type( val ) ~= 'number' then
+	-- end wikia change
 		error( 'Invalid value given: The value must be either a string or a number' )
 	end
 
@@ -234,6 +240,8 @@ methodtable.attr = function( t, name, val )
 		error( "Invalid attribute name: " .. name )
 	end
 
+	-- begin wikia change
+	-- VOLDEV-118
 	local attr, i = getAttr( t, name )
 	if attr then
 		if val ~= nil then
@@ -242,6 +250,7 @@ methodtable.attr = function( t, name, val )
 			table.remove( t.attributes, i )
 		end
 	elseif val ~= nil then
+	-- end wikia change
 		table.insert( t.attributes, { name = name, val = val } )
 	end
 
@@ -253,9 +262,12 @@ end
 --
 -- @param class
 methodtable.addClass = function( t, class )
+	-- begin wikia change
+	-- VOLDEV-118
 	if class == nil then
 		return t
 	end
+	-- end wikia change
 
 	if type( class ) ~= 'string' and type( class ) ~= 'number' then
 		error( 'Invalid class given: The name must be either a string or a number' )
@@ -297,24 +309,33 @@ methodtable.css = function( t, name, val )
 	if type( name ) ~= 'string' and type( name ) ~= 'number' then
 		error( 'Invalid CSS given: The name must be either a string or a number' )
 	end
+	-- begin wikia change
+	-- VOLDEV-118
 	if val ~= nil and type( val ) ~= 'string' and type( val ) ~= 'number' then
+	-- end wikia change
 		error( 'Invalid CSS given: The value must be either a string or a number' )
 	end
 
 	for i, prop in ipairs( t.styles ) do
 		if prop.name == name then
+			-- begin wikia change
+			-- VOLDEV-118
 			if val ~= nil then
 				prop.val = val
 			else
 				table.remove( t.styles, i )
 			end
+			-- end wikia change
 			return t
 		end
 	end
 
+	-- begin wikia change
+	-- VOLDEV-118
 	if val ~= nil then
 		table.insert( t.styles, { name = name, val = val } )
 	end
+	-- end wikia change
 
 	return t
 end
@@ -324,10 +345,13 @@ end
 --
 -- @param css
 methodtable.cssText = function( t, css )
+	-- begin wikia change
+	-- VOLDEV-118
 	if css ~= nil then
 		if type( css ) ~= 'string' and type( css ) ~= 'number' then
 			error( 'Invalid CSS given: Must be either a string or a number' )
 		end
+	-- end wikia change
 
 		table.insert( t.styles, css )
 	end
@@ -355,6 +379,8 @@ end
 -- @param tagName
 -- @param args
 function HtmlBuilder.create( tagName, args )
+	-- begin wikia change
+	-- VOLDEV-118
 	if tagname ~= nil then
 		if type( tagName ) ~= 'string' then
 			error( "Tag name must be a string" )
@@ -364,6 +390,7 @@ function HtmlBuilder.create( tagName, args )
 			error( "Invalid tag name: " .. tagName )
 		end
 	end
+	-- end wikia change
 
 	args = args or {}
 	local builder = {}
