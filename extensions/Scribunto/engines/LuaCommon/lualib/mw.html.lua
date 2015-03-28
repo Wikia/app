@@ -52,13 +52,13 @@ metatable.__tostring = function( t )
 	return table.concat( ret )
 end
 
--- Get an attribute table (name, value)
+-- Get an attribute table (name, value) and its index
 --
 -- @param name
 local function getAttr( t, name )
 	for i, attr in ipairs( t.attributes ) do
 		if attr.name == name then
-			return attr
+			return attr, i
 		end
 	end
 end
@@ -196,7 +196,7 @@ end
 -- Set an HTML attribute on the node.
 --
 -- @param name Attribute to set, alternative table of name-value pairs
--- @param val Value of the attribute
+-- @param val Value of the attribute. Nil causes the attribute to be unset
 methodtable.attr = function( t, name, val )
 	if type( name ) == 'table' then
 		if val ~= nil then
@@ -219,7 +219,7 @@ methodtable.attr = function( t, name, val )
 	if type( name ) ~= 'string' and type( name ) ~= 'number' then
 		error( 'Invalid name given: The name must be either a string or a number' )
 	end
-	if type( val ) ~= 'string' and type( val ) ~= 'number' then
+	if val ~= nil and type( val ) ~= 'string' and type( val ) ~= 'number' then
 		error( 'Invalid value given: The value must be either a string or a number' )
 	end
 
@@ -234,10 +234,14 @@ methodtable.attr = function( t, name, val )
 		error( "Invalid attribute name: " .. name )
 	end
 
-	local attr = getAttr( t, name )
+	local attr, i = getAttr( t, name )
 	if attr then
-		attr.val = val
-	else
+		if val ~= nil then
+			attr.val = val
+		else
+			table.remove( t.attributes, i )
+		end
+	elseif val ~= nil then
 		table.insert( t.attributes, { name = name, val = val } )
 	end
 
@@ -249,6 +253,10 @@ end
 --
 -- @param class
 methodtable.addClass = function( t, class )
+	if class == nil then
+		return t
+	end
+
 	if type( class ) ~= 'string' and type( class ) ~= 'number' then
 		error( 'Invalid class given: The name must be either a string or a number' )
 	end
@@ -266,7 +274,7 @@ end
 -- Set a CSS property to be added to the node's style attribute.
 --
 -- @param name CSS attribute to set, alternative table of name-value pairs
--- @param val
+-- @param val The value to set. Nil causes it to be unset
 methodtable.css = function( t, name, val )
 	if type( name ) == 'table' then
 		if val ~= nil then
@@ -289,18 +297,24 @@ methodtable.css = function( t, name, val )
 	if type( name ) ~= 'string' and type( name ) ~= 'number' then
 		error( 'Invalid CSS given: The name must be either a string or a number' )
 	end
-	if type( val ) ~= 'string' and type( val ) ~= 'number' then
+	if val ~= nil and type( val ) ~= 'string' and type( val ) ~= 'number' then
 		error( 'Invalid CSS given: The value must be either a string or a number' )
 	end
 
 	for i, prop in ipairs( t.styles ) do
 		if prop.name == name then
-			prop.val = val
+			if val ~= nil then
+				prop.val = val
+			else
+				table.remove( t.styles, i )
+			end
 			return t
 		end
 	end
 
-	table.insert( t.styles, { name = name, val = val } )
+	if val ~= nil then
+		table.insert( t.styles, { name = name, val = val } )
+	end
 
 	return t
 end
@@ -310,11 +324,11 @@ end
 --
 -- @param css
 methodtable.cssText = function( t, css )
-	if type( css ) ~= 'string' and type( css ) ~= 'number' then
-		error( 'Invalid CSS given: Must be either a string or a number' )
-	end
+	if css ~= nil then
+		if type( css ) ~= 'string' and type( css ) ~= 'number' then
+			error( 'Invalid CSS given: Must be either a string or a number' )
+		end
 
-	if css then
 		table.insert( t.styles, css )
 	end
 	return t
@@ -341,12 +355,14 @@ end
 -- @param tagName
 -- @param args
 function HtmlBuilder.create( tagName, args )
-	if type( tagName ) ~= 'string' then
-		error( "Tag name must be a string" )
-	end
+	if tagname ~= nil then
+		if type( tagName ) ~= 'string' then
+			error( "Tag name must be a string" )
+		end
 
-	if tagName ~= '' and not isValidTag( tagName ) then
-		error( "Invalid tag name: " .. tagName )
+		if tagName ~= '' and not isValidTag( tagName ) then
+			error( "Invalid tag name: " .. tagName )
+		end
 	end
 
 	args = args or {}
