@@ -80,6 +80,7 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 			'expandTemplate',
 			'preprocess',
 			'incrementExpensiveFunctionCount',
+			'getFrameTitle',
 		);
 
 		$lib = array();
@@ -353,6 +354,15 @@ abstract class Scribunto_LuaEngine extends ScribuntoEngineBase {
 	function parentFrameExists() {
 		$frame = $this->getFrameById( 'parent' );
 		return array( $frame !== false );
+	}
+	
+	/**
+	 * Handler for getTitle()
+	 * VOLDEV-122 Backporting https://gerrit.wikimedia.org/r/#/c/99797/2
+	 */
+	function getFrameTitle( $frameId ) {
+		$frame = $this->getFrameById( $frameId );
+		return array( $frame->getTitle()->getPrefixedText() );
 	}
 
 	/**

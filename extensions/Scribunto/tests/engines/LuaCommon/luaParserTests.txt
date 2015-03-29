@@ -133,6 +133,10 @@ function p.null( frame )
 	return '\0'
 end
 
+function p.getFrameTitle( frame )
+	return frame:getTitle()
+end
+
 return p
 !! endarticle
 
@@ -360,5 +364,14 @@ Scribunto: ASCII null
 {{#invoke:test|null}}
 !! result
 <p>�
+</p>
+!! end
+
+!! test
+Scribunto: frame:getTitle
+!! input
+{{#invoke:test|getFrameTitle}}
+!! result
+<p>Module:Test
 </p>
 !! end

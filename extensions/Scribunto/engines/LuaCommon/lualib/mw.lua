@@ -407,6 +407,13 @@ local function newFrame( frameId )
 			end
 			)
 	end
+	
+	-- VOLDEV-122
+	-- Backporting https://gerrit.wikimedia.org/r/#/c/99797/2
+	function frame:getTitle()
+		checkSelf( self, 'getTitle' )
+		return php.getFrameTitle( frameId )
+	end
 
 	-- For backwards compat
 	function frame:argumentPairs()
