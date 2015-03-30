@@ -118,6 +118,7 @@ class EmailController extends \WikiaController {
 	 */
 	public function main() {
 		$this->response->setVal( 'content', $this->getVal( 'content' ) );
+		$this->response->setVal( 'fancyHubLinks', true );
 	}
 
 	/**

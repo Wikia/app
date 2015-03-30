@@ -4,13 +4,25 @@
  * Only include styles that directly affect elements inside main.mustache
  */
 
-/** Base styles */
 body {
 	margin: 0;
 	padding: 0;
 }
 
-/** Layout styles **/
+.body-wrap {
+	width: 100%;
+}
+
+.main-wrapper {
+	background-color: #E6EBF2;
+}
+
+.main-content {
+	background-color: #FFF;
+	border-bottom: 1px solid #c5ced9;
+	border-top: 1px solid #c5ced9;
+}
+
 .container {
 	display: block !important;
 	max-width: 600px !important;
@@ -28,10 +40,6 @@ body {
 	padding-top: 12px;
 }
 
-.body-wrap {
-	width: 100%;
-}
-
 .footer-wrap {
 	text-align: center;
 	width: 100%;
@@ -41,15 +49,30 @@ body {
 	padding: 50px 40px 80px 40px;
 }
 
-/** Module styles **/
-
-/** Theme styles **/
-.main-wrapper {
-	background-color: #E6EBF2;
+.hubs {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5px;
+	max-width: 300px;
 }
 
-.main-content {
-	background-color: #FFF;
-	border-bottom: 1px solid #c5ced9;
-	border-top: 1px solid #c5ced9;
+.hubs a {
+	display: inline-block;
+	font-size: 14px;
+	padding: 0 6px 15px;
+}
+
+.hub-icon {
+	display: block;
+	margin: 0 auto 5px;
+}
+
+.social-links a {
+	margin: 0 10px;
+}
+
+.fine-print {
+	font-size: 10px;
+	line-height: 20px;
+	margin-bottom: 0;
 }
