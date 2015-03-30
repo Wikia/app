@@ -30,7 +30,7 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 			return true;
 		}
 
-		global $wgGAUserIdSalt;
+		global $wgDevelEnvironment, $wgGAUserIdSalt, $wgStagingEnvironment;
 
 		$app = F::app();
 
@@ -47,8 +47,6 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		if (!$user->isAnon()) {
 			$vars['wgGAUserIdHash'] = md5($user->getId() . $wgGAUserIdSalt);
 		}
-
-		global $wgDevelEnvironment, $wgStagingEnvironment;
 
 		// Enable collecting stats to staging accounts on all dev and staging environments
 		if ($wgDevelEnvironment || $wgStagingEnvironment) {
