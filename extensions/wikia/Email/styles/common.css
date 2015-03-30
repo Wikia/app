@@ -20,13 +20,13 @@ button {
 	border-width: 0;
 	background-color: #1A5EB8;
 	color: #FFF;
-	font-size: 14px;
+	font-size: 12px;
+	font-weight: bold;
 	line-height: 25px;
-	padding: 10px 28px;
+	padding: 10px 20px;
 	text-transform: uppercase;
 }
 
-/** Layout styles **/
 .content {
 	padding: 40px;
 	max-width: 600px;
@@ -42,7 +42,6 @@ td.widest {
 	margin-bottom: 50px;
 }
 
-/** Module styles **/
 .avatar-wrapper {
 	padding-right: 20px;
 }
@@ -51,7 +50,6 @@ td.widest {
 	border-radius: 100%;
 }
 
-/** Theme styles **/
 .subtle {
 	color: #93999f;
 }
