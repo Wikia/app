@@ -2183,13 +2183,13 @@ class DPLMain {
 		}
 		if ( $sNotCreatedBy != "" ) {
 			$sSqlNoCreationRevisionTable = $sRevisionTable . ' AS no_creation_rev, ';
-			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sCreatedBy) . ' != no_creation_rev.rev_user_text'
+			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sNotCreatedBy) . ' != no_creation_rev.rev_user_text'
 								.' AND no_creation_rev.rev_page = page_id'
 								.' AND no_creation_rev.rev_parent_id = 0';
 		}
 		if ( $sModifiedBy != "" ) {
 			$sSqlChangeRevisionTable = $sRevisionTable . ' AS change_rev, ';
-			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sCreatedBy) . ' = change_rev.rev_user_text'
+			$sSqlCond_page_rev .= ' AND ' . $dbr->addQuotes($sModifiedBy) . ' = change_rev.rev_user_text'
 								.' AND change_rev.rev_page = page_id';
 		}
 		if ( $sNotModifiedBy != "" ) {
