@@ -244,8 +244,6 @@ class ExternalUser_Wikia extends ExternalUser {
 	protected function addToDatabase( User &$User, $password, $email, $realname ) {
 		wfProfileIn( __METHOD__ );
 
-		$User->setToken();
-
 		global $wgExternalSharedDB;
 		$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
@@ -260,8 +258,12 @@ class ExternalUser_Wikia extends ExternalUser {
                     [
                         'user_id' => null,
                         'user_name' => $User->mName,
+                        'user_real_name' => $realname,
                         'user_password' => $User->mPassword,
+                        'user_newpassword' => '',
                         'user_email' => $email,
+                        'user_touched' => '',
+                        'user_token' => '',
                         'user_options' => '',
                         'user_registration' => $dbw->timestamp($User->mRegistration),
                         'user_editcount' => 0,
@@ -276,7 +278,7 @@ class ExternalUser_Wikia extends ExternalUser {
             }
 
             $User->mId = $userId;
-            $User->mRealName = $realname;
+            $User->setToken();
             $User->saveSettings();
 
 			$dbw->commit( __METHOD__ );
