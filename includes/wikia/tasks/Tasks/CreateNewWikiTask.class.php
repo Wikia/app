@@ -32,10 +32,11 @@ class CreateNewWikiTask extends BaseTask {
 	}
 
 	public function postCreationSetup( $params ) {
-		global $wgUser, $wgErrorLog, $wgServer, $wgInternalServer;
+		global $wgUser, $wgErrorLog, $wgServer, $wgInternalServer, $wgStatsDBEnabled;
 
 		$wgServer = rtrim( $params['url'], '/' );
 		$wgInternalServer = $wgServer;
+		$wgStatsDBEnabled = false;   // disable any DW queries/hooks during wiki creation
 
 		$wgErrorLog = false;
 
