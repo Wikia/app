@@ -60,7 +60,7 @@ define('ext.wikia.adEngine.template.modal', [
 			code: params.code,
 			height: params.height,
 			width: params.width,
-			classes: ['wikia-ad-iframe']
+			classes: 'wikia-ad-iframe'
 		});
 	}
 
