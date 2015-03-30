@@ -73,7 +73,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$oAddUserGroupResult = $oApiDataExtension->createRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oAddUserGroupResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oAddUserGroupResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oAddUserGroupResult ) );
 
 		if ( $oAddUserGroupResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
@@ -97,7 +97,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$oRemoveUserGroupResult = $oApiDataExtension->deleteRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oRemoveUserGroupResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oRemoveUserGroupResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oRemoveUserGroupResult ) );
 
 		if ( $oRemoveUserGroupResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
@@ -121,7 +121,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$oUpdateUserPropertiesResult = $oApiDataExtension->updateRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUserPropertiesResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateUserPropertiesResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUpdateUserPropertiesResult ) );
 
 		if ( $oUpdateUserPropertiesResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
@@ -152,9 +152,11 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 */
 	public function updateUsersEdits( array $aUsersEditsData ) {
 		$aUsersIds = array_keys( $aUsersEditsData );
+		$this->info( __METHOD__ . ' Params - User IDs: ' . json_encode( $aUsersIds ) );
 
 		// Get number of edits from ExactTarget
 		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
+		$oRetrieveUserHelper->taskId( $this->getTaskId() );
 		$aUserEditsDataFromET = $oRetrieveUserHelper->retrieveUserEdits( $aUsersIds );
 
 		// Merge number of edits from ExactTarget with incremental data that came as a function parameter
@@ -168,7 +170,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$oUpdateUsersEditsResult = $oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 
 		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUsersEditsResult->OverallStatus );
-		$this->info( __METHOD__ . ' result: ' . json_encode( (array)$oUpdateUsersEditsResult ) );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUpdateUsersEditsResult ) );
 
 		if ( $oUpdateUsersEditsResult->OverallStatus === 'Error' ) {
 			throw new \Exception(

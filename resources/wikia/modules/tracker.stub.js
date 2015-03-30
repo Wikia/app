@@ -117,7 +117,7 @@
 		 *
 		 *     var track = Wikia.Tracker.buildTrackingFunction({
 		 *         category: 'myCategory',
-		 *         trackingMethod: 'ga'
+		 *         trackingMethod: 'analytics'
 		 *     });
 		 *
 		 *     track({

@@ -19,8 +19,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		tile = 0,
 		slotForSkin = 'INVISIBLE_SKIN',
 		hoppedSlots = {},
-		iface,
-		undef;
+		iface;
 
 	slotMap = evolveSlotConfig.getConfig();
 
@@ -34,41 +33,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 		var embedNo = slot.getElementsByTagName('embed').length || slot.getElementsByTagName('object').length;
 		log(['hasEmbed', slot, embedNo], 5, logGroup);
 		return !!embedNo;
-	}
-
-	/**
-	 * Get element height like $.height. For IE get offsetHeight and subtracts margin and padding.
-	 *
-	 * TODO: in future we should rely entirely on offsetHeight, so the actual ad should be loaded
-	 * in a div with no paddings and margins.
-	 *
-	 * @param {Element} slot
-	 * @return {Number}
-	 */
-	function getHeight(slot) {
-		var margins = 0,
-			height,
-			undef;
-
-		log(['getHeight', slot], 5, logGroup);
-
-		if (window.getComputedStyle) {
-			height = parseInt(window.getComputedStyle(slot).getPropertyValue('height'), 10);
-			log(['getHeight (regular browser version)', slot, height], 5, logGroup);
-		}
-
-		// IE8
-		if (height === undef && slot.currentStyle) {
-			margins += parseInt('0' + slot.currentStyle.marginTop, 10);
-			margins += parseInt('0' + slot.currentStyle.marginBottom, 10);
-			margins += parseInt('0' + slot.currentStyle.paddingTop, 10);
-			margins += parseInt('0' + slot.currentStyle.paddingBottom, 10);
-
-			height = slot.offsetHeight - margins;
-			log(['getHeight (IE version)', slot, height], 5, logGroup);
-		}
-
-		return height;
 	}
 
 	function getKv(slotname) {
@@ -188,31 +152,18 @@ define('ext.wikia.adEngine.provider.evolve', [
 			);
 		} else {
 			scriptWriter.injectScriptByUrl(slotname, getUrl(slotname), function () {
-				var slot = document.getElementById(slotname),
-					height;
-
 				if (hoppedSlots[slotname]) {
 					pHop({method: 'hop'});
 					return;
 				}
 
-				// Don't rely completely on Evolve hop
+				// Success
+				// TODO: find a better place for operation below
 				slotTweaker.removeDefaultHeight(slotname);
-				height = getHeight(slot);
+				slotTweaker.removeTopButtonIfNeeded(slotname);
+				slotTweaker.adjustLeaderboardSize(slotname);
 
-				// Only assume success if > 1x1 ad is returned or there's embed
-				// in the slot (it seems Evolves returns an embed that causes
-				// more HTML to appear after GhostWriter calls finish callback).
-				if (height === undef || height > 1 || hasEmbed(slot)) {
-					// Real success
-					slotTweaker.removeTopButtonIfNeeded(slotname);
-					pSuccess();
-					return;
-				}
-
-				slotTweaker.addDefaultHeight(slotname);
-				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, logGroup);
-				pHop({method: '1x1'});
+				pSuccess();
 			});
 		}
 	}

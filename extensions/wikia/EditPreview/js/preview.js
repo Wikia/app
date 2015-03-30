@@ -75,7 +75,7 @@ define('wikia.preview', [
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'edit-preview',
 						label: 'button-best-practices',
-						trackingMethod: 'both'
+						trackingMethod: 'analytics'
 					});
 				});
 
@@ -92,17 +92,23 @@ define('wikia.preview', [
 			window.stylepath +
 			'/common/images/ajax.gif" class="loading"></div></div>';
 
-		loader({
-			type: loader.MULTI,
-			resources: {
-				mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
-			}
-		}).done(function (response) {
+		$.when(
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
+				}
+			}),
+			msg.getForContent('EditPreviewInContLang')
+		).done(function(response){
 			var params = {
 					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
 					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
-					bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					bestPracticesLinkUrl:  window.wgArticlePath.replace(
+						'$1', $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					)
 				},
+
 				template = response.mustache[0],
 				html = mustache.render(template, params);
 
@@ -435,7 +441,7 @@ define('wikia.preview', [
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'edit-preview',
 			label: 'preview-type-changed',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			value: type
 		});
 	}

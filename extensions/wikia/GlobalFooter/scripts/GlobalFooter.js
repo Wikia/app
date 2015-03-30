@@ -29,7 +29,7 @@ require([
 					category: 'corporate-footer',
 					action: tracker.ACTIONS.CLICK_LINK_BUTTON,
 					label: 'mobile-switch',
-					trackingMethod: 'both'
+					trackingMethod: 'analytics'
 				});
 
 

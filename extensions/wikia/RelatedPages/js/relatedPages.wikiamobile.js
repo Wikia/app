@@ -100,7 +100,7 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 
 								tracker.track( {
 									action: tracker.ACTIONS.CLICK,
-									trackingMethod: 'ga',
+									trackingMethod: 'analytics',
 									category: 'article',
 									label: 'related-pages'
 								} );
@@ -194,7 +194,7 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 								'related-article',
 								track.IMAGE_LINK,
 								{
-									method: 'ga',
+									method: 'analytics',
 									href: this.href,
 									label: 'section_' + ( sections.getId( this.nextSibling ) )
 								},

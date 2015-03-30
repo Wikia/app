@@ -317,10 +317,10 @@ class User {
 			 */
 			$isExpired = true;
 			if(!empty($data)) {
-				$_key = wfSharedMemcKey( "user_touched", $this->mId );
+				$_key = self::getUserTouchedKey( $this->mId );
 				$_touched = $wgMemc->get( $_key );
 				if( empty( $_touched ) ) {
-					$wgMemc->set( $_key, self::newTouchedTimestamp() );
+					$wgMemc->set( $_key, $data['mTouched'] );
 					wfDebug( "Shared user: miss on shared user_touched\n" );
 				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
@@ -2037,8 +2037,8 @@ class User {
 			$this->saveToCache();
 			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
-				$memckey = wfSharedMemcKey( "user_touched", $this->mId );
-				$wgMemc->set( $memckey, self::newTouchedTimestamp() );
+				$memckey = self::getUserTouchedKey( $this->mId );
+				$wgMemc->set( $memckey, $this->mTouched );
 				wfDebug( "Shared user: updating shared user_touched\n" );
 			}
 		}
@@ -2311,7 +2311,6 @@ class User {
 	 * @see getIntOption()
 	 */
 	public function getOption( $oname, $defaultOverride = null, $ignoreHidden = false ) {
-		\Wikia\Logger\WikiaLogger::instance()->info( 'user_properties lookup' , array( 'name' => $oname ) );
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
@@ -4539,5 +4538,19 @@ class User {
 	 */
 	public function wikiaConfirmationTokenUrl( $token ) {
 		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
+	}
+
+	/**
+	 * Return the memcache key for storing cross-wiki "user_touched" value.
+	 *
+	 * It's used to refresh user caches on Wiki B when user changes his setting on Wiki A
+	 *
+	 * @author wikia
+	 *
+	 * @param int $user_id
+	 * @return string memcache key
+	 */
+	public static function getUserTouchedKey( $user_id ) {
+		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
 	}
 }

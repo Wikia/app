@@ -960,84 +960,80 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	public function getAsJson() {
-		if ( $this->wg->EnableArticleAsJsonApi ) {
-			$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
-			$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
-			$redirect = $this->request->getVal('redirect');
+		$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
+		$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+		$redirect = $this->request->getVal('redirect');
 
-			if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
-				throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
-			}
-
-			if ( empty( $articleId ) && empty( $articleTitle ) ) {
-				throw new BadRequestApiException( 'You need to pass title or id of an article' );
-			}
-
-			if ( !empty( $articleId ) ) {
-				$article = Article::newFromID( $articleId );
-			} else {
-				$title = Title::newFromText( $articleTitle, NS_MAIN );
-
-				if ( $title instanceof Title && $title->exists() ) {
-					$article = Article::newFromTitle( $title, RequestContext::getMain() );
-				}
-			}
-
-			if ( empty( $article ) ) {
-				throw new NotFoundApiException( "Unable to find any article" );
-			}
-
-			if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
-				// false, Title object of local target or string with URL
-				$followRedirect = $article->getPage()->followRedirect();
-
-				if ( $followRedirect && !is_string( $followRedirect ) ) {
-					$article = Article::newFromTitle( $followRedirect, RequestContext::getMain() );
-				}
-			}
-
-			//Response is based on wikiamobile skin as this already removes inline style
-			//and make response smaller
-			RequestContext::getMain()->setSkin(
-				Skin::newFromKey( 'wikiamobile' )
-			);
-
-			global $wgArticleAsJson;
-			$wgArticleAsJson = true;
-
-			$parsedArticle = $article->getParserOutput();
-
-			if ( $parsedArticle instanceof ParserOutput ) {
-				$articleContent = json_decode( $parsedArticle->getText() );
-			} else {
-				throw new ArticleAsJsonParserException( 'Parser is currently not available' );
-			}
-
-			$wgArticleAsJson = false;
-			$categories = [];
-
-			foreach( array_keys( $parsedArticle->getCategories() ) as $category ) {
-				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
-				if ( $categoryTitle ) {
-					$categories[] = [
-						'title' => $categoryTitle->getText(),
-						'url' => $categoryTitle->getLocalURL()
-					];
-				}
-			}
-
-			$result = [
-				'content' => $articleContent->content,
-				'media' => $articleContent->media,
-				'users' => $articleContent->users,
-				'categories' => $categories,
-				'description' => $this->getArticleDescription( $article )
-			];
-
-			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
-		} else {
-			throw new BadRequestApiException( 'This entry point is disabled' );
+		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
 		}
+
+		if ( empty( $articleId ) && empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'You need to pass title or id of an article' );
+		}
+
+		if ( !empty( $articleId ) ) {
+			$article = Article::newFromID( $articleId );
+		} else {
+			$title = Title::newFromText( $articleTitle, NS_MAIN );
+
+			if ( $title instanceof Title && $title->exists() ) {
+				$article = Article::newFromTitle( $title, RequestContext::getMain() );
+			}
+		}
+
+		if ( empty( $article ) ) {
+			throw new NotFoundApiException( "Unable to find any article" );
+		}
+
+		if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
+			// false, Title object of local target or string with URL
+			$followRedirect = $article->getPage()->followRedirect();
+
+			if ( $followRedirect && !is_string( $followRedirect ) ) {
+				$article = Article::newFromTitle( $followRedirect, RequestContext::getMain() );
+			}
+		}
+
+		//Response is based on wikiamobile skin as this already removes inline style
+		//and make response smaller
+		RequestContext::getMain()->setSkin(
+			Skin::newFromKey( 'wikiamobile' )
+		);
+
+		global $wgArticleAsJson;
+		$wgArticleAsJson = true;
+
+		$parsedArticle = $article->getParserOutput();
+
+		if ( $parsedArticle instanceof ParserOutput ) {
+			$articleContent = json_decode( $parsedArticle->getText() );
+		} else {
+			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
+		}
+
+		$wgArticleAsJson = false;
+		$categories = [];
+
+		foreach( array_keys( $parsedArticle->getCategories() ) as $category ) {
+			$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
+			if ( $categoryTitle ) {
+				$categories[] = [
+					'title' => $categoryTitle->getText(),
+					'url' => $categoryTitle->getLocalURL()
+				];
+			}
+		}
+
+		$result = [
+			'content' => $articleContent->content,
+			'media' => $articleContent->media,
+			'users' => $articleContent->users,
+			'categories' => $categories,
+			'description' => $this->getArticleDescription( $article )
+		];
+
+		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 	}
 
 	public function getPopular() {
