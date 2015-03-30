@@ -32,4 +32,4 @@ $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Contr
  * messages
  */
 $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
-$wgExtensionMessagesFiles['WatchedPage'] = $dir . 'WatchedPage.i18n.php';
+$wgExtensionMessagesFiles['WatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
