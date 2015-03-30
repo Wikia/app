@@ -1,7 +1,6 @@
 <?php
 $messages = [];
 
-// TODO
 $messages['en'] = [
 	'emailext-watchedpage-subject' => '$1 on $2 has been edited.',
 	'emailext-watchedpage-salutation' => 'Hi $1,',
