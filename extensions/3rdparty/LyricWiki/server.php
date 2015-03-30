@@ -453,9 +453,9 @@ if(!$funcsOnly){
 	wfDebug("LWSOAP: Done setting up SOAP functions, about to process...\n");
 
 	// Use the request to (try to) invoke the service
-	$HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
+	$rawPostData = file_get_contents("php://input"); // preferred to HTTP_RAW_POST_DATA in PHP 5.6+
 	wfDebug("LWSOAP: Dispatching to the ->service().\n");
-	$server->service($HTTP_RAW_POST_DATA);
+	$server->service($rawPostData);
 	wfDebug("LWSOAP: Returned from ->service().");
 
 	// If the script took a long time to run, log it here.
@@ -466,7 +466,7 @@ if(!$funcsOnly){
 			if(is_writable($fileName)){
 				error_log(date("Y-m-d H:i:s")." - $scriptTime - ".$_SERVER['REQUEST_URI']."\n", 3, $fileName);
 				ob_start();
-				print_r($HTTP_RAW_POST_DATA);
+				print_r($rawPostData);
 				error_log(ob_get_clean(), 3, $fileName);
 			} else {
 				error_log("File not writable: \"$fileName\"", 1, "sean.colombo@gmail.com");
