@@ -46,7 +46,9 @@ class AdEngine2Hooks {
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
 
 		// use post scribe with 71Media - check scriptwriter.js:35
-		$wgUsePostScribe = !!$wgAdDriverUseSevenOneMedia;
+		if( $wgAdDriverUseSevenOneMedia ) {
+			$wgUsePostScribe = true;
+		}
 
 		return true;
 	}
