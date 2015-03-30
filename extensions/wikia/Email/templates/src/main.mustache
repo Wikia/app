@@ -35,14 +35,54 @@
 		<tr>
 			<td></td>
 			<td class="container">
-				{{#marketingFooter}}
-					{{> marketingFooter}}
-				{{/marketingFooter}}
+				<div class="footer content">
+					<p><img src="../../images/Fans-by-Fans.gif"></p>
+					<div class="hubs">
+						<a href="">
+							{{#fancyHubLinks}}<img src="../../images/Comics.gif" class="hub-icon">{{/fancyHubLinks}}
+							Comics
+						</a>
+						<a href="">
+							{{#fancyHubLinks}}<img src="../../images/Games.gif" class="hub-icon">{{/fancyHubLinks}}
+							Games
+						</a>
+						<a href="">
+							{{#fancyHubLinks}}<img src="../../images/Movies.gif" class="hub-icon">{{/fancyHubLinks}}
+							Movies
+						</a>
+						<a href="">
+							{{#fancyHubLinks}}<img src="../../images/Lifestyle.gif" class="hub-icon">{{/fancyHubLinks}}
+							Lifestyle
+						</a>
+						<a href="">
+							{{#fancyHubLinks}}<img src="../../images/Music.gif" class="hub-icon">{{/fancyHubLinks}}
+							Music
+						</a>
+						<a href="">
+							{{#fancyHubLinks}}<img src="../../images/Books.gif" class="hub-icon">{{/fancyHubLinks}}
+							Books
+						</a>
+						<a href="">
+							{{#fancyHubLinks}}<img src="../../images/TV.gif" class="hub-icon">{{/fancyHubLinks}}
+							TV
+						</a>
+					</div>
+					<p class="social-links">
+						<a href="" >
+							<img src="../../images/Twitter.gif" alt="Twitter">
+						</a>
+						<a href="">
+							<img src="../../images/Facebook.gif" alt="Facebook">
+						</a>
+						<a href="">
+							<img src="../../images/You-Tube.gif" alt="YouTube">
+						</a>
+					</p>
 
-				{{^marketingFooter}}
-					{{> footer}}
-				{{/marketingFooter}}
-			</td>
+					{{#footerMessages}}
+						<p class="fine-print">{{.}}</p>
+					{{/footerMessages}}
+				</div>			</td>
 			<td></td>
 		</tr>
 	</table>
