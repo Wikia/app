@@ -44,7 +44,7 @@ class AdEngine2Hooks {
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
-		
+
 		// use post scribe with 71Media - check scriptwriter.js:35
 		$wgUsePostScribe = !!$wgAdDriverUseSevenOneMedia;
 
@@ -106,6 +106,9 @@ class AdEngine2Hooks {
 
 		// GA vars
 		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
+
+		// 71Media
+		$vars['wgUsePostScribe'] = $wg->UsePostScribe;
 
 		return true;
 	}
