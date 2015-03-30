@@ -2654,10 +2654,10 @@ class DPLMain {
             if (!$bIncludeSubpages && (!(strpos($pageTitle,'/')===false))) continue;
 
             $title = Title::makeTitle($pageNamespace, $pageTitle);
-            $thisTitle = $parser->getTitle();
 
             // block recursion: avoid to show the page which contains the DPL statement as part of the result
-            if ($bSkipThisPage && $title->equals($thisTitle)) {
+            if ($bSkipThisPage && ($title->getNamespace() == $wgTitle->getNamespace() &&
+                $title->getText() == $wgTitle->getText())) {
                 // $output.= 'BLOCKED '.$wgTitle->getText().' DUE TO RECURSION'."\n";
                 continue;
             }
