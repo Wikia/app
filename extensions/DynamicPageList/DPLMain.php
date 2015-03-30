@@ -19,7 +19,6 @@ class DPLMain {
 
         global $wgUser, $wgLang, $wgContLang, $wgRequest;
         global $wgNonincludableNamespaces;
-		// global $wgArticle;
 
         //logger (display of debug messages)
         $logger = new DPLLogger();
@@ -2934,7 +2933,6 @@ class DPLMain {
 
 		if (ExtDynamicPageList::$useCacheAPI && $bAllowCachedResults && $wgRequest->getVal('action','view')=='submit') {
 /*
-			// CacheAPI::remDependencies ( $wgArticle->getID());
 			CacheAPI::remDependencies( $parser->mTitle->getArticleID());
 
 			// add category dependencies
@@ -2957,7 +2955,6 @@ class DPLMain {
 
 			// add general dependencies
 
-			// CacheAPI::addDependencies ( $wgArticle->getID(), $conditionTypes, $conditions);
 			// CacheAPI::addDependencies ( $parser->mTitle->getArticleID(), $conditionTypes, $conditions);
 */
 		}
