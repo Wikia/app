@@ -137,6 +137,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgEnableKruxTargeting',
 			'wgKruxCategoryId',
 			'cscoreCat',
+			'wgGaStaging',
 
 			//ads
 			'ads',

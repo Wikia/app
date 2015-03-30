@@ -2579,6 +2579,9 @@ class DPLMain {
             return $result;
         }
 
+        // Wikia change - mark transactions that trigger DPL queries (PLATFORM-1074)
+        Transaction::setAttribute( Transaction::PARAM_DPL, true );
+
         if ($dbr->numRows( $res ) <= 0) {
 			$header = str_replace('%TOTALPAGES%','0',str_replace('%PAGES%','0',$sNoResultsHeader));
             if ($sNoResultsHeader != '')	$output .= 	str_replace( '\n', "\n", str_replace( "¶", "\n", $header));
