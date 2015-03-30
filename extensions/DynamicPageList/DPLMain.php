@@ -18,7 +18,7 @@ class DPLMain {
         error_reporting(E_ALL);
 
         global $wgUser, $wgLang, $wgContLang, $wgRequest;
-        global $wgTitle, $wgNonincludableNamespaces;
+        global $wgNonincludableNamespaces;
 		// global $wgArticle;
 
         //logger (display of debug messages)
@@ -2617,6 +2617,7 @@ class DPLMain {
                 }
             }
         }
+            $thisTitle = $parser->getTitle();
 
         $iArticle = 0;
 		$firstNamespaceFound = '';
@@ -2656,9 +2657,8 @@ class DPLMain {
             $title = Title::makeTitle($pageNamespace, $pageTitle);
 
             // block recursion: avoid to show the page which contains the DPL statement as part of the result
-            if ($bSkipThisPage && ($title->getNamespace() == $wgTitle->getNamespace() &&
-                $title->getText() == $wgTitle->getText())) {
-                // $output.= 'BLOCKED '.$wgTitle->getText().' DUE TO RECURSION'."\n";
+            if ( $bSkipThisPage && $thisTitle->equals( $title ) ) {
+                // $output.= 'BLOCKED '.$thisTitle->getText().' DUE TO RECURSION'."\n";
                 continue;
             }
 
