@@ -13,8 +13,10 @@ class EmailIntegrationTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @param $num
-	 * @param $url
+	 * We've hard-coded some image URLs into the HTML emails, so let's make sure they are where we expect them to be
+	 *
+	 * @param string $name Image identifier
+	 * @param string $url URL for accessing image
 	 * @dataProvider emailImagesDataProvider
 	 */
 	public function testEmailImages( $name, $url ) {
@@ -38,5 +40,4 @@ class EmailIntegrationTest extends WikiaBaseTest {
 			['facebook image', 'http://vignette2.wikia.nocookie.net/wikianewsletter/images/a/ad/Facebook.gif/revision/latest?cb=20150330185226'],
 		];
 	}
-
 }
