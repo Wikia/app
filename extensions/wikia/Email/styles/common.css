@@ -1,4 +1,7 @@
-/** Base styles **/
+/**
+ * Include this file in all templates to maintain consistant common styles
+ */
+
 * {
 	color: #656e78;
 	font-family: "Helvetica Neue", Arial, sans-serif;
