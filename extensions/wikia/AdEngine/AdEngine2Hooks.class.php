@@ -45,7 +45,7 @@ class AdEngine2Hooks {
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
 
-		// use post scribe with 71Media - check scriptwriter.js:35
+		// use PostScribe with 71Media - check scriptwriter.js:35
 		if( $wgAdDriverUseSevenOneMedia ) {
 			$wgUsePostScribe = true;
 		}
@@ -92,12 +92,11 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		$wg = F::app()->wg;
-		$title = $wg->Title;
+		global $wgTitle, $wgUsePostScribe;
 		$skin = RequestContext::getMain()->getSkin();
 		$skinName = $skin->getSkinName();
 
-		$adContext = ( new AdEngine2ContextService() )->getContext( $title, $skinName );
+		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
 
 		$vars['ads'] = ['context' => $adContext];
 
@@ -110,7 +109,7 @@ class AdEngine2Hooks {
 		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
 
 		// 71Media
-		$vars['wgUsePostScribe'] = $wg->UsePostScribe;
+		$vars['wgUsePostScribe'] = $wgUsePostScribe;
 
 		return true;
 	}
