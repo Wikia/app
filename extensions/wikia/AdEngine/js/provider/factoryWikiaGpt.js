@@ -17,7 +17,8 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {Object} [extra]      - optional extra params
 	 * @param {function} [extra.beforeSuccess] - function to call before calling success
 	 * @param {function} [extra.beforeHop]     - function to call before calling hop
-	 * @param {bool} [extra.noFlush]           - don't flush after each push
+	 * @param {function} [extra.shouldFlush]   - should ads be flushed after given slotname
+	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
 	 * @returns {{name: string, canHandleSlot: function, fillInSlot: function}}
 	 */
 	function createProvider(logGroup, providerName, src, slotMap, extra) {
@@ -40,6 +41,15 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slotName
 				].join('/');
 
+			function flushIfNeeded() {
+				if (!extra.shouldFlush || extra.shouldFlush(slotName)) {
+					log(['fillInSlot', slotName, 'flushing'], 'debug', logGroup);
+					gptHelper.flushAds();
+				} else {
+					log(['fillInSlot', slotName, 'extra.shouldFlush() return false, not flushing'], 'debug', logGroup);
+				}
+			}
+
 			function doSuccess(adInfo) {
 				if (typeof extra.beforeSuccess === 'function') {
 					extra.beforeSuccess(slotName, adInfo);
@@ -54,6 +64,12 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				hop(adInfo);
 			}
 
+			if (slotTargeting.skipCall) {
+				flushIfNeeded();
+				doSuccess({});
+				return;
+			}
+
 			slotTargeting.pos = slotTargeting.pos || slotName;
 			slotTargeting.src = src;
 
@@ -62,12 +78,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			}
 
 			gptHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop);
-
-			if (extra.noFlush) {
-				log(['fillInSlot', slotName, 'skipping flush'], 'debug', logGroup);
-			} else {
-				gptHelper.flushAds();
-			}
+			flushIfNeeded();
 
 			log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
 		}
@@ -80,9 +91,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	}
 
 	return {
-		createProvider: createProvider,
-		getFillInSlot: function (logGroup, src, slotMap, extra) {
-			return createProvider(logGroup, '', src, slotMap, extra).fillInSlot;
-		}
+		createProvider: createProvider
 	};
 });

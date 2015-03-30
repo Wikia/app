@@ -11,7 +11,7 @@ describe('AdConfigMobile', function () {
 			canHandleSlot: function () { return true; }
 		};
 
-	function mockAdContext(showAds, enableRemnantGptMobile) {
+	function mockAdContext(showAds) {
 		return {
 			getContext: function () {
 				return {
@@ -20,7 +20,6 @@ describe('AdConfigMobile', function () {
 						pageType: 'all_ads'
 					},
 					providers: {
-						remnantGptMobile: enableRemnantGptMobile
 					}
 				};
 			}
@@ -34,16 +33,16 @@ describe('AdConfigMobile', function () {
 			adProviderRemnantMock
 		);
 
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock], 'GPT');
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
-	it('getProviderLists returns Null when wgShowAds set to false', function () {
+	it('getProviderLists returns [] when showAds is false', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
 			mockAdContext(false),
 			adProviderDirectMock,
 			adProviderRemnantMock
 		);
 
-		expect(adConfigMobile.getProviderList('foo')).toEqual([], 'Null over GPT');
+		expect(adConfigMobile.getProviderList('foo')).toEqual([]);
 	});
 });

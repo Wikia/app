@@ -24,30 +24,11 @@ describe('AdConfig2', function () {
 		};
 	}
 
-	function mockRtp(config, called, tier) {
-		return {
-			wasCalled: function () {
-				return called;
-			},
-			trackState: function () {
-				return;
-			},
-			getTier: function () {
-				return tier;
-			},
-			getConfig: function () {
-				return config;
-			}
-		};
-	}
-
 	// Mocks:
 	var adDecoratorPageDimensionsMock = {isApplicable: function () { return false; }},
 		adProviderLaterMock = {name: 'LaterMock'},
 		adProviderGptMock = {name: 'GptMock'},
-		logMock = function () { return; },
-		rtpMockWithTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true, 5),
-		rtpMockWithoutTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true),
+		logMock = function () { return;},
 
 	// Fixtures:
 		highValueSlot = 'TOP_LEADERBOARD',
@@ -68,7 +49,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderGptMock, adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderGptMock, adProviderLaterMock]);
 	});
 
 	it('getProviderList returns [Later] for low value slots', function () {
@@ -85,7 +66,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList(lowValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(lowValueSlot)).toEqual([adProviderLaterMock]);
 	});
 
 	it('getProviderList returns [Later] for NZ for both high and low value slots (if evolve slot config accepts)', function () {
@@ -102,11 +83,11 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList(lowValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock NZ');
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock NZ');
+		expect(adConfig.getProviderList(lowValueSlot)).toEqual([adProviderLaterMock]);
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock]);
 	});
 
-	it('getProviderList to return [GPT, Later] for NZ (if evolve slot config does not accept)', function () {
+	it('getProviderList returns [GPT, Later] for NZ (if evolve slot config does not accept)', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo('NZ'),
@@ -120,10 +101,10 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderGptMock, adProviderLaterMock], 'adProviderGptMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderGptMock, adProviderLaterMock]);
 	});
 
-	it('getProviderList to return [Later] when adContext.providers.sevenOneMedia = true in HVC', function () {
+	it('getProviderList returns [Later] when adContext.providers.sevenOneMedia = true in HVC', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo(),
@@ -137,10 +118,10 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock]);
 	});
 
-	it('getProviderList to return [Later] when wgAdProviderSevenOneMedia = true in PL', function () {
+	it('getProviderList returns [Later] when wgAdProviderSevenOneMedia = true in PL', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo('PL'),
@@ -154,10 +135,10 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock]);
 	});
 
-	it('getProviderList to return [Later] when wgAdProviderSevenOneMedia = true in NZ', function () {
+	it('getProviderList returns [Later] when wgAdProviderSevenOneMedia = true in NZ', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo('NZ'),
@@ -171,10 +152,10 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock]);
 	});
 
-	it('getProviderList to return [] when wgShowAds = false', function () {
+	it('getProviderList returns [] when wgShowAds = false', function () {
 		var geoMock = mockGeo(),
 			adConfig = modules['ext.wikia.adEngine.adConfig'](
 				logMock,
@@ -216,6 +197,6 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock]);
 	});
 });

@@ -1,29 +1,14 @@
 /*global define*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
-	'wikia.cache',
-	'wikia.geo',
-	'wikia.log',
-	'wikia.window',
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adLogicHighValueCountry',
-	'ext.wikia.adEngine.gptHelper',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker'
-], function (
-	cacheStorage,
-	geo,
-	log,
-	window,
-	adContext,
-	adLogicHighValueCountry,
-	gptHelper,
-	factory,
-	slotTweaker
-) {
+	'ext.wikia.adEngine.slotTweaker',
+	'wikia.log'
+], function (factory, slotTweaker, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
+		gptFlushed = false,
 		slotMap = {
 			CORP_TOP_LEADERBOARD:       {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			CORP_TOP_RIGHT_BOXAD:       {size: '300x250,300x600,300x1050', loc: 'top'},
@@ -58,17 +43,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			PREFOOTER_RIGHT_BOXAD:      {size: '300x250', loc: 'footer'},
 			TOP_LEADERBOARD:            {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'},
-			GPT_FLUSH: 'flushonly'
+			GPT_FLUSH:                  {skipCall: true}
 		},
-		forgetAdsShownAfterTime = 3600, // an hour
-		country = geo.getCountryCode(),
-		now = window.wgNow || new Date(),
-		maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country),
-		isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country),
-		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
-		gptFlushed = false,
-		alwaysCallDart = adContext.getContext().opts.alwaysCallDart,
-
 		gptConfig = { // slots to use SRA with
 			CORP_TOP_LEADERBOARD: 'wait',
 			HUB_TOP_LEADERBOARD:  'wait',
@@ -79,153 +55,29 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			TOP_RIGHT_BOXAD:      'flush',
 			HOME_TOP_RIGHT_BOXAD: 'flush',
 			GPT_FLUSH:            'flushonly'
-		},
+		};
 
-		factoryFillInSlot = factory.getFillInSlot(logGroup, 'gpt', slotMap, {
-			noFlush: true
-		});
+	return factory.createProvider(
+		logGroup,
+		'DirectGpt',
+		'gpt',
+		slotMap,
+		{
+			beforeSuccess: function (slotName) {
+				slotTweaker.removeDefaultHeight(slotName);
+				slotTweaker.removeTopButtonIfNeeded(slotName);
+				slotTweaker.adjustLeaderboardSize(slotName);
+			},
+			shouldFlush: function (slotName) {
+				log(['shouldFlush', slotName]);
 
-	// Private methods
+				if (gptConfig[slotName] === 'flushonly' || gptConfig[slotName] === 'flush') {
+					gptFlushed = true; // Setting the module-scope var here
+				}
 
-	function incrementItemInStorage(storageKey) {
-		log('incrementItemInStorage ' + storageKey, 'debug', logGroup);
-
-		var numCallForSlot = cacheStorage.get(storageKey, now) || 0;
-
-		numCallForSlot += 1;
-		cacheStorage.set(storageKey, numCallForSlot, forgetAdsShownAfterTime, now);
-
-		return numCallForSlot;
-	}
-
-	function getStorageKey(param, slotname) {
-		return 'dart_' + param + '_' + slotname;
-	}
-
-	/**
-	 * Flush GPT ads
-	 *
-	 * This function will cause all ads pushed to GPT to be fetched and rendered.
-	 * All other ads will auto-flush because the gptFlush variable is set to true.
-	 */
-	function flushGpt() {
-		log('flushGpt', 'debug', logGroup);
-
-		gptFlushed = true;
-		gptHelper.flushAds();
-	}
-
-	/**
-	 * Given we're considering calling DART (right country, right slot), should we?
-	 *
-	 * @param slotname
-	 * @returns {boolean}
-	 */
-	function shouldCallDart(slotname) {
-		log(['shouldCallDart', slotname], 'debug', logGroup);
-
-		var noAdLastTime = cacheStorage.get(getStorageKey('noad', slotname), now) || false,
-			numCallForSlot = cacheStorage.get(getStorageKey('calls', slotname), now) || 0;
-
-		// Show INVISIBLE_SKIN when leaderboard was to be shown
-		if (slotname === 'INVISIBLE_SKIN') {
-			if (leaderboardCalled) {
-				return true;
+				log(['shouldFlush', slotName, gptFlushed]);
+				return gptFlushed;
 			}
 		}
-
-		// Always have an ad for MODAL_INTERSTITIAL
-		if (slotname.match(/^MODAL_INTERSTITIAL/)) {
-			return true;
-		}
-
-		// Check if there was ad last time
-		// If not, check if desired number of DART calls were made
-		if (noAdLastTime && numCallForSlot >= maxCallsToDART) {
-			log('There was no ad for this slot last time and reached max number of calls to DART', 'debug', logGroup);
-			log({slot: slotname, numCalls: numCallForSlot, maxCalls: maxCallsToDART, geo: country}, 'debug', logGroup);
-			return false;
-		}
-
-		if (slotname.search('LEADERBOARD') > -1) {
-			leaderboardCalled = true;
-		}
-		return true;
-	}
-
-	// Public methods
-
-	function canHandleSlot(slotname) {
-		log(['canHandleSlot', slotname], 'debug', logGroup);
-
-		if (!slotMap[slotname]) {
-			log(['canHandleSlot', slotname, 'no DART for this slot', false], 'info', logGroup);
-			return false;
-		}
-
-		if (alwaysCallDart) {
-			log(['canHandleSlot', slotname, 'always calling DART', true], 'info', logGroup);
-			return true;
-		}
-
-		if (adContext.getContext().forceProviders.directGpt) {
-			log(['canHandleSlot', slotname, 'forced through adContext', true], 'info', logGroup);
-			return true;
-		}
-
-		if (!isHighValueCountry) {
-			log(['canHandleSlot', slotname, 'no high value country', false], 'info', logGroup);
-			return false;
-		}
-
-		if (gptConfig[slotname] === 'flushonly') {
-			return true;
-		}
-
-		var canHandle = shouldCallDart(slotname);
-
-		if (!canHandle && gptConfig[slotname] === 'flush') {
-			flushGpt();
-		}
-
-		return canHandle;
-	}
-
-	function fillInSlot(slotName, success, hop) {
-		log(['fillInSlot', slotName], 'debug', logGroup);
-
-		var noAdStorageKey = getStorageKey('noad', slotName),
-			numCallForSlotStorageKey = getStorageKey('calls', slotName);
-
-		if (gptConfig[slotName] === 'flushonly') {
-			flushGpt();
-			success();
-			return;
-		}
-
-		incrementItemInStorage(numCallForSlotStorageKey);
-		cacheStorage.del(noAdStorageKey);
-
-		factoryFillInSlot(slotName, function (adInfo) {
-			// Success
-			slotTweaker.removeDefaultHeight(slotName);
-			slotTweaker.removeTopButtonIfNeeded(slotName);
-			slotTweaker.adjustLeaderboardSize(slotName);
-			success(adInfo);
-		}, function (adInfo) {
-			// Hop
-			cacheStorage.set(noAdStorageKey, true, forgetAdsShownAfterTime, now);
-			hop(adInfo);
-		});
-
-		if (gptConfig[slotName] === 'flush' || gptFlushed) {
-			flushGpt();
-		}
-	}
-
-	return {
-		name: 'DirectGpt',
-		fillInSlot: fillInSlot,
-		canHandleSlot: canHandleSlot
-	};
+	);
 });
