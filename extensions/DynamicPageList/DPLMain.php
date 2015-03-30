@@ -2892,14 +2892,14 @@ class DPLMain {
 			switch ($DPLCacheStorage) {
 				case 'files':
 					if ( !is_writeable( $cacheFile ) ) {
-						self::mkdirr( dirname( $cacheFile ) );
+						wfMkdirParents( dirname( $cacheFile ) );
 					} elseif ( ( $bDPLRefresh ||
 							$wgRequest->getVal( 'action', 'view' ) == 'submit' ) &&
 						strpos( $DPLCache, '/' ) > 0 && strpos( $DPLCache, '..' ) === false
 					) {
 						// if the cache file contains a path and the user requested a refresh (or saved the file) we delete all brothers
-						self::rmdirr( dirname( $cacheFile ) );
-						mkdir( dirname( $cacheFile ) );
+						wfRecursiveRemoveDir( dirname( $cacheFile ) );
+						wfMkdirParents( dirname( $cacheFile ) );
 					}
 					$cFile = fopen( $cacheFile, 'w' );
 					fwrite( $cFile, $originalInput );
@@ -3100,32 +3100,6 @@ class DPLMain {
 		if ($t<2*86400) return "1 day";
 	    return floor($t/86400). ' days';
     }
-
-	private static function rmdirr($dirname) {
-		if (!file_exists($dirname)) return false;
-		if (is_file($dirname) || is_link($dirname)) return unlink($dirname);
-		$dir = dir($dirname);
-		while (false !== $entry = $dir->read()) {
-			if ($entry == '.' || $entry == '..') continue;
-			self::rmdirr($dirname . DIRECTORY_SEPARATOR . $entry);
-		}
-		$dir->close();
-		return rmdir($dirname);
-	}
-
-	private static function mkdirr($pathname) {
-		if (is_dir($pathname) || empty($pathname)) return true;
-		$pathname = str_replace(array('/', ''), DIRECTORY_SEPARATOR, $pathname);
-		if (is_file($pathname)) {
-			trigger_error('mkdirr() File exists', E_USER_WARNING);
-			return false;
-		}
-		$next_pathname = substr($pathname, 0, strrpos($pathname, DIRECTORY_SEPARATOR));
-		if (self::mkdirr($next_pathname)) {
-			if (!file_exists($pathname)) return mkdir($pathname);
-		}
-		return  false;
-	}
 
 	private static function resolveUrlArg($input,$arg) {
 		global $wgRequest;
