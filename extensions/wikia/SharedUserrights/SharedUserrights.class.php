@@ -134,7 +134,8 @@ class UserRights {
 					'ufg_user'  => $user->getID(),
 					'ufg_group' => $group,
 				],
-				__METHOD__
+				__METHOD__,
+				array( 'IGNORE' )
 		);
 
 		WikiaDataAccess::cachePurge( self::getMemcKey( $user ) );
