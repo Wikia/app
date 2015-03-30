@@ -89,7 +89,7 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	 * e.g. [ 1234 => [ 177 => 5500 ] ] That means user with id 1234 made 5500 edits on wiki with 177 id
 	 */
 	protected function formatUserEditsResult( $oUserEditsResult ) {
-		if ( empty( $oUserEditsResult ) ) {
+		if ( empty( $oUserEditsResult ) || empty( $oUserEditsResult->Results ) ) {
 			return [];
 		}
 
