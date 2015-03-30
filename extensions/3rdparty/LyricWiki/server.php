@@ -2126,7 +2126,7 @@ function lw_tracksToWiki($artistName, $songs){
 ////
 function lw_fmtArtist($artist){
 	$retVal = rawurldecode(ucwords($artist));
-	$retVal = preg_replace('/([-\("\.])([a-z])/e', '"$1".strtoupper("$2")', $retVal);
+	$retVal = preg_replace_callback('/([-\("\.])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $retVal);
 	$retVal = str_replace(" ", "_", $retVal);
 	return $retVal;
 } // end lw_fmtArtist()
@@ -2141,7 +2141,7 @@ function lw_fmtAlbum($album,$year){
 ////
 function lw_fmtSong($song){
 	$retVal = rawurldecode(ucwords($song));
-	$retVal = preg_replace('/([-\("\.])([a-z])/e', '"$1".strtoupper("$2")', $retVal);
+	$retVal = preg_replace_callback('/([-\("\.])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $retVal);
 	$retVal = str_replace(" ", "_", $retVal);
 	return $retVal;
 } // end lw_fmtSong()
@@ -2181,10 +2181,10 @@ function lw_getTitle($artist, $song='', $applyUnicode=true, $allowAllCaps=true){
 	}
 
 	$title = str_replace("|", "/", $title); # TODO: Figure out if this is the right solution.
-	$title = preg_replace('/([-\("\.\/:_])([a-z])/e', '"$1".strtoupper("$2")', $title);
-	$title = preg_replace('/\b(O)[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.  Does it to "O'Riley" but not "I'm" or "Don't"
-	$title = preg_replace('/( \()[\']([a-z])/ei', '"$1".strtoupper("\'$2")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
-	$title = preg_replace('/ [\']([a-z])/ei', '" ".strtoupper("\'$1")', $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
+	$title = preg_replace_callback('/([-\("\.\/:_])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $title);
+	$title = preg_replace_callback('/\b(O)[\']([a-z])/i', function($m){ return $m[1].strtoupper("'".$m[2]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.  Does it to "O'Riley" but not "I'm" or "Don't"
+	$title = preg_replace_callback('/( \()[\']([a-z])/i', function($m){ return $m[1].strtoupper("'".$m[2]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
+	$title = preg_replace_callback('/ [\']([a-z])/i', function($m){ return " ".strtoupper("'".$m[1]); }, $title); // single-quotes like above, but this is needed to avoid escaping the single-quote here.
 	$title = strtr($title, " ", "_"); // Warning: multiple-byte substitutions don't seem to work here, so smart-quotes can't be fixed in this line.
 
 	// Naming conventions. See: http://www.lyricwiki.org/LyricWiki:Page_names
