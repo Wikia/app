@@ -17,14 +17,7 @@ describe('iframeWriter module', function () {
 	mocks = {
 		document: {
 			createElement: function () {
-				return {
-					classList: {
-						classes: [],
-						add: function (className) {
-							this.classes.push(className);
-						}
-					}
-				};
+				return {};
 			}
 		},
 		log: noop
@@ -50,9 +43,9 @@ describe('iframeWriter module', function () {
 		var settings = testIframeSettings,
 			iframe;
 
-		settings.classes = ['class-one', 'class-two', 'calss-three'];
+		settings.classes = 'class-one,class-two,class-three';
 		iframe = getModule().getIframe(settings);
 
-		expect(iframe.classList.classes).toEqual(['class-one', 'class-two', 'calss-three']);
+		expect(iframe.className).toEqual('class-one,class-two,class-three');
 	});
 });
