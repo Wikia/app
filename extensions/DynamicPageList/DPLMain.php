@@ -2582,7 +2582,7 @@ class DPLMain {
             return $output;
         }
 
-        $sk = $wgUser->getSkin();
+        $sk =& $wgUser->getSkin();
         // generate title for Special:Contributions (used if adduser=true)
         $sSpecContribs = '[[:Special:Contributions|Contributions]]';
 
