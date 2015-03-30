@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {number} params.height - desired height of the Lightbox
 	 */
 	function show(params) {
-		log(['showNew', params], 'debug', logGroup);
+		log(['show', params], 'debug', logGroup);
 		var skin = adContext.getContext().targeting.skin;
 
 		if (skin === 'oasis') {
