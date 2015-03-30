@@ -48,6 +48,12 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 			$vars['wgGAUserIdHash'] = md5($user->getId() . $wgGAUserIdSalt);
 		}
 
+		global $wgDevelEnvironment, $wgStagingEnvironment;
+
+		// Enable collecting stats to staging accounts on all dev and staging environments
+		if ($wgDevelEnvironment || $wgStagingEnvironment) {
+			$vars['wgGaStaging'] = true;
+		}
 
 		return true;
 	}
