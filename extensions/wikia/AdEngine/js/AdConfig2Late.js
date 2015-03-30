@@ -51,7 +51,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'PREFOOTER_LEFT_BOXAD': true,
 			'PREFOOTER_RIGHT_BOXAD': true
 		},
-		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt,
 		decorators = adDecoratorTopInContent ? [adDecoratorTopInContent] : [];
 
 	function getProviderList(slotname) {
@@ -102,7 +101,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return evolveProvidersForSlot;
 		}
 
-		if (alwaysCallDart) {
+		if (!instantGlobals.wgSitewideDisableGpt) {
 			if (dartDirectBtfSlots[slotname]) {
 				return [adProviderDirectGpt, adProviderRemnantGpt, adProviderLiftium];
 			}

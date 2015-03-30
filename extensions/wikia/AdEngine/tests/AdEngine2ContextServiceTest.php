@@ -36,9 +36,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return [
 			[ ],
 
-			[ 'article', ['wgAdDriverAlwaysCallDart'], ['alwaysCallDart' => true] ],
 			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
-			[ 'article', ['wgAdDriverEnableRemnantGptMobile'], [], [], ['remnantGptMobile' => true] ],
 			[ 'article', ['wgAdDriverForceTurtleAd'], [], [], [], ['turtle' => true] ],
 			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
 			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
@@ -98,9 +96,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverSevenOneMediaOverrideSub2Site', $sevenOneMediaSub2Site );
 
 		// Flags
-		$this->mockGlobalVariable( 'wgAdDriverAlwaysCallDart', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
-		$this->mockGlobalVariable( 'wgAdDriverEnableRemnantGptMobile', false );
 		$this->mockGlobalVariable( 'wgAdDriverForceTurtleAd', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );

@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.adConfig', [
 
 		var context = adContext.getContext();
 
-		if (!adContext.getContext().opts.showAds) {
+		if (!context.opts.showAds) {
 			return [];
 		}
 

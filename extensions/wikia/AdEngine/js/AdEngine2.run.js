@@ -5,11 +5,9 @@
 require([
 	'wikia.log',
 	'wikia.window',
-	'wikia.instantGlobals',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
-	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
@@ -21,11 +19,9 @@ require([
 ], function (
 	log,
 	window,
-	instantGlobals,
 	adContext,
 	adEngine,
 	adConfig,
-	adLogicPageParams,
 	adTracker,
 	customAdsLoader,
 	wikiaDart,

@@ -55,12 +55,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.usePostScribe = true;
 		}
 
-		// Always call DART
-		// TODO: make mobile code compatible with desktop (currently one uses opts and the other providers)
-		// TODO: clean up in ADEN-1785
-		context.opts.alwaysCallDart = true;
-		context.providers.remnantGptMobile = true;
-
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();

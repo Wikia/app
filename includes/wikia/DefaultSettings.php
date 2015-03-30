@@ -1271,12 +1271,6 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgLoadLateAdsAfterPageLoad = false;
 
 /**
- * @name $wgAdDriverEnableRemnantGptMobile
- * Enables Remnant Gpti on Mobile experiment
- */
-$wgAdDriverEnableRemnantGptMobile = false;
-
-/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
@@ -1293,21 +1287,6 @@ $wgAdDriverUseAdsAfterInfobox = false;
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
 $wgAdDriverUseTaboola = false;
-
-/**
- * @name $wgAdDriverAlwaysCallDartInCountries
- * Disables the max N calls to DART and enables Remnant GPT call in those countries.
- * This is an instant globals, which means you set it only on community and it takes
- * effect on all wikis within 15 minutes.
- */
-$wgAdDriverAlwaysCallDartInCountries = [];
-
-/**
- * @name $wgAdDriverAlwaysCallDartInCountriesMobile
- * Enable Remnant GPT call in those countries on wikiamobile skin.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAlwaysCallDartInCountriesMobile = [];
 
 /**
  * @name $wgAdDriverUseTopInContentBoxad
