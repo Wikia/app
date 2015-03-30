@@ -257,7 +257,9 @@
 
 			var url = window.wgEditPageHandler.replace('$1', encodeURIComponent(window.wgEditedTitle));
 
-			if (skin) {
+			if (skin === 'mercury') {
+				url += '&type=mercury&skin=wikiamobile';
+			} else if (skin) {
 				url += '&type=full&skin=' + encodeURIComponent(skin);
 			}
 

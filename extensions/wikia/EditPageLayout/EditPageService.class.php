@@ -4,6 +4,8 @@
  * Service providing interface for generating previews and diffs
  */
 
+use Wikia\Util\GlobalStateWrapper;
+
 class EditPageService extends Service {
 
 	private $app;
@@ -45,7 +47,8 @@ class EditPageService extends Service {
 		return Html::rawElement( 'div', $realBodyAttribs, $html );
 	}
 
-	public function getPreview($wikitext) {
+	public function getPreview($wikitext, $asJson = false) {
+
 		// TODO: use wgParser here because some parser hooks initialize themselves on wgParser (should on provided parser instance)
 		global $wgParser, $wgUser, $wgRequest;
 		wfProfileIn(__METHOD__);
@@ -65,26 +68,24 @@ class EditPageService extends Service {
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
 		$wikitext = $wgParser->preSaveTransform($wikitext, $this->mTitle, $this->app->getGlobal('wgUser'), $parserOptions);
 
-		// parse wikitext using MW parser
-		$html = $wgParser->parse($wikitext, $this->mTitle, $parserOptions)->getText();
+		$title = $this->mTitle;
+		$wrapper = new GlobalStateWrapper( ['wgArticleAsJson' => $asJson] );
+		$wrapper->wrap( function () use ( &$out, $wgParser, $wikitext, $title, $parserOptions ) {
+			$out = $wgParser->parse( $wikitext, $title, $parserOptions )->getText();
+		});
 
-		$html = EditPageService::wrapBodyText($this->mTitle, $wgRequest, $html);
+		if ( !$asJson ) {
+			$out = EditPageService::wrapBodyText($this->mTitle, $wgRequest, $out);
+		}
 
 		// we should also render categories and interlanguage links
 		$parserOutput = $wgParser->getOutput();
 		$catbox = $this->renderCategoryBoxFromParserOutput($parserOutput);
 		$interlanglinks = $this->renderInterlangBoxFromParserOutput($parserOutput);
 
-		/**
-		 * bugid: 47995 -- Treat JavaScript and CSS as raw text wrapped in <pre> tags
-		 * We still rely on the parser for other stuff
-		 */
-		if ( $this->mTitle->isCssOrJsPage() ) {
-			$html = '<pre>' . htmlspecialchars( $originalWikitext ) . '</pre>';
-		}
-
 		wfProfileOut(__METHOD__);
-		return array( $html, $catbox, $interlanglinks );
+
+		return array( $out, $catbox, $interlanglinks );
 	}
 
 	public function getDiff($wikitext, $section = '') {

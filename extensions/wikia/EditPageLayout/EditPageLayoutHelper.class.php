@@ -120,6 +120,11 @@ class EditPageLayoutHelper {
 		$this->addJsVariableRef( 'wgEditPageHasEditPermissionError', $this->editPage->mHasPermissionError );
 		$this->addJsVariableRef( 'wgEditPageSection', $this->editPage->section );
 
+		// At the moment, Mercury is disabled for logged in users
+		if ( $this->app->wg->EditPreviewMercury && !$this->app->wg->User->isLoggedIn() ) {
+			$this->addJsVariable( 'wgEnableMercuryPreview', true );
+		}
+
 		// data for license module (BugId:6967)
 		$titleLicensing = GlobalTitle::newFromText( 'Community_Central:Licensing', null, 177 );
 		$this->addJsVariable( 'wgEditPageLicensingUrl', $titleLicensing->getFullUrl() );
@@ -322,6 +327,9 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/modules/Templates.js',
 			'extensions/wikia/EditPageLayout/js/modules/ToolbarMediawiki.js',
 			'extensions/wikia/EditPageLayout/js/modules/ToolbarWidescreen.js',
+			// >> preview module
+			'resources/wikia/modules/iframeWriter.js',
+			'extensions/wikia/EditPreview/js/preview.js',
 		);
 	}
 }
