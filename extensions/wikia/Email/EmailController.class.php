@@ -118,6 +118,7 @@ class EmailController extends \WikiaController {
 	 */
 	public function main() {
 		$this->response->setVal( 'content', $this->getVal( 'content' ) );
+		$this->response->setVal( 'footerMessages', $this->getVal( 'footerMessages' ) );
 		$this->response->setVal( 'fancyHubLinks', true );
 	}
 
@@ -197,10 +198,22 @@ class EmailController extends \WikiaController {
 		$html = $this->app->renderView(
 			get_class( $this ),
 			'main',
-			[ 'content' => $moduleBody ]
+			[
+				'content' => $moduleBody,
+				'footerMessages' => $this->getFooterMessages()
+
+			]
 		);
 
 		return $html;
+	}
+
+	protected function getFooterMessages() {
+		return [
+			wfMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )->parse(),
+			wfMessage( 'emailext-update-frequency' )->parse(),
+			wfMessage( 'emailext-unsubscribe', 'http://TODOADDURLHERE.com' )->parse(),
+		];
 	}
 
 	protected function findUserFromRequest( $paramName, \User $default = null ) {
@@ -237,9 +250,9 @@ class EmailController extends \WikiaController {
 	 * @throws \Email\Check
 	 */
 	public function assertCanEmail() {
+		$this->assertUserHasEmail();
 		$this->assertUserWantsEmail();
 		$this->assertUserNotBlocked();
-		$this->assertUserHasEmail();
 	}
 
 	public function assertGoodStatus( \Status $status ) {
