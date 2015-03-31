@@ -24,6 +24,13 @@ class SendGridPostbackV3Controller extends WikiaApiController {
 		if (empty($events)) {
 			Wikia::log(__METHOD__, false, "No data to process", true);
 			wfProfileOut( __METHOD__ );
+			return;
+		}
+
+		if (!is_array($events)) {
+			Wikia::log(__METHOD__, false, "Supplied data is not an array (JSON begins with): " . @substr($data,0,100), true);
+			wfProfileOut( __METHOD__ );
+			return;
 		}
 
 		foreach ($events as $event) {
