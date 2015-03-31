@@ -19,7 +19,6 @@ class WatchedPageController extends EmailController {
 
 	private $timeStamp;
 
-
 	public function getSubject() {
 		return wfMessage( 'emailext-watchedpage-subject', $this->title->getPrefixedText() );
 	}
@@ -104,13 +103,14 @@ class WatchedPageController extends EmailController {
 	}
 
 	private function getSalutation() {
-		return wfMessage( 'emailext-watchedpage-salutation', $this->targetUser->getName() );
+		return wfMessage( 'emailext-watchedpage-salutation',
+			$this->targetUser->getName() )->inLanguage( $this->getTargetLang() )->text();
 	}
 
 	private function getArticleEditedMessage() {
 		return wfMessage( 'emailext-watchedpage-article-edited',
 			$this->title->getFullURL(),
-			$this->title->getPrefixedText() )->parse();
+			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
 	}
 
 	private function getEditorProfilePage() {
@@ -124,7 +124,7 @@ class WatchedPageController extends EmailController {
 		if ( $this->currentUser->isLoggedIn() )	 {
 			return $this->currentUser->getName();
 		}
-		return wfMessage( "emailext-watchedpage-anonymous-editor" )->text();
+		return wfMessage( "emailext-watchedpage-anonymous-editor" )->inLanguage( $this->getTargetLang() )->text();
 	}
 
 	// TODO Make sure we want an anon avatar
@@ -136,11 +136,11 @@ class WatchedPageController extends EmailController {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}
-		return wfMessage( 'enotif_no_summary' )->text();
+		return wfMessage( 'enotif_no_summary' )->inLanguage( $this->getTargetLang() )->text();
 	}
 
 	private function getCompareChangesLabel() {
-		return wfMessage( 'emailext-watchedpage-diff-button-text' )->text();
+		return wfMessage( 'emailext-watchedpage-diff-button-text' )->inLanguage( $this->getTargetLang() )->text();
 	}
 
 	// TODO Make sure current revision is always one more than the old id
@@ -149,11 +149,15 @@ class WatchedPageController extends EmailController {
 	}
 
 	private function getHeadOver() {
-		return wfMessage( 'emailext-watchedpage-article-link-text', $this->title->getFullURL(), $this->title->getPrefixedText() )->parse();
+		return wfMessage( 'emailext-watchedpage-article-link-text',
+			$this->title->getFullURL(),
+			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
 	}
 
 	private function getAllChanges() {
-		return wfMessage( 'emailext-watchedpage-view-all-changes', $this->title->getFullURL( 'action=history' ), $this->title->getPrefixedText() )->parse();
+		return wfMessage( 'emailext-watchedpage-view-all-changes',
+			$this->title->getFullURL( 'action=history' ),
+			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
 	}
 
 	private function getTimeStamp() {

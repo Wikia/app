@@ -29,8 +29,7 @@ class ForgotPasswordController extends EmailController {
 	}
 
 	protected function getSubject() {
-		$lang = $this->getTargetLang();
-		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $lang )->text();
+		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $this->getTargetLang() )->text();
 	}
 
 	/**
@@ -40,7 +39,6 @@ class ForgotPasswordController extends EmailController {
 	 */
 	public function body() {
 		$targetUser = $this->targetUser;
-		$lang = $this->getTargetLang();
 
 		wfRunHooks( 'User::mailPasswordInternal', [
 			$this->currentUser,
@@ -53,9 +51,9 @@ class ForgotPasswordController extends EmailController {
 		$targetUser->saveSettings();
 
 		$this->response->setData( [
-			'greeting' => wfMessage( 'emailext-password-email-greeting', $targetUser->getName() )->inLanguage( $lang )->text(),
-			'content' => wfMessage( 'emailext-password-email-content', $tempPass )->inLanguage( $lang )->text(),
-			'signature' => wfMessage( 'emailext-password-email-signature' )->inLanguage( $lang )->text(),
+			'greeting' => wfMessage( 'emailext-password-email-greeting', $targetUser->getName() )->inLanguage( $this->getTargetLang() )->text(),
+			'content' => wfMessage( 'emailext-password-email-content', $tempPass )->inLanguage( $this->getTargetLang() )->text(),
+			'signature' => wfMessage( 'emailext-password-email-signature' )->inLanguage( $this->getTargetLang() )->text(),
 		] );
 	}
 
