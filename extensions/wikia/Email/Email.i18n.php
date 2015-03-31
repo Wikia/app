@@ -30,6 +30,7 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 
 	// Common email template messages (see i18n directory for email-specific messages)
 	'emailext-fanverse-tagline' => 'The Social Universe for Fans by Fans',
+	'emailext-recipient-notice' => 'Email sent to $1 from Wikia',
 	'emailext-update-frequency' => 'To change which emails you receive or their frequency, please visit your [{{fullurl:Special:Preferences}} Preferences] page.',
 	'emailext-unsubscribe' => 'To unsubscribe from all Wikia emails, click [$1 here].',
 ];
@@ -59,6 +60,7 @@ $messages['qqq'] = [
 
 	// Common email template messages (see i18n directory for email-specific messages)
 	'emailext-fanverse-tagline' => 'Trademarked tagline for Wikia.',
+	'emailext-watchedpage-notice' => 'Informs the user who the intended recipient of the email is. $1 is the recipient\'s email address.',
 	'emailext-update-frequency' => 'Provides a link for users to update their email preferences',
 	'emailext-unsubscribe' => 'Provides a link for users to opt out of emails altogether. $1 is the unsubscribe link.',
 ];
