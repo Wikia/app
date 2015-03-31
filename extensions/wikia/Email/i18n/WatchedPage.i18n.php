@@ -10,7 +10,6 @@ $messages['en'] = [
 	'emailext-watchedpage-view-all-changes' => 'View all changes to [$1 $2]',
 	'emailext-watchedpage-unfollow-text' => 'No longer interested in receiving these updates?',
 	'emailext-watchedpage-unfollow-link-text' => 'Click [$1 here] to unfollow $2 on {{SITENAME}}.',
-	'emailext-watchedpage-recipient-notice' => 'Email sent to $1 from Wikia',
 ];
 
 $messages['qqq'] = [
@@ -22,5 +21,4 @@ $messages['qqq'] = [
 	'emailext-watchedpage-view-all-changes' => 'Call to action to visit history of the article page. $1 -> article history url, $2 -> article title',
 	'emailext-watchedpage-unfollow-text' => 'Asks the user if they want to stop following this page. Question is answered with "emailext-watchedpage-unfollow-link-text"',
 	'emailext-watchedpage-unfollow-link-text' => 'Follows question asked in "emailext-watchedpage-unfollow-text". $1 -> unfollow url, $2 article title',
-	'emailext-watchedpage-recipient-notice' => 'Informs the user who the intended recipient of the email is. $1 is the recipient\'s email address.',
 ];
