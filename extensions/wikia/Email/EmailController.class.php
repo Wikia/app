@@ -216,6 +216,10 @@ class EmailController extends \WikiaController {
 		];
 	}
 
+	/**
+	 * TODO Move this into unsubscribe extension?
+	 * @return string
+	 */
 	private function getUnsubscribeLink() {
 		$params = [
 			'email' => $this->targetUser->getEmail(),
