@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 	 * Use Juice to inline css from an external style sheet
 	 * @see https://github.com/Automattic/juice
 	 */
-	grunt.registerTask('inlineCSS', 'Replaces css selector attributes with style attributes', function () {
+	grunt.registerTask('inlineCSS', 'Replaces css classes and IDs with style attributes', function () {
 		var src = '../templates/src';
 
 		grunt.file.recurse(src, function (absPath, rootDir, subDir, fileName) {
