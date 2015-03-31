@@ -31,7 +31,7 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 	// Common email template messages (see i18n directory for email-specific messages)
 	'emailext-fanverse-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-recipient-notice' => 'Email sent to $1 from Wikia',
-	'emailext-update-frequency' => 'To change which emails you receive or their frequency, please visit your [{{fullurl:Special:Preferences}} Preferences] page.',
+	'emailext-update-frequency' => 'To change which emails you receive or their frequency, please visit your [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Preferences] page.',
 	'emailext-unsubscribe' => 'To unsubscribe from all Wikia emails, click [$1 here].',
 ];
 
