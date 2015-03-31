@@ -43,9 +43,9 @@ describe('iframeWriter module', function () {
 		var settings = testIframeSettings,
 			iframe;
 
-		settings.classes = 'class-one,class-two,class-three';
+		settings.classes = 'class-one class-two class-three';
 		iframe = getModule().getIframe(settings);
 
-		expect(iframe.className).toEqual('class-one,class-two,class-three');
+		expect(iframe.className).toEqual('class-one class-two class-three');
 	});
 });
