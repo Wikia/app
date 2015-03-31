@@ -1,12 +1,91 @@
 <html>
 <head>
 	<title>Email!</title>
+	<link rel="stylesheet" href="../../styles/common.css" />
 	<link rel="stylesheet" href="../../styles/main.css" />
 </head>
 <body>
 
-<div class="content">
-	{{{content}}}
+<div class="main-wrapper">
+	<table class="head-wrap">
+		<tr>
+			<td></td>
+			<td class="container">
+				<div class="header content">
+					<a href="http://www.wikia.com" class="logo">
+						<img src="http://vignette3.wikia.nocookie.net/wikianewsletter/images/8/89/Wikia.gif/revision/latest?cb=20150330185243" data-inline-ignore alt="Wikia">
+					</a>
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<table class="body-wrap">
+		<tr>
+			<td></td>
+			<td class="container">
+				<div class="content main-content">
+					{{{content}}}
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<table class="footer-wrap">
+		<tr>
+			<td></td>
+			<td class="container">
+				<div class="footer content">
+					<p><img src="http://vignette1.wikia.nocookie.net/wikianewsletter/images/1/17/Fans-by-Fans.gif/revision/latest?cb=20150330215152" data-inline-ignore></p>
+					<div class="hubs">
+						<a href="http://comicshub.wikia.com/">
+							{{#fancyHubLinks}}<img src="http://vignette1.wikia.nocookie.net/wikianewsletter/images/e/e3/Comics.gif/revision/latest?cb=20150330185129" data-inline-ignore class="hub-icon">{{/fancyHubLinks}}
+							Comics
+						</a>
+						<a href="http://gameshub.wikia.com/">
+							{{#fancyHubLinks}}<img src="http://vignette1.wikia.nocookie.net/wikianewsletter/images/e/e8/Games.gif/revision/latest?cb=20150330185144" data-inline-ignore class="hub-icon">{{/fancyHubLinks}}
+							Games
+						</a>
+						<a href="http://movieshub.wikia.com/">
+							{{#fancyHubLinks}}<img src="http://vignette1.wikia.nocookie.net/wikianewsletter/images/b/bf/Movies.gif/revision/latest?cb=20150330185202" data-inline-ignore class="hub-icon">{{/fancyHubLinks}}
+							Movies
+						</a>
+						<a href="http://lifestylehub.wikia.com/">
+							{{#fancyHubLinks}}<img src="http://vignette4.wikia.nocookie.net/wikianewsletter/images/6/60/Lifestyle.gif/revision/latest?cb=20150330185152" data-inline-ignore class="hub-icon">{{/fancyHubLinks}}
+							Lifestyle
+						</a>
+						<a href="http://musichub.wikia.com/">
+							{{#fancyHubLinks}}<img src="http://vignette4.wikia.nocookie.net/wikianewsletter/images/f/fb/Music.gif/revision/latest?cb=20150330185211" data-inline-ignore class="hub-icon">{{/fancyHubLinks}}
+							Music
+						</a>
+						<a href="http://bookshub.wikia.com/">
+							{{#fancyHubLinks}}<img src="http://vignette4.wikia.nocookie.net/wikianewsletter/images/c/c2/Books.gif/revision/latest?cb=20150330185117" data-inline-ignore class="hub-icon">{{/fancyHubLinks}}
+							Books
+						</a>
+						<a href="http://tvhub.wikia.com/">
+							{{#fancyHubLinks}}<img src="http://vignette1.wikia.nocookie.net/wikianewsletter/images/c/c5/TV.gif/revision/latest?cb=20150330185219" data-inline-ignore class="hub-icon">{{/fancyHubLinks}}
+							TV
+						</a>
+					</div>
+					<p class="social-links">
+						<a href="https://twitter.com/wikia" >
+							<img src="http://vignette3.wikia.nocookie.net/wikianewsletter/images/8/88/Twitter.gif/revision/latest?cb=20150330185235" data-inline-ignore alt="Twitter">
+						</a>
+						<a href="https://www.facebook.com/wikia">
+							<img src="http://vignette2.wikia.nocookie.net/wikianewsletter/images/a/ad/Facebook.gif/revision/latest?cb=20150330185226" data-inline-ignore alt="Facebook">
+						</a>
+						<a href="https://www.youtube.com/user/wikia">
+							<img src="http://vignette4.wikia.nocookie.net/wikianewsletter/images/1/12/You-Tube.gif/revision/latest?cb=20150330185252" data-inline-ignore alt="YouTube">
+						</a>
+					</p>
+
+					{{#footerMessages}}
+						<p class="fine-print">{{.}}</p>
+					{{/footerMessages}}
+				</div>			</td>
+			<td></td>
+		</tr>
+	</table>
 </div>
 </body>
 </html>
