@@ -466,9 +466,6 @@ class EmailNotification {
 
 	private $composedCommon = false;
 
-	private $mailTargets = [];
-
-
 	/**
 	* @param $editor User object
 	* @param $title Title object
@@ -568,6 +565,13 @@ class EmailNotification {
 		$wl->updateWatch( $watchers, $this->timestamp );
 	}
 
+	/**
+	 * Check if there are either 1.) users watching the page, or 2.) the page which was
+	 * edited is a User Talk page and the owner of that page wants to receive notifications
+	 * when their User Talk page is changed.
+	 * @param array $watchers
+	 * @return bool
+	 */
 	private function shouldSendEmail( array $watchers ) {
 		global $wgUsersNotifiedOnAllChanges, $wgEnotifMinorEdits, $wgEnotifUserTalk;
 
@@ -579,7 +583,7 @@ class EmailNotification {
 			$sendEmail = false;
 			// Only send notification for non minor edits, unless $wgEnotifMinorEdits
 			if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
-				if ( $wgEnotifUserTalk && $this->isUserTalkPage() && $this->canSendUserTalkEmail( $this->editor, $this->title, $this->minorEdit ) ) {
+				if ( $wgEnotifUserTalk && $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
 					$sendEmail = true;
 				}
 			}
@@ -696,8 +700,8 @@ class EmailNotification {
 		# named variables when composing your notification emails while
 		# simply editing the Meta pages
 
-		$keys = array();
-		$postTransformKeys = array();
+		$keys = [];
+		$postTransformKeys = [];
 
 		if ( $this->oldid ) {
 			// WIKIA change, watchlist link tracking
@@ -732,7 +736,7 @@ class EmailNotification {
 
 		# <Wikia>
 		$keys['$ACTION'] = $this->action;
-
+		// Hook registered in FollowHelper -- used for blogposts and categoryAdd
 		wfRunHooks('MailNotifyBuildKeys', array( &$keys, $this->action, $this->otherParam ));
 		# </Wikia>
 
@@ -758,12 +762,19 @@ class EmailNotification {
 
 		# Now build message's subject and body
 		# <Wikia>
+		// ArticleComment -- updates subject and $keys['$PAGEEDITOR'] if anon editor
+		// EmailTemplatesHooksHelper -- updates subject if blogpost
+		// TopListHelper -- updates subject if title is toplist
 		wfRunHooks('ComposeCommonSubjectMail', array( $this->title, &$keys, &$subject, $this->editor ));
 		# </Wikia>
 		$subject = strtr( $subject, $keys );
 		$subject = MessageCache::singleton()->transform( $subject, false, null, $this->title );
 		$this->subject = strtr( $subject, $postTransformKeys );
 
+		// ArticleComment -- updates body and $keys['$PAGEEDITOR'] if anon editor
+		// EmailTemplatesHooksHelper -- changes body to blog post. EmailTemplates only enabled on community and messaging so this tranforms
+		//     any watched page email coming from Community to a blog post (I think)
+		// TopListHelper -- updates body if title is toplist
 		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ));
 		$body = strtr( $body, $keys );
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
@@ -804,12 +815,47 @@ class EmailNotification {
 	 * Call sendMails() to send any mails that were queued.
 	 * @param $user User
 	 */
-	function compose( $user ) {
+	private function compose( $user ) {
+		if ( $this->isArticlePageEdit() ) {
+			$this->sendUsingNewEmailExtension( $user );
+		} else {
+			$this->sendUsingUserMailer( $user );
+		}
+
+		wfRunHooks('NotifyOnPageChangeComplete', array( $this->title, $this->timestamp, &$user ));
+	}
+
+	/**
+	 * Returns whether the email notification is for a wathced articled page which has been edited.
+	 * If $this->action is empty it's an article page. The other possible values for action are
+	 * categoryadd, blogpost, and article_comment.
+	 * @return bool
+	 */
+	private function isArticlePageEdit() {
+		return empty( $this->action );
+	}
+
+	/**
+	 * Send a watched page email using the new Email extension.
+	 * @param $user User
+	 */
+	private function sendUsingNewEmailExtension( $user ) {
+		\F::app()->sendRequest( 'Email\Controller\WatchedPage', 'handle',
+			[
+				'targetUser' => $user->getName(),
+				'title' => $this->title,
+				'summary' => $this->summary,
+				'minorEdit' => $this->minorEdit,
+				'oldID' => $this->oldid,
+				'timeStamp' => $this->timestamp
+			]);
+	}
+
+	private function sendUsingUserMailer( $user ) {
 		if ( !$this->composedCommon ) {
 			$this->composeCommonMailtext();
 		}
 		$this->sendPersonalised( $user );
-		wfRunHooks('NotifyOnPageChangeComplete', array( $this->title, $this->timestamp, &$user ));
 	}
 
 	/**
@@ -854,12 +900,14 @@ class EmailNotification {
 			$body = array( 'text' => $body, 'html' => $bodyHTML );
 		}
 		# </Wikia>
-		return UserMailer::send( $to, $this->from, $this->subject, $body, $this->replyto );
+		UserMailer::send( $to, $this->from, $this->subject, $body, $this->replyto );
 	}
 
+	/**
+	 * Returns whether the edited page is a User Talk page.
+	 * @return bool
+	 */
 	private function isUserTalkPage() {
 		return $this->title->getNamespace() == NS_USER_TALK;
 	}
 } # end of class EmailNotification
-
-class UserMailerException extends Exception {}
