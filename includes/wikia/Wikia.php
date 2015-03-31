@@ -432,6 +432,11 @@ class Wikia {
 		 * and use wfDebug as well
 		 */
 		if (function_exists("wfDebug")) {
+			if ( $message instanceof Status ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( "Wikia::log \$message is a Status object", [
+					'exception' => new Exception(),
+				]);
+			}
 			wfDebug( $method . ": " . $message . "\n" );
 		} else {
 			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");

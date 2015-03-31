@@ -134,7 +134,9 @@ class UserRights {
 					'ufg_user'  => $user->getID(),
 					'ufg_group' => $group,
 				],
-				__METHOD__
+				__METHOD__,
+				// ignore duplicate key error which happens when removing a group from a user twice
+				[ 'IGNORE' ]
 		);
 
 		WikiaDataAccess::cachePurge( self::getMemcKey( $user ) );

@@ -30,6 +30,7 @@ class CeleryPurge {
 				$carry['vignette'][] = $item;
 			} elseif ( strstr($item, 'MercuryApi') !== false ) {
 				$carry['mercury'][] = $item;
+				$carry['mediawiki'][] = $item;  // TODO: we can remove this when mercury is only using internal cache
 			} else {
 				$carry['mediawiki'][] = $item;
 			}
