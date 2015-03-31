@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Video Service
@@ -11,6 +12,8 @@ class VideoService extends WikiaModel {
 	 * @return string error message or array( $videoTitle, $videoPageId, $videoProvider )
 	 */
 	public function addVideo( $url ) {
+		global $wgIsGhostVideo;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wg->User->isAllowed('videoupload') ) {
@@ -49,9 +52,21 @@ class VideoService extends WikiaModel {
 				$file = wfFindFile( $videoTitle );
 			}
 
-			// Add a default description if available and one doesn't already exist
-			$vHelper = new VideoHandlerHelper();
-			$vHelper->addDefaultVideoDescription( $file );
+			if ( !method_exists( $file, 'getTitle' ) ) {
+				WikiaLogger::instance()->error( '\VideoHandlerHelper->adDefaultVideoDescription() - File is empty', [
+					'exception' => new Exception(),
+					'url' => $url,
+					'title' => $title,
+					'videoTitle' => $videoTitle,
+					'videoPageId' => $videoPageId,
+					'videoProvider' => $videoProvider,
+					'wgIsGhostVideo' => $wgIsGhostVideo
+				] );
+			} else {
+				// Add a default description if available and one doesn't already exist
+				$vHelper = new VideoHandlerHelper();
+				$vHelper->addDefaultVideoDescription( $file );
+			}
 		} catch ( Exception $e ) {
 			wfProfileOut( __METHOD__ );
 			return $e->getMessage();
