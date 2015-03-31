@@ -17,28 +17,31 @@ class ExactTargetDeleteWikiTask extends ExactTargetTask {
 
 		// Retrieve city category mapping data for removal
 		$aCityCatMappingDataForRetrieve = $oHelper->prepareCityCatMappingDataExtensionForRetrieve( $aParams['city_id'] );
-		$this->info( 'RetrieveCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForRetrieve ) );
+		$sRetrieveLogHead = __METHOD__ . ' RetrieveCityCatMapping';
+		$this->info( $sRetrieveLogHead . ' ApiParams: ' . json_encode( $aCityCatMappingDataForRetrieve ) );
+
 		$oResults = $oApiDataExtension->retrieveRequest( $aCityCatMappingDataForRetrieve );
-		$this->info( 'RetrieveCityCatMapping' . ' OverallStatus: ' . $oResults->OverallStatus );
-		$this->info( 'RetrieveCityCatMapping' . ' Result: ' . json_encode( (array)$oResults ) );
+		$this->info( $sRetrieveLogHead . ' OverallStatus: ' . $oResults->OverallStatus );
+		$this->info( $sRetrieveLogHead . ' Result: ' . json_encode( (array)$oResults ) );
 
 		if ( $oResults->OverallStatus !== 'OK' ) {
 			throw new \Exception(
-				'Error in ' . 'RetrieveCityCatMapping' . ': ' . $oResults->OverallStatus
+				'Error in ' . $sRetrieveLogHead . ': ' . $oResults->OverallStatus
 			);
 		}
 
 		if ( isset( $oResults->Results ) ) {
 			// Delete city category mapping
 			$aCityCatMappingDataForDelete = $oHelper->prepareCityCatMappingDataExtensionForDelete( $oResults );
-			$this->info( 'DeleteCityCatMapping' . ' ApiParams: ' . json_encode( $aCityCatMappingDataForDelete ) );
+			$sDeleteCatLogHead = __METHOD__ . ' DeleteCityCatMapping';
+			$this->info( $sDeleteCatLogHead . ' ApiParams: ' . json_encode( $aCityCatMappingDataForDelete ) );
 			$oCityCatMappingDeleteResult = $oApiDataExtension->deleteRequest( $aCityCatMappingDataForDelete );
-			$this->info( 'DeleteCityCatMapping' . ' OverallStatus: ' . $oCityCatMappingDeleteResult->OverallStatus );
-			$this->info( 'DeleteCityCatMapping' . ' Result: ' . json_encode( (array)$oCityCatMappingDeleteResult ) );
+			$this->info( $sDeleteCatLogHead . ' OverallStatus: ' . $oCityCatMappingDeleteResult->OverallStatus );
+			$this->info( $sDeleteCatLogHead . ' Result: ' . json_encode( (array)$oCityCatMappingDeleteResult ) );
 
 			if ( $oCityCatMappingDeleteResult->OverallStatus === 'Error' ) {
 				throw new \Exception(
-					'Error in ' . 'DeleteCityCatMapping' . ': ' . $oCityCatMappingDeleteResult->Results->StatusMessage
+					'Error in ' . $sDeleteCatLogHead . ': ' . $oCityCatMappingDeleteResult->Results->StatusMessage
 				);
 			}
 		} else {
@@ -47,14 +50,15 @@ class ExactTargetDeleteWikiTask extends ExactTargetTask {
 
 		// Delete wiki data
 		$aWikiDataForDelete = $oHelper->prepareWikiDataExtensionForDelete( $aParams['city_id'] );
-		$this->info( 'DeleteWikiData' . ' ApiParams: ' . json_encode( $aWikiDataForDelete ) );
+		$sDeleteWikiLogHead = __METHOD__ . ' DeleteWikiData';
+		$this->info( $sDeleteWikiLogHead . ' ApiParams: ' . json_encode( $aWikiDataForDelete ) );
 		$oWikiDeleteResult = $oApiDataExtension->deleteRequest( $aWikiDataForDelete );
-		$this->info( 'DeleteWikiData' . ' OverallStatus: ' . $oWikiDeleteResult->OverallStatus );
-		$this->info( 'DeleteWikiData' . ' result: ' . json_encode( ( array )$oWikiDeleteResult ) );
+		$this->info( $sDeleteWikiLogHead . ' OverallStatus: ' . $oWikiDeleteResult->OverallStatus );
+		$this->info( $sDeleteWikiLogHead . ' result: ' . json_encode( ( array )$oWikiDeleteResult ) );
 
 		if ( $oWikiDeleteResult->OverallStatus === 'Error' ) {
 			throw new \Exception(
-				'Error in ' . 'DeleteWikiData' . ': ' . $oWikiDeleteResult->Results->StatusMessage
+				'Error in ' . $sDeleteWikiLogHead . ': ' . $oWikiDeleteResult->Results->StatusMessage
 			);
 		}
 

@@ -43,8 +43,8 @@ $messages['en'] = array(
 	"autocreatewiki-empty-field" => "Please complete this field.",
 	"autocreatewiki-bad-name" => "The name cannot contain special characters (like $ or @) and must be a single lower-case word without spaces.",
 	"autocreatewiki-invalid-wikiname" => "The name cannot contain special characters (like $ or @) and cannot be empty",
-	"autocreatewiki-violate-policy" => "This wiki name contains a word that violates our naming policy",
-	"autocreatewiki-name-taken" => "There’s already a wiki with this address. Start editing at <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> or choose another address.",
+	"autocreatewiki-violate-policy" => "This wikia name contains a word that violates our naming policy",
+	"autocreatewiki-name-taken" => "There’s already a wikia with this address. Start editing at <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> or choose another address.",
 	"autocreatewiki-name-too-short" => "This address is too short, choose an address with at least 3 characters.",
 	"autocreatewiki-name-too-long" => "This address is too long. Please choose an address with maximum 50 characters.",
 	"autocreatewiki-similar-wikis" => "Below are the wikis already created on this topic. We suggest editing one of them.",
@@ -138,7 +138,7 @@ All of the above links are a great place to start exploring, and have fun!
 -- [[User:$2|$3]] <staff />",
 // new wikis - special page
 
-	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,nl,no,pl,pt,pt-br,ru,zh',
+	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 );
 
 /** Message documentation (This is the name of the message documentation language code (qqq). Follow the rules of your languages and use small first letter if it doesn't capitalize language names always. It might be easier to translate it as "translation guidelines" or "translation help".)

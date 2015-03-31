@@ -405,7 +405,7 @@ var WikiaBar = {
 				action: action,
 				category: category,
 				label: label,
-				trackingMethod: 'ga',
+				trackingMethod: 'analytics',
 				value: value
 			}, params);
 		}

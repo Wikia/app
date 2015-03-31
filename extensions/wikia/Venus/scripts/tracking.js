@@ -11,7 +11,7 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function ($, win, tracker) 
 	// setup tracking functions
 	track = tracker.buildTrackingFunction({
 		action: tracker.ACTIONS.CLICK,
-		trackingMethod: 'ga'
+		trackingMethod: 'analytics'
 	});
 
 	function trackWithEventData(e) {

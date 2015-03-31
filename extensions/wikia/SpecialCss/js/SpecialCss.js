@@ -6,7 +6,7 @@ var trackSpecialCssClick = function ( action, label, value, params, event ) {
 		action: action,
 		browserEvent: event,
 		label: label,
-		trackingMethod: 'both',
+		trackingMethod: 'analytics',
 		value: value
 	}, params );
 };
@@ -17,7 +17,7 @@ $(function() {
 	// impressions
 	Wikia.Tracker.buildTrackingFunction({
 		category: 'special-css',
-		trackingMethod: 'both',
+		trackingMethod: 'analytics',
 		action: Wikia.Tracker.ACTIONS.IMPRESSION
 	});
 
