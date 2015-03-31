@@ -49,6 +49,14 @@ if ( !function_exists( 'version_compare' ) || version_compare( PHP_VERSION, '5.2
  */
 abstract class Maintenance {
 
+	// For use with the second argument to addOption()
+	const PARAM_REQUIRED = true;
+	const PARAM_OPTIONAL = false;
+
+	// For use with the third argument to addOption()
+	const PARAM_HAS_ARG = true;
+	const PARAM_IS_FLAG = false;
+
 	/**
 	 * Constants for DB access type
 	 * @see Maintenance::getDbType()
@@ -160,11 +168,11 @@ abstract class Maintenance {
 	 * Add a parameter to the script. Will be displayed on --help
 	 * with the associated description
 	 *
-	 * @param $name String: the name of the param (help, version, etc)
-	 * @param $description String: the description of the param to show on --help
-	 * @param $required Boolean: is the param required?
-	 * @param $withArg Boolean: is an argument required with this option?
-	 * @param $shortName String: character to use as short name
+	 * @param string $name : the name of the param (help, version, etc)
+	 * @param string $description : the description of the param to show on --help
+	 * @param bool $required : is the param required?
+	 * @param bool $withArg : is an argument required with this option?
+	 * @param string|bool $shortName : character to use as short name
 	 */
 	protected function addOption( $name, $description, $required = false, $withArg = false, $shortName = false ) {
 		$this->mParams[$name] = array( 'desc' => $description, 'require' => $required, 'withArg' => $withArg, 'shortName' => $shortName );
