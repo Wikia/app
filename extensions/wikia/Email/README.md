@@ -78,7 +78,9 @@ See [campaignmonitor.com's](https://www.campaignmonitor.com/css/) cheat sheet fo
 
 ### Grunt
 
-We're using [Grunt](http://gruntjs.com/) along with [Grunt Watch](https://github.com/gruntjs/grunt-contrib-watch) to manage the task of inlining CSS. When you begin development, `cd` into the `Email/scripts` folder, then: 
+We're using [Grunt](http://gruntjs.com/) along with [Grunt Watch](https://github.com/gruntjs/grunt-contrib-watch) to manage the task of inlining CSS. 
+
+First, make sure you have [NodeJS](https://nodejs.org/download/) and [Grunt](http://gruntjs.com/getting-started) installed. Then, when you begin development, `cd` into the `Email/scripts` folder, then: 
 
 * `npm install` (generally only needed once)
 * `grunt watch`

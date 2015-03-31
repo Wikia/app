@@ -14,23 +14,24 @@ body {
 }
 
 .main-wrapper {
-	background-color: #E6EBF2;
+	background-color: #e6ebf2;
 }
 
 .main-content {
-	background-color: #FFF;
+	background-color: #fff;
 	border-bottom: 1px solid #c5ced9;
 	border-top: 1px solid #c5ced9;
+	padding: 50px 40px 80px 40px;
 }
 
 .container {
-	display: block !important;
-	max-width: 600px !important;
-	margin: 0 auto !important;
-	clear: both !important;
+	display: block;
+	max-width: 600px;
+	margin: 0 auto;
+	clear: both;
 }
 
-.head-wrap {
+.header-wrap, .footer-wrap {
 	text-align: center;
 	width: 100%;
 }
@@ -40,13 +41,10 @@ body {
 	padding-top: 12px;
 }
 
-.footer-wrap {
-	text-align: center;
-	width: 100%;
-}
-
-.main-content {
-	padding: 50px 40px 80px 40px;
+.footer {
+	padding-left: 0;
+	padding-right: 0;
+	max-width: 600px;
 }
 
 .hubs {
