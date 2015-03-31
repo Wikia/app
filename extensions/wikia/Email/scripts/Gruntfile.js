@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 	 * Use Juice to inline css from an external style sheet
 	 * @see https://github.com/Automattic/juice
 	 */
-	grunt.registerTask('inlineCSS', 'some logging', function () {
+	grunt.registerTask('inlineCSS', 'Replaces css classes and IDs with style attributes', function () {
 		var src = '../templates/src';
 
 		grunt.file.recurse(src, function (absPath, rootDir, subDir, fileName) {
@@ -21,8 +21,12 @@ module.exports = function (grunt) {
 					}
 				},
 				function (err, html) {
-					var dest = rootDir + '/../compiled/' + fileName;
-					grunt.file.write(dest, html);
+					if (err) {
+						grunt.log.error(err);
+					} else {
+						var dest = rootDir + '/../compiled/' + fileName;
+						grunt.file.write(dest, html);
+					}
 				});
 		});
 	});
@@ -31,7 +35,11 @@ module.exports = function (grunt) {
 		watch: {
 			scripts: {
 				files: ['../templates/src/*.mustache', '../styles/*.css'],
-				tasks: ['inlineCSS']
+				tasks: ['inlineCSS'],
+				options: {
+					// run tasks when grunt watch is first started
+					atBegin: true
+				}
 			}
 		}
 	});
