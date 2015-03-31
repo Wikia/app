@@ -17,7 +17,7 @@ define('wikia.iframeWriter', [
 	 * @param {string} params.code - code to put into the iframe
 	 * @param {number} params.width - desired width of the iframe
 	 * @param {number} params.height - desired height of the iframe
-	 * @param {string} [params.classes] - custom class(es) of the iframe (coma-separated if more than one)
+	 * @param {string} [params.classes] - custom class(es) of the iframe (space-separated if more than one)
 	 */
 	function getIframe(params) {
 		log(['getIframe', params], 'debug', logGroup);
