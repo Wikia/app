@@ -25,10 +25,10 @@ body {
 }
 
 .container {
-	display: block !important;
-	max-width: 600px !important;
-	margin: 0 auto !important;
-	clear: both !important;
+	display: block;
+	max-width: 600px;
+	margin: 0 auto;
+	clear: both;
 }
 
 .head-wrap {

@@ -4,7 +4,7 @@
 
 * {
 	color: #656e78;
-	font-family: "Helvetica Neue", Arial, sans-serif;
+	font-family: 'Helvetica Neue', Arial, sans-serif;
 	font-size: 16px;
 }
 
@@ -21,8 +21,8 @@ p {
 
 button {
 	border-width: 0;
-	background-color: #1A5EB8;
-	color: #FFF;
+	background-color: #1a5eB8;
+	color: #fff;
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 25px;
