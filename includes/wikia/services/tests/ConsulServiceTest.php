@@ -5,12 +5,15 @@ class ConsulServiceTest extends WikiaBaseTest {
 
 		$mock = $this->getMockBuilder('ConsulService')->setMethods(['getResolvedRecords'])->getMock();
 
-		$this->assertTrue( $mock->getConsulServiceName('testservice', 'testtag') == 'testtag.testservice.service.sjc.consul');
-		$this->assertTrue( $mock->getConsulServiceName('testservice') == 'testservice.service.sjc.consul');
+		$domainWithTag = $mock->getConsulServiceName('testservice', 'testtag');
+		$domainWithoutTag = $mock->getConsulServiceName('testservice');
+		$this->assertTrue( $domainWithTag == 'testtag.testservice.service.sjc.consul');
+		$this->assertTrue( $domainWithoutTag == 'testservice.service.sjc.consul');
 
 		$mock->setDataCenter(ConsulService::DATA_CENTER_RES);
 
-		$this->assertTrue( $mock->getConsulServiceName('testservice') == 'testservice.service.res.consul');
+		$domainWithDifferentDataCenter =  $mock->getConsulServiceName('testservice');
+		$this->assertTrue( $domainWithDifferentDataCenter == 'testservice.service.res.consul');
 	}
 
 	public function testResolve() {
