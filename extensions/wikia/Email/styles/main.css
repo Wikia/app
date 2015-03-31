@@ -21,6 +21,7 @@ body {
 	background-color: #FFF;
 	border-bottom: 1px solid #c5ced9;
 	border-top: 1px solid #c5ced9;
+	padding: 50px 40px 80px 40px;
 }
 
 .container {
@@ -45,8 +46,10 @@ body {
 	width: 100%;
 }
 
-.main-content {
-	padding: 50px 40px 80px 40px;
+.footer {
+	padding-left: 0;
+	padding-right: 0;
+	max-width: 600px;
 }
 
 .hubs {
