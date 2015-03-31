@@ -51,6 +51,15 @@ class WatchedPageController extends EmailController {
 		}
 	}
 
+	protected function getFooterMessages() {
+		$footerMessages = [
+			wfMessage( 'emailext-watchedpage-unfollow-text',
+				$this->title->getFullURL( 'action=unwatch' ),
+				$this->title->getPrefixedText() )->parse()
+		];
+		return array_merge( $footerMessages, parent::getFooterMessages() );
+	}
+
 //	protected function getReplyToAddress() {
 //		global $wgPasswordSender, $wgPasswordSenderName, $wgEnotifRevealEditorAddress;
 //		global $wgEnotifFromEditor, $wgNoReplyAddress;
