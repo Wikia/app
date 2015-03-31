@@ -212,8 +212,18 @@ class EmailController extends \WikiaController {
 		return [
 			wfMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )->parse(),
 			wfMessage( 'emailext-update-frequency' )->parse(),
-			wfMessage( 'emailext-unsubscribe', 'http://TODOADDURLHERE.com' )->parse(),
+			wfMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )->parse(),
 		];
+	}
+
+	private function getUnsubscribeLink() {
+		$params = [
+			'email' => $this->targetUser->getEmail(),
+			'timestamp' => time()
+		];
+		$params['token'] = wfGenerateUnsubToken( $params['email'], $params['timestamp'] );
+		$unsubscribeTitle = \GlobalTitle::newFromText( 'Unsubscribe', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID );
+		return $unsubscribeTitle->getFullURL( $params );
 	}
 
 	protected function findUserFromRequest( $paramName, \User $default = null ) {
