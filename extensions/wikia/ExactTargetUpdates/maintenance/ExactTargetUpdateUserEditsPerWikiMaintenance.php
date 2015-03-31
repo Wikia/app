@@ -35,7 +35,13 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 	 * @param DatabaseBase $oStatsDBr
 	 * @param string $sStartDate e.g. 2014-12-31
 	 * @param boolean|ResultWrapper $oUsersListResult
-	 * @return array
+	 * @return array of number of edits with merged key consisted of user_id and wiki_id
+	 * e.g.
+	 * [
+	 *  '12345@177' => 3,
+	 *  '15432@177' => 2
+	 * ]
+	 * Means user 12345 edited 3 times on 177 wikia and user 15432 edited 2 times on 177 wikia
 	 */
 	private function getUserEdits( DatabaseBase $oStatsDBr, $sStartDate ) {
 		// Get user edits
@@ -50,9 +56,9 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 			->GROUP_BY( 'wiki_id' )
 			->GROUP_BY( 'user_id' );
 
-		$aUsersEditsData = $oWikiaSQL->runLoop( $oStatsDBr, function( &$oUserResult, $oUserEditCountWikiResult ) {
+		$aUsersEditsData = $oWikiaSQL->runLoop( $oStatsDBr, function( &$aUserResult, $oUserEditCountWikiResult ) {
 			$sMergedKey = $this->mergeKey( $oUserEditCountWikiResult->user_id, $oUserEditCountWikiResult->wiki_id );
-			$oUserResult[ $sMergedKey ] = intval( $oUserEditCountWikiResult->editcount );
+			$aUserResult[ $sMergedKey ] = intval( $oUserEditCountWikiResult->editcount );
 		});
 
 		return $aUsersEditsData;
