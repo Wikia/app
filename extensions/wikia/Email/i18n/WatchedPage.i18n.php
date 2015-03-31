@@ -9,8 +9,7 @@ $messages['en'] = [
 	'emailext-watchedpage-diff-button-text' => 'Compare changes',
 	'emailext-watchedpage-article-link-text' => "Head over to '''[$1 $2]''' to see what's new",
 	'emailext-watchedpage-view-all-changes' => 'View all changes to [$1 $2]',
-	'emailext-watchedpage-unfollow-text' => 'No longer interested in receiving these updates?',
-	'emailext-watchedpage-unfollow-link-text' => 'Click [$1 here] to unfollow $2 on {{SITENAME}}.',
+	'emailext-watchedpage-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 ];
 
 $messages['qqq'] = [
@@ -21,6 +20,5 @@ $messages['qqq'] = [
 	'emailext-watchedpage-diff-button-text' => 'Text for button that, when clicked, navigates to the diff page referencing this change.',
 	'emailext-watchedpage-article-link-text' => "Call to action to visit the article page. $1 -> article url, $2 -> article title.",
 	'emailext-watchedpage-view-all-changes' => 'Call to action to visit history of the article page. $1 -> article history url, $2 -> article title',
-	'emailext-watchedpage-unfollow-text' => 'Asks the user if they want to stop following this page. Question is answered with "emailext-watchedpage-unfollow-link-text"',
-	'emailext-watchedpage-unfollow-link-text' => 'Follows question asked in "emailext-watchedpage-unfollow-text". $1 -> unfollow url, $2 article title',
+	'emailext-watchedpage-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title',
 ];
