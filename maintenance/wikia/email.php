@@ -24,14 +24,14 @@ class EmailCLI extends Maintenance {
 
 	protected $verbose = false;
 	protected $test = false;
-	protected $to = '';
+	protected $user = '';
 	protected $type = '';
 	protected $argString = '';
 	protected $list = false;
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Pre-populate LVS suggestions";
+		$this->mDescription = "Test sending email via the Email extension";
 		$this->addOption( 'test', 'Test mode; make no changes',
 			Maintenance::PARAM_OPTIONAL,
 			Maintenance::PARAM_IS_FLAG,
@@ -43,7 +43,7 @@ class EmailCLI extends Maintenance {
 			'v'
 		);
 
-		$this->addOption( 'to', 'Address to send email to',
+		$this->addOption( 'user', 'Masquerade as this user when sending email. Can be username or ID.s',
 			Maintenance::PARAM_OPTIONAL,
 			Maintenance::PARAM_HAS_ARG
 		);
@@ -51,7 +51,7 @@ class EmailCLI extends Maintenance {
 			Maintenance::PARAM_OPTIONAL,
 			Maintenance::PARAM_HAS_ARG
 		);
-		$this->addOption( 'args', 'Arguments for email type',
+		$this->addOption( 'args', 'Arguments for email type as comma separated, key=value (e.g. name=foo,admin=0)',
 			Maintenance::PARAM_OPTIONAL,
 			Maintenance::PARAM_HAS_ARG
 		);
@@ -79,9 +79,9 @@ class EmailCLI extends Maintenance {
 
 			$this->assertSuccessfulEmail( $resp );
 
-			echo "Email sent as '$this->to' successfully!\n";
+			echo "Email sent as '$this->user' successfully!\n";
 			exit( 0 );
-		} catch ( Exception $e ) {
+		} catch ( EmailCLIException $e ) {
 			echo "An error occurred:\n";
 			echo $e->getMessage() . "\n";
 			exit( 1 );
@@ -91,7 +91,7 @@ class EmailCLI extends Maintenance {
 	protected function initOptions() {
 		$this->test = $this->hasOption( 'test' );
 		$this->verbose = $this->hasOption( 'verbose' );
-		$this->to = $this->getOption( 'to', '' );
+		$this->user = $this->getOption( 'user', '' );
 		$this->type = $this->getOption( 'type', '' );
 		$this->argString = $this->getOption( 'args', '' );
 		$this->list = $this->getOption( 'list', false );
@@ -109,7 +109,7 @@ class EmailCLI extends Maintenance {
 			return;
 		}
 
-		if ( !empty( $this->to ) && !empty( $this->type ) ) {
+		if ( !empty( $this->user ) && !empty( $this->type ) ) {
 			return;
 		}
 
@@ -118,14 +118,17 @@ class EmailCLI extends Maintenance {
 
 	protected function setupUser() {
 		// We either have a user ID or a user name
-		if ( preg_match( '/^\d+$/', $this->to ) ) {
-			$userObject = User::newFromId( $this->to );
-		} else {
-			$userObject = User::newFromName( $this->to );
+		if ( filter_var( $this->user, FILTER_VALIDATE_INT ) ) {
+			$userObject = User::newFromId( $this->user );
+		}
+
+		// Try this as a user name next if we still didn't find what we want.
+		if ( empty( $userObject ) ) {
+			$userObject = User::newFromName( $this->user );
 		}
 
 		if ( empty( $userObject ) ) {
-			throw new OptionException( 'Could not find matching user for name/ID: ' . $this->to );
+			throw new OptionException( 'Could not find matching user for name/ID: ' . $this->user );
 		}
 
 		F::app()->wg->User = $userObject;
@@ -136,7 +139,15 @@ class EmailCLI extends Maintenance {
 
 		$param = [];
 		foreach ( $paramPairs as $pair ) {
+			if ( empty( $pair ) ) {
+				continue;
+			}
+
 			list( $key, $value ) = explode( '=', $pair );
+			if ( empty( $value ) ) {
+				echo "WARNING: argument '$key' had no value\n";
+				continue;
+			}
 			$param[$key] = $value;
 		}
 
@@ -175,8 +186,9 @@ class EmailCLI extends Maintenance {
 	}
 }
 
-class OptionException extends Exception {};
-class RequestException extends Exception {};
+class EmailCLIException extends Exception {};
+class OptionException extends EmailCLIException {};
+class RequestException extends EmailCLIException {};
 
 global $maintClass;
 $maintClass = 'EmailCLI';
