@@ -31,7 +31,7 @@ body {
 	clear: both;
 }
 
-.head-wrap {
+.header-wrap, .footer-wrap {
 	text-align: center;
 	width: 100%;
 }
@@ -39,11 +39,6 @@ body {
 .header {
 	padding-bottom: 20px;
 	padding-top: 12px;
-}
-
-.footer-wrap {
-	text-align: center;
-	width: 100%;
 }
 
 .footer {
