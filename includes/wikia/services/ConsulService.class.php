@@ -12,6 +12,63 @@ class ConsulService extends Service {
 
 	protected $dataCenter = self::DATA_CENTER_SJC;
 
+	protected $serviceTag;
+	protected $serviceName;
+
+	public function __construct( $serviceName, $serviceTag=null ) {
+
+		$this->serviceName = $serviceName;
+
+		if ( $serviceTag === null ) {
+			$serviceTag = $this->isDevelopmentEnv() ? self::TAG_TESTING : self::TAG_PRODUCTION;
+		}
+
+		$this->serviceTag = $serviceTag;
+		return $this;
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function isDevelopmentEnv() {
+		return F::app()->wg->DevelEnvironment === true;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getServiceName()	{
+		return $this->serviceName;
+	}
+
+
+	/**
+	 * @param $serviceName
+	 * @return $this
+	 */
+	public function setServiceName( $serviceName )	{
+		$this->serviceName = $serviceName;
+		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function getServiceTag()	{
+		return $this->serviceTag;
+	}
+
+	/**
+	 * @param $serviceTag
+	 * @return $this
+	 */
+	public function setServiceTag( $serviceTag )	{
+		$this->serviceTag = $serviceTag;
+		return $this;
+	}
+
+
 	/**
 	 * @return string
 	 */
@@ -19,23 +76,24 @@ class ConsulService extends Service {
 		return $this->dataCenter;
 	}
 
+
 	/**
-	 * @param string $dataCenter
+	 * @param $dataCenter
+	 * @return $this
 	 */
 	public function setDataCenter( $dataCenter ) {
 		$this->dataCenter = $dataCenter;
+		return $this;
 	}
 
 	/**
 	 * Build consul service host name <{tag}.{service}.service.{dataCenter}.consul>
-	 * @param $serviceName
-	 * @param string $serviceTag
 	 * @return string
 	 */
-	public function getConsulServiceName( $serviceName, $serviceTag = "") {
+	public function getConsulServiceName() {
 		$name = strtr(self::SERVICE_NAME_SCHEMA, array(
-			'{tag}' => $serviceTag,
-			'{service}' => $serviceName,
+			'{tag}' => $this->getServiceTag(),
+			'{service}' => $this->getServiceName(),
 			'{dataCenter}' => $this->getDataCenter()
 		));
 		if ( empty( $serviceTag ) ) {
@@ -61,12 +119,10 @@ class ConsulService extends Service {
 
 	/**
 	 * Get single host/port for the service.
-	 * @param $serviceName
-	 * @param $serviceTag
 	 * @return array ['host'=>, 'port'=>],
 	 */
-	public function resolve( $serviceName, $serviceTag ) {
-		$consulServiceHost = $this->getConsulServiceName( $serviceName, $serviceTag );
+	public function resolve() {
+		$consulServiceHost = $this->getConsulServiceName();
 		$records = $this->getResolvedRecords( $consulServiceHost );
 		if ( !empty( $records ) ) {
 			//always first, consul is rotating the set
