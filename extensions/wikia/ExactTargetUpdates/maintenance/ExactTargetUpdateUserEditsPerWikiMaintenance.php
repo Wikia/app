@@ -49,19 +49,23 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 			->AND_( 'user_id' )->NOT_EQUAL_TO( 0 )
 			->GROUP_BY( 'wiki_id' )
 			->GROUP_BY( 'user_id' );
+
 		$aUsersEditsData = $oWikiaSQL->runLoop( $oStatsDBr, function( &$oUserResult, $oUserEditCountWikiResult ) {
-			$oUserResult[ $oUserEditCountWikiResult->user_id ][ $oUserEditCountWikiResult->wiki_id ] =
-				intval( $oUserEditCountWikiResult->editcount );
+			$sMergedKey = $this->mergeKey( $oUserEditCountWikiResult->user_id, $oUserEditCountWikiResult->wiki_id );
+			$oUserResult[ $sMergedKey ] = intval( $oUserEditCountWikiResult->editcount );
 		});
+
 		return $aUsersEditsData;
 	}
 
 	private function addEditsUpdateTasks( $aUsersEditsData ) {
 		$aUsersEditsData = array_chunk( $aUsersEditsData, \Wikia\ExactTarget\ExactTargetApiDataExtension::OBJECTS_PER_REQUEST_LIMIT, true );
 		foreach ( $aUsersEditsData as $aUsersEditsDataChunk ) {
-			$this->addEditsUpdateTask($aUsersEditsDataChunk);
+			$aUsersEditsData = $this->prepareDataFormat( $aUsersEditsDataChunk );
+			$this->addEditsUpdateTask( $aUsersEditsData );
 		}
 	}
+
 	private function addEditsUpdateTask( $aUsersEditsData ) {
 		/* Get and run the task */
 		$task = new \Wikia\ExactTarget\ExactTargetUpdateUserTask();
@@ -74,6 +78,43 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 		$oNow->sub(new DateInterval('P1D'));
 		$sStartDate = $oNow->format('Y-m-d H:i:s');
 		return $sStartDate;
+	}
+
+	/**
+	 * @param array $aUsersEditsDataChunk [ user_id@wiki_id => editcount ]
+	 * e.g.
+	 * [
+	 *  '12345@177' => 3,
+	 *  '15432@177' => 2
+	 * ]
+	 * Means user 12345 edited 3 times on 177 wikia and user 15432 edited 2 times on 177 wikia
+	 * @return array
+	 * e.g.
+	 * [
+	 *  '12345' => [ '177' => 3 ],
+	 *  '15432' => [ '177' => 2 ]
+	 * ]
+	 */
+	private function prepareDataFormat( $aUsersEditsDataChunk ) {
+		$aUsersEditsData = [];
+		foreach ( $aUsersEditsDataChunk as $sMergedKey => $iEditcount ) {
+			$aUnmergedKeysAssoc = $this->unmergeKey( $sMergedKey );
+			$iUserId = $aUnmergedKeysAssoc['user_id'];
+			$iWikiId = $aUnmergedKeysAssoc['wiki_id'];
+			$aUsersEditsData[$iUserId][$iWikiId] = $iEditcount;
+		}
+		return $aUsersEditsData;
+	}
+
+	private function mergeKey( $iUserId, $iWikiId ) {
+		return $iUserId . '@' . $iWikiId;
+	}
+
+	private function unmergeKey( $sMergedKey ) {
+		$aUnmergedKeysTemp = explode( '@', $sMergedKey );
+		$aUnmergedKeysAssoc['user_id'] = $aUnmergedKeysTemp[0];
+		$aUnmergedKeysAssoc['wiki_id'] = $aUnmergedKeysTemp[1];
+		return $aUnmergedKeysAssoc;
 	}
 }
 
