@@ -16,14 +16,15 @@
 				<p>{{summary}}</p>
 				<p>{{timeStamp}}</p>
 			</div>
-			<a href="{{compareChangesLink}}"><button>{{compareChangesLabel}}</button></a>
+			<a href="{{buttonLink}}"><button>{{buttonText}}</button></a>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
-			<div class="links">
-				<p>{{{headOver}}}</p>
-				<p>{{{allChanges}}}</p>
+			<div class="content-footer-messages">
+				{{#contentFooterMessages}}
+					<p>{{{.}}}</p>
+				{{/contentFooterMessages}}
 			</div>
 		</td>
 	</tr>
