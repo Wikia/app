@@ -11,22 +11,19 @@ class WatchedPageController extends EmailController {
 	/* @var \Title */
 	private $title;
 	private $summary;
-	private $oldID;
+	private $currentRevId;
+	private $previousRevId;
 	private $timeStamp;
 	private $replyToAddress;
 	private $fromAddress;
-	private $previousRevId;
-	private $currentRevId;
 
 	public function getSubject() {
 		return wfMessage( 'emailext-watchedpage-subject', $this->title->getPrefixedText() );
 	}
 
-	// TODO setup error handling here if minorEdit not passed in
 	public function initEmail() {
 		$this->title = $this->request->getVal( 'title' );
 		$this->summary = $this->request->getVal( 'summary' );
-		$this->minorEdit = $this->request->getVal( 'minorEdit' );
 		$this->currentRevId = $this->request->getVal( 'currentRevId' );
 		$this->previousRevId = $this->request->getVal( 'previousRevId' );
 		$this->timeStamp = $this->request->getVal( 'timeStamp' );

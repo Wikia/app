@@ -435,26 +435,14 @@ class UserMailer {
 class EmailNotification {
 
 	/**
-	 * @var Title
-	 */
-	private $title;
-
-	/**
 	 * @var User
 	 */
 	private $editor;
 
-	private $action;
-
-	private $subject;
-
-	private $body;
-
-	private $replyto;
-
-	private $from;
-
-	private $bodyHTML;
+	/**
+	 * @var Title
+	 */
+	private $title;
 
 	private $timestamp;
 
@@ -466,18 +454,32 @@ class EmailNotification {
 
 	private $previousRevId;
 
+	private $action;
+
+	private $otherParam;
+
+	private $subject;
+
+	private $body;
+
+	private $replyto;
+
+	private $from;
+
+	private $bodyHTML;
+
 	private $composedCommon = false;
 
 	/**
-	* @param $editor User object
-	* @param $title Title object
-	* @param $timestamp string Edit timestamp
-	* @param $summary string Edit summary
-	* @param $minorEdit bool
-	* @param $currentRevId int Revision ID
-	* @param $previousRevId int Revision ID
-	* @param $action (Wikia)
-	* @param $otherParam
+	* @param User $editor
+	* @param Title $title
+	* @param string $timestamp : Edit timestamp
+	* @param string $summary : Edit summary
+	* @param bool $minorEdit
+	* @param int $currentRevId : Revision ID
+	* @param int $previousRevId : Revision ID
+	* @param string $action (Wikia)
+	* @param array $otherParam
 	 */
 	public function __construct( $editor, $title, $timestamp, $summary, $minorEdit, $currentRevId = 0, $previousRevId = 0, $action = '', $otherParam = [] ) {
 		$this->editor = $editor;
@@ -854,7 +856,7 @@ class EmailNotification {
 	}
 
 	/**
-	 * Send a watched page email using the new Email extension.
+	 * Send a watched page edit email using the new Email extension.
 	 * @param $user User
 	 */
 	private function sendUsingNewEmailExtension( $user ) {

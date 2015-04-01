@@ -2,7 +2,7 @@
 
 namespace Email;
 
-class EmailController extends \WikiaController {
+abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/** @var \User The user associated with the current request */
@@ -179,9 +179,7 @@ class EmailController extends \WikiaController {
 	 * Return the subject used for this email
 	 * Must be overridden in child classes
 	 */
-	protected function getSubject() {
-		throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
-	}
+	abstract function getSubject();
 
 	/**
 	 * Renders the 'body' view of the current email controller
