@@ -17,8 +17,9 @@ class FollowEmailTask extends BaseTask {
 			$oEmailNotification = new EmailNotification( $oUser, $oTitle,
 				$now,
 				$sMessage,
-				0,
-				0,
+				false,
+				$currentRevId = 0,
+				$previousRevId = 0,
 				$sAction,
 				[ 'notisnull' => 1, 'childTitle' => $this->title ]
 			);
