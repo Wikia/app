@@ -337,13 +337,14 @@ class RelatedPages {
 	 * @return array
 	 */
 	protected function getCategoryRank() {
-		global $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
 
 		$results = WikiaDataAccess::cacheWithLock(
 			wfMemcKey( __METHOD__ ),
 			WikiaResponse::CACHE_STANDARD,
-			function () use ( $wgContentNamespaces ) {
+			function () {
+				global $wgContentNamespaces;
+
 				$db = wfGetDB( DB_SLAVE );
 				$sql = ( new WikiaSQL() )
 					->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FIELD( 'cl_to' )
@@ -377,30 +378,27 @@ class RelatedPages {
 	/**
 	 * @param string $category
 	 * @return int
-	 * @throws DBUnexpectedError|Exception|MWException
 	 */
 	private function getCategoryRankByName( $category ) {
-		global $wgContentNamespaces, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$cacheKey = wfMemcKey( __METHOD__, md5( $category ) );
-		$count = $wgMemc->get( $cacheKey );
+		$count = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, md5( $category ) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $category ) {
+				global $wgContentNamespaces;
 
-		if ( !isset( $count ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$sql = ( new WikiaSQL() )->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FROM( 'categorylinks' )->WHERE( 'cl_to' )->EQUAL_TO( $category );
-			if ( count( $wgContentNamespaces ) > 0 ) {
-				$join_cond = ( count( $wgContentNamespaces ) == 1 ) ? "page_namespace = " . intval( reset( $wgContentNamespaces ) ) : "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )";
-				$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
+				$dbr = wfGetDB( DB_SLAVE );
+				$sql = ( new WikiaSQL() )->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FROM( 'categorylinks' )->WHERE( 'cl_to' )->EQUAL_TO( $category );
+				if ( count( $wgContentNamespaces ) > 0 ) {
+					$join_cond = ( count( $wgContentNamespaces ) == 1 ) ? "page_namespace = " . intval( reset( $wgContentNamespaces ) ) : "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )";
+					$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
+				}
+
+				$result = $sql->run( $dbr, function( $result ) { return $result->fetchObject(); } );
+				return ( is_object( $result ) ) ? intval( $result->count ) : 0;
 			}
-
-			$result = $sql->run( $dbr, function( $result ) { return $result->fetchObject(); } );
-
-			$count = ( is_object( $result ) ) ? $result->count : 0;
-			if ( $count > 0 ) {
-				$wgMemc->set( $cacheKey, $count, WikiaResponse::CACHE_STANDARD );
-			}
-		}
+		);
 
 		wfProfileOut( __METHOD__ );
 		return $count;
