@@ -34,9 +34,11 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
 
 		/* Verify data */
-		$this->verifyUserData( $aUserData['user_id'] );
+		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
+		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
+		$sUserDataVerificationResult = $oUserDataVerificationTask->verifyUserData( $aUserData['user_id'] );
 
-		return 'OK';
+		return $sUserDataVerificationResult;
 	}
 
 	/**
@@ -106,17 +108,12 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 				'Error in ' . __METHOD__ . ': ' . $oCreateUserPropertiesResult->Results[0]->StatusMessage
 			);
 		}
-		return $oCreateUserPropertiesResult->OverallStatus;
-	}
 
-	protected function verifyUserData( $iUserId ) {
 		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
 		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$sUserDataVerificationResult = $oUserDataVerificationTask->execute( 'verifyUserData', [ $iUserId ] );
-		if ( $sUserDataVerificationResult != 'OK' ) {
-			throw new \Exception( $sUserDataVerificationResult );
-		} else {
-			$this->info( 'Verification passed. User record in ExactTarget match record in Wikia database' );
-		}
+		$sUserDataVerificationResult = $oUserDataVerificationTask->verifyUserPropertiesData( $iUserId );
+
+		return $sUserDataVerificationResult;
 	}
+
 }

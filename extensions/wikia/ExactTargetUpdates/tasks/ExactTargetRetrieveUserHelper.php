@@ -54,12 +54,53 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+
+		if ( isset( $oUserResult->OverallStatus ) && $oUserResult->OverallStatus !== 'OK' ) {
+			throw new \Exception( $oUserResult->OverallStatus );
+		}
+
 		if ( !empty( $oUserResult->Results->Properties->Property ) ) {
 			$aProperties = $oUserResult->Results->Properties->Property;
 			foreach ( $aProperties as $value ) {
 				$oExactTargetUserData[$value->Name] = $value->Value;
 			}
 			return $oExactTargetUserData;
+		}
+
+		return null;
+	}
+
+	public function retrieveUserPropertiesByUserId( $iUserId ) {
+		$aProperties = [
+			'up_property',
+			'up_value',
+		];
+
+		$oHelper = $this->getUserHelper();
+		$aApiParams = $oHelper->prepareUserPropertiesRetrieveParams( $aProperties, 'up_user', [ $iUserId ] );
+
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oUserPropertiesResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+
+		if ( isset( $oUserPropertiesResult->OverallStatus ) && $oUserPropertiesResult->OverallStatus !== 'OK' ) {
+			throw new \Exception( $oUserPropertiesResult->OverallStatus );
+		}
+
+		if ( !empty( $oUserPropertiesResult->Results ) ) {
+			foreach ( $oUserPropertiesResult->Results as $oResult ) {
+				$aProperties = $oResult->Properties->Property;
+				$sProperty = null;
+				$sValue = null;
+				foreach ( $aProperties as $value ) {
+					if ( $value->Name === 'up_property' ) {
+						$sProperty = $value->Value;
+					} elseif ( $value->Name === 'up_value' ) {
+						$sValue = $value->Value;
+					}
+				}
+				$oExactTargetUserPropertiesData[$sProperty] = $sValue;
+			}
+			return $oExactTargetUserPropertiesData;
 		}
 
 		return null;
