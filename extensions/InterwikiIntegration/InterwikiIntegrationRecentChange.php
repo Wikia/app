@@ -195,6 +195,7 @@ class InterwikiIntegrationRecentChange {
 				$this->mAttribs['integration_rc_timestamp'],
 				$this->mAttribs['integration_rc_comment'],
 				$this->mAttribs['integration_rc_minor'],
+				$this->mAttribs['integration_rc_this_oldid'],
 				$this->mAttribs['integration_rc_last_oldid'] );
 			$enotif->notifyOnPageChange();
 		}
