@@ -111,7 +111,7 @@ class SMWWikiPageValue extends SMWDataValue {
 
 			/// TODO: Escape the text so users can see punctuation problems (bug 11666).
 			if ( is_null( $this->m_title ) ) {
-				$this->addError( wfMessage( 'smw_notitle')->rawParams( $value )->inContentLanguage()->text() );
+				$this->addError( wfMessage( 'smw_notitle' )->rawParams( $value )->inContentLanguage()->text() );
 			} elseif ( ( $this->m_fixNamespace != NS_MAIN ) &&
 				 ( $this->m_fixNamespace != $this->m_title->getNamespace() ) ) {
 				$this->addError( wfMessage( 'smw_wrong_namespace',
@@ -123,7 +123,7 @@ class SMWWikiPageValue extends SMWDataValue {
 				$this->m_dataitem = SMWDIWikiPage::newFromTitle( $this->m_title, $this->m_typeid );
 			}
 		} else {
-			$this->addError(  wfMessage( 'smw_notitle')->rawParams( $value )->inContentLanguage()->text() );
+			$this->addError(  wfMessage( 'smw_notitle' )->rawParams( $value )->inContentLanguage()->text() );
 		}
 	}
 
@@ -338,7 +338,7 @@ class SMWWikiPageValue extends SMWDataValue {
 			if ( is_null( $this->m_title ) ) { // should not normally happen, but anyway ...
 				global $wgContLang;
 				$this->addError( wfMessage( 'smw_notitle' )
-					->rawParams($wgContLang->getNsText( $this->m_dataitem->getNamespace() ) . ':' . $this->m_dataitem->getDBkey())
+					->rawParams( $wgContLang->getNsText( $this->m_dataitem->getNamespace() ) . ':' . $this->m_dataitem->getDBkey() )
 					->inContentLanguage()->text() );
 			}
 		}
