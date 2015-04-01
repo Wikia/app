@@ -1,5 +1,8 @@
 @import "skins/shared/color";
+@import 'skins/shared/mixins/calc';
 @import "layout";
+
+$header-tally-width: 200px;
 
 .WikiaPageHeader {
 	margin: 0 10px 10px 10px;
@@ -174,21 +177,36 @@
 	padding-right: 0;
 }
 
-.WikiaPageHeader {
-	.header-table {
+.WikiaPageHeader.wikia-page-header {
+
+	.header-container {
 		border-bottom: solid 1px $color-page-border;
-		display: table;
 		margin-bottom: 7px;
 
 		.header-column {
-			display: table-cell;
+			display: inline-block;
+			float: none;
 			padding-bottom: 7px;
 			padding-top: 7px;
-			vertical-align: middle;
-			width: auto;
 
-			&.max-width {
-				width: 100%;
+			&.header-title {
+				@include width-calc("100% - #{$header-tally-width}");
+			}
+
+			&.header-tally {
+				text-align: right;
+				vertical-align: bottom;
+				//-10px - for spacing between elements
+				width: $header-tally-width - 10px;
+
+				.page-share-toolbar {
+					float: right;
+				}
+
+				.tally {
+					float: right;
+					text-align: left;
+				}
 			}
 		}
 	}
