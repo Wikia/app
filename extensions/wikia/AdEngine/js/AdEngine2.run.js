@@ -11,6 +11,7 @@ require([
 	'ext.wikia.adEngine.adConfig',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
@@ -26,6 +27,7 @@ require([
 	adConfig,
 	adLogicPageParams,
 	adTracker,
+	customAdsLoader,
 	wikiaDart,
 	slotTracker,
 	adLogicHighValueCountry,
@@ -76,17 +78,7 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	// TODO: loadable modules
-	window.loadCustomAd = function (params) {
-		log('loadCustomAd', 'debug', module);
-
-		var adModule = 'ext.wikia.adEngine.template.' + params.type;
-		log('loadCustomAd: loading ' + adModule, 'debug', module);
-
-		require([adModule], function (adTemplate) {
-			log('loadCustomAd: module ' + adModule + ' required', 'debug', module);
-			adTemplate.show(params);
-		});
-	};
+	window.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	function startEarlyQueue() {
 		// Start ads
