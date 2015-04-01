@@ -497,11 +497,11 @@ class EmailNotification {
 		global $wgEnotifWatchlist, $wgShowUpdatedMarker;
 
 		if ( $this->title->getNamespace() < 0 ) {
-			return false;
+			return;
 		}
 
 		if( !wfRunHooks( 'AllowNotifyOnPageChange', array( $this->editor, $this->title ) ) ) {
-			return false;
+			return;
 		}
 
 		// Build a list of users to notify
@@ -603,6 +603,8 @@ class EmailNotification {
 		global $wgEnotifWatchlist;
 		global $wgEnotifMinorEdits, $wgEnotifUserTalk;
 
+		$this->setReplyToAndFromAddresses();
+
 		# The following code is only run, if several conditions are met:
 		# 1. EmailNotification for pages (other than user_talk pages) must be enabled
 		# 2. minor edits (changes) are only regarded if the global flag indicates so
@@ -642,6 +644,31 @@ class EmailNotification {
 		$this->emailUsersNotifiedOnAllChanges();
 	}
 
+	private function setReplyToAndFromAddresses() {
+		global $wgPasswordSender, $wgPasswordSenderName, $wgNoReplyAddress;
+		global $wgEnotifFromEditor, $wgEnotifRevealEditorAddress;
+
+		# Reveal the page editor's address as REPLY-TO address only if
+		# the user has not opted-out and the option is enabled at the
+		# global configuration level.
+		$adminAddress = new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
+		if ( $wgEnotifRevealEditorAddress
+			&& ( $this->editor->getEmail() != '' )
+			&& $this->editor->getOption( 'enotifrevealaddr' ) )
+		{
+			$editorAddress = new MailAddress( $this->editor );
+			if ( $wgEnotifFromEditor ) {
+				$this->from    = $editorAddress;
+			} else {
+				$this->from    = $adminAddress;
+				$this->replyto = $editorAddress;
+			}
+		} else {
+			$this->from    = $adminAddress;
+			$this->replyto = new MailAddress( $wgNoReplyAddress );
+		}
+	}
+
 	private function emailUsersNotifiedOnAllChanges() {
 		global $wgUsersNotifiedOnAllChanges;
 
@@ -676,8 +703,6 @@ class EmailNotification {
 	 * Generate the generic "this page has been changed" e-mail text.
 	 */
 	private function composeCommonMailtext() {
-		global $wgPasswordSender, $wgPasswordSenderName, $wgNoReplyAddress;
-		global $wgEnotifFromEditor, $wgEnotifRevealEditorAddress;
 		global $wgEnotifUseRealName;
 		global $wgLanguageCode;
 
@@ -786,26 +811,6 @@ class EmailNotification {
 			$this->bodyHTML = strtr( $bodyHTML, $postTransformKeys );
 		}
 		# </Wikia>
-
-		# Reveal the page editor's address as REPLY-TO address only if
-		# the user has not opted-out and the option is enabled at the
-		# global configuration level.
-		$adminAddress = new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
-		if ( $wgEnotifRevealEditorAddress
-			&& ( $this->editor->getEmail() != '' )
-			&& $this->editor->getOption( 'enotifrevealaddr' ) )
-		{
-			$editorAddress = new MailAddress( $this->editor );
-			if ( $wgEnotifFromEditor ) {
-				$this->from    = $editorAddress;
-			} else {
-				$this->from    = $adminAddress;
-				$this->replyto = $editorAddress;
-			}
-		} else {
-			$this->from    = $adminAddress;
-			$this->replyto = new MailAddress( $wgNoReplyAddress );
-		}
 	}
 
 	/**
@@ -826,7 +831,7 @@ class EmailNotification {
 	}
 
 	/**
-	 * Returns whether the email notification is for a wathced articled page which has been edited.
+	 * Returns whether the email notification is for a watched article page which has been edited.
 	 * If $this->action is empty it's an article page. The other possible values for action are
 	 * categoryadd, blogpost, and article_comment.
 	 * @return bool
@@ -845,9 +850,10 @@ class EmailNotification {
 				'targetUser' => $user->getName(),
 				'title' => $this->title,
 				'summary' => $this->summary,
-				'minorEdit' => $this->minorEdit,
 				'oldID' => $this->oldid,
-				'timeStamp' => $this->timestamp
+				'timeStamp' => $this->timestamp,
+				'replyToAddress' => $this->replyto,
+				'fromAddress' => $this->from
 			]);
 	}
 
