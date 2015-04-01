@@ -2,7 +2,9 @@
 
 namespace Email;
 
-class EmailController extends \WikiaController {
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
+abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/** @var \User The user associated with the current request */
@@ -12,6 +14,9 @@ class EmailController extends \WikiaController {
 	protected $targetUser;
 
 	protected $hasErrorResponse = false;
+
+	/** @var bool Whether to show the icons over the hubs links */
+	protected $marketingFooter;
 
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
@@ -24,7 +29,7 @@ class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	public static function getTemplateDir() {
-		return dirname( __FILE__ ) . '/templates/compiled';
+		return dirname( __FILE__ ) . '/templates';
 	}
 
 	public function init() {
@@ -34,6 +39,7 @@ class EmailController extends \WikiaController {
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
 			$this->test = $this->getRequest()->getVal( 'test', false );
+			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
 			$this->initEmail();
 		} catch ( ControllerException $e ) {
@@ -55,7 +61,7 @@ class EmailController extends \WikiaController {
 			return;
 		}
 
-		throw new Fatal( wfMessage( 'emailext-error-restricted-controller' )->escaped() );
+		throw new Fatal( 'Access to this controller is restricted' );
 	}
 
 	/**
@@ -119,7 +125,7 @@ class EmailController extends \WikiaController {
 	public function main() {
 		$this->response->setVal( 'content', $this->getVal( 'content' ) );
 		$this->response->setVal( 'footerMessages', $this->getVal( 'footerMessages' ) );
-		$this->response->setVal( 'fancyHubLinks', true );
+		$this->response->setVal( 'marketingFooter', $this->marketingFooter );
 	}
 
 	/**
@@ -177,11 +183,8 @@ class EmailController extends \WikiaController {
 
 	/**
 	 * Return the subject used for this email
-	 * Must be overridden in child classes
 	 */
-	protected function getSubject() {
-		throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
-	}
+	abstract protected function getSubject();
 
 	/**
 	 * Renders the 'body' view of the current email controller
@@ -189,21 +192,42 @@ class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getBody() {
-		$moduleBody = $this->app->renderView(
-			get_class( $this ),
-			'body',
-			$this->request->getParams()
-		);
+		$css = file_get_contents( __DIR__ . '/styles/main.css' );
 
 		$html = $this->app->renderView(
 			get_class( $this ),
 			'main',
 			[
-				'content' => $moduleBody,
+				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages()
-
 			]
 		);
+
+		$html = $this->inlineStyles( $html, $css );
+
+		return $html;
+	}
+
+	/**
+	 * Renders the content unique to each email.
+	 */
+	abstract protected function getContent();
+
+	/**
+	 * Inline all css into style attributes
+	 *
+	 * @param string $html
+	 * @param string $css
+	 * @return string
+	 * @throws \TijsVerkoyen\CssToInlineStyles\Exception
+	 */
+	protected function inlineStyles( $html, $css ) {
+		// add default css to every template
+		$css .= file_get_contents( __DIR__ . '/styles/common.css' );
+
+		$inliner = new CssToInlineStyles( $html, $css );
+		$inliner->setUseInlineStylesBlock();
+		$html = $inliner->convert();
 
 		return $html;
 	}
@@ -249,7 +273,7 @@ class EmailController extends \WikiaController {
 	 */
 	protected function getUserFromName( $username ) {
 		if ( !$username ) {
-			throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
+			throw new Fatal( 'Required username has been left empty' );
 		}
 
 		$user = \User::newFromName( $username );
@@ -283,11 +307,11 @@ class EmailController extends \WikiaController {
 	 */
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
-			throw new Fatal( wfMessage( 'emailext-error-not-user' )->escaped() );
+			throw new Fatal( 'Unable to create user object');
 		}
 
 		if ( $user->getId() == 0 ) {
-			throw new Fatal( wfMessage( 'emailext-error-empty-user' )->escaped() );
+			throw new Fatal( 'Unable to find user' );
 		}
 	}
 
@@ -297,7 +321,7 @@ class EmailController extends \WikiaController {
 	public function assertUserHasEmail() {
 		$email = $this->targetUser->getEmail();
 		if ( empty( $email ) ) {
-			throw new Fatal( wfMessage( 'emailext-error-noemail' )->escaped() );
+			throw new Fatal( 'User has no email address' );
 		}
 	}
 
@@ -319,7 +343,7 @@ class EmailController extends \WikiaController {
 	 */
 	public function assertUserWantsEmail() {
 		if ( $this->targetUser->getBoolOption( 'unsubscribed' ) ) {
-			throw new Check( wfMessage( 'emailext-error-no-emails' )->escaped() );
+			throw new Check( 'User does not wish to receive email' );
 		}
 	}
 
@@ -330,7 +354,7 @@ class EmailController extends \WikiaController {
 	 */
 	public function assertUserNotBlocked() {
 		if ( $this->currentUser->isBlocked() ) {
-			throw new Check( wfMessage( 'emailext-error-user-blocked' )->escaped() );
+			throw new Check( 'User is blocked from taking this action' );
 		}
 	}
 }

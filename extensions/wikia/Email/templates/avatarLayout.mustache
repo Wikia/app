@@ -1,0 +1,31 @@
+<div class="greeting">
+	<p>{{salutation}}</p>
+	<p>{{{articleEditedMessage}}}</p>
+</div>
+
+<table>
+	<tr>
+		<td valign="top">
+			<div class="avatar-wrapper">
+				<a href="{{editorProfilePage}}"><img class="avatar" src="{{editorAvatarURL}}" data-inline-ignore></a>
+			</div>
+		</td>
+		<td class="widest">
+			<div class="message">
+				<p class="subtle">{{editorUserName}}</p>
+				<p>{{summary}}</p>
+				<p>{{timeStamp}}</p>
+			</div>
+			<a href="{{buttonLink}}"><button>{{buttonText}}</button></a>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div class="content-footer-messages">
+				{{#contentFooterMessages}}
+					<p>{{{.}}}</p>
+				{{/contentFooterMessages}}
+			</div>
+		</td>
+	</tr>
+</table>
