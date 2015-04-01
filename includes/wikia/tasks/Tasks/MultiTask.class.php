@@ -221,7 +221,7 @@ class MultiTask extends BaseTask {
 		}
 
 		if ( empty( $wikis ) ) {
-			$this->error( 'No wikis were found that have the provided page', [
+			$this->warning( 'No wikis were found that have the provided page', [
 				'title' => $title->getPrefixedDBkey()
 			] );
 		}
