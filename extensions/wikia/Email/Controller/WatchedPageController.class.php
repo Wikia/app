@@ -10,128 +10,83 @@ class WatchedPageController extends EmailController {
 
 	/* @var \Title */
 	private $title;
-
 	private $summary;
-
-	private $minorEdit;
-
-	private $oldID;
-
+	private $currentRevId;
+	private $previousRevId;
 	private $timeStamp;
+	private $replyToAddress;
+	private $fromAddress;
 
 	public function getSubject() {
 		return wfMessage( 'emailext-watchedpage-subject', $this->title->getPrefixedText() );
 	}
 
-	// TODO setup error handling here if minorEdit not passed in
 	public function initEmail() {
 		$this->title = $this->request->getVal( 'title' );
 		$this->summary = $this->request->getVal( 'summary' );
-		$this->minorEdit = $this->request->getVal( 'minorEdit' );
-		$this->oldID = $this->request->getVal( 'oldID' );
+		$this->currentRevId = $this->request->getVal( 'currentRevId' );
+		$this->previousRevId = $this->request->getVal( 'previousRevId' );
 		$this->timeStamp = $this->request->getVal( 'timeStamp' );
+		$this->replyToAddress = $this->request->getVal( 'replyToAddress' );
+		$this->fromAddress = $this->request->getVal( 'fromAddress' );
 	}
 
-	public function assertCanEmail() {
-		parent::assertCanEmail();
-		$this->assertUserWantsNotification();
-		$this->assertEditNotTooMinor();
+	protected function getFromAddress() {
+		return $this->fromAddress;
 	}
 
-	private function assertUserWantsNotification() {
-		if ( !$this->targetUser->getOption( 'enotifwatchlistpages' ) ) {
-			throw new \Email\Check( 'User does not want notifications' );
-		}
-	}
-
-	private function assertEditNotTooMinor() {
-		if ( $this->minorEdit && !$this->targetUser->getOption( 'enotifminoredits' ) ) {
-			throw new \Email\Check( 'Notification too minor' );
-		}
+	protected function getReplyToAddress() {
+		return $this->replyToAddress;
 	}
 
 	protected function getFooterMessages() {
 		$footerMessages = [
 			wfMessage( 'emailext-watchedpage-unfollow-text',
-				$this->title->getFullURL( 'action=unwatch' ),
+				$this->title->getCanonicalUrl( 'action=unwatch' ),
 				$this->title->getPrefixedText() )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
 
-//	protected function getReplyToAddress() {
-//		global $wgPasswordSender, $wgPasswordSenderName, $wgEnotifRevealEditorAddress;
-//		global $wgEnotifFromEditor, $wgNoReplyAddress;
-//		# Reveal the page editor's address as REPLY-TO address only if
-//		# the user has not opted-out and the option is enabled at the
-//		# global configuration level.
-//		$adminAddress = new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
-//		if ( $wgEnotifRevealEditorAddress
-//			&& ( $this->editor->getEmail() != '' )
-//			&& $this->editor->getOption( 'enotifrevealaddr' ) )
-//		{
-//			$editorAddress = new MailAddress( $this->editor );
-//			if ( $wgEnotifFromEditor ) {
-//				$this->from    = $editorAddress;
-//			} else {
-//				$this->from    = $adminAddress;
-//				$this->replyto = $editorAddress;
-//			}
-//		} else {
-//			$this->from    = $adminAddress;
-//			$this->replyto = new MailAddress( $wgNoReplyAddress );
-//		}
-//	}
-
 	/**
-	 * @template avatarLayout
+	 * @template watchedPage
 	 */
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'articleEditedMessage' => $this->getArticleEditedMessage(),
+			'articleEditedText' => $this->getArticleEditedText(),
 			'editorProfilePage' => $this->getEditorProfilePage(),
 			'editorUserName' => $this->getEditorUserName(),
 			'editorAvatarURL' => $this->getEditorAvatarUR(),
 			'summary' => $this->getSummary(),
-			'buttonText' => $this->getCompareChangesLabel(),
-			'buttonLink' => $this->getCompareChangesLink(),
-			'contentFooterMessages' => [
-				$this->getHeadOver(),
-				$this->getAllChanges(),
-			],
+			'compareChangesLabel' => $this->getCompareChangesLabel(),
+			'compareChangesLink' => $this->getCompareChangesLink(),
+			'articleLinkText' => $this->getArticleLinkText(),
+			'allChanges' => $this->getAllChangesText(),
 			'timeStamp' => $this->getTimeStamp()
 		] );
 	}
 
 	/**
-	 * Get rendered html for content unique to this email
-	 * @todo We may want to make this available more generically for other emails to use the avatar layout.
+	 * @return String
 	 */
-	protected function getContent() {
-		$css = file_get_contents( __DIR__ . '/../styles/avatarLayout.css' );
-		$html = $this->app->renderView(
-			get_class( $this ),
-			'body',
-			$this->request->getParams()
-		);
-
-		$html = $this->inlineStyles( $html, $css );
-
-		return $html;
-	}
-
 	private function getSalutation() {
 		return wfMessage( 'emailext-watchedpage-salutation',
 			$this->targetUser->getName() )->inLanguage( $this->getTargetLang() )->text();
 	}
 
-	private function getArticleEditedMessage() {
+	/**
+	 * @return String
+	 */
+	private function getArticleEditedText() {
 		return wfMessage( 'emailext-watchedpage-article-edited',
 			$this->title->getFullURL(),
 			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
 	}
 
+	/**
+	 * @return String
+	 */
 	private function getEditorProfilePage() {
 		if ( $this->currentUser->isLoggedIn() ) {
 			return $this->currentUser->getUserPage()->getFullURL();
@@ -139,6 +94,9 @@ class WatchedPageController extends EmailController {
 		return "";
 	}
 
+	/**
+	 * @return String
+	 */
 	private function getEditorUserName() {
 		if ( $this->currentUser->isLoggedIn() )	 {
 			return $this->currentUser->getName();
@@ -146,11 +104,16 @@ class WatchedPageController extends EmailController {
 		return wfMessage( "emailext-watchedpage-anonymous-editor" )->inLanguage( $this->getTargetLang() )->text();
 	}
 
-	// TODO Make sure we want an anon avatar
+	/**
+	 * @return String
+	 */
 	private function getEditorAvatarUR() {
 		return \AvatarService::getAvatarUrl( $this->currentUser, self::AVATAR_SIZE );
 	}
 
+	/**
+	 * @return String
+	 */
 	private function getSummary() {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
@@ -158,27 +121,41 @@ class WatchedPageController extends EmailController {
 		return wfMessage( 'enotif_no_summary' )->inLanguage( $this->getTargetLang() )->text();
 	}
 
+	/**
+	 * @return String
+	 */
 	private function getCompareChangesLabel() {
 		return wfMessage( 'emailext-watchedpage-diff-button-text' )->inLanguage( $this->getTargetLang() )->text();
 	}
 
-	// TODO Make sure current revision is always one more than the old id
+	/**
+	 * @return String
+	 */
 	private function getCompareChangesLink() {
-		return $this->title->getFullUrl( 'diff=' . ( $this->oldID + 1 ) . '&oldid=' . $this->oldID );
+		return $this->title->getFullUrl( 'diff=' . $this->currentRevId . '&oldid=' . $this->previousRevId );
 	}
 
-	private function getHeadOver() {
+	/**
+	 * @return String
+	 */
+	private function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
 			$this->title->getFullURL(),
 			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
 	}
 
-	private function getAllChanges() {
+	/**
+	 * @return String
+	 */
+	private function getAllChangesText() {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->title->getFullURL( 'action=history' ),
 			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
 	}
 
+	/**
+	 * @return String
+	 */
 	private function getTimeStamp() {
 		return \F::app()->wg->ContLang->userDate( $this->timestamp, $this->targetUser );
 	}
