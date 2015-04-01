@@ -75,15 +75,15 @@ class EmailCLI extends Maintenance {
 			$this->assertControllerExists( $controllerClass );
 
 			$params = $this->argStringToArray( $this->argString );
-			$resp = F::app()->sendRequest( $controllerClass, 'handle', $params, true );
+			$resp = F::app()->sendRequest( $controllerClass, 'handle', $params );
 
 			$this->assertSuccessfulEmail( $resp );
 
 			echo "Email sent as '$this->user' successfully!\n";
 			exit( 0 );
 		} catch ( EmailCLIException $e ) {
-			echo "An error occurred:\n";
-			echo $e->getMessage() . "\n";
+			$this->error( "An error occurred:\n" );
+			$this->error( $e->getMessage() . "\n" );
 			exit( 1 );
 		}
 	}
@@ -145,11 +145,11 @@ class EmailCLI extends Maintenance {
 
 			list( $key, $value ) = explode( '=', $pair );
 			if ( empty( $value ) ) {
-				echo "WARNING: argument '$key' had no value\n";
+				$this->error( "WARNING: argument '$key' had no value\n" );
 				continue;
 			}
 			if ( empty( $key ) ) {
-				echo "WARNING: missing key for value '$value'\n";
+				$this->error( "WARNING: missing key for value '$value'\n" );
 				continue;
 			}
 			$param[$key] = $value;
@@ -160,13 +160,13 @@ class EmailCLI extends Maintenance {
 
 	protected function assertControllerExists( $controllerClass ) {
 		if ( !class_exists( $controllerClass ) ) {
-			throw new OptionException( "Can't find $controllerClass to handle this email type\n" );
+			throw new OptionException( "Can't find $controllerClass to handle this email type" );
 		}
 	}
 
 	protected function assertSuccessfulEmail( WikiaResponse $resp = null ) {
 		if ( empty( $resp ) ) {
-			throw new RequestException( "Got empty response from the $this->type email controller\n" );
+			throw new RequestException( "Got empty response from the $this->type email controller" );
 		}
 
 		$data = $resp->getData();
