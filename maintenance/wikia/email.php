@@ -148,6 +148,10 @@ class EmailCLI extends Maintenance {
 				echo "WARNING: argument '$key' had no value\n";
 				continue;
 			}
+			if ( empty( $key ) ) {
+				echo "WARNING: missing key for value '$value'\n";
+				continue;
+			}
 			$param[$key] = $value;
 		}
 
