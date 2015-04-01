@@ -94,10 +94,12 @@ class WatchedPageController extends EmailController {
 			'editorUserName' => $this->getEditorUserName(),
 			'editorAvatarURL' => $this->getEditorAvatarUR(),
 			'summary' => $this->getSummary(),
-			'compareChangesLabel' => $this->getCompareChangesLabel(),
-			'compareChangesLink' => $this->getCompareChangesLink(),
-			'headOver' => $this->getHeadOver(),
-			'allChanges' => $this->getAllChanges(),
+			'buttonText' => $this->getCompareChangesLabel(),
+			'buttonLink' => $this->getCompareChangesLink(),
+			'contentFooterMessages' => [
+				$this->getHeadOver(),
+				$this->getAllChanges(),
+			],
 			'timeStamp' => $this->getTimeStamp()
 		] );
 	}
