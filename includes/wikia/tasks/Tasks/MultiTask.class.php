@@ -105,6 +105,12 @@ class MultiTask extends BaseTask {
 		// using the provided article's title
 		if ( $params['selwikia'] === 0 ) {
 			$params['selwikia'] = $this->getWikisWherePageExists( $page );
+
+			// PLATFORM-783 / PLATFORM-1106: do not run when the list of wikis is empty
+			// otherwise this would be run on ALL wikis
+			if ( empty( $params['selwikia'] ) ) {
+				return false;
+			}
 		}
 
 		$result = $this->runOnWikis(
@@ -212,6 +218,12 @@ class MultiTask extends BaseTask {
 		foreach ( $res as $row ) {
 			/* @var mixed $row */
 			$wikis[] = intval( $row->wiki_id );
+		}
+
+		if ( empty( $wikis ) ) {
+			$this->error( 'No wikis were found that have the provided page', [
+				'title' => $title->getPrefixedDBkey()
+			] );
 		}
 
 		return $wikis;
