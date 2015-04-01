@@ -214,7 +214,7 @@ class EmailController extends \WikiaController {
 	 * Renders the content unique to each email. Should be overridden in child classes.
 	 */
 	protected function getContent() {
-		throw new Fatal( wfMessage( 'emailext-error-nocontent' )->escaped() );
+		throw new Fatal( 'Required email content body has been left empty' );
 	}
 
 	/**
@@ -277,7 +277,7 @@ class EmailController extends \WikiaController {
 	 */
 	protected function getUserFromName( $username ) {
 		if ( !$username ) {
-			throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
+			throw new Fatal( 'Required username has been left empty' );
 		}
 
 		$user = \User::newFromName( $username );
