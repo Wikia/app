@@ -1,5 +1,5 @@
 <nav class="global-navigation" id="globalNavigation">
-	<div class="page-width">
+	<div class="global-navigation-container">
 		<div class="wikia-logo-container table-cell">
 			<a href="<?= htmlspecialchars( $centralUrl ) ?>"
 				class="wikia-logo"

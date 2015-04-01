@@ -1,4 +1,5 @@
 //TODO: Cleanup Oasis' scss files while removing responsive (vayout, responsive*, grid, ...)
+@import 'skins/shared/functions';
 
 $widthType: get_command_line_param( "widthType", 0 );
 $oasisTypography: get_command_line_param( "oasisTypography", 0 );

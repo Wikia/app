@@ -28,9 +28,6 @@ class GlobalNavigationController extends WikiaController {
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
-		Wikia::addAssetsToOutput( 'global_navigation_facebook_login_js' );
-		// TODO remove after when Oasis is retired
-		Wikia::addAssetsToOutput( 'global_navigation_oasis_scss' );
 
 		//Lang for centralUrl and CNW should be the same as user language not content language
 		//That's why $wgLang global is used
