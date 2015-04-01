@@ -150,10 +150,8 @@ function addTag( $action, $article ) {
 		);
 		$logPage->addEntry( 'tag', $imgTitle, $logComment );
 
-		$enotif = new EmailNotification;
-		$enotif->notifyOnPageChange(
-			$wgUser, $imgTitle, wfTimestampNow(), $logComment, false
-		);
+		$enotif = new EmailNotification( $wgUser, $imgTitle, wfTimestampNow(), $logComment, false );
+		$enotif->notifyOnPageChange();
 	} else {
 		$wgOut->clearHTML();
 		$wgOut->addHTML(
@@ -204,10 +202,8 @@ function removeTag( $action, $article ) {
 		$logComment = wfMsg( 'imagetagging-logentry', $tagName, $userText );
 		$logPage->addEntry( 'tag', $imgTitle, $logComment );
 
-		$enotif = new EmailNotification;
-		$enotif->notifyOnPageChange(
-			$wgUser, $imgTitle, wfTimestampNow(), $logComment, false
-		);
+		$enotif = new EmailNotification( $wgUser, $imgTitle, wfTimestampNow(), $logComment, false );
+		$enotif->notifyOnPageChange();
 	} else {
 		$wgOut->clearHTML();
 		$wgOut->addHTML(

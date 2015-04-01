@@ -889,7 +889,7 @@ class EmailNotification {
 	 * @return Boolean
 	 * @private
 	 */
-	function sendPersonalised( $watchingUser ) {
+	private function sendPersonalised( $watchingUser ) {
 		global $wgContLang, $wgEnotifUseRealName;
 		// From the PHP manual:
 		//     Note:  The to parameter cannot be an address in the form of "Something <someone@example.com>".
