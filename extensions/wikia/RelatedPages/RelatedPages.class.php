@@ -4,8 +4,6 @@ class RelatedPages {
 
 	protected $pages = null;
 	protected $categories = null;
-	protected $categoryCacheTTL = 8; // in hours
-	protected $categoryRankCacheTTL = 24; // in hours
 	protected $categoriesLimit = 6;
 	protected $pageSectionNo = 4; // number of section before which module should be injected (for long articles)
 	protected $isRendered = false;
@@ -212,7 +210,7 @@ class RelatedPages {
 			$pages[] = $row->page_id;
 		}
 
-		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
+		$wgMemc->set( $cacheKey, $pages, WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
 		return $pages;
@@ -276,7 +274,7 @@ class RelatedPages {
 			}
 		}
 
-		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
+		$wgMemc->set( $cacheKey, $pages, WikiaResponse::CACHE_STANDARD );
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
@@ -346,7 +344,7 @@ class RelatedPages {
 
 		$results = WikiaDataAccess::cacheWithLock(
 			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__ ) : wfMemcKey( $this->memcKeyPrefix, __METHOD__ ),
-			$this->categoryRankCacheTTL * 3600,
+			WikiaResponse::CACHE_STANDARD,
 			function () use ( $wgContentNamespaces ) {
 				$db = wfGetDB( DB_SLAVE );
 				$sql = ( new WikiaSQL() )
@@ -401,7 +399,7 @@ class RelatedPages {
 
 			$count = ( is_object( $result ) ) ? $result->count : 0;
 			if ( $count > 0 ) {
-				$wgMemc->set( $cacheKey, $count, $this->categoryRankCacheTTL * 3600 );
+				$wgMemc->set( $cacheKey, $count, WikiaResponse::CACHE_STANDARD );
 			}
 		}
 
