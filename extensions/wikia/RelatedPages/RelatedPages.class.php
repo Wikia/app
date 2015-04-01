@@ -7,7 +7,6 @@ class RelatedPages {
 	protected $categoriesLimit = 6;
 	protected $pageSectionNo = 4; // number of section before which module should be injected (for long articles)
 	protected $isRendered = false;
-	protected $memcKeyPrefix = '';
 	static protected $instance = null;
 
 	const MCACHE_VER = '1.01';
@@ -181,12 +180,9 @@ class RelatedPages {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, $category );
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category );
-		}
+		$cacheKey = wfMemcKey( __METHOD__, md5($category) );
 		$cache = $wgMemc->get( $cacheKey );
+
 		if ( is_array( $cache ) ) {
 			wfProfileOut( __METHOD__ );
 			return $cache;
@@ -234,11 +230,8 @@ class RelatedPages {
 		}
 
 		wfProfileIn( __METHOD__ );
-		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, $articleId );
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId );
-		}
+
+		$cacheKey = wfMemcKey( __METHOD__, $articleId );
 		$cache = $wgMemc->get( $cacheKey );
 
 		if ( is_array( $cache ) ) {
@@ -348,7 +341,7 @@ class RelatedPages {
 		wfProfileIn( __METHOD__ );
 
 		$results = WikiaDataAccess::cacheWithLock(
-			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__ ) : wfMemcKey( $this->memcKeyPrefix, __METHOD__ ),
+			wfMemcKey( __METHOD__ ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ( $wgContentNamespaces ) {
 				$db = wfGetDB( DB_SLAVE );
@@ -381,15 +374,16 @@ class RelatedPages {
 		return $results;
 	}
 
+	/**
+	 * @param string $category
+	 * @return int
+	 * @throws DBUnexpectedError|Exception|MWException
+	 */
 	private function getCategoryRankByName( $category ) {
 		global $wgContentNamespaces, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, md5( $category ) );
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, md5( $category ) );
-		}
+		$cacheKey = wfMemcKey( __METHOD__, md5( $category ) );
 		$count = $wgMemc->get( $cacheKey );
 
 		if ( !isset( $count ) ) {
