@@ -17,6 +17,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			CORP_TOP_LEADERBOARD:   'leaderboard',
 			CORP_TOP_RIGHT_BOXAD:   'medrec',
 			EXIT_STITIAL_BOXAD_1:   'medrec',
+			HIGH_IMPACT:            'pixel',
 			HOME_TOP_LEADERBOARD:   'leaderboard',
 			HOME_TOP_RIGHT_BOXAD:   'medrec',
 			HUB_TOP_LEADERBOARD:    'leaderboard',
