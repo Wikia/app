@@ -225,24 +225,26 @@
 		var expName, exp, versions, version, i, activeExperiments = {}, count = 0;
 
 		for ( expName in experiments ) {
-			exp = experiments[expName];
-			versions = exp.versions;
+			if ( experiments.hasOwnProperty( expName ) ) {
+				exp = experiments[expName];
+				versions = exp.versions;
 
-			// Check if any given version is active now
-			for ( i = 0; i < versions.length; i++ ) {
-				version = versions[ i ];
+				// Check if any given version is active now
+				for ( i = 0; i < versions.length; i++ ) {
+					version = versions[ i ];
 
-				// If this version is active remember this information
-				if ( serverTime >= version.startTime && serverTime < version.endTime ) {
-					exp.current = version;
-					exp.flags = version.flags;
-					count++;
-					break;
+					// If this version is active remember this information
+					if ( serverTime >= version.startTime && serverTime < version.endTime ) {
+						exp.current = version;
+						exp.flags = version.flags;
+						count++;
+						break;
+					}
 				}
-			}
 
-			if ( exp.current ) {
-				activeExperiments[expName] = exp;
+				if ( exp.current ) {
+					activeExperiments[expName] = exp;
+				}
 			}
 		}
 
