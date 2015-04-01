@@ -10,9 +10,9 @@
 		}
 	} else {
 ?>
-		<header id="WikiaPageHeader" class="WikiaPageHeader">
-			<div class="header-table">
-				<div class="header-column max-width">
+		<header id="WikiaPageHeader" class="WikiaPageHeader wikia-page-header">
+			<div class="header-container">
+				<div class="header-column header-title">
 					<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
 					<?php if (!empty($pageSubtitle)): ?>
 						<h2><?= $pageSubtitle ?></h2>
@@ -20,7 +20,7 @@
 						<div class="subtitle"><?= $subtitle ?></div>
 					<? endif; ?>
 				</div>
-				<div class="header-column">
+				<div class="header-column header-tally">
 					<?php if ( !empty( $wg->EnablePageShareExt ) ) {
 						echo F::app()->renderView('PageShare', 'index');
 					} ?>
