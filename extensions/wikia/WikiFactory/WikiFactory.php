@@ -1262,7 +1262,7 @@ class WikiFactory {
 	 *
 	 * @return array an array of objects, keys are wikis ids.
 	 */
-	static public function getWikisByID( $ids, $master = false ) {
+	static public function getWikisByID( array $ids, $master = false ) {
 		if ( !self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;

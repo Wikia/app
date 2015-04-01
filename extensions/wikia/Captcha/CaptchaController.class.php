@@ -5,17 +5,17 @@
  */
 class CaptchaController extends WikiaController {
 
-	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-
 	/**
 	 * Displays a captcha image. This is used exclusively by FancyCaptcha.
 	 */
 	public function showImage() {
 		$fancyCaptcha = new \Captcha\Module\FancyCaptcha();
-		if ( !$fancyCaptcha->showImage() ) {
-			$this->response->setData( [
-				'error' => wfMessage( 'captcha-no-image' )->escaped(),
-			] );
+		if ( $fancyCaptcha->showImage() ) {
+			/*
+			* Stop immediately when captcha is sent to browser.
+			* We don't want to send additional headers and other nirvana stuff
+			*/
+			exit();
 		}
 	}
 
@@ -28,12 +28,5 @@ class CaptchaController extends WikiaController {
 		$this->response->setData(
 			[ 'form' => $fancyCaptcha->getForm() ]
 		);
-	}
-
-	/**
-	 * Display information about how this captcha works
-	 */
-	public function showHelp() {
-		\Captcha\Factory\Module::getInstance()->showHelp();
 	}
 }

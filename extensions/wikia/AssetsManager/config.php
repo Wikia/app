@@ -72,6 +72,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
@@ -734,6 +735,7 @@ $config['mobile_base_ads_js'] = array(
 $config['mercury_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		// Common modules
 		'//resources/wikia/libraries/modil/modil.js',
 		'#group_tracker_js',
 		'//resources/wikia/modules/log.js',
@@ -748,9 +750,14 @@ $config['mercury_ads_js'] = array(
 		'#group_mobile_base_ads_js',
 		'//resources/wikia/modules/cache.js',
 		'//resources/wikia/modules/localStorage.js',
+
+		// Advertisement libs
+		'//resources/wikia/modules/iframeWriter.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
+		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
+		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/mercury.run.js',
 		'//resources/wikia/modules/krux.js',
 	)
