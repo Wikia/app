@@ -61,7 +61,7 @@ abstract class EmailController extends \WikiaController {
 			return;
 		}
 
-		throw new Fatal( wfMessage( 'emailext-error-restricted-controller' )->escaped() );
+		throw new Fatal( 'Access to this controller is restricted' );
 	}
 
 	/**
@@ -307,11 +307,11 @@ abstract class EmailController extends \WikiaController {
 	 */
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
-			throw new Fatal( wfMessage( 'emailext-error-not-user' )->escaped() );
+			throw new Fatal( 'Unable to create user object');
 		}
 
 		if ( $user->getId() == 0 ) {
-			throw new Fatal( wfMessage( 'emailext-error-empty-user' )->escaped() );
+			throw new Fatal( 'Unable to find user' );
 		}
 	}
 
@@ -321,7 +321,7 @@ abstract class EmailController extends \WikiaController {
 	public function assertUserHasEmail() {
 		$email = $this->targetUser->getEmail();
 		if ( empty( $email ) ) {
-			throw new Fatal( wfMessage( 'emailext-error-noemail' )->escaped() );
+			throw new Fatal( 'User has no email address' );
 		}
 	}
 
@@ -343,7 +343,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	public function assertUserWantsEmail() {
 		if ( $this->targetUser->getBoolOption( 'unsubscribed' ) ) {
-			throw new Check( wfMessage( 'emailext-error-no-emails' )->escaped() );
+			throw new Check( 'User does not wish to receive email' );
 		}
 	}
 
@@ -354,7 +354,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	public function assertUserNotBlocked() {
 		if ( $this->currentUser->isBlocked() ) {
-			throw new Check( wfMessage( 'emailext-error-user-blocked' )->escaped() );
+			throw new Check( 'User is blocked from taking this action' );
 		}
 	}
 }
