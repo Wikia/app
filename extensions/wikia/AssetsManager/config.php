@@ -754,6 +754,8 @@ $config['mercury_ads_js'] = array(
 		// Advertisement libs
 		'//resources/wikia/modules/iframeWriter.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+		'//extensions/wikia/AbTesting/js/AbTest.js',
+		'//resources/wikia/modules/abTest.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/mercury.run.js',
