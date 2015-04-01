@@ -2,6 +2,8 @@
 
 namespace Email;
 
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -12,6 +14,9 @@ abstract class EmailController extends \WikiaController {
 	protected $targetUser;
 
 	protected $hasErrorResponse = false;
+
+	/** @var bool Whether to show the icons over the hubs links */
+	protected $marketingFooter;
 
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
@@ -24,7 +29,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	public static function getTemplateDir() {
-		return dirname( __FILE__ ) . '/templates/compiled';
+		return dirname( __FILE__ ) . '/templates';
 	}
 
 	public function init() {
@@ -34,6 +39,7 @@ abstract class EmailController extends \WikiaController {
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
 			$this->test = $this->getRequest()->getVal( 'test', false );
+			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
 			$this->initEmail();
 		} catch ( ControllerException $e ) {
@@ -119,7 +125,7 @@ abstract class EmailController extends \WikiaController {
 	public function main() {
 		$this->response->setVal( 'content', $this->getVal( 'content' ) );
 		$this->response->setVal( 'footerMessages', $this->getVal( 'footerMessages' ) );
-		$this->response->setVal( 'fancyHubLinks', true );
+		$this->response->setVal( 'marketingFooter', $this->marketingFooter );
 	}
 
 	/**
@@ -177,9 +183,8 @@ abstract class EmailController extends \WikiaController {
 
 	/**
 	 * Return the subject used for this email
-	 * Must be overridden in child classes
 	 */
-	abstract function getSubject();
+	abstract protected function getSubject();
 
 	/**
 	 * Renders the 'body' view of the current email controller
@@ -187,21 +192,42 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getBody() {
-		$moduleBody = $this->app->renderView(
-			get_class( $this ),
-			'body',
-			$this->request->getParams()
-		);
+		$css = file_get_contents( __DIR__ . '/styles/main.css' );
 
 		$html = $this->app->renderView(
 			get_class( $this ),
 			'main',
 			[
-				'content' => $moduleBody,
+				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages()
-
 			]
 		);
+
+		$html = $this->inlineStyles( $html, $css );
+
+		return $html;
+	}
+
+	/**
+	 * Renders the content unique to each email.
+	 */
+	abstract protected function getContent();
+
+	/**
+	 * Inline all css into style attributes
+	 *
+	 * @param string $html
+	 * @param string $css
+	 * @return string
+	 * @throws \TijsVerkoyen\CssToInlineStyles\Exception
+	 */
+	protected function inlineStyles( $html, $css ) {
+		// add default css to every template
+		$css .= file_get_contents( __DIR__ . '/styles/common.css' );
+
+		$inliner = new CssToInlineStyles( $html, $css );
+		$inliner->setUseInlineStylesBlock();
+		$html = $inliner->convert();
 
 		return $html;
 	}
@@ -247,7 +273,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getUserFromName( $username ) {
 		if ( !$username ) {
-			throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
+			throw new Fatal( 'Required username has been left empty' );
 		}
 
 		$user = \User::newFromName( $username );

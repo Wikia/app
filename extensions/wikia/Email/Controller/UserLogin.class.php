@@ -32,6 +32,16 @@ class ForgotPasswordController extends EmailController {
 		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $this->getTargetLang() )->text();
 	}
 
+	protected function getContent() {
+		$html = $this->app->renderView(
+			get_class( $this ),
+			'body',
+			$this->request->getParams()
+		);
+
+		return $html;
+	}
+
 	/**
 	 * @template forgotPassword
 	 *
