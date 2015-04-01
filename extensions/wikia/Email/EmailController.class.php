@@ -26,7 +26,7 @@ class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	public static function getTemplateDir() {
-		return dirname( __FILE__ ) . '/templates/src';
+		return dirname( __FILE__ ) . '/templates';
 	}
 
 	public function init() {
@@ -212,6 +212,7 @@ class EmailController extends \WikiaController {
 
 		// inline all css into style attributes
 		$inliner = new CssToInlineStyles( $html, $css );
+		$inliner->setUseInlineStylesBlock();
 		$html = $inliner->convert();
 
 		return $html;
