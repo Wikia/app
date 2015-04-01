@@ -1,15 +1,18 @@
 <?php
+namespace Wikia\Util\Consul;
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class for querying Wikia Microservices provided by Consul
  * Using Wikia's Http class and ConsulService
  */
-class ExternalServicesQueryService extends Service {
+class ExternalServicesQuery {
 
 	/**
 	 * @var $consulService ConsulService
 	 */
 	protected $consulService;
-	protected $httpOptions = [];
+	protected $httpOptions = [ ];
 
 	const URL_SCHEMA = "http://{host}:{port}/{query_path}";
 	const METHOD_GET = 'GET';
@@ -23,7 +26,7 @@ class ExternalServicesQueryService extends Service {
 	/**
 	 * @return array
 	 */
-	public function getHttpOptions()	{
+	public function getHttpOptions() {
 		return $this->httpOptions;
 	}
 
@@ -32,7 +35,7 @@ class ExternalServicesQueryService extends Service {
 	 * @param array $httpOptions
 	 * @return $this
 	 */
-	public function setHttpOptions( $httpOptions )	{
+	public function setHttpOptions( $httpOptions ) {
 		$this->httpOptions = $httpOptions;
 		return $this;
 	}
@@ -41,30 +44,28 @@ class ExternalServicesQueryService extends Service {
 		$target = $this->consulService->resolve();
 
 		$url = strtr( self::URL_SCHEMA, array(
-			'{host}' => $target['host'],
-			'{port}' => $target['port'],
-			'{query_path}' => $queryPath
-		) );
+			'{host}' => $target[ 'host' ],
+			'{port}' => $target[ 'port' ],
+			'{query_path}' => $queryPath ) );
 		return $url;
 	}
 
-	protected function request( $method, $queryPath, $additionalOptions = [] ) {
+	protected function request( $method, $queryPath, $additionalOptions = [ ] ) {
 		$url = $this->getUrl( $queryPath );
-		$result = $this->real_request( $method,
-										$url,
-										array_merge( $this->getHttpOptions(), (array)$additionalOptions ) );
+		$result = $this->real_request( $method, $url, array_merge( $this->getHttpOptions(), (array)$additionalOptions ) );
 
 		if ( !$result ) {
-			$logger = \Wikia\Logger\WikiaLogger::instance();
-			$logger->error( "ExternalServiceQuery fail", [ "serviceName" => $this->consulService->getServiceName(),
-														 	"serviceTag" => $this->consulService->getServiceTag(),
-														 	"url" => $url ] );
+			$logger = WikiaLogger::instance();
+			$logger->error( "ExternalServiceQuery fail", [
+				"serviceName" => $this->consulService->getConfig()->getServiceName(),
+				"serviceTag" => $this->consulService->getConfig()->getServiceTag(),
+				"url" => $url ] );
 		}
 		return $result;
 	}
 
 	protected function real_request( $method, $url, $options ) {
-		return Http::request( $method, $url, $options );
+		return \Http::request( $method, $url, $options );
 	}
 
 	/**
@@ -82,6 +83,5 @@ class ExternalServicesQueryService extends Service {
 	 */
 	public function post( $queryPath, $postData ) {
 		return $this->request( self::METHOD_POST, $queryPath, [ "postData" => $postData ] );
-
 	}
 }
