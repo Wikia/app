@@ -52,7 +52,7 @@ class VideoService extends WikiaModel {
 				$file = wfFindFile( $videoTitle );
 			}
 
-			if ( !method_exists( $file, 'getTitle' ) ) {
+			if ( $file instanceof File )  {
 				WikiaLogger::instance()->error( '\VideoHandlerHelper->adDefaultVideoDescription() - File is empty', [
 					'exception' => new Exception(),
 					'url' => $url,
@@ -62,6 +62,8 @@ class VideoService extends WikiaModel {
 					'videoProvider' => $videoProvider,
 					'wgIsGhostVideo' => $wgIsGhostVideo
 				] );
+				wfProfileOut( __METHOD__ );
+				return wfMessage( 'videos-something-went-wrong' )->parse();
 			} else {
 				// Add a default description if available and one doesn't already exist
 				$vHelper = new VideoHandlerHelper();
