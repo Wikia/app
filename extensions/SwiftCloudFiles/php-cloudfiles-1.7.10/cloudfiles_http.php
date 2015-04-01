@@ -1092,7 +1092,7 @@ class CF_Http
     {
         $header_len = strlen($header);
 
-        if (preg_match("/^(HTTP\/1\.[01]) (\d{3}) (.*)/", $header, $matches)) {
+        if (preg_match("/^(HTTP\/1\.[01]) (\d{3})\s?(.*)/", $header, $matches)) {
             $this->response_status = $matches[2];
             $this->response_reason = $matches[3];
             return $header_len;
@@ -1205,7 +1205,7 @@ class CF_Http
 
     private function _auth_hdr_cb($ch, $header)
     {
-        preg_match("/^HTTP\/1\.[01] (\d{3}) (.*)/", $header, $matches);
+        preg_match("/^HTTP\/1\.[01] (\d{3})\s?(.*)/", $header, $matches);
         if (isset($matches[1])) {
             $this->response_status = $matches[1];
         }
