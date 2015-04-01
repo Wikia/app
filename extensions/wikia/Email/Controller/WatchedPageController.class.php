@@ -84,7 +84,7 @@ class WatchedPageController extends EmailController {
 //	}
 
 	/**
-	 * @template watchedPage
+	 * @template avatarLayout
 	 */
 	public function body() {
 		$this->response->setData( [
@@ -100,6 +100,23 @@ class WatchedPageController extends EmailController {
 			'allChanges' => $this->getAllChanges(),
 			'timeStamp' => $this->getTimeStamp()
 		] );
+	}
+
+	/**
+	 * Get rendered html for content unique to this email
+	 * @todo We may want to make this available more generically for other emails to use the avatar layout.
+	 */
+	protected function getContent() {
+		$css = file_get_contents( __DIR__ . '/../styles/avatarLayout.css' );
+		$html = $this->app->renderView(
+			get_class( $this ),
+			'body',
+			$this->request->getParams()
+		);
+
+		$html = $this->inlineStyles( $html, $css );
+
+		return $html;
 	}
 
 	private function getSalutation() {
