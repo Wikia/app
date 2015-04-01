@@ -24,10 +24,12 @@
  * Ideally some day this module should be a simple wrapper around PostScribe.
  */
 
-/*global setTimeout, define, require*/
+/*global define, require*/
 /*jslint regexp:true*/
 
-var ScriptWriter = function (document, log, window, loader) {
+define('wikia.scriptwriter', [
+	'wikia.document', 'wikia.log', 'wikia.window', 'wikia.loader'
+], function (document, log, window, loader) {
 	'use strict';
 
 	var module = 'wikia.scriptwriter',
@@ -38,8 +40,7 @@ var ScriptWriter = function (document, log, window, loader) {
 		impl,
 		implLoading = false, // load implementation only once
 		implGw = {},
-		implPs = {},
-		endCallbacks = [];
+		implPs = {};
 
 	function escapeHtml(str) {
 		return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -60,29 +61,6 @@ var ScriptWriter = function (document, log, window, loader) {
 		throw 'wikia.scriptwriter: Not a valid element or element id ' + elementOrElementId;
 	}
 
-	function callLater(callback) {
-		if (typeof callback !== 'function') {
-			throw 'wikia.scriptwriter: callLater requires function as the first argument';
-		}
-
-		setTimeout(function () {
-			if (queue.length > 0) {
-				log('callLater registered', 'debug', module);
-				endCallbacks.push(callback);
-			} else {
-				/*
-				 * TODO: It seems that in most cases the code follows the path marked with
-				 * log 'No queued script writer requests. Calling callLater directly' after
-				 * handling all the ads. This means the whole concept of "callLater" can
-				 * be removed and simple setTimeout(function, 0) should be used in
-				 * AdEngine2.run.js in place of this.
-				 */
-				log('No queued script writer requests. Calling callLater directly', 'debug', module);
-				callback();
-			}
-		}, 0);
-	}
-
 	function processQueue() {
 		log('processQueue', 'debug', module);
 
@@ -91,18 +69,6 @@ var ScriptWriter = function (document, log, window, loader) {
 		if (queue.length === 0) {
 			queueCompleted = true;
 			log(['processQueue', 'Queue completed'], 'debug', module);
-
-			while (true) {
-				callback = endCallbacks.shift();
-				if (typeof callback === 'function') {
-					log('Calling callLater now', 'debug', module);
-					callback();
-					log('Actual callLater called', 'debug', module);
-				} else {
-					break;
-				}
-			}
-
 			return;
 		}
 
@@ -141,8 +107,9 @@ var ScriptWriter = function (document, log, window, loader) {
 			impl = implPs;
 
 			// GhostWriter does this safety-guards, but PostScribe doesn't
-			document.open = function () {};
-			document.close = function () {};
+			document.open = document.close = function () {
+				return;
+			};
 
 			if (postscribeLoaded) {
 				log(['loadImpl', 'postscribe already loaded, processing queue'], 'debug', module);
@@ -252,23 +219,6 @@ var ScriptWriter = function (document, log, window, loader) {
 		 */
 		injectScriptByText: function (elementOrElementId, text, callback) {
 			push('text', [getElement(elementOrElementId), text], callback);
-		},
-
-		/**
-		 * Call callback after every thing handles by scriptwriter
-		 *
-		 * It's used by AdEngine2.run.js to queue loading of the Krux library.
-		 *
-		 * @param callback function to call later
-		 */
-		callLater: callLater
+		}
 	};
-};
-
-if (this.define && define.amd) {
-	define(
-		'wikia.scriptwriter',
-		['wikia.document', 'wikia.log', 'wikia.window', 'wikia.loader'],
-		ScriptWriter
-	);
-}
+});

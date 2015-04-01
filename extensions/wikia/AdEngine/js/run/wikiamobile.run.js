@@ -4,7 +4,7 @@ require(
 		'jquery',
 		'JSMessages',
 		'ext.wikia.adEngine.adEngine',
-		'ext.wikia.adEngine.adConfigMobile',
+		'ext.wikia.adEngine.config.mobile',
 		'ext.wikia.adEngine.messageListener',
 		'wikia.window',
 		'wikia.document',

@@ -97,11 +97,12 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
 			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
-			'extensions/wikia/AdEngine/js/lookup/*.js',
 			'extensions/wikia/AdEngine/js/MessageListener.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+			'extensions/wikia/AdEngine/js/config/*.js',
+			'extensions/wikia/AdEngine/js/lookup/*.js',
 			'extensions/wikia/AdEngine/js/provider/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',
