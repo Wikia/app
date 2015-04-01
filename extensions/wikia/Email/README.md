@@ -64,7 +64,7 @@ Note that email client support for SVGs is not great, so be sure to use JPG, GIF
 
 We're not using SCSS for the HTML emails, although we could theoretically add support for that in the future. For now, we're using plain CSS and [CssToInlineStyles](https://github.com/tijsverkoyen/CssToInlineStyles/) for inlining CSS into the templates. 
 
-There's one `common.css` that gets included in every template automatically. For template-specific styles, add them to the template via `<style>` tags.
+There's one `common.css` that gets included in every template automatically. For template-specific styles, add them via `\Email\EmailController::inlineStyles` in the child class' `getContent` method.
 
 See [campaignmonitor.com's](https://www.campaignmonitor.com/css/) cheat sheet for understanding which css properties are supported in major email clients. 
 
