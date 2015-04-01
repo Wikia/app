@@ -76,6 +76,28 @@ $wgAutoloadClasses['WikiaMobileController'] = "{$dir}/WikiaMobileController.clas
  */
 $wgExtensionMessagesFiles['WikiaMobile'] = "{$dir}/WikiaMobile.i18n.php";
 
+// initialize i18ns
+JSMessages::registerPackage( 'WkMbl', array(
+	'adengine-advertisement',
+	'wikiamobile-hide-section',
+	'wikiamobile-sharing-media-image',
+	'wikiamobile-sharing-page-text',
+	'wikiamobile-sharing-modal-text',
+	'wikiamobile-sharing-email-text',
+	'wikiamobile-image-not-loaded',
+	'wikiamobile-video-not-friendly',
+	'wikiamobile-video-not-friendly-header',
+	'wikiamobile-ad-label',
+	'wikiamobile-shared-file-not-available'
+) );
+
+JSMessages::registerPackage( 'SmartBanner', [
+	'wikiasmartbanner-appstore',
+	'wikiasmartbanner-googleplay',
+	'wikiasmartbanner-price',
+	'wikiasmartbanner-view'
+] );
+
 /**
  * hooks
  */
