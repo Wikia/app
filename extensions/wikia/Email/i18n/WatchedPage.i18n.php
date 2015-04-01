@@ -4,11 +4,11 @@ $messages = [];
 $messages['en'] = [
 	'emailext-watchedpage-subject' => '$1 on {{SITENAME}} has been edited.',
 	'emailext-watchedpage-salutation' => 'Hi $1,',
-	'emailext-watchedpage-article-edited' => '[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited. Check it out!',
+	'emailext-watchedpage-article-edited' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited. Check it out!'''",
 	'emailext-watchedpage-anonymous-editor' => 'Anonymous',
 	'emailext-watchedpage-diff-button-text' => 'Compare changes',
-	'emailext-watchedpage-article-link-text' => "Head over to '''[$1 $2]''' to see what's new",
-	'emailext-watchedpage-view-all-changes' => 'View all changes to [$1 $2]',
+	'emailext-watchedpage-article-link-text' => "[$1| Head over to '''$2''' to see what's new]",
+	'emailext-watchedpage-view-all-changes' => "[$1| View all changes to '''$2''']",
 	'emailext-watchedpage-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 ];
 

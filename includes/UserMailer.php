@@ -614,9 +614,9 @@ class EmailNotification {
 		# The following code is only run, if several conditions are met:
 		# 1. EmailNotification for pages (other than user_talk pages) must be enabled
 		# 2. minor edits (changes) are only regarded if the global flag indicates so
-		$userTalkId = false;
 		if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
 
+			$userTalkId = 0;
 			if ( $wgEnotifUserTalk && $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
 				$targetUser = User::newFromName( $this->title->getText() );
 				$this->compose( $targetUser );

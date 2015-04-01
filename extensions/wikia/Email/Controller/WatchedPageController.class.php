@@ -49,7 +49,7 @@ class WatchedPageController extends EmailController {
 	}
 
 	/**
-	 * @template watchedPage
+	 * @template avatarLayout
 	 */
 	public function body() {
 		$this->response->setData( [
@@ -59,12 +59,32 @@ class WatchedPageController extends EmailController {
 			'editorUserName' => $this->getEditorUserName(),
 			'editorAvatarURL' => $this->getEditorAvatarUR(),
 			'summary' => $this->getSummary(),
-			'compareChangesLabel' => $this->getCompareChangesLabel(),
-			'compareChangesLink' => $this->getCompareChangesLink(),
-			'articleLinkText' => $this->getArticleLinkText(),
-			'allChanges' => $this->getAllChangesText(),
+			'buttonText' => $this->getCompareChangesLabel(),
+			'buttonLink' => $this->getCompareChangesLink(),
+			'contentFooterMessages' => [
+				$this->getArticleLinkText(),
+				$this->getAllChangesText(),
+			],
 			'timeStamp' => $this->getTimeStamp()
 		] );
+	}
+
+	/**
+	 * @return String
+	 * Get rendered html for content unique to this email
+	 * @todo We may want to make this available more generically for other emails to use the avatar layout.
+	 */
+	protected function getContent() {
+		$css = file_get_contents( __DIR__ . '/../styles/avatarLayout.css' );
+		$html = $this->app->renderView(
+			get_class( $this ),
+			'body',
+			$this->request->getParams()
+		);
+
+		$html = $this->inlineStyles( $html, $css );
+
+		return $html;
 	}
 
 	/**

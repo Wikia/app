@@ -15,7 +15,8 @@ a, a * {
 
 p {
 	font-size: 16px;
-	margin: 0 0 20px 0;
+	line-height: 1.5em;
+	margin: 0 0 18px 0;
 	padding: 0;
 }
 
@@ -30,27 +31,12 @@ button {
 	text-transform: uppercase;
 }
 
-.content {
-	padding: 40px;
-	max-width: 520px;
-	margin: 0 auto;
-	display: block;
-}
-
 td.widest {
 	width: 100%;
 }
 
 .greeting {
 	margin-bottom: 50px;
-}
-
-.avatar-wrapper {
-	padding-right: 20px;
-}
-
-.avatar {
-	border-radius: 100%;
 }
 
 .subtle {
