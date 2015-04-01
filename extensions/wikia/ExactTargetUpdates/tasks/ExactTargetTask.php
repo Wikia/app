@@ -71,6 +71,15 @@ class ExactTargetTask extends BaseTask {
 	}
 
 	/**
+	 * A simple getter for an object of an ExactTargetRetrieveWikiHelper class
+	 * @return ExactTargetRetrieveWikiHelper
+	 */
+	protected function getRetrieveWikiHelper() {
+		return new ExactTargetRetrieveWikiHelper();
+	}
+
+
+	/**
 	 * A simple getter for an object of an ExactTargetUpdateWikiTask class
 	 * @return ExactTargetUpdateWikiTask
 	 */
@@ -84,6 +93,14 @@ class ExactTargetTask extends BaseTask {
 	 */
 	protected function getWikiHelper() {
 		return new ExactTargetWikiTaskHelper();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetWikiDataVerification class
+	 * @return ExactTargetWikiDataVerification
+	 */
+	protected function getWikiDataVerificationTask() {
+		return new ExactTargetWikiDataVerificationTask();
 	}
 
 }
