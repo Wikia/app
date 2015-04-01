@@ -217,11 +217,21 @@ class RelatedPages {
 	}
 
 	/**
-	* get pages that belong to a list of categories
-	* @author Owen
-	*/
+	 * get pages that belong to a list of categories
+	 * @author Owen
+	 *
+	 * @param int $articleId
+	 * @param int $limit
+	 * @param array $categories
+	 * @return array
+	 * @throws DBUnexpectedError|MWException
+	 */
 	protected function getPagesForCategories( $articleId, $limit, Array $categories ) {
 		global $wgMemc;
+
+		if ( empty( $categories ) ) {
+			return [];
+		}
 
 		wfProfileIn( __METHOD__ );
 		if ( empty( $this->memcKeyPrefix ) ) {
@@ -238,11 +248,6 @@ class RelatedPages {
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$pages = array();
-
-		if ( empty( $categories ) ) {
-			wfProfileOut( __METHOD__ );
-			return $pages;
-		}
 
 		$tables = array( "categorylinks" );
 		$joinSql = $this->getPageJoinSql( $dbr, $tables );
