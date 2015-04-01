@@ -343,34 +343,29 @@ class DataProvider {
 	 */
 	final public static function GetMostVisitedArticles($limit = 7, $ns = array(NS_MAIN), $fillUpMostPopular = true) {
 		wfProfileIn(__METHOD__);
-		global $wgMemc, $wgCityId;
+		global $wgCityId;
 
-		$memckey = wfMemcKey("MostVisited", $limit, implode(",", $ns), $fillUpMostPopular);
-		$results = $wgMemc->get($memckey);
-
-		if (!is_array($results)) {
-			$results = array();
-			$data = DataMartService::getTopArticlesByPageview( $wgCityId, null, $ns, false, 2 * $limit );
-			if ( !empty( $data ) ) {
-				foreach ( $data as $article_id => $row ) {
-					$title = Title::newFromID($article_id);
-					if ( is_object($title) ) {
-						if ( wfMsg("mainpage") != $title->getText() ) {
-							$article = array(
-								'url'	=> $title->getLocalUrl(),
-								'text'	=> $title->getPrefixedText(),
-								'count' => $row['pageviews']
-							);
-							$results[] = $article;
-						}
+		$results = array();
+		$data = DataMartService::getTopArticlesByPageview( $wgCityId, null, $ns, false, 2 * $limit );
+		if ( !empty( $data ) ) {
+			foreach ( $data as $article_id => $row ) {
+				$title = Title::newFromID($article_id);
+				if ( is_object($title) ) {
+					if ( wfMsg("mainpage") != $title->getText() ) {
+						$article = array(
+							'url'	=> $title->getLocalUrl(),
+							'text'	=> $title->getPrefixedText(),
+							'count' => $row['pageviews']
+						);
+						$results[] = $article;
 					}
 				}
+			}
 
-				self::removeAdultPages($results);
+			self::removeAdultPages($results);
 
-				if (!empty($results)) {
-					$results = array_slice($results, 0, $limit);
-				}
+			if (!empty($results)) {
+				$results = array_slice($results, 0, $limit);
 			}
 		}
 
