@@ -4,7 +4,7 @@ namespace Email;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
-class EmailController extends \WikiaController {
+abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/** @var \User The user associated with the current request */
@@ -14,7 +14,9 @@ class EmailController extends \WikiaController {
 	protected $targetUser;
 
 	protected $hasErrorResponse = false;
-	protected $marketingFooter = false;
+
+	/** @var bool Whether to show the icons over the hubs links */
+	protected $marketingFooter;
 
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
@@ -37,7 +39,7 @@ class EmailController extends \WikiaController {
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
 			$this->test = $this->getRequest()->getVal( 'test', false );
-			$this->marketingFooter = $this->request->getVal( 'marketingFooter' );
+			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
 			$this->initEmail();
 		} catch ( ControllerException $e ) {
@@ -181,11 +183,8 @@ class EmailController extends \WikiaController {
 
 	/**
 	 * Return the subject used for this email
-	 * Must be overridden in child classes
 	 */
-	protected function getSubject() {
-		throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
-	}
+	abstract protected function getSubject();
 
 	/**
 	 * Renders the 'body' view of the current email controller
@@ -210,11 +209,9 @@ class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * Renders the content unique to each email. Should be overridden in child classes.
+	 * Renders the content unique to each email.
 	 */
-	protected function getContent() {
-		throw new Fatal( 'Required email content body has been left empty' );
-	}
+	abstract protected function getContent();
 
 	/**
 	 * Inline all css into style attributes
