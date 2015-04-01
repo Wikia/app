@@ -114,7 +114,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 * Task for updating user_properties data in ExactTarget
 	 *
 	 * @info Removed updateUserPropertiesData method as was unused
-	 * @commit
+	 * @commit ebc67498c9c8ce0cdb260e38411a66f00768fa39
 	 *
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gloal properties ['property_name'=>'property_value']
