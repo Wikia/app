@@ -348,10 +348,12 @@ class DataProvider {
 		$results = array();
 		$data = DataMartService::getTopArticlesByPageview( $wgCityId, null, $ns, false, 2 * $limit );
 		if ( !empty( $data ) ) {
+			$mainPage = Title::newMainPage();
+
 			foreach ( $data as $article_id => $row ) {
 				$title = Title::newFromID($article_id);
 				if ( is_object($title) ) {
-					if ( wfMsg("mainpage") != $title->getText() ) {
+					if ( !$mainPage->equals( $title ) ) {
 						$article = array(
 							'url'	=> $title->getLocalUrl(),
 							'text'	=> $title->getPrefixedText(),
