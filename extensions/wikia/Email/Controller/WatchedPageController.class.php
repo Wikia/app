@@ -25,7 +25,9 @@ class WatchedPageController extends EmailController {
 
 	// TODO setup error handling here if minorEdit not passed in
 	public function initEmail() {
-		$this->title = $this->request->getVal( 'title' );
+		//$this->title = $this->request->getVal( 'title' );
+
+		$this->title = \Title::newFromText('Videos');
 		$this->summary = $this->request->getVal( 'summary' );
 		$this->minorEdit = $this->request->getVal( 'minorEdit' );
 		$this->oldID = $this->request->getVal( 'oldID' );

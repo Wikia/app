@@ -2,6 +2,8 @@
 
 namespace Email;
 
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
 class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -24,7 +26,7 @@ class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	public static function getTemplateDir() {
-		return dirname( __FILE__ ) . '/templates/compiled';
+		return dirname( __FILE__ ) . '/templates/src';
 	}
 
 	public function init() {
@@ -189,6 +191,9 @@ class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getBody() {
+		// add default css to every template
+		$css = file_get_contents( __DIR__ . '/styles/common.css' );
+
 		$moduleBody = $this->app->renderView(
 			get_class( $this ),
 			'body',
@@ -204,6 +209,10 @@ class EmailController extends \WikiaController {
 
 			]
 		);
+
+		// inline all css into style attributes
+		$inliner = new CssToInlineStyles( $html, $css );
+		$html = $inliner->convert();
 
 		return $html;
 	}
