@@ -19,7 +19,6 @@ class EmailController extends \WikiaController {
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
 
-
 	/**
 	 * Since the children of this class are located in the 'Controller' directory, the default
 	 * location for the template directory would be 'Controller/templates'.  Redefine it to be
