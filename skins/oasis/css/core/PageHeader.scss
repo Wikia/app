@@ -4,17 +4,18 @@
 @import 'layout';
 
 .WikiaPageHeader {
-	margin: 0 10px 10px 10px;
+	margin: 0 10px 10px;
 	position: relative;
 
 	&.separator {
 		border-bottom: 1px solid $color-page-border;
-		padding: 0 0 15px 0;
+		padding: 0 0 15px;
 	}
 
 	&.editbox {
-		padding: 20px 90px 0 0;
 		margin: 0 0 10px;
+		padding: 20px 90px 0 0;
+
 		p {
 			margin-top: 4px;
 		}
@@ -22,6 +23,7 @@
 
 	.ns-talk & {
 		padding-right: 10px;
+
 		.wikia-menu-button {
 			float: right;
 			top: 7px;
@@ -30,8 +32,9 @@
 
 	.commentslikes {
 		float: right;
+		margin: 0 -10px 4px 0;
 		padding: 1px 0;
-		margin: 0px -10px 4px 0;
+
 		.likes {
 			padding-top: 1px;
 		}
@@ -40,13 +43,15 @@
 	h1 {
 		display: inline;
 		font-size: 26px;
-		margin: 0 10px 0 0;
 		line-height: 27px;
+		margin: 0 10px;
 		word-wrap: break-word;
+
 		strong {
 			font-weight: bold;
 			margin-right: 5px;
 		}
+
 		i {
 			font-style: italic;
 		}
@@ -56,42 +61,51 @@
 		font-size: 10px;
 		position: relative;
 		top: -2px;
+
 		img {
 			padding: 0 3px;
 			vertical-align: baseline;
 		}
+
 		.sprite {
-			position:relative;
+			position: relative;
 			top: 1px;
 		}
 	}
 
-	h2, p {
-		border: none;
+	h2,
+	p {
+		border: 0;
 		font-size: 14px;
 		margin-top: 4px;
 	}
+
 	.subtitle {
 		line-height: 1.5em;
 		margin: 1em 0;
 	}
+
 	img {
 		vertical-align: text-bottom;
 	}
+
 	.wikia-button,
 	.wikia-menu-button {
 		margin-top: 2px;
 		vertical-align: top;
 		z-index: 3;
 	}
+
 	.mainpage-tally {
 		float: right;
 		margin-right: 10px;
 		padding: 1px 0;
+
 		> span {
 			float: left;
 		}
 	}
+
 	.mainpage-add-page {
 		border-right: 1px solid $color-page-border;
 		float: right;
@@ -104,50 +118,58 @@
 // WikiaNav - begin
 .wikinav2 {
 	.WikiaPageHeader {
-		padding-bottom: 7px;
 		margin-bottom: 10px;
+		padding-bottom: 7px;
 
 		> .comments {
-			margin: 2px 10px 0 10px;
+			margin: 2px 10px 0;
 		}
 
 		> .tally {
 			position: absolute;
 			right: 0;
 			top: 0;
+
 			&.mainpage-tally {
 				position: static;
 			}
 		}
 	}
+
 	&.oasis-one-column {
 		.WikiaPageHeader {
 			padding-right: 505px;
+
 			&.WikiaPageHeaderDiffHistory {
 				margin-right: 10px;
 				padding-right: 320px;
 			}
+
 			.tally {
 				right: 330px;
 			}
 		}
+
 		.WikiaSearchHeader {
 			position: absolute;
 			right: 10px;
 			top: 0;
 			width: $wikia-search-base-width + 100px;
 			z-index: 3;
+
 			form {
+				border-bottom: 0;
 				margin-bottom: 0;
 				padding-bottom: 0;
-				border-bottom: 0;
 			}
 		}
+
 		// temp grid transition code - integrate into main, then remove after grid is fully rolled out
 		.WikiaGrid {
 			.WikiaPageHeader .tally {
 				right: 340px;
 			}
+
 			.WikiaSearchHeader {
 				right: 0;
 			}
@@ -161,12 +183,14 @@
 .oasis-one-column .WikiaPageHeader {
 	padding-right: 320px;
 	position: relative;
+
 	.WikiaSearch {
 		position: absolute;
 		right: 0;
 		top: 1px;
 		width: $wikia-search-base-width + 100px;
 	}
+
 	details {
 		width: 980px;
 	}
@@ -177,16 +201,15 @@
 }
 
 .WikiaPageHeader.wikia-page-header {
-
 	.header-container {
-		border-bottom: solid 1px $color-page-border;
-		margin-bottom: 7px;
 		@include align-content(stretch);
 		@include align-items(flex-start);
 		@include flex-direction(row);
 		@include flexbox;
 		@include flex-wrap(nowrap);
 		@include justify-content(flex-start);
+		border-bottom: solid 1px $color-page-border;
+		margin-bottom: 7px;
 	}
 
 	.header-column {
@@ -195,21 +218,23 @@
 		padding-top: 7px;
 
 		&.header-title {
-			order: 0;
 			@include align-self(center);
 			@include flex('0 1 100%');
+			order: 0;
 		}
 
 		&.header-tally {
-			order: 0;
 			@include align-self(flex-end);
 			@include flex(0 0 auto);
+			order: 0;
 
 			.tally {
 				white-space: nowrap;
+
 				em {
 					float: none;
 				}
+
 				span {
 					display: inline-block;
 					float: none;
