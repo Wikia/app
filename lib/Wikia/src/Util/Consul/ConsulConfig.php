@@ -30,47 +30,46 @@ class ConsulConfig {
 	}
 
 	/**
-	 * @return mixed
+	 * @return string
 	 */
 	public function getDataCenter() {
 		return $this->dataCenter;
 	}
 
 	/**
-	 * @param mixed $dataCenter
+	 * @param string $dataCenter
 	 */
 	public function setDataCenter( $dataCenter ) {
 		$this->dataCenter = $dataCenter;
 	}
 
 	/**
-	 * @return mixed
+	 * @return string
 	 */
 	public function getServiceTag() {
 		return $this->serviceTag;
 	}
 
 	/**
-	 * @param mixed $serviceTag
+	 * @param string $serviceTag
 	 */
 	public function setServiceTag( $serviceTag ) {
 		$this->serviceTag = $serviceTag;
 	}
 
 	/**
-	 * @return mixed
+	 * @return string
 	 */
 	public function getServiceName() {
 		return $this->serviceName;
 	}
 
 	/**
-	 * @param mixed $serviceName
+	 * @param string $serviceName
 	 */
 	public function setServiceName( $serviceName ) {
 		$this->serviceName = $serviceName;
 	}
-
 
 	/**
 	 * Build consul service host name <{tag}.{service}.service.{dataCenter}.consul>
