@@ -14,7 +14,6 @@ require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
 class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 
-	const DAILY_PERIOD = 1;
 
 	/**
 	 * Maintenance script entry point.
@@ -46,7 +45,7 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 			->FIELD( 'sum( edits ) + sum( creates )' )->AS_( 'editcount' )
 			->FROM( 'rollup_wiki_user_events' )
 			->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
-			->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
+			->AND_( 'period_id' )->EQUAL_TO( DataMartService::PERIOD_ID_DAILY )
 			->AND_( 'user_id' )->NOT_EQUAL_TO( 0 )
 			->GROUP_BY( 'wiki_id' )
 			->GROUP_BY( 'user_id' );

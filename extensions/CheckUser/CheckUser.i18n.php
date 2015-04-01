@@ -100,6 +100,7 @@ Here are the IPs used (5000 max, sorted by address):',
 [http://www.ip2location.com/$1 Geolocate] ·
 [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor check] ·
 [http://ws.arin.net/whois/?queryinput=$1 WHOIS]]</span>', # do not translate or duplicate this message to other languages
+	'checkuser-token-fail'       => 'Session failure. Please try again.',
 );
 
 /** Message documentation (Message documentation)
@@ -224,6 +225,7 @@ See screenshot "[http://www.mediawiki.org/wiki/Extension:CheckUser#Basic_interfa
 
 See screenshot \"[http://www.mediawiki.org/wiki/Extension:CheckUser#Basic_interface Example log]\".",
 	'checkuser-autocreate-action' => 'Text of the event displayed in the CheckUser results, corresponding to the automatic creation of a new user account (by CentralAuth).',
+	'checkuser-token-fail' => 'Error message shown when the CSRF token does not match the current session.',
 );
 
 /** Karelian (Karjala)
