@@ -15,6 +15,8 @@ class WatchedPageController extends EmailController {
 	private $timeStamp;
 	private $replyToAddress;
 	private $fromAddress;
+	private $previousRevId;
+	private $currentRevId;
 
 	public function getSubject() {
 		return wfMessage( 'emailext-watchedpage-subject', $this->title->getPrefixedText() );
@@ -25,7 +27,8 @@ class WatchedPageController extends EmailController {
 		$this->title = $this->request->getVal( 'title' );
 		$this->summary = $this->request->getVal( 'summary' );
 		$this->minorEdit = $this->request->getVal( 'minorEdit' );
-		$this->oldID = $this->request->getVal( 'oldID' );
+		$this->currentRevId = $this->request->getVal( 'currentRevId' );
+		$this->previousRevId = $this->request->getVal( 'previousRevId' );
 		$this->timeStamp = $this->request->getVal( 'timeStamp' );
 		$this->replyToAddress = $this->request->getVal( 'replyToAddress' );
 		$this->fromAddress = $this->request->getVal( 'fromAddress' );
@@ -129,11 +132,10 @@ class WatchedPageController extends EmailController {
 	}
 
 	/**
-	* TODO Make sure current revision is always one more than the old id
 	 * @return String
 	 */
 	private function getCompareChangesLink() {
-		return $this->title->getFullUrl( 'diff=' . ( $this->oldID + 1 ) . '&oldid=' . $this->oldID );
+		return $this->title->getFullUrl( 'diff=' . $this->currentRevId . '&oldid=' . $this->previousRevId );
 	}
 
 	/**

@@ -462,7 +462,9 @@ class EmailNotification {
 
 	private $minorEdit;
 
-	private $oldid;
+	private $currentRevId;
+
+	private $previousRevId;
 
 	private $composedCommon = false;
 
@@ -472,18 +474,20 @@ class EmailNotification {
 	* @param $timestamp string Edit timestamp
 	* @param $summary string Edit summary
 	* @param $minorEdit bool
-	* @param $oldid bool Revision ID
+	* @param $currentRevId int Revision ID
+	* @param $previousRevId int Revision ID
 	* @param $action (Wikia)
 	* @param $otherParam
 	 */
-	public function __construct( $editor, $title, $timestamp, $summary, $minorEdit, $oldid = false, $action = '', $otherParam = [] ) {
+	public function __construct( $editor, $title, $timestamp, $summary, $minorEdit, $currentRevId = 0, $previousRevId = 0, $action = '', $otherParam = [] ) {
+		$this->editor = $editor;
 		$this->title = $title;
 		$this->timestamp = $timestamp;
 		$this->summary = $summary;
 		$this->minorEdit = $minorEdit;
-		$this->oldid = $oldid;
+		$this->currentRevId = $currentRevId;
+		$this->previousRevId = $previousRevId;
 		$this->action = $action;
-		$this->editor = $editor;
 		$this->otherParam = $otherParam;
 	}
 
@@ -728,24 +732,24 @@ class EmailNotification {
 		$keys = [];
 		$postTransformKeys = [];
 
-		if ( $this->oldid ) {
+		if ( $this->isNewPage() ) {
 			// WIKIA change, watchlist link tracking
 			list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative (
 				'enotif_lastvisited',
 				'enotif_lastvisited',
 				$wgLanguageCode,
 				array(),
-				$this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid )
+				$this->title->getFullUrl( 's=wldiff&diff=0&previousRevId=' . $this->previousRevId )
 			);
-			$keys['$OLDID']   = $this->oldid;
+			$keys['$OLDID']   = $this->previousRevId;
 			$keys['$CHANGEDORCREATED'] = wfMessage( 'changed' )->inContentLanguage()->plain();
 		} else {
 			# <Wikia>
 			if ( $action == '' ) {
-				//no oldid + empty action = create edit, ok to use newpagetext
+				//no previousRevId + empty action = create edit, ok to use newpagetext
 				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = wfMessage( 'enotif_newpagetext' )->inContentLanguage()->plain();
 			} else {
-				//no oldid + action = event, dont show anything, confuses users
+				//no previousRevId + action = event, dont show anything, confuses users
 				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = '';
 			}
 			# </Wikia>
@@ -832,12 +836,21 @@ class EmailNotification {
 
 	/**
 	 * Returns whether the email notification is for a watched article page which has been edited.
-	 * If $this->action is empty it's an article page. The other possible values for action are
-	 * categoryadd, blogpost, and article_comment.
+	 * If $this->action is empty and we have a previous Revision id it's an article page edit.
+	 * The other possible values for action are categoryadd, blogpost, and article_comment.
 	 * @return bool
 	 */
 	private function isArticlePageEdit() {
-		return empty( $this->action );
+		return empty( $this->action ) && !$this->isNewPage();
+	}
+
+
+	/**
+	 * When a page is created, the previousRevId is always 0.
+	 * @return bool
+	 */
+	private function isNewPage() {
+		return $this->previousRevId == 0;
 	}
 
 	/**
@@ -850,7 +863,8 @@ class EmailNotification {
 				'targetUser' => $user->getName(),
 				'title' => $this->title,
 				'summary' => $this->summary,
-				'oldID' => $this->oldid,
+				'currentRevId' => $this->currentRevId,
+				'previousRevId' => $this->previousRevId,
 				'timeStamp' => $this->timestamp,
 				'replyToAddress' => $this->replyto,
 				'fromAddress' => $this->from
@@ -916,4 +930,4 @@ class EmailNotification {
 	private function isUserTalkPage() {
 		return $this->title->getNamespace() == NS_USER_TALK;
 	}
-} # end of class EmailNotification
+}
