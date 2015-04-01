@@ -1,6 +1,3 @@
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
 @import 'GlobalNavigationMixins';
@@ -21,6 +18,10 @@
 			display: table;
 			table-layout: fixed;
 		}
+	}
+
+	.avatar {
+		border: 0;
 	}
 
 	.account-navigation-first-item {
@@ -72,8 +73,8 @@
 	}
 
 	.sign-in-label {
-		@include font-size-xxs;
 		color: $global-navigation-text-color;
+		font-size: 12px;
 		display: table-cell;
 		padding-top: 2px;
 		vertical-align: middle;
@@ -84,15 +85,15 @@
 	}
 
 	.user-menu {
-		@include grid-column-width('medium', 2, $medium-content-padding);
-		@include font-size-xs;
 		border: 1px solid $nav-border-color;
 		display: none;
+		font-size: 14px;
 		padding: 0;
 		position: absolute;
 		right: 0;
 		top: 96%;
 		white-space: normal;
+		width: 150px;
 
 		> li {
 			display: table-row;
@@ -118,23 +119,6 @@
 			&:first-child a {
 				border-top: 0;
 			}
-		}
-	}
-}
-
-@media #{$small-only} {
-	.AccountNavigation {
-		.user-menu {
-			@include grid-column-width('small', 3, $small-content-padding);
-			right: 0;
-		}
-	}
-}
-
-@media #{$large-up} {
-	.AccountNavigation {
-		.user-menu {
-			@include grid-column-width('large', 2, $large-content-padding);
 		}
 	}
 }
