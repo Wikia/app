@@ -30,13 +30,6 @@ button {
 	text-transform: uppercase;
 }
 
-.content {
-	padding: 40px;
-	max-width: 520px;
-	margin: 0 auto;
-	display: block;
-}
-
 td.widest {
 	width: 100%;
 }
