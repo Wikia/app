@@ -33,12 +33,8 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		/* Create User Properties DataExtension with new email */
 		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
 
-		/* Verify data */
-		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
-		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$sUserDataVerificationResult = $oUserDataVerificationTask->verifyUserData( $aUserData['user_id'] );
-
-		return $sUserDataVerificationResult;
+		// If execution reached that point without exception thrown update succeeded
+		return 'OK';
 	}
 
 	/**
@@ -60,6 +56,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	/**
 	 * Creates (or updates if already exists) DataExtension object in ExactTarget by API request that reflects Wikia user table
 	 * @param Array $aUserData Selected fields from Wikia user table
+	 * @return bool
 	 */
 	public function createUser( $aUserData ) {
 
@@ -86,12 +83,20 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 				'Error in ' . __METHOD__ . ': ' . $oCreateUserResult->Results->StatusMessage
 			);
 		}
+
+		/* Verify data */
+		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
+		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
+		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUserData( $aUserData['user_id'] );
+
+		return $bUserDataVerificationResult;
 	}
 
 	/**
 	 * Creates DataExtension object in ExactTarget by API request that reflects Wikia user_properties table
 	 * @param Integer $iUserId User ID
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
+	 * @return bool
 	 */
 	public function createUserProperties( $iUserId, array $aUserProperties ) {
 		$oHelper = $this->getUserHelper();
@@ -111,9 +116,9 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 
 		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
 		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$sUserDataVerificationResult = $oUserDataVerificationTask->verifyUserPropertiesData( $iUserId );
+		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUserPropertiesData( $iUserId );
 
-		return $sUserDataVerificationResult;
+		return $bUserDataVerificationResult;
 	}
 
 }

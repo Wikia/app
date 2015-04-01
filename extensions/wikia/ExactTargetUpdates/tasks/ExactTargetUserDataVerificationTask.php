@@ -5,8 +5,8 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 
 	/**
 	 * Retrieves data from ExactTarget and compares it with data in Wikia database
-	 * @return string
-	 * return 'OK' if data is equal (except comparing user_touched)
+	 * @return bool
+	 * return true if data is equal (except comparing user_touched)
 	 * if data isn't equal throws exception with result diff
 	 */
 	public function verifyUserData( $iUserId ) {
@@ -22,16 +22,16 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserData ) );
 
 		// Compare results
-		$this->compareResults( $oExactTargetUserData, $oWikiaUserData, __METHOD__, 'user_touched' );
+		$bResult = $this->compareResults( $oExactTargetUserData, $oWikiaUserData, __METHOD__, 'user_touched' );
 
-		return 'OK';
+		return $bResult;
 	}
 
 
 	/**
 	 * Retrieves data from ExactTarget and compares it with data in Wikia database
-	 * @return string
-	 * return 'OK' if data is equal (except comparing user_touched)
+	 * @return bool
+	 * return true if data is equal (except comparing user_touched)
 	 * if data isn't equal throws exception with result diff
 	 */
 	public function verifyUserPropertiesData( $iUserId ) {
@@ -47,9 +47,9 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserPropertiesData ) );
 
 		// Compare results
-		$this->compareResults( $oExactTargetUserProperties, $oWikiaUserPropertiesData, __METHOD__ );
+		$bResult = $this->compareResults( $oExactTargetUserProperties, $oWikiaUserPropertiesData, __METHOD__ );
 
-		return 'OK';
+		return $bResult;
 	}
 
 	/**
