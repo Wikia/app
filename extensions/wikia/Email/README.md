@@ -58,31 +58,18 @@ The `main.mustache` template is the main layout for all emails and includes the 
 
 To add a new image, upload it to the [WikiaNewsletter wiki](http://wikianewsletter.wikia.com). Copy and paste the URI's for these images into your template. Also please include new images inside the Email extension's `images` folder just for reference. 
 
-To be sure that [`web-resource-inliner`](https://github.com/jrit/web-resource-inliner) plugin doesn't base64 encode the images and inline them into the template, add the `data-inline-ignore` attribute to all `img` tags. 
-
 Note that email client support for SVGs is not great, so be sure to use JPG, GIF, or PNG files. 
 
 ### CSS
 
-We're not using SCSS for the HTML emails, although we could theoretically add support for that in the future. For now, we're using plain CSS and [Juice](https://github.com/Automattic/juice#juice) for inlining CSS into the templates. 
+We're not using SCSS for the HTML emails, although we could theoretically add support for that in the future. For now, we're using plain CSS and [CssToInlineStyles](https://github.com/tijsverkoyen/CssToInlineStyles/) for inlining CSS into the templates. 
 
-Please add a new css file for every new template and make sure it's included at the top of the template file via `link` tag. There's also a `common.css` file that you'll want to include in every template as well. 
+There's one `common.css` that gets included in every template automatically. For template-specific styles, add them to the template via `<style>` tags.
 
 See [campaignmonitor.com's](https://www.campaignmonitor.com/css/) cheat sheet for understanding which css properties are supported in major email clients. 
 
 ## Tools
 
-### Juice
+### CssToInlineStyles
 
-[Juice](https://github.com/Automattic/juice#juice) is a library that will inline CSS properties into the `style` attribute. See Juice dependencies [here](https://github.com/Automattic/juice/blob/master/package.json). 
-
-### Grunt
-
-We're using [Grunt](http://gruntjs.com/) along with [Grunt Watch](https://github.com/gruntjs/grunt-contrib-watch) to manage the task of inlining CSS. 
-
-First, make sure you have [NodeJS](https://nodejs.org/download/) and [Grunt](http://gruntjs.com/getting-started) installed. Then, when you begin development, `cd` into the `Email/scripts` folder, then: 
-
-* `npm install` (generally only needed once)
-* `grunt watch`
-
-This will ensure that when you make changes to a template inside `Email/templates/src`, it will be compiled with inline styles and copied into `Email/templates/compiled`. Note that if you're not working directly on your devbox, you'll have to make sure that files changed on your disk get uploaded to your devbox for them to work. 
+[CssToInlineStyles](https://github.com/tijsverkoyen/CssToInlineStyles/) is a PHP library that will inline CSS properties into the `style` attribute. It's installed via Composer and can be found in `/lib/composer/tijsverkoyen/`.
