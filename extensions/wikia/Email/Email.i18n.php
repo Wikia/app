@@ -9,6 +9,7 @@ $messages['en'] = [
 	// General errors
 	'emailext-error-restricted-controller' => 'Access to this controller is restricted',
 	'emailext-error-noname' => 'Required username has been left empty',
+	'emailext-error-nocontent' => 'Required email template body has been left empty',
 	'emailext-error-not-user' => 'Unable to create user object',
 	'emailext-error-empty-user' => 'Unable to find user',
 	'emailext-error-noemail' => 'User has no email address',
@@ -43,6 +44,7 @@ $messages['qqq'] = [
 	// General errors
 	'emailext-error-restricted-controller' => 'Error message shown when an unauthorized user tries to access this extension',
 	'emailext-error-noname' => 'Error message when a username was expected and an empty string was given instead',
+	'emailext-error-nocontent' => 'Error message when the content of the email is left empty',
 	'emailext-error-not-user' => 'Error message when the code tried to create a User object but failed',
 	'emailext-error-empty-user' => 'Error message when the code successfully creates a User object but it is an empty/anonymous user',
 	'emailext-error-noemail' => 'Error message given when the user who is the recipient of an email does not have an email address on file',

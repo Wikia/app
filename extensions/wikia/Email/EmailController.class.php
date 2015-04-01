@@ -14,9 +14,11 @@ class EmailController extends \WikiaController {
 	protected $targetUser;
 
 	protected $hasErrorResponse = false;
+	protected $marketingFooter = false;
 
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
+
 
 	/**
 	 * Since the children of this class are located in the 'Controller' directory, the default
@@ -36,6 +38,7 @@ class EmailController extends \WikiaController {
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
 			$this->test = $this->getRequest()->getVal( 'test', false );
+			$this->marketingFooter = $this->request->getVal( 'marketingFooter' );
 
 			$this->initEmail();
 		} catch ( ControllerException $e ) {
@@ -121,7 +124,7 @@ class EmailController extends \WikiaController {
 	public function main() {
 		$this->response->setVal( 'content', $this->getVal( 'content' ) );
 		$this->response->setVal( 'footerMessages', $this->getVal( 'footerMessages' ) );
-		$this->response->setVal( 'fancyHubLinks', true );
+		$this->response->setVal( 'marketingFooter', $this->marketingFooter );
 	}
 
 	/**
@@ -191,26 +194,41 @@ class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getBody() {
-		// add default css to every template
-		$css = file_get_contents( __DIR__ . '/styles/common.css' );
-
-		$moduleBody = $this->app->renderView(
-			get_class( $this ),
-			'body',
-			$this->request->getParams()
-		);
+		$css = file_get_contents( __DIR__ . '/styles/main.css' );
 
 		$html = $this->app->renderView(
 			get_class( $this ),
 			'main',
 			[
-				'content' => $moduleBody,
+				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages()
-
 			]
 		);
 
-		// inline all css into style attributes
+		$html = $this->inlineStyles( $html, $css );
+
+		return $html;
+	}
+
+	/**
+	 * Renders the content unique to each email. Should be overridden in child classes.
+	 */
+	protected function getContent() {
+		throw new Fatal( wfMessage( 'emailext-error-nocontent' )->escaped() );
+	}
+
+	/**
+	 * Inline all css into style attributes
+	 *
+	 * @param string $html
+	 * @param string $css
+	 * @return string
+	 * @throws \TijsVerkoyen\CssToInlineStyles\Exception
+	 */
+	protected function inlineStyles( $html, $css ) {
+		// add default css to every template
+		$css .= file_get_contents( __DIR__ . '/styles/common.css' );
+
 		$inliner = new CssToInlineStyles( $html, $css );
 		$inliner->setUseInlineStylesBlock();
 		$html = $inliner->convert();
