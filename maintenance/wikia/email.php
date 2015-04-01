@@ -5,6 +5,7 @@
  * This sends an email type (defined in extensions/wikia/Email) to the email address of your
  * choice
  *
+ * See https://one.wikia-inc.com/wiki/Social/Product/Email/Developer/EmailCLI for more information
  */
 
 ini_set( 'display_errors', 'stderr' );
