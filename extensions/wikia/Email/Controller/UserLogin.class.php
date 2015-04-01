@@ -69,7 +69,7 @@ class ForgotPasswordController extends EmailController {
 
 	protected function assertCanChangePassword() {
 		if ( !$this->wg->Auth->allowPasswordChange() ) {
-			throw new Fatal( wfMessage( 'emailext-error-password-reset-forbidden' )->escaped() );
+			throw new Fatal( 'This user is not allowed to change their password' );
 		}
 	}
 
@@ -85,10 +85,7 @@ class ForgotPasswordController extends EmailController {
 		}
 
 		if ( $this->targetUser->isPasswordReminderThrottled() ) {
-			$key = 'emailext-error-password-throttled';
-			$param = $this->wg->PasswordReminderResendTime;
-
-			throw new Check( wfMessage( $key, $param )->escaped() );
+			throw new Check( 'Too many resend password requests sent' );
 		}
 	}
 }
