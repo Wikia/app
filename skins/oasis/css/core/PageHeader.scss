@@ -219,7 +219,7 @@
 
 		&.header-title {
 			@include align-self(center);
-			@include flex('0 1 100%');
+			@include flex(0 1 100%);
 			order: 0;
 		}
 
@@ -229,6 +229,7 @@
 			order: 0;
 
 			.tally {
+				float: right;
 				white-space: nowrap;
 
 				em {
