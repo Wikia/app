@@ -43,7 +43,7 @@ class EmailCLI extends Maintenance {
 			'v'
 		);
 
-		$this->addOption( 'user', 'Masquerade as this user when sending email. Can be username or ID.s',
+		$this->addOption( 'user', 'Masquerade as this user when sending email. Can be username or ID.',
 			Maintenance::PARAM_OPTIONAL,
 			Maintenance::PARAM_HAS_ARG
 		);
