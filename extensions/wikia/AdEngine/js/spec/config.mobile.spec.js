@@ -1,5 +1,5 @@
 /*global describe, it, modules, expect*/
-describe('AdConfigMobile', function () {
+describe('ext.wikia.adEngine.config.mobile', function () {
 	'use strict';
 
 	var adProviderDirectMock = {
@@ -27,7 +27,7 @@ describe('AdConfigMobile', function () {
 	}
 
 	it('getProviderList returns DirectGPT, RemnantGPT in the regular case', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
+		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(true),
 			adProviderDirectMock,
 			adProviderRemnantMock
@@ -37,7 +37,7 @@ describe('AdConfigMobile', function () {
 	});
 
 	it('getProviderLists returns [] when showAds is false', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
+		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(false),
 			adProviderDirectMock,
 			adProviderRemnantMock

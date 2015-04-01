@@ -4,12 +4,11 @@
  */
 class AdEngine2Hooks {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
-	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
 	const ASSET_GROUP_OASIS_ADS = 'adengine2_oasis_ads_js';
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
@@ -122,23 +121,7 @@ class AdEngine2Hooks {
 
 		global $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
-		$coreGroupIndex = array_search( self::ASSET_GROUP_CORE, $jsAssets );
-		if ( $coreGroupIndex === false ) {
-			// Do nothing. oasis_shared_core_js must be present for ads to work
-			return true;
-		}
-
-		if ( AdEngine2Service::areAdsInHead() ) {
-			if ( AdEngine2Service::shouldLoadLateQueue() ) {
-				array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE_LATE );
-			}
-			// The ASSET_GROUP_ADENGINE_LATE package was added to the blocking group
-		} else {
-			array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE );
-			if ( AdEngine2Service::shouldLoadLateQueue() ) {
-				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_ADENGINE_LATE );
-			}
-		}
+		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
 
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
@@ -159,7 +142,7 @@ class AdEngine2Hooks {
 	}
 
 	/**
-	 * Modify assets appended to the top of the page
+	 * Modify assets appended to the top of the page: add RubiconRtp and AmazonMatch lookup services
 	 *
 	 * @param array $jsAssets
 	 *
@@ -169,11 +152,6 @@ class AdEngine2Hooks {
 
 		// Tracking should be available very early, so we can track how lookup calls (Amazon, Rubicon) perform
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_TRACKING;
-
-		if ( AdEngine2Service::areAdsInHead() ) {
-			// Add ad asset to JavaScripts loaded on top (in <head>)
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
-		}
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
@@ -214,9 +192,6 @@ class AdEngine2Hooks {
 
 	/**
 	 * Modify assets appended to the bottom of wikiaMobileSkin
-	 *
-	 * Note the dependency resolver does not work at this time, so we need to add every
-	 * module needed including their dependencies.
 	 *
 	 * @static
 	 * @param $jsStaticPackages
@@ -270,7 +245,7 @@ class AdEngine2Hooks {
 
 	public static function onVenusAssetsPackages( array &$jsHeadGroups, array &$jsBodyGroups, array &$cssGroups ) {
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_TRACKING;
-		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE;
+		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
 		$jsHeadGroups[] = self::ASSET_GROUP_VENUS_ADS;
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {

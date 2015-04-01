@@ -1,14 +1,16 @@
 /*global require*/
 require([
 	'ext.wikia.adEngine.customAdsLoader',
-	'ext.wikia.adEngine.messageListener'
+	'ext.wikia.adEngine.messageListener',
+	'wikia.window'
 ], function (
 	customAdsLoader,
-	messageListener
+	messageListener,
+	win
 ) {
 	'use strict';
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
-	window.loadCustomAd = customAdsLoader.loadCustomAd;
+	win.loadCustomAd = customAdsLoader.loadCustomAd;
 });
