@@ -13,7 +13,6 @@ class WatchedPageController extends EmailController {
 	private $summary;
 	private $currentRevId;
 	private $previousRevId;
-	private $timeStamp;
 	private $replyToAddress;
 	private $fromAddress;
 
@@ -26,7 +25,6 @@ class WatchedPageController extends EmailController {
 		$this->summary = $this->request->getVal( 'summary' );
 		$this->currentRevId = $this->request->getVal( 'currentRevId' );
 		$this->previousRevId = $this->request->getVal( 'previousRevId' );
-		$this->timeStamp = $this->request->getVal( 'timeStamp' );
 		$this->replyToAddress = $this->request->getVal( 'replyToAddress' );
 		$this->fromAddress = $this->request->getVal( 'fromAddress' );
 	}
@@ -49,7 +47,7 @@ class WatchedPageController extends EmailController {
 	}
 
 	/**
-	 * @template watchedPage
+	 * @template avatarLayout
 	 */
 	public function body() {
 		$this->response->setData( [
@@ -59,12 +57,31 @@ class WatchedPageController extends EmailController {
 			'editorUserName' => $this->getEditorUserName(),
 			'editorAvatarURL' => $this->getEditorAvatarUR(),
 			'summary' => $this->getSummary(),
-			'compareChangesLabel' => $this->getCompareChangesLabel(),
-			'compareChangesLink' => $this->getCompareChangesLink(),
-			'articleLinkText' => $this->getArticleLinkText(),
-			'allChanges' => $this->getAllChangesText(),
-			'timeStamp' => $this->getTimeStamp()
+			'buttonText' => $this->getCompareChangesLabel(),
+			'buttonLink' => $this->getCompareChangesLink(),
+			'contentFooterMessages' => [
+				$this->getArticleLinkText(),
+				$this->getAllChangesText(),
+			],
 		] );
+	}
+
+	/**
+	 * @return String
+	 * Get rendered html for content unique to this email
+	 * @todo We may want to make this available more generically for other emails to use the avatar layout.
+	 */
+	protected function getContent() {
+		$css = file_get_contents( __DIR__ . '/../styles/avatarLayout.css' );
+		$html = $this->app->renderView(
+			get_class( $this ),
+			'body',
+			$this->request->getParams()
+		);
+
+		$html = $this->inlineStyles( $html, $css );
+
+		return $html;
 	}
 
 	/**
@@ -151,12 +168,5 @@ class WatchedPageController extends EmailController {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->title->getFullURL( 'action=history' ),
 			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
-	}
-
-	/**
-	 * @return String
-	 */
-	private function getTimeStamp() {
-		return \F::app()->wg->ContLang->userDate( $this->timestamp, $this->targetUser );
 	}
 }

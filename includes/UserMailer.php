@@ -867,7 +867,6 @@ class EmailNotification {
 				'summary' => $this->summary,
 				'currentRevId' => $this->currentRevId,
 				'previousRevId' => $this->previousRevId,
-				'timeStamp' => $this->timestamp,
 				'replyToAddress' => $this->replyto,
 				'fromAddress' => $this->from
 			]);
