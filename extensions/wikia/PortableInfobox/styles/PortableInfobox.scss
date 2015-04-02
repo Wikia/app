@@ -1,0 +1,41 @@
+@import 'skins/shared/color';
+
+// temporary place for new infobox styles
+$infobox-background: mix($color-page, #000, 92%);
+@if $is-dark-wiki {
+	$infobox-background: mix($color-page, #FFF, 92%);
+}
+
+.WikiaArticle .new-infobox {
+	background-color: $infobox-background;
+	float: right;
+	width: 270px;
+	margin: 0 0 15px 15px;
+
+	h2 {
+		border: none;
+		line-height: 28px;
+		font-size: 18px;
+		margin: 10px;
+	}
+
+	> ul {
+		list-style: none;
+		margin: 0;
+
+		> li:not(.image) {
+			margin: 10px 20px 10px 10px;
+		}
+	}
+
+	h3 {
+		border-bottom: 1px solid $color-page-border;
+		line-height: 18px;
+		font-size: 12px;
+		font-weight: 400;
+	}
+
+	div {
+		padding-left: 10px;
+	}
+}
