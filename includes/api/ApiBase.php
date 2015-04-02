@@ -64,10 +64,14 @@ abstract class ApiBase extends ContextSource {
 	private $mMainModule, $mModuleName, $mModulePrefix;
 	private $mParamCache = array();
 
+	// Wikia Change - BEGIN
+
 	/**
 	 * @var array List of parameters being added to log context.
 	 */
 	protected $mLogContextVariables = ['action', 'prop'];
+
+	// Wikia Change - END
 
 	/**
 	 * Constructor
@@ -1576,6 +1580,8 @@ abstract class ApiBase extends ContextSource {
 		return __CLASS__ . ': $Id$';
 	}
 
+	// Wikia Change - BEGIN
+
 	/**
 	 * Sets up the WikiaLogger context for all log entries for current API call.
 	 * Adds extra information about module which handles the call and parameters
@@ -1605,4 +1611,6 @@ abstract class ApiBase extends ContextSource {
 	protected function destroyLogContext() {
 		WikiaLogger::instance()->popContext();
 	}
+
+	// Wikia Change - END
 }
