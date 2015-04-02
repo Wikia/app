@@ -22,7 +22,7 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 			h = (win.innerHeight / 2 | 0), // round down
 			w = (win.innerWidth / 2 | 0);  // round down
 
-		trackFunc({label: service.parent('li').data('share-service')});
+		trackFunc({label: service.data('share-service')});
 
 		win.open(url, title, 'width=' + w + ',height=' + h);
 	}
