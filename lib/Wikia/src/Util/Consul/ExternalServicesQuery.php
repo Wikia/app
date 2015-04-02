@@ -29,12 +29,4 @@ class ExternalServicesQuery {
 			'{query_path}' => $queryPath ) );
 		return $url;
 	}
-
-	public function logFail( $url ) {
-		$logger = WikiaLogger::instance();
-		$logger->error( "ExternalServiceQuery fail", [
-			"serviceName" => $this->consulService->getConfig()->getServiceName(),
-			"serviceTag" => $this->consulService->getConfig()->getServiceTag(),
-			"url" => $url ] );
-	}
 }
