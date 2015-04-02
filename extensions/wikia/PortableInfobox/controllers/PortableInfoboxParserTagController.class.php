@@ -13,5 +13,13 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return true;
 	}
 
-	public function renderInfobox() {}
+	/**
+	 * @desc Renders Infobox
+	 *
+	 * @param String $text
+	 * @param Array $params
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 */
+	public function renderInfobox( $text, $params, $parser, $frame ) {}
 }
