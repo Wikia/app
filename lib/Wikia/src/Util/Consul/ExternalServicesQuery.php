@@ -30,3 +30,4 @@ class ExternalServicesQuery {
 		return $url;
 	}
 }
+
