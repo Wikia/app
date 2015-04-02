@@ -13,13 +13,13 @@ $infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
 .portable-infobox {
 	background-color: $infobox-background;
 	float: right;
-	width: $infobox-width;
 	margin: 0 0 $infobox-margin $infobox-margin;
+	width: $infobox-width;
 
 	.infobox-title {
-		border: none;
-		line-height: 28px;
+		border: 0;
 		font-size: 18px;
+		line-height: 28px;
 		margin: $infobox-item-margin;
 	}
 
@@ -35,9 +35,9 @@ $infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
 
 	.infobox-item-label {
 		border-bottom: 1px solid $color-page-border;
-		line-height: 18px;
 		font-size: 12px;
 		font-weight: 400;
+		line-height: 18px;
 	}
 
 	.infobox-item-value {
