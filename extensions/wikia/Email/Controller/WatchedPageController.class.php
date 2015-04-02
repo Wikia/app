@@ -13,7 +13,6 @@ class WatchedPageController extends EmailController {
 	private $summary;
 	private $currentRevId;
 	private $previousRevId;
-	private $timeStamp;
 	private $replyToAddress;
 	private $fromAddress;
 
@@ -26,7 +25,6 @@ class WatchedPageController extends EmailController {
 		$this->summary = $this->request->getVal( 'summary' );
 		$this->currentRevId = $this->request->getVal( 'currentRevId' );
 		$this->previousRevId = $this->request->getVal( 'previousRevId' );
-		$this->timeStamp = $this->request->getVal( 'timeStamp' );
 		$this->replyToAddress = $this->request->getVal( 'replyToAddress' );
 		$this->fromAddress = $this->request->getVal( 'fromAddress' );
 	}
@@ -65,7 +63,6 @@ class WatchedPageController extends EmailController {
 				$this->getArticleLinkText(),
 				$this->getAllChangesText(),
 			],
-			'timeStamp' => $this->getTimeStamp()
 		] );
 	}
 
@@ -171,12 +168,5 @@ class WatchedPageController extends EmailController {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->title->getFullURL( 'action=history' ),
 			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
-	}
-
-	/**
-	 * @return String
-	 */
-	private function getTimeStamp() {
-		return \F::app()->wg->ContLang->userDate( $this->timestamp, $this->targetUser );
 	}
 }
