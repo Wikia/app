@@ -56,7 +56,7 @@ The `main.mustache` template is the main layout for all emails and includes the 
 
 ### Images
 
-To add a new image, upload it to the [WikiaNewsletter wiki](http://wikianewsletter.wikia.com). Copy and paste the URI's for these images into your template. Also please include new images inside the Email extension's `images` folder just for reference. 
+To add a new image, upload it to the [WikiaNewsletter wiki](http://wikianewsletter.wikia.com) and put it in the "Html_Emails" category so we can keep track of all the images used in emails. We'll generate those images dynamically with https://wikia-inc.atlassian.net/browse/SOC-622 but in the mean time the URLs are hard-coded in the templates. 
 
 Note that email client support for SVGs is not great, so be sure to use JPG, GIF, or PNG files. 
 

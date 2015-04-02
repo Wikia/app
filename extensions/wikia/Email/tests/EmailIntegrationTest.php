@@ -27,7 +27,6 @@ class EmailIntegrationTest extends WikiaBaseTest {
 	public function emailImagesDataProvider() {
 		return [
 			['wikia image', 'http://vignette3.wikia.nocookie.net/wikianewsletter/images/8/89/Wikia.gif/revision/latest?cb=20150330185243'],
-			['fans image', 'http://vignette1.wikia.nocookie.net/wikianewsletter/images/1/17/Fans-by-Fans.gif/revision/latest?cb=20150330215152'],
 			['comics image', 'http://vignette1.wikia.nocookie.net/wikianewsletter/images/e/e3/Comics.gif/revision/latest?cb=20150330185129'],
 			['games image', 'http://vignette1.wikia.nocookie.net/wikianewsletter/images/e/e8/Games.gif/revision/latest?cb=20150330185144'],
 			['movies image', 'http://vignette1.wikia.nocookie.net/wikianewsletter/images/b/bf/Movies.gif/revision/latest?cb=20150330185202'],

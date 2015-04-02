@@ -126,6 +126,7 @@ abstract class EmailController extends \WikiaController {
 		$this->response->setVal( 'content', $this->getVal( 'content' ) );
 		$this->response->setVal( 'footerMessages', $this->getVal( 'footerMessages' ) );
 		$this->response->setVal( 'marketingFooter', $this->getVal( 'marketingFooter' ) );
+		$this->response->setVal( 'tagline', $this->getTagline() );
 	}
 
 	/**
@@ -221,8 +222,13 @@ abstract class EmailController extends \WikiaController {
 	 * @param string $css
 	 * @return string
 	 * @throws \TijsVerkoyen\CssToInlineStyles\Exception
+	 * @see https://github.com/tijsverkoyen/CssToInlineStyles
 	 */
 	protected function inlineStyles( $html, $css ) {
+		// fix known issue in library with character encoding.
+		$charsetMeta = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		$html = $charsetMeta . $html;
+
 		// add default css to every template
 		$css .= file_get_contents( __DIR__ . '/styles/common.css' );
 
@@ -242,6 +248,14 @@ abstract class EmailController extends \WikiaController {
 			wfMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
 				->inLanguage( $this->getTargetLang() )->parse(),
 		];
+	}
+
+	/**
+	 * Tagline text that appears in the email footer
+	 * @return String
+	 */
+	protected function getTagline() {
+		return wfMessage( 'emailext-fans-tagline' )->text();
 	}
 
 	/**
