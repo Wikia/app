@@ -39,3 +39,4 @@ class ConsulServiceTest extends PHPUnit_Framework_TestCase {
 		return [ [ [ [ 'target' => 'test-host', 'port' => 123 ] ] ], [ [ ] ], [ false ], [ null ] ];
 	}
 }
+
