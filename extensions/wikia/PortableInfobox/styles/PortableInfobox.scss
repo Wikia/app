@@ -3,9 +3,11 @@
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 10px;
-$infobox-background: mix($color-page, #000, 92%);
+$infobox-bg-color-mix-value: 92%;
+$infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
+
 @if $is-dark-wiki {
-	$infobox-background: mix($color-page, #FFF, 92%);
+	$infobox-background: mix($color-page, #FFF, $infobox-bg-color-mix-value);
 }
 
 .portable-infobox {
