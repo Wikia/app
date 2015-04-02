@@ -1,13 +1,12 @@
 @import 'skins/shared/color';
 
-// temporary place for new infobox styles
+$infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
+$infobox-margin: 15px;
+$infobox-item-margin: 10px;
 $infobox-background: mix($color-page, #000, 92%);
 @if $is-dark-wiki {
 	$infobox-background: mix($color-page, #FFF, 92%);
 }
-$infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
-$infobox-margin: 15px;
-$infobox-item-margin: 10px;
 
 .portable-infobox {
 	background-color: $infobox-background;
