@@ -448,7 +448,7 @@ class GlobalWatchlistBot {
 
 		if ( ( $sLangCode != 'en' ) && !empty( $sLangCode ) ) {
 			// custom lang translation
-			$sBody = wfMessage( $sMsgKey )->inLanguage( $sLangCode );
+			$sBody = wfMessage( $sMsgKey )->inLanguage( $sLangCode )->text();
 		}
 
 		if ( $sBody == null ) {
