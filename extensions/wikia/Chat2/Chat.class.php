@@ -25,6 +25,8 @@ class Chat {
 	 * on lyrics.wikia.com, but interestingly, isn't in document.cookie in the javascript on lyrics.wikia.com).
 	 */
 	static public function echoCookies(){
+		ChatHelper::info( __METHOD__ . ': Method called' );
+
 		global $wgUser, $wgMemc;
 		if( !$wgUser->isLoggedIn() ) {
 			return array("key" => false ) ;
@@ -44,9 +46,21 @@ class Chat {
 	 * messages (this is used primarily when the user is already banned from the wiki.
 	 * in that case, there is an error, but if the user is present they should be kicked).
 	 *
-	 * Returns true on success, returns an error message as a string on failure.
+	 * @param string $userNameToKickBan
+	 * @param User $kickingUser
+	 * @param int $time
+	 * @param string $reason
+	 *
+	 * @return bool|string Returns true on success, returns an error message as a string on failure.
 	 */
 	static public function banUser($userNameToKickBan, $kickingUser, $time, $reason){
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'userNameToKickBan' => $userNameToKickBan,
+			'kickingUser' => $kickingUser,
+			'time' => $time,
+			'reason' => $reason,
+		] );
+
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		$errorMsg = "";
@@ -68,7 +82,20 @@ class Chat {
 		return ( $errorMsg=="" ? true : $errorMsg);
 	} // end banUser()
 
+	/**
+	 * @param string $username
+	 * @param string $dir
+	 * @param User $kickingUser
+	 *
+	 * @return bool
+	 * @throws DBUnexpectedError
+	 */
 	public static function blockPrivate($username, $dir = 'add', $kickingUser) {
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'username' => $username,
+			'dir' => $dir,
+			'kickingUser' => $kickingUser,
+		] );
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
@@ -105,8 +132,29 @@ class Chat {
 		return true;
 	}
 
-	//TODO: move it to some data base table
+	/**
+	 * TODO: move to some database table
+	 *
+	 * @param int $cityId
+	 * @param User $banUser
+	 * @param User $adminUser
+	 * @param int $time
+	 * @param string $reason
+	 * @param string $dir
+	 *
+	 * @return bool
+	 * @throws DBUnexpectedError
+	 * @throws MWException
+	 */
 	public static function banUserDB($cityId, $banUser, $adminUser, $time, $reason, $dir = 'add') {
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'cityId' => $cityId,
+			'banUser' => $banUser,
+			'adminUser' => $adminUser,
+			'time' => $time,
+			'reason' => $reason,
+			'dir' => $dir,
+		] );
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
@@ -171,8 +219,18 @@ class Chat {
 
 	/**
 	 * Return ban information if user is not ban return false;
+	 *
+	 * @param int $cityId
+	 * @param User $banUser
+	 *
+	 * @return bool|object|ResultWrapper
+	 * @throws MWException
 	 */
 	public static function getBanInformation($cityId, $banUser) {
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'cityId' => $cityId,
+			'banUser' => $banUser,
+		] );
 		global $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 
@@ -225,7 +283,11 @@ class Chat {
 		return $out;
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getListOfBlockedPrivate() {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgUser, $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
@@ -270,9 +332,16 @@ class Chat {
 	 * Attempts to add the 'chatmoderator' group to the user whose name is provided
 	 * in 'userNameToPromote'.
 	 *
-	 * Returns true on success, returns an error message as a string on failure.
+	 * @param string $userNameToPromote
+	 * @param User $promotingUser
+	 *
+	 * @return bool true on success, returns an error message as a string on failure.
 	 */
-	static public function promoteChatModerator($userNameToPromote, $promottingUser) {
+	static public function promoteChatModerator($userNameToPromote, $promotingUser) {
+		ChatHelper::info( __METHOD__ . ': Method called', [
+			'userNameToPromote' => $userNameToPromote,
+			'promotingUser' => $promotingUser
+		] );
 		wfProfileIn( __METHOD__ );
 		$CHAT_MOD_GROUP = 'chatmoderator';
 
@@ -290,9 +359,9 @@ class Chat {
 		if( in_array($CHAT_MOD_GROUP, $userToPromote->getEffectiveGroups()) ) {
 			$errorMsg = wfMsg("chat-err-already-chatmod", $userNameToPromote, $CHAT_MOD_GROUP);
 		} else {
-			$changeableGroups = $promottingUser->changeableGroups();
-			$promottingUserName = $promottingUser->getName();
-			$isSelf = ($userToPromote->getName() == $promottingUserName);
+			$changeableGroups = $promotingUser->changeableGroups();
+			$promotingUserName = $promotingUser->getName();
+			$isSelf = ($userToPromote->getName() == $promotingUserName);
 			$addableGroups = array_merge( $changeableGroups['add'], $isSelf ? $changeableGroups['add-self'] : array() );
 
 			if( in_array($CHAT_MOD_GROUP, $addableGroups) ) {
@@ -312,7 +381,7 @@ class Chat {
 				$newGroups = array_merge($oldGroups, array($CHAT_MOD_GROUP));
 
 				// Log the rights-change.
-				Chat::addLogEntry($userToPromote, $promottingUser, array(
+				Chat::addLogEntry($userToPromote, $promotingUser, array(
 					Chat::makeGroupNameListForLog( $oldGroups ),
 					Chat::makeGroupNameListForLog( $newGroups )
 				),'chatmoderator');
@@ -366,19 +435,20 @@ class Chat {
 	 * @param User $doer
 	 * @param Array $attr An array with parameters passed to LogPage::addEntry() according to description there these are parameters passed later to wfMsg.* functions
 	 * @param String $type
-	 * @param String|null $reasone comment added to log
+	 * @param String|null $reason comment added to log
 	 */
-	public static function addLogEntry($user, $doer, $attr, $type = 'banadd', $reasone = null) {
+	public static function addLogEntry($user, $doer, $attr, $type = 'banadd', $reason = null) {
 		wfProfileIn(__METHOD__);
 
 		$doerName = $doer->getName();
 
+		$subtype = '';
 		if( $type === 'chatmoderator' ) {
-			$reason = empty($reasone) ? wfMsgForContent( 'chat-userrightslog-a-made-b-chatmod', $doerName, $user->getName() ) : $reasone;
+			$reason = empty($reason) ? wfMsgForContent( 'chat-userrightslog-a-made-b-chatmod', $doerName, $user->getName() ) : $reason;
 			$type = 'rights';
 			$subtype = $type;
 		} else if(strpos($type, 'ban') === 0) {
-			$reason = empty($reasone) ? wfMsgForContent( 'chat-log-reason-'.$type, $doerName ) : $reasone;
+			$reason = empty($reason) ? wfMsgForContent( 'chat-log-reason-'.$type, $doerName ) : $reason;
 			$subtype = 'chat' . $type;
 			$type =  'chatban';
 		}
@@ -424,7 +494,7 @@ class Chat {
 		if( $wgDevelEnvironment ) {
 		//devbox
 			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		//production
@@ -513,7 +583,9 @@ class Chat {
 	 * Since the permission essentially has to be implemented as an anti-permission, this function removes the
 	 * need for confusing double-negatives in the code.
 	 *
-	 * @param userObject - an object of class User (such as wgUser).
+	 * @param User $userObject - an object of class User (such as wgUser).
+	 *
+	 * @return bool
 	 */
 	public static function canChat($userObject){
 		global $wgCityId;
@@ -586,6 +658,4 @@ class Chat {
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
-
-
 } // end class Chat
