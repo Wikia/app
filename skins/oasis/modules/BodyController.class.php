@@ -460,7 +460,8 @@ class BodyController extends WikiaController {
 				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
 			} else {
 				$this->monetizationModules = [
-					'in_content' => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_IN_CONTENT'] )
+					MonetizationModuleHelper::SLOT_TYPE_IN_CONTENT => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_IN_CONTENT'] ),
+					MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_BELOW_CATEGORY'] ),
 				];
 			}
 			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
