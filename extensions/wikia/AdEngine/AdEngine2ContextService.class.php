@@ -29,10 +29,8 @@ class AdEngine2ContextService {
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
-					'adsInHead' => $wg->LoadAdsInHead,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
-					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
