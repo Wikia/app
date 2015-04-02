@@ -234,9 +234,12 @@ abstract class EmailController extends \WikiaController {
 
 	protected function getFooterMessages() {
 		return [
-			wfMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )->parse(),
-			wfMessage( 'emailext-update-frequency' )->parse(),
-			wfMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )->parse(),
+			wfMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
+				->inLanguage( $this->getTargetLang() )->parse(),
+			wfMessage( 'emailext-update-frequency' )
+				->inLanguage( $this->getTargetLang() )->parse(),
+			wfMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
+				->inLanguage( $this->getTargetLang() )->parse(),
 		];
 	}
 

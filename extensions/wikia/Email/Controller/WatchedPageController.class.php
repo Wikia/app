@@ -43,7 +43,7 @@ class WatchedPageController extends EmailController {
 		$footerMessages = [
 			wfMessage( 'emailext-watchedpage-unfollow-text',
 				$this->title->getCanonicalUrl( 'action=unwatch' ),
-				$this->title->getPrefixedText() )->parse()
+				$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
