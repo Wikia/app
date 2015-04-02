@@ -10,7 +10,7 @@ define('videohomepage.views.search', [
 		this.track = Tracker.buildTrackingFunction({
 			action: Tracker.ACTIONS.CLICK,
 			category: 'video-home-page',
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		});
 
 		this.init();

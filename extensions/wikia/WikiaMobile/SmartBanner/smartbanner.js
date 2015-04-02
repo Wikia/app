@@ -35,7 +35,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'jquery', 'track'], func
 			};
 
 		track.event('smart-banner', track.IMPRESSION, {
-			method: 'both'
+			method: 'analytics'
 		});
 
 		// Get info from meta data// Get info from meta data
@@ -86,7 +86,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'jquery', 'track'], func
 
 					track.event('smart-banner', track.CLICK, {
 						label: 'app-store',
-						method: 'both'
+						method: 'analytics'
 					}, ev);
 				} else if (~className.indexOf('sb-close') || ~className.indexOf('sb-close-btn')) {
 					hide();
@@ -97,7 +97,7 @@ define('smartbanner', ['wikia.window', 'wikia.cookies', 'jquery', 'track'], func
 
 					track.event('smart-banner', track.CLICK, {
 						label: 'dismiss',
-						method: 'both'
+						method: 'analytics'
 					});
 				}
 			});

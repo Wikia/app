@@ -56,7 +56,7 @@
 							action: Wikia.Tracker.ACTIONS.CLICK,
 							category: 'image-placeholder',
 							label: 'view-mode',
-							method: 'ga'
+							method: 'analytics'
 						}
 
 					});
@@ -105,7 +105,7 @@
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'video-placeholder',
 						label: 'view-mode',
-						method: 'ga'
+						method: 'analytics'
 					}
 				});
 			});

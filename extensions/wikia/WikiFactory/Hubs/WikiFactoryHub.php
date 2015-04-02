@@ -155,7 +155,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id" )->EQUAL_TO( $city_id )
 			->AND_( "cat_deprecated" )->EQUAL_TO ( 1 )  // always return the "old" category
-			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ), true /* $cacheEmpty */ )
 			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
 				$result[]= $row->cat_id;
 			});
@@ -237,10 +237,9 @@ class WikiFactoryHub extends WikiaModel {
 	 * @access public
 	 *
 	 * @param $city_id
-	 * @return array of categories (empty if wiki is not in a category)
-	 *
+	 * @param int $active pass 0 if you want to get deprecated categories
+	 * @return array array of categories (empty if wiki is not in a category)
 	 */
-
 	public function getCategoryIds( $city_id, $active = 1 ) {
 		global $wgExternalSharedDB;
 		if( !$wgExternalSharedDB || empty($city_id) ) {
@@ -266,14 +265,17 @@ class WikiFactoryHub extends WikiaModel {
 	 * This function returns the list of categories AND category metadata for a wiki
 	 * get category metadata (id, name, url, short, deprecated, active) for a wiki
 	 * @param  integer $city_id  wiki_id
+	 * @param int $active pass 0 if you want to get deprecated categories
 	 * @return array of keys/values (id, name, url, short, deprecated, active)
 	 */
 	public function getWikiCategories( $city_id, $active = 1 ) {
-
 		global $wgWikiaEnvironment;
 		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
 			$city_id = 11;
 		}
+
+		// invalidated in clearCache method
+		$memckey = wfSharedMemcKey( __METHOD__, $city_id, $active ? 1 : 0 );
 
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
@@ -282,7 +284,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id ")->EQUAL_TO( $city_id )
 			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id, "$active" ) )
+			->cache( $this->cache_ttl, $memckey, true /* $cacheEmpty */ )
 			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
 				$result[] = get_object_vars($row);
 			});

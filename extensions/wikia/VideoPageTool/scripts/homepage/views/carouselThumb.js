@@ -8,7 +8,7 @@ define('videohomepage.views.carouselThumb', [
 
 	track = Tracker.buildTrackingFunction({
 		category: 'video-home-page',
-		trackingMethod: 'both',
+		trackingMethod: 'analytics',
 		action: Tracker.ACTIONS.CLICK
 	});
 

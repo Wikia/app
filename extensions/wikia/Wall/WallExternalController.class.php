@@ -104,12 +104,21 @@ class WallExternalController extends WikiaController {
 		 */
 		$mw =  WallMessage::newFromId( $this->request->getVal( 'id' ) );
 
-		$this->response->setVal('list',
-			$this->app->renderView( 'WallExternalController', 'votersListItems',
-				array( 'from' => 0, 'mw' => $mw, 'id' => $this->request->getVal('id') )
-		));
+		if ( !empty( $mw ) ) {
+			$this->response->setVal(
+				'list',
+				$this->app->renderView(
+					'WallExternalController',
+					'votersListItems',
+					[ 'from' => 0, 'mw' => $mw, 'id' => $this->request->getVal( 'id' ) ]
+				)
+			);
 
-		$this->response->setVal('count', $mw->getVoteCount());
+			$this->response->setVal( 'count', $mw->getVoteCount() );
+		} else {
+			$this->response->setCode( 404 );
+			$this->skipRendering();
+		}
 	}
 
 	public function votersListItems() {
@@ -151,23 +160,28 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function switchWatch() {
-		$this->response->setVal('status', false);
-		$isWatched = $this->request->getVal('isWatched');
+		$this->response->setVal( 'status', false );
+		$isWatched = $this->request->getVal( 'isWatched' );
 		/**
 		 * @var $title Title
 		 * @var $wallMessage WallMessage
 		 */
 		$title = Title::newFromId( $this->request->getVal('commentId') );
-		$wallMessage = WallMessage::newFromTitle($title);
 
-		if($this->wg->User->getId() > 0  && !$wallMessage->isWallOwner($this->wg->User) ) {
-			if($isWatched) {
-				$wallMessage->removeWatch($this->wg->User);
-			} else {
-				$wallMessage->addWatch($this->wg->User);
+		if ( empty( $title ) ) {
+			$this->response->setCode( 404 );
+		} else {
+			$wallMessage = WallMessage::newFromTitle( $title );
+
+			if ( $this->wg->User->getId() > 0 && !$wallMessage->isWallOwner( $this->wg->User ) ) {
+				if ( $isWatched ) {
+					$wallMessage->removeWatch( $this->wg->User );
+				} else {
+					$wallMessage->addWatch( $this->wg->User );
+				}
+
+				$this->response->setVal( 'status', true );
 			}
-
-			$this->response->setVal('status', true);
 		}
 	}
 

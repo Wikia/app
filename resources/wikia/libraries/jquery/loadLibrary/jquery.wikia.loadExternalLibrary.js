@@ -3,30 +3,19 @@
 
 	/**
 	 * Generic loading for external JS libraries, including success and failure handling
-	 * Originally adopted from facebook's developer pages but modified for reuse
 	 * @param {string} name Name of the library being loaded (used for logging)
 	 * @param {string} url URL of library file to be loaded
 	 * @param {*} typeCheck Expression to check if library is already loaded
 	 * @returns {jQuery} Returns a jQuery deferred object
 	 */
-	$.loadExternalLibrary = function (name, url, typeCheck) {
-		var scriptTag,
-			firstScriptTag,
-			$deferred = $.Deferred();
+	function loadExternalLibrary(name, url, typeCheck) {
+		var $deferred = $.Deferred();
 
-		if (typeCheck === 'undefined') {
-			firstScriptTag = document.getElementsByTagName('script')[0];
-			scriptTag = document.createElement('script');
-
-			scriptTag.src = url;
-			scriptTag.onload = function () {
-				$deferred.resolve();
-			};
-			scriptTag.onerror = function () {
-				$deferred.reject();
-			};
-
-			firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag);
+		if (window.wgNoExternals) {
+			// Don't load external libraries if this flag is set. Mainly used for metrics.
+			$deferred.reject();
+		} else if (typeCheck === 'undefined') {
+			addScriptToPage(url, $deferred);
 		} else {
 			Wikia.log(
 				name + ' already loaded',
@@ -37,7 +26,34 @@
 		}
 
 		return $deferred;
-	};
+	}
+
+	/**
+	 * Load a library via script tag injection.
+	 * Originally adopted from facebook's developer pages but modified for reuse
+	 * Note that it relies on an arbitrary script tag already being in the DOM (which is always the case in our stack)
+	 * @param {string} url Library resource
+	 * @param {jQuery} $deferred Deferred object to be returned to callee. Passed by reference.
+	 * @returns {jQuery}
+	 */
+	function addScriptToPage(url, $deferred) {
+		var firstScriptTag = document.getElementsByTagName('script')[0],
+			scriptTag = document.createElement('script');
+
+		scriptTag.src = url;
+		scriptTag.onload = function () {
+			// update deferred object, which is passed by reference
+			$deferred.resolve();
+		};
+		scriptTag.onerror = function () {
+			// update deferred object, which is passed by reference
+			$deferred.reject();
+		};
+
+		firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag);
+	}
+
+	// public methods
 
 	/**
 	 * Load the facebook JS library v2.x
@@ -63,7 +79,7 @@
 
 		if (typeof window.FB === 'object') {
 			// Since we have our own deferred object, we need to resolve it if FB is already loaded.
-			// We can't rely on the type check inside $.loadExternalLibrary.
+			// We can't rely on the type check inside loadExternalLibrary.
 			$deferred.resolve();
 		} else {
 			// This is invoked by Facebook once the SDK is loaded.
@@ -78,7 +94,7 @@
 				$deferred.resolve();
 			};
 
-			$.when($.loadExternalLibrary('FacebookSDK', url, typeof window.FB))
+			$.when(loadExternalLibrary('FacebookSDK', url, typeof window.FB))
 				.fail(function () {
 					$deferred.reject();
 				});
@@ -89,7 +105,6 @@
 
 	$.loadReCaptcha = function () {
 		var url = 'https://www.google.com/recaptcha/api.js?hl=' + window.wgUserLanguage;
-		return $.loadExternalLibrary('ReCaptcha', url, typeof window.grecaptcha);
+		return loadExternalLibrary('ReCaptcha', url, typeof window.grecaptcha);
 	};
-
 })(jQuery);

@@ -75,7 +75,7 @@ define('wikia.preview', [
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'edit-preview',
 						label: 'button-best-practices',
-						trackingMethod: 'both'
+						trackingMethod: 'analytics'
 					});
 				});
 
@@ -441,7 +441,7 @@ define('wikia.preview', [
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'edit-preview',
 			label: 'preview-type-changed',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			value: type
 		});
 	}

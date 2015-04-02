@@ -2,7 +2,7 @@
 
 namespace Email;
 
-abstract class EmailController extends \WikiaController {
+class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	/** @var \User The user associated with the current request */
@@ -23,8 +23,8 @@ abstract class EmailController extends \WikiaController {
 	 *
 	 * @return string
 	 */
-	public function getTemplateDir() {
-		return dirname( __FILE__ ) . '/templates';
+	public static function getTemplateDir() {
+		return dirname( __FILE__ ) . '/templates/compiled';
 	}
 
 	public function init() {
@@ -70,7 +70,7 @@ abstract class EmailController extends \WikiaController {
 	 * This is the main entry point for the email extension.  The template set for this
 	 * method is used for testing only, to preview the email that will be sent.
 	 *
-	 * @template Email_preview
+	 * @template emailPreview
 	 *
 	 * @throws \MWException
 	 */
@@ -109,6 +109,15 @@ abstract class EmailController extends \WikiaController {
 			'subject' => $subject,
 			'body' => $body['html'],
 		] );
+	}
+
+	/**
+	 * Render the main layout file
+	 *
+	 * @template main
+	 */
+	public function main() {
+		$this->response->setVal( 'content', $this->getVal( 'content' ) );
 	}
 
 	/**
@@ -166,8 +175,11 @@ abstract class EmailController extends \WikiaController {
 
 	/**
 	 * Return the subject used for this email
+	 * Must be overridden in child classes
 	 */
-	abstract protected function getSubject();
+	protected function getSubject() {
+		throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
+	}
 
 	/**
 	 * Renders the 'body' view of the current email controller
@@ -175,11 +187,18 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getBody() {
-		$html = $this->app->renderView(
+		$moduleBody = $this->app->renderView(
 			get_class( $this ),
 			'body',
 			$this->request->getParams()
 		);
+
+		$html = $this->app->renderView(
+			get_class( $this ),
+			'main',
+			[ 'content' => $moduleBody ]
+		);
+
 		return $html;
 	}
 

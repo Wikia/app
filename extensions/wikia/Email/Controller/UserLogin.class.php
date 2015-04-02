@@ -34,7 +34,7 @@ class ForgotPasswordController extends EmailController {
 	}
 
 	/**
-	 * @template ForgotPassword_body
+	 * @template forgotPassword
 	 *
 	 * @throws \MWException
 	 */

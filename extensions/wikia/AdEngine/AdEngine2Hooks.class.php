@@ -28,7 +28,7 @@ class AdEngine2Hooks {
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
 			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad,
-			   $wgEnableKruxOnMobile, $wgAdDriverForceTurtleAd;
+			   $wgEnableKruxOnMobile, $wgAdDriverForceTurtleAd, $wgAdDriverUseSevenOneMedia, $wgUsePostScribe;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
@@ -44,6 +44,11 @@ class AdEngine2Hooks {
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
+
+		// use PostScribe with 71Media - check scriptwriter.js:35
+		if( $wgAdDriverUseSevenOneMedia ) {
+			$wgUsePostScribe = true;
+		}
 
 		return true;
 	}
@@ -87,12 +92,11 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		$wg = F::app()->wg;
-		$title = $wg->Title;
+		global $wgTitle, $wgUsePostScribe;
 		$skin = RequestContext::getMain()->getSkin();
 		$skinName = $skin->getSkinName();
 
-		$adContext = ( new AdEngine2ContextService() )->getContext( $title, $skinName );
+		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
 
 		$vars['ads'] = ['context' => $adContext];
 
@@ -103,6 +107,9 @@ class AdEngine2Hooks {
 
 		// GA vars
 		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
+
+		// 71Media
+		$vars['wgUsePostScribe'] = $wgUsePostScribe;
 
 		return true;
 	}

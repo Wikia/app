@@ -7,7 +7,7 @@ define(
 		var track = tracker.buildTrackingFunction({
 			action: tracker.ACTIONS.CLICK,
 			category: 'Recommendation',
-			trackingMethod: 'ga'
+			trackingMethod: 'analytics'
 		});
 
 		/**

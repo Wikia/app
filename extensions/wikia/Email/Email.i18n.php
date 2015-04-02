@@ -14,6 +14,7 @@ $messages['en'] = [
 	'emailext-error-noemail' => 'User has no email address',
 	'emailext-error-no-emails' => 'User does not wish to receive email',
 	'emailext-error-user-blocked' => 'User is blocked from taking this action',
+	'emailext-error-no-subject' => 'A subject line is required',
 
 	// Forgot password messages and errors
 	'emailext-password-email-greeting' => 'Hi $1,',
@@ -26,6 +27,11 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 	'emailext-password-email-subject' => 'Reset password request',
 	'emailext-error-password-throttled' => 'Too many resend password requests sent',
 	'emailext-error-password-reset-forbidden' => 'This user is not allowed to change their password',
+
+	// Common email template messages (see i18n directory for email-specific messages)
+	'emailext-fanverse-tagline' => 'The Social Universe for Fans by Fans',
+	'emailext-update-frequency' => 'To change which emails you receive or their frequency, please visit your [{{fullurl:Special:Preferences}} Preferences] page.',
+	'emailext-unsubscribe' => 'To unsubscribe from all Wikia emails, click [$1 here].',
 ];
 
 $messages['qqq'] = [
@@ -41,6 +47,7 @@ $messages['qqq'] = [
 	'emailext-error-noemail' => 'Error message given when the user who is the recipient of an email does not have an email address on file',
 	'emailext-error-no-emails' => 'Error message given when has unsubscribed from all Wikia email',
 	'emailext-error-user-blocked' => 'Error message given when the user who triggered the email is blocked',
+	'emailext-error-no-subject' => 'Error message given when no subject line is specified for an email.',
 
 	// Forgot password messages and errors
 	'emailext-password-email-greeting' => 'Greeting for the forgot password email',
@@ -50,4 +57,8 @@ $messages['qqq'] = [
 	'emailext-error-password-throttled' => 'Error message given when a user has requested a new password too many times',
 	'emailext-error-password-reset-forbidden' => 'Error shown when the user requesting a password reset does not have permission to do so',
 
+	// Common email template messages (see i18n directory for email-specific messages)
+	'emailext-fanverse-tagline' => 'Trademarked tagline for Wikia.',
+	'emailext-update-frequency' => 'Provides a link for users to update their email preferences',
+	'emailext-unsubscribe' => 'Provides a link for users to opt out of emails altogether. $1 is the unsubscribe link.',
 ];
