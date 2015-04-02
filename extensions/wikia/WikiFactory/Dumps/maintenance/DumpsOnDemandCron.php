@@ -11,6 +11,8 @@ class DumpsOnDemandCron extends Maintenance {
     
     public function execute() {
 
+        global $wgExternalSharedDB;
+
         if ( file_exists( self::PIDFILE ) ) {
                 $sPid = file_get_contents( self::PIDFILE );
                 // Another process already running.
@@ -25,7 +27,7 @@ class DumpsOnDemandCron extends Maintenance {
 
         $this->output( "INFO: Searching for dump requests to process.\n" );
 
-        $oDB = wfGetDB( DB_SLAVE, array(), 'wikicities' );
+        $oDB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
         $sWikiaId = (string) $oDB->selectField(
                 'dumps',
                 'dump_wiki_id',
@@ -51,7 +53,7 @@ class DumpsOnDemandCron extends Maintenance {
 
         wfShellExec( $sCommand, $iStatus );
 
-        $oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
+        $oDB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
         if ( $iStatus ) {
             $this->output( "ERROR: Failed creating dumps. Terminating.\n" );
