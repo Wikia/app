@@ -52,7 +52,6 @@ class WatchedPageController extends EmailController {
 		if ( !$this->title->exists() ) {
 			throw new Check( "Title doesn't exist." );
 		}
-
 	}
 
 	private function assertValidRevIds() {
