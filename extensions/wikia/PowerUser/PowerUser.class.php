@@ -34,6 +34,9 @@ class PowerUser {
 	const MIN_LIFETIME_EDITS = 2000;
 	const MIN_FREQUENT_EDITS = 140;
 
+	/**
+	 * Logging parameters
+	 */
 	const LOG_MESSAGE = 'PowerUsersLog';
 	const ACTION_ADD_SET_OPTION = 'Add option';
 	const ACTION_ADD_GROUP = 'Add group';
@@ -82,7 +85,9 @@ class PowerUser {
 	private $oUser;
 
 	function __construct( \User $oUser ) {
+		global $wgEnableSharedUserRightsExt;
 		$this->oUser = $oUser;
+		$this->bUseGroups = $wgEnableSharedUserRightsExt;
 	}
 
 	/**
@@ -138,6 +143,7 @@ class PowerUser {
 	 */
 	public function addPowerUserAddGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& $this->bUseGroups
 			&& !in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) )
 		) {
 				\UserRights::addGlobalGroup( $this->oUser, self::GROUP_NAME );
@@ -187,6 +193,7 @@ class PowerUser {
 	 */
 	public function removePowerUserRemoveGroup( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& $this->bUseGroups
 			&& $this->isGroupForRemoval( $sProperty )
 		) {
 			\UserRights::removeGlobalGroup( $this->oUser, self::GROUP_NAME );

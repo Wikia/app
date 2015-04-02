@@ -288,7 +288,7 @@ define('mediaGallery.views.gallery', [
 	Gallery.prototype.track = tracker.buildTrackingFunction({
 		category: 'media-gallery',
 		label: 'gallery',
-		trackingMethod: 'both',
+		trackingMethod: 'analytics',
 		action: tracker.ACTIONS.CLICK,
 		value: 0
 	});

@@ -1666,7 +1666,7 @@ ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs = function () {
 		// preference to influence anonymous users (use the config
 		// variable for that; besides the pref value would be stale if
 		// the wiki uses static html caching).
-		usePrefs = !mw.user.isAnon();
+		usePrefs = !mw.user.anonymous();
 		prefSaysShow = usePrefs && !mw.user.options.get( 'visualeditor-hidebetawelcome' );
 		urlSaysHide = 'vehidebetadialog' in this.currentUri.query;
 

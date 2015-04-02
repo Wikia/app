@@ -281,6 +281,7 @@ function wfDevBoxLogExceptions( $errorText ) {
  * Hostname scheme: override.developer.wikia-dev.com
  * Example: muppet.owen.wikia-dev.com -> muppet.wikia.com
  * Example: es.gta.owen.wikia-dev.com -> es.gta.wikia.com
+ * Example: muppet.wikia.com -> muppet.wikia.com
  */
 function getForcedWikiValue(){
 	global $wgDevelEnvironmentName;
@@ -289,13 +290,15 @@ function getForcedWikiValue(){
 		return '';
 	}
 
-	if (count(explode(".", $_SERVER['HTTP_HOST'])) == 3) {
-		return 'wikia.com';
+	// This is an attempt to match "devbox" host names
+	if (strpos($_SERVER['HTTP_HOST'], "wikia-dev.com") !== false){
+		$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+		return "$site.wikia.com";
 	}
 
-	$site = str_replace('.' . $wgDevelEnvironmentName . '.wikia-dev.com', '', $_SERVER['HTTP_HOST']);
+	// Otherwise assume it's a wiki and try it anyway
+	return $_SERVER['HTTP_HOST'];
 
-	return "$site.wikia.com";
 } // end getForcedWikiValue()
 
 

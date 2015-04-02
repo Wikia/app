@@ -5,9 +5,15 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, $user ) {
-		if (self::isAnswersWiki())
+	public function enabled ( $wgCityId, User $user ) {
+		if ( self::isAnswersWiki() ) {
 			return false;
+		}
+
+		// disable if all Wikia email disabled
+		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+			return false;
+		}
 
 		// If complete digest mode is enabled, do not send views only digest
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
@@ -31,14 +37,14 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 
 		$wgTitle = Title::newMainPage();
 		// Get list of founders with digest mode turned on
-		$cityList = $founderEmailObj->getFoundersWithPreference('founderemails-views-digest');
-		$wikiService = (new WikiService);
+		$cityList = $founderEmailObj->getFoundersWithPreference( 'founderemails-views-digest' );
+		$wikiService = ( new WikiService );
 
 		// Gather daily page view stats for each wiki requesting views digest
-		foreach ($cityList as $cityID) {
+		foreach ( $cityList as $cityID ) {
 			$user_ids = $wikiService->getWikiAdminIds( $cityID );
 			$foundingWiki = WikiFactory::getWikiById( $cityID );
-			$page_url = GlobalTitle::newFromText( 'Createpage', NS_SPECIAL, $cityID )->getFullUrl( array('modal' => 'AddPage') );
+			$page_url = GlobalTitle::newFromText( 'Createpage', NS_SPECIAL, $cityID )->getFullUrl( array( 'modal' => 'AddPage' ) );
 
 			$emailParams = array(
 				'$WIKINAME' => $foundingWiki->city_title,
@@ -47,24 +53,24 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 				'$UNIQUEVIEWS' => $founderEmailObj->getPageViews( $cityID ),
 			);
 
-			foreach ($user_ids as $user_id) {
-				$user = User::newFromId($user_id);
+			foreach ( $user_ids as $user_id ) {
+				$user = User::newFromId( $user_id );
 
 				// skip if not enable
-				if (!$this->enabled($cityID, $user)) {
+				if ( !$this->enabled( $cityID, $user ) ) {
 					continue;
 				}
-				self::addParamsUser($cityID, $user->getName(), $emailParams);
+				self::addParamsUser( $cityID, $user->getName(), $emailParams );
 
 				$langCode = $user->getOption( 'language' );
 				$links = array(
 					'$WIKINAME' => $emailParams['$WIKIURL'],
 				);
-				$mailSubject = strtr(wfMsgExt('founderemails-email-views-digest-subject', array('content')), $emailParams);
-				$mailBody = strtr(wfMsgExt('founderemails-email-views-digest-body', array('content','parsemag'), $emailParams['$UNIQUEVIEWS']), $emailParams);
-				$mailBodyHTML = F::app()->renderView("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => 'views-digest')));
-				$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
-				$mailCategory = FounderEmailsEvent::CATEGORY_VIEWS_DIGEST.(!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
+				$mailSubject = strtr( wfMsgExt( 'founderemails-email-views-digest-subject', array( 'content' ) ), $emailParams );
+				$mailBody = strtr( wfMsgExt( 'founderemails-email-views-digest-body', array( 'content', 'parsemag' ), $emailParams['$UNIQUEVIEWS'] ), $emailParams );
+				$mailBodyHTML = F::app()->renderView( 'FounderEmails', 'GeneralUpdate', array_merge( $emailParams, array( 'language' => 'en', 'type' => 'views-digest' ) ) );
+				$mailBodyHTML = strtr( $mailBodyHTML, FounderEmails::addLink( $emailParams, $links ) );
+				$mailCategory = FounderEmailsEvent::CATEGORY_VIEWS_DIGEST . ( !empty( $langCode ) && $langCode == 'en' ? 'EN' : 'INT' );
 
 				$founderEmailObj->notifyFounder( $user, $this, $mailSubject, $mailBody, $mailBodyHTML, $cityID, $mailCategory );
 			}

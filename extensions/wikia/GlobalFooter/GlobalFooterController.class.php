@@ -1,13 +1,15 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class GlobalFooterController extends WikiaController {
 
 	const MEMC_KEY_GLOBAL_FOOTER_LINKS = 'mGlobalFooterLinks';
 	const MEMC_KEY_GLOBAL_FOOTER_VERSION = 1;
 	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links';
+	const MEMC_EXPIRY = 3600;
 
 	public function index() {
-
 		Wikia::addAssetsToOutput('old_global_footer_scss');
 		Wikia::addAssetsToOutput('global_footer_js');
 
@@ -19,25 +21,16 @@ class GlobalFooterController extends WikiaController {
 		$this->response->setVal( 'logoLink', $this->getLogoLink() );
 	}
 
-	public function oasisIndex() {
-		global $wgLang;
-		$wikiaLogoHelper = new WikiaLogoHelper();
-		Wikia::addAssetsToOutput('oasis_global_footer_scss');
+	public function indexUpdated() {
+		Wikia::addAssetsToOutput('updated_global_footer_scss');
 		Wikia::addAssetsToOutput('global_footer_js');
-		$this->response->setVal( 'centralUrl', $wikiaLogoHelper->getCentralUrlForLang( $wgLang->getCode() ) );
-		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
-		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
-		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
-	}
 
-	public function venusIndex() {
-		global $wgLang;
-		$wikiaLogoHelper = new WikiaLogoHelper();
-		Wikia::addAssetsToOutput('venus_global_footer_scss');
-		$this->response->setVal( 'centralUrl', $wikiaLogoHelper->getCentralUrlForLang( $wgLang->getCode() ) );
-		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
+		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
+		$this->response->setVal( 'isCorporate', WikiaPageType::isWikiaHomePage() );
 		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
+		$this->response->setVal( 'verticalNameMessage', $this->verticalNameMessage() );
+		$this->response->setVal( 'logoLink', $this->getLogoLink() );
 	}
 
 	private function getGlobalFooterLinks() {
@@ -62,7 +55,10 @@ class GlobalFooterController extends WikiaController {
 		if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS . '-' . $verticalId ) ) ) {
 			if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS ) ) ) {
 				wfProfileOut( __METHOD__ );
-
+				WikiaLogger::instance()->error(
+					"Global Footer's links not found in messages",
+					[ 'exception' => new Exception() ]
+				);
 				return [];
 			}
 		}
@@ -79,6 +75,8 @@ class GlobalFooterController extends WikiaController {
 				$parsedLinks[] = $parsedLink;
 			}
 		}
+
+		$wgMemc->set( $memcKey, $parsedLinks, self::MEMC_EXPIRY );
 
 		wfProfileOut( __METHOD__ );
 

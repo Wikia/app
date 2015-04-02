@@ -106,7 +106,7 @@ define(
 				articleSections = getTocData(headers, articleWrapperId),
 				track = tracker.buildTrackingFunction({
 					action: tracker.ACTIONS.CLICK,
-					trackingMethod: 'both'
+					trackingMethod: 'analytics'
 				});
 
 			// initialize TOC only if article has sections

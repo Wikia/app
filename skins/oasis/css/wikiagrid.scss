@@ -1,42 +1,50 @@
 $oasisWidthType: get_command_line_param("widthType", 0);
 
-$width-grid-column: 160px;
-$width-grid-gutter: 10px;
+@if $oasisWidthType != 0 {
+	$width-grid-column: 160px;
+	$width-grid-gutter: 10px;
 
-@if $oasisWidthType != 3 {
-	$width-grid-column: 155px;
-}
+	@if $oasisWidthType != 3 {
+		$width-grid-column: 155px;
+	}
 
-.WikiaGrid {
-	.grid-1,
-	.grid-2,
-	.grid-3,
-	.grid-4,
-	.grid-5,
-	.grid-6 {
-		display: inline;
-		float: left;
-		margin: 0 0 0 $width-grid-gutter;
-		&.alpha {
-			margin: 0;
+	.WikiaGrid {
+		.grid-1,
+		.grid-2,
+		.grid-3,
+		.grid-4,
+		.grid-5,
+		.grid-6 {
+			display: inline;
+			float: left;
+			margin: 0 0 0 $width-grid-gutter;
+			&.alpha {
+				margin: 0;
+			}
 		}
-	}
-	.grid-1 {
-		width: $width-grid-column;
-	}
-	.grid-2 {
-		width: ( $width-grid-column * 2 ) + $width-grid-gutter;
-	}
-	.grid-3 {
-		width: ( $width-grid-column * 3 ) + ( $width-grid-gutter * 2 );
-	}
-	.grid-4 {
-		width: ( $width-grid-column * 4 ) + ( $width-grid-gutter * 3 );
-	}
-	.grid-5 {
-		width: ( $width-grid-column * 5 ) + ( $width-grid-gutter * 4 );
-	}
-	.grid-6 {
-		width: ( $width-grid-column * 6 ) + ( $width-grid-gutter * 5 );
+
+		.grid-1 {
+			width: $width-grid-column;
+		}
+
+		.grid-2 {
+			width: ($width-grid-column * 2) + $width-grid-gutter;
+		}
+
+		.grid-3 {
+			width: ($width-grid-column * 3) + ($width-grid-gutter * 2);
+		}
+
+		.grid-4 {
+			width: ($width-grid-column * 4) + ($width-grid-gutter * 3);
+		}
+
+		.grid-5 {
+			width: ($width-grid-column * 5) + ($width-grid-gutter * 4);
+		}
+
+		.grid-6 {
+			width: ($width-grid-column * 6) + ($width-grid-gutter * 5);
+		}
 	}
 }

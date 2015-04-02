@@ -73,6 +73,8 @@
 
 // CSS (needs leading slash and file extension)
 @import '/extensions/wikia/CreatePage/css/CreatePage.css';
+//Site Optimizations
+@import 'extensions/wikia/Rail/styles/RailElement';
 
 // Print
 @media print {
@@ -85,3 +87,9 @@
 @import 'core/responsive-font-sizing';
 @import 'core/responsive-core';
 @import 'core/responsive-mainpage-tag';
+
+// Breakpoints
+// todo Cleanup responsive and old oasis layout files
+@import 'core/breakpoints-variables';
+@import 'core/breakpoints-layout';
+@import 'core/breakpoints-typography';

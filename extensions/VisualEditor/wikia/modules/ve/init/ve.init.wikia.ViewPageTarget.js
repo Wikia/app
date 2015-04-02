@@ -350,7 +350,8 @@ ve.init.wikia.ViewPageTarget.prototype.onSaveError = function ( doc, saveData, j
 	if ( window.veTrack ) {
 		veTrack( {
 			action: 'parsoid-save-error',
-			status: status
+			status: status,
+			apiresponsedata: data
 		} );
 	}
 	ve.init.wikia.ViewPageTarget.super.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );

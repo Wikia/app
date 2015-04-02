@@ -169,15 +169,6 @@ $VenusConfig[ 'local_navigation_js' ] = [
 	]
 ];
 
-/** GlobalFooter extension */
-$VenusConfig[ 'venus_global_footer_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooterVenus.scss'
-	]
-];
-
 /** GlobalNavigation extension */
 $VenusConfig[ 'global_navigation_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,

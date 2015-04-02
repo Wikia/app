@@ -452,7 +452,7 @@
 					width += config.extraPageWidth;
 				}
 
-				if (window.wgOasisResponsive) {
+				if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 					var pageWidth = $('#WikiaPage').width(), widthArticlePadding = fluidlayout.getWidthGutter(), railWidth = fluidlayout.getRightRailWidth() + fluidlayout.getWidthPadding(), minWidth = fluidlayout.getMinArticleWidth();
 
 					// don't go below minimum width
@@ -500,7 +500,7 @@
 				};
 
 				// pass info about dropped rail to preview module
-				if (pageWidth <= railBreakPoint && window.wgOasisResponsive) {
+				if (pageWidth <= railBreakPoint && (window.wgOasisResponsive || window.wgOasisBreakpoints)) {
 					// if it's a small screen or wide page pass to preview a flag to drop rail
 					previewOptions.isRailDropped = true;
 				}
