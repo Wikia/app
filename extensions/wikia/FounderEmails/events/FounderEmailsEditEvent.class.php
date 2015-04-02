@@ -32,9 +32,15 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, $user ) {
-		if (self::isAnswersWiki())
+	public function enabled ( $wgCityId, User $user ) {
+		if ( self::isAnswersWiki() ) {
 			return false;
+		}
+
+		// disable if all Wikia email disabled
+		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+			return false;
+		}
 
 		// If digest mode is enabled, do not create edit event notifications
 		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
@@ -55,15 +61,15 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$eventData = $events[ rand( 0, count( $events ) -1 ) ];
 
 			// quit if this particular user has generated an edit email in the last hour
-			$memcKey = wfMemcKey("FounderEmail", "EditEvent", $eventData['data']['editorName']);
-			if ($wgMemc->get($memcKey) == "1") {
+			$memcKey = wfMemcKey( 'FounderEmail', 'EditEvent', $eventData['data']['editorName'] );
+			if ( $wgMemc->get( $memcKey ) == '1' ) {
 				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
-			$foundingWiki = WikiFactory::getWikiById($wgCityId);
+			$foundingWiki = WikiFactory::getWikiById( $wgCityId );
 			$founderEmailObj = FounderEmails::getInstance();
-			$wikiService = (new WikiService);
+			$wikiService = ( new WikiService );
 			$user_ids = $wikiService->getWikiAdminIds();
 			$emailParams = array(
 				'$EDITORNAME' => $eventData['data']['editorName'],
@@ -80,16 +86,16 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$today = date( 'Y-m-d' );
 			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
 
-			foreach($user_ids as $user_id) {
-				$user = User::newFromId($user_id);
+			foreach ( $user_ids as $user_id ) {
+				$user = User::newFromId( $user_id );
 
 				// skip if not enable
-				if (!$this->enabled($wgCityId, $user)) {
+				if ( !$this->enabled( $wgCityId, $user ) ) {
 					continue;
 				}
 
 				// skip if reciever is the editor
-				if ($user->getName() == $eventData['data']['editorName']) {
+				if ( $user->getName() == $eventData['data']['editorName'] ) {
 					continue;
 				}
 
@@ -118,7 +124,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 					$aWikiCounter[0] = $today;
 					$aWikiCounter[1] = 0;
 				}
-				self::addParamsUser($wgCityId, $user->getName(), $emailParams);
+				self::addParamsUser( $wgCityId, $user->getName(), $emailParams );
 				$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
 				// @FIXME magic number, move to config
 				if ( $aWikiCounter[1] === 15 ) {
@@ -148,7 +154,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				}
 
 				// Set flag so this user won't generate edit notifications for given period of time
-				$wgMemc->set($memcKey, "1", self::USER_EMAILS_THROTTLE_EXPIRY_TIME);
+				$wgMemc->set( $memcKey, '1', self::USER_EMAILS_THROTTLE_EXPIRY_TIME );
 
 				// Increment counter for daily notification limit
 				$aWikiCounter[1] = ( $aWikiCounter[1] === 15 ) ? 'full' : $aWikiCounter[1] + 1;
@@ -158,18 +164,18 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				$user->saveSettings();
 
 				$langCode = $user->getOption( 'language' );
-				$mailCategory .= (!empty($langCode) && $langCode == 'en' ? 'EN' : 'INT');
-				$mailSubject = strtr(wfMsgExt($msgKeys['subject'], array('content')), $emailParams);
-				$mailBody = strtr(wfMsgExt($msgKeys['body'], array('content')), $emailParams);
+				$mailCategory .= ( !empty( $langCode ) && $langCode == 'en' ? 'EN' : 'INT' );
+				$mailSubject = strtr( wfMsgExt( $msgKeys['subject'], array( 'content' ) ), $emailParams );
+				$mailBody = strtr( wfMsgExt( $msgKeys['body'], array( 'content' ) ), $emailParams );
 
-				if(empty( $wgEnableAnswers )) { // FounderEmailv2.1
+				if ( empty( $wgEnableAnswers ) ) { // FounderEmailv2.1
 					$links = array(
 						'$EDITORNAME' => $emailParams['$EDITORPAGEURL'],
 						'$PAGETITLE' => $emailParams['$PAGEURL'],
 						'$WIKINAME' => $emailParams['$WIKIURL'],
 					);
-					$mailBodyHTML = F::app()->renderView("FounderEmails", "GeneralUpdate", array_merge($emailParams, array('language' => 'en', 'type' => $mailKey)));
-					$mailBodyHTML = strtr($mailBodyHTML, FounderEmails::addLink($emailParams,$links));
+					$mailBodyHTML = F::app()->renderView( 'FounderEmails', 'GeneralUpdate', array_merge( $emailParams, array( 'language' => 'en', 'type' => $mailKey ) ) );
+					$mailBodyHTML = strtr( $mailBodyHTML, FounderEmails::addLink( $emailParams, $links ) );
 				} else {	// old emails
 					$mailBodyHTML = $this->getLocalizedMsg( $msgKeys['body-html'], $emailParams );
 				}
@@ -195,8 +201,8 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 * 		FounderEmailsEditEvent::FIRST_EDIT
 	 * 		FounderEmailsEditEvent::MULTIPLE_EDITS
 	 */
-	static public function getUserEditsStatus($user, $useMasterDb = false ) {
-		wfProfileIn(__METHOD__);
+	static public function getUserEditsStatus( $user, $useMasterDb = false ) {
+		wfProfileIn( __METHOD__ );
 
 		$recentEditsCount = 0;
 		$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
@@ -207,7 +213,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 		$userPageId = $user->getUserPage()->getArticleID();
 
-		if($userPageId) {
+		if ( $userPageId ) {
 			$conditions[] = "rev_page != $userPageId";
 		}
 
@@ -222,7 +228,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			]
 		);
 
-		while($row = $dbr->FetchObject($dbResult)) {
+		while ( $row = $dbr->FetchObject( $dbResult ) ) {
 			$recentEditsCount++;
 		}
 
@@ -242,7 +248,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		global $wgUser, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
-		if( is_null( $oRecentChange ) ) {
+		if ( is_null( $oRecentChange ) ) {
 			throw new \Exception( 'Invalid $oRecentChange value.' );
 		}
 
@@ -342,7 +348,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 * @return array
 	 */
 	public static function getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
 		$eventData = array(
