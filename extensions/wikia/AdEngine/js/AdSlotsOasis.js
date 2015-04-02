@@ -1,15 +1,13 @@
 /*global require*/
 require([
-	'jquery',
-	'wikia.log',
-	'wikia.document',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adPlacementChecker',
-	'ext.wikia.adEngine.adSlotsInContent'
-], function ($, log, doc, adContext, adPlacementChecker, adSlotsInContent) {
+	'ext.wikia.adEngine.adSlotsInContent',
+	'jquery',
+	'wikia.document'
+], function (adContext, adSlotsInContent, $, doc) {
 	'use strict';
 
-	function init () {
+	function init() {
 		var elementsBeforeSlots = $(adSlotsInContent.selector).get(),
 			maxSlots = 1;
 		elementsBeforeSlots.unshift(null);
@@ -18,7 +16,8 @@ require([
 
 	var context = adContext.getContext();
 
-	if (context.opts.pageType !== 'corporate' && context.targeting.pageType !== 'home') {
+	// Don't start those slots on no_ads, corporate, home etc
+	if (context.opts.pageType === 'all_ads') {
 		$(doc).ready(init);
 	}
 });
