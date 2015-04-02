@@ -2,6 +2,7 @@
 
 namespace Email\Controller;
 
+use Email\Check;
 use Email\EmailController;
 
 class WatchedPageController extends EmailController {
@@ -21,12 +22,53 @@ class WatchedPageController extends EmailController {
 	}
 
 	public function initEmail() {
-		$this->title = $this->request->getVal( 'title' );
+		$this->title = \Title::newFromText( $this->request->getVal( 'title' ) );
 		$this->summary = $this->request->getVal( 'summary' );
 		$this->currentRevId = $this->request->getVal( 'currentRevId' );
 		$this->previousRevId = $this->request->getVal( 'previousRevId' );
 		$this->replyToAddress = $this->request->getVal( 'replyToAddress' );
-		$this->fromAddress = $this->request->getVal( 'fromAddress' );
+		$this->fromAddress = new \MailAddress( $this->request->getVal( 'fromAddress', '' ), $this->getVal( 'fromName', '' ) );
+
+		$this->assertValidParams();
+	}
+
+	/**
+	 * Validate the params passed in by the client
+	 */
+	private function assertValidParams() {
+		$this->assertValidTitle();
+		$this->assertValidRevIds();
+		$this->assertValiFromAddress();
+	}
+
+	/**
+	 * @throws \Email\Check
+	 */
+	private function assertValidTitle() {
+		if ( !$this->title instanceof \Title ) {
+			throw new Check( "Invalid value passed for title" );
+		}
+
+		if ( !$this->title->exists() ) {
+			throw new Check( "Title doesn't exist." );
+		}
+
+	}
+
+	private function assertValidRevIds() {
+		if ( empty( $this->currentRevId ) ) {
+			throw new Check( "Empty current Revision Id" );
+		}
+
+		if ( empty( $this->previousRevId ) ) {
+			throw new Check( "Empty previous Revision Id" );
+		}
+	}
+
+	private function assertValiFromAddress() {
+		if ( $this->fromAddress->toString() == "" ) {
+			throw new Check( "Empty from address" );
+		}
 	}
 
 	protected function getFromAddress() {

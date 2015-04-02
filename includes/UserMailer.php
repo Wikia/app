@@ -837,12 +837,13 @@ class EmailNotification {
 		\F::app()->sendRequest( 'Email\Controller\WatchedPage', 'handle',
 			[
 				'targetUser' => $user->getName(),
-				'title' => $this->title,
+				'title' => $this->title->getText(),
 				'summary' => $this->summary,
 				'currentRevId' => $this->currentRevId,
 				'previousRevId' => $this->previousRevId,
 				'replyToAddress' => $this->replyto,
-				'fromAddress' => $this->from
+				'fromAddress' => $this->from->address,
+				'fromName' => $this->from->name
 			]);
 	}
 
