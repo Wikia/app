@@ -13,6 +13,10 @@ a, a * {
 	text-decoration: none;
 }
 
+sub, sup {
+	font-size: 8px;
+}
+
 p {
 	font-size: 16px;
 	line-height: 1.5em;
