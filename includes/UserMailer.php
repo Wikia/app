@@ -794,8 +794,8 @@ class EmailNotification {
 	 * @param $user User
 	 */
 	private function compose( $user ) {
-		if ( $this->isArticlePageEdit() ) {
-			$this->sendUsingNewEmailExtension( $user );
+		if ( $this->isArticlePageEdit() && $this->emailExtensionEnabled() ) {
+			$this->sendUsingEmailExtension( $user );
 		} else {
 			$this->sendUsingUserMailer( $user );
 		}
@@ -813,6 +813,13 @@ class EmailNotification {
 		return empty( $this->action ) && !$this->isNewPage();
 	}
 
+	/**
+	 * Returns whether the Email extension is enabled or not.
+	 * @return bool
+	 */
+	private function emailExtensionEnabled() {
+		return !empty( \F::app()->wg->EnableEmailExt );
+	}
 
 	/**
 	 * When a page is created, the previousRevId is always 0.
@@ -826,7 +833,7 @@ class EmailNotification {
 	 * Send a watched page edit email using the new Email extension.
 	 * @param $user User
 	 */
-	private function sendUsingNewEmailExtension( $user ) {
+	private function sendUsingEmailExtension( $user ) {
 		\F::app()->sendRequest( 'Email\Controller\WatchedPage', 'handle',
 			[
 				'targetUser' => $user->getName(),
