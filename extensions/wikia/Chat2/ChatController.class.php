@@ -6,6 +6,7 @@ class ChatController extends WikiaController {
 	const CHAT_AVATAR_DIMENSION = 41;
 
 	public function executeIndex() {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgSitename;
 		wfProfileIn( __METHOD__ );
 
