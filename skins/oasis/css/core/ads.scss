@@ -294,6 +294,10 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
+.clear-right-after-ad-in-content {
+	clear: right;
+}
+
 @media screen and (max-width: $breakpoint-small) {
 	.home-top-right-ads.top-right-ads-in-content {
 		display: block;
