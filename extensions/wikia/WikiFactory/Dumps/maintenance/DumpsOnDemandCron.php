@@ -29,7 +29,7 @@ class DumpsOnDemandCron extends Maintenance {
         $sWikiaId = (string) $oDB->selectField(
                 'dumps',
                 'dump_wiki_id',
-                array( 'dump_completed IS NULL' ),
+                array( 'dump_completed IS NULL', 'dump_hold' => 'N' ),
                 __METHOD__,
                 array(
                     'ORDER BY' => 'dump_requested ASC',
@@ -51,15 +51,29 @@ class DumpsOnDemandCron extends Maintenance {
 
         wfShellExec( $sCommand, $iStatus );
 
+        $oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
+
         if ( $iStatus ) {
             $this->output( "ERROR: Failed creating dumps. Terminating.\n" );
+            $oDB->update(
+                'dumps',
+                array(
+                    'dump_compression' => DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT,
+                    'dump_hold' => 'Y',
+                    'dump_errors' => wfTimestampNow()
+                ),
+                array(
+                    'dump_wiki_id' => $sWikiaId,
+                    'dump_completed IS NULL',
+                    'dump_hold' => 'N'
+                ),
+                __METHOD__
+            );
             unlink( self::PIDFILE );
             exit( $iStatus );
         }
 
         $this->output( "INFO: Dumps completed. Updating the status of the request.\n" );
-
-        $oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
 
         $oDB->update(
             'dumps',
@@ -69,7 +83,8 @@ class DumpsOnDemandCron extends Maintenance {
             ),
             array(
                 'dump_wiki_id' => $sWikiaId,
-                'dump_completed IS NULL'
+                'dump_completed IS NULL',
+                'dump_hold' => 'N'
             ),
             __METHOD__
         );
