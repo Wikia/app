@@ -40,13 +40,10 @@ class MailAddress {
 			$this->address = $address->getEmail();
 			$this->name = $address->getName();
 			$this->realName = $address->getRealName();
-		/* Wikia change begin - @author: wladek */
-		/* #57817: Email "from" field description change */
 		} else if( is_object( $address ) && $address instanceof MailAddress ) {
 			$this->address = strval( $address->address );
 			$this->name = $name ? $name : strval( $address->name );
 			$this->realName = $realName ? $realName : strval( $address->realName );
-		/* Wikia change end */
 		} else {
 			$this->address = strval( $address );
 			$this->name = strval( $name );
@@ -156,16 +153,14 @@ class UserMailer {
 	 * @param $from MailAddress: sender's email
 	 * @param $subject String: email's subject.
 	 * @param $body String: email's text. 
-	 * (<Wikia>
 	 * $body can be array with text and html version of email message, and also can contain attachements
 	 * $body = array('text' => 'Email text', 'html' => '<b>Email text</b>')
-	 * </Wikia>)
 	 * @param $replyto MailAddress: optional reply-to email (default: null).
 	 * @param $contentType String: optional custom Content-Type (default: text/plain; charset=UTF-8)
 	 * @param $contentType String: optional custom Content-Type
-	 * @param $category String: optional category for statistic (added by Wikia)
-	 * @param $priority int: optional priority for email (added by Wikia)
-	 * @param $attachements Array: optional list of files to send as attachements (added by Wikia)
+	 * @param $category String: optional category for statistic
+	 * @param $priority int: optional priority for email
+	 * @param $attachements Array: optional list of files to send as attachements
 	 * @return Status object
 	 */
 	public static function send( $to, $from, $subject, $body, $replyto = null, $contentType = null, $category='UserMailer', $priority = 0,
@@ -187,9 +182,7 @@ class UserMailer {
 		if ( !$has_address ) {
 			return Status::newFatal( 'user-mail-no-addy' );
 		}
-		/* Wikia change - begin */
 		wfRunHooks( 'UserMailerSend', array( &$to ) );
-		/* Wikia change - end */
 
 		# Forge email headers
 		# -------------------
@@ -221,37 +214,29 @@ class UserMailer {
 		$headers['From'] = $from->toString();
 		$headers['Return-Path'] = $from->address;
 
-		if ( $replyto && $replyto instanceof MailAddress /* Wikia change (BugId:6519) */ ) {
+		if ( $replyto && $replyto instanceof MailAddress ) {
 			$headers['Reply-To'] = $replyto->toString();
 		}
 
 		$headers['Date'] = date( 'r' );
 		$headers['MIME-Version'] = '1.0';
 
-		/* <Wikia> */
 		if(empty($attachements)) {
-		/* </Wikia> */
 			$headers['Content-Type'] = ( is_null( $contentType ) ?
 				'text/plain; charset=UTF-8' : $contentType );
 			$headers['Content-Transfer-Encoding'] = '8bit';
-		/* <Wikia> */
 		}
-		/* </Wikia> */
 
 		$headers['Message-ID'] = self::makeMsgId();
 		$headers['X-Mailer'] = 'MediaWiki mailer';
 
-		# <Wikia> merged 1.19 (MoLi)
 		$headers['X-Msg-Category'] = $category;
 		if ( $priority ) {
 			$headers['X-Priority'] = $priority;
 		}
-		# </Wikia>
 
 		$ret = wfRunHooks( 'AlternateUserMailer', array( $headers, $to, $from, $subject, $body
-		/*<Wikia>*/
 			, $priority, $attachements
-		/*</Wikia>*/
 		) );
 		if ( $ret === false ) {
 			return Status::newGood();
@@ -259,13 +244,11 @@ class UserMailer {
 			return Status::newFatal( 'php-mail-error', $ret );
 		}
 
-		# <Wikia> 
 		# MoLi: body can be an array with text and html message
 		# MW core uses only text version of email message, so $body as array should be used only with AlternateUserMailer hook
 		if ( is_array( $body ) && isset( $body['text'] ) ) {
 			$body = $body['text'];
 		}
-		# </Wikia>
 
 		if ( is_array( $wgSMTP ) ) {
 			#
@@ -305,11 +288,9 @@ class UserMailer {
 			# number of possible recipients.	
 			$chunks = array_chunk( $to, $wgEnotifMaxRecips );
 			foreach ( $chunks as $chunk ) {
-				# <Wikia>
 				if ( !wfRunHooks( 'ComposeMail', array( $chunk, &$body, &$headers ) ) ) {
 					continue;
 				}
-				# </Wikia>
 				$status = self::sendWithPear( $mail_object, $chunk, $headers, $body );
 				# FIXME : some chunks might be sent while others are not!
 				if ( !$status->isOK() ) {
@@ -346,11 +327,9 @@ class UserMailer {
 
 			$safeMode = wfIniGetBool( 'safe_mode' );
 			foreach ( $to as $recip ) {
-				# <Wikia>
 				if ( !wfRunHooks( 'ComposeMail', array( $recip, &$body, &$headers ) ) ) {
 					continue;
 				}
-				# </Wikia>
 				if ( $safeMode ) {
 					$sent = mail( $recip, self::quotedPrintable( $subject ), $body, $headers );
 				} else {
@@ -478,7 +457,7 @@ class EmailNotification {
 	* @param bool $minorEdit
 	* @param int $currentRevId : Revision ID
 	* @param int $previousRevId : Revision ID
-	* @param string $action (Wikia)
+	* @param string $action
 	* @param array $otherParam
 	 */
 	public function __construct( $editor, $title, $timestamp, $summary, $minorEdit, $currentRevId = 0, $previousRevId = 0, $action = '', $otherParam = [] ) {
@@ -714,7 +693,6 @@ class EmailNotification {
 
 		$this->composedCommon = true;
 
-		# <Wikia>
 		$action = strtolower($this->action);
 		$subject = wfMessage( 'enotif_subject_' . $action )->inContentLanguage()->text();
 		if ( wfEmptyMsg( 'enotif_subject_' . $action, $subject ) ) {
@@ -725,7 +703,6 @@ class EmailNotification {
 			'enotif_body',
 			$wgLanguageCode
 		);
-		# </Wikia>
 
 		# You as the WikiAdmin and Sysops can make use of plenty of
 		# named variables when composing your notification emails while
@@ -735,7 +712,7 @@ class EmailNotification {
 		$postTransformKeys = [];
 
 		if ( $this->isNewPage() ) {
-			// WIKIA change, watchlist link tracking
+			// watchlist link tracking
 			list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative (
 				'enotif_lastvisited',
 				'enotif_lastvisited',
@@ -746,7 +723,6 @@ class EmailNotification {
 			$keys['$OLDID']   = $this->previousRevId;
 			$keys['$CHANGEDORCREATED'] = wfMessage( 'changed' )->inContentLanguage()->plain();
 		} else {
-			# <Wikia>
 			if ( $action == '' ) {
 				//no previousRevId + empty action = create edit, ok to use newpagetext
 				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = wfMessage( 'enotif_newpagetext' )->inContentLanguage()->plain();
@@ -754,7 +730,6 @@ class EmailNotification {
 				//no previousRevId + action = event, dont show anything, confuses users
 				$keys['$NEWPAGEHTML'] = $keys['$NEWPAGE'] = '';
 			}
-			# </Wikia>
 			# clear $OLDID placeholder in the message template
 			$keys['$OLDID']   = '';
 			$keys['$CHANGEDORCREATED'] = wfMessage( 'created' )->inContentLanguage()->plain();
@@ -765,11 +740,9 @@ class EmailNotification {
 		$keys['$PAGEMINOREDIT'] = $this->minorEdit ? wfMessage( 'minoredit' )->inContentLanguage()->plain() : '';
 		$keys['$UNWATCHURL'] = $this->title->getCanonicalUrl( 'action=unwatch' );
 
-		# <Wikia>
 		$keys['$ACTION'] = $this->action;
 		// Hook registered in FollowHelper -- used for blogposts and categoryAdd
 		wfRunHooks('MailNotifyBuildKeys', array( &$keys, $this->action, $this->otherParam ));
-		# </Wikia>
 
 		if ( $this->editor->isAnon() ) {
 			# real anon (user:xxx.xxx.xxx.xxx)
@@ -783,21 +756,16 @@ class EmailNotification {
 
 		$keys['$PAGEEDITOR_WIKI'] = $this->editor->getUserPage()->getCanonicalUrl();
 
-		# <Wikia>
-		// RT #1294 Bartek 07.05.2009, use the language of the wiki
 		$summary = ($this->summary == '') ? wfMessage( 'enotif_no_summary' )->inContentLanguage()->plain() : '"' . $this->summary . '"';
-		# </Wikia>
 
-		# Replace this after transforming the message, bug 35019
+		// Replace this after transforming the message, bug 35019
 		$postTransformKeys['$PAGESUMMARY'] = $summary;
 
-		# Now build message's subject and body
-		# <Wikia>
+		// Now build message's subject and body
 		// ArticleComment -- updates subject and $keys['$PAGEEDITOR'] if anon editor
 		// EmailTemplatesHooksHelper -- updates subject if blogpost
 		// TopListHelper -- updates subject if title is toplist
 		wfRunHooks('ComposeCommonSubjectMail', array( $this->title, &$keys, &$subject, $this->editor ));
-		# </Wikia>
 		$subject = strtr( $subject, $keys );
 		$subject = MessageCache::singleton()->transform( $subject, false, null, $this->title );
 		$this->subject = strtr( $subject, $postTransformKeys );
@@ -810,13 +778,12 @@ class EmailNotification {
 		$body = strtr( $body, $keys );
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
 		$this->body = wordwrap( strtr( $body, $postTransformKeys ), 72 );
-		# <Wikia>
+
 		if ($bodyHTML) {
 			$bodyHTML = strtr( $bodyHTML, $keys );
 			$bodyHTML = MessageCache::singleton()->transform( $bodyHTML, false, null, $this->title );
 			$this->bodyHTML = strtr( $bodyHTML, $postTransformKeys );
 		}
-		# </Wikia>
 	}
 
 	/**
@@ -895,9 +862,9 @@ class EmailNotification {
 		//     The mail command will not parse this properly while talking with the MTA.
 		$to = new MailAddress( $watchingUser );
 
-		# $PAGEEDITDATE is the time and date of the page change
-		# expressed in terms of individual local time of the notification
-		# recipient, i.e. watching user
+		// $PAGEEDITDATE is the time and date of the page change
+		// expressed in terms of individual local time of the notification
+		// recipient, i.e. watching user
 		$body = str_replace(
 			array( '$WATCHINGUSERNAME',
 				'$PAGEEDITDATE',
@@ -907,7 +874,6 @@ class EmailNotification {
 				$wgContLang->userTime( $this->timestamp, $watchingUser ) ),
 			$this->body );
 
-		# <Wikia>
 		if ( $watchingUser->getOption('htmlemails') && !empty($this->bodyHTML) ) {
 			$bodyHTML = str_replace(
 				array( '$WATCHINGUSERNAME',
@@ -920,7 +886,6 @@ class EmailNotification {
 			# now body is array with text and html version of email
 			$body = array( 'text' => $body, 'html' => $bodyHTML );
 		}
-		# </Wikia>
 		UserMailer::send( $to, $this->from, $this->subject, $body, $this->replyto );
 	}
 
