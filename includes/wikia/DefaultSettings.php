@@ -1263,12 +1263,6 @@ $wgAdPageLevelCategoryLangs = [ 'en' ];
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
- * @name $wgLoadLateAdsAfterPageLoad
- * Enables postpones start for ads in late queue until page "load" event.
- */
-$wgLoadLateAdsAfterPageLoad = false;
-
-/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */

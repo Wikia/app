@@ -3,7 +3,6 @@
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
-	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
 	const ASSET_GROUP_OASIS_ADS = 'adengine2_oasis_ads_js';
@@ -22,12 +21,10 @@ class AdEngine2Hooks {
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
 
-		// TODO: review top and bottom vars (important for adsinhead)
-
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
-			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad,
-			   $wgEnableKruxOnMobile, $wgAdDriverForceTurtleAd, $wgAdDriverUseSevenOneMedia, $wgUsePostScribe;
+			$wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
+			$wgAdEngineDisableLateQueue, $wgEnableKruxOnMobile,
+			$wgAdDriverForceTurtleAd, $wgAdDriverUseSevenOneMedia, $wgUsePostScribe;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
@@ -38,14 +35,11 @@ class AdEngine2Hooks {
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 		$wgAdDriverForceTurtleAd = $request->getBool( 'forceturtle', $wgAdDriverForceTurtleAd );
 
-		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
-		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
-
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
 
 		// use PostScribe with 71Media - check scriptwriter.js:35
-		if( $wgAdDriverUseSevenOneMedia ) {
+		if ( $wgAdDriverUseSevenOneMedia ) {
 			$wgUsePostScribe = true;
 		}
 
@@ -102,7 +96,7 @@ class AdEngine2Hooks {
 		$vars['adDriver2ForcedStatus'] = [];     // 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
 
 		// GA vars
-		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
+		$vars['wgGaHasAds'] = isset( $adContext['opts']['showAds'] );
 
 		// 71Media
 		$vars['wgUsePostScribe'] = $wgUsePostScribe;
@@ -234,11 +228,11 @@ class AdEngine2Hooks {
 		return true;
 	}
 
-	public static function onSkinAfterBottomScripts(Skin $skin, &$text) {
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
 		// TODO: Check whether this works also on Oasis!
-		if ($skin->getSkinName() === 'venus') {
+		if ( $skin->getSkinName() === 'venus' ) {
 			$text .= AdEngine2Controller::getLiftiumOptionsScript();
-			$text .= Html::inlineScript( 'Liftium.init();' )."\n";
+			$text .= Html::inlineScript( 'Liftium.init();' ) . "\n";
 		}
 		return true;
 	}
