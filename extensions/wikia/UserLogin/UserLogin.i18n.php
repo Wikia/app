@@ -1383,6 +1383,7 @@ ___________________________________________
 	'wikiamobile-sendpassword-label' => '新しいパスワードを送信',
 	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在ウィキアのアカウントとリンクされていません。',
 	'wikiamobile-go-to-login' => 'アカウントをお持ちですか？（[[Special:UserLogin|ログインはこちら >]]）',
+	'userlogin-opt-in-label' => 'ウィキアの最新情報やイベントに関するメールの受信を希望する',
 );
 
 /** Georgian (ქართული)
