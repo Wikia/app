@@ -228,6 +228,10 @@
 			@include flex(0 0 auto);
 			order: 0;
 
+			.page-share-toolbar {
+				text-align: right;
+			}
+
 			.tally {
 				float: right;
 				white-space: nowrap;
