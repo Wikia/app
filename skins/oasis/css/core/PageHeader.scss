@@ -138,7 +138,7 @@
 
 	&.oasis-one-column {
 		.WikiaPageHeader {
-			padding-right: 505px;
+			padding-right: 0;
 
 			&.WikiaPageHeaderDiffHistory {
 				margin-right: 10px;
@@ -194,10 +194,6 @@
 	details {
 		width: 980px;
 	}
-}
-
-.wikinav2.oasis-one-column .WikiaPageHeader {
-	padding-right: 0;
 }
 
 .WikiaPageHeader.wikia-page-header {
