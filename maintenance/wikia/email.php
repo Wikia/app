@@ -64,6 +64,10 @@ class EmailCLI extends Maintenance {
 
 	public function execute() {
 		try {
+			if ( !F::app()->wg->EnableEmailExt ) {
+				throw new EmailCLIException( "Please set \$wgEnableEmailExt to true to use this script" );
+			}
+
 			$this->initOptions();
 
 			if ( $this->list ) {
