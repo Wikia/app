@@ -267,7 +267,7 @@ WikiaHomePageRemix.prototype = {
 			browserEvent: event,
 			category: 'wikia-home-page',
 			label: label,
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		}, params);
 	},
 	trackClick: function(ev) {

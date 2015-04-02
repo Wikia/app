@@ -10,6 +10,15 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
 	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
+
+		if ( empty( $aUserData['user_id'] ) ) {
+			throw new \Exception( 'No user ID provided in params' );
+		}
+
+		if ( empty( $aUserData['user_email'] ) ) {
+			throw new \Exception( 'No user email address provided in params' );
+		}
+
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
 		$oDeleteUserTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
@@ -51,6 +60,15 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 	 * @param Array $aUserData Selected fields from Wikia user table
 	 */
 	public function createUser( $aUserData ) {
+
+		if ( empty( $aUserData['user_id'] ) ) {
+			throw new \Exception( 'No user ID provided in params' );
+		}
+
+		if ( empty( $aUserData['user_email'] ) ) {
+			throw new \Exception( 'No user email address provided in params' );
+		}
+
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );

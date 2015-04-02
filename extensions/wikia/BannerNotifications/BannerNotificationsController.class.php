@@ -22,10 +22,16 @@ class BannerNotificationsController extends WikiaController {
 	}
 
 	/**
-	 * Add confirmation message to the user session (so it persists between redirects)
+	 * @desc Add confirmation message to the user session (so it persists between redirects)
+	 *
+	 * @param String $message - message text
+	 * @param String $type - notification type, one of CONFIRMATION_ constants
+	 * @param Bool $force - flag that enforces to override existing notification
 	 */
-	public static function addConfirmation( $message, $type = self::CONFIRMATION_CONFIRM ) {
-		if ( !empty( $message ) ) {
+	public static function addConfirmation( $message, $type = self::CONFIRMATION_CONFIRM, $force = false ) {
+		//Add confirmation if there was none set yet or if it's forced
+		if ( !empty( $message ) &&
+			( empty( $_SESSION[self::SESSION_KEY] ) || $force === true ) ) {
 			$_SESSION[self::SESSION_KEY] = array(
 				'message' => $message,
 				'type' => $type,
@@ -108,12 +114,11 @@ class BannerNotificationsController extends WikiaController {
 			self::addConfirmation(
 				wfMessage(
 					'movepage-moved',
-					array('parseinline'),
 					$oldLink,
 					$newLink,
 					$oldText,
 					$newText
-				)->inContentLanguage()->escaped()
+				)->inContentLanguage()->parse()
 			);
 
 			// redirect to page with new title
@@ -133,6 +138,7 @@ class BannerNotificationsController extends WikiaController {
 
 		if ( F::app()->checkSkin( 'oasis' ) ) {
 			$title = $article->getTitle();
+
 			// special handling of ArticleComments
 			if ( class_exists( 'ArticleComment' ) &&
 				MWNamespace::isTalk( $title->getNamespace() ) &&
@@ -150,13 +156,12 @@ class BannerNotificationsController extends WikiaController {
 
 			$message = wfMessage(
 				'oasis-confirmation-page-deleted',
-				array( 'parseinline' ),
 				$pageName
-			)->inContentLanguage()->escaped();
+			)->inContentLanguage()->parse();
 
 			wfRunHooks( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
 
-			self::addConfirmation( $message );
+			self::addConfirmation( $message, self::CONFIRMATION_CONFIRM, true );
 
 			// redirect to main page
 			$wgOut->redirect( Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ) );

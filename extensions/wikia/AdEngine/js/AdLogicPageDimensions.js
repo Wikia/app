@@ -31,19 +31,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		slotsOnlyWithRail = {
 			LEFT_SKYSCRAPER_3: true
 		},
-
-		/**
-		 * Slots based on screen width
-		 *
-		 * @see skins/oasis/css/core/responsive-variables.scss
-		 * @see skins/oasis/css/core/responsive-background.scss
-		 */
-		mediaQueriesToCheck = {
-			twoColumns: 'screen and (min-width: 1024px)',
-			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1030px)',
-			noSkins: 'screen and (max-width: 1260px)'
-		},
 		slotsToHideOnMediaQuery = {
 			INCONTENT_1A: 'twoColumns',
 			INCONTENT_1B: 'twoColumns',
@@ -66,8 +53,31 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			INCONTENT_BOXAD_1: 'oneColumn',
 			INVISIBLE_SKIN: 'noSkins'
 		},
+		/**
+		 * Slots based on screen width for responsive
+		 *
+		 * @see skins/oasis/css/core/responsive-variables.scss
+		 * @see skins/oasis/css/core/responsive-background.scss
+		 */
+		mediaQueriesToCheck = {
+			twoColumns: 'screen and (min-width: 1024px)',
+			oneColumn: 'screen and (max-width: 1023px)',
+			noTopButton: 'screen and (max-width: 1030px)',
+			noSkins: 'screen and (max-width: 1260px)'
+		},
 		mediaQueriesMet,
 		matchMedia;
+
+		if (win.wgOasisBreakpoints) {
+			/**
+			 * Slots based on screen width for breakpoint based layout
+			 *
+			 * @see skins/oasis/css/core/breakpoints-variables.scss
+			 */
+			mediaQueriesToCheck.twoColumns = 'screen and (min-width: 1064px)';
+			mediaQueriesToCheck.oneColumn = 'screen and (max-width: 1063px)';
+			mediaQueriesToCheck.noSkins = 'screen and (max-width: 1324px)';
+		}
 
 	function isRightRailPresent() {
 		return !!doc.getElementById('WikiaRail');
@@ -176,7 +186,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		pageHeight = doc.documentElement.scrollHeight;
 
 		// All ads should be shown on non-responsive oasis and venus
-		if (win.wgOasisResponsive && win.skin !== 'venus') {
+		if ((win.wgOasisResponsive || win.wgOasisBreakpoints) && win.skin !== 'venus') {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {

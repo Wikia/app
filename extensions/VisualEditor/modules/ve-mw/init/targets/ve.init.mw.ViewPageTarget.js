@@ -342,6 +342,7 @@ ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
 		this.elementsThatHadOurAccessKey.attr( 'accesskey', ve.msg( 'accesskey-save' ) );
 	}
 	this.restorePage();
+	this.hideSpinner();
 	this.showReadOnlyContent();
 
 	$( document ).off( 'keydown', this.onDocumentKeyDownHandler );
@@ -417,7 +418,7 @@ ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
 		// Something weird happened? Deactivate
 		// TODO: how does this handle load errors triggered from
 		// calling this.loading.abort()?
-		this.activating = false;
+		// this.activating = false;
 		// Not passing trackMechanism because we don't know what happened
 		// and this is not a user action
 		this.deactivate( true );
@@ -1665,7 +1666,7 @@ ve.init.mw.ViewPageTarget.prototype.maybeShowDialogs = function () {
 		// preference to influence anonymous users (use the config
 		// variable for that; besides the pref value would be stale if
 		// the wiki uses static html caching).
-		usePrefs = !mw.user.isAnon();
+		usePrefs = !mw.user.anonymous();
 		prefSaysShow = usePrefs && !mw.user.options.get( 'visualeditor-hidebetawelcome' );
 		urlSaysHide = 'vehidebetadialog' in this.currentUri.query;
 

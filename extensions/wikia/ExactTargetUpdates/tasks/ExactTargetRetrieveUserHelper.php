@@ -74,8 +74,10 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	public function retrieveUserEdits( array $aUsersIds ) {
 		$oHelper = $this->getUserHelper();
 		$aApiRetrieveParams = $oHelper->prepareUserEditsRetrieveParams( $aUsersIds );
+		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiRetrieveParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserEditsResult = $oApiDataExtension->retrieveRequest( $aApiRetrieveParams );
+		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUserEditsResult ) );
 		$aUserEdits = $this->formatUserEditsResult( $oUserEditsResult );
 		return $aUserEdits;
 	}
@@ -87,7 +89,7 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	 * e.g. [ 1234 => [ 177 => 5500 ] ] That means user with id 1234 made 5500 edits on wiki with 177 id
 	 */
 	protected function formatUserEditsResult( $oUserEditsResult ) {
-		if ( empty( $oUserEditsResult ) ) {
+		if ( empty( $oUserEditsResult ) || empty( $oUserEditsResult->Results ) ) {
 			return [];
 		}
 

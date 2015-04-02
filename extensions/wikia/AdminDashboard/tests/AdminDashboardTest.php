@@ -1,11 +1,11 @@
 <?php
 	class AdminDashboardTest extends WikiaBaseTest {
-		
+
 		public function setUp() {
 			$this->setupFile = dirname(__FILE__) . '/../AdminDashboard.setup.php';
 			parent::setUp();
 		}
-		
+
 		const TEST_CITY_ID = 79860;
 		protected static $list = array('pageviews', 'edits', 'photos');
 
@@ -21,14 +21,6 @@
 
 			if (!is_null($fetch_obj))
 				$this->setMockDb($fetch_obj);
-
-
-			$mock = $this->getMock('QuickStatsController', array('getDailyLikes'));
-			$mock->expects($this->any())
-					->method('getDailyLikes')
-					->will($this->returnValue(false));
-
-			$this->mockClass('QuickStatsController', $mock);
 
 			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
 			$this->mockGlobalVariable('wgMemc', $mock_cache, 0);

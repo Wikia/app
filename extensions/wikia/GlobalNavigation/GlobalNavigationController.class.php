@@ -12,9 +12,15 @@ class GlobalNavigationController extends WikiaController {
 	 */
 	private $helper;
 
+	/**
+	 * @var GlobalNavigationHelper
+	 */
+	private $wikiaLogoHelper;
+
 	public function __construct() {
 		parent::__construct();
 		$this->helper = new GlobalNavigationHelper();
+		$this->wikiaLogoHelper = new WikiaLogoHelper();
 	}
 
 	public function index() {
@@ -29,7 +35,7 @@ class GlobalNavigationController extends WikiaController {
 		//Lang for centralUrl and CNW should be the same as user language not content language
 		//That's why $wgLang global is used
 		$lang = $wgLang->getCode();
-		$centralUrl = $this->helper->getCentralUrlForLang( $lang );
+		$centralUrl = $this->wikiaLogoHelper->getCentralUrlForLang( $lang );
 		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $lang );
 		$userCanRead = $wgUser->isAllowed( 'read' );
 

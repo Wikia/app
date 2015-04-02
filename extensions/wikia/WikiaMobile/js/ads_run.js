@@ -1,30 +1,20 @@
 /*global require*/
 require(
 	[
-		'jquery', 'JSMessages', 'wikia.window', 'wikia.document', 'wikia.log', require.optional('wikia.abTest'),
-		'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.adConfigMobile',
-		'ext.wikia.adEngine.messageListener'
+		'jquery',
+		'JSMessages',
+		'ext.wikia.adEngine.adEngine',
+		'ext.wikia.adEngine.adConfigMobile',
+		'ext.wikia.adEngine.messageListener',
+		'wikia.window',
+		'wikia.document',
+		'wikia.krux',
+		'wikia.log'
 	],
-	function ($, msg, win, doc, log, abTest, adEngine, adConfigMobile, messageListener) {
+	function ($, msg, adEngine, adConfigMobile, messageListener, win, doc, krux, log) {
 		'use strict';
 
-		var minZerothSectionLength = 700,
-			minPageLength = 2000,
-			mobileTopLeaderBoard = 'MOBILE_TOP_LEADERBOARD',
-			mobileInContent = 'MOBILE_IN_CONTENT',
-			mobilePreFooter = 'MOBILE_PREFOOTER',
-			mobileTaboola = 'NATIVE_TABOOLA',
-			logGroup = 'ads_run',
-			logLevel = log.levels.info,
-			$firstSection = $('h2[id]').first(),
-			$footer = $('#wkMainCntFtr'),
-			firstSectionTop = ($firstSection.length && $firstSection.offset().top) || 0,
-			infoboxSelectors = ['table[class*=infobox], div[class*=infobox], div[id*=infobox]'],
-		// TODO: clean up wgAdDriverUseAdsAfterInfobox
-			infoboxAdEnabled = win.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
-			showInContent = firstSectionTop > minZerothSectionLength,
-			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength,
-			adLabel = msg('adengine-advertisement'),
+		var adLabel = msg('adengine-advertisement'),
 			createSlot = function (name) {
 				var $slot = $('<div></div>'),
 					$label = $('<label></label>');
@@ -37,7 +27,21 @@ require(
 
 				return $slot.wrapAll('<div></div>').parent().html();
 			},
-			adSlots = [];
+			adSlots = [],
+			$firstSection = $('h2[id]').first(),
+			$footer = $('#wkMainCntFtr'),
+			firstSectionTop = ($firstSection.length && $firstSection.offset().top) || 0,
+			kruxSiteId = 'JTKzTN3f',
+			logGroup = 'ads_run',
+			logLevel = log.levels.info,
+			minZerothSectionLength = 700,
+			minPageLength = 2000,
+			mobileTopLeaderBoard = 'MOBILE_TOP_LEADERBOARD',
+			mobileInContent = 'MOBILE_IN_CONTENT',
+			mobilePreFooter = 'MOBILE_PREFOOTER',
+			mobileTaboola = 'NATIVE_TABOOLA',
+			showInContent = firstSectionTop > minZerothSectionLength,
+			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength;
 
 		messageListener.init();
 
@@ -46,23 +50,7 @@ require(
 		adSlots.push([mobileTopLeaderBoard]);
 
 		if (win.wgArticleId) {
-
 			$(doc).ready(function () {
-				var i, elem;
-
-				if (infoboxAdEnabled) {
-					for (i = 0; i < infoboxSelectors.length; i += 1) {
-						elem = $(infoboxSelectors[i]);
-						if (elem.length) {
-							log('Loading slot: ' + mobileInContent, logLevel, logGroup);
-							showInContent = false;
-							elem.after(createSlot(mobileInContent));
-							adSlots.push([mobileInContent]);
-							break;
-						}
-					}
-				}
-
 				if (showInContent) {
 					log('Loading slot: ' + mobileInContent, logLevel, logGroup);
 					$firstSection.before(createSlot(mobileInContent));
@@ -77,6 +65,9 @@ require(
 					adSlots.push([mobilePreFooter]);
 				}
 				adSlots.push([mobileTaboola]);
+
+				log('Loading Krux module, site id: ' + kruxSiteId, 'debug', 'wikia.krux');
+				krux.load(kruxSiteId);
 			});
 		}
 

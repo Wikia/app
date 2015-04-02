@@ -4,8 +4,6 @@
  * @file
  * @ingroup Cache
  */
-use Wikia\Tasks\AsyncCeleryTask;
-use Wikia\Tasks\Queues\PurgeQueue;
 
 /**
  * Handles purging appropriate Squid URLs given a title (or titles)
@@ -124,11 +122,7 @@ class SquidUpdate {
 
 		global $wgPurgeSquidViaCelery;
 		if ( $wgPurgeSquidViaCelery == true ) {
-			( new AsyncCeleryTask() )
-					->taskType('celery_workers.purger.purge')
-					->setArgs( $urlArr, [] )
-					->setPriority( PurgeQueue::NAME )
-					->queue();
+			CeleryPurge::purge( $urlArr );
 			return;
 		}
 		// wikia change end

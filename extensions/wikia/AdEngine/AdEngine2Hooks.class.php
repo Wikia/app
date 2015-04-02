@@ -8,13 +8,11 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
 	const ASSET_GROUP_OASIS_ADS = 'adengine2_oasis_ads_js';
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
-	const ASSET_GROUP_ADENGINE_INTERSTITIAL = 'adengine2_interstitial_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
-	const ASSET_GROUP_KRUX_MOBILE = 'mobile_krux_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
 
@@ -27,10 +25,10 @@ class AdEngine2Hooks {
 
 		// TODO: review top and bottom vars (important for adsinhead)
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgAdDriverUseInterstitial,
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
 			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad,
-			   $wgEnableKruxOnMobile;
+			   $wgEnableKruxOnMobile, $wgAdDriverForceTurtleAd, $wgAdDriverUseSevenOneMedia, $wgUsePostScribe;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
@@ -39,13 +37,18 @@ class AdEngine2Hooks {
 
 		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
-		$wgAdDriverUseInterstitial = $request->getBool( 'interstitial', $wgAdDriverUseInterstitial );
+		$wgAdDriverForceTurtleAd = $request->getBool( 'forceturtle', $wgAdDriverForceTurtleAd );
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
 		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
+
+		// use PostScribe with 71Media - check scriptwriter.js:35
+		if( $wgAdDriverUseSevenOneMedia ) {
+			$wgUsePostScribe = true;
+		}
 
 		return true;
 	}
@@ -65,6 +68,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchOldCountries';
 		$vars[] = 'wgHighValueCountries';
+		$vars[] = 'wgAdDriverTurtleCountries';
 
 		/**
 		 * Disaster Recovery
@@ -88,12 +92,11 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		$wg = F::app()->wg;
-		$title = $wg->Title;
+		global $wgTitle, $wgUsePostScribe;
 		$skin = RequestContext::getMain()->getSkin();
 		$skinName = $skin->getSkinName();
 
-		$adContext = ( new AdEngine2ContextService() )->getContext( $title, $skinName );
+		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
 
 		$vars['ads'] = ['context' => $adContext];
 
@@ -104,6 +107,9 @@ class AdEngine2Hooks {
 
 		// GA vars
 		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
+
+		// 71Media
+		$vars['wgUsePostScribe'] = $wgUsePostScribe;
 
 		return true;
 	}
@@ -117,8 +123,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseInterstitial, $wgAdDriverUseBottomLeaderboard,
-			$wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
+		global $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
 		$coreGroupIndex = array_search( self::ASSET_GROUP_CORE, $jsAssets );
 		if ( $coreGroupIndex === false ) {
@@ -143,16 +148,8 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
 		}
 
-		if ( $wgAdDriverUseInterstitial === true ) {
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE_INTERSTITIAL;
-		}
-
 		if ( $wgAdDriverUseTopInContentBoxad ) {
 			$jsAssets[] = self::ASSET_GROUP_OASIS_ADS;
-		}
-
-		if ( $wgAdDriverUseBottomLeaderboard === true ) {
-			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
 		}
 
 		if ( $wgAdDriverUseTaboola === true ) {
@@ -232,7 +229,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onWikiaMobileAssetsPackages( array &$jsStaticPackages, array &$jsExtensionPackages, array &$scssPackages ) {
 
-		global $wgAdDriverUseTaboola, $wgEnableKruxOnMobile;
+		global $wgAdDriverUseTaboola;
 
 		$coreGroupIndex = array_search( self::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
 
@@ -243,10 +240,6 @@ class AdEngine2Hooks {
 
 		if ( $wgAdDriverUseTaboola === true ) {
 			array_splice( $jsStaticPackages, $coreGroupIndex, 0, self::ASSET_GROUP_ADENGINE_TABOOLA );
-		}
-
-		if ($wgEnableKruxOnMobile === true) {
-			$jsStaticPackages[] = self::ASSET_GROUP_KRUX_MOBILE;
 		}
 
 		return true;

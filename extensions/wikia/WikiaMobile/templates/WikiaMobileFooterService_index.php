@@ -2,6 +2,7 @@
 /**
  * @var $links String[]
  * @var $defaultSkin String
+ * @var $centralUrl String
  * @var $wf WikiaFunctionWrapper
  * @var $copyrightLink String
  * @var $privacyLink String
@@ -9,7 +10,7 @@
  */
 ?>
 <footer id=wkFtr>
-	<a id=wkLogo href=http://wikia.com></a>
+	<a id=wkLogo href="<?= $centralUrl ?>"></a>
 	<? if( !empty( $links ) ) :?>
 		<ul>
 			<? foreach( $links as $link ) :?>

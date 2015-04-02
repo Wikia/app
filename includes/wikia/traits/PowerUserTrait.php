@@ -10,7 +10,7 @@ use Wikia\PowerUser\PowerUser;
 
 trait PowerUserTrait {
 	// Required base-class methods
-	abstract function getBoolOption();
+	abstract function getBoolOption( $oname );
 
 	/**
 	 * Checks if a user has one of the poweruser

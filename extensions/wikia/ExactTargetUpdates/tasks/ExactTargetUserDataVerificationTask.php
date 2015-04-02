@@ -13,13 +13,13 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 		// Fetch data from ExactTarget
 		$oRetriveveUserHelperTask = $this->getRetrieveUserHelper();
 		$oExactTargetUserData = $oRetriveveUserHelperTask->retrieveUserDataById( $iUserId );
-		$this->info( __METHOD__ . 'ExactTarget user data record: ' . json_encode( $oExactTargetUserData ) );
+		$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $oExactTargetUserData ) );
 
 		// Fetch data from Wikia DB
 		$oWikiaUser = \User::newFromId( $iUserId );
 		$oUserHooksHelper = $this->getUserHooksHelper();
 		$oWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
-		$this->info( __METHOD__ . 'Wikia DB user data record: ' . json_encode( $oWikiaUserData ) );
+		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserData ) );
 
 		// Compare results
 		$aDiffWikiaDB = array_diff( $oExactTargetUserData, $oWikiaUserData );
