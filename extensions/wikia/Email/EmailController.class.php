@@ -125,7 +125,7 @@ abstract class EmailController extends \WikiaController {
 	public function main() {
 		$this->response->setVal( 'content', $this->getVal( 'content' ) );
 		$this->response->setVal( 'footerMessages', $this->getVal( 'footerMessages' ) );
-		$this->response->setVal( 'marketingFooter', $this->marketingFooter );
+		$this->response->setVal( 'marketingFooter', $this->getVal( 'marketingFooter' ) );
 	}
 
 	/**
@@ -199,7 +199,8 @@ abstract class EmailController extends \WikiaController {
 			'main',
 			[
 				'content' => $this->getContent(),
-				'footerMessages' => $this->getFooterMessages()
+				'footerMessages' => $this->getFooterMessages(),
+				'marketingFooter' => $this->marketingFooter
 			]
 		);
 
