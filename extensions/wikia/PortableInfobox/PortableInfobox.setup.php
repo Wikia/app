@@ -15,6 +15,8 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PortableInfobox'
 ];
 
+$wgAutoloadClasses[ 'InfoboxServiceConnector' ] = $dir . 'InfoboxServiceConnector.class.php';
+
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
@@ -24,6 +26,6 @@ $wgHooks[ 'ParserFirstCallInit' ][] = 'PortableInfoboxParserTagController::parse
 $wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 
 // i18n mapping
-$wgExtensionMessagesFiles[ 'WikiaMaps' ] = $dir . 'PortableInfobox.i18n.php';
+$wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
 
 

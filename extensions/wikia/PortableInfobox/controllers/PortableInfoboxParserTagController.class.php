@@ -20,6 +20,12 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @param Array $params
 	 * @param Parser $parser
 	 * @param PPFrame $frame
+	 * @returns String $html
 	 */
-	public function renderInfobox( $text, $params, $parser, $frame ) {}
+	public function renderInfobox( $text, $params, $parser, $frame ) {
+		$connector = new InfoboxServiceConnector();
+		$data = $frame->getNamedArguments();
+		$html = $connector->getHtmlBySource('<'.self::PARSER_TAG_NAME.'>'.$text.'</'.self::PARSER_TAG_NAME.'>', $data);
+		return $html;
+	}
 }
