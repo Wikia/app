@@ -2,8 +2,6 @@
 
 class PageShareHooks {
 
-	const DEFAULT_LANG_FOR_PAGE_SHARE = 'en';
-
 	/*
 	 * @TODO
 	 * This hook should be removed when we decide to enable PageShare globally.
@@ -14,7 +12,7 @@ class PageShareHooks {
 
 		$lang = PageShareHelper::getLangForPageShare();
 
-		if ( empty($wgEnablePageShareWorldwide) && strtolower($lang) != self::DEFAULT_LANG_FOR_PAGE_SHARE ) {
+		if ( empty($wgEnablePageShareWorldwide) && strtolower($lang) != PageShareHelper::SHARE_DEFAULT_LANGUAGE ) {
 			$wgEnablePageShareExt = false;
 		}
 
