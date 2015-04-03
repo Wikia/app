@@ -49,27 +49,28 @@ require(
 		log('Loading slot: ' + mobileTopLeaderBoard, logLevel, logGroup);
 		adSlots.push([mobileTopLeaderBoard]);
 
-		if (win.wgArticleId) {
-			$(doc).ready(function () {
-				if (showInContent) {
-					log('Loading slot: ' + mobileInContent, logLevel, logGroup);
-					$firstSection.before(createSlot(mobileInContent));
-					adSlots.push([mobileInContent]);
-				}
-			});
-			//this can wait to on load as is under the fold
-			$(win).on('load', function () {
+		$(doc).ready(function () {
+			if (win.wgArticleId && showInContent) {
+				log('Loading slot: ' + mobileInContent, logLevel, logGroup);
+				$firstSection.before(createSlot(mobileInContent));
+				adSlots.push([mobileInContent]);
+			}
+		});
+
+		$(win).on('load', function () {
+			if (win.wgArticleId) {
+				// This can wait to on load as the ad is under the fold
 				if (showPreFooter) {
 					log('Loading slot: ' + mobilePreFooter, logLevel, logGroup);
 					$footer.after(createSlot(mobilePreFooter));
 					adSlots.push([mobilePreFooter]);
 				}
 				adSlots.push([mobileTaboola]);
+			}
 
-				log('Loading Krux module, site id: ' + kruxSiteId, 'debug', 'wikia.krux');
-				krux.load(kruxSiteId);
-			});
-		}
+			log('Loading Krux module, site id: ' + kruxSiteId, logLevel, logGroup);
+			krux.load(kruxSiteId);
+		});
 
 		// Start queue
 		log('Running mobile queue', logLevel, logGroup);

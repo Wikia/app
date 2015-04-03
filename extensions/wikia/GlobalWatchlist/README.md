@@ -75,9 +75,7 @@ which sends a job via the Job Queue to have that user added to the `global_watch
 	|     86 |   23910443  |      435087 |             0 | TestPage       |      53755 | 20150202153859 |  20150202153859   | User A
 	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
 
-Once that row has been added to `global_watchlist`, a job is scheduled to kick off exactly 7 days in the future which will
-send that user a weekly digest of all the changes they haven't seen on their watched pages. So if 2 other pages User A
-is watching are changed later on, the `global_watchlist` is updated with 2 additional rows.
+If 2 other pages User A is watching are changed later on, the `global_watchlist` is updated with 2 additional rows.
 
 	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
 	| gwa_id | gwa_user_id | gwa_city_id | gwa_namespace | gwa_title      | gwa_rev_id | gwa_timestamp  | gwa_rev_timestamp |
@@ -100,13 +98,12 @@ So if they were to visit the MuppetTestPage, the table would then look like:
 	|     88 |    23910443 |       26337 |             0 | GleeTestPage   |    2540196 | 20150202184358 | 20150202184358    | User A
 	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
 
-When that job finally runs which sends out the weekly notifications, the `global_watchlist` table is queried for all rows for User A.
-The digest is then prepared and sent out to them. At that point those rows are deleted from the `global_watchlist` table,
-and the corresponding rows in the local watchlist tables have their `wl_notificationtimestamp` fields set to null (which
-means the user will be notified about the next change going forward).
+The Weekly Digest itself is sent out weekly via a cronjob. The job queries the `global_watchlist` table for all
+users, then the digest is prepared and sent out to each one. Once we send the weekly digest to a user all their rows in
+the `global_watchlist` table are deleted, and the corresponding rows in the local watchlist tables have their `wl_notificationtimestamp`
+fields set to null (which means the user will be notified about the next change going forward).
 
 If a user ever unsubscribes from the Weekly Digest, or unsubscribes from all email from Wikia, all of their rows will be
-deleted from the `global_watchlist` table. New rows will not be added for them until they resubscribe, and any scheduled
-jobs to send out the Weekly Digest for that user will not actually send out the digest.
+deleted from the `global_watchlist` table. New rows will not be added for them until they resubscribe.
 
 Logging and stats for the Weekly Digest can be found [here](https://kibana.wikia-inc.com/index.html#/dashboard/elasticsearch/Weekly%20Digest)

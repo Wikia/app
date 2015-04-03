@@ -2,11 +2,9 @@
 @import 'skins/shared/mixins/calc';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/box-shadow';
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationColors';
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationMixins';
+@import 'GlobalNavigationColors';
+@import 'GlobalNavigationMixins';
+@import 'GlobalNavigationVariables';
 
 $black-half-transparent: rgba(0, 0, 0, .6);
 $black-transparent: rgba(0, 0, 0, 0);
@@ -100,7 +98,6 @@ $wiki-header-color: #2b54b5;
 }
 
 #GlobalNavigationWallNotifications {
-	@include grid-column-width('medium', 4, $medium-content-padding);
 	background-color: $white;
 	border: 1px solid $border-color;
 	border-top: 0;
@@ -111,6 +108,7 @@ $wiki-header-color: #2b54b5;
 	position: absolute;
 	right: 0;
 	top: -1px;
+	width: 300px;
 
 	#notificationsContainer {
 		margin-right: -18px; //NOTE: Hide native scrollbar
@@ -179,11 +177,11 @@ $wiki-header-color: #2b54b5;
 	}
 
 	.notifications-markasread {
-		@include font-size-xxs;
 		background-color: $markasread-bg-color;
 		border-top: 1px solid $notifications-divider-color;
 		color: $markasread-color;
 		cursor: pointer;
+		font-size: 12px;
 		height: 40px;
 		line-height: 40px;
 		font-weight: normal;
@@ -245,8 +243,8 @@ $wiki-header-color: #2b54b5;
 	}
 
 	.notification {
-		@include font-size-xxs;
 		border-top: 1px solid $notifications-divider-color;
+		font-size: 12px;
 		line-height: 20px;
 		padding: 12px 0;
 		position: relative;
@@ -280,7 +278,7 @@ $wiki-header-color: #2b54b5;
 		}
 
 		h4 {
-			@include font-size-xs;
+			font-size: 14px;
 			font-weight: bold;
 			line-height: 18px;
 			margin: 0;
@@ -335,19 +333,5 @@ $wiki-header-color: #2b54b5;
 				opacity: 1;
 			}
 		}
-	}
-}
-
-@media #{$small-only} {
-	#GlobalNavigationWallNotifications {
-		@include grid-column-width('small', 6, $small-content-padding);
-	}
-}
-
-
-
-@media #{$large-up} {
-	#GlobalNavigationWallNotifications {
-		@include grid-column-width('large', 4, $large-content-padding);
 	}
 }

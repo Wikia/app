@@ -189,6 +189,9 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'oasis-label-wiki-category-id-26' => 'Home and Garden',
 	'oasis-label-wiki-category-id-27' => 'Movies',
 	'oasis-label-wiki-category-id-28' => 'Anime',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-youtube' => 'YouTube',
 );
 
 /** Message documentation (Message documentation)
@@ -273,6 +276,9 @@ Example output: deleted by Avatar 3 hours ago',
 	'oasis-global-page-header' => 'Global (corporate) header for whole HTML page - first <h1> in <body>',
 	'oasis-generic-error' => 'This is a generic error message that shows up when something unexpected went wrong in the code.',
 	'oasis-upload-photos-overwrite-file' => 'Label for the option in the image upload modal to overwrite a file, if a file by the same name already exists on the wiki',
+	'oasis-social-facebook' => 'The proper name of the social network Facebook',
+	'oasis-social-twitter' => 'The proper name of the microblogging site Twitter',
+	'oasis-social-youtube' => 'The proper name of the video site YouTube',
 );
 
 /** Afrikaans (Afrikaans)
@@ -3402,7 +3408,7 @@ ___________________________________________
 	'wiki-navigation' => '* <nowiki>Artykuły</nowiki>
 ** #category1#
 ** #category2#
-** #category3# 
+** #category3#
 * <nowiki>Społeczność</nowiki>
 ** blogs-recent-url|blogs-recent-url-text
 * Pomoc:Zawartość|Pomoc
@@ -5110,13 +5116,13 @@ $messages['zh-tw'] = array(
 	'oasis-navigation-v2-new-photos' => '照片',
 	'oasis-on-the-wiki' => '本維基',
 	'oasis-sharing-toolbar-mail-subject' => '$1 給你發送了一個維基鏈接',
-	'oasis-sharing-toolbar-mail-body' => '你好，此網頁是$1從維基上的{{SITENAME}}給你寄來的： 
+	'oasis-sharing-toolbar-mail-body' => '你好，此網頁是$1從維基上的{{SITENAME}}給你寄來的：
                    $2
 好好享受吧！
 -Wikia團隊
 
-___________________________________________ 
-* 如果需要尋求社區中心的幫助和建議，請到 HTTP://community.wikia.com 
+___________________________________________
+* 如果需要尋求社區中心的幫助和建議，請到 HTTP://community.wikia.com
 * 希望從我們這裡收到的郵件少一些？你可以到以下網頁取消或更改您的電子郵件首選項：HTTP://community.wikia.com/Special:Preferences',
 	'oasis-label-wiki-vertical-id-0' => '其他',
 	'oasis-label-wiki-vertical-id-1' => '電視',
