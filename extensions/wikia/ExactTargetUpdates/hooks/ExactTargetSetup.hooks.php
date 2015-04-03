@@ -21,7 +21,7 @@ class ExactTargetSetupHooks {
 		\Hooks::register( 'EditAccountClosed', [ $oUserHooks, 'onEditAccountClosed' ] );
 		\Hooks::register( 'EditAccountEmailChanged', [ $oUserHooks, 'onEditAccountEmailChanged' ] );
 		\Hooks::register( 'EmailChangeConfirmed', [ $oUserHooks, 'onEmailChangeConfirmed' ] );
-		\Hooks::register( 'SignupConfirmEmailComplete', [ $oUserHooks, 'onSignupConfirmEmailComplete' ] );
+		\Hooks::register( 'ExternalUserAddUserToDatabaseComplete', [ $oUserHooks, 'onExternalUserAddUserToDatabaseComplete' ] );
 		\Hooks::register( 'AfterUserAddGlobalGroup', [ $oUserHooks, 'onAfterUserAddGlobalGroup' ] );
 		\Hooks::register( 'AfterUserRemoveGlobalGroup', [ $oUserHooks, 'onAfterUserRemoveGlobalGroup' ] );
 		\Hooks::register( 'UserSaveSettings', [ $oUserHooks, 'onUserSaveSettings' ] );
