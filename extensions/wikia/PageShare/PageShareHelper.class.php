@@ -32,8 +32,9 @@ class PageShareHelper {
 		global $wgLang, $wgRequest, $wgUser;
 
 		if ( $wgUser->isAnon() ) {
-			$lang = substr( $_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2 );
-			if ( empty( $lang ) ) {
+			if ( array_key_exists( 'HTTP_ACCEPT_LANGUAGE', $_SERVER ) ) {
+				$lang = substr( $_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2 );
+			} else {
 				$lang = self::SHARE_DEFAULT_LANGUAGE;
 			}
 		} else {
