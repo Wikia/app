@@ -29,6 +29,12 @@ class FacebookMapModel {
 	const ERROR_FACEBOOK_USER_ID_MISMATCH = 1;
 	const ERROR_WIKIA_USER_ID_MISMATCH = 2;
 
+	// This is the App ID given to records created before we started collecting the App ID
+	const APP_ID_DEFAULT_V1 = 0;
+	// Same as APP_ID_DEFAULT_V1 except these records map a different Wikia ID to an already
+	// mapped Facebook ID.  Of the pair, the older of the two is given this App ID
+	const APP_ID_DUPLICATE_V1 = 0;
+
 	protected $facebookUserId;
 	protected $wikiaUserId;
 	protected $lastUpdateTime;
@@ -69,10 +75,13 @@ class FacebookMapModel {
 	 *
 	 * @param int $wikiaUserId
 	 * @param int $fbUserId
+	 * @param string $bizToken
+	 *
 	 * @return FacebookMapModel|null Returns the mapping on success, null otherwise
 	 */
-	public static function createUserMapping( $wikiaUserId, $fbUserId ) {
+	public static function createUserMapping( $wikiaUserId, $fbUserId, $bizToken = '' ) {
 		$map = new self();
+		$map->setBizToken( $bizToken );
 		$map->relate( $wikiaUserId, $fbUserId );
 		try {
 			$map->save();
@@ -84,7 +93,9 @@ class FacebookMapModel {
 	}
 
 	/**
-	 * Lookup a mapping where the Wikia user ID is set to the given ID.
+	 * Lookup a mapping where the Wikia user ID is set to the given ID AND the FB App ID
+	 * is the current $fbAppId or if not found, an App ID of 0.  If neither is found, no
+	 * row is returned.
 	 *
 	 * @param int $wikiaUserId The Wikia user ID
 	 *
@@ -97,7 +108,9 @@ class FacebookMapModel {
 	}
 
 	/**
-	 * Find the mapping associated with the given Facebook user ID
+	 * Find the mapping associated with the given Facebook user ID AND the FB App ID
+	 * is the current $fbAppId or if not found, an App ID of 0.  If neither is found, no
+	 * row is returned.
 	 *
 	 * @param int $facebookId
 	 *
@@ -117,7 +130,9 @@ class FacebookMapModel {
 	 *
 	 * @param int $wikiaUserId
 	 * @param int $facebookId
+	 *
 	 * @return FacebookMapModel|null
+	 *
 	 * @throws FacebookMapModelException
 	 */
 	public static function getUserMapping( $wikiaUserId, $facebookId ) {
@@ -125,13 +140,6 @@ class FacebookMapModel {
 
 		if ( $map && ( $map->wikiaUserId != $wikiaUserId ) ) {
 			throw new FacebookMapModelException( '', self::ERROR_WIKIA_USER_ID_MISMATCH );
-		}
-
-		if ( !$map ) {
-			$map = self::lookupFromWikiaID( $wikiaUserId );
-			if ( $map && ( $map->$facebookId != $facebookId ) ) {
-				throw new FacebookMapModelException( '', self::ERROR_FACEBOOK_USER_ID_MISMATCH );
-			}
 		}
 
 		return $map;
@@ -308,6 +316,54 @@ class FacebookMapModel {
 	}
 
 	/**
+	 * Returns the App ID associated with this mapping
+	 *
+	 * @return int
+	 */
+	public function getAppId() {
+		return $this->facebookAppId;
+	}
+
+	/**
+	 * Returns whether the App ID is the default App ID given to user mappings created before
+	 * we started collecting App IDs.
+	 *
+	 * @return bool
+	 */
+	public function isDefaultAppId() {
+		return $this->facebookAppId == self::APP_ID_DEFAULT_V1;
+	}
+
+	/**
+	 * Returns the Business Token associated with this mapping
+	 *
+	 * @return int
+	 */
+	public function getBizToken() {
+		return $this->facebookBizToken;
+	}
+
+	/**
+	 * Sets the Business Token for this mapping
+	 *
+	 * @param string $token The business token for this user
+	 */
+	public function setBizToken( $token ) {
+		$this->facebookBizToken = $token;
+	}
+
+	/**
+	 * Check that the required values for a mapping are set
+	 *
+	 * @throws FacebookMapModelInvalidDataException
+	 */
+	protected function assertValidMapping() {
+		if ( !$this->getWikiaUserId() || !$this->getFacebookUserId() ) {
+			throw new FacebookMapModelInvalidDataException();
+		}
+	}
+
+	/**
 	 * Saves a mapping to the database
 	 *
 	 * @throws FacebookMapModelInvalidParamException
@@ -315,11 +371,43 @@ class FacebookMapModel {
 	 */
 	public function save() {
 		// Can't save if we haven't set the proper IDs on this instance
-		if ( !$this->wikiaUserId || !$this->facebookUserId ) {
-			throw new FacebookMapModelInvalidDataException();
-		}
+		$this->assertValidMapping();
 
 		$this->saveToDatabase();
+		$this->saveToCache();
+	}
+
+	/**
+	 * Sets the business token for a user.  This is only needed while updating existing
+	 * mappings to have this value.
+	 *
+	 * @param string $token
+	 *
+	 * @throws FacebookMapModelDbException
+	 */
+	public function updateBizToken( $token ) {
+		$this->setBizToken( $token );
+
+		$dbw = wfGetDB( DB_MASTER, null, F::app()->wg->ExternalSharedDB );
+		try {
+			( new WikiaSQL() )
+				->UPDATE( self::tableName )
+				->SET( self::columnFacebookBizToken, $this->getBizToken() )
+				->WHERE( self::columnFacebookUserId )->EQUAL_TO( $this->getFacebookUserId() )
+				->AND_( self::columnFacebookAppId)->EQUAL_TO( $this->getAppId() )
+				->run( $dbw );
+		} catch ( \Exception $e ) {
+			WikiaLogger::instance()->warning( 'Failed to update business token', [
+				'wikiaUserId' => $this->getWikiaUserId(),
+				'fbUserId' => $this->getFacebookUserId(),
+				'fbAppId' => $this->getAppId(),
+				'fbBizToken' => $this->getBizToken(),
+				'errorMessage' => $e->getMessage(),
+			] );
+
+			throw new FacebookMapModelDbException( $e->getMessage() );
+		}
+
 		$this->saveToCache();
 	}
 
@@ -328,16 +416,17 @@ class FacebookMapModel {
 		try {
 			( new WikiaSQL() )
 				->INSERT( self::tableName )
-				->SET( self::columnWikiaUserId, $this->wikiaUserId )
-				->SET( self::columnFacebookUserId, $this->facebookUserId )
-				->SET( self::columnFacebookAppId, $this->facebookAppId )
+				->SET( self::columnWikiaUserId, $this->getWikiaUserId() )
+				->SET( self::columnFacebookUserId, $this->getFacebookUserId() )
+				->SET( self::columnFacebookAppId, $this->getAppId() )
+				->SET( self::columnFacebookBizToken, $this->getBizToken() )
 				->run( $dbw );
 		} catch ( \Exception $e ) {
 			WikiaLogger::instance()->warning( 'Failed to create user mapping', [
-				'wikiaUserId' => $this->wikiaUserId,
-				'fbUserId' => $this->facebookUserId,
-				'fbAppId' => $this->facebookAppId,
-				'fbBizToken' => $this->facebookBizToken,
+				'wikiaUserId' => $this->getWikiaUserId(),
+				'fbUserId' => $this->getFacebookUserId(),
+				'fbAppId' => $this->getAppId(),
+				'fbBizToken' => $this->getBizToken(),
 				'errorMessage' => $e->getMessage(),
 			] );
 
@@ -347,12 +436,12 @@ class FacebookMapModel {
 
 	protected function saveToCache() {
 		$memkey = self::generateMemKey( [
-			self::paramFacebookUserId => $this->facebookUserId
+			self::paramFacebookUserId => $this->getFacebookUserId()
 		] );
 		F::app()->wg->Memc->set( $memkey, $this );
 
 		$memkey = self::generateMemKey( [
-			self::paramWikiaUserId => $this->wikiaUserId
+			self::paramWikiaUserId => $this->getWikiaUserId()
 		] );
 		F::app()->wg->Memc->set( $memkey, $this );
 	}
@@ -379,9 +468,9 @@ class FacebookMapModel {
 		$dbw = wfGetDB( DB_MASTER, null, F::app()->wg->ExternalSharedDB );
 		( new WikiaSQL() )
 			->DELETE( self::tableName )
-			->WHERE( self::columnWikiaUserId )->EQUAL_TO( $this->wikiaUserId )
-			->AND_( self::columnFacebookUserId )->EQUAL_TO( $this->facebookUserId )
-			->AND_( self::columnFacebookAppId )->IN( $this->facebookAppId, 0 )
+			->WHERE( self::columnWikiaUserId )->EQUAL_TO( $this->getWikiaUserId() )
+			->AND_( self::columnFacebookUserId )->EQUAL_TO( $this->getFacebookUserId() )
+			->AND_( self::columnFacebookAppId )->IN( $this->getAppId(), 0 )
 			->run( $dbw );
 	}
 }
