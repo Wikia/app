@@ -5,7 +5,7 @@ $messages['en'] = [
 	// General messages
 	'emailext-desc' => 'An extension to handle delivering email',
 	'emailext-no-reply-name' => 'No Reply',
-	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans<sup>TM</sup>',
+	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 
 	// Forgot password messages
 	'emailext-password-email-greeting' => 'Hi $1,',
