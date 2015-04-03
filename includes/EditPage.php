@@ -2091,9 +2091,9 @@ class EditPage {
 
 						if ( $this->isJsSubpage ) {
 						$wgOut->wrapWikiMsg( "<div id='mw-userjsyoucanpreview'>\n$1\n</div>", array( 'userjsyoucanpreview' ) );
+						}
+					}
 				}
-			}
-		}
 			}
 		}
 
