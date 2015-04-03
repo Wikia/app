@@ -1,9 +1,0 @@
-indent: yes
-input-xml: yes
-output-xml: yes
-indent-attributes: no
-indent-spaces: 3
-wrap: 0
-indent-cdata: yes
-literal-attributes: yes
-lower-literals: no
