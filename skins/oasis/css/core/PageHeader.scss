@@ -214,7 +214,7 @@
 		padding-top: 7px;
 
 		&.header-title {
-			@include align-self(center);
+			@include align-self(flex-start);
 			@include flex(0 1 100%);
 			order: 0;
 		}
