@@ -71,13 +71,13 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 	}
 
 	public function retrieveUserPropertiesByUserId( $iUserId ) {
-		$aProperties = [
+		$aFieldsList = [
 			'up_property',
 			'up_value',
 		];
 
 		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserPropertiesRetrieveParams( $aProperties, 'up_user', [ $iUserId ] );
+		$aApiParams = $oHelper->prepareUserPropertiesRetrieveParams( $aFieldsList, 'up_user', [ $iUserId ] );
 
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserPropertiesResult = $oApiDataExtension->retrieveRequest( $aApiParams );
@@ -88,17 +88,16 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 
 		if ( !empty( $oUserPropertiesResult->Results ) ) {
 			foreach ( $oUserPropertiesResult->Results as $oResult ) {
-				$aProperties = $oResult->Properties->Property;
-				$sProperty = null;
-				$sValue = null;
-				foreach ( $aProperties as $value ) {
-					if ( $value->Name === 'up_property' ) {
-						$sProperty = $value->Value;
-					} elseif ( $value->Name === 'up_value' ) {
-						$sValue = $value->Value;
+				$sPropertyName = null;
+				$sPropertyValue = null;
+				foreach ( $oResult->Properties->Property as $oPropertyEntry ) {
+					if ( $oPropertyEntry->Name === 'up_property' ) {
+						$sPropertyName = $oPropertyEntry->Value;
+					} elseif ( $oPropertyEntry->Name === 'up_value' ) {
+						$sPropertyValue = $oPropertyEntry->Value;
 					}
 				}
-				$oExactTargetUserPropertiesData[$sProperty] = $sValue;
+				$oExactTargetUserPropertiesData[$sPropertyName] = $sPropertyValue;
 			}
 			return $oExactTargetUserPropertiesData;
 		}

@@ -12,16 +12,16 @@ class ExactTargetWikiDataVerificationTask extends ExactTargetTask {
 	public function verifyWikiData( $iWikiId ) {
 		// Fetch data from ExactTarget
 		$oRetrieveWikiHelperTask = $this->getRetrieveWikiHelper();
-		$oExactTargetWikiData = $oRetrieveWikiHelperTask->retrieveWikiDataById( $iWikiId );
-		$this->info( __METHOD__ . ' ExactTarget wiki data record: ' . json_encode( $oExactTargetWikiData ) );
+		$aExactTargetWikiData = $oRetrieveWikiHelperTask->retrieveWikiDataById( $iWikiId );
+		$this->info( __METHOD__ . ' ExactTarget wiki data record: ' . json_encode( $aExactTargetWikiData ) );
 
 		// Fetch data from Wikia DB
 		$oWikiHelper = $this->getWikiHelper();
-		$oWikiaWikiData = $oWikiHelper->getWikiDataArray( $iWikiId );
-		$this->info( __METHOD__ . ' Wikia DB wiki data record: ' . json_encode( $oWikiaWikiData ) );
+		$aWikiaWikiData = $oWikiHelper->getWikiDataArray( $iWikiId );
+		$this->info( __METHOD__ . ' Wikia DB wiki data record: ' . json_encode( $aWikiaWikiData ) );
 
 		// Compare results
-		$bResult = $this->compareResults( $oExactTargetWikiData, $oWikiaWikiData, __METHOD__ );
+		$bResult = $this->compareResults( $aExactTargetWikiData, $aWikiaWikiData, __METHOD__ );
 
 		return $bResult;
 	}
@@ -29,7 +29,7 @@ class ExactTargetWikiDataVerificationTask extends ExactTargetTask {
 	/**
 	 * Compare results
 	 * @param array $aExactTargetData Array with results from ExactTarget
-	 * @param array$aWikiaData Array with results from Wikia DB
+	 * @param array $aWikiaData Array with results from Wikia DB
 	 * @param string $sCallerName name of function that called this one, needed for logs
 	 * @param string $sIgnoredProperty Name of property that doesn't have to be equal
 	 * @return bool true if equal
