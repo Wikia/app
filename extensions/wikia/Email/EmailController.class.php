@@ -127,6 +127,7 @@ abstract class EmailController extends \WikiaController {
 		$this->response->setVal( 'footerMessages', $this->getVal( 'footerMessages' ) );
 		$this->response->setVal( 'marketingFooter', $this->getVal( 'marketingFooter' ) );
 		$this->response->setVal( 'tagline', $this->getTagline() );
+		$this->response->setVal( 'useTrademark', $this->getUseTrademark() );
 	}
 
 	/**
@@ -145,6 +146,14 @@ abstract class EmailController extends \WikiaController {
 
 	protected function getTargetLang() {
 		return $this->targetUser->getOption( 'language' );
+	}
+
+	/**
+	 * Whether to show a TM next to the tagline in this country
+	 * At some point we may want to return the symbol instead of a bool
+	 */
+	protected function getUseTrademark() {
+		return $this->getTargetLang() == 'en';
 	}
 
 	/**
