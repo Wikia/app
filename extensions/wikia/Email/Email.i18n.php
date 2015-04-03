@@ -5,6 +5,7 @@ $messages['en'] = [
 	// General messages
 	'emailext-desc' => 'An extension to handle delivering email',
 	'emailext-no-reply-name' => 'No Reply',
+	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 
 	// Forgot password messages
 	'emailext-password-email-greeting' => 'Hi $1,',
@@ -27,6 +28,7 @@ $messages['qqq'] = [
 	// General messages
 	'email-desc' => 'The description for this extension',
 	'emailext-no-reply-name' => 'Name for sender of "no reply" email address',
+	'emailext-fans-tagline' => 'Tagline for the footer of the email',
 
 	// Forgot password messages
 	'emailext-password-email-greeting' => 'Greeting for the forgot password email',

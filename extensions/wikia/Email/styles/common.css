@@ -13,11 +13,24 @@ a, a * {
 	text-decoration: none;
 }
 
+sub, sup {
+	font-size: 8px;
+}
+
 p {
 	font-size: 16px;
 	line-height: 1.5em;
 	margin: 0 0 18px 0;
 	padding: 0;
+}
+
+td {
+	padding: 0;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: separate;
 }
 
 button {
@@ -37,9 +50,5 @@ td.widest {
 
 .greeting {
 	margin-bottom: 50px;
-}
-
-.subtle {
-	color: #93999f;
 }
 
