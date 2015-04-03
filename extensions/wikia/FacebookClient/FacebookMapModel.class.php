@@ -33,7 +33,7 @@ class FacebookMapModel {
 	const APP_ID_DEFAULT_V1 = 0;
 	// Same as APP_ID_DEFAULT_V1 except these records map a different Wikia ID to an already
 	// mapped Facebook ID.  Of the pair, the older of the two is given this App ID
-	const APP_ID_DUPLICATE_V1 = 0;
+	const APP_ID_DUPLICATE_V1 = 1;
 
 	protected $facebookUserId;
 	protected $wikiaUserId;
