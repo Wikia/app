@@ -24,6 +24,15 @@ p {
 	padding: 0;
 }
 
+td {
+	padding: 0;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: separate;
+}
+
 button {
 	border-width: 0;
 	background-color: #1a5eB8;
@@ -41,9 +50,5 @@ td.widest {
 
 .greeting {
 	margin-bottom: 50px;
-}
-
-.subtle {
-	color: #93999f;
 }
 

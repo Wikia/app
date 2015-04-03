@@ -7,17 +7,25 @@
 	<tr>
 		<td valign="top">
 			<div class="avatar-wrapper">
-				{{# editorProfilePage}}<a href="{{editorProfilePage}}">{{/ editorProfilePage}}
-					<img class="avatar" src="{{editorAvatarURL}}" data-inline-ignore>
-				{{# editorProfilePage}}</a>{{/ editorProfilePage}}
+				{{# editorProfilePage}}
+					<a href="{{editorProfilePage}}">
+				{{/ editorProfilePage}}
+					<img class="avatar" src="{{editorAvatarURL}}">
+				{{# editorProfilePage}}
+					</a>
+				{{/ editorProfilePage}}
 			</div>
 		</td>
 		<td class="widest">
 			<div class="message">
 				<p>
-					{{# editorProfilePage}}<a href="{{editorProfilePage}}">{{/ editorProfilePage}}
+					{{# editorProfilePage}}
+						<a class="username" href="{{editorProfilePage}}">
+					{{/ editorProfilePage}}
 						{{editorUserName}}
-					{{# editorProfilePage}}</a>{{/ editorProfilePage}}
+					{{# editorProfilePage}}
+						</a>
+					{{/ editorProfilePage}}
 				</p>
 				<p>{{summary}}</p>
 			</div>
