@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-class ExactTargetRetrieveUserHelper extends ExactTargetTask {
+class ExactTargetRetrieveUserTask extends ExactTargetTask {
 
 	/**
 	 * Retrieves user email from ExactTarget based on provided user ID

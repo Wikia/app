@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-class ExactTargetRetrieveWikiHelper extends ExactTargetTask {
+class ExactTargetRetrieveWikiTask extends ExactTargetTask {
 
 	/**
 	 * Retrieve wiki data from ExactTarget by wiki id

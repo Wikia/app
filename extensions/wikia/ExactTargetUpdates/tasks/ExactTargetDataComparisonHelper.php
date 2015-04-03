@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-trait ExactTargetDataComparison {
+trait ExactTargetDataComparisonHelper {
 
 	/**
 	 * Compare results

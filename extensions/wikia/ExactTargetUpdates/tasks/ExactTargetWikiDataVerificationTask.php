@@ -3,7 +3,7 @@ namespace Wikia\ExactTarget;
 
 class ExactTargetWikiDataVerificationTask extends ExactTargetTask {
 
-	use ExactTargetDataComparison;
+	use ExactTargetDataComparisonHelper;
 
 	/**
 	 * Retrieves data from ExactTarget and compares it with data in Wikia database
@@ -13,8 +13,8 @@ class ExactTargetWikiDataVerificationTask extends ExactTargetTask {
 	 */
 	public function verifyWikiData( $iWikiId ) {
 		// Fetch data from ExactTarget
-		$oRetrieveWikiHelperTask = $this->getRetrieveWikiHelper();
-		$aExactTargetWikiData = $oRetrieveWikiHelperTask->retrieveWikiDataById( $iWikiId );
+		$oRetrieveWikiTask = $this->getRetrieveWikiTask();
+		$aExactTargetWikiData = $oRetrieveWikiTask->retrieveWikiDataById( $iWikiId );
 		$this->info( __METHOD__ . ' ExactTarget wiki data record: ' . json_encode( $aExactTargetWikiData ) );
 
 		// Fetch data from Wikia DB
