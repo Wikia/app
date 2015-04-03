@@ -3,7 +3,7 @@ namespace Wikia\ExactTarget;
 
 class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 
-	use ExactTargetDataComparison;
+	use ExactTargetDataComparisonHelper;
 
 	/**
 	 * Retrieves data from ExactTarget and compares it with data in Wikia database
@@ -13,8 +13,8 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	 */
 	public function verifyUserData( $iUserId ) {
 		// Fetch data from ExactTarget
-		$oRetriveveUserHelperTask = $this->getRetrieveUserHelper();
-		$oExactTargetUserData = $oRetriveveUserHelperTask->retrieveUserDataById( $iUserId );
+		$oRetriveveUserTask = $this->getRetrieveUserTask();
+		$oExactTargetUserData = $oRetriveveUserTask->retrieveUserDataById( $iUserId );
 		$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $oExactTargetUserData ) );
 
 		// Fetch data from Wikia DB
@@ -38,8 +38,8 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	 */
 	public function verifyUserPropertiesData( $iUserId ) {
 		// Fetch data from ExactTarget
-		$oRetriveveUserHelperTask = $this->getRetrieveUserHelper();
-		$oExactTargetUserProperties = $oRetriveveUserHelperTask->retrieveUserPropertiesByUserId( $iUserId );
+		$oRetriveveUserTask = $this->getRetrieveUserTask();
+		$oExactTargetUserProperties = $oRetriveveUserTask->retrieveUserPropertiesByUserId( $iUserId );
 		$this->info( __METHOD__ . ' ExactTarget user_properties data record: ' . json_encode( $oExactTargetUserProperties ) );
 
 		// Fetch data from Wikia DB

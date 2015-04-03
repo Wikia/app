@@ -143,9 +143,9 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$this->info( __METHOD__ . ' Params - User IDs: ' . json_encode( $aUsersIds ) );
 
 		// Get number of edits from ExactTarget
-		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
-		$oRetrieveUserHelper->taskId( $this->getTaskId() );
-		$aUserEditsDataFromET = $oRetrieveUserHelper->retrieveUserEdits( $aUsersIds );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$oRetrieveUserTask->taskId( $this->getTaskId() );
+		$aUserEditsDataFromET = $oRetrieveUserTask->retrieveUserEdits( $aUsersIds );
 
 		// Merge number of edits from ExactTarget with incremental data that came as a function parameter
 		$oHelper = $this->getUserHelper();

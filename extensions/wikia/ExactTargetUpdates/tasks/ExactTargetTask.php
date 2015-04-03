@@ -39,11 +39,11 @@ class ExactTargetTask extends BaseTask {
 	}
 
 	/**
-	 * Returns an instance of ExactTargetRetrieveUserHelper class
-	 * @return ExactTargetRetrieveUserHelper
+	 * Returns an instance of ExactTargetRetrieveUserTask class
+	 * @return ExactTargetRetrieveUserTask
 	 */
-	protected function getRetrieveUserHelper() {
-		return new ExactTargetRetrieveUserHelper();
+	protected function getRetrieveUserTask() {
+		return new ExactTargetRetrieveUserTask();
 	}
 
 	/**
@@ -71,11 +71,11 @@ class ExactTargetTask extends BaseTask {
 	}
 
 	/**
-	 * A simple getter for an object of an ExactTargetRetrieveWikiHelper class
-	 * @return ExactTargetRetrieveWikiHelper
+	 * A simple getter for an object of an ExactTargetRetrieveWikiTask class
+	 * @return ExactTargetRetrieveWikiTask
 	 */
-	protected function getRetrieveWikiHelper() {
-		return new ExactTargetRetrieveWikiHelper();
+	protected function getRetrieveWikiTask() {
+		return new ExactTargetRetrieveWikiTask();
 	}
 
 
