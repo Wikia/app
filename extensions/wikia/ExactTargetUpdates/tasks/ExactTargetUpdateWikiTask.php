@@ -7,7 +7,7 @@ class ExactTargetUpdateWikiTask extends ExactTargetTask {
 	 * Updates city_list data with fallback to create in ExactTarget
 	 * Builds $aDataExtensions array and passes it to a DE API interface.
 	 * @param  int $iCityId  A wiki's ID
-	 * @return string 'OK' | 'Error'
+	 * @return bool
 	 */
 	public function updateFallbackCreateWikiData( $iCityId ) {
 		$oHelper = $this->getWikiHelper();
@@ -31,7 +31,7 @@ class ExactTargetUpdateWikiTask extends ExactTargetTask {
 		$oWikiDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
 		$bWikiDataVerificationResult = $oWikiDataVerificationTask->verifyWikiData( $iCityId );
 
-		return $bWikiDataVerificationResult ? 'OK' : 'Error';
+		return $bWikiDataVerificationResult;
 	}
 
 }

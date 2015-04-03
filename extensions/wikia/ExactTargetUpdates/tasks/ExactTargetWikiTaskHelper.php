@@ -104,6 +104,11 @@ class ExactTargetWikiTaskHelper {
 		return $aWikiDataExtension;
 	}
 
+	/**
+	 * Returns array with fields values from city_list for provided city_id that are required for ExactTarget updates
+	 * @param int $iCityId
+	 * @return array
+	 */
 	public function getWikiDataArray( $iCityId ) {
 		/* Get wikidata from master */
 		$oWiki = \WikiFactory::getWikiById( $iCityId, true );
