@@ -123,11 +123,16 @@ abstract class EmailController extends \WikiaController {
 	 * @template main
 	 */
 	public function main() {
-		$this->response->setVal( 'content', $this->getVal( 'content' ) );
-		$this->response->setVal( 'footerMessages', $this->getVal( 'footerMessages' ) );
-		$this->response->setVal( 'marketingFooter', $this->getVal( 'marketingFooter' ) );
-		$this->response->setVal( 'tagline', $this->getTagline() );
-		$this->response->setVal( 'useTrademark', $this->getUseTrademark() );
+		$this->response->setValues( [
+			'content' => $this->getVal( 'content' ),
+			'footerMessages' => $this->getVal( 'footerMessages' ),
+			'marketingFooter' => $this->getVal( 'marketingFooter' ),
+			'tagline' => $this->getTagline(),
+			'useTrademark' => $this->getUseTrademark(),
+			'facebook' => wfMessage( 'oasis-social-facebook' )->text(),
+			'twitter' => wfMessage( 'oasis-social-twitter' )->text(),
+			'youtube' => wfMessage( 'oasis-social-youtube' )->text(),
+		] );
 	}
 
 	/**
