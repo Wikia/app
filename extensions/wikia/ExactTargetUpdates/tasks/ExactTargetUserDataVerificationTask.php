@@ -62,24 +62,29 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	 * @throws \Exception when results are not equals
 	 */
 	protected function compareResults( $aExactTargetData, $aWikiaData, $sCallerName, $sIgnoredProperty = '' ) {
+		// Remove ignored property from compared arrays
+		if ( !empty( $sIgnoredProperty ) ) {
+			unset( $aExactTargetData[$sIgnoredProperty] );
+			unset( $aWikiaData[$sIgnoredProperty] );
+		}
+
 		// Compare results
 		$aDiffWikiaDB = array_diff( $aExactTargetData, $aWikiaData );
 
-		if ( !empty( $sIgnoredProperty ) && count( $aDiffWikiaDB ) == 1 && isset( $aDiffWikiaDB[$sIgnoredProperty] ) ) {
-			// Lets continue to the end of function as it's acceptable that $sIgnoredProperty is the only difference
-		} elseif ( count( $aDiffWikiaDB ) > 0 ) {
+		if ( count( $aDiffWikiaDB ) > 0 ) {
 			// There are unacceptable differences. Prepare diff and throw exception
 			$aDiffExactTarget = array_diff( $aWikiaData, $aExactTargetData );
-			$sDiffRes = [];
-			$sDiffRes[] = "--- Expected (Wikia DB)";
-			$sDiffRes[] = "+++ Actual (ExactTarget)";
+			$aDiffRes = [];
+			$aDiffRes[] = "--- Expected (Wikia DB)";
+			$aDiffRes[] = "+++ Actual (ExactTarget)";
 			foreach ( $aDiffExactTarget as $key => $val ) {
-				$sDiffRes[] = "- '$key' => '{$aDiffExactTarget[$key]}'";
-				$sDiffRes[] = "+ '$key' => '{$aDiffWikiaDB[$key]}'";
+				$aDiffRes[] = "- '$key' => '{$aDiffExactTarget[$key]}'";
+				$aDiffRes[] = "+ '$key' => '{$aDiffWikiaDB[$key]}'";
 			}
-			$this->debug( $sCallerName . ' ' . json_encode( $sDiffRes ) );
+			$this->debug( $sCallerName . ' ' . json_encode( $aDiffRes ) );
 			throw new \Exception( $sCallerName . " Verification failed, Record in ExactTarget doesn't match record in Wikia database.");
 		}
+
 		$this->info( 'Verification passed. Record in ExactTarget match record in Wikia database' );
 		return true;
 	}
