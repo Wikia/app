@@ -379,7 +379,11 @@ class FacebookMapModel {
 
 	/**
 	 * Sets the business token for a user.  This is only needed while updating existing
-	 * mappings to have this value.
+	 * mappings to have this value.  New records will be created with this value from the start.
+	 *
+	 * @TODO Remove this method once every row with a non-zero App ID has a business token, i.e. this is zero:
+	 *
+	 * select count(*) from user_fbconnect where user_fb_app_id != 0 and user_fb_biz_token = '';
 	 *
 	 * @param string $token
 	 *
