@@ -74,7 +74,7 @@ class ExactTargetUserHooks {
 	 * @param User $oUser
 	 * @return bool
 	 */
-	public function onSignupConfirmEmailComplete( \User $oUser ) {
+	public function onExternalUserAddUserToDatabaseComplete( \User $oUser ) {
 		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
