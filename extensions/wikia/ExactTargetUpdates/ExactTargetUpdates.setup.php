@@ -77,6 +77,10 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiSubscriber'] =  $dir . '/api
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
+/* Other classes */
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetDataComparison'] =  $dir . '/tasks/ExactTargetDataComparison.php' ;
+
+
 /**
  * Registering hooks
  */
