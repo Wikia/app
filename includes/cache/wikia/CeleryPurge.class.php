@@ -45,13 +45,11 @@ class CeleryPurge {
 	}
 
 	static function onRestInPeace() {
-		global $wgCityId;
 
 		if (empty(CeleryPurge::$buckets)) return true;
 
 		// log purges using Kibana (BAC-1317)
 		$context = [
-			'city' => $wgCityId,
 			'urls' => CeleryPurge::$buckets
 		];
 		WikiaLogger::instance()->info( 'varnish.purge', $context );
