@@ -22,7 +22,7 @@ if ( ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() ) ) {
 				<? endif; ?>
 			</div>
 			<div class="header-column header-tally">
-				<?php if ( !empty( $wg->EnablePageShareExt ) && ( !empty( $wg->EnablePageShareWorldwide ) || ( $wg->Lang->getCode() == 'en' ) ) ) {
+				<?php if ( !empty( $wg->EnablePageShareExt ) ) {
 					echo F::app()->renderView( 'PageShare', 'index' );
 				} ?>
 				<? if ( !is_null( $tallyMsg ) ): ?>
