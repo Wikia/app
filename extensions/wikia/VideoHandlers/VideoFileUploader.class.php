@@ -137,9 +137,8 @@ class VideoFileUploader {
 			// before generating upload (for now this only works for edits)
 			$articleId = $oTitle->getArticleID();
 			$article = Article::newFromID( $articleId );
-			//In case Article is null
-			//Log more info and throw an exception
-			if ( !( is_null( $article ) ) ) {
+			// In case Article is null log more info and throw an exception
+			if ( is_null( $article ) ) {
 				$exception = new VideoUploadFailedException( 'Video upload failed');
 				WikiaLogger::instance()->error('Video upload: title exists but article is null', [
 					'Title object' => $oTitle,
