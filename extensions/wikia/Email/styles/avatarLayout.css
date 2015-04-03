@@ -6,16 +6,16 @@
 	border-radius: 100%;
 }
 
+.username {
+	font-size: 12px;
+}
+
 .message {
 	margin-bottom: 20px;
 }
 
 .message p {
 	font-size: 14px;
-}
-
-.message .subtle, .message .subtle a {
-	font-size: 12px;
 }
 
 .content-footer-messages {
