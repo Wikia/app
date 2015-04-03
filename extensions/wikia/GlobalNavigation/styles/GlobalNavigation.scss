@@ -136,7 +136,7 @@ $start-a-wikia-logo-size: 30px;
 	}
 }
 @if $widthType > 0 {
-	@media screen and (max-width: $breakpoint-small) {
+	@media #{$breakpoint-not-supported} {
 		.global-navigation {
 			min-width: 767px;
 			position: relative;
