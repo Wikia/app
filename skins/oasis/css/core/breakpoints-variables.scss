@@ -1,9 +1,10 @@
-//TODO: Cleanup Oasis' scss files while removing responsive (vayout, responsive*, grid, ...)
+//TODO: Cleanup Oasis' scss files while removing responsive (layout, responsive*, grid, ...)
+@import 'skins/shared/functions';
 
 $widthType: get_command_line_param( "widthType", 0 );
 $oasisTypography: get_command_line_param( "oasisTypography", 0 );
 
-$breakpoint-not-supported: 768px;
+$breakpoint-width-not-supported: 767px;
 $breakpoint-lower: 1064px;
 $breakpoint-upper: 1575px;
 
@@ -17,7 +18,6 @@ $content-width-large: 1238px;
 $padding-width-large: 40px;
 $page-width-large: $content-width-large - 2 * $padding-width-large;
 
-$not-supported-range: (0, $breakpoint-not-supported - 1);
 $small-range: (0, $breakpoint-lower - 1);
 $medium-range: ($breakpoint-lower, $breakpoint-upper);
 $large-range: ($breakpoint-upper + 1, 999999999em);
@@ -27,7 +27,7 @@ $screen: 'only screen';
 $breakpoint-landscape: "#{$screen} and (orientation: landscape)";
 $breakpoint-portrait: "#{$screen} and (orientation: portrait)";
 
-$breakpoint-not-supported: "#{$screen} and (max-width: #{upper-bound($small-range)})";
+$breakpoint-not-supported: "#{$screen} and (max-width: #{$breakpoint-width-not-supported})";
 $breakpoint-small-up: $screen;
 $breakpoint-small-only: "#{$screen} and (max-width: #{upper-bound($small-range)})";
 $breakpoint-medium-up: "#{$screen} and (min-width:#{lower-bound($medium-range)})";
