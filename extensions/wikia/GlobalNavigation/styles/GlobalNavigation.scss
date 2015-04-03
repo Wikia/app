@@ -1,7 +1,7 @@
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/mixins/calc';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/oasis/css/core/responsive-variables';
+@import 'skins/oasis/css/core/breakpoints-variables';
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
 
@@ -10,21 +10,30 @@ $start-a-wikia-logo-size: 30px;
 .global-navigation {
 	background-color: $global-wikia-background-color;
 	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+	box-sizing: border-box;
 	color: $nav-foreground-dark-color;
 	height: $global-navigation-height;
+	margin-top: -$global-navigation-height - 1px;
 	position: fixed;
 	transition-duration: .5s;
 	width: 100%;
 	z-index: $global-navigation-z-index;
 
+	*, *::before, *::after {
+		box-sizing: inherit;
+	}
+
 	&.static {
 		position: absolute;
 	}
 
-	.page-width {
+	.global-navigation-container {
 		@include clearfix;
+
 		display: table;
 		white-space: nowrap;
+		margin: 0 auto;
+		width: $width-outside;
 	}
 
 	.table-cell {
@@ -45,10 +54,10 @@ $start-a-wikia-logo-size: 30px;
 		padding-left: 10px;
 
 		.start-wikia {
-			@include font-size-xxs;
 			border: solid 1px $global-navigation-text-color;
 			color: $global-navigation-text-color;
 			display: inline-block;
+			font-size: 12px;
 			height: $start-a-wikia-logo-size;
 			line-height: 28px;
 			margin-bottom: $global-navigation-margin-size + 1px;
@@ -69,45 +78,112 @@ $start-a-wikia-logo-size: 30px;
 	}
 }
 
+
+.WikiaSiteWrapper {
+	padding-top: $global-navigation-height + 1px;
+}
+
 .ve .global-navigation {
 	position: absolute;
 	z-index: $global-navigation-z-index - 1;
 }
 
-@media #{$small-only} {
-	.global-navigation {
-		.start-wikia-container {
-			padding-left: 21px;
-
-			.start-wikia {
-				width: $start-a-wikia-logo-size;
-				//-2px because of borders
-				line-height: $start-a-wikia-logo-size - 2px;
-				&:after {
-					content: '+';
-					display: block;
-				}
-
-				span {
-					display: none;
-				}
-			}
-		}
-
-		.page-width {
-			@include width-calc("100% - 20px");
-			margin: 0 10px;
-		}
-	}
-}
-
-@media #{$below-small} {
-	.global-navigation {
-		min-width: 767px;
-		position: relative;
-	}
-}
-
 .sso-login.hidden {
 	display: none;
 }
+
+@if $widthType == 0 {
+	@media #{$breakpoint-not-supported} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-small;
+			position: relative;
+		}
+	}
+	@media #{$breakpoint-small-only} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-small;
+
+			.start-wikia-container {
+				padding-left: 21px;
+
+				.start-wikia {
+					width: $start-a-wikia-logo-size;
+					//-2px because of borders
+					line-height: $start-a-wikia-logo-size - 2px;
+					&:after {
+						content: '+';
+						display: block;
+					}
+
+					span {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		.global-navigation .global-navigation-container {
+			width: $content-width-large;
+		}
+	}
+}
+@if $widthType > 0 {
+	@media #{$breakpoint-not-supported} {
+		.global-navigation {
+			min-width: 767px;
+			position: relative;
+		}
+	}
+
+	@media screen and (max-width: $breakpoint-content) {
+		.global-navigation {
+			min-width: $width-outside-min;
+
+			.start-wikia-container {
+				padding-left: 21px;
+
+				.start-wikia {
+					width: $start-a-wikia-logo-size;
+					//-2px because of borders
+					line-height: $start-a-wikia-logo-size - 2px;
+					&:after {
+						content: '+';
+						display: block;
+					}
+
+					span {
+						display: none;
+					}
+				}
+			}
+
+			.global-navigation-container {
+				@include width-calc("100% - 20px");
+				margin: 0 10px;
+			}
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-fluid) and (max-width: $breakpoint-max - 1) {
+		.global-navigation .global-navigation-container {
+			margin: 0 $width-adskin;
+			width: auto;
+		}
+	}
+
+	@media screen and (min-width: $breakpoint-max) {
+		.global-navigation .global-navigation-container {
+			margin: 0 auto;
+			width: $width-outside-max;
+		}
+	}
+}
+

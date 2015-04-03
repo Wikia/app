@@ -1,6 +1,5 @@
 <?php
 
-use \Wikia\Tasks\AsyncTaskList;
 use \Wikia\Logger\WikiaLogger;
 
 class GlobalWatchlistBot {
@@ -14,13 +13,100 @@ class GlobalWatchlistBot {
 	}
 
 	/**
+	 * Sends the weekly digest to all users in the global_watchlist table
+	 */
+	public function sendWeeklyDigest() {
+		foreach ( $this->getUserIDs() as $userID ) {
+			$this->sendDigestToUser( $userID );
+			$this->clearWatchLists( $userID );
+		}
+	}
+
+	/**
+	 * Return all users in the global_watchlist table.
+	 * @return array
+	 */
+	private function getUserIDs() {
+		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
+		$userIDs = ( new WikiaSQL() )
+			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_USER_ID )
+			->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->runLoop( $db, function ( &$userIDs, $row ) {
+				$userIDs[] = $row->gwa_user_id;
+			} );
+
+		return $userIDs;
+	}
+
+	/**
+	 * Clear the global_watchlist and local watchlists for a given user.
+	 * This is done after we send them the weekly digest which effectively
+	 * means they have "seen" all the watched pages and will receive notifications
+	 * for new edits.
+	 * @param int $userID
+	 */
+	public function clearWatchLists( $userID ) {
+		$this->clearLocalWatchlists( $userID );
+		$this->clearGlobalWatchlistAll( $userID );
+	}
+
+	/**
+	 * Clears the local watchlist tables for a given user.
+	 * @param int $userID
+	 */
+	public function clearLocalWatchlists( $userID ) {
+		$wikiIDs = $this->getWikisWithWatchedPagesForUser( $userID );
+		foreach ( $wikiIDs as $wikiID ) {
+			$db = wfGetDB( DB_MASTER, [], WikiFactory::IDtoDB( $wikiID ) );
+			( new WikiaSQL() )
+				->UPDATE( 'watchlist' )
+				->SET( 'wl_notificationtimestamp', null )
+				->WHERE( 'wl_user' )->EQUAL_TO( $userID )
+				->run( $db );
+		}
+	}
+
+	/**
+	 * Get all wikis that a user has a watched item on. We'll use this list
+	 * to clear those watched pages in the local watchlist table.
+	 * @param int $userID
+	 * @return array
+	 */
+	private function getWikisWithWatchedPagesForUser( $userID ) {
+		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
+		$wikiIDs = ( new WikiaSQL() )
+			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_CITY_ID )
+			->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
+			->runLoop( $db, function ( &$wikiIDs, $row ) {
+				$wikiIDs[] = $row->gwa_city_id;
+			} );
+
+		return $wikiIDs;
+	}
+
+	/**
+	 * Clears all watched pages from all wikis for the given user in
+	 * the global_watchlist table.
+	 * @param int $userID
+	 */
+	public function clearGlobalWatchlistAll( $userID ) {
+		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
+		( new WikiaSQL() )
+			->DELETE()->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
+			->run( $db );
+	}
+
+
+	/**
 	 * send email to user
 	 * TODO Break this method up a bit. It does way way too many things.
+	 * @param $userID integer
 	 */
 	public function sendDigestToUser( $userID ) {
 
 		if ( $this->shouldNotSendDigest( $userID, $sendLogging = true ) ) {
-			$this->clearUserFromGlobalWatchlist( $userID );
 			return;
 		}
 
@@ -124,8 +210,8 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $userID
-	 * @param $sendLogging
+	 * @param int $userID
+	 * @param bool $sendLogging
 	 * @return bool
 	 */
 	public function shouldNotSendDigest( $userID, $sendLogging = false ) {
@@ -148,7 +234,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $userID
+	 * @param int $userID
 	 * @return null|User
 	 */
 	private function getUserObject( $userID ) {
@@ -169,7 +255,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user
+	 * @param User $user
 	 * @throws Exception
 	 */
 	private function checkIfValidUser( $user ) {
@@ -179,7 +265,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user User
+	 * @param User $user
 	 * @throws Exception
 	 */
 	private function checkIfEmailUnSubscribed( \User $user ) {
@@ -189,7 +275,7 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user User
+	 * @param User $user
 	 * @throws Exception
 	 */
 	private function checkIfEmailConfirmed( \User $user ) {
@@ -199,24 +285,13 @@ class GlobalWatchlistBot {
 	}
 
 	/**
-	 * @param $user User
+	 * @param User $user
 	 * @throws Exception
 	 */
 	private function checkIfSubscribedToWeeklyDigest( \User $user ) {
 		if ( !$user->getBoolOption( 'watchlistdigest' ) ) {
 			throw new Exception( 'Not subscribed to weekly digest' );
 		}
-	}
-
-	/**
-	 * @param $userID
-	 */
-	private function clearUserFromGlobalWatchlist( $userID ) {
-		$task = new GlobalWatchlistTask();
-		( new AsyncTaskList() )
-			->wikiId( F::app()->wg->CityId )
-			->add( $task->call( 'clearGlobalWatchlistAll', $userID ) )
-			->queue();
 	}
 
 	/**
@@ -373,7 +448,7 @@ class GlobalWatchlistBot {
 
 		if ( ( $sLangCode != 'en' ) && !empty( $sLangCode ) ) {
 			// custom lang translation
-			$sBody = wfMessage( $sMsgKey )->inLanguage( $sLangCode );
+			$sBody = wfMessage( $sMsgKey )->inLanguage( $sLangCode )->text();
 		}
 
 		if ( $sBody == null ) {
