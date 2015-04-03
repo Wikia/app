@@ -17,6 +17,25 @@ class PageShareHelper {
 		return $icon;
 	}
 
+	/**
+	 * Get language for Page Share service.
+	 * For Anon users use the browser language.
+	 * For logged in user use user's language.
+	 * Both values can be overwritten by ?uselang parameter.
+	 *
+	 * @return String language
+	 */
+	public static function getLangForPageShare() {
+		global $wgLang, $wgRequest, $wgUser;
+
+		if ( $wgUser->isAnon() ) {
+			$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+		} else {
+			$lang = $wgLang->getCode();
+		}
+		return $wgRequest->getVal( 'uselang', $lang );
+	}
+
 	public static function isValidShareService( $service, $lang ) {
 		// filter through include list, default of true
 		if ( array_key_exists( 'languages:include', $service ) && is_array( $service['languages:include'] ) ) {
