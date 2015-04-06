@@ -24,6 +24,10 @@ p {
 	padding: 0;
 }
 
+img {
+	border: 0;
+}
+
 td {
 	padding: 0;
 }
@@ -39,6 +43,7 @@ button {
 	color: #fff;
 	font-size: 12px;
 	font-weight: bold;
+	height: auto;
 	line-height: 25px;
 	padding: 10px 20px;
 	text-transform: uppercase;
