@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Forum Special Page
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
@@ -210,6 +213,14 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$boardId = $this->getVal( 'boardId', -1 );
 
 		$board = ForumBoard::newFromId( $boardId );
+		if ( empty( $board ) ) {
+			WikiaLogger::instance()->error( 'Error reporter: failed to find board', [
+				'jiraTicket' => 'SOC-590',
+				'boardId' => $boardId,
+				'method' => __METHOD__
+			]);
+			throw new ErrorPageError( 'forum-board-error-title', 'forum-board-nonexistent' );
+		}
 		$boardTitle = $board->getTitle()->getText();
 
 
