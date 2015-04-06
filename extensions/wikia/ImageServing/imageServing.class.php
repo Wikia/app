@@ -313,14 +313,21 @@ class ImageServing {
 	private function getVignetteUrl(URLGeneratorInterface $image, $width, $height) {
 		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height);
 
-		return $image->getUrlGenerator()
-			->windowCrop()
-			->width($this->width)
-			->xOffset($left)
-			->yOffset($top)
-			->windowWidth($right - $left)
-			->windowHeight($bottom - $top)
-			->url();
+		$generator = $image->getUrlGenerator()
+			->width($this->width);
+
+		if ($top < 0 || $bottom < 0 || $right < 0 || $left < 0) {
+			$generator->scaleToWidth();
+		} else {
+			$generator
+				->windowCrop()
+				->xOffset($left)
+				->yOffset($top)
+				->windowWidth($right - $left)
+				->windowHeight($bottom - $top);
+		}
+
+		return $generator->url();
 	}
 
 	/**
@@ -360,7 +367,13 @@ class ImageServing {
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
 		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height, $align, $issvg);
-		return "{$this->width}px-$left,$right,$top,$bottom";
+		$cut = "{$this->width}px";
+
+		if ($left >= 0 && $right >= 0 && $top >= 0 && $bottom >= 0) {
+			$cut .= "-$left,$right,$top,$bottom";
+		}
+
+		return $cut;
 	}
 
 	private function getCutParams($width, $height, $align="center", $issvg=false) {
