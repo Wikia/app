@@ -28,7 +28,7 @@ class ForgotPasswordController extends EmailController {
 		$this->assertHasIP();
 	}
 
-	protected function getSubject() {
+	public function getSubject() {
 		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $this->getTargetLang() )->text();
 	}
 
