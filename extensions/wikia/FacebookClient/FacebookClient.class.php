@@ -371,11 +371,18 @@ class FacebookClient {
 		}
 	}
 
+	/**
+	 * Update the FacebookMapModel object with the correct business token
+	 *
+	 * @param FacebookMapModel $map
+	 *
+	 * @throws FacebookMapModelDbException
+	 */
 	public function updateBizTokenMapping( FacebookMapModel $map ) {
 		$token = $this->getBizToken();
 
 		if ( $token ) {
-			WikiaLogger::instance()->notice( 'Updating business token', [
+			WikiaLogger::instance()->info( 'Updating business token', [
 				'wikiaUserId' => $map->getWikiaUserId(),
 				'facebookUserId' => $map->getFacebookUserId(),
 				'appId' => $map->getAppId(),

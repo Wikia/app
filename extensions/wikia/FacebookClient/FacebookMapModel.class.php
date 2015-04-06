@@ -408,8 +408,6 @@ class FacebookMapModel {
 				'fbBizToken' => $this->getBizToken(),
 				'errorMessage' => $e->getMessage(),
 			] );
-
-			throw new FacebookMapModelDbException( $e->getMessage() );
 		}
 
 		$this->saveToCache();
