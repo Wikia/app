@@ -352,6 +352,6 @@ class SMWJSON {
 	 * @return string
 	*/
 	public function getEncoding( $syntax = '' , $isPretty = false ){
-		return FormatJSON::encode( $syntax === 'basic' ? $this->getBasicSerialization() : $this->getSerialization(), $isPretty );
+		return FormatJson::encode( $syntax === 'basic' ? $this->getBasicSerialization() : $this->getSerialization(), $isPretty );
 	}
 }
