@@ -558,23 +558,43 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function shouldSendEmail( array $watchers ) {
-		global $wgUsersNotifiedOnAllChanges, $wgEnotifMinorEdits, $wgEnotifUserTalk;
-
-		$sendEmail = true;
-		// If nobody is watching the page, and there are no users notified on all changes
-		// don't bother creating a job/trying to send emails
-		// $watchers deals with $wgEnotifWatchlist
-		if ( !count( $watchers ) && !count( $wgUsersNotifiedOnAllChanges ) ) {
-			$sendEmail = false;
-			// Only send notification for non minor edits, unless $wgEnotifMinorEdits
-			if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
-				if ( $wgEnotifUserTalk && $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
-					$sendEmail = true;
-				}
-			}
+		if ( $this->thereAreUsersWatchingPage( $watchers ) ) {
+			return true;
 		}
 
-		return $sendEmail;
+		if ( $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param array $watchers
+	 * @return bool
+	 */
+	private function thereAreUsersWatchingPage( array $watchers ) {
+		return count( $watchers ) || count( \F::app()->wg->UsersNotifiedOnAllChanges );
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function canSendUserTalkEmail() {
+		$targetUser = User::newFromName( $this->title->getText() );
+		if ( !empty( \F::app()->wg->EnotifUserTalk ) && // we want to notify users when they're user talk page is changed
+			!$this->editor->isAllowed( 'nominornewtalk' ) && // and the editor wants users to be notified when they make minor edits on discussion pages
+			$targetUser instanceof User && // and the user exists
+			!$targetUser->isAnon() && // and they not anonymous
+			$targetUser->getId() != $this->editor->getId() && // and they are not the user who made the edit
+			$targetUser->getOption( 'enotifusertalkpages' ) && // and they want to be notified about talk pages changes
+			$targetUser->isEmailConfirmed() && // and their email is confirmed
+			( !$this->minorEdit || $targetUser->getOption( 'enotifminoredits' ) ) // and this is not a minor edit, or they want to know about minor edits
+			) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -586,24 +606,24 @@ class EmailNotification {
 	 */
 	private function actuallyNotifyOnPageChange( $watchers ) {
 		global $wgEnotifWatchlist;
-		global $wgEnotifMinorEdits, $wgEnotifUserTalk;
+		global $wgEnotifMinorEdits;
 
 		$this->setReplyToAndFromAddresses();
 
 		# The following code is only run, if several conditions are met:
 		# 1. EmailNotification for pages (other than user_talk pages) must be enabled
 		# 2. minor edits (changes) are only regarded if the global flag indicates so
-		$userTalkId = false;
 		if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
 
-			if ( $wgEnotifUserTalk && $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
+			$userTalkId = 0;
+			if ( $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
 				$targetUser = User::newFromName( $this->title->getText() );
 				$this->compose( $targetUser );
 				$userTalkId = $targetUser->getId();
 
 				// Send mail to user when comment on his user talk has been added
 				$fakeUser = null;
-				wfRunHooks( 'UserMailer::NotifyUser', array( $this->title, &$fakeUser ) );
+				wfRunHooks( 'UserMailer::NotifyUser', [ $this->title, &$fakeUser ] );
 				if ( $fakeUser instanceof User && $fakeUser->getOption( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
 					$this->compose( $fakeUser );
 				}
@@ -665,23 +685,6 @@ class EmailNotification {
 			$user = User::newFromName( $name );
 			$this->compose( $user );
 		}
-	}
-
-	/**
-	 * @return bool
-	 */
-	private function canSendUserTalkEmail() {
-		$targetUser = User::newFromName( $this->title->getText() );
-		if ( $targetUser instanceof User && // user exists
-			!$targetUser->isAnon() && // and they not anonymous
-			$targetUser->getId() != $this->editor->getId() && // and they are not the user who made the edit
-			$targetUser->getOption( 'enotifusertalkpages' ) && // and they want to be notified about talk pages changes
-			( !$this->minorEdit || $targetUser->getOption( 'enotifminoredits' ) ) && // and this is not a minor edit, or they want to know about minor edits
-			$targetUser->isEmailConfirmed() /* and their email is confirmed */ ) {
-				return true;
-			}
-
-		return false;
 	}
 
 	/**
@@ -793,7 +796,7 @@ class EmailNotification {
 	 * Call sendMails() to send any mails that were queued.
 	 * @param $user User
 	 */
-	private function compose( $user ) {
+	private function compose( \User $user ) {
 		if ( $this->isArticlePageEdit() && $this->emailExtensionEnabled() ) {
 			$this->sendUsingEmailExtension( $user );
 		} else {
@@ -833,7 +836,7 @@ class EmailNotification {
 	 * Send a watched page edit email using the new Email extension.
 	 * @param $user User
 	 */
-	private function sendUsingEmailExtension( $user ) {
+	private function sendUsingEmailExtension( \User $user ) {
 		\F::app()->sendRequest( 'Email\Controller\WatchedPage', 'handle',
 			[
 				'targetUser' => $user->getName(),
@@ -847,7 +850,7 @@ class EmailNotification {
 			] );
 	}
 
-	private function sendUsingUserMailer( $user ) {
+	private function sendUsingUserMailer( \User $user ) {
 		if ( !$this->composedCommon ) {
 			$this->composeCommonMailtext();
 		}
