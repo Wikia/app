@@ -20,7 +20,7 @@ class WatchedPageController extends EmailController {
 	public function getSubject() {
 		return wfMessage( 'emailext-watchedpage-subject',
 			$this->title->getPrefixedText(),
-			$this->getEditorUserName() )->text();
+			$this->getEditorUserName() )->inLanguage( $this->getTargetLang() )->text();
 	}
 
 	public function initEmail() {
