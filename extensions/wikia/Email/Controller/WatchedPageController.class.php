@@ -98,7 +98,7 @@ class WatchedPageController extends EmailController {
 			'articleEditedText' => $this->getArticleEditedText(),
 			'editorProfilePage' => $this->getEditorProfilePage(),
 			'editorUserName' => $this->getEditorUserName(),
-			'editorAvatarURL' => $this->getEditorAvatarUR(),
+			'editorAvatarURL' => $this->getEditorAvatarURL(),
 			'summary' => $this->getSummary(),
 			'buttonText' => $this->getCompareChangesLabel(),
 			'buttonLink' => $this->getCompareChangesLink(),
@@ -167,7 +167,7 @@ class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getEditorAvatarUR() {
+	private function getEditorAvatarURL() {
 		return \AvatarService::getAvatarUrl( $this->currentUser, self::AVATAR_SIZE );
 	}
 
