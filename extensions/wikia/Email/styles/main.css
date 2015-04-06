@@ -63,9 +63,8 @@ body {
 	margin: 0 auto 5px;
 }
 
-.social-links a {
-	display: inline-block;
-	margin: 0 10px;
+.social-links img {
+	padding: 0 10px;
 }
 
 .fine-print, .fine-print * {
