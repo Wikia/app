@@ -589,7 +589,7 @@ class EmailNotification {
 			$targetUser->getId() != $this->editor->getId() && // and they are not the user who made the edit
 			$targetUser->getOption( 'enotifusertalkpages' ) && // and they want to be notified about talk pages changes
 			$targetUser->isEmailConfirmed() && // and their email is confirmed
-			( !$this->minorEdit || $targetUser->getOption( 'enotifminoredits' ) ) // and this is not a minor edit, or they want to know about minor edits
+			( !$this->isMinorEdit() || $targetUser->getOption( 'enotifminoredits' ) ) // and this is not a minor edit, or they want to know about minor edits
 			) {
 			return true;
 		}
@@ -606,14 +606,13 @@ class EmailNotification {
 	 */
 	private function actuallyNotifyOnPageChange( $watchers ) {
 		global $wgEnotifWatchlist;
-		global $wgEnotifMinorEdits;
 
 		$this->setReplyToAndFromAddresses();
 
 		# The following code is only run, if several conditions are met:
 		# 1. EmailNotification for pages (other than user_talk pages) must be enabled
 		# 2. minor edits (changes) are only regarded if the global flag indicates so
-		if ( !$this->minorEdit || ( $wgEnotifMinorEdits && !$this->editor->isAllowed( 'nominornewtalk' ) ) ) {
+		if ( !$this->isMinorEdit() || ( $this->notifyUsersOnMinorEdits() && $this->editorWantsToNotifyOnMinorEdits() ) ) {
 
 			$userTalkId = 0;
 			if ( $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
@@ -636,7 +635,7 @@ class EmailNotification {
 				/* @var $watchingUser User */
 				foreach ( $userArray as $watchingUser ) {
 					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
-						( !$this->minorEdit || $watchingUser->getOption( 'enotifminoredits' ) ) &&
+						( !$this->isMinorEdit() || $watchingUser->getOption( 'enotifminoredits' ) ) &&
 						$watchingUser->isEmailConfirmed() &&
 						$watchingUser->getID() != $userTalkId
 						&& !$watchingUser->getBoolOption( 'unsubscribed' ) )
@@ -906,5 +905,29 @@ class EmailNotification {
 	 */
 	private function isUserTalkPage() {
 		return $this->title->getNamespace() == NS_USER_TALK;
+	}
+
+	/**
+	 * Returns whether the edit was minor or not.
+	 * @return bool
+	 */
+	private function isMinorEdit() {
+		return $this->minorEdit;
+	}
+
+	/**
+	 * Returns whether this Wikia is configured to notify users on minor edits.
+	 * @return bool
+	 */
+	private function notifyUsersOnMinorEdits() {
+		return !empty(\F::app()->wg->EnotifMinorEdits );
+	}
+
+	/**
+	 * Returns whether the page editor wants to notify users if the edit was minor.
+	 * @return bool
+	 */
+	private function editorWantsToNotifyOnMinorEdits() {
+		return !$this->editor->isAllowed( 'nominornewtalk' );
 	}
 }
