@@ -94,7 +94,7 @@ class FacebookMapModel {
 
 	/**
 	 * Lookup a mapping where the Wikia user ID is set to the given ID AND the FB App ID
-	 * is the current $fbAppId or if not found, an App ID of 0.  If neither is found, no
+	 * is the current $fbAppId or if not found, an App ID of APP_ID_DEFAULT_V1.  If neither is found, no
 	 * row is returned.
 	 *
 	 * @param int $wikiaUserId The Wikia user ID
@@ -109,7 +109,7 @@ class FacebookMapModel {
 
 	/**
 	 * Find the mapping associated with the given Facebook user ID AND the FB App ID
-	 * is the current $fbAppId or if not found, an App ID of 0.  If neither is found, no
+	 * is the current $fbAppId or if not found, an App ID of APP_ID_DEFAULT_V1.  If neither is found, no
 	 * row is returned.
 	 *
 	 * @param int $facebookId
@@ -197,7 +197,7 @@ class FacebookMapModel {
 			->SELECT( '*' )
 			->FROM( self::tableName )
 			->WHERE( $column )->EQUAL_TO( $id )
-			->AND_( self::columnFacebookAppId )->IN( $fbAppId, 0 )
+			->AND_( self::columnFacebookAppId )->IN( $fbAppId, self::APP_ID_DEFAULT_V1 )
 			->ORDER_BY( self::columnFacebookAppId )->DESC()
 			->LIMIT( 1 )
 			->run( $dbr, function ( $result ) {
@@ -472,7 +472,7 @@ class FacebookMapModel {
 			->DELETE( self::tableName )
 			->WHERE( self::columnWikiaUserId )->EQUAL_TO( $this->getWikiaUserId() )
 			->AND_( self::columnFacebookUserId )->EQUAL_TO( $this->getFacebookUserId() )
-			->AND_( self::columnFacebookAppId )->IN( $this->getAppId(), 0 )
+			->AND_( self::columnFacebookAppId )->IN( $this->getAppId(), self::APP_ID_DEFAULT_V1 )
 			->run( $dbw );
 	}
 }
