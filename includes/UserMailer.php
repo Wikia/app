@@ -875,6 +875,7 @@ class EmailNotification {
 		// $PAGEEDITDATE is the time and date of the page change
 		// expressed in terms of individual local time of the notification
 		// recipient, i.e. watching user
+		// TODO The logic below is duplicated twice, break this off into a separate method.
 		$body = str_replace(
 			[ '$WATCHINGUSERNAME',
 				'$PAGEEDITDATE',
