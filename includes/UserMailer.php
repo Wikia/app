@@ -164,11 +164,11 @@ class UserMailer {
 	 * @return Status object
 	 */
 	public static function send( $to, $from, $subject, $body, $replyto = null, $contentType = null, $category = 'UserMailer', $priority = 0,
-	$attachements = array() ) {
+	$attachements = [] ) {
 		global $wgSMTP, $wgEnotifMaxRecips, $wgAdditionalMailParams;
 
 		if ( !is_array( $to ) ) {
-			$to = array( $to );
+			$to = [ $to ];
 		}
 
 		# Make sure we have at least one address
@@ -182,7 +182,7 @@ class UserMailer {
 		if ( !$has_address ) {
 			return Status::newFatal( 'user-mail-no-addy' );
 		}
-		wfRunHooks( 'UserMailerSend', array( &$to ) );
+		wfRunHooks( 'UserMailerSend', [ &$to ] );
 
 		# Forge email headers
 		# -------------------
@@ -235,9 +235,9 @@ class UserMailer {
 			$headers['X-Priority'] = $priority;
 		}
 
-		$ret = wfRunHooks( 'AlternateUserMailer', array( $headers, $to, $from, $subject, $body
+		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body
 			, $priority, $attachements
-		) );
+		] );
 		if ( $ret === false ) {
 			return Status::newGood();
 		} elseif ( $ret !== true ) {
@@ -288,7 +288,7 @@ class UserMailer {
 			# number of possible recipients.
 			$chunks = array_chunk( $to, $wgEnotifMaxRecips );
 			foreach ( $chunks as $chunk ) {
-				if ( !wfRunHooks( 'ComposeMail', array( $chunk, &$body, &$headers ) ) ) {
+				if ( !wfRunHooks( 'ComposeMail', [ $chunk, &$body, &$headers ] ) ) {
 					continue;
 				}
 				$status = self::sendWithPear( $mail_object, $chunk, $headers, $body );
@@ -358,7 +358,7 @@ class UserMailer {
 	 * @return string
 	 */
 	public static function rfc822Phrase( $phrase ) {
-		$phrase = strtr( $phrase, array( "\r" => '', "\n" => '', '"' => '' ) );
+		$phrase = strtr( $phrase, [ "\r" => '', "\n" => '', '"' => '' ] );
 		return '"' . $phrase . '"';
 	}
 
@@ -381,7 +381,7 @@ class UserMailer {
 		}
 		$out = "=?$charset?Q?";
 		$out .= preg_replace_callback( "/([$replace])/",
-			array( __CLASS__, 'quotedPrintableCallback' ), $string );
+			[ __CLASS__, 'quotedPrintableCallback' ], $string );
 		$out .= '?=';
 		return $out;
 	}
@@ -485,7 +485,7 @@ class EmailNotification {
 			return;
 		}
 
-		if ( !wfRunHooks( 'AllowNotifyOnPageChange', array( $this->editor, $this->title ) ) ) {
+		if ( !wfRunHooks( 'AllowNotifyOnPageChange', [ $this->editor, $this->title ] ) ) {
 			return;
 		}
 
@@ -497,7 +497,7 @@ class EmailNotification {
 			if ( $watchers ) {
 				$this->updateWatchedItem( $watchers );
 			}
-			wfRunHooks( 'NotifyOnSubPageChange', array ( $watchers, $this->title, $this->editor, $notificationTimeoutSql ) );
+			wfRunHooks( 'NotifyOnSubPageChange', [ $watchers, $this->title, $this->editor, $notificationTimeoutSql ] );
 		}
 		if ( $this->shouldSendEmail( $watchers ) ) {
 			$this->actuallyNotifyOnPageChange( $watchers );
@@ -545,7 +545,7 @@ class EmailNotification {
 	/**
 	 * Update wl_notificationtimestamp for all watching users except the editor
 	 */
-	private function updateWatchedItem( $watchers ) {
+	private function updateWatchedItem( array $watchers ) {
 		$wl = WatchedItem::fromUserTitle( $this->editor, $this->title );
 		$wl->updateWatch( $watchers, $this->timestamp );
 	}
@@ -717,7 +717,7 @@ class EmailNotification {
 				'enotif_lastvisited',
 				'enotif_lastvisited',
 				$wgLanguageCode,
-				array(),
+				[],
 				$this->title->getFullUrl( 's=wldiff&diff=0&previousRevId=' . $this->previousRevId )
 			);
 			$keys['$OLDID']   = $this->previousRevId;
@@ -742,7 +742,7 @@ class EmailNotification {
 
 		$keys['$ACTION'] = $this->action;
 		// Hook registered in FollowHelper -- used for blogposts and categoryAdd
-		wfRunHooks( 'MailNotifyBuildKeys', array( &$keys, $this->action, $this->otherParam ) );
+		wfRunHooks( 'MailNotifyBuildKeys', [ &$keys, $this->action, $this->otherParam ] );
 
 		if ( $this->editor->isAnon() ) {
 			# real anon (user:xxx.xxx.xxx.xxx)
@@ -765,7 +765,7 @@ class EmailNotification {
 		// ArticleComment -- updates subject and $keys['$PAGEEDITOR'] if anon editor
 		// EmailTemplatesHooksHelper -- updates subject if blogpost
 		// TopListHelper -- updates subject if title is toplist
-		wfRunHooks( 'ComposeCommonSubjectMail', array( $this->title, &$keys, &$subject, $this->editor ) );
+		wfRunHooks( 'ComposeCommonSubjectMail', [ $this->title, &$keys, &$subject, $this->editor ] );
 		$subject = strtr( $subject, $keys );
 		$subject = MessageCache::singleton()->transform( $subject, false, null, $this->title );
 		$this->subject = strtr( $subject, $postTransformKeys );
@@ -774,7 +774,7 @@ class EmailNotification {
 		// EmailTemplatesHooksHelper -- changes body to blog post. EmailTemplates only enabled on community and messaging so this tranforms
 		//     any watched page email coming from Community to a blog post (I think)
 		// TopListHelper -- updates body if title is toplist
-		wfRunHooks( 'ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ) );
+		wfRunHooks( 'ComposeCommonBodyMail', [ $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ] );
 		$body = strtr( $body, $keys );
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
 		$this->body = wordwrap( strtr( $body, $postTransformKeys ), 72 );
@@ -800,7 +800,7 @@ class EmailNotification {
 			$this->sendUsingUserMailer( $user );
 		}
 
-		wfRunHooks( 'NotifyOnPageChangeComplete', array( $this->title, $this->timestamp, &$user ) );
+		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
 	}
 
 	/**
@@ -874,25 +874,25 @@ class EmailNotification {
 		// expressed in terms of individual local time of the notification
 		// recipient, i.e. watching user
 		$body = str_replace(
-			array( '$WATCHINGUSERNAME',
+			[ '$WATCHINGUSERNAME',
 				'$PAGEEDITDATE',
-				'$PAGEEDITTIME' ),
-			array( $wgEnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
+				'$PAGEEDITTIME' ],
+			[ $wgEnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
 				$wgContLang->userDate( $this->timestamp, $watchingUser ),
-				$wgContLang->userTime( $this->timestamp, $watchingUser ) ),
+				$wgContLang->userTime( $this->timestamp, $watchingUser ) ],
 			$this->body );
 
 		if ( $watchingUser->getOption( 'htmlemails' ) && !empty( $this->bodyHTML ) ) {
 			$bodyHTML = str_replace(
-				array( '$WATCHINGUSERNAME',
+				[ '$WATCHINGUSERNAME',
 					'$PAGEEDITDATE',
-					'$PAGEEDITTIME' ),
-				array( $wgEnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
+					'$PAGEEDITTIME' ],
+				[ $wgEnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
 					$wgContLang->userDate( $this->timestamp, $watchingUser ),
-					$wgContLang->userTime( $this->timestamp, $watchingUser ) ),
+					$wgContLang->userTime( $this->timestamp, $watchingUser ) ],
 				$this->bodyHTML );
 			# now body is array with text and html version of email
-			$body = array( 'text' => $body, 'html' => $bodyHTML );
+			$body = [ 'text' => $body, 'html' => $bodyHTML ];
 		}
 		UserMailer::send( $to, $this->from, $this->subject, $body, $this->replyto );
 	}
