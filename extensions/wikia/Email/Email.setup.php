@@ -28,7 +28,6 @@ $wgAutoloadClasses['Email\Fatal'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Check'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Controller/UserLogin.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controller/WatchedPageController.class.php';
-$wgAutoloadClasses['CssToInlineStyles'] = $dir . '../../../../lib/composer/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php';
 
 /**
  * messages
