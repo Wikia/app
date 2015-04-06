@@ -6,6 +6,11 @@
 	border-radius: 100%;
 }
 
+.avatar img {
+	height: 40px;
+	width: 50px;
+}
+
 .username {
 	font-size: 12px;
 }
