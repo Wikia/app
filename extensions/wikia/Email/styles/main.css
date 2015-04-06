@@ -12,9 +12,11 @@ body {
 }
 
 .content {
-	max-width: 600px;
-	margin: 0 auto;
 	display: block;
+	margin: 0 auto;
+	max-width: 600px;
+	padding-left: 2%;
+	padding-right: 2%;
 }
 
 .content-inner {
@@ -46,10 +48,10 @@ body {
 }
 
 .hubs {
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 5px;
-	max-width: 300px;
+	text-align: center;
+	padding-right: 15%;
+	padding-left: 15%;
+	padding-bottom: 5px;
 }
 
 .hubs a {
