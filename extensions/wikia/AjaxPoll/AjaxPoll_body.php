@@ -20,14 +20,6 @@ class AjaxPollClass {
 	public static $mCount = 0; # macbre: count ajax polls on the page
 
 	/**
-	 * __construct
-	 */
-	public function __construct() {
-
-	}
-
-
-	/**
 	 * renderFromTag
 	 *
 	 * static constructor/callback function
@@ -36,9 +28,11 @@ class AjaxPollClass {
 	 * @static
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @param string $input: Text from tag
-	 * @param array $params: atrributions
-	 * @param Object $parser: Wiki Parser object
+	 * @param string $input : Text from tag
+	 * @param array $params : atrributions
+	 * @param Object $parser : Wiki Parser object
+	 *
+	 * @return string
 	 */
 	static public function renderFromTag( $input, $params, $parser ) {
 		/**
@@ -67,7 +61,9 @@ class AjaxPollClass {
 	 * @static
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 *
-	 * @param string $poll_id	poll identifier in database
+	 * @param string $poll_id poll identifier in database
+	 *
+	 * @return AjaxPollClass
 	 */
 	static public function newFromId( $poll_id ) {
 		global $wgTitle, $wgParser;
@@ -136,9 +132,11 @@ class AjaxPollClass {
 	 *
 	 * get HTML for votes
 	 *
-	 * @return array: votes for this poll
+	 * @param bool $isSubmit
+	 *
+	 * @return array : votes for this poll
 	 */
-	public function getVotes($isSubmit = false) {
+	public function getVotes( $isSubmit = false ) {
 		global $wgLang, $wgMemc;
 
 		if ( is_null( $this->mId ) ) {
@@ -149,54 +147,48 @@ class AjaxPollClass {
 		$votes = array();
 		$total = 0;
 
-		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
-		if (!$isSubmit) {
-			$votes = $wgMemc->get($memcKey);
+		$memcKey = $this->getVotesMemKey();
+		if ( !$isSubmit ) {
+			$votes = $wgMemc->get( $memcKey );
 		}
-		if (!empty($votes)) {
-			foreach($votes as $ansData){
+		if ( !empty( $votes ) ) {
+			foreach( $votes as $ansData ){
 				$total += $ansData["value"];
 			}
 		} else {
-			$votes = array();
 			$dbr = wfGetDB( $isSubmit ? DB_MASTER : DB_SLAVE );
-			$oRes = $dbr->select(
-				array( "poll_vote" ),
-				array( "poll_answer" ),
-				array( "poll_id" => $this->mId ),
-				__METHOD__
-			);
 
-			while( $oRow = $dbr->fetchObject( $oRes ) ) {
-				if( isset( $votes[ $oRow->poll_answer ] ) ) {
-					$votes[ $oRow->poll_answer ][ "value" ]++;
-				} else {
-					$votes[ $oRow->poll_answer ][ "value" ] = 1;
-				}
-				$total++;
-			}
-			$dbr->freeResult( $oRes );
+			$votes = ( new WikiaSQL() )
+				->SELECT( 'poll_answer' )
+					->COUNT( '*' )->AS_( 'count' )
+				->FROM( 'poll_vote' )
+				->WHERE( 'poll_id' )->EQUAL_TO( $this->mId )
+				->GROUP_BY( 'poll_answer' )
+				->runLoop( $dbr, function( &$votes, $row ) use ( &$total ) {
+					$votes[$row->poll_answer]['value'] = $row->count;
+					$total += $row->count;
+				}, [] );
 
 			/**
 			 * count percentage of answers
 			 */
-			foreach( $votes as $nr => $vote ) {
-				$percent = $vote[ "value" ] / $total * 100;
-				$votes[ $nr ][ "percent" ] = round($percent, 2);
-				$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
-
-				/* @var Language $wgLang */
-				$percent = $wgLang->formatNum(round($percent, 2));
-				$votes[ $nr ][ "title" ] = wfMsg("ajaxpoll-percentVotes", $percent);
-				$votes[ $nr ][ "key" ] = $nr;
+			foreach( $votes as $nr => &$vote ) {
+				$percent = $vote[ 'value' ] / $total * 100;
+				$vote['percent'] = round( $percent, 2 );
+				$vote['pixels'] = $this->percent2pixels( $percent );
+				$vote['key'] = $nr;
 			}
 
 			// NOTE: Remember to purge everywhere that poll_vote is updated.
-			$wgMemc->set($memcKey, $votes, 3600);
+			$wgMemc->set( $memcKey, $votes, 3600 );
 		}
 		wfProfileOut( __METHOD__ );
 
-		return array( $votes, $total );
+		return [ $votes, $total ];
+	}
+
+	protected function getVotesMemKey() {
+		return wfMemcKey( self::MEMC_PREFIX_GETVOTES, $this->mId );
 	}
 
 	/**
@@ -295,7 +287,9 @@ class AjaxPollClass {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 * @access private
 	 *
-	 * @return integer	number of pixels
+	 * @param int $percent
+	 *
+	 * @return int number of pixels
 	 */
 	private function percent2pixels( $percent ) {
 		return (int )( ( $percent * self::BAR_WIDTH ) / 100 );
@@ -397,7 +391,7 @@ class AjaxPollClass {
 		);
 
 		// Purge the vote stats.
-		$memcKey = wfMemcKey(self::MEMC_PREFIX_GETVOTES, $this->mId);
+		$memcKey = $this->getVotesMemKey();
 		$wgMemc->delete($memcKey);
 
 		wfProfileOut( __METHOD__ );
@@ -412,8 +406,9 @@ class AjaxPollClass {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 * @access private
 	 *
-	 * @param integer	$answer	number of question
+	 * @param integer $answer number of question
 	 *
+	 * @return bool
 	 */
 	private function doVote( $answer ) {
 		global $wgUser, $wgRequest;

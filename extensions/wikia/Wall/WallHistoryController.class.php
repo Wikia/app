@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class WallHistoryController extends WallController {
 	private $isThreadLevel = false;
 
@@ -217,8 +219,18 @@ class WallHistoryController extends WallController {
 				$history[$key]['msgurl'] = $messagePageUrl;
 
 				$msgUser = $wm->getUser();
+				$msgPage = Title::newFromText( $msgUser->getName(), $ns );
+				if ( empty( $msgPage ) ) {
+					WikiaLogger::instance( 'Error reporter: Could not load title object', [
+						'jiraTicket' => 'SOC-578',
+						'titleString' => $msgUser->getName(),
+						'titleNamespace' => $ns,
+						'method' => __METHOD__,
+					] );
+					continue;
+				}
 
-				$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), $ns )->getFullUrl();
+				$history[$key]['msguserurl'] = $msgPage->getFullUrl();
 
 				$history[$key]['msgusername'] = $msgUser->getName();
 
