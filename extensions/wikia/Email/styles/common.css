@@ -43,6 +43,7 @@ button {
 	color: #fff;
 	font-size: 12px;
 	font-weight: bold;
+	height: auto;
 	line-height: 25px;
 	padding: 10px 20px;
 	text-transform: uppercase;
