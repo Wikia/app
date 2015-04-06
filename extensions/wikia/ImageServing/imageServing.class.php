@@ -316,6 +316,10 @@ class ImageServing {
 		$generator = $image->getUrlGenerator()
 			->width($this->width);
 
+		/**
+		 * negative offsets are ignored in the legacy thumbnailer. Vignette respects these, so explicitly set
+		 * the mode to scale-to-width to maintain consistency with the legacy thumbnailer
+		 */
 		if ($top < 0 || $bottom < 0 || $right < 0 || $left < 0) {
 			$generator->scaleToWidth();
 		} else {
