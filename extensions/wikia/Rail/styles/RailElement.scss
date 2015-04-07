@@ -42,10 +42,10 @@ $color-rail-background: mix($color-page, $black, 90%);
         font-weight: bold;
 
         a {
-            color: $color-links-default;
+            color: $color-links;
 
             &:hover {
-                color: $color-links-default;
+                color: $color-links;
                 text-decoration: underline;
                 text-shadow: initial;
             }
@@ -232,51 +232,51 @@ $color-rail-background: mix($color-page, $black, 90%);
 
                 .carousel-container {
                     left: 16px;
-                    width: 260px;
+                    width: 220px;
                 }
 
                 .since, .chatter {
-                    width: 32px;
-                }
-
-                .UserStatsMenu {
-                    outline: rgba($color-divider, .3) solid 2px;
-                    width: 220px;
-
-                    .actions ul {
-                        margin: 0;
-
-                        li {
-                            border-bottom: $color-divider solid thin;
-                            cursor: pointer;
-                            height: 44px;
-                            margin: 0;
-                            white-space: nowrap;
-
-                            .label {
-                                color: mix($color-text, $color-links, 80%);
-                                line-height: 44px;
-                                padding-left: 10px;
-                            }
-
-                            &:hover {
-                                background-color: $color-buttons;
-                            }
-                        }
-                    }
-
-                    .info {
-                        background: $color-menu-highlight;
-                        padding: 10px;
-
-                        ul .username {
-                            font-weight: bold;
-                            margin-bottom: 10px;
-                            text-transform: uppercase;
-                        }
-                    }
+                    width: 30px;
                 }
             }
+        }
+    }
+}
+
+.UserStatsMenu .new-chat {
+    outline: rgba($color-divider, .3) solid 2px;
+    width: 220px;
+
+    .actions ul {
+        margin: 0;
+
+        li {
+            border-bottom: $color-divider solid thin;
+            cursor: pointer;
+            height: 24px;
+            margin: 0;
+            white-space: nowrap;
+
+            .label {
+                color: mix($color-text, $color-links, 80%);
+                line-height: 44px;
+                padding-left: 10px;
+            }
+
+            &:hover {
+                background-color: $color-buttons;
+            }
+        }
+    }
+
+    .info {
+        background: $color-menu-highlight;
+        padding: 10px;
+
+        ul .username {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
     }
 }
