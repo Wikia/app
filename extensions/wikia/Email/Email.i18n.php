@@ -43,7 +43,7 @@ $messages['de'] = array(
 Keine Sorge, falls du kein Passwort angefordert hast! Dein Konto ist absolut sicher. Du kannst diese Nachricht ignorieren und dich weiterhin mit deinem alten Passwort bei Wikia anmelden.
 <br /><br />
 Hast du Fragen oder Bedenken? Bitte wende dich jederzeit <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">an uns</a>.',
-	'emailext-password-email-signature' => 'Support der Wikia-Community',
+	'emailext-password-email-signature' => 'Wikia Community-Support',
 	'emailext-password-email-subject' => 'Anfrage zum Zurücksetzen des Passworts',
 	'emailext-fanverse-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-recipient-notice' => 'E-Mail wurde von Wikia an $1 geschickt',
@@ -56,7 +56,7 @@ $messages['es'] = array(
 	'emailext-no-reply-name' => 'No responder',
 	'emailext-fans-tagline' => 'El universo social para fans por fans',
 	'emailext-password-email-greeting' => 'Hola, $1;',
-	'emailext-password-email-content' => 'Por favor usa esta contraseña temporal para identificar en Wikia: "$1"
+	'emailext-password-email-content' => 'Por favor usa esta contraseña temporal para identificarte en Wikia: "$1"
 <br /><br />
 Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segura. Puedes ignorar este mensaje y continuar iniciando sesión en Wikia con tu antigua contraseña. 
 <br /><br />
@@ -66,7 +66,7 @@ Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segu
 	'emailext-fanverse-tagline' => 'El universo social para fans por fans',
 	'emailext-recipient-notice' => 'Correo electrónico enviado a $1 desde Wikia',
 	'emailext-update-frequency' => 'Para cambiar los correos electrónicos que recibes o la frecuencia con la que se envían, por favor visita tu página de [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} preferencias].',
-	'emailext-unsubscribe' => 'Para darte de baja de todos los emails de Wikia, haz clic [$1 aquí].',
+	'emailext-unsubscribe' => 'Para darte de baja de todos los correos electrónicos de Wikia, haz clic [$1 aquí].',
 );
 
 $messages['fr'] = array(
@@ -74,16 +74,16 @@ $messages['fr'] = array(
 	'emailext-no-reply-name' => 'Aucune réponse',
 	'emailext-fans-tagline' => "L'univers social pour les fans, par des fans",
 	'emailext-password-email-greeting' => 'Bonjour $1,',
-	'emailext-password-email-content' => 'Merci d\'utiliser ce mot de passe temporaire pour vous connecter sur Wikia : $1
+	'emailext-password-email-content' => 'Veuillez utiliser ce mot de passe temporaire pour vous connecter sur Wikia : $1
 <br /><br />
-Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas, votre compte est sécurisé  . Vous pouvez ignorer cet e-mail et continuer à vous connecter sur Wikia avec votre ancien mot de passe. 
+Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas, votre compte est sain et sauf : vous pouvez ignorer cet e-mail et continuer à vous connecter sur Wikia avec votre ancien mot de passe. 
 <br /><br />
 Si vous avez des questions,  n\'hésitez pas à <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">nous contacter</a>.',
 	'emailext-password-email-signature' => "L'équipe Support de Wikia",
 	'emailext-password-email-subject' => 'Demande de réinitialisation du mot de passe ',
 	'emailext-fanverse-tagline' => "L'univers social pour les fans, par des fans",
-	'emailext-recipient-notice' => 'E-mail envoyé par Wikia à 1 $',
-	'emailext-update-frequency' => 'Pour modifier le nombre ou la fréquence des e-mails que vous recevez, merci de visiter la page [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Préférences].',
+	'emailext-recipient-notice' => 'E-mail envoyé par Wikia à $1',
+	'emailext-update-frequency' => 'Pour modifier le nombre ou la fréquence des e-mails que vous recevez, visitez la page [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Préférences].',
 	'emailext-unsubscribe' => "Pour ne plus recevoir d'e-mails de Wikia, cliquez [$1 ici].",
 );
 
@@ -91,8 +91,8 @@ $messages['it'] = array(
 	'emailext-desc' => "Un'estensione per gestire la distribuzione di email",
 	'emailext-no-reply-name' => 'Nessuna risposta',
 	'emailext-fans-tagline' => "L'universo sociale per i fan, dai fan",
-	'emailext-password-email-greeting' => 'Ciao $1,',
-	'emailext-password-email-content' => 'Si prega di inserire questa password temporanea per accedere a Wikia: "$1"
+	'emailext-password-email-greeting' => 'Ciao, $1.',
+	'emailext-password-email-content' => 'Usa questa password temporanea per accedere a Wikia: "$1"
 <br /><br />
 Se non hai richiesto una nuova password, non ti preoccupare! Il tuo account è al sicuro. Semplicemente ignora questo messaggio e accedi a Wikia con la tua vecchia password.
 <br /><br />
@@ -110,9 +110,9 @@ $messages['ja'] = array(
 	'emailext-no-reply-name' => '送信専用',
 	'emailext-fans-tagline' => 'ファンによるファンのためのソーシャル・ユニバース',
 	'emailext-password-email-greeting' => '$1さん',
-	'emailext-password-email-content' => 'ウィキアにログインするには次の一時パスワードを使用してください："$1"
+	'emailext-password-email-content' => 'ウィキアへログインしていただくためには、次の一時パスワードをご利用ください。 $1
 <br /><br />
-新しいパスワードをリクエストしなかった場合も、あなたのアカウントは安全ですのでご安心ください。このメールを無視して、引き続き以前のパスワードでウィキアにログインしていただけます。
+新しいパスワードをリクエストしなかった場合でも、あなたのアカウントは安全ですのでご安心ください。このメールを無視していただき、引き続き以前のパスワードでウィキアにログインしていただけます。
 <br /><br />
 ご質問やご不明な点がございましたら、お気軽に<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">お問い合わせください</a>。',
 	'emailext-password-email-signature' => 'ウィキア・コミュニティ・サポート',
@@ -144,16 +144,16 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 $messages['pl'] = array(
 	'emailext-desc' => 'Rozszerzenie służące do obsługi dostarczania wiadomości e-mail',
 	'emailext-no-reply-name' => 'No Reply',
-	'emailext-fans-tagline' => 'Społeczny wszechświat tworzony dla fanów przez fanów',
+	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-password-email-greeting' => 'Cześć $1,',
 	'emailext-password-email-content' => 'Skorzystaj z poniższego tymczasowego hasła, aby zalogować się do Wikia: "$1"
 <br /><br />
-Jeśli nie prosiłeś o nowe hasło, nie przejmuj się! Twoje konto jest bezpieczne. Możesz zignorować ten e-mail i nadal logować się do Wikia korzystając z dotychczasowego hasła.
+Jeśli nie prosiłeś o nowe hasło, nie przejmuj się. Twoje konto jest bezpieczne. Możesz zignorować ten e-mail i nadal logować się do Wikia korzystając z dotychczasowego hasła.
 <br /><br />
 Masz pytania albo wątpliwości? Skontaktuj się z  <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">Nami</a>.',
-	'emailext-password-email-signature' => 'Wsparcie Społeczności Wikii',
+	'emailext-password-email-signature' => 'Wikia - Wsparcie Społeczności',
 	'emailext-password-email-subject' => 'Prośba o zresetowanie hasła',
-	'emailext-fanverse-tagline' => 'Społeczny wszechświat tworzony dla fanów przez fanów',
+	'emailext-fanverse-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-recipient-notice' => 'Wiadomość e-mail została wysłana do $1 z portalu Wikia',
 	'emailext-update-frequency' => 'Jeśli chcesz zmienić rodzaj lub częstotliwość otrzymywanych wiadomości e-mail, przejdź do strony zawierającej Twoje  [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Ustawienia].',
 	'emailext-unsubscribe' => 'Aby zrezygnować z otrzymywania wiadomości od Wikia, kliknij [$1 tutaj].',
@@ -173,9 +173,9 @@ href="http://pt-br.wikia.com/wiki/Especial:Contact/account-issue">contatar-nos</
 	'emailext-password-email-signature' => 'Apoio à Comunidade da Wikia',
 	'emailext-password-email-subject' => 'Solicitação de restauração de senha',
 	'emailext-fanverse-tagline' => 'O Universo social de fãs para fãs',
-	'emailext-recipient-notice' => 'E-mail enviado para $1 da Wikia',
+	'emailext-recipient-notice' => 'E-mail enviado pela Wikia para $1',
 	'emailext-update-frequency' => 'Para alterar quais e-mails você recebe ou com que frequência, visite sua página [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Preferências].',
-	'emailext-unsubscribe' => 'Para cancelar a assinatura de todos os e-mails da Wikia, clique em [$1 aqui].',
+	'emailext-unsubscribe' => 'Para cancelar a assinatura de todos os e-mails da Wikia, clique [$1 aqui].',
 );
 
 $messages['ru'] = array(
@@ -183,49 +183,50 @@ $messages['ru'] = array(
 	'emailext-no-reply-name' => 'Не отвечать',
 	'emailext-fans-tagline' => 'Социальная вселенная – создана фанатами для фанатов',
 	'emailext-password-email-greeting' => 'Здравствуйте, $1!',
-	'emailext-password-email-content' => 'Пожалуйста, используйте этот временный пароль для входа на Викия: "$1"
+	'emailext-password-email-content' => 'Используйте временный пароль для входа на Викия: "$1".
 <br /><br />
 Если Вы не запрашивали новый пароль, не беспокойтесь! Ваша учетная запись надежно защищена. Не обращайте внимания на данное сообщение и войдите в систему на Викия, используя свой старый пароль. <br /><br />
 Есть вопросы или предложения? <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">Свяжитесь с нами</a>.',
-	'emailext-password-email-signature' => 'Служба поддержки Вики-сообщества',
+	'emailext-password-email-signature' => 'Поддержка Викия',
 	'emailext-password-email-subject' => 'Запрос на сброс пароля',
 	'emailext-fanverse-tagline' => 'Социальная вселенная – создана фанатами для фанатов',
-	'emailext-recipient-notice' => 'Электронное сообщение отправлено участнику $1 c Викия',
+	'emailext-recipient-notice' => 'Электронное сообщение отправлено участнику $1 c Викия.',
 	'emailext-update-frequency' => 'Чтобы изменить параметры электронной почты или частоту получения сообщений, посетите страницу [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} «Настройки»].',
-	'emailext-unsubscribe' => 'Чтобы отписаться от всех электронных сообщений от Викия, нажмите [$1 сюда].',
+	'emailext-unsubscribe' => 'Чтобы отписаться от всех электронных сообщений от Викия, перейдите [$1 по ссылке].',
 );
 
 $messages['zh-hans'] = array(
-	'emailext-desc' => '用来处理邮件传递的扩展功能',
+	'emailext-desc' => '用来处理发送邮件的扩展功能',
 	'emailext-no-reply-name' => '请勿回复',
 	'emailext-fans-tagline' => '全球粉丝社交帝国',
-	'emailext-password-email-greeting' => '$1,您好，',
-	'emailext-password-email-content' => '请用这个临时密码登入Wikia的"$1"
+	'emailext-password-email-greeting' => '$1，您好！',
+	'emailext-password-email-content' => '请使用这个临时密码登入Wikia的"$1"
 <br /><br />
-如果您没有申请新的密码，别担心！您的账户安全无忧。 您可以忽略这个邮件并用您的旧密码继续登入Wikia。<br /><br />
-如有任何疑问或顾虑，请随时通过<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">联系我们</a>。',
-	'emailext-password-email-signature' => 'Wikia社区支持',
+如果您没有申请新的密码，别担心！您的账户安全无忧。 您可以忽略这封邮件并继续使用您的旧密码登入Wikia。<br /><br />
+如有您还有其他任何疑问，请随时<a href="http://zh.community.wikia.com/wiki/Special:Contact/account-issue">联系我们</a>。',
+	'emailext-password-email-signature' => 'Wikia社区支持团队',
 	'emailext-password-email-subject' => '重设密码请求',
 	'emailext-fanverse-tagline' => '全球粉丝社交帝国',
-	'emailext-recipient-notice' => 'Wikia已给$1发送电子邮件',
-	'emailext-update-frequency' => '要更改您要收到的电子邮件的类型或频率，请访问您的[{{fullurl:特别：偏好设置|#mw-prefsection-emailv2}} 偏好设置]页面。',
-	'emailext-unsubscribe' => '要取消订阅所有的Wikia电子邮件，请点击[$1这里]。',
+	'emailext-recipient-notice' => 'Wikia已经发送电子邮件至$1',
+	'emailext-update-frequency' => '如果您需要更改电子邮件地址或接收方式，请访问您的[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 偏好设置]页面。',
+	'emailext-unsubscribe' => '如果您希望取消订阅所有的Wikia电子邮件，请点击[$1 这里]。',
 );
 
 $messages['zh-tw'] = array(
-	'emailext-desc' => '用來處理電子郵件傳遞的擴展功能',
+	'emailext-desc' => '用來處理發送郵件的擴展功能',
 	'emailext-no-reply-name' => '請勿回復',
 	'emailext-fans-tagline' => '全球粉絲社交帝國',
-	'emailext-password-email-greeting' => '$1，您好，',
-	'emailext-password-email-content' => '請用這個臨時密碼登入Wikia的"$1"
+	'emailext-password-email-greeting' => '$1，您好！',
+	'emailext-password-email-content' => '請使用這個臨時密碼登入Wikia的"$1"
 <br /><br />
-如果您沒有請求新的密碼，不要擔心！您的帳戶非常安全、不會有問題。您可以忽略這封電子郵件並繼續用您的舊密碼登錄。<br /><br />
-有疑問或顧慮？請隨時透過<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">與我們聯絡</a>。',
-	'emailext-password-email-signature' => 'Wikia社區支援',
+如果您沒有申請新的密碼，別擔心！您的帳戶安全無憂。 您可以忽略這封郵件並繼續使用您的舊密碼登入Wikia。
+<br /><br />
+如有您還有其他任何疑問，請隨時 <a href="http://zh.community.wikia.com/wiki/Special:Contact/account-issue">聯繫我們</a>。',
+	'emailext-password-email-signature' => 'Wikia社區支援團隊',
 	'emailext-password-email-subject' => '重設密碼請求',
 	'emailext-fanverse-tagline' => '全球粉絲社交帝國',
-	'emailext-recipient-notice' => 'Wikia已给$1發送電子郵件給$1',
-	'emailext-update-frequency' => '若要更改您收到的電子郵件的類型或頻率，請訪問您的[{{fullurl:特別：首選項|#mw-prefsection-emailv2}} 首選項] 頁面。',
-	'emailext-unsubscribe' => '若要取消訂閲所有Wikia電子郵件，請按一下[$1 這裡]。',
+	'emailext-recipient-notice' => 'Wikia已經發送電子郵件至$1',
+	'emailext-update-frequency' => '如果您需要更改電子郵件地址或接收方式，請訪問您的[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 首選項]頁面。',
+	'emailext-unsubscribe' => '如果您希望取消訂閱所有的Wikia電子郵件，請點擊[$1 這裡]。',
 );
 
