@@ -85,9 +85,12 @@ class MercuryApiHooks {
 	 * @return bool
 	 */
 	static public function onTitleGetSquidURLs( Title $title, Array &$urls ) {
+		global $wgServer;
+
 		if( $title->inNamespaces( NS_MAIN ) ) {
 			// Mercury API call from service
-			$urls[] = MercuryApiController::getUrl( 'getArticle', ['title' => $title->getPartialURL()] );
+			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
+			$urls[] = $wgServer . self::SERVICE_API_BASE . self::SERVICE_API_ARTICLE . $title->getPartialURL();
 		}
 		return true;
 	}
