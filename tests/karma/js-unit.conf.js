@@ -195,6 +195,10 @@ module.exports = function (config) {
 			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js',
 			'extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 			'extensions/wikia/UserLogin/js/spec/UserBaseAjaxForm.spec.js',
+
+			// Banner Notifications
+			'extensions/wikia/BannerNotifications/js/BannerNotifications.js',
+			'extensions/wikia/BannerNotifications/js/spec/BannerNotifications.spec.js',
 		]
 	});
 };
