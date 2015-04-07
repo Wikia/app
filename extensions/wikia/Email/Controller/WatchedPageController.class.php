@@ -20,7 +20,7 @@ class WatchedPageController extends EmailController {
 	public function getSubject() {
 		return wfMessage( 'emailext-watchedpage-subject',
 			$this->title->getPrefixedText(),
-			$this->getEditorUserName() )->inLanguage( $this->getTargetLang() )->text();
+			$this->getEditorUserName() )->inLanguage( $this->targetLang )->text();
 	}
 
 	public function initEmail() {
@@ -84,7 +84,7 @@ class WatchedPageController extends EmailController {
 		$footerMessages = [
 			wfMessage( 'emailext-watchedpage-unfollow-text',
 				$this->title->getCanonicalUrl( 'action=unwatch' ),
-				$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse()
+				$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
@@ -132,7 +132,7 @@ class WatchedPageController extends EmailController {
 	 */
 	private function getSalutation() {
 		return wfMessage( 'emailext-watchedpage-salutation',
-			$this->targetUser->getName() )->inLanguage( $this->getTargetLang() )->text();
+			$this->targetUser->getName() )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
@@ -141,7 +141,7 @@ class WatchedPageController extends EmailController {
 	private function getArticleEditedText() {
 		return wfMessage( 'emailext-watchedpage-article-edited',
 			$this->title->getFullURL(),
-			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
+			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 
 	/**
@@ -161,7 +161,7 @@ class WatchedPageController extends EmailController {
 		if ( $this->currentUser->isLoggedIn() )	 {
 			return $this->currentUser->getName();
 		}
-		return wfMessage( "emailext-watchedpage-anonymous-editor" )->inLanguage( $this->getTargetLang() )->text();
+		return wfMessage( "emailext-watchedpage-anonymous-editor" )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
@@ -178,21 +178,24 @@ class WatchedPageController extends EmailController {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}
-		return wfMessage( 'enotif_no_summary' )->inLanguage( $this->getTargetLang() )->text();
+		return wfMessage( 'enotif_no_summary' )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
 	 * @return String
 	 */
 	private function getCompareChangesLabel() {
-		return wfMessage( 'emailext-watchedpage-diff-button-text' )->inLanguage( $this->getTargetLang() )->text();
+		return wfMessage( 'emailext-watchedpage-diff-button-text' )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
 	 * @return String
 	 */
 	private function getCompareChangesLink() {
-		return $this->title->getFullUrl( 'diff=' . $this->currentRevId . '&oldid=' . $this->previousRevId );
+		return $this->title->getFullUrl( [
+			'diff' => $this->currentRevId,
+			'oldid' => $this->previousRevId
+		] );
 	}
 
 	/**
@@ -201,7 +204,7 @@ class WatchedPageController extends EmailController {
 	private function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
 			$this->title->getFullURL(),
-			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
+			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 
 	/**
@@ -210,6 +213,6 @@ class WatchedPageController extends EmailController {
 	private function getAllChangesText() {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->title->getFullURL( 'action=history' ),
-			$this->title->getPrefixedText() )->inLanguage( $this->getTargetLang() )->parse();
+			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 }

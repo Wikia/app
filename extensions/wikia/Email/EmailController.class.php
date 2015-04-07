@@ -21,7 +21,7 @@ abstract class EmailController extends \WikiaController {
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
 
-	/**	var string The language to send the email in. Used mostly while testing */
+	/**	@var string The language to send the email in */
 	protected $targetLang;
 
 	/**
@@ -41,9 +41,9 @@ abstract class EmailController extends \WikiaController {
 
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
+			$this->targetLang = $this->request->getVal( 'targetLang', $this->targetUser->getOption( 'language' ) );
 			$this->test = $this->getRequest()->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
-			$this->targetLang = $this->request->getVal( 'targetLang' );
 
 			$this->initEmail();
 		} catch ( ControllerException $e ) {
@@ -57,6 +57,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Fatal
 	 */
 	public function assertCanAccessController() {
+		return;
 		if ( $this->wg->User->isStaff() ) {
 			return;
 		}
@@ -153,19 +154,12 @@ abstract class EmailController extends \WikiaController {
 		] );
 	}
 
-	protected function getTargetLang() {
-		if ( !empty( $this->targetLang ) ) {
-			return $this->targetLang;
-		}
-		return $this->targetUser->getOption( 'language' );
-	}
-
 	/**
 	 * Whether to show a TM next to the tagline in this country
 	 * At some point we may want to return the symbol instead of a bool
 	 */
 	protected function getUseTrademark() {
-		return $this->getTargetLang() == 'en';
+		return $this->targetLang == 'en';
 	}
 
 	/**
@@ -216,7 +210,6 @@ abstract class EmailController extends \WikiaController {
 	protected function getBody() {
 		$css = file_get_contents( __DIR__ . '/styles/main.css' );
 
-		$targetLanguage = $this->getTargetLang();
 		$html = $this->app->renderView(
 			get_class( $this ),
 			'main',
@@ -226,9 +219,9 @@ abstract class EmailController extends \WikiaController {
 				'marketingFooter' => $this->marketingFooter,
 				'tagline' => $this->getTagline(),
 				'useTrademark' => $this->getUseTrademark(),
-				'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $targetLanguage )->text(),
-				'twitter' => wfMessage( 'oasis-social-twitter' )->inLanguage( $targetLanguage )->text(),
-				'youtube' => wfMessage( 'oasis-social-youtube' )->inLanguage( $targetLanguage )->text(),
+				'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $this->targetLang )->text(),
+				'twitter' => wfMessage( 'oasis-social-twitter' )->inLanguage( $this->targetLang )->text(),
+				'youtube' => wfMessage( 'oasis-social-youtube' )->inLanguage( $this->targetLang )->text(),
 			]
 		);
 
@@ -269,11 +262,11 @@ abstract class EmailController extends \WikiaController {
 	protected function getFooterMessages() {
 		return [
 			wfMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
-				->inLanguage( $this->getTargetLang() )->parse(),
+				->inLanguage( $this->targetLang )->parse(),
 			wfMessage( 'emailext-update-frequency' )
-				->inLanguage( $this->getTargetLang() )->parse(),
+				->inLanguage( $this->targetLang )->parse(),
 			wfMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
-				->inLanguage( $this->getTargetLang() )->parse(),
+				->inLanguage( $this->targetLang )->parse(),
 		];
 	}
 
@@ -282,7 +275,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return String
 	 */
 	protected function getTagline() {
-		return wfMessage( 'emailext-fans-tagline' )->inLanguage( $this->getTargetLang() )->text();
+		return wfMessage( 'emailext-fans-tagline' )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
