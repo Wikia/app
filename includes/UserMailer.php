@@ -61,8 +61,7 @@ class MailAddress {
 		# so don't bother generating them
 		if ( $this->address ) {
 			if ( $this->name != '' && !wfIsWindows() ) {
-				global $wgEnotifUseRealName;
-				$name = ( $wgEnotifUseRealName && $this->realName ) ? $this->realName : $this->name;
+				$name = ( F::app()->wg->EnotifUseRealName && $this->realName ) ? $this->realName : $this->name;
 				$quoted = UserMailer::quotedPrintable( $name );
 				if ( strpos( $quoted, '.' ) !== false || strpos( $quoted, ',' ) !== false ) {
 					$quoted = '"' . $quoted . '"';
@@ -131,13 +130,11 @@ class UserMailer {
 	 * @return String
 	 */
 	static function makeMsgId() {
-		global $wgSMTP, $wgServer;
-
 		$msgid = uniqid( wfWikiID() . ".", true ); /* true required for cygwin */
-		if ( is_array( $wgSMTP ) && isset( $wgSMTP['IDHost'] ) && $wgSMTP['IDHost'] ) {
+		if ( is_array( F::app()->wg->SMTP ) && isset( $wgSMTP['IDHost'] ) && $wgSMTP['IDHost'] ) {
 			$domain = $wgSMTP['IDHost'];
 		} else {
-			$url = wfParseUrl( $wgServer );
+			$url = wfParseUrl( F::app()->wg->Server );
 			$domain = $url['host'];
 		}
 		return "<$msgid@$domain>";
@@ -163,9 +160,7 @@ class UserMailer {
 	 * @param $attachements Array: optional list of files to send as attachements
 	 * @return Status object
 	 */
-	public static function send( $to, $from, $subject, $body, $replyto = null, $contentType = null, $category = 'UserMailer', $priority = 0,
-	$attachements = [] ) {
-		global $wgSMTP, $wgEnotifMaxRecips, $wgAdditionalMailParams;
+	public static function send( $to, $from, $subject, $body, $replyto = null, $contentType = null, $category = 'UserMailer', $priority = 0, $attachements = [] ) {
 
 		if ( !is_array( $to ) ) {
 			$to = [ $to ];
@@ -235,9 +230,7 @@ class UserMailer {
 			$headers['X-Priority'] = $priority;
 		}
 
-		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body
-			, $priority, $attachements
-		] );
+		$ret = wfRunHooks( 'AlternateUserMailer', [ $headers, $to, $from, $subject, $body , $priority, $attachements ] );
 		if ( $ret === false ) {
 			return Status::newGood();
 		} elseif ( $ret !== true ) {
@@ -250,7 +243,7 @@ class UserMailer {
 			$body = $body['text'];
 		}
 
-		if ( is_array( $wgSMTP ) ) {
+		if ( is_array( F::app()->wg->SMTP ) ) {
 			#
 			# PEAR MAILER
 			#
@@ -268,7 +261,7 @@ class UserMailer {
 			wfSuppressWarnings();
 
 			// Create the mail object using the Mail::factory method
-			$mail_object =& Mail::factory( 'smtp', $wgSMTP );
+			$mail_object =& Mail::factory( 'smtp', F::app()->wg->SMTP );
 			if ( PEAR::isError( $mail_object ) ) {
 				wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
 				wfRestoreWarnings();
@@ -286,7 +279,7 @@ class UserMailer {
 
 			# Split jobs since SMTP servers tends to limit the maximum
 			# number of possible recipients.
-			$chunks = array_chunk( $to, $wgEnotifMaxRecips );
+			$chunks = array_chunk( $to, F::app()->wg->EnotifMaxRecips );
 			foreach ( $chunks as $chunk ) {
 				if ( !wfRunHooks( 'ComposeMail', [ $chunk, &$body, &$headers ] ) ) {
 					continue;
@@ -333,7 +326,7 @@ class UserMailer {
 				if ( $safeMode ) {
 					$sent = mail( $recip, self::quotedPrintable( $subject ), $body, $headers );
 				} else {
-					$sent = mail( $recip, self::quotedPrintable( $subject ), $body, $headers, $wgAdditionalMailParams );
+					$sent = mail( $recip, self::quotedPrintable( $subject ), $body, $headers, F::app()->wg->AdditionalMailParams );
 				}
 			}
 
@@ -479,7 +472,6 @@ class EmailNotification {
 	 * May be deferred via the job queue.
 	 */
 	public function notifyOnPageChange() {
-		global $wgEnotifWatchlist, $wgShowUpdatedMarker;
 
 		if ( $this->title->getNamespace() < 0 ) {
 			return;
@@ -491,7 +483,7 @@ class EmailNotification {
 
 		// Build a list of users to notify
 		$watchers = [];
-		if ( $wgEnotifWatchlist || $wgShowUpdatedMarker ) {
+		if ( F::app()->wg->EnotifWatchlist || F::app()->wg->ShowUpdatedMarker ) {
 			$notificationTimeoutSql = $this->getTimeOutSql();
 			$watchers = $this->getWatchersToNotify( $notificationTimeoutSql );
 			if ( $watchers ) {
@@ -508,12 +500,11 @@ class EmailNotification {
 	 * Add a timeout to the watchlist email block
 	 */
 	private function getTimeOutSql() {
-		global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
 
 		if ( !empty( $this->otherParam['notisnull'] ) ) {
 			$notificationTimeoutSql = "1";
-		} elseif ( !empty( $wgEnableWatchlistNotificationTimeout ) && isset( $WatchlistNotificationTimeout ) ) {
-			$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $this->timestamp ) - intval( $wgWatchlistNotificationTimeout ) );
+		} elseif ( !empty( F::app()->wg->EnableWatchlistNotificationTimeout ) && isset( F::app()->wg->WatchlistNotificationTimeout ) ) {
+			$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $this->timestamp ) - intval( F::app()->wg->WatchlistNotificationTimeout ) );
 			$notificationTimeoutSql = "wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout'";
 		} else {
 			$notificationTimeoutSql = 'wl_notificationtimestamp IS NULL';
@@ -574,7 +565,7 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function thereAreUsersWatchingPage( array $watchers ) {
-		return count( $watchers ) || count( \F::app()->wg->UsersNotifiedOnAllChanges );
+		return count( $watchers ) || count( F::app()->wg->UsersNotifiedOnAllChanges );
 	}
 
 	/**
@@ -582,7 +573,7 @@ class EmailNotification {
 	 */
 	private function canSendUserTalkEmail() {
 		$targetUser = User::newFromName( $this->title->getText() );
-		if ( !empty( \F::app()->wg->EnotifUserTalk ) && // we want to notify users when they're user talk page is changed
+		if ( !empty( F::app()->wg->EnotifUserTalk ) && // we want to notify users when they're user talk page is changed
 			!$this->editor->isAllowed( 'nominornewtalk' ) && // and the editor wants users to be notified when they make minor edits on discussion pages
 			$targetUser instanceof User && // and the user exists
 			!$targetUser->isAnon() && // and they not anonymous
@@ -605,7 +596,6 @@ class EmailNotification {
 	 *
 	 */
 	private function actuallyNotifyOnPageChange( $watchers ) {
-		global $wgEnotifWatchlist;
 
 		$this->setReplyToAndFromAddresses();
 
@@ -628,7 +618,7 @@ class EmailNotification {
 				}
 			}
 
-			if ( $wgEnotifWatchlist ) {
+			if ( F::app()->wg->EnotifWatchlist ) {
 				// Send updates to watchers other than the current editor
 				$userArray = UserArray::newFromIDs( $watchers );
 
@@ -649,19 +639,16 @@ class EmailNotification {
 	}
 
 	private function setReplyToAndFromAddresses() {
-		global $wgPasswordSender, $wgPasswordSenderName, $wgNoReplyAddress;
-		global $wgEnotifFromEditor, $wgEnotifRevealEditorAddress;
-
 		# Reveal the page editor's address as REPLY-TO address only if
 		# the user has not opted-out and the option is enabled at the
 		# global configuration level.
-		$adminAddress = new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
-		if ( $wgEnotifRevealEditorAddress
+		$adminAddress = new MailAddress( F::app()->wg->PasswordSender, F::app()->wg->PasswordSenderName );
+		if ( F::app()->wg->EnotifRevealEditorAddress
 			&& ( $this->editor->getEmail() != '' )
 			&& $this->editor->getOption( 'enotifrevealaddr' ) )
 		{
 			$editorAddress = new MailAddress( $this->editor );
-			if ( $wgEnotifFromEditor ) {
+			if ( F::app()->wg->EnotifFromEditor ) {
 				$this->from    = $editorAddress;
 			} else {
 				$this->from    = $adminAddress;
@@ -669,14 +656,12 @@ class EmailNotification {
 			}
 		} else {
 			$this->from    = $adminAddress;
-			$this->replyto = new MailAddress( $wgNoReplyAddress );
+			$this->replyto = new MailAddress( F::app()->wg->NoReplyAddress );
 		}
 	}
 
 	private function emailUsersNotifiedOnAllChanges() {
-		global $wgUsersNotifiedOnAllChanges;
-
-		foreach ( $wgUsersNotifiedOnAllChanges as $name ) {
+		foreach ( F::app()->wg->UsersNotifiedOnAllChanges as $name ) {
 			// No point notifying the user that actually made the change!
 			if ( $this->editor->getName() == $name ) {
 				continue;
@@ -690,8 +675,6 @@ class EmailNotification {
 	 * Generate the generic "this page has been changed" e-mail text.
 	 */
 	private function composeCommonMailtext() {
-		global $wgEnotifUseRealName;
-		global $wgLanguageCode;
 
 		$this->composedCommon = true;
 
@@ -703,7 +686,7 @@ class EmailNotification {
 		list ( $body, $bodyHTML ) = wfMsgHTMLwithLanguageAndAlternative(
 			'enotif_body' . ( $action == '' ? '' : ( '_' . $action ) ),
 			'enotif_body',
-			$wgLanguageCode
+			F::app()->wg->LanguageCode
 		);
 
 		# You as the WikiAdmin and Sysops can make use of plenty of
@@ -718,7 +701,7 @@ class EmailNotification {
 			list ( $keys['$NEWPAGE'], $keys['$NEWPAGEHTML'] ) = wfMsgHTMLwithLanguageAndAlternative (
 				'enotif_lastvisited',
 				'enotif_lastvisited',
-				$wgLanguageCode,
+				F::app()->wg->LanguageCode,
 				[],
 				$this->title->getFullUrl( 's=wldiff&diff=0&previousRevId=' . $this->previousRevId )
 			);
@@ -751,7 +734,7 @@ class EmailNotification {
 			$keys['$PAGEEDITOR'] = wfMessage( 'enotif_anon_editor', $this->editor->getName() )->inContentLanguage()->plain();
 			$keys['$PAGEEDITOR_EMAIL'] = wfMessage( 'noemailtitle' )->inContentLanguage()->plain();
 		} else {
-			$keys['$PAGEEDITOR'] = $wgEnotifUseRealName ? $this->editor->getRealName() : $this->editor->getName();
+			$keys['$PAGEEDITOR'] = F::app()->wg->EnotifUseRealName ? $this->editor->getRealName() : $this->editor->getName();
 			$emailPage = SpecialPage::getSafeTitleFor( 'Emailuser', $this->editor->getName() );
 			$keys['$PAGEEDITOR_EMAIL'] = $emailPage->getCanonicalUrl();
 		}
@@ -820,7 +803,7 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function emailExtensionEnabled() {
-		return !empty( \F::app()->wg->EnableEmailExt );
+		return !empty( F::app()->wg->EnableEmailExt );
 	}
 
 	/**
@@ -836,7 +819,7 @@ class EmailNotification {
 	 * @param $user User
 	 */
 	private function sendUsingEmailExtension( \User $user ) {
-		\F::app()->sendRequest( 'Email\Controller\WatchedPage', 'handle',
+		F::app()->sendRequest( 'Email\Controller\WatchedPage', 'handle',
 			[
 				'targetUser' => $user->getName(),
 				'title' => $this->title->getText(),
@@ -866,7 +849,6 @@ class EmailNotification {
 	 * @private
 	 */
 	private function sendPersonalised( $watchingUser ) {
-		global $wgContLang, $wgEnotifUseRealName;
 		// From the PHP manual:
 		//     Note:  The to parameter cannot be an address in the form of "Something <someone@example.com>".
 		//     The mail command will not parse this properly while talking with the MTA.
@@ -880,9 +862,9 @@ class EmailNotification {
 			[ '$WATCHINGUSERNAME',
 				'$PAGEEDITDATE',
 				'$PAGEEDITTIME' ],
-			[ $wgEnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
-				$wgContLang->userDate( $this->timestamp, $watchingUser ),
-				$wgContLang->userTime( $this->timestamp, $watchingUser ) ],
+			[ F::app()->wg->EnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
+				F::app()->wg->ContLang->userDate( $this->timestamp, $watchingUser ),
+				F::app()->wg->ContLang->userTime( $this->timestamp, $watchingUser ) ],
 			$this->body );
 
 		if ( $watchingUser->getOption( 'htmlemails' ) && !empty( $this->bodyHTML ) ) {
@@ -890,9 +872,9 @@ class EmailNotification {
 				[ '$WATCHINGUSERNAME',
 					'$PAGEEDITDATE',
 					'$PAGEEDITTIME' ],
-				[ $wgEnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
-					$wgContLang->userDate( $this->timestamp, $watchingUser ),
-					$wgContLang->userTime( $this->timestamp, $watchingUser ) ],
+				[ F::app()->wg->EnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
+					F::app()->wg->ContLang->userDate( $this->timestamp, $watchingUser ),
+					F::app()->wg->ContLang->userTime( $this->timestamp, $watchingUser ) ],
 				$this->bodyHTML );
 			# now body is array with text and html version of email
 			$body = [ 'text' => $body, 'html' => $bodyHTML ];
@@ -921,7 +903,7 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function notifyUsersOnMinorEdits() {
-		return !empty(\F::app()->wg->EnotifMinorEdits );
+		return !empty(F::app()->wg->EnotifMinorEdits );
 	}
 
 	/**
