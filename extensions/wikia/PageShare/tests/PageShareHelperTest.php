@@ -111,7 +111,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 			->will( $this->returnCallback( function ( $key, $defaultValue ) use ( $requestLang ) {
 				if ( !is_null( $requestLang ) ) {
 					return $requestLang;
-				} ;
+				}
 				return $defaultValue;
 			} ) );
 		$this->mockGlobalVariable( 'wgRequest', $wgRequestMock );
