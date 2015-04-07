@@ -44,6 +44,7 @@
 		display: inline;
 		font-size: 26px;
 		line-height: 27px;
+		//@TODO CONCF-189 remove this declaration when social buttons are live
 		margin: 0 10px;
 		word-wrap: break-word;
 
@@ -248,6 +249,10 @@
 					float: none;
 				}
 			}
+		}
+
+		h1 {
+			margin: 0 10px 0 0;
 		}
 	}
 }
