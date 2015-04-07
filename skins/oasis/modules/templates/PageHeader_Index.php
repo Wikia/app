@@ -22,9 +22,11 @@ if ( ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() ) ) {
 				<? endif; ?>
 			</div>
 			<div class="header-column header-tally">
-				<?php if ( !empty( $wg->EnablePageShareExt ) ) {
-					echo F::app()->renderView( 'PageShare', 'index' );
-				} ?>
+				<? if ( !empty( $wg->EnablePageShareExt ) ): ?>
+					<div id="PageShareContainer" class="page-share-container">
+						<?php echo F::app()->renderView( 'PageShare', 'Index' );?>
+					</div>
+				<? endif; ?>
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
 				<? endif; ?>

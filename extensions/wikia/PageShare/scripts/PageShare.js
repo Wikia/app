@@ -7,6 +7,34 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 		trackingMethod: 'both'
 	});
 
+	function loadShareIcons() {
+		var useLang = $.getUrlVar('uselang'),
+			browserLang = (win.navigator.language || win.navigator.browserLanguage),
+			browserLangShort;
+
+		if (browserLang) {
+			browserLangShort = browserLang.substr(0, 2)
+		}
+		$.nirvana.sendRequest({
+			type: 'GET',
+			controller: 'PageShare',
+			method: 'getShareIcons',
+			data: {
+				browserLang: browserLangShort,
+				useLang: useLang
+			},
+			callback: pasteShareIcons
+		})
+	}
+
+	function pasteShareIcons(data) {
+		var $container = $('#PageShareContainer');
+		if (data.socialIcons) {
+			$container.html(data.socialIcons);
+			$('#PageShareToolbar').on('click', '.page-share a', shareLinkClick);
+		}
+	}
+
 	/**
 	 * @desc Share click handler
 	 *
@@ -29,6 +57,6 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 
 	// bind events to links
 	$(function(){
-		$('#PageShareToolbar').on('click', '.page-share a', shareLinkClick);
+		loadShareIcons();
 	});
 });
