@@ -30,10 +30,10 @@ class PageShareHelper {
 	 * @param $useLang
 	 * @return String language
 	 */
-	public static function getLangForPageShare($browserLang, $useLang) {
+	public static function getLangForPageShare( $browserLang, $useLang ) {
 		global $wgLang, $wgUser;
 
-		if ( !empty ( $useLang )) {
+		if ( !empty ( $useLang ) ) {
 			return $useLang;
 		} else {
 			if ( $wgUser->isAnon() ) {
