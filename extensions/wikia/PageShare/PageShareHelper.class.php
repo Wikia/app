@@ -1,5 +1,8 @@
 <?php
 class PageShareHelper {
+
+	const SHARE_DEFAULT_LANGUAGE = 'en';
+
 	private static function readIcon( $fileName ) {
 		$fullName = realpath( __DIR__ . '/icons/' . $fileName . '.svg' );
 		if ( is_readable( $fullName ) ) {
@@ -15,6 +18,29 @@ class PageShareHelper {
 			$icon = self::readIcon( 'share' );
 		}
 		return $icon;
+	}
+
+	/**
+	 * Get language for Page Share service.
+	 * For anon users use the browser language, if header is empty default to English.
+	 * For logged in user use user's language.
+	 * Both values can be overwritten by ?uselang parameter.
+	 *
+	 * @return String language
+	 */
+	public static function getLangForPageShare() {
+		global $wgLang, $wgRequest, $wgUser;
+
+		if ( $wgUser->isAnon() ) {
+			if ( !empty( $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ] ) ) {
+				$lang = substr( $_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2 );
+			} else {
+				$lang = self::SHARE_DEFAULT_LANGUAGE;
+			}
+		} else {
+			$lang = $wgLang->getCode();
+		}
+		return $wgRequest->getVal( 'uselang', $lang );
 	}
 
 	public static function isValidShareService( $service, $lang ) {

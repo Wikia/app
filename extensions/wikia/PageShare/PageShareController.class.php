@@ -20,12 +20,12 @@ class PageShareController extends WikiaController {
 	 * @return Array
 	 */
 	private function prepareShareServicesData() {
-		global $wgPageShareServices, $wgLang;
+		global $wgPageShareServices;
 
 		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
 		$location = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+		$lang = PageShareHelper::getLangForPageShare();
 		$services = [];
-		$lang = $this->request->getVal( 'lang', $wgLang->getCode() );
 
 		foreach ( $wgPageShareServices as $service ) {
 			if ( PageShareHelper::isValidShareService( $service, $lang ) ) {
