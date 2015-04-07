@@ -516,14 +516,16 @@ class EmailNotification {
 	private function getWatchersToNotify( $notificationTimeoutSql ) {
 		$watchers = [];
 		$dbw = wfGetDB( DB_MASTER );
-		$res = $dbw->select( [ 'watchlist' ],
+		$res = $dbw->select(
+			[ 'watchlist' ],
 			[ 'wl_user' ],
 			[
 				'wl_title' => $this->title->getDBkey(),
 				'wl_namespace' => $this->title->getNamespace(),
 				'wl_user != ' . intval( $this->editor->getID() ),
 				$notificationTimeoutSql
-			], __METHOD__
+			],
+			__METHOD__
 		);
 
 		foreach ( $res as $row ) {
@@ -573,19 +575,53 @@ class EmailNotification {
 	 */
 	private function canSendUserTalkEmail() {
 		$targetUser = User::newFromName( $this->title->getText() );
-		if ( !empty( F::app()->wg->EnotifUserTalk ) && // we want to notify users when they're user talk page is changed
-			!$this->editor->isAllowed( 'nominornewtalk' ) && // and the editor wants users to be notified when they make minor edits on discussion pages
-			$targetUser instanceof User && // and the user exists
-			!$targetUser->isAnon() && // and they not anonymous
-			$targetUser->getId() != $this->editor->getId() && // and they are not the user who made the edit
-			$targetUser->getOption( 'enotifusertalkpages' ) && // and they want to be notified about talk pages changes
-			$targetUser->isEmailConfirmed() && // and their email is confirmed
-			( !$this->isMinorEdit() || $targetUser->getOption( 'enotifminoredits' ) ) // and this is not a minor edit, or they want to know about minor edits
-			) {
-			return true;
+
+		// Should we notify users when their user talk page is changed?
+		if ( empty( F::app()->wg->EnotifUserTalk ) ) {
+			return false;
 		}
 
-		return false;
+		// Is it a minor edit? If so, do we want to notify users about minor edits?
+		if ( $this->isMinorEdit() && !F::app()->wg->EnotifMinorEdits ) {
+			return false;
+		}
+
+		// Is it a minor edit? If so, does the editor does want users to be notified when they make minor edits on a discussion page?
+		if ( $this->isMinorEdit() && $this->editor->isAllowed( 'nominornewtalk' ) ) {
+			return false;
+		}
+
+		// Does the user whose talk page was edited exists?
+		if ( !$targetUser instanceof User ) {
+			return false;
+		}
+
+		// Is that user anonymous?
+		if ( $targetUser->isAnon() ) {
+			return false;
+		}
+
+		// Is that user the same user who made the edit?
+		if ( $targetUser->getId() != $this->editor->getId() ) {
+			return false;
+		}
+
+		// Does that user want to be notified about changes to their talk page?
+		if ( !$targetUser->getOption( 'enotifusertalkpages' ) ) {
+			return false;
+		}
+
+		// Does that user have a confirmed email?
+		if ( !$targetUser->isEmailConfirmed() ) {
+			return false;
+		}
+
+		// Is it a minor edit? If so, does that user want to know about minor edits?
+		if ( $this->isMinorEdit() &&  $targetUser->getOption( 'enotifminoredits' ) )  {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -627,8 +663,8 @@ class EmailNotification {
 					if ( $watchingUser->getOption( 'enotifwatchlistpages' ) &&
 						( !$this->isMinorEdit() || $watchingUser->getOption( 'enotifminoredits' ) ) &&
 						$watchingUser->isEmailConfirmed() &&
-						$watchingUser->getID() != $userTalkId
-						&& !$watchingUser->getBoolOption( 'unsubscribed' ) )
+						$watchingUser->getID() != $userTalkId &&
+						!$watchingUser->getBoolOption( 'unsubscribed' ) )
 					{
 						$this->compose( $watchingUser );
 					}
@@ -741,9 +777,8 @@ class EmailNotification {
 
 		$keys['$PAGEEDITOR_WIKI'] = $this->editor->getUserPage()->getCanonicalUrl();
 
-		$summary = ( $this->summary == '' ) ? wfMessage( 'enotif_no_summary' )->inContentLanguage()->plain() : '"' . $this->summary . '"';
+		$summary = $this->summary == '' ? wfMessage( 'enotif_no_summary' )->inContentLanguage()->plain() : '"' . $this->summary . '"';
 
-		// Replace this after transforming the message, bug 35019
 		$postTransformKeys['$PAGESUMMARY'] = $summary;
 
 		// Now build message's subject and body
@@ -903,7 +938,7 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function notifyUsersOnMinorEdits() {
-		return !empty(F::app()->wg->EnotifMinorEdits );
+		return !empty( F::app()->wg->EnotifMinorEdits );
 	}
 
 	/**
