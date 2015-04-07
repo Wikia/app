@@ -7,6 +7,10 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
+	/** CSS used for the main content section of each email. Used by getContent()
+	 * and intended to be overridden by child classes. */
+	const LAYOUT_CSS = 'avatarLayout.css';
+
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
 
@@ -57,7 +61,6 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Fatal
 	 */
 	public function assertCanAccessController() {
-		return;
 		if ( $this->wg->User->isStaff() ) {
 			return;
 		}
@@ -233,7 +236,18 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * Renders the content unique to each email.
 	 */
-	abstract protected function getContent();
+	protected function getContent() {
+		$css = file_get_contents( __DIR__ . '/styles/' . static::LAYOUT_CSS );
+		$html = $this->app->renderView(
+			get_class( $this ),
+			'body',
+			$this->request->getParams()
+		);
+
+		$html = $this->inlineStyles( $html, $css );
+
+		return $html;
+	}
 
 	/**
 	 * Inline all css into style attributes

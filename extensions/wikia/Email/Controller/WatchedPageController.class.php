@@ -111,24 +111,6 @@ class WatchedPageController extends EmailController {
 
 	/**
 	 * @return String
-	 * Get rendered html for content unique to this email
-	 * @todo We may want to make this available more generically for other emails to use the avatar layout.
-	 */
-	protected function getContent() {
-		$css = file_get_contents( __DIR__ . '/../styles/avatarLayout.css' );
-		$html = $this->app->renderView(
-			get_class( $this ),
-			'body',
-			$this->request->getParams()
-		);
-
-		$html = $this->inlineStyles( $html, $css );
-
-		return $html;
-	}
-
-	/**
-	 * @return String
 	 */
 	private function getSalutation() {
 		return wfMessage( 'emailext-watchedpage-salutation',
