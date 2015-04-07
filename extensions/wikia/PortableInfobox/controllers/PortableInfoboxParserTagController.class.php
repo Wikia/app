@@ -9,7 +9,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return bool
 	 */
 	public static function parserTagInit( Parser $parser ) {
-		$parser->setHook( self::PARSER_TAG_NAME, [new static(), 'renderInfobox'] );
+		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderInfobox' ] );
 		return true;
 	}
 
@@ -24,8 +24,59 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
 		$connector = new InfoboxServiceConnector();
-		$data = $frame->getNamedArguments();
-		$html = $connector->getHtmlBySource('<'.self::PARSER_TAG_NAME.'>'.$text.'</'.self::PARSER_TAG_NAME.'>', $data);
-		return $html;
+		$renderer = new PortableInfoboxRenderService();
+		$json = $connector->getJsonBySource( '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>',
+			$frame->getNamedArguments() );
+		$data = $this->parseData( json_decode( $json ), $parser, $frame );
+
+		return $renderer->renderInfobox($data);
+	}
+
+	private function parseData( $json, Parser $parser, PPFrame $frame ) {
+		$result = [ ];
+		foreach ( $json->items as $item ) {
+			$result[ $item->tag->value ] = $this->parseItem( $item, $parser, $frame );
+		}
+		return $result;
+	}
+
+	private function parseItem( $item, Parser $parser, PPFrame $frame ) {
+		$result = [
+			'type' => $item->type->value,
+			'data' => [
+				'label' => $this->parseValue( $item->label->value, $parser, $frame ),
+				'value' => $this->parseValue( $item->value->value, $parser, $frame ),
+			]
+		];
+		//add path for image type
+		if ( $item->type->value == 'image' ) {
+			//resolve url
+			$result[ 'data' ][ 'value' ] = $this->resolveImageUrl( $result[ 'data' ][ 'value' ] );
+			//get alt attribute
+			if ( !empty( $item->properties->alt->value ) ) {
+				$result[ 'data' ][ 'alt' ] = $this->parseValue( $item->properties->alt->value, $parser, $frame );
+			}
+		}
+		return $result;
+	}
+
+	private function resolveImageUrl( $filename ) {
+		$title = Title::newFromText( $filename, NS_FILE );
+		if ( $title->exists() ) {
+			return WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();
+		}
+		return "";
+	}
+
+	private function parseValue( $text, Parser $parser, PPFrame $frame ) {
+		if ( !empty( $text ) ) {
+			$options = $parser->getOptions();
+			$options->enableLimitReport( false );
+			$preprocessed = $parser->recursivePreprocess( $text, $frame );
+			$newlinesstripped = preg_replace( "|[\n\r]|Us", '', $preprocessed );
+			$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
+			return ( new Parser() )->parse( $marksstripped, $parser->getTitle(), $options, false )->getText();
+		}
+		return "";
 	}
 }

@@ -1,17 +1,19 @@
 <?php
+
 class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 
 	private $templates = [
-		'wrapper' => 'PortableInfoboxWrapper',
-		'title' => 'PortableInfoboxItemTitle',
-		'image' => 'PortableInfoboxItemImage',
-		'keyVal' => 'PortableInfoboxItemKeyVal'
+		'wrapper' => 'PortableInfoboxWrapper.mustache',
+		'title' => 'PortableInfoboxItemTitle.mustache',
+		'image' => 'PortableInfoboxItemImage.mustache',
+		'key' => 'PortableInfoboxItemKeyVal.mustache'
 	];
 	private $templateEngine;
 
 	function __construct() {
-		$this->templateEngine = (new Wikia\Template\MustacheEngine)->setPrefix( dirname(__FILE__) . '/templates' );
+		$this->templateEngine = ( new Wikia\Template\MustacheEngine )
+			->setPrefix( dirname( __FILE__ ) . '/../templates' );
 	}
 
 	/**
@@ -24,25 +26,22 @@ class PortableInfoboxRenderService extends WikiaService {
 		$infoboxHtmlContent = '';
 
 		foreach ( $infoboxdata as $item ) {
-			$data = $item['data'];
-			$type = $item['type'];
+			$data = $item[ 'data' ];
+			$type = $item[ 'type' ];
 
-			if ( !empty( $data['value'] ) ) {
-
+			if ( !empty( $data[ 'value' ] ) ) {
 				// skip rendering for not supported type and log it
-				if ( array_key_exists( $type, $this->templates ) ) {
+				if ( !isset( $this->templates[ $type ] ) ) {
 					Wikia\Logger\WikiaLogger::instance()->info( LOGGER_LABEL, [
 						'type' => $type
 					] );
-
 					continue;
 				}
-
 				$infoboxHtmlContent .= $this->renderItem( $type, $data );
 			}
 		}
 
-		return $this->renderItem( ['content' => $infoboxHtmlContent], 'wrapper' );
+		return $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent ] );
 	}
 
 	/**
@@ -52,10 +51,9 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $data
 	 * @return string - HTML
 	 */
-	private function renderItem( string $type, array $data ) {
-		return $this->templateEngine
-			->clearValues()
-			->setValues( $data )
-			->render( $this->templates[$type] );
+	private function renderItem( $type, array $data ) {
+		$this->templateEngine->clearData();
+		$this->templateEngine->setData( $data );
+		return $this->templateEngine->render( $this->templates[ $type ] );
 	}
 }

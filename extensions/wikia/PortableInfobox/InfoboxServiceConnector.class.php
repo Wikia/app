@@ -14,7 +14,7 @@ class InfoboxServiceConnector {
 		$this->consulService = new ConsulService( new ConsulConfig( self::SERVICE_DC, self::SERVICE_NAME, "testing" ) );
 	}
 
-	public function getHtmlBySource( $sourceCode, $templateData ) {
+	public function getJsonBySource( $sourceCode, $templateData ) {
 		$extQuery = new ExternalServicesQuery( $this->consulService );
 		$url = $extQuery->getUrl( self::SERIVCE_QUERY_PATH );
 		$postData = $this->getPostData( $sourceCode, $templateData );
@@ -33,7 +33,7 @@ class InfoboxServiceConnector {
 	protected function getHeaders() {
 		return [
 			"Content-Type" => "application/x-www-form-urlencoded",
-			"Accept" => "text/html"
+			"Accept" => "application/json"
 		];
 	}
 

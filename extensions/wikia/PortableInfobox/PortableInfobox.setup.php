@@ -16,6 +16,7 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 ];
 
 $wgAutoloadClasses[ 'InfoboxServiceConnector' ] = $dir . 'InfoboxServiceConnector.class.php';
+$wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/PortableInfoboxRenderService.class.php';
 
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
