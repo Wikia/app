@@ -88,9 +88,10 @@ class MercuryApiHooks {
 		global $wgServer;
 
 		if( $title->inNamespaces( NS_MAIN ) ) {
-			// Mercury API call from service
-			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
+			// Mercury API call from Ember to Hapi
 			$urls[] = $wgServer . self::SERVICE_API_BASE . self::SERVICE_API_ARTICLE . $title->getPartialURL();
+			// Mercury API call from Hapi to MediaWiki
+			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
 		}
 		return true;
 	}
