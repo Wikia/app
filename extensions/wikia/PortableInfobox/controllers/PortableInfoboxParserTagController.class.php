@@ -62,7 +62,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function resolveImageUrl( $filename ) {
 		$title = Title::newFromText( $filename, NS_FILE );
-		if ( $title->exists() ) {
+		if ( $title && $title->exists() ) {
 			return WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();
 		}
 		return "";
