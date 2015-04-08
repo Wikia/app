@@ -2,38 +2,10 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 	'use strict';
 
 	var trackFunc = tracker.buildTrackingFunction({
-		action: Wikia.Tracker.ACTIONS.CLICK,
+		action: win.Wikia.Tracker.ACTIONS.CLICK,
 		category: 'share',
 		trackingMethod: 'both'
 	});
-
-	function loadShareIcons() {
-		var useLang = $.getUrlVar('uselang'),
-			browserLang = (win.navigator.language || win.navigator.browserLanguage),
-			browserLangShort;
-
-		if (browserLang) {
-			browserLangShort = browserLang.substr(0, 2)
-		}
-		$.nirvana.sendRequest({
-			type: 'GET',
-			controller: 'PageShare',
-			method: 'getShareIcons',
-			data: {
-				browserLang: browserLangShort,
-				useLang: useLang
-			},
-			callback: pasteShareIcons
-		})
-	}
-
-	function pasteShareIcons(data) {
-		var $container = $('#PageShareContainer');
-		if (data.socialIcons) {
-			$container.html(data.socialIcons);
-			$('#PageShareToolbar').on('click', '.page-share a', shareLinkClick);
-		}
-	}
 
 	/**
 	 * @desc Share click handler
@@ -55,8 +27,37 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 		win.open(url, title, 'width=' + w + ',height=' + h);
 	}
 
+	function appendShareIcons(data) {
+		var $container = $('#PageShareContainer');
+		if (data.socialIcons) {
+			$container.html(data.socialIcons);
+			$('#PageShareToolbar').on('click', '.page-share a', shareLinkClick);
+		}
+	}
+
+	function loadShareIcons() {
+		var useLang = $.getUrlVar('uselang'),
+			browserLang = (win.navigator.language || win.navigator.browserLanguage),
+			browserLangShort;
+
+		if (browserLang) {
+			browserLangShort = browserLang.substr(0, 2);
+		}
+
+		$.nirvana.sendRequest({
+			type: 'GET',
+			controller: 'PageShare',
+			method: 'getShareIcons',
+			data: {
+				browserLang: browserLangShort,
+				useLang: useLang
+			},
+			callback: appendShareIcons
+		});
+	}
+
 	// bind events to links
-	$(function(){
+	$(function() {
 		loadShareIcons();
 	});
 });
