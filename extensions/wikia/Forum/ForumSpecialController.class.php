@@ -220,7 +220,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 				'method' => __METHOD__
 			]);
 			$this->response->setCode( 404 );
-			return false;
+			return true;
 		}
 		$boardTitle = $board->getTitle()->getText();
 
