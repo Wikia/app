@@ -70,8 +70,8 @@ class AdEngine2ContextService {
 				'forceProviders' => $this->filterOutEmptyItems( [
 					'directGpt' => $wg->AdDriverForceDirectGptAd,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
-					'turtle' => $wg->AdDriverForceTurtleAd,
 					'szymon' => $wg->AdDriverForceSzymonAd,
+					'turtle' => $wg->AdDriverForceTurtleAd,
 				] ),
 			];
 		} );

@@ -12,8 +12,8 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.later',
-	'ext.wikia.adEngine.provider.turtle',
-	'ext.wikia.adEngine.provider.szymon'
+	'ext.wikia.adEngine.provider.szymon',
+	'ext.wikia.adEngine.provider.turtle'
 ], function (
 	// regular dependencies
 	log,
@@ -27,8 +27,8 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	adProviderDirectGpt,
 	adProviderLater,
-	adProviderTurtle,
-	adProviderSzymon
+	adProviderSzymon,
+	adProviderTurtle
 ) {
 	'use strict';
 
@@ -80,11 +80,11 @@ define('ext.wikia.adEngine.adConfig', [
 			return [];
 		}
 
-        // Force szymon
-        if (context.forceProviders.szymon) {
-            log(['getProvider', slotname, 'Later (wgAdDriverForceSzymonAd)'], 'info', logGroup);
-            return [adProviderSzymon];
-        }
+		// Force szymon
+		if (context.forceProviders.szymon) {
+			log(['getProvider', slotname, 'Later (wgAdDriverForceSzymonAd)'], 'info', logGroup);
+			return [adProviderSzymon];
+		}
 
 		// Force Liftium
 		if (context.forceProviders.liftium) {
@@ -125,7 +125,7 @@ define('ext.wikia.adEngine.adConfig', [
 			}
 
 			log(['getProvider', slotname, 'DirectGpt->Later'], 'info', logGroup);
-			return [adProviderDirectGpt, adProviderLater];
+			return [adProviderSzymon, adProviderDirectGpt, adProviderLater];
 		}
 
 		// Non-high-value slots go to ad provider Later
