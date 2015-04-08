@@ -221,19 +221,17 @@ class WallHistoryController extends WallController {
 				$msgUser = $wm->getUser();
 				$msgPage = Title::newFromText( $msgUser->getName(), $ns );
 				if ( empty( $msgPage ) ) {
-					WikiaLogger::instance( 'Error reporter: Could not load title object', [
-						'jiraTicket' => 'SOC-578',
-						'titleString' => $msgUser->getName(),
-						'titleNamespace' => $ns,
-						'method' => __METHOD__,
-					] );
-					continue;
+					// SOC-586, SOC-578 : There is an edge case where $msgUser->getName can be empty
+					// because of a rev_deleted flag on the revision loaded by ArticleComment via the
+					// WallMessage $wm->load() above.  ArticleComment overwrites the User objects mName
+					// usertext with the first revision's usertext to preserve the thread author but in
+					// rare occasions this revision can have its user hidden via a DELETED_USER flag.
+					$history[$key]['msguserurl'] = '';
+					$history[$key]['msgusername'] = '';
+				} else {
+					$history[$key]['msguserurl'] = $msgPage->getFullUrl();
+					$history[$key]['msgusername'] = $msgUser->getName();
 				}
-
-				$history[$key]['msguserurl'] = $msgPage->getFullUrl();
-
-				$history[$key]['msgusername'] = $msgUser->getName();
-
 
 				if ( $type == WH_EDIT ) {
 					$rev = Revision::newFromTitle( $title );
