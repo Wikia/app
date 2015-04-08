@@ -165,7 +165,7 @@ class SpecialCreatePage extends SpecialEditPage {
 				$wgOut->redirect( $this->mPostArticle->getTitle()->getFullUrl() );
 				break;
 			default:
-				Wikia::log( __METHOD__, "createpage", $status );
+				Wikia::log( __METHOD__, "createpage", $status->getMessage() );
 				if ( ( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) || ( $status == EditPage::AS_READ_ONLY_PAGE_ANON ) ) {
 					$sMsg = wfMsg( 'createpage_cant_edit' );
 				}
