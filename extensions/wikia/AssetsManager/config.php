@@ -2365,3 +2365,11 @@ $config['poweruser'] = [
 		'//extensions/wikia/PowerUser/js/powerUser.run.js',
 	]
 ];
+
+$config['portable_infobox_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
+	]
+];
