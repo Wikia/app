@@ -29,7 +29,7 @@ class ForgotPasswordController extends EmailController {
 	}
 
 	public function getSubject() {
-		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $this->getTargetLang() )->text();
+		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $this->targetLang )->text();
 	}
 
 	protected function getContent() {
@@ -60,11 +60,10 @@ class ForgotPasswordController extends EmailController {
 		$targetUser->setNewpassword( $tempPass );
 		$targetUser->saveSettings();
 
-		$targetLanguage = $this->getTargetLang();
 		$this->response->setData( [
-			'greeting' => wfMessage( 'emailext-password-email-greeting', $targetUser->getName() )->inLanguage( $targetLanguage )->text(),
-			'content' => wfMessage( 'emailext-password-email-content', $tempPass )->inLanguage( $targetLanguage )->text(),
-			'signature' => wfMessage( 'emailext-password-email-signature' )->inLanguage( $targetLanguage )->text(),
+			'greeting' => wfMessage( 'emailext-password-email-greeting', $targetUser->getName() )->inLanguage( $this->targetLang )->text(),
+			'content' => wfMessage( 'emailext-password-email-content', $tempPass )->inLanguage( $this->targetLang )->text(),
+			'signature' => wfMessage( 'emailext-password-email-signature' )->inLanguage( $this->targetLang )->text(),
 		] );
 	}
 
