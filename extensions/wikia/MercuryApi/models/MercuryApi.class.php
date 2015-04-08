@@ -108,7 +108,8 @@ class MercuryApi {
 	public function getWikiVariables() {
 		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin,
 			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId,
-			   $wgAnalyticsProviderUseUA, $wgStagingEnvironment;
+			   $wgAnalyticsProviderUseUA;
+
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
 			'dbName' => $wgDBname,
