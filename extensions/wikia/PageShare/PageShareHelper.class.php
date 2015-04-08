@@ -35,16 +35,14 @@ class PageShareHelper {
 
 		if ( !empty ( $useLang ) ) {
 			return $useLang;
-		} else {
-			if ( $wgUser->isAnon() ) {
-				if ( !empty( $browserLang ) ) {
-					return $browserLang;
-				} else {
-					return self::SHARE_DEFAULT_LANGUAGE;
-				}
+		} else if ( $wgUser->isAnon() ) {
+			if ( !empty( $browserLang ) ) {
+				return $browserLang;
 			} else {
-				return $wgLang->getCode();
+				return self::SHARE_DEFAULT_LANGUAGE;
 			}
+		} else {
+			return $wgLang->getCode();
 		}
 	}
 

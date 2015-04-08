@@ -117,6 +117,13 @@ class PageShareHelperTest extends WikiaBaseTest {
 	/**
 	 * Data provider for testGetLangForPageShare.
 	 *
+	 * Arguments represent following values:
+	 * 1 - $requestLang, uselang parameter value
+	 * 2 - $langCode, $wgLang->getCode value
+	 * 3 - $isAnon, $wgUser->isAnon() value
+	 * 4 - $browserLang, window,navigator.language value
+	 * 5 - $expectedResult, expected result
+	 *
 	 * First set - anon user, language should be taken from browser language
 	 * Second set - anon user, browser language is set to "falsy" value, return default language defined in SHARE_DEFAULT_LANGUAGE
 	 * Third set - anon user, language is overwritten by ?uselang=xx
@@ -129,9 +136,9 @@ class PageShareHelperTest extends WikiaBaseTest {
 		return [
 			[ null, null, true, 'pl', 'pl' ],
 			[ null, null, true, false, 'en' ],
-			[ 'bar', null, true, 'pt-br,pt;q=0.8', 'bar' ],
-			[ null, 'foo', false, null, 'foo' ],
-			[ 'bar', 'foo', false, null, 'bar' ]
+			[ 'zh', null, true, 'pt', 'zh' ],
+			[ null, 'ru', false, null, 'ru' ],
+			[ 'ja', 'fr', false, null, 'ja' ]
 		];
 	}
 }
