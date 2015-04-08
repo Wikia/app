@@ -75,7 +75,7 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param $file - The file object for the video
 	 * @return bool - Returns true if successful, false otherwise
 	 */
-	public function addDefaultVideoDescription( $file ) {
+	public function addDefaultVideoDescription( File $file ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = $file->getTitle();
