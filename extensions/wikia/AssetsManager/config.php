@@ -2373,3 +2373,12 @@ $config['portable_infobox_scss'] = [
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
 	]
 ];
+
+$config['portable_infobox_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/wikia/libraries/vignette/vignette.js',
+		'//extensions/wikia/PortableInfobox/scripts/PortableInfobox.js'
+	]
+];
