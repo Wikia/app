@@ -71,7 +71,7 @@ class ExactTargetRetrieveWikiTask extends ExactTargetTask {
 	 * @param $aExactTargetWikiData
 	 */
 	protected function formatDates( &$aExactTargetWikiData ) {
-		$sWikiaDateFormat = "Y-m-d H:i:s";
+		$sWikiaDateFormat = 'Y-m-d H:i:s';
 
 		$oDateTime = new \DateTime( $aExactTargetWikiData['city_created'] );
 		$aExactTargetWikiData['city_created'] = $oDateTime->format( $sWikiaDateFormat );
