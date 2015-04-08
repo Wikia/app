@@ -52,8 +52,8 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
-		$this->templateEngine->clearData();
-		$this->templateEngine->setData( $data );
-		return $this->templateEngine->render( $this->templates[ $type ] );
+		return $this->templateEngine->clearData()
+			->setData( $data )
+			->render( $this->templates[ $type ] );
 	}
 }
