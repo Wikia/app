@@ -229,7 +229,7 @@ class ContactForm extends SpecialPage {
 		//build common top of both emails
 		$uid = $user->getID();
 		$m_shared = '';
-		if( !empty($uid) ) { $m_shared .= "USER IS NOT LOGGED IN\n"; }
+		if( empty($uid) ) { $m_shared .= "USER IS NOT LOGGED IN\n"; }
 		$m_shared .= ( !empty( $this->mRealName ) ) ? ( $this->mRealName ) : ( ( ( !empty( $this->mUserName ) ) ? ( $this->mUserName ) : ('--') ) );
 		$m_shared .= " ({$this->mEmail})";
 		$m_shared .= " " . ( ( !empty($this->mUserName) ) ? $wgServer . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mUserName)) : $wgServer ) . "\n";
