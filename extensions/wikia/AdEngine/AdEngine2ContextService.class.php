@@ -71,6 +71,7 @@ class AdEngine2ContextService {
 					'directGpt' => $wg->AdDriverForceDirectGptAd,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
 					'turtle' => $wg->AdDriverForceTurtleAd,
+					'szymon' => $wg->AdDriverForceSzymonAd,
 				] ),
 			];
 		} );

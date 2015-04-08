@@ -12,7 +12,8 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.later',
-	'ext.wikia.adEngine.provider.turtle'
+	'ext.wikia.adEngine.provider.turtle',
+	'ext.wikia.adEngine.provider.szymon'
 ], function (
 	// regular dependencies
 	log,
@@ -26,7 +27,8 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	adProviderDirectGpt,
 	adProviderLater,
-	adProviderTurtle
+	adProviderTurtle,
+	adProviderSzymon
 ) {
 	'use strict';
 
@@ -77,6 +79,12 @@ define('ext.wikia.adEngine.adConfig', [
 		if (!adContext.getContext().opts.showAds) {
 			return [];
 		}
+
+        // Force szymon
+        if (context.forceProviders.szymon) {
+            log(['getProvider', slotname, 'Later (wgAdDriverForceSzymonAd)'], 'info', logGroup);
+            return [adProviderSzymon];
+        }
 
 		// Force Liftium
 		if (context.forceProviders.liftium) {
