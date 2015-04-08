@@ -83,7 +83,8 @@ $messages['qqq'] = array(
 	'videos-error-old-type-video' => 'Error message when user tries to add a video of a type that is no longer supported.',
 	'videos-error-while-loading' => 'Error message when failing to add a video.',
 	'videos-error-admin-only' => 'Error message that shows up when the wgAllVideosAdminOnly is set to true and a non-admin attempts to upload a video',
-	'videos-update-edit-summary' => 'Edit summary used when updating a video in an article'
+	'videos-update-edit-summary' => 'Edit summary used when updating a video in an article',
+	'videos-provider-not-supported' => 'Message when video provider is not supported'
 );
 
 /** Afrikaans (Afrikaans)
