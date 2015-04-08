@@ -88,9 +88,12 @@ class MercuryApiHooks {
 		global $wgServer;
 
 		if( $title->inNamespaces( NS_MAIN ) ) {
-			// Mercury API call from Ember to Hapi
+			// Mercury API call from Ember.js to Hapi.js e.g.
+			// http://elderscrolls.wikia.com/api/v1/article/Morrowind
+			// To access it, you have to set your client to be directed to the Mercury machines.
 			$urls[] = $wgServer . self::SERVICE_API_BASE . self::SERVICE_API_ARTICLE . $title->getPartialURL();
-			// Mercury API call from Hapi to MediaWiki
+			// Mercury API call from Hapi.js to MediaWiki e.g.
+			// http://elderscrolls.wikia.com/wikia.php?controller=MercuryApi&method=getArticle&title=Morrowind
 			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
 		}
 		return true;
