@@ -31,7 +31,7 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 		var $container = $('#PageShareContainer');
 		if (data.socialIcons) {
 			$container.html(data.socialIcons);
-			$('#PageShareToolbar').on('click', '.page-share a', shareLinkClick);
+			$container.on('click', '.page-share a', shareLinkClick);
 		}
 	}
 
