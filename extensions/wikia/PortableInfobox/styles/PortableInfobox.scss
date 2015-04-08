@@ -20,15 +20,10 @@ $infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
 		border: 0;
 		font-size: 18px;
 		line-height: 28px;
-		margin: $infobox-item-margin;
-	}
-
-	.infobox-items-list {
-		list-style: none;
 		margin: 0;
 	}
 
-	.infobox-item:not(.image) {
+	.infobox-item:not(.item-type-image) {
 		margin: $infobox-item-margin;
 		margin-right: $infobox-item-margin * 2;
 	}
