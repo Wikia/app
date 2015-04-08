@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-class ExactTargetRetrieveUserHelper extends ExactTargetTask {
+class ExactTargetRetrieveUserTask extends ExactTargetTask {
 
 	/**
 	 * Retrieves user email from ExactTarget based on provided user ID
@@ -54,12 +54,52 @@ class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+
+		if ( isset( $oUserResult->OverallStatus ) && $oUserResult->OverallStatus !== 'OK' ) {
+			throw new \Exception( $oUserResult->OverallStatus );
+		}
+
 		if ( !empty( $oUserResult->Results->Properties->Property ) ) {
 			$aProperties = $oUserResult->Results->Properties->Property;
 			foreach ( $aProperties as $value ) {
 				$oExactTargetUserData[$value->Name] = $value->Value;
 			}
 			return $oExactTargetUserData;
+		}
+
+		return null;
+	}
+
+	public function retrieveUserPropertiesByUserId( $iUserId ) {
+		$aFieldsList = [
+			'up_property',
+			'up_value',
+		];
+
+		$oHelper = $this->getUserHelper();
+		$aApiParams = $oHelper->prepareUserPropertiesRetrieveParams( $aFieldsList, 'up_user', [ $iUserId ] );
+
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oUserPropertiesResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+
+		if ( isset( $oUserPropertiesResult->OverallStatus ) && $oUserPropertiesResult->OverallStatus !== 'OK' ) {
+			throw new \Exception( $oUserPropertiesResult->OverallStatus );
+		}
+
+		if ( !empty( $oUserPropertiesResult->Results ) ) {
+			foreach ( $oUserPropertiesResult->Results as $oResult ) {
+				$sPropertyName = null;
+				$sPropertyValue = null;
+				foreach ( $oResult->Properties->Property as $oPropertyEntry ) {
+					if ( $oPropertyEntry->Name === 'up_property' ) {
+						$sPropertyName = $oPropertyEntry->Value;
+					} elseif ( $oPropertyEntry->Name === 'up_value' ) {
+						$sPropertyValue = $oPropertyEntry->Value;
+					}
+				}
+				$oExactTargetUserPropertiesData[$sPropertyName] = $sPropertyValue;
+			}
+			return $oExactTargetUserPropertiesData;
 		}
 
 		return null;

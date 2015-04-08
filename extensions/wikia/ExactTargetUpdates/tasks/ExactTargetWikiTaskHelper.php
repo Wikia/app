@@ -56,6 +56,32 @@ class ExactTargetWikiTaskHelper {
 	}
 
 	/**
+	 * Prepares array of params for ExactTarget API for retrieving DataExtension objects from city_list table
+	 * @param array $aProperties list of fields to retrieve
+	 * @param string $sFilterProperty name of field to filter
+	 * @param array $aFilterValues possible values to filter
+	 * @return array
+	 */
+	public function prepareWikiDataExtensionRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = $this->getCustomerKeys();
+
+		$aApiParams = [
+			'DataExtension' => [
+				'ObjectType' => "DataExtensionObject[{$aCustomerKeys['city_list']}]",
+				'Properties' => $aProperties,
+			],
+			'SimpleFilterPart' => [
+				'Property' => $sFilterProperty,
+				'Value' => $aFilterValues
+			]
+		];
+
+		return $aApiParams;
+	}
+
+
+	/**
 	 * Prepares DataExtension objects data for Update from a city_list record
 	 * @param  int $iCityId  A wiki's ID
 	 * @return array         An array with city_list DataExtension objects data in a valid format
@@ -66,7 +92,24 @@ class ExactTargetWikiTaskHelper {
 		$aKeys = [
 			'city_id' => $iCityId,
 		];
-		
+
+		$aWikiData = $this->getWikiDataArray( $iCityId );
+		$aWikiDataExtension = [ 'DataExtension' => [] ];
+		$aWikiDataExtension['DataExtension'][] =  [
+				'CustomerKey' => $aCustomerKeys['city_list'],
+				'Keys' => $aKeys,
+				'Properties' => $aWikiData,
+		];
+
+		return $aWikiDataExtension;
+	}
+
+	/**
+	 * Returns array with fields values from city_list for provided city_id that are required for ExactTarget updates
+	 * @param int $iCityId
+	 * @return array
+	 */
+	public function getWikiDataArray( $iCityId ) {
 		/* Get wikidata from master */
 		$oWiki = \WikiFactory::getWikiById( $iCityId, true );
 		$aWikiData = [
@@ -98,14 +141,7 @@ class ExactTargetWikiTaskHelper {
 			'city_founding_ip' => $oWiki->city_founding_ip,
 			'city_vertical' => $oWiki->city_vertical,
 		];
-		$aWikiDataExtension = [ 'DataExtension' => [] ];
-		$aWikiDataExtension['DataExtension'][] =  [
-				'CustomerKey' => $aCustomerKeys['city_list'],
-				'Keys' => $aKeys,
-				'Properties' => $aWikiData,
-		];
-
-		return $aWikiDataExtension;
+		return $aWikiData;
 	}
 
 	/**

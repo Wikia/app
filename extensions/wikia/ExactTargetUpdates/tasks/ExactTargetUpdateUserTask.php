@@ -109,28 +109,16 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	}
 
 	/**
+	 * Here was
+	 * public function updateUserPropertiesData( $aUserData, $aUserProperties )
 	 * Task for updating user_properties data in ExactTarget
+	 *
+	 * @info Removed updateUserPropertiesData method as was unused
+	 * @commit ebc67498c9c8ce0cdb260e38411a66f00768fa39
+	 *
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gloal properties ['property_name'=>'property_value']
 	 */
-	public function updateUserPropertiesData( $aUserData, $aUserProperties ) {
-		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $aUserData['user_id'], $aUserProperties );
-		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oUpdateUserPropertiesResult = $oApiDataExtension->updateRequest( $aApiParams );
-
-		$this->info( __METHOD__ . ' OverallStatus: ' . $oUpdateUserPropertiesResult->OverallStatus );
-		$this->info( __METHOD__ . ' Result: ' . json_encode( (array)$oUpdateUserPropertiesResult ) );
-
-		if ( $oUpdateUserPropertiesResult->OverallStatus === 'Error' ) {
-			throw new \Exception(
-				'Error in ' . __METHOD__ . ': ' . $oUpdateUserPropertiesResult->Results[0]->StatusMessage
-			);
-		}
-
-		return $oUpdateUserPropertiesResult->Results[0]->StatusMessage;
-	}
 
 	/**
 	 * Task for incremental updating number of user contributions on specific wiki
@@ -155,9 +143,9 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$this->info( __METHOD__ . ' Params - User IDs: ' . json_encode( $aUsersIds ) );
 
 		// Get number of edits from ExactTarget
-		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
-		$oRetrieveUserHelper->taskId( $this->getTaskId() );
-		$aUserEditsDataFromET = $oRetrieveUserHelper->retrieveUserEdits( $aUsersIds );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$oRetrieveUserTask->taskId( $this->getTaskId() );
+		$aUserEditsDataFromET = $oRetrieveUserTask->retrieveUserEdits( $aUsersIds );
 
 		// Merge number of edits from ExactTarget with incremental data that came as a function parameter
 		$oHelper = $this->getUserHelper();
