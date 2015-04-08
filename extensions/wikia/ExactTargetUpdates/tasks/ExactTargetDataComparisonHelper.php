@@ -26,14 +26,14 @@ trait ExactTargetDataComparisonHelper {
 			// There are unacceptable differences. Prepare diff and throw exception
 			$aDiffExactTarget = array_diff_assoc( $aWikiaData, $aExactTargetData );
 			$aDiffRes = [];
-			$aDiffRes[] = "--- Expected (Wikia DB)";
-			$aDiffRes[] = "+++ Actual (ExactTarget)";
+			$aDiffRes[] = '--- Expected (Wikia DB)';
+			$aDiffRes[] = '+++ Actual (ExactTarget)';
 			foreach ( $aDiffExactTarget as $key => $val ) {
-				$aDiffRes[] = "- '$key' => '{$aDiffExactTarget[$key]}'";
-				$aDiffRes[] = "+ '$key' => '{$aDiffWikiaDB[$key]}'";
+				$aDiffRes[] = "- '{$key}' => '{$aDiffExactTarget[$key]}'";
+				$aDiffRes[] = "+ '{$key}' => '{$aDiffWikiaDB[$key]}'";
 			}
 			$this->debug( $sCallerName . ' ' . json_encode( $aDiffRes ) );
-			throw new \Exception( $sCallerName . " Verification failed, Record in ExactTarget doesn't match record in Wikia database.");
+			throw new \Exception( $sCallerName . " Verification failed, Record in ExactTarget doesn't match record in Wikia database." );
 		}
 
 		$this->info( 'Verification passed. Record in ExactTarget match record in Wikia database' );
