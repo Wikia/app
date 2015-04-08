@@ -167,7 +167,7 @@ class AjaxPollClass {
 				->runLoop( $dbr, function( &$votes, $row ) use ( &$total ) {
 					$votes[$row->poll_answer]['value'] = $row->count;
 					$total += $row->count;
-				}, [] );
+				} );
 
 			/**
 			 * count percentage of answers
