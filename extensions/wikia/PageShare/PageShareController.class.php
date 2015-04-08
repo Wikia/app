@@ -2,10 +2,10 @@
 
 class PageShareController extends WikiaController {
 
+	const MEMC_KEY_SOCIAL_ICONS_EN = 'mShareIconsEN';
+	const MEMC_KEY_SOCIAL_ICONS_VERSION = 1;
+	const MEMC_EXPIRY = 3600;
 
-	/**
-	 * render index
-	 */
 	public function index() {
 		Wikia::addAssetsToOutput( 'page_share_scss' );
 		Wikia::addAssetsToOutput( 'page_share_js' );
@@ -14,18 +14,29 @@ class PageShareController extends WikiaController {
 	}
 
 	public function getShareIcons() {
+		global $wgMemc;
+
 		$browserLang = $this->getVal( 'browserLang' );
 		$useLang = $this->getVal( 'useLang' );
 		$shareLang = PageShareHelper::getLangForPageShare( $browserLang, $useLang );
+
+		// If social icons should be enabled for EN users, and language is different than EN return false
 		if ( empty( $wgEnablePageShareWorldwide ) && $shareLang !== PageShareHelper::SHARE_DEFAULT_LANGUAGE ) {
 			$this->setVal( 'socialIcons', false );
 		} else {
-			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-			$renderedSocialIcons = \MustacheService::getInstance()->render(
-				__DIR__ . '/templates/PageShare_index.mustache',
-				['services' => $this->prepareShareServicesData( $shareLang )]
-			);
-			$this->setVal( 'socialIcons', $renderedSocialIcons );
+			$memcKey = $this->getMemcKey();
+			$socialIcons = $wgMemc->get( $memcKey );
+			if ( !empty( $socialIcons ) ) {
+				$this->setVal( 'socialIcons', $socialIcons );
+			} else {
+				$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+				$renderedSocialIcons = \MustacheService::getInstance()->render(
+					__DIR__ . '/templates/PageShare_index.mustache',
+					['services' => $this->prepareShareServicesData( $shareLang )]
+				);
+				$wgMemc->set( $memcKey, $renderedSocialIcons, self::MEMC_EXPIRY );
+				$this->setVal( 'socialIcons', $renderedSocialIcons );
+			}
 		}
 	}
 
@@ -50,5 +61,12 @@ class PageShareController extends WikiaController {
 			}
 		}
 		return $services;
+	}
+
+	private function getMemcKey() {
+		return wfSharedMemcKey(
+			self::MEMC_KEY_SOCIAL_ICONS_EN,
+			self::MEMC_KEY_SOCIAL_ICONS_VERSION
+		);
 	}
 }
