@@ -2,8 +2,14 @@
 
 namespace Email;
 
-class EmailController extends \WikiaController {
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
+abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
+	/** CSS used for the main content section of each email. Used by getContent()
+	 * and intended to be overridden by child classes. */
+	const LAYOUT_CSS = 'avatarLayout.css';
 
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
@@ -13,8 +19,14 @@ class EmailController extends \WikiaController {
 
 	protected $hasErrorResponse = false;
 
+	/** @var bool Whether to show the icons over the hubs links */
+	protected $marketingFooter;
+
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
+
+	/**	@var string The language to send the email in */
+	protected $targetLang;
 
 	/**
 	 * Since the children of this class are located in the 'Controller' directory, the default
@@ -24,7 +36,7 @@ class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	public static function getTemplateDir() {
-		return dirname( __FILE__ ) . '/templates/compiled';
+		return dirname( __FILE__ ) . '/templates';
 	}
 
 	public function init() {
@@ -33,7 +45,9 @@ class EmailController extends \WikiaController {
 
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
+			$this->targetLang = $this->request->getVal( 'targetLang', $this->targetUser->getOption( 'language' ) );
 			$this->test = $this->getRequest()->getVal( 'test', false );
+			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
 			$this->initEmail();
 		} catch ( ControllerException $e ) {
@@ -55,7 +69,7 @@ class EmailController extends \WikiaController {
 			return;
 		}
 
-		throw new Fatal( wfMessage( 'emailext-error-restricted-controller' )->escaped() );
+		throw new Fatal( 'Access to this controller is restricted' );
 	}
 
 	/**
@@ -117,7 +131,16 @@ class EmailController extends \WikiaController {
 	 * @template main
 	 */
 	public function main() {
-		$this->response->setVal( 'content', $this->getVal( 'content' ) );
+		$this->response->setValues( [
+			'content' => $this->getVal( 'content' ),
+			'footerMessages' => $this->getVal( 'footerMessages' ),
+			'marketingFooter' => $this->getVal( 'marketingFooter' ),
+			'tagline' => $this->getVal( 'tagline' ),
+			'useTrademark' => $this->getVal( 'useTrademark' ),
+			'facebook' => $this->request->getVal( 'facebook' ),
+			'twitter' => $this->request->getVal( 'twitter' ),
+			'youtube' => $this->request->getVal( 'youtube' )
+		] );
 	}
 
 	/**
@@ -134,8 +157,12 @@ class EmailController extends \WikiaController {
 		] );
 	}
 
-	protected function getTargetLang() {
-		return $this->targetUser->getOption( 'language' );
+	/**
+	 * Whether to show a TM next to the tagline in this country
+	 * At some point we may want to return the symbol instead of a bool
+	 */
+	protected function getUseTrademark() {
+		return $this->targetLang == 'en';
 	}
 
 	/**
@@ -175,11 +202,8 @@ class EmailController extends \WikiaController {
 
 	/**
 	 * Return the subject used for this email
-	 * Must be overridden in child classes
 	 */
-	protected function getSubject() {
-		throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
-	}
+	abstract function getSubject();
 
 	/**
 	 * Renders the 'body' view of the current email controller
@@ -187,19 +211,99 @@ class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getBody() {
-		$moduleBody = $this->app->renderView(
+		$css = file_get_contents( __DIR__ . '/styles/main.css' );
+
+		$html = $this->app->renderView(
+			get_class( $this ),
+			'main',
+			[
+				'content' => $this->getContent(),
+				'footerMessages' => $this->getFooterMessages(),
+				'marketingFooter' => $this->marketingFooter,
+				'tagline' => $this->getTagline(),
+				'useTrademark' => $this->getUseTrademark(),
+				'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $this->targetLang )->text(),
+				'twitter' => wfMessage( 'oasis-social-twitter' )->inLanguage( $this->targetLang )->text(),
+				'youtube' => wfMessage( 'oasis-social-youtube' )->inLanguage( $this->targetLang )->text(),
+			]
+		);
+
+		$html = $this->inlineStyles( $html, $css );
+
+		return $html;
+	}
+
+	/**
+	 * Renders the content unique to each email.
+	 */
+	protected function getContent() {
+		$css = file_get_contents( __DIR__ . '/styles/' . static::LAYOUT_CSS );
+		$html = $this->app->renderView(
 			get_class( $this ),
 			'body',
 			$this->request->getParams()
 		);
 
-		$html = $this->app->renderView(
-			get_class( $this ),
-			'main',
-			[ 'content' => $moduleBody ]
-		);
+		$html = $this->inlineStyles( $html, $css );
 
 		return $html;
+	}
+
+	/**
+	 * Inline all css into style attributes
+	 *
+	 * @param string $html
+	 * @param string $css
+	 * @return string
+	 * @throws \TijsVerkoyen\CssToInlineStyles\Exception
+	 * @see https://github.com/tijsverkoyen/CssToInlineStyles
+	 */
+	protected function inlineStyles( $html, $css ) {
+		// fix known issue in library with character encoding.
+		$charsetMeta = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+		$html = $charsetMeta . $html;
+
+		// add default css to every template
+		$css .= file_get_contents( __DIR__ . '/styles/common.css' );
+
+		$inliner = new CssToInlineStyles( $html, $css );
+		$inliner->setUseInlineStylesBlock();
+		$html = $inliner->convert();
+
+		return $html;
+	}
+
+	protected function getFooterMessages() {
+		return [
+			wfMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
+				->inLanguage( $this->targetLang )->parse(),
+			wfMessage( 'emailext-update-frequency' )
+				->inLanguage( $this->targetLang )->parse(),
+			wfMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
+				->inLanguage( $this->targetLang )->parse(),
+		];
+	}
+
+	/**
+	 * Tagline text that appears in the email footer
+	 * @return String
+	 */
+	protected function getTagline() {
+		return wfMessage( 'emailext-fans-tagline' )->inLanguage( $this->targetLang )->text();
+	}
+
+	/**
+	 * TODO Move this into unsubscribe extension?
+	 * @return string
+	 */
+	private function getUnsubscribeLink() {
+		$params = [
+			'email' => $this->targetUser->getEmail(),
+			'timestamp' => time()
+		];
+		$params['token'] = wfGenerateUnsubToken( $params['email'], $params['timestamp'] );
+		$unsubscribeTitle = \GlobalTitle::newFromText( 'Unsubscribe', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID );
+		return $unsubscribeTitle->getFullURL( $params );
 	}
 
 	protected function findUserFromRequest( $paramName, \User $default = null ) {
@@ -221,7 +325,7 @@ class EmailController extends \WikiaController {
 	 */
 	protected function getUserFromName( $username ) {
 		if ( !$username ) {
-			throw new Fatal( wfMessage( 'emailext-error-noname' )->escaped() );
+			throw new Fatal( 'Required username has been left empty' );
 		}
 
 		$user = \User::newFromName( $username );
@@ -236,9 +340,9 @@ class EmailController extends \WikiaController {
 	 * @throws \Email\Check
 	 */
 	public function assertCanEmail() {
+		$this->assertUserHasEmail();
 		$this->assertUserWantsEmail();
 		$this->assertUserNotBlocked();
-		$this->assertUserHasEmail();
 	}
 
 	public function assertGoodStatus( \Status $status ) {
@@ -255,11 +359,11 @@ class EmailController extends \WikiaController {
 	 */
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
-			throw new Fatal( wfMessage( 'emailext-error-not-user' )->escaped() );
+			throw new Fatal( 'Unable to create user object');
 		}
 
 		if ( $user->getId() == 0 ) {
-			throw new Fatal( wfMessage( 'emailext-error-empty-user' )->escaped() );
+			throw new Fatal( 'Unable to find user' );
 		}
 	}
 
@@ -269,7 +373,7 @@ class EmailController extends \WikiaController {
 	public function assertUserHasEmail() {
 		$email = $this->targetUser->getEmail();
 		if ( empty( $email ) ) {
-			throw new Fatal( wfMessage( 'emailext-error-noemail' )->escaped() );
+			throw new Fatal( 'User has no email address' );
 		}
 	}
 
@@ -291,7 +395,7 @@ class EmailController extends \WikiaController {
 	 */
 	public function assertUserWantsEmail() {
 		if ( $this->targetUser->getBoolOption( 'unsubscribed' ) ) {
-			throw new Check( wfMessage( 'emailext-error-no-emails' )->escaped() );
+			throw new Check( 'User does not wish to receive email' );
 		}
 	}
 
@@ -302,7 +406,7 @@ class EmailController extends \WikiaController {
 	 */
 	public function assertUserNotBlocked() {
 		if ( $this->currentUser->isBlocked() ) {
-			throw new Check( wfMessage( 'emailext-error-user-blocked' )->escaped() );
+			throw new Check( 'User is blocked from taking this action' );
 		}
 	}
 }

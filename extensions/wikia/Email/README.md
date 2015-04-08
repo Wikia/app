@@ -52,5 +52,24 @@ requests should be sufficient for almost all cases.
 When defining the `body` method in the controller, give the template name via the `@template` annotation.
 This gives the name of the template, minus the directory and templating suffix.
 
-There are special `Email_footer` and `Email_header` templates that should be used to define a consistent
-look for the email.
+The `main.mustache` template is the main layout for all emails and includes the header and footer. 
+
+### Images
+
+To add a new image, upload it to the [WikiaNewsletter wiki](http://wikianewsletter.wikia.com) and put it in the "Html_Emails" category so we can keep track of all the images used in emails. We'll generate those images dynamically with https://wikia-inc.atlassian.net/browse/SOC-622 but in the mean time the URLs are hard-coded in the templates. 
+
+Note that email client support for SVGs is not great, so be sure to use JPG, GIF, or PNG files. 
+
+### CSS
+
+We're not using SCSS for the HTML emails, although we could theoretically add support for that in the future. For now, we're using plain CSS and [CssToInlineStyles](https://github.com/tijsverkoyen/CssToInlineStyles/) for inlining CSS into the templates. 
+
+There's one `common.css` that gets included in every template automatically. For template-specific styles, add them via `\Email\EmailController::inlineStyles` in the child class' `getContent` method.
+
+See [campaignmonitor.com's](https://www.campaignmonitor.com/css/) cheat sheet for understanding which css properties are supported in major email clients. 
+
+## Tools
+
+### CssToInlineStyles
+
+[CssToInlineStyles](https://github.com/tijsverkoyen/CssToInlineStyles/) is a PHP library that will inline CSS properties into the `style` attribute. It's installed via Composer and can be found in `/lib/composer/tijsverkoyen/`.
