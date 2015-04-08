@@ -67,8 +67,6 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 	'forum-board-new-message-heading' => 'Start a Discussion',
 
 	'forum-no-board-selection-error' => '← Please select a board to post to',
-	'forum-board-error-title' => 'An error occurred',
-	'forum-board-nonexistent' => 'This forum board does not exist',
 
 	/* Forum Thread */
 	'forum-thread-reply-placeholder' => 'Post a reply',
@@ -461,8 +459,6 @@ Parameters:
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
 	'forum-related-discussion-see-more' => 'See More link to topic page',
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
-	'forum-board-error-title' => 'Error screen title',
-	'forum-board-nonexistent' => 'Shown when the forum board for the current action cannot be found',
 );
 
 /** Old English (Ænglisc)

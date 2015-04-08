@@ -219,7 +219,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 				'boardId' => $boardId,
 				'method' => __METHOD__
 			]);
-			throw new ErrorPageError( 'forum-board-error-title', 'forum-board-nonexistent' );
+			$this->response->setCode( 404 );
+			return false;
 		}
 		$boardTitle = $board->getTitle()->getText();
 

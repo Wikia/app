@@ -177,6 +177,10 @@ class AjaxPollClass {
 				$vote['percent'] = round( $percent, 2 );
 				$vote['pixels'] = $this->percent2pixels( $percent );
 				$vote['key'] = $nr;
+
+				/* @var Language $wgLang */
+				$percent = $wgLang->formatNum(round($percent, 2));
+				$vote[ "title" ] = wfMsg("ajaxpoll-percentVotes", $percent);
 			}
 
 			// NOTE: Remember to purge everywhere that poll_vote is updated.

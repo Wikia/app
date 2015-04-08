@@ -944,18 +944,14 @@ class BlogTemplateClass {
 	}
 
 	public static function getResultsCount() {
-		$res = self::$dbr->select(
+		$row = self::$dbr->selectField(
 			array_map( [ self::$dbr, 'tableName' ], self::$aTables ),
 			[ 'count(distinct(page_id)) as count' ],
 			self::$aWhere,
 			__METHOD__
 		);
 
-		$row = $res->fetchObject();
-		if ( !$row instanceof stdClass ) {
-			return 0;
-		}
-		return $row->count;
+		return $row ? $row['count'] : 0;
 	}
 
 	private static function __makeRssOutput($aInput) {
