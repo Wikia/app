@@ -41,6 +41,9 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				liftium: {
 					name: 'liftium'
 				},
+				openX: {
+					name: 'openX'
+				},
 				remnantGpt: {
 					name: 'remnant'
 				},
@@ -77,6 +80,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.providers.evolve,
 			mocks.providers.liftium,
 			mocks.providers.directGpt,
+			mocks.providers.openX,
 			mocks.providers.remnantGpt,
 			mocks.providers.sevenOneMedia,
 			mocks.providers.turtle,
