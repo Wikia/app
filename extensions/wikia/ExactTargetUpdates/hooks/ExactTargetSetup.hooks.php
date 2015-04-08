@@ -17,11 +17,13 @@ class ExactTargetSetupHooks {
 	 */
 	public function registerUserHooks() {
 		$oUserHooks = $this->getUserHooks();
+		\Hooks::register( 'AddUserToDatabaseComplete', [ $oUserHooks, 'onCreateNewUserComplete' ] );
+		\Hooks::register( 'CreateNewUserComplete', [ $oUserHooks, 'onCreateNewUserComplete' ] );
+		\Hooks::register( 'ExternalUserAddUserToDatabaseComplete', [ $oUserHooks, 'onCreateNewUserComplete' ] );
 		\Hooks::register( 'ArticleSaveComplete', [ $oUserHooks, 'onArticleSaveComplete' ] );
 		\Hooks::register( 'EditAccountClosed', [ $oUserHooks, 'onEditAccountClosed' ] );
 		\Hooks::register( 'EditAccountEmailChanged', [ $oUserHooks, 'onEditAccountEmailChanged' ] );
 		\Hooks::register( 'EmailChangeConfirmed', [ $oUserHooks, 'onEmailChangeConfirmed' ] );
-		\Hooks::register( 'SignupConfirmEmailComplete', [ $oUserHooks, 'onSignupConfirmEmailComplete' ] );
 		\Hooks::register( 'AfterUserAddGlobalGroup', [ $oUserHooks, 'onAfterUserAddGlobalGroup' ] );
 		\Hooks::register( 'AfterUserRemoveGlobalGroup', [ $oUserHooks, 'onAfterUserRemoveGlobalGroup' ] );
 		\Hooks::register( 'UserSaveSettings', [ $oUserHooks, 'onUserSaveSettings' ] );

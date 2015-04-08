@@ -3207,6 +3207,8 @@ class User {
 			global $wgMemc;
 			$wgMemc->incr( wfSharedMemcKey( "registered-users-number" ) );
 
+			wfRunHooks( 'CreateNewUserComplete', [ &$newUser ] );
+
 		} else {
 			$newUser = null;
 		}
@@ -3238,6 +3240,8 @@ class User {
 			), __METHOD__
 		);
 		$this->mId = $dbw->insertId();
+
+		wfRunHooks( 'AddUserToDatabaseComplete', [ &$this ] );
 
 		// Clear instance cache other than user table data, which is already accurate
 		$this->clearInstanceCache();
