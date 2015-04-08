@@ -12,6 +12,7 @@ $infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
 
 .portable-infobox {
 	background-color: $infobox-background;
+	clear: right;
 	float: right;
 	margin: 0 0 $infobox-margin $infobox-margin;
 	width: $infobox-width;
