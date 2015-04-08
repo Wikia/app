@@ -1,8 +1,10 @@
 <?php
+
 class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 	private $infoboxRenderService;
 
 	public function setUp() {
+		require_once( dirname(__FILE__) . '/../services/PortableInfoboxRenderService.class.php');
 		$this->infoboxRenderService = new PortableInfoboxRenderService();
 	}
 
