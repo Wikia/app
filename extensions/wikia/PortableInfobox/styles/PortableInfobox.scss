@@ -1,9 +1,10 @@
 @import 'skins/shared/color';
+@import "skins/shared/mixins/columns";
 
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 10px;
-$infobox-bg-color-mix-value: 92%;
+$infobox-bg-color-mix-value: 90%;
 $infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
 
 @if $is-dark-wiki {
@@ -16,6 +17,25 @@ $infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
 	float: right;
 	margin: 0 0 $infobox-margin $infobox-margin;
 	width: $infobox-width;
+
+	// TODO: experimental wide infobox styles (remove or refactor)
+	&.wide-infobox {
+		@include column-count(3);
+		@include column-gap($infobox-item-margin * 2);
+
+		clear: both;
+		float: none;
+		margin: 0;
+		width: 100%;
+
+		.infobox-item:not(.item-type-title) {
+			@include column-break-inside(avoid);
+		}
+
+		.item-type-title {
+			@include column-span(all);
+		}
+	}
 
 	.infobox-title {
 		border: 0;
