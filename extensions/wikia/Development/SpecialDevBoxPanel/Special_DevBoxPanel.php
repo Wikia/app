@@ -151,7 +151,7 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 				/**
 				 * find city_id by database name
 				 */
-				$dbr = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
+				$dbr = WikiFactory::db( DB_SLAVE );
 				$cityId = $dbr->selectField(
 					"city_list",
 					array( "city_id" ),
