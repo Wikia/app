@@ -7,12 +7,6 @@
 class SpecialCreatePage extends SpecialEditPage {
 
 	public function __construct() {
-		// confirm edit captcha [RT#21902] - Marooned
-		global $wgHooks, $wgWikiaEnableConfirmEditExt;
-		if ( $wgWikiaEnableConfirmEditExt ) {
-			$wgHooks['ConfirmEdit::onConfirmEdit'][] = array( $this, 'wfCreatePageOnConfirmEdit' );
-		}
-
 		parent::__construct( 'CreatePage'  /*class*/, '' /*restriction*/, true );
 	}
 
@@ -180,41 +174,6 @@ class SpecialCreatePage extends SpecialEditPage {
 					$this->renderForm();
 				}
 				break;
-		}
-	}
-
-	/**
-	 * handle ConfirmEdit captcha, only for CreatePage, which will be treated a bit differently (edits in special page)
-	 * this function is based on Bartek's solution for CreateAPage done in t:r6990 [RT#21902] - Marooned
-	 * @param SimpleCaptcha $captcha
-	 * @param $editPage
-	 * @param $newtext
-	 * @param $section
-	 * @param $merged
-	 * @param $result
-	 * @return bool
-	 */
-	public function wfCreatePageOnConfirmEdit( &$captcha, &$editPage, $newtext, $section, $merged, &$result ) {
-		global $wgTitle;
-		$canonspname = array_shift(SpecialPageFactory::resolveAlias( $wgTitle->getDBkey() ));
-		if ( $canonspname != 'CreatePage' ) {
-			return true;
-		}
-
-		if ( $captcha->shouldCheck( $editPage, $newtext, $section, $merged ) ) {
-			if ( $captcha->passCaptcha() ) {
-				$result = true;
-				return false;
-			} else {
-				global $wgHooks, $wgCreatePageCaptchaTriggered;
-				$wgCreatePageCaptchaTriggered = true;
-				$wgHooks['EditPage::showEditForm:beforeToolbar'][] = array( $this, 'renderFormHeaderWrapper' );
-
-				$result = false;
-				return true;
-			}
-		} else {
-			return true;
 		}
 	}
 }

@@ -291,7 +291,7 @@ class FollowHelper {
 	 * @return bool
 	 */
 	static public function showAll(){
-		global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt;
+		global $wgRequest, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$user_id = $wgRequest->getVal( 'user_id' );
