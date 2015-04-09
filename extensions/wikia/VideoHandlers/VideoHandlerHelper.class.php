@@ -499,18 +499,17 @@ class VideoHandlerHelper extends WikiaModel {
 	 * @param $url
 	 * @return bool
 	 */
-	public function isVideoProviderSupported($url) {
+	public function isVideoProviderSupported( $url ) {
 		global $wgVideoMigrationProviderMap;
 
 		$parsed = parse_url( strtolower( $url ) );
 
 		foreach( $wgVideoMigrationProviderMap as $name ) {
-			$class_name = $name . 'ApiWrapper';
-			if ( class_exists( $class_name ) && $class_name::isMatchingHostname( $parsed['host'] ) ) {
+			$className = $name . 'ApiWrapper';
+			if ( class_exists( $className ) && $className::isMatchingHostname( $parsed['host'] ) ) {
 				return true;
 			}
 		}
 		return false;
 	}
-
 }
