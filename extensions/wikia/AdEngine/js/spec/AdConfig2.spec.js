@@ -43,8 +43,9 @@ describe('AdConfig2', function () {
 
 	// Mocks:
 	var adDecoratorPageDimensionsMock = {isApplicable: function () { return false; }},
-		adProviderLaterMock = {name: 'LaterMock'},
 		adProviderGptMock = {name: 'GptMock'},
+		adProviderLaterMock = {name: 'LaterMock'},
+		adProviderSzymonMock = {name: 'SzymonMock'},
 		logMock = function () { return; },
 		rtpMockWithTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true, 5),
 		rtpMockWithoutTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true),
@@ -53,7 +54,7 @@ describe('AdConfig2', function () {
 		highValueSlot = 'TOP_LEADERBOARD',
 		lowValueSlot = 'foo';
 
-	it('getProviderList returns [GPT, Later] for high value slots', function () {
+	it('getProviderList returns [Szymon, GPT, Later] for high value slots', function () {
 
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
@@ -65,10 +66,11 @@ describe('AdConfig2', function () {
 
 			// AdProviders
 			adProviderGptMock,
-			adProviderLaterMock
+			adProviderLaterMock,
+			adProviderSzymonMock
 		);
 
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderGptMock, adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderSzymonMock, adProviderGptMock, adProviderLaterMock], 'adProviderLaterMock');
 	});
 
 	it('getProviderList returns [Later] for low value slots', function () {
@@ -106,7 +108,7 @@ describe('AdConfig2', function () {
 		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock NZ');
 	});
 
-	it('getProviderList to return [GPT, Later] for NZ (if evolve slot config does not accept)', function () {
+	it('getProviderList to return [Szymon, GPT, Later] for NZ (if evolve slot config does not accept)', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo('NZ'),
@@ -117,10 +119,11 @@ describe('AdConfig2', function () {
 
 			// AdProviders
 			adProviderGptMock,
-			adProviderLaterMock
+			adProviderLaterMock,
+			adProviderSzymonMock
 		);
 
-		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderGptMock, adProviderLaterMock], 'adProviderGptMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderSzymonMock, adProviderGptMock, adProviderLaterMock], 'adProviderGptMock');
 	});
 
 	it('getProviderList to return [Later] when adContext.providers.sevenOneMedia = true in HVC', function () {
