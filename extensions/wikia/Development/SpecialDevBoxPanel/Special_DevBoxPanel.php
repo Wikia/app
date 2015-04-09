@@ -197,11 +197,6 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 				die( "No local copy of database [$dbname] was found on {$cluster} cluster [using {$db->getServer()} DB]." );
 			}
 		}
-
-		// TODO: move this into the config file
-		global $wgReadOnly;
-		$wgReadOnly = false;
-
 	}
 	return true;
 } // end wfDevBoxForceWiki()
