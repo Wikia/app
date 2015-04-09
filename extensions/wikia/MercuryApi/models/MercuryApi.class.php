@@ -128,7 +128,7 @@ class MercuryApi {
 			'theme' => SassUtil::getOasisSettings(),
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
 			'analytics' => [
-				'UAEnabled' => $wgAnalyticsProviderUseUA,
+				'UAEnabled' => !empty( $wgAnalyticsProviderUseUA ) ? $wgAnalyticsProviderUseUA : false,
 			],
 		];
 	}
