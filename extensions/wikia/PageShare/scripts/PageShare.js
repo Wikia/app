@@ -30,8 +30,8 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 	function appendShareIcons(data) {
 		var $container = $('#PageShareContainer');
 		if (data.socialIcons) {
-			$container.html(data.socialIcons);
-			$container.on('click', '.page-share a', shareLinkClick);
+			$container.html(data.socialIcons)
+				.on('click', '.page-share a', shareLinkClick);
 		}
 	}
 
