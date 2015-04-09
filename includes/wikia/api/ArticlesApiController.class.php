@@ -670,6 +670,7 @@ class ArticlesApiController extends WikiaApiController {
 		$collection = [];
 		$resultingCollectionIds = [];
 		$titles = [];
+		$this->wg->Memc->set( self::getCacheKey( '135', self::DETAILS_CACHE_ID ), null );
 		foreach ( $articles as $i ) {
 			//data is cached on a per-article basis
 			//to avoid one article requiring purging
@@ -776,17 +777,22 @@ class ArticlesApiController extends WikiaApiController {
 		$collection = $this->appendMetadata( $collection );
 
 		$thumbnails = null;
-		//if strict return to original ids order
+		$collection = $this->preserveOriginalOrder( $articleIds, $collection );
+		//if strict return to original ids order - as an array
 		if ( $strict ) {
-			foreach( $articleIds as $id ) {
-				if ( !empty( $collection[ $id ] ) ) {
-					$result[] = $collection[ $id ];
-				}
-			}
-			return $result;
+			return array_values( $collection );
 		}
-
 		return $collection;
+	}
+
+	protected function preserveOriginalOrder( $originalOrder, $collection ) {
+		$result = [];
+		foreach ( $originalOrder as $id ) {
+			if ( !empty( $collection[ $id ] ) ) {
+				$result[ $id ] = $collection[ $id ];
+			}
+		}
+		return $result;
 	}
 
 	protected function getUserDataForArticles( $articles, $revisions ) {
