@@ -89,6 +89,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/later.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
+		'//extensions/wikia/AdEngine/js/provider/szymon.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
