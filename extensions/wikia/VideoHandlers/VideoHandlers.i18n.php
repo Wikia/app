@@ -50,7 +50,7 @@ $messages['en'] = array(
 	'videos-error-admin-only' => 'Sorry, only admins of this wiki are permitted to add videos',
 	'videos-initial-upload-edit-summary' => 'created video',
 	'videos-update-edit-summary' => 'updated video',
-	'videos-provider-not-supported' => 'This video provider is not supported. View our list of supported providers [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites here].'
+	'videos-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].'
 );
 
 /** Message documentation (Message documentation) */
