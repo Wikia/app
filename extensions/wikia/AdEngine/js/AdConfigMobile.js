@@ -3,10 +3,9 @@ define('ext.wikia.adEngine.adConfigMobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
-	'ext.wikia.adEngine.provider.turtle',
 	require.optional('ext.wikia.adEngine.provider.taboola'),
 	require.optional('wikia.instantGlobals')
-], function (adContext, directGptMobile, remnantGptMobile, turtle, taboola, instantGlobals) {
+], function (adContext, directGptMobile, remnantGptMobile, taboola, instantGlobals) {
 	'use strict';
 
 	var pageTypesWithAdsOnMobile = {
@@ -34,10 +33,6 @@ define('ext.wikia.adEngine.adConfigMobile', [
 
 		if (instantGlobals && instantGlobals.wgSitewideDisableGpt) {
 			return [];
-		}
-
-		if (context.providers.turtle) {
-			return [turtle, remnantGptMobile];
 		}
 
 		return [directGptMobile, remnantGptMobile];
