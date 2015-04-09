@@ -127,7 +127,7 @@ class DevBoxPanel extends SpecialPage {
  * @return boolean true to allow the WikiFactoryLoader to do its other necessary initalization.
  */
 function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
-	global $wgDevelEnvironment, $wgWikiFactoryDB, $wgCommandLineMode, $wgDevboxDefaultWikiDomain;
+	global $wgDevelEnvironment, $wgExternalSharedDB, $wgCommandLineMode, $wgDevboxDefaultWikiDomain;
 	if($wgDevelEnvironment){
 		$forcedWikiDomain = getForcedWikiValue();
 		$cityId = WikiFactory::DomainToID($forcedWikiDomain);
@@ -175,23 +175,26 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 
 		// This section allows us to use c1 or c2 as a source for wiki databases
 		// Be aware that this means the database has to be loaded in the right cluster according to wikicities!
-		$db = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB );
-		$sql = 'SELECT city_cluster from city_list where city_id = ' . $cityId;
-		$result = $db->query( $sql, __METHOD__ );
-
-		$row = $result->fetchRow();
-		$wikiFactoryLoader->mVariables["wgDBcluster"] = $row['city_cluster'];
+		$db = WikiFactory::db( DB_SLAVE );
+		$cluster = $db->selectField( 'city_list', 'city_cluster', [ 'city_id' => $cityId ], __METHOD__ );
+		$wikiFactoryLoader->mVariables["wgDBcluster"] = $cluster;
 
 		// Final sanity check to make sure our database exists
 		if ($forcedWikiDomain != $wgDevboxDefaultWikiDomain) {
-			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
-			$db1 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c1');
-			$db2 = wfGetDB( DB_SLAVE, "dump", $wgWikiFactoryDB . '_c2'); // lame
+			// check if the wiki exist on a cluster
+			wfDebug( __METHOD__ . ": checking if wiki #{$cityId} exists on {$cluster} cluster...\n" );
 
-			$devbox_dbs = array_merge(getDevBoxOverrideDatabases($db1), getDevBoxOverrideDatabases($db2));
-			if (array_search($dbname, $devbox_dbs) === false) {
-				header('HTTP/1.1 503');
-				die("<pre>Fatal Error: No local copy of database [$dbname] was found.</pre>");
+			$dbname = WikiFactory::DomainToDB($forcedWikiDomain);
+			$db = wfGetDB( DB_MASTER, [], $wgExternalSharedDB . '_' . $cluster ); // force master - @see PLATFORM-528
+
+			$res = $db->query( 'SHOW DATABASES ' . $db->buildLike($dbname), __METHOD__ ); // SHOW DATABASES LIKE 'muppet'
+
+			if ( $res->numRows() === 0 ) {
+				header( 'HTTP/1.1 503' );
+				header( 'X-Error: missing database' );
+				header( 'Content-Type: text/plain' );
+
+				die( "No local copy of database [$dbname] was found on {$cluster} cluster [using {$db->getServer()} DB]." );
 			}
 		}
 
