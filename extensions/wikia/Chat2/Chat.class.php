@@ -18,6 +18,15 @@ class Chat {
 	}
 
 	/**
+	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
+	 * parameter sent with every chat request to the Node.js server.
+	 *
+	 * As far as I can tell, this key is NEVER used to perform a 'get' on memcached, not in this extension and not in
+	 * the Node.js server. It is simply used as a unique user identifier.
+	 *
+	 * Here is the original description of this method, which is likely old and incorrect:
+	 * ---
+	 *
 	 * This function is meant to just echo the COOKIES which are available to the apache server.
 	 *
 	 * This helps to work around a limitation in the fact that javascript can't access the second-level-domain's
@@ -219,6 +228,8 @@ class Chat {
 
 	/**
 	 * Return ban information if user is not ban return false;
+	 *
+	 * @TODO Cache query and provide cache clearing function
 	 *
 	 * @param int $cityId
 	 * @param User $banUser
