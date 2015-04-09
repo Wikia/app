@@ -29,7 +29,6 @@ class PageShareController extends WikiaController {
 			if ( !empty( $socialIcons ) ) {
 				$this->setVal( 'socialIcons', $socialIcons );
 			} else {
-				$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 				$renderedSocialIcons = \MustacheService::getInstance()->render(
 					__DIR__ . '/templates/PageShare_index.mustache',
 					['services' => $this->prepareShareServicesData( $shareLang )]
