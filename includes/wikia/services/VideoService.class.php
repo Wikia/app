@@ -29,7 +29,7 @@ class VideoService extends WikiaModel {
 		$vHelper = new VideoHandlerHelper();
 		if ( !$vHelper->isVideoProviderSupported( $url ) ) {
 			wfProfileOut( __METHOD__ );
-			return wfMessage( 'videos-provider-not-supported' )->text();
+			return wfMessage( 'videos-provider-not-supported' )->parse();
 		}
 
 		try {
