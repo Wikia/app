@@ -50,7 +50,7 @@ $messages['en'] = array(
 	'videos-error-admin-only' => 'Sorry, only admins of this wiki are permitted to add videos',
 	'videos-initial-upload-edit-summary' => 'created video',
 	'videos-update-edit-summary' => 'updated video',
-	'videos-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].'
+	'videos-error-provider-not-supported' => 'This video provider is not supported. View our list of [http://community.wikia.com/wiki/Help:Video_Embed_Tool#Supported_sites supported providers].'
 );
 
 /** Message documentation (Message documentation) */
@@ -85,7 +85,7 @@ $messages['qqq'] = array(
 	'videos-error-while-loading' => 'Error message when failing to add a video.',
 	'videos-error-admin-only' => 'Error message that shows up when the wgAllVideosAdminOnly is set to true and a non-admin attempts to upload a video',
 	'videos-update-edit-summary' => 'Edit summary used when updating a video in an article',
-	'videos-provider-not-supported' => 'Message when video provider is not supported'
+	'videos-error-provider-not-supported' => 'Message when video provider is not supported'
 );
 
 /** Afrikaans (Afrikaans)
