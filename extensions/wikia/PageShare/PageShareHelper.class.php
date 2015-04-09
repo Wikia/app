@@ -22,25 +22,28 @@ class PageShareHelper {
 
 	/**
 	 * Get language for Page Share service.
-	 * For anon users use the browser language, if header is empty default to English.
+	 * For anon users use the browser language from client side, if empty default to EN.
 	 * For logged in user use user's language.
-	 * Both values can be overwritten by ?uselang parameter.
+	 * Both values can be overwritten by ?uselang parameter which is passed from the client side.
 	 *
+	 * @param $browserLang
+	 * @param $useLang
 	 * @return String language
 	 */
-	public static function getLangForPageShare() {
-		global $wgLang, $wgRequest, $wgUser;
+	public static function getLangForPageShare( $browserLang, $useLang ) {
+		global $wgLang, $wgUser;
 
-		if ( $wgUser->isAnon() ) {
-			if ( !empty( $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ] ) ) {
-				$lang = substr( $_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2 );
+		if ( !empty ( $useLang ) ) {
+			return $useLang;
+		} else if ( $wgUser->isAnon() ) {
+			if ( !empty( $browserLang ) ) {
+				return $browserLang;
 			} else {
-				$lang = self::SHARE_DEFAULT_LANGUAGE;
+				return self::SHARE_DEFAULT_LANGUAGE;
 			}
 		} else {
-			$lang = $wgLang->getCode();
+			return $wgLang->getCode();
 		}
-		return $wgRequest->getVal( 'uselang', $lang );
 	}
 
 	public static function isValidShareService( $service, $lang ) {

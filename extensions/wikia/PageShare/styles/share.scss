@@ -1,8 +1,11 @@
 @import 'skins/shared/color';
 
-.page-share-toolbar {
+.page-share-container {
 	//Without height ul element is expanded on IE11
 	height: 30px;
+}
+
+.page-share-toolbar {
 	line-height: 20px;
 	white-space: nowrap;
 
