@@ -197,8 +197,11 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'oasis-label-wiki-category-id-27' => 'Movies',
 	'oasis-label-wiki-category-id-28' => 'Anime',
 	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/wikia',
 	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikias',
 );
 
 /** Message documentation (Message documentation)
@@ -874,6 +877,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => 'Haus und Garten',
 	'oasis-label-wiki-category-id-27' => 'Filme',
 	'oasis-label-wiki-category-id-28' => 'Anime',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/wikia.de',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia_de',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/WikiaDE',
 );
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
@@ -1112,6 +1121,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => 'Casa y jardín',
 	'oasis-label-wiki-category-id-27' => 'Películas',
 	'oasis-label-wiki-category-id-28' => 'Anime',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/wikia.es',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia_es',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/channel/UCjwNzRwdDqpmELNZsJv3PSg',
 );
 
 /** Persian (فارسی)
@@ -1561,6 +1576,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => 'Maison et jardin',
 	'oasis-label-wiki-category-id-27' => 'Films',
 	'oasis-label-wiki-category-id-28' => "Films d'animation",
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/wikia.fr',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia_fr',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/channel/UClzAEgYaMs0SyDnXS4cyefg',
 );
 
 /** Galician (Galego)
@@ -2213,6 +2234,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => 'Casa e giardino',
 	'oasis-label-wiki-category-id-27' => 'Film',
 	'oasis-label-wiki-category-id-28' => 'Anime',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/wikia.it',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia_it',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 
 /** Japanese (日本語)
@@ -2414,6 +2441,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => '家庭・園芸',
 	'oasis-label-wiki-category-id-27' => '映画',
 	'oasis-label-wiki-category-id-28' => 'アニメ',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/wikia',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 
 /** Korean (한국어) */
@@ -3491,6 +3524,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => 'Dom i ogród',
 	'oasis-label-wiki-category-id-27' => 'Filmy',
 	'oasis-label-wiki-category-id-28' => 'Anime',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/wikiapl',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia_pl',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 
 /** Piedmontese (Piemontèis)
@@ -3737,6 +3776,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => 'Casa e Jardim',
 	'oasis-label-wiki-category-id-27' => 'Filmes',
 	'oasis-label-wiki-category-id-28' => 'Anime',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/WikiaemPT',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/ComunidadeWikia',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/channel/UCi8B4eUGFLU7SjHWFIjt3WQ',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -3844,6 +3889,26 @@ $messages['pt-br'] = array(
 	'oasis-upload-photos-caption' => 'Legenda',
 	'oasis-modal-error-headline' => 'Corrija os seguintes erros, por favor',
 	'oasis-on-the-wiki' => 'Pelo Wiki',
+	'oasis-label-wiki-vertical-id-1' => 'TV',
+	'oasis-label-wiki-vertical-id-1-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'oasis-label-wiki-vertical-id-2' => 'Videogames',
+	'oasis-label-wiki-vertical-id-2-link' => 'http://pt-br.videogames.wikia.com/wiki/Wiki_Videogameshub',
+	'oasis-label-wiki-vertical-id-3' => 'Livros',
+	'oasis-label-wiki-vertical-id-3-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'oasis-label-wiki-vertical-id-4' => 'Quadrinhos',
+	'oasis-label-wiki-vertical-id-4-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'oasis-label-wiki-vertical-id-5' => 'Estilo de vida',
+	'oasis-label-wiki-vertical-id-5-link' => 'http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida',
+	'oasis-label-wiki-vertical-id-6' => 'Música',
+	'oasis-label-wiki-vertical-id-6-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'oasis-label-wiki-vertical-id-7' => 'Filmes',
+	'oasis-label-wiki-vertical-id-7-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/WikiaemPT',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/ComunidadeWikia',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/channel/UCi8B4eUGFLU7SjHWFIjt3WQ',
 );
 
 /** Russian (русский)
@@ -4040,6 +4105,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => 'Дом и сад',
 	'oasis-label-wiki-category-id-27' => 'Кино',
 	'oasis-label-wiki-category-id-28' => 'Аниме',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/wikia.ru',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia_ru',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
@@ -4841,6 +4912,12 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => '家居与园艺',
 	'oasis-label-wiki-category-id-27' => '电影',
 	'oasis-label-wiki-category-id-28' => '动漫',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/ChineseWikia',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 
 /** Traditional Chinese (‪中文（繁體）‬)
@@ -4944,6 +5021,12 @@ $messages['zh-hant'] = array(
 	'oasis-navigation-v2-validation-next' => '下一步',
 	'oasis-navigation-v2-new-photos' => '新圖片',
 	'oasis-on-the-wiki' => '在這個wiki上',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/ChineseWikia',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 
 /** Chinese (Hong Kong) (‪中文（香港）‬)
@@ -5011,6 +5094,12 @@ $messages['zh-hk'] = array(
 	'oasis-spotlights-rail-title' => '更多',
 	'oasis-pages-on-wiki-header' => '個條目  在$1',
 	'oasis-interlang-languages' => '其他語言',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/ChineseWikia',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 
 /** Chinese (Taiwan) (‪中文（台灣）‬)
@@ -5203,5 +5292,11 @@ ___________________________________________
 	'oasis-label-wiki-category-id-26' => '家居與園藝',
 	'oasis-label-wiki-category-id-27' => '電影',
 	'oasis-label-wiki-category-id-28' => '動漫',
+	'oasis-social-facebook' => 'Facebook',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/ChineseWikia',
+	'oasis-social-twitter' => 'Twitter',
+	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
+	'oasis-social-youtube' => 'YouTube',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 

@@ -137,9 +137,7 @@ abstract class EmailController extends \WikiaController {
 			'marketingFooter' => $this->getVal( 'marketingFooter' ),
 			'tagline' => $this->getVal( 'tagline' ),
 			'useTrademark' => $this->getVal( 'useTrademark' ),
-			'facebook' => $this->request->getVal( 'facebook' ),
-			'twitter' => $this->request->getVal( 'twitter' ),
-			'youtube' => $this->request->getVal( 'youtube' ),
+			'socialMessages' => $this->request->getVal( 'socialMessages' ),
 			'hubsMessages' => $this->request->getVal( 'hubsMessages' ),
 		] );
 	}
@@ -223,10 +221,8 @@ abstract class EmailController extends \WikiaController {
 				'marketingFooter' => $this->marketingFooter,
 				'tagline' => $this->getTagline(),
 				'useTrademark' => $this->getUseTrademark(),
-				'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $this->targetLang )->text(),
-				'twitter' => wfMessage( 'oasis-social-twitter' )->inLanguage( $this->targetLang )->text(),
-				'youtube' => wfMessage( 'oasis-social-youtube' )->inLanguage( $this->targetLang )->text(),
 				'hubsMessages' => $this->getHubsMessages(),
+				'socialMessages' => $this->getSocialMessages(),
 			]
 		);
 
@@ -315,6 +311,17 @@ abstract class EmailController extends \WikiaController {
 			'musicURL' => wfMessage( 'oasis-label-wiki-vertical-id-6-link' )->inLanguage( $this->targetLang )->text(),
 			'movies' => wfMessage( 'oasis-label-wiki-vertical-id-7' )->inLanguage( $this->targetLang )->text(),
 			'moviesURL' => wfMessage( 'oasis-label-wiki-vertical-id-7-link' )->inLanguage( $this->targetLang )->text(),
+		];
+	}
+
+	protected function getSocialMessages() {
+		return [
+			'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $this->targetLang )->text(),
+			'facebook-link' => wfMessage( 'oasis-social-facebook-link' )->inLanguage( $this->targetLang )->text(),
+			'twitter' => wfMessage( 'oasis-social-twitter' )->inLanguage( $this->targetLang )->text(),
+			'twitter-link' => wfMessage( 'oasis-social-twitter-link' )->inLanguage( $this->targetLang )->text(),
+			'youtube' => wfMessage( 'oasis-social-youtube' )->inLanguage( $this->targetLang )->text(),
+			'youtube-link' => wfMessage( 'oasis-social-youtube-link' )->inLanguage( $this->targetLang )->text(),
 		];
 	}
 
