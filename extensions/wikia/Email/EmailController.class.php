@@ -139,7 +139,8 @@ abstract class EmailController extends \WikiaController {
 			'useTrademark' => $this->getVal( 'useTrademark' ),
 			'facebook' => $this->request->getVal( 'facebook' ),
 			'twitter' => $this->request->getVal( 'twitter' ),
-			'youtube' => $this->request->getVal( 'youtube' )
+			'youtube' => $this->request->getVal( 'youtube' ),
+			'hubsMessages' => $this->request->getVal( 'hubsMessages' ),
 		] );
 	}
 
@@ -225,6 +226,7 @@ abstract class EmailController extends \WikiaController {
 				'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $this->targetLang )->text(),
 				'twitter' => wfMessage( 'oasis-social-twitter' )->inLanguage( $this->targetLang )->text(),
 				'youtube' => wfMessage( 'oasis-social-youtube' )->inLanguage( $this->targetLang )->text(),
+				'hubsMessages' => $this->getHubsMessages(),
 			]
 		);
 
@@ -290,6 +292,30 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getTagline() {
 		return wfMessage( 'emailext-fans-tagline' )->inLanguage( $this->targetLang )->text();
+	}
+
+	/**
+	 * Get localized strings for hubs names and linkk
+	 * @return array
+	 * @throws \MWException
+	 */
+	protected function getHubsMessages() {
+		return [
+			'tv' => wfMessage( 'oasis-label-wiki-vertical-id-1' )->inLanguage( $this->targetLang )->text(),
+			'tvURL' => wfMessage( 'oasis-label-wiki-vertical-id-1-link' )->inLanguage( $this->targetLang )->text(),
+			'videoGames' => wfMessage( 'oasis-label-wiki-vertical-id-2' )->inLanguage( $this->targetLang )->text(),
+			'videoGamesURL' => wfMessage( 'oasis-label-wiki-vertical-id-2-link' )->inLanguage( $this->targetLang )->text(),
+			'books' => wfMessage( 'oasis-label-wiki-vertical-id-3' )->inLanguage( $this->targetLang )->text(),
+			'booksURL' => wfMessage( 'oasis-label-wiki-vertical-id-3-link' )->inLanguage( $this->targetLang )->text(),
+			'comics' => wfMessage( 'oasis-label-wiki-vertical-id-4' )->inLanguage( $this->targetLang )->text(),
+			'comicsURL' => wfMessage( 'oasis-label-wiki-vertical-id-4-link' )->inLanguage( $this->targetLang )->text(),
+			'lifestyle' => wfMessage( 'oasis-label-wiki-vertical-id-5' )->inLanguage( $this->targetLang )->text(),
+			'lifestyleURL' => wfMessage( 'oasis-label-wiki-vertical-id-5-link' )->inLanguage( $this->targetLang )->text(),
+			'music' => wfMessage( 'oasis-label-wiki-vertical-id-6' )->inLanguage( $this->targetLang )->text(),
+			'musicURL' => wfMessage( 'oasis-label-wiki-vertical-id-6-link' )->inLanguage( $this->targetLang )->text(),
+			'movies' => wfMessage( 'oasis-label-wiki-vertical-id-7' )->inLanguage( $this->targetLang )->text(),
+			'moviesURL' => wfMessage( 'oasis-label-wiki-vertical-id-7-link' )->inLanguage( $this->targetLang )->text(),
+		];
 	}
 
 	/**
