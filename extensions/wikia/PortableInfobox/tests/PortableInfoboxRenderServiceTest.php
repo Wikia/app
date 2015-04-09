@@ -8,8 +8,23 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$this->infoboxRenderService = new PortableInfoboxRenderService();
 	}
 
+	/**
+	 * @param $input
+	 * @param $output
+	 * @dataProvider testRenderInfoboxDataProvider
+	 */
 	public function testRenderInfobox( $input, $output ) {
-		$this->assertEquals( $this->infoboxRenderService( $input ), $output );
+
+		$realOutput = $this->infoboxRenderService->renderInfobox( $input );
+		$dom = DOMDocument::loadHTML($realOutput);
+		$xpath = new DOMXPath($dom);
+
+		$h2 = '//aside[@class="portable-infobox"]/div[@class="item-type-title"]/h2[text()="Test Title"]';
+		$nodes = $xpath->query($h2);
+
+		$this->assertTrue(count($nodes) == 1);
+
+
 	}
 
 	public function testRenderInfoboxDataProvider() {
