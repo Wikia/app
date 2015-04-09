@@ -229,7 +229,8 @@ class Chat {
 	/**
 	 * Return ban information if user is not ban return false;
 	 *
-	 * @TODO Cache query and provide cache clearing function
+	 * @TODO Cache query and provide cache clearing function: https://wikia-inc.atlassian.net/browse/SOC-639
+	 *
 	 *
 	 * @param int $cityId
 	 * @param User $banUser
