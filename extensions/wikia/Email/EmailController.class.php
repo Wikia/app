@@ -291,7 +291,7 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * Get localized strings for hubs names and linkk
+	 * Get localized strings for hubs names and their URLs
 	 * @return array
 	 * @throws \MWException
 	 */
@@ -314,6 +314,11 @@ abstract class EmailController extends \WikiaController {
 		];
 	}
 
+	/**
+	 * Get localized strings for social networks and their URLs
+	 * @return array
+	 * @throws \MWException
+	 */
 	protected function getSocialMessages() {
 		return [
 			'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $this->targetLang )->text(),
