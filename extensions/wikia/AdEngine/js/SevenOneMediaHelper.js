@@ -65,8 +65,8 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 		},
 		slotsQueue = [];
 
-	if (!window.wgOasisResponsive) {
-		// turn off skyscrapers if it's not responsive Oasis view i.e. hubs pages (ADEN-1792)
+	if (!window.wgOasisBreakpoints && !window.wgOasisResponsive) {
+		// turn off skyscrapers if it's not responsive Oasis or Oasis breakpoints view i.e. hubs pages (ADEN-1792)
 		slotVars.skyscraper1.SOI_SC1 = false;
 		slotVars.skyscraper1.SOI_SB = false;
 	}
