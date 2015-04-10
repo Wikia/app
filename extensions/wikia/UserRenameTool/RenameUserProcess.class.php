@@ -699,6 +699,8 @@ class RenameUserProcess {
 	 * Processes specific local wiki database and makes all needed changes
 	 *
 	 * Important: should only be run within maintenace script (bound to specified wiki)
+	 *
+	 * @throws DBError
 	 */
 	public function updateLocal(){
 		global $wgCityId, $wgUser;
@@ -774,6 +776,10 @@ class RenameUserProcess {
 				}
 			}
 			$dbw->freeResult($pages);
+		} catch (DBError $e) {
+			// re-throw DB related exceptions instead of silently ignoring them (@see PLATFORM-775)
+			wfProfileOut(__METHOD__);
+			throw $e;
 		} catch (Exception $e) {
 			$this->addLog("Exception while moving pages: " . $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine());
 		}
