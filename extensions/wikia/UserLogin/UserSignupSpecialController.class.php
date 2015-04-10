@@ -688,12 +688,12 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 *
 	 * @param string $label
 	 */
-	public static function track( $label ) {
+	public function track( $label ) {
 		\Track::event( 'trackingevent', [
 			'ga_category' => 'user-sign-up',
 			'ga_action' => 'request',
 			'ga_label' => $label,
-			'beacon' => !empty( F::app()->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
+			'beacon' => !empty( $this->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
 		] );
 	}
 }
