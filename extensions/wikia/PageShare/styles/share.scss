@@ -6,6 +6,8 @@
 }
 
 .page-share-toolbar {
+	//Without height ul element is expanded on IE11
+	height: 30px;
 	line-height: 20px;
 	white-space: nowrap;
 
