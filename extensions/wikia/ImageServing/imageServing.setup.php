@@ -55,10 +55,13 @@ $wgAPIModules['imageserving'] = 'WikiaApiImageServing';
 $wgSpecialPages[ 'MostLinkedFilesInContent' ] =  'MostLinkedFilesInContentPage';
 $wgSpecialPageGroups['MostLinkedFilesInContent'] = 'maintenance';
 
+
 $wgAutoloadClasses[ 'MostLinkedFilesInContentPage' ] = "{$dir}/querypage/MostLinkedFilesInContentPage.class.php";
+$wgAutoloadClasses[ 'MostimagesInContentPage' ] = "{$dir}/querypage/MostimagesInContentPage.class.php";
 
 $wgHooks['wgQueryPages'][] = function( Array &$wgQueryPages ) {
 	//                  QueryPage subclass         Special page name
 	$wgQueryPages[] = [ 'MostLinkedFilesInContentPage', 'MostLinkedFilesInContent' ];
+	$wgQueryPages[] = [ 'MostimagesInContentPage', 'MostimagesInContent' ];
 	return true;
 };

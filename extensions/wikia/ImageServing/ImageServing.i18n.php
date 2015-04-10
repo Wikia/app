@@ -9,6 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'imageserving-desc' => 'Selects images from a specified array of pages based on visual requirements',
+	'mostimagesincontent' => 'Most linked-to files in content namespaces',
 	'mostlinkedfilesincontent' => 'Most linked-to files in content namespaces',
 );
 
@@ -18,6 +19,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'imageserving-desc' => '{{desc}}',
 	'mostlinkedfilesincontent' => 'The name of the special page showing the list of the most popular images on pages in content namespaces',
+	'mostimagesincontent' => 'The name of the special page showing the list of the most popular images on pages in content namespaces',
 );
 
 /** Arabic (العربية)
@@ -81,6 +83,7 @@ $messages['cs'] = array(
 $messages['de'] = array(
 	'imageserving-desc' => 'Wählt Bilder von einer Auswahl von Seiten entsprechend der visuellen Anforderungen aus',
 	'mostlinkedfilesincontent' => 'Meistverlinkte Dateien in Inhaltsnamensräumen',
+	'mostimagesincontent' => 'Meistverlinkte Dateien in Inhaltsnamensräumen',
 );
 
 /** Spanish (español)
@@ -188,6 +191,7 @@ $messages['oc'] = array(
 $messages['pl'] = array(
 	'imageserving-desc' => 'Wybiera obrazy z określonej grupy stron na bazie preferencji wizualnych.',
 	'mostlinkedfilesincontent' => 'Najczęściej linkowane pliki w przestrzeniach nazw z treścią',
+	'mostimagesincontent' => 'Najczęściej linkowane pliki w przestrzeniach nazw z treścią',
 );
 
 /** Piedmontese (Piemontèis)

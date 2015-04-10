@@ -195,7 +195,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			'querycache',
 			[ 'qc_title as image', 'qc_value as popularity' ],
 			[
-				'qc_type' => 'MostLinkedFilesInContent',
+				'qc_type' => 'MostimagesInContent',
 				'qc_title' => $imageNames,
 			],
 			__METHOD__
