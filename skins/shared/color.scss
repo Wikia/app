@@ -201,3 +201,9 @@ $color-vertical-tv-secondary: #008cce;
 // Venus article
 $color-article-navigation-inactive: if($is-dark-wiki, mix(#fff, $color-page, 30%), mix(#000, $color-page, 30%));
 $image-caption-border-color: if($is-dark-wiki, darken($color-text, 30%), lighten($color-text, 30%));
+
+//New site modernizations module background
+$color-new-module-background: mix($color-page, black, 90%);
+@if $is-dark-wiki {
+	$color-new-module-background: mix($color-page, white, 90%);
+}

@@ -3,10 +3,6 @@
 $black: #000;
 $white: #FFF;
 $color-divider: mix($color-page, $color-text, 80%);
-$color-rail-background: mix($color-page, $black, 90%);
-@if $is-dark-wiki {
-    $color-rail-background: mix($color-page, $white, 90%);
-}
 
 @mixin standard-primary-button() {
     background-image: none;
