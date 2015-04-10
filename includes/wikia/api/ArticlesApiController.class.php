@@ -780,14 +780,16 @@ class ArticlesApiController extends WikiaApiController {
 		//to keep things consistent over time (some other APIs that are using sorted results are using
 		//ArticleApi::getDetails to fetch info about articles)
 		$orderedIdsFromTitles = array_diff( array_keys( $collection ), $articleIds );
+		//typecasting to convert falsy values into empty array (array_merge require arrays only)
 		$orderedIds = array_merge( (array)$articleIds, (array)$orderedIdsFromTitles );
 		$collection = $this->preserveOriginalOrder( $orderedIds, $collection );
 
 		//if strict - return array instead of associative array (dict)
 		if ( $strict ) {
 			return array_values( $collection );
+		} else {
+			return $collection;
 		}
-		return $collection;
 	}
 
 	protected function preserveOriginalOrder( $originalOrder, $collection ) {
