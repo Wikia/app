@@ -62,7 +62,7 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
-<? if ( BodyController::isResponsiveLayoutEnabled() ): ?>
+<? if ( BodyController::isResponsiveLayoutEnabled() or BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
