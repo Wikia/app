@@ -6,6 +6,7 @@ $oasisTypography: get_command_line_param( "oasisTypography", 0 );
 
 $breakpoint-width-not-supported: 767px;
 $breakpoint-lower: 1064px;
+$breakpoint-lower-half: $breakpoint-lower / 2;
 $breakpoint-upper: 1575px;
 
 $content-width-small: 768px;
@@ -17,6 +18,8 @@ $page-width-medium: $content-width-medium - 2 * $padding-width-medium;
 $content-width-large: 1238px;
 $padding-width-large: 30px;
 $page-width-large: $content-width-large - 2 * $padding-width-large;
+
+$width-adskin: 170px;
 
 $small-range: (0, $breakpoint-lower - 1);
 $medium-range: ($breakpoint-lower, $breakpoint-upper);
