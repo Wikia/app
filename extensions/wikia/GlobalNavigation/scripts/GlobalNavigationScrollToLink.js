@@ -27,12 +27,9 @@ require(
 
 		$(function() {
 			var $win = $(win),
-				SPACING_BELOW_GLOBAL_NAV = 10,
-				globalNavigationHeight,
-				$globalNavigation;
-
-			$globalNavigation = $('#globalNavigation');
-			globalNavigationHeight = $globalNavigation.height();
+				spacingBelowGlobalNav = 10,
+				$globalNavigation = $('#globalNavigation'),
+				globalNavigationHeight = $globalNavigation.height();
 
 			//If location contains hash hide global navigation when page loads.
 			//top:0 hides global navigation because it has "margin-top:-47px".
@@ -44,17 +41,15 @@ require(
 
 			// offset is negative - we want scroll BEFORE element's top offset
 			// also scroll a bit, so element won't be sticked to GlobalNavigation
-			offset = -( globalNavigationHeight + SPACING_BELOW_GLOBAL_NAV);
+			offset = -( globalNavigationHeight + spacingBelowGlobalNav);
 
-			$win.on('hashchange', hashChangeHandler);
-
-			$win.on('load', function() {
-				win.setTimeout(function() {
-					//console.log(offset);
-					win.scrollTo(0, win.scrollY - globalNavigationHeight );
-					$globalNavigation.animate({top: globalNavigationHeight}, 500);
-				}, 0);
-			});
+			$win.on('hashchange', hashChangeHandler)
+				.on('load', function() {
+					win.setTimeout(function() {
+						win.scrollTo(0, win.scrollY - globalNavigationHeight - spacingBelowGlobalNav);
+						$globalNavigation.animate({top: globalNavigationHeight}, 500);
+					}, 0);
+				});
 		});
 
 
