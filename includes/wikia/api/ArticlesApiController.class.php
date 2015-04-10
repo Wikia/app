@@ -776,8 +776,14 @@ class ArticlesApiController extends WikiaApiController {
 		$collection = $this->appendMetadata( $collection );
 
 		$thumbnails = null;
+
+		//The collection can be in random order (depends if item was found in memcache or not)
+		//lets preserve original order even if we are not using strict mode:
+		//to keep things consistent over time (some other APIs that are using sorted results are using
+		//ArticleApi::getDetails to fetch info about articles)
 		$collection = $this->preserveOriginalOrder( $articleIds, $collection );
-		//if strict return to original ids order - as an array
+
+		//if strict - return array instead of associative array (dict)
 		if ( $strict ) {
 			return array_values( $collection );
 		}
