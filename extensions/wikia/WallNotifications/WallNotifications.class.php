@@ -1006,7 +1006,6 @@ class WallNotifications {
 		$notification['user_id'] = $userId;
 		$notification['wiki_id'] = $wikiId;
 
-
 		WikiaLogger::instance()->info( 'New Wall Notification created', [
 			'wikiId' => $wikiId,
 			'userId' => $userId
