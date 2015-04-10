@@ -100,7 +100,7 @@ function efSecurePasswordsCrypt( &$password, &$salt, &$wgPasswordSalt, &$hash ) 
 	$size = mcrypt_get_iv_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC );
 	$ksize = mcrypt_get_key_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC );
 	$iv = mcrypt_create_iv( $size, MCRYPT_RAND );
-	$key = substr( $wgSecurePasswordsSecretKeys[2], 0, $ksize - 1 );
+	$key = substr( $wgSecurePasswordsSecretKeys[2], 0, $ksize - 1 ) . "\0";
 	$pw2 = mcrypt_encrypt( MCRYPT_RIJNDAEL_256, $key, $pw1, MCRYPT_MODE_CBC, $iv );
 	$pwf = base64_encode( gzcompress( base64_encode( $pw2 ) . '|' . base64_encode( $iv ) ) );
 	$hash .= $type . ':' . $salt . ':' . $pwf;
