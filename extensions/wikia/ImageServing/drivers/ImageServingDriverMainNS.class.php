@@ -189,19 +189,19 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 		$imageNames = array_values( $imageNames );
 
-		// MostimagesInContentPage generates daily reports with images
+		// MostLinkedFilesInContentPage generates daily reports with images
 		// that are included at least twice in article in content namespaces
 		$ret = $this->db->select(
 			'querycache',
 			[ 'qc_title as image', 'qc_value as popularity' ],
 			[
-				'qc_type' => 'MostimagesInContent',
+				'qc_type' => 'MostLinkedFilesInContent',
 				'qc_title' => $imageNames,
 			],
 			__METHOD__
 		);
 
-		// MostimagesInContent includes images used at least twice
+		// MostLinkedFilesInContent includes images used at least twice
 		// - make popularity default to one here
 		// - update with the data from query cache
 		$result = array_fill_keys( $imageNames, 1 );

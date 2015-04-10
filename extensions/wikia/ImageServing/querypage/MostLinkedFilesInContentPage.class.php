@@ -9,8 +9,8 @@
  *
  * @author macbre
  */
-class MostimagesInContentPage extends MostimagesPage {
-	function __construct( $name = 'MostimagesInContent' ) {
+class MostLinkedFilesInContentPage extends MostimagesPage {
+	function __construct( $name = 'MostLinkedFilesInContent' ) {
 		parent::__construct( $name );
 	}
 
