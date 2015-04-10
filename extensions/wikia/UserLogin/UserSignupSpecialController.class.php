@@ -183,28 +183,26 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * Returns captcha HTML
+	 */
 	public function captcha() {
-		$this->rawHtml = '';
-		$this->isFancyCaptcha = false;
-
 		if ( $this->shouldDisableCaptcha() ) {
 			return;
 		}
 
 		$captchaObj = $this->getCaptchaObj();
 		if ( !empty( $captchaObj ) ) {
-			$this->rawHtml = $captchaObj->getForm();
-			$this->isFancyCaptcha = $captchaObj instanceof Captcha\Module\FancyCaptcha;
+			$this->response->setVal( 'rawHtml', $captchaObj->getForm() );
 		}
 	}
 
 	private function getCaptchaObj() {
-		$captchaObj = null;
-
-		if ( !empty( $this->wg->EnableCaptchaExt ) ) {
-			$captchaObj = Captcha\Factory\Module::getInstance();
+		if ( empty( $this->wg->EnableCaptchaExt ) ) {
+			return null;
 		}
-		return $captchaObj;
+
+		return Captcha\Factory\Module::getInstance();
 	}
 
 	/**
