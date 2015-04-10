@@ -83,6 +83,7 @@ class BodyController extends WikiaController {
 		global $wgOasisBreakpoints, $wgRequest, $wgLanguageCode, $wgOasisBreakpointsDE;
 
 		//For now we want to disable breakpoints for German wikis if not turn on explicitly.
+		//@TODO remove when 71Media fixes their styles and $wgOasisBreakpointsDE will retire
 		if ( strtolower( $wgLanguageCode ) == 'de' && empty( $wgOasisBreakpointsDE ) ) {
 			$wgOasisBreakpoints = false;
 		}
