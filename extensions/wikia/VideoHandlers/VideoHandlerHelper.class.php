@@ -502,11 +502,11 @@ class VideoHandlerHelper extends WikiaModel {
 	public function isVideoProviderSupported( $url ) {
 		global $wgVideoMigrationProviderMap;
 
-		$parsed = parse_url( strtolower( $url ) );
+		$parsed = parse_url( strtolower( $url ), PHP_URL_HOST );
 
 		foreach( $wgVideoMigrationProviderMap as $name ) {
 			$className = $name . 'ApiWrapper';
-			if ( class_exists( $className ) && $className::isMatchingHostname( $parsed['host'] ) ) {
+			if ( class_exists( $className ) && $className::isMatchingHostname( $parsed ) ) {
 				return true;
 			}
 		}
