@@ -145,7 +145,7 @@ function efSecurePasswordsCompare( &$hash, &$password, &$userId, &$result ) {
 	$pw = hash_hmac( $algos[$type2], $salt . '-' . hash_hmac( $algos[$type1], $password, $wgSecurePasswordsSecretKeys[0] ), $wgSecurePasswordsSecretKeys[1] );
 	$h1 = gzuncompress( base64_decode( $hash1 ) );
 	$ksize = mcrypt_get_key_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC );
-	$key = substr( $wgSecurePasswordsSecretKeys[2], 0, $ksize - 1 );
+	$key = substr( $wgSecurePasswordsSecretKeys[2], 0, $ksize - 1 ) . "\0";
 	$bits = explode( '|', $h1 );
 	$iv = base64_decode( $bits[1] );
 	$h2 = base64_decode( $bits[0] );
@@ -196,7 +196,7 @@ function efSecurePasswordsOldCompare( &$hash, &$password, &$userId, &$result ) {
 	if( $m ) {
 		global $wgSecretKey;
 		$ksize = mcrypt_get_key_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC );
-		$key = substr( $wgSecretKey, 0, $ksize - 1 );
+		$key = substr( $wgSecretKey, 0, $ksize - 1 ) . "\0";
 		$bits = explode( '|', $h1 );
 		$iv = base64_decode( $bits[1] );
 		$h2 = base64_decode( $bits[0] );
