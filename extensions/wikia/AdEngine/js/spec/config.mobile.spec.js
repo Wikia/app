@@ -1,5 +1,5 @@
 /*global describe, it, modules, expect*/
-describe('AdConfigMobile', function () {
+describe('ext.wikia.adEngine.config.mobile', function () {
 	'use strict';
 
 	var adProviderDirectMock = {
@@ -11,7 +11,7 @@ describe('AdConfigMobile', function () {
 			canHandleSlot: function () { return true; }
 		};
 
-	function mockAdContext(showAds, enableRemnantGptMobile) {
+	function mockAdContext(showAds) {
 		return {
 			getContext: function () {
 				return {
@@ -20,7 +20,6 @@ describe('AdConfigMobile', function () {
 						pageType: 'all_ads'
 					},
 					providers: {
-						remnantGptMobile: enableRemnantGptMobile
 					}
 				};
 			}
@@ -28,22 +27,22 @@ describe('AdConfigMobile', function () {
 	}
 
 	it('getProviderList returns DirectGPT, RemnantGPT in the regular case', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
+		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(true),
 			adProviderDirectMock,
 			adProviderRemnantMock
 		);
 
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock], 'GPT');
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
-	it('getProviderLists returns Null when wgShowAds set to false', function () {
-		var adConfigMobile = modules['ext.wikia.adEngine.adConfigMobile'](
+	it('getProviderLists returns [] when showAds is false', function () {
+		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(false),
 			adProviderDirectMock,
 			adProviderRemnantMock
 		);
 
-		expect(adConfigMobile.getProviderList('foo')).toEqual([], 'Null over GPT');
+		expect(adConfigMobile.getProviderList('foo')).toEqual([]);
 	});
 });

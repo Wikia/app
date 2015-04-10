@@ -11,12 +11,9 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 * Setup global variables used to generate Ads context
 	 */
 	private function setupGlobals() {
-		$this->mockGlobalVariable('wgLoadAdsInHead', true);
-		$this->mockGlobalVariable('wgAdDriverEnableRemnantGptMobile', true);
 		$this->mockGlobalVariable('wgAdDriverSevenOneMediaOverrideSub2Site', true);
 		$this->mockGlobalVariable('wgAdDriverTrackState', true);
 		$this->mockGlobalVariable('wgAdEngineDisableLateQueue', true);
-		$this->mockGlobalVariable('wgLoadLateAdsAfterPageLoad', true);
 		$this->mockGlobalVariable('wgEnableWikiaHubsV3Ext', true);
 		$this->mockGlobalVariable('wgWikiDirectedAtChildren', true);
 		$this->mockGlobalVariable('wgAdDriverUseSevenOneMedia', false);
@@ -51,11 +48,9 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 		$expected = [
 			'opts' => [
-				'adsInHead' => true,
 				'adsInContent' => true,
 				'disableLateQueue' => true,
 				'enableAdsInMaps' => true,
-				'lateAdsAfterPageLoad' => true,
 				'pageType' => 'corporate',
 				'showAds' => true,
 				'trackSlotState' => true,
@@ -79,7 +74,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'wikiVertical' => 'Lifestyle',
 			],
 			'providers' => [
-				'remnantGptMobile' => true,
 			],
 			'slots' => [
 			],

@@ -1,5 +1,5 @@
 /*global define,require*/
-define('ext.wikia.adEngine.adConfigMobile', [
+define('ext.wikia.adEngine.config.mobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.remnantGptMobile',

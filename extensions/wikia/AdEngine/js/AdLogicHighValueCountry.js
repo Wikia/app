@@ -3,37 +3,26 @@ define('ext.wikia.adEngine.adLogicHighValueCountry', ['wikia.instantGlobals'], f
 	'use strict';
 
 	var highValueCountries = globals.wgHighValueCountries || {
-		'CA': 3,
-		'DE': 3,
-		'DK': 3,
-		'ES': 3,
-		'FI': 3,
-		'FR': 3,
-		'GB': 3,
-		'IT': 3,
-		'NL': 3,
-		'NO': 3,
-		'SE': 3,
-		'UK': 3,
-		'US': 3
+		'CA': true,
+		'DE': true,
+		'DK': true,
+		'ES': true,
+		'FI': true,
+		'FR': true,
+		'GB': true,
+		'IT': true,
+		'NL': true,
+		'NO': true,
+		'SE': true,
+		'UK': true,
+		'US': true
 	};
 
 	function isHighValueCountry(country) {
-		if (country && highValueCountries) {
-			return !!highValueCountries[country.toUpperCase()];
-		}
-		return false;
-	}
-
-	function getMaxCallsToDART(country) {
-		if (country && highValueCountries) {
-			return highValueCountries[country.toUpperCase()] || 0;
-		}
-		return false;
+		return !!(country && highValueCountries && highValueCountries[country.toUpperCase()]);
 	}
 
 	return {
-		isHighValueCountry: isHighValueCountry,
-		getMaxCallsToDART: getMaxCallsToDART
+		isHighValueCountry: isHighValueCountry
 	};
 });

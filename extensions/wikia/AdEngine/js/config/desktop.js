@@ -1,11 +1,12 @@
 /*global define,require*/
-define('ext.wikia.adEngine.adConfigLate', [
+define('ext.wikia.adEngine.config.desktop', [
 	// regular dependencies
 	'wikia.log',
 	'wikia.window',
 	'wikia.instantGlobals',
 	'wikia.geo',
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adDecoratorPageDimensions',
 
 	// adProviders
 	'ext.wikia.adEngine.provider.evolve',
@@ -13,8 +14,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
+	'ext.wikia.adEngine.provider.turtle',
 	require.optional('ext.wikia.adEngine.provider.taboola'),
-
 	require.optional('ext.wikia.adEngine.adDecoratorTopInContent')
 ], function (
 	// regular dependencies
@@ -23,13 +24,15 @@ define('ext.wikia.adEngine.adConfigLate', [
 	instantGlobals,
 	geo,
 	adContext,
+	adDecoratorPageDimensions,
 
 	// AdProviders
 	adProviderEvolve,
 	adProviderLiftium,
 	adProviderDirectGpt,
 	adProviderRemnantGpt,
-	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
+	adProviderSevenOneMedia,
+	adProviderTurtle,
 	adProviderTaboola,
 
 	adDecoratorTopInContent
@@ -38,6 +41,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		country = geo.getCountryCode(),
+		evolveCountry = (country === 'AU' || country === 'CA' || country === 'NZ'),
 		context = adContext.getContext(),
 		liftiumSlotsToShowWithSevenOneMedia = {
 			'WIKIA_BAR_BOXAD_1': true,
@@ -45,28 +49,31 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'TOP_BUTTON_WIDE.force': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
+		dartEnabled = !instantGlobals.wgSitewideDisableGpt;
 
-		dartDirectBtfSlots = {
-			'LEFT_SKYSCRAPER_3': true,
-			'PREFOOTER_LEFT_BOXAD': true,
-			'PREFOOTER_RIGHT_BOXAD': true
-		},
-		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt,
-		decorators = adDecoratorTopInContent ? [adDecoratorTopInContent] : [];
+	function getDecorators() {
+		var decorators = [adDecoratorPageDimensions];
 
-	function getProviderList(slotname) {
-		var evolveProvidersForSlot;
+		if (adDecoratorTopInContent) {
+			decorators.push(adDecoratorTopInContent);
+		}
+
+		return decorators;
+	}
+
+	function getProviderList(slotName) {
+		var providerList = [];
 
 		log('getProvider', 5, logGroup);
-		log(slotname, 5, logGroup);
+		log(slotName, 5, logGroup);
 
 		if (context.forceProviders.liftium) {
 			return [adProviderLiftium];
 		}
 
-		// First ask SevenOne Media
+		// SevenOne Media
 		if (context.providers.sevenOneMedia) {
-			if (!liftiumSlotsToShowWithSevenOneMedia[slotname]) {
+			if (!liftiumSlotsToShowWithSevenOneMedia[slotName]) {
 				if (ie8) {
 					log('SevenOneMedia not supported on IE8. No ads', 'warn', logGroup);
 					return [];
@@ -81,44 +88,33 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotname)) {
+		// Taboola
+		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName)) {
 			return [adProviderTaboola];
 		}
 
-		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			log(['getProvider', slotname, 'Evolve'], 'info', logGroup);
-			evolveProvidersForSlot = [adProviderRemnantGpt, adProviderLiftium];
-
-			if (adProviderEvolve.canHandleSlot(slotname)) {
-				evolveProvidersForSlot.unshift(adProviderEvolve);
-				return evolveProvidersForSlot;
-			}
-
-			if (dartDirectBtfSlots[slotname]) {
-				evolveProvidersForSlot.unshift(adProviderDirectGpt);
-				return evolveProvidersForSlot;
-			}
-
-			return evolveProvidersForSlot;
+		// First provider: Turtle, Evolve or Direct GPT?
+		if (context.providers.turtle) {
+			providerList.push(adProviderTurtle);
+		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
+			providerList.push(adProviderEvolve);
+		} else if (dartEnabled) {
+			providerList.push(adProviderDirectGpt);
 		}
 
-		if (alwaysCallDart) {
-			if (dartDirectBtfSlots[slotname]) {
-				return [adProviderDirectGpt, adProviderRemnantGpt, adProviderLiftium];
-			}
-			return [adProviderRemnantGpt, adProviderLiftium];
+		// Second provider: Remnant GPT
+		if (dartEnabled) {
+			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Load GPT and Liftium ads in TOP_INCONTENT_BOXAD
-		if (context.targeting.skin === 'venus' && slotname.indexOf('INCONTENT') !== -1) {
-			return [];
-		}
+		// Last resort provider: Liftium
+		providerList.push(adProviderLiftium);
 
-		return [adProviderLiftium];
+		return providerList;
 	}
 
 	return {
-		getDecorators: function () { return decorators; },
+		getDecorators: getDecorators,
 		getProviderList: getProviderList
 	};
 });

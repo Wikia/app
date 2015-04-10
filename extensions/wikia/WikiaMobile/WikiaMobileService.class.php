@@ -49,10 +49,6 @@ class WikiaMobileService extends WikiaService {
 				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
 			}
 
-			if ( $this->wg->AdDriverEnableRemnantGptMobile ) {
-				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
-			}
-
 			$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 		}
 
