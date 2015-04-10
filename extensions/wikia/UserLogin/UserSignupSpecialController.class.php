@@ -688,7 +688,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 *
 	 * @param string $label
 	 */
-	public function track( $label ) {
+	protected function track( $label ) {
 		\Track::event( 'trackingevent', [
 			'ga_category' => 'user-sign-up',
 			'ga_action' => 'request',
