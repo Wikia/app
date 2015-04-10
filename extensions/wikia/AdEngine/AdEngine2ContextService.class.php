@@ -64,7 +64,6 @@ class AdEngine2ContextService {
 				] ),
 				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [
-					'directGpt' => $wg->AdDriverForceDirectGptAd,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
 					'turtle' => $wg->AdDriverForceTurtleAd,
 				] ),
