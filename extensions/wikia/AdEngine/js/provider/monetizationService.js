@@ -2,12 +2,11 @@
 /* jshint maxparams:false */
 define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.log',
-	'wikia.window',
-	'jquery',
-	'wikia.scriptwriter',
 	'ext.wikia.adEngine.monetizationsServiceHelper',
-], function (adContext, log, window, $, scriptWriter, monetizationService) {
+	'jquery',
+	'wikia.log',
+	'wikia.scriptwriter',
+], function (adContext, monetizationService, $, log, scriptWriter) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
@@ -38,7 +37,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		var slotName = slotMap[slot],
 			context = adContext.getContext();
 
-		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
+		if (context.providers.monetizationServiceAds[slotName]) {
 			log(['fillInSlot', slot, 'injectScript'], 'info', logGroup);
 
 			monetizationService.loadAssets();

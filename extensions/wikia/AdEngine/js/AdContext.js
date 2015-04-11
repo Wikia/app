@@ -89,16 +89,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
-		// Monetization Service
-		if (context.forceProviders.monetizationService) {
-			context.providers.monetizationService = true;
-		}
-
-		// Use PostScribe for ScriptWriter implementation when Monetization Service ads are enabled
-		if (context.providers.monetizationService) {
-			context.opts.usePostScribe = true;
-		}
-
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {

@@ -25,7 +25,7 @@ class AdEngine2ContextService {
 			}
 
 			$monetizationServiceAds = null;
-			if ( !empty( $wg->AdDriverEnableMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
+			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];;
 				$monetizationServiceAds = str_replace( "<script>\n", '', $monetizationServiceAds );
 				$monetizationServiceAds = str_replace( "\n</script>", '', $monetizationServiceAds );
@@ -66,12 +66,12 @@ class AdEngine2ContextService {
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
+					'monetizationService' => $wg->AdDriverUseMonetizationService,
+					'monetizationServiceAds' => $monetizationServiceAds,
 					'remnantGptMobile' => $wg->AdDriverEnableRemnantGptMobile,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola,
-					'monetizationService' => $wg->AdDriverEnableMonetizationService,
-					'monetizationServiceAds' => $monetizationServiceAds,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 				] ),
@@ -80,7 +80,6 @@ class AdEngine2ContextService {
 					'directGpt' => $wg->AdDriverForceDirectGptAd,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
 					'turtle' => $wg->AdDriverForceTurtleAd,
-					'monetizationService' => $wg->AdDriverForceMonetizationService,
 				] ),
 			];
 		} );

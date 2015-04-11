@@ -97,11 +97,6 @@ define('ext.wikia.adEngine.adConfig', [
 			return [adProviderLater];
 		}
 
-		if (context.providers.monetizationService || context.forceProviders.monetizationService) {
-			log(['getProvider', slotname, 'Later (MonetizationService)'], 'info', logGroup);
-			return [adProviderLater];
-		}
-
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			if (evolveSlotConfig.canHandleSlot(slotname)) {
@@ -123,6 +118,11 @@ define('ext.wikia.adEngine.adConfig', [
 
 			log(['getProvider', slotname, 'DirectGpt->Later'], 'info', logGroup);
 			return [adProviderDirectGpt, adProviderLater];
+		}
+
+		if (context.providers.monetizationService) {
+			log(['getProvider', slotname, 'Later (MonetizationService)'], 'info', logGroup);
+			return [adProviderLater];
 		}
 
 		// Non-high-value slots go to ad provider Later

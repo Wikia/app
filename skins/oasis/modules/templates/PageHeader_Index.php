@@ -1,6 +1,6 @@
 <?php
 	if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-		if ( !empty( $wg->AdDriverEnableMonetizationService ) ) {
+		if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
 			echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_ABOVE_TITLE'] );
 		} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
 			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
@@ -74,7 +74,7 @@
 		</header>
 		<?php
 		if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-			if ( !empty( $wg->AdDriverEnableMonetizationService ) ) {
+			if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
 				echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_BELOW_TITLE'] );
 			} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
 				echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];

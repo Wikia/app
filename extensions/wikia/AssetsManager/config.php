@@ -106,14 +106,14 @@ $config['adengine2_late_js'] = array(
 		// ads
 		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
+		'//extensions/wikia/AdEngine/js/MonetizationServiceHelper.js',
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-		'//extensions/wikia/AdEngine/js/MonetizationServiceHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
-		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
 		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
+		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
 	),
 );
 

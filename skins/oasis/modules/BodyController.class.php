@@ -455,7 +455,7 @@ class BodyController extends WikiaController {
 
 		// MonetizationModule Extension
 		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			if ( empty( $this->wg->AdDriverEnableMonetizationService ) ) {
+			if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
 				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
 			} else {

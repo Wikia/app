@@ -152,7 +152,7 @@
 
 				<?php
 					if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-						if ( !empty( $wg->AdDriverEnableMonetizationService ) ) {
+						if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
 							echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_ABOVE_FOOTER'] );
 						} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER] ) ) {
 							echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER];
