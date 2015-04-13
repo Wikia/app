@@ -158,11 +158,11 @@ class MercuryApiController extends WikiaController {
 		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, NULL );
 		$articleTitle = $this->request->getVal( self::PARAM_ARTICLE_TITLE, NULL );
 
-		if ( !empty( $articleId ) && !is_null( $articleTitle ) && trim( $articleTitle ) !== '' ) {
+		if ( !empty( $articleId ) && MercuryApiHelper::isTitleStringValid( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
 		}
 
-		if ( empty( $articleId ) && ( is_null( $articleTitle ) || trim( $articleTitle ) === '' ) ) {
+		if ( empty( $articleId ) && !MercuryApiHelper::isTitleStringValid( $articleTitle ) ) {
 			throw new BadRequestApiException( 'You need to pass title or id of an article' );
 		}
 
