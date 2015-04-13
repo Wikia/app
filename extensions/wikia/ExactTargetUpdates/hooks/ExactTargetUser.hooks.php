@@ -18,20 +18,6 @@ class ExactTargetUserHooks {
 	}
 
 	/**
-	 * Adds Task for updating user editcount to job queue.
-	 * Updates whole user record
-	 * @param WikiPage $article
-	 * @param User $user
-	 * @return bool
-	 */
-	public function onArticleSaveComplete( \WikiPage $article, \User $oUser ) {
-		if ( !$oUser->isAnon() ) {
-			$this->addTheUpdateCreateUserTask( $oUser );
-		}
-		return true;
-	}
-
-	/**
 	 * Adds Task for removing user to job queue
 	 * @param User $oUser
 	 * @return bool
