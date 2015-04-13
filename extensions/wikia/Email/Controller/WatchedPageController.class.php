@@ -160,7 +160,7 @@ class WatchedPageController extends EmailController {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}
-		return wfMessage( 'enotif_no_summary' )->inLanguage( $this->targetLang )->text();
+		return wfMessage( 'emailext-watchedpage-no-summary' )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
