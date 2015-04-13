@@ -18,6 +18,7 @@ $background-width-half: $background-width / 2;
 $background-offset: ( $breakpoint-lower - $background-width ) / 2;
 $background-align: if( $background-width > $page-width-medium, center, left );
 
+// the following lines are needed for compatibility with oasis responsive (and non-responsive)
 $standard-oasis-content-size: 1000px;
 $standard-oasis-content-size-half: $standard-oasis-content-size / 2;
 $standard-oasis-content-size-with-adskins: $standard-oasis-content-size + 2 * $width-adskin;
