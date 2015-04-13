@@ -21,14 +21,20 @@ class CeleryPurge {
 
 	// Add some urls to the Task
 	static function purge( $urlArr ) {
-		global $wgPurgeVignetteUsingSurrogateKeys;
+		$caller = self::getPurgeCaller();
+		wfDebug( "Purging backtrace: " . wfGetAllCallers( false ) . "\n" );
 
 		// Filter urls into buckets based on service backend
-		$buckets = array_reduce($urlArr, function($carry, $item) {
+		$buckets = array_reduce($urlArr, function($carry, $item) use ( $caller ){
+			global $wgPurgeVignetteUsingSurrogateKeys;
+
+			wfDebug( "Purging URL $item from $caller via Celery\n" );
+
 			if ( isset($wgPurgeVignetteUsingSurrogateKeys) && VignetteRequest::isVignetteUrl($item) ) {
 				$carry['vignette'][] = $item;
 			} elseif ( strstr($item, 'MercuryApi') !== false ) {
 				$carry['mercury'][] = $item;
+				$carry['mediawiki'][] = $item;  // TODO: we can remove this when mercury is only using internal cache
 			} else {
 				$carry['mediawiki'][] = $item;
 			}
@@ -43,13 +49,11 @@ class CeleryPurge {
 	}
 
 	static function onRestInPeace() {
-		global $wgCityId;
 
 		if (empty(CeleryPurge::$buckets)) return true;
 
 		// log purges using Kibana (BAC-1317)
 		$context = [
-			'city' => $wgCityId,
 			'urls' => CeleryPurge::$buckets
 		];
 		WikiaLogger::instance()->info( 'varnish.purge', $context );
@@ -64,5 +68,14 @@ class CeleryPurge {
 					->queue();
 		}
 		return true;
+	}
+
+	/**
+	 * Return the name of the method (outside of the internal code) that triggered purge request
+	 *
+	 * @return string method name
+	 */
+	private static function getPurgeCaller() {
+		return wfGetCallerClassMethod( [ __CLASS__, 'SquidUpdate', 'WikiPage', 'Article', 'Title', 'WikiaDispatchableObject' ] );
 	}
 }

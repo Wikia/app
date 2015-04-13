@@ -18,8 +18,8 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	 * @param int $iUserId
 	 */
 	public function deleteSubscriber( $iUserId ) {
-		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
-		$sUserEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$sUserEmail = $oRetrieveUserTask->getUserEmail( $iUserId );
 
 		/* Skip deletion if no email found */
 		if ( empty( $sUserEmail ) ) {
@@ -94,9 +94,9 @@ class ExactTargetDeleteUserTask extends ExactTargetTask {
 	 * @return bool
 	 */
 	public function isEmailInUse( $sEmail, $iSkipUserId = null ) {
-		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
 		/* @var stdClass $oUsersIds */
-		$oUsersIds = $oRetrieveUserHelper->retrieveUserIdsByEmail( $sEmail );
+		$oUsersIds = $oRetrieveUserTask->retrieveUserIdsByEmail( $sEmail );
 		$iUsersCount = count( $oUsersIds->Results );
 
 		// Email is in use when there are more than one user with email

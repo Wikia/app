@@ -432,6 +432,11 @@ class Wikia {
 		 * and use wfDebug as well
 		 */
 		if (function_exists("wfDebug")) {
+			if ( $message instanceof Status ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( "Wikia::log \$message is a Status object", [
+					'exception' => new Exception(),
+				]);
+			}
 			wfDebug( $method . ": " . $message . "\n" );
 		} else {
 			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");
@@ -1636,46 +1641,6 @@ class Wikia {
 	 */
 	static public function chr( $ord, $encoding = 'UTF-8' ) {
 		return mb_convert_encoding(pack("N",$ord),$encoding,'UCS-4BE');
-	}
-
-	/**
-	 * This function uses the facebook api to get the open graph id for this domain
-	 *
-	 * @global string $wgServer
-	 * @global string $fbAccessToken
-	 * @global string $fbDomain
-	 * @global MemCachedClientforWiki $wgMemc
-	 * @return int
-	 */
-
-	static public function getFacebookDomainId() {
-		global $wgServer, $fbAccessToken, $fbDomain, $wgMemc;
-
-		if (!$fbAccessToken || !$fbDomain)
-			return false;
-
-		wfProfileIn(__METHOD__);
-		$memckey = wfMemcKey('fbDomainId');
-		$result = $wgMemc->get($memckey);
-		if (is_null($result)) {
-			if (preg_match('/\/\/(\w*)\./',$wgServer,$matches)) {
-				$domain = $matches[1].$fbDomain;
-			} else {
-				$domain = str_replace('http://', '', $wgServer);
-			}
-			$url = 'https://graph.facebook.com/?domain='.$domain;
-			$response = json_decode(Http::get($url));
-			if (isset($response->id)) {
-				$result = $response->id;
-			} else {
-				$result = 0;  // If facebook tells us nothing, don't keep trying, just give up until cache expires
-			}
-			$wgMemc->set($memckey, $result, 60*60*24*7);  // 1 week
-
-		}
-		wfProfileOut(__METHOD__);
-
-		return $result;
 	}
 
 	/**

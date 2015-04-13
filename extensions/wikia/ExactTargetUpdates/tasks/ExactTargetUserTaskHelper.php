@@ -237,6 +237,33 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
+
+	/**
+	 * Prepares array of params for ExactTarget API for retrieving DataExtension objects from user_properties table
+	 * @param array $aProperties list of fields to retrieve
+	 * @param string $sFilterProperty name of field to filter
+	 * @param array $aFilterValues possible values to filter
+	 * @return array
+	 */
+	public function prepareUserPropertiesRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = $this->getCustomerKeys();
+
+		$aApiParams = [
+			'DataExtension' => [
+				'ObjectType' => "DataExtensionObject[{$aCustomerKeys['user_properties']}]",
+				'Properties' => $aProperties,
+			],
+			'SimpleFilterPart' => [
+				'Property' => $sFilterProperty,
+				'Value' => $aFilterValues
+			]
+		];
+
+		return $aApiParams;
+	}
+
+
 	/**
 	 * Prepares array of params for ExactTarget API for removing DataExtension objects for user_properties table
 	 * @param int $iUserId id of user to be deleted

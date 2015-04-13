@@ -8,49 +8,6 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider shouldInvokeUpdateMethodWithProperParamProvider
-	 */
-	function testShouldInvokeUpdateMethodWithProperParam( $aInvokeParams, $aApiParams, $aCustomerKeys, $sInvokeMethodName ) {
-
-		/* @var ExactTargetApiDataExtension $mockApiDataExtension mock of ExactTargetApiDataExtension */
-		$mockApiDataExtension = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetApiDataExtension' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'updateRequest' ] )
-			->getMock();
-		$mockApiDataExtension
-			->expects( $this->once() )
-			->method( 'updateRequest' )
-			->with( $aApiParams );
-
-		/* @var ExactTargetUserTaskHelper $mockApiDataExtension mock of ExactTargetUserTaskHelper */
-		$mockUserHelper = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetUserTaskHelper' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getCustomerKeys' ] )
-			->getMock();
-		$mockUserHelper
-			->expects( $this->once() )
-			->method( 'getCustomerKeys' )
-			->will( $this->returnValue( $aCustomerKeys ) );
-
-		/* Mock tested class */
-		/* @var Wikia\ExactTarget\ExactTargetUpdateUserTask $mockUpdateUserTask */
-		$mockUpdateUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetUpdateUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getApiDataExtension', 'getUserHelper' ] )
-			->getMock();
-		$mockUpdateUserTask
-			->expects( $this->once() )
-			->method( 'getApiDataExtension' )
-			->will( $this->returnValue( $mockApiDataExtension ) );
-		$mockUpdateUserTask
-			->expects( $this->once() )
-			->method( 'getUserHelper' )
-			->will( $this->returnValue( $mockUserHelper ) );
-
-		call_user_func_array( [ $mockUpdateUserTask, $sInvokeMethodName ], $aInvokeParams );
-	}
-
-	/**
 	 * @dataProvider updateUserEmailProvider
 	 */
 	function testUpdateUserEmailShouldSendData( $aUserData, $aApiParams, $aMockCustomerKey ) {
@@ -148,41 +105,6 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	/**
 	 * DATA PROVIDERS
 	 */
-
-
-	function shouldInvokeUpdateMethodWithProperParamProvider() {
-		$sCustomerKey = 'sample_table_name';
-		$aCustomerKeys = [
-			'user_properties' => $sCustomerKey,
-			'user' => $sCustomerKey
-		];
-
-		/* User properties update params */
-		$sUpdateUserPropertiesMethodName = 'updateUserPropertiesData';
-		$aUserData1 = [ 'user_id' => 12345 ];
-		$aUserProperties = [
-			'property_name' => 'property_value'
-		];
-		$aInvokeParamsUserProperties = [ $aUserData1, $aUserProperties ];
-		$aUserPropertiesApiParams = [
-			'DataExtension' => [
-				0 => [
-					'CustomerKey' => $sCustomerKey,
-					'Properties' => [
-						'up_value' => $aUserProperties['property_name']
-					],
-					'Keys' => [
-						'up_user' => $aUserData1['user_id'],
-						'up_property' => 'property_name'
-					]
-				]
-			]
-		];
-
-		return [
-			[ $aInvokeParamsUserProperties, $aUserPropertiesApiParams, $aCustomerKeys, $sUpdateUserPropertiesMethodName ],
-		];
-	}
 
 	function updateUserEmailProvider() {
 		$sCustomerKey = 'sample_table_name';

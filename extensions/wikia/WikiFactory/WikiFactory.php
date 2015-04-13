@@ -7,6 +7,8 @@
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia.com> for Wikia Inc.
  */
 
+use Wikia\Logger\WikiaLogger;
+
 $wgExtensionCredits['other'][] = [
 	"name" => "WikiFactoryLoader",
 	"description" => "MediaWiki configuration loader",
@@ -759,6 +761,10 @@ class WikiFactory {
 
 
 		self::clearCache( $city_id );
+
+		global $wgMemc;
+		$wgMemc->delete( self::getVarValueKey( $city_id, $variable->cv_id ) );
+
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
 	}
@@ -828,7 +834,10 @@ class WikiFactory {
 					$variable_id);
 				$dbw->commit();
 				$bStatus = true;
+
 				self::clearCache( $wiki );
+				global $wgMemc;
+				$wgMemc->delete( self::getVarValueKey( $wiki, $variable_id ) );
 
 				wfRunHooks( 'WikiFactoryVariableRemoved', [ $variable->cv_name , $wiki ] );
 			}
@@ -1253,7 +1262,7 @@ class WikiFactory {
 	 *
 	 * @return array an array of objects, keys are wikis ids.
 	 */
-	static public function getWikisByID( $ids, $master = false ) {
+	static public function getWikisByID( array $ids, $master = false ) {
 		if ( !self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -1483,6 +1492,27 @@ class WikiFactory {
 		else {
 			return "wikifactory:variables:v5:{$city_id}";
 		}
+	}
+
+	/**
+	 * Get memcache key for given WF variable metadata
+	 *
+	 * @param string $id can be either "id:<var id>" or "name:<var name>"
+	 * @return string formatted memcache key
+	 */
+	static protected function getVarMetadataKey( $id ) {
+		return wfSharedMemcKey( 'wikifactory:variables:metadata:v5', $id );
+	}
+
+	/**
+	 * Get memcache key for given WF variable data
+	 *
+	 * @param int $city_id wiki ID
+	 * @param int $var_id variable ID
+	 * @return string formatted memcache key
+	 */
+	static protected function getVarValueKey( $city_id, $var_id ) {
+		return wfSharedMemcKey( 'wikifactory:variables:value:v5', $city_id, $var_id );
 	}
 
 	/**
@@ -1984,20 +2014,39 @@ class WikiFactory {
 		$fname = __METHOD__ . " (from {$caller})";
 
 		if ( $master || !isset( self::$variablesCache[$cacheKey] ) ) {
-			$oRow = $dbr->selectRow(
-				[ "city_variables_pool" ],
-				[
-					"cv_id",
-					"cv_name",
-					"cv_description",
-					"cv_variable_type",
-					"cv_variable_group",
-					"cv_access_level",
-					"cv_is_unique"
-				],
-				$condition,
-				$fname
+			$oRow = WikiaDataAccess::cache(
+				self::getVarMetadataKey( $cacheKey ),
+				WikiaResponse::CACHE_STANDARD,
+				function() use ( $dbr, $condition, $fname ) {
+					$oRow = $dbr->selectRow(
+						[ "city_variables_pool" ],
+						[
+							"cv_id",
+							"cv_name",
+							"cv_description",
+							"cv_variable_type",
+							"cv_variable_group",
+							"cv_access_level",
+							"cv_is_unique"
+						],
+						$condition,
+						$fname
+					);
+
+					// log typos in calls to WikiFactory::loadVariableFromDB
+					if ( !is_object( $oRow ) ) {
+						WikiaLogger::instance()->error('WikiFactory - variable not found', [
+							'condition' => $condition,
+							'exception' => new Exception()
+						]);
+					}
+
+					return $oRow;
+				},
+				// always hit the database when $master set to true
+				$master ? WikiaDataAccess::REFRESH_CACHE : WikiaDataAccess::USE_CACHE
 			);
+
 			self::$variablesCache[$cacheKey] = $oRow;
 		}
 		$oRow = self::$variablesCache[$cacheKey];
@@ -2014,19 +2063,26 @@ class WikiFactory {
 		}
 
 		if ( !empty( $city_id ) ) {
-			$oRow2 = $dbr->selectRow(
-				[ "city_variables" ],
-				[
-					"cv_city_id",
-					"cv_variable_id",
-					"cv_value"
-				],
-				[
-					"cv_variable_id" => $oRow->cv_id,
-					"cv_city_id" => $city_id
-				],
-				$fname
+			$oRow2 = WikiaDataAccess::cache(
+				self::getVarValueKey( $city_id, $oRow->cv_id ),
+				3600,
+				function() use ($dbr, $oRow, $city_id, $fname) {
+					return $dbr->selectRow(
+						[ "city_variables" ],
+						[
+							"cv_city_id",
+							"cv_variable_id",
+							"cv_value"
+						],
+						[
+							"cv_variable_id" => $oRow->cv_id,
+							"cv_city_id" => $city_id
+						],
+						$fname
+					);
+				}
 			);
+
 			if ( isset( $oRow2->cv_variable_id ) ) {
 
 				$oRow->cv_city_id = $oRow2->cv_city_id;
@@ -2859,6 +2915,9 @@ class WikiFactory {
 			throw $e;
 		}
 
+		global $wgMemc;
+		$wgMemc->delete( self::getVarMetadataKey( 'id:' . $cv_variable_id ) );
+
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
 	} // end createVariable()
@@ -3011,7 +3070,7 @@ class WikiFactory {
 	 *
 	 * @return string - variables key for memcached
 	 */
-	static public function getWikiaCacheKey( $city_id ) {
+	static protected function getWikiaCacheKey( $city_id ) {
 		return "wikifactory:wikia:v1:{$city_id}";
 	}
 
@@ -3028,7 +3087,7 @@ class WikiFactory {
 	 *
 	 * @return string - variables key for memcached
 	 */
-	static public function getWikiaDBCacheKey( $city_dbname ) {
+	static protected function getWikiaDBCacheKey( $city_dbname ) {
 		return "wikifactory:wikia:db:v1:{$city_dbname}";
 	}
 

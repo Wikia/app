@@ -1,11 +1,12 @@
 /*global define*/
-define('ext.wikia.adEngine.adSlotsInContent',[
+define('ext.wikia.adEngine.adSlotsInContent', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adPlacementChecker',
+	'ext.wikia.adEngine.slotTweaker',
 	'jquery',
 	'wikia.log',
-	'wikia.window',
-	'ext.wikia.adEngine.adPlacementChecker',
-	'ext.wikia.adEngine.slotTweaker'
-], function ($, log, win, adPlacementChecker, slotTweaker) {
+	'wikia.window'
+], function (adContext, adPlacementChecker, slotTweaker, $, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
@@ -117,9 +118,17 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 	 */
 	function init(elements, maxSlotsNumber) {
 		log(['init'], 'debug', logGroup);
+
 		//Default number of available slots is 3
 		maxSlots = maxSlotsNumber || 3;
 		container = $('#mw-content-text');
+
+		if (container.height() < minOffset) {
+			// Only show the ads on pages that are long enough
+			log(['init', 'Page too short. Not putting any ads here'], 'debug', logGroup);
+			return;
+		}
+
 		labelText = $('.wikia-ad-label').html();
 		elementsBeforeSlots = elements;
 		addMedrecs();

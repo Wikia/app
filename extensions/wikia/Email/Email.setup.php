@@ -27,8 +27,10 @@ $wgAutoloadClasses['Email\ControllerException'] =  $dir . 'EmailExceptions.class
 $wgAutoloadClasses['Email\Fatal'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Check'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Controller/UserLogin.class.php';
+$wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controller/WatchedPageController.class.php';
 
 /**
  * messages
  */
 $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
+$wgExtensionMessagesFiles['WatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';

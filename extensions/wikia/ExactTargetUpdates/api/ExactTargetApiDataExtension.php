@@ -3,6 +3,8 @@ namespace Wikia\ExactTarget;
 
 class ExactTargetApiDataExtension extends ExactTargetApi {
 
+	const OBJECTS_PER_REQUEST_LIMIT = 2500;
+
 	/**
 	 * An entry point for DataExtension Create requests
 	 * @param  Array  $aApiCallParams

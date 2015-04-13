@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.window', 'wikia.tracker'], function($, win, tracker) {	
+require(['jquery', 'wikia.window', 'wikia.tracker'], function($, win, tracker) {
 	'use strict';
 
 	var ARTICLE_LENGTH_THRESHOLD = 800,
@@ -8,16 +8,16 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, win, tracker) {
 		labelPrefix,
 		trackFunction,
 		windowWidth;
-		
+
 	if (Math.random() * 100 < WIDTH_SAMPLING_RATIO && win.wgIsArticle)  {
 		$article = $('.WikiaArticle');
 		trackFunction = tracker.buildTrackingFunction({
 			action: tracker.ACTIONS.IMPRESSION,
 			category: 'articleContentLengthTest',
-			trackingMethod: 'ga'
+			trackingMethod: 'analytics'
 		});
 		windowWidth = Math.floor($(win).width() / SCALE);
-		
+
 		if ($article.height() > ARTICLE_LENGTH_THRESHOLD) {
 			labelPrefix = 'long-';
 		} else {
@@ -26,5 +26,5 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, win, tracker) {
 		trackFunction({
 			label: labelPrefix + windowWidth
 		})
-	}	
+	}
 });

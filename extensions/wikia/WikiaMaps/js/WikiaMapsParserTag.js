@@ -102,7 +102,7 @@ require([
 							});
 
 							tracker.track({
-								trackingMethod: 'ga',
+								trackingMethod: 'analytics',
 								category: 'map',
 								action: tracker.ACTIONS.IMPRESSION,
 								label: 'map-in-modal-shown',

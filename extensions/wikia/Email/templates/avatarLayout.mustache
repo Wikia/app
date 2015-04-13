@@ -1,0 +1,44 @@
+<div class="greeting">
+	<p>{{salutation}}</p>
+	<p>{{{articleEditedText}}}</p>
+</div>
+
+<table>
+	<tr>
+		<td valign="top">
+			<div class="avatar-wrapper">
+				{{# editorProfilePage}}
+					<a href="{{editorProfilePage}}">
+				{{/ editorProfilePage}}
+					<img class="avatar" src="{{editorAvatarURL}}">
+				{{# editorProfilePage}}
+					</a>
+				{{/ editorProfilePage}}
+			</div>
+		</td>
+		<td class="widest">
+			<div class="message">
+				<p>
+					{{# editorProfilePage}}
+						<a class="username" href="{{editorProfilePage}}">
+					{{/ editorProfilePage}}
+						{{editorUserName}}
+					{{# editorProfilePage}}
+						</a>
+					{{/ editorProfilePage}}
+				</p>
+				<p>{{summary}}</p>
+			</div>
+			<a href="{{buttonLink}}"><button>{{buttonText}}</button></a>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<div class="content-footer-messages">
+				{{#contentFooterMessages}}
+					<p>{{{.}}}</p>
+				{{/contentFooterMessages}}
+			</div>
+		</td>
+	</tr>
+</table>

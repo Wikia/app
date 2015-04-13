@@ -16,7 +16,6 @@ class ResourceLoaderHooks {
 	static protected $assetsManagerGroups = array(
 //		'skins.oasis.blocking' => 'oasis_blocking',
 //		'skins.oasis.core' => 'oasis_shared_core',
-//		'wikia.ads.adengine2' => 'adengine2_js',
 	);
 
 	/**

@@ -79,8 +79,8 @@ class MemcachedStats {
 
 		$parts = array_map(
 			function($part) {
-				// replace IDs and hashes with *
-				return ctype_xdigit($part) ? '*' : $part;
+				// replace IP addresses, IDs and hashes with *
+				return ctype_xdigit( str_replace('.', '', $part) ) ? '*' : $part;
 			},
 			explode(':', $key)
 		);
