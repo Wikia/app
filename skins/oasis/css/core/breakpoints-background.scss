@@ -1,6 +1,6 @@
 @import "skins/shared/color";
-@import "breakpoints-layout";
 @import "breakpoints-variables";
+@import "breakpoints-layout";
 @import "skins/shared/mixins/calc";
 
 $background-height: get_command_line_param( "background-image-height", 0 );
@@ -18,72 +18,64 @@ $background-width-half: $background-width / 2;
 $background-offset: ( $breakpoint-lower - $background-width ) / 2;
 $background-align: if( $background-width > $page-width-medium, center, left );
 
+$standard-oasis-content-size: 1000px;
+$standard-oasis-content-size-half: $standard-oasis-content-size / 2;
+$standard-oasis-content-size-with-adskins: $standard-oasis-content-size + 2 * $width-adskin;
+$standard-oasis-content-size-with-adskins-half: $standard-oasis-content-size-with-adskins / 2;
+
 @mixin breakpoints-background($page-width) {
-	$background-position-offset: ($page-width / 2) - $background-width-half;
+	$background-position-offset: $standard-oasis-content-size-with-adskins-half - $background-width-half;
 	$background-position-before: 0;
 	$background-position-after: -$background-width-half;
 
-	$background-offset: $width-adskin - ($background-width-half - $page-width / 2);
+	$background-offset: $standard-oasis-content-size-half - ($background-width-half + $page-width / 2);
 	$gradient-offset: $background-position-offset + ( $background-width-half - $width-gradient );
 
-	// Middle space
-	$width-middle: $background-position-offset * -2;
-	$margin-middle: $background-position-offset;
+	// Middle space ($background-position-offset is negative)
+	$width-middle: $width-adskin - 2 * $background-position-offset;
+	$margin-middle: -$width-middle / 2;
 
 	// gradient offset
 	$gradient-offset: ($background-width-half + $background-offset) - $width-gradient;
 
-	@if $background-offset > 0 {
-		body.background-dynamic.skin-oasis {
-			background: $color-body;
+	body.background-dynamic.skin-oasis {
+		background: $color-body;
 
+		&:before {
+			background-position: $background-position-before 0;
+			/* @noflip */
+			left: calc(50% + #{$background-offset});
+		}
+
+		&:after {
+			background-position: $background-position-after 0;
+			/* @noflip */
+			right: calc(50% + #{$background-offset});
+		}
+
+		.background-image-gradient {
+			margin-left: $margin-middle;
+			width: $width-middle;
+
+			&:after,
 			&:before {
-				background-position: $background-position-before 0;
-				/* @noflip */
-				right: calc(50% + #{$background-offset});
+				width: $width-gradient;
 			}
 
 			&:after {
-				background-position: $background-position-after 0;
-				/* @noflip */
-				left: calc(50% + #{$background-offset});
+				background-color: rgba( $color-body-middle, 0 );
+				background-image: -webkit-linear-gradient(right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				background-image: linear-gradient(to left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				margin-right: $margin-middle - $width-gradient;
+				right: 50%;
 			}
 
-			.background-image-gradient {
-				margin-left: $margin-middle;
-				width: $width-middle;
-
-				&:after,
-				&:before {
-					width: $width-gradient;
-				}
-
-				&:after {
-					background-color: rgba( $color-body-middle, 0 );
-					background-image: -webkit-linear-gradient(right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-					background-image: linear-gradient(to left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-					margin-right: $margin-middle - $width-gradient;
-					right: 50%;
-				}
-
-				&:before {
-					background-color: rgba( $color-body-middle, 0 );
-					background-image: -webkit-linear-gradient(left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-					background-image: linear-gradient(to right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-					margin-left: $margin-middle - $width-gradient;
-					left: 50%;
-				}
-			}
-		}
-	}
-	@else {
-		body {
-			&:before,
-			&:after,
-			.background-image-gradient,
-			.background-image-gradient:before,
-			.background-image-gradient:after {
-				display: none;
+			&:before {
+				background-color: rgba( $color-body-middle, 0 );
+				background-image: -webkit-linear-gradient(left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				background-image: linear-gradient(to right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				margin-left: $margin-middle - $width-gradient;
+				left: 50%;
 			}
 		}
 	}
