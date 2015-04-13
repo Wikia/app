@@ -250,9 +250,6 @@ class AdEngine2Hooks {
 			$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
 		}
 
-		if ( AdEngine2Service::shouldLoadLateQueue() ) {
-			$jsBodyGroups[] = self::ASSET_GROUP_ADENGINE_LATE;
-		}
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsBodyGroups[] = self::ASSET_GROUP_LIFTIUM;
 		}
