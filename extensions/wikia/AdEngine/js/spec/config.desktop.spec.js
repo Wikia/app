@@ -16,7 +16,11 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		].join(''),
 		mocks = {
 			adDecoratorPageDimensions: noop,
-			getAdContextOpts: returnEmpty,
+			getAdContextOpts: function () {
+				return {
+					showAds: true
+				};
+			},
 			getAdContextTargeting: returnEmpty,
 			getAdContextProviders: returnEmpty,
 			getAdContextForceProviders: returnEmpty,

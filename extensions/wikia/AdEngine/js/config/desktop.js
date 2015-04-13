@@ -67,6 +67,11 @@ define('ext.wikia.adEngine.config.desktop', [
 		log('getProvider', 5, logGroup);
 		log(slotName, 5, logGroup);
 
+		// If wgShowAds set to false, hide slots
+		if (!context.opts.showAds) {
+			return [];
+		}
+
 		if (context.forceProviders.liftium) {
 			return [adProviderLiftium];
 		}
