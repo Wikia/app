@@ -157,7 +157,7 @@
 		}
 	}
 
-	@media #{$small-only} {
+	@media #{$breakpoint-small-only} {
 		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
 			margin: 0 1px;
 		}
