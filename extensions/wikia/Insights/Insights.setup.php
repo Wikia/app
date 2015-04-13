@@ -21,6 +21,9 @@ $wgExtensionCredits['specialpage'][] = array(
 //classes
 $wgAutoloadClasses['InsightsController'] = $dir . 'InsightsController.class.php';
 
+//models
+$wgAutoloadClasses['QueryPagesModel'] = $dir . 'models/QueryPagesModel.php';
+
 // hooks
 
 //special page
