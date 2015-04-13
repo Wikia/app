@@ -69,7 +69,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		}
 
 		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
+		$aApiParams = $oHelper->prepareUsersUpdateParams( [ $aUserData ] );
 		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
 

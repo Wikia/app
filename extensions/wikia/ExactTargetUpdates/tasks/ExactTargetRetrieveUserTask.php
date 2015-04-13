@@ -59,15 +59,27 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 			throw new \Exception( $oUserResult->OverallStatus );
 		}
 
-		if ( !empty( $oUserResult->Results->Properties->Property ) ) {
-			$aProperties = $oUserResult->Results->Properties->Property;
-			foreach ( $aProperties as $value ) {
-				$oExactTargetUserData[$value->Name] = $value->Value;
+		$aExactTargetUsersData = [];
+		if ( !empty( $oUserResult->Results ) ) {
+			/* Multiple records returned */
+			if ( is_array( $oUserResult->Results ) ) {
+				foreach ( $oUserResult->Results as $oResults ) {
+					$aExactTargetUserData = [];
+					$aProperties = $oResults->Properties->Property;
+					foreach ( $aProperties as $value ) {
+						$aExactTargetUserData[$value->Name] = $value->Value;
+					}
+					$aExactTargetUsersData[] = $aExactTargetUserData;
+				}
+			} else {
+				$aProperties = $oUserResult->Results->Properties->Property;
+				foreach ( $aProperties as $value ) {
+					$oExactTargetUserData[$value->Name] = $value->Value;
+				}
+				$aExactTargetUsersData = [ $oExactTargetUserData ];
 			}
-			return $oExactTargetUserData;
 		}
-
-		return null;
+		return $aExactTargetUsersData;
 	}
 
 	public function retrieveUserPropertiesByUserId( $iUserId ) {
@@ -171,7 +183,7 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 	public function retrieveUserIdsByEmail( $sEmail ) {
 		$aProperties = ['user_id'];
 		$sFilterProperty = 'user_email';
-		$aFilterValues = [$sEmail];
+		$aFilterValues = [ $sEmail ];
 		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
 
