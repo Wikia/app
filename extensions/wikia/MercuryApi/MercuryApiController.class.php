@@ -154,7 +154,7 @@ class MercuryApiController extends WikiaController {
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
 	 */
-	private function getTitleFromRequest(){
+	private function getTitleFromRequest() {
 		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, NULL );
 		$articleTitle = $this->request->getVal( self::PARAM_ARTICLE_TITLE, NULL );
 
