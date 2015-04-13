@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
@@ -30,6 +31,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderEvolve,
 	adProviderLiftium,
 	adProviderDirectGpt,
+	adProviderOpenX,
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
@@ -66,6 +68,12 @@ define('ext.wikia.adEngine.config.desktop', [
 
 		log('getProvider', 5, logGroup);
 		log(slotName, 5, logGroup);
+
+		// Force OpenX
+		if (context.forceProviders.openX) {
+			log(['getProvider', slotname, 'OpenX (wgAdDriverForceOpenXAd)'], 'info', logGroup);
+			return [adProviderOpenX];
+		}
 
 		if (context.forceProviders.liftium) {
 			return [adProviderLiftium];
