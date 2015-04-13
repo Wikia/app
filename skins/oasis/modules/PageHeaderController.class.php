@@ -1,4 +1,6 @@
 <?php
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Renders page header (title, subtitle, comments chicklet button, history dropdown)
  *
@@ -145,20 +147,6 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
-	public static function formatTimestamp( $stamp ) {
-
-		$diff = time() - strtotime( $stamp );
-
-		// show time difference if it's 14 or less days
-		if ( $diff < 15 * 86400 ) {
-			$ret = wfTimeFormatAgo( $stamp );
-		}
-		else {
-			$ret = '';
-		}
-		return $ret;
-	}
-
 	/**
 	 * Render default page header (with edit dropdown, history dropdown, ...)
 	 *
@@ -199,7 +187,9 @@ class PageHeaderController extends WikiaController {
 			wfRunHooks( 'PageHeaderIndexExtraButtons', array( $response ) );
 		} else {
 			// it happened on TimQ's devbox that $response was probably null fb#28747
-			Wikia::logBacktrace( __METHOD__ );
+			WikiaLogger::instance()->error('Response not an instance of WikiaResponse', [
+				'ex' => new Exception()
+			]);
 		}
 		/** end of wikia changes */
 
