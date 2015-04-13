@@ -1,0 +1,43 @@
+/**
+ * CSS for SRF dygraphs module
+ * @see http://www.semantic-mediawiki.org/wiki/Help:Dygraphs format
+ *
+ * @since 1.8
+ * @release 0.3
+ *
+ * @file
+ * @ingroup SRF
+ *
+ * @licence GNU GPL v2 or later
+ * @author mwjames
+ */
+.srf-ui-chart-source {
+	float: right;
+	clear:both;
+	font-size: 12px;
+}
+
+.srf-ui-chart-text{
+	float: left;
+	margin-right: 5px;
+}
+
+.srf-dygraphs-series-content {
+	display:none;
+}
+
+/* Tooltip icon defaults*/
+.srf-dygraphs.series {
+	float: right;
+	margin-left:10px;
+	vertical-align:bottom;
+	padding:16px 16px 0 0;
+	white-space:nowrap;
+}
+
+/* Individual assigned icons ( inline-block is important because the icon <span> is empty) */
+.srf-dygraphs.series.icon {
+	display:inline-block;
+	clear:both;
+	/* @embed */ background: url(images/check.png) no-repeat left bottom;
+}
