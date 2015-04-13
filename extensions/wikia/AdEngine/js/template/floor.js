@@ -1,12 +1,15 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floor', [
-	'jquery',
+	require.optional('jquery'),
 	'wikia.log',
 	'wikia.document',
 	'wikia.iframeWriter',
 	'wikia.window'
 ], function ($, log, doc, iframeWriter, win) {
 	'use strict';
+
+	// Use our jQuery module or in Mercury Ember's jQuery
+	$ = $ || win.$;
 
 	var logGroup = 'ext.wikia.adEngine.template.floor',
 		footerHtml = '<div id="ext-wikia-adEngine-template-footer">' +
@@ -42,7 +45,9 @@ define('ext.wikia.adEngine.template.floor', [
 				height: params.height
 			});
 
-		win.WikiaBar.hideContainer();
+		if (win.WikiaBar) {
+			win.WikiaBar.hideContainer();
+		}
 
 		$footer.find('a.close').click(function (event) {
 			event.preventDefault();
