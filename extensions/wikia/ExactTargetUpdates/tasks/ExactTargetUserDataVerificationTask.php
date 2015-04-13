@@ -12,21 +12,26 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	 * if data isn't equal throws exception with result diff
 	 */
 	public function verifyUserData( $iUserId ) {
+		$bSummaryResult = true;
 		// Fetch data from ExactTarget
 		$oRetriveveUserTask = $this->getRetrieveUserTask();
-		$oExactTargetUserData = $oRetriveveUserTask->retrieveUserDataById( $iUserId );
-		$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $oExactTargetUserData ) );
+		$oExactTargetUsersData = $oRetriveveUserTask->retrieveUserDataById( $iUserId );
+		foreach( $oExactTargetUsersData as $oExactTargetUserData ) {
+			$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $oExactTargetUserData ) );
 
-		// Fetch data from Wikia DB
-		$oWikiaUser = \User::newFromId( $iUserId );
-		$oUserHooksHelper = $this->getUserHooksHelper();
-		$oWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
-		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserData ) );
+			// Fetch data from Wikia DB
+			$oWikiaUser = \User::newFromId( $iUserId );
+			$oUserHooksHelper = $this->getUserHooksHelper();
+			$oWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
+			$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserData ) );
 
-		// Compare results
-		$bResult = $this->compareResults( $oExactTargetUserData, $oWikiaUserData, __METHOD__, 'user_touched' );
-
-		return $bResult;
+			// Compare results
+			$bResult = $this->compareResults( $oExactTargetUserData, $oWikiaUserData, __METHOD__, 'user_touched' );
+			if ( $bResult === false ) {
+				$bSummaryResult = $bResult;
+			}
+		}
+		return $bSummaryResult;
 	}
 
 
