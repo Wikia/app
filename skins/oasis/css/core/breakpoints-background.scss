@@ -24,6 +24,18 @@ $standard-oasis-content-size-half: $standard-oasis-content-size / 2;
 $standard-oasis-content-size-with-adskins: $standard-oasis-content-size + 2 * $width-adskin;
 $standard-oasis-content-size-with-adskins-half: $standard-oasis-content-size-with-adskins / 2;
 
+$color-body-middle-0:  rgba($color-body-middle, 0);
+
+@mixin breakpoint-middle-gradient($side, $margin) {
+	$other-side: if($side == 'left', 'right', 'left');
+
+	background-color: $color-body-middle-0;
+	background-image: -webkit-linear-gradient($side, $color-body-middle-0 0%, $color-body-middle 100%);
+	background-image: linear-gradient(to $other-side, $color-body-middle-0 0%, $color-body-middle 100%);
+	margin-#{$side}: $margin - $width-gradient;
+	#{$side}: 50%;
+}
+
 @mixin breakpoints-background($page-width) {
 	$background-position-offset: $standard-oasis-content-size-with-adskins-half - $background-width-half;
 	$background-position-before: 0;
@@ -64,19 +76,11 @@ $standard-oasis-content-size-with-adskins-half: $standard-oasis-content-size-wit
 			}
 
 			&:after {
-				background-color: rgba( $color-body-middle, 0 );
-				background-image: -webkit-linear-gradient(right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-				background-image: linear-gradient(to left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-				margin-right: $margin-middle - $width-gradient;
-				right: 50%;
+				@include breakpoint-middle-gradient(right, $margin-middle);
 			}
 
 			&:before {
-				background-color: rgba( $color-body-middle, 0 );
-				background-image: -webkit-linear-gradient(left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-				background-image: linear-gradient(to right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-				margin-left: $margin-middle - $width-gradient;
-				left: 50%;
+				@include breakpoint-middle-gradient(left, $margin-middle);
 			}
 		}
 	}
