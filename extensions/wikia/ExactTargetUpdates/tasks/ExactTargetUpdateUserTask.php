@@ -52,9 +52,10 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		}
 
 		/* Verify data */
+		$aUserIds = $oHelper->prepareUserIds( $aUsersData );
 		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
 		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUserData( $aUserData );
+		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUsersData( $aUserIds );
 
 		return $bUserDataVerificationResult;
 	}
