@@ -144,6 +144,7 @@ $color-divider: mix($color-page, $color-text, 80%);
         }
     }
 
+    // TODO: remove when chat will be ready to be pushed to prod together with other rail changes
     &.new-chat {
         .ChatModule {
             @include wikia-rail-element;
@@ -239,6 +240,7 @@ $color-divider: mix($color-page, $color-text, 80%);
     }
 }
 
+// TODO: remove new-chat when chat will be ready to be pushed to prod together with other rail changes
 .UserStatsMenu .new-chat {
     outline: rgba($color-divider, .3) solid 2px;
     width: 220px;
@@ -268,7 +270,9 @@ $color-divider: mix($color-page, $color-text, 80%);
     .info {
         background: $color-menu-highlight;
         padding: 10px;
-
+        
+        // TODO: remove unnecessary nesting when chat will be ready to be 
+        // pushed to prod together with other rail changes
         ul .username {
             font-weight: bold;
             margin-bottom: 10px;
