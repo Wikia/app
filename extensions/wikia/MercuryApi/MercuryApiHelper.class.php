@@ -9,6 +9,6 @@ class MercuryApiHelper {
 	 * @return bool
 	 */
 	public static function isTitleStringValid( $title ) {
-		return !is_null( $title ) && trim( $title ) !== '';
+		return !is_null( $title ) && $title !== '';
 	}
 }
