@@ -7,7 +7,7 @@ namespace Wikia\Helios;
  */
 class User {
 
-	const ACESS_TOKEN_COOKIE = 'access_token';
+	const ACCESS_TOKEN_COOKIE = 'access_token';
 
 	private static $authenticationCache = [];
 
