@@ -10,9 +10,10 @@ class QueryPagesModel extends InsightsModel {
 
 
 	public function __construct( $className, $wikiId ) {
-		if ( class_exists( $className ) ) {
-			$this->queryPageInstance = new $className();
+		if ( !class_exists( $className ) ) {
+			throw new Exception("Class $className doesn't exist.");
 		}
+		$this->queryPageInstance = new $className();
 		parent::__construct( $wikiId );
 	}
 
