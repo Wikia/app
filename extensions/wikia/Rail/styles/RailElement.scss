@@ -17,7 +17,7 @@ $color-divider: mix($color-page, $color-text, 80%);
 }
 
 @mixin wikia-rail-element() {
-    background-color: $color-new-module-background;
+    background-color: $color-unified-module-background;
     margin-bottom: 10px;
     padding: 20px;
 }
@@ -185,7 +185,7 @@ $color-divider: mix($color-page, $color-text, 80%);
             }
 
             .chat-total {
-                background-color: $color-new-module-background;
+                background-color: $color-unified-module-background;
                 border: 1px solid;
                 border-radius: 50%;
                 font-size: 10px;
