@@ -9,7 +9,7 @@ class UserTest extends \WikiaBaseTest {
 	public function setUp()
 	{
 		$this->setupFile =  __DIR__ . '/../Helios.setup.php';
-		$this->webRequestMock = $this->getMock( '\WebRequest', [ 'getHeader' ], [], '', false );
+		$this->webRequestMock = $this->getMock( '\WebRequest', [ 'getHeader', 'getCookie' ], [], '', false );
 		$this->mockGlobalVariable( 'wgHeliosLoginSamplingRate', 100 );
 		$this->mockGlobalVariable( 'wgHeliosLoginShadowMode', false );
 		User::purgeAuthenticationCache();
@@ -17,32 +17,66 @@ class UserTest extends \WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testNewFromTokenNoAuthorizationHeader()
+	public function testGetAccessTokenFromCookie()
 	{
+		$token = 'qi8H8R7OM4xMUNMPuRAZxlY';
+
+		$this->webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( $token );
+
+		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $token );
+	}
+
+	public function testGetAccessTokenFromAuthorizationHeader()
+	{
+		$token = 'qi8H8R7OM4xMUNMPuRAZxlY';
+
+		$this->webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
+		$this->webRequestMock->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( "Bearer $token" );
+
+		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $token );
+	}
+
+	public function testGetAccessTokenNoCookieNoAuthorizationHeader()
+	{
+		$this->webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
 		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( false );
 
-		$this->assertNull( User::newFromToken( $this->webRequestMock ) );
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
 	}
 
-	public function testNewFromTokenMalformedAuthorizationHeader()
+	public function testGetAccessTokenNoCookieMalformedAuthorizationHeader()
 	{
+		$this->webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
 		$this->webRequestMock->expects( $this->once() )
 			->method( 'getHeader' )
 			->with( 'AUTHORIZATION' )
 			->willReturn( 'Malformed' );
 
-		$this->assertNull( User::newFromToken( $this->webRequestMock ) );
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
 	}
 
 	public function testNewFromTokenAuthorizationGranted()
 	{
 		$this->webRequestMock->expects( $this->once() )
-			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
-			->willReturn( 'Bearer qi8H8R7OM4xMUNMPuRAZxlY' );
+			->method( 'getCookie' )
+			->willReturn( 'qi8H8R7OM4xMUNMPuRAZxlY' );
 
 		$userInfo = new \StdClass;
 		$userInfo->user_id = 1;
@@ -61,9 +95,8 @@ class UserTest extends \WikiaBaseTest {
 	public function testNewFromTokenAuthorizationDeclined()
 	{
 		$this->webRequestMock->expects( $this->once() )
-			->method( 'getHeader' )
-			->with( 'AUTHORIZATION' )
-			->willReturn( 'Bearer qi8H8R7OM4xMUNMPuRAZxlY' );
+			->method( 'getCookie' )
+			->willReturn( 'qi8H8R7OM4xMUNMPuRAZxlY' );
 
 		$userInfo = new \StdClass;
 
