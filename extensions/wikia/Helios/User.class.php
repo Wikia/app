@@ -71,7 +71,7 @@ class User {
 			$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 			try {
-				$tokenInfo = $heliosClient->info( $matches[1] );
+				$tokenInfo = $heliosClient->info( $token );
 				if ( !empty( $tokenInfo->user_id ) ) {
 					// return a MediaWiki's User object
 					return \User::newFromId( $tokenInfo->user_id );
