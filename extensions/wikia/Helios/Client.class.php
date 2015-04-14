@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Helios;
 use Wikia\Util\RequestId;
+use Wikia\Util\GlobalStateWrapper;
 
 /**
  * A client for Wikia authentication service.
@@ -31,6 +32,7 @@ class Client
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
 
+
 		// Add client_id and client_secret to the GET data.
 		$getParams['client_id'] = $this->clientId;
 		$getParams['client_secret'] = $this->clientSecret;
@@ -51,9 +53,15 @@ class Client
 
 		$options = array_merge( $options, $extraRequestOptions );
 
+		global $wgContLang;
+		$wrapper = new GlobalStateWrapper( [ 'wgLang' => $wgContLang ] );
+
 		// Request execution.
 		/** @var \MWHttpRequest $request */
-		$request = \Http::request( $options['method'], $uri, $options );
+		$request = $wrapper->wrap( function() use ( $options, $uri ) {
+			return \Http::request( $options['method'], $uri, $options );
+		} );
+
 		$status = $request->status;
 
 		// Response handling.
