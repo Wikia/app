@@ -87,7 +87,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		/* Verify data */
 		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
 		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUserData( $aUserData['user_id'] );
+		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUsersData( [ $aUserData['user_id'] ] );
 
 		return $bUserDataVerificationResult;
 	}

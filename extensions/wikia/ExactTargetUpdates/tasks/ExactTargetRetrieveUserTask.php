@@ -37,7 +37,7 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 		return $oEmailResult->Results->Properties->Property->Value;
 	}
 
-	public function retrieveUserDataById( $iUserId ) {
+	public function retrieveUsersDataByIds( array $aUsersIds ) {
 		$aProperties = [
 			'user_id',
 			'user_name',
@@ -50,7 +50,7 @@ class ExactTargetRetrieveUserTask extends ExactTargetTask {
 		];
 
 		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, 'user_id', [ $iUserId ] );
+		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, 'user_id', $aUsersIds );
 
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oUserResult = $oApiDataExtension->retrieveRequest( $aApiParams );

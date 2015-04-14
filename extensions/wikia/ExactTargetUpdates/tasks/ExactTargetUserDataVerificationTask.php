@@ -11,26 +11,38 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	 * return true if data is equal (except comparing user_touched)
 	 * if data isn't equal throws exception with result diff
 	 */
-	public function verifyUserData( $iUserId ) {
+	public function verifyUsersData( array $aUsersIds ) {
 		$bSummaryResult = true;
 		// Fetch data from ExactTarget
 		$oRetriveveUserTask = $this->getRetrieveUserTask();
-		$oExactTargetUsersData = $oRetriveveUserTask->retrieveUserDataById( $iUserId );
-		foreach( $oExactTargetUsersData as $oExactTargetUserData ) {
-			$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $oExactTargetUserData ) );
+		$aExactTargetUsersData = $oRetriveveUserTask->retrieveUsersDataByIds( $aUsersIds );
+		$aUsersIdsFlipped = array_flip( $aUsersIds );
+		foreach( $aExactTargetUsersData as $aExactTargetUserData ) {
+			$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $aExactTargetUserData ) );
 
 			// Fetch data from Wikia DB
-			$oWikiaUser = \User::newFromId( $iUserId );
+			$oWikiaUser = \User::newFromId( $aExactTargetUserData['user_id'] );
 			$oUserHooksHelper = $this->getUserHooksHelper();
-			$oWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
-			$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserData ) );
+			$aWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
+			$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $aWikiaUserData ) );
 
 			// Compare results
-			$bResult = $this->compareResults( $oExactTargetUserData, $oWikiaUserData, __METHOD__, 'user_touched' );
+			$bResult = $this->compareResults( $aExactTargetUserData, $aWikiaUserData, __METHOD__, 'user_touched' );
+
+			// Mark verification process as failed if any record fails
 			if ( $bResult === false ) {
 				$bSummaryResult = $bResult;
 			}
+
+			// Remove UserId from array to track unchecked users
+			unset ( $aUsersIdsFlipped[$aExactTargetUserData['user_id']] );
 		}
+
+		// Log error if unchecked users found
+		if ( !empty( $aUsersIdsFlipped ) ) {
+			$this->error( __METHOD__ . ' Following user ids not retrieved from ET: ' . json_encode( array_keys( $aUsersIdsFlipped ) ) );
+		}
+
 		return $bSummaryResult;
 	}
 
