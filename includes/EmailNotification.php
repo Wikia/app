@@ -246,7 +246,6 @@ class EmailNotification {
 	 * Send emails corresponding to the user $editor editing the page $title.
 	 * Also updates wl_notificationtimestamp.
 	 *
-	 * @param array $watchers
 	 */
 	private function actuallyNotifyOnPageChange( $watchers ) {
 
@@ -431,7 +430,7 @@ class EmailNotification {
 	 * @param $user User
 	 */
 	private function compose( \User $user ) {
-		if ( $this->emailExtensionEnabled() ) {
+		if ( $this->isArticlePageEdit() && $this->emailExtensionEnabled() ) {
 			$this->sendUsingEmailExtension( $user );
 		} else {
 			$this->sendUsingUserMailer( $user );
@@ -440,44 +439,6 @@ class EmailNotification {
 		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
 	}
 
-	/**
-	 * Returns whether the Email extension is enabled or not.
-	 * @return bool
-	 */
-	private function emailExtensionEnabled() {
-		return !empty( F::app()->wg->EnableEmailExt );
-	}
-
-	/**
-	 * Send a watched page edit email using the new Email extension.
-	 * @param $user User
-	 */
-	private function sendUsingEmailExtension( \User $user ) {
-
-		if ( $this->isArticlePageEdit() ) {
-			$controller = 'Email\Controller\WatchedPage';
-		} elseif ( $this->isArticleComment() ) {
-			$controller = 'Email\Controller\ArticleComment';
-		} elseif ( $this->isBlogComment() ) {
-			$controller = 'Email\Controller\BlogComment';
-		}
-
-		if ( !empty( $controller ) ) {
-			$params = [
-				'targetUser' => $user->getName(),
-				'title' => $this->title->getText(),
-				'namespace' => $this->title->getNamespace(),
-				'summary' => $this->summary,
-				'currentRevId' => $this->currentRevId,
-				'previousRevId' => $this->previousRevId,
-				'replyToAddress' => $this->replyto,
-				'fromAddress' => $this->from->address,
-				'fromName' => $this->from->name
-			];
-
-			F::app()->sendRequest( $controller, 'handle', $params );
-		}
-	}
 	/**
 	 * Returns whether the email notification is for a watched article page which has been edited.
 	 * If $this->action is empty and we have a previous Revision id it's an article page edit.
@@ -489,6 +450,14 @@ class EmailNotification {
 	}
 
 	/**
+	 * Returns whether the Email extension is enabled or not.
+	 * @return bool
+	 */
+	private function emailExtensionEnabled() {
+		return !empty( F::app()->wg->EnableEmailExt );
+	}
+
+	/**
 	 * When a page is created, the previousRevId is always 0.
 	 * @return bool
 	 */
@@ -496,21 +465,23 @@ class EmailNotification {
 		return $this->previousRevId == 0;
 	}
 
-	private function isArticleComment() {
-		// A blog has a specific namespace while an article could have a number of
-		// different namespaces.  To decide if this is an article, just make sure
-		// its not a blog.
-		return (
-			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
-			( $this->title->getNamespace() != NS_BLOG_ARTICLE )
-		);
-	}
-
-	private function isBlogComment() {
-		return (
-			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
-			( $this->title->getNamespace() == NS_BLOG_ARTICLE )
-		);
+	/**
+	 * Send a watched page edit email using the new Email extension.
+	 * @param $user User
+	 */
+	private function sendUsingEmailExtension( \User $user ) {
+		F::app()->sendRequest( 'Email\Controller\WatchedPage', 'handle',
+			[
+				'targetUser' => $user->getName(),
+				'title' => $this->title->getText(),
+				'nameSpace' => $this->title->getNamespace(),
+				'summary' => $this->summary,
+				'currentRevId' => $this->currentRevId,
+				'previousRevId' => $this->previousRevId,
+				'replyToAddress' => $this->replyto,
+				'fromAddress' => $this->from->address,
+				'fromName' => $this->from->name
+			] );
 	}
 
 	private function sendUsingUserMailer( \User $user ) {
