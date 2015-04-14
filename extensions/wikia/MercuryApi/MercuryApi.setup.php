@@ -21,7 +21,6 @@ $wgExtensionMessagesFiles['MercuryApi'] = $dir . 'MercuryApi.i18n.php';
 
 // Load needed classes
 $wgAutoloadClasses['MercuryApiController'] = $dir . 'MercuryApiController.class.php';
-$wgAutoloadClasses['MercuryApiHelper'] =  $dir . 'MercuryApiHelper.class.php';
 $wgAutoloadClasses['MercuryApiHooks'] = $dir . 'MercuryApiHooks.class.php';
 $wgAutoloadClasses['MercurySpecialPageController'] = $dir . 'MercurySpecialPageController.class.php';
 
