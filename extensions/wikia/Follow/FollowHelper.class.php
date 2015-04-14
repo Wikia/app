@@ -6,6 +6,9 @@
 
 class FollowHelper {
 
+	const LOG_ACTION_BLOG_POST = 'blogpost';
+	const LOG_ACTION_CATEGORY_ADD = 'categoryadd';
+
 	/**
 	 * watchCategory -- static hook/entry for foolow article category
 	 *
@@ -23,7 +26,7 @@ class FollowHelper {
 			return true;
 		}
 
-		$action = "categoryadd";
+		$action = self::LOG_ACTION_CATEGORY_ADD;
 		$catList = array_keys($categoryInserts);
 
 		$queryIn = "";
@@ -75,7 +78,7 @@ class FollowHelper {
 			$notificationTimeoutSql = "wl_notificationtimestamp IS NULL";
 		}
 
-		if($action == "blogpost") {
+		if ( $action == self::LOG_ACTION_BLOG_POST ) {
 			$notificationTimeoutSql = "1";
 		}
 
@@ -220,7 +223,7 @@ class FollowHelper {
 				$title = Title::makeTitle( NS_BLOG_LISTING, $title );
 				$related[] = ucfirst($title->getDBKey());
 			}
-			self::emailNotification($article->getTitle(), $related, NS_BLOG_LISTING, $user, "blogpost", wfMsg('follow-bloglisting-summary'));
+			self::emailNotification($article->getTitle(), $related, NS_BLOG_LISTING, $user, self::LOG_ACTION_BLOG_POST, wfMsg('follow-bloglisting-summary'));
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -653,7 +656,7 @@ class FollowHelper {
 	 */
 	static public function mailNotifyBuildKeys(&$keys, $action, $other_param) {
 		global $wgEnableForumExt;
-		$actionsList = array('categoryadd', 'blogpost');
+		$actionsList = [ self::LOG_ACTION_CATEGORY_ADD, self::LOG_ACTION_BLOG_POST ];
 		if (!in_array($action, $actionsList)) {
 			return true;
 		}
@@ -663,7 +666,7 @@ class FollowHelper {
 		$keys['$PAGETITLE'] = $other_param['childTitle']->getPrefixedText();
 		$keys['$PAGETITLE_URL'] = $other_param['childTitle']->getFullUrl();
 
-		if($action == 'categoryadd') {
+		if ( $action == self::LOG_ACTION_CATEGORY_ADD ) {
 			$keys['$CATEGORY_URL'] = $page->getFullUrl();
 			$keys['$CATEGORY'] = $page->getText();
 
@@ -690,7 +693,7 @@ class FollowHelper {
 			return true;
 		}
 
-		if($action == 'blogpost') {
+		if ( $action == self::LOG_ACTION_BLOG_POST ) {
 			$keys['$BLOGLISTING_URL'] = $page->getFullUrl();
 			$keys['$BLOGLISTING'] = $page->getText();
 			return true;

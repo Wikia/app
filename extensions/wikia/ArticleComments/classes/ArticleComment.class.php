@@ -13,6 +13,8 @@ class ArticleComment {
 	const CACHE_VERSION = 2;
 	const AN_HOUR = 3600;
 
+	const LOG_ACTION_COMMENT = 'article_comment';
+
 	/**
 	 * @var $mProps Bool blogs only
 	 */
@@ -764,11 +766,15 @@ class ArticleComment {
 	 * @static
 	 * @access public
 	 *
-	 * @param WebRequest $request -- instance of WebRequest
-	 * @param User       $user    -- instance of User who is leaving the comment
-	 * @param Title      $title   -- instance of Title
+	 * @param $text
+	 * @param User $user -- instance of User who is leaving the comment
+	 * @param Title $title -- instance of Title
+	 *
+	 * @param bool $parentId
+	 * @param array $metadata
 	 *
 	 * @return Article -- newly created article
+	 * @throws MWException
 	 */
 	static public function doPost( $text, $user, $title, $parentId = false, $metadata = array() ) {
 		global $wgTitle;
@@ -1067,7 +1073,7 @@ class ArticleComment {
 					$mAttribs = $oRC->mAttribs;
 					$mAttribs['rc_title'] = $oArticlePage->getDBkey();
 					$mAttribs['rc_namespace'] = $oArticlePage->getNamespace();
-					$mAttribs['rc_log_action'] = 'article_comment';
+					$mAttribs['rc_log_action'] = self::LOG_ACTION_COMMENT;
 
 					$oRC->setAttribs($mAttribs);
 				}
