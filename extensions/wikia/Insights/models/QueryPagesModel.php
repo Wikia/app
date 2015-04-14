@@ -72,12 +72,11 @@ class QueryPagesModel extends InsightsModel {
 	private function prepareRevisionData( Revision $rev ) {
 		$data['timestamp'] = wfTimestamp(TS_UNIX, $rev->getTimestamp());
 
-		$userId = $rev->getUser();
-		// TODO: Check if we can skip creating User instace step
-		$user = User::newFromId( $userId );
+		$user = $rev->getUserText();
+		$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
 
-		$data['username'] = $user->getName();
-		$data['userpage'] = $user->getUserPage()->getFullURL();
+		$data['username'] = $user;
+		$data['userpage'] = $userpage;
 
 		return $data;
 	}
