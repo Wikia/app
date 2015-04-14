@@ -1,24 +1,24 @@
 <?php
 
-class MercuryApiHelperTest extends WikiaBaseTest {
+class WikiaValidatorStringTest extends PHPUnit_Framework_TestCase {
 
-	public function setUp() {
-		global $IP;
-		$this->setupFile = "$IP/extensions/wikia/MercuryApi/MercuryApi.setup.php";
-		parent::setUp();
+	/* @var $titleStringValidator WikiaValidatorString */
+	private $titleStringValidator;
+
+	protected function setUp () {
+		$this->titleStringValidator = new WikiaValidatorString( [ 'min' => 1, 'required' => true ] );
 	}
 
 	/**
-	 * Test isTitleStringValid
-	 *
-	 * @covers MercuryApiHelper::isTitleStringValid
-	 * @dataProvider isTitleStringValidDataProvider
+	 * @covers WikiaValidatorString::isValid
+	 * @dataProvider testTitleStringsDataProvider
 	 */
-	public function testIsTitleStringValid( $desc, $title, $expected ) {
-		$this->assertEquals($expected, MercuryApiHelper::isTitleStringValid( $title ),  $desc );
+	public function testTitleStrings( $desc, $title, $expected ) {
+		$result = $this->titleStringValidator->isValid( $title );
+		$this->assertEquals( $expected, $result, $desc );
 	}
 
-	public function isTitleStringValidDataProvider() {
+	public function testTitleStringsDataProvider() {
 		return [
 			[
 				'$desc' => 'Test if a one word article title is valid',
