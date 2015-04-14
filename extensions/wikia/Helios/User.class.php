@@ -36,7 +36,7 @@ class User {
 	 */
 	public static function getAccessToken( \WebRequest $request ) {
 		// A cookie takes precedence over an HTTP header.
-		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE );
+		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE, '' );
 
 		// No access token in the cookie, try the HTTP header.
 		if ( ! $token ) {
@@ -79,7 +79,7 @@ class User {
 			}
 
 			catch ( \Wikia\Helios\ClientException $e ) {
-				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
 			}
 		}
 
