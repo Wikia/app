@@ -43,8 +43,7 @@ class InsightsController extends WikiaSpecialPageController {
 		} elseif ( !empty( $par ) && isset( InsightsModel::$insightsPages[$par] ) ) {
 			return InsightsModel::$insightsPages[$par];
 		} else {
-			// redirect
-			//$this->response->redirect();
+			$this->response->redirect( $this->specialPage->getTitle()->getFullURL() );
 		}
 	}
 } 
