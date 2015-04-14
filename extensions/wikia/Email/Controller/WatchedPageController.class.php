@@ -24,7 +24,8 @@ class WatchedPageController extends EmailController {
 	}
 
 	public function initEmail() {
-		$this->title = \Title::newFromText( $this->request->getVal( 'title' ) );
+		$nameSpace = $this->request->getVal( 'nameSpace', NS_MAIN );
+		$this->title = \Title::newFromText( $this->request->getVal( 'title' ), $nameSpace );
 		$this->summary = $this->request->getVal( 'summary' );
 		$this->currentRevId = $this->request->getVal( 'currentRevId' );
 		$this->previousRevId = $this->request->getVal( 'previousRevId' );

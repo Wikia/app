@@ -474,6 +474,7 @@ class EmailNotification {
 			[
 				'targetUser' => $user->getName(),
 				'title' => $this->title->getText(),
+				'nameSpace' => $this->title->getNamespace(),
 				'summary' => $this->summary,
 				'currentRevId' => $this->currentRevId,
 				'previousRevId' => $this->previousRevId,
