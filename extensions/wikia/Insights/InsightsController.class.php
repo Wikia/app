@@ -1,6 +1,7 @@
 <?php
 
 class InsightsController extends WikiaSpecialPageController {
+	public $page;
 
 	public function __construct() {
 		parent::__construct('Insights', 'insights', true);
@@ -9,18 +10,25 @@ class InsightsController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn(__METHOD__);
 
-		$page = $this->getInsightDataProvider( $this->getPar() );
-
-		$model = new QueryPagesModel( $page, $this->wg->CityId );
-
+		$this->page = $this->getInsightDataProvider( $this->getPar() );
 		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
+
+		$this->response->addAsset('/extensions/wikia/Insights/styles/insights.scss');
+
+		if ( !empty( $this->page ) ) {
+			$this->categoryList();
+		}
+
+		wfProfileOut(__METHOD__);
+	}
+
+	public function categoryList() {
+		$model = new QueryPagesModel( $this->page, $this->wg->CityId );
 
 		$this->list = $model->getList();
 		$this->offset = 0;
 
-		$this->response->addAsset('/extensions/wikia/Insights/styles/insights.scss');
-
-		wfProfileOut(__METHOD__);
+		$this->overrideTemplate('categoryList');
 	}
 
 	/**
@@ -30,10 +38,13 @@ class InsightsController extends WikiaSpecialPageController {
 	 * @return mixed
 	 */
 	public function getInsightDataProvider( $par ) {
-		if ( !empty( $par ) && isset( InsightsModel::$insightsPages[$par] ) ) {
+		if ( empty ( $par ) ) {
+			return null;
+		} elseif ( !empty( $par ) && isset( InsightsModel::$insightsPages[$par] ) ) {
 			return InsightsModel::$insightsPages[$par];
 		} else {
-			return array_pop( InsightsModel::$insightsPages );
+			// redirect
+			//$this->response->redirect();
 		}
 	}
 } 
