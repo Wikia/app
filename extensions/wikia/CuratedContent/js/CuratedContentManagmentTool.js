@@ -329,12 +329,12 @@ $(function () {
 					function (data) {
 						if (data.url && data.id) {
 							$currentImage.css('backgroundImage', 'url(' + data.url + ')')
+							$currentImage.data('id', data.id);
+							$currentImage.attr('data-id', data.id);
 
 							if (!catImage) {
-								$currentImage.attr('data-id', data.id);
 								$currentImage.siblings().last().addClass('photo-remove');
 							}
-							;
 
 							$currentImage.stopThrobbing();
 						} else {
