@@ -32,7 +32,6 @@ class Client
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
 
-
 		// Add client_id and client_secret to the GET data.
 		$getParams['client_id'] = $this->clientId;
 		$getParams['client_secret'] = $this->clientSecret;
