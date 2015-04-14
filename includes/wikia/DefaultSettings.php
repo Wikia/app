@@ -1696,5 +1696,6 @@ $wgImplicitGroups[] = 'poweruser';
 
 /**
  * Enable updated GlobalFooter
+ * @TODO CONCF-444 - remove this variable
  */
-$wgEnableUpdatedGlobalFooter = false;
+$wgEnableUpdatedGlobalFooter = true;
