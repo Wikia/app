@@ -1,0 +1,13 @@
+.insights-list {
+	border-collapse: collapse;
+	width: 100%;
+
+	td {
+		border: 1px solid #ccc;
+		padding:  5px 15px;
+	}
+
+	.item-number {
+		text-align: center;
+	}
+}
