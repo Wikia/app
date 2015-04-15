@@ -44,6 +44,72 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $token );
 	}
 
+	public function testGetAccessTokenFromCookieReturnsNull()
+	{
+		// No HTTP header
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( '' );
+
+		// Cookie with no value
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getCookie' )
+			->willReturn( '' );
+
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getCookie' )
+			->willReturn( false );
+
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+	}
+
+	public function testGetAccessTokenFromHeaderReturnsNull()
+	{
+		// No Cookie
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getCookie' )
+			->willReturn( null );
+
+		// Header with no value
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( '' );
+
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( false );
+
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( null );
+
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( 'Bearer ' );
+
+		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
+	}
+
+
 	public function testGetAccessTokenCookiePrecedenceIfBoth()
 	{
 		$tokenInCookie = 'qi8H8R7OM4xMUNMPuRAZxlY';
