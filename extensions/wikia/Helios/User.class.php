@@ -32,7 +32,7 @@ class User {
 	 * Extracts access token from HTTP request data.
 	 *
 	 * @param \WebRequest $request the HTTP request data as an object
-	 * @return String access token
+	 * @return String access token or null
 	 */
 	public static function getAccessToken( \WebRequest $request ) {
 		// A cookie takes precedence over an HTTP header.
@@ -48,6 +48,11 @@ class User {
 			if ( ! empty( $matches[1] ) ) {
 				$token = $matches[1];
 			}
+		}
+
+		// Normalize the value so the method returns a non-empty string or null.
+		if ( empty( $token ) ) {
+			return null;
 		}
 
 		return $token;
