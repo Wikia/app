@@ -26,7 +26,7 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-watchedpage-subject' => '$1 wurde im {{SITENAME}} von $2 bearbeitet',
+	'emailext-watchedpage-subject' => '{{SITENAME}}: Die Seite „$1“ wurde von $2 bearbeitet',
 	'emailext-watchedpage-salutation' => 'Hallo $1,',
 	'emailext-watchedpage-article-edited' => "'''Die [{{SERVER}} {{SITENAME}}]-Seite [$1 $2] wurde bearbeitet. Sieh es dir an!'''",
 	'emailext-watchedpage-anonymous-editor' => 'Ein Wikia-Fan',
@@ -81,7 +81,7 @@ $messages['ja'] = array(
 	'emailext-watchedpage-diff-button-text' => '変更を比較する',
 	'emailext-watchedpage-article-link-text' => "[$1 '''$2'''にアクセスして最新の内容を確認する]",
 	'emailext-watchedpage-view-all-changes' => "[$1 '''$2'''で行われたすべての変更を見る]",
-	'emailext-watchedpage-unfollow-text' => 'このような更新情報の受信をご希望でない場合は、[$1 こちら] をクリックして{{SITENAME}}の$2のフォローを解除してください。',
+	'emailext-watchedpage-unfollow-text' => 'このような更新情報の受信をご希望でない場合は、<br />[$1 こちら] をクリックして{{SITENAME}}の$2のフォローを解除してください。',
 	'emailext-watchedpage-no-summary' => '編集の要約はありません。',
 );
 
@@ -127,7 +127,7 @@ $messages['ru'] = array(
 	'emailext-watchedpage-article-edited' => "'''Страница [$1 $2] на [{{SERVER}} {{SITENAME}}] была отредактирована. Посмотрите правки!'''",
 	'emailext-watchedpage-anonymous-editor' => 'Фанат Викия',
 	'emailext-watchedpage-diff-button-text' => 'Сравнить изменения',
-	'emailext-watchedpage-article-link-text' => "[$1 Чтобы просмотреть новые правки, перейдите к странице «'''$2'''».]",
+	'emailext-watchedpage-article-link-text' => "[$1 Для просмотра новых правок перейдите к «'''$2'''».]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Просмотрите все правки статьи «'''$2'''».]",
 	'emailext-watchedpage-unfollow-text' => 'Не хотите больше получать эти сообщения? Перейдите [$1 по ссылке], чтобы перестать следить за страницей «$2» на {{SITENAME}}.',
 	'emailext-watchedpage-no-summary' => 'Участник не дал пояснений к данной правке.',
