@@ -10,13 +10,13 @@ class InsightsController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn(__METHOD__);
 
-		$this->key = $this->getPar();
-		$this->page = $this->getInsightDataProvider( $this->key );
+		$this->par = $this->getPar();
+		$this->page = $this->getInsightDataProvider( $this->par );
 		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
 
 		$this->response->addAsset('/extensions/wikia/Insights/styles/insights.scss');
 
-		if ( !empty( $this->key ) ) {
+		if ( !empty( $this->par ) ) {
 			$this->renderSubpage();
 		}
 
@@ -26,22 +26,11 @@ class InsightsController extends WikiaSpecialPageController {
 	public function renderSubpage() {
 		$model = new QueryPagesModel( $this->page, $this->wg->CityId );
 
-		$this->iconUrl = 'https://pbs.twimg.com/profile_images/583867858683166720/netMDLKF.png';
-		$this->subtitle = wfMessage( 'insights-list-' . $this->key . '-subtitle' )->parse();
-		$this->description = wfMessage( 'insights-list-' . $this->key . '-description' )->parse();
+		$this->messageKeys = InsightsHelper::$insightsMessageKeys;
 		$this->list = $model->getList();
 		$this->offset = 0;
 
 		$this->overrideTemplate( 'subpageList' );
-	}
-
-	public function categoryList() {
-		$model = new QueryPagesModel( $this->page, $this->wg->CityId );
-
-		$this->list = $model->getList();
-		$this->offset = 0;
-
-		$this->overrideTemplate('categoryList');
 	}
 
 	/**
