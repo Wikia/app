@@ -66,6 +66,16 @@ class ExactTargetUserHooks {
 	}
 
 	/**
+	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
+	 * @param User $oUser
+	 * @return bool
+	 */
+	public function onConfirmEmailComplete( \User $oUser ) {
+		$this->addTheUpdateCreateUserTask( $oUser );
+		return true;
+	}
+
+	/**
 	 * Adds a task for adding user groups
 	 * @param User $user
 	 * @param string $sGroup Group name to add
