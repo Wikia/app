@@ -44,6 +44,23 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $token );
 	}
 
+	public function testGetAccessTokenCookiePrecedenceIfBoth()
+	{
+		$tokenInCookie = 'qi8H8R7OM4xMUNMPuRAZxlY';
+		$tokenInHeader = 'MUNMPuRAZxlYqi8H8R7OM4x';
+
+		$this->webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( $tokenInCookie );
+
+		$this->webRequestMock->expects( $this->any() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( "Bearer $tokenInHeader" );
+
+		$this->assertEquals( User::getAccessToken( $this->webRequestMock ), $tokenInCookie );
+	}
+
 	public function testGetAccessTokenNoCookieNoAuthorizationHeader()
 	{
 		$this->webRequestMock->expects( $this->once() )
