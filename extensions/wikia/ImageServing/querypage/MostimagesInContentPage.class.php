@@ -14,6 +14,18 @@ class MostimagesInContentPage extends MostimagesPage {
 		parent::__construct( $name );
 	}
 
+	/**
+	 * Force an old name of the special page here.
+	 * We need to keep the old name in querycache's qc_type column to keep ImageServing working
+	 *
+	 * @see PLATFORM-1007
+	 *
+	 * @return String
+	 */
+	function getName() {
+		return 'MostimagesInContent';
+	}
+
 	function getQueryInfo() {
 		global $wgContentNamespaces;
 
