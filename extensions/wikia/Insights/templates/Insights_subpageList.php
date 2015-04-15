@@ -10,9 +10,9 @@
 	</ul>
 </div>
 <div class="insights-container-main">
-	<div class="insights-header insights-icon-<?= $par ?> clearfix">
-		<h2 class="insights-header-subtitle"><?= wfMessage( $messageKeys[$par]['subtitle'] )->escaped() ?></h2>
-		<p class="insights-header-description"><?= wfMessage( $messageKeys[$par]['description'] )->escaped() ?></p>
+	<div class="insights-header insights-icon-<?= $subpage ?> clearfix">
+		<h2 class="insights-header-subtitle"><?= wfMessage( $messageKeys[$subpage]['subtitle'] )->escaped() ?></h2>
+		<p class="insights-header-description"><?= wfMessage( $messageKeys[$subpage]['description'] )->escaped() ?></p>
 	</div>
 	<table class="insights-list">
 		<? foreach( $list as $item ): ?>
