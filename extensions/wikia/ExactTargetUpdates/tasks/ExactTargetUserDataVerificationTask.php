@@ -11,22 +11,39 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	 * return true if data is equal (except comparing user_touched)
 	 * if data isn't equal throws exception with result diff
 	 */
-	public function verifyUserData( $iUserId ) {
+	public function verifyUsersData( array $aUsersIds ) {
+		$bSummaryResult = true;
 		// Fetch data from ExactTarget
-		$oRetriveveUserTask = $this->getRetrieveUserTask();
-		$oExactTargetUserData = $oRetriveveUserTask->retrieveUserDataById( $iUserId );
-		$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $oExactTargetUserData ) );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$aExactTargetUsersData = $oRetrieveUserTask->retrieveUsersDataByIds( $aUsersIds );
+		$aUsersIdsFlipped = array_flip( $aUsersIds );
+		foreach ( $aExactTargetUsersData as $aExactTargetUserData ) {
+			$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $aExactTargetUserData ) );
 
-		// Fetch data from Wikia DB
-		$oWikiaUser = \User::newFromId( $iUserId );
-		$oUserHooksHelper = $this->getUserHooksHelper();
-		$oWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
-		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserData ) );
+			// Fetch data from Wikia DB
+			$oWikiaUser = \User::newFromId( $aExactTargetUserData['user_id'] );
+			$oUserHooksHelper = $this->getUserHooksHelper();
+			$aWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
+			$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $aWikiaUserData ) );
 
-		// Compare results
-		$bResult = $this->compareResults( $oExactTargetUserData, $oWikiaUserData, __METHOD__, 'user_touched' );
+			// Compare results
+			$bResult = $this->compareResults( $aExactTargetUserData, $aWikiaUserData, __METHOD__, 'user_touched' );
 
-		return $bResult;
+			// Mark verification process as failed if any record fails
+			if ( $bResult === false ) {
+				$bSummaryResult = $bResult;
+			}
+
+			// Remove UserId from array to track unchecked users
+			unset ( $aUsersIdsFlipped[$aExactTargetUserData['user_id']] );
+		}
+
+		// Log error if unchecked users found
+		if ( !empty( $aUsersIdsFlipped ) ) {
+			$this->error( __METHOD__ . ' Following user ids not retrieved from ET: ' . json_encode( array_keys( $aUsersIdsFlipped ) ) );
+		}
+
+		return $bSummaryResult;
 	}
 
 
@@ -38,8 +55,8 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	 */
 	public function verifyUserPropertiesData( $iUserId ) {
 		// Fetch data from ExactTarget
-		$oRetriveveUserTask = $this->getRetrieveUserTask();
-		$oExactTargetUserProperties = $oRetriveveUserTask->retrieveUserPropertiesByUserId( $iUserId );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$oExactTargetUserProperties = $oRetrieveUserTask->retrieveUserPropertiesByUserId( $iUserId );
 		$this->info( __METHOD__ . ' ExactTarget user_properties data record: ' . json_encode( $oExactTargetUserProperties ) );
 
 		// Fetch data from Wikia DB
