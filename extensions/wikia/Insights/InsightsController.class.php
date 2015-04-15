@@ -27,8 +27,8 @@ class InsightsController extends WikiaSpecialPageController {
 		$model = new QueryPagesModel( $this->page, $this->wg->CityId );
 
 		$this->messageKeys = InsightsHelper::$insightsMessageKeys;
-		$this->list = $model->getList();
 		$this->offset = 0;
+		$this->list = $model->getList();
 
 		$this->overrideTemplate( 'subpageList' );
 	}

@@ -23,10 +23,10 @@ class QueryPagesModel extends InsightsModel {
 	 * @param int $limit
 	 * @return array
 	 */
-	public function getList( $limit = 100 ) {
+	public function getList( $offset = 0, $limit = 100 ) {
 		$data = [];
 
-		$res = $this->queryPageInstance->fetchFromCache( $limit );
+		$res = $this->queryPageInstance->doQuery( $offset, $limit );
 		if ( $res->numRows() > 0 ) {
 			$data = $this->prepareData( $res );
 			// TODO: initial work for fetching page views
