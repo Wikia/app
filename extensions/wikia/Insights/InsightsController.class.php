@@ -4,23 +4,23 @@ class InsightsController extends WikiaSpecialPageController {
 	public $page;
 
 	public function __construct() {
-		parent::__construct('Insights', 'insights', true);
+		parent::__construct( 'Insights', 'insights', true );
 	}
 
 	public function index() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$this->par = $this->getPar();
 		$this->page = $this->getInsightDataProvider( $this->par );
 		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
 
-		$this->response->addAsset('/extensions/wikia/Insights/styles/insights.scss');
+		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights.scss' );
 
 		if ( !empty( $this->par ) ) {
 			$this->renderSubpage();
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function renderSubpage() {
