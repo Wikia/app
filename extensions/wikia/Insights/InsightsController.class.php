@@ -10,13 +10,13 @@ class InsightsController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$this->par = $this->getPar();
-		$this->page = $this->getInsightDataProvider( $this->par );
+		$this->subpage = $this->getPar();
+		$this->page = $this->getInsightDataProvider( $this->subpage );
 		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
 
 		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights.scss' );
 
-		if ( !empty( $this->par ) ) {
+		if ( !empty( $this->subpage ) ) {
 			$this->renderSubpage();
 		}
 
@@ -36,14 +36,14 @@ class InsightsController extends WikiaSpecialPageController {
 	/**
 	 * Returns specific data provider
 	 *
-	 * @param $par
+	 * @param $subpage Insights subpage name
 	 * @return mixed
 	 */
-	public function getInsightDataProvider( $par ) {
-		if ( empty ( $par ) ) {
+	public function getInsightDataProvider( $subpage ) {
+		if ( empty ( $subpage ) ) {
 			return null;
-		} elseif ( !empty( $par ) && isset( InsightsModel::$insightsPages[$par] ) ) {
-			return InsightsModel::$insightsPages[$par];
+		} elseif ( !empty( $subpage ) && isset( InsightsModel::$insightsPages[$subpage] ) ) {
+			return InsightsModel::$insightsPages[$subpage];
 		} else {
 			$this->response->redirect( $this->specialPage->getTitle()->getFullURL() );
 		}
