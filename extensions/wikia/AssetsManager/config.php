@@ -794,7 +794,7 @@ $config['wikiamobile_ads_js'] = array(
 		'#group_adengine2_interactive_maps_js',
 
 		// Run!
-		'//extensions/wikia/AdEngine2/js/run/wikiamobile.run.js',
+		'//extensions/wikia/AdEngine/js/run/wikiamobile.run.js',
 	)
 );
 
