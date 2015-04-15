@@ -144,14 +144,16 @@
 							</a>
 						</li>
 					<? } ?>
-					<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-add-blog-tooltip")->text() ?>">
-						<a href="<?= $urlCreateBlogPage ?>" class="set" data-tracking="create-blog">
-							<span class="representation">
-								<span class="icon createblog"></span>
-							</span>
-							<?= wfMessage("admindashboard-control-add-blog-label")->text() ?>
-						</a>
-					</li>
+					<? if( $showNewBlogLink ) { ?>
+						<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-add-blog-tooltip")->text() ?>">
+							<a href="<?= $urlCreateBlogPage ?>" class="set" data-tracking="create-blog">
+								<span class="representation">
+									<span class="icon createblog"></span>
+								</span>
+								<?= wfMessage("admindashboard-control-add-blog-label")->text() ?>
+							</a>
+						</li>
+					<? } ?>
 					<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-multiple-upload-tooltip")->text() ?>">
 						<a href="<?= $urlMultipleUpload ?>" class="set" data-tracking="multiple-upload">
 							<span class="representation">

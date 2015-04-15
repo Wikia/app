@@ -44,7 +44,13 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		} else {
 			$this->showVideoLink = false;
 		}
-		$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
+		if ( !empty( $this->wg->EnableBlogArticles ) ) {
+			$this->showNewBlogLink = true;
+			$this->urlCreateBlogPage = Title::newFromText('CreateBlogPage', NS_SPECIAL)->getFullURL();
+		} else {
+			$this->showNewBlogLink = false;
+		}
+		
 		$this->urlMultipleUpload = Title::newFromText('MultipleUpload', NS_SPECIAL)->getFullURL();
 		$this->urlLVS = Title::newFromText('LicensedVideoSwap', NS_SPECIAL)->getFullURL();
 		$this->urlSpecialCss = SpecialPage::getTitleFor('CSS')->getFullURL();
