@@ -9,7 +9,8 @@ class InsightsModel {
 	 * List of insights categories and mapping to existing class which we can reuse
 	 */
 	public static $insightsPages = [
-		'uncategorized' => 'UncategorizedPagesPage'
+		'uncategorized' => 'UncategorizedPagesPage',
+		'withoutimages' => 'WithoutimagesPage',
 	];
 
 	public function __construct( $wikiId ) {

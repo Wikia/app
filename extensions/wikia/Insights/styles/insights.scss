@@ -1,10 +1,48 @@
+.insights-container-nav {
+	float: left;
+	width: 220px;
+
+	.insights-nav-list {
+		margin: 0;
+	}
+
+	.insights-nav-item {
+		list-style-type: none;
+	}
+
+	.insights-nav-link {
+		display: block;
+
+	}
+}
+
+.insights-header {
+	margin: 10px 0 15px;
+
+	.insights-header-icon {
+		float: left;
+		margin-right: 40px;
+		width: 100px;
+	}
+
+	.insights-header-subtitle {
+		border-bottom: 0;
+		margin-top: 0;
+	}
+}
+
+.insights-container-main {
+	float: left;
+	width: 780px;
+}
+
 .insights-list {
 	border-collapse: collapse;
 	width: 100%;
 
 	td {
-		border: 1px solid #ccc;
-		padding:  5px 15px;
+		border: 1px solid $color-wam-border-grey;
+		padding: 5px 15px;
 	}
 
 	.item-number {
