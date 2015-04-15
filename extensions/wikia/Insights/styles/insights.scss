@@ -1,0 +1,91 @@
+$insights-dark-blue: #082040;
+$insights-grey: #ccc;
+$insights-text-light: #fff;
+
+.insights-icon-uncategorized {
+	background-image: url('/extensions/wikia/Insights/images/trending.png'); /* inline */
+}
+
+.insights-icon-withoutimages {
+	background-image: url('/extensions/wikia/Insights/images/trending.png'); /* inline */
+}
+
+.insights-container-landing {
+	margin: 0 auto;
+	width: 700px;
+
+	.insights-landing-nav-list {
+		margin: 0;
+	}
+}
+
+.insights-landing-header {
+	padding: 15px 0;
+}
+
+.insights-landing-nav-item {
+	background-position: center right;
+	background-repeat: no-repeat;
+	border: 1px solid $insights-grey;
+	padding: 15px 10px;
+}
+
+.insights-container-nav {
+	float: left;
+	width: 220px;
+
+	.insights-nav-list {
+		border: solid $insights-grey;
+		border-width: 1px 0 0;
+		margin: 0;
+	}
+
+	.insights-nav-item {
+		border: solid $insights-grey;
+		border-width: 0 1px 1px;
+		list-style-type: none;
+		margin: 0;
+	}
+
+	.insights-nav-link {
+		display: block;
+		padding: 6px;
+		text-decoration: none;
+
+		&:hover {
+			background: $insights-dark-blue;
+			color: $insights-text-light;
+		}
+	}
+}
+
+.insights-header {
+	background-position: center left;
+	background-repeat: no-repeat;
+	margin: 10px 0 15px;
+	padding: 20px 20px 20px 150px;
+
+	.insights-header-subtitle {
+		border-bottom: 0;
+		margin-top: 0;
+	}
+}
+
+.insights-container-main {
+	float: left;
+	width: 780px;
+}
+
+.insights-list {
+	border-collapse: collapse;
+	width: 100%;
+
+	td {
+		border: 1px solid $insights-grey;
+		padding: 5px 15px;
+	}
+
+	.item-number {
+		text-align: center;
+	}
+}
