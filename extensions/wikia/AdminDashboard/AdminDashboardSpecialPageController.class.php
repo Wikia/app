@@ -130,8 +130,8 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		}
 		$page = $this->getVal( 'page', '' );
 		if( empty( $page ) ) {
-            $page = ( $this->getVal( 'headerText', '' ) );
-        }
+			$page = ( $this->getVal( 'headerText', '' ) );
+		}
 		$headerText = SpecialPage::getLocalNameFor( $page );
 		$this->headerText = $headerText;
 		$this->tagline = $this->msg( 'tagline' );
