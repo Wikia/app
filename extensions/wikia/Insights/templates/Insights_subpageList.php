@@ -1,19 +1,18 @@
 <div class="insights-container-nav">
 	<ul class="insights-nav-list">
-		<? foreach( InsightsModel::$insightsPages as $key => $subpage ) : ?>
+		<? foreach( $messageKeys as $key => $messages ) : ?>
 			<li class="insights-nav-item">
-				<a href="<?= SpecialPage::getTitleFor( 'Insights', $key )->getLocalURL() ?>" class="insights-nav-link">
-					<?= wfMessage( 'insights-list-' . $key . '-subtitle' )->parse() ?>
+				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-nav-link">
+					<?= wfMessage( $messages['subtitle'] )->parse() ?>
 				</a>
 			</li>
 		<? endforeach; ?>
 	</ul>
 </div>
 <div class="insights-container-main">
-	<div class="insights-header clearfix">
-		<img src="<?= $iconUrl ?>" alt="<?= $subtitle ?>" class="insights-header-icon"/>
-		<h2 class="insights-header-subtitle"><?= $subtitle ?></h2>
-		<p class="insights-header-description"><?= $description ?></p>
+	<div class="insights-header insights-icon-<?= $par ?> clearfix">
+		<h2 class="insights-header-subtitle"><?= wfMessage( $messageKeys[$par]['subtitle'] )->parse() ?></h2>
+		<p class="insights-header-description"><?= wfMessage( $messageKeys[$par]['description'] )->parse() ?></p>
 	</div>
 	<table class="insights-list">
 		<? foreach( $list as $item ): ?>
