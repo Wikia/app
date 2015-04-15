@@ -107,7 +107,9 @@ class MercuryApi {
 	 */
 	public function getWikiVariables() {
 		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin,
-			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId;
+			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId,
+			   $wgAnalyticsProviderUseUA;
+
 		return [
 			'cacheBuster' => (int) $wgCacheBuster,
 			'dbName' => $wgDBname,
@@ -125,6 +127,9 @@ class MercuryApi {
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
+			'analytics' => [
+				'UAEnabled' => !empty( $wgAnalyticsProviderUseUA ),
+			],
 		];
 	}
 
