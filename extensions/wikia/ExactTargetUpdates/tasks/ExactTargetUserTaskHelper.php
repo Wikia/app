@@ -362,16 +362,4 @@ class ExactTargetUserTaskHelper {
 		}
 	}
 
-	/**
-	 * Extracts list of users ids from provided $aUsersData
-	 * @param $aUsersData array of users data arrays consistent with structure of ExactTargetUserHooksHelper::prepareUserParams
-	 * @return array
-	 */
-	public function prepareUserIds( $aUsersData ) {
-		foreach( $aUsersData as $aUserData ) {
-			$aUserIds[] = $aUserData['user_id'];
-		}
-		return $aUserIds;
-	}
-
 }
