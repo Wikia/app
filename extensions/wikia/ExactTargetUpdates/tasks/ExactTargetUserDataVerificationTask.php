@@ -14,10 +14,10 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	public function verifyUsersData( array $aUsersIds ) {
 		$bSummaryResult = true;
 		// Fetch data from ExactTarget
-		$oRetriveveUserTask = $this->getRetrieveUserTask();
-		$aExactTargetUsersData = $oRetriveveUserTask->retrieveUsersDataByIds( $aUsersIds );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$aExactTargetUsersData = $oRetrieveUserTask->retrieveUsersDataByIds( $aUsersIds );
 		$aUsersIdsFlipped = array_flip( $aUsersIds );
-		foreach( $aExactTargetUsersData as $aExactTargetUserData ) {
+		foreach ( $aExactTargetUsersData as $aExactTargetUserData ) {
 			$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $aExactTargetUserData ) );
 
 			// Fetch data from Wikia DB
@@ -55,8 +55,8 @@ class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 	 */
 	public function verifyUserPropertiesData( $iUserId ) {
 		// Fetch data from ExactTarget
-		$oRetriveveUserTask = $this->getRetrieveUserTask();
-		$oExactTargetUserProperties = $oRetriveveUserTask->retrieveUserPropertiesByUserId( $iUserId );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$oExactTargetUserProperties = $oRetrieveUserTask->retrieveUserPropertiesByUserId( $iUserId );
 		$this->info( __METHOD__ . ' ExactTarget user_properties data record: ' . json_encode( $oExactTargetUserProperties ) );
 
 		// Fetch data from Wikia DB

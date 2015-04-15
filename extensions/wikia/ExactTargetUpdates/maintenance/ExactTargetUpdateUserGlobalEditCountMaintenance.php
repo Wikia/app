@@ -39,7 +39,6 @@ class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 	 * Fetches user ids from statsDB from last period determined by prepareTimeCondition function
 	 * @param DatabaseBase $oStatsDBr
 	 * @param string $sStartDate e.g. 2014-12-31
-	 * @param boolean|ResultWrapper $oUsersListResult
 	 * @return array of user ids
 	 */
 	private function getListOfUsersIdsEdited( DatabaseBase $oStatsDBr, $sStartDate ) {
@@ -54,7 +53,7 @@ class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 
 		$aUsersIdsDidEdit = $oWikiaSQL->runLoop( $oStatsDBr, function( &$aUsersIdsDidEdit, $oUsersIdsDidEdit ) {
 			$aUsersIdsDidEdit[] = $oUsersIdsDidEdit->user_id;
-		});
+		} );
 		return $aUsersIdsDidEdit;
 	}
 
@@ -90,8 +89,8 @@ class ExactTargetUpdateUserGlobalEditCountMaintenance extends Maintenance {
 
 	private function getLastDayDate() {
 		$oNow = new DateTime();
-		$oNow->sub(new DateInterval('P1D'));
-		$sStartDate = $oNow->format('Y-m-d H:i:s');
+		$oNow->sub( new DateInterval( 'P1D' ) );
+		$sStartDate = $oNow->format( 'Y-m-d H:i:s' );
 		return $sStartDate;
 	}
 

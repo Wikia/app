@@ -26,10 +26,8 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 			if ( empty( $aUserData['user_id'] ) ) {
 				$this->error( __METHOD__ . ' user under ' . $iArrayKey . ' index of $aUsersData has no ID' );
 				unset( $aUsersData[$iArrayKey] );
-			}
-
-			elseif ( empty( $aUserData['user_email'] ) ) {
-				$this->error( __METHOD__ . ' user under ' . $iArrayKey . ' index of $aUsersData has no ID' );
+			} elseif ( empty( $aUserData['user_email'] ) ) {
+				$this->error( __METHOD__ . ' user under ' . $iArrayKey . ' index of $aUsersData has no email' );
 				unset( $aUsersData[$iArrayKey] );
 			}
 		}
@@ -52,7 +50,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		}
 
 		/* Verify data */
-		$aUserIds = $oHelper->prepareUserIds( $aUsersData );
+		$aUserIds = array_column( $aUsersData , 'user_id' );
 		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
 		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
 		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUsersData( $aUserIds );

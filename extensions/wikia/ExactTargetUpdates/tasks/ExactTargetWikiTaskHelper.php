@@ -182,7 +182,7 @@ class ExactTargetWikiTaskHelper {
 		$aCategories = $oWikiFactoryHub->getWikiCategories( $iCityId );
 		$aCityCatMappingDataExtension['DataExtension'] = [];
 
-		foreach( $aCategories as $aCategory ) {
+		foreach ( $aCategories as $aCategory ) {
 			$aCityCatMappingDataExtension['DataExtension'][] = [
 				'CustomerKey' => $aCustomerKeys['city_cat_mapping'],
 				'Properties' => [
