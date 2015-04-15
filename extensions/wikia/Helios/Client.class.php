@@ -52,6 +52,15 @@ class Client
 
 		$options = array_merge( $options, $extraRequestOptions );
 
+		/*
+		 * MediaWiki's MWHttpRequest class heavily relies on Messaging API
+		 * (wfMessage()) which happens to rely on the value of $wgLang.
+		 * $wgLang is set after $wgUser. On per-request authentication with
+		 * an access token we use MWHttpRequest before wgUser is created so
+		 * we need $wgLang to be present. With GlobalStateWrapper we can set
+		 * the global variable in the local, function's scope, so it is the
+		 * same as the already existing $wgContLang.
+		 */
 		global $wgContLang;
 		$wrapper = new GlobalStateWrapper( [ 'wgLang' => $wgContLang ] );
 
