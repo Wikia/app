@@ -2,7 +2,8 @@
 
 class YoutubeApiWrapper extends ApiWrapper {
 
-	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1';
+//	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1';
+	protected static $API_URL = 'https://www.googleapis.com/youtube/v3/videos';
 	protected static $CACHE_KEY = 'youtubeapi';
 	protected static $aspectRatio = 1.7777778;
 
@@ -116,9 +117,9 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getOriginalDescription() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['media$description']['$t']) ) {
+		if ( !empty($this->interfaceObj['items'][0]['snippet']['description']) ) {
 
-			return $this->interfaceObj['entry']['media$group']['media$description']['$t'];
+			return $this->interfaceObj['items'][0]['snippet']['description'];
 		}
 
 		return '';
@@ -126,6 +127,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	/**
 	 * User-defined keywords
+	 * @TODO find a way to get keywords for video
 	 * @return array
 	 */
 	protected function getVideoKeywords() {
@@ -139,6 +141,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	/**
 	 * YouTube category
+	 * @TODO fire another request to Youtube API to get category data
 	 * @return string
 	 */
 	protected function getVideoCategory() {
@@ -155,9 +158,9 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoPublished() {
-		if ( !empty($this->interfaceObj['entry']['published']['$t']) ) {
+		if ( !empty($this->interfaceObj['items'][0]['snippet']['publishedAt']) ) {
 
-			return strtotime($this->interfaceObj['entry']['published']['$t']);
+			return strtotime($this->interfaceObj['items'][0]['snippet']['publishedAt']);
 		}
 
 		return '';
@@ -168,9 +171,14 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return int
 	 */
 	protected function getVideoDuration() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['yt$duration']['seconds']) ) {
+		if ( !empty($this->interfaceObj['items'][0]['contentDetails']['duration']) ) {
+			$dateInterval = new DateInterval($this->interfaceObj['items'][0]['contentDetails']['duration']));
+			$seconds = (int) $dateInterval->format('%s');
+			$minutes = (int) $dateInterval->format('%i');
+			$hours = (int) $dateInterval->format('%h');
+			$durationInSeconds = $seconds + (60 * $minutes) + (60 * 60 * $hours);
 
-			return $this->interfaceObj['entry']['media$group']['yt$duration']['seconds'];
+			return $durationInSeconds;
 		}
 
 		return '';
@@ -178,25 +186,19 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	/**
 	 * Is resolution of 720 or higher available
+	 * @TODO find a way to ask API if HD video is accessible
 	 * @return boolean
 	 */
 	protected function isHdAvailable() {
-		return isset($this->interfaceObj['entry']['yt$hd']);
+		return false;
 	}
 
 	/**
 	 * Can video be embedded
+	 * Youtube video can always be embedded because we ask for embeddable ones via API
 	 * @return boolean
 	 */
 	protected function canEmbed() {
-		if ( !empty($this->interfaceObj['entry']['yt$accessControl']) ) {
-			foreach ($this->interfaceObj['entry']['yt$accessControl'] as $accessControl) {
-				if ($accessControl['action'] == 'embed') {
-					return $accessControl['permission'] == 'allowed';
-				}
-			}
-		}
-
 		return true;
 	}
 
@@ -267,19 +269,20 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getApiUrl() {
-
-		$youtubeConfig = F::app()->wg->YoutubeConfig;
+		global $wgYoutubeConfig;
 
 
 		$params = [
-			'v' => $youtubeConfig['v'],
-			'key' => $youtubeConfig['DeveloperKey'],
-			'alt' => 'json'
+			'part' => 'snippet,contentDetails',
+			'id' => $this->videoId,
+			'maxResults' => '1',
+			'videoEmbeddable' => true,
+			'type' => 'video',
+			'key' => $wgYoutubeConfig['DeveloperKeyApiV3']
 		];
 
-		$apiUrl = str_replace( '$1', $this->videoId, static::$API_URL );
-
-		return $apiUrl . '?' . http_build_query( $params );
+		$url = self::$API_URL . '?' . http_build_query( $params );
+		return $url;
 	}
 
 }
