@@ -2,7 +2,6 @@
 
 class YoutubeApiWrapper extends ApiWrapper {
 
-//	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1';
 	protected static $API_URL = 'https://www.googleapis.com/youtube/v3/videos';
 	protected static $CACHE_KEY = 'youtubeapi';
 	protected static $aspectRatio = 1.7777778;
@@ -135,16 +134,10 @@ class YoutubeApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * User-defined keywords
-	 * @TODO find a way to get keywords for video
-	 * @return array
+	 * User-defined keywords - Youtube dropped support for keywords on 2014
+	 * @return String
 	 */
 	protected function getVideoKeywords() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['media$keywords']['$t']) ) {
-
-			return $this->interfaceObj['entry']['media$group']['media$keywords']['$t'];
-		}
-
 		return '';
 	}
 
