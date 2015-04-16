@@ -9,8 +9,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	protected static $aspectRatio = 1.7777778;
 
 	public static function isMatchingHostname( $hostname ) {
-		return endsWith($hostname, "youtube.com")
-			|| endsWith($hostname, "youtu.be" ) ? true : false;
+		return endsWith( $hostname, "youtube.com" )
+			|| endsWith( $hostname, "youtu.be" ) ? true : false;
 	}
 
 	public static function newFromUrl( $url ) {
@@ -21,22 +21,22 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 		$id = '';
 		$parsedUrl = parse_url( $url );
-		if ( !empty( $parsedUrl['query'] ) ){
+		if ( !empty( $parsedUrl['query'] ) ) {
 			parse_str( $parsedUrl['query'], $aData );
-		};
-		if ( isset( $aData['v'] ) ){
+		} ;
+		if ( isset( $aData['v'] ) ) {
 			$id = $aData['v'];
 		}
 
-		if ( empty( $id ) ){
+		if ( empty( $id ) ) {
 			$parsedUrl = parse_url( $url );
 
 			$aExploded = explode( '/', $parsedUrl['path'] );
 			$id = array_pop( $aExploded );
 		}
 
-		if ( false !== strpos( $id, "&" ) ){
-			$parsedId = explode("&",$id);
+		if ( false !== strpos( $id, "&" ) ) {
+			$parsedId = explode( "&", $id );
 			$id = $parsedId[0];
 		}
 
@@ -49,21 +49,18 @@ class YoutubeApiWrapper extends ApiWrapper {
 		return null;
 	}
 
+	/**
+	 * Before Youtube API update it was build from keywords and categories.
+	 * After Youtube API update to V3, categories are no longer returned and support for keywords is dropped.
+	 * For now let's return an empty string.
+	 * If it's not enough let's revisit.
+	 * @return string
+	 */
 	public function getDescription() {
-
-		wfProfileIn( __METHOD__ );
-
-		$text = '';
-		if ( $this->getVideoCategory() ) $text .= 'Category: ' . $this->getVideoCategory();
-		if ( $this->getVideoKeywords() ) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
-
-		wfProfileOut( __METHOD__ );
-
-		return $text;
+		return '';
 	}
 
 	public function getThumbnailUrl() {
-
 		wfProfileIn( __METHOD__ );
 
 		$thumbnailDatas = $this->getVideoThumbnails();
@@ -102,8 +99,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return array
 	 */
 	protected function getVideoThumbnails() {
-		if ( !empty($this->interfaceObj['items'][0]['snippet']['thumbnails']) ) {
-
+		if ( !empty( $this->interfaceObj['items'][0]['snippet']['thumbnails'] ) ) {
 			return $this->interfaceObj['items'][0]['snippet']['thumbnails'];
 		}
 
@@ -115,7 +111,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoTitle() {
-		if ( !empty($this->interfaceObj['items'][0]['snippet']['title']) ) {
+		if ( !empty( $this->interfaceObj['items'][0]['snippet']['title'] ) ) {
 			return $this->interfaceObj['items'][0]['snippet']['title'];
 		}
 
@@ -127,31 +123,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getOriginalDescription() {
-		if ( !empty($this->interfaceObj['items'][0]['snippet']['description']) ) {
-
+		if ( !empty( $this->interfaceObj['items'][0]['snippet']['description'] ) ) {
 			return $this->interfaceObj['items'][0]['snippet']['description'];
-		}
-
-		return '';
-	}
-
-	/**
-	 * User-defined keywords - Youtube dropped support for keywords on 2014
-	 * @return String
-	 */
-	protected function getVideoKeywords() {
-		return '';
-	}
-
-	/**
-	 * YouTube category
-	 * @TODO fire another request to Youtube API to get category data
-	 * @return string
-	 */
-	protected function getVideoCategory() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['media$category'][0]['$t']) ) {
-
-			return $this->interfaceObj['entry']['media$group']['media$category'][0]['$t'];
 		}
 
 		return '';
@@ -162,9 +135,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoPublished() {
-		if ( !empty($this->interfaceObj['items'][0]['snippet']['publishedAt']) ) {
-
-			return strtotime($this->interfaceObj['items'][0]['snippet']['publishedAt']);
+		if ( !empty( $this->interfaceObj['items'][0]['snippet']['publishedAt'] ) ) {
+			return strtotime( $this->interfaceObj['items'][0]['snippet']['publishedAt'] );
 		}
 
 		return '';
@@ -175,12 +147,12 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return int
 	 */
 	protected function getVideoDuration() {
-		if ( !empty($this->interfaceObj['items'][0]['contentDetails']['duration']) ) {
-			$dateInterval = new DateInterval($this->interfaceObj['items'][0]['contentDetails']['duration']);
-			$seconds = (int) $dateInterval->format('%s');
-			$minutes = (int) $dateInterval->format('%i');
-			$hours = (int) $dateInterval->format('%h');
-			$durationInSeconds = $seconds + (60 * $minutes) + (60 * 60 * $hours);
+		if ( !empty( $this->interfaceObj['items'][0]['contentDetails']['duration'] ) ) {
+			$dateInterval = new DateInterval( $this->interfaceObj['items'][0]['contentDetails']['duration'] );
+			$seconds = (int) $dateInterval->format( '%s' );
+			$minutes = (int) $dateInterval->format( '%i' );
+			$hours = (int) $dateInterval->format( '%h' );
+			$durationInSeconds = $seconds + ( 60 * $minutes ) + ( 60 * 60 * $hours );
 
 			return $durationInSeconds;
 		}
@@ -207,10 +179,10 @@ class YoutubeApiWrapper extends ApiWrapper {
 	}
 
 	protected function sanitizeVideoId( $videoId ) {
-		if ( ($pos = strpos( $videoId, '?' )) !== false ) {
+		if ( ( $pos = strpos( $videoId, '?' ) ) !== false ) {
 			$videoId = substr( $videoId, 0, $pos );
 		}
-		if ( ($pos = strpos( $videoId, '&' )) !== false ) {
+		if ( ( $pos = strpos( $videoId, '&' ) ) !== false ) {
 			$videoId = substr( $videoId, 0, $pos );
 		}
 		return $videoId;
@@ -236,13 +208,13 @@ class YoutubeApiWrapper extends ApiWrapper {
 			WikiaLogger::instance()->error( 'Youtube API call  returns 400', [
 				'content' => $content
 			] );
-			throw new VideoWrongApiCall($status, $content, $apiUrl);
+			throw new VideoWrongApiCall( $status, $content, $apiUrl );
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		// return default
-		parent::checkForResponseErrors($status, $content, $apiUrl);
+		parent::checkForResponseErrors( $status, $content, $apiUrl );
 	}
 
 	/**
@@ -252,7 +224,6 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 */
 	protected function getApiUrl() {
 		global $wgYoutubeConfig;
-
 
 		$params = [
 			'part' => 'snippet,contentDetails',
