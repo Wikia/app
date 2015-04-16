@@ -17,6 +17,22 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 
 $wgAutoloadClasses[ 'InfoboxServiceConnector' ] = $dir . 'InfoboxServiceConnector.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/PortableInfoboxRenderService.class.php';
+//die("XXXX: $dir");
+// parser
+$wgAutoloadClasses[ 'PortableInfoboxMarkupParserService' ] = $dir . 'services/PortableInfoboxMarkupParserService.class.php';
+
+// autoloads values in the Wikia\PortableInfobox namespace
+spl_autoload_register( function( $class ) {
+	if ( substr_count( $class, 'Wikia\\PortableInfobox\\' ) > 0 ) {
+		$class = preg_replace( '/\\\\?Wikia\\\\PortableInfobox\\\\/', '', $class );
+		$file = __DIR__ . '/services/'.strtr( $class, '\\', '/' ).'.php';
+		if ( file_exists( $file ) ) {
+			require_once( $file );
+			return true;
+		}
+		return false;
+	}
+});
 
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
