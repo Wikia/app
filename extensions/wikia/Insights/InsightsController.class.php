@@ -23,6 +23,9 @@ class InsightsController extends WikiaSpecialPageController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Render an insight subpage
+	 */
 	public function renderSubpage() {
 		$model = new QueryPagesModel( $this->page, $this->wg->CityId );
 
@@ -39,16 +42,28 @@ class InsightsController extends WikiaSpecialPageController {
 	public function LoopNotification() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message' )->escaped() );
-		$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
-		$this->response->setVal( 'nextArticleButton', wfMessage( 'insights-notification-next-item-button' )->escaped() );
-		// TODO add generate below links
-		$this->response->setVal( 'insightsPageLink', '#' );
-		$this->response->setVal( 'nextArticleLink', '#' );
+		$insight = $this->request->getVal( 'insight', null );
+
+		if ( !empty( $insight ) && InsightsHelper::isInsightPage( $insight ) ) {
+			$page = $this->getInsightDataProvider( $insight );
+			$model = new QueryPagesModel( $page, $this->wg->CityId );
+			$next = array_pop( $model->getList(0, 1) );
+
+			$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message' )->escaped() );
+			$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
+			$this->response->setVal( 'nextArticleButton', wfMessage( 'insights-notification-next-item-button' )->escaped() );
+
+			$this->response->setVal( 'insightsPageLink', $this->getSpecialInsightsUrl() );
+			$this->response->setVal( 'nextArticleTitle', $next['title'] );
+			$this->response->setVal( 'nextArticleLink', $next['link'] . '?action=edit&insights=' . $insight );
+		} else {
+			return '';
+		}
 	}
 
 	/**
 	 * Returns specific data provider
+	 * If it doesn't exists redirect to Special:Insights main page
 	 *
 	 * @param $subpage Insights subpage name
 	 * @return mixed
@@ -56,10 +71,19 @@ class InsightsController extends WikiaSpecialPageController {
 	public function getInsightDataProvider( $subpage ) {
 		if ( empty ( $subpage ) ) {
 			return null;
-		} elseif ( !empty( $subpage ) && isset( InsightsModel::$insightsPages[$subpage] ) ) {
+		} elseif ( !empty( $subpage ) && InsightsHelper::isInsightPage( $subpage ) ) {
 			return InsightsModel::$insightsPages[$subpage];
 		} else {
-			$this->response->redirect( $this->specialPage->getTitle()->getFullURL() );
+			$this->response->redirect( $this->getSpecialInsightsUrl() );
 		}
+	}
+
+	/**
+	 * Get Special:Insights full url
+	 *
+	 * @return string
+	 */
+	private function getSpecialInsightsUrl() {
+		return $this->specialPage->getTitle()->getFullURL();
 	}
 }
