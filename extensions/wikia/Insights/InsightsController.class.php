@@ -34,6 +34,20 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Setup method for Insights_LoopNotification.mustache template
+	 */
+	public function LoopNotification() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message' )->escaped() );
+		$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
+		$this->response->setVal( 'nextArticleButton', wfMessage( 'insights-notification-next-item-button' )->escaped() );
+		// TODO add generate below links
+		$this->response->setVal( 'insightsPageLink', '#' );
+		$this->response->setVal( 'nextArticleLink', '#' );
+	}
+
+	/**
 	 * Returns specific data provider
 	 *
 	 * @param $subpage Insights subpage name
@@ -48,4 +62,4 @@ class InsightsController extends WikiaSpecialPageController {
 			$this->response->redirect( $this->specialPage->getTitle()->getFullURL() );
 		}
 	}
-} 
+}
