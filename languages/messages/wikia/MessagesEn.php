@@ -525,7 +525,6 @@ div.wikiaDialog h2,
 'wikicities-nav' => 'wikia',
 'searchsuggest' => 'Search suggest',
 'tog-searchsuggest' => 'Use search suggest',
-'tog-htmlemails' => 'Enable receipt of HTML emails',
 'tagline-url'   => 'From [{{SERVER}} {{SITENAME}}], a [http://www.wikia.com Wikia] wiki.',
 'tagline-url-interwiki' => 'From [[wikia:c:$1|{{SITENAME}}]], a [[wikia:|Wikia]] wiki.',
 'showall' => 'Show All', #ticet #699 messages
