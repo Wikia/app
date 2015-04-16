@@ -138,7 +138,6 @@ abstract class ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
-
 		// use URL's hash to avoid going beyond 250 characters limit of memcache key
 		$memcKey = wfMemcKey( static::$CACHE_KEY, md5($apiUrl), static::$CACHE_KEY_VERSION );
 		if ( empty($this->videoId) ){
@@ -166,9 +165,7 @@ abstract class ApiWrapper {
 		}
 		$processedResponse = $this->processResponse( $response );
 		if ( $cacheMe ) F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
-
 		wfProfileOut( __METHOD__ );
-
 		return $processedResponse;
 	}
 
@@ -200,7 +197,6 @@ abstract class ApiWrapper {
 	protected function processResponse( $response ){
 
 		wfProfileIn( __METHOD__ );
-
 		switch ( static::$RESPONSE_FORMAT ){
 			case self::RESPONSE_FORMAT_JSON :
 				 $return = json_decode( $response, true );

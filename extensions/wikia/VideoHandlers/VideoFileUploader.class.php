@@ -86,6 +86,9 @@ class VideoFileUploader {
 	public function upload( &$oTitle ) {
 		$apiWrapper = $this->getApiWrapper();
 		$thumbnailUrl = null;
+		print_r($apiWrapper);
+		var_dump('Im about to die');
+		die;
 		if ( method_exists( $apiWrapper, 'getThumbnailUrl' ) ) {
 			// Some providers will sometimes return error codes when attempting
 			// to fetch a thumbnail
