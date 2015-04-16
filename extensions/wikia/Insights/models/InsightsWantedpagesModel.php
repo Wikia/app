@@ -1,9 +1,6 @@
 <?php
 
-class InsightsWantedpagesModel extends InsightsSubpageModel {
-	public $settings = [
-		'template' => 'subpageList',
-	];
+class InsightsWantedpagesModel extends InsightsQuerypageModel {
 
 	public function getDataProvider() {
 		return new WantedPagesPage();
@@ -15,9 +12,7 @@ class InsightsWantedpagesModel extends InsightsSubpageModel {
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$article = [];
 			$title = Title::newFromText( $row->title );
-
-			$article['title'] = $title->getText();
-			$article['link'] = $title->getFullURL();
+			$article['link'] = Linker::link( $title );
 			$data[] = $article;
 		}
 		return $data;

@@ -3,7 +3,8 @@
 /**
  * Insights
  *
- * @author Łukasz Konieczny *
+ * @author Łukasz Konieczny
+ * @author Adam Karminski
  */
 
 $dir = dirname(__FILE__) . '/';
@@ -25,7 +26,7 @@ $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
 
 //models
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
-$wgAutoloadClasses['InsightsSubpageModel'] = $dir . 'models/InsightsSubpageModel.php';
+$wgAutoloadClasses['InsightsQuerypageModel'] = $dir . 'models/InsightsQuerypageModel.php';
 $wgAutoloadClasses['InsightsUncategorizedModel'] = $dir . 'models/InsightsUncategorizedModel.php';
 $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
 

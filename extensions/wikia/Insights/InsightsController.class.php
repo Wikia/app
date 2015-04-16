@@ -36,10 +36,8 @@ class InsightsController extends WikiaSpecialPageController {
 				$this->response->redirect( $this->specialPage->getTitle()->getFullURL() );
 		}
 
-		$this->list = $this->model->getList();
-		$this->messageKeys = InsightsHelper::$insightsMessageKeys;
-		$this->offset = 0;
-
-		$this->overrideTemplate( $this->model->template );
+		$this->content = $this->model->getContent();
+		$this->data = $this->model->getData();
+		$this->overrideTemplate( $this->model->getTemplate() );
 	}
 } 
