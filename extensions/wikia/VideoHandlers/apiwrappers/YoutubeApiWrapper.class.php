@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class YoutubeApiWrapper extends ApiWrapper {
 
 	protected static $API_URL = 'https://www.googleapis.com/youtube/v3/videos';
@@ -217,46 +219,24 @@ class YoutubeApiWrapper extends ApiWrapper {
 	/**
 	 * Handle response errors
 	 * @param $status - The response status object
-	 * @param $content - XML content from the provider
+	 * @param $content - content from the provider
 	 * @param $apiUrl - The URL for the providers API
-	 * @throws VideoNotFoundException - Video cannot be found
+	 * @throws NegativeResponseException
 	 * @throws VideoIsPrivateException - Video is private and cannot be viewed
-	 * @throws VideoQuotaExceededException - The quota for video owner has been exceeded
+	 * @throws VideoNotFoundException - Video cannot be found
+	 * @throws VideoWrongApiCall - Youtube returns 400 response error code
 	 */
 	protected function checkForResponseErrors( $status, $content, $apiUrl ) {
-
 		wfProfileIn( __METHOD__ );
 
-		// check if still exists
-		$code = empty( $status->errors[0]['params'][0] ) ? null : $status->errors[0]['params'][0];
+		$code = $content['error']['code'];
 
-		if ( $code == 404 ) {
+		if ( $code == 400 ) {
 			wfProfileOut( __METHOD__ );
-			throw new VideoNotFoundException($status, $content, $apiUrl);
-		}
-
-		// interpret error XML response
-		$sp = new SimplePie();
-		$sp->set_raw_data( $content );
-		$sp->init();
-
-		// check if private
-		$googleShemas ='http://schemas.google.com/g/2005';
-		if ( isset( $sp->data['child'][$googleShemas] ) ) {
-			$err = $sp->data['child'][$googleShemas]['errors'][0]['child'][$googleShemas]['error'][0]['child'][$googleShemas]['internalReason'][0]['data'];
-			if( $err == 'Private video' ) {
-				wfProfileOut( __METHOD__ );
-				throw new VideoIsPrivateException( $status, $content, $apiUrl );
-			}
-		}
-
-		// check if quota exceeded
-		if ( isset( $sp->data['child'][''] ) ) {
-			$err = $sp->data['child']['']['errors'][0]['child']['']['error'][0]['child']['']['code'][0]['data'];
-			if( $err == 'too_many_recent_calls' ) {
-				wfProfileOut( __METHOD__ );
-				throw new VideoQuotaExceededException( $status, $content, $apiUrl );
-			}
+			WikiaLogger::instance()->error( 'Youtube API call  returns 400', [
+				'content' => $content
+			] );
+			throw new VideoWrongApiCall($status, $content, $apiUrl);
 		}
 
 		wfProfileOut( __METHOD__ );
