@@ -190,11 +190,11 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	/**
 	 * Is resolution of 720 or higher available
-	 * @TODO find a way to ask API if HD video is accessible
 	 * @return boolean
 	 */
 	protected function isHdAvailable() {
-		return false;
+		return !empty( $this->interfaceObj['items'][0]['contentDetails']['definition'] )
+			&& $this->interfaceObj['items'][0]['contentDetails']['definition'] === 'hd';
 	}
 
 	/**
