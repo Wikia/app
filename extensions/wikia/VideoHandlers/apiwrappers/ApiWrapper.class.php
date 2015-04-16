@@ -618,6 +618,7 @@ class NegativeResponseException extends Exception {
 class VideoIsPrivateException extends NegativeResponseException {}
 class VideoNotFoundException extends NegativeResponseException {}
 class VideoQuotaExceededException extends NegativeResponseException {}
+class VideoWrongApiCall extends NegativeResponseException {}
 
 class UnsuportedTypeSpecifiedException extends Exception {}
 class VideoNotFound extends Exception {}
