@@ -25,14 +25,14 @@ $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
 
 //models
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
-$wgAutoloadClasses['QueryPagesModel'] = $dir . 'models/QueryPagesModel.php';
+$wgAutoloadClasses['InsightsSubpageModel'] = $dir . 'models/InsightsSubpageModel.php';
+$wgAutoloadClasses['InsightsUncategorizedModel'] = $dir . 'models/InsightsUncategorizedModel.php';
+$wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
 
 // hooks
-
 //special page
 $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['EditHub'] = 'wikia';
 
 //message files
 $wgExtensionMessagesFiles['Insights'] = $dir . 'Insights.i18n.php';
-

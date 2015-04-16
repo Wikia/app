@@ -11,6 +11,10 @@ class InsightsHelper {
 			'subtitle' => 'insights-list-withoutimages-subtitle',
 			'description' => 'insights-list-withoutimages-description',
 		],
+		'wantedpages' => [
+			'subtitle' => 'insights-list-wantedpages-subtitle',
+			'description' => 'insights-list-wantedpages-description',
+		],
 	];
 
 	public static function getSubpageLocalUrl( $key ) {
