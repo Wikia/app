@@ -83,6 +83,13 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
+		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
+			instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
+			instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
+		) {
+			context.opts.enableInvisibleHighImpactSlot = true;
+		}
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
