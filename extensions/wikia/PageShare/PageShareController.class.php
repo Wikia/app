@@ -3,7 +3,7 @@
 class PageShareController extends WikiaController {
 
 	const MEMC_KEY_SOCIAL_ICONS_EN = 'mShareIconsEN';
-	const MEMC_KEY_SOCIAL_ICONS_VERSION = 1;
+	const MEMC_KEY_SOCIAL_ICONS_VERSION = 2;
 	const MEMC_EXPIRY = 3600;
 
 	public function index() {
@@ -14,14 +14,15 @@ class PageShareController extends WikiaController {
 	}
 
 	public function getShareIcons() {
-		global $wgMemc;
+		global $wgMemc, $wgEnablePageShareWorldwide;
 
 		$browserLang = $this->getVal( 'browserLang' );
 		$useLang = $this->getVal( 'useLang' );
+		$title = $this->getVal( 'title' );
 		$shareLang = PageShareHelper::getLangForPageShare( $browserLang, $useLang );
 
 		// If social icons should be enabled for EN users, and language is different than EN return false
-		if ( empty( $wgEnablePageShareWorldwide ) && $shareLang !== PageShareHelper::SHARE_DEFAULT_LANGUAGE ) {
+		if ( empty( $wgEnablePageShareWorldwide ) && ( $shareLang !== PageShareHelper::SHARE_DEFAULT_LANGUAGE ) ) {
 			$this->setVal( 'socialIcons', false );
 		} else {
 			$memcKey = $this->getMemcKey();
@@ -31,8 +32,9 @@ class PageShareController extends WikiaController {
 			} else {
 				$renderedSocialIcons = \MustacheService::getInstance()->render(
 					__DIR__ . '/templates/PageShare_index.mustache',
-					['services' => $this->prepareShareServicesData( $shareLang )]
+					['services' => $this->prepareShareServicesData( $shareLang, $title )]
 				);
+
 				$wgMemc->set( $memcKey, $renderedSocialIcons, self::MEMC_EXPIRY );
 				$this->setVal( 'socialIcons', $renderedSocialIcons );
 			}
@@ -42,10 +44,11 @@ class PageShareController extends WikiaController {
 	/**
 	 * Prepare and normalize data from $wgPageShareServices
 	 *
-	 * @param $shareLang
+	 * @param String $shareLang
+	 * @param String $title
 	 * @return Array
 	 */
-	private function prepareShareServicesData( $shareLang ) {
+	private function prepareShareServicesData( $shareLang, $title ) {
 		global $wgPageShareServices;
 
 		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
@@ -54,8 +57,13 @@ class PageShareController extends WikiaController {
 
 		foreach ( $wgPageShareServices as $service ) {
 			if ( PageShareHelper::isValidShareService( $service, $shareLang ) ) {
-				$service['href'] = str_replace( '$1', urlencode( $location ), $service['url'] );
+				$service['href'] = str_replace(
+					[ '$url', '$title' ],
+					[ urlencode( $location ), urlencode( $title ) ],
+					$service['url']
+				);
 				$service['icon'] = PageShareHelper::getIcon( $service['name'] );
+
 				$services[] = $service;
 			}
 		}
