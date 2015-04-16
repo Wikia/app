@@ -8,8 +8,9 @@ class InsightsModel {
 	/**
 	 * List of insights categories and mapping to existing class which we can reuse
 	 */
-	public static $insightsPages = [
+	public static $insightsSubpages = [
 		'uncategorized' => 'UncategorizedPagesPage',
+		'wantedpages' => 'WantedPagesPage',
 		'withoutimages' => 'WithoutimagesPage',
 	];
 
