@@ -1,9 +1,9 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-class NodePair extends Node {
+class NodeHeader extends Node {
 	public function getData() {
-		return $this->getValueWithDefault( $this->xmlNode );
+		return (string) $this->xmlNode->{self::VALUE_TAG_NAME};
 	}
 
 }
