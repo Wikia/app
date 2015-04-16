@@ -1,6 +1,6 @@
 <?php
 
-class InsightsUncategorizedModel extends InsightsSubpageModel {
+class InsightsUncategorizedModel extends InsightsQuerypageModel {
 	public $settings = [
 		'template' => 'subpageList',
 	];
@@ -12,14 +12,12 @@ class InsightsUncategorizedModel extends InsightsSubpageModel {
 	public function prepareData( $res ) {
 		$data = [];
 		$dbr = wfGetDB( DB_SLAVE );
-		while ( $row = $dbr->fetchRow( $res ) ) {
-			if ( $row['title'] ) {
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			if ( $row->title ) {
 				$article = [];
 
-				$title = Title::newFromText( $row['title'] );
-
-				$article['title'] = $title->getText();
-				$article['link'] = $title->getFullURL();
+				$title = Title::newFromText( $row->title );
+				$article['link'] = Linker::link( $title );
 
 				$lastRev = $title->getLatestRevID();
 				$rev = Revision::newFromId( $lastRev );
