@@ -250,7 +250,7 @@ class User {
 
             global $wgExternalSharedDB;
 
-            $table = $wgHeliosRegistrationShadowMode ? '`user`' : 'user_helios';
+            $table = $wgHeliosRegistrationShadowMode ? 'user_helios' : '`user`';
 
             $dbw = \wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
             $heliosUserId = $dbw->selectField( $table, 'user_id', [ 'user_name' => $User->mName ], __METHOD__ );
@@ -264,11 +264,11 @@ class User {
 
                 $logger->info( 'HELIOS_REGISTRATION SUCCESS', [ 'method' => __METHOD__, 'user_id' => $heliosUserId, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
             } else {
-                $logger->info( 'HELIOS_REGISTRATION FAILURE FETCH_ID', [ 'method' => __METHOD__, 'user_id' => null, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
+                $logger->error( 'HELIOS_REGISTRATION FAILURE FETCH_ID', [ 'method' => __METHOD__, 'user_id' => null, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
             }
 
         } else {
-            $logger->info( 'HELIOS_REGISTRATION FAILURE CALL', [ 'method' => __METHOD__, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
+            $logger->error( 'HELIOS_REGISTRATION FAILURE CALL', [ 'method' => __METHOD__, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
         }
 
         return true;
