@@ -18,8 +18,6 @@ require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, Bann
 		}
 	};
 
-	console.log(qs.getVal('insights'));
-
 	$.nirvana.sendRequest({
 		controller: 'Insights',
 		method: 'LoopNotification',
