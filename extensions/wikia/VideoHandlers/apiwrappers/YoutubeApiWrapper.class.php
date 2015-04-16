@@ -65,24 +65,34 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 		wfProfileIn( __METHOD__ );
 
-		$lowresUrl = '';
-		$hiresUrl = '';
-
 		$thumbnailDatas = $this->getVideoThumbnails();
-		foreach ( $thumbnailDatas as $thumbnailData ) {
-			switch ( $thumbnailData['yt$name'] ) {
+		foreach ( $thumbnailDatas as $quality => $thumbnailData ) {
+			switch ( $quality ) {
+				case 'high':
+					if ( !empty( $thumbnailData['url'] ) ) {
+						wfProfileOut( __METHOD__ );
+						return $thumbnailData['url'];
+					}
+					break;
+				case 'medium':
+					if ( !empty( $thumbnailData['url'] ) ) {
+						wfProfileOut( __METHOD__ );
+						return $thumbnailData['url'];
+					}
+					break;
 				case 'default':
-					$lowresUrl = $thumbnailData['url'];
+					if ( !empty( $thumbnailData['url'] ) ) {
+						wfProfileOut( __METHOD__ );
+						return $thumbnailData['url'];
+					}
 					break;
-				case 'hqdefault':
-					$hiresUrl = $thumbnailData['url'];
-					break;
+				default: {
+					wfProfileOut( __METHOD__ );
+					return '';
+				}
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return !empty($hiresUrl) ? $hiresUrl : $lowresUrl;
+		return '';
 	}
 
 	/**
@@ -91,9 +101,9 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return array
 	 */
 	protected function getVideoThumbnails() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['media$thumbnail']) ) {
+		if ( !empty($this->interfaceObj['items'][0]['snippet']['thumbnails']) ) {
 
-			return $this->interfaceObj['entry']['media$group']['media$thumbnail'];
+			return $this->interfaceObj['items'][0]['snippet']['thumbnails'];
 		}
 
 		return array();
@@ -104,9 +114,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoTitle() {
-		if ( !empty($this->interfaceObj['entry']['title']['$t']) ) {
-
-			return $this->interfaceObj['entry']['title']['$t'];
+		if ( !empty($this->interfaceObj['items'][0]['snippet']['title']) ) {
+			return $this->interfaceObj['items'][0]['snippet']['title'];
 		}
 
 		return '';
@@ -172,7 +181,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 */
 	protected function getVideoDuration() {
 		if ( !empty($this->interfaceObj['items'][0]['contentDetails']['duration']) ) {
-			$dateInterval = new DateInterval($this->interfaceObj['items'][0]['contentDetails']['duration']));
+			$dateInterval = new DateInterval($this->interfaceObj['items'][0]['contentDetails']['duration']);
 			$seconds = (int) $dateInterval->format('%s');
 			$minutes = (int) $dateInterval->format('%i');
 			$hours = (int) $dateInterval->format('%h');
