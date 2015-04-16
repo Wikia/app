@@ -382,7 +382,7 @@ abstract class EmailController extends \WikiaController {
 		if ( $this->currentUser->isAnon() )	 {
 			return $this->currentUser->getName();
 		}
-		return wfMessage( "emailext-watchedpage-anonymous-editor" )->inLanguage( $this->targetLang )->text();
+		return wfMessage( "emailext-anonymous-editor" )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**

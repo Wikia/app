@@ -78,11 +78,11 @@ class WatchedPageController extends EmailController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'articleEditedText' => $this->getArticleEditedText(),
+			'summary' => $this->getSummary(),
 			'editorProfilePage' => $this->getCurrentProfilePage(),
 			'editorUserName' => $this->getCurrentUserName(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
-			'summary' => $this->getSummary(),
+			'details' => $this->getDetails(),
 			'buttonText' => $this->getCompareChangesLabel(),
 			'buttonLink' => $this->getCompareChangesLink(),
 			'contentFooterMessages' => [
@@ -103,7 +103,7 @@ class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getArticleEditedText() {
+	private function getSummary() {
 		return wfMessage( 'emailext-watchedpage-article-edited',
 			$this->title->getFullURL(),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
@@ -112,7 +112,7 @@ class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getSummary() {
+	private function getDetails() {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}

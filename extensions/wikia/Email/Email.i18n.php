@@ -3,6 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-desc' => 'An extension to handle delivering email',
+	'emailext-anonymous-editor' => 'A Wikia fan',
 	'emailext-no-reply-name' => 'No Reply',
 	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-password-email-greeting' => 'Hi $1,',
@@ -24,6 +25,7 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 
 $messages['qqq'] = array(
 	'email-desc' => 'The description for this extension',
+	'emailext-anonymous-editor' => 'Phrase used in place of a username when the page was edited by an anonymous (logged out) user.',
 	'emailext-no-reply-name' => 'Name for sender of "no reply" email address',
 	'emailext-fans-tagline' => 'Tagline for the footer of the email',
 	'emailext-password-email-greeting' => 'Greeting for the forgot password email',
@@ -38,6 +40,7 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'emailext-desc' => 'Eine Erweiterung, die die Zustellung von E-Mails abwickelt',
+	'emailext-anonymous-editor' => 'Ein Wikia-Fan',
 	'emailext-no-reply-name' => 'No Reply',
 	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-password-email-greeting' => 'Hallo $1,',
@@ -56,6 +59,7 @@ Hast du Fragen oder Bedenken? Bitte wende dich jederzeit <a href="http://communi
 
 $messages['es'] = array(
 	'emailext-desc' => 'Una extensión para controlar el envío de correos electrónicos.',
+	'emailext-anonymous-editor' => 'Un fan de Wikia',
 	'emailext-no-reply-name' => 'No responder',
 	'emailext-fans-tagline' => 'El universo social para fans por fans',
 	'emailext-password-email-greeting' => 'Hola, $1;',
@@ -74,6 +78,7 @@ Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segu
 
 $messages['fr'] = array(
 	'emailext-desc' => "Une extension pour gérer l'envoi d'e-mails",
+	'emailext-anonymous-editor' => 'Un fan de Wikia',
 	'emailext-no-reply-name' => 'Aucune réponse',
 	'emailext-fans-tagline' => "L'univers social pour les fans, par des fans",
 	'emailext-password-email-greeting' => 'Bonjour $1,',
@@ -92,6 +97,7 @@ Si vous avez des questions,  n\'hésitez pas à <a href="http://community.wikia.
 
 $messages['it'] = array(
 	'emailext-desc' => "Un'estensione per gestire la distribuzione di email",
+	'emailext-anonymous-editor' => 'Un fan di Wikia',
 	'emailext-no-reply-name' => 'Nessuna risposta',
 	'emailext-fans-tagline' => "L'universo sociale per i fan, dai fan",
 	'emailext-password-email-greeting' => 'Ciao, $1.',
@@ -110,6 +116,7 @@ Se hai domande non esitare a <a href="http://community.wikia.com/wiki/Special:Co
 
 $messages['ja'] = array(
 	'emailext-desc' => '配信メールを処理するための拡張機能',
+	'emailext-anonymous-editor' => 'ウィキアファン',
 	'emailext-no-reply-name' => '送信専用',
 	'emailext-fans-tagline' => 'ファンによるファンのためのソーシャル・ユニバース',
 	'emailext-password-email-greeting' => '$1さん',
@@ -128,6 +135,7 @@ $messages['ja'] = array(
 
 $messages['nl'] = array(
 	'emailext-desc' => 'An extension to handle delivering email',
+	'emailext-anonymous-editor' => 'A Wikia fan',
 	'emailext-no-reply-name' => 'No Reply',
 	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-password-email-greeting' => 'Hi $1,',
@@ -146,6 +154,7 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 
 $messages['pl'] = array(
 	'emailext-desc' => 'Rozszerzenie służące do obsługi dostarczania wiadomości e-mail',
+	'emailext-anonymous-editor' => 'Fan portalu Wikia',
 	'emailext-no-reply-name' => 'No Reply',
 	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-password-email-greeting' => 'Cześć $1,',
@@ -164,6 +173,7 @@ Masz pytania albo wątpliwości? Skontaktuj się z  <a href="http://community.wi
 
 $messages['pt'] = array(
 	'emailext-desc' => 'Uma extensão para lidar com a entrega de e-mail',
+	'emailext--anonymous-editor' => 'Um fã da Wikia',
 	'emailext-no-reply-name' => 'Sem resposta',
 	'emailext-fans-tagline' => 'O Universo social de fãs para fãs',
 	'emailext-password-email-greeting' => 'Olá $1,',
@@ -183,6 +193,7 @@ href="http://pt-br.wikia.com/wiki/Especial:Contact/account-issue">contatar-nos</
 
 $messages['ru'] = array(
 	'emailext-desc' => 'Расширение для доставки электронных сообщений',
+	'emailext-anonymous-editor' => 'Фанат Викия',
 	'emailext-no-reply-name' => 'Не отвечать',
 	'emailext-fans-tagline' => 'Социальная вселенная – создана фанатами для фанатов',
 	'emailext-password-email-greeting' => 'Здравствуйте, $1!',
@@ -200,6 +211,7 @@ $messages['ru'] = array(
 
 $messages['zh-hans'] = array(
 	'emailext-desc' => '用来处理发送邮件的扩展功能',
+	'emailext-anonymous-editor' => 'Wikia粉丝',
 	'emailext-no-reply-name' => '请勿回复',
 	'emailext-fans-tagline' => '全球粉丝社交帝国',
 	'emailext-password-email-greeting' => '$1，您好！',
@@ -217,6 +229,7 @@ $messages['zh-hans'] = array(
 
 $messages['zh-tw'] = array(
 	'emailext-desc' => '用來處理發送郵件的擴展功能',
+	'emailext--anonymous-editor' => 'Wikia粉絲',
 	'emailext-no-reply-name' => '請勿回復',
 	'emailext-fans-tagline' => '全球粉絲社交帝國',
 	'emailext-password-email-greeting' => '$1，您好！',

@@ -97,6 +97,34 @@ class ArticleComment {
 		return $comment;
 	}
 
+	static public function latestFromTitle( Title $title ) {
+		$dbh = wfGetDB( DB_MASTER );
+
+		$titleText = $title->getText();
+		$prefix =  $titleText . '/' . ARTICLECOMMENT_PREFIX;
+		$commentNamespace = MWNamespace::getTalk( $title->getNamespace() );
+
+		$latest = ( new WikiaSQL() )
+			->SELECT( 'page_id' )
+			->FROM( 'page' )
+			->WHERE( 'page_title' )->LIKE( $prefix.'%' )
+			->AND_( 'page_namespace' )->EQUAL_TO( $commentNamespace )
+			->ORDER_BY( 'page_id' )->DESC()
+			->LIMIT( 1 )
+			->run( $dbh, function( ResultWrapper $result ) {
+				$row = $result->fetchObject();
+				if ( $row ) {
+					return Title::newFromID( $row->page_id );
+				}
+				return null;
+			} );
+
+		if ( empty( $latest ) ) {
+			return null;
+		}
+		return new ArticleComment( $latest );
+	}
+
 	/**
 	 *
 	 * Used to store extra data in comment contend
@@ -185,7 +213,7 @@ class ArticleComment {
 			}
 
 			if ( empty( $this->mLastRevId ) ) {
-				// assume article is bogus, threat as if it doesn't exist
+				// assume article is bogus, treat as if it doesn't exist
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -197,7 +225,7 @@ class ArticleComment {
 			}
 
 			if ( empty( $this->mFirstRevId ) ) {
-				// assume article is bogus, threat as if it doesn't exist
+				// assume article is bogus, treat as if it doesn't exist
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -235,8 +263,8 @@ class ArticleComment {
 				return false;
 			}
 
-			$rawtext = $this->mLastRevision->getText();
-			$this->parseText( $rawtext );
+			$rawText = $this->mLastRevision->getText();
+			$this->parseText( $rawText );
 		} else { // null title
 			$result = false;
 		}
