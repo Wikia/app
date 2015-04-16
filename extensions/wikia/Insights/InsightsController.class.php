@@ -1,7 +1,7 @@
 <?php
 
 class InsightsController extends WikiaSpecialPageController {
-	private $model;
+	public $page;
 
 	public function __construct() {
 		parent::__construct( 'Insights', 'insights', true );
@@ -9,10 +9,13 @@ class InsightsController extends WikiaSpecialPageController {
 
 	public function index() {
 		wfProfileIn( __METHOD__ );
-		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
-		$this->addAssets();
 
 		$this->subpage = $this->getPar();
+		$this->page = $this->getInsightDataProvider( $this->subpage );
+		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
+
+		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights.scss' );
+
 		if ( !empty( $this->subpage ) ) {
 			$this->renderSubpage();
 		}
@@ -20,26 +23,67 @@ class InsightsController extends WikiaSpecialPageController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function addAssets() {
-		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights.scss' );
-	}
-
+	/**
+	 * Render an insight subpage
+	 */
 	public function renderSubpage() {
-		switch ( $this->subpage ) {
-			case 'uncategorized':
-				$this->model = new InsightsUncategorizedModel();
-				break;
-			case 'wantedpages':
-				$this->model = new InsightsWantedpagesModel();
-				break;
-			default:
-				$this->response->redirect( $this->specialPage->getTitle()->getFullURL() );
-		}
+		$model = new QueryPagesModel( $this->page, $this->wg->CityId );
 
-		$this->list = $this->model->getList();
 		$this->messageKeys = InsightsHelper::$insightsMessageKeys;
 		$this->offset = 0;
+		$this->list = $model->getList();
 
-		$this->overrideTemplate( $this->model->template );
+		$this->overrideTemplate( 'subpageList' );
 	}
-} 
+
+	/**
+	 * Setup method for Insights_LoopNotification.mustache template
+	 */
+	public function LoopNotification() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$insight = $this->request->getVal( 'insight', null );
+
+		if ( !empty( $insight ) && InsightsHelper::isInsightPage( $insight ) ) {
+			$page = $this->getInsightDataProvider( $insight );
+			$model = new QueryPagesModel( $page, $this->wg->CityId );
+			$next = array_pop( $model->getList(0, 1) );
+
+			$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message' )->escaped() );
+			$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
+			$this->response->setVal( 'nextArticleButton', wfMessage( 'insights-notification-next-item-button' )->escaped() );
+
+			$this->response->setVal( 'insightsPageLink', $this->getSpecialInsightsUrl() );
+			$this->response->setVal( 'nextArticleTitle', $next['title'] );
+			$this->response->setVal( 'nextArticleLink', $next['link'] . '?action=edit&insights=' . $insight );
+		} else {
+			return '';
+		}
+	}
+
+	/**
+	 * Returns specific data provider
+	 * If it doesn't exists redirect to Special:Insights main page
+	 *
+	 * @param $subpage Insights subpage name
+	 * @return mixed
+	 */
+	public function getInsightDataProvider( $subpage ) {
+		if ( empty ( $subpage ) ) {
+			return null;
+		} elseif ( !empty( $subpage ) && InsightsHelper::isInsightPage( $subpage ) ) {
+			return InsightsModel::$insightsPages[$subpage];
+		} else {
+			$this->response->redirect( $this->getSpecialInsightsUrl() );
+		}
+	}
+
+	/**
+	 * Get Special:Insights full url
+	 *
+	 * @return string
+	 */
+	private function getSpecialInsightsUrl() {
+		return $this->specialPage->getTitle()->getFullURL();
+	}
+}

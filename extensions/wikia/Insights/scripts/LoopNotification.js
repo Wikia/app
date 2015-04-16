@@ -4,22 +4,30 @@
  */
 
 /* global require */
-require(['jquery', 'BannerNotification'], function ($, BannerNotification) {
+require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, BannerNotification, Querystring) {
 	'use strict';
 
-	var bannerNotification, showNotification;
+	var bannerNotification, showNotification,
+		qs = new Querystring();
 
 	bannerNotification = new BannerNotification();
 
 	showNotification = function showNotification(html) {
-		bannerNotification.setContent(html).show();
+		if ( html ) {
+			bannerNotification.setContent(html).show();
+		}
 	};
+
+	console.log(qs.getVal('insights'));
 
 	$.nirvana.sendRequest({
 		controller: 'Insights',
 		method: 'LoopNotification',
 		format: 'html',
 		type: 'get',
+		data: {
+			insight: qs.getVal('insights')
+		},
 		callback: showNotification
 	});
 

@@ -23,4 +23,14 @@ class InsightsHelper {
 		}
 		return null;
 	}
+
+	/**
+	 * Check if given category exists as an insight page
+	 *
+	 * @param $category
+	 * @return bool
+	 */
+	public static function isInsightPage( $category ) {
+		return isset( InsightsModel::$insightsPages[$category] );
+	}
 }
