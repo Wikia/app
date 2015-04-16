@@ -39,7 +39,7 @@ class Chat {
 		if( !$wgUser->isLoggedIn() ) {
 			return array("key" => false ) ;
 		}
-		$key = md5( $wgUser->getId() . "_" . microtime() . '_' .  mt_rand() );
+		$key = sha1( $wgUser->getId() . "_" . microtime() . '_' .  mt_rand() );
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*48);
 		return $key;
 	} // end echoCookies()
