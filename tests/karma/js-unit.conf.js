@@ -55,6 +55,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/querystring.js',
 			'resources/wikia/modules/history.js',
+			'resources/wikia/modules/scriptwriter.js',
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',

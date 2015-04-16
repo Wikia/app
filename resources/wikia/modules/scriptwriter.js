@@ -9,9 +9,9 @@
  *
  * ScriptWriter is a wrapper around those libraries which:
  *
- *  * exposes a simple API including two functions: injectScriptByText and injectScriptByUrl
+ *  * exposes a simple API of 3 functions: injectHtml, injectScriptByText and injectScriptByUrl
  *  * registers an AMD module wikia.scriptwriter
- *  * chooses library to use (PostScribe if wgUsePostScribe or if PostScribe lib is already loaded)
+ *  * chooses library to use: postscribe if wgUsePostScribe, ghostwriter otherwise
  *  * loads the library if not already loaded
  *  * works around the "</embed>" bug in PostScribe (https://github.com/krux/postscribe/issues/33)
  *  * launches GhostWriter's flushloadhandlers() trigger after each script handled
@@ -24,26 +24,99 @@
  * Ideally some day this module should be a simple wrapper around PostScribe.
  */
 
-/*global define, require*/
+/*global define*/
 /*jslint regexp:true*/
 
 define('wikia.scriptwriter', [
-	'wikia.document', 'wikia.log', 'wikia.window', 'wikia.loader'
-], function (document, log, window, loader) {
+	'wikia.document', 'wikia.lazyqueue', 'wikia.log', 'wikia.window', 'wikia.loader'
+], function (doc, lazyQueue, log, win, loader) {
 	'use strict';
 
-	var module = 'wikia.scriptwriter',
-		postscribeLoaded = !!window.postscribe, // we don't want a reference
-		library = window.wgUsePostScribe ? 'postscribe' : 'ghostwriter',
+	var logGroup = 'wikia.scriptwriter',
+		library = win.wgUsePostScribe ? 'postscribe' : 'ghostwriter',
 		queue = [],
-		queueCompleted = false,
-		impl,
-		implLoading = false, // load implementation only once
-		implGw = {},
-		implPs = {};
+		loading = false; // load library only once
 
-	function escapeHtml(str) {
-		return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	function psBeforeWrite(str) {
+		log(['psBeforeWrite', str], 'trace_l3', logGroup);
+		return str.replace(/<\/embed>/gi, '');
+	}
+
+	function gwFlushLoadHandlersAndCall(callback) {
+		return function () {
+			win.ghostwriter.flushloadhandlers();
+			callback();
+		};
+	}
+
+	function noop() {
+		return;
+	}
+
+	/**
+	 * Do an HTML injection
+	 *
+	 * @param {Object}      params
+	 * @param {HTMLElement} params.element  Element to inject HTML to
+	 * @param {string}      params.html     HTML to inject
+	 * @param {Function}    params.callback Function to call when done
+	 */
+	function processItem(params) {
+		log(['processItem', library, params], 'debug', logGroup);
+
+		if (library === 'postscribe') {
+			win.postscribe(
+				params.element,
+				params.html,
+				{beforeWrite: psBeforeWrite, done: params.callback}
+			);
+		} else {
+			var text = 'document.write(' + JSON.stringify(params.html) + ');';
+			win.ghostwriter(
+				params.element,
+				{
+					insertType: 'append',
+					script: { text: text },
+					done: gwFlushLoadHandlersAndCall(params.callback)
+				}
+			);
+		}
+	}
+
+	function processQueue() {
+		log('processQueue', 'debug', logGroup);
+
+		lazyQueue.makeQueue(queue, processItem);
+		queue.start();
+	}
+
+	function loadLibrary() {
+		var url;
+
+		if (loading) {
+			return;
+		}
+		loading = true;
+
+		log(['loadLibrary', library], 'debug', logGroup);
+
+		if (library === 'postscribe') {
+			url = '/resources/wikia/libraries/postscribe/postscribe.min.js';
+
+			// GhostWriter does this safety-guards, but PostScribe doesn't
+			doc.open = noop;
+			doc.close = noop;
+
+			if (!!win.postscribe) {
+				log(['loadLibrary', 'postscribe already loaded, processing queue'], 'debug', logGroup);
+				processQueue();
+				return;
+			}
+		} else {
+			url = '/resources/wikia/libraries/ghostwriter/gw.min.js';
+		}
+
+		loader(url).done(processQueue);
 	}
 
 	function getElement(elementOrElementId) {
@@ -52,7 +125,7 @@ define('wikia.scriptwriter', [
 		}
 
 		if (typeof elementOrElementId === 'string') {
-			var el = document.getElementById(elementOrElementId);
+			var el = doc.getElementById(elementOrElementId);
 			if (el) {
 				return el;
 			}
@@ -61,164 +134,77 @@ define('wikia.scriptwriter', [
 		throw 'wikia.scriptwriter: Not a valid element or element id ' + elementOrElementId;
 	}
 
-	function processQueue() {
-		log('processQueue', 'debug', module);
+	/**
+	 * Queue an HTML injection and load the proper library
+	 *
+	 * @param {Object}      params
+	 * @param {HTMLElement} params.element  Element to inject HTML to
+	 * @param {string}      params.html     HTML to inject
+	 * @param {Function}    params.callback Function to call when done
+	 */
+	function queueHtmlInjection(params) {
+		log(['queueHtmlInjection', params], 'debug', logGroup);
 
-		var item, args, callback;
-
-		if (queue.length === 0) {
-			queueCompleted = true;
-			log(['processQueue', 'Queue completed'], 'debug', module);
-			return;
-		}
-
-		item = queue[0];
-		args = item.args;
-		callback = item.callback;
-
-		args.push(function () {
-			log(['Done writing', args], 'debug', module);
-			if (typeof callback === 'function') {
-				log(['Calling done callback', args], 'debug', module);
-				callback();
-				log(['Done callback called', args], 'debug', module);
-			}
-			queue.shift();
-			log(['processQueue', 'Item processed. Going on'], 'debug', module);
-			processQueue();
-		});
-
-		log(['Start writing', args], 'debug', module);
-		impl[item.type].apply(impl, args);
-	}
-
-	function loadImpl() {
-		var url;
-
-		if (implLoading) {
-			return;
-		}
-		implLoading = true;
-
-		log('loadImpl ' + library, 'debug', module);
-
-		if (library === 'postscribe') {
-			url = '/resources/wikia/libraries/postscribe/postscribe.min.js';
-			impl = implPs;
-
-			// GhostWriter does this safety-guards, but PostScribe doesn't
-			document.open = document.close = function () {
-				return;
-			};
-
-			if (postscribeLoaded) {
-				log(['loadImpl', 'postscribe already loaded, processing queue'], 'debug', module);
-				processQueue();
-				return;
-			}
-		} else {
-			url = '/resources/wikia/libraries/ghostwriter/gw.min.js';
-			impl = implGw;
-		}
-
-		if (loader) {
-			loader(url).done(processQueue);
-		} else {
-			require(['wikia.loader'], function (loader) {
-				loader(url).done(processQueue);
-			});
-		}
-	}
-
-	function push(type, args, callback) {
-		log(['push', type, args, callback], 'debug', module);
-
-		queue.push({type: type, args: args, callback: callback});
-
-		// In case the queue was already fully processed. Start over
-		if (queueCompleted && queue.length === 1) {
-			processQueue();
-		}
+		queue.push(params);
 
 		// Load implementation if needed (it'll start processing the queue)
-		loadImpl();
+		loadLibrary();
 	}
 
-	// PostScribe implementation:
-
-	function psBeforeWrite(str) {
-		log(['psBeforeWrite', str], 'trace_l3', module);
-		return str.replace(/<\/embed>/gi, '');
+	function escapeHtml(str) {
+		return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 	}
 
-	implPs.url = function (element, url, callback) {
-		window.postscribe(
-			element,
-			'<script src="' + escapeHtml(url) + '"></script>',
-			{ beforeWrite: psBeforeWrite, done: callback }
-		);
-	};
+	// Public interface
 
-	implPs.text = function (element, text, callback) {
-		window.postscribe(
-			element,
-			'<script>' + text + '</script>',
-			{ beforeWrite: psBeforeWrite, done: callback }
-		);
-	};
-
-	// GhostWriter implementation:
-
-	function gwFlushLoadHandlersAndCall(callback) {
-		return function () {
-			window.ghostwriter.flushloadhandlers();
-			callback();
-		};
+	/**
+	 * Inject HTML to given element and execute any document.write calls.
+	 *
+	 * @param {(HTMLElement|string)} elementOrElementId element (node or id) to inject the contents to
+	 * @param {string}               html               HTML code to inject to the element
+	 * @param {Function}             [callback]         callback to call on done
+	 */
+	function injectHtml(elementOrElementId, html, callback) {
+		queueHtmlInjection({
+			element: getElement(elementOrElementId),
+			html: html,
+			callback: callback || noop
+		});
 	}
 
-	implGw.url = function (element, url, callback) {
-		window.ghostwriter(
-			element,
-			{
-				insertType: 'append',
-				script: { src: url },
-				done: gwFlushLoadHandlersAndCall(callback)
-			}
-		);
-	};
+	/**
+	 * Inject script to given element and execute any document.write calls.
+	 *
+	 * @param {(HTMLElement|string)} elementOrElementId element (node or id) to inject the contents to
+	 * @param {string}               url                script src to inject to the element
+	 * @param {Function}             [callback]         callback to call on done
+	 */
+	function injectScriptByUrl(elementOrElementId, url, callback) {
+		queueHtmlInjection({
+			element: getElement(elementOrElementId),
+			html: '<script src="' + escapeHtml(url) + '"></script>',
+			callback: callback || noop
+		});
+	}
 
-	implGw.text = function (element, text, callback) {
-		window.ghostwriter(
-			element,
-			{
-				insertType: 'append',
-				script: { text: text },
-				done: gwFlushLoadHandlersAndCall(callback)
-			}
-		);
-	};
+	/**
+	 * Inject script to given element and execute any document.write calls.
+	 *
+	 * @param {(HTMLElement|string)} elementOrElementId element (node or id) to inject the contents to
+	 * @param {string}               text               script text to inject to the element
+	 * @param {Function}             [callback]         callback to call on done
+	 */
+	function injectScriptByText(elementOrElementId, text, callback) {
+		queueHtmlInjection({
+			element: getElement(elementOrElementId),
+			html: '<script>' + text + '</script>',
+			callback: callback || noop
+		});
+	}
 
 	return {
-		/**
-		 * Inject script to given element and execute any document.write calls.
-		 *
-		 * @param elementOrElementId element (node or id) to inject the contents to
-		 * @param url                script src to inject to the element
-		 * @param callback           callback to call on done
-		 */
-		injectScriptByUrl: function (elementOrElementId, url, callback) {
-			push('url', [getElement(elementOrElementId), url], callback);
-		},
-
-		/**
-		 * Inject script to given element and execute any document.write calls.
-		 *
-		 * @param elementOrElementId element (node or id) to inject the contents to
-		 * @param text               script text to inject to the element
-		 * @param callback           callback to call on done
-		 */
-		injectScriptByText: function (elementOrElementId, text, callback) {
-			push('text', [getElement(elementOrElementId), text], callback);
-		}
+		injectHtml: injectHtml,
+		injectScriptByUrl: injectScriptByUrl,
+		injectScriptByText: injectScriptByText
 	};
 });
