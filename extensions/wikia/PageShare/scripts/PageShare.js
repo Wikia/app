@@ -50,6 +50,7 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 			method: 'getShareIcons',
 			data: {
 				browserLang: browserLangShort,
+				title: win.document.title,
 				useLang: useLang
 			},
 			callback: appendShareIcons
