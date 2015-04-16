@@ -28,6 +28,11 @@ $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
 $wgAutoloadClasses['QueryPagesModel'] = $dir . 'models/QueryPagesModel.php';
 
 // hooks
+$wgAutoloadClasses['InsightsHooks'] = $dir . 'InsightsHooks.class.php';
+
+$wgHooks['BeforePageDisplay'][] = 'InsightsHooks::onBeforePageDisplay';
+$wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::onArticleUpdateBeforeRedirect';
+$wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
 
 //special page
 $wgSpecialPages['Insights'] = 'InsightsController';
