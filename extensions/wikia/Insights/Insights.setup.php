@@ -32,6 +32,12 @@ $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithou
 $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
 
 // hooks
+$wgAutoloadClasses['InsightsHooks'] = $dir . 'InsightsHooks.class.php';
+
+$wgHooks['BeforePageDisplay'][] = 'InsightsHooks::onBeforePageDisplay';
+$wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::onArticleUpdateBeforeRedirect';
+$wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
+
 //special page
 $wgSpecialPages['Insights'] = 'InsightsController';
 
