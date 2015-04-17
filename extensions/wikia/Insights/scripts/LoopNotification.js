@@ -11,11 +11,10 @@ require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, Bann
 		qs = new Querystring(),
 		showNotification;
 
-	console.log(bannerNotification);
-
 	showNotification = function showNotification(html) {
 		if (html) {
 			bannerNotification.setContent(html).show();
+			$('#InsightsNextPageButton').focus();
 		}
 	};
 
