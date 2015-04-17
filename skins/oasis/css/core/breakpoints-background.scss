@@ -30,8 +30,8 @@ $color-body-middle-0:  rgba($color-body-middle, 0);
 	$other-side: if($side == 'left', 'right', 'left');
 
 	background-color: $color-body-middle-0;
-	background-image: -webkit-linear-gradient($side, $color-body-middle-0 0%, $color-body-middle 100%);
-	background-image: linear-gradient(to $other-side, $color-body-middle-0 0%, $color-body-middle 100%);
+	background-image: -webkit-linear-gradient(#{$side}, $color-body-middle-0 0%, $color-body-middle 100%);
+	background-image: linear-gradient(to #{$other-side}, $color-body-middle-0 0%, $color-body-middle 100%);
 	margin-#{$side}: $margin - $width-gradient;
 	#{$side}: 50%;
 }
