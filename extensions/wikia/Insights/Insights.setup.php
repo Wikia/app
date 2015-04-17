@@ -31,7 +31,6 @@ $wgAutoloadClasses['QueryPagesModel'] = $dir . 'models/QueryPagesModel.php';
 
 //special page
 $wgSpecialPages['Insights'] = 'InsightsController';
-$wgSpecialPageGroups['EditHub'] = 'wikia';
 
 //message files
 $wgExtensionMessagesFiles['Insights'] = $dir . 'Insights.i18n.php';
