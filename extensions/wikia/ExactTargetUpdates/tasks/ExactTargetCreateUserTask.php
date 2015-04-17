@@ -69,7 +69,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		}
 
 		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
+		$aApiParams = $oHelper->prepareUsersUpdateParams( [ $aUserData ] );
 		$this->info( __METHOD__ . ' ApiParams: ' . json_encode( $aApiParams ) );
 		$oApiDataExtension = $this->getApiDataExtension();
 
@@ -87,7 +87,7 @@ class ExactTargetCreateUserTask extends ExactTargetTask {
 		/* Verify data */
 		$oUserDataVerificationTask = $this->getUserDataVerificationTask();
 		$oUserDataVerificationTask->taskId( $this->getTaskId() ); // Pass task ID to have all logs under one task
-		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUserData( $aUserData['user_id'] );
+		$bUserDataVerificationResult = $oUserDataVerificationTask->verifyUsersData( [ $aUserData['user_id'] ] );
 
 		return $bUserDataVerificationResult;
 	}

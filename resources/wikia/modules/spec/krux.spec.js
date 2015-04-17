@@ -1,4 +1,4 @@
-/*global describe, it, modules, expect, spyOn*/
+/*global describe, it, modules, expect*/
 describe('Krux module', function () {
 	'use strict';
 

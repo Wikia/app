@@ -10,7 +10,6 @@ trait ExactTargetDataComparisonHelper {
 	 * @param string $sCallerName name of function that called this one, needed for logs
 	 * @param string $sIgnoredProperty Name of property that doesn't have to be equal
 	 * @return bool true if equal
-	 * @throws \Exception when results are not equals
 	 */
 	protected function compareResults( $aExactTargetData, $aWikiaData, $sCallerName, $sIgnoredProperty = '' ) {
 		// Remove ignored property from compared arrays
@@ -33,7 +32,8 @@ trait ExactTargetDataComparisonHelper {
 				$aDiffRes[] = "+ '{$key}' => '{$aDiffWikiaDB[$key]}'";
 			}
 			$this->debug( $sCallerName . ' ' . json_encode( $aDiffRes ) );
-			throw new \Exception( $sCallerName . " Verification failed, Record in ExactTarget doesn't match record in Wikia database." );
+			$this->error( $sCallerName . " Verification failed, Record in ExactTarget doesn't match record in Wikia database." );
+			return false;
 		}
 
 		$this->info( 'Verification passed. Record in ExactTarget match record in Wikia database' );

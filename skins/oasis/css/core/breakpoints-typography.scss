@@ -9,6 +9,12 @@ $default-body-line-height: 22px;
 			.WikiaArticle {
 				font-size: $default-body-font-size;
 				line-height: $default-body-line-height;
+
+				//Overwrite styles from skins/oasis/css/core/article.scss:125
+				//@TODO should be removed when above line is removed - CONCF-186
+				li {
+					line-height: inherit;
+				}
 			}
 
 			h1 {
@@ -44,6 +50,12 @@ $default-body-line-height: 22px;
 				.infobox {
 					font-size: $default-body-font-size;
 					line-height: $default-body-line-height;
+				}
+
+				//Overwrite styles from skins/oasis/css/core/article.scss:125
+				//@TODO should be removed when above line is removed - CONCF-186
+				li {
+					line-height: inherit;
 				}
 			}
 
