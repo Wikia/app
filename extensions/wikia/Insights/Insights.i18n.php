@@ -12,6 +12,8 @@ $messages['en'] = [
 	'insights-list-uncategorized-description' => 'Uncategorized pages is the most awesome feature ever!',
 	'insights-list-withoutimages-subtitle' => 'Pages without images',
 	'insights-list-withoutimages-description' => 'The pages need their images!',
+	'insights-list-wantedpages-subtitle' => 'Wanted pages',
+	'insights-list-wantedpages-description' => 'Somebody wants these pages REALLY BAD!',
 ];
 
 $messages['qqq'] = [
