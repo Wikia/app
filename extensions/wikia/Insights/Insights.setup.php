@@ -28,6 +28,7 @@ $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
 $wgAutoloadClasses['InsightsQuerypageModel'] = $dir . 'models/InsightsQuerypageModel.php';
 $wgAutoloadClasses['InsightsUncategorizedModel'] = $dir . 'models/InsightsUncategorizedModel.php';
+$wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
 $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
 
 // hooks

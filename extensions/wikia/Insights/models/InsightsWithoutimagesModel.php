@@ -1,12 +1,9 @@
 <?php
 
-class InsightsUncategorizedModel extends InsightsQuerypageModel {
-	public $settings = [
-		'template' => 'subpageList',
-	];
+class InsightsWithoutimagesModel extends InsightsQuerypageModel {
 
 	public function getDataProvider() {
-		return new UncategorizedPagesPage();
+		return new WithoutimagesPage();
 	}
 
 	public function prepareData( $res ) {
