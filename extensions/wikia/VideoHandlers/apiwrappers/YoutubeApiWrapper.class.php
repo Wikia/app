@@ -76,6 +76,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 			return $thumbnailData['default']['url'];
 		}
 
+		wfProfileOut( __METHOD__ );
 		return '';
 	}
 
