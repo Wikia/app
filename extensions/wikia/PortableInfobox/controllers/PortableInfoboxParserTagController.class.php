@@ -1,4 +1,5 @@
 <?php
+
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 
@@ -29,7 +30,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$frame->getNamedArguments() );
 		$data = $this->parseData( json_decode( $json ), $parser, $frame );
 
-		return $renderer->renderInfobox($data);
+		return [ $renderer->renderInfobox( $data ), 'markerType' => 'nowiki' ];
 	}
 
 	private function parseData( $json, Parser $parser, PPFrame $frame ) {
