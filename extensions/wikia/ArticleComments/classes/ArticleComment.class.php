@@ -102,11 +102,16 @@ class ArticleComment {
 	 * or return null if one can't be found.
 	 *
 	 * @param Title $title The article (or blog post) from which to find the latest comment.
+	 * @param array $param Additional parameters for this method.  Currently available keys are:
+	 *   - useSlave : A boolean value on whether to use the slave DB for the query.  If not given the master
+	 *                DB is used, with the assumption that slave lag may cause this query to fail if a comment
+	 *                was just posted.
 	 *
 	 * @return ArticleComment|null
 	 */
-	static public function latestFromTitle( Title $title ) {
-		$dbh = wfGetDB( DB_MASTER );
+	static public function latestFromTitle( Title $title, array $param = [] ) {
+		$dbSource = empty( $param['useSlave'] ) ? DB_MASTER : DB_SLAVE;
+		$dbh = wfGetDB( $dbSource );
 
 		$titleText = $title->getText();
 		$prefix =  $titleText . '/' . ARTICLECOMMENT_PREFIX;
