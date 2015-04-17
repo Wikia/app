@@ -23,7 +23,6 @@ $wgAutoloadClasses['InsightsBlogpostRedirectController'] = $dir . 'InsightsBlogp
 
 //special page
 $wgSpecialPages['Insights'] = 'InsightsBlogpostRedirectController';
-$wgSpecialPageGroups['EditHub'] = 'wikia';
 
 //message files
 $wgExtensionMessagesFiles['InsightsBlogpostRedirect'] = $dir . 'InsightsBlogpostRedirect.i18n.php';
