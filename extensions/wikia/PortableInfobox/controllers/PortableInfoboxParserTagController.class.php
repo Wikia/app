@@ -32,8 +32,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$data = $infoboxParser->getDataFromXmlString( $markup );
 
 		$renderer = new PortableInfoboxRenderService();
-
-		return [ $renderer->renderInfobox( $data ), 'markerType' => 'nowiki' ];
+		$renderedValue = $renderer->renderInfobox( $data );
+		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 
 	private function parseData( $json, Parser $parser, PPFrame $frame ) {

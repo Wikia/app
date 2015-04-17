@@ -32,11 +32,11 @@ class Parser {
 		$data = [];
 		foreach ( $xmlIterable as $node ) {
 			$nodeHandler = $this->getNode( $node );
-			$data = $nodeHandler->getData();
+			$nodeData = $nodeHandler->getData();
 			$data[] = [
 				'type' => $nodeHandler->getType(),
-				'data' => $data,
-				'isNotEmpty' => $nodeHandler->isNotEmpty( $data )
+				'data' => $nodeData,
+				'isNotEmpty' => $nodeHandler->isNotEmpty( $nodeData )
 			];
 		}
 		return $data;

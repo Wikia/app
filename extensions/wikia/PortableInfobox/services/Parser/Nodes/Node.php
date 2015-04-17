@@ -36,7 +36,7 @@ class Node {
 	}
 
 	public function isNotEmpty( $data ) {
-		return isset( $data['value'] ) && !empty( $value );
+		return isset( $data["value"] ) && !empty( $data["value"] );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
