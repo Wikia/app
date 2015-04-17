@@ -59,9 +59,9 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 
 	public function testNodeGroup() {
 		$string = '<group>
-						<pair source="elem1"><label>l1</label><default>def1</default></pair>
-						<pair source="elem2"><label>l2</label><default>def2</default></pair>
-						<pair source="elem3"><label>l2</label></pair>
+				<pair source="elem1"><label>l1</label><default>def1</default></pair>
+				<pair source="elem2"><label>l2</label><default>def2</default></pair>
+				<pair source="elem3"><label>l2</label></pair>
 					</group>
 						';
 		$xml = simplexml_load_string( $string );
