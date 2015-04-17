@@ -15,4 +15,9 @@ class NodeComparison extends  Node {
 		return $data;
 	}
 
+	public function isNotEmpty( $data ) {
+		return is_array( $data['value'] ) && count( $data['value'] );
+	}
+
+
 }

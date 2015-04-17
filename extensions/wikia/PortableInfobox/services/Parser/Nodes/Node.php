@@ -35,6 +35,10 @@ class Node {
 		return [ "value" => (string) $this->xmlNode ];
 	}
 
+	public function isNotEmpty( $data ) {
+		return isset( $data['value'] ) && !empty( $value );
+	}
+
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 		$value = null;

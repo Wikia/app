@@ -9,4 +9,8 @@ class NodeFooter extends Node {
 		$data['links'] = $this->parseWithExternalParser( (string) $this->xmlNode->{self::LINKS_TAG_NAME} );
 		return $data;
 	}
+
+	public function isNotEmpty( $data ) {
+		return !empty( $data['links'] );
+	}
 }

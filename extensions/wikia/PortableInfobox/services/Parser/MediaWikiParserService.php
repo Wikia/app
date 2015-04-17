@@ -4,15 +4,20 @@ namespace Wikia\PortableInfobox\Parser;
 class MediaWikiParserService implements ExternalParser {
 
 	protected $parser;
+	protected $frame;
 	protected $localParser;
 
-	public function __construct( \Parser $parser ) {
+	public function __construct( \Parser $parser, \PPFrame $frame ) {
 		$this->parser = $parser;
+		$this->frame = $frame;
 	}
 
 	public function parse( $wikitext ) {
+		$preprocessed = $this->parser->recursivePreprocess( $wikitext, $this->frame );
+		$newlinesstripped = preg_replace( "|[\n\r]|Us", '', $preprocessed );
+		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
 		return $this->getParserInstance()
-			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
+			->parse( $marksstripped, $this->getParserTitle(), $this->getParserOptions(), false )
 			->getText();
 	}
 
@@ -32,5 +37,4 @@ class MediaWikiParserService implements ExternalParser {
 		}
 		return $this->localParser;
 	}
-
 }
