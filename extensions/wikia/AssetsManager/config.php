@@ -2422,3 +2422,10 @@ $config['poweruser'] = [
 		'//extensions/wikia/PowerUser/js/powerUser.run.js',
 	]
 ];
+
+$config['paid_asset_drop_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PaidAssetDrop/js/PaidAssetDrop.js'
+	]
+];
