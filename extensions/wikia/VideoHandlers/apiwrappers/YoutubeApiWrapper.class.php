@@ -23,7 +23,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 		$parsedUrl = parse_url( $url );
 		if ( !empty( $parsedUrl['query'] ) ) {
 			parse_str( $parsedUrl['query'], $aData );
-		} ;
+		}
 		if ( isset( $aData['v'] ) ) {
 			$id = $aData['v'];
 		}
