@@ -64,32 +64,15 @@ class YoutubeApiWrapper extends ApiWrapper {
 		wfProfileIn( __METHOD__ );
 
 		$thumbnailDatas = $this->getVideoThumbnails();
-		foreach ( $thumbnailDatas as $quality => $thumbnailData ) {
-			switch ( $quality ) {
-				case 'high':
-					if ( !empty( $thumbnailData['url'] ) ) {
-						wfProfileOut( __METHOD__ );
-						return $thumbnailData['url'];
-					}
-					break;
-				case 'medium':
-					if ( !empty( $thumbnailData['url'] ) ) {
-						wfProfileOut( __METHOD__ );
-						return $thumbnailData['url'];
-					}
-					break;
-				case 'default':
-					if ( !empty( $thumbnailData['url'] ) ) {
-						wfProfileOut( __METHOD__ );
-						return $thumbnailData['url'];
-					}
-					break;
-				default: {
-					wfProfileOut( __METHOD__ );
-					return '';
-				}
-			}
+
+		if ( array_key_exists( 'high', $thumbnailDatas ) ) {
+			return $thumbnailDatas['high']['url'];
+		} else if ( array_key_exists( 'medium', $thumbnailDatas ) ) {
+			return $thumbnailDatas['medium']['url'];
+		} else if ( array_key_exists( 'default', $thumbnailDatas ) ) {
+			return $thumbnailDatas['default']['url'];
 		}
+
 		return '';
 	}
 
@@ -234,8 +217,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 			'key' => $wgYoutubeConfig['DeveloperKeyApiV3']
 		];
 
-		$url = self::$API_URL . '?' . http_build_query( $params );
-		return $url;
+		return self::$API_URL . '?' . http_build_query( $params );
 	}
 
 }
