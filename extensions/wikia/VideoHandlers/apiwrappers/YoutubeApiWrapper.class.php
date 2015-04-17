@@ -63,14 +63,17 @@ class YoutubeApiWrapper extends ApiWrapper {
 	public function getThumbnailUrl() {
 		wfProfileIn( __METHOD__ );
 
-		$thumbnailDatas = $this->getVideoThumbnails();
+		$thumbnailData = $this->getVideoThumbnails();
 
-		if ( array_key_exists( 'high', $thumbnailDatas ) ) {
-			return $thumbnailDatas['high']['url'];
-		} else if ( array_key_exists( 'medium', $thumbnailDatas ) ) {
-			return $thumbnailDatas['medium']['url'];
-		} else if ( array_key_exists( 'default', $thumbnailDatas ) ) {
-			return $thumbnailDatas['default']['url'];
+		if ( array_key_exists( 'high', $thumbnailData ) ) {
+			wfProfileOut( __METHOD__ );
+			return $thumbnailData['high']['url'];
+		} else if ( array_key_exists( 'medium', $thumbnailData ) ) {
+			wfProfileOut( __METHOD__ );
+			return $thumbnailData['medium']['url'];
+		} else if ( array_key_exists( 'default', $thumbnailData ) ) {
+			wfProfileOut( __METHOD__ );
+			return $thumbnailData['default']['url'];
 		}
 
 		return '';
