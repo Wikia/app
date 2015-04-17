@@ -110,10 +110,15 @@ class ArticleComment {
 	 * @return ArticleComment|null
 	 */
 	static public function latestFromTitle( Title $title, array $param = [] ) {
-		$dbSource = empty( $param['useSlave'] ) ? DB_MASTER : DB_SLAVE;
-		$dbh = wfGetDB( $dbSource );
+		if ( empty( $param['useSlave'] ) ) {
+			$dbh = wfGetDB( DB_MASTER );
+			$flags = Title::GAID_FOR_UPDATE;
+		} else {
+			$dbh = wfGetDB( DB_SLAVE );
+			$flags = 0;
+		}
 
-		$titleText = $title->getText();
+		$titleText = $title->getDBkey();
 		$prefix =  $titleText . '/' . ARTICLECOMMENT_PREFIX;
 		$commentNamespace = MWNamespace::getTalk( $title->getNamespace() );
 
@@ -124,10 +129,10 @@ class ArticleComment {
 			->AND_( 'page_namespace' )->EQUAL_TO( $commentNamespace )
 			->ORDER_BY( 'page_id' )->DESC()
 			->LIMIT( 1 )
-			->run( $dbh, function( ResultWrapper $result ) {
+			->run( $dbh, function( ResultWrapper $result ) use ( $flags ) {
 				$row = $result->fetchObject();
 				if ( $row ) {
-					return Title::newFromID( $row->page_id );
+					return Title::newFromID( $row->page_id, $flags );
 				}
 				return null;
 			} );
