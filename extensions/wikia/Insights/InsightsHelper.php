@@ -11,6 +11,10 @@ class InsightsHelper {
 			'subtitle' => 'insights-list-withoutimages-subtitle',
 			'description' => 'insights-list-withoutimages-description',
 		],
+		'deadend' => [
+			'subtitle' => 'insights-list-deadend-subtitle',
+			'description' => 'insights-list-deadend-description',
+		],
 		'wantedpages' => [
 			'subtitle' => 'insights-list-wantedpages-subtitle',
 			'description' => 'insights-list-wantedpages-description',
