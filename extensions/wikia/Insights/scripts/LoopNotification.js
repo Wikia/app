@@ -7,20 +7,21 @@
 require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, BannerNotification, Querystring) {
 	'use strict';
 
-	var bannerNotification, showNotification,
-		qs = new Querystring();
+	var bannerNotification = new BannerNotification(),
+		qs = new Querystring(),
+		showNotification;
 
-	bannerNotification = new BannerNotification();
+	console.log(bannerNotification);
 
 	showNotification = function showNotification(html) {
-		if ( html ) {
+		if (html) {
 			bannerNotification.setContent(html).show();
 		}
 	};
 
 	$.nirvana.sendRequest({
 		controller: 'Insights',
-		method: 'LoopNotification',
+		method: 'loopNotification',
 		format: 'html',
 		type: 'get',
 		data: {

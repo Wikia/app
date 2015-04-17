@@ -8,9 +8,9 @@ class InsightsHooks {
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 		global $wgRequest;
 
-		$insightCategory = $wgRequest->getVal('insights', null);
+		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $insightCategory && InsightsHelper::isInsightPage( $insightCategory ) ) {
+		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
 			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopNotification.js' );
 		}
 
@@ -23,13 +23,13 @@ class InsightsHooks {
 	public static function onArticleUpdateBeforeRedirect( $article, &$sectionanchor, &$extraQuery ) {
 		global $wgRequest;
 
-		$insightCategory = $wgRequest->getVal('insights', null);
+		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $insightCategory && InsightsHelper::isInsightPage( $insightCategory ) ) {
+		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
 			if ( !empty( $extraQuery ) ) {
 				$extraQuery .= '&';
 			}
-			$extraQuery .= 'insights=' . $insightCategory;
+			$extraQuery .= 'insights=' . $subpage;
 		}
 
 		return true;
@@ -41,12 +41,12 @@ class InsightsHooks {
 	public static function onGetLocalURL( &$this, &$url, $query ) {
 		global $wgRequest;
 
-		$insightCategory = $wgRequest->getVal('insights', null);
+		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $insightCategory && InsightsHelper::isInsightPage( $insightCategory ) ) {
+		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
 			$action = $wgRequest->getVal( 'action', 'view' );
 			if ( $action == 'edit'  && $query == 'action=submit' ) {
-				$url .= '&insights=' . $insightCategory;
+				$url .= '&insights=' . $subpage;
 			}
 		}
 

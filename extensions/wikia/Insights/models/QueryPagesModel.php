@@ -37,6 +37,18 @@ class QueryPagesModel extends InsightsModel {
 		return $data;
 	}
 
+	/**
+	 * Get data about next element
+	 *
+	 * @param int $offset
+	 * @return mixed
+	 */
+	public function getNext( $offset = 0 ) {
+		$next = array_pop( $this->getList( $offset, 1) );
+
+		return $next;
+	}
+
 	private function prepareData( $res ) {
 		$data = [];
 		$dbr = wfGetDB( DB_SLAVE );

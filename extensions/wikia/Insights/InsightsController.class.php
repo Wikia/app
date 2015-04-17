@@ -37,17 +37,17 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Setup method for Insights_LoopNotification.mustache template
+	 * Setup method for Insights_loopNotification.mustache template
 	 */
-	public function LoopNotification() {
+	public function loopNotification() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$insight = $this->request->getVal( 'insight', null );
+		$subpage = $this->request->getVal( 'insight', null );
 
-		if ( !empty( $insight ) && InsightsHelper::isInsightPage( $insight ) ) {
-			$page = $this->getInsightDataProvider( $insight );
+		if ( !empty( $subpage ) && InsightsHelper::isInsightPage( $subpage ) ) {
+			$page = $this->getInsightDataProvider( $subpage );
 			$model = new QueryPagesModel( $page, $this->wg->CityId );
-			$next = array_pop( $model->getList(0, 1) );
+			$next = $model->getNext();
 
 			$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message' )->escaped() );
 			$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
@@ -55,9 +55,7 @@ class InsightsController extends WikiaSpecialPageController {
 
 			$this->response->setVal( 'insightsPageLink', $this->getSpecialInsightsUrl() );
 			$this->response->setVal( 'nextArticleTitle', $next['title'] );
-			$this->response->setVal( 'nextArticleLink', $next['link'] . '?action=edit&insights=' . $insight );
-		} else {
-			return '';
+			$this->response->setVal( 'nextArticleLink', $next['link'] . '?action=edit&insights=' . $subpage );
 		}
 	}
 
