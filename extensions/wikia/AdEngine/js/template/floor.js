@@ -1,31 +1,23 @@
 /*global define*/
 define('ext.wikia.adEngine.template.floor', [
 	'ext.wikia.adEngine.adContext',
-	require.optional('jquery'),
 	'wikia.log',
 	'wikia.document',
 	'wikia.iframeWriter',
 	'wikia.window'
-], function (adContext, $, log, doc, iframeWriter, win) {
+], function (adContext, log, doc, iframeWriter, win) {
 	'use strict';
-
-	// Use our jQuery module or in Mercury Ember's jQuery
-	$ = $ || win.$;
 
 	var logGroup = 'ext.wikia.adEngine.template.floor',
 		footerId = 'ext-wikia-adEngine-template-footer',
-		oasisFooterHtml = '<div id="' + footerId + '">' +
-			'<div class="background"></div>' +
-			'<div class="ad"></div>' +
-			'<a class="close" title="Close" href="#"><span>Close</span></a>' +
-			'</div>',
-		mercuryFooterHtml = '<div id="' + footerId + '">' +
+		footerHtml = '<div id="' + footerId + '">' +
 			'<div class="background"></div>' +
 			'<div class="ad"></div>' +
 			'<a class="close" title="Close" href="#">' +
 			'<svg role="img" class="ads-floor-close-button"><use xlink:href="#close"></use></svg>' +
 			'</a>' +
-			'</div>';
+			'</div>',
+		$ = $ || win.$;
 
 	/**
 	 * Show the floor ad.
@@ -53,15 +45,10 @@ define('ext.wikia.adEngine.template.floor', [
 				height: params.height
 			}),
 			skin = adContext.getContext().targeting.skin,
-			$footer;
+			$footer = $(footerHtml);
 
 		if (skin === 'oasis') {
-			$footer = $(oasisFooterHtml);
 			win.WikiaBar.hideContainer();
-		}
-
-		if (skin === 'mercury') {
-			$footer = $(mercuryFooterHtml);
 		}
 
 		$footer.find('a.close').click(function (event) {
