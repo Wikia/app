@@ -42,6 +42,10 @@ class Parser {
 		return $data;
 	}
 
+	/**
+	 * @param $xml String
+	 * @return array
+	 */
 	public function getDataFromXmlString( $xml ) {
 		$xml = simplexml_load_string( $xml );
 		return $this->getDataFromNodes( $xml );
