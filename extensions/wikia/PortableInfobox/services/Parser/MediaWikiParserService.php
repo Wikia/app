@@ -14,7 +14,7 @@ class MediaWikiParserService implements ExternalParser {
 
 	public function parse( $wikitext ) {
 		$preprocessed = $this->parser->recursivePreprocess( $wikitext, $this->frame );
-		$newlinesstripped = preg_replace( "|[\n\r]|Us", '', $preprocessed );
+		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $preprocessed );
 		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
 		return $this->getParserInstance()
 			->parse( $marksstripped, $this->getParserTitle(), $this->getParserOptions(), false )

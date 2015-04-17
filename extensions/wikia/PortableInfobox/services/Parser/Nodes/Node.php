@@ -5,10 +5,10 @@ use Wikia\PortableInfobox\Parser\ExternalParser;
 
 class Node {
 
-	const DATA_SRC_ATTR_NAME = "source";
-	const DEFAULT_TAG_NAME = "default";
-	const VALUE_TAG_NAME = "value";
-	const LABEL_TAG_NAME = "label";
+	const DATA_SRC_ATTR_NAME = 'source';
+	const DEFAULT_TAG_NAME = 'default';
+	const VALUE_TAG_NAME = 'value';
+	const LABEL_TAG_NAME = 'label';
 
 	protected $xmlNode;
 
@@ -32,11 +32,11 @@ class Node {
 	}
 
 	public function getData() {
-		return [ "value" => (string) $this->xmlNode ];
+		return [ 'value' => (string) $this->xmlNode ];
 	}
 
 	public function isNotEmpty( $data ) {
-		return isset( $data["value"] ) && !empty( $data["value"] );
+		return isset( $data['value'] ) && !empty( $data['value'] );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
