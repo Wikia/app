@@ -140,7 +140,7 @@ abstract class EmailController extends \WikiaController {
 				);
 				$this->assertGoodStatus( $status );
 			}
-		} catch ( ControllerException $e ) {
+		} catch ( \Exception $e ) {
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -172,13 +172,19 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * Create an error response for any exception thrown while creating this email
 	 *
-	 * @param ControllerException $e
+	 * @param \Exception $e
 	 *
 	 */
-	protected function setErrorResponse( ControllerException $e ) {
+	protected function setErrorResponse( \Exception $e ) {
+		if ( $e instanceof ControllerException ) {
+			$result = $e->getErrorType();
+		} else {
+			$result = 'genericError';
+		}
+
 		$this->hasErrorResponse = true;
 		$this->response->setData( [
-			'result' => $e->getErrorType(),
+			'result' => $result,
 			'msg' => $e->getMessage(),
 		] );
 	}
