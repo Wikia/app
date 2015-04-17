@@ -97,6 +97,14 @@ class ArticleComment {
 		return $comment;
 	}
 
+	/**
+	 * Given an article represented by a Title object, return the latest comment associated with it
+	 * or return null if one can't be found.
+	 *
+	 * @param Title $title The article (or blog post) from which to find the latest comment.
+	 *
+	 * @return ArticleComment|null
+	 */
 	static public function latestFromTitle( Title $title ) {
 		$dbh = wfGetDB( DB_MASTER );
 
