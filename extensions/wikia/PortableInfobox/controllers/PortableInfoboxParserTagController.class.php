@@ -32,9 +32,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$data = $infoboxParser->getDataFromXmlString( $markup );
 
 		$renderer = new PortableInfoboxRenderService();
-		var_dump( $data );
-		echo( $renderer->renderInfobox( $data ) );
-		die;
+
 		return [ $renderer->renderInfobox( $data ), 'markerType' => 'nowiki' ];
 	}
 
