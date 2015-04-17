@@ -12,7 +12,7 @@ class PaidAssetDropHooks {
 		global $wgPaidAssetDrop;
 
 		if( !empty( $wgPaidAssetDrop ) ) {
-			$jsAssets[] = 'paid_asset_drop_js';
+			$jsAssets[] = 'paid_asset_drop_desktop_js';
 		}
 
 		return true;
