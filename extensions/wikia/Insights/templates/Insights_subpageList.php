@@ -22,16 +22,16 @@
 				<?php if ( isset( $item['link'] ) ) : ?>
 					<td><?= $item['link'] ?></td>
 				<?php endif; ?>
-				<?php if ( isset( $item['revision'] ) ) : ?>
-					<td><?= wfMessage( 'insights-last-edit' )->rawParams(
+				<td><?php if ( isset( $item['revision'] ) ) : ?>
+					<?= wfMessage( 'insights-last-edit' )->rawParams(
 							Xml::element( 'a', [
 								'href' => $item['revision']['userpage']
 							],
 								$item['revision']['username']
 							),
 							date( 'F j, Y', $item['revision']['timestamp'] )
-						)->escaped() ?></td>
-				<?php endif; ?>
+						)->escaped() ?>
+				<?php endif; ?></td>
 
 				<td># of views</td>
 			</tr>

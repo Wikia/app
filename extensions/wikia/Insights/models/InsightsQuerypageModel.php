@@ -5,7 +5,7 @@
  *
  * Model for pages which extends QueryPage
  */
-abstract class InsightsQuerypageModel extends InsightsModel {
+abstract class InsightsQuerypageModel implements InsightsModel {
 	private $queryPageInstance,
 		$template = 'subpageList';
 

@@ -1,7 +1,7 @@
 <?php
 
-abstract class InsightsModel {
-	abstract public function getContent();
-	abstract public function getData();
-	abstract public function getTemplate();
+interface InsightsModel {
+	public function getContent();
+	public function getData();
+	public function getTemplate();
 } 

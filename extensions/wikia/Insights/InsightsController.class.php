@@ -29,15 +29,21 @@ class InsightsController extends WikiaSpecialPageController {
 			case 'uncategorized':
 				$this->model = new InsightsUncategorizedModel();
 				break;
+			case 'withoutimages':
+				$this->model = new InsightsWithoutimagesModel();
+				break;
 			case 'wantedpages':
 				$this->model = new InsightsWantedpagesModel();
 				break;
 			default:
 				$this->response->redirect( $this->specialPage->getTitle()->getFullURL() );
 		}
-
-		$this->content = $this->model->getContent();
-		$this->data = $this->model->getData();
-		$this->overrideTemplate( $this->model->getTemplate() );
+		if ( $this->model instanceof InsightsModel ) {
+			$this->content = $this->model->getContent();
+			$this->data = $this->model->getData();
+			$this->overrideTemplate($this->model->getTemplate());
+		} else {
+			throw new MWException( 'An Insights subpage should implement the InsightsModel interface.' );
+		}
 	}
 } 
