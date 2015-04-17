@@ -6,7 +6,7 @@ class NodeFooter extends Node {
 
 	public function getData() {
 		$data = [];
-		$data['links'] = (string) $this->xmlNode->{self::LINKS_TAG_NAME};
+		$data['links'] = $this->parseWithExternalParser( (string) $this->xmlNode->{self::LINKS_TAG_NAME} );
 		return $data;
 	}
 }

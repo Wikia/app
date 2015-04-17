@@ -7,9 +7,10 @@ class NodeComparison extends  Node {
 
 	public function getData() {
 		$data = [];
+		$data['value'] = [];
 		$nodeFactory = new Parser( $this->infoboxData );
 		foreach ( $this->xmlNode as $set ) {
-			$data[] = $nodeFactory->getDataFromNodes( $set );
+			$data['value'][] = $nodeFactory->getDataFromNodes( $set );
 		}
 		return $data;
 	}

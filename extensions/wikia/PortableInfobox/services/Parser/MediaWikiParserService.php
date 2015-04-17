@@ -1,11 +1,12 @@
 <?php
+namespace Wikia\PortableInfobox\Parser;
 
-class MediaWikiParserService {
+class MediaWikiParserService implements ExternalParser {
 
 	protected $parser;
 	protected $localParser;
 
-	public function __construct( Parser $parser ) {
+	public function __construct( \Parser $parser ) {
 		$this->parser = $parser;
 	}
 
@@ -27,7 +28,7 @@ class MediaWikiParserService {
 
 	private function getParserInstance() {
 		if ( !isset( $this->localParser ) ) {
-			$this->localParser = new Parser();
+			$this->localParser = new \Parser();
 		}
 		return $this->localParser;
 	}

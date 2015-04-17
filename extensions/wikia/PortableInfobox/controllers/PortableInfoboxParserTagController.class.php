@@ -24,12 +24,17 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @returns String $html
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
-		$connector = new InfoboxServiceConnector();
-		$renderer = new PortableInfoboxRenderService();
-		$json = $connector->getJsonBySource( '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>',
-			$frame->getNamedArguments() );
-		$data = $this->parseData( json_decode( $json ), $parser, $frame );
 
+		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
+
+		$infoboxParser = new Wikia\PortableInfobox\Parser\Parser( $frame->getNamedArguments() );
+		$infoboxParser->setExternalParser( (new \Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser ) ) );
+		$data = $infoboxParser->getDataFromXmlString( $markup );
+
+		$renderer = new PortableInfoboxRenderService();
+		var_dump( $data );
+		echo( $renderer->renderInfobox( $data ) );
+		die;
 		return [ $renderer->renderInfobox( $data ), 'markerType' => 'nowiki' ];
 	}
 

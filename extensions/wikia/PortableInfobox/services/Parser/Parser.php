@@ -4,9 +4,24 @@ namespace Wikia\PortableInfobox\Parser;
 class Parser {
 
 	protected $infoboxData;
+	protected $externalParser;
 
 	public function __construct( $infoboxData ) {
 		$this->infoboxData = $infoboxData;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getExternalParser() {
+		return $this->externalParser;
+	}
+
+	/**
+	 * @param mixed $externalParser
+	 */
+	public function setExternalParser( ExternalParser $externalParser ) {
+		$this->externalParser = $externalParser;
 	}
 
 	/**
@@ -25,6 +40,11 @@ class Parser {
 		return $data;
 	}
 
+	public function getDataFromXmlString( $xml ) {
+		$xml = simplexml_load_string( $xml );
+		return $this->getDataFromNodes( $xml );
+	}
+
 	/**
 	 * @param \SimpleXMLElement $xmlNode
 	 * @return \Wikia\PortableInfobox\Parser\Nodes\Node
@@ -33,8 +53,14 @@ class Parser {
 		$tagType = $xmlNode->getName();
 		$className = 'Wikia\\PortableInfobox\\Parser\\Nodes\\'.'Node' . ucfirst( strtolower( $tagType ) );
 		if ( class_exists( $className ) ) {
-			return new $className( $xmlNode, $this->infoboxData );
+			/* @var $instance \Wikia\PortableInfobox\Parser\Nodes\Node */
+			$instance = new $className( $xmlNode, $this->infoboxData );
+			if ( !empty( $this->externalParser ) ) {
+				$instance->setExternalParser( $this->externalParser );
+			}
+			return $instance;
 		}
 		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
 	}
+
 }

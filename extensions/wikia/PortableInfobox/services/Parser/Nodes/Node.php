@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
+use Wikia\PortableInfobox\Parser\ExternalParser;
+
 class Node {
 
 	const DATA_SRC_ATTR_NAME = "source";
@@ -10,9 +12,19 @@ class Node {
 
 	protected $xmlNode;
 
+	/* @var $externalParser ExternalParser */
+	protected $externalParser;
+
 	public function __construct( \SimpleXMLElement $xmlNode, $infoboxData ) {
 		$this->xmlNode = $xmlNode;
 		$this->infoboxData = $infoboxData;
+	}
+
+	/**
+	 * @param mixed $externalParser
+	 */
+	public function setExternalParser( ExternalParser $externalParser ) {
+		$this->externalParser = $externalParser;
 	}
 
 	public function getType() {
@@ -20,7 +32,7 @@ class Node {
 	}
 
 	public function getData() {
-		return (string) $this->xmlNode;
+		return [ "value" => (string) $this->xmlNode ];
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
@@ -31,7 +43,8 @@ class Node {
 		}
 		if ( !$value ) {
 			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				return (string) $xmlNode->{self::DEFAULT_TAG_NAME};
+				$value = (string) $xmlNode->{self::DEFAULT_TAG_NAME};
+				$value = $this->parseWithExternalParser( $value );
 			}
 		}
 		return $value;
@@ -43,7 +56,15 @@ class Node {
 		return null;
 	}
 
+	protected function parseWithExternalParser( $data ) {
+		if ( !empty( $data ) && !empty( $this->externalParser ) ) {
+			return $this->externalParser->parse( $data );
+		}
+		return $data;
+	}
+
 	protected function getInfoboxData( $key ) {
-		return isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
+		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
+		return $this->parseWithExternalParser( $data );
 	}
 }
