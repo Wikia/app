@@ -5,7 +5,7 @@ class MediaWikiParserService {
 	protected $parser;
 	protected $localParser;
 
-	public function __construct( $parser ) {
+	public function __construct( Parser $parser ) {
 		$this->parser = $parser;
 	}
 
