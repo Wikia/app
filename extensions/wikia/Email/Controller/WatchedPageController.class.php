@@ -24,7 +24,8 @@ class WatchedPageController extends EmailController {
 	}
 
 	public function initEmail() {
-		$this->title = \Title::newFromText( $this->request->getVal( 'title' ) );
+		$nameSpace = $this->request->getInt( 'nameSpace', NS_MAIN );
+		$this->title = \Title::newFromText( $this->request->getVal( 'title' ), $nameSpace );
 		$this->summary = $this->request->getVal( 'summary' );
 		$this->currentRevId = $this->request->getVal( 'currentRevId' );
 		$this->previousRevId = $this->request->getVal( 'previousRevId' );
@@ -160,7 +161,7 @@ class WatchedPageController extends EmailController {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}
-		return wfMessage( 'enotif_no_summary' )->inLanguage( $this->targetLang )->text();
+		return wfMessage( 'emailext-watchedpage-no-summary' )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**

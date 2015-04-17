@@ -199,11 +199,11 @@ $messages['zh-hans'] = array(
 	'emailext-desc' => '用来处理发送邮件的扩展功能',
 	'emailext-no-reply-name' => '请勿回复',
 	'emailext-fans-tagline' => '全球粉丝社交帝国',
-	'emailext-password-email-greeting' => '$1，您好！',
-	'emailext-password-email-content' => '请使用这个临时密码登入Wikia的"$1"
+	'emailext-password-email-greeting' => '$1，您好，',
+	'emailext-password-email-content' => '请用这个临时密码登入Wikia的"$1"。
 <br /><br />
-如果您没有申请新的密码，别担心！您的账户安全无忧。 您可以忽略这封邮件并继续使用您的旧密码登入Wikia。<br /><br />
-如有您还有其他任何疑问，请随时<a href="http://zh.community.wikia.com/wiki/Special:Contact/account-issue">联系我们</a>。',
+如果您没有申请新的密码，别担心！您的账户安全无忧。您可以忽略这个邮件并继续用您的旧密码登入Wikia。<br /><br />
+如有任何疑问或顾虑，请随时<a href="http://zh.community.wikia.com/wiki/Special:Contact/account-issue">联系我们</a>。',
 	'emailext-password-email-signature' => 'Wikia社区支持团队',
 	'emailext-password-email-subject' => '重设密码请求',
 	'emailext-fanverse-tagline' => '全球粉丝社交帝国',

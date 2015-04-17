@@ -625,6 +625,8 @@ include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
+//TODO Enable this (and remove $wgEnablePageShareExt from config after release of the PageShare
+//include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -774,7 +776,6 @@ $wgWikiaMailerDB = 'wikia_mailer';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
-$wgAutoloadClasses['Wikia\\MastersPoll'] = "$IP/includes/wikia/MastersPoll.php";
 
 /**
  * @name wgEnableBlogCommentEdit, wgEnabledGroupedBlogComments, wgEnableBlogWatchlist
@@ -1263,18 +1264,6 @@ $wgAdPageLevelCategoryLangs = [ 'en' ];
 $wgEnableJavaScriptErrorLogging = false;
 
 /**
- * @name $wgLoadLateAdsAfterPageLoad
- * Enables postpones start for ads in late queue until page "load" event.
- */
-$wgLoadLateAdsAfterPageLoad = false;
-
-/**
- * @name $wgAdDriverEnableRemnantGptMobile
- * Enables Remnant Gpti on Mobile experiment
- */
-$wgAdDriverEnableRemnantGptMobile = false;
-
-/**
  * @name $wgEnableAdEngineExt
  * Enables ad engine
  */
@@ -1291,21 +1280,6 @@ $wgAdDriverUseAdsAfterInfobox = false;
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
 $wgAdDriverUseTaboola = false;
-
-/**
- * @name $wgAdDriverAlwaysCallDartInCountries
- * Disables the max N calls to DART and enables Remnant GPT call in those countries.
- * This is an instant globals, which means you set it only on community and it takes
- * effect on all wikis within 15 minutes.
- */
-$wgAdDriverAlwaysCallDartInCountries = [];
-
-/**
- * @name $wgAdDriverAlwaysCallDartInCountriesMobile
- * Enable Remnant GPT call in those countries on wikiamobile skin.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverAlwaysCallDartInCountriesMobile = [];
 
 /**
  * @name $wgAdDriverUseTopInContentBoxad
@@ -1708,11 +1682,19 @@ $wgOasisTypography = false;
 $wgOasisBreakpoints = false;
 
 /**
+ * Force new breakpoints $wgOasisBreakpoints for German wikis
+ * see CONCF-433
+ * todo remove when 71M adjusts their styles
+ */
+$wgOasisBreakpointsDE = false;
+
+/**
  * Add poweruser to implicit groups
  */
 $wgImplicitGroups[] = 'poweruser';
 
 /**
  * Enable updated GlobalFooter
+ * @TODO CONCF-444 - remove this variable
  */
-$wgEnableUpdatedGlobalFooter = false;
+$wgEnableUpdatedGlobalFooter = true;

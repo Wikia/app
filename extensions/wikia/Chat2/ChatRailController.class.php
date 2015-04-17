@@ -36,6 +36,7 @@ class ChatRailController extends WikiaController {
 	/**
 	 * Chat entry point - rendered via Ajax or pre-rendered in JS variable
 	 * @todo: backward compatibility method, remove it till Oct 2013
+	 * @todo: Ticket to remove this function: https://wikia-inc.atlassian.net/browse/SOC-638
 	 */
 	public function executeContents() {
 		global $wgUser, $wgReadOnly, $wgEnableWallExt;

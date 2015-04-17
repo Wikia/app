@@ -29,11 +29,8 @@ class AdEngine2ContextService {
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
-					'adsInHead' => $wg->LoadAdsInHead,
-					'alwaysCallDart' => $wg->AdDriverAlwaysCallDart,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
-					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
@@ -59,7 +56,6 @@ class AdEngine2ContextService {
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
-					'remnantGptMobile' => $wg->AdDriverEnableRemnantGptMobile,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola,

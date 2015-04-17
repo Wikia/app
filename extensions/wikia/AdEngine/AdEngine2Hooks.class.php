@@ -3,13 +3,11 @@
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
-	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
-	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_ADENGINE_DESKTOP = 'adengine2_desktop_js';
 	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
 	const ASSET_GROUP_OASIS_ADS = 'adengine2_oasis_ads_js';
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
@@ -23,12 +21,10 @@ class AdEngine2Hooks {
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
 
-		// TODO: review top and bottom vars (important for adsinhead)
-
 		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
-			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad,
-			   $wgEnableKruxOnMobile, $wgAdDriverForceTurtleAd, $wgAdDriverUseSevenOneMedia, $wgUsePostScribe;
+			$wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
+			$wgAdEngineDisableLateQueue, $wgEnableKruxOnMobile,
+			$wgAdDriverForceTurtleAd, $wgAdDriverUseSevenOneMedia, $wgUsePostScribe;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
@@ -39,14 +35,11 @@ class AdEngine2Hooks {
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 		$wgAdDriverForceTurtleAd = $request->getBool( 'forceturtle', $wgAdDriverForceTurtleAd );
 
-		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
-		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
-
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
 
 		// use PostScribe with 71Media - check scriptwriter.js:35
-		if( $wgAdDriverUseSevenOneMedia ) {
+		if ( $wgAdDriverUseSevenOneMedia ) {
 			$wgUsePostScribe = true;
 		}
 
@@ -62,12 +55,9 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
-		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
-		$vars[] = 'wgAdDriverAlwaysCallDartInCountriesMobile';
-
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchOldCountries';
-		$vars[] = 'wgHighValueCountries';
+		$vars[] = 'wgHighValueCountries'; // Used by Liftium only
 		$vars[] = 'wgAdDriverTurtleCountries';
 
 		/**
@@ -106,7 +96,7 @@ class AdEngine2Hooks {
 		$vars['adDriver2ForcedStatus'] = [];     // 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
 
 		// GA vars
-		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
+		$vars['wgGaHasAds'] = isset( $adContext['opts']['showAds'] );
 
 		// 71Media
 		$vars['wgUsePostScribe'] = $wgUsePostScribe;
@@ -125,23 +115,7 @@ class AdEngine2Hooks {
 
 		global $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
-		$coreGroupIndex = array_search( self::ASSET_GROUP_CORE, $jsAssets );
-		if ( $coreGroupIndex === false ) {
-			// Do nothing. oasis_shared_core_js must be present for ads to work
-			return true;
-		}
-
-		if ( AdEngine2Service::areAdsInHead() ) {
-			if ( AdEngine2Service::shouldLoadLateQueue() ) {
-				array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE_LATE );
-			}
-			// The ASSET_GROUP_ADENGINE_LATE package was added to the blocking group
-		} else {
-			array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE );
-			if ( AdEngine2Service::shouldLoadLateQueue() ) {
-				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_ADENGINE_LATE );
-			}
-		}
+		$jsAssets[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
 
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
@@ -162,7 +136,7 @@ class AdEngine2Hooks {
 	}
 
 	/**
-	 * Modify assets appended to the top of the page
+	 * Modify assets appended to the top of the page: add RubiconRtp and AmazonMatch lookup services
 	 *
 	 * @param array $jsAssets
 	 *
@@ -172,11 +146,6 @@ class AdEngine2Hooks {
 
 		// Tracking should be available very early, so we can track how lookup calls (Amazon, Rubicon) perform
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_TRACKING;
-
-		if ( AdEngine2Service::areAdsInHead() ) {
-			// Add ad asset to JavaScripts loaded on top (in <head>)
-			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
-		}
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
@@ -217,9 +186,6 @@ class AdEngine2Hooks {
 
 	/**
 	 * Modify assets appended to the bottom of wikiaMobileSkin
-	 *
-	 * Note the dependency resolver does not work at this time, so we need to add every
-	 * module needed including their dependencies.
 	 *
 	 * @static
 	 * @param $jsStaticPackages
@@ -262,18 +228,18 @@ class AdEngine2Hooks {
 		return true;
 	}
 
-	public static function onSkinAfterBottomScripts(Skin $skin, &$text) {
+	public static function onSkinAfterBottomScripts( Skin $skin, &$text ) {
 		// TODO: Check whether this works also on Oasis!
-		if ($skin->getSkinName() === 'venus') {
+		if ( $skin->getSkinName() === 'venus' ) {
 			$text .= AdEngine2Controller::getLiftiumOptionsScript();
-			$text .= Html::inlineScript( 'Liftium.init();' )."\n";
+			$text .= Html::inlineScript( 'Liftium.init();' ) . "\n";
 		}
 		return true;
 	}
 
 	public static function onVenusAssetsPackages( array &$jsHeadGroups, array &$jsBodyGroups, array &$cssGroups ) {
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_TRACKING;
-		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE;
+		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_DESKTOP;
 		$jsHeadGroups[] = self::ASSET_GROUP_VENUS_ADS;
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
@@ -284,9 +250,6 @@ class AdEngine2Hooks {
 			$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
 		}
 
-		if ( AdEngine2Service::shouldLoadLateQueue() ) {
-			$jsBodyGroups[] = self::ASSET_GROUP_ADENGINE_LATE;
-		}
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsBodyGroups[] = self::ASSET_GROUP_LIFTIUM;
 		}

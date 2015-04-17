@@ -54,19 +54,17 @@ $config['liftium_ads_extra_js'] = array(
 	)
 );
 
-$config['adengine2_js'] = array(
+$config['adengine2_desktop_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
-		// core + high prio
+		// was: early queue
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/scriptwriter.js',
-		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
-		'//extensions/wikia/AdEngine/js/AdEngine2.run.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
@@ -85,6 +83,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaAdHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/later.js',
@@ -96,16 +95,7 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//resources/wikia/modules/krux.js',
 
-		// for low see adengine2_late_js
-	),
-);
-
-$config['adengine2_late_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus', 'wikiamobile'],
-	'assets' => array(
-		// ads
-		'//extensions/wikia/AdEngine/js/AdConfig2Late.js',
+		// was: late queue
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
@@ -113,6 +103,8 @@ $config['adengine2_late_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/evolve.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
 		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
+
+		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
 	),
 );
 
@@ -711,7 +703,6 @@ $config['mobile_base_ads_js'] = array(
 		'//resources/wikia/modules/instantGlobals.js',
 
 		// Advertisement libs
-		'//extensions/wikia/AdEngine/js/AdConfigMobile.js',
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
@@ -719,13 +710,13 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
-		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+		'//extensions/wikia/AdEngine/js/config/mobile.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
@@ -758,8 +749,9 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/abTest.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
-		'//extensions/wikia/AdEngine/js/mercury.run.js',
 		'//resources/wikia/modules/krux.js',
+
+		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 	)
 );
 
@@ -801,7 +793,7 @@ $config['wikiamobile_ads_js'] = array(
 		'#group_adengine2_interactive_maps_js',
 
 		// Run!
-		'//extensions/wikia/WikiaMobile/js/ads_run.js',
+		'//extensions/wikia/AdEngine/js/run/wikiamobile.run.js',
 	)
 );
 
@@ -2372,6 +2364,22 @@ $config['upload_photos_dialog_scss'] = [
 	'assets' => [
 		'//extensions/wikia/WikiaNewFiles/styles/UploadPhotoDialog.scss'
 	]
+];
+
+$config['page_share_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PageShare/scripts/PageShare.js'
+	]
+];
+
+$config['page_share_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PageShare/styles/share.scss'
+	],
 ];
 
 $config['old_global_footer_scss'] = [

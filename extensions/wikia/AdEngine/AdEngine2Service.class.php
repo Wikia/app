@@ -39,16 +39,6 @@ class AdEngine2Service {
 		return !$wgAdEngineDisableLateQueue;
 	}
 
-	public static function areAdsInHead() {
-		global $wgLoadAdsInHead;
-		return $wgLoadAdsInHead;
-	}
-
-	public static function areAdsAfterPageLoad() {
-		global $wgLoadLateAdsAfterPageLoad;
-		return $wgLoadLateAdsAfterPageLoad;
-	}
-
 	/**
 	 * @deprecated
 	 * @return array

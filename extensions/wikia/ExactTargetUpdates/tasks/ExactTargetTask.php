@@ -64,7 +64,7 @@ class ExactTargetTask extends BaseTask {
 
 	/**
 	 * Returns an instance of ExactTargetUserDataVerification class
-	 * @return ExactTargetUserDataVerification
+	 * @return ExactTargetUserDataVerificationTask
 	 */
 	protected function getUserDataVerificationTask() {
 		return new ExactTargetUserDataVerificationTask();

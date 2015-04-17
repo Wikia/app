@@ -18,6 +18,14 @@ class Chat {
 	}
 
 	/**
+	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
+	 * parameter sent with every chat request to the Node.js server.
+	 *
+	 * The key is then used by ChatAjax::getUserInfo() to load the info back from memcached.
+	 *
+	 * Here is the original description of this method, which is likely old and incorrect:
+	 * ---
+	 *
 	 * This function is meant to just echo the COOKIES which are available to the apache server.
 	 *
 	 * This helps to work around a limitation in the fact that javascript can't access the second-level-domain's
@@ -31,7 +39,7 @@ class Chat {
 		if( !$wgUser->isLoggedIn() ) {
 			return array("key" => false ) ;
 		}
-		$key = md5( $wgUser->getId() . "_" . time() . '_' .  mt_rand(0, 65535) );
+		$key = sha1( $wgUser->getId() . "_" . microtime() . '_' .  mt_rand() );
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*48);
 		return $key;
 	} // end echoCookies()
@@ -219,6 +227,9 @@ class Chat {
 
 	/**
 	 * Return ban information if user is not ban return false;
+	 *
+	 * @TODO Cache query and provide cache clearing function: https://wikia-inc.atlassian.net/browse/SOC-639
+	 *
 	 *
 	 * @param int $cityId
 	 * @param User $banUser
