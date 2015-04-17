@@ -9,9 +9,10 @@ require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, Bann
 
 	var bannerNotification = new BannerNotification(),
 		qs = new Querystring(),
+		insights = qs.getVal('insights', null),
+		isVE = qs.getVal('veaction', null),
+		initNotification,
 		showNotification;
-
-	console.log(bannerNotification);
 
 	showNotification = function showNotification(html) {
 		if (html) {
@@ -19,15 +20,28 @@ require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, Bann
 		}
 	};
 
-	$.nirvana.sendRequest({
-		controller: 'Insights',
-		method: 'loopNotification',
-		format: 'html',
-		type: 'get',
-		data: {
-			insight: qs.getVal('insights')
-		},
-		callback: showNotification
-	});
+	initNotification = function() {
+		$.nirvana.sendRequest({
+			controller: 'Insights',
+			method: 'loopNotification',
+			format: 'html',
+			type: 'get',
+			data: {
+				insight: insights
+			},
+			callback: showNotification
+		});
+	};
 
+	if (insights) {
+		if (isVE) {
+			window.mw.hook('ve.deactivationComplete').add(function(saved){
+				if (saved) {
+					initNotification();
+				}
+			});
+		} else {
+			initNotification();
+		}
+	}
 });
