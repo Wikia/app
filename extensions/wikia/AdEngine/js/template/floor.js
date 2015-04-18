@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.template.floor', [
 			'<svg role="img" class="ads-floor-close-button"><use xlink:href="#close"></use></svg>' +
 			'</a>' +
 			'</div>',
-		$ = $ || win.$;
+		$ = win.$;
 
 	/**
 	 * Show the floor ad.
