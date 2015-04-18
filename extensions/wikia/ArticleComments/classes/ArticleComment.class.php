@@ -597,7 +597,7 @@ class ArticleComment {
 			'title' => $title,
 			'partsOriginal' => $partsOriginal,
 			'partsStripped' => $partsStripped
-		 ];
+		];
 
 		return $result;
 	}
@@ -1000,7 +1000,7 @@ class ArticleComment {
 				'articleId' => $articleId,
 				'page' => 1,
 				'skin' => 'true'
-			 ]
+			]
 		);
 
 		wfRunHooks( 'ArticleCommentGetSquidURLs', [ $title, &$urls ] );
@@ -1073,7 +1073,7 @@ class ArticleComment {
 			'msg'    	=> $message,
 			'status' 	=> $status,
 			'text'   	=> $text
-		 ];
+		];
 
 		return $res;
 	}
@@ -1366,7 +1366,7 @@ class ArticleComment {
 					'cat'		=> '',
 					'selwikia'	=> $wgCityId,
 					'user'		=> self::MOVE_USER
-				 ];
+				];
 
 				for ( $i = $finish + 1; $i < count( $comments ); $i++ ) {
 					$aCommentArr = $comments[$i];
