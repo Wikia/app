@@ -460,7 +460,7 @@ class ArticleComment {
 
 			$rawmwtimestamp = $this->mFirstRevision->getTimestamp();
 			$rawtimestamp = wfTimeFormatAgo( $rawmwtimestamp );
-			$timestamp = "<a rel='nofollow' href='" . $title->getFullUrl( [  'permalink' => $commentId  ] ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo( $rawmwtimestamp ) . "</a>";
+			$timestamp = "<a rel='nofollow' href='" . $title->getFullUrl( [ 'permalink' => $commentId ] ) . '#comm-' . $commentId . "' class='permalink'>" . wfTimeFormatAgo( $rawmwtimestamp ) . "</a>";
 
 			$comment = [
 				'id' => $commentId,
@@ -778,7 +778,7 @@ class ArticleComment {
 			}
 
 			ArticleCommentList::purgeCache( $purgeTarget );
-			$res = [  $retval, $article  ];
+			$res = [ $retval, $article ];
 		} else {
 			$res = false;
 		}
@@ -943,7 +943,7 @@ class ArticleComment {
 
 		wfProfileOut( __METHOD__ );
 
-		return [  $retval, $article, $res  ];
+		return [ $retval, $article, $res ];
 	}
 
 	/**
@@ -1003,7 +1003,7 @@ class ArticleComment {
 			 ]
 		);
 
-		wfRunHooks( 'ArticleCommentGetSquidURLs', [  $title, &$urls  ] );
+		wfRunHooks( 'ArticleCommentGetSquidURLs', [ $title, &$urls ] );
 
 		return $urls;
 	}
@@ -1018,7 +1018,7 @@ class ArticleComment {
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 
-		wfRunHooks( 'ArticleCommentAfterPost', [  $status, &$article  ] );
+		wfRunHooks( 'ArticleCommentAfterPost', [ $status, &$article ] );
 		$commentId = $article->getId();
 		$error = false;
 		$id = 0;
@@ -1086,7 +1086,7 @@ class ArticleComment {
 	static public function addArticlePageToWatchlist( $comment ) {
 		global $wgUser, $wgEnableArticleWatchlist, $wgBlogsEnableStaffAutoFollow;
 
-		if ( !wfRunHooks( 'ArticleCommentBeforeWatchlistAdd', [  $comment  ] ) ) {
+		if ( !wfRunHooks( 'ArticleCommentBeforeWatchlistAdd', [ $comment ] ) ) {
 			return true;
 		}
 
@@ -1133,7 +1133,7 @@ class ArticleComment {
 		global $wgEnableGroupedArticleCommentsRC;
 		wfProfileIn( __METHOD__ );
 
-		wfRunHooks( 'AC_RecentChange_Save', [  &$oRC  ] );
+		wfRunHooks( 'AC_RecentChange_Save', [ &$oRC ] );
 
 		if ( !empty( $wgEnableGroupedArticleCommentsRC ) && ( $oRC instanceof RecentChange ) ) {
 			$title = $oRC->getAttribute( 'rc_title' );
@@ -1255,7 +1255,7 @@ class ArticleComment {
 
 		if ( !is_object( $oCommentTitle ) ) {
 			wfProfileOut( __METHOD__ );
-			return [  'invalid title'  ];
+			return [ 'invalid title' ];
 		}
 
 		$currentUser = $wgUser;
