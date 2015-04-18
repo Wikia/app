@@ -434,6 +434,12 @@ class EmailNotification {
 		if ( $this->emailExtensionEnabled() ) {
 			$this->sendUsingEmailExtension( $user );
 		} else {
+			\Wikia\Logger\WikiaLogger::instance()->notice( 'Sending via UserMailer', [
+				'page' => $this->title->getDBkey(),
+				'summary' => $this->summary,
+				'action' => $this->action,
+				'subject' => $this->subject,
+			] );
 			$this->sendUsingUserMailer( $user );
 		}
 
