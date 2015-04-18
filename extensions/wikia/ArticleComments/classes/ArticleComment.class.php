@@ -404,7 +404,7 @@ class ArticleComment {
 		$data = $wgMemc->get( $articleDataKey );
 
 		if ( !empty( $data ) ) {
-			$data['timestamp'] = "<a href='" . $title->getFullUrl( [  'permalink' => $data['id']  ] ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo( $data['rawmwtimestamp'] ) . "</a>";
+			$data['timestamp'] = "<a href='" . $title->getFullUrl( [ 'permalink' => $data['id'] ] ) . '#comm-' . $data['id'] . "' class='permalink'>" . wfTimeFormatAgo( $data['rawmwtimestamp'] ) . "</a>";
 
 			wfProfileOut( __METHOD__ );
 			return $data;
