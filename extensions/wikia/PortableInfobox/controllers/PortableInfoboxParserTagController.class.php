@@ -27,60 +27,14 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
-		$infoboxParser = new Wikia\PortableInfobox\Parser\Parser( $frame->getNamedArguments() );
+		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $frame->getNamedArguments() );
 		$infoboxParser->setExternalParser( (new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) ) );
 		$data = $infoboxParser->getDataFromXmlString( $markup );
 
 		$renderer = new PortableInfoboxRenderService();
 		$renderedValue = $renderer->renderInfobox( $data );
+
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 
-	private function parseData( $json, Parser $parser, PPFrame $frame ) {
-		$result = [ ];
-		foreach ( $json->items as $item ) {
-			$result[ $item->tag->value ] = $this->parseItem( $item, $parser, $frame );
-		}
-		return $result;
-	}
-
-	private function parseItem( $item, Parser $parser, PPFrame $frame ) {
-		$result = [
-			'type' => $item->type->value,
-			'data' => [
-				'label' => $this->parseValue( $item->label->value, $parser, $frame ),
-				'value' => $this->parseValue( $item->value->value, $parser, $frame ),
-			]
-		];
-		//add path for image type
-		if ( $item->type->value == 'image' ) {
-			//resolve url
-			$result[ 'data' ][ 'value' ] = $this->resolveImageUrl( $result[ 'data' ][ 'value' ] );
-			//get alt attribute
-			if ( !empty( $item->properties->alt->value ) ) {
-				$result[ 'data' ][ 'alt' ] = $this->parseValue( $item->properties->alt->value, $parser, $frame );
-			}
-		}
-		return $result;
-	}
-
-	private function resolveImageUrl( $filename ) {
-		$title = Title::newFromText( $filename, NS_FILE );
-		if ( $title && $title->exists() ) {
-			return WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();
-		}
-		return "";
-	}
-
-	private function parseValue( $text, Parser $parser, PPFrame $frame ) {
-		if ( !empty( $text ) ) {
-			$options = $parser->getOptions();
-			$options->enableLimitReport( false );
-			$preprocessed = $parser->recursivePreprocess( $text, $frame );
-			$newlinesstripped = preg_replace( "|[\n\r]|Us", '', $preprocessed );
-			$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
-			return ( new Parser() )->parse( $marksstripped, $parser->getTitle(), $options, false )->getText();
-		}
-		return "";
-	}
 }

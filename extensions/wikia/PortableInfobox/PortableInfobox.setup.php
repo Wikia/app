@@ -20,19 +20,23 @@ $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/Portable
 
 // parser
 $wgAutoloadClasses[ 'PortableInfoboxMarkupParserService' ] = $dir . 'services/PortableInfoboxMarkupParserService.class.php';
-
-// autoloads values in the Wikia\PortableInfobox namespace
-spl_autoload_register( function( $class ) {
-	if ( substr_count( $class, 'Wikia\\PortableInfobox\\' ) > 0 ) {
-		$class = preg_replace( '/\\\\?Wikia\\\\PortableInfobox\\\\/', '', $class );
-		$file = __DIR__ . '/services/'.strtr( $class, '\\', '/' ).'.php';
-		if ( file_exists( $file ) ) {
-			require_once( $file );
-			return true;
-		}
-		return false;
-	}
-});
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\XmlParser'] = $dir . 'services/Parser/XmlParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\MediaWikiParserService'] = $dir . 'services/Parser/MediaWikiParserService.php';
+$wgInfoboxParserNodes = [
+	'Node',
+	'NodeComparison',
+	'NodeFooter',
+	'NodeGroup',
+	'NodeHeader',
+	'NodeImage',
+	'NodePair',
+	'NodeTitle',
+	'NodeUnimplemented'
+];
+foreach ( $wgInfoboxParserNodes as $parserNode ) {
+	$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\'.$parserNode ] = $dir . 'services/Parser/Nodes/'.$parserNode.'.php';
+}
 
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';

@@ -35,8 +35,8 @@ class Node {
 		return [ 'value' => (string) $this->xmlNode ];
 	}
 
-	public function isNotEmpty( $data ) {
-		return isset( $data['value'] ) && !empty( $data['value'] );
+	public function isEmpty( $data ) {
+		return !( isset( $data[ 'value' ] ) ) || empty( $data[ 'value' ] );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
@@ -48,7 +48,7 @@ class Node {
 		if ( !$value ) {
 			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
 				$value = (string) $xmlNode->{self::DEFAULT_TAG_NAME};
-				$value = $this->parseWithExternalParser( $value );
+				$value = $this->parseWithExternalParser( $value, true );
 			}
 		}
 		return $value;
@@ -60,8 +60,11 @@ class Node {
 		return null;
 	}
 
-	protected function parseWithExternalParser( $data ) {
+	protected function parseWithExternalParser( $data, $recursive = false ) {
 		if ( !empty( $data ) && !empty( $this->externalParser ) ) {
+			if ( $recursive ) {
+				return $this->externalParser->parseRecursive( $data );
+			}
 			return $this->externalParser->parse( $data );
 		}
 		return $data;

@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser;
 
-class Parser {
+class XmlParser {
 
 	protected $infoboxData;
 	protected $externalParser;
@@ -36,7 +36,7 @@ class Parser {
 			$data[] = [
 				'type' => $nodeHandler->getType(),
 				'data' => $nodeData,
-				'isNotEmpty' => $nodeHandler->isNotEmpty( $nodeData )
+				'isEmpty' => $nodeHandler->isEmpty( $nodeData )
 			];
 		}
 		return $data;

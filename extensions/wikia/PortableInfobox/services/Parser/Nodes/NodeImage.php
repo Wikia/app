@@ -12,7 +12,7 @@ class NodeImage extends Node {
 		return $node;
 	}
 
-	public function resolveImageUrl( $filename ) {
+	protected function resolveImageUrl( $filename ) {
 		$title = \Title::newFromText( $filename, NS_FILE );
 		if ( $title && $title->exists() ) {
 			return \WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();

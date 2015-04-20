@@ -6,11 +6,11 @@ class NodeFooter extends Node {
 
 	public function getData() {
 		$data = [];
-		$data['links'] = $this->parseWithExternalParser( (string) $this->xmlNode->{self::LINKS_TAG_NAME} );
+		$data['links'] = $this->parseWithExternalParser( (string) $this->xmlNode->{self::LINKS_TAG_NAME}, true );
 		return $data;
 	}
 
-	public function isNotEmpty( $data ) {
-		return !empty( $data['links'] );
+	public function isEmpty( $data ) {
+		return empty( $data['links'] );
 	}
 }

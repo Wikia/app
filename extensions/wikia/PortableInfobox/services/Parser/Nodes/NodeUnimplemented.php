@@ -7,6 +7,9 @@ class NodeUnimplemented extends Node {
 	}
 
 	public function getData() {
-
+		throw new UnimplementedNodeException('Unimplemented node type');
 	}
+}
+
+class UnimplementedNodeException extends \Exception {
 }

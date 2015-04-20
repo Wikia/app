@@ -28,7 +28,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ( $infoboxdata as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
-			if ( !empty( $data ) && $item['isNotEmpty'] ) {
+			if ( !$item['isEmpty'] ) {
 				// skip rendering for not supported type and log it
 				if ( !isset( $this->templates[ $type ] ) ) {
 					Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
