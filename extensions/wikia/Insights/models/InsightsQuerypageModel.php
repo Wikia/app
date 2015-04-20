@@ -65,4 +65,16 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 
 		return $data;
 	}
+
+	/**
+	 * Get data about next element
+	 *
+	 * @param int $offset
+	 * @return mixed
+	 */
+	public function getNext( $offset = 0 ) {
+		$next = array_pop( $this->getContent( $offset, 1) );
+
+		return $next;
+	}
 } 
