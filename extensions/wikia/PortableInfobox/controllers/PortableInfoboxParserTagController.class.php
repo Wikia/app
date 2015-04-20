@@ -28,8 +28,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
 		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $frame->getNamedArguments() );
-		$infoboxParser->setExternalParser( (new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) ) );
+		$infoboxParser->setExternalParser( ( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) ) );
 		$data = $infoboxParser->getDataFromXmlString( $markup );
+		//save for later api usage
+		$this->saveToParserOutput( $parser->getOutput(), $data );
 
 		$renderer = new PortableInfoboxRenderService();
 		$renderedValue = $renderer->renderInfobox( $data );
