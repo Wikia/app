@@ -5,13 +5,15 @@ use Wikia\PortableInfobox\Parser\XmlParser;
 
 class NodeComparison extends  Node {
 
-	const SINGLE_GROUP_TYPE_NAME = 'comparision_group';
+	const SINGLE_GROUP_TYPE_NAME = 'set';
 
 	public function getData() {
 		$data = [];
 		$data['value'] = [];
 		$nodeFactory = new XmlParser( $this->infoboxData );
-		$nodeFactory->setExternalParser( $this->externalParser );
+		if ( $this->externalParser ) {
+			$nodeFactory->setExternalParser( $this->externalParser );
+		}
 		foreach ( $this->xmlNode as $set ) {
 			$value = $nodeFactory->getDataFromNodes( $set );
 			$data['value'][] = [ 'type' => self::SINGLE_GROUP_TYPE_NAME,
