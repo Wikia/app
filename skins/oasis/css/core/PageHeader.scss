@@ -123,8 +123,6 @@
 		border-bottom: solid 1px $color-page-border;
 		margin-bottom: 10px;
 		padding-bottom: 7px;
-		//@TODO CONCF-189 should be removed when social buttons enabled globally - flexbox enabled
-		padding-right: 175px;
 
 		> .comments {
 			margin: 2px 10px 0;
@@ -143,8 +141,7 @@
 
 	&.oasis-one-column {
 		.WikiaPageHeader {
-			//@TODO CONCF-189 should be removed when social buttons enabled globally - flexbox enabled
-			padding-right: 505px;
+			padding-right: 0;
 
 			&.WikiaPageHeaderDiffHistory {
 				margin-right: 10px;
@@ -202,18 +199,10 @@
 	}
 }
 
-//Changes related with Social Icons roll-out
-//@TODO CONCF-189 padding-right should be removed when social buttons enabled globally
-.oasis-one-column {
-	.wikia-page-header.WikiaPageHeader {
-		padding-right: 0;
-	}
-}
 .wikia-page-header {
 	//@TODO CONCF-189 border-bottom should be removed when social buttons enabled globally
 	&.WikiaPageHeader {
-		border: none;
-		padding-right: 0;
+		border: 0;
 	}
 
 	.header-container {
@@ -236,6 +225,7 @@
 			@include align-self(flex-start);
 			@include flex(0 1 100%);
 			order: 0;
+			word-wrap: break-word;
 		}
 
 		&.header-tally {
@@ -264,32 +254,6 @@
 
 		h1 {
 			margin: 0 10px 0 0;
-		}
-	}
-}
-
-//For IE10+ - flexbox doesn't work properly on IE browsers.
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-	.wikia-page-header {
-		.header-container {
-			display: block;
-			overflow: hidden;
-		}
-	}
-
-	//Double class to override style for [class*='column'] + [class*='column']:last-child
-	.WikiaPageHeader.wikia-page-header .header-column {
-		display: inline-block;
-		float: none;
-
-		&.header-title {
-			@include width-calc('100% - 185px');
-			word-wrap: break-word;
-		}
-
-		&.header-tally {
-			text-align: right;
-			width: 175px;
 		}
 	}
 }
