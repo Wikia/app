@@ -1,9 +1,8 @@
 <?php
 
 class InsightsUncategorizedModel extends InsightsQuerypageModel {
-	public $settings = [
-		'template' => 'subpageList',
-	];
+
+	public $type = 'Uncategorizedpages';
 
 	public function getDataProvider() {
 		return new UncategorizedPagesPage();
@@ -29,5 +28,14 @@ class InsightsUncategorizedModel extends InsightsQuerypageModel {
 			}
 		}
 		return $data;
+	}
+
+	public function isItemFixed( WikiPage $wikiPage ) {
+		$title = Title::newFromID( $wikiPage->getId() );
+		$categories = $title->getParentCategories( true );
+		if ( !empty( $categories ) ) {
+			return $this->removeFixedItem( $this->type, $title );
+		}
+		return false;
 	}
 }
