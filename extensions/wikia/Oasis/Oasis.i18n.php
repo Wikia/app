@@ -201,7 +201,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
 	'oasis-social-youtube' => 'YouTube',
-	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikias',
+	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
 );
 
 /** Message documentation (Message documentation)
