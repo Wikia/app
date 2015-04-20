@@ -11,6 +11,7 @@ class NodeComparison extends  Node {
 		$data = [];
 		$data['value'] = [];
 		$nodeFactory = new XmlParser( $this->infoboxData );
+		$nodeFactory->setExternalParser( $this->externalParser );
 		foreach ( $this->xmlNode as $set ) {
 			$value = $nodeFactory->getDataFromNodes( $set );
 			$data['value'][] = [ 'type' => self::SINGLE_GROUP_TYPE_NAME,
