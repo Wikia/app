@@ -7,27 +7,30 @@ use Email\EmailController;
 
 class WatchedPageController extends EmailController {
 
+	const AVATAR_SIZE = 50;
+
 	/* @var \Title */
 	private $title;
 	private $summary;
 	private $currentRevId;
 	private $previousRevId;
+	private $replyToAddress;
+	private $fromAddress;
 
 	public function getSubject() {
 		return wfMessage( 'emailext-watchedpage-subject',
 			$this->title->getPrefixedText(),
-			$this->getCurrentUserName()
-		)->inLanguage( $this->targetLang )->text();
+			$this->getEditorUserName() )->inLanguage( $this->targetLang )->text();
 	}
 
 	public function initEmail() {
-		$titleText = $this->request->getVal( 'title' );
-		$titleNamespace = $this->request->getVal( 'namespace', NS_MAIN );
-
-		$this->title = \Title::newFromText( $titleText, $titleNamespace );
-		$this->summary = $this->getVal( 'summary' );
-		$this->currentRevId = $this->getVal( 'currentRevId' );
-		$this->previousRevId = $this->getVal( 'previousRevId' );
+		$nameSpace = $this->request->getInt( 'nameSpace', NS_MAIN );
+		$this->title = \Title::newFromText( $this->request->getVal( 'title' ), $nameSpace );
+		$this->summary = $this->request->getVal( 'summary' );
+		$this->currentRevId = $this->request->getVal( 'currentRevId' );
+		$this->previousRevId = $this->request->getVal( 'previousRevId' );
+		$this->replyToAddress = $this->request->getVal( 'replyToAddress' );
+		$this->fromAddress = new \MailAddress( $this->request->getVal( 'fromAddress', '' ), $this->getVal( 'fromName', '' ) );
 
 		$this->assertValidParams();
 	}
@@ -38,6 +41,7 @@ class WatchedPageController extends EmailController {
 	private function assertValidParams() {
 		$this->assertValidTitle();
 		$this->assertValidRevIds();
+		$this->assertValiFromAddress();
 	}
 
 	/**
@@ -45,7 +49,7 @@ class WatchedPageController extends EmailController {
 	 */
 	private function assertValidTitle() {
 		if ( !$this->title instanceof \Title ) {
-			throw new Check( "Invalid value passed for title" );
+			throw new Check( "Invalid value passed for title (param: title)" );
 		}
 
 		if ( !$this->title->exists() ) {
@@ -55,17 +59,31 @@ class WatchedPageController extends EmailController {
 
 	private function assertValidRevIds() {
 		if ( empty( $this->currentRevId ) ) {
-			throw new Check( "Empty current Revision Id" );
+			throw new Check( "Empty value for current Revision ID (param: currentRevId)" );
 		}
 
 		if ( empty( $this->previousRevId ) ) {
-			throw new Check( "Empty previous Revision Id" );
+			throw new Check( "Empty value for previous Revision ID (param: previousRevId)" );
 		}
+	}
+
+	private function assertValiFromAddress() {
+		if ( $this->fromAddress->toString() == "" ) {
+			throw new Check( "Empty from address (param: fromAddress)" );
+		}
+	}
+
+	protected function getFromAddress() {
+		return $this->fromAddress;
+	}
+
+	protected function getReplyToAddress() {
+		return $this->replyToAddress;
 	}
 
 	protected function getFooterMessages() {
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text',
+			wfMessage( 'emailext-watchedpage-unfollow-text',
 				$this->title->getCanonicalUrl( 'action=unwatch' ),
 				$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse()
 		];
@@ -78,11 +96,11 @@ class WatchedPageController extends EmailController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
+			'articleEditedText' => $this->getArticleEditedText(),
+			'editorProfilePage' => $this->getEditorProfilePage(),
+			'editorUserName' => $this->getEditorUserName(),
+			'editorAvatarURL' => $this->getEditorAvatarURL(),
 			'summary' => $this->getSummary(),
-			'editorProfilePage' => $this->getCurrentProfilePage(),
-			'editorUserName' => $this->getCurrentUserName(),
-			'editorAvatarURL' => $this->getCurrentAvatarURL(),
-			'details' => $this->getDetails(),
 			'buttonText' => $this->getCompareChangesLabel(),
 			'buttonLink' => $this->getCompareChangesLink(),
 			'contentFooterMessages' => [
@@ -103,7 +121,7 @@ class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getSummary() {
+	private function getArticleEditedText() {
 		return wfMessage( 'emailext-watchedpage-article-edited',
 			$this->title->getFullURL(),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
@@ -112,7 +130,34 @@ class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getDetails() {
+	private function getEditorProfilePage() {
+		if ( $this->currentUser->isLoggedIn() ) {
+			return $this->currentUser->getUserPage()->getFullURL();
+		}
+		return "";
+	}
+
+	/**
+	 * @return String
+	 */
+	private function getEditorUserName() {
+		if ( $this->currentUser->isLoggedIn() )	 {
+			return $this->currentUser->getName();
+		}
+		return wfMessage( "emailext-watchedpage-anonymous-editor" )->inLanguage( $this->targetLang )->text();
+	}
+
+	/**
+	 * @return String
+	 */
+	private function getEditorAvatarURL() {
+		return \AvatarService::getAvatarUrl( $this->currentUser, self::AVATAR_SIZE );
+	}
+
+	/**
+	 * @return String
+	 */
+	private function getSummary() {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}
