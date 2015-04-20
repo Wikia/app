@@ -8,6 +8,7 @@ class InfoboxApiController extends WikiaApiController {
 		$data = [ ];
 		if ( $title && $title->exists() ) {
 			$data = Article::newFromTitle( $title, RequestContext::getMain() )
+				//on empty parser cache this should be regenerated, see WikiPage.php:2996
 				->getParserOutput()
 				->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME );
 		}
