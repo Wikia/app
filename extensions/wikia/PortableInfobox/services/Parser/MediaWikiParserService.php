@@ -13,15 +13,20 @@ class MediaWikiParserService implements ExternalParser {
 	}
 
 	public function parse( $wikitext ) {
-		return $this->getParserInstance()
+		wfProfileIn(__METHOD__);
+		$parsed = $this->getParserInstance()
 			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
 			->getText();
+		wfProfileOut(__METHOD__);
+		return $parsed;
 	}
 
 	public function parseRecursive( $wikitext ) {
+		wfProfileIn(__METHOD__);
 		$preprocessed = $this->parser->recursivePreprocess( $wikitext, $this->frame );
 		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $preprocessed );
 		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
+		wfProfileOut(__METHOD__);
 		return $this->parse( $marksstripped );
 	}
 

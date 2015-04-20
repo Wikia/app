@@ -29,16 +29,18 @@ class XmlParser {
 	 * @return array
 	 */
 	public function getDataFromNodes( \SimpleXMLElement $xmlIterable ) {
-		$data = [];
+		wfProfileIn(__METHOD__);
+		$data = [ ];
 		foreach ( $xmlIterable as $node ) {
 			$nodeHandler = $this->getNode( $node );
 			$nodeData = $nodeHandler->getData();
-			$data[] = [
+			$data[ ] = [
 				'type' => $nodeHandler->getType(),
 				'data' => $nodeData,
 				'isEmpty' => $nodeHandler->isEmpty( $nodeData )
 			];
 		}
+		wfProfileOut(__METHOD__);
 		return $data;
 	}
 
@@ -47,8 +49,11 @@ class XmlParser {
 	 * @return array
 	 */
 	public function getDataFromXmlString( $xml ) {
+		wfProfileIn( __METHOD__ );
 		$xml = simplexml_load_string( $xml );
-		return $this->getDataFromNodes( $xml );
+		$data = $this->getDataFromNodes( $xml );
+		wfProfileOut( __METHOD__ );
+		return $data;
 	}
 
 	/**
@@ -56,16 +61,19 @@ class XmlParser {
 	 * @return \Wikia\PortableInfobox\Parser\Nodes\Node
 	 */
 	public function getNode( \SimpleXMLElement $xmlNode ) {
+		wfProfileOut(__METHOD__);
 		$tagType = $xmlNode->getName();
-		$className = 'Wikia\\PortableInfobox\\Parser\\Nodes\\'.'Node' . ucfirst( strtolower( $tagType ) );
+		$className = 'Wikia\\PortableInfobox\\Parser\\Nodes\\' . 'Node' . ucfirst( strtolower( $tagType ) );
 		if ( class_exists( $className ) ) {
 			/* @var $instance \Wikia\PortableInfobox\Parser\Nodes\Node */
 			$instance = new $className( $xmlNode, $this->infoboxData );
 			if ( !empty( $this->externalParser ) ) {
 				$instance->setExternalParser( $this->externalParser );
 			}
+			wfProfileOut(__METHOD__);
 			return $instance;
 		}
+		wfProfileOut(__METHOD__);
 		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
 	}
 
