@@ -85,6 +85,9 @@ class InsightsController extends WikiaSpecialPageController {
 			case 'withoutimages':
 				$this->model = new InsightsWithoutimagesModel();
 				break;
+			case 'deadend':
+				$this->model = new InsightsDeadendModel();
+				break;
 			case 'wantedpages':
 				$this->model = new InsightsWantedpagesModel();
 				break;
