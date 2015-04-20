@@ -34,10 +34,24 @@ class PortableInfoboxRenderService extends WikiaService {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
 
-			if ( !$item['isEmpty'] ) {
-				if ( $this->validateType( $type ) ) {
-					$infoboxHtmlContent .= $this->renderItem( $type, $data );
-				}
+			if ( $item['isEmpty'] ) {
+				continue;
+			}
+
+			switch ( $type ) {
+				case 'comparison':
+					$infoboxHtmlContent .= $this->renderComparisonItem( $data );
+					break;
+				case 'group':
+					$infoboxHtmlContent .= $this->renderGroup( $data );
+					break;
+				case 'footer':
+					$infoboxHtmlContent .= $this->renderFooter( $data );
+					break;
+				default:
+					if ( $this->validateType( $type ) ) {
+						$infoboxHtmlContent .= $this->renderItem( $type, $data );
+					};
 			}
 		}
 
@@ -56,8 +70,16 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ( $comparisonData as $set ) {
 			$setHTMLContent = '';
 
+			if ( $set['isEmpty'] ) {
+				continue;
+			}
+
 			foreach ( $set as $item ) {
 				$type = $item[ 'type' ];
+
+				if ( $item['isEmpty'] ) {
+					continue;
+				}
 
 				if ( $type === 'header' ) {
 					$setHTMLContent .= $this->renderItem( 'comparison-set-header', [ 'content' => $item[ 'value' ] ] );
@@ -88,6 +110,10 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		foreach ( $groupData as $item ) {
 			$type = $item['type'];
+
+			if ( $item['isEmpty'] ) {
+				continue;
+			}
 
 			if ( $this->validateType( $type ) ) {
 				$groupHTMLContent .= $this->renderItem( $type, $item['value'] );
