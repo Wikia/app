@@ -15,6 +15,7 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 
 	abstract function getDataProvider();
 	abstract function prepareData( $res );
+	abstract function isItemFixed( WikiPage $wikiPage );
 
 	protected function getQueryPageInstance() {
 		return $this->queryPageInstance;
@@ -33,7 +34,6 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 	/**
 	 * Get list of article
 	 *
-	 * @param int $limit
 	 * @return array
 	 */
 	public function getContent() {
@@ -73,8 +73,14 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 	 * @return mixed
 	 */
 	public function getNext( $offset = 0 ) {
-		$next = array_pop( $this->getContent( $offset, 1) );
+		$next = array_pop($this->getContent($offset, 1));
 
 		return $next;
+	}
+
+	public function removeFixedItem( $type, Title $title ) {
+		$dbr = wfGetDB( DB_MASTER );
+		$dbr->delete( 'querycache', [ 'qc_type' => $type, 'qc_title' => $title->getDBkey() ] );
+		return $dbr->affectedRows() > 0;
 	}
 } 
