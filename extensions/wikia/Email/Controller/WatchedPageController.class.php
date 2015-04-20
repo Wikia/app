@@ -186,10 +186,7 @@ class WatchedPageController extends EmailController {
 	 */
 	private function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
-			$this->title->getFullURL( [
-				'diff' => 0,
-				'oldid' => $this->previousRevId
-			] ),
+			$this->title->getFullURL(),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 
