@@ -2,6 +2,7 @@
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
+	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
@@ -37,6 +38,14 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$renderedValue = $renderer->renderInfobox( $data );
 
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
+	}
+
+	protected function saveToParserOutput( \ParserOutput $parserOutput, $raw ) {
+		if ( !empty( $raw ) ) {
+			$infoboxes = $parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME );
+			$infoboxes[ ] = $raw;
+			$parserOutput->setProperty( self::INFOBOXES_PROPERTY_NAME, $infoboxes );
+		}
 	}
 
 }
