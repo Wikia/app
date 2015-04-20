@@ -16,7 +16,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'toast'], function ($, window
 		}).done(function (res) {
 				loader.processScript(res.scripts);
 			}
-		).fail(function () {});
+		);
 	}
 
 	function init() {
