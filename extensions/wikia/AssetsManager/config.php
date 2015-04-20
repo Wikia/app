@@ -2031,6 +2031,14 @@ $config['monetization_module_css'] = array(
 	]
 );
 
+$config['monetization_module_css_no_breakpoints'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/MonetizationModule/styles/MonetizationModuleNoBreakpoints.scss',
+	]
+);
+
 $config['monetization_module_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
