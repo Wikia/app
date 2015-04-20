@@ -1,14 +1,16 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class YoutubeApiWrapper extends ApiWrapper {
 
-	protected static $API_URL = 'http://gdata.youtube.com/feeds/api/videos/$1';
+	protected static $API_URL = 'https://www.googleapis.com/youtube/v3/videos';
 	protected static $CACHE_KEY = 'youtubeapi';
 	protected static $aspectRatio = 1.7777778;
 
 	public static function isMatchingHostname( $hostname ) {
-		return endsWith($hostname, "youtube.com")
-			|| endsWith($hostname, "youtu.be" ) ? true : false;
+		return endsWith( $hostname, "youtube.com" )
+			|| endsWith( $hostname, "youtu.be" ) ? true : false;
 	}
 
 	public static function newFromUrl( $url ) {
@@ -19,22 +21,22 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 		$id = '';
 		$parsedUrl = parse_url( $url );
-		if ( !empty( $parsedUrl['query'] ) ){
+		if ( !empty( $parsedUrl['query'] ) ) {
 			parse_str( $parsedUrl['query'], $aData );
-		};
-		if ( isset( $aData['v'] ) ){
+		}
+		if ( isset( $aData['v'] ) ) {
 			$id = $aData['v'];
 		}
 
-		if ( empty( $id ) ){
+		if ( empty( $id ) ) {
 			$parsedUrl = parse_url( $url );
 
 			$aExploded = explode( '/', $parsedUrl['path'] );
 			$id = array_pop( $aExploded );
 		}
 
-		if ( false !== strpos( $id, "&" ) ){
-			$parsedId = explode("&",$id);
+		if ( false !== strpos( $id, "&" ) ) {
+			$parsedId = explode( "&", $id );
 			$id = $parsedId[0];
 		}
 
@@ -47,41 +49,35 @@ class YoutubeApiWrapper extends ApiWrapper {
 		return null;
 	}
 
+	/**
+	 * Before Youtube API update it was build from keywords and categories.
+	 * After Youtube API update to V3, categories are no longer returned and support for keywords is dropped.
+	 * For now let's return an empty string.
+	 * If it's not enough let's revisit.
+	 * @return string
+	 */
 	public function getDescription() {
-
-		wfProfileIn( __METHOD__ );
-
-		$text = '';
-		if ( $this->getVideoCategory() ) $text .= 'Category: ' . $this->getVideoCategory();
-		if ( $this->getVideoKeywords() ) $text .= "\n\nKeywords: {$this->getVideoKeywords()}";
-
-		wfProfileOut( __METHOD__ );
-
-		return $text;
+		return '';
 	}
 
 	public function getThumbnailUrl() {
-
 		wfProfileIn( __METHOD__ );
 
-		$lowresUrl = '';
-		$hiresUrl = '';
+		$thumbnailData = $this->getVideoThumbnails();
 
-		$thumbnailDatas = $this->getVideoThumbnails();
-		foreach ( $thumbnailDatas as $thumbnailData ) {
-			switch ( $thumbnailData['yt$name'] ) {
-				case 'default':
-					$lowresUrl = $thumbnailData['url'];
-					break;
-				case 'hqdefault':
-					$hiresUrl = $thumbnailData['url'];
-					break;
-			}
+		if ( array_key_exists( 'high', $thumbnailData ) ) {
+			wfProfileOut( __METHOD__ );
+			return $thumbnailData['high']['url'];
+		} else if ( array_key_exists( 'medium', $thumbnailData ) ) {
+			wfProfileOut( __METHOD__ );
+			return $thumbnailData['medium']['url'];
+		} else if ( array_key_exists( 'default', $thumbnailData ) ) {
+			wfProfileOut( __METHOD__ );
+			return $thumbnailData['default']['url'];
 		}
 
 		wfProfileOut( __METHOD__ );
-
-		return !empty($hiresUrl) ? $hiresUrl : $lowresUrl;
+		return '';
 	}
 
 	/**
@@ -90,9 +86,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return array
 	 */
 	protected function getVideoThumbnails() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['media$thumbnail']) ) {
-
-			return $this->interfaceObj['entry']['media$group']['media$thumbnail'];
+		if ( !empty( $this->interfaceObj['snippet']['thumbnails'] ) ) {
+			return $this->interfaceObj['snippet']['thumbnails'];
 		}
 
 		return array();
@@ -103,9 +98,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoTitle() {
-		if ( !empty($this->interfaceObj['entry']['title']['$t']) ) {
-
-			return $this->interfaceObj['entry']['title']['$t'];
+		if ( !empty( $this->interfaceObj['snippet']['title'] ) ) {
+			return $this->interfaceObj['snippet']['title'];
 		}
 
 		return '';
@@ -116,35 +110,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getOriginalDescription() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['media$description']['$t']) ) {
-
-			return $this->interfaceObj['entry']['media$group']['media$description']['$t'];
-		}
-
-		return '';
-	}
-
-	/**
-	 * User-defined keywords
-	 * @return array
-	 */
-	protected function getVideoKeywords() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['media$keywords']['$t']) ) {
-
-			return $this->interfaceObj['entry']['media$group']['media$keywords']['$t'];
-		}
-
-		return '';
-	}
-
-	/**
-	 * YouTube category
-	 * @return string
-	 */
-	protected function getVideoCategory() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['media$category'][0]['$t']) ) {
-
-			return $this->interfaceObj['entry']['media$group']['media$category'][0]['$t'];
+		if ( !empty( $this->interfaceObj['snippet']['description'] ) ) {
+			return $this->interfaceObj['snippet']['description'];
 		}
 
 		return '';
@@ -155,9 +122,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoPublished() {
-		if ( !empty($this->interfaceObj['entry']['published']['$t']) ) {
-
-			return strtotime($this->interfaceObj['entry']['published']['$t']);
+		if ( !empty( $this->interfaceObj['snippet']['publishedAt'] ) ) {
+			return strtotime( $this->interfaceObj['snippet']['publishedAt'] );
 		}
 
 		return '';
@@ -168,9 +134,14 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return int
 	 */
 	protected function getVideoDuration() {
-		if ( !empty($this->interfaceObj['entry']['media$group']['yt$duration']['seconds']) ) {
+		if ( !empty( $this->interfaceObj['contentDetails']['duration'] ) ) {
+			$dateInterval = new DateInterval( $this->interfaceObj['contentDetails']['duration'] );
+			$seconds = (int) $dateInterval->format( '%s' );
+			$minutes = (int) $dateInterval->format( '%i' );
+			$hours = (int) $dateInterval->format( '%h' );
+			$durationInSeconds = $seconds + ( 60 * $minutes ) + ( 60 * 60 * $hours );
 
-			return $this->interfaceObj['entry']['media$group']['yt$duration']['seconds'];
+			return $durationInSeconds;
 		}
 
 		return '';
@@ -181,30 +152,24 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return boolean
 	 */
 	protected function isHdAvailable() {
-		return isset($this->interfaceObj['entry']['yt$hd']);
+		return !empty( $this->interfaceObj['contentDetails']['definition'] )
+			&& ( $this->interfaceObj['contentDetails']['definition'] == 'hd' );
 	}
 
 	/**
 	 * Can video be embedded
+	 * Youtube video can always be embedded because we ask for embeddable ones via API
 	 * @return boolean
 	 */
 	protected function canEmbed() {
-		if ( !empty($this->interfaceObj['entry']['yt$accessControl']) ) {
-			foreach ($this->interfaceObj['entry']['yt$accessControl'] as $accessControl) {
-				if ($accessControl['action'] == 'embed') {
-					return $accessControl['permission'] == 'allowed';
-				}
-			}
-		}
-
 		return true;
 	}
 
 	protected function sanitizeVideoId( $videoId ) {
-		if ( ($pos = strpos( $videoId, '?' )) !== false ) {
+		if ( ( $pos = strpos( $videoId, '?' ) ) !== false ) {
 			$videoId = substr( $videoId, 0, $pos );
 		}
-		if ( ($pos = strpos( $videoId, '&' )) !== false ) {
+		if ( ( $pos = strpos( $videoId, '&' ) ) !== false ) {
 			$videoId = substr( $videoId, 0, $pos );
 		}
 		return $videoId;
@@ -213,52 +178,42 @@ class YoutubeApiWrapper extends ApiWrapper {
 	/**
 	 * Handle response errors
 	 * @param $status - The response status object
-	 * @param $content - XML content from the provider
+	 * @param $content - content from the provider
 	 * @param $apiUrl - The URL for the providers API
-	 * @throws VideoNotFoundException - Video cannot be found
+	 * @throws NegativeResponseException
 	 * @throws VideoIsPrivateException - Video is private and cannot be viewed
-	 * @throws VideoQuotaExceededException - The quota for video owner has been exceeded
+	 * @throws VideoNotFoundException - Video cannot be found
+	 * @throws VideoWrongApiCall - Youtube returns 400 response error code
 	 */
 	protected function checkForResponseErrors( $status, $content, $apiUrl ) {
-
 		wfProfileIn( __METHOD__ );
 
-		// check if still exists
-		$code = empty( $status->errors[0]['params'][0] ) ? null : $status->errors[0]['params'][0];
+		$code = $content['error']['code'];
 
-		if ( $code == 404 ) {
+		if ( $code == 400 ) {
 			wfProfileOut( __METHOD__ );
-			throw new VideoNotFoundException($status, $content, $apiUrl);
-		}
-
-		// interpret error XML response
-		$sp = new SimplePie();
-		$sp->set_raw_data( $content );
-		$sp->init();
-
-		// check if private
-		$googleShemas ='http://schemas.google.com/g/2005';
-		if ( isset( $sp->data['child'][$googleShemas] ) ) {
-			$err = $sp->data['child'][$googleShemas]['errors'][0]['child'][$googleShemas]['error'][0]['child'][$googleShemas]['internalReason'][0]['data'];
-			if( $err == 'Private video' ) {
-				wfProfileOut( __METHOD__ );
-				throw new VideoIsPrivateException( $status, $content, $apiUrl );
-			}
-		}
-
-		// check if quota exceeded
-		if ( isset( $sp->data['child'][''] ) ) {
-			$err = $sp->data['child']['']['errors'][0]['child']['']['error'][0]['child']['']['code'][0]['data'];
-			if( $err == 'too_many_recent_calls' ) {
-				wfProfileOut( __METHOD__ );
-				throw new VideoQuotaExceededException( $status, $content, $apiUrl );
-			}
+			WikiaLogger::instance()->error( 'Youtube API call  returns 400', [
+				'content' => $content
+			] );
+			throw new VideoWrongApiCall( $status, $content, $apiUrl );
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		// return default
-		parent::checkForResponseErrors($status, $content, $apiUrl);
+		parent::checkForResponseErrors( $status, $content, $apiUrl );
+	}
+
+	/**
+	 * Override method from parent class.
+	 * Firstly, set the value for $this->interfaceObj - by calling the parent method.
+	 * Secondly, check if 'items' key exists and if yes update value of $this->interfaceObj.
+	 */
+	protected function initializeInterfaceObject() {
+		parent::initializeInterfaceObject();
+		if ( !empty( $this->interfaceObj['items'][0] ) ) {
+			$this->interfaceObj = $this->interfaceObj['items'][0];
+		}
 	}
 
 	/**
@@ -267,19 +222,18 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getApiUrl() {
-
-		$youtubeConfig = F::app()->wg->YoutubeConfig;
-
+		global $wgYoutubeConfig;
 
 		$params = [
-			'v' => $youtubeConfig['v'],
-			'key' => $youtubeConfig['DeveloperKey'],
-			'alt' => 'json'
+			'part' => 'snippet,contentDetails',
+			'id' => $this->videoId,
+			'maxResults' => '1',
+			'videoEmbeddable' => true,
+			'type' => 'video',
+			'key' => $wgYoutubeConfig['DeveloperKeyApiV3']
 		];
 
-		$apiUrl = str_replace( '$1', $this->videoId, static::$API_URL );
-
-		return $apiUrl . '?' . http_build_query( $params );
+		return self::$API_URL . '?' . http_build_query( $params );
 	}
 
 }
