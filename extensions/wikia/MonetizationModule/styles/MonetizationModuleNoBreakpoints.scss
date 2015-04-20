@@ -31,7 +31,7 @@
 		color: #fff;
 		font-family: Helvetica,sans-serif;
 		margin-bottom: 25px;
-		margin-top: 10px;
+		margin-top: 25px;
 
 		&.above-title {
 			margin-top: 0;
@@ -98,21 +98,49 @@
 
 	.ad-responsive {
 		height: 90px;
-		width: 700px;
+		width: 728px;
 	}
 
 	.ad-responsive-ic {
 		height: 90px;
-		width: 360px;
+		width: 320px;
 	}
 
-	@media(min-width: 1576px) {
+	@media(min-width: 850px) {
 		.ad-responsive-ic {
-			width: 510px;
+			width: 418px;
+		}
+	}
+
+	@media(min-width: 1024px) {
+		.ad-responsive-ic {
+			width: 320px;
+		}
+
+		.ad-responsive {
+			width: 690px;
+		}
+	}
+
+	@media(min-width: 1440px) {
+		.ad-responsive-ic {
+			width: 418px;
 		}
 
 		.ad-responsive {
 			width: 728px;
+		}
+	}
+
+	@media(min-width: 1665px) {
+		.ad-responsive-ic {
+			width: 630px;
+		}
+	}
+
+	@media(min-width: 1700px) {
+		.ad-responsive-ic {
+			width: 678px;
 		}
 	}
 
@@ -457,8 +485,8 @@
 			margin-top: 0;
 		}
 
-		@media(max-width: 1575px) {
-			width: 330px;
+		@media(max-width: 849px), (min-width: 1024px) and (max-width: 1439px) {
+			width: 290px;
 
 			.product-name {
 				font-size: 14px;
@@ -493,12 +521,24 @@
 			}
 		}
 
-		@media(min-width: 1576px) {
-			width: 480px;
+		@media(min-width: 850px) and (max-width: 1023px), (min-width: 1440px) {
+			width: 388px;
 
 			.product-name {
 				width: 50%;
 			}
+		}
+
+		@media(min-width: 1665px) {
+			width: 600px;
+
+			.product-name {
+				width: 70%;
+			}
+		}
+
+		@media(min-width: 1700px) {
+			width: 648px;
 		}
 	}
 }
