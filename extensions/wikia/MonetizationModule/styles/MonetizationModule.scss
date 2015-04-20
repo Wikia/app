@@ -21,7 +21,7 @@
 		clear: both;
 		font-family: Helvetica,sans-serif;
 		line-height: 1.8em;
-		margin: 0 10px 40px;
+		margin-bottom: 40px;
 	}
 
 	&.amazon-video {
@@ -30,7 +30,8 @@
 		clear: both;
 		color: #fff;
 		font-family: Helvetica,sans-serif;
-		margin: 10px 10px 25px;
+		margin-bottom: 25px;
+		margin-top: 10px;
 
 		&.above-title {
 			margin-top: 0;
