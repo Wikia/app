@@ -12,7 +12,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		'comparison' => 'PortableInfoboxItemComparison.mustache',
 		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
 		'comparison-set-header' => 'PortableInfoboxItemComparisonSetHeader.mustache',
-		'comparison-set-item' => 'PortableInfoboxItemComparisonSetItem.mustache'
+		'comparison-set-item' => 'PortableInfoboxItemComparisonSetItem.mustache',
+		'footer' => 'PortableInfoboxItemFooter.mustache'
 	];
 	private $templateEngine;
 
@@ -46,7 +47,7 @@ class PortableInfoboxRenderService extends WikiaService {
 					$infoboxHtmlContent .= $this->renderGroup( $data );
 					break;
 				case 'footer':
-					$infoboxHtmlContent .= $this->renderFooter( $data );
+					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
 					break;
 				default:
 					if ( $this->validateType( $type ) ) {
