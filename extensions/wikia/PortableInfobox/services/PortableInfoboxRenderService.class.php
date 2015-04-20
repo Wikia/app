@@ -34,7 +34,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
 
-			if ( !empty( $data[ 'value' ] ) ) {
+			if ( !$item['isEmpty'] ) {
 				if ( $this->validateType( $type ) ) {
 					$infoboxHtmlContent .= $this->renderItem( $type, $data );
 				}

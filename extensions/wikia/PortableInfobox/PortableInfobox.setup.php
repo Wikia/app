@@ -18,6 +18,26 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 $wgAutoloadClasses[ 'InfoboxServiceConnector' ] = $dir . 'InfoboxServiceConnector.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/PortableInfoboxRenderService.class.php';
 
+// parser
+$wgAutoloadClasses[ 'PortableInfoboxMarkupParserService' ] = $dir . 'services/PortableInfoboxMarkupParserService.class.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\XmlParser'] = $dir . 'services/Parser/XmlParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\MediaWikiParserService'] = $dir . 'services/Parser/MediaWikiParserService.php';
+$wgInfoboxParserNodes = [
+	'Node',
+	'NodeComparison',
+	'NodeFooter',
+	'NodeGroup',
+	'NodeHeader',
+	'NodeImage',
+	'NodePair',
+	'NodeTitle',
+	'NodeUnimplemented'
+];
+foreach ( $wgInfoboxParserNodes as $parserNode ) {
+	$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\'.$parserNode ] = $dir . 'services/Parser/Nodes/'.$parserNode.'.php';
+}
+
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
