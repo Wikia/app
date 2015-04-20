@@ -86,8 +86,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return array
 	 */
 	protected function getVideoThumbnails() {
-		if ( !empty( $this->interfaceObj['items'][0]['snippet']['thumbnails'] ) ) {
-			return $this->interfaceObj['items'][0]['snippet']['thumbnails'];
+		if ( !empty( $this->interfaceObj['snippet']['thumbnails'] ) ) {
+			return $this->interfaceObj['snippet']['thumbnails'];
 		}
 
 		return array();
@@ -98,8 +98,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoTitle() {
-		if ( !empty( $this->interfaceObj['items'][0]['snippet']['title'] ) ) {
-			return $this->interfaceObj['items'][0]['snippet']['title'];
+		if ( !empty( $this->interfaceObj['snippet']['title'] ) ) {
+			return $this->interfaceObj['snippet']['title'];
 		}
 
 		return '';
@@ -110,8 +110,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getOriginalDescription() {
-		if ( !empty( $this->interfaceObj['items'][0]['snippet']['description'] ) ) {
-			return $this->interfaceObj['items'][0]['snippet']['description'];
+		if ( !empty( $this->interfaceObj['snippet']['description'] ) ) {
+			return $this->interfaceObj['snippet']['description'];
 		}
 
 		return '';
@@ -122,8 +122,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return string
 	 */
 	protected function getVideoPublished() {
-		if ( !empty( $this->interfaceObj['items'][0]['snippet']['publishedAt'] ) ) {
-			return strtotime( $this->interfaceObj['items'][0]['snippet']['publishedAt'] );
+		if ( !empty( $this->interfaceObj['snippet']['publishedAt'] ) ) {
+			return strtotime( $this->interfaceObj['snippet']['publishedAt'] );
 		}
 
 		return '';
@@ -134,8 +134,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return int
 	 */
 	protected function getVideoDuration() {
-		if ( !empty( $this->interfaceObj['items'][0]['contentDetails']['duration'] ) ) {
-			$dateInterval = new DateInterval( $this->interfaceObj['items'][0]['contentDetails']['duration'] );
+		if ( !empty( $this->interfaceObj['contentDetails']['duration'] ) ) {
+			$dateInterval = new DateInterval( $this->interfaceObj['contentDetails']['duration'] );
 			$seconds = (int) $dateInterval->format( '%s' );
 			$minutes = (int) $dateInterval->format( '%i' );
 			$hours = (int) $dateInterval->format( '%h' );
@@ -152,8 +152,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @return boolean
 	 */
 	protected function isHdAvailable() {
-		return !empty( $this->interfaceObj['items'][0]['contentDetails']['definition'] )
-			&& $this->interfaceObj['items'][0]['contentDetails']['definition'] === 'hd';
+		return !empty( $this->interfaceObj['contentDetails']['definition'] )
+			&& ( $this->interfaceObj['contentDetails']['definition'] == 'hd' );
 	}
 
 	/**
@@ -202,6 +202,18 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 		// return default
 		parent::checkForResponseErrors( $status, $content, $apiUrl );
+	}
+
+	/**
+	 * Override method from parent class.
+	 * Firstly, set the value for $this->interfaceObj - by calling the parent method.
+	 * Secondly, check if 'items' key exists and if yes update value of $this->interfaceObj.
+	 */
+	protected function initializeInterfaceObject() {
+		parent::initializeInterfaceObject();
+		if ( !empty( $this->interfaceObj['items'][0] ) ) {
+			$this->interfaceObj = $this->interfaceObj['items'][0];
+		}
 	}
 
 	/**
