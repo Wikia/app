@@ -2,6 +2,13 @@
 
 class InsightsHelper {
 
+	public static $insightsPages = [
+		'uncategorized' => 'InsightsUncategorizedModel',
+		'withoutimages' => 'InsightsWithoutimagesModel',
+		'deadend' => 'InsightsDeadendModel',
+		'wantedpages' => 'InsightsWantedpagesModel'
+	];
+
 	public static $insightsMessageKeys = [
 		'uncategorized' => [
 			'subtitle' => 'insights-list-uncategorized-subtitle',
@@ -52,12 +59,12 @@ class InsightsHelper {
 	}
 
 	/**
-	 * Check if given category exists as an insight page
+	 * Check if given subpage exists as an insight page
 	 *
 	 * @param $category
 	 * @return bool
 	 */
-	public static function isInsightPage( $category ) {
-		return isset( InsightsModel::$insightsPages[$category] );
+	public static function isInsightPage( $subpage ) {
+		return isset( self::$insightsPages[$subpage] );
 	}
 }
