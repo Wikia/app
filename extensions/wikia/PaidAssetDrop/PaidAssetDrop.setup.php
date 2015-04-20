@@ -10,8 +10,9 @@ $wgExtensionCredits['other'][] = [
 // Autoload
 $wgAutoloadClasses['PaidAssetDropHooks'] =  __DIR__ . '/PaidAssetDropHooks.class.php';
 
-// Hooks for AdEngine2
+// Hooks for PAD
 $wgHooks['OasisSkinAssetGroups'][] = 'PaidAssetDropHooks::onOasisSkinAssetGroups';
+$wgHooks['WikiaSkinTopScripts'][] = 'PaidAssetDropHooks::onWikiaSkinTopScripts';
 
 // i18n
 $wgExtensionMessagesFiles['PaidAssetDrop'] = __DIR__ . '/PaidAssetDrop.i18n.php';
