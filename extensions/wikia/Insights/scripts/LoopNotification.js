@@ -17,6 +17,7 @@ require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, Bann
 	showNotification = function showNotification(html) {
 		if (html) {
 			bannerNotification.setContent(html).show();
+			$('#InsightsNextPageButton').focus();
 		}
 	};
 
