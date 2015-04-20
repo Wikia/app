@@ -2,6 +2,7 @@
 
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
+	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
@@ -28,12 +29,20 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
 		$infoboxParser = new Wikia\PortableInfobox\Parser\Parser( $frame->getNamedArguments() );
-		$infoboxParser->setExternalParser( (new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) ) );
+		$infoboxParser->setExternalParser( ( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) ) );
 		$data = $infoboxParser->getDataFromXmlString( $markup );
+		//save for later api usage
+		$this->saveToParserOutput( $parser->getOutput(), $data );
 
 		$renderer = new PortableInfoboxRenderService();
 		$renderedValue = $renderer->renderInfobox( $data );
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
+	}
+
+	private function saveToParserOutput( ParserOutput $output, $raw ) {
+		$infoboxes = $output->getProperty( self::INFOBOXES_PROPERTY_NAME );
+		$infoboxes[ ] = $raw;
+		$output->setProperty( self::INFOBOXES_PROPERTY_NAME, $infoboxes );
 	}
 
 	private function parseData( $json, Parser $parser, PPFrame $frame ) {
@@ -67,7 +76,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	private function resolveImageUrl( $filename ) {
 		$title = Title::newFromText( $filename, NS_FILE );
 		if ( $title && $title->exists() ) {
-			return WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();
+			return WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
 		}
 		return "";
 	}
