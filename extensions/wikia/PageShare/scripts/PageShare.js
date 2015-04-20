@@ -37,6 +37,8 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 
 	function loadShareIcons() {
 		var useLang = $.getUrlVar('uselang'),
+			mCache = $.getUrlVar('mcache'),
+			requestData,
 			browserLang = (win.navigator.language || win.navigator.browserLanguage),
 			browserLangShort;
 
@@ -44,15 +46,21 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 			browserLangShort = browserLang.substr(0, 2);
 		}
 
+		requestData = {
+			browserLang: browserLangShort,
+			title: win.document.title,
+			useLang: useLang
+		};
+
+		if (mCache) {
+			requestData.mcache = mCache;
+		}
+
 		$.nirvana.sendRequest({
 			type: 'GET',
 			controller: 'PageShare',
 			method: 'getShareIcons',
-			data: {
-				browserLang: browserLangShort,
-				title: win.document.title,
-				useLang: useLang
-			},
+			data: requestData,
 			callback: appendShareIcons
 		});
 	}
