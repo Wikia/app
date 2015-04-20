@@ -49,6 +49,7 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 		requestData = {
 			browserLang: browserLangShort,
 			title: win.document.title,
+			url: win.location.origin + win.location.pathname,
 			useLang: useLang
 		};
 
