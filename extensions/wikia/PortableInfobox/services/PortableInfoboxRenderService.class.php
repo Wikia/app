@@ -7,7 +7,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
-		'key' => 'PortableInfoboxItemKeyVal.mustache'
+		'pair' => 'PortableInfoboxItemKeyVal.mustache'
 	];
 	private $templateEngine;
 
@@ -28,11 +28,10 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ( $infoboxdata as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
-
-			if ( !empty( $data[ 'value' ] ) ) {
+			if ( !$item['isEmpty'] ) {
 				// skip rendering for not supported type and log it
 				if ( !isset( $this->templates[ $type ] ) ) {
-					Wikia\Logger\WikiaLogger::instance()->info( LOGGER_LABEL, [
+					Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
 						'type' => $type
 					] );
 					continue;
