@@ -77,6 +77,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			mediaQueriesToCheck.twoColumns = 'screen and (min-width: 1064px)';
 			mediaQueriesToCheck.oneColumn = 'screen and (max-width: 1063px)';
 			mediaQueriesToCheck.noSkins = 'screen and (max-width: 1324px)';
+			mediaQueriesToCheck.noTopButton = 'screen and (max-width: 1063px)';
 		}
 
 	function isRightRailPresent() {

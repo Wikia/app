@@ -627,6 +627,8 @@ include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
+//TODO Enable this (and remove $wgEnablePageShareExt from config after release of the PageShare
+//include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -776,7 +778,6 @@ $wgWikiaMailerDB = 'wikia_mailer';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
-$wgAutoloadClasses['Wikia\\MastersPoll'] = "$IP/includes/wikia/MastersPoll.php";
 
 /**
  * @name wgEnableBlogCommentEdit, wgEnabledGroupedBlogComments, wgEnableBlogWatchlist
@@ -1381,12 +1382,6 @@ $wgAdDriverSevenOneMediaOverrideSub2Site = null;
 $wgAdDriverTrackState = false;
 
 /**
- * @name $wgAdDriverForceDirectGptAd
- * Forces to use AdProviderDirectGpt for all slots managed by this provider
- */
-$wgAdDriverForceDirectGptAd = false;
-
-/**
  * @name $wgAdDriverForceLiftiumAd
  * Forces to use AdProviderLiftium for all slots managed by this provider
  */
@@ -1683,11 +1678,19 @@ $wgOasisTypography = false;
 $wgOasisBreakpoints = false;
 
 /**
+ * Force new breakpoints $wgOasisBreakpoints for German wikis
+ * see CONCF-433
+ * todo remove when 71M adjusts their styles
+ */
+$wgOasisBreakpointsDE = false;
+
+/**
  * Add poweruser to implicit groups
  */
 $wgImplicitGroups[] = 'poweruser';
 
 /**
  * Enable updated GlobalFooter
+ * @TODO CONCF-444 - remove this variable
  */
-$wgEnableUpdatedGlobalFooter = false;
+$wgEnableUpdatedGlobalFooter = true;

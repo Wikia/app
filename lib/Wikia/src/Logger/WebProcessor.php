@@ -62,7 +62,13 @@ class WebProcessor {
 	 * @return array list of context objects for the given $type
 	 */
 	private function prepareContext($type) {
-		$this->sharedContext[$type] = call_user_func_array('array_merge', array_reverse($this->contextStack[$type]));
+		$stack = array_reverse($this->contextStack[$type]);
+
+		if (!empty ($stack)) {
+			$stack = call_user_func_array('array_merge', $stack);
+		}
+
+		$this->sharedContext[$type] = $stack;
 		return $this->sharedContext[$type];
 	}
 

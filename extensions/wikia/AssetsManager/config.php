@@ -793,7 +793,7 @@ $config['wikiamobile_ads_js'] = array(
 		'#group_adengine2_interactive_maps_js',
 
 		// Run!
-		'//extensions/wikia/AdEngine2/js/run/wikiamobile.run.js',
+		'//extensions/wikia/AdEngine/js/run/wikiamobile.run.js',
 	)
 );
 
@@ -2364,6 +2364,22 @@ $config['upload_photos_dialog_scss'] = [
 	'assets' => [
 		'//extensions/wikia/WikiaNewFiles/styles/UploadPhotoDialog.scss'
 	]
+];
+
+$config['page_share_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PageShare/scripts/PageShare.js'
+	]
+];
+
+$config['page_share_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PageShare/styles/share.scss'
+	],
 ];
 
 $config['old_global_footer_scss'] = [
