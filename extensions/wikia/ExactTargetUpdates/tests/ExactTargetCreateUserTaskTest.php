@@ -34,7 +34,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		/* @var ExactTargetCreateUserTask $addTaskMock mock of ExactTargetCreateUserTask class */
 		$addTaskMock = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetCreateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'createSubscriber', 'createUser', 'createUserProperties', 'getDeleteUserTask', 'verifyUserData', 'getTaskId' ] )
+			->setMethods( [ 'createSubscriber', 'createUser', 'createUserProperties', 'getDeleteUserTask', 'getTaskId' ] )
 			->getMock();
 
 		$addTaskMock

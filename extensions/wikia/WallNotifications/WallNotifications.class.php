@@ -1,4 +1,6 @@
 <?php
+use Wikia\Logger\WikiaLogger;
+
 /*
  * Wall notifications allows us to manage notifications about new messages
  * and replies on users Walls
@@ -10,7 +12,6 @@
  *    every user who is interested in specific notification
  *
  */
-
 class WallNotifications {
 	/**
 	 * @var WikiaApp
@@ -1004,6 +1005,11 @@ class WallNotifications {
 		$notification['is_hidden'] = 0;
 		$notification['user_id'] = $userId;
 		$notification['wiki_id'] = $wikiId;
+
+		WikiaLogger::instance()->info( 'New Wall Notification created', [
+			'wikiId' => $wikiId,
+			'userId' => $userId
+		] );
 
 		$this->getDB(true)->insert( 'wall_notification', $notification, __METHOD__ );
 		$this->getDB(true)->commit();

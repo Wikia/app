@@ -65,6 +65,11 @@
 			width: 100%;
 		}
 
+		//Center ads on small breakpoint
+		.WikiaTopAds {
+			width: 100%;
+		}
+
 		.WikiHeader {
 			min-height: 145px;
 
@@ -157,7 +162,7 @@
 		}
 	}
 
-	@media #{$small-only} {
+	@media #{$breakpoint-small-only} {
 		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
 			margin: 0 1px;
 		}

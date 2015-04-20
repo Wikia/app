@@ -8,19 +8,10 @@
  * @file SM_KMLPrinter.php
  * @ingroup SemanticMaps
  *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class SMKMLPrinter extends SMWResultPrinter {
-	/**
-	 * Constructor.
-	 *
-	 * @param $format String
-	 * @param $inline
-	 */
-	public function __construct( $format, $inline ) {
-		parent::__construct( $format, $inline );
-		$this->useValidator = true;
-	}
+class SMKMLPrinter extends SMWExportPrinter {
 
 	/**
 	 * Handler of the print request.
@@ -37,7 +28,7 @@ class SMKMLPrinter extends SMWResultPrinter {
 			return $this->getKML( $res, $outputmode );
 		}
 		else {
-			return $this->getLink( $res, $outputmode );
+			return $this->getKMLLink( $res, $outputmode );
 		}
 	}
 
@@ -50,7 +41,7 @@ class SMKMLPrinter extends SMWResultPrinter {
 	 * @param $outputmode
 	 */
 	protected function handleParameters( array $params, $outputmode ) {
-		$this->m_params = $params;
+		$this->params = $params;
 	}
 
 	/**
@@ -74,9 +65,9 @@ class SMKMLPrinter extends SMWResultPrinter {
 		$params['linkabsolute'] = new Parameter( 'linkabsolute', Parameter::TYPE_BOOLEAN, true );
 		$params['linkabsolute']->setMessage( 'semanticmaps-kml-linkabsolute' );
 
-		$params['pagelinktext'] = new Parameter( 'pagelinktext', Parameter::TYPE_STRING, wfMsg( 'semanticmaps-default-kml-pagelink' ) );
+		$params['pagelinktext'] = new Parameter( 'pagelinktext', Parameter::TYPE_STRING, wfMessage( 'semanticmaps-default-kml-pagelink' )->text() );
 		$params['pagelinktext']->setMessage( 'semanticmaps-kml-pagelinktext' );
-		
+
 		return $params;
 	}
 
@@ -91,12 +82,12 @@ class SMKMLPrinter extends SMWResultPrinter {
 	 * @return string
 	 */
 	protected function getKML( SMWQueryResult $res, $outputmode ) {
-		$queryHandler = new SMQueryHandler( $res, $outputmode, $this->m_params['linkabsolute'], $this->m_params['pagelinktext'], false );
-		$queryHandler->setText( $this->m_params['text'] );
-		$queryHandler->setTitle( $this->m_params['title'] );
+		$queryHandler = new SMQueryHandler( $res, $outputmode, $this->params['linkabsolute'], $this->params['pagelinktext'], false );
+		$queryHandler->setText( $this->params['text'] );
+		$queryHandler->setTitle( $this->params['title'] );
 		$queryHandler->setSubjectSeparator( '' );
 
-		$formatter = new MapsKMLFormatter( $this->m_params );
+		$formatter = new MapsKMLFormatter( $this->params );
 		$formatter->addPlacemarks( $queryHandler->getLocations() );
 
 		return $formatter->getKML();
@@ -112,23 +103,23 @@ class SMKMLPrinter extends SMWResultPrinter {
 	 *
 	 * @return string
 	 */
-	protected function getLink( SMWQueryResult $res, $outputmode ) {
+	protected function getKMLLink( SMWQueryResult $res, $outputmode ) {
 		$searchLabel = $this->getSearchLabel( $outputmode );
-		$link = $res->getQueryLink( $searchLabel ? $searchLabel : wfMsgForContent( 'semanticmaps-kml-link' ) );
+		$link = $res->getQueryLink( $searchLabel ? $searchLabel : wfMessage( 'semanticmaps-kml-link' )->inContentLanguage()->text() );
 		$link->setParameter( 'kml', 'format' );
-		$link->setParameter( $this->m_params['linkabsolute'] ? 'yes' : 'no', 'linkabsolute' );
-		$link->setParameter( $this->m_params['pagelinktext'], 'pagelinktext' );
-		
-		if ( $this->m_params['title'] !== '' ) {
-			$link->setParameter( $this->m_params['title'], 'title' );
-		}
-		
-		if ( $this->m_params['text'] !== '' ) {
-			$link->setParameter( $this->m_params['text'], 'text' );
+		$link->setParameter( $this->params['linkabsolute'] ? 'yes' : 'no', 'linkabsolute' );
+		$link->setParameter( $this->params['pagelinktext'], 'pagelinktext' );
+
+		if ( $this->params['title'] !== '' ) {
+			$link->setParameter( $this->params['title'], 'title' );
 		}
 
-		if ( array_key_exists( 'limit', $this->m_params ) ) {
-			$link->setParameter( $this->m_params['limit'], 'limit' );
+		if ( $this->params['text'] !== '' ) {
+			$link->setParameter( $this->params['text'], 'text' );
+		}
+
+		if ( array_key_exists( 'limit', $this->params ) ) {
+			$link->setParameter( $this->params['limit'], 'limit' );
 		} else { // Use a reasonable default limit.
 			$link->setParameter( 20, 'limit' );
 		}
@@ -139,17 +130,28 @@ class SMKMLPrinter extends SMWResultPrinter {
 	}
 
 	/**
-	 * @see SMWResultPrinter::getMimeType()
+	 * @see SMWIExportPrinter::getMimeType
+	 *
+	 * @since 2.0
+	 *
+	 * @param SMWQueryResult $queryResult
+	 *
+	 * @return string
 	 */
-	public function getMimeType( $res ) {
+	public function getMimeType( SMWQueryResult $queryResult ) {
 		return 'application/vnd.google-earth.kml+xml';
 	}
 
 	/**
-	 * @see SMWResultPrinter::getFileName()
+	 * @see SMWIExportPrinter::getFileName
+	 *
+	 * @since 2.0
+	 *
+	 * @param SMWQueryResult $queryResult
+	 *
+	 * @return string|boolean
 	 */
-	public function getFileName( $res ) {
-		// @TODO FIXME
+	public function getFileName( SMWQueryResult $queryResult ) {
 		return 'kml.kml';
 	}
 
@@ -157,6 +159,6 @@ class SMKMLPrinter extends SMWResultPrinter {
 	 * @see SMWResultPrinter::getName()
 	 */
 	public final function getName() {
-		return wfMsg( 'semanticmaps-kml' );
+		return wfMessage( 'semanticmaps-kml' )->text();
 	}
 }

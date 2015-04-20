@@ -1,0 +1,47 @@
+/**
+ * CSS for SRF gallery fancybox module
+ *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @since: 1.8
+ *
+ * @release: 0.1
+ */
+.srf-fancybox-title {
+	text-align: left;
+}
+
+.srf-fancybox-title b {
+	display: block;
+	margin-right: 80px;
+}
+
+.srf-fancybox-title .count{
+	text-align: left;
+	font-weight:lighter;
+}
+
+.srf-fancybox-title .button {
+	float: right;
+}
+
+.srf-overlay li.gallerybox div.thumb {
+	background-color: #fff;
+	background-image: -webkit-linear-gradient(top,white,#F6F8F9);
+	background-image: linear-gradient(top,white,#F6F8F9);
+}
+
+.srf-overlay li {
+	position: relative;
+}
+
+.srf-overlay .overlayicon {
+	position: absolute;
+	top:10px;
+	left:10px;
+	width: 16px;
+	height: 16px;
+	display:block;
+	/* @embed */ background: url(images/overlay-zoom.png) no-repeat left;
+}

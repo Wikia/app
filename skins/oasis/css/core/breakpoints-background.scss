@@ -1,0 +1,157 @@
+@import "skins/shared/color";
+@import "breakpoints-variables";
+@import "breakpoints-layout";
+@import "skins/shared/mixins/calc";
+
+$background-height: get_command_line_param( "background-image-height", 0 );
+$background-width: get_command_line_param( "background-image-width", 0 );
+
+@if unitless($background-height) {
+	$background-height : $background-height * 1px;
+}
+@if unitless($background-width) {
+	$background-width : $background-width * 1px;
+}
+$width-gradient: 20px;
+
+$background-width-half: $background-width / 2;
+$background-offset: ( $breakpoint-lower - $background-width ) / 2;
+$background-align: if( $background-width > $page-width-medium, center, left );
+
+// the following lines are needed for compatibility with oasis responsive (and non-responsive)
+$standard-oasis-content-size: 1000px;
+$standard-oasis-content-size-half: $standard-oasis-content-size / 2;
+$standard-oasis-content-size-with-adskins: $standard-oasis-content-size + 2 * $width-adskin;
+$standard-oasis-content-size-with-adskins-half: $standard-oasis-content-size-with-adskins / 2;
+
+$color-body-middle-0:  rgba($color-body-middle, 0);
+
+@mixin breakpoint-middle-gradient($side, $margin) {
+	$other-side: if($side == 'left', 'right', 'left');
+
+	background-color: $color-body-middle-0;
+	background-image: -webkit-linear-gradient(#{$side}, $color-body-middle-0 0%, $color-body-middle 100%);
+	background-image: linear-gradient(to #{$other-side}, $color-body-middle-0 0%, $color-body-middle 100%);
+	margin-#{$side}: $margin - $width-gradient;
+	#{$side}: 50%;
+}
+
+@mixin breakpoints-background($page-width) {
+	$background-position-offset: $standard-oasis-content-size-with-adskins-half - $background-width-half;
+	$background-position-before: 0;
+	$background-position-after: -$background-width-half;
+
+	$background-offset: $standard-oasis-content-size-half - ($background-width-half + $page-width / 2);
+	$gradient-offset: $background-position-offset + ( $background-width-half - $width-gradient );
+
+	// Middle space ($background-position-offset is negative)
+	$width-middle: $width-adskin - 2 * $background-position-offset;
+	$margin-middle: -$width-middle / 2;
+
+	// gradient offset
+	$gradient-offset: ($background-width-half + $background-offset) - $width-gradient;
+
+	body.background-dynamic.skin-oasis {
+		background: $color-body;
+
+		&:before {
+			background-position: $background-position-before 0;
+			/* @noflip */
+			left: calc(50% + #{$background-offset});
+		}
+
+		&:after {
+			background-position: $background-position-after 0;
+			/* @noflip */
+			right: calc(50% + #{$background-offset});
+		}
+
+		.background-image-gradient {
+			margin-left: $margin-middle;
+			width: $width-middle;
+
+			&:after,
+			&:before {
+				width: $width-gradient;
+			}
+
+			&:after {
+				@include breakpoint-middle-gradient(right, $margin-middle);
+			}
+
+			&:before {
+				@include breakpoint-middle-gradient(left, $margin-middle);
+			}
+		}
+	}
+}
+
+
+body.skin-oasis {
+	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
+
+	&.background-not-tiled {
+		background-repeat: no-repeat;
+	}
+
+	&.background-fixed {
+		background-attachment: fixed;
+	}
+}
+
+@if ( $widthType == 0 ) {
+	body.background-dynamic {
+		overflow: hidden;
+		position: relative;
+
+		&:after,
+		&:before {
+			background-image: url($background-image); /* $wgCdnStylePath */
+			background-repeat: no-repeat;
+			content: "";
+			height: $background-height;
+			margin: 0;
+			position: absolute;
+			top: 0;
+			width: $background-width-half;
+			z-index: -1;
+		}
+		&.background-fixed:after,
+		&.background-fixed:before {
+			position: fixed;
+		}
+
+		.background-image-gradient {
+			background: $color-body-middle;
+			left: 50%;
+
+			&,
+			&:before,
+			&:after {
+				content: "";
+				height: 100%;
+				position: fixed;
+				top: 0;
+			}
+		}
+	}
+
+	@media #{$breakpoint-small-only} {
+		body.skin-oasis {
+			background-image: none;
+
+			&:after,
+			&:before {
+				display: none;
+			}
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		@include breakpoints-background($content-width-medium);
+	}
+
+	@media #{$breakpoint-large-up} {
+		@include breakpoints-background($content-width-large);
+	}
+}

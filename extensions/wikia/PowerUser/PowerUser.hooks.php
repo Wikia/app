@@ -15,7 +15,6 @@ class PowerUserHooks {
 		\Hooks::register( 'NewRevisionFromEditComplete', [ $oPowerUserHooks, 'onNewRevisionFromEditComplete' ] );
 		\Hooks::register( 'UserAddGroup', [ $oPowerUserHooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'WikiaSkinTopScripts', [ $oPowerUserHooks, 'onWikiaSkinTopScripts' ] );
-		\Hooks::register( 'BeforePageDisplay', [ $oPowerUserHooks, 'onBeforePageDisplay' ] );
 	}
 
 	/**

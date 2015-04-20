@@ -620,7 +620,6 @@ class ArticlesApiController extends WikiaApiController {
 		if ( empty( $articles ) && empty( $params[ 'titleKeys' ] ) ) {
 			throw new MissingParameterApiException( self::PARAMETER_ARTICLES );
 		}
-
 		$collection = $this->getArticlesDetails( $articles, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ] );
 
 		/*
@@ -776,17 +775,31 @@ class ArticlesApiController extends WikiaApiController {
 		$collection = $this->appendMetadata( $collection );
 
 		$thumbnails = null;
-		//if strict return to original ids order
-		if ( $strict ) {
-			foreach( $articleIds as $id ) {
-				if ( !empty( $collection[ $id ] ) ) {
-					$result[] = $collection[ $id ];
-				}
-			}
-			return $result;
-		}
+		//The collection can be in random order (depends if item was found in memcache or not)
+		//lets preserve original order even if we are not using strict mode:
+		//to keep things consistent over time (some other APIs that are using sorted results are using
+		//ArticleApi::getDetails to fetch info about articles)
+		$orderedIdsFromTitles = array_diff( array_keys( $collection ), $articleIds );
+		//typecasting to convert falsy values into empty array (array_merge require arrays only)
+		$orderedIds = array_merge( (array)$articleIds, (array)$orderedIdsFromTitles );
+		$collection = $this->preserveOriginalOrder( $orderedIds, $collection );
 
-		return $collection;
+		//if strict - return array instead of associative array (dict)
+		if ( $strict ) {
+			return array_values( $collection );
+		} else {
+			return $collection;
+		}
+	}
+
+	protected function preserveOriginalOrder( $originalOrder, $collection ) {
+		$result = [];
+		foreach ( $originalOrder as $id ) {
+			if ( !empty( $collection[ $id ] ) ) {
+				$result[ $id ] = $collection[ $id ];
+			}
+		}
+		return $result;
 	}
 
 	protected function getUserDataForArticles( $articles, $revisions ) {
