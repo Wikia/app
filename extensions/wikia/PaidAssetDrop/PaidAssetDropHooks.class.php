@@ -18,4 +18,22 @@ class PaidAssetDropHooks {
 		return true;
 	}
 
+	/**
+	 * Register PAD var on top
+	 *
+	 * @param array $vars
+	 * @param array $scripts
+	 *
+	 * @return bool
+	 */
+	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
+		global $wgPaidAssetDrop;
+
+		if( !empty( $wgPaidAssetDrop ) ) {
+			$vars['wgPaidAssetDrop'] = $wgPaidAssetDrop;
+		}
+
+		return true;
+	}
+
 }
