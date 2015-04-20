@@ -5,18 +5,39 @@ use Wikia\PortableInfobox\Parser\XmlParser;
 
 class NodeComparison extends  Node {
 
+	const SINGLE_GROUP_TYPE_NAME = 'comparision_group';
+
 	public function getData() {
 		$data = [];
 		$data['value'] = [];
 		$nodeFactory = new XmlParser( $this->infoboxData );
 		foreach ( $this->xmlNode as $set ) {
-			$data['value'][] = $nodeFactory->getDataFromNodes( $set );
+			$value = $nodeFactory->getDataFromNodes( $set );
+			$data['value'][] = [ 'type' => self::SINGLE_GROUP_TYPE_NAME,
+								 'value'=> $value,
+								 'isEmpty' => $this->isComparisionSetEmpty( $value )
+			];
+
 		}
 		return $data;
 	}
 
+	protected function isComparisionSetEmpty( $data ) {
+		foreach ( $data as $elem ) {
+			if ( $elem['type'] != 'header' && $elem['isEmpty'] == false ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public function isEmpty( $data ) {
-		return !is_array( $data[ 'value' ] ) || !count( $data[ 'value' ] );
+		foreach ( $data['value'] as $group ) {
+			if ( $group['isEmpty'] == false ) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 
