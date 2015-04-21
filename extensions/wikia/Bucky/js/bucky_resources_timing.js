@@ -168,8 +168,11 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 			for (subkey in stats[key]) {
 				value = Math.round(stats[key][subkey]);
 
-				sink.store(key + '.' + subkey, value);
-				debug(key + '.' + subkey, value);
+				// do not report negative values (PLATFORM-)
+				if (value >= 0) {
+					sink.store(key + '.' + subkey, value);
+					debug(key + '.' + subkey, value);
+				}
 			}
 		}
 	}
