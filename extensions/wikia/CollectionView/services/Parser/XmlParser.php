@@ -3,12 +3,7 @@ namespace Wikia\CollectionView\Parser;
 
 class XmlParser {
 
-	protected $collectionViewData;
 	protected $externalParser;
-
-	public function __construct( $collectionViewData ) {
-		$this->collectionViewData = $collectionViewData;
-	}
 
 	/**
 	 * @return mixed
@@ -60,13 +55,13 @@ class XmlParser {
 		$className = 'Wikia\\CollectionView\\Parser\\Nodes\\'.'Node' . ucfirst( strtolower( $tagType ) );
 		if ( class_exists( $className ) ) {
 			/* @var $instance \Wikia\CollectionView\Parser\Nodes\Node */
-			$instance = new $className( $xmlNode, $this->collectionViewData );
+			$instance = new $className( $xmlNode );
 			if ( !empty( $this->externalParser ) ) {
 				$instance->setExternalParser( $this->externalParser );
 			}
 			return $instance;
 		}
-		return new Nodes\NodeUnimplemented( $xmlNode, $this->collectionViewData );
+		return new Nodes\NodeUnimplemented( $xmlNode );
 	}
 
 }

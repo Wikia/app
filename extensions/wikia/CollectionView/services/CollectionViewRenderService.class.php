@@ -5,10 +5,8 @@ class CollectionViewRenderService extends WikiaService {
 
 	private $templates = [
 		'wrapper' => 'CollectionViewWrapper.mustache',
-		'title' => 'CollectionViewItemTitle.mustache',
-		'header' => 'CollectionViewItemHeader.mustache',
-		'item' => 'CollectionViewItemItem.mustache',
-		'pair' => 'CollectionViewItemKeyVal.mustache'
+		'header' => 'CollectionViewHeader.mustache',
+		'item' => 'CollectionViewItem.mustache'
 	];
 	private $templateEngine;
 
@@ -29,7 +27,7 @@ class CollectionViewRenderService extends WikiaService {
 		foreach ( $collectionViewData as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
-			if ( !$item['isEmpty'] ) {
+			if ( !$item[ 'isEmpty' ] ) {
 				// skip rendering for not supported type and log it
 				if ( !isset( $this->templates[ $type ] ) ) {
 					Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [

@@ -16,19 +16,17 @@ $wgAutoloadClasses[ 'CollectionViewRenderService' ] = $dir . 'services/Collectio
 $wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\XmlParser'] = $dir . 'services/Parser/XmlParser.php';
 $wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
 $wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\MediaWikiParserService'] = $dir . 'services/Parser/MediaWikiParserService.php';
+
 $wgCollectionViewParserNodes = [
 	'Node',
-	'NodeComparison',
 	'NodeDescription',
-	'NodeFooter',
-	'NodeGroup',
 	'NodeHeader',
 	'NodeItem',
-	'NodeTitle',
 	'NodeUnimplemented'
 ];
+
 foreach ( $wgCollectionViewParserNodes as $parserNode ) {
-	$wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\Nodes\\'.$parserNode ] = $dir . 'services/Parser/Nodes/'.$parserNode.'.php';
+	$wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\Nodes\\'.$parserNode ] = $dir . 'services/Parser/Nodes/' . $parserNode . '.php';
 }
 
 // controller classes
