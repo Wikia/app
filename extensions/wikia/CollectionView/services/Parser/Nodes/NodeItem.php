@@ -11,6 +11,10 @@ class NodeItem extends Node {
 		return $node;
 	}
 
+	public function isEmpty( $data ) {
+		return !( isset( $data[ 'img' ] ) ) || empty( $data[ 'img' ] );
+	}
+
 	protected function resolveImageUrl( $filename ) {
 		$title = \Title::newFromText( $filename, NS_FILE );
 		if ( $title && $title->exists() ) {
