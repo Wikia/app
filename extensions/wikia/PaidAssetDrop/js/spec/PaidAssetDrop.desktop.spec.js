@@ -2,19 +2,19 @@
 describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 	'use strict';
 
-	function noop() {
-		return;
-	}
-
-	function getModule() {
-		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.jquery, mocks.log, mocks.win);
-	}
-
 	var mocks = {
 		jquery: {},
 		log: noop,
 		win: {}
 	};
+
+	function noop() {
+		return;
+	}
+	
+	function getModule() {
+		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.jquery, mocks.log, mocks.win);
+	}
 
 	it('today is not valid when wgPaidAssetDropConfig is not set', function () {
 		expect(getModule().isNowValid()).toEqual(false);
