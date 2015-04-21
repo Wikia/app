@@ -1,9 +1,9 @@
 define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	'jquery',
 	'wikia.log',
-	'wikia.window',
-	'wikia.querystring'
-], function ($, log, win, Querystring) {
+	'wikia.querystring',
+	'wikia.window'
+], function ($, log, Querystring, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.paidAssetDrop.paidAssetDrop',
