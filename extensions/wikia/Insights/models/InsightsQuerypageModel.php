@@ -5,7 +5,7 @@
  *
  * Model for pages which extends QueryPage
  */
-abstract class InsightsQuerypageModel implements InsightsModel {
+abstract class InsightsQuerypageModel extends InsightsModel {
 	private $queryPageInstance,
 		$template = 'subpageList';
 
@@ -14,7 +14,6 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 		$limit = 100;
 
 	abstract function getDataProvider();
-	abstract function prepareData( $res );
 
 	protected function getQueryPageInstance() {
 		return $this->queryPageInstance;
@@ -47,6 +46,29 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 		return $content;
 	}
 
+	public function prepareData( $res ) {
+		$data = [];
+		$dbr = wfGetDB( DB_SLAVE );
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			if ( $row->title ) {
+				$article = [];
+				$params = $this->getUrlParams();
+
+				$title = Title::newFromText( $row->title );
+				$article['link'] = Linker::link( $title, null, [], $params );
+
+				$lastRev = $title->getLatestRevID();
+				$rev = Revision::newFromId( $lastRev );
+
+				if ( $rev ) {
+					$article['revision'] = $this->prepareRevisionData( $rev );
+				}
+				$data[] = $article;
+			}
+		}
+		return $data;
+	}
+
 	/**
 	 * Get data about revision
 	 * Who and when made last edition
@@ -76,5 +98,14 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 		$next = array_pop( $this->getContent( $offset, 1) );
 
 		return $next;
+	}
+
+	public function getUrlParams() {
+		$params = array_merge(
+			InsightsHelper::getEditUrlParams(),
+			$this->getInsightParam()
+		);
+
+		return $params;
 	}
 } 
