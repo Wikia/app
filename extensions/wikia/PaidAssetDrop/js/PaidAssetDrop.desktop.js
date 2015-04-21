@@ -10,7 +10,7 @@ define('ext.wikia.PaidAssetDrop', [
 		assetArticleName = 'MediaWiki:PAD_desktop.html',
 		apiEntryPoint = 'api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=';
 
-	log('Paid Asset Drop enabled', 'debug', logGroup);
+	log('Paid Asset Drop (PAD) loaded', 'debug', logGroup);
 
 	function isValidDate(dateString) {
 		return !isNaN(Date.parse(dateString));

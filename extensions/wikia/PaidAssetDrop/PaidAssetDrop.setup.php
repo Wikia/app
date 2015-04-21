@@ -1,7 +1,7 @@
 <?php
 $wgExtensionCredits['other'][] = [
-	'name' => 'Ad Engine',
-	'author' => 'Wikia',
+	'name' => 'Paid Asset Drop (PAD)',
+	'author' => 'Ad Engineering @Wikia',
 	'descriptionmsg' => 'paidassetdrop-desc',
 	'version' => '0.1',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PaidAssetDrop',
