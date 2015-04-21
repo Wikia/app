@@ -75,34 +75,12 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	}
 
 	function fetchPadContent(response) {
-		var page, revision;
-
-		if (response.query && response.query.pages && Object.keys) {
-			page = response.query.pages[Object.keys(response.query.pages)[0]];
-
-			log('Found page', 'debug', logGroup);
-			log(page, 'debug', logGroup);
-
-			if (page.revisions) {
-				revision = page.revisions.pop();
-
-				log('Found revision', 'debug', logGroup);
-				log(revision, 'debug', logGroup);
-
-				if (revision['*'] ) {
-					return revision['*'];
-				} else {
-					log('Could not find revision[*]', 'debug', logGroup);
-					return null;
-				}
-			} else {
-				log('Could not find page revisions', 'debug', logGroup);
-				return null;
-			}
+		try {
+			return response.query.pages[Object.keys(response.query.pages)[0]].revisions[0]['*'];
+		} catch (e) {
+			log(e, 'error', logGroup);
+			return null;
 		}
-
-		log('Could not find paid asset page', 'debug', logGroup);
-		return null;
 	}
 
 	function injectPad() {
