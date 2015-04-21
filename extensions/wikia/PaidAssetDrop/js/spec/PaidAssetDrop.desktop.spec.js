@@ -9,11 +9,16 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 	var mocks = {
 		jquery: {},
 		log: noop,
+		querystring: function () {
+			return {
+				getVal: noop
+			};
+		},
 		win: {}
 	};
 
 	function getModule() {
-		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.jquery, mocks.log, mocks.win);
+		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.jquery, mocks.log, mocks.querystring, mocks.win);
 	}
 
 	it('today is not valid when wgPaidAssetDropConfig is not set', function () {
@@ -74,5 +79,15 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 	it('today is invalid when end date is invalid', function () {
 		mocks.win.wgPaidAssetDropConfig = ['2015-04-20', 'bar'];
 		expect(getModule().isNowValid()).toEqual(false);
+	});
+
+	it('URL param', function () {
+		mocks.win.wgPaidAssetDropConfig = false;
+		spyOn(mocks, 'querystring').and.returnValue({
+			getVal: function () {
+				return 1;
+			}
+		});
+		expect(getModule().isNowValid()).toEqual(true);
 	});
 });
