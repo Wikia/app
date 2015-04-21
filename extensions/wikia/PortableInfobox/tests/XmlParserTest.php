@@ -11,7 +11,7 @@ class TestParser implements \Wikia\PortableInfobox\Parser\ExternalParser {
 	}
 }
 
-class PortableInfoboxParserNodesTest extends WikiaBaseTest {
+class XmlParserTest extends WikiaBaseTest {
 
 	protected function setUp() {
 		parent::setUp();
