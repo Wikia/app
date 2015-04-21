@@ -67,4 +67,21 @@ class InsightsHelper {
 	public static function isInsightPage( $subpage ) {
 		return isset( self::$insightsPages[$subpage] );
 	}
+
+	/**
+	 * Get param to show proper editor based on user preferences
+	 *
+	 * @return mixed
+	 */
+	public static function getEditUrlParams() {
+		global $wgUser;
+
+		if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
+			$param['veaction'] = 'edit';
+		} else {
+			$param['action'] = 'edit';
+		}
+
+		return $param;
+	}
 }

@@ -1,41 +1,17 @@
 <?php
 
 class InsightsUncategorizedModel extends InsightsQuerypageModel {
+	const INSIGHT_ID = 'uncategorized';
 
-	public $type = 'Uncategorizedpages';
+	public $settings = [
+		'template' => 'subpageList',
+	];
 
 	public function getDataProvider() {
 		return new UncategorizedPagesPage();
 	}
 
-	public function prepareData( $res ) {
-		$data = [];
-		$dbr = wfGetDB( DB_SLAVE );
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			if ( $row->title ) {
-				$article = [];
-
-				$title = Title::newFromText( $row->title );
-				$article['link'] = Linker::link( $title );
-
-				$lastRev = $title->getLatestRevID();
-				$rev = Revision::newFromId( $lastRev );
-
-				if ( $rev ) {
-					$article['revision'] = $this->prepareRevisionData( $rev );
-				}
-				$data[] = $article;
-			}
-		}
-		return $data;
-	}
-
-	public function isItemFixed( Article $article ) {
-		$title = $article->getTitle();
-		$categories = $title->getParentCategories( true );
-		if ( !empty( $categories ) ) {
-			return $this->removeFixedItem( $this->type, $title );
-		}
-		return false;
+	public function getInsightId() {
+		return self::INSIGHT_ID;
 	}
 }
