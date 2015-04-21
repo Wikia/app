@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\CollectionView\Parser\Nodes;
 
-class NodePair extends Node {
+class NodeItem extends Node {
 
 	public function getData() {
 		$data = [];

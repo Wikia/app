@@ -1,10 +1,10 @@
 <?php
 class CollectionViewHooks {
 	// FIX ME: temporary implementation - styles should be included only on page with collection view
-	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
-		Wikia::addAssetsToOutput('collection_view_scss');
-		return true;
-	}
+//	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+//		Wikia::addAssetsToOutput('collection_view_scss');
+//		return true;
+//	}
 
 	/**
 	 * Adds assets on the bottom of the body tag

@@ -19,11 +19,12 @@ $wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\MediaWikiParserService'] = $
 $wgCollectionViewParserNodes = [
 	'Node',
 	'NodeComparison',
+	'NodeDescription',
 	'NodeFooter',
 	'NodeGroup',
 	'NodeHeader',
 	'NodeImage',
-	'NodePair',
+	'NodeItem',
 	'NodeTitle',
 	'NodeUnimplemented'
 ];
@@ -37,7 +38,7 @@ $wgAutoloadClasses[ 'CollectionViewHooks' ] = $dir . 'CollectionViewHooks.class.
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'CollectionViewParserTagController::parserTagInit';
-$wgHooks[ 'BeforePageDisplay' ][] = 'CollectionViewHooks::onBeforePageDisplay';
+//$wgHooks[ 'BeforePageDisplay' ][] = 'CollectionViewHooks::onBeforePageDisplay';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'CollectionViewHooks::onSkinAfterBottomScripts';
 
 // i18n mapping
