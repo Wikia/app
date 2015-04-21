@@ -1,9 +1,10 @@
+/*global require*/
 require([
 	'ext.wikia.paidAssetDrop.paidAssetDrop',
 	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
-], function(
+], function (
 	pad,
 	log,
 	Querystring,
@@ -25,8 +26,8 @@ require([
 			return;
 		}
 
-		if (pad.isNowValid() && win.wgEnableAPI) {
-			pad.injectPAD();
+		if (pad.isNowValid(win.wgPaidAssetDropConfig) && win.wgEnableAPI) {
+			pad.injectPAD('#mw-content-text', 'desktop');
 		}
 	});
 });
