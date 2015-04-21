@@ -25,7 +25,7 @@ class InsightsHooks {
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
+		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			if ( !empty( $extraQuery ) ) {
 				$extraQuery .= '&';
 			}

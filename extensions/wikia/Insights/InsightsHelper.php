@@ -3,10 +3,10 @@
 class InsightsHelper {
 
 	public static $insightsPages = [
-		InsightsUncategorizedModel::INSIGHT_TYPE 	=> 'InsightsUncategorizedModel',
-		InsightsWithoutimagesModel::INSIGHT_TYPE 	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE 			=> 'InsightsDeadendModel',
-		InsightsWantedpagesModel::INSIGHT_TYPE 		=> 'InsightsWantedpagesModel'
+		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
+		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
+		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
+		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
 
 	public static $insightsMessageKeys = [
@@ -89,7 +89,7 @@ class InsightsHelper {
 	 * Returns specific data provider
 	 * If it doesn't exists redirect to Special:Insights main page
 	 *
-	 * @param $subpage Insights subpage name
+	 * @param $subpage String Insights subpage name
 	 * @return mixed
 	 */
 	public static function getInsightModel( $subpage ) {
