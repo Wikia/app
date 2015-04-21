@@ -5,7 +5,7 @@
  *
  * Model for pages which extends QueryPage
  */
-abstract class InsightsQuerypageModel implements InsightsModel {
+abstract class InsightsQuerypageModel extends InsightsModel {
 	private $queryPageInstance,
 		$template = 'subpageList';
 
@@ -14,7 +14,7 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 		$limit = 100;
 
 	abstract function getDataProvider();
-	abstract function prepareData( $res );
+	abstract function isItemFixed( Article $article );
 
 	protected function getQueryPageInstance() {
 		return $this->queryPageInstance;
@@ -33,7 +33,6 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 	/**
 	 * Get list of article
 	 *
-	 * @param int $limit
 	 * @return array
 	 */
 	public function getContent() {
@@ -45,6 +44,29 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 			$content = $this->prepareData( $res );
 		}
 		return $content;
+	}
+
+	public function prepareData( $res ) {
+		$data = [];
+		$dbr = wfGetDB( DB_SLAVE );
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			if ( $row->title ) {
+				$article = [];
+				$params = $this->getUrlParams();
+
+				$title = Title::newFromText( $row->title );
+				$article['link'] = Linker::link( $title, null, [], $params );
+
+				$lastRev = $title->getLatestRevID();
+				$rev = Revision::newFromId( $lastRev );
+
+				if ( $rev ) {
+					$article['revision'] = $this->prepareRevisionData( $rev );
+				}
+				$data[] = $article;
+			}
+		}
+		return $data;
 	}
 
 	/**
@@ -64,5 +86,31 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 		$data['userpage'] = $userpage;
 
 		return $data;
+	}
+
+	/**
+	 * Get data about next element
+	 *
+	 * @param int $offset
+	 * @return mixed
+	 */
+	public function getNext( $offset = 0 ) {
+		$next = array_pop( $this->getContent( $offset, 1 ) );
+		return $next;
+	}
+
+	public function getUrlParams() {
+		$params = array_merge(
+			InsightsHelper::getEditUrlParams(),
+			$this->getInsightParam()
+		);
+
+		return $params;
+	}
+
+	public function removeFixedItem( $type, Title $title ) {
+		$dbr = wfGetDB( DB_MASTER );
+		$dbr->delete( 'querycache', [ 'qc_type' => $type, 'qc_title' => $title->getDBkey() ] );
+		return $dbr->affectedRows() > 0;
 	}
 } 

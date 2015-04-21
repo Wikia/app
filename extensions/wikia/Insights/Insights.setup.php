@@ -36,7 +36,8 @@ $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpa
 $wgAutoloadClasses['InsightsHooks'] = $dir . 'InsightsHooks.class.php';
 
 $wgHooks['BeforePageDisplay'][] = 'InsightsHooks::onBeforePageDisplay';
-$wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::onArticleUpdateBeforeRedirect';
+$wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
+$wgHooks['ArticleCreateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
 $wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
 
 //special page

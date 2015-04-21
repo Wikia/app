@@ -1,30 +1,22 @@
 <?php
 
 class InsightsWithoutimagesModel extends InsightsQuerypageModel {
+	const INSIGHT_TYPE = 'Withoutimages';
 
 	public function getDataProvider() {
 		return new WithoutimagesPage();
 	}
 
-	public function prepareData( $res ) {
-		$data = [];
-		$dbr = wfGetDB( DB_SLAVE );
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			if ( $row->title ) {
-				$article = [];
+	public function getInsightType() {
+		return self::INSIGHT_TYPE;
+	}
 
-				$title = Title::newFromText( $row->title );
-				$article['link'] = Linker::link( $title );
-
-				$lastRev = $title->getLatestRevID();
-				$rev = Revision::newFromId( $lastRev );
-
-				if ( $rev ) {
-					$article['revision'] = $this->prepareRevisionData( $rev );
-				}
-				$data[] = $article;
-			}
+	public function isItemFixed( Article $article ) {
+		$dbr = wfGetDB( DB_MASTER );
+		$row = $dbr->selectRow( 'imagelinks', '*' , [ 'il_from' => $article->getID() ] );
+		if ( $row ) {
+			return $this->removeFixedItem( self::INSIGHT_TYPE, $article->getTitle() );
 		}
-		return $data;
+		return false;
 	}
 }

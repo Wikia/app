@@ -1017,6 +1017,18 @@ class EditPage {
 			case self::AS_SUCCESS_NEW_ARTICLE:
 				$query = $resultDetails['redirect'] ? 'redirect=no' : '';
 				$anchor = isset ( $resultDetails['sectionanchor'] ) ? $resultDetails['sectionanchor'] : '';
+
+				/**
+				 * Wikia change begin
+				 * Running similar hook that is run on update to give
+				 * extensions a chance to modify URL before a redirect
+				 * @see CE-1596
+				 */
+				wfRunHooks( 'ArticleCreateBeforeRedirect', [ $this->mArticle, &$anchor, &$query ] );
+				/**
+				 * Wikia change end
+				 */
+
 				$wgOut->redirect( $this->mTitle->getFullURL( $query ) . $anchor );
 				return false;
 

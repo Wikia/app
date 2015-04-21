@@ -10,7 +10,7 @@ class InsightsHooks {
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
+		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopNotification.js' );
 		}
 
@@ -20,16 +20,24 @@ class InsightsHooks {
 	/**
 	 * Add insight param to keep information about flow after edit
 	 */
-	public static function onArticleUpdateBeforeRedirect( $article, &$sectionanchor, &$extraQuery ) {
+	public static function AfterActionBeforeRedirect( Article $article, &$sectionanchor, &$extraQuery ) {
 		global $wgRequest;
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
+		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			if ( !empty( $extraQuery ) ) {
 				$extraQuery .= '&';
 			}
 			$extraQuery .= 'insights=' . $subpage;
+
+			$model = InsightsHelper::getInsightModel( $subpage );
+			$isItemFixed = $model->isItemFixed( $article );
+			if ( $isItemFixed ) {
+				$extraQuery .= '&item_status=fixed';
+			} else {
+				$extraQuery .= '&item_status=notfixed';
+			}
 		}
 
 		return true;
@@ -43,7 +51,7 @@ class InsightsHooks {
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
+		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$action = $wgRequest->getVal( 'action', 'view' );
 			if ( $action == 'edit'  && $query == 'action=submit' ) {
 				$url .= '&insights=' . $subpage;

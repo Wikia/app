@@ -2,20 +2,27 @@
 
 class InsightsHelper {
 
+	public static $insightsPages = [
+		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
+		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
+		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
+		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
+	];
+
 	public static $insightsMessageKeys = [
-		'uncategorized' => [
+		InsightsUncategorizedModel::INSIGHT_TYPE => [
 			'subtitle' => 'insights-list-uncategorized-subtitle',
 			'description' => 'insights-list-uncategorized-description',
 		],
-		'withoutimages' => [
+		InsightsWithoutimagesModel::INSIGHT_TYPE => [
 			'subtitle' => 'insights-list-withoutimages-subtitle',
 			'description' => 'insights-list-withoutimages-description',
 		],
-		'deadend' => [
+		InsightsDeadendModel::INSIGHT_TYPE => [
 			'subtitle' => 'insights-list-deadend-subtitle',
 			'description' => 'insights-list-deadend-description',
 		],
-		'wantedpages' => [
+		InsightsWantedpagesModel::INSIGHT_TYPE => [
 			'subtitle' => 'insights-list-wantedpages-subtitle',
 			'description' => 'insights-list-wantedpages-description',
 		],
@@ -52,12 +59,47 @@ class InsightsHelper {
 	}
 
 	/**
-	 * Check if given category exists as an insight page
+	 * Check if given subpage exists as an insight page
 	 *
 	 * @param $category
 	 * @return bool
 	 */
-	public static function isInsightPage( $category ) {
-		return isset( InsightsModel::$insightsPages[$category] );
+	public static function isInsightPage( $subpage ) {
+		return !empty( $subpage ) && isset( self::$insightsPages[$subpage] );
+	}
+
+	/**
+	 * Get param to show proper editor based on user preferences
+	 *
+	 * @return mixed
+	 */
+	public static function getEditUrlParams() {
+		global $wgUser;
+
+		if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
+			$param['veaction'] = 'edit';
+		} else {
+			$param['action'] = 'edit';
+		}
+
+		return $param;
+	}
+
+	/**
+	 * Returns specific data provider
+	 * If it doesn't exists redirect to Special:Insights main page
+	 *
+	 * @param $subpage String Insights subpage name
+	 * @return mixed
+	 */
+	public static function getInsightModel( $subpage ) {
+		if ( self::isInsightPage( $subpage ) ) {
+			$modelName = self::$insightsPages[$subpage];
+			if ( class_exists( $modelName ) ) {
+				return new $modelName();
+			}
+		}
+
+		return null;
 	}
 }
