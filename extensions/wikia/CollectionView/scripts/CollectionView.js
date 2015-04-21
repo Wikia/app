@@ -1,7 +1,7 @@
 'use strict';
 
 (function($, vignette) {
-	var images = $('.collection-view-image');
+	var images = $('.collection-view-item-image');
 
 	/**
 	 * @desc loads image

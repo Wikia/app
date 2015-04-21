@@ -6,7 +6,8 @@ class CollectionViewRenderService extends WikiaService {
 	private $templates = [
 		'wrapper' => 'CollectionViewWrapper.mustache',
 		'title' => 'CollectionViewItemTitle.mustache',
-		'image' => 'CollectionViewItemImage.mustache',
+		'header' => 'CollectionViewItemHeader.mustache',
+		'item' => 'CollectionViewItemItem.mustache',
 		'pair' => 'CollectionViewItemKeyVal.mustache'
 	];
 	private $templateEngine;
