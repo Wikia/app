@@ -97,10 +97,10 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$data = $node->getData();
 
 		$this->assertTrue( is_array( $data[ 'value' ] ), 'value is array' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['value'][ 0 ][ 'type' ] == 'header' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['value'][ 0 ][ 'data' ][ 'value' ] == 'Combatientes' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['value'][ 1 ][ 'type' ] == 'pair' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['value'][ 2 ][ 'data' ][ 'value' ] == 2 );
+		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 0 ][ 'type' ] == 'header' );
+		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 0 ][ 'data' ][ 'value' ] == 'Combatientes' );
+		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 1 ][ 'type' ] == 'pair' );
+		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 2 ][ 'data' ][ 'value' ] == 2 );
 	}
 
 }
