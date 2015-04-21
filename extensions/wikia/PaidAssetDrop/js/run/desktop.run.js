@@ -1,18 +1,27 @@
 require([
 	'ext.wikia.paidAssetDrop.paidAssetDrop',
 	'wikia.log',
+	'wikia.querystring',
 	'wikia.window'
 ], function(
 	pad,
 	log,
+	Querystring,
 	win
 ) {
 	'use strict';
 
+	var action = new Querystring().getVal('action', 'view');
+
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
 		if (win.wgNamespaceNumber !== 0) {
-			log('PAD: Not a main namespace', 'debug', 'ext.wikia.paidAssetDrop.paidAssetDrop');
+			log('PAD: Disabled: not a main namespace', 'debug', 'ext.wikia.paidAssetDrop.paidAssetDrop');
+			return;
+		}
+
+		if (action !== 'view') {
+			log('PAD: Disabled: not a view action', 'debug', 'ext.wikia.paidAssetDrop.paidAssetDrop');
 			return;
 		}
 
