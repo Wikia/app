@@ -12,8 +12,65 @@ define('ext.wikia.PaidAssetDrop', [
 
 	log('Paid Asset Drop enabled', 'debug', logGroup);
 
+	function isValidDate(dateString) {
+		return !isNaN(Date.parse(dateString));
+	}
+
+	function isConfigValid() {
+		if (typeof win.wgPaidAssetDrop === 'undefined') {
+			log('wgPaidAssetDrop is undefined', 'debug', logGroup);
+			return false;
+		}
+
+		if (!win.wgPaidAssetDrop[0]) {
+			log('No start date set', 'debug', logGroup);
+			return false;
+		}
+
+		if (!win.wgPaidAssetDrop[1]) {
+			log('No start date set', 'debug', logGroup);
+			return false;
+		}
+
+		if (!isValidDate(win.wgPaidAssetDrop[0])) {
+			log('Start date invalid', 'debug', logGroup);
+			return false;
+		}
+
+		if (!isValidDate(win.wgPaidAssetDrop[1])) {
+			log('End date invalid', 'debug', logGroup);
+			return false;
+		}
+
+		return true;
+	}
+
 	function isTodayValid() {
-		//TODO: change me/finish me!
+		var today, start, end;
+
+		if(!isConfigValid()) {
+			return false;
+		}
+
+		start = new Date(win.wgPaidAssetDrop[0]);
+		end = new Date(win.wgPaidAssetDrop[1]);
+		today = new Date();
+
+		log('PAD start date: ' + start, 'debug', logGroup);
+		log('PAD end date: ' + end, 'debug', logGroup);
+		log('PAD today is: ' + today, 'debug', logGroup);
+
+		if (today.getTime() < start.getTime()) {
+			log('PAD disabled: it is too early', 'debug', logGroup);
+			return false;
+		}
+
+		if (today.getTime() > end.getTime()) {
+			log('PAD disabled: it is too late', 'debug', logGroup);
+			return false;
+		}
+
+		log('PAD enabled', 'debug', logGroup);
 		return true;
 	}
 
