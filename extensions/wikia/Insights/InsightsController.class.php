@@ -14,19 +14,17 @@ class InsightsController extends WikiaSpecialPageController {
 
 		$this->subpage = $this->getPar();
 
-		if ( !empty( $this->subpage ) ) {
-			if ( InsightsHelper::isInsightPage( $this->subpage ) ) {
-				$this->renderSubpage();
-			} else {
-				$this->response->redirect( $this->getSpecialInsightsUrl() );
-			}
+		if ( InsightsHelper::isInsightPage( $this->subpage ) ) {
+			$this->renderSubpage();
+		} elseif ( !empty( $this->subpage ) ) {
+			$this->response->redirect( $this->getSpecialInsightsUrl() );
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
 
 	private function renderSubpage() {
-		$this->model = $this->getInsightModel( $this->subpage );
+		$this->model = InsightsHelper::getInsightModel( $this->subpage );
 		if ( $this->model instanceof InsightsModel ) {
 			$this->content = $this->model->getContent();
 			$this->data = $this->model->getData();
@@ -44,8 +42,8 @@ class InsightsController extends WikiaSpecialPageController {
 
 		$subpage = $this->request->getVal( 'insight', null );
 
-		if ( !empty( $subpage ) && InsightsHelper::isInsightPage( $subpage ) ) {
-			$model = $this->getInsightModel( $subpage );
+		if ( InsightsHelper::isInsightPage( $subpage ) ) {
+			$model = InsightsHelper::getInsightModel( $subpage );
 			if ( $model instanceof InsightsModel ) {
 				$next = $model->getNext();
 
@@ -58,24 +56,6 @@ class InsightsController extends WikiaSpecialPageController {
 				$this->response->setVal( 'nextArticleLink', $next['link'] . '?action=edit&insights=' . $subpage );
 			}
 		}
-	}
-
-	/**
-	 * Returns specific data provider
-	 * If it doesn't exists redirect to Special:Insights main page
-	 *
-	 * @param $subpage Insights subpage name
-	 * @return mixed
-	 */
-	public function getInsightModel( $subpage ) {
-		if ( !empty( $subpage ) && InsightsHelper::isInsightPage( $subpage ) ) {
-			$modelName = InsightsHelper::$insightsPages[$subpage];
-			if ( class_exists( $modelName ) ) {
-				return new $modelName();
-			}
-		}
-
-		return null;
 	}
 
 	private function addAssets() {

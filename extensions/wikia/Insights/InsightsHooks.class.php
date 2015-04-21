@@ -10,7 +10,7 @@ class InsightsHooks {
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
+		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopNotification.js' );
 		}
 
@@ -31,7 +31,7 @@ class InsightsHooks {
 			}
 			$extraQuery .= 'insights=' . $subpage;
 
-			$model = InsightsQuerypageModel::getModel( $subpage );
+			$model = InsightsHelper::getInsightModel( $subpage );
 			$isItemFixed = $model->isItemFixed( $article );
 			if ( $isItemFixed ) {
 				$extraQuery .= '&item_status=fixed';
@@ -51,7 +51,7 @@ class InsightsHooks {
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
-		if ( $subpage && InsightsHelper::isInsightPage( $subpage ) ) {
+		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$action = $wgRequest->getVal( 'action', 'view' );
 			if ( $action == 'edit'  && $query == 'action=submit' ) {
 				$url .= '&insights=' . $subpage;

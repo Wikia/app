@@ -3,26 +3,26 @@
 class InsightsHelper {
 
 	public static $insightsPages = [
-		'uncategorized' => 'InsightsUncategorizedModel',
-		'withoutimages' => 'InsightsWithoutimagesModel',
-		'deadend' => 'InsightsDeadendModel',
-		'wantedpages' => 'InsightsWantedpagesModel'
+		InsightsUncategorizedModel::INSIGHT_TYPE 	=> 'InsightsUncategorizedModel',
+		InsightsWithoutimagesModel::INSIGHT_TYPE 	=> 'InsightsWithoutimagesModel',
+		InsightsDeadendModel::INSIGHT_TYPE 			=> 'InsightsDeadendModel',
+		InsightsWantedpagesModel::INSIGHT_TYPE 		=> 'InsightsWantedpagesModel'
 	];
 
 	public static $insightsMessageKeys = [
-		'uncategorized' => [
+		InsightsUncategorizedModel::INSIGHT_TYPE => [
 			'subtitle' => 'insights-list-uncategorized-subtitle',
 			'description' => 'insights-list-uncategorized-description',
 		],
-		'withoutimages' => [
+		InsightsWithoutimagesModel::INSIGHT_TYPE => [
 			'subtitle' => 'insights-list-withoutimages-subtitle',
 			'description' => 'insights-list-withoutimages-description',
 		],
-		'deadend' => [
+		InsightsDeadendModel::INSIGHT_TYPE => [
 			'subtitle' => 'insights-list-deadend-subtitle',
 			'description' => 'insights-list-deadend-description',
 		],
-		'wantedpages' => [
+		InsightsWantedpagesModel::INSIGHT_TYPE => [
 			'subtitle' => 'insights-list-wantedpages-subtitle',
 			'description' => 'insights-list-wantedpages-description',
 		],
@@ -65,7 +65,7 @@ class InsightsHelper {
 	 * @return bool
 	 */
 	public static function isInsightPage( $subpage ) {
-		return isset( self::$insightsPages[$subpage] );
+		return !empty( $subpage ) && isset( self::$insightsPages[$subpage] );
 	}
 
 	/**
@@ -83,5 +83,23 @@ class InsightsHelper {
 		}
 
 		return $param;
+	}
+
+	/**
+	 * Returns specific data provider
+	 * If it doesn't exists redirect to Special:Insights main page
+	 *
+	 * @param $subpage Insights subpage name
+	 * @return mixed
+	 */
+	public static function getInsightModel( $subpage ) {
+		if ( self::isInsightPage( $subpage ) ) {
+			$modelName = self::$insightsPages[$subpage];
+			if ( class_exists( $modelName ) ) {
+				return new $modelName();
+			}
+		}
+
+		return null;
 	}
 }
