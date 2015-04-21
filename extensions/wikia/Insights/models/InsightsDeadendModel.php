@@ -1,6 +1,7 @@
 <?php
 
 class InsightsDeadendModel extends InsightsQuerypageModel {
+	public $type = 'Deadendpages';
 
 	public function getDataProvider() {
 		return new DeadendPagesPage();
@@ -26,5 +27,14 @@ class InsightsDeadendModel extends InsightsQuerypageModel {
 			}
 		}
 		return $data;
+	}
+
+	public function isItemFixed( Article $article ) {
+		$dbr = wfGetDB( DB_MASTER );
+		$row = $dbr->selectRow( 'pagelinks', '*' , [ 'pl_from' => $article->getID() ] );
+		if ( $row ) {
+			return $this->removeFixedItem( $this->type, $article->getTitle() );
+		}
+		return false;
 	}
 }

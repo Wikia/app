@@ -15,7 +15,15 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 
 	abstract function getDataProvider();
 	abstract function prepareData( $res );
-	abstract function isItemFixed( WikiPage $wikiPage );
+	abstract function isItemFixed( Article $article );
+
+	public static function getModel( $subpage ) {
+		if ( InsightsHelper::isInsightPage( $subpage )
+			&& class_exists( InsightsHelper::$insightsPages[$subpage] ) ) {
+			return new InsightsHelper::$insightsPages[$subpage]();
+		}
+		return null;
+	}
 
 	protected function getQueryPageInstance() {
 		return $this->queryPageInstance;
@@ -73,8 +81,7 @@ abstract class InsightsQuerypageModel implements InsightsModel {
 	 * @return mixed
 	 */
 	public function getNext( $offset = 0 ) {
-		$next = array_pop($this->getContent($offset, 1));
-
+		$next = array_pop( $this->getContent( $offset, 1 ) );
 		return $next;
 	}
 

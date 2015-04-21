@@ -20,7 +20,7 @@ class InsightsHooks {
 	/**
 	 * Add insight param to keep information about flow after edit
 	 */
-	public static function onArticleUpdateBeforeRedirect( Article $article, &$sectionanchor, &$extraQuery ) {
+	public static function AfterActionBeforeRedirect( Article $article, &$sectionanchor, &$extraQuery ) {
 		global $wgRequest;
 
 		$subpage = $wgRequest->getVal( 'insights', null );
@@ -31,9 +31,12 @@ class InsightsHooks {
 			}
 			$extraQuery .= 'insights=' . $subpage;
 
-			$isItemFixed = ( new InsightsUncategorizedModel() )->isItemFixed( $article );
+			$model = InsightsQuerypageModel::getModel( $subpage );
+			$isItemFixed = $model->isItemFixed( $article );
 			if ( $isItemFixed ) {
 				$extraQuery .= '&item_status=fixed';
+			} else {
+				$extraQuery .= '&item_status=notfixed';
 			}
 		}
 

@@ -30,8 +30,8 @@ class InsightsUncategorizedModel extends InsightsQuerypageModel {
 		return $data;
 	}
 
-	public function isItemFixed( WikiPage $wikiPage ) {
-		$title = Title::newFromID( $wikiPage->getId() );
+	public function isItemFixed( Article $article ) {
+		$title = $article->getTitle();
 		$categories = $title->getParentCategories( true );
 		if ( !empty( $categories ) ) {
 			return $this->removeFixedItem( $this->type, $title );

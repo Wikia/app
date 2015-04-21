@@ -1,6 +1,7 @@
 <?php
 
 class InsightsWantedpagesModel extends InsightsQuerypageModel {
+	public $type = 'Wantedpages';
 
 	public function getDataProvider() {
 		return new WantedPagesPage();
@@ -16,5 +17,12 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 			$data[] = $article;
 		}
 		return $data;
+	}
+
+	public function isItemFixed( Article $article ) {
+		if( $article->getID() !== 0 ) {
+			return $this->removeFixedItem( $this->type, $article->getTitle() );
+		}
+		return false;
 	}
 }
