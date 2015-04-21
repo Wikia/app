@@ -17,7 +17,7 @@ define('ext.wikia.paidAssetDrop', [
 	}
 
 	function isConfigValid() {
-		if (typeof win.wgPaidAssetDropConfig === 'undefined') {
+		if (!win.wgPaidAssetDropConfig) {
 			log('wgPaidAssetDropConfig is undefined', 'debug', logGroup);
 			return false;
 		}
