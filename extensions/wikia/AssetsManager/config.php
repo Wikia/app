@@ -2429,3 +2429,20 @@ $config['poweruser'] = [
 		'//extensions/wikia/PowerUser/js/powerUser.run.js',
 	]
 ];
+
+$config['collection_view_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/CollectionView/styles/CollectionView.scss'
+	]
+];
+
+$config['collection_view_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/wikia/libraries/vignette/vignette.js',
+		'//extensions/wikia/CollectionView/scripts/CollectionView.js'
+	]
+];

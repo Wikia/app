@@ -1,0 +1,62 @@
+@import 'skins/shared/color';
+@import "skins/shared/mixins/columns";
+
+$infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
+$infobox-margin: 15px;
+$infobox-item-margin: 10px;
+$infobox-bg-color-mix-value: 90%;
+$infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
+
+@if $is-dark-wiki {
+	$infobox-background: mix($color-page, #FFF, $infobox-bg-color-mix-value);
+}
+
+.portable-infobox {
+	background-color: $infobox-background;
+	clear: right;
+	float: right;
+	margin: 0 0 $infobox-margin $infobox-margin;
+	width: $infobox-width;
+
+	// TODO: experimental wide infobox styles (remove or refactor)
+	&.wide-infobox {
+		@include column-count(3);
+		@include column-gap($infobox-item-margin * 2);
+
+		clear: both;
+		float: none;
+		margin: 0;
+		width: 100%;
+
+		.infobox-item:not(.item-type-title) {
+			@include column-break-inside(avoid);
+		}
+
+		.item-type-title {
+			@include column-span(all);
+		}
+	}
+
+	.infobox-title {
+		border: 0;
+		font-size: 18px;
+		line-height: 28px;
+		margin: 0;
+	}
+
+	.infobox-item:not(.item-type-image) {
+		margin: $infobox-item-margin;
+		margin-right: $infobox-item-margin * 2;
+	}
+
+	.infobox-item-label {
+		border-bottom: 1px solid $color-page-border;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 18px;
+	}
+
+	.infobox-item-value {
+		padding-left: $infobox-item-margin;
+	}
+}
