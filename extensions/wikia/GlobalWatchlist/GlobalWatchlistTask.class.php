@@ -45,7 +45,7 @@ class GlobalWatchlistTask extends BaseTask {
 			$revision = Revision::newFromTitle( $titleObj );
 
 			// Skip revisions that doesn't exist
-			if ( !empty($revision) ) {
+			if ( !empty( $revision ) ) {
 				$globalWatchlistBot = new GlobalWatchlistBot();
 
 				$db = wfGetDB( DB_MASTER, [ ], \F::app()->wg->ExternalDatawareDB );
