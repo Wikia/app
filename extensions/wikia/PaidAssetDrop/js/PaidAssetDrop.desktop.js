@@ -45,7 +45,7 @@ define('ext.wikia.paidAssetDrop', [
 		return true;
 	}
 
-	function isTodayValid() {
+	function isNowValid() {
 		var today, start, end;
 
 		if(!isConfigValid()) {
@@ -121,7 +121,7 @@ define('ext.wikia.paidAssetDrop', [
 	}
 
 	return {
-		isTodayValid: isTodayValid,
+		isNowValid: isNowValid,
 		injectPAD: injectPad
 	};
 });
@@ -132,7 +132,7 @@ require([
 ], function(pad, win) {
 	'use strict';
 
-	if (pad.isTodayValid() && win.wgEnableAPI) {
+	if (pad.isNowValid() && win.wgEnableAPI) {
 		pad.injectPAD();
 	}
 });
