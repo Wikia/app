@@ -14,6 +14,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$limit = 100;
 
 	abstract function getDataProvider();
+	abstract function isItemFixed( Article $article );
 
 	protected function getQueryPageInstance() {
 		return $this->queryPageInstance;
@@ -32,7 +33,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	/**
 	 * Get list of article
 	 *
-	 * @param int $limit
 	 * @return array
 	 */
 	public function getContent() {
@@ -95,8 +95,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 * @return mixed
 	 */
 	public function getNext( $offset = 0 ) {
-		$next = array_pop( $this->getContent( $offset, 1) );
-
+		$next = array_pop( $this->getContent( $offset, 1 ) );
 		return $next;
 	}
 
@@ -107,5 +106,11 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		);
 
 		return $params;
+	}
+
+	public function removeFixedItem( $type, Title $title ) {
+		$dbr = wfGetDB( DB_MASTER );
+		$dbr->delete( 'querycache', [ 'qc_type' => $type, 'qc_title' => $title->getDBkey() ] );
+		return $dbr->affectedRows() > 0;
 	}
 } 
