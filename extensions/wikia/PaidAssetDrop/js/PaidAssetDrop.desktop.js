@@ -84,7 +84,7 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	}
 
 	function injectPad() {
-		var url = [win.wgServer, '/', apiEntryPoint, assetArticleName].join(''),
+		var url = ['/', apiEntryPoint, assetArticleName].join(''),
 			padContent;
 
 		log('Sending request to: ' + url, 'debug', logGroup);
