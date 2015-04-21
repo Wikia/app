@@ -18,27 +18,27 @@ define('ext.wikia.paidAssetDrop', [
 
 	function isConfigValid() {
 		if (!win.wgPaidAssetDropConfig) {
-			log('wgPaidAssetDropConfig is undefined', 'debug', logGroup);
+			log('wgPaidAssetDropConfig is undefined', 'error', logGroup);
 			return false;
 		}
 
 		if (!win.wgPaidAssetDropConfig[0]) {
-			log('No start date set', 'debug', logGroup);
+			log('No start date set', 'error', logGroup);
 			return false;
 		}
 
 		if (!win.wgPaidAssetDropConfig[1]) {
-			log('No start date set', 'debug', logGroup);
+			log('No end date set', 'error', logGroup);
 			return false;
 		}
 
 		if (!isValidDate(win.wgPaidAssetDropConfig[0])) {
-			log('Start date invalid', 'debug', logGroup);
+			log('Start date invalid', 'error', logGroup);
 			return false;
 		}
 
 		if (!isValidDate(win.wgPaidAssetDropConfig[1])) {
-			log('End date invalid', 'debug', logGroup);
+			log('End date invalid', 'error', logGroup);
 			return false;
 		}
 
