@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, jasmine*/
-describe('ext.wikia.paidAssetDrop', function () {
+describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 	'use strict';
 
 	function noop() {
@@ -7,7 +7,7 @@ describe('ext.wikia.paidAssetDrop', function () {
 	}
 
 	function getModule() {
-		return modules['ext.wikia.paidAssetDrop'](mocks.jquery, mocks.log, mocks.win);
+		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.jquery, mocks.log, mocks.win);
 	}
 
 	var mocks = {
