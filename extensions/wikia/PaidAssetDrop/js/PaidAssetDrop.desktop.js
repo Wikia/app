@@ -103,14 +103,3 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 		injectPAD: injectPad
 	};
 });
-
-require([
-	'ext.wikia.paidAssetDrop.paidAssetDrop',
-	'wikia.window'
-], function(pad, win) {
-	'use strict';
-
-	if (pad.isNowValid() && win.wgEnableAPI) {
-		pad.injectPAD();
-	}
-});
