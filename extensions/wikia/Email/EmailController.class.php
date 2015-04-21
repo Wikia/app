@@ -381,7 +381,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return String
 	 */
 	protected function getCurrentProfilePage() {
-		if ( $this->currentUser->isAnon() ) {
+		if ( $this->currentUser->isLoggedIn() ) {
 			return $this->currentUser->getUserPage()->getFullURL();
 		}
 		return "";
@@ -391,7 +391,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return String
 	 */
 	protected function getCurrentUserName() {
-		if ( $this->currentUser->isAnon() )	 {
+		if ( $this->currentUser->isLoggedIn() )	 {
 			return $this->currentUser->getName();
 		}
 		return wfMessage( "emailext-anonymous-editor" )->inLanguage( $this->targetLang )->text();
