@@ -2434,6 +2434,7 @@ $config['poweruser'] = [
 $config['paid_asset_drop_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/PaidAssetDrop/js/run/desktop.run.js',
 		'//extensions/wikia/PaidAssetDrop/js/PaidAssetDrop.desktop.js'
 	]
 ];
