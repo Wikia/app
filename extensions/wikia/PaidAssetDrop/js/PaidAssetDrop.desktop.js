@@ -1,11 +1,11 @@
-define('ext.wikia.paidAssetDrop', [
+define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	'jquery',
 	'wikia.log',
 	'wikia.window'
 ], function ($, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.paidAssetDrop',
+	var logGroup = 'ext.wikia.paidAssetDrop.paidAssetDrop',
 		articleContentId = '#mw-content-text',
 		assetArticleName = 'MediaWiki:PAD_desktop.html',
 		apiEntryPoint = 'api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=';
@@ -127,7 +127,7 @@ define('ext.wikia.paidAssetDrop', [
 });
 
 require([
-	'ext.wikia.paidAssetDrop',
+	'ext.wikia.paidAssetDrop.paidAssetDrop',
 	'wikia.window'
 ], function(pad, win) {
 	'use strict';
