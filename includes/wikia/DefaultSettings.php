@@ -1695,9 +1695,9 @@ $wgImplicitGroups[] = 'poweruser';
 $wgEnableUpdatedGlobalFooter = true;
 
 /**
- * @name $wgPaidAssetDrop
+ * @name $wgPADConfig
  *
- * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (Y/m/d format).
+ * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
  * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
  */
-$wgPaidAssetDrop = false;
+$wgPADConfig = false;
