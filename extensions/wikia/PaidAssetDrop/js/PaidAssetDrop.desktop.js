@@ -1,14 +1,16 @@
 define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	'jquery',
 	'wikia.log',
-	'wikia.window'
-], function ($, log, win) {
+	'wikia.window',
+	'wikia.querystring'
+], function ($, log, win, Querystring) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.paidAssetDrop.paidAssetDrop',
 		articleContentId = '#mw-content-text',
 		assetArticleName = 'MediaWiki:PAD_desktop.html',
-		apiEntryPoint = 'api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=';
+		apiEntryPoint = 'api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=',
+		qs = new Querystring();
 
 	log('Paid Asset Drop (PAD) loaded', 'debug', logGroup);
 
@@ -47,6 +49,11 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 
 	function isNowValid() {
 		var today, start, end;
+
+		if(parseInt(qs.getVal('forcepad', 0), 10) === 1) {
+			log('PAD enabled (forced)', 'debug', logGroup);
+			return true;
+		}
 
 		if(!isConfigValid()) {
 			return false;
