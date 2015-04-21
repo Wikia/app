@@ -84,7 +84,7 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 
 	it('URL param', function () {
 		mocks.win.wgPaidAssetDropConfig = false;
-		spyOn(mocks.qs, 'getVal').and.returnValue(1);
+		spyOn(mocks.qs, 'getVal').and.returnValue('1');
 		expect(getModule().isNowValid()).toEqual(true);
 	});
 });
