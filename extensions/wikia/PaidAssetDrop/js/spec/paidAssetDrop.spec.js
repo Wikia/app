@@ -7,19 +7,18 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 	}
 
 	var mocks = {
-		jquery: {},
 		log: noop,
 		qs: {
 			getVal: noop
 		},
-		Querystring: function () {
+		querystring: function () {
 			return mocks.qs;
 		},
 		win: {}
 	};
 
 	function getModule() {
-		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.jquery, mocks.log, mocks.Querystring, mocks.win);
+		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.log, mocks.querystring, mocks.win);
 	}
 
 	it('now is not valid when wgPaidAssetDropConfig is not set', function () {
@@ -40,36 +39,42 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 		var config = ['2015-04-14', '2015-04-21'];
 		jasmine.clock().mockDate(new Date('2015-04-13'));
 		expect(getModule().isNowValid(config)).toEqual(false);
+		jasmine.clock().mockDate();
 	});
 
 	it('now is not valid when it is after end date', function () {
 		var config = ['2015-04-14', '2015-04-21'];
 		jasmine.clock().mockDate(new Date('2015-04-22'));
 		expect(getModule().isNowValid(config)).toEqual(false);
+		jasmine.clock().mockDate();
 	});
 
 	it('now is valid', function () {
 		var config = ['2015-04-14', '2015-04-21'];
 		jasmine.clock().mockDate(new Date('2015-04-20'));
 		expect(getModule().isNowValid(config)).toEqual(true);
+		jasmine.clock().mockDate();
 	});
 
 	it('now is not valid when it is before start date (case with time)', function () {
 		var config = ['2015-04-14T12:00:00Z', '2015-04-14T20:00:00Z'];
 		jasmine.clock().mockDate(new Date('2015-04-14T10:00:00Z'));
 		expect(getModule().isNowValid(config)).toEqual(false);
+		jasmine.clock().mockDate();
 	});
 
 	it('now is not valid when it is after end date (case with time)', function () {
 		var config = ['2015-04-14T12:00:00Z', '2015-04-14T20:00:00Z'];
 		jasmine.clock().mockDate(new Date('2015-04-14T22:00:00Z'));
 		expect(getModule().isNowValid(config)).toEqual(false);
+		jasmine.clock().mockDate();
 	});
 
 	it('now is valid (case with time)', function () {
 		var config = ['2015-04-14T12:00:00Z', '2015-04-14T20:00:00Z'];
 		jasmine.clock().mockDate(new Date('2015-04-14T16:00:00Z'));
 		expect(getModule().isNowValid(config)).toEqual(true);
+		jasmine.clock().mockDate();
 	});
 
 	it('now is invalid when both dates are invalid', function () {
