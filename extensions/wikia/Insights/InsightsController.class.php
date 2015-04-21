@@ -28,7 +28,7 @@ class InsightsController extends WikiaSpecialPageController {
 		if ( $this->model instanceof InsightsModel ) {
 			$this->content = $this->model->getContent();
 			$this->data = $this->model->getData();
-			$this->overrideTemplate($this->model->getTemplate());
+			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
 			throw new MWException( 'An Insights subpage should implement the InsightsModel interface.' );
 		}
@@ -46,6 +46,7 @@ class InsightsController extends WikiaSpecialPageController {
 			$model = InsightsHelper::getInsightModel( $subpage );
 			if ( $model instanceof InsightsModel ) {
 				$next = $model->getNext();
+				$params = $this->prepareInsightUrlParams( $model->getUrlParams() );
 
 				$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message' )->escaped() );
 				$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
@@ -53,7 +54,7 @@ class InsightsController extends WikiaSpecialPageController {
 
 				$this->response->setVal( 'insightsPageLink', $this->getSpecialInsightsUrl() );
 				$this->response->setVal( 'nextArticleTitle', $next['title'] );
-				$this->response->setVal( 'nextArticleLink', $next['link'] . '?action=edit&insights=' . $subpage );
+				$this->response->setVal( 'nextArticleLink', $next['link'] . $params );
 			}
 		}
 	}
@@ -69,5 +70,16 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function getSpecialInsightsUrl() {
 		return $this->specialPage->getTitle()->getFullURL();
+	}
+
+	/**
+	 * Create url params from array
+	 *
+	 * @param Array array with url params
+	 * @return string url parameters
+	 */
+	private function prepareInsightUrlParams( Array $paramsArray ) {
+		$params = '?' . implode( '&', $paramsArray );
+		return $params;
 	}
 }
