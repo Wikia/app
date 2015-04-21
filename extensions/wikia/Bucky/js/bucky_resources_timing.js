@@ -90,6 +90,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 			'total',
 			'cached',
 			'dns',
+			'dns-cached',
 			'3rdparty',
 			'css',
 			'link',
@@ -127,7 +128,14 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 				// count DNS calls and report the time
 				dnsTime = res.domainLookupStart ? res.domainLookupEnd - res.domainLookupStart : false;
 				if (dnsTime !== false) {
-					addStatsEntry('dns', dnsTime);
+					if (dnsTime === 0) {
+						addStatsEntry('dns-cached', dnsTime);
+					}
+					else {
+						addStatsEntry('dns', dnsTime);
+					}
+
+					debug('DNS', {dnsTime: dnsTime, url: res.name});
 				}
 
 				// browser cache hit
