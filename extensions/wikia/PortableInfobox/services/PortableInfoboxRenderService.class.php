@@ -69,8 +69,6 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function renderComparisonItem( $comparisonData ) {
 		$comparisionHTMLContent = '';
 
-		var_dump($comparisonData);
-
 		foreach ( $comparisonData as $set ) {
 			$setHTMLContent = '';
 
@@ -78,7 +76,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				continue;
 			}
 
-			foreach ( $set as $item ) {
+			foreach ( $set['value'] as $item ) {
 				$type = $item[ 'type' ];
 
 				if ( $item['isEmpty'] ) {
@@ -86,7 +84,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				}
 
 				if ( $type === 'header' ) {
-					$setHTMLContent .= $this->renderItem( 'comparison-set-header', [ $item[ 'data' ] ] );
+					$setHTMLContent .= $this->renderItem( 'comparison-set-header', $item[ 'data' ] );
 				} else {
 					if ( $this->validateType( $type ) ) {
 						$setHTMLContent .= $this->renderItem(
