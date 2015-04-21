@@ -38,13 +38,12 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 			</infobox>
 		';
 		$data = $parser->getDataFromXmlString( $markup );
-
 		// infobox -> comparison -> set -> header
 		$this->assertTrue( $data[0]['data']['value'][0]['value'][0]['isEmpty'] == false );
 		// infobox -> comparison -> set -> pair { lado1 }
-		$this->assertTrue( $data[0]['data']['value'][0]['value'][1]['isEmpty'] == true );
+		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][1]['isEmpty'] == true );
 		// infobox -> comparison -> set -> pair { lado2 }
-		$this->assertTrue( $data[0]['data']['value'][0]['value'][2]['isEmpty'] == false );
+		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][2]['isEmpty'] == false );
 		// infobox -> comparison -> set
 		$this->assertTrue( $data[0]['data']['value']['isEmpty'] == false );
 		// infobox -> comparison
@@ -68,10 +67,13 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 					  <pair source="lado2" />
 				   </set>
 				</comparison>
+				<footer>
+				<links>[[aaa]]</links>
+				</footer>
 			</infobox>
 		';
 		$data = $parser->getDataFromXmlString( $markup );
 		$this->assertTrue( $data[0]['data']['value'] == 'parseRecursive(ABB)' );
-		$this->assertTrue( $data[1]['data']['value'][0]['value'][2]['data']['value'] == 'parse(LALALA)');
+		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parse(LALALA)');
 	}
 }

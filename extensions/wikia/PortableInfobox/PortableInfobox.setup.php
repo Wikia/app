@@ -25,6 +25,7 @@ $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\MediaWikiParserService'] = 
 $wgInfoboxParserNodes = [
 	'Node',
 	'NodeComparison',
+	'NodeSet',
 	'NodeFooter',
 	'NodeGroup',
 	'NodeHeader',

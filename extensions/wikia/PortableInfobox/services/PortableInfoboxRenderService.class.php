@@ -76,7 +76,7 @@ class PortableInfoboxRenderService extends WikiaService {
 				continue;
 			}
 
-			foreach ( $set['value'] as $item ) {
+			foreach ( $set['data']['value'] as $item ) {
 				$type = $item[ 'type' ];
 
 				if ( $item['isEmpty'] ) {
@@ -148,7 +148,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		$isValid = true;
 
 		if ( !isset( $this->templates[ $type ] ) ) {
-			Wikia\Logger\WikiaLogger::instance()->info( LOGGER_LABEL, [
+			Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
 				'type' => $type
 			] );
 
