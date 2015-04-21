@@ -1,6 +1,7 @@
 <?php
 
 class InsightsWithoutimagesModel extends InsightsQuerypageModel {
+	public $type = 'Withoutimages';
 
 	public function getDataProvider() {
 		return new WithoutimagesPage();
@@ -26,5 +27,14 @@ class InsightsWithoutimagesModel extends InsightsQuerypageModel {
 			}
 		}
 		return $data;
+	}
+
+	public function isItemFixed( Article $article ) {
+		$dbr = wfGetDB( DB_MASTER );
+		$row = $dbr->selectRow( 'imagelinks', '*' , [ 'il_from' => $article->getID() ] );
+		if ( $row ) {
+			return $this->removeFixedItem( $this->type, $article->getTitle() );
+		}
+		return false;
 	}
 }
