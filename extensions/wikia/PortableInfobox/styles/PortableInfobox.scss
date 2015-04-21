@@ -1,12 +1,12 @@
 @import 'skins/shared/color';
-@import "skins/shared/mixins/columns";
+@import 'skins/shared/mixins/columns';
 
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 5px;
-$infobox-section-header-background: rgba(0, 0, 0, 0.1);
+$infobox-section-header-background: rgba(0, 0, 0, .1);
 @if $is-dark-wiki {
-	$infobox-section-header-background: rgba(255, 255, 255, 0.1);
+	$infobox-section-header-background: rgba(255, 255, 255, .1);
 }
 
 .portable-infobox {
@@ -32,6 +32,18 @@ $infobox-section-header-background: rgba(0, 0, 0, 0.1);
 
 		.item-type-title {
 			@include column-span(all);
+		}
+	}
+
+	// TODO: experiment with removing margins on all children of pair value
+	&.reset-children-margins .portable-infobox-item-value {
+		> * {
+			margin: 0;
+		}
+
+		ul,
+		ol {
+			list-style-position: inside;
 		}
 	}
 
