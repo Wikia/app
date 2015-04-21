@@ -2,7 +2,6 @@
 
 class CollectionViewParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'collection';
-//	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
