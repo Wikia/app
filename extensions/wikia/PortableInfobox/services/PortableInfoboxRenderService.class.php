@@ -6,7 +6,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	private $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
-		'header' => 'PortableInfoboxItemTitle.mustache',
+		'header' => 'PortableInfoboxItemHeader.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
 		'pair' => 'PortableInfoboxItemKeyVal.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
@@ -84,7 +84,10 @@ class PortableInfoboxRenderService extends WikiaService {
 				}
 
 				if ( $type === 'header' ) {
-					$setHTMLContent .= $this->renderItem( 'comparison-set-header', $item[ 'data' ] );
+					$setHTMLContent .= $this->renderItem(
+						'comparison-set-header',
+						[ 'content' => $this->renderItem( $type, $item[ 'data' ] ) ]
+					);
 				} else {
 					if ( $this->validateType( $type ) ) {
 						$setHTMLContent .= $this->renderItem(
