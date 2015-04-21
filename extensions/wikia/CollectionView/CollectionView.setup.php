@@ -23,7 +23,6 @@ $wgCollectionViewParserNodes = [
 	'NodeFooter',
 	'NodeGroup',
 	'NodeHeader',
-	'NodeImage',
 	'NodeItem',
 	'NodeTitle',
 	'NodeUnimplemented'

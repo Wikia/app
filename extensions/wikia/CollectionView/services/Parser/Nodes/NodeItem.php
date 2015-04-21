@@ -4,9 +4,18 @@ namespace Wikia\CollectionView\Parser\Nodes;
 class NodeItem extends Node {
 
 	public function getData() {
-		$data = [];
-		$data['label'] = $this->parseWithExternalParser( (string) $this->xmlNode->{self::LABEL_TAG_NAME}, true );
-		$data['value'] = $this->getValueWithDefault( $this->xmlNode );
-		return $data;
+		$node = [];
+		$node['description'] = $this->parseWithExternalParser((string) ($this->xmlNode->{"description"}), false);
+		$node['img'] = $this->getXmlAttribute($this->xmlNode, "img");
+		$node['link'] = $this->getXmlAttribute( $this->xmlNode, "link" );
+		return $node;
+	}
+
+	protected function resolveImageUrl( $filename ) {
+		$title = \Title::newFromText( $filename, NS_FILE );
+		if ( $title && $title->exists() ) {
+			return \WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();
+		}
+		return "";
 	}
 }
