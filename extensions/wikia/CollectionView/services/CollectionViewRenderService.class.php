@@ -19,10 +19,16 @@ class CollectionViewRenderService extends WikiaService {
 	 * renders collection view
 	 *
 	 * @param array $collectionViewData
+	 * @param int $collectionViewIndex
 	 * @return string - HTML
 	 */
-	public function renderCollectionView( array $collectionViewData ) {
-		$html = '';
+	public function renderCollectionView( array $collectionViewData, $collectionViewIndex ) {
+		global $wgArticleAsJson;
+		$out = '';
+
+		if ( $wgArticleAsJson ) {
+			return '<div class="collection-view" data-ref="' . $collectionViewIndex . '"></div>';
+		}
 
 		foreach ( $collectionViewData as $item ) {
 			$data = $item[ 'data' ];
@@ -35,11 +41,11 @@ class CollectionViewRenderService extends WikiaService {
 					] );
 					continue;
 				}
-				$html .= $this->renderItem( $type, $data );
+				$out .= $this->renderItem( $type, $data );
 			}
 		}
 
-		return $this->renderItem( 'wrapper', [ 'content' => $html ] );
+		return $this->renderItem( 'wrapper', [ 'content' => $out ] );
 	}
 
 	/**

@@ -1038,11 +1038,14 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
+		$collections = $parsedArticle->getProperty('collections');
+
 		$result = [
 			'content' => $articleContent->content,
 			'media' => $articleContent->media,
 			'users' => $articleContent->users,
 			'categories' => $categories,
+			'collections' => $collections,
 			'description' => $this->getArticleDescription( $article )
 		];
 
