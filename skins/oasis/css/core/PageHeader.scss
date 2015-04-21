@@ -125,6 +125,7 @@
 		padding-bottom: 7px;
 		//@TODO CONCF-189 should be removed when social buttons enabled globally - flexbox enabled
 		padding-right: 175px;
+		word-wrap: break-word;
 
 		> .comments {
 			margin: 2px 10px 0;
@@ -236,7 +237,6 @@
 			@include align-self(flex-start);
 			@include flex(0 1 100%);
 			order: 0;
-			word-wrap: break-word;
 		}
 
 		&.header-tally {
