@@ -13,7 +13,7 @@ class MediaWikiParserService implements ExternalParser {
 	}
 
 	public function parse( $wikitext ) {
-		if ( substr( $wikitext, 0, 1) == "*" ) {
+		if ( substr( $wikitext, 0, 1 ) == "*" ) {
 			//fix for first item list elements
 			$wikitext = "\n" . $wikitext;
 		}
