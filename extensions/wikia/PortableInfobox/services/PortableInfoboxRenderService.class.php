@@ -6,6 +6,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	private $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
+		'header' => 'PortableInfoboxItemTitle.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
 		'pair' => 'PortableInfoboxItemKeyVal.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
@@ -41,10 +42,10 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			switch ( $type ) {
 				case 'comparison':
-					$infoboxHtmlContent .= $this->renderComparisonItem( $data );
+					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
 					break;
 				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data );
+					$infoboxHtmlContent .= $this->renderGroup( $data['value'] );
 					break;
 				case 'footer':
 					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
@@ -68,6 +69,8 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function renderComparisonItem( $comparisonData ) {
 		$comparisionHTMLContent = '';
 
+		var_dump($comparisonData);
+
 		foreach ( $comparisonData as $set ) {
 			$setHTMLContent = '';
 
@@ -83,12 +86,12 @@ class PortableInfoboxRenderService extends WikiaService {
 				}
 
 				if ( $type === 'header' ) {
-					$setHTMLContent .= $this->renderItem( 'comparison-set-header', [ 'content' => $item[ 'value' ] ] );
+					$setHTMLContent .= $this->renderItem( 'comparison-set-header', [ $item[ 'data' ] ] );
 				} else {
 					if ( $this->validateType( $type ) ) {
 						$setHTMLContent .= $this->renderItem(
 							'comparison-set-item',
-							[ 'content' => $this->renderItem( $type, $item[ 'value' ] ) ]
+							[ 'content' => $this->renderItem( $type, $item[ 'data' ] ) ]
 						);
 					}
 				}
@@ -97,7 +100,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			$comparisionHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
 		}
 
-		return $this->renderItem( 'comparison', $comparisionHTMLContent );
+		return $this->renderItem( 'comparison', [ 'content' => $comparisionHTMLContent ] );
 	}
 
 	/**
@@ -117,7 +120,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 
 			if ( $this->validateType( $type ) ) {
-				$groupHTMLContent .= $this->renderItem( $type, $item['value'] );
+				$groupHTMLContent .= $this->renderItem( $type, $item['data'] );
 			}
 		}
 
