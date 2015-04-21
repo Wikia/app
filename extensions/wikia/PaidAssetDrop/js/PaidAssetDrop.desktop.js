@@ -17,27 +17,27 @@ define('ext.wikia.PaidAssetDrop', [
 	}
 
 	function isConfigValid() {
-		if (typeof win.wgPADConfig === 'undefined') {
-			log('wgPADConfig is undefined', 'debug', logGroup);
+		if (typeof win.wgPaidAssetDropConfig === 'undefined') {
+			log('wgPaidAssetDropConfig is undefined', 'debug', logGroup);
 			return false;
 		}
 
-		if (!win.wgPADConfig[0]) {
+		if (!win.wgPaidAssetDropConfig[0]) {
 			log('No start date set', 'debug', logGroup);
 			return false;
 		}
 
-		if (!win.wgPADConfig[1]) {
+		if (!win.wgPaidAssetDropConfig[1]) {
 			log('No start date set', 'debug', logGroup);
 			return false;
 		}
 
-		if (!isValidDate(win.wgPADConfig[0])) {
+		if (!isValidDate(win.wgPaidAssetDropConfig[0])) {
 			log('Start date invalid', 'debug', logGroup);
 			return false;
 		}
 
-		if (!isValidDate(win.wgPADConfig[1])) {
+		if (!isValidDate(win.wgPaidAssetDropConfig[1])) {
 			log('End date invalid', 'debug', logGroup);
 			return false;
 		}
@@ -52,8 +52,8 @@ define('ext.wikia.PaidAssetDrop', [
 			return false;
 		}
 
-		start = new Date(win.wgPADConfig[0]);
-		end = new Date(win.wgPADConfig[1]);
+		start = new Date(win.wgPaidAssetDropConfig[0]);
+		end = new Date(win.wgPaidAssetDropConfig[1]);
 		today = new Date();
 
 		log('PAD start date: ' + start, 'debug', logGroup);
