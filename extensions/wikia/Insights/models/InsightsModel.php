@@ -12,10 +12,10 @@ abstract class InsightsModel {
 	abstract function prepareData( $res );
 
 	public function getInsightParam() {
-		$id = $this->getInsightId();
+		$type = $this->getInsightType();
 
 		return [
-			self::INSIGHTS_FLOW_URL_PARAM => $id
+			self::INSIGHTS_FLOW_URL_PARAM => $type
 		];
 	}
 } 
