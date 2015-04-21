@@ -9,9 +9,9 @@ class PaidAssetDropHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		global $wgPADConfig;
+		global $wgPaidAssetDropConfig;
 
-		if( !empty( $wgPADConfig ) ) {
+		if( !empty( $wgPaidAssetDropConfig ) ) {
 			$jsAssets[] = 'paid_asset_drop_desktop_js';
 		}
 
@@ -27,10 +27,10 @@ class PaidAssetDropHooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgPADConfig;
+		global $wgPaidAssetDropConfig;
 
-		if( !empty( $wgPADConfig ) ) {
-			$vars['wgPADConfig'] = $wgPADConfig;
+		if( !empty( $wgPaidAssetDropConfig ) ) {
+			$vars['wgPaidAssetDropConfig'] = $wgPaidAssetDropConfig;
 		}
 
 		return true;
