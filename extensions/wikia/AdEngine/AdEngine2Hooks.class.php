@@ -21,17 +21,17 @@ class AdEngine2Hooks {
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
-			$wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
-			$wgAdEngineDisableLateQueue, $wgEnableKruxOnMobile,
-			$wgAdDriverForceTurtleAd, $wgAdDriverUseSevenOneMedia, $wgUsePostScribe;
+		global $wgAdDriverForceLiftiumAd, $wgAdDriverForceTurtleAd,
+			   $wgAdDriverUseSevenOneMedia,
+			   $wgAdEngineDisableLateQueue,
+			   $wgEnableKruxOnMobile, $wgEnableKruxTargeting,
+			   $wgLiftiumOnLoad, $wgNoExternals, $wgUsePostScribe;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
 
 		$wgAdEngineDisableLateQueue = $request->getBool( 'noremnant', $wgAdEngineDisableLateQueue );
 
-		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 		$wgAdDriverForceTurtleAd = $request->getBool( 'forceturtle', $wgAdDriverForceTurtleAd );
 

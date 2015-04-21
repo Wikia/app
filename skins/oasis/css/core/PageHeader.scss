@@ -236,6 +236,7 @@
 			@include align-self(flex-start);
 			@include flex(0 1 100%);
 			order: 0;
+			word-wrap: break-word;
 		}
 
 		&.header-tally {
