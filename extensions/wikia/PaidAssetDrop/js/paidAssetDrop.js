@@ -97,10 +97,10 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	 * Inject the Paid Asset Drop
 	 *
 	 * @param {String} placeHolderSelector selector to drop the Paid Assets to (prepend)
-	 * @param {String} version             desktop or mobile
+	 * @param {String} platform             desktop or mobile
 	 */
-	function injectPad(placeHolderSelector, version) {
-		var url = apiEntryPoint + assetArticleName[version];
+	function injectPad(placeHolderSelector, platform) {
+		var url = apiEntryPoint + assetArticleName[platform];
 
 		log('Sending request to: ' + url, 'debug', logGroup);
 
