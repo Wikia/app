@@ -131,15 +131,7 @@ abstract class EmailController extends \WikiaController {
 	 * @template main
 	 */
 	public function main() {
-		$this->response->setValues( [
-			'content' => $this->getVal( 'content' ),
-			'footerMessages' => $this->getVal( 'footerMessages' ),
-			'marketingFooter' => $this->getVal( 'marketingFooter' ),
-			'tagline' => $this->getVal( 'tagline' ),
-			'useTrademark' => $this->getVal( 'useTrademark' ),
-			'socialMessages' => $this->request->getVal( 'socialMessages' ),
-			'hubsMessages' => $this->request->getVal( 'hubsMessages' ),
-		] );
+		$this->response->setValues( $this->request->getParams() );
 	}
 
 	/**
@@ -223,6 +215,7 @@ abstract class EmailController extends \WikiaController {
 				'useTrademark' => $this->getUseTrademark(),
 				'hubsMessages' => $this->getHubsMessages(),
 				'socialMessages' => $this->getSocialMessages(),
+				'icons' => ImageHelper::getIconInfo(),
 			]
 		);
 
