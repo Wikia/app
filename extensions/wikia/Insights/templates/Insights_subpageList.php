@@ -1,9 +1,9 @@
 <div class="insights-container-nav">
 	<ul class="insights-nav-list">
-		<? foreach( $data['messageKeys'] as $key => $messages ) : ?>
+		<? foreach( InsightsHelper::$insightsPages as $key => $page ) : ?>
 			<li class="insights-nav-item">
 				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-nav-link">
-					<?= wfMessage( $messages['subtitle'] )->escaped() ?>
+					<?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $key )->escaped() ?>
 				</a>
 			</li>
 		<? endforeach; ?>
@@ -11,8 +11,8 @@
 </div>
 <div class="insights-container-main">
 	<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( $subpage ) ?> clearfix">
-		<h2 class="insights-header-subtitle"><?= wfMessage( $data['messageKeys'][$subpage]['subtitle'] )->escaped() ?></h2>
-		<p class="insights-header-description"><?= wfMessage( $data['messageKeys'][$subpage]['description'] )->escaped() ?></p>
+		<h2 class="insights-header-subtitle"><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $subpage )->escaped() ?></h2>
+		<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->escaped() ?></p>
 	</div>
 	<table class="insights-list">
 		<? foreach( $content as $item ): ?>

@@ -1,7 +1,7 @@
 <?php
 
 class InsightsWithoutimagesModel extends InsightsQuerypageModel {
-	const INSIGHT_TYPE = 'Withoutimages';
+	const INSIGHT_TYPE = 'withoutimages';
 
 	public function getDataProvider() {
 		return new WithoutimagesPage();
@@ -15,7 +15,7 @@ class InsightsWithoutimagesModel extends InsightsQuerypageModel {
 		$dbr = wfGetDB( DB_MASTER );
 		$row = $dbr->selectRow( 'imagelinks', '*' , [ 'il_from' => $article->getID() ] );
 		if ( $row ) {
-			return $this->removeFixedItem( self::INSIGHT_TYPE, $article->getTitle() );
+			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $article->getTitle() );
 		}
 		return false;
 	}

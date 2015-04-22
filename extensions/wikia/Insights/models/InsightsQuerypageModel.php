@@ -25,7 +25,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	public function getData() {
-		$data['messageKeys'] = InsightsHelper::$insightsMessageKeys;
 		$data['offset'] = $this->offset;
 		return $data;
 	}
