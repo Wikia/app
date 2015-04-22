@@ -1,5 +1,16 @@
 <?php
 class PaidAssetDropHooks {
+	const PAD_FORCE_PARAMETER = 'forcepad';
+
+	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
+		global $wgPaidAssetDropConfig;
+
+		if( $request->getBool( static::PAD_FORCE_PARAMETER, false ) ) {
+			$wgPaidAssetDropConfig = true;
+		}
+
+		return true;
+	}
 
 	/**
 	 * Modify assets appended to the bottom of the page
