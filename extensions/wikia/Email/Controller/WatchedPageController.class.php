@@ -45,7 +45,7 @@ class WatchedPageController extends EmailController {
 	 */
 	private function assertValidTitle() {
 		if ( !$this->title instanceof \Title ) {
-			throw new Check( "Invalid value passed for title" );
+			throw new Check( "Invalid value passed for title (param: title)" );
 		}
 
 		if ( !$this->title->exists() ) {
@@ -55,11 +55,11 @@ class WatchedPageController extends EmailController {
 
 	private function assertValidRevIds() {
 		if ( empty( $this->currentRevId ) ) {
-			throw new Check( "Empty current Revision Id" );
+			throw new Check( "Empty value for current Revision ID (param: currentRevId)" );
 		}
 
 		if ( empty( $this->previousRevId ) ) {
-			throw new Check( "Empty previous Revision Id" );
+			throw new Check( "Empty value for previous Revision ID (param: previousRevId)" );
 		}
 	}
 
@@ -141,7 +141,10 @@ class WatchedPageController extends EmailController {
 	 */
 	private function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
-			$this->title->getFullURL(),
+			$this->title->getFullURL( [
+				'diff' => 0,
+				'oldid' => $this->previousRevId
+			] ),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 

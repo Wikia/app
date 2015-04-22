@@ -31,10 +31,11 @@ class AdEngine2ContextService {
 					'adsInContent' => $wg->EnableAdsInContent,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
+					'enableInvisibleHighImpactSlot' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
-					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'trackSlotState' => $wg->AdDriverTrackState,
+					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
@@ -64,8 +65,8 @@ class AdEngine2ContextService {
 				] ),
 				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [
-					'directGpt' => $wg->AdDriverForceDirectGptAd,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
+					'openX' => $wg->AdDriverForceOpenXAd,
 					'turtle' => $wg->AdDriverForceTurtleAd,
 				] ),
 			];

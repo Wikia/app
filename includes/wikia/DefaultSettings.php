@@ -1380,16 +1380,16 @@ $wgAdDriverSevenOneMediaOverrideSub2Site = null;
 $wgAdDriverTrackState = false;
 
 /**
- * @name $wgAdDriverForceDirectGptAd
- * Forces to use AdProviderDirectGpt for all slots managed by this provider
- */
-$wgAdDriverForceDirectGptAd = false;
-
-/**
  * @name $wgAdDriverForceLiftiumAd
- * Forces to use AdProviderLiftium for all slots managed by this provider
+ * Forces to use Liftium for all slots managed by this provider and disables other providers
  */
 $wgAdDriverForceLiftiumAd = false;
+
+/**
+ * @name $wgAdDriverForceOpenXAd
+ * Forces to use OpenX for all slots managed by this provider and disables other providers
+ */
+$wgAdDriverForceOpenXAd = false;
 
 /**
  * @name $wgAdDriverEnableAdsInMaps

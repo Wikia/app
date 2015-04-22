@@ -25,7 +25,7 @@ define('wikia.iframeWriter', [
 		var code = iframeHeader + iframeStyle + params.code + iframeFooter,
 			iframe = doc.createElement('iframe');
 
-		iframe.frameborder = 'no';
+		iframe.frameBorder = 'no';
 		iframe.scrolling = 'no';
 		iframe.width = params.width;
 		iframe.height = params.height;

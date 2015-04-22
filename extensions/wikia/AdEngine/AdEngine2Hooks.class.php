@@ -20,19 +20,25 @@ class AdEngine2Hooks {
 	 * @author Sergey Naumov
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
-
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
-			$wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
-			$wgAdEngineDisableLateQueue, $wgEnableKruxOnMobile,
-			$wgAdDriverForceTurtleAd, $wgAdDriverUseSevenOneMedia, $wgUsePostScribe;
+		global
+			$wgAdDriverForceLiftiumAd,
+			$wgAdDriverForceOpenXAd,
+			$wgAdDriverForceTurtleAd,
+			$wgAdDriverUseSevenOneMedia,
+			$wgAdEngineDisableLateQueue,
+			$wgEnableKruxOnMobile,
+			$wgEnableKruxTargeting,
+			$wgLiftiumOnLoad,
+			$wgNoExternals,
+			$wgUsePostScribe;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
 
 		$wgAdEngineDisableLateQueue = $request->getBool( 'noremnant', $wgAdEngineDisableLateQueue );
 
-		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
+		$wgAdDriverForceOpenXAd = $request->getBool( 'forceopenx', $wgAdDriverForceOpenXAd );
 		$wgAdDriverForceTurtleAd = $request->getBool( 'forceturtle', $wgAdDriverForceTurtleAd );
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
