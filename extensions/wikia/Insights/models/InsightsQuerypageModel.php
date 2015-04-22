@@ -55,13 +55,20 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				$params = $this->getUrlParams();
 
 				$title = Title::newFromText( $row->title );
-				$article['link'] = Linker::link( $title, null, [], $params );
+
+				$article['linkToArticle'] = Linker::link(
+					$title,
+					null,
+					[ 'class' => 'insights-list-item-title' ],
+					$params
+				);
 
 				$lastRev = $title->getLatestRevID();
+
 				$rev = Revision::newFromId( $lastRev );
 
 				if ( $rev ) {
-					$article['revision'] = $this->prepareRevisionData( $rev );
+					$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
 				}
 				$data[] = $article;
 			}
