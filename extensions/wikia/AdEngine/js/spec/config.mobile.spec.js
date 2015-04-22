@@ -57,6 +57,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(true, true),
 			adProviderDirectMock,
+			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
 
