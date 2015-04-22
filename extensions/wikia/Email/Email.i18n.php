@@ -49,6 +49,8 @@ Hast du Fragen oder Bedenken? Bitte wende dich jederzeit <a href="http://communi
 	'emailext-recipient-notice' => 'E-Mail wurde von Wikia an $1 geschickt',
 	'emailext-update-frequency' => 'Wenn du ändern möchtest, welche E-Mails und wie oft du E-Mails von uns erhältst, besuche bitte deine Seite [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Einstellungen].',
 	'emailext-unsubscribe' => 'Klicke [$1 hier], um dich von allen Wikia-E-Mails abzumelden.',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['es'] = array(
@@ -67,6 +69,8 @@ Si no solicitaste una nueva contraseña, ¡no te preocupes! Tu cuenta está segu
 	'emailext-recipient-notice' => 'Correo electrónico enviado a $1 desde Wikia',
 	'emailext-update-frequency' => 'Para cambiar los correos electrónicos que recibes o la frecuencia con la que se envían, por favor visita tu página de [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} preferencias].',
 	'emailext-unsubscribe' => 'Para darte de baja de todos los correos electrónicos de Wikia, haz clic [$1 aquí].',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['fr'] = array(
@@ -85,6 +89,8 @@ Si vous avez des questions,  n\'hésitez pas à <a href="http://community.wikia.
 	'emailext-recipient-notice' => 'E-mail envoyé par Wikia à $1',
 	'emailext-update-frequency' => 'Pour modifier le nombre ou la fréquence des e-mails que vous recevez, visitez la page [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Préférences].',
 	'emailext-unsubscribe' => "Pour ne plus recevoir d'e-mails de Wikia, cliquez [$1 ici].",
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['it'] = array(
@@ -103,6 +109,8 @@ Se hai domande non esitare a <a href="http://community.wikia.com/wiki/Special:Co
 	'emailext-recipient-notice' => 'Email inviata a $1 da Wikia',
 	'emailext-update-frequency' => 'Per filtrare le email che vuoi ricevere o la loro frequenza, visita la tua pagina [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Preferenze].',
 	'emailext-unsubscribe' => 'Per non ricevere più email da Wikia clicca [$1 qui].',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['ja'] = array(
@@ -117,10 +125,12 @@ $messages['ja'] = array(
 ご質問やご不明な点がございましたら、お気軽に<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">お問い合わせください</a>。',
 	'emailext-password-email-signature' => 'ウィキア・コミュニティ・サポート',
 	'emailext-password-email-subject' => 'パスワードリセットのリクエスト',
-	'emailext-fanverse-tagline' => 'ファンによるファンのためのソーシャル・ユニバース',
+	'emailext-fanverse-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-recipient-notice' => 'ウィキアから$1さんにメールを送信しました',
 	'emailext-update-frequency' => '配信メールの種類や頻度を変更するには、[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 個人設定] ページにアクセスしてください。',
 	'emailext-unsubscribe' => 'ウィキアからのメール配信をすべて停止するには [$1 こちら] をクリックしてください。',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['nl'] = array(
@@ -139,6 +149,8 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 	'emailext-recipient-notice' => 'Email sent to $1 from Wikia',
 	'emailext-update-frequency' => 'To change which emails you receive or their frequency, please visit your [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Preferences] page.',
 	'emailext-unsubscribe' => 'To unsubscribe from all Wikia emails, click [$1 here].',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['pl'] = array(
@@ -157,6 +169,8 @@ Masz pytania albo wątpliwości? Skontaktuj się z  <a href="http://community.wi
 	'emailext-recipient-notice' => 'Wiadomość e-mail została wysłana do $1 z portalu Wikia',
 	'emailext-update-frequency' => 'Jeśli chcesz zmienić rodzaj lub częstotliwość otrzymywanych wiadomości e-mail, przejdź do strony zawierającej Twoje  [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Ustawienia].',
 	'emailext-unsubscribe' => 'Aby zrezygnować z otrzymywania wiadomości od Wikia, kliknij [$1 tutaj].',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['pt'] = array(
@@ -176,6 +190,8 @@ href="http://pt-br.wikia.com/wiki/Especial:Contact/account-issue">contatar-nos</
 	'emailext-recipient-notice' => 'E-mail enviado pela Wikia para $1',
 	'emailext-update-frequency' => 'Para alterar quais e-mails você recebe ou com que frequência, visite sua página [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Preferências].',
 	'emailext-unsubscribe' => 'Para cancelar a assinatura de todos os e-mails da Wikia, clique [$1 aqui].',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['ru'] = array(
@@ -193,6 +209,8 @@ $messages['ru'] = array(
 	'emailext-recipient-notice' => 'Электронное сообщение отправлено участнику $1 c Викия.',
 	'emailext-update-frequency' => 'Чтобы изменить параметры электронной почты или частоту получения сообщений, посетите страницу [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} «Настройки»].',
 	'emailext-unsubscribe' => 'Чтобы отписаться от всех электронных сообщений от Викия, перейдите [$1 по ссылке].',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['zh-hans'] = array(
@@ -210,6 +228,8 @@ $messages['zh-hans'] = array(
 	'emailext-recipient-notice' => 'Wikia已经发送电子邮件至$1',
 	'emailext-update-frequency' => '如果您需要更改电子邮件地址或接收方式，请访问您的[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 偏好设置]页面。',
 	'emailext-unsubscribe' => '如果您希望取消订阅所有的Wikia电子邮件，请点击[$1 这里]。',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
 $messages['zh-tw'] = array(
@@ -228,5 +248,7 @@ $messages['zh-tw'] = array(
 	'emailext-recipient-notice' => 'Wikia已經發送電子郵件至$1',
 	'emailext-update-frequency' => '如果您需要更改電子郵件地址或接收方式，請訪問您的[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 首選項]頁面。',
 	'emailext-unsubscribe' => '如果您希望取消訂閱所有的Wikia電子郵件，請點擊[$1 這裡]。',
+	'emailext-anonymous-editor' => 'A Wikia fan',
+	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 );
 
