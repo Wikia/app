@@ -9,7 +9,7 @@ class InsightsHelper {
 	 * 'insights-list-subtitle-deadendpages',
 	 * 'insights-list-subtitle-wantedpages' 
 	 */
-	const INSIGHT_SUBTITLE_MSG_PREFIX		= 'insights-list-subtitle-';
+	const INSIGHT_SUBTITLE_MSG_PREFIX = 'insights-list-subtitle-';
 
 	/**
 	 * covers messages:
@@ -19,7 +19,7 @@ class InsightsHelper {
 	 * 'insights-list-description-deadendpages',
 	 * 'insights-list-description-wantedpages'
 	 */
-	const INSIGHT_DESCRIPTION_MSG_PREFIX	= 'insights-list-description-';
+	const INSIGHT_DESCRIPTION_MSG_PREFIX = 'insights-list-description-';
 
 	/**
 	 * covers messages:
@@ -29,7 +29,7 @@ class InsightsHelper {
 	 * 'insights-notification-message-inprogress-deadendpages',
 	 * 'insights-notification-message-inprogress-wantedpages'
 	 */
-	const INSIGHT_INPROGRESS_MSG_PREFIX		= 'insights-notification-message-inprogress-';
+	const INSIGHT_INPROGRESS_MSG_PREFIX = 'insights-notification-message-inprogress-';
 
 	/**
 	 * covers messages:
@@ -39,7 +39,7 @@ class InsightsHelper {
 	 * 'insights-notification-message-fixed-deadendpages',
 	 * 'insights-notification-message-fixed-wantedpages'
 	 */
-	const INSIGHT_FIXED_MSG_PREFIX			= 'insights-notification-message-fixed-';
+	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
 	public static $insightsPages = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
@@ -123,6 +123,13 @@ class InsightsHelper {
 		return null;
 	}
 
+	/**
+	 * Prepare link data
+	 *
+	 * @param Title $title
+	 * @param $params
+	 * @return array
+	 */
 	public static function getTitleLink(Title $title, $params) {
 		$data = [
 			'text' => $title->getText(),
