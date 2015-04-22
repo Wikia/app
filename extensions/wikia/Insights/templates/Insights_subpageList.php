@@ -1,7 +1,8 @@
-<div class="insights-container-nav">
+<div class="insights-container-nav <?= $data['themeClass'] ?>">
 	<ul class="insights-nav-list">
 		<? foreach( $data['messageKeys'] as $key => $messages ) : ?>
-			<li class="insights-nav-item">
+			<?php $subpage == $key ? $class = 'active' : $class = '' ?>
+			<li class="insights-nav-item insights-icon-<?= strtolower( $key ) ?> <?= $class ?>">
 				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-nav-link">
 					<?= wfMessage( $messages['subtitle'] )->escaped() ?>
 				</a>
@@ -9,33 +10,37 @@
 		<? endforeach; ?>
 	</ul>
 </div>
-<div class="insights-container-main">
-	<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( $subpage ) ?> clearfix">
-		<h2 class="insights-header-subtitle"><?= wfMessage( $data['messageKeys'][$subpage]['subtitle'] )->escaped() ?></h2>
-		<p class="insights-header-description"><?= wfMessage( $data['messageKeys'][$subpage]['description'] )->escaped() ?></p>
+<div class="insights-container-main <?= $data['themeClass'] ?>">
+	<div class="insights-container-main-inner">
+		<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( strtolower( $subpage ) ) ?> clearfix">
+			<h2 class="insights-header-subtitle"><?= wfMessage( $data['messageKeys'][$subpage]['subtitle'] )->escaped() ?></h2>
+			<p class="insights-header-description"><?= wfMessage( $data['messageKeys'][$subpage]['description'] )->escaped() ?></p>
+		</div>
+		<div class="insights-content">
+			<ul class="insights-list">
+				<?php foreach( $content as $item ): ?>
+					<li class="insights-list-item">
+						<?= $item['linkToArticle'] ?>
+						<?php if ( isset( $item['metadata'] ) ) : ?>
+							<p class="insights-list-item-metadata">
+								<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
+									<?= wfMessage( 'insights-last-edit' )->rawParams(
+										Xml::element( 'a', [
+											'href' => $item['metadata']['lastRevision']['userpage']
+										],
+											$item['metadata']['lastRevision']['username']
+										),
+										date( 'F j, Y', $item['metadata']['lastRevision']['timestamp'] )
+									)->escaped() ?>
+								<?php endif; ?>
+								<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
+									<?= $item['metadata']['wantedBy'] ?>
+								<?php endif; ?>
+							</p>
+						<?php endif; ?></td>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
 	</div>
-	<table class="insights-list">
-		<? foreach( $content as $item ): ?>
-			<tr>
-				<td class="item-number"><?= ++$offset ?></td>
-
-				<?php if ( isset( $item['link'] ) ) : ?>
-					<td><?= $item['link'] ?></td>
-				<?php endif; ?>
-				<td><?php if ( isset( $item['revision'] ) ) : ?>
-					<?= wfMessage( 'insights-last-edit' )->rawParams(
-							Xml::element( 'a', [
-								'href' => $item['revision']['userpage']
-							],
-								$item['revision']['username']
-							),
-							date( 'F j, Y', $item['revision']['timestamp'] )
-						)->escaped() ?>
-				<?php endif; ?></td>
-
-				<td># of views</td>
-			</tr>
-		<? endforeach ?>
-	</table>
 </div>
-

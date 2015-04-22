@@ -11,18 +11,25 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 		$data = [];
 		$dbr = wfGetDB( DB_SLAVE );
 		while ( $row = $dbr->fetchObject( $res ) ) {
-			$article = [];
-			$params = $this->getUrlParams();
+			if ( $row->title ) {
+				$article = [];
+				$params = $this->getUrlParams();
 
-			$title = Title::newFromText( $row->title );
-			$article['link'] = Linker::link( $title, null, [], $params );
-			$data[] = $article;
+				$title = Title::newFromText( $row->title );
+
+				$article['linkToArticle'] = Linker::link(
+					$title,
+					null,
+					[ 'class' => 'insights-list-item-title' ],
+					$params
+				);
+
+				$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
+
+				$data[] = $article;
+			}
 		}
 		return $data;
-	}
-
-	public function getUrlParams() {
-		return $this->getInsightParam();
 	}
 
 	public function getInsightType() {
@@ -34,5 +41,11 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 			return $this->removeFixedItem( self::INSIGHT_TYPE, $article->getTitle() );
 		}
 		return false;
+	}
+
+	private function makeWlhLink( $title, $result ) {
+		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
+		$label = wfMessage( 'insights-wanted-by' )->numParams( $result->value )->escaped();
+		return Linker::link( $wlh, $label );
 	}
 }
