@@ -37,7 +37,7 @@
 									<?= $item['metadata']['wantedBy'] ?>
 								<?php endif; ?>
 							</p>
-						<?php endif; ?></td>
+						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>
 			</ul>
