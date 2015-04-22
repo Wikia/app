@@ -20,7 +20,7 @@
 			<ul class="insights-list">
 				<?php foreach( $content as $item ): ?>
 					<li class="insights-list-item">
-						<?= $item['linkToArticle'] ?>
+						<a class="insights-list-item-title <?= $item['link']['classes'] ?>" title="<?= $item['link']['title'] ?>" href="<?= $item['link']['url'] ?>"><?= $item['link']['text'] ?></a>
 						<?php if ( isset( $item['metadata'] ) ) : ?>
 							<p class="insights-list-item-metadata">
 								<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
