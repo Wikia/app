@@ -228,25 +228,27 @@ class RecentChange {
 		global $wgUseEnotif, $wgShowUpdatedMarker, $wgUser;
 		if( $wgUseEnotif || $wgShowUpdatedMarker ) {
 			// Users
-			if( $this->mAttribs['rc_user'] ) {
-				$editor = ($wgUser->getId() == $this->mAttribs['rc_user']) ?
-					$wgUser : User::newFromID( $this->mAttribs['rc_user'] );
+			if ( $this->mAttribs['rc_user'] && $this->mAttribs['rc_user'] !== $wgUser->getId() ) {
+				$editor = User::newFromID( $this->mAttribs['rc_user'] );
 			// Anons
 			} else {
 				$editor = ($wgUser->getName() == $this->mAttribs['rc_user_text']) ?
 					$wgUser : User::newFromName( $this->mAttribs['rc_user_text'], false );
 			}
-			$title = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
 
-			# @todo FIXME: This would be better as an extension hook
-			$enotif = new EmailNotification( $editor, $title,
-				$this->mAttribs['rc_timestamp'],
-				$this->mAttribs['rc_comment'],
-				$this->mAttribs['rc_minor'],
-				$this->mAttribs['rc_this_oldid'],
-				$this->mAttribs['rc_last_oldid'],
-				$this->mAttribs['rc_log_action'] );
-			$enotif->notifyOnPageChange();
+			if ( !empty( $editor ) ) {
+				$title = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
+
+				# @todo FIXME: This would be better as an extension hook
+				$enotif = new EmailNotification( $editor, $title,
+					$this->mAttribs['rc_timestamp'],
+					$this->mAttribs['rc_comment'],
+					$this->mAttribs['rc_minor'],
+					$this->mAttribs['rc_this_oldid'],
+					$this->mAttribs['rc_last_oldid'],
+					$this->mAttribs['rc_log_action'] );
+				$enotif->notifyOnPageChange();
+			}
 		}
 
 		// temporary code begin /Inez
