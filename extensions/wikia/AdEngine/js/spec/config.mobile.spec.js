@@ -13,6 +13,10 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		adProviderRemnantMock = {
 			name: 'RemnantGptMobileMock',
 			canHandleSlot: function () { return true; }
+		},
+		adProviderOpenXMock = {
+			name: 'OpenX',
+			canHandleSlot: function () { return true; }
 		};
 
 	function mockAdContext(showAds, enableInvisibleHighImpactSlot) {
@@ -24,8 +28,8 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 						pageType: 'all_ads',
 						enableInvisibleHighImpactSlot: enableInvisibleHighImpactSlot
 					},
-					providers: {
-					}
+					providers: {},
+					forceProviders: {}
 				};
 			}
 		};
@@ -35,6 +39,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(true),
 			adProviderDirectMock,
+			adProviderOpenXMock,
 			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
@@ -46,6 +51,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(false),
 			adProviderDirectMock,
+			adProviderOpenXMock,
 			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
@@ -57,6 +63,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(true, true),
 			adProviderDirectMock,
+			adProviderOpenXMock,
 			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
@@ -68,6 +75,8 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(true, false),
 			adProviderDirectMock,
+			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
 

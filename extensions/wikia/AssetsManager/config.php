@@ -87,6 +87,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/later.js',
+		'//extensions/wikia/AdEngine/js/provider/openX.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
@@ -699,6 +700,8 @@ $config['mobile_base_ads_js'] = array(
 	'assets' => array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
+		'//extensions/wikia/AdEngine/js/MessageListener.js',
+		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/instantGlobals.js',
 
 		// Advertisement libs
@@ -706,6 +709,10 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
+		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
+		'//extensions/wikia/AdEngine/js/provider/openX.js',
+		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
@@ -748,7 +755,6 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/localStorage.js',
 
 		// Advertisement libs
-		'//resources/wikia/modules/iframeWriter.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
