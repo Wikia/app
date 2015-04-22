@@ -1,62 +1,28 @@
-@import 'skins/shared/color';
-@import "skins/shared/mixins/columns";
+$miniature-size: 100px;
 
-$infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
-$infobox-margin: 15px;
-$infobox-item-margin: 10px;
-$infobox-bg-color-mix-value: 90%;
-$infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
+.item-type-item {
+	float: left;
+	vertical-align: top;
+	width: $miniature-size;
 
-@if $is-dark-wiki {
-	$infobox-background: mix($color-page, #FFF, $infobox-bg-color-mix-value);
-}
-
-.portable-infobox {
-	background-color: $infobox-background;
-	clear: right;
-	float: right;
-	margin: 0 0 $infobox-margin $infobox-margin;
-	width: $infobox-width;
-
-	// TODO: experimental wide infobox styles (remove or refactor)
-	&.wide-infobox {
-		@include column-count(3);
-		@include column-gap($infobox-item-margin * 2);
-
-		clear: both;
-		float: none;
-		margin: 0;
-		width: 100%;
-
-		.infobox-item:not(.item-type-title) {
-			@include column-break-inside(avoid);
-		}
-
-		.item-type-title {
-			@include column-span(all);
-		}
+	.item-type-link:hover {
+		text-decoration: none;
 	}
 
-	.infobox-title {
-		border: 0;
-		font-size: 18px;
-		line-height: 28px;
-		margin: 0;
+	.item-type-figure {
+		text-align: center;
 	}
 
-	.infobox-item:not(.item-type-image) {
-		margin: $infobox-item-margin;
-		margin-right: $infobox-item-margin * 2;
+	//* selector is used because caption can contain wikitext
+	//so it's impossible to guess which element is the one with text
+	.item-type-caption * {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: $miniature-size;
 	}
 
-	.infobox-item-label {
-		border-bottom: 1px solid $color-page-border;
-		font-size: 12px;
-		font-weight: 400;
-		line-height: 18px;
-	}
-
-	.infobox-item-value {
-		padding-left: $infobox-item-margin;
+	.item-type-image {
+		height: $miniature-size;
 	}
 }

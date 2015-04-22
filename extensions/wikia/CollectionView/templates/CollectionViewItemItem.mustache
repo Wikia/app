@@ -1,8 +1,8 @@
 <div class="collection-view-item item-type-item">
-	<a href="{{link}}">
-		<figure>
-			<img class="collection-view-item-image" data-url="{{img}}" />
-			<figcaption>{{{description}}}</figcaption>
+	<a class="collection-view-item item-type-link" href="{{link}}">
+		<figure class="item-type-figure">
+			<img class="item-type-image" data-url="{{img}}" />
+			{{#description}}<figcaption class="item-type-caption">{{{description}}}</figcaption>{{/description}}
 		</figure>
 	</a>
 </div>
