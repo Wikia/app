@@ -13,9 +13,14 @@ class MediaWikiParserService implements ExternalParser {
 	}
 
 	public function parse( $wikitext ) {
-		return $this->getParserInstance()
+		if ( substr( $wikitext, 0, 1 ) == "*" ) {
+			//fix for first item list elements
+			$wikitext = "\n" . $wikitext;
+		}
+		$parsedText = $this->getParserInstance()
 			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
 			->getText();
+		return $parsedText;
 	}
 
 	public function parseRecursive( $wikitext ) {
