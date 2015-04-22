@@ -1,16 +1,19 @@
+/*global define*/
 define('ext.wikia.paidAssetDrop.paidAssetDrop', [
-	'jquery',
 	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
-], function ($, log, Querystring, win) {
+], function (log, Querystring, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.paidAssetDrop.paidAssetDrop',
-		articleContentId = '#mw-content-text',
-		assetArticleName = 'MediaWiki:PAD_desktop.html',
-		apiEntryPoint = 'api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=',
-		qs = new Querystring();
+		assetArticleName = {
+			desktop: 'MediaWiki:PAD_desktop.html',
+			mobile: 'MediaWiki:PAD_mobile.html'
+		},
+		apiEntryPoint = '/api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=',
+		qs = new Querystring(),
+		$ = win.$;
 
 	log('Paid Asset Drop (PAD) loaded', 'debug', logGroup);
 
@@ -18,28 +21,28 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 		return !isNaN(Date.parse(dateString));
 	}
 
-	function isConfigValid() {
-		if (!win.wgPaidAssetDropConfig) {
-			log('wgPaidAssetDropConfig is undefined', 'error', logGroup);
+	function isConfigValid(paidAssetDropConfig) {
+		if (!paidAssetDropConfig) {
+			log('paidAssetDropConfig is undefined', 'error', logGroup);
 			return false;
 		}
 
-		if (!win.wgPaidAssetDropConfig[0]) {
+		if (!paidAssetDropConfig[0]) {
 			log('No start date set', 'error', logGroup);
 			return false;
 		}
 
-		if (!win.wgPaidAssetDropConfig[1]) {
+		if (!paidAssetDropConfig[1]) {
 			log('No end date set', 'error', logGroup);
 			return false;
 		}
 
-		if (!isValidDate(win.wgPaidAssetDropConfig[0])) {
+		if (!isValidDate(paidAssetDropConfig[0])) {
 			log('Start date invalid', 'error', logGroup);
 			return false;
 		}
 
-		if (!isValidDate(win.wgPaidAssetDropConfig[1])) {
+		if (!isValidDate(paidAssetDropConfig[1])) {
 			log('End date invalid', 'error', logGroup);
 			return false;
 		}
@@ -47,20 +50,20 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 		return true;
 	}
 
-	function isNowValid() {
+	function isNowValid(paidAssetDropConfig) {
 		var today, start, end;
 
-		if(parseInt(qs.getVal('forcepad', 0), 10) === 1) {
+		if (qs.getVal('forcepad')) {
 			log('PAD enabled (forced)', 'debug', logGroup);
 			return true;
 		}
 
-		if(!isConfigValid()) {
+		if (!isConfigValid(paidAssetDropConfig)) {
 			return false;
 		}
 
-		start = new Date(win.wgPaidAssetDropConfig[0]);
-		end = new Date(win.wgPaidAssetDropConfig[1]);
+		start = new Date(paidAssetDropConfig[0]);
+		end = new Date(paidAssetDropConfig[1]);
 		today = new Date();
 
 		log('PAD start date: ' + start, 'debug', logGroup);
@@ -90,17 +93,23 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 		}
 	}
 
-	function injectPad() {
-		var url = ['/', apiEntryPoint, assetArticleName].join(''),
-			padContent;
+	/**
+	 * Inject the Paid Asset Drop
+	 *
+	 * @param {String} placeHolderSelector selector to drop the Paid Assets to (prepend)
+	 * @param {String} platform             desktop or mobile
+	 */
+	function injectPad(placeHolderSelector, platform) {
+		var url = apiEntryPoint + assetArticleName[platform];
 
 		log('Sending request to: ' + url, 'debug', logGroup);
 
-		$.get(url).then(function (response) {
-			padContent = fetchPadContent(response);
+		$.ajax({url: url, dataType: 'json'}).then(function (response) {
+			var padContent = fetchPadContent(response);
 
-			if (padContent !== null) {
-				$(articleContentId).prepend(padContent);
+			if (padContent) {
+				log('Injecting PAD into ' + placeHolderSelector, 'info', logGroup);
+				$(placeHolderSelector).prepend(padContent);
 			}
 		});
 	}

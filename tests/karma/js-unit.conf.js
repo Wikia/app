@@ -183,8 +183,8 @@ module.exports = function (config) {
 			'extensions/wikia/BannerNotifications/js/spec/BannerNotifications.spec.js',
 
 			// Paid Asset Drop
-			'extensions/wikia/PaidAssetDrop/js/PaidAssetDrop.desktop.js',
-			'extensions/wikia/PaidAssetDrop/js/spec/PaidAssetDrop.desktop.spec.js',
+			'extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
+			'extensions/wikia/PaidAssetDrop/js/spec/paidAssetDrop.spec.js',
 		]
 	});
 };

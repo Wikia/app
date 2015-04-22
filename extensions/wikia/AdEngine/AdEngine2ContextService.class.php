@@ -32,6 +32,7 @@ class AdEngine2ContextService {
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'pageType' => $adPageTypeService->getPageType(),
+					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'trackSlotState' => $wg->AdDriverTrackState,
