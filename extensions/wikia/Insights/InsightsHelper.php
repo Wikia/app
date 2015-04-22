@@ -122,4 +122,19 @@ class InsightsHelper {
 
 		return null;
 	}
+
+	public static function getTitleLink(Title $title, $params) {
+		$data = [
+			'text' => $title->getText(),
+			'url' => $title->getFullURL( $params ),
+			'title' => $title->getPrefixedText()
+		];
+
+		if ( !$title->exists() ) {
+			$data['classes'] = 'new';
+			$data['title'] = wfMessage( 'red-link-title', $title->getPrefixedText() )->escaped();
+		}
+
+		return $data;
+	}
 }
