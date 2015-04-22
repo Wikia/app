@@ -48,16 +48,70 @@ class InsightsController extends WikiaSpecialPageController {
 			if ( $model instanceof InsightsModel ) {
 				$next = $model->getNext();
 				$params = $this->prepareInsightUrlParams( $model->getUrlParams() );
+				$isFixed = $this->request->getVal('isFixed', null);
 
-				$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message' )->escaped() );
-				$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
-				$this->response->setVal( 'nextArticleButton', wfMessage( 'insights-notification-next-item-button' )->escaped() );
-
-				$this->response->setVal( 'insightsPageLink', $this->getSpecialInsightsUrl() );
-				$this->response->setVal( 'nextArticleTitle', $next['title'] );
-				$this->response->setVal( 'nextArticleLink', $next['link'] . $params );
+				if ( $this->request->getBool('isEdit', false ) || $isFixed == 'notfixed' ) {
+					$this->setInProgressNotification( $subpage );
+				} elseif ( empty( $next ) ) {
+					$this->setCongratulationsNotification( $subpage );
+				} elseif ( $isFixed == 'fixed' ) {
+					$this->setInsightFixedNotification( $next, $params, $subpage );
+				}
 			}
 		}
+	}
+
+	/**
+	 * Sets values for notification shown in edit mode or if issue is not fixed
+	 */
+	private function setInProgressNotification( $subpage ) {
+		$this->response->setVal(
+			'notificationMessage',
+			wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->escaped()
+		);
+		$this->setInsightListLink( $subpage );
+	}
+
+	/**
+	 * Sets values for notification shown when user fix all issues in given insight type
+	 */
+	private function setCongratulationsNotification( $subpage ) {
+		$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message-alldone' )->escaped() );
+	}
+
+	/**
+	 * Sets values for notification shown when user fix one issue from the insights list
+	 *
+	 * @param $next Array data about item from insight list
+	 * @param $params String params to be added to url
+	 */
+	private function setInsightFixedNotification( $next, $params, $subpage ) {
+		$this->response->setVal(
+			'notificationMessage',
+			wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->escaped()
+		);
+		$this->setInsightNextLink( $next, $params );
+		$this->setInsightListLink( $subpage );
+	}
+
+	/**
+	 * Sets values for next item link in notification
+	 *
+	 * @param $next Array data about item from insight list
+	 * @param $params String params to be added to url
+	 */
+	private function setInsightNextLink( $next, $params ) {
+		$this->response->setVal( 'nextArticleButton', wfMessage( 'insights-notification-next-item-button' )->escaped() );
+		$this->response->setVal( 'nextArticleTitle', $next['title'] );
+		$this->response->setVal( 'nextArticleLink', $next['link'] . $params );
+	}
+
+	/**
+	 * Sets values for link to insight list
+	 */
+	private function setInsightListLink( $subpage ) {
+		$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
+		$this->response->setVal( 'insightsPageLink', $this->getSpecialInsightsUrl( $subpage ) );
 	}
 
 	private function addAssets() {
@@ -69,8 +123,8 @@ class InsightsController extends WikiaSpecialPageController {
 	 *
 	 * @return string
 	 */
-	private function getSpecialInsightsUrl() {
-		return $this->specialPage->getTitle()->getFullURL();
+	private function getSpecialInsightsUrl( $subpage = false ) {
+		return $this->specialPage->getTitle( $subpage )->getFullURL();
 	}
 
 	/**

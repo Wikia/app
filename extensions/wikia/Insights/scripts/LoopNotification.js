@@ -4,20 +4,43 @@
  */
 
 /* global require */
-require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, BannerNotification, Querystring) {
+require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
+	function ($, BannerNotification, Querystring, window)
+{
 	'use strict';
 
-	var bannerNotification = new BannerNotification(),
-		qs = new Querystring(),
+	var qs = new Querystring(),
 		insights = qs.getVal('insights', null),
 		isVE = qs.getVal('veaction', null),
+		isFixed = qs.getVal('item_status', null),
 		initNotification,
-		showNotification;
+		showNotification,
+		getNotificationType,
+		getParent;
 
-	showNotification = function showNotification(html) {
+	showNotification = function(html) {
 		if (html) {
-			bannerNotification.setContent(html).show();
+			var msgType = getNotificationType(),
+				$parent = getParent();
+
+			new BannerNotification(html, msgType, $parent).show();
 			$('#InsightsNextPageButton').focus();
+		}
+	};
+
+	getNotificationType = function() {
+		if (window.wgIsEditPage || isFixed === 'notfixed') {
+			return 'warn';
+		} else {
+			return 'confirm';
+		}
+	};
+
+	getParent = function() {
+		if (window.wgIsEditPage) {
+			return $('#WikiaMainContent');
+		} else {
+			return null;
 		}
 	};
 
@@ -28,21 +51,25 @@ require(['jquery', 'BannerNotification', 'wikia.querystring'], function ($, Bann
 			format: 'html',
 			type: 'get',
 			data: {
-				insight: insights
+				insight: insights,
+				isEdit: window.wgIsEditPage,
+				isFixed: isFixed
 			},
 			callback: showNotification
 		});
 	};
 
-	if (insights) {
-		if (isVE) {
-			window.mw.hook('ve.deactivationComplete').add(function(saved){
-				if (saved) {
-					initNotification();
-				}
-			});
-		} else {
-			initNotification();
+	$(function () {
+		if (insights) {
+			if (isVE) {
+				window.mw.hook('ve.deactivationComplete').add(function(saved){
+					if (saved) {
+						initNotification();
+					}
+				});
+			} else {
+				initNotification();
+			}
 		}
-	}
+	});
 });
