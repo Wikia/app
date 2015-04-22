@@ -1040,11 +1040,11 @@
         },
         {
             "name": "wikia/fluent-sql-php",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Wikia/fluent-sql-php",
-                "reference": "bf758e5d759d93080e09c295eb701182d20c7309"
+                "reference": "ebde14122a0e3a21dd574fd482b8f09cee2ff811"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -1072,7 +1072,7 @@
                 }
             ],
             "description": "Fluent SQL wrapper for PHP",
-            "time": "2014-05-29 23:03:53"
+            "time": "2014-12-02 19:19:03"
         }
     ],
     "packages-dev": [],
