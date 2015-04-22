@@ -49,9 +49,12 @@ $insights-text-light: #fff;
 	}
 }
 
+/** The landing page **/
+
 .insights-container-landing {
 	margin: 0 auto;
-	width: 700px;
+	max-width: 700px;
+	width: 100%;
 
 	.insights-landing-nav-list {
 		margin: 0;
@@ -63,11 +66,18 @@ $insights-text-light: #fff;
 }
 
 .insights-landing-nav-item {
-	background-position: center right;
+	background-position: center left;
 	background-repeat: no-repeat;
-	border: 1px solid $insights-grey;
-	padding: 15px 10px;
+	background-size: auto 65px;
+	border-bottom: 1px solid $insights-grey;
+	padding: 15px 10px 15px 95px;
+
+	&:last-child {
+		border: 0;
+	}
 }
+
+/** Subpages - navigation **/
 
 .insights-container-nav {
 	float: left;
@@ -101,6 +111,8 @@ $insights-text-light: #fff;
 		text-decoration: none;
 	}
 }
+
+/** Subpages - content **/
 
 .insights-header {
 	background-position: center left;
