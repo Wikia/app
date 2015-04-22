@@ -33,14 +33,12 @@ class CollectionViewRenderService extends WikiaService {
 		foreach ( $collectionViewData as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
-			if ( !$item[ 'isEmpty' ] ) {
-				// skip rendering for not supported type and log it
-				if ( !isset( $this->templates[ $type ] ) ) {
-					Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
-						'type' => $type
-					] );
-					continue;
-				}
+
+			if ( $item['isEmpty'] ) {
+				continue;
+			}
+
+			if ( $this->validateType( $type ) ) {
 				$out .= $this->renderItem( $type, $data );
 			}
 		}
@@ -59,5 +57,25 @@ class CollectionViewRenderService extends WikiaService {
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( $this->templates[ $type ] );
+	}
+
+	/**
+	 * check if item type is supported and logs unsupported types
+	 *
+	 * @param string $type - template type
+	 * @return bool
+	 */
+	private function validateType( $type ) {
+		$isValid = true;
+
+		if ( !isset( $this->templates[ $type ] ) ) {
+			Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
+				'type' => $type
+			] );
+
+			$isValid = false;
+		}
+
+		return $isValid;
 	}
 }
