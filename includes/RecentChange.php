@@ -228,8 +228,10 @@ class RecentChange {
 		global $wgUseEnotif, $wgShowUpdatedMarker, $wgUser;
 		if( $wgUseEnotif || $wgShowUpdatedMarker ) {
 			// Users
-			if ( $this->mAttribs['rc_user'] && $this->mAttribs['rc_user'] !== $wgUser->getId() ) {
-				$editor = User::newFromID( $this->mAttribs['rc_user'] );
+			if( $this->mAttribs['rc_user'] ) {
+				if ( $wgUser->getId() !== $this->mAttribs['rc_user'] ) {
+					$editor = User::newFromID( $this->mAttribs['rc_user'] );
+				}
 			// Anons
 			} else {
 				$editor = ($wgUser->getName() == $this->mAttribs['rc_user_text']) ?
