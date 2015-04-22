@@ -74,6 +74,6 @@ class XmlParserTest extends WikiaBaseTest {
 		';
 		$data = $parser->getDataFromXmlString( $markup );
 		$this->assertTrue( $data[0]['data']['value'] == 'parseRecursive(ABB)' );
-		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parse(LALALA)');
+		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parseRecursive(LALALA)');
 	}
 }

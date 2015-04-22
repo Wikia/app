@@ -23,11 +23,17 @@ class MediaWikiParserService implements ExternalParser {
 		return $parsedText;
 	}
 
+	/**
+	 * @FIXME: regardless of what is the final approach, this code needs to be explained
+	 * WHY it does the things it does. Here. In docblock. Or by phrasing it explicitly with
+	 * class and method names.
+	 */
 	public function parseRecursive( $wikitext ) {
-		$preprocessed = $this->parser->recursivePreprocess( $wikitext, $this->frame );
+		$parsed = $this->parse($wikitext);
+		$preprocessed = $this->parser->recursivePreprocess( $parsed, $this->frame );
 		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $preprocessed );
 		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
-		return $this->parse( $marksstripped );
+		return $marksstripped;
 	}
 
 	private function getParserTitle() {

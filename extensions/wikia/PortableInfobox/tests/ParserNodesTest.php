@@ -102,5 +102,4 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 1 ][ 'type' ] == 'pair' );
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 2 ][ 'data' ][ 'value' ] == 2 );
 	}
-
 }
