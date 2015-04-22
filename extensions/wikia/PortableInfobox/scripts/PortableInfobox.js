@@ -1,7 +1,7 @@
 'use strict';
 
 (function($, vignette) {
-	var infoboxImages = $('.infobox-image');
+	var infoboxImages = $('.portable-infobox-image');
 
 	/**
 	 * @desc loads infobox image image
