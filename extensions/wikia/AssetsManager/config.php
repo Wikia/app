@@ -753,6 +753,7 @@ $config['mercury_ads_js'] = array(
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
+		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//resources/wikia/modules/krux.js',
 
@@ -2033,6 +2034,14 @@ $config['monetization_module_css'] = array(
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/MonetizationModule/styles/MonetizationModule.scss',
+	]
+);
+
+$config['monetization_module_css_no_breakpoints'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/MonetizationModule/styles/MonetizationModuleNoBreakpoints.scss',
 	]
 );
 

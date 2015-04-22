@@ -28,6 +28,10 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [];
 		}
 
+		if (!context.opts.enableInvisibleHighImpactSlot && slotName === 'INVISIBLE_HIGH_IMPACT') {
+			return [];
+		}
+
 		if (context.providers.taboola && taboola && taboola.canHandleSlot(slotName)) {
 			return [taboola];
 		}

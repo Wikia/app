@@ -101,7 +101,14 @@ abstract class EmailController extends \WikiaController {
 			$fromAddress = $this->getFromAddress();
 			$replyToAddress = $this->getReplyToAddress();
 			$subject = $this->getSubject();
-			$body = [ 'html' => $this->getBody() ];
+
+			$bodyHTML = $this->getBody();
+			$bodyText = $this->bodyHtmlToText( $bodyHTML );
+
+			$body = [
+				'html' => $bodyHTML,
+				'text' => $bodyText
+			];
 
 			if ( !$this->test ) {
 				$status = \UserMailer::send(
@@ -229,6 +236,24 @@ abstract class EmailController extends \WikiaController {
 		$html = $this->inlineStyles( $html, $css );
 
 		return $html;
+	}
+
+	/**
+	 * Create a plain text version of the body HTML
+	 *
+	 * @param string $html The HTML for the email body
+	 *
+	 * @return string
+	 */
+	protected function bodyHtmlToText( $html ) {
+		$bodyText = strip_tags( $html );
+
+		// Get rid of multiple blank white lines
+		$bodyText = preg_replace( '/^\h*\v+/m', '', $bodyText );
+
+		// Get rid of leading spacing/indenting
+		$bodyText = preg_replace( '/^[\t ]+/m', '', $bodyText );
+		return $bodyText;
 	}
 
 	/**
