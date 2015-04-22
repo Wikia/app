@@ -18,13 +18,6 @@ class MediaWikiParserService implements ExternalParser {
 			->getText();
 	}
 
-	public function parseRecursive( $wikitext ) {
-		$preprocessed = $this->parser->recursivePreprocess( $wikitext, $this->frame );
-		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $preprocessed );
-		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
-		return $this->parse( $marksstripped );
-	}
-
 	private function getParserTitle() {
 		return $this->parser->getTitle();
 	}

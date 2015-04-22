@@ -5,9 +5,9 @@ class NodeItem extends Node {
 
 	public function getData() {
 		$node = [];
-		$node['description'] = $this->parseWithExternalParser((string) ( $this->xmlNode->{'description'} ), false);
-		$node['img'] = $this->resolveImageUrl( $this->getXmlAttribute( $this->xmlNode, 'img' ) );
-		$node['link'] = $this->resolveArticleUrl( $this->getXmlAttribute( $this->xmlNode, 'link' ) );
+		$node[ 'description' ] = $this->parseWithExternalParser( (string) ( $this->xmlNode->{'description'} ), false );
+		$node[ 'img' ] = $this->resolveImageUrl( $this->getXmlAttribute( $this->xmlNode, 'img' ) );
+		$node[ 'link' ] = $this->resolveArticleUrl( $this->getXmlAttribute( $this->xmlNode, 'link' ) );
 		return $node;
 	}
 

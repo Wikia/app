@@ -5,10 +5,8 @@ class CollectionViewRenderService extends WikiaService {
 
 	private $templates = [
 		'wrapper' => 'CollectionViewWrapper.mustache',
-		'title' => 'CollectionViewItemTitle.mustache',
-		'header' => 'CollectionViewItemHeader.mustache',
-		'item' => 'CollectionViewItemItem.mustache',
-		'pair' => 'CollectionViewItemKeyVal.mustache'
+		'header' => 'CollectionViewHeader.mustache',
+		'item' => 'CollectionViewItem.mustache'
 	];
 	private $templateEngine;
 
@@ -21,15 +19,21 @@ class CollectionViewRenderService extends WikiaService {
 	 * renders collection view
 	 *
 	 * @param array $collectionViewData
+	 * @param int $collectionViewIndex
 	 * @return string - HTML
 	 */
-	public function renderCollectionView( array $collectionViewData ) {
-		$html = '';
+	public function renderCollectionView( array $collectionViewData, $collectionViewIndex ) {
+		global $wgArticleAsJson;
+		$out = '';
+
+		if ( $wgArticleAsJson ) {
+			return '<div class="collection-view" data-ref="' . $collectionViewIndex . '"></div>';
+		}
 
 		foreach ( $collectionViewData as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
-			if ( !$item['isEmpty'] ) {
+			if ( !$item[ 'isEmpty' ] ) {
 				// skip rendering for not supported type and log it
 				if ( !isset( $this->templates[ $type ] ) ) {
 					Wikia\Logger\WikiaLogger::instance()->info( self::LOGGER_LABEL, [
@@ -37,11 +41,11 @@ class CollectionViewRenderService extends WikiaService {
 					] );
 					continue;
 				}
-				$html .= $this->renderItem( $type, $data );
+				$out .= $this->renderItem( $type, $data );
 			}
 		}
 
-		return $this->renderItem( 'wrapper', [ 'content' => $html ] );
+		return $this->renderItem( 'wrapper', [ 'content' => $out ] );
 	}
 
 	/**
