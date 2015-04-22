@@ -1,17 +1,52 @@
-$insights-dark-blue: #082040;
 $insights-grey: #ccc;
+$insights-background-grey: #f0f0f0;
+$insights-background-grey-dark: #2a2a2a;
 $insights-text-light: #fff;
 
-.insights-icon-uncategorized {
-	background-image: url('/extensions/wikia/Insights/images/trending.png'); /* inline */
+.insights-light {
+	.insights-icon-uncategorizedpages {
+		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
+	}
+
+	.insights-icon-withoutimages {
+		background-image: url('/extensions/wikia/Insights/images/withoutimages.svg'); /* inline */
+	}
+
+	.insights-icon-deadendpages {
+		background-image: url('/extensions/wikia/Insights/images/deadendpages.svg'); /* inline */
+	}
+
+	.insights-icon-wantedpages {
+		background-image: url('/extensions/wikia/Insights/images/wantedpages.svg'); /* inline */
+	}
+
+	.insights-nav-item:hover,
+	.insights-nav-item.active {
+		background-color: $insights-background-grey;
+	}
 }
 
-.insights-icon-withoutimages {
-	background-image: url('/extensions/wikia/Insights/images/trending.png'); /* inline */
-}
+.insights-dark {
+	.insights-icon-uncategorizedpages {
+		background-image: url('/extensions/wikia/Insights/images/uncategorized_dark.svg'); /* inline */
+	}
 
-.insights-icon-orphan {
-	background-image: url('/extensions/wikia/Insights/images/trending.png'); /* inline */
+	.insights-icon-withoutimages {
+		background-image: url('/extensions/wikia/Insights/images/withoutimages_dark.svg'); /* inline */
+	}
+
+	.insights-icon-deadendpages {
+		background-image: url('/extensions/wikia/Insights/images/deadendpages_dark.svg'); /* inline */
+	}
+
+	.insights-icon-wantedpages {
+		background-image: url('/extensions/wikia/Insights/images/wantedpages_dark.svg'); /* inline */
+	}
+
+	.insights-nav-item:hover,
+	.insights-nav-item.active {
+		background-color: $insights-background-grey-dark;
+	}
 }
 
 .insights-container-landing {
@@ -36,38 +71,43 @@ $insights-text-light: #fff;
 
 .insights-container-nav {
 	float: left;
-	width: 220px;
+	width: 250px;
 
 	.insights-nav-list {
-		border: solid $insights-grey;
-		border-width: 1px 0 0;
 		margin: 0;
+
+		&.active {
+			background-color: $insights-background-grey;
+		}
 	}
 
 	.insights-nav-item {
-		border: solid $insights-grey;
-		border-width: 0 1px 1px;
+		background-position: 5% 50%;
+		background-repeat: no-repeat;
+		background-size: auto 26px;
+		border-bottom: 1px solid $insights-grey;
 		list-style-type: none;
 		margin: 0;
+		padding: 5px 0;
+
+		&:last-child {
+			border-bottom: 0;
+		}
 	}
 
 	.insights-nav-link {
 		display: block;
-		padding: 6px;
+		padding: 10px 10px 10px 55px;
 		text-decoration: none;
-
-		&:hover {
-			background: $insights-dark-blue;
-			color: $insights-text-light;
-		}
 	}
 }
 
 .insights-header {
 	background-position: center left;
 	background-repeat: no-repeat;
+	background-size: auto 65px;
 	margin: 10px 0 15px;
-	padding: 20px 20px 20px 150px;
+	padding: 20px 20px 20px 95px;
 
 	.insights-header-subtitle {
 		border-bottom: 0;
@@ -76,20 +116,34 @@ $insights-text-light: #fff;
 }
 
 .insights-container-main {
-	float: left;
-	width: 780px;
-}
+	box-sizing: border-box;
+	float: right;
+	margin-left: 25px;
+	width: calc(100% - 275px);
 
-.insights-list {
-	border-collapse: collapse;
-	width: 100%;
-
-	td {
-		border: 1px solid $insights-grey;
-		padding: 5px 15px;
-	}
-
-	.item-number {
-		text-align: center;
+	.insights-list {
+		margin: 0;
 	}
 }
+
+.insights-list-item {
+	border-bottom: 1px solid $insights-grey;
+	list-style-type: none;
+	padding: 10px 0;
+
+	&:last-child {
+		border: 0;
+	}
+
+	.insights-list-item-title {
+		clear: both;
+		font-size: 125%;
+	}
+
+	.insights-list-item-metadata {
+		margin: 0;
+		padding: 1px 0;
+	}
+}
+
+
