@@ -1,17 +1,17 @@
-<div class="insights-container-landing">
+<div class="insights-container-landing <?= $themeClass ?>">
 	<div class="insights-landing-header">
 		<h1><?= wfMessage( 'insights-landing-title' )->escaped() ?></h1>
-		<p><?= wfMessage( 'insights-landing-lead' )->escaped() ?></p>
+		<p><?= wfMessage( 'insights-landing-lead' )->parse() ?></p>
 	</div>
 	<div class="insights-landing-nav">
 		<ul class="insights-landing-nav-list">
 			<?php foreach( InsightsHelper::$insightsMessageKeys as $key => $messages ) : ?>
-				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>">
-					<li class="insights-landing-nav-item insights-icon-<?= $key ?>">
+				<li class="insights-landing-nav-item insights-icon-<?= strtolower( $key ) ?>">
+					<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>">
 						<h3><?= wfMessage( $messages['subtitle'] )->escaped() ?></h3>
-						<p><?= wfMessage( $messages['description'] )->escaped() ?></p>
-					</li>
-				</a>
+					</a>
+					<p><?= wfMessage( $messages['description'] )->escaped() ?></p>
+				</li>
 			<?php endforeach; ?>
 		</ul>
 	</div>

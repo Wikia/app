@@ -27,7 +27,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	public function getData() {
 		$data['messageKeys'] = InsightsHelper::$insightsMessageKeys;
 		$data['offset'] = $this->offset;
-		$data['themeClass'] = SassUtil::isThemeDark() ? 'insights-dark' : 'insights-light';
 		return $data;
 	}
 

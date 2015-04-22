@@ -13,6 +13,7 @@ class InsightsController extends WikiaSpecialPageController {
 		$this->addAssets();
 
 		$this->subpage = $this->getPar();
+		$this->themeClass = SassUtil::isThemeDark() ? 'insights-dark' : 'insights-light';
 
 		if ( InsightsHelper::isInsightPage( $this->subpage ) ) {
 			$this->renderSubpage();

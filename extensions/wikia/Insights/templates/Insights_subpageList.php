@@ -1,4 +1,4 @@
-<div class="insights-container-nav <?= $data['themeClass'] ?>">
+<div class="insights-container-nav <?= $themeClass ?>">
 	<ul class="insights-nav-list">
 		<? foreach( $data['messageKeys'] as $key => $messages ) : ?>
 			<?php $subpage == $key ? $class = 'active' : $class = '' ?>
@@ -10,7 +10,7 @@
 		<? endforeach; ?>
 	</ul>
 </div>
-<div class="insights-container-main <?= $data['themeClass'] ?>">
+<div class="insights-container-main <?= $themeClass ?>">
 	<div class="insights-container-main-inner">
 		<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( strtolower( $subpage ) ) ?> clearfix">
 			<h2 class="insights-header-subtitle"><?= wfMessage( $data['messageKeys'][$subpage]['subtitle'] )->escaped() ?></h2>
