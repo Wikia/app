@@ -699,7 +699,6 @@ $config['mobile_base_ads_js'] = array(
 	'assets' => array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
-		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//resources/wikia/modules/instantGlobals.js',
 
 		// Advertisement libs
@@ -707,19 +706,24 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
-		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
+		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
+		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
+		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
+		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
+		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+
+		// Paid asset drop
+		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
 	)
 );
 
@@ -2428,5 +2432,13 @@ $config['poweruser'] = [
 	'assets' => [
 		'//extensions/wikia/PowerUser/js/pageViewTracking.js',
 		'//extensions/wikia/PowerUser/js/powerUser.run.js',
+	]
+];
+
+$config['paid_asset_drop_desktop_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PaidAssetDrop/js/run/desktop.run.js',
+		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js'
 	]
 ];
