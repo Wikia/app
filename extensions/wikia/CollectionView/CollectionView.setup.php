@@ -14,7 +14,6 @@ $wgAutoloadClasses[ 'CollectionViewRenderService' ] = $dir . 'services/Collectio
 
 // parser
 $wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\XmlParser'] = $dir . 'services/Parser/XmlParser.php';
-$wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
 $wgAutoloadClasses[ 'Wikia\\CollectionView\\Parser\\MediaWikiParserService'] = $dir . 'services/Parser/MediaWikiParserService.php';
 
 $wgCollectionViewParserNodes = [
