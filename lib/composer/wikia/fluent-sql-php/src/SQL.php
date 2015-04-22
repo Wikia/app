@@ -11,6 +11,7 @@ namespace FluentSql;
 use FluentSql\Cache\ProcessCache;
 use FluentSql\Clause\Condition;
 use FluentSql\Clause\Where;
+use FluentSql\Exception\SqlException;
 use FluentSql\Functions\SqlFunction;
 
 class SQL {
@@ -50,6 +51,9 @@ class SQL {
 
 	/** @var Clause\Into INTO statement*/
 	protected $into;
+
+	/** @var Clause\OnDuplicateKeyUpdate ON DUPLICATE KEY UPDATE statement */
+	protected $onDuplicateKeyUpdate;
 
 	/** @var bool whether or not this SQL has added a comma to its $fields output */
 	protected $doCommaField = false;
@@ -225,6 +229,19 @@ class SQL {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * ON DUPLICATE clause for an INSERT statement
+	 *
+	 * @param array $columns
+	 * @return SQL
+	 * @throws SqlException if there is no INTO found
+	 */
+	public function ON_DUPLICATE_KEY_UPDATE( array $columns ) {
+		$this->onDuplicateKeyUpdate = new Clause\OnDuplicateKeyUpdate( $columns );
+
+		return $this->called( $this->onDuplicateKeyUpdate );
 	}
 
 	/**
@@ -547,7 +564,7 @@ class SQL {
 	/**
 	 * ON statement for a JOIN statement
 	 * @return SQL
-	 * @throws \Exception if there is no JOIN found
+	 * @throws SqlException if there is no JOIN found
 	 */
 	public function ON() {
 		$args = func_get_args();
@@ -558,8 +575,7 @@ class SQL {
 		$join = $this->getLast('Join');
 
 		if ($join === null) {
-			// TODO: make a sql exception?
-			throw new \Exception('using ON without a JOIN');
+			throw new SqlException('using ON without a JOIN');
 		}
 
 		/** @var Clause\Join $join */
@@ -964,6 +980,7 @@ class SQL {
 			$this->buildClauseAllGroupBy($bk, $tabs);
 			$this->buildClauseAllHaving($bk, $tabs);
 			$this->buildClauseAllValues($bk, $tabs);
+			$this->buildClauseOnDuplicateKeyUpdate($bk, $tabs);
 			$this->buildClauseAllOrderBy($bk, $tabs);
 			$this->buildClauseLimit($bk, $tabs);
 			$this->buildClauseOffset($bk, $tabs);
@@ -1091,6 +1108,12 @@ class SQL {
 	private function buildClauseInto(Breakdown $bk, $tabs) {
 		if ($this->into != null) {
 			$this->into->build($bk, $tabs);
+		}
+	}
+
+	private function buildClauseOnDuplicateKeyUpdate( Breakdown $bk, $tabs ) {
+		if ( $this->onDuplicateKeyUpdate != null ) {
+			$this->onDuplicateKeyUpdate->build( $bk, $tabs );
 		}
 	}
 
