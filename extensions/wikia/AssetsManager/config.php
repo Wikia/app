@@ -700,7 +700,6 @@ $config['mobile_base_ads_js'] = array(
 	'assets' => array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
-		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/instantGlobals.js',
 
@@ -709,10 +708,6 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
-		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/openX.js',
-		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
@@ -723,6 +718,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
+		'//extensions/wikia/AdEngine/js/provider/openX.js',
 		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 
@@ -731,7 +727,6 @@ $config['mobile_base_ads_js'] = array(
 
 		// Paid asset drop
 		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
-
 	)
 );
 
