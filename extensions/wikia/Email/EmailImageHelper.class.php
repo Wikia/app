@@ -42,25 +42,20 @@ class ImageHelper {
 	}
 
 	protected static function getFileInfo( $name ) {
-		$key = self::getFileKey( $name );
-		$memc = \F::app()->wg->Memc;
+		$info = \WikiaDataAccess::cache(
+			self::getFileKey( $name ),
+			self::ICON_CACHE_TTL,
+			function() use ( $name ) {
+				$file = \GlobalFile::newFromText( $name . '.gif', \Wikia::NEWSLETTER_WIKI_ID );
 
-		$info = $memc->get( $key );
-		if ( empty( $info ) ) {
-			$file   = \GlobalFile::newFromText( $name . '.gif', \Wikia::NEWSLETTER_WIKI_ID );
-			$width  = $file->getWidth();
-			$height = $file->getHeight();
-			$url    = $file->getUrlGenerator()->url();
-
-			$info = [
-				'name'   => $name,
-				'url'    => $url,
-				'height' => $height,
-				'width'  => $width,
-			];
-
-			$memc->set( $key, $info, self::ICON_CACHE_TTL );
-		}
+				return [
+					'name'   => $name,
+					'url'    => $file->getUrlGenerator()->url(),
+					'height' => $file->getHeight(),
+					'width'  => $file->getWidth(),
+				];
+			}
+		);
 
 		return $info;
 	}
