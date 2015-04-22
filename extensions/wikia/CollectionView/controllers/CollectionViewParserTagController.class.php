@@ -4,6 +4,8 @@ class CollectionViewParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'collection';
 	const COLLECTIONS_PROPERTY_NAME = 'collections';
 
+	static $collectionIndex = 0;
+
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
 	 *
@@ -36,7 +38,7 @@ class CollectionViewParserTagController extends WikiaController {
 		$this->saveToParserOutput( $parserOutput, $data );
 
 		$renderer = new CollectionViewRenderService();
-		$renderedValue = $renderer->renderCollectionView( $data, $this->getCollectionViewIndex( $parserOutput ) );
+		$renderedValue = $renderer->renderCollectionView( $data, self::$collectionIndex++ );
 
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
@@ -48,10 +50,5 @@ class CollectionViewParserTagController extends WikiaController {
 			$collections[ ] = $raw;
 			$parserOutput->setProperty( self::COLLECTIONS_PROPERTY_NAME, $collections );
 		}
-	}
-
-	private function getCollectionViewIndex( \ParserOutput $parserOutput ) {
-		$collections = $parserOutput->getProperty( self::COLLECTIONS_PROPERTY_NAME );
-		return is_array( $collections ) ? count( $collections ) - 1 : 0;
 	}
 }
