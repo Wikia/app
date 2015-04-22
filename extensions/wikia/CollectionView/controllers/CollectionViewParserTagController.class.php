@@ -45,10 +45,35 @@ class CollectionViewParserTagController extends WikiaController {
 
 	protected function saveToParserOutput( \ParserOutput $parserOutput, $raw ) {
 		if ( !empty( $raw ) ) {
-			//TODO we should convert $raw to the format described in CONCF-460
 			$collections = $parserOutput->getProperty( self::COLLECTIONS_PROPERTY_NAME );
-			$collections[ ] = $raw;
+			$collections[ ] = $this->prettifyData( $raw );
 			$parserOutput->setProperty( self::COLLECTIONS_PROPERTY_NAME, $collections );
 		}
+	}
+
+	/**
+	 * We want JSON data to be in a format different from the one used by this extension
+	 * Let's make it pretty!
+	 *
+	 * @param $raw
+	 * @return array
+	 */
+	protected function prettifyData( $raw ) {
+		$data = [];
+
+		foreach ( $raw as $item ) {
+			if ( !$item[ 'isEmpty' ] ) {
+				switch ( $item[ 'type' ] ) {
+					case 'header':
+						$data[ 'header' ] = $item[ 'data' ][ 'value' ];
+						break;
+					case 'item':
+						$data[ 'items' ][] = $item[ 'data' ];
+						break;
+				}
+			}
+		}
+
+		return $data;
 	}
 }
