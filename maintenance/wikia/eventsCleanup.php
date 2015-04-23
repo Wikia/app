@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Script that removes entries for closed wikis from
- * specials.events_local_users table
+ * Script that removes entries for closed wikis from:
+ *  - specials.events_local_users table
+ *  - stats.events table
  *
  * @see PLATFORM-1173
  *
@@ -15,9 +16,9 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 /**
  * Maintenance script class
  */
-class EventsLocalUsersCleanup extends Maintenance {
+class EventsCleanup extends Maintenance {
 
-	const BATCH = 25;
+	const BATCH = 50;
 
 	// remove entries for wikis closed before this date
 	const CLOSED_BEFORE = '20100101000000';
@@ -27,45 +28,48 @@ class EventsLocalUsersCleanup extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'This script removes entries from specials.events_local_users';
+		$this->mDescription = 'This script removes entries from events-related tables';
 	}
 
 	/**
 	 * Perform a cleanup for a set of wikis
 	 *
-	 * @param Array $city_ids IDs of wikis to remove from events_local_users
-	 * @return int rows removed
+	 * @param DatabaseBase $db database handler
+	 * @param string $table name of table to clean up
+	 * @param Array $city_ids IDs of wikis to remove from the table
 	 */
-	private function cleanupBatch( Array $city_ids ) {
-		global $wgSpecialsDB;
-		$start = time();
+	private function doTableCleanup( DatabaseBase $db, $table, Array $city_ids ) {
+		$start = microtime( true );
 
-		$specials = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
-		$specials->delete(
-			'events_local_users',
-			[
-				'wiki_id' => $city_ids
-			],
-			__METHOD__
-		);
-		$rows = $specials->affectedRows();
+		$db->delete( $table, [ 'wiki_id' => $city_ids ], __METHOD__ );
+		$rows = $db->affectedRows();
 
 		// just in case MW decides to start a transaction automagically
-		$specials->commit( __METHOD__ );
+		$db->commit( __METHOD__ );
 
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'table' => $table,
 			'cities' => join( ', ', $city_ids ),
 			'count' => count( $city_ids ),
-			'took' => time() - $start,
+			'took' => round( microtime( true ) - $start, 4 ),
 			'rows' => $rows
 		] );
+
+		$this->output( sprintf ( "%s: %s - removed %d rows\n", date( 'Y-m-d H:i:s' ), $table, $rows ) );
 
 		// throttle delete queries
 		if ( $rows > 0 ) {
 			sleep( 5 );
 		}
+	}
 
-		return $rows;
+	private function cleanupBatch( Array $city_ids ) {
+		global $wgSpecialsDB, $wgStatsDB;
+		$specials = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+		$stats = wfGetDB( DB_MASTER, [], $wgStatsDB );
+
+		$this->doTableCleanup( $specials, 'events_local_users', $city_ids );
+		$this->doTableCleanup( $stats, 'events', $city_ids );
 	}
 
 	public function execute() {
@@ -86,13 +90,12 @@ class EventsLocalUsersCleanup extends Maintenance {
 		$this->output( sprintf( "Got %d closed wikis (before %s) in %d batches\n", count( $closedWikis ), self::CLOSED_BEFORE, count( $batches ) ) );
 
 		foreach ( $batches as $n => $batch ) {
-			$rows = $this->cleanupBatch( $batch );
-			$this->output( sprintf( "%s: batch #%d: rows removed: %d\n", date( 'Y-m-d H:i:s' ), ($n+1), $rows ) );
+			$this->cleanupBatch( $batch );
 		}
 
 		$this->output( "\nDone\n" );
 	}
 }
 
-$maintClass = "EventsLocalUsersCleanup";
+$maintClass = "EventsCleanup";
 require_once( RUN_MAINTENANCE_IF_MAIN );
