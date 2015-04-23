@@ -24,6 +24,7 @@
 	padding: 10px 0;
 	text-align: center;
 	width: $width-outside;
+	visibility: hidden;
 	z-index: 0;
 	.WikiaTopAdsInner {
 		@include clearfix;
