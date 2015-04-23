@@ -1,9 +1,9 @@
-@import "skins/shared/color";
-@import "breakpoints-variables";
-@import "skins/shared/mixins/calc";
+@import 'skins/shared/color';
+@import 'breakpoints-variables';
+@import 'skins/shared/mixins/calc';
 
-$background-height: get_command_line_param( "background-image-height", 0 );
-$background-width: get_command_line_param( "background-image-width", 0 );
+$background-height: get_command_line_param('background-image-height', 0);
+$background-width: get_command_line_param('background-image-width', 0);
 $gradient-width: 40px;
 $adskin-width: 170px;
 $padding-content: 18px;
@@ -19,26 +19,26 @@ $large-breakpoint-content-and-adskin-width: $content-width-large + 2 * $adskin-w
 }
 
 $background-width-half: $background-width / 2;
-$background-offset: ( $breakpoint-upper - $background-width ) / 2;
-$background-align: if( $background-width > $width-outside, center, left );
+$background-offset: ($breakpoint-upper - $background-width) / 2;
+$background-align: if($background-width > $width-outside, center, left);
 $gradient-offset: $padding-content + $gradient-width;
 
 @mixin breakpoint-middle-gradient($side) {
 	$other-side: if($side == 'left', 'right', 'left');
 
-	background-color: rgba( $color-body-middle, 0 );
-	background-image: -webkit-linear-gradient(#{$side}, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
-	background-image: linear-gradient(to #{$other-side}, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+	background-color: rgba($color-body-middle, 0);
+	background-image: -webkit-linear-gradient(#{$side}, rgba($color-body-middle, 0) 0%, $color-body-middle 100%);
+	background-image: linear-gradient(to #{$other-side}, rgba($color-body-middle, 0) 0%, $color-body-middle 100%);
 }
 
 @mixin background-max() {
-	$background-margin: ($content-width-medium / 2) - ( ($content-width-large / 2) + $background-width-half + $padding-content);
+	$background-margin: ($content-width-medium / 2) - (($content-width-large / 2) + $background-width-half + $padding-content);
 	$background-halves-spacing: $content-width-large - $content-width-medium + $padding-content-both-sides;
 	$gradient-offset: ($background-halves-spacing / 2) + $gradient-width;
 
 	body.background-dynamic.skin-oasis {
-		&:after,
-		&:before {
+		&::after,
+		&::before {
 			width: $background-width-half;
 		}
 
@@ -48,7 +48,7 @@ $gradient-offset: $padding-content + $gradient-width;
 			right: 50%;
 		}
 
-		&:before {
+		&::before {
 			background-position: 0;
 			left: 50%;
 			margin-left: $background-margin;
@@ -58,12 +58,12 @@ $gradient-offset: $padding-content + $gradient-width;
 			margin-left: -($background-halves-spacing / 2);
 			width: $background-halves-spacing;
 
-			&:after {
-				@include calc("right", "50% - #{$gradient-offset}");
+			&::after {
+				@include calc('right', '50% - #{$gradient-offset}');
 			}
 
-			&:before {
-				@include calc("left", "50% - #{$gradient-offset}");
+			&::before {
+				@include calc('left', '50% - #{$gradient-offset}');
 			}
 		}
 	}
@@ -71,27 +71,27 @@ $gradient-offset: $padding-content + $gradient-width;
 
 body {
 	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
+
+	&.background-not-tiled {
+		background-repeat: no-repeat;
+	}
+
+	&.background-fixed {
+		 background-attachment: fixed;
+	}
 }
 
-body.background-not-tiled {
-	background-repeat: no-repeat;
-}
-
-body.background-fixed {
-	background-attachment: fixed;
-}
-
-@if ( $widthType == 0) {
+@if ($widthType == 0) {
 	body.background-dynamic.skin-oasis {
 		background: $color-body;
 		overflow: hidden;
 		position: relative;
 
-		&:after,
-		&:before {
+		&::after,
+		&::before {
 			background-image: url($background-image); /* $wgCdnStylePath */
 			background-repeat: no-repeat;
-			content: "";
+			content: '';
 			height: $background-height;
 			position: absolute;
 			top: 0;
@@ -99,18 +99,18 @@ body.background-fixed {
 			z-index: -1;
 		}
 
-		&.background-fixed:after,
-		&.background-fixed:before {
+		&.background-fixed::after,
+		&.background-fixed::before {
 			position: fixed;
 		}
 
-		&:after {
+		&::after {
+			@include calc('right', '50% - #{$padding-content}');
 			background-position: -$background-width-half 0;
 			margin-right: -$background-width-half;
-			@include calc("right", "50% - #{$padding-content}");
 		}
 
-		&:before {
+		&::before {
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
 			left: calc(50.1% - #{$padding-content});
 			margin-left: -$background-width-half;
@@ -119,40 +119,31 @@ body.background-fixed {
 		.background-image-gradient {
 			background: $color-body-middle;
 			left: 50%;
-
-			&,
-			&:before,
-			&:after {
-				content: "";
-				height: 100%;
-				position: fixed;
-				top: 0;
-			}
-		}
-
-		.background-image-gradient {
-			background: $color-body-middle;
-			left: 50%;
 			margin-left: -#{$padding-content};
 			width: $padding-content-both-sides;
 
-			&:before,
-			&:after {
-				content: "";
+			&,
+			&::before,
+			&::after {
+				content: '';
 				height: 100%;
 				position: fixed;
 				top: 0;
+			}
+
+			&::before,
+			&::after {
 				width: $gradient-width;
 			}
 
-			&:after {
-				@include breakpoint-middle-gradient("right");
-				@include calc("right", "50% - #{$gradient-offset}");
+			&::after {
+				@include breakpoint-middle-gradient('right');
+				@include calc('right', '50% - #{$gradient-offset}');
 			}
 
-			&:before {
-				@include breakpoint-middle-gradient("left");
-				@include calc("left", "50% - #{$gradient-offset}");
+			&::before {
+				@include breakpoint-middle-gradient('left');
+				@include calc('left', '50% - #{$gradient-offset}');
 			}
 		}
 	}
@@ -161,8 +152,8 @@ body.background-fixed {
 		body.skin-oasis {
 			background-image: none;
 
-			&:after,
-			&:before {
+			&::after,
+			&::before {
 				display: none;
 			}
 		}
