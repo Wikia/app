@@ -46,7 +46,9 @@ class InsightsController extends WikiaSpecialPageController {
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$model = InsightsHelper::getInsightModel( $subpage );
 			if ( $model instanceof InsightsModel ) {
-				$next = $model->getNext();
+				$articleName = $this->getVal('article', null);
+				$next = $model->getNextItem( $model->getInsightType(), $articleName );
+
 				$isFixed = $this->request->getVal('isFixed', null);
 
 				if ( $this->request->getBool('isEdit', false ) || $isFixed == 'notfixed' ) {
