@@ -1697,3 +1697,8 @@ $wgImplicitGroups[] = 'poweruser';
  * @TODO CONCF-444 - remove this variable
  */
 $wgEnableUpdatedGlobalFooter = true;
+
+/**
+ * Enable page share icons worldwide
+ */
+$wgEnablePageShareExt = true;
