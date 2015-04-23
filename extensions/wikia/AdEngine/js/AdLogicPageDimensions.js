@@ -76,7 +76,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			 */
 			mediaQueriesToCheck.twoColumns = 'screen and (min-width: 1064px)';
 			mediaQueriesToCheck.oneColumn = 'screen and (max-width: 1063px)';
-			mediaQueriesToCheck.noSkins = 'screen and (max-width: 1064px)';
+			mediaQueriesToCheck.noSkins = 'screen and (max-width: 1294px)';
 			mediaQueriesToCheck.noTopButton = 'screen and (max-width: 1063px)';
 		}
 

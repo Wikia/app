@@ -40,7 +40,7 @@ define('wikia.backgroundchanger', function()  {
 			},
 			settings = $.extend({}, window.wgSassParams, optionsForSass),
 			settingsBreakpoints = $.extend({}, settings, {widthType: 0}),
-			sassUrl = window.wgOasisBreakpoints ? $.getSassCommonURL('/skins/oasis/css/core/breakpoints-background-alternate.scss', settingsBreakpoints) : $.getSassCommonURL('/skins/oasis/css/core/background.scss', settings);
+			sassUrl = window.wgOasisBreakpoints ? $.getSassCommonURL('/skins/oasis/css/core/breakpoints-background.scss', settingsBreakpoints) : $.getSassCommonURL('/skins/oasis/css/core/background.scss', settings);
 
 		// preload adskin image
 		imagePreload.src = options.skinImage;
