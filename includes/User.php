@@ -2379,7 +2379,7 @@ class User {
 	private function logOption( $name, $defaultOverride ) {
 
 		$logger = Wikia\Logger\WikiaLogger::instance();
-		$logger->info( "getOption Logging", [
+		$logger->info( "getOptionLogging", [
 			"optionName" => $this->stripWikiID( $name ),
 			"defaultOverride" => $defaultOverride
 		] );
