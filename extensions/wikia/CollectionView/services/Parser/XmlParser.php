@@ -6,7 +6,6 @@ interface ExternalParser {
 }
 
 class XmlParser {
-
 	protected $externalParser;
 
 	/**
@@ -67,5 +66,4 @@ class XmlParser {
 		}
 		return new Nodes\NodeUnimplemented( $xmlNode );
 	}
-
 }

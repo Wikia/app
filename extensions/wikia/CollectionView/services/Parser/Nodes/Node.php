@@ -4,7 +4,6 @@ namespace Wikia\CollectionView\Parser\Nodes;
 use Wikia\CollectionView\Parser\ExternalParser;
 
 class Node {
-
 	protected $xmlNode;
 
 	/* @var $externalParser ExternalParser */
