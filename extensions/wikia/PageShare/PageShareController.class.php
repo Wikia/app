@@ -66,7 +66,7 @@ class PageShareController extends WikiaController {
 		return $services;
 	}
 
-	private function getMemcKey($lang) {
+	private function getMemcKey( $lang ) {
 		return wfSharedMemcKey(
 			$lang,
 			self::MEMC_KEY_SOCIAL_ICONS_VERSION
