@@ -2369,7 +2369,7 @@ class User {
 
 	/**
 	 * TEMPORARY. Part of SOC-674 investigation.
-	 * The user_properties table has 957,316 unique properties in it. This number
+	 * The user_properties table has 2,535,219 unique properties in it. This number
 	 * is absurdly big. We want to log which of those attributes are actually being
 	 * used and to what extent so we know what to support as part of the new user
 	 * attribute service.
@@ -2387,7 +2387,7 @@ class User {
 
 	/**
 	 * TEMPORARY. Part of SOC-674 investigation.
-	 * A great deal of the 957,316 properties mentioned above are wiki specific preferences.
+	 * A great deal of the 2,535,219 properties mentioned above are wiki specific preferences.
 	 * These take the form of <attrName>_<wikiID>, eg, founderemails-edits-123517. As we collect
 	 * information about which properties are actually being used, we want to consolidate these
 	 * so we have information about how much these properties are used across wikia, rather than
