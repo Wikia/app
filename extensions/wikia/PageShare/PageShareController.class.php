@@ -22,7 +22,7 @@ class PageShareController extends WikiaController {
 		$url = $this->getVal( 'url' );
 		$shareLang = PageShareHelper::getLangForPageShare( $browserLang, $useLang );
 
-		$memcKey = $this->getMemcKey($shareLang);
+		$memcKey = $this->getMemcKey( $shareLang );
 		$socialIcons = $wgMemc->get( $memcKey );
 		if ( !empty( $socialIcons ) ) {
 			$this->setVal( 'socialIcons', $socialIcons );
