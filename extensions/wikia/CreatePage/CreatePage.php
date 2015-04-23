@@ -89,7 +89,7 @@ function wfCreatePageSetupVars(Array &$vars ) {
 		$contentNamespaces[] = $wgContLang->getNsText( $contentNs );
 	}
 
-	if ( !empty( $vars['WikiaEnableNewCreatepage'] ) ) {
+	if ( !isset( $vars['WikiaEnableNewCreatepage'] ) ) {
 		$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
 	}
 
