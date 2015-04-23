@@ -1,0 +1,198 @@
+@import "skins/shared/color";
+@import "layout";
+@import "breakpoints-variables";
+@import "responsive-variables";
+@import "skins/shared/mixins/calc";
+
+$background-height: get_command_line_param( "background-image-height", 0 );
+$background-width: get_command_line_param( "background-image-width", 0 );
+
+// convert unitless int values to pixels
+@if unitless($background-height) {
+	$background-height : $background-height * 1px;
+}
+@if unitless($background-width) {
+	$background-width : $background-width * 1px;
+}
+
+$background-width-half: $background-width / 2;
+$background-offset: ( 1578px - $background-width ) / 2;
+$background-align: if( $background-width > $width-outside, center, left );
+$adskin-width: 170px;
+//$width-outside which is defined inside breakpoints-variables
+$content-and-adskin-width: 1238px + 2 * $adskin-width;
+$background-width-half: $background-width / 2;
+$background-is-wide: if( $background-width > $content-and-adskin-width, true, false );
+$gradient-offset: ( $background-width-half + $background-offset ) - $width-gradient;
+$gap-width: $background-width + 2 * $background-offset;
+$margin-middle-base: $gap-width / 2;
+@mixin background-max() {
+	//+20px because of padding added on .WikiaSiteWrapper
+	//site has box-sizing:content-box so padding is not included to its width
+	$background-margin: ($content-width-medium / 2) - ( ($content-width-large / 2) + $background-width-half + 18px);
+	$background-position-after: -$background-width-half;
+
+	// The gradient is still positioned on the outer edge of the background image
+	// slices, overlapping by the width of the gradient itself.
+	$gradient-offset: $background-margin + ( $background-width-half - $width-gradient );
+
+	// Middle space
+	$width-middle: $content-and-adskin-width - ($background-width + 2 * $background-offset);
+	$margin-middle: $width-middle / -2;
+
+	body.background-dynamic.skin-oasis {
+		&:after,
+		&:before {
+			width: $background-width-half;
+		}
+
+		&:after {
+			background-position: $background-position-after 0;
+			/* @noflip */
+			right: 50%;
+			/* @noflip */
+			margin-right: $background-margin;
+		}
+
+		&:before {
+			background-position: 0;
+			/* @noflip */
+			left: 50%;
+			/* @noflip */
+			margin-left: $background-margin;
+		}
+
+		.background-image-gradient {
+			margin-left: -106px;
+			width: 212px;
+
+			&:after {
+				right: calc(50% - 146px);;
+			}
+
+			&:before {
+				left: calc(50% - 146px);
+			}
+		}
+	}
+}
+
+// standard logic
+@if ( $oasisWidthType == 0) {
+	body {
+		background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
+	}
+
+	body.background-not-tiled {
+		background-repeat: no-repeat;
+	}
+
+	body.background-fixed {
+		background-attachment: fixed;
+	}
+}
+
+	body.background-dynamic.skin-oasis {
+		background: $color-body;
+		overflow: hidden;
+		position: relative;
+
+		&:after,
+		&:before {
+			background-image: url( $background-image ); /* $wgCdnStylePath */
+			background-repeat: no-repeat;
+			content: "";
+			height: $background-height;
+			position: absolute;
+			top: 0;
+			width: $background-width-half;
+			z-index: -1;
+		}
+		&.background-fixed:after,
+		&.background-fixed:before
+		{
+			position: fixed;
+		}
+
+		&:after {
+			background-position: -$background-width-half 0;
+			/* @noflip */
+			right: calc(50% - 18px);
+			/* @noflip */
+			margin-right: -$background-width-half;
+		}
+
+		&:before {
+			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
+			/* @noflip */
+			left: calc(50.1% - 18px);
+			/* @noflip */
+			margin-left: -$background-width-half;
+		}
+
+		.background-image-gradient {
+			background: $color-body-middle;
+			left: 50%;
+
+			&,
+			&:before,
+			&:after {
+				content: "";
+				height: 100%;
+				position: fixed;
+				top: 0;
+			}
+		}
+
+		.background-image-gradient {
+			background: $color-body-middle;
+			left: 50%;
+			width: 36px;
+			margin-left: -18px;
+
+			&,
+			&:before,
+			&:after {
+				content: "";
+				height: 100%;
+				position: fixed;
+				top: 0;
+			}
+
+			&:after,
+			&:before {
+				width: $width-gradient;
+			}
+
+			&:after {
+				// TODO: replace this with a proper linear-gradient mixin
+				background-color: rgba( $color-body-middle, 0 );
+				background-image: -webkit-linear-gradient(right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				background-image: linear-gradient(to left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				right: calc(50% - 36px);
+			}
+
+			&:before {
+				// TODO: replace this with a proper linear-gradient mixin
+				background-color: rgba( $color-body-middle, 0 );
+				background-image: -webkit-linear-gradient(left, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				background-image: linear-gradient(to right, rgba( $color-body-middle, 0 ) 0%, $color-body-middle 100%);
+				left: calc(50% - 36px);
+			}
+		}
+	}
+
+	@media #{$breakpoint-small-only} {
+		body.skin-oasis {
+			background-image: none;
+
+			&:after,
+			&:before {
+				display: none;
+			}
+		}
+	}
+
+	@media screen and (min-width: $content-and-adskin-width) {
+		@include background-max;
+	}
