@@ -34,7 +34,7 @@ $wgAutoloadClasses[ 'CollectionViewHooks' ] = $dir . 'CollectionViewHooks.class.
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'CollectionViewParserTagController::parserTagInit';
-//$wgHooks[ 'BeforePageDisplay' ][] = 'CollectionViewHooks::onBeforePageDisplay';
+$wgHooks[ 'BeforePageDisplay' ][] = 'CollectionViewHooks::onBeforePageDisplay';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'CollectionViewHooks::onSkinAfterBottomScripts';
 
 // i18n mapping
