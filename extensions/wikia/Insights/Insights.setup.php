@@ -39,6 +39,7 @@ $wgHooks['BeforePageDisplay'][] = 'InsightsHooks::onBeforePageDisplay';
 $wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
 $wgHooks['ArticleCreateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
 $wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
+$wgHooks['MakeGlobalVariablesScript'][] = 'InsightsHooks::onMakeGlobalVariablesScript';
 
 //special page
 $wgSpecialPages['Insights'] = 'InsightsController';
