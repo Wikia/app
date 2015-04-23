@@ -11,6 +11,7 @@ $wgExtensionCredits['other'][] = [
 $wgAutoloadClasses['PaidAssetDropHooks'] =  __DIR__ . '/PaidAssetDropHooks.class.php';
 
 // Hooks for PAD
+$wgHooks['AfterInitialize'][] = 'PaidAssetDropHooks::onAfterInitialize';
 $wgHooks['OasisSkinAssetGroups'][] = 'PaidAssetDropHooks::onOasisSkinAssetGroups';
 $wgHooks['WikiaSkinTopScripts'][] = 'PaidAssetDropHooks::onWikiaSkinTopScripts';
 
