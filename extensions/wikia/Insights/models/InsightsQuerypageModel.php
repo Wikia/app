@@ -54,11 +54,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				$params = $this->getUrlParams();
 
 				$title = Title::newFromText( $row->title );
-
 				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
 
 				$lastRev = $title->getLatestRevID();
-
 				$rev = Revision::newFromId( $lastRev );
 
 				if ( $rev ) {
@@ -89,17 +87,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $data;
 	}
 
-	/**
-	 * Get data about next element
-	 *
-	 * @param int $offset
-	 * @return mixed
-	 */
-	public function getNext( $offset = 0 ) {
-		$next = array_pop( $this->getContent( $offset, 1 ) );
-		return $next;
-	}
-
 	public function getUrlParams() {
 		$params = array_merge(
 			InsightsHelper::getEditUrlParams(),
@@ -113,5 +100,33 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$dbr = wfGetDB( DB_MASTER );
 		$dbr->delete( 'querycache', [ 'qc_type' => $type, 'qc_title' => $title->getDBkey() ] );
 		return $dbr->affectedRows() > 0;
+	}
+
+	/**
+	 * Get data about next element
+	 *
+	 * @param int $offset
+	 * @return mixed
+	 */
+	public function getNextItem( $type, $articleName ) {
+		$next = [];
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select(
+			'querycache',
+			'qc_title',
+			[ 'qc_type' => ucfirst( $type ), "qc_title != '$articleName'" ],
+			'DatabaseBase::select',
+			[ 'LIMIT' => 1 ]
+		);
+
+		if ( $res->numRows() > 0 ) {
+			$row = $dbr->fetchObject( $res );
+
+			$title = Title::newFromText( $row->qc_title );
+			$next['link'] = InsightsHelper::getTitleLink( $title, self::getUrlParams() );
+		}
+
+		return $next;
 	}
 } 

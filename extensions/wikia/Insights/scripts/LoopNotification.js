@@ -53,7 +53,8 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 			data: {
 				insight: insights,
 				isEdit: window.wgIsEditPage,
-				isFixed: isFixed
+				isFixed: isFixed,
+				article: window.wgPageName
 			},
 			callback: showNotification
 		});
