@@ -47,11 +47,12 @@ class PageShareController extends WikiaController {
 	 */
 	private function prepareShareServicesData( $shareLang, $title, $url ) {
 		global $wgPageShareServices;
+		$isTouchScreen = $this->getVal( 'isTouchScreen' );
 
 		$services = [];
 
 		foreach ( $wgPageShareServices as $service ) {
-			if ( PageShareHelper::isValidShareService( $service, $shareLang ) ) {
+			if ( PageShareHelper::isValidShareService( $service, $shareLang, $isTouchScreen ) ) {
 				$service['href'] = str_replace(
 					[ '$url', '$title' ],
 					[ urlencode( $url ), urlencode( $title ) ],

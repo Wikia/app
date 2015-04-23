@@ -50,7 +50,8 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 			browserLang: browserLangShort,
 			title: win.document.title,
 			url: win.location.origin + win.location.pathname,
-			useLang: useLang
+			useLang: useLang,
+			isTouchScreen: win.Wikia.isTouchScreen()
 		};
 
 		if (mCache) {
