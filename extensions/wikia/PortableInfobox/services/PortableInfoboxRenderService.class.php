@@ -30,6 +30,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - infobox HTML
 	 */
 	public function renderInfobox( array $infoboxdata ) {
+		wfProfileIn( __METHOD__ );
 		$infoboxHtmlContent = '';
 
 		foreach ( $infoboxdata as $item ) {
@@ -57,7 +58,15 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent ] );
+		if(!empty($infoboxHtmlContent)) {
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent ] );
+		} else {
+			$output = '';
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $output;
 	}
 
 	/**
@@ -67,7 +76,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - comparison HTML
 	 */
 	private function renderComparisonItem( $comparisonData ) {
-		$comparisionHTMLContent = '';
+		$comparisonHTMLContent = '';
 
 		foreach ( $comparisonData as $set ) {
 			$setHTMLContent = '';
@@ -98,10 +107,10 @@ class PortableInfoboxRenderService extends WikiaService {
 				}
 			}
 
-			$comparisionHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
+			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
 		}
 
-		return $this->renderItem( 'comparison', [ 'content' => $comparisionHTMLContent ] );
+		return $this->renderItem( 'comparison', [ 'content' => $comparisonHTMLContent ] );
 	}
 
 	/**
