@@ -112,6 +112,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$next = [];
 
 		$dbr = wfGetDB( DB_SLAVE );
+		$articleName = $dbr->strencode( $articleName );
+
 		$res = $dbr->select(
 			'querycache',
 			'qc_title',
