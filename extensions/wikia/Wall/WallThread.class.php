@@ -84,7 +84,7 @@ class WallThread {
 	/**
 	 * Fetches reply IDs for the thread, using a limit to control large queries
 	 *
-	 * @param Database $dbr Database resource
+	 * @param DatabaseBase $dbr Database resource
 	 * @param integer $afterId The last reply ID after which the next set is selected
 	 * @return array List of reply IDs
 	 */
