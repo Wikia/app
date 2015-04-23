@@ -14,7 +14,7 @@ class PageShareController extends WikiaController {
 	}
 
 	public function getShareIcons() {
-		global $wgMemc, $wgEnablePageShareWorldwide;
+		global $wgMemc;
 
 		$browserLang = $this->getVal( 'browserLang' );
 		$useLang = $this->getVal( 'useLang' );
@@ -22,23 +22,18 @@ class PageShareController extends WikiaController {
 		$url = $this->getVal( 'url' );
 		$shareLang = PageShareHelper::getLangForPageShare( $browserLang, $useLang );
 
-		// If social icons should be enabled for EN users, and language is different than EN return false
-		if ( empty( $wgEnablePageShareWorldwide ) && ( $shareLang !== PageShareHelper::SHARE_DEFAULT_LANGUAGE ) ) {
-			$this->setVal( 'socialIcons', false );
+		$memcKey = $this->getMemcKey($shareLang);
+		$socialIcons = $wgMemc->get( $memcKey );
+		if ( !empty( $socialIcons ) ) {
+			$this->setVal( 'socialIcons', $socialIcons );
 		} else {
-			$memcKey = $this->getMemcKey();
-			$socialIcons = $wgMemc->get( $memcKey );
-			if ( !empty( $socialIcons ) ) {
-				$this->setVal( 'socialIcons', $socialIcons );
-			} else {
-				$renderedSocialIcons = \MustacheService::getInstance()->render(
-					__DIR__ . '/templates/PageShare_index.mustache',
-					['services' => $this->prepareShareServicesData( $shareLang, $title, $url )]
-				);
+			$renderedSocialIcons = \MustacheService::getInstance()->render(
+				__DIR__ . '/templates/PageShare_index.mustache',
+				['services' => $this->prepareShareServicesData( $shareLang, $title, $url )]
+			);
 
-				$wgMemc->set( $memcKey, $renderedSocialIcons, self::MEMC_EXPIRY );
-				$this->setVal( 'socialIcons', $renderedSocialIcons );
-			}
+			$wgMemc->set( $memcKey, $renderedSocialIcons, self::MEMC_EXPIRY );
+			$this->setVal( 'socialIcons', $renderedSocialIcons );
 		}
 	}
 
@@ -70,9 +65,9 @@ class PageShareController extends WikiaController {
 		return $services;
 	}
 
-	private function getMemcKey() {
+	private function getMemcKey($lang) {
 		return wfSharedMemcKey(
-			self::MEMC_KEY_SOCIAL_ICONS_EN,
+			$lang,
 			self::MEMC_KEY_SOCIAL_ICONS_VERSION
 		);
 	}
