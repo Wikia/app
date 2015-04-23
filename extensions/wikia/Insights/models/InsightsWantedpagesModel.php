@@ -1,7 +1,7 @@
 <?php
 
 class InsightsWantedpagesModel extends InsightsQuerypageModel {
-	const INSIGHT_TYPE = 'Wantedpages';
+	const INSIGHT_TYPE = 'wantedpages';
 
 	public function getDataProvider() {
 		return new WantedPagesPage();
@@ -17,12 +17,7 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 
 				$title = Title::newFromText( $row->title );
 
-				$article['linkToArticle'] = Linker::link(
-					$title,
-					null,
-					[ 'class' => 'insights-list-item-title' ],
-					$params
-				);
+				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
 
 				$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
 
@@ -38,7 +33,7 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 
 	public function isItemFixed( Article $article ) {
 		if( $article->getID() !== 0 ) {
-			return $this->removeFixedItem( self::INSIGHT_TYPE, $article->getTitle() );
+			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $article->getTitle() );
 		}
 		return false;
 	}

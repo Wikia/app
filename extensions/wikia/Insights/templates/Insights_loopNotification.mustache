@@ -1,2 +1,7 @@
 {{notificationMessage}}
-<a href="{{insightsPageLink}}">{{insightsPageButton}}</a> <a id="InsightsNextPageButton" href="{{nextArticleLink}}" class="wikia-button">{{nextArticleButton}}</a>
+{{#insightsPageLink}}
+	<a href="{{insightsPageLink}}">{{insightsPageButton}}</a>
+{{/insightsPageLink}}
+{{#nextArticleLink}}
+	<a id="InsightsNextPageButton" href="{{nextArticleLink}}">{{nextArticleButton}}</a>
+{{/nextArticleLink}}

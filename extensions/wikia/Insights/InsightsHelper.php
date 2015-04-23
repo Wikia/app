@@ -1,31 +1,51 @@
 <?php
 
 class InsightsHelper {
+	/**
+	 * covers messages:
+	 *
+	 * 'insights-list-subtitle-uncategorizedpages',
+	 * 'insights-list-subtitle-withoutimages',
+	 * 'insights-list-subtitle-deadendpages',
+	 * 'insights-list-subtitle-wantedpages' 
+	 */
+	const INSIGHT_SUBTITLE_MSG_PREFIX = 'insights-list-subtitle-';
+
+	/**
+	 * covers messages:
+	 *
+	 * 'insights-list-description-uncategorizedpages',
+	 * 'insights-list-description-withoutimages',
+	 * 'insights-list-description-deadendpages',
+	 * 'insights-list-description-wantedpages'
+	 */
+	const INSIGHT_DESCRIPTION_MSG_PREFIX = 'insights-list-description-';
+
+	/**
+	 * covers messages:
+	 *
+	 * 'insights-notification-message-inprogress-uncategorizedpages',
+	 * 'insights-notification-message-inprogress-withoutimages',
+	 * 'insights-notification-message-inprogress-deadendpages',
+	 * 'insights-notification-message-inprogress-wantedpages'
+	 */
+	const INSIGHT_INPROGRESS_MSG_PREFIX = 'insights-notification-message-inprogress-';
+
+	/**
+	 * covers messages:
+	 *
+	 * 'insights-notification-message-fixed-uncategorizedpages',
+	 * 'insights-notification-message-fixed-withoutimages',
+	 * 'insights-notification-message-fixed-deadendpages',
+	 * 'insights-notification-message-fixed-wantedpages'
+	 */
+	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
 	public static $insightsPages = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
 		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
-	];
-
-	public static $insightsMessageKeys = [
-		InsightsUncategorizedModel::INSIGHT_TYPE => [
-			'subtitle' => 'insights-list-uncategorized-subtitle',
-			'description' => 'insights-list-uncategorized-description',
-		],
-		InsightsWithoutimagesModel::INSIGHT_TYPE => [
-			'subtitle' => 'insights-list-withoutimages-subtitle',
-			'description' => 'insights-list-withoutimages-description',
-		],
-		InsightsDeadendModel::INSIGHT_TYPE => [
-			'subtitle' => 'insights-list-deadend-subtitle',
-			'description' => 'insights-list-deadend-description',
-		],
-		InsightsWantedpagesModel::INSIGHT_TYPE => [
-			'subtitle' => 'insights-list-wantedpages-subtitle',
-			'description' => 'insights-list-wantedpages-description',
-		],
 	];
 
 	/**
@@ -51,9 +71,9 @@ class InsightsHelper {
 		// TODO: Finish during work on dispalying page views
 	}
 
-	public static function getSubpageLocalUrl( $key ) {
-		if ( isset( self::$insightsMessageKeys[$key] ) ) {
-			return SpecialPage::getTitleFor( 'Insights', $key )->getLocalURL();
+	public static function getSubpageLocalUrl( $subpage ) {
+		if ( isset( self::$insightsPages[$subpage] ) ) {
+			return SpecialPage::getTitleFor( 'Insights', $subpage )->getLocalURL();
 		}
 		return null;
 	}
@@ -101,5 +121,27 @@ class InsightsHelper {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Prepare link data
+	 *
+	 * @param Title $title
+	 * @param $params
+	 * @return array
+	 */
+	public static function getTitleLink(Title $title, $params) {
+		$data = [
+			'text' => $title->getText(),
+			'url' => $title->getFullURL( $params ),
+			'title' => $title->getPrefixedText()
+		];
+
+		if ( !$title->exists() ) {
+			$data['classes'] = 'new';
+			$data['title'] = wfMessage( 'red-link-title', $title->getPrefixedText() )->escaped();
+		}
+
+		return $data;
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 
 class InsightsDeadendModel extends InsightsQuerypageModel {
-	const INSIGHT_TYPE = 'Deadendpages';
+	const INSIGHT_TYPE = 'deadendpages';
 
 	public function getDataProvider() {
 		return new DeadendPagesPage();
@@ -15,7 +15,7 @@ class InsightsDeadendModel extends InsightsQuerypageModel {
 		$dbr = wfGetDB( DB_MASTER );
 		$row = $dbr->selectRow( 'pagelinks', '*' , [ 'pl_from' => $article->getID() ] );
 		if ( $row ) {
-			return $this->removeFixedItem( self::INSIGHT_TYPE, $article->getTitle() );
+			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $article->getTitle() );
 		}
 		return false;
 	}

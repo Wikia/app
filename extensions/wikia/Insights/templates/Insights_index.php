@@ -5,12 +5,12 @@
 	</div>
 	<div class="insights-landing-nav">
 		<ul class="insights-landing-nav-list">
-			<?php foreach( InsightsHelper::$insightsMessageKeys as $key => $messages ) : ?>
-				<li class="insights-landing-nav-item insights-icon-<?= strtolower( $key ) ?>">
+			<?php foreach( InsightsHelper::$insightsPages as $key => $subpage ) : ?>
+				<li class="insights-landing-nav-item insights-icon-<?= $key ?>">
 					<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>">
-						<h3><?= wfMessage( $messages['subtitle'] )->escaped() ?></h3>
+						<h3><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $key )->escaped() ?></h3>
 					</a>
-					<p><?= wfMessage( $messages['description'] )->escaped() ?></p>
+					<p><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $key )->escaped() ?></p>
 				</li>
 			<?php endforeach; ?>
 		</ul>

@@ -25,7 +25,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	public function getData() {
-		$data['messageKeys'] = InsightsHelper::$insightsMessageKeys;
 		$data['offset'] = $this->offset;
 		return $data;
 	}
@@ -56,12 +55,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 				$title = Title::newFromText( $row->title );
 
-				$article['linkToArticle'] = Linker::link(
-					$title,
-					null,
-					[ 'class' => 'insights-list-item-title' ],
-					$params
-				);
+				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
 
 				$lastRev = $title->getLatestRevID();
 

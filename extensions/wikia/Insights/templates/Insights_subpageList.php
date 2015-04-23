@@ -1,10 +1,10 @@
 <div class="insights-container-nav <?= $themeClass ?>">
 	<ul class="insights-nav-list">
-		<? foreach( $data['messageKeys'] as $key => $messages ) : ?>
+		<? foreach( InsightsHelper::$insightsPages as $key => $page ) : ?>
 			<?php $subpage == $key ? $class = 'active' : $class = '' ?>
-			<li class="insights-nav-item insights-icon-<?= strtolower( $key ) ?> <?= $class ?>">
+			<li class="insights-nav-item insights-icon-<?= $key ?> <?= $class ?>">
 				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-nav-link">
-					<?= wfMessage( $messages['subtitle'] )->escaped() ?>
+					<?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $key )->escaped() ?>
 				</a>
 			</li>
 		<? endforeach; ?>
@@ -12,15 +12,15 @@
 </div>
 <div class="insights-container-main <?= $themeClass ?>">
 	<div class="insights-container-main-inner">
-		<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( strtolower( $subpage ) ) ?> clearfix">
-			<h2 class="insights-header-subtitle"><?= wfMessage( $data['messageKeys'][$subpage]['subtitle'] )->escaped() ?></h2>
-			<p class="insights-header-description"><?= wfMessage( $data['messageKeys'][$subpage]['description'] )->escaped() ?></p>
+		<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( $subpage ) ?> clearfix">
+			<h2 class="insights-header-subtitle"><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $subpage )->escaped() ?></h2>
+			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->escaped() ?></p>
 		</div>
 		<div class="insights-content">
 			<ul class="insights-list">
 				<?php foreach( $content as $item ): ?>
 					<li class="insights-list-item">
-						<?= $item['linkToArticle'] ?>
+						<a class="insights-list-item-title <?= $item['link']['classes'] ?>" title="<?= $item['link']['title'] ?>" href="<?= $item['link']['url'] ?>"><?= $item['link']['text'] ?></a>
 						<?php if ( isset( $item['metadata'] ) ) : ?>
 							<p class="insights-list-item-metadata">
 								<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>

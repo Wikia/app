@@ -1,7 +1,7 @@
 <?php
 
 class InsightsUncategorizedModel extends InsightsQuerypageModel {
-	const INSIGHT_TYPE = 'Uncategorizedpages';
+	const INSIGHT_TYPE = 'uncategorizedpages';
 
 	public function getDataProvider() {
 		return new UncategorizedPagesPage();
@@ -15,7 +15,7 @@ class InsightsUncategorizedModel extends InsightsQuerypageModel {
 		$title = $article->getTitle();
 		$categories = $title->getParentCategories( true );
 		if ( !empty( $categories ) ) {
-			return $this->removeFixedItem( self::INSIGHT_TYPE, $title );
+			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $title );
 		}
 		return false;
 	}
