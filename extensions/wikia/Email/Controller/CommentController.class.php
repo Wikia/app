@@ -63,7 +63,10 @@ abstract class CommentController extends EmailController {
 	}
 
 	public function getSubject() {
-		return wfMessage( $this->getSubjectKey() )->inLanguage( $this->targetLang )->text();
+		$articleTitle = $this->title->getText();
+		return wfMessage( $this->getSubjectKey(), $articleTitle )
+			->inLanguage( $this->targetLang )
+			->text();
 	}
 
 	abstract protected function getSubjectKey();
@@ -146,7 +149,7 @@ abstract class CommentController extends EmailController {
 
 class ArticleCommentController extends CommentController {
 	protected function getSubjectKey() {
-		return 'emailext-articlecomment-subject';
+		return 'emailext-articlecomment-summary';
 	}
 
 	protected function getSummaryKey() {
@@ -156,7 +159,7 @@ class ArticleCommentController extends CommentController {
 
 class BlogCommentController extends CommentController {
 	protected function getSubjectKey() {
-		return 'emailext-blogcomment-subject';
+		return 'emailext-blogcomment-summary';
 	}
 
 	protected function getSummaryKey() {
