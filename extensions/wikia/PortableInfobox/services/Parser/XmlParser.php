@@ -67,7 +67,7 @@ class XmlParser {
 	 * @return \Wikia\PortableInfobox\Parser\Nodes\Node
 	 */
 	public function getNode( \SimpleXMLElement $xmlNode ) {
-		wfProfileOut(__METHOD__);
+		wfProfileIn(__METHOD__);
 		$tagType = $xmlNode->getName();
 		$className = 'Wikia\\PortableInfobox\\Parser\\Nodes\\' . 'Node' . ucfirst( strtolower( $tagType ) );
 		if ( class_exists( $className ) ) {
