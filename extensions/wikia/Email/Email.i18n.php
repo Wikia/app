@@ -108,7 +108,7 @@ Se hai domande non esitare a <a href="http://community.wikia.com/wiki/Special:Co
 $messages['ja'] = array(
 	'emailext-desc' => '配信メールを処理するための拡張機能',
 	'emailext-no-reply-name' => '送信専用',
-	'emailext-fans-tagline' => 'ファンによるファンのためのソーシャル・ユニバース',
+	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-password-email-greeting' => '$1さん',
 	'emailext-password-email-content' => 'ウィキアへログインしていただくためには、次の一時パスワードをご利用ください。 $1
 <br /><br />
