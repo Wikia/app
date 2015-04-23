@@ -100,7 +100,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 				'isTouchScreen' => 'false',
 				'out' => false,
 			],
-
 		];
 	}
 
