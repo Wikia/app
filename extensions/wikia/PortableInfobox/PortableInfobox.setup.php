@@ -20,11 +20,11 @@ $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/Portable
 
 // parser
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\XmlParser'] = $dir . 'services/Parser/XmlParser.php';
-$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\MediaWikiParserService'] = $dir . 'services/Parser/MediaWikiParserService.php';
 $wgInfoboxParserNodes = [
 	'Node',
 	'NodeComparison',
+	'NodeSet',
 	'NodeFooter',
 	'NodeGroup',
 	'NodeHeader',

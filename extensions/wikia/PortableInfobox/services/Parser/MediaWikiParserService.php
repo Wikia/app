@@ -14,11 +14,15 @@ class MediaWikiParserService implements ExternalParser {
 
 	public function parse( $wikitext ) {
 		wfProfileIn(__METHOD__);
-		$parsed = $this->getParserInstance()
+		if ( substr( $wikitext, 0, 1 ) == "*" ) {
+			//fix for first item list elements
+			$wikitext = "\n" . $wikitext;
+		}
+		$parsedText = $this->getParserInstance()
 			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
 			->getText();
 		wfProfileOut(__METHOD__);
-		return $parsed;
+		return $parsedText;
 	}
 
 	public function parseRecursive( $wikitext ) {

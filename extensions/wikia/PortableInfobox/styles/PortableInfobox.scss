@@ -1,18 +1,16 @@
 @import 'skins/shared/color';
-@import "skins/shared/mixins/columns";
+@import 'skins/shared/mixins/columns';
 
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
-$infobox-item-margin: 10px;
-$infobox-bg-color-mix-value: 90%;
-$infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
-
+$infobox-item-margin: 5px;
+$infobox-section-header-background: rgba(0, 0, 0, .1);
 @if $is-dark-wiki {
-	$infobox-background: mix($color-page, #FFF, $infobox-bg-color-mix-value);
+	$infobox-section-header-background: rgba(255, 255, 255, .1);
 }
 
 .portable-infobox {
-	background-color: $infobox-background;
+	background-color: $color-unified-module-background;
 	clear: right;
 	float: right;
 	margin: 0 0 $infobox-margin $infobox-margin;
@@ -28,7 +26,7 @@ $infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
 		margin: 0;
 		width: 100%;
 
-		.infobox-item:not(.item-type-title) {
+		.portable-infobox-item:not(.item-type-title) {
 			@include column-break-inside(avoid);
 		}
 
@@ -37,26 +35,87 @@ $infobox-background: mix($color-page, #000, $infobox-bg-color-mix-value);
 		}
 	}
 
-	.infobox-title {
+	// TODO: experiment with removing margins on all children of pair value
+	&.reset-children-margins .portable-infobox-item-value {
+		> * {
+			margin: 0;
+		}
+
+		ul,
+		ol {
+			list-style-position: inside;
+		}
+	}
+
+	.portable-infobox-item-margins {
+		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
+	}
+
+	.portable-infobox-header-background {
+		background-color: $infobox-section-header-background;
+		color: $color-alternate-text;
+	}
+
+	.portable-infobox-header-font {
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 18px;
+		margin-top: 0;
+	}
+
+	.portable-infobox-header,
+	.portable-infobox-title {
 		border: 0;
+
+		margin: 0;
+		padding: 0;
+	}
+
+	.portable-infobox-title {
 		font-size: 18px;
 		line-height: 28px;
-		margin: 0;
 	}
 
-	.infobox-item:not(.item-type-image) {
-		margin: $infobox-item-margin;
-		margin-right: $infobox-item-margin * 2;
-	}
-
-	.infobox-item-label {
+	.item-type-key-val:not(:last-of-type) {
 		border-bottom: 1px solid $color-page-border;
-		font-size: 12px;
-		font-weight: 400;
-		line-height: 18px;
 	}
 
-	.infobox-item-value {
-		padding-left: $infobox-item-margin;
+	.portable-infobox-item-label {
+		margin-top: 0;
+	}
+
+	.portable-infobox-item-value {
+		padding-left: $infobox-item-margin * 2;
+	}
+
+	.portable-infobox-comparision {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	.portable-infobox-comparision-set {
+		display: block;
+	}
+
+	.portable-infobox-comparision-set-header {
+		box-sizing: border-box;
+		display: block;
+		text-align: left;
+		width: 100%;
+	}
+
+	.portable-infobox-comparision-item {
+		box-sizing: border-box;
+		vertical-align: top;
+		width: $infobox-width / 2;
+
+		&:first-of-type {
+			border-right: 1px solid $color-page-border;
+		}
+
+		.item-type-key-val {
+			border-bottom: 0;
+			padding-right: $infobox-item-margin * 2;
+		}
 	}
 }
