@@ -8,7 +8,6 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'toast'], function ($, window
 		}, {
 			type: loader.MULTI,
 			resources: {
-				messages: 'fblogin',
 				scripts: 'userlogin_facebook_js_wikiamobile',
 				params: {
 					useskin: window.skin
