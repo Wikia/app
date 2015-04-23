@@ -16,9 +16,6 @@ class XmlParserTest extends WikiaBaseTest {
 	protected function setUp() {
 		parent::setUp();
 		require_once( dirname( __FILE__ ) . '/../PortableInfobox.setup.php' );
-		foreach ( $wgAutoloadClasses as $class => $file ) {
-			require_once( $file );
-		}
 	}
 
 	public function testIsEmpty() {

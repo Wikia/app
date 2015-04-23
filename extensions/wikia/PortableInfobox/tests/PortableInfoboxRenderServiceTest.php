@@ -4,55 +4,94 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 	private $infoboxRenderService;
 
 	public function setUp() {
-		require_once( dirname(__FILE__) . '/../services/PortableInfoboxRenderService.class.php');
+		parent::setUp();
+		require_once( dirname( __FILE__ ) . '/../PortableInfobox.setup.php' );
+
 		$this->infoboxRenderService = new PortableInfoboxRenderService();
 	}
 
 	/**
 	 * @param $input
-	 * @param $output
+	 * @param $expectedOutput
+	 * @param $description
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
-	public function testRenderInfobox( $input, $output ) {
+	public function testRenderInfobox( $input, $expectedOutput, $description ) {
+		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
 
-		$realOutput = $this->infoboxRenderService->renderInfobox( $input );
-		$dom = DOMDocument::loadHTML($realOutput);
-		$xpath = new DOMXPath($dom);
+		$actualDOM = new DOMDocument('1.0');
+		$expectedDOM = new DOMDocument('1.0');
+		$actualDOM->formatOutput = true;
+		$actualDOM->preserveWhiteSpace = false;
+		$expectedDOM->formatOutput = true;
+		$expectedDOM->preserveWhiteSpace = false;
+		$actualDOM->loadXML($actualOutput);
+		$expectedDOM->loadXML($expectedOutput);
 
-		$h2 = '//aside[@class="portable-infobox"]/div[@class="item-type-title"]/h2[text()="Test Title"]';
-		$nodes = $xpath->query($h2);
-
-		$this->assertTrue(count($nodes) == 1);
-
-
+		$this->assertEquals( $expectedDOM->saveXML(), $actualDOM->saveXML(), $description );
 	}
 
 	public function testRenderInfoboxDataProvider() {
 		return [
+			[
+				'input' => [],
+				'output' => '',
+				'description' => 'Empty data should yield no infobox markup'
+			],
 			[
 				'input' => [
 					[
 						'type' => 'title',
 						'data' => [
 							'value' => 'Test Title'
-						]
+						],
+						'isEmpty' => false
 					],
 					[
 						'type' => 'image',
 						'data' => [
 							'alt' => 'image alt',
 							'value' => 'http://image.jpg'
-						]
+						],
+						'isEmpty' => false
 					],
 					[
-						'type' => 'keyVal',
+						'type' => 'pair',
 						'data' => [
 							'label' => 'test label',
 							'value' => 'test value'
-						]
+						],
+						'isEmpty' => false
 					]
 				],
-				'output' => '<aside class="portable-infobox"><div class="infobox-item item-type-title"><h2 class=”infobox-title”>Test Title</h2></div><div class="infobox-item item-type-image"><figure><img alt="image alt" data-url="http://image.jpg" /></figure></div><div class="infobox-item item-type-key-val"><h3 class=”infobox-item-label”>test label</h3><div class=”infobox-item-value”>test value</div></div></aside>'
+				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-title portable-infobox-item-margins"><h2 class="portable-infobox-title">Test Title</h2></div><div class="portable-infobox-item item-type-image no-margins"><figure><img class="portable-infobox-image" alt="image alt" data-url="http://image.jpg"/></figure></div><div class="portable-infobox-item item-type-key-val portable-infobox-item-margins"><h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3><div class="portable-infobox-item-value">test value</div></div></aside>',
+				'description' => 'Simple infobox with title, image and key-value pair'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						],
+						'isEmpty' => false
+					],
+					[
+						'type' => 'image',
+						'data' => [],
+						'isEmpty' => true
+					],
+					[
+						'type' => 'pair',
+						'data' => [
+							'label' => 'test label',
+							'value' => 'test value'
+						],
+						'isEmpty' => false
+					]
+				],
+				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-title portable-infobox-item-margins"><h2 class="portable-infobox-title">Test Title</h2></div><div class="portable-infobox-item item-type-key-val portable-infobox-item-margins"><h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3><div class="portable-infobox-item-value">test value</div></div></aside>',
+				'description' => 'Simple infobox with title, empty image and key-value pair'
 			]
 		];
 	}
