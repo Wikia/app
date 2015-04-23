@@ -1,6 +1,8 @@
 <?php
 
 class WallThread {
+	const DB_LIMIT_REPLIES = 4;
+
 	private $mThreadId = false;
 	private $mCached = null;
 	private $mForceMaster = false;
@@ -61,8 +63,10 @@ class WallThread {
 	}
 
 	private function loadReplyObjs() {
-		if( $this->data->threadReplyIds === false )
+		if( $this->data->threadReplyIds === false ) {
 			$this->loadReplyIdsFromDB();
+		}
+
 		$this->data->threadReplyObjs = array();
 
 		if(empty($this->data->threadReplyIds)) {
@@ -77,31 +81,24 @@ class WallThread {
 		}
 	}
 
-	private function loadReplyIdsFromDB($master = false) {
+	private function getReplyIdsFromDB( $dbr, $afterId = null ) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
 		// (fetch for many threads at once, set with ->setReplies)
 
-		$title = Title::newFromId( $this->mThreadId );
+		$conditions = array( 'parent_comment_id = '.$this->mThreadId );
 
-		if( empty($title) ) {
-			$title = Title::newFromId( $this->mThreadId, Title::GAID_FOR_UPDATE );
+		if ( !empty( $afterId ) ) {
+			array_push( $conditions, 'comment_id > '.$afterId );
 		}
-
-		if( empty($title) ) {
-			return ;
-		}
-
-		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
-
-		$threadId = $title->getArticleID();
 
 		$result = $dbr->select(
 				array( 'comments_index' ),
 				array( 'distinct comment_id' ),
-				array( 'parent_comment_id = '.$threadId ),
+				$conditions,
 				__METHOD__,
-				array( 'ORDER BY' => 'comment_id ASC' )
+				array( 'ORDER BY' => 'comment_id ASC',
+					'LIMIT' => self::DB_LIMIT_REPLIES )
 		);
 
 		$list = array();
@@ -109,13 +106,25 @@ class WallThread {
 			$list[] = $row->comment_id;
 		}
 
-		$this->setReplies( $list );
+		$lastId = end( $list );
+
+		return ( empty( $lastId ) ) ? $list :
+			array_merge( $list, $this->getReplyIdsFromDB( $dbr, $lastId ) );
+	}
+
+	private function loadReplyIdsFromDB( $master = false ) {
+		if ( empty( Title::newFromId( $this->mThreadId ) ) ) {
+			return;
+		}
+
+		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
+
+		$this->setReplies( $this->getReplyIdsFromDB( $dbr, null ) );
 	}
 
 	public function invalidateCache() {
 		// invalidate cache at Thread level (new reply or reply removed in thread)
-		$this->mForceMaster = true;
-		$this->loadReplyIdsFromDB( true );
+		$this->getCache()->delete($this->getThreadKey());
 	}
 
 	private function getThreadKey() {
@@ -140,10 +149,7 @@ class WallThread {
 	}
 
 	private function saveToMemcache() {
-		$cache = $this->getCache();
-		$key = $this->getThreadKey();
-
-		$cache->set($key, $this->data);
+		$this->getCache()->set($this->getThreadKey(), $this->data);
 		$this->mCached = true;
 		$this->mForceMaster = false;
 	}
