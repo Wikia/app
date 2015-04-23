@@ -1,7 +1,7 @@
 <?php
 
 class WallThread {
-	const DB_LIMIT_REPLIES = 4;
+	const DB_LIMIT_REPLIES = 500;
 
 	private $mThreadId = false;
 	private $mCached = null;
@@ -81,6 +81,13 @@ class WallThread {
 		}
 	}
 
+	/**
+	 * Fetches reply IDs for the thread, using a limit to control large queries
+	 *
+	 * @param Database $dbr Database resource
+	 * @param integer $afterId The last reply ID after which the next set is selected
+	 * @return array List of reply IDs
+	 */
 	private function getReplyIdsFromDB( $dbr, $afterId = null ) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
@@ -88,7 +95,7 @@ class WallThread {
 
 		$conditions = array( 'parent_comment_id = '.$this->mThreadId );
 
-		if ( !empty( $afterId ) ) {
+		if ( (int) $afterId > 0 ) {
 			array_push( $conditions, 'comment_id > '.$afterId );
 		}
 
@@ -108,7 +115,7 @@ class WallThread {
 
 		$lastId = end( $list );
 
-		return ( empty( $lastId ) ) ? $list :
+		return empty( $lastId ) ? $list :
 			array_merge( $list, $this->getReplyIdsFromDB( $dbr, $lastId ) );
 	}
 
