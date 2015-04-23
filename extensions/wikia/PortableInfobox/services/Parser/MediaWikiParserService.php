@@ -13,6 +13,7 @@ class MediaWikiParserService implements ExternalParser {
 	}
 
 	public function parse( $wikitext ) {
+		wfProfileIn(__METHOD__);
 		if ( substr( $wikitext, 0, 1 ) == "*" ) {
 			//fix for first item list elements
 			$wikitext = "\n" . $wikitext;
@@ -20,13 +21,16 @@ class MediaWikiParserService implements ExternalParser {
 		$parsedText = $this->getParserInstance()
 			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
 			->getText();
+		wfProfileOut(__METHOD__);
 		return $parsedText;
 	}
 
 	public function parseRecursive( $wikitext ) {
+		wfProfileIn(__METHOD__);
 		$preprocessed = $this->parser->recursivePreprocess( $wikitext, $this->frame );
 		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $preprocessed );
 		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
+		wfProfileOut(__METHOD__);
 		return $this->parse( $marksstripped );
 	}
 
