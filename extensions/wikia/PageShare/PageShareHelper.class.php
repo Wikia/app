@@ -2,6 +2,7 @@
 class PageShareHelper {
 
 	const SHARE_DEFAULT_LANGUAGE = 'en';
+	const LINE_NAME = 'line';
 
 	private static function readIcon( $fileName ) {
 		$fullName = realpath( __DIR__ . '/icons/' . $fileName . '.svg' );
@@ -46,7 +47,10 @@ class PageShareHelper {
 		}
 	}
 
-	public static function isValidShareService( $service, $lang ) {
+	public static function isValidShareService( $service, $lang, $isTouchScreen ) {
+		if ($isTouchScreen === 'false' && ($service['name'] === self::LINE_NAME)) {
+			return false;
+		}
 		// filter through include list, default of true
 		if ( array_key_exists( 'languages:include', $service ) && is_array( $service['languages:include'] ) ) {
 			$allowedInLanguage = in_array( $lang, $service['languages:include'] );
