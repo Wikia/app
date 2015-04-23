@@ -60,4 +60,18 @@ class InsightsHooks {
 
 		return true;
 	}
+
+	/**
+	 * Disable create new page popup
+	 *
+	 * @param array $vars
+	 * @return bool
+	 */
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
+		if ( F::app()->wg->title->isSpecial( 'Insights' ) ) {
+			$vars['WikiaEnableNewCreatepage'] = false;
+		}
+
+		return true;
+	}
 } 
