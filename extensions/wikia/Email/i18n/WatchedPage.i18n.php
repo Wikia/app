@@ -19,7 +19,6 @@ $messages['qqq'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Text for button that, when clicked, navigates to the diff page referencing this change.',
 	'emailext-watchedpage-article-link-text' => 'Call to action to visit the article page. $1 -> article url, $2 -> article title.',
 	'emailext-watchedpage-view-all-changes' => 'Call to action to visit history of the article page. $1 -> article history url, $2 -> article title',
-	'emailext-watchedpage-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title',
 );
 
 $messages['de'] = array(
@@ -29,7 +28,6 @@ $messages['de'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Änderungen vergleichen',
 	'emailext-watchedpage-article-link-text' => "[$1 Unter '''$2''' siehst du, was es Neues gibt]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Alle Änderungen an '''$2''' ansehen]",
-	'emailext-watchedpage-unfollow-text' => 'Du möchtest diese Updates nicht mehr erhalten? Klicke [$1 hier], um $2 auf {{SITENAME}} nicht mehr zu folgen.',
 	'emailext-watchedpage-no-summary' => 'Es wurde keine Zusammenfassung der Bearbeitung angegeben.',
 );
 
@@ -40,7 +38,6 @@ $messages['es'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Mostrar cambios',
 	'emailext-watchedpage-article-link-text' => "[$1 Visita la página '''$2''' para ver qué hay de nuevo].",
 	'emailext-watchedpage-view-all-changes' => "[$1 Ver todos los cambios realizados en '''$2'''].",
-	'emailext-watchedpage-unfollow-text' => '¿Ya no tienes interés en recibir estas actualizaciones? Haz clic [$1 aquí] para dejar de seguir la página $2 en {{SITENAME}}.',
 	'emailext-watchedpage-no-summary' => 'Resumen de ediciones no fue entregado',
 );
 
@@ -51,7 +48,6 @@ $messages['fr'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Comparer les modifications',
 	'emailext-watchedpage-article-link-text' => "[$1 Rendez-vous sur '''$2''' pour voir ce qui a été modifié]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Affichez toutes les modifications apportées à '''$2''']",
-	'emailext-watchedpage-unfollow-text' => 'Vous ne souhaitez plus être informé de ces mises à jour ? Cliquez [$1 ici] pour ne plus suivre $2 sur {{SITENAME}}.',
 	'emailext-watchedpage-no-summary' => "Aucun résumé des modifications n'a été fourni.",
 );
 
@@ -62,7 +58,6 @@ $messages['it'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Mostra cambiamenti',
 	'emailext-watchedpage-article-link-text' => "[$1 Clicca su '''$2''' per vedere cosa c'è di nuovo]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Vedi tutte le modifiche a '''$2''']",
-	'emailext-watchedpage-unfollow-text' => "Non t'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire $2 su {{SITENAME}}.",
 	'emailext-watchedpage-no-summary' => 'Non è stato fornito un riassunto delle modifiche',
 );
 
@@ -73,7 +68,6 @@ $messages['ja'] = array(
 	'emailext-watchedpage-diff-button-text' => '変更を比較する',
 	'emailext-watchedpage-article-link-text' => "[$1 '''$2'''にアクセスして最新の内容を確認する]",
 	'emailext-watchedpage-view-all-changes' => "[$1 '''$2'''で行われたすべての変更を見る]",
-	'emailext-watchedpage-unfollow-text' => 'このような更新情報の受信をご希望でない場合は、<br />[$1 こちら] をクリックして{{SITENAME}}の$2のフォローを解除してください。',
 	'emailext-watchedpage-no-summary' => '編集の要約はありません。',
 );
 
@@ -84,7 +78,6 @@ $messages['nl'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Compare changes',
 	'emailext-watchedpage-article-link-text' => "[$1 Head over to '''$2''' to see what's new]",
 	'emailext-watchedpage-view-all-changes' => "[$1 View all changes to '''$2''']",
-	'emailext-watchedpage-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 	'emailext-watchedpage-no-summary' => 'No edit summary was given',
 );
 
@@ -95,7 +88,6 @@ $messages['pl'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Porównaj zmiany',
 	'emailext-watchedpage-article-link-text' => "[$1 Przejdź do '''$2''' i zobacz co się zmieniło]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Zobacz wszystkie zmiany '''$2''']",
-	'emailext-watchedpage-unfollow-text' => 'Nie jesteś już zainteresowany otrzymywaniem powiadomień? Kliknij [$1 tutaj], aby zrezygnować ze śledzenia $2 na {{SITENAME}}.',
 	'emailext-watchedpage-no-summary' => 'Brak podsumowania zmian',
 );
 
@@ -106,7 +98,6 @@ $messages['pt'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Comparar mudanças',
 	'emailext-watchedpage-article-link-text' => "[$1 Vá para '''$2''' para ver o que há de novo]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Visualizar todas as alterações de '''$2''']",
-	'emailext-watchedpage-unfollow-text' => 'Você não deseja mais receber essas atualizações? Clique [$1 aqui] para deixar de seguir $2 na {{SITENAME}}.',
 	'emailext-watchedpage-no-summary' => 'Não foi dado nenhum resumo',
 );
 
@@ -117,7 +108,6 @@ $messages['ru'] = array(
 	'emailext-watchedpage-diff-button-text' => 'Сравнить изменения',
 	'emailext-watchedpage-article-link-text' => "[$1 Для просмотра новых правок перейдите к «'''$2'''».]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Просмотрите все правки статьи «'''$2'''».]",
-	'emailext-watchedpage-unfollow-text' => 'Не хотите больше получать эти сообщения? Перейдите [$1 по ссылке], чтобы перестать следить за страницей «$2» на {{SITENAME}}.',
 	'emailext-watchedpage-no-summary' => 'Участник не дал пояснений к данной правке.',
 );
 
@@ -128,7 +118,6 @@ $messages['zh-hans'] = array(
 	'emailext-watchedpage-diff-button-text' => '查看更改之处',
 	'emailext-watchedpage-article-link-text' => "[$1 到'''$2'''查看新内容]",
 	'emailext-watchedpage-view-all-changes' => "[$1 查看'''$2'''上的所有更改]",
-	'emailext-watchedpage-unfollow-text' => '不想再接收这类更新内容？点击[$1 这里]取消对{{SITENAME}}上$2页面的关注。',
 	'emailext-watchedpage-no-summary' => '没有编辑概要',
 );
 
@@ -139,7 +128,6 @@ $messages['zh-tw'] = array(
 	'emailext-watchedpage-diff-button-text' => '查看更改之處',
 	'emailext-watchedpage-article-link-text' => "[$1 到'''$2'''查看新内容]",
 	'emailext-watchedpage-view-all-changes' => "[$1 查看'''$2'''上的所有更改]",
-	'emailext-watchedpage-unfollow-text' => '不想再接收這類更新内容？点击[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
 	'emailext-watchedpage-no-summary' => '沒有編輯概要',
 );
 
