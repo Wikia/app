@@ -62,7 +62,7 @@ class InsightsHooks {
 	}
 
 	/**
-	 * Disable create new page popup
+	 * Disable create new page popup and go directy to edit page to keep Insights flow
 	 *
 	 * @param array $vars
 	 * @return bool
