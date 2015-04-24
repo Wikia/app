@@ -3,7 +3,7 @@
 class PageShareController extends WikiaController {
 
 	const MEMC_KEY_SOCIAL_ICONS_EN = 'mShareIconsEN';
-	const MEMC_KEY_SOCIAL_ICONS_VERSION = 2;
+	const MEMC_KEY_SOCIAL_ICONS_VERSION = 3;
 	const MEMC_EXPIRY = 3600;
 
 	public function index() {
@@ -67,8 +67,10 @@ class PageShareController extends WikiaController {
 	}
 
 	private function getMemcKey( $lang ) {
+		$isTouchScreen = $this->getVal( 'isTouchScreen' );
 		return wfSharedMemcKey(
 			$lang,
+			$isTouchScreen,
 			self::MEMC_KEY_SOCIAL_ICONS_VERSION
 		);
 	}
