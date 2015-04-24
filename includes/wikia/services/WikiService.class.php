@@ -228,9 +228,10 @@ class WikiService extends WikiaModel {
 			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
 			static::TOPUSER_CACHE_VALID,
 			function() use ( $wikiId, $excludeBots, $fname ) {
+				global $wgSpecialsDB;
 				$topEditors = array();
 
-				$db = wfGetDB( DB_SLAVE, array(), 'specials' );
+				$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 
 				$result = $db->select(
 					array( 'events_local_users' ),
