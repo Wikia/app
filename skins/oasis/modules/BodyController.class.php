@@ -209,7 +209,6 @@ class BodyController extends WikiaController {
 				);
 			} else if ($wgTitle->isSpecial('WikiActivity')) {
 				$railModuleList = array (
-					1501 => array('InsightsModule', 'Index', null),
 					1102 => array('HotSpots', 'Index', null),
 					1101 => array('CommunityCorner', 'Index', null),
 				);
