@@ -60,7 +60,12 @@ class Node {
 		return null;
 	}
 
-	protected function parseWithExternalParser( $data, $recursive = false ) {
+	/**
+	 * @FIXME: regardless of what is the final approach, this code needs to be explained
+	 * WHY it does the things it does. Here. In docblock. Or by phrasing it explicitly with
+	 * class and method names.
+	 */
+	protected function parseWithExternalParser( $data, $recursive = true ) {
 		if ( !empty( $data ) && !empty( $this->externalParser ) ) {
 			if ( $recursive ) {
 				return $this->externalParser->parseRecursive( $data );

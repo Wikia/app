@@ -46,6 +46,33 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 							'value' => 'Test Title'
 						],
 						'isEmpty' => false
+					]
+				],
+				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-title portable-infobox-item-margins"><h2 class="portable-infobox-title">Test Title</h2></div></aside>',
+				'description' => 'Only title'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'value' => 'http://image.jpg'
+						],
+						'isEmpty' => false
+					]
+				],
+				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-image no-margins"><figure><img class="portable-infobox-image" alt="image alt" data-url="http://image.jpg"/></figure></div></aside>',
+				'description' => 'Only image'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'title',
+						'data' => [
+							'value' => 'Test Title'
+						],
+						'isEmpty' => false
 					],
 					[
 						'type' => 'image',
