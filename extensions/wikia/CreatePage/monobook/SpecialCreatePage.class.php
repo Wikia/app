@@ -165,19 +165,14 @@ class SpecialCreatePage extends SpecialEditPage {
 				$wgOut->redirect( $this->mPostArticle->getTitle()->getFullUrl() );
 				break;
 			default:
-				/**
-				 * PLATFORM-1160: Log the entire $status to ELK
-				 *
-				 * Recommendation: use $status->value for comparisons and messages rather than $status in the following block.
-				 */
-				Wikia\Logger\WikiaLogger::instance()->warning( 'PLATFORM-1160', [ 'method' => __METHOD__, 'status_object' => $status ] );
-				if ( ( $status->value == EditPage::AS_READ_ONLY_PAGE_LOGGED ) || ( $status->value == EditPage::AS_READ_ONLY_PAGE_ANON ) ) {
+				Wikia::log( __METHOD__, "createpage", $status->getMessage() );
+				if ( ( $status == EditPage::AS_READ_ONLY_PAGE_LOGGED ) || ( $status == EditPage::AS_READ_ONLY_PAGE_ANON ) ) {
 					$sMsg = wfMsg( 'createpage_cant_edit' );
 				}
 				else {
 					$sMsg = wfMsg( 'createpage_spam' );
 				}
-				$this->mFormErrors[] = $sMsg . " ($status->value)";
+				$this->mFormErrors[] = $sMsg . " ($status)";
 
 				global $wgCreatePageCaptchaTriggered;
 				// do not display form - there is already one invoked from Captcha [RT#21902] - Marooned

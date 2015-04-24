@@ -626,7 +626,6 @@ include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
-include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 
 /**
  * @name $wgSkipSkins
@@ -1700,15 +1699,6 @@ $wgImplicitGroups[] = 'poweruser';
 $wgEnableUpdatedGlobalFooter = true;
 
 /**
-<<<<<<< HEAD
  * Enable page share icons worldwide
  */
 $wgEnablePageShareExt = true;
-=======
- * @name $wgPaidAssetDropConfig
- *
- * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
- * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
- */
-$wgPaidAssetDropConfig = false;
->>>>>>> dev

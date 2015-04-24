@@ -218,7 +218,7 @@ class EmailNotification {
 		}
 
 		// Is that user the same user who made the edit?
-		if ( $targetUser->getId() === $this->editor->getId() ) {
+		if ( $targetUser->getId() != $this->editor->getId() ) {
 			return false;
 		}
 
