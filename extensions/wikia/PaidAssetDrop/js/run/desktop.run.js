@@ -1,18 +1,29 @@
 /*global require*/
 require([
 	'ext.wikia.paidAssetDrop.paidAssetDrop',
+	'jquery',
 	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
 ], function (
 	pad,
+	$,
 	log,
 	Querystring,
 	win
 ) {
 	'use strict';
 
-	var action = new Querystring().getVal('action', 'view');
+	var action = new Querystring().getVal('action', 'view'),
+		articleTarget = '#mw-content-text',
+		mainPageTarget = '#mw-content-text .lcs-container',
+		target;
+
+	if (win.wgIsMainPage && $(mainPageTarget).length) {
+		target = mainPageTarget;
+	} else {
+		target = articleTarget;
+	}
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
@@ -27,7 +38,7 @@ require([
 		}
 
 		if (pad.isNowValid(win.wgPaidAssetDropConfig) && win.wgEnableAPI) {
-			pad.injectPAD('#mw-content-text', 'desktop');
+			pad.injectPAD(target, 'desktop');
 		}
 	});
 });
