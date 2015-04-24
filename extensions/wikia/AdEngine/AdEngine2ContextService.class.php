@@ -33,7 +33,6 @@ class AdEngine2ContextService {
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'enableInvisibleHighImpactSlot' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 					'pageType' => $adPageTypeService->getPageType(),
-					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),

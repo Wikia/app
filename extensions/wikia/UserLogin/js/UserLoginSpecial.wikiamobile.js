@@ -1,34 +1,10 @@
-require(['jquery', 'wikia.window', 'wikia.loader', 'toast'], function ($, window, loader, toast) {
-	'use strict';
+$(function(){
+	var msgBox = document.getElementById('wkLgnMsg'),
+		msg = msgBox && msgBox.innerText;
 
-	function loadFacebookLoginScripts() {
-		loader({
-			type: loader.LIBRARY,
-			resources: 'facebook'
-		}, {
-			type: loader.MULTI,
-			resources: {
-				scripts: 'userlogin_facebook_js_wikiamobile',
-				params: {
-					useskin: window.skin
-				}
-			}
-		}).done(function (res) {
-				loader.processScript(res.scripts);
-			}
-		);
+	if(msg){
+		require('toast', function(t){
+			t.show(msg);
+		});
 	}
-
-	function init() {
-		var msgBox = document.getElementById('wkLgnMsg'),
-			msg = msgBox && msgBox.innerText;
-
-		if (msg) {
-			toast.show(msg);
-		}
-
-		loadFacebookLoginScripts();
-	}
-
-	$(init);
 });
