@@ -134,7 +134,8 @@ class InsightsHelper {
 		$data = [
 			'text' => $title->getText(),
 			'url' => $title->getFullURL( $params ),
-			'title' => $title->getPrefixedText()
+			'title' => $title->getPrefixedText(),
+			'classes' => '',
 		];
 
 		if ( !$title->exists() ) {
