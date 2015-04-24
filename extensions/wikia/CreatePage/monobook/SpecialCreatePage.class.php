@@ -170,7 +170,7 @@ class SpecialCreatePage extends SpecialEditPage {
 				 *
 				 * Recommendation: use $status->value for comparisons and messages rather than $status in the following block.
 				 */
-				Wikia\Logger\WikiaLogger::instance()->warning( 'PLATFORM-1160', [ 'method' => __METHOD__, 'status' => $status ] );
+				Wikia\Logger\WikiaLogger::instance()->warning( 'PLATFORM-1160', [ 'method' => __METHOD__, 'status_object' => $status ] );
 				if ( ( $status->value == EditPage::AS_READ_ONLY_PAGE_LOGGED ) || ( $status->value == EditPage::AS_READ_ONLY_PAGE_ANON ) ) {
 					$sMsg = wfMsg( 'createpage_cant_edit' );
 				}
