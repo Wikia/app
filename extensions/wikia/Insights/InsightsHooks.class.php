@@ -61,15 +61,11 @@ class InsightsHooks {
 		return true;
 	}
 
-	/**
-	 * Disable create new page popup and go directy to edit page to keep Insights flow
-	 *
-	 * @param array $vars
-	 * @return bool
-	 */
-	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		if ( F::app()->wg->title->isSpecial( 'Insights' ) ) {
-			$vars['WikiaEnableNewCreatepage'] = false;
+	public static function onGetRailModuleList( Array &$railModuleList ) {
+		global $wgTitle, $wgUser;
+
+		if ( $wgTitle->isSpecial( 'WikiActivity' ) && $wgUser->isPowerUser() ) {
+			$railModuleList[1501] = [ 'InsightsModule', 'Index', null ];
 		}
 
 		return true;
