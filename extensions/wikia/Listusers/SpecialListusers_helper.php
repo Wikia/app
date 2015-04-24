@@ -84,7 +84,8 @@ class ListusersData {
 					foreach ( $this->mOrderOptions[$orderName] as $orderStr ) {
 						$this->mOrder[] = sprintf( $orderStr, $orderDesc );
 					}
-					$this->mUseKey = $this->mUseKeyOptions[$orderName];
+					// disable mUseKey temporarily due to PLATFORM-1174 MAIN-4386
+					// $this->mUseKey = $this->mUseKeyOptions[$orderName];
 				}
 			}
 		}
