@@ -50,14 +50,10 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 		return true;
 	}
 
-	function isForced() {
-		return qs.getVal('forcepad');
-	}
-
 	function isNowValid(paidAssetDropConfig) {
 		var today, start, end;
 
-		if (isForced()) {
+		if (qs.getVal('forcepad')) {
 			log('PAD enabled (forced)', 'debug', logGroup);
 			return true;
 		}
@@ -105,12 +101,6 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	 */
 	function injectPad(placeHolderSelector, platform) {
 		var url = apiEntryPoint + assetArticleName[platform];
-
-		if (isForced()) {
-			url += '&cb=' + Math.round(Math.random() * 1e6);
-		} else {
-			url += '&*'; // MediaWiki redirects us to this URL anyway
-		}
 
 		log('Sending request to: ' + url, 'debug', logGroup);
 

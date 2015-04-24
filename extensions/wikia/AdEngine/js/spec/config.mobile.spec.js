@@ -6,6 +6,10 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			name: 'GptMobileMock',
 			canHandleSlot: function () { return true; }
 		},
+		adProviderPaidAssetDropMock = {
+			name: 'PaidAssetDropMock',
+			canHandleSlot: function () { return false; }
+		},
 		adProviderRemnantMock = {
 			name: 'RemnantGptMobileMock',
 			canHandleSlot: function () { return true; }
@@ -36,6 +40,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mockAdContext(true),
 			adProviderDirectMock,
 			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
 
@@ -47,6 +52,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mockAdContext(false),
 			adProviderDirectMock,
 			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
 
@@ -58,6 +64,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mockAdContext(true, true),
 			adProviderDirectMock,
 			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
 
@@ -69,6 +76,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mockAdContext(true, false),
 			adProviderDirectMock,
 			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
 
