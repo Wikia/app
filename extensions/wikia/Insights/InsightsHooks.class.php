@@ -74,4 +74,14 @@ class InsightsHooks {
 
 		return true;
 	}
+
+	public static function onGetRailModuleList( Array &$railModuleList ) {
+		global $wgTitle, $wgUser;
+
+		if ( $wgTitle->isSpecial( 'WikiActivity' ) && $wgUser->isPowerUser() ) {
+			$railModuleList[1501] = [ 'InsightsModule', 'Index', null ];
+		}
+
+		return true;
+	}
 } 

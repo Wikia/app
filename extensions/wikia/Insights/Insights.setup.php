@@ -40,6 +40,7 @@ $wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRed
 $wgHooks['ArticleCreateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
 $wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
 $wgHooks['MakeGlobalVariablesScript'][] = 'InsightsHooks::onMakeGlobalVariablesScript';
+$wgHooks['GetRailModuleList'][] = 'InsightsHooks::onGetRailModuleList';
 
 //special page
 $wgSpecialPages['Insights'] = 'InsightsController';
