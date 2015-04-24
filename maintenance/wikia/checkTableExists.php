@@ -56,11 +56,14 @@ $sth = $db->query("SHOW DATABASES");
 
 // Connect to all databases and check for existence of $table
 while ( $row = $db->fetchObject($sth) ) {
-	if ($skip && ($count < $skip)) continue;
+	if ($skip && ($count < $skip)) {
+		$count++;
+		continue;
+	}
+	if ($limit && ($count - $skip) >= $limit) break;
 	if ($count % 1000 == 0) {
 		echo "Processed " . (1000 + $count - $skip) . " wikis\n";
 	}
-	if ($limit && ($count - $skip) >= $limit) break;
 	$count ++;
 
 	$database = $row->Database;
