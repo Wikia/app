@@ -89,7 +89,11 @@ function wfCreatePageSetupVars(Array &$vars ) {
 		$contentNamespaces[] = $wgContLang->getNsText( $contentNs );
 	}
 
-	// Do not overwrite this variable if it's already set
+	/**
+	 * In some cases create page popup may be disabled
+	 * This avoids overwriting this variable if it's already set
+	 * For example see: InsightsHooks::onMakeGlobalVariablesScript
+	 */
 	if ( !isset( $vars['WikiaEnableNewCreatepage'] ) ) {
 		$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
 	}
