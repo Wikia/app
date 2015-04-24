@@ -18,7 +18,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'languages:exclude' => [],
 				],
 				'language' => 'en',
-				'isTouchScreen' => 'false',
+				'isTouchScreen' => 0,
 				'out' => true,
 			],
 			[
@@ -28,17 +28,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'name' => 'service',
 				],
 				'language' => 'en',
-				'isTouchScreen' => 'false',
-				'out' => true,
-			],
-			[
-				'service' => [
-					'title' => 'Service',
-					'url' => 'http://service.example.com',
-					'name' => 'service',
-				],
-				'language' => 'ja',
-				'isTouchScreen' => 'true',
+				'isTouchScreen' => 0,
 				'out' => true,
 			],
 			[
@@ -48,7 +38,17 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'name' => 'service',
 				],
 				'language' => 'ja',
-				'isTouchScreen' => 'false',
+				'isTouchScreen' => 1,
+				'out' => true,
+			],
+			[
+				'service' => [
+					'title' => 'Service',
+					'url' => 'http://service.example.com',
+					'name' => 'service',
+				],
+				'language' => 'ja',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -57,7 +57,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'name' => 'service',
 				],
 				'language' => 'en',
-				'isTouchScreen' => 'false',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -66,7 +66,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'name' => 'service',
 				],
 				'language' => 'en',
-				'isTouchScreen' => 'false',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -75,7 +75,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'url' => 'http://service.example.com',
 				],
 				'language' => 'en',
-				'isTouchScreen' => 'false',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -86,7 +86,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'languages:exclude' => ['de'],
 				],
 				'language' => 'de',
-				'isTouchScreen' => 'false',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -97,7 +97,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'languages:include' => ['en', 'de', 'zh'],
 				],
 				'language' => 'pl',
-				'isTouchScreen' => 'false',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 		];
