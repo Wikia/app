@@ -625,6 +625,7 @@ include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
+include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 //TODO Enable this (and remove $wgEnablePageShareExt from config after release of the PageShare
 //include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 
@@ -1381,9 +1382,15 @@ $wgAdDriverTrackState = false;
 
 /**
  * @name $wgAdDriverForceLiftiumAd
- * Forces to use AdProviderLiftium for all slots managed by this provider
+ * Forces to use Liftium for all slots managed by this provider and disables other providers
  */
 $wgAdDriverForceLiftiumAd = false;
+
+/**
+ * @name $wgAdDriverForceOpenXAd
+ * Forces to use OpenX for all slots managed by this provider and disables other providers
+ */
+$wgAdDriverForceOpenXAd = false;
 
 /**
  * @name $wgAdDriverEnableAdsInMaps
@@ -1692,3 +1699,11 @@ $wgImplicitGroups[] = 'poweruser';
  * @TODO CONCF-444 - remove this variable
  */
 $wgEnableUpdatedGlobalFooter = true;
+
+/**
+ * @name $wgPaidAssetDropConfig
+ *
+ * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
+ * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
+ */
+$wgPaidAssetDropConfig = false;

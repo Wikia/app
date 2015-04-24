@@ -43,25 +43,29 @@ class GlobalWatchlistTask extends BaseTask {
 		$titleObj = Title::newFromText( $databaseKey, $nameSpace );
 		if ( $titleObj instanceof Title && $titleObj->exists() ) {
 			$revision = Revision::newFromTitle( $titleObj );
-			$globalWatchlistBot = new GlobalWatchlistBot();
 
-			$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
-			foreach ( $watchers as $watcherID ) {
-				if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
-					$this->clearGlobalWatchlistAll( $watcherID );
-					continue;
+			// Skip revisions that doesn't exist
+			if ( !empty( $revision ) ) {
+				$globalWatchlistBot = new GlobalWatchlistBot();
+
+				$db = wfGetDB( DB_MASTER, [ ], \F::app()->wg->ExternalDatawareDB );
+				foreach ( $watchers as $watcherID ) {
+					if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
+						$this->clearGlobalWatchlistAll( $watcherID );
+						continue;
+					}
+
+					( new WikiaSQL() )
+						->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME )
+						->SET( GlobalWatchlistTable::COLUMN_USER_ID, $watcherID )
+						->SET( GlobalWatchlistTable::COLUMN_CITY_ID, \F::app()->wg->CityId )
+						->SET( GlobalWatchlistTable::COLUMN_TITLE, $databaseKey )
+						->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $nameSpace )
+						->SET( GlobalWatchlistTable::COLUMN_REVISION_ID, $revision->getId() )
+						->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
+						->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
+						->run( $db );
 				}
-
-				( new WikiaSQL() )
-					->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME )
-					->SET( GlobalWatchlistTable::COLUMN_USER_ID, $watcherID )
-					->SET( GlobalWatchlistTable::COLUMN_CITY_ID, \F::app()->wg->CityId )
-					->SET( GlobalWatchlistTable::COLUMN_TITLE, $databaseKey )
-					->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $nameSpace )
-					->SET( GlobalWatchlistTable::COLUMN_REVISION_ID, $revision->getId() )
-					->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
-					->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
-					->run( $db );
 			}
 		}
 	}
