@@ -32,6 +32,9 @@ $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithou
 $wgAutoloadClasses['InsightsDeadendModel'] = $dir . 'models/InsightsDeadendModel.php';
 $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
 
+// right rail module
+$wgAutoloadClasses['InsightsModuleController'] = $IP.'/skins/oasis/modules/InsightsModuleController.class.php';
+
 // hooks
 $wgAutoloadClasses['InsightsHooks'] = $dir . 'InsightsHooks.class.php';
 
