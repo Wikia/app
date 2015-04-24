@@ -652,10 +652,12 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * Disables User Signup Captcha for automated tests, mobile skin, and sites such as internal
 	 */
 	private function disableCaptcha() {
+		global $wgHooks;
+
 		// Remove hook function
-		$hookArrayKey = array_search( 'Captcha\Hooks::confirmUserCreate', $this->wg->Hooks['AbortNewAccount'] );
+		$hookArrayKey = array_search( 'Captcha\Hooks::confirmUserCreate', $wgHooks['AbortNewAccount'] );
 		if ( $hookArrayKey !== false ) {
-			unset( $this->wg->Hooks['AbortNewAccount'][$hookArrayKey] );
+			unset( $wgHooks['AbortNewAccount'][$hookArrayKey] );
 		}
 		$this->wg->Out->addJsConfigVars( [
 			'wgUserSignupDisableCaptcha' => true
