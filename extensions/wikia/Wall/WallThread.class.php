@@ -1,7 +1,7 @@
 <?php
 
 class WallThread {
-	const DB_LIMIT_REPLIES = 500;
+	const DATABASE_LIMIT = 500;
 
 	private $mThreadId = false;
 	private $mCached = null;
@@ -105,7 +105,7 @@ class WallThread {
 				$conditions,
 				__METHOD__,
 				array( 'ORDER BY' => 'comment_id ASC',
-					'LIMIT' => self::DB_LIMIT_REPLIES )
+					'LIMIT' => self::DATABASE_LIMIT )
 		);
 
 		$list = array();
@@ -126,12 +126,12 @@ class WallThread {
 
 		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
 
-		$this->setReplies( $this->getReplyIdsFromDB( $dbr, null ) );
+		$this->setReplies( $this->getReplyIdsFromDB( $dbr ) );
 	}
 
 	public function invalidateCache() {
 		// invalidate cache at Thread level (new reply or reply removed in thread)
-		$this->getCache()->delete($this->getThreadKey());
+		$this->getCache()->delete( $this->getThreadKey() );
 	}
 
 	private function getThreadKey() {
@@ -156,7 +156,7 @@ class WallThread {
 	}
 
 	private function saveToMemcache() {
-		$this->getCache()->set($this->getThreadKey(), $this->data);
+		$this->getCache()->set( $this->getThreadKey(), $this->data );
 		$this->mCached = true;
 		$this->mForceMaster = false;
 	}
