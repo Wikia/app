@@ -145,4 +145,15 @@ class InsightsHelper {
 
 		return $data;
 	}
+
+	public static function getMessageKeys() {
+		$messageKeys = [];
+		foreach ( self::$insightsPages as $key => $class ) {
+			$messageKeys[$key] = [
+				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
+				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
+			];
+		}
+		return $messageKeys;
+	}
 }
