@@ -17,7 +17,7 @@
 			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->escaped() ?></p>
 		</div>
 		<div class="insights-content">
-			<ul class="insights-list">
+			<ul class="insights-list" data-type="<?= $subpage ?>">
 				<?php foreach( $content as $item ): ?>
 					<li class="insights-list-item">
 						<a class="insights-list-item-title <?= $item['link']['classes'] ?>" title="<?= $item['link']['title'] ?>" href="<?= $item['link']['url'] ?>"><?= $item['link']['text'] ?></a>
