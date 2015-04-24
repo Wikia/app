@@ -9,7 +9,7 @@ define(
 		var insightType;
 
 		function onLinkClick() {
-			// Track a click on a notification link
+			// Track a click on an insights item link
 			var trackingParams = {
 				trackingMethod: 'both',
 				category: 'insights',
@@ -20,11 +20,11 @@ define(
 		}
 
 		function init() {
-			var $insightsList = $('.insights-list'),
-				$insightsListItems;
+			var $insightsList = $('.insights-list');
 			insightType = $insightsList.data('type');
-			$insightsListItems = $insightsList.find('.insights-list-item-title');
-			$insightsListItems.each(function(){$(this).click(onLinkClick);});
+			$insightsList.find('.insights-list-item-title').each(function(){
+				$(this).click(onLinkClick);
+			});
 		}
 
 		return {
