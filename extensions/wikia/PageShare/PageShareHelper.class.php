@@ -48,7 +48,7 @@ class PageShareHelper {
 	}
 
 	public static function isValidShareService( $service, $lang, $isTouchScreen ) {
-		//Don't display LINE social network (because it's a mobile app) on desktops
+		// Don't display LINE social network (because it's a mobile app) on desktops
 		if ( !$isTouchScreen && $service['name'] === self::LINE_NAME ) {
 			return false;
 		}
