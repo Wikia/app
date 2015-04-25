@@ -27,7 +27,6 @@ class AdEngine2ContextService {
 			$monetizationServiceAds = null;
 			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-				$monetizationServiceAds = preg_replace('/\<script\>\n(.*)\n\<\/script\>/s', '$1', $monetizationServiceAds);
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();

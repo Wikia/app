@@ -35,12 +35,12 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		var slotName = slotMap[slot],
 			context = adContext.getContext();
 
-		if (context.providers.monetizationServiceAds[slotName]) {
+		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
 			log(['fillInSlot', slot, 'injectScript'], 'info', logGroup);
 
 			monetizationService.loadAssets();
 
-			scriptWriter.injectScriptByText(slot, context.providers.monetizationServiceAds[slotName], function () {
+			scriptWriter.injectHtml(slot, context.providers.monetizationServiceAds[slotName], function () {
 				success();
 			});
 		}
