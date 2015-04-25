@@ -9,7 +9,7 @@ class InsightsModuleController extends WikiaController {
 		$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/modules/InsightsModule.scss" ) );
 
 		$this->themeClass = SassUtil::isThemeDark() ? 'insights-dark' : 'insights-light';
-		$this->messageKeys = InsightsHelper::$insightsMessageKeys;
+		$this->messageKeys = InsightsHelper::getMessageKeys();
 
 		wfProfileOut(__METHOD__);
 	}
