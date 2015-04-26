@@ -13,6 +13,7 @@ class InsightsHooks {
 		// Load scripts for pages in insights loop
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$out->addScriptFile('/extensions/wikia/Insights/scripts/LoopNotification.js');
+			$out->addScriptFile('/extensions/wikia/Insights/scripts/InsightsLoopNotificationTracking.js');
 		}
 
 		// Load scripts for Special:Insights
