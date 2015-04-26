@@ -4,8 +4,15 @@
  */
 
 /* global require */
-require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
-	function ($, BannerNotification, Querystring, window)
+require(
+	[
+		'jquery',
+		'BannerNotification',
+		'wikia.querystring',
+		'wikia.window',
+		'ext.wikia.Insights.LoopNotificationTracking'
+	],
+	function ($, BannerNotification, Querystring, window, loopNotificationTracking)
 {
 	'use strict';
 
@@ -21,9 +28,12 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 	showNotification = function(html) {
 		if (html) {
 			var msgType = getNotificationType(),
-				$parent = getParent();
+				$parent = getParent(),
+				bn;
 
-			new BannerNotification(html, msgType, $parent).show();
+			bn = new BannerNotification(html, msgType, $parent);
+			bn.onShow(loopNotificationTracking.init);
+			bn.show();
 			$('#InsightsNextPageButton').focus();
 		}
 	};
