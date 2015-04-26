@@ -15,10 +15,10 @@ class InsightsHooks {
 			$out->addScriptFile('/extensions/wikia/Insights/scripts/LoopNotification.js');
 		}
 
-		// Load scripts for pages in insights loop and Special:Insights
-		if ( InsightsHelper::isInsightPage( $subpage ) || F::app()->wg->title->isSpecial( 'Insights' ) ) {
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/Insights.run.js' );
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopTracking.js' );
+		// Load scripts for Special:Insights
+		if ( F::app()->wg->title->isSpecial( 'Insights' ) ) {
+			$out->addScriptFile( '/extensions/wikia/Insights/scripts/InsightsIndexPageTracking.js' );
+			$out->addScriptFile( '/extensions/wikia/Insights/scripts/InsightsListTracking.js' );
 		}
 
 		return true;

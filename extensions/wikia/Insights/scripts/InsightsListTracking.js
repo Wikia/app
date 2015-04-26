@@ -1,18 +1,14 @@
-define(
-	'ext.wikia.Insights.LoopTracking',
-	[
-		'wikia.tracker'
-	],
+require(['wikia.tracker'],
 	function (tracker) {
 		'use strict';
 
 		var insightType;
 
 		function onLinkClick() {
-			// Track a click on an insights item link
+			/* Track a click on an insights item link */
 			var trackingParams = {
 				trackingMethod: 'both',
-				category: 'insights',
+				category: 'insights-list',
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
 				label: insightType+'-insights-list-item'
 			};
@@ -27,8 +23,6 @@ define(
 			});
 		}
 
-		return {
-			init: init
-		};
+		init();
 	}
 );
