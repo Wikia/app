@@ -32,6 +32,9 @@ $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithou
 $wgAutoloadClasses['InsightsDeadendModel'] = $dir . 'models/InsightsDeadendModel.php';
 $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpagesModel.php';
 
+// right rail module
+$wgAutoloadClasses['InsightsModuleController'] = $IP.'/skins/oasis/modules/InsightsModuleController.class.php';
+
 // hooks
 $wgAutoloadClasses['InsightsHooks'] = $dir . 'InsightsHooks.class.php';
 
@@ -39,6 +42,8 @@ $wgHooks['BeforePageDisplay'][] = 'InsightsHooks::onBeforePageDisplay';
 $wgHooks['ArticleUpdateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
 $wgHooks['ArticleCreateBeforeRedirect'][] = 'InsightsHooks::AfterActionBeforeRedirect';
 $wgHooks['GetLocalURL'][] = 'InsightsHooks::onGetLocalURL';
+$wgHooks['MakeGlobalVariablesScript'][] = 'InsightsHooks::onMakeGlobalVariablesScript';
+$wgHooks['GetRailModuleList'][] = 'InsightsHooks::onGetRailModuleList';
 
 //special page
 $wgSpecialPages['Insights'] = 'InsightsController';

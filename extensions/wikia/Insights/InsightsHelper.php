@@ -134,7 +134,8 @@ class InsightsHelper {
 		$data = [
 			'text' => $title->getText(),
 			'url' => $title->getFullURL( $params ),
-			'title' => $title->getPrefixedText()
+			'title' => $title->getPrefixedText(),
+			'classes' => '',
 		];
 
 		if ( !$title->exists() ) {
@@ -143,5 +144,16 @@ class InsightsHelper {
 		}
 
 		return $data;
+	}
+
+	public static function getMessageKeys() {
+		$messageKeys = [];
+		foreach ( self::$insightsPages as $key => $class ) {
+			$messageKeys[$key] = [
+				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
+				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
+			];
+		}
+		return $messageKeys;
 	}
 }
