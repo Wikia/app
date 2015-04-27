@@ -15,7 +15,6 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PortableInfobox'
 ];
 
-$wgAutoloadClasses[ 'InfoboxServiceConnector' ] = $dir . 'InfoboxServiceConnector.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/PortableInfoboxRenderService.class.php';
 
 // parser
