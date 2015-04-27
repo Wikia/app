@@ -2,10 +2,6 @@
 
 class PageShareController extends WikiaController {
 
-	const MEMC_KEY_SOCIAL_ICONS_EN = 'mShareIconsEN';
-	const MEMC_KEY_SOCIAL_ICONS_VERSION = 3;
-	const MEMC_EXPIRY = 3600;
-
 	public function index() {
 		Wikia::addAssetsToOutput( 'page_share_scss' );
 		Wikia::addAssetsToOutput( 'page_share_js' );
@@ -14,27 +10,18 @@ class PageShareController extends WikiaController {
 	}
 
 	public function getShareIcons() {
-		global $wgMemc;
-
 		$browserLang = $this->getVal( 'browserLang' );
 		$useLang = $this->getVal( 'useLang' );
 		$title = $this->getVal( 'title' );
 		$url = $this->getVal( 'url' );
 		$shareLang = PageShareHelper::getLangForPageShare( $browserLang, $useLang );
 
-		$memcKey = $this->getMemcKey( $shareLang );
-		$socialIcons = $wgMemc->get( $memcKey );
-		if ( !empty( $socialIcons ) ) {
-			$this->setVal( 'socialIcons', $socialIcons );
-		} else {
-			$renderedSocialIcons = \MustacheService::getInstance()->render(
-				__DIR__ . '/templates/PageShare_index.mustache',
-				['services' => $this->prepareShareServicesData( $shareLang, $title, $url )]
-			);
+		$renderedSocialIcons = \MustacheService::getInstance()->render(
+			__DIR__ . '/templates/PageShare_index.mustache',
+			['services' => $this->prepareShareServicesData( $shareLang, $title, $url )]
+		);
 
-			$wgMemc->set( $memcKey, $renderedSocialIcons, self::MEMC_EXPIRY );
-			$this->setVal( 'socialIcons', $renderedSocialIcons );
-		}
+		$this->setVal( 'socialIcons', $renderedSocialIcons );
 	}
 
 	/**
@@ -64,14 +51,5 @@ class PageShareController extends WikiaController {
 			}
 		}
 		return $services;
-	}
-
-	private function getMemcKey( $lang ) {
-		$isTouchScreen = $this->getVal( 'isTouchScreen' );
-		return wfSharedMemcKey(
-			$lang,
-			$isTouchScreen,
-			self::MEMC_KEY_SOCIAL_ICONS_VERSION
-		);
 	}
 }
