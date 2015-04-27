@@ -9,11 +9,12 @@
 .AccountNavigation {
 	cursor: pointer;
 	height: $global-navigation-height;
-	padding: 0 21px;
 	margin: 0;
+	padding: 0 21px;
 
 	&.active {
 		background-color: $global-navigation-background-color;
+
 		.user-menu {
 			display: table;
 			table-layout: fixed;
@@ -64,8 +65,8 @@
 			&.logged-avatar,
 			&.logged-avatar-placeholder {
 				border: rgb(199, 209, 216) 1px solid;
-				height: 30px;
 				border-radius: 50%;
+				height: 30px;
 				margin: 0;
 				width: 30px;
 			}
@@ -74,8 +75,8 @@
 
 	.sign-in-label {
 		color: $global-navigation-text-color;
-		font-size: 12px;
 		display: table-cell;
+		font-size: 12px;
 		padding-top: 2px;
 		vertical-align: middle;
 
