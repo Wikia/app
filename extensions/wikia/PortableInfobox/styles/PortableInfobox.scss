@@ -1,0 +1,117 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/columns';
+
+$infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
+$infobox-margin: 15px;
+$infobox-item-margin: 5px;
+$infobox-background: mix($color-page, $color-links, 92%);
+$infobox-section-header-background: transparentize($color-links, 0.9);
+
+.portable-infobox {
+	background-color: $infobox-background;
+	clear: right;
+	float: right;
+	margin: 0 0 $infobox-margin $infobox-margin;
+	width: $infobox-width;
+
+	// TODO: experimental wide infobox styles (remove or refactor)
+	&.wide-infobox {
+		@include column-count(3);
+		@include column-gap($infobox-item-margin * 2);
+
+		clear: both;
+		float: none;
+		margin: 0;
+		width: 100%;
+
+		.portable-infobox-item:not(.item-type-title) {
+			@include column-break-inside(avoid);
+		}
+
+		.item-type-title {
+			@include column-span(all);
+		}
+	}
+
+	.portable-infobox-item-margins {
+		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
+	}
+
+	.portable-infobox-header-background {
+		background-color: $infobox-section-header-background;
+		color: $color-alternate-text;
+	}
+
+	.portable-infobox-header-font {
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 18px;
+		margin-top: 0;
+	}
+
+	.portable-infobox-header,
+	.portable-infobox-title {
+		border: 0;
+
+		margin: 0;
+		padding: 0;
+	}
+
+	.portable-infobox-title {
+		font-size: 18px;
+		line-height: 28px;
+	}
+
+	.item-type-key-val:not(:last-of-type) {
+		border-bottom: 1px solid $infobox-section-header-background;
+	}
+
+	.portable-infobox-item-label {
+		margin-top: 0;
+	}
+
+	.portable-infobox-item-value {
+		padding-left: $infobox-item-margin * 2;
+
+		// experiment with removing margins on all children of pair value
+		> * {
+			margin: 0;
+		}
+
+		ul,
+		ol {
+			list-style-position: inside;
+		}
+	}
+
+	.portable-infobox-comparision {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	.portable-infobox-comparision-set {
+		display: block;
+	}
+
+	.portable-infobox-comparision-set-header {
+		box-sizing: border-box;
+		display: block;
+		text-align: left;
+		width: 100%;
+	}
+
+	.portable-infobox-comparision-item {
+		box-sizing: border-box;
+		vertical-align: top;
+		width: $infobox-width / 2;
+
+		&:first-of-type {
+			border-right: 1px solid $infobox-section-header-background;
+		}
+
+		.item-type-key-val {
+			border-bottom: 0;
+			padding-right: $infobox-item-margin * 2;
+		}
+	}
+}
