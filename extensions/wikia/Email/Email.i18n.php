@@ -108,7 +108,7 @@ Se hai domande non esitare a <a href="http://community.wikia.com/wiki/Special:Co
 $messages['ja'] = array(
 	'emailext-desc' => '配信メールを処理するための拡張機能',
 	'emailext-no-reply-name' => '送信専用',
-	'emailext-fans-tagline' => 'ファンによるファンのためのソーシャル・ユニバース',
+	'emailext-fans-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-password-email-greeting' => '$1さん',
 	'emailext-password-email-content' => 'ウィキアへログインしていただくためには、次の一時パスワードをご利用ください。 $1
 <br /><br />
@@ -117,7 +117,7 @@ $messages['ja'] = array(
 ご質問やご不明な点がございましたら、お気軽に<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">お問い合わせください</a>。',
 	'emailext-password-email-signature' => 'ウィキア・コミュニティ・サポート',
 	'emailext-password-email-subject' => 'パスワードリセットのリクエスト',
-	'emailext-fanverse-tagline' => 'ファンによるファンのためのソーシャル・ユニバース',
+	'emailext-fanverse-tagline' => 'The Social Universe for Fans by Fans',
 	'emailext-recipient-notice' => 'ウィキアから$1さんにメールを送信しました',
 	'emailext-update-frequency' => '配信メールの種類や頻度を変更するには、[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 個人設定] ページにアクセスしてください。',
 	'emailext-unsubscribe' => 'ウィキアからのメール配信をすべて停止するには [$1 こちら] をクリックしてください。',

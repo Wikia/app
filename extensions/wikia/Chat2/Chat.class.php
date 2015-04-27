@@ -39,7 +39,7 @@ class Chat {
 		if( !$wgUser->isLoggedIn() ) {
 			return array("key" => false ) ;
 		}
-		$key = sha1( $wgUser->getId() . "_" . microtime() . '_' .  mt_rand() );
+		$key = "Chat::cookies::".sha1( $wgUser->getId() . "_" . microtime() . '_' .  mt_rand() );
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*48);
 		return $key;
 	} // end echoCookies()
@@ -226,7 +226,7 @@ class Chat {
 	}
 
 	/**
-	 * Return ban information if user is not ban return false;
+	 * Return ban information, if user is not banned return false;
 	 *
 	 * @TODO Cache query and provide cache clearing function: https://wikia-inc.atlassian.net/browse/SOC-639
 	 *

@@ -180,4 +180,18 @@ describe('AdContext', function () {
 		adContext.setContext({});
 		expect(mocks.callback).toHaveBeenCalled();
 	});
+
+	it('enables high impact slot when country in instantGlobals.wgAdDriverHighImpactSlotCountries', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgAdDriverHighImpactSlotCountries: ['XX', 'ZZ']
+		});
+		expect(adContext.getContext().opts.enableInvisibleHighImpactSlot).toBeTruthy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgAdDriverHighImpactSlotCountries: ['YY']
+		});
+		expect(adContext.getContext().opts.enableInvisibleHighImpactSlot).toBeFalsy();
+	});
 });

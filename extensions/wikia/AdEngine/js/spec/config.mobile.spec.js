@@ -6,21 +6,30 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			name: 'GptMobileMock',
 			canHandleSlot: function () { return true; }
 		},
+		adProviderPaidAssetDropMock = {
+			name: 'PaidAssetDropMock',
+			canHandleSlot: function () { return false; }
+		},
 		adProviderRemnantMock = {
 			name: 'RemnantGptMobileMock',
 			canHandleSlot: function () { return true; }
+		},
+		adProviderOpenXMock = {
+			name: 'OpenX',
+			canHandleSlot: function () { return true; }
 		};
 
-	function mockAdContext(showAds) {
+	function mockAdContext(showAds, enableInvisibleHighImpactSlot) {
 		return {
 			getContext: function () {
 				return {
 					opts: {
 						showAds: showAds,
-						pageType: 'all_ads'
+						pageType: 'all_ads',
+						enableInvisibleHighImpactSlot: enableInvisibleHighImpactSlot
 					},
-					providers: {
-					}
+					providers: {},
+					forceProviders: {}
 				};
 			}
 		};
@@ -30,6 +39,8 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(true),
 			adProviderDirectMock,
+			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
 
@@ -40,9 +51,35 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
 			mockAdContext(false),
 			adProviderDirectMock,
+			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
 			adProviderRemnantMock
 		);
 
 		expect(adConfigMobile.getProviderList('foo')).toEqual([]);
+	});
+
+	it('getProviderList returns DirectGPT, RemnantGPT for high impact slot', function () {
+		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+			mockAdContext(true, true),
+			adProviderDirectMock,
+			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
+			adProviderRemnantMock
+		);
+
+		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
+	});
+
+	it('getProviderLists returns [] for high impact slot when high impact slot is turned off', function () {
+		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+			mockAdContext(true, false),
+			adProviderDirectMock,
+			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
+			adProviderRemnantMock
+		);
+
+		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT')).toEqual([]);
 	});
 });

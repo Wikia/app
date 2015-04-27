@@ -18,6 +18,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'languages:exclude' => [],
 				],
 				'language' => 'en',
+				'isTouchScreen' => 0,
 				'out' => true,
 			],
 			[
@@ -27,14 +28,36 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'name' => 'service',
 				],
 				'language' => 'en',
+				'isTouchScreen' => 0,
 				'out' => true,
 			],
 			[
 				'service' => [
+					'title' => 'Service',
+					'url' => 'http://service.example.com',
+					'name' => 'service',
+				],
+				'language' => 'ja',
+				'isTouchScreen' => 1,
+				'out' => true,
+			],
+			[
+				'service' => [
+					'title' => 'Service',
+					'url' => 'http://service.example.com',
+					'name' => 'service',
+				],
+				'language' => 'ja',
+				'isTouchScreen' => 0,
+				'out' => false,
+			],
+			[
+				'service' => [
 					'url' => 'http://service.example.com',
 					'name' => 'service',
 				],
 				'language' => 'en',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -43,6 +66,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'name' => 'service',
 				],
 				'language' => 'en',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -51,6 +75,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'url' => 'http://service.example.com',
 				],
 				'language' => 'en',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -61,6 +86,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'languages:exclude' => ['de'],
 				],
 				'language' => 'de',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 			[
@@ -71,6 +97,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 					'languages:include' => ['en', 'de', 'zh'],
 				],
 				'language' => 'pl',
+				'isTouchScreen' => 0,
 				'out' => false,
 			],
 		];
@@ -83,7 +110,7 @@ class PageShareHelperTest extends WikiaBaseTest {
 	public function testIsValidShareService( $data ) {
 		$this->assertEquals(
 			$data['out'],
-			PageShareHelper::isValidShareService( $data['service'], $data['language'] )
+			PageShareHelper::isValidShareService( $data['service'], $data['language'], $data['isTouchScreen'] )
 		);
 	}
 
