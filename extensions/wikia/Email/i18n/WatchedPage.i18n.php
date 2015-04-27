@@ -3,6 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-watchedpage-subject' => '$1 on {{SITENAME}} has been edited by $2',
+	'emailext-watchedpage-subject-anonymous' => '$1 on {{SITENAME}} has been edited',
 	'emailext-watchedpage-salutation' => 'Hi $1,',
 	'emailext-watchedpage-article-edited' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited. Check it out!'''",
 	'emailext-watchedpage-no-summary' => 'No edit summary was given',
@@ -13,6 +14,7 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	'emailext-watchedpage-subject' => 'Subject line for watched article email. $1 -> article name, $2 -> username of user who edited the article',
+	'emailext-watchedpage-subject-anonymous' => 'Subject line for watched article email edited by an anonymous user. $1 -> article name',
 	'emailext-watchedpage-salutation' => "Email greeting. $1 is the recipient's username.",
 	'emailext-watchedpage-article-edited' => 'Message to the user that an article they are following has been edited. $1 -> article url, $2 -> article title, $3 -> wikia url',
 	'emailext-watchedpage-no-summary' => 'Message shown when the editor did not leave an edit summary',
