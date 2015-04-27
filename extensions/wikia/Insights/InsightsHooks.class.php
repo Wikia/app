@@ -10,15 +10,8 @@ class InsightsHooks {
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
-		// Load scripts for pages in insights loop
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
-			$out->addScriptFile('/extensions/wikia/Insights/scripts/LoopNotification.js');
-		}
-
-		// Load scripts for pages in insights loop and Special:Insights
-		if ( InsightsHelper::isInsightPage( $subpage ) || F::app()->wg->title->isSpecial( 'Insights' ) ) {
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/Insights.run.js' );
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopTracking.js' );
+			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopNotification.js' );
 		}
 
 		return true;
@@ -37,14 +30,6 @@ class InsightsHooks {
 				$extraQuery .= '&';
 			}
 			$extraQuery .= 'insights=' . $subpage;
-
-			$model = InsightsHelper::getInsightModel( $subpage );
-			$isItemFixed = $model->isItemFixed( $article );
-			if ( $isItemFixed ) {
-				$extraQuery .= '&item_status=fixed';
-			} else {
-				$extraQuery .= '&item_status=notfixed';
-			}
 		}
 
 		return true;
@@ -69,7 +54,7 @@ class InsightsHooks {
 	}
 
 	/**
-	 * Disable create new page popup and go directly to edit page to keep Insights flow
+	 * Disable create new page popup and go directy to edit page to keep Insights flow
 	 *
 	 * @param array $vars
 	 * @return bool
@@ -82,12 +67,6 @@ class InsightsHooks {
 		return true;
 	}
 
-	/**
-	 * Add a right rail module to the Special:WikiActivity page
-	 *
-	 * @param array $railModuleList
-	 * @return bool
-	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle, $wgUser;
 
