@@ -2397,19 +2397,11 @@ $config['page_share_scss'] = [
 	],
 ];
 
-$config['old_global_footer_scss'] = [
+$config['global_footer_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
-	]
-];
-
-$config['updated_global_footer_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooterUpdated.scss'
 	]
 ];
 
