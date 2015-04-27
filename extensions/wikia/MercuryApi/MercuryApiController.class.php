@@ -10,7 +10,7 @@ class MercuryApiController extends WikiaController {
 	const DEFAULT_PAGE = 1;
 
 	const WIKI_VARIABLES_CACHE_TTL = 60;
-	
+
 	private $mercuryApi = null;
 
 	public function __construct() {
@@ -30,7 +30,7 @@ class MercuryApiController extends WikiaController {
 			unset( $smartBannerConfig[ 'author' ] );
 
 			if ( !empty( $smartBannerConfig[ 'icon' ] )
-				&& !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) //it differs per wiki
+				&& !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) // it differs per wiki
 			) {
 				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
 			}
@@ -71,7 +71,7 @@ class MercuryApiController extends WikiaController {
 	 * @param int $articleId
 	 * @return mixed
 	 */
-	private function getArticleDetails( $articleId ){
+	private function getArticleDetails( $articleId ) {
 		$articleDetails = $this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
 			->getData()[ 'items' ][ $articleId ];
 
@@ -87,7 +87,7 @@ class MercuryApiController extends WikiaController {
 	 * @return array
 	 */
 	private function getArticleJson( $articleId, Title $title ) {
-		$redirect = $this->request->getVal('redirect');
+		$redirect = $this->request->getVal( 'redirect' );
 
 		$articleAsJson = $this->sendRequest( 'ArticlesApi', 'getAsJson', [
 			'id' => $articleId,
@@ -118,7 +118,7 @@ class MercuryApiController extends WikiaController {
 		try {
 			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )
 				->getData()[ 'items' ];
-		} catch (NotFoundApiException $e) {
+		} catch ( NotFoundApiException $e ) {
 			// getDetails throws NotFoundApiException when no contributors are found
 			// and we want the article even if we don't have the contributors
 			return [];
@@ -130,7 +130,7 @@ class MercuryApiController extends WikiaController {
 	 *
 	 * @return array
 	 */
-	private function getNavigationData(){
+	private function getNavigationData() {
 		return $this->sendRequest( 'NavigationApi', 'getData' )->getData();
 	}
 
@@ -141,7 +141,7 @@ class MercuryApiController extends WikiaController {
 	 * @param int $limit
 	 * @return mixed
 	 */
-	private function getRelatedPages( $articleId, $limit = 6 ){
+	private function getRelatedPages( $articleId, $limit = 6 ) {
 		if ( class_exists( 'RelatedPages' ) ) {
 			return RelatedPages::getInstance()->get( $articleId, $limit );
 		} else {
@@ -149,8 +149,17 @@ class MercuryApiController extends WikiaController {
 		}
 	}
 
-	private function getCuratedContent() {
-		return $this->sendRequest( 'CuratedContent', 'getList' )->getData();
+	private function getCuratedContentSections() {
+		try {
+			$response = $this->sendRequest( 'CuratedContent', 'getList' )->getData();
+			if ( !empty( $response['sections'] ) ) {
+				return $response['sections'];
+			} else {
+				return false;
+			}
+		} catch ( NotFoundApiException $ex ) {
+			return false;
+		}
 	}
 
 	/**
@@ -231,7 +240,7 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$wikiVariables[ 'navData' ] = $this->getNavigationData();
-		} catch (Exception $e) {
+		} catch ( Exception $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Fallback to empty navigation', [
 				'exception' => $e
 			] );
@@ -247,7 +256,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( !empty( $this->wg->ArticlePath ) ) {
-			$wikiVariables[ 'articlePath' ] = str_replace('$1', '', $this->wg->ArticlePath);
+			$wikiVariables[ 'articlePath' ] = str_replace( '$1', '', $this->wg->ArticlePath );
 		} else {
 			$wikiVariables[ 'articlePath' ] = '/wiki/';
 		}
@@ -264,7 +273,7 @@ class MercuryApiController extends WikiaController {
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		//cache wikiVariables for 1 minute
+		// cache wikiVariables for 1 minute
 		$this->response->setCacheValidity( self:: WIKI_VARIABLES_CACHE_TTL );
 	}
 
@@ -272,7 +281,7 @@ class MercuryApiController extends WikiaController {
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
 	 */
-	public function getArticle(){
+	public function getArticle() {
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
@@ -294,12 +303,13 @@ class MercuryApiController extends WikiaController {
 			}
 
 			if ( $title->isMainPage() ) {
-				$curatedContent = $this->getCuratedContent();
-				if ( !empty( $curatedContent ) ) {
+				$curatedContentSections = $this->getCuratedContentSections();
+				if ( !empty( $curatedContentSections ) ) {
+					$curatedContent = $this->getItemsForSections( $curatedContentSections );
 					$data[ 'curatedContent' ] = $curatedContent;
 				}
 			}
-		} catch (WikiaHttpException $exception) {
+		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
 			$data = [];
@@ -319,6 +329,20 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		$this->response->setVal( 'data', $data );
+	}
+
+	private function getItemsForSections( $sections ) {
+		$sectionsWithItems = [];
+		foreach ( $sections as $section ) {
+			$sectionItems = $this->sendRequest( 'CuratedContent', 'getList', ['section' => $section['title']] )->getData();
+			if ( !empty( $sectionItems['items'] ) ) {
+				$section['items'] = $sectionItems['items'];
+			} else {
+				$section['items'] = [];
+			}
+			$sectionsWithItems['sections'][] = $section;
+		}
+		return $sectionsWithItems;
 	}
 
 	/**
