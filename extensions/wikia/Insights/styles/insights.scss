@@ -2,6 +2,8 @@ $insights-grey: #ccc;
 $insights-background-grey: #f0f0f0;
 $insights-background-grey-dark: #2a2a2a;
 $insights-text-light: #fff;
+$insights-small-icon-size: auto 21px;
+$insights-big-icon-size: auto 65px;
 
 .insights-light {
 	.insights-icon-uncategorizedpages {
@@ -69,7 +71,7 @@ $insights-text-light: #fff;
 .insights-landing-nav-item {
 	background-position: center left;
 	background-repeat: no-repeat;
-	background-size: auto 65px;
+	background-size: $insights-big-icon-size;
 	border-bottom: 1px solid $insights-grey;
 	padding: 15px 10px 15px 95px;
 
@@ -95,7 +97,7 @@ $insights-text-light: #fff;
 	.insights-nav-item {
 		background-position: 5% 50%;
 		background-repeat: no-repeat;
-		background-size: auto 26px;
+		background-size: $insights-small-icon-size;
 		border-bottom: 1px solid $insights-grey;
 		list-style-type: none;
 		margin: 0;
@@ -118,7 +120,7 @@ $insights-text-light: #fff;
 .insights-header {
 	background-position: center left;
 	background-repeat: no-repeat;
-	background-size: auto 65px;
+	background-size: $insights-big-icon-size;
 	margin: 10px 0 15px;
 	padding: 20px 20px 20px 95px;
 
