@@ -93,22 +93,22 @@ class WallThread {
 		// the other one is in Wall.class done in a grouped way
 		// (fetch for many threads at once, set with ->setReplies)
 
-		$conditions = array( 'parent_comment_id = '.$this->mThreadId );
+		$conditions = [ 'parent_comment_id = '.$this->mThreadId ];
 
 		if ( (int) $afterId > 0 ) {
 			array_push( $conditions, 'comment_id > '.$afterId );
 		}
 
 		$result = $dbr->select(
-				array( 'comments_index' ),
-				array( 'distinct comment_id' ),
+				[ 'comments_index' ],
+				[ 'distinct comment_id' ],
 				$conditions,
 				__METHOD__,
-				array( 'ORDER BY' => 'comment_id ASC',
-					'LIMIT' => self::DATABASE_LIMIT )
+				[ 'ORDER BY' => 'comment_id ASC',
+					'LIMIT' => self::DATABASE_LIMIT ]
 		);
 
-		$list = array();
+		$list = [];
 		while ( $row = $dbr->fetchObject( $result ) ) {
 			$list[] = $row->comment_id;
 		}
