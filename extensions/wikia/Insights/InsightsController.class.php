@@ -1,20 +1,32 @@
 <?php
 
 class InsightsController extends WikiaSpecialPageController {
+
 	private $model;
 
 	public function __construct() {
 		parent::__construct( 'Insights', 'insights', true );
 	}
 
+	/**
+	 * The main, initializing function
+	 * @throws MWException
+	 */
 	public function index() {
 		wfProfileIn( __METHOD__ );
 		$this->wg->Out->setPageTitle( wfMessage( 'insights' )->escaped() );
 		$this->addAssets();
 
+		/**
+		 * @var A slug of a subpage
+		 */
 		$this->subpage = $this->getPar();
 		$this->themeClass = SassUtil::isThemeDark() ? 'insights-dark' : 'insights-light';
 
+		/**
+		 * Check if a user requested a subpage. If the requested subpage
+		 * is unknown redirect them to the landing page.
+		 */
 		if ( InsightsHelper::isInsightPage( $this->subpage ) ) {
 			$this->renderSubpage();
 		} elseif ( !empty( $this->subpage ) ) {
@@ -24,8 +36,18 @@ class InsightsController extends WikiaSpecialPageController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Collects all necessary data used for rendering a subpage
+	 * @throws MWException
+	 */
 	private function renderSubpage() {
 		$this->model = InsightsHelper::getInsightModel( $this->subpage );
+		/**
+		 * A model for insights should implement at least 3 methods:
+		 * - getContent() - returning all the visible data
+		 * - getData() - returning all the helping data
+		 * - getTemplate() - returning an overriding template
+		 */
 		if ( $this->model instanceof InsightsModel ) {
 			$this->content = $this->model->getContent();
 			$this->data = $this->model->getData();
@@ -47,26 +69,15 @@ class InsightsController extends WikiaSpecialPageController {
 			$model = InsightsHelper::getInsightModel( $subpage );
 			if ( $model instanceof InsightsModel ) {
 				$articleName = $this->getVal('article', null);
-				$title = Title::newFromText( $articleName );
-
 				$next = $model->getNextItem( $model->getInsightType(), $articleName );
 
 				$isFixed = $this->request->getVal('isFixed', null);
-				$isEdit = $this->request->getBool('isEdit', false );
 
-				if( !empty( $isFixed ) ) {
-					$isFixed = ( $isFixed === 'fixed' );
-				} elseif( !$isEdit ) {
-					$isFixed = $model->isItemFixed( $title );
-				}
-
-				$this->response->setVal( 'isFixed', $isFixed );
-
-				if ( $isEdit || !$isFixed ) {
+				if ( $this->request->getBool( 'isEdit', false ) || $isFixed == 'notfixed' ) {
 					$this->setInProgressNotification( $subpage );
-				} elseif ( $isFixed && empty( $next ) ) {
+				} elseif ( $isFixed == 'fixed' && empty( $next ) ) {
 					$this->setCongratulationsNotification( $subpage );
-				} elseif ( $isFixed ) {
+				} elseif ( $isFixed == 'fixed' ) {
 					$this->setInsightFixedNotification( $next, $subpage );
 				}
 			}

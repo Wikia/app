@@ -13,13 +13,12 @@ class InsightsHooks {
 		// Load scripts for pages in insights loop
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$out->addScriptFile('/extensions/wikia/Insights/scripts/LoopNotification.js');
-			$out->addScriptFile('/extensions/wikia/Insights/scripts/InsightsLoopNotificationTracking.js');
 		}
 
-		// Load scripts for Special:Insights
-		if ( F::app()->wg->title->isSpecial( 'Insights' ) ) {
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/InsightsIndexPageTracking.js' );
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/InsightsListTracking.js' );
+		// Load scripts for pages in insights loop and Special:Insights
+		if ( InsightsHelper::isInsightPage( $subpage ) || F::app()->wg->title->isSpecial( 'Insights' ) ) {
+			$out->addScriptFile( '/extensions/wikia/Insights/scripts/Insights.run.js' );
+			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopTracking.js' );
 		}
 
 		return true;
@@ -40,7 +39,7 @@ class InsightsHooks {
 			$extraQuery .= 'insights=' . $subpage;
 
 			$model = InsightsHelper::getInsightModel( $subpage );
-			$isItemFixed = $model->isItemFixed( $article->getTitle() );
+			$isItemFixed = $model->isItemFixed( $article );
 			if ( $isItemFixed ) {
 				$extraQuery .= '&item_status=fixed';
 			} else {
@@ -69,6 +68,26 @@ class InsightsHooks {
 		return true;
 	}
 
+	/**
+	 * Disable create new page popup and go directly to edit page to keep Insights flow
+	 *
+	 * @param array $vars
+	 * @return bool
+	 */
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
+		if ( F::app()->wg->title->isSpecial( 'Insights' ) ) {
+			$vars['WikiaEnableNewCreatepage'] = false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Add a right rail module to the Special:WikiActivity page
+	 *
+	 * @param array $railModuleList
+	 * @return bool
+	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle, $wgUser;
 
