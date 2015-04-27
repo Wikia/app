@@ -3,7 +3,7 @@
 /**
  * Class QueryPagesModel
  *
- * Model for pages which extends QueryPage
+ * A base model for subpages that extend the QueryPage class
  */
 abstract class InsightsQuerypageModel extends InsightsModel {
 	private $queryPageInstance,
@@ -16,6 +16,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	abstract function getDataProvider();
 	abstract function isItemFixed( Article $article );
 
+	/**
+	 * @return QueryPage An object of a QueryPage's child class
+	 */
 	protected function getQueryPageInstance() {
 		return $this->queryPageInstance;
 	}
@@ -30,7 +33,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	/**
-	 * Get list of article
+	 * Get list of articles related to the given QueryPage category
 	 *
 	 * @return array
 	 */
@@ -45,6 +48,13 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $content;
 	}
 
+	/**
+	 * Prepares all data in a format that is easy to use for display.
+	 *
+	 * @param $res Results to display
+	 * @return array
+	 * @throws MWException
+	 */
 	public function prepareData( $res ) {
 		$data = [];
 		$dbr = wfGetDB( DB_SLAVE );
@@ -87,6 +97,10 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $data;
 	}
 
+	/**
+	 * Get a type of a subpage and an edit parameter
+	 * @return array
+	 */
 	public function getUrlParams() {
 		$params = array_merge(
 			InsightsHelper::getEditUrlParams(),
@@ -96,6 +110,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $params;
 	}
 
+
 	public function removeFixedItem( $type, Title $title ) {
 		$dbr = wfGetDB( DB_MASTER );
 		$dbr->delete( 'querycache', [ 'qc_type' => $type, 'qc_title' => $title->getDBkey() ] );
@@ -103,10 +118,11 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	/**
-	 * Get data about next element
+	 * Get data for the next element that a user can take care of.
 	 *
-	 * @param int $offset
-	 * @return mixed
+	 * @param string $type A key of a Querypage
+	 * @param string $articleName A title of an article
+	 * @return Array The next item's data
 	 */
 	public function getNextItem( $type, $articleName ) {
 		$next = [];
