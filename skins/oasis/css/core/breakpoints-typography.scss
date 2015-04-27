@@ -27,6 +27,11 @@ $default-body-line-height: 22px;
 				line-height: 22px;
 			}
 
+			.wikia-page-header h2 {
+				font-size: $default-body-font-size;
+				line-height: $default-body-line-height;
+			}
+
 			h3 {
 				font-size: 17px;
 				line-height: 22px;
@@ -69,6 +74,11 @@ $default-body-line-height: 22px;
 				line-height: 30px;
 			}
 
+			.wikia-page-header h2 {
+				font-size: 16px;
+				line-height: 26px;
+			}
+
 			h3 {
 				font-size: 22px;
 				line-height: 24px;
@@ -78,6 +88,7 @@ $default-body-line-height: 22px;
 				font-size: 20px;
 				line-height: 28px;
 			}
+
 		}
 	}
 }
