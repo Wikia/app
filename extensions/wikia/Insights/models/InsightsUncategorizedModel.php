@@ -11,8 +11,7 @@ class InsightsUncategorizedModel extends InsightsQuerypageModel {
 		return self::INSIGHT_TYPE;
 	}
 
-	public function isItemFixed( Article $article ) {
-		$title = $article->getTitle();
+	public function isItemFixed( Title $title ) {
 		$categories = $title->getParentCategories( true );
 		if ( !empty( $categories ) ) {
 			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $title );
