@@ -149,6 +149,10 @@ class MercuryApiController extends WikiaController {
 		}
 	}
 
+	private function getCuratedContent() {
+		return $this->sendRequest( 'CuratedContent', 'getList' )->getData();
+	}
+
 	/**
 	 * @return Title Article Title
 	 * @throws NotFoundApiException
@@ -287,6 +291,13 @@ class MercuryApiController extends WikiaController {
 
 			if ( !empty( $relatedPages ) ) {
 				$data[ 'relatedPages' ] = $relatedPages;
+			}
+
+			if ( $title->isMainPage() ) {
+				$curatedContent = $this->getCuratedContent();
+				if ( !empty( $curatedContent ) ) {
+					$data[ 'curatedContent' ] = $curatedContent;
+				}
 			}
 		} catch (WikiaHttpException $exception) {
 			$this->response->setCode( $exception->getCode() );
