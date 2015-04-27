@@ -5,7 +5,6 @@
  *
  * checks for insights url param to log specific insight type
  * checks for item_status url param to log action status (fixed/notfixed)
- * TODO add tracking of close button of BannerNotification
  */
 define('ext.wikia.Insights.LoopNotificationTracking',
 	['jquery', 'wikia.tracker', 'wikia.querystring'],
@@ -14,7 +13,12 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 
 		var qs = new Querystring(),
 			insightType = qs.getVal('insights', null),
-			isFixed = qs.getVal('item_status', null);
+			itemStatus = qs.getVal('item_status', null);
+
+		/* If there's no itemStatus use action parameter */
+		if (itemStatus === null) {
+			itemStatus = qs.getVal('action', null);
+		}
 
 		/**
 		 * Log tracking data on clicks on BannerNotification buttons
@@ -26,7 +30,7 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 				trackingMethod: 'both',
 				category: 'insights-loop-notification',
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: insightType+'-'+isFixed+'-'+linkType.data
+				label: insightType+'-'+itemStatus+'-'+linkType.data
 			};
 			tracker.track(trackingParams);
 		}
@@ -35,6 +39,7 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 			/* Setup click events within BannerNotification */
 			bannerNotification.$element.find('#InsightsBackToListButton').click('back-to-list', onClickTrack);
 			bannerNotification.$element.find('#InsightsNextPageButton').click('next-page', onClickTrack);
+			bannerNotification.$element.find('button.close').click('dismiss', onClickTrack);
 		}
 
 		return {
