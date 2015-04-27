@@ -49,6 +49,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		// Single values
 		{input: {'a1x6p14': 1}, expected: {skyscraper: ['a1x6p14']}},
 		{input: {'a3x2p14': 1}, expected: {medrec: ['a3x2p14']}},
+		{input: {'a3x5p14': 1}, expected: {mobile: ['a3x5p14']}},
 		{input: {'a3x6p14': 1}, expected: {medrec: ['a3x6p14']}},
 		{input: {'a7x9p14': 1}, expected: {leaderboard: ['a7x9p14']}},
 
@@ -110,6 +111,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			expect(amazonMatch.getSlotParams('LEFT_SKYSCRAPER_3').amznslots).toEqual(testCase.expected.skyscraper);
 			expect(amazonMatch.getSlotParams('INVISIBLE_SKIN').amznslots).toEqual(undefined);
 			expect(amazonMatch.getSlotParams('INCONTENT_1').amznslots).toEqual(undefined);
+			expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.mobile);
 		});
 	});
 });

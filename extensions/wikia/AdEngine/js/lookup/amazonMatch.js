@@ -16,14 +16,22 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		amazonCalled = false,
 		amazonParamPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
 		sizeMapping = {
-			'1x6': 'SKYSCRAPER',
-			'3x2': 'BOXAD',
-			'3x6': 'BOXAD',
-			'7x9': 'LEADERBOARD'
+			'1x6': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
+			'3x2': [
+				'TOP_RIGHT_BOXAD',
+				'HOME_TOP_RIGHT_BOXAD',
+				'HUB_TOP_RIGHT_BOXAD',
+				'MOBILE_IN_CONTENT',
+				'MOBILE_PREFOOTER'
+			],
+			'3x5': ['MOBILE_TOP_LEADERBOARD'],
+			'3x6': ['TOP_RIGHT_BOXAD', 'HOME_TOP_RIGHT_BOXAD', 'HUB_TOP_RIGHT_BOXAD'],
+			'7x9': ['TOP_LEADERBOARD', 'HOME_TOP_LEADERBOARD', 'HUB_TOP_LEADERBOARD']
 		},
 		bestPricePointForSize = {
 			'1x6': null,
 			'3x2': null,
+			'3x5': null,
 			'3x6': null,
 			'7x9': null
 		};
@@ -139,22 +147,44 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return amazonCalled;
 	}
 
+	function isValidSlot(slotName, validSlotNames) {
+		// No Object.keys on IE8
+		checkIfObjectKeysNotSupported('isValidSlot()', false);
+
+		var isValid = false;
+
+		Object.keys(validSlotNames).forEach(function (k) {
+			var validSlotName = validSlotNames[k];
+
+			if (!isValid) {
+				isValid = slotName === validSlotName;
+			}
+		});
+
+		return isValid;
+	}
+
+	function checkIfObjectKeysNotSupported(functionName, retval) {
+		log([functionName, 'no Object.keys (IE8?)'], 'error', logGroup);
+
+		if (retval) {
+			return retval;
+		}
+	}
+
 	function getSlotParams(slotName) {
 		log(['getSlotParams'], 'debug', logGroup);
 
 		var amznSlots = [];
 
 		// No Object.keys on IE8
-		if (!Object.keys) {
-			log(['filterSlots()', 'no Object.keys (IE8?)'], 'error', logGroup);
-			return {};
-		}
+		checkIfObjectKeysNotSupported('filterSlots()', {});
 
 		Object.keys(sizeMapping).forEach(function (amazonSize) {
-			var slotNamePattern = sizeMapping[amazonSize],
+			var validSlotNames = sizeMapping[amazonSize],
 				amazonPricePoint = bestPricePointForSize[amazonSize];
 
-			if (slotName.search(slotNamePattern) > -1 && amazonPricePoint) {
+			if (isValidSlot(slotName, validSlotNames) && amazonPricePoint) {
 				amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
 			}
 		});
