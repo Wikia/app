@@ -11,12 +11,15 @@ class WallThread {
 	private $data;
 
 	public function __construct() {
+		$this->initializeReplyData();
+		$this->mCached = null;
+		$this->mCityId = F::app()->wg->CityId;
+	}
+
+	protected function initializeReplyData() {
 		$this->data = new StdClass();
 		$this->data->threadReplyIds = false;
 		$this->data->threadReplyObjs = false;
-
-		$this->mCached = null;
-		$this->mCityId = F::app()->wg->CityId;
 	}
 
 	/**
@@ -30,6 +33,7 @@ class WallThread {
 
 		return $wt;
 	}
+
 	public function loadIfCached() {
 		if($this->mCached === null) {
 			$this->loadFromMemcache();
@@ -53,9 +57,7 @@ class WallThread {
 
 	public function setReplies( $ids ) {
 		// set and cache replies of this thread
-		$this->data = new StdClass();
-		$this->data->threadReplyIds = false;
-		$this->data->threadReplyObjs = false;
+		$this->initializeReplyData();
 		
 		$this->data->threadReplyIds = $ids;
 
@@ -132,6 +134,8 @@ class WallThread {
 	public function invalidateCache() {
 		// invalidate cache at Thread level (new reply or reply removed in thread)
 		$this->getCache()->delete( $this->getThreadKey() );
+		// Reset data
+		$this->initializeReplyData();
 	}
 
 	private function getThreadKey() {
