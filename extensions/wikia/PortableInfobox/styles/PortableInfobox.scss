@@ -4,13 +4,11 @@
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 5px;
-$infobox-section-header-background: rgba(0, 0, 0, .1);
-@if $is-dark-wiki {
-	$infobox-section-header-background: rgba(255, 255, 255, .1);
-}
+$infobox-background: mix($color-page, $color-links, 92%);
+$infobox-section-header-background: transparentize($color-links, 0.9);
 
 .portable-infobox {
-	background-color: $color-unified-module-background;
+	background-color: $infobox-background;
 	clear: right;
 	float: right;
 	margin: 0 0 $infobox-margin $infobox-margin;
@@ -77,7 +75,7 @@ $infobox-section-header-background: rgba(0, 0, 0, .1);
 	}
 
 	.item-type-key-val:not(:last-of-type) {
-		border-bottom: 1px solid $color-page-border;
+		border-bottom: 1px solid $infobox-section-header-background;
 	}
 
 	.portable-infobox-item-label {
@@ -110,7 +108,7 @@ $infobox-section-header-background: rgba(0, 0, 0, .1);
 		width: $infobox-width / 2;
 
 		&:first-of-type {
-			border-right: 1px solid $color-page-border;
+			border-right: 1px solid $infobox-section-header-background;
 		}
 
 		.item-type-key-val {
