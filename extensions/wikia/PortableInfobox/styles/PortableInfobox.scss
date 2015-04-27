@@ -33,18 +33,6 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 		}
 	}
 
-	// TODO: experiment with removing margins on all children of pair value
-	&.reset-children-margins .portable-infobox-item-value {
-		> * {
-			margin: 0;
-		}
-
-		ul,
-		ol {
-			list-style-position: inside;
-		}
-	}
-
 	.portable-infobox-item-margins {
 		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
 	}
@@ -84,6 +72,16 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 
 	.portable-infobox-item-value {
 		padding-left: $infobox-item-margin * 2;
+
+		// experiment with removing margins on all children of pair value
+		> * {
+			margin: 0;
+		}
+
+		ul,
+		ol {
+			list-style-position: inside;
+		}
 	}
 
 	.portable-infobox-comparision {
