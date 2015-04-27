@@ -145,6 +145,7 @@ class EmailNotification {
 		);
 
 		foreach ( $res as $row ) {
+			/** @var stdClass $row */
 			$watchers[] = $row->wl_user;
 		}
 
@@ -246,6 +247,7 @@ class EmailNotification {
 	 * Send emails corresponding to the user $editor editing the page $title.
 	 * Also updates wl_notificationtimestamp.
 	 *
+	 * @param array $watchers
 	 */
 	private function actuallyNotifyOnPageChange( $watchers ) {
 
@@ -430,19 +432,71 @@ class EmailNotification {
 	 * @param $user User
 	 */
 	private function compose( \User $user ) {
-		if ( $this->isArticlePageEdit() && $this->emailExtensionEnabled() ) {
+		if ( $this->canUseEmailExtension() ) {
 			$this->sendUsingEmailExtension( $user );
 		} else {
+			\Wikia\Logger\WikiaLogger::instance()->notice( 'Sending via UserMailer', [
+				'page' => $this->title->getDBkey(),
+				'summary' => $this->summary,
+				'action' => $this->action,
+				'subject' => $this->subject,
+			] );
 			$this->sendUsingUserMailer( $user );
 		}
 
 		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
 	}
 
+	private function canUseEmailExtension() {
+		// Definitely can't send if the extension isn't enabled
+		if ( empty( F::app()->wg->EnableEmailExt ) ) {
+			return false;
+		}
+
+		// List of conditions we currently handle using the Email extension
+		return (
+			$this->isArticlePageEdit() ||
+			$this->isArticleComment() ||
+			$this->isBlogComment()
+		);
+	}
+
+	/**
+	 * Send a watched page edit email using the new Email extension.
+
+	 * @param User $user
+	 */
+	private function sendUsingEmailExtension( \User $user ) {
+
+		if ( $this->isArticlePageEdit() ) {
+			$controller = 'Email\Controller\WatchedPage';
+		} elseif ( $this->isArticleComment() ) {
+			$controller = 'Email\Controller\ArticleComment';
+		} elseif ( $this->isBlogComment() ) {
+			$controller = 'Email\Controller\BlogComment';
+		}
+
+		if ( !empty( $controller ) ) {
+			$params = [
+				'targetUser' => $user->getName(),
+				'title' => $this->title->getText(),
+				'namespace' => $this->title->getNamespace(),
+				'summary' => $this->summary,
+				'currentRevId' => $this->currentRevId,
+				'previousRevId' => $this->previousRevId,
+				'replyToAddress' => $this->replyto,
+				'fromAddress' => $this->from->address,
+				'fromName' => $this->from->name
+			];
+
+			F::app()->sendRequest( $controller, 'handle', $params );
+		}
+	}
 	/**
 	 * Returns whether the email notification is for a watched article page which has been edited.
 	 * If $this->action is empty and we have a previous Revision id it's an article page edit.
 	 * The other possible values for action are categoryadd, blogpost, and article_comment.
+	 *
 	 * @return bool
 	 */
 	private function isArticlePageEdit() {
@@ -450,38 +504,29 @@ class EmailNotification {
 	}
 
 	/**
-	 * Returns whether the Email extension is enabled or not.
-	 * @return bool
-	 */
-	private function emailExtensionEnabled() {
-		return !empty( F::app()->wg->EnableEmailExt );
-	}
-
-	/**
 	 * When a page is created, the previousRevId is always 0.
+	 *
 	 * @return bool
 	 */
 	private function isNewPage() {
 		return $this->previousRevId == 0;
 	}
 
-	/**
-	 * Send a watched page edit email using the new Email extension.
-	 * @param $user User
-	 */
-	private function sendUsingEmailExtension( \User $user ) {
-		F::app()->sendRequest( 'Email\Controller\WatchedPage', 'handle',
-			[
-				'targetUser' => $user->getName(),
-				'title' => $this->title->getText(),
-				'nameSpace' => $this->title->getNamespace(),
-				'summary' => $this->summary,
-				'currentRevId' => $this->currentRevId,
-				'previousRevId' => $this->previousRevId,
-				'replyToAddress' => $this->replyto,
-				'fromAddress' => $this->from->address,
-				'fromName' => $this->from->name
-			] );
+	private function isArticleComment() {
+		// A blog has a specific namespace while an article could have a number of
+		// different namespaces.  To decide if this is an article, just make sure
+		// its not a blog.
+		return (
+			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
+			( $this->title->getNamespace() != NS_BLOG_ARTICLE )
+		);
+	}
+
+	private function isBlogComment() {
+		return (
+			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
+			( $this->title->getNamespace() == NS_BLOG_ARTICLE )
+		);
 	}
 
 	private function sendUsingUserMailer( \User $user ) {
@@ -496,42 +541,43 @@ class EmailNotification {
 	 * timestamp in proper timezone, etc) and sends it out.
 	 * Returns true if the mail was sent successfully.
 	 *
-	 * @param $watchingUser User object
+	 * @param User $watchingUser User object
 	 * @return Boolean
 	 * @private
 	 */
 	private function sendPersonalised( $watchingUser ) {
-		// From the PHP manual:
-		//     Note:  The to parameter cannot be an address in the form of "Something <someone@example.com>".
-		//     The mail command will not parse this properly while talking with the MTA.
 		$to = new MailAddress( $watchingUser );
-
-		// $PAGEEDITDATE is the time and date of the page change
-		// expressed in terms of individual local time of the notification
-		// recipient, i.e. watching user
-		// TODO The logic below is duplicated twice, break this off into a separate method.
-		$body = str_replace(
-			[ '$WATCHINGUSERNAME',
-				'$PAGEEDITDATE',
-				'$PAGEEDITTIME' ],
-			[ F::app()->wg->EnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
-				F::app()->wg->ContLang->userDate( $this->timestamp, $watchingUser ),
-				F::app()->wg->ContLang->userTime( $this->timestamp, $watchingUser ) ],
-			$this->body );
+		$body = $this->expandBodyVariables( $watchingUser, $this->body );
 
 		if ( $watchingUser->getOption( 'htmlemails' ) && !empty( $this->bodyHTML ) ) {
-			$bodyHTML = str_replace(
-				[ '$WATCHINGUSERNAME',
-					'$PAGEEDITDATE',
-					'$PAGEEDITTIME' ],
-				[ F::app()->wg->EnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName(),
-					F::app()->wg->ContLang->userDate( $this->timestamp, $watchingUser ),
-					F::app()->wg->ContLang->userTime( $this->timestamp, $watchingUser ) ],
-				$this->bodyHTML );
+			$bodyHTML = $this->expandBodyVariables( $watchingUser, $this->bodyHTML );
 			# now body is array with text and html version of email
 			$body = [ 'text' => $body, 'html' => $bodyHTML ];
 		}
+
 		UserMailer::send( $to, $this->from, $this->subject, $body, $this->replyto );
+	}
+
+	private function expandBodyVariables( User $watchingUser, $content ) {
+		$name = F::app()->wg->EnotifUseRealName
+			? $watchingUser->getRealName()
+			: $watchingUser->getName();
+
+		// $PAGEEDITDATE is the time and date of the page change expressed in terms
+		// of individual local time of the notification recipient, i.e. watching user
+		return str_replace(
+			[
+				'$WATCHINGUSERNAME',
+				'$PAGEEDITDATE',
+				'$PAGEEDITTIME'
+			],
+			[
+				$name,
+				F::app()->wg->ContLang->userDate( $this->timestamp, $watchingUser ),
+				F::app()->wg->ContLang->userTime( $this->timestamp, $watchingUser )
+			],
+			$content
+		);
 	}
 
 	/**

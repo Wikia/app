@@ -3,9 +3,12 @@
 namespace Email;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use Wikia\Logger\WikiaLogger;
 
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
+	const AVATAR_SIZE = 50;
 
 	/** CSS used for the main content section of each email. Used by getContent()
 	 * and intended to be overridden by child classes. */
@@ -28,6 +31,12 @@ abstract class EmailController extends \WikiaController {
 	/**	@var string The language to send the email in */
 	protected $targetLang;
 
+	/** @var  \MailAddress */
+	protected $replyToAddress;
+
+	/** @var  \MailAddress */
+	protected $fromAddress;
+
 	/**
 	 * Since the children of this class are located in the 'Controller' directory, the default
 	 * location for the template directory would be 'Controller/templates'.  Redefine it to be
@@ -45,11 +54,24 @@ abstract class EmailController extends \WikiaController {
 
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
-			$this->targetLang = $this->request->getVal( 'targetLang', $this->targetUser->getOption( 'language' ) );
-			$this->test = $this->getRequest()->getVal( 'test', false );
+			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getOption( 'language' ) );
+			$this->test = $this->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
+			$noReplyName = wfMessage( 'emailext-no-reply-name' )->escaped();
+
+			$this->replyToAddress = new \MailAddress(
+				$this->getVal( 'replyToAddress', $this->wg->NoReplyAddress ),
+				$this->getVal( 'replyToName', $noReplyName )
+			);
+			$this->fromAddress = new \MailAddress(
+				$this->getVal( 'fromAddress', '' ),
+				$this->getVal( 'fromName', '' )
+			);
+
 			$this->initEmail();
+
+			$this->assertValidFromAddress();
 		} catch ( ControllerException $e ) {
 			$this->setErrorResponse( $e );
 		}
@@ -70,6 +92,12 @@ abstract class EmailController extends \WikiaController {
 		}
 
 		throw new Fatal( 'Access to this controller is restricted' );
+	}
+
+	protected function assertValidFromAddress() {
+		if ( $this->fromAddress->toString() == "" ) {
+			throw new Check( "Empty from address" );
+		}
 	}
 
 	/**
@@ -120,7 +148,7 @@ abstract class EmailController extends \WikiaController {
 				);
 				$this->assertGoodStatus( $status );
 			}
-		} catch ( ControllerException $e ) {
+		} catch ( \Exception $e ) {
 			$this->setErrorResponse( $e );
 			return;
 		}
@@ -152,13 +180,24 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * Create an error response for any exception thrown while creating this email
 	 *
-	 * @param ControllerException $e
+	 * @param \Exception $e
 	 *
 	 */
-	protected function setErrorResponse( ControllerException $e ) {
+	protected function setErrorResponse( \Exception $e ) {
+		if ( $e instanceof ControllerException ) {
+			$result = $e->getErrorType();
+		} else {
+			$result = 'genericError';
+		}
+
+		WikiaLogger::instance()->error( 'Error while sending email', [
+			'result' => $result,
+			'msg' => $e->getMessage(),
+		] );
+
 		$this->hasErrorResponse = true;
 		$this->response->setData( [
-			'result' => $e->getErrorType(),
+			'result' => $result,
 			'msg' => $e->getMessage(),
 		] );
 	}
@@ -187,8 +226,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return \MailAddress
 	 */
 	protected function getFromAddress() {
-		$sender = new \MailAddress( $this->wg->PasswordSender, $this->wg->PasswordSenderName );
-		return $sender;
+		return $this->fromAddress;
 	}
 
 	/**
@@ -197,13 +235,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return \MailAddress|null
 	 */
 	protected function getReplyToAddress() {
-		$replyAddr = null;
-		if ( !empty( $this->wg->NoReplyAddress ) ) {
-			$name = wfMessage( 'emailext-no-reply-name' )->escaped();
-			$replyAddr = new \MailAddress( $this->wg->NoReplyAddress, $name );
-		}
-
-		return $replyAddr;
+		return $this->replyToAddress;
 	}
 
 	/**
@@ -368,6 +400,35 @@ abstract class EmailController extends \WikiaController {
 		$unsubscribeTitle = \GlobalTitle::newFromText( 'Unsubscribe', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID );
 		return $unsubscribeTitle->getFullURL( $params );
 	}
+
+
+	/**
+	 * @return String
+	 */
+	protected function getCurrentProfilePage() {
+		if ( $this->currentUser->isLoggedIn() ) {
+			return $this->currentUser->getUserPage()->getFullURL();
+		}
+		return "";
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getCurrentUserName() {
+		if ( $this->currentUser->isLoggedIn() )	 {
+			return $this->currentUser->getName();
+		}
+		return wfMessage( "emailext-anonymous-editor" )->inLanguage( $this->targetLang )->text();
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getCurrentAvatarURL() {
+		return \AvatarService::getAvatarUrl( $this->currentUser, self::AVATAR_SIZE );
+	}
+
 
 	protected function findUserFromRequest( $paramName, \User $default = null ) {
 		$userName = $this->getRequest()->getVal( $paramName );
