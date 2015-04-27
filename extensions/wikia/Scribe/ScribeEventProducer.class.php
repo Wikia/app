@@ -183,7 +183,7 @@ class ScribeEventProducer {
 		return $logid;
 	}
 
-	public function buildUndeletePackage( $oTitle ) {
+	public function buildUndeletePackage( $oTitle, $created = false ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oTitle ) ) {
@@ -193,7 +193,7 @@ class ScribeEventProducer {
 		}
 
 		$oPage = WikiPage::factory( $oTitle );
-		if ( !$oPage instanceof Article ) {
+		if ( !$oPage instanceof WikiPage ) {
 			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -213,9 +213,14 @@ class ScribeEventProducer {
 			return true;
 		}
 
+		$oLocalFile = null;
+		if ( $created && $oTitle->getNamespace() == NS_FILE ) {
+			$oLocalFile = wfLocalFile( $oTitle );
+		}
+
 		wfProfileOut( __METHOD__ );
 
-		return $this->buildEditPackage( $oPage, $oUser );
+		return $this->buildEditPackage( $oPage, $oUser, null, null, $oLocalFile );
 	}
 
 	public function buildMovePackage( $oTitle, $oUser, $page_id = null, $redirect_id = null ) {
