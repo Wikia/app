@@ -39,100 +39,116 @@ class InsightsController extends WikiaSpecialPageController {
 	 * Setup method for Insights_loopNotification.mustache template
 	 */
 	public function loopNotification() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-
 		$subpage = $this->request->getVal( 'insight', null );
 
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$model = InsightsHelper::getInsightModel( $subpage );
 			if ( $model instanceof InsightsModel ) {
+				$params = [];
+				$type = '';
+				$isFixed = false;
 				$articleName = $this->getVal('article', null);
 				$title = Title::newFromText( $articleName );
 
 				$next = $model->getNextItem( $model->getInsightType(), $articleName );
 
-				$isFixed = $this->request->getVal('isFixed', null);
 				$isEdit = $this->request->getBool('isEdit', false );
 
-				if( !empty( $isFixed ) ) {
-					$isFixed = ( $isFixed === 'fixed' );
-				} elseif( !$isEdit ) {
+				if( !$isEdit ) {
 					$isFixed = $model->isItemFixed( $title );
 				}
 
-				$this->response->setVal( 'isFixed', $isFixed );
-
 				if ( $isEdit || !$isFixed ) {
-					$this->setInProgressNotification( $subpage );
+					$params = $this->getInProgressNotificationParams( $subpage );
+					$type = 'inprogress';
 				} elseif ( $isFixed && empty( $next ) ) {
-					$this->setCongratulationsNotification( $subpage );
+					$params = $this->getCongratulationsNotificationParams( $subpage );
+					$type = 'alldone';
 				} elseif ( $isFixed ) {
-					$this->setInsightFixedNotification( $next, $subpage );
+					$params = $this->getInsightFixedNotificationParams( $next, $subpage );
+					$type = 'fixed';
 				}
+
+				$html = \MustacheService::getInstance()->render(
+					'extensions/wikia/Insights/templates/Insights_loopNotification.mustache',
+					$params
+				);
+
+				$this->response->setData([
+					'html' => $html,
+					'isFixed' => $isFixed,
+					'notificationType' => $type
+				]);
 			}
 		}
 	}
 
 	/**
-	 * Sets values for notification shown in edit mode or if issue is not fixed
+	 * Get params for notification template shown in edit mode or if issue is not fixed
 	 */
-	private function setInProgressNotification( $subpage ) {
-		$this->response->setVal(
-			'notificationMessage',
-			wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->escaped()
-		);
-		$this->setInsightListLink( $subpage );
+	private function getInProgressNotificationParams( $subpage ) {
+		$params = $this->getInsightListLinkParams( $subpage );
+		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->escaped();
+
+		return $params;
 	}
 
 	/**
-	 * Sets values for notification shown when user fix all issues in given insight type
+	 * Get params for notification template shown when user fix all issues in given insight type
 	 */
-	private function setCongratulationsNotification() {
-		$this->response->setVal( 'notificationMessage', wfMessage( 'insights-notification-message-alldone' )->escaped() );
-		$this->setInsightLink();
+	private function getCongratulationsNotificationParams() {
+		$params = $this->getInsightLinkParams();
+		$params['notificationMessage'] = wfMessage( 'insights-notification-message-alldone' )->escaped();
+
+		return $params;
 	}
 
 	/**
-	 * Sets values for notification shown when user fix one issue from the insights list
+	 * Get params for notification template shown when user fix one issue from the insights list
 	 *
 	 * @param $next Array data about item from insight list
 	 * @param $params String params to be added to url
 	 */
-	private function setInsightFixedNotification( $next, $subpage ) {
-		$this->response->setVal(
-			'notificationMessage',
-			wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->escaped()
-		);
-		$this->setInsightNextLink( $next, $subpage );
-		$this->setInsightListLink( $subpage );
+	private function getInsightFixedNotificationParams( $next, $subpage ) {
+		$params = $this->getInsightNextLinkParams( $next, $subpage );
+		$params = array_merge( $params, $this->getInsightListLinkParams( $subpage ));
+		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->escaped();
+
+		return $params;
 	}
 
 	/**
-	 * Sets values for next item link in notification
+	 * Get params to generate next item link in notification template
 	 *
 	 * @param $next Array data about item from insight list
 	 * @param $params String params to be added to url
 	 */
-	private function setInsightNextLink( $next, $subpage ) {
-		$this->response->setVal( 'nextArticleButton', wfMessage( 'insights-notification-next-item-' . $subpage )->escaped() );
-		$this->response->setVal( 'nextArticleTitle', $next['link']['text'] );
-		$this->response->setVal( 'nextArticleLink', $next['link']['url'] );
+	private function getInsightNextLinkParams( $next, $subpage ) {
+		return [
+			'nextArticleButton' => wfMessage( 'insights-notification-next-item-' . $subpage )->escaped(),
+			'nextArticleTitle' => $next['link']['text'],
+			'nextArticleLink' => $next['link']['url']
+		];
 	}
 
 	/**
-	 * Sets values for link to insight list
+	 * Get params to generate link to insight list in notification template
 	 */
-	private function setInsightListLink( $subpage ) {
-		$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-list-button' )->escaped() );
-		$this->response->setVal( 'insightsPageLink', $this->getSpecialInsightsUrl( $subpage ) );
+	private function getInsightListLinkParams( $subpage ) {
+		return [
+			'insightsPageButton' => wfMessage( 'insights-notification-list-button' )->escaped(),
+			'insightsPageLink' => $this->getSpecialInsightsUrl( $subpage )
+		];
 	}
 
 	/**
-	 * Sets values for link to insight main page
+	 * Get params to generate link to insight main page in notification template
 	 */
-	private function setInsightLink() {
-		$this->response->setVal( 'insightsPageButton', wfMessage( 'insights-notification-see-more' )->escaped() );
-		$this->response->setVal( 'insightsPageLink', $this->getSpecialInsightsUrl() );
+	private function getInsightLinkParams() {
+		return [
+			'insightsPageButton' => wfMessage( 'insights-notification-see-more' )->escaped(),
+			'insightsPageLink' => $this->getSpecialInsightsUrl()
+		];
 	}
 
 	private function addAssets() {

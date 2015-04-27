@@ -13,25 +13,38 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 		var qs = new Querystring(),
 			insights = qs.getVal('insights', null),
 			isVE = qs.getVal('veaction', null),
-			isFixed = qs.getVal('item_status', null),
+			isFixed = false,
 			isEdit = false,
 			initNotification,
 			showNotification,
-			getNotificationType,
+			notification,
+			notificationType,
+			getMessageType,
 			getParent;
 
-		showNotification = function(html) {
-			if (html) {
-				var msgType = getNotificationType(),
+		showNotification = function(response) {
+			if (response) {
+				var msgType,
 					$parent = getParent();
 
-				new BannerNotification(html, msgType, $parent).show();
+				isFixed = response.isFixed;
+				msgType = getMessageType();
+
+				if (notificationType !== response.notificationType) {
+					notificationType = response.notificationType;
+
+					if (notification) {
+						notification.hide();
+					}
+					notification = new BannerNotification(response.html, msgType, $parent).show();
+				}
+
 				$('#InsightsNextPageButton').focus();
 			}
 		};
 
-		getNotificationType = function() {
-			if (isEdit || isFixed === 'notfixed') {
+		getMessageType = function() {
+			if (isEdit || !isFixed) {
 				return 'warn';
 			} else {
 				return 'confirm';
@@ -50,12 +63,10 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 			$.nirvana.sendRequest({
 				controller: 'Insights',
 				method: 'loopNotification',
-				format: 'html',
 				type: 'get',
 				data: {
 					insight: insights,
 					isEdit: isEdit,
-					isFixed: isFixed,
 					article: window.wgPageName
 				},
 				callback: showNotification
