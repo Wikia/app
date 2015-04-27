@@ -44,17 +44,22 @@ $gradient-offset: $legacy-background-shift + $gradient-width;
 
 		&:after {
 			background-position: -$background-width-half 0;
+			/* @noflip */
 			margin-right: $background-margin;
+			/* @noflip */
 			right: 50%;
 		}
 
 		&::before {
 			background-position: 0;
+			/* @noflip */
 			left: 50%;
+			/* @noflip */
 			margin-left: $background-margin;
 		}
 
 		.background-image-gradient {
+			/* @noflip */
 			margin-left: -($background-halves-spacing / 2);
 			width: $background-halves-spacing;
 
@@ -69,7 +74,7 @@ $gradient-offset: $legacy-background-shift + $gradient-width;
 	}
 }
 
-body {
+body.skin-oasis {
 	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
 
 	&.background-not-tiled {
@@ -112,13 +117,17 @@ body {
 
 		&::before {
 			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
+			/* @noflip */
 			left: calc(50.1% - #{$legacy-background-shift});
+			/* @noflip */
 			margin-left: -$background-width-half;
 		}
 
 		.background-image-gradient {
 			background: $color-body-middle;
+			/* @noflip */
 			left: 50%;
+			/* @noflip */
 			margin-left: -#{$legacy-background-shift};
 			width: $legacy-background-shift-both-sides;
 
