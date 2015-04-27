@@ -35,11 +35,28 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 			tracker.track(trackingParams);
 		}
 
+		/**
+		 * Add log for success banner impression if status is fixed
+		 */
+		function successTrack() {
+			if(itemStatus==='fixed') {
+				/* Track a click on an insights type link */
+				var trackingParams = {
+					trackingMethod: 'both',
+					category: 'insights-loop-notification',
+					action: tracker.ACTIONS.IMPRESSION,
+					label: insightType + '-' + itemStatus
+				};
+				tracker.track(trackingParams);
+			}
+		}
+
 		function init(event, bannerNotification) {
 			/* Setup click events within BannerNotification */
 			bannerNotification.$element.find('#InsightsBackToListButton').click('back-to-list', onClickTrack);
 			bannerNotification.$element.find('#InsightsNextPageButton').click('next-page', onClickTrack);
 			bannerNotification.$element.find('button.close').click('dismiss', onClickTrack);
+			successTrack();
 		}
 
 		return {
