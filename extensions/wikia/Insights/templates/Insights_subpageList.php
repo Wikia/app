@@ -1,10 +1,10 @@
 <div class="insights-container-nav <?= $themeClass ?>">
 	<ul class="insights-nav-list">
-		<? foreach( InsightsHelper::$insightsPages as $key => $page ) : ?>
+		<? foreach( InsightsHelper::getMessageKeys() as $key => $messages ) : ?>
 			<?php $subpage == $key ? $class = 'active' : $class = '' ?>
 			<li class="insights-nav-item insights-icon-<?= $key ?> <?= $class ?>">
 				<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>" class="insights-nav-link">
-					<?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $key )->escaped() ?>
+					<?= wfMessage( $messages['subtitle'] )->escaped() ?>
 				</a>
 			</li>
 		<? endforeach; ?>
@@ -17,7 +17,7 @@
 			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->escaped() ?></p>
 		</div>
 		<div class="insights-content">
-			<ul class="insights-list">
+			<ul class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
 				<?php foreach( $content as $item ): ?>
 					<li class="insights-list-item">
 						<a class="insights-list-item-title <?= $item['link']['classes'] ?>" title="<?= $item['link']['title'] ?>" href="<?= $item['link']['url'] ?>"><?= $item['link']['text'] ?></a>

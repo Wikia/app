@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class InsightsWantedpagesModel
+ * A class specific to a subpage with a list of pages
+ * that do not exist and have been referred to.
+ */
 class InsightsWantedpagesModel extends InsightsQuerypageModel {
 	const INSIGHT_TYPE = 'wantedpages';
 
@@ -31,6 +36,12 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 		return self::INSIGHT_TYPE;
 	}
 
+	/**
+	 * Checks if a given article has been fixed by a user
+	 * inside a productivity loop.
+	 * @param Title $title
+	 * @return bool
+	 */
 	public function isItemFixed( Title $title ) {
 		if( $title->getArticleID() !== 0 ) {
 			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $title );
@@ -38,7 +49,15 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 		return false;
 	}
 
-	private function makeWlhLink( $title, $result ) {
+	/**
+	 * Prepares a link to a Special:WhatLinksHere page
+	 * for the article
+	 * @param Title $title The target article's title object
+	 * @param $result A number of referring links
+	 * @return string A URL to the WLH page
+	 * @throws MWException
+	 */
+	private function makeWlhLink( Title $title, $result ) {
 		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
 		$label = wfMessage( 'insights-wanted-by' )->numParams( $result->value )->escaped();
 		return Linker::link( $wlh, $label );

@@ -2,7 +2,7 @@
 
 class InsightsHelper {
 	/**
-	 * covers messages:
+	 * Used to create the following messages:
 	 *
 	 * 'insights-list-subtitle-uncategorizedpages',
 	 * 'insights-list-subtitle-withoutimages',
@@ -12,7 +12,7 @@ class InsightsHelper {
 	const INSIGHT_SUBTITLE_MSG_PREFIX = 'insights-list-subtitle-';
 
 	/**
-	 * covers messages:
+	 * Used to create the following messages:
 	 *
 	 * 'insights-list-description-uncategorizedpages',
 	 * 'insights-list-description-withoutimages',
@@ -22,7 +22,7 @@ class InsightsHelper {
 	const INSIGHT_DESCRIPTION_MSG_PREFIX = 'insights-list-description-';
 
 	/**
-	 * covers messages:
+	 * Used to create the following messages:
 	 *
 	 * 'insights-notification-message-inprogress-uncategorizedpages',
 	 * 'insights-notification-message-inprogress-withoutimages',
@@ -32,7 +32,7 @@ class InsightsHelper {
 	const INSIGHT_INPROGRESS_MSG_PREFIX = 'insights-notification-message-inprogress-';
 
 	/**
-	 * covers messages:
+	 * Used to create the following messages:
 	 *
 	 * 'insights-notification-message-fixed-uncategorizedpages',
 	 * 'insights-notification-message-fixed-withoutimages',
@@ -50,7 +50,6 @@ class InsightsHelper {
 
 	/**
 	 * Gets pageviews for given articles
-	 * TODO: Are we going to show all pageviews or for some time pertiod?
 	 *
 	 * @param array $articleIds
 	 * @param $wikiId
@@ -71,6 +70,11 @@ class InsightsHelper {
 		// TODO: Finish during work on dispalying page views
 	}
 
+	/**
+	 * Returns a full URL for a known subpage and a NULL for an unknown one.
+	 * @param $subpage A slug of subpage
+	 * @return String|null
+	 */
 	public static function getSubpageLocalUrl( $subpage ) {
 		if ( isset( self::$insightsPages[$subpage] ) ) {
 			return SpecialPage::getTitleFor( 'Insights', $subpage )->getLocalURL();
@@ -79,9 +83,9 @@ class InsightsHelper {
 	}
 
 	/**
-	 * Check if given subpage exists as an insight page
+	 * Checks if a given subpage is known
 	 *
-	 * @param $category
+	 * @param $subpage A slug of a subpage
 	 * @return bool
 	 */
 	public static function isInsightPage( $subpage ) {
@@ -106,11 +110,11 @@ class InsightsHelper {
 	}
 
 	/**
-	 * Returns specific data provider
-	 * If it doesn't exists redirect to Special:Insights main page
+	 * Returns a specific subpage model
+	 * If it does not exist a user is redirected to the Special:Insights landing page
 	 *
-	 * @param $subpage String Insights subpage name
-	 * @return mixed
+	 * @param $subpage A slug of a subpage
+	 * @return InsightsModel|null
 	 */
 	public static function getInsightModel( $subpage ) {
 		if ( self::isInsightPage( $subpage ) ) {
@@ -124,13 +128,13 @@ class InsightsHelper {
 	}
 
 	/**
-	 * Prepare link data
+	 * Prepare a data to create a link element
 	 *
-	 * @param Title $title
+	 * @param Title $title A target article's Title object
 	 * @param $params
 	 * @return array
 	 */
-	public static function getTitleLink(Title $title, $params) {
+	public static function getTitleLink( Title $title, $params ) {
 		$data = [
 			'text' => $title->getText(),
 			'url' => $title->getFullURL( $params ),
@@ -144,5 +148,22 @@ class InsightsHelper {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Returns an array of basic messages keys associated with slugs of subpages
+	 * (subtitle and description). Used mainly to generate navigation elements.
+	 *
+	 * @return array
+	 */
+	public static function getMessageKeys() {
+		$messageKeys = [];
+		foreach ( self::$insightsPages as $key => $class ) {
+			$messageKeys[$key] = [
+				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
+				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
+			];
+		}
+		return $messageKeys;
 	}
 }
