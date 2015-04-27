@@ -30,33 +30,42 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 				trackingMethod: 'both',
 				category: 'insights-loop-notification',
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: insightType+'-'+itemStatus+'-'+linkType.data
+				label: insightType + '-' + itemStatus + '-' + linkType.data
 			};
 			tracker.track(trackingParams);
 		}
 
 		/**
 		 * Add log for success banner impression if status is fixed
+		 * @param object $nextPageButton
 		 */
-		function successTrack() {
+		function successTrack($nextPageButton) {
+			var statusToLog;
 			if(itemStatus==='fixed') {
-				/* Track a click on an insights type link */
+				if ($nextPageButton.length===0) {
+					/* Next button doesn't exist - log all done success */
+					statusToLog = 'alldone';
+				} else {
+					/* Next button exists - log regular fixed success */
+					statusToLog = itemStatus;
+				}
 				var trackingParams = {
 					trackingMethod: 'both',
 					category: 'insights-loop-notification',
 					action: tracker.ACTIONS.IMPRESSION,
-					label: insightType + '-' + itemStatus
+					label: insightType + '-' + statusToLog
 				};
 				tracker.track(trackingParams);
 			}
 		}
 
 		function init(event, bannerNotification) {
+			var $nextPageButton = bannerNotification.$element.find('#InsightsNextPageButton');
 			/* Setup click events within BannerNotification */
 			bannerNotification.$element.find('#InsightsBackToListButton').click('back-to-list', onClickTrack);
-			bannerNotification.$element.find('#InsightsNextPageButton').click('next-page', onClickTrack);
+			$nextPageButton.click('next-page', onClickTrack);
 			bannerNotification.$element.find('button.close').click('dismiss', onClickTrack);
-			successTrack();
+			successTrack($nextPageButton);
 		}
 
 		return {
