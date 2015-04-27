@@ -11,6 +11,7 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 		qs: {
 			getVal: noop
 		},
+		getInstantGlobals: function () { return {}; },
 		querystring: function () {
 			return mocks.qs;
 		},
@@ -18,7 +19,7 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 	};
 
 	function getModule() {
-		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.log, mocks.querystring, mocks.win);
+		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.getInstantGlobals(), mocks.log, mocks.querystring, mocks.win);
 	}
 
 	it('now is not valid when wgPaidAssetDropConfig is not set', function () {
@@ -90,8 +91,29 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 	it('URL param', function () {
 		var config = false;
 		spyOn(mocks, 'querystring').and.returnValue({
-			getVal: function () {
-				return '1';
+			getVal: function (param) {
+				return param === 'forcepad' ? '1' : undefined;
+			}
+		});
+		expect(getModule().isNowValid(config)).toEqual(true);
+	});
+
+	it('Disaster recovery', function () {
+		var config = false;
+		spyOn(mocks, 'getInstantGlobals').and.returnValue({
+			wgSitewideDisablePaidAssetDrop: true
+		});
+		expect(getModule().isNowValid(config)).toEqual(false);
+	});
+
+	it('Disaster recovery + URL param', function () {
+		var config = false;
+		spyOn(mocks, 'getInstantGlobals').and.returnValue({
+			wgSitewideDisablePaidAssetDrop: true
+		});
+		spyOn(mocks, 'querystring').and.returnValue({
+			getVal: function (param) {
+				return param === 'forcepad' ? '1' : undefined;
 			}
 		});
 		expect(getModule().isNowValid(config)).toEqual(true);
