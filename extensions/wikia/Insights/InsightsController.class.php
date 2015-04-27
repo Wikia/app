@@ -47,15 +47,26 @@ class InsightsController extends WikiaSpecialPageController {
 			$model = InsightsHelper::getInsightModel( $subpage );
 			if ( $model instanceof InsightsModel ) {
 				$articleName = $this->getVal('article', null);
+				$title = Title::newFromText( $articleName );
+
 				$next = $model->getNextItem( $model->getInsightType(), $articleName );
 
 				$isFixed = $this->request->getVal('isFixed', null);
+				$isEdit = $this->request->getBool('isEdit', false );
 
-				if ( $this->request->getBool('isEdit', false ) || $isFixed == 'notfixed' ) {
+				if( !empty( $isFixed ) ) {
+					$isFixed = ( $isFixed === 'fixed' );
+				} elseif( !$isEdit ) {
+					$isFixed = $model->isItemFixed( $title );
+				}
+
+				$this->response->setVal( 'isFixed', $isFixed );
+
+				if ( $isEdit || !$isFixed ) {
 					$this->setInProgressNotification( $subpage );
-				} elseif ( $isFixed == 'fixed' && empty( $next ) ) {
+				} elseif ( $isFixed && empty( $next ) ) {
 					$this->setCongratulationsNotification( $subpage );
-				} elseif ( $isFixed == 'fixed' ) {
+				} elseif ( $isFixed ) {
 					$this->setInsightFixedNotification( $next, $subpage );
 				}
 			}

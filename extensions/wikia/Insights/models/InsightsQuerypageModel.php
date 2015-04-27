@@ -14,7 +14,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$limit = 100;
 
 	abstract function getDataProvider();
-	abstract function isItemFixed( Article $article );
+	abstract function isItemFixed( Title $title );
 
 	protected function getQueryPageInstance() {
 		return $this->queryPageInstance;

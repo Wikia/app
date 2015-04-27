@@ -40,7 +40,7 @@ class InsightsHooks {
 			$extraQuery .= 'insights=' . $subpage;
 
 			$model = InsightsHelper::getInsightModel( $subpage );
-			$isItemFixed = $model->isItemFixed( $article );
+			$isItemFixed = $model->isItemFixed( $article->getTitle() );
 			if ( $isItemFixed ) {
 				$extraQuery .= '&item_status=fixed';
 			} else {

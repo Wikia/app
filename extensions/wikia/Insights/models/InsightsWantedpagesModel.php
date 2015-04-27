@@ -31,9 +31,9 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 		return self::INSIGHT_TYPE;
 	}
 
-	public function isItemFixed( Article $article ) {
-		if( $article->getID() !== 0 ) {
-			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $article->getTitle() );
+	public function isItemFixed( Title $title ) {
+		if( $title->getArticleID() !== 0 ) {
+			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $title );
 		}
 		return false;
 	}
