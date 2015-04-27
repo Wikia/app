@@ -24,7 +24,6 @@ class AdEngine2Hooks {
 			$wgAdDriverForceLiftiumAd,
 			$wgAdDriverForceOpenXAd,
 			$wgAdDriverForceTurtleAd,
-			$wgAdDriverUseMonetizationService,
 			$wgAdDriverUseSevenOneMedia,
 			$wgAdEngineDisableLateQueue,
 			$wgEnableKruxOnMobile,
@@ -46,7 +45,7 @@ class AdEngine2Hooks {
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
 
 		// use PostScribe with 71Media - check scriptwriter.js:35
-		if ( $wgAdDriverUseSevenOneMedia || $wgAdDriverUseMonetizationService ) {
+		if ( $wgAdDriverUseSevenOneMedia ) {
 			$wgUsePostScribe = true;
 		}
 
