@@ -1,7 +1,7 @@
 <?php
 
 class WallThread {
-	const DATABASE_LIMIT = 500;
+	const FETCHED_REPLIES_LIMIT = 500;
 
 	private $mThreadId = false;
 	private $mCached = null;
@@ -105,7 +105,7 @@ class WallThread {
 				$conditions,
 				__METHOD__,
 				[ 'ORDER BY' => 'comment_id ASC',
-					'LIMIT' => self::DATABASE_LIMIT ]
+					'LIMIT' => self::FETCHED_REPLIES_LIMIT ]
 		);
 
 		$list = [];
