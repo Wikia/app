@@ -16,12 +16,6 @@ class InsightsHooks {
 			$out->addScriptFile('/extensions/wikia/Insights/scripts/InsightsLoopNotificationTracking.js');
 		}
 
-		// Load scripts for Special:Insights
-		if ( F::app()->wg->title->isSpecial( 'Insights' ) ) {
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/InsightsIndexPageTracking.js' );
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/InsightsListTracking.js' );
-		}
-
 		return true;
 	}
 
