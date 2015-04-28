@@ -12,77 +12,79 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 		'use strict';
 
 		var qs = new Querystring(),
-			insightType = qs.getVal('insights', null),
-			itemStatus = qs.getVal('item_status', null);
+			track,
+			isEdit = false,
+			isFixed = false,
+			notificationType,
+			status,
+			insightType = qs.getVal('insights', null);
 
-		/* If there's no itemStatus use action parameter
-		 * when item status is empty and action not we're in edit mode
-		 */
-		if (itemStatus === null) {
-			itemStatus = qs.getVal('action', null);
-		}
+		track = Wikia.Tracker.buildTrackingFunction({
+			category: 'insights-loop-notification',
+			trackingMethod: 'both',
+			action: tracker.ACTIONS.CLICK_LINK_TEXT
+		});
 
 		/**
 		 * Log tracking data on clicks on BannerNotification buttons
 		 * @param object e
 		 */
 		function linkTrack(e) {
-			/* Track a click on an insights type link */
-			var trackingParams = {
-				trackingMethod: 'both',
-				category: 'insights-loop-notification',
-				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: insightType + '-' + itemStatus + '-' + e.data
-			};
-			tracker.track(trackingParams);
-		}
+			var action,
+				$target = $(e.target);
 
-		function onKeydownTrack(e) {
-			if(e.keyCode === 13) {// Enter keycode
-				linkTrack(e);
+			if(e.type === 'keydown' && e.keyCode !== 13) {
+				return;
 			}
+
+			if ($target.hasClass('close')) {
+				action = 'dismiss';
+			} else {
+				action = $target.attr('data-type');
+			}
+
+			track({
+				label: insightType + '-' + status + '-' + action
+			});
 		}
 
 		/**
 		 * Add log for success banner impression if status is fixed
 		 * @param object $nextPageButton
 		 */
-		function successTrack($nextPageButton) {
-			var statusToLog;
-			if(itemStatus==='fixed') {
-				if ($nextPageButton.length===0) {
-					/* Next button doesn't exist - log all done success */
-					statusToLog = 'alldone';
-				} else {
-					/* Next button exists - log regular fixed success */
-					statusToLog = itemStatus;
-				}
-				var trackingParams = {
-					trackingMethod: 'both',
-					category: 'insights-loop-notification',
+		function successTrack() {
+			if(isFixed) {
+				track({
 					action: tracker.ACTIONS.IMPRESSION,
-					label: insightType + '-' + statusToLog
-				};
-				tracker.track(trackingParams);
+					label: insightType + '-' + status
+				});
 			}
 		}
 
-		function init(event, bannerNotification) {
-			var $nextPageButton = bannerNotification.$element.find('#InsightsNextPageButton'),
-				$backToListButton = bannerNotification.$element.find('#InsightsBackToListButton'),
-				$closeButton = bannerNotification.$element.find('button.close');
-			/* Setup click events within BannerNotification - using mousedown and keydown for earlier detect */
-			$backToListButton.mousedown('back-to-list', linkTrack);
-			$backToListButton.keydown('back-to-list', onKeydownTrack);
-			$nextPageButton.mousedown('next-page', linkTrack);
-			$nextPageButton.keydown('next_page', onKeydownTrack);
-			$closeButton.mousedown('dismiss', linkTrack);
-			$closeButton.keydown('dismiss', onKeydownTrack);
-			successTrack($nextPageButton);
+		function setStatus() {
+			if (isEdit) {
+				status = 'edit';
+			} else {
+				status = notificationType;
+			}
+		}
+
+		function init() {
+			$('#WikiaPage').on('mousedown keydown', '.banner-notification a, .banner-notification .close', linkTrack);
+			successTrack();
+		}
+
+		function setParams(edit, fixed, type) {
+			isEdit = edit;
+			isFixed = fixed;
+			notificationType = type;
+
+			setStatus();
 		}
 
 		return {
-			init: init
+			init: init,
+			setParams: setParams
 		};
 	}
 );

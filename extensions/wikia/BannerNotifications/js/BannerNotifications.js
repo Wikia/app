@@ -55,7 +55,6 @@
 			this.type = type;
 			this.timeout = timeout;
 		}
-		this.onShowHandler = Function.prototype;
 		this.onCloseHandler = Function.prototype;
 	}
 
@@ -80,8 +79,6 @@
 		}
 
 		addToDOM(this.$element, this.$parent);
-
-		this.onShowHandler(event, this);
 
 		this.hidden = false;
 
@@ -163,18 +160,6 @@
 	BannerNotification.prototype.onClose = function (callback) {
 		if (typeof callback === 'function') {
 			this.onCloseHandler = callback;
-		}
-		return this;
-	};
-
-	/**
-	 * Allows to attach a handler to a notification show event
-	 * @param {Function} callback
-	 * @returns {BannerNotification}
-	 */
-	BannerNotification.prototype.onShow = function (callback) {
-		if (typeof callback === 'function') {
-			this.onShowHandler = callback;
 		}
 		return this;
 	};

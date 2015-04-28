@@ -24,7 +24,6 @@ require(
 			isEdit = false,
 			initNotification,
 			showNotification,
-			onShowNotification,
 			notification,
 			notificationType,
 			getMessageType,
@@ -44,19 +43,13 @@ require(
 					if (notification) {
 						notification.hide();
 					}
-					notification = new BannerNotification(response.html, msgType, $parent);
-					notification.onShow(onShowNotification);
-					notification.show();
+					notification = new BannerNotification(response.html, msgType, $parent).show();
 				}
+
+				loopNotificationTracking.setParams(isEdit, isFixed, notificationType);
 
 				$('#InsightsNextPageButton').focus();
 			}
-		};
-
-		onShowNotification = function(event, bannerNotification) {
-			bannerNotification.$element.find('#InsightsNextPageButton').focus();
-			// TODO pass notificationType as tracking param
-			loopNotificationTracking.init(event, bannerNotification);
 		};
 
 		getMessageType = function() {
@@ -89,7 +82,6 @@ require(
 			});
 		};
 
-
 		if (insights) {
 			if (isVE) {
 				window.mw.hook('ve.deactivationComplete').add(function(saved){
@@ -108,6 +100,8 @@ require(
 				isEdit = window.wgIsEditPage;
 				initNotification();
 			}
+
+			loopNotificationTracking.init();
 		}
 	});
 });
