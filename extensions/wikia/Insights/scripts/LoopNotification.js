@@ -16,76 +16,92 @@ require(
 {
 	'use strict';
 
-	var qs = new Querystring(),
-		insights = qs.getVal('insights', null),
-		isVE = qs.getVal('veaction', null),
-		isFixed = qs.getVal('item_status', null),
-		initNotification,
-		showNotification,
-		onShowNotification,
-		getNotificationType,
-		getParent;
-
-	showNotification = function(html) {
-		if (html) {
-			var msgType = getNotificationType(),
-				$parent = getParent(),
-				bn = new BannerNotification(html, msgType, $parent);
-
-			bn.onShow(onShowNotification);
-			bn.show();
-		}
-	};
-
-	onShowNotification = function(event, bannerNotification) {
-		bannerNotification.$element.find('#InsightsNextPageButton').focus();
-		// TODO pass notificationType as tracking param
-		loopNotificationTracking.init(event, bannerNotification);
-	}
-
-	getNotificationType = function() {
-		if (window.wgIsEditPage || isFixed === 'notfixed') {
-			return 'warn';
-		} else {
-			return 'confirm';
-		}
-	};
-
-	getParent = function() {
-		if (window.wgIsEditPage) {
-			return $('#WikiaMainContent');
-		} else {
-			return null;
-		}
-	};
-
-	initNotification = function() {
-		$.nirvana.sendRequest({
-			controller: 'Insights',
-			method: 'loopNotification',
-			format: 'html',
-			type: 'get',
-			data: {
-				insight: insights,
-				isEdit: window.wgIsEditPage,
-				isFixed: isFixed,
-				article: window.wgPageName
-			},
-			callback: showNotification
-		});
-	};
-
 	$(function () {
+		var qs = new Querystring(),
+			insights = qs.getVal('insights', null),
+			isVE = qs.getVal('veaction', null),
+			isFixed = false,
+			isEdit = false,
+			initNotification,
+			showNotification,
+			notification,
+			notificationType,
+			getMessageType,
+			getParent;
+
+		showNotification = function(response) {
+			if (response) {
+				var msgType,
+					$parent = getParent();
+
+				isFixed = response.isFixed;
+				msgType = getMessageType();
+
+				if (notificationType !== response.notificationType) {
+					notificationType = response.notificationType;
+
+					if (notification) {
+						notification.hide();
+					}
+					notification = new BannerNotification(response.html, msgType, $parent).show();
+				}
+
+				loopNotificationTracking.setParams(isEdit, isFixed, notificationType);
+
+				$('#InsightsNextPageButton').focus();
+			}
+		};
+
+		getMessageType = function() {
+			if (isEdit || !isFixed) {
+				return 'warn';
+			} else {
+				return 'confirm';
+			}
+		};
+
+		getParent = function() {
+			if (window.wgIsEditPage) {
+				return $('#WikiaMainContent');
+			} else {
+				return null;
+			}
+		};
+
+		initNotification = function() {
+			$.nirvana.sendRequest({
+				controller: 'Insights',
+				method: 'loopNotification',
+				type: 'get',
+				data: {
+					insight: insights,
+					isEdit: isEdit,
+					article: window.wgPageName
+				},
+				callback: showNotification
+			});
+		};
+
 		if (insights) {
 			if (isVE) {
 				window.mw.hook('ve.deactivationComplete').add(function(saved){
 					if (saved) {
+						isEdit = false;
 						initNotification();
 					}
 				});
+
+				window.mw.hook('ve.activationComplete').add(function(){
+					isEdit = true;
+					initNotification();
+				});
+
 			} else {
+				isEdit = window.wgIsEditPage;
 				initNotification();
 			}
+
+			loopNotificationTracking.init();
 		}
 	});
 });
