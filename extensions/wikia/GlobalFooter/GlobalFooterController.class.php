@@ -37,6 +37,7 @@ class GlobalFooterController extends WikiaController {
 
 		$globalFooterLinks = $wgMemc->get( $memcKey );
 		if ( !empty( $globalFooterLinks ) ) {
+			wfProfileOut( __METHOD__ );
 			return $globalFooterLinks;
 		}
 
