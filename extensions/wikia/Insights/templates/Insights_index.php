@@ -6,7 +6,7 @@
 	<div class="insights-landing-nav">
 		<ul class="insights-landing-nav-list">
 			<?php foreach( InsightsHelper::$insightsPages as $key => $subpage ) : ?>
-				<li class="insights-landing-nav-item insights-icon-<?= $key ?>">
+				<li class="insights-landing-nav-item insights-icon-<?= $key ?>" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
 					<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>">
 						<h3><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $key )->escaped() ?></h3>
 					</a>

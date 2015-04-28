@@ -4,8 +4,15 @@
  */
 
 /* global require */
-require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
-	function ($, BannerNotification, Querystring, window)
+require(
+	[
+		'jquery',
+		'BannerNotification',
+		'wikia.querystring',
+		'wikia.window',
+		'ext.wikia.Insights.LoopNotificationTracking'
+	],
+	function ($, BannerNotification, Querystring, window, loopNotificationTracking)
 {
 	'use strict';
 
@@ -38,6 +45,8 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 					}
 					notification = new BannerNotification(response.html, msgType, $parent).show();
 				}
+
+				loopNotificationTracking.setParams(isEdit, isFixed, notificationType);
 
 				$('#InsightsNextPageButton').focus();
 			}
@@ -73,7 +82,6 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 			});
 		};
 
-
 		if (insights) {
 			if (isVE) {
 				window.mw.hook('ve.deactivationComplete').add(function(saved){
@@ -92,6 +100,8 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 				isEdit = window.wgIsEditPage;
 				initNotification();
 			}
+
+			loopNotificationTracking.init();
 		}
 	});
 });
