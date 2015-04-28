@@ -49,8 +49,10 @@ $(function () {
 		 * Only used in Oasis
 		 */
 		initAddVideo: function () {
-			var addVideoButton = $('.addVideo');
+			var addVideoButton = $('.addVideo'),
+				videoEmbedMain2 = $('#VideoEmbedMain');
 			if ($.isFunction($.fn.addVideoButton)) {
+				var videoEmbedMain = $('#VideoEmbedMain');
 				addVideoButton.addVideoButton({
 					callbackAfterSelect: function (url, VET) {
 						$.nirvana.postJson(
@@ -65,6 +67,10 @@ $(function () {
 							// success callback
 							function (formRes) {
 								SpecialVideos.bannerNotification.hide();
+								require( ['wikia.throbber'], function( throbber ) {
+									console.log("throbber OFF");
+									throbber.remove(videoEmbedMain);
+								});
 								if (formRes.error) {
 									SpecialVideos.bannerNotification
 										.setContent(formRes.error)
@@ -76,11 +82,20 @@ $(function () {
 							},
 							// error callback
 							function () {
+								require( ['wikia.throbber'], function( throbber ) {
+									console.log("throbber OFF");
+									throbber.remove(videoEmbedMain);
+								} );
 								SpecialVideos.bannerNotification
 									.setContent($.msg('vet-error-while-loading'))
 									.show();
 							}
 						);
+						require( ['wikia.throbber'], function( throbber ) {
+							console.log("throbber ON");
+							console.log("videoEmbedMain: ", videoEmbedMain);
+							throbber.show(videoEmbedMain);
+						});
 						// Don't move on to second VET screen.  We're done.
 						return false;
 					}
