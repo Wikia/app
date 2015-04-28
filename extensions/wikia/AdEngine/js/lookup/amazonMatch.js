@@ -106,7 +106,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			});
 		}
 
-		log(['onAmazonResponse::end', bestPricePointForSize], 'debug', logGroup);
+		log(['onAmazonResponse - end', bestPricePointForSize], 'debug', logGroup);
 
 		trackState(true);
 	}
@@ -173,7 +173,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	}
 
 	function getSlotParams(slotName) {
-		log(['getSlotParams'], 'debug', logGroup);
+		log(['getSlotParams', slotName], 'debug', logGroup);
 
 		var amznSlots = [];
 
