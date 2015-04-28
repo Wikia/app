@@ -30,9 +30,8 @@ require(
 		if (html) {
 			var msgType = getNotificationType(),
 				$parent = getParent(),
-				bn;
+				bn = new BannerNotification(html, msgType, $parent);
 
-			bn = new BannerNotification(html, msgType, $parent);
 			bn.onShow(onShowNotification);
 			bn.show();
 		}
