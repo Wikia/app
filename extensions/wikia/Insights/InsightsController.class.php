@@ -81,7 +81,6 @@ class InsightsController extends WikiaSpecialPageController {
 
 				$isEdit = $this->request->getBool('isEdit', false );
 
-
 				if( !$isEdit ) {
 					$isFixed = $model->isItemFixed( $title );
 				}
