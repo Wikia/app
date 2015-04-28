@@ -38,6 +38,11 @@ $messages['en'] = [
 	'insights-notification-list-button' => 'Back to the list',
 	'insights-notification-see-more' => 'See more insights.',
 	'insights-wanted-by' => '$1 referral links',
+
+	/**
+	 * WikiActivity module
+	 */
+	'insights-module-see-more' => 'See more insights',
 ];
 
 $messages['qqq'] = [

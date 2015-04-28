@@ -9,4 +9,5 @@
 			</li>
 		<? endforeach; ?>
 	</ul>
+	<a class="more" href="<?= SpecialPage::getTitleFor( 'Insights' )->getFullURL() ?>"><?= wfMessage( 'insights-module-see-more' )->escaped() ?></a>
 </section>
