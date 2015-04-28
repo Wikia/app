@@ -106,6 +106,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			});
 		}
 
+		log(['onAmazonResponse::end', bestPricePointForSize], 'debug', logGroup);
+
 		trackState(true);
 	}
 
@@ -139,7 +141,6 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		s.async = true;
 		s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + amazonId + '&u=' + url + '&cb=' + cb;
 		doc.body.appendChild(s);
-
 	}
 
 	function wasCalled() {
@@ -165,9 +166,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	}
 
 	function checkIfObjectKeysNotSupported(functionName, retval) {
-		log([functionName, 'no Object.keys (IE8?)'], 'error', logGroup);
-
-		if (retval) {
+		if (!Object.keys && retval) {
+			log([functionName, 'no Object.keys (IE8?)'], 'error', logGroup);
 			return retval;
 		}
 	}
@@ -188,6 +188,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 				amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
 			}
 		});
+
+		log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
 
 		if (amznSlots.length) {
 			return {
