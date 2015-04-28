@@ -39,12 +39,12 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 	/**
 	 * Checks if a given article has been fixed by a user
 	 * inside a productivity loop.
-	 * @param Article $article
+	 * @param Title $title
 	 * @return bool
 	 */
-	public function isItemFixed( Article $article ) {
-		if( $article->getID() !== 0 ) {
-			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $article->getTitle() );
+	public function isItemFixed( Title $title ) {
+		if( $title->getArticleID() !== 0 ) {
+			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $title );
 		}
 		return false;
 	}

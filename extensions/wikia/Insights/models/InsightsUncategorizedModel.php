@@ -19,11 +19,10 @@ class InsightsUncategorizedModel extends InsightsQuerypageModel {
 	/**
 	 * Checks if a given article has been fixed by a user
 	 * inside a productivity loop.
-	 * @param Article $article
+	 * @param Title $title
 	 * @return bool
 	 */
-	public function isItemFixed( Article $article ) {
-		$title = $article->getTitle();
+	public function isItemFixed( Title $title ) {
 		$categories = $title->getParentCategories( true );
 		if ( !empty( $categories ) ) {
 			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $title );

@@ -16,17 +16,18 @@ class InsightsDeadendModel extends InsightsQuerypageModel {
 		return self::INSIGHT_TYPE;
 	}
 
+
 	/**
 	 * Checks if a given article has been fixed by a user
 	 * inside a productivity loop.
-	 * @param Article $article
+	 * @param Title $title
 	 * @return bool
 	 */
-	public function isItemFixed( Article $article ) {
+	public function isItemFixed( Title $title ) {
 		$dbr = wfGetDB( DB_MASTER );
-		$row = $dbr->selectRow( 'pagelinks', '*' , [ 'pl_from' => $article->getID() ] );
+		$row = $dbr->selectRow( 'pagelinks', '*' , [ 'pl_from' => $title->getArticleID() ] );
 		if ( $row ) {
-			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $article->getTitle() );
+			return $this->removeFixedItem( ucfirst( self::INSIGHT_TYPE ), $title );
 		}
 		return false;
 	}
