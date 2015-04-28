@@ -10,8 +10,10 @@ class InsightsHooks {
 
 		$subpage = $wgRequest->getVal( 'insights', null );
 
+		// Load scripts for pages in insights loop
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopNotification.js' );
+			$out->addScriptFile('/extensions/wikia/Insights/scripts/LoopNotification.js');
+			$out->addScriptFile('/extensions/wikia/Insights/scripts/InsightsLoopNotificationTracking.js');
 		}
 
 		return true;
@@ -54,7 +56,7 @@ class InsightsHooks {
 	}
 
 	/**
-	 * Disable create new page popup and go directy to edit page to keep Insights flow
+	 * Disable create new page popup and go directly to edit page to keep Insights flow
 	 *
 	 * @param array $vars
 	 * @return bool
@@ -67,6 +69,12 @@ class InsightsHooks {
 		return true;
 	}
 
+	/**
+	 * Add a right rail module to the Special:WikiActivity page
+	 *
+	 * @param array $railModuleList
+	 * @return bool
+	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle, $wgUser;
 
