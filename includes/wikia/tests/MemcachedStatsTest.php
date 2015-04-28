@@ -82,8 +82,40 @@ class MemcachedStatsTest extends WikiaBaseTest {
 				'expected' => 'wikicities:WallNotificationsOwner:*:*'
 			],
 			[
+				'key' => 'wikicities:WallNotificationEntity:v32:100260_15217:notification',
+				'expected' => 'wikicities:WallNotificationEntity:*:*:*:notification'
+			],
+			[
+				'key' => 'wikicities:MemcacheSyncLock:wikicities:WallNotifications:1234:1164405v31',
+				'expected' => 'wikicities:MemcacheSyncLock:wikicities:WallNotifications:*:*'
+			],
+			[
 				'key' => 'AssetsManagerSassBuilder-minified-ff5434c76b952082c64416c7bd05417a',
 				'expected' => 'AssetsManagerSassBuilder:minified:*'
+			],
+			[
+				'key' => 'WikiaApiQueryAllUsers::getUsersForGroup-vstf-902227',
+				'expected' => 'WikiaApiQueryAllUsers::getUsersForGroup:vstf:*'
+			],
+			[
+				'key' => 'wikia:talk_messages:1234:ViniSD',
+				'expected' => 'wikia:talk_messages:*'
+			],
+			[
+				'key' => 'wikicities:InterwikiDispatcher::isWikiExists:es.mario',
+				'expected' => 'wikicities:InterwikiDispatcher::isWikiExists:*'
+			],
+			[
+				'key' => 'wikicities:UserCache:Zephyr135',
+				'expected' => 'wikicities:UserCache:*'
+			],
+			[
+				'key' => 'wikicities:datamart:1234:wam:374799-withDate',
+				'expected' => 'wikicities:datamart:*:wam:*:withDate'
+			],
+			[
+				'key' => 'wikicities:filepage:globalusage:etspikri:123',
+				'expected' => 'wikicities:filepage:globalusage:*'
 			],
 		];
 	}
