@@ -22,6 +22,7 @@ require(
 		isFixed = qs.getVal('item_status', null),
 		initNotification,
 		showNotification,
+		onShowNotification,
 		getNotificationType,
 		getParent;
 
@@ -32,11 +33,16 @@ require(
 				bn;
 
 			bn = new BannerNotification(html, msgType, $parent);
-			bn.onShow(loopNotificationTracking.init);
+			bn.onShow(onShowNotification);
 			bn.show();
-			$('#InsightsNextPageButton').focus();
 		}
 	};
+
+	onShowNotification = function(event, bannerNotification) {
+		bannerNotification.$element.find('#InsightsNextPageButton').focus();
+		// TODO pass notificationType as tracking param
+		loopNotificationTracking.init(event, bannerNotification);
+	}
 
 	getNotificationType = function() {
 		if (window.wgIsEditPage || isFixed === 'notfixed') {
