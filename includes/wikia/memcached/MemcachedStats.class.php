@@ -15,6 +15,7 @@ class MemcachedStats {
 	// @see PLATFORM-1186
 	private static $keyPrefixesToNormalize = [
 		'wikifactory:domains:by_domain_hash:',
+		'wikicities:wikifactory:variables:metadata:',
 		'*:pcache:idhash:',
 	];
 
@@ -91,12 +92,16 @@ class MemcachedStats {
 			}
 		}
 
+		// normalize key parts separators
+		$key = str_replace( '-', ':', $key );
+		$key = str_replace( '_', ':', $key );
+
 		$parts = array_map(
 			function($part) {
-				// replace IP addresses, IDs and hashes with *
-				return ctype_xdigit( str_replace('.', '', $part) ) ? '*' : $part;
+				// replace IP addresses, IDs, "v1" suffixes and hashes with *
+				return ctype_xdigit( strtr( $part, '.v', '00' ) ) ? '*' : $part;
 			},
-			explode(':', str_replace( '-', ':', $key ) ) // treat both '-' and ':' as key parts separators
+			explode( ':', $key )
 		);
 
 		return implode(':', $parts);

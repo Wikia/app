@@ -42,7 +42,7 @@ class MemcachedStatsTest extends WikiaBaseTest {
 			],
 			[
 				'key' => self::WIKI_PREFIX . ':favicon-v1',
-				'expected' => '*:favicon:v1'
+				'expected' => '*:favicon:*'
 			],
 			[
 				'key' => self::WIKI_PREFIX . ':VoteHelper:VoteHelper::getUserCacheKey:123:0:84.77.150.66:VER1',
@@ -55,7 +55,7 @@ class MemcachedStatsTest extends WikiaBaseTest {
 			// shared keys
 			[
 				'key' => 'wikifactory:wikia:v1:1031256',
-				'expected' => 'wikifactory:wikia:v1:*'
+				'expected' => 'wikifactory:wikia:*:*'
 			],
 			[
 				'key' => 'extuser:119245:c6',
@@ -63,7 +63,7 @@ class MemcachedStatsTest extends WikiaBaseTest {
 			],
 			[
 				'key' => 'wikicities_c6:sharedLinks:1686:21e74e1deae71d1903d7a323d4eae53e',
-				'expected' => 'wikicities_c6:sharedLinks:*:*'
+				'expected' => 'wikicities:*:sharedLinks:*:*'
 			],
 			[
 				'key' => 'wikicities:WikiFactoryHub::getCategoryId:1031256',
@@ -72,6 +72,14 @@ class MemcachedStatsTest extends WikiaBaseTest {
 			[
 				'key' => 'wikifactory:domains:by_domain_hash:zombiesrun.wikia.com',
 				'expected' => 'wikifactory:domains:by_domain_hash:*'
+			],
+			[
+				'key' => 'wikicities:wikifactory:variables:metadata:v5:name:wgExtraNamespacesLocal',
+				'expected' => 'wikicities:wikifactory:variables:metadata:*'
+			],
+			[
+				'key' => 'wikicities:WallNotificationsOwner:997076_26295802v11',
+				'expected' => 'wikicities:WallNotificationsOwner:*:*'
 			],
 			[
 				'key' => 'AssetsManagerSassBuilder-minified-ff5434c76b952082c64416c7bd05417a',
