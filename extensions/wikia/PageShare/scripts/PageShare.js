@@ -32,8 +32,7 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 			url = win.location.origin + win.location.pathname,
 			result;
 		if (data.socialIcons) {
-			result = data.socialIcons.replace(/\$url/g, url);
-			result = result.replace(/title/g, win.document.title);
+			result = data.socialIcons.replace(/\$url/g, url).replace(/\$title/g, win.document.title);
 			$container.html(result)
 				.on('click', '.page-share a', shareLinkClick);
 		}
