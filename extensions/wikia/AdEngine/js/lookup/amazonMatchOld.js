@@ -53,24 +53,30 @@ define('ext.wikia.adEngine.lookup.amazonMatchOld', [
 		trackState(true);
 	}
 
-	function call() {
-		log('call', 'debug', logGroup);
+	function call(ac, geoCountryCode) {
+		if (ac && ac.indexOf && ac.indexOf(geoCountryCode) > -1) {
+			log('call', 'debug', logGroup);
 
-		amazonCalled = true;
-		amazonTiming = adTracker.measureTime('amazon', {}, 'start');
-		amazonTiming.track();
+			amazonCalled = true;
+			amazonTiming = adTracker.measureTime('amazon', {}, 'start');
+			amazonTiming.track();
 
-		var url = encodeURIComponent(doc.location),
-			s = doc.createElement('script');
+			var url = encodeURIComponent(doc.location),
+				s = doc.createElement('script');
 
-		try { url = encodeURIComponent(w.top.location.href); } catch(e) {}
+			try {
+				url = encodeURIComponent(w.top.location.href);
+			} catch (e) {
+			}
 
-		s.id = logGroup;
-		s.async = true;
-		s.onload = onAmazonResponse;
-		s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + amazonId + '&u=' + url + "&cb=" + Math.round(Math.random()*10000000);
-		doc.body.appendChild(s);
-
+			s.id = logGroup;
+			s.async = true;
+			s.onload = onAmazonResponse;
+			s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + amazonId + '&u=' + url + "&cb=" + Math.round(Math.random() * 10000000);
+			doc.body.appendChild(s);
+		} else {
+			log('call - skipped: wrong geo', 'debug', logGroup);
+		}
 	}
 
 	function wasCalled() {

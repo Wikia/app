@@ -25,12 +25,10 @@ class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 		require.optional($moduleName1), // new name
 		require.optional($moduleName2)  // old name
 	], function (geo, globals, amazon1, amazon2) {
-		var ac = globals[$instantGlobalName],
+		var amazonCountries = globals[$instantGlobalName],
 			amazon = amazon1 || amazon2;
 
-		if (ac && ac.indexOf && ac.indexOf(geo.getCountryCode()) > -1) {
-			amazon.call();
-		}
+		amazon.call(amazonCountries, geo.getCountryCode());
 	});
 CODE;
 
