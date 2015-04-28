@@ -10,19 +10,7 @@ class GlobalFooterController extends WikiaController {
 	const MEMC_EXPIRY = 3600;
 
 	public function index() {
-		Wikia::addAssetsToOutput('old_global_footer_scss');
-		Wikia::addAssetsToOutput('global_footer_js');
-
-		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
-		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
-		$this->response->setVal( 'isCorporate', WikiaPageType::isWikiaHomePage() );
-		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
-		$this->response->setVal( 'verticalNameMessage', $this->verticalNameMessage() );
-		$this->response->setVal( 'logoLink', $this->getLogoLink() );
-	}
-
-	public function indexUpdated() {
-		Wikia::addAssetsToOutput('updated_global_footer_scss');
+		Wikia::addAssetsToOutput('global_footer_scss');
 		Wikia::addAssetsToOutput('global_footer_js');
 
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
