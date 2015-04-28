@@ -63,6 +63,6 @@ class PageShareHelper {
 			$allowedInLanguage = $allowedInLanguage && !in_array( $lang, $service['languages:exclude'] );
 		}
 
-		return $allowedInLanguage && array_key_exists( 'url', $service ) && array_key_exists( 'title', $service ) && array_key_exists( 'name', $service );
+		return $allowedInLanguage && array_key_exists( 'href', $service ) && array_key_exists( 'title', $service ) && array_key_exists( 'name', $service );
 	}
 }
