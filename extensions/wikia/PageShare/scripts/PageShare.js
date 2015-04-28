@@ -28,9 +28,13 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 	}
 
 	function appendShareIcons(data) {
-		var $container = $('#PageShareContainer');
+		var $container = $('#PageShareContainer'),
+			url = encodeURIComponent(win.location.origin + win.location.pathname),
+			title = encodeURIComponent(win.document.title),
+			result;
 		if (data.socialIcons) {
-			$container.html(data.socialIcons)
+			result = data.socialIcons.replace(/\$url/g, url).replace(/\$title/g, title);
+			$container.html(result)
 				.on('click', '.page-share a', shareLinkClick);
 		}
 	}
@@ -48,14 +52,15 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 
 		requestData = {
 			browserLang: browserLangShort,
-			title: win.document.title,
-			url: win.location.origin + win.location.pathname,
-			useLang: useLang,
 			isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
 		};
 
 		if (mCache) {
 			requestData.mcache = mCache;
+		}
+
+		if (useLang) {
+			requestData.useLang = useLang;
 		}
 
 		$.nirvana.sendRequest({
