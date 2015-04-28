@@ -29,10 +29,11 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 
 	function appendShareIcons(data) {
 		var $container = $('#PageShareContainer'),
-			url = win.location.origin + win.location.pathname,
+			url = encodeURIComponent(win.location.origin + win.location.pathname),
+			title = encodeURIComponent(win.document.title),
 			result;
 		if (data.socialIcons) {
-			result = data.socialIcons.replace(/\$url/g, url).replace(/\$title/g, win.document.title);
+			result = data.socialIcons.replace(/\$url/g, url).replace(/\$title/g, title);
 			$container.html(result)
 				.on('click', '.page-share a', shareLinkClick);
 		}
