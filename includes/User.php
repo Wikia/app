@@ -2319,6 +2319,9 @@ class User {
 	 * @see getIntOption()
 	 */
 	public function getOption( $oname, $defaultOverride = null, $ignoreHidden = false ) {
+
+		$this->logOption( $oname, $defaultOverride );
+
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
@@ -2362,6 +2365,39 @@ class User {
 		} else {
 			return $defaultOverride;
 		}
+	}
+
+	/**
+	 * TEMPORARY. Part of SOC-674 investigation.
+	 * The user_properties table has 2,535,219 unique properties in it. This number
+	 * is absurdly big. We want to log which of those attributes are actually being
+	 * used and to what extent so we know what to support as part of the new user
+	 * attribute service.
+	 * @param $name
+	 * @param $defaultOverride
+	 */
+	private function logOption( $name, $defaultOverride ) {
+
+		$logger = Wikia\Logger\WikiaLogger::instance();
+		$logger->info( "getOptionLogging", [
+			"optionName" => $this->stripWikiID( $name ),
+			"defaultOverride" => $defaultOverride
+		] );
+	}
+
+	/**
+	 * TEMPORARY. Part of SOC-674 investigation.
+	 * A great deal of the 2,535,219 properties mentioned above are wiki specific preferences.
+	 * These take the form of <attrName>_<wikiID>, eg, founderemails-edits-123517. As we collect
+	 * information about which properties are actually being used, we want to consolidate these
+	 * so we have information about how much these properties are used across wikia, rather than
+	 * just for a single wiki. The solution is to strip off the wiki ID and replace it with an X
+	 * so all these properties share a common key for logging.
+	 * @param $name
+	 * @return mixed
+	 */
+	private function stripWikiID( $name ) {
+		return preg_replace( "/\d+$/", "X", $name );
 	}
 
 	/**
