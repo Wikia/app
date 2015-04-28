@@ -34,7 +34,7 @@ class MemcachedStatsTest extends WikiaBaseTest {
 			],
 			[
 				'key' => self::WIKI_PREFIX . ':imageserving-images-data:1727:100:100',
-				'expected' => '*:imageserving-images-data:*:*:*'
+				'expected' => '*:imageserving:images:data:*:*:*'
 			],
 			[
 				'key' => self::WIKI_PREFIX . ':timeago:i18n:pl:3',
@@ -42,11 +42,15 @@ class MemcachedStatsTest extends WikiaBaseTest {
 			],
 			[
 				'key' => self::WIKI_PREFIX . ':favicon-v1',
-				'expected' => '*:favicon-v1'
+				'expected' => '*:favicon:v1'
 			],
 			[
 				'key' => self::WIKI_PREFIX . ':VoteHelper:VoteHelper::getUserCacheKey:123:0:84.77.150.66:VER1',
 				'expected' => '*:VoteHelper:VoteHelper::getUserCacheKey:*:*:*:VER1'
+			],
+			[
+				'key' => self::WIKI_PREFIX . ':pcache:idhash:8262-0!*!0!!*!2!zh!*',
+				'expected' => '*:pcache:idhash:*'
 			],
 			// shared keys
 			[
@@ -64,6 +68,14 @@ class MemcachedStatsTest extends WikiaBaseTest {
 			[
 				'key' => 'wikicities:WikiFactoryHub::getCategoryId:1031256',
 				'expected' => 'wikicities:WikiFactoryHub::getCategoryId:*'
+			],
+			[
+				'key' => 'wikifactory:domains:by_domain_hash:zombiesrun.wikia.com',
+				'expected' => 'wikifactory:domains:by_domain_hash:*'
+			],
+			[
+				'key' => 'AssetsManagerSassBuilder-minified-ff5434c76b952082c64416c7bd05417a',
+				'expected' => 'AssetsManagerSassBuilder:minified:*'
 			],
 		];
 	}
