@@ -105,6 +105,7 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 			wgSitewideDisablePaidAssetDrop: true
 		});
 		expect(getModule().isNowValid(config)).toEqual(false);
+		jasmine.clock().mockDate();
 	});
 
 	it('Disaster recovery + URL param', function () {
