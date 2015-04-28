@@ -2,6 +2,11 @@
 
 class InsightsController extends WikiaSpecialPageController {
 
+	const
+		FLOW_STATUS_INPROGRESS = 'inprogress',
+		FLOW_STATUS_ALLDONE = 'alldone',
+		FLOW_STATUS_FIXED = 'fixed';
+
 	private $model;
 
 	public function __construct() {
@@ -83,13 +88,13 @@ class InsightsController extends WikiaSpecialPageController {
 
 				if ( $isEdit || !$isFixed ) {
 					$params = $this->getInProgressNotificationParams( $subpage );
-					$type = 'inprogress';
+					$type = self::FLOW_STATUS_INPROGRESS;
 				} elseif ( $isFixed && empty( $next ) ) {
 					$params = $this->getCongratulationsNotificationParams( $subpage );
-					$type = 'alldone';
+					$type = self::FLOW_STATUS_ALLDONE;
 				} elseif ( $isFixed ) {
 					$params = $this->getInsightFixedNotificationParams( $next, $subpage );
-					$type = 'fixed';
+					$type = self::FLOW_STATUS_FIXED;
 				}
 
 				$html = \MustacheService::getInstance()->render(
