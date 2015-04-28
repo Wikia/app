@@ -98,8 +98,9 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 		expect(getModule().isNowValid(config)).toEqual(true);
 	});
 
-	it('Disaster recovery', function () {
-		var config = false;
+	it('Disaster recovery + valid date', function () {
+		var config = ['2015-04-14T12:00:00Z', '2015-04-14T20:00:00Z'];
+		jasmine.clock().mockDate(new Date('2015-04-14T16:00:00Z'));
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({
 			wgSitewideDisablePaidAssetDrop: true
 		});
