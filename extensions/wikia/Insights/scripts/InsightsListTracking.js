@@ -4,7 +4,7 @@ require(['wikia.tracker'],
 
 		var insightType;
 
-		function onLinkClick() {
+		function linkTrack() {
 			/* Track a click on an insights item link */
 			var trackingParams = {
 				trackingMethod: 'both',
@@ -15,12 +15,21 @@ require(['wikia.tracker'],
 			tracker.track(trackingParams);
 		}
 
+		function onKeydownTrack(e) {
+			if(e.keyCode === 13) {// Enter keycode
+				linkTrack(e);
+			}
+		}
+
 		function init() {
 			var $insightsList = $('.insights-list');
+
 			insightType = $insightsList.data('type');
-			$insightsList.find('.insights-list-item-title').each(function(){
-				$(this).click(onLinkClick);
-			});
+
+			/* Bind mousedown and keydown to invoke tracking logs earlier than regular click to avoid loosing log
+			 * when reload happens quicker than tracking log */
+			$insightsList.on('mousedown', '.insights-list-item-title', linkTrack);
+			$insightsList.on('keydown', '.insights-list-item-title', onKeydownTrack);
 		}
 
 		$(init);
