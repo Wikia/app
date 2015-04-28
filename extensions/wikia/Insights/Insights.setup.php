@@ -36,7 +36,7 @@ $wgAutoloadClasses['InsightsHelper'] = $dir . 'InsightsHelper.php';
  * Special pages
  */
 $wgSpecialPages['Insights'] = 'InsightsController';
-$wgSpecialPageGroups['Insights'] = 'wiki';
+$wgSpecialPageGroups['Insights'] = 'wikia';
 
 /**
  * Permissions
