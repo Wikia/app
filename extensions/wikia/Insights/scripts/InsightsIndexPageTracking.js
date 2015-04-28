@@ -21,6 +21,6 @@ require(['wikia.tracker'],
 			});
 		}
 
-		init();
+		$(init);
 	}
 );
