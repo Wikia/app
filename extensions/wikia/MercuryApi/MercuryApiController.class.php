@@ -11,6 +11,10 @@ class MercuryApiController extends WikiaController {
 
 	const WIKI_VARIABLES_CACHE_TTL = 60;
 
+	const MEMCACHE_TTL = 86400;
+	const MEMCACHE_PREFIX = 'CuratedContent_MercuryApi';
+	const MEMCACHE_VERSION = 1;
+
 	private $mercuryApi = null;
 
 	public function __construct() {
@@ -282,9 +286,11 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle() {
+		global $wgMemc;
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
+			$memcKey = $this->getMemcacheKey();
 
 			$articleAsJson = $this->getArticleJson( $articleId, $title );
 
@@ -303,11 +309,15 @@ class MercuryApiController extends WikiaController {
 			}
 
 			if ( $title->isMainPage() ) {
-				$curatedContentSections = $this->getCuratedContentSections();
-				if ( !empty( $curatedContentSections ) ) {
-					$curatedContent = $this->getItemsForSections( $curatedContentSections );
-					$data[ 'curatedContent' ] = $curatedContent;
+				$curatedContent = $wgMemc->get( $memcKey );
+				if ( empty( $curatedContent ) ) {
+					$curatedContentSections = $this->getCuratedContentSections();
+					if ( !empty( $curatedContentSections ) ) {
+						$curatedContent = $this->getItemsForSections( $curatedContentSections );
+						$wgMemc->set( $memcKey, $curatedContent, self::MEMCACHE_TTL );
+					}
 				}
+				$data[ 'curatedContent' ] = $curatedContent;
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
@@ -335,11 +345,12 @@ class MercuryApiController extends WikiaController {
 		$sectionsWithItems = [];
 		foreach ( $sections as $section ) {
 			$sectionItems = $this->sendRequest( 'CuratedContent', 'getList', ['section' => $section['title']] )->getData();
-			if ( !empty( $sectionItems['items'] ) ) {
-				$section['items'] = $sectionItems['items'];
-			} else {
-				$section['items'] = [];
+			$items = [];
+			foreach ( $sectionItems['items'] as $item ) {
+				$item['article_local_url'] = Title::newFromID( $item['article_id'] )->getLocalURL();
+				$items[] = $item;
 			}
+			$section['items'] = $items;
 			$sectionsWithItems['sections'][] = $section;
 		}
 		return $sectionsWithItems;
@@ -356,5 +367,9 @@ class MercuryApiController extends WikiaController {
 		$this->response->setValues(
 			$this->sendRequest( 'SearchSuggestionsApi', 'getList', $this->request->getParams() )->getData()
 		);
+	}
+
+	private function getMemcacheKey() {
+		return wfMemcKey( self::MEMCACHE_PREFIX, self::MEMCACHE_VERSION );
 	}
 }
