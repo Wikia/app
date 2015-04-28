@@ -14,8 +14,12 @@ class MemcachedStats {
 	// list of memcache keys to normalize by taking a look at the prefix
 	// @see PLATFORM-1186
 	private static $keyPrefixesToNormalize = [
-		'wikifactory:domains:by_domain_hash:',
+		'wikia:talk_messages:',
+		'wikicities:filepage:globalusage:',
+		'wikicities:InterwikiDispatcher::isWikiExists:',
+		'wikicities:UserCache:',
 		'wikicities:wikifactory:variables:metadata:',
+		'wikifactory:domains:by_domain_hash:',
 		'*:pcache:idhash:',
 	];
 
