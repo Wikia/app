@@ -9,7 +9,7 @@
 
 class WikiaSQLCache extends FluentSql\Cache\Cache {
 	/** @var bool */
-	private $useSharedKey = false;
+	private $useSharedKey;
 
 	/**
 	 * @param bool $useSharedKey Whether or not this memcache key is shared amongst wikis
