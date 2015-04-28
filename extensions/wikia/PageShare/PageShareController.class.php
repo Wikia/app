@@ -22,17 +22,16 @@ class PageShareController extends WikiaController {
 		);
 
 		$this->setVal( 'socialIcons', $renderedSocialIcons );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	/**
 	 * Prepare and normalize data from $wgPageShareServices
 	 *
 	 * @param String $shareLang
-	 * @param String $title
-	 * @param String $url
 	 * @return Array
 	 */
-	private function prepareShareServicesData( $shareLang, $title, $url ) {
+	private function prepareShareServicesData( $shareLang ) {
 		global $wgPageShareServices;
 		$isTouchScreen = $this->getVal( 'isTouchScreen' );
 
@@ -40,13 +39,7 @@ class PageShareController extends WikiaController {
 
 		foreach ( $wgPageShareServices as $service ) {
 			if ( PageShareHelper::isValidShareService( $service, $shareLang, $isTouchScreen ) ) {
-				$service['href'] = str_replace(
-					[ '$url', '$title' ],
-					[ urlencode( $url ), urlencode( $title ) ],
-					$service['url']
-				);
 				$service['icon'] = PageShareHelper::getIcon( $service['name'] );
-
 				$services[] = $service;
 			}
 		}
