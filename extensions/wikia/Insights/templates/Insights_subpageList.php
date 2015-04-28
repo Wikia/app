@@ -17,30 +17,36 @@
 			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->escaped() ?></p>
 		</div>
 		<div class="insights-content">
-			<ul class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
-				<?php foreach( $content as $item ): ?>
-					<li class="insights-list-item">
-						<a class="insights-list-item-title <?= $item['link']['classes'] ?>" title="<?= $item['link']['title'] ?>" href="<?= $item['link']['url'] ?>"><?= $item['link']['text'] ?></a>
-						<?php if ( isset( $item['metadata'] ) ) : ?>
-							<p class="insights-list-item-metadata">
-								<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
-									<?= wfMessage( 'insights-last-edit' )->rawParams(
+			<?php if ( !empty( $content ) ) : ?>
+				<ul class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
+					<?php foreach( $content as $item ): ?>
+						<li class="insights-list-item">
+							<a class="insights-list-item-title <?= Sanitizer::encodeAttribute( $item['link']['classes'] ) ?>" title="<?= Sanitizer::encodeAttribute( $item['link']['title'] ) ?>" href="<?= Sanitizer::cleanUrl( $item['link']['url'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $item['link']['text'] ) ?></a>
+							<?php if ( isset( $item['metadata'] ) ) : ?>
+								<p class="insights-list-item-metadata">
+									<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
+										<?= wfMessage( 'insights-last-edit' )->rawParams(
 										Xml::element( 'a', [
-											'href' => $item['metadata']['lastRevision']['userpage']
-										],
-											$item['metadata']['lastRevision']['username']
-										),
+												'href' => $item['metadata']['lastRevision']['userpage']
+											],
+												$item['metadata']['lastRevision']['username']
+											),
 										date( 'F j, Y', $item['metadata']['lastRevision']['timestamp'] )
-									)->escaped() ?>
-								<?php endif; ?>
-								<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
-									<?= $item['metadata']['wantedBy'] ?>
-								<?php endif; ?>
-							</p>
-						<?php endif; ?>
-					</li>
-				<?php endforeach; ?>
-			</ul>
+										)->escaped() ?>
+									<?php endif; ?>
+									<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
+										<?= $item['metadata']['wantedBy'] ?>
+									<?php endif; ?>
+								</p>
+							<?php endif; ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php else: ?>
+				<p>
+					<?= wfMessage( 'insights-list-no-items' )->escaped(); ?>
+				</p>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

@@ -38,14 +38,6 @@ class InsightsHooks {
 				$extraQuery .= '&';
 			}
 			$extraQuery .= 'insights=' . $subpage;
-
-			$model = InsightsHelper::getInsightModel( $subpage );
-			$isItemFixed = $model->isItemFixed( $article );
-			if ( $isItemFixed ) {
-				$extraQuery .= '&item_status=fixed';
-			} else {
-				$extraQuery .= '&item_status=notfixed';
-			}
 		}
 
 		return true;
@@ -70,7 +62,7 @@ class InsightsHooks {
 	}
 
 	/**
-	 * Disable create new page popup and go directy to edit page to keep Insights flow
+	 * Disable create new page popup and go directly to edit page to keep Insights flow
 	 *
 	 * @param array $vars
 	 * @return bool
@@ -83,6 +75,12 @@ class InsightsHooks {
 		return true;
 	}
 
+	/**
+	 * Add a right rail module to the Special:WikiActivity page
+	 *
+	 * @param array $railModuleList
+	 * @return bool
+	 */
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle, $wgUser;
 
