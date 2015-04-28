@@ -8,6 +8,7 @@ $messages['en'] = [
 	'insights-landing-title' => 'Welcome to Insights',
 	'insights-landing-lead' => 'Spend your time efficiently and make informed decisions about which articles you should edit with these insights. This feature is currently in beta. Love it? Hate it? Have ideas? Please submit your thoughts via [[Special:Contact/feedback]].',
 	'insights-last-edit' => 'Last edited by $1, $2',
+	'insights-list-no-items' => 'Great work! There are no articles in this queue that need attention.',
 	// Uncategorized pages
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
@@ -45,6 +46,7 @@ $messages['qqq'] = [
 	'insights-landing-title' => 'A title of the Insights landing page appearing as an h1 element.',
 	'insights-landing-lead' => 'A lead for the Insights special page with a general description, appearing below the title.',
 	'insights-last-edit' => 'Information who and when made last edit for chosen article on the list',
+	'insights-list-no-items' => 'A message that is shown when there are no items to work on left on a list',
 
 	// Uncategorized pages
 	'insights-list-subtitle-uncategorizedpages' => 'A title of a subpage with a list of uncategorized pages',
