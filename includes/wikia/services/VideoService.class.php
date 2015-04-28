@@ -55,7 +55,6 @@ class VideoService extends WikiaModel {
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				//$file = wfFindFile( $videoTitle ); // <- tu sie zaczyna psuc
 				$file = RepoGroup::singleton()->findFile( $videoTitle );
 			}
 
