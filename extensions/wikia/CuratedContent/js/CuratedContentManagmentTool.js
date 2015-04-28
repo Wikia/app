@@ -294,12 +294,17 @@ $(function () {
 						} else if (data.status) {
 							$save.addClass('ok');
 						}
-					}).fail(
-					function () {
+					}).fail(function () {
 						$save.addClass('err');
-					}
-				).then(function () {
+					}).then(function () {
 						$form.stopThrobbing();
+
+						Wikia.Tracker.track({
+							action: Wikia.Tracker.ACTIONS.CLICK,
+							category: 'special-curated-content',
+							label: 'save',
+							trackingMethod: 'internal'
+						});
 					});
 			}
 		});
