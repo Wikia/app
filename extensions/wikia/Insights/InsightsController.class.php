@@ -74,12 +74,12 @@ class InsightsController extends WikiaSpecialPageController {
 				$params = [];
 				$type = '';
 				$isFixed = false;
-				$articleName = $this->getVal('article', null);
+				$articleName = $this->getVal( 'article', null );
 				$title = Title::newFromText( $articleName );
 
 				$next = $model->getNextItem( $model->getInsightType(), $articleName );
 
-				$isEdit = $this->request->getBool('isEdit', false );
+				$isEdit = $this->request->getBool( 'isEdit', false );
 
 				if( !$isEdit ) {
 					$isFixed = $model->isItemFixed( $title );
