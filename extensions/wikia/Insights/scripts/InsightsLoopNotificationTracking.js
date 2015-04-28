@@ -15,24 +15,32 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 			insightType = qs.getVal('insights', null),
 			itemStatus = qs.getVal('item_status', null);
 
-		/* If there's no itemStatus use action parameter */
+		/* If there's no itemStatus use action parameter
+		 * when item status is empty and action not we're in edit mode
+		 */
 		if (itemStatus === null) {
 			itemStatus = qs.getVal('action', null);
 		}
 
 		/**
 		 * Log tracking data on clicks on BannerNotification buttons
-		 * @param linkType
+		 * @param object e
 		 */
-		function onClickTrack(linkType) {
+		function linkTrack(e) {
 			/* Track a click on an insights type link */
 			var trackingParams = {
 				trackingMethod: 'both',
 				category: 'insights-loop-notification',
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
-				label: insightType + '-' + itemStatus + '-' + linkType.data
+				label: insightType + '-' + itemStatus + '-' + e.data
 			};
 			tracker.track(trackingParams);
+		}
+
+		function onKeydownTrack(e) {
+			if(e.keyCode === 13) {// Enter keycode
+				linkTrack(e);
+			}
 		}
 
 		/**
@@ -60,11 +68,16 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 		}
 
 		function init(event, bannerNotification) {
-			var $nextPageButton = bannerNotification.$element.find('#InsightsNextPageButton');
-			/* Setup click events within BannerNotification */
-			bannerNotification.$element.find('#InsightsBackToListButton').click('back-to-list', onClickTrack);
-			$nextPageButton.click('next-page', onClickTrack);
-			bannerNotification.$element.find('button.close').click('dismiss', onClickTrack);
+			var $nextPageButton = bannerNotification.$element.find('#InsightsNextPageButton'),
+				$backToListButton = bannerNotification.$element.find('#InsightsBackToListButton'),
+				$closeButton = bannerNotification.$element.find('button.close');
+			/* Setup click events within BannerNotification - using mousedown and keydown for earlier detect */
+			$backToListButton.mousedown('back-to-list', linkTrack);
+			$backToListButton.keydown('back-to-list', onKeydownTrack);
+			$nextPageButton.mousedown('next-page', linkTrack);
+			$nextPageButton.keydown('next_page', onKeydownTrack);
+			$closeButton.mousedown('dismiss', linkTrack);
+			$closeButton.keydown('dismiss', onKeydownTrack);
 			successTrack($nextPageButton);
 		}
 
