@@ -9,7 +9,8 @@ class GlobalWatchlistBot {
 	const REPLY_ADDRESS = 'noreply@wikia.com';
 
 	public function __construct() {
-		\F::app()->wg->ExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
+		$messageFiles = \F::app()->wg->ExtensionMessagesFiles;
+		$messageFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
 	}
 
 	/**

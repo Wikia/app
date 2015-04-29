@@ -18,6 +18,11 @@ class ForgotPasswordController extends EmailController {
 	public function initEmail() {
 		// Set the recipient user
 		$this->setTargetUser();
+
+		$this->fromAddress = new \MailAddress(
+			$this->wg->PasswordSender,
+			$this->wg->PasswordSenderName
+		);
 	}
 
 	public function assertCanEmail() {

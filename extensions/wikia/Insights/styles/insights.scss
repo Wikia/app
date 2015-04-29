@@ -1,0 +1,164 @@
+$insights-grey: #ccc;
+$insights-background-grey: #f0f0f0;
+$insights-background-grey-dark: #2a2a2a;
+$insights-text-light: #fff;
+$insights-small-icon-size: auto 21px;
+$insights-big-icon-size: auto 65px;
+
+.insights-light {
+	.insights-icon-uncategorizedpages {
+		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
+	}
+
+	.insights-icon-withoutimages {
+		background-image: url('/extensions/wikia/Insights/images/withoutimages.svg'); /* inline */
+	}
+
+	.insights-icon-deadendpages {
+		background-image: url('/extensions/wikia/Insights/images/deadendpages.svg'); /* inline */
+	}
+
+	.insights-icon-wantedpages {
+		background-image: url('/extensions/wikia/Insights/images/wantedpages.svg'); /* inline */
+	}
+
+	.insights-nav-item:hover,
+	.insights-nav-item.active {
+		background-color: $insights-background-grey;
+	}
+}
+
+.insights-dark {
+	.insights-icon-uncategorizedpages {
+		background-image: url('/extensions/wikia/Insights/images/uncategorized_dark.svg'); /* inline */
+	}
+
+	.insights-icon-withoutimages {
+		background-image: url('/extensions/wikia/Insights/images/withoutimages_dark.svg'); /* inline */
+	}
+
+	.insights-icon-deadendpages {
+		background-image: url('/extensions/wikia/Insights/images/deadendpages_dark.svg'); /* inline */
+	}
+
+	.insights-icon-wantedpages {
+		background-image: url('/extensions/wikia/Insights/images/wantedpages_dark.svg'); /* inline */
+	}
+
+	.insights-nav-item:hover,
+	.insights-nav-item.active {
+		background-color: $insights-background-grey-dark;
+	}
+}
+
+/** The landing page **/
+
+.insights-container-landing {
+	margin: 0 auto;
+	max-width: 700px;
+	width: 100%;
+
+	.insights-landing-nav-list {
+		list-style-type: none;
+		margin: 0;
+	}
+}
+
+.insights-landing-header {
+	padding: 15px 0;
+}
+
+.insights-landing-nav-item {
+	background-position: center left;
+	background-repeat: no-repeat;
+	background-size: $insights-big-icon-size;
+	border-bottom: 1px solid $insights-grey;
+	padding: 15px 10px 15px 95px;
+
+	&:last-child {
+		border: 0;
+	}
+}
+
+/** Subpages - navigation **/
+
+.insights-container-nav {
+	float: left;
+	width: 250px;
+
+	.insights-nav-list {
+		margin: 0;
+
+		&.active {
+			background-color: $insights-background-grey;
+		}
+	}
+
+	.insights-nav-item {
+		background-position: 5% 50%;
+		background-repeat: no-repeat;
+		background-size: $insights-small-icon-size;
+		border-bottom: 1px solid $insights-grey;
+		list-style-type: none;
+		margin: 0;
+		padding: 5px 0;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	.insights-nav-link {
+		display: block;
+		padding: 10px 10px 10px 55px;
+		text-decoration: none;
+	}
+}
+
+/** Subpages - content **/
+
+.insights-header {
+	background-position: center left;
+	background-repeat: no-repeat;
+	background-size: $insights-big-icon-size;
+	margin: 10px 0 15px;
+	padding: 20px 20px 20px 95px;
+
+	.insights-header-subtitle {
+		border-bottom: 0;
+		margin-top: 0;
+	}
+}
+
+.insights-container-main {
+	box-sizing: border-box;
+	float: right;
+	margin-left: 25px;
+	width: calc(100% - 275px);
+
+	.insights-list {
+		margin: 0;
+	}
+}
+
+.insights-list-item {
+	border-bottom: 1px solid $insights-grey;
+	list-style-type: none;
+	padding: 10px 0;
+
+	&:last-child {
+		border: 0;
+	}
+
+	.insights-list-item-title {
+		clear: both;
+		font-size: 125%;
+	}
+
+	.insights-list-item-metadata {
+		margin: 0;
+		padding: 1px 0;
+	}
+}
+
+
