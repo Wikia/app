@@ -251,11 +251,13 @@ class CuratedContentController extends WikiaController {
 		if ( !empty( $allCategories ) ) {
 
 			$ret = [ ];
+			$app = F::app();
+			$categoryName = $app->wg->contLang->getNsText( NS_CATEGORY );
 
 			foreach ( $allCategories as $value ) {
 				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
 					$ret[ ] = $this::getJsonItem( $value[ '*' ],
-						'category',
+						$categoryName,
 						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0 );
 				}
 			}
@@ -367,8 +369,11 @@ class CuratedContentController extends WikiaController {
 		$title = Title::makeTitle( $ns, $titleName );
 		list( $image_id, $image_url ) = CuratedContentSpecialController::findImageIfNotSet( 0, $pageId );
 		return [
-			'title' => $title->getFullText(),
+			'title' => $ns . ':' . $title->getFullText(),
+			'label' => $title->getFullText(),
 			'image_id' => $image_id,
+			'article_id' => $pageId,
+			'type' => 'category',
 			'image_url' => $image_url
 		];
 	}
