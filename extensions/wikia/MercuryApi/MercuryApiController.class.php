@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class MercuryApiController extends WikiaController {
 
 	const PARAM_ARTICLE_ID = 'id';
@@ -10,10 +12,6 @@ class MercuryApiController extends WikiaController {
 	const DEFAULT_PAGE = 1;
 
 	const WIKI_VARIABLES_CACHE_TTL = 60;
-
-	const MEMCACHE_TTL = 86400;
-	const MEMCACHE_PREFIX = 'CuratedContent_MercuryApi';
-	const MEMCACHE_VERSION = 1;
 
 	private $mercuryApi = null;
 
@@ -153,19 +151,6 @@ class MercuryApiController extends WikiaController {
 		}
 	}
 
-	private function getCuratedContentSections() {
-		try {
-			$response = $this->sendRequest( 'CuratedContent', 'getList' )->getData();
-			if ( !empty( $response['sections'] ) ) {
-				return $response['sections'];
-			} else {
-				return false;
-			}
-		} catch ( NotFoundApiException $ex ) {
-			return false;
-		}
-	}
-
 	/**
 	 * @return Title Article Title
 	 * @throws NotFoundApiException
@@ -286,7 +271,6 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle() {
-		global $wgMemc;
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
@@ -309,15 +293,12 @@ class MercuryApiController extends WikiaController {
 			}
 
 			if ( $title->isMainPage() ) {
-				$curatedContent = $wgMemc->get( $memcKey );
-				if ( empty( $curatedContent ) ) {
-					$curatedContentSections = $this->getCuratedContentSections();
-					if ( !empty( $curatedContentSections ) ) {
-						$curatedContent = $this->getItemsForSections( $curatedContentSections );
-						$wgMemc->set( $memcKey, $curatedContent, self::MEMCACHE_TTL );
-					}
+				try {
+					$curatedContentData = $this->sendRequest( 'CuratedContent', 'getList' )->getData();
+					$data[ 'curatedContent' ] = $this->mercuryApi->getCuratedContent($curatedContentData);
+				} catch (NotFoundApiException $ex) {
+					WikiaLogger::instance()->error('Curated content and categories are empty');
 				}
-				$data[ 'curatedContent' ] = $curatedContent;
 			}
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
@@ -341,19 +322,20 @@ class MercuryApiController extends WikiaController {
 		$this->response->setVal( 'data', $data );
 	}
 
-	private function getItemsForSections( $sections ) {
-		$sectionsWithItems = [];
-		foreach ( $sections as $section ) {
-			$sectionItems = $this->sendRequest( 'CuratedContent', 'getList', ['section' => $section['title']] )->getData();
+	public function getItemsForCuratedContentSection() {
+		$sectionName = $this->getVal('sectionName');
+		if (empty($sectionName)) {
+			$this->response->setVal('items', false);
+		} else {
+			$sectionItems = $this->sendRequest( 'CuratedContent', 'getList', ['section' => $this->getVal('sectionName')] )->getData();
 			$items = [];
 			foreach ( $sectionItems['items'] as $item ) {
 				$item['article_local_url'] = Title::newFromID( $item['article_id'] )->getLocalURL();
 				$items[] = $item;
 			}
-			$section['items'] = $items;
-			$sectionsWithItems['sections'][] = $section;
+			$this->response->setFormat('json');
+			$this->response->setVal('items', $items);
 		}
-		return $sectionsWithItems;
 	}
 
 	/**
