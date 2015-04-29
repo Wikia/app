@@ -14,7 +14,7 @@ $messages['qqq'] = array(
 	'emailext-blogcomment-summary' => 'Information about a blog post comment comment.  $1 is the blog post name',
 	'emailext-comment-salutation' => "Email greeting. $1 is the recipient's username.",
 	'emailext-comment-link-label' => 'Label text for a button a user can click to view the comment on the site',
-	'emailext-comment-view-all' => 'A link to the comment section on the blog post or article',
+	'emailext-comment-view-all' => 'A link to the comment section on the blog post or article, plus the link label.  $1 is the link itself, and must remain at the beginning of the string with a space after it.',
 );
 
 $messages['de'] = array(
