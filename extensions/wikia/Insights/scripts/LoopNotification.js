@@ -22,12 +22,14 @@ require(
 			isVE = qs.getVal('veaction', null),
 			isFixed = false,
 			isEdit = false,
-			initNotification,
-			showNotification,
 			notification,
 			notificationType,
+			// Functions
+			initNotification,
+			showNotification,
 			getMessageType,
-			getParent;
+			getParent,
+			addInsightsFlowToEditButtons;
 
 		showNotification = function(response) {
 			if (response) {
@@ -40,6 +42,10 @@ require(
 				if (notificationType !== response.notificationType) {
 					notificationType = response.notificationType;
 
+					if (notificationType === 'notfixed') {
+						addInsightsFlowToEditButtons();
+					}
+
 					if (notification) {
 						notification.hide();
 					}
@@ -48,7 +54,12 @@ require(
 
 				loopNotificationTracking.setParams(isEdit, isFixed, notificationType);
 
-				$('#InsightsNextPageButton').focus();
+
+				if (notificationType === 'fixed') {
+					$('#InsightsNextPageButton').focus();
+				} else if (notificationType === 'notfixed') {
+					$('#InsightsEditPageButton').focus();
+				}
 			}
 		};
 
@@ -79,6 +90,21 @@ require(
 					article: window.wgPageName
 				},
 				callback: showNotification
+			});
+		};
+
+		addInsightsFlowToEditButtons = function() {
+			var self,
+				href = '',
+				pathname = document.location.pathname,
+				param = '&insights=' + insights;
+
+			$('a[href*="action=edit"]').each(function(){
+				self = $(this);
+				href = self.attr('href');
+				if (href.indexOf(pathname) !== -1) {
+					self.attr('href', href + param);
+				}
 			});
 		};
 
