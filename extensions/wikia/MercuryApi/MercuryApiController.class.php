@@ -274,8 +274,6 @@ class MercuryApiController extends WikiaController {
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
-			$memcKey = $this->getMemcacheKey();
-
 			$articleAsJson = $this->getArticleJson( $articleId, $title );
 
 			$data = [
@@ -283,7 +281,7 @@ class MercuryApiController extends WikiaController {
 				'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
 				),
-				'article' => $articleAsJson
+				'article' => $articleAsJson,
 			];
 
 			$relatedPages = $this->getRelatedPages( $articleId );
@@ -293,13 +291,9 @@ class MercuryApiController extends WikiaController {
 			}
 
 			if ( $title->isMainPage() ) {
-				try {
-					$curatedContentData = $this->sendRequest( 'CuratedContent', 'getList' )->getData();
-					$data[ 'curatedContent' ] = $this->mercuryApi->getCuratedContent($curatedContentData);
-				} catch (NotFoundApiException $ex) {
-					WikiaLogger::instance()->error('Curated content and categories are empty');
-				}
+				$data['mainPageData'] = $this->getMainPageData();
 			}
+
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
@@ -323,18 +317,18 @@ class MercuryApiController extends WikiaController {
 	}
 
 	public function getItemsForCuratedContentSection() {
-		$sectionName = $this->getVal('sectionName');
-		if (empty($sectionName)) {
-			$this->response->setVal('items', false);
+		$sectionName = $this->getVal( 'sectionName' );
+		if ( empty( $sectionName ) ) {
+			$this->response->setVal( 'items', false );
 		} else {
-			$sectionItems = $this->sendRequest( 'CuratedContent', 'getList', ['section' => $this->getVal('sectionName')] )->getData();
+			$sectionItems = $this->sendRequest( 'CuratedContent', 'getList', ['section' => $this->getVal( 'sectionName' )] )->getData();
 			$items = [];
 			foreach ( $sectionItems['items'] as $item ) {
 				$item['article_local_url'] = Title::newFromID( $item['article_id'] )->getLocalURL();
 				$items[] = $item;
 			}
-			$this->response->setFormat('json');
-			$this->response->setVal('items', $items);
+			$this->response->setFormat( 'json' );
+			$this->response->setVal( 'items', $items );
 		}
 	}
 
@@ -351,7 +345,14 @@ class MercuryApiController extends WikiaController {
 		);
 	}
 
-	private function getMemcacheKey() {
-		return wfMemcKey( self::MEMCACHE_PREFIX, self::MEMCACHE_VERSION );
+	private function getMainPageData() {
+		$mainPageData = [];
+		try {
+			$curatedContentData = $this->sendRequest( 'CuratedContent', 'getList' )->getData();
+			$mainPageData['curatedContent'] = $this->mercuryApi->getCuratedContent( $curatedContentData );
+		} catch ( NotFoundApiException $ex ) {
+			WikiaLogger::instance()->error( 'Curated content and categories are empty' );
+		}
+		return $mainPageData;
 	}
 }
