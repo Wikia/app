@@ -143,6 +143,11 @@ abstract class BaseTask {
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
+		$this->info( 'BaseTask::queue', [
+			'type' => get_class( $this ),
+			'backtrace' => new \Exception()
+		] );
+
 		$taskLists = $this->convertToTaskLists();
 		$taskIds = AsyncTaskList::batch( $taskLists );
 
@@ -388,6 +393,12 @@ abstract class BaseTask {
 			/** @var BaseTask $task $taskLists */
 			$taskLists = array_merge( $taskLists, $task->convertToTaskLists() );
 		}
+
+		\Wikia\Logger\WikiaLogger::instance()->info( 'BaseTask::batch', [
+			'tasks' => count( $tasks ),
+			'type' => get_class( reset( $tasks ) ),
+			'backtrace' => new \Exception()
+		] );
 
 		return AsyncTaskList::batch( $taskLists );
 	}
