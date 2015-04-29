@@ -116,36 +116,31 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		doc.write(amazonResponse[adId]);
 	}
 
-	function call(ac, geoCountryCode) {
-		if (ac && ac.indexOf && ac.indexOf(geoCountryCode) > -1) {
-			log('call', 'debug', logGroup);
+	function call() {
+		log('call', 'debug', logGroup);
 
-			amazonCalled = true;
-			amazonTiming = adTracker.measureTime('amazon', {}, 'start');
-			amazonTiming.track();
+		amazonCalled = true;
+		amazonTiming = adTracker.measureTime('amazon', {}, 'start');
+		amazonTiming.track();
 
-			// Mocking amazon "lib"
-			win.amznads = {
-				updateAds: onAmazonResponse,
-				renderAd: renderAd
-			};
+		// Mocking amazon "lib"
+		win.amznads = {
+			updateAds: onAmazonResponse,
+			renderAd: renderAd
+		};
 
-			var url = encodeURIComponent(doc.location),
-				s = doc.createElement('script'),
-				cb = Math.round(Math.random() * 10000000);
+		var url = encodeURIComponent(doc.location),
+			s = doc.createElement('script'),
+			cb = Math.round(Math.random() * 10000000);
 
-			try {
-				url = encodeURIComponent(win.top.location.href);
-			} catch (ignore) {
-			}
+		try {
+			url = encodeURIComponent(win.top.location.href);
+		} catch (ignore) {}
 
-			s.id = logGroup;
-			s.async = true;
-			s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + amazonId + '&u=' + url + '&cb=' + cb;
-			doc.body.appendChild(s);
-		} else {
-			log('call - skipped: wrong geo', 'debug', logGroup);
-		}
+		s.id = logGroup;
+		s.async = true;
+		s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + amazonId + '&u=' + url + '&cb=' + cb;
+		doc.body.appendChild(s);
 	}
 
 	function wasCalled() {
