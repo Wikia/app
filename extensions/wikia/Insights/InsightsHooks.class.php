@@ -40,7 +40,7 @@ class InsightsHooks {
 	/**
 	 * Add insights param to edit page form to keep information about insights flow
 	 */
-	public static function onGetLocalURL( &$this, &$url, $query ) {
+	public static function onGetLocalURL( Title $title, &$url, $query ) {
 		global $wgRequest;
 
 		$subpage = $wgRequest->getVal( 'insights', null );
