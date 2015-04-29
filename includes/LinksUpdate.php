@@ -286,6 +286,12 @@ class LinksUpdate {
 			$task->wikiId( $wgCityId );
 			$task->call( 'refreshTemplateLinks', $start, $end );
 			$task->queue();
+
+			Wikia\Logger\WikiaLogger::instance()->info( 'LinksUpdate::queueRefreshTasks', [
+				'title' => $this->mTitle->getPrefixedDBkey(),
+				'start' => $start,
+				'end' => $end,
+			] );
 		}
 
 	}

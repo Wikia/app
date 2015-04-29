@@ -83,6 +83,9 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 		$task->title( $title );
 		$task->call( 'refresh' );
 		$task->wikiId( $this->getWikiId() );
+
+		// TODO: delay the tasks - see PLATFORM-1192
+
 		return $task;
 	}
 
