@@ -115,7 +115,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function getInProgressNotificationParams( $subpage ) {
 		$params = $this->getInsightListLinkParams( $subpage );
-		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->escaped();
+		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain();
 
 		return $params;
 	}
@@ -125,7 +125,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function getCongratulationsNotificationParams() {
 		$params = $this->getInsightLinkParams();
-		$params['notificationMessage'] = wfMessage( 'insights-notification-message-alldone' )->escaped();
+		$params['notificationMessage'] = wfMessage( 'insights-notification-message-alldone' )->plain();
 
 		return $params;
 	}
@@ -139,7 +139,7 @@ class InsightsController extends WikiaSpecialPageController {
 	private function getInsightFixedNotificationParams( $next, $subpage ) {
 		$params = $this->getInsightNextLinkParams( $next, $subpage );
 		$params = array_merge( $params, $this->getInsightListLinkParams( $subpage ));
-		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->escaped();
+		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->plain();
 
 		return $params;
 	}
@@ -152,7 +152,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function getInsightNextLinkParams( $next, $subpage ) {
 		return [
-			'nextArticleButton' => wfMessage( 'insights-notification-next-item-' . $subpage )->escaped(),
+			'nextArticleButton' => wfMessage( 'insights-notification-next-item-' . $subpage )->plain(),
 			'nextArticleTitle' => $next['link']['text'],
 			'nextArticleLink' => $next['link']['url']
 		];
@@ -163,7 +163,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function getInsightListLinkParams( $subpage ) {
 		return [
-			'insightsPageButton' => wfMessage( 'insights-notification-list-button' )->escaped(),
+			'insightsPageButton' => wfMessage( 'insights-notification-list-button' )->plain(),
 			'insightsPageLink' => $this->getSpecialInsightsUrl( $subpage )
 		];
 	}
@@ -173,7 +173,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function getInsightLinkParams() {
 		return [
-			'insightsPageButton' => wfMessage( 'insights-notification-see-more' )->escaped(),
+			'insightsPageButton' => wfMessage( 'insights-notification-see-more' )->plain(),
 			'insightsPageLink' => $this->getSpecialInsightsUrl()
 		];
 	}
