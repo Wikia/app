@@ -145,6 +145,9 @@ class DMCARequestPager extends TablePager {
 					$lang->formatNum( intval( $value ) )
 				);
 
+			case 'dmca_date':
+				return $lang->date( $value, true );
+
 			case 'dmca_email':
 				return Linker::link(
 					SpecialPage::getTitleFor( 'DMCARequestManagement' ),
@@ -169,9 +172,9 @@ class DMCARequestPager extends TablePager {
 	public function getRowClass( $row ) {
 		if ( !$row->dmca_action_taken ) {
 			return 'dmcarequest-list-noaction';
-		} else {
-			return 'dmcarequest-list-' . Sanitizer::escapeClass( $row->dmca_action_taken );
 		}
+
+		return 'dmcarequest-list-' . Sanitizer::escapeClass( $row->dmca_action_taken );
 	}
 
 	public function isFieldSortable( $name ) {

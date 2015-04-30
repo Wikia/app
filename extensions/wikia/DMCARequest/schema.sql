@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS /*_*/dmca_request (
 	dmca_comments TEXT NOT NULL,
 	dmca_signature VARCHAR(255) NOT NULL,
 	dmca_action_taken VARCHAR(7) NOT NULL,
+	dmca_ce_id INT unsigned,
 	PRIMARY KEY(`dmca_id`),
 	KEY dmca_date (`dmca_date`),
 	KEY dmca_email (`dmca_email`)
