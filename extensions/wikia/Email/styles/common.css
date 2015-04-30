@@ -37,15 +37,15 @@ table {
 	border-collapse: separate;
 }
 
-button {
-	border-width: 0;
+.buttonLink {
 	background-color: #1a5eb8;
 	color: #fff;
+	display: inline-block;
 	font-size: 12px;
 	font-weight: bold;
 	height: auto;
-	line-height: 25px;
-	padding: 10px 20px;
+	line-height: 47px;
+	padding: 0 23px;
 	text-transform: uppercase;
 }
 
