@@ -271,6 +271,8 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return string
 	 */
 	protected function mysqlRealEscapeString( $s ) {
+		\Wikia\Util\Assert::true( is_string( $s ) || is_int( $s ), 'DatabaseMysqli::mysqlRealEscapeString - expected a string' );
+
 		return $this->mConn->real_escape_string( $s );
 	}
 
