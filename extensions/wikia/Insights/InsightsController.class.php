@@ -115,6 +115,8 @@ class InsightsController extends WikiaSpecialPageController {
 
 	/**
 	 * Get params for notification template shown in edit mode
+	 *
+	 * @param String $subpage Insights subpage
 	 */
 	private function getInProgressNotificationParams( $subpage ) {
 		$params = $this->getInsightListLinkParams( $subpage );
@@ -126,8 +128,12 @@ class InsightsController extends WikiaSpecialPageController {
 
 	/**
 	 * Get params for notification template shownwhen user dont fix an issue
+	 *
+	 * @param String $subpage Insights subpage
+	 * @param Title $title
+	 * @param InsightsModel $model
 	 */
-	private function getNotFixedNotificationParams( $subpage, $title, $model ) {
+	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsModel $model ) {
 		$params = $this->getInsightFixItParams( $title, $model );
 		$params = array_merge( $params, $this->getInsightListLinkParams( $subpage ) );
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain();
@@ -136,7 +142,7 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get params for notification template shown when user fix all issues in given insight type
+	 * Get params for notification template shown when user fix all issues in given insight type	 *
 	 */
 	private function getCongratulationsNotificationParams() {
 		$params = $this->getInsightLinkParams();
@@ -148,10 +154,11 @@ class InsightsController extends WikiaSpecialPageController {
 	/**
 	 * Get params for notification template shown when user fix one issue from the insights list
 	 *
-	 * @param $next Array data about item from insight list
-	 * @param $params String params to be added to url
+	 * @param String $subpage Insights subpage
+	 * @param String $articleName current article name
+	 * @param InsightsModel $model
 	 */
-	private function getInsightFixedNotificationParams( $subpage, $articleName, $model ) {
+	private function getInsightFixedNotificationParams( $subpage, $articleName, InsightsModel $model ) {
 		$params = $this->getInsightNextLinkParams( $subpage, $articleName, $model );
 		$params = array_merge( $params, $this->getInsightListLinkParams( $subpage ));
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->plain();
@@ -162,10 +169,11 @@ class InsightsController extends WikiaSpecialPageController {
 	/**
 	 * Get params to generate next item link in notification template
 	 *
-	 * @param $next Array data about item from insight list
-	 * @param $params String params to be added to url
+	 * @param String $subpage Insights subpage
+	 * @param String $articleName current article name
+	 * @param InsightsModel $model
 	 */
-	private function getInsightNextLinkParams( $subpage, $articleName, $model ) {
+	private function getInsightNextLinkParams( $subpage, $articleName, InsightsModel $model ) {
 		$next = $model->getNextItem( $model->getInsightType(), $articleName );
 
 		return [
@@ -177,8 +185,11 @@ class InsightsController extends WikiaSpecialPageController {
 
 	/**
 	 * Get params to generate link back to edit mode
+	 *
+	 * @param Title $title
+	 * @param InsightsModel $model
 	 */
-	private function getInsightFixItParams( $title, $model ) {
+	private function getInsightFixItParams( Title $title, InsightsModel $model ) {
 		$link = InsightsHelper::getTitleLink( $title, $model->getUrlParams() );
 
 		return [
@@ -189,6 +200,8 @@ class InsightsController extends WikiaSpecialPageController {
 
 	/**
 	 * Get params to generate link to insight list in notification template
+	 *
+	 * @param String $subpage Insights subpage
 	 */
 	private function getInsightListLinkParams( $subpage ) {
 		return [
