@@ -89,7 +89,12 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$data['timestamp'] = wfTimestamp( TS_UNIX, $rev->getTimestamp() );
 
 		$user = $rev->getUserText();
-		$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
+
+		if ( $rev->getUser() ) {
+			$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
+		} else {
+			$userpage = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
+		}
 
 		$data['username'] = $user;
 		$data['userpage'] = $userpage;
