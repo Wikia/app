@@ -456,6 +456,9 @@ class EmailNotification {
 		// List of conditions we currently handle using the Email extension
 		return (
 			$this->isArticlePageEdit() ||
+			$this->isArticlePageRenamed() ||
+			$this->isArticlePageProtected() ||
+			$this->isArticlePageDeleted() ||
 			$this->isArticleComment() ||
 			$this->isBlogComment()
 		);
@@ -467,9 +470,14 @@ class EmailNotification {
 	 * @param User $user
 	 */
 	private function sendUsingEmailExtension( \User $user ) {
-
 		if ( $this->isArticlePageEdit() ) {
-			$controller = 'Email\Controller\WatchedPage';
+			$controller = 'Email\Controller\WatchedPageEdited';
+		} elseif ( $this->isArticlePageRenamed() ) {
+			$controller = 'Email\Controller\WatchedPageRenamed';
+		} elseif ( $this->isArticlePageProtected() ) {
+			$controller = 'Email\Controller\WatchedPageProtected';
+		} elseif ( $this->isArticlePageDeleted() ) {
+			$controller = 'Email\Controller\WatchedPageDeleted';
 		} elseif ( $this->isArticleComment() ) {
 			$controller = 'Email\Controller\ArticleComment';
 		} elseif ( $this->isBlogComment() ) {
@@ -482,13 +490,17 @@ class EmailNotification {
 				'title' => $this->title->getText(),
 				'namespace' => $this->title->getNamespace(),
 				'summary' => $this->summary,
-				'currentRevId' => $this->currentRevId,
-				'previousRevId' => $this->previousRevId,
+				//'currentRevId' => $this->currentRevId,
+				// TODO
+				'currentRevId' => 123,
+				//'previousRevId' => $this->previousRevId,
+				'previousRevId' => 46,
 				'replyToAddress' => $this->replyto,
 				'fromAddress' => $this->from->address,
 				'fromName' => $this->from->name
 			];
 
+			// TODO add handling errors
 			F::app()->sendRequest( $controller, 'handle', $params );
 		}
 	}
@@ -501,6 +513,19 @@ class EmailNotification {
 	 */
 	private function isArticlePageEdit() {
 		return empty( $this->action ) && !$this->isNewPage();
+	}
+
+	// TODO document
+	private function isArticlePageRenamed() {
+		return in_array( $this->action, [ 'move_redir', 'move' ] );
+	}
+
+	private function isArticlePageProtected() {
+		return in_array( $this->action, [ 'unprotect', 'modify', 'protect' ] );
+	}
+
+	private function isArticlePageDeleted() {
+		return in_array( $this->action, [ 'delete' ] );
 	}
 
 	/**

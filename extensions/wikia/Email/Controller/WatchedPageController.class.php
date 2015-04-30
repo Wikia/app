@@ -5,7 +5,7 @@ namespace Email\Controller;
 use Email\Check;
 use Email\EmailController;
 
-class WatchedPageController extends EmailController {
+abstract class WatchedPageController extends EmailController {
 
 	/* @var \Title */
 	private $title;
@@ -13,8 +13,15 @@ class WatchedPageController extends EmailController {
 	private $currentRevId;
 	private $previousRevId;
 
+	/**
+	 * @return String
+	 */
+	protected abstract function getSubjectMessageKey();
+
+	protected abstract function getSummaryMessageKey();
+
 	public function getSubject() {
-		return wfMessage( 'emailext-watchedpage-subject',
+		return wfMessage( $this->getSubjectMessageKey(),
 			$this->title->getPrefixedText(),
 			$this->getCurrentUserName()
 		)->inLanguage( $this->targetLang )->text();
@@ -104,7 +111,7 @@ class WatchedPageController extends EmailController {
 	 * @return String
 	 */
 	private function getSummary() {
-		return wfMessage( 'emailext-watchedpage-article-edited',
+		return wfMessage( $this->getSummaryMessageKey(),
 			$this->title->getFullURL(),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
@@ -155,5 +162,69 @@ class WatchedPageController extends EmailController {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->title->getFullURL( 'action=history' ),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+	}
+}
+
+class WatchedPageEditedController extends WatchedPageController {
+	/**
+	 * @return String
+	 */
+	protected function getSubjectMessageKey() {
+		return 'emailext-watchedpage-article-edited-subject';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getSummaryMessageKey() {
+		return 'emailext-watchedpage-article-edited';
+	}
+}
+
+class WatchedPageProtectedController extends WatchedPageController {
+	/**
+	 * @return String
+	 */
+	protected function getSubjectMessageKey() {
+		return 'emailext-watchedpage-article-protected-subject';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getSummaryMessageKey() {
+		return 'emailext-watchedpage-article-protected';
+	}
+}
+
+class WatchedPageDeletedController extends WatchedPageController {
+	/**
+	 * @return String
+	 */
+	protected function getSubjectMessageKey() {
+		return 'emailext-watchedpage-article-deleted-subject';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getSummaryMessageKey() {
+		return 'emailext-watchedpage-article-deleted';
+	}
+}
+
+class WatchedPageRenamedController extends WatchedPageController {
+	/**
+	 * @return String
+	 */
+	protected function getSubjectMessageKey() {
+		return 'emailext-watchedpage-article-renamed-subject';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getSummaryMessageKey() {
+		return 'emailext-watchedpage-article-renamed';
 	}
 }
