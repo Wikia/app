@@ -29,7 +29,9 @@
 				</p>
 				<p>{{details}}</p>
 			</div>
-			<a href="{{buttonLink}}"><button>{{buttonText}}</button></a>
+			{{# buttonText}}
+				<a href="{{buttonLink}}"><button>{{buttonText}}</button></a>
+			{{/ buttonText}}
 		</td>
 	</tr>
 	<tr>

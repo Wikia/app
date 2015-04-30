@@ -129,7 +129,7 @@ abstract class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getCompareChangesLabel() {
+	protected function getCompareChangesLabel() {
 		return wfMessage( 'emailext-watchedpage-diff-button-text' )->inLanguage( $this->targetLang )->text();
 	}
 
@@ -194,6 +194,13 @@ class WatchedPageProtectedController extends WatchedPageController {
 	 */
 	protected function getSummaryMessageKey() {
 		return 'emailext-watchedpage-article-protected';
+	}
+
+	/**
+	 * @return null
+	 */
+	protected function getCompareChangesLabel() {
+		return null;
 	}
 }
 
