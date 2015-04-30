@@ -5,7 +5,8 @@ class InsightsController extends WikiaSpecialPageController {
 	const
 		FLOW_STATUS_INPROGRESS = 'inprogress',
 		FLOW_STATUS_ALLDONE = 'alldone',
-		FLOW_STATUS_FIXED = 'fixed';
+		FLOW_STATUS_FIXED = 'fixed',
+		FLOW_STATUS_NOTFIXED = 'notfixed';
 
 	private $model;
 
@@ -77,22 +78,23 @@ class InsightsController extends WikiaSpecialPageController {
 				$articleName = $this->getVal( 'article', null );
 				$title = Title::newFromText( $articleName );
 
-				$next = $model->getNextItem( $model->getInsightType(), $articleName );
-
 				$isEdit = $this->request->getBool( 'isEdit', false );
 
 				if( !$isEdit ) {
 					$isFixed = $model->isItemFixed( $title );
 				}
 
-				if ( $isEdit || !$isFixed ) {
+				if ( $isEdit ) {
 					$params = $this->getInProgressNotificationParams( $subpage );
 					$type = self::FLOW_STATUS_INPROGRESS;
+				} elseif ( !$isFixed ) {
+					$params = $this->getNotFixedNotificationParams( $subpage, $title, $model );
+					$type = self::FLOW_STATUS_NOTFIXED;
 				} elseif ( $isFixed && empty( $next ) ) {
 					$params = $this->getCongratulationsNotificationParams( $subpage );
 					$type = self::FLOW_STATUS_ALLDONE;
 				} elseif ( $isFixed ) {
-					$params = $this->getInsightFixedNotificationParams( $next, $subpage );
+					$params = $this->getInsightFixedNotificationParams( $subpage, $articleName, $model );
 					$type = self::FLOW_STATUS_FIXED;
 				}
 
@@ -111,10 +113,28 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get params for notification template shown in edit mode or if issue is not fixed
+	 * Get params for notification template shown in edit mode
+	 *
+	 * @param String $subpage Insights subpage
 	 */
 	private function getInProgressNotificationParams( $subpage ) {
 		$params = $this->getInsightListLinkParams( $subpage );
+		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain()
+			. wfMessage( 'insights-notification-message-fixit' )->plain();
+
+		return $params;
+	}
+
+	/**
+	 * Get params for notification template shownwhen user dont fix an issue
+	 *
+	 * @param String $subpage Insights subpage
+	 * @param Title $title
+	 * @param InsightsModel $model
+	 */
+	private function getNotFixedNotificationParams( $subpage, Title $title, InsightsModel $model ) {
+		$params = $this->getInsightFixItParams( $title, $model );
+		$params = array_merge( $params, $this->getInsightListLinkParams( $subpage ) );
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain();
 
 		return $params;
@@ -133,11 +153,12 @@ class InsightsController extends WikiaSpecialPageController {
 	/**
 	 * Get params for notification template shown when user fix one issue from the insights list
 	 *
-	 * @param $next Array data about item from insight list
-	 * @param $params String params to be added to url
+	 * @param String $subpage Insights subpage
+	 * @param String $articleName current article name
+	 * @param InsightsModel $model
 	 */
-	private function getInsightFixedNotificationParams( $next, $subpage ) {
-		$params = $this->getInsightNextLinkParams( $next, $subpage );
+	private function getInsightFixedNotificationParams( $subpage, $articleName, InsightsModel $model ) {
+		$params = $this->getInsightNextLinkParams( $subpage, $articleName, $model );
 		$params = array_merge( $params, $this->getInsightListLinkParams( $subpage ));
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->plain();
 
@@ -147,23 +168,43 @@ class InsightsController extends WikiaSpecialPageController {
 	/**
 	 * Get params to generate next item link in notification template
 	 *
-	 * @param $next Array data about item from insight list
-	 * @param $params String params to be added to url
+	 * @param String $subpage Insights subpage
+	 * @param String $articleName current article name
+	 * @param InsightsModel $model
 	 */
-	private function getInsightNextLinkParams( $next, $subpage ) {
+	private function getInsightNextLinkParams( $subpage, $articleName, InsightsModel $model ) {
+		$next = $model->getNextItem( $model->getInsightType(), $articleName );
+
 		return [
-			'nextArticleButton' => wfMessage( 'insights-notification-next-item-' . $subpage )->plain(),
+			'nextArticleText' => wfMessage( 'insights-notification-next-item-' . $subpage )->plain(),
 			'nextArticleTitle' => $next['link']['text'],
 			'nextArticleLink' => $next['link']['url']
 		];
 	}
 
 	/**
+	 * Get params to generate link back to edit mode
+	 *
+	 * @param Title $title
+	 * @param InsightsModel $model
+	 */
+	private function getInsightFixItParams( Title $title, InsightsModel $model ) {
+		$link = InsightsHelper::getTitleLink( $title, $model->getUrlParams() );
+
+		return [
+			'editPageText' => wfMessage( 'insights-notification-message-fixit' )->plain(),
+			'editPageLink' => $link['url']
+		];
+	}
+
+	/**
 	 * Get params to generate link to insight list in notification template
+	 *
+	 * @param String $subpage Insights subpage
 	 */
 	private function getInsightListLinkParams( $subpage ) {
 		return [
-			'insightsPageButton' => wfMessage( 'insights-notification-list-button' )->plain(),
+			'insightsPageText' => wfMessage( 'insights-notification-list-button' )->plain(),
 			'insightsPageLink' => $this->getSpecialInsightsUrl( $subpage )
 		];
 	}
@@ -173,7 +214,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function getInsightLinkParams() {
 		return [
-			'insightsPageButton' => wfMessage( 'insights-notification-see-more' )->plain(),
+			'insightsPageText' => wfMessage( 'insights-notification-see-more' )->plain(),
 			'insightsPageLink' => $this->getSpecialInsightsUrl()
 		];
 	}
