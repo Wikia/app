@@ -5,7 +5,7 @@ abstract class InsightsModel {
 
 	public $subpage;
 
-	abstract public function getContent();
+	abstract public function getContent( $params );
 	abstract public function getData();
 	abstract public function getTemplate();
 

@@ -54,7 +54,8 @@ class InsightsController extends WikiaSpecialPageController {
 		 * - getTemplate() - returning an overriding template
 		 */
 		if ( $this->model instanceof InsightsModel ) {
-			$this->content = $this->model->getContent();
+			$params = $this->request->getParams();
+			$this->content = $this->model->getContent( $params );
 			$this->data = $this->model->getData();
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {

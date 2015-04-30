@@ -6,15 +6,24 @@
  * A base model for subpages that extend the QueryPage class
  */
 abstract class InsightsQuerypageModel extends InsightsModel {
-	private $queryPageInstance,
-		$template = 'subpageList';
+	private
+		$queryPageInstance,
+		$template = 'subpageList',
+		$cacheTtl,
+		$offset = 0,
+		$limit = 100,
+		$sortingArray;
 
 	public
-		$offset = 0,
-		$limit = 100;
+		$sorting = [
+			'pv7' => SORT_NUMERIC,
+			'pv28' => SORT_NUMERIC,
+			'pvDiff' => SORT_NUMERIC,
+		];
 
 	abstract function getDataProvider();
 	abstract function isItemFixed( Title $title );
+	abstract function getInsightType();
 
 	/**
 	 * @return QueryPage An object of a QueryPage's child class
@@ -27,8 +36,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $this->template;
 	}
 
+	public function arePageViewsRequired() {
+		return true;
+	}
+
 	public function getData() {
-		$data['offset'] = $this->offset;
+		$data['display'] = [
+			'pageviews'	=> $this->arePageViewsRequired(),
+		];
 		return $data;
 	}
 
@@ -37,15 +52,130 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 *
 	 * @return array
 	 */
-	public function getContent() {
+	public function getContent( $params ) {
 		$this->queryPageInstance = $this->getDataProvider();
 
+		/**
+		 * 1. Prepare data of articles - title, last revision, link etc.
+		 */
+		$articlesData = $this->fetchArticlesData();
+
+		/**
+		 * 2. Slice a sorting table to retrieve a page
+		 */
+		$this->prepareParams( $params );
+		if ( !isset( $this->sortingArray ) ) {
+			$this->sortingArray = array_keys( $articlesData );
+		}
+		$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
+
+		/**
+		 * 3. Populate $content array with data for each article id
+		 */
 		$content = [];
-		$res = $this->queryPageInstance->doQuery( $this->offset, $this->limit );
-		if ( $res->numRows() > 0 ) {
-			$content = $this->prepareData( $res );
+		foreach ( $ids as $id ) {
+			$content[] = $articlesData[$id];
 		}
 		return $content;
+	}
+
+	private function prepareParams( $params ) {
+		global $wgMemc;
+
+		if ( isset( $params['sort'] ) && isset( $this->sorting[ $params['sort'] ] ) ) {
+			$this->sortingArray = $wgMemc->get( wfSharedMemcKey( $this->getInsightType(), $params['sort'] ) );
+		}
+
+		if ( isset( $params['offset'] ) ) {
+			$this->offset = intval( $params['offset'] );
+		}
+
+		if ( isset( $params['limit'] ) ) {
+			$this->limit = intval( $params['limit'] );
+		}
+	}
+
+	public function fetchArticlesData() {
+		$cacheKey = wfSharedMemcKey( $this->getInsightType(), 'articlesData' );
+		$this->cacheTtl = WikiaResponse::CACHE_STANDARD * 3;
+		$articlesData = WikiaDataAccess::cache( $cacheKey, $this->cacheTtl, function () {
+			$res = $this->queryPageInstance->doQuery();
+
+			if ( $res->numRows() > 0 ) {
+				$articlesData = $this->prepareData( $res );
+			}
+
+			if ( $this->arePageViewsRequired() ) {
+				$articlesIds = array_keys( $articlesData );
+				$pageViewsData = $this->getPageViewsData( $articlesIds );
+				$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
+			}
+
+			return $articlesData;
+		} );
+
+		return $articlesData;
+	}
+
+	public function getPageViewsData( $articlesIds ) {
+		/**
+		 * Get pv for the last 4 Sundays
+		 */
+		$pvTimes = InsightsHelper::getLastFourTimeIds();
+
+		$pvData = [];
+
+		foreach( $pvTimes as $timeId ) {
+			$pvData[] = DataMartService::getPageViewsForArticles( $articlesIds, $timeId );
+		}
+
+		return $pvData;
+	}
+
+	public function createSortingArray( $sortingArray, $key ) {
+		global $wgMemc;
+
+		arsort( $sortingArray, $this->sorting[ $key ] );
+		$cacheKey = wfSharedMemcKey( $this->getInsightType(), $key );
+
+		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), $this->cacheTtl );
+	}
+
+	public function assignPageViewsData( $articlesData, $pageViewsData ) {
+		$sortingData = [];
+
+		foreach ( $articlesData as $articleId => $data ) {
+			$pv = [
+				intval( $pageViewsData[0][ $articleId ] ),
+				intval( $pageViewsData[1][ $articleId ] ),
+				intval( $pageViewsData[2][ $articleId ] ),
+				intval( $pageViewsData[3][ $articleId ] ),
+			];
+
+			$pv28 = array_sum( $pv );
+			if ( $pv[1] != 0 ) {
+				$pvDiff = ( $pv[1] - $pv[2] ) / $pv[2];
+				$pvDiff = round( $pvDiff, 2 ) * 100;
+			} else {
+				$pvDiff = 'N/A';
+			}
+
+			$sortingData['pv7'][ $articleId ] = $pv[0];
+			$articlesData[ $articleId ]['metadata']['pv7'] = $pv[0];
+
+			$sortingData['pv28'][ $articleId ] = $pv28;
+			$articlesData[ $articleId ]['metadata']['pv28'] = $pv28;
+
+			$sortingData['pvDiff'][ $articleId ] = $pvDiff;
+			$articlesData[ $articleId ]['metadata']['pvDiff'] = $pvDiff;
+
+		}
+
+		foreach ( $this->sorting as $key => $flag ) {
+			$this->createSortingArray( $sortingData[ $key ], $key );
+		}
+
+		return $articlesData;
 	}
 
 	/**
@@ -72,9 +202,17 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				if ( $rev ) {
 					$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
 				}
-				$data[] = $article;
+
+				if ( $this->arePageViewsRequired() ) {
+					$article['metadata']['pv7'] = 0;
+					$article['metadata']['pv28'] = 0;
+					$article['metadata']['pvDiff'] = 0;
+				}
+
+				$data[ $title->getArticleID() ] = $article;
 			}
 		}
+
 		return $data;
 	}
 
