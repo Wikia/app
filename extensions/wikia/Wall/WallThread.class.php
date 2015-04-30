@@ -1,6 +1,8 @@
 <?php
 
 class WallThread {
+	const FETCHED_REPLIES_LIMIT = 500;
+
 	private $mThreadId = false;
 	private $mCached = null;
 	private $mForceMaster = false;
@@ -9,12 +11,15 @@ class WallThread {
 	private $data;
 
 	public function __construct() {
+		$this->initializeReplyData();
+		$this->mCached = null;
+		$this->mCityId = F::app()->wg->CityId;
+	}
+
+	protected function initializeReplyData() {
 		$this->data = new StdClass();
 		$this->data->threadReplyIds = false;
 		$this->data->threadReplyObjs = false;
-
-		$this->mCached = null;
-		$this->mCityId = F::app()->wg->CityId;
 	}
 
 	/**
@@ -28,6 +33,7 @@ class WallThread {
 
 		return $wt;
 	}
+
 	public function loadIfCached() {
 		if($this->mCached === null) {
 			$this->loadFromMemcache();
@@ -51,9 +57,7 @@ class WallThread {
 
 	public function setReplies( $ids ) {
 		// set and cache replies of this thread
-		$this->data = new StdClass();
-		$this->data->threadReplyIds = false;
-		$this->data->threadReplyObjs = false;
+		$this->initializeReplyData();
 		
 		$this->data->threadReplyIds = $ids;
 
@@ -61,8 +65,10 @@ class WallThread {
 	}
 
 	private function loadReplyObjs() {
-		if( $this->data->threadReplyIds === false )
+		if( $this->data->threadReplyIds === false ) {
 			$this->loadReplyIdsFromDB();
+		}
+
 		$this->data->threadReplyObjs = array();
 
 		if(empty($this->data->threadReplyIds)) {
@@ -77,45 +83,59 @@ class WallThread {
 		}
 	}
 
-	private function loadReplyIdsFromDB($master = false) {
+	/**
+	 * Fetches reply IDs for the thread, using a limit to control large queries
+	 *
+	 * @param DatabaseBase $dbr Database resource
+	 * @param integer $afterId The last reply ID after which the next set is selected
+	 * @return array List of reply IDs
+	 */
+	private function getReplyIdsFromDB( $dbr, $afterId = null ) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
 		// (fetch for many threads at once, set with ->setReplies)
 
-		$title = Title::newFromId( $this->mThreadId );
+		$conditions = [ 'parent_comment_id = '.$this->mThreadId ];
 
-		if( empty($title) ) {
-			$title = Title::newFromId( $this->mThreadId, Title::GAID_FOR_UPDATE );
+		if ( (int) $afterId > 0 ) {
+			array_push( $conditions, 'comment_id > '.$afterId );
 		}
-
-		if( empty($title) ) {
-			return ;
-		}
-
-		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
-
-		$threadId = $title->getArticleID();
 
 		$result = $dbr->select(
-				array( 'comments_index' ),
-				array( 'distinct comment_id' ),
-				array( 'parent_comment_id = '.$threadId ),
+				[ 'comments_index' ],
+				[ 'distinct comment_id' ],
+				$conditions,
 				__METHOD__,
-				array( 'ORDER BY' => 'comment_id ASC' )
+				[ 'ORDER BY' => 'comment_id ASC',
+					'LIMIT' => self::FETCHED_REPLIES_LIMIT ]
 		);
 
-		$list = array();
+		$list = [];
 		while ( $row = $dbr->fetchObject( $result ) ) {
 			$list[] = $row->comment_id;
 		}
 
-		$this->setReplies( $list );
+		$lastId = end( $list );
+
+		return empty( $lastId ) ? $list :
+			array_merge( $list, $this->getReplyIdsFromDB( $dbr, $lastId ) );
+	}
+
+	private function loadReplyIdsFromDB( $master = false ) {
+		if ( empty( Title::newFromId( $this->mThreadId ) ) ) {
+			return;
+		}
+
+		$dbr = wfGetDB( $master ? DB_MASTER : DB_SLAVE );
+
+		$this->setReplies( $this->getReplyIdsFromDB( $dbr ) );
 	}
 
 	public function invalidateCache() {
 		// invalidate cache at Thread level (new reply or reply removed in thread)
-		$this->mForceMaster = true;
-		$this->loadReplyIdsFromDB( true );
+		$this->getCache()->delete( $this->getThreadKey() );
+		// Reset data
+		$this->initializeReplyData();
 	}
 
 	private function getThreadKey() {
@@ -140,10 +160,7 @@ class WallThread {
 	}
 
 	private function saveToMemcache() {
-		$cache = $this->getCache();
-		$key = $this->getThreadKey();
-
-		$cache->set($key, $this->data);
+		$this->getCache()->set( $this->getThreadKey(), $this->data );
 		$this->mCached = true;
 		$this->mForceMaster = false;
 	}

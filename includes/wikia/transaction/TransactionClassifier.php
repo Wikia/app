@@ -42,6 +42,13 @@ class TransactionClassifier {
 		'JSMessages',
 		'WikiaSearchIndexer',
 		'LatestActivity',
+
+		// controllers used by Mobile Apps (PLATFORM-1177)
+		'SpecialVideosSpecial',
+		'GameGuides',
+		'SearchApi',
+		'VideoHandler',
+		'SearchSuggestionsApi',
 	);
 
 	protected static $FILTER_AJAX_FUNCTIONS = array(

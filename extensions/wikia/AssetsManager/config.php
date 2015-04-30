@@ -702,7 +702,6 @@ $config['mobile_base_ads_js'] = array(
 	'assets' => array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
-		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/instantGlobals.js',
 
@@ -711,20 +710,25 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
-		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/openX.js',
-		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
+		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
+		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
+		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
+		'//extensions/wikia/AdEngine/js/provider/openX.js',
+		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
+		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+
+		// Paid asset drop
+		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
 	)
 );
 
@@ -2395,19 +2399,11 @@ $config['page_share_scss'] = [
 	],
 ];
 
-$config['old_global_footer_scss'] = [
+$config['global_footer_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
-	]
-];
-
-$config['updated_global_footer_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooterUpdated.scss'
 	]
 ];
 
@@ -2432,5 +2428,30 @@ $config['poweruser'] = [
 	'assets' => [
 		'//extensions/wikia/PowerUser/js/pageViewTracking.js',
 		'//extensions/wikia/PowerUser/js/powerUser.run.js',
+	]
+];
+
+$config['portable_infobox_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
+	]
+];
+
+$config['portable_infobox_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//resources/wikia/libraries/vignette/vignette.js',
+		'//extensions/wikia/PortableInfobox/scripts/PortableInfobox.js'
+	]
+];
+
+$config['paid_asset_drop_desktop_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/PaidAssetDrop/js/run/desktop.run.js',
+		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js'
 	]
 ];
