@@ -146,11 +146,13 @@ class InsightsHelper {
 	}
 
 	public static function getLastFourTimeIds() {
+		$lastTimeId = ( new DateTime() )->modify( 'last Sunday' );
+		$format = 'Y-m-d H:i:s';
 		return [
-			( new DateTime() )->modify( 'last Sunday' )->format( 'Y-m-d H:i:s' ),
-			( new DateTime() )->modify( '-1 week' )->modify( 'last Sunday' )->format( 'Y-m-d H:i:s' ),
-			( new DateTime() )->modify( '-2 week' )->modify( 'last Sunday' )->format( 'Y-m-d H:i:s' ),
-			( new DateTime() )->modify( '-3 week' )->modify( 'last Sunday' )->format( 'Y-m-d H:i:s' ),
+			$lastTimeId->format( $format ),
+			$lastTimeId->modify( '-1 week' )->format( $format ),
+			$lastTimeId->modify( '-2 week' )->format( $format ),
+			$lastTimeId->modify( '-3 week' )->format( $format ),
 		];
 	}
 }
