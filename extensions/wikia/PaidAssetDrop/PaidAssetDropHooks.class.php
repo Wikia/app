@@ -5,7 +5,7 @@ class PaidAssetDropHooks {
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
 		global $wgPaidAssetDropConfig;
 
-		if( $request->getBool( static::PAD_FORCE_PARAMETER, false ) ) {
+		if ( $request->getBool( static::PAD_FORCE_PARAMETER, false ) ) {
 			$wgPaidAssetDropConfig = true;
 		}
 
@@ -22,7 +22,7 @@ class PaidAssetDropHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		global $wgPaidAssetDropConfig;
 
-		if( !empty( $wgPaidAssetDropConfig ) ) {
+		if ( !empty( $wgPaidAssetDropConfig ) ) {
 			$jsAssets[] = 'paid_asset_drop_desktop_js';
 		}
 
@@ -40,9 +40,23 @@ class PaidAssetDropHooks {
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
 		global $wgPaidAssetDropConfig;
 
-		if( !empty( $wgPaidAssetDropConfig ) ) {
+		if ( !empty( $wgPaidAssetDropConfig ) ) {
 			$vars['wgPaidAssetDropConfig'] = $wgPaidAssetDropConfig;
 		}
+
+		return true;
+	}
+
+
+	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	public static function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgSitewideDisablePaidAssetDrop';
 
 		return true;
 	}

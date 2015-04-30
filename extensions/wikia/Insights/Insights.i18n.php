@@ -27,16 +27,28 @@ $messages['en'] = [
 	'insights-notification-message-inprogress-deadendpages' => 'This page needs links to other pages. ',
 	'insights-notification-message-fixed-deadendpages' => 'Yay, this page is now linked!',
 	'insights-notification-next-item-deadendpages' => 'Go to the next article that needs links.',
-	//Wanted pages
+	// Wanted pages
 	'insights-list-subtitle-wantedpages' => 'Wanted pages',
 	'insights-list-description-wantedpages' => 'There are redlinks pointing to these pages, but the pages don\'t exist! Create the article or make it a redirect to the correct article to help readers navigate your community.',
 	'insights-notification-message-inprogress-wantedpages' => 'This page needs to be created. ',
 	'insights-notification-message-fixed-wantedpages' => 'Thanks for making this page!',
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
+	// Popular pages
+	'insights-list-subtitle-popularpages' => 'Popular pages',
+	'insights-list-description-popularpages' => 'These pages are gaining traction with your readers! Make sure they are up to your standards and have all the latest images and information.',
+	'insights-notification-message-inprogress-popularpages' => 'This page is frequently read. Make sure it looks great!',
+	'insights-notification-next-item-popularpages' => 'Go to the next uncategorized article.',
+
+	// Sorting
+	'insights-sort-label' => 'Sort by',
+	'insights-sort-pageviews-1week' => 'Page views, last week',
+	'insights-sort-pageviews-4weeks' => 'Page views, last 4 weeks',
+	'insights-sort-pageviews-risingfast' => 'Recent increase in page views',
+	'insights-sort-alphabetical' => 'Alphabetical',
 
 	'insights-notification-message-alldone' => 'Congratulations! There are no more items in this queue.',
 	'insights-notification-message-fixit' => 'Let\'s fix it.',
-	'insights-notification-list-button' => 'Back to the list',
+	'insights-notification-list-button' => 'Go back to the list',
 	'insights-notification-see-more' => 'See more insights.',
 	'insights-wanted-by' => '$1 referral links',
 
