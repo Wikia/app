@@ -83,7 +83,7 @@ require(
 			$.nirvana.sendRequest({
 				controller: 'Insights',
 				method: 'loopNotification',
-				type: 'get',
+				type: 'POST',
 				data: {
 					insight: insights,
 					isEdit: isEdit,
