@@ -96,6 +96,7 @@ abstract class BaseTask {
 			throw new \InvalidArgumentException;
 		}
 
+		$this->info( 'BaseTask::execute' );
 
 		try {
 			$result = call_user_func_array( [$this, $method], $args );
@@ -144,7 +145,7 @@ abstract class BaseTask {
 	 */
 	public function queue() {
 		$this->info( 'BaseTask::queue', [
-			'type' => get_class( $this ),
+			'task' => get_class( $this ),
 			'backtrace' => new \Exception()
 		] );
 
@@ -395,8 +396,8 @@ abstract class BaseTask {
 		}
 
 		\Wikia\Logger\WikiaLogger::instance()->info( 'BaseTask::batch', [
-			'tasks' => count( $tasks ),
-			'type' => get_class( reset( $tasks ) ),
+			'count' => count( $tasks ),
+			'task' => get_class( reset( $tasks ) ),
 			'backtrace' => new \Exception()
 		] );
 
