@@ -8,10 +8,12 @@ use DMCARequest\DMCARequestHelper;
 
 class DMCARequestSpecialController extends WikiaSpecialPageController {
 
+	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
 	private $helper;
 
 	public function __construct() {
-		parent::__construct( 'DMCARequest', 'dmcarequest-management' );
+		parent::__construct( 'DMCARequest' );
 		$this->helper = new DMCARequestHelper();
 	}
 
@@ -20,10 +22,8 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->specialPage->setHeaders();
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$request = $this->getRequest();
-		$user = $this->getUser();
 
 		if ( $request->wasPosted()
 			&& $this->getUser()->matchEditToken( $request->getVal( 'token' ) )
@@ -46,7 +46,6 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 	 * Page to display on successfully submitting a notice.
 	 */
 	public function success() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 		$this->response->setData( [
 			'success' => $this->msg( 'dmcarequest-request-success' )->escaped(),
 			'returnto' => $this->msg( 'returnto' )->rawParams(
@@ -73,12 +72,14 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 
 		if ( !$result ) {
 			$this->error = $this->msg( 'dmcarequest-request-error-submission' )->escaped();
+			return false;
 		}
 
 		$result = $this->helper->sendNoticeEmail();
 
 		if ( !$result ) {
 			$this->error = $this->msg( 'dmcarequest-request-error-submission' )->escaped();
+			return false;
 		}
 
 		return true;
@@ -116,7 +117,7 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 		}
 
 		$requestData['type'] = $request->getInt( 'type' );
-		if ( !in_array( $requestData['type'], array_keys( $this->helper->requestorTypes ) ) ) {
+		if ( !$this->helper->isValidRequestorType( $requestData['type'] ) ) {
 			$this->error = $this->msg( 'dmcarequest-request-error-invalid' )->escaped();
 			$this->errorParam = 'type';
 			return false;
@@ -150,28 +151,28 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 	 *               attaching to the email.
 	 */
 	private function getScreenshots() {
-		$screenshot = $this->getContext()->getRequest()->getFileTempname( 'screenshots' );
+		$screenshots = $this->getContext()->getRequest()->getFileTempname( 'screenshots' );
 		$magic = MimeMagic::singleton();
 
-		$screenshots = [];
-		if ( !empty( $screenshot ) ) {
-			foreach ( $screenshot as $image ) {
+		$result = [];
+		if ( !empty( $screenshots ) ) {
+			foreach ( $screenshots as $image ) {
 				if ( !empty( $image ) ) {
 					$extList = '';
 					$mime = $magic->guessMimeType( $image );
 					if ( $mime !== 'unknown/unknown' ) {
-							# Get a space separated list of extensions
+							// Get a space separated list of extensions
 							$extList = $magic->getExtensionsForType( $mime );
 							$fileExtension = strtok( $extList, ' ' );
 					} else {
 							$mime = 'application/octet-stream';
 					}
-					$screenshots[] = [ 'file' => $image, 'ext' => $fileExtension, 'mime' => $mime ];
+					$result[] = [ 'file' => $image, 'ext' => $fileExtension, 'mime' => $mime ];
 				}
 			}
 		}
 
-		return $screenshots;
+		return $result;
 	}
 
 	/**
@@ -327,7 +328,9 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 	 */
 	private function getTypeOptions() {
 		$options = [];
-		foreach ( $this->helper->requestorTypes as $type => $typeName ) {
+		$requestorTypes = $this->helper->getRequestorTypes();
+
+		foreach ( $requestorTypes as $type => $typeName ) {
 			$options[] = [
 				'value' => $type,
 				// Messages used here:

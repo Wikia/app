@@ -11,12 +11,6 @@ namespace DMCARequest;
 class DMCARequestHelper {
 	const DMCA_SUBMISSION_EMAIL = 'copyright@wikia.com';
 
-	public $requestorTypes = [
-		1 => 'copyrightholder',
-		2 => 'representative',
-		3 => 'none',
-	];
-
 	/**
 	 * Available values for action taken on the request as defined
 	 * in the ChillingEffects API.
@@ -29,7 +23,12 @@ class DMCARequestHelper {
 		'Partial',
 	];
 
-	private $noticeId;
+	private $requestorTypes = [
+		1 => 'copyrightholder',
+		2 => 'representative',
+		3 => 'none',
+	];
+
 	private $noticeData = [];
 
 	/**
@@ -48,6 +47,25 @@ class DMCARequestHelper {
 	 */
 	public function setNoticeData( array $noticeData ) {
 		$this->noticeData = array_merge( $this->noticeData, $noticeData );
+	}
+
+	/**
+	 * Get a list of valid types of DMCA requestors.
+	 *
+	 * @return array List of valid types of requestor
+	 */
+	public function getRequestorTypes() {
+		return $this->requestorTypes;
+	}
+
+	/**
+	 * Check if a valid requestor type was provided.
+	 *
+	 * @param  int     $type The type ot check
+	 * @return boolean
+	 */
+	public function isValidRequestorType( $type ) {
+		return in_array( $type, array_keys( $this->requestorTypes ) );
 	}
 
 	/**
@@ -82,7 +100,7 @@ class DMCARequestHelper {
 		);
 
 		if ( $result ) {
-			$this->noticeId = $dbw->insertId();
+			$this->noticeData['id'] = $dbw->insertId();
 		}
 
 		return $result;
@@ -110,9 +128,8 @@ class DMCARequestHelper {
 			return false;
 		}
 
-		$this->noticeId = $notice->dmca_id;
-
 		$this->setNoticeData( [
+			'id' => $notice->dmca_id,
 			'type' => $notice->dmca_requestor_type,
 			'date' => $notice->dmca_date,
 			'fullname' => $notice->dmca_fullname,
@@ -196,15 +213,16 @@ class DMCARequestHelper {
 			// * dmcarequest-request-type-copyrightholder
 			// * dmcarequest-request-type-representative
 			// * dmcarequest-request-type-none
-			wfMessage( "dmcarequest-request-type-{$this->requestorTypes[$this->noticeData['type']]}" )->plain(),
+			wfMessage( "dmcarequest-request-type-{$this->requestorTypes[$this->noticeData['type']]}" )
+				->inLanguage( 'en' )->useDatabase( false )->plain(),
 			$this->noticeData['original_urls'],
 			$this->noticeData['infringing_urls'],
-			wfMessage( 'dmcarequest-request-good-faith-label' )->plain(),
-			wfMessage( 'dmcarequest-request-perjury-label' )->plain(),
-			wfMessage( 'dmcarequest-request-wikiarights-label' )->plain(),
+			wfMessage( 'dmcarequest-request-good-faith-label' )->inLanguage( 'en' )->useDatabase( false )->plain(),
+			wfMessage( 'dmcarequest-request-perjury-label' )->inLanguage( 'en' )->useDatabase( false )->plain(),
+			wfMessage( 'dmcarequest-request-wikiarights-label' )->inLanguage( 'en' )->useDatabase( false )->plain(),
 			$this->noticeData['comments'],
 			$this->noticeData['signature'],
-			\SpecialPage::getTitleFor( 'DMCARequestManagement', $this->noticeId )->getFullURL(),
+			\SpecialPage::getTitleFor( 'DMCARequestManagement', $this->noticeData['id'] )->getFullURL(),
 		] )->inLanguage( 'en' )->useDatabase( false )->escaped();
 	}
 
