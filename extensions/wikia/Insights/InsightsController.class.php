@@ -141,7 +141,7 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get params for notification template shown when user fix all issues in given insight type	 *
+	 * Get params for notification template shown when user fix all issues in given insight type
 	 */
 	private function getCongratulationsNotificationParams() {
 		$params = $this->getInsightLinkParams();
