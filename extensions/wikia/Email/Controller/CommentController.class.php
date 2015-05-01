@@ -14,11 +14,24 @@ abstract class CommentController extends EmailController {
 	/** @var \Title */
 	protected $latestComment;
 
+	/** @var \Title */
+	protected $commentTitle;
+
 	public function initEmail() {
 		$titleText = $this->request->getVal( 'title' );
 		$titleNamespace = $this->request->getVal( 'namespace' );
 
 		$this->title = \Title::newFromText( $titleText, $titleNamespace );
+
+		// The summary here is the contents of the comment
+		$commentRevID = $this->getVal( 'currentRevId', false );
+		if ( $commentRevID ) {
+			$rev = \Revision::newFromId( $commentRevID, \Revision::USE_MASTER_DB );
+
+			if ( $rev ) {
+				$this->commentTitle = $rev->getTitle( \Revision::USE_MASTER_DB );
+			}
+		}
 
 		$this->assertValidParams();
 	}
@@ -28,6 +41,7 @@ abstract class CommentController extends EmailController {
 	 */
 	private function assertValidParams() {
 		$this->assertValidTitle();
+		$this->assertValidCommentTitle();
 	}
 
 	/**
@@ -40,6 +54,19 @@ abstract class CommentController extends EmailController {
 
 		if ( !$this->title->exists() ) {
 			throw new Check( "Title doesn't exist." );
+		}
+	}
+
+	/**
+	 * @throws \Email\Check
+	 */
+	private function assertValidCommentTitle() {
+		if ( !$this->commentTitle instanceof \Title ) {
+			throw new Check( "Could not find comment for revision ID given by currentRevId" );
+		}
+
+		if ( !$this->title->exists() ) {
+			throw new Check( "Comment doesn't exist." );
 		}
 	}
 
@@ -89,18 +116,11 @@ abstract class CommentController extends EmailController {
 	abstract protected function getSummaryKey();
 
 	protected function getDetails() {
-		$comment = $this->getLatestComment();
-		$articleID = $comment->getArticleID();
+		$article = \Article::newFromTitle( $this->commentTitle, \RequestContext::getMain() );
+		$service = new \ArticleService( $article );
+		$snippet = $service->getTextSnippet();
 
-		$res = $this->sendRequest( 'ArticleSummary', 'blurb', [
-			'ids' => $articleID,
-		] )->getData();
-
-		if ( empty( $res['summary'][$articleID] ) ) {
-			return '';
-		}
-
-		return $res['summary'][$articleID]['snippet'];
+		return $snippet;
 	}
 
 	protected function getCommentLabel() {
@@ -110,7 +130,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getCommentLink() {
-		$comment = $this->getLatestComment();
+		$comment = $this->commentTitle;
 		return $comment->getCanonicalURL();
 	}
 
@@ -124,18 +144,6 @@ abstract class CommentController extends EmailController {
 				->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
-	}
-
-	protected function getLatestComment() {
-		if ( empty( $this->latestComment ) ) {
-			$articleComment = \ArticleComment::latestFromTitle( $this->title );
-			if ( empty( $articleComment ) ) {
-				throw new Fatal( 'Could not find latest comment' );
-			}
-			$this->latestComment = $articleComment->getTitle();
-		}
-
-		return $this->latestComment;
 	}
 
 	protected function getCommentSectionLink() {
