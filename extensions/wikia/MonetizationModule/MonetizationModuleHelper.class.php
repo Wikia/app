@@ -64,11 +64,10 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		$app = F::app();
 		$status = false;
-		$showableNameSpaces = array_merge( $app->wg->ContentNamespaces, [ NS_FILE ] );
 		if ( !WikiaPageType::isCorporatePage()
 			&& $app->wg->Title->exists()
 			&& !$app->wg->Title->isMainPage()
-			&& in_array( $app->wg->Title->getNamespace(), $showableNameSpaces )
+			&& in_array( $app->wg->Title->getNamespace(), $app->wg->ContentNamespaces )
 			&& in_array( $app->wg->request->getVal( 'action' ), [ 'view', null ] )
 			&& $app->wg->request->getVal( 'diff' ) === null
 			&& $app->wg->User->isAnon()
@@ -296,17 +295,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return bool
 	 */
 	public function isPageSpecificResponse( $data ) {
-		// TODO: remove after service is updated
-		if ( !empty( $data['special_instructions'] ) ) {
-			if ( is_array( $data['special_instructions'] ) ) {
-				return ( in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
-			} else {
-				return ( $data['special_instructions'] == self::PAGE_SPECIFIC );
-			}
-		}
-
-		return false;
-		// return ( !empty( $data['special_instructions'] ) && in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
+		 return ( !empty( $data['special_instructions'] ) && in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
 	}
 
 	/**
