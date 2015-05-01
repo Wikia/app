@@ -1905,7 +1905,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * Makes an encoded list of strings from an array
 	 *
 	 * @param Array $a containing the data
-	 * @param int $mode int Constant
+	 * @param int $mode Constant
 	 *      - LIST_COMMA:          comma separated, no field names
 	 *      - LIST_AND:            ANDed WHERE clause (without the WHERE). See
 	 *        the documentation for $conds in DatabaseBase::select().

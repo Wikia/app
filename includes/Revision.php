@@ -33,7 +33,6 @@ class Revision {
 	const RAW = 3;
 
 	// These constants are used with methods that accept a true/false 'useMaster' parameter
-	const USE_SLAVE_DB = false;
 	const USE_MASTER_DB = true;
 
 	/**
