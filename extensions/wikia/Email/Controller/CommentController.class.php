@@ -12,18 +12,16 @@ abstract class CommentController extends EmailController {
 	protected $title;
 
 	/** @var \Title */
-	protected $latestComment;
-
-	/** @var \Title */
 	protected $commentTitle;
 
 	public function initEmail() {
+		// This title is for the article being commented upon
 		$titleText = $this->request->getVal( 'title' );
 		$titleNamespace = $this->request->getVal( 'namespace' );
 
 		$this->title = \Title::newFromText( $titleText, $titleNamespace );
 
-		// The summary here is the contents of the comment
+		// This revision ID is for the comment that was left
 		$commentRevID = $this->getVal( 'currentRevId', false );
 		if ( $commentRevID ) {
 			$rev = \Revision::newFromId( $commentRevID, \Revision::USE_MASTER_DB );
