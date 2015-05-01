@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 		slotMap = {
 			HOME_TOP_LEADERBOARD:    {size: '728x90,970x250,970x90'},
 			HOME_TOP_RIGHT_BOXAD:    {size: '300x250,300x600'},
+			INVISIBLE_SKIN:          {size: '1x1'},
 			LEFT_SKYSCRAPER_2:       {size: '160x600'},
 			TOP_LEADERBOARD:         {size: '728x90,970x250,970x90'},
 			TOP_RIGHT_BOXAD:         {size: '300x250,300x600'}
