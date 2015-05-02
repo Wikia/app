@@ -139,8 +139,12 @@
 				?>
 
 				<?php
-				if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY] ) ) {
-					echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY];
+				if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
+					if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
+						echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_BELOW_CATEGORY'] );
+					} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY] ) ) {
+						echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY];
+					}
 				}
 				?>
 
