@@ -100,7 +100,9 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// MonetizationService
-		if (context.providers.monetizationService && adProviderMonetizationService.canHandleSlot(slotName)) {
+		if (context.providers.monetizationService && adProviderMonetizationService.canHandleSlot(slotName) &&
+			context.providers.monetizationServiceAds
+		) {
 			if (instantGlobals.wgSitewideDisableMonetizationService) {
 				log('MonetizationService disabled by DR. No ads', 'warn', logGroup);
 				return [];
