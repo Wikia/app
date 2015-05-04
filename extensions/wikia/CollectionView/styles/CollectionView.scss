@@ -1,0 +1,30 @@
+$collection-view-image-size: 100px;
+
+.collection-view {
+	.item-type-item {
+		float: left;
+		vertical-align: top;
+		width: $collection-view-image-size;
+
+		.item-type-link:hover {
+			text-decoration: none;
+		}
+
+		.item-type-figure {
+			text-align: center;
+		}
+
+		//* selector is used because caption can contain wikitext
+		//so it's impossible to guess which element is the one with text
+		.item-type-caption * {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: $collection-view-image-size;
+		}
+
+		.item-type-image {
+			height: $collection-view-image-size;
+		}
+	}
+}
