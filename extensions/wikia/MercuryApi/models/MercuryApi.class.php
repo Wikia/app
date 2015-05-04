@@ -240,28 +240,20 @@ class MercuryApi {
 	}
 
 	/**
-	 * Get categories titles
-	 *
-	 * @param array $articleCategories
-	 * @return array
-	 */
-	private function getArticleCategoriesTitles( Array $articleCategories ) {
-		$categories = [];
-		foreach ( $articleCategories as $category ) {
-			$categories[] = $category[ 'title' ];
-		}
-		return $categories;
-	}
-
-	/**
 	 * Get ads context for Title
 	 * @param Title $title Title object
-	 * @param WikiaGlobalRegistry $wg Reference to the Global registry
-	 * @param array $articleCategories List of Categories
 	 * @return array Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
 		$adContext = new AdEngine2ContextService();
 		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+	}
+
+	public function getCuratedContent($data) {
+		if ( !empty( $data['sections'] ) ) {
+			return $data;
+		} else {
+			return false;
+		}
 	}
 }
