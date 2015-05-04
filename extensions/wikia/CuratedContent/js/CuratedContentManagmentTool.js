@@ -255,6 +255,24 @@ $(function () {
 							return errReason;
 						}
 
+						function trackSave() {
+							Wikia.Tracker.track({
+								action: Wikia.Tracker.ACTIONS.CLICK,
+								category: 'special-curated-content',
+								label: 'save',
+								trackingMethod: 'analytics'
+							});
+						}
+
+						function trackSaveError() {
+							Wikia.Tracker.track({
+								action: Wikia.Tracker.ACTIONS.CLICK,
+								category: 'special-curated-content',
+								label: 'save-error',
+								trackingMethod: 'analytics'
+							});
+						}
+
 						if (data.error) {
 							var err = data.error,
 								i = err.length,
@@ -291,20 +309,16 @@ $(function () {
 
 							$save.addClass('err');
 							$save.attr('disabled', true);
+							trackSaveError();
 						} else if (data.status) {
 							$save.addClass('ok');
+							trackSave();
 						}
 					}).fail(function () {
 						$save.addClass('err');
+						trackSaveError();
 					}).then(function () {
 						$form.stopThrobbing();
-
-						Wikia.Tracker.track({
-							action: Wikia.Tracker.ACTIONS.CLICK,
-							category: 'special-curated-content',
-							label: 'save',
-							trackingMethod: 'internal'
-						});
 					});
 			}
 		});
