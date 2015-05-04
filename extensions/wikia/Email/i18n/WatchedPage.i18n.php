@@ -20,13 +20,21 @@ $messages['en'] = array(
 	'emailext-watchedpage-view-all-changes' => "[$1 View all changes to '''$2''']",
 );
 
-// TODO qqq
 $messages['qqq'] = array(
-	'emailext-watchedpage-article-edited-subject' => 'Subject line for watched article email. $1 -> article name, $2 -> username of user who edited the article',
+	'emailext-watchedpage-article-edited-subject' => 'Subject line for watched article email when article was edited. $1 -> article name, $2 -> username of user who edited the article',
+	'emailext-watchedpage-article-protected-subject' => 'Subject line for watched article email when article was protected. $1 -> article name, $2 -> username of user who edited the article',
+	'emailext-watchedpage-article-unprotected-subject' => 'Subject line for watched article email when article was unprotected. $1 -> article name, $2 -> username of user who edited the article',
+	'emailext-watchedpage-article-renamed-subject' => 'Subject line for watched article email when article was renamed. $1 -> article name, $2 -> username of user who edited the article',
+	'emailext-watchedpage-article-deleted-subject' => 'Subject line for watched article email when article was deleted. $1 -> article name, $2 -> username of user who edited the article',
 	'emailext-watchedpage-salutation' => "Email greeting. $1 is the recipient's username.",
-	'emailext-watchedpage-article-edited' => 'Message to the user that an article they are following has been edited. $1 -> article url, $2 -> article title, $3 -> wikia url',
+	'emailext-watchedpage-article-edited' => 'Message to the user that an article they are following has been edited. $1 -> article url, $2 -> article title',
+	'emailext-watchedpage-article-protected' => 'Message to the user that an article they are following has been protected. $1 -> article url, $2 -> article title',
+	'emailext-watchedpage-article-unprotected' => 'Message to the user that an article they are following has been unprotected. $1 -> article url, $2 -> article title',
+	'emailext-watchedpage-article-renamed' => 'Message to the user that an article they are following has been renamed. $1 -> article url, $2 -> article title',
+	'emailext-watchedpage-article-deleted' => 'Message to the user that an article they are following has been deleted. $1 -> article url, $2 -> article title',
 	'emailext-watchedpage-no-summary' => 'Message shown when the editor did not leave an edit summary',
 	'emailext-watchedpage-diff-button-text' => 'Text for button that, when clicked, navigates to the diff page referencing this change.',
+	'emailext-watchedpage-deleted-button-text' => 'Text for button that, when clicked, navigates to the deleted page.',
 	'emailext-watchedpage-article-link-text' => 'Call to action to visit the article page. $1 -> article url, $2 -> article title.',
 	'emailext-watchedpage-view-all-changes' => 'Call to action to visit history of the article page. $1 -> article history url, $2 -> article title',
 );
