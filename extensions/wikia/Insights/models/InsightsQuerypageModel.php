@@ -61,28 +61,31 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 */
 	public function getContent( $params ) {
 		$this->queryPageInstance = $this->getDataProvider();
+		$content = [];
 
 		/**
 		 * 1. Prepare data of articles - title, last revision, link etc.
 		 */
 		$articlesData = $this->fetchArticlesData();
 
-		/**
-		 * 2. Slice a sorting table to retrieve a page
-		 */
-		$this->prepareParams( $params );
-		if ( !isset( $this->sortingArray ) ) {
-			$this->sortingArray = array_keys( $articlesData );
-		}
-		$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
+		if ( !empty( $articlesData ) ) {
+			/**
+			 * 2. Slice a sorting table to retrieve a page
+			 */
+			$this->prepareParams( $params );
+			if ( !isset( $this->sortingArray ) ) {
+				$this->sortingArray = array_keys( $articlesData );
+			}
+			$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
 
-		/**
-		 * 3. Populate $content array with data for each article id
-		 */
-		$content = [];
-		foreach ( $ids as $id ) {
-			$content[] = $articlesData[$id];
+			/**
+			 * 3. Populate $content array with data for each article id
+			 */
+			foreach ( $ids as $id ) {
+				$content[] = $articlesData[$id];
+			}
 		}
+
 		return $content;
 	}
 
@@ -121,7 +124,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
 				}
 			}
-
 
 			return $articlesData;
 		} );
