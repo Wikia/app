@@ -39,15 +39,28 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $this->queryPageInstance;
 	}
 
+	/**
+	 * @return string A name of the page's template
+	 */
 	public function getTemplate() {
 		return $this->template;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function arePageViewsRequired() {
 		return true;
 	}
 
-	public function getData() {
+	/**
+	 * Returns an array of boolean values that you can use
+	 * to toggle columns of a subpage's table view
+	 * (e.g. turn the column with number of views on or off)
+	 *
+	 * @return array An array of boolean values
+	 */
+	public function getViewData() {
 		$data['display'] = [
 			'pageviews'	=> $this->arePageViewsRequired(),
 		];
@@ -89,6 +102,11 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $content;
 	}
 
+	/**
+	 * Overrides the default values used for sorting and pagination
+	 *
+	 * @param $params An array of URL parameters
+	 */
 	private function prepareParams( $params ) {
 		global $wgMemc;
 
@@ -109,6 +127,12 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 	}
 
+	/**
+	 * The main method that assembles all data on articles that should be displayed
+	 * on a given Insights subpage
+	 *
+	 * @return Mixed|null An array with data of articles i.e. title, url, metadata etc.
+	 */
 	public function fetchArticlesData() {
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
 		$this->cacheTtl = 259200; // Cache for 3 days
@@ -132,7 +156,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	/**
-	 * Purge all data for given Insights category in cache after item from list is fixed
+	 * Updates the cached articleData and sorting array
 	 *
 	 * @param int $articleId
 	 */
@@ -142,8 +166,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	/**
-	 * Purge article data for given Insights category in cache
-	 * Remove fixed article from the array
+	 * Removes a fixed article from the articleData array
 	 *
 	 * @param int $articleId
 	 */
@@ -160,8 +183,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	/**
-	 * Purge article sorting lists in cache
-	 * Remove fixed article from the arrays
+	 * Removes a fixed article from the sorting arrays
 	 *
 	 * @param int $articleId
 	 */
@@ -179,6 +201,13 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 	}
 
+	/**
+	 * Fetches page views data for a given set of articles. The data includes
+	 * number of views for the last four time ids (data points).
+	 *
+	 * @param $articlesIds An array of IDs of articles to fetch views for
+	 * @return array An array with views for the last four time ids
+	 */
 	public function getPageViewsData( $articlesIds ) {
 		global $wgCityId;
 		/**
@@ -195,6 +224,13 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $pvData;
 	}
 
+	/**
+	 * Sorts an array and sets it as a value in memcache. Article IDs are
+	 * keys in the array.
+	 *
+	 * @param $sortingArray The input array with
+	 * @param $key Memcache key
+	 */
 	public function createSortingArray( $sortingArray, $key ) {
 		global $wgMemc;
 
@@ -204,6 +240,20 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), $this->cacheTtl );
 	}
 
+	/**
+	 * Calculates desirable results and aggregates them in an array.
+	 * Then, it modifies the articles data array and returns it
+	 * with the values assigned to the articles.
+	 *
+	 * For now the values are:
+	 * * PVs from the last week
+	 * * PVs from the last 4 weeks
+	 * * Views growth from a penultimate week
+	 *
+	 * @param $articlesData
+	 * @param $pageViewsData
+	 * @return mixed
+	 */
 	public function assignPageViewsData( $articlesData, $pageViewsData ) {
 		$sortingData = [];
 
@@ -321,7 +371,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $params;
 	}
 
-
+	/**
+	 * Removes an item from the querycache table if it has been fixed
+	 *
+	 * @param $type A qc_type value
+	 * @param Title $title A Title object for the article
+	 * @return bool
+	 * @throws DBUnexpectedError
+	 */
 	public function removeFixedItem( $type, Title $title ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete(

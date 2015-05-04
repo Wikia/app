@@ -145,6 +145,12 @@ class InsightsHelper {
 		return $messageKeys;
 	}
 
+	/**
+	 * Returns an array of datetime entries for the last four Sundays
+	 * (page views data is currently updated on every Sunday)
+	 *
+	 * @return array An array with dates of the last four Sundays
+	 */
 	public static function getLastFourTimeIds() {
 		$lastTimeId = ( new DateTime() )->modify( 'last Sunday' );
 		$format = 'Y-m-d H:i:s';
