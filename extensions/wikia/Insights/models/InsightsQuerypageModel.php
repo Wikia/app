@@ -8,7 +8,9 @@
 abstract class InsightsQuerypageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
-		INSIGHTS_MEMC_VERSION = '1.0';
+		INSIGHTS_MEMC_VERSION = '1.0',
+		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData';
+
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
@@ -99,7 +101,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	public function fetchArticlesData() {
-		$cacheKey = $this->getMemcKey( 'articlesData' );
+		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
 		$this->cacheTtl = WikiaResponse::CACHE_STANDARD * 3;
 		$articlesData = WikiaDataAccess::cache( $cacheKey, $this->cacheTtl, function () {
 			$res = $this->queryPageInstance->doQuery();
@@ -120,7 +122,53 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $articlesData;
 	}
 
+	/**
+	 * Purge all data for given Insights category in cache after item from list is fixed
+	 *
+	 * @param int $articleId
+	 */
+	public function updateInsightsCache( $articleId ) {
+		$this->updateArticleDataCache( $articleId );
+		$this->updateSortingCache( $articleId );
+	}
 
+	/**
+	 * Purge article data for given Insights category in cache
+	 * Remove fixed article from the array
+	 *
+	 * @param int $articleId
+	 */
+	private function updateArticleDataCache( $articleId ) {
+		global $wgMemc;
+
+		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
+		$articleData = $wgMemc->get( $cacheKey );
+
+		if ( isset( $articleData[$articleId] ) ) {
+			unset( $articleData[$articleId] );
+			$wgMemc->set( $cacheKey, $articleData, $this->cacheTtl );
+		}
+	}
+
+	/**
+	 * Purge article sorting lists in cache
+	 * Remove fixed article from the arrays
+	 *
+	 * @param int $articleId
+	 */
+	private function updateSortingCache( $articleId ) {
+		global $wgMemc;
+
+		foreach ( $this->sorting as $key => $flag ) {
+			$cacheKey = $this->getMemcKey( $key );
+			$sortingArray = $wgMemc->get( $cacheKey );
+
+			if ( $key = array_search( $articleId, $sortingArray ) !== false ) {
+				unset( $sortingArray[$key] );
+				$wgMemc->set( $cacheKey, $sortingArray, $this->cacheTtl );
+			}
+		}
+	}
 
 	public function getPageViewsData( $articlesIds ) {
 		/**
