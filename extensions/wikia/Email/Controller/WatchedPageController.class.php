@@ -144,7 +144,7 @@ abstract class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getArticleLinkText() {
+	protected function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
 			$this->title->getFullURL( [
 				'diff' => 0,
@@ -156,7 +156,7 @@ abstract class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getAllChangesText() {
+	protected function getAllChangesText() {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->title->getFullURL( 'action=history' ),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
@@ -273,6 +273,14 @@ class WatchedPageDeletedController extends WatchedPageController {
 }
 
 class WatchedPageRenamedController extends WatchedPageController {
+	protected $newTitle;
+
+	public function initEmail() {
+		parent::initEmail();
+
+		$this->newTitle = \WikiPage::factory( $this->title )->getRedirectTarget();
+	}
+
 	/**
 	 * @return String
 	 */
@@ -285,5 +293,26 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 */
 	protected function getSummaryMessageKey() {
 		return 'emailext-watchedpage-article-renamed';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getArticleLinkText() {
+		return wfMessage( 'emailext-watchedpage-article-link-text',
+			$this->newTitle->getFullURL( [
+				'diff' => 0,
+				'oldid' => $this->previousRevId
+			] ),
+			$this->newTitle->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getAllChangesText() {
+		return wfMessage( 'emailext-watchedpage-view-all-changes',
+			$this->newTitle->getFullURL( 'action=history' ),
+			$this->newTitle->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 }
