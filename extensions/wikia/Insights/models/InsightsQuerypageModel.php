@@ -26,6 +26,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			'pvDiff' => SORT_NUMERIC,
 		];
 
+	const INSIGHTS_LIST_MAX_LIMIT = 100;
+
 	abstract function getDataProvider();
 	abstract function isItemFixed( Title $title );
 	abstract function getInsightType();
@@ -96,13 +98,17 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		if ( isset( $params['limit'] ) ) {
-			$this->limit = intval( $params['limit'] );
+			if ( $params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
+				$this->limit = intval( $params['limit'] );
+			} else {
+				$this->limit = self::INSIGHTS_LIST_MAX_LIMIT;
+			}
 		}
 	}
 
 	public function fetchArticlesData() {
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$this->cacheTtl = WikiaResponse::CACHE_STANDARD * 3;
+		$this->cacheTtl = 259200; // Cache for 3 days
 		$articlesData = WikiaDataAccess::cache( $cacheKey, $this->cacheTtl, function () {
 			$res = $this->queryPageInstance->doQuery();
 
@@ -110,7 +116,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				$articlesData = $this->prepareData( $res );
 			}
 
-			if ( $this->arePageViewsRequired() ) {
+			if ( $this->arePageViewsRequired() && !empty( $articlesData ) ) {
 				$articlesIds = array_keys( $articlesData );
 				$pageViewsData = $this->getPageViewsData( $articlesIds );
 				$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
@@ -198,23 +204,28 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$sortingData = [];
 
 		foreach ( $articlesData as $articleId => $data ) {
-			$pv = [
-				intval( $pageViewsData[0][ $articleId ] ),
-				intval( $pageViewsData[1][ $articleId ] ),
-				intval( $pageViewsData[2][ $articleId ] ),
-				intval( $pageViewsData[3][ $articleId ] ),
-			];
 
-			$pv28 = array_sum( $pv );
-			if ( $pv[1] != 0 ) {
-				$pvDiff = ( $pv[1] - $pv[2] ) / $pv[2];
+			$articlePV = [];
+
+			foreach ( $pageViewsData as $dataPoint ) {
+				if ( isset( $dataPoint[ $articleId ] ) ) {
+					$articlePV[] = intval( $dataPoint[ $articleId ] );
+				} else {
+					$articlePV[] = 0;
+				}
+			}
+
+			$pv28 = array_sum( $articlePV );
+			if ( $articlePV[1] != 0 ) {
+				$pvDiff = ( $articlePV[0] - $articlePV[1] ) / $articlePV[1];
 				$pvDiff = round( $pvDiff, 2 ) * 100;
+				$pvDiff .= '%';
 			} else {
 				$pvDiff = 'N/A';
 			}
 
-			$sortingData['pv7'][ $articleId ] = $pv[0];
-			$articlesData[ $articleId ]['metadata']['pv7'] = $pv[0];
+			$sortingData['pv7'][ $articleId ] = $articlePV[0];
+			$articlesData[ $articleId ]['metadata']['pv7'] = $articlePV[0];
 
 			$sortingData['pv28'][ $articleId ] = $pv28;
 			$articlesData[ $articleId ]['metadata']['pv28'] = $pv28;
