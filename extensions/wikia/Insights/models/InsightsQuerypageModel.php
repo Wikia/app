@@ -114,13 +114,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 			if ( $res->numRows() > 0 ) {
 				$articlesData = $this->prepareData( $res );
+
+				if ( $this->arePageViewsRequired() ) {
+					$articlesIds = array_keys( $articlesData );
+					$pageViewsData = $this->getPageViewsData( $articlesIds );
+					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
+				}
 			}
 
-			if ( $this->arePageViewsRequired() && !empty( $articlesData ) ) {
-				$articlesIds = array_keys( $articlesData );
-				$pageViewsData = $this->getPageViewsData( $articlesIds );
-				$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
-			}
 
 			return $articlesData;
 		} );
