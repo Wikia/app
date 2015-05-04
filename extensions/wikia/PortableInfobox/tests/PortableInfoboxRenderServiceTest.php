@@ -83,7 +83,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'isEmpty' => false
 					],
 					[
-						'type' => 'pair',
+						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
 							'value' => 'test value'
@@ -109,7 +109,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'isEmpty' => true
 					],
 					[
-						'type' => 'pair',
+						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
 							'value' => 'test value'

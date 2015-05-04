@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-class NodePair extends Node {
+class NodeData extends Node {
 
 	public function getData() {
 		$data = [];

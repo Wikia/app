@@ -28,8 +28,8 @@ class XmlParserTest extends WikiaBaseTest {
 				<comparison>
 				   <set>
 					  <header><value>Combatientes</value></header>
-					  <pair source="lado1" />
-					  <pair source="lado2" />
+					  <data source="lado1" />
+					  <data source="lado2" />
 				   </set>
 				</comparison>
 			</infobox>
@@ -37,9 +37,9 @@ class XmlParserTest extends WikiaBaseTest {
 		$data = $parser->getDataFromXmlString( $markup );
 		// infobox -> comparison -> set -> header
 		$this->assertTrue( $data[0]['data']['value'][0]['value'][0]['isEmpty'] == false );
-		// infobox -> comparison -> set -> pair { lado1 }
+		// infobox -> comparison -> set -> data { lado1 }
 		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][1]['isEmpty'] == true );
-		// infobox -> comparison -> set -> pair { lado2 }
+		// infobox -> comparison -> set -> data { lado2 }
 		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][2]['isEmpty'] == false );
 		// infobox -> comparison -> set
 		$this->assertTrue( $data[0]['data']['value']['isEmpty'] == false );
@@ -60,8 +60,8 @@ class XmlParserTest extends WikiaBaseTest {
 				<comparison>
 				   <set>
 					  <header><value>Combatientes</value></header>
-					  <pair source="lado1" />
-					  <pair source="lado2" />
+					  <data source="lado1" />
+					  <data source="lado2" />
 				   </set>
 				</comparison>
 				<footer>

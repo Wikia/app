@@ -28,7 +28,7 @@ $wgInfoboxParserNodes = [
 	'NodeGroup',
 	'NodeHeader',
 	'NodeImage',
-	'NodePair',
+	'NodeData',
 	'NodeTitle',
 	'NodeUnimplemented'
 ];
