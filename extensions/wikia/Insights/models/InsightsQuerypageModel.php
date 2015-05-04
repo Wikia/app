@@ -89,7 +89,12 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$data['timestamp'] = wfTimestamp( TS_UNIX, $rev->getTimestamp() );
 
 		$user = $rev->getUserText();
-		$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
+
+		if ( $rev->getUser() ) {
+			$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
+		} else {
+			$userpage = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
+		}
 
 		$data['username'] = $user;
 		$data['userpage'] = $userpage;
@@ -112,9 +117,21 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 
 	public function removeFixedItem( $type, Title $title ) {
-		$dbr = wfGetDB( DB_MASTER );
-		$dbr->delete( 'querycache', [ 'qc_type' => $type, 'qc_title' => $title->getDBkey() ] );
-		return $dbr->affectedRows() > 0;
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->delete(
+			'querycache',
+			[
+				'qc_type' => $type,
+				'qc_namespace' => $title->getNamespace(),
+				'qc_title' => $title->getDBkey(),
+			],
+			__METHOD__
+		);
+
+		$affectedRows = $dbw->affectedRows();
+		$dbw->commit( __METHOD__ );
+
+		return $affectedRows > 0;
 	}
 
 	/**
@@ -147,4 +164,4 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 		return $next;
 	}
-} 
+}

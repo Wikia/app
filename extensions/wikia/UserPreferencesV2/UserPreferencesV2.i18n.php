@@ -491,24 +491,36 @@ $messages['eu'] = array(
 /** Persian (فارسی)
  * @author Alirezaaa
  * @author Ebraminio
+ * @author Mjbmr
+ * @author Movyn
  * @author Reza1615
  */
 $messages['fa'] = array(
+	'prefs-personal' => 'اطلاعات من',
+	'preferences-v2-username' => 'نام کاربری من:',
+	'preferences-v2-usergroups' => 'گروه کاربری من:',
+	'preferences-v2-gender' => 'جنسیت:',
+	'preferences-v2-password' => 'گذرواژه من:',
 	'preferences-v2-oldsig' => 'امضای کنونی:',
+	'preferences-v2-nickname' => 'امضای شخصی:',
 	'prefs-appearance' => 'نمایش صفحه',
 	'preferences-v2-date' => 'آرایش تاریخ:',
 	'preferences-v2-time' => 'منطقهٔ زمانی:',
 	'preferences-v2-skin' => 'چیدمان:',
-	'prefs-emailv2' => 'رایانامه',
+	'prefs-emailv2' => 'ایمیل',
 	'preferences-v2-user-landing-page' => 'صفحهٔ فرود:',
 	'preferences-v2-redirect-wiki-activity' => 'فعالیت‌های ویکی',
 	'preferences-v2-redirect-main-page' => 'صفحهٔ اصلی',
 	'preferences-v2-redirect-recent-changes' => 'تغییرات اخیر',
+	'tog-showAdsv2' => 'تبلیغات:',
 	'prefs-addressv2' => 'نشانی',
 	'preferences-v2-watchdefault' => 'ویرایش',
 	'preferences-v2-watchmoves' => 'انتقال',
 	'preferences-v2-watchdeletion' => 'حذف',
 	'preferences-v2-watchcreations' => 'ایجاد',
+	'preferences-v2-showads-enable' => 'نمایش همه تبلیغات',
+	'preferences-v2-showads-disable' => 'نمایش ندادن همه تبلیغات',
+	'preferences-v2-my-email-address' => 'آدرس ایمیل من:',
 	'tog-editondblclick-v2' => 'ویرایش صفحات با دوکلیک (نیازمند جاوااسکریپت)',
 );
 
@@ -743,6 +755,7 @@ $messages['ja'] = array(
 $messages['ko'] = array(
 	'prefs-personal' => '내 정보',
 	'preferences-v2-username' => '내 사용자 이름:',
+	'preferences-v2-usergroups' => '내가 속한 그룹:',
 	'preferences-v2-gender' => '내 성별:',
 	'preferences-v2-password' => '나의 비밀번호:',
 	'preferences-v2-oldsig' => '사용중인 서명:',
@@ -1046,9 +1059,11 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author Chrumps
+ * @author Pio387
  * @author Sovq
  */
 $messages['pl'] = array(
+	'preferences-v2-desc' => 'User Preferences v2',
 	'prefs-personal' => 'Moje informacje',
 	'preferences-v2-username' => 'Nazwa użytkownika:',
 	'preferences-v2-usergroups' => 'Grupy użytkownika:',
@@ -1099,6 +1114,41 @@ $messages['pl'] = array(
 	'tog-editsectiononrightclick-v2' => 'Edytuj sekcje poprzez kliknięcie na nagłówek prawym klawiszem',
 	'tog-editondblclick-v2' => 'Edytuj strony po dwukrotnym kliknięciu',
 	'tog-hidefollowedpages-v2' => 'Ukryj moją listę obserwowanych stron',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'prefs-personal' => 'زما مالومات',
+	'preferences-v2-username' => 'زما کارن-نوم:',
+	'preferences-v2-usergroups' => 'زما کارن ډلې:',
+	'preferences-v2-gender' => 'زما جنس:',
+	'preferences-v2-password' => 'زما پټنوم:',
+	'preferences-v2-oldsig' => 'اوسنی لاسليک:',
+	'preferences-v2-nickname' => 'دوديزه لاسليک:',
+	'preferences-v2-fancysig-help-page-name' => 'Help:لاسليک',
+	'prefs-appearance' => 'ښکارېدنه',
+	'preferences-v2-date' => 'د نېټې بڼه:',
+	'preferences-v2-time' => 'د وخت سيمه:',
+	'preferences-v2-skin' => 'مخبڼه:',
+	'prefs-emailv2' => 'برېښليک',
+	'prefs-email-me-v2' => 'برېښليک راولېږه کله چې...',
+	'prefs-email-advanced-v2' => 'پرمختللې خوښنې',
+	'preferences-v2-redirect-wiki-activity' => 'ويکي فعاليتونه',
+	'preferences-v2-redirect-main-page' => 'لومړی مخ',
+	'preferences-v2-redirect-recent-changes' => 'وروستي بدلونونه',
+	'prefs-monobookv2' => 'مونوبوک',
+	'prefs-recent-changesv2' => 'تازه بدلونونه، پېښليکونه، او يادښتونه',
+	'tog-showAdsv2' => 'خبرتياوې:',
+	'prefs-addressv2' => 'پته',
+	'preferences-v2-watchdefault' => 'سمول',
+	'preferences-v2-watchmoves' => 'لېږدول',
+	'preferences-v2-watchdeletion' => 'ړنگول',
+	'preferences-v2-watchcreations' => 'جوړول',
+	'preferences-v2-showads-enable' => 'ټولې خبرتياوې ښکاره کول',
+	'preferences-v2-showads-disable' => 'ټولې خبرتياوې مه ښکاره کوه',
+	'preferences-v2-my-email-address' => 'زما برېښليک پته:',
 );
 
 /** Portuguese (português)
@@ -1159,8 +1209,10 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
+	'preferences-v2-desc' => 'Preferências de Usuário V2',
 	'prefs-personal' => 'Minhas Informações',
 	'preferences-v2-username' => 'Meu nome de usuário:',
 	'preferences-v2-usergroups' => 'Meus grupos de usuário:',
@@ -1218,6 +1270,7 @@ $messages['pt-br'] = array(
  * @author Okras
  */
 $messages['ru'] = array(
+	'preferences-v2-desc' => 'Настройки пользователя v2',
 	'prefs-personal' => 'Моя информация',
 	'preferences-v2-username' => 'Моё имя пользователя:',
 	'preferences-v2-usergroups' => 'Мои группы пользователей:',
@@ -1479,8 +1532,10 @@ $messages['tr'] = array(
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Ua2004
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'preferences-v2-desc' => 'Уподобання користувачів версії v2',
 	'prefs-personal' => 'Особисті',
 	'preferences-v2-username' => "Моє ім'я користувача:",
 	'preferences-v2-usergroups' => 'Я є учасником груп:',
@@ -1689,13 +1744,13 @@ $messages['zh-hant'] = array(
 	'preferences-v2-time' => '時區：',
 	'preferences-v2-skin' => '佈局：',
 	'prefs-emailv2' => '電子郵件',
-	'prefs-email-me-v2' => '發電子郵件通知我，當...',
+	'prefs-email-me-v2' => '寄電子郵件通知我，當...',
 	'tog-enotifwatchlistpages-v2' => '...我關注的頁面被更改',
-	'tog-enotifusertalkpages-v2' => '...我的用戶討論頁被更改',
+	'tog-enotifusertalkpages-v2' => '...我的使用者討論頁被更改',
 	'tog-enotifminoredits-v2' => '...我關注的頁面有小修改',
 	'tog-marketingallowed-v2' => '...Wikia 有新聞和事件',
 	'prefs-email-advanced-v2' => '進階選項',
-	'prefs-wikiemail' => '{{SITENAME}}的選項。發電子郵件件给我，當...',
+	'prefs-wikiemail' => '{{SITENAME}}的選項。寄電子郵件给我，當...',
 	'prefs-email-unsubscribe' => '禁用所有的電子郵件',
 	'unsubscribe-preferences-toggle-v2' => '禁用所有來自 Wikia的電子郵件 (覆蓋所有其他選項)',
 	'tog-watchlistdigest-v2' => '我關注頁面改變的每週摘要產生時',
@@ -1703,7 +1758,7 @@ $messages['zh-hant'] = array(
 	'preferences-v2-user-landing-page' => '到達頁面：',
 	'preferences-v2-redirect-wiki-activity' => 'wiki動作',
 	'preferences-v2-redirect-main-page' => '首頁',
-	'preferences-v2-redirect-recent-changes' => '近期變更',
+	'preferences-v2-redirect-recent-changes' => '近期變動',
 	'preferences-v2-redirect-explanation' => '登錄頁面選項，讓你選擇你在輸入$1的時候會抵達的頁面。',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => '進階設定',
@@ -1720,7 +1775,7 @@ $messages['zh-hant'] = array(
 	'preferences-v2-watchcreations' => '建立',
 	'preferences-v2-showads-enable' => '顯示所有廣告',
 	'preferences-v2-showads-disable' => '不顯示所有的廣告',
-	'preferences-v2-my-email-address' => '我的電子郵件位址：',
+	'preferences-v2-my-email-address' => '我的電子郵件地址：',
 	'prefs-patrolled-editsv2' => '巡查過的編輯',
 	'tog-editsectiononrightclick-v2' => '允許在標題上按右鍵編輯段落',
 	'tog-editondblclick-v2' => '雙擊來編輯頁面',

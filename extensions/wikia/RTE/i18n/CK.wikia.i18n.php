@@ -1172,6 +1172,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Movyn
  * @author Reza1615
  */
 $messages['fa'] = array(
@@ -1199,6 +1200,7 @@ $messages['fa'] = array(
 	'rte-ck-templateDropDown-label' => 'الگو',
 	'rte-ck-templateEditor-dialog-insert' => 'درج',
 	'rte-ck-templateEditor-dialog-magicWords' => 'واژه‌های جادویی',
+	'rte-ck-templateEditor-dialog-search' => 'جستجوی یک الگو',
 	'rte-ck-templateEditor-editor-parameters' => 'پارامترها',
 	'rte-ck-templateEditor-editor-previewButton' => 'پیش‌نمایش',
 	'rte-ck-templateEditor-editor-previewTitle' => 'پیش‌نمایش',
@@ -1826,7 +1828,7 @@ $messages['ia'] = array(
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
-	'rte-ck-link-error-title' => 'ГӀалат',
+	'rte-ck-link-error-title' => 'Г|алат',
 );
 
 /** Italian (italiano)
@@ -2202,6 +2204,7 @@ $messages['lb'] = array(
 	'rte-ck-hoverPreview-template-intro' => 'Dëst ass eng Schabloun.',
 	'rte-ck-hoverPreview-template-notExisting' => 'Dës Schabloun gëtt et net!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Dëse Video gëtt et net!',
+	'rte-ck-image-photo' => 'Foto',
 	'rte-ck-link-add' => 'Link derbäisetzen',
 	'rte-ck-link-error-title' => 'Feeler',
 	'rte-ck-link-external-tab' => 'Externe Link',
@@ -2230,7 +2233,7 @@ $messages['lrc'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'نظر',
 	'rte-ck-hoverPreview-delete' => 'پاك كردن',
 	'rte-ck-hoverPreview-edit' => 'ويرايشت',
-	'rte-ck-image-photo' => 'عسكيا',
+	'rte-ck-image-photo' => 'عسک',
 	'rte-ck-link-error-title' => 'خطا',
 	'rte-ck-link-external-linkText' => 'هوم پیوند متنی',
 	'rte-ck-link-external-url' => 'يو آر ال',
@@ -4368,9 +4371,11 @@ $messages['zh-hans'] = array(
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
+	'rte-ck-bucket-insert' => '插入',
 	'rte-ck-hoverPreview-delete' => '刪除',
 	'rte-ck-image-photo' => '照片',
 	'rte-ck-templateDropDown-label' => '模板',
+	'rte-ck-templateEditor-dialog-insert' => '插入',
 	'rte-ck-templateEditor-editor-previewButton' => '預覽',
 	'rte-ck-templateEditor-editor-previewTitle' => '預覽',
 	'rte-ck-templateEditor-title' => '模板編輯者',

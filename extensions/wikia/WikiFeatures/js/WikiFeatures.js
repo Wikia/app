@@ -1,9 +1,12 @@
-/* global BannerNotification, Modernizr */
+/* global Modernizr */
 
 (function (window, $) {
 	'use strict';
 
-	var lockedFeatures = {};
+	var lockedFeatures = {},
+	    fadingFeatures = [
+		'wgEnableNjordExt'
+	    ];
 
 	function init() {
 		var $wikifeatures = $('#WikiFeatures'),
@@ -26,7 +29,8 @@
 				isEnabled = $el.hasClass('on');
 
 				if (isEnabled) {
-					modalTitle = $.msg('wikifeatures-deactivate-heading', feature.find('h3').contents(':first').text().trim());
+					modalTitle = $.msg('wikifeatures-deactivate-heading', feature.find('h3')
+                        .contents(':first').text().trim());
 
 					require(['wikia.ui.factory'], function (uiFactory) {
 						uiFactory.init(['modal']).then(function (uiModal) {
@@ -210,6 +214,9 @@
 		}, function (res) {
 			if (res.result === 'ok') {
 				lockedFeatures[featureName] = false;
+				if (fadingFeatures.indexOf(featureName) !== -1) {
+					$('.feature[data-name="' + featureName + '"]').addClass('faded');
+				}
 			} else {
 				new window.BannerNotification(res.error, 'error').show();
 			}
