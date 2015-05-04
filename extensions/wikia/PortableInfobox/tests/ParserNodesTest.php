@@ -52,11 +52,11 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 	}
 
 	public function testNodeFooter() {
-		$string = '<footer><links>123</links></footer>';
+		$string = '<footer>123</footer>';
 		$xml = simplexml_load_string( $string );
 
 		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeFooter( $xml, [ ] );
-		$this->assertTrue( $node->getData()[ 'links' ] == '123' );
+		$this->assertTrue( $node->getData()[ 'value' ] == '123' );
 	}
 
 	public function testNodeGroup() {

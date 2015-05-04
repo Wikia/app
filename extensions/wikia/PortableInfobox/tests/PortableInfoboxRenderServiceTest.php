@@ -28,7 +28,13 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$actualDOM->loadXML($actualOutput);
 		$expectedDOM->loadXML($expectedOutput);
 
-		$this->assertEquals( $expectedDOM->saveXML(), $actualDOM->saveXML(), $description );
+		// lets sanitize expected and actual HTML to not deal with whitespaces
+		$from = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s'];
+		$to   = ['>',            '<',            '\\1',      '><'];
+		$expectedHtml = preg_replace($from, $to, $expectedDOM->saveXML());
+		$actualHtml = preg_replace($from, $to, $actualDOM->saveXML());
+
+		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
 
 	public function testRenderInfoboxDataProvider() {
@@ -50,6 +56,19 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 				],
 				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-title portable-infobox-item-margins"><h2 class="portable-infobox-title">Test Title</h2></div></aside>',
 				'description' => 'Only title'
+			],
+			[
+				'input' => [
+					[
+						'type' => 'footer',
+						'data' => [
+							'value' => 'Footer value',
+							'isEmpty' => false
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox"><footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">Footer value</footer></aside>',
+				'description' => 'Footer only'
 			],
 			[
 				'input' => [
