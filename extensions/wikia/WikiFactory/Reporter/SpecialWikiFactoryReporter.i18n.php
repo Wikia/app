@@ -256,6 +256,13 @@ $messages['kn'] = array(
 	'wikifactoryreporter' => 'ವಿಕಿಫ಼್ಯಾಕ್ಟರಿ ವರದಿಗಾರ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikifactoryreporter' => '위키팩토리 리포터',
+);
+
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Къарачайлы
  */

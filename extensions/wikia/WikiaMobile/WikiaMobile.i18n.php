@@ -108,7 +108,8 @@ $messages['qqq'] = array(
 {{Identical|Feedback}}',
 	'wikiamobile-back' => 'Label on a button to go back one level on wiki navigation.
 {{Identical|Back}}',
-	'wikiamobile-hide-section' => 'Link to close section on an article that is at the end of a given section',
+	'wikiamobile-hide-section' => 'Link to close section on an article that is at the end of a given section
+{{Identical|Hide}}',
 	'wikiamobile-profile' => 'Link to a profile page in a top wiki navigation.
 {{Identical|Profile}}',
 	'wikiamobile-last-edited-on' => 'In a sentance when was the list time an article got edited. "Last edited on September 3, 2013"',
@@ -125,7 +126,8 @@ $messages['qqq'] = array(
 {{Identical|Privacy policy}}',
 	'mobile-full-site' => 'Link to reload a page and load desktop skin',
 	'wikiamobile-categories-tagline' => 'Tagline that appears next to the category page title, please keep it really short',
-	'wikiamobile-categories-items-total' => 'Message above list of articles in a category. $1 is the total number of articles in the category',
+	'wikiamobile-categories-items-total' => 'Message above list of articles in a category. $1 is the total number of articles in the category
+{{Identical|Article}}',
 	'wikiamobile-category-items-more' => 'Label on a button to load more articles under given letter on category page.
 {{Identical|Load more}}',
 	'wikiamobile-category-items-prev' => 'Label on a button to load previous articles under given letter on category page',
@@ -493,6 +495,13 @@ $messages['cs'] = array(
 	'wikiasmartbanner-view' => 'zobrazit',
 );
 
+/** Chuvash (Чӑвашла)
+ * @author Chuvash2014
+ */
+$messages['cv'] = array(
+	'wikiamobile-article-categories' => 'Категорисем',
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author Geitost
@@ -710,10 +719,12 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Mjbmr
+ * @author Movyn
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'wikiamobile-search' => 'جستجو',
+	'wikiamobile-search-this-wiki' => 'جستجو در این ویکی',
 	'wikiamobile-search-wiki' => 'ویکی',
 	'wikiamobile-search-wikia' => 'ویکیا',
 	'wikiamobile-login' => 'ورود',
@@ -738,6 +749,7 @@ $messages['fa'] = array(
 );
 
 /** Finnish (suomi)
+ * @author Silvonen
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -753,6 +765,7 @@ $messages['fi'] = array(
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Elämäntyyli]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Viihde]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Pelaaminen]]',
+	'wikiamobile-toc-header' => 'Sisällysluettelo',
 );
 
 /** Faroese (føroyskt)
@@ -1257,6 +1270,7 @@ $messages['lzh'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'wikiamobile-desc' => 'Мобилно руво за Викија',
 	'wikiamobile-search' => 'Пребарај',
 	'wikiamobile-search-this-wiki' => 'Пребарување по ова вики',
 	'wikiamobile-search-wiki' => 'Вики',
@@ -1618,7 +1632,9 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'wikiamobile-desc' => 'د ويکييا د موبايل پوښۍ',
 	'wikiamobile-search' => 'پلټل',
+	'wikiamobile-search-this-wiki' => 'همدا ويکي پلټل',
 	'wikiamobile-search-wiki' => 'ويکي',
 	'wikiamobile-search-wikia' => 'ويکيا',
 	'wikiamobile-login' => 'ننوتل',
@@ -1626,13 +1642,35 @@ $messages['ps'] = array(
 	'wikiamobile-login-submit' => 'ننوتل',
 	'wikiamobile-menu' => 'غورنۍ',
 	'wikiamobile-article-categories' => 'وېشنيزې',
+	'wikiamobile-feedback' => 'غبرگون',
 	'wikiamobile-back' => 'پر شا',
 	'wikiamobile-hide-section' => 'پټول',
+	'wikiamobile-profile' => 'پېژنليک',
+	'wikiamobile-last-edited-on' => 'په $1 وروستنۍ سمونې',
+	'wikiamobile-last-edited-by' => 'د $1 لخوا',
+	'wikiamobile-anonymous-edited-by' => 'ورکنومی',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|ژوندتوگه]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|ساتيری]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|ويډيويي لوبې]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|منښتليکنه]]',
+	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|د پټنتيا تگلاره]]',
+	'mobile-full-site' => 'بشپړ وېبځی',
+	'wikiamobile-categories-tagline' => 'د وېشنيزې مخ',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|ليکنه|ليکنې}}',
+	'wikiamobile-category-items-more' => 'نور برسېرول',
+	'wikiamobile-category-items-prev' => 'پخوانی برسېرول',
 	'wikiamobile-categories-expand' => 'ټول ښکاره کول',
 	'wikiamobile-categories-collapse' => 'ټول پټول',
+	'wikiamobile-categories-blogs' => 'د بلاگ پوستونه',
 	'wikiamobile-sharing-media-image' => 'انځور',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-videos' => 'ويډيوگانې',
+	'wikiamobile-toc-header' => 'نيوليک',
+	'wikiamobile-image-not-loaded' => 'انځور نشته',
+	'wikiasmartbanner-appstore' => 'په اپ سټور کې',
+	'wikiasmartbanner-googleplay' => 'په گووگل پلې کې',
+	'wikiasmartbanner-price' => 'وړيا',
+	'wikiasmartbanner-view' => 'کتل',
 );
 
 /** Portuguese (português)
@@ -2100,8 +2138,10 @@ $messages['tyv'] = array(
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Ua2004
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'wikiamobile-desc' => 'Мобільний скін для Вікії',
 	'wikiamobile-search' => 'Пошук',
 	'wikiamobile-search-this-wiki' => 'Пошук у цій вікі',
 	'wikiamobile-search-wiki' => 'Вікі',
@@ -2261,7 +2301,7 @@ $messages['zh-hans'] = array(
 	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|隐私政策]]',
 	'mobile-full-site' => '完整网站',
 	'wikiamobile-categories-tagline' => '分类页面',
-	'wikiamobile-categories-items-total' => '$1个{{PLURAL:$1|条目|条目}}',
+	'wikiamobile-categories-items-total' => '$1个{{PLURAL:$1|条目}}',
 	'wikiamobile-category-items-more' => '载入更多',
 	'wikiamobile-category-items-prev' => '加载上次',
 	'wikiamobile-categories-expand' => '显示全部',
@@ -2321,7 +2361,7 @@ $messages['zh-hant'] = array(
 	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|隱私政策]]',
 	'mobile-full-site' => '完整網站',
 	'wikiamobile-categories-tagline' => '分類頁面',
-	'wikiamobile-categories-items-total' => '$1個{{PLURAL:$1|條目|條目}}',
+	'wikiamobile-categories-items-total' => '$1 個{{PLURAL:$1|條目}}',
 	'wikiamobile-category-items-more' => '載入更多',
 	'wikiamobile-category-items-prev' => '載入前一個',
 	'wikiamobile-categories-expand' => '顯示全部',
