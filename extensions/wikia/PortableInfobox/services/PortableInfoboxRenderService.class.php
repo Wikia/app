@@ -8,7 +8,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'header' => 'PortableInfoboxItemHeader.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
-		'pair' => 'PortableInfoboxItemKeyVal.mustache',
+		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'comparison' => 'PortableInfoboxItemComparison.mustache',
 		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',

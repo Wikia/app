@@ -19,12 +19,12 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$this->assertTrue( $nodeDefault->getData()[ 'value' ] == 'def' );
 	}
 
-	public function testNodePair() {
-		$string = '<pair source="Season"><label>Season(s)</label><default>Lorem ipsum</default></pair>';
+	public function testNodeData() {
+		$string = '<data source="Season"><label>Season(s)</label><default>Lorem ipsum</default></data>';
 		$xml = simplexml_load_string( $string );
 
-		$node = new Wikia\PortableInfobox\Parser\Nodes\NodePair( $xml, [ 'Season' => 1 ] );
-		$nodeDefault = new Wikia\PortableInfobox\Parser\Nodes\NodePair( $xml, [ ] );
+		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeData( $xml, [ 'Season' => 1 ] );
+		$nodeDefault = new Wikia\PortableInfobox\Parser\Nodes\NodeData( $xml, [ ] );
 		$this->assertTrue( $node->getData()[ 'value' ] == 1 );
 		$this->assertTrue( $nodeDefault->getData()[ 'value' ] == 'Lorem ipsum' );
 	}
@@ -61,9 +61,9 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 
 	public function testNodeGroup() {
 		$string = '<group>
-				<pair source="elem1"><label>l1</label><default>def1</default></pair>
-				<pair source="elem2"><label>l2</label><default>def2</default></pair>
-				<pair source="elem3"><label>l2</label></pair>
+				<data source="elem1"><label>l1</label><default>def1</default></data>
+				<data source="elem2"><label>l2</label><default>def2</default></data>
+				<data source="elem3"><label>l2</label></data>
 					</group>
 						';
 		$xml = simplexml_load_string( $string );
@@ -81,13 +81,13 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$string = '<comparison>
 			   <set>
 				  <header><value>Combatientes</value></header>
-				  <pair source="lado1" />
-				  <pair source="lado2" />
+				  <data source="lado1" />
+				  <data source="lado2" />
 			   </set>
 			   <set>
 				  <header><value>Comandantes</value></header>
-				  <pair source="comandantes1" />
-				  <pair source="comandantes2" />
+				  <data source="comandantes1" />
+				  <data source="comandantes2" />
 			   </set>
 			</comparison>
 						';
@@ -99,7 +99,7 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$this->assertTrue( is_array( $data[ 'value' ] ), 'value is array' );
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 0 ][ 'type' ] == 'header' );
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 0 ][ 'data' ][ 'value' ] == 'Combatientes' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 1 ][ 'type' ] == 'pair' );
+		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 1 ][ 'type' ] == 'data' );
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 2 ][ 'data' ][ 'value' ] == 2 );
 	}
 }
