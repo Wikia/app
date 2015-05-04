@@ -258,7 +258,7 @@
     /*
      * Remove when SOC-217 ABTest is finished
      */
-    window.ga('set', 'dimension20', getUnconfirmedEmailUserType());                 // UnconfirmedEmailUserType
+    window.ga('set', 'dimension39', getUnconfirmedEmailUserType());                 // UnconfirmedEmailUserType
     /*
      * end remove
      */
