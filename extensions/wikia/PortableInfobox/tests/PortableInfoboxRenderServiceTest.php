@@ -28,11 +28,8 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$actualDOM->loadXML($actualOutput);
 		$expectedDOM->loadXML($expectedOutput);
 
-		// lets sanitize expected and actual HTML to not deal with whitespaces
-		$from = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s'];
-		$to   = ['>',            '<',            '\\1',      '><'];
-		$expectedHtml = preg_replace($from, $to, $expectedDOM->saveXML());
-		$actualHtml = preg_replace($from, $to, $actualDOM->saveXML());
+		$expectedHtml = $expectedDOM->saveXML();
+		$actualHtml = $actualDOM->saveXML();
 
 		$this->assertEquals( $expectedHtml, $actualHtml, $description );
 	}
