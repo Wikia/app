@@ -499,7 +499,6 @@ class EmailNotification {
 				'fromName' => $this->from->name
 			];
 
-			// TODO add handling errors
 			F::app()->sendRequest( $controller, 'handle', $params );
 		}
 	}
@@ -514,20 +513,39 @@ class EmailNotification {
 		return empty( $this->action ) && !$this->isNewPage();
 	}
 
-	// TODO document
+	/**
+	 * Check if performed action is page rename
+	 *
+	 * @return bool
+	 */
 	private function isArticlePageRenamed() {
 		return in_array( $this->action, [ 'move_redir', 'move' ] );
 	}
 
+	/**
+	 * Check if performed action is adding page protection
+	 *
+	 * @return bool
+	 */
 	private function isArticlePageProtected() {
 		return in_array( $this->action, [ 'protect' ] );
 		// TODO add support for modify
 	}
 
+	/**
+	 * Check if performed action is removal of page protection
+	 *
+	 * @return bool
+	 */
 	private function isArticlePageUnprotected() {
 		return in_array( $this->action, [ 'unprotect' ] );
 	}
 
+	/**
+	 * Check if performed action is page deletion
+	 *
+	 * @return bool
+	 */
 	private function isArticlePageDeleted() {
 		return in_array( $this->action, [ 'delete' ] );
 	}
