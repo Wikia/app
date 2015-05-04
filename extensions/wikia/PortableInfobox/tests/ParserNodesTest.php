@@ -44,7 +44,7 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 	}
 
 	public function testNodeHeader() {
-		$string = '<header><value>Comandantes</value></header>';
+		$string = '<header>Comandantes</header>';
 		$xml = simplexml_load_string( $string );
 
 		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeHeader( $xml, [ ] );
@@ -81,13 +81,13 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$string = '<comparison>
 			   <set>
 				  <header>Combatientes</header>
-				  <pair source="lado1" />
-				  <pair source="lado2" />
+				  <data source="lado1" />
+				  <data source="lado2" />
 			   </set>
 			   <set>
 				  <header>Comandantes</header>
-				  <pair source="comandantes1" />
-				  <pair source="comandantes2" />
+				  <data source="comandantes1" />
+				  <data source="comandantes2" />
 			   </set>
 			</comparison>
 						';
