@@ -16,8 +16,10 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 	 * @param $description
 	 * @dataProvider testSanitizeFilenameDataProvider
 	 */
-	public function testSanitizeFilename( $inputFileName, $expectedOutput, $description ) {
-		$actualOutput = $this->imageFilenameSanitizer->sanitizeImageFileName( $inputFileName );
+	public function testSanitizeFilename( $inputFileName, $contentLanguageCode, $expectedOutput, $description ) {
+		$language = new \Language();
+		$language->setCode( $contentLanguageCode );
+		$actualOutput = $this->imageFilenameSanitizer->sanitizeImageFileName( $inputFileName, $language );
 
 		$this->assertEquals( $expectedOutput, $actualOutput, $description );
 	}
@@ -26,7 +28,57 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 		return [
 			[
 				'filename.jpg',
-				'filename.jpg'
+				'en',
+				'filename.jpg',
+				'Plain filename'
+			],
+			[
+				'File:filename.jpg',
+				'en',
+				'filename.jpg',
+				'Filename with namespace'
+			],
+			[
+				'Plik:filename.jpg',
+				'pl',
+				'filename.jpg',
+				'Filename with localized namespace'
+			],
+			[
+				'Grafika:filename.jpg',
+				'pl',
+				'filename.jpg',
+				'Filename with localized namespace alias'
+			],
+			[
+				'File:filename.jpg|300px',
+				'en',
+				'filename.jpg',
+				'Filename with namespace and width'
+			],
+			[
+				'[[File:filename.jpg|300px|lorem ipsum]]',
+				'en',
+				'filename.jpg',
+				'Link to filename with namespace, width and caption'
+			],
+			[
+				'[[File:filename.jpg|lorem ipsum]]',
+				'en',
+				'filename.jpg',
+				'Link to filename with namespace and caption'
+			],
+			[
+				'{{File:filename.jpg|lorem ipsum}}',
+				'en',
+				'{{File:filename.jpg',
+				'Non-file string; sanitized, though useless'
+			],
+			[
+				'',
+				'en',
+				'',
+				'Empty file name'
 			]
 		];
 	}

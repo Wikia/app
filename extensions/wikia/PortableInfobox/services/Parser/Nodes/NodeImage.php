@@ -15,8 +15,9 @@ class NodeImage extends Node {
 	}
 
 	public function resolveImageUrl( $filename ) {
+		global $wgContLang;
 		$title = \Title::newFromText( \Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer::getInstance()
-			->sanitizeImageFileName($filename), NS_FILE );
+			->sanitizeImageFileName($filename, $wgContLang), NS_FILE );
 		if ( $title && $title->exists() ) {
 			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
 		} else {

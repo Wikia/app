@@ -24,7 +24,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 	public function testNoWrappingParagraphs() {
 		$this->markTestSkipped( 'DAT-2738 - awaiting decision whether this is a behavior to be fixed' );
-		$text = PHP_EOL . '<infobox><pair><default>Val</default></pair></infobox>' . PHP_EOL;
+		$text = PHP_EOL . '<infobox><data><default>Val</default></data></infobox>' . PHP_EOL;
 
 		$parser = new Parser();
 		$options = new ParserOptions();
@@ -39,7 +39,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 	public function testNoPreTag() {
 		$this->markTestSkipped( 'DAT-2736 - awaiting decision whether this is a behavior to be fixed' );
-		$text = '<infobox><pair><default>Val</default></pair></infobox>' . PHP_EOL . ' Test';
+		$text = '<infobox><data><default>Val</default></data></infobox>' . PHP_EOL . ' Test';
 
 		$parser = new Parser();
 		$options = new ParserOptions();
