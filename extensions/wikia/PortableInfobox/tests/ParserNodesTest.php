@@ -80,14 +80,14 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 	public function testNodeComparition() {
 		$string = '<comparison>
 			   <set>
-				  <header><value>Combatientes</value></header>
-				  <data source="lado1" />
-				  <data source="lado2" />
+				  <header>Combatientes</header>
+				  <pair source="lado1" />
+				  <pair source="lado2" />
 			   </set>
 			   <set>
-				  <header><value>Comandantes</value></header>
-				  <data source="comandantes1" />
-				  <data source="comandantes2" />
+				  <header>Comandantes</header>
+				  <pair source="comandantes1" />
+				  <pair source="comandantes2" />
 			   </set>
 			</comparison>
 						';
