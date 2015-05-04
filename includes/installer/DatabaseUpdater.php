@@ -415,9 +415,9 @@ abstract class DatabaseUpdater {
 	 */
 	protected function applyPatch( $path, $isFullPath = false ) {
 		if ( $isFullPath ) {
-			$this->db->sourceFile( $path );
+			$this->db->sourceFile( $path, false, false, __METHOD__ );
 		} else {
-			$this->db->sourceFile( $this->db->patchPath( $path ) );
+			$this->db->sourceFile( $this->db->patchPath( $path ), false, false, __METHOD__ );
 		}
 	}
 

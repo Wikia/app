@@ -3250,6 +3250,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool|string
 	 */
 	function sourceFile( $filename, $lineCallback = false, $resultCallback = false, $fname = false ) {
+		global $wgDBcluster;
 		wfSuppressWarnings();
 		$fp = fopen( $filename, 'r' );
 		wfRestoreWarnings();
@@ -3267,11 +3268,28 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 		catch ( MWException $e ) {
 			fclose( $fp );
+			$this->getWikiaLogger()->error( "ERROR: {$e->getMessage()}", [
+				'method'      => $fname,
+				'cluster'     => $wgDBcluster,
+				'server'      => $this->getServer(),
+				'db_name'     => $this->getDBname(),
+				'exception'   => 'MWException',
+				'trace'       => $e->getTrace(),
+			] );
 			throw $e;
 		}
 
 		fclose( $fp );
 
+		if ( $error !== true ) {
+			$this->getWikiaLogger()->error( "ERROR: $error", [
+				'method'      => $fname,
+				'cluster'     => $wgDBcluster,
+				'server'      => $this->getServer(),
+				'db_name'     => $this->getDBname(),
+				'exception'   => new Exception(), // log the backtrace
+			] );
+		}
 		return $error;
 	}
 

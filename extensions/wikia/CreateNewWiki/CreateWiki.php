@@ -948,8 +948,9 @@ class CreateWiki {
 		foreach( $mSqlFiles as $file ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Populating database with {$file}\n", true );
 
-			$error = $this->mNewWiki->dbw->sourceFile( $file );
+			$error = $this->mNewWiki->dbw->sourceFile( $file, false, false, __METHOD__ );
 			if ( $error !== true ) {
+				// TODO retry failed query
 				return false;
 			}
 		}
