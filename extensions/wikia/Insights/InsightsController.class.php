@@ -84,7 +84,7 @@ class InsightsController extends WikiaSpecialPageController {
 				if( !$isEdit ) {
 					$isFixed = $model->isItemFixed( $title );
 					if ( $isFixed ) {
-						$model->purgeInsightsCache( $title->getArticleId() );
+						$model->updateInsightsCache( $title->getArticleId() );
 					}
 				}
 
