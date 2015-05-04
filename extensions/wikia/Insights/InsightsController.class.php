@@ -57,7 +57,7 @@ class InsightsController extends WikiaSpecialPageController {
 		if ( $this->model instanceof InsightsModel ) {
 			$params = $this->request->getParams();
 			$this->content = $this->model->getContent( $params );
-			$this->data = $this->model->getData();
+			$this->data = $this->model->getViewData();
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
 			throw new MWException( 'An Insights subpage should implement the InsightsModel interface.' );
