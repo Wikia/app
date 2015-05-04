@@ -98,6 +98,7 @@ $config['adengine2_desktop_js'] = array(
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
+		'//extensions/wikia/AdEngine/js/MonetizationServiceHelper.js',
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
