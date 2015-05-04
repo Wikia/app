@@ -3,11 +3,12 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.monetizationsServiceHelper',
 	'jquery',
 	'wikia.log',
-	'wikia.scriptwriter',
-], function (adContext, monetizationService, $, log, scriptWriter) {
+], function (adContext, monetizationService, $, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
+		isLoaded = false,
+		slotInContent = 'MON_IN_CONTENT',
 		slotMap = {
 			MON_ABOVE_TITLE: 'above_title',
 			MON_BELOW_TITLE: 'below_title',
@@ -35,15 +36,31 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		var slotName = slotMap[slot],
 			context = adContext.getContext();
 
-		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
+		init(success);
+
+		if (context.providers.monetizationServiceAds[slotName] && monetizationService.checkConditions(slotName)) {
 			log(['fillInSlot', slot, 'injectScript'], 'info', logGroup);
-
-			monetizationService.loadAssets();
-
-			scriptWriter.injectHtml(slot, context.providers.monetizationServiceAds[slotName], function () {
-				success();
-			});
+			monetizationService.injectContent(slot, context.providers.monetizationServiceAds[slotName], success);
 		}
+	}
+
+	function init(success) {
+		if (isLoaded) {
+			return;
+		}
+
+		log(['init', 'loadAssets'], 'info', logGroup);
+		monetizationService.loadAssets();
+
+		var slotName = slotMap[slotInContent],
+			ads = adContext.getContext().providers.monetizationServiceAds;
+
+		if (ads[slotName]) {
+			log(['init', 'addInContentSlot'], 'info', logGroup);
+			monetizationService.addInContentSlot(slotInContent, ads[slotName], success);
+		}
+
+		isLoaded = true;
 	}
 
 	return {
