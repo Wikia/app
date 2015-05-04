@@ -75,33 +75,34 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $comparisonData
 	 * @return string - comparison HTML
 	 */
-	private function renderComparisonItem( $comparisonData ) {
+	private function renderComparisonItem( $comparisonData )
+	{
 		$comparisonHTMLContent = '';
 
-		foreach ( $comparisonData as $set ) {
+		foreach ($comparisonData as $set) {
 			$setHTMLContent = '';
 
-			if ( $set['isEmpty'] ) {
+			if ($set['isEmpty']) {
 				continue;
 			}
 
-			foreach ( $set['data']['value'] as $item ) {
-				$type = $item[ 'type' ];
+			foreach ($set['data']['value'] as $item) {
+				$type = $item['type'];
 
-				if ( $item['isEmpty'] ) {
+				if ($item['isEmpty']) {
 					continue;
 				}
 
-				if ( $type === 'header' ) {
+				if ($type === 'header') {
 					$setHTMLContent .= $this->renderItem(
 						'comparison-set-header',
-						[ 'content' => $this->renderItem( $type, $item[ 'data' ] ) ]
+						['content' => $this->renderItem($type, $item['data'])]
 					);
 				} else {
-					if ( $this->validateType( $type ) ) {
+					if ($this->validateType($type)) {
 						$setHTMLContent .= $this->renderItem(
 							'comparison-set-item',
-							[ 'content' => $this->renderItem( $type, $item[ 'data' ] ) ]
+							['content' => $this->renderItem($type, $item['data'])]
 						);
 					}
 				}
@@ -110,7 +111,13 @@ class PortableInfoboxRenderService extends WikiaService {
 			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
 		}
 
-		return $this->renderItem( 'comparison', [ 'content' => $comparisonHTMLContent ] );
+		if ( !empty( $comparisonHTMLContent ) ) {
+			$output = $this->renderItem('comparison', [ 'content' => $comparisonHTMLContent ] );
+		} else {
+			$output = '';
+		}
+
+		return $output;
 	}
 
 	/**

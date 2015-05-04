@@ -106,11 +106,14 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
 	'wikiarelatedpages-desc' => 'Přidá na stránky seznam souvisejících stránek',
 	'wikiarelatedpages-heading' => 'Číst více',
+	'wikiamobile-related-article' => 'Související článek',
+	'wikiamobile-people-also-read' => 'Lidé si také přečetli',
 );
 
 /** German (Deutsch)

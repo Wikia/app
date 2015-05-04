@@ -424,8 +424,10 @@ $messages['pdc'] = array(
 /** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'ircgate-desc' => 'Pozwala użytkownikom na wstawianie formularza logującego do IRC na dowolnej stronie',
 	'ircgate-username' => 'Nazwa użytkownika:',
 	'ircgate-channel' => 'Kanał:',
 );
@@ -550,9 +552,11 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
+	'ircgate-desc' => 'Дозволяє користувачам вставляти IRC форму входу на будь-які сторінці',
 	'ircgate-username' => "Ім'я користувача:",
 	'ircgate-channel' => 'Канал:',
 );

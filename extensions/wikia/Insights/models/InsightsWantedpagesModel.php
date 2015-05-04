@@ -12,6 +12,10 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 		return new WantedPagesPage();
 	}
 
+	public function arePageViewsRequired() {
+		return false;
+	}
+
 	public function prepareData( $res ) {
 		$data = [];
 		$dbr = wfGetDB( DB_SLAVE );

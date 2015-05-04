@@ -625,8 +625,19 @@ $messages['fa'] = array(
 	'wikiaquiz-game-next-button' => 'سؤال بعدی',
 	'wikiaquiz-game-finish-button' => 'پایان',
 	'wikiaquiz-game-continue-button' => 'ادامه',
-	'wikiaquiz-game-email-valid-please' => 'لطفاً یک نشانی رایانامه‌ای معتبر وارد کنید.',
+	'wikiaquiz-game-email-valid-please' => 'لطفاً یک آدرس ایمیل معتبر وارد کنید.',
 	'wikiaquiz-game-mute' => 'صامت‌سازی',
+);
+
+/** Finnish (suomi)
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'wikiaquiz-questions-label' => 'Kysymykset',
+	'wikiaquiz-answers-label' => 'Vastaukset',
+	'wikiaquiz-publish-label' => 'Julkaise',
+	'wikiaquiz-game-start-button' => 'Käynnistä peli',
+	'wikiaquiz-game-continue-button' => 'Jatka',
 );
 
 /** Faroese (føroyskt)
@@ -1472,6 +1483,50 @@ $messages['nl'] = array(
 	'wikiaquiz-game-mute' => 'Dempen',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikiaquiz-desc' => 'Provesís un mejan aisit de crear e de gerir de quizzes',
+	'wikiaquiz-createquiz-headline' => 'Crear un quizz',
+	'wikiaquiz-editquiz-headline' => 'Modificar lo quizz',
+	'wikiaquiz-createquizarticle-headline' => 'Crear las questions e las responsas del quizz',
+	'wikiaquiz-editquizarticle-headline' => 'Modificar las questions e las responsas del quizz',
+	'wikiaquiz-title-label' => 'Títol',
+	'wikiaquiz-titlescreentext-label' => 'Tèxte de l’ecran de títol',
+	'wikiaquiz-fbrecommendationtext-label' => 'Descripcion de la recomandacion de Facebook',
+	'wikiaquiz-titlescreenimages-label' => 'Imatges de l’ecran de títol',
+	'wikiaquiz-moreinfoheading-label' => 'Entèsta « Mai d’informacions »',
+	'wikiaquiz-moreinfolinks-label' => "Ligams « Mai d'informacions »",
+	'wikiaquiz-moreinfoarticle-label' => 'Article',
+	'wikiaquiz-moreinfolinktext-label' => 'Tèxte del ligam',
+	'wikiaquiz-question-label' => 'Question',
+	'wikiaquiz-image-label' => 'Imatge (opcional)',
+	'wikiaquiz-video-label' => 'Vidèo (facultatiu, remplaça Imatge)',
+	'wikiaquiz-explanation-label' => 'Explicacion de la responsa (facultatiu)',
+	'wikiaquiz-quiz-label' => 'Quizz',
+	'wikiaquiz-questions-label' => 'Questions',
+	'wikiaquiz-answers-label' => 'Responsas',
+	'wikiaquiz-answer-label' => 'Responsa',
+	'wikiaquiz-correct-label' => 'Corrècte ?',
+	'wikiaquiz-addnewitem-label' => 'Apondre un element novèl',
+	'wikiaquiz-cancel-label' => 'Anullar',
+	'wikiaquiz-publish-label' => 'Publicar',
+	'wikiaquiz-error-invalid-question' => 'L’intitulat de la question es pas valid.',
+	'wikiaquiz-error-invalid-image' => 'L’imatge es pas valid : $1',
+	'wikiaquiz-error-invalid-video' => 'La vidèo es pas valida : $1',
+	'wikiaquiz-error-invalid-quiz' => "Lo nom d'aqueste quizz es pas valid.",
+	'wikiaquiz-error-invalid-article' => 'L’ID article es pas valid.',
+	'wikiaquiz-error-invalid-article-with-details' => 'L’article es pas valid : $1',
+	'wikiaquiz-game-cadence-2' => 'Prèst',
+	'wikiaquiz-game-cadence-1' => 'Partissètz !',
+	'wikiaquiz-game-question-label' => 'QUESTION',
+	'wikiaquiz-game-next-button' => 'Question seguenta',
+	'wikiaquiz-game-finish-button' => 'Acabar',
+	'wikiaquiz-game-continue-button' => 'Contunhar',
+	'wikiaquiz-game-mute' => 'Mut',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
@@ -1617,6 +1672,7 @@ $messages['ps'] = array(
 	'wikiaquiz-answers-label' => 'ځوابونه',
 	'wikiaquiz-answer-label' => 'ځواب',
 	'wikiaquiz-correct-label' => 'سم؟',
+	'wikiaquiz-addnewitem-label' => 'نوی توکی ورگډول',
 	'wikiaquiz-cancel-label' => 'ناگارل',
 	'wikiaquiz-publish-label' => 'خپرول',
 	'wikiaquiz-game-start-button' => 'لوبه پيلول',
@@ -2180,8 +2236,13 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'wikiaquiz-image-label' => 'Hình ảnh (tùy chọn)',
+	'wikiaquiz-video-label' => 'Video (tùy chọn, supercedes Image)',
+	'wikiaquiz-error-invalid-image' => 'Hình ảnh không hợp lệ: $1',
+	'wikiaquiz-error-invalid-video' => 'Video không hợp lệ: $1',
 	'wikiaquiz-game-email-placeholder' => 'tênđịachỉemail@wikia.com',
 );
 

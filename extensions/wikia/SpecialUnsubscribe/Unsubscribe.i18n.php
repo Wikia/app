@@ -349,10 +349,13 @@ $messages['ja'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
 	'unsubscribe-confirm-legend' => '확인',
+	'unsubscribe-confirm-text' => '<code>$1</code>로 보내는 모든 알림을 받지 않으시겠습니까?',
+	'unsubscribe-confirm-button' => '확인',
 );
 
 /** Colognian (Ripoarisch)
@@ -636,9 +639,11 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
+ * @author Okras
  */
 $messages['ru'] = array(
 	'unsubscribe' => 'Отписаться',
+	'unsubscribe-desc' => 'Единая точка отписки от электронных сообщений',
 	'unsubscribe-badaccess' => 'К сожалению, эта страница не может быть использована напрямую. Пожалуйста, перейдите по ссылке из вашей электронной почты.',
 	'unsubscribe-badtoken' => 'К сожалению, у нас проблема с маркером безопасности.',
 	'unsubscribe-bademail' => 'К сожалению, у нас проблема с электронной почты.',
@@ -679,6 +684,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'unsubscribe' => 'Avsluta prenumeration',
+	'unsubscribe-desc' => 'Avslutar prenumerationer på ett ställe',
 	'unsubscribe-badaccess' => 'Tyvärr kan inte denna sida användas direkt. Vänligen följ länken i din e-post.',
 	'unsubscribe-badtoken' => 'Tyvärr, det var ett problem med säkerhetsnyckel.',
 	'unsubscribe-bademail' => 'Tyvärr, det var ett problem med e-posten.',
@@ -732,10 +738,12 @@ $messages['tl'] = array(
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
 	'unsubscribe' => 'Відписатись',
+	'unsubscribe-desc' => 'Єдина точка відписки від електронних повідомлень',
 	'unsubscribe-badaccess' => 'На жаль, цю сторінку не можна відкрити безпосередньо. Будь ласка, перейдіть за посиланням з вашої електронної пошти.',
 	'unsubscribe-badtoken' => 'Помилка: невірний ключ.',
 	'unsubscribe-bademail' => 'Помилка: невірний e-mail.',

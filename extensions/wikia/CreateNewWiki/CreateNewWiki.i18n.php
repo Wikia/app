@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'cnw-or' => 'or',
 	'cnw-title' => 'Create New Wiki',
 	// step1 - create a wiki
-	'cnw-name-wiki-headline' => 'Start a Wiki',
+	'cnw-name-wiki-headline' => 'Start a wikia',
 	'cnw-name-wiki-creative' => 'Build a website, grow a community, and embark on your ultimate fan experience.',
 	'cnw-name-wiki-label' => 'Name your wikia',
 	'cnw-name-wiki-domain-label' => 'Give your wikia an address',
@@ -449,7 +449,7 @@ $messages['bgn'] = array(
 	'cnw-back' => 'بیئرگشت',
 	'cnw-or' => 'یا',
 	'cnw-name-wiki-headline' => 'یک ویکی ئی شرو کورتین',
-	'cnw-name-wiki-label' => 'شمی ویکی ئی نام',
+	'cnw-name-wiki-label' => 'شمی ویکی ئی نام', # Fuzzy
 	'cnw-signup' => 'کار زوروکین حسابئ جوڑ کورتین',
 	'cnw-userauth-creative' => 'داخل بوتین',
 	'cnw-userauth-marketing-heading' => 'شما کار زوروکین حسابئ نداریت؟',
@@ -808,6 +808,14 @@ $messages['diq'] = array(
 	'cnw-error-blocked-header' => 'Hesab biyo kılit',
 );
 
+/** British English (British English)
+ * @author Caliburn
+ */
+$messages['en-gb'] = array(
+	'createnewwiki-desc' => 'Wiki creation wizard',
+	'cnw-next' => 'Next',
+);
+
 /** Spanish (español)
  * @author Benfutbol10
  * @author Ciencia Al Poder
@@ -825,10 +833,10 @@ $messages['es'] = array(
 	'cnw-or' => 'o',
 	'cnw-title' => 'Crear un nuevo wiki',
 	'cnw-name-wiki-headline' => 'Comenzar una wiki',
-	'cnw-name-wiki-creative' => 'Wikia es el mejor sitio para construir un sitio web y hacer crecer una comunidad en torno a lo que te gusta.',
-	'cnw-name-wiki-label' => 'Nombre de tu wiki',
-	'cnw-name-wiki-domain-label' => 'Dale a tu wiki una dirección',
-	'cnw-name-wiki-submit-error' => '¡Oops! Asegúrate que todos los campos estén rellenados con las entradas válidas anteriores.',
+	'cnw-name-wiki-creative' => 'Wikia es el mejor sitio para construir un sitio web y hacer crecer una comunidad en torno a lo que te gusta.', # Fuzzy
+	'cnw-name-wiki-label' => 'Nombre de tu wiki', # Fuzzy
+	'cnw-name-wiki-domain-label' => 'Dale a tu wiki una dirección', # Fuzzy
+	'cnw-name-wiki-submit-error' => 'Asegúrate de rellenar ambos cuadros antes de continuar.',
 	'cnw-login' => 'Entrar',
 	'cnw-signup' => 'Crear una cuenta',
 	'cnw-signup-prompt' => '¿Necesitas una cuenta?',
@@ -847,27 +855,27 @@ $messages['es'] = array(
 	'cnw-userauth-marketing-body' => 'Necesitas una cuenta para crear un wiki en Wikia. ¡Solo tardas un minuto en registrarte!',
 	'cnw-userauth-signup-button' => 'Registrarse',
 	'cnw-desc-headline' => '¿De qué trata tu wikia?',
-	'cnw-desc-creative' => 'Tu descripción ayudará a la gente encontrar tu wikia',
-	'cnw-desc-placeholder' => 'Esto aparecerá en la página principal de tu wiki.',
-	'cnw-desc-tip1' => 'Sugerencia',
-	'cnw-desc-tip1-creative' => 'Dile a la gente de qué trata tu wikia en pocas palabras',
-	'cnw-desc-tip2' => 'Consejo 2',
-	'cnw-desc-tip2-creative' => 'Asegúrate de incluir detalles',
-	'cnw-desc-select-vertical' => 'Selecciona una categoría Hub',
-	'cnw-desc-select-categories' => 'Selecciona categorías adicionales',
+	'cnw-desc-creative' => 'Tu descripción ayudará a la gente encontrar tu wikia', # Fuzzy
+	'cnw-desc-placeholder' => 'Esto aparecerá en la página principal de tu wiki.', # Fuzzy
+	'cnw-desc-tip1' => 'Sugerencia', # Fuzzy
+	'cnw-desc-tip1-creative' => 'Dile a la gente de qué trata tu wikia en pocas palabras', # Fuzzy
+	'cnw-desc-tip2' => 'Consejo 2', # Fuzzy
+	'cnw-desc-tip2-creative' => 'Asegúrate de incluir detalles', # Fuzzy
+	'cnw-desc-select-vertical' => 'Selecciona una categoría Hub', # Fuzzy
+	'cnw-desc-select-categories' => 'Selecciona categorías adicionales', # Fuzzy
 	'cnw-desc-select-one' => 'Selecciona una',
 	'cnw-desc-all-ages' => '¿Esta wikia está destinada a un público infantil?',
 	'cnw-desc-tip-all-ages' => '¿Esto es acerca de un tema para niños? Para ayudarnos a cumplir con una ley de Estados Unidos mantenemos un seguimiento constante de aquellas wikias que interesan directamente a los niños menores de 12 años.',
-	'cnw-desc-default-lang' => 'Tu wiki estará en $1',
+	'cnw-desc-default-lang' => 'Tu wiki estará en $1', # Fuzzy
 	'cnw-desc-change-lang' => 'cambiar',
 	'cnw-desc-lang' => 'Idioma',
 	'cnw-desc-wiki-submit-error' => 'Por favor, elige una categoría',
 	'cnw-theme-headline' => 'Diseña tu wiki',
-	'cnw-theme-creative' => 'Escoge un tema que se ajuste a tu wiki.',
-	'cnw-theme-instruction' => 'Puedes cambiar el tema o diseñar tu propio en cualquier momento usando "Mis Herramientas" situada en la barra de herramientas en la parte inferior de la página.',
-	'cnw-welcome-headline' => '¡Enhorabuena! Has creado $1',
-	'cnw-welcome-instruction1' => 'Ahora haz clic al botón de abajo para empezar a llenar tu wiki con información.',
-	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.',
+	'cnw-theme-creative' => 'Escoge un tema que se ajuste a tu wiki.', # Fuzzy
+	'cnw-theme-instruction' => 'Puedes cambiar el tema o diseñar tu propio en cualquier momento usando "Mis Herramientas" situada en la barra de herramientas en la parte inferior de la página.', # Fuzzy
+	'cnw-welcome-headline' => '¡Enhorabuena! Has creado $1', # Fuzzy
+	'cnw-welcome-instruction1' => 'Ahora haz clic al botón de abajo para empezar a llenar tu wiki con información.', # Fuzzy
+	'cnw-welcome-help' => 'Encuentra respuestas, consejos, y más en la <a href="http://es.wikia.com">Comunidad Central</a>.', # Fuzzy
 	'cnw-error-general' => '¡Algo salió mal en nuestro sistema! Por favor inténtalo de nuevo o [[Special:Contact|contáctanos]] para obtener ayuda.',
 	'cnw-error-general-heading' => 'Lo sentimos',
 	'cnw-badword-header' => '¡Oops!',
@@ -900,6 +908,7 @@ $messages['eu'] = array(
  * @author BlueDevil
  * @author Ebraminio
  * @author Hosseinblue
+ * @author Movyn
  * @author Reza1615
  */
 $messages['fa'] = array(
@@ -908,18 +917,34 @@ $messages['fa'] = array(
 	'cnw-or' => 'یا',
 	'cnw-title' => 'ایجاد ویکی تازه',
 	'cnw-name-wiki-headline' => 'شروع یک ویکی',
+	'cnw-name-wiki-creative' => 'ویکیا از بهترین مکان‌ها برای ساخت وب‌گاهی است که می‌تواند رشد کند و موضوع مورد علاقه شما را گسترش دهد.', # Fuzzy
+	'cnw-name-wiki-label' => 'نام ویکی شما', # Fuzzy
+	'cnw-name-wiki-domain-label' => 'آدرس ویکی شما', # Fuzzy
 	'cnw-login' => 'ورود به سامانه',
 	'cnw-signup' => 'ایجاد حساب تازه',
+	'cnw-signup-prompt' => 'نیاز به حساب کاربری دارید؟',
+	'cnw-call-to-signup' => 'ثبت نام کنید',
+	'cnw-call-to-login' => 'وارد شوید',
 	'cnw-auth-headline' => 'ورود به سامانه',
 	'cnw-auth-headline2' => 'ثبت نام',
 	'cnw-userauth-creative' => 'ورود به سامانه',
 	'cnw-userauth-marketing-heading' => 'حساب کاربری ندارید؟',
 	'cnw-userauth-signup-button' => 'ثبت نام',
-	'cnw-desc-tip1' => 'راهنمایی',
+	'cnw-desc-headline' => 'ویکی شما در چه موضوعی است؟',
+	'cnw-desc-creative' => 'توصیف شما به دیگران کمک می‌کند تا بهتر ویکی شما را پیدا کنند', # Fuzzy
+	'cnw-desc-tip1' => 'راهنمایی', # Fuzzy
+	'cnw-desc-tip1-creative' => 'با یک یا دو جمله، از این فضا استفاده کنید تا دیگران بدانند از چه ویکی استفاده می‌کنند', # Fuzzy
+	'cnw-desc-select-vertical' => 'یک دایرکتوری مادر انتخاب کنید', # Fuzzy
+	'cnw-desc-select-categories' => 'دسته‌بندی دقیق‌تر', # Fuzzy
 	'cnw-desc-select-one' => 'یکی را انتخاب کنید',
 	'cnw-desc-change-lang' => 'تغییر',
 	'cnw-desc-lang' => 'زبان',
+	'cnw-theme-headline' => 'انتخاب قالب',
+	'cnw-theme-creative' => 'از نمونه‌های زیر یک قالب را انتخاب کنید. شما این امکان را دارید تا پیش‌نمایشی از قالب انتخابی خود را مشاهده کنید.', # Fuzzy
+	'cnw-theme-instruction' => 'شما همچنین می‌توانید قالب اختصاصی خود را بعدا با کمک "ابزارهای من" ایجاد کنید.', # Fuzzy
 	'cnw-error-anon-user-header' => 'لطفاً وارد شوید',
+	'cnw-error-unconfirmed-email-header' => 'ایمیل شما تایید نشده است',
+	'cnw-error-unconfirmed-email' => 'برای ساخت یک ویکی باید ایمیل شما تایید شود.',
 );
 
 /** Finnish (suomi)
@@ -1119,7 +1144,7 @@ $messages['fy'] = array(
 	'cnw-back' => 'Foarige',
 	'cnw-or' => 'of',
 	'cnw-login' => 'Oanmelde',
-	'cnw-desc-tip2' => 'Psst',
+	'cnw-desc-tip2' => 'Psst', # Fuzzy
 	'cnw-desc-lang' => 'Taal',
 );
 
@@ -1196,6 +1221,7 @@ $messages['gl'] = array(
 
 /** Hebrew (עברית)
  * @author Amire80
+ * @author LaG roiL
  * @author שומבלע
  */
 $messages['he'] = array(
@@ -1205,9 +1231,9 @@ $messages['he'] = array(
 	'cnw-or' => 'או',
 	'cnw-title' => 'יצירת ויקי חדש',
 	'cnw-name-wiki-headline' => 'להתחיל ויקי',
-	'cnw-name-wiki-creative' => 'ויקיה – המקום הטוב ביותר לבנות אתר ולטפל קהילה סביב דברים שאתם אוהבים.',
-	'cnw-name-wiki-label' => 'שם הוויקי',
-	'cnw-name-wiki-domain-label' => 'כתובת הוויקי',
+	'cnw-name-wiki-creative' => 'ויקיה – המקום הטוב ביותר לבנות אתר ולטפל קהילה סביב דברים שאתם אוהבים.', # Fuzzy
+	'cnw-name-wiki-label' => 'שם הוויקי', # Fuzzy
+	'cnw-name-wiki-domain-label' => 'כתובת הוויקי', # Fuzzy
 	'cnw-name-wiki-submit-error' => 'אוי! צריך למלא את שתי התיבות למעל כדי להמשיך.',
 	'cnw-login' => 'כניסה',
 	'cnw-signup' => 'יצירת חשבון',
@@ -1221,30 +1247,49 @@ $messages['he'] = array(
 	'cnw-auth-signup-creative' => 'צריך חשבון כדי להמשיך לבנות את הוויקי שלכם.<br />לוקח רק דקה להירשם!',
 	'cnw-auth-facebook-signup' => 'הרשמה עם פייסבוק',
 	'cnw-auth-facebook-login' => 'התחברות עם פייסבוק',
-	'cnw-desc-headline' => 'על מה הוויקי שלכם?',
-	'cnw-desc-creative' => 'תארו את הנושא שלכם',
-	'cnw-desc-placeholder' => 'זה יופיע בדף הראשי של הוויקי שלכם.',
-	'cnw-desc-tip1' => 'עצה',
-	'cnw-desc-tip1-creative' => 'השתמשו במרווח הזה כדי לספר לאנשים על הוויקי שלכם במשפט או שניים',
-	'cnw-desc-tip2' => 'אהם־אהם',
-	'cnw-desc-tip2-creative' => 'תנו למבקרים שלכם כמה פרטים על הנושא שלכם',
+	'cnw-userauth-headline' => 'בעל/ת חשבון?',
+	'cnw-userauth-creative' => 'כניסה לחשבון',
+	'cnw-userauth-marketing-heading' => 'אין לך חשבון?',
+	'cnw-userauth-marketing-body' => 'נדרש חשבון ליצירת מיזם ויקי בוויקיה. הרשמה לוקחת דקה בלבד!',
+	'cnw-userauth-signup-button' => 'הרשמה',
+	'cnw-desc-headline' => 'על מה הוויקיה שלכם?',
+	'cnw-desc-creative' => 'התיאור שלכם יסייע לאנשים למצוא את הוויקיה', # Fuzzy
+	'cnw-desc-placeholder' => 'זה יופיע בדף הראשי של הוויקי שלכם.', # Fuzzy
+	'cnw-desc-tip1' => 'עצה', # Fuzzy
+	'cnw-desc-tip1-creative' => 'השתמשו בשדה זה כדי לספר לאנשים על הוויקיה שלכם במשפט אחד או שניים', # Fuzzy
+	'cnw-desc-tip2' => 'אהם־אהם', # Fuzzy
+	'cnw-desc-tip2-creative' => 'תנו למבקרים שלכם כמה פרטים על הנושא שלכם', # Fuzzy
+	'cnw-desc-select-vertical' => 'בחירת קטגוריה', # Fuzzy
+	'cnw-desc-select-categories' => 'בחירת קטגוריות נוספות', # Fuzzy
 	'cnw-desc-select-one' => 'לבחור אחת',
-	'cnw-desc-default-lang' => 'הוויקי שלכם יהיה ב$1',
+	'cnw-desc-all-ages' => 'האם המיזם מיועד לילדים?',
+	'cnw-desc-tip-all-ages' => 'האם עוסק המיזם בנושא המעניין ילדים? בהתאם לחוק בארה"ב, אנו עוקבים אחרי מיזמי ויקיה על נושאים הפונים באופן ישיר לילדים בני 12 ומטה.',
+	'cnw-desc-default-lang' => 'הוויקי שלכם יהיה ב$1', # Fuzzy
 	'cnw-desc-change-lang' => 'לשנות',
 	'cnw-desc-lang' => 'שפה',
 	'cnw-desc-wiki-submit-error' => 'נא לבחור קטגוריה',
 	'cnw-theme-headline' => 'נא לבחור ערכת עיצוב',
-	'cnw-theme-creative' => 'נא לבחור באחת מערכות העיצוב להלן. אפשר יהיה לראות תצוגה מקדימה של כל ערכה תוך כדי הבחירה.',
-	'cnw-theme-instruction' => 'אפשר גם לעצב ערכת עיצוב משלכם דרך "הכלים שלי".',
-	'cnw-welcome-headline' => 'ברכות! הוויקי $1 נוצר',
-	'cnw-welcome-instruction1' => 'לחצו על הכפתור להלן כדי להתחיל להוסיף דפים לוויקי שלכם.',
-	'cnw-welcome-help' => 'מצאו תשובות, עצות ועוד ב־<a href="http://community.wikia.com">Community Central</a>.',
+	'cnw-theme-creative' => 'נא לבחור באחת מערכות העיצוב להלן. אפשר יהיה לראות תצוגה מקדימה של כל ערכה תוך כדי הבחירה.', # Fuzzy
+	'cnw-theme-instruction' => 'אפשר גם לעצב ערכת עיצוב משלכם דרך "הכלים שלי".', # Fuzzy
+	'cnw-welcome-headline' => 'ברכות! הוויקי $1 נוצר', # Fuzzy
+	'cnw-welcome-instruction1' => 'לחצו על הכפתור להלן כדי להתחיל להוסיף דפים לוויקי שלכם.', # Fuzzy
+	'cnw-welcome-help' => 'מצאו תשובות, עצות ועוד ב־<a href="http://community.wikia.com">Community Central</a>.', # Fuzzy
+	'cnw-badword-msg' => 'שלום, נא להימנע משימוש במילים הגסות או האסורות להלן בתיאור הוויקיה: $1',
+	'cnw-error-wiki-limit' => 'שלום, הינך מוגבל ליצירת {{PLURAL:$1|$1 ויקיה אחת|$1 ויקיות}} ביום. נא להמתין 24 שעות לפני יצירת ויקיה נוספת.',
+	'cnw-error-blocked-header' => 'חשבונך חסום',
+	'cnw-error-blocked' => 'נחסמת על ידי $1. הסיבה לכך היא: $2. (מספר החסימה: $3)',
+	'cnw-error-anon-user-header' => 'נא להיכנס לחשבון',
+	'cnw-error-anon-user' => 'למשתמשים אנונימיים לא ניתן ליצור ויקיות. נא [[Special:UserLogin|להיכנס לחשבון]] ולנסות שוב.',
+	'cnw-error-torblock' => 'יצירת ויקיות דרך רשת Tor אסורה.',
+	'cnw-error-unconfirmed-email-header' => 'כתובת הדוא"ל שלך לא אומתה',
+	'cnw-error-unconfirmed-email' => 'יש לאמת את כתובת הדוא"ל שלך על מנת ליצור ויקי.',
 );
 
 /** Hungarian (magyar)
  * @author Dani
  * @author Dj
  * @author TK-999
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
 	'createnewwiki-desc' => 'Wikikészítő varázsló',
@@ -1253,9 +1298,9 @@ $messages['hu'] = array(
 	'cnw-or' => 'vagy',
 	'cnw-title' => 'Új wiki létrehozása',
 	'cnw-name-wiki-headline' => 'Wiki indítása',
-	'cnw-name-wiki-creative' => 'Wikia a legjobb hely, ha kedvenc témádnak egy új weboldalt akarsz készíteni, és közösséget építeni hozzá.',
-	'cnw-name-wiki-label' => 'A wiki neve',
-	'cnw-name-wiki-domain-label' => 'Adj a wikinek egy címet',
+	'cnw-name-wiki-creative' => 'Wikia a legjobb hely, ha kedvenc témádnak egy új weboldalt akarsz készíteni, és közösséget építeni hozzá.', # Fuzzy
+	'cnw-name-wiki-label' => 'A wiki neve', # Fuzzy
+	'cnw-name-wiki-domain-label' => 'Adj a wikinek egy címet', # Fuzzy
 	'cnw-name-wiki-submit-error' => 'Hoppá! Ki kell töltened mindkét fenti mezőt a folytatáshoz.',
 	'cnw-login' => 'Bejelentkezés',
 	'cnw-signup' => 'Fiók létrehozása',
@@ -1272,28 +1317,28 @@ $messages['hu'] = array(
 	'cnw-userauth-headline' => 'Van már felhasználói fiókod?',
 	'cnw-userauth-creative' => 'Bejelentkezés',
 	'cnw-userauth-marketing-heading' => 'Még nem regisztráltál?',
-	'cnw-userauth-marketing-body' => 'Felhasználói fiókra van szükséged, hogy wikit hozhass létre a Wikián. Csak egy percbe telik a regisztráció!', # Fuzzy
+	'cnw-userauth-marketing-body' => 'Felhasználói fiókra van szükséged, hogy wikit hozhass létre a Wikián. Csak egy percbe telik a regisztráció!',
 	'cnw-userauth-signup-button' => 'Regisztráció',
-	'cnw-desc-headline' => 'Miről szól a wiki?',
-	'cnw-desc-creative' => 'Írd körül a témát',
-	'cnw-desc-placeholder' => 'Ez a wiki kezdőlapján fog megjelenni.',
-	'cnw-desc-tip1' => 'Tipp',
-	'cnw-desc-tip1-creative' => 'Itt egy-két mondatban mesélj az wikidről az idelátogató embereknek',
-	'cnw-desc-tip2' => 'Pszt',
-	'cnw-desc-tip2-creative' => 'Közölj a látogatókkal valami egyedi részletet a témádról',
+	'cnw-desc-headline' => 'Miről szól a wikiád?',
+	'cnw-desc-creative' => 'Írd körül a témát', # Fuzzy
+	'cnw-desc-placeholder' => 'Ez a wiki kezdőlapján fog megjelenni.', # Fuzzy
+	'cnw-desc-tip1' => 'Tipp', # Fuzzy
+	'cnw-desc-tip1-creative' => 'Itt egy-két mondatban mesélj az wikiádról az idelátogató embereknek', # Fuzzy
+	'cnw-desc-tip2' => 'Pszt', # Fuzzy
+	'cnw-desc-tip2-creative' => 'Közölj a látogatókkal valami egyedi részletet a témádról', # Fuzzy
 	'cnw-desc-select-one' => 'Válassz egyet',
-	'cnw-desc-default-lang' => 'A wikid a $1 kategóriába lesz',
+	'cnw-desc-default-lang' => 'A wikid a $1 kategóriába lesz', # Fuzzy
 	'cnw-desc-change-lang' => 'módosítás',
 	'cnw-desc-lang' => 'Nyelv',
 	'cnw-desc-wiki-submit-error' => 'Válassz egy kategóriát',
 	'cnw-theme-headline' => 'Válassz egy témát',
-	'cnw-theme-creative' => 'Válassz az alábbi témák közöl. Ha kiválasztasz egy témát, akkor annak látható lesz az előnézeti képe.',
-	'cnw-theme-instruction' => 'Saját stílusodat később is megtervezheted a "My Tools" eszköztáron keresztül.',
-	'cnw-welcome-headline' => 'Gratulálunk!A(z) $1 létrehozása sikerült.',
-	'cnw-welcome-instruction1' => 'Kattints a lenti gombra, hogy elkezdd a lapok hozzáadását a wikidhez.',
-	'cnw-welcome-help' => 'Keress válaszokat, tanácsot és sok mást a <a href="http://community.wikia.com">Community Central</a> wikin.',
+	'cnw-theme-creative' => 'Válassz az alábbi témák közöl. Ha kiválasztasz egy témát, akkor annak látható lesz az előnézeti képe.', # Fuzzy
+	'cnw-theme-instruction' => 'Saját stílusodat később is megtervezheted a "My Tools" eszköztáron keresztül.', # Fuzzy
+	'cnw-welcome-headline' => 'Gratulálunk!A(z) $1 létrehozása sikerült.', # Fuzzy
+	'cnw-welcome-instruction1' => 'Kattints a lenti gombra, hogy elkezdd a lapok hozzáadását a wikidhez.', # Fuzzy
+	'cnw-welcome-help' => 'Keress válaszokat, tanácsot és sok mást a <a href="http://community.wikia.com">Community Central</a> wikin.', # Fuzzy
 	'cnw-error-general' => 'Valami hiba történt a wikid létrehozása közben. Kérlek, próbáld újra később.', # Fuzzy
-	'cnw-error-general-heading' => 'Hiba új wiki létrehozásakor', # Fuzzy
+	'cnw-error-general-heading' => 'Elnézést',
 	'cnw-badword-header' => 'Hoppácska',
 	'cnw-badword-msg' => 'Szia, légyszíves tartózkodj a csúnya és tiltott szavak használatától a Wiki leírásban: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki korlátot elérte',
@@ -1376,17 +1421,19 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Riemogerz
  */
 $messages['id'] = array(
+	'createnewwiki-desc' => 'Ahli pembuatan Wiki',
 	'cnw-next' => 'Selanjutnya',
 	'cnw-back' => 'Kembali',
 	'cnw-or' => 'atau',
 	'cnw-title' => 'Buat Wiki Baru',
 	'cnw-name-wiki-headline' => 'Memulai sebuah Wiki',
-	'cnw-name-wiki-creative' => 'Wikia adalah tempat terbaik untuk membangun sebuah situs web dan komunitas yang Anda suka.',
-	'cnw-name-wiki-label' => 'Nama wiki Anda',
-	'cnw-name-wiki-domain-label' => 'Berikan alamat ke wiki Anda',
+	'cnw-name-wiki-creative' => 'Wikia adalah tempat terbaik untuk membangun sebuah situs web dan komunitas yang Anda suka.', # Fuzzy
+	'cnw-name-wiki-label' => 'Nama wiki Anda', # Fuzzy
+	'cnw-name-wiki-domain-label' => 'Berikan alamat ke wiki Anda', # Fuzzy
 	'cnw-name-wiki-submit-error' => 'Ups! Anda perlu mengisi kedua kotak di atas untuk terus berjalan.',
 	'cnw-login' => 'Masuk Log',
 	'cnw-signup' => 'Buat akun',
@@ -1405,22 +1452,42 @@ $messages['id'] = array(
 	'cnw-userauth-marketing-heading' => 'Belum memiliki akun?',
 	'cnw-userauth-marketing-body' => 'Anda memerlukan sebuah akun untuk membuat wiki di Wikia. Hanya butuh satu menit untuk mendaftar!',
 	'cnw-userauth-signup-button' => 'Mendaftar',
-	'cnw-desc-headline' => 'Tentang wiki Anda?', # Fuzzy
-	'cnw-desc-creative' => 'Gambarkan topik Anda', # Fuzzy
-	'cnw-desc-placeholder' => 'Ini akan muncul pada halaman utama Anda wiki.',
-	'cnw-desc-tip1' => 'Petunjuk',
-	'cnw-desc-tip1-creative' => 'Menggunakan ruang ini untuk memberitahu orang tentang wiki Anda (tulis dalam satu atau dua kalimat)', # Fuzzy
-	'cnw-desc-tip2' => 'Tulis',
-	'cnw-desc-tip2-creative' => 'Memberi pengunjung Anda beberapa rincian spesifik tentang subjek Anda',
+	'cnw-desc-headline' => 'Tentang apa wikia Anda?',
+	'cnw-desc-creative' => 'Deskripsi Anda akan membantu orang menemukan wikia Anda', # Fuzzy
+	'cnw-desc-placeholder' => 'Ini akan muncul pada halaman utama Anda wiki.', # Fuzzy
+	'cnw-desc-tip1' => 'Petunjuk', # Fuzzy
+	'cnw-desc-tip1-creative' => 'Gunakan ruang ini untuk memberitahu orang-orang tentang wikia Anda dalam satu atau dua kalimat', # Fuzzy
+	'cnw-desc-tip2' => 'Psst', # Fuzzy
+	'cnw-desc-tip2-creative' => 'Memberi pengunjung Anda beberapa rincian spesifik tentang subjek Anda', # Fuzzy
+	'cnw-desc-select-vertical' => 'Pilih Pusat Kategori', # Fuzzy
+	'cnw-desc-select-categories' => 'Pilih Kategori Tambahan', # Fuzzy
 	'cnw-desc-select-one' => 'Pilih salah satu',
-	'cnw-desc-tip-all-ages' => 'Apakah wiki ini tentang topik yang menarik bagi anak-anak? Untuk membantu kami mematuhi undang-undang AS kami melacak wiki-wiki tentang topik yang secara langsung menarik kepada anak-anak 12 tahun ke bawah.', # Fuzzy
+	'cnw-desc-all-ages' => 'Apakah wikia ini ditujukan untuk anak-anak?',
+	'cnw-desc-tip-all-ages' => 'Apakah wiki ini berisi tentang topik yang menarik bagi anak-anak? Untuk membantu kami mematuhi undang-undang AS kami melacak wiki-wiki tentang topik yang secara langsung menarik kepada anak-anak 12 tahun ke bawah.',
+	'cnw-desc-default-lang' => 'Wiki Anda akan berada di $1', # Fuzzy
 	'cnw-desc-change-lang' => 'ubah',
 	'cnw-desc-lang' => 'Bahasa',
-	'cnw-welcome-headline' => 'Selamat! $1 telah dibuat',
-	'cnw-welcome-instruction1' => 'Klik tombol di bawah untuk memulai menambahkan halaman ke wiki Anda.',
+	'cnw-desc-wiki-submit-error' => 'Silakan pilih kategori',
+	'cnw-theme-headline' => 'Pilih tema',
+	'cnw-theme-creative' => 'Pilih tema di bawah ini, Anda akan dapat melihat pratayang dari setiap tema yang Anda pilih.', # Fuzzy
+	'cnw-theme-instruction' => 'Anda juga dapat merancang tema Anda sendiri kemudian dengan pergi ke "Peralatanku".', # Fuzzy
+	'cnw-welcome-headline' => 'Selamat! $1 telah dibuat', # Fuzzy
+	'cnw-welcome-instruction1' => 'Klik tombol di bawah untuk memulai menambahkan halaman ke wiki Anda.', # Fuzzy
+	'cnw-welcome-help' => 'Temukan jawaban, saran, dan masih banyak lagi pada <a href="http://community.wikia.com">Community Central</a>.', # Fuzzy
 	'cnw-error-general' => 'Ups, ada sesuatu yang salah di pihak kami! Silakan coba lagi, atau [[Special:Contact|hubungi kami]] untuk bantuan.',
+	'cnw-error-general-heading' => 'Permintaan maaf kami',
+	'cnw-badword-header' => 'Wah ada',
+	'cnw-badword-msg' => 'Hai, tolong jangan menggunakan kata-kata yang buruk atau kata-kata dilarang di Keterangan Wiki Anda: $1',
 	'cnw-error-wiki-limit-header' => 'Wiki telah mencapai batas',
 	'cnw-error-blocked-header' => 'Akun diblokir',
+	'cnw-error-blocked' => 'Anda telah diblokir oleh $1. Alasan yang diberikan aadalah: $2. (ID Blok untuk referensi: $3)',
+	'cnw-error-anon-user-header' => 'Silahkan masuk log',
+	'cnw-error-anon-user' => 'Membuat wiki untuk anonim dinonaktifkan. Silahkan [[Special:UserLogin|masuk log]] dan coba lagi.',
+	'cnw-error-torblock' => 'Membuat wiki melalui Jaringan Tor tidak diperbolehkan.',
+	'cnw-error-bot' => 'Kami mendeteksi bahwa Anda mungkin bot. Jika kami melakukan kesalahan, silahkan hubungi kami dan menjelaskan bahwa Anda telah salah terdeteksi sebagai bot, dan kami akan membantu Anda dalam membuat wiki Anda: [http://www.wikia.com/Special:Contact/general Hubungi Kami]',
+	'cnw-error-bot-header' => 'Anda telah terdeteksi sebagai bot',
+	'cnw-error-unconfirmed-email-header' => 'Surel Anda tidak dikonfirmasi',
+	'cnw-error-unconfirmed-email' => 'Surel Anda harus dikonfirmasi untuk membuat Wiki.',
 );
 
 /** Interlingue (Interlingue)
@@ -1854,35 +1921,35 @@ $messages['lki'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
-	'cnw-next' => 'نيا',
+	'cnw-next' => 'نها',
 	'cnw-back' => 'وا دما',
 	'cnw-or' => 'يا',
 	'cnw-title' => 'يه گل ويكی تازه راس بكيت',
 	'cnw-name-wiki-headline' => 'یه گل ویکی نه شرو بکید',
-	'cnw-name-wiki-label' => 'نوم ویکی تو',
-	'cnw-name-wiki-domain-label' => 'د ویکیتو نشونی بئیتو',
-	'cnw-login' => 'اومائن د سيستم',
+	'cnw-name-wiki-label' => 'نوم ویکی تو', # Fuzzy
+	'cnw-name-wiki-domain-label' => 'سی ویکی تو تیرنشو راس بکیت', # Fuzzy
+	'cnw-login' => 'وا مین اومائن',
 	'cnw-signup' => 'حساو راست بكيد',
 	'cnw-signup-prompt' => 'یه گل حساو می حایت؟',
 	'cnw-call-to-signup' => 'ایچه ثوت نام بکید',
-	'cnw-login-prompt' => 'ایسنی حساو کاروری داریتو؟',
+	'cnw-login-prompt' => 'ایسنی حساو کاریاری داریتو؟',
 	'cnw-call-to-login' => 'ایچه بیایت وامین',
-	'cnw-auth-headline' => 'اومائن د سيستم',
+	'cnw-auth-headline' => 'وا مین اومائن',
 	'cnw-auth-headline2' => 'ثوت نام كردن',
 	'cnw-auth-facebook-signup' => 'ثوت نام وا فیس بوک',
 	'cnw-auth-facebook-login' => 'اومائن وا مین وا فیس بوک',
 	'cnw-userauth-headline' => 'یه گل حساو داریتو؟',
-	'cnw-userauth-creative' => 'اومائن د سيستم',
+	'cnw-userauth-creative' => 'وا مین اومائن',
 	'cnw-userauth-marketing-heading' => 'یه گل حساو ناریت؟',
 	'cnw-userauth-signup-button' => 'ثوت نام كردن',
 	'cnw-desc-headline' => 'ویکیتو دباره چنه؟',
-	'cnw-desc-tip2' => 'پی اس اس تی',
+	'cnw-desc-tip2' => 'پی اس اس تی', # Fuzzy
 	'cnw-desc-select-one' => 'یه گل نه انتخاو بکید',
 	'cnw-desc-all-ages' => 'همه بلگيا', # Fuzzy
 	'cnw-desc-change-lang' => 'آلشت بكيد',
 	'cnw-desc-lang' => 'زون',
 	'cnw-error-blocked-header' => 'حساو قلف بیه',
-	'cnw-error-anon-user-header' => 'لطفا وارد سیستم بویت',
+	'cnw-error-anon-user-header' => 'لطف بکیت بیایت وامین',
 );
 
 /** Lithuanian (lietuvių)
@@ -2499,8 +2566,8 @@ $messages['ps'] = array(
 	'cnw-or' => 'يا',
 	'cnw-title' => 'يو نوی ويکي جوړول',
 	'cnw-name-wiki-headline' => 'يو ويکي پيلول',
-	'cnw-name-wiki-label' => 'خپله ويکي نومول',
-	'cnw-name-wiki-domain-label' => 'خپل ويکي ته يوه پته ورکول',
+	'cnw-name-wiki-label' => 'خپله ويکي نومول', # Fuzzy
+	'cnw-name-wiki-domain-label' => 'خپل ويکي ته يوه پته ورکول', # Fuzzy
 	'cnw-login' => 'ننوتل',
 	'cnw-signup' => 'گڼون جوړول',
 	'cnw-signup-prompt' => 'آيا يو گڼون غواړۍ؟',
@@ -2515,17 +2582,19 @@ $messages['ps'] = array(
 	'cnw-userauth-creative' => 'ننوتل',
 	'cnw-userauth-marketing-heading' => 'گڼون نه لرې؟',
 	'cnw-userauth-signup-button' => 'نومليکل',
-	'cnw-desc-headline' => 'ستاسې ويکي د څه په اړه دی؟',
-	'cnw-desc-placeholder' => 'دا به ستاسې د ويکي په لومړي مخ ښکاره شي.',
-	'cnw-desc-tip1-creative' => 'دلته په يوې يا دوه کرښو کې خلکو ته مالومات ورکړۍ چې ستاسې ويکي د څه په اړه دی',
+	'cnw-desc-headline' => 'ستاسې ويکييا د څه په اړه ده؟',
+	'cnw-desc-placeholder' => 'دا به ستاسې د ويکي په لومړي مخ ښکاره شي.', # Fuzzy
+	'cnw-desc-tip1-creative' => 'دلته په يوې يا دوه کرښو کې خلکو ته مالومات ورکړۍ چې ستاسې ويکي د څه په اړه دی', # Fuzzy
+	'cnw-desc-select-categories' => 'اضافه وېشنيزې ټاکل', # Fuzzy
 	'cnw-desc-select-one' => 'يو وټاکۍ',
-	'cnw-desc-default-lang' => 'ستاسې ويکي به په $1 ژبه وي',
+	'cnw-desc-default-lang' => 'ستاسې ويکي به په $1 ژبه وي', # Fuzzy
 	'cnw-desc-change-lang' => 'بدلول',
 	'cnw-desc-lang' => 'ژبه',
 	'cnw-desc-wiki-submit-error' => 'يوه وېشنيزه وټاکۍ',
 	'cnw-theme-headline' => 'خپل ويکي سکښتل',
-	'cnw-welcome-headline' => 'بختور مو شه، د $1 ويکي جوړ شو',
+	'cnw-welcome-headline' => 'بختور مو شه، د $1 ويکي جوړ شو', # Fuzzy
 	'cnw-error-blocked-header' => 'پر گڼون بنديز ولگېد',
+	'cnw-error-anon-user-header' => 'لطفاً ورننوځئ',
 );
 
 /** Portuguese (português)
@@ -2622,9 +2691,9 @@ $messages['pt-br'] = array(
 	'cnw-or' => 'ou',
 	'cnw-title' => 'Criar uma Nova Wikia',
 	'cnw-name-wiki-headline' => 'Iniciar uma Wikia',
-	'cnw-name-wiki-creative' => 'A Wikia é o melhor lugar para criar um site e desenvolver uma comunidade em torno de um tema do seu agrado.',
-	'cnw-name-wiki-label' => 'Nome da sua wikia',
-	'cnw-name-wiki-domain-label' => 'Dê um endereço a sua wikia',
+	'cnw-name-wiki-creative' => 'A Wikia é o melhor lugar para criar um site e desenvolver uma comunidade em torno de um tema do seu agrado.', # Fuzzy
+	'cnw-name-wiki-label' => 'Nome da sua wikia', # Fuzzy
+	'cnw-name-wiki-domain-label' => 'Dê um endereço a sua wikia', # Fuzzy
 	'cnw-name-wiki-submit-error' => 'Ops! Você precisa preencher ambas as caixas acima para continuar.',
 	'cnw-login' => 'Login',
 	'cnw-signup' => 'Criar Conta',
@@ -2644,27 +2713,27 @@ $messages['pt-br'] = array(
 	'cnw-userauth-marketing-body' => 'Você precisa de uma conta para criar uma wikia na Wikia. Leva apenas um minuto para se registrar!',
 	'cnw-userauth-signup-button' => 'Registrar-se',
 	'cnw-desc-headline' => 'Sobre o que é a sua wikia?',
-	'cnw-desc-creative' => 'Sua descrição vai ajudar as pessoas a encontrar a seu wikia',
-	'cnw-desc-placeholder' => 'Isso vai aparecer na página principal da sua wikia.',
-	'cnw-desc-tip1' => 'Sugestão',
-	'cnw-desc-tip1-creative' => 'Use este espaço para descrever a sua wikia aos visitantes numa frase ou duas',
-	'cnw-desc-tip2' => 'Psiu',
-	'cnw-desc-tip2-creative' => 'Dê aos visitantes alguns detalhes específicos sobre o assunto',
-	'cnw-desc-select-vertical' => 'Selecione uma categoria Hub',
-	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
+	'cnw-desc-creative' => 'Sua descrição vai ajudar as pessoas a encontrar a seu wikia', # Fuzzy
+	'cnw-desc-placeholder' => 'Isso vai aparecer na página principal da sua wikia.', # Fuzzy
+	'cnw-desc-tip1' => 'Sugestão', # Fuzzy
+	'cnw-desc-tip1-creative' => 'Use este espaço para descrever a sua wikia aos visitantes numa frase ou duas', # Fuzzy
+	'cnw-desc-tip2' => 'Psiu', # Fuzzy
+	'cnw-desc-tip2-creative' => 'Dê aos visitantes alguns detalhes específicos sobre o assunto', # Fuzzy
+	'cnw-desc-select-vertical' => 'Selecione uma categoria Hub', # Fuzzy
+	'cnw-desc-select-categories' => 'Selecione categorias adicionais', # Fuzzy
 	'cnw-desc-select-one' => 'Selecione uma',
 	'cnw-desc-all-ages' => 'Esta wikia é destinada a crianças?',
 	'cnw-desc-tip-all-ages' => 'Esta wikia é sobre um assunto no qual crianças estariam interessadas? A fim de nos ajudar a cumprir a lei dos Estados Unidos, nós mantemos o controle de wikias sobre assuntos que se dirigem diretamente para crianças de até 12 anos.',
-	'cnw-desc-default-lang' => 'Sua wikia será em $1',
+	'cnw-desc-default-lang' => 'Sua wikia será em $1', # Fuzzy
 	'cnw-desc-change-lang' => 'alterar',
 	'cnw-desc-lang' => 'Idioma',
 	'cnw-desc-wiki-submit-error' => 'Por favor, escolha uma categoria',
 	'cnw-theme-headline' => 'Escolha um tema',
-	'cnw-theme-creative' => 'Escolha um tema abaixo, você será capaz de ver uma prévia de cada tema, quando você selecioná-lo.',
-	'cnw-theme-instruction' => "Você também pode criar o seu próprio tema mais tarde usando ''Minhas Ferramentas''.",
-	'cnw-welcome-headline' => 'Parabéns! A $1 foi criada',
-	'cnw-welcome-instruction1' => 'Clique no botão abaixo para começar a criar páginas na sua wikia.',
-	'cnw-welcome-help' => 'Encontre respostas, conselhos, e muito mais na <a href="http://comunidade.wikia.com">Central da Comunidade Wikia</a>.',
+	'cnw-theme-creative' => 'Escolha um tema abaixo, você será capaz de ver uma prévia de cada tema, quando você selecioná-lo.', # Fuzzy
+	'cnw-theme-instruction' => "Você também pode criar o seu próprio tema mais tarde usando ''Minhas Ferramentas''.", # Fuzzy
+	'cnw-welcome-headline' => 'Parabéns! A $1 foi criada', # Fuzzy
+	'cnw-welcome-instruction1' => 'Clique no botão abaixo para começar a criar páginas na sua wikia.', # Fuzzy
+	'cnw-welcome-help' => 'Encontre respostas, conselhos, e muito mais na <a href="http://comunidade.wikia.com">Central da Comunidade Wikia</a>.', # Fuzzy
 	'cnw-error-general' => 'Opa, algo deu errado em nosso sistema! Por favor, tente novamente ou [[Special:Contact|entre em contato]] conosco para obter ajuda.',
 	'cnw-error-general-heading' => 'Nossas desculpas',
 	'cnw-badword-header' => 'Atenção',
@@ -3498,6 +3567,7 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Hzy980512
+ * @author LNDDYL
  * @author Liuxinyu970226
  * @author Liye
  * @author Sam Wang
@@ -3513,9 +3583,9 @@ $messages['zh-hans'] = array(
 	'cnw-or' => '或',
 	'cnw-title' => '创造一个新的维基',
 	'cnw-name-wiki-headline' => '开始一个维基',
-	'cnw-name-wiki-creative' => 'Wikia是您网站和您喜爱的社区的温馨小窝。',
-	'cnw-name-wiki-label' => '给您的wiki一个名字',
-	'cnw-name-wiki-domain-label' => '给您的维基一个地址',
+	'cnw-name-wiki-creative' => 'Wikia是您网站和您喜爱的社区的温馨小窝。', # Fuzzy
+	'cnw-name-wiki-label' => '给您的wiki一个名字', # Fuzzy
+	'cnw-name-wiki-domain-label' => '给您的维基一个地址', # Fuzzy
 	'cnw-name-wiki-submit-error' => '哎呀！您需要填写以上的两个框才能延续下去。',
 	'cnw-login' => '登录',
 	'cnw-signup' => '创建帐户',
@@ -3535,27 +3605,27 @@ $messages['zh-hans'] = array(
 	'cnw-userauth-marketing-body' => '您需要一个账户才能在wikia上创建wiki。只需要一分钟即可注册！',
 	'cnw-userauth-signup-button' => '注册',
 	'cnw-desc-headline' => '您的wikia是关于什么的？',
-	'cnw-desc-creative' => '您的主题将帮助人民找到您的wikia',
-	'cnw-desc-placeholder' => '这会在您的维基首页出现。',
-	'cnw-desc-tip1' => '暗示',
-	'cnw-desc-tip1-creative' => '在此空格中使用一两句话向大家介绍您的维基',
-	'cnw-desc-tip2' => '喂',
-	'cnw-desc-tip2-creative' => '给访客提供一些关于你主题的某些特定信息',
-	'cnw-desc-select-vertical' => '选择一个集线器分类',
-	'cnw-desc-select-categories' => '选择额外分类',
+	'cnw-desc-creative' => '您的主题将帮助人们找到您的wikia', # Fuzzy
+	'cnw-desc-placeholder' => '这会在您的维基首页出现。', # Fuzzy
+	'cnw-desc-tip1' => '暗示', # Fuzzy
+	'cnw-desc-tip1-creative' => '在此空格中使用一两句话向大家介绍您的维基', # Fuzzy
+	'cnw-desc-tip2' => '喂', # Fuzzy
+	'cnw-desc-tip2-creative' => '给访客提供一些关于你主题的某些特定信息', # Fuzzy
+	'cnw-desc-select-vertical' => '选择一个集线器分类', # Fuzzy
+	'cnw-desc-select-categories' => '选择额外分类', # Fuzzy
 	'cnw-desc-select-one' => '选一',
 	'cnw-desc-all-ages' => '此wikia适合儿童浏览么？',
 	'cnw-desc-tip-all-ages' => '这是有关于孩子们感兴趣的话题么？为了使我们遵守美国法律，我们要保持跟踪面向12岁及以下儿童的话题的wikia站点。',
-	'cnw-desc-default-lang' => '您的维基将位于$1',
+	'cnw-desc-default-lang' => '您的维基将位于$1', # Fuzzy
 	'cnw-desc-change-lang' => '改变',
 	'cnw-desc-lang' => '语言',
 	'cnw-desc-wiki-submit-error' => '请选一个分类',
 	'cnw-theme-headline' => '选择一个主题',
-	'cnw-theme-creative' => '在下面选择一个主题，您将会看见您选择的主题的预览。',
-	'cnw-theme-instruction' => '您也可以在“我的工具”里设计自己的主题。',
-	'cnw-welcome-headline' => '恭喜！$1 已创建',
-	'cnw-welcome-instruction1' => '点击以下的按钮来开始在您的维基新增页面。',
-	'cnw-welcome-help' => '在<a href="http://community.wikia.com">社区中心</a>中找到答案、咨询和更多其它。',
+	'cnw-theme-creative' => '在下面选择一个主题，您将会看见您选择的主题的预览。', # Fuzzy
+	'cnw-theme-instruction' => '您也可以在“我的工具”里设计自己的主题。', # Fuzzy
+	'cnw-welcome-headline' => '恭喜！$1 已创建', # Fuzzy
+	'cnw-welcome-instruction1' => '点击以下的按钮来开始在您的维基新增页面。', # Fuzzy
+	'cnw-welcome-help' => '在<a href="http://community.wikia.com">社区中心</a>中找到答案、咨询和更多其它。', # Fuzzy
 	'cnw-error-general' => '哎呀，我们这边出错了！请再试一次，或者[[Special:Contact|联系我们]]取得帮助。',
 	'cnw-error-general-heading' => '抱歉',
 	'cnw-badword-header' => '哇',
@@ -3583,15 +3653,15 @@ $messages['zh-hans'] = array(
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
-	'createnewwiki-desc' => 'Wiki 創建嚮導',
+	'createnewwiki-desc' => 'Wiki 建立精靈',
 	'cnw-next' => '下一步',
 	'cnw-back' => '前一步',
 	'cnw-or' => '或者',
-	'cnw-title' => '創建新的 Wiki',
+	'cnw-title' => '建立新的 Wiki',
 	'cnw-name-wiki-headline' => '建立新的wiki',
-	'cnw-name-wiki-creative' => 'Wikia是建立你所喜好的網站和發展社群最好的選擇。',
-	'cnw-name-wiki-label' => '給您的wiki一個名字',
-	'cnw-name-wiki-domain-label' => '給您的 wiki 的一個網址',
+	'cnw-name-wiki-creative' => 'Wikia是建立你所喜好的網站和發展社群最好的選擇。', # Fuzzy
+	'cnw-name-wiki-label' => '給您的wiki一個名字', # Fuzzy
+	'cnw-name-wiki-domain-label' => '給您的 wiki 的一個網址', # Fuzzy
 	'cnw-name-wiki-submit-error' => '啊！您需要填寫上面兩欄之後才能繼續。',
 	'cnw-login' => '登入',
 	'cnw-signup' => '建立帳號',
@@ -3610,25 +3680,25 @@ $messages['zh-hant'] = array(
 	'cnw-userauth-marketing-heading' => '沒有帳戶嗎？',
 	'cnw-userauth-marketing-body' => '您需要帳戶才能在wikia創建wiki。只需要一分鐘即可註冊!',
 	'cnw-userauth-signup-button' => '註冊',
-	'cnw-desc-headline' => '你的wiki是關於什麼？', # Fuzzy
-	'cnw-desc-creative' => '描述您的主題', # Fuzzy
-	'cnw-desc-placeholder' => '這將顯示你的 wiki 的首頁上。',
-	'cnw-desc-tip1' => '提示',
+	'cnw-desc-headline' => '你的 wikia 是關於什麼的？',
+	'cnw-desc-creative' => '您的描述將幫忙人們找到您的 wikia', # Fuzzy
+	'cnw-desc-placeholder' => '這將顯示你的 wiki 的首頁上。', # Fuzzy
+	'cnw-desc-tip1' => '提示', # Fuzzy
 	'cnw-desc-tip1-creative' => '使用此空間以一兩句話來向其他人講述你的 wiki。', # Fuzzy
-	'cnw-desc-tip2-creative' => '向訪問者提供一些有關你的主題的特定詳細資訊',
+	'cnw-desc-tip2-creative' => '向訪問者提供一些有關你的主題的特定詳細資訊', # Fuzzy
 	'cnw-desc-select-one' => '請選擇一項',
 	'cnw-desc-all-ages' => '所有年齡', # Fuzzy
 	'cnw-desc-tip-all-ages' => '這個Wiki有關於孩子們感興趣的話題嗎？为了遵守美國法律，我們持續追縱直接與12歲及以下兒童相關主題的wiki。', # Fuzzy
-	'cnw-desc-default-lang' => '您的 wiki 將位於 $1',
+	'cnw-desc-default-lang' => '您的 wiki 將位於 $1', # Fuzzy
 	'cnw-desc-change-lang' => '變更',
 	'cnw-desc-lang' => '語言',
 	'cnw-desc-wiki-submit-error' => '請選擇一個分類',
 	'cnw-theme-headline' => '選擇一個主題',
-	'cnw-theme-creative' => '選擇下面其中一個樣式，選擇之後您可以看到每個樣式的預覽。',
-	'cnw-theme-instruction' => '您還可以稍後透過"我的工具"設計您自己的樣式。',
-	'cnw-welcome-headline' => '恭喜！ $1 已建立',
-	'cnw-welcome-instruction1' => '按一下下面的按鈕以開始將頁面添加到你的 wiki。',
-	'cnw-welcome-help' => '要找尋解答、建議以及其他，可到 <a href="http://community.wikia.com">社群中心</a>.',
+	'cnw-theme-creative' => '選擇下面其中一個樣式，選擇之後您可以看到每個樣式的預覽。', # Fuzzy
+	'cnw-theme-instruction' => '您還可以稍後透過"我的工具"設計您自己的樣式。', # Fuzzy
+	'cnw-welcome-headline' => '恭喜！ $1 已建立', # Fuzzy
+	'cnw-welcome-instruction1' => '按一下下面的按鈕以開始將頁面添加到你的 wiki。', # Fuzzy
+	'cnw-welcome-help' => '要找尋解答、建議以及其他，可到 <a href="http://community.wikia.com">社群中心</a>.', # Fuzzy
 	'cnw-error-general' => '哎呀，我們這邊出了一些問題 ！請重試，或 [[Special： Contact|聯絡我們]]以得到幫助。', # Fuzzy
 	'cnw-error-general-heading' => '抱歉',
 	'cnw-badword-header' => '哇',
@@ -3638,8 +3708,8 @@ $messages['zh-hant'] = array(
 	'cnw-error-blocked-header' => '帳戶被封禁',
 	'cnw-error-blocked' => '您的帳戶被 $1封禁。 封禁原因是 $2. (被封禁ID: $3)',
 	'cnw-error-anon-user-header' => '請登錄',
-	'cnw-error-anon-user' => '匿名用戶不能創建維基。請先[[Special:UserLogin|登入]]，然後再試。',
-	'cnw-error-torblock' => '不允許通過 Tor 網路創建 wiki 。',
-	'cnw-error-bot' => '我們檢測到您可能是個機器人。如果我們弄錯了，請聯繫我們描述你被錯誤地檢測為機器人，我們將協助您創建您的 wiki: [HTTP://www.wikia.com/Special:Contact/聯繫我們]',
+	'cnw-error-anon-user' => '匿名使用者不能建立維基。請先[[Special:UserLogin|登入]]後再試。',
+	'cnw-error-torblock' => '不允許透過 Tor 網路建立 wiki 。',
+	'cnw-error-bot' => '我們檢測到您可能是個機器人。如果我們搞錯了，請聯絡並告訴我們，您已經被誤以為是一個機器人，我們將協助您建立您的 wiki: [HTTP://www.wikia.com/Special:Contact/聯絡我們]',
 	'cnw-error-bot-header' => '你已被檢測到是機器人',
 );
