@@ -324,8 +324,8 @@ class MercuryApiController extends WikiaController {
 			$sectionItems = $this->sendRequest( 'CuratedContent', 'getList', ['section' => $sectionName] )->getData();
 			$items = [];
 			foreach ( $sectionItems['items'] as $item ) {
-				//Mercury can't open article using ID - we need to create a local link.
-				//@TODO - talk to platform team about performance cost of this operation (it queries DB)
+				// Mercury can't open article using ID - we need to create a local link.
+				// @TODO - talk to platform team about performance cost of this operation (it queries DB)
 				$item['article_local_url'] = Title::newFromID( $item['article_id'] )->getLocalURL();
 				$items[] = $item;
 			}
@@ -353,7 +353,7 @@ class MercuryApiController extends WikiaController {
 			$curatedContentData = $this->sendRequest( 'CuratedContent', 'getList' )->getData();
 			$mainPageData['curatedContent'] = $this->mercuryApi->getCuratedContent( $curatedContentData );
 		} catch ( NotFoundApiException $ex ) {
-			WikiaLogger::instance()->error( 'Curated content and categories are empty' );
+			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
 		}
 		return $mainPageData;
 	}
