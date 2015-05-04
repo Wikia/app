@@ -177,6 +177,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	public function getPageViewsData( $articlesIds ) {
+		global $wgCityId;
 		/**
 		 * Get pv for the last 4 Sundays
 		 */
@@ -185,7 +186,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$pvData = [];
 
 		foreach( $pvTimes as $timeId ) {
-			$pvData[] = DataMartService::getPageViewsForArticles( $articlesIds, $timeId );
+			$pvData[] = DataMartService::getPageViewsForArticles( $articlesIds, $timeId, $wgCityId );
 		}
 
 		return $pvData;
