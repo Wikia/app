@@ -3289,6 +3289,13 @@ abstract class DatabaseBase implements DatabaseType {
 				'db_name'     => $this->getDBname(),
 				'exception'   => new Exception(), // log the backtrace
 			] );
+		} else {
+			$this->getWikiaLogger()->info( "SUCCESS: SQL code from $filename successfuly executed", [
+				'method'      => $fname,
+				'cluster'     => $wgDBcluster,
+				'server'      => $this->getServer(),
+				'db_name'     => $this->getDBname(),
+			] );
 		}
 		return $error;
 	}
