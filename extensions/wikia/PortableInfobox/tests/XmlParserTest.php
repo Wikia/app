@@ -27,7 +27,7 @@ class XmlParserTest extends WikiaBaseTest {
 			<infobox>
 				<comparison>
 				   <set>
-					  <header><value>Combatientes</value></header>
+					  <header>Combatientes</header>
 					  <data source="lado1" />
 					  <data source="lado2" />
 				   </set>
@@ -59,14 +59,12 @@ class XmlParserTest extends WikiaBaseTest {
 			    <title><default>ABB</default></title>
 				<comparison>
 				   <set>
-					  <header><value>Combatientes</value></header>
+					  <header>Combatientes</header>
 					  <data source="lado1" />
 					  <data source="lado2" />
 				   </set>
 				</comparison>
-				<footer>
-				<links>[[aaa]]</links>
-				</footer>
+				<footer>[[aaa]]</footer>
 			</infobox>
 		';
 		$data = $parser->getDataFromXmlString( $markup );
