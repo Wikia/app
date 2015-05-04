@@ -845,7 +845,7 @@ class DataMartService extends Service {
 	 * @param datetime $timeId
 	 * @return array
 	 */
-	public static function getPageViewsForArticles( Array $articlesIds, $timeId ) {
+	public static function getPageViewsForArticles( Array $articlesIds, $timeId, $wikiId, $periodId = self::PERIOD_ID_WEEKLY ) {
 		$app = F::app();
 
 		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
@@ -853,10 +853,10 @@ class DataMartService extends Service {
 		$articlePageViews = ( new WikiaSQL() )->skipIf( !$app->wg->StatsDBEnabled )
 			->SELECT( 'article_id', 'pageviews' )
 			->FROM( 'rollup_wiki_article_pageviews' )
-			->WHERE( 'time_id' )->EQUAL_TO( $timeId )
-			->AND_( 'period_id' )->EQUAL_TO( DataMartService::PERIOD_ID_WEEKLY )
-			->AND_( 'wiki_id' )->EQUAL_TO( $app->wg->CityId )
-			->AND_( 'article_id' )->IN( $articlesIds )
+			->WHERE( 'article_id' )->IN( $articlesIds )
+			->AND_( 'time_id' )->EQUAL_TO( $timeId )
+			->AND_( 'wiki_id' )->EQUAL_TO( intval( $wikiId ) )
+			->AND_( 'period_id' )->EQUAL_TO( intval( $periodId ) )
 			->runLoop( $db, function( &$articlePageViews, $row ) {
 				$articlePageViews[ $row->article_id ] = $row->pageviews;
 			} );
