@@ -31,6 +31,7 @@ $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Contr
 $wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageEditedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageProtectedController'] =  $dir . 'Controller/WatchedPageController.class.php';
+$wgAutoloadClasses['Email\Controller\WatchedPageUnprotectedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageRenamedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\WatchedPageDeletedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\ArticleCommentController'] =  $dir . 'Controller/CommentController.class.php';

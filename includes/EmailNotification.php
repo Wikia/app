@@ -458,6 +458,7 @@ class EmailNotification {
 			$this->isArticlePageEdit() ||
 			$this->isArticlePageRenamed() ||
 			$this->isArticlePageProtected() ||
+			$this->isArticlePageUnprotected() ||
 			$this->isArticlePageDeleted() ||
 			$this->isArticleComment() ||
 			$this->isBlogComment()
@@ -476,6 +477,8 @@ class EmailNotification {
 			$controller = 'Email\Controller\WatchedPageRenamed';
 		} elseif ( $this->isArticlePageProtected() ) {
 			$controller = 'Email\Controller\WatchedPageProtected';
+		} elseif ( $this->isArticlePageUnprotected() ) {
+			$controller = 'Email\Controller\WatchedPageUnprotected';
 		} elseif ( $this->isArticlePageDeleted() ) {
 			$controller = 'Email\Controller\WatchedPageDeleted';
 		} elseif ( $this->isArticleComment() ) {
@@ -521,7 +524,12 @@ class EmailNotification {
 	}
 
 	private function isArticlePageProtected() {
-		return in_array( $this->action, [ 'unprotect', 'modify', 'protect' ] );
+		return in_array( $this->action, [ 'protect' ] );
+		// TODO add support for modify
+	}
+
+	private function isArticlePageUnprotected() {
+		return in_array( $this->action, [ 'unprotect' ] );
 	}
 
 	private function isArticlePageDeleted() {

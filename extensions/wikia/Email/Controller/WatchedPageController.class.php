@@ -8,10 +8,10 @@ use Email\EmailController;
 abstract class WatchedPageController extends EmailController {
 
 	/* @var \Title */
-	private $title;
-	private $summary;
-	private $currentRevId;
-	private $previousRevId;
+	protected $title;
+	protected $summary;
+	protected $currentRevId;
+	protected $previousRevId;
 
 	/**
 	 * @return String
@@ -90,12 +90,10 @@ abstract class WatchedPageController extends EmailController {
 			'editorUserName' => $this->getCurrentUserName(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'details' => $this->getDetails(),
-			'buttonText' => $this->getCompareChangesLabel(),
-			'buttonLink' => $this->getCompareChangesLink(),
-			'contentFooterMessages' => [
-				$this->getArticleLinkText(),
-				$this->getAllChangesText(),
-			],
+			'buttonText' => $this->getButtonText(),
+			'buttonLink' => $this->getButtonLink(),
+			'contentFooterMessages' => $this->getContentFooterMessages(),
+			'contentFooterMessagesCount' => count($this->getContentFooterMessages()),
 		] );
 	}
 
@@ -129,14 +127,14 @@ abstract class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	protected function getCompareChangesLabel() {
+	protected function getButtonText() {
 		return wfMessage( 'emailext-watchedpage-diff-button-text' )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
 	 * @return String
 	 */
-	private function getCompareChangesLink() {
+	protected function getButtonLink() {
 		return $this->title->getFullUrl( [
 			'diff' => $this->currentRevId,
 			'oldid' => $this->previousRevId
@@ -162,6 +160,16 @@ abstract class WatchedPageController extends EmailController {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->title->getFullURL( 'action=history' ),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+	}
+
+	/**
+	 * @return Array
+	 */
+	protected function getContentFooterMessages() {
+		return [
+			$this->getArticleLinkText(),
+			$this->getAllChangesText(),
+		];
 	}
 }
 
@@ -199,7 +207,30 @@ class WatchedPageProtectedController extends WatchedPageController {
 	/**
 	 * @return null
 	 */
-	protected function getCompareChangesLabel() {
+	protected function getButtonText() {
+		return null;
+	}
+}
+
+class WatchedPageUnprotectedController extends WatchedPageController {
+	/**
+	 * @return String
+	 */
+	protected function getSubjectMessageKey() {
+		return 'emailext-watchedpage-article-unprotected-subject';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getSummaryMessageKey() {
+		return 'emailext-watchedpage-article-unprotected';
+	}
+
+	/**
+	 * @return null
+	 */
+	protected function getButtonText() {
 		return null;
 	}
 }
@@ -217,6 +248,27 @@ class WatchedPageDeletedController extends WatchedPageController {
 	 */
 	protected function getSummaryMessageKey() {
 		return 'emailext-watchedpage-article-deleted';
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonText() {
+		return wfMessage( 'emailext-watchedpage-deleted-button-text' )->inLanguage( $this->targetLang )->text();
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonLink() {
+		return $this->title->getFullUrl();
+	}
+
+	/**
+	 * @return Array
+	 */
+	protected function getContentFooterMessages() {
+		return [];
 	}
 }
 
