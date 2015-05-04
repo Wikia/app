@@ -28,15 +28,21 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 	}
 
 	function appendShareIcons(data) {
-		var $container = $('#PageShareContainer');
+		var $container = $('#PageShareContainer'),
+			url = encodeURIComponent(win.location.origin + win.location.pathname),
+			title = encodeURIComponent(win.document.title),
+			result;
 		if (data.socialIcons) {
-			$container.html(data.socialIcons)
+			result = data.socialIcons.replace(/\$url/g, url).replace(/\$title/g, title);
+			$container.html(result)
 				.on('click', '.page-share a', shareLinkClick);
 		}
 	}
 
 	function loadShareIcons() {
 		var useLang = $.getUrlVar('uselang'),
+			mCache = $.getUrlVar('mcache'),
+			requestData,
 			browserLang = (win.navigator.language || win.navigator.browserLanguage),
 			browserLangShort;
 
@@ -44,14 +50,24 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 			browserLangShort = browserLang.substr(0, 2);
 		}
 
+		requestData = {
+			browserLang: browserLangShort,
+			isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
+		};
+
+		if (mCache) {
+			requestData.mcache = mCache;
+		}
+
+		if (useLang) {
+			requestData.useLang = useLang;
+		}
+
 		$.nirvana.sendRequest({
 			type: 'GET',
 			controller: 'PageShare',
 			method: 'getShareIcons',
-			data: {
-				browserLang: browserLangShort,
-				useLang: useLang
-			},
+			data: requestData,
 			callback: appendShareIcons
 		});
 	}

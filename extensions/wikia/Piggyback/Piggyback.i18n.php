@@ -73,16 +73,22 @@ $messages['br'] = array(
  */
 $messages['ca'] = array(
 	'piggybac-desc' => 'Permet entrar com a un altre usuari.',
+	'piggyback' => 'Personificar',
 	'piggyback-otherusername' => "Una altre nom d'usuari:",
 	'piggyback-nosuchuser' => 'No hi ha cap d\'usuari amb el nom "$1".
 Les majúscules i les minúscules compten, revisa l\'escriptura!',
 	'piggyback-wronguser' => "$1 no és el teu nom d'usuari.",
 	'piggyback-loginprompt' => "Si us plau, torneu a introduir el vostre nom d'usuari i contrasenya.",
 	'piggyback-firstlogout' => 'Si us plau, surt de la teva sessió i torna a entrar.',
+	'piggyback-itisyou' => 'No et pots personificar.',
+	'piggyback-issysopto' => 'No pots personificar un usuari amb el dret de personificar.',
 	'action-piggyback' => 'registre a un altre usuari',
+	'log-name-piggyback' => 'Registre de personificacions',
+	'log-description-piggyback' => 'Aquesta pàgina és un registre de personificacions a comptes.',
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Reaperman
  */
@@ -100,6 +106,7 @@ Zkontrolujte správné zadání jména.',
 	'piggyback-issysopto' => 'Nemůžete provést piggyback uživateli s právem piggyback.',
 	'action-piggyback' => 'přihlásit se jako jiný uživatel',
 	'log-name-piggyback' => 'Záznamy užití piggyback',
+	'log-description-piggyback' => 'Tento log obsahuje záznamy "piggybacků".',
 );
 
 /** German (Deutsch)

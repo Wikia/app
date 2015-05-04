@@ -4,8 +4,15 @@
  */
 
 /* global require */
-require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
-	function ($, BannerNotification, Querystring, window)
+require(
+	[
+		'jquery',
+		'BannerNotification',
+		'wikia.querystring',
+		'wikia.window',
+		'ext.wikia.Insights.LoopNotificationTracking'
+	],
+	function ($, BannerNotification, Querystring, window, loopNotificationTracking)
 {
 	'use strict';
 
@@ -15,12 +22,14 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 			isVE = qs.getVal('veaction', null),
 			isFixed = false,
 			isEdit = false,
-			initNotification,
-			showNotification,
 			notification,
 			notificationType,
+			// Functions
+			initNotification,
+			showNotification,
 			getMessageType,
-			getParent;
+			getParent,
+			addInsightsFlowToEditButtons;
 
 		showNotification = function(response) {
 			if (response) {
@@ -33,13 +42,24 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 				if (notificationType !== response.notificationType) {
 					notificationType = response.notificationType;
 
+					if (notificationType === 'notfixed') {
+						addInsightsFlowToEditButtons();
+					}
+
 					if (notification) {
 						notification.hide();
 					}
 					notification = new BannerNotification(response.html, msgType, $parent).show();
 				}
 
-				$('#InsightsNextPageButton').focus();
+				loopNotificationTracking.setParams(isEdit, isFixed, notificationType);
+
+
+				if (notificationType === 'fixed') {
+					$('#InsightsNextPageButton').focus();
+				} else if (notificationType === 'notfixed') {
+					$('#InsightsEditPageButton').focus();
+				}
 			}
 		};
 
@@ -63,7 +83,7 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 			$.nirvana.sendRequest({
 				controller: 'Insights',
 				method: 'loopNotification',
-				type: 'get',
+				type: 'POST',
 				data: {
 					insight: insights,
 					isEdit: isEdit,
@@ -73,6 +93,20 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 			});
 		};
 
+		addInsightsFlowToEditButtons = function() {
+			var self,
+				href = '',
+				pathname = document.location.pathname,
+				param = '&insights=' + insights;
+
+			$('a[href*="action=edit"]').each(function(){
+				self = $(this);
+				href = self.attr('href');
+				if (href.indexOf(pathname) !== -1) {
+					self.attr('href', href + param);
+				}
+			});
+		};
 
 		if (insights) {
 			if (isVE) {
@@ -92,6 +126,8 @@ require(['jquery', 'BannerNotification', 'wikia.querystring', 'wikia.window'],
 				isEdit = window.wgIsEditPage;
 				initNotification();
 			}
+
+			loopNotificationTracking.init();
 		}
 	});
 });

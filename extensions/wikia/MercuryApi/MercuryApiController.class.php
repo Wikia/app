@@ -154,15 +154,16 @@ class MercuryApiController extends WikiaController {
 	 * @throws NotFoundApiException
 	 * @throws BadRequestApiException
 	 */
-	private function getTitleFromRequest(){
+	private function getTitleFromRequest() {
 		$articleId = $this->request->getInt( self::PARAM_ARTICLE_ID, NULL );
 		$articleTitle = $this->request->getVal( self::PARAM_ARTICLE_TITLE, NULL );
+		$articleTitleValidator = new WikiaValidatorString( [ 'min' => 1, 'required' => true ] );
 
-		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+		if ( !empty( $articleId ) && $articleTitleValidator->isValid( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
 		}
 
-		if ( empty( $articleId ) && empty( $articleTitle ) ) {
+		if ( empty( $articleId ) && !$articleTitleValidator->isValid( $articleTitle ) ) {
 			throw new BadRequestApiException( 'You need to pass title or id of an article' );
 		}
 

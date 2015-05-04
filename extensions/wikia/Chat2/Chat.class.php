@@ -21,8 +21,7 @@ class Chat {
 	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
 	 * parameter sent with every chat request to the Node.js server.
 	 *
-	 * As far as I can tell, this key is NEVER used to perform a 'get' on memcached, not in this extension and not in
-	 * the Node.js server. It is simply used as a unique user identifier.
+	 * The key is then used by ChatAjax::getUserInfo() to load the info back from memcached.
 	 *
 	 * Here is the original description of this method, which is likely old and incorrect:
 	 * ---
@@ -40,7 +39,7 @@ class Chat {
 		if( !$wgUser->isLoggedIn() ) {
 			return array("key" => false ) ;
 		}
-		$key = md5( $wgUser->getId() . "_" . time() . '_' .  mt_rand(0, 65535) );
+		$key = "Chat::cookies::".sha1( $wgUser->getId() . "_" . microtime() . '_' .  mt_rand() );
 		$wgMemc->set($key, array( "user_id" => $wgUser->getId(), "cookie" => $_COOKIE) , 60*60*48);
 		return $key;
 	} // end echoCookies()
@@ -227,7 +226,7 @@ class Chat {
 	}
 
 	/**
-	 * Return ban information if user is not ban return false;
+	 * Return ban information, if user is not banned return false;
 	 *
 	 * @TODO Cache query and provide cache clearing function: https://wikia-inc.atlassian.net/browse/SOC-639
 	 *

@@ -365,6 +365,7 @@ $messages['ko'] = array(
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
+	'stafflog-filter-label' => 'Filter',
 	'stafflog-filter-user' => 'Benotzer:',
 );
 
@@ -373,10 +374,10 @@ $messages['lb'] = array(
  */
 $messages['lrc'] = array(
 	'stafflog-filter-label' => 'فيلتر',
-	'stafflog-filter-user' => 'كارور',
+	'stafflog-filter-user' => 'کاریار',
 	'stafflog-filter-type' => 'نوع:',
-	'stafflog-filter-apply' => 'وه كار بردن فيلتر',
-	'stafflog-filter-type-block' => 'بخشیا',
+	'stafflog-filter-apply' => 'وه کار بسن فیلتر',
+	'stafflog-filter-type-block' => 'بهرجایا',
 );
 
 /** Macedonian (македонски)

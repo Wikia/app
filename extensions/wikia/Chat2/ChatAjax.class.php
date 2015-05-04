@@ -13,7 +13,7 @@ class ChatAjax {
 	 * The returned info is just a custom subset of what the node server needs and does not contain an exhaustive list of rights.
 	 *
 	 * The 'isLoggedIn' field and 'canChat' field of the result should be checked by the calling code before allowing
-	 * the user to chat.  This is the last line of security against any users attemptin to circumvent our protections.  Otherwise,
+	 * the user to chat.  This is the last line of security against any users attempting to circumvent our protections.  Otherwise,
 	 * a banned user could copy the entire client code (HTML/JS/etc.) from an unblocked user, then run that code while logged in as
 	 * under a banned account, and they would still be given access.
 	 *

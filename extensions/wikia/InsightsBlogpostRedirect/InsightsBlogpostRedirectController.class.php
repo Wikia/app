@@ -7,7 +7,7 @@ class InsightsBlogpostRedirectController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		$this->wg->Out->redirect( wfMessage('insights-blogpost-url')->escaped() );
+		$this->wg->Out->redirect( wfMessage( 'insights-blogpost-url' )->useDatabase( false )->escaped() );
 	}
 
 }

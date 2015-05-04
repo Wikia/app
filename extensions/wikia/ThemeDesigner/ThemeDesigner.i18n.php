@@ -1095,9 +1095,9 @@ $messages['ia'] = array(
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
-	'themedesigner-page' => 'ОагIув',
-	'themedesigner-color' => 'бос', # Fuzzy
-	'themedesigner-links' => 'Iинкаш',
+	'themedesigner-page' => 'Оаг|ув',
+	'themedesigner-color' => 'кертера',
+	'themedesigner-links' => 'хьожадергаш',
 );
 
 /** Japanese (日本語)
@@ -1285,6 +1285,9 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'themedesigner-background' => 'Hannergrond',
 	'themedesigner-page' => 'Säit',
+	'themedesigner-small' => 'Kleng',
+	'themedesigner-medium' => 'Mëttel',
+	'themedesigner-large' => 'Grouss',
 	'themedesigner-button-cancel' => 'Ofbriechen',
 	'themedesigner-button-ok' => 'OK',
 	'themedesigner-button-upload' => 'Eroplueden',
@@ -1311,7 +1314,7 @@ $messages['lrc'] = array(
 	'themedesigner-default' => 'پيش فرض',
 	'themedesigner-font' => 'فونت',
 	'themedesigner-size' => 'انازه',
-	'themedesigner-button-save' => 'ذخيره كردن',
+	'themedesigner-button-save' => 'اماییه كردن',
 	'themedesigner-dont-use-a-graphic' => 'ؤرداشتن',
 	'themedesigner-history-item' => '$1 وا
 $2',
@@ -2554,7 +2557,7 @@ $messages['zh-hant'] = array(
 	'themedesigner-button-save' => '儲存',
 	'themedesigner-upload-a-graphic' => '上傳一個圖案',
 	'themedesigner-rules-wordmark' => '上傳一個250 x 65 圖元或更少的.png 檔 。',
-	'themedesigner-rules-favicon' => '上傳一个16x16像素的.ico檔案。Favicon就是出现在wiki瀏覽器標簽左上角的小圖標。 [http://community.wikia.com/wiki/Help:Favicon 了解更多。]',
+	'themedesigner-rules-favicon' => '上傳一个16x16像素的.ico檔案。Favicon就是出现在wiki瀏覽器分頁左上角的小圖示。 [http://community.wikia.com/wiki/Help:Favicon 瞭解更多。]',
 	'themedesigner-dont-use-a-graphic' => '移除',
 	'themedesigner-history-item' => '$1 由 $2',
 	'themedesigner-button-change-text' => '更改文本',

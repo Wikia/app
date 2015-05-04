@@ -293,6 +293,7 @@ $messages['fo'] = array(
 /** French (français)
  * @author Gomoko
  * @author Iluvalar
+ * @author Zetud
  */
 $messages['fr'] = array(
 	'wva-success' => 'La page de vidéo [[:$1]] a bien été ajoutée.',
@@ -303,7 +304,7 @@ $messages['fr'] = array(
 	'wva-add' => 'Ajouter',
 	'wva-title' => 'Ajouter une vidéo rapidement à partir de son URL',
 	'wva-protected' => 'Cette vidéo est protégée',
-	'wva-thumbnail-upload-failed' => 'La vidéo incluse a échouée, impossible de trouver la bonne miniature',
+	'wva-thumbnail-upload-failed' => 'La vidéo incluse a échoué, impossible de trouver la bonne miniature',
 );
 
 /** Galician (galego)
@@ -635,6 +636,7 @@ $messages['ps'] = array(
 	'wva-add' => 'ورگډول',
 	'wva-title' => 'په چټکۍ له يو آر اېل (URL) نه ويډيو ورگډول',
 	'wva-protected' => 'دا ويډيو ژغورل شوې',
+	'wva-thumbnail-upload-failed' => 'ويډيو ورټومبنه نابرياله شوه، سم بټنوک مو ترلاسه نه شو کړلای',
 );
 
 /** Portuguese (português)

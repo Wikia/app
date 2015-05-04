@@ -7,6 +7,8 @@ namespace Wikia\Helios;
  */
 class User {
 
+	const ACCESS_TOKEN_COOKIE = 'access_token';
+
 	private static $authenticationCache = [];
 
 	/**
@@ -27,35 +29,62 @@ class User {
 	}
 
 	/**
-	 * Creates a MediaWiki User object based on the token given in the HTTP request.
+	 * Extracts access token from HTTP request data.
+	 *
+	 * @param \WebRequest $request the HTTP request data as an object
+	 * @return String access token or null
 	 */
-	public static function newFromToken( \WebRequest $request )
-	{
+	public static function getAccessToken( \WebRequest $request ) {
+		// A cookie takes precedence over an HTTP header.
+		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE, '' );
 
-		$header = $request->getHeader( 'AUTHORIZATION' );
-
-		if ( $header ) {
+		// No access token in the cookie, try the HTTP header.
+		if ( ! $token ) {
+			$header = $request->getHeader( 'AUTHORIZATION' );
 
 			$matches = [];
 			preg_match( '/^Bearer\s*(\S*)$/', $header, $matches );
 
-			if ( !empty( $matches[1] ) ) {
+			if ( ! empty( $matches[1] ) ) {
+				$token = $matches[1];
+			}
+		}
 
-				global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+		// Normalize the value so the method returns a non-empty string or null.
+		if ( empty( $token ) ) {
+			return null;
+		}
 
-				$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+		return $token;
+	}
 
-				try {
-					// Authenticate with the token and create a MediaWiki User object.
-					$tokenInfo = $heliosClient->info( $matches[1] );
-					if ( !empty( $tokenInfo->user_id ) ) {
-						return \User::newFromId( $tokenInfo->user_id );
-					}
+	/**
+	 * Creates a MediaWiki User object based on the token given in the HTTP request.
+	 *
+	 * @param \WebRequest $request the HTTP request data as an object
+	 *
+	 * @return \User on successful authentication
+	 */
+	public static function newFromToken( \WebRequest $request )
+	{
+		// Extract access token from HTTP request data.
+		$token = self::getAccessToken( $request );
+
+		// Authenticate with the token, if present.
+		if ( $token ) {
+			global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+			$heliosClient = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+
+			try {
+				$tokenInfo = $heliosClient->info( $token );
+				if ( !empty( $tokenInfo->user_id ) ) {
+					// return a MediaWiki's User object
+					return \User::newFromId( $tokenInfo->user_id );
 				}
+			}
 
-				catch ( \Wikia\Helios\ClientException $e ) {
-					\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
-				}
+			catch ( \Wikia\Helios\ClientException $e ) {
+				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
 			}
 		}
 
@@ -198,6 +227,83 @@ class User {
 		return true;
 	}
 
+    /**
+     * Called in ExternalUser_Wikia registers a user.
+     *
+     * @param string $username string of the user name
+     * @param string $password string of the plaintext password the user entered
+     * @param string $email string of the user email
+     *
+     * @return boolean true on success, false otherwise
+     */
+    public static function register( $username, $password, $email, $birthdate )
+    {
+        $logger = \Wikia\Logger\WikiaLogger::instance();
+        $logger->info( 'HELIOS_REGISTRATION START', [ 'method' => __METHOD__ ] );
+
+        global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
+        $helios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+
+        try {
+            $registration = $helios->register( $username, $password, $email, $birthdate );
+            $result = !empty( $registration->success );
+
+            if ( !empty( $registration->error ) ) {
+                $logger->error(
+                    'HELIOS_REGISTRATION ERROR_FROM_SERVICE',
+                    [ 'method' => __METHOD__ ]
+                );
+            }
+        }
+
+        catch ( ClientException $e ) {
+            $logger->error(
+                'HELIOS_REGISTRATION ERROR_FROM_CLIENT',
+                [ 'exception' => $e, 'method' => __METHOD__ ]
+            );
+            $result = false;
+        }
+
+        return $result;
+    }
+
+    public static function onRegister( &$result, &$userId, $User, $password, $email ) {
+
+        $heliosUserId = null;
+        $heliosResult = self::register( $User->mName, $password, $email, $User->mBirthDate );
+        $logger = \Wikia\Logger\WikiaLogger::instance();
+
+        global $wgHeliosRegistrationShadowMode;
+
+        if ( $heliosResult ) {
+
+            global $wgExternalSharedDB;
+
+            $table = $wgHeliosRegistrationShadowMode ? 'user_helios' : '`user`';
+
+            $dbw = \wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+            $dbw->commit(); // PLATFORM-1151 This commit is required in order to refresh the database state.
+            $heliosUserId = $dbw->selectField( $table, 'user_id', [ 'user_name' => $User->mName ], __METHOD__ );
+
+            if ( $heliosUserId ) {
+
+                if ( ! $wgHeliosRegistrationShadowMode ) {
+                    $result = $heliosResult;
+                    $userId = $heliosUserId;
+                }
+
+                $logger->info( 'HELIOS_REGISTRATION SUCCESS', [ 'method' => __METHOD__, 'user_id' => $heliosUserId, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
+            } else {
+                $logger->error( 'HELIOS_REGISTRATION FAILURE FETCH_ID', [ 'method' => __METHOD__, 'user_id' => null, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
+            }
+
+        } else {
+            $logger->error( 'HELIOS_REGISTRATION FAILURE CALL', [ 'method' => __METHOD__, 'user_name' => $User->mName, 'shadow' => $wgHeliosRegistrationShadowMode ] );
+        }
+
+        return true;
+
+    }
 
 	/**
 	 * Listens for any user data save events and purges the authentication cache

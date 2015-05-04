@@ -13,12 +13,7 @@ class InsightsHooks {
 		// Load scripts for pages in insights loop
 		if ( InsightsHelper::isInsightPage( $subpage ) ) {
 			$out->addScriptFile('/extensions/wikia/Insights/scripts/LoopNotification.js');
-		}
-
-		// Load scripts for pages in insights loop and Special:Insights
-		if ( InsightsHelper::isInsightPage( $subpage ) || F::app()->wg->title->isSpecial( 'Insights' ) ) {
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/Insights.run.js' );
-			$out->addScriptFile( '/extensions/wikia/Insights/scripts/LoopTracking.js' );
+			$out->addScriptFile('/extensions/wikia/Insights/scripts/InsightsLoopNotificationTracking.js');
 		}
 
 		return true;
@@ -45,7 +40,7 @@ class InsightsHooks {
 	/**
 	 * Add insights param to edit page form to keep information about insights flow
 	 */
-	public static function onGetLocalURL( &$this, &$url, $query ) {
+	public static function onGetLocalURL( Title $title, &$url, $query ) {
 		global $wgRequest;
 
 		$subpage = $wgRequest->getVal( 'insights', null );

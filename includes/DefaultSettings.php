@@ -5618,7 +5618,7 @@ $wgJobRunRate = 1;
 /**
  * Number of rows to update per job
  */
-$wgUpdateRowsPerJob = 500;
+$wgUpdateRowsPerJob = 50;
 
 /**
  * Number of rows to update per query
