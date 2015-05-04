@@ -11,7 +11,6 @@ abstract class WatchedPageController extends EmailController {
 	protected $title;
 	protected $summary;
 	protected $currentRevId;
-	protected $previousRevId;
 
 	/**
 	 * @return String
@@ -33,8 +32,10 @@ abstract class WatchedPageController extends EmailController {
 
 		$this->title = \Title::newFromText( $titleText, $titleNamespace );
 		$this->summary = $this->getVal( 'summary' );
-		$this->currentRevId = $this->getVal( 'currentRevId' );
-		$this->previousRevId = $this->getVal( 'previousRevId' );
+
+		if ($this->title instanceof \Title) {
+			$this->currentRevId = $this->title->getLatestRevID();
+		}
 
 		$this->assertValidParams();
 	}
@@ -42,31 +43,20 @@ abstract class WatchedPageController extends EmailController {
 	/**
 	 * Validate the params passed in by the client
 	 */
-	private function assertValidParams() {
+	protected function assertValidParams() {
 		$this->assertValidTitle();
-		$this->assertValidRevIds();
 	}
 
 	/**
 	 * @throws \Email\Check
 	 */
-	private function assertValidTitle() {
+	protected function assertValidTitle() {
 		if ( !$this->title instanceof \Title ) {
 			throw new Check( "Invalid value passed for title (param: title)" );
 		}
 
 		if ( !$this->title->exists() ) {
 			throw new Check( "Title doesn't exist." );
-		}
-	}
-
-	private function assertValidRevIds() {
-		if ( empty( $this->currentRevId ) ) {
-			throw new Check( "Empty value for current Revision ID (param: currentRevId)" );
-		}
-
-		if ( empty( $this->previousRevId ) ) {
-			throw new Check( "Empty value for previous Revision ID (param: previousRevId)" );
 		}
 	}
 
@@ -135,10 +125,7 @@ abstract class WatchedPageController extends EmailController {
 	 * @return String
 	 */
 	protected function getButtonLink() {
-		return $this->title->getFullUrl( [
-			'diff' => $this->currentRevId,
-			'oldid' => $this->previousRevId
-		] );
+		return $this->title->getFullUrl();
 	}
 
 	/**
@@ -148,7 +135,7 @@ abstract class WatchedPageController extends EmailController {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
 			$this->title->getFullURL( [
 				'diff' => 0,
-				'oldid' => $this->previousRevId
+				'oldid' => $this->currentRevId
 			] ),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
@@ -174,6 +161,50 @@ abstract class WatchedPageController extends EmailController {
 }
 
 class WatchedPageEditedController extends WatchedPageController {
+	protected $previousRevId;
+
+	public function initEmail() {
+		$this->previousRevId = $this->getVal( 'previousRevId' );
+
+		parent::initEmail();
+	}
+
+	/**
+	 * Validate the params passed in by the client
+	 */
+	protected function assertValidParams() {
+		parent::assertValidParams();
+		$this->assertValidRevIds();
+	}
+
+	protected function assertValidRevIds() {
+		if ( empty( $this->previousRevId ) ) {
+			throw new Check( "Empty value for previous Revision ID (param: previousRevId)" );
+		}
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonLink() {
+		return $this->title->getFullUrl( [
+			'diff' => $this->currentRevId,
+			'oldid' => $this->previousRevId
+		] );
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getArticleLinkText() {
+		return wfMessage( 'emailext-watchedpage-article-link-text',
+			$this->title->getFullURL( [
+				'diff' => 0,
+				'oldid' => $this->previousRevId
+			] ),
+			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+	}
+
 	/**
 	 * @return String
 	 */
@@ -300,10 +331,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 */
 	protected function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
-			$this->newTitle->getFullURL( [
-				'diff' => 0,
-				'oldid' => $this->previousRevId
-			] ),
+			$this->newTitle->getFullURL(),
 			$this->newTitle->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 
