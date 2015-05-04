@@ -250,15 +250,8 @@ class MercuryApi {
 	}
 
 	public function getCuratedContent($data) {
-		$sections = $this->getCuratedContentSections($data);
-		return [
-			'sections' => $sections
-		];
-	}
-
-	protected function getCuratedContentSections($data) {
 		if ( !empty( $data['sections'] ) ) {
-			return $data['sections'];
+			return $data;
 		} else {
 			return false;
 		}
