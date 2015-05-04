@@ -127,9 +127,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 *
 	 * @param int $articleId
 	 */
-	public function purgeInsightsCache( $articleId ) {
-		$this->purgeArticleDataCache( $articleId );
-		$this->purgeSortingCache( $articleId );
+	public function updateInsightsCache( $articleId ) {
+		$this->updateArticleDataCache( $articleId );
+		$this->updateSortingCache( $articleId );
 	}
 
 	/**
@@ -138,7 +138,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 *
 	 * @param int $articleId
 	 */
-	private function purgeArticleDataCache( $articleId ) {
+	private function updateArticleDataCache( $articleId ) {
 		global $wgMemc;
 
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
@@ -156,7 +156,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 *
 	 * @param int $articleId
 	 */
-	private function purgeSortingCache( $articleId ) {
+	private function updateSortingCache( $articleId ) {
 		global $wgMemc;
 
 		foreach ( $this->sorting as $key => $flag ) {
