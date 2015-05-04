@@ -2084,6 +2084,7 @@ $messages['ja'] = array(
 );
 
 /** Georgian (ქართული)
+ * @author David1010
  * @author DevaMK
  */
 $messages['ka'] = array(
@@ -2092,6 +2093,7 @@ $messages['ka'] = array(
 	'myhome-watchlist-feed' => 'გვერდები, რომლებსაც თვალს ვადევნებ',
 	'myhome-hot-spots-feed' => 'ცხელი წერტილები',
 	'myhome-hot-spots-newest' => 'ახალი გვერდები',
+	'myhome-feed-newpage' => 'ახალი გვერდი',
 	'myhome-feed-created-by' => 'შემქმნელი - $1.',
 	'myhome-feed-edited-by' => 'რედაქტორი - $1.',
 	'myhome-feed-new-page-details' => 'ახალი გვერდი',
@@ -2138,8 +2140,15 @@ $messages['ko'] = array(
 	'myhome' => '마이 홈',
 	'wikiactivity' => '위키 활동 내역',
 	'myhome-activity-more' => '더 많은 활동 내역 보기',
+	'myhome-activity-feed-empty' => "이 위키는 당신의 기여를 기다리고 있습니다.
+'''[[Special:CreatePage|새 문서 시작하기]]'''에서 기여를 시작하세요!",
 	'myhome-watchlist-feed' => '주시문서 목록',
+	'myhome-watchlist-feed-empty' => "문서 위에 있는 '주시' 링크를 누르시면 주시문서 목록에 문서를 추가하실 수 있습니다.
+주시문서 목록을 이용하여 관심 있는 문서의 변경점을 추적하실 수 있습니다.",
 	'myhome-hot-spots-feed' => '핫 스팟',
+	'myhome-hot-spots-feed-empty' => "이 위키는 당신의 기여를 기다리고 있습니다.
+'''[[Special:CreatePage|새 문서 시작하기]]'''에서 기여를 시작하세요!",
+	'myhome-hot-spots-newest' => '최근에 만들어진 문서',
 	'tog-userlandingpage' => '위키 방문시 처음 보이는 곳:',
 	'prefs-myhome' => '마이 홈',
 	'myhome-feed-newpage' => '새 문서',
@@ -2161,6 +2170,7 @@ $messages['ko'] = array(
 	'myhome-feed-article-comment-created-by' => '$1의 새 댓글',
 	'myhome-feed-article-comment-edited-by' => '$1의 댓글 편집',
 	'myhome-feed-by' => '($1)',
+	'myhome-feed-diff-alt' => '이 문서의 변경점 보기',
 	'myhome-feed-new-page-details' => '새 문서',
 	'myhome-feed-summary-details' => '요약',
 	'myhome-feed-section-edit-details' => '이 문단 편집',
@@ -2172,12 +2182,20 @@ $messages['ko'] = array(
 	'myhome-feed-inserted-image-details' => '그림 추가', # Fuzzy
 	'myhome-feed-inserted-video-details' => '동영상 추가', # Fuzzy
 	'myhome-feed-inserted-category-details' => '분류 추가', # Fuzzy
+	'myhome-user-contributions-empty' => "문서 위에 있는 '편집' 링크를 누르고 당신이 아는 것을 적으셔서 이 위키에 참여하실 수 있습니다.
+이 위키를 방문하는 모든 사람이 정보를 추가하고 실수를 고칠 수 있습니다.
+위키는 공동체에 의해 만들어지며, 당신이 '편집' 링크를 클릭하는 것만으로 당신은 공동체의 일부가 됩니다.
+지금 바로 시도해보세요!",
 	'myhome-hot-spots-number-of-editors' => '편집자',
 	'myhome-log-in' => "<center>마이 홈 기능은 로그인한 상태에서만 이용하실 수 있습니다.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} 먼저 로그인해 주세요!]'''</big></center>",
 	'myhome-switch-to-monaco' => "위키 활동 내역 기능은 위키아 스킨을 사용 중일 때만 사용할 수 있습니다.
 마이 홈을 보고 싶으실 땐 '''[[Special:Preferences|환경설정]]'''에서 스킨을 변경해 주세요.",
 	'myhome-namespace-blog' => '블로그',
 	'myhome-community-corner-header' => '커뮤니티 코너',
+	'oasis-myhome-community-corner-edit' => '편집 &gt;',
+	'myhome-hot-spots-definition' => '$1일 동안에 편집이 가장 많은 문서들의 목록입니다.',
+	'myhome-default-view-checkbox' => '$1을 기본으로 보기',
+	'myhome-default-view-success' => '설정이 변경되었습니다.',
 );
 
 /** Colognian (Ripoarisch)
@@ -2218,6 +2236,7 @@ $messages['lb'] = array(
 	'myhome-feed-move' => 'Säit geréckelt',
 	'myhome-feed-talkpage' => 'Diskussiounssäit',
 	'myhome-feed-delete' => 'geläscht',
+	'myhome-feed-added-by' => 'derbäigesat vum $1',
 	'myhome-feed-comment-by' => 'Bemierkung vum $1',
 	'myhome-feed-article-comment-created-by' => 'nei Bemierkung vum $1',
 	'myhome-feed-by' => 'vum $1',
@@ -2235,19 +2254,19 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
-	'myhome' => 'حونه مه',
-	'prefs-myhome' => 'حونه مه',
+	'myhome' => 'سرآسونه مه',
+	'prefs-myhome' => 'سرآسونه مه',
 	'myhome-feed-newpage' => 'بلگه نو',
 	'myhome-feed-edit' => 'ويرايشت',
 	'myhome-feed-talkpage' => 'بلگه چک چنه',
-	'myhome-feed-delete' => 'پاك بیه',
+	'myhome-feed-delete' => 'پاکسا بیه',
 	'myhome-feed-by' => 'وا $1',
 	'myhome-feed-new-page-details' => 'بلگه نو',
 	'myhome-feed-summary-details' => 'چكسته',
-	'myhome-feed-new-blog-comment-details' => 'نظر',
-	'myhome-feed-new-article-comment-details' => 'نظر',
+	'myhome-feed-new-blog-comment-details' => 'ویر و باور',
+	'myhome-feed-new-article-comment-details' => 'ویر و باور',
 	'myhome-hot-spots-number-of-editors' => 'ویرایشتگریا',
-	'tooltip-pt-myhome' => 'رو د حونه مه',
+	'tooltip-pt-myhome' => 'رو د سرآسونه مه',
 );
 
 /** Latvian (latviešu)
@@ -2997,9 +3016,9 @@ $messages['ps'] = array(
 	'myhome-feed-new-blog-post-details' => 'نوی بلاگ',
 	'myhome-feed-new-blog-comment-details' => 'تبصره',
 	'myhome-feed-new-article-comment-details' => 'تبصره',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|انځور ورگډ شو|انځورونه ورگډ شوه}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|ويډيو ورگډه شوه|ويډيوگانې ورگډې شوې}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|وېشنيزه ورگډه شوه|وېشنيزې ورگډې شوې}}',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|ورگډ شوی انځور|ورگډ شوي انځورونه}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|ورگډه شوې ويډيو|ورگډې شوې ويډيوگانې}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|ورگډه شوې وېشنيزه|ورگډې شوې وېشنيزې}}',
 	'myhome-hot-spots-number-of-editors' => 'سمونگران',
 	'myhome-namespace-blog' => 'بلاگ',
 	'myhome-community-corner-header' => 'د ټولنې پيغام',
@@ -3020,7 +3039,7 @@ $messages['ps'] = array(
 * د دې ويکي کارن چې دې وېبځي سره يې په ځانگړې ونډه کې گډون کړی وي وستايل شي
 
 * او يا هم يوازې د تشويق او د نورو د هڅولو لپاره خوږې خبرې وليکۍ!",
-	'tooltip-pt-myhome' => 'زما کورپاڼې ته ورتلل',
+	'tooltip-pt-myhome' => 'خپلې کورپاڼې ته ورتلل',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|يو پيغام|$1 پيغامونه}}',
 );
 
@@ -4187,8 +4206,8 @@ $messages['zh-hans'] = array(
 	'myhome-feed-new-article-comment-details' => '评论',
 	'myhome-feed-move-details' => '重命名',
 	'myhome-feed-redirect-details' => '重定向',
-	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|添加的照片|添加的照片}}',
-	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|添加的视频|添加的视频}}',
+	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|添加的照片}}',
+	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|添加的视频}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|已添加的分类}}',
 	'myhome-user-contributions-empty' => '您可以通过点击任何页面上的"{{int:editthispage}}"来参与本维基，并添加您所知道的。
 每个人都可以进行更改，添加信息或纠正错误。
@@ -4227,21 +4246,28 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
+	'myhome-desc' => '已登入使用者的個人首頁',
 	'myhome' => '我的首頁',
 	'wikiactivity' => 'wiki動作',
 	'myhome-activity-more' => '查看更多最新動作',
+	'myhome-activity-feed' => '活動 Feed',
 	'myhome-activity-feed-empty' => "本wiki在等待您的參與。
 點擊'''[[Special:CreatePage|新頁面]]'''開始撰寫！",
 	'myhome-watchlist-feed' => '監視清單',
+	'myhome-watchlist-feed-empty' => '您可以點選在頁面上方列的 "{{int:watch}}" 連結加入頁面至您的監視清單。
+您可以使用您的監視清單追蹤您所關心的頁面的最近變更。',
 	'myhome-user-contributions-feed' => '貢獻',
 	'myhome-hot-spots-feed' => '熱點',
 	'myhome-hot-spots-feed-empty' => "本wiki在等待您的參與。
 點擊'''[[Special:CreatePage|新頁面]]'''開始撰寫！",
 	'myhome-hot-spots-newest' => 'Wiki 上的新頁面',
+	'tog-userlandingpage' => '到達頁面：',
 	'prefs-myhome' => '我的首頁',
 	'myhome-feed-newpage' => '新頁面',
 	'myhome-feed-edit' => '編輯',
@@ -4252,7 +4278,7 @@ $messages['zh-hant'] = array(
 	'myhome-feed-image' => '圖像已增加',
 	'myhome-feed-video' => '影片已增加',
 	'myhome-feed-categorization' => '分類',
-	'myhome-feed-created-by' => '由$1創建',
+	'myhome-feed-created-by' => '由 $1 建立',
 	'myhome-feed-added-by' => '由 $1增加',
 	'myhome-feed-edited-by' => '由 $1編輯',
 	'myhome-feed-posted-by' => '由 $1發布',
@@ -4262,6 +4288,7 @@ $messages['zh-hant'] = array(
 	'myhome-feed-article-comment-created-by' => '$1的新評論',
 	'myhome-feed-article-comment-edited-by' => '$1編輯的評論',
 	'myhome-feed-by' => '由$1',
+	'myhome-feed-diff-alt' => '顯示此頁面的變更',
 	'myhome-feed-new-page-details' => '新頁面',
 	'myhome-feed-summary-details' => '摘要',
 	'myhome-feed-section-edit-details' => '編輯段落',
@@ -4269,19 +4296,44 @@ $messages['zh-hant'] = array(
 	'myhome-feed-new-blog-comment-details' => '評論',
 	'myhome-feed-new-article-comment-details' => '評論',
 	'myhome-feed-move-details' => '重新命名',
-	'myhome-feed-redirect-details' => '重定向',
+	'myhome-feed-redirect-details' => '重新導向',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|增加的圖片|增加的圖片}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|增加的影片|增加的影片}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|增加的分類|增加的分類}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|增加的分類}}',
+	'myhome-user-contributions-empty' => '您可以在任何頁面點選 "{{int:editthispage}}" 參與此 wiki 的頁面編輯，並且將你所瞭解的內容加入。
+任何人都可以變更，加入資訊或修正錯誤。
+此 Wiki 是由社群所建立，當您點選編輯按鈕，您即成為社群的一員。
+嘗試看看！',
 	'myhome-hot-spots-number-of-editors' => '編輯者',
 	'myhome-log-in' => "<center>我的首頁功能只有在登入後才可使用。<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} 請登入後查看本頁！]'''</big></center>",
+	'myhome-switch-to-monaco' => "WikiActivity 功能只在您使用 Wikia 外觀時可使用。
+若您希望看到我的首頁，請至 '''[[Special:Preferences|您的偏好設定]]''' 更改您所使用的外觀。",
 	'myhome-namespace-blog' => '部落格',
 	'myhome-community-corner-header' => '社群訊息',
 	'oasis-myhome-community-corner-edit' => '編輯訊息 &gt;',
 	'myhome-community-corner-edit' => '編輯訊息',
+	'community-corner' => "'''歡迎光臨我的首頁！'''
+
+此頁面可協助您瞭解此 wiki 所發生的最新資訊。
+
+若您為此 wiki 的創始者或管理員，您可以更改此訊息來告知社群的使用者關於本站的重要訊息。
+例如您可以：
+
+* 組織專案來開闢此 wiki 的新區域
+
+* 顯示每個人應該看到的新頁面
+
+* 讓使用者參與關於本站討論
+
+* 表揚為此 wiki 加入特別資訊的貢獻者
+
+* 或者張貼一些鼓勵的文章！",
 	'myhome-hot-spots-definition' => '最近$1天編輯者最多的頁面',
+	'myhome-default-view-checkbox' => '使 $1 成為我的預設畫面',
 	'myhome-default-view-success' => '好了，現在這是您的預設值',
 	'tooltip-pt-myhome' => '轉到我的首頁',
+	'activityfeed' => '活動 Feed',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|1 則訊息|$1 則訊息}}',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)

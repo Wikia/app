@@ -981,11 +981,11 @@ $messages['diq'] = array(
 	'wmu-upload-image' => 'Resım Bar ke',
 	'wmu-title' => 'Resım Bar ke',
 	'wmu-upload' => 'Bar ke',
-	'wmu-find' => 'Bıvin',
+	'wmu-find' => 'Bıvêne',
 	'wmu-thiswiki' => 'E na wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Bar ke',
-	'wmu-find-btn' => 'Bıvin',
+	'wmu-find-btn' => 'Bıvêne',
 	'wmu-rename' => 'Resimi fına name ke',
 	'wmu-insert' => 'Têare ker',
 	'wmu-name' => 'Name',
@@ -994,7 +994,7 @@ $messages['diq'] = array(
 	'wmu-size' => 'Gırdiye',
 	'wmu-thumbnail' => 'Resmo qıckek',
 	'wmu-fullsize' => 'Full-gırdiye ($1x$2px)',
-	'wmu-width' => 'Herayey',
+	'wmu-width' => 'Herayiye',
 	'wmu-layout' => 'Ca gınayiş',
 	'wmu-caption' => 'Bınnuşte',
 	'wmu-link' => 'Link',
@@ -1709,7 +1709,7 @@ $messages['id'] = array(
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
-	'wmu-gallery' => 'Суртанче',
+	'wmu-gallery' => 'Суртгуллам',
 );
 
 /** Italian (italiano)
@@ -1820,6 +1820,7 @@ $messages['kn'] = array(
  * @author Hym411
  * @author Miri-Nae
  * @author Revi
+ * @author SeoJeongHo
  * @author 아라
  */
 $messages['ko'] = array(
@@ -1830,6 +1831,7 @@ $messages['ko'] = array(
 	'wmu-flickr' => '플리커',
 	'wmu-upload-btn' => '올리기',
 	'wmu-find-btn' => '찾기',
+	'wmu-flickr-inf' => '플리커에서 허가 받은 그림을 찾고, 귀하의 위키에 넣어 보세요.',
 	'wmu-license' => '라이선스',
 	'wmu-licensing' => '라이선스',
 	'wmu-size' => '크기',
@@ -1841,6 +1843,8 @@ $messages['ko'] = array(
 	'wmu-optional' => '(선택 사항)',
 	'wmu-gallery' => '갤러리',
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
+	'wmu-more-options' => '더 많은 옵션들',
+	'wmu-fewer-options' => '설명 가리기',
 	'wmu-file-not-found' => '파일을 찾지 못했습니다',
 );
 
@@ -1897,6 +1901,7 @@ $messages['lb'] = array(
 	'wmu-thumbnail' => 'Miniaturbild',
 	'wmu-width' => 'Breet',
 	'wmu-link' => 'Link',
+	'wmu-optional' => '(fakultativ)',
 	'wmu-prev' => 'Vireg 8',
 	'wmu-next' => 'Nächst 8',
 	'wmu-insert3' => 'Dëst Bild drasetzen',
@@ -1928,6 +1933,7 @@ $messages['lv'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'wmu-desc' => 'Додаток ВикијаМиниПодигање',
 	'wmu-upload-image' => 'Подигни слика',
 	'wmu-title' => 'Подигни слика',
 	'wmu-upload' => 'Подигање',
@@ -2094,9 +2100,10 @@ $messages['ms'] = array(
 
 /** Maltese (Malti)
  * @author Chrisportelli
+ * @author Leli Forte
  */
 $messages['mt'] = array(
-
+	'wmu-fewer-options' => 'Inqas għażliet',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -2338,8 +2345,10 @@ $messages['pfl'] = array(
  * @author BeginaFelicysym
  * @author Clamira
  * @author Sovq
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'wmu-desc' => 'Rozszerzenie WikiaMiniUpload',
 	'wmu-upload-image' => 'Prześlij obraz',
 	'wmu-title' => 'Prześlij obraz',
 	'wmu-upload' => 'Prześlij',
@@ -2523,7 +2532,10 @@ $messages['ps'] = array(
 	'wmu-back' => 'يو بل انځور ټاکل',
 	'wmu-imagebutton' => 'انځورونه ورگډول',
 	'wmu-gallery' => 'انځورتون',
+	'wmu-columns' => '$1 {{PLURAL:$1|ستنې|ستنې}}', # Fuzzy
 	'wmu-gallery-btn1' => 'يو بل انځور ورگډول',
+	'wmu-gallery-btn2' => 'په مخ کې انځورتون ورگډول',
+	'wmu-no-preview' => 'د مخ مخليدنې حالت په وخت کې تاسې انځور نه شی ورگډولی',
 	'wmu-more-options' => 'نورې خوښنې',
 	'wmu-fewer-options' => 'لږې خوښنې',
 );
@@ -3179,9 +3191,11 @@ $messages['tyv'] = array(
  * @author Andriykopanytsia
  * @author Prima klasy4na
  * @author Ua2004
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
+	'wmu-desc' => 'ВікіяМініЗавантажити розширення',
 	'wmu-upload-image' => 'Завантажити світлину',
 	'wmu-title' => 'Завантажити світлину',
 	'wmu-upload' => 'Завантажити',

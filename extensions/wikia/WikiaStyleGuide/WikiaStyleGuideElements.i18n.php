@@ -220,11 +220,21 @@ $messages['os'] = array(
 
 /** Polish (polski)
  * @author Sovq
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'wikiastyleguide-desc' => 'Rozszerzenie WikiaStyleGuide',
 	'wikiastyleguide-dropdown-all' => 'Wszystkie',
 	'wikiastyleguide-dropdown-select-all' => 'Wybierz wszystkie',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 i $2 więcej',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiastyleguide-dropdown-all' => 'ټول',
+	'wikiastyleguide-dropdown-select-all' => 'ټول ټاکل',
 );
 
 /** Portuguese (português)
@@ -276,8 +286,10 @@ $messages['sv'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'wikiastyleguide-desc' => 'ВікіяРозширенняГід по стилю',
 	'wikiastyleguide-dropdown-all' => 'Усі',
 	'wikiastyleguide-dropdown-select-all' => 'Вибрати всі',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 і ще $2',

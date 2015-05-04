@@ -290,6 +290,19 @@ $messages['eu'] = array(
 	'globalwatchlist-blog-page-title-comment' => '$1 ({{PLURAL:$2|iruzkin $2|$2 iruzkin}})',
 );
 
+/** Persian (فارسی)
+ * @author Mjbmr
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'globalwatchlist-desc' => 'ارسال هفتگی بروزرسانی‌های خلاصه مطالب پیگیری شده در همه ویکی‌ها به ایمیل',
+	'tog-watchlistdigest' => 'به صورت هفتگی خلاصه‌ای از فهرست پیگیری‌هایم را به ایمیل بفرست',
+	'tog-watchlistdigestclear' => 'به همه صفحات پیگری‌شده‌ام که به صورت هفتگی انتخاب کردم علامت خوانده شده بزن',
+	'globalwatchlist-digest-email-subject' => 'خلاصه هفتگی',
+	'globalwatchlist-no-page-found' => 'صفحه پیدا نشد',
+	'globalwatchlist-no-blog-page-found' => 'وبلاگ پیدا نشد',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
@@ -635,7 +648,7 @@ $3
 * За да ги промените вашите нагодувања за известувања за списокот на набљудувања, посетете ја страницата http://www.wikia.com/wiki/Special:Preferences
 * За да ги означите сите страници од овој Неделен преглед како посетени, одберете ја таа можност во јазичето „Список на набљудувања“ на вашата страница за нагодувања',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментари}})',
-	'globalwatchlist-no-page-found' => 'Нема пронајдено ниедна страница.',
+	'globalwatchlist-no-page-found' => 'Не пронајдов ниедна страница.',
 	'globalwatchlist-no-blog-page-found' => 'Нема пронајдено блог-страница.',
 );
 
@@ -766,6 +779,10 @@ Groet, Wikia
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'globalwatchlist-desc' => 'Manda un resumit setmanièr per corrièl amb las paginas seguidas sus totes los wikis',
+	'tog-watchlistdigest' => 'Me mandar un resumit per corrièl un còp per setmana',
+	'tog-watchlistdigestclear' => 'Marcar totas las paginas de mon resumit setmanièr coma visitadas',
+	'globalwatchlist-see-more' => 'Verificatz vòstras listas de seguiment localas per afichar mai de modificacions',
 	'globalwatchlist-digest-email-subject' => 'Somari de la setmana',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentari|comentaris}})',
 	'globalwatchlist-no-page-found' => 'Cap de pagina pas trobada.',
