@@ -6,6 +6,9 @@
  * A base model for subpages that extend the QueryPage class
  */
 abstract class InsightsQuerypageModel extends InsightsModel {
+	const
+		INSIGHTS_MEMC_PREFIX = 'insights',
+		INSIGHTS_MEMC_VERSION = '1.0';
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
@@ -83,7 +86,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		global $wgMemc;
 
 		if ( isset( $params['sort'] ) && isset( $this->sorting[ $params['sort'] ] ) ) {
-			$this->sortingArray = $wgMemc->get( wfSharedMemcKey( $this->getInsightType(), $params['sort'] ) );
+			$this->sortingArray = $wgMemc->get( $this->getMemcKey( $params['sort'] ) );
 		}
 
 		if ( isset( $params['offset'] ) ) {
@@ -96,7 +99,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	}
 
 	public function fetchArticlesData() {
-		$cacheKey = wfSharedMemcKey( $this->getInsightType(), 'articlesData' );
+		$cacheKey = $this->getMemcKey( 'articlesData' );
 		$this->cacheTtl = WikiaResponse::CACHE_STANDARD * 3;
 		$articlesData = WikiaDataAccess::cache( $cacheKey, $this->cacheTtl, function () {
 			$res = $this->queryPageInstance->doQuery();
@@ -117,6 +120,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $articlesData;
 	}
 
+
+
 	public function getPageViewsData( $articlesIds ) {
 		/**
 		 * Get pv for the last 4 Sundays
@@ -136,7 +141,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		global $wgMemc;
 
 		arsort( $sortingArray, $this->sorting[ $key ] );
-		$cacheKey = wfSharedMemcKey( $this->getInsightType(), $key );
+		$cacheKey = $this->getMemcKey( $key );
 
 		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), $this->cacheTtl );
 	}
@@ -301,5 +306,20 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		return $next;
+	}
+
+	/**
+	 * Get memcache key for insights
+	 *
+	 * @param String $params
+	 * @return String
+	 */
+	private function getMemcKey( $params ) {
+		return wfMemcKey(
+			self::INSIGHTS_MEMC_PREFIX,
+			$this->getInsightType(),
+			$params,
+			self::INSIGHTS_MEMC_VERSION
+		);
 	}
 }
