@@ -106,19 +106,13 @@ class Linker {
 	 * Return the CSS colour of a known link
 	 *
 	 * @param $t Title object
-	 * @param $threshold Integer: user defined threshold
 	 * @return String: CSS class
 	 */
-	public static function getLinkColour( $t, $threshold ) {
+	public static function getLinkColour( $t ) {
 		$colour = '';
 		if ( $t->isRedirect() ) {
 			# Page is a redirect
 			$colour = 'mw-redirect';
-		} elseif ( $threshold > 0 &&
-			   $t->exists() && $t->getLength() < $threshold &&
-			   $t->isContentPage() ) {
-			# Page is a stub
-			$colour = 'stub';
 		}
 		return $colour;
 	}
@@ -339,9 +333,9 @@ class Linker {
 			}
 
 			if ( !in_array( 'broken', $options ) ) { # Avoid useless calls to LinkCache (see r50387)
-				$colour = self::getLinkColour( $target, $wgUser->getStubThreshold() );
+				$colour = self::getLinkColour( $target );
 				if ( $colour !== '' ) {
-					$classes[] = $colour; # mw-redirect or stub
+					$classes[] = $colour; # mw-redirect
 				}
 			}
 			if ( $classes != array() ) {
@@ -413,8 +407,7 @@ class Linker {
 		global $wgUser;
 		wfDeprecated( __METHOD__, '1.17' );
 
-		$threshold = $wgUser->getStubThreshold();
-		$colour = ( $size < $threshold ) ? 'stub' : '';
+		$colour = '';
 		// @todo FIXME: Replace deprecated makeColouredLinkObj by link()
 		return self::makeColouredLinkObj( $nt, $colour, $text, $query, $trail, $prefix );
 	}

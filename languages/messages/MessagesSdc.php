@@ -839,7 +839,6 @@ Cunsulthà lu [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} rigi
 'columns'                   => 'Curonni:',
 'searchresultshead'         => 'Zercha',
 'resultsperpage'            => 'Nùmaru di risulthaddi pa pàgina:',
-'stub-threshold'            => 'Varori mìminu pa i <a href="#" class="stub">cullegamenti a li sàgumi</a>:',
 'recentchangesdays'         => 'Nùmaru di dì da musthrà i li ulthimi mudìfigghi:',
 'recentchangescount'        => 'Numaru pridifiniddu di mudifigghi da musthrà:',
 'savedprefs'                => 'Li tó prifirènzi so isthaddi saivvaddi.',

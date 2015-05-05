@@ -1382,8 +1382,6 @@ Perlu diingat bahwa indeks Google untuk konten {{SITENAME}} mungkin belum mencak
 'columns'                       => 'Kolom:',
 'searchresultshead'             => 'Cari',
 'resultsperpage'                => 'Hasil per halaman:',
-'stub-threshold'                => 'Ambang batas untuk format <a href="#" class="stub">pranala rintisan</a>:',
-'stub-threshold-disabled'       => 'Dinonaktifkan',
 'recentchangesdays'             => 'Jumlah hari yang ditampilkan di perubahan terbaru:',
 'recentchangesdays-max'         => '(maksimum $1 {{PLURAL:$1|hari|hari}})',
 'recentchangescount'            => 'Standar jumlah suntingan yang ditampilkan:',

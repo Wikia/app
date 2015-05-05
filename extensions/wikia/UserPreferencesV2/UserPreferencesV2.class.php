@@ -204,7 +204,6 @@ class UserPreferencesV2 {
 		unset( $defaultPreferences['nowserver'] );
 		unset( $defaultPreferences['nowlocal'] );
 		unset( $defaultPreferences['underline'] );
-		unset( $defaultPreferences['stubthreshold'] );
 		unset( $defaultPreferences['highlightbroken'] );
 		unset( $defaultPreferences['toggle'] );
 		unset( $defaultPreferences['showtoc'] );

@@ -605,7 +605,6 @@ $messages = array(
 'prefs-editing'             => 'Ивын',
 'rows'                      => 'Рæнхъытæ:',
 'searchresultshead'         => 'Агуырд',
-'stub-threshold-disabled'   => 'Хицæн',
 'timezonelegend'            => 'Сахаты таг:',
 'localtime'                 => 'Бынæттон рæстæг:',
 'timezoneuseserverdefault'  => 'Архайын серверы æвæрдæй ($1)',

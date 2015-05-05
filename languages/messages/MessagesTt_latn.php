@@ -987,8 +987,6 @@ Barlıq alannarda (bäxäs bitläre, ürnäklär, h.b.) ezläw öçen ''all'' s�
 'columns'                       => 'Bağanalar:',
 'searchresultshead'             => 'Ezläw',
 'resultsperpage'                => 'Ber bitkä turı kilgän tabıldıqlar:',
-'stub-threshold'                => '<a href="#" class="stub">Yasalma sıltamalarnıñ</a> bizäleşe buyınça çikläwlär (baytlarda):',
-'stub-threshold-disabled'       => 'Yabılğan',
 'recentchangesdays'             => 'Soñğı üzgärtülärne kürsätüçe könnär sanı:',
 'recentchangesdays-max'         => '( $1 {{PLURAL:$1|könnän}} dä artıq bulmasqa tieş)',
 'recentchangescount'            => 'Töp bularaq qullanuçı üzgärtülär sanı:',

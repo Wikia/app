@@ -1046,7 +1046,6 @@ Considerescha che lur index da {{SITENAME}} po cuntegnair datas ch'èn betg pli 
 'columns'                     => 'Colonnas:',
 'searchresultshead'           => 'Tschertga',
 'resultsperpage'              => 'resultats per pagina:',
-'stub-threshold-disabled'     => 'Deactivà',
 'recentchangesdays'           => 'Dumber da dis che duain vegnir mussads en las ultimas midadas:',
 'recentchangesdays-max'       => 'Maximalmain $1 {{PLURAL:$1|di|dis}}',
 'recentchangescount'          => 'Dumber da modificaziuns che duai vegnir mussà sco standard:',

@@ -252,7 +252,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 			->with( 'width', $this->anything() )
 			->will( $this->returnValue( \LightboxController::CONTEXT_DEFAULT_WIDTH ) );
 
-		$userMock = $this->getMock( 'stdClass', [ 'isAnon', 'isAllowed', 'isItemLoaded', 'getOption', 'getStubThreshold' ] );
+		$userMock = $this->getMock( 'stdClass', [ 'isAnon', 'isAllowed', 'isItemLoaded', 'getOption' ] );
 		$userMock->expects( $this->any() )
 		     ->method( 'isAnon' )
 		     ->will( $this->returnValue( false ) );
@@ -264,9 +264,6 @@ class LightboxControllerTest extends WikiaBaseTest {
 			->method( 'isItemLoaded' )
 			->with( $this->anything() )
 			->will( $this->returnValue( false ) );
-		$userMock->expects( $this->any() )
-			->method( 'getStubThreshold' )
-			->will( $this->returnValue( 0 ) );
 		$this->mockGlobalVariable( 'wgUser', $userMock );
 
 		$width = LightboxController::CONTEXT_DEFAULT_WIDTH;

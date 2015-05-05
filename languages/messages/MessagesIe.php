@@ -667,7 +667,6 @@ Vider li [[Special:IPBlockList|liste de bloc de IP]] por li liste de bloces e ba
 'skin-preview'              => 'Prevision',
 'saveprefs'                 => 'Conservar',
 'searchresultshead'         => 'Serchar',
-'stub-threshold'            => "Catenunes por págines de contenete va aparir <a href=''#'' class=''stub''>de ti forme</a> si ili have minu de (bytes):",
 'timezonelegend'            => 'Zone de témpor:',
 'timezoneuseserverdefault'  => 'Usar wiki de contumacie ($1)',
 'timezoneuseoffset'         => 'Altri (specificar compensation)',

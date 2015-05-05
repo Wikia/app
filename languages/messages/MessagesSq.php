@@ -1255,8 +1255,6 @@ Kini kujdes se përdorimi i lidhjeve të shfletimit do të ndryshojë përzgjedh
 'columns'                       => 'Kollona:',
 'searchresultshead'             => 'Kërkimi',
 'resultsperpage'                => 'Sa përputhje të tregohen për faqe:',
-'stub-threshold'                => 'Kufiri për formatin e <a href="#" class="stub">lidhjeve cung</a> (B):',
-'stub-threshold-disabled'       => 'Çaktivizuar',
 'recentchangesdays'             => 'Numri i ditëve të treguara në ndryshime së fundmi:',
 'recentchangesdays-max'         => '(maksimum $1 {{PLURAL:$1|dit|ditë}})',
 'recentchangescount'            => 'Numri i redaktimeve për të treguar:',

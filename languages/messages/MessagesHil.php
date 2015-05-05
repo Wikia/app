@@ -1107,8 +1107,6 @@ Tandai nga ang ila nga palasulundan sang mga unod sang {{SITENAME}} mahimo nga m
 'columns'                       => 'Mga kulumna:',
 'searchresultshead'             => 'Pangita-a',
 'resultsperpage'                => 'Mga pag-igu kada panid:',
-'stub-threshold'                => 'Suludlan sang <a href="#" class="stub">stub sang link</a> nga pagkay-o (bytes):',
-'stub-threshold-disabled'       => 'Gin-untat',
 'recentchangesdays'             => 'Adlaw nga nabilin sa pagpakita sang mga bag-o nga pag-ilis:',
 'recentchangesdays-max'         => 'Indi magtaas sa $1 {{PLURAL:$1|ka adlaw|ka mga adlaw}}',
 'recentchangescount'            => 'Numero sang mga pag-ilis nga ipakita by default:',

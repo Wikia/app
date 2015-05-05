@@ -1150,7 +1150,6 @@ $2
 'columns'                   => 'अध: पंक्त्याः',
 'searchresultshead'         => 'अन्वेषणम्',
 'resultsperpage'            => 'प्रति पृष्ट हिट्स:',
-'stub-threshold-disabled'   => 'निष्क्रियः',
 'recentchangesdays'         => 'दिवसानि पर्यन्तो सद्यावधि-परिवर्तनानि दृश्यतु:',
 'recentchangesdays-max'     => 'अधिकतम $1 {{PLURAL:$1|दिवसः|दिवसानि}}',
 'recentchangescount'        => 'सम्पादन संख्यकानि व्यवस्थानुसारेण दृश्यतु:',

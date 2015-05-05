@@ -640,20 +640,6 @@ class Preferences {
 			);
 		}
 
-		$stubThresholdValues = array( 50, 100, 500, 1000, 2000, 5000, 10000 );
-		$stubThresholdOptions = array( $context->msg( 'stub-threshold-disabled' )->text() => 0 );
-		foreach ( $stubThresholdValues as $value ) {
-			$stubThresholdOptions[$context->msg( 'size-bytes', $value )->text()] = $value;
-		}
-
-		$defaultPreferences['stubthreshold'] = array(
-			'type' => 'selectorother',
-			'section' => 'rendering/advancedrendering',
-			'options' => $stubThresholdOptions,
-			'size' => 20,
-			'label' => $context->msg( 'stub-threshold' )->text(), // Raw HTML message. Yay?
-		);
-
 		if ( $wgAllowUserCssPrefs ) {
 			$defaultPreferences['highlightbroken'] = array(
 				'type' => 'toggle',

@@ -767,7 +767,6 @@ there micht be parteeculars in the [{{fullurl:{{#Special:Log}}/suppress|page={{F
 'prefs-editing'             => 'Editin',
 'searchresultshead'         => 'Rake result settins',
 'resultsperpage'            => 'Hits tae shaw per page',
-'stub-threshold-disabled'   => 'Tuckie',
 'recentchangescount'        => 'Nummer o teitles in recent chynges',
 'savedprefs'                => 'Yer preferences haes been hained.',
 'timezoneoffset'            => 'Affset',

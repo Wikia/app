@@ -999,7 +999,6 @@ Gunakna tombol radio kanggo nggabungaké révisi-révisi sing digawé sadurungé
 'resultsperpage'                => 'Cacahing klik saben kaca:',
 'contextlines'                  => 'Baris dituduhaké per pituwas (kasil):',
 'contextchars'                  => 'Karakter kanggo kontèks per baris:',
-'stub-threshold'                => 'Ambang wates kanggo format <a href="#" class="stub">pranala rintisan</a>:',
 'recentchangesdays'             => 'Cacahé dina sing dituduhaké ing owah-owahan pungkasan:',
 'recentchangesdays-max'         => '(maksimum $1 {{PLURAL:$1|dina|dina}})',
 'recentchangescount'            => 'Cacahé suntingan sing ditampilaké:',

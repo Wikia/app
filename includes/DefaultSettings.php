@@ -3279,7 +3279,6 @@ $wgDefaultUserOptions = array(
 	'showtoc'                 => 1,
 	'showtoolbar'             => 1,
 	'skin'                    => false,
-	'stubthreshold'           => 0,
 	'thumbsize'               => 2,
 	'underline'               => 2,
 	'uselivepreview'          => 0,

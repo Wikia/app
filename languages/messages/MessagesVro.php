@@ -846,7 +846,6 @@ otsisõna iin edejakku ''all:''. Ütest kimmäst nimeruumist otsmisõs pruugiq e
 'columns'                   => 'Tulpõ',
 'searchresultshead'         => 'Otsminõ',
 'resultsperpage'            => 'Tulõmuisi leheküle kotsilõ',
-'stub-threshold'            => '<a href="#" class="stub">Kehväkese lehe</a> näütämispiir (baidõn):',
 'recentchangesdays'         => 'Päivi, midä näüdädäq viimätsin muutmiisin',
 'recentchangescount'        => 'Päälkirjo hulk viimätsin muutmiisin',
 'savedprefs'                => 'Su muutmisõq ommaq pästedüq.',

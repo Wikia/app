@@ -486,7 +486,6 @@ $messages = array(
 'prefs-email'               => 'གློག་འཕྲིན་འདེམས་ཚན།',
 'saveprefs'                 => 'ཉར་བ།',
 'searchresultshead'         => 'འཚོལ།',
-'stub-threshold-disabled'   => 'ནུས་མེད་དུ་བཟོས་ཟིན།',
 'timezoneregion-africa'     => 'ཨ་ཧྥི་རི་ཀ',
 'youremail'                 => 'དྲ་འཕྲིན། *:',
 'username'                  => 'དྲ་མིང་།:',

@@ -491,9 +491,6 @@ class Article extends Page {
 		# Should the parser cache be used?
 		$useParserCache = $this->mPage->isParserCacheUsed( $parserOptions, $oldid );
 		wfDebug( 'Article::view using parser cache: ' . ( $useParserCache ? 'yes' : 'no' ) . "\n" );
-		if ( $wgUser->getStubThreshold() ) {
-			wfIncrStats( 'pcache_miss_stub' );
-		}
 
 		$this->showRedirectedFromHeader();
 		$this->showNamespaceHeader();

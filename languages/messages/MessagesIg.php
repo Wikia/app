@@ -779,7 +779,6 @@ Nwàné ótù okwu íshí na ihe Í nè tú jí ''háníle:'' Í tuó ihe nílé
 'columns'                   => 'Ogìdì:',
 'searchresultshead'         => 'Chọwa',
 'resultsperpage'            => 'Nlé na ihü:',
-'stub-threshold-disabled'   => 'Ápụgị òkò',
 'timezonelegend'            => 'Nkeji ogẹ:',
 'localtime'                 => 'Ogẹ ebeanọr:',
 'servertime'                => 'Ógè nsónùsòrò òdìbọ:',

@@ -262,7 +262,6 @@ class LinkHolderArray {
 
 		wfProfileIn( __METHOD__.'-check' );
 		$dbr = wfGetDB( DB_SLAVE );
-		$threshold = $this->parent->getOptions()->getStubThreshold();
 
 		# Sort by namespace
 		ksort( $this->internals );
@@ -288,7 +287,7 @@ class LinkHolderArray {
 				} elseif ( $ns == NS_SPECIAL ) {
 					$colours[$pdbk] = 'new';
 				} elseif ( ( $id = $linkCache->getGoodLinkID( $pdbk ) ) != 0 ) {
-					$colours[$pdbk] = Linker::getLinkColour( $title, $threshold );
+					$colours[$pdbk] = Linker::getLinkColour( $title );
 					$output->addLink( $title, $id );
 					$linkcolour_ids[$id] = $pdbk;
 				} elseif ( $linkCache->isBadLink( $pdbk ) ) {
@@ -328,7 +327,7 @@ class LinkHolderArray {
 				# @todo FIXME: Convoluted data flow
 				# The redirect status and length is passed to getLinkColour via the LinkCache
 				# Use formal parameters instead
-				$colours[$pdbk] = Linker::getLinkColour( $title, $threshold );
+				$colours[$pdbk] = Linker::getLinkColour( $title );
 				//add id to the extension todolist
 				$linkcolour_ids[$s->page_id] = $pdbk;
 			}
@@ -425,7 +424,6 @@ class LinkHolderArray {
 		$variantMap = array(); // maps $pdbkey_Variant => $keys (of link holders)
 		$output = $this->parent->getOutput();
 		$linkCache = LinkCache::singleton();
-		$threshold = $this->parent->getOptions()->getStubThreshold();
 		$titlesToBeConverted = '';
 		$titlesAttrs = array();
 
@@ -529,7 +527,7 @@ class LinkHolderArray {
 						# @todo FIXME: Convoluted data flow
 						# The redirect status and length is passed to getLinkColour via the LinkCache
 						# Use formal parameters instead
-						$colours[$varPdbk] = Linker::getLinkColour( $variantTitle, $threshold );
+						$colours[$varPdbk] = Linker::getLinkColour( $variantTitle );
 						$linkcolour_ids[$s->page_id] = $pdbk;
 					}
 				}

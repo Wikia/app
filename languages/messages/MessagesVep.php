@@ -1015,8 +1015,6 @@ Otkat sil'mnägubale üks-se, miše {{SITENAME}}-saitan sädäimišt voib olda v
 'columns'                       => 'Pachid:',
 'searchresultshead'             => 'Ecind',
 'resultsperpage'                => 'Kirjutesiden lugu lehtpolel:',
-'stub-threshold'                => 'Nägutesen märitamižen künduz <a href="#" class="stub">kosketust otetile</a> (baitoiš)',
-'stub-threshold-disabled'       => 'Ei ole kävutamas',
 'recentchangesdays'             => 'Päiväd veresiden toižetusidenke, lugumär:',
 'recentchangesdays-max'         => '(maksimum $1 {{PLURAL:$1|päiv|päiväd}})',
 'recentchangescount'            => 'Redakcijoiden lugu, kudamb pidab ozutada augotižjärgendusen mödhe:',

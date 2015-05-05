@@ -821,7 +821,6 @@ class WikiPage extends Page {
 		global $wgEnableParserCache;
 
 		return $wgEnableParserCache
-			&& $parserOptions->getStubThreshold() == 0
 			&& $this->mTitle->exists()
 			&& ( $oldid === null || $oldid === 0 || $oldid === $this->getLatest() )
 			&& $this->mTitle->isWikitextPage();
@@ -842,9 +841,6 @@ class WikiPage extends Page {
 
 		$useParserCache = $this->isParserCacheUsed( $parserOptions, $oldid );
 		wfDebug( __METHOD__ . ': using parser cache: ' . ( $useParserCache ? 'yes' : 'no' ) . "\n" );
-		if ( $parserOptions->getStubThreshold() ) {
-			wfIncrStats( 'pcache_miss_stub' );
-		}
 
 		if ( $useParserCache ) {
 			$parserOutput = ParserCache::singleton()->get( $this, $parserOptions );

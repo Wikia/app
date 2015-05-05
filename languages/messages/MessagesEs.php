@@ -1412,8 +1412,6 @@ Mientras tanto puedes buscar mediante Google, pero ten en cuenta que sus índice
 'columns'                       => 'Columnas:',
 'searchresultshead'             => 'Búsquedas',
 'resultsperpage'                => 'Resultados por página:',
-'stub-threshold'                => 'Límite para formato de <a href="#" class="stub">enlace a esbozo</a> (bytes):',
-'stub-threshold-disabled'       => 'Desactivado',
 'recentchangesdays'             => 'Días a mostrar en cambios recientes:',
 'recentchangesdays-max'         => '(máximo {{PLURAL:$1|un día|$1 días}})',
 'recentchangescount'            => 'Número de ediciones a mostrar de manera predeterminada:',

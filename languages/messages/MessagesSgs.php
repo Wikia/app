@@ -771,7 +771,6 @@ Kėtė admėnėstratuorē šėtom pruojekte vėsdar galės pasėiktė pasliepta 
 'columns'                   => 'Štolpalē:',
 'searchresultshead'         => 'Paėiškuos nostatīmā',
 'resultsperpage'            => 'Rezoltatu poslapie:',
-'stub-threshold'            => 'Minimums <a href="#" class="stub">nabėngta poslapė</a> fuormatavėmō:',
 'recentchangesdays'         => 'Ruodomas dėinas vielībūju pakeitėmu sārašė:',
 'recentchangesdays-max'     => '(daugiausē $1 {{PLURAL:$1|dėina|dėinū|dėinas}})',
 'recentchangescount'        => 'Numatītasā keitėmu skaitlius, ruodoms vielībūju keitėmu, poslapiu istuorėjėsė ė notėkėmu sarašūsė:',

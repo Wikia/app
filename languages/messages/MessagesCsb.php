@@ -615,7 +615,6 @@ Spróbùjë szëkbë z przëdôwkã ''all:'' dlô całowny zamkłoscë starnów 
 'columns'                   => 'Kòlumnów:',
 'searchresultshead'         => 'Szëkba',
 'resultsperpage'            => 'Rezultatów na starnã:',
-'stub-threshold'            => 'Greńca dlô fòrmatowaniô <a href="#" class="stub">lënków stubów</a>:',
 'recentchangesdays'         => 'Kùli dni pòkazëwac w slédnëch edicëjach:',
 'recentchangescount'        => 'Domëslnô wielëna wëskrzëniónych edicëjów',
 'savedprefs'                => 'Twòjé nastôwë òstałë zapisóné.',

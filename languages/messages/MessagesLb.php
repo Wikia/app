@@ -1208,8 +1208,6 @@ Denkt w.e.g drunn datt d'Navigatiounslinken d'Wiel vun de Versiounen nees zréck
 'columns'                       => 'Kolonnen',
 'searchresultshead'             => 'Sichen',
 'resultsperpage'                => 'Zuel vun de Resultater pro Säit:',
-'stub-threshold'                => 'Maximum (a Byte) bei deem e Link nach ëmmer am <a href="#" class="stub">Skizze-Format</a> gewise gëtt:',
-'stub-threshold-disabled'       => 'Desaktivéiert',
 'recentchangesdays'             => 'Deeg déi an de Rezenten Ännerungen ugewise ginn:',
 'recentchangesdays-max'         => '(Maximal $1 {{PLURAL:$1|Dag|Deeg}})',
 'recentchangescount'            => 'Zuel vun den Ännerungen déi als Standard gewise ginn:',

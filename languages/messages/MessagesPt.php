@@ -1392,8 +1392,6 @@ Note, no entanto, que a indexação da {{SITENAME}} neste motor de busca pode es
 'columns'                       => 'Colunas:',
 'searchresultshead'             => 'Pesquisar',
 'resultsperpage'                => 'Resultados por página:',
-'stub-threshold'                => 'Links para páginas curtas terão <a href="#" class="stub">este formato</a> se elas ocuparem menos de (bytes):',
-'stub-threshold-disabled'       => 'Desactivado',
 'recentchangesdays'             => 'Dias a apresentar nas mudanças recentes:',
 'recentchangesdays-max'         => '(máximo: $1 {{PLURAL:$1|dia|dias}})',
 'recentchangescount'            => 'Número de edições a apresentar por omissão:',

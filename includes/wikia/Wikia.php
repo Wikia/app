@@ -2101,9 +2101,12 @@ class Wikia {
 	 *
 	 * See BAC-1227 for details
 	 *
-	 * @param WikiPage $article
+	 * @param Article|WikiPage $article
 	 * @param ParserOptions $popts
 	 * @param $eTag
+	 *
+	 * @return bool
+	 *
 	 * @author macbre
 	 */
 	static function onParserCacheGetETag(Article $article, ParserOptions $popts, &$eTag) {

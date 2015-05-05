@@ -1311,8 +1311,6 @@ Takyachikuy kay hukchayqa allin wiñay kawsay ñiqita ama waqllichunchu chaylla.
 'columns' => 'Wachukuna:',
 'searchresultshead' => 'Maskay',
 'resultsperpage' => "Huk p'anqapi hayk'a tarinakuna:",
-'stub-threshold' => 'Kay hatun kaykamam <a href="#" class="stub">t\'una qillqasqa t\'inki</a> nisqa kachun (byte):',
-'stub-threshold-disabled' => 'Ama nisqa',
 'recentchangesdays' => "Ñaqha hukchasqakunapi rikuchina p'unchawkuna:",
 'recentchangesdays-max' => "(ama $1-manta aswan {{PLURAL:$1|p'unchaw|p'unchaw}} kachunchu)",
 'recentchangescount' => 'Rikuchina hukchasqakunap yupaynin, kikinmanta:',
