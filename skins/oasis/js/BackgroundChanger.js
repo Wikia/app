@@ -47,7 +47,6 @@ define('wikia.backgroundchanger', function()  {
 
 		// load CSS and apply class changes to body element after loading
 		$.getCSS(sassUrl, function() {
-			console.log('skin changer', options);
 			if (options.skinImage !== '' && options.skinImageWidth > 0 && options.skinImageHeight > 0) {
 				if ((options.backgroundFixed === undefined) || !!options.backgroundFixed) {
 					$('body').addClass('background-fixed');
