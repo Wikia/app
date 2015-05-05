@@ -27,23 +27,17 @@ class PageShareHelper {
 	 * For logged in user use user's language.
 	 * Both values can be overwritten by ?uselang parameter which is passed from the client side.
 	 *
-	 * @param $browserLang
+	 * @param $requestShareLang
 	 * @param $useLang
 	 * @return String language
 	 */
-	public static function getLangForPageShare( $browserLang, $useLang ) {
-		global $wgLang, $wgUser;
-
+	public static function getLangForPageShare( $requestShareLang, $useLang ) {
 		if ( !empty ( $useLang ) ) {
 			return $useLang;
-		} else if ( $wgUser->isAnon() ) {
-			if ( !empty( $browserLang ) ) {
-				return $browserLang;
-			} else {
-				return self::SHARE_DEFAULT_LANGUAGE;
-			}
+		} elseif ( !empty( $requestShareLang ) ) {
+			return $requestShareLang;
 		} else {
-			return $wgLang->getCode();
+			return self::SHARE_DEFAULT_LANGUAGE;
 		}
 	}
 

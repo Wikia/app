@@ -1,4 +1,4 @@
-require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
+require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) {
 	'use strict';
 
 	var trackFunc = tracker.buildTrackingFunction({
@@ -51,7 +51,7 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 		}
 
 		requestData = {
-			browserLang: browserLangShort,
+			shareLang: win.wgUserLanguage || browserLangShort,
 			isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
 		};
 
@@ -73,7 +73,7 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 	}
 
 	// bind events to links
-	$(function() {
+	$(function () {
 		loadShareIcons();
 	});
 });
