@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'emailext-watchedpage-article-deleted' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been deleted.'''",
 	'emailext-watchedpage-no-summary' => 'No edit summary was given',
 	'emailext-watchedpage-diff-button-text' => 'Compare changes',
-	'emailext-watchedpage-deleted-button-text' => 'See article',
+	'emailext-watchedpage-deleted-button-text' => 'See article history',
 	'emailext-watchedpage-article-link-text' => "[$1 Head over to '''$2''' to see what's new]",
 	'emailext-watchedpage-view-all-changes' => "[$1 View all changes to '''$2''']",
 );
