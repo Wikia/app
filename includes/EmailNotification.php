@@ -499,7 +499,7 @@ class EmailNotification {
 				'fromName' => $this->from->name
 			];
 
-			F::app()->sendRequest( $controller, 'handle', $params );
+			F::app()->sendRequest( $controller, 'handle', $params )->getData();
 		}
 	}
 	/**
@@ -528,8 +528,7 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function isArticlePageProtected() {
-		return in_array( $this->action, [ 'protect' ] );
-		// TODO add support for modify
+		return in_array( $this->action, [ 'protect', 'modify' ] );
 	}
 
 	/**

@@ -34,7 +34,7 @@ abstract class WatchedPageController extends EmailController {
 		$this->summary = $this->getVal( 'summary' );
 
 		if ($this->title instanceof \Title) {
-			$this->currentRevId = $this->title->getLatestRevID();
+			$this->currentRevId = $this->title->getLatestRevID( \Title::GAID_FOR_UPDATE );
 		}
 
 		$this->assertValidParams();
@@ -55,7 +55,7 @@ abstract class WatchedPageController extends EmailController {
 			throw new Check( "Invalid value passed for title (param: title)" );
 		}
 
-		if ( !$this->title->exists() ) {
+		if ( !$this->title->exists() && !$this->title->isDeletedQuick() ) {
 			throw new Check( "Title doesn't exist." );
 		}
 	}
@@ -83,7 +83,7 @@ abstract class WatchedPageController extends EmailController {
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
 			'contentFooterMessages' => $this->getContentFooterMessages(),
-			'contentFooterMessagesCount' => count($this->getContentFooterMessages()),
+			'contentFooterMessagesCount' => (bool) count($this->getContentFooterMessages()),
 		] );
 	}
 
@@ -101,7 +101,8 @@ abstract class WatchedPageController extends EmailController {
 	private function getSummary() {
 		return wfMessage( $this->getSummaryMessageKey(),
 			$this->title->getFullURL(),
-			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+			$this->title->getPrefixedText()
+		)->inLanguage( $this->targetLang )->parse();
 	}
 
 	/**
@@ -125,7 +126,9 @@ abstract class WatchedPageController extends EmailController {
 	 * @return String
 	 */
 	protected function getButtonLink() {
-		return $this->title->getFullUrl();
+		return $this->title->getFullUrl( [
+			'diff' => $this->currentRevId
+		] );
 	}
 
 	/**
@@ -137,7 +140,8 @@ abstract class WatchedPageController extends EmailController {
 				'diff' => 0,
 				'oldid' => $this->currentRevId
 			] ),
-			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+			$this->title->getPrefixedText()
+		)->inLanguage( $this->targetLang )->parse();
 	}
 
 	/**
@@ -145,8 +149,11 @@ abstract class WatchedPageController extends EmailController {
 	 */
 	protected function getAllChangesText() {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
-			$this->title->getFullURL( 'action=history' ),
-			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+			$this->title->getFullURL( [
+				'action' => 'history'
+			] ),
+			$this->title->getPrefixedText()
+		)->inLanguage( $this->targetLang )->parse();
 	}
 
 	/**
@@ -181,16 +188,6 @@ class WatchedPageEditedController extends WatchedPageController {
 		if ( empty( $this->previousRevId ) ) {
 			throw new Check( "Empty value for previous Revision ID (param: previousRevId)" );
 		}
-	}
-
-	/**
-	 * @return String
-	 */
-	protected function getButtonLink() {
-		return $this->title->getFullUrl( [
-			'diff' => $this->currentRevId,
-			'oldid' => $this->previousRevId
-		] );
 	}
 
 	/**
@@ -234,13 +231,6 @@ class WatchedPageProtectedController extends WatchedPageController {
 	protected function getSummaryMessageKey() {
 		return 'emailext-watchedpage-article-protected';
 	}
-
-	/**
-	 * @return null
-	 */
-	protected function getButtonText() {
-		return null;
-	}
 }
 
 class WatchedPageUnprotectedController extends WatchedPageController {
@@ -256,13 +246,6 @@ class WatchedPageUnprotectedController extends WatchedPageController {
 	 */
 	protected function getSummaryMessageKey() {
 		return 'emailext-watchedpage-article-unprotected';
-	}
-
-	/**
-	 * @return null
-	 */
-	protected function getButtonText() {
-		return null;
 	}
 }
 
