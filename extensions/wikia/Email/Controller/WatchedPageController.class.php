@@ -121,7 +121,14 @@ abstract class WatchedPageController extends EmailController {
 	 * @return String
 	 */
 	protected function getButtonText() {
-		return wfMessage( 'emailext-watchedpage-diff-button-text' )->inLanguage( $this->targetLang )->text();
+		return wfMessage( $this->getButtonTextMessageKey() )->inLanguage( $this->targetLang )->text();
+	}
+
+	/**
+	 * @return String
+	 */
+	protected function getButtonTextMessageKey() {
+		return 'emailext-watchedpage-diff-button-text';
 	}
 
 	/**
@@ -235,8 +242,8 @@ class WatchedPageDeletedController extends WatchedPageController {
 	/**
 	 * @return String
 	 */
-	protected function getButtonText() {
-		return wfMessage( 'emailext-watchedpage-deleted-button-text' )->inLanguage( $this->targetLang )->text();
+	protected function getButtonTextMessageKey() {
+		return 'emailext-watchedpage-deleted-button-text';
 	}
 
 	/**
@@ -283,7 +290,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	protected function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
 			$this->newTitle->getFullURL(),
-			$this->newTitle->getPrefixedText() 
+			$this->newTitle->getPrefixedText()
 		)->inLanguage( $this->targetLang )->parse();
 	}
 
@@ -293,7 +300,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	protected function getAllChangesText() {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->newTitle->getFullURL( 'action=history' ),
-			$this->newTitle->getPrefixedText() 
+			$this->newTitle->getPrefixedText()
 		)->inLanguage( $this->targetLang )->parse();
 	}
 }
