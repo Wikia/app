@@ -31,6 +31,7 @@ $messages['de'] = array(
 	'emailext-watchedpage-article-link-text' => "[$1 Unter '''$2''' siehst du, was es Neues gibt]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Alle Änderungen an '''$2''' ansehen]",
 	'emailext-watchedpage-no-summary' => 'Es wurde keine Zusammenfassung der Bearbeitung angegeben.',
+	'emailext-watchedpage-subject-anonymous' => '$1 wurde auf {{SITENAME}} bearbeitet',
 );
 
 $messages['es'] = array(
@@ -41,6 +42,7 @@ $messages['es'] = array(
 	'emailext-watchedpage-article-link-text' => "[$1 Visita la página '''$2''' para ver qué hay de nuevo].",
 	'emailext-watchedpage-view-all-changes' => "[$1 Ver todos los cambios realizados en '''$2'''].",
 	'emailext-watchedpage-no-summary' => 'Resumen de ediciones no fue entregado',
+	'emailext-watchedpage-subject-anonymous' => 'La página $1 en {{SITENAME}} ha sido editada',
 );
 
 $messages['fr'] = array(
@@ -51,6 +53,7 @@ $messages['fr'] = array(
 	'emailext-watchedpage-article-link-text' => "[$1 Rendez-vous sur '''$2''' pour voir ce qui a été modifié]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Affichez toutes les modifications apportées à '''$2''']",
 	'emailext-watchedpage-no-summary' => "Aucun résumé des modifications n'a été fourni.",
+	'emailext-watchedpage-subject-anonymous' => 'Quelqu\'un a modifié 1 $ sur {{SITENAME}}.',
 );
 
 $messages['it'] = array(
@@ -61,6 +64,7 @@ $messages['it'] = array(
 	'emailext-watchedpage-article-link-text' => "[$1 Clicca su '''$2''' per vedere cosa c'è di nuovo]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Vedi tutte le modifiche a '''$2''']",
 	'emailext-watchedpage-no-summary' => 'Non è stato fornito un riassunto delle modifiche',
+	'emailext-watchedpage-subject-anonymous' => '$1 di {{SITENAME}} è stato modificato',
 );
 
 $messages['ja'] = array(
@@ -71,6 +75,7 @@ $messages['ja'] = array(
 	'emailext-watchedpage-article-link-text' => "[$1 '''$2'''にアクセスして最新の内容を確認する]",
 	'emailext-watchedpage-view-all-changes' => "[$1 '''$2'''で行われたすべての変更を見る]",
 	'emailext-watchedpage-no-summary' => '編集の要約はありません。',
+	'emailext-watchedpage-subject-anonymous' => '{{SITENAME}}の「$1」に編集が加えられました',
 );
 
 $messages['nl'] = array(
@@ -81,16 +86,18 @@ $messages['nl'] = array(
 	'emailext-watchedpage-article-link-text' => "[$1 Head over to '''$2''' to see what's new]",
 	'emailext-watchedpage-view-all-changes' => "[$1 View all changes to '''$2''']",
 	'emailext-watchedpage-no-summary' => 'No edit summary was given',
+	'emailext-watchedpage-subject-anonymous' => '$1 on {{SITENAME}} has been edited',
 );
 
 $messages['pl'] = array(
-	'emailext-watchedpage-subject' => 'Użytkownik $2 dokonał edycji $1 na {{SITENAME}}',
+	'emailext-watchedpage-subject' => 'Dokonano edycji $1 na {{SITENAME}}',
 	'emailext-watchedpage-salutation' => 'Cześć $1,',
 	'emailext-watchedpage-article-edited' => "'''Dokonano edycji [$1 $2] na [{{SERVER}} {{SITENAME}}]. Sprawdź!'''",
 	'emailext-watchedpage-diff-button-text' => 'Porównaj zmiany',
 	'emailext-watchedpage-article-link-text' => "[$1 Przejdź do '''$2''' i zobacz co się zmieniło]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Zobacz wszystkie zmiany '''$2''']",
 	'emailext-watchedpage-no-summary' => 'Brak podsumowania zmian',
+	'emailext-watchedpage-subject-anonymous' => 'Dokonano edycji $1 na {{SITENAME}}',
 );
 
 $messages['pt'] = array(
@@ -101,6 +108,7 @@ $messages['pt'] = array(
 	'emailext-watchedpage-article-link-text' => "[$1 Vá para '''$2''' para ver o que há de novo]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Visualizar todas as alterações de '''$2''']",
 	'emailext-watchedpage-no-summary' => 'Não foi dado nenhum resumo',
+	'emailext-watchedpage-subject-anonymous' => '$1 na {{SITENAME}} foi editado',
 );
 
 $messages['ru'] = array(
@@ -111,25 +119,28 @@ $messages['ru'] = array(
 	'emailext-watchedpage-article-link-text' => "[$1 Для просмотра новых правок перейдите к «'''$2'''».]",
 	'emailext-watchedpage-view-all-changes' => "[$1 Просмотрите все правки статьи «'''$2'''».]",
 	'emailext-watchedpage-no-summary' => 'Участник не дал пояснений к данной правке.',
+	'emailext-watchedpage-subject-anonymous' => 'Страница «$1» на {{SITENAME}} была отредактирована',
 );
 
 $messages['zh-hans'] = array(
-	'emailext-watchedpage-subject' => '{{SITENAME}}上的$1由$2进行编辑过',
+	'emailext-watchedpage-subject' => '{{SITENAME}}上的$1被$2编辑过',
 	'emailext-watchedpage-salutation' => '$1，您好！',
 	'emailext-watchedpage-article-edited' => "'''[{{SERVER}} {{SITENAME}}]上的[$1 $2]已被编辑过。快来查看吧！'''",
 	'emailext-watchedpage-diff-button-text' => '查看更改之处',
 	'emailext-watchedpage-article-link-text' => "[$1 到'''$2'''查看新内容]",
 	'emailext-watchedpage-view-all-changes' => "[$1 查看'''$2'''上的所有更改]",
 	'emailext-watchedpage-no-summary' => '没有编辑概要',
+	'emailext-watchedpage-subject-anonymous' => '{{SITENAME}}上的$1已被编辑过',
 );
 
 $messages['zh-tw'] = array(
-	'emailext-watchedpage-subject' => '{{SITENAME}}上的$1由$2進行編輯過',
+	'emailext-watchedpage-subject' => '{{SITENAME}}上的$1被$2編輯過',
 	'emailext-watchedpage-salutation' => '$1，您好！',
 	'emailext-watchedpage-article-edited' => "'''[{{SERVER}} {{SITENAME}}]上的[$1 $2]已被編輯。快來查看吧！'''",
 	'emailext-watchedpage-diff-button-text' => '查看更改之處',
 	'emailext-watchedpage-article-link-text' => "[$1 到'''$2'''查看新内容]",
 	'emailext-watchedpage-view-all-changes' => "[$1 查看'''$2'''上的所有更改]",
 	'emailext-watchedpage-no-summary' => '沒有編輯概要',
+	'emailext-watchedpage-subject-anonymous' => '{{SITENAME}}上的$1已經被編輯過',
 );
 
