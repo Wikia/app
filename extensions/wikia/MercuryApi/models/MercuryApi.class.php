@@ -249,11 +249,40 @@ class MercuryApi {
 		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}
 
-	public function getCuratedContent($data) {
-		if ( !empty( $data['sections'] ) ) {
-			return $data;
-		} else {
+	public function processCuratedContent( $data ) {
+		if ( empty( $data ) ) {
 			return false;
 		}
+
+		$process = false;
+
+		if ( !empty( $data[ 'featured' ] ) ) {
+			$process = 'featured';
+		} else if ( !empty( $data[ 'items' ] ) ) {
+			$process = 'items';
+		}
+
+		if ( $process ) {
+			foreach ( $data[ $process ] as &$item ) {
+				$item = $this->addArticleUrlToCuratedContentItem( $item );
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @desc Mercury can't open article using ID - we need to create a local link
+	 * FIXME talk to platform team about performance cost of this operation (it queries DB)
+	 *
+	 * @param $item
+	 * @return mixed
+	 */
+	private function addArticleUrlToCuratedContentItem( $item ) {
+		if ( !empty( $item[ 'article_id' ] ) ) {
+			$item[ 'article_local_url' ] = Title::newFromID( $item[ 'article_id' ] )->getLocalURL();
+		}
+
+		return $item;
 	}
 }
