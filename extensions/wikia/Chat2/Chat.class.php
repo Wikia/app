@@ -371,7 +371,7 @@ class Chat {
 		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgUser, $wgExternalDatawareDB;
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$dbw = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 
 		$res = $dbw->select (
 			"chat_blocked_users",
