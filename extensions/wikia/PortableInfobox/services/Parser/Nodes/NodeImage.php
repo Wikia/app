@@ -8,6 +8,7 @@ class NodeImage extends Node {
 		$node = [];
 		$imageName = $this->getInfoboxData( $this->getXmlAttribute($this->xmlNode, self::DATA_SRC_ATTR_NAME ) );
 		$node['value'] = $this->resolveImageUrl( $imageName );
+		$node['image'] = $imageName;
 		$node['alt'] = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 		return $node;
 	}
