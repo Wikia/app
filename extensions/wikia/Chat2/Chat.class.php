@@ -152,17 +152,19 @@ class Chat {
 	}
 
 	/**
-	 * @param int $cityId
-	 * @param User $banUser
-	 * @param User $adminUser
-	 * @param int $time
-	 * @param string $reason
-	 * @param string $dir
+	 * Add, update or remove a user ban from chat on a specific wikia
+	 *
+	 * @param int $cityId The ID of the wikia where the user was banned
+	 * @param User $banUser The ID of the user who was banned
+	 * @param User $adminUser The ID of the user doing the banning if adding or updating
+	 * @param int $time The time in seconds to ban the user if adding or updating
+	 * @param string $reason Why the user ban status was changed
+	 * @param string $action The operation
 	 *
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	public static function banUserDB( $cityId, $banUser, $adminUser, $time, $reason, $dir = 'add' ) {
+	public static function banUserDB( $cityId, $banUser, $adminUser, $time, $reason, $action = 'add' ) {
 		if ( empty( $banUser ) || empty( $adminUser ) ) {
 			return;
 		}
@@ -174,13 +176,13 @@ class Chat {
 		$adminID = $adminUser->getId();
 		$userID = $banUser->getId();
 
-		if ( $dir == 'remove' ) {
+		if ( $action == 'remove' ) {
 			$timeLabel = $endOn = null;
 
 			self::deleteUserBanFromDB( $cityId, $userID );
 		} else {
 			if ( Chat::getBanInformation( $cityId, $banUser ) !== false ) {
-				$dir = "change";
+				$action = 'change';
 			}
 
 			$timeLabel = self::getTimeLabel( $time );
@@ -195,18 +197,24 @@ class Chat {
 			'adminUser' => $adminID,
 			'time' => $time,
 			'reason' => $reason,
-			'dir' => $dir,
+			'action' => $action,
 		] );
 
 		Chat::addLogEntry(
 			$banUser,
 			$adminUser,
 			[ $adminID, $userID, $timeLabel, $endOn ],
-			'ban' . $dir,
+			'ban' . $action,
 			$reason
 		);
 	}
 
+	/**
+	 * Deletes a chat_ban_users row from the DB and clears the ban cache
+	 *
+	 * @param int $wikiID The ID of the wikia where the user was banned
+	 * @param int $userID The ID of the user who was banned
+	 */
 	protected static function deleteUserBanFromDB( $wikiID, $userID ) {
 		$dbw = wfGetDB( DB_MASTER, [], F::app()->wg->ExternalDatawareDB );
 		( new WikiaSQL() )
@@ -218,6 +226,17 @@ class Chat {
 		self::clearBanInfoCache( $wikiID, $userID );
 	}
 
+	/**
+	 * Add a user to the chat_ban_users table, banning them from chat on a specific wikia
+	 *
+	 * @param int $wikiID The ID of the wikia to ban the user on
+	 * @param int $userID The ID of the user to ban
+	 * @param int $adminID The ID of the user doing the banning
+	 * @param int $endOn The date when the banning will end
+	 * @param string $reason
+	 *
+	 * @throws MWException
+	 */
 	protected static function addUserBanToDB( $wikiID, $userID, $adminID, $endOn, $reason ) {
 		$dbw = wfGetDB( DB_MASTER, [], F::app()->wg->ExternalDatawareDB );
 
@@ -238,6 +257,15 @@ class Chat {
 		self::clearBanInfoCache( $wikiID, $userID );
 	}
 
+	/**
+	 * Takes a time in seconds and returns a human readable string (e.g. "2 hours").
+	 * This bizarre system only works for the time periods defined in the
+	 * chat-ban-option-list i18n message.
+	 *
+	 * @param $time
+	 *
+	 * @return null|string
+	 */
 	protected static function getTimeLabel( $time ) {
 		$timeLabel = null;
 
