@@ -432,7 +432,7 @@ class EmailNotification {
 	 * @param $user User
 	 */
 	private function compose( \User $user ) {
-		if ( $this->canUseEmailExtension() ) {
+		if ( $this->getEmailExtensionController() !== false ) {
 			$this->sendUsingEmailExtension( $user );
 		} else {
 			\Wikia\Logger\WikiaLogger::instance()->notice( 'Sending via UserMailer', [
@@ -447,30 +447,14 @@ class EmailNotification {
 		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
 	}
 
-	private function canUseEmailExtension() {
+	private function getEmailExtensionController() {
 		// Definitely can't send if the extension isn't enabled
 		if ( empty( F::app()->wg->EnableEmailExt ) ) {
 			return false;
 		}
 
-		// List of conditions we currently handle using the Email extension
-		return (
-			$this->isArticlePageEdit() ||
-			$this->isArticlePageRenamed() ||
-			$this->isArticlePageProtected() ||
-			$this->isArticlePageUnprotected() ||
-			$this->isArticlePageDeleted() ||
-			$this->isArticleComment() ||
-			$this->isBlogComment()
-		);
-	}
+		$controller = false;
 
-	/**
-	 * Send a watched page edit email using the new Email extension.
-
-	 * @param User $user
-	 */
-	private function sendUsingEmailExtension( \User $user ) {
 		if ( $this->isArticlePageEdit() ) {
 			$controller = 'Email\Controller\WatchedPageEdited';
 		} elseif ( $this->isArticlePageRenamed() ) {
@@ -486,6 +470,17 @@ class EmailNotification {
 		} elseif ( $this->isBlogComment() ) {
 			$controller = 'Email\Controller\BlogComment';
 		}
+
+		return $controller;
+	}
+
+	/**
+	 * Send a watched page edit email using the new Email extension.
+
+	 * @param User $user
+	 */
+	private function sendUsingEmailExtension( \User $user ) {
+		$controller = $this->getEmailExtensionController();
 
 		if ( !empty( $controller ) ) {
 			$params = [
