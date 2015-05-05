@@ -83,7 +83,7 @@ $messages['ca'] = array(
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina de discussió creada automàticament',
 	'sharedhelp-searchprofile' => "Pàgines d'ajuda",
 	'sharedhelp-searchprofile-tooltip' => "Cercar pàgines d'ajuda",
-	'shared_help_info' => 'Dubtes? Pregunta al [[w:ca:Special:Forum|Fòrum comunitari]].', # Fuzzy
+	'shared_help_info' => 'Preguntes? Pregunta al [[w:c:ca:Special:Forum|Fòrum comunitari]].', # Fuzzy
 	'shared_help_edit_info' => "El text dins d'aquesta caixa està emmagatzemat a [[w:c:comunidad:Ayuda:$1|Ajuda:$1]] al wiki $2. Vegeu [[Ajuda:Ajuda compartida]] per més informació.
 
 Qualsevol canvi que vulguis fer a ''tots'' els wikis s'ha de fer a la còpia del wiki $2. [[w:c:comunidad:Ayuda_discusión:$1|Suggeriu canvis aquí]].
@@ -150,6 +150,13 @@ Cualquier cambio que se aplique a '''todos''' los wikis deben hacerse en $2 Wiki
 El texto debe colocarse en esta página si deseas explicar las su uso, estilo y política que se aplican solo a {{SITENAME}}. El texto añadido en esta caja de edición aparecerá encima de la caja de texto de ayuda.",
 	'shared_help_search_info' => 'Para buscar ayuda con la edición, visita [http://c.wikia.com/wiki/Special:Search?search=$1 de la Comunidad Central]',
 	'shared_help_was_redirect' => 'Esta página es una redirección a $1',
+);
+
+/** Persian (فارسی)
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'sharedhelp-searchprofile-tooltip' => 'جستجوی صفحات راهنما',
 );
 
 /** Finnish (suomi)
@@ -551,10 +558,11 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
-	'sharedhelp-desc' => '自[[w:c:Help|Wikia幫助]]獲取頁面並嵌入到這個維基的 {{ns:help}}命名空間',
-	'sharedhelp-autotalkcreate-summary' => '討論頁已自動創建',
+	'sharedhelp-desc' => '自[[w:c:Help|Wikia幫助]]獲取頁面並嵌入到這個維基的 {{ns:help}}命名空間', # Fuzzy
+	'sharedhelp-autotalkcreate-summary' => '討論頁已自動建立',
 	'sharedhelp-searchprofile' => '幫助頁面',
-	'sharedhelp-searchprofile-tooltip' => '搜尋幫助頁面',
+	'sharedhelp-searchprofile-tooltip' => '搜尋使用說明頁面',
 );

@@ -126,12 +126,12 @@ class ScribeEventProducerController {
 		return true;
 	}
 
-	static public function onArticleUndelete( &$oTitle, $is_new = false ) {
+	static public function onArticleUndelete( &$oTitle, $created = false ) {
 		wfProfileIn( __METHOD__ );
 
  		$oScribeProducer = new ScribeEventProducer( 'undelete' );
 		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildUndeletePackage( $oTitle ) ) {
+			if ( $oScribeProducer->buildUndeletePackage( $oTitle, $created ) ) {
 				$oScribeProducer->sendLog();
 			}
 		}

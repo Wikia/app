@@ -498,6 +498,7 @@ Si vostè creu que es tracta d\'un error, si us plau, [[Special:Contact|contacti
 	'action-phalanx' => 'utilitzar el Mecanisme de Defensa de Spam Integrat',
 	'right-phalanx' => 'Pot gestionar blocatges globals i filtres antispam',
 	'right-phalanxexempt' => 'Exempt de les regles de la falange',
+	'right-phalanxemailblock' => 'Pot arxivar, veure i gestionar blocs de correus',
 );
 
 /** Chechen (нохчийн)
@@ -685,6 +686,7 @@ Ein Klick auf „{{int:phalanx-edit-block}}“ speichert Ihre Änderungen!',
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Kunalgrover05
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -695,7 +697,7 @@ $messages['diq'] = array(
 	'phalanx-label-reason' => 'Sebeb:',
 	'phalanx-label-expiry' => 'Qediyayış:',
 	'phalanx-label-type' => 'Babet:',
-	'phalanx-test-submit' => 'Test',
+	'phalanx-test-submit' => 'Tewr',
 	'phalanx-stats-table-type' => 'Babet',
 	'phalanx-stats-table-create' => 'Vıraziya',
 	'phalanx-stats-table-language' => 'Zıwan',
@@ -836,12 +838,13 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Mjbmr
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'phalanx-title' => 'انگشت - مکانیسم دفاعی یکپارچه اسپم',
 	'phalanx-type-user' => 'کاربر',
-	'phalanx-type-user-email' => 'رایانامه',
+	'phalanx-type-user-email' => 'ایمیل',
 	'phalanx-type-answers-question-title' => 'عنوان سوأل',
 	'phalanx-type-answers-recent-questions' => 'سوألات اخیر',
 	'phalanx-type-wiki-creation' => 'ایجاد ویکی',
@@ -879,7 +882,7 @@ $messages['fa'] = array(
 	'phalanx-help-type-wiki-creation' => 'این فیلتر از ایجاد یک ویکی جلوگیری می‌کند، اگر نام یا یوآر‌ال آن با هر عبارت فهرست سیاه مطابق باشد.',
 	'phalanx-help-type-answers-question-title' => 'این فیلتر از ایجاد سوأل (صفحه) جلوگیری می‌کند، اگر عنوان آن با هر عبارت فهرست سیاه مطابق باشد.
 توجه: فقط در ویکی‌های نوع پاسخ کار می‌کند.',
-	'phalanx-help-type-user-email' => 'این فیلتر از ایجاد حساب با استفاده از آدرس رایانامه مسدود شده، جلوگیری می‌کند.',
+	'phalanx-help-type-user-email' => 'این پالایه از ایجاد حساب با استفاده از آدرس ایمیل مسدود شده، جلوگیری می‌کند.',
 	'phalanx-user-block-new-account' => 'نام کاربری برای ثبت‌نام در دسترس نیست. لطفاً یکی دیگر را انتخاب کنید.',
 	'phalanx-title-move-summary' => 'دلیلی که شما وارد کرده‌اید شامل یک عبارت مسدود بود.',
 	'phalanx-content-spam-summary' => 'متن در خلاصهٔ صفحه پیدا شد.',
@@ -909,6 +912,7 @@ $messages['fa'] = array(
  * @author Centerlink
  * @author Nedergard
  * @author Nike
+ * @author Silvonen
  * @author Tofu II
  * @author Ville96
  */
@@ -934,6 +938,7 @@ $messages['fi'] = array(
 	'phalanx-view-id' => 'Hae suodatinta tunnisteella:',
 	'phalanx-view-id-submit' => 'Nouda suodatin',
 	'phalanx-format-text' => 'muotoilematon teksti',
+	'phalanx-format-regex' => 'säännöllinen lauseke',
 	'phalanx-format-case' => 'kirjainkoko on merkitsevä',
 	'phalanx-format-exact' => 'tarkka',
 	'phalanx-tab-main' => 'Suodattimien hallinta',
@@ -955,6 +960,7 @@ Jos tämä on mielestäsi virhe, ole hyvä ja [[Special:Contact|ota yhteyttä Wi
 	'phalanx-stats-table-user' => 'Lisääjä',
 	'phalanx-stats-table-type' => 'Tyyppi',
 	'phalanx-stats-table-create' => 'Luotu',
+	'phalanx-stats-table-regex' => 'Säännöllinen lauseke',
 	'phalanx-stats-table-language' => 'Kieli',
 	'phalanx-stats-table-text' => 'Teksti',
 	'phalanx-stats-table-reason' => 'Syy',
@@ -1647,12 +1653,14 @@ $messages['ko'] = array(
  */
 $messages['lb'] = array(
 	'phalanx-type-user' => 'Benotzer',
+	'phalanx-type-user-email' => 'E-Mail',
 	'phalanx-label-filter' => 'Filter:',
 	'phalanx-label-reason' => 'Grond:',
 	'phalanx-label-type' => 'Typ:',
 	'phalanx-label-lang' => 'Sprooch:',
 	'phalanx-test-submit' => 'Test',
 	'phalanx-link-unblock' => 'Spär ophiewen',
+	'phalanx-stats-table-user' => 'Derbäigesat vum',
 	'phalanx-stats-table-type' => 'Typ',
 	'phalanx-stats-table-language' => 'Sprooch',
 	'phalanx-stats-table-text' => 'Text:',
@@ -1666,8 +1674,8 @@ $messages['lb'] = array(
 $messages['lrc'] = array(
 	'phalanx' => 'فالانکس',
 	'phalanx-type-summary' => 'چکسته بلگه',
-	'phalanx-type-user' => 'كارور',
-	'phalanx-type-user-email' => 'پیومک برقی',
+	'phalanx-type-user' => 'کاریار',
+	'phalanx-type-user-email' => 'انجومانامه',
 	'phalanx-label-filter' => 'فيلتر',
 	'phalanx-label-reason' => 'دليل:',
 	'phalanx-label-expiry' => 'تموم بين:',
@@ -1679,14 +1687,14 @@ $messages['lrc'] = array(
 	'phalanx-link-unblock' => 'بی قطی',
 	'phalanx-link-modify' => 'آلشت كردن',
 	'phalanx-link-stats' => 'گوتن',
-	'phalanx-stats-table-type' => 'نيسنن كامپيتری',
+	'phalanx-stats-table-type' => 'انجومیار نیسی',
 	'phalanx-stats-table-create' => 'راست بيه',
 	'phalanx-stats-table-expire' => 'تموم بیه آ',
 	'phalanx-stats-table-exact' => 'گپ کردن',
 	'phalanx-stats-table-regex' => 'ریجکس',
 	'phalanx-stats-table-case' => 'نمونه',
 	'phalanx-stats-table-language' => 'زون',
-	'phalanx-stats-table-text' => 'متن',
+	'phalanx-stats-table-text' => 'نیسسه',
 	'phalanx-stats-table-reason' => 'دليل',
 	'phalanx-stats-table-wiki-name' => 'نوم ویکی',
 );
@@ -3236,6 +3244,7 @@ $messages['uz'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'phalanx-user-block-reason-ip' => 'Địa chỉ IP này đã bị cấm không cho sửa đổi trên toàn cầu Wikia do phá hoại hoặc gián đoạn khác bởi bạn hoặc bởi một người chia sẻ địa chỉ IP của bạn.
@@ -3246,9 +3255,11 @@ Xin vui lòng [[Special:Contact|liên lạc]] với nhân viên về vấn đề
 Nếu bạn tin rằng đây là lỗi, xin vui lòng [[Special:Contact|liên lạc]].<br />Lý do sau đây được cho là: $1.',
 	'phalanx-user-block-withreason-similar' => 'Tên người dùng này bị cấm không cho sửa đổi trên toàn cầu Wikia do phá hoại hoặc bị gián đoạn khác bởi bạn hoặc bởi một người chia sẻ địa chỉ IP của bạn.
 Nếu bạn tin rằng đây là lỗi, xin vui lòng [[Special:Contact|liên lạc]].<br />Lý do sau đây được cho là: $1.',
+	'phalanx-stats-block-notfound' => 'ID bị khóa không tìm thấy',
 	'phalanx-stats-table-language' => 'Ngôn ngữ',
 	'phalanx-stats-table-text' => 'Văn bản',
 	'phalanx-stats-table-reason' => 'Lý do',
+	'phalanx-email-filter-hidden' => 'Bộ lọc Email bị ẩn. Bạn không có quyền được xem văn bản.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
