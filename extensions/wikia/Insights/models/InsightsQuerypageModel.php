@@ -9,7 +9,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
 		INSIGHTS_MEMC_VERSION = '1.0',
-		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData';
+		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
+		INSIGHTS_LIST_MAX_LIMIT = 100;
 
 	private
 		$queryPageInstance,
@@ -17,6 +18,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$cacheTtl,
 		$offset = 0,
 		$limit = 100,
+		$total = 0,
+		$page = 0,
 		$sortingArray;
 
 	public
@@ -26,11 +29,25 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			'pvDiff' => SORT_NUMERIC,
 		];
 
-	const INSIGHTS_LIST_MAX_LIMIT = 100;
-
 	abstract function getDataProvider();
 	abstract function isItemFixed( Title $title );
 	abstract function getInsightType();
+
+	public function getTotalResultsNum() {
+		return $this->total;
+	}
+
+	public function getLimitResultsNum() {
+		return $this->limit;
+	}
+
+	public function getOffset() {
+		return $this->offset;
+	}
+
+	public function getPage() {
+		return $this->page;
+	}
 
 	/**
 	 * @return QueryPage An object of a QueryPage's child class
@@ -82,6 +99,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$articlesData = $this->fetchArticlesData();
 
 		if ( !empty( $articlesData ) ) {
+			$this->total = count( $articlesData );
+
 			/**
 			 * 2. Slice a sorting table to retrieve a page
 			 */
@@ -114,16 +133,18 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			$this->sortingArray = $wgMemc->get( $this->getMemcKey( $params['sort'] ) );
 		}
 
-		if ( isset( $params['offset'] ) ) {
-			$this->offset = intval( $params['offset'] );
-		}
-
 		if ( isset( $params['limit'] ) ) {
 			if ( $params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
 				$this->limit = intval( $params['limit'] );
 			} else {
 				$this->limit = self::INSIGHTS_LIST_MAX_LIMIT;
 			}
+		}
+
+		if ( isset( $params['page'] ) ) {
+			$page = intval( $params['page'] );
+			$this->page = --$page;
+			$this->offset = $this->page * $this->limit;
 		}
 	}
 
