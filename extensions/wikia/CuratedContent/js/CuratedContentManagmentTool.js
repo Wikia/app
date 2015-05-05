@@ -1,6 +1,6 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
 $(function () {
-	require(['wikia.window', 'jquery', 'wikia.nirvana', 'JSMessages'], function (window, $, nirvana, msg) {
+	require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'], function (window, $, nirvana, tracker, msg) {
 		'use strict';
 
 		var d = document,
@@ -133,7 +133,12 @@ $(function () {
 					$save.attr('disabled', false);
 					return true;
 				}
-			};
+			},
+			track = tracker.buildTrackingFunction({
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'special-curated-content',
+				trackingMethod: 'analytics'
+			});
 
 		$form
 			.on('focus', 'input', function () {
@@ -204,24 +209,6 @@ $(function () {
 				result['featured'] = true;
 			}
 			return result;
-		}
-
-		function trackSave() {
-			Wikia.Tracker.track({
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				category: 'special-curated-content',
-				label: 'save',
-				trackingMethod: 'analytics'
-			});
-		}
-
-		function trackSaveError() {
-			Wikia.Tracker.track({
-				action: Wikia.Tracker.ACTIONS.CLICK,
-				category: 'special-curated-content',
-				label: 'save-error',
-				trackingMethod: 'analytics'
-			});
 		}
 
 		window._gaq.push(['_setSampleRate', '100']);
@@ -311,14 +298,14 @@ $(function () {
 
 							$save.addClass('err');
 							$save.attr('disabled', true);
-							trackSaveError();
+							track({ label: 'save-error' });
 						} else if (data.status) {
 							$save.addClass('ok');
-							trackSave();
+							track({ label: 'save' });
 						}
 					}).fail(function () {
 						$save.addClass('err');
-						trackSaveError();
+						track({ label: 'save-error' });
 					}).then(function () {
 						$form.stopThrobbing();
 					});
