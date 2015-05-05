@@ -119,12 +119,17 @@ body.skin-oasis {
 
 		.background-image-gradient {
 			background: $color-body-middle;
+			content: '';
+			height: 100%;
 			/* @noflip */
 			left: 50%;
 			/* @noflip */
 			margin-left: 0;
+			position: fixed;
+			top: 0;
+		}
 
-			&,
+		.background-image-gradient:not(.no-gradients) {
 			&::before,
 			&::after {
 				content: '';
