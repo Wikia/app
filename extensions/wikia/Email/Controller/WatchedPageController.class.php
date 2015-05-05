@@ -283,7 +283,8 @@ class WatchedPageRenamedController extends WatchedPageController {
 	protected function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
 			$this->newTitle->getFullURL(),
-			$this->newTitle->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+			$this->newTitle->getPrefixedText() 
+		)->inLanguage( $this->targetLang )->parse();
 	}
 
 	/**
@@ -292,6 +293,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	protected function getAllChangesText() {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->newTitle->getFullURL( 'action=history' ),
-			$this->newTitle->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+			$this->newTitle->getPrefixedText() 
+		)->inLanguage( $this->targetLang )->parse();
 	}
 }
