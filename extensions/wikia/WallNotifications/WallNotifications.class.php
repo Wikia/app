@@ -39,7 +39,6 @@ class WallNotifications {
 
 		// try fetching the list of notifications from memcache
 		$list = $memcSync->get();
-		$list = false;
 		if ( empty( $list ) && !is_array( $list ) ) {
 			// nothing in the cache, so use the db as a fallback and store the result in cache
 			$callback = function() use( $userId, $wikiId, &$list ) {
