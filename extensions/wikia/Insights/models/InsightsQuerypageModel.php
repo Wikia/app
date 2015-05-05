@@ -9,12 +9,17 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
 		INSIGHTS_MEMC_VERSION = '1.0',
-		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData';
+		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
+		INSIGHTS_LIST_MAX_LIMIT = 10;
 
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
 		$cacheTtl,
+		$offset = 0,
+		$limit = 10,
+		$total = 0,
+		$page = 0,
 		$sortingArray;
 
 	public
@@ -27,6 +32,22 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	abstract function getDataProvider();
 	abstract function isItemFixed( Title $title );
 	abstract function getInsightType();
+
+	public function getTotalResultsNum() {
+		return $this->total;
+	}
+
+	public function getLimitResultsNum() {
+		return $this->limit;
+	}
+
+	public function getOffset() {
+		return $this->offset;
+	}
+
+	public function getPage() {
+		return $this->page;
+	}
 
 	/**
 	 * @return QueryPage An object of a QueryPage's child class
