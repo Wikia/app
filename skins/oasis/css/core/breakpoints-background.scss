@@ -10,7 +10,7 @@ $adskin-width: 170px;
 //In order to preserve compatibility between "old" responsive and "new" breakpoints
 //We need to shift the background by 17px on each side, it comes from this equation:
 //(1064 - 1030) / 2 = 17 (difference between content width for breakpoints and responsive)
-$legacy-background-shift: 17px;
+$legacy-background-shift: 0px;
 $legacy-background-shift-both-sides: $legacy-background-shift * 2;
 $large-breakpoint-content-and-adskin-width: $content-width-large + 2 * $adskin-width;
 

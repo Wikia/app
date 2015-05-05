@@ -123,7 +123,7 @@
 
 	@media #{$breakpoint-large-up} {
 		.WikiHeader > nav.WikiNav .navbackground {
-			@include width-calc("100% + 10px");
+			@include width-calc("100% + 9px");
 		}
 	}
 
