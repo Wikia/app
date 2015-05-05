@@ -1,34 +1,6 @@
-$insights-grey: #ccc;
-$insights-background-grey: #f0f0f0;
-$insights-background-grey-dark: #2a2a2a;
-$insights-text-light: #fff;
-$insights-small-icon-size: auto 21px;
-$insights-big-icon-size: auto 65px;
+@import './insights-settings';
 
-.insights-light {
-	.insights-icon-uncategorizedpages {
-		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
-	}
-
-	.insights-icon-withoutimages {
-		background-image: url('/extensions/wikia/Insights/images/withoutimages.svg'); /* inline */
-	}
-
-	.insights-icon-deadendpages {
-		background-image: url('/extensions/wikia/Insights/images/deadendpages.svg'); /* inline */
-	}
-
-	.insights-icon-wantedpages {
-		background-image: url('/extensions/wikia/Insights/images/wantedpages.svg'); /* inline */
-	}
-
-	.insights-nav-item:hover,
-	.insights-nav-item.active {
-		background-color: $insights-background-grey;
-	}
-}
-
-.insights-dark {
+@if $is-dark-wiki {
 	.insights-icon-uncategorizedpages {
 		background-image: url('/extensions/wikia/Insights/images/uncategorized_dark.svg'); /* inline */
 	}
@@ -44,10 +16,21 @@ $insights-big-icon-size: auto 65px;
 	.insights-icon-wantedpages {
 		background-image: url('/extensions/wikia/Insights/images/wantedpages_dark.svg'); /* inline */
 	}
+} @else {
+	.insights-icon-uncategorizedpages {
+		background-image: url('/extensions/wikia/Insights/images/uncategorized.svg'); /* inline */
+	}
 
-	.insights-nav-item:hover,
-	.insights-nav-item.active {
-		background-color: $insights-background-grey-dark;
+	.insights-icon-withoutimages {
+		background-image: url('/extensions/wikia/Insights/images/withoutimages.svg'); /* inline */
+	}
+
+	.insights-icon-deadendpages {
+		background-image: url('/extensions/wikia/Insights/images/deadendpages.svg'); /* inline */
+	}
+
+	.insights-icon-wantedpages {
+		background-image: url('/extensions/wikia/Insights/images/wantedpages.svg'); /* inline */
 	}
 }
 
@@ -72,7 +55,7 @@ $insights-big-icon-size: auto 65px;
 	background-position: center left;
 	background-repeat: no-repeat;
 	background-size: $insights-big-icon-size;
-	border-bottom: 1px solid $insights-grey;
+	border-bottom: $border-insights-default;
 	padding: 15px 10px 15px 95px;
 
 	&:last-child {
@@ -84,13 +67,13 @@ $insights-big-icon-size: auto 65px;
 
 .insights-container-nav {
 	float: left;
-	width: 250px;
+	width: $width-insights-nav;
 
 	.insights-nav-list {
 		margin: 0;
 
 		&.active {
-			background-color: $insights-background-grey;
+			background-color: $color-insights-nav-hover;
 		}
 	}
 
@@ -98,13 +81,18 @@ $insights-big-icon-size: auto 65px;
 		background-position: 5% 50%;
 		background-repeat: no-repeat;
 		background-size: $insights-small-icon-size;
-		border-bottom: 1px solid $insights-grey;
+		border-bottom: $border-insights-default;
 		list-style-type: none;
 		margin: 0;
 		padding: 5px 0;
 
 		&:last-child {
 			border-bottom: 0;
+		}
+
+		&:hover,
+		&.active {
+			background-color: $color-insights-nav-hover;
 		}
 	}
 
@@ -118,23 +106,24 @@ $insights-big-icon-size: auto 65px;
 /** Subpages - content **/
 
 .insights-header {
-	background-position: center left;
+	background-position: 15px 50%;
 	background-repeat: no-repeat;
 	background-size: $insights-big-icon-size;
 	margin: 10px 0 15px;
-	padding: 20px 20px 20px 95px;
+	padding: 20px 20px 20px 110px;
 
 	.insights-header-subtitle {
 		border-bottom: 0;
+		font-size: 200%;
 		margin-top: 0;
+		overflow: visible;
 	}
 }
 
 .insights-container-main {
 	box-sizing: border-box;
 	float: right;
-	margin-left: 25px;
-	width: calc(100% - 275px);
+	width: calc(100% - #{$width-insights-nav});
 
 }
 
@@ -145,12 +134,26 @@ $insights-big-icon-size: auto 65px;
 }
 
 .insights-list-header {
+	background-color: $color-insights-list-th;
+	border-bottom: $border-insights-default;
+	border-top: $border-insights-default;
+	padding: 5px 10px;
 	text-align: left;
 }
 
+.insights-list-header-pageviews {
+	border-left: $border-insights-default;
+	text-align: center;
+	width: $width-insights-pageviews-column;
+}
+
 .insights-list-cell {
-	border-bottom: 1px solid $insights-grey;
-	padding: 10px 0;
+	border-bottom: $border-insights-default;
+	padding: 10px;
+}
+
+.insights-list-first-column {
+	padding-left: 15px;
 }
 
 .insights-list-item {
@@ -158,7 +161,7 @@ $insights-big-icon-size: auto 65px;
 	&:last-child {
 
 		.insights-list-cell {
-			border: 0;
+			border-bottom: 0;
 		}
 	}
 
@@ -170,6 +173,12 @@ $insights-big-icon-size: auto 65px;
 	.insights-list-item-metadata {
 		margin: 0;
 		padding: 1px 0;
+	}
+
+	.insights-list-item-pageviews {
+		border-left: $border-insights-default;
+		text-align: right;
+		width: $width-insights-pageviews-column;
 	}
 }
 

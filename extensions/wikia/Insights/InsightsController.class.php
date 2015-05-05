@@ -224,7 +224,7 @@ class InsightsController extends WikiaSpecialPageController {
 	}
 
 	private function addAssets() {
-		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights.scss' );
+		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights-lists.scss' );
 		$this->response->addAsset( '/extensions/wikia/Insights/scripts/InsightsPageTracking.js' );
 	}
 
