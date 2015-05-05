@@ -4,12 +4,10 @@
 $color-insights-text-light: #fff;
 $color-insights-border: #ccc;
 
-$color-insights-nav-hover: darken($color-page, 5%);
-$color-insights-list-th: darken($color-page, 5%);
+$color-insights-highlight: darken($color-page, 5%);
 
 @if $is-dark-wiki {
-	$color-insights-nav-hover: lighten($color-page, 5%);
-	$color-insights-list-th: lighten($color-page, 5%);
+	$color-insights-highlight: lighten($color-page, 5%);
 }
 
 // Borders
