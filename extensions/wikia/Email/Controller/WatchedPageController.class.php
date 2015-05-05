@@ -11,6 +11,7 @@ abstract class WatchedPageController extends EmailController {
 	protected $title;
 	protected $summary;
 	protected $currentRevId;
+	protected $previousRevId;
 
 	/**
 	 * @return String
@@ -35,6 +36,7 @@ abstract class WatchedPageController extends EmailController {
 
 		if ($this->title instanceof \Title) {
 			$this->currentRevId = $this->title->getLatestRevID( \Title::GAID_FOR_UPDATE );
+			$this->previousRevId = $this->title->getPreviousRevisionID( $this->currentRevId, \Title::GAID_FOR_UPDATE );
 		}
 
 		$this->assertValidParams();
@@ -83,7 +85,7 @@ abstract class WatchedPageController extends EmailController {
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
 			'contentFooterMessages' => $this->getContentFooterMessages(),
-			'contentFooterMessagesCount' => (bool) count($this->getContentFooterMessages()),
+			'contentFooterMessagesCount' => (bool) count( $this->getContentFooterMessages() ),
 		] );
 	}
 
@@ -138,7 +140,7 @@ abstract class WatchedPageController extends EmailController {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
 			$this->title->getFullURL( [
 				'diff' => 0,
-				'oldid' => $this->currentRevId
+				'oldid' => $this->previousRevId
 			] ),
 			$this->title->getPrefixedText()
 		)->inLanguage( $this->targetLang )->parse();
@@ -168,40 +170,6 @@ abstract class WatchedPageController extends EmailController {
 }
 
 class WatchedPageEditedController extends WatchedPageController {
-	protected $previousRevId;
-
-	public function initEmail() {
-		$this->previousRevId = $this->getVal( 'previousRevId' );
-
-		parent::initEmail();
-	}
-
-	/**
-	 * Validate the params passed in by the client
-	 */
-	protected function assertValidParams() {
-		parent::assertValidParams();
-		$this->assertValidRevIds();
-	}
-
-	protected function assertValidRevIds() {
-		if ( empty( $this->previousRevId ) ) {
-			throw new Check( "Empty value for previous Revision ID (param: previousRevId)" );
-		}
-	}
-
-	/**
-	 * @return String
-	 */
-	protected function getArticleLinkText() {
-		return wfMessage( 'emailext-watchedpage-article-link-text',
-			$this->title->getFullURL( [
-				'diff' => 0,
-				'oldid' => $this->previousRevId
-			] ),
-			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
-	}
-
 	/**
 	 * @return String
 	 */
