@@ -34,7 +34,7 @@ abstract class WatchedPageController extends EmailController {
 		$this->title = \Title::newFromText( $titleText, $titleNamespace );
 		$this->summary = $this->getVal( 'summary' );
 
-		if ($this->title instanceof \Title) {
+		if ( $this->title instanceof \Title ) {
 			$this->currentRevId = $this->title->getLatestRevID( \Title::GAID_FOR_UPDATE );
 			$this->previousRevId = $this->title->getPreviousRevisionID( $this->currentRevId, \Title::GAID_FOR_UPDATE );
 		}
@@ -85,7 +85,7 @@ abstract class WatchedPageController extends EmailController {
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
 			'contentFooterMessages' => $this->getContentFooterMessages(),
-			'contentFooterMessagesCount' => (bool) count( $this->getContentFooterMessages() ),
+			'contentFooterMessagesCount' => ( bool ) count( $this->getContentFooterMessages() ),
 		] );
 	}
 
