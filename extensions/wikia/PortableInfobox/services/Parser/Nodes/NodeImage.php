@@ -6,17 +6,22 @@ class NodeImage extends Node {
 
 	public function getData() {
 		$node = [];
-		$imageName = $this->getInfoboxData( $this->getXmlAttribute($this->xmlNode, self::DATA_SRC_ATTR_NAME ) );
+
+		$imageName = $this->getValueWithDefault( $this->xmlNode );
 		$node['value'] = $this->resolveImageUrl( $imageName );
 		$node['alt'] = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
+
 		return $node;
 	}
 
-	protected function resolveImageUrl( $filename ) {
-		$title = \Title::newFromText( $filename, NS_FILE );
+	public function resolveImageUrl( $filename ) {
+		global $wgContLang;
+		$title = \Title::newFromText( \Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer::getInstance()
+			->sanitizeImageFileName($filename, $wgContLang), NS_FILE );
 		if ( $title && $title->exists() ) {
-			return \WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();
+			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
+		} else {
+			return "";
 		}
-		return "";
 	}
 }

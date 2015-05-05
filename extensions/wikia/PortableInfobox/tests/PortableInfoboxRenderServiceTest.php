@@ -3,9 +3,9 @@
 class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 	private $infoboxRenderService;
 
-	public function setUp() {
+	protected function setUp() {
+		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
-		require_once( dirname( __FILE__ ) . '/../PortableInfobox.setup.php' );
 
 		$this->infoboxRenderService = new PortableInfoboxRenderService();
 	}

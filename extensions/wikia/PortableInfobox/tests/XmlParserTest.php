@@ -1,21 +1,10 @@
 <?php
-require_once( dirname( __FILE__ ) . '/../services/Parser/XmlParser.php' );
-
-class TestParser implements \Wikia\PortableInfobox\Parser\ExternalParser {
-	public function parse( $text ) {
-		return "parse($text)";
-	}
-
-	public function parseRecursive( $text ) {
-		return "parseRecursive($text)";
-	}
-}
 
 class XmlParserTest extends WikiaBaseTest {
 
 	protected function setUp() {
+		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
-		require_once( dirname( __FILE__ ) . '/../PortableInfobox.setup.php' );
 	}
 
 	public function testIsEmpty() {
@@ -52,7 +41,7 @@ class XmlParserTest extends WikiaBaseTest {
 			'elem2' => 'ELEM2',
 			'lado2' => 'LALALA'
 		]);
-		$externalParser = new TestParser();
+		$externalParser = new \Wikia\PortableInfobox\Parser\DummyParser();
 		$parser->setExternalParser( $externalParser );
 		$markup = '
 			<infobox>
