@@ -15,8 +15,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$queryPageInstance,
 		$template = 'subpageList',
 		$cacheTtl,
-		$offset = 0,
-		$limit = 100,
 		$sortingArray;
 
 	public
@@ -25,8 +23,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			'pv28' => SORT_NUMERIC,
 			'pvDiff' => SORT_NUMERIC,
 		];
-
-	const INSIGHTS_LIST_MAX_LIMIT = 100;
 
 	abstract function getDataProvider();
 	abstract function isItemFixed( Title $title );
@@ -82,6 +78,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$articlesData = $this->fetchArticlesData();
 
 		if ( !empty( $articlesData ) ) {
+			$this->total = count( $articlesData );
+
 			/**
 			 * 2. Slice a sorting table to retrieve a page
 			 */
@@ -114,16 +112,18 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			$this->sortingArray = $wgMemc->get( $this->getMemcKey( $params['sort'] ) );
 		}
 
-		if ( isset( $params['offset'] ) ) {
-			$this->offset = intval( $params['offset'] );
-		}
-
 		if ( isset( $params['limit'] ) ) {
 			if ( $params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
 				$this->limit = intval( $params['limit'] );
 			} else {
 				$this->limit = self::INSIGHTS_LIST_MAX_LIMIT;
 			}
+		}
+
+		if ( isset( $params['page'] ) ) {
+			$page = intval( $params['page'] );
+			$this->page = --$page;
+			$this->offset = $this->page * $this->limit;
 		}
 	}
 

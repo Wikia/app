@@ -55,6 +55,9 @@
 						</tr>
 					<?php endforeach; ?>
 				</table>
+				<?php if ( $paginatorBar ) : ?>
+					<?= $paginatorBar ?>
+				<?php endif ?>
 			<?php else: ?>
 				<p>
 					<?= wfMessage( 'insights-list-no-items' )->escaped(); ?>

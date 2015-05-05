@@ -57,6 +57,7 @@ class InsightsController extends WikiaSpecialPageController {
 		if ( $this->model instanceof InsightsModel ) {
 			$params = $this->request->getParams();
 			$this->content = $this->model->getContent( $params );
+			$this->preparePagination();
 			$this->data = $this->model->getViewData();
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
@@ -223,6 +224,21 @@ class InsightsController extends WikiaSpecialPageController {
 		];
 	}
 
+	/**
+	 * Prepare pagination
+	 */
+	private function preparePagination() {
+		$total = $this->model->getTotalResultsNum();
+		$itemsPerPage = $this->model->getLimitResultsNum();
+
+		if( $total > $itemsPerPage ) {
+			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
+			$paginator->setActivePage( $this->model->getPage() );
+			$url = urldecode($this->getSpecialInsightsUrl( $this->subpage, [ 'page' => '%s' ] ));
+			$this->paginatorBar = $paginator->getBarHTML( $url );
+		}
+	}
+
 	private function addAssets() {
 		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights-lists.scss' );
 		$this->response->addAsset( '/extensions/wikia/Insights/scripts/InsightsPageTracking.js' );
@@ -233,7 +249,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 *
 	 * @return string
 	 */
-	private function getSpecialInsightsUrl( $subpage = false ) {
-		return $this->specialPage->getTitle( $subpage )->getFullURL();
+	private function getSpecialInsightsUrl( $subpage = false, $params = [] ) {
+		return $this->specialPage->getTitle( $subpage )->getFullURL( $params );
 	}
 }
