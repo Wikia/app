@@ -43,15 +43,20 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) 
 		var useLang = $.getUrlVar('uselang'),
 			mCache = $.getUrlVar('mcache'),
 			requestData,
+			userLang,
 			browserLang = (win.navigator.language || win.navigator.browserLanguage),
 			browserLangShort;
+
+		if (win.wgUserName) {
+			userLang = win.wgUserLanguage;
+		}
 
 		if (browserLang) {
 			browserLangShort = browserLang.substr(0, 2);
 		}
 
 		requestData = {
-			shareLang: win.wgUserLanguage || browserLangShort,
+			shareLang: userLang || browserLangShort,
 			isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
 		};
 
