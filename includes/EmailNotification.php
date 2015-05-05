@@ -493,7 +493,7 @@ class EmailNotification {
 				'fromName' => $this->from->name
 			];
 
-			F::app()->sendRequest( $controller, 'handle', $params )->getData();
+			F::app()->sendRequest( $controller, 'handle', $params );
 		}
 	}
 	/**
