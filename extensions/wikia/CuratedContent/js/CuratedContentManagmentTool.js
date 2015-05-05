@@ -206,6 +206,26 @@ $(function () {
 			return result;
 		}
 
+		function trackSave() {
+			Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'special-curated-content',
+				label: 'save',
+				trackingMethod: 'analytics'
+			});
+		}
+
+		function trackSaveError() {
+			Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'special-curated-content',
+				label: 'save-error',
+				trackingMethod: 'analytics'
+			});
+		}
+
+		window._gaq.push(['_setSampleRate', '100']);
+
 		$save.on('click', function () {
 			var data = [],
 				orphans = [];
@@ -253,24 +273,6 @@ $(function () {
 								return noCategoryInTag;
 							}
 							return errReason;
-						}
-
-						function trackSave() {
-							Wikia.Tracker.track({
-								action: Wikia.Tracker.ACTIONS.CLICK,
-								category: 'special-curated-content',
-								label: 'save',
-								trackingMethod: 'analytics'
-							});
-						}
-
-						function trackSaveError() {
-							Wikia.Tracker.track({
-								action: Wikia.Tracker.ACTIONS.CLICK,
-								category: 'special-curated-content',
-								label: 'save-error',
-								trackingMethod: 'analytics'
-							});
 						}
 
 						if (data.error) {
