@@ -10,14 +10,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		INSIGHTS_MEMC_PREFIX = 'insights',
 		INSIGHTS_MEMC_VERSION = '1.0',
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
-		INSIGHTS_LIST_MAX_LIMIT = 10;
+		INSIGHTS_LIST_MAX_LIMIT = 100;
 
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
 		$cacheTtl,
 		$offset = 0,
-		$limit = 10,
+		$limit = 100,
 		$total = 0,
 		$page = 0,
 		$sortingArray;
