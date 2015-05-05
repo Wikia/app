@@ -3,13 +3,13 @@
 abstract class InsightsModel {
 	const
 		INSIGHTS_FLOW_URL_PARAM = 'insights',
-		INSIGHTS_LIST_MAX_LIMIT = 10;
+		INSIGHTS_LIST_MAX_LIMIT = 100;
 
 	public $subpage;
 
 	protected
 		$offset = 1,
-		$limit = 10,
+		$limit = 100,
 		$total = 0,
 		$page = 1;
 
