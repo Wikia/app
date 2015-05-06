@@ -153,6 +153,8 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
+		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
+		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ( $type === 'image' ) {
 			$data[ 'thumbnail' ] = VignetteRequest::fromUrl( $data[ 'url' ] )
 				->scaleToWidth( self::THUMBNAIL_WIDTH )
