@@ -155,7 +155,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function renderItem( $type, array $data ) {
 		if ( $type === 'image' ) {
 			$data[ 'thumbnail' ] = VignetteRequest::fromUrl( $data[ 'url' ] )
-				->width( self::THUMBNAIL_WIDTH )
+				->scaleToWidth( self::THUMBNAIL_WIDTH )
 				->url();
 		}
 
