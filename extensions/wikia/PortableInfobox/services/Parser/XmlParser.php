@@ -40,11 +40,12 @@ class XmlParser {
 		foreach ( $xmlIterable as $node ) {
 			$nodeHandler = $this->getNode( $node );
 			$nodeData = $nodeHandler->getData();
-			$data[ ] = [
-				'type' => $nodeHandler->getType(),
-				'data' => $nodeData,
-				'isEmpty' => $nodeHandler->isEmpty( $nodeData )
-			];
+			if ( !$nodeHandler->isEmpty( $nodeData ) ) {
+				$data[ ] = [
+					'type' => $nodeHandler->getType(),
+					'data' => $nodeData
+				];
+			}
 		}
 		wfProfileOut(__METHOD__);
 		return $data;
