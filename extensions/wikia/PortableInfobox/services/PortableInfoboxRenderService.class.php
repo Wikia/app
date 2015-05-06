@@ -152,6 +152,12 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
+		if ( $type === 'image' ) {
+			$data[ 'thumbnail' ] = VignetteRequest::fromUrl( $data[ 'url' ] )
+				->width( self::THUMBNAIL_WIDTH )
+				->url();
+		}
+
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( $this->templates[ $type ] );
