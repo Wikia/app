@@ -21,7 +21,7 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 
 		track = Wikia.Tracker.buildTrackingFunction({
 			category: 'insights-loop-notification',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: tracker.ACTIONS.CLICK_LINK_TEXT
 		});
 
