@@ -1,8 +1,9 @@
 <?php
+
 class PortableInfoboxHooks {
 	// FIX ME: temporary implementation - styles should be included only on page with portable infobox
 	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
-		Wikia::addAssetsToOutput('portable_infobox_scss');
+		Wikia::addAssetsToOutput( 'portable_infobox_scss' );
 		return true;
 	}
 
@@ -21,6 +22,29 @@ class PortableInfoboxHooks {
 			$text .= Html::linkedScript( $script );
 		}
 
+		return true;
+	}
+
+	/**
+	 * Add aside HTML tag to accepted list
+	 * @param $includeTags parser accepted tags list
+	 * @param $excludeTags parser excluded tags list
+	 * @return bool
+	 */
+	public static function onSanitizerTagsLists( &$includeTags, &$excludeTags ) {
+		$includeTags[ ] = 'aside';
+		return true;
+	}
+
+	/**
+	 * Ass aside attributes to whitelist
+	 * @param $whitelist
+	 * @return bool
+	 */
+	public static function onSanitizerAttributesSetup( &$whitelist ) {
+		if ( !isset( $whitelist[ 'aside' ] ) ) {
+			$whitelist[ 'aside' ] = [ 'id', 'class', 'lang', 'dir', 'title', 'style' ];
+		}
 		return true;
 	}
 }
