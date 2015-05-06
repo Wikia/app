@@ -663,7 +663,11 @@ class Chat {
 	 *
 	 * @return bool
 	 */
-	public static function canChat( $userObject ) {
+	public static function canChat( User $userObject ) {
+		if ( $userObject->isAnon() ) {
+			return false;
+		}
+
 		if ( $userObject->isBlocked() ) {
 			return false;
 		}
@@ -672,7 +676,7 @@ class Chat {
 			return false;
 		}
 
-		return ( $userObject->isLoggedin() && $userObject->isAllowed( 'chat' ) );
+		return $userObject->isAllowed( 'chat' );
 	}
 
 	public static function getBanTimeFactors() {
