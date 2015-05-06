@@ -176,7 +176,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->wg->out->redirect( $redirectUrl );
 		} else {
 			$this->track( 'signup-failed' );
-			$this->response->setData( [
+			$this->response->setValues( [
 				'result' => $result,
 				'msg' => $response->getVal( 'msg', '' ),
 				'errParam' => $response->getVal( 'errParam', '' ),

@@ -56,10 +56,10 @@ class VideoService extends WikiaModel {
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				$file = wfFindFile( $videoTitle );
+				$file = RepoGroup::singleton()->findFile( $videoTitle );
 			}
 
-			if ( !( $file instanceof File ) )  {
+			if ( !( $file instanceof File ) ) {
 				WikiaLogger::instance()->error( '\VideoHandlerHelper->adDefaultVideoDescription() - File is empty', [
 					'exception' => new Exception(),
 					'url' => $url,

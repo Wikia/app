@@ -3,8 +3,8 @@
 class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 	protected function setUp() {
+		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
-		require_once( dirname( __FILE__ ) . '/../PortableInfobox.setup.php' );
 	}
 
 	public function testEmptyInfobox() {

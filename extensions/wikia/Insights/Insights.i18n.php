@@ -9,6 +9,8 @@ $messages['en'] = [
 	'insights-landing-lead' => 'Spend your time efficiently and make informed decisions about which articles you should edit with these insights. This feature is currently in beta. Love it? Hate it? Have ideas? Please submit your thoughts via [[Special:Contact/feedback]].',
 	'insights-last-edit' => 'Last edited by $1, $2',
 	'insights-list-no-items' => 'Great work! There are no articles in this queue that need attention.',
+	'insights-list-header-page' => 'Page',
+	'insights-list-header-pageviews' => 'Page views',
 	// Uncategorized pages
 	'insights-list-subtitle-uncategorizedpages' => 'Pages without categories',
 	'insights-list-description-uncategorizedpages' => 'Add categories to these pages. Good categorization is vital to a successfully organized wikia!',
@@ -63,7 +65,8 @@ $messages['qqq'] = [
 	'insights-landing-lead' => 'A lead for the Insights special page with a general description, appearing below the title.',
 	'insights-last-edit' => 'Information who and when made last edit for chosen article on the list',
 	'insights-list-no-items' => 'A message that is shown when there are no items to work on left on a list',
-
+	'insights-list-header-page' => 'A header of an Insights list table for a column with a title and last revision data',
+	'insights-list-header-pageviews' => 'A header of an Insights list table for a column with a number of views of an article',
 	// Uncategorized pages
 	'insights-list-subtitle-uncategorizedpages' => 'A title of a subpage with a list of uncategorized pages',
 	'insights-list-description-uncategorizedpages' => 'A description for a subpage with a list of uncategorized pages',
