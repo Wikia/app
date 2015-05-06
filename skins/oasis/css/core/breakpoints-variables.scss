@@ -21,7 +21,7 @@ $padding-width-large: 30px;
 $page-width-large: $content-width-large - 2 * $padding-width-large;
 // "special case" for 1024px tablets (think landscape iPad)
 $content-width-small-plus: 1024px;
-$padding-width-small-plus: $padding-width-small;
+$padding-width-small-plus: 10px;
 $page-width-small-plus: $content-width-small-plus - 2 * $padding-width-small-plus;
 
 $width-adskin: 170px;
@@ -39,6 +39,7 @@ $breakpoint-portrait: "#{$screen} and (orientation: portrait)";
 $breakpoint-not-supported: "#{$screen} and (max-width: #{$breakpoint-width-not-supported})";
 $breakpoint-small-up: $screen;
 $breakpoint-small-only: "#{$screen} and (max-width: #{upper-bound($small-range)})";
+$breakpoint-below-small-plus: "#{$screen} and (max-width: #{$breakpoint-lower-plus - 1})";
 $breakpoint-small-plus: "#{$screen} and (min-width:#{lower-bound($small-plus-range)}) and (max-width: #{upper-bound($small-plus-range)})";
 $breakpoint-medium-up: "#{$screen} and (min-width:#{lower-bound($medium-range)})";
 $breakpoint-medium-only: "#{$screen} and (min-width:#{lower-bound($medium-range)}) and (max-width:#{upper-bound($medium-range)})";

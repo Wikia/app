@@ -90,9 +90,7 @@
 		.wikinav2.oasis-one-column .WikiaPageHeader {
 			padding: 0;
 		}
-	}
 
-	@media #{$breakpoint-small-only} {
 		.WikiHeader > nav.WikiNav .navbackground {
 			left: -24px;
 			width: 772px;
@@ -130,7 +128,7 @@
 	.WikiaRail, .main-page-tag-rcs {
 		padding: 0;
 
-		@media #{$breakpoint-small-only} {
+		@media #{$breakpoint-below-small-plus} {
 			// this is copied from responsive-core.scss
 			clear: both;
 			float: none;
@@ -226,11 +224,37 @@
 			padding: 0 $padding-width-small-plus;
 			width: $page-width-small-plus;
 		}
-		.WikiHeader > nav.WikiNav .navbackground {
-			width: $page-width-small-plus + 2px;
+
+		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+			@include width-calc("100% - 320px");
 		}
-		.global-navigation .global-navigation-container {
-			width: $page-width-small-plus;
+
+		.main-page-tag-rcs {
+			width: 300px;
+		}
+
+		.WikiHeader {
+			min-height: 69px;
+
+			.buttons {
+				top: 22px;
+			}
+
+			& > nav.WikiNav {
+				@include width-calc("100% - 250px");
+
+				left: 275px;
+				top: 20px;
+
+				.subnav-2 {
+					width: auto;
+				}
+			}
+		}
+
+		// needs to be nested in this way, so it it'll override styles in GlobalNav extension
+		.WikiaSiteWrapper > .global-navigation > .global-navigation-container {
+			width: $content-width-small-plus;
 		}
 	}
 }
