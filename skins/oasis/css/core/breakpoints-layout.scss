@@ -219,4 +219,18 @@
 		margin-left: 0;
 		margin-right: 0;
 	}
+
+	// "special case" for 1024px tablets (think landscape iPad)
+	@media #{$breakpoint-small-plus} {
+		.WikiaPage {
+			padding: 0 $padding-width-small-plus;
+			width: $page-width-small-plus;
+		}
+		.WikiHeader > nav.WikiNav .navbackground {
+			width: $page-width-small-plus + 2px;
+		}
+		.global-navigation .global-navigation-container {
+			width: $page-width-small-plus;
+		}
+	}
 }
