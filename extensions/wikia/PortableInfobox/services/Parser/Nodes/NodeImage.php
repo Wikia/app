@@ -15,6 +15,10 @@ class NodeImage extends Node {
 		return $node;
 	}
 
+	public function isEmpty( $data ) {
+		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
+	}
+
 	public function resolveImageUrl( $filename ) {
 		global $wgContLang;
 		$title = \Title::newFromText( \Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer::getInstance()
