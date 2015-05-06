@@ -3,8 +3,8 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function(win, tracker, $) {
 
 	var trackFunc = tracker.buildTrackingFunction({
 		action: win.Wikia.Tracker.ACTIONS.CLICK,
-		category: 'share',
-		trackingMethod: 'both'
+		category: 'social-share',
+		trackingMethod: 'analytics'
 	});
 
 	/**

@@ -6,15 +6,48 @@
  * A base model for subpages that extend the QueryPage class
  */
 abstract class InsightsQuerypageModel extends InsightsModel {
-	private $queryPageInstance,
-		$template = 'subpageList';
+	const
+		INSIGHTS_MEMC_PREFIX = 'insights',
+		INSIGHTS_MEMC_VERSION = '1.0',
+		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
+		INSIGHTS_LIST_MAX_LIMIT = 100;
+
+	private
+		$queryPageInstance,
+		$template = 'subpageList',
+		$cacheTtl,
+		$offset = 0,
+		$limit = 100,
+		$total = 0,
+		$page = 0,
+		$sortingArray;
 
 	public
-		$offset = 0,
-		$limit = 100;
+		$sorting = [
+			'pv7' => SORT_NUMERIC,
+			'pv28' => SORT_NUMERIC,
+			'pvDiff' => SORT_NUMERIC,
+		];
 
 	abstract function getDataProvider();
 	abstract function isItemFixed( Title $title );
+	abstract function getInsightType();
+
+	public function getTotalResultsNum() {
+		return $this->total;
+	}
+
+	public function getLimitResultsNum() {
+		return $this->limit;
+	}
+
+	public function getOffset() {
+		return $this->offset;
+	}
+
+	public function getPage() {
+		return $this->page;
+	}
 
 	/**
 	 * @return QueryPage An object of a QueryPage's child class
@@ -23,12 +56,31 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $this->queryPageInstance;
 	}
 
+	/**
+	 * @return string A name of the page's template
+	 */
 	public function getTemplate() {
 		return $this->template;
 	}
 
-	public function getData() {
-		$data['offset'] = $this->offset;
+	/**
+	 * @return bool
+	 */
+	public function arePageViewsRequired() {
+		return true;
+	}
+
+	/**
+	 * Returns an array of boolean values that you can use
+	 * to toggle columns of a subpage's table view
+	 * (e.g. turn the column with number of views on or off)
+	 *
+	 * @return array An array of boolean values
+	 */
+	public function getViewData() {
+		$data['display'] = [
+			'pageviews'	=> $this->arePageViewsRequired(),
+		];
 		return $data;
 	}
 
@@ -37,15 +89,232 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 *
 	 * @return array
 	 */
-	public function getContent() {
+	public function getContent( $params ) {
 		$this->queryPageInstance = $this->getDataProvider();
-
 		$content = [];
-		$res = $this->queryPageInstance->doQuery( $this->offset, $this->limit );
-		if ( $res->numRows() > 0 ) {
-			$content = $this->prepareData( $res );
+
+		/**
+		 * 1. Prepare data of articles - title, last revision, link etc.
+		 */
+		$articlesData = $this->fetchArticlesData();
+
+		if ( !empty( $articlesData ) ) {
+			$this->total = count( $articlesData );
+
+			/**
+			 * 2. Slice a sorting table to retrieve a page
+			 */
+			$this->prepareParams( $params );
+			if ( !isset( $this->sortingArray ) ) {
+				$this->sortingArray = array_keys( $articlesData );
+			}
+			$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
+
+			/**
+			 * 3. Populate $content array with data for each article id
+			 */
+			foreach ( $ids as $id ) {
+				$content[] = $articlesData[$id];
+			}
 		}
+
 		return $content;
+	}
+
+	/**
+	 * Overrides the default values used for sorting and pagination
+	 *
+	 * @param $params An array of URL parameters
+	 */
+	private function prepareParams( $params ) {
+		global $wgMemc;
+
+		if ( isset( $params['sort'] ) && isset( $this->sorting[ $params['sort'] ] ) ) {
+			$this->sortingArray = $wgMemc->get( $this->getMemcKey( $params['sort'] ) );
+		}
+
+		if ( isset( $params['limit'] ) ) {
+			if ( $params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
+				$this->limit = intval( $params['limit'] );
+			} else {
+				$this->limit = self::INSIGHTS_LIST_MAX_LIMIT;
+			}
+		}
+
+		if ( isset( $params['page'] ) ) {
+			$page = intval( $params['page'] );
+			$this->page = --$page;
+			$this->offset = $this->page * $this->limit;
+		}
+	}
+
+	/**
+	 * The main method that assembles all data on articles that should be displayed
+	 * on a given Insights subpage
+	 *
+	 * @return Mixed|null An array with data of articles i.e. title, url, metadata etc.
+	 */
+	public function fetchArticlesData() {
+		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
+		$this->cacheTtl = 259200; // Cache for 3 days
+		$articlesData = WikiaDataAccess::cache( $cacheKey, $this->cacheTtl, function () {
+			$res = $this->queryPageInstance->doQuery();
+
+			if ( $res->numRows() > 0 ) {
+				$articlesData = $this->prepareData( $res );
+
+				if ( $this->arePageViewsRequired() ) {
+					$articlesIds = array_keys( $articlesData );
+					$pageViewsData = $this->getPageViewsData( $articlesIds );
+					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
+				}
+			}
+
+			return $articlesData;
+		} );
+
+		return $articlesData;
+	}
+
+	/**
+	 * Updates the cached articleData and sorting array
+	 *
+	 * @param int $articleId
+	 */
+	public function updateInsightsCache( $articleId ) {
+		$this->updateArticleDataCache( $articleId );
+		$this->updateSortingCache( $articleId );
+	}
+
+	/**
+	 * Removes a fixed article from the articleData array
+	 *
+	 * @param int $articleId
+	 */
+	private function updateArticleDataCache( $articleId ) {
+		global $wgMemc;
+
+		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
+		$articleData = $wgMemc->get( $cacheKey );
+
+		if ( isset( $articleData[$articleId] ) ) {
+			unset( $articleData[$articleId] );
+			$wgMemc->set( $cacheKey, $articleData, $this->cacheTtl );
+		}
+	}
+
+	/**
+	 * Removes a fixed article from the sorting arrays
+	 *
+	 * @param int $articleId
+	 */
+	private function updateSortingCache( $articleId ) {
+		global $wgMemc;
+
+		foreach ( $this->sorting as $key => $flag ) {
+			$cacheKey = $this->getMemcKey( $key );
+			$sortingArray = $wgMemc->get( $cacheKey );
+
+			if ( $key = array_search( $articleId, $sortingArray ) !== false ) {
+				unset( $sortingArray[$key] );
+				$wgMemc->set( $cacheKey, $sortingArray, $this->cacheTtl );
+			}
+		}
+	}
+
+	/**
+	 * Fetches page views data for a given set of articles. The data includes
+	 * number of views for the last four time ids (data points).
+	 *
+	 * @param $articlesIds An array of IDs of articles to fetch views for
+	 * @return array An array with views for the last four time ids
+	 */
+	public function getPageViewsData( $articlesIds ) {
+		global $wgCityId;
+		/**
+		 * Get pv for the last 4 Sundays
+		 */
+		$pvTimes = InsightsHelper::getLastFourTimeIds();
+
+		$pvData = [];
+
+		foreach( $pvTimes as $timeId ) {
+			$pvData[] = DataMartService::getPageViewsForArticles( $articlesIds, $timeId, $wgCityId );
+		}
+
+		return $pvData;
+	}
+
+	/**
+	 * Sorts an array and sets it as a value in memcache. Article IDs are
+	 * keys in the array.
+	 *
+	 * @param $sortingArray The input array with
+	 * @param $key Memcache key
+	 */
+	public function createSortingArray( $sortingArray, $key ) {
+		global $wgMemc;
+
+		arsort( $sortingArray, $this->sorting[ $key ] );
+		$cacheKey = $this->getMemcKey( $key );
+
+		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), $this->cacheTtl );
+	}
+
+	/**
+	 * Calculates desirable results and aggregates them in an array.
+	 * Then, it modifies the articles data array and returns it
+	 * with the values assigned to the articles.
+	 *
+	 * For now the values are:
+	 * * PVs from the last week
+	 * * PVs from the last 4 weeks
+	 * * Views growth from a penultimate week
+	 *
+	 * @param $articlesData
+	 * @param $pageViewsData
+	 * @return mixed
+	 */
+	public function assignPageViewsData( $articlesData, $pageViewsData ) {
+		$sortingData = [];
+
+		foreach ( $articlesData as $articleId => $data ) {
+
+			$articlePV = [];
+
+			foreach ( $pageViewsData as $dataPoint ) {
+				if ( isset( $dataPoint[ $articleId ] ) ) {
+					$articlePV[] = intval( $dataPoint[ $articleId ] );
+				} else {
+					$articlePV[] = 0;
+				}
+			}
+
+			$pv28 = array_sum( $articlePV );
+			if ( $articlePV[1] != 0 ) {
+				$pvDiff = ( $articlePV[0] - $articlePV[1] ) / $articlePV[1];
+				$pvDiff = round( $pvDiff, 2 ) * 100;
+				$pvDiff .= '%';
+			} else {
+				$pvDiff = 'N/A';
+			}
+
+			$sortingData['pv7'][ $articleId ] = $articlePV[0];
+			$articlesData[ $articleId ]['metadata']['pv7'] = $articlePV[0];
+
+			$sortingData['pv28'][ $articleId ] = $pv28;
+			$articlesData[ $articleId ]['metadata']['pv28'] = $pv28;
+
+			$sortingData['pvDiff'][ $articleId ] = $pvDiff;
+			$articlesData[ $articleId ]['metadata']['pvDiff'] = $pvDiff;
+
+		}
+
+		foreach ( $this->sorting as $key => $flag ) {
+			$this->createSortingArray( $sortingData[ $key ], $key );
+		}
+
+		return $articlesData;
 	}
 
 	/**
@@ -72,9 +341,17 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				if ( $rev ) {
 					$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
 				}
-				$data[] = $article;
+
+				if ( $this->arePageViewsRequired() ) {
+					$article['metadata']['pv7'] = 0;
+					$article['metadata']['pv28'] = 0;
+					$article['metadata']['pvDiff'] = 0;
+				}
+
+				$data[ $title->getArticleID() ] = $article;
 			}
 		}
+
 		return $data;
 	}
 
@@ -115,7 +392,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return $params;
 	}
 
-
+	/**
+	 * Removes an item from the querycache table if it has been fixed
+	 *
+	 * @param $type A qc_type value
+	 * @param Title $title A Title object for the article
+	 * @return bool
+	 * @throws DBUnexpectedError
+	 */
 	public function removeFixedItem( $type, Title $title ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete(
@@ -163,5 +447,20 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		return $next;
+	}
+
+	/**
+	 * Get memcache key for insights
+	 *
+	 * @param String $params
+	 * @return String
+	 */
+	private function getMemcKey( $params ) {
+		return wfMemcKey(
+			self::INSIGHTS_MEMC_PREFIX,
+			$this->getInsightType(),
+			$params,
+			self::INSIGHTS_MEMC_VERSION
+		);
 	}
 }
