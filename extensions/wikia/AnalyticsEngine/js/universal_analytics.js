@@ -361,8 +361,9 @@
 
     /**** Include A/B testing status ****/
     if (window.Wikia && window.Wikia.AbTest) {
-        if (abCustomVarsForAds.length) {
-            window.ga.apply(window, abCustomVarsForAds);
+        var i;
+        for (i = 0; i < abCustomVarsForAds.length; i++) {
+            window.ga.apply(window, abCustomVarsForAds[i]);
         }
     }
 
