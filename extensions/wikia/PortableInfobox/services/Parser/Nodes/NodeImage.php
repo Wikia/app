@@ -8,8 +8,8 @@ class NodeImage extends Node {
 		$node = [];
 
 		$imageName = $this->getValueWithDefault( $this->xmlNode );
-		$node['value'] = $this->resolveImageUrl( $imageName );
-		$node['image'] = $imageName;
+		$node['url'] = $this->resolveImageUrl( $imageName );
+		$node['name'] = $imageName;
 		$node['alt'] = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 
 		return $node;
