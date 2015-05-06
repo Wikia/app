@@ -23,9 +23,8 @@ class PageShareHelper {
 
 	/**
 	 * Get language for Page Share service.
-	 * For anon users use the browser language from client side, if empty default to EN.
-	 * For logged in user use user's language.
-	 * Both values can be overwritten by ?uselang parameter which is passed from the client side.
+	 * Language code is sent from the client side. If it's empty, the default (en) is returned.
+	 * Both values can be overwritten by ?uselang parameter.
 	 *
 	 * @param $requestShareLang
 	 * @param $useLang

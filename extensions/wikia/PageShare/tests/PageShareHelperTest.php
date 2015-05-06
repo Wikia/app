@@ -100,56 +100,36 @@ class PageShareHelperTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getLangForPageShareDataProvider
-	 * @param $requestLang
-	 * @param $langCode
-	 * @param $isAnon
-	 * @param $acceptLanguageHeaderExists
-	 * @param $acceptLanguageHeader
+	 * @param $requestShareLang
+	 * @param $useLang
 	 * @param $expectedResult
 	 */
-	public function testGetLangForPageShare(
-		$requestLang, $langCode, $isAnon, $browserLang, $expectedResult
-	) {
-		$wgLangMock = $this->getMock( 'Language', [ 'getCode' ] );
-		$wgLangMock->expects( $this->any() )
-			->method( 'getCode' )
-			->will( $this->returnValue( $langCode ) );
-		$this->mockGlobalVariable( 'wgLang', $wgLangMock );
-
-		$wgUserMock = $this->getMock( 'User', [ 'isAnon' ] );
-		$wgUserMock->expects( $this->any() )
-			->method( 'isAnon' )
-			->will( $this->returnValue( $isAnon ) );
-		$this->mockGlobalVariable( 'wgUser', $wgUserMock );
-
-		$this->assertEquals( $expectedResult, PageShareHelper::getLangForPageShare($browserLang, $requestLang) );
+	public function testGetLangForPageShare( $requestShareLang, $useLang, $expectedResult ) {
+		$this->assertEquals( $expectedResult, PageShareHelper::getLangForPageShare( $requestShareLang, $useLang ) );
 	}
 
 	/**
 	 * Data provider for testGetLangForPageShare.
 	 *
 	 * Arguments represent following values:
-	 * 1 - $requestLang, uselang parameter value
-	 * 2 - $langCode, $wgLang->getCode value
-	 * 3 - $isAnon, $wgUser->isAnon() value
-	 * 4 - $browserLang, window,navigator.language value
-	 * 5 - $expectedResult, expected result
+	 * 1 - $requestShareLang, language requested from client side
+	 * 2 - $useLang, uselang query string parameter value
+	 * 3 - $expectedResult, expected result
 	 *
-	 * First set - anon user, language should be taken from browser language
-	 * Second set - anon user, browser language is set to "falsy" value, return default language defined in SHARE_DEFAULT_LANGUAGE
-	 * Third set - anon user, language is overwritten by ?uselang=xx
-	 * Fourth set - logged in user, language is taken from user language
-	 * Fifth set - logged in user, language is overwritten by ?uselang=xx
+	 * First set - client didn't request any language and didn't provide ?uselang=xx query string parameter,
+	 *             return default language defined in SHARE_DEFAULT_LANGUAGE
+	 * Second set - language is provided by client
+	 * Third set - language is taken from ?uselang=xx
+	 * Fourth set - language is provided by client, but it's overwritten by ?uselang=xx
 	 *
 	 * @return array
 	 */
 	public function getLangForPageShareDataProvider() {
 		return [
-			[ null, null, true, 'pl', 'pl' ],
-			[ null, null, true, false, 'en' ],
-			[ 'zh', null, true, 'pt', 'zh' ],
-			[ null, 'ru', false, null, 'ru' ],
-			[ 'ja', 'fr', false, null, 'ja' ]
+			[ null, null, 'en' ],
+			[ 'zh', null, 'zh' ],
+			[ null, 'ru', 'ru' ],
+			[ 'de', 'ja', 'ja' ]
 		];
 	}
 }
