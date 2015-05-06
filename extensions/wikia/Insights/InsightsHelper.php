@@ -49,28 +49,6 @@ class InsightsHelper {
 	];
 
 	/**
-	 * Gets pageviews for given articles
-	 *
-	 * @param array $articleIds
-	 * @param $wikiId
-	 */
-	public function getArticlesPageviews( Array $articleIds, $wikiId ) {
-		global $wgStatsDBEnabled, $wgDatamartDB;
-
-		$db = wfGetDB( DB_SLAVE, array(), $wgDatamartDB );
-
-		$sql = ( new WikiaSQL() )->skipIf( empty( $wgStatsDBEnabled ) )
-			->SELECT( 'namespace_id', 'article_id', 'pageviews as pv' )
-			->FROM( 'rollup_wiki_article_pageviews' )
-			->WHERE( 'time_id' )->EQUAL_TO( sql::RAW( 'CURDATE() - INTERVAL DAYOFWEEK(CURDATE()) - 1 DAY' ) )
-			->AND_( 'article_id' )->IN( $articleIds )
-			->AND_( 'period_id' )->EQUAL_TO( DataMartService::PERIOD_ID_WEEKLY )
-			->AND_( 'wiki_id' )->EQUAL_TO( $wikiId );
-
-		// TODO: Finish during work on dispalying page views
-	}
-
-	/**
 	 * Returns a full URL for a known subpage and a NULL for an unknown one.
 	 * @param $subpage A slug of subpage
 	 * @return String|null
@@ -165,5 +143,22 @@ class InsightsHelper {
 			];
 		}
 		return $messageKeys;
+	}
+
+	/**
+	 * Returns an array of datetime entries for the last four Sundays
+	 * (page views data is currently updated on every Sunday)
+	 *
+	 * @return array An array with dates of the last four Sundays
+	 */
+	public static function getLastFourTimeIds() {
+		$lastTimeId = ( new DateTime() )->modify( 'last Sunday' );
+		$format = 'Y-m-d H:i:s';
+		return [
+			$lastTimeId->format( $format ),
+			$lastTimeId->modify( '-1 week' )->format( $format ),
+			$lastTimeId->modify( '-2 week' )->format( $format ),
+			$lastTimeId->modify( '-3 week' )->format( $format ),
+		];
 	}
 }

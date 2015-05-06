@@ -84,23 +84,23 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 		}
 	}
 
-	.portable-infobox-comparision {
+	.portable-infobox-comparison {
 		border-collapse: collapse;
 		width: 100%;
 	}
 
-	.portable-infobox-comparision-set {
+	.portable-infobox-comparison-set {
 		display: block;
 	}
 
-	.portable-infobox-comparision-set-header {
+	.portable-infobox-comparison-set-header {
 		box-sizing: border-box;
 		display: block;
 		text-align: left;
 		width: 100%;
 	}
 
-	.portable-infobox-comparision-item {
+	.portable-infobox-comparison-item {
 		box-sizing: border-box;
 		vertical-align: top;
 		width: $infobox-width / 2;
