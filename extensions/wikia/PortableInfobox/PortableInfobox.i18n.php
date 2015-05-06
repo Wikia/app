@@ -9,5 +9,5 @@ $messages[ 'en' ] = [
 
 $messages[ 'qqq' ] = [
 	'portable-infobox-desc' => 'Portable Infobox extension description',
-	'unimplemented-infobox-tag' => 'Error message for using unimplemented infobox tag: <$1>'
+	'unimplemented-infobox-tag' => 'Error message for using unimplemented infobox tag; $1 is the tag name without pointy braces'
 ];
