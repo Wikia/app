@@ -6,7 +6,7 @@ require(['wikia.tracker'],
 			insightType;
 
 		track = Wikia.Tracker.buildTrackingFunction({
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: tracker.ACTIONS.CLICK_LINK_TEXT
 		});
 
