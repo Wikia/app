@@ -333,8 +333,12 @@ class MercuryApiController extends WikiaController {
 		$mainPageData = [];
 		$curatedContent = $this->getCuratedContentData();
 
-		if ( !empty( $curatedContent ) ) {
-			$mainPageData[ 'curatedContent' ] = $curatedContent;
+		if ( !empty( $curatedContent[ 'sections' ] ) ) {
+			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'sections' ];
+		}
+
+		if ( !empty( $curatedContent[ 'featured' ] ) ) {
+			$mainPageData[ 'featuredContent' ] = $curatedContent[ 'featured' ];
 		}
 
 		return $mainPageData;
