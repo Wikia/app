@@ -43,7 +43,12 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) 
 		var useLang = $.getUrlVar('uselang'),
 			mCache = $.getUrlVar('mcache'),
 			requestData,
-			userLang,
+			shareLang,
+			browserLang;
+
+		if (win.wgUserName) {
+			shareLang = win.wgUserLanguage;
+		} else {
 			browserLang = (
 				// Chrome and Firefox
 				win.navigator.languages ? win.navigator.languages[0] :
@@ -53,19 +58,15 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) 
 				win.navigator.browserLanguage ||
 				win.navigator.userLanguage ||
 				win.navigator.systemLanguage
-			),
-			browserLangShort;
+			);
 
-		if (win.wgUserName) {
-			userLang = win.wgUserLanguage;
-		}
-
-		if (browserLang) {
-			browserLangShort = browserLang.substr(0, 2);
+			if (browserLang) {
+				shareLang = browserLang.substr(0, 2);
+			}
 		}
 
 		requestData = {
-			shareLang: userLang || browserLangShort,
+			shareLang: shareLang,
 			isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
 		};
 
