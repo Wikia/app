@@ -68,7 +68,7 @@ class WallNotificationsExternalController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		$all = WikiaDataAccess::cache(
-			wfSharedMemcKey( __METHOD__, 'getCounts', $wgUser->getId() ),
+			wfMemcKey( __METHOD__, 'getCounts', $wgUser->getId() ),
 			self::TTL,
 			function() use ( $wn, $wgUser ) {
 				return $wn->getCounts( $wgUser->getId() );
