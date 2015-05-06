@@ -44,7 +44,16 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) 
 			mCache = $.getUrlVar('mcache'),
 			requestData,
 			userLang,
-			browserLang = (win.navigator.language || win.navigator.browserLanguage),
+			browserLang = (
+				// Chrome and Firefox
+				win.navigator.languages ? win.navigator.languages[0] :
+				// Chrome and Firefox fallback
+				win.navigator.language ||
+				// Internet Explorer
+				win.navigator.browserLanguage ||
+				win.navigator.userLanguage ||
+				win.navigator.systemLanguage
+			),
 			browserLangShort;
 
 		if (win.wgUserName) {
