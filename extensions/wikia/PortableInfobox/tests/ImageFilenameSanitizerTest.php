@@ -79,6 +79,18 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 				'en',
 				'',
 				'Empty file name'
+			],
+			[
+				'[[File:image.jpg|300px|lorem ipsum]]',
+				'es',
+				'image.jpg',
+				'Link to filename with canonical namespace, width and caption on a non-EN wiki '
+			],
+			[
+				'[[File:image.jpg|lorem ipsum]]',
+				'es',
+				'image.jpg',
+				'Link to filename with canonical namespace and caption on a non-EN wiki '
 			]
 		];
 	}

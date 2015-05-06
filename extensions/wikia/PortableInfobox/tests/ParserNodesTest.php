@@ -36,7 +36,8 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$node = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\Nodes\NodeImage' )->setConstructorArgs( [ $xml, [ 'image2' => 'aaa.jpg', 'alt-source' => 'bbb' ] ] )->setMethods( [ 'resolveImageUrl' ] )->getMock();
 		$node->expects( $this->any() )->method( 'resolveImageUrl' )->will( $this->returnValue( 'aaa.jpg' ) );
 
-		$this->assertTrue( $node->getData()[ 'value' ] == 'aaa.jpg', 'value is not aaa.jpg' );
+		$this->assertTrue( $node->getData()[ 'url' ] == 'aaa.jpg', 'value is not aaa.jpg' );
+		$this->assertTrue( $node->getData()[ 'name' ] == 'aaa.jpg', 'value is not aaa.jpg' );
 		$this->assertTrue( $node->getData()[ 'alt' ] == 'bbb', 'alt is not bbb' );
 		$this->assertTrue( $nodeDefault->getData()[ 'alt' ] == 'default-alt', 'default alt' );
 	}
