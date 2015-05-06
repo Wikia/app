@@ -33,7 +33,6 @@ class MediaWikiParserService implements ExternalParser {
 	public function parseRecursive( $wikitext ) {
 		wfProfileIn( __METHOD__ );
 		$parsed = $this->parser->internalParse( $wikitext, false, $this->frame );
-		//reverse
 		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $parsed );
 		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
 		wfProfileOut( __METHOD__ );
