@@ -49,8 +49,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function renderUnimplementedTagErrorMesssage( $tagName ) {
 		$renderedValue = '<strong class="error"> '
-			. wfMessage( 'unimplemented-infobox-tag' ) . ': '
-			. htmlspecialchars( '<' . $tagName . '>' )
+			. wfMessage( 'unimplemented-infobox-tag', [ $tagName ] )->escaped()
 			. '</strong>';
 		return $renderedValue;
 	}
