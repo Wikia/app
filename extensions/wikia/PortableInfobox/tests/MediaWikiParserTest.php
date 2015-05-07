@@ -2,7 +2,6 @@
 
 class MediaWikiParserTest extends WikiaBaseTest {
 
-
 	public function testAsideTagPWrappedDuringParsing() {
 		$aside = "<aside></aside>";
 		$result = ( new Parser() )->doBlockLevels( $aside, true );
