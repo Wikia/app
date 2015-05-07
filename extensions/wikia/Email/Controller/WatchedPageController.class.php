@@ -160,12 +160,12 @@ class WatchedPageController extends EmailController {
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 
-	protected function getEmailSpecificAdminForm() {
+	protected static function getEmailSpecificAdminForm() {
 			$form = [
 				'inputs' => [
 					[
 						'type' => 'text',
-						'name' => 'title',
+						'name' => 'pageTitle',
 						'label' => "Title of the article",
 						'tooltip' => "Name of the article (make sure it's on this wikia!)"
 					],

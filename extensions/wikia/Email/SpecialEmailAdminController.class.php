@@ -98,10 +98,12 @@ class SpecialEmailAdminController extends \WikiaSpecialPageController {
 		return $emailControllerClasses;
 	}
 
+	/**
+	 * @param \Email\EmailController $controllerClass
+	 * @return string
+	 */
 	private function getFormHtml( $controllerClass ) {
-		/** @var \Email\EmailController $controllerObject */
-		$controllerObject = new $controllerClass();
-		return \F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $controllerObject->getAdminForm() ] );
+		return \F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $controllerClass::getAdminForm() ] );
 
 	}
 }

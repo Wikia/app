@@ -527,16 +527,14 @@ abstract class EmailController extends \WikiaController {
 		}
 	}
 
-	public function getAdminForm() {
-		$foo =  array_merge_recursive(
-			$this->getBaseAdminForm(),
-			$this->getEmailSpecificAdminForm()
+	public static function getAdminForm() {
+		return array_merge_recursive(
+			self::getBaseAdminForm(),
+			static::getEmailSpecificFormFields()
 		);
-
-		return $foo;
 	}
 
-	private function getBaseAdminForm() {
+	private static function getBaseAdminForm() {
 		$baseForm = [
 			'inputs' => [
 				[
@@ -588,13 +586,13 @@ abstract class EmailController extends \WikiaController {
 				'value' => "Send Email",
 			],
 			'method' => 'post',
-			'legend' => $this->getLegendName()
+			'legend' => self::getLegendName()
 		];
 
 		return $baseForm;
 	}
 
-	private function getLegendName() {
+	private static function getLegendName() {
 		$legendName = "";
 		if ( preg_match( "/^Email\\\\Controller\\\\(.+)Controller$/", get_called_class(), $matches ) ) {
 			$legendName = $matches[1] . " Email";
@@ -603,5 +601,7 @@ abstract class EmailController extends \WikiaController {
 		return $legendName;
 	}
 
-	protected abstract function getEmailSpecificAdminForm();
+	protected static function getEmailSpecificFormFields() {
+		return [];
+	}
 }

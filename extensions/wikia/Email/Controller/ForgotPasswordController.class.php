@@ -85,8 +85,4 @@ class ForgotPasswordController extends EmailController {
 			throw new Check( 'Too many resend password requests sent' );
 		}
 	}
-
-	protected function getEmailSpecificAdminForm() {
-		return [];
-	}
 }

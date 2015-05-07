@@ -152,20 +152,18 @@ abstract class CommentController extends EmailController {
 			->parse();
 	}
 
-	protected function getEmailSpecificAdminForm() {
+	protected static function getEmailSpecificFormFields() {
 		$form = [
 			'inputs' => [
 				[
 					'type' => 'text',
 					'name' => 'pageTitle',
-					'isRequired' => true,
 					'label' => "Title of the article"
 				],
 				[
 					'type' => 'text',
 					'name' => 'currentRevId',
-					'isRequired' => true,
-					'label' => "current rev id"
+					'label' => "Current Revision ID"
 				],
 			]
 		];
