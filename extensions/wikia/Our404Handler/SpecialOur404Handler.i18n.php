@@ -143,8 +143,10 @@ N'eo ket bet kavet ar pennad '''$1'''.
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'our404handler-desc' => 'El nostre gestor per pàgines inexistents',
 	'our404handler' => 'Error 404: Pàgina no trobada!',
 	'our404handler-oops' => "Aquestes no són les pàgines que estàs buscant. Surt d'aquí, si us plau.",
 	'message404' => "'''Ho sentim molt, però per alguna raó la pàgina que busques no existeix.'''
@@ -157,9 +159,11 @@ L'article '''$1''' no s'ha trobat.
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Mormegil
  */
 $messages['cs'] = array(
+	'our404handler-desc' => 'Náš 404 handler pro neexistující stránk',
 	'our404handler' => 'Chyba 404: Stránka nenalezena!',
 	'our404handler-oops' => 'Tohle nejsou ty stránky, které hledáte. Pokračujte, prosím.',
 	'message404' => "'''Je nám to opravdu líto, ale stránka, kterou žádáte, z nějakého důvodu neexistuje.'''

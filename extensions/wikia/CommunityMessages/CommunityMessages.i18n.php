@@ -390,16 +390,18 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author LNDDYL
  */
 $messages['zh-hans'] = array(
-	'communitymessages-desc' => '社区信息的辅助扩展',
-	'communitymessages-notice-msg' => '[[Special:WikiActivity|社区信息已更新]]。',
+	'communitymessages-desc' => '社区消息的辅助扩展',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|社区消息已更新]]。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
-	'communitymessages-desc' => '社區訊息的輔助擴展功能',
-	'communitymessages-notice-msg' => '[[Special:WikiActivity|社區消息已更新]]。',
+	'communitymessages-desc' => '社群訊息的輔助擴展功能',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|社群訊息已更新]]。',
 );

@@ -261,6 +261,7 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 $messages['qqq'] = array(
 	'wikistats-desc' => '{{desc}}',
 	'wikistats_info' => '"Show statistics" refers to {{msg-wikia|wikistats_showstats_btn}}.',
+	'wikistats_comparision' => '{{Identical|Comparison}}',
 	'wikistats_showstats_btn' => 'Button text, also referenced in {{msg-wikia|wikistats_info}}.',
 	'wikiastast_refresh_data' => '{{Identical|Refresh data}}',
 	'wikistats_panel_close_btn' => 'Button text. Translate as verb.
@@ -2806,6 +2807,7 @@ $messages['fi'] = array(
 	'wikistats_video_new' => 'Uudet videot',
 	'wikistats_months_edits' => 'Muokkaajat tässä kuussa',
 	'wikistats_mediawiki_stats' => 'MediaWiki-tilastot:',
+	'wikistats_title' => 'Otsikko',
 	'wikistats_namespaces_top10list' => 'Top 10-lista',
 );
 
@@ -3498,6 +3500,7 @@ $messages['he'] = array(
 );
 
 /** Hungarian (magyar)
+ * @author Adam78
  * @author Dani
  * @author Enbéká
  * @author Glanthor Reviol
@@ -3582,7 +3585,7 @@ $messages['hu'] = array(
 	'wikistats_wikicategory' => 'Kategória:',
 	'wikistats_wikiid' => 'Azonosító:',
 	'wikistats_mean' => 'átlagos',
-	'wikistats_largerthan' => 'nagyobb mint',
+	'wikistats_largerthan' => 'nagyobb, mint',
 	'wikistats_username' => 'Felhasználó',
 	'wikistats_usernames' => 'Felhasználók',
 	'wikistats_edits' => 'szerkesztés',
@@ -3967,6 +3970,7 @@ Per favor [[Special:UserLogin|aperi un session, o crea un conto]] si tu non jam 
  * @author C5st4wr6ch
  * @author Farras
  * @author Irwangatot
+ * @author Iwan Novirion
  * @author Kenrick95
  */
 $messages['id'] = array(
@@ -3995,7 +3999,7 @@ $messages['id'] = array(
 	'wikistats_anon_wikians_count' => '$1 {{PLURAL:$1|pengguna|pengguna}} anon ditemukan',
 	'wikistats_latest_pageviews' => 'Halaman yang baru baru ini di kunjungi',
 	'wikistats_active_useredits' => 'Aktivitas bahasa',
-	'wikistats_latest_pageviews_subtitle' => 'dalam $1 menit  terakhir', # Fuzzy
+	'wikistats_latest_pageviews_subtitle' => 'dalam $1 {{PLURAL:$1|menit}} terakhir',
 	'wikistats_pageviews' => 'Halaman di lihat  per ruang nama per bulan',
 	'wikistats_article_one_link' => 'Artikel yang berisi setidaknya satu pranala internal',
 	'wikistats_recently_active_wikians' => '$1pengguna terdaftar yang aktif {{PLURAL:$1|editor|editors, ordered by number of contributions}}',
@@ -4225,11 +4229,11 @@ $messages['inh'] = array(
 	'wikistats_active_day' => 'ди',
 	'wikistats_active_month' => 'бутт',
 	'wikistats_active_year' => 'шу',
-	'wikistats_video' => 'Даьсурт',
-	'wikistats_show' => 'Хьахокха',
-	'wikistats_wikiname' => 'ЦIи:',
-	'wikistats_wikicategory' => 'Цатег:',
-	'wikistats_username' => 'Юзер цIи',
+	'wikistats_video' => 'Дийнсурт',
+	'wikistats_show' => 'Гойта',
+	'wikistats_wikiname' => 'Ц|и:',
+	'wikistats_wikicategory' => 'Катаг:',
+	'wikistats_username' => 'Доакъошхо',
 	'wikistats_edits' => 'хувца',
 	'wikistats_words' => 'дешаш',
 	'wikistats_image_namespace' => 'сурт',
@@ -4860,6 +4864,7 @@ $messages['ko'] = array(
 	'wikistats_edits' => '편집',
 	'wikistats_bytes' => '바이트',
 	'wikistats_size' => '크기',
+	'wikistats_interwiki' => '인터위키',
 	'wikistats_external' => '바깥',
 	'wikistats_rollups' => '총정리',
 	'wikistats_namespaces' => '이름공간',
@@ -6361,6 +6366,7 @@ $messages['mzn'] = array(
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
+	'wikistats-desc' => 'Samler et stort spektrum av statistikk for denne wikien og legger til et grensesnitt for å bla i det. Inspirert av og delvis basert på den originale [https://meta.wikimedia.org/wiki/Wikistats WikiStats] av Erik Zachte.',
 	'wikistats' => 'Wikiastatistikk',
 	'wikistats_wikia' => 'Wikia',
 	'wikistats_pagetitle' => 'Wikiastatistikk',
@@ -7030,14 +7036,17 @@ $messages['pfl'] = array(
  * @author Chrumps
  * @author Deejay1
  * @author Marcin Łukasz Kiejzik
+ * @author Pio387
  * @author Ponurak
  * @author Rzuwig
  * @author Shareif
  * @author Sovq
  * @author Sp5uhe
+ * @author VerMa
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'wikistats-desc' => 'Gromadzi statystyki wiki i umożliwia ich przeglądanie. Inspirowane i częściowo wykonane na podstawie rozszerzenia [http://meta.wikimedia.org/wiki/Wikistats WikiStats] napisanego przez Erika Zachte',
 	'wikistats' => 'Statystyki Wikii',
 	'wikistats_wikia' => 'Wikia',
 	'wikistats_pagetitle' => 'Statystyki Wikii',
@@ -7057,7 +7066,7 @@ $messages['pl'] = array(
 	'wikistats_invalid_date' => 'Niepoprawny zakres czasu',
 	'wikistats_distrib_article' => 'Rozkład aktywności edytorów',
 	'wikistats_breakdown_editors' => 'Aktywność edytorów',
-	'wikistats_breakdown_anons' => 'Aktywność niezarejstr. uż.',
+	'wikistats_breakdown_anons' => 'Aktywność niezarejestr. uż.',
 	'wikistats_active_absent_wikians' => 'Aktywność zarejestrowanych edytorów',
 	'wikistats_anon_wikians' => 'Zestawienie aktywności anonimowych edytorów',
 	'wikistats_anon_wikians_count' => 'znaleziono $1 {{PLURAL:$1|anonimowego użytkownika|anonimowych użytkowników}}',
@@ -7547,9 +7556,11 @@ $messages['ps'] = array(
 	'wikistats_size' => 'کچه',
 	'wikistats_words' => 'وييونه',
 	'wikistats_internal' => 'کورنۍ',
+	'wikistats_interwiki' => 'ويکي خپلمنځي',
 	'wikistats_image' => 'انځور',
 	'wikistats_external' => 'باندنۍ',
 	'wikistats_namespaces' => 'نوم-تشيالونه',
+	'wikistats_redirects' => 'مخ گرځېدنې',
 	'wikistats_main_namespace' => 'آرنی',
 	'wikistats_image_namespace' => 'انځور',
 	'wikistats_page_requests' => 'د مخ غوښتنې',
@@ -7580,6 +7591,8 @@ $messages['ps'] = array(
 	'wikistats_trend_where_text' => 'چېرته:',
 	'wikistats_trend_all_wikia_text' => 'ټولې ويکي گانې',
 	'wikistats_always_selected' => '(تل ټاکل شوی)',
+	'wikistats_select_statistics' => 'شمارنې ټاکل',
+	'wikistats_select_wikia_statistics' => 'د $1 ويکييا لپاره شمارنې ټاکل',
 	'wikistats_full_dump_stats' => 'بشپړ',
 	'wikistats_current_dump_stats' => 'اوسنی',
 	'wikistats_xls_cancel' => 'ناگارل',
@@ -7607,16 +7620,23 @@ $messages['ps'] = array(
 	'wikistats_content' => 'منځپانگه',
 	'wikistats_content_editors' => 'د مېنځپانگې سمونگران',
 	'wikistats_userns' => 'کارن',
+	'wikistats_code_version' => 'کوډ بڼه:',
 	'wikistats_mediawiki_stats' => 'ميډياويکي شمار:',
+	'wikistats_statistics_information' => 'د شمارنو مالومات',
+	'wikistats_nbr_kilo' => 'كيلو = x ١٠٠٠',
+	'wikistats_nbr_mega' => 'مېگا = كيلو x ١٠٠٠',
+	'wikistats_nbr_giga' => 'گېگا = مېگا x ١٠٠٠',
 	'wikistats_month' => 'مياشتنی شمار',
 	'wikistats_current_month' => 'اوسنۍ مياشت',
 	'wikistats_see_also' => 'دا هم وگورۍ:',
 	'wikistats_language_top' => 'د سر $1 ژبې',
 	'wikistats_language_all' => 'ټولې ژبې',
 	'wikistats_title' => 'سرليک',
+	'wikistats_summary_data' => 'لنډيز اومتوک',
 	'wikistats_namespaces_talk' => 'خبرې اترې (تبصرې سره نغاړل)',
 	'wikistats_namespaces_top10list' => 'د سر 10 لړليکونه',
 	'wikistats_namespaces_blog' => 'بلاگونه (د بلاگ او بلاگ تبصرو په گډون)',
+	'wikistats_namespaces_user' => 'کارن (د کارن خبرو اترو په گډون)',
 );
 
 /** Portuguese (português)
@@ -8197,9 +8217,11 @@ $messages['roa-tara'] = array(
  * @author G0rn
  * @author Kuzura
  * @author Lockal
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'wikistats-desc' => 'Собирает большой объём статистических данных для этого вики-проекта и добавляет пользовательский интерфейс для их просмотра. Частично основан на [http://meta.wikimedia.org/wiki/Wikistats WikiStats], написанном Эриком Захте',
 	'wikistats' => 'Статистика Викии',
 	'wikistats_wikia' => 'Викия',
 	'wikistats_pagetitle' => 'Статистика Викии',
@@ -9438,9 +9460,11 @@ $messages['tzm'] = array(
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
+	'wikistats-desc' => 'Збирає великий масив статистичних даних для цієї Вікі і додає GUI, щоб їх переглянути. Натхненно і частково на основі оригіналу [http://meta.wikimedia.org/wiki/Wikistats WikiStats] написав Ерік Zachte',
 	'wikistats' => 'Вікія Статистика',
 	'wikistats_wikia' => 'Вікія',
 	'wikistats_pagetitle' => 'Вікія Статистика',
@@ -10044,6 +10068,8 @@ $messages['zh-hans'] = array(
 	'wikistats_latest_pageviews_subtitle' => '在最近$1分钟',
 	'wikistats_pageviews' => '每月各个命名空间的页面浏览量',
 	'wikistats_article_one_link' => '包含至少一个内部链接的条目',
+	'wikistats_recently_active_wikians' => '$1位最近活跃的注册{{PLURAL:$1|编辑者|编辑者，按贡献数排列}}',
+	'wikistats_recently_absent_wikians' => '$1位最近缺席的注册{{PLURAL:$1|编辑者|编辑者，按贡献数排列}}',
 	'wikistats_active_wikians_subtitle' => '只计入内容名字空间的编辑，除了“{{int:wikiastats_other}}”列之外',
 	'wikistats_anon_wikians_subtitle' => '仅计算内容名称空间的编辑',
 	'wikistats_active_wikians_subtitle_info' => 'Δ = 范围内变化',
@@ -10089,7 +10115,7 @@ $messages['zh-hans'] = array(
 	'wikistats_wikiname' => '名：',
 	'wikistats_wikidbname' => '数据库名：',
 	'wikistats_wikicategory' => '分类：',
-	'wikistats_wikiid' => 'ID:',
+	'wikistats_wikiid' => 'ID：',
 	'wikistats_mean' => '意思',
 	'wikistats_largerthan' => '超过',
 	'wikistats_username' => '用户',
@@ -10153,6 +10179,7 @@ $messages['zh-hans'] = array(
 	'wikistats_trend_mean_info' => '意味着 = 在已显示月份的平均数量',
 	'wikistats_trend_value' => '值',
 	'wikistats_trend_formula' => '数学公式',
+	'wikistats_trend_ordered' => '所有wiki都按条目数排列。<br />选择这些统计的一部分：',
 	'wikistats_trend_where_text' => '地点：',
 	'wikistats_trend_all_wikia_text' => '所有wiki',
 	'wikistats_always_selected' => '（总是选中）',
@@ -10331,7 +10358,7 @@ $messages['zh-hant'] = array(
 	'wikistats_external' => '外部',
 	'wikistats_rollups' => '匯總',
 	'wikistats_namespaces' => '命名空間',
-	'wikistats_redirects' => '重定向',
+	'wikistats_redirects' => '重新導向',
 	'wikistats_edited_in_namespace' => '在命名空間中進行編輯',
 	'wikistats_main_namespace' => '主',
 	'wikistats_image_namespace' => '圖片',
@@ -10366,7 +10393,7 @@ $messages['zh-hant'] = array(
 	'wikistats_search_text' => '搜尋：',
 	'wikistats_lifetime_editors' => '編輯者總數',
 	'wikistats_article_total' => '條目總數',
-	'wikistats_blog_created' => '已創建的部落格',
+	'wikistats_blog_created' => '已建立的部落格',
 	'wikistats_blog_comment' => '部落格評論',
 	'wikistats_photo_new' => '新照片',
 	'wikistats_video_new' => '新影片',

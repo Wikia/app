@@ -114,8 +114,10 @@ $messages['br'] = array(
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
  * @author Roxas Nobody 15
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'partner-feed-desc' => 'Extensió de Partner Feed',
 	'partner-feed-achievements-leaderboard' => 'Taula de líders amb més exits',
 	'partner-feed-earned-badges' => 'Recentment va guanyar insígnies per a un determinat Wiki',
 	'partner-feed-recent-blog-posts' => 'Darreres entrades del bloc relacionades amb la promoció',
@@ -399,10 +401,19 @@ $messages['kn'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
+	'partner-feed-desc' => '파트너 피드 확장 기능',
+	'partner-feed-achievements-leaderboard' => '위키 도전 과제 리더보드',
+	'partner-feed-earned-badges' => '최근 특정 위키에서 얻은 배지',
+	'partner-feed-recent-blog-posts' => '홍보와 연관된 최근 블로그 글',
+	'partner-feed-latest-images' => '가장 최근에 올라온 그림 목록',
+	'partner-feed-hotcontent' => '편집자 수에 따라 매겨진, 허브 및 분야의 "핫 콘텐츠"',
+	'partner-feed-recent-blog-comments' => '특정 블로그 글과 연관된 최근 덧글',
+	'partnerfeed' => '파트너 피드',
 	'feed-title-blogposts' => '최근 블로그 게시물',
 	'feed-title-recent-badges' => '최근 배지',
 	'feed-title-recent-images' => '최근 그림',
 	'feed-title-leaderboard' => '배지 현황판',
+	'feed-main-title' => '위키아 파트너 피드',
 	'feed-title-recentchanges' => '최근 바뀜',
 );
 
@@ -462,7 +473,7 @@ $messages['mk'] = array(
 	'feed-title-recent-badges' => 'Скорешни значки',
 	'feed-title-recent-images' => 'Скорешни слики',
 	'feed-title-leaderboard' => 'Предводници',
-	'feed-main-title' => 'Партнерски канал',
+	'feed-main-title' => 'Партнерска испорака',
 	'all-blog-posts' => 'сите категории',
 	'blog-posts-from-listing' => 'од списокот: $1',
 	'feed-title-hot-content' => 'Актуелна содржина - $1',
@@ -746,6 +757,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'partner-feed-desc' => 'Tillägg för partnersmatning',
 	'partner-feed-achievements-leaderboard' => 'Wikins topplista för utmärkelser',
 	'partner-feed-earned-badges' => 'Nyligen tjänade emblem för en viss Wiki',
 	'partner-feed-recent-blog-posts' => 'Senaste blogginläggen med anknytning till en befordran',
@@ -908,6 +920,6 @@ $messages['zh-hans'] = array(
  * @author EagerLin
  */
 $messages['zh-hant'] = array(
-	'partner-feed-recent-changes' => '近期變更',
-	'feed-title-recentchanges' => '近期變更',
+	'partner-feed-recent-changes' => '近期變動',
+	'feed-title-recentchanges' => '近期變動',
 );

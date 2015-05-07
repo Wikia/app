@@ -1,4 +1,4 @@
-<footer class="global-footer row">
+<footer class="global-footer">
 	<nav>
 		<div class="branding <?= ( !empty( $verticalShort ) ? 'vertical-' . $verticalShort : '' ); ?> <?= ( !$isCorporate ? 'black' : '' ); ?>">
 			<a class="wikia-logo" href="<?=Sanitizer::encodeAttribute( $logoLink ); ?>">

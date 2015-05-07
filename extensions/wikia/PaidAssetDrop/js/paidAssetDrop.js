@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.paidAssetDrop.paidAssetDrop', [
+	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
-], function (log, Querystring, win) {
+], function (instantGlobals, log, QueryString, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.paidAssetDrop.paidAssetDrop',
@@ -12,7 +13,7 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 			mobile: 'MediaWiki:PAD_mobile.html'
 		},
 		apiEntryPoint = '/api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=',
-		qs = new Querystring(),
+		qs = new QueryString(),
 		$ = win.$;
 
 	log('Paid Asset Drop (PAD) loaded', 'debug', logGroup);
@@ -60,6 +61,11 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 		if (isForced()) {
 			log('PAD enabled (forced)', 'debug', logGroup);
 			return true;
+		}
+
+		if (instantGlobals.wgSitewideDisablePaidAssetDrop) {
+			log('PAD disabled through instantGlobals.wgSitewideDisablePaidAssetDrop', 'debug', logGroup);
+			return false;
 		}
 
 		if (!isConfigValid(paidAssetDropConfig)) {

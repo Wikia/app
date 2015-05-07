@@ -11,8 +11,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 		return [
 			[
 				'service' => [
-					'title' => 'Service',
-					'url' => 'http://service.example.com',
 					'name' => 'service',
 					'languages:include' => ['en'],
 					'languages:exclude' => [],
@@ -23,8 +21,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 			],
 			[
 				'service' => [
-					'title' => 'Service',
-					'url' => 'http://service.example.com',
 					'name' => 'service',
 				],
 				'language' => 'en',
@@ -33,8 +29,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 			],
 			[
 				'service' => [
-					'title' => 'Service',
-					'url' => 'http://service.example.com',
 					'name' => 'service',
 				],
 				'language' => 'ja',
@@ -43,8 +37,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 			],
 			[
 				'service' => [
-					'title' => 'Service',
-					'url' => 'http://service.example.com',
 					'name' => 'service',
 				],
 				'language' => 'ja',
@@ -53,7 +45,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 			],
 			[
 				'service' => [
-					'url' => 'http://service.example.com',
 					'name' => 'service',
 				],
 				'language' => 'en',
@@ -62,7 +53,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 			],
 			[
 				'service' => [
-					'title' => 'Service',
 					'name' => 'service',
 				],
 				'language' => 'en',
@@ -71,8 +61,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 			],
 			[
 				'service' => [
-					'title' => 'Service',
-					'url' => 'http://service.example.com',
 				],
 				'language' => 'en',
 				'isTouchScreen' => 0,
@@ -80,8 +68,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 			],
 			[
 				'service' => [
-					'title' => 'Service',
-					'url' => 'http://service.example.com',
 					'name' => 'service',
 					'languages:exclude' => ['de'],
 				],
@@ -91,8 +77,6 @@ class PageShareHelperTest extends WikiaBaseTest {
 			],
 			[
 				'service' => [
-					'title' => 'Service',
-					'url' => 'http://service.example.com',
 					'name' => 'service',
 					'languages:include' => ['en', 'de', 'zh'],
 				],

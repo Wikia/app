@@ -282,6 +282,7 @@ class User {
             $table = $wgHeliosRegistrationShadowMode ? 'user_helios' : '`user`';
 
             $dbw = \wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+            $dbw->commit(); // PLATFORM-1151 This commit is required in order to refresh the database state.
             $heliosUserId = $dbw->selectField( $table, 'user_id', [ 'user_name' => $User->mName ], __METHOD__ );
 
             if ( $heliosUserId ) {
