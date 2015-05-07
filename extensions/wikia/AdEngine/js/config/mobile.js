@@ -52,11 +52,3 @@ define('ext.wikia.adEngine.config.mobile', [
 		getProviderList: getProviderList
 	};
 });
-
-// Can be removed after ADEN-1921 is done
-define('ext.wikia.adEngine.adConfigMobile', [
-	'ext.wikia.adEngine.config.mobile'
-], function (configMobile) {
-	'use strict';
-	return configMobile;
-});
