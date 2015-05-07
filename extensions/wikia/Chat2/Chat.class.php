@@ -11,8 +11,8 @@ class Chat {
 	const HTTP_HEADER_XFF = 'X-FORWARDED-FOR';
 	const HTTP_HEADER_USER_AGENT = 'USER-AGENT';
 
-	// Cache ban info for 5m
-	const BAN_INFO_TTL = 300;
+	// Cache ban info for 24h, 24*60*60 = 86400
+	const BAN_INFO_TTL = 86400;
 
 	/**
 	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
