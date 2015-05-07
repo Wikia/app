@@ -816,7 +816,7 @@ Vols controlar els correus que reps? Vés a: {{fullurl: {{ns:special}}:Preferèn
 $messages['ce'] = array(
 	'usersignup-confirm-email-update' => 'Карлаяккха',
 	'usersignup-resend-email-heading-success' => 'Керла хаам дӀабахийтина',
-	'usersignup-reconfirmation-email_subject' => 'Бакъде электронан почтан адрес хуьйцуш хилар Вики чохь',
+	'usersignup-reconfirmation-email_subject' => 'Бакъде электронан поштан адрес хуьйцуш хилар Вики чохь',
 	'usersignup-welcome-email-learn-basic-button' => 'Дехьа гӀо',
 );
 
@@ -918,7 +918,7 @@ $messages['cy'] = array(
 $messages['de'] = array(
 	'usersignup-page-title' => 'Mach mit bei Wikia',
 	'usersignup-page-title-wikiamobile' => 'Benutzerkonto erstellen',
-	'usersignup-page-captcha-label' => 'Spam-Schutz:',
+	'usersignup-page-captcha-label' => 'Spam-Schutz:', # Fuzzy
 	'usersignup-error-username-length' => 'Der Benutzername darf nicht länger als {{PLURAL:$1|ein Zeichen|$1 Zeichen}} sein.',
 	'usersignup-error-invalid-user' => 'Ungültiger Benutzer. Bitte zuerst anmelden.',
 	'usersignup-error-invalid-email' => 'Bitte eine gültige E-Mail-Adresse angeben.',
@@ -929,7 +929,7 @@ $messages['de'] = array(
 	'usersignup-error-throttled-email' => 'Es wurden zuviele Bestätigungs-E-Mails am selben Tag angefordert, bitte später noch einmal probieren.',
 	'usersignup-error-too-many-changes' => 'Für heute wurde das Maximum an Änderungen der Mail-Adresse erreicht, bitte später noch einmal probieren.',
 	'usersignup-error-password-length' => 'Das Passwort darf nicht länger als 50 Zeichen sein.',
-	'usersignup-error-confirmed-user' => 'Scheinbar ist die E-Mail-Adresse als $1 bereits bestätigt! Bitte in den [$2 Einstellungen] nachsehen. ',
+	'usersignup-error-confirmed-user' => 'Scheinbar ist die E-Mail-Adresse als $1 bereits bestätigt! Bitte in den [$2 Einstellungen] nachsehen.', # Fuzzy
 	'usersignup-facebook-heading' => 'Anmeldung abschließen',
 	'usersignup-facebook-create-account' => 'Benutzerkonto anlegen',
 	'usersignup-facebook-email-tooltip' => 'Die E-Mail-Adresse kann später auch noch in den Einstellungen zu einer anderen Adresse geändert werden.',
@@ -1065,7 +1065,7 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 	'usersignup-marketing-creativity-heading' => 'Sei originell',
 	'usersignup-marketing-creativity' => 'Nutze Wikia und bringe deine Kreativität über Umfragen und Top-10-Listen, Foto- und Video-Galerien, Apps und mehr zum Ausdruck',
 	'usersignup-createaccount-byemail' => 'Ein Konto für jemand anderen erstellen',
-	'usersignup-error-captcha' => 'Das eingegebene Wort ist nicht identisch mit dem Wort in der Box. Versuche es noch einmal!',
+	'usersignup-error-captcha' => 'Das eingegebene Wort ist nicht identisch mit dem Wort in der Box. Versuche es noch einmal!', # Fuzzy
 	'usersignup-account-creation-heading' => 'Erfolg!',
 	'usersignup-account-creation-subheading' => 'Wir haben eine E-Mail an $1 geschickt.',
 	'usersignup-account-creation-email-sent' => 'Du hast die Erstellung eines Benutzerkontos für $2 eingeleitet. Wir haben eine Mail an $1 mit einem temporären Passwort und einem Bestätigungslink versandt.
@@ -1123,10 +1123,6 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 	'usersignup-facebook-problem' => 'Es gab ein Problem bei der Kommunikation mit Facebook. Bitte versuche es später noch einmal.',
 	'usersignup-facebook-signup-header' => 'Ein neues Benutzerkonto erstellen?',
 	'usersignup-facebook-login-header' => 'Hast du bereits ein Benutzerkonto?',
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email_body-HTML' => '',
-	'usersignup-account-creation-email-body-HTML' => '',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 );
 
 /** Zazaki (Zazaki)
@@ -1179,7 +1175,7 @@ $messages['es'] = array(
 	'usersignup-error-throttled-email' => '¿Qué ha pasado? Has solicitado demasiados mensajes de confirmación por hoy. Inténtalo de nuevo más tarde.',
 	'usersignup-error-too-many-changes' => 'Has alcanzado el límite máximo de hoy para cambiar el correo electrónico. Por favor, inténtalo de nuevo más tarde.',
 	'usersignup-error-password-length' => 'Eso fue un poco exagerado. Tu contraseña es demasiado larga. Elige una contraseña de 50 caracteres o menos.',
-	'usersignup-error-confirmed-user' => '¡Parece que ya has confirmado tu correo electrónico para $1! Revisa tu [$2 perfil de usuario].',
+	'usersignup-error-confirmed-user' => '¡Parece que ya has confirmado tu correo electrónico para $1! Revisa tu [$2 perfil de usuario].', # Fuzzy
 	'usersignup-facebook-heading' => 'Termina de registrarte',
 	'usersignup-facebook-create-account' => 'Crear una cuenta',
 	'usersignup-facebook-email-tooltip' => 'Si deseas utilizar un correo electrónico diferente, puedes cambiarlo después en tus preferencias.',
@@ -1317,7 +1313,7 @@ Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com
 	'usersignup-marketing-creativity-heading' => 'Sé original',
 	'usersignup-marketing-creativity' => 'Usa Wikia para expresar tu creatividad con encuestas y listas, galerías de imágenes y vídeos, aplicaciones y más.',
 	'usersignup-createaccount-byemail' => 'Crear una cuenta para alguien más',
-	'usersignup-error-captcha' => 'La respuesta del reto ha fallado, ¡por favor inténtalo de nuevo!',
+	'usersignup-error-captcha' => 'La respuesta del reto ha fallado, ¡por favor inténtalo de nuevo!', # Fuzzy
 	'usersignup-account-creation-heading' => '¡Conseguido!',
 	'usersignup-account-creation-subheading' => 'Hemos enviado un correo electrónico a $1',
 	'usersignup-account-creation-email-sent' => 'Has comenzado el proceso de creación de una cuenta de usuario con el nombre $2. Hemos enviado un correo electrónico a $1 con una contraseña temporal y un enlace de confirmación. 
@@ -1373,20 +1369,20 @@ Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com
 	'usersignup-facebook-problem' => 'Hubo un problema de comunicación con Facebook. Inténtalo de nuevo más tarde.',
 	'usersignup-facebook-signup-header' => '¿Creando una nueva cuenta?',
 	'usersignup-facebook-login-header' => '¿Ya tienes una cuenta?',
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email_body-HTML' => '',
-	'usersignup-account-creation-email-body-HTML' => '',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 );
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Mjbmr
+ * @author Movyn
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'usersignup-page-title-wikiamobile' => 'ایجاد حساب کاربری',
-	'usersignup-error-invalid-email' => 'لطفاً یک نشانی رایانامه‌ای معتبر وارد کنید.',
+	'usersignup-error-invalid-email' => 'لطفاً یک آدرس ایمیل معتبر وارد کنید.',
 	'usersignup-facebook-create-account' => 'ایجاد حساب کاربری',
+	'usersignup-user-pref-emailnotauthenticated' => 'ایمیل خود را چک کنید و برای تایید ایمیل خود و پایان تغییرات روی لینک تایید کلیک کنید. ایمیل: $1',
+	'usersignup-confirm-email-change-email' => 'تغییر آدرس ایمیل من',
 	'usersignup-confirm-email-update' => 'به روز رسانی',
 	'usersignup-confirmation-email-greeting' => 'سلام $USERNAME،',
 	'usersignup-confirmation-email-signature' => 'تیم ویکیا',
@@ -1406,6 +1402,7 @@ $messages['fa'] = array(
  */
 $messages['fi'] = array(
 	'usersignup-page-title' => 'Liity Wikiaan',
+	'usersignup-page-title-wikiamobile' => 'Luo käyttäjätili',
 	'usersignup-page-captcha-label' => 'Testi',
 	'usersignup-error-username-length' => 'Oho! Käyttäjänimessäsi ei voi olla enempää kuin {{PLURAL:$1|one character|$1 characters}}.',
 	'usersignup-error-invalid-user' => 'Virheellinen käyttäjä. Kirjaudu ensin sisään.',
@@ -1414,13 +1411,27 @@ $messages['fi'] = array(
 	'usersignup-error-empty-email' => 'Oho! Lisää sähköpostiosoitteesi.',
 	'usersignup-error-empty-username' => 'Oho! Lisää kenttään käyttäjänimesi.',
 	'usersignup-error-already-confirmed' => 'Olet jo vahvistanut tämän sähköpostiosoitteen.',
+	'usersignup-error-throttled-email' => 'Oho! Olet pyytänyt liikaa lähetettäväksi sähköpostin vahvistusviestejä Yritä uudelleen hetken päästä.',
+	'usersignup-error-too-many-changes' => 'Olet jo tehnyt maksimimäärän sähköpostimuutoksia tänään. Yritä myöhemmin uudelleen.',
 	'usersignup-error-password-length' => 'Oho! Salasanasi on liian pitkä. Valitse salasana, jossa on 50 merkkiä tai vähemmän.',
+	'usersignup-error-confirmed-user' => "Looks like you've already confirmed your email address for $1!  Check out your [$2 user profile].", # Fuzzy
+	'usersignup-facebook-heading' => 'Viimeistele rekisteröityminen',
+	'usersignup-facebook-create-account' => 'Luo käyttäjätili',
 	'usersignup-facebook-email-tooltip' => 'Jos haluat käyttää toista sähköpostiosoitetta voit muuttaa myöhemmin henkilökohtaisissa asetuksissasi.',
 	'usersignup-facebook-have-an-account-heading' => 'Onko sinulla jo käyttäjätili?',
+	'usersignup-facebook-have-an-account' => 'Yhdistä jo olemassa oleva Wikia-käyttäjänimesi mieluummin Facebookiin.',
+	'usersignup-facebook-proxy-email' => 'Tuntematon Facebook-sähköpostiosoite',
 	'usersignup-user-pref-emailconfirmlink' => 'Pyydä uutta sähköpostin vahvistusviestiä',
 	'usersignup-user-pref-confirmemail_send' => 'Lähetä uusi sähköpostin vahvistusviesti',
 	'usersignup-user-pref-emailauthenticated' => 'Kiitos! Sähköpostisi vahvistettiin $2 kello $3.',
+	'usersignup-user-pref-emailnotauthenticated' => 'Tarkista sähköpostisi ja klikkaa vahvistuslinkkiä viimeistelläksesi muuttaen sähköpostiksesi $1',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Voi ei! Sähköpostiosoitettasi ei ole vahvistettu. Sähköpostin ominaisuudet eivät toimi, ennen kuin vahvistat sähköpostiosoitteesi.',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'Melkein valmis! Olemme lähettänyt uuden vahvistusviestin osoitteeseen $1. Tarkista sähköpostisi ja klikkaa linkkiä viimeistelläksesi sähköpostiosoitteesi vahvistaminen.',
+	'usersignup-user-pref-noemailprefs' => 'Näyttää siltä, että meillä ei ole sähköpostiosoitettasi. Kirjoita säshköpostiosoitteesi yläpuolelle.',
+	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Voi ei! Sähköpostiosoitettasi ei ole vahvistettu. Olemme lähettäneet sinulle sähköpostiin. Klikkaa vahvistuslinkkiä vahvistaaksesi osoite.',
+	'usersignup-user-pref-confirmemail_noemail' => 'Näyttää siltä, että meillä ei ole sähköpostiosoitettasi. Siirry [[Toiminnot:Asetukset|käyttäjäasetuksiin]] kirjoittaaksesi se.', # Fuzzy
 	'usersignup-confirm-page-title' => 'Vahvista sähköpostiosoitteesi',
+	'usersignup-confirm-page-title-wikiamobile' => 'Tarkista sähköpostiosoitteesi',
 	'usersignup-confirm-email-resend-email' => 'Lähetä minulle toinen sähköpostiosoitteen vahvistusviesti',
 	'usersignup-confirm-email-change-email-content' => 'Haluan käyttää toista sähköpostiosoitetta.',
 	'usersignup-confirm-email-change-email' => 'Muuta sähköpostiosoitteeni',
@@ -1432,9 +1443,13 @@ $messages['fi'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Onnittelut!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Olet jo vahvistanut',
 	'usersignup-confirmation-heading' => 'Melkein valmis',
+	'usersignup-confirmation-heading-wikiamobile' => 'Tarkista sähköpostiosoitteesi',
 	'usersignup-confirmation-heading-email-resent' => 'Uusi sähköpostiviesti lähetetty',
 	'usersignup-confirmation-subheading' => 'Tarkista sähköpostiosoitteesi',
 	'usersignup-confirmation-email-sent' => "Olemme lähettäneet sinulle sähköpostia osoitteeseen '''$1'''.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Olemme lähettäneet sinulle sähköpostia osoitteeseen '''$1'''.
+
+Klikkaa sähköpostiviestissäsi olevaa vahvistuslinkkiä viimeistelläksesi kyttäjätilisi luominen. Kiitos!",
 	'usersignup-confirmation-email_subject' => 'Melkein valmis! Vahvista Wikia-tilisi',
 	'usersignup-confirmation-email-greeting' => 'Hei $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Olet yhden askeleen päässä käyttäjätilin luomisesta Wikiaan! Napsauta alla olevaa linkkiä ja vahvistaaksesi sähköpostiosoitteesi ja aloittaaksesi.
@@ -1478,27 +1493,6 @@ Tarkistaaksesi Wikian viimeismmät tapahtumat, vieraile sivulla http://yhteiso.w
 Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetukset}}',
 	'usersignup-welcome-email-subject' => 'Tervetuloa Wikiaan, $USERNAME!',
 	'usersignup-welcome-email-greeting' => 'Hei $USERNAME',
-	'usersignup-page-title-wikiamobile' => 'Luo käyttäjätili',
-	'usersignup-error-throttled-email' => 'Oho! Olet pyytänyt liikaa lähetettäväksi sähköpostin vahvistusviestejä Yritä uudelleen hetken päästä.',
-	'usersignup-error-too-many-changes' => 'Olet jo tehnyt maksimimäärän sähköpostimuutoksia tänään. Yritä myöhemmin uudelleen.',
-	'usersignup-error-confirmed-user' => "Looks like you've already confirmed your email address for $1!  Check out your [$2 user profile].",
-	'usersignup-facebook-heading' => 'Viimeistele rekisteröityminen',
-	'usersignup-facebook-create-account' => 'Luo käyttäjätili',
-	'usersignup-facebook-have-an-account' => 'Yhdistä jo olemassa oleva Wikia-käyttäjänimesi mieluummin Facebookiin.',
-	'usersignup-facebook-proxy-email' => 'Tuntematon Facebook-sähköpostiosoite',
-	'usersignup-user-pref-emailnotauthenticated' => 'Tarkista sähköpostisi ja klikkaa vahvistuslinkkiä viimeistelläksesi muuttaen sähköpostiksesi $1',
-	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Voi ei! Sähköpostiosoitettasi ei ole vahvistettu. Sähköpostin ominaisuudet eivät toimi, ennen kuin vahvistat sähköpostiosoitteesi.',
-	'usersignup-user-pref-reconfirmation-email-sent' => 'Melkein valmis! Olemme lähettänyt uuden vahvistusviestin osoitteeseen $1. Tarkista sähköpostisi ja klikkaa linkkiä viimeistelläksesi sähköpostiosoitteesi vahvistaminen.',
-	'usersignup-user-pref-noemailprefs' => 'Näyttää siltä, että meillä ei ole sähköpostiosoitettasi. Kirjoita säshköpostiosoitteesi yläpuolelle.',
-	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Voi ei! Sähköpostiosoitettasi ei ole vahvistettu. Olemme lähettäneet sinulle sähköpostiin. Klikkaa vahvistuslinkkiä vahvistaaksesi osoite.',
-	'usersignup-user-pref-confirmemail_noemail' => 'Näyttää siltä, että meillä ei ole sähköpostiosoitettasi. Siirry [[Toiminnot:Asetukset|käyttäjäasetuksiin]] kirjoittaaksesi se.',
-	'usersignup-confirm-page-title-wikiamobile' => 'Tarkista sähköpostiosoitteesi',
-	'usersignup-confirmation-heading-wikiamobile' => 'Tarkista sähköpostiosoitteesi',
-	'usersignup-confirmation-email-sent-wikiamobile' => "Olemme lähettäneet sinulle sähköpostia osoitteeseen '''$1'''.
-
-Klikkaa sähköpostiviestissäsi olevaa vahvistuslinkkiä viimeistelläksesi kyttäjätilisi luominen. Kiitos!",
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email_body-HTML' => '',
 	'usersignup-welcome-email-heading' => 'Meillä on ilo toivottaa sinut tervetulleeksi Wikiaan sekä {{SITENAME}}-sivustolle! Tässä muutamia asioita, joita voit tehdä päästäksesi alkuun.',
 	'usersignup-welcome-email-edit-profile-heading' => 'Muokkaa profiiliasi.',
 	'usersignup-welcome-email-edit-profile-content' => 'Lisää profiilikuva ja muutamia asioita itsestäsi {{SITENAME}}-profiiliisi.',
@@ -1545,7 +1539,7 @@ Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetuks
 	'usersignup-heading' => 'Liity Wikiaan tänään',
 	'usersignup-heading-byemail' => 'Luo käyttäjätilli jollekulle toiselle',
 	'usersignup-marketing-wikia' => 'Aloita avustaminen miljoonien ympäri maailmaa tulevien ihmisten kanssa, jotka kokoontuvat jakamaan tietonsa sekä rakkautensa siihen.',
-	'usersignup-marketing-login' => 'Oletko jo käyttäjä? [[Toiminnot:Kirjaudu_sisään|Kirjaudu sisään]]',
+	'usersignup-marketing-login' => 'Oletko jo käyttäjä? [[Toiminnot:Kirjaudu_sisään|Kirjaudu sisään]]', # Fuzzy
 	'usersignup-marketing-benefits' => 'Ole osa jotain suurta',
 	'usersignup-marketing-community-heading' => 'Avusta',
 	'usersignup-marketing-community' => 'Löydä ja tutki aiheita videopeleistä elokuviin ja televisio-ohjelmiin. Tapaa uusia ihmisiä samanlaisten kiinnostusten ja intohimojen kera.',
@@ -1554,7 +1548,7 @@ Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetuks
 	'usersignup-marketing-creativity-heading' => 'Ole alkuperäinen',
 	'usersignup-marketing-creativity' => 'Käytä Wikiaa ilmaistaksesi luovuutesi kyselyillä ja Top 10 -listoilla, kuva- ja videogallerioilla, sovelluksilla ja muilla tavoilla.',
 	'usersignup-createaccount-byemail' => 'Luo käyttäjätilli jollekulle toiselle',
-	'usersignup-error-captcha' => 'Testiin vastaaminen epäonnistui, yritä uudelleen!',
+	'usersignup-error-captcha' => 'Testiin vastaaminen epäonnistui, yritä uudelleen!', # Fuzzy
 	'usersignup-account-creation-heading' => 'Onnistui!',
 	'usersignup-account-creation-subheading' => 'Lähetimme sinulle sähköpostin osoitteeseen $1',
 	'usersignup-account-creation-email-sent' => 'Olet alkanut luoda käyttäjätiliä nimellä $2. Olemme lähettäneet sinulle sähköpostina osoitteeseen $1 tilapäisen salasanan ja vahvistuslinkin.
@@ -1586,7 +1580,6 @@ ___________________________________________
 
 Tarkistaaksesi Wikian viimeismmät tapahtumat, vieraile sivulla http://yhteiso.wikia.com
 Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetukset}}',
-	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-confirmation-reminder-email_subject' => 'Älä ole muukalainen…',
 	'usersignup-confirmation-reminder-email-greeting' => 'Hei $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'Siitä on muutama päivä, mutta näyttää siltä, että et ole viimeistellyt tilisi luomista. Se on helppoa. Klikkaa alla olevaa vahvistuslinkkiä:
@@ -1610,7 +1603,6 @@ ___________________________________________
 
 Tarkistaaksesi Wikian viimeismmät tapahtumat, vieraile sivulla http://yhteiso.wikia.com
 Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetukset}}',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 	'usersignup-facebook-problem' => 'Yhteyden saamisessa Facebookiin oli ongelma. Yritä myöhemmin uudelleen.',
 	'usersignup-facebook-signup-header' => 'Luotko uuden käyttäjätilin?',
 	'usersignup-facebook-login-header' => 'Onko sinulla jo käyttäjätili?',
@@ -1774,7 +1766,7 @@ ___________________________________________
 	'usersignup-marketing-creativity-heading' => 'Soyez original',
 	'usersignup-marketing-creativity' => "Utilisez Wikia pour exprimer votre créativité avec des sondages, des listes de top 10, des galeries d'image et de vidéo, des applications et plus.",
 	'usersignup-createaccount-byemail' => "Créer un compte pour quelqu'un d'autre",
-	'usersignup-error-captcha' => 'La réponse au défi est incorrecte, veuillez réessayer !',
+	'usersignup-error-captcha' => 'La réponse au défi est incorrecte, veuillez réessayer !', # Fuzzy
 	'usersignup-account-creation-heading' => 'Réussite !',
 	'usersignup-account-creation-subheading' => 'Un courriel a été envoyé à $1',
 	'usersignup-account-creation-email-sent' => "Vous avez commencé le processus de création pour $2. Nous lui avons envoyé un courriel à l'adresse $1 avec un mot de passe temporaire et un lien de confirmation.
@@ -1830,10 +1822,6 @@ ___________________________________________
 	'usersignup-facebook-problem' => 'Une erreur est survenue en communiquant avec Facebook. Veuillez réessayer plus tard.',
 	'usersignup-facebook-signup-header' => 'Vous créez un nouveau compte ?',
 	'usersignup-facebook-login-header' => 'Vous avez déjà un compte ?',
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email_body-HTML' => '',
-	'usersignup-account-creation-email-body-HTML' => '',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 );
 
 /** Western Frisian (Frysk)
@@ -2368,6 +2356,7 @@ Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences
  */
 $messages['it'] = array(
 	'usersignup-page-title' => 'Iscriviti a Wikia',
+	'usersignup-page-title-wikiamobile' => 'Crea account',
 	'usersignup-page-captcha-label' => 'Sfida',
 	'usersignup-error-username-length' => 'Oops, il tuo nome utente non può avere più di {{PLURAL:$1|un carattere|$1 caratteri}}.',
 	'usersignup-error-invalid-user' => 'Utente non valido. Effettua prima il login.',
@@ -2379,7 +2368,7 @@ $messages['it'] = array(
 	'usersignup-error-throttled-email' => "Oops, hai richiesto l'invio di troppe email di conferma oggi. Riprova ancora tra un po'.",
 	'usersignup-error-too-many-changes' => 'Hai raggiunto il limite massimo per cambi di email oggi. Per favore, riprova più tardi.',
 	'usersignup-error-password-length' => 'Oops, la tua password è troppo lunga. Per favore, scegli una password che sia al massimo di 50 caratteri.',
-	'usersignup-error-confirmed-user' => 'Sembra che tu abbia già confermato il tuo indirizzo email per $1! Controlla il tuo [$2 profilo utente].',
+	'usersignup-error-confirmed-user' => 'Sembra che tu abbia già confermato il tuo indirizzo email per $1! Controlla il tuo [$2 profilo utente].', # Fuzzy
 	'usersignup-facebook-heading' => "Concludi l'iscrizione",
 	'usersignup-facebook-create-account' => 'Crea account',
 	'usersignup-facebook-email-tooltip' => 'Se preferisci usare un indirizzo email differente, puoi cambiarlo in seguito nelle tue preferenze.',
@@ -2396,6 +2385,7 @@ $messages['it'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Oh, no! La tua email non è cofermata. Ti abbiamo inviato una email, clicca sul link presente per confermare.',
 	'usersignup-user-pref-confirmemail_noemail' => 'Sembra che non abbiamo un indirizzo email per te. Vai nelle tue [[Special:Preferences|preferenze]] per inserirne uno.',
 	'usersignup-confirm-page-title' => 'Conferma la tua email',
+	'usersignup-confirm-page-title-wikiamobile' => 'Controlla la tua email',
 	'usersignup-confirm-email-resend-email' => "Mandami un'altra email di conferma",
 	'usersignup-confirm-email-change-email-content' => 'Voglio usare un indirizzo email diverso.',
 	'usersignup-confirm-email-change-email' => 'Cambia il mio indirizzo email',
@@ -2407,20 +2397,42 @@ $messages['it'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Complimenti!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Sei già confermato',
 	'usersignup-confirmation-heading' => 'Ci siamo quasi',
+	'usersignup-confirmation-heading-wikiamobile' => 'Controlla la tua email',
 	'usersignup-confirmation-heading-email-resent' => 'Nuova email inviata',
 	'usersignup-confirmation-subheading' => 'Controlla la tua email',
 	'usersignup-confirmation-email-sent' => 'Abbiamo inviato una email a "$1".
 
 Clicca sul link di conferma nella tua email per concludere la creazione del tuo account.',
+	'usersignup-confirmation-email-sent-wikiamobile' => 'Abbiamo inviato una email a "$1".
+
+Clicca sul link di conferma nella tua email per concludere la creazione del tuo account. Grazie!',
 	'usersignup-confirmation-email_subject' => 'Ci sei quasi! Conferma il tuo account Wikia',
 	'usersignup-confirmation-email-greeting' => 'Ciao $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Sei ad un passo dal creare il tuo account Wikia! Clicca sul link qui sotto per confermare la tua email ed iniziare.
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'Il team di Wikia',
+	'usersignup-confirmation-email_body' => 'Ciao $2,
+
+Sei ad un passo dal creare il tuo account Wikia! Clicca il link qui sotto per confermare la tua email ed iniziare.
+
+$3
+
+Il team di Wikia
+
+
+___________________________________________
+
+Per controllare le ultime novità su Wikia, vai su http://it.community.wikia.com
+Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-reconfirmation-email-sent' => 'Il tuo indirizzo email è stato cambiato in $1. Ti abbiamo inviato una nuova email di conferma. Per favore, conferma il nuovo indirizzo email.',
 	'usersignup-reconfirmation-email_subject' => 'Conferma il cambio di indirizzo email su Wikia',
 	'usersignup-reconfirmation-email-greeting' => 'Ciao $USERNAME',
+	'usersignup-reconfirmation-email-content' => 'Per favore, clicca il link qui sotto per confermare il cambio del tuo indirizzo email su Wikia.
+
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
+
+Continuerai a ricevere email al tuo vecchio indirizzo finché non confermi questo.',
 	'usersignup-reconfirmation-email-signature' => 'Il team di Wikia',
 	'usersignup-reconfirmation-email_body' => 'Ciao $2,
 
@@ -2451,51 +2463,6 @@ Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferenc
 	'usersignup-welcome-email-explore-wiki-button' => 'Vai su wikia.com',
 	'usersignup-welcome-email-content' => 'Vuoi maggiori informazioni? Trova consigli, risposte e la community di Wikia su la <a style="color:#2C85D5;" href="http://it.community.wikia.com">Wiki della Community</a>. Happy editing!',
 	'usersignup-welcome-email-signature' => 'Il team di Wikia',
-	'usersignup-heading' => 'Unisciti adesso a Wikia',
-	'usersignup-heading-byemail' => 'Crea un account per qualcun altro',
-	'usersignup-marketing-wikia' => 'Inizia a collaborare con milioni di persone da tutto il mondo che si ritrovano per condividere ciò che conoscono ed amano.',
-	'usersignup-marketing-login' => 'Già un utente? [[Special:UserLogin|Accedi]]',
-	'usersignup-marketing-benefits' => 'Sii parte di qualcosa di grande',
-	'usersignup-marketing-community-heading' => 'Collabora',
-	'usersignup-marketing-community' => 'Scopri ed esplora argomenti che vanno da videogiochi a film e televisione. Incontra persone con interessi e passioni simili.',
-	'usersignup-marketing-global-heading' => 'Crea',
-	'usersignup-marketing-creativity-heading' => 'Sii originale',
-	'usersignup-marketing-creativity' => 'Usa Wikia per esprimere la tua creatività con sondaggi e liste top 10, immagini e gallerie video, app e molto altro.',
-	'usersignup-createaccount-byemail' => 'Crea un account per qualcun altro',
-	'usersignup-error-captcha' => 'La risposta alla sfida è scorretta, riprova!',
-	'usersignup-account-creation-heading' => 'Successo!',
-	'usersignup-account-creation-subheading' => 'Abbiamo inviato una email a $1',
-	'usersignup-account-creation-email-subject' => 'Un account è stato create per te su Wikia!',
-	'usersignup-account-creation-email-greeting' => 'Ciao,',
-	'usersignup-account-creation-email-signature' => 'Il team di Wikia',
-	'usersignup-confirmation-reminder-email-signature' => 'Il team di Wikia',
-	'usersignup-facebook-problem' => "C'è stato un problema di comunicazione con Facebook. Per favore, riprova più tardi.",
-	'usersignup-page-title-wikiamobile' => 'Crea account',
-	'usersignup-confirm-page-title-wikiamobile' => 'Controlla la tua email',
-	'usersignup-confirmation-heading-wikiamobile' => 'Controlla la tua email',
-	'usersignup-confirmation-email-sent-wikiamobile' => 'Abbiamo inviato una email a "$1".
-
-Clicca sul link di conferma nella tua email per concludere la creazione del tuo account. Grazie!',
-	'usersignup-confirmation-email_body' => 'Ciao $2,
-
-Sei ad un passo dal creare il tuo account Wikia! Clicca il link qui sotto per confermare la tua email ed iniziare.
-
-$3
-
-Il team di Wikia
-
-
-___________________________________________
-
-Per controllare le ultime novità su Wikia, vai su http://it.community.wikia.com
-Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email-content' => 'Per favore, clicca il link qui sotto per confermare il cambio del tuo indirizzo email su Wikia.
-
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
-
-Continuerai a ricevere email al tuo vecchio indirizzo finché non confermi questo.',
-	'usersignup-reconfirmation-email_body-HTML' => '',
 	'usersignup-welcome-email-body' => 'Ciao $USERNAME,
 
 Siamo felici di darti il benvenuto su Wikia e {{SITENAME}}! Ecco alcune cose ce puoi fare per iniziare.
@@ -2527,7 +2494,21 @@ ___________________________________________
 
 Per controllare le ultime novità su Wikia, vai su http://it.community.wikia.com
 Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferences}}',
+	'usersignup-heading' => 'Unisciti adesso a Wikia',
+	'usersignup-heading-byemail' => 'Crea un account per qualcun altro',
+	'usersignup-marketing-wikia' => 'Inizia a collaborare con milioni di persone da tutto il mondo che si ritrovano per condividere ciò che conoscono ed amano.',
+	'usersignup-marketing-login' => 'Già un utente? [[Special:UserLogin|Accedi]]',
+	'usersignup-marketing-benefits' => 'Sii parte di qualcosa di grande',
+	'usersignup-marketing-community-heading' => 'Collabora',
+	'usersignup-marketing-community' => 'Scopri ed esplora argomenti che vanno da videogiochi a film e televisione. Incontra persone con interessi e passioni simili.',
+	'usersignup-marketing-global-heading' => 'Crea',
 	'usersignup-marketing-global' => "Crea una wiki. Inizia in piccolo, diventa grande con l'aiuto degli altri.",
+	'usersignup-marketing-creativity-heading' => 'Sii originale',
+	'usersignup-marketing-creativity' => 'Usa Wikia per esprimere la tua creatività con sondaggi e liste top 10, immagini e gallerie video, app e molto altro.',
+	'usersignup-createaccount-byemail' => 'Crea un account per qualcun altro',
+	'usersignup-error-captcha' => 'La risposta alla sfida è scorretta, riprova!', # Fuzzy
+	'usersignup-account-creation-heading' => 'Successo!',
+	'usersignup-account-creation-subheading' => 'Abbiamo inviato una email a $1',
 	'usersignup-account-creation-email-sent' => "Hai avviato la creazione di un account per $2. Gli abbiamo inviato una email a $1 con una password temporanea e un link di conferma.
 
 
@@ -2535,11 +2516,14 @@ $2 deve cliccare sul link presente nella email che gli abbiamo inviato per conva
 
 
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Crea altri account] su {{SITENAME}}",
+	'usersignup-account-creation-email-subject' => 'Un account è stato create per te su Wikia!',
+	'usersignup-account-creation-email-greeting' => 'Ciao,',
 	'usersignup-account-creation-email-content' => 'Un account è stato creato per te su {{SITENAME}}. Per accedere al tuo account e cambiare la tua password temporanea clicca sul link qui sotto e accedi con il nome utente "$USERNAME" e la password "$NEWPASSWORD".
 
 Per favore, accedi a <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
 
 Se non vuoi che questo account venga creato puoi semplicemente ignorare questa email o contattare il nostro team di supporto per qualunque domanda.',
+	'usersignup-account-creation-email-signature' => 'Il team di Wikia',
 	'usersignup-account-creation-email-body' => 'Ciao,
 
 Un account è stato creato per te su {{SITENAME}}. Per accedere al tuo account e cambiare la tua password temporanea clicca sul link qui sotto e accedi con il nome utente "$2" e la password "$3".
@@ -2555,7 +2539,6 @@ ___________________________________________
 
 Per controllare le ultime novità su Wikia, vai su http://it.community.wikia.com
 Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-confirmation-reminder-email_subject' => "Non fare l'estraneo…",
 	'usersignup-confirmation-reminder-email-greeting' => 'Ciao $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'Sono passati un po\' di giorni, ma sempra che tu non abbia ancora finito di creare il tuo account su Wikia. È semplice, basta che clicchi sul link di conferma qui sotto:
@@ -2563,6 +2546,7 @@ Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferenc
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
 Se non confermi entro 23 giorni, il tuo nome utente, $USERNAME, diventerà disponibile nuovamente, per cui non esitare!',
+	'usersignup-confirmation-reminder-email-signature' => 'Il team di Wikia',
 	'usersignup-confirmation-reminder-email_body' => "Ciao $2,
 
 Sono passati un po' di giorni, ma sempra che tu non abbia ancora finito di creare il tuo account su Wikia. È semplice, basta che clicchi sul link di conferma qui sotto:
@@ -2578,7 +2562,7 @@ ___________________________________________
 
 Per controllare le ultime novità su Wikia, vai su http://it.community.wikia.com
 Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferences}}",
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
+	'usersignup-facebook-problem' => "C'è stato un problema di comunicazione con Facebook. Per favore, riprova più tardi.",
 	'usersignup-facebook-signup-header' => 'Stai creando un nuovo account?',
 	'usersignup-facebook-login-header' => 'Hai già un account?',
 );
@@ -2589,21 +2573,36 @@ Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferenc
  */
 $messages['ja'] = array(
 	'usersignup-page-title' => 'ウィキアに参加する',
-	'usersignup-page-captcha-label' => '画像認証',
+	'usersignup-page-title-wikiamobile' => 'アカウントを作成する',
+	'usersignup-page-captcha-label' => '画像認証', # Fuzzy
+	'usersignup-error-username-length' => 'ユーザー名は {{PLURAL:$1|one character|$1 characters}} 文字以下にしてください。',
+	'usersignup-error-invalid-user' => '有効でないユーザーです。まずはログインしてください。',
 	'usersignup-error-invalid-email' => '有効なメールアドレスを入力してください。',
+	'usersignup-error-symbols-in-username' => 'ユーザー名に含むことができるのは文字と数字のみです。',
 	'usersignup-error-empty-email' => 'メールアドレスを入力してください。',
 	'usersignup-error-empty-username' => 'ユーザー名を入力してください。',
+	'usersignup-error-already-confirmed' => 'このメールアドレスは認証済みです。',
+	'usersignup-error-throttled-email' => '本日、認証メールのリクエストを何度もいただいているようです。しばらくしてからもう一度お試しください。',
+	'usersignup-error-too-many-changes' => 'メールアドレスの変更可能回数が本日の上限に達しました。しばらくしてからもう一度お試しください。',
+	'usersignup-error-password-length' => 'パスワードが長すぎるようです。50文字以下のパスワードをご指定ください。',
+	'usersignup-error-confirmed-user' => '$1 のメールアドレスは既に認証済みのようです。[$2 ユーザー プロフィール] をご確認ください。', # Fuzzy
 	'usersignup-facebook-heading' => '登録を完了してください',
 	'usersignup-facebook-create-account' => 'アカウントを作成する',
 	'usersignup-facebook-email-tooltip' => '別のメールアドレスの使用をご希望の場合には、個人設定で変更することができます。',
 	'usersignup-facebook-have-an-account-heading' => '既にアカウントをお持ちですか？',
 	'usersignup-facebook-have-an-account' => '既存のウィキアのユーザー名とFacebookをコネクトすることもできます。',
+	'usersignup-facebook-proxy-email' => '匿名Facebookメール',
 	'usersignup-user-pref-emailconfirmlink' => '新しい認証メールをリクエストする',
+	'usersignup-user-pref-confirmemail_send' => '認証メールを再送信する',
 	'usersignup-user-pref-emailauthenticated' => 'このメールアドレスは$2、$3に認証されました。ありがとうございます。',
 	'usersignup-user-pref-emailnotauthenticated' => 'メールを確認し、認証用リンクをクリックしてメールアドレスの $1 への変更を完了してください。',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'メールアドレスの認証が完了していません。メール機能はメールアドレスの認証が完了するまでご利用いただくことができません。',
+	'usersignup-user-pref-reconfirmation-email-sent' => 'もうすぐ完了します。$1 に新しい認証メールを送信しました。メールを確認し、リンクをクリックしてメールアドレスの認証を完了してください。',
 	'usersignup-user-pref-noemailprefs' => 'メールアドレスが指定されていないようです。メールアドレスを入力してください。',
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'メールアドレスの認証が完了していません。ウィキアからメールを送信しましたので、そのメール内の認証用リンクをクリックして認証を行ってください。',
+	'usersignup-user-pref-confirmemail_noemail' => 'メールアドレスが指定されていないようです。[[Special:Preferences|個人設定]] にアクセスして入力してください。',
 	'usersignup-confirm-page-title' => 'メールアドレスの認証',
+	'usersignup-confirm-page-title-wikiamobile' => 'メールを確認してください',
 	'usersignup-confirm-email-resend-email' => '認証メールの再送信をリクエストする',
 	'usersignup-confirm-email-change-email-content' => '別のメールアドレスを使用する',
 	'usersignup-confirm-email-change-email' => 'メールアドレスを変更する',
@@ -2611,12 +2610,19 @@ $messages['ja'] = array(
 	'usersignup-confirm-email-update' => '更新',
 	'usersignup-confirm-email-tooltip' => '認証できないメールアドレスを入力してしまった場合、または別のメールアドレスを使用したい場合は、下のリンクからメールアドレスを変更して新しい認証メールを受信することができます。',
 	'usersignup-resend-email-heading-success' => '新しい認証メールを送信しました',
+	'usersignup-resend-email-heading-failure' => '認証メールを再送信できませんでした',
+	'usersignup-confirm-page-heading-confirmed-user' => '認証が完了しました。',
+	'usersignup-confirm-page-subheading-confirmed-user' => '認証は既に完了しています',
 	'usersignup-confirmation-heading' => 'もうすぐ完了します',
+	'usersignup-confirmation-heading-wikiamobile' => 'メールを確認してください',
 	'usersignup-confirmation-heading-email-resent' => '新しい認証メールを送信しました',
 	'usersignup-confirmation-subheading' => 'メールを確認してください',
 	'usersignup-confirmation-email-sent' => "'''$1''' にメールを送信しました。
 
 メール内の認証用リンクをクリックしてアカウントの作成を完了してください。",
+	'usersignup-confirmation-email-sent-wikiamobile' => "'''$1''' にメールを送信しました。
+
+メール内の認証用リンクをクリックしてアカウントの作成を完了してください。どうもありがとうございます。",
 	'usersignup-confirmation-email_subject' => 'もうすぐ完了です。ウィキアアカウントの認証',
 	'usersignup-confirmation-email-greeting' => '$USERNAME さん',
 	'usersignup-confirmation-email-content' => '間もなくウィキアのアカウント作成が完了します。下のリンクをクリックしてメールアドレスの認証を行ってください。
@@ -2636,6 +2642,7 @@ ___________________________________________
 
 ウィキアの最新情報については http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページにて行っていただけます',
+	'usersignup-reconfirmation-email-sent' => 'メールアドレスを $1 に変更しました。新しい認証メールを送信しましたので、新しいメールアドレスの認証を行ってください。',
 	'usersignup-reconfirmation-email_subject' => 'ウィキアでのメールアドレス変更の認証',
 	'usersignup-reconfirmation-email-greeting' => '$USERNAME さん',
 	'usersignup-reconfirmation-email-content' => '下のリンクをクリックして、ウィキアでのメールアドレス変更の認証を行ってください。
@@ -2658,46 +2665,6 @@ ___________________________________________
 
 ウィキアの最新情報については http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページで行っていただけます',
-	'usersignup-welcome-email-signature' => 'ウィキアチーム',
-	'usersignup-heading' => '今すぐウィキアに参加しよう',
-	'usersignup-marketing-wikia' => 'それぞれの知識や興味を共有するために、世界中から集まってきた何百万人ものユーザーたちと協力してみよう。',
-	'usersignup-marketing-login' => '既に登録済みですか？ [[Special:UserLogin|ログイン]]',
-	'usersignup-marketing-benefits' => '膨大で有意義なコミュニティの一員になりませんか',
-	'usersignup-marketing-community-heading' => '一緒に作り上げる',
-	'usersignup-marketing-community' => 'ゲームから映画やテレビに至るまで、幅広い話題の中から自分が好きなことを見つけて、共通の趣味や情熱を持った人たちと繋がりを持ってみよう。',
-	'usersignup-marketing-global-heading' => '創造する',
-	'usersignup-marketing-global' => 'まずはウィキアを作ってみましょう。初めは小さくても、他の人々の助けを借りて大きなものへと成長させていきましょう。',
-	'usersignup-marketing-creativity-heading' => 'ユニークに',
-	'usersignup-marketing-creativity' => 'アンケート投票やトップ10リスト、写真や動画ギャラリー、各種アプリなど、様々な機能を活用して、オリジナリティ溢れるウィキアを作ってみましょう。',
-	'usersignup-error-captcha' => '回答が違っています。もう一度お試しください。',
-	'usersignup-account-creation-email-signature' => 'ウィキアチーム',
-	'usersignup-confirmation-reminder-email-signature' => 'ウィキアチーム',
-	'usersignup-facebook-problem' => 'Facebookとの通信中にエラーが発生しました。しばらくしてからもう一度お試しください。',
-	'usersignup-page-title-wikiamobile' => 'アカウントを作成する',
-	'usersignup-error-username-length' => 'ユーザー名は {{PLURAL:$1|one character|$1 characters}} 文字以下にしてください。',
-	'usersignup-error-invalid-user' => '有効でないユーザーです。まずはログインしてください。',
-	'usersignup-error-symbols-in-username' => 'ユーザー名に含むことができるのは文字と数字のみです。',
-	'usersignup-error-already-confirmed' => 'このメールアドレスは認証済みです。',
-	'usersignup-error-throttled-email' => '本日、認証メールのリクエストを何度もいただいているようです。しばらくしてからもう一度お試しください。',
-	'usersignup-error-too-many-changes' => 'メールアドレスの変更可能回数が本日の上限に達しました。しばらくしてからもう一度お試しください。',
-	'usersignup-error-password-length' => 'パスワードが長すぎるようです。50文字以下のパスワードをご指定ください。',
-	'usersignup-error-confirmed-user' => '$1 のメールアドレスは既に認証済みのようです。[$2 ユーザー プロフィール] をご確認ください。',
-	'usersignup-facebook-proxy-email' => '匿名Facebookメール',
-	'usersignup-user-pref-confirmemail_send' => '認証メールを再送信する',
-	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'メールアドレスの認証が完了していません。メール機能はメールアドレスの認証が完了するまでご利用いただくことができません。',
-	'usersignup-user-pref-reconfirmation-email-sent' => 'もうすぐ完了します。$1 に新しい認証メールを送信しました。メールを確認し、リンクをクリックしてメールアドレスの認証を完了してください。',
-	'usersignup-user-pref-confirmemail_noemail' => 'メールアドレスが指定されていないようです。[[Special:Preferences|個人設定]] にアクセスして入力してください。',
-	'usersignup-confirm-page-title-wikiamobile' => 'メールを確認してください',
-	'usersignup-resend-email-heading-failure' => '認証メールを再送信できませんでした',
-	'usersignup-confirm-page-heading-confirmed-user' => '認証が完了しました。',
-	'usersignup-confirm-page-subheading-confirmed-user' => '認証は既に完了しています',
-	'usersignup-confirmation-heading-wikiamobile' => 'メールを確認してください',
-	'usersignup-confirmation-email-sent-wikiamobile' => "'''$1''' にメールを送信しました。
-
-メール内の認証用リンクをクリックしてアカウントの作成を完了してください。どうもありがとうございます。",
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email-sent' => 'メールアドレスを $1 に変更しました。新しい認証メールを送信しましたので、新しいメールアドレスの認証を行ってください。',
-	'usersignup-reconfirmation-email_body-HTML' => '',
 	'usersignup-welcome-email-subject' => '$USERNAME さん、ウィキアへようこそ！',
 	'usersignup-welcome-email-greeting' => '$USERNAME さん',
 	'usersignup-welcome-email-heading' => 'この度は、ウィキアと {{SITENAME}} にご登録いただき、ありがとうございます。ご利用を開始いただくにあたり、ウィキアでできることをこちらにいくつかご紹介します。',
@@ -2711,6 +2678,7 @@ ___________________________________________
 	'usersignup-welcome-email-explore-wiki-content' => 'ウィキアには何千ものコミュニティがあります。<a style="color:#2C85D5;" href="http://ja.videogameshub.wikia.com/">ゲーム</a>、<a style="color:#2C85D5;" href="http://ja.entertainmenthub.wikia.com/">エンターテイメント</a>、<a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">ライフスタイル</a>のハブから、他にもおもしろそうなウィキを探してみましょう。',
 	'usersignup-welcome-email-explore-wiki-button' => 'wikia.com にアクセス',
 	'usersignup-welcome-email-content' => '詳しくは、<a style="color:#2C85D5;" href="http://community.wikia.com">コミュニティ セントラル</a>にてアドバイス、回答、いろいろなウィキアコミュニティをご覧ください。それではどうぞ編集をお楽しみください。',
+	'usersignup-welcome-email-signature' => 'ウィキアチーム',
 	'usersignup-welcome-email-body' => '$USERNAME さん
 
 この度は、ウィキアと {{SITENAME}} にご登録いただき、ありがとうございます。ご利用を開始いただくにあたり、ウィキアでできることをこちらにいくつかご紹介します。
@@ -2742,8 +2710,19 @@ ___________________________________________
 
 ウィキアの最新情報については http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページで行っていただけます',
+	'usersignup-heading' => '今すぐウィキアに参加しよう',
 	'usersignup-heading-byemail' => '他のユーザーのためにアカウントを作成する',
+	'usersignup-marketing-wikia' => 'それぞれの知識や興味を共有するために、世界中から集まってきた何百万人ものユーザーたちと協力してみよう。',
+	'usersignup-marketing-login' => '既に登録済みですか？ [[Special:UserLogin|ログイン]]',
+	'usersignup-marketing-benefits' => '膨大で有意義なコミュニティの一員になりませんか',
+	'usersignup-marketing-community-heading' => '一緒に作り上げる',
+	'usersignup-marketing-community' => 'ゲームから映画やテレビに至るまで、幅広い話題の中から自分が好きなことを見つけて、共通の趣味や情熱を持った人たちと繋がりを持ってみよう。',
+	'usersignup-marketing-global-heading' => '創造する',
+	'usersignup-marketing-global' => 'まずはウィキアを作ってみましょう。初めは小さくても、他の人々の助けを借りて大きなものへと成長させていきましょう。',
+	'usersignup-marketing-creativity-heading' => 'ユニークに',
+	'usersignup-marketing-creativity' => 'アンケート投票やトップ10リスト、写真や動画ギャラリー、各種アプリなど、様々な機能を活用して、オリジナリティ溢れるウィキアを作ってみましょう。',
 	'usersignup-createaccount-byemail' => '他のユーザーのためにアカウントを作成する',
+	'usersignup-error-captcha' => '回答が違っています。もう一度お試しください。', # Fuzzy
 	'usersignup-account-creation-heading' => '認証が完了しました。',
 	'usersignup-account-creation-subheading' => '$1 にメールを送信しました',
 	'usersignup-account-creation-email-sent' => '$2 さんのアカウント作成手続きを開始しました。$1 に一時パスワードと認証用リンクを記載したメールを送信しました。
@@ -2760,6 +2739,7 @@ $2 さんには、ウィキアから送信したメールに記載のリンク�
 <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:ユーザーログイン}}</a> からログインしてください。
 
 このアカウントの作成を取り消したい場合は、このメールを無視していただいて構いません。また、その他ご不明な点がございましたら、コミュニティサポートチームにお問い合わせください。',
+	'usersignup-account-creation-email-signature' => 'ウィキアチーム',
 	'usersignup-account-creation-email-body' => 'こんにちは。
 
 {{SITENAME}} であなたのアカウントが作成されました。アカウントにアクセスして一時パスワードを変更するには、下のリンクをクリックしてユーザー名「$2」とパスワード「$3」でログインしてください。
@@ -2775,7 +2755,6 @@ ___________________________________________
 
 ウィキアの最新情報については http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページで行っていただけます',
-	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-confirmation-reminder-email_subject' => '認証がまだのようです',
 	'usersignup-confirmation-reminder-email-greeting' => '$USERNAME さん',
 	'usersignup-confirmation-reminder-email-content' => '手続きが開始されてから数日経ちますが、ウィキアでのアカウントの作成が完了していないようです。下の認証用リンクをクリックするだけの簡単な操作で完了します:
@@ -2783,6 +2762,7 @@ ___________________________________________
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
 23日以内に認証を行っていただけない場合、ユーザー名「$USERNAME」は他のユーザーが使用できるようになります。なるべくお早めに認証を行ってください。',
+	'usersignup-confirmation-reminder-email-signature' => 'ウィキアチーム',
 	'usersignup-confirmation-reminder-email_body' => '$2 さん
 
 手続きが開始されてから数日経ちますが、ウィキアでのアカウントの作成が完了していないようです。下の認証用リンクをクリックするだけの簡単な操作で完了します:
@@ -2797,7 +2777,7 @@ ___________________________________________
 
 ウィキアの最新情報については  http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページで行っていただけます',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
+	'usersignup-facebook-problem' => 'Facebookとの通信中にエラーが発生しました。しばらくしてからもう一度お試しください。',
 	'usersignup-facebook-signup-header' => '新しいアカウントを作成しますか？',
 	'usersignup-facebook-login-header' => '既にアカウントをお持ちですか？',
 );
@@ -2815,21 +2795,9 @@ $messages['ka'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
-	'usersignup-page-captcha-label' => '질문',
-	'usersignup-user-pref-emailauthenticated' => '감사합니다! 귀하의 이메일은 $2 $3에 인증되었습니다.',
-	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => '이런! 귀하의 이메일은 인증되지 않았습니다. 이메일 주소를 인증하기 전까진 이메일 기능을 사용할 수 없습니다.',
-	'usersignup-confirmation-email-greeting' => '안녕하세요, $USERNAME 님.',
-	'usersignup-confirmation-email-signature' => '위키아 팀',
-	'usersignup-reconfirmation-email-greeting' => '안녕하세요, $USERNAME 님.',
-	'usersignup-reconfirmation-email-signature' => '위키아 팀',
-	'usersignup-welcome-email-greeting' => '안녕하세요, $USERNAME 님.',
-	'usersignup-welcome-email-signature' => '위키아 팀',
-	'usersignup-account-creation-email-greeting' => '안녕하세요,',
-	'usersignup-account-creation-email-signature' => '위키아 팀',
-	'usersignup-confirmation-reminder-email-greeting' => '안녕하세요, $USERNAME 님.',
-	'usersignup-confirmation-reminder-email-signature' => '위키아 팀',
 	'usersignup-page-title' => '위키아 가입하기',
 	'usersignup-page-title-wikiamobile' => '계정 만들기',
+	'usersignup-page-captcha-label' => '질문',
 	'usersignup-error-username-length' => '이런! 사용자 이름은 {{PLURAL:$1|한 글자|$1자}}를 넘을 수 없습니다.',
 	'usersignup-error-invalid-user' => '잘못된 사용자입니다. 먼저 로그인을 해주세요.',
 	'usersignup-error-invalid-email' => '유효한 이메일 주소를 입력해 주세요.',
@@ -2840,7 +2808,7 @@ $messages['ko'] = array(
 	'usersignup-error-throttled-email' => '이런! 귀하는 오늘 하루 동안 너무 많은 인증 이메일을 요청했습니다. 나중에 다시 시도해 주세요.',
 	'usersignup-error-too-many-changes' => '귀하는 오늘 하루 동안 너무 많이 이메일 주소를 변경했습니다. 나중에 다시 시도해 주세요.',
 	'usersignup-error-password-length' => '이런! 비밀번호가 너무 깁니다. 비밀번호는 50자 이하로 설정해 주세요.',
-	'usersignup-error-confirmed-user' => '$1 이메일 주소는 이미 인증되었습니다! [$2 사용자 프로필]을 확인해 보세요.',
+	'usersignup-error-confirmed-user' => '$1 이메일 주소는 이미 인증되었습니다! [$2 사용자 프로필]을 확인해 보세요.', # Fuzzy
 	'usersignup-facebook-heading' => '가입 완료',
 	'usersignup-facebook-create-account' => '계정 만들기',
 	'usersignup-facebook-email-tooltip' => '다른 이메일 주소를 사용하고 싶을 땐 이후에 환경 설정에서 변경할 수 있습니다.',
@@ -2849,7 +2817,9 @@ $messages['ko'] = array(
 	'usersignup-facebook-proxy-email' => '익명 페이스북 이메일',
 	'usersignup-user-pref-emailconfirmlink' => '새 인증 이메일 요청',
 	'usersignup-user-pref-confirmemail_send' => '인증 이메일 재발송',
+	'usersignup-user-pref-emailauthenticated' => '감사합니다! 귀하의 이메일은 $2 $3에 인증되었습니다.',
 	'usersignup-user-pref-emailnotauthenticated' => '이메일 변경을 완료하려면 귀하에게 발송된 이메일에서 인증 링크를 클릭하세요: $1',
+	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => '이런! 귀하의 이메일은 인증되지 않았습니다. 이메일 주소를 인증하기 전까진 이메일 기능을 사용할 수 없습니다.',
 	'usersignup-user-pref-reconfirmation-email-sent' => '거의 다 됐어요! $1 주소로 새 인증 이메일을 보냈습니다. 이메일 인증을 완료하려면 귀하에게 발송된 이메일에서 인증 링크를 클릭하세요.',
 	'usersignup-user-pref-noemailprefs' => '귀하의 이메일 주소에 대한 정보를 찾을 수 없습니다. 위의 입력란에 이메일 주소를 적어 주세요.',
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => '이런! 귀하의 이메일은 아직 인증되지 않았습니다. 이메일을 전송했으니 해당 이메일에서 인증 링크를 눌러 인증을 완료해 주세요.',
@@ -2877,9 +2847,11 @@ $messages['ko'] = array(
 
 해당 이메일에서 인증 링크를 눌러 계정 생성을 완료하세요. 감사합니다!",
 	'usersignup-confirmation-email_subject' => '거의 다 됐어요! 지금 이메일 주소를 인증해 주세요',
+	'usersignup-confirmation-email-greeting' => '안녕하세요, $USERNAME 님.',
 	'usersignup-confirmation-email-content' => '위키아 계정을 생성하기까지 앞으로 한 단계만 거치시면 됩니다! 아래 링크를 눌러 귀하의 이메일 주소를 인증하고 계정 생성을 완료해 주세요.
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
+	'usersignup-confirmation-email-signature' => '위키아 팀',
 	'usersignup-confirmation-email_body' => '안녕하세요, $USERNAME 님.
 
 위키아 계정을 생성하기까지 앞으로 한 단계만 거치시면 됩니다! 아래 링크를 눌러 귀하의 이메일 주소를 인증하고 계정 생성을 완료해 주세요.
@@ -2892,15 +2864,16 @@ $3
 ___________________________________________
 
 위키아의 최근 소식을 찾아보시려면 이곳을 방문해 주세요: http://ko.community.wikia.com
-받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-confirmation-email_body-HTML' => '',
+받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'usersignup-reconfirmation-email-sent' => '귀하의 이메일 주소가 $1로 변경되었습니다. 새 인증 이메일을 전송했으니 해당 이메일을 인증해 주세요.',
 	'usersignup-reconfirmation-email_subject' => '귀하의 위키아 계정의 새 이메일 주소를 인증해 주세요',
+	'usersignup-reconfirmation-email-greeting' => '안녕하세요, $USERNAME 님.',
 	'usersignup-reconfirmation-email-content' => '귀하의 위키아 계정의 새 이메일 주소를 인증하려면 아래 링크를 클릭해 주세요.
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
 이 과정을 완료하지 않으면 위키아에서 보내는 모든 정보 메일은 기존의 이메일 주소로 전송될 것입니다.',
+	'usersignup-reconfirmation-email-signature' => '위키아 팀',
 	'usersignup-reconfirmation-email_body' => '안녕하세요, $USERNAME 님.
 
 귀하의 위키아 계정의 새 이메일 주소를 인증하려면 아래 링크를 클릭해 주세요.
@@ -2915,9 +2888,9 @@ $3
 ___________________________________________
 
 위키아의 최근 소식을 찾아보시려면 이곳을 방문해 주세요: http://ko.community.wikia.com
-받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-reconfirmation-email_body-HTML' => '',
+받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'usersignup-welcome-email-subject' => '위키아에 오신 것을 환영합니다, $USERNAME 님!',
+	'usersignup-welcome-email-greeting' => '안녕하세요, $USERNAME 님.',
 	'usersignup-welcome-email-heading' => '귀하를 위키아와 {{SITENAME}}에 맞이하게 되어서 정말 기쁩니다! 아래 내용을 참고해서 위키아 활동을 본격적으로 시작해 보세요.',
 	'usersignup-welcome-email-edit-profile-heading' => '프로필 편집하기',
 	'usersignup-welcome-email-edit-profile-content' => '{{SITENAME}}에서 귀하의 프로필에 프로필 사진을 추가하고 간단한 정보를 적어 넣어 보세요.',
@@ -2929,6 +2902,7 @@ ___________________________________________
 	'usersignup-welcome-email-explore-wiki-content' => '위키아에는 수많은 위키가 존재합니다. 허브에서 귀하의 관심을 끄는 위키를 찾아 보세요: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">게임</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">엔터테인먼트</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">생활</a>',
 	'usersignup-welcome-email-explore-wiki-button' => 'Wikia.com 방문하기',
 	'usersignup-welcome-email-content' => '더 많은 정보를 원하시나요? 조언을 얻고, 질문을 하고, 다른 사용자들과 소통하려면 <a style="color:#2C85D5;" href="http://ko.community.wikia.com">위키아 중앙 커뮤니티</a>를 방문해 보세요. 즐거운 위키아 생활 되세요!',
+	'usersignup-welcome-email-signature' => '위키아 팀',
 	'usersignup-welcome-email-body' => '안녕하세요, $USERNAME 님.
 
 귀하를 위키아와 {{SITENAME}}에 맞이하게 되어서 정말 기쁩니다! 아래 내용을 참고해서 위키아 활동을 본격적으로 시작해 보세요.
@@ -2983,11 +2957,13 @@ ___________________________________________
 
 {{SITENAME}}에 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} 더 많은 계정 만들기]',
 	'usersignup-account-creation-email-subject' => '귀하를 위한 위키아 계정이 생성되었습니다!',
+	'usersignup-account-creation-email-greeting' => '안녕하세요,',
 	'usersignup-account-creation-email-content' => '귀하를 위해 {{SITENAME}}에 귀하의 계정이 생성되었습니다. 귀하의 계정으로 접속해서 임시 비밀번호를 변경하시려면 먼저 아래의 인증 링크를 눌러 이메일을 인증하고, 사용자 이름 "$USERNAME"과 비밀번호 "$NEWPASSWORD"로 위키아에 로그인해 주세요.
 
 로그인은 <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>에서 하실 수 있습니다.
 
 계정을 만들고 싶지 않으시다면 그냥 이 이메일을 무시하시거나 위키아 지원 팀에 문의를 넣어 주세요.',
+	'usersignup-account-creation-email-signature' => '위키아 팀',
 	'usersignup-account-creation-email-body' => '안녕하세요,
 
 귀하를 위해 {{SITENAME}}에 귀하의 계정이 생성되었습니다. 귀하의 계정으로 접속해서 임시 비밀번호를 변경하시려면 먼저 아래의 인증 링크를 눌러 이메일을 인증하고, 사용자 이름 "$2"과 비밀번호 "$3"로 위키아에 로그인해 주세요.
@@ -3003,13 +2979,14 @@ ___________________________________________
 
 위키아의 최근 소식을 찾아보시려면 이곳을 방문해 주세요: http://ko.community.wikia.com
 받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-account-creation-email-body-HTML' => '',
 	'usersignup-confirmation-reminder-email_subject' => '아직 이메일 인증이 완료되지 않았습니다',
+	'usersignup-confirmation-reminder-email-greeting' => '안녕하세요, $USERNAME 님.',
 	'usersignup-confirmation-reminder-email-content' => '계정 생성을 시작한 지 며칠이 지났지만 아직 이메일 인증이 완료되지 않은 것으로 보입니다. 가능하다면 아래의 인증 링크를 눌러 주세요:
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
 23일 내에 인증을 완료하지 않으면 귀하의 사용자 이름 "$USERNAME"은 다른 사용자들이 사용할 수 있게 됩니다. 서두르세요!',
+	'usersignup-confirmation-reminder-email-signature' => '위키아 팀',
 	'usersignup-confirmation-reminder-email_body' => '안녕하세요, $USERNAME 님.
 
 계정 생성을 시작한 지 며칠이 지났지만 아직 이메일 인증이 완료되지 않은 것으로 보입니다. 가능하다면 아래의 인증 링크를 눌러 주세요:
@@ -3024,8 +3001,7 @@ $3
 ___________________________________________
 
 위키아의 최근 소식을 찾아보시려면 이곳을 방문해 주세요: http://ko.community.wikia.com
-받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
+받을 이메일 종류를 선택하고 싶으시다면 이곳을 방문해 주세요: {{fullurl:{{ns:special}}:Preferences}}', # Fuzzy
 	'usersignup-facebook-problem' => '페이스북과 통신하던 중 문제가 발생했습니다. 나중에 다시 시도해 주세요.',
 	'usersignup-facebook-signup-header' => '새 계정을 생성하시겠어요?',
 	'usersignup-facebook-login-header' => '이미 계정을 가지고 계신가요?',
@@ -3983,7 +3959,7 @@ $messages['pl'] = array(
 	'usersignup-error-throttled-email' => 'Zażądano dzisiaj zbyt wielu wiadomości potwierdzających e-mail. Spróbuj ponownie później.',
 	'usersignup-error-too-many-changes' => 'Osiągnięto limit żądań zmiany e-maila. Spróbuj ponownie później.',
 	'usersignup-error-password-length' => 'Twoje hasło jest zbyt długie. Wybierz hasło, które ma mniej niż 51 znaków.',
-	'usersignup-error-confirmed-user' => 'Wygląda na to, że już potwierdzono adres e-mail $1. Sprawdź swój [$2 profil użytkownika].',
+	'usersignup-error-confirmed-user' => 'Wygląda na to, że już potwierdzono adres e-mail $1. Sprawdź swój [$2 profil użytkownika].', # Fuzzy
 	'usersignup-facebook-heading' => 'Zakończenie rejestracji',
 	'usersignup-facebook-create-account' => 'Załóż nowe konto',
 	'usersignup-facebook-email-tooltip' => 'Jeśli chcesz zmienić swój adres e-mail, możesz to zrobić później w swoich preferencjach.',
@@ -3998,7 +3974,7 @@ $messages['pl'] = array(
 	'usersignup-user-pref-reconfirmation-email-sent' => 'Wysłano nowy e-mail potwierdzający na adres $1. Sprawdź swoją skrzynkę e-mailową i kliknij na link, aby zakończyć potwierdzanie adresu e-mail.',
 	'usersignup-user-pref-noemailprefs' => 'Wygląda na to, że nie podano adresu e-mail. Wprowadź go w polu powyżej.',
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Twój adres e-mail nie został potwierdzony. Wysłaliśmy Ci wiadomość, kliknij na link w niej, aby go potwierdzić.',
-	'usersignup-user-pref-confirmemail_noemail' => 'Wygląda na to, że nie podano adresu e-mail. Przejdź do [[Special:Preferences#mw-prefsection-emailv2|preferencji]], aby go wprowadzić.',
+	'usersignup-user-pref-confirmemail_noemail' => 'Wygląda na to, że nie podano adresu e-mail. Przejdź do [[Special:Preferences#mw-prefsection-emailv2|preferencji]], aby go wprowadzić.', # Fuzzy
 	'usersignup-confirm-page-title' => 'Potwierdź swój e-mail',
 	'usersignup-confirm-page-title-wikiamobile' => 'Sprawdź swoją pocztę',
 	'usersignup-confirm-email-resend-email' => 'Wyślij mi kolejny e-mail z potwierdzeniem',
@@ -4176,11 +4152,6 @@ Chcesz zmienić ustawienia przysyłanych wiadomości? Przejdź tutaj: {{fullurl:
 	'usersignup-facebook-problem' => 'Wystąpił problem podczas łączenia z Facebookiem. Spróbuj później.',
 	'usersignup-facebook-signup-header' => 'Tworzysz nowe konto?',
 	'usersignup-facebook-login-header' => 'Masz już konto?',
-	'usersignup-facebook-or-header' => 'czy',
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email_body-HTML' => '',
-	'usersignup-account-creation-email-body-HTML' => '',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 );
 
 /** Piedmontese (Piemontèis)
@@ -4422,35 +4393,8 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'usersignup-page-title' => 'Junte-se à Wikia',
-	'usersignup-page-captcha-label' => 'Captcha',
-	'usersignup-facebook-create-account' => 'Criar conta',
-	'usersignup-confirm-email-new-email-label' => 'Novo e-mail',
-	'usersignup-confirm-email-update' => 'Atualize',
-	'usersignup-resend-email-heading-success' => 'Novo e-mail enviado',
-	'usersignup-resend-email-heading-failure' => 'E-mail não foi reenviado',
-	'usersignup-confirm-page-heading-confirmed-user' => 'Parabéns!',
-	'usersignup-confirm-page-subheading-confirmed-user' => 'Você já está confirmado',
-	'usersignup-confirmation-heading' => 'Quase lá',
-	'usersignup-confirmation-heading-email-resent' => 'Novo e-mail enviado',
-	'usersignup-confirmation-email-greeting' => 'Olá $USERNAME,',
-	'usersignup-reconfirmation-email-greeting' => 'Olá $USERNAME',
-	'usersignup-reconfirmation-email-signature' => 'A equipe da Wikia',
-	'usersignup-welcome-email-subject' => 'Bem-vindo à Wikia, $USERNAME!',
-	'usersignup-welcome-email-greeting' => 'Olá $USERNAME',
-	'usersignup-welcome-email-edit-profile-heading' => 'Edite seu perfil.',
-	'usersignup-welcome-email-learn-basic-heading' => 'Aprenda o básico.',
-	'usersignup-welcome-email-explore-wiki-heading' => 'Explore mais wikias.',
-	'usersignup-welcome-email-explore-wiki-button' => 'Ir para pt.wikia.com',
-	'usersignup-marketing-community-heading' => 'Colabore',
-	'usersignup-marketing-global-heading' => 'Crie',
-	'usersignup-marketing-creativity-heading' => 'Seja original',
-	'usersignup-account-creation-heading' => 'Sucesso!',
-	'usersignup-account-creation-email-greeting' => 'Olá,',
-	'usersignup-confirmation-reminder-email_subject' => 'Não seja um estranho…',
-	'usersignup-confirmation-reminder-email-greeting' => 'Olá $USERNAME',
-	'usersignup-confirmation-reminder-email-signature' => 'A equipe da Wikia',
-	'usersignup-facebook-login-header' => 'Já tem uma conta?',
 	'usersignup-page-title-wikiamobile' => 'Criar uma conta',
+	'usersignup-page-captcha-label' => 'Captcha',
 	'usersignup-error-username-length' => 'Opa, o seu nome de usuário não pode ter mais do que {{PLURAL:$1|um caracter|$1 caracteres}}.',
 	'usersignup-error-invalid-user' => 'Usuário inválido. Faça o login primeiro.',
 	'usersignup-error-invalid-email' => 'Por favor, insira um endereço de email válido.',
@@ -4461,8 +4405,9 @@ $messages['pt'] = array(
 	'usersignup-error-throttled-email' => 'Opa, você solicitou muitos e-mails de confirmação hoje. Tente novamente daqui a pouco.',
 	'usersignup-error-too-many-changes' => 'Você atingiu o limite máximo para alterações de e-mail hoje. Por favor, tente novamente mais tarde.',
 	'usersignup-error-password-length' => 'Oops, sua senha é muito longa. Por favor, escolha uma senha de 50 caracteres ou menos.',
-	'usersignup-error-confirmed-user' => 'Parece que você já confirmou seu endereço de e-mail para $1!  Verifique o seu [perfil de usuário $2].',
+	'usersignup-error-confirmed-user' => 'Parece que você já confirmou seu endereço de e-mail para $1!  Verifique o seu [perfil de usuário $2].', # Fuzzy
 	'usersignup-facebook-heading' => 'Termine de se inscrever',
+	'usersignup-facebook-create-account' => 'Criar conta',
 	'usersignup-facebook-email-tooltip' => 'Se você gostaria de usar um endereço de e-mail diferente você pode alterar isso mais tarde em suas preferências.',
 	'usersignup-facebook-have-an-account-heading' => 'Já tem uma conta?',
 	'usersignup-facebook-have-an-account' => 'Conecte o seu nome de usuário da Wikia com o Facebook.',
@@ -4475,14 +4420,22 @@ $messages['pt'] = array(
 	'usersignup-user-pref-reconfirmation-email-sent' => 'Quase lá! Nós mandamos um novo email de confirmação para $1. Verifique o seu email e clique no link para terminar de confirmar o seu endereço de email.',
 	'usersignup-user-pref-noemailprefs' => 'Parece que não temos um endereço de e-mail para você. Por favor, insira um endereço de e-mail acima.',
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => 'Ah, não! O seu e-mail ainda não confirmado. Nós já lhe enviamos um e-mail, clique no link de confirmação lá para confirmar.',
-	'usersignup-user-pref-confirmemail_noemail' => 'Parece que não temos um endereço de e-mail para você. Vá para [[Especial: Preferências|Preferências]] para adicionar um.',
+	'usersignup-user-pref-confirmemail_noemail' => 'Parece que não temos um endereço de e-mail para você. Vá para [[Especial: Preferências|Preferências]] para adicionar um.', # Fuzzy
 	'usersignup-confirm-page-title' => 'Confirme o seu email',
 	'usersignup-confirm-page-title-wikiamobile' => 'Verifique o seu e-mail',
 	'usersignup-confirm-email-resend-email' => 'Envie-me um novo e-mail de confirmação',
 	'usersignup-confirm-email-change-email-content' => 'Eu quero usar um e-mail diferente.',
 	'usersignup-confirm-email-change-email' => 'Altere o meu endereço de e-mail',
+	'usersignup-confirm-email-new-email-label' => 'Novo e-mail',
+	'usersignup-confirm-email-update' => 'Atualize',
 	'usersignup-confirm-email-tooltip' => 'Você adicionou um endereço de email que você não pode confirmar, ou você quer usar um endereço de email diferente? Não se preocupe, use o link abaixo para mudar o seu endereço de email e receber um novo email de confirmação.',
+	'usersignup-resend-email-heading-success' => 'Novo e-mail enviado',
+	'usersignup-resend-email-heading-failure' => 'E-mail não foi reenviado',
+	'usersignup-confirm-page-heading-confirmed-user' => 'Parabéns!',
+	'usersignup-confirm-page-subheading-confirmed-user' => 'Você já está confirmado',
+	'usersignup-confirmation-heading' => 'Quase lá',
 	'usersignup-confirmation-heading-wikiamobile' => 'Verifique o seu e-mail',
+	'usersignup-confirmation-heading-email-resent' => 'Novo e-mail enviado',
 	'usersignup-confirmation-subheading' => 'Verifique o seu e-mail',
 	'usersignup-confirmation-email-sent' => "Nós enviamos um e-mail para '''$1'''. 
 
@@ -4491,6 +4444,7 @@ Clique no link de confirmação no seu e-mail para concluir a criação de sua c
 
 Clique no link de confirmação no seu e-mail para concluir a criação de sua conta. Obrigado!",
 	'usersignup-confirmation-email_subject' => 'Quase lá! Confirme sua conta na Wikia',
+	'usersignup-confirmation-email-greeting' => 'Olá $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Você está a um passo de criar a sua conta na Wikia! Clique no link abaixo para confirmar o seu email e começar.
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>',
 	'usersignup-confirmation-email-signature' => 'A equipe da Wikia',
@@ -4506,14 +4460,15 @@ ___________________________________________
 
 Para conferir os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com
 Quer controlar os emails que você recebe? Vá para {{fullurl:{{ns:special}}:Preferências}}',
-	'usersignup-confirmation-email_body-HTML' => '',
 	'usersignup-reconfirmation-email-sent' => 'O seu endereço de e-mail foi alterado para $1. Enviamos-lhe um novo e-mail de confirmação. Por favor, confirme o novo endereço de e-mail.',
 	'usersignup-reconfirmation-email_subject' => 'Confirme a sua mudança de endereço de e-mail na Wikia',
+	'usersignup-reconfirmation-email-greeting' => 'Olá $USERNAME',
 	'usersignup-reconfirmation-email-content' => 'Por favor clique no link abaixo para confirmar sua mudança de endereço de e-mail na Wikia.  
 
 <a style="color:#2C85D5;" href="$CONFIRMURL"> $CONFIRMURL</a>  
 
 Você continuará a receber emails no seu endereço de email antigo até que este seja confirmado.',
+	'usersignup-reconfirmation-email-signature' => 'A equipe da Wikia',
 	'usersignup-reconfirmation-email_body' => 'Olá $2,
 
 Por favor, clique no link abaixo para confirmar a mudança do seu endereço de email na Wikia. 
@@ -4530,13 +4485,18 @@ ___________________________________________
 
 Para conferir os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com
 Quer controlar os emails que você recebe? Vá para {{fullurl:{{ns:special}}:Preferências}}',
-	'usersignup-reconfirmation-email_body-HTML' => '',
+	'usersignup-welcome-email-subject' => 'Bem-vindo à Wikia, $USERNAME!',
+	'usersignup-welcome-email-greeting' => 'Olá $USERNAME',
 	'usersignup-welcome-email-heading' => 'Estamos felizes em recebê-lo na Wikia e na {{SITENAME}}! Aqui estão algumas coisas que você pode fazer para começar.',
+	'usersignup-welcome-email-edit-profile-heading' => 'Edite seu perfil.',
 	'usersignup-welcome-email-edit-profile-content' => 'Adicione uma foto de perfil e alguns fatos sobre você no seu perfil {{SITENAME}}.',
 	'usersignup-welcome-email-edit-profile-button' => 'Vá para o perfil',
+	'usersignup-welcome-email-learn-basic-heading' => 'Aprenda o básico.',
 	'usersignup-welcome-email-learn-basic-content' => 'Veja um tutorial rápido sobre os princípios básicos da Wikia: como editar uma página, seu perfil de usuário, alterar suas preferências e mais.',
 	'usersignup-welcome-email-learn-basic-button' => 'Confira',
+	'usersignup-welcome-email-explore-wiki-heading' => 'Explore mais wikias.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Há milhares de comunidades na Wikia, encontre algumas que the interessam visitando os nossos portais: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Video Games</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Entretenimento</a>, ou <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Estilo de Vida</a>.',
+	'usersignup-welcome-email-explore-wiki-button' => 'Ir para pt.wikia.com',
 	'usersignup-welcome-email-content' => 'Quer mais informações? Encontre respostas, conselhos e a comunidade Wikia na <a style="color:#2C85D5;" href="http://comunidade.wikia.com"> Central da Comunidade</a>. Boas contribuições!',
 	'usersignup-welcome-email-signature' => 'A equipe da Wikia',
 	'usersignup-welcome-email-body' => 'Olá $USERNAME,
@@ -4572,13 +4532,17 @@ Quer controlar quais emails você recebe? Vá para: {{fullurl:{{ns:special}}:Pre
 	'usersignup-heading' => 'Junte-se à Wikia hoje',
 	'usersignup-heading-byemail' => 'Crie uma conta para outra pessoa',
 	'usersignup-marketing-wikia' => 'Comece a colaborar com milhões de pessoas ao redor do mundo que se reúnem para compartilhar o que conhecem e amam.',
-	'usersignup-marketing-login' => 'Já é um usuário? [[Especial: UserLogin|Entrar]]',
+	'usersignup-marketing-login' => 'Já é um usuário? [[Especial: UserLogin|Entrar]]', # Fuzzy
 	'usersignup-marketing-benefits' => 'Seja parte de algo grande',
+	'usersignup-marketing-community-heading' => 'Colabore',
 	'usersignup-marketing-community' => 'Descubra e explore temas que vão desde vídeo games a filmes e televisão. Conheça pessoas com interesses e paixões semelhantes.',
+	'usersignup-marketing-global-heading' => 'Crie',
 	'usersignup-marketing-global' => 'Comece uma wiki. Comece aos poucos e cresça bastante com a ajuda dos outros.',
+	'usersignup-marketing-creativity-heading' => 'Seja original',
 	'usersignup-marketing-creativity' => 'Use a Wikia para expressar sua criatividade com as pesquisas e listas top 10, galerias de foto e vídeo, aplicativos e mais.',
 	'usersignup-createaccount-byemail' => 'Crie uma conta para outra pessoa',
 	'usersignup-error-captcha' => 'A resposta do captcha falhou, por favor, tente novamente!',
+	'usersignup-account-creation-heading' => 'Sucesso!',
 	'usersignup-account-creation-subheading' => 'Enviamos um e-mail para $1',
 	'usersignup-account-creation-email-sent' => 'Você começou o processo de criação de conta para $2. Nós enviamos um e-mail para $1 com uma senha temporária e um link de confirmação. 
 
@@ -4587,6 +4551,7 @@ $2 precisará clicar no link no e-mail que nós enviamos para confirmar sua cont
 
 [{{fullurl: {{ns:special}}: UserSignup|byemail=1}} Criar mais contas] em {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => 'Uma conta foi criada para você na Wikia!',
+	'usersignup-account-creation-email-greeting' => 'Olá,',
 	'usersignup-account-creation-email-content' => 'Uma conta foi criada para você na {{SITENAME}}. Para acessar sua conta e alterar sua senha temporária, clique no link abaixo e inicie a sessão com o nome de usuário "$USERNAME" e senha "$NEWPASSWORD".
 
 Efetue o login no <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}"> {{fullurl: {{ns:special}}: UserLogin}}</a>
@@ -4608,12 +4573,14 @@ ___________________________________________
 
 Para conferir os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com
 Quer controlar quais emails você recebe? Vá para: {{fullurl:{{ns:special}}:Preferências}}',
-	'usersignup-account-creation-email-body-HTML' => '',
+	'usersignup-confirmation-reminder-email_subject' => 'Não seja um estranho…',
+	'usersignup-confirmation-reminder-email-greeting' => 'Olá $USERNAME',
 	'usersignup-confirmation-reminder-email-content' => 'Já faz alguns dias, mas parece que você ainda não terminou de criar a sua conta na Wikia. É fácil. Basta clicar no link de confirmação abaixo:
 
 <a style="color:#2C85D5;" href="$CONFIRMURL"> $CONFIRMURL</a>
 
 Se você não confirmar o seu nome de usuário em menos de 23 dias, $USERNAME ficará disponível novamente, então não espere!',
+	'usersignup-confirmation-reminder-email-signature' => 'A equipe da Wikia',
 	'usersignup-confirmation-reminder-email_body' => 'Olá, $2,
 
 Já faz alguns dias, mas parece que você ainda não terminou de criar a sua conta na Wikia. É fácil. Basta clicar no link de confirmação abaixo: 
@@ -4629,9 +4596,9 @@ ___________________________________________
 
 Para conferir os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com 
 Quer controlar quais emails você recebe? Acesse: {{fullurl: {{ns:special}}: Preferências}}',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 	'usersignup-facebook-problem' => 'Houve um problema na comunicação com o Facebook. Por favor, tente novamente mais tarde.',
 	'usersignup-facebook-signup-header' => 'Criando uma conta nova?',
+	'usersignup-facebook-login-header' => 'Já tem uma conta?',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -4644,7 +4611,7 @@ Quer controlar quais emails você recebe? Acesse: {{fullurl: {{ns:special}}: Pre
 $messages['pt-br'] = array(
 	'usersignup-page-title' => 'Junte-se à comunidade Wikia',
 	'usersignup-page-title-wikiamobile' => 'Criar uma conta',
-	'usersignup-page-captcha-label' => 'Palavra Obscura',
+	'usersignup-page-captcha-label' => 'Palavra Obscura', # Fuzzy
 	'usersignup-error-invalid-user' => 'Usuário inválido. Por favor, autentique-se primeiro.',
 	'usersignup-error-invalid-email' => 'Por favor, insira um endereço de e-mail válido.',
 	'usersignup-error-symbols-in-username' => 'Ops, seu nome de usuário pode conter apenas letras e números.',
@@ -4725,7 +4692,7 @@ Quer controlar quais e-mails você recebe? Vá para: {{fullurl: {{ns: especiais}
 	'usersignup-marketing-creativity-heading' => 'Seja original',
 	'usersignup-marketing-creativity' => 'Use a Wikia para expressar sua criatividade com as pesquisas e listas de top 10, fotos e galerias de vídeo, aplicações e muito mais.',
 	'usersignup-createaccount-byemail' => 'Crie uma conta para outra pessoa',
-	'usersignup-error-captcha' => 'A palavra que você digitou não corresponde a palavra na caixa, tente novamente!',
+	'usersignup-error-captcha' => 'A palavra que você digitou não corresponde a palavra na caixa, tente novamente!', # Fuzzy
 	'usersignup-account-creation-heading' => 'Sucesso!',
 	'usersignup-account-creation-subheading' => 'Enviamos um e-mail para $1',
 	'usersignup-account-creation-email-subject' => 'Uma conta foi criada para você na Wikia!',
@@ -4780,7 +4747,7 @@ $messages['ru'] = array(
 	'usersignup-error-throttled-email' => 'Вы оставили слишком много запросов о подтверждении адресов электронной почты. Повторите попытку через некоторое время.',
 	'usersignup-error-too-many-changes' => 'Вы изменили адрес электронной почты максимальное число раз за сегодня. Пожалуйста, повторите попытку позже.',
 	'usersignup-error-password-length' => 'Указанный вами пароль слишком длинный. Пожалуйста, выберите пароль, который содержит менее 50 символов.',
-	'usersignup-error-confirmed-user' => 'Похоже, вы уже подтвердили адрес электронной почты: $1.  Проверьте ваши [$2 личные настройки].',
+	'usersignup-error-confirmed-user' => 'Похоже, вы уже подтвердили адрес электронной почты: $1.  Проверьте ваши [$2 личные настройки].', # Fuzzy
 	'usersignup-facebook-heading' => 'Завершить регистрацию',
 	'usersignup-facebook-create-account' => 'Создать учётную запись',
 	'usersignup-facebook-email-tooltip' => 'Если вы хотите использовать другой адрес электронной почты, вы сможете изменить его позже в личных настройках.',
@@ -4977,10 +4944,6 @@ ___________________________________________
 	'usersignup-facebook-problem' => 'Есть проблема с соединением с Facebook. Пожалуйста, повторите попытку позже.',
 	'usersignup-facebook-signup-header' => 'Создать новую учётную запись?',
 	'usersignup-facebook-login-header' => 'Уже есть учётная запись?',
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email_body-HTML' => '',
-	'usersignup-account-creation-email-body-HTML' => '',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 );
 
 /** Swedish (svenska)
@@ -5443,11 +5406,12 @@ $messages['tt-cyrl'] = array(
  * @author Mykola Swarnyk
  * @author Ua2004
  * @author Wildream
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
 	'usersignup-page-title' => 'Приєднатися до Wikia',
 	'usersignup-page-title-wikiamobile' => 'Створити обліковий запис',
-	'usersignup-page-captcha-label' => 'Blurry Word',
+	'usersignup-page-captcha-label' => 'Blurry Word', # Fuzzy
 	'usersignup-error-username-length' => "На жаль, ім'я участника не може бути довшим за {{PLURAL:$1|один символ|$1 символів}",
 	'usersignup-error-invalid-user' => "Недопустиме ім'я користувача. Будь ласка, спробуйте ще раз!",
 	'usersignup-error-invalid-email' => 'Будь ласка введіть справжню e-mail адресу.',
@@ -5458,7 +5422,7 @@ $messages['uk'] = array(
 	'usersignup-error-throttled-email' => 'Вам було відправлено занадто багато листів з підтвердженням. Будь ласка, спробуйте ще раз, але трохи пізніше.',
 	'usersignup-error-too-many-changes' => 'Досягнуто максимальної межі для спроб зміни електронної пошти на сьогодні. Будь ласка, повторіть спробу пізніше.',
 	'usersignup-error-password-length' => 'На жаль, ваш пароль занадто довгий. Будь ласка, виберіть пароль, який складається з 50 символів або менше.',
-	'usersignup-error-confirmed-user' => 'Схоже, що ви вже підтвердили свою електронну адресу для $1! Будь ласка, перевірте ваш [$2 профіль користувача].',
+	'usersignup-error-confirmed-user' => 'Схоже, що ви вже підтвердили свою електронну адресу для $1! Будь ласка, перевірте ваш [$2 профіль користувача].', # Fuzzy
 	'usersignup-facebook-heading' => 'Завершити реестрацію.',
 	'usersignup-facebook-create-account' => 'Створити обліковий запис',
 	'usersignup-facebook-email-tooltip' => 'Якщо ви захочете використовувати іншу електронну адресу, ви зможете змінити її в налаштуваннях пізніше.',
@@ -5595,7 +5559,7 @@ ___________________________________________
 	'usersignup-marketing-creativity-heading' => 'Будьте оригінальним',
 	'usersignup-marketing-creativity' => 'Використовуйте Wikia, щоб висловити свій творчий потенціал за допомогою опитувань і рейтингових списків, фото та відео галерей, програми та багато іншого.',
 	'usersignup-createaccount-byemail' => 'Створити обліковий запис для когось іншого',
-	'usersignup-error-captcha' => 'Введене вами слово не збігається з словом у вікно, спробуйте ще раз!',
+	'usersignup-error-captcha' => 'Введене вами слово не збігається з словом у вікно, спробуйте ще раз!', # Fuzzy
 	'usersignup-account-creation-heading' => 'Успіх!',
 	'usersignup-account-creation-subheading' => 'Ми відправили лист на $1',
 	'usersignup-account-creation-email-sent' => 'Ви почали процес створення облікового запису $2. Ми відправили вам лист на $1 з тимчасовим паролем та посиланням для підтвердження.
@@ -5651,6 +5615,8 @@ ___________________________________________
  Ознайомтеся з останніми подіями на Вікія, відвідавши http://community.wikia.com
 Хочете налаштувати отримання розсилки листів? Перейдіть на:  {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-facebook-problem' => "Сталася помилка з'єднання з Facebook. Будь ласка, спробуйте ще раз пізніше.",
+	'usersignup-facebook-signup-header' => 'Створити новий обліковий запис?',
+	'usersignup-facebook-login-header' => 'Ви вже зареєстровані?',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -5809,7 +5775,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-marketing-creativity-heading' => 'Be original',
 	'usersignup-marketing-creativity' => 'Use Wikia to express your creativity with polls and top 10 lists, photo and video galleries, apps and more.',
 	'usersignup-createaccount-byemail' => 'Create an account for someone else',
-	'usersignup-error-captcha' => 'The challenge answer failed, please try again!',
+	'usersignup-error-captcha' => 'The challenge answer failed, please try again!', # Fuzzy
 	'usersignup-account-creation-heading' => 'Success!',
 	'usersignup-account-creation-subheading' => "We've sent an email to $1",
 	'usersignup-account-creation-email-sent' => "You've started the account creation process for $2. We've sent them an email at $1 with a temporary password and a confirmation link.
@@ -5866,10 +5832,6 @@ ___________________________________________
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-facebook-problem' => 'There was a problem communicating with Facebook. Please try again later.',
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email_body-HTML' => '',
-	'usersignup-account-creation-email-body-HTML' => '',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 	'usersignup-facebook-signup-header' => 'Creating a new account?',
 	'usersignup-facebook-login-header' => 'Already have an account?',
 );
@@ -5902,7 +5864,7 @@ $messages['zh-hans'] = array(
 	'usersignup-error-throttled-email' => '很抱歉，你今天申请发送了过多的确认电子邮件。请稍等片刻重新尝试。',
 	'usersignup-error-too-many-changes' => '您今天已经达到电子邮件更改的次数限制。请稍后再试。',
 	'usersignup-error-password-length' => '很抱歉，您的密码太长。请选择50个字符以内的密码。',
-	'usersignup-error-confirmed-user' => '您似乎已经确认了$1为电子邮件地址！ 请查看您的[$2 个人帐户]。',
+	'usersignup-error-confirmed-user' => '您似乎已经确认了$1为电子邮件地址！ 请查看您的[$2 个人帐户]。', # Fuzzy
 	'usersignup-facebook-heading' => '完成注册',
 	'usersignup-facebook-create-account' => '创建帐户',
 	'usersignup-facebook-email-tooltip' => '如果您想要使用一个不同的电子邮件地址，可以稍后在个人设置中进行更改。',
@@ -5956,8 +5918,7 @@ Wikia团队
 ___________________________________________
 
 想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com
-点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}
-',
+点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-reconfirmation-email-sent' => '您的邮件地址已经变更为$1。我们已经发送给您一封确认邮件。请登录您的邮箱点击链接进行确认。',
 	'usersignup-reconfirmation-email_subject' => '在Wikia上确认您的电子邮件变更。',
 	'usersignup-reconfirmation-email-greeting' => '您好$USERNAME',
@@ -5965,9 +5926,7 @@ ___________________________________________
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
-在您确认新的电子邮件之前，所有信息都将发送至您的旧的电子邮箱。
-
-',
+在您确认新的电子邮件之前，所有信息都将发送至您的旧的电子邮箱。',
 	'usersignup-reconfirmation-email-signature' => 'Wikia团队',
 	'usersignup-reconfirmation-email_body' => '您好$2，
 
@@ -5981,8 +5940,7 @@ Wikia团队
 ___________________________________________
 
 想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com
-点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}
-',
+点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-welcome-email-subject' => '欢迎来到Wikia，$USERNAME！',
 	'usersignup-welcome-email-greeting' => '您好$USERNAME',
 	'usersignup-welcome-email-heading' => '我们很高兴您加入Wikia{{SITENAME}}社区！在开始之前，请查看以下相关信息。',
@@ -6087,38 +6045,34 @@ Wikia团队
 ___________________________________________
 
 想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com
-点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}
-',
+点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => '链接Facebook出现问题。请稍后再试。',
 	'usersignup-facebook-signup-header' => '创建帐户',
 	'usersignup-facebook-login-header' => '已经拥有一个帐户了？',
-	'usersignup-confirmation-email_body-HTML' => '',
-	'usersignup-reconfirmation-email_body-HTML' => '',
-	'usersignup-account-creation-email-body-HTML' => '',
-	'usersignup-confirmation-reminder-email_body-HTML' => '',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Ffaarr
  * @author LNDDYL
  * @author Simon Shek
  */
 $messages['zh-hant'] = array(
 	'usersignup-page-title' => '加入 Wikia',
-	'usersignup-page-captcha-label' => '模糊單詞',
+	'usersignup-page-captcha-label' => '模糊單詞', # Fuzzy
 	'usersignup-error-username-length' => '哎呀，您的使用者名稱不能超過 {{PLURAL:$1|一個字符| $1 字元}}。',
 	'usersignup-error-invalid-user' => '無效使用者，請先登入。',
-	'usersignup-error-invalid-email' => '請輸入有效的電子郵件位址。',
-	'usersignup-error-symbols-in-username' => '哎呀，您的用戶名只能包含字母和數位。',
-	'usersignup-error-empty-email' => '哎呀，請填寫您的電子郵件位址。',
-	'usersignup-error-empty-username' => '哎呀，請填寫用戶名。',
-	'usersignup-error-already-confirmed' => '你已經確認該電子郵件位址。',
+	'usersignup-error-invalid-email' => '請輸入有效的電子郵件地址。',
+	'usersignup-error-symbols-in-username' => '哎呀，您的使用者名稱只能包含字母與數字。',
+	'usersignup-error-empty-email' => '哎呀，請填寫您的電子郵件地址。',
+	'usersignup-error-empty-username' => '哎呀，請填寫使用者名稱。',
+	'usersignup-error-already-confirmed' => '你已經確認該電子郵件地址。',
 	'usersignup-confirm-email-new-email-label' => '新電子郵件',
 	'usersignup-confirm-email-update' => '更新',
-	'usersignup-resend-email-heading-failure' => '電子郵件未重新發送',
+	'usersignup-resend-email-heading-failure' => '電子郵件未重新傳送',
 	'usersignup-confirm-page-heading-confirmed-user' => '恭喜 ！',
 	'usersignup-confirmation-heading' => '快完成了。',
-	'usersignup-confirmation-heading-email-resent' => '新電子郵件已發送',
+	'usersignup-confirmation-heading-email-resent' => '新電子郵件已傳送',
 	'usersignup-confirmation-subheading' => '請檢查您的電子郵件',
 	'usersignup-marketing-global-heading' => '建立',
 );
@@ -6327,4 +6281,3 @@ ___________________________________________
 	'usersignup-facebook-signup-header' => '要創建新的帳戶嗎？',
 	'usersignup-facebook-login-header' => '已經擁有一個帳戶了嗎？',
 );
-

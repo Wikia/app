@@ -2248,22 +2248,23 @@ $3',
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'welcome-user-page' => "==關於我==
 
-''這是您的用戶頁面。請編輯本頁向整個社區介紹您！''
+''這是您的使用者頁面。請編輯本頁向整個社群介紹您自己！''
 
 ==我的貢獻==
 
-* [[Special:Contributions/$1|用戶貢獻]]
+* [[Special:Contributions/$1|使用者貢獻]]
 
-==我喜愛的頁面==
+==我最愛的頁面==
 
 * 在此為您喜愛的頁面增加連結！
-* 喜愛的頁面 #2
-* 喜愛的頁面 #3",
+* 最愛的頁面 #2
+* 最愛的頁面 #3",
 	'welcome-message-user' => 'Hi，歡迎來到{{SITENAME}}！ 感謝您對[[:$1]]頁面的編輯。
 
 如果我能幫助您的話，請在[[$2|我的討論頁]]留言。$3',

@@ -92,11 +92,13 @@ $messages['ca'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Jezevec
  */
 $messages['cs'] = array(
 	'taskmanager' => 'Zobrazit a spravovat úlohy na pozadí',
+	'taskmanager-desc' => 'Zobrazit a spravovat úlohy na pozadí',
 	'taskmanager_title' => 'Zobrazit a spravovat úlohy na pozadí',
 	'taskmanager_tasklist' => 'Návrat do seznamu úkolů',
 	'right-taskmanager' => 'Lze zobrazit úlohy na pozadí',
@@ -429,10 +431,12 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
+ * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'taskmanager' => 'Просмотр и управление фоновыми заданиями',
+	'taskmanager-desc' => 'Просмотр и управление фоновыми заданиями',
 	'taskmanager_title' => 'Просмотр и управление фоновыми заданиями',
 	'taskmanager_tasklist' => 'Вернуться к списку заданий',
 	'right-taskmanager' => 'Может просматривать фоновые задачи',
@@ -511,9 +515,11 @@ $messages['tr'] = array(
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
 	'taskmanager' => 'Перегляд і керування фоновими завданнями',
+	'taskmanager-desc' => 'Перегляд і керування фоновими завданнями',
 	'taskmanager_title' => 'Перегляд і керування фоновими завданнями',
 	'taskmanager_tasklist' => 'Повернутися до списку завдань',
 	'right-taskmanager' => 'Переглядати фонові завдання',

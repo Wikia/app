@@ -1,6 +1,6 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
 $(function () {
-	require(['wikia.window', 'jquery', 'wikia.nirvana', 'JSMessages'], function (window, $, nirvana, msg) {
+	require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'], function (window, $, nirvana, tracker, msg) {
 		'use strict';
 
 		var d = document,
@@ -133,7 +133,12 @@ $(function () {
 					$save.attr('disabled', false);
 					return true;
 				}
-			};
+			},
+			track = tracker.buildTrackingFunction({
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'special-curated-content',
+				trackingMethod: 'analytics'
+			});
 
 		$form
 			.on('focus', 'input', function () {
@@ -205,6 +210,8 @@ $(function () {
 			}
 			return result;
 		}
+
+		window._gaq.push(['_setSampleRate', '100']);
 
 		$save.on('click', function () {
 			var data = [],
@@ -291,14 +298,15 @@ $(function () {
 
 							$save.addClass('err');
 							$save.attr('disabled', true);
+							track({ label: 'save-error' });
 						} else if (data.status) {
 							$save.addClass('ok');
+							track({ label: 'save' });
 						}
-					}).fail(
-					function () {
+					}).fail(function () {
 						$save.addClass('err');
-					}
-				).then(function () {
+						track({ label: 'save-error' });
+					}).then(function () {
 						$form.stopThrobbing();
 					});
 			}

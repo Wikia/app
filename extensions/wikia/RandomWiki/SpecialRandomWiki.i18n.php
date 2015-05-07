@@ -296,6 +296,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'randomwiki-desc' => 'کارنانو ته د يوې ناټاکلې ويکي د سپړلو اسانتيا وربرابروي',
 	'randomwiki' => 'ناټاکلې ويکي',
 );
 
@@ -441,9 +442,10 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Horacewai2
+ * @author LNDDYL
  * @author Waihorace
  */
 $messages['zh-hant'] = array(
-	'randomwiki-desc' => '容許用戶去訪問一個隨機的維基',
+	'randomwiki-desc' => '容許使用者去探索一個隨機的 wiki',
 	'randomwiki' => '隨機維基',
 );

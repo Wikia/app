@@ -1189,10 +1189,12 @@ class CreateWiki {
 
 	/**
 	 * gets initial value for wgEnableNjordExt for new created wiki
-	 * TODO: Prototype - turn on on 10% of new created wikis
+	 * Set to false to stop beta version progression.
+	 * @see DAT-2752
+	 *
 	 * @return bool
 	 */
 	private function getInitialNjordExtValue() {
-		return rand( 0, 9 ) % 10 === 1 ? true : false;
+		return false;
 	}
 }

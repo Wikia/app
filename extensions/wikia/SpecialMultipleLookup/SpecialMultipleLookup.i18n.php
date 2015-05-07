@@ -388,6 +388,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Silvonen
  */
 $messages['fi'] = array(
 	'multilookupgo' => 'Siirry',
@@ -400,6 +401,8 @@ $messages['fi'] = array(
 	'multilookupwiki' => 'Wiki',
 	'multilookupdetails' => 'Lisätietoja',
 	'multilookuplastedit' => 'Viimeisin muokkaus tästä IP-osoitteesta:',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Otsikko',
 );
 
 /** French (français)
@@ -540,7 +543,7 @@ $messages['ia'] = array(
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
-	'multilookupwiki' => 'ВIикIи',
+	'multilookupwiki' => 'Масса',
 );
 
 /** Italian (italiano)
@@ -640,7 +643,7 @@ $messages['lrc'] = array(
 	'multilookupprevious' => 'وادمايی',
 	'multilookupnoresultfound' => 'هيچ نتيجه يی  جسته نبی',
 	'multilookupwiki' => 'ويكی',
-	'multilookuplink' => 'لینک هومیار',
+	'multilookuplink' => 'هوم پیوند هومیاری',
 	'multilookupdetails' => 'جزيات نشون بيئه',
 	'multilookupwikidbname' => 'نوم دی بی',
 	'multilookupwikiurl' => 'يو آر ال',
@@ -1180,10 +1183,12 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'multilookupnoresultfound' => 'Không tìm thấy kết quả',
 	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Xem chi tiết',
 );
 
 /** Yiddish (ייִדיש)

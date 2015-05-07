@@ -735,10 +735,12 @@ $messages['tl'] = array(
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Prima klasy4na
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
 	'tagsreport' => 'Звіт про теги',
+	'tagsreport-desc' => "Список статей, які використовують спеціальні теги в тексті (наприклад, \"дпл', 'YouTube')",
 	'tagsreporttitle' => 'Звіт про теги',
 	'tagsreportselecttag' => 'Оберіть тег:',
 	'tagsreportgo' => 'Показати',

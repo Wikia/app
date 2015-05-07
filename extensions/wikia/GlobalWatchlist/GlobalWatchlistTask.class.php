@@ -66,7 +66,7 @@ class GlobalWatchlistTask extends BaseTask {
 						->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
 						// Do nothing on duplicate key - we already have that record in place
 						->ON_DUPLICATE_KEY_UPDATE(
-							[ GlobalWatchlistTable::COLUMN_USER_ID => GlobalWatchlistTable::COLUMN_USER_ID ]
+							[ GlobalWatchlistTable::COLUMN_USER_ID => $watcherID ]
 						)
 						->run( $db );
 				}

@@ -951,7 +951,7 @@ class BlogTemplateClass {
 			__METHOD__
 		);
 
-		return $row ? $row : 0;
+		return $row ? (int)$row : 0;
 	}
 
 	private static function __makeRssOutput($aInput) {

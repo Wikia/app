@@ -96,6 +96,7 @@ abstract class BaseTask {
 			throw new \InvalidArgumentException;
 		}
 
+		$this->info( 'BaseTask::execute' );
 
 		try {
 			$result = call_user_func_array( [$this, $method], $args );
@@ -143,6 +144,11 @@ abstract class BaseTask {
 	 * @return string|array the task's id or array of such IDs if the given wikiID is an array
 	 */
 	public function queue() {
+		$this->info( 'BaseTask::queue', [
+			'task' => get_class( $this ),
+			'backtrace' => new \Exception()
+		] );
+
 		$taskLists = $this->convertToTaskLists();
 		$taskIds = AsyncTaskList::batch( $taskLists );
 
@@ -388,6 +394,12 @@ abstract class BaseTask {
 			/** @var BaseTask $task $taskLists */
 			$taskLists = array_merge( $taskLists, $task->convertToTaskLists() );
 		}
+
+		\Wikia\Logger\WikiaLogger::instance()->info( 'BaseTask::batch', [
+			'count' => count( $tasks ),
+			'task' => get_class( reset( $tasks ) ),
+			'backtrace' => new \Exception()
+		] );
 
 		return AsyncTaskList::batch( $taskLists );
 	}

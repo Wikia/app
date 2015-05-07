@@ -18,30 +18,46 @@
 		</div>
 		<div class="insights-content">
 			<?php if ( !empty( $content ) ) : ?>
-				<ul class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
+				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
+					<tr>
+						<th class="insights-list-header insights-list-first-column"><?= wfMessage( 'insights-list-header-page' )->escaped() ?></th>
+						<?php if ( $data['display']['pageviews'] ) : ?>
+							<th class="insights-list-header insights-list-header-pageviews"><?= wfMessage( 'insights-list-header-pageviews' )->escaped() ?></th>
+						<?php endif; ?>
+					</tr>
 					<?php foreach( $content as $item ): ?>
-						<li class="insights-list-item">
-							<a class="insights-list-item-title <?= Sanitizer::encodeAttribute( $item['link']['classes'] ) ?>" title="<?= Sanitizer::encodeAttribute( $item['link']['title'] ) ?>" href="<?= Sanitizer::cleanUrl( $item['link']['url'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $item['link']['text'] ) ?></a>
-							<?php if ( isset( $item['metadata'] ) ) : ?>
-								<p class="insights-list-item-metadata">
-									<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
-										<?= wfMessage( 'insights-last-edit' )->rawParams(
-										Xml::element( 'a', [
-												'href' => $item['metadata']['lastRevision']['userpage']
-											],
-												$item['metadata']['lastRevision']['username']
-											),
-										date( 'F j, Y', $item['metadata']['lastRevision']['timestamp'] )
-										)->escaped() ?>
-									<?php endif; ?>
-									<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
-										<?= $item['metadata']['wantedBy'] ?>
-									<?php endif; ?>
-								</p>
+						<tr class="insights-list-item">
+							<td class="insights-list-item-page insights-list-cell insights-list-first-column">
+								<a class="insights-list-item-title <?= Sanitizer::encodeAttribute( $item['link']['classes'] ) ?>" title="<?= Sanitizer::encodeAttribute( $item['link']['title'] ) ?>" href="<?= Sanitizer::cleanUrl( $item['link']['url'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $item['link']['text'] ) ?></a>
+								<?php if ( isset( $item['metadata'] ) ) : ?>
+									<p class="insights-list-item-metadata">
+										<?php if ( isset( $item['metadata']['lastRevision'] ) ) : ?>
+											<?= wfMessage( 'insights-last-edit' )->rawParams(
+											Xml::element( 'a', [
+													'href' => $item['metadata']['lastRevision']['userpage']
+												],
+													$item['metadata']['lastRevision']['username']
+												),
+											date( 'F j, Y', $item['metadata']['lastRevision']['timestamp'] )
+											)->escaped() ?>
+										<?php endif; ?>
+										<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
+											<?= $item['metadata']['wantedBy'] ?>
+										<?php endif; ?>
+									</p>
+								<?php endif; ?>
+							</td>
+							<?php if ( $data['display']['pageviews'] ) : ?>
+								<td class="insights-list-item-pageviews insights-list-cell">
+									<?= $wg->Lang->formatNum( $item['metadata']['pv7'] ); ?>
+								</td>
 							<?php endif; ?>
-						</li>
+						</tr>
 					<?php endforeach; ?>
-				</ul>
+				</table>
+				<?php if ( $paginatorBar ) : ?>
+					<?= $paginatorBar ?>
+				<?php endif ?>
 			<?php else: ?>
 				<p>
 					<?= wfMessage( 'insights-list-no-items' )->escaped(); ?>

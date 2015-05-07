@@ -278,7 +278,6 @@ class LinksUpdate {
 
 	private function queueRefreshTasks( $batches ) {
 		global $wgCityId;
-		$legacyJobs = array();
 
 		foreach ( $batches as $batch ) {
 			list( $start, $end ) = $batch;
@@ -287,10 +286,12 @@ class LinksUpdate {
 			$task->wikiId( $wgCityId );
 			$task->call( 'refreshTemplateLinks', $start, $end );
 			$task->queue();
-		}
 
-		if ( !empty( $legacyJobs ) ) {
-			Job::batchInsert( $legacyJobs );
+			Wikia\Logger\WikiaLogger::instance()->info( 'LinksUpdate::queueRefreshTasks', [
+				'title' => $this->mTitle->getPrefixedDBkey(),
+				'start' => $start,
+				'end' => $end,
+			] );
 		}
 
 	}
