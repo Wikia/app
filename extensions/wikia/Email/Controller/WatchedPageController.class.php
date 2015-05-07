@@ -85,7 +85,7 @@ abstract class WatchedPageController extends EmailController {
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
 			'contentFooterMessages' => $this->getContentFooterMessages(),
-			'contentFooterMessagesCount' => ( bool ) count( $this->getContentFooterMessages() ),
+			'hasContentFooterMessages' => ( bool ) count( $this->getContentFooterMessages() ),
 		] );
 	}
 
@@ -262,6 +262,7 @@ class WatchedPageDeletedController extends WatchedPageController {
 }
 
 class WatchedPageRenamedController extends WatchedPageController {
+	/** @var \Title */
 	protected $newTitle;
 
 	public function initEmail() {
