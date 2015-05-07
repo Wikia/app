@@ -115,8 +115,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'mostvisitedpages-desc' => 'Obtenir una llista de les pàgines més visitades',
 	'mostvisitedpages' => 'Pàgines més visitades',
 	'mostvisitedpagessearchtext' => "Nom de l'article:",
 	'mostvisitedpagessearchbtn' => 'Cerca',
@@ -133,10 +135,12 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Reaperman
  */
 $messages['cs'] = array(
+	'mostvisitedpages-desc' => 'Seznam nejčastěji navštěvovaných stránek',
 	'mostvisitedpages' => 'Nejnavštěvovanější stránky',
 	'mostvisitedpagessearchtext' => 'Název článku:',
 	'mostvisitedpagessearchbtn' => 'hledat',
@@ -425,6 +429,7 @@ $messages['lrc'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'mostvisitedpages-desc' => 'Добијте список на најпосетувани страници',
 	'mostvisitedpages' => 'Најпосетени страници',
 	'mostvisitedpagessearchtext' => 'Назив на статијата:',
 	'mostvisitedpagessearchbtn' => 'пребарај',
@@ -530,6 +535,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'mostvisitedpages-desc' => 'د ډېرو لوستل شويو مخونو لړليک ترلاسه کول',
 	'mostvisitedpages' => 'تر ټولو ډېر کتل شوي مخونه',
 	'mostvisitedpagessearchtext' => 'د ليکنې نوم:',
 	'mostvisitedpagessearchbtn' => 'پلټل',
@@ -580,10 +586,12 @@ $messages['roa-tara'] = array(
 );
 
 /** Russian (русский)
+ * @author Kopcap94
  * @author Lockal
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'mostvisitedpages-desc' => 'Получить список самых посещаемых страниц',
 	'mostvisitedpages' => 'Наиболее часто посещаемые страницы',
 	'mostvisitedpagessearchtext' => 'Название статьи:',
 	'mostvisitedpagessearchbtn' => 'найти',
@@ -596,6 +604,7 @@ $messages['ru'] = array(
  * @author Dbc334
  */
 $messages['sl'] = array(
+	'mostvisitedpages-desc' => 'Pridobi seznam najbolj obiskanih strani',
 	'mostvisitedpages' => 'Strani z največ ogledi',
 	'mostvisitedpagessearchtext' => 'Naslov članka:',
 	'mostvisitedpagessearchbtn' => 'išči',
@@ -710,9 +719,11 @@ $messages['tyv'] = array(
 
 /** Ukrainian (українська)
  * @author Prima klasy4na
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
+	'mostvisitedpages-desc' => 'Отримати список найбільш відвідуваних сторінок',
 	'mostvisitedpages' => 'Сторінки, які найчастіше переглядають',
 	'mostvisitedpagessearchtext' => 'Назва статті:',
 	'mostvisitedpagessearchbtn' => 'пошук',

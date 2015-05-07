@@ -235,7 +235,7 @@ class CuratedContentController extends WikiaController {
 				return ApiService::call(
 					[
 						'action' => 'query',
-						'list' => 'allitems',
+						'list' => 'allcategories',
 						'redirects' => true,
 						'aclimit' => $limit,
 						'acfrom' => $offset,
@@ -248,24 +248,24 @@ class CuratedContentController extends WikiaController {
 		);
 
 		$allCategories = $items[ 'query' ][ 'allcategories' ];
-
 		if ( !empty( $allCategories ) ) {
 
 			$ret = [ ];
+			$app = F::app();
+			$categoryName = $app->wg->contLang->getNsText( NS_CATEGORY );
 
 			foreach ( $allCategories as $value ) {
 				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
 					$ret[ ] = $this::getJsonItem( $value[ '*' ],
-						'category',
-						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0,
-						NS_CATEGORY );
+						$categoryName,
+						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0 );
 				}
 			}
 
 			$this->response->setVal( 'items', $ret );
 
-			if ( !empty( $categories[ 'query-continue' ] ) ) {
-				$this->response->setVal( 'offset', $categories[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
+			if ( !empty( $items[ 'query-continue' ] ) ) {
+				$this->response->setVal( 'offset', $items[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
 			}
 
 		} else {
@@ -365,14 +365,16 @@ class CuratedContentController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	function getJsonItem( $titleName, $ns, $pageId, $type ) {
+	function getJsonItem( $titleName, $ns, $pageId ) {
 		$title = Title::makeTitle( $ns, $titleName );
-
+		list( $image_id, $image_url ) = CuratedContentSpecialController::findImageIfNotSet( 0, $pageId );
 		return [
-			'title' => $title->getFullText(),
-			'type' => $type,
-			'id' => $pageId,
-			'nsId' => $ns,
+			'title' => $ns . ':' . $title->getFullText(),
+			'label' => $title->getFullText(),
+			'image_id' => $image_id,
+			'article_id' => $pageId,
+			'type' => 'category',
+			'image_url' => $image_url
 		];
 	}
 
@@ -384,7 +386,7 @@ class CuratedContentController extends WikiaController {
 	 */
 	static function onCuratedContentSave() {
 		self::purgeMethod( 'getList' );
-		if(class_exists( 'GameGuidesController' ) ) {
+		if ( class_exists( 'GameGuidesController' ) ) {
 			GameGuidesController::purgeMethod( 'getList' );
 		}
 		return true;

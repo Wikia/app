@@ -1,6 +1,6 @@
 <div class="greeting">
 	<p>{{salutation}}</p>
-	<p>{{{articleEditedText}}}</p>
+	<p>{{{summary}}}</p>
 </div>
 
 <table>
@@ -27,9 +27,13 @@
 						</a>
 					{{/ editorProfilePage}}
 				</p>
-				<p>{{summary}}</p>
+				<p>{{details}}</p>
 			</div>
-			<a href="{{buttonLink}}"><button>{{buttonText}}</button></a>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<a class="button" href="{{buttonLink}}">{{buttonText}}</a>
 		</td>
 	</tr>
 	<tr>

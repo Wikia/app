@@ -400,7 +400,8 @@ $messages['qqq'] = array(
 	'wall-message-wall' => 'Name of the feature',
 	'wall-message-wall-shorten' => "Name of the feature when it's used with a possessive, as in John's wall
 {{Identical|Wall}}",
-	'wall-message-unfollow' => 'stop subscribing to notifications for this thread',
+	'wall-message-unfollow' => 'stop subscribing to notifications for this thread
+{{Identical|Unfollow}}',
 	'wall-message-undoremove' => 'undo the action that you just took.
 {{Identical|Undo}}',
 	'wall-message-edited' => 'Parameters:
@@ -673,8 +674,10 @@ This message follows after http://messaging.wikia.com/wiki/MediaWiki:Prefs-email
 	'wall-recentchanges-namespace-selector-message-wall' => 'Recent changes, item in namespace dropdown',
 	'wall-recentchanges-thread-group' => 'Grouped recent changes item. Parameters:
 * $1 is the thread title link
-* $2 is page name of the wall
-* $3 is wall owner',
+* $2 is page name of the message wall
+* $3 is wall owner
+
+<pre>Example: "[[Thread:123456|Welcome to the wiki!]] on [[Message Wall:John Doe|John Doe\'s wall]]"</pre>',
 	'wall-recentchanges-history-link' => 'Recent changes, link to wall history for items about removed and deleted threads',
 	'wall-recentchanges-thread-history-link' => 'Recent changes, link to thread history for items about removed replies',
 	'wall-contributions-line' => 'Contributions item. Parameters:
@@ -3534,6 +3537,7 @@ $messages['fy'] = array(
 	'wall-message-more' => 'Mear',
 	'wall-action-all-confirm-cancel' => 'Annulearje',
 	'wall-delete-error-title' => 'Flater',
+	'wall-notifications-all' => 'Alle meldingen',
 	'wall-history' => 'Skiednis',
 	'wall-topic-edit-cancel' => 'Annulearje',
 );
@@ -4796,6 +4800,8 @@ $messages['ko'] = array(
 	'wall-delete-error-title' => '오류',
 	'wall-action-remove-confirm-ok' => '제거',
 	'wall-action-admin-confirm-ok' => '삭제',
+	'wall-notifications-markasread-all-wikis' => '모든 위키',
+	'wall-notifications-loading' => '알림 로드 중',
 	'wn-user1-reply-you-your-wall' => '귀하의 메시지 담벼락에 $1 사용자가 귀하에게 댓글을 남겼습니다',
 	'wn-user3-reply-you-your-wall' => '귀하의 메시지 담벼락에 $1 사용자 및 그 외 사용자가 귀하에게 댓글을 남겼습니다',
 	'wn-user2-reply-self-your-wall' => '$1 사용자와 $2 사용자가 귀하의 메시지 담벼락에 댓글을 남겼습니다',
@@ -4944,13 +4950,13 @@ $messages['ksh'] = array(
 	'wall-action-rev-confirm-ok' => 'Joh, schmieß fott',
 	'wall-notifications' => 'Meddeilonge',
 	'wall-notifications-all' => 'Alle Medeilonge',
-	'wall-notifications-markasread' => 'Alles als jelesse makeere',
+	'wall-notifications-markasread' => 'Alles als jelässe makehre',
 	'wall-notifications-markasread-all-wikis' => 'All Wikis',
 	'wall-notifications-markasread-this-wiki' => 'Bloß heh dat Wiki',
 	'wall-sorting-most-active' => 'Aam aktiivste',
 	'wall-sorting-archived' => 'uss_em Aschiif',
 	'wall-recentchanges-thread-history-link' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
-	'wall-wiki-activity-on' => 'op [[$1]]',
+	'wall-wiki-activity-on' => 'op [[$1]]', # Fuzzy
 	'wall-removed-thread-undo' => 'Dä Jeschprääschßfäddem es fottjeschmeße. $1',
 	'wall-removed-reply-undo' => 'Di Antwoot es fottjeschmeße. $1',
 	'wall-removed-reply' => 'Di Antwoot es fottjeschmeße',
@@ -4965,7 +4971,7 @@ $messages['ksh'] = array(
 	'wall-history-action-view' => 'aanloore',
 	'wall-history-action-restore' => 'wider zerök holle',
 	'wall-history-action-thread-history' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
-	'wall-thread-history-title' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione',
+	'wall-thread-history-title' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione', # Fuzzy
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -5016,7 +5022,7 @@ $messages['lb'] = array(
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
-	'wall-button-save-changes' => 'ذخیره کردن آلشتیا',
+	'wall-button-save-changes' => 'اماییه کردن آلشتیا',
 );
 
 /** Latvian (latviešu)
@@ -5335,6 +5341,9 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Уреди теми',
 	'wall-topic-edit-save' => 'Зачувај',
 	'wall-topic-edit-cancel' => 'Откажи',
+	'group-threadmoderator' => 'Модератори',
+	'group-threadmoderator-member' => 'Модератор',
+	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
 /** Malay (Bahasa Melayu)
@@ -6336,6 +6345,7 @@ $messages['pfl'] = array(
 /** Polish (polski)
  * @author Ankry
  * @author BeginaFelicysym
+ * @author Chrumps
  * @author Debeet
  * @author Pio387
  * @author Rezonansowy
@@ -6641,6 +6651,8 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Edytuj tematy',
 	'wall-topic-edit-save' => 'Zapisz zmiany',
 	'wall-topic-edit-cancel' => 'Anuluj',
+	'group-threadmoderator' => 'Moderatorzy',
+	'group-threadmoderator-member' => 'Moderator',
 );
 
 /** Pashto (پښتو)
@@ -7008,7 +7020,7 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
  */
 $messages['pt-br'] = array(
 	'wall-no-title' => 'Sem título',
-	'wall-message-loadmore' => 'Ver todas as $1 {{PLURAL:$1|resposta|respostas}}', # Fuzzy
+	'wall-message-loadmore' => 'Ver <span class="count">{{PLURAL:$1|a $1 resposta|todas as $1 respostas}}</span>',
 	'wall-message-wall' => 'Mural de Mensagens',
 	'wall-message-wall-shorten' => 'mural',
 	'wall-message-unfollow' => 'Parar de seguir',
@@ -7110,8 +7122,8 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-notifications' => 'Notificações',
 	'wall-notifications-all' => 'Todas as Notificações',
 	'wall-notifications-markasread' => 'Marcar tudo como lido',
-	'wall-notifications-markasread-all-wikis' => 'Todas as wikis',
-	'wall-notifications-markasread-this-wiki' => 'Esta wiki',
+	'wall-notifications-markasread-all-wikis' => 'Todas as wikias',
+	'wall-notifications-markasread-this-wiki' => 'Esta wikia',
 	'wall-notifications-empty' => 'Não há notificações',
 	'wall-notifications-loading' => 'Carregando notificações',
 	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} {{PLURAL:$1|não lida|não lidas}}',
@@ -7178,7 +7190,7 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-deleted-reply' => 'Esta resposta foi excluída',
 	'wall-history' => 'Histórico',
 	'wall-history-title' => 'histórico do mural',
-	'wall-history-who-involved-wall-title' => 'Quem está envolvido neste mural?', # Fuzzy
+	'wall-history-who-involved-wall-title' => 'Quem está envolvido?',
 	'wall-history-who-involved-thread-title' => 'Quem está envolvido neste tópico?',
 	'wall-history-thread-created' => '$1 criado por $2',
 	'wall-history-thread-removed' => '$1 removido por $2',
@@ -7193,7 +7205,7 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-history-action-view' => 'ver',
 	'wall-history-action-restore' => 'restaurar',
 	'wall-history-action-thread-history' => 'histórico do tópico',
-	'wall-thread-history-title' => 'histórico do tópico', # Fuzzy
+	'wall-thread-history-title' => 'Histórico do tópico',
 	'mail-notification-body' => 'Oi $WATCHER,
 
 $SUBJECT
@@ -7593,6 +7605,8 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Сохранить',
 	'wall-topic-edit-cancel' => 'Отмена',
+	'group-threadmoderator' => 'Модераторы',
+	'group-threadmoderator-member' => 'Модератор',
 );
 
 /** Scots (Scots)
@@ -8632,6 +8646,7 @@ $messages['tzm'] = array(
  * @author Base
  * @author Pig1995z
  * @author Wildream
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
 	'wall-no-title' => 'Без назви',
@@ -8915,6 +8930,9 @@ ___________________________________________<br />
 	'wall-topic-edit' => 'Редагувати теми',
 	'wall-topic-edit-save' => 'Зберегти',
 	'wall-topic-edit-cancel' => 'Скасувати',
+	'group-threadmoderator' => 'Модератори',
+	'group-threadmoderator-member' => 'Модератор',
+	'grouppage-threadmoderator' => 'w:c:спільнота:допомога:Модератори',
 );
 
 /** Uzbek (oʻzbekcha)
@@ -9323,6 +9341,7 @@ $messages['yi'] = array(
  * @author Dimension
  * @author Ffaarr
  * @author Liuxinyu970226
+ * @author Macofe
  * @author Sam Wang
  * @author Xiaomingyan
  * @author Yfdyh000
@@ -9506,7 +9525,7 @@ $messages['zh-hans'] = array(
 	'wall-message-staff-text' => '该用户是Wikia的一名工作人员',
 	'wall-ipballowusertalk' => '允许此用户在被封禁期间在他的信息墙上发布信息',
 	'wall-ipbwatchuser' => '监视此用户的个人资料并关注它的信息墙',
-	'wall-wiki-activity-on' => '在[[$1上|$2的留言墙]]',
+	'wall-wiki-activity-on' => '在[[$1|$2的信息墙上]]',
 	'wall-removed-thread-undo' => '此话题已被移除。$1',
 	'wall-removed-reply-undo' => '此回复已被移除。$1',
 	'wall-removed-reply' => '此回复已被移除',
@@ -9609,6 +9628,9 @@ ___________________________________________<br />
 	'wall-topic-edit' => '编辑主题',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '取消',
+	'group-threadmoderator' => '版主',
+	'group-threadmoderator-member' => '版主',
+	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -9616,6 +9638,7 @@ ___________________________________________<br />
  * @author LNDDYL
  * @author Liflon
  * @author Liuxinyu970226
+ * @author Macofe
  */
 $messages['zh-hant'] = array(
 	'wall-no-title' => '無標題',
@@ -9644,7 +9667,7 @@ $messages['zh-hant'] = array(
 	'wall-thread-closed' => '已關閉',
 	'wall-default-title' => '來自 $1 的訊息',
 	'wall-no-title-warning' => '← 您未指定任何標題',
-	'wall-desc' => '取代用戶對話頁',
+	'wall-desc' => '取代使用者對話頁',
 	'wall-disabled-desc' => '針對未啟用訊息牆的wiki的功能',
 	'wall-placeholder-topic' => '這是關於什麼？',
 	'wall-placeholder-message' => '在$1的訊息牆上發表新留言',
@@ -9674,8 +9697,8 @@ $messages['zh-hant'] = array(
 	'wall-message-restore-reply' => '還原回覆',
 	'wall-delete-reason' => '使用者/管理員操作',
 	'wall-user-talk-page-archive-anchor' => '查看存檔的討論頁',
-	'wall-user-talk-archive-page-title' => '用戶討論頁存檔',
-	'wall-ipb-disableusertalk' => '禁止這個用戶在封禁期間於其訊息牆上發布訊息',
+	'wall-user-talk-archive-page-title' => '使用者討論頁存檔',
+	'wall-ipb-disableusertalk' => '禁止這位使用者在封鎖期間在其訊息牆上發佈訊息',
 	'wall-action-all-confirm-cancel' => '取消',
 	'wall-action-all-confirm-notify' => '通知管理員',
 	'wall-action-remove-reply-title' => '移除此回覆',
@@ -9783,7 +9806,7 @@ $messages['zh-hant'] = array(
 	'wall-recentchanges-closed-thread' => '從[[$3|$4的訊息牆]]關閉討論串 "[[$1|$2]]"',
 	'wall-recentchanges-reopened-thread' => '將討論串"[[$1|$2]]" 再度於[[$3|$4\'的訊息牆]]開啟', # Fuzzy
 	'wall-recentchanges-deleted-reply-title' => '訊息牆的一則回覆',
-	'wall-recentchanges-wall-created-title' => '創建訊息牆',
+	'wall-recentchanges-wall-created-title' => '建立訊息牆',
 	'wall-recentchanges-namespace-selector-message-wall' => '訊息牆',
 	'wall-recentchanges-thread-group' => '[[$2|$3的訊息牆]]上的討論 $1',
 	'wall-recentchanges-history-link' => '頁面歷史',
@@ -9793,7 +9816,7 @@ $messages['zh-hant'] = array(
 	'wall-message-staff-text' => '此使用者是 Wikia 職員',
 	'wall-ipballowusertalk' => '允許此使用者在被封禁時在自己的訊息牆上發布訊息',
 	'wall-ipbwatchuser' => '觀看此使用者的使用者頁面，並關注其訊息牆',
-	'wall-wiki-activity-on' => '在[[$1上|$2的訊息牆]]',
+	'wall-wiki-activity-on' => '在[[$1|$2的訊息牆上]]',
 	'wall-removed-thread-undo' => '此討論串已被移除。$1',
 	'wall-removed-reply-undo' => '本回覆已被移除。$1',
 	'wall-removed-reply' => '這個回覆已被移除',
@@ -9854,7 +9877,7 @@ $messages['zh-hant'] = array(
 	'wall-notifications-notifyeveryone' => '由$1 聚焦',
 	'wall-message-notifyeveryone' => '聚焦這個討論串',
 	'wall-message-unnotifyeveryone' => '取消這個討論串的聚焦',
-	'wall-message-notifyeveryone-tooltip' => '所有這個維基的登入用戶當他們造訪本維基時會收到關於這個討論串的通知。',
+	'wall-message-notifyeveryone-tooltip' => '所有這個維基的登入使用者當他們造訪本 wiki 時會收到關於這個討論串的通知。',
 	'wall-votes-modal-showmore' => '看看其他給了讚的人。',
 	'wall-votes-modal-title' => '讚',
 	'wall-votes-modal-title-desc' => '有{{PLURAL:$1|One person|$1 個人}}幫這個訊息按讚',

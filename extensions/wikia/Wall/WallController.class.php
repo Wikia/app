@@ -264,18 +264,4 @@ class WallController extends WallBaseController {
 			return $this->app->wg->Parser->parse($article->getContent(), $pageTitle, new ParserOptions($this->wg->User))->getText();
 		}
 	}
-	
-	public function getThread($filterid) {
-		wfProfileIn(__METHOD__);
-
-		$wallthread = WallThread::newFromId($filterid);
-		$wallthread->loadIfCached();
-
-		$this->threads = array( $filterid => $wallthread );
-
-		$this->title = $this->wg->Title;
-
-		wfProfileOut(__METHOD__);
-	}
-
 } // end class Wall

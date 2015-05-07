@@ -83,12 +83,20 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 		$task->title( $title );
 		$task->call( 'refresh' );
 		$task->wikiId( $this->getWikiId() );
+
+		// TODO: delay the tasks - see PLATFORM-1192
+
 		return $task;
 	}
 
 	protected function batchEnqueue( array $tasks ) {
 		if ( !empty( $tasks ) ) {
-			$this->info( sprintf( "batching %d jobs %d from %s between %d and %d", count( $tasks ), $this->getTaskId(), $this->title->getText(), $this->getStart(), $this->getEnd() ) );
+			$this->info( 'BatchRefreshLinksForTemplate::batchEnqueue', [
+				'tasks' => count( $tasks ),
+				'title' => $this->title->getText(),
+				'start' => $this->getStart(),
+				'end' => $this->getEnd()
+			] );
 			BaseTask::batch( $tasks );
 		}
 	}

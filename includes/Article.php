@@ -104,8 +104,8 @@ class Article extends Page {
 	/**
 	 * Create an Article object of the appropriate class for the given page.
 	 *
-	 * @param $title Title
-	 * @param $context IContextSource
+	 * @param Title $title
+	 * @param IContextSource $context
 	 * @return Article object
 	 */
 	public static function newFromTitle( $title, IContextSource $context ) {

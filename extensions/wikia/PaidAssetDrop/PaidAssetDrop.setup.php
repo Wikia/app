@@ -14,6 +14,7 @@ $wgAutoloadClasses['PaidAssetDropHooks'] =  __DIR__ . '/PaidAssetDropHooks.class
 $wgHooks['AfterInitialize'][] = 'PaidAssetDropHooks::onAfterInitialize';
 $wgHooks['OasisSkinAssetGroups'][] = 'PaidAssetDropHooks::onOasisSkinAssetGroups';
 $wgHooks['WikiaSkinTopScripts'][] = 'PaidAssetDropHooks::onWikiaSkinTopScripts';
+$wgHooks['InstantGlobalsGetVariables'][] = 'PaidAssetDropHooks::onInstantGlobalsGetVariables';
 
 // i18n
 $wgExtensionMessagesFiles['PaidAssetDrop'] = __DIR__ . '/PaidAssetDrop.i18n.php';

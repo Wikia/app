@@ -271,6 +271,8 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle() {
+		global $wgEnableMainPageDataMercuryApi;
+
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
@@ -290,7 +292,7 @@ class MercuryApiController extends WikiaController {
 				$data[ 'relatedPages' ] = $relatedPages;
 			}
 
-			if ( $title->isMainPage() ) {
+			if ( $title->isMainPage() && !empty( $wgEnableMainPageDataMercuryApi ) ) {
 				$data[ 'mainPageData' ] = $this->getMainPageData();
 			}
 
@@ -364,7 +366,6 @@ class MercuryApiController extends WikiaController {
 		if ( $section ) {
 			$params[ 'section' ] = $section;
 		}
-
 		try {
 			$rawData = $this->sendRequest( 'CuratedContent', 'getList', $params )->getData();
 			$data = $this->mercuryApi->processCuratedContent( $rawData );

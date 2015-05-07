@@ -273,7 +273,8 @@ class MercuryApi {
 
 	/**
 	 * @desc Mercury can't open article using ID - we need to create a local link
-	 * FIXME talk to platform team about performance cost of this operation (it queries DB)
+	 * TODO Implement cache for release version.
+	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
 	 *
 	 * @param $item
 	 * @return mixed

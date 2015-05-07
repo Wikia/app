@@ -7,7 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.2';
+	const CACHE_VERSION = '0.0.3';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;

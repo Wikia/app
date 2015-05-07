@@ -32,7 +32,7 @@ class CreateNewWikiTask extends BaseTask {
 	}
 
 	public function postCreationSetup( $params ) {
-		global $wgUser, $wgErrorLog, $wgServer, $wgInternalServer, $wgStatsDBEnabled;
+		global $wgErrorLog, $wgServer, $wgInternalServer, $wgStatsDBEnabled;
 
 		$wgServer = rtrim( $params['url'], '/' );
 		$wgInternalServer = $wgServer;
@@ -63,8 +63,6 @@ class CreateNewWikiTask extends BaseTask {
 				}
 			}
 		}
-
-		$wgUser = \User::newFromName( 'CreateWiki script' );
 
 		$this->wikiName = isset( $params['sitename'] ) ? $params['sitename'] : \WikiFactory::getVarValueByName( 'wgSitename', $params['city_id'], true );
 		$this->wikiLang = isset( $params['language'] ) ? $params['language'] : \WikiFactory::getVarValueByName( 'wgLanguageCode', $params['city_id'] );
@@ -350,10 +348,9 @@ class CreateNewWikiTask extends BaseTask {
 	private function protectKeyPages() {
 		global $wgUser, $wgWikiaKeyPages;
 
-		$wgUser = \User::newFromName( "CreateWiki script" );
-		if ( $wgUser->isAnon() ) {
-			$wgUser->addToDatabase();
-		}
+		$saveUser = $wgUser;
+		$wgUser = \User::newFromName( "Wikia" );
+
 		if ( empty( $wgWikiaKeyPages ) ) {
 			$wgWikiaKeyPages = array( 'File:Wiki.png', 'File:Favicon.ico' );
 		}
@@ -372,8 +369,6 @@ class CreateNewWikiTask extends BaseTask {
 		 *  define reason msg and fetch it
 		 */
 		$reason = wfMsgForContent( 'autocreatewiki-protect-reason' );
-
-		$wgUser->addGroup( 'staff' );
 
 		foreach ( $wgWikiaKeyPages as $pageName ) {
 			$title = \Title::newFromText( $pageName );
@@ -395,7 +390,8 @@ class CreateNewWikiTask extends BaseTask {
 				$this->warning('failed to protect key page', ['page_name' => $pageName]);
 			}
 		}
-		$wgUser->removeGroup( "staff" );
+
+		$wgUser = $saveUser;
 	}
 
 	/**
