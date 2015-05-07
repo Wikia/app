@@ -55,8 +55,10 @@ class InsightsController extends WikiaSpecialPageController {
 		 * - getTemplate() - returning an overriding template
 		 */
 		if ( $this->model instanceof InsightsModel ) {
-			$this->content = $this->model->getContent();
-			$this->data = $this->model->getData();
+			$params = $this->request->getParams();
+			$this->content = $this->model->getContent( $params );
+			$this->preparePagination();
+			$this->data = $this->model->getViewData();
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
 			throw new MWException( 'An Insights subpage should implement the InsightsModel interface.' );
@@ -77,11 +79,15 @@ class InsightsController extends WikiaSpecialPageController {
 				$isFixed = false;
 				$articleName = $this->getVal( 'article', null );
 				$title = Title::newFromText( $articleName );
+				$next = $model->getNextItem( $model->getInsightType(), $articleName );
 
 				$isEdit = $this->request->getBool( 'isEdit', false );
 
 				if( !$isEdit ) {
 					$isFixed = $model->isItemFixed( $title );
+					if ( $isFixed ) {
+						$model->updateInsightsCache( $title->getArticleId() );
+					}
 				}
 
 				if ( $isEdit ) {
@@ -94,7 +100,7 @@ class InsightsController extends WikiaSpecialPageController {
 					$params = $this->getCongratulationsNotificationParams( $subpage );
 					$type = self::FLOW_STATUS_ALLDONE;
 				} elseif ( $isFixed ) {
-					$params = $this->getInsightFixedNotificationParams( $subpage, $articleName, $model );
+					$params = $this->getInsightFixedNotificationParams( $subpage, $next );
 					$type = self::FLOW_STATUS_FIXED;
 				}
 
@@ -157,8 +163,8 @@ class InsightsController extends WikiaSpecialPageController {
 	 * @param String $articleName current article name
 	 * @param InsightsModel $model
 	 */
-	private function getInsightFixedNotificationParams( $subpage, $articleName, InsightsModel $model ) {
-		$params = $this->getInsightNextLinkParams( $subpage, $articleName, $model );
+	private function getInsightFixedNotificationParams( $subpage, $next ) {
+		$params = $this->getInsightNextLinkParams( $subpage, $next );
 		$params = array_merge( $params, $this->getInsightListLinkParams( $subpage ));
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->plain();
 
@@ -172,9 +178,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 * @param String $articleName current article name
 	 * @param InsightsModel $model
 	 */
-	private function getInsightNextLinkParams( $subpage, $articleName, InsightsModel $model ) {
-		$next = $model->getNextItem( $model->getInsightType(), $articleName );
-
+	private function getInsightNextLinkParams( $subpage, $next ) {
 		return [
 			'nextArticleText' => wfMessage( 'insights-notification-next-item-' . $subpage )->plain(),
 			'nextArticleTitle' => $next['link']['text'],
@@ -219,8 +223,23 @@ class InsightsController extends WikiaSpecialPageController {
 		];
 	}
 
+	/**
+	 * Prepare pagination
+	 */
+	private function preparePagination() {
+		$total = $this->model->getTotalResultsNum();
+		$itemsPerPage = $this->model->getLimitResultsNum();
+
+		if( $total > $itemsPerPage ) {
+			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
+			$paginator->setActivePage( $this->model->getPage() );
+			$url = urldecode( $this->getSpecialInsightsUrl( $this->subpage, [ 'page' => '%s' ] ) );
+			$this->paginatorBar = $paginator->getBarHTML( $url );
+		}
+	}
+
 	private function addAssets() {
-		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights.scss' );
+		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights-lists.scss' );
 		$this->response->addAsset( '/extensions/wikia/Insights/scripts/InsightsPageTracking.js' );
 	}
 
@@ -229,7 +248,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 *
 	 * @return string
 	 */
-	private function getSpecialInsightsUrl( $subpage = false ) {
-		return $this->specialPage->getTitle( $subpage )->getFullURL();
+	private function getSpecialInsightsUrl( $subpage = false, $params = [] ) {
+		return $this->specialPage->getTitle( $subpage )->getFullURL( $params );
 	}
 }
