@@ -163,87 +163,73 @@ class CloseWikiMaintenance {
 			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 
-				$this->log( "removing folder {$folder}" );
-				if( is_dir( $wgUploadDirectory ) ) {
-			        /**
-					 * what should we use here?
-					 */
-					$cmd = "rm -rf {$folder}";
-					wfShellExec( $cmd, $retval );
-					if( $retval ) {
-						/**
-						 * info removing folder was not possible
-						 */
-					}
+				/**
+				 * clear wikifactory tables, condition for city_public should
+				 * be always true there but better safe than sorry
+				 */
+				WikiFactory::copyToArchive( $row->city_id );
+				$dbw = WikiFactory::db( DB_MASTER );
+				$dbw->delete(
+					"city_list",
+					array(
+						"city_public" => array( 0, -1 ),
+						"city_id" => $row->city_id
+					),
+					__METHOD__
+				);
+				$this->log( "{$row->city_id} removed from WikiFactory tables" );
 
-					/**
-					 * clear wikifactory tables, condition for city_public should
-					 * be always true there but better safe than sorry
-					 */
-					WikiFactory::copyToArchive( $row->city_id );
-					$dbw = WikiFactory::db( DB_MASTER );
-					$dbw->delete(
-						"city_list",
-						array(
-							"city_public" => array( 0, -1 ),
-							"city_id" => $row->city_id
-						),
-						__METHOD__
-					);
-					$this->log( "{$row->city_id} removed from WikiFactory tables" );
+				/**
+				 * remove records from dataware
+				 */
+				global $wgExternalDatawareDB;
+				$datawareDB = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+				$datawareDB->delete( "pages", array( "page_wikia_id" => $row->city_id ), __METHOD__ );
+				$this->log( "{$row->city_id} removed from pages table" );
 
-					/**
-					 * remove records from dataware
-					 */
-					global $wgExternalDatawareDB;
-					$datawareDB = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-					$datawareDB->delete( "pages", array( "page_wikia_id" => $row->city_id ), __METHOD__ );
-					$this->log( "{$row->city_id} removed from pages table" );
+				/**
+				 * remove images from D.I.R.T.
+				 */
+				$datawareDB->delete( "image_review", array( "wiki_id" => $row->city_id ), __METHOD__  );
+				$this->log( "{$row->city_id} removed from image_review table" );
 
-					/**
-					 * remove images from D.I.R.T.
-					 */
-					$datawareDB->delete( "image_review", array( "wiki_id" => $row->city_id ), __METHOD__  );
-					$this->log( "{$row->city_id} removed from image_review table" );
+				$datawareDB->delete( "image_review_stats", array( "wiki_id" => $row->city_id ), __METHOD__  );
+				$this->log( "{$row->city_id} removed from image_review_stats table" );
 
-					$datawareDB->delete( "image_review_stats", array( "wiki_id" => $row->city_id ), __METHOD__  );
-					$this->log( "{$row->city_id} removed from image_review_stats table" );
+				$datawareDB->delete( "image_review_wikis", array( "wiki_id" => $row->city_id ), __METHOD__  );
+				$this->log( "{$row->city_id} removed from image_review_wikis table" );
 
-					$datawareDB->delete( "image_review_wikis", array( "wiki_id" => $row->city_id ), __METHOD__  );
-					$this->log( "{$row->city_id} removed from image_review_wikis table" );
+				$datawareDB->commit();
 
-					$datawareDB->commit();
+				/**
+				 * drop database, get db handler for proper cluster
+				 */
+				global $wgDBadminuser, $wgDBadminpassword;
+				$centralDB = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
 
-					/**
-					 * drop database, get db handler for proper cluster
-					 */
-					global $wgDBadminuser, $wgDBadminpassword;
-					$centralDB = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
+				/**
+				 * get connection but actually we only need info about host
+				 */
+				$local = wfGetDB( DB_MASTER, array(), $centralDB );
+				$server = $local->getLBInfo( 'host' );
+				$dbw = new DatabaseMysql( $server, $wgDBadminuser, $wgDBadminpassword, $centralDB );
+				$dbw->begin();
+				$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
+				$dbw->commit();
+				$this->log(  "{$row->city_dbname} dropped from cluster {$cluster}" );
 
-					/**
-					 * get connection but actually we only need info about host
-					 */
-					$local = wfGetDB( DB_MASTER, array(), $centralDB );
-					$server = $local->getLBInfo( 'host' );
-					$dbw = new DatabaseMysql( $server, $wgDBadminuser, $wgDBadminpassword, $centralDB );
-					$dbw->begin();
-					$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
-					$dbw->commit();
-					$this->log(  "{$row->city_dbname} dropped from cluster {$cluster}" );
+				/**
+				 * update search index
+				 */
+				$indexer = new Wikia\Search\Indexer();
+				$indexer->deleteWikiDocs( $row->city_id );
+				$this->log( "Wiki documents removed from index" );
 
-					/**
-					 * update search index
-					 */
-					$indexer = new Wikia\Search\Indexer();
-					$indexer->deleteWikiDocs( $row->city_id );
-					$this->log( "Wiki documents removed from index" );
-
-					/**
-					 * there is nothing to set because row in city_list doesn't
-					 * exists
-					 */
-					$newFlags = false;
-				}
+				/**
+				 * there is nothing to set because row in city_list doesn't
+				 * exists
+				 */
+				$newFlags = false;
 			}
 			/**
 			 * reset flags, if database was dropped and data were removed from
