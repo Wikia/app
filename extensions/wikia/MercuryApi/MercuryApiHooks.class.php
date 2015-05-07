@@ -87,7 +87,7 @@ class MercuryApiHooks {
 	static public function onTitleGetSquidURLs( Title $title, Array &$urls ) {
 		global $wgServer;
 
-		if( $title->inNamespaces( NS_MAIN ) ) {
+		if ( $title->inNamespaces( NS_MAIN ) ) {
 			// Mercury API call from Ember.js to Hapi.js e.g.
 			// http://elderscrolls.wikia.com/api/v1/article/Morrowind
 			// To access it, you have to set your client to be directed to the Mercury machines.
