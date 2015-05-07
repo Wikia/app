@@ -7,7 +7,10 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
 
-		$this->infoboxRenderService = new PortableInfoboxRenderService();
+		$mock = $this->getMock( 'PortableInfoboxRenderService', [ 'getThubnailUrl' ] );
+		$mock->expects( $this->any() )->method( 'getThubnailUrl' )->will( $this->returnValue( 'http://image.jpg' ) );
+
+		$this->infoboxRenderService = $mock;
 	}
 
 	/**
@@ -17,6 +20,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description ) {
+
 		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
 
 		$actualDOM = new DOMDocument('1.0');
@@ -51,7 +55,11 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'isEmpty' => false
 					]
 				],
-				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-title portable-infobox-item-margins"><h2 class="portable-infobox-title">Test Title</h2></div></aside>',
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+							</aside>',
 				'description' => 'Only title'
 			],
 			[
@@ -64,7 +72,9 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox"><footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">Footer value</footer></aside>',
+				'output' => '<aside class="portable-infobox">
+								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">Footer value</footer>
+							</aside>',
 				'description' => 'Footer only'
 			],
 			[
@@ -73,18 +83,26 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'image',
 						'data' => [
 							'alt' => 'image alt',
-							'value' => 'http://image.jpg'
+							'url' => 'http://image.jpg'
 						],
 						'isEmpty' => false
 					]
 				],
-				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-image no-margins"><figure><img class="portable-infobox-image" alt="image alt" data-url="http://image.jpg"/></figure></div></aside>',
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-image no-margins">
+									<figure>
+										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+										</a>
+									</figure>
+								</div>
+							</aside>',
 				'description' => 'Only image'
 			],
 			[
 				'input' => [
 					[
-						'type' => 'pair',
+						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
 							'value' => 'test value'
@@ -92,7 +110,12 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'isEmpty' => false
 					]
 				],
-				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-key-val portable-infobox-item-margins"><h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3><div class="portable-infobox-item-value">test value</div></div></aside>',
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+								</div>
+							</aside>',
 				'description' => 'Only pair'
 			],
 			[
@@ -121,7 +144,22 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'isEmpty' => false
 					]
 				],
-				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-title portable-infobox-item-margins"><h2 class="portable-infobox-title">Test Title</h2></div><div class="portable-infobox-item item-type-image no-margins"><figure><img class="portable-infobox-image" alt="image alt" data-url="http://image.jpg"/></figure></div><div class="portable-infobox-item item-type-key-val portable-infobox-item-margins"><h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3><div class="portable-infobox-item-value">test value</div></div></aside>',
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-image no-margins">
+									<figure>
+										<a href="" class="image image-thumbnail" title="image alt">
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+										</a>
+									</figure>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+									</div>
+							</aside>',
 				'description' => 'Simple infobox with title, image and key-value pair'
 			],
 			[
@@ -134,11 +172,6 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'isEmpty' => false
 					],
 					[
-						'type' => 'image',
-						'data' => [],
-						'isEmpty' => true
-					],
-					[
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
@@ -147,7 +180,15 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'isEmpty' => false
 					]
 				],
-				'output' => '<aside class="portable-infobox"><div class="portable-infobox-item item-type-title portable-infobox-item-margins"><h2 class="portable-infobox-title">Test Title</h2></div><div class="portable-infobox-item item-type-key-val portable-infobox-item-margins"><h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3><div class="portable-infobox-item-value">test value</div></div></aside>',
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
+									<h2 class="portable-infobox-title">Test Title</h2>
+								</div>
+								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+									<div class="portable-infobox-item-value">test value</div>
+								</div>
+							</aside>',
 				'description' => 'Simple infobox with title, empty image and key-value pair'
 			],
 			[
@@ -156,49 +197,6 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'title',
 						'data' => [
 							'value' => 'Test Title'
-						],
-						'isEmpty' => false
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'value' => 'http://image.jpg'
-						],
-						'isEmpty' => false
-					],
-					[
-						'type' => 'pair',
-						'data' => [],
-						'isEmpty' => true
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure>
-										<img class="portable-infobox-image" alt="image alt" data-url="http://image.jpg"/>
-									</figure>
-								</div>
-							</aside>',
-				'description' => 'Simple infobox with title, image and empty key-value pair'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						],
-						'isEmpty' => false
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'value' => 'http://image.jpg'
 						],
 						'isEmpty' => false
 					],
@@ -214,7 +212,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 									'isEmpty' => false
 								],
 								[
-									'type' => 'pair',
+									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
 										'value' => 'test value'
@@ -222,7 +220,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 									'isEmpty' => false,
 								],
 								[
-									'type' => 'pair',
+									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
 										'value' => 'test value'
@@ -237,11 +235,6 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
 									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure>
-										<img class="portable-infobox-image" alt="image alt" data-url="http://image.jpg"/>
-									</figure>
 								</div>
 								<section class="portable-infobox-item item-type-group">
 									<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-header-background">
@@ -262,83 +255,9 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 			[
 				'input' => [
 					[
-						'type' => 'title',
-						'data' => [
-							'value' => 'Test Title'
-						],
-						'isEmpty' => false
-					],
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'value' => 'http://image.jpg'
-						],
-						'isEmpty' => false
-					],
-					[
-						'type' => 'group',
-						'data' => [
-							'value' => [
-								[
-									'type' => 'header',
-									'data' => [
-										'value' => 'Test Header'
-									],
-									'isEmpty' => false
-								],
-							]
-						],
-						'isEmpty' => true
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
-									<h2 class="portable-infobox-title">Test Title</h2>
-								</div>
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure>
-										<img class="portable-infobox-image" alt="image alt" data-url="http://image.jpg"/>
-									</figure>
-								</div>
-							</aside>',
-				'description' => 'Infobox with title, image and empty group with header'
-			],
-			[
-				'input' => [
-					[
 						'type' => 'comparison',
 						'data' => [
 							'value' => [
-								[
-									'type' => 'set',
-									'data' => [],
-									'isEmpty' => true
-								],
-								[
-									'type' => 'set',
-									'data' => [],
-									'isEmpty' => true
-								],
-							],
-						],
-						'isEmpty' => true
-					]
-				],
-				'output' => '',
-				'description' => 'Infobox with empty comparison'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'comparison',
-						'data' => [
-							'value' => [
-								[
-									'type' => 'set',
-									'data' => [],
-									'isEmpty' => true
-								],
 								[
 									'type' => 'set',
 									'data' => [
@@ -351,7 +270,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 												'isEmpty' => false
 											],
 											[
-												'type' => 'pair',
+												'type' => 'data',
 												'data' => [
 													'label' => 'test label',
 													'value' => 'test value'
@@ -359,7 +278,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 												'isEmpty' => false,
 											],
 											[
-												'type' => 'pair',
+												'type' => 'data',
 												'data' => [
 													'label' => 'test label',
 													'value' => 'test value'
@@ -408,26 +327,14 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 				'input' => [
 					[
 						'type' => 'footer',
-						'data' => [],
-						'isEmpty' => true
-					]
-				],
-				'output' => '',
-				'description' => 'Infobox with empty footer'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'footer',
 						'data' => [
-							'links' => '<p>Links</p>'
+							'value' => '<p>Links</p>'
 						],
 						'isEmpty' => false
 					]
 				],
 				'output' => '<aside class="portable-infobox">
-								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background
-portable-infobox-header-font">
+								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">
 									<p>Links</p>
 								</footer>
 							</aside>',
