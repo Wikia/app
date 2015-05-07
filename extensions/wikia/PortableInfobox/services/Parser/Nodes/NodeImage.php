@@ -8,9 +8,14 @@ class NodeImage extends Node {
 
 	public function getData() {
 		return [
-			'value' => $this->resolveImageUrl( $this->getValueWithDefault( $this->xmlNode ) ),
+			'url' => $this->resolveImageUrl( $imageName ),
+			'name' => $this->getValueWithDefault( $this->xmlNode ),
 			'alt' => $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} )
 		];
+	}
+
+	public function isEmpty( $data ) {
+		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
 	}
 
 	public function resolveImageUrl( $filename ) {
