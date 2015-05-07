@@ -271,6 +271,8 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle() {
+		global $wgEnableMainPageDataMercuryApi;
+
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
@@ -290,7 +292,7 @@ class MercuryApiController extends WikiaController {
 				$data[ 'relatedPages' ] = $relatedPages;
 			}
 
-			if ( $title->isMainPage() ) {
+			if ( $title->isMainPage() && !empty( $wgEnableMainPageDataMercuryApi ) ) {
 				$data['mainPageData'] = $this->getMainPageData();
 			}
 
@@ -330,9 +332,9 @@ class MercuryApiController extends WikiaController {
 				$item['article_local_url'] = Title::newFromID( $item['article_id'] )->getLocalURL();
 				$items[] = $item;
 			}
-			$this->response->setFormat( 'json' );
 			$this->response->setVal( 'items', $items );
 		}
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	/**
@@ -352,7 +354,8 @@ class MercuryApiController extends WikiaController {
 		$mainPageData = [];
 		try {
 			$curatedContentData = $this->sendRequest( 'CuratedContent', 'getList' )->getData();
-			$mainPageData['curatedContent'] = $this->mercuryApi->getCuratedContent( $curatedContentData );
+
+			$mainPageData['curatedContent'] = $this->mercuryApi->getCuratedContent($curatedContentData);
 		} catch ( NotFoundApiException $ex ) {
 			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
 		}
