@@ -95,7 +95,7 @@ class WallThread {
 		// the other one is in Wall.class done in a grouped way
 		// (fetch for many threads at once, set with ->setReplies)
 
-		$query = (new WikiaSQL())
+		$query = ( new WikiaSQL() )
 			->SELECT( 'distinct comment_id' )
 			->FROM( 'comments_index' )
 			->WHERE( 'parent_comment_id' )->EQUAL_TO( $this->mThreadId );
@@ -105,7 +105,7 @@ class WallThread {
 		}
 
 		$list = $query->ORDER_BY( [ 'comment_id', 'ASC' ] )
-			->LIMIT(self::FETCHED_REPLIES_LIMIT)
+			->LIMIT( self::FETCHED_REPLIES_LIMIT )
 			->runLoop( $dbr, function( &$list, $oRow ) {
 				$list[] = $oRow->comment_id;
 			} );
