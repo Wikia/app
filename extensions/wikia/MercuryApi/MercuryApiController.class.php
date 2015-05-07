@@ -325,7 +325,8 @@ class MercuryApiController extends WikiaController {
 			$items = [];
 			foreach ( $sectionItems['items'] as $item ) {
 				// Mercury can't open article using ID - we need to create a local link.
-				// @TODO - talk to platform team about performance cost of this operation (it queries DB)
+				// TODO Implement cache for release version.
+				// Platform Team is OK with hitting DB for MVP (10-15 wikis)
 				$item['article_local_url'] = Title::newFromID( $item['article_id'] )->getLocalURL();
 				$items[] = $item;
 			}
