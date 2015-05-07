@@ -46,7 +46,7 @@ class WebResponse {
 	 * @param string $value : value to give cookie
 	 * @param int $expire : Expire time in seconds (a unix epoch time)
 	 * @param string $prefix : Prefix to use, if not $wgCookiePrefix (use '' for no prefix)
-	 * @param $domain String : Cookie domain to use, if not $wgCookieDomain
+	 * @param string $domain : Cookie domain to use, if not $wgCookieDomain
 	 */
 	public function setcookie( $name, $value, $expire = 0, $prefix = null, $domain = null ) {
 		global $wgCookiePath, $wgCookiePrefix, $wgCookieDomain;

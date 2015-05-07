@@ -11,8 +11,8 @@ class User {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
 
-	// This is set to 6 months, 6*30*24*60*60 = 15552000
-	const ACCESS_TOKEN_COOKIE_TTL = 15552000;
+	// This is set to 6 months,(365/2)*24*60*60 = 15768000
+	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
 
 	private static $authenticationCache = [];
 
