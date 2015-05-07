@@ -73,9 +73,11 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			 * Slots based on screen width for breakpoint based layout
 			 *
 			 * @see skins/oasis/css/core/breakpoints-variables.scss
+			 *
+			 * We want MEDREC to be visible on tablet landscape
+			 * view, so we'll leave responsive values for twoColumns
+			 * and oneColumn fields.
 			 */
-			mediaQueriesToCheck.twoColumns = 'screen and (min-width: 1064px)';
-			mediaQueriesToCheck.oneColumn = 'screen and (max-width: 1063px)';
 			mediaQueriesToCheck.noTopButton = 'screen and (max-width: 1063px)';
 		}
 
