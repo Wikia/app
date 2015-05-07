@@ -334,6 +334,12 @@ class Chat {
 		return $info;
 	}
 
+	/**
+	 * Clear the information cached by getBanInformation
+	 *
+	 * @param int $wikiID
+	 * @param int $userID
+	 */
 	public static function clearBanInfoCache( $wikiID, $userID ) {
 		$key = self::getBanInfoCacheKey( $wikiID, $userID );
 		WikiaDataAccess::cachePurge( $key );
@@ -652,7 +658,7 @@ class Chat {
 	}
 
 	protected static function getUserIPMemcKey( $userId, $address ) {
-		return wfSharedMemcKey( $userId, $address, 'v1' );
+		return wfSharedMemcKey( 'Chat', 'userIP', $userId, $address, 'v1' );
 	}
 
 	/**
@@ -679,17 +685,11 @@ class Chat {
 		return $userObject->isAllowed( 'chat' );
 	}
 
-	public static function getBanTimeFactors() {
-		return [
-			'minutes' => 60,
-			'hours' => 60 * 60,
-			'days' => 60 * 60 * 24,
-			'weeks' => 60 * 60 * 24 * 7,
-			'months' => 60 * 60 * 24 * 30,
-			'years' => 60 * 60 * 24 * 365
-		];
-	}
-
+	/**
+	 * Get a list of ban time length options
+	 *
+	 * @return array
+	 */
 	public static function getBanOptions() {
 		$in = wfMessage( 'chat-ban-option-list' )->inContentLanguage()->text();
 		$in = preg_replace( '!\s+!', ' ', $in );
@@ -733,5 +733,16 @@ class Chat {
 		}
 
 		return $out;
+	}
+
+	private static function getBanTimeFactors() {
+		return [
+			'minutes' => 60,
+			'hours' => 60 * 60,
+			'days' => 60 * 60 * 24,
+			'weeks' => 60 * 60 * 24 * 7,
+			'months' => 60 * 60 * 24 * 30,
+			'years' => 60 * 60 * 24 * 365
+		];
 	}
 }
