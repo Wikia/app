@@ -9,13 +9,13 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
 		INSIGHTS_MEMC_VERSION = '1.0',
+		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
 		INSIGHTS_LIST_MAX_LIMIT = 100;
 
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
-		$cacheTtl,
 		$offset = 0,
 		$limit = 100,
 		$total = 0,
@@ -156,8 +156,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 */
 	public function fetchArticlesData() {
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$this->cacheTtl = 259200; // Cache for 3 days
-		$articlesData = WikiaDataAccess::cache( $cacheKey, $this->cacheTtl, function () {
+		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
 			$res = $this->queryPageInstance->doQuery();
 
 			if ( $res->numRows() > 0 ) {
@@ -199,7 +198,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 		if ( isset( $articleData[$articleId] ) ) {
 			unset( $articleData[$articleId] );
-			$wgMemc->set( $cacheKey, $articleData, $this->cacheTtl );
+			$wgMemc->set( $cacheKey, $articleData, self::INSIGHTS_MEMC_TTL );
 		}
 	}
 
@@ -217,7 +216,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 			if ( $key = array_search( $articleId, $sortingArray ) !== false ) {
 				unset( $sortingArray[$key] );
-				$wgMemc->set( $cacheKey, $sortingArray, $this->cacheTtl );
+				$wgMemc->set( $cacheKey, $sortingArray, self::INSIGHTS_MEMC_TTL );
 			}
 		}
 	}
@@ -258,7 +257,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		arsort( $sortingArray, $this->sorting[ $key ] );
 		$cacheKey = $this->getMemcKey( $key );
 
-		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), $this->cacheTtl );
+		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), self::INSIGHTS_MEMC_TTL );
 	}
 
 	/**
