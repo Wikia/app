@@ -156,7 +156,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
 		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ( $type === 'image' ) {
-			$data[ 'thumbnail' ] = $this->getThubnailUrl( $data['url'] );
+			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['url'] );
 		}
 
 		return $this->templateEngine->clearData()
@@ -164,7 +164,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			->render( $this->templates[ $type ] );
 	}
 
-	protected function getThubnailUrl( $url ) {
+	protected function getThumbnailUrl( $url ) {
 		return VignetteRequest::fromUrl( $url )->scaleToWidth( self::THUMBNAIL_WIDTH )->url();
 	}
 
