@@ -48,8 +48,7 @@ class ImageFilenameSanitizer {
 		$trimmedFilename = trim( $filename, "\t\n\r[]" );
 
 		$filePrefixRegex = $this->getFilePrefixRegex( $contLang );
-		$unprefixedFilename = mbereg_replace( $filePrefixRegex, "", $trimmedFilename );
-
+		$unprefixedFilename = mb_ereg_replace( $filePrefixRegex, "", $trimmedFilename );
 		// strip
 		$filenameParts = explode( '|', $unprefixedFilename );
 		if ( !empty( $filenameParts[0] ) ) {
