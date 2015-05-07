@@ -10,7 +10,8 @@ class XmlParserTest extends WikiaBaseTest {
 	public function testIsEmpty() {
 		$parser = new \Wikia\PortableInfobox\Parser\XmlParser([
 			'elem2' => 'ELEM2',
-			'lado2' => 'LALALA'
+			'lado2' => 'LALALA',
+			'nonempty' => '111'
 		]);
 		$markup = '
 			<infobox>
@@ -21,19 +22,13 @@ class XmlParserTest extends WikiaBaseTest {
 					  <data source="lado2" />
 				   </set>
 				</comparison>
+				<data source="empty" />
+				<data source="nonempty"><label>nonemepty</label></data>
 			</infobox>
 		';
 		$data = $parser->getDataFromXmlString( $markup );
-		// infobox -> comparison -> set -> header
-		$this->assertTrue( $data[0]['data']['value'][0]['value'][0]['isEmpty'] == false );
-		// infobox -> comparison -> set -> data { lado1 }
-		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][1]['isEmpty'] == true );
-		// infobox -> comparison -> set -> data { lado2 }
-		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][2]['isEmpty'] == false );
-		// infobox -> comparison -> set
-		$this->assertTrue( $data[0]['data']['value']['isEmpty'] == false );
-		// infobox -> comparison
-		$this->assertTrue( $data[0]['isEmpty'] == false );
+		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][0]['data']['value'] == 'Combatientes' );
+		$this->assertTrue( $data[1]['data']['value'] == '111' );
 	}
 
 	public function testExternalParser() {
@@ -58,6 +53,6 @@ class XmlParserTest extends WikiaBaseTest {
 		';
 		$data = $parser->getDataFromXmlString( $markup );
 		$this->assertTrue( $data[0]['data']['value'] == 'parseRecursive(ABB)' );
-		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parseRecursive(LALALA)');
+		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][1]['data']['value'] == 'parseRecursive(LALALA)');
 	}
 }
