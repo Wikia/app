@@ -2,6 +2,7 @@
 
 class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
+	const THUMBNAIL_WIDTH = 270;
 
 	private $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
@@ -75,33 +76,34 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $comparisonData
 	 * @return string - comparison HTML
 	 */
-	private function renderComparisonItem( $comparisonData ) {
+	private function renderComparisonItem( $comparisonData )
+	{
 		$comparisonHTMLContent = '';
 
-		foreach ( $comparisonData as $set ) {
+		foreach ($comparisonData as $set) {
 			$setHTMLContent = '';
 
-			if ( $set['isEmpty'] ) {
+			if ($set['isEmpty']) {
 				continue;
 			}
 
-			foreach ( $set['data']['value'] as $item ) {
-				$type = $item[ 'type' ];
+			foreach ($set['data']['value'] as $item) {
+				$type = $item['type'];
 
-				if ( $item['isEmpty'] ) {
+				if ($item['isEmpty']) {
 					continue;
 				}
 
-				if ( $type === 'header' ) {
+				if ($type === 'header') {
 					$setHTMLContent .= $this->renderItem(
 						'comparison-set-header',
-						[ 'content' => $this->renderItem( $type, $item[ 'data' ] ) ]
+						['content' => $this->renderItem($type, $item['data'])]
 					);
 				} else {
-					if ( $this->validateType( $type ) ) {
+					if ($this->validateType($type)) {
 						$setHTMLContent .= $this->renderItem(
 							'comparison-set-item',
-							[ 'content' => $this->renderItem( $type, $item[ 'data' ] ) ]
+							['content' => $this->renderItem($type, $item['data'])]
 						);
 					}
 				}
@@ -110,7 +112,13 @@ class PortableInfoboxRenderService extends WikiaService {
 			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
 		}
 
-		return $this->renderItem( 'comparison', [ 'content' => $comparisonHTMLContent ] );
+		if ( !empty( $comparisonHTMLContent ) ) {
+			$output = $this->renderItem('comparison', [ 'content' => $comparisonHTMLContent ] );
+		} else {
+			$output = '';
+		}
+
+		return $output;
 	}
 
 	/**
@@ -145,6 +153,14 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
+		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
+		// it modular) While doing this we also need to move this logic to appropriate image render class
+		if ( $type === 'image' ) {
+			$data[ 'thumbnail' ] = VignetteRequest::fromUrl( $data[ 'url' ] )
+				->scaleToWidth( self::THUMBNAIL_WIDTH )
+				->url();
+		}
+
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( $this->templates[ $type ] );

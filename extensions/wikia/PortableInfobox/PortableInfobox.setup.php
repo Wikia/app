@@ -19,6 +19,7 @@ $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/Portable
 
 // parser
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\SimpleParser'] = $dir . 'services/Parser/SimpleParser.php';
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\XmlParser'] = $dir . 'services/Parser/XmlParser.php';
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\DummyParser'] = $dir . 'services/Parser/DummyParser.php';
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\MediaWikiParserService'] = $dir . 'services/Parser/MediaWikiParserService.php';
@@ -48,7 +49,6 @@ $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.clas
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'PortableInfoboxParserTagController::parserTagInit';
 $wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
-$wgHooks[ 'SkinAfterBottomScripts' ][] = 'PortableInfoboxHooks::onSkinAfterBottomScripts';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';

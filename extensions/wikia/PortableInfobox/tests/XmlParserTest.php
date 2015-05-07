@@ -8,10 +8,10 @@ class XmlParserTest extends WikiaBaseTest {
 	}
 
 	public function testIsEmpty() {
-		$parser = new \Wikia\PortableInfobox\Parser\XmlParser([
+		$parser = new \Wikia\PortableInfobox\Parser\XmlParser( [
 			'elem2' => 'ELEM2',
 			'lado2' => 'LALALA'
-		]);
+		] );
 		$markup = '
 			<infobox>
 				<comparison>
@@ -25,22 +25,22 @@ class XmlParserTest extends WikiaBaseTest {
 		';
 		$data = $parser->getDataFromXmlString( $markup );
 		// infobox -> comparison -> set -> header
-		$this->assertTrue( $data[0]['data']['value'][0]['value'][0]['isEmpty'] == false );
+		$this->assertFalse( $data[ 0 ][ 'data' ][ 'value' ][ 0 ][ 'data' ][ 'value' ][ 0 ][ 'isEmpty' ] );
 		// infobox -> comparison -> set -> data { lado1 }
-		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][1]['isEmpty'] == true );
+		$this->assertTrue( $data[ 0 ][ 'data' ][ 'value' ][ 0 ][ 'data' ][ 'value' ][ 1 ][ 'isEmpty' ] );
 		// infobox -> comparison -> set -> data { lado2 }
-		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][2]['isEmpty'] == false );
+		$this->assertFalse( $data[ 0 ][ 'data' ][ 'value' ][ 0 ][ 'data' ][ 'value' ][ 2 ][ 'isEmpty' ] );
 		// infobox -> comparison -> set
-		$this->assertTrue( $data[0]['data']['value']['isEmpty'] == false );
+		$this->assertFalse( $data[ 0 ][ 'data' ][ 'value' ][ 0 ][ 'isEmpty' ] );
 		// infobox -> comparison
-		$this->assertTrue( $data[0]['isEmpty'] == false );
+		$this->assertFalse( $data[ 0 ][ 'isEmpty' ] );
 	}
 
 	public function testExternalParser() {
-		$parser = new \Wikia\PortableInfobox\Parser\XmlParser([
+		$parser = new \Wikia\PortableInfobox\Parser\XmlParser( [
 			'elem2' => 'ELEM2',
 			'lado2' => 'LALALA'
-		]);
+		] );
 		$externalParser = new \Wikia\PortableInfobox\Parser\DummyParser();
 		$parser->setExternalParser( $externalParser );
 		$markup = '
@@ -57,7 +57,8 @@ class XmlParserTest extends WikiaBaseTest {
 			</infobox>
 		';
 		$data = $parser->getDataFromXmlString( $markup );
-		$this->assertTrue( $data[0]['data']['value'] == 'parseRecursive(ABB)' );
-		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parseRecursive(LALALA)');
+		$this->assertEquals( 'parseRecursive(ABB)', $data[ 0 ][ 'data' ][ 'value' ] );
+		$this->assertEquals( 'parse(LALALA)',
+			$data[ 1 ][ 'data' ][ 'value' ][ 0 ][ 'data' ][ 'value' ][ 2 ][ 'data' ][ 'value' ] );
 	}
 }

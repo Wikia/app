@@ -15,7 +15,7 @@ $messages['en'] = array(
 	'cnw-or' => 'or',
 	'cnw-title' => 'Create New Wiki',
 	// step1 - create a wiki
-	'cnw-name-wiki-headline' => 'Start a Wiki',
+	'cnw-name-wiki-headline' => 'Start a wikia',
 	'cnw-name-wiki-creative' => 'Build a website, grow a community, and embark on your ultimate fan experience.',
 	'cnw-name-wiki-label' => 'Name your wikia',
 	'cnw-name-wiki-domain-label' => 'Give your wikia an address',

@@ -29,7 +29,14 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $frame->getNamedArguments() );
 		$infoboxParser->setExternalParser( ( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) ) );
-		$data = $infoboxParser->getDataFromXmlString( $markup );
+
+		try {
+			$data = $infoboxParser->getDataFromXmlString( $markup );
+		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
+
+			return [ $this->renderUnimplementedTagErrorMesssage( $e->getMessage() ), 'markerType' => 'nowiki' ];
+		}
+
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $data );
 
@@ -37,6 +44,13 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$renderedValue = $renderer->renderInfobox( $data );
 
 		return [ $renderedValue, 'markerType' => 'general' ];
+	}
+
+	private function renderUnimplementedTagErrorMesssage( $tagName ) {
+		$renderedValue = '<strong class="error"> '
+			. wfMessage( 'unimplemented-infobox-tag', [ $tagName ] )->escaped()
+			. '</strong>';
+		return $renderedValue;
 	}
 
 	protected function saveToParserOutput( \ParserOutput $parserOutput, $raw ) {

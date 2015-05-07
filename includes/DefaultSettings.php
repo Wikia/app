@@ -1422,7 +1422,7 @@ $wgDefaultExternalStore = false;
  *
  * Set to 0 to disable, or number of seconds before cache expiry.
  */
-$wgRevisionCacheExpiry = 0;
+$wgRevisionCacheExpiry = 86400;
 
 /** @} */ # end text storage }
 
