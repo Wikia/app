@@ -387,50 +387,56 @@ class WallNotifications {
 			$watcher = $this->getUser( $val );
 			$mode = $watcher->getOption( 'enotifwallthread' );
 
-			if ( !empty( $mode ) && $watcher->getId() != 0 && (
+			if ( !( $watcher->getBoolOption('unsubscribed') === true ) &&
+				!empty( $mode ) && $watcher->getId() != 0 && (
 				( $mode == WALL_EMAIL_EVERY ) ||
 				( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) )
 			)) {
 
-				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-				$watcherName = $watcher->getName();
+				$controller = $this->getEmailExtensionController( $notification );
+				if ( !empty( $controller ) ) {
+					$params = [];
 
-				if ( $notification->data->msg_author_username == $notification->data->msg_author_displayname ) {
-					$author_signature = $notification->data->msg_author_username;
+					F:app()->sendRequest( $controller, 'handle', $params );
 				} else {
-					$author_signature = $notification->data->msg_author_displayname .
-						' (' . $notification->data->msg_author_username . ')';
-				}
+					$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
+					$watcherName = $watcher->getName();
 
-				$data = [];
-				wfRunHooks( 'NotificationGetMailNotificationMessage', [
-					&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text
-				]);
-				if ( empty( $data ) ) {
-					$data = [
-						'$WATCHER' => $watcherName,
-						'$WIKI' => $notification->data->wikiname,
-						'$PARENT_AUTHOR_NAME' => 	(empty($notification->data->parent_displayname)
-													? ''
-													: $notification->data->parent_displayname),
-						'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
-						'$AUTHOR' => $notification->data->msg_author_username,
-						'$AUTHOR_SIGNATURE' => $author_signature,
-						'$MAIL_SUBJECT' => wfMessage('mail-notification-subject', [
-							'$1' => $notification->data->thread_title,
-							'$2' => $notification->data->wikiname
-						])->text(),
-						'$METATITLE' => $notification->data->thread_title,
-						'$MESSAGE_LINK' =>  $notification->data->url,
-						'$MESSAGE_NO_HTML' =>  $textNoHtml,
-						'$MESSAGE_HTML' =>  $text,
-						'$MSG_KEY_SUBJECT' => $key,
-						'$MSG_KEY_BODY' => 'mail-notification-body',
-						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
-					];
-				}
+					if ( $notification->data->msg_author_username == $notification->data->msg_author_displayname ) {
+						$author_signature = $notification->data->msg_author_username;
+					} else {
+						$author_signature = $notification->data->msg_author_displayname .
+							' (' . $notification->data->msg_author_username . ')';
+					}
 
-				if ( !( $watcher->getBoolOption('unsubscribed') === true ) ) {
+					$data = [];
+					wfRunHooks( 'NotificationGetMailNotificationMessage', [
+						&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text
+					]);
+					if ( empty( $data ) ) {
+						$data = [
+							'$WATCHER' => $watcherName,
+							'$WIKI' => $notification->data->wikiname,
+							'$PARENT_AUTHOR_NAME' => 	(empty($notification->data->parent_displayname)
+								? ''
+								: $notification->data->parent_displayname),
+							'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
+							'$AUTHOR' => $notification->data->msg_author_username,
+							'$AUTHOR_SIGNATURE' => $author_signature,
+							'$MAIL_SUBJECT' => wfMessage('mail-notification-subject', [
+								'$1' => $notification->data->thread_title,
+								'$2' => $notification->data->wikiname
+							])->text(),
+							'$METATITLE' => $notification->data->thread_title,
+							'$MESSAGE_LINK' =>  $notification->data->url,
+							'$MESSAGE_NO_HTML' =>  $textNoHtml,
+							'$MESSAGE_HTML' =>  $text,
+							'$MSG_KEY_SUBJECT' => $key,
+							'$MSG_KEY_BODY' => 'mail-notification-body',
+							'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
+						];
+					}
+
 					$this->sendEmail( $watcher, $data );
 				}
 			}
@@ -1049,6 +1055,20 @@ class WallNotifications {
 			$this->cachedUsers[$userId] = User::newFromId($userId);
 		}
 		return $this->cachedUsers[$userId];
+	}
+
+	private function getEmailExtensionController( $notification ) {
+		$controller = false;
+
+		if ( !empty( $notification->data->article_title_ns )
+			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
+			&& $notification->isMain()
+		) {
+			$controller = '\Email\Controller\ForumController';
+		}
+
+
+		return $controller;
 	}
 
 }
