@@ -243,9 +243,9 @@ class User {
 	/**
 	 * Called in ExternalUser_Wikia registers a user.
 	 *
-	 * @param string $username string of the user name
-	 * @param string $password string of the plaintext password the user entered
-	 * @param string $email string of the user email
+	 * @param string $username The username
+	 * @param string $password The plaintext password the user entered
+	 * @param string $email The user's email
 	 * @param string $birthDate
 	 *
 	 * @return bool true on success, false otherwise
