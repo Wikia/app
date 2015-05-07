@@ -526,4 +526,82 @@ abstract class EmailController extends \WikiaController {
 			throw new Check( 'User is blocked from taking this action' );
 		}
 	}
+
+	public function getAdminForm() {
+		$foo =  array_merge_recursive(
+			$this->getBaseAdminForm(),
+			$this->getEmailSpecificAdminForm()
+		);
+
+		return $foo;
+	}
+
+	private function getBaseAdminForm() {
+		$baseForm = [
+			'inputs' => [
+				[
+					'type' => 'hidden',
+					'name' => 'fromAddress',
+					'value' => \F::app()->wg->PasswordSender
+				],
+				[
+					'type' => 'hidden',
+					'name' => 'fromName',
+					'value' => \F::app()->wg->PasswordSenderName
+				],
+				[
+					'type' => 'text',
+					'name' => 'targetUser',
+					'isRequired' => true,
+					'label' => 'Target User',
+					'tooltip' => 'User to send the email to',
+					'value' => \F::app()->wg->User->getName()
+				],
+				[
+					'type' => 'select',
+					'name' => 'targetLang',
+					'label' => 'Language',
+					'tooltip' => 'The language of the email',
+					'options' => [
+						[ 'value' => 'en', 'content' => 'English' ],
+						[ 'value' => 'de', 'content' => 'German' ],
+						[ 'value' => 'es', 'content' => 'Spanish' ],
+						[ 'value' => 'fr', 'content' => 'French' ],
+						[ 'value' => 'it', 'content' => 'Italian' ],
+						[ 'value' => 'ja', 'content' => 'Japanese' ],
+						[ 'value' => 'nl', 'content' => 'Dutch' ],
+						[ 'value' => 'pl', 'content' => 'Polish' ],
+						[ 'value' => 'pt', 'content' => 'Portuguese' ],
+						[ 'value' => 'ru', 'content' => 'Russian' ],
+						[ 'value' => 'zh-hans', 'content' => 'Chinese Simplified' ],
+						[ 'value' => 'zh-tw', 'content' => 'Chinese Taiwan' ],
+					]
+
+				],
+				[
+					'type' => 'hidden',
+					'name' => 'emailController',
+					'value' => get_called_class()
+				],
+			],
+			'submits' => [
+				'value' => "Send Email",
+			],
+			'method' => 'post',
+			'legend' => $this->getLegendName()
+		];
+
+		return $baseForm;
+	}
+
+	private function getLegendName() {
+		$legendName = "";
+		if ( preg_match( "/^Email\\\\Controller\\\\(.+)Controller$/", get_called_class(), $matches ) ) {
+			$legendName = $matches[1] . " Email";
+		}
+
+		return $legendName;
+	}
+
+	protected abstract function getEmailSpecificAdminForm();
 }

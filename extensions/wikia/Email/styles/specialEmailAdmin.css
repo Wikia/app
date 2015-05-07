@@ -1,0 +1,11 @@
+.WikiaForm .input-group {
+	clear: none;
+}
+
+.WikiaForm {
+	margin-bottom: 15px;
+}
+
+input[type="submit"] {
+	margin-top: 5px;
+}

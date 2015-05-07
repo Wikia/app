@@ -16,7 +16,7 @@ abstract class CommentController extends EmailController {
 
 	public function initEmail() {
 		// This title is for the article being commented upon
-		$titleText = $this->request->getVal( 'title' );
+		$titleText = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace' );
 
 		$this->title = \Title::newFromText( $titleText, $titleNamespace );
@@ -150,6 +150,27 @@ abstract class CommentController extends EmailController {
 		return wfMessage( 'emailext-comment-view-all', $url )
 			->inLanguage( $this->targetLang )
 			->parse();
+	}
+
+	protected function getEmailSpecificAdminForm() {
+		$form = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'pageTitle',
+					'isRequired' => true,
+					'label' => "Title of the article"
+				],
+				[
+					'type' => 'text',
+					'name' => 'currentRevId',
+					'isRequired' => true,
+					'label' => "current rev id"
+				],
+			]
+		];
+
+		return $form;
 	}
 }
 

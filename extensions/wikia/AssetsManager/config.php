@@ -2453,3 +2453,10 @@ $config['paid_asset_drop_desktop_js'] = [
 		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js'
 	]
 ];
+
+$config['special_email_admin_css'] = [
+	'type' => AssetsManager::TYPE_CSS,
+	'assets' => [
+		'//extensions/wikia/Email/styles/specialEmailAdmin.css'
+	]
+];
