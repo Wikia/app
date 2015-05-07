@@ -118,13 +118,11 @@ $wgGroupPermissions['staff']['forumoldedit'] = true;
 $wgGroupPermissions['helper']['forumoldedit'] = true;
 $wgGroupPermissions['sysop']['forumoldedit'] = true;
 $wgGroupPermissions['bureaucrat']['forumoldedit'] = true;
-$wgGroupPermissions['helper']['forumoldedit'] = true;
 
 $wgGroupPermissions['*']['forumadmin'] = false;
 $wgGroupPermissions['staff']['forumadmin'] = true;
 $wgGroupPermissions['helper']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
-$wgGroupPermissions['helper']['forumadmin'] = true;
 $wgGroupPermissions['threadmoderator']['forumadmin'] = true;
 
 JSMessages::registerPackage('Forum', array(

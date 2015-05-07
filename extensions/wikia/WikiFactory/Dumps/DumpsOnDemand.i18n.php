@@ -179,6 +179,7 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Mr. Richard Bolla
  */
@@ -195,6 +196,7 @@ $messages['cs'] = array(
 	'dump-database-request-already-submitted' => 'O výstup z databáze bylo požádáno nedávno (před méně než 7 dny)',
 	'dump-database-request-requested' => 'Žádost o výstup z databáze odeslána',
 	'dump-database-info-more' => 'Více informací <a href="http://community.wikia.com/wiki/Help:Database_download">zde</a>',
+	'dump-database-last-unknown' => 'Neznámé',
 );
 
 /** Danish (dansk)
@@ -304,6 +306,7 @@ $messages['fa'] = array(
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
+ * @author Silvonen
  * @author VezonThunder
  */
 $messages['fi'] = array(
@@ -319,6 +322,7 @@ $messages['fi'] = array(
 	'dump-database-request-already-submitted' => 'Vedosta on pyydetty lähiaikoina (alle 7 päivää sitten)',
 	'dump-database-request-requested' => 'Pyyntö tietokantavedoksesta lähetetty',
 	'dump-database-info-more' => '<a href="http://community.wikia.com/wiki/Help:Database_download">Katso lisätietoja</a>',
+	'dump-database-last-unknown' => 'Tuntematon',
 );
 
 /** French (français)

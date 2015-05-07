@@ -59,8 +59,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'paginator-desc' => 'Extensió de paginació',
 	'paginator-next' => 'Següent',
 	'paginator-back' => 'Enrere',
 );
@@ -73,9 +75,11 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
+	'paginator-desc' => 'Rozšíření Paginator',
 	'paginator-next' => 'Další',
 	'paginator-back' => 'Zpět',
 );
@@ -246,6 +250,7 @@ $messages['lrc'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'paginator-desc' => 'Додаток „Страничар“',
 	'paginator-next' => 'Следна',
 	'paginator-back' => 'Назад',
 );
@@ -370,8 +375,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'paginator-desc' => 'Tillägget Paginator',
 	'paginator-next' => 'Nästa',
 	'paginator-back' => 'Tillbaka',
 );

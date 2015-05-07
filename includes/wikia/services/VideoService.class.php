@@ -27,10 +27,11 @@ class VideoService extends WikiaModel {
 		}
 
 		$vHelper = new VideoHandlerHelper();
-		if ( !$vHelper->isVideoProviderSupported( $url ) ) {
-			wfProfileOut( __METHOD__ );
-			return wfMessage( 'videos-error-provider-not-supported' )->parse();
-		}
+# @TODO Commenting out to fix MAIN-4436 -- Should be fixed correctly when content team is back
+#		if ( !$vHelper->isVideoProviderSupported( $url ) ) {
+#			wfProfileOut( __METHOD__ );
+#			return wfMessage( 'videos-error-provider-not-supported' )->parse();
+#		}
 
 		try {
 			// is it a WikiLink?
@@ -55,10 +56,10 @@ class VideoService extends WikiaModel {
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				$file = wfFindFile( $videoTitle );
+				$file = RepoGroup::singleton()->findFile( $videoTitle );
 			}
 
-			if ( !( $file instanceof File ) )  {
+			if ( !( $file instanceof File ) ) {
 				WikiaLogger::instance()->error( '\VideoHandlerHelper->adDefaultVideoDescription() - File is empty', [
 					'exception' => new Exception(),
 					'url' => $url,

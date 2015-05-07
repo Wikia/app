@@ -271,7 +271,19 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @return string
 	 */
 	protected function mysqlRealEscapeString( $s ) {
-		return $this->mConn->real_escape_string( $s );
+		$ret = $this->mConn->real_escape_string( $s );
+
+		// Wikia change - begin
+		// @see PLATFORM-1196
+		if ( is_null( $ret ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'DatabaseMysqli::mysqlRealEscapeString', [
+				'arg_type' => is_object( $s ) ? get_class( $s ) : gettype( $s ),
+				'exception' => new Exception()
+			] );
+		}
+		// Wikia change - end
+
+		return $ret;
 	}
 
 	protected function mysqlPing() {

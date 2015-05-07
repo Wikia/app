@@ -626,6 +626,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'places' => 'ځايونه په دې ويکي',
 	'places-editor-search' => 'پلټل',
 	'places-geolocation-button-label' => 'ځای ورگډول',
 	'places-geolocation-modal-add-title' => 'ځای ورگډول',

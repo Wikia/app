@@ -87,9 +87,11 @@ $messages['ca'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Mr. Richard Bolla
  */
 $messages['cs'] = array(
+	'wikiawidget-desc' => 'Vytvořte Wikia widget pro vložení na externí webové stránky nebo do Vaší wiki.',
 	'wikiawidget' => 'Wikia widgety',
 );
 
@@ -329,8 +331,10 @@ $messages['pdc'] = array(
 
 /** Polish (polski)
  * @author Sp5uhe
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'wikiawidget-desc' => 'Twórz Wikia Widgety do użytku na stronach zewnętrznych lub do wstawienia na twoją wiki',
 	'wikiawidget' => 'Wikia — widgety',
 );
 
@@ -430,8 +434,10 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Ast
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'wikiawidget-desc' => 'Створити Вікії віджети для використання на зовнішніх ресурсах або для включення на Вікі',
 	'wikiawidget' => 'Віджети Wikia',
 );
 
