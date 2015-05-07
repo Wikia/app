@@ -1,11 +1,11 @@
 <?php
 namespace Wikia\PortableInfobox\Parser;
 
-//interface moved here, because of $wgAutoloadClass issue
-interface ExternalParser {
-	public function parse( $text );
-	public function parseRecursive( $text );
-}
+////interface moved here, because of $wgAutoloadClass issue
+//interface ExternalParser {
+//	public function parse( $text );
+//	public function parseRecursive( $text );
+//}
 
 class XmlParser {
 
