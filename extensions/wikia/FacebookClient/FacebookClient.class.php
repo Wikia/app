@@ -126,6 +126,14 @@ class FacebookClient {
 		}
 	}
 
+	/**
+	 * Clear out the session saved for this user
+	 */
+	public function clearSessionFromMemcache() {
+		$memc = F::app()->wg->memc;
+		$memc->delete( $this->getTokenMemcKey() );
+	}
+
 	private function getSessionFromCookie() {
 		$memc = F::app()->wg->memc;
 		$session = $this->facebookAPI->getSession();
@@ -448,6 +456,9 @@ class FacebookClient {
 
 			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
 		}
+
+		// Make sure we don't keep the session memcached around
+		$this->clearSessionFromMemcache();
 	}
 
 	/**
