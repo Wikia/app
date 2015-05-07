@@ -22,7 +22,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'emailext-watchedpage-article-edited-subject' => 'Subject line for watched article email. $1 -> article name, $2 -> username of user who edited the article',
+	'emailext-watchedpage-article-edited-subject' => 'Subject line for watched article email when article was edited. $1 -> article name, $2 -> username of user who edited the article',
 	'emailext-watchedpage-article-edited-subject-anonymous' => 'Subject line for watched article email edited by an anonymous user. $1 -> article name',
 	'emailext-watchedpage-article-unprotected-subject' => 'Subject line for watched article email when article was unprotected. $1 -> article name, $2 -> username of user who edited the article',
 	'emailext-watchedpage-article-renamed-subject' => 'Subject line for watched article email when article was renamed. $1 -> article name, $2 -> username of user who edited the article',
@@ -108,11 +108,7 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-<<<<<<< HEAD
-	'emailext-watchedpage-article-edited-subject' => 'Użytkownik $2 dokonał edycji $1 na {{SITENAME}}',
-=======
-	'emailext-watchedpage-subject' => 'Dokonano edycji $1 na {{SITENAME}}',
->>>>>>> origin/dev
+	'emailext-watchedpage-article-edited-subject' => 'Dokonano edycji $1 na {{SITENAME}}',
 	'emailext-watchedpage-salutation' => 'Cześć $1,',
 	'emailext-watchedpage-article-edited' => "'''Dokonano edycji [$1 $2] na [{{SERVER}} {{SITENAME}}]. Sprawdź!'''",
 	'emailext-watchedpage-diff-button-text' => 'Porównaj zmiany',
@@ -145,11 +141,7 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-<<<<<<< HEAD
-	'emailext-watchedpage-article-edited-subject' => '{{SITENAME}}上的$1由$2进行编辑过',
-=======
-	'emailext-watchedpage-subject' => '{{SITENAME}}上的$1被$2编辑过',
->>>>>>> origin/dev
+	'emailext-watchedpage-article-edited-subject' => '{{SITENAME}}上的$1被$2编辑过',
 	'emailext-watchedpage-salutation' => '$1，您好！',
 	'emailext-watchedpage-article-edited' => "'''[{{SERVER}} {{SITENAME}}]上的[$1 $2]已被编辑过。快来查看吧！'''",
 	'emailext-watchedpage-diff-button-text' => '查看更改之处',
@@ -160,11 +152,7 @@ $messages['zh-hans'] = array(
 );
 
 $messages['zh-tw'] = array(
-<<<<<<< HEAD
-	'emailext-watchedpage-article-edited-subject' => '{{SITENAME}}上的$1由$2進行編輯過',
-=======
-	'emailext-watchedpage-subject' => '{{SITENAME}}上的$1被$2編輯過',
->>>>>>> origin/dev
+	'emailext-watchedpage-article-edited-subject' => '{{SITENAME}}上的$1被$2編輯過',
 	'emailext-watchedpage-salutation' => '$1，您好！',
 	'emailext-watchedpage-article-edited' => "'''[{{SERVER}} {{SITENAME}}]上的[$1 $2]已被編輯。快來查看吧！'''",
 	'emailext-watchedpage-diff-button-text' => '查看更改之處',
