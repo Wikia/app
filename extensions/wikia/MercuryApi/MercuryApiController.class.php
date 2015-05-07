@@ -348,13 +348,12 @@ class MercuryApiController extends WikiaController {
 
 	public function getCuratedContentSection() {
 		$section = $this->getVal( 'section' );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		if ( empty( $section ) ) {
 			$this->response->setVal( 'items', false );
 		} else {
 			$data = $this->getCuratedContentData( $section );
-
-			$this->response->setFormat( 'json' );
 			$this->response->setVal( 'items', $data );
 		}
 	}
