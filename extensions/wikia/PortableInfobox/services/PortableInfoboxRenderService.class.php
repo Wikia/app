@@ -2,7 +2,8 @@
 
 class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
-	const THUMBNAIL_WIDTH = 270;
+	const DESKTOP_THUMBNAIL_WIDTH = 270;
+	const MOBILE_THUMBNAIL_WIDTH = 360;
 
 	private $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
@@ -149,7 +150,11 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	protected function getThumbnailUrl( $url ) {
-		return VignetteRequest::fromUrl( $url )->scaleToWidth( self::THUMBNAIL_WIDTH )->url();
+		return VignetteRequest::fromUrl( $url )->scaleToWidth(
+			F::app()->checkSkin( 'wikiamobile' ) ?
+				self::MOBILE_THUMBNAIL_WIDTH :
+				self::DESKTOP_THUMBNAIL_WIDTH
+		)->url();
 	}
 
 	/**
