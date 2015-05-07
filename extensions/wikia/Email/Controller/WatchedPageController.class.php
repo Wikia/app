@@ -158,14 +158,16 @@ abstract class WatchedPageController extends EmailController {
 	}
 
 	/**
+	 * @param $title
 	 * @return String
+	 * @throws \MWException
 	 */
-	protected function getAllChangesText() {
+	protected function getAllChangesText( $title ) {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
-			$this->title->getFullURL( [
+			$title->getFullURL( [
 				'action' => 'history'
 			] ),
-			$this->title->getPrefixedText()
+			$title->getPrefixedText()
 		)->inLanguage( $this->targetLang )->parse();
 	}
 
@@ -175,7 +177,7 @@ abstract class WatchedPageController extends EmailController {
 	protected function getContentFooterMessages() {
 		return [
 			$this->getArticleLinkText(),
-			$this->getAllChangesText(),
+			$this->getAllChangesText( $this->title ),
 		];
 	}
 }
@@ -290,22 +292,27 @@ class WatchedPageRenamedController extends WatchedPageController {
 	}
 
 	/**
+	 * Get link to current revision of new title because it's first revision of this title
+	 *
 	 * @return String
 	 */
 	protected function getArticleLinkText() {
 		return wfMessage( 'emailext-watchedpage-article-link-text',
-			$this->newTitle->getFullURL(),
+			$this->newTitle->getFullURL( [
+					'diff' => 0,
+					'oldid' => $this->currentRevId
+			] ),
 			$this->newTitle->getPrefixedText()
 		)->inLanguage( $this->targetLang )->parse();
 	}
 
 	/**
+	 * Get url to renamed Title
+	 *
+	 * @param $title
 	 * @return String
 	 */
-	protected function getAllChangesText() {
-		return wfMessage( 'emailext-watchedpage-view-all-changes',
-			$this->newTitle->getFullURL( 'action=history' ),
-			$this->newTitle->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+	protected function getAllChangesText( $title ) {
+		return parent::getAllChangesText( $this->newTitle );
 	}
 }
