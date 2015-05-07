@@ -2,6 +2,7 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 use Wikia\PortableInfobox\Parser\ExternalParser;
+use Wikia\PortableInfobox\Parser\SimpleParser;
 
 class Node {
 
@@ -21,6 +22,16 @@ class Node {
 	}
 
 	/**
+	 * @return ExternalParser
+	 */
+	public function getExternalParser() {
+		if ( !isset( $this->externalParser ) ) {
+			$this->setExternalParser( new SimpleParser() );
+		}
+		return $this->externalParser;
+	}
+
+	/**
 	 * @param mixed $externalParser
 	 */
 	public function setExternalParser( ExternalParser $externalParser ) {
@@ -32,7 +43,7 @@ class Node {
 	}
 
 	public function getData() {
-		return [ 'value' => (string) $this->xmlNode ];
+		return [ 'value' => (string)$this->xmlNode ];
 	}
 
 	public function isEmpty( $data ) {
@@ -47,36 +58,21 @@ class Node {
 		}
 		if ( !$value ) {
 			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				$value = (string) $xmlNode->{self::DEFAULT_TAG_NAME};
-				$value = $this->parseWithExternalParser( $value, true );
+				$value = (string)$xmlNode->{self::DEFAULT_TAG_NAME};
+				$value = $this->getExternalParser()->parseRecursive( $value );
 			}
 		}
 		return $value;
 	}
 
-	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute )	{
-		if( isset( $xmlNode[ $attribute ] ) )
-			return (string) $xmlNode[ $attribute ];
+	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
+		if ( isset( $xmlNode[ $attribute ] ) )
+			return (string)$xmlNode[ $attribute ];
 		return null;
-	}
-
-	/**
-	 * @FIXME: regardless of what is the final approach, this code needs to be explained
-	 * WHY it does the things it does. Here. In docblock. Or by phrasing it explicitly with
-	 * class and method names.
-	 */
-	protected function parseWithExternalParser( $data, $recursive = true ) {
-		if ( !empty( $data ) && !empty( $this->externalParser ) ) {
-			if ( $recursive ) {
-				return $this->externalParser->parseRecursive( $data );
-			}
-			return $this->externalParser->parse( $data );
-		}
-		return $data;
 	}
 
 	protected function getInfoboxData( $key ) {
 		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
-		return $this->parseWithExternalParser( $data );
+		return $this->getExternalParser()->parse( $data );
 	}
 }

@@ -8,7 +8,7 @@ class XmlParserTest extends WikiaBaseTest {
 	}
 
 	public function testIsEmpty() {
-		$parser = new \Wikia\PortableInfobox\Parser\XmlParser([
+		$parser = new \Wikia\PortableInfobox\Parser\XmlParser( [
 			'elem2' => 'ELEM2',
 			'lado2' => 'LALALA',
 			'nonempty' => '111'
@@ -33,10 +33,10 @@ class XmlParserTest extends WikiaBaseTest {
 	}
 
 	public function testExternalParser() {
-		$parser = new \Wikia\PortableInfobox\Parser\XmlParser([
+		$parser = new \Wikia\PortableInfobox\Parser\XmlParser( [
 			'elem2' => 'ELEM2',
 			'lado2' => 'LALALA'
-		]);
+		] );
 		$externalParser = new \Wikia\PortableInfobox\Parser\DummyParser();
 		$parser->setExternalParser( $externalParser );
 		$markup = '

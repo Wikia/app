@@ -12,8 +12,13 @@ class MediaWikiParserService implements ExternalParser {
 		$this->frame = $frame;
 	}
 
+	/**
+	 * Method used for parsing wikitext provided through variable
+	 * @param $wikitext
+	 * @return mixed
+	 */
 	public function parse( $wikitext ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		if ( substr( $wikitext, 0, 1 ) == "*" ) {
 			//fix for first item list elements
 			$wikitext = "\n" . $wikitext;
@@ -21,22 +26,23 @@ class MediaWikiParserService implements ExternalParser {
 		$parsedText = $this->getParserInstance()
 			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
 			->getText();
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $parsedText;
 	}
 
 	/**
-	 * @FIXME: regardless of what is the final approach, this code needs to be explained
-	 * WHY it does the things it does. Here. In docblock. Or by phrasing it explicitly with
-	 * class and method names.
+	 * Method used for parsing wikitext provided in infobox that might contain variables
+	 * @param $wikitext
+	 * @return string HTML outcome
 	 */
 	public function parseRecursive( $wikitext ) {
-		wfProfileIn(__METHOD__);
-		$parsed = $this->parse($wikitext);
-		$preprocessed = $this->parser->recursivePreprocess( $parsed, $this->frame );
-		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $preprocessed );
+		wfProfileIn( __METHOD__ );
+		$withVars = $this->parser->replaceVariables( $wikitext, $this->frame );
+		$parsed = $this->parse( $withVars );
+		$ready = $this->parser->mStripState->unstripBoth( $parsed );
+		$newlinesstripped = preg_replace( '|[\n\r]|Us', '', $ready );
 		$marksstripped = preg_replace( '|{{{.*}}}|Us', '', $newlinesstripped );
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $marksstripped;
 	}
 
