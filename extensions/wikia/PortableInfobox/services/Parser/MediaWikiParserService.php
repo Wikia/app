@@ -12,6 +12,11 @@ class MediaWikiParserService implements ExternalParser {
 		$this->frame = $frame;
 	}
 
+	/**
+	 * Method used for parsing wikitext provided through variable
+	 * @param $wikitext
+	 * @return mixed
+	 */
 	public function parse( $wikitext ) {
 		wfProfileIn( __METHOD__ );
 		if ( substr( $wikitext, 0, 1 ) == "*" ) {
@@ -26,9 +31,9 @@ class MediaWikiParserService implements ExternalParser {
 	}
 
 	/**
-	 * @FIXME: regardless of what is the final approach, this code needs to be explained
-	 * WHY it does the things it does. Here. In docblock. Or by phrasing it explicitly with
-	 * class and method names.
+	 * Method used for parsing wikitext provided in infobox that might contain variables
+	 * @param $wikitext
+	 * @return string HTML outcome
 	 */
 	public function parseRecursive( $wikitext ) {
 		wfProfileIn( __METHOD__ );
