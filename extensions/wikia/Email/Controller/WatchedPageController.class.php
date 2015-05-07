@@ -21,10 +21,14 @@ abstract class WatchedPageController extends EmailController {
 	protected abstract function getSummaryMessageKey();
 
 	public function getSubject() {
-		return wfMessage( $this->getSubjectMessageKey(),
-			$this->title->getPrefixedText(),
-			$this->getCurrentUserName()
-		)->inLanguage( $this->targetLang )->text();
+
+		$msgKey = $this->currentUser->isLoggedIn()
+			? 'emailext-watchedpage-article-edited-subject'
+			: 'emailext-watchedpage-article-edited-subject-anonymous';
+
+		return wfMessage( $msgKey, $this->title->getPrefixedText(), $this->getCurrentUserName() )
+			->inLanguage( $this->targetLang )
+			->text();
 	}
 
 	public function initEmail() {

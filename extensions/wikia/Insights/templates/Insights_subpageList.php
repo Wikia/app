@@ -20,14 +20,14 @@
 			<?php if ( !empty( $content ) ) : ?>
 				<table class="insights-list" data-type="<?= Sanitizer::encodeAttribute( $subpage ) ?>">
 					<tr>
-						<th class="insights-list-header"><?= wfMessage( 'insights-list-header-page' )->escaped() ?></th>
+						<th class="insights-list-header insights-list-first-column"><?= wfMessage( 'insights-list-header-page' )->escaped() ?></th>
 						<?php if ( $data['display']['pageviews'] ) : ?>
-							<th class="insights-list-header"><?= wfMessage( 'insights-list-header-pageviews' )->escaped() ?></th>
+							<th class="insights-list-header insights-list-header-pageviews"><?= wfMessage( 'insights-list-header-pageviews' )->escaped() ?></th>
 						<?php endif; ?>
 					</tr>
 					<?php foreach( $content as $item ): ?>
 						<tr class="insights-list-item">
-							<td class="insights-list-item-page insights-list-cell">
+							<td class="insights-list-item-page insights-list-cell insights-list-first-column">
 								<a class="insights-list-item-title <?= Sanitizer::encodeAttribute( $item['link']['classes'] ) ?>" title="<?= Sanitizer::encodeAttribute( $item['link']['title'] ) ?>" href="<?= Sanitizer::cleanUrl( $item['link']['url'] ) ?>"><?= Sanitizer::escapeHtmlAllowEntities( $item['link']['text'] ) ?></a>
 								<?php if ( isset( $item['metadata'] ) ) : ?>
 									<p class="insights-list-item-metadata">
@@ -55,6 +55,9 @@
 						</tr>
 					<?php endforeach; ?>
 				</table>
+				<?php if ( $paginatorBar ) : ?>
+					<?= $paginatorBar ?>
+				<?php endif ?>
 			<?php else: ?>
 				<p>
 					<?= wfMessage( 'insights-list-no-items' )->escaped(); ?>

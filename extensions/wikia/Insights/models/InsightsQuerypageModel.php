@@ -9,14 +9,17 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
 		INSIGHTS_MEMC_VERSION = '1.0',
-		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData';
+		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
+		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
+		INSIGHTS_LIST_MAX_LIMIT = 100;
 
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
-		$cacheTtl,
 		$offset = 0,
 		$limit = 100,
+		$total = 0,
+		$page = 0,
 		$sortingArray;
 
 	public
@@ -26,11 +29,25 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			'pvDiff' => SORT_NUMERIC,
 		];
 
-	const INSIGHTS_LIST_MAX_LIMIT = 100;
-
 	abstract function getDataProvider();
 	abstract function isItemFixed( Title $title );
 	abstract function getInsightType();
+
+	public function getTotalResultsNum() {
+		return $this->total;
+	}
+
+	public function getLimitResultsNum() {
+		return $this->limit;
+	}
+
+	public function getOffset() {
+		return $this->offset;
+	}
+
+	public function getPage() {
+		return $this->page;
+	}
 
 	/**
 	 * @return QueryPage An object of a QueryPage's child class
@@ -82,6 +99,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$articlesData = $this->fetchArticlesData();
 
 		if ( !empty( $articlesData ) ) {
+			$this->total = count( $articlesData );
+
 			/**
 			 * 2. Slice a sorting table to retrieve a page
 			 */
@@ -114,16 +133,18 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			$this->sortingArray = $wgMemc->get( $this->getMemcKey( $params['sort'] ) );
 		}
 
-		if ( isset( $params['offset'] ) ) {
-			$this->offset = intval( $params['offset'] );
-		}
-
 		if ( isset( $params['limit'] ) ) {
 			if ( $params['limit'] <= self::INSIGHTS_LIST_MAX_LIMIT ) {
 				$this->limit = intval( $params['limit'] );
 			} else {
 				$this->limit = self::INSIGHTS_LIST_MAX_LIMIT;
 			}
+		}
+
+		if ( isset( $params['page'] ) ) {
+			$page = intval( $params['page'] );
+			$this->page = --$page;
+			$this->offset = $this->page * $this->limit;
 		}
 	}
 
@@ -135,8 +156,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 */
 	public function fetchArticlesData() {
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$this->cacheTtl = 259200; // Cache for 3 days
-		$articlesData = WikiaDataAccess::cache( $cacheKey, $this->cacheTtl, function () {
+		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
 			$res = $this->queryPageInstance->doQuery();
 
 			if ( $res->numRows() > 0 ) {
@@ -178,7 +198,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 		if ( isset( $articleData[$articleId] ) ) {
 			unset( $articleData[$articleId] );
-			$wgMemc->set( $cacheKey, $articleData, $this->cacheTtl );
+			$wgMemc->set( $cacheKey, $articleData, self::INSIGHTS_MEMC_TTL );
 		}
 	}
 
@@ -196,7 +216,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 			if ( $key = array_search( $articleId, $sortingArray ) !== false ) {
 				unset( $sortingArray[$key] );
-				$wgMemc->set( $cacheKey, $sortingArray, $this->cacheTtl );
+				$wgMemc->set( $cacheKey, $sortingArray, self::INSIGHTS_MEMC_TTL );
 			}
 		}
 	}
@@ -237,7 +257,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		arsort( $sortingArray, $this->sorting[ $key ] );
 		$cacheKey = $this->getMemcKey( $key );
 
-		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), $this->cacheTtl );
+		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), self::INSIGHTS_MEMC_TTL );
 	}
 
 	/**
