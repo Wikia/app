@@ -7,7 +7,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
 
-		$mock = $this->getMock( 'PortableInfoboxRenderService', [ 'getThubnailUrl' ] );
+		$mock = $this->getMock( 'PortableInfoboxRenderService', [ 'getThumbnailUrl' ] );
 		$mock->expects( $this->any() )->method( 'getThumbnailUrl' )->will( $this->returnValue( 'http://image.jpg' ) );
 
 		$this->infoboxRenderService = $mock;
