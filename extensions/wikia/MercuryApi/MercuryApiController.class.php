@@ -293,7 +293,7 @@ class MercuryApiController extends WikiaController {
 			}
 
 			if ( $title->isMainPage() && !empty( $wgEnableMainPageDataMercuryApi ) ) {
-				$data['mainPageData'] = $this->getMainPageData();
+				$data[ 'mainPageData' ] = $this->getMainPageData();
 			}
 
 		} catch ( WikiaHttpException $exception ) {
@@ -318,25 +318,6 @@ class MercuryApiController extends WikiaController {
 		$this->response->setVal( 'data', $data );
 	}
 
-	public function getItemsForCuratedContentSection() {
-		$sectionName = $this->getVal( 'sectionName' );
-		if ( empty( $sectionName ) ) {
-			$this->response->setVal( 'items', false );
-		} else {
-			$sectionItems = $this->sendRequest( 'CuratedContent', 'getList', ['section' => $sectionName] )->getData();
-			$items = [];
-			foreach ( $sectionItems['items'] as $item ) {
-				// Mercury can't open article using ID - we need to create a local link.
-				// TODO Implement cache for release version.
-				// Platform Team is OK with hitting DB for MVP (10-15 wikis)
-				$item['article_local_url'] = Title::newFromID( $item['article_id'] )->getLocalURL();
-				$items[] = $item;
-			}
-			$this->response->setVal( 'items', $items );
-		}
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-	}
-
 	/**
 	 * @desc HG-377: Returns search suggestions
 	 *
@@ -352,13 +333,44 @@ class MercuryApiController extends WikiaController {
 
 	private function getMainPageData() {
 		$mainPageData = [];
-		try {
-			$curatedContentData = $this->sendRequest( 'CuratedContent', 'getList' )->getData();
+		$curatedContent = $this->getCuratedContentData();
 
-			$mainPageData['curatedContent'] = $this->mercuryApi->getCuratedContent($curatedContentData);
+		if ( !empty( $curatedContent[ 'sections' ] ) ) {
+			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'sections' ];
+		}
+
+		if ( !empty( $curatedContent[ 'featured' ] ) ) {
+			$mainPageData[ 'featuredContent' ] = $curatedContent[ 'featured' ];
+		}
+
+		return $mainPageData;
+	}
+
+	public function getCuratedContentSection() {
+		$section = $this->getVal( 'section' );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		if ( empty( $section ) ) {
+			$this->response->setVal( 'items', false );
+		} else {
+			$data = $this->getCuratedContentData( $section );
+			$this->response->setVal( 'items', $data );
+		}
+	}
+
+	private function getCuratedContentData( $section = null ) {
+		$params = [];
+		$data = [];
+
+		if ( $section ) {
+			$params[ 'section' ] = $section;
+		}
+		try {
+			$rawData = $this->sendRequest( 'CuratedContent', 'getList', $params )->getData();
+			$data = $this->mercuryApi->processCuratedContent( $rawData );
 		} catch ( NotFoundApiException $ex ) {
 			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
 		}
-		return $mainPageData;
+		return $data;
 	}
 }
