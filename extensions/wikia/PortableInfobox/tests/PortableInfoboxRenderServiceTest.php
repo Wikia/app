@@ -7,7 +7,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
 
-		$mock = $this->getMock( 'PortableInfoboxRenderService', [ 'getThubnailUrl' ] );
+		$mock = $this->getMock( 'PortableInfoboxRenderService', [ 'getThumbnailUrl' ] );
 		$mock->expects( $this->any() )->method( 'getThumbnailUrl' )->will( $this->returnValue( 'http://image.jpg' ) );
 
 		$this->infoboxRenderService = $mock;
@@ -51,8 +51,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'title',
 						'data' => [
 							'value' => 'Test Title'
-						],
-						'isEmpty' => false
+						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
@@ -68,7 +67,6 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'footer',
 						'data' => [
 							'value' => 'Footer value',
-							'isEmpty' => false
 						]
 					]
 				],
@@ -84,8 +82,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'data' => [
 							'alt' => 'image alt',
 							'url' => 'http://image.jpg'
-						],
-						'isEmpty' => false
+						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
@@ -106,8 +103,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'data' => [
 							'label' => 'test label',
 							'value' => 'test value'
-						],
-						'isEmpty' => false
+						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
@@ -124,24 +120,21 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'title',
 						'data' => [
 							'value' => 'Test Title'
-						],
-						'isEmpty' => false
+						]
 					],
 					[
 						'type' => 'image',
 						'data' => [
 							'alt' => 'image alt',
 							'value' => 'http://image.jpg'
-						],
-						'isEmpty' => false
+						]
 					],
 					[
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
 							'value' => 'test value'
-						],
-						'isEmpty' => false
+						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
@@ -168,16 +161,14 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'title',
 						'data' => [
 							'value' => 'Test Title'
-						],
-						'isEmpty' => false
+						]
 					],
 					[
 						'type' => 'data',
 						'data' => [
 							'label' => 'test label',
 							'value' => 'test value'
-						],
-						'isEmpty' => false
+						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
@@ -197,8 +188,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'title',
 						'data' => [
 							'value' => 'Test Title'
-						],
-						'isEmpty' => false
+						]
 					],
 					[
 						'type' => 'group',
@@ -208,28 +198,24 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 									'type' => 'header',
 									'data' => [
 										'value' => 'Test Header'
-									],
-									'isEmpty' => false
+									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
 										'value' => 'test value'
-									],
-									'isEmpty' => false,
+									]
 								],
 								[
 									'type' => 'data',
 									'data' => [
 										'label' => 'test label',
 										'value' => 'test value'
-									],
-									'isEmpty' => false
+									]
 								]
 							]
-						],
-						'isEmpty' => false
+						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
@@ -266,32 +252,27 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 												'type' => 'header',
 												'data' => [
 													'value' => 'Test Header'
-												],
-												'isEmpty' => false
+												]
 											],
 											[
 												'type' => 'data',
 												'data' => [
 													'label' => 'test label',
 													'value' => 'test value'
-												],
-												'isEmpty' => false,
+												]
 											],
 											[
 												'type' => 'data',
 												'data' => [
 													'label' => 'test label',
 													'value' => 'test value'
-												],
-												'isEmpty' => false
+												]
 											]
 										]
-									],
-									'isEmpty' => false
+									]
 								],
 							],
-						],
-						'isEmpty' => false
+						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">
@@ -329,8 +310,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						'type' => 'footer',
 						'data' => [
 							'value' => '<p>Links</p>'
-						],
-						'isEmpty' => false
+						]
 					]
 				],
 				'output' => '<aside class="portable-infobox">

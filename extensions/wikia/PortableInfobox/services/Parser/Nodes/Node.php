@@ -73,6 +73,6 @@ class Node {
 
 	protected function getInfoboxData( $key ) {
 		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
-		return $this->getExternalParser()->parse( $data );
+		return $this->getExternalParser()->parseRecursive( $data );
 	}
 }
