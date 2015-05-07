@@ -92,9 +92,9 @@
 		}
 
 		.WikiHeader > nav.WikiNav .navbackground {
-			left: -24px;
-			width: 772px;
-		}
+			 left: -24px;
+			 width: 772px;
+		 }
 	}
 
 	@media #{$breakpoint-medium-up} {
@@ -225,7 +225,7 @@
 			width: $page-width-small-plus;
 		}
 
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded, .WikiaMainContent {
 			// right rail width + space between RR and content
 			@include width-calc("100% - 320px");
 		}
@@ -253,6 +253,10 @@
 				.subnav-2 {
 					width: auto;
 				}
+
+				.navbackground {
+					 width: 768px;
+				 }
 			}
 		}
 
