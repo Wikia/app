@@ -1,11 +1,5 @@
-require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) {
+define('pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) {
 	'use strict';
-
-	var trackFunc = tracker.buildTrackingFunction({
-		action: win.Wikia.Tracker.ACTIONS.CLICK,
-		category: 'social-share',
-		trackingMethod: 'analytics'
-	});
 
 	/**
 	 * @desc Share click handler
@@ -20,7 +14,12 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) 
 			url = service.prop('href'),
 			title = service.prop('title'),
 			h = (win.innerHeight / 2 | 0), // round down
-			w = (win.innerWidth / 2 | 0);  // round down
+			w = (win.innerWidth / 2 | 0),  // round down
+			trackFunc = tracker.buildTrackingFunction({
+				action: win.Wikia.Tracker.ACTIONS.CLICK,
+				category: 'social-share',
+				trackingMethod: 'analytics'
+			});
 
 		trackFunc({label: service.data('share-service')});
 
@@ -40,42 +39,17 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) 
 	}
 
 	function loadShareIcons() {
-		var useLang = $.getUrlVar('uselang'),
-			mCache = $.getUrlVar('mcache'),
+		var mCacheQueryStringParam = $.getUrlVar('mcache'),
 			requestData,
-			shareLang,
-			browserLang;
-
-		if (win.wgUserName) {
-			shareLang = win.wgUserLanguage;
-		} else {
-			browserLang = (
-				// Chrome and Firefox
-				win.navigator.languages ? win.navigator.languages[0] :
-				// Chrome and Firefox fallback
-				win.navigator.language ||
-				// Internet Explorer
-				win.navigator.browserLanguage ||
-				win.navigator.userLanguage ||
-				win.navigator.systemLanguage
-			);
-
-			if (browserLang) {
-				shareLang = browserLang.substr(0, 2);
-			}
-		}
+			shareLang = getShareLang($.getUrlVar('uselang'));
 
 		requestData = {
 			shareLang: shareLang,
 			isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
 		};
 
-		if (mCache) {
-			requestData.mcache = mCache;
-		}
-
-		if (useLang) {
-			requestData.useLang = useLang;
+		if (mCacheQueryStringParam) {
+			requestData.mcache = mCacheQueryStringParam;
 		}
 
 		$.nirvana.sendRequest({
@@ -87,8 +61,31 @@ require(['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) 
 		});
 	}
 
+	function getShareLang(useLangQueryStringParam) {
+		var browserLang;
+
+		if (useLangQueryStringParam) {
+			return useLangQueryStringParam;
+		} else if (win.wgUserName) {
+			return win.wgUserLanguage;
+		} else {
+			// Chrome and Firefox : Internet Explorer
+			browserLang = win.navigator.languages ? win.navigator.languages[0] : win.navigator.browserLanguage;
+
+			if (browserLang) {
+				return browserLang.substr(0, 2);
+			} else {
+				return null;
+			}
+		}
+	}
+
 	// bind events to links
 	$(function () {
 		loadShareIcons();
 	});
+
+	return {
+		getShareLang: getShareLang
+	};
 });

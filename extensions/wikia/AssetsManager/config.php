@@ -2393,7 +2393,7 @@ $config['page_share_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PageShare/styles/share.scss'
+		'//extensions/wikia/PageShare/styles/PageShare.scss'
 	],
 ];
 
