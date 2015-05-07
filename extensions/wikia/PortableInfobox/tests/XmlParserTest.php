@@ -28,6 +28,7 @@ class XmlParserTest extends WikiaBaseTest {
 		';
 		$data = $parser->getDataFromXmlString( $markup );
 		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][0]['data']['value'] == 'Combatientes' );
+		// '111' should be at [1] position, becasue <data source="empty"> should be ommited
 		$this->assertTrue( $data[1]['data']['value'] == '111' );
 	}
 
@@ -53,6 +54,7 @@ class XmlParserTest extends WikiaBaseTest {
 		';
 		$data = $parser->getDataFromXmlString( $markup );
 		$this->assertTrue( $data[0]['data']['value'] == 'parseRecursive(ABB)' );
+		// ledo1 ommited, ledo2 at [1] position
 		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][1]['data']['value'] == 'parseRecursive(LALALA)');
 	}
 }
