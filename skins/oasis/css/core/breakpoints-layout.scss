@@ -226,14 +226,18 @@
 		}
 
 		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+			// right rail width + space between RR and content
 			@include width-calc("100% - 320px");
 		}
 
 		.main-page-tag-rcs {
+			// right rail width
 			width: 300px;
 		}
 
 		.WikiHeader {
+			// values here are mostly copied from WikiHeader.scss
+			// so it will override small breakpoint's values
 			min-height: 69px;
 
 			.buttons {
