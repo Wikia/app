@@ -38,10 +38,6 @@ class PortableInfoboxRenderService extends WikiaService {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
 
-			if ( $item['isEmpty'] ) {
-				continue;
-			}
-
 			switch ( $type ) {
 				case 'comparison':
 					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
@@ -83,16 +79,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ($comparisonData as $set) {
 			$setHTMLContent = '';
 
-			if ($set['isEmpty']) {
-				continue;
-			}
-
 			foreach ($set['data']['value'] as $item) {
 				$type = $item['type'];
-
-				if ($item['isEmpty']) {
-					continue;
-				}
 
 				if ($type === 'header') {
 					$setHTMLContent .= $this->renderItem(
@@ -132,10 +120,6 @@ class PortableInfoboxRenderService extends WikiaService {
 
 		foreach ( $groupData as $item ) {
 			$type = $item['type'];
-
-			if ( $item['isEmpty'] ) {
-				continue;
-			}
 
 			if ( $this->validateType( $type ) ) {
 				$groupHTMLContent .= $this->renderItem( $type, $item['data'] );
