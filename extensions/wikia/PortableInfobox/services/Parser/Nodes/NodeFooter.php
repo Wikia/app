@@ -4,13 +4,11 @@ namespace Wikia\PortableInfobox\Parser\Nodes;
 class NodeFooter extends Node {
 
 	public function getData() {
-		$data = [];
-		$data['value'] = $this->parseWithExternalParser( (string) $this->xmlNode, true );
-		return $data;
+		return [ 'value' => $this->getExternalParser()->parseRecursive( (string)$this->xmlNode ) ];
 	}
 
 	public function isEmpty( $data ) {
-		$links = trim( $data['value'] );
+		$links = trim( $data[ 'value' ] );
 		return empty( $links );
 	}
 }

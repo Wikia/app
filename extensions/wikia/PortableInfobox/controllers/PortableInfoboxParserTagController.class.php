@@ -44,7 +44,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$renderer = new PortableInfoboxRenderService();
 		$renderedValue = $renderer->renderInfobox( $data );
 
-		return [ $renderedValue, 'markerType' => 'nowiki' ];
+		return [ $renderedValue, 'markerType' => 'general' ];
 	}
 
 	private function renderUnimplementedTagErrorMesssage( $tagName ) {
