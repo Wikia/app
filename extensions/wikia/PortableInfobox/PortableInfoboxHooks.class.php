@@ -24,27 +24,4 @@ class PortableInfoboxHooks {
 
 		return true;
 	}
-
-	/**
-	 * Add aside HTML tag to accepted list
-	 * @param $includeTags parser accepted tags list
-	 * @param $excludeTags parser excluded tags list
-	 * @return bool
-	 */
-	public static function onSanitizerTagsLists( &$includeTags, &$excludeTags ) {
-		$includeTags[ ] = 'aside';
-		return true;
-	}
-
-	/**
-	 * Ass aside attributes to whitelist
-	 * @param $whitelist
-	 * @return bool
-	 */
-	public static function onSanitizerAttributesSetup( &$whitelist ) {
-		if ( !isset( $whitelist[ 'aside' ] ) ) {
-			$whitelist[ 'aside' ] = [ 'id', 'class', 'lang', 'dir', 'title', 'style' ];
-		}
-		return true;
-	}
 }

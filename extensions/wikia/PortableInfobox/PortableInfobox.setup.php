@@ -49,8 +49,6 @@ $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.clas
 $wgHooks[ 'ParserFirstCallInit' ][] = 'PortableInfoboxParserTagController::parserTagInit';
 $wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'PortableInfoboxHooks::onSkinAfterBottomScripts';
-$wgHooks[ 'SanitizerTagsLists' ][] = 'PortableInfoboxHooks::onSanitizerTagsLists';
-$wgHooks[ 'SanitizerAttributesSetup' ][] = 'PortableInfoboxHooks::onSanitizerAttributesSetup';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
