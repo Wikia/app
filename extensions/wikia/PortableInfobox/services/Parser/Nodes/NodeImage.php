@@ -1,22 +1,34 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
+use Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer;
+
 class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';
 
 	public function getData() {
-		$node = [];
-		$imageName = $this->getInfoboxData( $this->getXmlAttribute($this->xmlNode, self::DATA_SRC_ATTR_NAME ) );
-		$node['value'] = $this->resolveImageUrl( $imageName );
-		$node['alt'] = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
-		return $node;
+		$imageName = $this->getValueWithDefault( $this->xmlNode );
+		return [
+			'url' => $this->resolveImageUrl( $imageName ),
+			'name' => $imageName,
+			'alt' => $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} )
+		];
 	}
 
-	protected function resolveImageUrl( $filename ) {
-		$title = \Title::newFromText( $filename, NS_FILE );
+	public function isEmpty( $data ) {
+		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
+	}
+
+	public function resolveImageUrl( $filename ) {
+		global $wgContLang;
+		$title = \Title::newFromText(
+			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $filename, $wgContLang ),
+			NS_FILE
+		);
 		if ( $title && $title->exists() ) {
-			return \WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();
+			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
+		} else {
+			return "";
 		}
-		return "";
 	}
 }
