@@ -58,11 +58,12 @@ describe('AdLogicPageDimensions', function(){
 	}
 
 	var oneColumnResponsive = 'screen and (max-width: 1023px)',
-		oneColumnBreakpoints = 'screen and (max-width: 1063px)',
-		noTopButton = 'screen and (max-width: 1030px)',
-		width800Responsive = [oneColumnResponsive, noTopButton],
-		width800Breakpoints = [oneColumnBreakpoints, noTopButton],
-		width1024 = [noTopButton],
+		oneColumnBreakpoints = 'screen and (max-width: 1023px)',
+		noTopButtonResponsive = 'screen and (max-width: 1030px)',
+		noTopButtonBreakpoints = 'screen and (max-width: 1063px)',
+		width800Responsive = [oneColumnResponsive, noTopButtonResponsive],
+		width800Breakpoints = [oneColumnBreakpoints, noTopButtonBreakpoints],
+		width1024 = [noTopButtonResponsive, noTopButtonBreakpoints],
 		width2000 = [];
 
 	it('checks if page is too short for a slot on a static oasis skin', function() {
