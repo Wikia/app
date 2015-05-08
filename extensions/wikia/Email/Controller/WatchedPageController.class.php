@@ -166,8 +166,8 @@ class WatchedPageController extends EmailController {
 					[
 						'type' => 'text',
 						'name' => 'pageTitle',
-						'label' => "Title of the article",
-						'tooltip' => "Name of the article (make sure it's on this wikia!)"
+						'label' => "Article Title",
+						'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
 					],
 					[
 						'type' => 'text',

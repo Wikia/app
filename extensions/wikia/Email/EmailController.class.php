@@ -527,6 +527,10 @@ abstract class EmailController extends \WikiaController {
 		}
 	}
 
+	/**
+	 * Get the form field for this email to be used on Special:SendEmail
+	 * @return array
+	 */
 	public static function getAdminForm() {
 		return array_merge_recursive(
 			self::getBaseAdminForm(),
@@ -534,6 +538,10 @@ abstract class EmailController extends \WikiaController {
 		);
 	}
 
+	/**
+	 * Get the common form fields used by all emails on Special:SendEmail.
+	 * @return array
+	 */
 	private static function getBaseAdminForm() {
 		$baseForm = [
 			'inputs' => [
@@ -592,6 +600,22 @@ abstract class EmailController extends \WikiaController {
 		return $baseForm;
 	}
 
+	/**
+	 * This method is overridden by most subclasses of the EmailController. It returns a list of
+	 * form fields which are specific to that email and are required for it's form found on
+	 * Special:SendEmail (eg, the WatchedPage email requires a Title and 2 revision IDs, in addition
+	 * to all of the fields from EmailController::getBaseAdminForm).
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		return [];
+	}
+
+	/**
+	 * Get the legend to display over this emails Special:SendEmail form. eg "WatchedPage Email" or
+	 * "ForgottenPassword Email"
+	 * @return string
+	 */
 	private static function getLegendName() {
 		$legendName = "";
 		if ( preg_match( "/^Email\\\\Controller\\\\(.+)Controller$/", get_called_class(), $matches ) ) {
@@ -599,9 +623,5 @@ abstract class EmailController extends \WikiaController {
 		}
 
 		return $legendName;
-	}
-
-	protected static function getEmailSpecificFormFields() {
-		return [];
 	}
 }

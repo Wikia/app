@@ -151,25 +151,6 @@ abstract class CommentController extends EmailController {
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
-
-	protected static function getEmailSpecificFormFields() {
-		$form = [
-			'inputs' => [
-				[
-					'type' => 'text',
-					'name' => 'pageTitle',
-					'label' => "Title of the article"
-				],
-				[
-					'type' => 'text',
-					'name' => 'currentRevId',
-					'label' => "Current Revision ID"
-				],
-			]
-		];
-
-		return $form;
-	}
 }
 
 class ArticleCommentController extends CommentController {
@@ -180,6 +161,26 @@ class ArticleCommentController extends CommentController {
 	protected function getSummaryKey() {
 		return 'emailext-articlecomment-summary';
 	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'pageTitle',
+					'label' => "Article Title",
+					'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
+				],
+				[
+					'type' => 'text',
+					'name' => 'currentRevId',
+					'label' => "Comment Revision ID"
+				],
+			]
+		];
+
+		return $formFields;
+	}
 }
 
 class BlogCommentController extends CommentController {
@@ -189,5 +190,28 @@ class BlogCommentController extends CommentController {
 
 	protected function getSummaryKey() {
 		return 'emailext-blogcomment-summary';
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields['inputs'] = [
+			[
+				'type' => 'text',
+				'name' => 'pageTitle',
+				'label' => "Blog Post Title",
+				'tooltip' => 'eg "Gcheung28/New_sharing_options_on_Wikia"'
+			],
+			[
+				'type' => 'text',
+				'name' => 'currentRevId',
+				'label' => "Comment Revision ID"
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'namespace',
+				'value' => 500
+			]
+		];
+
+		return $formFields;
 	}
 }
