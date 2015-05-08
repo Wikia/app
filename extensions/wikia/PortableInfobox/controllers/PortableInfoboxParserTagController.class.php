@@ -32,11 +32,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		try {
 			$data = $infoboxParser->getDataFromXmlString( $markup );
-			if ( $data === false ) {
-				return $this->handleError( wfMessage('xml-parse-error') );
-			}
 		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
 			return $this->handleError( wfMessage( 'unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
+		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e) {
+			return $this->handleError( wfMessage('xml-parse-error') );
 		}
 
 		//save for later api usage

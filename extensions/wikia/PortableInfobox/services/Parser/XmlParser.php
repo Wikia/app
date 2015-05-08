@@ -55,7 +55,7 @@ class XmlParser {
 		if ( $xml ) {
 			$data = $this->getDataFromNodes( $xml );
 		} else {
-			return false;
+			throw new XmlMarkupParseErrorException();
 		}
 		wfProfileOut( __METHOD__ );
 		return $data;
@@ -82,4 +82,7 @@ class XmlParser {
 		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
 	}
 
+}
+
+class XmlMarkupParseErrorException extends \Exception {
 }
