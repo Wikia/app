@@ -370,12 +370,11 @@ class WallNotifications {
 	}
 
 	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
-		$text = strip_tags( $notification->data_noncached->msg_text, '<p><br>' );
+		$text = preg_replace( array( '#<br\s*/?>#i', '#</p\s*/?>#i' ), "\n",
+			$notification->data_noncached->msg_text );
+		$text = trim( strip_tags( $text ) );
 		$text = substr( $text, 0, 3000 ) . ( strlen( $text ) > 3000 ? '...' : '' );
-
-		$textNoHtml = preg_replace( '#<br\s*/?>#i', "\n", $text );
-		$textNoHtml = trim( preg_replace( '#</?p\s*/?>#i', "\n", $textNoHtml ) );
-		$textNoHtml = substr( $textNoHtml, 0, 3000) . ( strlen( $textNoHtml ) > 3000 ? '...' : '' );
+		$textNoNewlines = str_replace( "\n", ' ', $text );
 
 		$entityKey = $notification->getId();
 
@@ -390,8 +389,7 @@ class WallNotifications {
 			if ( !empty( $mode ) && $watcher->getId() != 0 && (
 				( $mode == WALL_EMAIL_EVERY ) ||
 				( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) )
-			)) {
-
+			) && $watcher->getBoolOption( 'unsubscribed' ) !== true ) {
 				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
 				$watcherName = $watcher->getName();
 
@@ -404,34 +402,28 @@ class WallNotifications {
 
 				$data = [];
 				wfRunHooks( 'NotificationGetMailNotificationMessage', [
-					&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text
+					&$notification, &$data, $key, $watcherName, $author_signature, $text, $textNoNewlines
 				]);
-				if ( empty( $data ) ) {
-					$data = [
-						'$WATCHER' => $watcherName,
-						'$WIKI' => $notification->data->wikiname,
-						'$PARENT_AUTHOR_NAME' => 	(empty($notification->data->parent_displayname)
-													? ''
-													: $notification->data->parent_displayname),
-						'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
-						'$AUTHOR' => $notification->data->msg_author_username,
-						'$AUTHOR_SIGNATURE' => $author_signature,
-						'$MAIL_SUBJECT' => wfMessage('mail-notification-subject', [
-							'$1' => $notification->data->thread_title,
-							'$2' => $notification->data->wikiname
-						])->text(),
-						'$METATITLE' => $notification->data->thread_title,
-						'$MESSAGE_LINK' =>  $notification->data->url,
-						'$MESSAGE_NO_HTML' =>  $textNoHtml,
-						'$MESSAGE_HTML' =>  $text,
-						'$MSG_KEY_SUBJECT' => $key,
-						'$MSG_KEY_BODY' => 'mail-notification-body',
-						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
-					];
-				}
-
-				if ( !( $watcher->getBoolOption('unsubscribed') === true ) ) {
+				if ( !empty( $data ) ) {
+					// The old email delivery has been kept here for forums, which use the hook above. This logic can be removed when forum emails are migrated to the new email extension or when forums are retired.
 					$this->sendEmail( $watcher, $data );
+				} else {
+					$fromUser = new MailAddress( $watcher );
+					$params = [
+						'targetUser' => $watcher->getName(),
+						// Wall message title
+						'messageTitle' => $notification->data->thread_title,
+						// Wall message body
+						'messageBody' => $text,
+						'messageType' => $messageType,
+						'replyToAddress' => $this->replyto,
+						'fromAddress' => $fromUser->address,
+						'fromName' => $notification->data->msg_author_displayname,
+						'wallUserName' => $notification->data->wall_username,
+						'url' => $notification->data->url
+					];
+
+					F::app()->sendRequest( 'Email\Controller\WallMessageController', 'handle', $params );
 				}
 			}
 		}

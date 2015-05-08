@@ -28,7 +28,7 @@ abstract class EmailController extends \WikiaController {
 	/** @var bool Whether or not to actually send an email */
 	protected $test;
 
-	/**	@var string The language to send the email in */
+	/** @var string The language to send the email in */
 	protected $targetLang;
 
 	/** @var  \MailAddress */
@@ -449,6 +449,14 @@ abstract class EmailController extends \WikiaController {
 		$this->assertValidUser( $user );
 
 		return $user;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getSalutation() {
+		return wfMessage( 'emailext-salutation',
+			$this->targetUser->getName() )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
