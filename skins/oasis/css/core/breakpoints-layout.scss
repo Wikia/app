@@ -33,6 +33,7 @@
 	html {
 		overflow-y: auto;
 	}
+
 	body {
 		overflow: hidden;
 		position: relative;
@@ -61,7 +62,8 @@
 	}
 
 	@media #{$breakpoint-small-only} {
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
 			width: 100%;
 		}
 
@@ -92,13 +94,14 @@
 		}
 
 		.WikiHeader > nav.WikiNav .navbackground {
-			 left: -24px;
-			 width: 772px;
-		 }
+			left: -24px;
+			width: 772px;
+		}
 	}
 
 	@media #{$breakpoint-medium-up} {
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
 			@include width-calc("100% - 320px");
 		}
 
@@ -125,7 +128,8 @@
 		}
 	}
 
-	.WikiaRail, .main-page-tag-rcs {
+	.WikiaRail,
+	.main-page-tag-rcs {
 		padding: 0;
 
 		@media #{$breakpoint-below-small-plus} {
@@ -225,7 +229,9 @@
 			width: $page-width-small-plus;
 		}
 
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded, .WikiaMainContent {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded,
+		.WikiaMainContent {
 			// right rail width + space between RR and content
 			@include width-calc("100% - 320px");
 		}
