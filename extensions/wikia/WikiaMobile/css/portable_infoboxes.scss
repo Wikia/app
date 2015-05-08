@@ -1,0 +1,151 @@
+@import "variables.scss";
+
+$infobox-item-margin: 5px;
+$infobox-section-header-background: #e5e5e5;
+
+.portable-infobox {
+	margin-bottom: $infobox-item-margin * 4;
+
+	figure {
+		margin: 0;
+	}
+
+	.portable-infobox-item-margins {
+		padding: $infobox-item-margin $infobox-item-margin * 3 $infobox-item-margin * 2;
+	}
+
+	.portable-infobox-header-background {
+		background-color: $infobox-section-header-background;
+	}
+
+	.portable-infobox-title,
+	.portable-infobox-header {
+		border: 0;
+		margin: 0;
+	}
+
+	.portable-infobox-title {
+		padding: $infobox-item-margin * 2 0;
+	}
+
+	.portable-infobox-header {
+		padding: $infobox-item-margin 0 0;
+	}
+
+	.portable-infobox-header-font {
+		font-size: 1rem;
+		font-weight: bold;
+		margin-top: 0;
+	}
+
+	.item-type-key-val:not(:last-of-type) {
+		border-bottom: 1px solid $infobox-section-header-background;
+	}
+
+	.portable-infobox-item-label {
+		margin: 0;
+		padding: 0;
+	}
+
+	.portable-infobox-item-value {
+		padding-left: $infobox-item-margin * 2;
+
+		// experiment with removing margins on all children of data value
+		> * {
+			margin: 0;
+		}
+
+		ul,
+		ol {
+			list-style-position: inside;
+		}
+	}
+
+	.portable-infobox-comparison {
+		border-collapse: collapse;
+		margin: 0;
+		width: 100%;
+	}
+
+	.portable-infobox-comparison-set {
+		display: flex;
+		display: -webkit-flex;
+		flex-wrap: wrap;
+		-webkit-flex-wrap: wrap;
+		width: 100%;
+
+		&:not(:first-of-type) {
+			border-bottom: 0;
+		}
+	}
+
+	.portable-infobox-comparison-set-header {
+		box-sizing: border-box;
+		display: block;
+		flex-basis: 100%;
+		-webkit-flex-basis: 100%;
+		padding: 0;
+		text-align: left;
+		width: 100%;
+	}
+
+	.portable-infobox-comparison-item {
+		box-sizing: border-box;
+		display: block;
+		vertical-align: top;
+		width: 50%;
+
+		> * {
+			width: 100%;
+		}
+
+		&:first-of-type {
+			border-right: 1px solid $infobox-section-header-background;
+		}
+
+		.item-type-key-val {
+			border-bottom: 0;
+			padding-right: $infobox-item-margin * 2;
+		}
+	}
+
+	.portable-infobox-footer {
+		font-weight: normal;
+		padding:  $infobox-item-margin * 2 $infobox-item-margin * 3;
+		text-align: center;
+	}
+
+	&.collapsed {
+		height: 450px;
+		overflow: hidden;
+		position: relative;
+
+		.portable-infobox-expand-button {
+			bottom: 0;
+			position: absolute;
+
+			.chevron {
+				border-color: $border-color transparent transparent transparent;
+				top: 9px;
+
+				&:after {
+					border-color: white transparent transparent transparent;
+					bottom: -$chevron-size/2 - 1;
+				}
+			}
+		}
+	}
+
+	.portable-infobox-expand-button {
+		background-color: $page-background-color;
+		box-sizing: border-box;
+		border: 1px solid $infobox-section-header-background;
+		padding: $infobox-item-margin 0;
+		text-align: center;
+		width: 100%;
+
+		.chevron {
+			top: -4px;
+		}
+	}
+}
