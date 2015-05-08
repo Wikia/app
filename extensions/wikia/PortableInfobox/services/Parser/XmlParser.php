@@ -52,7 +52,11 @@ class XmlParser {
 	public function getDataFromXmlString( $xml ) {
 		wfProfileIn( __METHOD__ );
 		$xml = simplexml_load_string( $xml );
-		$data = $this->getDataFromNodes( $xml );
+		if ( $xml ) {
+			$data = $this->getDataFromNodes( $xml );
+		} else {
+			return false;
+		}
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
