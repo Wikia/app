@@ -194,7 +194,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Skjul patruljerede sider på listen over nye sider',
 'tog-extendwatchlist'         => 'Udvid overvågningslisten til at vise alle ændringer og ikke kun den nyeste',
 'tog-usenewrc'                => 'Brug forbedret liste over seneste ændringer (kræver JavaScript)',
-'tog-numberheadings'          => 'Automatisk nummerering af overskrifter',
 'tog-showtoolbar'             => 'Vis værktøjslinje til redigering (JavaScript)',
 'tog-editondblclick'          => 'Redigér sider med dobbeltklik (JavaScript)',
 'tog-editsection'             => 'Redigér afsnit ved hjælp af [redigér]-henvisninger',

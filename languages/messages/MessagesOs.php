@@ -71,7 +71,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Басгæрст фæрстæ ног фæрсты номхыгъдæй æмбæхс',
 'tog-extendwatchlist'         => 'Стырдæр цæстдард номхыгъд алы ивдимæ дæр, æрмæст фæстагимæ нал.',
 'tog-usenewrc'                => 'Хуыздæр фæстаг ивдтыты номхыгъд (домы JavaScript)',
-'tog-numberheadings'          => 'Сæргæндты автоматикон нумераци',
 'tog-showtoolbar'             => 'Æвдисын ивыны панел (домы JavaScript)',
 'tog-editondblclick'          => 'Фæрстæ дыкъæппæй ив (JavaScript)',
 'tog-editsection'             => 'Равдис «баив æй» æрвитæн тексты алы хайы дæр',

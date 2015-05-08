@@ -22,7 +22,6 @@ $messages = array(
 'tog-hideminor'               => 'Čiega unna rievdadusaid varas rievdadusat -listtus',
 'tog-extendwatchlist'         => 'Viiddit čuovvunlisttu, nu ahte čájeha buot dahkon rievdadusaid, iige dušše ođđaseamos',
 'tog-usenewrc'                => 'Viiddiduvvon varas rievdadusat -listu (gáibida JavaScript)',
-'tog-numberheadings'          => 'Nummaraste bajilčállagiid',
 'tog-showtoolbar'             => 'Čájet rievdadangaskaomiid',
 'tog-editondblclick'          => 'Rievdat siidduid duppaldeaddilemiin (JavaScript)',
 'tog-editsection'             => 'Čájet rievdadanliŋkkaid juohke oasáža bajábealde',

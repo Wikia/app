@@ -165,7 +165,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Gemarkeerde pagina's verberge in de lies mit nuuj pagina's",
 'tog-extendwatchlist'         => 'Oetgebreide volglies gebroeke óm alle verangeringe te zeen en neet allein de lèste',
 'tog-usenewrc'                => 'Oetgebreide recènte verangeringe (Javascript nudig)',
-'tog-numberheadings'          => 'Köpkes automatisch nummere',
 'tog-showtoolbar'             => 'Laot edit toolbar zeen',
 'tog-editondblclick'          => "Bewirk pazjena's bie 'ne dobbelklik (JavaScript)",
 'tog-editsection'             => 'Bewirke van secties via [bewirke] links',

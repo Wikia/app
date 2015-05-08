@@ -53,7 +53,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kontrollierde Sieden ap ju Lieste „Näie Sieden“ ferbierge',
 'tog-extendwatchlist'         => 'Uutgediende Beooboachtengslieste tou Anwiesenge fon aal Annerengen',
 'tog-usenewrc'                => 'Fermeerde Deerstaalenge fon do "Lääste Annerengen" (bruukt Javascript)',
-'tog-numberheadings'          => 'Uurskrifte automatisk nuumerierje',
 'tog-showtoolbar'             => 'Beoarbaidengs-Reewen anwiese',
 'tog-editondblclick'          => 'Sieden mäd Dubbeldklik beoarbaidje (JavaScript)',
 'tog-editsection'             => 'Links toun Beoarbaidjen fon eenpelde Ousatse anwiese',

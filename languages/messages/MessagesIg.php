@@ -80,7 +80,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Zonari orü ha hụrụ shí ndetu ihü ohúrù',
 'tog-extendwatchlist'         => 'Gbasa ndetu ihe ánà elé ka ó zi gbanwere nke níle, o bughi nani nke isi nso',
 'tog-usenewrc'                => 'Ji ihe gbanwere nso níguélé élu (ö chọrọ JavaScript)',
-'tog-numberheadings'          => 'Onuogụgụ-otu anyi mere ya maka ishi edemede',
 'tog-showtoolbar'             => 'Zi igbe orü (Í gí nwere JavaScript)',
 'tog-editondblclick'          => 'Rüwá na élu ihü mgbe I kpạtạrạ (ö chọrọ JavaScript)',
 'tog-editsection'             => 'Gbanyé orürü nkeji shi [rüwá] jikodo',

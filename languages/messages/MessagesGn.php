@@ -35,7 +35,6 @@ $messages = array(
 'tog-hideminor'       => 'Eñomi ñemyatyrõ michĩva «ñemoambue pyahúpe»',
 'tog-extendwatchlist' => 'Eipyso tembiapo rapykueho rysýi opaite ñemoambue ikatúvape',
 'tog-usenewrc'        => "Ñemoambue ojejapo ramóva (ndoikói opaite 'navegador'-pe)",
-'tog-numberheadings'  => 'Mbopapapy ijehegui myakãha',
 'tog-showtoolbar'     => 'Ehechauka ñemyatyrõ renda',
 
 'underline-always' => 'Akói',

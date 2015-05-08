@@ -40,7 +40,6 @@ $messages = array(
 'tog-hideminor'               => 'Asconda editas minor en cambias resente',
 'tog-extendwatchlist'         => 'Grandi la lista oservada per mostra tota cambias aplicable',
 'tog-usenewrc'                => 'Aumenta cambias resente (JavaScript)',
-'tog-numberheadings'          => 'Dona automatica numeros a titula',
 'tog-showtoolbar'             => 'Mostra la bara de utiles per edita (JavaScript)',
 'tog-editondblclick'          => 'Edita pajes a du clicas (JavaScript)',
 'tog-editsection'             => 'Engrana la edita de sesion via lias de {edita}.',

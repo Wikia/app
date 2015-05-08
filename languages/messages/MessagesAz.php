@@ -85,7 +85,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Yoxlanılmış səhifələri yeni səhifə siyahısında göstərmə',
 'tog-extendwatchlist'         => 'Təkmil izləmə siyahısı',
 'tog-usenewrc'                => 'Son dəyişikliklərin təkmil versiyası (JavaScript)',
-'tog-numberheadings'          => 'Başlıqların avto-nömrələnməsi',
 'tog-showtoolbar'             => 'Redaktə zamanı alətlər qutusunu göstər (JavaScript)',
 'tog-editondblclick'          => 'Səhifələri iki kliklə redaktə etməyə başla (JavaScript)',
 'tog-editsection'             => 'Hər bir bölmə üçün [redaktə]ni mümkün et',

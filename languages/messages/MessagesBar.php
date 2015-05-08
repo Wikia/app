@@ -31,7 +31,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kóntróilirde Seiten auf da Listen „Neiche Seiten“ vaberng',
 'tog-extendwatchlist'         => 'Daweiterde Beówochtungslisten',
 'tog-usenewrc'                => "Daweiterde Dorstöung voh d' létzden Änderrungen (JavaScript werd braucht)",
-'tog-numberheadings'          => 'Ywerschriften autómaatisch nummerrirn',
 'tog-showtoolbar'             => 'Beorweiten-Werkzeigleisten åzoang (JavaScript werd braucht)',
 'tog-editondblclick'          => 'Seiten mid am Dóppedrucker beorweiden (JavaScript werd braucht)',
 'tog-editsection'             => "Links zum beorweiten voh d' oahzelnen Obschnitt åzoang",

@@ -22,7 +22,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kliptinais izbandātans pāusans iz listin stēisan nāunan pāusan',
 'tog-extendwatchlist'         => 'Waidinnais en listin stēisan nadirītan wissans, ni tēr panzdaumans kitawīdinsnans',
 'tog-usenewrc'                => 'Tērpaus plattinsenin stēisan panzdauman kitawīdinsnan (izkīnina JavaScript)',
-'tog-numberheadings'          => 'Autōmatiska galwasrīndan nummerinsna',
 'tog-showtoolbar'             => 'Waidinnais sawinzlin stēisan pagaptin (JavaScript)',
 'tog-editondblclick'          => 'Redigīs pāusans pra dwigubban pellis gnesnan (JavaScript)',
 'tog-editsection'             => 'Ermazīnginais redigīsnan stēisan pāusas sekciōnin pra "[redigīs]" autengīnsenin',

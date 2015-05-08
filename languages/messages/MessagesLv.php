@@ -58,7 +58,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Paslēpt pārbaudītās lapas jauno lapu sarakstā',
 'tog-extendwatchlist'         => 'Izvērst uzraugāmo lapu sarakstu, lai parādītu visas veiktās izmaiņas (ne tikai pašas svaigākās)',
 'tog-usenewrc'                => "Lietot uzlaboto pēdējo izmaiņu lapu (izmanto ''JavaScript'')",
-'tog-numberheadings'          => 'Automātiski numurēt virsrakstus',
 'tog-showtoolbar'             => 'Rādīt rediģēšanas rīkjoslu',
 'tog-editondblclick'          => "Atvērt rediģēšanas lapu ar dubultklikšķi (izmanto ''JavaScript'')",
 'tog-editsection'             => 'Rādīt sadaļām izmainīšanas saiti "[labot]"',

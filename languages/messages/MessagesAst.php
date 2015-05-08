@@ -66,7 +66,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Atapecer les páxines vixilaes na llista de páxines nueves',
 'tog-extendwatchlist'         => "Espander la llista de vixilancia p'amosar tolos cambios, non sólo los recientes.",
 'tog-usenewrc'                => 'Cambios recientes ameyoraos (necesita JavaScript)',
-'tog-numberheadings'          => 'Autonumberar los encabezaos',
 'tog-showtoolbar'             => "Amosar la barra de ferramientes d'edición (JavaScript)",
 'tog-editondblclick'          => 'Editar páxines con doble clic (JavaScript)',
 'tog-editsection'             => "Activar la edición de seiciones per aciu d'enllaces [editar]",

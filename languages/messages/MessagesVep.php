@@ -96,7 +96,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Peitta patruliruidud redakcijad uziden lehtpoliden nimikirjuteses',
 'tog-extendwatchlist'         => 'Levitagat kaclendnimikirjutez, miše nähta kaik toižetused.',
 'tog-usenewrc'                => 'Kävutagat paremboitud tantoižed toižetused (pidab otta radho JavaScript)',
-'tog-numberheadings'          => 'Nomeruida avtomatižikš pälkirjutesed',
 'tog-showtoolbar'             => "Ozutada azegiden üläpanel' redaktiruindan aigan (JavaScript)",
 'tog-editondblclick'          => 'Redaktiruida lehtpoled kaksitadud plokul (JavaScript)',
 'tog-editsection'             => 'Ozutada "Redaktiruida"-kosketuz kaikuččen sekcijan täht',

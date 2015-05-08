@@ -35,7 +35,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Schow sprowdzůne zajty na wykoźe nowych zajtůw',
 'tog-extendwatchlist'         => 'Pokoż na mojij pozůrliśće wszyjske, a ńyjyno uostatńe sprowjyńa',
 'tog-usenewrc'                => 'Używej poszyrzyńo ńydowno pomjyńanych (JavaScript)',
-'tog-numberheadings'          => 'Automatyczno numeracyjo titlůw',
 'tog-showtoolbar'             => 'Pokoż gurt werkcojgůw (JavaScript)',
 'tog-editondblclick'          => 'Edycja napoczynajům dwa klikńyńća (JavaScript)',
 'tog-editsection'             => 'Kożdo tajla zajty sprowjano uosobno',

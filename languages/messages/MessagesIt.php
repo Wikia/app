@@ -267,7 +267,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Nascondi le pagine verificate dall'elenco delle pagine più recenti",
 'tog-extendwatchlist'         => "Mostra tutte le modifiche agli osservati speciali, non solo l'ultima",
 'tog-usenewrc'                => 'Utilizza le ultime modifiche avanzate (richiede JavaScript)',
-'tog-numberheadings'          => 'Numerazione automatica dei titoli di sezione',
 'tog-showtoolbar'             => 'Mostra barra degli strumenti di modifica (richiede JavaScript)',
 'tog-editondblclick'          => 'Modifica delle pagine tramite doppio clic (richiede JavaScript)',
 'tog-editsection'             => 'Modifica delle sezioni tramite il collegamento [modifica]',

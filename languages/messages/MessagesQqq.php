@@ -107,7 +107,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Toggle in [[Special:Preferences]], section "Recent changes" (if [[mw:Manual:$wgUseRCPatrol|$wgUseRCPatrol]] is enabled)',
 'tog-extendwatchlist'         => "[[Special:Preferences]], tab 'Watchlist'. Offers user to show all applicable changes in watchlist (by default only the last change to a page on the watchlist is shown).",
 'tog-usenewrc'                => "[[Special:Preferences]], tab 'Recent changes'. Offers user to use alternative reprsentation of [[Special:RecentChanges]].",
-'tog-numberheadings'          => "[[Special:Preferences]], tab 'Misc'. Offers numbered headings on content pages to user.",
 'tog-showtoolbar'             => "[[Special:Preferences]], tab 'Edit'. Offers user to show edit toolbar in page edit screen.
 
 This is the toolbar: [[Image:Toolbar.png]]",

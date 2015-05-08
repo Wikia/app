@@ -302,7 +302,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ukryj sprawdzone strony na liście nowych stron',
 'tog-extendwatchlist'         => 'Pokaż na liście obserwowanych wszystkie zmiany, nie tylko ostatnie',
 'tog-usenewrc'                => 'Zastosuj rozbudowany widok ostatnich zmian (JavaScript)',
-'tog-numberheadings'          => 'Automatyczna numeracja nagłówków',
 'tog-showtoolbar'             => 'Pokaż pasek narzędzi (JavaScript)',
 'tog-editondblclick'          => 'Podwójne kliknięcie rozpoczyna edycję (JavaScript)',
 'tog-editsection'             => 'Możliwość edycji poszczególnych sekcji strony (link [edytuj])',

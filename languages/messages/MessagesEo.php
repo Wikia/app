@@ -316,7 +316,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kaŝi patrolitajn paĝojn de listo de novaj paĝoj',
 'tog-extendwatchlist'         => 'Etendi la atentaron por montri ĉiujn ŝanĝojn, ne nur la plej lastajn',
 'tog-usenewrc'                => 'Uzi progresan "Lastaj ŝanĝoj" (bezonas JavaSkripton)',
-'tog-numberheadings'          => 'Aŭtomate numerigi sekciojn',
 'tog-showtoolbar'             => 'Montri eldonilaron',
 'tog-editondblclick'          => 'Redakti per duobla alklako (JavaScript)',
 'tog-editsection'             => 'Montri [redakti]-ligilojn por sekcioj',

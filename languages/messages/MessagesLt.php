@@ -185,7 +185,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Slėpti patikrintus puslapius iš naujausių straipsnių sąrašo',
 'tog-extendwatchlist'         => 'Išplėsti stebimųjų sąrašą, kad rodytų visus tinkamus keitimus, ne tik pačius naujausius.',
 'tog-usenewrc'                => 'Naudoti patobulintąjį paskutinių keitimų sąrašą (reikia JavaScript)',
-'tog-numberheadings'          => 'Automatiškai numeruoti skyrelius',
 'tog-showtoolbar'             => 'Rodyti redagavimo įrankinę (JavaScript)',
 'tog-editondblclick'          => 'Puslapių redagavimas dvigubu spustelėjimu (JavaScript)',
 'tog-editsection'             => 'Įjungti skyrelių redagavimą naudojant nuorodas [taisyti]',

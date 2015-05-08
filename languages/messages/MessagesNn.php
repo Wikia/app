@@ -295,7 +295,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Gøym patruljerte sider frå lista over nye sider',
 'tog-extendwatchlist'         => 'Utvid overvakingslista til å vise alle endringane, ikkje berre dei siste',
 'tog-usenewrc'                => 'Bruk utvida funksjonalitet på lista over siste endringar (krev JavaScript)',
-'tog-numberheadings'          => 'Vis nummererte overskrifter',
 'tog-showtoolbar'             => 'Vis endringsknappar (JavaScript)',
 'tog-editondblclick'          => 'Endre sider med dobbeltklikk (JavaScript)',
 'tog-editsection'             => 'Endre avsnitt ved hjelp av [endre]-lenkje',

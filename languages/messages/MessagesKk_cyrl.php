@@ -373,7 +373,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Тексерілген беттерді жаңа беттер тізімінде көрсетпеу',
 'tog-extendwatchlist'         => 'Бақылау тізімді ұлғайту (барлық жарамды өзгерістерді көрсету)',
 'tog-usenewrc'                => 'Кеңейтілген жуықтағы өзгерістер (JavaScript)',
-'tog-numberheadings'          => 'Бас жолдарды өздіктік номірле',
 'tog-showtoolbar'             => 'Өңдеу қуралдар жолағын көрсет (JavaScript)',
 'tog-editondblclick'          => 'Қос шерту арқылы бетті өңдеу (JavaScript)',
 'tog-editsection'             => 'Бөлімдерді [өңдеу] сілтемесімен өңдеуін қос',

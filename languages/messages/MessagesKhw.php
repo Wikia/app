@@ -25,7 +25,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'جدید صفحاتی فہرستہ گشتی صفحاتن کھوشاوے',
 'tog-extendwatchlist'         => 'زیرِنظرفہرستو پھیلاؤ  کورے تاکہ ھیارا تھمامو ترمیمات غیچھی گیانی، نہ کہ صرفی تازہ ترین',
 'tog-usenewrc'                => 'افزودہ حالیہ تبدیلیان استعمال کورے (JavaScript ضرورت بوی)',
-'tog-numberheadings'          => 'سرخیانتے تان لمبار دیت',
 'tog-showtoolbar'             => 'تدوینی اوزاردانن پشاؤے ( JavaScript ضرورت بوی)',
 'tog-editondblclick'          => 'کلکہ صفحاتن  ترمیم (JavaScript ضرورت بوی)',
 'tog-editsection'             => '[ترمیم] روابطان ذریعا سطری ترمیم کاریو فعال کورے',

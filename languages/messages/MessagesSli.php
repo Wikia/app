@@ -33,7 +33,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kontrollierte Seeta ei dar Liste "neue Seeta" verberga',
 'tog-extendwatchlist'         => 'Erweiterte Beobachtungsliste zur Oazeige oller Änderunga',
 'tog-usenewrc'                => 'Erweiterte Darstellung dar „Letzta Änderunga“ (benetigt JavaScript)',
-'tog-numberheadings'          => 'Ieberschrifta automatisch nummeriern',
 'tog-showtoolbar'             => 'Bearbta Werkzichleiste aozäan (beneeticht JavaScript)',
 'tog-editondblclick'          => 'Seita mit Doppelklick bearbta (JavaScript)',
 'tog-editsection'             => 'Links zum Bearbta vu eenzelner Obschnitte oazeiga',

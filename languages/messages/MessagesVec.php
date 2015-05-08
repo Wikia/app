@@ -157,7 +157,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Scondi łe pajine verifegae da l'elenco de łe pajine pì resenti",
 'tog-extendwatchlist'         => "Mostra tute łe modifeghe a i oservai spesałi, no soło l'ultima",
 'tog-usenewrc'                => 'Utiłisa łe ulteme modifeghe avansae (el richiede JavaScript)',
-'tog-numberheadings'          => 'Numerasion automatega de i titołi de sesion',
 'tog-showtoolbar'             => 'Mostra ła bara de i strumenti de modifega (el richiede JavaScript)',
 'tog-editondblclick'          => 'Modifega de łe pajine tramite dopio clic (el richiede JavaScript)',
 'tog-editsection'             => 'Modifega de łe sesion tramite el cołegamento [modifega]',

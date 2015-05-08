@@ -300,7 +300,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Amagar las paginas susvelhadas de la lista de las paginas novèlas',
 'tog-extendwatchlist'         => 'Espandir la lista de seguiment per afichar totas las modificacions e non pas solament las mai recentas',
 'tog-usenewrc'                => 'Utilizar los darrièrs cambiaments melhorats (necessita JavaScript)',
-'tog-numberheadings'          => 'Numerotar automaticament los títols',
 'tog-showtoolbar'             => 'Far veire la barra de menut de modificacion (JavaScript)',
 'tog-editondblclick'          => 'Modificar una pagina amb un clic doble (JavaScript)',
 'tog-editsection'             => 'Modificar una seccion via los ligams [modificar]',

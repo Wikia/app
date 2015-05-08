@@ -19,7 +19,6 @@ $messages = array(
 'tog-hideminor'               => 'Qari wax ka bedelka yar ee isbedelada dhow',
 'tog-extendwatchlist'         => "Balaari liiska waardiyeyska si loo arko isbedelada la'xiriira",
 'tog-usenewrc'                => "Isbdelada dhowdhow oo la'horumariyey (JavaScript)",
-'tog-numberheadings'          => 'Cinwaanada u nambareey si automaatik ah',
 'tog-showtoolbar'             => "I'tus liiska qalabka shaqada ee wax ka bedelka (JavaScript)",
 'tog-editondblclick'          => "Boggag wax kabedel markii laba mar dhag la'siiyo (JavaScript)",
 'tog-editsection'             => 'Fasax wax ka bedelida cutubyada dhinaca linkiyada [wax ka bedel]',

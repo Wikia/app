@@ -157,7 +157,6 @@ $messages = array(
 'tog-hideminor'               => 'Kibri pikin kenki ini laste kenki',
 'tog-extendwatchlist'         => 'Moro langa "Tan luku" réy',
 'tog-usenewrc'                => 'Moro betre Laste Kenki (JavaScript)',
-'tog-numberheadings'          => 'Gi den ede wan nomru sondro fu yepi',
 'tog-showtoolbar'             => 'Sori Kenki-Wrokosani-barki (JavaScript)',
 'tog-editondblclick'          => 'Naki tu tron fu kenki (JavaScript)',
 'tog-editsection'             => 'Gi primisi fu kenki pisi-papira nanga [kenki]-miti',

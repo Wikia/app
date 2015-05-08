@@ -102,7 +102,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Folaigh leathanaigh smachtaithe ó liosta leathanaigh úire',
 'tog-extendwatchlist'         => 'Leathnaigh an liosta faire chun gach athrú cuí a thaispeáint',
 'tog-usenewrc'                => 'Stíl nua do na hathruithe is déanaí (JavaScript riachtanach)',
-'tog-numberheadings'          => 'Uimhrigh ceannteidil go huathoibríoch',
 'tog-showtoolbar'             => 'Taispeáin an barra uirlisí eagair (JavaScript)',
 'tog-editondblclick'          => 'Déghliogáil chun leathanaigh a chur in eagar (JavaScript)',
 'tog-editsection'             => 'Cumasaigh mír-eagarthóireacht le naisc mar seo: [athrú]',

@@ -165,7 +165,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Paginae censae inter nouissime creatas celandae',
 'tog-extendwatchlist'         => 'Indicem paginarum obseruandarum cunctas mutatas praeter nouissimas includere decet',
 'tog-usenewrc'                => 'Indice nuper mutatarum excelsa uti (JavaScript necesse est)',
-'tog-numberheadings'          => 'Subtituli numeris adornandi',
 'tog-showtoolbar'             => 'Affigere trabem redigentem (JavaScript poscitur)',
 'tog-editondblclick'          => 'Percussus duplex redactionem hortetur (JavaScript poscitur)',
 'tog-editsection'             => 'Paginarum segmenta [redigere] hortari',

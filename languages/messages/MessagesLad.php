@@ -187,7 +187,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Esconder las hojas surveyadas de la lista de las hojas muevas',
 'tog-extendwatchlist'         => 'Anchar mi lista de akavidamiento afín de àmostrar todos los trocamientos, no sólo los muevos',
 'tog-usenewrc'                => 'Usar el modo adelantado (JavaScript es menester)',
-'tog-numberheadings'          => 'Numerotar otomatika mente los títůlos de los kapítůlos',
 'tog-showtoolbar'             => 'Àmostrar el chibuk de aparatos (JavaScript es menester)',
 'tog-editondblclick'          => 'Trocar las hojas con doble klik (JavaScript es menester)',
 'tog-editsection'             => 'Ofrir la possibilidad de trocar los kapítůlos con el atamiento [trocar]',

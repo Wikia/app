@@ -368,7 +368,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Masquer les pages surveillées parmi les nouvelles pages',
 'tog-extendwatchlist'         => 'Étendre la liste de suivi pour afficher toutes les modifications et non seulement les plus récentes',
 'tog-usenewrc'                => 'Utiliser les modifications récentes améliorées (nécessite JavaScript)',
-'tog-numberheadings'          => 'Numéroter automatiquement les titres de section',
 'tog-showtoolbar'             => 'Montrer la barre de menu de modification (nécessite JavaScript)',
 'tog-editondblclick'          => 'Double-cliquer permet de modifier une page (nécessite JavaScript)',
 'tog-editsection'             => 'Activer les modifications de sections grâce aux liens « [modifier] »',

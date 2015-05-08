@@ -220,7 +220,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Dun de nohjeloorte Änderunge en de Leß „{{int:newpages}}“ eez ens <strong>nit</strong> aanzeije',
 'tog-extendwatchlist'         => 'Verjrößer de Oppassliss för jede Aat vun müjjeliche Änderunge ze zeije, nit nor de neuste',
 'tog-usenewrc'                => 'Don de opgemotzte „{{int:Recentchanges}}“ aanzeije (bruch Java_Skripp)',
-'tog-numberheadings'          => 'Dun de Üvverschrefte automatisch nummereere',
 'tog-showtoolbar'             => 'Zeich de Werkzüchliss zom Ändere aan (bruch Java_Skripp)',
 'tog-editondblclick'          => 'Sigge met Dubbel-Klicke ändere (bruch Java_Skripp)',
 'tog-editsection'             => 'Maach [{{int:Editsection}}]-Links aan de Avschnedde dran',

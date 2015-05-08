@@ -631,7 +631,6 @@ XHTML id names.
 'tog-newpageshidepatrolled'   => 'Hide patrolled pages from new page list',
 'tog-extendwatchlist'         => 'Expand my feed to show all changes, not just the most recent',
 'tog-usenewrc'                => 'Use advanced recent changes',
-'tog-numberheadings'          => 'Auto-number headings',
 'tog-showtoolbar'             => 'Show edit toolbar (requires JavaScript)',
 'tog-editondblclick'          => 'Edit pages on double click (requires JavaScript)',
 'tog-editsection'             => 'Enable section editing via [edit] links',

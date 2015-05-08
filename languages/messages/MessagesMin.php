@@ -26,7 +26,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Suruakkan halaman nan lah dijago dari senarai halaman baru',
 'tog-extendwatchlist'         => 'Kambangkan senarai pantauan untuak malihek sado parubahan, indak nan baru se',
 'tog-usenewrc'                => 'Gunoan parubahan terkini tingkek lanjut (perlu JavaScript)',
-'tog-numberheadings'          => 'Agiah nomor judua sacaro otomatis',
 'tog-showtoolbar'             => 'Tampilkan bilah suntiang (paralu JavaScript)',
 'tog-editondblclick'          => 'Suntiang laman jo klik ganda (JavaScript)',
 'tog-editsection'             => 'Fungsikan penyuntingan subbagian malalui [sunting] pranala',

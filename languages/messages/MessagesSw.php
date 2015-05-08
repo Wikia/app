@@ -132,7 +132,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ficha kurasa zilizofanyiwa doria kwenye orodha ya kurasa mpya',
 'tog-extendwatchlist'         => 'Tanua orodha ya maangalizi ili kuonyesha mabadiliko yote yaliyofanyika, si hilo la mwisho tu.',
 'tog-usenewrc'                => 'Mabadiliko ya karibuni yenye maelezo mengine (inatumia JavaScript)',
-'tog-numberheadings'          => 'Vichwa vya habari vijipange namba-vyenyewe',
 'tog-showtoolbar'             => 'Onyesha mwambaa wa zana za kuhariria (JavaScript)',
 'tog-editondblclick'          => 'Hariri ukurasa kwa kubonyeza mara mbili',
 'tog-editsection'             => 'Wezesha sehemu ya kuandikia kwa kutumia viungo vya [hariri]',

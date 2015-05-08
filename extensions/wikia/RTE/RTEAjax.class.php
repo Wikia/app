@@ -116,8 +116,6 @@ class RTEAjax {
 		$parserOptions = new ParserOptions();
 		// don't show [edit] link for sections
 		$parserOptions->setEditSection(false);
-		// disable headings numbering
-		$parserOptions->setNumberHeadings(false);
 
 		$parser = new RTEParser();
 

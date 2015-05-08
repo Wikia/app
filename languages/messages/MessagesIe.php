@@ -142,7 +142,6 @@ $messages = array(
 'tog-hidepatrolled'           => 'Ocultar redactiones vigilat in nov changes',
 'tog-newpageshidepatrolled'   => 'Ocultar págines vigilat de liste de nov págines',
 'tog-usenewrc'                => 'Usar nov changes augmentat (exige JavaScript)',
-'tog-numberheadings'          => 'Auto-numerar rublicas',
 'tog-showtoolbar'             => 'Monstrar barre de utensile de redaction (exige JavaScript)',
 'tog-editondblclick'          => 'Redacter págines in clacca duplic (exige JavaScript)',
 'tog-editsection'             => 'Permisser redaction de division usant catenunes [redacter]',

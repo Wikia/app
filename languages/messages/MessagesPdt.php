@@ -19,7 +19,6 @@ $messages = array(
 'tog-hideminor'               => 'Tjliene Endarunge ute latste Tiet nich wiese',
 'tog-extendwatchlist'         => 'Moak dee Oppaussied-List jrata en wies aula Endarunge',
 'tog-usenewrc'                => 'Betre Doastalinj (JavaScript es needich)',
-'tog-numberheadings'          => 'Ewaschrefte automatisch numerere',
 'tog-showtoolbar'             => 'Instrumente-Leist wiese (JavaScript)',
 'tog-editondblclick'          => 'Siede mett Dobbeltklick beoabeide (JavaScript)',
 'tog-editsection'             => 'Links tom Beoabeide von eenzelne Aufschnette wiese',

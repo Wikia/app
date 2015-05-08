@@ -64,7 +64,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '到新頁清單裡頭弆到巡查過嗰頁面',
 'tog-extendwatchlist'         => '增加監視清單來顯示全部改動，不淨係最晏嗰',
 'tog-usenewrc'                => '用強化版最晏嗰改動（需要JavaScript）',
-'tog-numberheadings'          => '標題自動編號',
 'tog-showtoolbar'             => '顯示編輯工具欄（JavaScript）',
 'tog-editondblclick'          => '按兩下改吖（JavaScript）',
 'tog-editsection'             => '可以用[編寫]連結來編寫個別段落',

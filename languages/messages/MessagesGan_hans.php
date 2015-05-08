@@ -41,7 +41,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '到新页清单里头弆到巡查过𠮶页面',
 'tog-extendwatchlist'         => '增加监视清单来显示全部改动，不净系最晏𠮶',
 'tog-usenewrc'                => '用强化版最晏𠮶改动（需要JavaScript）',
-'tog-numberheadings'          => '标题自动编号',
 'tog-showtoolbar'             => '显示编辑工具栏（JavaScript）',
 'tog-editondblclick'          => '按两下改吖（JavaScript）',
 'tog-editsection'             => '可以用[编写]链接来编写个别段落',

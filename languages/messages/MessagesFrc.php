@@ -28,7 +28,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '↓Cache pages patrollés de la list des pages nouveau',
 'tog-extendwatchlist'         => 'Agrandir la liste des pages guettées pour montrer tous les changements',
 'tog-usenewrc'                => 'User les derniers changements improuvés (JavaScript)',
-'tog-numberheadings'          => 'Mettre les numéros sus les en-têtes',
 'tog-showtoolbar'             => "Montrer la barre d'outils des changements (JavaScript)",
 'tog-editondblclick'          => 'Faire un clic-double pour changer la page (JavaScript)',
 'tog-editsection'             => 'Changer une section avec les liens [changer]',

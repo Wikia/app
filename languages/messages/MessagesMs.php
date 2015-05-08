@@ -200,7 +200,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Sorokkan laman yang telah dironda daripada senarai laman baru',
 'tog-extendwatchlist'         => 'Kembangkan senarai pantau untuk memaparkan semua perubahan, bukan hanya yang terkini',
 'tog-usenewrc'                => 'Guna peningkatan perubahan terkini (perlukan JavaScript)',
-'tog-numberheadings'          => 'Nomborkan tajuk secara automatik',
 'tog-showtoolbar'             => 'Tunjukkan bar sunting (JavaScript)',
 'tog-editondblclick'          => 'Klik ganda untuk sunting halaman (JavaScript)',
 'tog-editsection'             => 'Bolehkan penyuntingan bahagian melalui pautan [sunting]',

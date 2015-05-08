@@ -486,8 +486,6 @@ HTML
 		$options = new ParserOptions();
 		// don't show [edit] link for sections
 		$options->setEditSection(false);
-		// disable headings numbering
-		$options->setNumberHeadings(false);
 
 		RTE::$parser = new RTEParser();
 

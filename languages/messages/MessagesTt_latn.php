@@ -98,7 +98,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Tikşerelgän bitlär yaña bitlär isemlegennän yäşerelsen',
 'tog-extendwatchlist'         => 'Soñğıların ğına tügel, ä barlıq üzgärtülärne eçenä alğan, kiñäytelgän küzätü isemlege',
 'tog-usenewrc'                => 'Yaxşırtılğan soñğı üzgärtülär isemlege qullanılsın (JavaScript kiräk)',
-'tog-numberheadings'          => 'Atamalar avtomat räweştä nomerlansın',
 'tog-showtoolbar'             => 'Üzgärtü waqıtında qorallarnıñ öske panele kürsätelsen (JavaScript kiräk)',
 'tog-editondblclick'          => 'Bitlärgä ike çirtterü belän üzgärtü bite açılsın (JavaScript kiräk)',
 'tog-editsection'             => 'Här bülektä «üzgärtü» sıltaması kürsätelsen',

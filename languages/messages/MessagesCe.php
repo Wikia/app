@@ -218,7 +218,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Къайлайаха гlароллайина агlонаш оц могlама керла агlонашкахь',
 'tog-extendwatchlist'         => 'Шорбина тlехьажарна могlам, ша беригге а хийцамаш чубогlуш, тlяхьабина боцурш а',
 'tog-usenewrc'                => 'Лелабе дика могlам керла чу хийцамашна (оьшу JavaScript)',
-'tog-numberheadings'          => 'Ша шех хlитто терахь корташна',
 'tog-showtoolbar'             => 'Гайта лакхара гlирсан дакъа нисйеш аттон оц редаккхар чохь (JavaScript)',
 'tog-editondblclick'          => 'Нисйе агlонаш шозза тlетаlийча (JavaScript)',
 'tog-editsection'             => 'Гайта хьажориг «нисйе» аьлла хlора агlона',

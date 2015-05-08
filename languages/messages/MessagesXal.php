@@ -65,7 +65,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Шин халхна сеткүләс шүүсн хүврлһиг бултулх',
 'tog-extendwatchlist'         => 'Хар шидрә сольлһн биш, цуг сольлһн үзүлдг, өргдүлсн шинҗллһнә сеткүл',
 'tog-usenewrc'                => 'Ясрулсн шидрә сольлһна сеткүл олзлх (JavaScript кергтә)',
-'tog-numberheadings'          => 'То-диг чикән даах',
 'tog-showtoolbar'             => 'Ора зер-зев үзлх (JavaScript кергтә)',
 'tog-editondblclick'          => 'Давхр индстлһар чиклх (JavaScript кергтә)',
 'tog-editsection'             => '«Чиклх» заавр болвчн хүвд үзүлх',

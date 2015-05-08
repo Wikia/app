@@ -322,7 +322,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Göm patrullerade sidor från listan över nya sidor',
 'tog-extendwatchlist'         => 'Utöka bevakningslistan till att visa alla ändringar, inte bara den senaste',
 'tog-usenewrc'                => 'Använd avancerad senaste ändringar (kräver JavaScript)',
-'tog-numberheadings'          => 'Numrerade rubriker',
 'tog-showtoolbar'             => 'Visa verktygsrad (Javascript)',
 'tog-editondblclick'          => 'Redigera sidor med dubbelklick (Javascript)',
 'tog-editsection'             => 'Aktivera redigering av avsnitt genom [redigera]-länkar',

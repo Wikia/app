@@ -25,7 +25,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ĥebbi ṣ-ṣefḫaṫ l-mraqbin men ṣ-ṣefḫaṫ j-jdad',
 'tog-extendwatchlist'         => 'Kebber l-lista dyal s-suivi baċ bano ṫ-ṫeġyiraṫ kamlin, maċi ġir l-leĥĥrin.',
 'tog-usenewrc'                => 'Sṫeĝmel ṫ-ṫeġyiraṫ l-leĥĥrin l-mezyanin (kayḫṫaj JavaScript)',
-'tog-numberheadings'          => 'Nemra otomaṫikiya dyal l-ĝanawin',
 'tog-showtoolbar'             => 'Werri l-barra dyal ṫ-ṫeĝdilaṫ (kayḫṫaj JavaScript)',
 'tog-editondblclick'          => 'Baċ ṫṣayeb ṣ-ṣefḫa ĥaṣek ṫbrek 2 merraṫ (kayḫṫaj JavaScript)',
 'tog-editsection'             => 'Aktivé ṫ-ṫeĝdilaṫ dyal s-seksyon be l-lyanaṫ « [Ĝeddel] »',

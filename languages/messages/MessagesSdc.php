@@ -110,7 +110,6 @@ $messages = array(
 'tog-hideminor'               => "Cua li mudìfigghi minori i' l'ulthimi mudìfigghi",
 'tog-extendwatchlist'         => "Musthra tutti li mudìfigghi a li abbaidaddi ippiziari, nò soru l'ulthimi.",
 'tog-usenewrc'                => "Utirizza l'ulthimi mudìfigghi abanzaddi (dumanda JavaScript)",
-'tog-numberheadings'          => 'Numarazioni otomàtigga di li tìturi di sezzioni',
 'tog-showtoolbar'             => "Musthra barra di l'isthrumenti di mudìfigga (dumanda JavaScript)",
 'tog-editondblclick'          => 'Mudìfigga di li pàgini attrabessu dóppiu clic (dumanda JavaScript)',
 'tog-editsection'             => 'Mudìfigga di li sezzioni attrabessu lu cullegamentu [mudifigga]',

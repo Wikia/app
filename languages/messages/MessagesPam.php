@@ -20,7 +20,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Isalikut la reng bulung a babanten (''patrolled pages'') king listaan king bayung bulung (''new page list'')",
 'tog-extendwatchlist'         => 'Dagdagan la reng babanten ba lang palto deng anggang mialilan, aliwa mu deng pekabayu.',
 'tog-usenewrc'                => 'Mesanting la reng bayung mengayalili (JavaScript)',
-'tog-numberheadings'          => 'Tambing lang dinan nomiru deng pamagat',
 'tog-showtoolbar'             => 'Ipakit ya panaliling toolbar (JavaScript)',
 'tog-editondblclick'          => 'Alilan la reng bulung kapamilatan ning makataduang pamagpindut (JavaScript)',
 'tog-editsection'             => 'Paganan ya ing pamag-edit king dake (section editing) kapamilatan da reng suglung a [edit]

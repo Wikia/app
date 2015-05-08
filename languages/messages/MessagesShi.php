@@ -20,7 +20,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '↓ Ḥbu tisniwin lli n tsagga gr tisniwin timaynutin',
 'tog-extendwatchlist'         => '↓ Ssaɣḍ umuɣ n tisniwin lli n ttfur bac ad n ẓṛṛa imbddln maci ɣir imaynutn',
 'tog-usenewrc'                => '↓ Skr s imbddln imaynutn lli n sastwa (ira mayad JavaScript)',
-'tog-numberheadings'          => 'nmra n nsmiat wahdot',
 'tog-showtoolbar'             => 'sbaynd tizikrt n tbddil(JavaScript)',
 'tog-editondblclick'          => 'Ẓrig tisniwin ad s uklik snat wal ( ira mayad JavaScript)',
 'tog-editsection'             => 'Mmurzm i imbddln n w-ayyawn izdayn n « [Bddel] »',

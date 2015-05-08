@@ -362,7 +362,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => 'Skrýt patrolované stránky ze seznamu nových stránek',
 'tog-extendwatchlist' => 'Na seznamu sledovaných stránek zobrazovat všechny změny, ne jen tu poslední',
 'tog-usenewrc' => 'V posledních změnách a sledovaných stránkách seskupovat změny podle stránek (vyžaduje JavaScript)',
-'tog-numberheadings' => 'Automaticky číslovat nadpisy',
 'tog-showtoolbar' => 'Zobrazit panel nástrojů (vyžaduje JavaScript)',
 'tog-editondblclick' => 'Editovat dvojklikem (JavaScript)',
 'tog-editsection' => 'Zapnout možnost editace části stránky pomocí odkazu [editovat]',

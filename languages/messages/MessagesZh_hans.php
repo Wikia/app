@@ -265,7 +265,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '在新页面列表中隐藏已巡查页面',
 'tog-extendwatchlist'         => '扩大监视列表以显示所有更改而不仅是最近更改',
 'tog-usenewrc'                => '启用增强最近更改（需要JavaScript）',
-'tog-numberheadings'          => '标题自动编号',
 'tog-showtoolbar'             => '显示编辑工具条（需要JavaScript）',
 'tog-editondblclick'          => '双击时编辑页面（需要JavaScript）',
 'tog-editsection'             => '启用[编辑]链接编辑段落',

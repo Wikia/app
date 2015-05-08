@@ -141,7 +141,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Itago ang napatrolyang mga pahina mula talaan ng bagong pahina',
 'tog-extendwatchlist'         => 'Palawigin ang talaan ng mga binabantayan upang maipakita ang lahat ng mga pagbabago, hindi lamang ang pinakakamakailan lamang',
 'tog-usenewrc'                => 'Gamitin ang pinadagdagang huling binago (kailangan ng JavaScript)',
-'tog-numberheadings'          => 'Automatikong bilangin ang mga pamagat',
 'tog-showtoolbar'             => "Ipakita ang ''toolbar'' ng pagbabago (JavaScript)",
 'tog-editondblclick'          => 'Magbago ng mga pahina sa dalawahang pagpindot (JavaScript)',
 'tog-editsection'             => 'Payagan ang mga pagbabagong panseksyon sa mga [baguhin] na kawing',

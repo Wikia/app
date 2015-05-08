@@ -195,7 +195,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Amaga pàgines patrullades de la llista de pàgines noves',
 'tog-extendwatchlist'         => 'Desplega la llista de seguiment per a mostrar tots els canvis afectats, no només els més recents',
 'tog-usenewrc'                => 'Usa la presentació millorada dels canvis recents (cal JavaScript)',
-'tog-numberheadings'          => 'Enumera automàticament els encapçalaments',
 'tog-showtoolbar'             => "Mostra la barra d'eines d'edició (cal JavaScript)",
 'tog-editondblclick'          => 'Edita les pàgines amb un doble clic (cal JavaScript)',
 'tog-editsection'             => 'Activa la modificació de seccions mitjançant els enllaços [modifica]',

@@ -65,7 +65,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Cua is pàginas verificadas dae sa lista de is pàginas noas',
 'tog-extendwatchlist'         => 'Ammània sa watchlist pro ammustrare totu is mudàntzias, non feti is prus reghentes',
 'tog-usenewrc'                => 'Imprea is ùrtimas mudàntzias megioradas (esigit JavaScript)',
-'tog-numberheadings'          => 'Auto-numeratzione de is tìtulos',
 'tog-showtoolbar'             => "Ammustra s'amusta de is ainas pro is acontzos (esigit JavaScript)",
 'tog-editondblclick'          => 'Acontza pàginas cun dòpiu click (esigit JavaScript)',
 'tog-editsection'             => 'Acontza setziones dae su butone [acontza]',

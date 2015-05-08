@@ -104,7 +104,6 @@ $messages = array(
 'tog-hideminor'               => 'Küçük diişmäkleri "Bitki diişmäkler" sayfasında sakla',
 'tog-extendwatchlist'         => 'İlerlemiş bakmaa listası',
 'tog-usenewrc'                => 'İlerlemiş bitki diişmäkler listası (JavaScript uymêêr)',
-'tog-numberheadings'          => 'Başlıklara avtomatik nomer yaz',
 'tog-showtoolbar'             => 'Diişmäk yapar känä yardımcı tuşları göster. (JavaScript)',
 'tog-editondblclick'          => 'Sayfayı çift tuşlayarak diiştirmää başla (JavaScript)',
 'tog-editsection'             => 'Bölümleri [diiştir] baalantılarılan diiştirmää hakkı ver',

@@ -689,12 +689,6 @@ class Preferences {
 				'label-message' => 'tog-justify',
 			);
 		}
-
-		$defaultPreferences['numberheadings'] = array(
-			'type' => 'toggle',
-			'section' => 'rendering/advancedrendering',
-			'label-message' => 'tog-numberheadings',
-		);
 	}
 
 	/**

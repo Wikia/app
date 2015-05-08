@@ -43,7 +43,6 @@ $messages = array(
 'tog-hideminor'               => 'Ffer ibeddlen ifessasen deg yibeddlen imaynuten',
 'tog-extendwatchlist'         => 'Ssemɣer umuɣ n uɛessi iwakken ad muqleɣ akk n wayen zemreɣ ad beddleɣ',
 'tog-usenewrc'                => 'Sselhu ibeddlen ifessasen (JavaScript)',
-'tog-numberheadings'          => 'Izwal ɣur-sen imḍanen mebla ma serseɣ-iten',
 'tog-showtoolbar'             => 'Ssken tanuga n dduzan n ubeddel (JavaScript)',
 'tog-editondblclick'          => 'Beddel isebtar mi wekkiɣ snat n tikwal (JavaScript)',
 'tog-editsection'             => 'Eǧǧ abeddel n umur s yizdayen [beddel]',

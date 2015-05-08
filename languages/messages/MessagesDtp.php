@@ -23,7 +23,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Lisoko bolikon tinamangan mantad lis bolikon kawawagu',
 'tog-extendwatchlist'         => 'Pointongo koinsanai listamangan do popokito koinsanai pinongundolihon, okon ko iri kawawagu nopo',
 'tog-usenewrc'                => 'Gunao popoingkawas kaalanai kawawagu (momoguno JawaSikrip)',
-'tog-numberheadings'          => 'oporian-mongonumbur it tuluhon',
 'tog-showtoolbar'             => 'Pokitono kakamotbar mongidit (momoguno JawaSikrip)',
 'tog-editondblclick'          => 'Idito bolikon momoguno induaan todos (momoguno JawaSikrip)',
 'tog-editsection'             => 'Pabanaro sikson mongidit mamakai noputan (idit)',

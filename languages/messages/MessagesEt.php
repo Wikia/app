@@ -296,7 +296,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => 'Peida uute lehtede loendis kontrollitud leheküljed',
 'tog-extendwatchlist' => 'Laienda jälgimisloendit, et näha kõiki muudatusi, mitte vaid kõige värskemaid',
 'tog-usenewrc' => 'Rühmita viimased muudatused ja muudatused jälgimisloendis lehekülje järgi (vaja JavaScripti)',
-'tog-numberheadings' => 'Pealkirjade automaatnummerdus',
 'tog-showtoolbar' => 'Redigeerimise tööriistariba näitamine',
 'tog-editondblclick' => 'Artiklite redigeerimine topeltklõpsu peale (JavaScript)',
 'tog-editsection' => '[redigeeri] lingid peatükkide muutmiseks',

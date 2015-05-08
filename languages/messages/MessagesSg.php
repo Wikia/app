@@ -20,7 +20,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Na pöpö tî âlêmbëtï nî, hônde âla sô a yeke bâa ndo daä.',
 'tog-extendwatchlist'         => 'Gbara molongö tî bängö-pekô sï atanda gï âfinî âsänzëmä pëpe me âsänzëmä kûê kûê.',
 'tog-usenewrc'                => 'Sâra kua na âfinî sänzëmä sô alônzi ângbêre nî (ahûnda Javascript)',
-'tog-numberheadings'          => 'Sû nömörö bîakü bîakü na terê tî âlisurä',
 'tog-showtoolbar'             => 'Fa motarâka tî sepesû (ahûnda Javascript)',
 'tog-editondblclick'          => 'Pîka kpêkê ûse tî sepe lêmbëtï (ahûnda Javascript)',
 'tog-editsection'             => 'Zîngo sëpengö surä na gbê "[Sepe]"',

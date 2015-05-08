@@ -57,7 +57,6 @@ $messages = array(
 'tog-hideminor'               => "Annascunne 'e cagne piccirille  'int'a ll'úrdeme cagne",
 'tog-extendwatchlist'         => "Spanne ll'asservate speciale pe fà vedé tutte 'e cagne possíbbele",
 'tog-usenewrc'                => 'Urdeme cagne avanzate (JavaScript)',
-'tog-numberheadings'          => "Annúmmera automatecamente 'e títule",
 'tog-showtoolbar'             => "Aspone 'a barra d''e stromiente 'e cagno (JavaScript)",
 'tog-editondblclick'          => "Cagna 'e pàggene cliccanno ddoje vote (JavaScript)",
 'tog-editsection'             => "Permette 'e cagnà 'e sezzione cu a jonta [cagna]",

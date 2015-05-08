@@ -204,7 +204,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Fshih faqet e vrojtuara nga lista e faqeve të reja',
 'tog-extendwatchlist'         => "Zgjero listën e faqeve të vëzhguara që t'i tregojë të gjitha ndryshimet, jo vetëm më të fundit.",
 'tog-usenewrc'                => 'Përdor ndryshimet e fundit në mënyrë të zgjeruar (kërkon JavaScript)',
-'tog-numberheadings'          => 'Numëro automatikish titujt',
 'tog-showtoolbar'             => 'Trego mjetet e redaktimit (kërkon JavaScript)',
 'tog-editondblclick'          => 'Redakto faqet me dopio-klik (kërkon JavaScript)',
 'tog-editsection'             => 'Lejo redaktimin e seksioneve me anë të lidhjeve [redakto]',

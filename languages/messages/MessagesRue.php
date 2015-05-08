@@ -52,7 +52,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Сховати патролёваны сторінкы зо списку новых сторінок',
 'tog-extendwatchlist'         => 'Росшыреный список слїдованых сторінок, обсягує вшыткы зміны, не лем послїднї',
 'tog-usenewrc'                => 'Хосновати здоконалены послїднї зміны (JavaScript)',
-'tog-numberheadings'          => 'Автоматічно чісловати надписы',
 'tog-showtoolbar'             => 'Вказати панел інштрументів (потрібный JavaScript)',
 'tog-editondblclick'          => 'Едітовати двоїтым кликом (JavaScript)',
 'tog-editsection'             => 'Поволити едітованя секції сторінкы через одказ [едіт.]',

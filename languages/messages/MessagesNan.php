@@ -28,7 +28,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Sin-ia̍h ê chheng-toaⁿ am sûn koè--ê',
 'tog-extendwatchlist'         => 'Tián-khui kàm-sī-toaⁿ khoàⁿ só͘-ū ê kái-piàn, m̄-chí sī choè-kīn--ê',
 'tog-usenewrc'                => 'Ēng ka-kiông pán khoàⁿ chòe-kīn ê kái-piàn (su-iàu JavaScript)',
-'tog-numberheadings'          => 'Phiau-tê chū-tōng pian-hō',
 'tog-showtoolbar'             => 'Hián-sī pian-chi̍p ke-si-tiâu (su-iàu JavaScript)',
 'tog-editondblclick'          => 'Siang-ji̍h ia̍h-bīn to̍h ē-tàng pian-chi̍p (su-iàu JavaScript)',
 'tog-editsection'             => 'Ji̍h [siu-kái] chit-ê liân-kiat to̍h ē-tàng pian-chi̍p toāⁿ-lo̍h',

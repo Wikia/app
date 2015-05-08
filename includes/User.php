@@ -3312,7 +3312,7 @@ class User {
 		if ( $wgUseDynamicDates ) { # This is wrong (bug 24714)
 			$confstr .= '!' . $this->getDatePreference();
 		}
-		$confstr .= '!' . ( $this->getOption( 'numberheadings' ) ? '1' : '' );
+		$confstr .= '!'; // Placeholder for numberheadings
 		$confstr .= '!' . $wgLang->getCode();
 		$confstr .= '!' . $this->getOption( 'thumbsize' );
 		// add in language specific options, if any

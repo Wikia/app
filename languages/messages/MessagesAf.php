@@ -217,7 +217,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Versteek gepatrolleerde wysigings van nuwe bladsy lys',
 'tog-extendwatchlist'         => 'Brei dophoulys uit om alle wysigings te wys, nie slegs die nuutste nie',
 'tog-usenewrc'                => 'Verbeterde onlangse wysigingslys (benodig JavaScript)',
-'tog-numberheadings'          => 'Nommer opskrifte outomaties',
 'tog-showtoolbar'             => 'Wys redigeergereedskap (benodig JavaScript)',
 'tog-editondblclick'          => 'Dubbelkliek om blaaie te wysig (benodig JavaScript)',
 'tog-editsection'             => 'Wys [wysig]-skakels vir elke afdeling',

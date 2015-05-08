@@ -192,7 +192,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Skrij pregledane strani iz seznama novih strani',
 'tog-extendwatchlist'         => 'Razširi spisek nadzorov, da bo prikazoval vse spremembe, ne le najnovejše',
 'tog-usenewrc'                => 'Izboljšane zadnje spremembe (zahteva JavaScript)',
-'tog-numberheadings'          => 'Samodejno številči poglavja',
 'tog-showtoolbar'             => 'Prikaži urejevalno orodno vrstico',
 'tog-editondblclick'          => 'Omogoči urejanje strani z dvojnim klikom (zahteva JavaScript)',
 'tog-editsection'             => 'Omogoči urejanje delov prek povezav [{{int:editsection}}]',

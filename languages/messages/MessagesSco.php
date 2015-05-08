@@ -31,7 +31,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Hide patrolled pages frae the new page list',
 'tog-extendwatchlist'         => 'Mak watchleet bigger tae shaw aw chynges',
 'tog-usenewrc'                => 'Enhanced recent chynges (no for aa brousers)',
-'tog-numberheadings'          => 'Auto-nummer heidins',
 'tog-showtoolbar'             => 'Shaw edit toolbar',
 'tog-editondblclick'          => 'Edit pages on dooble-dab (JavaScript)',
 'tog-editsection'             => 'Enable section editin via [edit] airtins',

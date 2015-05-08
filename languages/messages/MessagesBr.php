@@ -187,7 +187,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kuzhat ar pajennoù evezhiet diouzh roll ar pajennoù nevez',
 'tog-extendwatchlist'         => 'Astenn ar roll evezhiañ a-benn diskouez an holl gemmoù ha neket ar re ziwezhañ hepken.',
 'tog-usenewrc'                => "Ober gant ar c'hemmoù nevez gwellaet<br /> (rekis eo JavaScript)",
-'tog-numberheadings'          => 'Niverenniñ emgefre an titloù',
 'tog-showtoolbar'             => 'Diskouez ar varrenn gant ar meuzioù skridaozañ',
 'tog-editondblclick'          => 'Daouglikañ evit kemmañ ur bajenn (JavaScript)',
 'tog-editsection'             => 'Kemmañ ur rann dre al liammoù [kemmañ]',

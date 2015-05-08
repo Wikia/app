@@ -310,7 +310,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'خبى الصفح المتراجعه من ليستة الصفح الجديده',
 'tog-extendwatchlist'         => 'وسع ليستة المراقبه علشان تبين كل التعديلات, مش بس اجدد تعديلات',
 'tog-usenewrc'                => 'استعمل اجدد تغييرات متقويه (بيحتاج JavaScript).',
-'tog-numberheadings'          => 'رقم العناوين اوتوماتيك',
 'tog-showtoolbar'             => 'بين الtoolbar بتاع التعديل (بيحتاج JavaScript)',
 'tog-editondblclick'          => 'عدل الصفح لما تدوس مرتين (بيحتاج JavaScript)',
 'tog-editsection'             => 'اسمح بـ تعديل الاجزاء عن طريق لينكات [تعديل]',

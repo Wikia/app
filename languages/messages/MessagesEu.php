@@ -133,7 +133,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ezkutatu patruilatutako orriak, orri-zerrenda berritik',
 'tog-extendwatchlist'         => 'Jarraipen-zerrenda zabaldu aldaketa guztiak ikusteko, ez bakarrik azken aldaketak',
 'tog-usenewrc'                => 'Hobetutako azken aldaketak (JavaScript behar da)',
-'tog-numberheadings'          => 'Goiburukoak automatikoki zenbakitu',
 'tog-showtoolbar'             => 'Aldaketen tresna-barra erakutsi (JavaScript)',
 'tog-editondblclick'          => 'Klik bikoitzaren bitartez orrialdeak aldatu (JavaScript)',
 'tog-editsection'             => 'Atalak [aldatu] loturen bitartez aldatzeko aukera gaitu',

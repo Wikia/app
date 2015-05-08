@@ -274,7 +274,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => "Patrullasqa llamk'apusqakunata musuq p'anqakunapi pakay",
 'tog-extendwatchlist' => "Watiqana sutisuyuta tukuy rurachinalla hukchaykunaman mast'ay, ama lliwmanta aswan ñaqhallachu",
 'tog-usenewrc' => "Sananchasqa ñaqha hukchasqakuna (JavaScript nisqallawanmi llamk'an)",
-'tog-numberheadings' => "Uma siq'ikunata kikinmanta yupay",
 'tog-showtoolbar' => "Llamk'apuna sillwita rikuchiy",
 'tog-editondblclick' => "P'anqakunata llamk'apuy iskaylla ñit'iywan (JavaScript)",
 'tog-editsection' => "Rakirilla llamk'apuyta saqillay [qillqay] t'inkiwan",

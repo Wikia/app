@@ -25,7 +25,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Açonchal páginas vegilás ena nueva lista',
 'tog-extendwatchlist'         => 'Aumental la lista de seguimientu pa muestral tolos chambus apricabris, nu solu los úrtimus',
 'tog-usenewrc'                => 'Resartal úrtimus chambus (es mestel JavaScript)',
-'tog-numberheadings'          => 'Autu-numeral entítulus',
 'tog-showtoolbar'             => "Muestral la barra d'eición (JavaScript)",
 'tog-editondblclick'          => 'Eital páhinas haziendu dobri click (JavaScript)',
 'tog-editsection'             => 'Premitil eital mensahis gastandu el atihu [eital]',

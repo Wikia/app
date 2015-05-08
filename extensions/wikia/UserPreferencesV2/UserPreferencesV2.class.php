@@ -210,7 +210,6 @@ class UserPreferencesV2 {
 		unset( $defaultPreferences['showtoc'] );
 		unset( $defaultPreferences['nocache'] );
 		unset( $defaultPreferences['showjumplinks'] );
-		unset( $defaultPreferences['numberheadings'] );
 		if ( isset( $defaultPreferences['enablerichtext'] ) ) {
 			$defaultPreferences['enablerichtext']['section'] = 'editing/editing-experience';
 		}
@@ -328,11 +327,6 @@ class UserPreferencesV2 {
 			$defaultPreferences['justify']['type'] = 'toggle';
 			$defaultPreferences['justify']['label-message'] = 'tog-justify';
 		}
-		if ( isset( $defaultPreferences['numberheadings'] ) ) {
-			$defaultPreferences['numberheadings']['section'] = 'under-the-hood/advanced-displayv2';
-			$defaultPreferences['numberheadings']['type'] = 'toggle';
-			$defaultPreferences['numberheadings']['label-message'] = 'tog-numberheadings';
-		}
 		if ( isset( $defaultPreferences['diffonly'] ) ) {
 			$defaultPreferences['diffonly']['section'] = 'under-the-hood/advanced-displayv2';
 		}
@@ -369,7 +363,6 @@ class UserPreferencesV2 {
 		unset( $defaultPreferences['enotiffollowedpages'] );
 		unset( $defaultPreferences['enotiffollowedminoredits'] );
 		unset( $defaultPreferences['nocache'] );
-		unset( $defaultPreferences['numberheadings'] );
 		unset( $defaultPreferences['showjumplinks'] );
 
 		return true;

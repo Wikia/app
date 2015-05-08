@@ -108,7 +108,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Scund i paginn verifegaa de la lista di paginn növ',
 'tog-extendwatchlist'         => 'Slarga la funziun "tegn sot ögg" in manera che la fà vidè tüt i mudifegh, minga dumà l\'ültema',
 'tog-usenewrc'                => 'Dupra i ültem mudifegh avanzaa (ghe vör el JavaScript)',
-'tog-numberheadings'          => 'Utu-nümerazión di paragraf',
 'tog-showtoolbar'             => 'Fá vidé ai butún da redataziún (JavaScript)',
 'tog-editondblclick'          => 'Redatá i pagin cun al dópi clich (JavaScript)',
 'tog-editsection'             => 'Abilità edizion di seczion par ligam',

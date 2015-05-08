@@ -368,7 +368,6 @@ $messages = array(
 'tog-hideminor'               => 'Jwıqtağı özgeristerden şağın öñdemelerdi jasır',
 'tog-extendwatchlist'         => 'Baqılaw tizimdi ulğaýt (barlıq jaramdı özgeristerdi körset)',
 'tog-usenewrc'                => 'Keñeýtilgen jwıqtağı özgerister (JavaScript)',
-'tog-numberheadings'          => 'Bas joldardı özdiktik nomirle',
 'tog-showtoolbar'             => 'Öñdew qwraldar jolağın körset (JavaScript)',
 'tog-editondblclick'          => 'Qos nuqımdap öñdew (JavaScript)',
 'tog-editsection'             => 'Bölimderdi [öñdew] siltemesimen öñdewin qos',

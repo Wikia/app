@@ -110,7 +110,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Yañı saifeler köstergende teşkerilgen saifelerni gizle',
 'tog-extendwatchlist'         => 'Közetüv cedvelini, tek soñki degil, bütün deñişmelerni körmek içün kenişlet',
 'tog-usenewrc'                => 'Tafsilâtlı soñki deñişmeler cedvelini qullan (JavaScript kerek)',
-'tog-numberheadings'          => 'Serlevalarnı avtomatik nomeralandır',
 'tog-showtoolbar'             => 'Saifeni deñiştirgen vaqıtta yardımcı dögmelerni köster. (JavaScript)',
 'tog-editondblclick'          => 'Saifeni çift basıp deñiştirmege başla (JavaScript)',
 'tog-editsection'             => 'Bölüklerni [deñiştir] bağlantısı vastasınen deñiştirmege ruhset ber',

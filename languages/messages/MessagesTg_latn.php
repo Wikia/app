@@ -21,7 +21,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Pinhoni sahifahoi gaştxūrda az fehristi sahifahoi nav',
 'tog-extendwatchlist'         => 'Gustarişi fehristi pajgiriho baroi nişon dodani hamai taƣjirotho, na tanho az hama oxirin',
 'tog-usenewrc'                => 'Az taƣjiroti oxiri gustarişjofta istifoda bared(ÇavaSkript lozim ast)',
-'tog-numberheadings'          => 'şumoraguzori~i xudkori invonho',
 'tog-showtoolbar'             => 'Namoişi navori abzori viroiş (JavaScript)',
 'tog-editondblclick'          => 'Viroiş namudani sahifaho hangomi du karat paxş namudani tugmai muşak (JavaScript)',
 'tog-editsection'             => 'Içozat dodani viroişi qismati sahifa ba vositai pajvandi [viroiş]',

@@ -131,7 +131,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Aagluegti Syten uf dr Lischt „Neiji Syte“ verstecke',
 'tog-extendwatchlist'         => 'Beobachtungslischte erwytere go alli Änderige aazeige, nit numme di letschte',
 'tog-usenewrc'                => 'Erwytereti «letschti Änderige» (brucht JavaScript)',
-'tog-numberheadings'          => 'Überschrifte outomatisch numeriere',
 'tog-showtoolbar'             => 'Editier-Wärchzüüg aazeige',
 'tog-editondblclick'          => 'Syte ändere mit Doppelklick i d Syte (JavaScript)',
 'tog-editsection'             => 'Gleicher aazeige für ds Bearbeite vo einzelnen Absätz',

@@ -167,7 +167,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => 'Doglědowane boki z lisćiny nowych bokow schowaś',
 'tog-extendwatchlist' => 'Wobglědowańku wócyniś, aby wšě změny pokazał, nic jano nejnowše',
 'tog-usenewrc' => 'Kupkowe změny pó boku w aktualnych změnach a wobglědowanjach (trjeba JavaScript)',
-'tog-numberheadings' => 'Nadpisma awtomatiski numerěrowaś',
 'tog-showtoolbar' => 'Wobźěłańsku lejstwu pokazaś (JavaScript)',
 'tog-editondblclick' => 'Boki z dwójnym kliknjenim wobźěłaś (JavaScript)',
 'tog-editsection' => 'Wobźěłanje wótstawkow pśez wótkaze [wobźěłaś] zmóžniś',

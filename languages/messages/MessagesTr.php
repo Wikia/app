@@ -320,7 +320,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kontrol edilmiş sayfaları yeni sayfalar listesinde gizle',
 'tog-extendwatchlist'         => 'İzleme listesini sadece son değil, tüm değişiklikleri görmek için genişlet',
 'tog-usenewrc'                => 'Gelişmiş son değişiklikleri kullan (JavaScript gerekir)',
-'tog-numberheadings'          => 'Başlıkları otomatik numaralandır',
 'tog-showtoolbar'             => 'Düzenleme yaparken araç çubuğunu göster (JavaScript gerekir)',
 'tog-editondblclick'          => 'Çift tıklayarak sayfayı düzenle (JavaScript gerekir)',
 'tog-editsection'             => 'Bölümleri [değiştir] bağlantıları ile düzenlemeyi etkinleştir',

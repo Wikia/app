@@ -117,7 +117,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Celez patroliita pagini en la listo di nova pagino',
 'tog-extendwatchlist'         => 'Expansez surveyo-listo por montrar omna chanji, vice nur la maxim recenta',
 'tog-usenewrc'                => 'Usez augmentita Recenta chanji (JavaScript bezonesas)',
-'tog-numberheadings'          => 'Autonumerez tituli',
 'tog-showtoolbar'             => 'Montrez redaktilo (JavaScript bezonesas)',
 'tog-editondblclick'          => 'Redaktez pagini kande on klikus dufoye (JavaScript bezonesas)',
 'tog-editsection'             => 'Kapabligez redakto di secioni per [redaktar]-ligamini',

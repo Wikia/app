@@ -25,7 +25,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Machaqa uñstawix waruchatat uñstawix unch'ukita imantaña",
 'tog-extendwatchlist'         => "Sarayawi jaqukipaw uñachayasuñatakiw unch'ukit waruch aqatatayaña",
 'tog-usenewrc'                => 'Jichhnaki jaqukipawi waliptäta (JavaScript munawiwa)',
-'tog-numberheadings'          => 'Titulun chinu achuraña',
 'tog-showtoolbar'             => 'Turkawit irnaqañ täta tisi uñachayaña (JavaScript munawiwa)',
 'tog-editondblclick'          => 'Uñstawi turkayaña päsuxuqiña (JavaScript munawiwa)',
 'tog-editsection'             => '[Turkaña] sipitampi tuqitaki turkawi luräña',

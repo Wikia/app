@@ -137,7 +137,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Amagar as pachinas patrulladas d'a lista de pachinas nuevas",
 'tog-extendwatchlist'         => "Expandir a lista de seguimiento t'amostrar totz os cambeos, no nomás os más recients.",
 'tog-usenewrc'                => 'Zaguers cambeos con presentación amillorada (cal JavaScript)',
-'tog-numberheadings'          => 'Numerar automaticament os encabezaus',
 'tog-showtoolbar'             => "Amostrar a barra de ferramientas d'edición (cal JavaScript)",
 'tog-editondblclick'          => 'Activar edición de pachinas fendo-ie doble click (cal JavaScript)',
 'tog-editsection'             => 'Activar a edición por seccions usando os vinclos [editar]',

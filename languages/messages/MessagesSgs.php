@@ -65,7 +65,6 @@ $messages = array(
 'tog-hideminor'               => 'Pakavuotė mažus pataisėmus vielībūju taisīmu sārašė',
 'tog-extendwatchlist'         => 'Ėšpliestė keravuojamu sāraša, kū ruodītu vėsus tėnkamus pakeitėmus',
 'tog-usenewrc'                => 'Pažongē ruodomė vielibė̅jė pakeitėmā (JavaScript)',
-'tog-numberheadings'          => 'Autuomatėškā numeroutė skėrsnelios',
 'tog-showtoolbar'             => 'Ruodītė redagavėma rakondinė (JavaScript)',
 'tog-editondblclick'          => 'Poslapiu redagavėms dvėgobu paspaudėmu (JavaScript)',
 'tog-editsection'             => 'Ijongtė skėrsneliu redagavėma nauduojant nūruodas [taisītė]',

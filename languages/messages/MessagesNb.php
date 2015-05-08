@@ -313,7 +313,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Skjul patruljerte sider fra listen over nye sider',
 'tog-extendwatchlist'         => 'Utvid overvåkningslisten til å vise alle endringer, ikke bare de siste',
 'tog-usenewrc'                => 'Bruk forbedret siste endringer (krever JavaScript)',
-'tog-numberheadings'          => 'Autonummerer overskrifter',
 'tog-showtoolbar'             => 'Vis verktøylinje (JavaScript)',
 'tog-editondblclick'          => 'Rediger sider ved å dobbeltklikke (JavaScript)',
 'tog-editsection'             => 'Rediger avsnitt ved hjelp av [rediger]-lenke',
