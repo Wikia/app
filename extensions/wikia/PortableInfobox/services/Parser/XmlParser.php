@@ -49,10 +49,10 @@ class XmlParser {
 	 * @param $xml String
 	 * @return array
 	 */
-	public function getDataFromXmlString( $xml ) {
+	public function getDataFromXmlString( $xmlString ) {
 		wfProfileIn( __METHOD__ );
-		$xml = simplexml_load_string( $xml );
-		if ( !$xml ) {
+		$xml = simplexml_load_string( $xmlString );
+		if ( $xml === false ) {
 			throw new XmlMarkupParseErrorException();
 		}
 
