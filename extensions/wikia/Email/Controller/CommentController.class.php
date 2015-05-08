@@ -152,6 +152,11 @@ abstract class CommentController extends EmailController {
 			->parse();
 	}
 
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
 	protected static function getEmailSpecificFormFields() {
 		$formFields =  [
 			"inputs" => [
@@ -176,6 +181,11 @@ class ArticleCommentController extends CommentController {
 		return 'emailext-articlecomment-summary';
 	}
 
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
 	protected static function getEmailSpecificFormFields() {
 		$formFields = [
 			'inputs' => [
@@ -201,6 +211,11 @@ class BlogCommentController extends CommentController {
 		return 'emailext-blogcomment-summary';
 	}
 
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
 	protected static function getEmailSpecificFormFields() {
 		$formFields['inputs'] = [
 			[

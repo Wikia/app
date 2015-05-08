@@ -547,6 +547,11 @@ abstract class EmailController extends \WikiaController {
 			'inputs' => [
 				[
 					'type' => 'hidden',
+					'name' => 'emailController',
+					'value' => get_called_class()
+				],
+				[
+					'type' => 'hidden',
 					'name' => 'fromAddress',
 					'value' => \F::app()->wg->PasswordSender
 				],
@@ -558,7 +563,6 @@ abstract class EmailController extends \WikiaController {
 				[
 					'type' => 'text',
 					'name' => 'targetUser',
-					'isRequired' => true,
 					'label' => 'Target User',
 					'tooltip' => 'User to send the email to',
 					'value' => \F::app()->wg->User->getName()
@@ -583,11 +587,6 @@ abstract class EmailController extends \WikiaController {
 						[ 'value' => 'zh-tw', 'content' => 'Chinese Taiwan' ],
 					]
 
-				],
-				[
-					'type' => 'hidden',
-					'name' => 'emailController',
-					'value' => get_called_class()
 				],
 			],
 			'submits' => [
