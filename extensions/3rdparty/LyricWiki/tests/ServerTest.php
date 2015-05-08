@@ -67,4 +67,30 @@ class ServerTest extends WikiaBaseTest
 				is_array( lw_getSearchResults( $query, $limit ) )
 		);
 	}
+	
+	/**
+	 * @covers lw_getTitle
+	 */
+	public function test_lw_getTitle(){
+		$this->assertTrue(lw_getTitle("the who:baba o'riley") == "The_Who:Baba_O'Riley");
+		$this->assertTrue(lw_getTitle("the who:i'm cool") == "The_Who:I'm_Cool");
+		$this->assertTrue(lw_getTitle("the who:don't") == "The_Who:Don't");
+		$this->assertTrue(lw_getTitle("the who:cant skip apostrophes") == "The_Who:Can't_Skip_Apostrophes");
+	}
+	
+	/**
+	 * @covers lw_fmtArtist
+	 */
+	public function test_lw_fmtArtist(){
+		$this->assertTrue(lw_fmtArtist("normal name") == "Normal_Name");
+		$this->assertTrue(lw_fmtArtist("with (parens)") == "With_(Parens)");
+	}
+
+	/**
+	 * @covers lw_fmtSong
+	 */
+	public function test_lw_fmtSong(){
+		$this->assertTrue(lw_fmtSong("Cake:guitar%20man") == "Cake:Guitar_Man");
+		$this->assertTrue(lw_fmtSong("Cake:guitar (man)") == "Cake:Guitar_(Man)");
+	}
 }
