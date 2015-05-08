@@ -23,7 +23,6 @@ class Client
 		$this->baseUri = $baseUri;
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret;
-		$this->status = new \Status;
 	}
 
 	/**
