@@ -160,7 +160,7 @@ class WatchedPageController extends EmailController {
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
 	}
 
-	protected static function getEmailSpecificAdminForm() {
+	protected static function getEmailSpecificFormFields() {
 			$form = [
 				'inputs' => [
 					[

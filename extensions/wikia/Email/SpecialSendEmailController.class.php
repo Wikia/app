@@ -3,12 +3,12 @@
 namespace Email;
 
 
-class SpecialEmailAdminController extends \WikiaSpecialPageController {
+class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function __construct() {
-		parent::__construct( 'EmailAdmin', $restriction = 'staff', $listed = false );
+		parent::__construct( 'SendEmail', $restriction = 'staff', $listed = false );
 	}
 
 	public function init() {

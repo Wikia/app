@@ -31,12 +31,12 @@ $wgAutoloadClasses['Email\Controller\ForgotPasswordController'] =  $dir . 'Contr
 $wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\ArticleCommentController'] =  $dir . 'Controller/CommentController.class.php';
 $wgAutoloadClasses['Email\Controller\BlogCommentController'] =  $dir . 'Controller/CommentController.class.php';
-$wgAutoloadClasses['Email\SpecialEmailAdminController'] = $dir .  'SpecialEmailAdminController.class.php';
+$wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
 
 /**
  * special pages
  */
-$wgSpecialPages[ 'EmailAdmin' ] =  'Email\SpecialEmailAdminController';
+$wgSpecialPages[ 'SendEmail' ] =  'Email\SpecialSendEmailController';
 
 /**
  * messages
