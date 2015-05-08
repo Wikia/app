@@ -51,8 +51,11 @@ class Node {
 	}
 
 	protected function getInnerXML( \SimpleXMLElement $node ) {
-		$tag = $node->getName();
-		return preg_replace( '!<'. $tag .'(?:[^>]*)>(.*)</'. $tag .'>!Ums', '$1', $node->asXml() );
+		$innerXML= '';
+		foreach ( dom_import_simplexml( $node )->childNodes as $child ) {
+			$innerXML .= $child->ownerDocument->saveXML( $child );
+		}
+		return $innerXML;
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
