@@ -135,11 +135,6 @@ class ParserOptions {
 	var $mNumberHeadings;
 	
 	/**
-	 * User math preference (as integer). Not used (1.19)
-	 */
-	var $mMath;
-	
-	/**
 	 * Thumb size preferred by the user.
 	 */
 	var $mThumbSize;
@@ -206,8 +201,6 @@ class ParserOptions {
 	function getEnableLimitReport()             { return $this->mEnableLimitReport; }
 	function getCleanSignatures()               { return $this->mCleanSignatures; }
 	function getExternalLinkTarget()            { return $this->mExternalLinkTarget; }
-	function getMath()                          { $this->optionUsed( 'math' );
-												  return $this->mMath; }
 	function getThumbSize()                     { $this->optionUsed( 'thumbsize' );
 												  return $this->mThumbSize; }
 	function getStubThreshold()                 { $this->optionUsed( 'stubthreshold' );
@@ -292,7 +285,6 @@ class ParserOptions {
 	function setTimestamp( $x )                 { return wfSetVar( $this->mTimestamp, $x ); }
 	function setCleanSignatures( $x )           { return wfSetVar( $this->mCleanSignatures, $x ); }
 	function setExternalLinkTarget( $x )        { return wfSetVar( $this->mExternalLinkTarget, $x ); }
-	function setMath( $x )                      { return wfSetVar( $this->mMath, $x ); }
 	function setUserLang( $x )                  {
 		if ( is_string( $x ) ) {
 			$x = Language::factory( $x );
@@ -399,7 +391,6 @@ class ParserOptions {
 
 		$this->mUser = $user;
 		$this->mNumberHeadings = $user->getOption( 'numberheadings' );
-		$this->mMath = $user->getOption( 'math' );
 		$this->mThumbSize = $user->getOption( 'thumbsize' );
 		$this->mStubThreshold = $user->getStubThreshold();
 		$this->mUserLang = $lang;
@@ -461,11 +452,8 @@ class ParserOptions {
 
 		$confstr = '';
 
-		if ( in_array( 'math', $forOptions ) ) {
-			$confstr .= $this->mMath;
-		} else {
-			$confstr .= '*';
-		}
+		// Place holder for remove 'math' option
+		$confstr .= '*';
 
 
 		// Space assigned for the stubthreshold but unused
