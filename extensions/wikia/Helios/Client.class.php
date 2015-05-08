@@ -13,6 +13,7 @@ class Client
 	protected $baseUri;
 	protected $clientId;
 	protected $clientSecret;
+	protected $status;
 	
 	/**
 	 * The constructor.
@@ -22,6 +23,14 @@ class Client
 		$this->baseUri = $baseUri;
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret;
+	}
+
+	/**
+	 * Returns the status of the last request.
+	 */
+	public function getStatus()
+	{
+		return $this->status;
 	}
 
 	/**
@@ -70,15 +79,10 @@ class Client
 			return \Http::request( $options['method'], $uri, $options );
 		} );
 
-		$status = $request->status;
-
-		// Response handling.
-		if ( !$status->isGood() ) {
-			throw new ClientException( 'Request failed.', 0, null, $status->getErrorsArray() );
-		}
+		$this->status = $request->status;
 
 		$output = json_decode( $request->getContent() );
-		
+
 		if ( !$output ) {
 			throw new ClientException( 'Invalid response.' );
 		}
