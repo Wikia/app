@@ -43,9 +43,9 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 
 	function loadShareIcons() {
 		var mCacheQueryStringParam = $.getUrlVar('mcache'),
-			shareLang = getShareLang($.getUrlVar('uselang')),
+			lang = getShareLang($.getUrlVar('uselang')),
 			requestData = {
-				shareLang: shareLang,
+				lang: lang,
 				isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
 			};
 

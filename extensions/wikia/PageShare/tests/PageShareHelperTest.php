@@ -7,95 +7,156 @@ class PageShareHelperTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function IsValidShareServiceProvider() {
-		return [
-			[
-				'service' => [
-					'name' => 'service',
-					'languages:include' => ['en'],
-					'languages:exclude' => [],
-				],
-				'language' => 'en',
-				'isTouchScreen' => 0,
-				'out' => true,
-			],
-			[
-				'service' => [
-					'name' => 'service',
-				],
-				'language' => 'en',
-				'isTouchScreen' => 0,
-				'out' => true,
-			],
-			[
-				'service' => [
-					'name' => 'service',
-				],
-				'language' => 'ja',
-				'isTouchScreen' => 1,
-				'out' => true,
-			],
-			[
-				'service' => [
-					'name' => 'service',
-				],
-				'language' => 'ja',
-				'isTouchScreen' => 0,
-				'out' => false,
-			],
-			[
-				'service' => [
-					'name' => 'service',
-				],
-				'language' => 'en',
-				'isTouchScreen' => 0,
-				'out' => false,
-			],
-			[
-				'service' => [
-					'name' => 'service',
-				],
-				'language' => 'en',
-				'isTouchScreen' => 0,
-				'out' => false,
-			],
-			[
-				'service' => [
-				],
-				'language' => 'en',
-				'isTouchScreen' => 0,
-				'out' => false,
-			],
-			[
-				'service' => [
-					'name' => 'service',
-					'languages:exclude' => ['de'],
-				],
-				'language' => 'de',
-				'isTouchScreen' => 0,
-				'out' => false,
-			],
-			[
-				'service' => [
-					'name' => 'service',
-					'languages:include' => ['en', 'de', 'zh'],
-				],
-				'language' => 'pl',
-				'isTouchScreen' => 0,
-				'out' => false,
-			],
-		];
-	}
-
-
 	/**
-	 * @dataProvider IsValidShareServiceProvider
+	 * @dataProvider IsValidShareServiceDataProvider
 	 */
-	public function testIsValidShareService( $data ) {
+	public function testIsValidShareService( $data, $expectedResult ) {
 		$this->assertEquals(
-			$data['out'],
+			$expectedResult,
 			PageShareHelper::isValidShareService( $data['service'], $data['language'], $data['isTouchScreen'] )
 		);
+	}
+
+	public function IsValidShareServiceDataProvider() {
+		return [
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title',
+						'href' => 'service href'
+					],
+					'language' => 'en',
+					'isTouchScreen' => 0
+				],
+				true
+			],
+			[
+				[
+					'service' => [
+						'title' => 'service title',
+						'href' => 'service href'
+					],
+					'language' => 'en',
+					'isTouchScreen' => 0
+				],
+				false
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'href' => 'service href'
+					],
+					'language' => 'en',
+					'isTouchScreen' => 0
+				],
+				false
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title'
+					],
+					'language' => 'en',
+					'isTouchScreen' => 0
+				],
+				false
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title',
+						'href' => 'service href',
+						'languages:include' => ['en', 'pl', 'de'],
+						'languages:exclude' => ['ru', 'es']
+					],
+					'language' => 'en',
+					'isTouchScreen' => 0
+				],
+				true
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title',
+						'href' => 'service href',
+						'languages:include' => ['en', 'pl', 'de'],
+						'languages:exclude' => ['ru', 'es']
+					],
+					'language' => 'ru',
+					'isTouchScreen' => 0
+				],
+				false
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title',
+						'href' => 'service href',
+						'languages:include' => ['en', 'de', 'zh']
+					],
+					'language' => 'pl',
+					'isTouchScreen' => 0
+				],
+				false
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title',
+						'href' => 'service href',
+						'languages:exclude' => ['ru', 'de', 'fr']
+					],
+					'language' => 'de',
+					'isTouchScreen' => 0
+				],
+				false
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title',
+						'href' => 'service href'
+					],
+					'language' => 'en',
+					'isTouchScreen' => 1
+				],
+				true
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title',
+						'href' => 'service href',
+						'displayOnlyOnTouchDevices' => true
+					],
+					'language' => 'ja',
+					'isTouchScreen' => 1
+				],
+				true
+			],
+			[
+				[
+					'service' => [
+						'name' => 'service name',
+						'title' => 'service title',
+						'href' => 'service href',
+						'displayOnlyOnTouchDevices' => true
+					],
+					'language' => 'ja',
+					'isTouchScreen' => 0
+				],
+				false
+			]
+		];
 	}
 
 	/**
