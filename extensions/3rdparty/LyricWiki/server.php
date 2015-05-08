@@ -2140,7 +2140,7 @@ function lw_fmtAlbum($album,$year){
 // Returns the standardly formatted song name.
 ////
 function lw_fmtSong($song){
-	$retVal = rawurldecode(ucwords($song));
+	$retVal = ucwords(rawurldecode($song));
 	$retVal = preg_replace_callback('/([-\("\.])([a-z])/', function($m){ return $m[1].strtoupper($m[2]); }, $retVal);
 	$retVal = str_replace(" ", "_", $retVal);
 	return $retVal;
