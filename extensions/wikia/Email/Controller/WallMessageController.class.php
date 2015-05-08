@@ -32,7 +32,7 @@ class WallMessageController extends EmailController {
 	 * @return boolean
 	 */
 	protected function isForFollowedThread() {
-		return (bool) $this->request->getVal( 'targetUser' ) !== $this->request->getVal( 'wallUserName' );
+		return $this->request->getVal( 'targetUser' ) !== $this->request->getVal( 'wallUserName' );
 	}
 
 	/**
