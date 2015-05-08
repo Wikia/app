@@ -4,6 +4,21 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
+	private $markerNumber = 0;
+	private $markers = [ ];
+
+	protected static $instance;
+
+	/**
+	 * @return PortableInfoboxParserTagController
+	 */
+	public static function getInstance() {
+		if ( !isset( static::$instance ) ) {
+			static::$instance = new PortableInfoboxParserTagController();
+		}
+		return static::$instance;
+	}
+
 	/**
 	 * @desc Parser hook: used to register parser tag in MW
 	 *
@@ -11,7 +26,17 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return bool
 	 */
 	public static function parserTagInit( Parser $parser ) {
-		$parser->setHook( self::PARSER_TAG_NAME, [ new static(), 'renderInfobox' ] );
+		$parser->setHook( self::PARSER_TAG_NAME, [ static::getInstance(), 'renderInfobox' ] );
+		return true;
+	}
+
+	/**
+	 * Parser hook: used to replace infobox markes put on rendering
+	 * @param $text
+	 * @return string
+	 */
+	public static function replaceInfoboxMarkers( &$parser, &$text ) {
+		$text = static::getInstance()->replaceMarkers( $text );
 		return true;
 	}
 
@@ -25,6 +50,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @returns String $html
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
+		$this->markerNumber++;
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
 		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $frame->getNamedArguments() );
@@ -43,7 +69,13 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$renderer = new PortableInfoboxRenderService();
 		$renderedValue = $renderer->renderInfobox( $data );
 
-		return [ $renderedValue, 'markerType' => 'general' ];
+		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}-QINU";
+		$this->markers[ $marker ] = $renderedValue;
+		return [ $marker, 'markerType' => 'nowiki' ];
+	}
+
+	public function replaceMarkers( $text ) {
+		return strtr( $text, $this->markers );
 	}
 
 	private function renderUnimplementedTagErrorMesssage( $tagName ) {

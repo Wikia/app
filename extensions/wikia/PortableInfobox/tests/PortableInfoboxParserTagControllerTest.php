@@ -17,7 +17,8 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$parser->Options( $options );
 		$parser->startExternalParse( $title, $options, 'text', true );
 		$frame = $parser->getPreprocessor()->newFrame();
-		$output = trim( $controller->renderInfobox( $text, [ ], $parser, $frame )[0] );
+		$marker = $controller->renderInfobox( $text, [ ], $parser, $frame )[ 0 ];
+		$output = $controller->replaceMarkers( $marker );
 
 		$this->assertEquals( $output, '' );
 	}
@@ -31,7 +32,8 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$title = Title::newFromText( 'Test' );
 		$parser->Options( $options );
 		$parser->startExternalParse( $title, $options, 'text', true );
-		$output = trim( $parser->parse( $text, $title, $options, false )->getText() );
+		$marker = $parser->parse( $text, $title, $options, false )->getText();
+		$output = $controller->replaceMarkers( $marker );
 
 		$this->assertFalse( strpos( $output, '<pre>Test' . PHP_EOL . '</pre>' ) );
 	}

@@ -2575,7 +2575,7 @@ class Parser {
 				$closematch = preg_match(
 					'/(?:<\\/?aside|<\\/table|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
 				#	'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
-					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|'.$this->mUniqPrefix.'-infobox|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
 				/**
 				 * Wikia change end
 				 */
