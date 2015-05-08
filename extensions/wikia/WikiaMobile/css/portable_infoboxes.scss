@@ -3,6 +3,9 @@
 $infobox-item-margin: 5px;
 $infobox-section-header-background: #e5e5e5;
 
+// not using mixins for flexbox - for mobile traffic we only need -webkit- prefix for safari
+// our mixins will add a lot of other prefixes for browsers that we do not support on mobile skin
+
 .portable-infobox {
 	margin-bottom: $infobox-item-margin * 4;
 
