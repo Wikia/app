@@ -4,8 +4,10 @@
  * Script that removes entries for closed wikis from:
  *  - specials.events_local_users table
  *  - stats.events table
+ *  - dataware.pages
  *
  * @see PLATFORM-1173
+ * @see PLATFORM-1204
  *
  * @author Macbre
  * @ingroup Maintenance
@@ -65,12 +67,15 @@ class EventsCleanup extends Maintenance {
 	}
 
 	private function cleanupBatch( Array $city_ids ) {
-		global $wgSpecialsDB, $wgStatsDB;
-		$specials = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
-		$stats = wfGetDB( DB_MASTER, [], $wgStatsDB );
+		global $wgStatsDB, $wgSpecialsDB, $wgExternalDatawareDB;
 
+		$dataware = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$specials = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+		$stats    = wfGetDB( DB_MASTER, [], $wgStatsDB );
+
+		$this->doTableCleanup( $dataware, 'pages',              $city_ids, 'page_wikia_id' );
 		$this->doTableCleanup( $specials, 'events_local_users', $city_ids );
-		$this->doTableCleanup( $stats, 'events', $city_ids );
+		$this->doTableCleanup( $stats,    'events',             $city_ids );
 	}
 
 	public function execute() {
