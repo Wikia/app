@@ -13,8 +13,8 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 		var service = $(event.target).closest('a'),
 			url = service.prop('href'),
 			title = service.prop('title'),
-			h = (win.innerHeight / 2 | 0), // round down
-			w = (win.innerWidth / 2 | 0),  // round down
+			h = Math.floor(win.innerHeight / 2),
+			w = Math.floor(win.innerWidth / 2),
 			trackFunc = tracker.buildTrackingFunction({
 				action: win.Wikia.Tracker.ACTIONS.CLICK,
 				category: 'social-share',
@@ -22,7 +22,6 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 			});
 
 		trackFunc({label: service.data('share-service')});
-
 		win.open(url, title, 'width=' + w + ',height=' + h);
 	}
 

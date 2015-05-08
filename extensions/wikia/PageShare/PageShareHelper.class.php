@@ -2,7 +2,6 @@
 class PageShareHelper {
 
 	const SHARE_DEFAULT_LANGUAGE = 'en';
-	const LINE_NAME = 'line';
 
 	private static function readIcon( $fileName ) {
 		$fullName = realpath( __DIR__ . '/icons/' . $fileName . '.svg' );
@@ -41,8 +40,8 @@ class PageShareHelper {
 	}
 
 	public static function isValidShareService( $service, $lang, $isTouchScreen ) {
-		// Don't display LINE social network (because it's a mobile app) on desktops
-		if ( !$isTouchScreen && $service['name'] === self::LINE_NAME ) {
+		// Don't display LINE social network or any other mobile app on desktops
+		if ( !$isTouchScreen && array_key_exists( 'displayOnlyOnTouchDevices', $service ) && $service['displayOnlyOnTouchDevices'] ) {
 			return false;
 		}
 		// filter through include list, default of true
