@@ -52,11 +52,12 @@ class XmlParser {
 	public function getDataFromXmlString( $xml ) {
 		wfProfileIn( __METHOD__ );
 		$xml = simplexml_load_string( $xml );
-		if ( $xml ) {
-			$data = $this->getDataFromNodes( $xml );
-		} else {
+		if ( !$xml ) {
 			throw new XmlMarkupParseErrorException();
 		}
+
+		$data = $this->getDataFromNodes( $xml );
+
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
