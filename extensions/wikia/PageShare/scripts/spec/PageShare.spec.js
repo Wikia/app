@@ -4,9 +4,10 @@ describe('pageShare', function () {
 	function _() {}
 
 	it('should be defined', function () {
-		var pageShareModule = modules.pageShare({}, _, _);
+		var pageShareModule = modules['wikia.pageShare']({}, _, _);
 
 		expect(pageShareModule).toBeDefined();
+		expect(typeof pageShareModule.loadShareIcons).toBe('function');
 		expect(typeof pageShareModule.getShareLang).toBe('function');
 	});
 
@@ -142,7 +143,7 @@ describe('pageShare', function () {
 			];
 
 		testDataSet.forEach(function (testData) {
-			pageShareModule = modules.pageShare(testData.mock.window, _, _);
+			pageShareModule = modules['wikia.pageShare'](testData.mock.window, _, _);
 			expect(pageShareModule.getShareLang(testData.mock.useLang)).toBe(testData.expectedResult);
 		});
 	});

@@ -2385,7 +2385,8 @@ $config['page_share_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PageShare/scripts/PageShare.js'
+		'//extensions/wikia/PageShare/scripts/PageShare.js',
+		'//extensions/wikia/PageShare/scripts/PageShareInit.js'
 	]
 ];
 
