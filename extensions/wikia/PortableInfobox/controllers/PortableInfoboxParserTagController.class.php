@@ -4,7 +4,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 
-	private $count = 0;
+	private $markerNumber = 0;
 	private $markers = [ ];
 
 	protected static $instance;
@@ -50,7 +50,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @returns String $html
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
-		$this->count++;
+		$this->markerNumber++;
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
 		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $frame->getNamedArguments() );
@@ -69,7 +69,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$renderer = new PortableInfoboxRenderService();
 		$renderedValue = $renderer->renderInfobox( $data );
 
-		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->count}-QINU";
+		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}-QINU";
 		$this->markers[ $marker ] = $renderedValue;
 		return [ $marker, 'markerType' => 'nowiki' ];
 	}
