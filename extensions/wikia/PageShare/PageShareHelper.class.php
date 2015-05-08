@@ -23,20 +23,12 @@ class PageShareHelper {
 	/**
 	 * Get language for Page Share service.
 	 * Language code is sent from the client side. If it's empty, the default (en) is returned.
-	 * Both values can be overwritten by ?uselang parameter.
 	 *
 	 * @param $requestShareLang
-	 * @param $useLang
 	 * @return String language
 	 */
-	public static function getLangForPageShare( $requestShareLang, $useLang ) {
-		if ( !empty ( $useLang ) ) {
-			return $useLang;
-		} elseif ( !empty( $requestShareLang ) ) {
-			return $requestShareLang;
-		} else {
-			return self::SHARE_DEFAULT_LANGUAGE;
-		}
+	public static function getLangForPageShare( $requestShareLang ) {
+		return empty( $requestShareLang ) ? self::SHARE_DEFAULT_LANGUAGE : $requestShareLang;
 	}
 
 	public static function isValidShareService( $service, $lang, $isTouchScreen ) {

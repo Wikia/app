@@ -101,35 +101,30 @@ class PageShareHelperTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getLangForPageShareDataProvider
 	 * @param $requestShareLang
-	 * @param $useLang
 	 * @param $expectedResult
 	 */
-	public function testGetLangForPageShare( $requestShareLang, $useLang, $expectedResult ) {
-		$this->assertEquals( $expectedResult, PageShareHelper::getLangForPageShare( $requestShareLang, $useLang ) );
+	public function testGetLangForPageShare( $requestShareLang, $expectedResult ) {
+		$this->assertEquals( $expectedResult, PageShareHelper::getLangForPageShare( $requestShareLang ) );
 	}
 
 	/**
 	 * Data provider for testGetLangForPageShare.
 	 *
 	 * Arguments represent following values:
-	 * 1 - $requestShareLang, language requested from client side
-	 * 2 - $useLang, uselang query string parameter value
-	 * 3 - $expectedResult, expected result
+	 * $requestShareLang - language requested from client side
+	 * $expectedResult - Nobody expects the Spanish Inquisition!
 	 *
-	 * First set - client didn't request any language and didn't provide ?uselang=xx query string parameter,
-	 *             return default language defined in SHARE_DEFAULT_LANGUAGE
+	 * First set - client didn't request any language, return default language defined in SHARE_DEFAULT_LANGUAGE
 	 * Second set - language is provided by client
-	 * Third set - language is taken from ?uselang=xx
-	 * Fourth set - language is provided by client, but it's overwritten by ?uselang=xx
+	 * Third set - language is provided by Worf
 	 *
 	 * @return array
 	 */
 	public function getLangForPageShareDataProvider() {
 		return [
-			[ null, null, 'en' ],
-			[ 'zh', null, 'zh' ],
-			[ null, 'ru', 'ru' ],
-			[ 'de', 'ja', 'ja' ]
+			[ null, 'en' ],
+			[ 'pl', 'pl' ],
+			[ 'Klingon', 'Klingon' ]
 		];
 	}
 }

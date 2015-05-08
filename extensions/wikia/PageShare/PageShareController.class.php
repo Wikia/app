@@ -11,10 +11,9 @@ class PageShareController extends WikiaController {
 
 	public function getShareIcons() {
 		$requestShareLang = $this->getVal( 'shareLang' );
-		$useLang = $this->getVal( 'useLang' );
 		$title = $this->getVal( 'title' );
 		$url = $this->getVal( 'url' );
-		$shareLang = PageShareHelper::getLangForPageShare( $requestShareLang, $useLang );
+		$shareLang = PageShareHelper::getLangForPageShare( $requestShareLang );
 
 		$renderedSocialIcons = \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/PageShare_index.mustache',
