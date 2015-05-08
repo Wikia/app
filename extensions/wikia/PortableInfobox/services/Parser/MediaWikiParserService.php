@@ -46,6 +46,11 @@ class MediaWikiParserService implements ExternalParser {
 		return $marksstripped;
 	}
 
+	public function replaceVariables( $wikitext ) {
+		$output = $this->parser->replaceVariables ( $wikitext, $this->frame );
+		return $output;
+	}
+
 	private function getParserTitle() {
 		return $this->parser->getTitle();
 	}

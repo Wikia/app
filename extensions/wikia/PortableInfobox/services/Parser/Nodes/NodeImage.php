@@ -7,7 +7,7 @@ class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';
 
 	public function getData() {
-		$imageName = $this->getValueWithDefault( $this->xmlNode );
+		$imageName = $this->getRawValueWithDefault( $this->xmlNode );
 		return [
 			'url' => $this->resolveImageUrl( $imageName ),
 			'name' => $imageName,

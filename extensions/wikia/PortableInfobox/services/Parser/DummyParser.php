@@ -10,4 +10,8 @@ class DummyParser implements ExternalParser {
 	public function parseRecursive( $text ) {
 		return "parseRecursive($text)";
 	}
+
+	public function replaceVariables( $text ) {
+		return "replaceVariables($text)";
+	}
 }
