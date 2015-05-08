@@ -151,6 +151,20 @@ abstract class CommentController extends EmailController {
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields =  [
+			"inputs" => [
+				[
+					'type' => 'text',
+					'name' => 'currentRevId',
+					'label' => "Comment Revision ID"
+				]
+			]
+		];
+
+		return $formFields;
+	}
 }
 
 class ArticleCommentController extends CommentController {
@@ -171,15 +185,10 @@ class ArticleCommentController extends CommentController {
 					'label' => "Article Title",
 					'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
 				],
-				[
-					'type' => 'text',
-					'name' => 'currentRevId',
-					'label' => "Comment Revision ID"
-				],
 			]
 		];
 
-		return $formFields;
+		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
 }
 
@@ -198,12 +207,7 @@ class BlogCommentController extends CommentController {
 				'type' => 'text',
 				'name' => 'pageTitle',
 				'label' => "Blog Post Title",
-				'tooltip' => 'eg "Gcheung28/New_sharing_options_on_Wikia"'
-			],
-			[
-				'type' => 'text',
-				'name' => 'currentRevId',
-				'label' => "Comment Revision ID"
+				'tooltip' => "eg 'Gcheung28/New_sharing_options_on_Wikia' (make sure it's on this wikia!)",
 			],
 			[
 				'type' => 'hidden',
@@ -212,6 +216,6 @@ class BlogCommentController extends CommentController {
 			]
 		];
 
-		return $formFields;
+		return  array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
 }

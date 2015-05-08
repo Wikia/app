@@ -533,7 +533,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	public static function getAdminForm() {
 		return array_merge_recursive(
-			self::getBaseAdminForm(),
+			self::getBaseFormFields(),
 			static::getEmailSpecificFormFields()
 		);
 	}
@@ -542,7 +542,7 @@ abstract class EmailController extends \WikiaController {
 	 * Get the common form fields used by all emails on Special:SendEmail.
 	 * @return array
 	 */
-	private static function getBaseAdminForm() {
+	private static function getBaseFormFields() {
 		$baseForm = [
 			'inputs' => [
 				[
@@ -604,7 +604,7 @@ abstract class EmailController extends \WikiaController {
 	 * This method is overridden by most subclasses of the EmailController. It returns a list of
 	 * form fields which are specific to that email and are required for it's form found on
 	 * Special:SendEmail (eg, the WatchedPage email requires a Title and 2 revision IDs, in addition
-	 * to all of the fields from EmailController::getBaseAdminForm).
+	 * to all of the fields from EmailController::getBaseFormFields).
 	 * @return array
 	 */
 	protected static function getEmailSpecificFormFields() {
