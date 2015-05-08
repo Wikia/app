@@ -32,6 +32,7 @@ $wgAutoloadClasses['Email\Controller\WatchedPageController'] =  $dir . 'Controll
 $wgAutoloadClasses['Email\Controller\ArticleCommentController'] =  $dir . 'Controller/CommentController.class.php';
 $wgAutoloadClasses['Email\Controller\BlogCommentController'] =  $dir . 'Controller/CommentController.class.php';
 $wgAutoloadClasses['Email\Controller\WallMessageController'] =  $dir . 'Controller/WallMessageController.class.php';
+
 /**
  * messages
  */
@@ -39,4 +40,3 @@ $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
 $wgExtensionMessagesFiles['WatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
 $wgExtensionMessagesFiles['Comment'] = $dir . 'i18n/Comment.i18n.php';
 $wgExtensionMessagesFiles['WallMessage'] = $dir . 'i18n/WallMessage.i18n.php';
-
