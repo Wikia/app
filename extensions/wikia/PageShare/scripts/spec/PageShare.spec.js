@@ -3,8 +3,127 @@ describe('pageShare', function () {
 
 	function _() {}
 
+	var windowMock = {
+			Wikia: {
+				Tracker: {
+					ACTIONS: {
+						CLICK: _
+					}
+				}
+			}
+		},
+		trackingModuleMock = {
+			buildTrackingFunction: _
+		},
+		testDataSet = [
+			{
+				mock: {
+					window: {
+						navigator: {}
+					}
+				},
+				expectedResult: null
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {}
+					}
+				},
+				expectedResult: null
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: 'Warkot',
+						wgUserLanguage: 'pl',
+						navigator: {
+							languages: ['pl', 'en-US', 'en-GB', 'en']
+						}
+					}
+				},
+				expectedResult: 'pl'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {
+							languages: ['ja', 'en-US', 'en-GB', 'en']
+						}
+					}
+				},
+				expectedResult: 'ja'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {
+							languages: ['zn-CN', 'en-US', 'en-GB', 'en']
+						}
+					}
+				},
+				expectedResult: 'zn'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: 'Warkot',
+						wgUserLanguage: 'pl',
+						navigator: {
+							browserLanguage: 'de'
+						}
+					}
+				},
+				expectedResult: 'pl'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {
+							browserLanguage: 'ru'
+						}
+					}
+				},
+				expectedResult: 'ru'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: 'Warkot',
+						wgUserLanguage: 'pl',
+						navigator: {
+							browserLanguage: 'de'
+						}
+					},
+					useLang: 'ru'
+				},
+				expectedResult: 'ru'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {
+							browserLanguage: 'ru'
+						}
+					},
+					useLang: 'pl'
+				},
+				expectedResult: 'pl'
+			}
+		];
+
 	it('should be defined', function () {
-		var pageShareModule = modules['wikia.pageShare']({}, _, _);
+		var pageShareModule = modules['wikia.pageShare'](windowMock, trackingModuleMock, _);
 
 		expect(pageShareModule).toBeDefined();
 		expect(typeof pageShareModule.loadShareIcons).toBe('function');
@@ -12,138 +131,11 @@ describe('pageShare', function () {
 	});
 
 	it('should return the right language code', function () {
-		var pageShareModule,
-			testDataSet = [
-				{
-					mock: {
-						window: {
-							wgUserName: undefined,
-							wgUserLanguage: undefined,
-							navigator: {
-								languages: undefined,
-								browserLanguage: undefined
-							}
-						},
-						useLang: undefined
-					},
-					expectedResult: null
-				},
-				{
-					mock: {
-						window: {
-							wgUserName: null,
-							wgUserLanguage: 'en',
-							navigator: {
-								languages: undefined,
-								browserLanguage: undefined
-							}
-						},
-						useLang: undefined
-					},
-					expectedResult: null
-				},
-				{
-					mock: {
-						window: {
-							wgUserName: 'Warkot',
-							wgUserLanguage: 'pl',
-							navigator: {
-								languages: ['pl', 'en-US', 'en-GB', 'en'],
-								browserLanguage: undefined
-							}
-						},
-						useLang: undefined
-					},
-					expectedResult: 'pl'
-				},
-				{
-					mock: {
-						window: {
-							wgUserName: null,
-							wgUserLanguage: 'en',
-							navigator: {
-								languages: ['ja', 'en-US', 'en-GB', 'en'],
-								browserLanguage: undefined
-							}
-						},
-						useLang: undefined
-					},
-					expectedResult: 'ja'
-				},
-				{
-					mock: {
-						window: {
-							wgUserName: null,
-							wgUserLanguage: 'en',
-							navigator: {
-								languages: ['zn-CN', 'en-US', 'en-GB', 'en'],
-								browserLanguage: undefined
-							}
-						},
-						useLang: undefined
-					},
-					expectedResult: 'zn'
-				},
-				{
-					mock: {
-						window: {
-							wgUserName: 'Warkot',
-							wgUserLanguage: 'pl',
-							navigator: {
-								languages: undefined,
-								browserLanguage: 'de'
-							}
-						},
-						useLang: undefined
-					},
-					expectedResult: 'pl'
-				},
-				{
-					mock: {
-						window: {
-							wgUserName: null,
-							wgUserLanguage: 'en',
-							navigator: {
-								languages: undefined,
-								browserLanguage: 'ru'
-							}
-						},
-						useLang: undefined
-					},
-					expectedResult: 'ru'
-				},
-				{
-					mock: {
-						window: {
-							wgUserName: 'Warkot',
-							wgUserLanguage: 'pl',
-							navigator: {
-								languages: undefined,
-								browserLanguage: 'de'
-							}
-						},
-						useLang: 'ru'
-					},
-					expectedResult: 'ru'
-				},
-				{
-					mock: {
-						window: {
-							wgUserName: null,
-							wgUserLanguage: 'en',
-							navigator: {
-								languages: undefined,
-								browserLanguage: 'ru'
-							}
-						},
-						useLang: 'pl'
-					},
-					expectedResult: 'pl'
-				}
-			];
+		var pageShareModule;
 
 		testDataSet.forEach(function (testData) {
-			pageShareModule = modules['wikia.pageShare'](testData.mock.window, _, _);
+			testData.mock.window.Wikia = windowMock.Wikia;
+			pageShareModule = modules['wikia.pageShare'](testData.mock.window, trackingModuleMock, _);
 			expect(pageShareModule.getShareLang(testData.mock.useLang)).toBe(testData.expectedResult);
 		});
 	});

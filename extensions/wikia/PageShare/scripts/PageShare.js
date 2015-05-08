@@ -1,6 +1,12 @@
 define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) {
 	'use strict';
 
+	var trackFunc = tracker.buildTrackingFunction({
+		action: win.Wikia.Tracker.ACTIONS.CLICK,
+		category: 'social-share',
+		trackingMethod: 'analytics'
+	});
+
 	/**
 	 * @desc Share click handler
 	 *
@@ -14,12 +20,7 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 			url = service.prop('href'),
 			title = service.prop('title'),
 			h = Math.floor(win.innerHeight / 2),
-			w = Math.floor(win.innerWidth / 2),
-			trackFunc = tracker.buildTrackingFunction({
-				action: win.Wikia.Tracker.ACTIONS.CLICK,
-				category: 'social-share',
-				trackingMethod: 'analytics'
-			});
+			w = Math.floor(win.innerWidth / 2);
 
 		trackFunc({label: service.data('share-service')});
 		win.open(url, title, 'width=' + w + ',height=' + h);
@@ -43,9 +44,8 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 
 	function loadShareIcons() {
 		var mCacheQueryStringParam = $.getUrlVar('mcache'),
-			lang = getShareLang($.getUrlVar('uselang')),
 			requestData = {
-				lang: lang,
+				lang: getShareLang($.getUrlVar('uselang')),
 				isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
 			};
 
