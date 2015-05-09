@@ -15,7 +15,7 @@ class MonetizationModuleHooks {
 		$app = F::app();
 		$script = 'monetization_module_top_script_js';
 		if ( !WikiaPageType::isCorporatePage() && $app->wg->User->isAnon() && $app->checkSkin( 'oasis' )
-			&& !in_array( $script, $jsAssetGroups )) {
+			&& !in_array( $script, $jsAssetGroups ) && empty( $app->wg->AdDriverUseMonetizationService ) ) {
 			$jsAssetGroups[] = $script;
 		}
 
