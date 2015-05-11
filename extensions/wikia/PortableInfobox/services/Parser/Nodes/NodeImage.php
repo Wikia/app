@@ -7,10 +7,20 @@ class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';
 
 	public function getData() {
-		$imageName = $this->getValueWithDefault( $this->xmlNode );
+		global $wgContLang;
+
+		$title = \Title::newFromText(
+			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName(
+				$this->getRawValueWithDefault( $this->xmlNode ),
+				$wgContLang
+			),
+			NS_FILE
+		);
+
+
 		return [
-			'url' => $this->resolveImageUrl( $imageName ),
-			'name' => $imageName,
+			'url' => $this->resolveImageUrl( $title ),
+			'name' => ( $title ) ? $title->getDBkey() : '',
 			'alt' => $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} )
 		];
 	}
@@ -19,12 +29,7 @@ class NodeImage extends Node {
 		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
 	}
 
-	public function resolveImageUrl( $filename ) {
-		global $wgContLang;
-		$title = \Title::newFromText(
-			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $filename, $wgContLang ),
-			NS_FILE
-		);
+	public function resolveImageUrl( $title ) {
 		if ( $title && $title->exists() ) {
 			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
 		} else {

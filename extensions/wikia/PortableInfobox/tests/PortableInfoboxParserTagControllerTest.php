@@ -22,19 +22,4 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 		$this->assertEquals( $output, '' );
 	}
-
-	public function testNoPreTag() {
-		$this->markTestSkipped( 'DAT-2736 - awaiting decision whether this is a behavior to be fixed' );
-		$text = '<infobox><data><default>Val</default></data></infobox>' . PHP_EOL . ' Test';
-
-		$parser = new Parser();
-		$options = new ParserOptions();
-		$title = Title::newFromText( 'Test' );
-		$parser->Options( $options );
-		$parser->startExternalParse( $title, $options, 'text', true );
-		$marker = $parser->parse( $text, $title, $options, false )->getText();
-		$output = $controller->replaceMarkers( $marker );
-
-		$this->assertFalse( strpos( $output, '<pre>Test' . PHP_EOL . '</pre>' ) );
-	}
 }
