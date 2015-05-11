@@ -1649,14 +1649,6 @@ class OutputPage extends ContextSource {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
 		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
-
-		// Wikia change - begin
-		// log empty articles showing up randomly - @see PLATFORM-1212
-		if ( $text == '') {
-			\Wikia\Logger\WikiaLogger::instance()->warning( 'PLATFORM-1212 - empty parser output', [ 'exception' => new Exception() ] );
-		}
-		// Wikia change - end
-
 		$this->addHTML( $text );
 	}
 
