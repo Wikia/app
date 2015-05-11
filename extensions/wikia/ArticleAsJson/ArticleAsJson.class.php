@@ -116,9 +116,11 @@ class ArticleAsJson extends WikiaService {
 	public static function onPortableInfoboxNodeImageGetData( $title, &$ref, $alt ) {
 
 		wfProfileIn( __METHOD__ );
-		$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
-		self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
-		$ref = count( self::$media ) - 1;
+		if ( $title ) {
+			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
+			$ref = count( self::$media ) - 1;
+		}
 
 		wfProfileOut( __METHOD__ );
 		return true;
