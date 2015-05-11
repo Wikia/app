@@ -8,15 +8,14 @@ class FlagType extends FlagsBaseModel {
 		$paramsVerified = false;
 
 	public static $flagGroups = [
-		1 => 'Spoiler',
-		2 => 'Disambiguation',
-		3 => 'Canon',
-		4 => 'Stub',
-		5 => 'Article management',
-		6 => 'Article improvement',
-		7 => 'Article status',
-		8 => 'For readers',
-		9 => 'For contributors',
+		1 => 'spoiler',
+		2 => 'disambig',
+		3 => 'canon',
+		4 => 'stub',
+		5 => 'delete',
+		6 => 'improvements',
+		7 => 'status',
+		8 => 'other'
 	];
 
 	public function getFlagGroupsMapping() {
