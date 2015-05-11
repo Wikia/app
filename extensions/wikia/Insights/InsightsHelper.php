@@ -113,21 +113,18 @@ class InsightsHelper {
 	 * @return array
 	 */
 	public static function getTitleLink( Title $title, $params ) {
-		$name = $title->getPrefixedText();
-		if ( $title->getNamespace() != 0 ) {
-			$name = $title->getNsText() . ':' . $name;
-		}
+		$prefixedTitle = $title->getPrefixedText();
 
 		$data = [
-			'text' => $title->getText(),
+			'text' => $prefixedTitle,
 			'url' => $title->getFullURL( $params ),
-			'title' => $name,
+			'title' => $prefixedTitle,
 			'classes' => '',
 		];
 
 		if ( !$title->exists() ) {
 			$data['classes'] = 'new';
-			$data['title'] = wfMessage( 'red-link-title', $name )->escaped();
+			$data['title'] = wfMessage( 'red-link-title', $prefixedTitle )->escaped();
 		}
 
 		return $data;
