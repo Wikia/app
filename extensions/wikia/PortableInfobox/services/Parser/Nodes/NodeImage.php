@@ -7,14 +7,16 @@ class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';
 
 	public function getData() {
-		$imageName = $this->getValueWithDefault( $this->xmlNode );
+		$title = $this->getImageAsTitleObject( $this->getRawValueWithDefault( $this->xmlNode ) );
 		$ref = null;
 		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 
-		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $this->getImageAsTitleObject( $imageName ), &$ref, $alt ] );
+
+		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
+		
 		return [
-			'url' => $this->resolveImageUrl( $imageName ),
-			'name' => $imageName,
+			'url' => $this->resolveImageUrl( $title ),
+			'name' => ( $title ) ? $title->getDBkey() : '',
 			'alt' => $alt,
 			'ref' => $ref
 		];
@@ -33,12 +35,11 @@ class NodeImage extends Node {
 		return $title;
 	}
 
-	public function resolveImageUrl( $filename ) {
-		$title = $this->getImageAsTitleObject( $filename );
+	public function resolveImageUrl( $title ) {
 		if ( $title && $title->exists() ) {
 			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
 		} else {
-			return "";
+			return '';
 		}
 	}
 }

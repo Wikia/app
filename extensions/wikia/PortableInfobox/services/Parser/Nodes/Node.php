@@ -65,14 +65,33 @@ class Node {
 		return $value;
 	}
 
+	protected function getRawValueWithDefault( \SimpleXMLElement $xmlNode ) {
+		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
+		$value = null;
+		if ( !empty( $source ) ) {
+			$value = $this->getRawInfoboxData( $source );
+		}
+		if ( !$value ) {
+			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
+				$value = (string)$xmlNode->{self::DEFAULT_TAG_NAME};
+				$value = $this->getExternalParser()->replaceVariables( $value );
+			}
+		}
+		return $value;
+	}
+
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
 		if ( isset( $xmlNode[ $attribute ] ) )
 			return (string)$xmlNode[ $attribute ];
 		return null;
 	}
 
-	protected function getInfoboxData( $key ) {
+	protected function getRawInfoboxData ( $key ) {
 		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
-		return $this->getExternalParser()->parseRecursive( $data );
+		return $data;
+	}
+
+	protected function getInfoboxData( $key ) {
+		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData ( $key ) );
 	}
 }

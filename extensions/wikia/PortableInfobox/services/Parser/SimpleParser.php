@@ -10,4 +10,7 @@ class SimpleParser implements ExternalParser {
 		return $this->parse( $text );
 	}
 
+	public function replaceVariables( $text ) {
+		return $text;
+	}
 }
