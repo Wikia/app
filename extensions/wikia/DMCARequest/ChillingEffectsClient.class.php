@@ -83,45 +83,11 @@ class ChillingEffectsClient {
 		$path = parse_url( $location, PHP_URL_PATH );
 
 		$matches = [];
-		if ( preg_match( "/^\/notices\/(\d+)$/", $path, $matches ) ) {
+		if ( preg_match( '/^\/notices\/(\d+)$/', $path, $matches ) ) {
 			return (int)$matches[1];
 		}
 
 		return false;
-	}
-
-	/**
-	 * Get a list of valid topics and their IDs.
-	 *
-	 * @return array List of topics indexed by their ID
-	 */
-	public function getTopics() {
-		$memcKey = wfSharedMemcKey( 'chillingeffects', 'topics' );
-		$cacheTTL = 60;
-
-		$topics = \WikiaDataAccess::cache( $memcKey, $cacheTTL, function () {
-			$topicsJson = \Http::get(
-				$this->baseUrl . '/topics.json',
-				'default',
-				[ 'noProxy' => true ]
-			);
-			if ( $topicsJson === false ) {
-				return [];
-			}
-
-			$result = [];
-			$topics = json_decode( $topicsJson, true )['topics'];
-
-			foreach ( $topics as $topic ) {
-				if ( $topic['parent_id'] === null ) {
-					$result[$topic['id']] = $topic['name'];
-				}
-			}
-
-			return $result;
-		} );
-
-		return $topics;
 	}
 
 	/**
