@@ -117,13 +117,9 @@ class ArticleAsJson extends WikiaService {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
-
-		if ( $wgArticleAsJson ) {
-			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
-
-			self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
-			$ref = count( self::$media ) - 1;
-		}
+		$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+		self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
+		$ref = count( self::$media ) - 1;
 
 		wfProfileOut( __METHOD__ );
 		return true;
