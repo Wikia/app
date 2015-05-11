@@ -213,8 +213,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		foreach ( $this->sorting as $key => $flag ) {
 			$cacheKey = $this->getMemcKey( $key );
 			$sortingArray = $wgMemc->get( $cacheKey );
+			$key = array_search( $articleId, $sortingArray );
 
-			if ( $key = array_search( $articleId, $sortingArray ) !== false ) {
+			if ( $key !== false && $key !== null ) {
 				unset( $sortingArray[$key] );
 				$wgMemc->set( $cacheKey, $sortingArray, self::INSIGHTS_MEMC_TTL );
 			}
@@ -331,7 +332,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				$article = [];
 				$params = $this->getUrlParams();
 
-				$title = Title::newFromText( $row->title );
+				$title = Title::newFromText( $row->title, $row->namespace );
 				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
 
 				$lastRev = $title->getLatestRevID();

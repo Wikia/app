@@ -54,11 +54,14 @@ require(
 
 				loopNotificationTracking.setParams(isEdit, isFixed, notificationType);
 
-
 				if (notificationType === 'fixed') {
 					$('#InsightsNextPageButton').focus();
 				} else if (notificationType === 'notfixed') {
 					$('#InsightsEditPageButton').focus();
+				}
+
+				if (isFixed) {
+					loopNotificationTracking.successTrack();
 				}
 			}
 		};
