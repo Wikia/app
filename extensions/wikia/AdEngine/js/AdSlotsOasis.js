@@ -27,14 +27,14 @@ require([
 			return !!abTest.getGroup(experimentName);
 		}
 
-		if (isValidAbTestingGroup()) {
-			log([experimentName + ' turned on'], 'debug', logGroup);
+		if (isValidAbTestingGroup() && !context.providers.sevenOneMedia) {
+			log(experimentName + ' turned on', 'debug', logGroup);
 
 			$('#' + medrecId)
 				.addClass(experimentClassName)
 				.addClass(abTest.getGroup(experimentName));
 		} else {
-			log([experimentName + ' turned off'], 'debug', logGroup);
+			log(experimentName + ' turned off', 'debug', logGroup);
 		}
 	}
 
