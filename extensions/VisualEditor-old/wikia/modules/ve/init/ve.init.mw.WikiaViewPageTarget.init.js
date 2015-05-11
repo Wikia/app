@@ -25,7 +25,7 @@
 		// Used by tracking calls that go out before ve.track is available.
 		trackerConfig = {
 			'category': 'editor-ve',
-			'trackingMethod': 'both'
+			'trackingMethod': 'analytics'
 		},
 		spinnerTimeoutId = null,
 		skin = mw.config.get( 'skin' );
