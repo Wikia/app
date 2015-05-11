@@ -127,7 +127,7 @@ class InsightsHelper {
 
 		if ( !$title->exists() ) {
 			$data['classes'] = 'new';
-			$data['title'] = wfMessage( 'red-link-title', $title->getPrefixedText() )->escaped();
+			$data['title'] = wfMessage( 'red-link-title', $name )->escaped();
 		}
 
 		return $data;
