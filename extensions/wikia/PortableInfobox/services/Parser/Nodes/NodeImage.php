@@ -8,10 +8,15 @@ class NodeImage extends Node {
 
 	public function getData() {
 		$imageName = $this->getValueWithDefault( $this->xmlNode );
+		$ref = null;
+		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
+
+		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $this->getImageAsTitleObject( $imageName ), &$ref, $alt ] );
 		return [
 			'url' => $this->resolveImageUrl( $imageName ),
 			'name' => $imageName,
-			'alt' => $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} )
+			'alt' => $alt,
+			'ref' => $ref
 		];
 	}
 
@@ -19,12 +24,17 @@ class NodeImage extends Node {
 		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
 	}
 
-	public function resolveImageUrl( $filename ) {
+	private function getImageAsTitleObject( $imageName ) {
 		global $wgContLang;
 		$title = \Title::newFromText(
-			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $filename, $wgContLang ),
+			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $imageName, $wgContLang ),
 			NS_FILE
 		);
+		return $title;
+	}
+
+	public function resolveImageUrl( $filename ) {
+		$title = $this->getImageAsTitleObject( $filename );
 		if ( $title && $title->exists() ) {
 			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
 		} else {

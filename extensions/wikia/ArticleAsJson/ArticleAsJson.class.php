@@ -113,6 +113,22 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
+	public static function onPortableInfoboxNodeImageGetData( $title, &$ref, $alt ) {
+		global $wgArticleAsJson;
+
+		wfProfileIn( __METHOD__ );
+
+		if ( $wgArticleAsJson ) {
+			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+
+			self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
+			$ref = count( self::$media ) - 1;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
 	public static function onImageBeforeProduceHTML( &$dummy, Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ) {
 		global $wgArticleAsJson;
 

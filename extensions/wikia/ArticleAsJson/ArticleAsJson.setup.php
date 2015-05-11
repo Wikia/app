@@ -23,3 +23,4 @@ $wgHooks['PageRenderingHash'][] = 'ArticleAsJson::onPageRenderingHash';
 $wgHooks['ParserAfterTidy'][] = 'ArticleAsJson::onParserAfterTidy';
 $wgHooks['Parser::showEditLink'][] = 'ArticleAsJson::onShowEditLink';
 $wgHooks['ParserLimitReport'][] = 'ArticleAsJson::reportLimits';
+$wgHooks['PortableInfoboxNodeImage::getData'][] = 'ArticleAsJson::onPortableInfoboxNodeImageGetData';
