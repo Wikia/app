@@ -113,10 +113,15 @@ class InsightsHelper {
 	 * @return array
 	 */
 	public static function getTitleLink( Title $title, $params ) {
+		$name = $title->getPrefixedText();
+		if ( $title->getNamespace() != 0 ) {
+			$name = $title->getNsText() . ':' . $name;
+		}
+
 		$data = [
 			'text' => $title->getText(),
 			'url' => $title->getFullURL( $params ),
-			'title' => $title->getPrefixedText(),
+			'title' => $name,
 			'classes' => '',
 		];
 
