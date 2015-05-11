@@ -2,7 +2,7 @@
 
 namespace Flags\Models;
 
-class FlagsModel extends \WikiaModel {
+class FlagsBaseModel extends \WikiaModel {
 
 	const FLAGS_TO_PAGES_TABLE = 'flags_to_pages';
 	const FLAGS_TYPES_TABLE = 'flags_types';

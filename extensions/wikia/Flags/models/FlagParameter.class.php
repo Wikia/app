@@ -2,38 +2,33 @@
 
 namespace Flags\Models;
 
-class FlagParameter extends FlagsModel {
+class FlagParameter extends FlagsBaseModel {
 	private
 		$status;
 
 	public function createParametersForFlag( $flagId, $flagTypeId, $wikiId, $pageId, $params ) {
 		$db = $this->getDatabaseForWrite();
 
-		$sql = ( new \WikiaSQL )
-			->INSERT( self::FLAGS_PARAMS_TABLE );
-
+		$values = [];
 		foreach ( $params as $paramName => $paramValue ) {
-			$sql->VALUES( $flagId, $wikiId, $pageId, $flagTypeId, $paramName, $paramValue );
+			$values[] = [ $flagId, $flagTypeId, $wikiId, $pageId, $paramName, $paramValue ];
 		}
 
-		$sql->run( $db );
-
-		$db->commit();
+		$sql = ( new \WikiaSQL )
+			->INSERT()->INTO( self::FLAGS_PARAMS_TABLE, [
+				'flag_id',
+				'flag_type_id',
+				'wiki_id',
+				'page_id',
+				'param_name',
+				'param_value',
+			] )
+			->VALUES( $values )
+			->run( $db );
 
 		$this->status = $db->affectedRows() > 0;
 
-		return $this->status;
-	}
-
-	public function deleteParametersForFlag( $flagId ) {
-		$db = $this->getDatabaseForWrite();
-
-		$sql = ( new \WikiaSQL() )
-			->DELETE( self::FLAGS_PARAMS_TABLE )
-			->WHERE( 'flag_id' )->EQUAL_TO( $flagId )
-			->run( $db );
-
-		$this->status = $db->commit();
+		$db->commit();
 
 		return $this->status;
 	}

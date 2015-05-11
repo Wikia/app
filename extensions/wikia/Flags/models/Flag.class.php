@@ -2,13 +2,13 @@
 
 namespace Flags\Models;
 
-class Flag extends FlagsModel {
-	const FLAG_ACTION_ADD = 'add';
-	const FLAG_ACTION_REMOVE = 'remove';
-
+class Flag extends FlagsBaseModel {
 	private
-		$paramsVerified = false,
-		$status;
+		$paramsVerified = false;
+
+	/**
+	 * GET methods
+	 */
 
 	public function getFlagsForPage( $wikiId, $pageId ) {
 		/**
@@ -33,8 +33,6 @@ class Flag extends FlagsModel {
 				$flagsForPage[ $flagId ]['params'] = $flagParams;
 			}
 		}
-
-		var_dump( $flagsForPage );
 
 		/**
 		 * 3. Return the ready table
@@ -73,48 +71,25 @@ class Flag extends FlagsModel {
 		return $flagsParams;
 	}
 
-	public function performAction( $action, $params ) {
-		/**
-		 * The data should be verified in the
-		 * verifyParamsForAction() method before
-		 * performing an action
-		 */
-		if ( !$this->paramsVerified ) {
+	/**
+	 * POST methods
+	 */
+
+	/**
+	 * Adding flags
+	 */
+
+	public function verifyParamsForAdd( $params ) {
+		if ( !isset( $params['wikiId'] )
+			|| !isset( $params['pageId'] )
+			|| ( !isset( $params['flags'] ) && !is_array( $params['flags'] ) )
+		) {
 			return false;
 		}
 
-		switch ( $action ) {
-			case self::FLAG_ACTION_ADD:
-				$flagParams = [];
-				if ( isset( $params['flagParams'] ) ) {
-					$flagParams = json_decode( $params['flagParams'] );
-				}
-				$this->status = $this->addFlag( $params['flagTypeId'], $params['wikiId'], $params['pageId'], $flagParams );
-				break;
-			case self::FLAG_ACTION_REMOVE:
-				$this->status = $this->removeFlag( $params['flagId'] );
-				break;
-		}
-
-		return $this->status;
-	}
-
-	public function verifyParamsForAction( $action, $params ) {
-		$this->debug( [ $action, $params ] );
-		switch ( $action ) {
-			case self::FLAG_ACTION_ADD:
-				$required = [ 'flagTypeId', 'wikiId', 'pageId' ];
-				break;
-			case self::FLAG_ACTION_REMOVE:
-				$required = [ 'flag_id' ];
-				break;
-			default:
-				return false; // Unknown action
-		}
-
-		foreach ( $required as $requiredField ) {
-			if ( !isset( $params[ $requiredField ] ) ) {
-				return false; // Lack of a required parameter
+		foreach( $params['flags'] as $flag ) {
+			if ( !isset( $flag['flagTypeId'] ) ) {
+				return false;
 			}
 		}
 
@@ -122,64 +97,76 @@ class Flag extends FlagsModel {
 		return true;
 	}
 
-	/**
-	 * The following private methods are used to modify data
-	 * in databases e.g. perform INSERT, UPDATE and DELETE actions.
-	 * They're not meant to be called directly but via the
-	 * performAction() method.
-	 */
+	public function addFlagsToPage( $params ) {
+		if ( !$this->paramsVerified ) {
+			return false;
+		}
 
-	/**
-	 * @param $wikiId
-	 * @param $pageId
-	 * @param $flagTypeId
-	 * @param array $params
-	 * @return bool
-	 */
+		$status = [];
 
-	private function addFlag( $flagTypeId, $wikiId, $pageId, Array $params = [] ) {
-
-		$this->debug( [ $wikiId, $pageId, $flagTypeId ] );
-
-		$db = $this->getDatabaseForWrite();
-
-		$sql = ( new \WikiaSQL() )
-			->INSERT( self::FLAGS_TO_PAGES_TABLE )
-				// flag_id is auto_increment
-				->SET( 'flag_type_id', $flagTypeId )
-				->SET( 'wiki_id', $wikiId )
-				->SET( 'page_id', $pageId )
-			->run( $db );
-
-		$db->commit();
-
-		$status = $db->affectedRows() > 0;
-
-		if ( $status && !empty( $params ) ) {
-			$flagId = $db->insertId();
-			$paramsModel = new FlagParameter();
-			$status = $paramsModel->createParametersForFlag( $flagId, $wikiId, $pageId, $flagTypeId, $params );
+		foreach ( $params['flags'] as $i => $flag ) {
+			$status[$i] = $this->addFlag( $flag['flagTypeId'], $params['wikiId'], $params['pageId'], $flag['params'] );
 		}
 
 		return $status;
 	}
 
-	private function removeFlag( $flagId, $removeParams = false ) {
+	private function addFlag( $flagTypeId, $wikiId, $pageId, Array $params = [] ) {
+		$db = $this->getDatabaseForWrite();
+
+		$sql = ( new \WikiaSQL() )
+			->INSERT( self::FLAGS_TO_PAGES_TABLE )
+			// flag_id is auto_increment
+			->SET( 'flag_type_id', $flagTypeId )
+			->SET( 'wiki_id', $wikiId )
+			->SET( 'page_id', $pageId )
+			->run( $db );
+
+		$status = $db->affectedRows() > 0;
+		$flagId = $db->insertId();
+
+		$db->commit();
+
+		if ( $status && !empty( $params ) ) {
+			$paramsModel = new FlagParameter();
+			$status = $paramsModel->createParametersForFlag( $flagId, $flagTypeId, $wikiId, $pageId, $params );
+		}
+
+		return $status;
+	}
+
+	/**
+	 * Removing flags
+	 */
+
+	public function removeFlagsFromPage( $params ) {
+		if ( !$this->paramsVerified ) {
+			return false;
+		}
+
+		$status = $this->removeFlags( $params['flagsIds'] );
+		return $status;
+	}
+
+	public function verifyParamsForRemove( $params ) {
+		if ( !isset( $params['flagsIds'] ) || !is_array( $params['flagsIds'] ) ) {
+			return false;
+		}
+
+		$this->paramsVerified = true;
+		return true;
+	}
+
+	private function removeFlags( Array $flagsIds ) {
 		$db = $this->getDatabaseForWrite();
 
 		$sql = ( new \WikiaSQL() )
 			->DELETE( self::FLAGS_TO_PAGES_TABLE )
-			->WHERE( 'flag_id' )->EQUAL_TO( $flagId )
+			->WHERE( 'flag_id' )->IN( $flagsIds )
 			->run( $db );
 
-		$db->commit();
-
 		$status = $db->affectedRows() > 0;
-
-		if ( $status && $removeParams ) {
-			$paramsModel = new FlagParameter();
-			$status = $paramsModel->deleteParametersForFlag( $flagId );
-		}
+		$db->commit();
 
 		return $status;
 	}

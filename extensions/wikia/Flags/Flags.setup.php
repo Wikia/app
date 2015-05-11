@@ -6,21 +6,6 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
-
-/**
- * Controllers
- */
-$wgAutoloadClasses['FlagsController'] = $dir . 'controllers/FlagsController.class.php';
-
-/**
- * Models
- */
-$wgAutoloadClasses['Flags\Models\FlagsModel'] = $dir . 'models/FlagsModel.class.php';
-$wgAutoloadClasses['Flags\Models\Flag'] = $dir . 'models/Flag.class.php';
-$wgAutoloadClasses['Flags\Models\FlagParameter'] = $dir . 'models/FlagParameter.class.php';
-$wgAutoloadClasses['Flags\Models\FlagType'] = $dir . 'models/FlagType.class.php';
-
 $wgExtensionCredits['other'][] = [
 	'name'				=> 'Flags',
 	'version'			=> '1.0',
@@ -28,3 +13,16 @@ $wgExtensionCredits['other'][] = [
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Flags',
 	'descriptionmsg'    => 'flags-desc'
 ];
+
+/**
+ * Controllers
+ */
+$wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
+
+/**
+ * Models
+ */
+$wgAutoloadClasses['Flags\Models\FlagsBaseModel'] = __DIR__ . '/models/FlagsBaseModel.class.php';
+$wgAutoloadClasses['Flags\Models\Flag'] = __DIR__ . '/models/Flag.class.php';
+$wgAutoloadClasses['Flags\Models\FlagParameter'] = __DIR__ . '/models/FlagParameter.class.php';
+$wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.php';
