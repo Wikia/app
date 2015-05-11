@@ -12,25 +12,21 @@ class WallMessageController extends EmailController {
 	private $messageBody;
 
 	private $wallUserName;
-	private $threadUserName;
-	private $replyUserName;
-	private $isThread;
-
 	private $senderUserName;
 	private $receiverUserName;
 
 	public function initEmail() {
 		$this->wallUserName = $this->request->getVal( 'wallUserName' );
-		$this->threadUserName = $this->request->getVal( 'threadUserName' );
-		$this->replyUserName = $this->request->getVal( 'replyUserName' );
-		$this->isThread = $this->request->getVal( 'isThread' );
+		$threadUserName = $this->request->getVal( 'threadUserName' );
+		$replyUserName = $this->request->getVal( 'replyUserName' );
+		$isThread = $this->request->getVal( 'isThread' );
 
-		if ( $this->isThread ) {
-			$this->senderUserName = $this->threadUserName;
+		if ( $isThread ) {
+			$this->senderUserName = $threadUserName;
 			$this->receiverUserName = $this->wallUserName;
 		} else {
-			$this->senderUserName = $this->replyUserName;
-			$this->receiverUserName = $this->threadUserName;
+			$this->senderUserName = $replyUserName;
+			$this->receiverUserName = $threadUserName;
 		}
 
 		$this->assertUserRolesSet();
