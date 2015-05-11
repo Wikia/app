@@ -9,16 +9,18 @@ class NodeImage extends Node {
 	public function getData() {
 		global $wgContLang;
 
-		$imageName = \Title::newFromText(
+		$title = \Title::newFromText(
 			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName(
 				$this->getRawValueWithDefault( $this->xmlNode ),
 				$wgContLang
 			),
 			NS_FILE
 		);
+
+
 		return [
-			'url' => $this->resolveImageUrl( $imageName ),
-			'name' => $imageName,
+			'url' => $this->resolveImageUrl( $title ),
+			'name' => ( $title ) ? $title->getDBkey() : '',
 			'alt' => $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} )
 		];
 	}
