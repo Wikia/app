@@ -11,9 +11,8 @@ class NodeImage extends Node {
 		$ref = null;
 		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 
-
 		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
-		
+
 		return [
 			'url' => $this->resolveImageUrl( $title ),
 			'name' => ( $title ) ? $title->getDBkey() : '',
