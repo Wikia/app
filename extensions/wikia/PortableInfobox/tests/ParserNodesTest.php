@@ -42,6 +42,21 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$this->assertTrue( $nodeDefault->getData()[ 'alt' ] == 'default-alt', 'default alt' );
 	}
 
+	/**
+	 * @dataProvider testNodeImageVariableReplaceProvider
+	 */
+	public function testNodeImageVariableReplace( $xmlString, $data, $expValue ) {
+		$xml = simplexml_load_string($xmlString);
+		$node = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\Nodes\NodeImage' )
+			->setConstructorArgs( [ $xml, $data ] )
+			->setMethods( [ 'resolveImageUrl' ] )
+			->getMock();
+		$node->expects( $this->any() )->method( 'resolveImageUrl' )->with( $this->equalTo( $expValue ) );
+		$externalParser = new \Wikia\PortableInfobox\Parser\DummyParser();
+		$node->setExternalParser( $externalParser );
+		$node->getData();
+	}
+
 	public function testNodeHeader() {
 		$string = '<header>Comandantes</header>';
 		$xml = simplexml_load_string( $string );
@@ -100,5 +115,41 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 0 ][ 'data' ][ 'value' ] == 'Combatientes' );
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 1 ][ 'type' ] == 'data' );
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 2 ][ 'data' ][ 'value' ] == 2 );
+	}
+
+	public function testNodeImageVariableReplaceProvider() {
+		return [
+			[
+				'<image source="image2"><alt source="alt-source"><default>default-alt</default></alt></image>',
+				[
+					'image2' => 'Wiki-image'
+				],
+				'Wiki-image',
+				'Regular filename should be untouched'
+			],
+			[
+				'<image source="image2"><alt source="alt-source"><default>default-alt</default></alt></image>',
+				[
+					'image2' => '[[Wiki-image]]'
+				],
+				'[[Wiki-image]]',
+				'Link to filename should be untouched'
+			],
+			[
+			'<image source="image2"><alt source="alt-source"><default>default-alt</default></alt></image>',
+				[
+					'image2' => '[[File:Wiki-image]]'
+				],
+				'[[File:Wiki-image]]',
+				'File invocation in params should be untouched'
+			],
+			[
+				'<image source="image2"><default>[[File:Wiki-image]]</default><alt source="alt-source"><default>default-alt</default></alt></image>',
+				[ ],
+				'replaceVariables([[File:Wiki-image]])',
+				'File invocation in default should invoke replace variables'
+			],
+
+		];
 	}
 }

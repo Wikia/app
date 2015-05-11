@@ -69,7 +69,7 @@ class Node {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 		$value = null;
 		if ( !empty( $source ) ) {
-			$value = $this->getInfoboxData( $source );
+			$value = $this->getRawInfoboxData( $source );
 		}
 		if ( !$value ) {
 			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
@@ -92,7 +92,6 @@ class Node {
 	}
 
 	protected function getInfoboxData( $key ) {
-		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
-		return $this->getExternalParser()->parseRecursive( $data );
+		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData ( $key ) );
 	}
 }
