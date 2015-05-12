@@ -24,7 +24,7 @@ class ChillingEffectsClient {
 	 * @param string $baseUrl  API URL.
 	 * @param string $apiToken API token.
 	 */
-	public function __construct( $baseUrl = '', $apiToken = '' ) {
+	public function __construct( $baseUrl, $apiToken ) {
 		$this->baseUrl = $baseUrl;
 		$this->apiToken = $apiToken;
 	}

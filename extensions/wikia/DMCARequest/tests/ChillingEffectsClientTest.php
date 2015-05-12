@@ -22,7 +22,7 @@ class ChillingEffectsClientTest extends \WikiaBaseTest {
 			->with( 'Location' )
 			->will( $this->returnValue( $locationHeader ) );
 
-		$client = new ChillingEffectsClient();
+		$client = new ChillingEffectsClient( '', '' );
 
 		$result = $client->getNoticeIdFromResponse( $httpRequestMock );
 
