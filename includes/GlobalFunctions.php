@@ -3826,6 +3826,7 @@ function wfWaitForSlaves( $wiki = false ) {
 			# not just the one returned by consul
 			sleep( 1 );
 
+			/* @var MySQLMasterPos $pos */
 			\Wikia\Logger\WikiaLogger::instance()->info( 'wfWaitForSlaves for consul clusters',  [
 				'exception' => new Exception(),
 				'master' => $masterHostName,
