@@ -1,10 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.paidAssetDrop', [
-	'wikia.document',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.paidAssetDrop.paidAssetDrop',
+	'wikia.document',
 	'wikia.log'
-], function (doc, adContext, pad, log) {
+], function (adContext, pad, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.paidAssetDrop',
