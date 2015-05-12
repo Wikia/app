@@ -10,7 +10,7 @@ class ForumController extends EmailController {
 
 	protected $titleText;
 	protected $titleUrl;
-	protected $summary;
+	protected $details;
 	/* @var \Title */
 	protected $board;
 
@@ -21,7 +21,7 @@ class ForumController extends EmailController {
 			$this->request->getVal( 'boardTitle' ),
 			$this->request->getVal( 'boardNamespace' )
 		);
-		$this->summary = $this->getVal( 'summary' );
+		$this->details = $this->getVal( 'details' );
 
 		$this->assertValidParams();
 	}
@@ -67,7 +67,7 @@ class ForumController extends EmailController {
 	}
 
 	protected function getDetails() {
-		return $this->summary;
+		return $this->details;
 	}
 
 	protected function getButtonText() {

@@ -400,7 +400,7 @@ class WallNotifications {
 						'boardTitle' => $notification->data->article_title_text,
 						'titleText' => $notification->data->thread_title,
 						'titleUrl' => $notification->data->thread_title,
-						'summary' => $text,
+						'details' => $text,
 						'targetUser' => $watcher->getName(),
 						'fromAddress' => $this->app->wg->PasswordSender,
 						'replyToAddress' => $this->app->wg->NoReplyAddress,
