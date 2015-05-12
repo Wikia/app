@@ -275,10 +275,10 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	public function createSortingArray( $sortingArray, $key ) {
 		global $wgMemc;
 
-		if ( isset( $this->sorting[$key]['sortFunction'] ) ) {
-			usort( $sortingArray, $this->sorting[$key]['sortFunction'] );
+		if ( isset( $this->sorting[ $key ]['sortFunction'] ) ) {
+			usort( $sortingArray, $this->sorting[ $key ]['sortFunction'] );
 		} else {
-			arsort( $sortingArray, $this->sorting[$key]['sortType'] );
+			arsort( $sortingArray, $this->sorting[ $key ]['sortType'] );
 		}
 
 		$cacheKey = $this->getMemcKey( $key );
