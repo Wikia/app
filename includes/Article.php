@@ -682,6 +682,10 @@ class Article extends Page {
 		# Adjust title for main page & pages with displaytitle
 		if ( $pOutput ) {
 			$this->adjustDisplayTitle( $pOutput );
+
+			if ($pOutput->getText() == '') {
+				\Wikia\Logger\WikiaLogger::instance()->error( 'PLATFORM-1212 - empty parser output' );
+			}
 		}
 
 		# For the main page, overwrite the <title> element with the con-
