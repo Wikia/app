@@ -82,11 +82,12 @@ require([
 
 require(['ext.wikia.adEngine.adContext', 'wikia.abTest'], function (adContext, abTest) {
 	'use strict';
+	
+	var group = abTest.getGroup('ADS_VIEWABILITY_MEDREC'),
+		medrec = document.getElementById('TOP_RIGHT_BOXAD');
 
-	if (!!abTest.getGroup('ADS_VIEWABILITY_MEDREC') && !adContext.getContext().providers.sevenOneMedia) {
-		var medrec = document.getElementById('TOP_RIGHT_BOXAD');
-		medrec.classList.add('ads-viewability-test');
-		medrec.classList.add(abTest.getGroup('ADS_VIEWABILITY_MEDREC'));
+	if (group && medrec && !adContext.getContext().providers.sevenOneMedia) {
+		medrec.className += ' ads-viewability-test ' + group;
 	}
 });
 
