@@ -85,7 +85,7 @@ require(['ext.wikia.adEngine.adContext', 'wikia.abTest'], function (adContext, a
 
 	if (!!abTest.getGroup('ADS_VIEWABILITY_MEDREC') && !adContext.getContext().providers.sevenOneMedia) {
 		var medrec = document.getElementById('TOP_RIGHT_BOXAD');
-		medrec.classList.add('ads-viability-test');
+		medrec.classList.add('ads-viewability-test');
 		medrec.classList.add(abTest.getGroup('ADS_VIEWABILITY_MEDREC'));
 	}
 });
