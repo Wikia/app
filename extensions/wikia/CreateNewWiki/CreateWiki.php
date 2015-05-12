@@ -40,7 +40,7 @@ class CreateWiki {
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
-	const DEFAULT_STAFF        = "Angela";
+	const DEFAULT_STAFF        = "Wikia";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
 	const ACTIVE_CLUSTER       = "c7";
@@ -347,6 +347,8 @@ class CreateWiki {
 		 * destroy connection to newly created database
 		 */
 		$this->mNewWiki->dbw->commit();
+		wfWaitForSlaves( $this->mNewWiki->dbname ); # OPS-6313
+
 		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
 		$wgSharedDB = $tmpSharedDB;
 

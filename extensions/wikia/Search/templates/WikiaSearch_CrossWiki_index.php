@@ -5,7 +5,7 @@
 
 				<p class="result-count subtle">
 					<?php if (empty($isOneResultsPageOnly)): ?>
-						<?= wfMsg('wikiasearch2-results-count', $resultsFoundTruncated, '<strong>' . $query . '</strong>'); ?>
+						<?= wfMessage('wikiasearch2-results-count', $resultsFoundTruncated, '<strong>' . $query . '</strong>')->text(); ?>
 					<?php else: ?>
 						<?= wfMsg('wikiasearch2-results-for', '<strong>' . $query . '</strong>'); ?>
 					<?php endif; ?>

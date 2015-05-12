@@ -17,7 +17,7 @@ class DMCARequestHelper {
 	 *
 	 * @var array
 	 */
-	public $availableActions = [
+	private $availableActions = [
 		'Yes',
 		'No',
 		'Partial',
@@ -27,6 +27,11 @@ class DMCARequestHelper {
 		1 => 'copyrightholder',
 		2 => 'representative',
 		3 => 'none',
+	];
+
+	private $senderTypes = [
+		'organization',
+		'individual',
 	];
 
 	private $noticeData = [];
@@ -66,6 +71,44 @@ class DMCARequestHelper {
 	 */
 	public function isValidRequestorType( $type ) {
 		return in_array( $type, array_keys( $this->requestorTypes ) );
+	}
+
+	/**
+	 * Get a list of valid actions taken on DMCA requestors.
+	 *
+	 * @return array List of valid actions
+	 */
+	public function getActions() {
+		return $this->availableActions;
+	}
+
+	/**
+	 * Check if a given action is valid for the ChillingEffects API.
+	 *
+	 * @param  string  $action Action text.
+	 * @return boolean
+	 */
+	public function isValidAction( $action ) {
+		return in_array( $action, array_keys( $this->availableActions ) );
+	}
+
+	/**
+	 * Get a list of valid sender types.
+	 *
+	 * @return array List of valid sender types
+	 */
+	public function getSenderTypes() {
+		return $this->senderTypes;
+	}
+
+	/**
+	 * Check if a given sender type is valid for the ChillingEffects API.
+	 *
+	 * @param  string  $action Action text.
+	 * @return boolean
+	 */
+	public function isValidSenderType( $type ) {
+		return in_array( $type, array_keys( $this->senderTypes ) );
 	}
 
 	/**
@@ -140,6 +183,7 @@ class DMCARequestHelper {
 			'infringing_urls' => $notice->dmca_infringing_urls,
 			'comments' => $notice->dmca_comments,
 			'signature' => $notice->dmca_signature,
+			'ce_id' => $notice->dmca_ce_id,
 		] );
 
 		return true;
@@ -167,29 +211,30 @@ class DMCARequestHelper {
 	}
 
 	/**
-	 * Update the action taken on the notice.
+	 * Set the ID of the notice on ChillingEffects.
 	 *
-	 * @param  int     $noticeId The ID of the notice to update
-	 * @param  string  $action   The action taken
-	 * @return boolean           Whether the update was successful
+	 * @param  int     $noticeId   The ID of the notice to update
+	 * @param  string  $ceNoticeId The ID on ChillingEffects
+	 * @return boolean             Whether the update was successful
 	 */
-	public function updateAction( $noticeId, $action ) {
+	public function setChillingEffectsNoticeId( $noticeId, $ceNoticeId ) {
 		$dbw = $this->getDB( DB_MASTER );
-
-		if ( !in_array( $action, $this->availableActions ) ) {
-			return false;
-		}
 
 		$result = $dbw->update(
 			'dmca_request',
 			[
-				'dmca_action_taken' => $action,
+				'dmca_ce_id' => $ceNoticeId,
 			],
 			[
 				'dmca_id' => $noticeId,
 			],
 			__METHOD__
 		);
+
+		if ( $result ) {
+			$dbw->commit( __METHOD__ );
+			$this->noticeData['ce_id'] = $ceNoticeId;
+		}
 
 		return $result;
 	}
@@ -222,7 +267,8 @@ class DMCARequestHelper {
 			wfMessage( 'dmcarequest-request-wikiarights-label' )->inLanguage( 'en' )->useDatabase( false )->plain(),
 			$this->noticeData['comments'],
 			$this->noticeData['signature'],
-			\SpecialPage::getTitleFor( 'DMCARequestManagement', $this->noticeData['id'] )->getFullURL(),
+			\GlobalTitle::newFromText( 'DMCARequestManagement/' . $this->noticeData['id'],
+				NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID )->getFullURL(),
 		] )->inLanguage( 'en' )->useDatabase( false )->escaped();
 	}
 
