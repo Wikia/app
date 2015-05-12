@@ -3817,6 +3817,21 @@ function wfWaitForSlaves( $wiki = false ) {
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
 		$lb->waitForAll( $pos, $wiki );
+
+		// Wikia change - begin
+		// OPS-6313 - sleep-based implementaion for cluster G (it uses consul-powered DB config)
+		if ( $lb->parentInfo()['id'] === 'main-c7' ) {
+			# I am terribly sorry, but we do really need to wait for all slaves
+			# not just the one returned by consul
+			sleep( 1 );
+
+			\Wikia\Logger\WikiaLogger::instance()->info( 'wfWaitForSlaves for c7',  [
+				'exception' => new Exception(),
+				'pos' => $pos->__toString(),
+				'wiki' => $wiki
+			] );
+		}
+		// Wikia change - end
 	}
 }
 

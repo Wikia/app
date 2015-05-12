@@ -347,7 +347,7 @@ class CreateWiki {
 		 * destroy connection to newly created database
 		 */
 		$this->mNewWiki->dbw->commit();
-		sleep(2); # I'm terribly sorry, we need to wait for slaves here (OPS-6313)
+		wfWaitForSlaves( $this->mNewWiki->dbname ); # OPS-6313
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
 		$wgSharedDB = $tmpSharedDB;
