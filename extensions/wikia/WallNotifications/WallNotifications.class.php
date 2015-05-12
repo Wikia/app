@@ -385,6 +385,11 @@ class WallNotifications {
 
 		foreach ( $watchers as $val ){
 			$watcher = $this->getUser( $val );
+
+			if ( !( $watcher->getBoolOption('unsubscribed') === true ) ) {
+				continue;
+			}
+
 			$mode = $watcher->getOption( 'enotifwallthread' );
 
 			if ( !empty( $mode ) && $watcher->getId() != 0 && (
@@ -402,11 +407,18 @@ class WallNotifications {
 						' (' . $notification->data->msg_author_username . ')';
 				}
 
-				$data = [];
-				wfRunHooks( 'NotificationGetMailNotificationMessage', [
-					&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text
-				]);
-				if ( empty( $data ) ) {
+				if ( !empty( $notification->data->article_title_ns ) && MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD ) {
+
+					$params = [
+						'notification' => $notification
+					];
+
+					$controller = '\Email\Controller\ForumController';
+					F:app()->sendRequest( $controller, 'handle', $params );
+
+				}
+
+				else {
 					$data = [
 						'$WATCHER' => $watcherName,
 						'$WIKI' => $notification->data->wikiname,
@@ -428,11 +440,10 @@ class WallNotifications {
 						'$MSG_KEY_BODY' => 'mail-notification-body',
 						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
 					];
-				}
 
-				if ( !( $watcher->getBoolOption('unsubscribed') === true ) ) {
 					$this->sendEmail( $watcher, $data );
 				}
+
 			}
 		}
 

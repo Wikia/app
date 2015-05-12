@@ -79,16 +79,17 @@ abstract class CommentController extends EmailController {
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'summary' => $this->getSummary(),
 			'details' => $this->getDetails(),
-			'buttonText' => $this->getCommentLabel(),
-			'buttonLink' => $this->getCommentLink(),
+			'buttonText' => $this->getButtonLabel(),
+			'buttonLink' => $this->getButtonLink(),
 			'contentFooterMessages' => [
-				$this->getCommentSectionLink(),
+				$this->getViewAll(),
 			],
 		] );
 	}
 
 	public function getSubject() {
 		$articleTitle = $this->title->getText();
+
 		return wfMessage( $this->getSubjectKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
 			->text();
@@ -105,31 +106,40 @@ abstract class CommentController extends EmailController {
 
 	protected function getSummary() {
 		$articleTitle = $this->title->getText();
+		$articleUrl = $this->title->getFullURL();
 
-		return wfMessage( $this->getSummaryKey(), $articleTitle )
+		return wfMessage( $this->getSummaryKey(), $articleTitle, $articleUrl )
 			->inLanguage( $this->targetLang )
-			->text();
+			->parse();
 	}
 
 	abstract protected function getSummaryKey();
 
 	protected function getDetails() {
-		$article = \Article::newFromTitle( $this->commentTitle, \RequestContext::getMain() );
-		$service = new \ArticleService( $article );
-		$snippet = $service->getTextSnippet();
+		$comment = $this->getLatestComment();
+		$articleID = $comment->getArticleID();
 
-		return $snippet;
+		$res = $this->sendRequest( 'ArticleSummary', 'blurb', [
+			'ids' => $articleID,
+		] )->getData();
+
+		if ( empty( $res['summary'][$articleID] ) ) {
+			return '';
+		}
+
+		return $res['summary'][$articleID]['snippet'];
 	}
 
-	protected function getCommentLabel() {
-		return wfMessage( 'emailext-comment-link-label')
+	protected function getButtonLabel() {
+		return wfMessage( $this->getButtonLabelKey())
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
 
-	protected function getCommentLink() {
-		$comment = $this->commentTitle;
-		return $comment->getCanonicalURL();
+	abstract protected function getButtonLabelKey();
+
+	protected function getButtonLink() {
+		return $this->getLatestComment()->getCanonicalURL();
 	}
 
 	protected function getFooterMessages() {
@@ -144,13 +154,29 @@ abstract class CommentController extends EmailController {
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
 
-	protected function getCommentSectionLink() {
-		$url = $this->title->getFullURL( '#WikiaArticleComments' );
+	protected function getLatestComment() {
+		if ( empty( $this->latestComment ) ) {
+			$articleComment = \ArticleComment::latestFromTitle( $this->title );
+			if ( empty( $articleComment ) ) {
+				throw new Fatal( 'Could not find latest comment' );
+			}
+			$this->latestComment = $articleComment->getTitle();
+		}
 
-		return wfMessage( 'emailext-comment-view-all', $url )
+		return $this->latestComment;
+	}
+
+	protected function getViewAll() {
+		return wfMessage( $this->getViewAllKey(), $this->getViewAllLink() )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
+
+	protected function getViewAllLink() {
+		return $this->title->getFullURL( '#WikiaArticleComments' );
+	}
+
+	abstract protected function getViewAllKey();
 }
 
 class ArticleCommentController extends CommentController {
@@ -161,6 +187,14 @@ class ArticleCommentController extends CommentController {
 	protected function getSummaryKey() {
 		return 'emailext-articlecomment-summary';
 	}
+
+    protected function getButtonLabelKey () {
+        return 'emailext-comment-link-label';
+    }
+
+	protected function getViewAllKey(){
+		return 'emailext-comment-view-all';
+	}
 }
 
 class BlogCommentController extends CommentController {
@@ -170,5 +204,64 @@ class BlogCommentController extends CommentController {
 
 	protected function getSummaryKey() {
 		return 'emailext-blogcomment-summary';
+	}
+
+    protected function getButtonLabelKey () {
+        return 'emailext-comment-link-label';
+    }
+
+	protected function getViewAllKey(){
+		return 'emailext-comment-view-all';
+	}
+}
+
+class ForumReplyController extends CommentController {
+	protected function getButtonLink() {
+		$notification = $this->getVal('notification');
+		return $notification->data->url;
+    }
+
+    protected function getViewAllLink() {
+		$notification = $this->getVal('notification');
+		return $notification->data->url;
+    }
+
+    protected function getButtonLabelKey () {
+        return 'emailext-forumreply-link-label';
+    }
+
+	protected function getSummary() {
+		$notification = $this->getVal('notification');
+		$threadTitle = $notification->data->thread_title;
+		$messageUrl = $notification->data->url;
+
+		return wfMessage( $this->getSummaryKey(), $threadTitle, $messageUrl )
+			->inLanguage( $this->targetLang )
+			->parse();
+	}
+
+    protected function getSubjectKey() {
+        return 'emailext-forumreply-summary';
+    }
+
+    protected function getSummaryKey() {
+        return 'emailext-forumreply-summary';
+    }
+
+	protected function getViewAllKey(){
+		return 'emailext-forumreply-view-all';
+	}
+
+	protected function getFooterMessages() {
+		$notification = $this->getVal('notification');
+		$unfollowUrl = $this->title->getCanonicalURL( 'action=unwatch' );
+		$parentTitleText = $notification->data->thread_title;
+
+		$footerMessages = [
+			wfMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $parentTitleText )
+				->inLanguage( $this->targetLang )
+				->parse()
+		];
+		return array_merge( $footerMessages, EmailController::getFooterMessages() );
 	}
 }

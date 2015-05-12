@@ -19,7 +19,7 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 	'emailext-update-frequency' => 'To change which emails you receive or their frequency, please visit your [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Preferences] page.',
 	'emailext-unsubscribe' => 'To unsubscribe from all Wikia emails, click [$1 here].',
 	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
-
+	'emailext-forumreply-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow [$2 this] discussion on [{{SITENAME}}.'
 );
 
 $messages['qqq'] = array(
@@ -36,6 +36,7 @@ $messages['qqq'] = array(
 	'emailext-update-frequency' => 'Provides a link for users to update their email preferences',
 	'emailext-unsubscribe' => 'Provides a link for users to opt out of emails altogether. $1 is the unsubscribe link.',
 	'emailext-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title',
+	'emailext-forumreply-unfollow-text' => 'Asks the user if they want to stop following this discussion and provides a link to unfollow the discussion. $1 -> unfollow url, $2 discussion url'
 );
 
 $messages['de'] = array(

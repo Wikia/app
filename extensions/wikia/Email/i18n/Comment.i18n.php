@@ -7,6 +7,9 @@ $messages['en'] = array(
 	'emailext-comment-salutation' => 'Hi $1,',
 	'emailext-comment-link-label' => 'See this comment',
 	'emailext-comment-view-all' => '[$1 View all comments]',
+    'emailext-forumreply-summary' => "'''There are new replies to [$2 $1] on [{{SERVER}} {{SITENAME}}].'''",
+    'emailext-forumreply-link-label' => 'Read the reply',
+    'emailext-forumreply-view-all' => '[$1 See the entire discussion.]',
 );
 
 $messages['qqq'] = array(
@@ -15,6 +18,9 @@ $messages['qqq'] = array(
 	'emailext-comment-salutation' => "Email greeting. $1 is the recipient's username.",
 	'emailext-comment-link-label' => 'Label text for a button a user can click to view the comment on the site',
 	'emailext-comment-view-all' => 'A link to the comment section on the blog post or article, plus the link label.  $1 is the link itself, and must remain at the beginning of the string with a space after it.',
+    'emailext-forum-reply-summary' => 'Information about the new replies in thread. $1 is the thread subject.',
+    'emailext-forumreply-link-label' => 'Link to the post, permalink.',
+    'emailext-forumreply-view-all' => 'Link to the thread page.'
 );
 
 $messages['de'] = array(
