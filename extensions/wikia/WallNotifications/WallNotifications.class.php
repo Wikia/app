@@ -410,7 +410,9 @@ class WallNotifications {
 				if ( !empty( $notification->data->article_title_ns ) && MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD ) {
 
 					$params = [
-						'notification' => $notification
+						'message_link' => $notification->data->url,
+						'board_name' => $notification->data->article_title_text,
+						'thread_title' => $notification->data->thread_title
 					];
 
 					$controller = '\Email\Controller\ForumController';

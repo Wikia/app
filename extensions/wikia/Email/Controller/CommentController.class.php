@@ -217,13 +217,11 @@ class BlogCommentController extends CommentController {
 
 class ForumReplyController extends CommentController {
 	protected function getButtonLink() {
-		$notification = $this->getVal('notification');
-		return $notification->data->url;
+		return $this->getVal('message_link');
     }
 
     protected function getViewAllLink() {
-		$notification = $this->getVal('notification');
-		return $notification->data->url;
+		return $this->getVal('message_link');
     }
 
     protected function getButtonLabelKey () {
@@ -231,11 +229,10 @@ class ForumReplyController extends CommentController {
     }
 
 	protected function getSummary() {
-		$notification = $this->getVal('notification');
-		$threadTitle = $notification->data->thread_title;
-		$messageUrl = $notification->data->url;
+		$message_link = $this->getVal('message_link');
+		$thread_title = $this->getVal('thread_title');
 
-		return wfMessage( $this->getSummaryKey(), $threadTitle, $messageUrl )
+		return wfMessage( $this->getSummaryKey(), $thread_title, $message_link )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
@@ -253,12 +250,11 @@ class ForumReplyController extends CommentController {
 	}
 
 	protected function getFooterMessages() {
-		$notification = $this->getVal('notification');
+		$thread_title = $this->getVal('thread_title');
 		$unfollowUrl = $this->title->getCanonicalURL( 'action=unwatch' );
-		$parentTitleText = $notification->data->thread_title;
 
 		$footerMessages = [
-			wfMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $parentTitleText )
+			wfMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $thread_title )
 				->inLanguage( $this->targetLang )
 				->parse()
 		];
