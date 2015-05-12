@@ -267,7 +267,7 @@ class CreateNewWikiTask extends BaseTask {
 		 * set apropriate staff member
 		 */
 		$wgUser = \Wikia::staffForLang( $this->wikiLang );
-		$wgUser = ( $wgUser instanceof \User ) ? $wgUser : \User::newFromName( "Angela" );
+		$wgUser = ( $wgUser instanceof \User ) ? $wgUser : \User::newFromName( \CreateWiki::DEFAULT_STAFF );
 
 		$talkParams = array( $this->founder->getName(), $wgUser->getName(), $wgUser->getRealName(), $this->wikiName );
 

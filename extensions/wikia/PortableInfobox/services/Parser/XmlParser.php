@@ -1,12 +1,6 @@
 <?php
 namespace Wikia\PortableInfobox\Parser;
 
-//interface moved here, because of $wgAutoloadClass issue
-interface ExternalParser {
-	public function parse( $text );
-	public function parseRecursive( $text );
-}
-
 class XmlParser {
 
 	protected $infoboxData;
@@ -40,11 +34,12 @@ class XmlParser {
 		foreach ( $xmlIterable as $node ) {
 			$nodeHandler = $this->getNode( $node );
 			$nodeData = $nodeHandler->getData();
-			$data[ ] = [
-				'type' => $nodeHandler->getType(),
-				'data' => $nodeData,
-				'isEmpty' => $nodeHandler->isEmpty( $nodeData )
-			];
+			if ( !$nodeHandler->isEmpty( $nodeData ) ) {
+				$data[ ] = [
+					'type' => $nodeHandler->getType(),
+					'data' => $nodeData
+				];
+			}
 		}
 		wfProfileOut(__METHOD__);
 		return $data;
@@ -54,10 +49,15 @@ class XmlParser {
 	 * @param $xml String
 	 * @return array
 	 */
-	public function getDataFromXmlString( $xml ) {
+	public function getDataFromXmlString( $xmlString ) {
 		wfProfileIn( __METHOD__ );
-		$xml = simplexml_load_string( $xml );
+		$xml = simplexml_load_string( $xmlString );
+		if ( $xml === false ) {
+			throw new XmlMarkupParseErrorException();
+		}
+
 		$data = $this->getDataFromNodes( $xml );
+
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}
@@ -83,4 +83,7 @@ class XmlParser {
 		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
 	}
 
+}
+
+class XmlMarkupParseErrorException extends \Exception {
 }
