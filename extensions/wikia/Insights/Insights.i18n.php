@@ -81,6 +81,10 @@ $messages['qqq'] = array(
 	'insights-notification-message-fixit' => 'Text encouraging user to fix an issue',
 	'insights-notification-list-button' => 'Text on button that redirects to list of insights',
 	'insights-notification-see-more' => 'Link text to redirect to Insights main page to see more Insight types',
+	'insights-sort-pv7' => 'Sorting option by page views in last week',
+	'insights-sort-pv28' => 'Sorting option by page views in last 4 weeks',
+	'insights-sort-pvDiff' => 'Sorting option by recent increase in page views',
+	'insights-sort-title' => 'Alphabetical sorting option',
 );
 
 $messages['de'] = array(
