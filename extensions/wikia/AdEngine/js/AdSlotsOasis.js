@@ -4,16 +4,12 @@ require([
 	'ext.wikia.adEngine.adSlotsInContent',
 	'jquery',
 	'wikia.document',
-	'wikia.abTest',
 	'wikia.log'
-], function (adContext, adSlotsInContent, $, doc, abTest, log) {
+], function (adContext, adSlotsInContent, $, doc, log) {
 	'use strict';
 
 	var logGroup = 'AdSlotOasis.js',
-		context = adContext.getContext(),
-		medrecId = 'TOP_RIGHT_BOXAD',
-		experimentName = 'ADS_VIEWABILITY_MEDREC',
-		experimentClassName = 'ads-viability-test';
+		context = adContext.getContext();
 
 	function init() {
 		var elementsBeforeSlots = $(adSlotsInContent.selector).get(),
@@ -22,20 +18,6 @@ require([
 		log('init()', 'debug', logGroup);
 		elementsBeforeSlots.unshift(null);
 		adSlotsInContent.init(elementsBeforeSlots, maxSlots);
-
-		function isValidAbTestingGroup() {
-			return !!abTest.getGroup(experimentName);
-		}
-
-		if (isValidAbTestingGroup() && !context.providers.sevenOneMedia) {
-			log(experimentName + ' turned on', 'debug', logGroup);
-
-			$('#' + medrecId)
-				.addClass(experimentClassName)
-				.addClass(abTest.getGroup(experimentName));
-		} else {
-			log(experimentName + ' turned off', 'debug', logGroup);
-		}
 	}
 
 	// Don't start those slots on no_ads, corporate, home etc
