@@ -7,21 +7,17 @@ class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';
 
 	public function getData() {
-		global $wgContLang;
+		$title = $this->getImageAsTitleObject( $this->getRawValueWithDefault( $this->xmlNode ) );
+		$ref = null;
+		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 
-		$title = \Title::newFromText(
-			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName(
-				$this->getRawValueWithDefault( $this->xmlNode ),
-				$wgContLang
-			),
-			NS_FILE
-		);
-
+		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
 
 		return [
 			'url' => $this->resolveImageUrl( $title ),
 			'name' => ( $title ) ? $title->getDBkey() : '',
-			'alt' => $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} )
+			'alt' => $alt,
+			'ref' => $ref
 		];
 	}
 
@@ -29,11 +25,20 @@ class NodeImage extends Node {
 		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
 	}
 
+	private function getImageAsTitleObject( $imageName ) {
+		global $wgContLang;
+		$title = \Title::newFromText(
+			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $imageName, $wgContLang ),
+			NS_FILE
+		);
+		return $title;
+	}
+
 	public function resolveImageUrl( $title ) {
 		if ( $title && $title->exists() ) {
 			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
 		} else {
-			return "";
+			return '';
 		}
 	}
 }
