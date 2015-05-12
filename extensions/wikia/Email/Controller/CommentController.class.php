@@ -131,7 +131,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getButtonLabel() {
-		return wfMessage( $this->getButtonLabelKey())
+		return wfMessage( $this->getButtonLabelKey() )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
