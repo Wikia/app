@@ -35,7 +35,7 @@ $config['tracker_js'] = array(
 
 $config['liftium_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus', 'wikiamobile'],
+	'skin' => ['oasis', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 	)
@@ -43,7 +43,7 @@ $config['liftium_ads_js'] = array(
 
 $config['liftium_ads_extra_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus', 'wikiamobile'],
+	'skin' => ['oasis', 'wikiamobile'],
 	'assets' => array(
 		// TODO: get rid of those:
 		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
@@ -56,7 +56,7 @@ $config['liftium_ads_extra_js'] = array(
 
 $config['adengine2_desktop_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus', 'wikiamobile'],
+	'skin' => ['oasis', 'wikiamobile'],
 	'assets' => array(
 		// was: early queue
 		'//resources/wikia/modules/iframeWriter.js',
@@ -118,7 +118,7 @@ $config['spotlights_js'] = array(
 
 $config['adengine2_taboola_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'venus', 'wikiamobile' ],
+	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/provider/taboola.js',
 	),
@@ -131,30 +131,12 @@ $config['adengine2_interactive_maps_js'] = array(
 	),
 );
 
-$config['adengine2_in_content_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
-		'//extensions/wikia/AdEngine/js/AdSlotsInContent.js',
-	),
-);
-
-$config['adengine2_venus_ads_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
-	'assets' => array(
-		'#group_adengine2_in_content_ads_js',
-		'//extensions/wikia/AdEngine/js/AdSlotsVenus.js',
-	),
-);
-
-$config['adengine2_oasis_ads_js'] = array(
+$config['adengine2_oasis_in_content_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'oasis',
 	'assets' => array(
-		'#group_adengine2_in_content_ads_js',
-		'//extensions/wikia/AdEngine/js/AdSlotsOasis.js',
+		'//extensions/wikia/AdEngine/js/slot/inContent.js',
+		'//extensions/wikia/AdEngine/js/slot/inContentDesktop.js',
 	),
 );
 
