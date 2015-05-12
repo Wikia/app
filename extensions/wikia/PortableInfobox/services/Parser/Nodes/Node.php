@@ -50,6 +50,14 @@ class Node {
 		return !( isset( $data[ 'value' ] ) ) || empty( $data[ 'value' ] );
 	}
 
+	protected function getInnerXML( \SimpleXMLElement $node ) {
+		$innerXML= '';
+		foreach ( dom_import_simplexml( $node )->childNodes as $child ) {
+			$innerXML .= $child->ownerDocument->saveXML( $child );
+		}
+		return $innerXML;
+	}
+
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 		$value = null;
@@ -58,7 +66,12 @@ class Node {
 		}
 		if ( !$value ) {
 			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				$value = (string)$xmlNode->{self::DEFAULT_TAG_NAME};
+				/*
+				 * <default> tag can contain <ref> or other WikiText parser hooks
+				 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
+				 * parse it.
+				 */
+				$value = $this->getInnerXML( $xmlNode->{self::DEFAULT_TAG_NAME} );
 				$value = $this->getExternalParser()->parseRecursive( $value );
 			}
 		}
