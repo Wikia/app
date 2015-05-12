@@ -395,9 +395,18 @@ class WallNotifications {
 
 				$controller = $this->getEmailExtensionController( $notification );
 				if ( !empty( $controller ) ) {
-					$params = [];
-
-					F:app()->sendRequest( $controller, 'handle', $params );
+					$params = [
+						'boardNamespace' => $notification->data->article_title_ns,
+						'boardTitle' => $notification->data->article_title_text,
+						'titleText' => $notification->data->thread_title,
+						'titleUrl' => $notification->data->thread_title,
+						'summary' => $text,
+						'targetUser' => $watcher->getName(),
+						'fromAddress' => $this->app->wg->PasswordSender,
+						'replyToAddress' => $this->app->wg->NoReplyAddress,
+						'fromName' => $notification->data->msg_author_username
+					];
+					F::app()->sendRequest( $controller, 'handle', $params );
 				} else {
 					$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
 					$watcherName = $watcher->getName();
@@ -1064,7 +1073,7 @@ class WallNotifications {
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
 			&& $notification->isMain()
 		) {
-			$controller = '\Email\Controller\ForumController';
+			$controller = 'Email\Controller\Forum';
 		}
 
 

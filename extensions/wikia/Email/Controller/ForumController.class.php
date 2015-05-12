@@ -8,36 +8,22 @@ use Email\Fatal;
 
 class ForumController extends EmailController {
 
-	/** @var \Title */
-	protected $title;
+	protected $titleText;
+	protected $titleUrl;
+	protected $summary;
+	/* @var \Title */
+	protected $board;
 
 	public function initEmail() {
-		$titleText = $this->request->getVal( 'title' );
-		$titleNamespace = $this->request->getVal( 'namespace' );
-
-		$this->title = \Title::newFromText( $titleText, $titleNamespace );
+		$this->titleText = $this->request->getVal( 'titleText' );
+		$this->titleUrl = $this->request->getVal( 'titleUrl' );
+		$this->board = \Title::newFromText(
+			$this->request->getVal( 'boardTitle' ),
+			$this->request->getVal( 'boardNamespace' )
+		);
+		$this->summary = $this->getVal( 'summary' );
 
 		$this->assertValidParams();
-	}
-
-	/**
-	 * Validate the params passed in by the client
-	 */
-	private function assertValidParams() {
-		$this->assertValidTitle();
-	}
-
-	/**
-	 * @throws \Email\Check
-	 */
-	private function assertValidTitle() {
-		if ( !$this->title instanceof \Title ) {
-			throw new Check( "Invalid value passed for title" );
-		}
-
-		if ( !$this->title->exists() ) {
-			throw new Check( "Title doesn't exist." );
-		}
 	}
 
 	/**
@@ -58,8 +44,7 @@ class ForumController extends EmailController {
 	}
 
 	public function getSubject() {
-		$articleTitle = $this->title->getText();
-		return wfMessage( $this->getSubjectKey(), $articleTitle )
+		return wfMessage( $this->getSubjectKey(), $this->boardText )
 			->inLanguage( $this->targetLang )
 			->text();
 	}
@@ -75,20 +60,14 @@ class ForumController extends EmailController {
 		)->inLanguage( $this->targetLang )->text();
 	}
 
-	// TODO get board name
 	protected function getSummary() {
-		$articleTitle = $this->title->getText();
-
-		return wfMessage( 'emailext-forum-summary', $articleTitle )
+		return wfMessage( 'emailext-forum-summary', $this->board->getFullURL(), $this->board->getText() )
 			->inLanguage( $this->targetLang )
-			->text();
+			->parse();
 	}
 
 	protected function getDetails() {
-		global $wgParser;
-		$article = new \Article($this->title);
-
-		return strip_tags($wgParser->parse($article->getContent(), $this->title, $article->getParserOptions())->getText(), '<p><br>');
+		return $this->summary;
 	}
 
 	protected function getButtonText() {
@@ -98,25 +77,33 @@ class ForumController extends EmailController {
 	}
 
 	protected function getButtonLink() {
-		return $this->title->getFullURL();
+		return $this->titleUrl;
 	}
 
 	protected function getDetailsHeader() {
-		return $this->title->getText();
+		return $this->titleText;
 	}
 
-	// TODO footer message
-	/*
+	protected function assertValidParams() {
+		if ( !$this->board instanceof \Title ) {
+			throw new Check( "Invalid value passed for board" );
+		}
+
+		if ( !$this->board->exists() ) {
+			throw new Check( "Board doesn't exist." );
+		}
+	}
+
 	protected function getFooterMessages() {
-		$parentUrl = $this->title->getCanonicalURL( 'action=unwatch' );
-		$parentTitleText = $this->title->getPrefixedText();
+		$boardUrl = $this->board->getCanonicalURL( [
+			'action' => 'unwatch'
+		] );
 
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
+			wfMessage( 'emailext-unfollow-text', $boardUrl, $this->board->getText() )
 				->inLanguage( $this->targetLang )
 				->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
-	*/
 }

@@ -37,5 +37,6 @@ $wgAutoloadClasses['Email\Controller\ForumController'] =  $dir . 'Controller/For
  * messages
  */
 $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
-$wgExtensionMessagesFiles['WatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
-$wgExtensionMessagesFiles['Comment'] = $dir . 'i18n/Comment.i18n.php';
+$wgExtensionMessagesFiles['EmailWatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
+$wgExtensionMessagesFiles['EmailComment'] = $dir . 'i18n/Comment.i18n.php';
+$wgExtensionMessagesFiles['EmailForum'] = $dir . 'i18n/Forum.i18n.php';
