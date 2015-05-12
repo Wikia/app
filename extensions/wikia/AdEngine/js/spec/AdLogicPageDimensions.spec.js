@@ -58,12 +58,9 @@ describe('AdLogicPageDimensions', function(){
 	}
 
 	var oneColumnResponsive = 'screen and (max-width: 1023px)',
-		oneColumnBreakpoints = 'screen and (max-width: 1023px)',
-		noTopButtonResponsive = 'screen and (max-width: 1030px)',
-		noTopButtonBreakpoints = 'screen and (max-width: 1063px)',
-		width800Responsive = [oneColumnResponsive, noTopButtonResponsive],
-		width800Breakpoints = [oneColumnBreakpoints, noTopButtonBreakpoints],
-		width1024 = [noTopButtonResponsive, noTopButtonBreakpoints],
+		noTopButton = 'screen and (max-width: 1063px)',
+		width800 = [oneColumnResponsive, noTopButton],
+		width1024 = [noTopButton, noTopButton],
 		width2000 = [];
 
 	it('checks if page is too short for a slot on a static oasis skin', function() {
@@ -143,23 +140,14 @@ describe('AdLogicPageDimensions', function(){
 		expect(adShown('LEFT_SKYSCRAPER_3', 5000, 'responsive', width1024, false)).toBeFalsy('width=1024 slot=LEFT_SKYSCRAPER_3 -> ADS noRail');
 		expect(adShown('INCONTENT_BOXAD_1', 5000, 'responsive', width1024)).toBeTruthy('width=1024 slot=INCONTENT_BOXAD_1 -> ADS');
 
-		expect(adShown('foo', 5000, 'responsive', width800Responsive)).toBeTruthy('width=800Responsive slot=foo -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE', 5000, 'responsive', width800Responsive)).toBeFalsy('width=800Responsive slot=LEFT_SKYSCRAPER_2 -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'responsive', width800Responsive)).toBeFalsy('width=800Responsive slot=LEFT_SKYSCRAPER_3 -> ADS');
-		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'responsive', width800Responsive)).toBeFalsy('width=800Responsive slot=PREFOOTER_LEFT_BOXAD -> ADS');
-		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'responsive', width800Responsive)).toBeFalsy('width=800Responsive slot=PREFOOTER_RIGHT_BOXAD -> ADS');
-		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width800Responsive)).toBeFalsy('width=800Responsive slot=PREFOOTER_RIGHT_BOXAD -> ADS');
-		expect(adShown('LEFT_SKYSCRAPER_3', 5000, 'responsive', width800Responsive)).toBeFalsy('width=800Responsive slot=PREFOOTER_RIGHT_BOXAD -> ADS');
-		expect(adShown('INCONTENT_BOXAD_1', 5000, 'responsive', width800Responsive)).toBeFalsy('width=800Responsive slot=PREFOOTER_RIGHT_BOXAD -> ADS');
-
-		expect(adShown('foo', 5000, 'breakpoints', width800Breakpoints)).toBeTruthy('width=800Breakpoints slot=foo -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE', 5000, 'breakpoints', width800Breakpoints)).toBeFalsy('width=800Breakpoints slot=LEFT_SKYSCRAPER_2 -> ADS');
-		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'breakpoints', width800Breakpoints)).toBeFalsy('width=800Breakpoints slot=LEFT_SKYSCRAPER_3 -> ADS');
-		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'breakpoints', width800Breakpoints)).toBeFalsy('width=800Breakpoints slot=PREFOOTER_LEFT_BOXAD -> ADS');
-		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'breakpoints', width800Breakpoints)).toBeFalsy('width=800Breakpoints slot=PREFOOTER_RIGHT_BOXAD -> ADS');
-		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'breakpoints', width800Breakpoints)).toBeFalsy('width=800Breakpoints slot=PREFOOTER_RIGHT_BOXAD -> ADS');
-		expect(adShown('LEFT_SKYSCRAPER_3', 5000, 'breakpoints', width800Breakpoints)).toBeFalsy('width=800Breakpoints slot=PREFOOTER_RIGHT_BOXAD -> ADS');
-		expect(adShown('INCONTENT_BOXAD_1', 5000, 'breakpoints', width800Breakpoints)).toBeFalsy('width=800Breakpoints slot=PREFOOTER_RIGHT_BOXAD -> ADS');
+		expect(adShown('foo', 5000, 'responsive', width800)).toBeTruthy('width=800 slot=foo -> ADS');
+		expect(adShown('TOP_BUTTON_WIDE', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=TOP_BUTTON_WIDE -> ADS');
+		expect(adShown('TOP_BUTTON_WIDE.force', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=TOP_BUTTON_WIDE.force -> ADS');
+		expect(adShown('TOP_RIGHT_BOXAD', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=PREFOOTER_LEFT_BOXAD -> ADS');
+		expect(adShown('HOME_TOP_RIGHT_BOXAD', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_2', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
+		expect(adShown('LEFT_SKYSCRAPER_3', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
+		expect(adShown('INCONTENT_BOXAD_1', 5000, 'responsive', width800)).toBeFalsy('width=800 slot=PREFOOTER_RIGHT_BOXAD -> ADS');
 	});
 
 	it('updates the logic when resize event is fired', function() {
