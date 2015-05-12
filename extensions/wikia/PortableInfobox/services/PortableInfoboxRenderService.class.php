@@ -2,13 +2,17 @@
 
 class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
+	const DESKTOP_THUMBNAIL_WIDTH = 270;
+	const MOBILE_THUMBNAIL_WIDTH = 360;
+	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'header' => 'PortableInfoboxItemHeader.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
-		'pair' => 'PortableInfoboxItemKeyVal.mustache',
+		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
+		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'comparison' => 'PortableInfoboxItemComparison.mustache',
 		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
@@ -36,10 +40,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ( $infoboxdata as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
-
-			if ( $item['isEmpty'] ) {
-				continue;
-			}
 
 			switch ( $type ) {
 				case 'comparison':
@@ -82,16 +82,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ($comparisonData as $set) {
 			$setHTMLContent = '';
 
-			if ($set['isEmpty']) {
-				continue;
-			}
-
 			foreach ($set['data']['value'] as $item) {
 				$type = $item['type'];
-
-				if ($item['isEmpty']) {
-					continue;
-				}
 
 				if ($type === 'header') {
 					$setHTMLContent .= $this->renderItem(
@@ -132,10 +124,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ( $groupData as $item ) {
 			$type = $item['type'];
 
-			if ( $item['isEmpty'] ) {
-				continue;
-			}
-
 			if ( $this->validateType( $type ) ) {
 				$groupHTMLContent .= $this->renderItem( $type, $item['data'] );
 			}
@@ -152,9 +140,27 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
+		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
+		// it modular) While doing this we also need to move this logic to appropriate image render class
+		if ( $type === 'image' ) {
+			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['url'] );
+
+			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
+			}
+		}
+
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( $this->templates[ $type ] );
+	}
+
+	protected function getThumbnailUrl( $url ) {
+		return VignetteRequest::fromUrl( $url )->scaleToWidth(
+			F::app()->checkSkin( 'wikiamobile' ) ?
+				self::MOBILE_THUMBNAIL_WIDTH :
+				self::DESKTOP_THUMBNAIL_WIDTH
+		)->url();
 	}
 
 	/**

@@ -53,12 +53,10 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 		 * @param object $nextPageButton
 		 */
 		function successTrack() {
-			if(isFixed) {
-				track({
-					action: tracker.ACTIONS.IMPRESSION,
-					label: insightType + '-' + status
-				});
-			}
+			track({
+				action: tracker.ACTIONS.IMPRESSION,
+				label: insightType + '-' + status
+			});
 		}
 
 		function setStatus() {
@@ -71,7 +69,6 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 
 		function init() {
 			$('#WikiaPage').on('mousedown keydown', '.banner-notification a, .banner-notification .close', linkTrack);
-			successTrack();
 		}
 
 		function setParams(edit, fixed, type) {
@@ -84,7 +81,8 @@ define('ext.wikia.Insights.LoopNotificationTracking',
 
 		return {
 			init: init,
-			setParams: setParams
+			setParams: setParams,
+			successTrack: successTrack
 		};
 	}
 );

@@ -2437,15 +2437,6 @@ $config['portable_infobox_scss'] = [
 	]
 ];
 
-$config['portable_infobox_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//resources/wikia/libraries/vignette/vignette.js',
-		'//extensions/wikia/PortableInfobox/scripts/PortableInfobox.js'
-	]
-];
-
 $config['paid_asset_drop_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
