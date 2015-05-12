@@ -250,13 +250,15 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function prepareSortingData() {
 		$dropdown = [];
+		$sort = $this->request->getVal( 'sort', $this->model->getDefaultSorting() );
 
 		foreach ( $this->model->sorting as $key => $sorting ) {
 			$dropdown[$key] = wfMessage( 'insights-sort-' . $key )->escaped();
 		}
 
-		$this->current = $this->request->getVal( 'sort', $this->model->getDefaultSorting() );
-		$this->metadata = $this->current !== 'title' ? $this->current : $this->model->getDefaultSorting();
+		$this->current = $sort;
+		$this->metadata = isset( $this->model->sorting[$sort]['metadata'] ) ? $this->model->sorting[$sort]['metadata'] : $sort;
+
 		$this->dropdown = $dropdown;
 	}
 

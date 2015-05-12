@@ -11,24 +11,34 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		INSIGHTS_MEMC_VERSION = '1.0',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
-		INSIGHTS_LIST_MAX_LIMIT = 10,
+		INSIGHTS_LIST_MAX_LIMIT = 100,
 		INSIGHTS_DEFAULT_SORTING = 'pv7';
 
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
 		$offset = 0,
-		$limit = 10,
+		$limit = 100,
 		$total = 0,
 		$page = 0,
 		$sortingArray;
 
 	public
 		$sorting = [
-			'pv7' => SORT_NUMERIC,
-			'pv28' => SORT_NUMERIC,
-			'pvDiff' => SORT_NUMERIC,
-			'title' => SORT_STRING
+			'pv7' => [
+				'sortType' => SORT_NUMERIC,
+			],
+			'pv28' => [
+				'sortType' => SORT_NUMERIC,
+			],
+			'pvDiff' => [
+				'sortType' => SORT_NUMERIC,
+				'metadata' => 'pv7',
+			],
+			'title' => [
+				'sortFunction' => 'sortInsightsAlphabetical',
+				'metadata' => 'pv7'
+			]
 		];
 
 	abstract function getDataProvider();
@@ -262,13 +272,13 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 * @param $sortingArray The input array with
 	 * @param $key Memcache key
 	 */
-	public function createSortingArray( $sortingArray, $key, $sortingFunction = null ) {
+	public function createSortingArray( $sortingArray, $key ) {
 		global $wgMemc;
 
-		if ( !is_null( $sortingFunction ) ) {
-			usort( $sortingArray, $sortingFunction );
+		if ( isset( $this->sorting[$key]['sortFunction'] ) ) {
+			usort( $sortingArray, $this->sorting[$key]['sortFunction'] );
 		} else {
-			arsort( $sortingArray, $this->sorting[ $key ] );
+			arsort( $sortingArray, $this->sorting[$key]['sortType'] );
 		}
 
 		$cacheKey = $this->getMemcKey( $key );
@@ -333,7 +343,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		foreach ( $this->sorting as $key => $flag ) {
-			$this->createSortingArray( $sortingData[ $key ], $key );
+			if ( isset( $sortingData[$key] ) ) {
+				$this->createSortingArray( $sortingData[ $key ], $key );
+			}
 		}
 
 		return $articlesData;
