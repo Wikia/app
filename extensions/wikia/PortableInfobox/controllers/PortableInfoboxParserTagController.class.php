@@ -50,6 +50,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @returns String $html
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
+		global $wgArticleAsJson;
 		$this->markerNumber++;
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
@@ -69,6 +70,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$renderer = new PortableInfoboxRenderService();
 		$renderedValue = $renderer->renderInfobox( $data );
+		if ( $wgArticleAsJson ) {
+			// (wgArticleAsJson == true) it means that we need to encode output for use inside JSON
+			$renderedValue = trim(json_encode($renderedValue), '"');
+		}
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}-QINU";
 		$this->markers[ $marker ] = $renderedValue;
