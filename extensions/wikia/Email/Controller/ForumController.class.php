@@ -95,7 +95,7 @@ class ForumController extends EmailController {
 	}
 
 	protected function getFooterMessages() {
-		$boardUrl = $this->board->getCanonicalURL( [
+		$boardUrl = $this->board->getFullURL( [
 			'action' => 'unwatch'
 		] );
 
