@@ -64,14 +64,16 @@ abstract class EmailController extends \WikiaController {
 				$this->getVal( 'replyToAddress', $this->wg->NoReplyAddress ),
 				$this->getVal( 'replyToName', $noReplyName )
 			);
+
+			$fromAddress = $this->getVal( 'fromAddress', '' );
+			$this->assertValidFromAddress( $fromAddress );
+
 			$this->fromAddress = new \MailAddress(
-				$this->getVal( 'fromAddress', '' ),
+				$fromAddress,
 				$this->getVal( 'fromName', '' )
 			);
 
 			$this->initEmail();
-
-			$this->assertValidFromAddress();
 		} catch ( ControllerException $e ) {
 			$this->setErrorResponse( $e );
 		}
@@ -94,10 +96,12 @@ abstract class EmailController extends \WikiaController {
 		throw new Fatal( 'Access to this controller is restricted' );
 	}
 
-	protected function assertValidFromAddress() {
-		if ( $this->fromAddress->toString() == "" ) {
-			throw new Check( "Empty from address" );
+	protected function assertValidFromAddress( $email ) {
+		if ( !\Sanitizer::validateEmail( $email ) ) {
+			throw new Check( "Invalid from address" );
 		}
+
+		return true;
 	}
 
 	/**
