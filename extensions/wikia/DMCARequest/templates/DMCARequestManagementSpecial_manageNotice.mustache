@@ -1,10 +1,18 @@
 {{#error}}
 <p class="error">{{error}}</p>
 {{/error}}
+
+{{#sentToChillingEffects}}
+<div class="successbox">{{{submittedMsg}}}</div>
+{{/sentToChillingEffects}}
 <p>{{{returnto}}}</p>
-{{^error}}
+
 <h3>{{noticeTextHeader}}</h3>
 <pre>
 {{{noticeText}}}
 </pre>
-{{/error}}
+
+{{#form}}
+<h3>{{formHeader}}</h3>
+{{{form}}}
+{{/form}}
