@@ -488,6 +488,8 @@ class EmailNotification {
 				'title' => $this->title->getText(),
 				'namespace' => $this->title->getNamespace(),
 				'summary' => $this->summary,
+				'currentRevId' => $this->currentRevId,
+				'previousRevId' => $this->previousRevId,
 				'replyToAddress' => $this->replyto,
 				'fromAddress' => $this->from->address,
 				'fromName' => $this->from->name
