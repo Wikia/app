@@ -128,6 +128,10 @@ class ChillingEffectsClient {
 			],
 			'entity_notice_roles_attributes' => [
 				[
+					'name' => 'submitter',
+					'entity_attributes' => $orgDetails,
+				],
+				[
 					'name' => 'recipient',
 					'entity_attributes' => $orgDetails,
 				],
