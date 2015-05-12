@@ -11,13 +11,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		INSIGHTS_MEMC_VERSION = '1.0',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
-		INSIGHTS_LIST_MAX_LIMIT = 100;
+		INSIGHTS_LIST_MAX_LIMIT = 10,
+		INSIGHTS_DEFAULT_SORTING = 'pv7';
 
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
 		$offset = 0,
-		$limit = 100,
+		$limit = 10,
 		$total = 0,
 		$page = 0,
 		$sortingArray;
@@ -27,6 +28,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			'pv7' => SORT_NUMERIC,
 			'pv28' => SORT_NUMERIC,
 			'pvDiff' => SORT_NUMERIC,
+			'title' => SORT_STRING
 		];
 
 	abstract function getDataProvider();
@@ -47,6 +49,10 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 	public function getPage() {
 		return $this->page;
+	}
+
+	public function getDefaultSorting() {
+		return self::INSIGHTS_DEFAULT_SORTING;
 	}
 
 	/**
@@ -90,6 +96,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 * @return array
 	 */
 	public function getContent( $params ) {
+		global $wgMemc;
+
 		$this->queryPageInstance = $this->getDataProvider();
 		$content = [];
 
@@ -106,7 +114,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			 */
 			$this->prepareParams( $params );
 			if ( !isset( $this->sortingArray ) ) {
-				$this->sortingArray = array_keys( $articlesData );
+				$this->sortingArray = $wgMemc->get($this->getMemcKey( self::INSIGHTS_DEFAULT_SORTING ) );
 			}
 			$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
 
@@ -167,6 +175,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$pageViewsData = $this->getPageViewsData( $articlesIds );
 					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
 				}
+
+				$this->createSortingArray( $articlesData, 'title', 'sortInsightsAlphabetical' );
 			}
 
 			return $articlesData;
@@ -252,13 +262,25 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 * @param $sortingArray The input array with
 	 * @param $key Memcache key
 	 */
-	public function createSortingArray( $sortingArray, $key ) {
+	public function createSortingArray( $sortingArray, $key, $sortingFunction = null ) {
 		global $wgMemc;
 
-		arsort( $sortingArray, $this->sorting[ $key ] );
+		if ( !is_null( $sortingFunction ) ) {
+			usort( $sortingArray, $sortingFunction );
+		} else {
+			arsort( $sortingArray, $this->sorting[ $key ] );
+		}
+
 		$cacheKey = $this->getMemcKey( $key );
 
 		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), self::INSIGHTS_MEMC_TTL );
+	}
+
+	/**
+	 * Function for sorting list alphabetical
+	 */
+	public function sortInsightsAlphabetical( $a, $b ) {
+		return strcasecmp( $a['link']['text'], $b['link']['text'] );
 	}
 
 	/**

@@ -58,6 +58,7 @@ class InsightsController extends WikiaSpecialPageController {
 			$params = $this->request->getParams();
 			$this->content = $this->model->getContent( $params );
 			$this->preparePagination();
+			$this->prepareSortingData();
 			$this->data = $this->model->getViewData();
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
@@ -229,18 +230,39 @@ class InsightsController extends WikiaSpecialPageController {
 	private function preparePagination() {
 		$total = $this->model->getTotalResultsNum();
 		$itemsPerPage = $this->model->getLimitResultsNum();
+		$params['page'] = '%s';
+
+		$sorting = $this->request->getVal( 'sort', null );
+		if ( $sorting ) {
+			$params['sort'] = $sorting;
+		}
 
 		if( $total > $itemsPerPage ) {
 			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
 			$paginator->setActivePage( $this->model->getPage() );
-			$url = urldecode( $this->getSpecialInsightsUrl( $this->subpage, [ 'page' => '%s' ] ) );
+			$url = urldecode( $this->getSpecialInsightsUrl( $this->subpage, $params ) );
 			$this->paginatorBar = $paginator->getBarHTML( $url );
 		}
 	}
 
+	/**
+	 * Prepare data needed to sort list
+	 */
+	private function prepareSortingData() {
+		$dropdown = [];
+
+		foreach ( $this->model->sorting as $key => $sorting ) {
+			$dropdown[$key] = wfMessage( 'insights-sort-' . $key )->escaped();
+		}
+
+		$this->current = $this->request->getVal( 'sort', $this->model->getDefaultSorting() );
+		$this->metadata = $this->current !== 'title' ? $this->current : $this->model->getDefaultSorting();
+		$this->dropdown = $dropdown;
+	}
+
 	private function addAssets() {
 		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights-lists.scss' );
-		$this->response->addAsset( '/extensions/wikia/Insights/scripts/InsightsPageTracking.js' );
+		$this->response->addAsset( '/extensions/wikia/Insights/scripts/InsightsPage.js' );
 	}
 
 	/**
