@@ -1,11 +1,5 @@
 <?php
 class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
-	static private function isEnabled() {
-		global $wgAnalyticsProviderUseUA;
-
-		return !empty($wgAnalyticsProviderUseUA);
-	}
-
 	public function getSetupHtml($params=array()){
 		return '';
 	}
@@ -18,18 +12,12 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		//should be added unprocessed as per Cardinal Path's request
 		//but screw it, that's an additional single request that adds overhead
 		//and the main experiment is done on Oasis :P
-		if (self::isEnabled()) {
-			array_unshift( $jsStaticPackages, 'universal_analytics_js' );
-		}
+		array_unshift( $jsStaticPackages, 'universal_analytics_js' );
 
 		return true;
 	}
 
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ){
-		if (!self::isEnabled()) {
-			return true;
-		}
-
 		global $wgDevelEnvironment, $wgGAUserIdSalt, $wgStagingEnvironment;
 
 		$app = F::app();
@@ -58,9 +46,8 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 
 	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
 		// this is only called in Oasis, so there's no need to double-check it
-		if (self::isEnabled()) {
-			$jsAssetGroups[] = 'universal_analytics_js';
-		}
+		$jsAssetGroups[] = 'universal_analytics_js';
+
 		return true;
 	}
 }
