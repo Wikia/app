@@ -265,7 +265,7 @@ class MercuryApi {
 		if ( $process ) {
 			$items = [];
 			foreach ( $data[ $process ] as $item ) {
-				$processedItem = $this->processItem( $item );
+				$processedItem = $this->processCuratedContentItem( $item );
 				if ( !empty( $processedItem ) ) {
 					$items[] = $processedItem;
 				}
@@ -285,7 +285,7 @@ class MercuryApi {
 	 * @param $item
 	 * @return mixed
 	 */
-	private function processItem( $item ) {
+	private function processCuratedContentItem( $item ) {
 		if ( !empty( $item[ 'article_id' ] ) ) {
 			$title = Title::newFromID( $item[ 'article_id' ] );
 			if ( !empty( $title ) ) {
