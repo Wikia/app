@@ -585,7 +585,7 @@ class DataMartService extends Service {
 			});
 
 			if ( empty( $topArticles ) ) {
-				WikiaLogger::instance()->error( 'DataMartService::doGetTopArticlesByPageview' . ' emptyQueryResult', [
+				WikiaLogger::instance()->error( 'DataMartService::doGetTopArticlesByPageview emptyQueryResult', [
 					'raw_sql' => (string) $sql
 				]);
 			}
