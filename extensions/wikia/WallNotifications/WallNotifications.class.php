@@ -412,7 +412,9 @@ class WallNotifications {
 			} else {
 				$params = [
 					'targetUser' => $watcherName,
-					'fromAddress' => $watcher->getEmail(),
+					'fromAddress' => $this->app->wg->PasswordSender,
+					'replyToAddress' => $this->app->wg->NoReplyAddress,
+					'fromName' => $notification->data->msg_author_username,
 
 					'wallUserName' => $notification->data->wall_username,
 					'threadUserName' => $notification->data->parent_username,
