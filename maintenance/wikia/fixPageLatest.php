@@ -71,13 +71,17 @@ class FixPageLatest extends Maintenance {
 					// make an empty edit - the affected article will have at least an empty revision
 					if ( !$isDryRun ) {
 						$page = WikiPage::newFromID( $row->page_id );
-						$page->doEdit(
+						$status = $page->doEdit(
 							'',
 							'Fixing empty articles with no revisions',
-							EDIT_NEW,
+							0, // $flags
 							false, // $baseRevId
 							User::newFromName( 'WikiaBot' )
 						);
+
+						if ( !$status->isOK() ) {
+							$this->output( "\n\t[ERR] " . $status->getMessage() . "\n\n" );
+						}
 
 						$fixed++;
 					}
