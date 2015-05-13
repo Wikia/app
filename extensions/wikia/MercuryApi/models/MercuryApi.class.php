@@ -263,8 +263,12 @@ class MercuryApi {
 		}
 
 		if ( $process ) {
-			foreach ( $data[ $process ] as &$item ) {
-				$item = $this->addArticleUrlToCuratedContentItem( $item );
+			$items = [];
+			foreach ( $data[ $process ] as $item ) {
+				$processedItem = $this->processItem( $item );
+				if (!empty($processedItem)) {
+					$items[] = $processedItem;
+				}
 			}
 		}
 
@@ -272,18 +276,23 @@ class MercuryApi {
 	}
 
 	/**
-	 * @desc Mercury can't open article using ID - we need to create a local link
+	 * @desc Mercury can't open article using ID - we need to create a local link.
+	 * If article doesn't exist (Title is null) return null.
+	 * In other case return item with updated article_local_url.
 	 * TODO Implement cache for release version.
 	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
 	 *
 	 * @param $item
 	 * @return mixed
 	 */
-	private function addArticleUrlToCuratedContentItem( $item ) {
+	private function processItem( $item ) {
 		if ( !empty( $item[ 'article_id' ] ) ) {
-			$item[ 'article_local_url' ] = Title::newFromID( $item[ 'article_id' ] )->getLocalURL();
+			$title = Title::newFromID( $item[ 'article_id' ] );
+			if ( !empty($title) ) {
+				$item[ 'article_local_url' ] = $title->getLocalURL();
+				return $item;
+			}
 		}
-
-		return $item;
+		return null;
 	}
 }
