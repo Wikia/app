@@ -79,17 +79,16 @@ abstract class CommentController extends EmailController {
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'summary' => $this->getSummary(),
 			'details' => $this->getDetails(),
-			'buttonText' => $this->getButtonLabel(),
-			'buttonLink' => $this->getButtonLink(),
+			'buttonText' => $this->getCommentLabel(),
+			'buttonLink' => $this->getCommentLink(),
 			'contentFooterMessages' => [
-				$this->getViewAll(),
+				$this->getCommentSectionLink(),
 			],
 		] );
 	}
 
 	public function getSubject() {
 		$articleTitle = $this->title->getText();
-
 		return wfMessage( $this->getSubjectKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
 			->text();
@@ -97,49 +96,33 @@ abstract class CommentController extends EmailController {
 
 	abstract protected function getSubjectKey();
 
-	protected function getSalutation() {
-		return wfMessage(
-			'emailext-comment-salutation',
-			$this->targetUser->getName()
-		)->inLanguage( $this->targetLang )->text();
-	}
-
 	protected function getSummary() {
 		$articleTitle = $this->title->getText();
-		$articleUrl = $this->title->getFullURL();
 
-		return wfMessage( $this->getSummaryKey(), $articleTitle, $articleUrl )
+		return wfMessage( $this->getSummaryKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
-			->parse();
+			->text();
 	}
 
 	abstract protected function getSummaryKey();
 
 	protected function getDetails() {
-		$comment = $this->getLatestComment();
-		$articleID = $comment->getArticleID();
+		$article = \Article::newFromTitle( $this->commentTitle, \RequestContext::getMain() );
+		$service = new \ArticleService( $article );
+		$snippet = $service->getTextSnippet();
 
-		$res = $this->sendRequest( 'ArticleSummary', 'blurb', [
-			'ids' => $articleID,
-		] )->getData();
-
-		if ( empty( $res['summary'][$articleID] ) ) {
-			return '';
-		}
-
-		return $res['summary'][$articleID]['snippet'];
+		return $snippet;
 	}
 
-	protected function getButtonLabel() {
-		return wfMessage( $this->getButtonLabelKey() )
+	protected function getCommentLabel() {
+		return wfMessage( 'emailext-comment-link-label')
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
 
-	abstract protected function getButtonLabelKey();
-
-	protected function getButtonLink() {
-		return $this->getLatestComment()->getCanonicalURL();
+	protected function getCommentLink() {
+		$comment = $this->commentTitle;
+		return $comment->getCanonicalURL();
 	}
 
 	protected function getFooterMessages() {
@@ -154,29 +137,13 @@ abstract class CommentController extends EmailController {
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
 
-	protected function getLatestComment() {
-		if ( empty( $this->latestComment ) ) {
-			$articleComment = \ArticleComment::latestFromTitle( $this->title );
-			if ( empty( $articleComment ) ) {
-				throw new Fatal( 'Could not find latest comment' );
-			}
-			$this->latestComment = $articleComment->getTitle();
-		}
+	protected function getCommentSectionLink() {
+		$url = $this->title->getFullURL( '#WikiaArticleComments' );
 
-		return $this->latestComment;
-	}
-
-	protected function getViewAll() {
-		return wfMessage( $this->getViewAllKey(), $this->getViewAllLink() )
+		return wfMessage( 'emailext-comment-view-all', $url )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
-
-	protected function getViewAllLink() {
-		return $this->title->getFullURL( '#WikiaArticleComments' );
-	}
-
-	abstract protected function getViewAllKey();
 }
 
 class ArticleCommentController extends CommentController {
@@ -186,14 +153,6 @@ class ArticleCommentController extends CommentController {
 
 	protected function getSummaryKey() {
 		return 'emailext-articlecomment-summary';
-	}
-
-    protected function getButtonLabelKey () {
-        return 'emailext-comment-link-label';
-    }
-
-	protected function getViewAllKey(){
-		return 'emailext-comment-view-all';
 	}
 }
 
@@ -205,13 +164,4 @@ class BlogCommentController extends CommentController {
 	protected function getSummaryKey() {
 		return 'emailext-blogcomment-summary';
 	}
-
-    protected function getButtonLabelKey () {
-        return 'emailext-comment-link-label';
-    }
-
-	protected function getViewAllKey(){
-		return 'emailext-comment-view-all';
-	}
 }
-
