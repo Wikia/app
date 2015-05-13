@@ -417,7 +417,7 @@ class WallNotifications {
 					'isThread' => $notification->isMain(),
 
 					'messageTitle' => $notification->data->thread_title,
-					'messageBody' => $textNoHtml,
+					'messageBody' => $text,
 					'messageUrl' => $notification->data->url
 				];
 

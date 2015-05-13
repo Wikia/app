@@ -5,6 +5,7 @@ namespace Email\Controller;
 use Email\Check;
 use Email\EmailController;
 
+// TODO fix replies on MY message wall to fire an email
 class WallMessageController extends EmailController {
 
 	private $messageUrl;
@@ -153,6 +154,8 @@ class WallMessageController extends EmailController {
 	}
 
 	protected function getFooterMessages() {
+		// TODO remove this link on MY message wall
+
 		$footerMessages = [
 			wfMessage( 'emailext-unfollow-text' )->inLanguage( $this->targetLang )->parse()
 		];
