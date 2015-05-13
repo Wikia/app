@@ -384,56 +384,41 @@ class WallNotifications {
 
 		foreach ( $watchers as $watcherUserId ) {
 			$watcher = $this->getUser( $watcherUserId );
-
-			if ( !$this->canSendToWatcher( $watcher, $entityKey ) ) {
-				continue;
-			}
-
-			$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-
-			if ( $notification->data->msg_author_username == $notification->data->msg_author_displayname ) {
-				$authorSignature = $notification->data->msg_author_username;
-			} else {
-				$authorSignature = $notification->data->msg_author_displayname .
-					' (' . $notification->data->msg_author_username . ')';
-			}
-
 			$watcherName = $watcher->getName();
-			$data = [];
-			wfRunHooks( 'NotificationGetMailNotificationMessage', [
-				&$notification, &$data, $key, $watcherName, $authorSignature, $textNoHtml, $text
-			] );
 
-			if ( !empty( $data ) ) {
-				// The old email delivery has been kept here for forums, which use the hook above.
-				// This logic can be removed when forum emails are migrated to the new email extension
-				// or when forums are retired.
-				$this->sendEmail( $watcher, $data );
-			} else {
+			$controller = $this->getEmailExtensionController( $notification, $watcherName );
+			if ( !empty( $controller ) ) {
 				$params = [
 					'wallUserName' => $notification->data->wall_username,
 					'authorUserName' => $notification->data->msg_author_username,
-
+					'boardNamespace' => $notification->data->article_title_ns,
+					'boardTitle' => $notification->data->article_title_text,
 					'titleText' => $notification->data->thread_title,
 					'threadId' => $notification->data->parent_id,
-					'details' => $text,
 					'titleUrl' => $notification->data->url,
-
+					'details' => $text,
 					'targetUser' => $watcher->getName(),
 					'fromAddress' => $this->app->wg->PasswordSender,
 					'replyToAddress' => $this->app->wg->NoReplyAddress,
-					'fromName' => $this->app->wg->PasswordSenderName,
+					'fromName' => $this->app->wg->PasswordSenderName
 				];
+				F::app()->sendRequest( $controller, 'handle', $params );
+			} else {
+				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
 
-				if ( !$notification->isMain() ) {
-					$controller = 'Email\Controller\ReplyWallMessageController';
-				} else if ( $params['wallUserName'] == $watcherName ) {
-					$controller = 'Email\Controller\OwnWallMessageController';
+				if ( $notification->data->msg_author_username == $notification->data->msg_author_displayname ) {
+					$author_signature = $notification->data->msg_author_username;
 				} else {
-					$controller = 'Email\Controller\FollowedWallMessageController';
+					$author_signature = $notification->data->msg_author_displayname .
+						' (' . $notification->data->msg_author_username . ')';
 				}
 
-				F::app()->sendRequest( $controller, 'handle', $params );
+				$data = [];
+				wfRunHooks( 'NotificationGetMailNotificationMessage', [
+					&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text
+				]);
+
+				$this->sendEmail( $watcher, $data );
 			}
 		}
 
@@ -486,6 +471,25 @@ class WallNotifications {
 		$text = str_replace( $keys, $values, $text );
 
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
+	}
+
+	protected function getEmailExtensionController( $notification, $watcherName ) {
+		$controller = false;
+
+		if ( !empty( $notification->data->article_title_ns )
+			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
+			&& $notification->isMain()
+		) {
+			$controller = 'Email\Controller\Forum';
+		} else if ( !$notification->isMain() ) {
+			$controller = 'Email\Controller\ReplyWallMessageController';
+		} else if ( $notification->data->wall_username == $watcherName ) {
+			$controller = 'Email\Controller\OwnWallMessageController';
+		} else {
+			$controller = 'Email\Controller\FollowedWallMessageController';
+		}
+
+		return $controller;
 	}
 
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
@@ -1075,5 +1079,4 @@ class WallNotifications {
 		}
 		return $this->cachedUsers[$userId];
 	}
-
 }

@@ -76,7 +76,7 @@ abstract class WallMessageController extends EmailController {
 			'editorProfilePage' => $this->getCurrentProfilePage(),
 			'editorUserName' => $this->authorUserName,
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
-			'detailsSubject' => $this->titleText,
+			'detailsHeader' => $this->titleText,
 			'details' => $this->details,
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->titleUrl,
