@@ -1,0 +1,187 @@
+---
+layout: default
+---
+<h1>Buttons</h1>
+<p>
+	Wikia forms for everyday use. You can have them just for $1. Buy now and you will get one radio button for free.
+</p>
+
+<h4 class="section-header">Standard</h4>
+<p>
+	<strong>Wikia corporate buttons</strong> are used in most cases when the interface calls for a button.
+</p>
+<div class="row">
+	<div class="large-2 column">
+		<button>Default</button>
+	</div>
+	<div class="large-2 column">
+		<button class="active">Hover</button>
+	</div>
+	<div class="large-2 column end">
+		<button disabled>Inactive</button>
+	</div>
+</div>
+
+<p>
+	By default, all <code>button</code> elements will be styled. Using the <em>disabled</em> attribute will style it as inactive, as expected.
+</p>
+
+<h6>HTML</h6>
+<pre><code>&lt;button&gt;Default&lt;/button&gt;
+&lt;button&gt;Hover&lt;/button&gt;
+&lt;button disabled&gt;Inactive&lt;/button&gt;
+</code></pre>
+
+<p>
+	Additionally, any <code>a</code> element will be styled as a button when given the <code>button</code> class. To disable such buttons, the <code>disabled</code> class needs to be used instead of the native <em>disabled</em> attribute. The following markup will produce the same styled buttons as the markup above:
+</p>
+
+<h6>HTML</h6>
+<pre><code>&lt;a class="button"&gt;Default&lt;/a&gt;
+&lt;a class="button disabled"&gt;Inactive&lt;/a&gt;
+</code></pre>
+
+<aside class="note">
+	Note: Be aware of the logic implications when using an anchor styled as a button instead of a native button. When an anchor is "disabled" with CSS, it is still clickable and may execute JavaScript. Conversely, a native button that is disabled will not trigger a JavaScript click event.
+</aside>
+
+<hr class="break">
+<p>
+	<strong>Secondary buttons</strong> are only used when there is an exceedingly distinct and clear call-to-action. An example of this is the "Vote" button on a poll, or a "Send" button in a form. Although appearing different in style, the color used for each state is the same as normal buttons.
+</p>
+<div class="row">
+	<div class="large-2 column">
+		<button class="secondary">Default</button>
+	</div>
+	<div class="large-2 column">
+		<button class="active secondary">Hover</button>
+	</div>
+	<div class="large-2 column end">
+		<button class="secondary" disabled>Inactive</button>
+	</div>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;button class="secondary"&gt;Default&lt;/button&gt;
+&lt;button class="secondary"&gt;Hover&lt;/button&gt;
+&lt;button class="secondary" disabled&gt;Inactive&lt;/button&gt;
+</code></pre>
+
+<hr class="break">
+<p>
+	<strong>Sizes of buttons</strong> depend on the situation. Medium is the default size and is used in most cases. Add the <code>large</code> or <code>small</code> class to use a different size. Only the height changes with button size. All buttons use the same padding, and therefore width is only dependent on the length of the button label.
+</p>
+<div class="row">
+	<div class="large-2 column">
+		<button class="large">Large</button>
+	</div>
+	<div class="large-2 column">
+		<button>Medium</button>
+	</div>
+	<div class="large-2 column end">
+		<button class="small">Small</button>
+	</div>
+</div>
+
+<h6>HTML</h6>
+<pre><code>&lt;button class="large"&gt;Large&lt;/button&gt;
+&lt;button&gt;Medium&lt;/button&gt;
+&lt;button class="small"&gt;Small&lt;/button&gt;
+</code></pre>
+
+<h4 class="section-header">Icon Buttons</h4>
+<p>
+	<strong>Left Side Navigation</strong> is a special case of an icon button. Behavior and interaction are the same.
+</p>
+<nav class="icon-bar">
+	<a class="item">
+		<img src="{{ site.assets_path | prepend: site.baseurl }}/images/icons/icon_menu.svg" alt="">
+	</a>
+	<a class="item">
+		<img src="{{ site.assets_path | prepend: site.baseurl }}/images/icons/icon_pencil.svg" alt="">
+	</a>
+	<a class="item">
+		<img src="{{ site.assets_path | prepend: site.baseurl }}/images/icons/icon_gear.svg" alt="">
+	</a>
+	<a class="item">
+		<img src="{{ site.assets_path | prepend: site.baseurl }}/images/icons/icon_reddit.svg" alt="">
+	</a>
+	<a class="item">
+		<img src="{{ site.assets_path | prepend: site.baseurl }}/images/icons/icon_facebook.svg" alt="">
+	</a>
+	<a class="item">
+		<img src="{{ site.assets_path | prepend: site.baseurl }}/images/icons/icon_twitter.svg" alt="">
+	</a>
+</nav>
+
+<h4 class="section-header">Pagination</h4>
+<p>
+	<!-- pagination description? -->
+</p>
+<div class="pagination">
+<div class="clearfix">
+	<p>Dot pagination</p>
+	<ul class="dot-pagination clearfix">
+		<li class="current"><span></span></li>
+		<li><span></span></li>
+		<li><span></span></li>
+		<li><span></span></li>
+		<li><span></span></li>
+		<li><span></span></li>
+	</ul>
+	<h6>HTML</h6>
+	<pre><code>&lt;ul class="dot-pagination"&gt;
+  &lt;li class="current"&gt;&lt;span&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;span&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+</div>
+<hr class="break">
+<div class="clearfix">
+	<div class="active">
+		<p>Active pager</p>
+		<ul class="pagination">
+			<li class="arrow-right"><a></a></li>
+		</ul>
+	</div>
+	<div class="inactive">
+		<p>Inactive pager</p>
+		<ul class="pagination">
+			<li class="arrow-right unavailable"><a></a></li>
+		</ul>
+	</div>
+	<p>Use the <code>unavailable</code> class to make a paging arrow inactive.</p>
+</div>
+<div class="clearfix">
+	<p>Numerical pagination</p>
+	<ul class="pagination">
+		<li class="arrow-left unavailable"><a></a></li>
+		<li class="current"><a href="">1</a></li>
+		<li><a href="">2</a></li>
+		<li><a href="">3</a></li>
+		<li><a href="">4</a></li>
+		<li><a href="">5</a></li>
+		<li class="unavailable"><a href="">&hellip;</a></li>
+		<li><a href="">12</a></li>
+		<li><a href="">13</a></li>
+		<li class="arrow-right"><a href=""></a></li>
+	</ul>
+	<h6>HTML</h6>
+	<pre><code>&lt;ul class="pagination"&gt;
+  &lt;li class="arrow-left unavailable"&gt;&lt;a&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="current"&gt;&lt;a&gt;1&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;2&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;3&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;4&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;5&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="unavailable"&gt;&lt;a&gt;&hellip;&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;12&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a&gt;13&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="arrow-right"&gt;&lt;a&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+</div>
+</div>
+<hr class="break">

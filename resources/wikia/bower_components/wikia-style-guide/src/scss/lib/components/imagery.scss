@@ -1,0 +1,263 @@
+// Wikia Style Guide
+// http://wikia.github.io/style-guide/
+
+@import "global";
+
+@mixin landscape-image-dimensions($image-size) {
+	@media #{$small-only} {
+		$image-width: (nth($landscape-image-columns, $image-size) * $landscape-column-width-small);
+		$icon-size: $image-width * 0.1;
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $landscape-height-ratio;
+		}
+
+		.icon-play {
+			bottom: $icon-size / 3;
+			height: $icon-size;
+			left: $icon-size / 3;
+			width: $icon-size;
+		}
+	}
+
+	@media #{$medium-only} {
+		$image-width: (nth($landscape-image-columns, $image-size) * $landscape-column-width-medium);
+		$icon-size: $image-width * 0.1;
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $landscape-height-ratio;
+		}
+
+		.icon-play {
+			bottom: $icon-size / 3;
+			height: $icon-size;
+			left: $icon-size / 3;
+			width: $icon-size;
+		}
+	}
+
+	@media #{$large-only} {
+		$image-width: (nth($landscape-image-columns, $image-size) * $landscape-column-width-large);
+		$icon-size: $image-width * 0.1;
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $landscape-height-ratio;
+		}
+
+		.icon-play {
+			bottom: $icon-size / 3;
+			height: $icon-size;
+			left: $icon-size / 3;
+			width: $icon-size;
+		}
+	}
+
+	@media #{$xlarge-only} {
+		$image-width: (nth($landscape-image-columns, $image-size) * $landscape-column-width-xlarge);
+		$icon-size: $image-width * 0.1;
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $landscape-height-ratio;
+		}
+
+		.icon-play {
+			bottom: $icon-size / 3;
+			height: $icon-size;
+			left: $icon-size / 3;
+			width: $icon-size;
+		}
+	}
+
+	@media #{$xxlarge-up} {
+		$image-width: (nth($landscape-image-columns, $image-size) * $landscape-column-width-xxlarge);
+		$icon-size: $image-width * 0.1;
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $landscape-height-ratio;
+		}
+
+		.icon-play {
+			bottom: $icon-size / 3;
+			height: $icon-size;
+			left: $icon-size / 3;
+			width: $icon-size;
+		}
+	}
+}
+
+@mixin portrait-image-dimensions($image-size) {
+	@media #{$small-only} {
+		$image-width: (nth($portrait-image-columns, $image-size) * $portrait-column-width-small);
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $portrait-height-ratio;
+		}
+	}
+
+	@media #{$medium-only} {
+		$image-width: (nth($portrait-image-columns, $image-size) * $portrait-column-width-medium);
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $portrait-height-ratio;
+		}
+	}
+
+	@media #{$large-only} {
+		$image-width: (nth($portrait-image-columns, $image-size) * $portrait-column-width-large);
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $portrait-height-ratio;
+		}
+	}
+
+	@media #{$xlarge-only} {
+		$image-width: (nth($portrait-image-columns, $image-size) * $portrait-column-width-xlarge);
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $portrait-height-ratio;
+		}
+	}
+
+	@media #{$xxlarge-up} {
+		$image-width: (nth($portrait-image-columns, $image-size) * $portrait-column-width-xxlarge);
+
+		width: $image-width;
+
+		img, .overlay {
+			height: $image-width * $portrait-height-ratio;
+		}
+	}
+}
+
+$avatar-size: 36px;
+
+figure {
+	// User avatars
+	&.avatar {
+		border: 2px solid #fff;
+		border-radius: 50%;
+		height: $avatar-size;
+		width: $avatar-size;
+	}
+
+	&.landscape, &.video {
+		&.xlarge {
+			@include landscape-image-dimensions($image-size-xlarge);
+		}
+
+		&.large {
+			@include landscape-image-dimensions($image-size-large);
+		}
+
+		&.medium {
+			@include landscape-image-dimensions($image-size-medium);
+		}
+
+		&.small {
+			@include landscape-image-dimensions($image-size-small);
+		}
+
+		&.xsmall {
+			@include landscape-image-dimensions($image-size-xsmall);
+		}
+
+		&.thumb {
+			@include landscape-image-dimensions($image-size-thumb);
+		}
+	}
+
+	&.portrait {
+		&.medium {
+			@include portrait-image-dimensions($image-size-small);
+		}
+
+		&.small {
+			@include portrait-image-dimensions($image-size-xsmall);
+		}
+
+		&.thumb {
+			@include portrait-image-dimensions($image-size-thumb);
+		}
+	}
+
+	&.video {
+		position: relative;
+
+		&.large {
+			figcaption {
+				bottom: 7%;
+				color: #fff;
+				font-size: 26px;
+				height: 62px;
+				left: 16%;
+				line-height: 32px;
+				overflow-y: hidden;
+				position: absolute;
+				text-shadow: #999 1px 1px;
+				width: 80%;
+			}
+
+			.overlay {
+				background-image: linear-gradient(0deg, #c0c0c0, transparent 40%);
+			}
+		}
+
+		&.medium {
+			figcaption {
+				color: $color-blue-gray-dark;
+				font-size: 14px;
+				line-height: 1.4;
+				padding: 15px;
+				text-align: justify;
+			}
+
+			h5 {
+				color: $color-blue-light;
+				margin: 0;
+			}
+		}
+
+		&.small {
+			figcaption {
+				color: $color-blue-light;
+				font-size: 14px;
+				padding: 10px;
+			}
+		}
+
+		.icon-play,
+		.overlay {
+			display: block;
+			position: absolute;
+		}
+
+		.icon-play {
+			// Commented out for HG-616
+			// TODO: Find a way to make image paths work with a variable
+			//background-image: url(../../dist/icons/icon_play.svg);
+			//background-size: cover;
+		}
+	}
+
+	img {
+		width: 100%;
+	}
+}

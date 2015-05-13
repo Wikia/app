@@ -1,0 +1,407 @@
+---
+layout: default
+---
+<h1>Theming</h1>
+<p>
+	For specification and how it works, please go to these links: <a href="/colors">color specification</a>, <a href="/colors">information about colors on Wikia</a>.
+</p>
+<p>
+	We provide you a tool that helps you understand how colors look with different themes applied. Try light and dark theme.
+</p>
+
+<div class="light-theme">
+	<img><!-- sun icon--><br>
+	LIGHT THEME
+</div>
+<div class="dark-theme">
+	<img><!-- moon icon--><br>
+	DARK THEME
+</div>
+
+<h4 class="section-header">Typography</h4>
+<p>
+	<strong>Headlines and body text</strong>
+</p>
+<h4>History</h4>
+<p>
+	As Dog lay unconscious, Logan unsheathed his claws, for the first time in public (to the shock of everyone watching), and was about to deal the deathblow, when Rose leaped in to stop him, but was accidentally impaled by his claws. Horrified, Logan held her in his arms as she died. Stricken with grief and guilt for the death of his first love, Logan fled into the nearby woods, where he lived in self-imposed exile in a feral state with a pack of wolves for months, if not years.
+</p>
+<aside>
+	Color-text: <strong>#3A3A3A</strong>
+</aside>
+
+<p>
+	<strong>Links</strong>
+</p>
+<a>This is a nice link</a>
+<aside>
+	<strong>Color-links</strong>
+</aside>
+
+<p>
+	<strong>Red links</strong>
+</p>
+<p>
+	<a class="redlink">Superman</a>
+</p>
+<a class="redlink">Superman</a>
+<aside>
+	Background: 30% <strong>color-links</strong>, text: <strong>color-text</strong>
+</aside>
+
+<h4 class="section-header">Buttons</h4>
+<p>
+	<strong>Primary buttons</strong>
+</p>
+<div class="row">
+	<div class="large-3 column">
+		<button>Default</button>
+	</div>
+	<div class="large-3 column end">
+		<button disabled>Inactive</button>
+	</div>
+</div>
+<aside>
+	Normal &mdash; background: <strong>color-button</strong>. For light <strong>color-button</strong>, text color: <strong>#000000</strong>. For dark <strong>color-button</strong>, text color: <strong>#FFFFFF</strong>
+</aside>
+<aside>
+	Hover &mdash; background: 90% <strong>color-button</strong> + 10% <strong>#FFFFFF</strong>, text color: <strong>#FFFFFF</strong>
+</aside>
+<aside>
+	Inactive &mdash; background: 50% <strong>color-button</strong> + 50% <strong>#FFFFFF</strong>, text color: <strong>#FFFFFF</strong> + 50% opacity
+</aside>
+
+<p>
+	<strong>Secondary buttons</strong>
+</p>
+<p>
+	Text color: if contrast ratio between <strong>color-page</strong> and <strong>color-button</strong> is lower than <strong>1.6</strong>, use for text and outline mix: <strong>color-button</strong> + 10% <strong>#000000</strong>
+</p>
+<p>
+	To set the minimum contrast, use <strong>color contrast</strong>
+</p>
+
+<div class="row">
+	<div class="large-3 column">
+		<button class="secondary">Default</button>
+	</div>
+	<div class="large-3 column end">
+		<button class="secondary" disabled>Inactive</button>
+	</div>
+</div>
+<aside>
+	Normal &mdash; background: <strong>transparent</strong>, stroke: <strong>color-button</strong>, text color: <strong>color-button</strong>
+</aside>
+<aside>
+	Hover &mdash; background: <strong>color-button</strong> + 10% <strong>#FFFFFF</strong>. For light <strong>color-button</strong>, text color: <strong>#000000</strong>. For dark <strong>color-button</strong>, text color: <strong>#FFFFFF</strong>
+</aside>
+<aside>
+	Inactive &mdash; background: 50% <strong>color-button</strong> + 50% <strong>color-page</strong>, text color: <strong>#FFFFFF</strong> + 50% opacity
+</aside>
+
+<p>
+	<strong>Icon buttons</strong>
+</p>
+<!-- icon normal -->
+<!-- icon hover -->
+<!-- icon active -->
+<aside>
+	Normal &mdash; background: 30% opacity <strong>#000000</strong>, icon: <strong>color-page</strong>
+</aside>
+<aside>
+	Hover / Active &mdash; background: <strong>color-button</strong>, icon: <strong>color-page</strong>
+</aside>
+
+<p>
+	<strong>Dot pagination</strong>
+</p>
+<div class="pagination">
+	<p>Dot pagination</p>
+	<div class="dot clearfix">
+		<span class="page selected"><span></span></span>
+		<span class="page"><span></span></span>
+		<span class="page"><span></span></span>
+		<span class="page"><span></span></span>
+		<span class="page"><span></span></span>
+		<span class="page"><span></span></span>
+	</div>
+</div>
+<aside>
+	Normal &mdash; background: <strong>color-page</strong>, stroke: 80% <strong>color-page</strong> + 20% <strong>#000000</strong>
+</aside>
+<aside>
+	Hover / Active &mdash; background: <strong>color-button</strong>
+</aside>
+
+<p>
+	<strong>Pager</strong>
+</p>
+<ul class="pagination">
+	<li class="arrow-left"><a></a></li>
+	<li class="arrow-right"><a></a></li>
+</ul>
+<aside>
+	Active / Normal &mdash; <strong>color-button</strong>
+</aside>
+<aside>
+	Hover &mdash; 90% <strong>color-button</strong> + 10% <strong>#FFFFFF</strong>
+</aside>
+<aside>
+	Inactive &mdash; 50% <strong>color-button</strong> + 50% <strong>#FFFFFF</strong>
+</aside>
+
+<p>
+	<strong>Numerical pagination</strong>
+</p>
+<ul class="pagination">
+	<li class="arrow-left unavailable"><a></a></li>
+	<li class="current"><a href="">1</a></li>
+	<li><a href="">2</a></li>
+	<li><a href="">3</a></li>
+	<li><a href="">4</a></li>
+	<li><a href="">5</a></li>
+	<li class="unavailable"><a href="">&hellip;</a></li>
+	<li><a href="">12</a></li>
+	<li><a href="">13</a></li>
+	<li class="arrow-right"><a href=""></a></li>
+</ul>
+<aside>
+	Active / Normal &mdash; <strong>color-button</strong>
+</aside>
+<aside>
+	Normal &mdash; <strong>link-color</strong>
+</aside>
+
+<h4 class="section-header">Forms &amp; dropdowns</h4>
+<p>
+	<strong>Text inputs</strong>
+</p>
+<div class="row">
+	<div class="large-5 column">
+		<input type="text" placeholder="Muppets, Iron Man, Moon">
+		<input type="search" placeholder="Search for cool things">
+	</div>
+</div>
+<aside>
+	Background: 10% <strong>#000000</strong> + 90% <strong>color-page</strong>, text-color: 30% <strong>color-page</strong> + 70% <strong>color-text</strong>, icon: <strong>color-button</strong>
+</aside>
+<p>
+	<strong>Text areas</strong>
+</p>
+<div class="row">
+	<div class="large-5 column">
+		<textarea placeholder="You can write here"></textarea>
+	</div>
+</div>
+<aside>
+	Background: 10% <strong>#000000</strong> + 90% <strong>color-page</strong>, text-color: 30% <strong>color-page</strong> + 70% <strong>color-text</strong>
+</aside>
+
+<p>
+	<strong>Checkbox buttons fields</strong>
+</p>
+<div class="row">
+	<label class="large-4 column"><input type="checkbox"> Unchecked checkbox</label>
+	<label class="large-4 column"><input type="checkbox" checked> Checked checkbox</label>
+	<label class="large-4 column"><input type="checkbox" checked disabled> Disabled checkbox</label>
+</div>
+<aside>
+	Active &mdash; background: <strong>color-button</strong>, icon: <strong>#FFFFFF</strong>, text: <strong>#3A3A3A</strong>
+</aside>
+<aside>
+	Normal &mdash; border stroke: 80% <strong>color-page</strong> + 20% <strong>#000000</strong>
+</aside>
+<aside>
+	Inactive &mdash; background: 40% <strong>color-button</strong> + 60% <strong>color-page</strong>, icon: 60% <strong>color-page</strong> + 40% <strong>#FFFFFF</strong>, text: 40% <strong>color-text</strong> + 60% <strong>color-page</strong>
+</aside>
+
+<p>
+	<strong>Radio buttons</strong>
+</p>
+<div class="row">
+	<label class="large-4 column"><input type="radio"> Unchecked radio button</label>
+	<label class="large-4 column"><input type="radio" checked> Checked radio button</label>
+	<label class="large-4 column"><input type="radio" checked disabled> Disabled radio button</label>
+</div>
+<aside>
+	Active &mdash; background: <strong>color-button</strong>, stroke: <strong>color-button</strong>
+</aside>
+<aside>
+	Normal &mdash; background: <strong>color-button</strong>, border stroke: 80% <strong>color-page</strong> + 20% <strong>#000000</strong>
+</aside>
+<aside>
+	Inactive &mdash; background: 40% <strong>color-button</strong> + 60% <strong>#FFFFFF</strong>, stroke: 40% <strong>color-button</strong> + 60% <strong>#FFFFFF</strong>
+</aside>
+
+<p>
+	<strong>Dropdowns</strong>
+</p>
+
+<span>Primary</span>
+<div class="row">
+	<div class="large-3 column end">
+		<select>
+			<option>Menu 1</option>
+			<option>Menu 2</option>
+			<option>Menu 3</option>
+			<option>Menu 4</option>
+		</select>
+	</div>
+</div>
+
+<p>
+	Level 1 navigation
+</p>
+<aside>
+	Text color &mdash; For light <strong>color-button</strong>, text and chevron color: <strong>#000000</strong>. For dark <strong>color-button</strong>, text and chevron color: <strong>#FFFFFFF</strong>.
+</aside>
+<aside>
+	Normal &mdash; background: <strong>color-button</strong>, chevron: 50% <strong>#FFFFFF</strong> + 50% <strong>color-button</strong>
+</aside>
+<aside>
+	Active &mdash; background: <strong>color-button</strong>
+</aside>
+<aside>
+	Hover &mdash; background: 90% <strong>color-button</strong> + 10% <strong>#FFFFFF</strong>
+</aside>
+
+<p>
+	Level 2 navigation (flyout)
+</p>
+<aside>
+	Normal &mdash; For light <strong>color-page</strong>, text and checkmark color: <strong>#000000</strong><br>
+	Hover &mdash; For light <strong>color-link</strong>, text and checkmark color: <strong>#000000</strong>
+</aside>
+<aside>
+	Normal &mdash; background: <strong>color-page</strong>, stroke: 93% <strong>color-page</strong> + 7% <strong>#000000</strong>
+</aside>
+<aside>
+	Hover &mdash; background: <strong>color-link</strong>
+</aside>
+<aside>
+	Drop shadow &mdash; angle: <strong>45</strong>, distance: <strong>2</strong>, blur: <strong>8</strong>, color: <strong>#000000</strong>, opacity: <strong>0.3</strong>
+</aside>
+
+<span>Secondary</span>
+<div class="row">
+	<div class="large-3 column end">
+		<select class="secondary">
+			<option>Menu 1</option>
+			<option>Menu 2</option>
+			<option>Menu 3</option>
+			<option>Menu 4</option>
+		</select>
+	</div>
+</div>
+
+<p>
+	Level 1 navigation
+</p>
+<aside>
+	Normal &mdash; background: <strong>color-button</strong>, chevron: 50% <strong>#FFFFFF</strong> + 50% <strong>color-button</strong>, text: <strong>#FFFFFF</strong>
+</aside>
+<aside>
+	Active &mdash; background: <strong>color-button</strong>, chevron: <strong>#FFFFFF</strong>, text: <strong>#FFFFFF</strong>
+</aside>
+<aside>
+	Hover &mdash; background: 90% <strong>color-button</strong> + 10% <strong>#FFFFFF</strong>, text: <strong>#FFFFFF</strong>, chevron: <strong>#FFFFFF</strong>
+</aside>
+
+<p>
+	Level 2 navigation (flyout)
+</p>
+<aside>
+	Normal &mdash; background: <strong>color-page</strong>, text: <strong>#3A3A3A</strong>, checkmark: <strong>#3A3A3A</strong>, stroke: 93% <strong>color-page</strong> + 7% <strong>#000000</strong>
+</aside>
+<aside>
+	Hover &mdash; background: <strong>color-link</strong>, text: <strong>#FFFFFF</strong>, checkmark: <strong>#FFFFFF</strong>
+</aside>
+<aside>
+	Drop shadow &mdash; angle: <strong>45</strong>, distance: <strong>2</strong>, blur: <strong>8</strong>, color: <strong>#000000</strong>, opacity: <strong>0.3</strong>
+</aside>
+
+<p>
+	<strong>Icon dropdown (flyout)</strong>
+</p>
+<div class="icon-dropdown">
+	<img class="dropdown" data-dropdown="icon-drop" src="{{site.assets_path}}images/icons/icon_avatar.svg" alt="">
+	<ul id="icon-drop" class="f-dropdown">
+		<li><a>Menu 1</a></li>
+		<li><a>Menu 2</a></li>
+		<li><a>Menu 3</a></li>
+		<li><a>Menu 4</a></li>
+	</ul>
+</div>
+<aside>
+	Normal &mdash; background: <strong>color-button</strong>, text: <strong>#3A3A3A</strong>, chevron: 50% <strong>#FFFFFF</strong> + <strong>color-button</strong>, stroke: 93% <strong>color-page</strong> + 7% <strong>#000000</strong>
+</aside>
+<aside>
+	Hover &mdash; background: <strong>color-link</strong> text: <strong>#FFFFFF</strong>
+</aside>
+
+<p>
+	<strong>Left side navigation (flyout)</strong>
+</p>
+<div class="icon-navigation clearfix">
+	<img class="dropdown" data-dropdown="icon-nav" src="{{site.assets_path}}images/icons/icon_menu.svg" alt="">
+	<ul id="icon-nav" class="f-dropdown nav">
+		<li><a>History</a></li>
+		<li><a>Personality</a></li>
+		<li><a>Powers &amp; Abilities</a></li>
+		<li><a>Paraphernalia</a></li>
+		<li><a>Notes</a></li>
+		<li><a>Trivia</a></li>
+		<li><a>Links</a></li>
+	</ul>
+</div>
+<p>
+	Level 1 navigation (icon)
+</p>
+<aside>
+	Normal &mdash; background: 30% opacity <strong>#000000</strong>, icon: <strong>color-page</strong>
+</aside>
+<aside>
+	Hover &mdash; background: <strong>color-button</strong>, icon: <strong>color-page</strong>
+</aside>
+
+<p>
+	Level 2 Navigation (flyout)
+</p>
+<aside>
+	Text color &mdash; For light <strong>color-link</strong>, text: <strong>#000000</strong>. For dark <strong>color-link</strong>, text: <strong>#FFFFFF</strong>
+</aside>
+<aside>
+	Normal &mdash; background: <strong>color-page</strong>, text: <strong>#3A3A3A</strong>, stroke: 93% <strong>color-page</strong> + 7% <strong>#000000</strong>
+</aside>
+<aside>
+	Hover &mdash; background: <strong>color-link</strong>
+</aside>
+
+<h4 class="section-header">Videos</h4>
+<p>
+	<strong>Large thumbnail</strong>
+</p>
+<figure class="large video">
+	<a class="example">
+		<img src="" alt="">
+		<span class="play-icon"></span>
+	</a>
+	<figcaption><span>I Gots the Claws, Son!</span><br>Cosby sweater meggings quinoa, try-hard food truck bitters direct trade mumblecore before they sold out tousled scenester keffiyeh church-key slow-carb. Austin DIY try-hard, Portland Schlitz.</figcaption>
+</figure>
+<aside>
+	Active / Normal &mdash; <strong>color-button</strong>
+</aside>
+
+<p>
+	<strong>Small thumbnail</strong>
+</p>
+<figure class="small video">
+	<a class="example">
+		<img src="" alt="">
+		<span class="play-icon"></span>
+	</a>
+	<figcaption>Marvel Heroes Dyestruction Trailer</figcaption>
+</figure>
+<aside>
+	Normal &mdash; <strong>link-color</strong>
+</aside>

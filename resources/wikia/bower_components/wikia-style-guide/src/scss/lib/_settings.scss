@@ -1,0 +1,710 @@
+// Foundation by ZURB
+// foundation.zurb.com
+// Licensed under MIT Open Source
+
+//
+
+// Table of Contents
+// Foundation Settings
+//
+// a. Base
+// b. Grid
+// c. Global
+// d. Media Query Ranges
+// e. Typography
+// 01. Block Grid
+// 02. Buttons
+// 03. Dropdown
+// 04. Dropdown Buttons
+// 05. Forms
+// 06. Icon Bar
+// 07. Pagination
+// 08. Visibility Classes
+// 09. Imagery
+
+// a. Base
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+// Data attribute namespace
+// styles get applied to [data-mysite-plugin], etc
+$namespace: false;
+
+// This is the default html and body font-size for the base rem value.
+$rem-base: 16px;
+
+// Allows the use of rem-calc() or lower-bound() in your settings
+@import "functions";
+
+// The default font-size is set to 100% of the browser style sheet (usually 16px)
+// for compatibility with browser-based text zoom or user-set defaults.
+
+// Since the typical default browser font-size is 16px, that makes the calculation for grid size.
+// If you want your base font-size to be different and not have it affect the grid breakpoints,
+// set $rem-base to $base-font-size and make sure $base-font-size is a px value.
+$base-font-size: 16px;
+
+// The $base-font-size is 100% while $base-line-height is 150%
+$base-line-height: 150%;
+
+// We use this to control whether or not CSS classes come through in the gem files.
+$include-html-classes: true;
+$include-print-styles: true;
+$include-html-global-classes: $include-html-classes;
+
+// b. Grid
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-html-grid-classes: $include-html-classes;
+$include-xl-html-grid-classes: false;
+
+$row-width: rem-calc(1000);
+$total-columns: 12;
+$column-gutter: rem-calc(30);
+
+// c. Global
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// We use these to define default font stacks
+$font-family-sans-serif: "Helvetica Neue", Arial, sans-serif;
+$font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+$font-family-monospace: Consolas, "Liberation Mono", Courier, monospace;
+
+// We use these to define default font weights
+$font-weight-normal: 400 !default;
+$font-weight-bold: 700 !default;
+
+$white       : #FFFFFF;
+$ghost       : #FAFAFA;
+$snow        : #F9F9F9;
+$vapor       : #F6F6F6;
+$white-smoke : #F5F5F5;
+$silver      : #EFEFEF;
+$smoke       : #EEEEEE;
+$gainsboro   : #DDDDDD;
+$iron        : #CCCCCC;
+$base        : #AAAAAA;
+$aluminum    : #999999;
+$jumbo       : #888888;
+$monsoon     : #777777;
+$steel       : #666666;
+$charcoal    : #555555;
+$tuatara     : #444444;
+$oil         : #333333;
+$jet         : #222222;
+$black       : #000000;
+
+// Default user experience colors
+$color-blue-dark       : #092344;
+$color-blue-light      : #1A5EB8;
+$color-gray-dark       : #39424D;
+$color-blue-gray-dark  : #656E78;
+$color-blue-gray       : #C5CED9;
+$color-blue-gray-light : #E6EBF2;
+$color-gray-light      : #F2F6FA;
+$color-white           : #FFFFFF;
+$color-black           : #000000;
+
+// Hub Colors
+$color-hub-comics    : #FF5400;
+$color-hub-games     : #94D11F;
+$color-hub-books     : #FF7F26;
+$color-hub-movies    : #09D3BF;
+$color-hub-lifestyle : #FFD000;
+$color-hub-music     : #C819AD;
+$color-hub-tv        : #00B7E0;
+
+// We use these as default colors throughout
+$primary-color   : $color-blue-dark;
+$secondary-color : #e7e7e7;
+$alert-color     : #ff3500;
+$success-color   : #43AC6A;
+$warning-color   : #f08a24;
+$info-color      : #a0d3e8;
+
+// We use these to control various global styles
+$body-background: $white;
+$body-font-color: $color-gray-dark;
+$body-font-family: $font-family-sans-serif;
+$body-font-weight: $font-weight-normal;
+$body-font-style: normal;
+
+// We use this to control font-smoothing
+$font-smoothing: antialiased;
+
+// We use these to control text direction settings
+$text-direction: ltr;
+$opposite-direction: right;
+$default-float: left;
+$last-child-float: $opposite-direction;
+
+// We use these to make sure border radius matches unless we want it different.
+$global-radius: 3px;
+$global-rounded: 1000px;
+
+// We use these to control inset shadow shiny edges and depressions.
+$shiny-edge-size: 0 1px 0;
+$shiny-edge-color: rgba($white, .5);
+$shiny-edge-active-color: rgba($black, .2);
+
+// d. Media Query Ranges
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$screen-sizes: small, medium, large, xlarge, xxlarge;
+
+$small-range: (0px, 320px);
+$medium-range: (321px, 768px);
+$large-range: (769px, 1024px);
+$xlarge-range: (1025px, 1156px);
+$xxlarge-range: (1157px, 99999px);
+
+$screen: "only screen";
+
+$landscape: "#{$screen} and (orientation: landscape)";
+$portrait: "#{$screen} and (orientation: portrait)";
+
+$small-up: $screen;
+$small-only: "#{$screen} and (max-width: #{upper-bound($small-range)})";
+
+$medium-up: "#{$screen} and (min-width:#{lower-bound($medium-range)})";
+$medium-only: "#{$screen} and (min-width:#{lower-bound($medium-range)}) and (max-width:#{upper-bound($medium-range)})";
+
+$large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
+$large-only: "#{$screen} and (min-width:#{lower-bound($large-range)}) and (max-width:#{upper-bound($large-range)})";
+
+$xlarge-up: "#{$screen} and (min-width:#{lower-bound($xlarge-range)})";
+$xlarge-only: "#{$screen} and (min-width:#{lower-bound($xlarge-range)}) and (max-width:#{upper-bound($xlarge-range)})";
+
+$xxlarge-up: "#{$screen} and (min-width:#{lower-bound($xxlarge-range)})";
+$xxlarge-only: "#{$screen} and (min-width:#{lower-bound($xxlarge-range)}) and (max-width:#{upper-bound($xxlarge-range)})";
+
+// Legacy
+$small: $medium-up;
+$medium: $medium-up;
+$large: $large-up;
+
+// We use this as cursors values for enabling the option of having custom cursors in the whole site's stylesheet
+$cursor-auto-value: auto;
+$cursor-crosshair-value: crosshair;
+$cursor-default-value: default;
+$cursor-pointer-value: pointer;
+$cursor-help-value: help;
+$cursor-text-value: text;
+
+// e. Typography
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-html-type-classes: $include-html-classes;
+
+// We use these to control header font styles
+$header-font-family: $body-font-family;
+$header-font-weight: $font-weight-bold;
+$header-font-style: normal;
+$header-font-color: $jet;
+$header-line-height: 1.4;
+$header-top-margin: .2rem;
+$header-bottom-margin: 1.4rem;
+$header-text-rendering: optimizeLegibility;
+
+
+// Type Scale inspired by Medium's CSS
+// @source https : //medium.com/@fat/mediums-css-is-actually-pretty-fucking-good-b8e2a6c78b06
+$type-base     : 1rem;
+$type-max      : rem-calc(54);
+$type-largest  : rem-calc(40);
+$type-larger   : rem-calc(36);
+$type-large    : rem-calc(27);
+$type-small    : rem-calc(24);
+$type-smaller  : rem-calc(18);
+$type-smallest : rem-calc(14);
+$type-min      : 0.75rem;
+
+$line-height-base     : rem-calc(26);
+$line-height-max      : rem-calc(54);
+$line-height-largest  : rem-calc(40);
+$line-height-larger   : rem-calc(36);
+$line-height-large    : rem-calc(32);
+$line-height-small    : rem-calc(28);
+$line-height-smaller  : rem-calc(28);
+$line-height-smallest : rem-calc(20);
+$line-height-min      : rem-calc(18);
+
+// We use these to control header font sizes
+$h1-font-size: $type-max;
+$h2-font-size: $type-largest;
+$h3-font-size: $type-larger;
+$h4-font-size: $type-large;
+$h5-font-size: $type-small;
+$h6-font-size: $type-smaller;
+
+$h1-line-height: $line-height-max;
+$h2-line-height: $line-height-largest;
+$h3-line-height: $line-height-larger;
+$h4-line-height: $line-height-large;
+$h5-line-height: $line-height-small;
+$h6-line-height: $line-height-smaller;
+
+$h1-font-size-small: $type-large;
+$h2-font-size-small: $type-large;
+$h3-font-size-small: $type-small;
+$h4-font-size-small: $type-smaller;
+$h5-font-size-small: $type-smaller;
+$h6-font-size-small: $type-smallest;
+
+$h1-line-height-small: $line-height-large;
+$h2-line-height-small: $line-height-large;
+$h3-line-height-small: $line-height-small;
+$h4-line-height-small: $line-height-smaller;
+$h5-line-height-small: $line-height-smaller;
+$h6-line-height-small: $line-height-smallest;
+
+$h1-font-size-medium: $type-larger;
+$h2-font-size-medium: $type-large;
+$h3-font-size-medium: $type-small;
+$h4-font-size-medium: $type-smaller;
+$h5-font-size-medium: $type-smaller;
+$h6-font-size-medium: $type-smaller;
+
+$h1-line-height-medium: $line-height-larger;
+$h2-line-height-medium: $line-height-large;
+$h3-line-height-medium: $line-height-small;
+$h4-line-height-medium: $line-height-smaller;
+$h5-line-height-medium: $line-height-smaller;
+$h6-line-height-medium: $line-height-smaller;
+
+// We use these to control header size reduction on small screens
+$h1-font-reduction: 0 !default;
+$h2-font-reduction: 0 !default;
+$h3-font-reduction: 0 !default;
+$h4-font-reduction: 0 !default;
+$h5-font-reduction: 0 !default;
+$h6-font-reduction: 0 !default;
+
+// These control how subheaders are styled.
+$subheader-line-height: 1.4;
+$subheader-font-color: scale-color($header-font-color, $lightness: 35%);
+$subheader-font-weight: $font-weight-normal;
+$subheader-top-margin: .2rem;
+$subheader-bottom-margin: .5rem;
+
+// A general <small> styling
+$small-font-size: $type-min;
+$small-font-color: scale-color($header-font-color, $lightness: 35%);
+
+// We use these to style paragraphs
+$paragraph-font-family: inherit;
+$paragraph-font-weight: $font-weight-normal;
+$paragraph-font-size: $type-base;
+$paragraph-line-height: 1.6;
+$paragraph-margin: 1rem;
+$paragraph-aside-font-size: $type-smallest;
+$paragraph-aside-line-height: 1.35;
+$paragraph-aside-font-style: italic;
+$paragraph-text-rendering: optimizeLegibility;
+
+// We use these to style <code> tags
+$code-color: $oil;
+$code-font-family: $font-family-monospace;
+$code-font-weight: $font-weight-normal;
+$code-background-color: scale-color($secondary-color, $lightness: 70%);
+$code-border-size: 1px;
+$code-border-style: solid;
+$code-border-color: scale-color($code-background-color, $lightness: -10%);
+$code-padding: rem-calc(2) rem-calc(5) rem-calc(1);
+
+// We use these to style anchors
+$anchor-text-decoration: none;
+$anchor-text-decoration-hover: none;
+$anchor-font-color: $color-blue-light;
+$anchor-font-color-hover: scale-color($primary-color, $lightness: -14%);
+$redlink-background-color: #afd0e5;
+
+// We use these to style the <hr> element
+$hr-border-width: 1px;
+$hr-border-style: solid;
+$hr-border-color: $gainsboro;
+$hr-margin: rem-calc(20);
+
+// We use these to style lists
+$list-font-family: $paragraph-font-family;
+$list-font-size: $paragraph-font-size;
+$list-line-height: $paragraph-line-height;
+$list-margin-bottom: $paragraph-margin;
+$list-style-position: outside;
+$list-side-margin: 1.1rem;
+$list-ordered-side-margin: 1.4rem;
+$list-side-margin-no-bullet: 0;
+$list-nested-margin: rem-calc(20);
+$definition-list-header-weight: $font-weight-bold !default;
+$definition-list-header-margin-bottom: .3rem !default;
+$definition-list-margin-bottom: rem-calc(12);
+
+// We use these to style blockquotes
+$blockquote-font-size: $type-large;
+$blockquote-font-color: $color-black;
+$blockquote-font-weight: $font-weight-bold;
+$blockquote-line-height: 1.2;
+$blockquote-padding: rem-calc(9 20 0 19);
+$blockquote-border: 1px solid $gainsboro;
+$blockquote-cite-font-size: $type-smaller;
+$blockquote-cite-font-style: normal;
+$blockquote-cite-font-weight: $font-weight-normal;
+$blockquote-cite-font-color: scale-color($header-font-color, $lightness: 23%);
+$blockquote-cite-link-color: $anchor-font-color;
+
+// Acronym styles
+$acronym-underline: 1px dotted $gainsboro;
+
+// We use these to control padding and margin
+$microformat-padding: rem-calc(10 12);
+$microformat-margin: rem-calc(0 0 20 0);
+
+// We use these to control the border styles
+$microformat-border-width: 1px;
+$microformat-border-style: solid;
+$microformat-border-color: $gainsboro;
+
+// We use these to control full name font styles
+$microformat-fullname-font-weight: $font-weight-bold;
+$microformat-fullname-font-size: $type-smallest;
+
+// We use this to control the summary font styles
+$microformat-summary-font-weight: $font-weight-bold;
+
+// We use this to control abbr padding
+$microformat-abbr-padding: rem-calc(0 1);
+
+// We use this to control abbr font styles
+$microformat-abbr-font-weight: $font-weight-bold;
+$microformat-abbr-font-decoration: none;
+
+
+// 01. Block Grid
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-html-block-grid-classes: $include-html-classes;
+$include-xl-html-block-grid-classes: false;
+
+// We use this to control the maximum number of block grid elements per row
+$block-grid-elements: 12;
+$block-grid-default-spacing: rem-calc(20);
+$align-block-grid-to-grid: false;
+
+// Enables media queries for block-grid classes. Set to false if writing semantic HTML.
+$block-grid-media-queries: true;
+
+// 02. Buttons
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-html-button-classes: $include-html-classes;
+
+// We use these to build padding for buttons.
+$button-sml: rem-calc(30);
+$button-med: rem-calc(40);
+$button-lrg: rem-calc(50);
+
+// We use this to control the display property.
+$button-display: inline-block;
+$button-margin-bottom: rem-calc(20);
+
+// We use these to control button text styles.
+$button-font-family: $body-font-family;
+$button-font-color: $white;
+$button-font-color-alt: $oil;
+$button-font-tny: rem-calc(11);
+$button-font-sml: rem-calc(13);
+$button-font-med: rem-calc(16);
+$button-font-lrg: rem-calc(20);
+$button-font-weight: $font-weight-normal;
+$button-font-align: center;
+
+// We use these to control various hover effects.
+$button-function-factor: -20%;
+
+// We use these to control button border and hover styles.
+$button-border-width: 1px;
+$button-border-style: solid;
+$button-bg-color: $color-blue-light;
+$button-bg-hover: $color-blue-dark;
+$button-border-color: $button-bg-color;
+$secondary-button-bg-hover: $color-white;
+$secondary-button-border-color: $button-bg-color;
+$success-button-bg-hover: scale-color($success-color, $lightness: $button-function-factor);
+$success-button-border-color: $success-button-bg-hover;
+$alert-button-bg-hover: scale-color($alert-color, $lightness: $button-function-factor);
+$alert-button-border-color: $alert-button-bg-hover;
+$warning-button-bg-hover: scale-color($warning-color, $lightness: $button-function-factor) !default;
+$warning-button-border-color: $warning-button-bg-hover !default;
+$info-button-bg-hover: scale-color($info-color, $lightness: $button-function-factor) !default;
+$info-button-border-color: $info-button-bg-hover !default;
+
+// We use this to set the default radius used throughout the core.
+$button-radius: $global-radius;
+$button-round: $global-rounded;
+
+// We use this to set default opacity and cursor for disabled buttons.
+$button-disabled-opacity: 0.5;
+$button-disabled-cursor: $cursor-default-value;
+
+// 03. Dropdown
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-html-dropdown-classes: $include-html-classes;
+
+// We use these to controls height and width styles.
+$f-dropdown-max-width: 200px;
+$f-dropdown-height: auto;
+$f-dropdown-max-height: none;
+
+// Used for bottom position
+$f-dropdown-margin-top: 2px;
+
+// Used for right position
+$f-dropdown-margin-left: $f-dropdown-margin-top;
+
+// Used for left position
+$f-dropdown-margin-right: $f-dropdown-margin-top;
+
+// Used for top position
+$f-dropdown-margin-bottom: $f-dropdown-margin-top;
+
+// We use this to control the background color
+$f-dropdown-bg: $white;
+
+// We use this to set the border styles for dropdowns.
+$f-dropdown-border-style: solid;
+$f-dropdown-border-width: 1px;
+$f-dropdown-border-color: scale-color($white, $lightness: -20%);
+
+// We use these to style the triangle pip.
+$f-dropdown-triangle-size: 6px;
+$f-dropdown-triangle-color: $white;
+$f-dropdown-triangle-side-offset: 10px;
+
+// We use these to control styles for the list elements.
+$f-dropdown-list-style: none;
+$f-dropdown-font-color: $color-blue-light;
+$f-dropdown-font-size: $type-smallest;
+$f-dropdown-list-padding: rem-calc(5, 10);
+$f-dropdown-line-height: rem-calc(18);
+$f-dropdown-list-hover-bg: $color-blue-light;
+$dropdown-mobile-default-float: 0;
+
+// We use this to control the styles for when the dropdown has custom content.
+$f-dropdown-content-padding: rem-calc(20);
+
+// Default radius for dropdown.
+$f-dropdown-radius: $global-radius;
+
+
+// 04. Dropdown Buttons
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-html-button-classes: $include-html-classes;
+
+// We use these to set the color of the pip in dropdown buttons
+$dropdown-button-pip-color: $white;
+$dropdown-button-pip-color-alt: $oil;
+
+$button-pip-tny: rem-calc(6);
+$button-pip-sml: rem-calc(7);
+$button-pip-med: rem-calc(9);
+$button-pip-lrg: rem-calc(11);
+
+// We use these to style tiny dropdown buttons
+$dropdown-button-padding-tny: $button-pip-tny * 7;
+$dropdown-button-pip-size-tny: $button-pip-tny;
+$dropdown-button-pip-opposite-tny: $button-pip-tny * 3;
+$dropdown-button-pip-top-tny: -$button-pip-tny / 2 + rem-calc(1);
+
+// We use these to style small dropdown buttons
+$dropdown-button-padding-sml: $button-pip-sml * 7;
+$dropdown-button-pip-size-sml: $button-pip-sml;
+$dropdown-button-pip-opposite-sml: $button-pip-sml * 3;
+$dropdown-button-pip-top-sml: -$button-pip-sml / 2 + rem-calc(1);
+
+// We use these to style medium dropdown buttons
+$dropdown-button-padding-med: $button-pip-med * 6 + rem-calc(3);
+$dropdown-button-pip-size-med: $button-pip-med - rem-calc(3);
+$dropdown-button-pip-opposite-med: $button-pip-med * 2.5;
+$dropdown-button-pip-top-med: -$button-pip-med / 2 + rem-calc(2);
+
+// We use these to style large dropdown buttons
+$dropdown-button-padding-lrg: $button-pip-lrg * 5 + rem-calc(3);
+$dropdown-button-pip-size-lrg: $button-pip-lrg - rem-calc(6);
+$dropdown-button-pip-opposite-lrg: $button-pip-lrg * 2.5;
+$dropdown-button-pip-top-lrg: -$button-pip-lrg / 2 + rem-calc(3);
+
+// 05. Forms
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-html-form-classes: $include-html-classes;
+
+// We use this to set the base for lots of form spacing and positioning styles
+$form-spacing: rem-calc(16);
+
+// We use these to style the labels in different ways
+$form-label-pointer: pointer;
+$form-label-font-size: $type-smallest;
+$form-label-font-weight: $font-weight-normal;
+$form-label-line-height: 1.5;
+$form-label-font-color: scale-color($black, $lightness: 30%);
+$form-label-small-transform: capitalize;
+$form-label-bottom-margin: 0;
+$input-font-family: inherit;
+$input-font-color: rgba(0,0,0,0.75);
+$input-font-size: $type-smallest;
+$input-bg-color: $white;
+$input-focus-bg-color: scale-color($white, $lightness: -2%);
+$input-border-color: scale-color($white, $lightness: -20%);
+$input-focus-border-color: scale-color($white, $lightness: -40%);
+$input-border-style: solid;
+$input-border-width: 1px;
+$input-border-radius: $global-radius;
+$input-disabled-bg: $gainsboro;
+$input-disabled-cursor: $cursor-default-value;
+$input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+
+// We use these to style the fieldset border and spacing.
+$fieldset-border-style: solid;
+$fieldset-border-width: 1px;
+$fieldset-border-color: $gainsboro;
+$fieldset-padding: rem-calc(20);
+$fieldset-margin: rem-calc(18 0);
+
+// We use these to style the legends when you use them
+$legend-bg: $white;
+$legend-font-weight: $font-weight-bold;
+$legend-padding: rem-calc(0 3);
+
+// We use these to style the prefix and postfix input elements
+$input-prefix-bg: scale-color($white, $lightness: -5%);
+$input-prefix-border-color: scale-color($white, $lightness: -20%);
+$input-prefix-border-size: 1px;
+$input-prefix-border-type: solid;
+$input-prefix-overflow: hidden;
+$input-prefix-font-color: $oil;
+$input-prefix-font-color-alt: $white;
+
+// We use this setting to turn on/off HTML5 number spinners (the up/down arrows)
+$input-number-spinners: true;
+
+// We use these to style the error states for inputs and labels
+$input-error-message-padding: rem-calc(6 9 9);
+$input-error-message-top: -1px;
+$input-error-message-font-size: $type-min;
+$input-error-message-font-weight: $font-weight-normal;
+$input-error-message-font-style: italic;
+$input-error-message-font-color: $alert-color;
+$input-error-message-font-color-alt: $alert-color;
+
+// We use this to style the glowing effect of inputs when focused
+$input-include-glowing-effect: true;
+$glowing-effect-fade-time: 0.45s;
+$glowing-effect-color: $input-focus-border-color;
+
+// Select variables
+$select-bg-color: $ghost;
+$select-font-size: $type-min;
+$select-hover-bg-color: scale-color($select-bg-color, $lightness: -3%);
+
+// 06. Icon Bar
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// We use these to style the icon-bar and items
+$include-html-icon-bar-classes: $include-html-classes;
+$icon-bar-bg: transparent;
+$icon-bar-font-color: $white;
+$icon-bar-font-size: $type-base;
+$icon-bar-hover-color: $primary-color;
+$icon-bar-icon-color: $white;
+$icon-bar-icon-size: rem-calc(38);
+$icon-bar-image-width: rem-calc(38);
+$icon-bar-image-height: $icon-bar-image-width;
+$icon-bar-active-color: $primary-color;
+$icon-bar-item-padding: rem-calc(6);
+
+// 07. Pagination
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-pagination-classes: $include-html-classes;
+
+// We use these to control the pagination container
+$pagination-height: rem-calc(24);
+$pagination-margin: rem-calc(-5);
+
+// We use these to set the list-item properties
+$pagination-li-float: $default-float;
+$pagination-li-height: rem-calc(18);
+$pagination-li-font-color: $body-font-color;
+$pagination-li-font-size: $type-smallest;
+$pagination-li-margin: rem-calc(0 6);
+
+// We use these for the pagination anchor links
+$pagination-link-pad: 0;
+$pagination-link-font-color: $anchor-font-color;
+$pagination-link-active-bg: transparent;
+
+// We use these for disabled anchor links
+$pagination-link-unavailable-cursor: default;
+$pagination-link-unavailable-font-color: $body-font-color;
+$pagination-link-unavailable-bg-active: transparent;
+
+// We use these for currently selected anchor links
+$pagination-link-current-background: transparent;
+$pagination-link-current-font-color: $body-font-color;
+$pagination-link-current-font-weight: $font-weight-bold;
+$pagination-link-current-cursor: default;
+$pagination-link-current-active-bg: transparent;
+
+// 08. Visibility Classes
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$include-html-visibility-classes: $include-html-classes;
+$include-table-visibility-classes: true;
+$include-legacy-visibility-classes: true;
+$include-accessibility-classes: true;
+
+// 09. Imagery
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+$landscape-height-ratio: 0.5625; // 16:9
+$portrait-height-ratio: 1.4; // 5:7
+
+$image-size-thumb:  1;
+$image-size-xsmall: 2;
+$image-size-small:  3;
+$image-size-medium: 4;
+$image-size-large:  5;
+$image-size-xlarge: 6;
+
+$landscape-image-columns: 2, 3, 4, 6, 8, 12;
+$portrait-image-columns: 2, 3, 4;
+
+$landscape-column-width-small:   26px;
+$landscape-column-width-medium:  50px;
+$landscape-column-width-large:   60px;
+$landscape-column-width-xlarge:  80px;
+$landscape-column-width-xxlarge: 90px;
+
+$portrait-column-width-small:   26px;
+$portrait-column-width-medium:  50px;
+$portrait-column-width-large:   60px;
+$portrait-column-width-xlarge:  80px;
+$portrait-column-width-xxlarge: 90px;
+
+// Z-Index Scale
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+// Never --ever-- implement z-index that doesn't use this scale, if you have a use-case that
+// for some reason falls out of this scale, ask for guidance before implementing one-offs.
+
+$z-min : -1;
+$z-1   : 100;
+$z-2   : 200;
+$z-3   : 300;
+$z-4   : 400;
+$z-5   : 500;
+$z-6   : 600;
+$z-7   : 700;
+$z-8   : 800;
+$z-9   : 900;
+$z-max : 10000;

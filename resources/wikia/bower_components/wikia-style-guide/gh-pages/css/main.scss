@@ -1,0 +1,31 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+// These colors are copied from:
+// https://github.com/Wikia/style-guide/blob/master/src/scss/lib/_settings.scss#L118
+// Normally devs would source the SCSS file directly and hence, have access to these variables,
+// but Jekyll is not super flexible with include paths
+$color-blue-dark       : #092344;
+$color-blue-light      : #1A5EB8;
+$color-gray-dark       : #39424D;
+$color-blue-gray-dark  : #656E78;
+$color-blue-gray       : #C5CED9;
+$color-blue-gray-light : #E6EBF2;
+$color-gray-light      : #F2F6FA;
+$color-white           : #FFFFFF;
+
+// Hub Colors
+$color-hub-comics    : #FF5400;
+$color-hub-games     : #94D11F;
+$color-hub-books     : #FF7F26;
+$color-hub-movies    : #09D3BF;
+$color-hub-lifestyle : #FFD000;
+$color-hub-music     : #C819AD;
+$color-hub-tv        : #00B7E0;
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import 'base';
+@import 'layout';
+@import 'section';

@@ -1,0 +1,30 @@
+{
+  "name": "wikia-style-guide",
+  "version": "1.0.1",
+  "description": "Wikia Style Guide ===========",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bump-major": "bower version major && git push --tags",
+    "bump-minor": "bower version minor && git push --tags",
+    "bump-patch": "bower version patch && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wikia/style-guide.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wikia/style-guide/issues"
+  },
+  "homepage": "https://github.com/Wikia/style-guide",
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp-sass": "^1.1.0",
+    "node-sass": "^1.2.2"
+  },
+  "dependencies": {
+    "gulp": "^3.8.10"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "wikia-style-guide",
+  "version": "1.0.1",
+  "homepage": "http://wikia.github.io/style-guide",
+  "authors": [
+    "Kenneth Kouot <kenneth@wikia-inc.com>"
+  ],
+  "description": "Front-end style guide based on Zurb's Foundation",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "~0.6.0"
+  },
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.1",
+    "commit": "86c398a324aa0e6177b44c7acd75307824801e99"
+  },
+  "_source": "git://github.com/Wikia/style-guide.git",
+  "_target": "~1.0.1",
+  "_originalSource": "Wikia/style-guide",
+  "_direct": true
+}

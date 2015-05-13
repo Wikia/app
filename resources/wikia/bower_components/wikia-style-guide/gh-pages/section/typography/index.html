@@ -1,0 +1,186 @@
+---
+layout: default
+class: 'typography'
+---
+<h1>Typography</h1>
+<p><strong>Helvetica Neue</strong> &mdash; This typeface, designed by Max Miedinger and other project members at the Haas'sche Schriftgiesserei, has become one of the most famous and popular typefaces in the world, thanks to the marketing strategy of Stempel and Linotype. It forms an integral part of many printers and operating systems. The original letterforms of Helvetica had to be modified for the Linotype system. Over the years, Helvetica was expanded to include many different weights, but these were not coordinated with each other.</p>
+<p><strong>Font Family:</strong> "Helvetica Neue", Arial, sans-serif;</p>
+
+<table class="font-list">
+	<thead>
+		<tr>
+            <th>Example</th>
+            <th>Font Weight</th>
+            <th>Font Size /<br>Line Height</th>
+            <th>Uses</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<h1>Helvetica Neue</h1>
+			</td>
+			<td>700</td>
+			<td>54px / 54px</td>
+			<td class="font-smallest">
+				<code>h1</code> heading
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h2>Helvetica Neue</h2>
+			</td>
+			<td>700</td>
+			<td>40px / 40px</td>
+			<td class="font-smallest">
+				<code>h2</code> heading
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h3>Helvetica Neue</h3>
+			</td>
+			<td>700</td>
+			<td>36px / 44px</td>
+			<td class="font-smallest">
+				<code>h3</code> heading
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h4>Helvetica Neue</h4>
+			</td>
+			<td>400/700</td>
+			<td>27px / 32px</td>
+			<td class="font-smallest">
+				<code>h4</code> heading, <code>blockquote</code> quote text
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h5>Helvetica Neue</h5>
+			</td>
+			<td>400/700</td>
+			<td>24px / 28px</td>
+			<td class="font-smallest">
+				<code>h5</code> heading
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<h6>Helvetica Neue</h6>
+			</td>
+			<td>400/700</td>
+			<td>18px / 28px</td>
+			<td class="font-smallest">
+				<code>h6</code> heading, <code>cite</code> inside <code>blockquote</code>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Helvetica Neue
+			</td>
+			<td>400</td>
+			<td>16px / 26px</td>
+			<td class="font-smallest">
+				Base paragraph and body text
+			</td>
+		</tr>
+		<tr>
+			<td class="font-smallest">
+				Helvetica Neue
+			</td>
+			<td>400</td>
+			<td>14px / 20px</td>
+			<td class="font-smallest"></td>
+		</tr>
+		<tr>
+			<td>
+                <small>Helvetica Neue</small>
+			</td>
+			<td>400</td>
+			<td>12px / 18px</td>
+			<td class="font-smallest">
+				<code>small</code> text
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h4 class="section-header">Blockquote</h4>
+<section class="row">
+    <div class="large-12 columns">
+        <div class="large-10 columns end">
+            <blockquote>
+                ...I'm Wolverine. I'm the best there is at what I do, but what I do best isn't very nice.
+                <cite><a href="#">Logan</a></cite>
+            </blockquote>
+        </div>
+    </div>
+    <div class="large-12 columns">
+    	<hr class="break">
+        <h6>HTML</h6>
+        <pre><code>&lt;blockquote&gt;
+  ...I'm Wolverine. I'm the best there is at what I do, but what I do
+  best isn't very nice.
+  &lt;cite&gt;&lt;a href="/wiki/Logan"&gt;Logan&lt;/a&gt;&lt;/cite&gt;
+&lt;/blockquote&gt;</code></pre>
+    </div>
+</section>
+
+<h4 class="section-header">Text</h4>
+<section class="row">
+    <div class="large-12 columns">
+        <h6>Headlines and body text</h6>
+        <h4>History</h4>
+        <p>As Dog lay unconscious, Logan unsheathed his claws, for the first time in public (to the shock of everyone watching), and was about to deal the deathblow, when Rose leaped in to stop him, but was accidentally impaled by his claws. Horrified, Logan held her in his arms as she died. Stricken with grief and guilt for the death of his first love, Logan fled into the nearby woods, where he lived in self-imposed exile in a feral state with a pack of wolves for months, if not years.</p>
+        <h6>HTML</h6>
+        <pre><code>&lt;h4&gt;History&lt;/h4&gt;
+&lt;p&gt;As Dog lay unconscious, Logan unsheathed his claws...&lt;/p&gt;</code></pre>
+        <hr class="break">
+        <h6>Links</h6>
+        <p>
+            <a href="#">This is a nice link</a>
+        </p>
+        <h6>HTML</h6>
+        <pre><code>&lt;a href="/wiki/Nice_link"&gt;This is a nice link&lt;/a&gt;</code></pre>
+        <hr class="break">
+        <p><strong>Red links</strong> are links to wiki articles that don't yet exist. Historically in Mediawiki, they have been colored red, but community theme colors may present them differently. Any red links should contain the <code>redlink</code> class.</p>
+        <p>
+            <a href="#" class="redlink">Superman</a>
+        </p>
+        <h6>HTML</h6>
+        <pre><code>&lt;a href="/wiki/Superman" class="redlink"&gt;Superman&lt;/a&gt;</code></pre>
+    </div>
+</section>
+
+<h4 class="section-header">Numbered and bulleted lists</h4>
+<section class="row">
+    <div class="large-12 columns">
+        <p><b>Bullet list</b></p>
+        <ul>
+            <li>It has been estimated to be 60 feet high and 250 feet long with each half of the great gate being 90 feet wide and set on large stone wheels.</li>
+            <li>The Black Gate was made from an impregnable black stone.</li>
+            <li>During the War of the Ring, Frodo and Sam had a chance to go through the Black Gate when they arrived at Mordor, but it was so heavily fortified and guarded that they turned away and were led on a different route into</li>
+        </ul>
+        <h6>HTML</h6>
+        <pre><code>&lt;ul&gt;
+  &lt;li&gt;It has been estimated to be 60 feet high and 250 feet long...&lt;/li&gt;
+  &lt;li&gt;The Black Gate was made from an impregnable black stone.&lt;/li&gt;
+  &lt;li&gt;During the War of the Ring, Frodo and Sam had a chance...&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        <hr class="break">
+        <p><b>Number list</b></p>
+        <ol>
+            <li>It has been estimated to be 60 feet high and 250 feet long with each half of the great gate being 90 feet wide and set on large stone wheels.</li>
+            <li>The Black Gate was made from an impregnable black stone.</li>
+            <li>During the War of the Ring, Frodo and Sam had a chance to go through the Black Gate when they arrived at Mordor, but it was so heavily fortified and guarded that they turned away and were led on a different route into</li>
+        </ol>
+        <h6>HTML</h6>
+        <pre><code>&lt;ol&gt;
+  &lt;li&gt;It has been estimated to be 60 feet high and 250 feet long...&lt;/li&gt;
+  &lt;li&gt;The Black Gate was made from an impregnable black stone.&lt;/li&gt;
+  &lt;li&gt;During the War of the Ring, Frodo and Sam had a chance...&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+    </div>
+</section>
