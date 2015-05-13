@@ -154,9 +154,10 @@ class CreateWiki {
 	 */
 	protected function getLoggerContext() {
 		return [
-			'cityid' => $this->mNewWiki->city_id,
-			'domain' => $this->mDomain,
-			'dbname' => $this->mNewWiki->dbname,
+			'cityid'   => $this->mNewWiki->city_id,
+			'domain'   => $this->mDomain,
+			'dbname'   => $this->mNewWiki->dbname,
+			'logGroup' => 'createwiki',
 		];
 	}
 
@@ -167,6 +168,8 @@ class CreateWiki {
 	 */
 	public function create() {
 		global $wgExternalSharedDB, $wgSharedDB, $wgUser;
+
+		$then = microtime( true );
 
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
@@ -472,6 +475,10 @@ class CreateWiki {
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
+
+		$this->info( __METHOD__ . ': done', [
+			'took' => microtime( true ) - $then
+		] );
 
 		wfProfileOut( __METHOD__ );
 	}
