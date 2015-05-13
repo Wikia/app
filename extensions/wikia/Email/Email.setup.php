@@ -50,5 +50,5 @@ $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i1
 /**
  * permissions
  */
-$wgDefaultUserOptions['access-sendemail'] = false;
+$wgGroupPermissions['*']['access-sendemail'] = false;
 $wgGroupPermissions['staff']['access-sendemail'] = true;
