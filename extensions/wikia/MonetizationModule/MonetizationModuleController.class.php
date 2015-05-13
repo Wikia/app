@@ -39,6 +39,16 @@ class MonetizationModuleController extends WikiaController {
 			$params['mcache'] = $mcachePurge;
 		}
 
+		$adEngine = $this->request->getVal( 'adEngine', false );
+		$fromSearch = $this->request->getVal( 'from_search', false );
+		if ( $adEngine ) {
+			$params['ad_engine'] = $adEngine;
+			$params['geo'] = $helper->getCountryCode();
+			if ( $fromSearch ) {
+				$params['from_search'] = $fromSearch;
+			}
+		}
+
 		$this->data = $helper->getMonetizationUnits( $params );
 
 		// check if the article page is blocked
