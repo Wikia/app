@@ -6,12 +6,6 @@ $background-height: get_command_line_param('background-image-height', 0);
 $background-width: get_command_line_param('background-image-width', 0);
 $gradient-width: 40px;
 $adskin-width: 170px;
-//@TODO clean up when cleaning up backgrounds
-//In order to preserve compatibility between "old" responsive and "new" breakpoints
-//We need to shift the background by 17px on each side, it comes from this equation:
-//(1064 - 1030) / 2 = 17 (difference between content width for breakpoints and responsive)
-$legacy-background-shift: 17px;
-$legacy-background-shift-both-sides: $legacy-background-shift * 2;
 $large-breakpoint-content-and-adskin-width: $content-width-large + 2 * $adskin-width;
 
 // convert unitless int values to pixels
@@ -25,15 +19,15 @@ $large-breakpoint-content-and-adskin-width: $content-width-large + 2 * $adskin-w
 $background-width-half: $background-width / 2;
 $background-offset: ($breakpoint-upper - $background-width) / 2;
 $background-align: if($background-width > $width-outside, center, left);
-$gradient-offset: $legacy-background-shift + $gradient-width;
+$gradient-offset: $gradient-width;
 
 @mixin breakpoint-middle-gradient($side) {
 	background: rgba($color-body-middle, 0) linear-gradient(to #{$side}, rgba($color-body-middle, 0) 0%, $color-body-middle 100%);
 }
 
 @mixin background-max() {
-	$background-margin: ($content-width-medium / 2) - (($content-width-large / 2) + $background-width-half + $legacy-background-shift);
-	$background-halves-spacing: $content-width-large - $content-width-medium + $legacy-background-shift-both-sides;
+	$background-margin: ($content-width-medium / 2) - (($content-width-large / 2) + $background-width-half);
+	$background-halves-spacing: $content-width-large - $content-width-medium;
 	$gradient-offset: ($background-halves-spacing / 2) + $gradient-width;
 
 	body.background-dynamic.skin-oasis {
@@ -110,15 +104,16 @@ body.skin-oasis {
 		}
 
 		&::after {
-			@include calc('right', '50% - #{$legacy-background-shift}');
 			background-position: -$background-width-half 0;
+			/* @noflip */
 			margin-right: -$background-width-half;
+			/* @noflip */
+			right: 50%;
 		}
 
 		&::before {
-			// The extra 0.1% fixes sub-pixel rendering issues in Safari (DAR-1052)
 			/* @noflip */
-			left: calc(50.1% - #{$legacy-background-shift});
+			left: 50%;
 			/* @noflip */
 			margin-left: -$background-width-half;
 		}
@@ -127,9 +122,6 @@ body.skin-oasis {
 			background: $color-body-middle;
 			/* @noflip */
 			left: 50%;
-			/* @noflip */
-			margin-left: -#{$legacy-background-shift};
-			width: $legacy-background-shift-both-sides;
 
 			&,
 			&::before,
@@ -153,6 +145,11 @@ body.skin-oasis {
 			&::before {
 				@include breakpoint-middle-gradient('right');
 				@include calc('left', '50% - #{$gradient-offset}');
+			}
+
+			&.no-gradients::before,
+			&.no-gradients::after {
+				display: none;
 			}
 		}
 	}

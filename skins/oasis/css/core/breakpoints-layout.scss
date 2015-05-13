@@ -33,6 +33,7 @@
 	html {
 		overflow-y: auto;
 	}
+
 	body {
 		overflow: hidden;
 		position: relative;
@@ -61,7 +62,8 @@
 	}
 
 	@media #{$breakpoint-small-only} {
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
 			width: 100%;
 		}
 
@@ -90,9 +92,7 @@
 		.wikinav2.oasis-one-column .WikiaPageHeader {
 			padding: 0;
 		}
-	}
 
-	@media #{$breakpoint-small-only} {
 		.WikiHeader > nav.WikiNav .navbackground {
 			left: -24px;
 			width: 772px;
@@ -100,7 +100,8 @@
 	}
 
 	@media #{$breakpoint-medium-up} {
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
 			@include width-calc("100% - 320px");
 		}
 
@@ -123,14 +124,15 @@
 
 	@media #{$breakpoint-large-up} {
 		.WikiHeader > nav.WikiNav .navbackground {
-			@include width-calc("100% + 10px");
+			@include width-calc("100% + 9px");
 		}
 	}
 
-	.WikiaRail, .main-page-tag-rcs {
+	.WikiaRail,
+	.main-page-tag-rcs {
 		padding: 0;
 
-		@media #{$breakpoint-small-only} {
+		@media #{$breakpoint-below-small-plus} {
 			// this is copied from responsive-core.scss
 			clear: both;
 			float: none;
@@ -218,5 +220,55 @@
 	.WikiaPageHeader {
 		margin-left: 0;
 		margin-right: 0;
+	}
+
+	// "special case" for 1024px tablets (think landscape iPad)
+	@media #{$breakpoint-small-plus} {
+		.WikiaPage {
+			padding: 0 $padding-width-small-plus;
+			width: $page-width-small-plus;
+		}
+
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded,
+		.WikiaMainContent {
+			// right rail width + space between RR and content
+			@include width-calc("100% - 320px");
+		}
+
+		.main-page-tag-rcs {
+			// right rail width
+			width: 300px;
+		}
+
+		.WikiHeader {
+			// values here are mostly copied from WikiHeader.scss
+			// so it will override small breakpoint's values
+			min-height: 69px;
+
+			.buttons {
+				top: 22px;
+			}
+
+			& > nav.WikiNav {
+				@include width-calc("100% - 250px");
+
+				left: 275px;
+				top: 20px;
+
+				.subnav-2 {
+					width: auto;
+				}
+
+				.navbackground {
+					 width: 768px;
+				 }
+			}
+		}
+
+		// needs to be nested in this way, so it it'll override styles in GlobalNav extension
+		.WikiaSiteWrapper > .global-navigation > .global-navigation-container {
+			width: $content-width-small-plus;
+		}
 	}
 }
