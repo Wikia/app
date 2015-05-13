@@ -15,12 +15,10 @@ class MonetizationModuleController extends WikiaController {
 			return true;
 		}
 
-		if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
-			if ( empty( $this->wg->OasisBreakpoints ) ) {
-				$this->response->addAsset( 'monetization_module_css_no_breakpoints' );
-			} else {
-				$this->response->addAsset( 'monetization_module_css' );
-			}
+		if ( empty( $this->wg->OasisBreakpoints ) ) {
+			$this->response->addAsset( 'monetization_module_css_no_breakpoints' );
+		} else {
+			$this->response->addAsset( 'monetization_module_css' );
 		}
 
 		$this->response->addAsset( 'monetization_module_js' );

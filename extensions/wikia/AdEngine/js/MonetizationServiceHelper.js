@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 ], function ($, cache, loader, scriptWriter, window) {
 	'use strict';
 
-	var isEndOfContent = true;
+	var isEndOfContent = false;
 
 	/**
 	 * Loads all assets for monetization ads
@@ -46,7 +46,12 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		}
 	}
 
-	function checkConditions(slotName) {
+	/**
+	 * @desc Validate slot
+	 * @param {string} slotName
+	 * @returns {boolean}
+	 */
+	function validateSlot(slotName) {
 		if (slotName === 'below_category' && isEndOfContent) {
 			return false;
 		}
@@ -54,12 +59,22 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		return true;
 	}
 
+	/**
+	 * @desc Inject content to the slot
+	 * @param {string} slot
+	 * @param {string} content
+	 * @param {function} success
+	 */
 	function injectContent(slot, content, success) {
 		scriptWriter.injectHtml(slot, content, function () {
 			success();
 		});
 	}
 
+	/**
+	 * @desc Add in-content slot
+	 * @param {string} slot
+	 */
 	function addInContentSlot(slot) {
 		var elementName = '#mw-content-text > h2',
 			num = $(elementName).length,
@@ -68,14 +83,13 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		// TOC exists. Insert the ad above the 3rd <H2> tag.
 		if ($('#toc').length > 0 && num > 3) {
 			$(elementName).eq(2).before(content);
-			isEndOfContent = false;
 		// TOC not exist. Insert the ad above the 2nd <H2> tag.
 		} else if (num > 2) {
 			$(elementName).eq(1).before(content);
-			isEndOfContent = false;
 		// Otherwise, insert to the end of content
 		} else {
 			$('#mw-content-text').append(content);
+			isEndOfContent = true;
 		}
 
 		window.adslots2.push(slot);
@@ -83,7 +97,7 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 
 	return {
 		addInContentSlot: addInContentSlot,
-		checkConditions: checkConditions,
+		validateSlot: validateSlot,
 		injectContent: injectContent,
 		loadAssets: loadAssets
 	};

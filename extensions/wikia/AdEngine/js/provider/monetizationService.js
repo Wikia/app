@@ -38,7 +38,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 
 		init();
 
-		if (context.providers.monetizationServiceAds[slotName] && monetizationService.checkConditions(slotName)) {
+		if (context.providers.monetizationServiceAds[slotName] && monetizationService.validateSlot(slotName)) {
 			log(['fillInSlot', slot, 'injectScript'], 'info', logGroup);
 			monetizationService.injectContent(slot, context.providers.monetizationServiceAds[slotName], success);
 		}
