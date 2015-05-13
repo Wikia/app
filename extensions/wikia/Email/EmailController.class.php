@@ -237,7 +237,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * Return the subject used for this email
 	 */
-	abstract function getSubject();
+	abstract protected function getSubject();
 
 	/**
 	 * Renders the 'body' view of the current email controller

@@ -6,60 +6,56 @@ use Email\Check;
 use Email\EmailController;
 
 // TODO fix replies on MY message wall to fire an email
-class WallMessageController extends EmailController {
+abstract class WallMessageController extends EmailController {
 
-	private $messageUrl;
-	private $messageTitle;
-	private $messageBody;
+	protected $titleUrl;
+	protected $titleText;
+	protected $details;
 
-	private $wallUserName;
-	private $senderUserName;
-	private $receiverUserName;
+	protected $wallUserName;
+	/** @var \Title */
+	protected $wallTitle;
+	protected $authorUserName;
+
+	/**
+	 * Get the summary text immediately following the salutation in the email
+	 *
+	 * @return string
+	 */
+	abstract protected function getSummary();
 
 	public function initEmail() {
 		$this->wallUserName = $this->request->getVal( 'wallUserName' );
-		$threadUserName = $this->request->getVal( 'threadUserName' );
-		$replyUserName = $this->request->getVal( 'replyUserName' );
-		$isThread = $this->request->getVal( 'isThread' );
-
-		if ( $isThread ) {
-			$this->senderUserName = $threadUserName;
-			$this->receiverUserName = $this->wallUserName;
-		} else {
-			$this->senderUserName = $replyUserName;
-			$this->receiverUserName = $threadUserName;
-		}
+		$this->authorUserName = $this->request->getVal( 'authorUserName' );
 
 		$this->assertUserRolesSet();
 
-		$this->messageUrl = $this->request->getVal( 'messageUrl' );
-		$this->messageTitle = $this->request->getVal( 'messageTitle' );
-		$this->messageBody = $this->request->getVal( 'messageBody' );
+		$this->titleUrl = $this->request->getVal( 'titleUrl' );
+		$this->titleText = $this->request->getVal( 'titleText' );
+		$this->details = $this->request->getVal( 'details' );
+
+		$this->wallTitle = \Title::newFromText( $this->wallUserName, NS_USER_WALL );
 
 		$this->assertMessageDetails();
 	}
 
-	private function assertUserRolesSet() {
-		if ( empty( $this->senderUserName ) ) {
-			throw new Check( "Could not determine message sender" );
-		}
-
-		if ( empty( $this->receiverUserName ) ) {
-			throw new Check( "Could not determine message recipient" );
+	protected function assertUserRolesSet() {
+		if ( empty( $this->authorUserName ) ) {
+			throw new Check( "Could not determine message author" );
 		}
 	}
 
-	private function assertMessageDetails() {
-		if ( empty( $this->messageUrl ) ) {
-			throw new Check( "Message URL parameter (messageUrl) is required" );
+	protected function assertMessageDetails() {
+		if ( empty( $this->titleUrl ) ) {
+			throw new Check( "Message URL parameter (titleUrl) is required" );
 		}
 
-		if ( empty( $this->messageTitle ) ) {
-			throw new Check( "Message title parameter (messageTitle) is required" );
+		if ( empty( $this->titleText ) ) {
+			throw new Check( "Title text parameter (titleText) is required" );
 		}
 
-		if ( empty( $this->messageBody ) ) {
-			throw new Check( "Message body parameter (messageBody) is required" );
+		if ( empty( $this->details ) ) {
+			throw new Check( "Details parameter (details) is required" );
 		}
 	}
 
@@ -71,62 +67,16 @@ class WallMessageController extends EmailController {
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
 			'editorProfilePage' => $this->getCurrentProfilePage(),
-			'editorUserName' => $this->senderUserName,
+			'editorUserName' => $this->authorUserName,
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
-			'detailsSubject' => $this->messageTitle,
-			'details' => $this->messageBody,
+			'detailsSubject' => $this->titleText,
+			'details' => $this->details,
 			'buttonText' => $this->getButtonText(),
-			'buttonLink' => $this->messageUrl,
+			'buttonLink' => $this->titleUrl,
 			'contentFooterMessages' => [
 				$this->getRecentMessagesText()
 			],
 		] );
-	}
-
-	/**
-	 * Whether this thread topic or thread reply is meant for the user getting this email
-	 *
-	 * @return boolean
-	 */
-	protected function isForTargetUser() {
-		$targetName = $this->targetUser->getName();
-		return $targetName == $this->receiverUserName;
-	}
-
-	/**
-	 * Get the email subject line
-	 *
-	 * @return string
-	 */
-	public function getSubject() {
-		if ( $this->isForTargetUser() ) {
-			return wfMessage( 'emailext-wallmessage-owned-subject',
-				$this->senderUserName
-			)->inLanguage( $this->targetLang )->text();
-		} else {
-			return wfMessage( 'emailext-wallmessage-following-subject',
-				$this->senderUserName,
-				$this->receiverUserName
-			)->inLanguage( $this->targetLang )->text();
-		}
-	}
-
-	/**
-	 * Get the summary text immediately following the salutation in the email
-	 *
-	 * @return string
-	 */
-	protected function getSummary() {
-		if ( $this->isForTargetUser() ) {
-			return wfMessage( 'emailext-wallmessage-owned-summary',
-				$this->senderUserName
-			)->inLanguage( $this->targetLang )->parse();
-		} else {
-			return wfMessage( 'emailext-wallmessage-following-summary',
-				$this->senderUserName,
-				$this->receiverUserName
-			)->inLanguage( $this->targetLang )->parse();
-		}
 	}
 
 	/**
@@ -146,19 +96,78 @@ class WallMessageController extends EmailController {
 	 * @return string
 	 */
 	protected function getRecentMessagesText() {
-		$ownerWall = \Title::newFromText( $this->wallUserName, NS_USER_WALL );
-		$wallUrl = $ownerWall->getFullURL();
-
-		return wfMessage( 'emailext-wallmessage-recent-messages', $wallUrl )
-			->inLanguage( $this->targetLang )->parse();
+		return wfMessage(
+			'emailext-wallmessage-recent-messages',
+			$this->wallTitle->getFullURL(),
+			$this->wallTitle->getPrefixedText() )
+		->inLanguage( $this->targetLang )->parse();
 	}
 
 	protected function getFooterMessages() {
-		// TODO remove this link on MY message wall
+		$unfollowURL = $this->wallTitle->getFullURL( [
+			'action' => 'unwatch'
+		] );
 
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text' )->inLanguage( $this->targetLang )->parse()
+			wfMessage( 'emailext-unfollow-text', $unfollowURL, $this->wallTitle->getPrefixedText() )
+				->inLanguage( $this->targetLang )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
+	}
+}
+
+class OwnWallMessageController extends WallMessageController {
+
+	/**
+	 * Get the summary text immediately following the salutation in the email
+	 *
+	 * @return string
+	 */
+	protected function getSummary() {
+		return wfMessage( 'emailext-wallmessage-owned-summary',
+			$this->authorUserName
+		)->inLanguage( $this->targetLang )->parse();
+	}
+
+	protected function getFooterMessages() {
+		return EmailController::getFooterMessages();
+	}
+
+	/**
+	 * Get the email subject line
+	 *
+	 * @return string
+	 */
+	protected function getSubject() {
+		return wfMessage( 'emailext-wallmessage-owned-subject',
+			$this->authorUserName
+		)->inLanguage( $this->targetLang )->text();
+	}
+}
+
+class FollowedWallMessageController extends WallMessageController {
+
+	/**
+	 * Get the summary text immediately following the salutation in the email
+	 *
+	 * @return string
+	 */
+	protected function getSummary() {
+		return wfMessage( 'emailext-wallmessage-following-summary',
+			$this->authorUserName,
+			$this->wallUserName
+		)->inLanguage( $this->targetLang )->parse();
+	}
+
+	/**
+	 * Get the email subject line
+	 *
+	 * @return string
+	 */
+	protected function getSubject() {
+		return wfMessage( 'emailext-wallmessage-following-subject',
+			$this->authorUserName,
+			$this->wallUserName
+		)->inLanguage( $this->targetLang )->text();
 	}
 }

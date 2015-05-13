@@ -411,22 +411,26 @@ class WallNotifications {
 				$this->sendEmail( $watcher, $data );
 			} else {
 				$params = [
-					'targetUser' => $watcherName,
+					'wallUserName' => $notification->data->wall_username,
+					'authorUserName' => $notification->data->msg_author_username,
+
+					'titleText' => $notification->data->thread_title,
+					'details' => $text,
+					'titleUrl' => $notification->data->url,
+
+					'targetUser' => $watcher->getName(),
 					'fromAddress' => $this->app->wg->PasswordSender,
 					'replyToAddress' => $this->app->wg->NoReplyAddress,
-					'fromName' => $notification->data->msg_author_username,
-
-					'wallUserName' => $notification->data->wall_username,
-					'threadUserName' => $notification->data->parent_username,
-					'replyUserName' => $notification->data->msg_author_username,
-					'isThread' => $notification->isMain(),
-
-					'messageTitle' => $notification->data->thread_title,
-					'messageBody' => $text,
-					'messageUrl' => $notification->data->url
+					'fromName' => $this->app->wg->PasswordSenderName,
 				];
 
-				F::app()->sendRequest( 'Email\Controller\WallMessageController', 'handle', $params );
+				if ( $params['wallUserName'] == $watcherName ) {
+					$controller = 'Email\Controller\OwnWallMessageController';
+				} else {
+					$controller = 'Email\Controller\FollowedWallMessageController';
+				}
+
+				F::app()->sendRequest( $controller, 'handle', $params );
 			}
 		}
 
@@ -448,11 +452,10 @@ class WallNotifications {
 			return false;
 		}
 
-		if ( empty( $watcher->getOption( 'enotifwallthread' ) ) ) {
+		$mode = $watcher->getOption( 'enotifwallthread' );
+		if ( empty( $mode ) ) {
 			return false;
 		}
-
-
 
 		return ( $mode == WALL_EMAIL_EVERY ) || ( $mode == WALL_EMAIL_SINCEVISITED );
 	}
