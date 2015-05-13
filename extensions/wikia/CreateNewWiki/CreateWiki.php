@@ -14,6 +14,8 @@
 
 class CreateWiki {
 
+	use \Wikia\Logger\Loggable;
+
 	/* @var $mDBw DatabaseMysql */
 	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
@@ -145,6 +147,19 @@ class CreateWiki {
 		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = __DIR__ . "/CreateWikiLocalJob.php";
 	}
 
+	/**
+	 * Add more context to messages sent to LogStash
+	 *
+	 * @return array
+	 */
+	protected function getLoggerContext() {
+		return [
+			'cityid'   => $this->mNewWiki->city_id,
+			'domain'   => $this->mDomain,
+			'dbname'   => $this->mNewWiki->dbname,
+			'logGroup' => 'createwiki',
+		];
+	}
 
 	/**
 	 * main entry point, create wiki with given parameters
@@ -153,6 +168,8 @@ class CreateWiki {
 	 */
 	public function create() {
 		global $wgExternalSharedDB, $wgSharedDB, $wgUser;
+
+		$then = microtime( true );
 
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
@@ -346,10 +363,13 @@ class CreateWiki {
 		/**
 		 * destroy connection to newly created database
 		 */
-		$this->mNewWiki->dbw->commit();
+		$res = $this->mNewWiki->dbw->commit( __METHOD__ );
 		wfWaitForSlaves( $this->mNewWiki->dbname ); # OPS-6313
 
-		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
+		$this->info( __METHOD__ . ": database changes commited", [
+			'commit_res' => $res
+		] );
+
 		$wgSharedDB = $tmpSharedDB;
 
 
@@ -455,6 +475,10 @@ class CreateWiki {
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
+
+		$this->info( __METHOD__ . ': done', [
+			'took' => microtime( true ) - $then
+		] );
 
 		wfProfileOut( __METHOD__ );
 	}
