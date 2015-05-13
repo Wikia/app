@@ -438,15 +438,21 @@ class WallNotifications {
 			return false;
 		}
 
+		// Don't send an email to users that unsubscribed their email address
+		if ( $watcher->getBoolOption( 'unsubscribed' ) === true ) {
+			return false;
+		}
+
 		// Don't send the same email twice
 		if ( !empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) ) {
 			return false;
 		}
 
-		$mode = $watcher->getOption( 'enotifwallthread' );
-		if ( empty( $mode ) ) {
+		if ( empty( $watcher->getOption( 'enotifwallthread' ) ) ) {
 			return false;
 		}
+
+
 
 		return ( $mode == WALL_EMAIL_EVERY ) || ( $mode == WALL_EMAIL_SINCEVISITED );
 	}
