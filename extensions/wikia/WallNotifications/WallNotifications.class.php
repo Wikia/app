@@ -399,7 +399,7 @@ class WallNotifications {
 						'boardNamespace' => $notification->data->article_title_ns,
 						'boardTitle' => $notification->data->article_title_text,
 						'titleText' => $notification->data->thread_title,
-						'titleUrl' => $notification->data->thread_title,
+						'titleUrl' => $notification->data->url,
 						'details' => $text,
 						'targetUser' => $watcher->getName(),
 						'fromAddress' => $this->app->wg->PasswordSender,
