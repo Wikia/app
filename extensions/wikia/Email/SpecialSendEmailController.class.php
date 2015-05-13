@@ -125,7 +125,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		$allClasses = \F::app()->wg->AutoloadClasses;
 		$emailControllerClasses = [];
 		foreach ( $allClasses as $className => $classPath ) {
-			if ( preg_match( "/^Email\\\\Controller\\\\.+Controller$/", $className, $matches ) ) {
+			if ( preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $className, $matches ) ) {
 				$emailControllerClasses[] = $matches[0];
 			}
 		}

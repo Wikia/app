@@ -14,6 +14,10 @@ abstract class EmailController extends \WikiaController {
 	 * and intended to be overridden by child classes. */
 	const LAYOUT_CSS = 'avatarLayout.css';
 
+	/** Regular expression pattern used to find all email controller classes inside
+	 * of $wgAutoLoadClasses */
+	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
+
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
 
@@ -622,7 +626,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	private static function getLegendName() {
 		$legendName = "";
-		if ( preg_match( "/^Email\\\\Controller\\\\(.+)Controller$/", get_called_class(), $matches ) ) {
+		if ( preg_match( self::EMAIL_CONTROLLER_REGEX, get_called_class(), $matches ) ) {
 			$legendName = $matches[1] . " Email";
 		}
 
