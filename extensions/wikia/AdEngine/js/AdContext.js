@@ -50,11 +50,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
-		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		if (context.providers.sevenOneMedia) {
-			context.opts.usePostScribe = true;
-		}
-
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
