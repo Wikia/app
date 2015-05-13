@@ -60,25 +60,25 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		});
 	}
 
-	function addInContentSlot(slot, content, success) {
+	function addInContentSlot(slot) {
 		var elementName = '#mw-content-text > h2',
 			num = $(elementName).length,
-			tag = '<div id="' + slot + '" class="wikia-ad noprint default-height"></div>';
+			content = '<div id="' + slot + '" class="wikia-ad noprint default-height"></div>';
 
 		// TOC exists. Insert the ad above the 3rd <H2> tag.
 		if ($('#toc').length > 0 && num > 3) {
-			$(elementName).eq(2).before(tag);
+			$(elementName).eq(2).before(content);
 			isEndOfContent = false;
 		// TOC not exist. Insert the ad above the 2nd <H2> tag.
 		} else if (num > 2) {
-			$(elementName).eq(1).before(tag);
+			$(elementName).eq(1).before(content);
 			isEndOfContent = false;
 		// Otherwise, insert to the end of content
 		} else {
-			$('#mw-content-text').append(tag);
+			$('#mw-content-text').append(content);
 		}
 
-		injectContent(slot, content, success);
+		window.adslots2.push(slot);
 	}
 
 	return {

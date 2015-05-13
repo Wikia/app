@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		var slotName = slotMap[slot],
 			context = adContext.getContext();
 
-		init(success);
+		init();
 
 		if (context.providers.monetizationServiceAds[slotName] && monetizationService.checkConditions(slotName)) {
 			log(['fillInSlot', slot, 'injectScript'], 'info', logGroup);
@@ -44,7 +44,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		}
 	}
 
-	function init(success) {
+	function init() {
 		if (isLoaded) {
 			return;
 		}
@@ -52,12 +52,11 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		log(['init', 'loadAssets'], 'info', logGroup);
 		monetizationService.loadAssets();
 
-		var slotName = slotMap[slotInContent],
-			ads = adContext.getContext().providers.monetizationServiceAds;
+		var slotName = slotMap[slotInContent];
 
-		if (ads[slotName]) {
-			log(['init', 'addInContentSlot'], 'info', logGroup);
-			monetizationService.addInContentSlot(slotInContent, ads[slotName], success);
+		if (adContext.getContext().providers.monetizationServiceAds[slotName]) {
+			log(['init', 'addInContentSlot', slotInContent], 'info', logGroup);
+			monetizationService.addInContentSlot(slotInContent);
 		}
 
 		isLoaded = true;
