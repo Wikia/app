@@ -164,16 +164,38 @@ class User {
 		}
 
 		if ( !empty( $loginInfo ) ) {
-			$response = \RequestContext::getMain()->getRequest()->response();
-			$response->setcookie(
-				self::ACCESS_TOKEN_COOKIE_NAME,
-				$loginInfo->access_token,
-				time() + self::ACCESS_TOKEN_COOKIE_TTL,
-				\WebResponse::NO_COOKIE_PREFIX
-			);
+			self::setAccessTokenCookie( $loginInfo->access_token );
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Set the access_token cookie with the token value passed.
+	 *
+	 * @param string $accessToken
+	 */
+	public static function setAccessTokenCookie( $accessToken ) {
+		$response = \RequestContext::getMain()->getRequest()->response();
+		$response->setcookie(
+			self::ACCESS_TOKEN_COOKIE_NAME,
+			$accessToken,
+			time() + self::ACCESS_TOKEN_COOKIE_TTL,
+			\WebResponse::NO_COOKIE_PREFIX
+		);
+	}
+
+	/**
+	 * Clear the access token cookie by setting a time in the past
+	 */
+	public static function clearAccessTokenCookie() {
+		$response = \RequestContext::getMain()->getRequest()->response();
+		$response->setcookie(
+			self::ACCESS_TOKEN_COOKIE_NAME,
+			'',
+			time() - self::ACCESS_TOKEN_COOKIE_TTL,
+			\WebResponse::NO_COOKIE_PREFIX
+		);
 	}
 
 	/**
