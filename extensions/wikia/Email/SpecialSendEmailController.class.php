@@ -7,9 +7,10 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const REQUIRED_PERMISSION = "staff";
+	const PAGE_NAME = "SendEmail";
 
 	public function __construct() {
-		parent::__construct( 'SendEmail', '', $listed = false );
+		parent::__construct( self::PAGE_NAME, '', $listed = false );
 	}
 
 	/**
@@ -54,9 +55,10 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 */
 	public function index() {
 
-		if ( $this->wg->request->wasPosted() ) {
+		if ( $this->wg->request->wasPosted() && $this->editTokenValidates() ) {
 			$result = $this->processForm();
 			$this->addBannerNotification( $result );
+			$this->response->redirect()
 		}
 
 		$this->response->setVal(
@@ -65,13 +67,21 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	}
 
 	/**
+	 * Makes sure the form contains a valid CSRF token
+	 * @return bool
+	 */
+	private function editTokenValidates() {
+		return 	$this->wg->User->matchEditToken( $this->request->getVal( 'token' )  );
+	}
+
+	/**
 	 * If a form was posted, dispatch the form to the proper Email Controller.
 	 * @return \WikiaResponse
 	 */
 	private function processForm() {
-		$params = $this->request->getParams();
-		$controllerName = $params['emailController'];
-		return \F::app()->sendRequest( $controllerName, 'handle', $params );
+		$postedFormValues = $this->request->getParams();
+		$controllerName = $postedFormValues['emailController'];
+		return \F::app()->sendRequest( $controllerName, 'handle', $postedFormValues );
 	}
 
 	/**
@@ -125,14 +135,53 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	}
 
 	/**
-	 * Get the actual html form for the Email Controller. Each Email Controller implements a method
+	 * Get the actual HTML form for the Email Controller. Each Email Controller implements a method
 	 * which returns it's required inputs as an array. These get sent to the WikiaStyleGuideFormController
 	 * which will construct the actual form.
 	 * @param \Email\EmailController $controllerClass
 	 * @return string
 	 */
 	private function getFormHtml( $controllerClass ) {
-		return \F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $controllerClass::getAdminForm() ] );
+		$form = $controllerClass::getAdminForm();
+		if ( $this->isThePostedForm( $controllerClass ) ) {
+			$form = $this->populateFormWithPostedValues( $form );
+		}
 
+		return \F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] );
 	}
+
+	/**
+	 * Checks if the current request contains a POSTed form and, if so, if that form
+	 * corresponds to the given controller class.
+	 * @param $controllerClass
+	 * @return bool
+	 */
+	private function isThePostedForm( $controllerClass ) {
+		if ( !$this->wg->request->wasPosted() ) {
+			return false;
+		}
+
+		$postedFormValues = $this->request->getParams();
+		return $controllerClass == $postedFormValues['emailController'];
+	}
+
+	/**
+	 * Populates a given form with values POSTed by the client. This will allow the
+	 * form to be re-rendered with the values inputed by the user, so they can make
+	 * changes without having to re-enter all of the form fields again.
+	 * @param $form
+	 * @return mixed
+	 */
+	private function populateFormWithPostedValues( $form ) {
+		$postedFormValues = $this->request->getParams();
+		foreach ( $form['inputs'] as &$input ) {
+			$inputName = $input['name'];
+			if ( array_key_exists( $inputName, $postedFormValues ) ) {
+				$input['value'] = $postedFormValues[$inputName];
+			}
+		}
+
+		return $form;
+	}
+
 }

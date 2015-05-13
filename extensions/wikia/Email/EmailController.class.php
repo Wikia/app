@@ -547,6 +547,11 @@ abstract class EmailController extends \WikiaController {
 			'inputs' => [
 				[
 					'type' => 'hidden',
+					'name' => 'token',
+					'value' => \F::app()->wg->User->getEditToken()
+				],
+				[
+					'type' => 'hidden',
 					'name' => 'emailController',
 					'value' => get_called_class()
 				],

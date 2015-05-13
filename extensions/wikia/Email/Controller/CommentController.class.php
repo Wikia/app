@@ -227,7 +227,7 @@ class BlogCommentController extends CommentController {
 			[
 				'type' => 'hidden',
 				'name' => 'namespace',
-				'value' => 500
+				'value' => NS_BLOG_ARTICLE
 			]
 		];
 
