@@ -270,6 +270,7 @@ class MercuryApi {
 					$items[] = $processedItem;
 				}
 			}
+			$data[ $process ] = $items;
 		}
 
 		return $data;
