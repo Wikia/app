@@ -8,14 +8,14 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'UserLogin',
-	'author' => array('Hyun Lim', 'Saipetch Kongkatong'),
+	'author' => array( 'Hyun Lim', 'Saipetch Kongkatong' ),
 	'descriptionmsg' => 'userlogin-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserLogin'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//classes
+// classes
 $wgAutoloadClasses['FacebookButtonController'] =  $dir . 'FacebookButtonController.class.php';
 $wgAutoloadClasses['FacebookSignupController'] =  $dir . 'FacebookSignupController.class.php';
 $wgAutoloadClasses['UserLoginSpecialController'] =  $dir . 'UserLoginSpecialController.class.php';
@@ -50,7 +50,7 @@ $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';
 $wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
 
-JSMessages::registerPackage('UserLogin', ['userlogin-login-*']);
+JSMessages::registerPackage( 'UserLogin', ['userlogin-login-*'] );
 
 /**
  * Use ResourceLoader to load the JavaScript module
