@@ -6,7 +6,7 @@ namespace Email;
 class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const REQUIRED_PERMISSION = "staff";
+	const REQUIRED_USER_RIGHT = "access-sendemail";
 	const PAGE_NAME = "SendEmail";
 
 	public function __construct() {
@@ -29,8 +29,8 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @throws \PermissionsError
 	 */
 	private function assertCanAccess() {
-		if ( !$this->wg->User->isStaff() ) {
-			throw new \PermissionsError( self::REQUIRED_PERMISSION );
+		if ( !$this->wg->User->isAllowed( self::REQUIRED_USER_RIGHT ) ) {
+			throw new \PermissionsError( self::REQUIRED_USER_RIGHT );
 		}
 	}
 
@@ -58,7 +58,6 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		if ( $this->wg->request->wasPosted() && $this->editTokenValidates() ) {
 			$result = $this->processForm();
 			$this->addBannerNotification( $result );
-			$this->response->redirect()
 		}
 
 		$this->response->setVal(

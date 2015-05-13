@@ -44,3 +44,11 @@ $wgSpecialPages[ 'SendEmail' ] =  'Email\SpecialSendEmailController';
 $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
 $wgExtensionMessagesFiles['WatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
 $wgExtensionMessagesFiles['Comment'] = $dir . 'i18n/Comment.i18n.php';
+$wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
+
+
+/**
+ * permissions
+ */
+$wgDefaultUserOptions['access-sendemail'] = false;
+$wgGroupPermissions['staff']['access-sendemail'] = true;
