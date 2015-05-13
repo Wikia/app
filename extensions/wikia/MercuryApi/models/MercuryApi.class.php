@@ -27,7 +27,7 @@ class MercuryApi {
 		return $articleCommentList->getCountAll();
 	}
 
-	public static function getTopContributorsKey ( $articleId, $limit ){
+	public static function getTopContributorsKey ( $articleId, $limit ) {
 		return wfMemcKey( __CLASS__, __METHOD__, $articleId, $limit );
 	}
 
@@ -41,7 +41,7 @@ class MercuryApi {
 	public function topContributorsPerArticle( $articleId, $limit ) {
 		$key = self::getTopContributorsKey( $articleId, $limit );
 		$method = __METHOD__;
-		$contributions = WikiaDataAccess::cache($key, self::CACHE_TIME_TOP_CONTRIBUTORS,
+		$contributions = WikiaDataAccess::cache( $key, self::CACHE_TIME_TOP_CONTRIBUTORS,
 			function() use ( $articleId, $limit, $method ) {
 				// Log DB hit
 				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
@@ -65,7 +65,7 @@ class MercuryApi {
 					]
 				);
 				$result = [];
-				while($row = $db->fetchObject($res)) {
+				while ( $row = $db->fetchObject( $res ) ) {
 					$result[ (int) $row->rev_user ] = (int) $row->cntr;
 				}
 				return $result;
@@ -209,7 +209,7 @@ class MercuryApi {
 	 * @param array $commentData - ArticleComment Data
 	 * @return string userName
 	 */
-	private function addUser(Array $commentData) {
+	private function addUser( Array $commentData ) {
 		$userName = trim( $commentData['author']->mName );
 		if ( !isset( $this->users[$userName] ) ) {
 			$this->users[$userName] = [
@@ -266,7 +266,7 @@ class MercuryApi {
 			$items = [];
 			foreach ( $data[ $process ] as $item ) {
 				$processedItem = $this->processItem( $item );
-				if (!empty($processedItem)) {
+				if ( !empty( $processedItem ) ) {
 					$items[] = $processedItem;
 				}
 			}
@@ -288,7 +288,7 @@ class MercuryApi {
 	private function processItem( $item ) {
 		if ( !empty( $item[ 'article_id' ] ) ) {
 			$title = Title::newFromID( $item[ 'article_id' ] );
-			if ( !empty($title) ) {
+			if ( !empty( $title ) ) {
 				$item[ 'article_local_url' ] = $title->getLocalURL();
 				return $item;
 			}
