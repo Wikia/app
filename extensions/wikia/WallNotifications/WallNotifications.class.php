@@ -13,6 +13,8 @@ use Wikia\Logger\WikiaLogger;
  *
  */
 class WallNotifications {
+	const MAX_ABSTRACT_LENGTH = 3000;
+
 	/**
 	 * @var WikiaApp
 	 */
@@ -370,7 +372,8 @@ class WallNotifications {
 
 	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
 		$text = strip_tags( $notification->data_noncached->msg_text, '<p><br>' );
-		$text = substr( $text, 0, 3000 ) . ( strlen( $text ) > 3000 ? '...' : '' );
+		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
+			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
 		$textNoHtml = trim( preg_replace( '#</?(p|br)[^/>]*/?>#i', "\n", $text ) );
 
 		$entityKey = $notification->getId();
