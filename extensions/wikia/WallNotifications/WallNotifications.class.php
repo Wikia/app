@@ -1081,9 +1081,13 @@ class WallNotifications {
 
 		if ( !empty( $notification->data->article_title_ns )
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
-			&& $notification->isMain()
 		) {
-			$controller = 'Email\Controller\Forum';
+			if ($notification->isMain()) {
+				$controller = 'Email\Controller\Forum';
+			}
+			else {
+				$controller = 'Email\Controller\ForumReply';
+			}
 		}
 
 
