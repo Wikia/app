@@ -12,7 +12,7 @@ class WallNotificationsExternalController extends WikiaController {
 	}
 
 	public function init() {
-		if( ($this->app->checkSkin('oasis')) || $this->app->checkSkin('venus') ) {
+		if ( ( $this->app->checkSkin( 'oasis' ) ) || $this->app->checkSkin( 'venus' ) ) {
 			$this->controllerName = 'GlobalNavigationWallNotifications';
 		} else {
 			$this->controllerName = 'WallNotifications';
@@ -31,8 +31,8 @@ class WallNotificationsExternalController extends WikiaController {
 	}
 
 	public function getUpdateWiki() {
-		$id = $this->request->getVal('wikiId');
-		$isCrossWiki = $this->request->getVal('isCrossWiki') == 1;
+		$id = $this->request->getVal( 'wikiId' );
+		$isCrossWiki = $this->request->getVal( 'isCrossWiki' ) == 1;
 		$wn = new WallNotifications();
 		$this->getUpdateWikiInternal( $wn, $id, $isCrossWiki );
 		return true;
@@ -44,7 +44,7 @@ class WallNotificationsExternalController extends WikiaController {
 		$forceAll = $this->request->getVal( 'forceAll' );
 		$wn = new WallNotifications();
 		$ret = $wn->markRead( $wgUser->getId(), $wgCityId );
-		if( $ret === false || $forceAll == 'FORCE' ) {
+		if ( $ret === false || $forceAll == 'FORCE' ) {
 			$ret = $wn->markReadAllWikis( $wgUser->getId() );
 		}
 		$this->getUpdateCountsInternal( $wn );
@@ -65,7 +65,7 @@ class WallNotificationsExternalController extends WikiaController {
 
 	private function getUpdateCountsInternal( WallNotifications $wn ) {
 		global $wgUser, $wgLang, $wgMemc;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$all = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, 'getCounts', $wgUser->getId() ),
@@ -76,16 +76,16 @@ class WallNotificationsExternalController extends WikiaController {
 		);
 
 		$sum = 0;
-		foreach( $all as $k => $wiki ) {
+		foreach ( $all as $k => $wiki ) {
 			$sum += $wiki['unread'];
 			$wikiSitename = $wiki['sitename'];
 
-			if( mb_strlen($wikiSitename) > self::WALL_WIKI_NAME_MAX_LEN ) {
+			if ( mb_strlen( $wikiSitename ) > self::WALL_WIKI_NAME_MAX_LEN ) {
 				$all[$k]['sitename'] = $wgLang->truncate( $wikiSitename, ( self::WALL_WIKI_NAME_MAX_LEN - 3 ) );
 			}
 		}
 
-		//solution for problem with cross wiki notification and no wikia domain.
+		// solution for problem with cross wiki notification and no wikia domain.
 		$notificationKey = uniqid();
 
 		$wgMemc->set( $notificationKey,  $wgUser->getId() );
@@ -94,14 +94,14 @@ class WallNotificationsExternalController extends WikiaController {
 			'notificationCounts' => $all, 'count' => $sum, 'notificationKey' => $notificationKey
 		] ) );
 		$this->response->setVal( 'count', $sum );
-		$this->response->setVal( 'reminder', wfMessage('wall-notifications-reminder', $sum)->text() );
+		$this->response->setVal( 'reminder', wfMessage( 'wall-notifications-reminder', $sum )->text() );
 		$this->response->setVal( 'status', true );
 
 		// PLATFORM-1194: cache the response for 5 minutes in the browser cache
 		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 		$this->response->setCacheValidity( self::TTL );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	private function getUpdateWikiInternal( WallNotifications $wn, $wikiId, $isCrossWiki = false ) {
@@ -115,7 +115,7 @@ class WallNotificationsExternalController extends WikiaController {
 
 		$this->response->setVal(
 			'html',
-			$this->app->renderView(  $this->controllerName, 'UpdateWiki', [ 'notifications'=>$all ] )
+			$this->app->renderView(  $this->controllerName, 'UpdateWiki', [ 'notifications' => $all ] )
 		);
 		$this->response->setVal( 'unread', $all[ 'unread_count' ] );
 		$this->response->setVal( 'status', true );
