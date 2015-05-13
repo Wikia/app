@@ -404,7 +404,7 @@ class WallNotifications {
 						'boardNamespace' => $notification->data->article_title_ns,
 						'boardTitle' => $notification->data->article_title_text,
 						'titleText' => $notification->data->thread_title,
-						'titleUrl' => $notification->data->thread_title,
+						'titleUrl' => $notification->data->url,
 						'details' => $text,
 						'targetUser' => $watcher->getName(),
 						'fromAddress' => $this->app->wg->PasswordSender,
@@ -487,6 +487,20 @@ class WallNotifications {
 		$text = str_replace( $keys, $values, $text );
 
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
+	}
+
+	protected function getEmailExtensionController( $notification ) {
+		$controller = false;
+
+		if ( !empty( $notification->data->article_title_ns )
+			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
+			&& $notification->isMain()
+		) {
+			$controller = 'Email\Controller\Forum';
+		}
+
+
+		return $controller;
 	}
 
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
@@ -1090,9 +1104,6 @@ class WallNotifications {
 			}
 		}
 
-
 		return $controller;
 	}
-
 }
-					F::app()->sendRequest( $controller, 'handle', $params );
