@@ -479,6 +479,20 @@ class WallNotifications {
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
 	}
 
+	protected function getEmailExtensionController( $notification ) {
+		$controller = false;
+
+		if ( !empty( $notification->data->article_title_ns )
+			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
+			&& $notification->isMain()
+		) {
+			$controller = 'Email\Controller\Forum';
+		}
+
+
+		return $controller;
+	}
+
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
 		//TODO: add some caching
 		$userTitle = Title::newFromText( $name, MWNamespace::getSubject($ns) );
@@ -1065,19 +1079,4 @@ class WallNotifications {
 		}
 		return $this->cachedUsers[$userId];
 	}
-
-	private function getEmailExtensionController( $notification ) {
-		$controller = false;
-
-		if ( !empty( $notification->data->article_title_ns )
-			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
-			&& $notification->isMain()
-		) {
-			$controller = 'Email\Controller\Forum';
-		}
-
-
-		return $controller;
-	}
-
 }

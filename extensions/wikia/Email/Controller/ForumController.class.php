@@ -26,6 +26,16 @@ class ForumController extends EmailController {
 		$this->assertValidParams();
 	}
 
+	protected function assertValidParams() {
+		if ( !$this->board instanceof \Title ) {
+			throw new Check( "Invalid value passed for board" );
+		}
+
+		if ( !$this->board->exists() ) {
+			throw new Check( "Board doesn't exist." );
+		}
+	}
+
 	/**
 	 * @template avatarLayout
 	 */
@@ -71,7 +81,7 @@ class ForumController extends EmailController {
 	}
 
 	protected function getButtonText() {
-		return wfMessage( 'emailext-forum-button-label')
+		return wfMessage( 'emailext-forum-button-label' )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
@@ -82,16 +92,6 @@ class ForumController extends EmailController {
 
 	protected function getDetailsHeader() {
 		return $this->titleText;
-	}
-
-	protected function assertValidParams() {
-		if ( !$this->board instanceof \Title ) {
-			throw new Check( "Invalid value passed for board" );
-		}
-
-		if ( !$this->board->exists() ) {
-			throw new Check( "Board doesn't exist." );
-		}
 	}
 
 	protected function getFooterMessages() {
