@@ -392,8 +392,7 @@ class WallNotifications {
 
 			$mode = $watcher->getOption( 'enotifwallthread' );
 
-			if ( !( $watcher->getBoolOption('unsubscribed') === true ) &&
-				!empty( $mode ) && $watcher->getId() != 0 && (
+			if ( !empty( $mode ) && $watcher->getId() != 0 && (
 				( $mode == WALL_EMAIL_EVERY ) ||
 				( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) )
 			)) {
@@ -415,7 +414,7 @@ class WallNotifications {
 						'threadTitle' => $notification->data->thread_title
 					];
 
-					F:app()->sendRequest( $controller, 'handle', $params );
+					F::app()->sendRequest( $controller, 'handle', $params );
 				} else {
 					$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
 					$watcherName = $watcher->getName();
@@ -494,11 +493,14 @@ class WallNotifications {
 
 		if ( !empty( $notification->data->article_title_ns )
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
-			&& $notification->isMain()
 		) {
-			$controller = 'Email\Controller\Forum';
+			if ($notification->isMain()) {
+				$controller = 'Email\Controller\Forum';
+			}
+			else {
+				$controller = 'Email\Controller\ForumReply';
+			}
 		}
-
 
 		return $controller;
 	}
@@ -1088,22 +1090,5 @@ class WallNotifications {
 			$this->cachedUsers[$userId] = User::newFromId($userId);
 		}
 		return $this->cachedUsers[$userId];
-	}
-
-	private function getEmailExtensionController( $notification ) {
-		$controller = false;
-
-		if ( !empty( $notification->data->article_title_ns )
-			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
-		) {
-			if ($notification->isMain()) {
-				$controller = 'Email\Controller\Forum';
-			}
-			else {
-				$controller = 'Email\Controller\ForumReply';
-			}
-		}
-
-		return $controller;
 	}
 }
