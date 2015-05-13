@@ -4,8 +4,10 @@
  * Script that tries to fix page_latest entry in page table
  *
  * @author macbre
- * @file
  * @ingroup Maintenance
+ *
+ * @see BAC-278
+ * @see PLATFORM-1206
  */
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
@@ -35,6 +37,7 @@ class FixPageLatest extends Maintenance {
 			[
 				'page_id',
 				'page_title',
+				'page_len',
 				#'page_touched',
 				'rev_id'
 			],
@@ -45,7 +48,7 @@ class FixPageLatest extends Maintenance {
 		);
 
 		$count = $res->numRows();
-		$this->output(" {$count} pages(s) found\n\n");
+		$this->output(" {$count} affected pages(s) found\n\n");
 
 		if ($count === 0) {
 			$this->output("No articles found!\n");
@@ -61,6 +64,25 @@ class FixPageLatest extends Maintenance {
 
 			// no revision data
 			if ($revId === 0) {
+				// we can generate an empty revision if "page_len" is set to 0 (PLATFORM-1286)
+				if ( $row->page_len == 0 ) {
+					$this->output("* {$row->page_title} has page_len = 0 (will make an empty edit)\n");
+
+					// make an empty edit - the affected article will have at least an empty revision
+					if ( !$isDryRun ) {
+						$page = WikiPage::newFromID( $row->page_id );
+						$page->doEdit(
+							'',
+							'Fixing empty articles with no revisions',
+							EDIT_NEW,
+							false, // $baseRevId
+							User::newFromName( 'WikiaBot' )
+						);
+
+						$fixed++;
+					}
+				}
+
 				continue;
 			}
 
