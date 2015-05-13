@@ -16,11 +16,11 @@ class Walls extends WikiaModel {
 	public function getList( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
 		wfProfileIn( __METHOD__ );
 
-		$titles = $this->getListTitles($db,$namespace);
+		$titles = $this->getListTitles( $db, $namespace );
 
 		$boards = array();
 		/** @var $title Title */
-		foreach ($titles as $title) {
+		foreach ( $titles as $title ) {
 			$boards[] = $title->getArticleID();
 		}
 
@@ -39,7 +39,7 @@ class Walls extends WikiaModel {
 	public function getListTitles( $db = DB_SLAVE, $namespace = NS_USER_WALL ) {
 		wfProfileIn( __METHOD__ );
 
-		$titles = TitleBatch::newFromConds('page_wikia_props',array(
+		$titles = TitleBatch::newFromConds( 'page_wikia_props', array(
 				'page.page_namespace' => $namespace,
 				'page_wikia_props.page_id = page.page_id'
 			),
