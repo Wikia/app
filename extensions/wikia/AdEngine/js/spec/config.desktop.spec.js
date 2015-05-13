@@ -41,6 +41,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				liftium: {
 					name: 'liftium'
 				},
+				monetizationService: {
+					name: 'monetizationService',
+					canHandleSlot: noop
+				},
 				openX: {
 					name: 'openX'
 				},
@@ -80,6 +84,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.providers.evolve,
 			mocks.providers.liftium,
 			mocks.providers.directGpt,
+			mocks.providers.monetizationService,
 			mocks.providers.openX,
 			mocks.providers.remnantGpt,
 			mocks.providers.sevenOneMedia,
@@ -192,5 +197,16 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
 		expect(getProviders('foo')).toEqual('turtle,liftium');
+	});
+
+	it('any country, Monetization Service on, Monetization Service slot', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
+		spyOn(mocks.providers.monetizationService, 'canHandleSlot').and.returnValue(true);
+		expect(getProviders('foo')).toEqual('monetizationService');
+	});
+
+	it('any country, Monetization Service on, non Monetization Service slot', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
+		expect(getProviders('foo')).not.toEqual('monetizationService');
 	});
 });
