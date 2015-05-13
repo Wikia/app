@@ -727,6 +727,7 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 require_once( "{$IP}/includes/wikia/tasks/autoload.php");
+require_once( "{$IP}/extensions/wikia/CreateNewWiki/RetryCreateTable.php");
 
 /*
  * @name wgWikiaStaffLanguages

@@ -947,16 +947,22 @@ class CreateWiki {
 			}
 		}
 
+		$result = true;
+
 		foreach( $mSqlFiles as $file ) {
 			wfDebugLog( "createwiki", __METHOD__ . ": Populating database with {$file}\n", true );
 
-			$error = $this->mNewWiki->dbw->sourceFile( $file );
+			$error = $this->mNewWiki->dbw->sourceFile( $file, false, false, __METHOD__ );
 			if ( $error !== true ) {
-				return false;
+				wfDebugLog( 'createwiki', __METHOD__ . ': Failed source file execution. Queue new retry task.' . "\n", true);
+				$task = new RetryCreateTable();
+				$task->call( 'retry', $this->mNewWiki->dbw->getDBname(), $file, false, false, __METHOD__, 1 );
+				$task->delay( '2 minutes' )->queue();
+				$result = false;
 			}
 		}
 
-		return true;
+		return $result;
 	}
 
 	/**

@@ -6,6 +6,8 @@
  * @ingroup Deployment
  */
 
+use Wikia\Logger\Loggable;
+
 require_once( dirname(__FILE__) . '/../../maintenance/Maintenance.php' );
 
 /**
@@ -17,6 +19,7 @@ require_once( dirname(__FILE__) . '/../../maintenance/Maintenance.php' );
  */
 abstract class DatabaseUpdater {
 
+	use Loggable;
 	/**
 	 * Array of updates to perform on the database
 	 *
@@ -414,10 +417,19 @@ abstract class DatabaseUpdater {
 	 * @param $isFullPath Boolean Whether to treat $path as a relative or not
 	 */
 	protected function applyPatch( $path, $isFullPath = false ) {
-		if ( $isFullPath ) {
-			$this->db->sourceFile( $path );
-		} else {
-			$this->db->sourceFile( $this->db->patchPath( $path ) );
+		if ( !$isFullPath ) {
+			$path = $this->db->patchPath($path);
+		}
+
+		$result = $this->db->sourceFile( $path, false, false, __METHOD__ );
+
+		/* Queue database patch retry task if failed */
+		if ( $result !== true ) {
+			$task = new RetryCreateTable();
+			$task->call( 'retry', $this->db->getDBname(), $path, false, false, __METHOD__, 1 );
+			$task->delay( '2 minutes' )->queue();
+
+			$this->error( __METHOD__ . ': Failed source file execution. Queued retry task (taskId: ' . $task->getTaskId() . ')' );
 		}
 	}
 

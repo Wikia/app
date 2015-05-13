@@ -166,7 +166,7 @@ abstract class DatabaseInstaller {
 		$this->db->setFlag( DBO_DDLMODE ); // For Oracle's handling of schema files
 		$this->db->begin( __METHOD__ );
 
-		$error = $this->db->sourceFile( $this->db->getSchemaPath() );
+		$error = $this->db->sourceFile( $this->db->getSchemaPath(), false, false, __METHOD__ );
 		if( $error !== true ) {
 			$this->db->reportQueryError( $error, 0, '', __METHOD__ );
 			$this->db->rollback( __METHOD__ );
