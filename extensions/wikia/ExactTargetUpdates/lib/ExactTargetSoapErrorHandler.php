@@ -24,11 +24,7 @@ class ExactTargetSoapErrorHandler {
 			}
 		}
 
-		WikiaLogger::instance()->warning( $errstr, [
-			'err_no' =>$errno,
-			'file' =>$errfile,
-			'line' =>$errline,
-			'request' => $request
-		] );
+		/* Use default WikiaLogger to store default logs as well */
+		WikiaLogger::instance()->onError( $errno, $errstr, $errfile, $errline, $errcontext );
 	}
 }
