@@ -415,6 +415,7 @@ class WallNotifications {
 					'authorUserName' => $notification->data->msg_author_username,
 
 					'titleText' => $notification->data->thread_title,
+					'threadId' => $notification->data->parent_id,
 					'details' => $text,
 					'titleUrl' => $notification->data->url,
 
@@ -424,7 +425,9 @@ class WallNotifications {
 					'fromName' => $this->app->wg->PasswordSenderName,
 				];
 
-				if ( $params['wallUserName'] == $watcherName ) {
+				if ( !$notification->isMain() ) {
+					$controller = 'Email\Controller\ReplyWallMessageController';
+				} else if ( $params['wallUserName'] == $watcherName ) {
 					$controller = 'Email\Controller\OwnWallMessageController';
 				} else {
 					$controller = 'Email\Controller\FollowedWallMessageController';

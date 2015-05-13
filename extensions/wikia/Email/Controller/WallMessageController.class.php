@@ -5,7 +5,6 @@ namespace Email\Controller;
 use Email\Check;
 use Email\EmailController;
 
-// TODO fix replies on MY message wall to fire an email
 abstract class WallMessageController extends EmailController {
 
 	protected $titleUrl;
@@ -28,13 +27,13 @@ abstract class WallMessageController extends EmailController {
 		$this->wallUserName = $this->request->getVal( 'wallUserName' );
 		$this->authorUserName = $this->request->getVal( 'authorUserName' );
 
+		$this->wallTitle = \Title::newFromText( $this->wallUserName, NS_USER_WALL );
+
 		$this->assertUserRolesSet();
 
 		$this->titleUrl = $this->request->getVal( 'titleUrl' );
 		$this->titleText = $this->request->getVal( 'titleText' );
 		$this->details = $this->request->getVal( 'details' );
-
-		$this->wallTitle = \Title::newFromText( $this->wallUserName, NS_USER_WALL );
 
 		$this->assertMessageDetails();
 	}
@@ -42,6 +41,14 @@ abstract class WallMessageController extends EmailController {
 	protected function assertUserRolesSet() {
 		if ( empty( $this->authorUserName ) ) {
 			throw new Check( "Could not determine message author" );
+		}
+
+		if ( empty( $this->wallUserName ) ) {
+			throw new Check( "Could not determine message owner" );
+		}
+
+		if ( !$this->wallTitle->exists() ) {
+			throw new Check( "Given Message Wall doesn't exist" );
 		}
 	}
 
@@ -102,18 +109,6 @@ abstract class WallMessageController extends EmailController {
 			$this->wallTitle->getPrefixedText() )
 		->inLanguage( $this->targetLang )->parse();
 	}
-
-	protected function getFooterMessages() {
-		$unfollowURL = $this->wallTitle->getFullURL( [
-			'action' => 'unwatch'
-		] );
-
-		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text', $unfollowURL, $this->wallTitle->getPrefixedText() )
-				->inLanguage( $this->targetLang )->parse()
-		];
-		return array_merge( $footerMessages, parent::getFooterMessages() );
-	}
 }
 
 class OwnWallMessageController extends WallMessageController {
@@ -129,10 +124,6 @@ class OwnWallMessageController extends WallMessageController {
 		)->inLanguage( $this->targetLang )->parse();
 	}
 
-	protected function getFooterMessages() {
-		return EmailController::getFooterMessages();
-	}
-
 	/**
 	 * Get the email subject line
 	 *
@@ -142,6 +133,29 @@ class OwnWallMessageController extends WallMessageController {
 		return wfMessage( 'emailext-wallmessage-owned-subject',
 			$this->authorUserName
 		)->inLanguage( $this->targetLang )->text();
+	}
+}
+
+class ReplyWallMessageController extends OwnWallMessageController {
+	/** @var \Title */
+	protected $title;
+
+	public function initEmail() {
+		parent::initEmail();
+
+		$this->title = \Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE );
+	}
+
+	protected function getFooterMessages() {
+		$unwatchUrl = $this->title->getFullURL( [
+			'action' => 'unwatch'
+		] );
+
+		$footerMessages = [
+			wfMessage( 'emailext-unfollow-text', $unwatchUrl, $this->title->getPrefixedText() )
+				->inLanguage( $this->targetLang )->parse()
+		];
+		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
 }
 
@@ -169,5 +183,17 @@ class FollowedWallMessageController extends WallMessageController {
 			$this->authorUserName,
 			$this->wallUserName
 		)->inLanguage( $this->targetLang )->text();
+	}
+
+	protected function getFooterMessages() {
+		$unwatchUrl = $this->wallTitle->getFullURL( [
+			'action' => 'unwatch'
+		] );
+
+		$footerMessages = [
+			wfMessage( 'emailext-unfollow-text', $unwatchUrl, $this->wallTitle->getPrefixedText() )
+				->inLanguage( $this->targetLang )->parse()
+		];
+		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
 }
