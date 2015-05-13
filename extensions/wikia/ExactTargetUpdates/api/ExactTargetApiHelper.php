@@ -11,7 +11,7 @@ class ExactTargetApiHelper {
 	public function getClient() {
 		global $wgExactTargetApiConfig;
 		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
-		$oClient = new \ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
+		$oClient = new \ExactTargetSoapClient( $wsdl, [ 'trace'=>1, 'exceptions' => true ] );
 		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 		return $oClient;
