@@ -1,4 +1,4 @@
-<section class="ChatModule <?=($isEntryPoint)?'ChatEntryPoint':'module'?> ChatModuleUninitialized">
+<section class="ChatModule <?=( $isEntryPoint ) ? 'ChatEntryPoint': 'module'?> ChatModuleUninitialized">
 	<div class="chat-contents">
 		<h1 class="chat-headline">
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
@@ -50,7 +50,7 @@
 		</div>
 	</div>
 </section>
-<?php if ($isEntryPoint): ?>
+<?php if ( $isEntryPoint ): ?>
 	<script language="javascript" type="text/javascript">if ( typeof ChatEntryPoint!=="undefined" ) ChatEntryPoint.init();</script>
-	<a class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat ?>"><?= wfMsg('chat-join-the-chat')?></a>
+	<a class="ChatMonobookEntryPoint" href="<?= $linkToSpecialChat ?>"><?= wfMsg( 'chat-join-the-chat' )?></a>
 <?php endif; ?>
