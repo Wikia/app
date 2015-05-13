@@ -3,7 +3,7 @@ namespace Wikia\ExactTarget;
 use Wikia\Logger\WikiaLogger;
 
 class ExactTargetSoapErrorHandler {
-	static function requeueConnectionResetWarning( $errno, $errstr = null, $errfile = null, $errline = null, $errcontext = null ) {
+	public static function requeueConnectionResetWarning( $errno, $errstr = null, $errfile = null, $errline = null, $errcontext = null ) {
 
 		if ( strpos( $errstr, 'Connection reset by peer' ) !== false ) {
 			if ( isset( $errcontext['retryAttempt'] ) && $errcontext['retryAttempt'] !== false ) {
