@@ -10,7 +10,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Forum', '', false );
-		OasisController::addBodyParameter('itemscope itemtype="http://schema.org/WebPage"');
+		OasisController::addBodyParameter( 'itemscope itemtype="http://schema.org/WebPage"' );
 	}
 
 	public function init() {
@@ -35,13 +35,13 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$output->setRobotPolicy( "index,follow" );
 
 		$policies = Title::newFromText( 'forum-policies-and-faq', NS_MEDIAWIKI );
-		$this->response->setJsVar( 'wgCanEditPolicies', $this->wg->User->isAllowed('forumadmin'));
+		$this->response->setJsVar( 'wgCanEditPolicies', $this->wg->User->isAllowed( 'forumadmin' ) );
 		$this->response->setJsVar( 'wgPoliciesRev', $policies->getLatestRevID()  );
 		$this->response->setJsVar( 'wgPoliciesEditURL', $policies->getFullUrl( 'action=edit' )  );
 
-		//getLatestRevID
+		// getLatestRevID
 
-		JSMessages::enqueuePackage('Forum', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage( 'Forum', JSMessages::EXTERNAL );
 		$this->response->addAsset( 'extensions/wikia/Forum/js/Forum.js' );
 
 		if ( $this->request->getVal( 'showWarning', 0 ) == 1 ) {
@@ -82,7 +82,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			$this->showOldForumLink = false;
 		}
 
-		//TODO: keep the varnish cache and do purging on post
+		// TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 
 		wfProfileOut( __METHOD__ );
@@ -102,7 +102,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoardEdit.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/js/ForumBoardEdit.js' );
 
-		$this->boards = (new Forum)->getBoardList( DB_SLAVE );
+		$this->boards = ( new Forum )->getBoardList( DB_SLAVE );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -117,8 +117,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 			// skip rendering
 		}
 
-		$this->setVal('title', wfMessage( 'forum-admin-create-new-board-modal-heading' )->plain() );
-		$this->setVal('submitLabel', wfMessage('forum-admin-create-new-board-label')->plain() );
+		$this->setVal( 'title', wfMessage( 'forum-admin-create-new-board-modal-heading' )->plain() );
+		$this->setVal( 'submitLabel', wfMessage( 'forum-admin-create-new-board-label' )->plain() );
 
 		$form = array(
 			'inputs' => array(
@@ -126,7 +126,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 					'type' => 'text',
 					'name' => 'boardTitle',
 					'isRequired' => true,
-					'label' => wfMessage('forum-admin-create-new-board-title')->plain(),
+					'label' => wfMessage( 'forum-admin-create-new-board-title' )->plain(),
 					'attributes' => array(
 						'maxlength' => '40'
 					),
@@ -135,7 +135,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 					'type' => 'text',
 					'name' => 'boardDescription',
 					'isRequired' => true,
-					'label' => wfMessage('forum-admin-create-new-board-description')->plain(),
+					'label' => wfMessage( 'forum-admin-create-new-board-description' )->plain(),
 					'attributes' => array(
 						'maxlength' => '255'
 					),
@@ -175,7 +175,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 					'name' => 'boardTitle',
 					'value' => htmlspecialchars( $boardTitle ),
 					'isRequired' => true,
-					'label' => wfMessage('forum-admin-edit-board-title')->plain(),
+					'label' => wfMessage( 'forum-admin-edit-board-title' )->plain(),
 					'attributes' => array(
 						'maxlength' => '40'
 					),
@@ -185,7 +185,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 					'name' => 'boardDescription',
 					'value' => htmlspecialchars( $boardDescription ),
 					'isRequired' => true,
-					'label' => wfMessage('forum-admin-edit-board-description')->plain(),
+					'label' => wfMessage( 'forum-admin-edit-board-description' )->plain(),
 					'attributes' => array(
 						'maxlength' => '255'
 					),
@@ -218,7 +218,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 				'jiraTicket' => 'SOC-590',
 				'boardId' => $boardId,
 				'method' => __METHOD__
-			]);
+			] );
 			$this->response->setCode( 404 );
 			return true;
 		}

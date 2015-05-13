@@ -12,7 +12,7 @@ $specialPageAliases = array();
  * English (English)
  */
 $specialPageAliases['en'] = array(
-	'Forum' => array( 'Forum', 'Forums'),
+	'Forum' => array( 'Forum', 'Forums' ),
 );
 
 /**

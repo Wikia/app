@@ -6,7 +6,7 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = array( 
+$wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Forum',
 	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Forum',
@@ -15,7 +15,7 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname( __FILE__ ) . '/';
 
-include ($dir . '/Forum.namespace.setup.php');
+include ( $dir . '/Forum.namespace.setup.php' );
 
 $wgAutoloadClasses[ 'ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
 

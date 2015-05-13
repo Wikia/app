@@ -55,11 +55,11 @@ $wgHooks['ContributionsLineEnding'][] = 'ForumHooksHelper::onContributionsLineEn
 $wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'ForumHooksHelper::onOasisAddPageDeletedConfirmationMessage';
 $wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageUsageSingleLink';
 
-//notification hooks
+// notification hooks
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
 $wgHooks['NotificationGetMailNotificationMessage'][] = 'ForumNotificationPlugin::onGetMailNotificationMessage';
 
-//old forum archive
+// old forum archive
 $wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::onGetUserPermissionsErrors';
 $wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'ForumHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
 $wgHooks['ArticleViewHeader'][] = 'ForumHooksHelper::onArticleViewHeader';
@@ -72,7 +72,7 @@ $wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'ForumHooksHelper::onArticl
 
 
 // forum discussion on article
-//It need to be first one !!!
+// It need to be first one !!!
 array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'ForumHooksHelper::onOutputPageBeforeHTML' );
 
 $wgHooks['WallAction'][] = 'ForumHooksHelper::onWallAction';
@@ -91,9 +91,9 @@ $wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 $wgHooks['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
 $wgHooks['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
 
-include ($dir . '/Forum.namespace.setup.php');
+include ( $dir . '/Forum.namespace.setup.php' );
 
-//add this namespace to list of wall namespaces
+// add this namespace to list of wall namespaces
 $app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
 $app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
 
@@ -125,9 +125,9 @@ $wgGroupPermissions['helper']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
 $wgGroupPermissions['threadmoderator']['forumadmin'] = true;
 
-JSMessages::registerPackage('Forum', array(
+JSMessages::registerPackage( 'Forum', array(
 	'back',
 	'forum-specialpage-policies-edit',
 	'forum-specialpage-policies'
-));
+) );
 

@@ -4,10 +4,10 @@
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
 
-//TODO: Consider to have some interface defined in the wall ext
+// TODO: Consider to have some interface defined in the wall ext
 
 class ForumNotificationPlugin {
-	static public function onGetNotificationMessage($nc, &$msg, $isMain, $data, $authors, $userCount, $myName) {
+	static public function onGetNotificationMessage( $nc, &$msg, $isMain, $data, $authors, $userCount, $myName ) {
 
 		if ( empty( $data->article_title_ns ) || MWNamespace::getSubject( $data->article_title_ns ) != NS_WIKIA_FORUM_BOARD ) {
 			return true;
@@ -55,7 +55,7 @@ class ForumNotificationPlugin {
 		return true;
 	}
 
-	static public function onGetMailNotificationMessage($notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text) {
+	static public function onGetMailNotificationMessage( $notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text ) {
 		if ( empty( $notification->data->article_title_ns ) || MWNamespace::getSubject( $notification->data->article_title_ns ) != NS_WIKIA_FORUM_BOARD ) {
 			return true;
 		}
