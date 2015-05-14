@@ -344,25 +344,6 @@ class CreateWiki {
 		}
 
 		/**
-		 * add local job
-		 */
-		$job_params = new stdClass();
-		foreach ( $this->mNewWiki as $id => $value ) {
-			if ( !is_object($value) ) {
-				$job_params->$id = $value;
-			}
-		}
-		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
-		$job_params->sDbStarter = $this->sDbStarter;
-
-		if (!TaskRunner::isModern('CreateWikiLocalJob')) {
-			$localJob = new CreateWikiLocalJob( Title::newFromText( NS_MAIN, "Main" ), $job_params );
-			$localJob->WFinsert( $this->mNewWiki->city_id, $this->mNewWiki->dbname );
-		}
-
-		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
-
-		/**
 		 * destroy connection to newly created database
 		 */
 		$res = $this->mNewWiki->dbw->commit( __METHOD__ );
@@ -452,37 +433,32 @@ class CreateWiki {
 		$wgUser = $oldUser;
 		unset($oldUser);
 
-		if (TaskRunner::isModern('CreateWikiLocalJob')) {
-			$creationTask = new \Wikia\Tasks\Tasks\CreateNewWikiTask();
+		/**
+		 * Schedule an async task
+		 */
+		$creationTask = new \Wikia\Tasks\Tasks\CreateNewWikiTask();
 
-			(new \Wikia\Tasks\AsyncTaskList())
-				->wikiId($this->mNewWiki->city_id)
-				->prioritize()
-				->add($creationTask->call('postCreationSetup', $job_params))
-				->add($creationTask->call('maintenance', rtrim($this->mNewWiki->url, "/")))
-				->queue();
-		} else {
-			/**
-			 * inform task manager
-			 */
-			$Task = new LocalMaintenanceTask();
-			$Task->createTask(
-				array(
-					"city_id" => $this->mNewWiki->city_id,
-					"command" => "maintenance/runJobs.php",
-					"type"    => "CWLocal",
-					"data"    => $this->mNewWiki,
-					"server"  => rtrim( $this->mNewWiki->url, "/" )
-				),
-				TASK_QUEUED,
-				BatchTask::PRIORITY_HIGH
-			);
+		$job_params = new stdClass();
+		foreach ( $this->mNewWiki as $id => $value ) {
+			if ( !is_object($value) ) {
+				$job_params->$id = $value;
+			}
 		}
+		// BugId:15644 - I need to pass this to CreateWikiLocalJob::changeStarterContributions
+		$job_params->sDbStarter = $this->sDbStarter;
 
-		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
+		$task_id = (new \Wikia\Tasks\AsyncTaskList())
+			->wikiId($this->mNewWiki->city_id)
+			->prioritize()
+			->add($creationTask->call('postCreationSetup', $job_params))
+			->add($creationTask->call('maintenance', rtrim($this->mNewWiki->url, "/")))
+			->queue();
+
+		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added as {$task_id}\n", true );
 
 		$this->info( __METHOD__ . ': done', [
-			'took' => microtime( true ) - $then
+			'task_id' => $task_id,
+			'took' => microtime( true ) - $then,
 		] );
 
 		wfProfileOut( __METHOD__ );
