@@ -34,10 +34,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			'pvDiff' => [
 				'sortType' => SORT_NUMERIC,
 				'metadata' => 'pv7',
-			],
-			'title' => [
-				'sortFunction' => 'sortInsightsAlphabetical',
-				'metadata' => 'pv7'
 			]
 		];
 
@@ -189,8 +185,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$pageViewsData = $this->getPageViewsData( $articlesIds );
 					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
 				}
-
-				$this->createSortingArray( $articlesData, 'title' );
 			}
 
 			return $articlesData;
