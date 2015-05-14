@@ -100,7 +100,14 @@ class FixPageLatest extends Maintenance {
 			// no revision data - we can generate an empty revision if "page_len" is set to 0 (PLATFORM-1286)
 			if ($revId == 0 &&  $row->page_len == 0 ) {
 				$this->output(" - making an empty edit");
-				$revId = $this->insertEmptyRevision( $row->page_id );
+
+				try {
+					$revId = $this->insertEmptyRevision($row->page_id);
+				}
+				catch(MWException $ex) {
+					$this->output(" - error: " . $ex->getMessage() . "\n");
+					continue;
+				}
 			}
 
 			$this->dbw->update(
