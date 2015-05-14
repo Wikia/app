@@ -386,7 +386,7 @@ class WallNotifications {
 		foreach ( $watchers as $val ){
 			$watcher = $this->getUser( $val );
 
-			if ( !( $watcher->getBoolOption('unsubscribed') === true ) ) {
+			if ( $watcher->getBoolOption('unsubscribed') === true ) {
 				continue;
 			}
 
