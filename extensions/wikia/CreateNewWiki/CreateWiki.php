@@ -295,6 +295,8 @@ class CreateWiki {
 		$tmpSharedDB = $wgSharedDB;
 		$wgSharedDB = $this->mNewWiki->dbname;
 
+		$this->mDBw->commit( __METHOD__ ); // commit shared DB changes
+
 		/**
 		 * we got empty database created, now we have to create tables and
 		 * populate it with some default values
@@ -364,7 +366,10 @@ class CreateWiki {
 		 * destroy connection to newly created database
 		 */
 		$res = $this->mNewWiki->dbw->commit( __METHOD__ );
-		wfWaitForSlaves( $this->mNewWiki->dbname ); # OPS-6313
+
+		# OPS-6313 - wait for slaves to catch up (both shared DB and the current new wikis cluster)
+		wfWaitForSlaves( $wgExternalSharedDB );
+		wfWaitForSlaves( $this->mNewWiki->dbname );
 
 		$this->info( __METHOD__ . ": database changes commited", [
 			'commit_res' => $res
