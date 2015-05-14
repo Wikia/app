@@ -11,7 +11,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		INSIGHTS_MEMC_VERSION = '1.0',
 		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
-		INSIGHTS_LIST_MAX_LIMIT = 100;
+		INSIGHTS_LIST_MAX_LIMIT = 100,
+		INSIGHTS_DEFAULT_SORTING = 'pv7';
 
 	private
 		$queryPageInstance,
@@ -24,9 +25,20 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 	public
 		$sorting = [
-			'pv7' => SORT_NUMERIC,
-			'pv28' => SORT_NUMERIC,
-			'pvDiff' => SORT_NUMERIC,
+			'pv7' => [
+				'sortType' => SORT_NUMERIC,
+			],
+			'pv28' => [
+				'sortType' => SORT_NUMERIC,
+			],
+			'pvDiff' => [
+				'sortType' => SORT_NUMERIC,
+				'metadata' => 'pv7',
+			],
+			'title' => [
+				'sortFunction' => 'sortInsightsAlphabetical',
+				'metadata' => 'pv7'
+			]
 		];
 
 	abstract function getDataProvider();
@@ -47,6 +59,10 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 	public function getPage() {
 		return $this->page;
+	}
+
+	public function getDefaultSorting() {
+		return self::INSIGHTS_DEFAULT_SORTING;
 	}
 
 	/**
@@ -90,6 +106,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 * @return array
 	 */
 	public function getContent( $params ) {
+		global $wgMemc;
+
 		$this->queryPageInstance = $this->getDataProvider();
 		$content = [];
 
@@ -106,7 +124,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			 */
 			$this->prepareParams( $params );
 			if ( !isset( $this->sortingArray ) ) {
-				$this->sortingArray = array_keys( $articlesData );
+				$this->sortingArray = $wgMemc->get($this->getMemcKey( self::INSIGHTS_DEFAULT_SORTING ) );
 			}
 			$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
 
@@ -167,6 +185,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$pageViewsData = $this->getPageViewsData( $articlesIds );
 					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
 				}
+
+				$this->createSortingArray( $articlesData, 'title', 'sortInsightsAlphabetical' );
 			}
 
 			return $articlesData;
@@ -255,10 +275,22 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	public function createSortingArray( $sortingArray, $key ) {
 		global $wgMemc;
 
-		arsort( $sortingArray, $this->sorting[ $key ] );
+		if ( isset( $this->sorting[ $key ]['sortFunction'] ) ) {
+			usort( $sortingArray, $this->sorting[ $key ]['sortFunction'] );
+		} else {
+			arsort( $sortingArray, $this->sorting[ $key ]['sortType'] );
+		}
+
 		$cacheKey = $this->getMemcKey( $key );
 
 		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), self::INSIGHTS_MEMC_TTL );
+	}
+
+	/**
+	 * Function for sorting list alphabetical
+	 */
+	public function sortInsightsAlphabetical( $a, $b ) {
+		return strcasecmp( $a['link']['text'], $b['link']['text'] );
 	}
 
 	/**
@@ -311,7 +343,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		foreach ( $this->sorting as $key => $flag ) {
-			$this->createSortingArray( $sortingData[ $key ], $key );
+			if ( isset( $sortingData[$key] ) ) {
+				$this->createSortingArray( $sortingData[ $key ], $key );
+			}
 		}
 
 		return $articlesData;
