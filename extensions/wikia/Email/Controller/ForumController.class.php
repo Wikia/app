@@ -129,7 +129,7 @@ class ForumReplyController extends ForumController {
 	}
 
 	protected function getSubjectKey() {
-		return 'emailext-forum-reply-summary';
+		return 'emailext-forum-reply-subject';
 	}
 
 	protected function getSummaryKey() {
