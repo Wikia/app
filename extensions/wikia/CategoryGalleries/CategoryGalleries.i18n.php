@@ -107,6 +107,13 @@ $messages['es'] = array(
 	'categorygalleries-desc' => 'Muestra una galería de páginas encima de las páginas de la categoría',
 );
 
+/** Persian (فارسی)
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'categorygalleries-desc' => 'نمایش صفحه گالری در صفحه رده',
+);
+
 /** Finnish (suomi)
  * @author VezonThunder
  */

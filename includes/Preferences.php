@@ -461,13 +461,6 @@ class Preferences {
 			}
 
 			/* Wikia change begin - @author: Inez */
-			$defaultPreferences['htmlemails'] =
-				array(
-					'type' => 'toggle',
-					'section' => 'personal/email',
-					'label-message' => 'tog-htmlemails',
-				);
-
 			$defaultPreferences['marketingallowed'] =
 				array(
 					'type' => 'toggle',

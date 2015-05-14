@@ -9,6 +9,12 @@ $default-body-line-height: 22px;
 			.WikiaArticle {
 				font-size: $default-body-font-size;
 				line-height: $default-body-line-height;
+
+				//Overwrite styles from skins/oasis/css/core/article.scss:125
+				//@TODO should be removed when above line is removed - CONCF-186
+				li {
+					line-height: inherit;
+				}
 			}
 
 			h1 {
@@ -19,6 +25,11 @@ $default-body-line-height: 22px;
 			h2 {
 				font-size: 20px;
 				line-height: 22px;
+			}
+
+			.wikia-page-header h2 {
+				font-size: $default-body-font-size;
+				line-height: $default-body-line-height;
 			}
 
 			h3 {
@@ -45,6 +56,12 @@ $default-body-line-height: 22px;
 					font-size: $default-body-font-size;
 					line-height: $default-body-line-height;
 				}
+
+				//Overwrite styles from skins/oasis/css/core/article.scss:125
+				//@TODO should be removed when above line is removed - CONCF-186
+				li {
+					line-height: inherit;
+				}
 			}
 
 			h1 {
@@ -55,6 +72,11 @@ $default-body-line-height: 22px;
 			h2 {
 				font-size: 28px;
 				line-height: 30px;
+			}
+
+			.wikia-page-header h2 {
+				font-size: 16px;
+				line-height: 26px;
 			}
 
 			h3 {

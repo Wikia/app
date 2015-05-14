@@ -1,3 +1,0 @@
-This is the mwEmbed Support module it supplies common functionality that other mwEmbed modules depend on.
-
-Modules can express the dependency as 'mwEmbedSupport'

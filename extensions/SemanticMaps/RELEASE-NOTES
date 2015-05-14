@@ -1,15 +1,48 @@
-For a documentation of all features, see http://www.mediawiki.org/wiki/Extension:Semantic_Maps
+These are the release notes for the Semantic Maps extension.
 
-== Semantic Maps change log ==
+Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:Semantic_Maps
+Documentation and examples: http://mapping.referata.com/wiki/Semantic_Maps
 
-This change log contains a list of completed to-do's (new features, bug fixes, refactoring) for every
-version of Semantic Maps. You can find the most upt-do-date version at
-http://www.mediawiki.org/wiki/Extension:Semantic_Maps/Version_history#Semantic_Maps_change_log
 
+=== Semantic Maps 2.0.1 ===
+(2012-12-13)
+
+* Improved compatibility with SMW 1.8 and 1.9 (including bug 42830)
+* Fixed issue in SMQueryHandler (bug 42250)
+* Make use of the default parameter in the query printers
+
+=== Semantic Maps 2.0 ===
+(2012-10-05)
+
+; Compatibility changes
+
+* Changed minimum PHP version from 5.2 to 5.3.
+* Changed minimum MediaWiki version from 1.17 to 1.18.
+* Changed minimum Semantic MediaWiki version from 1.7 to 1.8.
+* Changed minimum Maps version from 1.0.x to 2.0.
+* Changed minimum Validator version from 0.4 to 0.5.
+* Removed support for the deprecated Google Maps v2 API.
+* Removed support for the now unsorted Yahoo! Maps API and associated geocoding service.
+
+; New features
+
+* Added support for the visitedicon parameter to the map result formats.
+* Many new functionality that got added in Maps 2.0 (see the Maps release notes).
+
+; Other improvements
+
+* Improved script loading.
+* Usage of Validator 0.5.x features.
+
+; Bug fixes
+
+* Fixed display of maps in multiple instance templates in forms.
+* Fixed partial incompatibility with SMW >=1.6.
 
 === Semantic Maps 1.0.5 ===
 (2011-11-30)
 
+* Changed minimun Semantic MediaWiki version from 1.6.1 to 1.7.
 * Allow properties of type string to be used as title. (bug 32632)
 * Fixed error occuring when parsing invalid coordinates.
 

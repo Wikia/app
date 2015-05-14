@@ -39,11 +39,11 @@ class ExactTargetTask extends BaseTask {
 	}
 
 	/**
-	 * Returns an instance of ExactTargetRetrieveUserHelper class
-	 * @return ExactTargetRetrieveUserHelper
+	 * Returns an instance of ExactTargetRetrieveUserTask class
+	 * @return ExactTargetRetrieveUserTask
 	 */
-	protected function getRetrieveUserHelper() {
-		return new ExactTargetRetrieveUserHelper();
+	protected function getRetrieveUserTask() {
+		return new ExactTargetRetrieveUserTask();
 	}
 
 	/**
@@ -64,11 +64,20 @@ class ExactTargetTask extends BaseTask {
 
 	/**
 	 * Returns an instance of ExactTargetUserDataVerification class
-	 * @return ExactTargetUserDataVerification
+	 * @return ExactTargetUserDataVerificationTask
 	 */
 	protected function getUserDataVerificationTask() {
 		return new ExactTargetUserDataVerificationTask();
 	}
+
+	/**
+	 * A simple getter for an object of an ExactTargetRetrieveWikiTask class
+	 * @return ExactTargetRetrieveWikiTask
+	 */
+	protected function getRetrieveWikiTask() {
+		return new ExactTargetRetrieveWikiTask();
+	}
+
 
 	/**
 	 * A simple getter for an object of an ExactTargetUpdateWikiTask class
@@ -84,6 +93,14 @@ class ExactTargetTask extends BaseTask {
 	 */
 	protected function getWikiHelper() {
 		return new ExactTargetWikiTaskHelper();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetWikiDataVerification class
+	 * @return ExactTargetWikiDataVerification
+	 */
+	protected function getWikiDataVerificationTask() {
+		return new ExactTargetWikiDataVerificationTask();
 	}
 
 }

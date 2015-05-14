@@ -258,6 +258,7 @@ class BlogTemplateClass {
 	private static $aOptions	= array( );
 	private static $aCategoryNames = array( );
 
+	/** @var DatabaseBase */
 	private static $dbr 		= null;
 
 	private static $search 		= array (
@@ -265,7 +266,7 @@ class BlogTemplateClass {
         '/(<table[^>]*>|<\/table>)/i',
         '/(<tr[^>]*>|<\/tr>)/i',
         '/<td[^>]*>(.*?)<\/td>/i',
-        '/<th[^>]*>(.*?)<\/th>/ie',
+        '/<th[^>]*>(.*?)<\/th>/i',
 		'/<div[^>]*>.*<\/div>/siU',
 		'/<script[^>]*>.*<\/script>/siU',
 		'/<h\d>.*<\/h\d>/siU',
@@ -943,19 +944,14 @@ class BlogTemplateClass {
 	}
 
 	public static function getResultsCount() {
-		global $wgLang;
-    	wfProfileIn( __METHOD__ );
-    	/* main query */
-    	$aResult = array();
-    	$aFields = array( 'distinct(page_id) as page_id' );
-		$res = self::$dbr->select(
-			array_map(array(self::$dbr, 'tableName'), self::$aTables),
-			$aFields,
+		$row = self::$dbr->selectField(
+			array_map( [ self::$dbr, 'tableName' ], self::$aTables ),
+			[ 'count(distinct(page_id)) as count' ],
 			self::$aWhere,
 			__METHOD__
 		);
-    	wfProfileOut( __METHOD__ );
-		return self::$dbr->numRows( $res );
+
+		return $row ? (int)$row : 0;
 	}
 
 	private static function __makeRssOutput($aInput) {

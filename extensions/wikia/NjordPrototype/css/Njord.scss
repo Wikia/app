@@ -463,6 +463,8 @@ header.MainPageHeroHeader {
 		padding-left: 6px;
 		position: relative;
 		top: -3px;
+		//pencil icon and "edit" text should be always in the same line
+		white-space: nowrap;
 	}
 
 		&.edit-state {

@@ -1,2 +1,0 @@
-require_once( "{{path}}/PageNotice.php" );
-

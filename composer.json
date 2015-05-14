@@ -14,6 +14,7 @@
 		"monolog/monolog": "1.9.1",
 		"phpunit/phpunit": "4.1.*",
 		"facebook/php-sdk-v4": "4.0.*",
-		"cssjanus/cssjanus": "1.1.*"
+		"cssjanus/cssjanus": "1.1.*",
+		"tijsverkoyen/css-to-inline-styles": "1.5.2"
 	}
 }

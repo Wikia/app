@@ -1,6 +1,7 @@
 @import 'skins/shared/color';
 @import 'layout';
 @import 'responsive-variables';
+@import 'breakpoints-variables';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
 @import 'ads-floor';
@@ -294,8 +295,27 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
+.clear-right-after-ad-in-content {
+	clear: right;
+}
+
 @media screen and (max-width: $breakpoint-small) {
 	.home-top-right-ads.top-right-ads-in-content {
 		display: block;
+	}
+}
+
+/* ADEN-1716 AB testing experiment with medrec viewability */
+#TOP_RIGHT_BOXAD.ads-viewability-test {
+	&.GUTTER_150 {
+		margin-top: 150px;
+	}
+
+	&.GUTTER_300 {
+		margin-top: 300px;
+	}
+
+	&.GUTTER_450 {
+		margin-top: 450px;
 	}
 }

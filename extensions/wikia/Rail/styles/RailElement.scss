@@ -1,12 +1,8 @@
-@import "skins/shared/color";
+@import 'skins/shared/color';
 
 $black: #000;
 $white: #FFF;
 $color-divider: mix($color-page, $color-text, 80%);
-$color-rail-background: mix($color-page, $black, 90%);
-@if $is-dark-wiki {
-    $color-rail-background: mix($color-page, $white, 90%);
-}
 
 @mixin standard-primary-button() {
     background-image: none;
@@ -21,7 +17,7 @@ $color-rail-background: mix($color-page, $black, 90%);
 }
 
 @mixin wikia-rail-element() {
-    background-color: $color-rail-background;
+    background-color: $color-unified-module-background;
     margin-bottom: 10px;
     padding: 20px;
 }
@@ -42,10 +38,10 @@ $color-rail-background: mix($color-page, $black, 90%);
         font-weight: bold;
 
         a {
-            color: $color-links-default;
+            color: $color-links;
 
             &:hover {
-                color: $color-links-default;
+                color: $color-links;
                 text-decoration: underline;
                 text-shadow: initial;
             }
@@ -89,7 +85,7 @@ $color-rail-background: mix($color-page, $black, 90%);
 
             //Activity Feed
             &.edit {
-                background-image: url(/skins/shared/images/editpen.svg);
+                background-image: url('/skins/shared/images/editpen.svg'); /* inline */
                 height: 20px;
                 left: 5px;
                 opacity: .6;
@@ -98,7 +94,7 @@ $color-rail-background: mix($color-page, $black, 90%);
             }
 
             &.new {
-                background-image: url(/skins/shared/images/new_article_icon.svg);
+                background-image: url('/skins/shared/images/new_article_icon.svg'); /* inline */
                 height: 27px;
                 left: 0;
                 opacity: .8;
@@ -148,6 +144,7 @@ $color-rail-background: mix($color-page, $black, 90%);
         }
     }
 
+    // TODO: remove when chat will be ready to be pushed to prod together with other rail changes
     &.new-chat {
         .ChatModule {
             @include wikia-rail-element;
@@ -189,7 +186,7 @@ $color-rail-background: mix($color-page, $black, 90%);
             }
 
             .chat-total {
-                background-color: $color-rail-background;
+                background-color: $color-unified-module-background;
                 border: 1px solid;
                 border-radius: 50%;
                 font-size: 10px;
@@ -232,51 +229,54 @@ $color-rail-background: mix($color-page, $black, 90%);
 
                 .carousel-container {
                     left: 16px;
-                    width: 260px;
+                    width: 220px;
                 }
 
                 .since, .chatter {
-                    width: 32px;
-                }
-
-                .UserStatsMenu {
-                    outline: rgba($color-divider, .3) solid 2px;
-                    width: 220px;
-
-                    .actions ul {
-                        margin: 0;
-
-                        li {
-                            border-bottom: $color-divider solid thin;
-                            cursor: pointer;
-                            height: 44px;
-                            margin: 0;
-                            white-space: nowrap;
-
-                            .label {
-                                color: mix($color-text, $color-links, 80%);
-                                line-height: 44px;
-                                padding-left: 10px;
-                            }
-
-                            &:hover {
-                                background-color: $color-buttons;
-                            }
-                        }
-                    }
-
-                    .info {
-                        background: $color-menu-highlight;
-                        padding: 10px;
-
-                        ul .username {
-                            font-weight: bold;
-                            margin-bottom: 10px;
-                            text-transform: uppercase;
-                        }
-                    }
+                    width: 30px;
                 }
             }
+        }
+    }
+}
+
+// TODO: remove new-chat when chat will be ready to be pushed to prod together with other rail changes
+.UserStatsMenu .new-chat {
+    outline: rgba($color-divider, .3) solid 2px;
+    width: 220px;
+
+    .actions ul {
+        margin: 0;
+
+        li {
+            border-bottom: $color-divider solid thin;
+            cursor: pointer;
+            height: 24px;
+            margin: 0;
+            white-space: nowrap;
+
+            .label {
+                color: mix($color-text, $color-links, 80%);
+                line-height: 44px;
+                padding-left: 10px;
+            }
+
+            &:hover {
+                background-color: $color-buttons;
+            }
+        }
+    }
+
+    .info {
+        background: $color-menu-highlight;
+        padding: 10px;
+        
+        // TODO: remove unnecessary nesting when chat will be ready to be 
+        // pushed to prod together with other rail changes
+        ul .username {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
     }
 }

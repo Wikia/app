@@ -315,11 +315,12 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Justincheng12345
  * @author LNDDYL
  * @author StephDC
  */
 $messages['zh-hant'] = array(
-	'confirmemailprompt-desc' => '當用戶的電郵地址尚未確認時顯示警告',
-	'confirmemailprompt-error' => '<strong>$1</strong>是否是您的電子郵箱位址？ [[$2|是]]或[[$3|不是，請修改]]。',
+	'confirmemailprompt-desc' => '當使用者的電郵地址尚未確認時顯示警告',
+	'confirmemailprompt-error' => '<strong>$1</strong>是否是您的電子郵件地址？ [[$2|是]]或[[$3|不是，請修改]]。',
 );

@@ -17,7 +17,7 @@
 	$currentBatch = $itemsBatch['currentBatch'];
 	$nextBatch = $currentBatch + 1;
 	$prevBatch = $currentBatch - 1;
-	$urlSafeIndex = urlencode( $index );
+	$urlSafeIndex = rawurlencode( $index );
 	$id = 'catAlpha' . $urlSafeIndex;
 	?>
 	<h2 id="<?= $id ;?>" data-count="<?= $wg->ContLang->formatNum( $itemsBatch['total'] ) ;?>"><?= $index; ?></h2>

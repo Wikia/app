@@ -1,5 +1,0 @@
-
-to enable put
-require_once( "$IP/extensions/TimedText/TimedText.php" );
-
-in LocalSettings.php

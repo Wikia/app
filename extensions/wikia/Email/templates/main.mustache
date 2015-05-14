@@ -1,0 +1,96 @@
+<html>
+<head>
+	<title>Wikia</title>
+</head>
+<body>
+
+<div class="main-wrapper">
+	<table class="header-wrap">
+		<tr>
+			<td></td>
+			<td>
+				<div class="content">
+					<div class="header content-inner">
+						<a href="http://www.wikia.com" class="logo">
+                            {{# icons.Wikia}}<img src="{{url}}" width="{{width}}" height="{{height}}" alt="Wikia">{{/ icons.Wikia}}
+						</a>
+					</div>
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<table class="body-wrap">
+		<tr>
+			<td></td>
+			<td>
+				<div class="content">
+					<div class="main-content content-inner">
+						{{{content}}}
+					</div>
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<table class="footer-wrap">
+		<tr>
+			<td></td>
+			<td>
+				<div class="content">
+					<div class="footer content-inner">
+						<p>{{tagline}}{{#useTrademark}}<sup>TM</sup>{{/useTrademark}}</p>
+						<div class="hubs">
+							<a href="{{hubsMessages.comicsURL}}">
+								{{# marketingFooter}}{{# icons.Comics}}<img src="{{url}}" width="{{width}}" height="{{height}}" class="hub-icon">{{/ icons.Comics}}{{/ marketingFooter}}
+								{{hubsMessages.comics}}
+							</a>
+							<a href="{{hubsMessages.videoGamesURL}}">
+								{{# marketingFooter}}{{# icons.Games}}<img src="{{url}}" width="{{width}}" height="{{height}}" class="hub-icon">{{/ icons.Games}}{{/ marketingFooter}}
+								{{hubsMessages.videoGames}}
+							</a>
+							<a href="{{hubsMessages.moviesURL}}">
+								{{# marketingFooter}}{{# icons.Movies}}<img src="{{url}}" width="{{width}}" height="{{height}}" class="hub-icon">{{/ icons.Movies}}{{/ marketingFooter}}
+								{{hubsMessages.movies}}
+							</a>
+							<a href="{{hubsMessages.lifestyleURL}}">
+								{{# marketingFooter}}{{# icons.Lifestyle}}<img src="{{url}}" width="{{width}}" height="{{height}}" class="hub-icon">{{/ icons.Lifestyle}}{{/ marketingFooter}}
+								{{hubsMessages.lifestyle}}
+							</a>
+							<a href="{{hubsMessages.musicURL}}">
+								{{# marketingFooter}}{{# icons.Music}}<img src="{{url}}" width="{{width}}" height="{{height}}" class="hub-icon">{{/ icons.Music}}{{/ marketingFooter}}
+								{{hubsMessages.music}}
+							</a>
+							<a href="{{hubsMessages.booksURL}}">
+								{{# marketingFooter}}{{# icons.Books}}<img src="{{url}}" width="{{width}}" height="{{height}}" class="hub-icon">{{/ icons.Books}}{{/ marketingFooter}}
+								{{hubsMessages.books}}
+							</a>
+							<a href="{{hubsMessages.tvURL}}">
+								{{# marketingFooter}}{{# icons.TV}}<img src="{{url}}" width="{{width}}" height="{{height}}" class="hub-icon">{{/ icons.TV}}{{/ marketingFooter}}
+								{{hubsMessages.tv}}
+							</a>
+						</div>
+						<p class="social-links">
+							<a href="{{socialMessages.twitter-link}}" >
+                                {{# icons.Twitter}}<img src="{{url}}" width="{{width}}" height="{{height}}" alt="{{socialMessages.twitter}}">{{/ icons.Twitter}}
+							</a>
+							<a href="{{socialMessages.facebook-link}}" >
+                                {{# icons.Facebook}}<img src="{{url}}" width="{{width}}" height="{{height}}" alt="{{socialMessages.facebook}}">{{/ icons.Facebook}}
+							</a>
+							<a href="{{socialMessages.youtube-link}}" >
+                                {{# icons.YouTube}}<img src="{{url}}" width="{{width}}" height="{{height}}" alt="{{socialMessages.youtube}}">{{/ icons.YouTube}}
+							</a>
+						</p>
+
+						{{#footerMessages}}
+							<p class="fine-print">{{{.}}}</p>
+						{{/footerMessages}}
+					</div>
+				</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

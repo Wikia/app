@@ -1,6 +1,7 @@
 <?php
 use Wikia\Logger\WikiaLogger;
 
+class VideoUploadFailedException extends Exception {}
 /**
  * Class VideoFileUploader
  */
@@ -134,7 +135,20 @@ class VideoFileUploader {
 			// @TODO
 			// if video already exists make sure that we are in fact changing something
 			// before generating upload (for now this only works for edits)
-			$article = Article::newFromID( $oTitle->getArticleID() );
+			$articleId = $oTitle->getArticleID();
+			$article = Article::newFromID( $articleId );
+			// In case Article is null log more info and throw an exception
+			if ( is_null( $article ) ) {
+				$exception = new VideoUploadFailedException( 'Video upload failed');
+				WikiaLogger::instance()->error('Video upload: title exists but article is null', [
+					'Title object' => $oTitle,
+					'Video title' => $this->getNormalizedDestinationTitle(),
+					'Article ID' => $articleId,
+					'Title from ID' => Title::newFromID($articleId),
+					'exception' => $exception
+				] );
+				throw $exception;
+			}
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
 			if ( $content != $newcontent ) {

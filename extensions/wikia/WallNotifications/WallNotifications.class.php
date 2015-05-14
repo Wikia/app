@@ -1,4 +1,6 @@
 <?php
+use Wikia\Logger\WikiaLogger;
+
 /*
  * Wall notifications allows us to manage notifications about new messages
  * and replies on users Walls
@@ -10,7 +12,6 @@
  *    every user who is interested in specific notification
  *
  */
-
 class WallNotifications {
 	/**
 	 * @var WikiaApp
@@ -41,7 +42,7 @@ class WallNotifications {
 		if ( empty( $list ) && !is_array( $list ) ) {
 			// nothing in the cache, so use the db as a fallback and store the result in cache
 			$callback = function() use( $userId, $wikiId, &$list ) {
-				$list = $this->rebuildData( $userId, $wikiId );
+				$list = $this->rebuildData( $userId, $wikiId, false );
 				return $list;
 			};
 
@@ -887,14 +888,15 @@ class WallNotifications {
 	 * @param MemcacheSync $cache
 	 * @param $userId
 	 * @param $wiki
+	 * @param $useMaster
 	 *
 	 * @return array|Mixed
 	 */
-	protected function getData( MemcacheSync $cache, $userId, $wiki ) {
+	protected function getData( MemcacheSync $cache, $userId, $wiki, $useMaster = true ) {
 		$val = $cache->get();
 
 		if ( empty( $val ) && !is_array( $val ) ) {
-			$val = $this->rebuildData( $userId, $wiki );
+			$val = $this->rebuildData( $userId, $wiki, $useMaster );
 
 			// this normally would be unnessesery (after all everything should be
 			// already removed from DB if we are just recreating our structures)
@@ -912,14 +914,13 @@ class WallNotifications {
 	}
 
 
-	public function rebuildData( $userId, $wikiId ) {
+	public function rebuildData( $userId, $wikiId, $useMaster = true ) {
 		$data =[
 			'notification' => [],
 			'relation' => []
 		];
 
-		//TODO: solve problem with master slave replication
-		$dbData = $this->getBackupData( $userId, $wikiId );
+		$dbData = $this->getBackupData( $userId, $wikiId, $useMaster );
 
 		foreach ( $dbData as $value ) {
 			$this->addNotificationToData( $data, $userId, $wikiId, $value );
@@ -934,15 +935,16 @@ class WallNotifications {
 	 *
 	 * @param int $userId
 	 * @param int $wikiId
+	 * @param bool $useMaster
 	 *
 	 * @return array
 	 */
-	protected function getBackupData( $userId, $wikiId ) {
+	protected function getBackupData( $userId, $wikiId, $useMaster = true ) {
 		$uniqueIds = [];
 		// select distinct Unique_id from wall_notification where user_id = 1 and wiki_id = 1 order by id
 		// unique_id field contains page id (like page_id in page table)
 		// for many notifications we want to make sure we 50 notifications from different pages hance distinct
-		$db = $this->getDB( true );
+		$db = $this->getDB( $useMaster );
 		$res = $db->select(
 			[ 'wn1' => 'wall_notification','wn2' => 'wall_notification' ],
 			[ 'wn1.unique_id' ],
@@ -1004,6 +1006,11 @@ class WallNotifications {
 		$notification['is_hidden'] = 0;
 		$notification['user_id'] = $userId;
 		$notification['wiki_id'] = $wikiId;
+
+		WikiaLogger::instance()->info( 'New Wall Notification created', [
+			'wikiId' => $wikiId,
+			'userId' => $userId
+		] );
 
 		$this->getDB(true)->insert( 'wall_notification', $notification, __METHOD__ );
 		$this->getDB(true)->commit();

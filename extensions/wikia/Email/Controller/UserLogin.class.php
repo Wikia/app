@@ -18,6 +18,11 @@ class ForgotPasswordController extends EmailController {
 	public function initEmail() {
 		// Set the recipient user
 		$this->setTargetUser();
+
+		$this->fromAddress = new \MailAddress(
+			$this->wg->PasswordSender,
+			$this->wg->PasswordSenderName
+		);
 	}
 
 	public function assertCanEmail() {
@@ -28,9 +33,18 @@ class ForgotPasswordController extends EmailController {
 		$this->assertHasIP();
 	}
 
-	protected function getSubject() {
-		$lang = $this->getTargetLang();
-		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $lang )->text();
+	public function getSubject() {
+		return wfMessage( 'emailext-password-email-subject' )->inLanguage( $this->targetLang )->text();
+	}
+
+	protected function getContent() {
+		$html = $this->app->renderView(
+			get_class( $this ),
+			'body',
+			$this->request->getParams()
+		);
+
+		return $html;
 	}
 
 	/**
@@ -40,7 +54,6 @@ class ForgotPasswordController extends EmailController {
 	 */
 	public function body() {
 		$targetUser = $this->targetUser;
-		$lang = $this->getTargetLang();
 
 		wfRunHooks( 'User::mailPasswordInternal', [
 			$this->currentUser,
@@ -53,15 +66,15 @@ class ForgotPasswordController extends EmailController {
 		$targetUser->saveSettings();
 
 		$this->response->setData( [
-			'greeting' => wfMessage( 'emailext-password-email-greeting', $targetUser->getName() )->inLanguage( $lang )->text(),
-			'content' => wfMessage( 'emailext-password-email-content', $tempPass )->inLanguage( $lang )->text(),
-			'signature' => wfMessage( 'emailext-password-email-signature' )->inLanguage( $lang )->text(),
+			'greeting' => wfMessage( 'emailext-password-email-greeting', $targetUser->getName() )->inLanguage( $this->targetLang )->text(),
+			'content' => wfMessage( 'emailext-password-email-content', $tempPass )->inLanguage( $this->targetLang )->text(),
+			'signature' => wfMessage( 'emailext-password-email-signature' )->inLanguage( $this->targetLang )->text(),
 		] );
 	}
 
 	protected function assertCanChangePassword() {
 		if ( !$this->wg->Auth->allowPasswordChange() ) {
-			throw new Fatal( wfMessage( 'emailext-error-password-reset-forbidden' )->escaped() );
+			throw new Fatal( 'This user is not allowed to change their password' );
 		}
 	}
 
@@ -77,10 +90,7 @@ class ForgotPasswordController extends EmailController {
 		}
 
 		if ( $this->targetUser->isPasswordReminderThrottled() ) {
-			$key = 'emailext-error-password-throttled';
-			$param = $this->wg->PasswordReminderResendTime;
-
-			throw new Check( wfMessage( $key, $param )->escaped() );
+			throw new Check( 'Too many resend password requests sent' );
 		}
 	}
 }

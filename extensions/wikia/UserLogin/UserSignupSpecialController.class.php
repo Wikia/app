@@ -14,7 +14,10 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct( 'UserSignup', '', false );
 
-		$this->disableCaptcha();
+		// Disable captcha for automated tests and wikia mobile and sites disabling it, e.g. Internal
+		if ( $this->shouldDisableCaptcha() ) {
+			$this->disableCaptcha();
+		}
 	}
 
 	public function init() {
@@ -122,82 +125,85 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		// process signup
 		$redirected = $this->request->getVal( 'redirected', '' );
 		if ( $this->wg->Request->wasPosted() && empty( $redirected ) ) {
-
-			$response = $this->app->sendRequest( 'UserSignupSpecial', 'signup' );
-
-			$this->result = $response->getVal( 'result', '' );
-			$this->msg = $response->getVal( 'msg', '' );
-			$this->errParam = $response->getVal( 'errParam', '' );
-
-			if ( $this->result == 'ok' ) {
-
-				/*
-				 * Remove when SOC-217 ABTest is finished
-				 */
-				$signupForm = new UserLoginForm( $this->wg->request );
-
-				if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
-					$user = User::newFromName( $this->username );
-					// Get and clear redirect page
-					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
-
-					$user->saveSettings();
-
-					// redirect user
-					if ( !empty( $userSignupRedirect ) ) {
-						// Redirect user to the point where he finished (when signup on create wiki)
-						$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
-						$query = $userSignupRedirect;
-					} else {
-						$title = $user->getUserPage();
-						$query = '';
-					}
-
-					$redirectUrl = $title->getFullURL( $query );
-				} else {
-				/*
-				 * end remove
-				 */
-					$params = [
-						'method' => 'sendConfirmationEmail',
-						'username' => $this->username,
-						'byemail' => intval( $this->byemail ),
-					];
-					$redirectUrl = $this->wg->title->getFullUrl( $params );
-				}
-
-				$this->wg->out->redirect( $redirectUrl );
-			}
-
+			$this->handleSignupFormSubmit();
+		} else {
+			$this->track( 'signup-start' );
 		}
 	}
 
-	public function captcha() {
-		$this->rawHtml = '';
-		$this->isFancyCaptcha = false;
+	public function handleSignupFormSubmit() {
+		$response = $this->app->sendRequest( 'UserSignupSpecial', 'signup' );
+		$result = $response->getVal( 'result', '' );
 
-		if ( $this->shouldDisplayCaptcha() ) {
-			$captchaObj = $this->getCaptchaObj();
-			if ( !empty( $captchaObj ) ) {
-				$this->rawHtml = $captchaObj->getForm();
-				$this->isFancyCaptcha = (
-					class_exists( 'Captcha\Module\FancyCaptcha' ) &&
-					$captchaObj instanceof Captcha\Module\FancyCaptcha
-				);
+		if ( $result == 'ok' ) {
+			/*
+			 * Remove when SOC-217 ABTest is finished
+			 */
+			$signupForm = new UserLoginForm( $this->wg->request );
+
+			if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
+				$user = User::newFromName( $this->username );
+				// Get and clear redirect page
+				$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+				$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+
+				$user->saveSettings();
+
+				// redirect user
+				if ( !empty( $userSignupRedirect ) ) {
+					// Redirect user to the point where he finished (when signup on create wiki)
+					$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
+					$query = $userSignupRedirect;
+				} else {
+					$title = $user->getUserPage();
+					$query = '';
+				}
+
+				$redirectUrl = $title->getFullURL( $query );
+			} else {
+				/*
+				 * end remove
+				 */
+				$params = [
+					'method' => 'sendConfirmationEmail',
+					'username' => $this->username,
+					'byemail' => intval( $this->byemail ),
+				];
+				$redirectUrl = $this->wg->title->getFullUrl( $params );
 			}
+
+			$this->track( 'signup-successful' );
+			$this->wg->out->redirect( $redirectUrl );
+		} else {
+			$this->track( 'signup-failed' );
+			$this->response->setValues( [
+				'result' => $result,
+				'msg' => $response->getVal( 'msg', '' ),
+				'errParam' => $response->getVal( 'errParam', '' ),
+			] );
+		}
+	}
+
+	/**
+	 * Returns captcha HTML
+	 */
+	public function captcha() {
+		if ( $this->shouldDisableCaptcha() ) {
+			return;
+		}
+
+		$captchaObj = $this->getCaptchaObj();
+		if ( !empty( $captchaObj ) ) {
+			$this->response->setVal( 'rawHtml', $captchaObj->getForm() );
 		}
 	}
 
 	private function getCaptchaObj() {
-		$captchaObj = null;
-
-		if ( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
-			$captchaObj = ConfirmEditHooks::getInstance();
-		} elseif ( !empty( $this->wg->EnableCaptchaExt ) ) {
-			$captchaObj = Captcha\Factory\Module::getInstance();
+		if ( empty( $this->wg->EnableCaptchaExt ) ) {
+			return null;
 		}
-		return $captchaObj;
+
+		return Captcha\Factory\Module::getInstance();
 	}
 
 	/**
@@ -646,16 +652,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * Disables User Signup Captcha for automated tests, mobile skin, and sites such as internal
 	 */
 	private function disableCaptcha() {
-		// Disable captcha for automated tests and wikia mobile and sites disabling it, e.g. Internal
-		if ( $this->shouldDisplayCaptcha() ) {
-			return;
-		}
-
 		global $wgHooks;
 
-		//Switch off global var
-		$this->wg->WikiaEnableConfirmEditExt = false;
-		//Remove hook function
+		// Remove hook function
 		$hookArrayKey = array_search( 'Captcha\Hooks::confirmUserCreate', $wgHooks['AbortNewAccount'] );
 		if ( $hookArrayKey !== false ) {
 			unset( $wgHooks['AbortNewAccount'][$hookArrayKey] );
@@ -666,23 +665,38 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Determines if captcha should be displayed / enabled
+	 * Determines if captcha should be withheld
+	 *
 	 * @return bool
 	 */
-	protected function shouldDisplayCaptcha() {
-		// For mobile and when signup captcha is disabled, e.g Internal, return immediately
+	protected function shouldDisableCaptcha() {
+		// We shouldn't show captcha for mobile and when signup captcha is disabled
 		if ( $this->app->checkSkin( 'wikiamobile' ) || $this->wg->UserSignupDisableCaptcha ) {
+			return true;
+		}
+
+		// We shouldn't show captcha if nocaptchatest is set and we're in a known test environment.
+		try {
+			$isTest = $this->wg->Request->getInt( 'nocaptchatest' ) == 1;
+			$userIp = $this->wg->Request->getIP();
+
+			return $isTest && in_array( $userIp, $this->wg->AutomatedTestsIPsList );
+		} catch ( MWException $e ) {
 			return false;
 		}
+	}
 
-		try {
-			$userIp = $this->wg->Request->getIP();
-			$isTest = in_array( $userIp, $this->wg->AutomatedTestsIPsList ) &&
-				( $this->wg->Request->getInt( 'nocaptchatest' ) == 1 );
-		} catch ( MWException $e ) {
-			$isTest = false;
-		}
-
-		return !$isTest;
+	/**
+	 * Track an event with a given label with category 'user-sign-up' and action 'request'
+	 *
+	 * @param string $label
+	 */
+	protected function track( $label ) {
+		\Track::event( 'trackingevent', [
+			'ga_category' => 'user-sign-up',
+			'ga_action' => 'request',
+			'ga_label' => $label,
+			'beacon' => !empty( $this->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
+		] );
 	}
 }

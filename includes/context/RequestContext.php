@@ -327,7 +327,7 @@ class RequestContext implements IContextSource {
 	/**
 	 * Get the Skin object
 	 *
-	 * @return Skin
+	 * @return Skin|Linker
 	 */
 	public function getSkin() {
 		if ( $this->skin === null ) {

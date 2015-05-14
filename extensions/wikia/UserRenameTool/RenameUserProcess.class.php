@@ -600,41 +600,6 @@ class RenameUserProcess {
 
 		$this->invalidateUser($this->mOldUsername);
 
-		//Block the user from logging in before logging him out
-		$this->addLog("Creating a Phalanx block for the user.");
-
-		if(empty($this->mPhalanxBlockId)){
-			$data = array(
-				'id'          => $this->mPhalanxBlockId,
-				'text'        => $this->mNewUsername,
-				'exact'       => 1,
-				'case'        => 1,
-				'regex'       => 0,
-				'timestamp'   => wfTimestampNow(),
-				'expire'      => null,
-				'author_id'   => $this->mRequestorId,
-				'reason'      => 'User rename process requested',
-				'lang'        => null,
-				'type'        => Phalanx::TYPE_USER
-			);
-
-			wfRunHooks( "EditPhalanxBlock", array( &$data ) );
-			$this->mPhalanxBlockId = $data['id'];
-			if(!$this->mPhalanxBlockId) {
-				$this->addLog("Creation of the block failed.");
-				$this->addError( wfMessage('userrenametool-error-cannot-create-block')->inContentLanguage()->text() );
-				wfProfileOut(__METHOD__);
-				return false;
-			} else {
-				$fakeUser->setOption( 'renameData', $fakeUser->getOption( 'renameData', '') . ';' . self::PHALANX_BLOCK_TAG . '=' . $this->mPhalanxBlockId);
-				$fakeUser->saveSettings();
-				$this->addLog("Block created with ID {$this->mPhalanxBlockId}.");
-			}
-		}
-		else{
-			$this->addLog("Block with ID {$this->mPhalanxBlockId} already exists.");
-		}
-
 		$hookName = 'UserRename::AfterAccountRename';
 		$this->addLog("Broadcasting hook: {$hookName}");
 		wfRunHooks($hookName, array($this->mUserId, $this->mOldUsername, $this->mNewUsername));
@@ -699,6 +664,8 @@ class RenameUserProcess {
 	 * Processes specific local wiki database and makes all needed changes
 	 *
 	 * Important: should only be run within maintenace script (bound to specified wiki)
+	 *
+	 * @throws DBError
 	 */
 	public function updateLocal(){
 		global $wgCityId, $wgUser;
@@ -774,6 +741,10 @@ class RenameUserProcess {
 				}
 			}
 			$dbw->freeResult($pages);
+		} catch (DBError $e) {
+			// re-throw DB related exceptions instead of silently ignoring them (@see PLATFORM-775)
+			wfProfileOut(__METHOD__);
+			throw $e;
 		} catch (Exception $e) {
 			$this->addLog("Exception while moving pages: " . $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine());
 		}
@@ -951,23 +922,7 @@ class RenameUserProcess {
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 * Performs action for cleaning up temporary data at the very end of a process
 	 */
-	public function cleanup(){
-		//remove phalanx user block
-
-		if ( $this->mPhalanxBlockId ) {
-			if ( !wfRunHooks( "DeletePhalanxBlock", array( $this->mPhalanxBlockId ) ) ) {
-				$result = false;
-			} else {
-				$result = true;
-			}
-
-			if ( !$result ) {
-				$this->addLog("Error removing Phalanx user block with ID {$this->mPhalanxBlockId}");
-			} else {
-				$this->addLog("Phalanx user block with ID {$this->mPhalanxBlockId} has been removed");
-			}
-		}
-
+	public function cleanup() {
 		if($this->mFakeUserId){
 			$this->addLog("Cleaning up process data in user option renameData for ID {$this->mFakeUserId}");
 

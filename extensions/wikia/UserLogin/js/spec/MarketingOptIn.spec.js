@@ -49,6 +49,16 @@ describe('UserLogin Marketing Opt In', function () {
 		expect(checkedAttr).toBe(undefined);
 	});
 
+	it('should not check the box in Japan', function () {
+		var checkedAttr;
+
+		geo.getCountryCode.and.returnValue('JP');
+		optIn.init(wikiaFormMock);
+		checkedAttr = wikiaFormMock.inputs.wpMarketingOptIn.attr('checked');
+
+		expect(checkedAttr).toBe(undefined);
+	});
+
 	it('should hide the box in the US', function () {
 		var isHidden;
 

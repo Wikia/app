@@ -1,0 +1,175 @@
+@import 'skins/shared/color';
+@import 'breakpoints-variables';
+@import 'skins/shared/mixins/calc';
+
+$background-height: get_command_line_param('background-image-height', 0);
+$background-width: get_command_line_param('background-image-width', 0);
+$gradient-width: 40px;
+$adskin-width: 170px;
+$large-breakpoint-content-and-adskin-width: $content-width-large + 2 * $adskin-width;
+
+// convert unitless int values to pixels
+@if unitless($background-height) {
+	$background-height : $background-height * 1px;
+}
+@if unitless($background-width) {
+	$background-width : $background-width * 1px;
+}
+
+$background-width-half: $background-width / 2;
+$background-offset: ($breakpoint-upper - $background-width) / 2;
+$background-align: if($background-width > $width-outside, center, left);
+$gradient-offset: $gradient-width;
+
+@mixin breakpoint-middle-gradient($side) {
+	background: rgba($color-body-middle, 0) linear-gradient(to #{$side}, rgba($color-body-middle, 0) 0%, $color-body-middle 100%);
+}
+
+@mixin background-max() {
+	$background-margin: ($content-width-medium / 2) - (($content-width-large / 2) + $background-width-half);
+	$background-halves-spacing: $content-width-large - $content-width-medium;
+	$gradient-offset: ($background-halves-spacing / 2) + $gradient-width;
+
+	body.background-dynamic.skin-oasis {
+		&::after,
+		&::before {
+			width: $background-width-half;
+		}
+
+		&:after {
+			background-position: -$background-width-half 0;
+			/* @noflip */
+			margin-right: $background-margin;
+			/* @noflip */
+			right: 50%;
+		}
+
+		&::before {
+			background-position: 0;
+			/* @noflip */
+			left: 50%;
+			/* @noflip */
+			margin-left: $background-margin;
+		}
+
+		.background-image-gradient {
+			/* @noflip */
+			margin-left: -($background-halves-spacing / 2);
+			width: $background-halves-spacing;
+
+			&::after {
+				@include calc('right', '50% - #{$gradient-offset}');
+			}
+
+			&::before {
+				@include calc('left', '50% - #{$gradient-offset}');
+			}
+		}
+	}
+}
+
+body.skin-oasis {
+	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
+
+	&.background-not-tiled {
+		background-repeat: no-repeat;
+	}
+
+	&.background-fixed {
+		 background-attachment: fixed;
+	}
+}
+
+@if ($widthType == 0) {
+	body.background-dynamic.skin-oasis {
+		background: $color-body;
+		overflow: hidden;
+		position: relative;
+
+		&::after,
+		&::before {
+			background-image: url($background-image); /* $wgCdnStylePath */
+			background-repeat: no-repeat;
+			content: '';
+			height: $background-height;
+			position: absolute;
+			top: 0;
+			width: $background-width-half;
+			z-index: -1;
+		}
+
+		&.background-fixed::after,
+		&.background-fixed::before {
+			position: fixed;
+		}
+
+		&::after {
+			background-position: -$background-width-half 0;
+			/* @noflip */
+			margin-right: -$background-width-half;
+			/* @noflip */
+			right: 50%;
+		}
+
+		&::before {
+			/* @noflip */
+			left: 50%;
+			/* @noflip */
+			margin-left: -$background-width-half;
+		}
+
+		.background-image-gradient {
+			background: $color-body-middle;
+			/* @noflip */
+			left: 50%;
+
+			&,
+			&::before,
+			&::after {
+				content: '';
+				height: 100%;
+				position: fixed;
+				top: 0;
+			}
+
+			&::before,
+			&::after {
+				width: $gradient-width;
+			}
+
+			&::after {
+				@include breakpoint-middle-gradient('left');
+				@include calc('right', '50% - #{$gradient-offset}');
+			}
+
+			&::before {
+				@include breakpoint-middle-gradient('right');
+				@include calc('left', '50% - #{$gradient-offset}');
+			}
+
+			&.no-gradients::before,
+			&.no-gradients::after {
+				display: none;
+			}
+		}
+	}
+
+	@media #{$breakpoint-small-only} {
+		body.skin-oasis {
+			background-image: none;
+
+			&::after,
+			&::before {
+				display: none;
+			}
+
+			.background-image-gradient {
+				display: none;
+			}
+		}
+	}
+
+	@media screen and (min-width: $large-breakpoint-content-and-adskin-width) {
+		@include background-max;
+	}
+}

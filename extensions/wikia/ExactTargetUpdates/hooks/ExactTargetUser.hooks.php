@@ -18,20 +18,6 @@ class ExactTargetUserHooks {
 	}
 
 	/**
-	 * Adds Task for updating user editcount to job queue.
-	 * Updates whole user record
-	 * @param WikiPage $article
-	 * @param User $user
-	 * @return bool
-	 */
-	public function onArticleSaveComplete( \WikiPage $article, \User $oUser ) {
-		if ( !$oUser->isAnon() ) {
-			$this->addTheUpdateCreateUserTask( $oUser );
-		}
-		return true;
-	}
-
-	/**
 	 * Adds Task for removing user to job queue
 	 * @param User $oUser
 	 * @return bool
@@ -56,11 +42,30 @@ class ExactTargetUserHooks {
 	}
 
 	/**
+	 * Adds Task for updating user due to email authentication field change
+	 * @param User $user
+	 * @return bool
+	 */
+	public function onInvalidateEmailComplete( \User $oUser ) {
+		/* Prepare params */
+		$oUserHelper = $this->getUserHelper();
+		$aUserData = $oUserHelper->prepareUserParams( $oUser );
+		$aUsersData = [ $aUserData ];
+
+		/* Get and run the task */
+		$task = $oUserHelper->getUpdateUserTask();
+		$task->call( 'updateFallbackCreateUsers', $aUsersData );
+		$task->queue();
+		return true;
+	}
+
+
+	/**
 	 * Adds Task for updating user email
 	 * @param User $user
 	 * @return bool
 	 */
-	public function onEmailChangeConfirmed( \User $oUser ) {
+	public function onConfirmEmailComplete( \User $oUser ) {
 		/* Get and run the task */
 		$oUserHelper = $this->getUserHelper();
 		$task = $oUserHelper->getUpdateUserTask();
@@ -74,7 +79,7 @@ class ExactTargetUserHooks {
 	 * @param User $oUser
 	 * @return bool
 	 */
-	public function onSignupConfirmEmailComplete( \User $oUser ) {
+	public function onCreateNewUserComplete( \User $oUser ) {
 		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}

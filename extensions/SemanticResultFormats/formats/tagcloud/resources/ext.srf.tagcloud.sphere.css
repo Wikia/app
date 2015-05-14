@@ -1,0 +1,34 @@
+/**
+ * CSS for SRF Tagcloud module
+ *
+ * @licence: GNU GPL v2 or later
+ * @author:  mwjames
+ *
+ * @since: 1.8
+ *
+ * @release: 0.1
+ */
+.srf-tagcloud ul {
+ float: left;
+ display: block;
+ width: 280px;
+ overflow: auto;
+ padding: 20px;
+ margin: 0 10px 20px 0;
+ background-color: #fff;
+ border: 4px solid #aaa;
+ border-radius: 20px;
+ -moz-border-radius: 20px;
+}
+.srf-tagcloud ul li {
+ display: inline;
+ white-space: nowrap;
+}
+.srf-tagcloud ul li a {
+ margin: 2px;
+}
+.srf-tagcloud-sphere canvas#gradient {
+ float: right;
+ border:1px solid #000;
+ margin: 2px 20px
+}

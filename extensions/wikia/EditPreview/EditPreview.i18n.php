@@ -29,17 +29,15 @@ $messages['qqq'] = array(
 
 /** German */
 $messages['de'] = array(
-	'wikia-editor-preview-current-width' => 'Destop-Version:
-wikia-editor-preview-current-width -> Option wählen; nach der Wahl, kann der Benutzer den Artikel in der Vorschau, in der Bildschirmbreite seines Gerätes ansehen',
-	'wikia-editor-preview-min-width' => 'Tablet Porträtansicht
-wikia-editor-preview-min-width -> Option wählen; nach der Wahl kann der Benutzer die Vorschau des Artikels in der minimal möglichen Bildschirmbreite ansehen (1024px)',
-	'wikia-editor-preview-max-width' => 'Desktop XL-Ansicht: 
-wikia-editor-preview-max-width -> Option wählen; nach der Wahl kann der Benutzer den Artikel in der Vorschau, in der maximal möglichen Bildschirmbreite ansehen (1600px)',
-	'wikia-editor-preview-type-tooltip' => 'Das Ändern der Option wird dir den Artikel in Browsern mit kleinen und großen Bildschirmen und auf Mobil-Geräten auf deinem jetzigen Bildschirm anzeigen.',
+	'wikia-editor-preview-current-width' => 'Desktop-Ansicht',
+	'wikia-editor-preview-min-width' => 'Tablet-Porträtansicht',
+	'wikia-editor-preview-max-width' => 'Desktop XL-Ansicht
+',
+	'wikia-editor-preview-type-tooltip' => 'Das Ändern dieser Option zeigt dir, wie dieser Artikel in in Browsern mit kleinen und großen Bildschirmen, auf Mobil-Geräten oder auf deinem jetzigen Bildschirm aussieht.',
 	'wikia-editor-preview-desc' => 'Ermöglicht den Benutzern ihre Änderungen vor dem Speichern in der Vorschau anzusehen',
 	'wikia-editor-preview-mobile-width' => 'Mobile Geräte',
 	'wikia-editor-preview-venus-width' => 'Venus',
-	'wikia-editor-preview-best-practices-notice' => 'Wusstest du, dass 50% der Netzverkehrs von mobilen Geräten kommt? Es kann sein, dass einige der Vorlagen auf den mobilen Geräten nicht richtig angezeigt werden. Folge unseren Best-Practices um sicherzugehen, dass alles gut aussieht für die Besucher.',
+	'wikia-editor-preview-best-practices-notice' => 'Wusstest du, dass 50% der Netzverkehrs von mobilen Geräten kommt? Es kann sein, dass einige der Vorlagen auf den mobilen Geräten nicht richtig angezeigt werden. Folge unseren Empfehlungen um sicherzugehen, dass alles gut aussieht für die Besucher.',
 	'wikia-editor-preview-best-practices-button' => 'Empfehlungen',
 	'wikia-editor-preview-best-practices-button-link' => 'Hilfe:Optimaler_Wikitext',
 );
@@ -77,8 +75,8 @@ $messages['it'] = array(
 	'wikia-editor-preview-current-width' => 'Desktop',
 	'wikia-editor-preview-min-width' => 'Modalità ritratto tablet',
 	'wikia-editor-preview-max-width' => 'Desktop XL',
-	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devies, or your current display.",
-	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
+	'wikia-editor-preview-type-tooltip' => "Cambiare questa opzione mostrerà come l'articolo viene visualizzato nel browser su schermi piccoli, grandi, dispositivi mobili o il tuo schermo corrente.",
+	'wikia-editor-preview-desc' => "Consente agli utenti di visualizzare l'anteprima delle modifiche prima di salvare",
 	'wikia-editor-preview-mobile-width' => 'Mobile',
 	'wikia-editor-preview-venus-width' => 'Venus',
 	'wikia-editor-preview-best-practices-notice' => 'Lo sapevi che oltre il 50% dei visitatori su Wikia leggono i tuoi contenuti su mobile? Alcuni template personalizzati potrebbero non essere visualizzati correttamente su dispositivi mobili. Per essere sicuri che tutto quanto funzioni al meglio, segui le nostre pratiche migliori.',
@@ -95,7 +93,7 @@ $messages['ja'] = array(
 	'wikia-editor-preview-desc' => '保存する前に編集をプレビューで見られるようにします',
 	'wikia-editor-preview-mobile-width' => 'モバイル',
 	'wikia-editor-preview-venus-width' => 'ビーナス',
-	'wikia-editor-preview-best-practices-notice' => 'ウィキア閲覧者の50%以上は、あなたが作ったコンテンツをモバイルデバイスから読んでいるということをご存知でしたか。独自のテンプレートはモバイルデバイスではうまく表示されないことがあります。全ての閲覧者にとって見やすいコンテンツであることを確実にするため、ベストプラクティスを参考にしてください。',
+	'wikia-editor-preview-best-practices-notice' => 'ウィキア閲覧者の50%以上は、あなたが作ったコンテンツをモバイルデバイスから見ているということをご存知でしたか。独自のテンプレートを使うと、モバイルデバイスではうまく表示されないことがあります。誰が見ても見やすいコンテンツであるということを確実にするため、ベストプラクティスをご参照ください。',
 	'wikia-editor-preview-best-practices-button' => 'ベストプラクティス',
 	'wikia-editor-preview-best-practices-button-link' => 'ヘルプ:ウィキテキストのベストプラクティス',
 );
@@ -110,26 +108,26 @@ $messages['nl'] = array(
 	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devies, or your current display.",
 	'wikia-editor-preview-best-practices-notice' => 'Did you know that over 50% of Wikia visitors are reading your content on mobile? Some custom templates may not properly show on mobile devices. To make sure everything looks great to all visitors, follow our best practices.',
 	'wikia-editor-preview-best-practices-button' => 'Best practices',
-	'wikia-editor-preview-best-practices-button-link' => 'Help:Wikitext_best_practices',
+	'wikia-editor-preview-best-practices-button-link' => 'http://community.wikia.com/wiki/Help:Wikitext_best_practices',
 );
 
 /** Polish */
 $messages['pl'] = array(
-	'wikia-editor-preview-current-width' => 'Pulpit',
+	'wikia-editor-preview-current-width' => 'Monitor',
 	'wikia-editor-preview-min-width' => 'Tablet w pionie',
-	'wikia-editor-preview-max-width' => 'Pulpit XL',
+	'wikia-editor-preview-max-width' => 'Monitor XL',
 	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devies, or your current display.",
 	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
 	'wikia-editor-preview-mobile-width' => 'Skórka mobilna',
 	'wikia-editor-preview-venus-width' => 'Venus',
-	'wikia-editor-preview-best-practices-notice' => 'Czy wiesz, że ponad 50% odwiedzających Wikię robi to na urządzeniach mobilnych? Niektóre szablony mogą nie wyświetlać się poprawnie na urządzeniach mobilnych. Aby upewnić się, że wszystko prezentuje się jak najlepiej u wszystkich czytelników, podążaj za naszymi najlepszymi praktykami.',
+	'wikia-editor-preview-best-practices-notice' => 'Czy wiesz, że ponad 50% czytelników odwiedza Wikię na urządzeniach mobilnych? Niektóre szablony mogą nie wyświetlać się poprawnie na urządzeniach mobilnych. Aby upewnić się, że wszystko prezentuje się jak najlepiej dla wszystkich czytelników, podążaj za naszymi najlepszymi praktykami.',
 	'wikia-editor-preview-best-practices-button' => 'Najlepsze praktyki',
 	'wikia-editor-preview-best-practices-button-link' => 'Pomoc:Najlepsze_praktyki_w_wikitek%C5%9Bcie',
 );
 
 $messages['pt'] = array(
 	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
-	'wikia-editor-preview-current-width' => 'Área de trabalho',
+	'wikia-editor-preview-current-width' => 'Computador',
 	'wikia-editor-preview-min-width' => 'Modo Retrato (Tablete)',
 	'wikia-editor-preview-max-width' => 'Área de trabalho GG',
 	'wikia-editor-preview-mobile-width' => 'Dispositivo Móvel',
@@ -149,7 +147,7 @@ $messages['ru'] = array(
 	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
 	'wikia-editor-preview-mobile-width' => 'Мобильный',
 	'wikia-editor-preview-venus-width' => 'Venus',
-	'wikia-editor-preview-best-practices-notice' => 'Знаете ли вы, что более 50% этих людей читают статьи вики с планшета или мобильного телефона? А многие шаблоны не всегда корректно отображаются на мобильных устройствах. Лучшие примеры Викия помогут вам форматировать содержимое страниц так, чтобы они выглядели великолепно на любом устройстве.',
+	'wikia-editor-preview-best-practices-notice' => 'Знаете ли вы, что более 50% пользователей читают статьи вики с планшета или мобильного телефона? А многие шаблоны не всегда корректно отображаются на мобильных устройствах. Лучшие примеры Викия помогут вам форматировать содержимое страниц так, чтобы они выглядели великолепно на любом устройстве.',
 	'wikia-editor-preview-best-practices-button' => 'Лучшие примеры',
 	'wikia-editor-preview-best-practices-button-link' => '%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%92%D0%B8%D0%BA%D0%B8%D1%82%D0%B5%D0%BA%D1%81%D1%82/%D0%BB%D1%83%D1%87%D1%88%D0%B8%D0%B5_%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B',
 );

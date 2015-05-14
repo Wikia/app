@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class WallHistoryController extends WallController {
 	private $isThreadLevel = false;
 
@@ -217,11 +219,19 @@ class WallHistoryController extends WallController {
 				$history[$key]['msgurl'] = $messagePageUrl;
 
 				$msgUser = $wm->getUser();
-
-				$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), $ns )->getFullUrl();
-
-				$history[$key]['msgusername'] = $msgUser->getName();
-
+				$msgPage = Title::newFromText( $msgUser->getName(), $ns );
+				if ( empty( $msgPage ) ) {
+					// SOC-586, SOC-578 : There is an edge case where $msgUser->getName can be empty
+					// because of a rev_deleted flag on the revision loaded by ArticleComment via the
+					// WallMessage $wm->load() above.  ArticleComment overwrites the User objects mName
+					// usertext with the first revision's usertext to preserve the thread author but in
+					// rare occasions this revision can have its user hidden via a DELETED_USER flag.
+					$history[$key]['msguserurl'] = '';
+					$history[$key]['msgusername'] = '';
+				} else {
+					$history[$key]['msguserurl'] = $msgPage->getFullUrl();
+					$history[$key]['msgusername'] = $msgUser->getName();
+				}
 
 				if ( $type == WH_EDIT ) {
 					$rev = Revision::newFromTitle( $title );

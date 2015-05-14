@@ -1,11 +1,14 @@
-//TODO: Cleanup Oasis' scss files while removing responsive (vayout, responsive*, grid, ...)
+//TODO: Cleanup Oasis' scss files while removing responsive (layout, responsive*, grid, ...)
+@import 'skins/shared/functions';
 
 $widthType: get_command_line_param( "widthType", 0 );
 $oasisTypography: get_command_line_param( "oasisTypography", 0 );
 
-$breakpoint-not-supported: 768px;
+$breakpoint-width-not-supported: 767px;
+$breakpoint-lower-plus: 1024px;
 $breakpoint-lower: 1064px;
-$breakpoint-upper: 1575px;
+$breakpoint-lower-half: $breakpoint-lower / 2;
+$breakpoint-upper: 1576px;
 
 $content-width-small: 768px;
 $padding-width-small: 24px;
@@ -14,23 +17,35 @@ $content-width-medium: 1064px;
 $padding-width-medium: 20px;
 $page-width-medium: $content-width-medium - 2 * $padding-width-medium;
 $content-width-large: 1238px;
-$padding-width-large: 73px;
+$padding-width-large: 30px;
 $page-width-large: $content-width-large - 2 * $padding-width-large;
+// "special case" for 1024px tablets (think landscape iPad)
+$content-width-small-plus: 1024px;
+$padding-width-small-plus: 10px;
+$page-width-small-plus: $content-width-small-plus - 2 * $padding-width-small-plus;
 
-$not-supported-range: (0, $breakpoint-not-supported - 1);
+$width-adskin: 170px;
+
 $small-range: (0, $breakpoint-lower - 1);
-$medium-range: ($breakpoint-lower, $breakpoint-upper);
-$large-range: ($breakpoint-upper + 1, 999999999em);
+$small-plus-range: ($breakpoint-lower-plus, $breakpoint-lower - 1);
+$medium-range: ($breakpoint-lower, $breakpoint-upper - 1);
+$large-range: ($breakpoint-upper, 999999999em);
 
 $screen: 'only screen';
 
 $breakpoint-landscape: "#{$screen} and (orientation: landscape)";
 $breakpoint-portrait: "#{$screen} and (orientation: portrait)";
 
-$breakpoint-not-supported: "#{$screen} and (max-width: #{upper-bound($small-range)})";
+$breakpoint-not-supported: "#{$screen} and (max-width: #{$breakpoint-width-not-supported})";
 $breakpoint-small-up: $screen;
 $breakpoint-small-only: "#{$screen} and (max-width: #{upper-bound($small-range)})";
+$breakpoint-below-small-plus: "#{$screen} and (max-width: #{$breakpoint-lower-plus - 1})";
+$breakpoint-small-plus-up: "#{$screen} and (min-width: #{$breakpoint-lower-plus})";
+$breakpoint-small-plus: "#{$screen} and (min-width:#{lower-bound($small-plus-range)}) and (max-width: #{upper-bound($small-plus-range)})";
 $breakpoint-medium-up: "#{$screen} and (min-width:#{lower-bound($medium-range)})";
 $breakpoint-medium-only: "#{$screen} and (min-width:#{lower-bound($medium-range)}) and (max-width:#{upper-bound($medium-range)})";
 $breakpoint-large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
 $breakpoint-below-large: "#{$screen} and (max-width:#{upper-bound($medium-range)})";
+
+//This is used by ads.scss to set width of .WikiaTopAds and breakpoints-background.scss
+$width-outside: $content-width-medium;

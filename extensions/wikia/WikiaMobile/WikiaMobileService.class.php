@@ -33,28 +33,6 @@ class WikiaMobileService extends WikiaService {
 		$this->skin = RequestContext::getMain()->getSkin();
 		$this->templateObject = $this->app->getSkinTemplateObj();
 		$this->assetsManager = AssetsManager::getInstance();
-
-		// initialize i18ns
-		JSMessages::registerPackage( 'WkMbl', array(
-			'adengine-advertisement',
-			'wikiamobile-hide-section',
-			'wikiamobile-sharing-media-image',
-			'wikiamobile-sharing-page-text',
-			'wikiamobile-sharing-modal-text',
-			'wikiamobile-sharing-email-text',
-			'wikiamobile-image-not-loaded',
-			'wikiamobile-video-not-friendly',
-			'wikiamobile-video-not-friendly-header',
-			'wikiamobile-ad-label',
-			'wikiamobile-shared-file-not-available'
-		) );
-
-		JSMessages::registerPackage( 'SmartBanner', [
-			'wikiasmartbanner-appstore',
-			'wikiasmartbanner-googleplay',
-			'wikiasmartbanner-price',
-			'wikiasmartbanner-view'
-		] );
 	}
 
 	private function handleAds(){
@@ -69,10 +47,6 @@ class WikiaMobileService extends WikiaService {
 
 			if ( $this->wg->AdDriverTrackState ) {
 				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
-			}
-
-			if ( $this->wg->AdDriverEnableRemnantGptMobile ) {
-				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
 			}
 
 			$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
@@ -183,15 +157,7 @@ class WikiaMobileService extends WikiaService {
 		}
 
 		//Stats for Gracenote reporting
-		if ( $this->wg->cityId == self::LYRICSWIKI_ID ){
-			$trackingCode .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
-
-		$trackingCode .= AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW ).
-			AnalyticsEngine::track( 'GA_Urchin', 'onewiki', [$this->wg->cityId] ).
-			AnalyticsEngine::track( 'GA_Urchin', 'pagetime', ['wikiamobile'] ).
-			AnalyticsEngine::track( 'GA_Urchin', 'varnish-stat').
-			AnalyticsEngine::track( 'GAS', 'usertiming' );
+		$trackingCode .= AnalyticsEngine::track( 'GoogleUA', 'usertiming' );
 
 		$this->response->setVal( 'trackingCode', $trackingCode );
 

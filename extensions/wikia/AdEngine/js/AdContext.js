@@ -50,17 +50,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
-		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		if (context.providers.sevenOneMedia) {
-			context.opts.usePostScribe = true;
-		}
-
-		// Always call DART
-		// TODO: make mobile code compatible with desktop (currently one uses opts and the other providers)
-		// TODO: clean up in ADEN-1785
-		context.opts.alwaysCallDart = true;
-		context.providers.remnantGptMobile = true;
-
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
@@ -87,6 +76,13 @@ define('ext.wikia.adEngine.adContext', [
 				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1
 					) {
 			context.providers.turtle = true;
+		}
+
+		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
+			instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
+			instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
+		) {
+			context.opts.enableInvisibleHighImpactSlot = true;
 		}
 
 		// Export the context back to ads.context

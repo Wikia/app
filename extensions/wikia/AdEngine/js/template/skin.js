@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.template.skin', [
 				pixelElement,
 				pixelUrl;
 
-			if (win.wgOasisResponsive || win.skin === 'venus') {
+			if (win.wgOasisResponsive || win.wgOasisBreakpoints || win.skin === 'venus') {
 				require(['wikia.backgroundchanger'], function (backgroundchanger) {
 					var bcParams = {
 						skinImage: params.skinImage,
@@ -48,6 +48,9 @@ define('ext.wikia.adEngine.template.skin', [
 					}
 					if (params.middleColor) {
 						bcParams.backgroundMiddleColor = '#' + params.middleColor;
+					}
+					if (params.ten64) {
+						bcParams.ten64 = true;
 					}
 					backgroundchanger.load(bcParams);
 				});

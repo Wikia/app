@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Video Service
@@ -11,6 +12,8 @@ class VideoService extends WikiaModel {
 	 * @return string error message or array( $videoTitle, $videoPageId, $videoProvider )
 	 */
 	public function addVideo( $url ) {
+		global $wgIsGhostVideo;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( !$this->wg->User->isAllowed('videoupload') ) {
@@ -22,6 +25,13 @@ class VideoService extends WikiaModel {
 			wfProfileOut( __METHOD__ );
 			return wfMessage('videos-error-no-video-url')->text();
 		}
+
+		$vHelper = new VideoHandlerHelper();
+# @TODO Commenting out to fix MAIN-4436 -- Should be fixed correctly when content team is back
+#		if ( !$vHelper->isVideoProviderSupported( $url ) ) {
+#			wfProfileOut( __METHOD__ );
+#			return wfMessage( 'videos-error-provider-not-supported' )->parse();
+#		}
 
 		try {
 			// is it a WikiLink?
@@ -46,12 +56,25 @@ class VideoService extends WikiaModel {
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
-				$file = wfFindFile( $videoTitle );
+				$file = RepoGroup::singleton()->findFile( $videoTitle );
 			}
 
-			// Add a default description if available and one doesn't already exist
-			$vHelper = new VideoHandlerHelper();
-			$vHelper->addDefaultVideoDescription( $file );
+			if ( !( $file instanceof File ) ) {
+				WikiaLogger::instance()->error( '\VideoHandlerHelper->adDefaultVideoDescription() - File is empty', [
+					'exception' => new Exception(),
+					'url' => $url,
+					'title' => $title,
+					'videoTitle' => $videoTitle,
+					'videoPageId' => $videoPageId,
+					'videoProvider' => $videoProvider,
+					'wgIsGhostVideo' => $wgIsGhostVideo
+				] );
+				wfProfileOut( __METHOD__ );
+				return wfMessage( 'videos-something-went-wrong' )->parse();
+			} else {
+				// Add a default description if available and one doesn't already exist
+				$vHelper->addDefaultVideoDescription( $file );
+			}
 		} catch ( Exception $e ) {
 			wfProfileOut( __METHOD__ );
 			return $e->getMessage();

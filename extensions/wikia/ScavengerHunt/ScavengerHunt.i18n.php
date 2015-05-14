@@ -415,6 +415,9 @@ $messages['br'] = array(
  * @author Unapersona
  */
 $messages['ca'] = array(
+	'scavengerhunt-desc' => "Permet la creació d'un joc de cerca en un wiki",
+	'scavengerhunt' => "Interfície d'Scavenger hunt",
+	'scavengerhunt-common-modal-title' => 'Scavenger hunt',
 	'scavengerhunt-list-header-name' => 'Nom del joc',
 	'scavengerhunt-list-header-is-enabled' => 'Habilitat? (clic per canviar-ho)',
 	'scavengerhunt-list-header-actions' => 'Accions',
@@ -426,20 +429,30 @@ $messages['ca'] = array(
 	'scavengerhunt-label-general' => 'General',
 	'scavengerhunt-label-name' => 'Nom:',
 	'scavengerhunt-label-landing-title' => "Nom de la pàgina de destinació (URL de l'article en qualsevol wiki):",
+	'scavengerhunt-label-landing-button-text' => 'Text del botó de la pàgina de destí:',
+	'scavengerhunt-label-landing-button-x' => 'Posició X del botó de la pàgina de destí:',
+	'scavengerhunt-label-landing-button-y' => 'Posició Y del botó de la pàgina de destí:',
+	'scavengerhunt-label-starting-clue' => 'Iniciar pista emergent',
 	'scavengerhunt-label-starting-clue-title' => 'Títol de la finestra emergent:',
 	'scavengerhunt-label-starting-clue-text' => 'Text emergent:',
 	'scavengerhunt-label-starting-clue-image' => 'Imatge emergent (adreça URL)',
 	'scavengerhunt-label-starting-clue-button-text' => 'Text del botó desplegable:',
 	'scavengerhunt-label-starting-clue-button-target' => 'Objectiu del botó desplegable (adreça URL):',
+	'scavengerhunt-label-article' => 'Article (pàgina del joc)',
 	'scavengerhunt-label-article-title' => 'Títol (URL del article en qualsevol Wiki)',
 	'scavengerhunt-label-article-hidden-image' => 'Imatge oculta:',
 	'scavengerhunt-label-article-clue-title' => 'Pista del títol emergent:',
+	'scavengerhunt-label-article-clue-text' => 'Text de la pista emergent:',
+	'scavengerhunt-label-article-clue-image' => 'Imatge de la pista emergent (adreça URL):',
+	'scavengerhunt-label-article-clue-button-text' => 'Text del botó de la pista emergent:',
+	'scavengerhunt-label-article-clue-button-target' => 'Objectiu del botó de la pista emergent (adreça URL):',
 	'scavengerhunt-label-entry-form' => "Formulari d'inscripció",
 	'scavengerhunt-label-entry-form-title' => 'Títol de la finestra emergent:',
 	'scavengerhunt-label-entry-form-text' => 'Text desplegable:',
 	'scavengerhunt-label-entry-form-image' => 'Imatge emergent (adreça URL)',
 	'scavengerhunt-label-entry-form-question' => 'Pregunta desplegable:',
 	'scavengerhunt-label-entry-form-button-text' => 'Text del botó:',
+	'scavengerhunt-label-goodbye' => 'Adéu emergent',
 	'scavengerhunt-label-goodbye-title' => 'Títol de la finestra emergent:',
 	'scavengerhunt-label-goodbye-text' => 'Missatge desplegable:',
 	'scavengerhunt-label-goodbye-image' => 'Imatge emergent (adreça URL)',
@@ -449,8 +462,16 @@ $messages['ca'] = array(
 	'scavengerhunt-button-enable' => 'Activat',
 	'scavengerhunt-button-delete' => 'Esborrar',
 	'scavengerhunt-button-export' => 'Exportar a CSV',
+	'scavengerhunt-button-add-section' => 'Afegeix un altre pas a la caça',
+	'scavengerhunt-button-remove-section' => 'Retira aquest pas',
 	'scavengerhunt-form-error' => 'Si us plau, corregiu els errors següents:',
+	'scavengerhunt-form-error-no-landing-title' => 'Si us plau introdueix el nom de la pàgina de destí (URL vàlid).',
 	'scavengerhunt-form-error-invalid-title' => 'No s\'ha trobat el títol de la pàgina "$1".',
+	'scavengerhunt-form-error-landing-button-text' => 'Si us plau escriu el text del botó de la pàgina de destí.',
+	'scavengerhunt-form-error-landing-button-position' => 'Si us plau escriu la posició del botó a la pàgina de destí.',
+	'scavengerhunt-form-error-starting-clue' => 'Si us plau omple tots els forats per començar la secció de pistes.',
+	'scavengerhunt-form-error-entry-form' => "SI us plau omple tots els forats al formulari de la secció d'entrada.",
+	'scavengerhunt-form-error-goodbye' => "Si us plau omple tots els forats en la secció de l'adéu emergent.",
 	'scavengerhunt-form-error-no-article-title' => 'Si us plau introduïu tots els títol del articles (com a adreces URL vàlides).',
 	'scavengerhunt-form-error-invalid-url' => 'Si us plau, introduïu un URL vàlid.',
 	'scavengerhunt-form-error-clueColor' => 'Si us plau, proporcioneu un color vàlid en notació #XXX',
@@ -733,7 +754,7 @@ $messages['es'] = array(
 	'scavengerhunt-list-header-is-enabled' => '¿Activado? (haz clic para activar)',
 	'scavengerhunt-list-header-actions' => 'Acciones',
 	'scavengerhunt-list-enabled' => 'Habilitado',
-	'scavengerhunt-list-disabled' => 'Deshabilitado',
+	'scavengerhunt-list-disabled' => 'Desactivado',
 	'scavengerhunt-list-edit' => 'editar',
 	'scavengerhunt-label-dialog-check' => '(mostrar editor visual - versión pre-alfa, no funciona todavía)',
 	'scavengerhunt-label-image-check' => '(mostrar imagen)',
@@ -911,9 +932,11 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Centerlink
+ * @author Silvonen
  * @author Tofu II
  */
 $messages['fi'] = array(
+	'scavengerhunt-list-edit' => 'muokkaa',
 	'scavengerhunt-label-image-check' => '(näytä kuva)',
 	'scavengerhunt-button-add' => 'Lisää peli',
 	'scavengerhunt-button-save' => 'Tallenna',
@@ -921,6 +944,7 @@ $messages['fi'] = array(
 	'scavengerhunt-button-enable' => 'Ota käyttöön',
 	'scavengerhunt-button-delete' => 'Poista',
 	'scavengerhunt-button-export' => 'Vie CSV-tiedostoksi',
+	'scavengerhunt-quit-game-button-quit' => 'Lopeta',
 );
 
 /** French (français)
@@ -1510,6 +1534,7 @@ $messages['ko'] = array(
 	'scavengerhunt-button-disable' => '비활성화',
 	'scavengerhunt-button-enable' => '활성화',
 	'scavengerhunt-button-delete' => '삭제',
+	'scavengerhunt-form-error' => '다음 오류들을 해결하세요:',
 	'scavengerhunt-quit-game-button-quit' => '종료',
 	'scavengerhunt-quit-game-button-cancel' => '취소',
 	'scavengerhunt-label-entry-form-email' => '사용자 이메일',
@@ -1569,13 +1594,13 @@ $messages['lrc'] = array(
 	'scavengerhunt-list-edit' => 'ويرايشت',
 	'scavengerhunt-label-general' => 'کلی',
 	'scavengerhunt-label-name' => 'نوم:',
-	'scavengerhunt-button-save' => 'ذخيره كردن',
-	'scavengerhunt-button-disable' => 'د كار ونن',
+	'scavengerhunt-button-save' => 'اماییه كردن',
+	'scavengerhunt-button-disable' => 'ناکشتگر کردن',
 	'scavengerhunt-button-enable' => 'قادر بيه',
-	'scavengerhunt-button-delete' => 'پاك كردن',
+	'scavengerhunt-button-delete' => 'پاکسا کردن',
 	'scavengerhunt-entry-form-name' => 'نومتو',
-	'scavengerhunt-entry-form-email' => 'نشونی ایمیلتو:',
-	'scavengerhunt-quit-game-button-cancel' => 'رد کردن',
+	'scavengerhunt-entry-form-email' => 'تیرنشون انجومانامه تو',
+	'scavengerhunt-quit-game-button-cancel' => 'انجوم شیوسن',
 	'scavengerhunt-label-clue-size' => 'انازه فونت',
 );
 
@@ -2194,9 +2219,43 @@ $messages['nl-informal'] = array(
 	'scavengerhunt-entry-form-email' => 'Je e-mailadres:',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'scavengerhunt' => 'Interfàcia de caça al Tresaur',
+	'scavengerhunt-common-modal-title' => 'Caça al tresaur',
+	'scavengerhunt-list-header-name' => 'Nom de la partida',
+	'scavengerhunt-list-header-actions' => 'Accions',
+	'scavengerhunt-list-enabled' => 'Activat',
+	'scavengerhunt-list-disabled' => 'Desactivat',
+	'scavengerhunt-list-edit' => 'modificar',
+	'scavengerhunt-label-image-check' => "(veire l'imatge)",
+	'scavengerhunt-label-general' => 'General',
+	'scavengerhunt-label-name' => 'Nom :',
+	'scavengerhunt-button-save' => 'Enregistrar',
+	'scavengerhunt-button-disable' => 'Desactivar',
+	'scavengerhunt-button-enable' => 'Activar',
+	'scavengerhunt-button-delete' => 'Suprimir',
+	'scavengerhunt-button-export' => 'Exportar en CSV',
+	'scavengerhunt-entry-form-name' => 'Vòstre nom :',
+	'scavengerhunt-entry-form-email' => 'Vòstra adreça electronica :',
+	'scavengerhunt-entry-form-submit' => 'Sometre l’entrada',
+	'scavengerhunt-label-sprite-img' => "Camin de l'imatge del sprite",
+	'scavengerhunt-label-sprite-X' => "Posicion de l'element",
+	'scavengerhunt-quit-game-button-quit' => 'Quitar',
+	'scavengerhunt-quit-game-button-cancel' => 'Anullar',
+	'scavengerhunt-quit-game-button-stay' => 'Contunhar de jogar',
+	'scavengerhunt-label-entry-form-email' => "Corrièl de l'utilizaire",
+	'scavengerhunt-label-entry-form-username' => "Nom de l'utilizaire",
+	'scavengerhunt-label-facebook' => 'Partatge Facebook',
+	'scavengerhunt-facebook-image' => 'Imatge de partatge Facebook',
+);
+
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
+ * @author VerMa
  */
 $messages['pl'] = array(
 	'scavengerhunt-desc' => 'Pozwala stworzyć grę w poszukiwanie skarbów na wiki.',
@@ -2341,7 +2400,7 @@ $messages['pl'] = array(
 	'scavengerhunt-editor-tip-clue-color' => 'Kolory powinny być w notacji szesnastkowej, na przykład #F00.',
 	'scavengerhunt-editor-tip-entry-form-button-text' => 'Jest to tekst na przycisku, który pojawia się w oknie dialogowym na końcu poszukiwań.',
 	'scavengerhunt-editor-tip-facebook-image' => 'Ścieżka do obrazka w stylu MediaWiki na stronie docelowej wiki. Przykład: "Some_image_example.png"',
-	'scavengerhunt-editor-tip-facebook-description' => 'Tekst wyświetlany we wiadomości o udostępnieniu',
+	'scavengerhunt-editor-tip-facebook-description' => 'Tekst wyświetlany w wiadomości o udostępnieniu',
 	'scavengerhunt-facebook-image' => 'Obraz udostępniania przez Facebooka',
 	'scavengerhunt-facebook-description' => 'Tekst udostępniania przez Facebooka',
 );
@@ -3202,9 +3261,24 @@ $messages['uk'] = array(
 	'scavengerhunt-facebook-description' => 'Facebook обмін текстом',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Dinhxuanduyet
+ */
+$messages['vi'] = array(
+	'scavengerhunt-label-image-check' => '(Hiển thị hình ảnh)',
+	'scavengerhunt-label-article-hidden-image' => 'Hình ảnh bị ẩn:',
+	'scavengerhunt-button-delete' => 'Xóa',
+	'scavengerhunt-form-error-article-hidden-image' => 'Hãy điền tất cả địa chỉ cho các hình ảnh bị ẩn',
+	'scavengerhunt-form-error-no-sprite-image' => 'Xin vui lòng cho đường dẫn đầy đủ đến tập tin hình ảnh',
+	'scavengerhunt-game-has-been-deleted' => 'Hunt game đã bị xóa',
+	'scavengerhunt-editor-tip-entry-form-question' => 'Nếu bạn muốn hiển thị một trường văn bản miễn phí cho người chơi để trả lời một câu hỏi hoặc đưa lên các bình luận, vui lòng nhập văn bản ở đây. Nếu bạn không muốn trường này, hãy để trống.',
+	'scavengerhunt-facebook-image' => 'Hình ảnh chia sẽ trên Facebook',
+);
+
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Jiang123aa
  * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yfdyh000
@@ -3262,6 +3336,9 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-form-error-invalid-title' => '下列页面标题未找到：“$1”。',
 	'scavengerhunt-form-error-landing-button-text' => '请输入登陆页面按钮文本。',
 	'scavengerhunt-form-error-landing-button-position' => '请输入登陆页面按钮位置。',
+	'scavengerhunt-form-error-article-hidden-image' => '请为隐藏图像键入全部的地址。',
+	'scavengerhunt-form-error-article-clue' => '请为填入文章线索所有的信息。',
+	'scavengerhunt-form-error-no-sprite-image' => '请输入图片文件完整地址',
 	'scavengerhunt-form-error-invalid-url' => '请提供一个有效的URL。',
 	'scavengerhunt-form-error-clueColor' => '请提供有效的颜色格式（#XXX）',
 	'scavengerhunt-edit-token-mismatch' => '编辑令牌不正确 - 请重试。',
@@ -3291,11 +3368,12 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Justincheng12345
  * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
-	'scavengerhunt-entry-form-email' => '您的電郵位址：',
+	'scavengerhunt-entry-form-email' => '您的電子郵件地址：',
 	'scavengerhunt-label-clue-size' => '字型大小',
 );

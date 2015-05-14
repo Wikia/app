@@ -14,6 +14,8 @@
 
 class CreateWiki {
 
+	use \Wikia\Logger\Loggable;
+
 	/* @var $mDBw DatabaseMysql */
 	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
@@ -40,10 +42,10 @@ class CreateWiki {
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
-	const DEFAULT_STAFF        = "Angela";
+	const DEFAULT_STAFF        = "Wikia";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
-	const ACTIVE_CLUSTER       = "c6";
+	const ACTIVE_CLUSTER       = "c7";
 	const DEFAULT_SLOT         = "slot1";
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
@@ -145,6 +147,19 @@ class CreateWiki {
 		$wgAutoloadClasses[ "CreateWikiLocalJob" ] = __DIR__ . "/CreateWikiLocalJob.php";
 	}
 
+	/**
+	 * Add more context to messages sent to LogStash
+	 *
+	 * @return array
+	 */
+	protected function getLoggerContext() {
+		return [
+			'cityid'   => $this->mNewWiki->city_id,
+			'domain'   => $this->mDomain,
+			'dbname'   => $this->mNewWiki->dbname,
+			'logGroup' => 'createwiki',
+		];
+	}
 
 	/**
 	 * main entry point, create wiki with given parameters
@@ -153,6 +168,8 @@ class CreateWiki {
 	 */
 	public function create() {
 		global $wgExternalSharedDB, $wgSharedDB, $wgUser;
+
+		$then = microtime( true );
 
 		// Set this flag to ensure that all select operations go against master
 		// Slave lag can cause random errors during wiki creation process
@@ -346,8 +363,13 @@ class CreateWiki {
 		/**
 		 * destroy connection to newly created database
 		 */
-		$this->mNewWiki->dbw->commit();
-		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
+		$res = $this->mNewWiki->dbw->commit( __METHOD__ );
+		wfWaitForSlaves( $this->mNewWiki->dbname ); # OPS-6313
+
+		$this->info( __METHOD__ . ": database changes commited", [
+			'commit_res' => $res
+		] );
+
 		$wgSharedDB = $tmpSharedDB;
 
 
@@ -453,6 +475,10 @@ class CreateWiki {
 		}
 
 		wfDebugLog( "createwiki", __METHOD__ . ": Local maintenance task added\n", true );
+
+		$this->info( __METHOD__ . ': done', [
+			'took' => microtime( true ) - $then
+		] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -1189,10 +1215,12 @@ class CreateWiki {
 
 	/**
 	 * gets initial value for wgEnableNjordExt for new created wiki
-	 * TODO: Prototype - turn on on 10% of new created wikis
+	 * Set to false to stop beta version progression.
+	 * @see DAT-2752
+	 *
 	 * @return bool
 	 */
 	private function getInitialNjordExtValue() {
-		return rand( 0, 9 ) % 10 === 1 ? true : false;
+		return false;
 	}
 }

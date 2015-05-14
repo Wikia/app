@@ -331,7 +331,6 @@ class User {
 			}
 			# /Wikia
 		}
-
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "User: cache miss for user {$this->mId}\n" );
 			# Load from DB
@@ -363,6 +362,15 @@ class User {
 			// Anonymous users are uncached
 			return;
 		}
+
+		// prepare mOptionOverrides for caching
+		$this->mOptionOverrides = [];
+		foreach ( $this->mOptions as $optionKey => $optionValue ) {
+			if ( $this->shouldOptionBeStored( $optionKey, $optionValue ) ) {
+				$this->mOptionOverrides[$optionKey] = $optionValue;
+			}
+		}
+
 		$data = array();
 		foreach ( self::$mCacheVars as $name ) {
 			$data[$name] = $this->$name;
@@ -3044,6 +3052,8 @@ class User {
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
 
+		Wikia\Helios\User::clearAccessTokenCookie();
+
 		// Wikia change - begin (@see PLATFORM-1028)
 		// @author macbre
 		// There's no need to keep the user name (in both session and cookie) when you log out
@@ -3061,7 +3071,6 @@ class User {
 	 */
 	public function saveSettings() {
 		global $wgAuth;
-
 		$this->load();
 		if ( wfReadOnly() ) { return; }
 		if ( 0 == $this->mId ) { return; }
@@ -3200,6 +3209,8 @@ class User {
 			global $wgMemc;
 			$wgMemc->incr( wfSharedMemcKey( "registered-users-number" ) );
 
+			wfRunHooks( 'CreateNewUserComplete', [ &$newUser ] );
+
 		} else {
 			$newUser = null;
 		}
@@ -3231,6 +3242,8 @@ class User {
 			), __METHOD__
 		);
 		$this->mId = $dbw->insertId();
+
+		wfRunHooks( 'AddUserToDatabaseComplete', [ &$this ] );
 
 		// Clear instance cache other than user table data, which is already accurate
 		$this->clearInstanceCache();
@@ -4364,7 +4377,6 @@ class User {
 			return;
 
 		$this->mOptions = self::getDefaultOptions();
-
 		// Maybe load from the object
 		if ( !is_null( $this->mOptionOverrides ) ) {
 			wfDebug( "User: loading options for user " . $this->getId() . " from override cache.\n" );
@@ -4435,21 +4447,10 @@ class User {
 		foreach( $saveOptions as $key => $value ) {
 			# Don't bother storing default values
 			# <Wikia>
-			if ( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) {
+			if ( $this->shouldOptionBeStored( $key, $value ) ) {
 				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );
 			}
 			# </Wikia>
-			else {
-				if ( ( is_null( self::getDefaultOption( $key ) ) &&
-						!( $value === false || is_null($value) ) ) ||
-						$value != self::getDefaultOption( $key ) ) {
-					$insert_rows[] = array(
-							'up_user' => $this->getId(),
-							'up_property' => $key,
-							'up_value' => $value,
-						);
-				}
-			}
 			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
 				switch ( $wgAllowPrefChange[$key] ) {
 					case 'local':
@@ -4468,6 +4469,25 @@ class User {
 		if ( $extuser ) {
 			$extuser->updateUser();
 		}
+	}
+
+	/**
+	 * @desc Check if user option should be stored in DataBase.
+	 * We don't want to store default values in order to easily change them in future.
+	 * @param $key
+	 * @param $value
+	 * @return bool
+	 */
+	private function shouldOptionBeStored( $key, $value ) {
+		global $wgGlobalUserProperties;
+		if (
+			( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) ||
+			( is_null( self::getDefaultOption( $key ) ) && !( $value === false || is_null($value) ) ) ||
+			$value != self::getDefaultOption( $key )
+		) {
+			return true;
+		}
+		return false;
 	}
 
 	/**

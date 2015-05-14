@@ -3,44 +3,72 @@ namespace Wikia\ExactTarget;
 
 class ExactTargetUserDataVerificationTask extends ExactTargetTask {
 
+	use ExactTargetDataComparisonHelper;
+
 	/**
 	 * Retrieves data from ExactTarget and compares it with data in Wikia database
-	 * @return string
-	 * return 'OK' if data is equal (except comparing user_touched)
+	 * @return bool
+	 * return true if data is equal (except comparing user_touched)
 	 * if data isn't equal throws exception with result diff
 	 */
-	public function verifyUserData( $iUserId ) {
+	public function verifyUsersData( array $aUsersIds ) {
+		$bSummaryResult = true;
 		// Fetch data from ExactTarget
-		$oRetriveveUserHelperTask = $this->getRetrieveUserHelper();
-		$oExactTargetUserData = $oRetriveveUserHelperTask->retrieveUserDataById( $iUserId );
-		$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $oExactTargetUserData ) );
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$aExactTargetUsersData = $oRetrieveUserTask->retrieveUsersDataByIds( $aUsersIds );
+		$aUsersIdsFlipped = array_flip( $aUsersIds );
+		foreach ( $aExactTargetUsersData as $aExactTargetUserData ) {
+			$this->info( __METHOD__ . ' ExactTarget user data record: ' . json_encode( $aExactTargetUserData ) );
+
+			// Fetch data from Wikia DB
+			$oWikiaUser = \User::newFromId( $aExactTargetUserData['user_id'] );
+			$oUserHooksHelper = $this->getUserHooksHelper();
+			$aWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
+			$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $aWikiaUserData ) );
+
+			// Compare results
+			$bResult = $this->compareResults( $aExactTargetUserData, $aWikiaUserData, __METHOD__, 'user_touched' );
+
+			// Mark verification process as failed if any record fails
+			if ( $bResult === false ) {
+				$bSummaryResult = $bResult;
+			}
+
+			// Remove UserId from array to track unchecked users
+			unset ( $aUsersIdsFlipped[$aExactTargetUserData['user_id']] );
+		}
+
+		// Log error if unchecked users found
+		if ( !empty( $aUsersIdsFlipped ) ) {
+			$this->error( __METHOD__ . ' Following user ids not retrieved from ET: ' . json_encode( array_keys( $aUsersIdsFlipped ) ) );
+		}
+
+		return $bSummaryResult;
+	}
+
+
+	/**
+	 * Retrieves data from ExactTarget and compares it with data in Wikia database
+	 * @return bool
+	 * return true if data is equal (except comparing user_touched)
+	 * if data isn't equal throws exception with result diff
+	 */
+	public function verifyUserPropertiesData( $iUserId ) {
+		// Fetch data from ExactTarget
+		$oRetrieveUserTask = $this->getRetrieveUserTask();
+		$oExactTargetUserProperties = $oRetrieveUserTask->retrieveUserPropertiesByUserId( $iUserId );
+		$this->info( __METHOD__ . ' ExactTarget user_properties data record: ' . json_encode( $oExactTargetUserProperties ) );
 
 		// Fetch data from Wikia DB
 		$oWikiaUser = \User::newFromId( $iUserId );
 		$oUserHooksHelper = $this->getUserHooksHelper();
-		$oWikiaUserData = $oUserHooksHelper->prepareUserParams( $oWikiaUser );
-		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserData ) );
+		$oWikiaUserPropertiesData = $oUserHooksHelper->prepareUserPropertiesParams( $oWikiaUser );
+		$this->info( __METHOD__ . ' Wikia DB user data record: ' . json_encode( $oWikiaUserPropertiesData ) );
 
 		// Compare results
-		$aDiffWikiaDB = array_diff( $oExactTargetUserData, $oWikiaUserData );
+		$bResult = $this->compareResults( $oExactTargetUserProperties, $oWikiaUserPropertiesData, __METHOD__ );
 
-		if ( count( $aDiffWikiaDB ) == 1 && isset( $aDiffWikiaDB['user_touched'] ) ) {
-			// Return OK status if user_touched field is only difference
-			return 'OK';
-		} elseif ( count( $aDiffWikiaDB ) > 0 ) {
-			// Prepare diff and throw exception
-			$aDiffExactTarget = array_diff( $oWikiaUserData, $oExactTargetUserData );
-			$sDiffRes = [];
-			$sDiffRes[] = "--- Expected (Wikia DB)";
-			$sDiffRes[] = "+++ Actual (ExactTarget)";
-			foreach ( $aDiffExactTarget as $key => $val ) {
-				$sDiffRes[] = "- '$key' => '{$aDiffExactTarget[$key]}'";
-				$sDiffRes[] = "+ '$key' => '{$aDiffWikiaDB[$key]}'";
-			}
-			$this->debug( __METHOD__ . ' ' . json_encode( $sDiffRes ) );
-			throw new \Exception( __METHOD__ . " Verification failed, User record in ExactTarget doesn't match record in Wikia database.");
-		}
-		return 'OK';
+		return $bResult;
 	}
 
 	/**

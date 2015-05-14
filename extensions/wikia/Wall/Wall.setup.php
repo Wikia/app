@@ -89,7 +89,6 @@ $wgHooks['ArticleDeleteComplete'][] = 'WallHooksHelper::onArticleDeleteComplete'
 $wgHooks['FilePageImageUsageSingleLink'][] = 'WallHooksHelper::onFilePageImageUsageSingleLink';
 
 $wgHooks['getUserPermissionsErrors'][] = 'WallHooksHelper::onGetUserPermissionsErrors';
-$wgHooks['ComposeCommonBodyMail'][] = 'WallHooksHelper::onComposeCommonBodyMail';
 
 //Special:Contributions adjusting
 $wgHooks['ContributionsLineEnding'][] = 'WallHooksHelper::onContributionsLineEnding';
@@ -276,3 +275,7 @@ $wgAddGroups['bureaucrat'][] = 'threadmoderator';
 $wgRemoveGroups['bureaucrat'][] = 'threadmoderator';
 $wgAddGroups['sysop'][] = 'threadmoderator';
 $wgRemoveGroups['sysop'][] = 'threadmoderator';
+$wgAddGroups['staff'][] = 'threadmoderator';
+$wgRemoveGroups['staff'][] = 'threadmoderator';
+$wgAddGroups['helper'][] = 'threadmoderator';
+$wgRemoveGroups['helper'][] = 'threadmoderator';

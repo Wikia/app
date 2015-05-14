@@ -1,24 +1,27 @@
 /*global require*/
 require([
-	'jquery',
-	'wikia.log',
-	'wikia.document',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adPlacementChecker',
-	'ext.wikia.adEngine.adSlotsInContent'
-], function ($, log, doc, adContext, adPlacementChecker, adSlotsInContent) {
+	'ext.wikia.adEngine.adSlotsInContent',
+	'jquery',
+	'wikia.document',
+	'wikia.log'
+], function (adContext, adSlotsInContent, $, doc, log) {
 	'use strict';
 
-	function init () {
+	var logGroup = 'AdSlotOasis.js',
+		context = adContext.getContext();
+
+	function init() {
 		var elementsBeforeSlots = $(adSlotsInContent.selector).get(),
 			maxSlots = 1;
+
+		log('init()', 'debug', logGroup);
 		elementsBeforeSlots.unshift(null);
 		adSlotsInContent.init(elementsBeforeSlots, maxSlots);
 	}
 
-	var context = adContext.getContext();
-
-	if (context.opts.pageType !== 'corporate' && context.targeting.pageType !== 'home') {
+	// Don't start those slots on no_ads, corporate, home etc
+	if (context.opts.pageType === 'all_ads') {
 		$(doc).ready(init);
 	}
 });
