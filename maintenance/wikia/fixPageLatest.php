@@ -53,18 +53,18 @@ class FixPageLatest extends Maintenance {
 	}
 
 	public function execute() {
-		$isDryRun = $this->hasOption('dry-run');
-		$dbr = $this->getDB(DB_SLAVE);
+		$isDryRun = $this->hasOption( 'dry-run' );
+		$dbr = $this->getDB( DB_SLAVE );
 
 		# select page_id, page_title, page_touched, rev_id from page left join revision on rev_page = page_id where page_latest = 0
-		$this->output('Looking for pages with broken page_latest entry...');
+		$this->output( 'Looking for pages with broken page_latest entry...' );
 		$res = $dbr->select(
 			['page', 'revision'],
 			[
 				'page_id',
 				'page_title',
 				'page_len',
-				#'page_touched',
+				# 'page_touched',
 				'rev_id'
 			],
 			['page_latest' => 0],
@@ -74,38 +74,38 @@ class FixPageLatest extends Maintenance {
 		);
 
 		$count = $res->numRows();
-		$this->output(" {$count} affected pages(s) found\n\n");
+		$this->output( " {$count} affected pages(s) found\n\n" );
 
-		if ($count === 0) {
-			$this->output("No articles found!\n");
-			die(1);
+		if ( $count === 0 ) {
+			$this->output( "No articles found!\n" );
+			die( 1 );
 		}
 
 		// fix entries
 		$fixed = 0;
 
-		$this->dbw = $this->getDB(DB_MASTER);
+		$this->dbw = $this->getDB( DB_MASTER );
 		$this->user = User::newFromName( 'WikiaBot' );
 
-		while($row = $res->fetchObject()) {
-			$revId = intval($row->rev_id);
+		while ( $row = $res->fetchObject() ) {
+			$revId = intval( $row->rev_id );
 
 			if ( $isDryRun ) {
-				$this->output("* {$row->page_title} affected - would set page_latest to {$revId}\n");
+				$this->output( "* {$row->page_title} affected - would set page_latest to {$revId}\n" );
 				continue;
 			}
 
-			$this->output("* {$row->page_title}");
+			$this->output( "* {$row->page_title}" );
 
 			// no revision data - we can generate an empty revision if "page_len" is set to 0 (PLATFORM-1286)
-			if ($revId == 0 &&  $row->page_len == 0 ) {
-				$this->output(" - making an empty edit");
+			if ( $revId == 0 &&  $row->page_len == 0 ) {
+				$this->output( " - making an empty edit" );
 
 				try {
-					$revId = $this->insertEmptyRevision($row->page_id);
+					$revId = $this->insertEmptyRevision( $row->page_id );
 				}
-				catch(MWException $ex) {
-					$this->output(" - error: " . $ex->getMessage() . "\n");
+				catch ( MWException $ex ) {
+					$this->output( " - error: " . $ex->getMessage() . "\n" );
 					continue;
 				}
 			}
@@ -116,13 +116,13 @@ class FixPageLatest extends Maintenance {
 				['page_id' => $row->page_id],
 				__METHOD__
 			);
-			$this->output(" - page_latest set to {$revId}\n");
+			$this->output( " - page_latest set to {$revId}\n" );
 
 			$fixed++;
 		}
 
 		if ( !$isDryRun ) {
-			$this->output("Done - {$fixed} page(s) fixed\n");
+			$this->output( "Done - {$fixed} page(s) fixed\n" );
 		}
 	}
 }
