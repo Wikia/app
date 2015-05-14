@@ -1,11 +1,17 @@
 /*global require*/
 require([
+	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
+	amazon,
 	customAdsLoader,
 	messageListener,
+	geo,
+	instantGlobals,
 	win
 ) {
 	'use strict';
@@ -13,4 +19,9 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	win.loadCustomAd = customAdsLoader.loadCustomAd;
+
+	var ac = instantGlobals.wgAmazonMatchCountries;
+	if (ac && ac.indexOf && ac.indexOf(geo.getCountryCode()) > -1) {
+		amazon.call();
+	}
 });
