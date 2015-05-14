@@ -110,16 +110,11 @@ class ForumController extends EmailController {
 }
 
 class ForumReplyController extends ForumController {
-	protected function getButtonLink() {
-		return $this->titleUrl;
-	}
 
-	protected function getViewAllLink() {
-		return $this->titleUrl;
-	}
-
-	protected function getButtonLabelKey () {
-		return 'emailext-forum-reply-link-label';
+	public function getSubject() {
+		return wfMessage( $this->getSubjectKey(), $this->titleText )
+			->inLanguage( $this->targetLang )
+			->text();
 	}
 
 	protected function getSummary() {
@@ -138,18 +133,5 @@ class ForumReplyController extends ForumController {
 
 	protected function getViewAllKey(){
 		return 'emailext-forum-reply-view-all';
-	}
-
-	protected function getFooterMessages() {
-		$unfollowUrl = $this->board->getFullURL( [
-			'action' => 'unwatch'
-		] );
-
-		$footerMessages = [
-			wfMessage( 'emailext-forum-reply-unfollow-text', $unfollowUrl, $this->titleText )
-				->inLanguage( $this->targetLang )
-				->parse()
-		];
-		return array_merge( $footerMessages, EmailController::getFooterMessages() );
 	}
 }

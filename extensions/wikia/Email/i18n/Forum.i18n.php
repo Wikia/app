@@ -6,8 +6,8 @@ $messages['en'] = [
 	'emailext-forum-salutation' => 'Hi $1,',
 	'emailext-forum-summary' => "'''There is a new discussion on [$1 $2] on [{{SERVER}} {{SITENAME}}].'''",
 	'emailext-forum-button-label' => 'See the discussion',
-	'emailext-forum-reply-subject' => "There are new replies to $1 on {{SITENAME}}.",
-	'emailext-forum-reply-summary' => "'''There are new replies to [$2 $1] on [{{SERVER}} {{SITENAME}}].'''",
+	'emailext-forum-reply-subject' => '$1 on {{SITENAME}} has new replies.',
+	'emailext-forum-reply-summary' => "'''[$2 $1] on [{{SERVER}} {{SITENAME}}] has new replies.'''",
 	'emailext-forum-reply-link-label' => 'Read the reply',
 	'emailext-forum-reply-view-all' => '[$1 See the entire discussion.]'
 ];
