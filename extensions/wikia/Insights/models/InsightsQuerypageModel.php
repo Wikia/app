@@ -124,7 +124,11 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			 */
 			$this->prepareParams( $params );
 			if ( !isset( $this->sortingArray ) ) {
-				$this->sortingArray = $wgMemc->get($this->getMemcKey( self::INSIGHTS_DEFAULT_SORTING ) );
+				if ( $this->arePageViewsRequired() ) {
+					$this->sortingArray = $wgMemc->get($this->getMemcKey( self::INSIGHTS_DEFAULT_SORTING ) );
+				} else {
+					$this->sortingArray = array_keys( $articlesData );
+				}
 			}
 			$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
 
@@ -186,7 +190,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
 				}
 
-				$this->createSortingArray( $articlesData, 'title', 'sortInsightsAlphabetical' );
+				$this->createSortingArray( $articlesData, 'title' );
 			}
 
 			return $articlesData;
