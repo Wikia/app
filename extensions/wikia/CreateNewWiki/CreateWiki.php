@@ -1117,7 +1117,14 @@ class CreateWiki {
 				$wgDBadminpassword,
 				$this->mNewWiki->dbname
 			);
-			wfShellExec( $cmd );
+			wfShellExec( $cmd, $retVal );
+
+			if ($retVal > 0) {
+				$this->error( 'starter dump import failed', [
+					'starter_db' => $dbStarter
+				] );
+				return false;
+			}
 
 			wfDebugLog( "createwiki", __METHOD__ . ": Import {$this->mIP}/maintenance/cleanupStarter.sql \n", true );
 			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql", false, false, __METHOD__ );
@@ -1133,7 +1140,14 @@ class CreateWiki {
 				$this->mIP,
 				$wgWikiaLocalSettingsPath
 			);
-			wfShellExec( $cmd );
+			wfShellExec( $cmd, $retVal );
+
+			if ($retVal > 0) {
+				$this->error( 'updateArticleCount.php failed', [
+					'ret_val' => $retVal
+				] );
+				return false;
+			}
 
 			wfDebugLog( "createwiki", __METHOD__ . ": Starter database copied \n", true );
 		}
