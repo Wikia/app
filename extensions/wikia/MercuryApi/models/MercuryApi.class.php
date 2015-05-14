@@ -3,9 +3,7 @@
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
-
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
-
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -262,7 +260,7 @@ class MercuryApi {
 
 		if ( !empty( $data[ 'featured' ] ) ) {
 			$process = 'featured';
-		} else if ( !empty( $data[ 'items' ] ) ) {
+		} elseif ( !empty( $data[ 'items' ] ) ) {
 			$process = 'items';
 		}
 
@@ -280,6 +278,24 @@ class MercuryApi {
 		return $data;
 	}
 
+	public function processTrendingArticles( $data ) {
+		if ( !isset( $data[ 'items' ] ) || !is_array( $data[ 'items' ] ) ) {
+			return false;
+		}
+
+		$items = [];
+
+		foreach ( $data[ 'items' ] as $item ) {
+			$processedItem = $this->processTrendingArticlesItem( $item );
+
+			if ( !empty( $processedItem ) ) {
+				$items[] = $processedItem;
+			}
+		}
+
+		return $items;
+	}
+
 	/**
 	 * @desc Mercury can't open article using ID - we need to create a local link.
 	 * If article doesn't exist (Title is null) return null.
@@ -293,11 +309,52 @@ class MercuryApi {
 	private function processCuratedContentItem( $item ) {
 		if ( !empty( $item[ 'article_id' ] ) ) {
 			$title = Title::newFromID( $item[ 'article_id' ] );
+
 			if ( !empty( $title ) ) {
 				$item[ 'article_local_url' ] = $title->getLocalURL();
+
 				return $item;
 			}
 		}
+
 		return null;
+	}
+
+	/**
+	 * @desc To save some bandwidth, the unnecessary params are stripped
+	 * and standarized to match the curated content items
+	 *
+	 * @param $item
+	 * @return array
+	 */
+	private function processTrendingArticlesItem( $item ) {
+		global $wgArticlePath;
+
+		$processedItem = [];
+
+		if ( !empty( $item ) && is_array( $item ) ) {
+			$paramsMap = [
+				// params fetched from ArticlesApi => params passed to response
+				'title' => 'label',
+				'id' => 'article_id',
+				'type' => 'type',
+				'thumbnail' => 'image_url',
+				'url' => 'article_local_url',
+			];
+
+			if ( !empty( $item[ 'url' ] ) ) {
+				// $wgArticlePath equals `/wiki/$1` or `/$1`,
+				// the `2` which is substracted is the lenght of the `$1`
+				$processedItem[ 'title' ] = substr( $item[ 'url' ], strlen( $wgArticlePath ) - 2 );
+			}
+
+			foreach ( $paramsMap as $param => $standarizedParam ) {
+				if ( !empty( $item[ $param ] ) ) {
+					$processedItem[ $standarizedParam ] = $item[ $param ];
+				}
+			}
+		}
+
+		return $processedItem;
 	}
 }
