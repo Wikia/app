@@ -17,6 +17,13 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
  */
 class FixPageLatest extends Maintenance {
 
+	const EMPTY_EDIT_SUMMARY = 'An empty edit for the missing revision';
+
+	/* @var DatabaseBase $dbw */
+	private $dbw;
+	/* @var User $user */
+	private $user;
+
 	/**
 	 * Set script options
 	 */
@@ -24,6 +31,25 @@ class FixPageLatest extends Maintenance {
 		parent::__construct();
 		$this->addOption( "dry-run", "Do not update page table" );
 		$this->mDescription = 'Fixes page_latest entry in page table';
+	}
+
+	/**
+	 * @param int $pageId page id to insert the revision for
+	 * @return int ID of inserted revisions
+	 * @throws MWException
+	 */
+	private function insertEmptyRevision( $pageId ) {
+		$revision = new Revision( [
+			'page'       => $pageId,
+			'comment'    => self::EMPTY_EDIT_SUMMARY ,
+			'minor_edit' => true,
+			'text'       => '',
+			'user'       => $this->user->getId(),
+			'user_text'  => $this->user->getName(),
+			'timestamp'  => wfTimestampNow()
+		] );
+
+		return $revision->insertOn( $this->dbw );
 	}
 
 	public function execute() {
@@ -52,63 +78,45 @@ class FixPageLatest extends Maintenance {
 
 		if ($count === 0) {
 			$this->output("No articles found!\n");
-			die();
+			die(1);
 		}
 
 		// fix entries
 		$fixed = 0;
-		$dbw = $this->getDB(DB_MASTER);
+
+		$this->dbw = $this->getDB(DB_MASTER);
+		$this->user = User::newFromName( 'WikiaBot' );
 
 		while($row = $res->fetchObject()) {
 			$revId = intval($row->rev_id);
 
-			// no revision data
-			if ($revId === 0) {
-				// we can generate an empty revision if "page_len" is set to 0 (PLATFORM-1286)
-				if ( $row->page_len == 0 ) {
-					$this->output("* {$row->page_title} has page_len = 0 (will make an empty edit)\n");
-
-					// make an empty edit - the affected article will have at least an empty revision
-					if ( !$isDryRun ) {
-						$page = WikiPage::newFromID( $row->page_id );
-						$status = $page->doEdit(
-							'',
-							'Fixing empty articles with no revisions',
-							0, // $flags
-							false, // $baseRevId
-							User::newFromName( 'WikiaBot' )
-						);
-
-						if ( !$status->isOK() ) {
-							$this->output( "\n\t[ERR] " . $status->getMessage() . "\n\n" );
-						}
-
-						$fixed++;
-					}
-				}
-
+			if ( $isDryRun ) {
+				$this->output("* {$row->page_title} affected - would set page_latest to {$revId}\n");
 				continue;
 			}
 
 			$this->output("* {$row->page_title}");
 
-			if ($isDryRun) {
-				$this->output(" - page_latest would be set to {$revId}\n");
+			// no revision data - we can generate an empty revision if "page_len" is set to 0 (PLATFORM-1286)
+			if ($revId == 0 &&  $row->page_len == 0 ) {
+				$this->output(" - making an empty edit");
+				$revId = $this->insertEmptyRevision( $row->page_id );
 			}
-			else {
-				$dbw->update(
-					'page',
-					['page_latest' => $revId],
-					['page_id' => $row->page_id],
-					__METHOD__
-				);
-				$this->output(" - page_latest set to {$revId}\n");
 
-				$fixed++;
-			}
+			$this->dbw->update(
+				'page',
+				['page_latest' => $revId],
+				['page_id' => $row->page_id],
+				__METHOD__
+			);
+			$this->output(" - page_latest set to {$revId}\n");
+
+			$fixed++;
 		}
 
-		$this->output("Done - {$fixed} page(s) fixed\n");
+		if ( !$isDryRun ) {
+			$this->output("Done - {$fixed} page(s) fixed\n");
+		}
 	}
 }
 
