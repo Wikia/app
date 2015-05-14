@@ -17,12 +17,14 @@ class CreateWiki {
 	use \Wikia\Logger\Loggable;
 
 	/* @var $mDBw DatabaseMysql */
+	/* @var $mClusterDB string */
 	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
 		$mStarterTables, $sDbStarter, $mFounderIp,
-		$mCurrTime;
+		$mCurrTime,
+		$mClusterDB; // eg. "wikicities_c7"
 
 	const ERROR_BAD_EXECUTABLE_PATH                    = 1;
 	const ERROR_DOMAIN_NAME_TAKEN                      = 2;
@@ -162,6 +164,21 @@ class CreateWiki {
 	}
 
 	/**
+	 * Wait for shared DB and the current DB cluster slaves
+	 *
+	 * @param string $fname
+	 * @see PLATFORM-1219
+	 */
+	private function waitForSlaves( $fname ){
+		// commit the changes
+		$this->mNewWiki->dbw->commit( $fname );
+
+		# PLATFORM-1219 - wait for slaves to catch up (shared DB and the current new wikis cluster)
+		wfWaitForSlaves( $wgExternalSharedDB );
+		wfWaitForSlaves( $this->mClusterDB );
+	}
+
+	/**
 	 * main entry point, create wiki with given parameters
 	 *
 	 * @throw CreateWikiException an exception with status of operation set
@@ -228,8 +245,8 @@ class CreateWiki {
 		// set $activeCluster to false if you want to create wikis on first
 		// cluster
 		//
-		$clusterdb = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
-		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $clusterdb ); // database handler, old $dbwTarget
+		$this->mClusterDB = ( self::ACTIVE_CLUSTER ) ? "wikicities_" . self::ACTIVE_CLUSTER : "wikicities";
+		$this->mNewWiki->dbw = wfGetDB( DB_MASTER, array(), $this->mClusterDB ); // database handler, old $dbwTarget
 
 		// check if database is creatable
 		// @todo move all database creation checkers to canCreateDatabase
@@ -346,15 +363,7 @@ class CreateWiki {
 		/**
 		 * destroy connection to newly created database
 		 */
-		$res = $this->mNewWiki->dbw->commit( __METHOD__ );
-
-		# OPS-6313 - wait for slaves to catch up (both shared DB and the current new wikis cluster)
-		wfWaitForSlaves( $wgExternalSharedDB );
-		wfWaitForSlaves( $this->mNewWiki->dbname );
-
-		$this->info( __METHOD__ . ": database changes commited", [
-			'commit_res' => $res
-		] );
+		$this->waitForSlaves( __METHOD__ );
 
 		$wgSharedDB = $tmpSharedDB;
 
@@ -960,6 +969,10 @@ class CreateWiki {
 				return false;
 			}
 		}
+
+		// we need to wait for slaves to catch up
+		// the next method called (importStarter) connects to the newly created wiki using slave DB
+		$this->waitForSlaves( __METHOD__ );
 
 		return true;
 	}
