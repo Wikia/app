@@ -250,24 +250,27 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	private function prepareSortingData() {
 		$dropdown = [];
-		$sort = $this->request->getVal( 'sort', $this->model->getDefaultSorting() );
 
-		/**
-		 * Used to create the following messages:
-		 *
-		 * 'insights-list-pv7',
-		 * 'insights-list-pv28',
-		 * 'insights-list-pvDiff',
-		 * 'insights-list-title'
-		 */
-		foreach ( $this->model->sorting as $key => $sorting ) {
-			$dropdown[ $key ] = wfMessage( 'insights-sort-' . $key )->escaped();
+		if( $this->model->arePageViewsRequired() ) {
+			$sort = $this->request->getVal( 'sort', $this->model->getDefaultSorting() );
+
+			/**
+			 * Used to create the following messages:
+			 *
+			 * 'insights-list-pv7',
+			 * 'insights-list-pv28',
+			 * 'insights-list-pvDiff',
+			 * 'insights-list-title'
+			 */
+			foreach ( $this->model->sorting as $key => $sorting ) {
+				$dropdown[ $key ] = wfMessage( 'insights-sort-' . $key )->escaped();
+			}
+
+			$this->current = $sort;
+			$this->metadata = isset( $this->model->sorting[ $sort ]['metadata'] )
+				? $this->model->sorting[ $sort ]['metadata']
+				: $sort;
 		}
-
-		$this->current = $sort;
-		$this->metadata = isset( $this->model->sorting[ $sort ]['metadata'] )
-			? $this->model->sorting[ $sort ]['metadata']
-			: $sort;
 
 		$this->dropdown = $dropdown;
 	}
