@@ -482,11 +482,11 @@ class WallNotifications {
 		) {
 			$controller = 'Email\Controller\Forum';
 		} else if ( !$notification->isMain() ) {
-			$controller = 'Email\Controller\ReplyWallMessageController';
+			$controller = 'Email\Controller\ReplyWallMessage';
 		} else if ( $notification->data->wall_username == $watcherName ) {
-			$controller = 'Email\Controller\OwnWallMessageController';
+			$controller = 'Email\Controller\OwnWallMessage';
 		} else {
-			$controller = 'Email\Controller\FollowedWallMessageController';
+			$controller = 'Email\Controller\FollowedWallMessage';
 		}
 
 		return $controller;
