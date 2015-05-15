@@ -156,10 +156,9 @@ class WallNotifications {
 		return WikiaDataAccess::cache(
 			$this->getCacheKey( $userId ),
 			self::TTL,
-			function() use ( $userId ){
+			function() use ( $userId ) {
 				global $wgMemc, $wgCityId;
 
-				wfProfileIn(__METHOD__);
 				$wikiList = $this->getWikiList( $userId );
 
 				// prefetch data
@@ -178,10 +177,10 @@ class WallNotifications {
 					$total += $wiki['unread'];
 					// show only Wikis with unread notifications
 					// current Wiki is an exception (show always)
-					if ( $wiki['unread'] > 0 || $wiki['id'] == $wgCityId )
+					if ( $wiki['unread'] > 0 || $wiki['id'] == $wgCityId ) {
 						$output[] = $wiki;
+					}
 				}
-				wfProfileOut(__METHOD__);
 				return $output;
 			}
 		);
