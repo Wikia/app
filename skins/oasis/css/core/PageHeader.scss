@@ -269,11 +269,14 @@
 	}
 }
 
-.ve-activated {
-	.wikia-page-header .header-container {
-		margin-bottom: 0px;
+.ve-activated .wikia-page-header {
+	padding-bottom: 0;
+
+	.header-container {
+		margin-bottom: 0;
 	}
-	.wikinav2 .WikiaPageHeader {
-		padding-bottom: 0px;
+
+	.wikia-button, .wikia-menu-button, .header-tally {
+		display: none;
 	}
 }

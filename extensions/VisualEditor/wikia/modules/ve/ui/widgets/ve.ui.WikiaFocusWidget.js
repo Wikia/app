@@ -33,12 +33,9 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.$body = this.$( this.getElementDocument() ).find( 'body:first' );
 	this.$window = this.$( this.getElementWindow() );
 	this.$surface = surface.$element;
-	this.$pageHeaderElements = this.$( '#WikiaPageHeader' ).children( ':not( .header-container  )' ).add( '.header-tally' );
 
 	this.$navBackground = this.$( '.WikiNav .navbackground' );
 	this.$localNavigation = this.$( '#localNavigation' );
-	this.$wikiaBarWrapper = this.$( '#WikiaBarWrapper' );
-	this.$wikiaBarCollapseWrapper = this.$( '#WikiaBarCollapseWrapper' );
 	this.$wikiaAds = this.$( '.hide-to-edit, .hide-for-edit, .wikia-ad, #WikiaAdInContentPlaceHolder' );
 	if ( mw.config.get( 'WikiaBar' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
 		this.showWikiaBar = true;
@@ -285,9 +282,6 @@ ve.ui.WikiaFocusWidget.prototype.hideDistractions = function () {
 	if ( mw.config.get( 'WikiaBar' ) ) {
 		mw.config.get( 'WikiaBar' ).hide();
 	}
-	// Visibility property - problem with edit button opening when setting display property
-	//this.$pageHeaderElements.css( 'visibility', 'hidden' );
-	this.$pageHeaderElements.hide();
 	this.$wikiaAds
 		.each( function () {
 			var $ad = $( this );
@@ -308,8 +302,6 @@ ve.ui.WikiaFocusWidget.prototype.showDistractions = function () {
 	if ( this.showWikiaBar ) {
 		mw.config.get( 'WikiaBar' ).show();
 	}
-	//this.$pageHeaderElements.css( 'visibility', 'visible' );
-	this.$pageHeaderElements.show();
 	this.$wikiaAds
 		.css( {
 			height: 'auto',
