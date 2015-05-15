@@ -725,6 +725,8 @@ class WallNotifications {
 			}
 		);
 
+		$this->purgeCache( $userId );
+
 		$this->cleanEntitiesFromDB();
 	}
 
