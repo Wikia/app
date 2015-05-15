@@ -397,6 +397,6 @@ class MercuryApiController extends WikiaController {
 			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
 		}
 
-	return $data;
+		return $data;
 	}
 }
