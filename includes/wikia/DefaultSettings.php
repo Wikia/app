@@ -1674,14 +1674,14 @@ $wgImageServingForceNoResults = false;
  * Enable typography changes on oasis breakpoints.
  * Works only if wgOasisBreakpoints set to true
  */
-$wgOasisTypography = false;
+$wgOasisTypography = true;
 
 /**
  * Force new breakpoints $wgOasisBreakpoints
  * see CONCF-186
  * todo Remove when removing responsive
  */
-$wgOasisBreakpoints = false;
+$wgOasisBreakpoints = true;
 
 /**
  * Force new breakpoints $wgOasisBreakpoints for German wikis
