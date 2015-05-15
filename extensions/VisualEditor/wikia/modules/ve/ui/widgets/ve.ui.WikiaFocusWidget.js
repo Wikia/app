@@ -33,7 +33,6 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.$body = this.$( this.getElementDocument() ).find( 'body:first' );
 	this.$window = this.$( this.getElementWindow() );
 	this.$surface = surface.$element;
-
 	this.$navBackground = this.$( '.WikiNav .navbackground' );
 	this.$localNavigation = this.$( '#localNavigation' );
 	this.$wikiaAds = this.$( '.hide-to-edit, .hide-for-edit, .wikia-ad, #WikiaAdInContentPlaceHolder' );
