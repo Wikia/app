@@ -394,7 +394,7 @@ class MercuryApiController extends WikiaController {
 			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
 			$data = $this->mercuryApi->processTrendingArticles( $rawData );
 		} catch ( NotFoundApiException $ex ) {
-			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
+			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
 
 		return $data;
