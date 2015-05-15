@@ -574,7 +574,7 @@ abstract class EmailController extends \WikiaController {
 					'name' => 'targetUser',
 					'label' => 'Target User',
 					'tooltip' => 'User to send the email to',
-					'value' => \F::app()->wg->User->getName()
+					'value' => htmlspecialchars(  \F::app()->wg->User->getName(), ENT_QUOTES )
 				],
 				[
 					'type' => 'select',

@@ -14,11 +14,12 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	}
 
 	/**
-	 * Run before index. First make sure the user can access page, then set the title and
-	 * add the css.
+	 * Run before index. First make sure the user can access page, then set the title, disable
+	 * redirects, and add the css.
 	 */
 	public function init() {
 		$this->assertCanAccess();
+		$this->disableRedirects();
 		$this->setTitle();
 		$this->addCss();
 	}
@@ -32,6 +33,14 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		if ( !$this->wg->User->isAllowed( self::REQUIRED_USER_RIGHT ) ) {
 			throw new \PermissionsError( self::REQUIRED_USER_RIGHT );
 		}
+	}
+
+	/**
+	 * Disable redirects. Some operations called in the controllers will cause the page to
+	 * redirect (eg Article::newFromTitle()). We always want to return to Special:SendEmail.
+	 */
+	private function disableRedirects() {
+		$this->wg->Out->enableRedirects( false );
 	}
 
 	/**
