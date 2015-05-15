@@ -188,7 +188,7 @@ class WallNotifications {
 	}
 
 	private function getCacheKey( $userId ) {
-		return wfMemcKey( __METHOD__, 'getCounts', $userId );
+		return wfMemcKey( __CLASS__, 'getCounts', $userId );
 	}
 
 	private function purgeCache( $userId ) {
