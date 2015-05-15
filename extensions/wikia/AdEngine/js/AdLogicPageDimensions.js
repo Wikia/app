@@ -78,7 +78,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			 * view, so we'll leave responsive values for twoColumns
 			 * and oneColumn fields.
 			 */
-			mediaQueriesToCheck.noSkins = 'screen and (max-width: 1294px)';
 			mediaQueriesToCheck.noTopButton = 'screen and (max-width: 1063px)';
 		}
 
