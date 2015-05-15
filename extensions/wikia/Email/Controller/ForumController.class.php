@@ -54,7 +54,7 @@ class ForumController extends EmailController {
 	}
 
 	public function getSubject() {
-		return wfMessage( $this->getSubjectKey(), $this->boardText )
+		return wfMessage( $this->getSubjectKey(), $this->board->getText() )
 			->inLanguage( $this->targetLang )
 			->text();
 	}
