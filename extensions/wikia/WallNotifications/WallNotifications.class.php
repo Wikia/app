@@ -13,6 +13,9 @@ use Wikia\Logger\WikiaLogger;
  *
  */
 class WallNotifications {
+
+	const TTL = 300; // 5 minutes
+
 	/**
 	 * @var WikiaApp
 	 */
@@ -150,32 +153,46 @@ class WallNotifications {
 	 * @return array
 	 */
 	public function getCounts( $userId ) {
-		global $wgMemc, $wgCityId;
+		return WikiaDataAccess::cache(
+			$this->getCacheKey( $userId ),
+			self::TTL,
+			function() use ( $userId ){
+				global $wgMemc, $wgCityId;
 
-		wfProfileIn(__METHOD__);
-		$wikiList = $this->getWikiList( $userId );
+				wfProfileIn(__METHOD__);
+				$wikiList = $this->getWikiList( $userId );
 
-		// prefetch data
-		$keys = [];
-		$wno = new WallNotificationsOwner;
-		foreach ( $wikiList as $wiki ) {
-			$keys[] = $this->getKey( $userId, $wiki['id'] );
-			$keys[] = $wno->getKey( $wiki['id'], $userId );
-		}
-		$wgMemc->prefetch( $keys );
+				// prefetch data
+				$keys = [];
+				$wno = new WallNotificationsOwner;
+				foreach ( $wikiList as $wiki ) {
+					$keys[] = $this->getKey( $userId, $wiki['id'] );
+					$keys[] = $wno->getKey( $wiki['id'], $userId );
+				}
+				$wgMemc->prefetch( $keys );
 
-		$output = [];
-		$total = 0;
-		foreach ( $wikiList as $wiki ) {
-			$wiki['unread'] = $this->getCount( $userId, $wiki['id'], $wiki['id'] == $wgCityId );
-			$total += $wiki['unread'];
-			// show only Wikis with unread notifications
-			// current Wiki is an exception (show always)
-			if ( $wiki['unread'] > 0 || $wiki['id'] == $wgCityId )
-				$output[] = $wiki;
-		}
-		wfProfileOut(__METHOD__);
-		return $output;
+				$output = [];
+				$total = 0;
+				foreach ( $wikiList as $wiki ) {
+					$wiki['unread'] = $this->getCount( $userId, $wiki['id'], $wiki['id'] == $wgCityId );
+					$total += $wiki['unread'];
+					// show only Wikis with unread notifications
+					// current Wiki is an exception (show always)
+					if ( $wiki['unread'] > 0 || $wiki['id'] == $wgCityId )
+						$output[] = $wiki;
+				}
+				wfProfileOut(__METHOD__);
+				return $output;
+			}
+		);
+	}
+
+	private function getCacheKey( $userId ) {
+		return wfMemcKey( __METHOD__, 'getCounts', $userId );
+	}
+
+	private function purgeCache( $userId ) {
+		WikiaDataAccess::cachePurge( $this->getCacheKey( $userId ) );
 	}
 
 	private function sortByTimestamp( $array ) {
@@ -555,6 +572,7 @@ class WallNotifications {
 				$memcSync->delete();
 			}
 		);
+		$this->purgeCache( $userId );
 
 		foreach ( $updateDBlist as $value ) {
 			$this->getDB( true )->update( 'wall_notification' , ['is_read' =>  1], $value, __METHOD__ );
