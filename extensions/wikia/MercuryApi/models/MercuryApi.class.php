@@ -344,7 +344,7 @@ class MercuryApi {
 
 			if ( !empty( $item[ 'url' ] ) ) {
 				// $wgArticlePath equals `/wiki/$1` or `/$1`,
-				// the `2` which is substracted is the lenght of the `$1`
+				// the `2` which is substracted is the length of the `$1`
 				$processedItem[ 'title' ] = substr( $item[ 'url' ], strlen( $wgArticlePath ) - 2 );
 			}
 
