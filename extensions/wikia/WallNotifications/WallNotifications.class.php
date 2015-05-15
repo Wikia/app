@@ -154,7 +154,7 @@ class WallNotifications {
 	 */
 	public function getCounts( $userId ) {
 		return WikiaDataAccess::cache(
-			$this->getCacheKey( $userId ),
+			$this->getCountsCacheKey( $userId ),
 			self::TTL,
 			function() use ( $userId ) {
 				global $wgMemc, $wgCityId;
@@ -186,12 +186,12 @@ class WallNotifications {
 		);
 	}
 
-	private function getCacheKey( $userId ) {
+	private function getCountsCacheKey( $userId ) {
 		return wfMemcKey( __CLASS__, 'getCounts', $userId );
 	}
 
-	private function purgeCache( $userId ) {
-		WikiaDataAccess::cachePurge( $this->getCacheKey( $userId ) );
+	private function purgeCountsCache( $userId ) {
+		WikiaDataAccess::cachePurge( $this->getCountsCacheKey( $userId ) );
 	}
 
 	private function sortByTimestamp( $array ) {
@@ -571,7 +571,7 @@ class WallNotifications {
 				$memcSync->delete();
 			}
 		);
-		$this->purgeCache( $userId );
+		$this->purgeCountsCache( $userId );
 
 		foreach ( $updateDBlist as $value ) {
 			$this->getDB( true )->update( 'wall_notification' , ['is_read' =>  1], $value, __METHOD__ );
@@ -724,7 +724,7 @@ class WallNotifications {
 			}
 		);
 
-		$this->purgeCache( $userId );
+		$this->purgeCountsCache( $userId );
 
 		$this->cleanEntitiesFromDB();
 	}
