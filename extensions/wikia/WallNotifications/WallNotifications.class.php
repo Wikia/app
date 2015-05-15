@@ -679,6 +679,8 @@ class WallNotifications {
 		} else {
 			$this->getDB( true )->delete( 'wall_notification' , $where, __METHOD__ );
 		}
+
+		$this->purgeCountsCache( $userId );
 	}
 
 	protected function unhideNotificationsForUniqueIDDB( $wikiId, $uniqueId ) {
