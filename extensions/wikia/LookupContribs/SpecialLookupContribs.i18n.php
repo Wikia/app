@@ -1032,12 +1032,16 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'lookupcontribsgo' => 'Biçe',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Sernav',
 	'lookupcontribswikioptions' => 'Vebijêrk',
+	'lookupcontribsnext' => 'pêş',
 	'lookupcontribscontent' => 'naverok',
 	'lookupcontribsnormal' => 'niha',
 	'lookupcontribsall' => 'hemû',
@@ -2100,7 +2104,7 @@ $messages['vi'] = array(
 	'lookupcontribsselectuser' => 'Chọn người dùng:',
 	'lookupcontribsselectfor' => 'Chọn cho:',
 	'lookupcontribsdisplaymode' => 'Chế độ hiển thị:',
-	'lookupcontribsselectmodenormal' => 'Đóng góp gần đây cho người dùng đó',
+	'lookupcontribsselectmodenormal' => 'Các đóng góp gần đây cho người dùng này',
 	'lookupcontribsselectmodefinal' => 'Các đóng góp cuối cùng cho người dùng',
 	'lookupcontribsselectmodeall' => 'Tất cả các đóng góp cho người dùng đó',
 	'lookupcontribsfullurls' => 'URL đầy đủ',
@@ -2134,6 +2138,7 @@ $messages['vi'] = array(
 	'lookupcontribsnormal' => 'Gần đây',
 	'lookupcontribsfinal' => 'Cuối cùng',
 	'lookupcontribsall' => 'tất cả',
+	'action-lookupcontribs' => 'Tra các đóng góp của một người dùng trên nhiều trang wiki khác nhau',
 );
 
 /** Yiddish (ייִדיש)

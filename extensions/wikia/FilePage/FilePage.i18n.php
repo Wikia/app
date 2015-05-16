@@ -620,6 +620,14 @@ $messages['ko'] = array(
 	'file-page-more-links' => '전체 목록 보기',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'file-page-tab-about' => 'Derbarê',
+	'file-page-tab-metadata' => 'Daneyên meta',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

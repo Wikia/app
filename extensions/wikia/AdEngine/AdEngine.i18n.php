@@ -316,8 +316,10 @@ $messages['hrx'] = array(
 /** Hungarian (magyar)
  * @author Csega
  * @author Liteon
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
+	'adengine-advertisement' => 'hirdetés',
 	'adengine-exitstitial-redirecting' => 'Böngésződ másodperceken belül átirányít a kívánt oldalra.',
 	'adengine-exitstitial-go-back' => 'Visszamennél?',
 	'adengine-exitstitial-button' => 'Hirdetés átugrása',
@@ -405,6 +407,13 @@ $messages['ko'] = array(
  */
 $messages['krc'] = array(
 	'adengine-advertisement' => 'реклама',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'adengine-exitstitial-title-template' => 'Tu ji $1 derdikevî...',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
