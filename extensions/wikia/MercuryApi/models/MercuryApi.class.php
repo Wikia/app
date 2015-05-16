@@ -240,13 +240,16 @@ class MercuryApi {
 	}
 
 	/**
-	 * Get ads context for Title
+	 * Get ads context for Title. Fallback to empty array if class doesn't exist.
 	 * @param Title $title Title object
 	 * @return array Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
-		$adContext = new AdEngine2ContextService();
-		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+		if ( class_exists( 'AdEngine2ContextService' ) ) {
+			$adContext = new AdEngine2ContextService();
+			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+		}
+		return [];
 	}
 
 	public function processCuratedContent( $data ) {
