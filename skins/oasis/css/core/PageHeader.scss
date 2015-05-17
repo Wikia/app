@@ -268,3 +268,15 @@
 		}
 	}
 }
+
+.ve-activated .wikia-page-header {
+	padding-bottom: 0;
+
+	.header-container {
+		margin-bottom: 0;
+	}
+
+	.wikia-button, .wikia-menu-button, .header-tally {
+		display: none;
+	}
+}
