@@ -109,6 +109,45 @@ abstract class WallMessageController extends EmailController {
 			$this->wallTitle->getPrefixedText() )
 		->inLanguage( $this->targetLang )->parse();
 	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields =  [
+			"inputs" => [
+				[
+					'type' => 'text',
+					'name' => 'wallUserName',
+					'label' => 'Wall Username',
+					'tooltip' => 'Name of the board, eg <wikiName>.wikia.com/wiki/Board:<wallUserName>'
+				],
+				[
+					'type' => 'text',
+					'name' => 'authorUserName',
+					'label' => 'Author Username',
+					'tooltip' => 'Username of the user who posted a reply'
+				],
+				[
+					'type' => 'text',
+					'name' => 'titleUrl',
+					'label' => 'Title URL',
+					'tooltip' => 'URL of the specific forum thread, eg http://community.wikia.com/wiki/Thread:841030#2'
+				],
+				[
+					'type' => 'text',
+					'name' => 'titleText',
+					'label' => 'Title Text',
+					'tooltip' => 'The title of the forum thread, eg "Changing the Font Size of Headings" from Title URL listed above'
+				],
+				[
+					'type' => 'text',
+					'name' => 'details',
+					'label' => 'Details',
+					'tooltip' => 'The text of post'
+				],
+			]
+		];
+
+		return $formFields;
+	}
 }
 
 class OwnWallMessageController extends WallMessageController {
