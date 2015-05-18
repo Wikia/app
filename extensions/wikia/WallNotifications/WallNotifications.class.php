@@ -1,7 +1,7 @@
 <?php
 use Wikia\Logger\WikiaLogger;
 
-/*
+/**
  * Wall notifications allows us to manage notifications about new messages
  * and replies on users Walls
  *
@@ -13,6 +13,8 @@ use Wikia\Logger\WikiaLogger;
  *
  */
 class WallNotifications {
+	const MAX_ABSTRACT_LENGTH = 3000;
+
 	/**
 	 * @var WikiaApp
 	 */
@@ -20,7 +22,7 @@ class WallNotifications {
 
 	private $cachedUsers = [];
 	private $removedEntities;
-	private $uniqueUsers = []; //used for since read email.
+	private $uniqueUsers = []; // used for since read email.
 
 	public function __construct() {
 		$this->app = F::app();
@@ -33,7 +35,7 @@ class WallNotifications {
 	public function getWikiNotifications( $userId, $wikiId, $readSlice = 5, $countonly = false, $notifyeveryone = false ) {
 		/* if since == null, get all notifications */
 		/* possibly ignore $wiki at one point and fetch notifications from all wikis */
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$memcSync = $this->getCache( $userId, $wikiId );
 
@@ -53,7 +55,7 @@ class WallNotifications {
 		}
 
 		if ( empty( $list ) ) {
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return [];
 		}
 		$read = [];
@@ -70,8 +72,8 @@ class WallNotifications {
 				}
 
 				if ( !empty( $grouped ) || $countonly ) {
-					if ( $list['relation'][ $listval ]['read'] ){
-						if ( count( $read ) < $readSlice ){
+					if ( $list['relation'][ $listval ]['read'] ) {
+						if ( count( $read ) < $readSlice ) {
 							$read[] = [
 								"grouped" => $grouped,
 								"count" => 	empty( $list['relation'][ $listval ]['count'] )
@@ -84,7 +86,7 @@ class WallNotifications {
 							$this->remNotificationsForUniqueID( $userId, $wikiId, $listval );
 						}
 					} else {
-						if ( empty( $list['relation'][ $listval ]['notifyeveryone']) || $notifyeveryone ) {
+						if ( empty( $list['relation'][ $listval ]['notifyeveryone'] ) || $notifyeveryone ) {
 							$unread[] = [
 								"grouped" => $grouped,
 								"count" => 	empty( $list['relation'][ $listval ]['count'] )
@@ -119,13 +121,13 @@ class WallNotifications {
 		$unread = $this->sortByTimestamp( $unread );
 
 		$out = [
-			'unread'=> $unread,
+			'unread' => $unread,
 			'unread_count' => count( $unread ),
 			'read' => $read,
 			'read_count' => count( $read )
 		];
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 
@@ -152,7 +154,7 @@ class WallNotifications {
 	public function getCounts( $userId ) {
 		global $wgMemc, $wgCityId;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		$wikiList = $this->getWikiList( $userId );
 
 		// prefetch data
@@ -174,18 +176,18 @@ class WallNotifications {
 			if ( $wiki['unread'] > 0 || $wiki['id'] == $wgCityId )
 				$output[] = $wiki;
 		}
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $output;
 	}
 
 	private function sortByTimestamp( $array ) {
-		uasort($array, [ $this, 'sortByTimestampCB' ]);
+		uasort( $array, [ $this, 'sortByTimestampCB' ] );
 
 		return $array;
 	}
 
 	private function sortByTimestampCB( $a, $b ) {
-		if ( !empty( $a['grouped']) && !empty( $b['grouped'] ) ) {
+		if ( !empty( $a['grouped'] ) && !empty( $b['grouped'] ) ) {
 			if ( $a['grouped'][0]->data->timestamp > $b['grouped'][0]->data->timestamp ) {
 				return -1;
 			}
@@ -228,7 +230,7 @@ class WallNotifications {
 		} else {
 			$output = [];
 		}
-		WikiFactory::prefetchWikisById( array_keys( $val), WikiFactory::PREFETCH_VARIABLES );
+		WikiFactory::prefetchWikisById( array_keys( $val ), WikiFactory::PREFETCH_VARIABLES );
 		foreach ( $val as $wikiId => $wikiSitename ) {
 			$output[] = [
 				'id' => $wikiId,
@@ -297,7 +299,7 @@ class WallNotifications {
 		return $output;
 	}
 
-	protected function groupEntity( $list ){
+	protected function groupEntity( $list ) {
 		$grouped = [];
 		foreach ( array_reverse( $list ) as $obj ) {
 			$notif = WallNotificationEntity::getById( $obj['entityKey'] );
@@ -324,7 +326,6 @@ class WallNotifications {
 	 * @param WallNotificationEntity $notification
 	 */
 	public function notifyEveryone( WallNotificationEntity $notification ) {
-
 		if ( empty( $notification->data_noncached ) || empty( $notification->data_noncached->parent_title_dbkey ) ) {
 			$title = "";
 		} else {
@@ -337,7 +338,7 @@ class WallNotifications {
 			$users = $this->getWatchlist( $notification->data->wall_username, $title );
 		}
 
-		//FB:#11089
+		// FB:#11089
 		$users[$notification->data->wall_userid] = $notification->data->wall_userid;
 
 		if ( !empty( $users[$notification->data->msg_author_id] ) ) {
@@ -370,30 +371,43 @@ class WallNotifications {
 	}
 
 	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
-		$text = strip_tags( $notification->data_noncached->msg_text, '<p><br>' );
-		$text = substr( $text, 0, 3000 ) . ( strlen( $text ) > 3000 ? '...' : '' );
-
-		$textNoHtml = preg_replace( '#<br\s*/?>#i', "\n", $text );
-		$textNoHtml = trim( preg_replace( '#</?p\s*/?>#i', "\n", $textNoHtml ) );
-		$textNoHtml = substr( $textNoHtml, 0, 3000) . ( strlen( $textNoHtml ) > 3000 ? '...' : '' );
+		$text = $this->getAbstract( $notification->data_noncached->msg_text );
+		$textNoHtml = trim( preg_replace( '#</?(p|br)[^/>]*/?>#i', "\n", $text ) );
 
 		$entityKey = $notification->getId();
 
-		if ( empty( $this->uniqueUsers[$entityKey] ) ){
+		if ( empty( $this->uniqueUsers[$entityKey] ) ) {
 			$this->uniqueUsers[$entityKey] = [];
 		}
 
-		foreach ( $watchers as $val ){
-			$watcher = $this->getUser( $val );
-			$mode = $watcher->getOption( 'enotifwallthread' );
+		foreach ( $watchers as $watcherUserId ) {
+			$watcher = $this->getUser( $watcherUserId );
 
-			if ( !empty( $mode ) && $watcher->getId() != 0 && (
-				( $mode == WALL_EMAIL_EVERY ) ||
-				( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) )
-			)) {
+			if ( !$this->canSendToWatcher( $watcher, $entityKey ) ) {
+				continue;
+			}
 
+			$watcherName = $watcher->getName();
+
+			$controller = $this->getEmailExtensionController( $notification, $watcherName );
+			if ( !empty( $controller ) ) {
+				$params = [
+					'wallUserName' => $notification->data->wall_username,
+					'authorUserName' => $notification->data->msg_author_username,
+					'boardNamespace' => $notification->data->article_title_ns,
+					'boardTitle' => $notification->data->article_title_text,
+					'titleText' => $notification->data->thread_title,
+					'threadId' => $notification->data->parent_id,
+					'titleUrl' => $notification->data->url,
+					'details' => $text,
+					'targetUser' => $watcher->getName(),
+					'fromAddress' => $this->app->wg->PasswordSender,
+					'replyToAddress' => $this->app->wg->NoReplyAddress,
+					'fromName' => $this->app->wg->PasswordSenderName
+				];
+				F::app()->sendRequest( $controller, 'handle', $params );
+			} else {
 				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-				$watcherName = $watcher->getName();
 
 				if ( $notification->data->msg_author_username == $notification->data->msg_author_displayname ) {
 					$author_signature = $notification->data->msg_author_username;
@@ -406,37 +420,31 @@ class WallNotifications {
 				wfRunHooks( 'NotificationGetMailNotificationMessage', [
 					&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text
 				]);
-				if ( empty( $data ) ) {
-					$data = [
-						'$WATCHER' => $watcherName,
-						'$WIKI' => $notification->data->wikiname,
-						'$PARENT_AUTHOR_NAME' => 	(empty($notification->data->parent_displayname)
-													? ''
-													: $notification->data->parent_displayname),
-						'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
-						'$AUTHOR' => $notification->data->msg_author_username,
-						'$AUTHOR_SIGNATURE' => $author_signature,
-						'$MAIL_SUBJECT' => wfMessage('mail-notification-subject', [
-							'$1' => $notification->data->thread_title,
-							'$2' => $notification->data->wikiname
-						])->text(),
-						'$METATITLE' => $notification->data->thread_title,
-						'$MESSAGE_LINK' =>  $notification->data->url,
-						'$MESSAGE_NO_HTML' =>  $textNoHtml,
-						'$MESSAGE_HTML' =>  $text,
-						'$MSG_KEY_SUBJECT' => $key,
-						'$MSG_KEY_BODY' => 'mail-notification-body',
-						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
-					];
-				}
 
-				if ( !( $watcher->getBoolOption('unsubscribed') === true ) ) {
-					$this->sendEmail( $watcher, $data );
-				}
+				$this->sendEmail( $watcher, $data );
 			}
 		}
 
 		return true;
+	}
+
+	protected function canSendToWatcher( User $watcher, $entityKey ) {
+		if ( $watcher->getId() == 0 ) {
+			return false;
+		}
+
+		// Don't send an email to users that unsubscribed their email address
+		if ( $watcher->getBoolOption( 'unsubscribed' ) === true ) {
+			return false;
+		}
+
+		$mode = $watcher->getOption( 'enotifwallthread' );
+		if ( empty( $mode ) ) {
+			return false;
+		}
+
+		return ( $mode == WALL_EMAIL_EVERY ) ||
+			( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) );
 	}
 
 	protected function sendEmail( User $watcher, array $data ) {
@@ -464,9 +472,41 @@ class WallNotifications {
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
 	}
 
+	protected function getEmailExtensionController( WallNotificationEntity $notification, $watcherName ) {
+		if ( !empty( $notification->data->article_title_ns )
+			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
+			&& $notification->isMain()
+		) {
+			$controller = 'Email\Controller\Forum';
+		} else if ( !$notification->isMain() ) {
+			$controller = 'Email\Controller\ReplyWallMessage';
+		} else if ( $notification->data->wall_username == $watcherName ) {
+			$controller = 'Email\Controller\OwnWallMessage';
+		} else {
+			$controller = 'Email\Controller\FollowedWallMessage';
+		}
+
+		return $controller;
+	}
+
+	/**
+	 * Get abstract from whole entity text.
+	 * HTML tags are stripped out, expect <p> <br> which are used to make it easier to read.
+	 *
+	 * @param $text
+	 * @return string
+	 */
+	private function getAbstract( $text ) {
+		$text = strip_tags( $text, '<p><br>' );
+		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
+			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
+
+		return $text;
+	}
+
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
-		//TODO: add some caching
-		$userTitle = Title::newFromText( $name, MWNamespace::getSubject($ns) );
+		// TODO: add some caching
+		$userTitle = Title::newFromText( $name, MWNamespace::getSubject( $ns ) );
 
 		$dbw = $this->getLocalDB( true );
 		$res = $dbw->select(
@@ -474,9 +514,10 @@ class WallNotifications {
 			[ 'wl_user' ],
 			[
 				'wl_title' => [ $titleDbkey, $userTitle->getDBkey() ],
-				'wl_namespace' => [ MWNamespace::getSubject($ns), MWNamespace::getTalk($ns) ],
-				//THIS hack will be removed after runing script with will clear all notification copy
-                "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = ".MWNamespace::getSubject($ns).") or ( wl_namespace = " .MWNamespace::getTalk($ns). " ))"
+				'wl_namespace' => [ MWNamespace::getSubject( $ns ), MWNamespace::getTalk( $ns ) ],
+				// THIS hack will be removed after running script with will clear all notification copy
+				// FYI diff for this 3 year old hack: https://github.com/Wikia/app/commit/affdeb1557b2479b9819da1a5f8daacb4dab0bf9
+                "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = " . MWNamespace::getSubject( $ns ) . ") or ( wl_namespace = " . MWNamespace::getTalk( $ns ) . " ))"
 			],
 			__METHOD__
 		);
@@ -510,7 +551,7 @@ class WallNotifications {
 				'unique_id' => $notification->getUniqueId(),
 				'entity_key' => $notification->getId(),
 				'author_id' => $notification->data->msg_author_id,
-				'is_reply' => !$notification->isMain(),
+				'is_reply' => $notification->isReply(),
 				'notifyeveryone' => $notification->data->notifyeveryone
 			]
 		);
@@ -527,13 +568,13 @@ class WallNotifications {
 			function() use( $memcSync, $userId, $wikiId, $id, &$updateDBlist, &$wasUnread ) {
 				$data = $this->getData( $memcSync, $userId, $wikiId );
 
-				if ($id == 0 && !empty( $data['relation'] ) ) {
+				if ( $id == 0 && !empty( $data['relation'] ) ) {
 					$ids = array_keys( $data['relation'] );
 				} else {
 					$ids = [ $id ];
 				}
 
-				foreach ($ids as $value) {
+				foreach ( $ids as $value ) {
 					if ( !empty( $data['relation'][ $value] ) ) {
 						if ( $data['relation'][ $value ]['read'] == false ) {
 							$wasUnread = true;
@@ -595,7 +636,7 @@ class WallNotifications {
 
 		foreach ( $users as $uId ) {
 
-			if ($this->isCachedData( $uId, $wikiId ) ) {
+			if ( $this->isCachedData( $uId, $wikiId ) ) {
 				$memcSync = $this->getCache( $uId, $wikiId );
 
 				$memcSync->lockAndSetData(
@@ -690,7 +731,7 @@ class WallNotifications {
 		}
 
 		$this->storeInDB( $userId, $wikiId, $notification );
-		//id use to prevent having of extra entry after memc fail.
+		// id use to prevent having of extra entry after memc fail.
 
 		$memcSync = $this->getCache( $userId, $wikiId );
 
@@ -711,11 +752,11 @@ class WallNotifications {
 	}
 
 	protected function random_msleep( $max = 20 ) {
-		usleep( rand( 1, $max*1000 ) );
+		usleep( rand( 1, $max * 1000 ) );
 	}
 
 	protected function remNotificationFromData( &$data, $uniqueId ) {
-		if ( isset( $data['relation'][ $uniqueId ]['last']) && $data['relation'][ $uniqueId ]['last'] > -1 ) {
+		if ( isset( $data['relation'][ $uniqueId ]['last'] ) && $data['relation'][ $uniqueId ]['last'] > -1 ) {
 			unset( $data['notification'][ $data['relation'][$uniqueId ]['last'] ] );
 			unset( $data['relation'][$uniqueId ] );
 		}
@@ -759,7 +800,7 @@ class WallNotifications {
 
 		}
 
-		if ( empty($data['relation'][ $uniqueId ]['list']) || $data['relation'][ $uniqueId ]['read'] ) {
+		if ( empty( $data['relation'][ $uniqueId ]['list'] ) || $data['relation'][ $uniqueId ]['read'] ) {
 			// this is new Notification (new thread), so create some basic structure for it
 			$data['relation'][ $uniqueId ]['list'] = [];
 			$data['relation'][ $uniqueId ]['count'] = 0;
@@ -797,7 +838,7 @@ class WallNotifications {
 					$this->removedEntities[] = [
 						'user_id' => $userId,
 						'wiki_id' => $wikiId,
-						'unique_id'=>$uniqueId,
+						'unique_id' => $uniqueId,
 						'entity_key' => $rel['entityKey']
 					];
 				}
@@ -831,7 +872,7 @@ class WallNotifications {
 		}
 
 		// if we didn't find same author in our list, we need to remove oldest element
-		if ( $found == false && count( $data['relation'][ $uniqueId ]['list']) > 2 ) {
+		if ( $found == false && count( $data['relation'][ $uniqueId ]['list'] ) > 2 ) {
 			$first = array_shift( $data['relation'][ $uniqueId ]['list'] );
 			if ( $first ) {
 				// keep track of removed elements - we will remove them from db
@@ -839,19 +880,19 @@ class WallNotifications {
 				$this->removedEntities[] = [
 					'user_id' => $userId,
 					'wiki_id' => $wikiId,
-					'unique_id'=>$uniqueId,
+					'unique_id' => $uniqueId,
 					'entity_key' => $first['entityKey']
 				];
 			}
 		}
 
 		// if this was new author increase author count
-		if ( $found == false ){
+		if ( $found == false ) {
 			// add new element
 			$data['relation'][ $uniqueId ]['list'][] = [
 				'entityKey' => $entityKey,
 				'authorId' => $authorId,
-				'isReply'=>$isReply
+				'isReply' => $isReply
 			];
 			$data['relation'][ $uniqueId ]['count'] += 1;
 			$data['relation'][ $uniqueId ]['notifyeveryone'] = $notifyeveryone;
@@ -915,7 +956,7 @@ class WallNotifications {
 
 
 	public function rebuildData( $userId, $wikiId, $useMaster = true ) {
-		$data =[
+		$data = [
 			'notification' => [],
 			'relation' => []
 		];
@@ -946,7 +987,7 @@ class WallNotifications {
 		// for many notifications we want to make sure we 50 notifications from different pages hance distinct
 		$db = $this->getDB( $useMaster );
 		$res = $db->select(
-			[ 'wn1' => 'wall_notification','wn2' => 'wall_notification' ],
+			[ 'wn1' => 'wall_notification', 'wn2' => 'wall_notification' ],
 			[ 'wn1.unique_id' ],
 			[
 				'wn1.user_id' => $userId,
@@ -1001,7 +1042,7 @@ class WallNotifications {
 		return $out;
 	}
 
-	public function storeInDB( $userId, $wikiId, $notification ){
+	public function storeInDB( $userId, $wikiId, $notification ) {
 		$notification['is_read'] = 0;
 		$notification['is_hidden'] = 0;
 		$notification['user_id'] = $userId;
@@ -1012,8 +1053,8 @@ class WallNotifications {
 			'userId' => $userId
 		] );
 
-		$this->getDB(true)->insert( 'wall_notification', $notification, __METHOD__ );
-		$this->getDB(true)->commit();
+		$this->getDB( true )->insert( 'wall_notification', $notification, __METHOD__ );
+		$this->getDB( true )->commit();
 	}
 
 	protected function getCache( $userId, $wikiId ) {
@@ -1021,17 +1062,17 @@ class WallNotifications {
 		return new MemcacheSync( $wgMemc, $this->getKey( $userId, $wikiId ) );
 	}
 
-	public function getDB( $master = false ){
+	public function getDB( $master = false ) {
 		global $wgExternalDatawareDB;
-		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, [], $wgExternalDatawareDB );
+		return wfGetDB( $master ? DB_MASTER: DB_SLAVE, [], $wgExternalDatawareDB );
 	}
 
-	public function getLocalDB( $master = false ){
-		return wfGetDB( $master ? DB_MASTER:DB_SLAVE, [] );
+	public function getLocalDB( $master = false ) {
+		return wfGetDB( $master ? DB_MASTER: DB_SLAVE, [] );
 	}
 
-	public function getKey( $userId, $wikiId ){
-		return wfSharedMemcKey( __CLASS__, $userId, $wikiId. 'v31' );
+	public function getKey( $userId, $wikiId ) {
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v31' );
 	}
 
 	/**
@@ -1045,10 +1086,9 @@ class WallNotifications {
 	 * @return User User object
 	 */
 	protected function getUser( $userId ) {
-		if ( !array_key_exists($userId,$this->cachedUsers ) ) {
-			$this->cachedUsers[$userId] = User::newFromId($userId);
+		if ( !array_key_exists( $userId, $this->cachedUsers ) ) {
+			$this->cachedUsers[$userId] = User::newFromId( $userId );
 		}
 		return $this->cachedUsers[$userId];
 	}
-
 }

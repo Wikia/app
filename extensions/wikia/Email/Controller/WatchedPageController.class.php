@@ -98,14 +98,6 @@ class WatchedPageController extends EmailController {
 	/**
 	 * @return String
 	 */
-	private function getSalutation() {
-		return wfMessage( 'emailext-watchedpage-salutation',
-			$this->targetUser->getName() )->inLanguage( $this->targetLang )->text();
-	}
-
-	/**
-	 * @return String
-	 */
 	private function getSummary() {
 		return wfMessage( 'emailext-watchedpage-article-edited',
 			$this->title->getFullURL(),
