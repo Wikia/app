@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Wikia Flags Extension
  * @author Adam Karmiński
@@ -26,3 +25,13 @@ $wgAutoloadClasses['Flags\Models\FlagsBaseModel'] = __DIR__ . '/models/FlagsBase
 $wgAutoloadClasses['Flags\Models\Flag'] = __DIR__ . '/models/Flag.class.php';
 $wgAutoloadClasses['Flags\Models\FlagParameter'] = __DIR__ . '/models/FlagParameter.class.php';
 $wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.php';
+
+/**
+ * Other classes
+ */
+$wgAutoloadClasses['Flags\FlagsHooks'] = __DIR__ . '/FlagsHooks.class.php';
+
+/**
+ * Hooks
+ */
+$wgHooks['SkinTemplateNavigation'][] = 'Flags\FlagsHooks::onSkinTemplateNavigation';
