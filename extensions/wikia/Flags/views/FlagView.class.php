@@ -9,7 +9,7 @@ class FlagView {
 		$viewCall = '{{' . $flagView;
 
 		if ( !empty( $params ) ) {
-			foreach( $params as $paramName => $paramValue ) {
+			foreach ( $params as $paramName => $paramValue ) {
 				$viewCall .= "|{$paramName}={$paramValue}";
 			}
 		}

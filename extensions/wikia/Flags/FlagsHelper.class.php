@@ -15,14 +15,14 @@ class Helper {
 				$flagsWikitext .= $flagView->createWikitextCall( $flag['flag_view'], $flag['params'] );
 			}
 			return $flagsWikitext;
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 
 	private function sendGetFlagsForPageRequest( $pageId ) {
 		$app = \F::app();
-		return $app->sendRequest('FlagsController',
+		return $app->sendRequest( 'FlagsController',
 			'getFlagsForPage',
 			[
 				'pageId' => $pageId,

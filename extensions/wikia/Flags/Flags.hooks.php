@@ -10,8 +10,8 @@ class Hooks {
 	 * Hooks into the internalParse() process and injects a wikitext
 	 * with notices for the given page.
 	 * @param \Parser $parser
-	 * @param $text
-	 * @param $stripState
+	 * @param string $text
+	 * @param \StripState $stripState
 	 * @return bool
 	 */
 	public static function onParserBeforeInternalParse( \Parser $parser, &$text, &$stripState ) {
@@ -31,7 +31,7 @@ class Hooks {
 			$addText = $helper->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 
 			if ( $addText !== null ) {
-				$mwf = \MagicWord::get('flags');
+				$mwf = \MagicWord::get( 'flags' );
 				if ( $mwf->match( $text ) ) {
 					$text = $mwf->replace( $addText, $text );
 				} else {
