@@ -46,29 +46,30 @@ class XmlParser {
 	}
 
 	/**
-	 * @param $xml String
+	 * @param $xmlString
 	 * @return array
+	 * @throws XmlMarkupParseErrorException
+	 * @internal param String $xml
 	 */
 	public function getDataFromXmlString( $xmlString ) {
 		wfProfileIn( __METHOD__ );
+
 		$global_libxml_setting = libxml_use_internal_errors();
 		libxml_use_internal_errors( true );
 		$xml = simplexml_load_string( $xmlString );
+		$errors = libxml_get_errors();
+		libxml_use_internal_errors( $global_libxml_setting );
+
 		if ( $xml === false ) {
-			$errors = libxml_get_errors();
 			foreach ( $errors as $xmlerror ) {
-				if ( $xmlerror->level >= LIBXML_ERR_ERROR ) {
-					\Wikia\Logger\WikiaLogger::instance()->debug( "PortableInfobox XML Parser problem", [
+					\Wikia\Logger\WikiaLogger::instance()->info( "PortableInfobox XML Parser problem", [
 						"level" => $xmlerror->level,
 						"code" => $xmlerror->code,
 						"message" => $xmlerror->message ] );
-				}
 			}
 			libxml_clear_errors();
-			libxml_use_internal_errors( $global_libxml_setting );
 			throw new XmlMarkupParseErrorException();
 		}
-
 		$data = $this->getDataFromNodes( $xml );
 
 		wfProfileOut( __METHOD__ );
