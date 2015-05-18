@@ -195,6 +195,11 @@ class ArticleCommentController extends CommentController {
 					'label' => "Article Title",
 					'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
 				],
+				[
+					'type' => 'hidden',
+					'name' => 'namespace',
+					'value' => NS_MAIN
+				]
 			]
 		];
 
