@@ -206,7 +206,8 @@ define('ext.wikia.adEngine.slot.inContent', [
 			return false;
 		}
 
-		maxHeightDiff = 1.2 * $ad.outerWidth(true) * adHeight / originalContainerWidth;
+		// 1.2 = accept 20% more height difference than calculated by strict math in case the text flows differently
+		maxHeightDiff = 1.2 * adWidth * adHeight / originalContainerWidth;
 		minSectionHeight = adHeight - maxHeightDiff;
 
 		if (section.height < minSectionHeight) {

@@ -63,7 +63,7 @@ define('ext.wikia.adEngine.slot.inContentDesktop', [
 
 				trackedData.tried300x600 = try300x600 ? 'yes' : 'no';
 				trackedData.fitted300x600 = slotName === 'INCONTENT_1C' ? 'yes' : 'no';
-				trackedData.top = $ad.offset().top.toFixed(-2);
+				trackedData.top = Math.round($ad.offset().top / 100) * 100;
 			} else {
 				log('No capable section found', 'info', logGroup);
 
