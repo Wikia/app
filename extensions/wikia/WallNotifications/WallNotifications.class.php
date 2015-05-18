@@ -497,7 +497,7 @@ class WallNotifications {
 	 * @return string
 	 */
 	private function getAbstract( $text ) {
-		$text = strip_tags( $text->data_noncached->msg_text, '<p><br>' );
+		$text = strip_tags( $text, '<p><br>' );
 		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
 			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
 
