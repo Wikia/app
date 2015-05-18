@@ -374,7 +374,6 @@ class WallNotifications {
 		$text = strip_tags( $notification->data_noncached->msg_text, '<p><br>' );
 		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
 			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
-		$textNoHtml = trim( preg_replace( '#</?(p|br)[^/>]*/?>#i', "\n", $text ) );
 
 		$entityKey = $notification->getId();
 
@@ -392,44 +391,25 @@ class WallNotifications {
 			$watcherName = $watcher->getName();
 			$controller = $this->getEmailExtensionController( $notification, $watcherName );
 
-			if ( !empty( $controller ) ) {
-				$params = [
-					'boardNamespace' => $notification->data->article_title_ns,
-					'boardTitle' => $notification->data->article_title_text,
-					'titleText' => $notification->data->thread_title,
-					'titleUrl' => $notification->data->url,
-					'details' => $text,
-					'targetUser' => $watcherName,
-					'fromAddress' => $this->app->wg->PasswordSender,
-					'replyToAddress' => $this->app->wg->NoReplyAddress,
-					'fromName' => $notification->data->msg_author_username,
-					'messageLink' => $notification->data->url,
-					'boardName' => $notification->data->article_title_text,
-					'threadTitle' => $notification->data->thread_title,
-					'wallUserName' => $notification->data->wall_username,
-					'authorUserName' => $notification->data->msg_author_username,
-					'threadId' => $notification->data->parent_id
-				];
+			$params = [
+				'boardNamespace' => $notification->data->article_title_ns,
+				'boardTitle' => $notification->data->article_title_text,
+				'titleText' => $notification->data->thread_title,
+				'titleUrl' => $notification->data->url,
+				'details' => $text,
+				'targetUser' => $watcherName,
+				'fromAddress' => $this->app->wg->PasswordSender,
+				'replyToAddress' => $this->app->wg->NoReplyAddress,
+				'fromName' => $notification->data->msg_author_username,
+				'messageLink' => $notification->data->url,
+				'boardName' => $notification->data->article_title_text,
+				'threadTitle' => $notification->data->thread_title,
+				'wallUserName' => $notification->data->wall_username,
+				'authorUserName' => $notification->data->msg_author_username,
+				'threadId' => $notification->data->parent_id
+			];
 
-				F::app()->sendRequest( $controller, 'handle', $params );
-			} else {
-				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-
-				if ( $notification->data->msg_author_username == $notification->data->msg_author_displayname ) {
-					$author_signature = $notification->data->msg_author_username;
-				} else {
-					$author_signature = $notification->data->msg_author_displayname .
-						' (' . $notification->data->msg_author_username . ')';
-				}
-
-				$data = [];
-				wfRunHooks( 'NotificationGetMailNotificationMessage', [
-					&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text
-				]);
-
-				$this->sendEmail( $watcher, $data );
-
-			}
+			F::app()->sendRequest( $controller, 'handle', $params );
 		}
 
 		return true;
