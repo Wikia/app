@@ -1,8 +1,10 @@
 <?php
 
+namespace Flags;
+
 use Flags\Views\FlagView;
 
-class FlagsHelper {
+class Helper {
 
 	public function getFlagsForPageWikitext( $pageId ) {
 		$flags = $this->sendGetFlagsForPageRequest( $pageId );

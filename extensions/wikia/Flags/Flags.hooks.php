@@ -2,6 +2,8 @@
 
 namespace Flags;
 
+use Flags\Helper;
+
 class Hooks {
 
 	/**
@@ -25,7 +27,7 @@ class Hooks {
 			&& !\WikiaPageType::isEditPage()
 			&& !( $wgRequest->getVal( 'action' ) == 'visualeditor' )
 		) {
-			$helper = new \FlagsHelper();
+			$helper = new Helper();
 			$addText = $helper->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 
 			if ( $addText !== null ) {
