@@ -34,4 +34,5 @@ $wgAutoloadClasses['Flags\FlagsHooks'] = __DIR__ . '/FlagsHooks.class.php';
 /**
  * Hooks
  */
+$wgHooks['BeforePageDisplay'][] = 'Flags\FlagsHooks::onBeforePageDisplay';
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\FlagsHooks::onSkinTemplateNavigation';
