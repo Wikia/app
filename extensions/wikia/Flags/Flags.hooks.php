@@ -25,18 +25,18 @@ class Hooks {
 			&& !\WikiaPageType::isEditPage()
 			&& !( $wgRequest->getVal( 'action' ) == 'visualeditor' )
 		) {
-			$mwf = \MagicWord::get('flags');
-			$isMagicWordMatch = $mwf->match( $text );
-
 			$helper = new \FlagsHelper();
 			$addText = $helper->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
+
 			if ( $addText !== null ) {
-				if ( $isMagicWordMatch ) {
+				$mwf = \MagicWord::get('flags');
+				if ( $mwf->match( $text ) ) {
 					$text = $mwf->replace( $addText, $text );
 				} else {
 					$text = $addText . $text;
 				}
 			}
+
 			$parser->mFlagsParsed = true;
 		}
 
