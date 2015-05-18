@@ -34,7 +34,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			'3x5': null,
 			'3x6': null,
 			'7x9': null
-		};
+		},
+		module;
 
 	function trackState(trackEnd) {
 		log(['trackState', amazonResponse], 'debug', logGroup);
@@ -73,7 +74,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			amazonResponse = response.ads;
 		}
 
-		if (amazonResponse && Object.keys) {
+		if (amazonResponse) {
 			var targetingParams = Object.keys(amazonResponse),
 				allPricePointsForSize = {},
 				i,
@@ -149,9 +150,6 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	}
 
 	function isValidSlot(slotName, validSlotNames) {
-		// No Object.keys on IE8
-		checkIfObjectKeysNotSupported('isValidSlot()', false);
-
 		var isValid = false;
 
 		Object.keys(validSlotNames).forEach(function (k) {
@@ -165,20 +163,10 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return isValid;
 	}
 
-	function checkIfObjectKeysNotSupported(functionName, retval) {
-		if (!Object.keys && retval) {
-			log([functionName, 'no Object.keys (IE8?)'], 'error', logGroup);
-			return retval;
-		}
-	}
-
 	function getSlotParams(slotName) {
 		log(['getSlotParams', slotName], 'debug', logGroup);
 
 		var amznSlots = [];
-
-		// No Object.keys on IE8
-		checkIfObjectKeysNotSupported('filterSlots()', {});
 
 		Object.keys(sizeMapping).forEach(function (amazonSize) {
 			var validSlotNames = sizeMapping[amazonSize],
@@ -200,12 +188,25 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return {};
 	}
 
-	return {
-		call: call,
-		getSlotParams: getSlotParams,
+	module = {
+		call: function () {
+			log('fake call - module is not supported in IE8', 'debug', logGroup);
+		},
+		getSlotParams: function () {
+			log('fake getSlotParams - module is not supported in IE8', 'debug', logGroup);
+			return {};
+		},
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled
 	};
+
+	if (!Object.keys) {
+		return module;
+	} else {
+		module.call = call;
+		module.getSlotParams = getSlotParams;
+		return module;
+	}
 });
 
 define('ext.wikia.adEngine.amazonMatch', [
