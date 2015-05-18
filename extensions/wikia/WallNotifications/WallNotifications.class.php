@@ -384,6 +384,11 @@ class WallNotifications {
 
 		foreach ( $watchers as $watcherUserId ) {
 			$watcher = $this->getUser( $watcherUserId );
+
+			if ( !$this->canSendToWatcher( $watcher, $entityKey ) ) {
+				continue;
+			}
+
 			$watcherName = $watcher->getName();
 
 			$controller = $this->getEmailExtensionController( $notification, $watcherName );
@@ -435,17 +440,13 @@ class WallNotifications {
 			return false;
 		}
 
-		// Don't send the same email twice
-		if ( !empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) ) {
-			return false;
-		}
-
 		$mode = $watcher->getOption( 'enotifwallthread' );
 		if ( empty( $mode ) ) {
 			return false;
 		}
 
-		return ( $mode == WALL_EMAIL_EVERY ) || ( $mode == WALL_EMAIL_SINCEVISITED );
+		return ( $mode == WALL_EMAIL_EVERY ) ||
+			( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) );
 	}
 
 	protected function sendEmail( User $watcher, array $data ) {
