@@ -382,11 +382,13 @@ class MercuryApiController extends WikiaController {
 	}
 
 	private function getTrendingArticlesData() {
+		global $wgContentNamespaces;
+
 		$params = [
 			'abstract' => false,
 			'expand' => true,
 			'limit' => 10,
-			'namespaces' => '0'
+			'namespaces' => implode( ',', $wgContentNamespaces )
 		];
 		$data = [];
 
