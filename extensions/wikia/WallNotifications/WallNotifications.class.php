@@ -473,9 +473,7 @@ class WallNotifications {
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
 	}
 
-	protected function getEmailExtensionController( $notification, $watcherName ) {
-		$controller = false;
-
+	protected function getEmailExtensionController( WallNotificationEntity $notification, $watcherName ) {
 		if ( !empty( $notification->data->article_title_ns )
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
 			&& $notification->isMain()
