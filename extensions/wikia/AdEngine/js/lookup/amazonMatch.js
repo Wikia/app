@@ -158,7 +158,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			var validSlotNames = sizeMapping[amazonSize],
 				amazonPricePoint = bestPricePointForSize[amazonSize];
 
-			if (validSlotNames.indexOf(slotName) !== false && amazonPricePoint) {
+			if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
 				amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
 			}
 		});
