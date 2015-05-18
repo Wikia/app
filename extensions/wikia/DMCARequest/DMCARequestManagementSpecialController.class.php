@@ -227,6 +227,13 @@ class DMCARequestManagementSpecialController extends WikiaSpecialPageController 
 			return false;
 		}
 
+		$requestData['language'] = trim( $request->getVal( 'language' ) );
+		if ( !$this->getClient()->isValidLanguageCode( $requestData['language'] ) ) {
+			$this->error = $this->msg( 'dmcarequest-request-error-invalid' )->escaped();
+			$this->errorParam = 'language';
+			return false;
+		}
+
 		return $requestData;
 	}
 
@@ -275,6 +282,7 @@ class DMCARequestManagementSpecialController extends WikiaSpecialPageController 
 					'label' => $this->msg( 'dmcarequestmanagement-action-label' )->escaped(),
 					'options' => $this->getActionOptions(),
 					'value' => Sanitizer::encodeAttribute( $request->getVal( 'actiontaken' ) ),
+					'isInvalid' => $this->errorParam === 'actiontaken',
 				],
 				[
 					'type' => 'text',
@@ -292,6 +300,15 @@ class DMCARequestManagementSpecialController extends WikiaSpecialPageController 
 					'label' => $this->msg( 'dmcarequestmanagement-sendertype-label' )->escaped(),
 					'options' => $this->getSenderTypeOptions(),
 					'value' => Sanitizer::encodeAttribute( $request->getVal( 'sendertype' ) ),
+					'isInvalid' => $this->errorParam === 'sendertype',
+				],
+				[
+					'type' => 'select',
+					'name' => 'language',
+					'label' => $this->msg( 'dmcarequestmanagement-language-label' )->escaped(),
+					'options' => $this->getLanguageOptions(),
+					'value' => Sanitizer::encodeAttribute( $request->getVal( 'language', ChillingEffectsClient::DEFAULT_LANG ) ),
+					'isInvalid' => $this->errorParam === 'language',
 				],
 				[
 					'type' => 'textarea',
@@ -380,6 +397,20 @@ class DMCARequestManagementSpecialController extends WikiaSpecialPageController 
 				'content' => $this->msg( 'dmcarequestmanagement-sender-type-' . $senderType )->escaped(),
 			];
 		}
+		return $options;
+	}
+
+	private function getLanguageOptions() {
+		$options = [];
+		$languages = $this->getClient()->getSupportedLanguages();
+
+		foreach ( $languages as $code => $language ) {
+			$options[] = [
+				'value' => $code,
+				'content' => Sanitizer::encodeAttribute( $code . ' - ' . $language ),
+			];
+		}
+
 		return $options;
 	}
 
