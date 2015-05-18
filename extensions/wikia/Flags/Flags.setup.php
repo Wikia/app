@@ -29,7 +29,7 @@ $wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.
 /**
  * Other classes
  */
-$wgAutoloadClasses['Flags\FlagsHooks'] = __DIR__ . '/FlagsHooks.class.php';
+$wgAutoloadClasses['Flags\FlagsHooks'] = __DIR__ . '/Flags.hooks.php';
 
 /**
  * Hooks
