@@ -149,20 +149,6 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return amazonCalled;
 	}
 
-	function isValidSlot(slotName, validSlotNames) {
-		var isValid = false;
-
-		Object.keys(validSlotNames).forEach(function (k) {
-			var validSlotName = validSlotNames[k];
-
-			if (!isValid) {
-				isValid = slotName === validSlotName;
-			}
-		});
-
-		return isValid;
-	}
-
 	function getSlotParams(slotName) {
 		log(['getSlotParams', slotName], 'debug', logGroup);
 
@@ -172,7 +158,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			var validSlotNames = sizeMapping[amazonSize],
 				amazonPricePoint = bestPricePointForSize[amazonSize];
 
-			if (isValidSlot(slotName, validSlotNames) && amazonPricePoint) {
+			if (validSlotNames.indexOf(slotName) !== false && amazonPricePoint) {
 				amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
 			}
 		});
