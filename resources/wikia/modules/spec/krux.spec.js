@@ -23,7 +23,7 @@ describe('Krux module', function () {
 		expect(getModule().getUser()).toBe(mocks.window.localStorage.kxuser);
 	});
 
-	it('Expects to get user from localStorage', function () {
+	it('Expects to get empty array of segments from localStorage', function () {
 		expect(getModule().getSegments()).toEqual([]);
 	});
 
