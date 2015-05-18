@@ -371,9 +371,7 @@ class WallNotifications {
 	}
 
 	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
-		$text = strip_tags( $notification->data_noncached->msg_text, '<p><br>' );
-		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
-			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
+		$text = $this->getAbstract( $notification->data_noncached->msg_text );
 
 		$entityKey = $notification->getId();
 
@@ -381,8 +379,8 @@ class WallNotifications {
 			$this->uniqueUsers[$entityKey] = [];
 		}
 
-		foreach ( $watchers as $val ){
-			$watcher = $this->getUser( $val );
+		foreach ( $watchers as $watcherUserId ) {
+			$watcher = $this->getUser( $watcherUserId );
 
 			if ( !$this->canSendToWatcher( $watcher, $entityKey ) ) {
 				continue;
@@ -425,17 +423,13 @@ class WallNotifications {
 			return false;
 		}
 
-		// Don't send the same email twice
-		if ( !empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) ) {
-			return false;
-		}
-
 		$mode = $watcher->getOption( 'enotifwallthread' );
 		if ( empty( $mode ) ) {
 			return false;
 		}
 
-		return ( $mode == WALL_EMAIL_EVERY ) || ( $mode == WALL_EMAIL_SINCEVISITED );
+		return ( $mode == WALL_EMAIL_EVERY ) ||
+			( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) );
 	}
 
 	protected function sendEmail( User $watcher, array $data ) {
@@ -463,9 +457,7 @@ class WallNotifications {
 		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
 	}
 
-	protected function getEmailExtensionController( $notification, $watcherName ) {
-		$controller = false;
-
+	protected function getEmailExtensionController( WallNotificationEntity $notification, $watcherName ) {
 		if ( !empty( $notification->data->article_title_ns )
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
 		) {
@@ -484,6 +476,21 @@ class WallNotifications {
 		}
 
 		return $controller;
+	}
+
+	/**
+	 * Get abstract from whole entity text.
+	 * HTML tags are stripped out, expect <p> <br> which are used to make it easier to read.
+	 *
+	 * @param $text
+	 * @return string
+	 */
+	private function getAbstract( $text ) {
+		$text = strip_tags( $text->data_noncached->msg_text, '<p><br>' );
+		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
+			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
+
+		return $text;
 	}
 
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {

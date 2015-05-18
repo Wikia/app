@@ -108,6 +108,44 @@ class ForumController extends EmailController {
 
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields =  [
+			"inputs" => [
+				[
+					'type' => 'text',
+					'name' => 'titleText',
+					'label' => 'Title Text',
+					'tooltip' => 'The title of the forum thread, eg "Changing the Font Size of Headings" from Title URL listed above'
+				],
+				[
+					'type' => 'text',
+					'name' => 'titleUrl',
+					'label' => 'Title URL',
+					'tooltip' => 'URL of the specific forum thread, eg http://community.wikia.com/wiki/Thread:841030'
+				],
+				[
+					'type' => 'text',
+					'name' => 'boardTitle',
+					'label' => 'Board Title',
+					'tooltip' => 'Name of the board, eg <wikiName>.wikia.com/wiki/Board:<wallUserName>'
+				],
+				[
+					'type' => 'hidden',
+					'name' => 'boardNamespace',
+					'value' => NS_WIKIA_FORUM_BOARD
+				],
+				[
+					'type' => 'text',
+					'name' => 'details',
+					'label' => 'Details',
+					'tooltip' => 'The first posting in the board'
+				],
+			]
+		];
+
+		return $formFields;
+	}
 }
 
 class ReplyForumController extends ForumController {
