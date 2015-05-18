@@ -170,12 +170,23 @@ class CreateWiki {
 	 * @see PLATFORM-1219
 	 */
 	private function waitForSlaves( $fname ){
-		// commit the changes
-		$this->mNewWiki->dbw->commit( $fname );
+		global $wgExternalSharedDB;
+		$then = microtime( true );
 
-		# PLATFORM-1219 - wait for slaves to catch up (shared DB and the current new wikis cluster)
-		wfWaitForSlaves( $wgExternalSharedDB );
-		wfWaitForSlaves( $this->mClusterDB );
+		// commit the changes
+		$res = $this->mNewWiki->dbw->commit( $fname );
+
+		# PLATFORM-1219 - wait for slaves to catch up (shared DB, cluster's shared DB and the new wiki DB)
+		wfWaitForSlaves( $wgExternalSharedDB );     // wikicities (shared DB)
+		wfWaitForSlaves( $this->mClusterDB );       // wikicities_c7
+		wfWaitForSlaves( $this->mNewWiki->dbname ); // new_wiki_db
+
+		$this->info( __METHOD__, [
+			'commit_res' => $res,
+			'cluster'    => $this->mClusterDB,
+			'fname'      => $fname,
+			'took'       => microtime( true ) - $then,
+		] );
 	}
 
 	/**
