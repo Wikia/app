@@ -399,7 +399,7 @@ class WallNotifications {
 					'titleText' => $notification->data->thread_title,
 					'titleUrl' => $notification->data->url,
 					'details' => $text,
-					'targetUser' => $watcher->getName(),
+					'targetUser' => $watcherName,
 					'fromAddress' => $this->app->wg->PasswordSender,
 					'replyToAddress' => $this->app->wg->NoReplyAddress,
 					'fromName' => $notification->data->msg_author_username,
@@ -414,7 +414,6 @@ class WallNotifications {
 				F::app()->sendRequest( $controller, 'handle', $params );
 			} else {
 				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-				$watcherName = $watcher->getName();
 
 				if ( $notification->data->msg_author_username == $notification->data->msg_author_displayname ) {
 					$author_signature = $notification->data->msg_author_username;
@@ -494,7 +493,7 @@ class WallNotifications {
 				$controller = 'Email\Controller\Forum';
 			}
 			else {
-				$controller = 'Email\Controller\ForumReply';
+				$controller = 'Email\Controller\ReplyForum';
 			}
 		} else if ( !$notification->isMain() ) {
 			$controller = 'Email\Controller\ReplyWallMessage';
