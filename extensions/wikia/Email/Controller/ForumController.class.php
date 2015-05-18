@@ -50,6 +50,7 @@ class ForumController extends EmailController {
 			'detailsHeader' => $this->getDetailsHeader(),
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
+			'contentFooterMessages' => $this->getContentFooterMessages()
 		] );
 	}
 
@@ -81,9 +82,12 @@ class ForumController extends EmailController {
 	}
 
 	protected function getButtonText() {
-		return wfMessage( 'emailext-forum-button-label' )
+		return wfMessage( $this->getButtonTextKey() )
 			->inLanguage( $this->targetLang )
 			->parse();
+	}
+	protected function getButtonTextKey() {
+		return 'emailext-forum-button-label';
 	}
 
 	protected function getButtonLink() {
@@ -92,6 +96,10 @@ class ForumController extends EmailController {
 
 	protected function getDetailsHeader() {
 		return $this->titleText;
+	}
+
+	protected function getContentFooterMessages() {
+		return [];
 	}
 
 	protected function getFooterMessages() {
@@ -123,15 +131,25 @@ class ForumReplyController extends ForumController {
 			->parse();
 	}
 
+	protected function getContentFooterMessages() {
+		return array_merge( parent::getContentFooterMessages(), [ $this->getViewAll() ] );
+	}
+
+	protected function getViewAll() {
+		return wfMessage( 'emailext-forum-reply-view-all', $this->titleUrl )
+			->inLanguage( $this->targetLang )
+			->parse();
+	}
+
+	protected function getButtonTextKey() {
+		return 'emailext-forum-reply-link-label';
+	}
+
 	protected function getSubjectKey() {
 		return 'emailext-forum-reply-subject';
 	}
 
 	protected function getSummaryKey() {
 		return 'emailext-forum-reply-summary';
-	}
-
-	protected function getViewAllKey(){
-		return 'emailext-forum-reply-view-all';
 	}
 }
