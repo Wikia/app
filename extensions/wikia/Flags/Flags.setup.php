@@ -26,3 +26,24 @@ $wgAutoloadClasses['Flags\Models\FlagsBaseModel'] = __DIR__ . '/models/FlagsBase
 $wgAutoloadClasses['Flags\Models\Flag'] = __DIR__ . '/models/Flag.class.php';
 $wgAutoloadClasses['Flags\Models\FlagParameter'] = __DIR__ . '/models/FlagParameter.class.php';
 $wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.php';
+
+/**
+ * Views
+ */
+$wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.php';
+
+/**
+ * Helper
+ */
+$wgAutoloadClasses['Flags\Helper'] = __DIR__ . '/FlagsHelper.class.php';
+
+/**
+ * Hooks
+ */
+$wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
+$wgHooks['ParserBeforeInternalParse'][] = 'Flags\Hooks::onParserBeforeInternalParse';
+
+/**
+ * Messages
+ */
+$wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
