@@ -30,69 +30,74 @@ class WallNotifications {
 	/*
 	 * Public Interface
 	 */
-	public function getWikiNotifications( $userId, $wikiId, $readSlice = 5, $countonly = false, $notifyeveryone = false ) {
-		/* if since == null, get all notifications */
-		/* possibly ignore $wiki at one point and fetch notifications from all wikis */
-		wfProfileIn(__METHOD__);
 
-		$memcSync = $this->getCache( $userId, $wikiId );
+	/**
+	 * Get all notifications for a user on a wiki
+	 *
+	 * @param int $userId The user ID receiving notifications
+	 * @param int $wikiId The wikia on which the notifications originated
+	 * @param int $readSlice Max number of already read messages to show
+	 * @param bool $countOnly Set to true to only return a count.  This should be split out to another function
+	 * @param bool $notifyEveryone
+	 *
+	 * @return array|Mixed
+	 */
+	public function getWikiNotifications( $userId, $wikiId, $readSlice = 5, $countOnly = false, $notifyEveryone = false ) {
 
-		// try fetching the list of notifications from memcache
-		$list = $memcSync->get();
-		if ( empty( $list ) && !is_array( $list ) ) {
-			// nothing in the cache, so use the db as a fallback and store the result in cache
-			$callback = function() use( $userId, $wikiId, &$list ) {
-				$list = $this->rebuildData( $userId, $wikiId, false );
-				return $list;
-			};
-
-			// this memcache data is synchronized so we're making sure nothing else is modifying it at the same time
-			// we're using the same callback when we cannot acquire the lock, as we want to have the list of notifications
-			// even if we won't be able to store it in the cache
-			$memcSync->lockAndSetData( $callback, $callback );
-		}
-
+		$list = $this->getWikiNotificationList( $userId, $wikiId );
 		if ( empty( $list ) ) {
-			wfProfileOut(__METHOD__);
-			return [];
+			return $list;
 		}
+
 		$read = [];
 		$unread = [];
+		$cacheCleared = false;
 
-		// walk through list of ids
-		// $listval is unique_id field from wall_notification table in DB
-		foreach ( array_reverse( $list['notification'] ) as $listval ) {
-			if ( !empty( $listval ) ) {
-				if ( !$countonly ) {
-					$grouped = $this->groupEntity( $list['relation'][ $listval ]['list'] );
-				} else {
-					$grouped = [];
+		// walk through list of ids from wall_notification table in DB
+		foreach ( array_reverse( $list['notification'] ) as $notifyUniqueId ) {
+			$notifyRelation = $list['relation'][$notifyUniqueId];
+
+			if ( empty( $notifyUniqueId ) ) {
+				continue;
+			}
+
+			$grouped = [];
+			if ( !$countOnly ) {
+				$grouped = $this->groupEntity( $notifyRelation['list'] );
+
+				if ( empty( $grouped ) ) {
+					continue;
 				}
+			}
 
-				if ( !empty( $grouped ) || $countonly ) {
-					if ( $list['relation'][ $listval ]['read'] ){
-						if ( count( $read ) < $readSlice ){
-							$read[] = [
-								"grouped" => $grouped,
-								"count" => 	empty( $list['relation'][ $listval ]['count'] )
-											? count( $list['relation'][ $listval ]['list'] )
-											: $list['relation'][ $listval ]['count']
-							];
-						} elseif ( $readSlice > 0 ) {
-							// so we have more read notifications that we need for display
-							// remove them
-							$this->remNotificationsForUniqueID( $userId, $wikiId, $listval );
-						}
-					} else {
-						if ( empty( $list['relation'][ $listval ]['notifyeveryone']) || $notifyeveryone ) {
-							$unread[] = [
-								"grouped" => $grouped,
-								"count" => 	empty( $list['relation'][ $listval ]['count'] )
-											? count( $list['relation'][ $listval ]['list'] )
-											: $list['relation'][ $listval ]['count']
-							];
-						}
+			if ( $notifyRelation['read'] ) {
+				if ( count( $read ) < $readSlice ) {
+					$read[] = [
+						"grouped" => $grouped,
+						"count" => 	empty( $notifyRelation['count'] )
+									? count( $notifyRelation['list'] )
+									: $notifyRelation['count']
+					];
+				} elseif ( $readSlice > 0 ) {
+					// so we have more read notifications that we need for display
+					// remove them
+					$this->remNotificationsForUniqueID( $userId, $wikiId, $notifyUniqueId );
+
+					// After removing the notifications above, make sure we don't still
+					// have them in this cache and thus try to remove them again. SOC-815
+					if ( !$cacheCleared ) {
+						$this->clearWikiNotificationListCache( $userId, $wikiId );
+						$cacheCleared = true;
 					}
+				}
+			} else {
+				if ( empty( $notifyRelation['notifyeveryone'] ) || $notifyEveryone ) {
+					$unread[] = [
+						"grouped" => $grouped,
+						"count" => 	empty( $notifyRelation['count'] )
+									? count( $notifyRelation['list'] )
+									: $notifyRelation['count']
+					];
 				}
 			}
 		}
@@ -125,8 +130,33 @@ class WallNotifications {
 			'read_count' => count( $read )
 		];
 
-		wfProfileOut(__METHOD__);
 		return $out;
+	}
+
+	private function getWikiNotificationList( $userId, $wikiId ) {
+		$memcSync = $this->getCache( $userId, $wikiId );
+
+		// try fetching the list of notifications from memcache
+		$list = $memcSync->get();
+		if ( empty( $list ) && !is_array( $list ) ) {
+			// nothing in the cache, so use the db as a fallback and store the result in cache
+			$callback = function() use( $userId, $wikiId, &$list ) {
+				$list = $this->rebuildData( $userId, $wikiId, false );
+				return $list;
+			};
+
+			// this memcache data is synchronized so we're making sure nothing else is modifying it at the same time
+			// we're using the same callback when we cannot acquire the lock, as we want to have the list of notifications
+			// even if we won't be able to store it in the cache
+			$memcSync->lockAndSetData( $callback, $callback );
+		}
+
+		return empty( $list ) ? [] : $list;
+	}
+
+	private function clearWikiNotificationListCache( $userId, $wikiId ) {
+		$memcSync = $this->getCache( $userId, $wikiId );
+		$memcSync->delete();
 	}
 
 	/**
