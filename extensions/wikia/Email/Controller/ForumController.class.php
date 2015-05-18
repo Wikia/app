@@ -64,13 +64,6 @@ class ForumController extends EmailController {
 		return 'emailext-forum-subject';
 	}
 
-	protected function getSalutation() {
-		return wfMessage(
-			'emailext-forum-salutation',
-			$this->targetUser->getName()
-		)->inLanguage( $this->targetLang )->text();
-	}
-
 	protected function getSummary() {
 		return wfMessage( 'emailext-forum-summary', $this->board->getFullURL(), $this->board->getText() )
 			->inLanguage( $this->targetLang )
@@ -117,7 +110,7 @@ class ForumController extends EmailController {
 	}
 }
 
-class ForumReplyController extends ForumController {
+class ReplyForumController extends ForumController {
 
 	public function getSubject() {
 		return wfMessage( $this->getSubjectKey(), $this->titleText )
