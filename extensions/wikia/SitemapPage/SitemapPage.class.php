@@ -1,0 +1,126 @@
+<?php
+
+class SitemapPage extends WikiaModel {
+
+	const SITEMAP_PAGE = 'Sitemap';
+	const CACHE_VERSION = '1';
+	const CACHE_TTL = 86400;
+	const WIKI_LIMIT_PER_PAGE = 100;
+	const VERTICAL_UNKNOWN = 'Unknown';
+
+	protected static $verticalNames = [
+		WikiFactoryHub::VERTICAL_ID_OTHER => 'Other',
+		WikiFactoryHub::VERTICAL_ID_TV => 'TV',
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES => 'Games',
+		WikiFactoryHub::VERTICAL_ID_BOOKS => 'Books',
+		WikiFactoryHub::VERTICAL_ID_COMICS => 'Comics',
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE => 'Lifestyle',
+		WikiFactoryHub::VERTICAL_ID_MUSIC => 'Music',
+		WikiFactoryHub::VERTICAL_ID_MOVIES => 'Movies',
+	];
+
+	/**
+	 * Check if the page is sitemap page
+	 * @param Title $title
+	 * @return bool
+	 */
+	public static function isSitemapPage( $title ) {
+		if ( WikiaPageType::isCorporatePage() && $title->getDBkey() == self::SITEMAP_PAGE ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get list of wikis for the page
+	 * @param int $page
+	 * @return array
+	 */
+	public function getWikis( $page ) {
+		$db = $this->getSharedDB();
+		$memcKey = $this->getMemcKeyWikis( $page );
+		$query = ( new WikiaSQL() )->cacheGlobal( self::CACHE_TTL, $memcKey )
+			->SELECT()
+				->FIELD( 'city_list.city_id' )
+				->FIELD( 'city_list.city_title' )
+				->FIELD( 'city_list.city_url' )
+				->FIELD( 'city_visualization.city_lang_code' )
+				->FIELD( 'city_visualization.city_vertical' )
+				->FIELD( 'city_visualization.city_description' )
+			->FROM( 'city_list' )
+			->LEFT_JOIN( 'city_visualization' )->ON( 'city_list.city_id', 'city_visualization.city_id' )
+			->WHERE( 'city_list.city_public' )->EQUAL_TO( 1 )
+			->ORDER_BY( 'city_list.city_title' )
+			->LIMIT( self::WIKI_LIMIT_PER_PAGE );
+
+		if ( $page > 1 ) {
+			$query->OFFSET( ($page - 1) * self::WIKI_LIMIT_PER_PAGE );
+		}
+
+		$wikis = $query->runLoop( $db, function( &$wikis, $row ) {
+			$wikis[$row->city_id] = [
+				'title'       => $row->city_title,
+				'url'         => $row->city_url,
+				'lang'        => $row->city_lang_code,
+				'vertical'    => $this->getVerticalName( $row->city_vertical ),
+				'description' => empty( $row->city_description ) ? '' : $row->city_description,
+			];
+		});
+
+		return empty( $wikis ) ? [] : $wikis;
+	}
+
+	/**
+	 * Get the total number of wikis
+	 * @return int
+	 */
+	public function getTotalWikis() {
+		$memcKey = $this->getMemcKeyTotalWikis();
+		$db = $this->getSharedDB();
+		$total = ( new WikiaSQL() )->cacheGlobal( self::CACHE_TTL, $memcKey )
+			->SELECT( 'count(*) total' )
+			->FROM( 'city_list' )
+			->LEFT_JOIN( 'city_visualization' )->ON( 'city_list.city_id', 'city_visualization.city_id' )
+			->WHERE( 'city_list.city_public' )->EQUAL_TO( 1 )
+			->run( $db, function ( $result ) {
+				$row = $result->fetchObject( $result );
+				return empty( $row ) ? 0 : $row->total;
+			});
+
+		return $total;
+	}
+
+	/**
+	 * Get memcache key for getWikis
+	 * @param int $page
+	 * @return string
+	 */
+	protected function getMemcKeyWikis( $page ) {
+		return wfSharedMemcKey( 'sitemap_page', 'wikis', self::CACHE_VERSION, $page );
+	}
+
+	/**
+	 * Get memcache key for getTotalWikis
+	 * @return string
+	 */
+	protected function getMemcKeyTotalWikis() {
+		return wfSharedMemcKey( 'sitemap_page', 'total_wikis', self::CACHE_VERSION );
+	}
+
+	/**
+	 * Get vertical name
+	 * @param int $verticalId - vertical id
+	 * @return string - vertical name
+	 */
+	protected function getVerticalName( $verticalId ) {
+		if ( empty( self::$verticalNames[$verticalId] ) ) {
+			$name = self::VERTICAL_UNKNOWN;
+		} else {
+			$name = self::$verticalNames[$verticalId];
+		}
+
+		return $name;
+	}
+
+}
