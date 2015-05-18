@@ -371,9 +371,7 @@ class WallNotifications {
 	}
 
 	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
-		$text = strip_tags( $notification->data_noncached->msg_text, '<p><br>' );
-		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
-			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
+		$text = $this->getAbstract( $notification->data_noncached->msg_text );
 		$textNoHtml = trim( preg_replace( '#</?(p|br)[^/>]*/?>#i', "\n", $text ) );
 
 		$entityKey = $notification->getId();
@@ -489,6 +487,21 @@ class WallNotifications {
 		}
 
 		return $controller;
+	}
+
+	/**
+	 * Get abstract from whole entity text.
+	 * HTML tags are stripped out, expect <p> <br> which are used to make it easier to read.
+	 *
+	 * @param $text
+	 * @return string
+	 */
+	private function getAbstract( $text ) {
+		$text = strip_tags( $text->data_noncached->msg_text, '<p><br>' );
+		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
+			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
+
+		return $text;
 	}
 
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
