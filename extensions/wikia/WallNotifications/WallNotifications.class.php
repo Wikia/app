@@ -432,31 +432,6 @@ class WallNotifications {
 			( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) );
 	}
 
-	protected function sendEmail( User $watcher, array $data ) {
-		global $wgPasswordSender, $wgNoReplyAddress;
-
-		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
-		$replyTo = new MailAddress ( $wgNoReplyAddress );
-
-		$keys = array_keys( $data );
-		$values =  array_values( $data );
-
-		$subject = wfMessage( $data['$MSG_KEY_SUBJECT'] )->inContentLanguage()->text();
-
-		$text = wfMessage( $data['$MSG_KEY_BODY'] )->inContentLanguage()->text();
-
-		$subject = str_replace( $keys, $values, $subject );
-
-		$keys[] = '$SUBJECT';
-		$values[] = $subject;
-
-		$data['$SUBJECT'] = $subject;
-		$html = $this->app->getView( 'WallExternal', 'mail', ['data' => $data] )->render();
-		$text = str_replace( $keys, $values, $text );
-
-		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
-	}
-
 	protected function getEmailExtensionController( WallNotificationEntity $notification, $watcherName ) {
 		if ( !empty( $notification->data->article_title_ns )
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
