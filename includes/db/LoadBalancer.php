@@ -434,19 +434,6 @@ class LoadBalancer {
 		if ( $result == -1 || is_null( $result ) ) {
 			# Timed out waiting for slave, use master instead
 			wfDebug( __METHOD__.": Timed out waiting for slave #$index pos {$this->mWaitForPos}\n" );
-
-			// Wikia change - begin
-			// log failed wfWaitForSlaves
-			// @see PLATFORM-1219
-			Wikia\Logger\WikiaLogger::instance()->error( 'LoadBalancer::doWait timed out', [
-				'exception' => new Exception(),
-				'db'        => $conn->getDBname(),
-				'host'      => $conn->getServer(),
-				'pos'       => (string) $this->mWaitForPos,
-				'result'    => $result,
-			] );
-			// Wikia change - end
-
 			return false;
 		} else {
 			wfDebug( __METHOD__.": Done\n" );
