@@ -23,11 +23,11 @@ class Hooks {
 		 * - a user is on an edit page
 		 * - the request is from VE
 		 */
+		$helper = new Helper();
 		if ( !$parser->mFlagsParsed
-			&& !\WikiaPageType::isEditPage()
+			&& $helper->shouldDisplayFlags()
 			&& !( $wgRequest->getVal( 'action' ) == 'visualeditor' )
 		) {
-			$helper = new Helper();
 			$addText = $helper->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 
 			if ( $addText !== null ) {

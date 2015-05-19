@@ -6,6 +6,15 @@ use Flags\Views\FlagView;
 
 class Helper {
 
+	public function shouldDisplayFlags() {
+		global $wgRequest;
+
+		return !in_array(
+			$wgRequest->getVal( 'action', 'view' ),
+			array( 'edit', 'formedit' , 'history' )
+		);
+	}
+
 	public function getFlagsForPageWikitext( $pageId ) {
 		$flags = $this->sendGetFlagsForPageRequest( $pageId );
 		if ( !empty( $flags ) ) {
