@@ -3809,8 +3809,6 @@ function wfGetNull() {
  * @param $wiki mixed Wiki identifier accepted by wfGetLB
  */
 function wfWaitForSlaves( $wiki = false ) {
-	$then = microtime( true ); // Wikia change
-
 	$lb = wfGetLB( $wiki );
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
@@ -3826,14 +3824,13 @@ function wfWaitForSlaves( $wiki = false ) {
 		if ( strpos( $masterHostName, '.service.consul' ) !== false ) {
 			# I am terribly sorry, but we do really need to wait for all slaves
 			# not just the one returned by consul
-			sleep( $lb->waitTimeout() ); // use the default slaves wait timeout
+			sleep( 1 );
 
 			/* @var MySQLMasterPos $pos */
 			\Wikia\Logger\WikiaLogger::instance()->info( 'wfWaitForSlaves for consul clusters',  [
 				'exception' => new Exception(),
 				'master' => $masterHostName,
 				'pos' => $pos->__toString(),
-				'waited' => microtime( true ) - $then,
 				'wiki' => $wiki
 			] );
 		}
