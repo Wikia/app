@@ -30,16 +30,16 @@ $messages['es'] = array(
 );
 
 $messages['fr'] = array(
-	'emailext-forum-subject' => 'Il y a une nouvelle discussion sur $1 sur {{SITENAME}}.',
+	'emailext-forum-subject' => 'Une nouvelle discussion a été ajoutée à $1 sur {{SITENAME}}.',
 	'emailext-forum-salutation' => 'Bonjour $1,',
-	'emailext-forum-summary' => "'''Il y a une nouvelle discussion sur [$1 $2] sur [{{SERVER}} {{SITENAME}}].'''",
+	'emailext-forum-summary' => "'''Une nouvelle discussion a été ajoutée à [$1 $2] sur [{{SERVER}} {{SITENAME}}].'''",
 	'emailext-forum-button-label' => 'Voir la discussion',
 );
 
 $messages['it'] = array(
-	'emailext-forum-subject' => "C'è una nuova discussione nel $1 di {{SITENAME}}.",
+	'emailext-forum-subject' => "C'è una nuova discussione in $1 della {{SITENAME}}.",
 	'emailext-forum-salutation' => 'Ciao, $1.',
-	'emailext-forum-summary' => "'''C'è una nuova discussione nel [$1 $2] di [{{SERVER}} {{SITENAME}}].'''",
+	'emailext-forum-summary' => "'''C'è una nuova discussione in [$1 $2] della [{{SERVER}} {{SITENAME}}].'''",
 	'emailext-forum-button-label' => 'Vedi la discussione',
 );
 
@@ -58,16 +58,16 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'emailext-forum-subject' => 'Na $1 na {{SITENAME}} jest nowa dyskucja.',
+	'emailext-forum-subject' => 'Na forum $1 na {{SITENAME}} pojawiła się nowa dyskusja.',
 	'emailext-forum-salutation' => 'Cześć $1,',
-	'emailext-forum-summary' => "'''Na [$1 $2] na [{{SERVER}} {{SITENAME}}]  jest nowa dyskucja.'''",
+	'emailext-forum-summary' => "'''Na forum [$1 $2] na [{{SERVER}} {{SITENAME}}]  pojawiła się nowa dyskusja.'''",
 	'emailext-forum-button-label' => 'Zobacz dyskusję',
 );
 
 $messages['pt'] = array(
 	'emailext-forum-subject' => 'Há uma nova discussão em $1 na {{SITENAME}}.',
 	'emailext-forum-salutation' => 'Olá $1,',
-	'emailext-forum-summary' => "'''Há uma nova discussão em [$1 $2] na [{{SERVER}}] {{SITENAME}}.'''",
+	'emailext-forum-summary' => "'''Há uma nova discussão em [$1 $2] na [{{SERVER}} {{SITENAME}}].'''",
 	'emailext-forum-button-label' => 'Ver a discussão',
 );
 
@@ -79,16 +79,16 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'emailext-forum-subject' => '在{{SITENAME}}网站的$1论坛上，大家正在讨论一个新的话题。',
+	'emailext-forum-subject' => '在{{SITENAME}}网站的$1论坛上，大家正在对一个新的话题进行讨论。',
 	'emailext-forum-salutation' => '尊敬的$1用户，你好,',
-	'emailext-forum-summary' => "'''[在{{SERVER}}支持的{{SITENAME}}网站的[$1 $2]页面，大家正在讨论一个新的话题]。'''",
-	'emailext-forum-button-label' => '查看讨论',
+	'emailext-forum-summary' => "'''在{{SERVER}}上的{{SITENAME}}网站的[$1 $2]页面，大家正在对一个新的话题进行讨论。'''",
+	'emailext-forum-button-label' => '查看该讨论',
 );
 
 $messages['zh-tw'] = array(
-	'emailext-forum-subject' => '在{{SITENAME}}網站的$1論壇上,大家正在討論一個新的話題。',
+	'emailext-forum-subject' => '在{{SITENAME}}網站的$1論壇上,大家正在對一個新的話題進行討論。',
 	'emailext-forum-salutation' => '尊敬的$1用户，你好，',
-	'emailext-forum-summary' => "'''[在{{SERVER}}支持的{{SITENAME}}網站的[$1 $2]網頁，大家正在討論一個新的話題]。'''",
-	'emailext-forum-button-label' => '查看討論',
+	'emailext-forum-summary' => "'''在{{SERVER}}上的{{SITENAME}}網站的[$1 $2]網頁，大家正在對一個新的話題進行討論]。'''",
+	'emailext-forum-button-label' => '查看该討論',
 );
 
