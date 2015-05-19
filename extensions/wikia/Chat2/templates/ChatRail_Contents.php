@@ -3,10 +3,10 @@
 ?> chat-user-<?=
 (!empty($profileAvatarUrl) ? 'logged-in' : 'anonymous')
 ?>">
-	<h1 class="chat-headline">
+	<h2 class="chat-headline">
 		<span class="chat-live"><?= wfMsg('chat-live2') ?></span>
 		<span class="chat-total"><?= $totalInRoom ?></span>
-	</h1>
+	</h2>
 
 	<p class="chat-name"><?= $wg->Sitename ?></p>
 
