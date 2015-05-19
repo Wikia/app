@@ -1363,11 +1363,13 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'toplists-editor-title-label' => 'Navê lîstê',
 	'toplists-cancel-button' => 'Betal bike',
+	'toplists-image-browser-upload-btn' => 'Hilbijêre',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1376,6 +1378,7 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'toplists-editor-title-label' => 'Numm vun der Lëscht',
 	'toplists-cancel-button' => 'Ofbriechen',
+	'toplists-list-created-by' => 'vum [[User:$1|$1]]',
 	'toplists-seconds' => '$1 {{PLURAL:$1|Sekonn|Sekonnen}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|Minutt|Minutten}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|Stonn|Stonnen}}',
@@ -2668,11 +2671,14 @@ $messages['uk'] = array(
  * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'right-toplists-create-edit-list' => 'Tạo và chỉnh sửa các trang trong danh Top 10',
 	'right-toplists-delete-item' => 'Xóa các mục từ trang danh sách top 10',
+	'edittoplist' => 'Chỉnh sửa danh sách Top 10',
 	'toplists-error-invalid-title' => 'Văn bản cung cấp không hợp lệ',
 	'toplists-error-invalid-picture' => 'Hình ảnh được chọn không hợp lệ',
 	'toplists-error-article-not-exists' => '"$1" không tồn tại. Bạn có muốn <a href="$2" target="_blank">tạo nó</a>?',
 	'toplists-error-image-already-exists' => 'Một hình ảnh có cùng tên đã tồn tại.',
+	'action-toplists-create-edit-list' => 'Tạo và chỉnh sửa các trang trong danh Top 10',
 	'toplists-editor-related-article-label' => 'Trang liên quan <small>(tùy chon, nhưng phải chọn một hình)</small>',
 	'toplists-items-nochange' => 'Không mục nào được thay đổi',
 	'toplists-seconds' => '$1 {{PLURAL:$1|giây|giây}}',

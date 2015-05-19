@@ -1025,7 +1025,7 @@ $messages['gl'] = array(
 	'userlogin-error-userexists' => 'Alguén xa ten ese nome de usuario. Probe con outro!',
 	'userlogin-error-invalidemailaddress' => 'Por favor, escriba un enderezo de correo electrónico válido.',
 	'userlogin-get-account' => 'Non ten unha conta? <a href="$1" tabindex="$2">Rexístrese</a>',
-	'userlogin-error-invalid-username' => 'Nome de usuario inválido',
+	'userlogin-error-invalid-username' => 'Nome de usuario non válido',
 	'userlogin-error-userlogin-unable-info' => 'Sentímolo, non é posible rexistrar a súa conta nestes intres.',
 	'userlogin-error-user-not-allowed' => 'Este nome de usuario non está permitido.',
 	'userlogin-error-captcha-createaccount-fail' => 'A palabra que escribiu non coincide co texto da caixa. Inténteo de novo!',
@@ -1443,10 +1443,14 @@ $messages['krc'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author Ghybu
  */
 $messages['ku-latn'] = array(
 	'userlogin-login-heading' => 'Têkeve',
+	'userlogin-forgot-password' => 'Te şîfreye xwe jibîrkir?',
+	'userlogin-provider-or' => 'An jî',
+	'userlogin-loginreqlink' => 'têkeve',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

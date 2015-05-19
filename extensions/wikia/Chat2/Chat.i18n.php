@@ -2141,6 +2141,16 @@ $messages['ko'] = array(
 	'chat-status-away' => '잠수',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'chat' => 'Çet',
+	'chat-ban-modal-label-reason' => 'Sedem',
+	'chat-ban-modal-button-cancel' => 'Betal bike',
+	'chat-start-a-chat' => 'Çetek bide destpêkirin',
+);
+
 /** Kyrgyz (Кыргызча)
  * @author Growingup
  */

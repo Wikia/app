@@ -219,10 +219,12 @@ $messages['hsb'] = array(
 
 /** Hungarian (magyar)
  * @author TK-999
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
 	'sharedhelp-desc' => 'A [[w:Help:Contents|Community Central]] oldalait illeszti be az {{ns:help}} névtérbe ezen a wikin',
 	'sharedhelp-autotalkcreate-summary' => 'Automatikusan létrehozott vitalap',
+	'sharedhelp-searchprofile-tooltip' => 'Keresés a Segítség lapokon',
 	'shared_help_info' => 'Kérdéseid vannak? Tedd fel őket a [[w:Special:Forum|Közösségi Központ fórumain]].',
 );
 

@@ -127,6 +127,15 @@
 
 }
 
+.insights-header-sorting {
+	border-top: $border-insights-default;
+	padding: 13px 15px;
+
+	label {
+		margin: 5px 10px 0 0;
+	}
+}
+
 .insights-list {
 	border-collapse: collapse;
 	margin: 0;

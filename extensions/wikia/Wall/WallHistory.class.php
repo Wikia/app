@@ -35,7 +35,7 @@ class WallHistory extends WikiaModel {
 			case WH_RESTORE:
 				// wall the wall action goes through this point.
 				wfRunHooks( 'WallAction', array( $type, $feed->data->parent_id, $feed->data->message_id ) );
-				$this->addStatChangeAction( $type, $feed );
+				$this->addStatChangeAction( $type, $feed, $user );
 			break;
 		}
 
@@ -77,7 +77,7 @@ class WallHistory extends WikiaModel {
 		$this->getDB( DB_MASTER )->commit();
 	}
 
-	private function addNewOrEdit( $action, $feed, User $user ) {
+	private function addNewOrEdit( $action, $feed, $user ) {
 		if ( !( $feed instanceof WallNotificationEntity ) ) {
 			return false;
 		}
@@ -398,7 +398,7 @@ class WallHistory extends WikiaModel {
 		$message = WallMessage::newFromId( $row['comment_id'] );
 
 		if ( empty( $message ) ) {
-			return null;
+			return;
 		}
 
 		$title = $message->getTitle();

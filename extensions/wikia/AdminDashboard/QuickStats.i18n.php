@@ -590,7 +590,7 @@ $messages['gl'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** Hakka (客家語/Hak-kâ-ngî)
+/** Hakka Chinese (客家語/Hak-kâ-ngî)
  * @author Anson2812
  */
 $messages['hak'] = array(
@@ -1146,7 +1146,7 @@ $messages['pms'] = array(
 	'quickstats-header-edits' => 'Modìfiche',
 	'quickstats-header-photos' => 'Fòto',
 	'quickstats-totals-label' => 'Totaj',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|Varda pi statìstiche]]',
+	'quickstats-see-more-stats-link' => '[[Special:Insights|Vëdde pi dë statìstiche]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1Mrd',
@@ -1162,7 +1162,7 @@ $messages['ps'] = array(
 	'quickstats-header-edits' => 'سمونونه',
 	'quickstats-header-photos' => 'انځورونه',
 	'quickstats-totals-label' => 'ټولټال',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|نورې شمارنې کتل]]',
+	'quickstats-see-more-stats-link' => '[[Special:Insights|نورې شمارنې وگورئ]]',
 	'quickstats-number-shortening' => '$1زر',
 	'quickstats-number-shortening-millions' => '$1ميليون',
 	'quickstats-number-shortening-billions' => '$1بيليون',

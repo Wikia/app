@@ -438,6 +438,14 @@ $messages['ko'] = array(
 	'category-exhibition-display-old' => '분류 목록 보기',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'category-exhibition-page-header' => 'Rûpelên di kategoriya "$1" de',
+	'category-exhibition-subcategories-header' => 'Binkategorî',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  */
 $messages['lb'] = array(

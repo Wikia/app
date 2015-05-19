@@ -490,6 +490,7 @@ $messages['cs'] = array(
  * @author Se4598
  */
 $messages['de'] = array(
+	'visualeditor-ca-classiceditor' => 'Klassischer Editor',
 	'wikia-visualeditor-preference-enable' => 'Den Beta-VisualEditor aktivieren',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Medium',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Karte',
@@ -636,6 +637,7 @@ $messages['en-gb'] = array(
  * @author Wifidel
  */
 $messages['es'] = array(
+	'visualeditor-ca-classiceditor' => 'Editor clásico',
 	'wikia-visualeditor-preference-enable' => 'Activar el editor visual (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Archivos multimedia',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -834,6 +836,7 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'visualeditor-ca-classiceditor' => 'Éditeur classique',
 	'wikia-visualeditor-preference-enable' => 'Activer ÉditeurVisuel (bêta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Médias',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Carte',
@@ -1067,6 +1070,7 @@ $messages['he'] = array(
 
 /** Hungarian (magyar)
  * @author TK-999
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
 	'wikia-visualeditor-preference-enable' => 'A béta állapotú VisualEditor bekapcsolása',
@@ -1088,6 +1092,7 @@ $messages['hu'] = array(
 	'wikia-visualeditor-help-label' => 'Ismert problémák',
 	'wikia-visualeditor-help-link' => 'Segítség:VisualEditor', # Fuzzy
 	'wikia-visualeditor-beta-warning' => 'Ez a Wikia béta állapotú VisualEditor-integrációja. Vannak még hibái, de reméljük, tetszik!',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Képek keresése',
 );
 
 /** Armenian (Հայերեն)
@@ -1104,10 +1109,12 @@ $messages['hy'] = array(
 );
 
 /** Italian (italiano)
+ * @author Macofe
  * @author Ontsed
  * @author Peg60
  */
 $messages['it'] = array(
+	'visualeditor-ca-classiceditor' => 'Editor classico',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mappa',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Crea una mappa',
@@ -1305,10 +1312,28 @@ $messages['ko'] = array(
 	'wikia-visualeditor-media-video-policy' => '그림을 올릴 땐 반드시 위키아 그림 정책을 준수해주세요',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lîsans',
+	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Zêdetir bixwîne',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Biguherîne',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Şablon',
+	'wikia-visualeditor-savedialog-label-save' => 'Weşandin',
+	'wikia-visualeditor-toolbar-savedialog' => 'Weşandin',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Çavkanî',
+	'wikia-visualeditor-dialog-done-button' => 'Çêbû',
+	'wikia-visualeditor-dialog-cancel-button' => 'Betal bike',
+	'wikia-visualeditor-context-transclusion-description' => 'Biguherîne',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Bibîne',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
+	'visualeditor-ca-classiceditor' => 'Klasseschen Editeur',
 	'wikia-visualeditor-preference-enable' => 'De Beta-VisualEditor aktivéieren',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Kaart',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Eng Kaart uleeën',
@@ -1505,6 +1530,7 @@ $messages['mr'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'visualeditor-ca-classiceditor' => 'Editor klasik',
 	'wikia-visualeditor-preference-enable' => 'Membolehkan beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Peta',
@@ -2210,6 +2236,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'visualeditor-ca-classiceditor' => 'Klassisk redigerare',
 	'wikia-visualeditor-preference-enable' => 'Aktivera VisualEditor (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Karta',
@@ -2339,10 +2366,12 @@ $messages['th'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Captantrips
  * @author Sayginer
  * @author Sucsuzz
  */
 $messages['tr'] = array(
+	'visualeditor-ca-classiceditor' => 'Klasik editör',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Harita',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Harita oluştur',
 	'wikia-visualeditor-dialog-transclusion-get-info' => '"$1" şablonu hakkında bilgi al',
@@ -2579,6 +2608,7 @@ $messages['yi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'visualeditor-ca-classiceditor' => '传统编辑器',
 	'wikia-visualeditor-preference-enable' => '启用测试版可视化编辑器',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '媒体',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地图',

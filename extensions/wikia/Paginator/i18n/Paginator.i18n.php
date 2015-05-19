@@ -231,6 +231,14 @@ $messages['ksh'] = array(
 	'paginator-back' => 'Zeröck',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'paginator-next' => 'Pêşve',
+	'paginator-back' => 'Paşve',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  */
 $messages['lb'] = array(

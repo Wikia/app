@@ -238,10 +238,11 @@ $messages['ar'] = array(
 
 /** Assamese (অসমীয়া)
  * @author Bishnu Saikia
+ * @author Gitartha.bordoloi
  */
 $messages['as'] = array(
 	'editaccount' => 'একাউণ্ট সম্পাদনা কৰক',
-	'editaccount-title' => 'বিশেষ:একাউন্ট সম্পাদনা',
+	'editaccount-title' => 'বিশেষ:একাউণ্ট সম্পাদনা',
 	'editaccount-frame-manage' => 'একাউণ্ট সম্পাদনা কৰক',
 	'editaccount-frame-usage' => 'টোকা',
 	'editaccount-submit-account' => 'একাউণ্ট ব্যৱ্স্থাপনা',
@@ -1580,6 +1581,18 @@ $messages['ko'] = array(
 	'editaccount-log-entry-close' => '$2 계정 비활성화',
 	'right-editaccount' => '다른 사용자의 정보 편집',
 	'action-editaccount' => '다른 사용자의 정보 편집',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'editaccount' => 'Hesabe biguherîne',
+	'editaccount-frame-usage' => 'Not',
+	'editaccount-label-reason' => 'Sedem:',
+	'editaccount-submit-pass' => 'Şîfreye tomar bike',
+	'editaccount-submit-close' => 'Hesabe biqafele',
+	'editaccount-submit-button' => 'Tomar bike',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

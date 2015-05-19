@@ -304,3 +304,18 @@ body >a >img[src$="noad.gif"] {
 		display: block;
 	}
 }
+
+/* ADEN-1716 AB testing experiment with medrec viewability */
+#TOP_RIGHT_BOXAD.ads-viewability-test {
+	&.GUTTER_150 {
+		margin-top: 150px;
+	}
+
+	&.GUTTER_300 {
+		margin-top: 300px;
+	}
+
+	&.GUTTER_450 {
+		margin-top: 450px;
+	}
+}
