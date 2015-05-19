@@ -1113,6 +1113,7 @@ class CreateWiki {
 		if ( $starter ) {
 			$tables = $this->mStarterTables[ "*" ];
 
+			$then = microtime( true );
 			$cmd = sprintf(
 				"%s -h%s -u%s -p%s %s %s | %s -h%s -u%s -p%s %s",
 				$this->mMYSQLdump,
@@ -1129,6 +1130,13 @@ class CreateWiki {
 			);
 			wfShellExec( $cmd, $retVal );
 
+			$this->info( 'importStarter: mysqldump', [
+				'host'    => $starter[ "host" ],
+				'retval'  => $retVal,
+				'starter' => $starter[ "dbStarter" ],
+				'took'    => microtime( true ) - $then,
+			] );
+
 			if ($retVal > 0) {
 				$this->error( 'starter dump import failed', [
 					'starter_db' => $dbStarter
@@ -1136,8 +1144,16 @@ class CreateWiki {
 				return false;
 			}
 
+			$then = microtime( true );
+
 			wfDebugLog( "createwiki", __METHOD__ . ": Import {$this->mIP}/maintenance/cleanupStarter.sql \n", true );
 			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql", false, false, __METHOD__ );
+
+			$this->info( 'importStarter: cleanup', [
+				'err'     => $error,
+				'took'    => microtime( true ) - $then,
+			] );
+
 			if ($error !== true) {
 				wfDebugLog( "createwiki", __METHOD__ . ": Import starter failed\n", true );
 				return false;
