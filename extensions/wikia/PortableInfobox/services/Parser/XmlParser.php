@@ -62,10 +62,7 @@ class XmlParser {
 
 		if ( $xml === false ) {
 			foreach ( $errors as $xmlerror ) {
-					\Wikia\Logger\WikiaLogger::instance()->info( "PortableInfobox XML Parser problem", [
-						"level" => $xmlerror->level,
-						"code" => $xmlerror->code,
-						"message" => $xmlerror->message ] );
+				$this->logXmlParseError( $xmlerror );
 			}
 			libxml_clear_errors();
 			throw new XmlMarkupParseErrorException();
@@ -74,6 +71,13 @@ class XmlParser {
 
 		wfProfileOut( __METHOD__ );
 		return $data;
+	}
+
+	protected function logXmlParseError( \libXMLError $xmlError ) {
+		\Wikia\Logger\WikiaLogger::instance()->info( "PortableInfobox XML Parser problem", [
+			"level" => $xmlError->level,
+			"code" => $xmlError->code,
+			"message" => $xmlError->message ] );
 	}
 
 	/**
