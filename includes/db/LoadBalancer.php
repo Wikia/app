@@ -428,6 +428,8 @@ class LoadBalancer {
 			}
 		}
 
+		$then = microtime( true ); // Wikia change
+
 		wfDebug( __METHOD__.": Waiting for slave #$index to catch up...\n" );
 		$result = $conn->masterPosWait( $this->mWaitForPos, $this->mWaitTimeout );
 
@@ -444,6 +446,7 @@ class LoadBalancer {
 				'host'      => $conn->getServer(),
 				'pos'       => (string) $this->mWaitForPos,
 				'result'    => $result,
+				'waited'    => microtime( true ) - $then,
 			] );
 			// Wikia change - end
 
