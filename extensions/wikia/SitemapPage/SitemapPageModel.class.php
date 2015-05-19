@@ -21,9 +21,12 @@ class SitemapPageModel extends WikiaModel {
 
 	protected $maxDate;	// maximum date
 
-	public function __construct() {
-		parent::__construct();
-		$this->maxDate = date( 'Ymd' );
+	/**
+	 * Set maximum date
+	 * @param string $date - format: yyyymmdd
+	 */
+	public function setMaxDate( $date ) {
+		$this->maxDate = $date;
 	}
 
 	/**
@@ -31,6 +34,11 @@ class SitemapPageModel extends WikiaModel {
 	 * @return string
 	 */
 	public function getMaxDate() {
+		if ( empty( $this->maxDate ) ) {
+			$date = date( 'Ymd' );
+			$this->setMaxDate( $date );
+		}
+
 		return $this->maxDate;
 	}
 
@@ -109,20 +117,44 @@ class SitemapPageModel extends WikiaModel {
 	}
 
 	/**
-	 * Get Pagination (HTML)
+	 * Get Pagination (HTML) and list of links for the header
 	 * @param int $page
 	 * @return string $pagination
 	 */
 	public function getPagination( $page ) {
 		$pagination = '';
+		$links = [];
 		$totalWikis = $this->getTotalWikis();
 		if ( $totalWikis > self::WIKI_LIMIT_PER_PAGE ) {
 			$pages = Paginator::newFromArray( array_fill( 0, $totalWikis, '' ), self::WIKI_LIMIT_PER_PAGE );
 			$pages->setActivePage( $page - 1 );
-			$pagination = $pages->getBarHTML( $this->wg->Title->getLocalURL( 'page=%s' ) );
+			$url = $this->wg->Title->getFullURL( 'page=%s' );
+			$pagination = $pages->getBarHTML( $url );
+			$links = $this->getPaginationHeadLinks( $pages->getPagesCount(), $page, $url );
 		}
 
-		return $pagination;
+		return [ $pagination, $links ];
+	}
+
+	/**
+	 * Get list of links for the header
+	 * @param int $totalPages
+	 * @param int $page
+	 * @param string $url
+	 * @return array
+	 */
+	public function getPaginationHeadLinks( $totalPages, $page, $url ) {
+		$links = [];
+
+		if ( $page > 1 && $page <= $totalPages ) {
+			$links[] = [ 'rel' => 'prev', 'href' => str_replace( '%s', $page - 1, $url ) ];
+		}
+
+		if ( $page < $totalPages ) {
+			$links[] = [ 'rel' => 'next', 'href' => str_replace( '%s', $page + 1, $url ) ];
+		}
+
+		return $links;
 	}
 
 	/**
