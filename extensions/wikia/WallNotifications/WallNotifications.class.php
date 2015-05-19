@@ -363,27 +363,6 @@ class WallNotifications {
 		$this->sendEmails( array_keys( $users ), $notification );
 	}
 
-	protected function createKeyForMailNotification( $watcher, WallNotificationEntity $notification ) {
-		$data = $notification->data;
-
-		if ( $notification->isMain() ) {
-			if ( $watcher == $data->wall_userid ) {
-				$key = 'mail-notification-new-your';
-			} else {
-				$key = 'mail-notification-new-someone';
-			}
-		} else {
-			if ( $watcher == $data->parent_user_id ) {
-				$key = 'mail-notification-reply-your';
-			} elseif ( $data->msg_author_id == $data->parent_user_id && $data->msg_author_id != 0 ) {
-				$key = 'mail-notification-reply-his';
-			} else {
-				$key = 'mail-notification-reply-someone';
-			}
-		}
-		return $key;
-	}
-
 	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
 		$text = $this->getAbstract( $notification->data_noncached->msg_text );
 
