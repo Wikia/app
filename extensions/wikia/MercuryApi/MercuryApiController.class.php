@@ -335,6 +335,7 @@ class MercuryApiController extends WikiaController {
 		$mainPageData = [];
 		$curatedContent = $this->getCuratedContentData();
 		$trendingArticles = $this->getTrendingArticlesData();
+		$trendingVideos = $this->getTrendingVideosData();
 
 		if ( !empty( $curatedContent[ 'sections' ] ) ) {
 			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'sections' ];
@@ -346,6 +347,10 @@ class MercuryApiController extends WikiaController {
 
 		if ( !empty( $trendingArticles ) ) {
 			$mainPageData[ 'trendingArticles' ] = $trendingArticles;
+		}
+
+		if ( !empty( $trendingVideos ) ) {
+			$mainPageData[ 'trendingVideos' ] = $trendingVideos;
 		}
 
 		return $mainPageData;
@@ -397,6 +402,24 @@ class MercuryApiController extends WikiaController {
 			$data = $this->mercuryApi->processTrendingArticles( $rawData );
 		} catch ( NotFoundApiException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
+		}
+
+		return $data;
+	}
+
+	private function getTrendingVideosData() {
+		$params = [
+			'sort' => 'trend',
+			'getThumbnail' => false,
+			'format' => 'json',
+		];
+		$data = [];
+
+		try {
+			$rawData = $this->sendRequest( 'SpecialVideosSpecial', 'getVideos', $params )->getData();
+			$data = $this->mercuryApi->processTrendingVideos( $rawData );
+		} catch ( NotFoundApiException $ex ) {
+			WikiaLogger::instance()->info( 'Trending videos data is empty' );
 		}
 
 		return $data;

@@ -292,6 +292,14 @@ class MercuryApi {
 		return $items;
 	}
 
+	public function processTrendingVideos( $data ) {
+		if ( !isset( $data[ 'videos' ] ) || !is_array( $data[ 'videos' ] ) ) {
+			return false;
+		}
+
+		return $data[ 'videos' ];
+	}
+
 	/**
 	 * @desc Mercury can't open article using ID - we need to create a local link.
 	 * If article doesn't exist (Title is null) return null.
