@@ -12,6 +12,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Track::onWikiaSkinTopScripts';
 
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
+	const HEADER_MIRRORED_REQUEST = 'x-mirrored-request';
 
 	private static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
 		global $wgStyleVersion, $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
@@ -111,13 +112,7 @@ SCRIPT1;
 	protected static function shouldTrackEvents() {
 		// Check request headers to make sure this is not a mirrored
 		// request, which could result in duplicate tracking events
-		$headers = getallheaders();
-		foreach ( $headers as $name => $value ) {
-			if ( strtolower( $name ) === 'x-mirrored-request' ) {
-				return false;
-			}
-		}
-		return true;
+		return F::app()->wg->request->getHeader( self::HEADER_MIRRORED_REQUEST ) === false;
 	}
 
 	/**
