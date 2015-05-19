@@ -168,8 +168,8 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function shouldSendEmail( array $watchers ) {
-		if ( $this->isArticleComment() && $this->previousRevId !== 0 ) {
-			// Don't send email when an article comment is edited or deleted
+		if ( ( $this->isArticleComment() || $this->isBlogComment() ) && $this->previousRevId !== 0 ) {
+			// Don't send email when a comment is edited or deleted
 			return false;
 		}
 
