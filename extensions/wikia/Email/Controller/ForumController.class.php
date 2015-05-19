@@ -137,6 +137,13 @@ class ForumController extends EmailController {
 }
 
 class ReplyForumController extends ForumController {
+	protected $threadId;
+
+	public function initEmail() {
+		parent::initEmail();
+
+		$this->threadId = $this->request->getVal( 'threadId' );
+	}
 
 	public function getSubject() {
 		return wfMessage( $this->getSubjectKey(), $this->titleText )
@@ -158,6 +165,25 @@ class ReplyForumController extends ForumController {
 		return wfMessage( 'emailext-forum-reply-view-all', $this->titleUrl )
 			->inLanguage( $this->targetLang )
 			->parse();
+	}
+
+	protected function getFooterMessages() {
+		$thread = \Title::newFromText(
+			$this->threadId,
+			NS_USER_WALL_MESSAGE
+		);
+		$threadUrl = $thread->getFullURL();
+		$unfollowUrl =  $thread->getFullURL( [
+			'action' => 'unwatch'
+		] );
+
+		$footerMessages = [
+			wfMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $threadUrl )
+				->inLanguage( $this->targetLang )
+				->parse()
+		];
+
+		return array_merge( $footerMessages, EmailController::getFooterMessages() );
 	}
 
 	protected function getButtonTextKey() {
