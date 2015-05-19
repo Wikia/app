@@ -69,13 +69,12 @@ $messages['ru'] = array(
 
 $messages['zh-hans'] = array(
 	'emailext-forum-subject' => '在{{SITENAME}}网站的$1论坛上，大家正在对一个新的话题进行讨论。',
-	'emailext-forum-summary' => "'''在{{SERVER}}上的{{SITENAME}}网站的[$1 $2]页面，大家正在对一个新的话题进行讨论。'''",
+	'emailext-forum-summary' => "'''在[{{SERVER}}{{SITENAME}}]网站的[$1 $2]页面，大家正在对一个新的话题进行讨论。'''",
 	'emailext-forum-button-label' => '查看该讨论',
 );
 
 $messages['zh-tw'] = array(
 	'emailext-forum-subject' => '在{{SITENAME}}網站的$1論壇上,大家正在對一個新的話題進行討論。',
-	'emailext-forum-summary' => "'''在{{SERVER}}上的{{SITENAME}}網站的[$1 $2]網頁，大家正在對一個新的話題進行討論]。'''",
+	'emailext-forum-summary' => "'''在[{{SERVER}} {{SITENAME}}]網站的[$1 $2]網頁，大家正在對一個新的話題進行討論。'''",
 	'emailext-forum-button-label' => '查看该討論',
 );
-
