@@ -442,8 +442,15 @@ class WallNotifications {
 			return false;
 		}
 
-		return ( $mode == WALL_EMAIL_EVERY ) ||
-			( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) );
+		if ( $mode == WALL_EMAIL_EVERY ) {
+			return true;
+		}
+
+		if ( $mode == WALL_EMAIL_SINCEVISITED ) {
+			return empty( $this->uniqueUsers[$entityKey][$watcher->getId()] );
+		}
+
+		return false;
 	}
 
 	protected function getEmailExtensionController( WallNotificationEntity $notification, $watcherName ) {
