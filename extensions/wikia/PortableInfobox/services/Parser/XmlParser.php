@@ -49,7 +49,6 @@ class XmlParser {
 	 * @param $xmlString
 	 * @return array
 	 * @throws XmlMarkupParseErrorException
-	 * @internal param String $xml
 	 */
 	public function getDataFromXmlString( $xmlString ) {
 		wfProfileIn( __METHOD__ );
@@ -62,7 +61,7 @@ class XmlParser {
 
 		if ( $xml === false ) {
 			foreach ( $errors as $xmlerror ) {
-				$this->logXmlParseError( $xmlerror );
+				$this->logXmlParseError( $xmlerror->level, $xmlerror->code, trim( $xmlerror->message ) );
 			}
 			libxml_clear_errors();
 			throw new XmlMarkupParseErrorException();
@@ -73,11 +72,11 @@ class XmlParser {
 		return $data;
 	}
 
-	protected function logXmlParseError( \libXMLError $xmlError ) {
+	public function logXmlParseError( $level, $code, $message ) {
 		\Wikia\Logger\WikiaLogger::instance()->info( "PortableInfobox XML Parser problem", [
-			"level" => $xmlError->level,
-			"code" => $xmlError->code,
-			"message" => $xmlError->message ] );
+			"level" => $level,
+			"code" => $code,
+			"message" => $message ] );
 	}
 
 	/**
