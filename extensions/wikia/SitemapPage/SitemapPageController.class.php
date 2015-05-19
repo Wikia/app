@@ -13,23 +13,20 @@ class SitemapPageController extends WikiaController {
 	 * @responseParam string pagination
 	 */
 	public function index() {
-		$this->response->addAsset( 'sitemappage_js' );
-		$this->response->addAsset( 'sitemappage_scss' );
+		$this->response->addAsset( 'sitemap_page_js' );
+		$this->response->addAsset( 'sitemap_page_css' );
 
 		$page = $this->getVal( 'page', 1 );
 
-		$sitemapPage = new SitemapPage();
-		$totalWikis = $sitemapPage->getTotalWikis();
+		$sitemapPage = new SitemapPageModel();
+		$this->header = [
+			'title' => wfMessage( 'sitemap-page-wiki-title' )->escaped(),
+			'language' => wfMessage( 'sitemap-page-wiki-language' )->escaped(),
+			'vertical' => wfMessage( 'sitemap-page-wiki-vertical' )->escaped(),
+			'description' => wfMessage( 'sitemap-page-wiki-description' )->escaped(),
+		];
 		$this->wikis = $sitemapPage->getWikis( $page );
-
-		// add pagination
-		$this->pagination = '';
-		$limitPerPage = SitemapPage::WIKI_LIMIT_PER_PAGE;
-		if ( $totalWikis > $limitPerPage ) {
-			$pages = Paginator::newFromArray( array_fill( 0, $totalWikis, '' ), $limitPerPage );
-			$pages->setActivePage( $page - 1 );
-			$this->pagination = $pages->getBarHTML( $this->wg->Title->getLocalURL( 'page=%s' ) );
-		}
+		$this->pagination = $sitemapPage->getPagination( $page );
 	}
 
 }

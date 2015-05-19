@@ -1,6 +1,6 @@
 <?php
 
-class SitemapPage extends WikiaModel {
+class SitemapPageModel extends WikiaModel {
 
 	const SITEMAP_PAGE = 'Sitemap';
 	const CACHE_VERSION = '1';
@@ -19,12 +19,27 @@ class SitemapPage extends WikiaModel {
 		WikiFactoryHub::VERTICAL_ID_MOVIES => 'Movies',
 	];
 
+	protected $maxDate;	// maximum date
+
+	public function __construct() {
+		parent::__construct();
+		$this->maxDate = date( 'Ymd' );
+	}
+
+	/**
+	 * Get maximum date
+	 * @return string
+	 */
+	public function getMaxDate() {
+		return $this->maxDate;
+	}
+
 	/**
 	 * Check if the page is sitemap page
 	 * @param Title $title
 	 * @return bool
 	 */
-	public static function isSitemapPage( $title ) {
+	public function isSitemapPage( $title ) {
 		if ( WikiaPageType::isCorporatePage() && $title->getDBkey() == self::SITEMAP_PAGE ) {
 			return true;
 		}
@@ -43,15 +58,16 @@ class SitemapPage extends WikiaModel {
 		$query = ( new WikiaSQL() )->cacheGlobal( self::CACHE_TTL, $memcKey )
 			->SELECT()
 				->FIELD( 'city_list.city_id' )
-				->FIELD( 'city_list.city_title' )
+				->FIELD( 'trim(city_list.city_title) as title' )
 				->FIELD( 'city_list.city_url' )
 				->FIELD( 'city_visualization.city_lang_code' )
 				->FIELD( 'city_visualization.city_vertical' )
-				->FIELD( 'city_visualization.city_description' )
+				->FIELD( 'trim(city_visualization.city_description) as description' )
 			->FROM( 'city_list' )
 			->LEFT_JOIN( 'city_visualization' )->ON( 'city_list.city_id', 'city_visualization.city_id' )
 			->WHERE( 'city_list.city_public' )->EQUAL_TO( 1 )
-			->ORDER_BY( 'city_list.city_title' )
+				->AND_( 'city_list.city_created' )->LESS_THAN( $this->getMaxDate() )
+			->ORDER_BY( 'title' )
 			->LIMIT( self::WIKI_LIMIT_PER_PAGE );
 
 		if ( $page > 1 ) {
@@ -60,11 +76,11 @@ class SitemapPage extends WikiaModel {
 
 		$wikis = $query->runLoop( $db, function( &$wikis, $row ) {
 			$wikis[$row->city_id] = [
-				'title'       => $row->city_title,
+				'title'       => $row->title,
 				'url'         => $row->city_url,
-				'lang'        => $row->city_lang_code,
+				'language'    => strtoupper( $row->city_lang_code ),
 				'vertical'    => $this->getVerticalName( $row->city_vertical ),
-				'description' => empty( $row->city_description ) ? '' : $row->city_description,
+				'description' => empty( $row->description ) ? '' : $row->description,
 			];
 		});
 
@@ -73,7 +89,7 @@ class SitemapPage extends WikiaModel {
 
 	/**
 	 * Get the total number of wikis
-	 * @return int
+	 * @return int $total
 	 */
 	public function getTotalWikis() {
 		$memcKey = $this->getMemcKeyTotalWikis();
@@ -83,6 +99,7 @@ class SitemapPage extends WikiaModel {
 			->FROM( 'city_list' )
 			->LEFT_JOIN( 'city_visualization' )->ON( 'city_list.city_id', 'city_visualization.city_id' )
 			->WHERE( 'city_list.city_public' )->EQUAL_TO( 1 )
+				->AND_( 'city_list.city_created' )->LESS_THAN( $this->getMaxDate() )
 			->run( $db, function ( $result ) {
 				$row = $result->fetchObject( $result );
 				return empty( $row ) ? 0 : $row->total;
@@ -92,12 +109,30 @@ class SitemapPage extends WikiaModel {
 	}
 
 	/**
+	 * Get Pagination (HTML)
+	 * @param int $page
+	 * @return string $pagination
+	 */
+	public function getPagination( $page ) {
+		$pagination = '';
+		$totalWikis = $this->getTotalWikis();
+		if ( $totalWikis > self::WIKI_LIMIT_PER_PAGE ) {
+			$pages = Paginator::newFromArray( array_fill( 0, $totalWikis, '' ), self::WIKI_LIMIT_PER_PAGE );
+			$pages->setActivePage( $page - 1 );
+			$pagination = $pages->getBarHTML( $this->wg->Title->getLocalURL( 'page=%s' ) );
+		}
+
+		return $pagination;
+	}
+
+	/**
 	 * Get memcache key for getWikis
 	 * @param int $page
 	 * @return string
 	 */
 	protected function getMemcKeyWikis( $page ) {
-		return wfSharedMemcKey( 'sitemap_page', 'wikis', self::CACHE_VERSION, $page );
+		$date = $this->getMaxDate();
+		return wfSharedMemcKey( 'sitemap_page', 'wikis', self::CACHE_VERSION, $date, $page );
 	}
 
 	/**
@@ -105,13 +140,14 @@ class SitemapPage extends WikiaModel {
 	 * @return string
 	 */
 	protected function getMemcKeyTotalWikis() {
-		return wfSharedMemcKey( 'sitemap_page', 'total_wikis', self::CACHE_VERSION );
+		$date = $this->getMaxDate();
+		return wfSharedMemcKey( 'sitemap_page', 'total_wikis', self::CACHE_VERSION, $date );
 	}
 
 	/**
 	 * Get vertical name
 	 * @param int $verticalId - vertical id
-	 * @return string - vertical name
+	 * @return string $name - vertical name
 	 */
 	protected function getVerticalName( $verticalId ) {
 		if ( empty( self::$verticalNames[$verticalId] ) ) {

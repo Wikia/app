@@ -11,7 +11,8 @@ class SitemapPageHooks {
 	 */
 	public static function onArticleFromTitle( &$title, &$article ) {
 		$app = F::app();
-		if ( SitemapPage::isSitemapPage( $title ) && $app->checkSkin( 'oasis' ) ) {
+		$sitemapPage = new SitemapPageModel();
+		if ( $sitemapPage->isSitemapPage( $title ) && $app->checkSkin( 'oasis' ) ) {
 			$app->wg->SuppressPageHeader = true;
 			$app->wg->SuppressWikiHeader = true;
 			$app->wg->SuppressRail = true;

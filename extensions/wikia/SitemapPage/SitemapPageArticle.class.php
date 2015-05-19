@@ -12,6 +12,9 @@ class SitemapPageArticle extends Article {
 		$app = F::app();
 		$app->wg->Out->clearHTML();
 
+		$title = wfMessage( 'sitemap-page-html-title' )->inContentLanguage()->text();
+		$app->wg->Out->setHTMLTitle( $title );
+
 		$params = $app->wg->request->getValues();
 		$html = $app->sendRequest( 'SitemapPageController', 'index', $params );
 		$app->wg->Out->addHTML( $html );

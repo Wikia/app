@@ -17,7 +17,7 @@ $dir = dirname( __FILE__ ) . '/';
 
 // autoload
 $wgAutoloadClasses['SitemapPageController'] =  $dir . 'SitemapPageController.class.php';
-$wgAutoloadClasses['SitemapPage'] = $dir . 'SitemapPage.class.php';
+$wgAutoloadClasses['SitemapPageModel'] = $dir . 'SitemapPageModel.class.php';
 $wgAutoloadClasses['SitemapPageArticle'] = $dir . 'SitemapPageArticle.class.php';
 $wgAutoloadClasses['SitemapPageHooks'] = $dir . 'SitemapPageHooks.class.php';
 
