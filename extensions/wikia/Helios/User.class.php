@@ -196,7 +196,7 @@ class User {
 			time() - self::ACCESS_TOKEN_COOKIE_TTL,
 			\WebResponse::NO_COOKIE_PREFIX
 		);
-		self::clearEncryptedAccessTokenCookie($response);
+		self::clearEncryptedAccessTokenCookie( $response );
 	}
 
 	/**
