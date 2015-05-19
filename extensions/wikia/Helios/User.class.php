@@ -196,6 +196,22 @@ class User {
 			time() - self::ACCESS_TOKEN_COOKIE_TTL,
 			\WebResponse::NO_COOKIE_PREFIX
 		);
+		self::clearEncryptedAccessTokenCookie($response);
+	}
+
+	/**
+	 * Mercury's backend (Hapi) is setting access_token cookie in an encrypted form, so we need
+	 * to destroy this one as well on UserLogout
+	 * This is a temporary change which will be deleted while implementing SOC-798
+	 * @param $response
+	 */
+	public static function clearEncryptedAccessTokenCookie($response) {
+		$response->setcookie(
+			'sid',
+			'',
+			time() - self::ACCESS_TOKEN_COOKIE_TTL,
+			\WebResponse::NO_COOKIE_PREFIX
+		);
 	}
 
 	/**
