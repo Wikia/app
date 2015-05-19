@@ -82,20 +82,22 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ($comparisonData as $set) {
 			$setHTMLContent = '';
 
-			foreach ($set['data']['value'] as $item) {
-				$type = $item['type'];
+			if (is_array($set['data']['value'])) {
+				foreach ($set['data']['value'] as $item) {
+					$type = $item['type'];
 
-				if ($type === 'header') {
-					$setHTMLContent .= $this->renderItem(
-						'comparison-set-header',
-						['content' => $this->renderItem($type, $item['data'])]
-					);
-				} else {
-					if ($this->validateType($type)) {
+					if ($type === 'header') {
 						$setHTMLContent .= $this->renderItem(
-							'comparison-set-item',
+							'comparison-set-header',
 							['content' => $this->renderItem($type, $item['data'])]
 						);
+					} else {
+						if ($this->validateType($type)) {
+							$setHTMLContent .= $this->renderItem(
+								'comparison-set-item',
+								['content' => $this->renderItem($type, $item['data'])]
+							);
+						}
 					}
 				}
 			}
