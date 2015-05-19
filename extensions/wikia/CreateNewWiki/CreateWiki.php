@@ -1159,6 +1159,10 @@ class CreateWiki {
 				return false;
 			}
 **/
+
+			// starter import performs lots of inserts, wait for slaves to catch up
+			$this->waitForSlaves( __METHOD__ );
+
 			$cmd = sprintf(
 				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
 				$this->mNewWiki->city_id,
