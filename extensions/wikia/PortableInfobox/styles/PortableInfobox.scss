@@ -37,15 +37,10 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
 	}
 
-	.portable-infobox-image-wrapper {
-		text-align: center;
-	}
-
 	.portable-infobox-image-caption {
 		color: $color-alternate-text;
 		font-size: 12px;
 		font-style: italic;
-		text-align: left;
 	}
 
 	.portable-infobox-header-background {
