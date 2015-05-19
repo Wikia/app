@@ -3,8 +3,6 @@
 class WallNotificationsExternalController extends WikiaController {
 	const WALL_WIKI_NAME_MAX_LEN = 32;
 
-	const TTL = 300; // 5 minutes
-
 	private $controllerName;
 
 	public function __construct() {
@@ -47,7 +45,9 @@ class WallNotificationsExternalController extends WikiaController {
 		if( $ret === false || $forceAll == 'FORCE' ) {
 			$ret = $wn->markReadAllWikis( $wgUser->getId() );
 		}
+
 		$this->getUpdateCountsInternal( $wn );
+
 		return true;
 	}
 
@@ -67,13 +67,7 @@ class WallNotificationsExternalController extends WikiaController {
 		global $wgUser, $wgLang, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		$all = WikiaDataAccess::cache(
-			wfMemcKey( __METHOD__, 'getCounts', $wgUser->getId() ),
-			self::TTL,
-			function() use ( $wn, $wgUser ) {
-				return $wn->getCounts( $wgUser->getId() );
-			}
-		);
+		$all = $wn->getCounts( $wgUser->getId() );
 
 		$sum = 0;
 		foreach( $all as $k => $wiki ) {
@@ -97,9 +91,8 @@ class WallNotificationsExternalController extends WikiaController {
 		$this->response->setVal( 'reminder', wfMessage('wall-notifications-reminder', $sum)->text() );
 		$this->response->setVal( 'status', true );
 
-		// PLATFORM-1194: cache the response for 5 minutes in the browser cache
 		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
-		$this->response->setCacheValidity( self::TTL );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 
 		wfProfileOut(__METHOD__);
 	}
@@ -120,9 +113,7 @@ class WallNotificationsExternalController extends WikiaController {
 		$this->response->setVal( 'unread', $all[ 'unread_count' ] );
 		$this->response->setVal( 'status', true );
 
-		// PLATFORM-1194: cache the response for 5 minutes in the browser cache
 		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
-		$this->response->setCacheValidity( self::TTL );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 	}
-
 }
