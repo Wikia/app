@@ -34,7 +34,7 @@ define('ext.wikia.adEngine.slot.inContentDesktop', [
 			var startTime = new Date(),
 				totalTime,
 				trackedData = {},
-				try300x600 = Math.random() < 0.5,
+				try300x600 = (context.targeting.pageArticleId % 2 === 0), // poor man's consistent coin-flip
 				section,
 				slotName = 'INCONTENT_1A';
 
