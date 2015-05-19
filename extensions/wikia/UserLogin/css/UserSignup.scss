@@ -98,7 +98,22 @@
 			margin-left: 80px;
 		}
 
+		//TODO cleanup then removing responsive / introducing breakpoints
 		@if ($responsive-layout-enabled) {
+			@media screen and (max-width: 910px) {
+				margin-top: 35px;
+				width: 100%;
+
+				.benefit {
+					float: left;
+					width: 33%;
+				}
+			}
+		}
+
+		//TODO cleanup then removing responsive / introducing breakpoints
+		// breakpoints layout
+		@if ($oasisWidthType == 0) {
 			@media screen and (max-width: 910px) {
 				margin-top: 35px;
 				width: 100%;
@@ -133,7 +148,25 @@
 			@include submitpane;
 		}
 
+		//TODO cleanup then removing responsive / introducing breakpoints
 		@if ($responsive-layout-enabled) {
+			@media screen and (max-width: 910px) {
+				padding-left: 2%;
+				width: 52%;
+
+				form {
+					width: 332px;
+				}
+
+				.sso-login {
+					margin: 0;
+				}
+			}
+		}
+
+		//TODO cleanup then removing responsive / introducing breakpoints
+		// breakpoints layout
+		@if ($oasisWidthType == 0) {
 			@media screen and (max-width: 910px) {
 				padding-left: 2%;
 				width: 52%;

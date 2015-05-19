@@ -475,6 +475,7 @@ body {
 	@include sprite-edit-mw-toolbar-deep-embed(23px, 23px);
 }
 
+//TODO cleanup then removing responsive / introducing breakpoints
 @if ($responsive-layout-enabled) {
 	// START - edit page fixes
 	.editor .WikiaMainContent {

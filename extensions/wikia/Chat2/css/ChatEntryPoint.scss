@@ -139,7 +139,20 @@ body.skin-oasis .ChatMonobookEntryPoint {
 				margin: 0 8px 0 0;
 			}
 		}
+		//TODO cleanup then removing responsive / introducing breakpoints
 		@if ($responsive-layout-enabled) {
+			.carousel-container {
+				left: 19px;
+				width: 218px;
+
+				li {
+					margin-right: 12px;
+				}
+			}
+		}
+		//TODO cleanup then removing responsive / introducing breakpoints
+		// breakpoints layout
+		@if ($oasisWidthType == 0) {
 			.carousel-container {
 				left: 19px;
 				width: 218px;

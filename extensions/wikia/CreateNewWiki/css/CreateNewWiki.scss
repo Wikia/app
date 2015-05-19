@@ -171,10 +171,15 @@ $color-borders: #CECECE;
 }
 
 #NameWiki {
+	width: 500px;
+	//TODO cleanup then removing responsive / introducing breakpoints
 	@if ($responsive-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 500px;
+	}
+	//TODO cleanup then removing responsive / introducing breakpoints
+	// breakpoints layout
+	@if ($oasisWidthType == 0) {
+		width: auto;
 	}
 
 	form {
@@ -204,10 +209,17 @@ $color-borders: #CECECE;
 #UserAuth {
 	@include clearfix;
 	display: none;
+	width: 600px;
+	//TODO cleanup then removing responsive / introducing breakpoints
 	@if ($responsive-layout-enabled) {
 		min-width: 590px;
-	} @else {
-		width: 600px;
+		width: auto;
+	}
+	//TODO cleanup then removing responsive / introducing breakpoints
+	// breakpoints layout
+	@if ($oasisWidthType == 0) {
+		min-width: 590px;
+		width: auto;
 	}
 
 	.UserLoginModal {
@@ -237,24 +249,42 @@ $color-borders: #CECECE;
 
 #DescWiki {
 	display: none;
+	width: 700px;
+	//TODO cleanup then removing responsive / introducing breakpoints
 	@if ($responsive-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 700px;
+	}
+	//TODO cleanup then removing responsive / introducing breakpoints
+	// breakpoints layout
+	@if ($oasisWidthType == 0) {
+		width: auto;
 	}
 
 	ol {
 		margin: 0;
 		padding: 0;
+		left: 515px;
+		position: absolute;
+		right: 515px;
+		top: 100px;
+		width: 265px;
 
+		//TODO cleanup then removing responsive / introducing breakpoints
 		@if ($responsive-layout-enabled) {
-
-		} @else {
-			left: 515px;
-			position: absolute;
-			right: 515px;
-			top: 100px;
-			width: 265px;
+			left: auto;
+			position: static;
+			right: auto;
+			top: auto;
+			width: auto;
+		}
+		//TODO cleanup then removing responsive / introducing breakpoints
+		// breakpoints layout
+		@if ($oasisWidthType == 0) {
+			left: auto;
+			position: static;
+			right: auto;
+			top: auto;
+			width: auto;
 		}
 
 		li {
@@ -267,7 +297,16 @@ $color-borders: #CECECE;
 			list-style: none;
 			margin-bottom: 10px;
 			padding: 10px;
+			//TODO cleanup then removing responsive / introducing breakpoints
 			@if ($responsive-layout-enabled) {
+				display: inline-block;
+				float: left;
+				margin-left: 1%;
+				width: 27%;
+			}
+			//TODO cleanup then removing responsive / introducing breakpoints
+			// breakpoints layout
+			@if ($oasisWidthType == 0) {
 				display: inline-block;
 				float: left;
 				margin-left: 1%;
@@ -287,10 +326,15 @@ $color-borders: #CECECE;
 		height: 170px;
 		padding: 0;
 		resize: none;
+		width: 425px;
+		//TODO cleanup then removing responsive / introducing breakpoints
 		@if ($responsive-layout-enabled) {
 			width: 510px;
-		} @else{
-			width: 425px;
+		}
+		//TODO cleanup then removing responsive / introducing breakpoints
+		// breakpoints layout
+		@if ($oasisWidthType == 0) {
+			width: 510px;
 		}
 
 		&.placeholder {
@@ -346,10 +390,15 @@ $color-borders: #CECECE;
 
 #ThemeWiki {
 	display: none;
+	width: 650px;
+	//TODO cleanup then removing responsive / introducing breakpoints
 	@if ($responsive-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 650px;
+	}
+	//TODO cleanup then removing responsive / introducing breakpoints
+	// breakpoints layout
+	@if ($oasisWidthType == 0) {
+		width: auto;
 	}
 
 	.ThemeTab {
@@ -361,10 +410,15 @@ $color-borders: #CECECE;
 		.slider {
 			height: 106px;
 			top: 0;
+			width: 608px;
+			//TODO cleanup then removing responsive / introducing breakpoints
 			@if ($responsive-layout-enabled) {
 				width: 500px;
-			} @else {
-				width: 608px;
+			}
+			//TODO cleanup then removing responsive / introducing breakpoints
+			// breakpoints layout
+			@if ($oasisWidthType == 0) {
+				width: 500px;
 			}
 
 			ul {
@@ -386,10 +440,15 @@ $color-borders: #CECECE;
 			top: 37px;
 
 			&.next {
+				left: 645px;
+				//TODO cleanup then removing responsive / introducing breakpoints
 				@if ($responsive-layout-enabled) {
 					left: 540px;
-				} @else {
-					left: 645px;
+				}
+				//TODO cleanup then removing responsive / introducing breakpoints
+				// breakpoints layout
+				@if ($oasisWidthType == 0) {
+					left: 540px;
 				}
 			}
 		}
@@ -402,10 +461,15 @@ $color-borders: #CECECE;
 
 #UpgradeWiki {
 	display: none;
+	width: 625px;
+	//TODO cleanup then removing responsive / introducing breakpoints
 	@if ($responsive-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 625px;
+	}
+	//TODO cleanup then removing responsive / introducing breakpoints
+	// breakpoints layout
+	@if ($oasisWidthType == 0) {
+		width: auto;
 	}
 
 	.marketing {
