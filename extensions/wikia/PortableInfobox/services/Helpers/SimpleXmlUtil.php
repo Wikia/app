@@ -30,7 +30,7 @@ class SimpleXmlUtil {
 		if ( $node instanceof \SimpleXMLElement ) {
 			$domElement = dom_import_simplexml( $node );
 
-			if ( $domElement->childNodes->length ) {
+			if ( ( $domElement instanceof \DOMElement ) && ( $domElement->hasChildNodes() ) ) {
 				foreach ( $domElement->childNodes as $child ) {
 					$innerXML .= $child->ownerDocument->saveXML( $child );
 				}
