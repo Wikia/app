@@ -24,7 +24,7 @@ class WallNotificationEntity {
 	 */
 	public static function createFromRev( Revision $rev, $wikiId, $master = false ) {
 		$wn = new WallNotificationEntity();
-		if( $wn->loadDataFromRev( $rev, $wikiId, $master ) ) {
+		if ( $wn->loadDataFromRev( $rev, $wikiId, $master ) ) {
 			$wn->save();
 			return $wn;
 		}
@@ -39,11 +39,11 @@ class WallNotificationEntity {
 
 		$wn->id = $id;
 		$wn->data = $wn->getCache()->get( $wn->getMemcKey() );
-		if( empty( $wn->data ) ) {
+		if ( empty( $wn->data ) ) {
 			$wn->recreateFromDB();
 		}
 
-		if( empty( $wn->data ) ) {
+		if ( empty( $wn->data ) ) {
 			return null;
 		}
 
@@ -55,7 +55,7 @@ class WallNotificationEntity {
 	}
 
 	public function getUniqueId() {
-		if( $this->isMain() ) {
+		if ( $this->isMain() ) {
 			return $this->data->title_id;
 		} else {
 			return $this->data->parent_id;
@@ -69,9 +69,9 @@ class WallNotificationEntity {
 	public function loadDataFromRev( Revision $rev, $wikiId, $master = false ) {
 		global $wgSitename;
 
-		$this->id = $rev->getId(). '_' .  $wikiId;
+		$this->id = $rev->getId() . '_' .  $wikiId;
 
-		$wm = WallMessage::newFromTitle($rev->getTitle()); /* @var $wm WallMessage */
+		$wm = WallMessage::newFromTitle( $rev->getTitle() ); /* @var $wm WallMessage */
 		$wm->load();
 
 		$app = F::app();
@@ -82,8 +82,8 @@ class WallNotificationEntity {
 		$walluser = $wm->getWallOwner( $master );
 		$authoruser = User::newFromId( $rev->getUser() );
 
-		if(empty($walluser)) {
-			error_log('WALL_NO_OWNER: (entityId)'.$this->id);
+		if ( empty( $walluser ) ) {
+			error_log( 'WALL_NO_OWNER: (entityId)' . $this->id );
 			$this->data = null;
 			// FIXME: shouldn't it be data_non_cached ?
 			$this->data_noncached = null;
@@ -98,7 +98,7 @@ class WallNotificationEntity {
 		$this->data->rev_id = $rev->getId();
 
 		$wallTitle = $wm->getArticleTitle();
-		if( !empty( $wallTitle ) && $wallTitle->exists() ) {
+		if ( !empty( $wallTitle ) && $wallTitle->exists() ) {
 			$this->data->article_title_ns = $wallTitle->getNamespace();
 			$this->data->article_title_text = $wallTitle->getText();
 			$this->data->article_title_dbkey = $wallTitle->getDBkey();
@@ -113,20 +113,20 @@ class WallNotificationEntity {
 		$this->data->timestamp = $rev->getTimestamp();
 
 		$this->data->parent_id = null;
-		
+
 		$this->data->parent_page_id = $wm->getArticleTitle()->getArticleId();
 
-		if( $authoruser instanceof User ) {
+		if ( $authoruser instanceof User ) {
 			$this->data->msg_author_id = $authoruser->getId();
 			$this->data->msg_author_username = $authoruser->getName();
-			if( $authoruser->getId() > 0 ) {
+			if ( $authoruser->getId() > 0 ) {
 				$this->data->msg_author_displayname = $this->data->msg_author_username;
 			} else {
-				$this->data->msg_author_displayname = wfMessage('oasis-anon-user')->text();
+				$this->data->msg_author_displayname = wfMessage( 'oasis-anon-user' )->text();
 			}
 		} else {
-		//annon
-			$this->data->msg_author_displayname = wfMessage('oasis-anon-user')->text();
+		// annon
+			$this->data->msg_author_displayname = wfMessage( 'oasis-anon-user' )->text();
 			$this->data->msg_author_id = 0;
 		}
 
@@ -134,7 +134,7 @@ class WallNotificationEntity {
 
 		$this->data->wall_userid = $walluser->getId();
 		$this->data->wall_displayname = $this->data->wall_username;
-		//TODO: double ?
+		// TODO: double ?
 		$this->data->title_id = $wm->getTitle()->getArticleId();
 
 		$this->data_noncached->title = $wm->getTitle();
@@ -147,22 +147,22 @@ class WallNotificationEntity {
 		$this->data_noncached->msg_text = $wm->getText();
 		$this->data->notifyeveryone = $wm->getNotifyeveryone();
 
-		if( $wm->isEdited() ) {
+		if ( $wm->isEdited() ) {
 			$this->data->reason = $wm->getLastEditSummery();
 		} else {
 			$this->data->reason = '';
 		}
 
-		if( !empty( $acParent ) ) {
+		if ( !empty( $acParent ) ) {
 			$acParent->load();
 			$parentUser = $acParent->getUser();
 
-			if( $parentUser instanceof User ) {
+			if ( $parentUser instanceof User ) {
 				$this->data->parent_username = $parentUser->getName();
-				if( $parentUser->getId() > 0 ) {
+				if ( $parentUser->getId() > 0 ) {
 					$this->data->parent_displayname = $this->data->parent_username;
 				} else {
-					$this->data->parent_displayname = wfMessage('oasis-anon-user')->text();
+					$this->data->parent_displayname = wfMessage( 'oasis-anon-user' )->text();
 				}
 				$this->data->parent_user_id = $acParent->getUser()->getId();
 			} else {
@@ -172,7 +172,7 @@ class WallNotificationEntity {
 			 * an edge case but it needs to be handled
 			 * --nAndy
 			 */
-				$this->data->parent_username = $this->data->parent_displayname = wfMessage('oasis-anon-user')->text();
+				$this->data->parent_username = $this->data->parent_displayname = wfMessage( 'oasis-anon-user' )->text();
 				$this->data->parent_user_id = 0;
 			}
 			$title = $acParent->getTitle();
@@ -202,7 +202,7 @@ class WallNotificationEntity {
 		$wikiId = $explodedId[1];
 
 		$rev = Revision::newFromId( $RevId );
-		if( empty( $rev ) ) {
+		if ( empty( $rev ) ) {
 			/* also cache failures not to make expensive database queries
 			 * again and again for the same Entity */
 			$this->save();
@@ -217,7 +217,7 @@ class WallNotificationEntity {
 		$cache = $this->getCache();
 		$key = $this->getMemcKey();
 
-		$cache->set($key, $this->data);
+		$cache->set( $key, $this->data );
 	}
 
 	/**
