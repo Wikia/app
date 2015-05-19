@@ -198,4 +198,17 @@ class ReplyForumController extends ForumController {
 	protected function getSummaryKey() {
 		return 'emailext-forum-reply-summary';
 	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields = parent::getEmailSpecificFormFields();
+
+		$formFields['inputs'][] = [
+			'type' => 'text',
+			'name' => 'threadId',
+			'label' => 'Thread Id',
+			'tooltip' => 'The id of the forum thread, eg "841030" from URL like:  http://community.wikia.com/wiki/Thread:841030'
+		];
+
+		return $formFields;
+	}
 }
