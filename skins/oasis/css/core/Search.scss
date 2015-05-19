@@ -80,16 +80,19 @@
 			p {
 				margin: 0;
 			}
+
 			.grid-1.alpha {
 				width: 170px;
 				float: left;
 			}
 		}
+
 		.search-tabs {
 			float: left;
 			margin: 35px 0 0 0;
 			width: 170px;
 		}
+
 		.results-wrapper {
 			@include width-calc("100% - 500px");
 			float: left;
