@@ -71,63 +71,70 @@ class XmlParserTest extends WikiaBaseTest {
 						->setMethods( [ 'logXmlParseError' ] )
 						->getMock();
 
-		foreach ( $expectedErrors as $i => $ee ) {
-			$parser->expects( $this->at( $i ) )->method( 'logXmlParseError' )->with($ee['level'], $ee['code'], $ee['msg'] );
+		foreach ( $expectedErrors as $i => $expectedError ) {
+			$parser->expects( $this->at( $i ) )->method( 'logXmlParseError' )->with( $expectedError['level'],
+																					 $expectedError['code'],
+																					 $expectedError['msg'] );
 		}
 
 		$data = $parser->getDataFromXmlString( $markup );
 	}
 
 	public function errorHandlingDataProvider() {
+
+		/*
+		 * Error codes are defined on official xml API documentation:
+		 * http://www.xmlsoft.org/html/libxml-xmlerror.html
+		 */
 		return [
 				[
 					'<data>d</dat/a>',
 					[
-						['level' => 3, 'code' => 73, 'msg' => "expected '>'"],
-						['level' => 3, 'code' => 76, 'msg' => "Opening and ending tag mismatch: data line 1 and dat"],
-						['level' => 3, 'code' => 5, 'msg' => "Extra content at the end of the document"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 73, 'msg' => "expected '>'"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 76, 'msg' => "Opening and ending tag mismatch: data line 1 and dat"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 5, 'msg' => "Extra content at the end of the document"],
 					]
 				],
 				[
 					'<data> x </data></data>',
 					[
-						['level' => 3, 'code' => 5, 'msg' => "Extra content at the end of the document"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 5, 'msg' => "Extra content at the end of the document"],
 					]
 				],
 				[
 					'<data> > ddd < a ></data>',
 					[
-						['level' => 3, 'code' => 68, 'msg' => "StartTag: invalid element name"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 68, 'msg' => "StartTag: invalid element name"],
 					]
 				],
 				[
 					'<data>',
 					[
-						['level' => 3, 'code' => 77, 'msg' => "Premature end of data in tag data line 1"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 77, 'msg' => "Premature end of data in tag data line 1"],
 					]
 				],
 				[
 					'<infobox><data source=caption></infobox>',
 					[
-						['level' => 3, 'code' => 39, 'msg' => "AttValue: \" or ' expected"],
-						['level' => 3, 'code' => 65, 'msg' => "attributes construct error"],
-						['level' => 3, 'code' => 73, 'msg' => "Couldn't find end of Start Tag data line 1"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 39, 'msg' => "AttValue: \" or ' expected"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 65, 'msg' => "attributes construct error"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 73, 'msg' => "Couldn't find end of Start Tag data line 1"],
 					]
 				],
 				[
 					'<infobox><data source="caption"></infobox>',
 					[
-						['level' => 3, 'code' => 76, 'msg' => "Opening and ending tag mismatch: data line 1 and infobox"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 76, 'msg' => "Opening and ending tag mismatch: data line 1 and infobox"],
 					]
 				],
 				[
 					'<infobox><data source="caption></data></infobox>',
 					[
-						['level' => 3, 'code' => 38, 'msg' => "Unescaped '<' not allowed in attributes values"],
-						['level' => 3, 'code' => 65, 'msg' => "attributes construct error"],
-						['level' => 3, 'code' => 73, 'msg' => "Couldn't find end of Start Tag data line 1"],
-						['level' => 3, 'code' => 76, 'msg' => "Opening and ending tag mismatch: infobox line 1 and data"],
-						['level' => 3, 'code' => 5, 'msg' => "Extra content at the end of the document"]
+						['level' => LIBXML_ERR_FATAL, 'code' => 38, 'msg' => "Unescaped '<' not allowed in attributes values"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 65, 'msg' => "attributes construct error"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 73, 'msg' => "Couldn't find end of Start Tag data line 1"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 76, 'msg' => "Opening and ending tag mismatch: infobox line 1 and data"],
+						['level' => LIBXML_ERR_FATAL, 'code' => 5, 'msg' => "Extra content at the end of the document"]
 					]
 				]
 		];
