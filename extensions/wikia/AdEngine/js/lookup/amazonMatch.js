@@ -45,16 +45,12 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 		if (amazonResponse) {
 			eventName = 'lookupSuccess';
-			if (Object.keys) {
-				Object.keys(sizeMapping).forEach(function (amazonSize) {
-					var pricePoint = bestPricePointForSize[amazonSize];
-					if (pricePoint) {
-						data['a' + amazonSize] = 'p' + pricePoint;
-					}
-				});
-			} else {
-				data.ie8 = 1; // No detailed tracking for IE8, sorry
-			}
+			Object.keys(sizeMapping).forEach(function (amazonSize) {
+				var pricePoint = bestPricePointForSize[amazonSize];
+				if (pricePoint) {
+					data['a' + amazonSize] = 'p' + pricePoint;
+				}
+			});
 		} else {
 			eventName = 'lookupError';
 		}
@@ -182,7 +178,9 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			log('fake getSlotParams - module is not supported in IE8', 'debug', logGroup);
 			return {};
 		},
-		trackState: function () { trackState(); },
+		trackState: function () {
+			log('fake trackState - module is not supported in IE8', 'debug', logGroup);
+		},
 		wasCalled: wasCalled
 	};
 
@@ -191,6 +189,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	} else {
 		module.call = call;
 		module.getSlotParams = getSlotParams;
+		module.trackState = trackState;
 		return module;
 	}
 });
