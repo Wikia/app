@@ -85,6 +85,11 @@
 				width: 170px;
 				float: left;
 			}
+			@media #{$breakpoint-below-small-plus} {
+				#advanced-link {
+					display: none;
+				}
+			}
 		}
 
 		.search-tabs {
@@ -95,6 +100,9 @@
 
 		.results-wrapper {
 			@include width-calc("100% - 500px");
+			@media #{$breakpoint-below-small-plus} {
+				@include width-calc("100% - 180px");
+			}
 			float: left;
 		}
 	}
