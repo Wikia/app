@@ -690,18 +690,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * Track an event with a given label with category 'user-sign-up' and action 'request'
 	 *
 	 * @param string $label
-	 * @return void
 	 */
 	protected function track( $label ) {
-		// Check request headers to make sure this is not a mirrored
-		// request, which could result in duplicate tracking events
-		$headers = getallheaders();
-		foreach ( $headers as $name => $value ) {
-			if ( strtolower( $name ) === 'x-mirrored-request' ) {
-				return;
-			}
-		}
-
 		\Track::event( 'trackingevent', [
 			'ga_category' => 'user-sign-up',
 			'ga_action' => 'request',
