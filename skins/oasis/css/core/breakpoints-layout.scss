@@ -7,7 +7,7 @@
 	@media #{$breakpoint-small-only} {
 		.WikiaPage {
 			padding: 0 $padding-width-small;
-			width: $page-width-small;
+			width: $page-width-small - 2 * $content-border-width;
 		}
 	}
 
@@ -37,6 +37,10 @@
 	body {
 		overflow: hidden;
 		position: relative;
+
+		@media #{$breakpoint-not-supported} {
+			overflow: auto;
+		}
 	}
 
 	.WikiaMainContent {
@@ -102,7 +106,7 @@
 	@media #{$breakpoint-medium-up} {
 		.wikia-main-page-tag-lcs,
 		.main-page-tag-lcs-exploded {
-			@include width-calc("100% - 320px");
+			@include width-calc('100% - 320px');
 		}
 
 		.main-page-tag-rcs {
@@ -110,7 +114,7 @@
 		}
 
 		.WikiHeader > nav.WikiNav {
-			@include width-calc("100% - 250px");
+			@include width-calc('100% - 250px');
 
 			.navbackground {
 				width: 100%;
@@ -124,7 +128,7 @@
 
 	@media #{$breakpoint-large-up} {
 		.WikiHeader > nav.WikiNav .navbackground {
-			@include width-calc("100% + 9px");
+			@include width-calc('100% + 9px');
 		}
 	}
 
@@ -168,6 +172,7 @@
 		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
 			margin: 0 1px;
 		}
+
 		.EditPageToolbar .cke_toolbar_widescreen .cke_toolbar_insert {
 			padding: 0;
 		}
@@ -186,17 +191,18 @@
 			margin-right: 300px;
 		}
 	}
+
 	.EditPageRail {
 		width: 300px;
 	}
 
 	.EditPageHeader {
-		& > h1 {
+		> h1 {
 			margin-left: 5px;
 			margin-top: 2px;
 		}
 
-		& > h2 {
+		> h2 {
 			display: inline-block;
 			float: left;
 		}
@@ -227,7 +233,7 @@
 		position: static;
 	}
 
-	// "special case" for 1024px tablets (think landscape iPad)
+	// 'special case' for 1024px tablets (think landscape iPad)
 	@media #{$breakpoint-small-plus} {
 		.WikiaPage {
 			padding: 0 $padding-width-small-plus;
@@ -238,7 +244,7 @@
 		.main-page-tag-lcs-exploded,
 		.WikiaMainContent {
 			// right rail width + space between RR and content
-			@include width-calc("100% - 320px");
+			@include width-calc('100% - 320px');
 		}
 
 		.main-page-tag-rcs {
@@ -255,8 +261,8 @@
 				top: 22px;
 			}
 
-			& > nav.WikiNav {
-				@include width-calc("100% - 250px");
+			> nav.WikiNav {
+				@include width-calc('100% - 250px');
 
 				left: 275px;
 				top: 20px;
@@ -274,6 +280,16 @@
 		// needs to be nested in this way, so it it'll override styles in GlobalNav extension
 		.WikiaSiteWrapper > .global-navigation > .global-navigation-container {
 			width: $content-width-small-plus;
+		}
+	}
+
+	@media #{$breakpoint-not-supported} {
+		.WikiHeader > nav.WikiNav .navbackground {
+			width: $content-width-small - $content-border-width;
+
+			img {
+				display: none;
+			}
 		}
 	}
 }
