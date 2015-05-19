@@ -1,6 +1,7 @@
 @import "skins/shared/color";
 @import "layout";
 @import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/forms";
@@ -67,9 +68,31 @@
 .wikinav2 {
 	.WikiaRail > .WikiaSearch,
 	.WikiaSearchHeader > .WikiaSearch {
-		padding-bottom: 0px;
+		padding-bottom: 0;
 		margin-bottom: 10px;
 	}
 }
 // WikiaNav - end
 
+@if ( $breakpoints-layout-enabled ) {
+	.Search .WikiaSearch {
+		.SearchInput {
+			p {
+				margin: 0;
+			}
+			.grid-1.alpha {
+				width: 170px;
+				float: left;
+			}
+		}
+		.search-tabs {
+			float: left;
+			margin: 35px 0 0 0;
+			width: 170px;
+		}
+		.results-wrapper {
+			@include width-calc("100% - 500px");
+			float: left;
+		}
+	}
+}
