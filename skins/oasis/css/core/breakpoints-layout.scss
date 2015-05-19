@@ -273,7 +273,7 @@
 
 		// needs to be nested in this way, so it it'll override styles in GlobalNav extension
 		.WikiaSiteWrapper > .global-navigation > .global-navigation-container {
-			width: $content-width-small-plus;
+			width: $content-width-small-plus - $scroll-bar-width;
 		}
 	}
 }

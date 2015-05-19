@@ -95,13 +95,13 @@ $start-a-wikia-logo-size: 30px;
 @if $widthType == 0 {
 	@media #{$breakpoint-not-supported} {
 		.global-navigation .global-navigation-container {
-			width: $content-width-small;
+			width: $content-width-small - $scroll-bar-width;
 			position: relative;
 		}
 	}
 	@media #{$breakpoint-small-only} {
 		.global-navigation .global-navigation-container {
-			width: $content-width-small;
+			width: $content-width-small - $scroll-bar-width;
 
 			.start-wikia-container {
 				padding-left: 21px;
