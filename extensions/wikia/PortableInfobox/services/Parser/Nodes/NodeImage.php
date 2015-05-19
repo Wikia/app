@@ -17,7 +17,8 @@ class NodeImage extends Node {
 
 		return [
 			'url' => $this->resolveImageUrl( $title ),
-			'name' => ( $title ) ? $title->getDBkey() : '',
+			'name' => ( $title ) ?htmlspecialchars( $title->getText() ) : '',
+			'key' => ( $title ) ? htmlspecialchars( urlencode( $title->getDBKey() ) ) : '',
 			'alt' => $alt,
 			'caption' => $caption,
 			'ref' => $ref
