@@ -23,7 +23,17 @@ class FlagType extends FlagsBaseModel {
 	}
 
 	public function getFlagTypesForWikia( $wikiId ) {
+		$db = $this->getDatabaseForRead();
 
+		$flagTypesForWikia = ( new \WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( self::FLAGS_TYPES_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->runLoop( $db, function( &$flagTypesForWikia, $row ) {
+				$flagTypesForWikia[ $row->flag_type_id ] = get_object_vars( $row );
+			} );
+
+		return $flagTypesForWikia;
 	}
 
 	public function verifyParamsForAdd( $params ) {
