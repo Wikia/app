@@ -222,6 +222,11 @@
 		margin-right: 0;
 	}
 
+	//
+	.ve-activated .WikiaMainContent {
+		position: static;
+	}
+
 	// "special case" for 1024px tablets (think landscape iPad)
 	@media #{$breakpoint-small-plus} {
 		.WikiaPage {
