@@ -47,8 +47,8 @@ class ForumController extends EmailController {
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'summary' => $this->getSummary(),
 			'details' => $this->details,
-			'detailsHeader' => $this->getDetailsHeader(),
-			'buttonText' => $this->titleText,
+			'detailsHeader' => $this->titleText,
+			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->titleUrl,
 			'contentFooterMessages' => $this->getContentFooterMessages()
 		] );
