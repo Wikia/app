@@ -2444,3 +2444,11 @@ $config['paid_asset_drop_desktop_js'] = [
 		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js'
 	]
 ];
+
+$config['sitemap_page_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
+	]
+);
