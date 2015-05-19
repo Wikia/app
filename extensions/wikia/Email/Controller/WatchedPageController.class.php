@@ -78,6 +78,8 @@ abstract class WatchedPageController extends EmailController {
 	 * @template avatarLayout
 	 */
 	public function body() {
+		$contentFooterMessages = $this->getContentFooterMessages();
+
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
@@ -87,8 +89,8 @@ abstract class WatchedPageController extends EmailController {
 			'details' => $this->getDetails(),
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
-			'contentFooterMessages' => $this->getContentFooterMessages(),
-			'hasContentFooterMessages' => ( bool ) count( $this->getContentFooterMessages() ),
+			'contentFooterMessages' => $contentFooterMessages,
+			'hasContentFooterMessages' => ( bool ) count( $contentFooterMessages ),
 		] );
 	}
 
