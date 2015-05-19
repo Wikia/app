@@ -12,7 +12,7 @@
 const RESULT_OK = 0;
 const RESULT_READ_ONLY = 1;
 
-ini_set( 'include_path', dirname( __FILE__ ) . '/../../../../maintenance/' );
+ini_set( 'include_path', dirname( __FILE__ ) . '/../../../maintenance/' );
 
 require_once( 'commandLine.inc' );
 
