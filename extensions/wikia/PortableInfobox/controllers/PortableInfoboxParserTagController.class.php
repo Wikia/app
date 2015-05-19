@@ -3,6 +3,8 @@
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
+	const DEFAULT_THEME_NAME = 'wikia';
+	const INFOBOX_THEME_SUFFIX = "-infobox-theme";
 
 	private $markerNumber = 0;
 	private $markers = [ ];
@@ -61,18 +63,19 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$data = $infoboxParser->getDataFromXmlString( $markup );
 		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
 			return $this->handleError( wfMessage( 'unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
-		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e) {
-			return $this->handleError( wfMessage('xml-parse-error') );
+		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
+			return $this->handleError( wfMessage( 'xml-parse-error' ) );
 		}
 
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $data );
 
 		$renderer = new PortableInfoboxRenderService();
-		$renderedValue = $renderer->renderInfobox( $data );
+		$theme = $this->getThemeWithDefault( $params, $frame );
+		$renderedValue = $renderer->renderInfobox( $data, $theme );
 		if ( $wgArticleAsJson ) {
 			// (wgArticleAsJson == true) it means that we need to encode output for use inside JSON
-			$renderedValue = trim(json_encode($renderedValue), '"');
+			$renderedValue = trim( json_encode( $renderedValue ), '"' );
 		}
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}-QINU";
@@ -84,17 +87,28 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return strtr( $text, $this->markers );
 	}
 
-	private function handleError( $message ) {
-		$renderedValue = '<strong class="error"> ' . $message . '</strong>';
-		return [ $renderedValue, 'markerType' => 'nowiki' ];
-	}
-
 	protected function saveToParserOutput( \ParserOutput $parserOutput, $raw ) {
 		if ( !empty( $raw ) ) {
 			$infoboxes = $parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME );
 			$infoboxes[ ] = $raw;
 			$parserOutput->setProperty( self::INFOBOXES_PROPERTY_NAME, $infoboxes );
 		}
+	}
+
+	private function handleError( $message ) {
+		$renderedValue = '<strong class="error"> ' . $message . '</strong>';
+		return [ $renderedValue, 'markerType' => 'nowiki' ];
+	}
+
+	private function getThemeWithDefault( $params, PPFrame $frame ) {
+		$value = isset( $params[ 'theme-source' ] ) ? $frame->getArgument( $params[ 'theme-source' ] ) : false;
+		return $this->getThemePrefix( $params, $value ) . self::INFOBOX_THEME_SUFFIX;
+	}
+
+	private function getThemePrefix( $params, $value ) {
+		return !empty( $value ) ? $value :
+			// default logic
+			( isset( $params[ 'theme' ] ) ? $params[ 'theme' ] : self::DEFAULT_THEME_NAME );
 	}
 
 }

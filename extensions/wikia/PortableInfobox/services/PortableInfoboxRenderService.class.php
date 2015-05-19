@@ -39,7 +39,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $infoboxdata
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata ) {
+	public function renderInfobox( array $infoboxdata, $theme ) {
 		wfProfileIn( __METHOD__ );
 		$infoboxHtmlContent = '';
 
@@ -65,7 +65,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if(!empty($infoboxHtmlContent)) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent ] );
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme ] );
 		} else {
 			$output = '';
 		}
