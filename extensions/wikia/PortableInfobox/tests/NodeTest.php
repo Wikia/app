@@ -16,7 +16,7 @@ class NodeTest extends WikiaBaseTest {
 
 		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeData( $xml, [ 'season' => $season ] );
 		$nodeData = $node->getData();
-		$this->assertTrue( $node->isEmpty( $nodeData['value'] ) == $expectedOutput );
+		$this->assertTrue( $node->isEmpty( $nodeData ) == $expectedOutput );
 	}
 
 	public function testIsEmptyDataProvider() {
@@ -56,6 +56,14 @@ class NodeTest extends WikiaBaseTest {
 			[
 				'season' => '',
 				'expectedOutput' => true
+			],
+			[
+				'season' => 5,
+				'expectedOutput' => false
+			],
+			[
+				'season' => 0,
+				'expectedOutput' => false
 			]
 		];
 	}
