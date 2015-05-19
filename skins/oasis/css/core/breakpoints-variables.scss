@@ -4,6 +4,9 @@
 $widthType: get_command_line_param( "widthType", 0 );
 $oasisTypography: get_command_line_param( "oasisTypography", 0 );
 
+
+//Most browsers have 17px wide scrollbars, 20px here is for safty net and round number
+//ie: http://www.textfixer.com/tutorials/browser-scrollbar-width.php
 $scroll-bar-width: 20px;
 $breakpoint-width-not-supported: 767px + $scroll-bar-width;
 // "special case" for 1024px tablets (think landscape iPad)
