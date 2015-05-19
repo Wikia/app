@@ -15,17 +15,17 @@ class NodeApiClient {
 	 * that the connection is attempting to be made from (prevents
 	 * circumventing bans by connecting to Wiki A's chat via Wiki B).
 	 */
-	static public function getCityIdForRoom($roomId){
-		wfProfileIn(__METHOD__);
+	static public function getCityIdForRoom( $roomId ) {
+		wfProfileIn( __METHOD__ );
 
 		$cityId = "";
-		$cityJson = NodeApiClient::makeRequest(array(
+		$cityJson = NodeApiClient::makeRequest( array(
 			"func" => "getCityIdForRoom",
 			"roomId" => $roomId
-		));
-		$cityData = json_decode($cityJson);
-		if(isset($cityData->{'cityId'})){
-			$cityId = $cityData->{'cityId'};
+		) );
+		$cityData = json_decode( $cityJson );
+		if ( isset( $cityData->{ 'cityId' } ) ) {
+			$cityId = $cityData->{ 'cityId' };
 		} else {
 			// FIXME: How should we handle it if there is no cityId?
 			ChatHelper::info( __METHOD__ . ': Method called - no cityId', [
@@ -54,32 +54,32 @@ class NodeApiClient {
 	 *
 	 * @return string
 	 */
-	static public function getDefaultRoomId( $roomType = "open", $roomUsers = [] ){
+	static public function getDefaultRoomId( $roomType = "open", $roomUsers = [] ) {
 		global $wgCityId, $wgServer, $wgArticlePath;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		if(empty($roomData)){ // TODO: FIXME: What is this testing? Isn't it ALWAYS empty? - SWC 20110905
+		if ( empty( $roomData ) ) { // TODO: FIXME: What is this testing? Isn't it ALWAYS empty? - SWC 20110905
 			// Add some extra data that the server will want in order to store it in the room's hash.
 			$extraData = array(
 				'wgServer' => $wgServer,
 				'wgArticlePath' => $wgArticlePath
 			);
-			$extraDataString = json_encode($extraData);
-			
+			$extraDataString = json_encode( $extraData );
+
 			$roomId = "";
-			$roomJson = NodeApiClient::makeRequest(array(
+			$roomJson = NodeApiClient::makeRequest( array(
 				"func" => "getDefaultRoomId",
 				"wgCityId" => $wgCityId,
 				"roomType" => $roomType,
-				"roomUsers" => json_encode($roomUsers),
+				"roomUsers" => json_encode( $roomUsers ),
 				"extraDataString" => $extraDataString
-			));
-			
-			$roomData = json_decode($roomJson);
+			) );
+
+			$roomData = json_decode( $roomJson );
 		}
 
-		if(isset($roomData->{'roomId'})){
-			$roomId = $roomData->{'roomId'};
+		if ( isset( $roomData->{ 'roomId' } ) ) {
+			$roomId = $roomData->{ 'roomId' };
 			ChatHelper::info( __METHOD__ . ': Method called', [
 				'roomId' => $roomId,
 			] );
@@ -95,35 +95,35 @@ class NodeApiClient {
 
 	static public function getChatters() {
 		global $wgMemc;
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$memKey = wfMemcKey("NodeApiClient::getChatters");
-		
-		//data are store in memcache and set by node.js
-		$chatters = $wgMemc->get($memKey, false);
-		if(!$chatters){
+		$memKey = wfMemcKey( "NodeApiClient::getChatters" );
+
+		// data are store in memcache and set by node.js
+		$chatters = $wgMemc->get( $memKey, false );
+		if ( !$chatters ) {
 			$chatters = array();
 		}
 
 		wfProfileOut( __METHOD__ );
 		return $chatters;
 	}
-	
-	static public function setChatters($chatters) {
+
+	static public function setChatters( $chatters ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
-		
-		$memKey = wfMemcKey("NodeApiClient::getChatters");
-		$wgMemc->set($memKey, $chatters, 60*60*24);
-		
-		wfProfileOut( __METHOD__ );	
+
+		$memKey = wfMemcKey( "NodeApiClient::getChatters" );
+		$wgMemc->set( $memKey, $chatters, 60 * 60 * 24 );
+
+		wfProfileOut( __METHOD__ );
 	}
 
 
 	/**
 	 * Does the request to the Node server and returns the responseText (empty string on failure).
 	 */
-	static private function makeRequest($params){
+	static private function makeRequest( $params ) {
 		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 		$response = "";
@@ -134,10 +134,10 @@ class NodeApiClient {
 		// even a chat server in the backup datacenter(s)), so if we're in read-only, even though this isn't a write
 		// operation, abort trying to contact the node server since it could be unavailable (in the event of complete
 		// network unavailability in the primary datacenter). - BugzId 11047
-		if(empty($wgReadOnly)){
-			$requestUrl = "http://" . NodeApiClient::getHostAndPort() . "/api?" . http_build_query($params);
-			$response = Http::get( $requestUrl, 'default', array('noProxy' => true) );
-			if($response === false){
+		if ( empty( $wgReadOnly ) ) {
+			$requestUrl = "http://" . NodeApiClient::getHostAndPort() . "/api?" . http_build_query( $params );
+			$response = Http::get( $requestUrl, 'default', array( 'noProxy' => true ) );
+			if ( $response === false ) {
 				$response = "";
 			}
 		}
@@ -150,18 +150,18 @@ class NodeApiClient {
 	 * Return the appropriate host and port for the client to connect to.
 	 * This is based on whether this is dev or prod, but can be overridden
 	 */
-	static protected function getHostAndPort(){
+	static protected function getHostAndPort() {
 		global $wgDevelEnvironment;
-		
-		$server = ChatHelper::getServer('Api');
 
-		$server = ChatHelper::getServer('Api');
-		$hostAndPort = $server['host'].':'.$server['port'];
+		$server = ChatHelper::getServer( 'Api' );
+
+		$server = ChatHelper::getServer( 'Api' );
+		$hostAndPort = $server['host'] . ':' . $server['port'];
 
 		return $hostAndPort;
-		
-		
-		
+
+
+
 	} // end getHostAndPort()
 
 }

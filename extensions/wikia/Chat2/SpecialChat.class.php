@@ -11,8 +11,8 @@ class SpecialChat extends UnlistedSpecialPage {
 		global $wgUser, $wgOut;
 
 		// check if logged in
-		if($wgUser->isLoggedIn()){
-			if( Chat::canChat($wgUser) ){
+		if ( $wgUser->isLoggedIn() ) {
+			if ( Chat::canChat( $wgUser ) ) {
 				ChatHelper::info( __METHOD__ . ': Method called - success' );
 				Wikia::setVar( 'OasisEntryControllerName', 'Chat' );
 				Chat::logChatWindowOpenedEvent();

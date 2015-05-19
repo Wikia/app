@@ -92,7 +92,7 @@ $messages['en'] = array(
     'chat-user-menu-private-close' => 'Close Private Room',
     'chat-private-headline' => 'Private chat with $1',
 
-    //rights/groups
+    // rights/groups
     'right-chatmoderator' => 'Can kick/ban users from [[Help:Chat|Chat]]',
     'group-chatmoderator' => 'Chat moderators',
     'group-chatmoderator-member' => 'Chat moderator',

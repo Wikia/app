@@ -10,21 +10,21 @@
 	<![endif]-->
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/Chat2/css/Chat.scss')?>">
+	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL( '/extensions/wikia/Chat2/css/Chat.scss' )?>">
 	<link rel="stylesheet" href="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.css%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.css&only=styles">
 
 	<!-- JS -->
 	<?php
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('oasis_blocking', array());
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'oasis_blocking', array() );
 	?>
-	<?php foreach($srcs as $src): ?>
+	<?php foreach ( $srcs as $src ): ?>
 		<script src="<?php echo $src ?>"></script>
-	<?php endforeach;?>
+	<?php endforeach; ?>
 
 	<!-- temporary hack -->
 	<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
 	<?= $globalVariablesScript ?>
-	<?php //TODO: use js var?>
+	<?php // TODO: use js var?>
 
 </head>
 <body class="<?= $bodyClasses ?> ChatWindow">
@@ -32,7 +32,7 @@
 	<header id="ChatHeader" class="ChatHeader">
 		<h1 class="public wordmark">
 			<a href="<?= $mainPageURL ?>">
-			<? if ($themeSettings['wordmark-type'] == 'graphic') { ?>
+			<? if ( $themeSettings['wordmark-type'] == 'graphic' ) { ?>
 			<img width="<?= ChatController::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>">
 			<? } else { ?>
 			<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
@@ -48,7 +48,7 @@
 		<div id="Rail" class="Rail">
 			<h1 class="public wordmark selected">
 				<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
-				<? if ($themeSettings['wordmark-type'] == 'graphic') { ?>
+				<? if ( $themeSettings['wordmark-type'] == 'graphic' ) { ?>
 				<img width="<?= ChatController::CHAT_WORDMARK_WIDTH ?>" height="<?= ChatController::CHAT_WORDMARK_HEIGHT ?>" src="<?= $wordmarkThumbnailUrl ?>" class="wordmark">
 				<? } else { ?>
 				<span class="font-<?= $themeSettings['wordmark-font']?>"><?= $themeSettings['wordmark-text'] ?></span>
@@ -56,7 +56,7 @@
 				<span id="MsgCount_<?php echo $roomId ?>" class="splotch">0</span>
 			</h1>
 			<ul id="WikiChatList" class="WikiChatList"></ul>
-			<h1 class="private"><?= wfMsg('chat-private-messages') ?></h1>
+			<h1 class="private"><?= wfMsg( 'chat-private-messages' ) ?></h1>
 			<ul id="PrivateChatList" class="PrivateChatList"></ul>
 		</div>
 
@@ -93,7 +93,7 @@
 		<img src="<%= avatarSrc %>"/>
 		<span class="username"><%= name %></span>
 		<div class="details">
-			<span class="status"><?= wfMsg('chat-status-away'); ?></span>
+			<span class="status"><?= wfMsg( 'chat-status-away' ); ?></span>
 		</div>
 		<% if(isPrivate) { %>
 			<span id="MsgCount_<%= roomId %>" class="splotch">0</span>
@@ -103,9 +103,9 @@
 				<img src="<%= avatarSrc %>"/>
 				<ul>
 					<li class="username"><%= name %></li>
-					<li class="edits"><?= wfMsg('chat-edit-count', "<%= editCount %>") ?></li>
+					<li class="edits"><?= wfMsg( 'chat-edit-count', "<%= editCount %>" ) ?></li>
 					<% if (since) { %>
-						<li class="since"><?= wfMsg('chat-member-since', "<%= since %>") ?></li>
+						<li class="since"><?= wfMsg( 'chat-member-since', "<%= since %>" ) ?></li>
 					<% } %>
 				</ul>
 			</div>
@@ -128,11 +128,11 @@
 	</script>
 	<!-- Load these after the DOM is built -->
 	<?php
-		$srcs = AssetsManager::getInstance()->getGroupCommonURL('chat_js2', array());
+		$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'chat_js2', array() );
 	?>
-	<?php foreach($srcs as $src): ?>
+	<?php foreach ( $srcs as $src ): ?>
 		<script src="<?php echo $src ?>"></script>
-	<?php endforeach;?>
+	<?php endforeach; ?>
 	<script src="<?php echo $jsMessagePackagesUrl ?>"></script>
 	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.js&only=scripts"></script>
 </body>

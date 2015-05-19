@@ -17,7 +17,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'chat-desc',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // rights
 $wgAvailableRights[] = 'chatmoderator';
@@ -47,16 +47,16 @@ $wgGroupPermissions['util']['chatfailover'] = true;
 
 
 // Let staff & helpers change chatmod & banning status.
-if( empty($wgAddGroups['staff'])  || !is_array($wgAddGroups['staff']) ){
+if ( empty( $wgAddGroups['staff'] )  || !is_array( $wgAddGroups['staff'] ) ) {
 	$wgAddGroups['staff'] = array();
 }
-if( empty($wgAddGroups['helper'])  || !is_array($wgAddGroups['helper']) ){
+if ( empty( $wgAddGroups['helper'] )  || !is_array( $wgAddGroups['helper'] ) ) {
 	$wgAddGroups['helper'] = array();
 }
-if( empty($wgRemoveGroups['staff']) || !is_array($wgRemoveGroups['staff']) ){
+if ( empty( $wgRemoveGroups['staff'] ) || !is_array( $wgRemoveGroups['staff'] ) ) {
 	$wgRemoveGroups['staff'] = array();
 }
-if( empty($wgRemoveGroups['helper']) || !is_array($wgRemoveGroups['helper']) ){
+if ( empty( $wgRemoveGroups['helper'] ) || !is_array( $wgRemoveGroups['helper'] ) ) {
 	$wgRemoveGroups['helper'] = array();
 }
 
@@ -103,10 +103,10 @@ $wgSpecialPages[ 'Chatfailover'] = 'ChatfailoverSpecialController';
 $wgSpecialPages['Chat'] = 'SpecialChat';
 
 // i18n
-$wgExtensionMessagesFiles['Chat'] = $dir.'/Chat.i18n.php';
-$wgExtensionMessagesFiles['ChatAliases'] = $dir.'/Chat.aliases.php';
-$wgExtensionMessagesFiles['Chatfailover'] = $dir.'/Chatfailover.i18n.php';
-$wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir.'/ChatDefaultEmoticons.i18n.php';
+$wgExtensionMessagesFiles['Chat'] = $dir . '/Chat.i18n.php';
+$wgExtensionMessagesFiles['ChatAliases'] = $dir . '/Chat.aliases.php';
+$wgExtensionMessagesFiles['Chatfailover'] = $dir . '/Chatfailover.i18n.php';
+$wgExtensionMessagesFiles['ChatDefaultEmoticons'] = $dir . '/ChatDefaultEmoticons.i18n.php';
 
 // hooks
 $wgHooks[ 'GetRailModuleList' ][] = 'ChatHelper::onGetRailModuleList';
@@ -136,19 +136,19 @@ $wgLogActionsHandlers['chatban/chatbanremove'] = "ChatHelper::formatLogEntry";
 $wgLogActionsHandlers['chatban/chatbanadd'] = "ChatHelper::formatLogEntry";
 
 // register messages package for JS
-JSMessages::registerPackage('Chat', array(
+JSMessages::registerPackage( 'Chat', array(
 	'chat-*',
-));
+) );
 
-JSMessages::registerPackage('ChatBanModal', array(
+JSMessages::registerPackage( 'ChatBanModal', array(
 	'chat-log-reason-banadd',
 	'chat-ban-modal-change-ban-heading',
 	'chat-ban-modal-button-cancel',
 	'chat-ban-modal-button-ok',
 	'chat-ban-modal-button-change-ban',
-));
+) );
 
-JSMessages::registerPackage('ChatEntryPoint', array(
+JSMessages::registerPackage( 'ChatEntryPoint', array(
 	'chat-join-the-chat',
 	'chat-start-a-chat',
 	'chat-user-menu-message-wall',
@@ -157,10 +157,10 @@ JSMessages::registerPackage('ChatEntryPoint', array(
 	'chat-live2',
 	'chat-edit-count',
 	'chat-member-since'
-));
+) );
 
 define( 'CHAT_TAG', 'chat' );
-define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
+define( 'CUC_TYPE_CHAT', 128 );	// for CheckUser operation type
 
 /**
  * Add read right to ChatAjax am reqest.
@@ -168,7 +168,7 @@ define( 'CUC_TYPE_CHAT', 128);	// for CheckUser operation type
  */
 function chatAjaxonUserGetRights( $user, &$aRights ) {
 	global $wgRequest;
-	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'ChatAjax' ) {
+	if ( $wgRequest->getVal( 'action' ) === 'ajax' && $wgRequest->getVal( 'rs' ) === 'ChatAjax' ) {
 		$aRights[] = 'read';
 	}
 	return true;
@@ -179,22 +179,22 @@ $wgAjaxExportList[] = 'ChatAjax';
 function ChatAjax() {
 	global $wgChatDebugEnabled;
 
-	if (!empty($wgChatDebugEnabled)) {
-		Wikia::log( __METHOD__, "", "Chat debug:" . json_encode($_REQUEST));
+	if ( !empty( $wgChatDebugEnabled ) ) {
+		Wikia::log( __METHOD__, "", "Chat debug:" . json_encode( $_REQUEST ) );
 	}
 
 	global $wgRequest, $wgUser, $wgMemc;
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if (method_exists('ChatAjax', $method)) {
-		wfProfileIn(__METHOD__);
+	if ( method_exists( 'ChatAjax', $method ) ) {
+		wfProfileIn( __METHOD__ );
 
-		$key = $wgRequest->getVal('key');
+		$key = $wgRequest->getVal( 'key' );
 
 		// macbre: check to protect against BugId:27916
-		if (!is_null($key)) {
+		if ( !is_null( $key ) ) {
 			$data = $wgMemc->get( $key, false );
-			if( !empty($data) ) {
+			if ( !empty( $data ) ) {
 				$wgUser = User::newFromId( $data['user_id'] );
 			}
 		}
@@ -204,8 +204,8 @@ function ChatAjax() {
 		 so if the server passed the correct user ip, we try to make use of it and
 		 record it here so $wgRequest->getIP return this address
 		 */
-		$userIP = $wgRequest->getVal('userIP');
-		if ( ( $userIP !== false ) && IP::isIPAddress( $userIP ) ){
+		$userIP = $wgRequest->getVal( 'userIP' );
+		if ( ( $userIP !== false ) && IP::isIPAddress( $userIP ) ) {
 			ChatAjax::$chatUserIP = $userIP;
 
 		}
@@ -213,12 +213,12 @@ function ChatAjax() {
 		$data = ChatAjax::$method();
 
 		// send array as JSON
-		$json = json_encode($data);
-		$response = new AjaxResponse($json);
-		$response->setCacheDuration(0); // don't cache any of these requests
-		$response->setContentType('application/json; charset=utf-8');
+		$json = json_encode( $data );
+		$response = new AjaxResponse( $json );
+		$response->setCacheDuration( 0 ); // don't cache any of these requests
+		$response->setContentType( 'application/json; charset=utf-8' );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 }
