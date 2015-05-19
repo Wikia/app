@@ -46,10 +46,10 @@ class ForumController extends EmailController {
 			'editorUserName' => $this->getCurrentUserName(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'summary' => $this->getSummary(),
-			'details' => $this->getDetails(),
+			'details' => $this->details,
 			'detailsHeader' => $this->getDetailsHeader(),
-			'buttonText' => $this->getButtonText(),
-			'buttonLink' => $this->getButtonLink(),
+			'buttonText' => $this->titleText,
+			'buttonLink' => $this->titleUrl,
 			'contentFooterMessages' => $this->getContentFooterMessages()
 		] );
 	}
@@ -70,10 +70,6 @@ class ForumController extends EmailController {
 			->parse();
 	}
 
-	protected function getDetails() {
-		return $this->details;
-	}
-
 	protected function getButtonText() {
 		return wfMessage( $this->getButtonTextKey() )
 			->inLanguage( $this->targetLang )
@@ -81,14 +77,6 @@ class ForumController extends EmailController {
 	}
 	protected function getButtonTextKey() {
 		return 'emailext-forum-button-label';
-	}
-
-	protected function getButtonLink() {
-		return $this->titleUrl;
-	}
-
-	protected function getDetailsHeader() {
-		return $this->titleText;
 	}
 
 	protected function getContentFooterMessages() {

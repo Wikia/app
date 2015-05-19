@@ -36,7 +36,9 @@ $messages['qqq'] = array(
 	'emailext-watchedpage-notice' => "Informs the user who the intended recipient of the email is. $1 is the recipient's email address.",
 	'emailext-update-frequency' => 'Provides a link for users to update their email preferences',
 	'emailext-unsubscribe' => 'Provides a link for users to opt out of emails altogether. $1 is the unsubscribe link.',
-	'emailext-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title', 'emailext-salutation' => "Email greeting. $1 is the recipient's username.", 'emailext-forumreply-unfollow-text' => 'Asks the user if they want to stop following this discussion and provides a link to unfollow the discussion. $1 -> unfollow url, $2 discussion url'
+	'emailext-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title',
+	'emailext-salutation' => "Email greeting. $1 is the recipient's username.",
+	'emailext-forumreply-unfollow-text' => 'Asks the user if they want to stop following this discussion and provides a link to unfollow the discussion. $1 -> unfollow url, $2 discussion url'
 );
 
 $messages['de'] = array(

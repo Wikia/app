@@ -476,7 +476,7 @@ class WallNotifications {
 
 	/**
 	 * Get abstract from whole entity text.
-	 * HTML tags are stripped out, expect <p> <br> which are used to make it easier to read.
+	 * HTML tags are stripped out, except <p> <br> which are used to make it easier to read.
 	 *
 	 * @param $text
 	 * @return string
