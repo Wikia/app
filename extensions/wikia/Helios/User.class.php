@@ -205,7 +205,7 @@ class User {
 	 * This is a temporary change which will be deleted while implementing SOC-798
 	 * @param $response
 	 */
-	public static function clearEncryptedAccessTokenCookie($response) {
+	public static function clearEncryptedAccessTokenCookie( $response ) {
 		$response->setcookie(
 			'sid',
 			'',
