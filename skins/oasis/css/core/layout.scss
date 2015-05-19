@@ -5,7 +5,10 @@ $zTop: 5000100;
 // TODO: get rid of the 'widthType' parameter when the responsive layout
 // styles are refactored back into oasis core.
 $oasisWidthType: get_command_line_param("widthType", 0);
-$responsive-layout-enabled: if( $oasisWidthType == 2, true, false );
+$responsive-layout-enabled: if($oasisWidthType == 2, true, false);
+
+// Border separating content area from the page background
+$content-border-width: 1px;
 
 // We often use this amount of padding or margin to separate elements in our layout.
 $width-gutter: 10px;
