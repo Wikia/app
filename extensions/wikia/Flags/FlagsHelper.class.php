@@ -11,7 +11,7 @@ class Helper {
 
 		return !in_array(
 			$wgRequest->getVal( 'action', 'view' ),
-			array( 'edit', 'formedit' , 'history' )
+			[ 'edit', 'formedit' , 'history' ]
 		);
 	}
 
