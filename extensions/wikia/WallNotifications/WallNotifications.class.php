@@ -412,10 +412,7 @@ class WallNotifications {
 				'targetUser' => $watcherName,
 				'fromAddress' => $this->app->wg->PasswordSender,
 				'replyToAddress' => $this->app->wg->NoReplyAddress,
-				'fromName' => $notification->data->msg_author_username,
-				'messageLink' => $notification->data->url,
-				'boardName' => $notification->data->article_title_text,
-				'threadTitle' => $notification->data->thread_title,
+				'fromName' => $notification->data->PasswordSenderName,
 				'wallUserName' => $notification->data->wall_username,
 				'authorUserName' => $notification->data->msg_author_username,
 				'threadId' => $notification->data->parent_id
