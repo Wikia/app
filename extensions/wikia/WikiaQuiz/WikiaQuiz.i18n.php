@@ -2239,6 +2239,7 @@ $messages['uk'] = array(
  * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'wikiaquiz-editquiz-headline' => 'Chỉnh sửa các câu hỏi nhanh (Quiz)',
 	'wikiaquiz-image-label' => 'Hình ảnh (tùy chọn)',
 	'wikiaquiz-video-label' => 'Video (tùy chọn, supercedes Image)',
 	'wikiaquiz-error-invalid-image' => 'Hình ảnh không hợp lệ: $1',

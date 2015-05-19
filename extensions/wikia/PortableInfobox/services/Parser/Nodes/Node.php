@@ -46,16 +46,10 @@ class Node {
 		return [ 'value' => (string)$this->xmlNode ];
 	}
 
+	//note that a '0' value cannot be treated like a null
 	public function isEmpty( $data ) {
-		return !( isset( $data[ 'value' ] ) ) || empty( $data[ 'value' ] );
-	}
-
-	protected function getInnerXML( \SimpleXMLElement $node ) {
-		$innerXML= '';
-		foreach ( dom_import_simplexml( $node )->childNodes as $child ) {
-			$innerXML .= $child->ownerDocument->saveXML( $child );
-		}
-		return $innerXML;
+		$value = $data[ 'value' ];
+		return !( isset( $value ) ) || (empty( $value ) && $value != '0');
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
@@ -71,7 +65,9 @@ class Node {
 				 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
 				 * parse it.
 				 */
-				$value = $this->getInnerXML( $xmlNode->{self::DEFAULT_TAG_NAME} );
+				$value = \Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance()->getInnerXML(
+					$xmlNode->{self::DEFAULT_TAG_NAME}
+				);
 				$value = $this->getExternalParser()->parseRecursive( $value );
 			}
 		}

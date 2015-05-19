@@ -800,6 +800,20 @@ $messages['ko'] = array(
 	'tog-hidefollowedpages-v2' => '내 주시문서 목록을 내 사용자 문서에서 숨기기',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'preferences-v2-password' => 'Şîfreya min:',
+	'prefs-emailv2' => 'E-name',
+	'preferences-v2-redirect-main-page' => 'Destpêk',
+	'prefs-addressv2' => 'Navnîşan',
+	'preferences-v2-watchdefault' => 'Biguherîne',
+	'preferences-v2-watchdeletion' => 'Jê bibe',
+	'preferences-v2-watchcreations' => 'Çêke',
+	'preferences-v2-my-email-address' => 'Navnîşana e-nameya min:',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

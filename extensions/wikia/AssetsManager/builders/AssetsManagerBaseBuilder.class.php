@@ -34,6 +34,11 @@ class AssetsManagerBaseBuilder {
 		}
 	}
 
+	/**
+	 * @param float $processingTimeStart Unix timestamp in microseconds used for profiling (when profiling is forced)
+	 * @return string
+	 * @throws Exception
+	 */
 	public function getContent( $processingTimeStart = null ) {
 		$minifyTimeStart = null;
 

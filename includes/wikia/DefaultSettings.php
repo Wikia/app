@@ -1329,6 +1329,17 @@ $wgSitewideDisableIVW2 = false;
 $wgSitewideDisableLiftium = false;
 
 /**
+ * @name $wgSitewideDisablePaidAssetDrop
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
+ *
+ * Disable Paid Asset Drop (PAD) sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisablePaidAssetDrop = false;
+
+/**
  * @name $wgSitewideDisableRubiconRTP
  * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableRubiconRTP
@@ -1674,14 +1685,14 @@ $wgImageServingForceNoResults = false;
  * Enable typography changes on oasis breakpoints.
  * Works only if wgOasisBreakpoints set to true
  */
-$wgOasisTypography = false;
+$wgOasisTypography = true;
 
 /**
  * Force new breakpoints $wgOasisBreakpoints
  * see CONCF-186
  * todo Remove when removing responsive
  */
-$wgOasisBreakpoints = false;
+$wgOasisBreakpoints = true;
 
 /**
  * Force new breakpoints $wgOasisBreakpoints for German wikis

@@ -80,6 +80,17 @@ require([
 	});
 });
 
+require(['ext.wikia.adEngine.adContext', 'wikia.abTest'], function (adContext, abTest) {
+	'use strict';
+	
+	var group = abTest.getGroup('ADS_VIEWABILITY_MEDREC'),
+		medrec = document.getElementById('TOP_RIGHT_BOXAD');
+
+	if (group && medrec && !adContext.getContext().providers.sevenOneMedia) {
+		medrec.className += ' ads-viewability-test ' + group;
+	}
+});
+
 // FPS meter
 require(['wikia.querystring', 'wikia.document'], function (qs, doc) {
 	'use strict';
