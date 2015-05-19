@@ -1143,7 +1143,7 @@ class CreateWiki {
 				] );
 				return false;
 			}
-
+/**
 			$then = microtime( true );
 
 			wfDebugLog( "createwiki", __METHOD__ . ": Import {$this->mIP}/maintenance/cleanupStarter.sql \n", true );
@@ -1158,7 +1158,7 @@ class CreateWiki {
 				wfDebugLog( "createwiki", __METHOD__ . ": Import starter failed\n", true );
 				return false;
 			}
-
+**/
 			$cmd = sprintf(
 				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
 				$this->mNewWiki->city_id,
