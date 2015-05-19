@@ -16,8 +16,8 @@ $messages['qqq'] = array(
 	'emailext-forum-summary' => "Message to the user that new forum thread was created. $1 -> thread url, $2 -> thread name",
 	'emailext-forum-button-label' => 'Text for button that, when clicked, navigates to the new forum thread.',
 	'emailext-forum-reply-summary' => 'Information about the new replies in thread. $1 is the thread subject.',
-    'emailext-forum-reply-link-label' => 'Link to the post, permalink.',
-    'emailext-forum-reply-view-all' => 'Link to the thread page.'
+	'emailext-forum-reply-link-label' => 'Link to the post, permalink.',
+	'emailext-forum-reply-view-all' => 'Link to the thread page.'
 );
 
 $messages['de'] = array(
