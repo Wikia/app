@@ -138,11 +138,17 @@ class ForumController extends EmailController {
 
 class ReplyForumController extends ForumController {
 	protected $threadId;
+	protected $threadUrl;
 
 	public function initEmail() {
 		parent::initEmail();
 
 		$this->threadId = $this->request->getVal( 'threadId' );
+		$this->thread = \Title::newFromText(
+			$this->threadId,
+			NS_USER_WALL_MESSAGE
+		);
+		$this->threadUrl = $this->thread->getFullURL();
 	}
 
 	public function getSubject() {
@@ -152,7 +158,7 @@ class ReplyForumController extends ForumController {
 	}
 
 	protected function getSummary() {
-		return wfMessage( $this->getSummaryKey(), $this->titleText, $this->titleUrl )
+		return wfMessage( $this->getSummaryKey(), $this->titleText, $this->threadUrl )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
@@ -162,23 +168,18 @@ class ReplyForumController extends ForumController {
 	}
 
 	protected function getViewAll() {
-		return wfMessage( 'emailext-forum-reply-view-all', $this->titleUrl )
+		return wfMessage( 'emailext-forum-reply-view-all', $this->threadUrl )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
 
 	protected function getFooterMessages() {
-		$thread = \Title::newFromText(
-			$this->threadId,
-			NS_USER_WALL_MESSAGE
-		);
-		$threadUrl = $thread->getFullURL();
-		$unfollowUrl =  $thread->getFullURL( [
+		$unfollowUrl =  $this->thread->getFullURL( [
 			'action' => 'unwatch'
 		] );
 
 		$footerMessages = [
-			wfMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $threadUrl )
+			wfMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $this->threadUrl )
 				->inLanguage( $this->targetLang )
 				->parse()
 		];
