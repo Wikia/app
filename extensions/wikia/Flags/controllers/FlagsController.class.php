@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * The public interface of the extension and the main entry point for all requests.
+ * It provides a set of CRUD methods to manipulate Flags instances and their types.
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ */
+
 use Flags\FlagsCache;
 use Flags\Helper;
 use Flags\Models\Flag;
@@ -109,6 +118,18 @@ class FlagsController extends WikiaApiController {
 		$this->setResponseData( $allFlagTypes );
 	}
 
+	/**
+	 * A method that combines data from two models - Flag and FlagTypes.
+	 * The Flag model gives it data on instances of flags assigned to the given page.
+	 * The FlagType model provides data on every type of a flag available on the wikia.
+	 * The union operator used on arrays lets us safely merge these two arrays.
+	 * In case of an index duplication it preserves an item from the left array and adds a new
+	 * item if an index is not set.
+	 *
+	 * @param $wikiId
+	 * @param $pageId
+	 * @return Array An array of all types of flags, with and without instances
+	 */
 	private function getAllFlagTypes( $wikiId, $pageId ) {
 		$flagsCache = new FlagsCache();
 
@@ -130,8 +151,8 @@ class FlagsController extends WikiaApiController {
 		}
 
 		/**
-		 * 3. Return the united arrays - it is possible to merge them since both arrays use
-		 * flag_type_id values as indexes
+		 * 3. Return the united arrays if it's possible to merge them (both arrays use
+		 * flag_type_id values as indexes)
 		 */
 		return $flagsForPage + $flagTypesForWikia;
 	}
@@ -182,6 +203,21 @@ class FlagsController extends WikiaApiController {
 		$this->setResponseData( $flagsForPage );
 	}
 
+	/**
+	 * This is the main entry point if you want to modify flags for a page using the edit form.
+	 * The request HAS TO BE a POST one and include a `token` parameter that
+	 * matches an edit token for $wgUser.
+	 *
+	 * The request should include:
+	 * @requestParam int wikiId (if not provided a $wgCityId value is used)
+	 * @requestParam int pageId
+	 * @requestParam string token
+	 *
+	 * Input fields of the form should have a prefix `editFlags:flag_type_id:`
+	 * @see const values in FlagsHelper.class.php
+	 *
+	 * @return null|bool
+	 */
 	public function postFlagsEditForm() {
 		$this->processRequest();
 
@@ -208,20 +244,27 @@ class FlagsController extends WikiaApiController {
 			$flagsCache->purgeFlagsForPageForRender( $wikiId, $pageId );
 			$flagsCache->purgeFlagsForPageForEdit( $wikiId, $pageId );
 		}
+
+		return true;
 	}
 
-	private function performActionsUsingPostedData( $flagsToChange ) {
-		$wikiId = $this->params['wikiId'];
-		$pageId = $this->params['pageId'];
-
+	/**
+	 * A method that wraps performing appropriate actions for flags specified in $flagsToChange.
+	 * The array should have one or more of the following indexes:
+	 * 1. `toAdd` an array with data for adding new flags
+	 * 2. `toUpdate` an array with data for updating the existing flags
+	 * 3. `toRemove` an array with IDs of flags to remove
+	 * @param Array $flagsToChange an array with three possible nested arrays:
+	 */
+	private function performActionsUsingPostedData( Array $flagsToChange ) {
 		$flagModel = new Flag();
 		/**
 		 * Add flags
 		 */
 		if ( !empty( $flagsToChange['toAdd'] ) ) {
 			$flagsToAdd = [
-				'wikiId' => $wikiId,
-				'pageId' => $pageId,
+				'wikiId' => $this->params['wikiId'],
+				'pageId' => $this->params['pageId'],
 				'flags' => $flagsToChange['toAdd'],
 			];
 
