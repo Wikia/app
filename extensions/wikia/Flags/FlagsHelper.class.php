@@ -83,12 +83,13 @@ class Helper {
 				$key = $this->composeInputName( $flagTypeId, $paramName );
 				if ( isset( $postData[$key] ) ) {
 					/**
-					 * Use a value from the form if it is provided
+					 * Use a value from the form if it is provided.
+					 * It will be escaped by default mechanism from FluentSQL.
 					 */
-					$flagFromPost['params'][$paramName] = \Sanitizer::escapeHtmlAllowEntities( $postData[$key] );
+					$flagFromPost['params'][$paramName] = $postData[$key];
 				} else {
 					/**
-					 * Insert an empty string otherwise
+					 * Insert an empty string if a value is not provided.
 					 */
 					$flagFromPost['params'][$paramName] = '';
 				}
