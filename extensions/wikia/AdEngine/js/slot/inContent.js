@@ -205,11 +205,6 @@ define('ext.wikia.adEngine.slot.inContent', [
 		}
 
 		if (section.$end.length) {
-			if (section.$end.width() < originalContainerWidth) {
-				logInfo(section, 'NO: next section header is too narrow');
-				return false;
-			}
-
 			spaceBetweenSections = section.$end.offset().top - section.$extraLastElement.offset().top;
 
 			if (spaceBetweenSections > maxSpaceBetweenSections) {
