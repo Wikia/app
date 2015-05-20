@@ -7,22 +7,25 @@ define('ext.wikia.adEngine.slot.inContent', [
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
 		$container = $('#mw-content-text'),
-		headersSelector = '> h2, > h3, > section > h2'; // relative to $container
+		headersSelector = '> h2, > h3, > section > h2', // relative to $container
+		maxSpaceBetweenSections = 50,     // allow max 50px space between sections
+		heightDifferenceTollerance = 1.2; // accept 20% more height difference because of text re-flowing
 
 	/**
 	 * Representation of a section which is a chunk of HTML between two headers within an article content
 	 *
 	 * @typedef {Object} Section
-	 * @property {boolean} intro            whether this is an intro section (the one BEFORE the first heading)
-	 * @porperty {String} name              name of the section
-	 * @porperty {String} nextName          name of the next section
-	 * @property {jQuery} [$start]          header preceding the section (empty when section.intro = true)
-	 * @property {jQuery} $end              header following the section
-	 * @property {jQuery} $firstElement     first element in the section
-	 * @property {String} firstElementFloat value of CSS property "float" of the first element in the section
-	 * @property {number} height            height of the section before putting any ads to it
-	 * @property {jQuery} [$ad]             ad Placeholder added to the section
-	 * @property {boolean} [keepAd]         whether the ad fits in the section
+	 * @property {boolean} intro              whether this is an intro section (the one BEFORE the first heading)
+	 * @porperty {String} name                name of the section
+	 * @porperty {String} nextName            name of the next section
+	 * @property {jQuery} [$start]            header preceding the section (empty when section.intro = true)
+	 * @property {jQuery} $end                header following the section
+	 * @property {jQuery} $firstElement       first element in the section
+	 * @property {String} firstElementFloat   value of CSS property "float" of the first element in the section
+	 * @property {number} height              height of the section before putting any ads to it
+	 * @property {jQuery} [$ad]               ad placeholder added to the section
+	 * @property {jQuery} [$extraLastElement] extra element added at the end of the section
+	 * @property {boolean} [keepAd]           whether the ad fits in the section
 	 */
 
 	/**
@@ -160,9 +163,14 @@ define('ext.wikia.adEngine.slot.inContent', [
 		for (i = 0, len = sections.length; i < len; i += 1) {
 			section = sections[i];
 
-			// Inject the ad Placeholder now
+			// Inject the ad placeholder now
 			section.$ad = $adPlaceholder.clone();
+
 			injectAdPlaceholderIntoSection(section, section.$ad);
+
+			// Add extra element before the next section so we can track if sections are long enough
+			section.$extraLastElement = $('<div></div>');
+			section.$end.before(section.$extraLastElement);
 		}
 	}
 
@@ -188,6 +196,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 			minSectionHeight,
 			newSectionHeight,
 			heightDiff,
+			spaceBetweenSections,
 			msg;
 
 		if (!section.intro && section.$start.width() < originalContainerWidth) {
@@ -195,9 +204,19 @@ define('ext.wikia.adEngine.slot.inContent', [
 			return false;
 		}
 
-		if (section.$end.length && section.$end.width() < originalContainerWidth) {
-			logInfo(section, 'NO: next section header is too narrow');
-			return false;
+		if (section.$end.length) {
+			if (section.$end.width() < originalContainerWidth) {
+				logInfo(section, 'NO: next section header is too narrow');
+				return false;
+			}
+
+			spaceBetweenSections = section.$end.offset().top - section.$extraLastElement.offset().top;
+
+			if (spaceBetweenSections > maxSpaceBetweenSections) {
+				msg = 'NO: section too short for an ad';
+				logInfo(section, msg);
+				return false;
+			}
 		}
 
 		firstElementClear = section.$firstElement.css('clear');
@@ -206,8 +225,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 			return false;
 		}
 
-		// 1.2 = accept 20% more height difference than calculated by strict math in case the text flows differently
-		maxHeightDiff = 1.2 * adWidth * adHeight / originalContainerWidth;
+		maxHeightDiff = heightDifferenceTollerance * adWidth * adHeight / originalContainerWidth;
 		minSectionHeight = adHeight - maxHeightDiff;
 
 		if (section.height < minSectionHeight) {
@@ -220,20 +238,21 @@ define('ext.wikia.adEngine.slot.inContent', [
 		heightDiff = newSectionHeight - section.height;
 
 		if (heightDiff > maxHeightDiff) {
-			msg = 'NO: height difference is too big: ' + heightDiff.toFixed(1) + '>' + maxHeightDiff.toFixed(1);
+			msg = 'NO: height difference is too big: ';
+			msg += heightDiff.toFixed(1) + '>' + maxHeightDiff.toFixed(1);
 			logInfo(section, msg);
 			return false;
 		}
 
 		if (!canReFlow(section.$firstElement) && section.$firstElement.width() > newContentWidth) {
-			msg = 'NO: the first element in section is too wide and does not adapt: ' +
-				section.$firstElement.width() + '>' + newContentWidth;
+			msg = 'NO: the first element in section is too wide and does not adapt: ';
+			msg += section.$firstElement.width() + '>' + newContentWidth;
 			logInfo(section, msg);
 			return false;
 		}
 
-		msg = 'YES: ad fits and height difference is acceptable: ' +
-			heightDiff.toFixed(1) + '<' + maxHeightDiff.toFixed(1);
+		msg = 'YES: ad fits and height difference is acceptable: ';
+		msg += heightDiff.toFixed(1) + '<' + maxHeightDiff.toFixed(1);
 
 		logInfo(section, msg);
 
@@ -276,7 +295,9 @@ define('ext.wikia.adEngine.slot.inContent', [
 			section.$ad.remove();
 			section.$firstElement.removeClass('clear-right-after-ad-in-content');
 			section.$end.removeClass('clear-both-after-ad-in-content');
+			section.$extraLastElement.remove();
 			delete section.$ad;
+			delete section.$extraLastElement;
 		}
 	}
 
