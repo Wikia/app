@@ -51,6 +51,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			LEFT_SKYSCRAPER_2: 'oneColumn',
 			LEFT_SKYSCRAPER_3: 'oneColumn',
 			INCONTENT_BOXAD_1: 'oneColumn',
+			INCONTENT_PLAYER: 'oneColumn',
 			INVISIBLE_SKIN: 'noSkins'
 		},
 		/**
