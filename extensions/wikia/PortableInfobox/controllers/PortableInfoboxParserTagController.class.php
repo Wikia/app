@@ -4,7 +4,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 	const DEFAULT_THEME_NAME = 'wikia';
-	const INFOBOX_THEME_SUFFIX = "-infobox-theme";
+	const INFOBOX_THEME_PREFIX = "portable-infobox-theme-";
 
 	private $markerNumber = 0;
 	private $markers = [ ];
@@ -102,7 +102,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function getThemeWithDefault( $params, PPFrame $frame ) {
 		$value = isset( $params[ 'theme-source' ] ) ? $frame->getArgument( $params[ 'theme-source' ] ) : false;
-		return $this->getThemePrefix( $params, $value ) . self::INFOBOX_THEME_SUFFIX;
+		return self::INFOBOX_THEME_PREFIX . $this->getThemePrefix( $params, $value );
 	}
 
 	private function getThemePrefix( $params, $value ) {
