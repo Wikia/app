@@ -10,6 +10,7 @@ use Wikia\Logger\WikiaLogger;
 class User {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
+	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
 
 	// This is set to 6 months,(365/2)*24*60*60 = 15768000
 	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
@@ -189,29 +190,14 @@ class User {
 	 * Clear the access token cookie by setting a time in the past
 	 */
 	public static function clearAccessTokenCookie() {
-		$response = \RequestContext::getMain()->getRequest()->response();
-		$response->setcookie(
-			self::ACCESS_TOKEN_COOKIE_NAME,
-			'',
-			time() - self::ACCESS_TOKEN_COOKIE_TTL,
-			\WebResponse::NO_COOKIE_PREFIX
-		);
-		self::clearEncryptedAccessTokenCookie( $response );
-	}
+		self::clearCookie( self::ACCESS_TOKEN_COOKIE_NAME );
 
-	/**
-	 * Mercury's backend (Hapi) is setting access_token cookie in an encrypted form, so we need
-	 * to destroy this one as well on UserLogout
-	 * This is a temporary change which will be deleted while implementing SOC-798
-	 * @param $response
-	 */
-	public static function clearEncryptedAccessTokenCookie( $response ) {
-		$response->setcookie(
-			'sid',
-			'',
-			time() - self::ACCESS_TOKEN_COOKIE_TTL,
-			\WebResponse::NO_COOKIE_PREFIX
-		);
+		/*
+		 * Mercury's backend (Hapi) is setting access_token cookie in an encrypted form, so we need
+		 * to destroy this one as well on UserLogout
+		 * This is a temporary change which will be deleted while implementing SOC-798
+		 */
+		self::clearCookie( self::MERCURY_ACCESS_TOKEN_COOKIE_NAME );
 	}
 
 	/**
@@ -387,5 +373,20 @@ class User {
 	public static function onUserSave( \User $user ) {
 		self::purgeAuthenticationCache( $user->getName() );
 		return true;
+	}
+
+	/**
+	 * Clears selected cookie
+	 *
+	 * @param $cookieName
+	 */
+	private static function clearCookie( $cookieName ) {
+		$response = \RequestContext::getMain()->getRequest()->response();
+		$response->setcookie(
+			$cookieName,
+			'',
+			time() - self::ACCESS_TOKEN_COOKIE_TTL,
+			\WebResponse::NO_COOKIE_PREFIX
+		);
 	}
 }
