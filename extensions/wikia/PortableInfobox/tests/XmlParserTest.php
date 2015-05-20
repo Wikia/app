@@ -64,20 +64,40 @@ class XmlParserTest extends WikiaBaseTest {
 	 */
 	public function testErrorHandling( $markup, $expectedErrors ) {
 
-		$this->setExpectedException( '\Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException' );
-
 		$parser = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\XmlParser' )
 						->setConstructorArgs( [ [] ] )
 						->setMethods( [ 'logXmlParseError' ] )
 						->getMock();
 
-		foreach ( $expectedErrors as $i => $expectedError ) {
-			$parser->expects( $this->at( $i ) )->method( 'logXmlParseError' )->with( $expectedError['level'],
-																					 $expectedError['code'],
-																					 $expectedError['msg'] );
+
+		$errorCodes = [];
+		$errorMsgs = [];
+
+		// Let's gather error codes and messages that comes to logXmlParseError function:
+		$parser->expects($this->any())->method( 'logXmlParseError' )->will( $this->returnCallback(
+			function( $level, $code, $msg ) use ( &$errorCodes, &$errorMsgs ) {
+				$errorCodes[] = $code;
+				$errorMsgs[] = $msg;
+			}
+		));
+
+		$throwsException = false;
+
+		// getDataFromXmlString should throw an exception, but we want to proceed in order to check parameters
+		// from logXmlParseError
+		try {
+			$data = $parser->getDataFromXmlString( $markup );
+		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
+			$throwsException = true;
 		}
 
-		$data = $parser->getDataFromXmlString( $markup );
+		$this->assertTrue( $throwsException );
+
+		// lets compare expectedErrors with real errors
+		foreach ( $expectedErrors as $expectedError ) {
+			$this->assertTrue( in_array( $expectedError['code'], $errorCodes ) );
+			$this->assertTrue( in_array( $expectedError['msg'], $errorMsgs ) );
+		}
 	}
 
 	public function errorHandlingDataProvider() {
