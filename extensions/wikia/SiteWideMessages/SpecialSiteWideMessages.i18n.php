@@ -925,6 +925,8 @@ $messages['de'] = array(
 	'swm-label-mode-users-active' => 'Aktive Benutzer',
 	'swm-label-mode-users-group' => 'Benutzer in der Gruppe',
 	'swm-label-mode-users-group-hint' => '<i>Wähle eine Gruppe aus dem Dropdown, oder schreibe den Namen per Hand um die Dropdown-Auswahl zu überschreiben.</i>',
+	'swm-label-mode-users-poweruser' => 'Powerbenutzer eines Typs',
+	'swm-label-mode-users-poweruser-hint' => 'Wähle Typen von Powerbenutzern aus einer Liste aus. Die Nachricht wird an alle Wikias versandt.',
 	'swm-label-mode-users-user' => 'Ausgewählter Benutzer',
 	'swm-label-mode-users-user-hint' => '<i>Diese Option ignoriert die Auswahl in der Gruppe „Wikis“.</i>',
 	'swm-label-mode-users-user-multi' => 'Benutzerliste',
@@ -1091,6 +1093,7 @@ $messages['el'] = array(
  * @author Armando-Martin
  * @author Bola
  * @author Crazymadlover
+ * @author Macofe
  * @author McDutchie
  * @author Mor
  * @author Peter17
@@ -1126,6 +1129,8 @@ $messages['es'] = array(
 	'swm-label-mode-users-active' => 'Usuarios activos',
 	'swm-label-mode-users-group' => 'Usuarios pertenecientes al grupo',
 	'swm-label-mode-users-group-hint' => '<i>Elija un grupo del menú desplegable o escriba el nombre a mano para sobrescribir la selección del menú desplegable.</i>',
+	'swm-label-mode-users-poweruser' => 'Tipos de usuarios avanzados',
+	'swm-label-mode-users-poweruser-hint' => 'Elije los tipos de usuarios avanzados de una lista. El mensaje se enviará a todas las wikias.',
 	'swm-label-mode-users-user' => 'Usuario seleccionado',
 	'swm-label-mode-users-user-hint' => '<i>esta opción ignora selección en "Wikis" de grupo.</i>',
 	'swm-label-mode-users-user-multi' => 'Lista de usuarios',
@@ -1404,6 +1409,8 @@ $messages['fr'] = array(
 	'swm-label-mode-users-active' => 'Utilisateurs actifs',
 	'swm-label-mode-users-group' => 'Utilisateurs appartenant à ce groupe',
 	'swm-label-mode-users-group-hint' => '<i>Sélectionnez un groupe depuis la liste déroulante ou écrivez le nom manuelle pour outrepasser la liste déroulante.</i>',
+	'swm-label-mode-users-poweruser' => 'Super-utilisateurs d’un type',
+	'swm-label-mode-users-poweruser-hint' => 'Choisissez les types de super-utilisateur depuis une liste. Le message sera envoyé à tous les wikias.',
 	'swm-label-mode-users-user' => 'Utilisateur sélectionné',
 	'swm-label-mode-users-user-hint' => '<i>Cette option ignore la sélection dans le groupe « Wikis ».</i>',
 	'swm-label-mode-users-user-multi' => 'Liste des utilisateurs',
@@ -2055,13 +2062,18 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'swm-label-edit' => 'Biguherîne',
 	'swm-label-list' => 'Lîste',
 	'swm-label-recipient-users' => 'Bikarhêner',
+	'swm-label-mode-wikis-all' => 'Hemû wîkî',
+	'swm-label-mode-wikis-wiki-multi' => 'Lîsteya wîkîyan',
 	'swm-label-mode-users-all' => 'Hemû bikarhêner',
+	'swm-label-mode-users-active' => 'Bikarhênerên çalak',
+	'swm-label-mode-users-user' => 'Bikarhênerên hilbijartî',
 	'swm-label-content' => 'Naverok',
 	'swm-label-language' => 'Ziman',
 	'swm-button-preview' => '[ Pêşdîtin ]',
@@ -2070,12 +2082,22 @@ $messages['ku-latn'] = array(
 	'swm-button-new' => '[ Nû ]',
 	'swm-msg-sent-ok' => '<h3>Peyam hate şandin.</h3>',
 	'swm-list-no-messages' => 'Mesaj tune ne.',
+	'swm-list-table-id' => 'ID',
 	'swm-list-table-group' => 'Kom',
 	'swm-list-table-content' => 'Naverok',
 	'swm-list-table-tools' => 'Amûr',
 	'swm-list-table-lang' => 'Ziman',
 	'swm-yes' => 'Erê',
 	'swm-no' => 'Na',
+	'swm-mode-users-registration-after' => 'Piştî',
+	'swm-mode-users-registration-before' => 'Berî',
+	'swm-mode-users-registration-between' => 'Di navberê de',
+	'swm-mode-users-editcount-more' => 'Bêhtir',
+	'swm-mode-users-editcount-less' => 'Kêmtir',
+	'swm-mode-users-editcount-between' => 'Di navberê de',
+	'swm-mode-wikis-created-after' => 'Piştî',
+	'swm-mode-wikis-created-before' => 'Berî',
+	'swm-mode-wikis-created-between' => 'Di navberê de',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2301,6 +2323,8 @@ $messages['ms'] = array(
 	'swm-label-mode-users-active' => 'Pengguna aktif',
 	'swm-label-mode-users-group' => 'Pengguna dalam kumpulan',
 	'swm-label-mode-users-group-hint' => '<i>Pilih satu kumpulan daripada menu juntai bawah, atau taipkan nama yang dicari itu sendiri untuk mengatasi pilihan juntai bawah.</i>',
+	'swm-label-mode-users-poweruser' => 'Pengguna berkuasa sejenis',
+	'swm-label-mode-users-poweruser-hint' => 'Pilih jenis-jenis pengguna berkuasa dari senarai. Pesanannya akan dihantar ke semua Wikia.',
 	'swm-label-mode-users-user' => 'Pengguna terpilih',
 	'swm-label-mode-users-user-hint' => '<i>Pilihan ini mengabaikan pilihan dalam kumpulan "Wiki".</i>',
 	'swm-label-mode-users-user-multi' => 'Senarai pengguna',
@@ -3839,6 +3863,9 @@ $messages['uz'] = array(
  * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'sidewidemessages-desc' => 'Phần mở rộng này cung cấp một giao diện để gửi tin nhắn nhìn thấy trên tất cả các wiki.',
+	'swm-label-edit' => 'Sửa đổi',
+	'swm-label-mode-wikis-all' => 'Tất cả các wiki',
 	'swm-label-comment' => 'Bình luận',
 	'swm-button-lang-checknone' => '[ Không đánh dấu ]',
 	'swm-list-no-messages' => 'Không có tin nhắn.',
@@ -3907,6 +3934,7 @@ $messages['zh-hans'] = array(
 	'swm-label-mode-users-active' => '活跃用户',
 	'swm-label-mode-users-group' => '用户属于该组',
 	'swm-label-mode-users-group-hint' => '<i>从下拉框挑选一个组，或者手写名称覆盖在下拉框的选择。</i>',
+	'swm-label-mode-users-poweruser' => '类型的高级用户',
 	'swm-label-mode-users-user' => '选定用户',
 	'swm-label-mode-users-user-hint' => '<i>此选项会忽略在组“Wikis”中的选择。</i>',
 	'swm-label-mode-users-user-multi' => '用户列表',

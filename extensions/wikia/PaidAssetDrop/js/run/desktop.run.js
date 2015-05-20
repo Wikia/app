@@ -17,11 +17,14 @@ require([
 	var action = new Querystring().getVal('action', 'view'),
 		articleTarget = '#mw-content-text',
 		mainPageTarget = '#mw-content-text .lcs-container',
+		pageType,
 		target;
 
 	if (win.wgIsMainPage && $(mainPageTarget).length) {
+		pageType = 'home';
 		target = mainPageTarget;
 	} else {
+		pageType = 'article';
 		target = articleTarget;
 	}
 
@@ -38,7 +41,7 @@ require([
 		}
 
 		if (pad.isNowValid(win.wgPaidAssetDropConfig) && win.wgEnableAPI) {
-			pad.injectPAD(target, 'desktop');
+			pad.injectPAD(target, 'desktop', pageType);
 		}
 	});
 });

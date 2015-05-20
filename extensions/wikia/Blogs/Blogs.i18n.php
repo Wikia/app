@@ -3246,15 +3246,18 @@ $messages['ku'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  * @author Gomada
  */
 $messages['ku-latn'] = array(
+	'createblogpage' => 'Blogek çêke',
 	'create-blog-invalid-title-error' => 'Sernava ne-derbasdar',
 	'create-blog-save' => 'Rûpelê tomar bike',
 	'create-blog-preview' => 'Pêşdîtin',
 	'create-blog-listing-sortby-author' => 'Nivîskar',
 	'blog-defaulttitle' => 'Blog',
+	'blog-readfullpost' => 'Zêdetir bixwîne',
 	'blog-page' => 'Blog',
 	'blog-voting-label' => 'Dengdan',
 	'blog-comment-delete' => 'jê bibe',
@@ -3262,7 +3265,10 @@ $messages['ku-latn'] = array(
 	'blog-comment-unhide' => 'nîşan bide',
 	'blog-comment-history' => 'dîrok',
 	'blog-comment-edit' => 'biguherîne',
+	'blog-refresh-label' => 'Nû bike',
 	'blog-fromsitename' => 'Ji $1',
+	'blog-comment-sending' => 'Te şandin...',
+	'blogs-searchprofile' => 'Blog',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

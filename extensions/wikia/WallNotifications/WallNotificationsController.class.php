@@ -19,7 +19,7 @@ class WallNotificationsController extends WikiaController {
 		$loggedIn = $wgUser->isLoggedIn();
 		$suppressWallNotifications = $this->areNotificationsSuppressedByExtensions();
 
-		if( $loggedIn && !$suppressWallNotifications ) {
+		if ( $loggedIn && !$suppressWallNotifications ) {
 			OasisController::addSkinAssetGroup( 'wall_notifications_js' );
 			$this->response->addAsset( 'extensions/wikia/WallNotifications/styles/WallNotifications.scss' );
 			$this->response->setVal( 'prehide', ( empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) ) );
@@ -33,7 +33,7 @@ class WallNotificationsController extends WikiaController {
 	public function Update() {
 		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$this->response->setVal( 'alwaysGrouped', empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) );
 		$this->response->setVal( 'notificationKey', $this->request->getVal( 'notificationKey' ) );
@@ -41,18 +41,18 @@ class WallNotificationsController extends WikiaController {
 		$notificationCounts = $this->request->getVal( 'notificationCounts' );
 		$this->response->setVal( 'notificationCounts', $notificationCounts );
 
-		$unreadCount = $this->request->getVal( 'count');
+		$unreadCount = $this->request->getVal( 'count' );
 		$this->response->setVal( 'count', $unreadCount );
 
 		$this->response->setVal( 'user', $wgUser );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function UpdateWiki() {
 		global $wgUser;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$all = $this->request->getVal( 'notifications' );
 
@@ -60,7 +60,7 @@ class WallNotificationsController extends WikiaController {
 		$this->response->setVal( 'unread', $all['unread'] );
 		$this->response->setVal( 'read', $all['read'] );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function NotificationAdmin() {
@@ -70,15 +70,15 @@ class WallNotificationsController extends WikiaController {
 		$authoruser = User::newFromId( $data->user_removing_id );
 		$walluser = User::newFromId( $data->user_wallowner_id );
 
-		if( $authoruser instanceof User ) {
-			if( $authoruser->getId() > 0 ) {
+		if ( $authoruser instanceof User ) {
+			if ( $authoruser->getId() > 0 ) {
 				$displayname = $authoruser->getName();
 			} else {
-				$displayname = wfMessage('oasis-anon-user')->text();
+				$displayname = wfMessage( 'oasis-anon-user' )->text();
 			}
 		} else {
-			//annon
-			$displayname = wfMessage('oasis-anon-user')->text();
+			// annon
+			$displayname = wfMessage( 'oasis-anon-user' )->text();
 		}
 
 		$wall_displayname = $walluser->getName();
@@ -89,14 +89,14 @@ class WallNotificationsController extends WikiaController {
 			'username' => $displayname
 		];
 
-		if( $data->type == 'OWNER' ) {
-			if( !$data->is_reply ) {
+		if ( $data->type == 'OWNER' ) {
+			if ( !$data->is_reply ) {
 				$msg = wfMessage( 'wn-owner-thread-deleted' )->text();
 			} else {
 				$msg = wfMessage( 'wn-owner-reply-deleted' )->text();
 			}
 		} else {
-			if( !$data->is_reply ) {
+			if ( !$data->is_reply ) {
 				$msg = wfMessage( 'wn-admin-thread-deleted', [ $wall_displayname ] )->text();
 			} else {
 				$msg = wfMessage( 'wn-admin-reply-deleted', [ $wall_displayname ] )->text();
@@ -107,14 +107,14 @@ class WallNotificationsController extends WikiaController {
 		$this->response->setVal( 'msg', $msg );
 		$this->response->setVal( 'authors', $authors );
 		$this->response->setVal( 'title', $data->title );
-		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
+		$this->response->setVal( 'iso_timestamp',  wfTimestamp( TS_ISO_8601, $data->timestamp ) );
 	}
 
 	private function areNotificationsSuppressedByExtensions() {
 		global $wgUser, $wgAtCreateNewWikiPage;
 
 		$suppressed = $wgAtCreateNewWikiPage || !$wgUser->isAllowed( 'read' );
-		return !empty($suppressed);
+		return !empty( $suppressed );
 	}
 
 	private function fixNotificationURL( $url ) {
@@ -122,19 +122,19 @@ class WallNotificationsController extends WikiaController {
 		$hostOn = getHostPrefix();
 
 		$hosts = $wgStagingList;
-		foreach( $hosts as $host ){
-			$prefix = 'http://'.$host.'.';
-			if( strpos( $url, $prefix )  !== false ) {
-				if( empty( $hostOn ) ) {
+		foreach ( $hosts as $host ) {
+			$prefix = 'http://' . $host . '.';
+			if ( strpos( $url, $prefix )  !== false ) {
+				if ( empty( $hostOn ) ) {
 					return str_replace( $prefix, 'http://', $url );
 				} else {
-					return str_replace( $prefix, 'http://'.$hostOn.'.', $url );
+					return str_replace( $prefix, 'http://' . $hostOn . '.', $url );
 				}
 			}
 		}
 
-		if( !empty( $hostOn ) ){
-			return str_replace( 'http://', 'http://'.$hostOn.'.', $url );
+		if ( !empty( $hostOn ) ) {
+			return str_replace( 'http://', 'http://' . $hostOn . '.', $url );
 		}
 
 		return $url;
@@ -144,23 +144,23 @@ class WallNotificationsController extends WikiaController {
 		global $wgUser;
 
 		$notify = $this->request->getVal( 'notify' );
-		if( empty( $notify['grouped'][0] ) ) {
+		if ( empty( $notify['grouped'][0] ) ) {
 			// do not render this notification, it's bugged
 			return false;
 		}
 
 		$data = $notify['grouped'][0]->data;
-		if( isset( $data->type ) && $data->type === 'ADMIN' ) {
+		if ( isset( $data->type ) && $data->type === 'ADMIN' ) {
 			$this->forward( __CLASS__, 'NotificationAdmin' );
 			return;
 		}
 		$data = $notify['grouped'][0]->data;
-		if( isset( $data->type ) && $data->type === 'OWNER' ) {
+		if ( isset( $data->type ) && $data->type === 'OWNER' ) {
 			$this->forward( __CLASS__, 'NotificationAdmin' );
 			return;
 		}
 		$authors = [];
-		foreach( $notify['grouped'] as $notify_entity ) {
+		foreach ( $notify['grouped'] as $notify_entity ) {
 			$authors[] = [
 				'displayname' => $notify_entity->data->msg_author_displayname,
 				'username' => $notify_entity->data->msg_author_username
@@ -173,18 +173,18 @@ class WallNotificationsController extends WikiaController {
 
 		$userCount = 1;
 		$authorsCount = count( $authors );
-		if( $authorsCount == 2 ){
+		if ( $authorsCount == 2 ) {
 			$userCount = 2;
-		} elseif( $authorsCount > 2 ) {
+		} elseif ( $authorsCount > 2 ) {
 			$userCount = 3;
 		}
 
 		$msg = "";
-		wfRunHooks('NotificationGetNotificationMessage',[
-			&$this, &$msg, $notify['grouped'][0]->isMain(), $data, $authors,$userCount,  $wgUser->getName()
+		wfRunHooks( 'NotificationGetNotificationMessage', [
+			&$this, &$msg, $notify['grouped'][0]->isMain(), $data, $authors, $userCount,  $wgUser->getName()
 		] );
 
-		if( empty( $msg ) ) {
+		if ( empty( $msg ) ) {
 			$msg = $this->getNotificationMessage(
 				$notify['grouped'][0]->isMain(),
 				$data,
@@ -196,7 +196,7 @@ class WallNotificationsController extends WikiaController {
 
 		$unread = $this->request->getVal( 'unread' );
 		$this->response->setVal( 'unread', $unread );
-		if( !$unread ) {
+		if ( !$unread ) {
 			$authors = array_slice( $authors, 0, 1 );
 		}
 
@@ -211,21 +211,21 @@ class WallNotificationsController extends WikiaController {
 		}
 
 		$this->response->setVal( 'url', $this->fixNotificationURL( $oldestEntity->data->url ) );
-		$this->response->setVal( 'authors', array_reverse($authors) );
+		$this->response->setVal( 'authors', array_reverse( $authors ) );
 		$this->response->setVal( 'title', $data->thread_title );
-		$this->response->setVal( 'iso_timestamp',  wfTimestamp(TS_ISO_8601, $data->timestamp ));
+		$this->response->setVal( 'iso_timestamp',  wfTimestamp( TS_ISO_8601, $data->timestamp ) );
 
-		if( $unread && $data->notifyeveryone ) {
+		if ( $unread && $data->notifyeveryone ) {
 			$this->response->getView()->setTemplate( 'WallNotificationsController', 'NotifyEveryone' );
 		}
 	}
 
 	private function getNotificationMessage( $isMain, $data, $authors, $userCount, $myName ) {
 		$params = [];
-		if( !$isMain ) {
+		if ( !$isMain ) {
 			$params[] = $this->getDisplayname( $data->msg_author_displayname );
 
-			if( $userCount == 2 ) {
+			if ( $userCount == 2 ) {
 				$params['$1'] = $this->getDisplayname( $authors[1]['displayname'] );
 			}
 
@@ -234,36 +234,36 @@ class WallNotificationsController extends WikiaController {
 							   // self = same as person who wrote original message (parent)
 							   // other = someone else
 
-			if( $data->parent_username == $myName ) {
+			if ( $data->parent_username == $myName ) {
 				$reply_by = 'you';
-			} elseif ( in_array($data->parent_username, $authors) ) {
+			} elseif ( in_array( $data->parent_username, $authors ) ) {
 				$reply_by = 'self';
-			} else $params['$'.(count($params)+1)] =$this->getDisplayname( $data->parent_displayname );
+			} else $params['$' . ( count( $params ) + 1 )] = $this->getDisplayname( $data->parent_displayname );
 
 			$whos_wall = 'a'; // on who's wall was the message written?
 								   // your  = on message author's wall
 								   // other = on someone else's wall
 								   // a     = the person was already mentioned (either author of msg or thread)
 
-			if( $data->wall_username == $myName ) {
+			if ( $data->wall_username == $myName ) {
 				$whos_wall = 'your';
-			} elseif( $data->wall_username != $data->parent_username && !in_array($data->wall_username, $authors) ) {
+			} elseif ( $data->wall_username != $data->parent_username && !in_array( $data->wall_username, $authors ) ) {
 				$whos_wall = 'other';
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_displayname);
+				$params['$' . ( count( $params ) + 1 )] = $this->getDisplayname( $data->wall_displayname );
 			}
 
 			$msgid = "wn-user$userCount-reply-$reply_by-$whos_wall-wall";
 		} else {
-			if( $data->wall_username == $myName ) {
+			if ( $data->wall_username == $myName ) {
 				$msgid = 'wn-newmsg-onmywall';
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->msg_author_displayname);
-			} else if( $data->msg_author_username != $myName ) {
+				$params['$' . ( count( $params ) + 1 )] = $this->getDisplayname( $data->msg_author_displayname );
+			} else if ( $data->msg_author_username != $myName ) {
 				$msgid = 'wn-newmsg-on-followed-wall';
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->msg_author_displayname);
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_displayname);
+				$params['$' . ( count( $params ) + 1 )] = $this->getDisplayname( $data->msg_author_displayname );
+				$params['$' . ( count( $params ) + 1 )] = $this->getDisplayname( $data->wall_displayname );
 			} else {
 				$msgid = 'wn-newmsg';
-				$params['$'.(count($params)+1)] = $this->getDisplayname($data->wall_displayname);
+				$params['$' . ( count( $params ) + 1 )] = $this->getDisplayname( $data->wall_displayname );
 			}
 		}
 		$msg = wfMessage( $msgid, $params )->text();
@@ -271,8 +271,8 @@ class WallNotificationsController extends WikiaController {
 	}
 
 	public function getDisplayname( $username ) {
-		if( User::isIP( $username ) ) {
-			return wfMessage('oasis-anon-user')->text();
+		if ( User::isIP( $username ) ) {
+			return wfMessage( 'oasis-anon-user' )->text();
 		}
 		return $username;
 	}
@@ -284,7 +284,7 @@ class WallNotificationsController extends WikiaController {
 		$result = false;
 
 		$topic = $this->getRequest()->getVal( 'query' );
-		if( !empty( $topic ) ) {
+		if ( !empty( $topic ) ) {
 			/** @var $title title */
 			$title = Title::newFromText( $topic );
 

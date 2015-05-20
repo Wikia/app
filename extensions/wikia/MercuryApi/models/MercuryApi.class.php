@@ -27,7 +27,7 @@ class MercuryApi {
 		return $articleCommentList->getCountAll();
 	}
 
-	public static function getTopContributorsKey ( $articleId, $limit ){
+	public static function getTopContributorsKey ( $articleId, $limit ) {
 		return wfMemcKey( __CLASS__, __METHOD__, $articleId, $limit );
 	}
 
@@ -41,7 +41,7 @@ class MercuryApi {
 	public function topContributorsPerArticle( $articleId, $limit ) {
 		$key = self::getTopContributorsKey( $articleId, $limit );
 		$method = __METHOD__;
-		$contributions = WikiaDataAccess::cache($key, self::CACHE_TIME_TOP_CONTRIBUTORS,
+		$contributions = WikiaDataAccess::cache( $key, self::CACHE_TIME_TOP_CONTRIBUTORS,
 			function() use ( $articleId, $limit, $method ) {
 				// Log DB hit
 				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
@@ -65,7 +65,7 @@ class MercuryApi {
 					]
 				);
 				$result = [];
-				while($row = $db->fetchObject($res)) {
+				while ( $row = $db->fetchObject( $res ) ) {
 					$result[ (int) $row->rev_user ] = (int) $row->cntr;
 				}
 				return $result;
@@ -209,7 +209,7 @@ class MercuryApi {
 	 * @param array $commentData - ArticleComment Data
 	 * @return string userName
 	 */
-	private function addUser(Array $commentData) {
+	private function addUser( Array $commentData ) {
 		$userName = trim( $commentData['author']->mName );
 		if ( !isset( $this->users[$userName] ) ) {
 			$this->users[$userName] = [
@@ -240,28 +240,64 @@ class MercuryApi {
 	}
 
 	/**
-	 * Get categories titles
-	 *
-	 * @param array $articleCategories
-	 * @return array
+	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
+	 * @param Title $title Title object
+	 * @return array|null Article Ad context
 	 */
-	private function getArticleCategoriesTitles( Array $articleCategories ) {
-		$categories = [];
-		foreach ( $articleCategories as $category ) {
-			$categories[] = $category[ 'title' ];
+	public function getAdsContext( Title $title ) {
+		global $wgEnableAdEngineExt;
+		if ( !empty( $wgEnableAdEngineExt ) ) {
+			$adContext = new AdEngine2ContextService();
+			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 		}
-		return $categories;
+		return null;
+	}
+
+	public function processCuratedContent( $data ) {
+		if ( empty( $data ) ) {
+			return false;
+		}
+
+		$process = false;
+
+		if ( !empty( $data[ 'featured' ] ) ) {
+			$process = 'featured';
+		} else if ( !empty( $data[ 'items' ] ) ) {
+			$process = 'items';
+		}
+
+		if ( $process ) {
+			$items = [];
+			foreach ( $data[ $process ] as $item ) {
+				$processedItem = $this->processCuratedContentItem( $item );
+				if ( !empty( $processedItem ) ) {
+					$items[] = $processedItem;
+				}
+			}
+			$data[ $process ] = $items;
+		}
+
+		return $data;
 	}
 
 	/**
-	 * Get ads context for Title
-	 * @param Title $title Title object
-	 * @param WikiaGlobalRegistry $wg Reference to the Global registry
-	 * @param array $articleCategories List of Categories
-	 * @return array Article Ad context
+	 * @desc Mercury can't open article using ID - we need to create a local link.
+	 * If article doesn't exist (Title is null) return null.
+	 * In other case return item with updated article_local_url.
+	 * TODO Implement cache for release version.
+	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
+	 *
+	 * @param $item
+	 * @return mixed
 	 */
-	public function getAdsContext( Title $title ) {
-		$adContext = new AdEngine2ContextService();
-		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+	private function processCuratedContentItem( $item ) {
+		if ( !empty( $item[ 'article_id' ] ) ) {
+			$title = Title::newFromID( $item[ 'article_id' ] );
+			if ( !empty( $title ) ) {
+				$item[ 'article_local_url' ] = $title->getLocalURL();
+				return $item;
+			}
+		}
+		return null;
 	}
 }

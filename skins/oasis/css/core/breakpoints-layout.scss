@@ -7,7 +7,7 @@
 	@media #{$breakpoint-small-only} {
 		.WikiaPage {
 			padding: 0 $padding-width-small;
-			width: $page-width-small;
+			width: $page-width-small - 2 * $content-border-width;
 		}
 	}
 
@@ -33,9 +33,14 @@
 	html {
 		overflow-y: auto;
 	}
+
 	body {
 		overflow: hidden;
 		position: relative;
+
+		@media #{$breakpoint-not-supported} {
+			overflow: auto;
+		}
 	}
 
 	.WikiaMainContent {
@@ -61,7 +66,8 @@
 	}
 
 	@media #{$breakpoint-small-only} {
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
 			width: 100%;
 		}
 
@@ -90,9 +96,7 @@
 		.wikinav2.oasis-one-column .WikiaPageHeader {
 			padding: 0;
 		}
-	}
 
-	@media #{$breakpoint-small-only} {
 		.WikiHeader > nav.WikiNav .navbackground {
 			left: -24px;
 			width: 772px;
@@ -100,8 +104,9 @@
 	}
 
 	@media #{$breakpoint-medium-up} {
-		.wikia-main-page-tag-lcs, .main-page-tag-lcs-exploded {
-			@include width-calc("100% - 320px");
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
+			@include width-calc('100% - 320px');
 		}
 
 		.main-page-tag-rcs {
@@ -109,7 +114,7 @@
 		}
 
 		.WikiHeader > nav.WikiNav {
-			@include width-calc("100% - 250px");
+			@include width-calc('100% - 250px');
 
 			.navbackground {
 				width: 100%;
@@ -123,14 +128,15 @@
 
 	@media #{$breakpoint-large-up} {
 		.WikiHeader > nav.WikiNav .navbackground {
-			@include width-calc("100% + 10px");
+			@include width-calc('100% + 9px');
 		}
 	}
 
-	.WikiaRail, .main-page-tag-rcs {
+	.WikiaRail,
+	.main-page-tag-rcs {
 		padding: 0;
 
-		@media #{$breakpoint-small-only} {
+		@media #{$breakpoint-below-small-plus} {
 			// this is copied from responsive-core.scss
 			clear: both;
 			float: none;
@@ -166,6 +172,7 @@
 		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
 			margin: 0 1px;
 		}
+
 		.EditPageToolbar .cke_toolbar_widescreen .cke_toolbar_insert {
 			padding: 0;
 		}
@@ -184,17 +191,18 @@
 			margin-right: 300px;
 		}
 	}
+
 	.EditPageRail {
 		width: 300px;
 	}
 
 	.EditPageHeader {
-		& > h1 {
+		> h1 {
 			margin-left: 5px;
 			margin-top: 2px;
 		}
 
-		& > h2 {
+		> h2 {
 			display: inline-block;
 			float: left;
 		}
@@ -202,11 +210,26 @@
 
 	.banner-notifications-wrapper {
 		width: auto;
-
 		&.float {
-			left: 0;
-			margin: 0;
-			right: 0;
+			@media #{$breakpoint-small-only} {
+				margin-left: $page-width-small / -2;
+				width: $page-width-small;
+			}
+
+			@media #{$breakpoint-small-plus} {
+				margin-left: $page-width-small-plus / -2;
+				width: $page-width-small-plus;
+			}
+
+			@media #{$breakpoint-medium-only} {
+				margin-left: $page-width-medium / -2;
+				width: $page-width-medium;
+			}
+
+			@media #{$breakpoint-large-up} {
+				margin-left: $page-width-large / -2;
+				width: $page-width-large;
+			}
 		}
 	}
 
@@ -218,5 +241,72 @@
 	.WikiaPageHeader {
 		margin-left: 0;
 		margin-right: 0;
+	}
+
+	//
+	.ve-activated .WikiaMainContent {
+		position: static;
+	}
+
+	// 'special case' for 1024px tablets (think landscape iPad)
+	@media #{$breakpoint-small-plus} {
+		.WikiaPage {
+			padding: 0 $padding-width-small-plus;
+			width: $page-width-small-plus;
+		}
+
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded,
+		.WikiaMainContent {
+			// right rail width + space between RR and content
+			@include width-calc('100% - 320px');
+		}
+
+		.main-page-tag-rcs {
+			// right rail width
+			width: 300px;
+		}
+
+		.WikiHeader {
+			// values here are mostly copied from WikiHeader.scss
+			// so it will override small breakpoint's values
+			min-height: 69px;
+
+			.buttons {
+				top: 22px;
+			}
+
+			> nav.WikiNav {
+				@include width-calc('100% - 250px');
+
+				left: 275px;
+				top: 20px;
+
+				.subnav-2 {
+					left: 10px;
+					width: auto;
+				}
+
+				.navbackground {
+					left: 10px;
+					width: 734px; // it's 100% of content minus wordmark
+				 }
+			}
+		}
+
+		// needs to be nested in this way, so it it'll override styles in GlobalNav extension
+		.WikiaSiteWrapper > .global-navigation > .global-navigation-container {
+			width: $content-width-small-plus - $scroll-bar-width;
+		}
+	}
+
+	@media #{$breakpoint-not-supported} {
+		.WikiHeader > nav.WikiNav .navbackground {
+			width: $content-width-small - $content-border-width;
+
+			img {
+				display: none;
+			}
+		}
 	}
 }

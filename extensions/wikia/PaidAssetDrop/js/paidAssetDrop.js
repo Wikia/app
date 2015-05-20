@@ -8,15 +8,23 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.paidAssetDrop.paidAssetDrop',
-		assetArticleName = {
-			desktop: 'MediaWiki:PAD_desktop.html',
-			mobile: 'MediaWiki:PAD_mobile.html'
-		},
 		apiEntryPoint = '/api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=',
 		qs = new QueryString(),
+		validPageTypes = [
+			'home',
+			'article'
+		],
 		$ = win.$;
 
 	log('Paid Asset Drop (PAD) loaded', 'debug', logGroup);
+
+	function getAssetName(platform, pageType) {
+		return 'MediaWiki:PAD_' + platform + '_' + pageType + '.html';
+	}
+
+	function isValidPageType(pageType) {
+		return validPageTypes.indexOf(pageType) !== -1;
+	}
 
 	function isValidDate(dateString) {
 		return !isNaN(Date.parse(dateString));
@@ -107,10 +115,16 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 	 * Inject the Paid Asset Drop
 	 *
 	 * @param {String} placeHolderSelector selector to drop the Paid Assets to (prepend)
-	 * @param {String} platform             desktop or mobile
+	 * @param {String} platform            desktop or mobile
+	 * @param {String} pageType            home or article
 	 */
-	function injectPad(placeHolderSelector, platform) {
-		var url = apiEntryPoint + assetArticleName[platform];
+	function injectPad(placeHolderSelector, platform, pageType) {
+		if (!isValidPageType(pageType)) {
+			log('Invalid page type: ' + pageType, 'debug', logGroup);
+			return;
+		}
+
+		var url = apiEntryPoint + getAssetName(platform, pageType);
 
 		if (isForced()) {
 			url += '&cb=' + Math.round(Math.random() * 1e6);

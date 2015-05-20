@@ -418,9 +418,11 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'places-editor-search' => 'Lê bigere',
 	'places-geolocation-modal-error-title' => 'Çewtî',
 );
 

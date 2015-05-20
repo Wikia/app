@@ -65,6 +65,10 @@ define('wikia.backgroundchanger', function()  {
 				} else {
 					$('body').removeClass('background-dynamic');
 				}
+
+				if (!!options.ten64) {
+					$('.background-image-gradient').addClass('no-gradients');
+				}
 			} else {
 				$('body').removeClass('background-dynamic background-not-tiled background-fixed');
 			}
