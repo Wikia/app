@@ -246,14 +246,14 @@
 		font-size: 12px;
 		padding: 6px 3px 6px 30px;
 		position: relative;
+
 		&:first-child {
 			border: 0;
 		}
+
 		em {
-			display: inline-block;
 			font-size: 14px;
 			line-height: 17px;
-			width: 270px;
 		}
 	}
 	.sprite {

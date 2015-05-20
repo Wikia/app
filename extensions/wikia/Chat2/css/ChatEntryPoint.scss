@@ -139,7 +139,7 @@ body.skin-oasis .ChatMonobookEntryPoint {
 				margin: 0 8px 0 0;
 			}
 		}
-		@if ($responsive-layout-enabled) {
+		@if ($responsive-or-breakpoints-layout-enabled) {
 			.carousel-container {
 				left: 19px;
 				width: 218px;

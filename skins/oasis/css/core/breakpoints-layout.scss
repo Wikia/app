@@ -210,11 +210,26 @@
 
 	.banner-notifications-wrapper {
 		width: auto;
-
 		&.float {
-			left: 0;
-			margin: 0;
-			right: 0;
+			@media #{$breakpoint-small-only} {
+				margin-left: $page-width-small / -2;
+				width: $page-width-small;
+			}
+
+			@media #{$breakpoint-small-plus} {
+				margin-left: $page-width-small-plus / -2;
+				width: $page-width-small-plus;
+			}
+
+			@media #{$breakpoint-medium-only} {
+				margin-left: $page-width-medium / -2;
+				width: $page-width-medium;
+			}
+
+			@media #{$breakpoint-large-up} {
+				margin-left: $page-width-large / -2;
+				width: $page-width-large;
+			}
 		}
 	}
 
