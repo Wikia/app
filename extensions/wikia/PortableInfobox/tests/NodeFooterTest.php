@@ -25,7 +25,11 @@ class NodeFooterTest extends WikiaBaseTest {
 			],
 			[
 				'string' => '<footer>0</footer>',
-				'expectedOutput' => true
+				'expectedOutput' => false
+			],
+			[
+				'string' => '<footer>\'0\'</footer>',
+				'expectedOutput' => false
 			],
 			[
 				'string' => '<footer></footer>',
