@@ -72,7 +72,7 @@ class XmlParser {
 		return $data;
 	}
 
-	public function logXmlParseError( $level, $code, $message ) {
+	protected function logXmlParseError( $level, $code, $message ) {
 		\Wikia\Logger\WikiaLogger::instance()->info( "PortableInfobox XML Parser problem", [
 			"level" => $level,
 			"code" => $code,
