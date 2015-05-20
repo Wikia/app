@@ -7,7 +7,6 @@ use Flags\Models\FlagType;
 class FlagsController extends WikiaApiController {
 
 	private
-		$model,
 		$params,
 		$status = false;
 
@@ -132,8 +131,8 @@ class FlagsController extends WikiaApiController {
 			return null;
 		}
 
-		$this->model = new Flag();
-		$flagsForPage = $this->model->getFlagsForPage( $this->params['wikiId'], $this->params['pageId'] );
+		$flagModel = new Flag();
+		$flagsForPage = $flagModel->getFlagsForPage( $this->params['wikiId'], $this->params['pageId'] );
 
 		$this->setResponseData( $flagsForPage );
 	}
@@ -153,7 +152,7 @@ class FlagsController extends WikiaApiController {
 		$helper = new Helper();
 		$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
 
-		$this->model = new Flag();
+		$flagModel = new Flag();
 		/**
 		 * Add flags
 		 */
@@ -164,8 +163,8 @@ class FlagsController extends WikiaApiController {
 				'flags' => $flagsToChange['toAdd'],
 			];
 
-			if ( $this->model->verifyParamsForAdd( $flagsToAdd ) ) {
-				$this->model->addFlagsToPage( $flagsToAdd );
+			if ( $flagModel->verifyParamsForAdd( $flagsToAdd ) ) {
+				$flagModel->addFlagsToPage( $flagsToAdd );
 			}
 		}
 
@@ -176,8 +175,8 @@ class FlagsController extends WikiaApiController {
 			$flagsToRemove = [
 				'flagsIds' => $flagsToChange['toRemove'],
 			];
-			if ( $this->model->verifyParamsForRemove( $flagsToRemove ) ) {
-				$this->model->removeFlagsFromPage( $flagsToRemove );
+			if ( $flagModel->verifyParamsForRemove( $flagsToRemove ) ) {
+				$flagModel->removeFlagsFromPage( $flagsToRemove );
 			}
 		}
 
@@ -185,7 +184,7 @@ class FlagsController extends WikiaApiController {
 		 * Update flags
 		 */
 		if ( !empty( $flagsToChange['toUpdate'] ) ) {
-			$this->model->updateFlagsForPage( $flagsToChange['toUpdate'] );
+			$flagModel->updateFlagsForPage( $flagsToChange['toUpdate'] );
 		}
 	}
 
@@ -208,10 +207,10 @@ class FlagsController extends WikiaApiController {
 	 */
 	public function addFlagsToPage() {
 		$this->processRequest();
-		$this->model = new Flag();
+		$flagModel = new Flag();
 
-		if ( $this->model->verifyParamsForAdd( $this->params ) ) {
-			$this->status = $this->model->addFlagsToPage( $this->params );
+		if ( $flagModel->verifyParamsForAdd( $this->params ) ) {
+			$this->status = $flagModel->addFlagsToPage( $this->params );
 		}
 
 		$this->setVal( 'status', $this->status );
@@ -226,10 +225,10 @@ class FlagsController extends WikiaApiController {
 	 */
 	public function removeFlagsFromPage() {
 		$this->processRequest();
-		$this->model = new Flag();
+		$flagModel = new Flag();
 
-		if ( $this->model->verifyParamsForRemove( $this->params ) ) {
-			$this->status = $this->model->removeFlagsFromPage( $this->params );
+		if ( $flagModel->verifyParamsForRemove( $this->params ) ) {
+			$this->status = $flagModel->removeFlagsFromPage( $this->params );
 		}
 
 		$this->setVal( 'status', $this->status );
@@ -255,10 +254,10 @@ class FlagsController extends WikiaApiController {
 	 */
 	public function addFlagType() {
 		$this->processRequest();
-		$this->model = new FlagType();
+		$flagTypeModel = new FlagType();
 
-		if ( $this->model->verifyParamsForAdd( $this->params ) ) {
-			$this->status = $this->model->addFlagType( $this->params );
+		if ( $flagTypeModel->verifyParamsForAdd( $this->params ) ) {
+			$this->status = $flagTypeModel->addFlagType( $this->params );
 		}
 
 		$this->setVal( 'status', $this->status );
@@ -276,10 +275,10 @@ class FlagsController extends WikiaApiController {
 	 */
 	public function removeFlagType() {
 		$this->processRequest();
-		$this->model = new FlagType();
+		$flagTypeModel = new FlagType();
 
-		if ( $this->model->verifyParamsForRemove( $this->params ) ) {
-			$this->status = $this->model->removeFlagType( $this->params );
+		if ( $flagTypeModel->verifyParamsForRemove( $this->params ) ) {
+			$this->status = $flagTypeModel->removeFlagType( $this->params );
 		}
 
 		$this->setVal( 'status', $this->status );
