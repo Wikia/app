@@ -11,7 +11,7 @@
 		<div class="speech-bubble-avatar">
 			<?= AvatarService::renderAvatar($username, 30) ?>
 		</div>
-		<blockquote class="speech-bubble-message">
+		<div class="speech-bubble-message">
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Header' )->render();
 			endif; ?>
@@ -19,7 +19,7 @@
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Editor_Footer' )->render();
 			endif; ?>
-		</blockquote>
+		</div>
 		<div class="speech-bubble-buttons" data-space-type="buttons">
 			<button disabled="disabled" class="replyButton"><?= wfMsg('wall-button-to-submit-reply') ?></button>
 			
