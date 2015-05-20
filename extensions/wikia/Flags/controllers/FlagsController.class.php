@@ -85,20 +85,20 @@ class FlagsController extends WikiaApiController {
 		/**
 		 * 1. Get all flag types with instances for the page
 		 */
-		$responseData = $this->getAllFlagTypes( $this->params['wikiId'], $this->params['pageId'] );
+		$allFlagTypes = $this->getAllFlagTypes( $this->params['wikiId'], $this->params['pageId'] );
 
 		/**
 		 * 2. Create links to templates for creation of "See more" links
 		 */
-		foreach ( $responseData as $flagTypeId => $flag ) {
-			$title = Title::newFromText( $flag['flag_view'], NS_TEMPLATE );
-			$responseData[$flagTypeId]['flag_view_url'] = $title->getFullURL();
+		foreach ( $allFlagTypes as $flagTypeId => $flagType ) {
+			$title = Title::newFromText( $flagType['flag_view'], NS_TEMPLATE );
+			$allFlagTypes[$flagTypeId]['flag_view_url'] = $title->getFullURL();
 		}
 
 		/**
 		 * 3. Set the response data
 		 */
-		$this->setResponseData( $responseData );
+		$this->setResponseData( $allFlagTypes );
 	}
 
 	/**
