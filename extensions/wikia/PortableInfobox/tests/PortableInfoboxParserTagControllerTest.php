@@ -45,7 +45,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 		$this->assertTrue( $this->checkClassName(
 			$output,
-			$defaultTheme . PortableInfoboxParserTagController::INFOBOX_THEME_SUFFIX
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
 		) );
 	}
 
@@ -60,7 +60,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 		$this->assertTrue( $this->checkClassName(
 			$output,
-			$themeName . PortableInfoboxParserTagController::INFOBOX_THEME_SUFFIX
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $themeName
 		) );
 	}
 
@@ -78,7 +78,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 		$this->assertTrue( $this->checkClassName(
 			$output,
-			$defaultTheme . PortableInfoboxParserTagController::INFOBOX_THEME_SUFFIX
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
 		) );
 	}
 
@@ -91,7 +91,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 		$this->assertTrue( $this->checkClassName(
 			$output,
-			PortableInfoboxParserTagController::DEFAULT_THEME_NAME . PortableInfoboxParserTagController::INFOBOX_THEME_SUFFIX
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . PortableInfoboxParserTagController::DEFAULT_THEME_NAME
 		) );
 	}
 }
