@@ -1,5 +1,6 @@
 <?php
 
+use Flags\Helper;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 
@@ -47,8 +48,10 @@ class FlagsController extends WikiaApiController {
 	/**
 	 * Retrieves all data for all flag types available on the given wikia
 	 * with an intent of rendering a modal with an edit form.
-	 * It returns
-	 * @see getFlagsForPageForEdit()
+	 * It returns the types with instances on the page first and then all
+	 * other types sorted alphabetically.
+	 * To retrieve only types with instances on the given page:
+	 * @see getFlagsForPage()
 	 *
 	 * @requestParam int wikiId
 	 * @requestParam int pageId
@@ -62,7 +65,8 @@ class FlagsController extends WikiaApiController {
 	 *		int page_id
 	 * 		int flag_group
 	 * 		string flag_name
-	 * 		string flag_view
+	 * 		string flag_view A name of a template of the flag
+	 * 		string flag_view_url A full URL of the template
 	 * 		int flag_targeting
 	 * 		string|null flag_params_names
 	 *
@@ -79,24 +83,12 @@ class FlagsController extends WikiaApiController {
 		}
 
 		/**
-		 * 1. Get flags assigned to the page
+		 * 1. Get all flag types with instances for the page
 		 */
-		$this->model = new Flag();
-		$flagsForPage = $this->model->getFlagsForPage( $this->params['wikiId'], $this->params['pageId'] );
+		$responseData = $this->getAllFlagTypes( $this->params['wikiId'], $this->params['pageId'] );
 
 		/**
-		 * 2. Get all flag types for a wikia
-		 */
-		$this->model = new FlagType();
-		$flagTypesForWikia = $this->model->getFlagTypesForWikia( $this->params['wikiId'] );
-
-		/**
-		 * 3. Unite the arrays
-		 */
-		$responseData = $flagsForPage + $flagTypesForWikia;
-
-		/**
-		 * 4. Create links to templates for creation of "See more" links
+		 * 2. Create links to templates for creation of "See more" links
 		 */
 		foreach ( $responseData as $flagTypeId => $flag ) {
 			$title = Title::newFromText( $flag['flag_view'], NS_TEMPLATE );
@@ -104,7 +96,7 @@ class FlagsController extends WikiaApiController {
 		}
 
 		/**
-		 * 5. Set the response data
+		 * 3. Set the response data
 		 */
 		$this->setResponseData( $responseData );
 	}
@@ -146,6 +138,57 @@ class FlagsController extends WikiaApiController {
 		$this->setResponseData( $flagsForPage );
 	}
 
+	public function postFlagsEditForm() {
+		$this->processRequest();
+
+		if ( !isset( $this->params['pageId'] ) ) {
+			return null;
+		}
+
+		/**
+		 * Get the current status to compare
+		 */
+		$currentFlags = $this->getAllFlagTypes( $this->params['wikiId'], $this->params['pageId'] );
+
+		$helper = new Helper();
+		$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
+
+		$this->model = new Flag();
+		/**
+		 * Add flags
+		 */
+		if ( !empty( $flagsToChange['toAdd'] ) ) {
+			$flagsToAdd = [
+				'wikiId' => $this->params['wikiId'],
+				'pageId' => $this->params['pageId'],
+				'flags' => $flagsToChange['toAdd'],
+			];
+
+			if ( $this->model->verifyParamsForAdd( $flagsToAdd ) ) {
+				$this->model->addFlagsToPage( $flagsToAdd );
+			}
+		}
+
+		/**
+		 * Remove flags
+		 */
+		if ( !empty( $flagsToChange['toRemove'] ) ) {
+			$flagsToRemove = [
+				'flagsIds' => $flagsToChange['toRemove'],
+			];
+			if ( $this->model->verifyParamsForRemove( $flagsToRemove ) ) {
+				$this->model->removeFlagsFromPage( $flagsToRemove );
+			}
+		}
+
+		/**
+		 * Update flags
+		 */
+		if ( !empty( $flagsToChange['toUpdate'] ) ) {
+			$this->model->updateFlagsForPage( $flagsToChange['toUpdate'] );
+		}
+	}
+
 	/**
 	 * Adds flags to the given page. It accepts only POST requests
 	 * with a valid User edit token.
@@ -153,10 +196,11 @@ class FlagsController extends WikiaApiController {
 	 * Required parameters:
 	 * @requestParam int wikiId
 	 * @requestParam int pageId
-	 * @requestParam int flagTypeId An ID of a flag type
+	 * @requestParam array flags
+	 * @requestParam int flags['flagTypeId'] An ID of a flag type
 	 *
 	 * Optional parameters:
-	 * @requestParam array params An array of params structured like:
+	 * @requestParam array flags['params'] An array of params structured like:
 	 * [
 	 * 	'paramName1' => 'paramValue1',
 	 * 	'paramName2' => 'paramValue2',
@@ -239,5 +283,24 @@ class FlagsController extends WikiaApiController {
 		}
 
 		$this->setVal( 'status', $this->status );
+	}
+
+	private function getAllFlagTypes( $wikiId, $pageId ) {
+		/**
+		 * 1. Get flags assigned to the page
+		 */
+		$flagModel = new Flag();
+		$flagsForPage = $flagModel->getFlagsForPage( $wikiId, $pageId );
+
+		/**
+		 * 2. Get all flag types for a wikia
+		 */
+		$flagTypeModel = new FlagType();
+		$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
+
+		/**
+		 * 3. Return the united arrays
+		 */
+		return $flagsForPage + $flagTypesForWikia;
 	}
 }
