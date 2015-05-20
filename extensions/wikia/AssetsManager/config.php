@@ -2435,6 +2435,15 @@ $config['portable_infobox_scss'] = [
 	]
 ];
 
+$config['portable_infobox_monobook_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['monobook'],
+	'assets' => [
+		'#group_portable_infobox_scss',
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
+	]
+];
+
 $config['paid_asset_drop_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
