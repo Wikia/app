@@ -58,6 +58,8 @@ $config['adengine2_desktop_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
+		'#group_adengine2_incontent_player',
+
 		// was: early queue
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/scriptwriter.js',
@@ -183,6 +185,14 @@ $config['adengine2_amazon_match_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatchOld.js',
 	),
+);
+
+$config['adengine2_incontent_player'] = array(
+	'skin' => ['oasis', 'wikiamobile'],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js'
+	)
 );
 
 $config['oasis_noads_extensions_js'] = array(

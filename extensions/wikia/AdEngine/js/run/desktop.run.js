@@ -14,7 +14,8 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
-	'wikia.window'
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.adInContentPlayer')
 ], function (
 	adEngine,
 	adLogicHighValueCountry,
@@ -27,7 +28,8 @@ require([
 	slotTracker,
 	slotTweaker,
 	krux,
-	window
+	window,
+	adInContentPlayer
 ) {
 	'use strict';
 
@@ -67,6 +69,10 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	window.loadCustomAd = customAdsLoader.loadCustomAd;
+
+	if (adInContentPlayer) {
+		adInContentPlayer.init();
+	}
 
 	// Everything starts after content and JS
 	window.wgAfterContentAndJS.push(function () {
