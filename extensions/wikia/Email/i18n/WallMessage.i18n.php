@@ -40,28 +40,28 @@ $messages['es'] = array(
 $messages['fr'] = array(
 	'emailext-wallmessage-owned-subject' => '$1 vous a laissé un nouveau message sur {{SITENAME}}',
 	'emailext-wallmessage-following-subject' => '$1 a laissé un nouveau message à $2 sur {{SITENAME}}',
-	'emailext-wallmessage-owned-summary' => "'''$1 vous a laissé un nouveau message sur {{SITENAME}}. Quelle chance !'''",
+	'emailext-wallmessage-owned-summary' => "'''$1 vous a laissé un nouveau message sur {{SITENAME}} !'''",
 	'emailext-wallmessage-following-summary' => "'''$1 a laissé un nouveau message à $2 sur {{SITENAME}}.'''",
-	'emailext-wallmessage-full-conversation' => 'Conversation entière',
+	'emailext-wallmessage-full-conversation' => 'Toute la conversation',
 	'emailext-wallmessage-recent-messages' => '[$1 Tous les messages récents sur $2]',
 );
 
 $messages['it'] = array(
-	'emailext-wallmessage-owned-subject' => '$1 ti ha scritto un nuovo messaggio nella {{SITENAME}}',
-	'emailext-wallmessage-following-subject' => '$1 ha scritto un nuovo messaggio per $2 nella {{SITENAME}}',
-	'emailext-wallmessage-owned-summary' => "'''$1 ti ha scritto un nuovo messaggio nella {{SITENAME}}. Urrà!'''",
-	'emailext-wallmessage-following-summary' => "'''$1 ha scritto un nuovo messaggio per $2 nella {{SITENAME}}.'''",
+	'emailext-wallmessage-owned-subject' => '$1 ti ha scritto un nuovo messaggio in {{SITENAME}}',
+	'emailext-wallmessage-following-subject' => '$1 ha scritto un nuovo messaggio per $2 in {{SITENAME}}',
+	'emailext-wallmessage-owned-summary' => "'''$1 ti ha scritto un nuovo messaggio in {{SITENAME}}. Urrà!'''",
+	'emailext-wallmessage-following-summary' => "'''$1 ha scritto un nuovo messaggio per $2 in {{SITENAME}}.'''",
 	'emailext-wallmessage-full-conversation' => 'Conversazione completa',
 	'emailext-wallmessage-recent-messages' => '[$1 Tutti i messaggi recenti in $2]',
 );
 
 $messages['ja'] = array(
-	'emailext-wallmessage-owned-subject' => '$1さんが{{SITENAME}}についての新しいメッセージを投稿しました',
-	'emailext-wallmessage-following-subject' => '$1さんが$2さんに{{SITENAME}}についての新しいメッセージを投稿しました',
-	'emailext-wallmessage-owned-summary' => "'''$1さんが{{SITENAME}}についての新しいメッセージを投稿しました。'''",
-	'emailext-wallmessage-following-summary' => "'''$1さんが$2さんに{{SITENAME}}についての新しいメッセージを投稿しました。'''",
+	'emailext-wallmessage-owned-subject' => '$1さんが{{SITENAME}}で新しいメッセージを投稿しました',
+	'emailext-wallmessage-following-subject' => '$1さんが$2さんに{{SITENAME}}で新しいメッセージを投稿しました',
+	'emailext-wallmessage-owned-summary' => "'''$1さんが{{SITENAME}}で新しいメッセージを投稿しました。'''",
+	'emailext-wallmessage-following-summary' => "'''$1さんが$2さんに{{SITENAME}}で新しいメッセージを投稿しました。",
 	'emailext-wallmessage-full-conversation' => 'スレッド全体を見る',
-	'emailext-wallmessage-recent-messages' => '[$1 $2のすべての最近のメッセージを見る]',
+	'emailext-wallmessage-recent-messages' => '[$1 $2の最近のメッセージをすべて見る]',
 );
 
 $messages['nl'] = array(
@@ -76,10 +76,10 @@ $messages['nl'] = array(
 $messages['pl'] = array(
 	'emailext-wallmessage-owned-subject' => '$1 napisał do ciebie nową wiadomość na {{SITENAME}}',
 	'emailext-wallmessage-following-subject' => '$1 napisał do $2 nową wiadomość na {{SITENAME}}',
-	'emailext-wallmessage-owned-summary' => "'''$1 napisał do ciebie nową wiadomość na {{SITENAME}}. Hurra!'''",
+	'emailext-wallmessage-owned-summary' => "'''$1 napisał do ciebie nową wiadomość na {{SITENAME}}. Wspaniale!'''",
 	'emailext-wallmessage-following-summary' => "'''$1 napisał do $2 nową wiadomość na {{SITENAME}}.'''",
-	'emailext-wallmessage-full-conversation' => 'Cała rozmowa',
-	'emailext-wallmessage-recent-messages' => '[$1 wszystkie najnowsze wiadomości na $2]',
+	'emailext-wallmessage-full-conversation' => 'Pełna rozmowa',
+	'emailext-wallmessage-recent-messages' => '[$1 Wszystkie najnowsze wiadomości na $2]',
 );
 
 $messages['pt'] = array(
@@ -94,19 +94,19 @@ $messages['pt'] = array(
 $messages['ru'] = array(
 	'emailext-wallmessage-owned-subject' => '$1 оставил(а) вам новое сообщение на {{SITENAME}}',
 	'emailext-wallmessage-following-subject' => '$1 оставил(а) участнику $2 новое сообщение на {{SITENAME}}',
-	'emailext-wallmessage-owned-summary' => "'''$1 оставил(а) вам новое сообщение на {{SITENAME}}. Ура!'''",
+	'emailext-wallmessage-owned-summary' => "'''$1 оставил(а) вам новое сообщение на {{SITENAME}}. Вот так удача!'''",
 	'emailext-wallmessage-following-summary' => "'''$1 оставил(а) участнику $2 новое сообщение на {{SITENAME}}.'''",
 	'emailext-wallmessage-full-conversation' => 'Обсуждение полностью',
 	'emailext-wallmessage-recent-messages' => '[$1 Все недавние сообщения на $2]',
 );
 
 $messages['zh-hans'] = array(
-	'emailext-wallmessage-owned-subject' => '$1在{{SITENAME}}上给你留言了',
+	'emailext-wallmessage-owned-subject' => '$1在{{SITENAME}}上给您留言了',
 	'emailext-wallmessage-following-subject' => '$1在{{SITENAME}}上给$2留言了',
-	'emailext-wallmessage-owned-summary' => "'''$1在{{SITENAME}}上给你留言了。真幸运！'''",
+	'emailext-wallmessage-owned-summary' => "'''$1在{{SITENAME}}上给您留言了。真幸运！'''",
 	'emailext-wallmessage-following-summary' => "'''$1在{{SITENAME}}上给$2留言了。'''",
 	'emailext-wallmessage-full-conversation' => '完整对话',
-	'emailext-wallmessage-recent-messages' => '[$1最近在$2上的所有留言]',
+	'emailext-wallmessage-recent-messages' => '[$1$2上最近的所有留言]',
 );
 
 $messages['zh-tw'] = array(
@@ -115,6 +115,6 @@ $messages['zh-tw'] = array(
 	'emailext-wallmessage-owned-summary' => "'''$1在{{SITENAME}}上給你留言了。好幸運喔！'''",
 	'emailext-wallmessage-following-summary' => "'''$1在{{SITENAME}}上給$2留言了。'''",
 	'emailext-wallmessage-full-conversation' => '完整對話',
-	'emailext-wallmessage-recent-messages' => '[$1最近在$2上的所有留言]',
+	'emailext-wallmessage-recent-messages' => '[$1$2上最近的所有留言]',
 );
 
