@@ -36,7 +36,9 @@ class Helper {
 			} elseif ( $flag['flag_param_names'] !== null ) {
 				/**
 				 * 4. The flag type HAS an instance on this page and WAS posted
-				 * and HAS parameters - update the parameters of the instance
+				 * and HAS parameters - update the parameters of the instance.
+				 * If the flag type has no parameters defined - there is nothing to update
+				 * because the form only allows you to modify parameters.
 				 */
 				$flagsToUpdate[ $flag['flag_id'] ] = $this->getFlagFromPostData( $flag, $postData );
 			}
