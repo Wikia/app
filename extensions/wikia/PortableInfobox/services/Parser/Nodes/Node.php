@@ -46,7 +46,10 @@ class Node {
 		return [ 'value' => (string)$this->xmlNode ];
 	}
 
-	//note that a '0' value cannot be treated like a null
+	/**
+	 * @desc Check if node is empty.
+	 * Note that a '0' value cannot be treated like a null
+	 */
 	public function isEmpty( $data ) {
 		$value = $data[ 'value' ];
 		return !( isset( $value ) ) || (empty( $value ) && $value != '0');
