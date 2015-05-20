@@ -40,9 +40,9 @@ $messages['es'] = array(
 $messages['fr'] = array(
 	'emailext-wallmessage-owned-subject' => '$1 vous a laissé un nouveau message sur {{SITENAME}}',
 	'emailext-wallmessage-following-subject' => '$1 a laissé un nouveau message à $2 sur {{SITENAME}}',
-	'emailext-wallmessage-owned-summary' => "'''$1 vous a laissé un nouveau message sur {{SITENAME}} !'''",
+	'emailext-wallmessage-owned-summary' => "'''$1 vous a laissé un nouveau message sur {{SITENAME}}. Hourra !'''",
 	'emailext-wallmessage-following-summary' => "'''$1 a laissé un nouveau message à $2 sur {{SITENAME}}.'''",
-	'emailext-wallmessage-full-conversation' => 'Toute la conversation',
+	'emailext-wallmessage-full-conversation' => 'Voir la conversation',
 	'emailext-wallmessage-recent-messages' => '[$1 Tous les messages récents sur $2]',
 );
 
