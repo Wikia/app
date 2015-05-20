@@ -17,7 +17,7 @@ class FlagParameter extends FlagsBaseModel {
 			$values[] = [ $flagId, $flagTypeId, $wikiId, $pageId, $paramName, $paramValue ];
 		}
 
-		$sql = ( new \WikiaSQL )
+		( new \WikiaSQL )
 			->INSERT()->INTO( self::FLAGS_PARAMS_TABLE, [
 				'flag_id',
 				'flag_type_id',
@@ -40,7 +40,7 @@ class FlagParameter extends FlagsBaseModel {
 		$db = $this->getDatabaseForWrite();
 
 		foreach ( $params as $paramName => $paramValue ) {
-			$sql = ( new \WikiaSQL )
+			( new \WikiaSQL )
 				->UPDATE( self::FLAGS_PARAMS_TABLE )
 				->SET( $paramName, $paramValue )
 				->WHERE( 'flag_id' )->EQUAL_TO( $flagId )
