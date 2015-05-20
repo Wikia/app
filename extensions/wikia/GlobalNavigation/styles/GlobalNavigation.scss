@@ -16,6 +16,7 @@ $start-a-wikia-logo-size: 30px;
 	margin-top: -$global-navigation-height - 1px;
 	position: fixed;
 	transition-duration: .5s;
+	transition-property: background-color;
 	width: 100%;
 	z-index: $global-navigation-z-index;
 
