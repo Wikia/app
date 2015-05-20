@@ -30,6 +30,11 @@ class UncycloUserMigrator extends Maintenance {
 	const PREFIX_RENAME_UNCYCLO = 'Un-';
 	const PREFIX_RENAME_GLOBAL = 'W-';
 
+	private $createdAccounts         = 0;
+	private $mergedAccounts          = 0;
+	private $renamedUnclycloAccounts = 0;
+	private $renamedWikiaAccounts    = 0;
+
 	/**
 	 * Set script options
 	 */
@@ -89,6 +94,8 @@ class UncycloUserMigrator extends Maintenance {
 		$this->output( sprintf('> renaming uncyclo user to "%s"...', $newName) );
 
 		// TODO
+
+		$this->renamedUnclycloAccounts++;
 	}
 
 	/**
@@ -101,6 +108,8 @@ class UncycloUserMigrator extends Maintenance {
 		$this->output( sprintf('> renaming global user to "%s"...', $newName) );
 
 		// TODO
+
+		$this->renamedWikiaAccounts++;
 	}
 
 	/**
@@ -122,6 +131,8 @@ class UncycloUserMigrator extends Maintenance {
 
 				// TODO: merge the accounts
 				$this->output( "\n\tmerging accounts..." );
+
+				$this->mergedAccounts++;
 			}
 			else {
 				// resolve conflicts
@@ -162,6 +173,8 @@ class UncycloUserMigrator extends Maintenance {
 		else {
 			// there's no accounts conflict - create a shared account and update the uncyclopedia user_id entries
 			$this->output( sprintf( "\n\tcreating a shared account for %s...", $user->getName() ) );
+
+			$this->createdAccounts++;
 		}
 
 		$this->output( "\n" );
@@ -176,8 +189,7 @@ class UncycloUserMigrator extends Maintenance {
 			self::USER_TABLE,
 			'*',
 			[],
-			__METHOD__,
-			[ 'LIMIT' => 250 ] // FIXME
+			__METHOD__
 		);
 
 		$this->output( sprintf( "Migrating %d accounts...\n", $res->numRows() ) );
@@ -185,6 +197,15 @@ class UncycloUserMigrator extends Maintenance {
 		while( $user = $res->fetchObject() ) {
 			$this->migrateUser( User::newFromRow((object) $user ) );
 		}
+
+		// print the stats
+		$this->output( "\n\nDone!\n\n" );
+
+		$this->output( sprintf( "Accounts processed:       %d\n", $res->numRows() ) );
+		$this->output( sprintf( "Created Wikia accounts:   %d\n", $this->createdAccounts ) );
+		$this->output( sprintf( "Merged accounts:          %d\n", $this->mergedAccounts ) );
+		$this->output( sprintf( "Renamed Uncyclo accounts: %d\n", $this->renamedUnclycloAccounts ) );
+		$this->output( sprintf( "Renamed Wikia accounts:   %d\n", $this->renamedWikiaAccounts ) );
 	}
 }
 
