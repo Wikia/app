@@ -11,6 +11,31 @@ class FlagsController extends WikiaApiController {
 		$status = false;
 
 	/**
+	 * Generates html contents for Flags modal for editing flags
+	 */
+	public function modal() {
+		$pageId = $this->request->getVal( 'pageId' );
+		if ( empty( $pageId ) ) {
+			return null;
+		}
+
+		$flagsWikiaResponse = $this->app->sendRequest( 'FlagsController', 'getFlagsForPageForEdit', [
+			'pageId' => $pageId
+		] );
+
+		$flags = $flagsWikiaResponse->getData();
+
+		$html = \HandlebarsService::getInstance()->render(
+			'extensions/wikia/Flags/templates/modal.handlebars', [
+				'flags' => $flags,
+				'pageId' => $pageId
+			]
+		);
+
+		$this->response->setVal( 'html', $html );
+	}
+
+	/**
 	 * Assigns a request's parameters to the object's property
 	 * and sets a wikiId if it hasn't been specified as one
 	 * of the parameters.

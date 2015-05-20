@@ -88,7 +88,7 @@ require(['jquery'], function($) {
 			Wikia.getMultiTypePackage({
 				templates: [{
 					controller: 'Flags',
-					method: 'FlagsModal',
+					method: 'modal',
 					params: {
 						'wikiId': window.wgCityId,
 						'pageId': window.wgArticleId
@@ -105,7 +105,7 @@ require(['jquery'], function($) {
 						//self.buildModal(options);
 						//self.bucky.timer.stop('initModal');
 					});
-					template.content = $.parseJSON(pkg.templates.Flags_FlagsModal);
+					template.content = $.parseJSON(pkg.templates.Flags_modal);
 					dfd.resolve( template );
 				}
 			});
