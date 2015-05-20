@@ -2,7 +2,7 @@
 	<ul class="flags">
 	{{#flags}}
 		<li>
-			<input type="checkbox" name="{{../inputNamePrefix}}:{{flag_type_id}}:{{../inputNameCheckbox}}"/>
+			<input type="checkbox" name="{{../inputNamePrefix}}:{{flag_type_id}}:{{../inputNameCheckbox}}" {{#if flag_id}}checked="checked"{{/if}}/>
 			<label>{{flag_name}}</label>
 			<a href="{{flag_view_url}}" target="_blank">More info</a>
 			{{#each params}}
@@ -12,4 +12,5 @@
 	{{/flags}}
 	</ul>
 	<input type="hidden" name="pageId" value="{{pageId}}"/>
+	<input type="hidden" name="token" value="{{editToken}}"/>
 </form>

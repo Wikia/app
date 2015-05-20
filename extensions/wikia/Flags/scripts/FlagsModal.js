@@ -93,12 +93,6 @@ require(['jquery'], function($) {
 				callback: function( pkg ) {
 					require(['wikia.ui.factory', 'wikia.loader'], function (uiFactory, loader) {
 						loader.processStyle(pkg.styles);
-
-						//self.uiFactory = uiFactory;
-						//self.packagesData = packagesData;
-						//
-						//self.buildModal(options);
-						//self.bucky.timer.stop('initModal');
 					});
 					template.content = $.parseJSON(pkg.templates.Flags_modal);
 					dfd.resolve( template );

@@ -15,6 +15,8 @@ class FlagsController extends WikiaApiController {
 	 * Generates html contents for Flags modal for editing flags
 	 */
 	public function modal() {
+		global $wgUser;
+
 		$pageId = $this->request->getVal( 'pageId' );
 		if ( empty( $pageId ) ) {
 			return null;
@@ -28,6 +30,7 @@ class FlagsController extends WikiaApiController {
 
 		$html = \HandlebarsService::getInstance()->render(
 			'extensions/wikia/Flags/templates/modal.handlebars', [
+				'editToken' => $wgUser->getEditToken(),
 				'flags' => $flags,
 				'formSubmitUrl' => $this->getLocalUrl('postFlagsEditForm'),
 				'inputNamePrefix' => Helper::FLAGS_INPUT_NAME_PREFIX,
@@ -176,7 +179,7 @@ class FlagsController extends WikiaApiController {
 
 		$title = Title::newFromID( $this->params['pageId'] );
 		if ( $title === null ) {
-			$this->response->setException( new \Exception( "Article with ID {$pageId} doesn't exist" ) );
+			$this->response->setException( new \Exception( "Article with ID {$this->params['pageId']} doesn't exist" ) );
 			return true;
 		}
 
@@ -225,7 +228,7 @@ class FlagsController extends WikiaApiController {
 
 		// Redirect back to article view after saving flags
 		$pageUrl = $title->getFullURL();
-		$this->response->redirect( $this->params['pageId'] );
+		$this->response->redirect( $pageUrl );
 	}
 
 	/**
