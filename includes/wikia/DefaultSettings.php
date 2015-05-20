@@ -629,6 +629,7 @@ include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
 include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
+include_once( "$IP/extensions/wikia/Flags/Flags.setup.php" );
 
 /**
  * @name $wgSkipSkins
