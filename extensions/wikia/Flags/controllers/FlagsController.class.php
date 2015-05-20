@@ -299,7 +299,8 @@ class FlagsController extends WikiaApiController {
 		$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
 
 		/**
-		 * 3. Return the united arrays
+		 * 3. Return the united arrays - it is possible to merge them since both arrays use
+		 * flag_type_id values as indexes
 		 */
 		return $flagsForPage + $flagTypesForWikia;
 	}
