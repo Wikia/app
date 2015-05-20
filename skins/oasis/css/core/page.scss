@@ -153,19 +153,20 @@
 			font-weight: normal;
 		}
 
-		h1 {
+		h2 {
+			border: 0;
 			font: {
 				size: 18px;
 				weight: bold;
 			}
 			margin: {
-				top: 0px;
+				top: 0;
 				bottom: 25px;
 			}
 			padding-left: 2px;
 		}
 
-		h2 {
+		h3 {
 			@extend h1;
 			clear: both;
 			padding-top: 15px;
