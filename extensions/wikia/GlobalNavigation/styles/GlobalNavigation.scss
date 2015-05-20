@@ -9,7 +9,7 @@ $start-a-wikia-logo-size: 30px;
 
 .global-navigation {
 	background-color: $global-wikia-background-color;
-	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, .3);
 	box-sizing: border-box;
 	color: $nav-foreground-dark-color;
 	height: $global-navigation-height;
@@ -31,8 +31,8 @@ $start-a-wikia-logo-size: 30px;
 		@include clearfix;
 
 		display: table;
-		white-space: nowrap;
 		margin: 0 auto;
+		white-space: nowrap;
 		width: $width-outside;
 	}
 
@@ -94,11 +94,12 @@ $start-a-wikia-logo-size: 30px;
 
 @if $widthType == 0 {
 	@media #{$breakpoint-not-supported} {
-		.global-navigation .global-navigation-container {
-			width: $content-width-small - $scroll-bar-width;
+		.global-navigation {
 			position: relative;
+			width: $content-width-small - $scroll-bar-width;
 		}
 	}
+
 	@media #{$breakpoint-small-only} {
 		.global-navigation .global-navigation-container {
 			width: $content-width-small - $scroll-bar-width;
@@ -107,9 +108,9 @@ $start-a-wikia-logo-size: 30px;
 				padding-left: 21px;
 
 				.start-wikia {
+					line-height: $start-a-wikia-logo-size - 2 * $content-border-width;
 					width: $start-a-wikia-logo-size;
-					//-2px because of borders
-					line-height: $start-a-wikia-logo-size - 2px;
+
 					&:after {
 						content: '+';
 						display: block;
@@ -151,9 +152,9 @@ $start-a-wikia-logo-size: 30px;
 				padding-left: 21px;
 
 				.start-wikia {
+					line-height: $start-a-wikia-logo-size - 2 * $content-border-width;
 					width: $start-a-wikia-logo-size;
-					//-2px because of borders
-					line-height: $start-a-wikia-logo-size - 2px;
+
 					&:after {
 						content: '+';
 						display: block;
@@ -166,7 +167,7 @@ $start-a-wikia-logo-size: 30px;
 			}
 
 			.global-navigation-container {
-				@include width-calc("100% - 20px");
+				@include width-calc('100% - 20px');
 				margin: 0 10px;
 			}
 		}
