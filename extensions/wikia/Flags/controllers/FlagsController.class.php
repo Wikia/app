@@ -2,6 +2,7 @@
 
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
+use Flags\Helper;
 
 class FlagsController extends WikiaApiController {
 
@@ -28,6 +29,9 @@ class FlagsController extends WikiaApiController {
 		$html = \HandlebarsService::getInstance()->render(
 			'extensions/wikia/Flags/templates/modal.handlebars', [
 				'flags' => $flags,
+				'formSubmitUrl' => $this->getLocalUrl('postFlagsEditForm'),
+				'inputNamePrefix' => Helper::FLAGS_INPUT_NAME_PREFIX,
+				'inputNameCheckbox' => Helper::FLAGS_INPUT_NAME_CHECKBOX,
 				'pageId' => $pageId
 			]
 		);
@@ -169,6 +173,26 @@ class FlagsController extends WikiaApiController {
 		$flagsForPage = $this->model->getFlagsForPage( $this->params['wikiId'], $this->params['pageId'] );
 
 		$this->setResponseData( $flagsForPage );
+	}
+
+	public function postFlagsEditForm() {
+		$pageId = $this->request->getVal( 'pageId' );
+		if ( empty( $pageId ) ) {
+			$this->response->setException( new \Exception( 'Required param pageId not provided' ) );
+			return true;
+		}
+
+		$title = Title::newFromID( $pageId );
+		if ( $title === null ) {
+			$this->response->setException( new \Exception( "Article with ID {$pageId} doesn't exist" ) );
+			return true;
+		}
+
+		// TODO place saving code here on merge
+
+		// Redirect back to article view after saving flags
+		$pageUrl = $title->getFullURL();
+		$this->response->redirect( $pageUrl );
 	}
 
 	/**

@@ -1,15 +1,15 @@
-<form action="wikia.php?controller=FlagsController&method=postFlagsEditForm" method="POST">
-<ul class="flags">
-{{#flags}}
-	<li>
-		<input type="checkbox" name="{{flag_type_id}}"/>
-		<label>{{flag_name}}</label>
-		<a href="{{flag_view_url}}" target="_blank">More info</a>
-		{{#each params}}
-			<input type="text" name="{{flag_type_id}}:{{@key}}" value="{{this}}" placeholder="{{@key}}" class="param" />
-		{{/each}}
-	</li>
-{{/flags}}
-</ul>
-<input type="hidden" name="pageId" value="{{pageId}}"/>
+<form action="{{formSubmitUrl}}" method="POST" id="flagsEditForm">
+	<ul class="flags">
+	{{#flags}}
+		<li>
+			<input type="checkbox" name="{{../inputNamePrefix}}:{{flag_type_id}}:{{../inputNameCheckbox}}"/>
+			<label>{{flag_name}}</label>
+			<a href="{{flag_view_url}}" target="_blank">More info</a>
+			{{#each params}}
+				<input type="text" name="{{../../inputNamePrefix}}:{{../flag_type_id}}:{{@key}}" value="{{this}}" placeholder="{{@key}}" class="param" />
+			{{/each}}
+		</li>
+	{{/flags}}
+	</ul>
+	<input type="hidden" name="pageId" value="{{pageId}}"/>
 </form>

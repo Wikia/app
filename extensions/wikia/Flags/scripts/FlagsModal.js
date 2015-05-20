@@ -2,7 +2,8 @@ require(['jquery'], function($) {
 	'use strict';
 
 	var init,
-		modal = null;
+		modal = null,
+		$flagsEditForm;
 
 	init = function init() {
 		$('#ca-flags').on('click', showModal);
@@ -53,21 +54,15 @@ require(['jquery'], function($) {
 					// create the wrapping JS Object using the modalConfig
 					uiModal.createComponent(modalConfig, function(sampleModal) {
 						modal = sampleModal;
-						// bind the Save button to this anon. function
-						sampleModal.bind('save', function(event) {
-							event.preventDefault();
-							// do something
+						$flagsEditForm = $('#flagsEditForm');
 
-							// to close the modal, call the trigger event with 'close'
-							sampleModal.trigger('close');
+						// bind the Save button to this anon. function
+						sampleModal.bind('save', function() {
+							$flagsEditForm.trigger('submit');
 						});
 
 						// show the modal
 						sampleModal.show();
-						//sampleModal.$content = 'kamilktest';
-
-						// deactivate the modal and show the throbbing image
-						//sampleModal.deactivate();
 					});
 				});
 			});
