@@ -64,6 +64,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgAmazonMatchOldCountries';
 		$vars[] = 'wgHighValueCountries'; // Used by Liftium only
+		$vars[] = 'wgAdDriverOpenXCountries';
+		$vars[] = 'wgAdDriverTurtleCountries';
 
 		/**
 		 * Disaster Recovery
