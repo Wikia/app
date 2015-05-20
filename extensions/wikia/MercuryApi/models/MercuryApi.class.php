@@ -322,35 +322,19 @@ class MercuryApi {
 
 	/**
 	 * @desc To save some bandwidth, the unnecessary params are stripped
-	 * and standarized to match the curated content items
 	 *
 	 * @param $item
 	 * @return array
 	 */
 	private function processTrendingArticlesItem( $item ) {
-		global $wgArticlePath;
-
 		$processedItem = [];
 
 		if ( !empty( $item ) && is_array( $item ) ) {
-			$paramsMap = [
-				// params fetched from ArticlesApi => params passed to response
-				'title' => 'label',
-				'id' => 'article_id',
-				'type' => 'type',
-				'thumbnail' => 'image_url',
-				'url' => 'article_local_url',
-			];
+			$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
 
-			if ( !empty( $item[ 'url' ] ) ) {
-				// $wgArticlePath equals `/wiki/$1` or `/$1`,
-				// the `2` which is substracted is the length of the `$1`
-				$processedItem[ 'title' ] = substr( $item[ 'url' ], strlen( $wgArticlePath ) - 2 );
-			}
-
-			foreach ( $paramsMap as $param => $standarizedParam ) {
+			foreach ( $paramsToInclude as $param) {
 				if ( !empty( $item[ $param ] ) ) {
-					$processedItem[ $standarizedParam ] = $item[ $param ];
+					$processedItem[ $param ] = $item[ $param ];
 				}
 			}
 		}
