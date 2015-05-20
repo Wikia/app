@@ -42,7 +42,7 @@ class FlagParameter extends FlagsBaseModel {
 		foreach ( $params as $paramName => $paramValue ) {
 			( new \WikiaSQL )
 				->UPDATE( self::FLAGS_PARAMS_TABLE )
-				->SET( $paramName, $paramValue )
+				->SET( 'param_value', $paramValue )
 				->WHERE( 'flag_id' )->EQUAL_TO( $flagId )
 				->AND_( 'param_name' )->EQUAL_TO( $paramName )
 				->run( $db );
