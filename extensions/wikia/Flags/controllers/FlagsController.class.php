@@ -45,21 +45,88 @@ class FlagsController extends WikiaApiController {
 	 */
 
 	/**
-	 * Retrieves all data for flags assigned to the given page.
+	 * Retrieves all data for all flag types available on the given wikia
+	 * with an intent of rendering a modal with an edit form.
+	 * It returns
+	 * @see getFlagsForPageForEdit()
 	 *
 	 * @requestParam int wikiId
 	 * @requestParam int pageId
-	 * @response Array A list of flags with ids as indexes.
+	 * @response Array A list of flags with flag_type_id values as indexes.
 	 *  One item contains the following fields:
-	 *	 	flag_id
-	 * 		flag_type_id
-	 * 		wiki_id
-	 *		page_id
-	 * 		flag_group
-	 * 		flag_name
-	 * 		flag_view
-	 * 		flag_targeting
-	 * 		flag_params_names
+	 * @if The page has an instance of the flag type
+	 *	 	int flag_id
+	 *
+	 * 		int flag_type_id
+	 * 		int wiki_id
+	 *		int page_id
+	 * 		int flag_group
+	 * 		string flag_name
+	 * 		string flag_view
+	 * 		int flag_targeting
+	 * 		string|null flag_params_names
+	 *
+	 * 	@if flag_params_names is not empty
+	 * 		params = [
+	 * 			param_name => param_value
+	 *		]
+	 */
+	public function getFlagsForPageForEdit() {
+		$this->getRequestParams();
+
+		if ( !isset( $this->params['pageId'] ) ) {
+			return null;
+		}
+
+		/**
+		 * 1. Get flags assigned to the page
+		 */
+		$this->model = new Flag();
+		$flagsForPage = $this->model->getFlagsForPage( $this->params['wikiId'], $this->params['pageId'] );
+
+		/**
+		 * 2. Get all flag types for a wikia
+		 */
+		$this->model = new FlagType();
+		$flagTypesForWikia = $this->model->getFlagTypesForWikia( $this->params['wikiId'] );
+
+		/**
+		 * 3. Unite the arrays
+		 */
+		$responseData = $flagsForPage + $flagTypesForWikia;
+
+		/**
+		 * 4. Create links to templates for creation of "See more" links
+		 */
+		foreach ( $responseData as $flagTypeId => $flag ) {
+			$title = Title::newFromText( $flag['flag_view'], NS_TEMPLATE );
+			$responseData[$flagTypeId]['flag_view_url'] = $title->getFullURL();
+		}
+
+		/**
+		 * 5. Set the response data
+		 */
+		$this->setResponseData( $responseData );
+	}
+
+	/**
+	 * Retrieves all data for flags assigned to the given page
+	 * with an intent of rendering them. To get all types of flags:
+	 * @see getFlagsForPageForEdit()
+	 *
+	 * @requestParam int wikiId
+	 * @requestParam int pageId
+	 * @response Array A list of flags with flag_type_id values as indexes.
+	 *  One item contains the following fields:
+	 *	 	int flag_id
+	 * 		int flag_type_id
+	 * 		int wiki_id
+	 *		int page_id
+	 * 		int flag_group
+	 * 		string flag_name
+	 * 		string flag_view
+	 * 		int flag_targeting
+	 * 		string|null flag_params_names
 	 *
 	 * 	@if flag_params_names is not empty
 	 * 		params = [

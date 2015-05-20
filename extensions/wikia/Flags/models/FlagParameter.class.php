@@ -3,6 +3,9 @@
 namespace Flags\Models;
 
 class FlagParameter extends FlagsBaseModel {
+
+	const FLAG_PARAMETER_REGEXP = "/[^A-Za-z0-9-_:.]/"; // See W3C documentation for the name and id HTML attributes
+
 	private
 		$status;
 
@@ -31,5 +34,9 @@ class FlagParameter extends FlagsBaseModel {
 		$db->commit();
 
 		return $this->status;
+	}
+
+	public static function isValidParameterName( $paramName ) {
+		return preg_match( self::FLAG_PARAMETER_REGEXP, $paramName ) === 0;
 	}
 }

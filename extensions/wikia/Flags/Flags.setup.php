@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Wikia Flags Extension
  * @author Adam Karmiński
@@ -27,12 +28,25 @@ $wgAutoloadClasses['Flags\Models\FlagParameter'] = __DIR__ . '/models/FlagParame
 $wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.php';
 
 /**
- * Other classes
+ * Views
  */
-$wgAutoloadClasses['Flags\FlagsHooks'] = __DIR__ . '/Flags.hooks.php';
+$wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.php';
+
+/**
+ * Helper
+ */
+$wgAutoloadClasses['Flags\Helper'] = __DIR__ . '/FlagsHelper.class.php';
 
 /**
  * Hooks
  */
-$wgHooks['BeforePageDisplay'][] = 'Flags\FlagsHooks::onBeforePageDisplay';
-$wgHooks['SkinTemplateNavigation'][] = 'Flags\FlagsHooks::onSkinTemplateNavigation';
+$wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
+$wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
+$wgHooks['DropdownActions'][] = 'Flags\Hooks::onDropdownActions';
+$wgHooks['ParserBeforeInternalParse'][] = 'Flags\Hooks::onParserBeforeInternalParse';
+$wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
+
+/**
+ * Messages
+ */
+$wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';

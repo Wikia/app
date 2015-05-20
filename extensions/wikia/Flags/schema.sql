@@ -30,7 +30,7 @@ CREATE TABLE flags_types (
     flag_group int    NOT NULL ,
     flag_name varchar(128)    NOT NULL ,
     flag_view varchar(255)    NOT NULL ,
-    flag_targeting int    NOT NULL ,
+    flag_targeting tinyint    NOT NULL ,
     flag_params_names text    NULL ,
     CONSTRAINT flags_types_pk PRIMARY KEY (flag_type_id)
 );
