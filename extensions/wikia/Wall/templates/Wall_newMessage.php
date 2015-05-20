@@ -3,7 +3,7 @@
 		<div class="speech-bubble-avatar">
 			<?= AvatarService::renderAvatar($username, 50) ?>
 		</div>
-		<blockquote class="speech-bubble-message">
+		<div class="speech-bubble-message">
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Header', array(
 					'attributes' => array(
@@ -41,7 +41,7 @@
 			<? if ( $wg->EnableMiniEditorExtForWall ):
 				echo $app->getView( 'MiniEditorController', 'Footer' )->render(); 
 			endif; ?>
-		</blockquote>
+		</div>
 	</div>
 <? else: ?>
 	<br />
