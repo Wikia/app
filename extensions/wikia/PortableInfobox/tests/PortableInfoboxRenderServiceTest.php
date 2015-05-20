@@ -85,7 +85,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
 									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
@@ -124,7 +124,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">Footer value</footer>
 							</aside>',
 				'description' => 'Footer only'
@@ -139,7 +139,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-image no-margins">
 									<figure class="portable-infobox-image-wrapper">
 										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
@@ -160,7 +160,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
 									<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
 									<div class="portable-infobox-item-value">test value</div>
@@ -191,7 +191,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
 									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
@@ -225,7 +225,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
 									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
@@ -272,7 +272,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-title portable-infobox-item-margins">
 									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
@@ -329,7 +329,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-comparison">
 									<table class="portable-infobox-comparison">
 										<tbody>
@@ -367,7 +367,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox ">
+				'output' => '<aside class="portable-infobox">
 								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">
 									<p>Links</p>
 								</footer>
