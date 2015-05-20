@@ -1,11 +1,11 @@
 <?php
 
+use Flags\FlagsCache;
 use Flags\Helper;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 
 class FlagsController extends WikiaApiController {
-
 	private
 		$params,
 		$status = false;
@@ -80,24 +80,60 @@ class FlagsController extends WikiaApiController {
 		if ( !isset( $this->params['pageId'] ) ) {
 			return null;
 		}
+		$wikiId = $this->params['wikiId'];
+		$pageId = $this->params['pageId'];
+
+		$flagsCache = new FlagsCache();
+		$allFlagTypes = $flagsCache->getFlagsForPageForEdit( $wikiId, $pageId );
+
+		if ( !$allFlagTypes ) {
+			/**
+			 * 1. Get all flag types with instances for the page
+			 */
+			$allFlagTypes = $this->getAllFlagTypes( $wikiId, $pageId );
+
+			/**
+			 * 2. Create links to templates for creation of "See more" links
+			 */
+			foreach ( $allFlagTypes as $flagTypeId => $flagType ) {
+				$title = Title::newFromText( $flagType['flag_view'], NS_TEMPLATE );
+				$allFlagTypes[$flagTypeId]['flag_view_url'] = $title->getFullURL();
+			}
+
+			/**
+			 * 3. Cache the results and set the response data
+			 */
+			$flagsCache->setFlagsForPageForEdit( $wikiId, $pageId, $allFlagTypes );
+		}
+
+		$this->setResponseData( $allFlagTypes );
+	}
+
+	private function getAllFlagTypes( $wikiId, $pageId ) {
+		$flagsCache = new FlagsCache();
 
 		/**
-		 * 1. Get all flag types with instances for the page
+		 * 1. Get flags assigned to the page
 		 */
-		$allFlagTypes = $this->getAllFlagTypes( $this->params['wikiId'], $this->params['pageId'] );
-
+		$flagsForPage = $flagsCache->getFlagsForPageForRender( $wikiId, $pageId );
+		if ( !$flagsForPage ) {
+			$flagModel = new Flag();
+			$flagsForPage = $flagModel->getFlagsForPage( $wikiId, $pageId );
+		}
 		/**
-		 * 2. Create links to templates for creation of "See more" links
+		 * 2. Get all flag types for a wikia
 		 */
-		foreach ( $allFlagTypes as $flagTypeId => $flagType ) {
-			$title = Title::newFromText( $flagType['flag_view'], NS_TEMPLATE );
-			$allFlagTypes[$flagTypeId]['flag_view_url'] = $title->getFullURL();
+		$flagTypesForWikia = $flagsCache->getFlagTypesForWikia( $wikiId );
+		if ( !$flagTypesForWikia ) {
+			$flagTypeModel = new FlagType();
+			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
 		}
 
 		/**
-		 * 3. Set the response data
+		 * 3. Return the united arrays - it is possible to merge them since both arrays use
+		 * flag_type_id values as indexes
 		 */
-		$this->setResponseData( $allFlagTypes );
+		return $flagsForPage + $flagTypesForWikia;
 	}
 
 	/**
@@ -130,9 +166,18 @@ class FlagsController extends WikiaApiController {
 		if ( !isset( $this->params['pageId'] ) ) {
 			return null;
 		}
+		$wikiId = $this->params['wikiId'];
+		$pageId = $this->params['pageId'];
 
-		$flagModel = new Flag();
-		$flagsForPage = $flagModel->getFlagsForPage( $this->params['wikiId'], $this->params['pageId'] );
+		$flagsCache = new FlagsCache();
+		$flagsForPage = $flagsCache->getFlagsForPageForRender( $wikiId, $pageId );
+
+		if ( !$flagsForPage ) {
+			$flagModel = new Flag();
+			$flagsForPage = $flagModel->getFlagsForPage( $wikiId, $pageId );
+
+			$flagsCache->setFlagsForPageForRender( $wikiId, $pageId, $flagsForPage );
+		}
 
 		$this->setResponseData( $flagsForPage );
 	}
@@ -143,14 +188,31 @@ class FlagsController extends WikiaApiController {
 		if ( !isset( $this->params['pageId'] ) ) {
 			return null;
 		}
+		$wikiId = $this->params['wikiId'];
+		$pageId = $this->params['pageId'];
 
 		/**
 		 * Get the current status to compare
 		 */
-		$currentFlags = $this->getAllFlagTypes( $this->params['wikiId'], $this->params['pageId'] );
+		$currentFlags = $this->getAllFlagTypes( $wikiId, $pageId );
 
 		$helper = new Helper();
 		$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
+		if ( !empty( $flagsToChange ) ) {
+			$this->performActionsUsingPostedData( $flagsToChange );
+
+			/**
+			 * Purge cache values for the page
+			 */
+			$flagsCache = new FlagsCache();
+			$flagsCache->purgeFlagsForPageForRender( $wikiId, $pageId );
+			$flagsCache->purgeFlagsForPageForEdit( $wikiId, $pageId );
+		}
+	}
+
+	private function performActionsUsingPostedData( $flagsToChange ) {
+		$wikiId = $this->params['wikiId'];
+		$pageId = $this->params['pageId'];
 
 		$flagModel = new Flag();
 		/**
@@ -158,8 +220,8 @@ class FlagsController extends WikiaApiController {
 		 */
 		if ( !empty( $flagsToChange['toAdd'] ) ) {
 			$flagsToAdd = [
-				'wikiId' => $this->params['wikiId'],
-				'pageId' => $this->params['pageId'],
+				'wikiId' => $wikiId,
+				'pageId' => $pageId,
 				'flags' => $flagsToChange['toAdd'],
 			];
 
@@ -282,25 +344,5 @@ class FlagsController extends WikiaApiController {
 		}
 
 		$this->setVal( 'status', $this->status );
-	}
-
-	private function getAllFlagTypes( $wikiId, $pageId ) {
-		/**
-		 * 1. Get flags assigned to the page
-		 */
-		$flagModel = new Flag();
-		$flagsForPage = $flagModel->getFlagsForPage( $wikiId, $pageId );
-
-		/**
-		 * 2. Get all flag types for a wikia
-		 */
-		$flagTypeModel = new FlagType();
-		$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
-
-		/**
-		 * 3. Return the united arrays - it is possible to merge them since both arrays use
-		 * flag_type_id values as indexes
-		 */
-		return $flagsForPage + $flagTypesForWikia;
 	}
 }
