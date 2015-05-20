@@ -96,7 +96,6 @@ $start-a-wikia-logo-size: 30px;
 	@media #{$breakpoint-not-supported} {
 		.global-navigation {
 			position: relative;
-			width: $content-width-small - $scroll-bar-width;
 		}
 	}
 
