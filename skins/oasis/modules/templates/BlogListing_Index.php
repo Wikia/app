@@ -20,7 +20,7 @@
 					<span><?= wfMsg('blog-by', $post['date'], Xml::element('a', array('href' => htmlspecialchars($post['userpage'])), $post['username'], false)) ?></span>
 				</div>
 
-				<blockquote>
+				<div class='post-summary'>
 					<?php
 					// handle proper rendering of "read more"
 					$readMoreLink = Xml::openElement('span', array('class' => 'read-more')) .
@@ -36,7 +36,7 @@
 
 					echo $post['text'];
 					?>
-				</blockquote>
+				</div>
 			</li>
 <?php
 		}
