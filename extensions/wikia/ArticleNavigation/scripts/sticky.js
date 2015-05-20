@@ -1,6 +1,6 @@
 require([
-	'wikia.document', 'wikia.stickyElement', 'venus.layout', 'wikia.browserDetect'
-], function(doc, stickyElement, layout, browserDetect) {
+	'wikia.document', 'wikia.stickyElement', 'venus.layout'
+], function(doc, stickyElement, layout) {
 	'use strict';
 	/*
 	 * TODO: This file will/should be rafactored after beta release:
@@ -14,7 +14,6 @@ require([
 		$source = $(navigationElement),
 		$target = $(boundBoxElement),
 		$bottomTarget = $('main'),
-		$doc = $(doc),
 		stickyElementObject = stickyElement.spawn(),
 		adPoolerSelector = '#TOP_LEADERBOARD.standard-leaderboard,' +
 			'#TOP_LEADERBOARD [data-gpt-creative-size], ' +
@@ -23,8 +22,12 @@ require([
 		adLogicLastHeight = 0,
 		adLogicPoolerMaxCount = 50,
 		adLogicPoolerTimeout = 250,
-		adLogicPoolerDefaultLeaderboardHeight = 90;
-
+		adLogicPoolerDefaultLeaderboardHeight = 90,
+		contentPadding,
+		additionalSourceOffset,
+		sourcePosition,
+		sourceLimit,
+		targetBottom;
 
 	/**
 	 * Pool for changed TOP_LEADERBOARD's height (can be very lazy-loaded)
@@ -34,7 +37,7 @@ require([
 			height, size;
 
 		if ($el.length === 0 && adLogicPoolerCount < adLogicPoolerMaxCount) {
-			adLogicPoolerCount ++;
+			adLogicPoolerCount += 1;
 
 			// absent, schedule another check
 			setTimeout(adLoadPooler, adLogicPoolerTimeout);
@@ -55,35 +58,29 @@ require([
 
 	// this function is needed for additional margin for screens >= 1024px
 	// (because header is getting float: left on medium and higher breakpoints)
-	function adjustValueFunction(value, typ) {
-		switch(typ) {
+	function adjustValueFunction(value, type) {
+		switch(type) {
 			case 'topScrollLimit':
 			case 'topSticked':
 				if ($('.mw-content-text').css('clear') === 'none') {
 					return value + $('.article-header').outerHeight(true);
 				}
-			// fall-through on purpose!
+			/* falls through */
 			default:
 				return value;
 		}
 	}
 
-	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
-		var additionalOffset, targetBottom, contentPadding;
-
+	function adjustPositionFunction(scrollY) {
+		contentPadding = parseInt( $target.css('padding-bottom'), 10);
+		additionalSourceOffset = additionalTopOffset + globalNavigationHeight + contentPadding;
+		sourcePosition = scrollY + additionalSourceOffset + $source.outerHeight(true);
+		sourceLimit = $bottomTarget.offset().top + $bottomTarget.outerHeight(true);
 		targetBottom = $bottomTarget.position().top +
 			$bottomTarget.outerHeight(true) -
 			$source.outerHeight(true);
 
-		contentPadding = parseInt( $target.css('padding-bottom') );
-
-		if (browserDetect.isIE()) {
-			additionalOffset = 2 * additionalTopOffset;
-		} else {
-			additionalOffset = additionalTopOffset;
-		}
-
-		if ($doc.scrollTop() + additionalOffset - contentPadding >= targetBottom) {
+		if (sourcePosition > sourceLimit) {
 			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom - contentPadding);
 			return true;
 		} else {

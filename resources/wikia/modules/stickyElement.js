@@ -41,12 +41,14 @@ define('wikia.stickyElement', [
 			};
 			options = _.extend(defaultOptions, userOptions);
 
-			win.addEventListener('load',   updateSize);
-			win.addEventListener('scroll', _.debounce(updatePosition, 10));
-			win.addEventListener('resize', _.debounce(updateSize, 10));
+			win.addEventListener('load',   updateSize, false);
+			win.addEventListener('resize', _.debounce(updateSize, 10), false);
+			win.addEventListener('scroll', _.throttle(updatePosition, 10), false);
+			win.addEventListener('touchmove', _.throttle(updatePosition, 10), false);
 
 			updateSize();
 
+			/*jshint validthis:true*/
 			return this;
 		}
 
@@ -77,18 +79,18 @@ define('wikia.stickyElement', [
 		 * @param {Event=} event
 		 */
 		function updatePosition (event) {
-			var currentY = win.pageYOffset,
-				bottomLimit,
-				bottomScrollLimitForElement;
+			var currentY = win.pageYOffset;
 
 			// return if there's nothing to update
-			if (event != undefined && currentY === lastY) return;
+			if (event !== undefined && currentY === lastY) {
+				return;
+			}
 			lastY = currentY;
 
 			if (!!options.minWidth && win.innerWidth < options.minWidth) {
 				sourceElementPosition('absolute', 'top', topSticked);
 			} else {
-				if (typeof options.adjustPositionFunc == 'function' && options.adjustPositionFunc(currentY, options.sourceElement, options.alignToElement)) {
+				if (typeof options.adjustPositionFunc === 'function' && options.adjustPositionFunc(currentY)) {
 					return;
 				}
 
@@ -135,5 +137,5 @@ define('wikia.stickyElement', [
 		spawn: function() {
 			return new StickyElement();
 		}
-	}
+	};
 });
