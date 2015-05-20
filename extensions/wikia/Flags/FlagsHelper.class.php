@@ -40,7 +40,7 @@ class Helper {
 				 * If the flag type has no parameters defined - there is nothing to update
 				 * because the form only allows you to modify parameters.
 				 */
-				$flagsToUpdate[ $flag['flag_id'] ] = $this->getFlagFromPostData( $flag, $postData );
+				$flagsToUpdate[$flag['flag_id']] = $this->getFlagFromPostData( $flag, $postData );
 			}
 		}
 
@@ -82,7 +82,15 @@ class Helper {
 			foreach ( $paramNames as $paramName ) {
 				$key = $this->composeInputName( $flagTypeId, $paramName );
 				if ( isset( $postData[$key] ) ) {
+					/**
+					 * Use a value from the form if it is provided
+					 */
 					$flagFromPost['params'][$paramName] = \Sanitizer::escapeHtmlAllowEntities( $postData[$key] );
+				} else {
+					/**
+					 * Insert an empty string otherwise
+					 */
+					$flagFromPost['params'][$paramName] = '';
 				}
 			}
 		}
