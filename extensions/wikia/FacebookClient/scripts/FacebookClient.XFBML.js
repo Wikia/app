@@ -6,16 +6,17 @@
 mw.hook('wikipage.content').add(function ($content) {
 	'use strict';
 
-	if ((xfbmlTagsOnPage())) {
-		$.loadFacebookSDK().done(renderXFBMLTags);
+	if ((faceBookTagsOnPage())) {
+		$.loadFacebookSDK().done(renderFaceBookTags);
 	}
 
-	function xfbmlTagsOnPage() {
-		var numOfXFBMLTags = $content.find('[data-type="xfbml-tag"]').length;
-		return numOfXFBMLTags > 0;
+	// Checks for XFBML tags or FaceBook Page Plugin tags
+	function faceBookTagsOnPage() {
+		var numOfFaceBookTags = $content.find('[data-type="xfbml-tag"], .fb-page').length;
+		return numOfFaceBookTags > 0;
 	}
 
-	function renderXFBMLTags() {
+	function renderFaceBookTags() {
 		FB.XFBML.parse($content[0]);
 	}
 });
