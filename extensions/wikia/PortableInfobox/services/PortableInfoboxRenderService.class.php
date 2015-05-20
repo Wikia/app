@@ -144,8 +144,9 @@ class PortableInfoboxRenderService extends WikiaService {
 		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ( $type === 'image' ) {
 			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['url'] );
+			$data[ 'key' ] = urlencode( $data[ 'key' ] );
 
-			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
+			if ( $this->isWikiaMobile() ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
 			}
 		}
@@ -157,10 +158,18 @@ class PortableInfoboxRenderService extends WikiaService {
 
 	protected function getThumbnailUrl( $url ) {
 		return VignetteRequest::fromUrl( $url )->scaleToWidth(
-			F::app()->checkSkin( 'wikiamobile' ) ?
+			$this->isWikiaMobile() ?
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH
 		)->url();
+	}
+
+	/**
+	 * required for testing mobile template rendering
+	 * @return bool
+	 */
+	protected function isWikiaMobile() {
+		return F::app()->checkSkin( 'wikiamobile' );
 	}
 
 	/**
