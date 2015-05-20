@@ -6,11 +6,14 @@ use Flags\Views\FlagView;
 
 class Helper {
 
+	const FLAGS_INPUT_NAME_PREFIX = 'editFlags';
+	const FLAGS_INPUT_NAME_CHECKBOX = 'checkbox';
+
 	public function compareDataAndGetFlagsToChange( $currentFlags, $postData ) {
 		$flagsToAdd = $flagsToRemove = $flagsToUpdate = [];
 
 		foreach ( $currentFlags as $flagTypeId => $flag ) {
-			$keyCheckbox = "editFlags:{$flagTypeId}:checkbox";
+			$keyCheckbox = $this->composeInputName( $flagTypeId, self::FLAGS_INPUT_NAME_CHECKBOX );
 
 			if ( !isset( $flag['flag_id'] ) && !isset( $postData[$keyCheckbox] ) ) {
 				/**
@@ -75,7 +78,7 @@ class Helper {
 			 * This is a protection from users modifying names of parameters in the DOM.
 			 */
 			foreach ( $paramNames as $paramName ) {
-				$key = "editFlags:{$flagTypeId}:{$paramName}";
+				$key = $this->composeInputName( $flagTypeId, $paramName );
 				if ( isset( $postData[$key] ) ) {
 					$flagFromPost['params'][$paramName] = \Sanitizer::escapeHtmlAllowEntities( $postData[$key] );
 				}
@@ -116,5 +119,9 @@ class Helper {
 				'pageId' => $pageId,
 			]
 		)->getData();
+	}
+
+	private function composeInputName( $flagTypeId, $field ) {
+		return self::FLAGS_INPUT_NAME_PREFIX . ":{$flagTypeId}:" . $field;
 	}
 }
