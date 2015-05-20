@@ -2322,11 +2322,11 @@ $config['cookie_policy_js'] = [
 	]
 ];
 
-$config['facebook_client_xfbml_js'] = [
+$config['facebook_client_fbtags_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'monobook'],
 	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/FacebookClient.XFBML.js',
+		'//extensions/wikia/FacebookClient/scripts/FacebookClient.facebookTags.js',
 	]
 ];
 
