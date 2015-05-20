@@ -12,7 +12,7 @@ class XmlParserTest extends WikiaBaseTest {
 			'elem2' => 'ELEM2',
 			'lado2' => 'LALALA',
 			'nonempty' => '111'
-		]);
+		] );
 		$markup = '
 			<infobox>
 				<comparison>
@@ -56,7 +56,7 @@ class XmlParserTest extends WikiaBaseTest {
 
 		$this->assertTrue( $data[0]['data']['value'] == 'parseRecursive(ABB)' );
 		// ledo1 ommited, ledo2 at [1] position
-		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parseRecursive(LALALA)');
+		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parseRecursive(LALALA)' );
 	}
 
 	/**

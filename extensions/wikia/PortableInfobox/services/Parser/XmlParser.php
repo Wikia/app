@@ -93,10 +93,10 @@ class XmlParser {
 			if ( !empty( $this->externalParser ) ) {
 				$instance->setExternalParser( $this->externalParser );
 			}
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return $instance;
 		}
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
 	}
 
