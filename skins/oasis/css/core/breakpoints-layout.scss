@@ -301,6 +301,11 @@
 	}
 
 	@media #{$breakpoint-not-supported} {
+		body {
+			//This has to be visible to allow for zooming out
+			overflow: visible;
+		}
+
 		.WikiHeader > nav.WikiNav .navbackground {
 			width: $content-width-small - $content-border-width;
 
