@@ -117,47 +117,6 @@ class SitemapPageModel extends WikiaModel {
 	}
 
 	/**
-	 * Get Pagination (HTML) and list of links for the header
-	 * @param int $page
-	 * @return string $pagination
-	 */
-	public function getPagination( $page ) {
-		$pagination = '';
-		$links = [];
-		$totalWikis = $this->getTotalWikis();
-		if ( $totalWikis > self::WIKI_LIMIT_PER_PAGE ) {
-			$pages = Paginator::newFromArray( array_fill( 0, $totalWikis, '' ), self::WIKI_LIMIT_PER_PAGE );
-			$pages->setActivePage( $page - 1 );
-			$url = $this->wg->Title->getFullURL( 'page=%s' );
-			$pagination = $pages->getBarHTML( $url );
-			$links = $this->getPaginationHeadLinks( $pages->getPagesCount(), $page, $url );
-		}
-
-		return [ $pagination, $links ];
-	}
-
-	/**
-	 * Get list of links for the header
-	 * @param int $totalPages
-	 * @param int $page
-	 * @param string $url
-	 * @return array
-	 */
-	public function getPaginationHeadLinks( $totalPages, $page, $url ) {
-		$links = [];
-
-		if ( $page > 1 && $page <= $totalPages ) {
-			$links[] = [ 'rel' => 'prev', 'href' => str_replace( '%s', $page - 1, $url ) ];
-		}
-
-		if ( $page < $totalPages ) {
-			$links[] = [ 'rel' => 'next', 'href' => str_replace( '%s', $page + 1, $url ) ];
-		}
-
-		return $links;
-	}
-
-	/**
 	 * Get memcache key for getWikis
 	 * @param int $page
 	 * @return string

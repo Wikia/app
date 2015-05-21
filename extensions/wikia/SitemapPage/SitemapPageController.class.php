@@ -20,11 +20,6 @@ class SitemapPageController extends WikiaController {
 
 		$sitemapPage = new SitemapPageModel();
 
-		list( $pagination, $headLinks ) = $sitemapPage->getPagination( $page );
-		foreach ( $headLinks as $link ) {
-			$this->wg->Out->addLink( $link );
-		}
-
 		$this->header = [
 			'title' => wfMessage( 'sitemap-page-wiki-title' )->escaped(),
 			'language' => wfMessage( 'sitemap-page-wiki-language' )->escaped(),
@@ -32,7 +27,6 @@ class SitemapPageController extends WikiaController {
 			'description' => wfMessage( 'sitemap-page-wiki-description' )->escaped(),
 		];
 		$this->wikis = $sitemapPage->getWikis( $page );
-		$this->pagination = $pagination;
 	}
 
 }
