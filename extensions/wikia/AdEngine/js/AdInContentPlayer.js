@@ -10,49 +10,62 @@ define('ext.wikia.adEngine.adInContentPlayer', [
 	var logGroup = 'ext.wikia.adEngine.adInContentPlayer',
 		context = adContext.getContext(),
 		slotName = 'INCONTENT_PLAYER',
-		adHtml = '<div id="' + slotName + '" class="wikia-ad default-height"></div>';
+		adHtml = '<div id="' + slotName + '" class="wikia-ad default-height"></div>',
+		header,
+		isOasis = (context.targeting.skin === 'oasis');
 
-	function init() {
-		log('INCONTENT_PLAYER: init()', 'debug', logGroup);
+	function getSlotName() {
+		return slotName;
+	}
 
-		var $header,
-			articleContainer,
-			header,
-			headersSelector,
-			logMessage,
-			logWikiData,
-			isOasis = (context.targeting.skin === 'oasis');
+	/**
+	 * Oasis only method; Adds the slot if the conditions are met and sends tracking event
+	 */
+	function insertSlot() {
+		log('insertSlot()', 'debug', logGroup);
+		$(header).before(adHtml);
+		trackSuccess();
+		win.adslots2.push(slotName);
+	}
 
-		articleContainer = isOasis ? $('#mw-content-text') : $('.article-body')[0];
-		headersSelector = isOasis ? '> h2' : 'h2';
-		logWikiData = isOasis ? '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')' : '';
+	/**
+	 * Basically checks if 2nd header in an article exists but in Oasis checks also the width of the header; + tracking
+	 *
+	 * @param {string} selector 2nd header selector
+	 * @returns {boolean}
+	 */
+	function shouldInsertSlot(selector) {
+		var logMessage,
+			logWikiData = isOasis ? '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')' : '';
 
-		header = $(articleContainer).find(headersSelector)[1];
+		header = $(selector)[1];
+		log(header, 'debug', logGroup);
+
 		if (!header) {
 			logMessage = 'no second section in the article ' + logWikiData;
 			log('INCONTENT_PLAYER not added - ' + logMessage, 'debug', logGroup);
 			adTracker.track('incontent_slot_player/insertion/failed', {'reason': logMessage, 'isOasis': isOasis});
-			return;
+			return false;
 		}
-		log(header, 'debug', logGroup);
 
-		$header = $(header);
-		if (isOasis && $header.width() < articleContainer.width()) {
+		if (isOasis && $(header).width() < $('#mw-content-text').width()) {
 			logMessage = '2nd section in the article is not full width ' + logWikiData;
 			log('INCONTENT_PLAYER not added - ' + logMessage, 'debug', logGroup);
 			adTracker.track('incontent_slot_player/insertion/failed', {'reason': logMessage, 'isOasis': isOasis});
-			return;
+			return false;
 		}
 
-		$header.before(adHtml);
+		return true;
+	}
+
+	function trackSuccess() {
 		adTracker.track('incontent_slot_player/insertion/success', {'isOasis': isOasis});
-
-		if (isOasis) {
-			win.adslots2.push(slotName);
-		}
 	}
 
 	return {
-		init: init
+		getSlotName: getSlotName,
+		insertSlot: insertSlot,
+		shouldInsertSlot: shouldInsertSlot,
+		trackSuccess: trackSuccess
 	};
 });
