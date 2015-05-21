@@ -44,14 +44,14 @@ define('ext.wikia.adEngine.adInContentPlayer', [
 		if (!header) {
 			logMessage = 'no second section in the article ' + logWikiData;
 			log('INCONTENT_PLAYER not added - ' + logMessage, 'debug', logGroup);
-			adTracker.track('incontent_slot_player/insertion/failed', {'reason': logMessage, 'isOasis': isOasis});
+			adTracker.track('slot/incontent_player/failed', {'reason': logMessage, 'isOasis': isOasis});
 			return false;
 		}
 
 		if (isOasis && $(header).width() < $('#mw-content-text').width()) {
 			logMessage = '2nd section in the article is not full width ' + logWikiData;
 			log('INCONTENT_PLAYER not added - ' + logMessage, 'debug', logGroup);
-			adTracker.track('incontent_slot_player/insertion/failed', {'reason': logMessage, 'isOasis': isOasis});
+			adTracker.track('slot/incontent_player/failed', {'reason': logMessage, 'isOasis': isOasis});
 			return false;
 		}
 
@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.adInContentPlayer', [
 	}
 
 	function trackSuccess() {
-		adTracker.track('incontent_slot_player/insertion/success', {'isOasis': isOasis});
+		adTracker.track('slot/incontent_player/success', {'isOasis': isOasis});
 	}
 
 	return {
