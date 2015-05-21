@@ -70,3 +70,12 @@ function efPiggybackAddToolLinks( $id, $nt, &$tools ) {
 
 	return true;
 }
+
+$wgHooks['User::getUser'][] = 'efPiggybackUserGetUser';
+function efPiggybackUserGetUser( &$user ) {
+	if ( PBLoginForm::isPiggyback() ) {
+		global $wgRequest;
+		$user = User::newFromSession( $wgRequest );
+	}
+	return false;
+}
