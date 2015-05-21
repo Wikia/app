@@ -49,14 +49,13 @@ define('ext.wikia.adEngine.provider.openX', [
 			slotItem = targeting.getItem(slotName),
 			size = slotItem.size.split('x'),
 			width = size[0],
-			height = size[1],
-			iframe = iframeWriter.getIframe({
-				code: getCode(slotItem.auid),
-				width: width,
-				height: height
-			});
+			height = size[1];
 
-		slot.appendChild(iframe);
+		slot.appendChild(iframeWriter.getIframe({
+			code: getCode(slotItem.auid),
+			width: width,
+			height: height
+		}));
 		success();
 	}
 
