@@ -103,6 +103,6 @@ require(['jquery'], function($) {
 		});
 	}
 
-	// Run initialization
-	init();
+	// Run initialization method on DOM ready
+	$(init);
 });
