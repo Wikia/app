@@ -7,8 +7,21 @@ use Flags\Models\FlagType;
 
 class FlagsController extends WikiaApiController {
 	private
+		$cache,
 		$params,
 		$status = false;
+
+	/**
+	 * Returns a singleton instance of FlagsCache
+	 * @return FlagsCache
+	 */
+	private function getCache() {
+		if ( !isset( $this->cache ) ) {
+			$this->cache = new FlagsCache();
+		}
+
+		return $this->cache;
+	}
 
 	/**
 	 * Assigns a request's parameters to the object's property
@@ -87,24 +100,15 @@ class FlagsController extends WikiaApiController {
 	}
 
 	private function getAllFlagTypes( $wikiId, $pageId ) {
-		$flagsCache = new FlagsCache();
-
 		/**
 		 * 1. Get flags assigned to the page
 		 */
-		$flagsForPage = $flagsCache->getFlagsForPage( $pageId );
-		if ( !$flagsForPage ) {
-			$flagModel = new Flag();
-			$flagsForPage = $flagModel->getFlagsForPage( $wikiId, $pageId );
-		}
+		$flagsForPage = $this->tryGetFlagsForPageFromCache( $wikiId, $pageId );
+
 		/**
 		 * 2. Get all flag types for a wikia
 		 */
-		$flagTypesForWikia = $flagsCache->getFlagTypesForWikia();
-		if ( !$flagTypesForWikia ) {
-			$flagTypeModel = new FlagType();
-			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
-		}
+		$flagTypesForWikia = $this->tryGetFlagTypesForWikiaFromCache( $wikiId );
 
 		/**
 		 * 3. Return the united arrays - it is possible to merge them since both arrays use
@@ -143,10 +147,21 @@ class FlagsController extends WikiaApiController {
 		if ( !isset( $this->params['pageId'] ) ) {
 			return null;
 		}
-		$wikiId = $this->params['wikiId'];
-		$pageId = $this->params['pageId'];
 
-		$flagsCache = new FlagsCache();
+		$flagsForPage = $this->tryGetFlagsForPageFromCache( $this->params['wikiId'], $this->params['pageId'] );
+
+		$this->setResponseData( $flagsForPage );
+	}
+
+	/**
+	 * Tries to get the data on Flags instances for the given page from cache.
+	 * If it is not cached it gets it from the database and caches it.
+	 * @param $wikiId
+	 * @param $pageId
+	 * @return bool|mixed
+	 */
+	private function tryGetFlagsForPageFromCache( $wikiId, $pageId ) {
+		$flagsCache = $this->getCache();
 		$flagsForPage = $flagsCache->getFlagsForPage( $pageId );
 
 		if ( !$flagsForPage ) {
@@ -156,7 +171,25 @@ class FlagsController extends WikiaApiController {
 			$flagsCache->setFlagsForPage( $pageId, $flagsForPage );
 		}
 
-		$this->setResponseData( $flagsForPage );
+		return $flagsForPage;
+	}
+
+	/**
+	 * Tries to get the data on types of flags available for the given wikia from cache.
+	 * If it is not cached it gets it from the database and caches it.
+	 * @param $wikiId
+	 * @return bool|mixed
+	 */
+	private function tryGetFlagTypesForWikiaFromCache( $wikiId ) {
+		$flagsCache = $this->getCache();
+
+		$flagTypesForWikia = $flagsCache->getFlagTypesForWikia();
+		if ( !$flagTypesForWikia ) {
+			$flagTypeModel = new FlagType();
+			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
+		}
+
+		return $flagTypesForWikia;
 	}
 
 	public function postFlagsEditForm() {
