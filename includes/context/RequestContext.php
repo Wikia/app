@@ -206,8 +206,9 @@ class RequestContext implements IContextSource {
 		if ( $this->user === null && $wgUserForceAnon ) {
 			$this->user = new User();
 		}
+		// replace the FromToken user with a FromSession user when in a Piggyback session
+		if ( $this->user === null || PBLoginForm::isPiggyback() ) {
 		// Wikia change - end
-		if ( $this->user === null ) {
 			$this->user = User::newFromSession( $this->getRequest() );
 		}
 		return $this->user;
