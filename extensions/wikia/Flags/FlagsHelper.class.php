@@ -4,7 +4,7 @@ namespace Flags;
 
 use Flags\Views\FlagView;
 
-class Helper {
+class FlagsHelper {
 
 	const FLAGS_INPUT_NAME_PREFIX = 'editFlags';
 	const FLAGS_INPUT_NAME_CHECKBOX = 'checkbox';

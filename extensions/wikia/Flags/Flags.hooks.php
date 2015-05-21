@@ -2,7 +2,7 @@
 
 namespace Flags;
 
-use Flags\Helper;
+use Flags\FlagsHelper;
 
 class Hooks {
 
@@ -23,7 +23,7 @@ class Hooks {
 		 * - a user is on an edit page
 		 * - the request is from VE
 		 */
-		$helper = new Helper();
+		$helper = new FlagsHelper();
 		if ( !$parser->mFlagsParsed
 			&& $helper->shouldDisplayFlags()
 			&& !( $wgRequest->getVal( 'action' ) == 'visualeditor' )

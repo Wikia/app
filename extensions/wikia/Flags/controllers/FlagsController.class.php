@@ -1,7 +1,7 @@
 <?php
 
 use Flags\FlagsCache;
-use Flags\Helper;
+use Flags\FlagsHelper;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 
@@ -173,7 +173,7 @@ class FlagsController extends WikiaApiController {
 		 */
 		$currentFlags = $this->getAllFlagTypes( $wikiId, $pageId );
 
-		$helper = new Helper();
+		$helper = new FlagsHelper();
 		$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
 		if ( !empty( $flagsToChange ) ) {
 			$this->performActionsUsingPostedData( $flagsToChange );
