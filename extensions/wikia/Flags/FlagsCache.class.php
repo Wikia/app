@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * A helper class to manage data cached by the extension.
+ * It generates unified cache keys and provides all necessary methods to get, set and delete the data.
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ */
+
 namespace Flags;
 
 use Flags\Models\FlagsBaseModel;
@@ -15,18 +24,23 @@ class FlagsCache {
 	}
 
 	/**
-	 * Cache flag types on a wikia
+	 * Cache all types of flags for a wikia.
 	 */
 
 	/**
-	 * @param $wikiId
-	 * @return Mixed
+	 * Tries to get all types of flags available for the wikia from memcache.
+	 * @return array|bool An array if the data is cached, false otherwise.
 	 */
 	public function getFlagTypesForWikia() {
 		return $this->memcache->get( $this->getMemcKeyFlagTypesOnWikia() );
 	}
 
-	public function setFlagTypesForWikia( $flagTypes ) {
+	/**
+	 * Saves all types of flags in the memcache.
+	 * @param int $wikiId
+	 * @param array $flagTypes
+	 */
+	public function setFlagTypesForWikia( Array $flagTypes ) {
 		$this->memcache->set(
 			$this->getMemcKeyFlagTypesOnWikia(),
 			$flagTypes,
@@ -34,23 +48,31 @@ class FlagsCache {
 		);
 	}
 
+	/**
+	 * Purges the data on types of flags for the given wikia.
+	 */
 	public function purgeFlagTypesForWikia() {
-		$this->memcache->delete( $this->getMemcKeyFlagTypesOnWikia() );
+		$this->memcache->delete( $this->getMemcKeyFlagTypesOnWikia( $wikiId ) );
 	}
 
 	/**
-	 * Cache flags instances on a page
+	 * Cache flags instances on a page.
 	 */
 
 	/**
-	 * @param $wikiId
-	 * @return Mixed
+	 * Tries to get all instances of flag types for the given page from memcache.
+	 * @return array|bool An array if the data is cached, false otherwise.
 	 */
 	public function getFlagsForPage( $pageId ) {
 		return $this->memcache->get( $this->getMemcKeyFlagsOnPage( $pageId ) );
 	}
 
-	public function setFlagsForPage( $pageId, $flags ) {
+	/**
+	 * Saves all instances of flags for the page in the memcache.
+	 * @param int $pageId
+	 * @param array $flags
+	 */
+	public function setFlagsForPage( $pageId, Array $flags ) {
 		$this->memcache->set(
 			$this->getMemcKeyFlagsOnPage( $pageId ),
 			$flags,
@@ -58,13 +80,18 @@ class FlagsCache {
 		);
 	}
 
+	/**
+	 * Purges the data on instances of flags for the given page.
+	 * @param int $pageId
+	 */
+
 	public function purgeFlagsForPage( $pageId ) {
 		$this->memcache->delete( $this->getMemcKeyFlagsOnPage( $pageId ) );
 	}
 
 	/**
-	 * @param $wikiId
-	 * @return String
+	 * Returns a memcache key for data on all types of flags for the wikia.
+	 * @return String A memcache key
 	 */
 	private function getMemcKeyFlagTypesOnWikia() {
 		return wfMemcKey(
@@ -74,6 +101,11 @@ class FlagsCache {
 		);
 	}
 
+	/**
+	 * Returns a memcache key for data on flag types with and without instances available for the page.
+	 * @param int $pageId
+	 * @return String A memcache key
+	 */
 	private function getMemcKeyFlagsOnPage( $pageId ) {
 		return wfMemcKey(
 			self::FLAGS_MEMC_KEY_PREFIX,
