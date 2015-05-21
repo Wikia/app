@@ -47,19 +47,30 @@ class FlagType extends FlagsBaseModel {
 	}
 
 	public function getFlagTypesForWikia( $wikiId ) {
+		$db = $this->getDatabaseForRead();
 
+		$flagTypesForWikia = ( new \WikiaSQL() )
+			->SELECT_ALL()
+			->FROM( self::FLAGS_TYPES_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->ORDER_BY( 'flag_name ASC' )
+			->runLoop( $db, function( &$flagTypesForWikia, $row ) {
+				$flagTypesForWikia[$row->flag_type_id] = get_object_vars( $row );
+			} );
+
+		return $flagTypesForWikia;
 	}
 
 	public function verifyParamsForAdd( $params ) {
 		$required = [ 'wikiId', 'flagGroup', 'flagName', 'flagView', 'flagTargeting' ];
 
 		foreach ( $required as $requiredField ) {
-			if ( !isset( $params[ $requiredField ] ) ) {
+			if ( !isset( $params[$requiredField] ) ) {
 				return false; // Lack of a required parameter
 			}
 		}
 
-		if ( !isset( self::$flagGroups[ $params['flagGroup'] ] ) ) {
+		if ( !isset( self::$flagGroups[$params['flagGroup']] ) ) {
 			return false; // Unrecognized flag group
 		}
 

@@ -613,11 +613,17 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'multilookupgo' => 'Biçe',
+	'multilookupnext' => 'pêş',
+	'multilookupwiki' => 'Wîkî',
+	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Sernav',
+	'multilookupwikioptions' => 'Vebijêrk',
+	'multilookuplastedithdr' => 'Guherandina dawî',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1189,6 +1195,7 @@ $messages['vi'] = array(
 	'multilookupnoresultfound' => 'Không tìm thấy kết quả',
 	'multilookupwiki' => 'Wiki',
 	'multilookupdetails' => 'Xem chi tiết',
+	'multilookuplastedithdr' => 'Chỉnh sửa lần cuối',
 );
 
 /** Yiddish (ייִדיש)

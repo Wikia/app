@@ -34,10 +34,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			'pvDiff' => [
 				'sortType' => SORT_NUMERIC,
 				'metadata' => 'pv7',
-			],
-			'title' => [
-				'sortFunction' => 'sortInsightsAlphabetical',
-				'metadata' => 'pv7'
 			]
 		];
 
@@ -124,7 +120,11 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			 */
 			$this->prepareParams( $params );
 			if ( !isset( $this->sortingArray ) ) {
-				$this->sortingArray = $wgMemc->get($this->getMemcKey( self::INSIGHTS_DEFAULT_SORTING ) );
+				if ( $this->arePageViewsRequired() ) {
+					$this->sortingArray = $wgMemc->get($this->getMemcKey( self::INSIGHTS_DEFAULT_SORTING ) );
+				} else {
+					$this->sortingArray = array_keys( $articlesData );
+				}
 			}
 			$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
 
@@ -185,8 +185,6 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$pageViewsData = $this->getPageViewsData( $articlesIds );
 					$articlesData = $this->assignPageViewsData( $articlesData, $pageViewsData );
 				}
-
-				$this->createSortingArray( $articlesData, 'title', 'sortInsightsAlphabetical' );
 			}
 
 			return $articlesData;

@@ -2435,10 +2435,26 @@ $config['portable_infobox_scss'] = [
 	]
 ];
 
+$config['portable_infobox_monobook_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['monobook'],
+	'assets' => [
+		'#group_portable_infobox_scss',
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
+	]
+];
+
 $config['paid_asset_drop_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/PaidAssetDrop/js/run/desktop.run.js',
 		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js'
+	]
+];
+
+$config['special_email_admin_css'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/Email/styles/specialSendEmail.scss'
 	]
 ];

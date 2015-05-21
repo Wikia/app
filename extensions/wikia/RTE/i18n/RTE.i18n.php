@@ -452,6 +452,13 @@ $messages['ksh'] = array(
 	'rte-edgecase-redirect' => 'en Ömleidong',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'rte-edgecase-redirect' => 'beralîkirin',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

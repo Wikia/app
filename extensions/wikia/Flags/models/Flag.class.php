@@ -29,8 +29,8 @@ class Flag extends FlagsBaseModel {
 
 		if ( !empty( $flagsWithParams ) ) {
 			$flagsParams = $this->getParamsForFlags( $flagsWithParams );
-			foreach ( $flagsParams as $flagId => $flagParams ) {
-				$flagsForPage[ $flagId ]['params'] = $flagParams;
+			foreach ( $flagsParams as $flagTypeId => $flagParams ) {
+				$flagsForPage[$flagTypeId]['params'] = $flagParams;
 			}
 		}
 
@@ -51,7 +51,7 @@ class Flag extends FlagsBaseModel {
 			->WHERE( 'flags_to_pages.wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'flags_to_pages.page_id' )->EQUAL_TO( $pageId )
 			->runLoop( $db, function( &$flagsTypes, $row ) {
-				$flagsTypes[ $row->flag_id ] = get_object_vars( $row );
+				$flagsTypes[$row->flag_type_id] = get_object_vars( $row );
 			} );
 
 		return $flagsTypes;
@@ -61,11 +61,11 @@ class Flag extends FlagsBaseModel {
 		$db = $this->getDatabaseForRead();
 
 		$flagsParams = ( new \WikiaSQL() )
-			->SELECT( 'flag_id', 'param_name', 'param_value' )
+			->SELECT( 'flag_type_id', 'param_name', 'param_value' )
 			->FROM( 'flags_params' )
 			->WHERE( 'flag_id' )->IN( $flagsWithParams )
 			->runLoop( $db, function( &$flagsParams, $row ) {
-				$flagsParams[ $row->flag_id ][ $row->param_name ] = $row->param_value;
+				$flagsParams[$row->flag_type_id][$row->param_name] = $row->param_value;
 			} );
 
 		return $flagsParams;
@@ -151,6 +151,7 @@ class Flag extends FlagsBaseModel {
 
 	public function verifyParamsForRemove( $params ) {
 		if ( !isset( $params['flagsIds'] ) || !is_array( $params['flagsIds'] ) ) {
+			$this->paramsVerified = false;
 			return false;
 		}
 
@@ -168,6 +169,17 @@ class Flag extends FlagsBaseModel {
 
 		$status = $db->affectedRows() > 0;
 		$db->commit();
+
+		return $status;
+	}
+
+	public function updateFlagsForPage( $flags ) {
+		$status = [];
+
+		$flagParameterModel = new FlagParameter();
+		foreach ( $flags as $flag ) {
+			$status[] = $flagParameterModel->updateParametersForFlag( $flag['flag_id'], $flag['params'] );
+		}
 
 		return $status;
 	}

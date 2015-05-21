@@ -1769,6 +1769,8 @@ $messages['hu'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Az anyacikket / anyamegjegyzést törölték.',
 	'article-comments-empty-comment' => "Nem írhatsz üres megjegyzést. <a href='$1'>Szeretnéd törölni?</a>",
+	'article-comments-show-more' => 'Több megjegyzés',
+	'wikiamobile-article-comments-counter' => '$1 megjegyzés',
 	'wikiamobile-article-comments-header' => 'Hozzászólások',
 	'wikiamobile-article-comments-more' => 'Több betöltése',
 	'wikiamobile-article-comments-prev' => 'Előző betöltése',
@@ -2328,12 +2330,16 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'article-comments-cancel' => 'Betal bike',
 	'article-comments-delete' => 'jê bibe',
 	'article-comments-edit' => 'biguherîne',
 	'article-comments-history' => 'dîrok',
+	'article-comments-reply' => 'Bersiv bide',
+	'article-comments-next-page' => 'Pêşve',
 );
 
 /** Kyrgyz (Кыргызча)

@@ -240,13 +240,17 @@ class MercuryApi {
 	}
 
 	/**
-	 * Get ads context for Title
+	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
 	 * @param Title $title Title object
-	 * @return array Article Ad context
+	 * @return array|null Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
-		$adContext = new AdEngine2ContextService();
-		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+		global $wgEnableAdEngineExt;
+		if ( !empty( $wgEnableAdEngineExt ) ) {
+			$adContext = new AdEngine2ContextService();
+			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+		}
+		return null;
 	}
 
 	public function processCuratedContent( $data ) {

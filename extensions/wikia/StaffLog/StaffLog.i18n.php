@@ -359,6 +359,15 @@ $messages['ko'] = array(
 	'stafflog-filter-type-wikifactory' => '위키 통계',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'stafflog-filter-label' => 'Fîltre',
+	'stafflog-filter-user' => 'Bikarhêner:',
+	'stafflog-filter-type' => 'Cure:',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

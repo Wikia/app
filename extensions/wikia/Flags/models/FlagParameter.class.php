@@ -4,6 +4,8 @@ namespace Flags\Models;
 
 class FlagParameter extends FlagsBaseModel {
 
+	const FLAG_PARAMETER_REGEXP = "/[^A-Za-z0-9-_:.]/"; // See W3C documentation for the name and id HTML attributes
+
 	public function createParametersForFlag( $flagId, $flagTypeId, $wikiId, $pageId, $params ) {
 		$db = $this->getDatabaseForWrite();
 
@@ -12,7 +14,7 @@ class FlagParameter extends FlagsBaseModel {
 			$values[] = [ $flagId, $flagTypeId, $wikiId, $pageId, $paramName, $paramValue ];
 		}
 
-		$sql = ( new \WikiaSQL )
+		( new \WikiaSQL )
 			->INSERT()->INTO( self::FLAGS_PARAMS_TABLE, [
 				'flag_id',
 				'flag_type_id',
@@ -29,5 +31,28 @@ class FlagParameter extends FlagsBaseModel {
 		$db->commit();
 
 		return $status;
+	}
+
+	public function updateParametersForFlag( $flagId, $params ) {
+		$db = $this->getDatabaseForWrite();
+
+		foreach ( $params as $paramName => $paramValue ) {
+			( new \WikiaSQL )
+				->UPDATE( self::FLAGS_PARAMS_TABLE )
+				->SET( 'param_value', $paramValue )
+				->WHERE( 'flag_id' )->EQUAL_TO( $flagId )
+				->AND_( 'param_name' )->EQUAL_TO( $paramName )
+				->run( $db );
+		}
+
+		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
+		return $status;
+	}
+
+	public static function isValidParameterName( $paramName ) {
+		return preg_match( self::FLAG_PARAMETER_REGEXP, $paramName ) === 0;
 	}
 }

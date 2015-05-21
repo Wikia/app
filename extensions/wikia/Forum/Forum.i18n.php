@@ -2488,10 +2488,17 @@ ___________________________________________<br />
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'forum-forum-title' => 'Forum',
+	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-policies-edit' => 'Biguherîne',
+	'forum-board-thread-follow' => 'Bişopîne',
+	'forum-board-thread-following' => 'Te şopandin',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|Peyam}}',
+	'forum-mail-notification-html-greeting' => 'Silav $1,',
 	'forum-autoboard-title-4' => 'Pirs û Bersiv',
 	'forum-related-discussion-total-replies' => '$1 peyam',
 	'forum-related-discussion-see-more' => 'Zêdetir gotûbêjan bibîne',

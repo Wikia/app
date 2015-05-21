@@ -1545,6 +1545,7 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1555,6 +1556,10 @@ $messages['ku-latn'] = array(
 	'scavengerhunt-button-delete' => 'Jê bibe',
 	'scavengerhunt-entry-form-name' => 'Navê te:',
 	'scavengerhunt-entry-form-submit' => 'Gotarê qeyd bike',
+	'scavengerhunt-quit-game-button-quit' => 'Derkeve',
+	'scavengerhunt-quit-game-button-cancel' => 'Betal bike',
+	'scavengerhunt-label-entry-form-email' => 'E-nameya Bikarhêner',
+	'scavengerhunt-label-entry-form-username' => 'Navê Bikarhêner',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -3265,6 +3270,7 @@ $messages['uk'] = array(
  * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'scavengerhunt-list-edit' => 'sửa',
 	'scavengerhunt-label-image-check' => '(Hiển thị hình ảnh)',
 	'scavengerhunt-label-article-hidden-image' => 'Hình ảnh bị ẩn:',
 	'scavengerhunt-button-delete' => 'Xóa',
