@@ -3,9 +3,7 @@
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
-
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
-
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -262,7 +260,7 @@ class MercuryApi {
 
 		if ( !empty( $data[ 'featured' ] ) ) {
 			$process = 'featured';
-		} else if ( !empty( $data[ 'items' ] ) ) {
+		} elseif ( !empty( $data[ 'items' ] ) ) {
 			$process = 'items';
 		}
 
@@ -280,6 +278,24 @@ class MercuryApi {
 		return $data;
 	}
 
+	public function processTrendingArticles( $data ) {
+		if ( !isset( $data[ 'items' ] ) || !is_array( $data[ 'items' ] ) ) {
+			return false;
+		}
+
+		$items = [];
+
+		foreach ( $data[ 'items' ] as $item ) {
+			$processedItem = $this->processTrendingArticlesItem( $item );
+
+			if ( !empty( $processedItem ) ) {
+				$items[] = $processedItem;
+			}
+		}
+
+		return $items;
+	}
+
 	/**
 	 * @desc Mercury can't open article using ID - we need to create a local link.
 	 * If article doesn't exist (Title is null) return null.
@@ -293,11 +309,36 @@ class MercuryApi {
 	private function processCuratedContentItem( $item ) {
 		if ( !empty( $item[ 'article_id' ] ) ) {
 			$title = Title::newFromID( $item[ 'article_id' ] );
+
 			if ( !empty( $title ) ) {
 				$item[ 'article_local_url' ] = $title->getLocalURL();
+
 				return $item;
 			}
 		}
+
 		return null;
+	}
+
+	/**
+	 * @desc To save some bandwidth, the unnecessary params are stripped
+	 *
+	 * @param $item
+	 * @return array
+	 */
+	private function processTrendingArticlesItem( $item ) {
+		$processedItem = [];
+
+		if ( !empty( $item ) && is_array( $item ) ) {
+			$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
+
+			foreach ( $paramsToInclude as $param) {
+				if ( !empty( $item[ $param ] ) ) {
+					$processedItem[ $param ] = $item[ $param ];
+				}
+			}
+		}
+
+		return $processedItem;
 	}
 }
