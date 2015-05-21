@@ -73,28 +73,24 @@ define('ext.wikia.adEngine.provider.openX.targeting', [
 			'TOP_RIGHT_BOXAD/US/Lifestyle':                         {size: '300x250',  auid: 537211378},
 
 			/* Mobile */
-			'MOBILE_IN_CONTENT/notUSnotPL':                         {size: '300x250',  auid: 537208059},
+			'MOBILE_IN_CONTENT/notUS':                              {size: '300x250',  auid: 537208059},
 			'MOBILE_IN_CONTENT/US':                                 {size: '300x250',  auid: 537204073},
 
-			'MOBILE_PREFOOTER/notUSnotPL':                          {size: '300x250',  auid: 537208059},
+			'MOBILE_PREFOOTER/notUS':                               {size: '300x250',  auid: 537208059},
 			'MOBILE_PREFOOTER/US':                                  {size: '300x250',  auid: 537204073},
 
-			'MOBILE_TOP_LEADERBOARD/notUSnotPL':                    {size: '320x50',  auid: 537208060},
+			'MOBILE_TOP_LEADERBOARD/notUS':                         {size: '320x50',  auid: 537208060},
 			'MOBILE_TOP_LEADERBOARD/US':                            {size: '320x50',  auid: 537204074}
 		};
 
 	function getItemName(slotName) {
 		var params = adContext.getContext().targeting,
-			loc = geo.getCountryCode(),
-			country = loc === 'US' ? 'US' : 'notUS',
+			country = geo.getCountryCode() === 'US' ? 'US' : 'notUS',
 			vertical = '/' + params.wikiVertical,
 			itemName = slotName;
 
 		if (params.skin === 'wikiamobile' || params.skin === 'mercury') {
 			vertical = '';
-			if (loc !== 'PL') {
-				country = country + 'notPL';
-			}
 		}
 
 		itemName += '/' + country + vertical

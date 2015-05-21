@@ -1,6 +1,6 @@
 /*global describe, it, modules, expect, spyOn*/
 /*jshint maxlen:200*/
-describe('OpenX targeting', function () {
+describe('OpenX Provider targeting', function () {
 	'use strict';
 
 	var noop = function () {},
@@ -54,16 +54,5 @@ describe('OpenX targeting', function () {
 		});
 
 		expect(getTargeting().getItem('MOBILE_TOP_LEADERBOARD').auid).toEqual(537208060);
-	});
-
-	it('Should return falsy value for mobile skin when geo is PL', function () {
-		spyOn(geoMock, 'getCountryCode').and.returnValue('PL');
-		spyOn(adContextMock, 'getContext').and.returnValue({
-			targeting: {
-				skin: 'mercury'
-			}
-		});
-
-		expect(getTargeting().getItem('MOBILE_TOP_LEADERBOARD')).toBeFalsy();
 	});
 });
