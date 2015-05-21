@@ -5,14 +5,16 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.window'
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.adInContentPlayer')
 ], function (
 	amazon,
 	customAdsLoader,
 	messageListener,
 	geo,
 	instantGlobals,
-	win
+	win,
+	adInContentPlayer
 ) {
 	'use strict';
 	messageListener.init();
@@ -23,5 +25,9 @@ require([
 	var ac = instantGlobals.wgAmazonMatchCountries;
 	if (ac && ac.indexOf && ac.indexOf(geo.getCountryCode()) > -1) {
 		amazon.call();
+	}
+
+	if (adInContentPlayer) {
+		adInContentPlayer.init();
 	}
 });
