@@ -399,7 +399,7 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = $this->mercuryApi->processTrendingArticles( $rawData );
+			$data = $this->mercuryApi->processTrendingData( $rawData, 'items', [ 'title', 'thumbnail', 'url' ] );
 		} catch ( NotFoundApiException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
@@ -417,7 +417,7 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$rawData = $this->sendRequest( 'SpecialVideosSpecial', 'getVideos', $params )->getData();
-			$data = $this->mercuryApi->processTrendingVideos( $rawData );
+			$data = $this->mercuryApi->processTrendingData( $rawData, 'videos', [ 'title', 'fileUrl', 'duration', 'thumbUrl' ] );
 		} catch ( NotFoundApiException $ex ) {
 			WikiaLogger::instance()->info( 'Trending videos data is empty' );
 		}
