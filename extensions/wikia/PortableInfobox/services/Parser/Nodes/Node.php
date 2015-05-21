@@ -12,6 +12,7 @@ class Node {
 	const LABEL_TAG_NAME = 'label';
 
 	protected $xmlNode;
+	protected $parent = null;
 
 	/* @var $externalParser ExternalParser */
 	protected $externalParser;
@@ -19,6 +20,40 @@ class Node {
 	public function __construct( \SimpleXMLElement $xmlNode, $infoboxData ) {
 		$this->xmlNode = $xmlNode;
 		$this->infoboxData = $infoboxData;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getParent() {
+		return $this->parent;
+	}
+
+	/**
+	 * @param mixed $parent
+	 */
+	public function setParent( Node $parent ) {
+		$this->parent = $parent;
+	}
+
+	public function isParentTypeOf( $typeName ) {
+		if ( !is_null( $this->parent ) && $this->getParent()->getType() == $typeName ) {
+			return true;
+		}
+		return false;
+	}
+
+	public function ignoreNodeWhenEmpty() {
+		return true;
+	}
+
+	/**
+	 * Get node type name based on class name
+	 * @return string
+	 */
+	public static function type() {
+		$called_class = get_called_class();
+		return strtolower( substr( $called_class, strrpos($called_class, '\\Node') + 1 + strlen('Node') ) );
 	}
 
 	/**
@@ -39,7 +74,7 @@ class Node {
 	}
 
 	public function getType() {
-		return $this->xmlNode->getName();
+		return strtolower( $this->xmlNode->getName() );
 	}
 
 	public function getData() {
