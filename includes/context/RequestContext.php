@@ -213,7 +213,7 @@ class RequestContext implements IContextSource {
 		}
 
 		// Replace the user object according to the context, e.g. Piggyback.
-		wfRunHooks( 'User::getUser', [ &$this->user ] );
+		wfRunHooks( 'RequestContextOverrideUser', [ &$this->user ] );
 		return $this->user;
 	}
 
