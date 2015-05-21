@@ -96,9 +96,6 @@ class XmlParser {
 			if ( !empty( $this->externalParser ) ) {
 				$instance->setExternalParser( $this->externalParser );
 			}
-			if ( $parent ) {
-				$instance->setParent( $parent );
-			}
 			wfProfileOut( __METHOD__ );
 			return $instance;
 		}
