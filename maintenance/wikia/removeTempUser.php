@@ -61,13 +61,13 @@ class RemoveTempUserAccounts extends Maintenance {
 		);
 
 		$users = [];
-		while( $user = $res->fetchObject() ) {
+		while ( $user = $res->fetchObject() ) {
 			// check if this is really a temp user: "TempUser" + <user ID>
 			if ( $user->user_name === self::TEMPUSER_PREFIX . $user->user_id ) {
 				$users[] = intval( $user->user_id );
 			}
 			else {
-				$this->output( sprintf(" > skipped %s (#%d)\n", $user->user_name, $user->user_id ) );
+				$this->output( sprintf( " > skipped %s (#%d)\n", $user->user_name, $user->user_id ) );
 			}
 		}
 
@@ -79,13 +79,13 @@ class RemoveTempUserAccounts extends Maintenance {
 		$db = $this->getOption( 'db', $wgExternalSharedDB );
 		$isDryRun = $this->hasOption( 'dry-run' );
 
-		$this->output( "Removing temp user accounts from '$db'...\n");
+		$this->output( "Removing temp user accounts from '$db'...\n" );
 
 		$dbr = wfGetDB( DB_SLAVE, [], $db );
 		$dbw = wfGetDB( DB_MASTER, [], $db );
 
 		// get the list of accounts for remove
-		$users =$this->getTempUserAccounts( $dbr );
+		$users = $this->getTempUserAccounts( $dbr );
 
 		// split accounts into batches and remove them
 		$batches = array_chunk( $users, self::BATCH );
@@ -108,7 +108,7 @@ class RemoveTempUserAccounts extends Maintenance {
 		// close any open transaction
 		$dbw->commit( __METHOD__ );
 
-		foreach ($batches as $batch ) {
+		foreach ( $batches as $batch ) {
 			$dbw->begin( __METHOD__ );
 
 			$rows = 0;
