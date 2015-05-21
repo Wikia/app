@@ -28,8 +28,12 @@ class SimpleXmlUtil {
 	public function getInnerXML( $node ) {
 		$innerXML = '';
 		if ( $node instanceof \SimpleXMLElement ) {
-			foreach ( dom_import_simplexml( $node )->childNodes as $child ) {
-				$innerXML .= $child->ownerDocument->saveXML( $child );
+			$domElement = dom_import_simplexml( $node );
+
+			if ( ( $domElement instanceof \DOMElement ) && ( $domElement->hasChildNodes() ) ) {
+				foreach ( $domElement->childNodes as $child ) {
+					$innerXML .= $child->ownerDocument->saveXML( $child );
+				}
 			}
 		}
 		return $innerXML;
