@@ -15,7 +15,7 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.adInContentPlayer')
+	'ext.wikia.adEngine.adInContentPlayer'
 ], function (
 	adEngine,
 	adLogicHighValueCountry,
