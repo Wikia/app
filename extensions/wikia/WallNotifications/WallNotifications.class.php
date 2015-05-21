@@ -45,7 +45,7 @@ class WallNotifications {
 
 		$list = $this->getWikiNotificationList( $userId, $wikiId );
 		if ( empty( $list ) ) {
-			return $list;
+			return [];
 		}
 
 		$read = [];
@@ -150,7 +150,7 @@ class WallNotifications {
 			$memcSync->lockAndSetData( $callback, $callback );
 		}
 
-		return empty( $list ) ? [] : $list;
+		return $list;
 	}
 
 	private function clearWikiNotificationListCache( $userId, $wikiId ) {
