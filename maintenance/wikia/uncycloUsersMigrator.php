@@ -36,12 +36,16 @@ class UncycloUserMigrator extends Maintenance {
 	private $renamedWikiaAccounts    = 0;
 	private $accountsWithNoEmail     = 0;
 
+	/* @var resource $csv */
+	private $csv;
+
 	/**
 	 * Set script options
 	 */
 	public function __construct() {
 		parent::__construct();
 
+		$this->addOption( 'csv', 'Generate a report in CSV file' );
 		$this->addOption( 'dry-run', 'Don\'t perform any operations' );
 
 		$this->mDescription = 'This script migrates uncyclopedia user accounts to the shared database';
@@ -135,6 +139,11 @@ class UncycloUserMigrator extends Maintenance {
 	private function migrateUser(User $user) {
 		$this->output( sprintf( "%d: %s <%s>", $user->getId(), $user->getName(), $user->getEmail() ?: 'MISSING_EMAIL' ) );
 
+		// keep data that will be saved to CSV file
+		$action = false;
+		$userName = $user->getName();
+		$isMerged = false;
+
 		// check if the uncyclo account has a valid email set
 		$isValidEmail = Sanitizer::validateEmail( $user->getEmail() );
 		if ( !$isValidEmail ) {
@@ -150,11 +159,12 @@ class UncycloUserMigrator extends Maintenance {
 			// global and shared DB accounts match
 			if ( $isValidEmail && $globalUser->getEmail() === $user->getEmail() ) {
 				$this->output( ' - emails match' );
-
-				// TODO: merge the accounts
 				$this->output( "\n\tmerging accounts..." );
 
 				$this->mergedAccounts++;
+
+				$isMerged = true;
+				$action = 'merge';
 			}
 			else {
 				// resolve conflicts
@@ -174,20 +184,25 @@ class UncycloUserMigrator extends Maintenance {
 				 **/
 				if ( $uncycloEdits == 0 && $globalEdits == 0 ) {
 					$user = $this->doRenameUncycloUser( $user );
+					$action = 'rename uncyclo account';
 				}
 				elseif ( $uncycloEdits > 0 && $globalEdits == 0 ) {
 					$this->doRenameGlobalUser( $user );
+					$action = 'rename wikia account';
 				}
 				elseif ( $uncycloEdits < 1000 ) {
 					$user = $this->doRenameUncycloUser( $user );
+					$action = 'rename uncyclo account';
 				}
 				else {
 					// rename the one with the least edits
 					if ( $uncycloEdits > $globalEdits ) {
 						$this->doRenameGlobalUser( $user );
+						$action = 'rename wikia account';
 					}
 					else {
 						$user = $this->doRenameUncycloUser( $user );
+						$action = 'rename uncyclo account';
 					}
 				}
 			}
@@ -197,10 +212,27 @@ class UncycloUserMigrator extends Maintenance {
 			$this->output( sprintf( "\n\tcreating a shared account for %s...", $user->getName() ) );
 
 			$this->createdAccounts++;
+
+			$action = 'create shared account';
 		}
 
 		// now create a shared account using the "local" uncyclo user object
-		$migratedUser = $this->doCreateGlobalUser( $user );
+		$migratedSharedUser = $this->doCreateGlobalUser( $user );
+
+		// add an entry to CSV file
+		if ( is_resource( $this->csv ) ) {
+			fputcsv( $this->csv, [
+				$user->getId(),
+				$userName,
+				$user->getName(),
+				$user->getEmail(),
+				$isValidEmail ? 'Y' : 'N',
+				$isMerged ? 'Y' : 'N',
+				$user->getEditCount(),
+				$globalEdits ?: 0,
+				$action
+			] );
+		}
 
 		$this->output( "\n" );
 	}
@@ -209,6 +241,22 @@ class UncycloUserMigrator extends Maintenance {
 	 * Script entry point
 	 */
 	public function execute() {
+		if ( $this->hasOption( 'csv' ) ) {
+			$this->csv = fopen( $this->getOption( 'csv' ), 'w' );
+
+			fputcsv( $this->csv, [
+				'User ID',
+				'User Name',
+				'New user name',
+				'Email',
+				'Valid email',
+				'Merge?',
+				'Uncyclo edits',
+				'Global edits',
+				'Action'
+			] );
+		}
+
 		// get all uncyclopedia accounts
 		$res = $this->getUncycloDB()->select(
 			self::USER_TABLE,
@@ -232,6 +280,10 @@ class UncycloUserMigrator extends Maintenance {
 		$this->output( sprintf( "Renamed Uncyclo accounts: %d\n", $this->renamedUnclycloAccounts ) );
 		$this->output( sprintf( "Renamed Wikia accounts:   %d\n", $this->renamedWikiaAccounts ) );
 		$this->output( sprintf( "Accounts with no email:   %d\n", $this->accountsWithNoEmail ) );
+
+		if ( is_resource( $this->csv ) ) {
+			fclose( $this->csv );
+		}
 	}
 }
 
