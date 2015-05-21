@@ -12,7 +12,8 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			INVISIBLE_HIGH_IMPACT:      {size: '1x1'},
 			MOBILE_TOP_LEADERBOARD:     {size: '320x50,320x100,1x1'},
 			MOBILE_IN_CONTENT:          {size: '300x250,1x1'},
-			MOBILE_PREFOOTER:           {size: '300x250,1x1'}
+			MOBILE_PREFOOTER:           {size: '300x250,1x1'},
+			INCONTENT_PLAYER:           {size: '1x1', 'pos': 'incontent_player'}
 		}
 	);
 });
