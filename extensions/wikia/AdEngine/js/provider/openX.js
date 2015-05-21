@@ -57,8 +57,6 @@ define('ext.wikia.adEngine.provider.openX', [
 			});
 
 		slot.appendChild(iframe);
-		// Prevent from forever ads loading
-		iframe.contentWindow.document.close();
 		success();
 	}
 
