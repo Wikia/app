@@ -49,6 +49,9 @@ define('ext.wikia.adEngine.template.skin', [
 					if (params.middleColor) {
 						bcParams.backgroundMiddleColor = '#' + params.middleColor;
 					}
+					if (params.ten64) {
+						bcParams.ten64 = true;
+					}
 					backgroundchanger.load(bcParams);
 				});
 			} else {

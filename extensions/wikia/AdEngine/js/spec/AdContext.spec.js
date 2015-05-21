@@ -67,21 +67,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().opts.showAds).toBeFalsy();
 	});
 
-	it('makes opts.usePostScribe true when wgAdDriverUseSevenOneMedia = true', function () {
-		var adContext;
-
-		adContext = modules['ext.wikia.adEngine.adContext']({
-			ads: {
-				context: {
-					providers: {
-						sevenOneMedia: true
-					}
-				}
-			}
-		}, {}, geoMock, {});
-		expect(adContext.getContext().opts.usePostScribe).toBeTruthy();
-	});
-
 	it('makes targeting.pageCategories filled with categories properly', function () {
 		var adContext;
 

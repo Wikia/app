@@ -1266,11 +1266,16 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'themedesigner-or' => 'an',
 	'themedesigner-page' => 'rûpel',
-	'themedesigner-color' => 'reng', # Fuzzy
+	'themedesigner-color' => 'sereke',
+	'themedesigner-graphic' => 'grafîk',
+	'themedesigner-buttons' => 'bişkoj',
+	'themedesigner-links' => 'girêdan',
 	'themedesigner-small' => 'Biçûk',
 	'themedesigner-large' => 'Mezin',
 	'themedesigner-button-cancel' => 'Betal bike',

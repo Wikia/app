@@ -1,5 +1,5 @@
 <section class="insights-module <?= $themeClass ?> module">
-	<h1><?= wfMessage( 'insights' )->escaped() ?></h1>
+	<h2><?= wfMessage( 'insights' )->escaped() ?></h2>
 	<ul class="insights-module-list">
 		<? foreach( $messageKeys as $key => $messages ) : ?>
 			<li class="insights-module-item insights-icon-<?= strtolower( $key ) ?>">

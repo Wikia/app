@@ -36,7 +36,9 @@ require(['wikia.tracker'],
 
 		function init() {
 			var $insightsContainer = $('.insights-container-landing'),
-				$insightsList = $('.insights-list');
+				$insightsList = $('.insights-list'),
+				$insightsSortingForm = $('.insights-sorting-form'),
+				$insightsSorting = $('.insights-sorting');
 
 			/* Bind mousedown and keydown to invoke tracking logs earlier than regular click to avoid loosing log
 			 * when reload happens quicker than tracking log */
@@ -48,6 +50,12 @@ require(['wikia.tracker'],
 				insightType = $insightsList.data('type');
 
 				$insightsList.on('mousedown keydown', '.insights-list-item-title', linkTrackList);
+			}
+
+			if ($insightsSorting) {
+				$insightsSorting.on('change', function(){
+					$insightsSortingForm.submit();
+				});
 			}
 
 		}

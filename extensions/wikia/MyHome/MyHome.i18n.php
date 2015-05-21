@@ -2208,18 +2208,23 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'myhome' => 'Mala min',
+	'myhome-watchlist-feed' => 'Lîsteya şopandinê',
 	'myhome-feed-newpage' => 'rûpela nû',
 	'myhome-feed-edit' => 'biguherîne',
 	'myhome-feed-delete' => 'hate jêbirin',
+	'myhome-feed-created-by' => 'ji alîye $1ve hatiye çêkirin',
 	'myhome-feed-new-page-details' => 'Rûpela nû',
 	'myhome-feed-summary-details' => 'Kurte',
 	'myhome-feed-new-blog-comment-details' => 'Şîrove',
 	'myhome-feed-new-article-comment-details' => 'Şîrove',
 	'myhome-feed-redirect-details' => 'Beralîkirin',
+	'myhome-hot-spots-number-of-editors' => 'edîtor',
+	'myhome-namespace-blog' => 'Blog',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

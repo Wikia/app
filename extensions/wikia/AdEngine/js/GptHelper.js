@@ -175,13 +175,16 @@ define('ext.wikia.adEngine.gptHelper', [
 			setPageLevelParams(pageLevelParams);
 
 			adDiv = document.getElementById(adDivId);
+			log(['queueAd', slotName, slotDiv, adDiv], 'debug', logGroup);
 
 			if (!adDiv) {
 				// Create a div for the GPT ad
 				adDiv = document.createElement('div');
 				adDiv.id = adDivId;
 				slotDiv.appendChild(adDiv);
+			}
 
+			if (!gptSlots[adDivId]) {
 				sizes = convertSizesToGpt(slotTargeting.size);
 
 				if (slotName.match(/TOP_LEADERBOARD/)) {
@@ -204,16 +207,16 @@ define('ext.wikia.adEngine.gptHelper', [
 					}
 				}
 
-				gptSlots[adDivId] = slot;
-
 				// Display div through GPT
 				log(['googletag.display', adDivId], 'debug', logGroup);
 				googletag.display(adDivId);
 
-				// Save slot level params for easier ad delivery debugging
-				adDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
-				adDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
+				gptSlots[adDivId] = slot;
 			}
+
+			// Save slot level params for easier ad delivery debugging
+			adDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
+			adDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
 
 			// Save page level params for easier ad delivery debugging
 			adDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
@@ -223,6 +226,7 @@ define('ext.wikia.adEngine.gptHelper', [
 
 			// Some broken ads never fire "success" event, so we show the div now (and maybe hide later)
 			slotTweaker.show(adDivId);
+			log(['adding slot to the queue', adDivId], 'debug', logGroup);
 			slotQueue.push(gptSlots[adDivId]);
 		}
 
