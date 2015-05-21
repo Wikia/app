@@ -2,8 +2,18 @@
 
 /**
  * Wikia Flags Extension
- * @author Adam Karmiński
  *
+ * Have you ever tried to a content of an article but had to scroll through a dozen of crazy
+ * messages? They were saying something about missing sources and references, something about
+ * an article being messy... While these notifications are very useful in general, you don't
+ * want to see them all the time in every context.
+ *
+ * This extension provides a new way of storing and managing of the Flags that allows them
+ * to be portable and behave accordingly to a given context.
+ *
+ * @author Adam Karmiński
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 $wgExtensionCredits['other'][] = [
@@ -33,9 +43,10 @@ $wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.
 $wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.php';
 
 /**
- * Helper
+ * Helpers
  */
 $wgAutoloadClasses['Flags\Helper'] = __DIR__ . '/FlagsHelper.class.php';
+$wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
 
 /**
  * Hooks
