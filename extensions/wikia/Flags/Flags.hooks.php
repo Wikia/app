@@ -34,7 +34,7 @@ class Hooks {
 	 * @param array $actions
 	 * @return bool true
 	 */
-	public static function onDropdownActions( array &$actions ) {
+	public static function onPageHeaderDropdownActions( array &$actions ) {
 		$actions[] = self::FLAGS_DROPDOWN_ACTION;
 		return true;
 	}

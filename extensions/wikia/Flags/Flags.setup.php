@@ -42,7 +42,7 @@ $wgAutoloadClasses['Flags\Helper'] = __DIR__ . '/FlagsHelper.class.php';
  */
 $wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
 $wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
-$wgHooks['DropdownActions'][] = 'Flags\Hooks::onDropdownActions';
+$wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
 $wgHooks['ParserBeforeInternalParse'][] = 'Flags\Hooks::onParserBeforeInternalParse';
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
 
