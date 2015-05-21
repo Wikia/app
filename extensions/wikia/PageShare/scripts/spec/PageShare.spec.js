@@ -76,7 +76,7 @@ describe('pageShare', function () {
 						wgUserName: 'Warkot',
 						wgUserLanguage: 'pl',
 						navigator: {
-							browserLanguage: 'de'
+							userLanguage: 'de'
 						}
 					}
 				},
@@ -88,7 +88,7 @@ describe('pageShare', function () {
 						wgUserName: null,
 						wgUserLanguage: 'en',
 						navigator: {
-							browserLanguage: 'ru'
+							userLanguage: 'ru'
 						}
 					}
 				},
@@ -100,7 +100,7 @@ describe('pageShare', function () {
 						wgUserName: 'Warkot',
 						wgUserLanguage: 'pl',
 						navigator: {
-							browserLanguage: 'de'
+							userLanguage: 'de'
 						}
 					},
 					useLang: 'ru'
@@ -113,7 +113,7 @@ describe('pageShare', function () {
 						wgUserName: null,
 						wgUserLanguage: 'en',
 						navigator: {
-							browserLanguage: 'ru'
+							userLanguage: 'ru'
 						}
 					},
 					useLang: 'pl'
