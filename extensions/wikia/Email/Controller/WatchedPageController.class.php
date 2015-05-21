@@ -24,7 +24,7 @@ class WatchedPageController extends EmailController {
 	}
 
 	public function initEmail() {
-		$titleText = $this->request->getVal( 'title' );
+		$titleText = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace', NS_MAIN );
 
 		$this->title = \Title::newFromText( $titleText, $titleNamespace );
@@ -158,5 +158,32 @@ class WatchedPageController extends EmailController {
 		return wfMessage( 'emailext-watchedpage-view-all-changes',
 			$this->title->getFullURL( 'action=history' ),
 			$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse();
+	}
+
+	protected static function getEmailSpecificFormFields() {
+			$form = [
+				'inputs' => [
+					[
+						'type' => 'text',
+						'name' => 'pageTitle',
+						'label' => "Article Title",
+						'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
+					],
+					[
+						'type' => 'text',
+						'name' => 'currentRevId',
+						'label' => "Current Revision ID",
+						'tooltip' => "The current revision you want to compare to"
+					],
+					[
+						'type' => 'text',
+						'name' => 'previousRevId',
+						'label' => "Previous Revision ID",
+						'tooltip' => 'The previous revision you want to compare to'
+					],
+				]
+			];
+
+		return $form;
 	}
 }

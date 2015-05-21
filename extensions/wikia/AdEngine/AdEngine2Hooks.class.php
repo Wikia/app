@@ -59,6 +59,7 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
 		$vars[] = 'wgAmazonMatchCountries';
+		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgAmazonMatchOldCountries';
 		$vars[] = 'wgHighValueCountries'; // Used by Liftium only
 		$vars[] = 'wgAdDriverTurtleCountries';

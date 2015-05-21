@@ -4,6 +4,12 @@ class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
 	const DESKTOP_THUMBNAIL_WIDTH = 270;
 	const MOBILE_THUMBNAIL_WIDTH = 360;
+	// TODO: https://wikia-inc.atlassian.net/browse/MAIN-4601 - request for the missing vignette feature which will
+	// allow us to remove THUMBNAIL_HEIGHT from the code. Currently we need this value cause it it impossible to get
+	// vignette thumbnail without upsampling only specifying width. The height need to be big enough so each image width
+	// will reach our thumbnail width based on its aspect ratio
+
+	const THUMBNAIL_HEIGHT = 1000;
 	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
@@ -156,11 +162,14 @@ class PortableInfoboxRenderService extends WikiaService {
 	}
 
 	protected function getThumbnailUrl( $url ) {
-		return VignetteRequest::fromUrl( $url )->scaleToWidth(
-			F::app()->checkSkin( 'wikiamobile' ) ?
+		return VignetteRequest::fromUrl( $url )
+			->thumbnailDown()
+			->width( F::app()->checkSkin( 'wikiamobile' ) ?
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH
-		)->url();
+			)
+			->height(self::THUMBNAIL_HEIGHT)
+			->url();
 	}
 
 	/**

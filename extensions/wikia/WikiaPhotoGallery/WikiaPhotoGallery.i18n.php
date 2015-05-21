@@ -3502,11 +3502,13 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  * @author Gomada
  */
 $messages['ku-latn'] = array(
 	'wikiaPhotoGallery-back' => 'Paşve',
+	'wikiaPhotoGallery-finish' => 'Dawî',
 	'wikiaPhotoGallery-lightbox-caption' => 'Bi rêya $1',
 	'wikiaPhotoGallery-error-caption' => 'Çewtî',
 	'wikiaPhotoGallery-upload-title' => 'Wêne bibîne û bar bike',

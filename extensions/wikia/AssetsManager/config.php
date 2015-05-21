@@ -714,6 +714,8 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
+		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
+		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.js',
@@ -2435,10 +2437,26 @@ $config['portable_infobox_scss'] = [
 	]
 ];
 
+$config['portable_infobox_monobook_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['monobook'],
+	'assets' => [
+		'#group_portable_infobox_scss',
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
+	]
+];
+
 $config['paid_asset_drop_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/PaidAssetDrop/js/run/desktop.run.js',
 		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js'
+	]
+];
+
+$config['special_email_admin_css'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/Email/styles/specialSendEmail.scss'
 	]
 ];

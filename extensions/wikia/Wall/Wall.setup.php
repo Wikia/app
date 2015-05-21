@@ -17,9 +17,9 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'wall-desc',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
-include($dir . '/WallNamespaces.php');
+include( $dir . '/WallNamespaces.php' );
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
@@ -60,7 +60,7 @@ $wgHooks['UserIsBlockedFrom'][] = 'WallHooksHelper::onUserIsBlockedFrom';
 
 $wgHooks['ArticleRobotPolicy'][] = 'WallHooksHelper::onArticleRobotPolicy';
 
-//wall history in toolbar
+// wall history in toolbar
 $wgHooks['BeforeToolbarMenu'][] = 'WallHooksHelper::onBeforeToolbarMenu';
 $wgHooks['BeforePageHistory'][] = 'WallHooksHelper::onBeforePageHistory';
 $wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription';
@@ -68,7 +68,7 @@ $wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription'
 $wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageChange';
 $wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
-//recent changes adjusting
+// recent changes adjusting
 
 $wgHooks['AC_RecentChange_Save'][] = 'WallHooksHelper::onRecentChangeSave';
 $wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
@@ -90,34 +90,34 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'WallHooksHelper::onFilePageImageUs
 
 $wgHooks['getUserPermissionsErrors'][] = 'WallHooksHelper::onGetUserPermissionsErrors';
 
-//Special:Contributions adjusting
+// Special:Contributions adjusting
 $wgHooks['ContributionsLineEnding'][] = 'WallHooksHelper::onContributionsLineEnding';
 
-//Special:Whatlinkshere adjustinb
+// Special:Whatlinkshere adjustinb
 $wgHooks['SpecialWhatlinkshere::renderWhatLinksHereRow'][] = 'WallHooksHelper::onRenderWhatLinksHereRow';
 $wgHooks['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLinks';
 
-//watchlist
+// watchlist
 $wgHooks['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
-//$wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
-//$wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
+// $wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
+// $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
-//diff page adjusting
+// diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
 $wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
 $wgHooks['DiffLoadText'][] = 'WallHooksHelper::onDiffLoadText';
 
-//right rail adjusting
+// right rail adjusting
 $wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
 
-//handmade links to message wall adjusting
+// handmade links to message wall adjusting
 $wgHooks['LinkBegin'][] = 'WallHooksHelper::onLinkBegin';
 $wgHooks['LinkerUserTalkLinkAfter'][] = 'WallHooksHelper::onLinkerUserTalkLinkAfter';
 
-//saving user talk archive redirects to user talk archive
+// saving user talk archive redirects to user talk archive
 $wgHooks['ArticleSaveComplete'][] = 'WallHooksHelper::onArticleSaveComplete';
 
-//cancel API vote adding
+// cancel API vote adding
 $wgHooks['ArticleBeforeVote'][] = 'WallHooksHelper::onArticleBeforeVote';
 
 // vote invalidation
@@ -154,7 +154,7 @@ $wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGet
 // VOLDEV-66
 $wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
 
-JSMessages::registerPackage('Wall', array(
+JSMessages::registerPackage( 'Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
 	'wall-notifications-wall-disabled',
@@ -183,17 +183,17 @@ JSMessages::registerPackage('Wall', array(
 	'preview',
 	'savearticle',
 	'back',
-));
+) );
 
 /**
  * extension related configuration
  */
 
 
-define( 'WALL_EMAIL_NOEMAIL', -1);
-define( 'WALL_EMAIL_EVERY', 1);
-define( 'WALL_EMAIL_SINCEVISITED', 2);
-define( 'WALL_EMAIL_REMINDER', 3);
+define( 'WALL_EMAIL_NOEMAIL', -1 );
+define( 'WALL_EMAIL_EVERY', 1 );
+define( 'WALL_EMAIL_SINCEVISITED', 2 );
+define( 'WALL_EMAIL_REMINDER', 3 );
 
 $wgDefaultUserOptions['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
 $wgDefaultUserOptions['wallshowsource'] = false;
@@ -203,16 +203,16 @@ $wgUserProfileNamespaces = array(
 	NS_USER, NS_USER_TALK, NS_USER_WALL
 );
 
-define( 'WH_EDIT', 0);
-define( 'WH_NEW', 1);
-define( 'WH_DELETE', 2);
-define( 'WH_REMOVE', 4);
-define( 'WH_RESTORE', 5);
-define( 'WH_ARCHIVE', 6);
-define( 'WH_REOPEN', 7);
+define( 'WH_EDIT', 0 );
+define( 'WH_NEW', 1 );
+define( 'WH_DELETE', 2 );
+define( 'WH_REMOVE', 4 );
+define( 'WH_RESTORE', 5 );
+define( 'WH_ARCHIVE', 6 );
+define( 'WH_REOPEN', 7 );
 
 
-//wall
+// wall
 $wgGroupPermissions['*']['walldelete'] = false;
 $wgGroupPermissions['util']['walldelete'] = true;
 

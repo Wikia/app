@@ -918,7 +918,7 @@ $messages['cy'] = array(
 $messages['de'] = array(
 	'usersignup-page-title' => 'Mach mit bei Wikia',
 	'usersignup-page-title-wikiamobile' => 'Benutzerkonto erstellen',
-	'usersignup-page-captcha-label' => 'Spam-Schutz:', # Fuzzy
+	'usersignup-page-captcha-label' => 'Herausforderung',
 	'usersignup-error-username-length' => 'Der Benutzername darf nicht länger als {{PLURAL:$1|ein Zeichen|$1 Zeichen}} sein.',
 	'usersignup-error-invalid-user' => 'Ungültiger Benutzer. Bitte zuerst anmelden.',
 	'usersignup-error-invalid-email' => 'Bitte eine gültige E-Mail-Adresse angeben.',
@@ -929,7 +929,7 @@ $messages['de'] = array(
 	'usersignup-error-throttled-email' => 'Es wurden zuviele Bestätigungs-E-Mails am selben Tag angefordert, bitte später noch einmal probieren.',
 	'usersignup-error-too-many-changes' => 'Für heute wurde das Maximum an Änderungen der Mail-Adresse erreicht, bitte später noch einmal probieren.',
 	'usersignup-error-password-length' => 'Das Passwort darf nicht länger als 50 Zeichen sein.',
-	'usersignup-error-confirmed-user' => 'Scheinbar ist die E-Mail-Adresse als $1 bereits bestätigt! Bitte in den [$2 Einstellungen] nachsehen.', # Fuzzy
+	'usersignup-error-confirmed-user' => 'Scheinbar ist die E-Mail-Adresse als $1 bereits bestätigt! Bitte in den [$2 Einstellungen] nachsehen.',
 	'usersignup-facebook-heading' => 'Anmeldung abschließen',
 	'usersignup-facebook-create-account' => 'Benutzerkonto anlegen',
 	'usersignup-facebook-email-tooltip' => 'Die E-Mail-Adresse kann später auch noch in den Einstellungen zu einer anderen Adresse geändert werden.',
@@ -1065,7 +1065,7 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 	'usersignup-marketing-creativity-heading' => 'Sei originell',
 	'usersignup-marketing-creativity' => 'Nutze Wikia und bringe deine Kreativität über Umfragen und Top-10-Listen, Foto- und Video-Galerien, Apps und mehr zum Ausdruck',
 	'usersignup-createaccount-byemail' => 'Ein Konto für jemand anderen erstellen',
-	'usersignup-error-captcha' => 'Das eingegebene Wort ist nicht identisch mit dem Wort in der Box. Versuche es noch einmal!', # Fuzzy
+	'usersignup-error-captcha' => 'Die Herausforderungsantwort ist fehlgeschlagen, bitte erneut versuchen!',
 	'usersignup-account-creation-heading' => 'Erfolg!',
 	'usersignup-account-creation-subheading' => 'Wir haben eine E-Mail an $1 geschickt.',
 	'usersignup-account-creation-email-sent' => 'Du hast die Erstellung eines Benutzerkontos für $2 eingeleitet. Wir haben eine Mail an $1 mit einem temporären Passwort und einem Bestätigungslink versandt.
@@ -1175,7 +1175,7 @@ $messages['es'] = array(
 	'usersignup-error-throttled-email' => '¿Qué ha pasado? Has solicitado demasiados mensajes de confirmación por hoy. Inténtalo de nuevo más tarde.',
 	'usersignup-error-too-many-changes' => 'Has alcanzado el límite máximo de hoy para cambiar el correo electrónico. Por favor, inténtalo de nuevo más tarde.',
 	'usersignup-error-password-length' => 'Eso fue un poco exagerado. Tu contraseña es demasiado larga. Elige una contraseña de 50 caracteres o menos.',
-	'usersignup-error-confirmed-user' => '¡Parece que ya has confirmado tu correo electrónico para $1! Revisa tu [$2 perfil de usuario].', # Fuzzy
+	'usersignup-error-confirmed-user' => '¡Parece que ya has confirmado tu dirección de correo electrónico para $1! Revisa tu [$2 perfil de usuario].',
 	'usersignup-facebook-heading' => 'Termina de registrarte',
 	'usersignup-facebook-create-account' => 'Crear una cuenta',
 	'usersignup-facebook-email-tooltip' => 'Si deseas utilizar un correo electrónico diferente, puedes cambiarlo después en tus preferencias.',
@@ -1265,7 +1265,7 @@ Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 	'usersignup-welcome-email-learn-basic-heading' => 'Aprende los conceptos básicos.',
 	'usersignup-welcome-email-learn-basic-content' => 'Obtén un tutorial rápido sobre los conceptos básicos de Wikia; cómo editar una página, tu perfil de usuario, cambiar tus preferencias y mucho más.',
 	'usersignup-welcome-email-learn-basic-button' => '¡Échale un vistazo!',
-	'usersignup-welcome-email-explore-wiki-heading' => 'Explora más wikias.',
+	'usersignup-welcome-email-explore-wiki-heading' => 'Explora más wikis.',
 	'usersignup-welcome-email-explore-wiki-content' => 'Hay miles de wikias en Wikia, encuentra más comunidades que te interesen revisando nuestras categorías: <a style="color:#2C85D5;" href="http://es.wikia.com/Videojuegos">Videojuegos</a>, <a style="color:#2C85D5;" href="http://es.wikia.com/Entretenimiento">Entretenimiento</a>, o <a style="color:#2C85D5;" href="http://es.wikia.com/Estilo_de_vida">Estilo de vida</a>.',
 	'usersignup-welcome-email-explore-wiki-button' => 'Ir a es.wikia.com',
 	'usersignup-welcome-email-content' => '¿Quieres más información? Encuentra consejos, respuestas y a la comunidad de Wikia en <a style="color:#2C85D5;" href="http://comunidad.wikia.com">Comunidad Central</a>. ¡Diviértete editando!',
@@ -1313,7 +1313,7 @@ Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com
 	'usersignup-marketing-creativity-heading' => 'Sé original',
 	'usersignup-marketing-creativity' => 'Usa Wikia para expresar tu creatividad con encuestas y listas, galerías de imágenes y vídeos, aplicaciones y más.',
 	'usersignup-createaccount-byemail' => 'Crear una cuenta para alguien más',
-	'usersignup-error-captcha' => 'La respuesta del reto ha fallado, ¡por favor inténtalo de nuevo!', # Fuzzy
+	'usersignup-error-captcha' => 'La respuesta del reto ha fallado, ¡por favor inténtalo de nuevo!',
 	'usersignup-account-creation-heading' => '¡Conseguido!',
 	'usersignup-account-creation-subheading' => 'Hemos enviado un correo electrónico a $1',
 	'usersignup-account-creation-email-sent' => 'Has comenzado el proceso de creación de una cuenta de usuario con el nombre $2. Hemos enviado un correo electrónico a $1 con una contraseña temporal y un enlace de confirmación. 
@@ -1612,6 +1612,7 @@ Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetuks
  * @author Boniface
  * @author Gomoko
  * @author McDutchie
+ * @author Windes
  * @author Wyz
  * @author Zetud
  */
@@ -1762,11 +1763,11 @@ ___________________________________________
 	'usersignup-marketing-community-heading' => 'Participez',
 	'usersignup-marketing-community' => 'Découvrez et explorez des sujets qui vont des jeux vidéo aux films et à la télévision. Rencontrez des gens qui partagent les mêmes intérêts et passions que vous.',
 	'usersignup-marketing-global-heading' => 'Créez',
-	'usersignup-marketing-global' => "Commencez un wikia. Commencez petit, devenez grand avec l'aide des autres.",
+	'usersignup-marketing-global' => "Commencez un wikia. Commencez petit, devenez grand, avec l'aide des autres.",
 	'usersignup-marketing-creativity-heading' => 'Soyez original',
 	'usersignup-marketing-creativity' => "Utilisez Wikia pour exprimer votre créativité avec des sondages, des listes de top 10, des galeries d'image et de vidéo, des applications et plus.",
 	'usersignup-createaccount-byemail' => "Créer un compte pour quelqu'un d'autre",
-	'usersignup-error-captcha' => 'La réponse au défi est incorrecte, veuillez réessayer !', # Fuzzy
+	'usersignup-error-captcha' => 'La réponse au défi est incorrecte, veuillez réessayer !',
 	'usersignup-account-creation-heading' => 'Réussite !',
 	'usersignup-account-creation-subheading' => 'Un courriel a été envoyé à $1',
 	'usersignup-account-creation-email-sent' => "Vous avez commencé le processus de création pour $2. Nous lui avons envoyé un courriel à l'adresse $1 avec un mot de passe temporaire et un lien de confirmation.
@@ -3015,10 +3016,18 @@ $messages['krc'] = array(
 	'usersignup-confirm-email-update' => 'Джангырт',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'usersignup-account-creation-email-greeting' => 'Silav,',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
+	'usersignup-page-captcha-label' => 'Erausfuerderung',
 );
 
 /** Macedonian (македонски)
@@ -3235,7 +3244,7 @@ ___________________________________________
 $messages['ms'] = array(
 	'usersignup-page-title' => 'Sertai Wikia',
 	'usersignup-page-title-wikiamobile' => 'Buka akaun',
-	'usersignup-page-captcha-label' => 'Kata Kabur',
+	'usersignup-page-captcha-label' => 'Cabaran',
 	'usersignup-error-username-length' => 'Maaf, nama pengguna anda tidak boleh melebihi {{PLURAL:$1|satu aksara|$1 aksara}}.',
 	'usersignup-error-invalid-user' => 'Pengguna tidak sah. Sila log masuk terlebih dahulu.',
 	'usersignup-error-invalid-email' => 'Sila berikan alamat e-mel yang sah.',
@@ -3246,7 +3255,7 @@ $messages['ms'] = array(
 	'usersignup-error-throttled-email' => 'Maaf, anda telah memohon terlalu banyak e-mel pengesahan untuk dihantar kepada anda hari ini. Sila cuba lagi selepas seketika.',
 	'usersignup-error-too-many-changes' => 'Anda telah mencapai had maksimum untuk perubahan e-mel hari ini. Sila cuba lagi kemudian.',
 	'usersignup-error-password-length' => 'Maaf, kata laluan anda terlalu panjang. Sila pilih kata laluan yang tidak lebih daripada 50 aksara.',
-	'usersignup-error-confirmed-user' => 'Nampaknya anda sudah mengesahkan alamat e-mel anda untuk $1! Sila semak [$2 profil pengguna] anda.',
+	'usersignup-error-confirmed-user' => 'Nampaknya anda sudah sahkan alamat e-mel anda untuk $1!  Lihat [$2 profil pengguna] anda.',
 	'usersignup-facebook-heading' => 'Selesaikan Pendaftaran',
 	'usersignup-facebook-create-account' => 'Buka akaun',
 	'usersignup-facebook-email-tooltip' => 'Jika anda ingin menggunakan alamat e-mel yang berbeza, anda boleh menukarnya pada bila-bila masa dalam Keutamaan anda.',
@@ -3384,7 +3393,7 @@ Ingin mengawal e-mel yang anda terima? Pergi ke: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-marketing-creativity-heading' => 'Tonjolkan diri',
 	'usersignup-marketing-creativity' => 'Manfaatkan Wikia untuk meluahkan daya kreatif anda dengan carta undian dan senarai 10 teratas, galeri gambar dan video, aplikasi dan banyak lagi.',
 	'usersignup-createaccount-byemail' => 'Buka akaun untuk rakan anda',
-	'usersignup-error-captcha' => 'Perkataan yang anda taipkan tidak sepadan dengan perkataan dalam petak. Sila cuba lagi!',
+	'usersignup-error-captcha' => 'Cabaran tersalah jawab, sila cuba lagi!',
 	'usersignup-account-creation-heading' => 'Berjaya!',
 	'usersignup-account-creation-subheading' => 'Kami telah menghantar e-mel kepada $1',
 	'usersignup-account-creation-email-sent' => 'Anda telah memulakan proses pembukaan akaun untuk $2. Kami telah menghantar e-mel kepadanya di $1 dengan kata laluan sementara serta pautan pengesahan.
@@ -4368,7 +4377,7 @@ Veul-lo controlé che mëssagi a arsèiv? Ch'a vada su: {{fullurl:{{ns:special}}
  */
 $messages['ps'] = array(
 	'usersignup-page-title' => 'ويکيا سره يوځای شی',
-	'usersignup-page-captcha-label' => 'تته ويکه',
+	'usersignup-page-captcha-label' => 'ننگول',
 	'usersignup-facebook-create-account' => 'گڼون جوړول',
 	'usersignup-confirm-email-change-email' => 'زما برېښليک پته بدله کړه',
 	'usersignup-confirm-email-new-email-label' => 'نوی برېښليک',
@@ -4952,7 +4961,7 @@ ___________________________________________
 $messages['sv'] = array(
 	'usersignup-page-title' => 'Gå med i Wikia',
 	'usersignup-page-title-wikiamobile' => 'Skapa konto',
-	'usersignup-page-captcha-label' => 'Suddigt ord',
+	'usersignup-page-captcha-label' => 'Utmaning',
 	'usersignup-error-username-length' => 'Hoppsan, ditt användarnamn kan inte vara mer än {{PLURAL:$1|ett tecken|$1 tecken}}.',
 	'usersignup-error-invalid-user' => 'Ogiltig användare. Var god logga in först.',
 	'usersignup-error-invalid-email' => 'Var god ange en giltig e-postadress.',
@@ -5101,7 +5110,7 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'usersignup-marketing-creativity-heading' => 'Var originell',
 	'usersignup-marketing-creativity' => 'Använd Wikia för att uttrycka din kreativitet med omröstningar och Topp 10-listor, foto- och videogallerier, applikationer och mer.',
 	'usersignup-createaccount-byemail' => 'Skapa ett konto för någon annan',
-	'usersignup-error-captcha' => 'Ordet du skrev in stämde inte överens med ordet i rutan, försök igen!',
+	'usersignup-error-captcha' => 'Ordet du skrev in stämde inte överens med ordet i rutan, försök igen!', # Fuzzy
 	'usersignup-account-creation-heading' => 'Åtgärden genomfördes!',
 	'usersignup-account-creation-subheading' => 'Vi har skickat ett e-postmeddelande till $1',
 	'usersignup-account-creation-email-sent' => 'Du har börjat på att skapa ett konto för $2. Vi har skickat ett e-postmeddelande till $1 med ett tillfälligt lösenord och en bekräftelselänk.
@@ -5379,8 +5388,10 @@ Nais mo bang tabanan ang kung anong mga e-liham ang matatanggap mo? Magpunta sa:
 /** Turkish (Türkçe)
  * @author Erdemaslancan
  * @author Incelemeelemani
+ * @author Ömer Berkay
  */
 $messages['tr'] = array(
+	'usersignup-page-captcha-label' => 'İtiraz',
 	'usersignup-welcome-email-explore-wiki-content' => 'Wikia\'da binlerce wiki bulunmaktadır, ilgilendiğiniz konu hakkında daha fazla wikiye ulaşmak için merkezi başlıkları kullanın: <a style="color:#2C85D5;" href="http://www.wikia.com/Video_Games">Video Oyunları</a>, <a style="color:#2C85D5;" href="http://www.wikia.com/Entertainment">Eğlence</a>, or <a style="color:#2C85D5;" href="http://www.wikia.com/Lifestyle">Yaşam tarzı</a>.',
 	'usersignup-marketing-creativity-heading' => 'Orijinal olmak',
 );
@@ -5849,6 +5860,7 @@ Ahiver on novea conte',
  * @author Liuxinyu970226
  * @author Sam Wang
  * @author Yfdyh000
+ * @author 凡人丶
  */
 $messages['zh-hans'] = array(
 	'usersignup-page-title' => '加入Wikia',
@@ -5864,7 +5876,7 @@ $messages['zh-hans'] = array(
 	'usersignup-error-throttled-email' => '很抱歉，你今天申请发送了过多的确认电子邮件。请稍等片刻重新尝试。',
 	'usersignup-error-too-many-changes' => '您今天已经达到电子邮件更改的次数限制。请稍后再试。',
 	'usersignup-error-password-length' => '很抱歉，您的密码太长。请选择50个字符以内的密码。',
-	'usersignup-error-confirmed-user' => '您似乎已经确认了$1为电子邮件地址！ 请查看您的[$2 个人帐户]。', # Fuzzy
+	'usersignup-error-confirmed-user' => '您似乎已经确认了$1为电子邮件地址！请查看您的[$2 个人帐户]。',
 	'usersignup-facebook-heading' => '完成注册',
 	'usersignup-facebook-create-account' => '创建帐户',
 	'usersignup-facebook-email-tooltip' => '如果您想要使用一个不同的电子邮件地址，可以稍后在个人设置中进行更改。',
