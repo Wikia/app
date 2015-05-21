@@ -103,12 +103,12 @@ class FlagsController extends WikiaApiController {
 		/**
 		 * 1. Get flags assigned to the page
 		 */
-		$flagsForPage = $this->tryGetFlagsForPageFromCache( $wikiId, $pageId );
+		$flagsForPage = $this->getFlagsForPageRawData( $wikiId, $pageId );
 
 		/**
 		 * 2. Get all flag types for a wikia
 		 */
-		$flagTypesForWikia = $this->tryGetFlagTypesForWikiaFromCache( $wikiId );
+		$flagTypesForWikia = $this->getFlagTypesForWikiaRawData( $wikiId );
 
 		/**
 		 * 3. Return the united arrays - it is possible to merge them since both arrays use
@@ -148,7 +148,7 @@ class FlagsController extends WikiaApiController {
 			return null;
 		}
 
-		$flagsForPage = $this->tryGetFlagsForPageFromCache( $this->params['wikiId'], $this->params['pageId'] );
+		$flagsForPage = $this->getFlagsForPageRawData( $this->params['wikiId'], $this->params['pageId'] );
 
 		$this->setResponseData( $flagsForPage );
 	}
@@ -160,7 +160,7 @@ class FlagsController extends WikiaApiController {
 	 * @param $pageId
 	 * @return bool|mixed
 	 */
-	private function tryGetFlagsForPageFromCache( $wikiId, $pageId ) {
+	private function getFlagsForPageRawData( $wikiId, $pageId ) {
 		$flagsCache = $this->getCache();
 		$flagsForPage = $flagsCache->getFlagsForPage( $pageId );
 
@@ -180,13 +180,15 @@ class FlagsController extends WikiaApiController {
 	 * @param $wikiId
 	 * @return bool|mixed
 	 */
-	private function tryGetFlagTypesForWikiaFromCache( $wikiId ) {
+	private function getFlagTypesForWikiaRawData( $wikiId ) {
 		$flagsCache = $this->getCache();
 
 		$flagTypesForWikia = $flagsCache->getFlagTypesForWikia();
 		if ( !$flagTypesForWikia ) {
 			$flagTypeModel = new FlagType();
 			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
+
+			$flagsCache->setFlagTypesForWikia( $flagTypesForWikia );
 		}
 
 		return $flagTypesForWikia;
