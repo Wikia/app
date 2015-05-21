@@ -58,8 +58,6 @@ $config['adengine2_desktop_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
-		'#group_adengine2_incontent_player',
-
 		// was: early queue
 		'//resources/wikia/modules/iframeWriter.js',
 		'//resources/wikia/modules/scriptwriter.js',
@@ -67,6 +65,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
@@ -185,14 +184,6 @@ $config['adengine2_amazon_match_js'] = array(
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatchOld.js',
 	),
-);
-
-$config['adengine2_incontent_player'] = array(
-	'skin' => ['oasis', 'wikiamobile'],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js'
-	)
 );
 
 $config['oasis_noads_extensions_js'] = array(
@@ -758,11 +749,11 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/geo.js',
 
 		'#group_mobile_base_ads_js',
-		'#group_adengine2_incontent_player',
 		'//resources/wikia/modules/cache.js',
 		'//resources/wikia/modules/localStorage.js',
 
 		// Advertisement libs
+		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',

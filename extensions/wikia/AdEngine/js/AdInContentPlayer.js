@@ -2,9 +2,11 @@
 define('ext.wikia.adEngine.adInContentPlayer', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, log, win) {
+], function (adContext, adTracker, geo, instantGlobals, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adInContentPlayer',
@@ -35,8 +37,17 @@ define('ext.wikia.adEngine.adInContentPlayer', [
 	 * @returns {boolean}
 	 */
 	function shouldInsertSlot(selector) {
-		var logMessage,
+		var incontentPlayerCountries = instantGlobals.wgIncontentPlayerCountries,
+			logMessage,
 			logWikiData = isOasis ? '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')' : '';
+
+		if (!incontentPlayerCountries ||
+			!incontentPlayerCountries.indexOf ||
+			incontentPlayerCountries.indexOf(geo.getCountryCode()) === -1
+		) {
+			log('INCONTENT_PLAYER not added - INCONTENT_PLAYER disabled in this country', 'debug', logGroup);
+			return false;
+		}
 
 		header = $(selector)[1];
 		log(header, 'debug', logGroup);
