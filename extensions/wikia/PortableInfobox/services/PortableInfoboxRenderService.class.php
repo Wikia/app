@@ -161,7 +161,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	protected function getThumbnailUrl( $url ) {
 		return VignetteRequest::fromUrl( $url )
 			->thumbnailDown()
-			->width( $this->isWikiaMobile() ?
+			->width( F::app()->checkSkin( 'wikiamobile' ) ?
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH
 			)
