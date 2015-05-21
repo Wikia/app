@@ -30,11 +30,14 @@ class UncycloUserMigrator extends Maintenance {
 	const PREFIX_RENAME_UNCYCLO = 'Un-';
 	const PREFIX_RENAME_GLOBAL = 'W-';
 
+	const UNCYCLO_EDITS_AFTER = '20140101000000' ; // Jan 2014
+
 	private $createdAccounts         = 0;
 	private $mergedAccounts          = 0;
 	private $renamedUnclycloAccounts = 0;
 	private $renamedWikiaAccounts    = 0;
 	private $accountsWithNoEmail     = 0;
+	private $accountsWithNoEmailWithEdits = 0;
 
 	/* @var resource $csv */
 	private $csv;
@@ -87,6 +90,25 @@ class UncycloUserMigrator extends Maintenance {
 		);
 
 		return $row ? User::newFromRow( (object) $row ) : null;
+	}
+
+	/**
+	 * Count all user edits performed after given date
+	 *
+	 * @param User $user user to count edits of
+	 * @param string $since MW timestamp string
+	 * @param int $since edits count
+	 */
+	protected function getEditsCountAfter( User $user, $since ) {
+		return $this->getUncycloDB()->selectField(
+			'revision',
+			'count(*)',
+			[
+				'rev_user' => $user->getId(),
+				sprintf( 'rev_timestamp > "%s"', $since )
+			],
+			__METHOD__
+		);
 	}
 
 	/**
@@ -146,8 +168,14 @@ class UncycloUserMigrator extends Maintenance {
 
 		// check if the uncyclo account has a valid email set
 		$isValidEmail = Sanitizer::validateEmail( $user->getEmail() );
+		$uncycloEditsSince = $this->getEditsCountAfter( $user, self::UNCYCLO_EDITS_AFTER );
+
 		if ( !$isValidEmail ) {
 			$this->accountsWithNoEmail++;
+
+			if ( $uncycloEditsSince > 0 ) {
+				$this->accountsWithNoEmailWithEdits++;
+			}
 		}
 
 		// check the shared users database
@@ -213,7 +241,7 @@ class UncycloUserMigrator extends Maintenance {
 
 			$this->createdAccounts++;
 
-			$action = 'create shared account';
+			$action = 'move to shared DB';
 		}
 
 		// now create a shared account using the "local" uncyclo user object
@@ -229,6 +257,7 @@ class UncycloUserMigrator extends Maintenance {
 				$isValidEmail ? 'Y' : 'N',
 				$isMerged ? 'Y' : 'N',
 				$user->getEditCount(),
+				$uncycloEditsSince,
 				$globalEdits ?: 0,
 				$action
 			] );
@@ -252,6 +281,7 @@ class UncycloUserMigrator extends Maintenance {
 				'Valid email',
 				'Merge?',
 				'Uncyclo edits',
+				'Uncyclo edits after Jan 2014',
 				'Global edits',
 				'Action'
 			] );
@@ -274,12 +304,13 @@ class UncycloUserMigrator extends Maintenance {
 		// print the stats
 		$this->output( "\n\nDone!\n\n" );
 
-		$this->output( sprintf( "Accounts processed:       %d\n", $res->numRows() ) );
-		$this->output( sprintf( "Created Wikia accounts:   %d\n", $this->createdAccounts ) );
-		$this->output( sprintf( "Merged accounts:          %d\n", $this->mergedAccounts ) );
-		$this->output( sprintf( "Renamed Uncyclo accounts: %d\n", $this->renamedUnclycloAccounts ) );
-		$this->output( sprintf( "Renamed Wikia accounts:   %d\n", $this->renamedWikiaAccounts ) );
-		$this->output( sprintf( "Accounts with no email:   %d\n", $this->accountsWithNoEmail ) );
+		$this->output( sprintf( "Accounts processed:            %d\n", $res->numRows() ) );
+		$this->output( sprintf( "Created Wikia accounts:        %d\n", $this->createdAccounts ) );
+		$this->output( sprintf( "Merged accounts:               %d\n", $this->mergedAccounts ) );
+		$this->output( sprintf( "Renamed Uncyclo accounts:      %d\n", $this->renamedUnclycloAccounts ) );
+		$this->output( sprintf( "Renamed Wikia accounts:        %d\n", $this->renamedWikiaAccounts ) );
+		$this->output( sprintf( "Accounts with no email:        %d\n", $this->accountsWithNoEmail ) );
+		$this->output( sprintf( "  (but active after Jan 2014): %d\n", $this->accountsWithNoEmailWithEdits ) );
 
 		if ( is_resource( $this->csv ) ) {
 			fclose( $this->csv );
