@@ -1,15 +1,36 @@
 <?php
 
+/**
+ * A helper class that contains various universal functions or helps clients to interact with Flags.
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ */
+
 namespace Flags;
 
 use Flags\Views\FlagView;
 
-class Helper {
+class FlagsHelper {
 
+	/**
+	 * Strings used to parse the content of an array
+	 * posted from an edit form for flags for a page
+	 */
 	const FLAGS_INPUT_NAME_PREFIX = 'editFlags';
 	const FLAGS_INPUT_NAME_CHECKBOX = 'checkbox';
 
-	public function compareDataAndGetFlagsToChange( $currentFlags, $postData ) {
+	/**
+	 * Compares the data posted from the edit form with the database results.
+	 * Extracts data on particular types of flags and decides if
+	 * they should be skipped, added, updated or deleted.
+	 * Returns an array with the possible following keys: `toAdd`, `toRemove` and `toUpdate`.
+	 * @param array $currentFlags An array with the data retrieved from the database
+	 * @param array $postData An array with the data posted from the form
+	 * @return array
+	 */
+	public function compareDataAndGetFlagsToChange( Array $currentFlags, Array $postData ) {
 		$flagsToAdd = $flagsToRemove = $flagsToUpdate = [];
 
 		foreach ( $currentFlags as $flagTypeId => $flag ) {
@@ -51,6 +72,12 @@ class Helper {
 		];
 	}
 
+	/**
+	 * Retrieves data on the flag for INSERT or UPDATE actions
+	 * @param array $flag Data on the flag from the database
+	 * @param array $postData Data on the flag from the edit form
+	 * @return array
+	 */
 	public function getFlagFromPostData( $flag, $postData ) {
 		$flagTypeId = $flag['flag_type_id'];
 
@@ -99,6 +126,10 @@ class Helper {
 		return $flagFromPost;
 	}
 
+	/**
+	 * Checks if a request for flags does not come from an edit page
+	 * @return bool
+	 */
 	public function shouldDisplayFlags() {
 		global $wgRequest;
 
@@ -108,6 +139,12 @@ class Helper {
 		);
 	}
 
+	/**
+	 * A wrapper for a request to the FlagsController for flags for the given page
+	 * that returns a wikitext string with calls to templates of the flags.
+	 * @param int $pageId
+	 * @return null|string
+	 */
 	public function getFlagsForPageWikitext( $pageId ) {
 		$flags = $this->sendGetFlagsForPageRequest( $pageId );
 		if ( !empty( $flags ) ) {
@@ -122,6 +159,11 @@ class Helper {
 		return null;
 	}
 
+	/**
+	 * Sends a request to the FlagsController to get data on flags for the given page.
+	 * @param int $pageId
+	 * @return array
+	 */
 	private function sendGetFlagsForPageRequest( $pageId ) {
 		$app = \F::app();
 		return $app->sendRequest( 'FlagsController',
@@ -132,7 +174,13 @@ class Helper {
 		)->getData();
 	}
 
+	/**
+	 * Composes the name of a flags edit form input from the $field parameter and a $flagTypeId
+	 * @param int $flagTypeId
+	 * @param string $field
+	 * @return string
+	 */
 	private function composeInputName( $flagTypeId, $field ) {
-		return self::FLAGS_INPUT_NAME_PREFIX . ":{$flagTypeId}:" . $field;
+		return self::FLAGS_INPUT_NAME_PREFIX . ":{$flagTypeId}:{$field}";
 	}
 }

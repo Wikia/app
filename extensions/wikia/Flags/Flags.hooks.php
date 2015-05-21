@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * A class that contains all methods that are hooked to events occurring in the stack.
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ */
+
 namespace Flags;
 
-use Flags\Helper;
+use Flags\FlagsHelper;
 
 class Hooks {
 
@@ -23,7 +31,7 @@ class Hooks {
 		 * - a user is on an edit page
 		 * - the request is from VE
 		 */
-		$helper = new Helper();
+		$helper = new FlagsHelper();
 		if ( !$parser->mFlagsParsed
 			&& $helper->shouldDisplayFlags()
 			&& !( $wgRequest->getVal( 'action' ) == 'visualeditor' )

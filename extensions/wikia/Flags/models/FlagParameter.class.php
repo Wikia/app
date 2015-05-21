@@ -1,11 +1,28 @@
 <?php
 
+/**
+ * A model that reflects parameters of a Flag and provides an interface for managing them.
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ */
+
 namespace Flags\Models;
 
 class FlagParameter extends FlagsBaseModel {
 
 	const FLAG_PARAMETER_REGEXP = "/[^A-Za-z0-9-_:.]/"; // See W3C documentation for the name and id HTML attributes
 
+	/**
+	 * Performs an INSERT query that adds rows to store parameters of a given instance of a flag.
+	 * @param int $flagId
+	 * @param int $flagTypeId
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @param array $params `paramName` => `paramValue`
+	 * @return bool
+	 */
 	public function createParametersForFlag( $flagId, $flagTypeId, $wikiId, $pageId, $params ) {
 		$db = $this->getDatabaseForWrite();
 
@@ -33,6 +50,12 @@ class FlagParameter extends FlagsBaseModel {
 		return $status;
 	}
 
+	/**
+	 * Performs an UPDATE query on parameters of a given flag.
+	 * @param int $flagId
+	 * @param array $params `paramName` => `paramValue`
+	 * @return bool
+	 */
 	public function updateParametersForFlag( $flagId, $params ) {
 		$db = $this->getDatabaseForWrite();
 

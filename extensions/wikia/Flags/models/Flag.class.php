@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * A model that reflects an instance of a Flag
+ *
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @copyright (c) 2015 Wikia, Inc.
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
+ */
+
 namespace Flags\Models;
 
 class Flag extends FlagsBaseModel {
@@ -10,11 +18,18 @@ class Flag extends FlagsBaseModel {
 	 * GET methods
 	 */
 
+	/**
+	 * Retrieves instances of flags for the given page with associated parameters.
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @return bool|mixed
+	 */
 	public function getFlagsForPage( $wikiId, $pageId ) {
 		/**
-		 * 1. Get flags data for the page
+		 * 1. Get flags data for the page from a database
 		 */
-		$flagsForPage = $this->getFlagsTypesForPage( $wikiId, $pageId );
+		$flagsForPage = $this->getFlagsForPageFromDatabase( $wikiId, $pageId );
 
 
 		/**
@@ -40,7 +55,15 @@ class Flag extends FlagsBaseModel {
 		return $flagsForPage;
 	}
 
-	private function getFlagsTypesForPage( $wikiId, $pageId ) {
+	/**
+	 * Do an actual SQL query to retrieve the instances of flags for the given page
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @return bool|mixed
+	 * @throws \FluentSql\Exception\SqlException
+	 */
+	private function getFlagsForPageFromDatabase( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();
 
 		$flagsTypes = ( new \WikiaSQL() )
@@ -52,18 +75,29 @@ class Flag extends FlagsBaseModel {
 			->AND_( 'flags_to_pages.page_id' )->EQUAL_TO( $pageId )
 			->runLoop( $db, function( &$flagsTypes, $row ) {
 				$flagsTypes[$row->flag_type_id] = get_object_vars( $row );
+
+				/**
+				 * Create URLs for a template of the flag
+				 */
+				$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
+				$flagsTypes[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
 			} );
 
 		return $flagsTypes;
 	}
 
-	private function getParamsForFlags( $flagsWithParams ) {
+	/**
+	 * Fetches parameters for a set of flags
+	 * @param array $flagsIds An array of IDs of flags to get params for
+	 * @return bool|array An array with IDs of flags as indexes
+	 */
+	private function getParamsForFlags( $flagsIds ) {
 		$db = $this->getDatabaseForRead();
 
 		$flagsParams = ( new \WikiaSQL() )
 			->SELECT( 'flag_type_id', 'param_name', 'param_value' )
 			->FROM( 'flags_params' )
-			->WHERE( 'flag_id' )->IN( $flagsWithParams )
+			->WHERE( 'flag_id' )->IN( $flagsIds )
 			->runLoop( $db, function( &$flagsParams, $row ) {
 				$flagsParams[$row->flag_type_id][$row->param_name] = $row->param_value;
 			} );
@@ -79,7 +113,12 @@ class Flag extends FlagsBaseModel {
 	 * Adding flags
 	 */
 
-	public function verifyParamsForAdd( $params ) {
+	/**
+	 * Verifies if a passed array has all of the required keys and values set
+	 * @param array $params An array to analyze
+	 * @return bool
+	 */
+	public function verifyParamsForAdd( Array $params ) {
 		if ( !isset( $params['wikiId'] )
 			|| !isset( $params['pageId'] )
 			|| ( !isset( $params['flags'] ) && !is_array( $params['flags'] ) )
@@ -97,6 +136,11 @@ class Flag extends FlagsBaseModel {
 		return true;
 	}
 
+	/**
+	 * Wrapper for an addition of multiple flags
+	 * @param array $params
+	 * @return array|bool Returns an array of status codes or false if params have not been verified
+	 */
 	public function addFlagsToPage( $params ) {
 		if ( !$this->paramsVerified ) {
 			return false;
@@ -111,6 +155,15 @@ class Flag extends FlagsBaseModel {
 		return $status;
 	}
 
+	/**
+	 * Adds an instance of a flag. Performs an SQL query to the flags_to_pages table
+	 * and then adds flags parameters if they are fetched, using the last inserted flag_id.
+	 * @param int $flagTypeId
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @param array $params
+	 * @return bool
+	 */
 	private function addFlag( $flagTypeId, $wikiId, $pageId, Array $params = [] ) {
 		$db = $this->getDatabaseForWrite();
 
@@ -137,10 +190,36 @@ class Flag extends FlagsBaseModel {
 	}
 
 	/**
+	 * Updating flags
+	 */
+
+	/**
+	 * Updates parameters of the given flags
+	 * @param array $flags Should have flag_id values as indexes
+	 * @return array An array of statuses for each flag
+	 */
+	public function updateFlagsForPage( $flags ) {
+		$status = [];
+
+		$flagParameterModel = new FlagParameter();
+		foreach ( $flags as $flag ) {
+			$status[] = $flagParameterModel->updateParametersForFlag( $flag['flag_id'], $flag['params'] );
+		}
+
+		return $status;
+	}
+
+	/**
 	 * Removing flags
 	 */
 
-	public function removeFlagsFromPage( $params ) {
+	/**
+	 * Checks if parameters have been verified and
+	 * sends a request to remove flags with the passed IDs
+	 * @param array $params An array of IDs of flags to remove under a `flagsIds` key
+	 * @return bool
+	 */
+	public function removeFlagsFromPage( Array $params ) {
 		if ( !$this->paramsVerified ) {
 			return false;
 		}
@@ -149,6 +228,11 @@ class Flag extends FlagsBaseModel {
 		return $status;
 	}
 
+	/**
+	 * Verifies if parameters have a flagsIds field and if it is an array
+	 * @param array $params Should have a `flagsIds` key that contains an array of IDs
+	 * @return bool
+	 */
 	public function verifyParamsForRemove( $params ) {
 		if ( !isset( $params['flagsIds'] ) || !is_array( $params['flagsIds'] ) ) {
 			$this->paramsVerified = false;
@@ -159,6 +243,11 @@ class Flag extends FlagsBaseModel {
 		return true;
 	}
 
+	/**
+	 * Performs a removal SQL query on instances of flags based on the passed flagsIds
+	 * @param array $flagsIds
+	 * @return bool
+	 */
 	private function removeFlags( Array $flagsIds ) {
 		$db = $this->getDatabaseForWrite();
 
@@ -169,17 +258,6 @@ class Flag extends FlagsBaseModel {
 
 		$status = $db->affectedRows() > 0;
 		$db->commit();
-
-		return $status;
-	}
-
-	public function updateFlagsForPage( $flags ) {
-		$status = [];
-
-		$flagParameterModel = new FlagParameter();
-		foreach ( $flags as $flag ) {
-			$status[] = $flagParameterModel->updateParametersForFlag( $flag['flag_id'], $flag['params'] );
-		}
 
 		return $status;
 	}
