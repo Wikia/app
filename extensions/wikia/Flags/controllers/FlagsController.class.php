@@ -7,7 +7,6 @@ use Flags\Models\FlagType;
 class FlagsController extends WikiaApiController {
 
 	private
-		$model,
 		$params,
 		$status = false;
 
@@ -19,7 +18,8 @@ class FlagsController extends WikiaApiController {
 
 		$pageId = $this->request->getVal( 'pageId' );
 		if ( empty( $pageId ) ) {
-			return null;
+			$this->response->setException( new \Exception( 'Required param pageId not provided' ) );
+			return true;
 		}
 
 		$flagsWikiaResponse = $this->app->sendRequest( 'FlagsController', 'getFlagsForPageForEdit', [
