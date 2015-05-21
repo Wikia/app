@@ -274,15 +274,15 @@ class MercuryApi {
 		return $data;
 	}
 
-	public function processTrendingArticles( $data ) {
-		if ( !isset( $data[ 'items' ] ) || !is_array( $data[ 'items' ] ) ) {
+	public function processTrendingData( $data, $itemArrayName, $paramsToInclude = [] ) {
+		if ( !isset( $data[ $itemArrayName ] ) || !is_array( $data[ $itemArrayName ] ) ) {
 			return false;
 		}
 
 		$items = [];
 
-		foreach ( $data[ 'items' ] as $item ) {
-			$processedItem = $this->processTrendingArticlesItem( $item );
+		foreach ( $data[ $itemArrayName ] as $item ) {
+			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
@@ -319,15 +319,18 @@ class MercuryApi {
 	/**
 	 * @desc To save some bandwidth, the unnecessary params are stripped
 	 *
-	 * @param $item
+	 * @param $item array
+	 * @param $paramsToInclude array: leave empty to return all params
 	 * @return array
 	 */
-	private function processTrendingArticlesItem( $item ) {
+	private function processTrendingDataItem( $item, $paramsToInclude = [] ) {
+		if ( empty( $paramsToInclude ) ) {
+			return $item;
+		}
+
 		$processedItem = [];
 
-		if ( !empty( $item ) && is_array( $item ) ) {
-			$paramsToInclude = [ 'title', 'thumbnail', 'url' ];
-
+		if ( !empty( $item ) && is_array( $item ) && is_array( $paramsToInclude ) ) {
 			foreach ( $paramsToInclude as $param) {
 				if ( !empty( $item[ $param ] ) ) {
 					$processedItem[ $param ] = $item[ $param ];
