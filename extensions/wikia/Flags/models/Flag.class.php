@@ -52,6 +52,12 @@ class Flag extends FlagsBaseModel {
 			->AND_( 'flags_to_pages.page_id' )->EQUAL_TO( $pageId )
 			->runLoop( $db, function( &$flagsTypes, $row ) {
 				$flagsTypes[$row->flag_type_id] = get_object_vars( $row );
+
+				/**
+				 * Create URLs for a template of the flag
+				 */
+				$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
+				$flagsTypes[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
 			} );
 
 		return $flagsTypes;
