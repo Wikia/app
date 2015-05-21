@@ -92,6 +92,7 @@ $messages['bg'] = array(
  * @author Aftabuzzaman
  */
 $messages['bn'] = array(
+	'mostvisitedpages-desc' => 'সর্বাধিক দেখা পাতার তালিকা দেয়',
 	'mostvisitedpages' => 'সর্বাধিক দেখা পাতাসমূহ',
 	'mostvisitedpagessearchtext' => 'নিবন্ধের নাম:',
 	'mostvisitedpagessearchbtn' => 'অনুসন্ধান',

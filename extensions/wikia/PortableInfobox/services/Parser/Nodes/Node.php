@@ -2,6 +2,7 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 use Wikia\PortableInfobox\Parser\ExternalParser;
+use Wikia\PortableInfobox\Parser\SimpleParser;
 
 class Node {
 
@@ -21,6 +22,16 @@ class Node {
 	}
 
 	/**
+	 * @return ExternalParser
+	 */
+	public function getExternalParser() {
+		if ( !isset( $this->externalParser ) ) {
+			$this->setExternalParser( new SimpleParser() );
+		}
+		return $this->externalParser;
+	}
+
+	/**
 	 * @param mixed $externalParser
 	 */
 	public function setExternalParser( ExternalParser $externalParser ) {
@@ -32,11 +43,16 @@ class Node {
 	}
 
 	public function getData() {
-		return [ 'value' => (string) $this->xmlNode ];
+		return [ 'value' => (string)$this->xmlNode ];
 	}
 
+	/**
+	 * @desc Check if node is empty.
+	 * Note that a '0' value cannot be treated like a null
+	 */
 	public function isEmpty( $data ) {
-		return !( isset( $data[ 'value' ] ) ) || empty( $data[ 'value' ] );
+		$value = $data[ 'value' ];
+		return !( isset( $value ) ) || (empty( $value ) && $value != '0');
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
@@ -47,36 +63,47 @@ class Node {
 		}
 		if ( !$value ) {
 			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				$value = (string) $xmlNode->{self::DEFAULT_TAG_NAME};
-				$value = $this->parseWithExternalParser( $value, true );
+				/*
+				 * <default> tag can contain <ref> or other WikiText parser hooks
+				 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
+				 * parse it.
+				 */
+				$value = \Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance()->getInnerXML(
+					$xmlNode->{self::DEFAULT_TAG_NAME}
+				);
+				$value = $this->getExternalParser()->parseRecursive( $value );
 			}
 		}
 		return $value;
 	}
 
-	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute )	{
-		if( isset( $xmlNode[ $attribute ] ) )
-			return (string) $xmlNode[ $attribute ];
+	protected function getRawValueWithDefault( \SimpleXMLElement $xmlNode ) {
+		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
+		$value = null;
+		if ( !empty( $source ) ) {
+			$value = $this->getRawInfoboxData( $source );
+		}
+		if ( !$value ) {
+			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
+				$value = (string)$xmlNode->{self::DEFAULT_TAG_NAME};
+				$value = $this->getExternalParser()->replaceVariables( $value );
+			}
+		}
+		return $value;
+	}
+
+	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
+		if ( isset( $xmlNode[ $attribute ] ) )
+			return (string)$xmlNode[ $attribute ];
 		return null;
 	}
 
-	/**
-	 * @FIXME: regardless of what is the final approach, this code needs to be explained
-	 * WHY it does the things it does. Here. In docblock. Or by phrasing it explicitly with
-	 * class and method names.
-	 */
-	protected function parseWithExternalParser( $data, $recursive = true ) {
-		if ( !empty( $data ) && !empty( $this->externalParser ) ) {
-			if ( $recursive ) {
-				return $this->externalParser->parseRecursive( $data );
-			}
-			return $this->externalParser->parse( $data );
-		}
+	protected function getRawInfoboxData ( $key ) {
+		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
 		return $data;
 	}
 
 	protected function getInfoboxData( $key ) {
-		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
-		return $this->parseWithExternalParser( $data );
+		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData ( $key ) );
 	}
 }

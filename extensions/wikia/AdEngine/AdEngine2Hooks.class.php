@@ -25,7 +25,6 @@ class AdEngine2Hooks {
 			$wgAdDriverForceOpenXAd,
 			$wgAdDriverForceTurtleAd,
 			$wgAdDriverUseSevenOneMedia,
-			$wgAdEngineDisableLateQueue,
 			$wgEnableKruxOnMobile,
 			$wgEnableKruxTargeting,
 			$wgLiftiumOnLoad,
@@ -35,13 +34,11 @@ class AdEngine2Hooks {
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
 
-		$wgAdEngineDisableLateQueue = $request->getBool( 'noremnant', $wgAdEngineDisableLateQueue );
-
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 		$wgAdDriverForceOpenXAd = $request->getBool( 'forceopenx', $wgAdDriverForceOpenXAd );
 		$wgAdDriverForceTurtleAd = $request->getBool( 'forceturtle', $wgAdDriverForceTurtleAd );
 
-		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
+		$wgEnableKruxTargeting = !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
 
 		// use PostScribe with 71Media - check scriptwriter.js:35

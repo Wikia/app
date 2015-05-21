@@ -13,7 +13,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	private function setupGlobals() {
 		$this->mockGlobalVariable('wgAdDriverSevenOneMediaOverrideSub2Site', true);
 		$this->mockGlobalVariable('wgAdDriverTrackState', true);
-		$this->mockGlobalVariable('wgAdEngineDisableLateQueue', true);
 		$this->mockGlobalVariable('wgEnableWikiaHubsV3Ext', true);
 		$this->mockGlobalVariable('wgWikiDirectedAtChildren', true);
 		$this->mockGlobalVariable('wgAdDriverUseSevenOneMedia', false);
@@ -49,7 +48,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$expected = [
 			'opts' => [
 				'adsInContent' => true,
-				'disableLateQueue' => true,
 				'enableAdsInMaps' => true,
 				'pageType' => 'corporate',
 				'showAds' => true,

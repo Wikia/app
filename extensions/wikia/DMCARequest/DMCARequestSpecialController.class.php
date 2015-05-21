@@ -22,6 +22,7 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->specialPage->setHeaders();
+		$this->getOutput()->addModuleStyles( 'ext.dmcaRequest' );
 
 		$request = $this->getRequest();
 
@@ -71,14 +72,14 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 		$result = $this->helper->saveNotice();
 
 		if ( !$result ) {
-			$this->error = $this->msg( 'dmcarequest-request-error-submission' )->escaped();
+			$this->error = $this->msg( 'dmcarequest-request-error-submission' )->parse();
 			return false;
 		}
 
 		$result = $this->helper->sendNoticeEmail();
 
 		if ( !$result ) {
-			$this->error = $this->msg( 'dmcarequest-request-error-submission' )->escaped();
+			$this->error = $this->msg( 'dmcarequest-request-error-submission' )->parse();
 			return false;
 		}
 
@@ -183,6 +184,7 @@ class DMCARequestSpecialController extends WikiaSpecialPageController {
 	private function getFormHtml() {
 		$request = $this->getRequest();
 		return $this->app->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => [
+			'class' => 'dmca-form',
 			'attributes' => [ 'enctype' => 'multipart/form-data' ],
 			'isInvalid' => !empty( $this->error ),
 			'errorMsg' => $this->error,

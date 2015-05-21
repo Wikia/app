@@ -50,6 +50,12 @@ class FlagType extends FlagsBaseModel {
 			->ORDER_BY( 'flag_name ASC' )
 			->runLoop( $db, function( &$flagTypesForWikia, $row ) {
 				$flagTypesForWikia[$row->flag_type_id] = get_object_vars( $row );
+
+				/**
+				 * Create URLs for a template of the flag
+				 */
+				$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
+				$flagTypesForWikia[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
 			} );
 
 		return $flagTypesForWikia;

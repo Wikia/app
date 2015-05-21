@@ -31,6 +31,14 @@ OO.inheritClass( ve.ui.HistoryTool, ve.ui.Tool );
 /* Methods */
 
 /**
+ * @inheritdoc
+ */
+ve.ui.HistoryTool.prototype.onSelect = function () {
+	ve.track( 'tool.history.select', { name: this.constructor.static.name } );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
+/**
  * Handle history events on the surface model
  */
 ve.ui.HistoryTool.prototype.onHistory = function () {

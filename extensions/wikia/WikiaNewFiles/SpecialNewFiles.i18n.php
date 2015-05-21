@@ -151,6 +151,13 @@ $messages['ka'] = array(
 	'wikianewfiles-more' => 'მეტი...',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'wikianewfiles-more' => 'zêdetir...',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

@@ -561,6 +561,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'our404handler-desc' => 'Handler 404 kami untuk halaman yang tidak wujud',
 	'our404handler' => 'Ralat 404: Laman tidak dijumpai!',
 	'our404handler-oops' => 'Ini bukan laman yang anda cari. Sila teruskan pencarian.',
 	'message404' => "'''Kami minta maaf banyak-banyak, tetapi laman yang anda minta itu tidak wujud atas sebab-sebab tertentu.'''

@@ -1,5 +1,5 @@
 <section class="module WikiaActivityModule ForumActivityModule">
-	<h1><?= wfMessage( 'forum-activity-module-heading' )->escaped() ?></h1>
+	<h2><?= wfMessage( 'forum-activity-module-heading' )->escaped() ?></h2>
 	<ul>
 		<?php foreach( $posts as $value ): ?>
 		<li>

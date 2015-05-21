@@ -12,7 +12,7 @@ namespace Flags;
 
 use Flags\Views\FlagView;
 
-class Helper {
+class FlagsHelper {
 
 	/**
 	 * Strings used to parse the content of an array

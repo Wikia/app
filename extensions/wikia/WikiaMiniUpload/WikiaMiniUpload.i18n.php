@@ -1849,6 +1849,7 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  * @author Ghybu
  */
@@ -1867,7 +1868,7 @@ $messages['ku-latn'] = array(
 	'wmu-license' => 'Lîsans',
 	'wmu-thumbnail' => 'Thumbnail',
 	'wmu-link' => 'Girêdan',
-	'wmu-back' => 'paşve biçe', # Fuzzy
+	'wmu-back' => 'wêneyên din hilbijêre',
 	'wmu-imagebutton' => 'Wêneyan zêde bike',
 	'wmu-hide-license-msg' => 'lîsansa nivîsê veşêre',
 	'wmu-show-license-msg' => 'lîsansa nivîsê nîşan bide',
