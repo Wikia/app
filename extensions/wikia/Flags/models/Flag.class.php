@@ -122,17 +122,18 @@ class Flag extends FlagsBaseModel {
 			->SET( 'page_id', $pageId )
 			->run( $db );
 
-		$status = $db->affectedRows() > 0;
 		$flagId = $db->insertId();
 
 		$db->commit();
 
-		if ( $status && !empty( $params ) ) {
+		if ( $flagId && !empty( $params ) ) {
 			$paramsModel = new FlagParameter();
 			$status = $paramsModel->createParametersForFlag( $flagId, $flagTypeId, $wikiId, $pageId, $params );
 		}
 
-		return $status;
+		$this->paramsVerified = false;
+
+		return $flagId && $status;
 	}
 
 	/**

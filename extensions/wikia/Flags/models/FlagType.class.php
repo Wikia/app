@@ -4,7 +4,6 @@ namespace Flags\Models;
 
 class FlagType extends FlagsBaseModel {
 	private
-		$status,
 		$paramsVerified = false;
 
 	public static $flagGroups = [
@@ -18,8 +17,33 @@ class FlagType extends FlagsBaseModel {
 		8 => 'other'
 	];
 
+	public static $flagTargeting = [
+		1 => 'readers',
+		2 => 'contributors'
+	];
+
 	public function getFlagGroupsMapping() {
 		return self::$flagGroups;
+	}
+
+	public function getFlagGroupName( $flagGroupId ) {
+		return self::$flagGroups[$flagGroupId];
+	}
+
+	public function getFlagGroupId ( $flagGroupName ) {
+		return array_search( strtolower( $flagGroupName ), self::$flagGroups );
+	}
+
+	public function getFlagTargetingMapping() {
+		return self::$flagTargeting;
+	}
+
+	public function getFlagTargetingName( $flagTargetingId ) {
+		return self::$flagTargeting[$flagTargetingId];
+	}
+
+	public function getFlagTargetingId ( $flagTargetingName ) {
+		return array_search( strtolower( $flagTargetingName ), self::$flagTargeting );
 	}
 
 	public function getFlagTypesForWikia( $wikiId ) {
@@ -78,11 +102,13 @@ class FlagType extends FlagsBaseModel {
 
 		$sql->run( $db );
 
-		$this->status = $db->affectedRows() > 0;
+		$flagTypeId = $db->insertId();
 
 		$db->commit();
 
-		return $this->status;
+		$this->paramsVerified = false;
+
+		return $flagTypeId;
 	}
 
 	public function removeFlagType( $params ) {
@@ -97,10 +123,10 @@ class FlagType extends FlagsBaseModel {
 			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flagTypeId'] )
 			->run( $db );
 
-		$this->status = $db->affectedRows() > 0;
+		$status = $db->affectedRows() > 0;
 
 		$db->commit();
 
-		return $this->status;
+		return $status;
 	}
 }

@@ -3,8 +3,6 @@
 namespace Flags\Models;
 
 class FlagParameter extends FlagsBaseModel {
-	private
-		$status;
 
 	public function createParametersForFlag( $flagId, $flagTypeId, $wikiId, $pageId, $params ) {
 		$db = $this->getDatabaseForWrite();
@@ -26,10 +24,10 @@ class FlagParameter extends FlagsBaseModel {
 			->VALUES( $values )
 			->run( $db );
 
-		$this->status = $db->affectedRows() > 0;
+		$status = $db->affectedRows() > 0;
 
 		$db->commit();
 
-		return $this->status;
+		return $status;
 	}
 }
