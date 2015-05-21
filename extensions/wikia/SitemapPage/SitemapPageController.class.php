@@ -5,28 +5,39 @@
  */
 class SitemapPageController extends WikiaController {
 
-	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+	public function init() {
+		$this->response->addAsset( 'sitemap_page_js' );
+		$this->response->addAsset( 'sitemap_page_css' );
+	}
 
 	/**
 	 * Display sitemap page
-	 * @responseParam array wikis - list of wikis
-	 * @responseParam string pagination
 	 */
 	public function index() {
-		$this->response->addAsset( 'sitemap_page_js' );
-		$this->response->addAsset( 'sitemap_page_css' );
+		$level = $this->request->getInt( 'level', 1 );
+		if ( $level >= 3 ) {
+			$this->forward( __CLASS__, 'showList' );
+			return true;
+		}
 
-		$page = $this->getVal( 'page', 1 );
+		$from = $this->getVal( 'from', '' );
+		$to = $this->getVal( 'to', '' );
 
 		$sitemapPage = new SitemapPageModel();
-
-		$this->header = [
-			'title' => wfMessage( 'sitemap-page-wiki-title' )->escaped(),
-			'language' => wfMessage( 'sitemap-page-wiki-language' )->escaped(),
-			'vertical' => wfMessage( 'sitemap-page-wiki-vertical' )->escaped(),
-			'description' => wfMessage( 'sitemap-page-wiki-description' )->escaped(),
-		];
-		$this->wikis = $sitemapPage->getWikis( $page );
+		$this->wikis = $sitemapPage->getWikiListTopLevel( $level, $from, $to );
+		$this->level = $level + 1;
 	}
+
+	/**
+	 * Show list of wikis
+	 */
+	public function showList() {
+		$from = $this->getVal( 'from', '' );
+		$to = $this->getVal( 'to', '' );
+
+		$sitemapPage = new SitemapPageModel();
+		$this->wikis = $sitemapPage->getWikiList( $from, $to );
+	}
+
 
 }
