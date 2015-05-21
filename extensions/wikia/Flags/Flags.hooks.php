@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A class that contains all methods that are hooked to events occuring in the stack.
+ * A class that contains all methods that are hooked to events occurring in the stack.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.

@@ -37,7 +37,6 @@ class FlagsCache {
 
 	/**
 	 * Saves all types of flags in the memcache.
-	 * @param int $wikiId
 	 * @param array $flagTypes
 	 */
 	public function setFlagTypesForWikia( Array $flagTypes ) {
@@ -52,7 +51,7 @@ class FlagsCache {
 	 * Purges the data on types of flags for the given wikia.
 	 */
 	public function purgeFlagTypesForWikia() {
-		$this->memcache->delete( $this->getMemcKeyFlagTypesOnWikia( $wikiId ) );
+		$this->memcache->delete( $this->getMemcKeyFlagTypesOnWikia() );
 	}
 
 	/**
