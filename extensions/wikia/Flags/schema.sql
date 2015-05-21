@@ -1,9 +1,9 @@
 -- Table flags_params
 CREATE TABLE flags_params (
-    flag_id int    NOT NULL ,
-    flag_type_id int    NOT NULL ,
-    wiki_id int    NOT NULL ,
-    page_id int    NOT NULL ,
+    flag_id int unsigned	NOT NULL ,
+    flag_type_id int unsigned   NOT NULL ,
+    wiki_id int unsigned   NOT NULL ,
+    page_id int unsigned   NOT NULL ,
     param_name varchar(128)    NOT NULL ,
     param_value text    NOT NULL ,
     CONSTRAINT flags_params_pk PRIMARY KEY (flag_id,param_name)
@@ -12,10 +12,10 @@ CREATE INDEX params_on_wikia_idx ON flags_params (wiki_id,param_name);
 
 -- Table flags_to_pages
 CREATE TABLE flags_to_pages (
-    flag_id int    NOT NULL  AUTO_INCREMENT,
-    flag_type_id int    NOT NULL ,
-    wiki_id int    NOT NULL ,
-    page_id int    NOT NULL ,
+    flag_id int unsigned    NOT NULL  AUTO_INCREMENT,
+    flag_type_id int unsigned   NOT NULL ,
+    wiki_id int unsigned   NOT NULL ,
+    page_id int unsigned   NOT NULL ,
     CONSTRAINT flags_to_pages_pk PRIMARY KEY (flag_id)
 );
 CREATE INDEX flags_on_page_idx ON flags_to_pages (wiki_id,page_id);
@@ -25,12 +25,12 @@ CREATE  UNIQUE INDEX uni_flags_on_page_on_wiki_idx ON flags_to_pages (wiki_id,pa
 
 -- Table flags_types
 CREATE TABLE flags_types (
-    flag_type_id int    NOT NULL  AUTO_INCREMENT,
-    wiki_id int    NOT NULL ,
-    flag_group int    NOT NULL ,
+    flag_type_id int unsigned   NOT NULL  AUTO_INCREMENT,
+    wiki_id int unsigned   NOT NULL ,
+    flag_group smallint unsigned   NOT NULL ,
     flag_name varchar(128)    NOT NULL ,
     flag_view varchar(255)    NOT NULL ,
-    flag_targeting tinyint    NOT NULL ,
+    flag_targeting tinyint unsigned   NOT NULL ,
     flag_params_names text    NULL ,
     CONSTRAINT flags_types_pk PRIMARY KEY (flag_type_id)
 );
