@@ -63,13 +63,16 @@ define('ext.wikia.adEngine.provider.openX', [
 			slotItem = slotMap[slotName],
 			size = slotItem.size.split('x'),
 			width = size[0],
-			height = size[1];
+			height = size[1],
+			iframe = iframeWriter.getIframe({
+				code: getCode(slotItem.auid),
+				width: width,
+				height: height
+			});
 
-		slot.appendChild(iframeWriter.getIframe({
-			code: getCode(slotItem.auid),
-			width: width,
-			height: height
-		}));
+		slot.appendChild(iframe);
+		// Prevent from forever ads loading
+		iframe.contentWindow.document.close();
 		success();
 	}
 
