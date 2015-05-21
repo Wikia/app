@@ -120,6 +120,7 @@ class PageHeaderController extends WikiaController {
 	 * Get content actions for dropdown
 	 */
 	protected function getDropdownActions() {
+		wfDebug('kamilktestlog '.__METHOD__."\n");
 		$ret = array();
 
 		$editActions = array();
@@ -139,7 +140,7 @@ class PageHeaderController extends WikiaController {
 			array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ) );
 
 		// Enable to modify actions list on dropdown
-		wfRunHooks( 'DropdownActions', [ &$actions ] );
+		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
 
 		foreach ( $actions as $action ) {
 			if ( isset( $this->content_actions[$action] ) ) {
