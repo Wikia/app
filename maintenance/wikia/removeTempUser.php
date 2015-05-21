@@ -57,7 +57,8 @@ class RemoveTempUserAccounts extends Maintenance {
 			[
 				'user_name ' . $db->buildLike( self::TEMPUSER_PREFIX, $db->anyString() ),
 				sprintf( 'user_touched < "%s"', wfTimestamp( TS_DB, time() - 86400 * 365 ) ),
-			]
+			],
+			__METHOD__
 		);
 
 		$users = [];
