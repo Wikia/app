@@ -1,14 +1,12 @@
 <?php
 class PiggybackTest extends WikiaBaseTest {
 
-	public function setUp()
-	{
+	public function setUp() {
 		$this->setupFile =  __DIR__ . '/../Piggyback.php';
 		parent::setUp();
 	}
 
-	public function testEfPiggybackRequestContextOverrideUserOverride()
-	{
+	public function testEfPiggybackRequestContextOverrideUserOverride() {
 		$originalUser = 'OriginalUser';
 		$newUser = 'NewUser';
 
@@ -22,8 +20,7 @@ class PiggybackTest extends WikiaBaseTest {
 		$this->assertFalse( $result );
 	}
 
-	public function testEfPiggybackRequestContextOverrideUserDoNotOverride()
-	{
+	public function testEfPiggybackRequestContextOverrideUserDoNotOverride() {
 		$originalUser = 'OriginalUser';
 		$newUser = 'NewUser';
 
