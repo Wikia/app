@@ -75,6 +75,37 @@ class RemoveTempUserAccounts extends Maintenance {
 		return $users;
 	}
 
+	/**
+	 * Remove a batch of users
+	 *
+	 * @param DatabaseBase $dbw
+	 * @param array $batch list of user IDs to remove
+	 */
+	private function removeBatch( DatabaseBase $dbw, Array $batch ) {
+		$rows = 0;
+		$dbw->begin( __METHOD__ );
+
+		// remove entries from user table
+		$dbw->delete( self::USER_TABLE,  [ 'user_id' => $batch ], __METHOD__ );
+		$rows += $dbw->affectedRows();
+
+		// remove entries from user_properties table
+		$dbw->delete( 'user_properties', [ 'up_user' => $batch ], __METHOD__ );
+		$rows += $dbw->affectedRows();
+
+		$dbw->commit( __METHOD__ );
+
+		// remove from wikicities_cX
+		foreach ( $batch as $userId ) {
+			ExternalUser_Wikia::removeFromSecondaryClusters( $userId );
+		}
+
+		$this->info( 'Batch removed', [
+			'batch' => count( $batch ),
+			'rows'  => $rows,
+		] );
+	}
+
 	public function execute() {
 		global $wgExternalSharedDB;
 		$db = $this->getOption( 'db', $wgExternalSharedDB );
@@ -110,25 +141,11 @@ class RemoveTempUserAccounts extends Maintenance {
 		$dbw->commit( __METHOD__ );
 
 		foreach ( $batches as $batch ) {
-			$dbw->begin( __METHOD__ );
+			$this->removeBatch( $dbw, $batch );
 
-			$rows = 0;
-
-			// remove entries from user table
-			$dbw->delete( self::USER_TABLE,  [ 'user_id' => $batch ], __METHOD__ );
-			$rows += $dbw->affectedRows();
-
-			// remove entries from user_properties table
-			$dbw->delete( 'user_properties', [ 'up_user' => $batch ], __METHOD__ );
-			$rows += $dbw->affectedRows();
-
-			$dbw->commit( __METHOD__ );
-			wfWaitForSlaves( $db ); // prevent slave lag
-
-			$this->info( 'Batch removed', [
-				'batch' => count( $batch ),
-				'rows'  => $rows,
-			] );
+			// prevent slave lag
+			wfWaitForSlaves( $db );
+			sleep( 1 );
 		}
 
 		$this->output( "\n\nDone!\n" );
