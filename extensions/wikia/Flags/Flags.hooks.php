@@ -7,8 +7,10 @@ class Hooks {
 
 	const FLAGS_DROPDOWN_ACTION = 'flags';
 
-	public static function onBeforePageDisplay( \OutputPage &$out, \Skin &$skin ) {
-		\Wikia::addAssetsToOutput( 'flags_js' );
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		if ( \Wikia::isContentNamespace() ) {
+			\Wikia::addAssetsToOutput('flags_js');
+		}
 		return true;
 	}
 
@@ -20,12 +22,14 @@ class Hooks {
 	 * @param array $links Navigation links
 	 * @return bool true
 	 */
-	public static function onSkinTemplateNavigation( &$skin, &$links ) {
-		$links['views'][self::FLAGS_DROPDOWN_ACTION] = [
-			'href' => '#',
-			'text' => 'Flags',
-			'class' => 'flags-access-class',
-		];
+	public static function onSkinTemplateNavigation( $skin, &$links ) {
+		if ( \Wikia::isContentNamespace() ) {
+			$links['views'][self::FLAGS_DROPDOWN_ACTION] = [
+				'href' => '#',
+				'text' => 'Flags',
+				'class' => 'flags-access-class',
+			];
+		}
 		return true;
 	}
 
@@ -35,7 +39,9 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onPageHeaderDropdownActions( array &$actions ) {
-		$actions[] = self::FLAGS_DROPDOWN_ACTION;
+		if ( \Wikia::isContentNamespace() ) {
+			$actions[] = self::FLAGS_DROPDOWN_ACTION;
+		}
 		return true;
 	}
 
