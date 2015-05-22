@@ -70,9 +70,7 @@ require([
 	// Custom ads (skins, footer, etc)
 	window.loadCustomAd = customAdsLoader.loadCustomAd;
 
-	if (adInContentPlayer && adInContentPlayer.shouldInsertSlot('#mw-content-text > h2')) {
-		adInContentPlayer.insertSlot();
-	}
+	adInContentPlayer.init();
 
 	// Everything starts after content and JS
 	window.wgAfterContentAndJS.push(function () {

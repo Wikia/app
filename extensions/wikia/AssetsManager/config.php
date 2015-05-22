@@ -753,7 +753,6 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/localStorage.js',
 
 		// Advertisement libs
-		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
