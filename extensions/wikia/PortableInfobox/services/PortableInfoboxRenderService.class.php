@@ -149,7 +149,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
 		// it modular) While doing this we also need to move this logic to appropriate image render class
 		if ( $type === 'image' ) {
-			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['url'] );
+			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data );
 
 			if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
@@ -161,15 +161,55 @@ class PortableInfoboxRenderService extends WikiaService {
 			->render( $this->templates[ $type ] );
 	}
 
-	protected function getThumbnailUrl( $url ) {
-		return VignetteRequest::fromUrl( $url )
-			->thumbnailDown()
-			->width( F::app()->checkSkin( 'wikiamobile' ) ?
+	/**
+	 * @desc returns the thumbnail url from
+	 * Vignette or from old service
+	 * @param string $url
+	 * @return string thumbnail url
+	 */
+	protected function getThumbnailUrl( $data ) {
+		$url = $data['url'];
+		// TODO: remove 'if' condition when unified thumb method
+		// will be implemented: https://wikia­inc.atlassian.net/browse/PLATFORM­1237
+		if ( VignetteRequest::isVignetteUrl( $url )) {
+			return VignetteRequest::fromUrl($url)
+				->thumbnailDown()
+				->width(F::app()->checkSkin('wikiamobile') ?
+					self::MOBILE_THUMBNAIL_WIDTH :
+					self::DESKTOP_THUMBNAIL_WIDTH
+				)
+				->height(self::THUMBNAIL_HEIGHT)
+				->url();
+		} else {
+			$url = $this->createOldThumbnail($data['name']);
+		}
+		return $url;
+	}
+
+	/**
+	 * @desc If the image is served from an old
+	 * service we have to again obtain file to
+	 * call the createThumb function
+	 * @param $name
+	 * @return mixed
+	 */
+	private function createOldThumbnail( $name )
+	{
+		$file = $this->findFileByName($name);
+		return $file->createThumb(
+			F::app()­> checkSkin('wikiamobile') ?
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH
-			)
-			->height(self::THUMBNAIL_HEIGHT)
-			->url();
+			);
+	}
+
+	/**
+	 * @param string $name image name
+	 * @return File
+	 */
+	public function findFileByName( $name ) {
+		$file = wfFindFile( $name );
+		return $file;
 	}
 
 	/**
