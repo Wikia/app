@@ -17,10 +17,33 @@ class FlagsController extends WikiaController {
 		$params;
 
 	/**
-	 * A wrapper for a request to the FlagsApiController for flags for the given page
-	 * that returns a wikitext string with calls to templates of the flags.
-	 * @return null|string
+	 * Generates html contents for Flags modal for editing flags
 	 */
+	public function editForm() {
+		global $wgUser;
+
+		$pageId = $this->request->getVal( 'pageId' );
+		if ( empty( $pageId ) ) {
+			$this->response->setException( new \Exception( 'Required param pageId not provided' ) );
+			return true;
+		}
+
+		$flagsWikiaResponse = $this->app->sendRequest( 'FlagsController', 'getFlagsForPageForEdit', [
+			'pageId' => $pageId
+		] );
+
+		$flags = $flagsWikiaResponse->getData();
+
+		$this->setVal( 'editToken', $wgUser->getEditToken() );
+		$this->setVal( 'flags', $flags );
+		$this->setVal( 'formSubmitUrl', $this->getLocalUrl('postFlagsEditForm') );
+		$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
+		$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
+		$this->setVal( 'pageId', $pageId );
+
+		$this->response->setFormat('html');
+	}
+
 	public function getFlagsForPageWikitext( $pageId ) {
 		$flags = $this->requestGetFlagsForPage( $pageId );
 
@@ -61,6 +84,12 @@ class FlagsController extends WikiaController {
 		}
 		$pageId = $this->params['page_id'];
 
+		$title = Title::newFromID( $pageId );
+		if ( $title === null ) {
+			$this->response->setException( new \Exception( "Article with ID {$this->params['page_id']} doesn't exist" ) );
+			return true;
+		}
+
 		/**
 		 * Get the current status to compare
 		 */
@@ -76,8 +105,19 @@ class FlagsController extends WikiaController {
 			 */
 			$flagsCache = new FlagsCache();
 			$flagsCache->purgeFlagsForPage( $pageId );
+
+			/**
+			 * Purge article after updating flags
+			 */
+			$wikiPage = WikiPage::factory( $title );
+			$wikiPage->doPurge();
 		}
 
+		/**
+		 * Redirect back to article view after saving flags
+		 */
+		$pageUrl = $title->getFullURL();
+		$this->response->redirect( $pageUrl );
 		return true;
 	}
 
