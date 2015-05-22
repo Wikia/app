@@ -239,6 +239,7 @@ class MercuryApi {
 
 	/**
 	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
+	 *
 	 * @param Title $title Title object
 	 * @return array|null Article Ad context
 	 */
@@ -254,6 +255,7 @@ class MercuryApi {
 	/**
 	 * CuratedContent API returns data in a different format than we need.
 	 * Let's clean it up!
+	 *
 	 * @param $rawData
 	 * @return array|null
 	 */
@@ -288,6 +290,7 @@ class MercuryApi {
 
 	/**
 	 * Add `section` type to all sections from CuratedContent data
+	 *
 	 * @param $data
 	 * @return array
 	 */
@@ -304,6 +307,7 @@ class MercuryApi {
 
 	/**
 	 * Process CuratedContent items and sanitize when the item is an article
+	 *
 	 * @param $items
 	 * @return array
 	 */
@@ -350,7 +354,7 @@ class MercuryApi {
 
 	public function processTrendingArticles( $data ) {
 		if ( !isset( $data[ 'items' ] ) || !is_array( $data[ 'items' ] ) ) {
-			return false;
+			return null;
 		}
 
 		$items = [];
