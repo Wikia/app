@@ -5,15 +5,25 @@ $extDir = __DIR__ . "/../";
 
 require_once( $dir . 'includes/wikia/nirvana/WikiaObject.class.php' );
 require_once( $dir . 'includes/wikia/nirvana/WikiaModel.class.php' );
+require_once( $extDir . 'FlagsExtractor.class.php' );
 require_once( $extDir . 'models/FlagsBaseModel.class.php' );
 require_once( $extDir . 'models/Flag.class.php' );
 require_once( $extDir . 'models/FlagType.class.php' );
 require_once( $dir . 'maintenance/Maintenance.php' );
 
+use Flags\FlagsExtractor;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 
 class MoveNotices extends Maintenance {
+
+	private
+		$log = '',
+		$logFile,
+		$templateName,
+		$wikiId,
+		$pageId,
+		$flagId;
 
 	/**
 	 * Set script options
@@ -27,6 +37,12 @@ class MoveNotices extends Maintenance {
 
 	public function execute() {
 		global $wgCityId, $wgParser;
+
+		if ( empty ( $wgCityId ) ) {
+			exit( "Wiki ID is not set\n" );
+		}
+
+		$this->wikiId = $wgCityId;
 
 		$csv = $this->getOption( 'csv' );
 		$section = $this->getOption( 'section' );
@@ -42,13 +58,14 @@ class MoveNotices extends Maintenance {
 			return;
 		}
 
-		// Prepare log file
-		$logName = substr( $csv, 0, strrpos( $csv, '.' ) );
-		$logName .= '.log';
+		$this->prepareLogFile( $csv );
+
+		if ( !$this->logFile ) {
+			$this->output( "Cannot create log file.\n" );
+			return;
+		}
 
 		$csvFile = fopen( $csv, 'r' );
-		$logFile = fopen( $logName, 'w+' );
-
 		$csvData = [];
 
 		if ( !$csvFile ) {
@@ -65,316 +82,240 @@ class MoveNotices extends Maintenance {
 
 		$this->output( "Start processing\n" );
 
-		$flag = new Flag();
-		$flagTypes = new FlagType();
+		$flagModel = new Flag();
+		$flagTypeModel = new FlagType();
+		$flagsExtractor = new FlagsExtractor();
 
 		foreach( $csvData as $data ) {
-			$log = '';
-			$error = false;
+			$this->log = '';
 			$flagId = null;
 
-			if ( empty( $data[0] ) ) {
-				$this->output( "[WARNING] Template name is not set.\n" );
-				$log .= "[WARNING] Template name is not set.\n";
-				$error = true;
-			}
-
-			$templateName = $data[0];
-
-			if ( empty( $data[1] ) ) {
-				$this->output( "[WARNING] Template display name for template $templateName is not set.\n" );
-				$log .= "[WARNING] Template name is not set.\n";
-				$error = true;
-			}
-
-			if ( empty( $data[2] ) ) {
-				$this->output( "[WARNING] Flag type for template $templateName is not set.\n" );
-				$log .= "[WARNING] Template name for template $templateName is not set.\n";
-				$error = true;
-			}
-
-			if ( empty( $data[3] ) ) {
-				$this->output( "[WARNING] Flag targeting for template $templateName is not set.\n" );
-				$log .= "[WARNING] Template name for template $templateName is not set.\n";
-				$error = true;
-			}
+			$error = $this->validateCSVData( $data );
 
 			if ( $error ) {
-				fwrite($logFile, $log);
-				$this->output( $log );
+				fwrite($this->logFile, $this->log);
+				$this->output( $this->log );
 				continue;
 			}
 
-			$templateDisplayName = $data[1];
-			$flagGroup = $flagTypes->getFlagGroupId( $data[2] );
-			$flagTargeting = $flagTypes->getFlagTargetingId( $data[3] );
-
-			if ( !empty( $data[4] ) ) {
-				$parameters = $this->prepareParametersFromCSV( $data[4] );
-			} else {
-				$parameters = null;
-			}
-
-			// Prepare data to add flag type
-			$flagType = [
-				'wikiId' => $wgCityId,
-				'flagGroup' => $flagGroup,
-				'flagName' => $templateDisplayName,
-				'flagView' => $templateName,
-				'flagTargeting' => $flagTargeting,
-				'flagParamsNames' => $parameters
-			];
-
-			$log = "Adding flag type: " . json_encode( $flagType ) ."\n";
+			$this->templateName = $data[0];
 
 			if ( !$list ) {
-				$flagTypes->verifyParamsForAdd( $flagType );
-				$flagId = $flagTypes->addFlagType( $flagType );
+				// Prepare data to add flag type
+				$flagType = $this->prepareDataForFlagType( $flagTypeModel, $data );
 
-				if ( $flagId ) {
-					$log .= "Flag ID: $flagId added.\n";
-				} else {
-					$log .= "[ERROR] Flag is not added!\n";
-					$log .= "================================================== \n\n\n";
-					fwrite( $logFile, $log );
-					$this->output( $log );
+				if ( !($this->flagId = $this->addFlagType( $flagTypeModel, $flagType ) ) ) {
 					continue;
 				}
+
+				$this->log = "Adding flag type: " . json_encode( $flagType ) ."\n";
 			}
 
-			$log .= "Start processing template: $templateName \n";
+			$this->log .= "Start processing template: $this->templateName \n";
 
-			$title = Title::newFromText('Template:' . $templateName);
+			$title = Title::newFromText('Template:' . $this->templateName);
 
 			$rows = $this->showIndirectLinks( 0, $title, 0 );
 
 			if ( empty( $rows ) ) {
-				$log .= "[WARNING] This template is not used \n";
-				$log .= "================================================== \n\n\n";
-				fwrite( $logFile, $log );
-				$this->output( $log );
+				$this->log .= "[WARNING] This template is not used \n";
+				$this->log .= "================================================== \n\n\n";
+				fwrite( $this->logFile, $this->log );
+				$this->output( $this->log );
 				continue;
 			}
 
 			if ( !is_null( $section )  ) {
-				$log .= "Searching in section $section\n";
+				$this->log .= "Searching in section $section\n";
 			} else {
-				$log .= "Searching in all article content\n";
+				$this->log .= "Searching in all article content\n";
 			}
 
-			fwrite( $logFile, $log );
-			$this->output( $log );
+			fwrite( $this->logFile, $this->log );
+			$this->output( $this->log );
 
 			foreach ( $rows as $row ) {
-				$log = '';
+				$this->log = '';
+				$this->pageId = $row->page_id;
 
 				$page = Title::makeTitle( $row->page_namespace, $row->page_title );
 				$pageName = $page->getPrefixedText();
-				$article = Article::newFromID( $row->page_id );
+				$article = Article::newFromID( $this->pageId );
 				$content = $article->getContent();
 
 				if ( !is_null( $section )  ) {
 					$content = $wgParser->getSection($content, $section);
 				}
 
-				$log .= "Looking for template on $pageName [" . $row->page_id . "]\n";
+				$this->log .= "Looking for template on $pageName [" . $this->pageId . "]\n";
 
-				$flagsToPages = [
-					'wikiId' => $wgCityId,
-					'pageId' => $row->page_id
-				];
+				$flagsExtractor->init( $content, $this->templateName);
+				$templates = $flagsExtractor->getAllTemplates();
 
-				$templates = $this->findTemplates( $content, $templateName );
 				$size = sizeof( $templates );
 
 				if ( !$size ) {
-					$log .= "[WARNING] No templates found on page $pageName\n";
+					$this->log .= "[WARNING] No templates found on page $pageName\n";
 				} elseif ( $size > 1 ) {
-					$log .= "[WARNING] Found more than one ($size) template $templateName on page $pageName\n";
-				}
-
-				foreach ( $templates as $template ) {
-					$log .= "Processing template: " . $template['name'] ."\n";
-
-					if (empty($template['params'])) {
-						$log .= "No parameters found\n";
-					} else {
-						$log .= "Found parameters: \n";
-
-						foreach( $template['params'] as $name => $value ) {
-							$log .= "Parameter $name = $value \n";
-						}
-					}
+					$this->log .= "[WARNING] Found more than one ($size) template $this->templateName on page $pageName\n";
 				}
 
 				if ( $size ) {
-					$flagsToPages['flags'][] = [
-						'flagTypeId' => $flagId,
-						'params' => $templates[0]['params']
-					];
+					$this->logTemplatesInfo( $templates );
 
-					$log .= "Adding flags to pages: " . json_encode( $flagsToPages ) ."\n";
+					$flagsToPages = $this->prepareDataForFlagsToPage( $templates[0]['params'] );
 
 					if ( !$list ) {
-						$flag->verifyParamsForAdd( $flagsToPages );
-						$flag->addFlagsToPage( $flagsToPages );
+						$flagModel->verifyParamsForAdd( $flagsToPages );
+						$flagModel->addFlagsToPage( $flagsToPages );
+
+						$this->log .= "Adding flags to pages: " . json_encode( $flagsToPages ) ."\n";
 					}
 				}
 
-				fwrite( $logFile, $log );
-				$this->output( $log );
+				fwrite( $this->logFile, $this->log );
+				$this->output( $this->log );
 			}
 
-			$log = "Processing template: $templateName completed \n";
-			$log .= "================================================== \n\n\n";
+			$this->log = "Processing template: $this->templateName completed \n";
+			$this->log .= "================================================== \n\n\n";
 
-			fwrite($logFile, $log);
-			$this->output( $log );
+			fwrite($this->logFile, $this->log);
+			$this->output( $this->log );
 		}
 
-		fclose( $logFile );
+		fclose( $this->logFile );
 
 		$this->output( "Processing completed\n" );
 	}
 
-	public function findTemplates( $text, $templateName ) {
-		$paramOffsetStart = null;
-		$bracketsCounter = 2;
-		$bracketsLinkCounter = 0;
-		$inProgress = true;
-		$hasParamName = false;
-		$template = [];
-		$templates = [];
-		$params = [];
-		$i = 1;
-
-		$templateName = '{{' . $templateName;
-
-		// Position of template begin
-		$offsetStart = $this->findTemplatePosition( $text, $templateName, 0 );
-
-		if ( $offsetStart !== false ) {
-			$offset = $offsetStart + strlen( $templateName );
-			$textLength = strlen( $text ) - 1;
-
-			while( $inProgress && $offset <= $textLength ) {
-
-				switch ( $text[$offset] ) {
-					case '}' : $bracketsCounter--; break;
-					case '{' : $bracketsCounter++; break;
-					case ']' : $bracketsLinkCounter--; break;
-					case '[' : $bracketsLinkCounter++; break;
-					// Looking for template parameters - check if it's not link or nested template parameter
-					case '|' : if ( $bracketsCounter == 2 && !$bracketsLinkCounter ) {
-									// First parameter
-									if ( is_null( $paramOffsetStart ) ) {
-										$paramOffsetStart = $offset;
-									// Next parameter
-									} else {
-										$param = substr( $text, $paramOffsetStart + 1, $offset - $paramOffsetStart - 1 );
-										$params = $this->getTemplateParams( $param, $params, $hasParamName, $i );
-										$i++;
-										$paramOffsetStart = $offset;
-										$hasParamName = false;
-									}
-								}
-								break;
-					// Check if param has name and it's not in link or nested template
-					case '=' : if ( !is_null( $paramOffsetStart ) && $bracketsCounter == 2 && !$bracketsLinkCounter ) {
-									$hasParamName = true;
-								}
-								break;
-				}
-
-				$offset++;
-
-				// End of template
-				if ( $bracketsCounter === 0 ) {
-					$tmp = substr( $text, $offsetStart, $offset - $offsetStart );
-					$template['name'] = $tmp;
-					$offsetStart = $this->findTemplatePosition( $text, $templateName, $offset );
-
-					// Check if there is last template parameter
-					if ( !is_null( $paramOffsetStart ) ) {
-						$param = substr( $text, $paramOffsetStart + 1, $offset - $paramOffsetStart - 3 );
-						$params = $this->getTemplateParams( $param, $params, $hasParamName, $i );
-						$i = 1;
-						$paramOffsetStart = null;
-						$hasParamName = false;
-					}
-
-					$template['params'] = $params;
-
-					$templates[] = $template;
-
-					// If there is more same templates in content
-					if ( $offsetStart !== false ) {
-						$bracketsCounter = 2;
-						$offset = $offsetStart + strlen( $templateName ) - 1;
-						$template = [];
-						$params = [];
-					} else {
-						$inProgress = false;
-					}
-				}
-			}
-		}
-
-		return $templates;
-	}
-
 	/**
-	 * Check if template is wrapped by <nowiki> tag
+	 * Add flag type
 	 */
-	public function isWrappedByNoWikiTag( $text, $offset ) {
-		while( $offset > 0 && $text[--$offset] == ' ' ) {};
-		if ( $offset >= 7 ) {
-			$offset -= 7;
+	private function addFlagType( FlagType $flagTypeModel, $flagType ) {
+		$flagTypeModel->verifyParamsForAdd( $flagType );
+		$flagId = $flagTypeModel->addFlagType( $flagType );
 
-			$tag = substr( $text, $offset, 8 );
-
-			if ( strcasecmp( $tag, '<nowiki>' ) == 0 ) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Find template position in text
-	 */
-	public function findTemplatePosition( $text, $templateName, $offset ) {
-		while ( ( $offsetStart = stripos($text, $templateName, $offset) ) !== false ) {
-			$offset = $offsetStart + strlen($templateName);
-			if ( !$this->isWrappedByNoWikiTag( $text, $offsetStart ) ) {
-				if ( $text[$offset] == '}' || $text[$offset] == '|' ) {
-					return $offsetStart;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Get template from params
-	 */
-	public function getTemplateParams( $param, $params, $hasParamName, $i) {
-		if ($hasParamName) {
-			list($paramName, $paramValue) = explode('=', $param, 2);
-			$paramName = trim($paramName);
-			$paramValue = trim($paramValue);
-			$params[$paramName] = $paramValue;
+		if ( $flagId ) {
+			$this->log .= "Flag ID: $flagId added.\n";
 		} else {
-			$params[$i] = $param;
+			$this->log .= "[ERROR] Flag is not added!\n";
+			$this->log .= "================================================== \n\n\n";
+			fwrite( $this->logFile, $this->log );
+			$this->output( $this->log );
 		}
 
-		return $params;
+		return $flagId;
+	}
+
+	/**
+	 * Log info about all found templates
+	 */
+	private function logTemplatesInfo( $templates ) {
+		foreach ( $templates as $template ) {
+			$this->log .= "Processing template: " . $template['template'] ."\n";
+
+			if (empty($template['params'])) {
+				$this->log .= "No parameters found\n";
+			} else {
+				$this->log .= "Found parameters: \n";
+
+				foreach( $template['params'] as $name => $value ) {
+					$this->log .= "Parameter $name = $value \n";
+				}
+			}
+		}
+	}
+
+	/**
+	 * Prepare data to add flag type
+	 */
+	private function prepareDataForFlagType( FlagType $flagTypeModel, $data ) {
+		if ( !empty( $data[4] ) ) {
+			$parameters = $this->prepareParametersFromCSV( $data[4] );
+		} else {
+			$parameters = null;
+		}
+
+		$flagType = [
+			'wikiId' => $this->wikiId,
+			'flagGroup' => $flagTypeModel->getFlagGroupId( $data[2] ),
+			'flagName' => $data[1],
+			'flagView' => $data[0],
+			'flagTargeting' => $flagTypeModel->getFlagTargetingId( $data[3] ),
+			'flagParamsNames' => $parameters
+		];
+
+		return $flagType;
+	}
+
+	/**
+	 * Prepare data to add flags to page
+	 */
+	private function prepareDataForFlagsToPage( $params ) {
+		$flagsToPages = [
+			'wikiId' => $this->wikiId,
+			'pageId' => $this->pageId,
+			'flags' => [
+				[
+					'flagTypeId' => $this->flagId,
+					'params' => $params
+				]
+			]
+		];
+
+		return $flagsToPages;
+	}
+
+	/**
+	 * Prepare log file
+	 */
+	private function prepareLogFile( $csv ) {
+		$logName = substr( $csv, 0, strrpos( $csv, '.' ) );
+		$logName .= '.log';
+
+		$this->logFile = fopen( $logName, 'w+' );
+	}
+
+	/**
+	 * Validate data from CSV file
+	 */
+	private function validateCSVData( $data ) {
+		$error = false;
+
+		if ( empty( $data[0] ) ) {
+			$this->output( "[WARNING] Template name is not set.\n" );
+			$this->log .= "[WARNING] Template name is not set.\n";
+			$error = true;
+		}
+
+		$templateName = $data[0];
+
+		if ( empty( $data[1] ) ) {
+			$this->output( "[WARNING] Template display name for template $templateName is not set.\n" );
+			$this->log .= "[WARNING] Template name is not set.\n";
+			$error = true;
+		}
+
+		if ( empty( $data[2] ) ) {
+			$this->output( "[WARNING] Flag type for template $templateName is not set.\n" );
+			$this->log .= "[WARNING] Template name for template $templateName is not set.\n";
+			$error = true;
+		}
+
+		if ( empty( $data[3] ) ) {
+			$this->output( "[WARNING] Flag targeting for template $templateName is not set.\n" );
+			$this->log .= "[WARNING] Template name for template $templateName is not set.\n";
+			$error = true;
+		}
+
+		return $error;
 	}
 
 	/**
 	 * Get template parameters from csv file
 	 */
-	public function prepareParametersFromCSV( $csvParams ) {
+	private function prepareParametersFromCSV( $csvParams ) {
 		$params = [];
 
 		if ($csvParams[0] == '|') {
@@ -396,6 +337,8 @@ class MoveNotices extends Maintenance {
 	 * Based on Special:Whatlinkshere showIndirectLinks method
 	 */
 	public function showIndirectLinks( $level, $target ) {
+		global $wgContentNamespaces;
+
 		$rows = [];
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -430,6 +373,18 @@ class MoveNotices extends Maintenance {
 			'page_id=il_from',
 			'il_to' => $target->getDBkey(),
 		);
+
+		if ( is_array( $wgContentNamespaces ) && !empty( $wgContentNamespaces ) ) {
+			$namespaces = implode( ',', $wgContentNamespaces );
+
+			$plConds[] = 'page_namespace IN (' . $namespaces . ')';
+			$tlConds[] = 'page_namespace IN (' . $namespaces . ')';
+			$ilConds[] = 'page_namespace IN (' . $namespaces . ')';
+		} elseif ( is_int( $wgContentNamespaces ) ) {
+			$plConds['page_namespace'] = $wgContentNamespaces;
+			$tlConds['page_namespace'] = $wgContentNamespaces;
+			$ilConds['page_namespace'] = $wgContentNamespaces;
+		}
 
 		// Enforce join order, sometimes namespace selector may
 		// trigger filesorts which are far less efficient than scanning many entries
