@@ -195,9 +195,9 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	private function createOldThumbnail( $name )
 	{
-		$file = $this->findFileByName($name);
+		$file = $this->findFileByName( $name );
 		return $file->createThumb(
-			F::app()­> checkSkin('wikiamobile') ?
+			F::app()->checkSkin('wikiamobile') ?
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH
 			);
