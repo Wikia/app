@@ -102,10 +102,12 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function getThemeWithDefault( $params, PPFrame $frame ) {
 		$value = isset( $params[ 'theme-source' ] ) ? $frame->getArgument( $params[ 'theme-source' ] ) : false;
-		return self::INFOBOX_THEME_PREFIX . $this->getThemePrefix( $params, $value );
+		$themeName = $this->getThemeName( $params, $value );
+		//make sure no whitespaces, prevents side effects
+		return self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $themeName );
 	}
 
-	private function getThemePrefix( $params, $value ) {
+	private function getThemeName( $params, $value ) {
 		return !empty( $value ) ? $value :
 			// default logic
 			( isset( $params[ 'theme' ] ) ? $params[ 'theme' ] : self::DEFAULT_THEME_NAME );
