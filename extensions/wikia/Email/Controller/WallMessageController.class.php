@@ -25,7 +25,14 @@ abstract class WallMessageController extends EmailController {
 
 	public function initEmail() {
 		$this->wallUserName = $this->request->getVal( 'wallUserName' );
-		$this->authorUserName = $this->currentUser->getName();
+
+		// Anon's have IPs for usernames so choose something more appropriate in that case
+		if ( $this->currentUser->isAnon() ) {
+			$this->authorUserName = wfMessage( 'emailext-anonymous-editor' )
+				->inLanguage( $this->targetLang )->text();
+		} else {
+			$this->authorUserName = $this->currentUser->getName();
+		}
 
 		$this->wallTitle = \Title::newFromText( $this->wallUserName, NS_USER_WALL );
 
@@ -70,18 +77,11 @@ abstract class WallMessageController extends EmailController {
 	 * @template avatarLayout
 	 */
 	public function body() {
-		if ( $this->currentUser->isAnon() ) {
-			$userName = wfMessage( 'emailext-anonymous-editor' )
-				->inLanguage( $this->targetLang )->text();
-		} else {
-			$userName = $this->authorUserName;
-		}
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
 			'editorProfilePage' => $this->getCurrentProfilePage(),
-			'editorUserName' => $userName,
+			'editorUserName' => $this->authorUserName,
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'detailsHeader' => $this->titleText,
 			'details' => $this->details,
