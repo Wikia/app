@@ -41,6 +41,7 @@ class UncycloUserMigrator extends Maintenance {
 
 	/* @var resource $csv */
 	private $csv;
+	private $isDryRun = true;
 
 	/**
 	 * Set script options
@@ -132,6 +133,28 @@ class UncycloUserMigrator extends Maintenance {
 	}
 
 	/**
+	 * Change uncyclo user ID
+	 *
+	 * @param User $user uncyclo account to migrate
+	 * @param $newUserId new user ID
+	 */
+	protected function doChangeUncycloUserId( User $user, $newUserId ) {
+		// check if there's the uncyclo user with the ID from shared DB
+		$whoIs = User::whoIs( $newUserId );
+
+		if ( $whoIs !== false ) {
+			$this->output( sprintf( "\nCan't change the ID of %s - clashes with %s!\n", $user->getName(), $whoIs ) );
+			return;
+		}
+
+		if ( $this->isDryRun ) {
+			return;
+		}
+
+		// TODO
+	}
+
+	/**
 	 * Rename uncyclopedia user
 	 *
 	 * @param User $user
@@ -167,9 +190,13 @@ class UncycloUserMigrator extends Maintenance {
 	 * Create a shared DB account using given Uncyclo account
 	 *
 	 * @param User $user
-	 * @return User created global account (with a new ID and migrated user settings)
+	 * @return User|false created global account (with a new ID and migrated user settings)
 	 */
 	protected function doCreateGlobalUser( User $user ) {
+		if ( $this->isDryRun ) {
+			return false;
+		}
+
 		$extUser = clone $user;
 
 		// this code was borrowed from ExternalUser_Wikia::addToDatabase
@@ -238,6 +265,8 @@ class UncycloUserMigrator extends Maintenance {
 
 			if ( $uncycloEditsSince > 0 ) {
 				$this->accountsWithNoEmailWithEdits++;
+
+				$this->output( sprintf( "\n\tEmail missing for %s [active after Jan 2014]\n", $userName ) );
 			}
 		}
 
@@ -256,6 +285,8 @@ class UncycloUserMigrator extends Maintenance {
 
 				$isMerged = true;
 				$action = 'merge';
+
+				$this->doChangeUncycloUserId( $user, $globalUser->getId() );
 			}
 			else {
 				// resolve conflicts
@@ -336,6 +367,8 @@ class UncycloUserMigrator extends Maintenance {
 	 * Script entry point
 	 */
 	public function execute() {
+		$this->isDryRun = $this->hasOption( 'dry-run' );
+
 		if ( $this->hasOption( 'csv' ) ) {
 			$this->csv = fopen( $this->getOption( 'csv' ), 'w' );
 
