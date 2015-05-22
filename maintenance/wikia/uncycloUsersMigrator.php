@@ -55,6 +55,16 @@ class UncycloUserMigrator extends Maintenance {
 	}
 
 	/**
+	 * Log helper
+	 *
+	 * @param string $msg
+	 * @param array $context
+	 */
+	private function info( $msg, Array $context = [] ) {
+		Wikia\Logger\WikiaLogger::instance()->info( $msg, $context );
+	}
+
+	/**
 	 * Get the uncyclopedia database
 	 *
 	 * @param int $flag
@@ -150,7 +160,16 @@ class UncycloUserMigrator extends Maintenance {
 	 * @return User created global account (with a new ID and migrated user settings)
 	 */
 	protected function doCreateGlobalUser( User $user ) {
+		$extUser = clone $user;
+		ExternalUser_Wikia::addUser( $extUser, '', $user->getEmail(), $user->getRealName() );
 
+		$this->info( __METHOD__, [
+			'user'     => $extUser->getName(),
+			'local_id' => $user->getId(),
+			'ext_id'   => $extUser->getId(),
+		] );
+
+		return $extUser;
 	}
 
 	/**
