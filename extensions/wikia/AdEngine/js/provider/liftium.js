@@ -15,7 +15,6 @@ define('ext.wikia.adEngine.provider.liftium', [
 		fillInSlot;
 
 	slotMap = {
-		'EXIT_STITIAL_BOXAD_1': {'size': '300x250'},
 		'HOME_TOP_LEADERBOARD': {'size': '728x90'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'INCONTENT_BOXAD_1': {'size': '300x250'},

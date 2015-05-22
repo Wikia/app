@@ -1,26 +1,26 @@
-// TODO: ADEN-1332-ize
+// TODO: replace with template/modal.js?
 
-/**
- * Exitstitial ads
- */
-/*global require, setTimeout*/
-require([
-	'wikia.window', 'wikia.document', 'wikia.location', 'jquery', 'ext.wikia.adEngine.adContext'
-], function (window, document, location, $, adContext) {
+/*global define, setTimeout*/
+define('ext.wikia.adEngine.slot.exitstitial', [
+	'ext.wikia.adEngine.adContext',
+	'jquery',
+	'wikia.location',
+	'wikia.window'
+], function (adContext, $, loc, win) {
 	'use strict';
 
 	var modalId = 'ExitstitialInfobox',
 		modalWidth = 840,
 		adSlot = 'EXIT_STITIAL_BOXAD_1',
-		redirectDelay = window.wgOutboundScreenRedirectDelay || 10,
-		enabled = adContext.getContext().opts.showAds && window.wgEnableOutboundScreenExt;
+		enabled = adContext.getContext().slots.exitstitial,
+		redirectDelay = adContext.getContext().slots.exitstitialRedirectDelay || 10;
 
-	// Check if external links should be ad-guarded
-	if (!enabled) {
-		return;
-	}
+	function init() {
+		// Check if external links should be ad-guarded
+		if (!enabled) {
+			return;
+		}
 
-	$(document).ready(function () {
 		$('.WikiaArticle a.exitstitial').filter('.external, .extiw').click(function (event) {
 			event.preventDefault();
 
@@ -28,7 +28,7 @@ require([
 
 			$.getMessages('AdEngine', function () {
 				var $goBack = $('<a></a>').attr('href', '').text($.msg('adengine-exitstitial-go-back')),
-					modalTitle = $.msg('adengine-exitstitial-title-template', window.wgSiteName),
+					modalTitle = $.msg('adengine-exitstitial-title-template', win.wgSiteName),
 					$modal,
 					$modalBody = $('<div></div>'),
 					$modalText = $('<p></p>').text($.msg('adengine-exitstitial-redirecting') + ' '),
@@ -36,6 +36,16 @@ require([
 					$ad = $('<div class="wikia-ad noprint"></div>').attr('id', adSlot),
 					$modalSkip = $('<div class="close-exitstitial-ad"></div>'),
 					$skipAd = $('<a></a>').attr('href', url).text($.msg('adengine-exitstitial-button'));
+
+				function skipAd() {
+					$skipAd.filter(':visible').each(function () {
+						loc.href = url;
+					});
+				}
+
+				function showModal() {
+					$modal.css('opacity', 1);
+				}
 
 				$modalText.append($goBack);
 				$modalSkip.append($skipAd);
@@ -47,23 +57,28 @@ require([
 
 				$modalBody.append($modalText).append($modalAd).append($modalSkip);
 
-				// Show modal
+				// Load modal, but don't show its content yet
 				$modal = $.showModal(modalTitle, $modalBody, {
 					id: modalId,
 					width: modalWidth
-				});
+				}).css('opacity', 0);
 
-				// Show ads
+				// Once the ad loads, show the modal
 				$modalAd.html($('<div></div>').html($ad));
-				window.adslots2.push(adSlot);
+				win.adslots2.push({
+					slotName: adSlot,
+					onError: skipAd,
+					onSuccess: showModal
+				});
+				setTimeout(showModal, 1000); // Show modal after a second even if the ad still loads
 
 				// Skip ads after N seconds
-				setTimeout(function () {
-					$skipAd.filter(':visible').each(function () {
-						location.href = url;
-					});
-				}, redirectDelay * 1000);
+				setTimeout(skipAd, redirectDelay * 1000);
 			});
 		});
-	});
+	}
+
+	return {
+		init: init
+	};
 });
