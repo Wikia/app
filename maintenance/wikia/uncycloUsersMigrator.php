@@ -171,10 +171,44 @@ class UncycloUserMigrator extends Maintenance {
 	 */
 	protected function doCreateGlobalUser( User $user ) {
 		$extUser = clone $user;
-		ExternalUser_Wikia::addUser( $extUser, '', $user->getEmail(), $user->getRealName() );
+
+		// this code was borrowed from ExternalUser_Wikia::addToDatabase
+		$dbw = wfGetDB( DB_MASTER, [], 'wikicities' ); // $wgExternalSharedDB is not set on uncyclo
+		$dbw->begin( __METHOD__ );
+
+		try {
+			$dbw->insert(
+				self::USER_TABLE,
+				[
+					'user_id' => null,
+					'user_name' => $user->getName(),
+					'user_real_name' => $user->getRealName(),
+					'user_password' => $user->mPassword,
+					'user_newpassword' => '',
+					'user_email' => $user->getEmail(),
+					'user_touched' => '',
+					'user_token' => '',
+					'user_options' => '',
+					'user_registration' => $dbw->timestamp($user->mRegistration),
+					'user_editcount' => $user->getEditCount(), // use uncyclo counter
+					'user_birthdate' => $user->mBirthDate
+				],
+				__METHOD__
+			);
+
+			$extUser->setId( $dbw->insertId() );
+			$extUser->setToken();
+			$extUser->saveSettings();
+
+			$dbw->commit(__METHOD__);
+		}
+		catch(Exception $e) {
+			$dbw->rollback();
+			throw $e;
+		}
 
 		$this->info( __METHOD__, [
-			'user'     => $extUser->getName(),
+			'user'     => $user->getName(),
 			'local_id' => $user->getId(),
 			'ext_id'   => $extUser->getId(),
 		] );
@@ -262,6 +296,9 @@ class UncycloUserMigrator extends Maintenance {
 						$action = 'rename uncyclo account';
 					}
 				}
+
+				// now create a shared account using the "local" uncyclo user object
+				$migratedSharedUser = $this->doCreateGlobalUser( $user );
 			}
 		}
 		else {
@@ -271,10 +308,10 @@ class UncycloUserMigrator extends Maintenance {
 			$this->createdAccounts++;
 
 			$action = 'move to shared DB';
-		}
 
-		// now create a shared account using the "local" uncyclo user object
-		$migratedSharedUser = $this->doCreateGlobalUser( $user );
+			// now create a shared account using the "local" uncyclo user object
+			$migratedSharedUser = $this->doCreateGlobalUser( $user );
+		}
 
 		// add an entry to CSV file
 		if ( is_resource( $this->csv ) ) {
