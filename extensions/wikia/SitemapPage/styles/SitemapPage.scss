@@ -5,7 +5,40 @@
 .sitemap-page {
 	margin: 20px 10px 50px;
 
-	.sitemap-page-table {
+	h1 {
+		border-bottom: solid 1px #ccc;
+		font-size: 32px;
+		margin: 0 0 10px;
+		padding-bottom: 10px;
+	}
+
+	.showlist {
+		border-bottom: 0;
+	}
+
+	.sitemap-top-level {
+		line-height: 30px;
+		margin: 0 20px;
+
+		span {
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		a {
+			color: #006cb0;
+			text-decoration: none;
+		}
+
+		a:hover {
+			font-weight: bold;
+			text-decoration: none;
+		}
+	}
+
+	.sitemap-showlist {
 		border-collapse: collapse;
 		clear: both;
 		table-layout: fixed;
@@ -47,9 +80,5 @@
 			padding-top: 5px;
 			vertical-align: top;
 		}
-	}
-
-	.wikia-paginator {
-		margin-top: 35px;
 	}
 }
