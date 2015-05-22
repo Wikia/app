@@ -131,14 +131,17 @@ class FlagsHelper {
 	 * @return bool
 	 */
 	public function shouldDisplayFlags() {
-		global $wgRequest;
+		global $wgTitle, $wgRequest;
 
-		return \Wikia::isContentNamespace() && !in_array(
-			$wgRequest->getVal( 'action', 'view' ),
-			[ 'edit', 'formedit' , 'history' ]
-		);
+		return
+			$wgTitle instanceof \Title
+			&& \Wikia::isContentNamespace()
+			&& !in_array(
+				$wgRequest->getVal( 'action', 'view' ),
+				[ 'edit', 'formedit' , 'history' ]
+			);
 	}
-
+	
 	/**
 	 * A wrapper for a request to the FlagsController for flags for the given page
 	 * that returns a wikitext string with calls to templates of the flags.
