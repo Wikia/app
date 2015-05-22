@@ -65,6 +65,16 @@ class UncycloUserMigrator extends Maintenance {
 	}
 
 	/**
+	 * Error log helper
+	 *
+	 * @param string $msg
+	 * @param array $context
+	 */
+	private function error( $msg, Array $context = [] ) {
+		Wikia\Logger\WikiaLogger::instance()->error( $msg, $context );
+	}
+
+	/**
 	 * Get the uncyclopedia database
 	 *
 	 * @param int $flag
@@ -316,8 +326,27 @@ class UncycloUserMigrator extends Maintenance {
 
 		$this->output( sprintf( "Migrating %d accounts...\n", $res->numRows() ) );
 
-		while( $user = $res->fetchObject() ) {
-			$this->migrateUser( User::newFromRow((object) $user ) );
+		// close the current transaction (if any)
+		$dbw = $this->getUncycloDB( DB_MASTER );
+		$dbw->commit();
+
+		while( $row = $res->fetchObject() ) {
+			$user = User::newFromRow((object)$row);
+
+			try {
+				$dbw->begin();
+				$this->migrateUser( $user );
+				$dbw->commit();
+			}
+			catch ( Exception $e ) {
+				$dbw->rollback();
+
+				$this->error( __METHOD__ , [
+					'exception' => $e,
+					'user_id' => $user->getId(),
+					'user_name' => $user->getName(),
+				] );
+			}
 		}
 
 		// print the stats
