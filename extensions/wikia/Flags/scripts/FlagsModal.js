@@ -50,7 +50,7 @@ require(['jquery'], function($) {
 		Wikia.getMultiTypePackage({
 			templates: [{
 				controller: 'Flags',
-				method: 'modal',
+				method: 'editForm',
 				params: {
 					'pageId': window.wgArticleId
 				}
@@ -73,9 +73,7 @@ require(['jquery'], function($) {
 		});
 
 		/* Add content to modal */
-		modalConfig.vars.content = $.parseJSON(
-			pkg.templates.Flags_modal
-		).html;
+		modalConfig.vars.content = pkg.templates.Flags_editForm;
 
 		require(['wikia.ui.factory'], function (uiFactory) {
 			/* Initialize the modal component */

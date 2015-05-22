@@ -12,8 +12,9 @@ class FlagsController extends WikiaApiController {
 
 	/**
 	 * Generates html contents for Flags modal for editing flags
+	 * @TODO Move modal away from API to client controller
 	 */
-	public function modal() {
+	public function editForm() {
 		global $wgUser;
 
 		$pageId = $this->request->getVal( 'pageId' );
@@ -28,18 +29,14 @@ class FlagsController extends WikiaApiController {
 
 		$flags = $flagsWikiaResponse->getData();
 
-		$html = \HandlebarsService::getInstance()->render(
-			'extensions/wikia/Flags/templates/modal.handlebars', [
-				'editToken' => $wgUser->getEditToken(),
-				'flags' => $flags,
-				'formSubmitUrl' => $this->getLocalUrl('postFlagsEditForm'),
-				'inputNamePrefix' => Helper::FLAGS_INPUT_NAME_PREFIX,
-				'inputNameCheckbox' => Helper::FLAGS_INPUT_NAME_CHECKBOX,
-				'pageId' => $pageId
-			]
-		);
+		$this->setVal( 'editToken', $wgUser->getEditToken() );
+		$this->setVal( 'flags', $flags );
+		$this->setVal( 'formSubmitUrl', $this->getLocalUrl('postFlagsEditForm') );
+		$this->setVal( 'inputNamePrefix', Helper::FLAGS_INPUT_NAME_PREFIX );
+		$this->setVal( 'inputNameCheckbox', Helper::FLAGS_INPUT_NAME_CHECKBOX );
+		$this->setVal( 'pageId', $pageId );
 
-		$this->response->setVal( 'html', $html );
+		$this->response->setFormat('html');
 	}
 
 	/**
