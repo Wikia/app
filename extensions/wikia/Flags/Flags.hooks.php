@@ -10,9 +10,47 @@
 
 namespace Flags;
 
-use Flags\FlagsHelper;
-
 class Hooks {
+
+	const FLAGS_DROPDOWN_ACTION = 'flags';
+
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+		if ( \Wikia::isContentNamespace() ) {
+			\Wikia::addAssetsToOutput('flags_js');
+		}
+		return true;
+	}
+
+	/**
+	 * Adds flags item to edit button dropdown. Flags item shows modal for editing flags for article.
+	 * This is attached to the MediaWiki 'SkinTemplateNavigation' hook.
+	 *
+	 * @param SkinTemplate $skin
+	 * @param array $links Navigation links
+	 * @return bool true
+	 */
+	public static function onSkinTemplateNavigation( $skin, &$links ) {
+		if ( \Wikia::isContentNamespace() ) {
+			$links['views'][self::FLAGS_DROPDOWN_ACTION] = [
+				'href' => '#',
+				'text' => 'Flags',
+				'class' => 'flags-access-class',
+			];
+		}
+		return true;
+	}
+
+	/**
+	 * Adds flags action to dropdown actions to enable displaying flags item on edit dropdown
+	 * @param array $actions
+	 * @return bool true
+	 */
+	public static function onPageHeaderDropdownActions( array &$actions ) {
+		if ( \Wikia::isContentNamespace() ) {
+			$actions[] = self::FLAGS_DROPDOWN_ACTION;
+		}
+		return true;
+	}
 
 	/**
 	 * Hooks into the internalParse() process and injects a wikitext

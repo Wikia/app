@@ -133,7 +133,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function verifyParamsForRemove( $params ) {
-		if ( !isset( $params['flagTypeId'] ) ) {
+		if ( !isset( $params['flag_type_id'] ) ) {
 			return false;
 		}
 
@@ -155,7 +155,7 @@ class FlagType extends FlagsBaseModel {
 
 		( new \WikiaSQL() )
 			->DELETE( self::FLAGS_TYPES_TABLE )
-			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flagTypeId'] )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flag_type_id'] )
 			->run( $db );
 
 		$this->status = $db->affectedRows() > 0;
