@@ -144,8 +144,8 @@ class RemoveTempUserAccounts extends Maintenance {
 			$this->removeBatch( $dbw, $batch );
 
 			// prevent slave lag
-			wfWaitForSlaves( $db );
-			sleep( 1 );
+			// we're potentially performing deletes on all clusters
+			sleep( 15 );
 		}
 
 		$this->output( "\n\nDone!\n" );
