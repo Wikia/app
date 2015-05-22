@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.slot.inContent', [
 	 * @param {String}  result
 	 */
 	function logInfo(section, result) {
-		var padding = ' '.repeat(60),
+		var padding = '                                                            ',
 			name1 = section.name.substring(0, 30),
 			name2 = section.nextName.substring(0, 30),
 			msgPrefix = 'Between ' + name1 + ' and ' + name2 + padding,
