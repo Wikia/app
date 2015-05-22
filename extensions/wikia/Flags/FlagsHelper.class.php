@@ -127,7 +127,6 @@ class FlagsHelper {
 	}
 
 	/**
-	 * 
 	 * Checks if a request for flags does not come from an edit page
 	 * @return bool
 	 */
