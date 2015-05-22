@@ -1,19 +1,24 @@
-<form action="<?= $formSubmitUrl ?>" method="POST" id="flagsEditForm">
+<form action="<?= Sanitizer::cleanUrl( $formSubmitUrl ) ?>" method="POST" id="flagsEditForm">
 	<ul class="flags">
-		<?php foreach ( $flags as $flag_type_id => $flag ): ?>
+		<?php foreach ( $flags as $flagTypeId => $flag ): ?>
+		<?php $prefix = "{$inputNamePrefix}:{$flagTypeId}" ?>
 		<li>
-			<input type="checkbox" name="<?= $inputNamePrefix . ':' . $flag_type_id . ':' . $inputNameCheckbox ?>" <?php if ( $flag['flag_id'] ){ echo 'checked="checked"'; }?>/>
-			<label><?= $flag['flag_name'] ?></label>
-			<a href="<?= $flag['flag_view_url'] ?>" target="_blank">More info</a>
+			<?php isset( $flag['flag_id'] ) ? $checked = 'checked' : $checked = '';	?>
+			<input type="checkbox" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$inputNameCheckbox}" ) ?>" <?= $checked ?>>
+			<label for="<?= Sanitizer::encodeAttribute( "{$prefix}:{$inputNameCheckbox}" ) ?>"><?= $flag['flag_name'] ?></label>
+			<a href="<?= Sanitizer::cleanUrl( $flag['flag_view_url'] ) ?>" target="_blank"><?= wfMessage( 'flags-edit-form-more-info' )->escaped() ?></a>
 			<?php
-			$flagParamsNames = json_decode($flag['flag_params_names']);
-			foreach ( $flagParamsNames as $flagParamName ):
+				$flagParamsNames = json_decode( $flag['flag_params_names'] );
+				foreach ( $flagParamsNames as $flagParamName ):
+					$flagParamValue = (string)$flag['params'][$flagParamName];
 			?>
-				<input type="text" name="<?= $inputNamePrefix . ':' . $flag_type_id . ':' . $flagParamName ?>" value="<?= isset( $flag['params'][$flagParamName] ) ? $flag['params'][$flagParamName] : '' ?>" placeholder="<?= $flagParamName ?>" class="param" />
-			<?php endforeach; ?>
+			<input type="text" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$flagParamName}" ) ?>" value="<?= Sanitizer::encodeAttribute( $flagParamValue ) ?>" placeholder="<?= Sanitizer::encodeAttribute( $flagParamName ) ?>" class="param">
+			<?php
+				endforeach;
+			?>
 		</li>
 		<?php endforeach; ?>
 	</ul>
-	<input type="hidden" name="pageId" value="<?= $pageId ?>"/>
-	<input type="hidden" name="token" value="<?= $editToken ?>"/>
+	<input type="hidden" name="page_id" value="<?= Sanitizer::encodeAttribute( $pageId ) ?>">
+	<input type="hidden" name="token" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>">
 </form>
