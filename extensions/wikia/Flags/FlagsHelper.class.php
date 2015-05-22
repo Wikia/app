@@ -127,6 +127,7 @@ class FlagsHelper {
 	}
 
 	/**
+	 * 
 	 * Checks if a request for flags does not come from an edit page
 	 * @return bool
 	 */
@@ -134,8 +135,11 @@ class FlagsHelper {
 		global $wgTitle, $wgRequest;
 
 		return
+			/* Don't display flags when parsing message (wgTitle doesn't exist then) */
 			$wgTitle instanceof \Title
+			/* Display flags only on content namespaces */
 			&& \Wikia::isContentNamespace()
+			/* Don't display flags on edit pages that are content namespaces */
 			&& !in_array(
 				$wgRequest->getVal( 'action', 'view' ),
 				[ 'edit', 'formedit' , 'history' ]
