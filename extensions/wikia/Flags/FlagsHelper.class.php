@@ -131,12 +131,18 @@ class FlagsHelper {
 	 * @return bool
 	 */
 	public function shouldDisplayFlags() {
-		global $wgRequest;
+		global $wgTitle, $wgRequest;
 
-		return !in_array(
-			$wgRequest->getVal( 'action', 'view' ),
-			[ 'edit', 'formedit' , 'history' ]
-		);
+		return
+			/* Don't display flags when parsing message (wgTitle doesn't exist then) */
+			$wgTitle instanceof \Title
+			/* Display flags only on content namespaces */
+			&& \Wikia::isContentNamespace()
+			/* Don't display flags on edit pages that are content namespaces */
+			&& !in_array(
+				$wgRequest->getVal( 'action', 'view' ),
+				[ 'edit', 'formedit' , 'history' ]
+			);
 	}
 
 	/**
