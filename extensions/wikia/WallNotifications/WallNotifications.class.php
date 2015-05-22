@@ -394,6 +394,7 @@ class WallNotifications {
 				'fromName' => $this->app->wg->PasswordSenderName,
 				'wallUserName' => $notification->data->wall_username,
 				'authorUserName' => $notification->data->msg_author_username,
+				'authorIsAnon' => $notification->data->msg_author_id == 0,
 				'threadId' => $notification->data->parent_id
 			];
 

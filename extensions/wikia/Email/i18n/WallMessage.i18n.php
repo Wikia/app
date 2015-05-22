@@ -6,6 +6,12 @@ $messages['en'] = array(
 	'emailext-wallmessage-following-subject' => '$1 wrote $2 a new message on {{SITENAME}}',
 	'emailext-wallmessage-owned-summary' => "'''$1 wrote you a new message on {{SITENAME}}. Lucky you!'''",
 	'emailext-wallmessage-following-summary' => "'''$1 wrote $2 a new message on {{SITENAME}}.'''",
+
+	'emailext-wallmessage-anon-owned-subject' => 'A Wikia fan wrote you a new message on {{SITENAME}}',
+	'emailext-wallmessage-anon-following-subject' => 'A Wikia fan wrote $2 a new message on {{SITENAME}}',
+	'emailext-wallmessage-anon-owned-summary' => "'''A Wikia fan wrote you a new message on {{SITENAME}}. Lucky you!'''",
+	'emailext-wallmessage-anon-following-summary' => "'''A Wikia fan wrote $2 a new message on {{SITENAME}}.'''",
+
 	'emailext-wallmessage-full-conversation' => 'Full conversation',
 	'emailext-wallmessage-recent-messages' => '[$1 All recent messages on $2]',
 );
