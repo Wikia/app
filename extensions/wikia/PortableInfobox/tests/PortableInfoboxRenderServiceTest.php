@@ -87,7 +87,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 				],
 				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-image no-margins">
-									<figure>
+									<figure class="portable-infobox-image-wrapper">
 										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
 											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
 										</a>
@@ -142,7 +142,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 									<h2 class="portable-infobox-title">Test Title</h2>
 								</div>
 								<div class="portable-infobox-item item-type-image no-margins">
-									<figure>
+									<figure class="portable-infobox-image-wrapper">
 										<a href="" class="image image-thumbnail" title="image alt">
 											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
 										</a>

@@ -11,6 +11,6 @@ class NodeFooter extends Node {
 
 	public function isEmpty( $data ) {
 		$links = trim( $data['value'] );
-		return empty( $links );
+		return empty( $links ) && $links != '0';
 	}
 }
