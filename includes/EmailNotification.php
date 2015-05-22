@@ -97,6 +97,11 @@ class EmailNotification {
 			return;
 		}
 
+		if ( ( $this->isArticleComment() || $this->isBlogComment() ) && $this->previousRevId !== 0 ) {
+			// Ignore edited or deleted comments
+			return;
+		}
+
 		// Build a list of users to notify
 		$watchers = [];
 		if ( F::app()->wg->EnotifWatchlist || F::app()->wg->ShowUpdatedMarker ) {
@@ -116,7 +121,6 @@ class EmailNotification {
 	 * Add a timeout to the watchlist email block
 	 */
 	private function getTimeOutSql() {
-
 		if ( !empty( $this->otherParam['notisnull'] ) ) {
 			$notificationTimeoutSql = "1";
 		} elseif ( !empty( F::app()->wg->EnableWatchlistNotificationTimeout ) && isset( F::app()->wg->WatchlistNotificationTimeout ) ) {
@@ -168,11 +172,6 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function shouldSendEmail( array $watchers ) {
-		if ( ( $this->isArticleComment() || $this->isBlogComment() ) && $this->previousRevId !== 0 ) {
-			// Don't send email when a comment is edited or deleted
-			return false;
-		}
-
 		if ( $this->thereAreUsersWatchingPage( $watchers ) ) {
 			return true;
 		}
