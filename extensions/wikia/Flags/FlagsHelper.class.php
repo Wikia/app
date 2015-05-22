@@ -141,7 +141,7 @@ class FlagsHelper {
 				[ 'edit', 'formedit' , 'history' ]
 			);
 	}
-	
+
 	/**
 	 * A wrapper for a request to the FlagsController for flags for the given page
 	 * that returns a wikitext string with calls to templates of the flags.
