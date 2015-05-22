@@ -9,6 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'sitemap-page-desc' => 'Sitemap Page',
+	'sitemap-page-header' => 'Wikia Sitemap',
 	'sitemap-page-html-title' => 'Sitemap Page - Wikia.com/Sitemap',
 	'sitemap-page-wiki-title' => 'Title',
 	'sitemap-page-wiki-language' => 'Language',
@@ -21,6 +22,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'sitemap-page-desc' => '{{desc}}',
+	'sitemap-page-header' => 'This is the title of the page',
 	'sitemap-page-html-title' => 'This is the page title for the sitemap page',
 	'sitemap-page-wiki-title' => 'Label text for wiki title',
 	'sitemap-page-wiki-language' => 'Label text for wiki language',

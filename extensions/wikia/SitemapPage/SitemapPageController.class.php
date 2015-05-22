@@ -6,7 +6,6 @@
 class SitemapPageController extends WikiaController {
 
 	public function init() {
-		$this->response->addAsset( 'sitemap_page_js' );
 		$this->response->addAsset( 'sitemap_page_css' );
 		$this->wg->Out->setRobotPolicy( 'noindex, follow' );
 	}

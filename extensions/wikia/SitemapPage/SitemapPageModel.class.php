@@ -72,8 +72,8 @@ class SitemapPageModel extends WikiaModel {
 				->FIELD( 'city_list.city_id' )
 				->FIELD( 'trim(city_list.city_title) as title' )
 				->FIELD( 'city_list.city_url' )
-				->FIELD( 'city_visualization.city_lang_code' )
-				->FIELD( 'city_visualization.city_vertical' )
+				->FIELD( 'city_list.city_lang' )
+				->FIELD( 'city_list.city_vertical' )
 				->FIELD( 'trim(city_visualization.city_description) as description' )
 			->FROM( 'city_list' )
 			->LEFT_JOIN( 'city_visualization' )->ON( 'city_list.city_id', 'city_visualization.city_id' )
@@ -94,7 +94,7 @@ class SitemapPageModel extends WikiaModel {
 			$wikis[] = [
 				'title'       => $row->title,
 				'url'         => $row->city_url,
-				'language'    => strtoupper( $row->city_lang_code ),
+				'language'    => strtoupper( $row->city_lang ),
 				'vertical'    => $this->getVerticalName( $row->city_vertical ),
 				'description' => empty( $row->description ) ? '' : $row->description,
 			];
