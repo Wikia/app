@@ -1260,6 +1260,24 @@ $messages['ko'] = array(
 	'manage-wikia-home-stats-failure' => '데이터가 저장되지 않았습니다. 양식의 오류를 수정하고 다시 시도해주세요.',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'manage-wikia-home-change-button' => 'Biguherîne',
+	'manage-wikia-home-wiki-filter' => 'Fîltre',
+	'manage-wikia-home-wiki-filter-reset' => 'Paqij bike',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Na',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Erê',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Na',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Erê',
+	'manage-wikia-home-wiki-list-official-no' => 'Na',
+	'manage-wikia-home-wiki-list-official-yes' => 'Erê',
+	'manage-wikia-home-modal-button-no' => 'Na',
+	'manage-wikia-home-modal-button-yes' => 'Erê',
+	'manage-wikia-home-collections-setup-save-button' => 'Tomar bike',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -2224,6 +2242,7 @@ $messages['vi'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'Cài đặt slot',
 	'manage-wikia-home-wikis-in-slots-total' => 'Tổng số slot: $1',
 	'manage-wikia-home-hubs-slot-empty-option' => '--Slot rỗng--',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki đã tồn tại trong bộ sưu tập này.',
 	'manage-wikia-home-collections-invalid-action' => 'Hành động này không tồn tại',
 	'manage-wikia-home-change-button' => 'Thay đổi',
 	'manage-wikia-home-wikis-in-visualization-heading' => 'Danh sách trực quan các wiki',
@@ -2244,6 +2263,7 @@ $messages['vi'] = array(
 	'manage-wikia-home-wiki-list-official-yes' => 'Có',
 	'manage-wikia-home-wiki-list-all-collections' => 'Tất cả các bộ sưu tập',
 	'manage-wikia-home-modal-title' => 'Thay đổi trạng thái của wiki',
+	'manage-wikia-home-modal-title-collection' => 'Chỉnh sửa wiki trong bộ sưu tập',
 	'manage-wikia-home-modal-content-add-blocked' => 'Bạn có muốn loại trừ wiki này xuất hiện trong hình dung wiki?',
 	'manage-wikia-home-modal-content-remove-blocked' => 'Bạn có muốn bao gồm wiki này trong hình dung wiki?',
 	'manage-wikia-home-modal-content-add-promoted' => 'Bạn có muốn thúc đẩy wiki này trong hình dung wiki?',
@@ -2268,6 +2288,8 @@ $messages['vi'] = array(
 	'manage-wikia-home-collections-sponsor-hero-image-field-label' => 'Hình ảnh người hùng',
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Hình ảnh nhà tài trợ',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wiki: $1 trong tổng số $2',
+	'manage-wikia-home-collection-hero-image-tooltip' => 'Hình ảnh này sẽ có kich thước $1px × $2px',
+	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Hình ảnh này sẽ có kích thước  $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Thêm hình ảnh',
 	'manage-wikia-home-stats-visitors-label' => 'Khách viếng thăm hàng tháng',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% Khách ghé thăm qua điện thoại di động',

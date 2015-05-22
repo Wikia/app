@@ -867,6 +867,17 @@ $messages['ko'] = array(
 	'lvs-new-flag' => '신규',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'lvs-history-button-text' => 'Dîrok',
+	'lvs-button-yes' => 'Erê',
+	'lvs-button-no' => 'Na',
+	'lvs-posted-in-more' => 'bêhtir',
+	'lvs-new-flag' => 'Nû',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

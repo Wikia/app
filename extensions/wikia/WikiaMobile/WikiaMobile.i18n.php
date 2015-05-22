@@ -1002,6 +1002,13 @@ $messages['he'] = array(
  $1',
 );
 
+/** Hungarian (magyar)
+ * @author Tacsipacsi
+ */
+$messages['hu'] = array(
+	'wikiamobile-search' => 'Keresés',
+);
+
 /** Interlingua (interlingua)
  * @author McDutchie
  */
@@ -1213,6 +1220,7 @@ $messages['krc'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author Gomada
  */
 $messages['ku-latn'] = array(
@@ -1223,6 +1231,9 @@ $messages['ku-latn'] = array(
 	'wikiamobile-password' => 'Şîfre',
 	'wikiamobile-login-submit' => 'Têkeve',
 	'wikiamobile-menu' => 'Menû',
+	'wikiamobile-article-categories' => 'Kategorî',
+	'wikiamobile-back' => 'Paşve',
+	'wikiamobile-profile' => 'Profîl',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1239,6 +1250,7 @@ $messages['lb'] = array(
 	'wikiamobile-feedback' => 'Feedback',
 	'wikiamobile-back' => 'Zréck',
 	'wikiamobile-profile' => 'Profil',
+	'wikiamobile-last-edited-by' => 'vum $1',
 	'wikiamobile-anonymous-edited-by' => 'Anonym',
 	'wikiamobile-categories-tagline' => 'Säit vun der Kategorie',
 	'wikiamobile-media-group-footer' => '1 vu(n) $1',

@@ -75,7 +75,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
-		'//extensions/wikia/AdEngine/js/LateAdsQueue.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -86,7 +85,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
-		'//extensions/wikia/AdEngine/js/provider/later.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
@@ -2437,12 +2435,12 @@ $config['portable_infobox_scss'] = [
 	]
 ];
 
-$config['portable_infobox_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+$config['portable_infobox_monobook_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['monobook'],
 	'assets' => [
-		'//resources/wikia/libraries/vignette/vignette.js',
-		'//extensions/wikia/PortableInfobox/scripts/PortableInfobox.js'
+		'#group_portable_infobox_scss',
+		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
 	]
 ];
 
@@ -2459,5 +2457,12 @@ $config['paid_asset_drop_desktop_js'] = [
 	'assets' => [
 		'//extensions/wikia/PaidAssetDrop/js/run/desktop.run.js',
 		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js'
+	]
+];
+
+$config['special_email_admin_css'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'assets' => [
+		'//extensions/wikia/Email/styles/specialSendEmail.scss'
 	]
 ];

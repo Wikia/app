@@ -44,6 +44,9 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ), wfMessage( 'loginerror' ) );
 		}
 
+		// Clean up any facebook cookies/data
+		FacebookClient::getInstance()->logout();
+
 		$this->setHeaders();
 		$this->outputHeader();
 

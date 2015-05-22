@@ -1648,6 +1648,21 @@ $messages['ko'] = array(
 	'right-phalanx' => '전역 차단 및 스팸 필터 관리',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'phalanx-type-user' => 'bikarhêner',
+	'phalanx-type-user-email' => 'e-name',
+	'phalanx-label-filter' => 'Fîltre:',
+	'phalanx-label-reason' => 'Sedem:',
+	'phalanx-label-lang' => 'Ziman:',
+	'phalanx-stats-table-reason' => 'Sedem',
+	'phalanx-stats-table-wiki-name' => 'Navê Wîkîye',
+	'phalanx-stats-table-wiki-url' => 'URLya Wîkîye',
+	'phalanx-stats-table-wiki-last-edited' => 'Guherandina dawî',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -3259,6 +3274,7 @@ Nếu bạn tin rằng đây là lỗi, xin vui lòng [[Special:Contact|liên l�
 	'phalanx-stats-table-language' => 'Ngôn ngữ',
 	'phalanx-stats-table-text' => 'Văn bản',
 	'phalanx-stats-table-reason' => 'Lý do',
+	'phalanx-stats-table-wiki-last-edited' => 'Sửa đổi lần cuối',
 	'phalanx-email-filter-hidden' => 'Bộ lọc Email bị ẩn. Bạn không có quyền được xem văn bản.',
 );
 

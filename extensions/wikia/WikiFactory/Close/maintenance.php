@@ -37,6 +37,14 @@ class CloseWikiMaintenance {
 	}
 
 	/**
+	 * @param string $msg
+	 * @param array $context
+	 */
+	private function info( $msg, Array $context = [] ) {
+		\Wikia\Logger\WikiaLogger::instance()->info( $msg, $context );
+	}
+
+	/**
 	 * 1. go through all wikis which are marked for closing and check which one
 	 * 	want to have images packed.
 	 *
@@ -53,8 +61,20 @@ class CloseWikiMaintenance {
 		global $wgUploadDirectory, $wgDBname, $IP;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
-		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 1;
+		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 15;
+		$cluster   = isset( $this->mOptions[ "cluster" ] ) ? $this->mOptions[ "cluster" ] : false; // eg. c6
 		$condition = array( "ORDER BY" => "city_id" );
+
+		if ($cluster === false) {
+			$this->log('--cluster needs to be provided');
+			return;
+		}
+
+		$this->info( 'start', [
+			'cluster' => $cluster,
+			'first'   => $first,
+			'limit'   => $this->mOptions[ "limit" ] ?: false
+		] );
 
 		/**
 		 * if $first is set skip limit checking
@@ -74,10 +94,15 @@ class CloseWikiMaintenance {
 				"city_public" => array( 0, -1 ),
 				"city_flags <> 0 && city_flags <> 32",
 				"city_last_timestamp < '{$timestamp}'",
+				"city_cluster" => $cluster
 			),
 			__METHOD__,
 			$condition
 		);
+
+		$this->info( 'wikis to remove', [
+			'wikis' => $sth->numRows()
+		] );
 
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			/**
@@ -238,6 +263,12 @@ class CloseWikiMaintenance {
 			if(  $newFlags ) {
 				WikiFactory::resetFlags( $row->city_id, $newFlags );
 			}
+
+			$this->info( 'closed', [
+				'cluster' => $cluster,
+				'city_id' => (int) $cityid,
+				'dbname'  => $dbname,
+			] );
 
 			/**
 			 * just one?

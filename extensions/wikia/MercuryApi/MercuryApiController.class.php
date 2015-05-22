@@ -354,7 +354,7 @@ class MercuryApiController extends WikiaController {
 			$this->response->setVal( 'items', false );
 		} else {
 			$data = $this->getCuratedContentData( $section );
-			$this->response->setVal( 'items', $data );
+			$this->response->setVal( 'items', $data['items'] );
 		}
 	}
 
