@@ -120,7 +120,6 @@ class PageHeaderController extends WikiaController {
 	 * Get content actions for dropdown
 	 */
 	protected function getDropdownActions() {
-		wfDebug('kamilktestlog '.__METHOD__."\n");
 		$ret = array();
 
 		$editActions = array();
