@@ -72,7 +72,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function verifyParamsForAdd( $params ) {
-		$required = [ 'wikiId', 'flagGroup', 'flagName', 'flagView', 'flagTargeting' ];
+		$required = [ 'wiki_id', 'flagGroup', 'flagName', 'flagView', 'flagTargeting' ];
 
 		foreach ( $required as $requiredField ) {
 			if ( !isset( $params[$requiredField] ) ) {
@@ -103,7 +103,7 @@ class FlagType extends FlagsBaseModel {
 
 		$sql = ( new \WikiaSQL() )
 			->INSERT( self::FLAGS_TYPES_TABLE )
-			->SET( 'wiki_id', $params['wikiId'] )
+			->SET( 'wiki_id', $params['wiki_id'] )
 			// flag_type_id is auto_increment
 			->SET( 'flag_group', $params['flagGroup'] )
 			->SET( 'flag_name', $params['flagName'] )
