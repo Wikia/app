@@ -174,7 +174,7 @@ class OwnWallMessageController extends WallMessageController {
 				->inLanguage( $this->targetLang )->parse();
 		} else {
 			return wfMessage( 'emailext-wallmessage-owned-summary',
-				$this->authorUserName
+				$this->getCurrentProfilePage(), $this->authorUserName
 			)->inLanguage( $this->targetLang )->parse();
 		}
 	}
@@ -233,6 +233,7 @@ class FollowedWallMessageController extends WallMessageController {
 			)->inLanguage( $this->targetLang )->parse();
 		} else {
 			return wfMessage( 'emailext-wallmessage-following-summary',
+				$this->getCurrentProfilePage(),
 				$this->authorUserName,
 				$this->wallUserName
 			)->inLanguage( $this->targetLang )->parse();
