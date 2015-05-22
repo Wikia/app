@@ -433,18 +433,17 @@ class WallNotifications {
 		if ( !empty( $notification->data->article_title_ns )
 			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
 		) {
-			if ($notification->isMain()) {
+			if ( $notification->isMain() ) {
 				$controller = 'Email\Controller\Forum';
-			}
-			else {
+			} else {
 				$controller = 'Email\Controller\ReplyForum';
 			}
+		} else if ( $notification->data->wall_username != $watcherName ) {
+			$controller = 'Email\Controller\FollowedWallMessage';
 		} else if ( !$notification->isMain() ) {
 			$controller = 'Email\Controller\ReplyWallMessage';
-		} else if ( $notification->data->wall_username == $watcherName ) {
-			$controller = 'Email\Controller\OwnWallMessage';
 		} else {
-			$controller = 'Email\Controller\FollowedWallMessage';
+			$controller = 'Email\Controller\OwnWallMessage';
 		}
 
 		return $controller;
