@@ -119,8 +119,8 @@ class Flag extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function verifyParamsForAdd( Array $params ) {
-		if ( !isset( $params['wikiId'] )
-			|| !isset( $params['pageId'] )
+		if ( !isset( $params['wiki_id'] )
+			|| !isset( $params['page_id'] )
 			|| ( !isset( $params['flags'] ) && !is_array( $params['flags'] ) )
 		) {
 			return false;

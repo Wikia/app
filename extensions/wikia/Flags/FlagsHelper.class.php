@@ -146,41 +146,6 @@ class FlagsHelper {
 	}
 
 	/**
-	 * A wrapper for a request to the FlagsController for flags for the given page
-	 * that returns a wikitext string with calls to templates of the flags.
-	 * @param int $pageId
-	 * @return null|string
-	 */
-	public function getFlagsForPageWikitext( $pageId ) {
-		$flags = $this->sendGetFlagsForPageRequest( $pageId );
-		if ( !empty( $flags ) ) {
-			$flagsWikitext = '';
-			$flagView = new FlagView();
-			foreach ( $flags as $flagId => $flag ) {
-				$flagsWikitext .= $flagView->createWikitextCall( $flag['flag_view'], $flag['params'] );
-			}
-			return $flagsWikitext;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Sends a request to the FlagsController to get data on flags for the given page.
-	 * @param int $pageId
-	 * @return array
-	 */
-	private function sendGetFlagsForPageRequest( $pageId ) {
-		$app = \F::app();
-		return $app->sendRequest( 'FlagsController',
-			'getFlagsForPage',
-			[
-				'pageId' => $pageId,
-			]
-		)->getData();
-	}
-
-	/**
 	 * Composes the name of a flags edit form input from the $field parameter and a $flagTypeId
 	 * @param int $flagTypeId
 	 * @param string $field

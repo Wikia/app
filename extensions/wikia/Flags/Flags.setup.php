@@ -28,6 +28,7 @@ $wgExtensionCredits['other'][] = [
  * Controllers
  */
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
+$wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 
 /**
  * Models
