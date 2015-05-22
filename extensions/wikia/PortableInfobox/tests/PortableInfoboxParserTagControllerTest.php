@@ -94,4 +94,34 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . PortableInfoboxParserTagController::DEFAULT_THEME_NAME
 		) );
 	}
+
+	public function testWhiteSpacedThemeInfobox() {
+		$text = '<data><default>test</default></data>';
+		$defaultTheme = 'test test';
+		$expectedName = 'test-test';
+
+		$marker = $this->controller->renderInfobox( $text, [ 'theme' => $defaultTheme ], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
+		) );
+	}
+
+	public function testMultiWhiteSpacedThemeInfobox() {
+		$text = '<data><default>test</default></data>';
+		$defaultTheme = "test    test\n test\ttest";
+		$expectedName = 'test-test-test-test';
+
+		$marker = $this->controller->renderInfobox( $text, [ 'theme' => $defaultTheme ], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
+		) );
+	}
 }
