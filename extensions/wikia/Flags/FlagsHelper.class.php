@@ -133,7 +133,7 @@ class FlagsHelper {
 	public function shouldDisplayFlags() {
 		global $wgRequest;
 
-		return !in_array(
+		return \Wikia::isContentNamespace() && !in_array(
 			$wgRequest->getVal( 'action', 'view' ),
 			[ 'edit', 'formedit' , 'history' ]
 		);
