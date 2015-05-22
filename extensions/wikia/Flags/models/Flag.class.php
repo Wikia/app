@@ -127,7 +127,7 @@ class Flag extends FlagsBaseModel {
 		}
 
 		foreach( $params['flags'] as $flag ) {
-			if ( !isset( $flag['flagTypeId'] ) ) {
+			if ( !isset( $flag['flag_type_id'] ) ) {
 				return false;
 			}
 		}
@@ -149,7 +149,7 @@ class Flag extends FlagsBaseModel {
 		$status = [];
 
 		foreach ( $params['flags'] as $i => $flag ) {
-			$status[$i] = $this->addFlag( $flag['flagTypeId'], $params['wikiId'], $params['pageId'], $flag['params'] );
+			$status[$i] = $this->addFlag( $flag['flag_type_id'], $params['wikiId'], $params['pageId'], $flag['params'] );
 		}
 
 		return $status;

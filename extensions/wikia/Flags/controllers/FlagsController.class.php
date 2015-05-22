@@ -290,9 +290,17 @@ class FlagsController extends WikiaApiController {
 			 */
 			$flagsCache = new FlagsCache();
 			$flagsCache->purgeFlagsForPage( $pageId );
+
+			/**
+			 * Purge article after updating flags
+			 */
+			$wikiPage = WikiPage::factory( $title );
+			$wikiPage->doPurge();
 		}
 
-		// Redirect back to article view after saving flags
+		/**
+		 * Redirect back to article view after saving flags
+		 */
 		$pageUrl = $title->getFullURL();
 		$this->response->redirect( $pageUrl );
 		return true;
@@ -351,7 +359,7 @@ class FlagsController extends WikiaApiController {
 	 * @requestParam int wikiId
 	 * @requestParam int pageId
 	 * @requestParam array flags
-	 * @requestParam int flags['flagTypeId'] An ID of a flag type
+	 * @requestParam int flags['flag_type_id'] An ID of a flag type
 	 *
 	 * Optional parameters:
 	 * @requestParam array flags['params'] An array of params structured like:
