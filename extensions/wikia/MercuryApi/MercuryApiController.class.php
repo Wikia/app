@@ -337,8 +337,8 @@ class MercuryApiController extends WikiaController {
 		$trendingArticles = $this->getTrendingArticlesData();
 		$trendingVideos = $this->getTrendingVideosData();
 
-		if ( !empty( $curatedContent[ 'sections' ] ) ) {
-			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'sections' ];
+		if ( !empty( $curatedContent[ 'items' ] ) ) {
+			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
 		}
 
 		if ( !empty( $curatedContent[ 'featured' ] ) ) {

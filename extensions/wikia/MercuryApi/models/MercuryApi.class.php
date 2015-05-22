@@ -251,49 +251,77 @@ class MercuryApi {
 		return null;
 	}
 
-	public function processCuratedContent( $data ) {
-		if ( empty( $data ) ) {
-			return false;
+	/**
+	 * CuratedContent API returns data in a different format than we need.
+	 * Let's clean it up!
+	 * @param $rawData
+	 * @return array|null
+	 */
+	public function processCuratedContent( $rawData ) {
+		if ( empty( $rawData ) ) {
+			return null;
 		}
 
-		$process = false;
+		$data = [];
+		$sections = $this->getCuratedContentSections( $rawData );
+		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
+		$featured = $this->getCuratedContentItems( $rawData[ 'featured' ] );
 
-		if ( !empty( $data[ 'featured' ] ) ) {
-			$process = 'featured';
-		} elseif ( !empty( $data[ 'items' ] ) ) {
-			$process = 'items';
+		if ( !empty( $sections ) || !empty( $items ) ) {
+			$data[ 'items' ] = [];
 		}
 
-		if ( $process ) {
-			$items = [];
-			foreach ( $data[ $process ] as $item ) {
-				$processedItem = $this->processCuratedContentItem( $item );
-				if ( !empty( $processedItem ) ) {
-					$items[] = $processedItem;
-				}
-			}
-			$data[ $process ] = $items;
+		if ( !empty( $sections ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $sections );
+		}
+
+		if ( !empty( $items ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $items );
+		}
+
+		if ( !empty( $featured ) ) {
+			$data[ 'featured' ] = $featured;
 		}
 
 		return $data;
 	}
 
-	public function processTrendingData( $data, $itemArrayName, $paramsToInclude = [] ) {
-		if ( !isset( $data[ $itemArrayName ] ) || !is_array( $data[ $itemArrayName ] ) ) {
-			return false;
-		}
-
-		$items = [];
-
-		foreach ( $data[ $itemArrayName ] as $item ) {
-			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
-
-			if ( !empty( $processedItem ) ) {
-				$items[] = $processedItem;
+	/**
+	 * Add `section` type to all sections from CuratedContent data
+	 * @param $data
+	 * @return array
+	 */
+	private function getCuratedContentSections( $data ) {
+		$sections = [];
+		if ( !empty( $data[ 'sections' ] ) ) {
+			foreach ( $data[ 'sections' ] as $section ) {
+				$section[ 'type' ] = 'section';
+				$sections[] = $section;
 			}
 		}
+		return $sections;
+	}
 
-		return $items;
+	/**
+	 * Process CuratedContent items and sanitize when the item is an article
+	 * @param $items
+	 * @return array
+	 */
+	private function getCuratedContentItems( $items ) {
+		$data = [];
+		if ( !empty( $items ) ) {
+			foreach ( $items as $item ) {
+				if ( $item[ 'type' ] === 'article' ) {
+					$processedItem = $this->processCuratedContentArticle($item);
+					if ( !empty( $processedItem ) ) {
+						$data[] = $processedItem;
+					}
+				} else {
+					$data[] = $item;
+				}
+			}
+		}
+		return $data;
 	}
 
 	/**
@@ -306,7 +334,7 @@ class MercuryApi {
 	 * @param $item
 	 * @return mixed
 	 */
-	private function processCuratedContentItem( $item ) {
+	private function processCuratedContentArticle( $item ) {
 		if ( !empty( $item[ 'article_id' ] ) ) {
 			$title = Title::newFromID( $item[ 'article_id' ] );
 
@@ -318,6 +346,24 @@ class MercuryApi {
 		}
 
 		return null;
+	}
+
+	public function processTrendingArticles( $data ) {
+		if ( !isset( $data[ 'items' ] ) || !is_array( $data[ 'items' ] ) ) {
+			return false;
+		}
+
+		$items = [];
+
+		foreach ( $data[ 'items' ] as $item ) {
+			$processedItem = $this->processTrendingArticlesItem( $item );
+
+			if ( !empty( $processedItem ) ) {
+				$items[] = $processedItem;
+			}
+		}
+
+		return $items;
 	}
 
 	/**
