@@ -40,11 +40,11 @@ class NodeImage extends Node {
 	 * @return string url or '' if image doesn't exist
 	 */
 	public function resolveImageUrl( $title ) {
-		if ( $title && $title->exists() ) {
-			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
-		} else if ( $title ) {
-			$file = wfFindFile( $title );
-			return $file->getUrl();
+		if ( $title ) {
+			$file = \WikiaFileHelper::getFileFromTitle($title);
+			if ($file) {
+				return $file->getUrl();
+			}
 		}
 		return '';
 	}

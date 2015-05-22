@@ -172,18 +172,25 @@ class PortableInfoboxRenderService extends WikiaService {
 		// TODO: remove 'if' condition when unified thumb method
 		// will be implemented: https://wikia­inc.atlassian.net/browse/PLATFORM­1237
 		if ( VignetteRequest::isVignetteUrl( $url ) ) {
-			return VignetteRequest::fromUrl( $url )
-				->thumbnailDown()
-				->width(F::app()->checkSkin( 'wikiamobile' ) ?
-					self::MOBILE_THUMBNAIL_WIDTH :
-					self::DESKTOP_THUMBNAIL_WIDTH
-				)
-				->height( self::THUMBNAIL_HEIGHT )
-				->url();
+			return $this->createVignetteThumbnail( $url );
 		} else {
-			$url = $this->createOldThumbnail( $data['name'] );
+			return $this->createOldThumbnail( $data['name'] );
 		}
-		return $url;
+	}
+
+	/**
+	 * @param $url
+	 * @return string
+	 */
+	private function createVignetteThumbnail( $url ) {
+		return VignetteRequest::fromUrl( $url )
+			->thumbnailDown()
+			->width(F::app()->checkSkin( 'wikiamobile' ) ?
+				self::MOBILE_THUMBNAIL_WIDTH :
+				self::DESKTOP_THUMBNAIL_WIDTH
+			)
+			->height( self::THUMBNAIL_HEIGHT )
+			->url();
 	}
 
 	/**
@@ -195,21 +202,15 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	private function createOldThumbnail( $name )
 	{
-		$file = $this->findFileByName( $name );
-		return $file->createThumb(
-			F::app()->checkSkin('wikiamobile') ?
-				self::MOBILE_THUMBNAIL_WIDTH :
-				self::DESKTOP_THUMBNAIL_WIDTH
+		$file = $this->wfFindFile( $name );
+		if ( $file ) {
+			return $file->createThumb(
+				F::app()->checkSkin('wikiamobile') ?
+					self::MOBILE_THUMBNAIL_WIDTH :
+					self::DESKTOP_THUMBNAIL_WIDTH
 			);
-	}
-
-	/**
-	 * @param string $name image name
-	 * @return File
-	 */
-	public function findFileByName( $name ) {
-		$file = wfFindFile( $name );
-		return $file;
+		}
+		return '';
 	}
 
 	/**
