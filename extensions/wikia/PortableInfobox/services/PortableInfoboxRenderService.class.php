@@ -171,17 +171,17 @@ class PortableInfoboxRenderService extends WikiaService {
 		$url = $data['url'];
 		// TODO: remove 'if' condition when unified thumb method
 		// will be implemented: https://wikia­inc.atlassian.net/browse/PLATFORM­1237
-		if ( VignetteRequest::isVignetteUrl( $url )) {
-			return VignetteRequest::fromUrl($url)
+		if ( VignetteRequest::isVignetteUrl( $url ) ) {
+			return VignetteRequest::fromUrl( $url )
 				->thumbnailDown()
-				->width(F::app()->checkSkin('wikiamobile') ?
+				->width(F::app()->checkSkin( 'wikiamobile' ) ?
 					self::MOBILE_THUMBNAIL_WIDTH :
 					self::DESKTOP_THUMBNAIL_WIDTH
 				)
-				->height(self::THUMBNAIL_HEIGHT)
+				->height( self::THUMBNAIL_HEIGHT )
 				->url();
 		} else {
-			$url = $this->createOldThumbnail($data['name']);
+			$url = $this->createOldThumbnail( $data['name'] );
 		}
 		return $url;
 	}
