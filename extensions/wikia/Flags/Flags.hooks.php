@@ -8,7 +8,7 @@ class Hooks {
 	const FLAGS_DROPDOWN_ACTION = 'flags';
 
 	public static function onBeforePageDisplay( \OutputPage &$out, \Skin &$skin ) {
-		$out->addScriptFile('/extensions/wikia/Flags/scripts/FlagsModal.js');
+		\Wikia::addAssetsToOutput( 'flags_js' );
 		return true;
 	}
 
