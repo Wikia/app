@@ -70,7 +70,8 @@ define('ext.wikia.adEngine.slot.exitstitial', [
 					onError: skipAd,
 					onSuccess: showModal
 				});
-				setTimeout(showModal, 1000); // Show modal after a second even if the ad still loads
+				// Show modal after a second even if the ad still loads
+				setTimeout(showModal, 1000);
 
 				// Skip ads after N seconds
 				setTimeout(skipAd, redirectDelay * 1000);
