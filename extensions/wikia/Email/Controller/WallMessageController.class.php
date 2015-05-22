@@ -128,12 +128,6 @@ abstract class WallMessageController extends EmailController {
 				],
 				[
 					'type' => 'text',
-					'name' => 'authorUserName',
-					'label' => 'Author Username',
-					'tooltip' => 'Username of the user who posted a reply'
-				],
-				[
-					'type' => 'text',
 					'name' => 'titleUrl',
 					'label' => 'Title URL',
 					'tooltip' => 'URL of the specific forum thread, eg http://community.wikia.com/wiki/Thread:841030#2'
