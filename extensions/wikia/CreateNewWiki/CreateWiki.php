@@ -91,7 +91,6 @@ class CreateWiki {
 				"de" => "destarter",
 				"en" => "starter",
 				"es" => "esstarter",
-				"fi" => "fistarter",
 				"fr" => "starterbeta",
 				"it" => "italianstarter",
 				"ja" => "jastarter",
@@ -1114,6 +1113,7 @@ class CreateWiki {
 		if ( $starter ) {
 			$tables = $this->mStarterTables[ "*" ];
 
+			$then = microtime( true );
 			$cmd = sprintf(
 				"%s -h%s -u%s -p%s %s %s | %s -h%s -u%s -p%s %s",
 				$this->mMYSQLdump,
@@ -1130,19 +1130,38 @@ class CreateWiki {
 			);
 			wfShellExec( $cmd, $retVal );
 
+			$this->info( 'importStarter: mysqldump', [
+				'host'    => $starter[ "host" ],
+				'retval'  => $retVal,
+				'starter' => $starter[ "dbStarter" ],
+				'took'    => microtime( true ) - $then,
+			] );
+
 			if ($retVal > 0) {
 				$this->error( 'starter dump import failed', [
 					'starter_db' => $dbStarter
 				] );
 				return false;
 			}
+/**
+			$then = microtime( true );
 
 			wfDebugLog( "createwiki", __METHOD__ . ": Import {$this->mIP}/maintenance/cleanupStarter.sql \n", true );
 			$error = $this->mNewWiki->dbw->sourceFile( "{$this->mIP}/maintenance/cleanupStarter.sql", false, false, __METHOD__ );
+
+			$this->info( 'importStarter: cleanup', [
+				'err'     => $error,
+				'took'    => microtime( true ) - $then,
+			] );
+
 			if ($error !== true) {
 				wfDebugLog( "createwiki", __METHOD__ . ": Import starter failed\n", true );
 				return false;
 			}
+**/
+
+			// starter import performs lots of inserts, wait for slaves to catch up
+			$this->waitForSlaves( __METHOD__ );
 
 			$cmd = sprintf(
 				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",

@@ -28,7 +28,7 @@ $color-divider: mix($color-page, $color-text, 80%);
     padding: 0 10px 10px 0;
     width: 300px;
 
-    h1 {
+    h2 {
         padding-left: 0;
     }
 
@@ -108,7 +108,7 @@ $color-divider: mix($color-page, $color-text, 80%);
         @include wikia-rail-element;
         display: block;
 
-        h1 {
+        h2 {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 16px;

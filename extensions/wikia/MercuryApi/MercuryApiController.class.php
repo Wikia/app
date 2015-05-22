@@ -310,7 +310,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
@@ -334,6 +334,7 @@ class MercuryApiController extends WikiaController {
 	private function getMainPageData() {
 		$mainPageData = [];
 		$curatedContent = $this->getCuratedContentData();
+		$trendingArticles = $this->getTrendingArticlesData();
 
 		if ( !empty( $curatedContent[ 'sections' ] ) ) {
 			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'sections' ];
@@ -341,6 +342,10 @@ class MercuryApiController extends WikiaController {
 
 		if ( !empty( $curatedContent[ 'featured' ] ) ) {
 			$mainPageData[ 'featuredContent' ] = $curatedContent[ 'featured' ];
+		}
+
+		if ( !empty( $trendingArticles ) ) {
+			$mainPageData[ 'trendingArticles' ] = $trendingArticles;
 		}
 
 		return $mainPageData;
@@ -354,7 +359,7 @@ class MercuryApiController extends WikiaController {
 			$this->response->setVal( 'items', false );
 		} else {
 			$data = $this->getCuratedContentData( $section );
-			$this->response->setVal( 'items', $data['items'] );
+			$this->response->setVal( 'items', $data[ 'items' ] );
 		}
 	}
 
@@ -365,12 +370,35 @@ class MercuryApiController extends WikiaController {
 		if ( $section ) {
 			$params[ 'section' ] = $section;
 		}
+
 		try {
 			$rawData = $this->sendRequest( 'CuratedContent', 'getList', $params )->getData();
 			$data = $this->mercuryApi->processCuratedContent( $rawData );
 		} catch ( NotFoundApiException $ex ) {
 			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
 		}
+
+		return $data;
+	}
+
+	private function getTrendingArticlesData() {
+		global $wgContentNamespaces;
+
+		$params = [
+			'abstract' => false,
+			'expand' => true,
+			'limit' => 10,
+			'namespaces' => implode( ',', $wgContentNamespaces )
+		];
+		$data = [];
+
+		try {
+			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
+			$data = $this->mercuryApi->processTrendingArticles( $rawData );
+		} catch ( NotFoundApiException $ex ) {
+			WikiaLogger::instance()->info( 'Trending articles data is empty' );
+		}
+
 		return $data;
 	}
 }

@@ -427,7 +427,7 @@ $WikiNavWidth: $width-outside - 271px;
 		left: 0;
 
 		// fix for wiki nav bug - DAR-2884
-		@if ( $responsive-layout-enabled ) {
+		@if ( $responsive-or-breakpoints-layout-enabled ) {
 			left: -10px;
 			position: relative;
 			top: auto;

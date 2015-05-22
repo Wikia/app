@@ -624,20 +624,6 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 			wfProfileOut( $fname );
 			return $row[0];
 		}
-
-		// Wikia change - begin
-		// log failed wfWaitForSlaves calls
-		// @see PLATFORM-1219
-		Wikia\Logger\WikiaLogger::instance()->error( 'LoadBalancer::doWait timed out', [
-			'exception' => new Exception( $this->lastError() ),
-			'db'        => $this->getDBname(),
-			'host'      => $this->getServer(),
-			'pos'       => (string) $pos,
-			'query'     => $this->lastQuery(),
-			'timeout'   => $timeout
-		] );
-		// Wikia change - end
-
 		wfProfileOut( $fname );
 		return false;
 	}
