@@ -29,12 +29,11 @@
 
 		a {
 			color: #006cb0;
-			text-decoration: none;
-		}
 
-		a:hover {
-			font-weight: bold;
-			text-decoration: none;
+			span {
+				color: #000;
+				display: inline;
+			}
 		}
 	}
 

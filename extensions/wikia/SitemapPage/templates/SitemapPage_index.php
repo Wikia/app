@@ -6,9 +6,13 @@
 			$from = array_shift( $wikis );
 			$to = array_shift( $wikis );
 			$url = $wg->Title->getLocalURL( "level=$level&from=$from[dbname]&to=$to[dbname]" );
-		?>
-		<span>
-			<a class="title" href="<?= $url ?>"><?= $from['title'] ?> ... <?= $to['title'] ?></a>
+			?>
+			<span>
+			<a class="title" href="<?= $url ?>">
+				<?= $from['title'] ?>
+				<span>to</span>
+				<?= $to['title'] ?>
+			</a>
 		</span>
 		<?php } ?>
 	</div>
