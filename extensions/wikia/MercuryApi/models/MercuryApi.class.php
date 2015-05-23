@@ -289,6 +289,23 @@ class MercuryApi {
 	}
 
 	/**
+	 * Add `section` type to all sections from CuratedContent data
+	 *
+	 * @param $data
+	 * @return array
+	 */
+	private function getCuratedContentSections( $data ) {
+		$sections = [];
+		if ( !empty( $data[ 'sections' ] ) ) {
+			foreach ( $data[ 'sections' ] as $section ) {
+				$section[ 'type' ] = 'section';
+				$sections[] = $section;
+			}
+		}
+		return $sections;
+	}
+
+	/**
 	 * Process CuratedContent items and sanitize when the item is an article
 	 *
 	 * @param $items
@@ -327,11 +344,9 @@ class MercuryApi {
 
 			if ( !empty( $title ) ) {
 				$item[ 'article_local_url' ] = $title->getLocalURL();
-
 				return $item;
 			}
 		}
-
 		return null;
 	}
 
