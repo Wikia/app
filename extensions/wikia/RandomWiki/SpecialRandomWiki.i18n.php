@@ -207,6 +207,13 @@ $messages['ksh'] = array(
 	'randomwiki' => 'Zohfällesh Wiki',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'randomwiki' => 'Wîkiyek ketober',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

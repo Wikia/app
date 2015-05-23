@@ -14,7 +14,8 @@ require([
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
-	'wikia.window'
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
 ], function (
 	adEngine,
 	adLogicHighValueCountry,
@@ -27,7 +28,8 @@ require([
 	slotTracker,
 	slotTweaker,
 	krux,
-	window
+	window,
+	inContentDesktop
 ) {
 	'use strict';
 
@@ -78,6 +80,22 @@ require([
 		// Krux
 		krux.load(kruxSiteId);
 	});
+
+	// Start loading in content slots
+	if (inContentDesktop) {
+		window.addEventListener('load', inContentDesktop.init);
+	}
+});
+
+require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.document'], function (adContext, abTest, doc) {
+	'use strict';
+
+	var group = abTest.getGroup('ADS_VIEWABILITY_MEDREC'),
+		medrec = doc.getElementById('TOP_RIGHT_BOXAD');
+
+	if (group && medrec && !adContext.getContext().providers.sevenOneMedia) {
+		medrec.className += ' ads-viewability-test ' + group;
+	}
 });
 
 // FPS meter

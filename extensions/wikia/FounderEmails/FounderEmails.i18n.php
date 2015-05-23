@@ -4890,6 +4890,13 @@ $messages['ksh'] = array(
 	'founderemails-email-first-edit-headline' => 'Joot. Uns Metmaacher $EDITORNAME hät sing eetste Änderong op $WIKINAME jemaat.',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'founderemails-email-0-days-passed-subject' => 'Bi xêr hatî Wikiayê!',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

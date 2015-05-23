@@ -4974,6 +4974,32 @@ $messages['ksh'] = array(
 	'wall-thread-history-title' => 'dem Jeshprääschßfäddem sing Verjangeheit un Versione', # Fuzzy
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'wall-toolbar-history' => 'Dîrok',
+	'wall-thread-deleted' => 'Hate jêbirin',
+	'wall-thread-closed' => 'Hate girtin',
+	'wall-default-title' => 'Peyama ji $1',
+	'wall-button-to-cancel-preview' => 'Biguherîne',
+	'wall-button-cancel-changes' => 'Betal bike',
+	'wall-button-done-source' => 'Çêbû',
+	'wall-message-edit' => 'Biguherîne',
+	'wall-message-more' => 'Bêhtir',
+	'wall-message-delete' => 'Jê bibe',
+	'wall-action-all-confirm-cancel' => 'Betal bike',
+	'wall-delete-error-title' => 'Çewtî',
+	'wall-action-close-confirm-ok' => 'Bigre',
+	'wall-action-admin-confirm-ok' => 'Jê bibe',
+	'wall-action-rev-confirm-ok' => 'Belê, jê bibe',
+	'mail-notification-html-greeting' => 'Silav $1,',
+	'wall-topic-edit-save' => 'Tomar bike',
+	'wall-topic-edit-cancel' => 'Betal bike',
+	'group-threadmoderator' => 'Moderator',
+	'group-threadmoderator-member' => 'Moderator',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -5651,6 +5677,8 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-topic-edit' => 'Ubah Topik',
 	'wall-topic-edit-save' => 'Simpan',
 	'wall-topic-edit-cancel' => 'Batalkan',
+	'group-threadmoderator' => 'Pengawal Selia',
+	'group-threadmoderator-member' => 'Pengawal Selia',
 );
 
 /** Neapolitan (Napulitano)

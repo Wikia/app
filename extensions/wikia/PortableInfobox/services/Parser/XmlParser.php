@@ -46,20 +46,37 @@ class XmlParser {
 	}
 
 	/**
-	 * @param $xml String
+	 * @param $xmlString
 	 * @return array
+	 * @throws XmlMarkupParseErrorException
 	 */
 	public function getDataFromXmlString( $xmlString ) {
 		wfProfileIn( __METHOD__ );
+
+		$global_libxml_setting = libxml_use_internal_errors();
+		libxml_use_internal_errors( true );
 		$xml = simplexml_load_string( $xmlString );
+		$errors = libxml_get_errors();
+		libxml_use_internal_errors( $global_libxml_setting );
+
 		if ( $xml === false ) {
+			foreach ( $errors as $xmlerror ) {
+				$this->logXmlParseError( $xmlerror->level, $xmlerror->code, trim( $xmlerror->message ) );
+			}
+			libxml_clear_errors();
 			throw new XmlMarkupParseErrorException();
 		}
-
 		$data = $this->getDataFromNodes( $xml );
 
 		wfProfileOut( __METHOD__ );
 		return $data;
+	}
+
+	protected function logXmlParseError( $level, $code, $message ) {
+		\Wikia\Logger\WikiaLogger::instance()->info( "PortableInfobox XML Parser problem", [
+			"level" => $level,
+			"code" => $code,
+			"message" => $message ] );
 	}
 
 	/**
@@ -76,10 +93,10 @@ class XmlParser {
 			if ( !empty( $this->externalParser ) ) {
 				$instance->setExternalParser( $this->externalParser );
 			}
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return $instance;
 		}
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
 	}
 

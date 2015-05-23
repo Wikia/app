@@ -292,8 +292,12 @@ class MercuryApiController extends WikiaController {
 				$data[ 'relatedPages' ] = $relatedPages;
 			}
 
-			if ( $title->isMainPage() && !empty( $wgEnableMainPageDataMercuryApi ) ) {
-				$data[ 'mainPageData' ] = $this->getMainPageData();
+			if ( $title->isMainPage() ) {
+				$data['isMainPage'] = true;
+
+				if ( !empty( $wgEnableMainPageDataMercuryApi ) ) {
+					$data['mainPageData'] = $this->getMainPageData();
+				}
 			}
 
 		} catch ( WikiaHttpException $exception ) {
@@ -337,8 +341,8 @@ class MercuryApiController extends WikiaController {
 		$trendingArticles = $this->getTrendingArticlesData();
 		$trendingVideos = $this->getTrendingVideosData();
 
-		if ( !empty( $curatedContent[ 'sections' ] ) ) {
-			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'sections' ];
+		if ( !empty( $curatedContent[ 'items' ] ) ) {
+			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
 		}
 
 		if ( !empty( $curatedContent[ 'featured' ] ) ) {

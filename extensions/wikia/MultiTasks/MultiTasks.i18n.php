@@ -1475,6 +1475,7 @@ $messages['ha'] = array(
  * @author Dani
  * @author Glanthor Reviol
  * @author TK-999
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
 	'multitasks-link-back-label' => 'itt',
@@ -1524,6 +1525,7 @@ $messages['hu'] = array(
 	'multiwikifindpagenames' => 'Lapnevek keresése',
 	'multiwikienterpagename' => 'Adj meg egy lapnevet:',
 	'multiwikirecords' => '$1 wiki található', # Fuzzy
+	'action-multiwikifinder' => 'egy adott cím keresése a teljes Wikiában',
 );
 
 /** Interlingua (interlingua)
@@ -1968,6 +1970,7 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1975,13 +1978,17 @@ $messages['ku-latn'] = array(
 	'multiwikiedit_confirm' => 'BISEDIQÎNE',
 	'multiwikiedit_or' => '<b>AN</b>',
 	'multiwikiedit_on' => 'li ser', # Fuzzy
+	'multiwikiedit_reason' => 'Sedema guherandine',
 	'multiwikiedit_minoredit_caption' => 'Guhertina biçûk',
-	'multiwikiedit_success_subtitle' => 'ji bo $', # Fuzzy
+	'multiwikiedit_all_wikis' => 'hemû wîkîyan',
+	'multiwikiedit_success_subtitle' => 'ji bo $1',
 	'multiwikiedit_select_yourself' => 'tu',
 	'multidelete_button' => 'JÊ BIBE',
 	'multidelete_or' => '<b>AN</b>',
 	'multidelete_reason' => 'Sedema jêbirinê',
+	'multidelete_all_wikis' => 'hemû wîkîyan',
 	'multidelete_success_subtitle' => 'ji bo $1',
+	'multiwikifinder-redirect' => 'beralîkirin',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -3849,6 +3856,9 @@ $messages['vi'] = array(
 	'multiwikiedit_confirm' => 'XÁC NHẬN',
 	'multiwikiedit_help' => 'Chỉnh sửa hàng loạt của trang. Bạn có thể chỉnh sửa các trang được liệt kê trong một hộp văn bản. Chọn một người dùng sẽ được hiển thị trong xóa Nhật ký. Đã tải lên tệp nên chứa tên trang và tùy chọn lý do tách ra bởi | nhân vật trong mỗi dòng.',
 	'multiwikiedit_caption' => 'Danh sách trang:',
+	'multiwikiedit_as' => 'Chạy kịch bản với:',
+	'multiwikiedit_both_modes' => 'Hãy chọn hoặc một trang cụ thể hoặc một danh sách các trang cho trước.',
+	'multiwikiedit_or' => '<b>HOẶC</b>',
 	'multiwikiedit_page' => 'Các trang sẽ được chỉnh sửa',
 	'multiwikiedit_page_text' => 'Văn bản sẽ được lưu',
 	'multiwikiedit_reason' => 'Lí do để chỉnh sửa',
@@ -3862,14 +3872,20 @@ $messages['vi'] = array(
 	'multiwikiedit_inbox_caption' => 'chia tách bởi dấu phẩy',
 	'multiwikiedit_all_wikis' => 'Tất cả các wiki',
 	'multiwikiedit_file_missing' => 'Không thể đọc tập tin đã chọn',
+	'multiwikiedit_select_script' => 'chỉnh sửa kịch bản của trang',
 	'multiwikiedit_select_yourself' => 'bạn',
+	'multiwikiedit_edit_options' => 'Các tùy chọn biên tập',
 	'multidelete_button' => 'Xóa',
+	'multidelete_caption' => 'Danh sách trang:',
 	'multidelete_title' => 'Xóa nhiều lựa chọn cùng lúc',
+	'multidelete_or' => '<b>HOẶC</b>',
 	'multidelete_task_added' => 'Xóa nhiều tác vụ #$1 đã được bổ sung.',
 	'multidelete_task_error' => 'Xuất hiện một lỗi khi bổ sung tác vụ xóa đa lựa chọn.',
-	'multidelete_select_all' => 'Chọn Toàn bộ',
+	'multidelete_task_none_selected' => 'Bạn chưa chọn bất kỳ bài viết nào. Nhiệm vụ không được bổ sung.',
+	'multidelete_select_all' => 'Chọn tất cả',
 	'multidelete_page' => 'Các trang sẽ bị xóa:',
 	'multidelete_choose_articles' => 'Chọn bài viết để xóa',
+	'multidelete_all_wikis' => 'Tất cả các wiki',
 	'multidelete_file_missing' => 'Không thể đọc tập tin đã chọn',
 );
 
