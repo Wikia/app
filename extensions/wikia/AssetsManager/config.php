@@ -2447,7 +2447,7 @@ $config['paid_asset_drop_desktop_js'] = [
 
 $config['sitemap_page_css'] = array(
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
+	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
 		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
 	]

@@ -7,7 +7,7 @@
 
 	h1 {
 		border-bottom: solid 1px #ccc;
-		font-size: 32px;
+		font-size: 30px;
 		margin: 0 0 10px;
 		padding-bottom: 10px;
 	}
@@ -43,31 +43,6 @@
 		table-layout: fixed;
 		width: 100%;
 
-		th {
-			background-color: #f7f7f7;
-			text-align: left;
-		}
-
-		td:first-child, th:first-child {
-			padding-left: 20px;
-			width: 30%;
-		}
-
-		td:last-child, th:last-child {
-			padding-right: 20px;
-			width: 53%;
-		}
-
-		td:first-child {
-			font-weight: bold;
-		}
-
-		td:last-child {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
 		td, th {
 			border: solid #e8e8e8;
 			border-width: 1px 0;
@@ -78,6 +53,46 @@
 		td {
 			padding-top: 5px;
 			vertical-align: top;
+		}
+
+		th {
+			background-color: #f7f7f7;
+			text-align: left;
+		}
+
+		td:first-child, th:first-child {
+			padding-left: 20px;
+		}
+
+		td:first-child {
+			font-weight: bold;
+		}
+
+		@media(max-width: 840px) {
+			td:first-child, th:first-child {
+				padding-right: 20px;
+			}
+
+			td:not(:first-child), th:not(:first-child) {
+				display: none;
+			}
+		}
+
+		@media(min-width: 841px) {
+			td:first-child, th:first-child {
+				width: 30%;
+			}
+
+			td:last-child, th:last-child {
+				padding-right: 20px;
+				width: 47%;
+			}
+
+			td:last-child {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 		}
 	}
 }
