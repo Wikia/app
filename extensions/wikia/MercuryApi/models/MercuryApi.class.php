@@ -239,6 +239,7 @@ class MercuryApi {
 
 	/**
 	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
+	 *
 	 * @param Title $title Title object
 	 * @return array|null Article Ad context
 	 */
@@ -251,36 +252,109 @@ class MercuryApi {
 		return null;
 	}
 
-	public function processCuratedContent( $data ) {
-		if ( empty( $data ) ) {
-			return false;
+	/**
+	 * CuratedContent API returns data in a different format than we need.
+	 * Let's clean it up!
+	 *
+	 * @param $rawData
+	 * @return array|null
+	 */
+	public function processCuratedContent( $rawData ) {
+		if ( empty( $rawData ) ) {
+			return null;
 		}
 
-		$process = false;
+		$data = [];
+		$sections = $this->getCuratedContentSections( $rawData );
+		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
+		$featured = $this->getCuratedContentItems( $rawData[ 'featured' ] );
 
-		if ( !empty( $data[ 'featured' ] ) ) {
-			$process = 'featured';
-		} elseif ( !empty( $data[ 'items' ] ) ) {
-			$process = 'items';
+		if ( !empty( $sections ) || !empty( $items ) ) {
+			$data[ 'items' ] = [];
 		}
 
-		if ( $process ) {
-			$items = [];
-			foreach ( $data[ $process ] as $item ) {
-				$processedItem = $this->processCuratedContentItem( $item );
-				if ( !empty( $processedItem ) ) {
-					$items[] = $processedItem;
-				}
-			}
-			$data[ $process ] = $items;
+		if ( !empty( $sections ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $sections );
+		}
+
+		if ( !empty( $items ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $items );
+		}
+
+		if ( !empty( $featured ) ) {
+			$data[ 'featured' ] = $featured;
 		}
 
 		return $data;
 	}
 
+	/**
+	 * Add `section` type to all sections from CuratedContent data
+	 *
+	 * @param $data
+	 * @return array
+	 */
+	private function getCuratedContentSections( $data ) {
+		$sections = [];
+		if ( !empty( $data[ 'sections' ] ) ) {
+			foreach ( $data[ 'sections' ] as $section ) {
+				$section[ 'type' ] = 'section';
+				$sections[] = $section;
+			}
+		}
+		return $sections;
+	}
+
+	/**
+	 * Process CuratedContent items and sanitize when the item is an article
+	 *
+	 * @param $items
+	 * @return array
+	 */
+	private function getCuratedContentItems( $items ) {
+		$data = [];
+		if ( !empty( $items ) ) {
+			foreach ( $items as $item ) {
+				if ( $item[ 'type' ] === 'article' ) {
+					$processedItem = $this->processCuratedContentArticle($item);
+					if ( !empty( $processedItem ) ) {
+						$data[] = $processedItem;
+					}
+				} else {
+					$data[] = $item;
+				}
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * @desc Mercury can't open article using ID - we need to create a local link.
+	 * If article doesn't exist (Title is null) return null.
+	 * In other case return item with updated article_local_url.
+	 * TODO Implement cache for release version.
+	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
+	 *
+	 * @param $item
+	 * @return mixed
+	 */
+	private function processCuratedContentArticle( $item ) {
+		if ( !empty( $item[ 'article_id' ] ) ) {
+			$title = Title::newFromID( $item[ 'article_id' ] );
+
+			if ( !empty( $title ) ) {
+				$item[ 'article_local_url' ] = $title->getLocalURL();
+
+				return $item;
+			}
+		}
+
+		return null;
+	}
+
 	public function processTrendingArticles( $data ) {
 		if ( !isset( $data[ 'items' ] ) || !is_array( $data[ 'items' ] ) ) {
-			return false;
+			return null;
 		}
 
 		$items = [];
@@ -294,30 +368,6 @@ class MercuryApi {
 		}
 
 		return $items;
-	}
-
-	/**
-	 * @desc Mercury can't open article using ID - we need to create a local link.
-	 * If article doesn't exist (Title is null) return null.
-	 * In other case return item with updated article_local_url.
-	 * TODO Implement cache for release version.
-	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
-	 *
-	 * @param $item
-	 * @return mixed
-	 */
-	private function processCuratedContentItem( $item ) {
-		if ( !empty( $item[ 'article_id' ] ) ) {
-			$title = Title::newFromID( $item[ 'article_id' ] );
-
-			if ( !empty( $title ) ) {
-				$item[ 'article_local_url' ] = $title->getLocalURL();
-
-				return $item;
-			}
-		}
-
-		return null;
 	}
 
 	/**
