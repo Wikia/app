@@ -5,6 +5,7 @@ require(['jquery'], function($) {
 	var modalConfig = {
 		vars: {
 			id: 'FlagsModal',
+			classes: ['edit-flags'],
 			size: 'small', // size of the modal
 			content: '', // content
 			title: 'Flags',
