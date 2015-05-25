@@ -4,8 +4,8 @@
 		<?php $prefix = "{$inputNamePrefix}:{$flagTypeId}" ?>
 		<li>
 			<?php isset( $flag['flag_id'] ) ? $checked = 'checked' : $checked = '';	?>
-			<input type="checkbox" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$inputNameCheckbox}" ) ?>" <?= $checked ?>>
-			<label for="<?= Sanitizer::encodeAttribute( "{$prefix}:{$inputNameCheckbox}" ) ?>"><?= $flag['flag_name'] ?></label>
+			<input type="checkbox" id="<?= Sanitizer::encodeAttribute( $prefix ) ?>" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$inputNameCheckbox}" ) ?>" <?= $checked ?>>
+			<label for="<?= Sanitizer::encodeAttribute( $prefix ) ?>"><?= $flag['flag_name'] ?></label>
 			<a href="<?= Sanitizer::cleanUrl( $flag['flag_view_url'] ) ?>" target="_blank"><?= wfMessage( 'flags-edit-form-more-info' )->escaped() ?></a>
 			<?php
 			$flagParamsNames = json_decode( $flag['flag_params_names'] );
