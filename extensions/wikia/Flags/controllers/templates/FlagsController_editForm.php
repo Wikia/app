@@ -1,5 +1,5 @@
 <form action="<?= Sanitizer::cleanUrl( $formSubmitUrl ) ?>" method="POST" id="flagsEditForm">
-	<ul class="flags">
+	<ul>
 		<?php foreach ( $flags as $flagTypeId => $flag ): ?>
 		<?php $prefix = "{$inputNamePrefix}:{$flagTypeId}" ?>
 		<li>
