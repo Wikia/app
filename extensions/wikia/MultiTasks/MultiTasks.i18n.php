@@ -663,7 +663,7 @@ $messages['ce'] = array(
 	'multiwikifinder-redirect' => 'дӀасахьажор',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  */
 $messages['ckb'] = array(
 	'multidelete_button' => 'سڕینەوە',
@@ -2042,7 +2042,7 @@ $messages['lb'] = array(
 	'multiwikifinder-redirect' => 'viruleeden',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -2594,17 +2594,61 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
  * @author Hulothe
  */
 $messages['oc'] = array(
+	'multitasks-link-back-label' => 'aicí',
+	'multiwikiedit_button' => 'MODIFICAR',
+	'multiwikiedit_confirm' => 'CONFIRMAR',
+	'multiwikiedit_caption' => 'Lista de paginas',
+	'multiwikiedit_or' => '<b>O</b>',
+	'multiwikiedit_on' => "Executar l'escript sus",
+	'multiwikiedit_page' => 'Paginas de modificar',
+	'multiwikiedit_list_caption' => 'Lista dels wikis',
+	'multiwikiedit_minoredit_caption' => 'Modificacion menora',
 	'multiwikiedit_norecentchanges_caption' => 'Afichar pas lo cambiament dins los Darrièrs Cambiaments',
+	'multiwikiedit_from_form' => 'dempuèi lo formulari',
+	'multiwikiedit_summary_text' => 'Camp del resumit',
+	'multiwikiedit_this_wiki' => 'aqueste wiki',
+	'multiwikiedit_all_wikis' => 'totes los wikis',
+	'multiwikiedit_selected_wikis' => 'los wikis seleccionats',
+	'multiwikiedit_success_subtitle' => 'per $1',
+	'multiwikiedit_select_yourself' => 'vos',
+	'multiwikiedit_edit_options' => 'Opcions de la modificacion',
+	'multidelete_button' => 'SUPRIMIT',
+	'multidelete_caption' => 'Lista de paginas',
+	'multidelete_or' => '<b>O</b>',
+	'multidelete_select_all' => 'Seleccionar tot',
+	'multidelete_page' => 'Paginas de suprimir',
+	'multidelete_this_wiki' => 'aqueste wiki',
+	'multidelete_all_wikis' => 'totes los wikis',
+	'multidelete_selected_wikis' => 'los wikis seleccionats',
+	'multidelete_success_subtitle' => 'per $1',
+	'multidelete_brazilian_portuguese_wikis' => 'totes los wikis en portugués brasilièr',
+	'multidelete_hebrew_wikis' => 'totes los wikis en ebrieu',
+	'multidelete_chinese_wikis' => 'totes los wikis en chinés',
+	'multidelete_polish_wikis' => 'totes los wikis en polonés',
+	'multidelete_czech_wikis' => 'totes los wikis en chèc',
+	'multidelete_portuguese_wikis' => 'totes los wikis en portugués',
+	'multidelete_dutch_wikis' => 'totes los wikis en neerlandés',
+	'multidelete_italian_wikis' => 'totes los wikis en italian',
+	'multidelete_russian_wikis' => 'totes los wikis en rus',
+	'multidelete_english_wikis' => 'totes los wikis en anglés',
+	'multidelete_japanese_wikis' => 'totes los wikis en japonés',
+	'multidelete_finnish_wikis' => 'totes los wikis en finés',
+	'multidelete_spanish_wikis' => 'totes los wikis en espanhòl',
+	'multidelete_french_wikis' => 'totes los wikis en francés',
+	'multidelete_swedish_wikis' => 'totes los wikis en suedés',
+	'multidelete_german_wikis' => 'totes los wikis en alemand',
+	'multiwikifinder-redirect' => 'redireccion',
+	'action-multiwikifinder' => 'recercar un títol especific dins Wikia',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
 	'multidelete_button' => 'VERWISCHE',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(

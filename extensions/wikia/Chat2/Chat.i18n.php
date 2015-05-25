@@ -404,7 +404,7 @@ $messages['az'] = array(
 	'chat-status-away' => 'Kənar',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author Koroğlu
  */
 $messages['azb'] = array(
@@ -442,6 +442,7 @@ $messages['bgn'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'chat' => 'আড্ডা',
@@ -679,6 +680,7 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Aktron
  * @author Chmee2
  * @author H4nek
  * @author Macinosak
@@ -726,6 +728,7 @@ $messages['cs'] = array(
 	'chat-log-reason-banchange' => 'Bez udání důvodu',
 	'chat-log-reason-banremove' => 'Bez udání důvodu',
 	'chat-ban-cant-ban-moderator' => 'Nemůžete vykopnout/zablokovat dalšího moderátora chatu.',
+	'chat-you-are-banned' => 'Chyba povolení.',
 	'chat-live2' => 'Živě! Chat',
 	'chat-start-a-chat' => 'Zahájit chat',
 	'chat-join-the-chat' => 'Připojit se k chatu',
@@ -744,8 +747,13 @@ $messages['cs'] = array(
 	'group-chatmoderator' => 'Moderátoři chatu',
 	'group-chatmoderator-member' => 'Moderátor chatu',
 	'group-bannedfromchat' => 'Zablokován z chatu',
+	'group-bannedfromchat-member' => 'Zablokovat na chatu',
 	'chat-ban-option-list' => '2 hodiny:2 hours,1 den:1 day,3 dny:3 days,1 týden:1 week,2 týdny:2 weeks,1 měsíc:1 month,3 měsíce:3 months,6 měsíců:6 months,1 rok:1 year,navždy:infinite',
 	'chat-ban-log-change-ban-link' => 'Změnit ban',
+	'chat-chatconnect-log' => 'Záznam připojení k chatu',
+	'chat-chatconnect-log-entry' => 'připojen k $1 z adresy $2',
+	'chat-chatban-log' => 'Záznam zablokování na chatu',
+	'chat-chatbanadd-log-entry' => '$1 byl zablokován na chatu s datem vypršení $2, které skončí v $3',
 	'chat-checkuser-join-action' => 'Připojen k chatu',
 	'chat-status-away' => 'Pryč',
 );
@@ -2200,7 +2208,7 @@ $messages['lb'] = array(
 	'chat-status-away' => 'Net do',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -3442,6 +3450,7 @@ $messages['sco'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -3449,10 +3458,14 @@ $messages['sr-ec'] = array(
 	'chat-no-login' => 'Морате бити пријављени да бисте ћаскали.',
 	'chat-no-login-text' => 'Пријавите се да бисте ћаскали.',
 	'chat-default-topic' => 'Добро дошли на ћасање $1',
+	'chat-private-messages' => 'Приватне поруке',
 	'chat-you-are-banned' => 'Грешка у дозволама.',
 	'chat-you-are-banned-text' => 'Немате дозволу да ћаскате на овом викију. Ако мислите да је ово грешка или желите да се одлука преиспита, обратите се администратору.',
 	'chat-kick-log-reason' => 'Избачени сте са ћаскања од стране {{GENDER:$1|корисника|кориснице|корисника}} $1.
 Контактирајте га да бисте сазнали зашто сте избачени.',
+	'chat-user-menu-talk-page' => 'Страница за разговор',
+	'chat-user-menu-contribs' => 'Доприноси',
+	'chat-user-menu-private' => 'Приватна порука',
 	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 );

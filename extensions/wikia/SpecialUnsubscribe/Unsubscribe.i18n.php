@@ -207,6 +207,14 @@ $messages['es'] = array(
 	'unsubscribe-preferences-notice' => 'Los correos electrónicos han sido deshabilitados para tu cuenta. Visita la pestaña de tu perfil para reactivarlos.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'unsubscribe' => 'Harpidetza kendu',
+	'unsubscribe-confirm-button' => 'Bai, ziur nago',
+);
+
 /** Persian (فارسی)
  * @author Mjbmr
  * @author Reza1615

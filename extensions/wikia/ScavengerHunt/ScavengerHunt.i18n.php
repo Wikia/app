@@ -340,7 +340,7 @@ $messages['az'] = array(
 	'scavengerhunt-entry-form-email' => 'Sizin e-poçt ünvanınız:',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author Erdemaslancan
  */
 $messages['azb'] = array(
@@ -1593,7 +1593,7 @@ $messages['lb'] = array(
 	'scavengerhunt-label-entry-form-username' => 'Benotzernumm',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -3094,7 +3094,7 @@ $messages['tl'] = array(
 	'scavengerhunt-facebook-description' => 'Teksto ng pagpapamahagi sa Facebook',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(

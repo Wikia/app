@@ -30,7 +30,7 @@ $messages['qqq'] = array(
 	'communitymessages-notice-msg' => 'A message about updating Community Messages',
 );
 
-/** Tunisian Spoken Arabic (   زَوُن)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Csisc
  */
 $messages['aeb'] = array(

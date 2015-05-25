@@ -25,7 +25,7 @@ Article '''$1''' could not be found.
 * To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]"
 );
 
-/** Tunisian Spoken Arabic (تونسي)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Csisc
  */
 $messages['aeb'] = array(
@@ -222,6 +222,23 @@ $messages['el'] = array(
 *Μπορείτε να δοκιμάσετε το άρθρο [[$2]]
 *Μπορείτε να χρησιμοποιήσετε το κουτί αναζήτησης στα αριστερά της σελίδας
 *Για την κύρια σελίδα του ιστότοπου, πατήστε στο σύνδεσμο: [{{SERVER}}{{SITENAME}}]",
+);
+
+/** British English (British English)
+ * @author Chase me ladies, I'm the Cavalry
+ */
+$messages['en-gb'] = array(
+	'our404handler-desc' => 'Our 404 handler for non-existent pages tricks',
+	'our404handler' => 'Error 404: Page not found!',
+	'our404handler-oops' => "These aren't the pages you're looking for. Move along, please.",
+	'message404' => "
+'''We're really sorry, but for some reason the page you've asked for doesn't exist.'''
+
+Article '''$1''' could not be found.
+
+* You can try article [[$2]]
+* You can use the search box on the left side of the page
+* To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Spanish (español)
@@ -674,7 +691,7 @@ $messages['pa'] = array(
 	'our404handler-oops' => 'ਇਹ ਸਫ਼ੇ ਨਹੀਂ ਹੈ, ਜਿੰਨ੍ਹਾਂ ਨੂੰ ਤੁਸੀਂ ਲੱਭਦੇ ਸੀ। ਜਾਰੀ ਰੱਖੋ ਜੀ।',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(

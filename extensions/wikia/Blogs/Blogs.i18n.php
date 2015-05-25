@@ -670,6 +670,7 @@ $messages['bgn'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'create-blog-save' => 'পাতা সংরক্ষণ',
@@ -946,13 +947,14 @@ $messages['ce'] = array(
 	'blog-refresh-label' => 'Карлаяккха',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  */
 $messages['ckb'] = array(
 	'blog-comment-delete' => 'سڕینەوە',
 );
 
 /** Czech (čeština)
+ * @author Aktron
  * @author Chmee2
  * @author H4nek
  * @author Jezevec
@@ -1002,6 +1004,7 @@ $messages['cs'] = array(
 	'blog-nbrcomments' => '{{PLURAL:$1|Jeden komentář|$1 komentáře}}',
 	'blog-nopostfound' => 'Nalezeny žádné příspěvky.',
 	'blog-writeone' => 'Napiš ho!',
+	'blog-empty-user-blog' => 'Tento uživatel zatím nenapsal žádné příspěvky na blogu!',
 	'blog-added' => 'přidáno',
 	'blog-edited' => 'upraveno',
 	'blog-page' => 'Blog',
@@ -1013,6 +1016,8 @@ $messages['cs'] = array(
 	'blog-comments-save' => 'Uložit komentář na blog',
 	'blog-comments-label' => 'Komentování',
 	'blog-voting-label' => 'Hlasování',
+	'blog-comments-info' => 'Toto pole používá jako metodu vstupu wikitext',
+	'blog-comments-login' => 'Chcete-li komentovat,<a href="$1" rel="nofollow">Přihlašte se</a>',
 	'blog-comments-dsc' => 'Nejnovější nejdříve',
 	'blog-comments-asc' => 'Nejnovější poslední',
 	'blog-comments-anonymous' => 'Anonymní uživatel',
@@ -1028,8 +1033,11 @@ $messages['cs'] = array(
 	'blog-create-post-label' => 'Vytvořit položku blogu',
 	'blog-create-label' => 'Vytvoření článku na blogu',
 	'blog-create-next-label' => 'Vytvořit nový článek blogu',
+	'blog-create-listing-label' => 'Vytvořit výpis blogu',
 	'blog-refresh-label' => 'Obnovit',
+	'blog-widgets-label' => 'Panel s widgety.',
 	'blog-listing-zero-other' => 'Tento uživatel zatím nenapsal žádné příspěvky na blogu!',
+	'blog-userblog' => 'Blog uživatele $1',
 	'blog-fromsitename' => 'Z $1',
 	'blogs-reportproblem' => 'Odeslat zprávu o chybách',
 	'blogs-comment-hidden' => 'Komentář ukrytý.',
@@ -3322,7 +3330,7 @@ $messages['lb'] = array(
 	'blog-by' => '$1 vum $2',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Bonevarluri
  * @author Mogoeilor
  */
@@ -4198,7 +4206,7 @@ $messages['or'] = array(
 	'blog-edited' => 'ବଦଳାଗଲା',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -4206,7 +4214,7 @@ $messages['pdc'] = array(
 	'blog-comment-delete' => 'verwische',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -5186,6 +5194,8 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
+ * @author Milicevic01
  * @author Rancher
  * @author Verlor
  */
@@ -5195,6 +5205,8 @@ $messages['sr-ec'] = array(
 	'create-blog-form-post-text' => 'Текст блога',
 	'create-blog-empty-title-error' => 'Потребан је наслов',
 	'create-blog-invalid-title-error' => 'Неисправан наслов',
+	'create-blog-no-login' => 'Нисте пријављени',
+	'create-blog-login-required' => 'Морате бити [{{fullurl:Special:Signup|$1}} пријављени] да би направили блог пост или списак.',
 	'create-blog-categories-textinput' => 'Додај нову категорију',
 	'create-blog-categories-submit' => 'Пошаљи',
 	'create-blog-save' => 'Сачувај страницу',
@@ -5205,6 +5217,7 @@ $messages['sr-ec'] = array(
 	'create-blog-listing-sortby' => 'Поређај по',
 	'create-blog-listing-sortby-date' => 'Најновије',
 	'create-blog-listing-sortby-author' => 'Аутор',
+	'create-blog-listing-sortby-comments' => 'Број коментара',
 	'blog-emptyparam' => 'Назив параметра не може остати празно.',
 	'blog-defaulttitle' => 'Блогови',
 	'blog-readfullpost' => 'Прочитај више',
@@ -5254,6 +5267,8 @@ $messages['sr-ec'] = array(
 	'blog-desc' => 'Чланци блога',
 	'blog-comment-sending' => 'Шаљем…',
 	'blog-by' => '$1 од $2',
+	'blogs-searchprofile' => 'Блогови',
+	'user-blog-url-link' => 'Кориснички блог:$1',
 );
 
 /** Swedish (svenska)
@@ -5731,7 +5746,7 @@ $messages['tl'] = array(
 	'blogs-searchprofile-tooltip' => 'Maghanap sa loob ng Mga Artikulong Blog at Mga Kalistahan ng Blog',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */
@@ -5988,7 +6003,7 @@ $messages['uk'] = array(
 	'user-blog-url-link' => 'Блог користувача:$1',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  * @author Sociologist
  */
@@ -6380,4 +6395,11 @@ $messages['zh-hant'] = array(
 	'blog-movepage-badtitle' => '無效的部落格文章標題。',
 	'blog-comment-sending' => '正在發送...',
 	'blogs-searchprofile' => '部落格',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hk'] = array(
+	'blog-comments-anonymous' => '匿名用戶',
 );

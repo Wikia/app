@@ -47,7 +47,7 @@ $messages['qqq'] = array(
  * @author Malhargan
  */
 $messages['ar'] = array(
-	'sharedhelp-desc' => 'تأخذ صفحات من [[w:Help:Contents|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي', # Fuzzy
+	'sharedhelp-desc' => 'تأخذ صفحات من [[w:Help:Contents|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي',
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
 	'sharedhelp-searchprofile' => 'صفحات المساعدة',
 	'sharedhelp-searchprofile-tooltip' => 'البحث في صفحات المساعدة',

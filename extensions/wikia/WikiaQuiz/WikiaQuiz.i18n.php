@@ -603,6 +603,7 @@ $messages['eu'] = array(
 	'wikiaquiz-game-next-button' => 'Hurrengo galdera',
 	'wikiaquiz-game-finish-button' => 'Amaitu',
 	'wikiaquiz-game-continue-button' => 'Jarraitu',
+	'wikiaquiz-game-email-placeholder' => 'zureizena@zureposta.com',
 );
 
 /** Persian (فارسی)
@@ -1530,6 +1531,7 @@ $messages['oc'] = array(
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
+ * @author Wedkarski
  */
 $messages['pl'] = array(
 	'wikiaquiz-desc' => 'Pozwala łatwo tworzyć i zarządzać quizami',
@@ -1562,7 +1564,7 @@ $messages['pl'] = array(
 	'wikiaquiz-error-duplicate-question' => 'Pytanie o tej nazwie już istnieje.',
 	'wikiaquiz-error-invalid-question' => 'Tekst pytania jest nieprawidłowy.',
 	'wikiaquiz-error-invalid-image' => 'Obraz jest nieprawidłowy: $1',
-	'wikiaquiz-error-invalid-video' => 'Film jest nieprawidłowe: $1',
+	'wikiaquiz-error-invalid-video' => 'Film jest nieprawidłowy: $1',
 	'wikiaquiz-error-missing-answers' => 'Należy podać co najmniej jedną odpowiedź.',
 	'wikiaquiz-error-invalid-correct-answer' => 'Należy określić jedną prawidłową odpowiedź.',
 	'wikiaquiz-error-invalid-quiz' => 'Nazwa quizu jest nieprawidłowa.',
@@ -1576,7 +1578,7 @@ $messages['pl'] = array(
 	'wikiaquiz-game-next-button' => 'Następne pytanie',
 	'wikiaquiz-game-finish-button' => 'Zakończ',
 	'wikiaquiz-game-correct-label' => 'Poprawnie! Wymiatasz.',
-	'wikiaquiz-game-incorrect-label' => 'ŻLE. Łeeee.',
+	'wikiaquiz-game-incorrect-label' => 'ŹLE. Łeeee.',
 	'wikiaquiz-game-congratulations' => 'Wspaniale, $1 !',
 	'wikiaquiz-game-congratulations-anon' => 'Dobra robota!',
 	'wikiaquiz-game-your-score' => 'TWÓJ WYNIK TO',

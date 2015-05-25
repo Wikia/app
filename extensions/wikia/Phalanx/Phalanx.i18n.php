@@ -737,7 +737,7 @@ $messages['es'] = array(
 	'phalanx-view-blocks' => 'Buscar filtros',
 	'phalanx-view-id' => 'Obtener filtro por ID:',
 	'phalanx-view-id-submit' => 'Obtener filtro',
-	'phalanx-format-text' => 'texto plano',
+	'phalanx-format-text' => 'texto sin formato',
 	'phalanx-format-regex' => 'regex',
 	'phalanx-format-case' => 'sensible',
 	'phalanx-format-exact' => 'exacto',
@@ -1686,7 +1686,7 @@ $messages['lb'] = array(
 	'phalanx-stats-table-wiki-name' => 'Numm vun der Wiki',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -2220,7 +2220,50 @@ Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met 
 	'phalanx-title-move-summary' => 'De samenvatting die je hebt opgegeven bevat niet toegelaten tekst.',
 );
 
-/** Pälzisch (Pälzisch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'phalanx' => 'Phalanx',
+	'phalanx-title' => 'Phalanx - mecanisme de defensa de Spam integrat',
+	'phalanx-type-content' => 'contingut de la pagina',
+	'phalanx-type-summary' => 'resumit de la pagina',
+	'phalanx-type-title' => 'títol de la pagina',
+	'phalanx-type-user' => 'utilizaire',
+	'phalanx-type-user-email' => 'adreça de corrièr electronic',
+	'phalanx-type-answers-question-title' => 'títol de la question',
+	'phalanx-type-answers-recent-questions' => 'questions recentas',
+	'phalanx-type-wiki-creation' => 'creacion de wiki',
+	'phalanx-label-filter' => 'Filtre :',
+	'phalanx-label-reason' => 'Motiu :',
+	'phalanx-label-expiry' => 'Expiracion :',
+	'phalanx-label-type' => 'Tipe :',
+	'phalanx-label-lang' => 'Lenga :',
+	'phalanx-view-blocker' => 'Recercar per filtratge de tèxte :',
+	'phalanx-view-blocks' => 'Filtres de recèrca',
+	'phalanx-format-regex' => 'regex',
+	'phalanx-format-exact' => 'exacte',
+	'phalanx-test-submit' => 'Tèst',
+	'phalanx-display-row-blocks' => 'blocatges : $1',
+	'phalanx-link-unblock' => 'desblocar',
+	'phalanx-link-modify' => 'modificar',
+	'phalanx-link-stats' => 'estatisticas',
+	'phalanx-stats-table-type' => 'Tipe',
+	'phalanx-stats-table-create' => 'Creat lo',
+	'phalanx-stats-table-expire' => 'Expira lo',
+	'phalanx-stats-table-exact' => 'Exacte',
+	'phalanx-stats-table-regex' => 'Regex',
+	'phalanx-stats-table-case' => 'Cassa',
+	'phalanx-stats-table-language' => 'Lenga',
+	'phalanx-stats-table-text' => 'Tèxte',
+	'phalanx-stats-table-reason' => 'Rason',
+	'phalanx-stats-table-wiki-id' => 'ID del wiki',
+	'phalanx-stats-table-wiki-name' => 'Nom del wiki',
+	'phalanx-stats-table-wiki-url' => 'URL del wiki',
+	'phalanx-stats-table-wiki-last-edited' => 'Darrièr cambiament',
+);
+
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -2829,7 +2872,7 @@ $messages['ru'] = array(
 	'right-phalanxemailblock' => 'Можно обратиться, просмотреть и управлять e-mail на основе блоков',
 );
 
-/** ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
+/** Saurashtra (ꢱꣃꢬꢵꢯ꣄ꢡ꣄ꢬꢵ)
  * @author MooRePrabu
  */
 $messages['saz'] = array(
@@ -3253,7 +3296,7 @@ $messages['uk'] = array(
 	'right-phalanxemailblock' => 'Можна звернутися, переглянути і управляти ел.поштою на основі блоків',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author Sociologist
  */
 $messages['uz'] = array(
@@ -3407,4 +3450,11 @@ $messages['zh-hant'] = array(
 	'phalanx-test-submit' => '測試',
 	'phalanx-stats-table-regex' => '正規表示法',
 	'phalanx-stats-table-reason' => '原因',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hk'] = array(
+	'phalanx-type-user' => '用戶',
 );

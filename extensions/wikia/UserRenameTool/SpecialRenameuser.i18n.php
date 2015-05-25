@@ -282,7 +282,7 @@ $messages['arc'] = array(
 	'right-renameuser' => 'ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
 );
 
-/** Egyptian Spoken Arabic (مصرى)
+/** Egyptian Arabic (مصرى)
  * @author Ghaly
  * @author Meno25
  * @author Ramsis II
@@ -831,7 +831,7 @@ $messages['ce'] = array(
 	'action-renameuser' => 'декъашхойн цӀерш хийцар',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  * @author Calak
  */
 $messages['ckb'] = array(
@@ -1540,7 +1540,7 @@ Vous serez informé par courriel quand cela sera terminé.',
 	'action-renameuser' => 'renommer les utilisateurs',
 );
 
-/** Franco-Provençal (arpetan)
+/** Arpitan (arpetan)
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
@@ -2965,7 +2965,7 @@ $messages['my'] = array(
 	'right-renameuser' => 'အသုံးပြုသူအား အမည်ပြန်မှည့်ရန်',
 );
 
-/** Nahuatl (Nāhuatl)
+/** Nāhuatl (Nāhuatl)
  * @author Fluence
  */
 $messages['nah'] = array(
@@ -3297,13 +3297,13 @@ $messages['pcd'] = array(
 	'right-renameuser' => 'Érlonmer chés uzeus',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  */
 $messages['pdc'] = array(
 	'renameuser' => 'Naame vum Yuuser ennere',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  * @author SPS
  */
@@ -4113,7 +4113,7 @@ $messages['sr-el'] = array(
 	'right-renameuser' => 'preimenovanje korisničkih imena',
 );
 
-/** Seeltersk (Seeltersk)
+/** Saterland Frisian (Seeltersk)
  * @author Maartenvdbent
  * @author Pyt
  */
@@ -4444,7 +4444,7 @@ Pababatiran ka sa pamamagitan ng e-liham kapag nabuo na ito.',
 	'right-renameuser' => 'Muling pangalanan ang mga tagagamit',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -4603,7 +4603,7 @@ $messages['ur'] = array(
 	'userrenametool-log' => 'جن کی $1 ترامیم تھیں. $2',
 );
 
-/** vèneto (vèneto)
+/** Venetian (vèneto)
  * @author Candalua
  */
 $messages['vec'] = array(
@@ -5026,6 +5026,17 @@ $messages['zh-hant'] = array(
 	'userrenametool-move-log' => '當由"[[User:$1|$1]]"重新命名為"[[User:$2|$2]]"時已經自動移動使用者頁面',
 	'right-renameuser' => '重新命名使用者',
 	'action-renameuser' => '重新命名使用者',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hk'] = array(
+	'renameuser' => '重新命名用戶',
+	'userrenametool-desc' => "加入一個[[Special:UserRenameTool|特殊頁面]]以重命名用戶 (需要 ''renameuser'' 權限)，并處理相關資料",
+	'userrenametool-new' => '新的用戶名稱：',
+	'right-renameuser' => '重新命名用戶',
+	'action-renameuser' => '重新命名用戶',
 );
 
 /** Zulu (isiZulu)

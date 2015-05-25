@@ -50,6 +50,7 @@ $messages['az'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'wikiastyleguide-dropdown-all' => 'সমস্ত',
@@ -74,6 +75,13 @@ $messages['ca'] = array(
 	'wikiastyleguide-dropdown-all' => 'Tot',
 	'wikiastyleguide-dropdown-select-all' => 'Seleccionar tot',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 i $2 més',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 кхин а $2',
 );
 
 /** German (Deutsch)

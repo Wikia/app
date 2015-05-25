@@ -1024,6 +1024,7 @@ $messages['fy'] = array(
 	'manage-wikia-home-modal-button-no' => 'Nee',
 	'manage-wikia-home-modal-button-yes' => 'Ja',
 	'manage-wikia-home-modal-button-okay' => 'OK',
+	'manage-wikia-home-collections-setup-save-button' => 'Bewarje',
 );
 
 /** Galician (galego)
@@ -1307,7 +1308,7 @@ $messages['lb'] = array(
 	'manage-wikia-home-stats-failure' => "D'Donnéeë goufen net gespäichert. Verbessert w.e.g. d'Feeler am Formulaire a probéiert nach eng Kéier.",
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
