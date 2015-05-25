@@ -1461,6 +1461,13 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
+ * @name $wgAdDriverOpenXCountries
+ * List of countries to call OpenX ad partner in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXCountries = null;
+
+/**
  * @name $wgAnalyticsProviderPageFair
  * Site ID for PageFair analytics provider.
  */
