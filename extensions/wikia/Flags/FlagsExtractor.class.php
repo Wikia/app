@@ -136,13 +136,18 @@ class FlagsExtractor {
 	private function findTemplatePosition( $templateName, $offset ) {
 		while ( ( $offsetStart = stripos($this->text, $templateName, $offset) ) !== false ) {
 			$offset = $offsetStart + strlen($templateName);
-			if ( !$this->isWrappedByNoWikiTag( $offsetStart ) ) {
-				if ( $this->text[$offset] == '}' || $this->text[$offset] == '|' ) {
-					return $offsetStart;
-				}
+			if ( $this->isSearchedTemplate( $templateName, $offsetStart ) ) {
+				return $offsetStart;
 			}
 		}
 		return false;
+	}
+
+	private function isSearchedTemplate( $templateName, $offsetStart ) {
+		$offset = $offsetStart + strlen($templateName);
+
+		return !$this->isWrappedByNoWikiTag( $offsetStart )
+			&& ( $this->text[$offset] == '}' || $this->text[$offset] == '|' );
 	}
 
 	/**
