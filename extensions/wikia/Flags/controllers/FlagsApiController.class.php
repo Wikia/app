@@ -51,7 +51,7 @@ class FlagsApiController extends WikiaApiController {
 	 */
 	private function processRequest() {
 		if ( !$this->request->wasPosted()
-			|| !$this->wg->User->matchEditToken( $this->getVal( 'token' ) )
+			|| !$this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) )
 		) {
 			$this->response->setException( new \Exception( 'Invalid request' ) );
 			return false;
@@ -219,13 +219,13 @@ class FlagsApiController extends WikiaApiController {
 	 * with a valid User edit token.
 	 *
 	 * Required parameters:
-	 * @requestParam int wiki_id
 	 * @requestParam int page_id
 	 * @requestParam array flags
-	 * @requestParam int flags['flagTypeId'] An ID of a flag type
+	 * @requestParam int flags[]['flagTypeId'] An ID of a flag type
 	 *
 	 * Optional parameters:
-	 * @requestParam array flags['params'] An array of params structured like:
+	 * @requestParam int wiki_id You can overwrite the current city_id
+	 * @requestParam array flags[]['params'] An array of params structured like:
 	 * [
 	 * 	'paramName1' => 'paramValue1',
 	 * 	'paramName2' => 'paramValue2',
@@ -247,7 +247,7 @@ class FlagsApiController extends WikiaApiController {
 	 * with a valid User edit token.
 	 *
 	 * Required parameters:
-	 * @requestParam array flagsIds An array of IDs of flags to remove
+	 * @requestParam array flags_ids An array of IDs of flags to remove
 	 */
 	public function removeFlagsFromPage() {
 		$this->processRequest();

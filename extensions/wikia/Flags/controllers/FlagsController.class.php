@@ -16,9 +16,16 @@ class FlagsController extends WikiaController {
 	private
 		$params;
 
+	private function isValidPostRequest() {
+		return $this->request->wasPosted()
+		&& $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) );
+	}
+
 	/**
-	 * A wrapper for a request to the FlagsApiController for flags for the given page
-	 * that returns a wikitext string with calls to templates of the flags.
+	 * Sends a request for all instances of flags for the given page.
+	 * A result of the request is transformed into a set of wikitext templates calls
+	 * that are supposed to be injected into Parser before expanding templates.
+	 * @param $pageId
 	 * @return null|string
 	 */
 	public function getFlagsForPageWikitext( $pageId ) {
@@ -39,6 +46,28 @@ class FlagsController extends WikiaController {
 	}
 
 	/**
+	 * Generates html contents for Flags modal for editing flags
+	 */
+	public function editForm() {
+		$pageId = $this->request->getVal( 'page_id' );
+		if ( empty( $pageId ) ) {
+			$this->response->setException( new \Exception( 'Required param page_id not provided' ) );
+			return true;
+		}
+
+		$flags = $this->requestGetFlagsForPageForEdit( $pageId );
+
+		$this->setVal( 'edit_token', $this->wg->User->getEditToken() );
+		$this->setVal( 'flags', $flags );
+		$this->setVal( 'form_submit_url', $this->getLocalUrl( 'postFlagsEditForm' ) );
+		$this->setVal( 'input_name_prefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
+		$this->setVal( 'input_name_checkbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
+		$this->setVal( 'page_id', $pageId );
+
+		$this->response->setFormat( 'html' );
+	}
+
+	/**
 	 * This is the main entry point if you want to modify flags for a page using the edit form.
 	 * The request HAS TO BE a POST one and include a `token` parameter that
 	 * matches an edit token for $wgUser.
@@ -54,16 +83,15 @@ class FlagsController extends WikiaController {
 	 * @return null|bool
 	 */
 	public function postFlagsEditForm() {
-		$this->processRequest();
-		if ( !isset( $this->params['pageId'] ) ) {
-			$this->response->setException( new \Exception( 'Required param pageId not provided' ) );
-			return true;
+		if ( !$this->isValidPostRequest() || !isset( $this->params['page_id'] ) ) {
+			return null;
 		}
+		$this->params = $this->request->getParams();
 		$pageId = $this->params['page_id'];
 
 		$title = Title::newFromID( $pageId );
 		if ( $title === null ) {
-			$this->response->setException( new \Exception( "Article with ID {$this->params['pageId']} doesn't exist" ) );
+			$this->response->setException( new \Exception( "Article with ID {$pageId} doesn't exist" ) );
 			return true;
 		}
 
@@ -75,7 +103,7 @@ class FlagsController extends WikiaController {
 		$helper = new FlagsHelper();
 		$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
 		if ( !empty( $flagsToChange ) ) {
-			$this->sendRequestsUsingPostedData( $flagsToChange );
+			$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
 
 			/**
 			 * Purge cache values for the page
@@ -104,41 +132,35 @@ class FlagsController extends WikiaController {
 	 * 1. `toAdd` an array with data for adding new flags
 	 * 2. `toUpdate` an array with data for updating the existing flags
 	 * 3. `toRemove` an array with IDs of flags to remove
+	 * @param int $pageId
 	 * @param Array $flagsToChange an array with three possible nested arrays:
+	 * @return null
 	 */
-	private function sendRequestsUsingPostedData( Array $flagsToChange ) {
+	private function sendRequestsUsingPostedData( $pageId, Array $flagsToChange ) {
+		if ( !isset( $this->params['edit_token'] ) ) {
+			return null;
+		}
+		$editToken = $this->params['edit_token'];
+
 		/**
 		 * Add flags
 		 */
 		if ( !empty( $flagsToChange['toAdd'] ) ) {
-			$flagsToAdd = [
-				'wiki_id' => $this->params['wiki_id'],
-				'page_id' => $this->params['page_id'],
-				'flags' => $flagsToChange['toAdd'],
-			];
-
-			if ( $flagModel->verifyParamsForAdd( $flagsToAdd ) ) {
-				$flagModel->addFlagsToPage( $flagsToAdd );
-			}
+			$this->requestAddFlagsToPage( $editToken, $pageId, $flagsToChange['toAdd'] );
 		}
 
 		/**
 		 * Remove flags
 		 */
 		if ( !empty( $flagsToChange['toRemove'] ) ) {
-			$flagsToRemove = [
-				'flagsIds' => $flagsToChange['toRemove'],
-			];
-			if ( $flagModel->verifyParamsForRemove( $flagsToRemove ) ) {
-				$flagModel->removeFlagsFromPage( $flagsToRemove );
-			}
+			$this->requestRemoveFlagsFromPage( $editToken, $pageId, $flagsToChange['toRemove'] );
 		}
 
 		/**
 		 * Update flags
 		 */
 		if ( !empty( $flagsToChange['toUpdate'] ) ) {
-			$flagModel->updateFlagsForPage( $flagsToChange['toUpdate'] );
+			$this->requestUpdateFlagsForPage( $editToken, $pageId, $flagsToChange['toUpdate'] );
 		}
 	}
 
@@ -171,13 +193,60 @@ class FlagsController extends WikiaController {
 		)->getData();
 	}
 
-	private function requestAddFlagsToPage( $pageId, $flags ) {
+	/**
+	 * Sends a request to the FlagsApiController with data on flags to add to the page.
+	 * @param $editToken
+	 * @param $pageId
+	 * @param $flags
+	 * @return array
+	 * @see FlagsApiController::addFlagsToPage() for a structure of the $flags array
+	 */
+	private function requestAddFlagsToPage( $editToken, $pageId, $flags ) {
 		return $this->sendRequest( 'FlagsApiController',
 			'addFlagsToPage',
 			[
+				'edit_token' => $editToken,
 				'page_id' => $pageId,
 				'flags' => $flags,
 			]
+		)->getData();
+	}
+
+	/**
+	 * Sends a request to the FlagsApiController with data on flags to add to the page.
+	 * @param $editToken
+	 * @param $pageId
+	 * @param $flags
+	 * @return array
+	 * @see FlagsApiController::removeFlagsFromPage() for a structure of the $flagsIds array
+	 */
+	private function requestRemoveFlagsFromPage( $editToken, $pageId, $flags ) {
+		return $this->sendRequest( 'FlagsApiController',
+			'removeFlagsFromPage',
+			[
+				'edit_token' => $editToken,
+				'page_id' => $pageId,
+				'flags' => $flags,
+			]
+		)->getData();
+	}
+
+	/**
+	 * Sends a request to the FlagsApiController with data on flags to update on the page.
+	 * @param $editToken
+	 * @param $pageId
+	 * @param $flags
+	 * @return array
+	 * @see FlagsApiController::updateFlagsForPage() for a structure of the $flags array
+	 */
+	private function requestUpdateFlagsForPage( $editToken, $pageId, $flags ) {
+		return $this->sendRequest( 'FlagsApiController',
+		'updateFlagsForPage',
+		[
+			'edit_token' => $editToken,
+			'page_id' => $pageId,
+			'flags' => $flags
+		]
 		)->getData();
 	}
 }

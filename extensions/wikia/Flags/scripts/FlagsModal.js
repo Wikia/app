@@ -1,4 +1,4 @@
-require(['jquery'], function($) {
+require(['jquery'], function ($) {
 	'use strict';
 
 	/* Modal component configuration */
@@ -43,7 +43,6 @@ require(['jquery'], function($) {
 	 * Function for showing modal.
 	 * First function in showing modal process.
 	 * Performs all necessary job to display modal with flags ready to edit
-	 * @param event
 	 */
 	function showModal(event) {
 		event.preventDefault();
@@ -52,7 +51,7 @@ require(['jquery'], function($) {
 				controller: 'Flags',
 				method: 'editForm',
 				params: {
-					'pageId': window.wgArticleId
+					'page_id': window.wgArticleId
 				}
 			}],
 			styles: '/extensions/wikia/Flags/styles/Modal.scss',
@@ -64,7 +63,6 @@ require(['jquery'], function($) {
 	 * Handles package provided by getMultiTypePackage from server.
 	 * Loads received styles, adds content to modal and initializes modal component
 	 * One of sub-tasks for getting modal shown
-	 * @param Object pkg
 	 */
 	function handlePackage(pkg) {
 		/* Load styles */
@@ -84,7 +82,6 @@ require(['jquery'], function($) {
 	/**
 	 * Creates modal UI component
 	 * One of sub-tasks for getting modal shown
-	 * @param uiModal
 	 */
 	function createComponent(uiModal) {
 		/* Create the wrapping JS Object using the modalConfig */
@@ -95,13 +92,12 @@ require(['jquery'], function($) {
 	 * CreateComponent callback that finally shows modal
 	 * and binds submit action to Done button
 	 * One of sub-tasks for getting modal shown
-	 * @param modalInstance
 	 */
 	function processInstance(modalInstance) {
 		var $flagsEditForm = modalInstance.$element.find('#flagsEditForm');
 
 		/* Submit flags edit form on Done button click */
-		modalInstance.bind('done', function(){
+		modalInstance.bind('done', function () {
 			$flagsEditForm.trigger('submit');
 		});
 
