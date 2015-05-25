@@ -9,6 +9,10 @@ $modal-secondary-color: darken( $color-page, 10% );
 		background-color: $color-page;
 	}
 
+	h3 {
+		color: $color-text-dark;
+	}
+
 	input[type="checkbox"] ~ fieldset {
 		display: none;
 	}
@@ -18,6 +22,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 	}
 
 	label {
+		color: $color-text-dark;
 		font-size: 16px;
 		font-weight: bold;
 		line-height: 19px;
@@ -28,6 +33,7 @@ $modal-secondary-color: darken( $color-page, 10% );
 		padding: 15px;
 
 		a {
+			color: $color-links-default;
 			display: block;
 			float: right;
 			line-height: 20px;

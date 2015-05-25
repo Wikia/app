@@ -6,7 +6,7 @@ require(['jquery'], function ($) {
 		vars: {
 			id: 'FlagsModal',
 			classes: ['edit-flags'],
-			size: 'small', // size of the modal
+			size: 'medium', // size of the modal
 			content: '', // content
 			title: 'Flags',
 			buttons: [ // buttons in the footer
