@@ -1279,6 +1279,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDelayBTF
+ * Prevents from loading BTF before ATF ad slots
+ */
+$wgAdDelayBTF;
+
+/**
  * @name $wgAdDriverUseAdsAfterInfobox
  * Enable new mobile_in_content slot after infobox placement
  */
