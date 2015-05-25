@@ -25,14 +25,14 @@ CREATE INDEX flags_on_pages_flag_type_id_idx ON flags_to_pages (flag_type_id);
 
 -- Table flags_params
 CREATE TABLE flags_params (
-    param_id int unsigned  NOT NULL,
-    flag_id int unsigned	NOT NULL ,
+    param_id int unsigned   NOT NULL  AUTO_INCREMENT,
+    flag_id int unsigned  NOT NULL ,
     param_name varchar(128)    NOT NULL ,
     param_value text    NULL ,
     CONSTRAINT flags_params_pk PRIMARY KEY (param_id)
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-CREATE INDEX flags_on_pages_flag_id_idx ON flags_to_pages (flag_id);
-CREATE INDEX flags_on_pages_param_name_idx ON flags_to_pages (param_name);
+CREATE INDEX flags_on_pages_flag_id_idx ON flags_params (flag_id);
+CREATE INDEX flags_on_pages_param_name_idx ON flags_params (param_name);
 
 -- foreign keys
 -- Reference:  flag_type_id (table: flags_to_pages)
