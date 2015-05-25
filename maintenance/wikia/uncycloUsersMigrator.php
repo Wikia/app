@@ -333,6 +333,10 @@ class UncycloUserMigrator extends Maintenance {
 			$extUser->setToken();
 			$extUser->saveSettings();
 
+			// we have a new ID for a global account
+			// update user ID in uncyclo database
+			$this->doChangeUncycloUserId( $user, $extUser->getId() );
+
 			$dbw->commit(__METHOD__);
 		}
 		catch(Exception $e) {
@@ -435,7 +439,7 @@ class UncycloUserMigrator extends Maintenance {
 				}
 
 				// now create a shared account using the "local" uncyclo user object
-				$migratedSharedUser = $this->doCreateGlobalUser( $user );
+				$this->doCreateGlobalUser( $user );
 			}
 		}
 		else {
@@ -447,7 +451,7 @@ class UncycloUserMigrator extends Maintenance {
 			$action = 'move to shared DB';
 
 			// now create a shared account using the "local" uncyclo user object
-			$migratedSharedUser = $this->doCreateGlobalUser( $user );
+			$this->doCreateGlobalUser( $user );
 		}
 
 		// add an entry to CSV file
