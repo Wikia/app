@@ -767,6 +767,18 @@ Puedes <a href="$4">cancelar</a>  tu subscripción de los cambios a la lista.',
 	'toplists-oasis-only' => 'La creación y edición de las listas "Top 10" no está disponible en Monobook. Si deseas utilizar esta función, cambia tus preferencias a la piel Wikia.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'toplists-image-browser-upload-btn' => 'Aukeratu',
+	'toplists-seconds' => '{{PLURAL:$1|Segundu $1|$1 segundu}}',
+	'toplists-minutes' => '{{PLURAL:$1|Minutu $1|$1 minutu}}',
+	'toplists-hours' => '{{PLURAL:$1|Ordu bat|$1 ordu}}',
+	'toplists-days' => '({{PLURAL:$1|Egun bat|$1 egun}})',
+	'toplists-weeks' => '{{PLURAL: $1|Aste bat|$1 aste}}',
+);
+
 /** Persian (فارسی)
  * @author Mjbmr
  * @author Reza1615
@@ -1781,7 +1793,17 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'toplists-desc' => 'Listas de top 10',
+	'toplists-editor-title-label' => 'Nom de la lista',
 	'toplists-editor-description-placeholder' => 'Entratz una descripcion',
+	'toplists-cancel-button' => 'Anullar',
+	'toplists-image-browser-upload-btn' => 'Causir',
+	'toplists-seconds' => '$1 {{PLURAL:$1|segonda|segondas}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minuta|minutas}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|ora|oras}}',
+	'toplists-days' => '$1 {{PLURAL:$1|jorn|jorns}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|setmana|setmanas}}',
+	'toplists-create-button-msg' => 'Crear una lista',
 );
 
 /** Polish (polski)

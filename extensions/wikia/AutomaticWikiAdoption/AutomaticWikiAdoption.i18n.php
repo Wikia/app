@@ -344,6 +344,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  * @author Tauhid16
  */
 $messages['bn'] = array(
@@ -523,17 +524,21 @@ Eines útils:
 );
 
 /** Czech (čeština)
+ * @author Aktron
  * @author Chmee2
  * @author H4nek
  * @author Jezevec
  */
 $messages['cs'] = array(
+	'wikiadoption' => 'Automatické přijetí wiki',
 	'wikiadoption-header' => 'Přijmout tuto wiki',
 	'wikiadoption-button-adopt' => 'Ano, chci přijmout {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Zjistěte více!',
 	'wikiadoption-know-more-header' => 'Chcete vědět více?',
 	'wikiadoption-adoption-successed' => 'Blahopřejeme! Pro tento okamžik jste správce této wiki.',
+	'wikiadoption-adoption-failed' => 'Je nám líto. Pokoušeli jsme se vám přidat správcovská oprávnění, nicméně nespěšně. Můžete nás nicméně [http://community.wikia.com/Special:Contact kontaktovat] a my se vám pokusíme pomoci.',
 	'wikiadoption-not-allowed' => 'Je nám to líto. Právě teď nemůžete přijmout tuto wiki.',
+	'wikiadoption-not-enough-edits' => 'Ajaj! Jestli chcete tuto wiki přijmout, musíte mít více než 10 editací.',
 	'wikiadoption-log-reason' => 'Automatické přijetí Wiki',
 	'wikiadoption-mail-first-subject' => 'Chvíli jsme vás zde neviděli',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME byla přijata',
@@ -1825,7 +1830,7 @@ $messages['lb'] = array(
 	'wikiadoption-welcome-header' => 'Gratulatioun! Dir hutt {{SITENAME}} adoptéiert!',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -3012,6 +3017,7 @@ $messages['ru'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -3021,6 +3027,7 @@ $messages['sr-ec'] = array(
 	'wikiadoption-adopt-inquiry' => 'Сазнајте више.',
 	'wikiadoption-know-more-header' => 'Желите да сазнате више?',
 	'wikiadoption-adoption-successed' => 'Честитамо! Постали сте администратор овог викија!',
+	'wikiadoption-mail-first-subject' => 'Нисмо се дуго видели.',
 );
 
 /** Swedish (svenska)

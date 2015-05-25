@@ -323,7 +323,7 @@ $messages['az'] = array(
 	'wikiamobile-sendpassword-label' => 'Yeni şifrəni göndər',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author Arjanizary
  * @author Koroğlu
  */
@@ -768,6 +768,9 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://comuni
 $messages['eu'] = array(
 	'userlogin-forgot-password' => 'Zure pasahitza ahaztu duzu?',
 	'userlogin-forgot-password-button' => 'Jarraitu',
+	'userlogin-error-resetpass_forbidden' => 'Ezin dira pasahitzak aldatu',
+	'userlogin-oldpassword' => 'Pasahitz zaharra',
+	'userlogin-newpassword' => 'Pasahitz berria',
 );
 
 /** Persian (فارسی)
@@ -2371,6 +2374,17 @@ Want tae control whit wab-mails ye receive? Gang til: {{fullurl:{{ns:special}}:P
 	'wikiamobile-facebook-connect-fail' => 'Sorrie, yer Facebook accoont is no airtit wi ae Wikia accoont richt nou.',
 );
 
+/** Serbian (српски / srpski)
+ * @author Dicto23456
+ */
+$messages['sr'] = array(
+	'userlogin-error-invalidfacebook' => 'Проблем приликом
+постављања вашег налога на
+Facebook. Пријавите се на
+Facebооk и покушајте
+поново.',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Bebauautu
  * @author Milicevic01
@@ -2860,7 +2874,7 @@ ___________________________________________
 	'userlogin-logged-in-title' => 'Ласкаво просимо на сайт {{SITENAME}}, $1!',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author Akmalzhon
  * @author Sociologist
  */

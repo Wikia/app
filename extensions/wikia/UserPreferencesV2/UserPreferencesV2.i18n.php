@@ -486,6 +486,11 @@ $messages['eu'] = array(
 	'prefs-appearance' => 'Itxura',
 	'preferences-v2-date' => 'Data-formatua:',
 	'preferences-v2-time' => 'Ordu-eremua:',
+	'preferences-v2-watchdefault' => 'Aldatu',
+	'preferences-v2-watchmoves' => 'Mugitu',
+	'preferences-v2-watchdeletion' => 'Ezabatu',
+	'preferences-v2-watchcreations' => 'Sortu',
+	'preferences-v2-my-email-address' => 'Nire helbide elektronikoa:',
 );
 
 /** Persian (فارسی)
@@ -851,7 +856,7 @@ $messages['lb'] = array(
 	'tog-hidefollowedpages-v2' => "D'lëscht vun de Säiten déi ech iwwerwaache viru D'lëscht vun de Säiten déi ech iwwerwaache viru jiddwerengem verstoppen",
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(

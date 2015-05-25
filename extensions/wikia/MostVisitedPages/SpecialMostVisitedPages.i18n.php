@@ -418,7 +418,7 @@ $messages['lb'] = array(
 	'mostvisitedpagesalllink' => 'Déi am dackst besicht Säite kucken',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -646,6 +646,7 @@ $messages['sv'] = array(
  * @author Krol111
  */
 $messages['szl'] = array(
+	'mostvisitedpages-desc' => 'Lista nojczyńśći uobrzyranych zajt',
 	'mostvisitedpages' => 'Nojczyńśći uobźyrane zajty',
 	'mostvisitedpagessearchtext' => 'Mjano artikla:',
 	'mostvisitedpagessearchbtn' => 'sznupej',
@@ -691,7 +692,7 @@ $messages['tl'] = array(
 	'mostvisitedpagesalllink' => 'Tingnan ang pinakadinadalaw na mga pahina',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(

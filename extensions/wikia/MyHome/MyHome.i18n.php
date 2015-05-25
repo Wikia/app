@@ -1199,6 +1199,7 @@ Näiteks:
  * @author Subi
  */
 $messages['eu'] = array(
+	'myhome-user-contributions-feed' => 'Ekarpenak',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|mezu bat|$1 mezu}}',
 );
 
@@ -2741,6 +2742,38 @@ Als je de oprichter of een beheerder van deze wiki bent, kan je dit bericht gebr
  */
 $messages['oc'] = array(
 	'myhome' => 'Mon Acuèlh',
+	'wikiactivity' => 'Activitat del Wiki',
+	'myhome-activity-feed' => "Flux d'activitat",
+	'myhome-watchlist-feed' => 'Lista de seguiment',
+	'myhome-user-contributions-feed' => 'Contribucions',
+	'myhome-hot-spots-newest' => 'Novèlas paginas del wiki',
+	'prefs-myhome' => 'Mon Acuèlh',
+	'myhome-feed-newpage' => 'pagina novèla',
+	'myhome-feed-edit' => 'modificar',
+	'myhome-feed-talkpage' => 'pagina de discussion',
+	'myhome-feed-blogcomment' => 'comentari del blog',
+	'myhome-feed-delete' => 'suprimit',
+	'myhome-feed-image' => 'imatge apondut',
+	'myhome-feed-video' => 'vidèo aponduda',
+	'myhome-feed-categorization' => 'categorizacion',
+	'myhome-feed-created-by' => 'creada per $1',
+	'myhome-feed-edited-by' => 'modificada per $1',
+	'myhome-feed-posted-by' => 'postat per $1',
+	'myhome-feed-comment-by' => 'comentat per $1',
+	'myhome-feed-deleted-by' => 'suprimit per $1',
+	'myhome-feed-moved-by' => 'desplaçat per $1',
+	'myhome-feed-by' => 'per $1',
+	'myhome-feed-new-page-details' => 'Pagina novèla',
+	'myhome-feed-summary-details' => 'Resumit',
+	'myhome-feed-new-blog-comment-details' => 'Comentari',
+	'myhome-feed-new-article-comment-details' => 'Comentari',
+	'myhome-feed-move-details' => 'Nom novèl',
+	'myhome-feed-redirect-details' => 'Redireccion',
+	'myhome-hot-spots-number-of-editors' => 'contributors',
+	'myhome-namespace-blog' => 'Blog',
+	'myhome-community-corner-header' => 'Messatges de la comunautat',
+	'oasis-myhome-community-corner-edit' => 'modificar lo messatge &gt;',
+	'myhome-community-corner-edit' => 'modificar lo messatge',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -2776,7 +2809,7 @@ $messages['pa'] = array(
 	'myhome-feed-move-details' => 'ਨਾਂ ਬਦਲਿਆ ਗਿਆ',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -2804,7 +2837,7 @@ $messages['pdc'] = array(
 	'myhome-hot-spots-definition' => 'Bledder mit de meescht Schreiwer vun de letscht $1 Daag.', # Fuzzy
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -3741,7 +3774,7 @@ Halimbawa, maaari kang:
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|isang mensahe|$1 mga mensahe}}',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(

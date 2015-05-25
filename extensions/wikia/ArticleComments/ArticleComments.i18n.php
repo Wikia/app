@@ -298,7 +298,7 @@ $messages['az'] = array(
 	'wikiamobile-article-comments-post-reply' => 'Cavab göndər',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author E THP
  * @author Koroğlu
  */
@@ -511,6 +511,7 @@ $messages['bgn'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  * @author Tauhid16
  */
 $messages['bn'] = array(
@@ -722,7 +723,7 @@ $messages['ce'] = array(
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Къамел|Къамелаш}}',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  * @author Calak
  */
 $messages['ckb'] = array(
@@ -2444,7 +2445,7 @@ $PAGEEDITOR къейд ттуна "$PAGETITLE".
 </p>', # Fuzzy
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -3159,7 +3160,7 @@ $messages['oc'] = array(
 	'enotif_subject_article_comment' => '$PAGEEDITOR a comentat « $PAGETITLE » sus {{SITENAME}}',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -3759,6 +3760,8 @@ $messages['si'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
+ * @author Milicevic01
  * @author Rancher
  * @author Милан Јелисавчић
  */
@@ -3781,12 +3784,16 @@ $messages['sr-ec'] = array(
 	'article-comments-show-all' => 'Прикажи све коментаре',
 	'article-comments-prev-page' => 'Претходно',
 	'article-comments-next-page' => 'Следеће',
+	'wikiamobile-article-comments-header' => 'Коментари',
 	'wikiamobile-article-comments-more' => 'Учитај још',
 	'wikiamobile-article-comments-prev' => 'Учитај претходно',
 	'wikiamobile-article-comments-none' => 'Нема коментара',
+	'wikiamobile-article-comments-view' => 'Прикажи одговоре',
 	'wikiamobile-article-comments-replies' => 'одговори',
+	'wikiamobile-article-comments-post-reply' => 'Одговори',
 	'wikiamobile-article-comments-post' => 'Постави',
 	'wikiamobile-article-comments-placeholder' => 'Постави коментар',
+	'wikiamobile-article-comments-login-post' => 'Да би оставили коментар морате бити пријављени.',
 );
 
 /** Swedish (svenska)
@@ -4039,7 +4046,7 @@ Wikia
 </p>', # Fuzzy
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */
@@ -4413,16 +4420,15 @@ $messages['zh-hans'] = array(
 	'wikiamobile-article-comments-login-post' => '请登录以发表评论。',
 	'wikiamobile-article-comments-post-fail' => '评论保存失败，请稍后再试',
 	'enotif_subject_article_comment' => '$PAGEEDITOR在{{SITENAME}}上对"$PAGETITLE"发表了评论',
-	'enotif_body_article_comment' => 'Hi~,$WATCHINGUSERNAME，
+	'enotif_body_article_comment' => '嗨！$WATCHINGUSERNAME
 
-{{SITENAME}}上的$PAGETITLE有了新评论哦。
-点此链接查看评论：$PAGETITLE_URL#WikiaArticleComments
+{{SITENAME}}上的$PAGETITLE有了新评论哦。点此链接查看所有评论：$PAGETITLE_URL#WikiaArticleComments
 
-Wikia社区支持
+- Wikia社区支持
 
 ___________________________________________
-* 在社区中心寻找帮助和建议: http://community.wikia.com
-* 觉得信息太多？您可以在这里退订或变更邮件偏好：http://community.wikia.com/Special:Preferences',
+* 在社区中心寻找帮助和建议：http://community.wikia.com
+* 希望减少来自我们的消息？您可以在此退订或更改您的电子邮件设置：http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
 <br /><br />
 {{SITENAME}}上的$PAGETITLE有评论哦。点击如下链接查看全部评论：
@@ -4547,7 +4553,7 @@ $messages['zh-hk'] = array(
 	'article-comments-next-page' => '下一頁',
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-empty-comment' => "你不能發佈空的評論。<a href='$1'>要刪除它嗎？</a>",
-	'wikiamobile-article-comments-header' => '評論<span class=cnt id=wkArtCnt>$1</span>',
+	'wikiamobile-article-comments-header' => '評論',
 	'wikiamobile-article-comments-more' => '載入更多',
 	'wikiamobile-article-comments-prev' => '載入前面的',
 	'wikiamobile-article-comments-none' => '沒有評論',
@@ -4556,7 +4562,6 @@ $messages['zh-hk'] = array(
 	'wikiamobile-article-comments-post-reply' => '發表回覆',
 	'wikiamobile-article-comments-post' => '發佈',
 	'wikiamobile-article-comments-placeholder' => '發表評論',
-	'wikiamobile-article-comments-show' => '顯示',
 	'wikiamobile-article-comments-login-post' => '請登錄後發表評論。',
 	'wikiamobile-article-comments-post-fail' => '評論儲存失敗，請稍後再試',
 	'enotif_subject_article_comment' => '$PAGEEDITOR 在 {{SITENAME}}的文章 "$PAGETITLE"中發表評論',

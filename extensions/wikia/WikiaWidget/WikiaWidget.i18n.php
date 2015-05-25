@@ -59,6 +59,7 @@ $messages['be-tarask'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'wikiawidget' => 'উইকিয়া উইজেট',
@@ -322,7 +323,7 @@ $messages['pap'] = array(
 	'wikiawidget' => 'Wikia widgetnan',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -392,8 +393,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Sertion
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikiawidget-desc' => 'Skapa Wikia-widgets att använda på externa webbplatser eller på din wiki',
 	'wikiawidget' => 'Wikia widgets',
 );
 

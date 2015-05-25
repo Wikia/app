@@ -64,6 +64,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'mostpopularcategories' => 'সবচেয়ে জনপ্রিয় বিষয়শ্রেণীসমূহ',

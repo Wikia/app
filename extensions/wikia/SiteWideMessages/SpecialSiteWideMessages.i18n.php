@@ -2146,7 +2146,7 @@ $messages['lb'] = array(
 	'swm-mode-wikis-created-before' => 'Virum',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -2716,7 +2716,7 @@ $messages['os'] = array(
 	'swm-list-table-lang' => 'Æвзæгтæ',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -2731,7 +2731,7 @@ $messages['pdc'] = array(
 	'swm-no' => 'Nee',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  */
 $messages['pfl'] = array(
 	'swm-label-edit' => 'Bearwaide',
@@ -3642,7 +3642,7 @@ $messages['tl'] = array(
 	'swm-error-registered-tobeforefrom' => 'Ang petsa ng pagwawakas ng pagkakapatala ng tagagamit ay bago ang petsa ng pagsisimula.',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -3858,7 +3858,7 @@ $messages['uk'] = array(
 	'swm-error-created-tobeforefrom' => 'Кінцева дата створення вікі є ранішою за початкову дату.',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  */
 $messages['uz'] = array(
@@ -4023,7 +4023,15 @@ $messages['zh-hant'] = array(
 	'swm-label-mode-users-anon' => '所有匿名使用者',
 	'swm-label-content' => '內容',
 	'swm-label-language' => '語言',
+	'swm-button-save' => '[ 儲存 ]',
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-content' => '內容',
 	'swm-list-table-tools' => '工具',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hk'] = array(
+	'swm-label-recipient-users' => '用戶',
 );

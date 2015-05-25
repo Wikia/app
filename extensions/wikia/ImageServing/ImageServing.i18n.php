@@ -228,11 +228,12 @@ $messages['ru'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'imageserving-desc' => 'Väljer bilder från en given mängd sidor baserade på visuella krav',
-	'mostlinkedfilesincontent' => 'Flest länkade filer i innehållsnamnrymder',
+	'mostlinkedfilesincontent' => 'Filer som länkats mest till i innehållsnamnrymder',
 );
 
 /** Thai (ไทย)

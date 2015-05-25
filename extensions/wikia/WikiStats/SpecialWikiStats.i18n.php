@@ -832,7 +832,7 @@ $messages['az'] = array(
 	'wikistats_title' => 'Başlıq',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author Erdemaslancan
  */
 $messages['azb'] = array(
@@ -1106,6 +1106,7 @@ $messages['bjn'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  * @author Bellayet
  * @author Usarker
  */
@@ -1701,7 +1702,7 @@ $messages['ce'] = array(
 	'wikistats_title' => 'Корта',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  */
 $messages['ckb'] = array(
 	'wikistats_wikicategory' => 'پۆل:',
@@ -2563,6 +2564,7 @@ $messages['eu'] = array(
 	'wikistats_panel_close_btn' => 'Itxi',
 	'wikistats_daterange_from' => 'Nork:',
 	'wikistats_daterange_to' => 'Nori:',
+	'wikistats_latest_pageviews_subtitle' => 'azken {{PLURAL:$1|minutuan|$1 minutuetan}}',
 	'wikistats_active_day' => 'egun',
 	'wikistats_active_month' => 'hilabete',
 	'wikistats_active_year' => 'urte',
@@ -2597,6 +2599,7 @@ $messages['eu'] = array(
 	'wikistats_new_per_day' => 'berri<br />eguneko',
 	'wikistats_official' => 'ofiziala',
 	'wikistats_rank' => 'postua',
+	'wikistats_previous_month' => 'aurreko<br />hilabetea',
 	'wikistats_total' => 'guztira',
 	'wikistats_new' => 'berria',
 	'wikistats_more_txt' => 'gehiago',
@@ -5469,7 +5472,7 @@ $messages['li'] = array(
 	'wikistats_new_per_day' => 'nuuj<br />edaag',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -6972,6 +6975,7 @@ $messages['oc'] = array(
 	'wikistats_tables' => 'Tablèus',
 	'wikistats_charts' => 'Grafics',
 	'wikistats_back_to_prevpage' => 'Retorn',
+	'wikistats_trend_growth_info' => 'Creissença = creissença mesadièra mejana dels meses afichats',
 	'wikistats_trend_value' => 'valor',
 	'wikistats_trend_formula' => 'Formula',
 	'wikistats_trend_where_text' => 'ont :',
@@ -7006,13 +7010,14 @@ $messages['oc'] = array(
 	'wikistats_nbr_mega' => 'M = K x 1000',
 	'wikistats_nbr_giga' => 'G = M x 1000',
 	'wikistats_nbr_format' => 'Format dels nombres :',
+	'wikistats_month' => 'Estatisticas mesadièras',
 	'wikistats_see_also' => 'Vejatz tanben :',
 	'wikistats_language_all' => 'Totas las lengas',
 	'wikistats_recordspager' => "Mostrar '''$1''' de '''$2''' sus '''$3''' registraments",
 	'wikistats_title' => 'Títol',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -7026,7 +7031,7 @@ $messages['pdc'] = array(
 	'wikistats_search_text' => 'Guck uff:',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -8460,6 +8465,7 @@ $messages['ru'] = array(
 
 /** Sinhala (සිංහල)
  * @author බිඟුවා
+ * @author හරිත
  */
 $messages['si'] = array(
 	'wikistats_showstats_btn' => 'සංඛ්‍යා ලේඛන පෙන්වන්න',
@@ -8475,8 +8481,8 @@ $messages['si'] = array(
 	'wikistats_other' => 'අනෙකුත්',
 	'wikistats_database' => 'දත්ත ගබඩාව',
 	'wikistats_links' => 'සබැඳුම්',
-	'wikistats_images' => 'පිංතූර',
-	'wikistats_uploaded_images' => 'උඩුගත කරන ලද',
+	'wikistats_images' => 'රූප',
+	'wikistats_uploaded_images' => 'උඩුගත කළ',
 	'wikistats_distrib_edits_total' => 'මුළු සංස්කරණ ගණන',
 	'wikistats_date' => 'දිනය',
 	'wikistats_namespace' => 'නාම අවකාශය',
@@ -8747,6 +8753,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikistats-desc' => 'Samlar ett brett utbud av statistik för denna wiki och lägger till ett gränssnitt för att bläddra bland dem. Inspirerad av och delvis byggd på den ursprungliga versionen av [http://meta.wikimedia.org/wiki/Wikistats WikiStats] av Erik Zachte',
 	'wikistats' => 'Wikia Statistik',
 	'wikistats_wikia' => 'Wikia',
 	'wikistats_pagetitle' => 'Wikia Statistik',
@@ -10032,7 +10039,7 @@ Hãy [[Special:UserLogin|đăng nhập hoặc tạo một tài khoản]] nếu b
 	'wikistats_error_malformed_date' => 'Lỗi: Ngày cho là bị thay đổi',
 );
 
-/** Wu (吴语)
+/** Wu Chinese (吴语)
  */
 $messages['wuu'] = array(
 	'wikistats_xls_cancel' => '取消',
@@ -10417,14 +10424,17 @@ $messages['zh-hant'] = array(
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
  * @author Tcshek
  */
 $messages['zh-hk'] = array(
 	'wikistats_images' => '圖像',
 	'wikistats_media' => '圖片及影片',
+	'wikistats_username' => '用戶',
 	'wikistats_image' => '圖片',
 	'wikistats_image_namespace' => '圖片',
 	'wikistats_image_uploads' => '已上傳的圖像',
+	'wikistats_userns' => '用戶',
 );
 
 /** Chinese (Taiwan) (中文（台灣）‎)
