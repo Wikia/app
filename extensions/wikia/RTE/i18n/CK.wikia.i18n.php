@@ -1461,8 +1461,10 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'rte-ck-errorPopupTitle' => 'Flater!',
+	'rte-ck-hoverPreview-delete' => 'fuortsmite',
 	'rte-ck-hoverPreview-edit' => 'bewurkje',
 	'rte-ck-link-error-title' => 'Flater',
+	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-signature-label' => 'ûndertekening',
 	'rte-ck-templateDropDown-label' => 'Berjocht',
 	'rte-ck-templateEditor-editor-previewButton' => 'Proefbyld',

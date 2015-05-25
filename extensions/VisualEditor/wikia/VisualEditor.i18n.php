@@ -745,7 +745,14 @@ $messages['fa'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'خوش آمدید',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'ویرایش را آغاز کنید',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'منبع',
+	'wikia-visualeditor-dialog-done-button' => 'انجام شد',
+	'wikia-visualeditor-dialog-cancel-button' => 'انصراف',
+	'wikia-visualeditor-context-transclusion-description' => 'ویرایش',
+	'wikia-visualeditor-dialog-preference-start-button' => 'متوجه شدید؟',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'گالری',
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'جستجوی تصویر',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'نمایش',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'پی‌گیری',
 );
 
 /** Finnish (suomi)
@@ -1646,9 +1653,11 @@ $messages['nb'] = array(
 );
 
 /** Nepali (नेपाली)
+ * @author Nirjal stha
  * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
+	'visualeditor-ca-classiceditor' => 'पूराना सम्पादक',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'सामग्री',
 );
 
@@ -2115,8 +2124,10 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author Kopcap94
  * @author Okras
+ * @author Дмитрий
  */
 $messages['ru'] = array(
+	'visualeditor-ca-classiceditor' => 'Классический редактор',
 	'wikia-visualeditor-preference-enable' => 'Включить бета-версию Визуального редактора',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Мультимедиа',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Карта',

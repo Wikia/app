@@ -643,6 +643,7 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'prefs-emailv2' => 'E-mail',
 	'preferences-v2-watchdefault' => 'Bewurkje',
+	'preferences-v2-watchdeletion' => 'Fuortsmite',
 	'preferences-v2-watchcreations' => 'Oanmeitsje',
 );
 
@@ -1069,6 +1070,13 @@ $messages['oc'] = array(
 	'preferences-v2-watchdeletion' => 'Suprimir',
 	'preferences-v2-watchcreations' => 'Crear',
 	'preferences-v2-showads-enable' => 'Afichar totas las publicitats',
+);
+
+/** Ossetic (Ирон)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'preferences-v2-date' => 'Датæйы формат:',
 );
 
 /** Polish (polski)

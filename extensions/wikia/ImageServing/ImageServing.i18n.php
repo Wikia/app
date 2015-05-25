@@ -265,9 +265,11 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'imageserving-desc' => 'Chọn hình ảnh từ một mảng được chỉ định của trang dựa trên yêu cầu hình ảnh',
+	'mostlinkedfilesincontent' => 'Các file liên quan nhất liên kết với các không gian tên nội dung',
 );
 
 /** Simplified Chinese (中文（简体）‎)

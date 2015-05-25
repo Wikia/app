@@ -1241,6 +1241,20 @@ $messages['ru'] = array(
 	'quickstats-number-shortening-billions' => '$1миллиард',
 );
 
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'quickstats-header-date' => 'दिनाङ्कः',
+	'quickstats-header-views' => 'मतानि',
+	'quickstats-header-edits' => 'सम्पादनानि',
+	'quickstats-header-photos' => 'चित्राणि',
+	'quickstats-totals-label' => 'योगः',
+	'quickstats-number-shortening' => '$1 सहस्राणि',
+	'quickstats-number-shortening-millions' => '$1 कोटिः',
+	'quickstats-number-shortening-billions' => '$1 अर्बुदं',
+);
+
 /** Scots (Scots)
  * @author John Reid
  */

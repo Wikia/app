@@ -1313,6 +1313,7 @@ $messages['fy'] = array(
 	'wmu-find' => 'Sykje',
 	'wmu-find-btn' => 'Sykje',
 	'wmu-name' => 'Namme',
+	'wmu-optional' => '(opsjoneel)',
 	'wmu-prev' => 'Foarige 8',
 	'wmu-next' => 'Folgjende 8',
 );

@@ -431,6 +431,7 @@ Si vous préférez utiliser la messagerie électronique classique ou souhaitez j
  * @author Robin0van0der0vliet
  */
 $messages['fy'] = array(
+	'specialcontact-yourmail' => 'E-mailadres',
 	'specialcontact-problem' => 'Ûnderwerp',
 	'specialcontact-notyou' => 'Bin jo dit net?',
 );

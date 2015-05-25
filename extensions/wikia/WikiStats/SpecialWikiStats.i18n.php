@@ -3201,20 +3201,25 @@ de noms',
  * @author Robin0van0der0vliet
  */
 $messages['fy'] = array(
+	'wikistats_panel_close_btn' => 'Slute',
 	'wikistats_active_months' => 'moannen',
 	'wikistats_video' => 'Fideo',
 	'wikistats_namespace' => 'Nammeromte',
+	'wikistats_username' => 'Brûker',
 	'wikistats_bytes' => 'bytes',
 	'wikistats_image' => 'ôfbylding',
 	'wikistats_namespaces' => 'nammeromten',
 	'wikistats_image_namespace' => 'ôfbylding',
+	'wikistats_new' => 'nij',
 	'wikistats_more_txt' => 'mear',
+	'wikistats_wikiurl' => 'URL:',
 	'wikistats_wikilang' => 'Taal:',
 	'wikistats_back_to_prevpage' => 'Foarige',
 	'wikistats_trend_value' => 'wearde',
 	'wikistats_xls_cancel' => 'Annulearje',
 	'wikistats_ns_statistics_legend' => 'Nammeromten',
 	'wikistats_search_text' => 'Sykje:',
+	'wikistats_userns' => 'brûker',
 );
 
 /** Galician (galego)

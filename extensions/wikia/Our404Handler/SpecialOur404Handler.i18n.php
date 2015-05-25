@@ -484,11 +484,11 @@ $messages['ksh'] = array(
 	'our404handler-oops' => 'Dat sin nit de Sigge, woh De noh aam looere bes. Nemm andere!',
 	'message404' => "'''Et deihd uns leid, ävver di Sigg, di De han wullts, di jidd_et nit.'''
 
-Dä Atikel '''$1''' ham_mer nit jefonge.
+Di Sigg '''$1''' ham_mer nit jefonge.
 
-* Velleich helft Der dä Atikel [[$2]]
-* Do kanns övver dat Feld op de linke Sigg noh jät söhke
-* Öm op de Houpsigg ze kumme, kleck op: [{{SERVER}} {{SITENAME}}]",
+* Velleich helft Der di Sigg [[$2]]
+* Do kanns övver dat Fäld op de lengke Sigg noh jät söhke
+* Öm op de Houpsigg ze kumme, klegg op: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

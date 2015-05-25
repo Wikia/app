@@ -1398,6 +1398,7 @@ $messages['fa'] = array(
 
 /** Finnish (suomi)
  * @author Lukkipoika
+ * @author Nike
  * @author Ville96
  */
 $messages['fi'] = array(
@@ -1424,7 +1425,7 @@ $messages['fi'] = array(
 	'usersignup-user-pref-emailconfirmlink' => 'Pyydä uutta sähköpostin vahvistusviestiä',
 	'usersignup-user-pref-confirmemail_send' => 'Lähetä uusi sähköpostin vahvistusviesti',
 	'usersignup-user-pref-emailauthenticated' => 'Kiitos! Sähköpostisi vahvistettiin $2 kello $3.',
-	'usersignup-user-pref-emailnotauthenticated' => 'Tarkista sähköpostisi ja klikkaa vahvistuslinkkiä viimeistelläksesi muuttaen sähköpostiksesi $1',
+	'usersignup-user-pref-emailnotauthenticated' => 'Tarkista sähköpostisi ja vahvista sähköpostiosoitteen vaihto napsautamalla osoitteeseen $1 lähetetyssä sähköpostissa olevaa vahvituslinkkiä.',
 	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => 'Voi ei! Sähköpostiosoitettasi ei ole vahvistettu. Sähköpostin ominaisuudet eivät toimi, ennen kuin vahvistat sähköpostiosoitteesi.',
 	'usersignup-user-pref-reconfirmation-email-sent' => 'Melkein valmis! Olemme lähettänyt uuden vahvistusviestin osoitteeseen $1. Tarkista sähköpostisi ja klikkaa linkkiä viimeistelläksesi sähköpostiosoitteesi vahvistaminen.',
 	'usersignup-user-pref-noemailprefs' => 'Näyttää siltä, että meillä ei ole sähköpostiosoitettasi. Kirjoita säshköpostiosoitteesi yläpuolelle.',
@@ -1443,7 +1444,7 @@ $messages['fi'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Onnittelut!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Olet jo vahvistanut',
 	'usersignup-confirmation-heading' => 'Melkein valmis',
-	'usersignup-confirmation-heading-wikiamobile' => 'Tarkista sähköpostiosoitteesi',
+	'usersignup-confirmation-heading-wikiamobile' => 'Tarkista sähköpostisi',
 	'usersignup-confirmation-heading-email-resent' => 'Uusi sähköpostiviesti lähetetty',
 	'usersignup-confirmation-subheading' => 'Tarkista sähköpostiosoitteesi',
 	'usersignup-confirmation-email-sent' => "Olemme lähettäneet sinulle sähköpostia osoitteeseen '''$1'''.",
@@ -1472,11 +1473,11 @@ Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetuks
 	'usersignup-reconfirmation-email-sent' => 'Sähköpostiosoitteeksesi on muutettu $1. Olemme lähettäneet sinulle uuden vahvistusviestin. Vahvista uusi sähköpostiosoitteesi.',
 	'usersignup-reconfirmation-email_subject' => 'Vahvista sähköpostin osoitemuutos Wikiassa',
 	'usersignup-reconfirmation-email-greeting' => 'Hei $USERNAME',
-	'usersignup-reconfirmation-email-content' => 'Klikkaa alla olevaa linkkiä vahvistaaksesi Wikialle sähköpostiosoitteesi.
+	'usersignup-reconfirmation-email-content' => 'Vahvista sähköpostiosoitteesi Wikialle napsauttamalla alla olevaa linkkiä.
 
 <a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a>
 
-Sähköpostisi tulee yhä vanhaan osoitteeseesi, kunnes vahvistat tämän.',
+Saat sähköpostia edelleen vanhaan osoitteeseesi, kunnes vahvistat tämän osoitteen.',
 	'usersignup-reconfirmation-email-signature' => 'Wikia-tiimi',
 	'usersignup-reconfirmation-email_body' => 'Hei $2,
 
@@ -3660,6 +3661,14 @@ Vil du kontrollere hva slags e-post du får? Gå til: {{fullurl:{{ns:special}}:P
 	'usersignup-facebook-problem' => 'Kunne ikke kommunisere med Facebook. Vennligst forsøk igjen senere.',
 );
 
+/** Nepali (नेपाली)
+ * @author Nirjal stha
+ */
+$messages['ne'] = array(
+	'usersignup-page-captcha-label' => 'चुनौति',
+	'usersignup-error-captcha' => 'चुनौति उत्तर गलत भयो, पुन प्रयास गर्नुहोला !',
+);
+
 /** Dutch (Nederlands)
  * @author AvatarTeam
  * @author HanV
@@ -4718,7 +4727,7 @@ Quer controlar quais e-mails você recebe? Vá para: {{fullurl: {{ns: especiais}
  */
 $messages['roa-tara'] = array(
 	'usersignup-page-title' => 'Join Uicchia',
-	'usersignup-page-captcha-label' => 'Parole Sfocate',
+	'usersignup-page-captcha-label' => 'Sfide',
 	'usersignup-error-username-length' => "Pizze, 'u nome utende tune non ge pò essere cchiù de {{PLURAL:$1|'nu carattere|$1 carattere}}.",
 	'usersignup-error-invalid-user' => 'Utende invalide. Pe piacere tràse apprime.',
 	'usersignup-confirm-email-new-email-label' => 'Mail nove',
@@ -5110,7 +5119,7 @@ Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:sp
 	'usersignup-marketing-creativity-heading' => 'Var originell',
 	'usersignup-marketing-creativity' => 'Använd Wikia för att uttrycka din kreativitet med omröstningar och Topp 10-listor, foto- och videogallerier, applikationer och mer.',
 	'usersignup-createaccount-byemail' => 'Skapa ett konto för någon annan',
-	'usersignup-error-captcha' => 'Ordet du skrev in stämde inte överens med ordet i rutan, försök igen!', # Fuzzy
+	'usersignup-error-captcha' => 'Felaktigt svar på utmaningen, försök igen!',
 	'usersignup-account-creation-heading' => 'Åtgärden genomfördes!',
 	'usersignup-account-creation-subheading' => 'Vi har skickat ett e-postmeddelande till $1',
 	'usersignup-account-creation-email-sent' => 'Du har börjat på att skapa ett konto för $2. Vi har skickat ett e-postmeddelande till $1 med ett tillfälligt lösenord och en bekräftelselänk.
@@ -5632,6 +5641,7 @@ ___________________________________________
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author KhangND
  * @author Rémy Lee
  */
 $messages['vi'] = array(
@@ -5786,7 +5796,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-marketing-creativity-heading' => 'Be original',
 	'usersignup-marketing-creativity' => 'Use Wikia to express your creativity with polls and top 10 lists, photo and video galleries, apps and more.',
 	'usersignup-createaccount-byemail' => 'Create an account for someone else',
-	'usersignup-error-captcha' => 'The challenge answer failed, please try again!', # Fuzzy
+	'usersignup-error-captcha' => 'Đáp án trả lời thất bại, vui lòng thử lại!',
 	'usersignup-account-creation-heading' => 'Success!',
 	'usersignup-account-creation-subheading' => "We've sent an email to $1",
 	'usersignup-account-creation-email-sent' => "You've started the account creation process for $2. We've sent them an email at $1 with a temporary password and a confirmation link.

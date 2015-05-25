@@ -2193,6 +2193,10 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'wf_city_lang' => 'Taal',
 	'wf_cc_name' => 'Kategory',
+	'wikifactory-label-close' => 'Slute',
+	'awc-metrics-close' => 'Slute',
+	'awc-metrics-close-action' => 'slute',
+	'closed-reason' => 'Reden:',
 );
 
 /** Galician (galego)

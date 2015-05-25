@@ -445,6 +445,7 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'multilookupnext' => 'folgjende',
 	'multilookupprevious' => 'foarige',
+	'multilookupwikiurl' => 'URL',
 );
 
 /** Galician (galego)

@@ -262,6 +262,13 @@ $messages['fr'] = array(
 	'action-stafflog' => 'voir le journal de l’équipe d’administration',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'stafflog-filter-user' => 'Brûker:',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

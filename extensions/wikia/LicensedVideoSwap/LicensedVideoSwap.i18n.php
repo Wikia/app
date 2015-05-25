@@ -698,6 +698,7 @@ $messages['fy'] = array(
 	'lvs-button-yes' => 'Ja',
 	'lvs-button-no' => 'Nee',
 	'lvs-posted-in-more' => 'mear',
+	'lvs-new-flag' => 'Nij',
 );
 
 /** Galician (galego)
