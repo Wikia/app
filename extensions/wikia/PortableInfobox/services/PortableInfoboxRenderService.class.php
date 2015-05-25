@@ -185,7 +185,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function createVignetteThumbnail( $url ) {
 		return VignetteRequest::fromUrl( $url )
 			->thumbnailDown()
-			->width(F::app()->checkSkin( 'wikiamobile' ) ?
+			->width( F::app()->checkSkin( 'wikiamobile' ) ?
 				self::MOBILE_THUMBNAIL_WIDTH :
 				self::DESKTOP_THUMBNAIL_WIDTH
 			)
@@ -197,15 +197,15 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @desc If the image is served from an old
 	 * service we have to again obtain file to
 	 * call the createThumb function
-	 * @param $name
+	 * @param $title
 	 * @return mixed
 	 */
-	private function createOldThumbnail( $name )
+	private function createOldThumbnail( $title )
 	{
-		$file = wfFindFile( $name );
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
 		if ( $file ) {
 			return $file->createThumb(
-				F::app()->checkSkin('wikiamobile') ?
+				F::app()->checkSkin( 'wikiamobile' ) ?
 					self::MOBILE_THUMBNAIL_WIDTH :
 					self::DESKTOP_THUMBNAIL_WIDTH
 			);

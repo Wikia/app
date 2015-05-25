@@ -41,8 +41,8 @@ class NodeImage extends Node {
 	 */
 	public function resolveImageUrl( $title ) {
 		if ( $title ) {
-			$file = \WikiaFileHelper::getFileFromTitle($title);
-			if ($file) {
+			$file = \WikiaFileHelper::getFileFromTitle( $title );
+			if ( $file ) {
 				return $file->getUrl();
 			}
 		}
