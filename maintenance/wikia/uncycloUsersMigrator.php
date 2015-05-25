@@ -71,7 +71,7 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param string $msg
 	 * @param array $context
 	 */
-	private function error( $msg, Array $context = [] ) {
+	protected function error( $msg, Array $context = [] ) {
 		Wikia\Logger\WikiaLogger::instance()->error( $msg, $context );
 	}
 
@@ -386,9 +386,12 @@ class UncycloUserMigrator extends Maintenance {
 				'Global edits',
 				'Action'
 			] );
+
+			$this->output( sprintf( "Will generate CSV file - <%s>...\n", $this->csv ) );
 		}
 
 		// get all uncyclopedia accounts
+		$this->output( "Prepating the list of accounts to migrate..." );
 		$res = $this->getUncycloDB()->select(
 			self::USER_TABLE,
 			'*',
@@ -396,7 +399,7 @@ class UncycloUserMigrator extends Maintenance {
 			__METHOD__
 		);
 
-		$this->output( sprintf( "Migrating %d accounts...\n", $res->numRows() ) );
+		$this->output( sprintf( "\nMigrating %d accounts...\n", $res->numRows() ) );
 
 		// close the current transaction (if any)
 		$dbw = $this->getUncycloDB( DB_MASTER );
