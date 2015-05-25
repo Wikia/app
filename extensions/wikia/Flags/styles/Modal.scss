@@ -9,6 +9,14 @@ $modal-secondary-color: darken( $color-page, 10% );
 		background-color: $color-page;
 	}
 
+	input[type="checkbox"] ~ fieldset {
+		display: none;
+	}
+
+	input[type="checkbox"]:checked ~ fieldset {
+		display: block;
+	}
+
 	label {
 		font-size: 16px;
 		font-weight: bold;

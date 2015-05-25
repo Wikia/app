@@ -101,10 +101,6 @@ require(['jquery'], function($) {
 	function processInstance(modalInstance) {
 		var $flagsEditForm = modalInstance.$element.find('#flagsEditForm');
 
-		/* Setup toggle show of params fields on checkboxes change */
-		hideFieldsets($flagsEditForm);
-		toggleFieldsets($flagsEditForm);
-
 		/* Submit flags edit form on Done button click */
 		modalInstance.bind('done', function(){
 			$flagsEditForm.trigger('submit');
@@ -112,28 +108,6 @@ require(['jquery'], function($) {
 
 		/* Show the modal */
 		modalInstance.show();
-	}
-
-	/**
-	 * Hide fieldset tags that are siblings to unchecked checkboxes
-	 * @param object $flagsEditForm jQuery object of form element
-	 */
-	function hideFieldsets($flagsEditForm) {
-		function hide(event,element) {
-			$(element).siblings('fieldset').hide();
-		}
-		$flagsEditForm.find('input[type=checkbox]:not(:checked)').each(hide);
-	}
-
-	/**
-	 * Show and hide sibling fieldsets on checkbox change
-	 * @param object $flagsEditForm jQuery object of form element
-	 */
-	function toggleFieldsets($flagsEditForm) {
-		function toggle(event) {
-			$(event.target).siblings('fieldset').toggle();
-		}
-		$flagsEditForm.find('input[type=checkbox]').click(toggle);
 	}
 
 	// Run initialization method on DOM ready
