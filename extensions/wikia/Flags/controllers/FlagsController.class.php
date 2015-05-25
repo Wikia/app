@@ -9,6 +9,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
+use Flags\FlagsCache;
 use Flags\Views\FlagView;
 use Flags\FlagsHelper;
 
@@ -57,14 +58,12 @@ class FlagsController extends WikiaController {
 
 		$flags = $this->requestGetFlagsForPageForEdit( $pageId );
 
-		$this->setVal( 'edit_token', $this->wg->User->getEditToken() );
+		$this->setVal( 'editToken', $this->wg->User->getEditToken() );
 		$this->setVal( 'flags', $flags );
-		$this->setVal( 'form_submit_url', $this->getLocalUrl( 'postFlagsEditForm' ) );
-		$this->setVal( 'input_name_prefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
-		$this->setVal( 'input_name_checkbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
-		$this->setVal( 'page_id', $pageId );
-
-		$this->response->setFormat( 'html' );
+		$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
+		$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
+		$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
+		$this->setVal( 'pageId', $pageId );
 	}
 
 	/**
@@ -83,10 +82,11 @@ class FlagsController extends WikiaController {
 	 * @return null|bool
 	 */
 	public function postFlagsEditForm() {
+		$this->skipRendering();
+		$this->params = $this->request->getParams();
 		if ( !$this->isValidPostRequest() || !isset( $this->params['page_id'] ) ) {
 			return null;
 		}
-		$this->params = $this->request->getParams();
 		$pageId = $this->params['page_id'];
 
 		$title = Title::newFromID( $pageId );

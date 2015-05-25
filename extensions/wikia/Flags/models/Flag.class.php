@@ -215,15 +215,15 @@ class Flag extends FlagsBaseModel {
 	/**
 	 * Checks if parameters have been verified and
 	 * sends a request to remove flags with the passed IDs
-	 * @param array $params An array of IDs of flags to remove under a `flags_ids` key
+	 * @param array $flags An array of IDs of flags to remove
 	 * @return bool
 	 */
-	public function removeFlagsFromPage( Array $params ) {
+	public function removeFlagsFromPage( Array $flags ) {
 		if ( !$this->paramsVerified ) {
 			return false;
 		}
 
-		$status = $this->removeFlags( $params['flags_ids'] );
+		$status = $this->removeFlags( $flags );
 		return $status;
 	}
 
@@ -233,7 +233,7 @@ class Flag extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function verifyParamsForRemove( $params ) {
-		if ( !isset( $params['flags_ids'] ) || !is_array( $params['flags_ids'] ) ) {
+		if ( !isset( $params['flags'] ) || !is_array( $params['flags'] ) ) {
 			$this->paramsVerified = false;
 			return false;
 		}
@@ -244,15 +244,15 @@ class Flag extends FlagsBaseModel {
 
 	/**
 	 * Performs a removal SQL query on instances of flags based on the passed flags_ids
-	 * @param array $flags_ids
+	 * @param array $flags
 	 * @return bool
 	 */
-	private function removeFlags( Array $flags_ids ) {
+	private function removeFlags( Array $flags ) {
 		$db = $this->getDatabaseForWrite();
 
 		$sql = ( new \WikiaSQL() )
 			->DELETE( self::FLAGS_TO_PAGES_TABLE )
-			->WHERE( 'flag_id' )->IN( $flags_ids )
+			->WHERE( 'flag_id' )->IN( $flags )
 			->run( $db );
 
 		$status = $db->affectedRows() > 0;

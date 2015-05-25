@@ -54,7 +54,7 @@ class FlagsHelper {
 				 */
 				$flagsToRemove[] = $flag['flag_id'];
 
-			} elseif ( $flag['flag_param_names'] !== null ) {
+			} elseif ( $flag['flag_params_names'] !== null ) {
 				/**
 				 * 4. The flag type HAS an instance on this page and WAS posted
 				 * and HAS parameters - update the parameters of the instance.
@@ -106,7 +106,7 @@ class FlagsHelper {
 			 * Check only for names of parameters defined in the flag_param_names field.
 			 * This is a protection from users modifying names of parameters in the DOM.
 			 */
-			foreach ( $paramNames as $paramName ) {
+			foreach ( $paramNames as $paramName => $paramDescription ) {
 				$key = $this->composeInputName( $flagTypeId, $paramName );
 				if ( isset( $postData[$key] ) ) {
 					/**

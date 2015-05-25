@@ -254,8 +254,17 @@ class FlagsApiController extends WikiaApiController {
 		$flagModel = new Flag();
 
 		if ( $flagModel->verifyParamsForRemove( $this->params ) ) {
-			$this->status = $flagModel->removeFlagsFromPage( $this->params );
+			$this->status = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 		}
+
+		$this->setVal( 'status', $this->status );
+	}
+
+	public function updateFlagsForPage() {
+		$this->processRequest();
+		$flagModel = new Flag();
+
+		$this->status = $flagModel->updateFlagsForPage( $this->params['flags'] );
 
 		$this->setVal( 'status', $this->status );
 	}
