@@ -130,7 +130,7 @@ class AdEngine2ExitstitialHooks {
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 		global $wgEnableOutboundScreenExt;
 
-		if ( ! empty( $wgEnableOutboundScreenExt ) ) {
+		if ( !empty( $wgEnableOutboundScreenExt ) ) {
 			$jsAssets[] = 'adengine2_oasis_exitstitial_js';
 		}
 
