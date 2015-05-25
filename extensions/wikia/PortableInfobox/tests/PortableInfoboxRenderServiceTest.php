@@ -13,6 +13,11 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 		$this->infoboxRenderService = $mock;
 	}
 
+	private function setWikiaMobileSkin($bool) {
+		$this->infoboxRenderService->expects( $this->any() )->method( 'isWikiaMobile' )->will( $this->returnValue
+		($bool) );
+	}
+
 	/**
 	 * @param $input
 	 * @param $expectedOutput
@@ -20,7 +25,33 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider testRenderInfoboxDataProvider
 	 */
 	public function testRenderInfobox( $input, $expectedOutput, $description ) {
+		$this->setWikiaMobileSkin(false);
 
+		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
+
+		$actualDOM = new DOMDocument('1.0');
+		$expectedDOM = new DOMDocument('1.0');
+		$actualDOM->formatOutput = true;
+		$actualDOM->preserveWhiteSpace = false;
+		$expectedDOM->formatOutput = true;
+		$expectedDOM->preserveWhiteSpace = false;
+		$actualDOM->loadXML($actualOutput);
+		$expectedDOM->loadXML($expectedOutput);
+
+		$expectedHtml = $expectedDOM->saveXML();
+		$actualHtml = $actualDOM->saveXML();
+
+		$this->assertEquals( $expectedHtml, $actualHtml, $description );
+	}
+
+	/**
+	 * @param $input
+	 * @param $expectedOutput
+	 * @param $description
+	 * @dataProvider testRenderInfoboxDataProvider
+	 */
+	public function testRenderMobileInfobox( $input, $expectedOutput, $description ) {
+		$this->setWikiaMobileSkin(true);
 		$actualOutput = $this->infoboxRenderService->renderInfobox( $input );
 
 		$actualDOM = new DOMDocument('1.0');
@@ -64,6 +95,29 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 			[
 				'input' => [
 					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'url' => 'http://image.jpg',
+							'caption' => 'Lorem ipsum dolor'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-image no-margins">
+									<figure class="portable-infobox-image-wrapper">
+										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
+											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
+										</a>
+										<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">Lorem ipsum dolor</figcaption>
+									</figure>
+								</div>
+							</aside>',
+				'description' => 'Only image'
+			],
+			[
+				'input' => [
+					[
 						'type' => 'footer',
 						'data' => [
 							'value' => 'Footer value',
@@ -74,27 +128,6 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">Footer value</footer>
 							</aside>',
 				'description' => 'Footer only'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg'
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure class="portable-infobox-image-wrapper">
-										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
-										</a>
-									</figure>
-								</div>
-							</aside>',
-				'description' => 'Only image'
 			],
 			[
 				'input' => [
@@ -319,6 +352,31 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								</footer>
 							</aside>',
 				'description' => 'Infobox with footer'
+			]
+		];
+	}
+
+	public function testRenderMobileInfoboxDataProvider() {
+		return [
+			[
+				'input' => [
+					[
+						'type' => 'image',
+						'data' => [
+							'alt' => 'image alt',
+							'url' => 'http://image.jpg',
+							'thumbnail' => 'thumbnail.jpg',
+							'ref' => 1,
+							'name' => 'test1'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<div class="portable-infobox-item item-type-image no-margins">
+									<img src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" class="portable-infobox-image lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-src="thumbnail.jpg" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
+								</div>
+							</aside>',
+				'description' => 'Only image for mobile'
 			]
 		];
 	}
