@@ -52,7 +52,7 @@ require(['jquery'], function($) {
 				controller: 'Flags',
 				method: 'editForm',
 				params: {
-					'pageId': window.wgArticleId
+					'page_id': window.wgArticleId
 				}
 			}],
 			styles: '/extensions/wikia/Flags/styles/Modal.scss',
