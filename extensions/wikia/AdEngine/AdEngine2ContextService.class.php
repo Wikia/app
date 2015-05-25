@@ -29,7 +29,7 @@ class AdEngine2ContextService {
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
-					'delayBtf' => $wg->AdDelayBTF,
+					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'enableInvisibleHighImpactSlot' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 					'pageType' => $adPageTypeService->getPageType(),

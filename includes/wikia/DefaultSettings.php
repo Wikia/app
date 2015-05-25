@@ -1279,10 +1279,10 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
- * @name $wgAdDelayBTF
+ * @name $wgAdDriverDelayBelowTheFold
  * Prevents from loading BTF before ATF ad slots
  */
-$wgAdDelayBTF;
+$wgAdDriverDelayBelowTheFold = false;
 
 /**
  * @name $wgAdDriverUseAdsAfterInfobox
