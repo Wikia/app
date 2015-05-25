@@ -1,12 +1,9 @@
 @import "skins/shared/color";
 
-$modal-secondary-color: darken( $color-page, 10% );
-
 .edit-flags.modal {
-	background-color: $modal-secondary-color;
 
-	footer, header, li {
-		background-color: $color-page;
+	li {
+		background-color: $color-unified-module-background;
 	}
 
 	input[type="checkbox"] ~ fieldset {
@@ -40,7 +37,6 @@ $modal-secondary-color: darken( $color-page, 10% );
 	}
 
 	.param {
-		background: $modal-secondary-color;
 		border: 0;
 		display: block;
 		margin-bottom: 5px;
