@@ -232,7 +232,10 @@ class FlagsApiController extends WikiaApiController {
 	 * ]
 	 */
 	public function addFlagsToPage() {
-		$this->processRequest();
+		# @TODO: CE-1849 Proper error handling
+		if ( !$this->processRequest() ) {
+			return false;
+		}
 		$flagModel = new Flag();
 
 		if ( $flagModel->verifyParamsForAdd( $this->params ) ) {
@@ -250,7 +253,10 @@ class FlagsApiController extends WikiaApiController {
 	 * @requestParam array flags_ids An array of IDs of flags to remove
 	 */
 	public function removeFlagsFromPage() {
-		$this->processRequest();
+		# @TODO: CE-1849 Proper error handling
+		if ( !$this->processRequest() ) {
+			return false;
+		}
 		$flagModel = new Flag();
 
 		if ( $flagModel->verifyParamsForRemove( $this->params ) ) {
@@ -261,7 +267,10 @@ class FlagsApiController extends WikiaApiController {
 	}
 
 	public function updateFlagsForPage() {
-		$this->processRequest();
+		# @TODO: CE-1849 Proper error handling
+		if ( !$this->processRequest() ) {
+			return false;
+		}
 		$flagModel = new Flag();
 
 		$this->status = $flagModel->updateFlagsForPage( $this->params['flags'] );
@@ -288,7 +297,10 @@ class FlagsApiController extends WikiaApiController {
 	 * 		It's used for rendering inputs in the "Add a flag" form.
 	 */
 	public function addFlagType() {
-		$this->processRequest();
+		# @TODO: CE-1849 Proper error handling
+		if ( !$this->processRequest() ) {
+			return false;
+		}
 		$flagTypeModel = new FlagType();
 
 		if ( $flagTypeModel->verifyParamsForAdd( $this->params ) ) {
@@ -309,7 +321,10 @@ class FlagsApiController extends WikiaApiController {
 	 * of flags with ALL of their parameters per the database's configuration.
 	 */
 	public function removeFlagType() {
-		$this->processRequest();
+		# @TODO: CE-1849 Proper error handling
+		if ( !$this->processRequest() ) {
+			return false;
+		}
 		$flagTypeModel = new FlagType();
 
 		if ( $flagTypeModel->verifyParamsForRemove( $this->params ) ) {
