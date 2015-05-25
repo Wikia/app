@@ -58,6 +58,12 @@ class Node {
 	}
 
 	public function getType() {
+		/*
+		 * Node type generation is based on XML tag name.
+		 * It's worth to remember that SimpleXMLElement::getName method is
+		 * case - sensitive ( "<Data>" != "<data>" ), so we need to sanitize Node Type
+		 * by using strtolower function
+		 */
 		return strtolower( $this->xmlNode->getName() );
 	}
 
