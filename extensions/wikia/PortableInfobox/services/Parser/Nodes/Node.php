@@ -36,24 +36,8 @@ class Node {
 		$this->parent = $parent;
 	}
 
-	public function isParentTypeOf( $typeName ) {
-		if ( !is_null( $this->parent ) && $this->getParent()->getType() == $typeName ) {
-			return true;
-		}
-		return false;
-	}
-
 	public function ignoreNodeWhenEmpty() {
 		return true;
-	}
-
-	/**
-	 * Get node type name based on class name
-	 * @return string
-	 */
-	public static function type() {
-		$called_class = get_called_class();
-		return strtolower( substr( $called_class, strrpos($called_class, '\\Node') + 1 + strlen('Node') ) );
 	}
 
 	/**
