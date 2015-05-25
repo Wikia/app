@@ -306,23 +306,6 @@ class MercuryApi {
 	}
 
 	/**
-	 * Add `section` type to all sections from CuratedContent data
-	 *
-	 * @param $data
-	 * @return array
-	 */
-	private function getCuratedContentSections( $data ) {
-		$sections = [];
-		if ( !empty( $data[ 'sections' ] ) ) {
-			foreach ( $data[ 'sections' ] as $section ) {
-				$section[ 'type' ] = 'section';
-				$sections[] = $section;
-			}
-		}
-		return $sections;
-	}
-
-	/**
 	 * Process CuratedContent items and sanitize when the item is an article
 	 *
 	 * @param $items
@@ -367,15 +350,15 @@ class MercuryApi {
 		return null;
 	}
 
-	public function processTrendingArticles( $data ) {
-		if ( !isset( $data[ 'items' ] ) || !is_array( $data[ 'items' ] ) ) {
+	public function processTrendingData( $data, $itemArrayName, $paramsToInclude = [] ) {
+		if ( !isset( $data[ $itemArrayName ] ) || !is_array( $data[ $itemArrayName ] ) ) {
 			return null;
 		}
 
 		$items = [];
 
-		foreach ( $data[ 'items' ] as $item ) {
-			$processedItem = $this->processTrendingArticlesItem( $item );
+		foreach ( $data[ $itemArrayName ] as $item ) {
+			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
