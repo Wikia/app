@@ -20,6 +20,8 @@ putenv('SERVER_ID=425'); // run in the context of uncyclopedia wiki
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
+class UncycloUserMigratorException extends Exception {}
+
 /**
  * Maintenance script class
  */
@@ -42,6 +44,45 @@ class UncycloUserMigrator extends Maintenance {
 	/* @var resource $csv */
 	private $csv;
 	private $isDryRun = true;
+
+	/**
+	 * Stores the predefined tasks to do for every local wiki database.
+	 * Here should be mentioned all core tables not connected to any extension.
+	 *
+	 * Borrowed from /extensions/wikia/UserRenameTool/RenameUserProcess.class.php
+	 */
+	static private $mTableRenameRules = [
+		# Core MW tables
+		[ 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ],
+		[ 'table' => 'filearchive', 'userid_column' => 'fa_user', 'username_column' => 'fa_user_text' ],
+		[ 'table' => 'image', 'userid_column' => 'img_user', 'username_column' => 'img_user_text' ],
+		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_by', 'username_column' => 'ipb_by_text' ],
+		[ 'table' => 'ipblocks', 'userid_column' => 'ipb_user', 'username_column' => 'ipb_address' ],
+		[ 'table' => 'oldimage', 'userid_column' => 'oi_user', 'username_column' => 'oi_user_text' ],
+		[ 'table' => 'recentchanges', 'userid_column' => 'rc_user', 'username_column' => 'rc_user_text' ],
+		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ],
+		[ 'table' => 'text', 'userid_column' => 'old_user', 'username_column' => 'old_user_text' ],
+		[ 'table' => 'user_newtalk', 'userid_column' => null, 'username_column' => 'user_ip' ],
+		# Core 1.16 tables
+		[ 'table' => 'logging', 'userid_column' => 'log_user', 'username_column' => 'log_user_text' ],
+
+		# macbre: user ID only tables
+		[ 'table' => 'user_groups', 'userid_column' => 'ug_user', 'username_column' => null ],
+		[ 'table' => 'user_former_groups', 'userid_column' => 'ufg_user', 'username_column' => null ],
+		[ 'table' => 'user_newtalk', 'userid_column' => 'user_id', 'username_column' => null ],
+		[ 'table' => 'user_properties', 'userid_column' => 'up_user', 'username_column' => null ],
+		[ 'table' => 'filearchive', 'userid_column' => 'fa_deleted_user', 'username_column' => null ],
+		[ 'table' => 'uploadstash', 'userid_column' => 'us_id', 'username_column' => null ],
+		[ 'table' => 'watchlist', 'userid_column' => 'wl_user', 'username_column' => null ],
+		[ 'table' => 'page_restrictions', 'userid_column' => 'pr_user', 'username_column' => null ],
+		[ 'table' => 'protected_titles', 'userid_column' => 'pt_user', 'username_column' => null ],
+
+		# Template entry
+//		[ 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ],
+	];
+
+	const UPDATE_TABLE_USER_ID = 'userid_column';
+	const UPDATE_TABLE_USER_NAME = 'username_column';
 
 	/**
 	 * Set script options
@@ -133,36 +174,75 @@ class UncycloUserMigrator extends Maintenance {
 	}
 
 	/**
+	 * Updates given column (userid_column or username_column) with a new value
+	 *
+	 * @param string $fieldType
+	 * @param string|int $oldValue
+	 * @param string|int $newValue
+	 */
+	protected function updateTables( $fieldType, $oldValue, $newValue ) {
+		// update user_id in MW tables
+		$dbw = $this->getUncycloDB(DB_MASTER);
+
+		foreach( self::$mTableRenameRules as $entry ) {
+			// a single entry:
+			// array( 'table' => 'archive', 'userid_column' => 'ar_user', 'username_column' => 'ar_user_text' ),
+			if ( is_null( $entry[ $fieldType ] ) ) {
+				continue;
+			}
+
+			$columnName = $entry[ $fieldType ];
+			$dbw->update(
+				$entry[ 'table' ],
+				[ $columnName => $newValue ], // SET
+				[ $columnName => $oldValue ], // WHERE
+				__METHOD__
+			);
+		}
+	}
+
+	/**
 	 * Change uncyclo user ID
+	 *
+	 * Updates fields with user ID only!
 	 *
 	 * @param User $user uncyclo account to migrate
 	 * @param $newUserId new user ID
+	 * @throws Exception
 	 */
 	protected function doChangeUncycloUserId( User $user, $newUserId ) {
+		// "OptiPest" and "MrFlashlight" accounts have the same ID on uncyclo and shared DB
+		if ( $newUserId == $user->getId() ) {
+			return;
+		}
+
 		// check if there's the uncyclo user with the ID from shared DB
 		$whoIs = User::whoIs( $newUserId );
 
 		if ( $whoIs !== false ) {
 			$this->output( sprintf( "\nCan't change the ID of %s - clashes with %s!\n", $user->getName(), $whoIs ) );
-			return;
+			throw new UncycloUserMigratorException( sprintf( 'IDs clash for %s (new ID #%d)', $user->getName(), $newUserId ) );
 		}
 
 		if ( $this->isDryRun ) {
 			return;
 		}
 
-		// TODO
-		#$process = RenameUserProcess::newFromData( $processData );
-		#$process->updateLocal();
+		// update user_id in MW tables
+		$this->updateTables( self::UPDATE_TABLE_USER_ID, $user->getId(), $newUserId );
 	}
 
 	/**
 	 * Rename uncyclopedia user
 	 *
-	 * @param User $user
+	 * Updates fields with user name only!
+	 *
+	 * @param User $uncycloUser
 	 * @return User user object with a changed name
 	 */
-	protected function doRenameUncycloUser( User $user ) {
+	protected function doRenameUncycloUser( User $uncycloUser ) {
+		$user = clone $uncycloUser;
+
 		$newName = self::PREFIX_RENAME_UNCYCLO . $user->getName();
 		$this->output( sprintf('> renaming uncyclo user to "%s"...', $newName) );
 
@@ -170,6 +250,9 @@ class UncycloUserMigrator extends Maintenance {
 
 		$this->renamedUnclycloAccounts++;
 
+		// TODO: move user page
+
+		// return the updated user object
 		$user->setName( $newName );
 		return $user;
 	}
