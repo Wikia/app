@@ -19,7 +19,7 @@ class FlagsController extends WikiaController {
 
 	private function isValidPostRequest() {
 		return $this->request->wasPosted()
-		&& $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) );
+			&& $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) );
 	}
 
 	/**
