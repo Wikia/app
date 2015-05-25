@@ -4,9 +4,9 @@ namespace Wikia\PortableInfobox\Parser\Nodes;
 class NodeData extends Node {
 
 	public function ignoreNodeWhenEmpty() {
-		if ( $this->isParentTypeOf( NodeSet::type() ) ) {
-			$parent = $this->getParent();
-			if ( $parent->isParentTypeOf( NodeComparison::type() ) ) {
+		$parent = $this->getParent();
+		if ( $parent instanceof NodeSet ) {
+			if ( $parent->getParent() instanceof NodeComparison ) {
 				// data tag inside comparison tag can not be ignored
 				return false;
 			}
