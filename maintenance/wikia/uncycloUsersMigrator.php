@@ -152,6 +152,8 @@ class UncycloUserMigrator extends Maintenance {
 		}
 
 		// TODO
+		#$process = RenameUserProcess::newFromData( $processData );
+		#$process->updateLocal();
 	}
 
 	/**
