@@ -5,6 +5,7 @@ require(['jquery'], function($) {
 	var modalConfig = {
 		vars: {
 			id: 'FlagsModal',
+			classes: ['edit-flags'],
 			size: 'small', // size of the modal
 			content: '', // content
 			title: 'Flags',
@@ -55,7 +56,7 @@ require(['jquery'], function($) {
 					'pageId': window.wgArticleId
 				}
 			}],
-			styles: '/extensions/wikia/Flags/styles/Modal.scss',
+			styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
 			callback: handlePackage
 		});
 	}

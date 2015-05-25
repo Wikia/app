@@ -1,0 +1,50 @@
+@import "skins/shared/color";
+
+$modal-secondary-color: darken( $color-page, 10% );
+
+.edit-flags.modal {
+	background-color: $modal-secondary-color;
+
+	footer, header, li {
+		background-color: $color-page;
+	}
+
+	input[type="checkbox"] ~ fieldset {
+		display: none;
+	}
+
+	input[type="checkbox"]:checked ~ fieldset {
+		display: block;
+	}
+
+	label {
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 19px;
+	}
+
+	li {
+		margin-bottom: 5px;
+		padding: 15px;
+
+		a {
+			display: block;
+			float: right;
+			line-height: 20px;
+		}
+	}
+
+	.params {
+		margin-top: 10px;
+		padding-left: 24px;
+	}
+
+	.param {
+		background: $modal-secondary-color;
+		border: 0;
+		display: block;
+		margin-bottom: 5px;
+		padding: 5px 10px;
+		width: calc(100% - 20px);
+	}
+}

@@ -10,7 +10,7 @@ $messages = [];
  */
 $messages['en'] = [
 	'flags-description' => 'Portable flags',
-	'flags-edit-form-more-info' => 'More info',
+	'flags-edit-form-more-info' => 'More info >',
 ];
 
 /**

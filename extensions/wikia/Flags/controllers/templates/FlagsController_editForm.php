@@ -1,5 +1,5 @@
 <form action="<?= Sanitizer::cleanUrl( $formSubmitUrl ) ?>" method="POST" id="flagsEditForm">
-	<ul class="flags">
+	<ul>
 		<?php foreach ( $flags as $flagTypeId => $flag ): ?>
 		<?php $prefix = "{$inputNamePrefix}:{$flagTypeId}" ?>
 		<li>
@@ -8,13 +8,21 @@
 			<label for="<?= Sanitizer::encodeAttribute( "{$prefix}:{$inputNameCheckbox}" ) ?>"><?= $flag['flag_name'] ?></label>
 			<a href="<?= Sanitizer::cleanUrl( $flag['flag_view_url'] ) ?>" target="_blank"><?= wfMessage( 'flags-edit-form-more-info' )->escaped() ?></a>
 			<?php
-				$flagParamsNames = json_decode( $flag['flag_params_names'] );
+			$flagParamsNames = json_decode( $flag['flag_params_names'] );
+			if ( !empty( $flagParamsNames ) ):
+			?>
+				<fieldset class="params">
+				<?php
 				foreach ( $flagParamsNames as $flagParamName => $flagParamDescription ):
 					$flagParamValue = (string)$flag['params'][$flagParamName];
-			?>
-			<input type="text" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$flagParamName}" ) ?>" value="<?= Sanitizer::encodeAttribute( $flagParamValue ) ?>" placeholder="<?= Sanitizer::encodeAttribute( $flagParamDescription ) ?>" class="param">
-			<?php
+				?>
+					<input type="text" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$flagParamName}" ) ?>" value="<?= Sanitizer::encodeAttribute( $flagParamValue ) ?>" placeholder="<?= Sanitizer::encodeAttribute( $flagParamDescription ) ?>" class="param">
+				<?php
 				endforeach;
+				?>
+				</fieldset>
+			<?php 
+			endif;
 			?>
 		</li>
 		<?php endforeach; ?>
