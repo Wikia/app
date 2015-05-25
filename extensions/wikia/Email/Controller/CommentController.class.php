@@ -9,7 +9,7 @@ use Email\Fatal;
 abstract class CommentController extends EmailController {
 
 	/** @var \Title */
-	protected $pageTtitle;
+	protected $pageTitle;
 
 	/** @var \Title */
 	protected $commentTitle;
@@ -19,7 +19,7 @@ abstract class CommentController extends EmailController {
 		$titleText = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace' );
 
-		$this->pageTtitle = \Title::newFromText( $titleText, $titleNamespace );
+		$this->pageTitle = \Title::newFromText( $titleText, $titleNamespace );
 
 		// This revision ID is for the comment that was left
 		$commentRevID = $this->getVal( 'currentRevId', false );
@@ -46,11 +46,11 @@ abstract class CommentController extends EmailController {
 	 * @throws \Email\Check
 	 */
 	private function assertValidTitle() {
-		if ( !$this->pageTtitle instanceof \Title ) {
+		if ( !$this->pageTitle instanceof \Title ) {
 			throw new Check( "Invalid value passed for title" );
 		}
 
-		if ( !$this->pageTtitle->exists() ) {
+		if ( !$this->pageTitle->exists() ) {
 			throw new Check( "Title doesn't exist." );
 		}
 	}
@@ -63,7 +63,7 @@ abstract class CommentController extends EmailController {
 			throw new Check( "Could not find comment for revision ID given by currentRevId" );
 		}
 
-		if ( !$this->pageTtitle->exists() ) {
+		if ( !$this->pageTitle->exists() ) {
 			throw new Check( "Comment doesn't exist." );
 		}
 	}
@@ -88,7 +88,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	public function getSubject() {
-		$articleTitle = $this->pageTtitle->getText();
+		$articleTitle = $this->pageTitle->getText();
 		return wfMessage( $this->getSubjectKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
 			->text();
@@ -104,7 +104,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getSummary() {
-		$articleTitle = $this->pageTtitle->getText();
+		$articleTitle = $this->pageTitle->getText();
 
 		return wfMessage( $this->getSummaryKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
@@ -133,8 +133,8 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getFooterMessages() {
-		$parentUrl = $this->pageTtitle->getFullURL( 'action=unwatch' );
-		$parentTitleText = $this->pageTtitle->getPrefixedText();
+		$parentUrl = $this->pageTitle->getFullURL( 'action=unwatch' );
+		$parentTitleText = $this->pageTitle->getPrefixedText();
 
 		$footerMessages = [
 			wfMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
@@ -145,7 +145,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getCommentSectionLink() {
-		$url = $this->pageTtitle->getFullURL( '#WikiaArticleComments' );
+		$url = $this->pageTitle->getFullURL( '#WikiaArticleComments' );
 
 		return wfMessage( 'emailext-comment-view-all', $url )
 			->inLanguage( $this->targetLang )
