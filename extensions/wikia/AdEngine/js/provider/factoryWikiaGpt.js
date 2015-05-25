@@ -63,7 +63,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				lookups.extendSlotTargeting(slotName, slotTargeting);
 			}
 
-			if (extra.sraEnabled) {
+			if (gptSraHelper && extra.sraEnabled) {
 				gptSraHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop);
 			} else {
 				gptHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop);
