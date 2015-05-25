@@ -66,6 +66,10 @@ class UncycloUserMigrator extends Maintenance {
 		# Core 1.16 tables
 		[ 'table' => 'logging', 'userid_column' => 'log_user', 'username_column' => 'log_user_text' ],
 
+		# macbre: wikia-specific tables
+		[ 'table' => 'cu_log', 'userid_column' => 'cul_user', 'username_column' => 'cul_user_text' ],
+		[ 'table' => 'cu_changes', 'userid_column' => 'cuc_user', 'username_column' => 'cuc_user_text' ],
+
 		# macbre: user ID only tables
 		[ 'table' => 'user_groups', 'userid_column' => 'ug_user', 'username_column' => null ],
 		[ 'table' => 'user_former_groups', 'userid_column' => 'ufg_user', 'username_column' => null ],
@@ -76,6 +80,13 @@ class UncycloUserMigrator extends Maintenance {
 		[ 'table' => 'watchlist', 'userid_column' => 'wl_user', 'username_column' => null ],
 		[ 'table' => 'page_restrictions', 'userid_column' => 'pr_user', 'username_column' => null ],
 		[ 'table' => 'protected_titles', 'userid_column' => 'pt_user', 'username_column' => null ],
+
+		# macbre: user ID only, wikia-specific tables
+		[ 'table' => 'wikia_user_properties', 'userid_column' => 'wup_user', 'username_column' => null ],
+		[ 'table' => 'video_info', 'userid_column' => 'added_by', 'username_column' => null ],
+		[ 'table' => 'wall_history', 'userid_column' => 'post_user_id', 'username_column' => null ],
+		[ 'table' => 'comments_index', 'userid_column' => 'post_user_id', 'username_column' => null ],
+		[ 'table' => 'page_vote', 'userid_column' => 'user_id', 'username_column' => null ],
 
 		# Template entry
 //		[ 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ],
