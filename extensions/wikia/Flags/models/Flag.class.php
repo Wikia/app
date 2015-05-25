@@ -167,7 +167,7 @@ class Flag extends FlagsBaseModel {
 	private function addFlag( $flagTypeId, $wikiId, $pageId, Array $params = [] ) {
 		$db = $this->getDatabaseForWrite();
 
-		$sql = ( new \WikiaSQL() )
+		( new \WikiaSQL() )
 			->INSERT( self::FLAGS_TO_PAGES_TABLE )
 			// flag_id is auto_increment
 			->SET( 'flag_type_id', $flagTypeId )
@@ -182,7 +182,7 @@ class Flag extends FlagsBaseModel {
 
 		if ( $status && !empty( $params ) ) {
 			$paramsModel = new FlagParameter();
-			$status = $paramsModel->createParametersForFlag( $flagId, $flagTypeId, $wikiId, $pageId, $params );
+			$status = $paramsModel->createParametersForFlag( $flagId, $flagTypeId, $params );
 		}
 
 		return $status;
@@ -250,7 +250,7 @@ class Flag extends FlagsBaseModel {
 	private function removeFlags( Array $flags ) {
 		$db = $this->getDatabaseForWrite();
 
-		$sql = ( new \WikiaSQL() )
+		( new \WikiaSQL() )
 			->DELETE( self::FLAGS_TO_PAGES_TABLE )
 			->WHERE( 'flag_id' )->IN( $flags )
 			->run( $db );

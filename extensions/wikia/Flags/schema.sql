@@ -27,11 +27,13 @@ CREATE INDEX flags_on_pages_flag_type_id_idx ON flags_to_pages (flag_type_id);
 CREATE TABLE flags_params (
     param_id int unsigned   NOT NULL  AUTO_INCREMENT,
     flag_id int unsigned  NOT NULL ,
+    flag_type_id int unsigned  NOT NULL ,
     param_name varchar(128)    NOT NULL ,
     param_value text    NULL ,
     CONSTRAINT flags_params_pk PRIMARY KEY (param_id)
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 CREATE INDEX flags_on_pages_flag_id_idx ON flags_params (flag_id);
+CREATE INDEX flags_on_pages_flag_type_id_idx ON flags_params (flag_type_id);
 CREATE INDEX flags_on_pages_param_name_idx ON flags_params (param_name);
 
 -- foreign keys
@@ -40,8 +42,8 @@ ALTER TABLE flags_to_pages ADD CONSTRAINT flag_type_id FOREIGN KEY flag_type_id 
     REFERENCES flags_types (flag_type_id)
     ON DELETE CASCADE;
 
--- Reference:  flags_params_flags_to_pages (table: flags_params)
-ALTER TABLE flags_params ADD CONSTRAINT flags_params_flags_to_pages FOREIGN KEY flags_params_flags_to_pages (flag_id)
+-- Reference:  flags_params_flag_id (table: flags_params)
+ALTER TABLE flags_params ADD CONSTRAINT flags_params_flag_id FOREIGN KEY flags_params_flag_id (flag_id)
     REFERENCES flags_to_pages (flag_id)
     ON DELETE CASCADE;
 
