@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'wikia.log',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.gptHelper',
+	'ext.wikia.adEngine.gptSraHelper',
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (log, adLogicPageParams, gptHelper, lookups) {
+], function (log, adLogicPageParams, gptHelper, gptSraHelper, lookups) {
 	'use strict';
 
 	/**
@@ -41,15 +42,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slotName
 				].join('/');
 
-			function flushIfNeeded() {
-				if (!extra.shouldFlush || extra.shouldFlush(slotName)) {
-					log(['fillInSlot', slotName, 'flushing'], 'debug', logGroup);
-					gptHelper.flushAds();
-				} else {
-					log(['fillInSlot', slotName, 'extra.shouldFlush() return false, not flushing'], 'debug', logGroup);
-				}
-			}
-
 			function doSuccess(adInfo) {
 				if (typeof extra.beforeSuccess === 'function') {
 					extra.beforeSuccess(slotName, adInfo);
@@ -64,12 +56,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				hop(adInfo);
 			}
 
-			if (slotTargeting.skipCall) {
-				flushIfNeeded();
-				doSuccess({});
-				return;
-			}
-
 			slotTargeting.pos = slotTargeting.pos || slotName;
 			slotTargeting.src = src;
 
@@ -77,8 +63,12 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				lookups.extendSlotTargeting(slotName, slotTargeting);
 			}
 
-			gptHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop);
-			flushIfNeeded();
+			if (extra.sraEnabled) {
+				gptSraHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop);
+			} else {
+				gptHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop);
+				gptHelper.flushAds();
+			}
 
 			log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
 		}

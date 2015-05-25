@@ -22,6 +22,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				},
 				flushAds: noop
 			},
+			gptSraHelper: {
+				pushAd: noop
+			},
 			lookups: {
 				extendSlotTargeting: noop
 			},
@@ -34,6 +37,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			mocks.log,
 			mocks.adLogicPageParams,
 			mocks.gptHelper,
+			mocks.gptSraHelper,
 			mocks.lookups
 		);
 	}
@@ -95,43 +99,25 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		expect(mocks.beforeHop).toHaveBeenCalled();
 	});
 
-	it('Do not push if slot skipCall is set to true', function () {
+	it('Push ad using gptHelper if SRA is disabled', function () {
 		spyOn(mocks.gptHelper, 'pushAd');
+		spyOn(mocks.gptSraHelper, 'pushAd');
 
-		getProvider().fillInSlot('GPT_FLUSH', noop, noop);
+		getProvider().fillInSlot('TOP_LEADERBOARD');
 
+		expect(mocks.gptHelper.pushAd).toHaveBeenCalled();
+		expect(mocks.gptSraHelper.pushAd).not.toHaveBeenCalled();
+	});
+
+	it('Push ad using gptSraHelper if SRA is enabled', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
+		spyOn(mocks.gptSraHelper, 'pushAd');
+
+		getProvider({
+			sraEnabled: true
+		}).fillInSlot('TOP_LEADERBOARD');
+
+		expect(mocks.gptSraHelper.pushAd).toHaveBeenCalled();
 		expect(mocks.gptHelper.pushAd).not.toHaveBeenCalled();
-	});
-
-	it('Flush ads if extra.shouldFlush methods returns true', function () {
-		spyOn(mocks.gptHelper, 'flushAds');
-
-		getProvider({
-			shouldFlush: function () {
-				return true;
-			}
-		}).fillInSlot('TOP_RIGHT_BOXAD', noop, noop);
-
-		expect(mocks.gptHelper.flushAds).toHaveBeenCalled();
-	});
-
-	it('Flush ads if extra.shouldFlush does not exist', function () {
-		spyOn(mocks.gptHelper, 'flushAds');
-
-		getProvider().fillInSlot('TOP_LEADERBOARD', noop, noop);
-
-		expect(mocks.gptHelper.flushAds).toHaveBeenCalled();
-	});
-
-	it('Do not flush ads if extra.shouldFlush methods returns false', function () {
-		spyOn(mocks.gptHelper, 'flushAds');
-
-		getProvider({
-			shouldFlush: function () {
-				return false;
-			}
-		}).fillInSlot('TOP_LEADERBOARD', noop, noop);
-
-		expect(mocks.gptHelper.flushAds).not.toHaveBeenCalled();
 	});
 });

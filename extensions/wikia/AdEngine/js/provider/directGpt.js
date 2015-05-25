@@ -8,7 +8,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
-		gptFlushed = false,
 		slotMap = {
 			CORP_TOP_LEADERBOARD:       {size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			CORP_TOP_RIGHT_BOXAD:       {size: '300x250,300x600,300x1050', loc: 'top'},
@@ -36,17 +35,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			TOP_LEADERBOARD:            {size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'},
 			GPT_FLUSH:                  {skipCall: true}
-		},
-		gptConfig = { // slots to use SRA with
-			CORP_TOP_LEADERBOARD: 'wait',
-			HUB_TOP_LEADERBOARD:  'wait',
-			TOP_LEADERBOARD:      'wait',
-			HOME_TOP_LEADERBOARD: 'wait',
-			INVISIBLE_SKIN:       'wait',
-			CORP_TOP_RIGHT_BOXAD: 'flush',
-			TOP_RIGHT_BOXAD:      'flush',
-			HOME_TOP_RIGHT_BOXAD: 'flush',
-			GPT_FLUSH:            'flushonly'
 		};
 
 	return factory.createProvider(
@@ -60,16 +48,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				slotTweaker.removeTopButtonIfNeeded(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
 			},
-			shouldFlush: function (slotName) {
-				log(['shouldFlush', slotName]);
-
-				if (gptConfig[slotName] === 'flushonly' || gptConfig[slotName] === 'flush') {
-					gptFlushed = true; // Setting the module-scope var here
-				}
-
-				log(['shouldFlush', slotName, gptFlushed]);
-				return gptFlushed;
-			}
+			sraEnabled: true
 		}
 	);
 });
