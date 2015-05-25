@@ -8,7 +8,6 @@ class WikiDataModel {
 	public $description;
 	public $imagePath;
 	public $originalImagePath;
-	public $title;
 
 	const WIKI_HERO_IMAGE_PROP_ID = 10001;
 	const WIKI_HERO_TITLE_PROP_ID = 10002;
@@ -24,12 +23,11 @@ class WikiDataModel {
 	}
 
 	public function isEmpty() {
-		return empty($this->title) || empty($this->description) || empty($this->imagePath);
+		return empty($this->description) || empty($this->imagePath);
 	}
 
 	public function setFromAttributes( $attributes ) {
 		$this->imageName = !empty( $attributes[ 'imagename' ] ) ? $attributes[ 'imagename' ] : null;
-		$this->title = !empty( $attributes[ 'title' ] ) ? $attributes[ 'title' ] : null;
 		$this->description = !empty( $attributes[ 'description' ] ) ? $attributes[ 'description' ] : null;
 		$this->cropPosition = !empty( $attributes[ 'cropposition' ] ) ? $attributes[ 'cropposition' ] : null;
 
@@ -40,8 +38,7 @@ class WikiDataModel {
 		$pageId = Title::newFromText( $this->pageName )->getArticleId();
 
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId, $this->imageName );
-		wfSetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId, $this->title );
-		wfSetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId, $this->description );
+		wfSetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId, trim($this->description) );
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId, $this->cropPosition );
 	}
 
@@ -49,7 +46,6 @@ class WikiDataModel {
 		$pageId = Title::newFromText( $this->pageName )->getArticleId();
 
 		$this->imageName = wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId );
-		$this->title = wfGetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId );
 		$this->description = wfGetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId );
 		$this->cropPosition = floatval(wfGetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId ));
 
@@ -69,19 +65,41 @@ class WikiDataModel {
 		$imageTitle = Title::newFromText( $this->imageName, NS_FILE );
 		$file = wfFindFile( $imageTitle );
 		if ( $file && $file->exists() ) {
-			$this->imagePath = $file->getThumbUrl(
-				$this->getThumbSuffix(
-					$file,
-					self::WIKI_HERO_IMAGE_MAX_WIDTH,
-					self::WIKI_HERO_IMAGE_MAX_HEIGHT,
-					$cropPosition
-				) );
-			$this->originalImagePath = $file->getFullUrl();
+			$fullUrl = $file->getFullUrl();
+
+			if (VignetteRequest::isVignetteUrl($fullUrl)) {
+				$this->imagePath = $this->createVignetteThumbnail($file, $cropPosition);
+			} else {
+				$this->imagePath = $this->createOldThumbnail($file, $cropPosition);
+			}
+
+			$this->originalImagePath = $fullUrl;
 		} else {
 			$this->imageName = null;
 			$this->imagePath = null;
 			$this->originalImagePath = null;
 		}
+	}
+
+	private function createVignetteThumbnail($file, $cropPosition) {
+		return VignetteRequest::fromUrl($file->getFullUrl())
+			->windowCrop()
+			->width(self::WIKI_HERO_IMAGE_MAX_WIDTH)
+			->xOffset(0)
+			->yOffset(round($file->getHeight() * $cropPosition))
+			->windowWidth($file->getWidth())
+			->windowHeight(round($file->getWidth() / 4))
+			->url();
+	}
+
+	private function createOldThumbnail($file, $cropPosition) {
+		return $file->getThumbUrl(
+			$this->getThumbSuffix(
+				$file,
+				self::WIKI_HERO_IMAGE_MAX_WIDTH,
+				self::WIKI_HERO_IMAGE_MAX_HEIGHT,
+				$cropPosition
+			) );
 	}
 
 	private function getThumbSuffix( File $file, $expectedWidth, $expectedHeight, $crop ) {
@@ -117,7 +135,6 @@ class WikiDataModel {
 
 		// Prepend the hero tag
 		$heroTag = Xml::element( 'hero', $attribs = [
-			'title' => $this->title,
 			'description' => $this->description,
 			'imagename' => $this->imageName,
 			'cropposition' => $this->cropPosition

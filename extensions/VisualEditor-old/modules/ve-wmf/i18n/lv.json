@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Admresdeserv.",
+			"Audriusa",
+			"Eitvys200",
+			"Papuass",
+			"PeterisP"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizuālais redaktors]]",
+	"tag-visualeditor-description": "Labots ar [[{{MediaWiki:visualeditor-descriptionpagelink}}|vizuālo redaktoru]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Vizuālais redaktors: pārbaudiet]]",
+	"tag-visualeditor-needcheck-description": "Labojums veikts ar [[{{MediaWiki:visualeditor-descriptionpagelink}}|vizuālo redaktoru]], un sistēma konstatēja iespējamas netīšas izmaiņas wikitext saturā.",
+	"visualeditor-feedback-link": "VizuālaisRedaktors/Atsauksmes",
+	"visualeditor-feedback-tool": "Atstāt atsauksmi",
+	"visualeditor-help-label": "Izlasiet lietotāja pamācību",
+	"visualeditor-help-title": "Lietotāja pamācība redaktora lietošanai"
+}

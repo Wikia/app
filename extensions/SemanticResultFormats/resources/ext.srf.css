@@ -1,0 +1,40 @@
+/**
+ * CSS for SRF common objects
+ *
+ * @since 1.8
+ * @release 0.1
+ *
+ * @file
+ * @ingroup SRF
+ *
+ * @licence GNU GPL v2 or later
+ * @author mwjames
+ */
+
+.srf-processing-text{
+	padding-left: 2.1em;
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+.srf-spinner.text{
+	color: #666;
+	padding-left: 1.6em;
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+/* Spinner for left side in-text*/
+.srf-spinner.mw-small-spinner {
+	background-position:left;
+	vertical-align: middle;
+	display:inline-block;
+	padding: 0px !important;
+}
+
+/* Sppiner for image center*/
+.srf-spinner-img.mw-small-spinner {
+	vertical-align: middle;
+	display:inline-block;
+	padding: 0px !important;
+}

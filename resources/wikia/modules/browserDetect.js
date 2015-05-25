@@ -50,6 +50,10 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		return !!userAgent.match(/iPad.+OS.[6,7].\d.+like.Mac.OS.+Safari/i);
 	}
 
+	function isAndroid() {
+		return userAgent.toLowerCase().indexOf('android') > -1;
+	}
+
 	/**
 	 * Public API
 	 */
@@ -58,6 +62,7 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		isIE: isIE,
 		isFirefox: isFirefox,
 		isIPad: isIPad,
-		isIOS7orLower: isIOS7orLower
+		isIOS7orLower: isIOS7orLower,
+		isAndroid: isAndroid
 	};
 });

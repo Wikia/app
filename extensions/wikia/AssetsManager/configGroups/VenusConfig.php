@@ -169,75 +169,11 @@ $VenusConfig[ 'local_navigation_js' ] = [
 	]
 ];
 
-/** GlobalFooter extension */
-$VenusConfig[ 'global_footer_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooterVenus.scss'
-	]
-];
-
-/** GlobalNavigation extension */
-$VenusConfig[ 'global_navigation_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus', 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationSearch.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationAccountNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationHubsMenu.scss',
-		'//extensions/wikia/UserLogin/css/UserLoginDropdown.globalNavigation.scss',
-		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationInverse.scss',
-		'//skins/shared/styles/transparent-out.scss'
-	]
-];
-
-$VenusConfig[ 'global_navigation_js' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'venus', 'oasis' ],
-	'assets' => [
-		'//resources/wikia/libraries/menu-aim/menu-aim.js',
-		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
-		'//resources/wikia/modules/scrollToLink.js',
-		'//skins/shared/scripts/transparent-out.js',
-		'//extensions/wikia/Venus/scripts/layout.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationHubsMenu.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
-		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationInverseTransition.js',
-		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
-		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
-		//This asset is only for prototype version. It shouldn't be loaded by default.
-		//It is used for Optimizely A/B tests
-//		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAutoHide.js'
-	]
-];
-
-$VenusConfig[ 'global_navigation_facebook_login_js' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
-		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
-	]
-];
-
 $VenusConfig[ 'article_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'#group_banner_notifications_js',
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavUserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/edit.js',

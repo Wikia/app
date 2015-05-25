@@ -60,10 +60,7 @@ var WikiaQuiz = {
 			WikiaQuiz.trackEvent('click-link-text', 'moreinfo', -1, $(e.target).attr('href'), e );
 		});
 
-		$.loadFacebookAPI()
-			.done(function () {
-				$('.sso-login').removeClass('hidden');
-			});
+		$.loadFacebookSDK();
 
 		$().log('init', 'WikiaQuiz');
 	},
@@ -299,7 +296,7 @@ var WikiaQuiz = {
 			category: 'wikia-quiz',
 			href: href,
 			label: WikiaQuiz.trackerLabelPrefix + label,
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		};
 		if ( value > -1 ) {
 			params.value = value;

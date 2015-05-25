@@ -9,7 +9,9 @@
 <div class="video-page-caption">
 	<div class="inner">
 		<p class="video-provider"><?= $providerPhrase ?></p>
-		<p class="video-views"><?= wfMessage( 'video-page-views' )->numParams( $viewCount )->parse() ?></p>
+		<? if ( !empty( $viewCount ) ): ?>
+			<p class="video-views"><?= wfMessage( 'video-page-views' )->numParams( $viewCount )->parse() ?></p>
+		<? endif; ?>
 		<? if ( $regionalRestrictions ) : ?>
 			<p class="regional-restriction hidden" id="restricted-content-viewable" data-regional-restrictions="<?= htmlspecialchars( strtolower( $regionalRestrictions ) ) ?>">
 				<?= wfMessage('video-page-regional-restrictions-viewable')->plain() ?>

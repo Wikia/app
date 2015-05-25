@@ -33,7 +33,7 @@ ve.dm.MWIndexForceMetaItem.static.matchTagNames = [ 'meta' ];
 ve.dm.MWIndexForceMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/index' ];
 
 ve.dm.MWIndexForceMetaItem.static.toDataElement = function ( ) {
-	return { 'type': this.name };
+	return { type: this.name };
 };
 
 ve.dm.MWIndexForceMetaItem.static.toDomElements = function ( dataElement, doc ) {

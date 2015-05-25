@@ -42,6 +42,13 @@ class TransactionClassifier {
 		'JSMessages',
 		'WikiaSearchIndexer',
 		'LatestActivity',
+
+		// controllers used by Mobile Apps (PLATFORM-1177)
+		'SpecialVideosSpecial',
+		'GameGuides',
+		'SearchApi',
+		'VideoHandler',
+		'SearchSuggestionsApi',
 	);
 
 	protected static $FILTER_AJAX_FUNCTIONS = array(
@@ -78,6 +85,9 @@ class TransactionClassifier {
 		true => 'parser_cache_disabled',
 	);
 
+	protected static $MAP_DPL = array(
+		true => 'dpl',
+	);
 
 	protected $dependencies = array( Transaction::PARAM_ENTRY_POINT );
 	protected $attributes = array();
@@ -170,6 +180,10 @@ class TransactionClassifier {
 		else if ( $this->addByMap( Transaction::PARAM_PARSER_CACHE_USED, self::$MAP_PARSER_CACHED_USED ) === null ) {
 			return;
 		}
+
+		// add "DPL was used" information
+		$this->addByMap( Transaction::PARAM_DPL, self::$MAP_DPL );
+
 		// add size category
 		if ( $this->add( Transaction::PARAM_SIZE_CATEGORY ) === null ) {
 			return;

@@ -1,0 +1,51 @@
+/*!
+ * VisualEditor FormatTool styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-paragraph .oo-ui-tool-title-text {
+	font-weight: normal;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading1 .oo-ui-tool-title-text {
+	font-size: 190%;
+	font-weight: normal;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading2 .oo-ui-tool-title-text {
+	font-size: 150%;
+	font-weight: normal;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading3 .oo-ui-tool-title-text {
+	font-size: 130%;
+	font-weight: bold;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading4 .oo-ui-tool-title-text {
+	font-size: 115%;
+	font-weight: bold;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading5 .oo-ui-tool-title-text {
+	font-size: 100%;
+	font-weight: bold;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-heading6 .oo-ui-tool-title-text {
+	font-size: 80%;
+	font-weight: bold;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-preformatted .oo-ui-tool-title-text {
+	font-family: monospace, "Courier New";
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-blockquote .oo-ui-tool-title-text {
+	padding-left: 1em;
+}
+
+.oo-ui-menuToolGroup .oo-ui-tool-name-tableCellHeader .oo-ui-tool-title-text {
+	font-weight: bold;
+}

@@ -1017,6 +1017,18 @@ class EditPage {
 			case self::AS_SUCCESS_NEW_ARTICLE:
 				$query = $resultDetails['redirect'] ? 'redirect=no' : '';
 				$anchor = isset ( $resultDetails['sectionanchor'] ) ? $resultDetails['sectionanchor'] : '';
+
+				/**
+				 * Wikia change begin
+				 * Running similar hook that is run on update to give
+				 * extensions a chance to modify URL before a redirect
+				 * @see CE-1596
+				 */
+				wfRunHooks( 'ArticleCreateBeforeRedirect', [ $this->mArticle, &$anchor, &$query ] );
+				/**
+				 * Wikia change end
+				 */
+
 				$wgOut->redirect( $this->mTitle->getFullURL( $query ) . $anchor );
 				return false;
 
@@ -2083,11 +2095,16 @@ class EditPage {
 				if ( $this->isWrongCaseCssJsPage ) {
 					$wgOut->wrapWikiMsg( "<div class='error' id='mw-userinvalidcssjstitle'>\n$1\n</div>", array( 'userinvalidcssjstitle', $this->mTitle->getSkinFromCssJsSubpage() ) );
 				}
+				if ( $this->getTitle()->isSubpageOf( $wgUser->getUserPage() ) ) {
 				if ( $this->formtype !== 'preview' ) {
-					if ( $this->isCssSubpage )
+						if ( $this->isCssSubpage ) {
 						$wgOut->wrapWikiMsg( "<div id='mw-usercssyoucanpreview'>\n$1\n</div>", array( 'usercssyoucanpreview' ) );
-					if ( $this->isJsSubpage )
+						}
+
+						if ( $this->isJsSubpage ) {
 						$wgOut->wrapWikiMsg( "<div id='mw-userjsyoucanpreview'>\n$1\n</div>", array( 'userjsyoucanpreview' ) );
+						}
+					}
 				}
 			}
 		}

@@ -31,9 +31,23 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		slotsOnlyWithRail = {
 			LEFT_SKYSCRAPER_3: true
 		},
-
+		slotsToHideOnMediaQuery = {
+			VIRTUAL_INCONTENT:       'twoColumns', // "virtual" slot to launch INCONTENT_* slots
+			INCONTENT_1A:            'twoColumns',
+			INCONTENT_1B:            'twoColumns',
+			INCONTENT_1C:            'twoColumns',
+			INCONTENT_LEADERBOARD_1: 'twoColumns',
+			TOP_BUTTON_WIDE:         'noTopButton',
+			'TOP_BUTTON_WIDE.force': 'noTopButton',
+			TOP_RIGHT_BOXAD:         'oneColumn',
+			HOME_TOP_RIGHT_BOXAD:    'oneColumn',
+			LEFT_SKYSCRAPER_2:       'oneColumn',
+			LEFT_SKYSCRAPER_3:       'oneColumn',
+			INCONTENT_BOXAD_1:       'oneColumn',
+			INVISIBLE_SKIN:          'noSkins'
+		},
 		/**
-		 * Slots based on screen width
+		 * Slots based on screen width for responsive
 		 *
 		 * @see skins/oasis/css/core/responsive-variables.scss
 		 * @see skins/oasis/css/core/responsive-background.scss
@@ -41,30 +55,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1030px)',
+			noTopButton: 'screen and (max-width: 1063px)',
 			noSkins: 'screen and (max-width: 1260px)'
-		},
-		slotsToHideOnMediaQuery = {
-			INCONTENT_1A: 'twoColumns',
-			INCONTENT_1B: 'twoColumns',
-			INCONTENT_1C: 'twoColumns',
-			INCONTENT_2A: 'twoColumns',
-			INCONTENT_2B: 'twoColumns',
-			INCONTENT_2C: 'twoColumns',
-			INCONTENT_3A: 'twoColumns',
-			INCONTENT_3B: 'twoColumns',
-			INCONTENT_3C: 'twoColumns',
-			INCONTENT_LEADERBOARD_1: 'twoColumns',
-			INCONTENT_LEADERBOARD_2: 'twoColumns',
-			INCONTENT_LEADERBOARD_3: 'twoColumns',
-			TOP_BUTTON_WIDE: 'noTopButton',
-			'TOP_BUTTON_WIDE.force': 'noTopButton',
-			TOP_RIGHT_BOXAD: 'oneColumn',
-			HOME_TOP_RIGHT_BOXAD: 'oneColumn',
-			LEFT_SKYSCRAPER_2: 'oneColumn',
-			LEFT_SKYSCRAPER_3: 'oneColumn',
-			INCONTENT_BOXAD_1: 'oneColumn',
-			INVISIBLE_SKIN: 'noSkins'
 		},
 		mediaQueriesMet,
 		matchMedia;
@@ -176,7 +168,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		pageHeight = doc.documentElement.scrollHeight;
 
 		// All ads should be shown on non-responsive oasis and venus
-		if (win.wgOasisResponsive && win.skin !== 'venus') {
+		if ((win.wgOasisResponsive || win.wgOasisBreakpoints) && win.skin !== 'venus') {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {
@@ -250,8 +242,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 		return !!(
 			slotsOnlyOnLongPages[slotname] ||
-				slotsToHideOnMediaQuery[slotname] ||
-				slotsOnlyWithRail[slotname]
+			slotsToHideOnMediaQuery[slotname] ||
+			slotsOnlyWithRail[slotname]
 		);
 	}
 

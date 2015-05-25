@@ -27,6 +27,7 @@ class ChatfailoverSpecialController extends WikiaSpecialPageController {
 	 */
 
 	public function index() {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		if(!$this->wg->User->isAllowed('chatfailover')) {
 			$this->skipRendering();
 			throw new PermissionsError('chatfailover');

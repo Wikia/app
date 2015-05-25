@@ -69,6 +69,31 @@ class TransactionClassifierTest extends WikiaBaseTest {
 				],
 				'expectedName' => 'page/main/view/foo-skin/no_parser/medium-page'
 			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_PAGE,
+					Transaction::PARAM_NAMESPACE => NS_MAIN,
+					Transaction::PARAM_ACTION => TransactionClassifier::ACTION_VIEW,
+					Transaction::PARAM_SKIN => 'foo-skin',
+					Transaction::PARAM_PARSER_CACHE_DISABLED => true,
+					Transaction::PARAM_DPL => true
+				],
+				'expectedName' => 'page/main/view/foo-skin/parser_cache_disabled/dpl'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
+					Transaction::PARAM_CONTROLLER => 'SearchSuggestionsApi',
+				],
+				'expectedName' => 'api/nirvana/SearchSuggestionsApi'
+			],
+			[
+				'attributes' => [
+					Transaction::PARAM_ENTRY_POINT => Transaction::ENTRY_POINT_NIRVANA,
+					Transaction::PARAM_CONTROLLER => 'Places',
+				],
+				'expectedName' => 'api/nirvana/other'
+			],
 		];
 	}
 }

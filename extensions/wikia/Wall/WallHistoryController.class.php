@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class WallHistoryController extends WallController {
 	private $isThreadLevel = false;
 
@@ -35,7 +37,7 @@ class WallHistoryController extends WallController {
 			( $this->isThreadLevel &&
 				!in_array( MWNamespace::getSubject( $title->getNamespace() ), $this->wg->WallNS ) )
 		) {
-			//paranoia -- why the message is not in DB
+			// paranoia -- why the message is not in DB
 			$this->response->setVal( 'wallmessageNotFound', true );
 			return;
 		}
@@ -103,15 +105,15 @@ class WallHistoryController extends WallController {
 	}
 
 	public function threadHistory() {
-		//this method is only to load other template
-		//all template variables and logic can be found
-		//in method above -- WallHistoryController::index()
+		// this method is only to load other template
+		// all template variables and logic can be found
+		// in method above -- WallHistoryController::index()
 	}
 
 	private function historyPreExecute() {
 		$this->response->addAsset( 'wall_history_js' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/WallHistory.scss' );
-		
+
 		// VOLDEV-36: separate monobook styling
 		if ( $this->app->checkSkin( 'monobook' ) ) {
 			$this->response->addAsset( 'extensions/wikia/Wall/css/monobook/WallHistoryMonobook.scss' );
@@ -205,8 +207,8 @@ class WallHistoryController extends WallController {
 				$history[$key]['prefix'] = ( $isReply === '1' ) ? 'reply-' : 'thread-';
 
 				if ( intval( $value['page_id'] ) === $threadId ) {
-					//if the entry is about change in top message
-					//hardcode the order number to 1
+					// if the entry is about change in top message
+					// hardcode the order number to 1
 					$history[$key]['msgid'] = 1;
 				} else {
 					$history[$key]['msgid'] = $wm->getOrderId();
@@ -217,11 +219,19 @@ class WallHistoryController extends WallController {
 				$history[$key]['msgurl'] = $messagePageUrl;
 
 				$msgUser = $wm->getUser();
-
-				$history[$key]['msguserurl'] = Title::newFromText( $msgUser->getName(), $ns )->getFullUrl();
-
-				$history[$key]['msgusername'] = $msgUser->getName();
-
+				$msgPage = Title::newFromText( $msgUser->getName(), $ns );
+				if ( empty( $msgPage ) ) {
+					// SOC-586, SOC-578 : There is an edge case where $msgUser->getName can be empty
+					// because of a rev_deleted flag on the revision loaded by ArticleComment via the
+					// WallMessage $wm->load() above.  ArticleComment overwrites the User objects mName
+					// usertext with the first revision's usertext to preserve the thread author but in
+					// rare occasions this revision can have its user hidden via a DELETED_USER flag.
+					$history[$key]['msguserurl'] = '';
+					$history[$key]['msgusername'] = '';
+				} else {
+					$history[$key]['msguserurl'] = $msgPage->getFullUrl();
+					$history[$key]['msgusername'] = $msgUser->getName();
+				}
 
 				if ( $type == WH_EDIT ) {
 					$rev = Revision::newFromTitle( $title );
@@ -251,7 +261,7 @@ class WallHistoryController extends WallController {
 					}
 
 					$history[$key]['actions'][] = array(
-						'class' => 'message-restore', //TODO: ?
+						'class' => 'message-restore', // TODO: ?
 						'data-id' => $value['page_id'],
 						'data-mode' => 'restore' . ( $wm->canFastrestore( $this->getContext()->getUser() ) ? '-fast' : '' ),
 						'href' => '#',

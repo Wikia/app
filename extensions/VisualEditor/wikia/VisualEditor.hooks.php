@@ -8,44 +8,26 @@
 
 class VisualEditorWikiaHooks {
 
-	public static function onGetPreferences( $user, &$preferences ) {
-		// Remove core VisualEditor preferences
-		unset(
-			$preferences['visualeditor-enable'],
-			$preferences['visualeditor-betatempdisable']
-		);
-
-		// For option tracking whether a user viewed the editor preference transition dialog
-		$preferences['showVisualEditorTransitionDialog'] = array(
-			'type' => 'hidden'
-		);
-
-		return true;
-	}
-
 	public static function onResourceLoaderTestModules( array &$testModules, ResourceLoader &$resourceLoader ) {
 		global $wgVisualEditorWikiaResourceTemplate;
 
-		$testModules['qunit']['ext.visualEditor.wikiaTest'] = $wgVisualEditorWikiaResourceTemplate + array(
+		$testModules['qunit']['ext.visualEditor.wikia.test'] = $wgVisualEditorWikiaResourceTemplate + array(
 			'scripts' => array(
-				// util
-				've/test/ve.wikiaTest.utils.js',
+				've/tests/ve.wikiaTest.utils.js',
 
 				// dm
-				've/test/dm/ve.dm.wikiaExample.js',
-				've/test/dm/ve.dm.WikiaConverter.test.js',
-				've/test/dm/ve.dm.WikiaCart.test.js',
-				've/test/dm/ve.dm.WikiaTemplateModel.test.js',
+				've/tests/dm/ve.dm.wikiaExample.js',
+				've/tests/dm/ve.dm.WikiaConverter.test.js',
 
 				// ce
-				've/test/ce/ve.ce.wikiaExample.js',
-				've/test/ce/ve.ce.WikiaBlockImageNode.test.js',
-				've/test/ce/ve.ce.WikiaBlockVideoNode.test.js',
-				've/test/ce/ve.ce.WikiaInlineVideoNode.test.js'
+				've/tests/ce/ve.ce.wikiaExample.js',
+				've/tests/ce/ve.ce.WikiaBlockVideoNode.test.js',
+				've/tests/ce/ve.ce.WikiaBlockImageNode.test.js',
+				've/tests/ce/ve.ce.WikiaInlineVideoNode.test.js',
 			),
 			'dependencies' => array(
 				'ext.visualEditor.test',
-				'ext.visualEditor.wikiaCore',
+				'ext.visualEditor.wikia.core',
 			)
 		);
 		return true;

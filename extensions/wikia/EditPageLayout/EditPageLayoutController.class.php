@@ -42,6 +42,9 @@ class EditPageLayoutController extends WikiaController {
 
 		// extra buttons
 		$this->buttons = $editPage->getControlButtons();
+
+		// Should show mobile preview icon
+		$this->showMobilePreview = $this->request->getVal('showMobilePreview');
 	}
 
 	/**
@@ -68,7 +71,7 @@ class EditPageLayoutController extends WikiaController {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()
 				->getSassCommonURL( 'extensions/wikia/EditPageLayout/css/EditPageLayout.scss' ) );
 
-			if ( $helper->isCodePage( $editPage->getTitle() ) ) {
+			if ( $helper->isCodeSyntaxHighlightingEnabled( $editPage->getTitle() ) ) {
 				$this->pagetype = 'codepage';
 				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>" );
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'ace_editor_js' );
@@ -94,11 +97,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-		if ( !empty( $this->wg->EnableGlobalNavExt ) ) {
-			$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
-		} else {
-			$this->header = F::app()->renderView( 'GlobalHeader', 'Index' );
-		}
+		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
@@ -114,6 +113,9 @@ class EditPageLayoutController extends WikiaController {
 
 		// Text for Edit summary label
 		$wpSummaryLabelText = 'editpagelayout-edit-summary-label';
+
+		// Should show mobile preview icon
+		$this->showMobilePreview = $helper->showMobilePreview( $editPage->getTitle() );
 
 		if ($section == 'new') {
 			$msgKey = 'editingcomment';

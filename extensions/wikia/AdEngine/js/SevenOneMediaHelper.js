@@ -1,15 +1,15 @@
 /* jshint camelcase:false, maxparams:false */
 /*global define,require*/
 define('ext.wikia.adEngine.sevenOneMediaHelper', [
-	'jquery',
-	'wikia.log',
-	'wikia.window',
-	'wikia.tracker',
-	'wikia.scriptwriter',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	require.optional('ext.wikia.adEngine.krux')
-], function ($, log, window, tracker, scriptWriter, adContext, adLogicPageParams, Krux) {
+	'jquery',
+	require.optional('wikia.krux'),
+	'wikia.log',
+	'wikia.scriptwriter',
+	'wikia.tracker',
+	'wikia.window'
+], function (adContext, adLogicPageParams, $, krux, log, scriptWriter, tracker, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sevenOneMediaHelper',
@@ -64,6 +64,12 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			}
 		},
 		slotsQueue = [];
+
+	if (!window.wgOasisBreakpoints && !window.wgOasisResponsive) {
+		// turn off skyscrapers if it's not responsive Oasis or Oasis breakpoints view i.e. hubs pages (ADEN-1792)
+		slotVars.skyscraper1.SOI_SC1 = false;
+		slotVars.skyscraper1.SOI_SB = false;
+	}
 
 	function track(action) {
 		log(['track', action], 'info', logGroup);
@@ -221,7 +227,7 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	function generateSoiKeywords() {
 		log('generateSoiKeywords', 'debug', logGroup);
 
-		var i, len, param, val, valIndex, valLen, keywords = [];
+		var i, len, param, val, valIndex, valLen, keywords = [], kruxSegments;
 
 		// Get all values for params defined in soiKeywordsParams
 		for (i = 0, len = soiKeywordsParams.length; i < len; i += 1) {
@@ -240,10 +246,14 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 			}
 		}
 
-		if (Krux && Krux.segments && Krux.segments.length) {
-			for (i = 0, len = Krux.segments.length; i < len; i += 1) {
-				if (soiKeywordsSegments[Krux.segments[i]]) {
-					keywords.push(Krux.segments[i]);
+		if( krux ) {
+			kruxSegments = krux.getSegments();
+		}
+
+		if (kruxSegments && kruxSegments.length) {
+			for (i = 0, len = kruxSegments.length; i < len; i += 1) {
+				if (soiKeywordsSegments[kruxSegments[i]]) {
+					keywords.push(kruxSegments[i]);
 				}
 			}
 		}
@@ -322,8 +332,8 @@ define('ext.wikia.adEngine.sevenOneMediaHelper', [
 	 * beforeFinish (optional) is a callback that will be run before calling myAd.finishAd
 	 * afterFinish (optional) is a callback that will be run after myAd.finishAd
 	 *
-	 * @param slotname
-	 * @param params {beforeFinish: callback, afterFinish: callback}
+	 * @param {String} slotname
+	 * @param {Object} params {beforeFinish: callback, afterFinish: callback}
 	 */
 	function pushAd(slotname, params) {
 		log(['pushAd', slotname, params], 'info', logGroup);

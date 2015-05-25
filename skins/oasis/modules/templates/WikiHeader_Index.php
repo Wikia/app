@@ -1,10 +1,5 @@
 <header id="WikiHeader" class="WikiHeader">
 	<?= $app->renderView( 'WikiHeader', 'Wordmark' ) ?>
-    <?php if ( BodyController::isResponsiveLayoutEnabled()  && empty( $wg->EnableGlobalNavExt ) ) : ?>
-    <div class="WikiHeaderSearch">
-        <?= $app->renderView( 'Search', 'Index', array( 'searchFormId' => 'HeaderWikiaSearch' ) ) ?>
-    </div>
-    <?php endif ?>
     <nav class="WikiNav">
     	<? if ( $displayHeader ): ?>
         <h1><?= wfMsg( 'oasis-wiki-navigation', $wordmarkText ) ?></h1>
@@ -24,8 +19,3 @@
     </div>
 </header>
 
-<? if ( $displaySearch && empty( $wg->EnableGlobalNavExt ) ): ?>
-<div class="adm-dash-search">
-	<?= $app->renderView( 'Search', 'Index' ) ?>
-</div>
-<? endif ?>

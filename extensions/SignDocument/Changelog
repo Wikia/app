@@ -1,7 +1,0 @@
-Release : 2008-01-15
-Major release
-* update extension access rights
-* fix bug for loading Special:SignDocument
-* fix bug for loading Special:CreateSignDocument
-* fix new internationalization files format
-* deleting empty lines

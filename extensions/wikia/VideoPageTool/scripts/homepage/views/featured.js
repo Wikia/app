@@ -7,14 +7,15 @@ define('videohomepage.views.featured', [
 	'wikia.tracker',
 	// module specific deps
 	'videohomepage.collections.featuredslides',
-], function ($, Nirvana, VideoBootstrap, Tracker, FeaturedSlidesCollection) {
+	'BannerNotification'
+], function ($, Nirvana, VideoBootstrap, Tracker, FeaturedSlidesCollection, BannerNotification) {
 	'use strict';
 	var track, FeaturedVideosView;
 
 	track = Tracker.buildTrackingFunction({
 		action: Tracker.ACTIONS.CLICK,
 		category: 'video-home-page',
-		trackingMethod: 'both'
+		trackingMethod: 'analytics'
 	});
 
 	FeaturedVideosView = Backbone.View.extend({
@@ -232,7 +233,7 @@ define('videohomepage.views.featured', [
 
 			$.when(data).done(function (json) {
 				if (json.error) {
-					window.GlobalNotification.show(json.error, 'error', null, 4000);
+					new BannerNotification(json.error, 'error', null, 4000).show();
 				} else {
 					// cache embed data
 					model.set({

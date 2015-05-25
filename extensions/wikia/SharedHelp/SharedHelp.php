@@ -439,23 +439,32 @@ function SharedHelpArticleExists(Title $title) {
 		} else {
 			wfProfileIn( __METHOD__ . '::query');
 
-			$dbr = wfGetDB( DB_SLAVE, array(), WikiFactory::IDtoDB($wgHelpWikiId) );
-			$res = $dbr->select(
-				'page',
-				'page_id',
-				array(
-					'page_namespace' => NS_HELP,
-					'page_title' => $title->getDBkey(),
-				),
-				__METHOD__
-			);
+			try {
+				$dbr = wfGetDB( DB_SLAVE, array(), WikiFactory::IDtoDB($wgHelpWikiId) );
+				$res = $dbr->select(
+					'page',
+					'page_id',
+					array(
+						'page_namespace' => NS_HELP,
+						'page_title' => $title->getDBkey(),
+					),
+					__METHOD__
+				);
 
-			if ( $row = $dbr->fetchObject( $res ) ) {
-				if ( !empty($row->page_id) ) {
-					$exists =  true;
+				if ( $row = $dbr->fetchObject( $res ) ) {
+					if ( !empty($row->page_id) ) {
+						$exists =  true;
+					}
 				}
 			}
 
+			catch ( DBConnectionError $e ) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					'TechnicalDebtHotSpot',
+					[ 'exception_message' => $e->getMessage() ]
+				);
+			}
+		
 			wfProfileOut( __METHOD__ . '::query');
 		}
 

@@ -34,7 +34,6 @@ class GlobalWatchlistHooks {
 			$wg = \F::app()->wg;
 			$task = new GlobalWatchlistTask();
 			( new AsyncTaskList() )
-				->wikiId( $wg->CityId )
 				->add( $task->call( 'clearGlobalWatchlistAll', $wg->User->getId() ) )
 				->queue();
 		}
@@ -75,7 +74,7 @@ class GlobalWatchlistHooks {
 	 * @param $timestamp Datetime or null
 	 * @return bool (always true)
 	 */
-	public static function updateGlobalWatchList( WatchedItem $watchedItem, $watchers, $timestamp ) {
+	public static function updateGlobalWatchList( WatchedItem $watchedItem, $watchers, $timestamp = null ) {
 		$watchers = wfReturnArray( $watchers );
 		if ( is_null( $timestamp ) ) {
 			self::removeWatchers( $watchedItem, $watchers );
@@ -120,7 +119,6 @@ class GlobalWatchlistHooks {
 	 * @return bool (always true)
 	 */
 	public static function clearGlobalWatch( $userID ) {
-
 		$task = new GlobalWatchlistTask();
 		( new AsyncTaskList() )
 			->wikiId( F::app()->wg->CityId )

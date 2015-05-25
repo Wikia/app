@@ -1,7 +1,6 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
-@import "skins/shared/mixins/box-sizing";
 @import "WikiaHubsColors";
 @import 'Explore';
 @import 'HubsPopularVideos';
@@ -23,29 +22,35 @@ $wikiahubs-line-height: 16px;
 	padding-bottom: 70px;
 }
 
-.wikinav2 .WikiaPageContentWrapper .WikiaMainContentContainer .WikiaPageHeader {
-	padding: 15px 0;
-	h1 {
-		display: block;
-		font-size: 28px;
-		font-weight: inherit;
-		line-height: 32px;
+.wikinav2 .WikiaPageContentWrapper .WikiaMainContentContainer  {
+	.wikia-page-header {
+		border-bottom: solid 1px $color-page-border;
 	}
 
-	.tally {
-		position: relative;
-		float: right;
-		right: 0;
-		margin-right:20px;
-	}
-
-	.WikiaSearchHeader {
-		.WikiaSearch {
-			position: relative;
+	.WikiaPageHeader {
+		padding: 15px 0;
+		h1 {
+			display: block;
+			font-size: 28px;
+			font-weight: inherit;
+			line-height: 32px;
 		}
-		float: right;
-		position: relative;
-		right: 0;
+
+		.tally {
+			position: relative;
+			float: right;
+			right: 0;
+			margin-right:20px;
+		}
+
+		.WikiaSearchHeader {
+			.WikiaSearch {
+				position: relative;
+			}
+			float: right;
+			position: relative;
+			right: 0;
+		}
 	}
 }
 
@@ -176,17 +181,18 @@ $wikiahubs-line-height: 16px;
 }
 
 .suggestArticleDialogModal {
-  input[name=articleurl],
-  textarea[name=reason] {
-	@include box-sizing;
+	input[name=articleurl],
+	textarea[name=reason] {
+		box-sizing: border-box;
 
-	margin-bottom: 10px;
-	padding: 7px;
-	width: 100%;
-  }
-  section.hidden {
-	display: none;
-  }
+		margin-bottom: 10px;
+		padding: 7px;
+		width: 100%;
+	}
+
+	section.hidden {
+		display: none;
+	}
 }
 
 .WikiaGrid {

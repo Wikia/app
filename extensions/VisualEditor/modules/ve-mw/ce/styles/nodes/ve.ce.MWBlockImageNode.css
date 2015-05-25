@@ -6,16 +6,6 @@
  */
 /*csslint regex-selectors:false, overqualified-elements:false */
 
-/* Hide outer shield for centered images */
-figure[typeof~='mw:Image'].mw-halign-center + .ve-ce-focusableNode-shield {
-	display: none;
-}
-
-/* Override border on shields for images */
-.ve-ce-mwBlockImageNode .ve-ce-focusableNode-shield {
-	border: none;
-}
-
 /* Override paragraph margins inside of captions */
 .ve-ce-mwBlockImageNode figcaption p {
 	margin: 0 !important;

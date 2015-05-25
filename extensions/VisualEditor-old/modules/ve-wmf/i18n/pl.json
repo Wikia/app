@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Babanwalia",
+			"Chrumps",
+			"Matma Rex",
+			"Mikołka",
+			"Nasir8891",
+			"Odie2",
+			"Rzuwig",
+			"Tar Lócesilion",
+			"Ty221",
+			"WTM",
+			"Woytecr",
+			"Wpedzich",
+			"Jacenty359"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Edycja z wykorzystaniem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditora]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: do sprawdzenia]]",
+	"tag-visualeditor-needcheck-description": "Edycja z wykorzystaniem [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditora]], w której system wykrył prawdopodobnie niezamierzone uszkodzenie wikikodu.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: przełączono]]",
+	"tag-visualeditor-switched-description": "Użytkownik rozpoczął edycję używając VisualEditora, a w jej trakcie przełączył się na edytor wikitekstu.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Opinie",
+	"visualeditor-feedback-tool": "Prześlij opinię",
+	"visualeditor-help-label": "Przeczytaj poradnik użytkownika",
+	"visualeditor-help-title": "Instrukcja używania edytora"
+}

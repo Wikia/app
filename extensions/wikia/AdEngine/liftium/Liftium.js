@@ -42,7 +42,9 @@ var Liftium = {
 	isCalledAfterOnload : LiftiumOptions.isCalledAfterOnload || 0,
 	hasMoreCalls : LiftiumOptions.hasMoreCalls || 0,
 	slotnames	: [],
-	fingerprint	: 'a'
+	fingerprint	: 'a',
+	adNum       : 200,
+	queue       : []
 };
 
 
@@ -66,10 +68,46 @@ Liftium.addEventListener = function(item, eventName, callback){
     return false;
 };
 
+Liftium.addAdDiv = function (doc, slotname, slotsize) {
+	'use strict';
+
+	var adDiv = doc.createElement('div'),
+		adIframe;
+
+	Liftium.adNum++;
+	adDiv.id = 'Liftium_' + slotsize + '_' + Liftium.adNum;
+	adIframe = Liftium.createAdIframe(doc, slotname, slotsize);
+
+	adDiv.appendChild(adIframe);
+	doc.getElementById(slotname).appendChild(adDiv);
+};
+
+Liftium.createAdIframe = function (doc, slotname, slotsize, src) {
+	'use strict';
+
+	var adIframe = doc.createElement('iframe'),
+		s = slotsize && slotsize.split('x');
+
+	adIframe.width = s[0];
+	adIframe.height = s[1];
+	adIframe.scrolling = 'no';
+	adIframe.frameBorder = 0;
+	adIframe.marginHeight = 0;
+	adIframe.marginWidth = 0;
+	adIframe.allowTransparency = true; // For IE
+	adIframe.id = slotname + '_iframe';
+	adIframe.style.display = 'block';
+
+	if (src) {
+		adIframe.src = src;
+	}
+
+	return adIframe;
+};
 
 Liftium.beaconCall = function (url, cb){
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(beaconCall) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 	// Create an image and call the beacon
@@ -254,7 +292,7 @@ Liftium.buildQueryString = function(nvpairs, sep){
 
 Liftium.callAd = function (sizeOrSlot, slotPlacement) {
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(callAd) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 
@@ -384,19 +422,9 @@ Liftium.callIframeAd = function(slotname, tag, adIframe){
 		adIframe.src = iframeUrl;
 	} else {
 		// Otherwise, create one and append it to load dive
-		adIframe = document.createElement("iframe");
-		var s = tag.size.split("x");
-		adIframe.src = iframeUrl;
-		adIframe.width = s[0];
-		adIframe.height = s[1];
-		adIframe.scrolling = "no";
-		adIframe.frameBorder = 0;
-		adIframe.marginHeight = 0;
-		adIframe.marginWidth = 0;
-		adIframe.allowTransparency = true; // For IE
+		adIframe = Liftium.createAdIframe(document, slotname, tag.size, iframeUrl);
 		adIframe.id = slotname + '_' + tag.tag_id;
 		adIframe.setAttribute('data-tag-id', tag.tag_id);
-		adIframe.style.display = 'block';
 
 		// expandable slots via in-tag-name magic phrase
 		// eg. 300x250 with "foo 600x250 bar"
@@ -433,7 +461,7 @@ Liftium.callInjectedIframeAd = function (sizeOrSlot, iframeElement, slotPlacemen
 	Liftium.d("Calling injected Iframe Ad for " + sizeOrSlot, 1);
 
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(callInjectedIframeAd) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 
@@ -1424,11 +1452,20 @@ Liftium.in_array = function (needle, haystack, ignoreCase){
     return false;
 };
 
+Liftium.injectAd = function (doc, slotname, slotsize) {
+	Liftium.addAdDiv(doc, slotname, slotsize);
+	Liftium.queue.push({
+		slotsize: slotsize,
+		htmlElement: doc.getElementById(slotname + '_iframe'),
+		slotname: slotname
+	});
+};
 
 
-Liftium.init = function (callback) {
+
+Liftium.init = function () {
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(init) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 
@@ -1442,19 +1479,8 @@ Liftium.init = function (callback) {
 		tracker.measureTime('adengine.init', 'liftium').track();
 	});
 
-	// TODO remove! an ugly hack for AdDriver transparency
-	var callback2 = function() {
-		if (typeof callback === 'function') {
-			callback();
-		}
-		if (window.AdEngine_loadLateAds) {
-			Liftium.d("AdEngine_run_later", 1);
-			window.AdEngine_loadLateAds();
-		}
-	};
-
 	Liftium.pullGeo();
-	Liftium.pullConfig(callback2);
+	Liftium.pullConfig(Liftium.processQueue);
 
 	// Tell the parent window to listen to hop messages
 	if (LiftiumOptions.enableXDM !== false ){
@@ -1797,7 +1823,7 @@ Liftium.normalizeColor = function(input){
 Liftium.onLoadHandler = function () {
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
 	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
-		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
+		Liftium.d('(onLoadHandler) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
 
@@ -1865,7 +1891,20 @@ Liftium.parseQueryString = function (qs){
 	return ret;
 };
 
+Liftium.processQueue = function () {
+	Liftium.d('Processing the queue', 'debug', 1);
 
+	Wikia.LazyQueue.makeQueue(Liftium.queue, function (slot) {
+		Liftium.d('Liftium queue processing a slot', 1);
+		Liftium.callInjectedIframeAd(
+			slot.slotsize,
+			window.document.getElementById(slot.slotname + '_iframe'),
+			slot.slotname
+		);
+	});
+
+	Liftium.queue.start();
+};
 
 /* Pull the configuration data from our servers */
 Liftium.pullConfig = function (callback){

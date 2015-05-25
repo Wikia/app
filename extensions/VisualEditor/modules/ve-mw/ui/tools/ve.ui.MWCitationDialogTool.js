@@ -10,7 +10,7 @@
  *
  * @class
  * @abstract
- * @extends ve.ui.DialogTool
+ * @extends ve.ui.MWReferenceDialogTool
  * @constructor
  * @param {OO.ui.Toolbar} toolbar
  * @param {Object} [config] Configuration options
@@ -29,8 +29,6 @@ OO.inheritClass( ve.ui.MWCitationDialogTool, ve.ui.MWReferenceDialogTool );
 ve.ui.MWCitationDialogTool.static.group = 'cite';
 
 ve.ui.MWCitationDialogTool.static.modelClasses = [ ve.dm.MWReferenceNode ];
-
-ve.ui.MWCitationDialogTool.static.requiresRange = true;
 
 /**
  * Only display tool for single-template transclusions of these templates.

@@ -1,6 +1,5 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/menus";
 
@@ -50,9 +49,9 @@
 
 		input[type=text],
 		textarea {
-			@include box-sizing;
 			background-color: $color-wall-input-new;
 			border: 0;
+			box-sizing: border-box;
 			color: $color-text;
 
 			// Chrome needs this to get rid of empty space below textarea
@@ -335,9 +334,6 @@
 		a {
 			white-space: nowrap;
 		}
-	}
-	h1 {
-		margin-bottom: 15px;
 	}
 	.avatar {
 		left: 0;

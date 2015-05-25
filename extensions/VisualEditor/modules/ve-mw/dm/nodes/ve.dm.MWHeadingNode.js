@@ -28,7 +28,7 @@ OO.inheritClass( ve.dm.MWHeadingNode, ve.dm.HeadingNode );
 
 ve.dm.MWHeadingNode.static.name = 'mwHeading';
 
-ve.dm.MWHeadingNode.static.suggestedParentNodeTypes = [ 'document' ];
+ve.dm.MWHeadingNode.static.suggestedParentNodeTypes = [ 'document', 'tableCell' ];
 
 /* Registration */
 

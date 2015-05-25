@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"सरोज कुमार ढकाल"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|भिजुअल एडिटर]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|भिजुअल एडिटर]] प्रयोग गरेर सम्पादन गरिएको",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|भिजुअल एडिटर: जाँच्नुहोस्]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|भिजुअल एडिटर]] प्रयोग गरेर सम्पादन गरिएको जहाँ प्रणालीले विकिपाठ संभवतः अनायास परिवर्तन भइरहेको पत्ता लगायो।",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|भिजुअल एडिटर: स्विच गरिएको]]",
+	"tag-visualeditor-switched-description": "प्रयोगकर्ताले भिजुअल एडिटर प्रयोग गरेर सम्पादन गर्न सुरु गरे त्यसपछि विकिपाठ सम्पादकमा परिवर्तन गरे।",
+	"visualeditor-feedback-link": "परियोजना:भिजुअल एडिटर/पृष्ठपोषण",
+	"visualeditor-feedback-tool": "पृष्ठपोषण छोड्नुहोस्",
+	"visualeditor-help-label": "प्रयोगकर्ता गाइड पढ्नुहोस्",
+	"visualeditor-help-title": "सम्पादक कसरी प्रयोग गर्ने भनेर प्रयोगकर्ता गाइड"
+}

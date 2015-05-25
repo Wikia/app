@@ -110,10 +110,29 @@ ve.dm.MWParameterModel.prototype.getOriginalName = function () {
 /**
  * Get parameter value.
  *
- * @returns {string} Parameter value
+ * @returns {string} Parameter value, or automatic value if there is none stored.
+ *  Otherwise an empty string.
  */
 ve.dm.MWParameterModel.prototype.getValue = function () {
-	return this.value;
+	return this.value || this.getAutoValue() || '';
+};
+
+/**
+ * Get default parameter value.
+ *
+ * @returns {string} Default parameter value
+ */
+ve.dm.MWParameterModel.prototype.getDefaultValue = function () {
+	return this.template.getSpec().getParameterDefaultValue( this.name );
+};
+
+/**
+ * Get automatic parameter value.
+ *
+ * @returns {string} Automatic parameter name.
+ */
+ve.dm.MWParameterModel.prototype.getAutoValue = function () {
+	return this.template.getSpec().getParameterAutoValue( this.name );
 };
 
 /**

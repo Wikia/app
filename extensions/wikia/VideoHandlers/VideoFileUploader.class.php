@@ -1,5 +1,7 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
+class VideoUploadFailedException extends Exception {}
 /**
  * Class VideoFileUploader
  */
@@ -82,16 +84,33 @@ class VideoFileUploader {
 	 * @throws Exception
 	 */
 	public function upload( &$oTitle ) {
-		// Some providers will sometimes return error codes when attempting
-		// to fetch a thumbnail
-		try {
-			$upload = $this->uploadBestThumbnail( $this->getApiWrapper()->getThumbnailUrl() );
-		} catch ( Exception $e ) {
-			Wikia::Log( __METHOD__, false, $e->getMessage() );
-
-			return Status::newFatal( $e->getMessage() );
+		$apiWrapper = $this->getApiWrapper();
+		$thumbnailUrl = null;
+		if ( method_exists( $apiWrapper, 'getThumbnailUrl' ) ) {
+			// Some providers will sometimes return error codes when attempting
+			// to fetch a thumbnail
+			try {
+				$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+			} catch ( Exception $e ) {
+				WikiaLogger::instance()->error('Video upload failed', [
+					'targetFile' => $this->sTargetTitle,
+					'externalURL' => $this->sExternalUrl,
+					'videoID' => $this->sVideoId,
+					'provider' => $this->sProvider,
+					'exception' => $e
+				]);
+				return Status::newFatal($e->getMessage());
+			}
+		} else {
+			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
+				'targetFile' => $this->sTargetTitle,
+				'overrideMetadata' => $this->aOverrideMetadata,
+				'externalURL' => $this->sExternalUrl,
+				'videoID' => $this->sVideoId,
+				'provider' => $this->sProvider,
+				'apiWrapper' => get_class( $apiWrapper )
+			]);
 		}
-
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
 		// Check if the user has the proper permissions
@@ -116,7 +135,20 @@ class VideoFileUploader {
 			// @TODO
 			// if video already exists make sure that we are in fact changing something
 			// before generating upload (for now this only works for edits)
-			$article = Article::newFromID( $oTitle->getArticleID() );
+			$articleId = $oTitle->getArticleID();
+			$article = Article::newFromID( $articleId );
+			// In case Article is null log more info and throw an exception
+			if ( is_null( $article ) ) {
+				$exception = new VideoUploadFailedException( 'Video upload failed');
+				WikiaLogger::instance()->error('Video upload: title exists but article is null', [
+					'Title object' => $oTitle,
+					'Video title' => $this->getNormalizedDestinationTitle(),
+					'Article ID' => $articleId,
+					'Title from ID' => Title::newFromID($articleId),
+					'exception' => $exception
+				] );
+				throw $exception;
+			}
 			$content = $article->getContent();
 			$newcontent = $this->getDescription();
 			if ( $content != $newcontent ) {
@@ -141,7 +173,18 @@ class VideoFileUploader {
 			$file->forceMetadata( serialize( $this->getNormalizedMetadata() ) );
 		}
 
+
+		$forceMime = $file->forceMime;
+
 		$file->getMetadata();
+
+		//In case of video replacement - Title already exists - preserve forceMime value.
+		//By default it is changed to false in WikiaLocalFileShared::afterSetProps method
+		//which is called by $file->getMetadata().
+		if ( $oTitle->exists() ) {
+			$file->forceMime = $forceMime;
+		}
+
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),

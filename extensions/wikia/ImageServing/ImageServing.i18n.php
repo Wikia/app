@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'imageserving-desc' => 'Selects images from a specified array of pages based on visual requirements',
-	'mostimagesincontent' => 'Most linked-to files in content namespaces',
+	'mostlinkedfilesincontent' => 'Most linked-to files in content namespaces',
 );
 
 /** Message documentation (Message documentation)
@@ -17,7 +17,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'imageserving-desc' => '{{desc}}',
-	'mostimagesincontent' => 'The name of the special page showing the list of the most popular images on pages in content namespaces',
+	'mostlinkedfilesincontent' => 'The name of the special page showing the list of the most popular images on pages in content namespaces',
 );
 
 /** Arabic (العربية)
@@ -80,13 +80,15 @@ $messages['cs'] = array(
  */
 $messages['de'] = array(
 	'imageserving-desc' => 'Wählt Bilder von einer Auswahl von Seiten entsprechend der visuellen Anforderungen aus',
-	'mostimagesincontent' => 'Meistverlinkte Dateien in Inhaltsnamensräumen',
+	'mostlinkedfilesincontent' => 'Meistverlinkte Dateien in Inhaltsnamensräumen',
 );
 
 /** Spanish (español)
+ * @author VegaDark
  */
 $messages['es'] = array(
 	'imageserving-desc' => 'Selecciona las imágenes de un conjunto especificado de páginas basados en necesidades visuales',
+	'mostlinkedfilesincontent' => 'Archivos más enlazados en los espacios de nombres de contenido',
 );
 
 /** Finnish (suomi)
@@ -97,9 +99,11 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  */
 $messages['fr'] = array(
 	'imageserving-desc' => 'Sélectionne les images dans un ensemble défini de pages, en fonction des besoins visuels',
+	'mostlinkedfilesincontent' => 'Fichiers les plus référencés dans les espaces de nom de contenu',
 );
 
 /** Galician (galego)
@@ -160,6 +164,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'imageserving-desc' => 'Memilih gambar daripada tatasusunan laman yang terpilih berasaskan keperluan visual',
+	'mostlinkedfilesincontent' => 'Fail-fail yang paling banyak pautan dalam ruang nama kandungan',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -187,7 +192,7 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'imageserving-desc' => 'Wybiera obrazy z określonej grupy stron na bazie preferencji wizualnych.',
-	'mostimagesincontent' => 'Najczęściej linkowane pliki w przestrzeniach nazw z treścią',
+	'mostlinkedfilesincontent' => 'Najczęściej linkowane pliki w przestrzeniach nazw z treścią',
 );
 
 /** Piedmontese (Piemontèis)
@@ -223,10 +228,12 @@ $messages['ru'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
 	'imageserving-desc' => 'Väljer bilder från en given mängd sidor baserade på visuella krav',
+	'mostlinkedfilesincontent' => 'Filer som länkats mest till i innehållsnamnrymder',
 );
 
 /** Thai (ไทย)
@@ -259,9 +266,11 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'imageserving-desc' => 'Chọn hình ảnh từ một mảng được chỉ định của trang dựa trên yêu cầu hình ảnh',
+	'mostlinkedfilesincontent' => 'Các file liên quan nhất liên kết với các không gian tên nội dung',
 );
 
 /** Simplified Chinese (中文（简体）‎)

@@ -7,7 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.2';
+	const CACHE_VERSION = '0.0.3';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -107,6 +107,19 @@ class ArticleAsJson extends WikiaService {
 			ParserPool::release( $parser );
 			wfProfileOut( __METHOD__ );
 			return false;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	public static function onPortableInfoboxNodeImageGetData( $title, &$ref, $alt ) {
+
+		wfProfileIn( __METHOD__ );
+		if ( $title ) {
+			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
+			$ref = count( self::$media ) - 1;
 		}
 
 		wfProfileOut( __METHOD__ );

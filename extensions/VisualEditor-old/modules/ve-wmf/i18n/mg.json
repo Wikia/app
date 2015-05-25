@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jagwar"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Fanovana natao tamin'ny alalan'i [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: tokony homarinina]]",
+	"tag-visualeditor-needcheck-description": "Fanovàna natao tamin'ny alalan'i [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] izay nahitan'ny rafitra hadisoam-panovàna",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor:Nivadika]]",
+	"tag-visualeditor-switched-description": "Nanomboka nampiasa an'i VisualEditor ity mpikambana ity ary nivadika tamin'ny mpanova wikisoratra izy.",
+	"visualeditor-feedback-tool": "Hametraka famoahan-kevitra"
+}

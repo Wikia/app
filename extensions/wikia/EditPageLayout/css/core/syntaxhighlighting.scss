@@ -10,26 +10,12 @@
 
 	.editpage-sourcewidemode.mode-source.editpage-sourcewidemode-on .EditPageRail .module_page_controls {
 		.wikia-menu-button {
-			right: 50px;
-			top: 10px;
-		}
+			height: 21px;
+			margin-top: 8px;
+			position: relative;
 
-		.module_content {
-			width: 600px;
-		}
-
-		#wpSave {
-			position: static;
-		}
-
-		.checkboxes {
-			left: 285px;
-			position: absolute;
-			right: auto;
-			top: 0;
-
-			label {
-				float: none;
+			#wpSave {
+				margin-top: 0;
 				position: static;
 			}
 		}
@@ -53,19 +39,19 @@
 	border: 1px solid transparent;
 	box-sizing: border-box;
 	color: transparent;
-	line-height: normal;
+	line-height: 140%;
 	margin: 0;
 	overflow-x: auto;
 	overflow-y: scroll;
 	white-space: pre-wrap;
 	width: 100%;
-	word-wrap: normal;
+	word-wrap: break-word;
 }
 
 #wpTextbox1.highlighted {
 	border: 1px inset gray;
 	box-sizing: border-box;
-	line-height: normal;
+	line-height: 140%;
 	left: 0;
 	margin: 0;
 	overflow-x: auto;
@@ -73,5 +59,6 @@
 	padding: 0;
 	position: absolute;
 	top: 0;
+	visibility: visible;
 	width: 100%;
 }

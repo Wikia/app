@@ -50,6 +50,7 @@ $messages['az'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'wikiastyleguide-dropdown-all' => 'সমস্ত',
@@ -74,6 +75,13 @@ $messages['ca'] = array(
 	'wikiastyleguide-dropdown-all' => 'Tot',
 	'wikiastyleguide-dropdown-select-all' => 'Seleccionar tot',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 i $2 més',
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 кхин а $2',
 );
 
 /** German (Deutsch)
@@ -220,11 +228,21 @@ $messages['os'] = array(
 
 /** Polish (polski)
  * @author Sovq
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'wikiastyleguide-desc' => 'Rozszerzenie WikiaStyleGuide',
 	'wikiastyleguide-dropdown-all' => 'Wszystkie',
 	'wikiastyleguide-dropdown-select-all' => 'Wybierz wszystkie',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 i $2 więcej',
+);
+
+/** Pashto (پښتو)
+ * @author Ahmed-Najib-Biabani-Ibrahimkhel
+ */
+$messages['ps'] = array(
+	'wikiastyleguide-dropdown-all' => 'ټول',
+	'wikiastyleguide-dropdown-select-all' => 'ټول ټاکل',
 );
 
 /** Portuguese (português)
@@ -276,8 +294,10 @@ $messages['sv'] = array(
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'wikiastyleguide-desc' => 'ВікіяРозширенняГід по стилю',
 	'wikiastyleguide-dropdown-all' => 'Усі',
 	'wikiastyleguide-dropdown-select-all' => 'Вибрати всі',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 і ще $2',
@@ -285,8 +305,10 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'wikiastyleguide-desc' => 'mở rộng WikiaStyleGuide',
 	'wikiastyleguide-dropdown-all' => 'Tất cả',
 	'wikiastyleguide-dropdown-select-all' => 'Chọn tất cả',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 và $2 thêm',

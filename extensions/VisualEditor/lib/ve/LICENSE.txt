@@ -1,9 +1,6 @@
-Copyright (c) 2011-2014 VisualEditor Team and others under the terms
-of The MIT License (MIT), as follows:
+Copyright (c) 2011-2014 VisualEditor Team and others
 
-This software consists of voluntary contributions made by many
-individuals (AUTHORS.txt) For exact contribution history, see the
-revision history and logs, available at https://gerrit.wikimedia.org
+https://git.wikimedia.org/blob/VisualEditor%2FVisualEditor/master/AUTHORS.txt
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

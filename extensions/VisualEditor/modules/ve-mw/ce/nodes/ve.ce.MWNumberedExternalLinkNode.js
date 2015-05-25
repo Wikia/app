@@ -10,6 +10,7 @@
  *
  * @class
  * @extends ve.ce.LeafNode
+ * @mixins ve.ce.FocusableNode
  * @constructor
  * @param {ve.dm.MWNumberedExternalLinkNode} model Model to observe
  * @param {Object} [config] Configuration options
@@ -35,7 +36,7 @@ ve.ce.MWNumberedExternalLinkNode = function VeCeMWNumberedExternalLinkNode( mode
 		.appendTo( this.$element );
 
 	// Events
-	this.model.connect( this, { 'update': 'onUpdate' } );
+	this.model.connect( this, { update: 'onUpdate' } );
 
 	// Initialization
 	this.onUpdate();
@@ -53,7 +54,7 @@ ve.ce.MWNumberedExternalLinkNode.static.name = 'link/mwNumberedExternal';
 
 ve.ce.MWNumberedExternalLinkNode.static.tagName = 'span';
 
-ve.ce.MWNumberedExternalLinkNode.static.primaryCommandName = 'linkNode';
+ve.ce.MWNumberedExternalLinkNode.static.primaryCommandName = 'link';
 
 /* Static Methods */
 

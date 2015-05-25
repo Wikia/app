@@ -1,10 +1,15 @@
-/* global GlobalNotification */
+/* global BannerNotification */
 
 /*
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
  */
 
-define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function (VideoBootstrap, $, window) {
+define('wikia.vet', [
+	'wikia.videoBootstrap',
+	'jquery',
+	'wikia.window',
+	'BannerNotification'
+], function (VideoBootstrap, $, window, BannerNotification) {
 	'use strict';
 
 	var curSourceId = 0,
@@ -17,7 +22,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		prevScreen = null,
 		wysiwygStart = 1,
 		// Show notifications for this long and then hide them
-		notificationTimout = 4000,
+		notificationTimeout = 4000,
 		vetOptions = {},
 		embedPresets = false,
 		callbackAfterSelect = $.noop,
@@ -27,6 +32,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		DEFAULT_WIDTH = 335,
 		thumbSize = DEFAULT_WIDTH,
 		videoInstance = null,
+		bannerNotification = new BannerNotification('', 'error', null, notificationTimeout),
 		tracking,
 		VETExtended,
 		VET;
@@ -34,7 +40,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 	tracking = Wikia.Tracker.buildTrackingFunction(Wikia.trackEditorComponent, {
 		action: Wikia.Tracker.ACTIONS.CLICK,
 		category: 'vet',
-		trackingMethod: 'both'
+		trackingMethod: 'analytics'
 	});
 
 	// ajax call for 2nd screen (aka embed screen)
@@ -115,7 +121,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			var extraData, caption;
 
 			if (json.status === 'fail') {
-				GlobalNotification.show(json.errMsg, 'error', null, notificationTimout);
+				bannerNotification.setContent(json.errMsg).show();
 			} else {
 				// setup metadata
 				extraData = {};
@@ -221,7 +227,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				category: options.track.category || 'vet',
 				label: options.track.label || '',
 				value: options.track.value || null,
-				trackingMethod: options.track.method || 'both'
+				trackingMethod: options.track.method || 'analytics'
 			});
 		}
 
@@ -278,7 +284,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			query;
 
 		if (!$urlInput.val()) {
-			GlobalNotification.show($.msg('vet-warn2'), 'error', null, notificationTimout);
+			bannerNotification.setContent($.msg('vet-warn2')).show();
 			return false;
 		} else {
 			query = $urlInput.val();
@@ -332,7 +338,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		});
 
 		if ($errorBox.length) {
-			GlobalNotification.show($errorBox.html(), 'error', null, notificationTimout);
+			bannerNotification.setContent($errorBox.html()).show();
 		}
 
 		if ($('#VideoEmbedMain').html() === '') {
@@ -357,7 +363,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		e.preventDefault();
 
 		if (!$nameInput.length || $nameInput.val() === '') {
-			GlobalNotification.show($.msg('vet-warn3'), 'error', null, notificationTimout);
+			bannerNotification.setContent($.msg('vet-warn3')).show();
 			return;
 		}
 
@@ -394,7 +400,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			var wikitext, options, screenType;
 
 			if (status === 'error') {
-				GlobalNotification.show($.msg('vet-insert-error'), 'error', null, notificationTimout);
+				bannerNotification.setContent($.msg('vet-insert-error')).show();
 			} else if (status === 'success') {
 				screenType = jqXHR.getResponseHeader('X-screen-type');
 				if (typeof screenType === 'undefined') {
@@ -403,7 +409,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				switch ($.trim(screenType)) {
 					case 'error':
 						data.responseText = data.responseText.replace(/<script.*script>/, '');
-						GlobalNotification.show(data.responseText, 'error', null, notificationTimout);
+						bannerNotification.setContent(data.responseText).show();
 						break;
 					case 'summary':
 						switchScreen('Summary');
@@ -526,7 +532,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				}
 
 				if ($.trim(screenType) === 'error') {
-					GlobalNotification.show(data.responseText, 'error', null, notificationTimout);
+					bannerNotification.setContent(data.responseText).show();
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();

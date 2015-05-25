@@ -12,7 +12,7 @@ $(function () {
 	track = globalTracker.buildTrackingFunction({
 		action: globalTracker.ACTIONS.CLICK,
 		category: 'file-page',
-		trackingMethod: 'both'
+		trackingMethod: 'analytics'
 	});
 
 	Paginator = function (el) {
@@ -201,7 +201,7 @@ $(function () {
 										if (json.result === 'ok') {
 											window.location = json.redirectUrl;
 										} else {
-											window.GlobalNotification.show(json.msg, 'error');
+											new BannerNotification(json.msg, 'error').show();
 										}
 									}
 								});

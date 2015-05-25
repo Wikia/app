@@ -29,7 +29,6 @@
 @import 'core/body';
 @import 'core/background';
 @import 'core/globalelements';
-@import 'core/GlobalHeader';
 @import 'core/page';
 @import 'core/CommentsLikes';
 @import 'core/WikiHeader';
@@ -45,12 +44,11 @@
 @import 'core/successerror';
 @import 'core/SpeechBubble';
 @import 'core/ArticleAfterComments';
-@import 'core/GlobalNotificationOasis';
+@import 'core/BannerNotificationsOasis';
 @import 'core/WikiaBar';
 @import 'core/thumbnails';
 @import 'core/MenuElement';
 @import 'core/visualeditor';
-@import 'skins/shared/styles/logo';
 @import 'skins/shared/styles/jquery.ui.autocomplete'; // TODO: load on demand
 
 // Bootstrap
@@ -58,23 +56,25 @@
 @import 'resources/wikia/libraries/bootstrap/popover';
 
 // Extensions (only include here if used on the majority of page views!)
-@import 'modules/LatestPhotos';
+@import 'extensions/wikia/WikiaLogo/styles/WikiaLogo';
 @import 'extensions/wikia/Blogs/css/oasis';
 @import 'extensions/wikia/CategorySelect/css/CategorySelect';
 @import 'extensions/wikia/RelatedPages/RelatedPages';
 @import 'extensions/wikia/ImageLazyLoad/css/ImageLazyLoad';
 @import 'extensions/wikia/UserLogin/css/UserLoginGlobal';
 @import 'extensions/wikia/WikiaStyleGuide/css/Form';
+@import 'extensions/wikia/WikiaStyleGuide/css/tooltip-icon';
 @import 'extensions/wikia/WikiaBar/css/WikiaBar';
 @import 'extensions/wikia/Chat2/css/ChatEntryPoint';
 @import 'extensions/wikia/Forum/css/RelatedForumDiscussion'; // on every article page
-@import 'extensions/wikia/TOC/css/toc.scss';
+@import 'extensions/wikia/TOC/css/toc';
 @import 'extensions/wikia/VideosModule/styles/VideosModule';
-@import 'extensions/wikia/GlobalFooter/styles/GlobalFooterOasis';
-@import 'extensions/wikia/MediaGallery/styles/MediaGallery.scss'; // relies on bulky foundation mixins
+@import 'extensions/wikia/MediaGallery/styles/MediaGallery'; // relies on bulky foundation mixins
 
 // CSS (needs leading slash and file extension)
 @import '/extensions/wikia/CreatePage/css/CreatePage.css';
+//Site Optimizations
+@import 'extensions/wikia/Rail/styles/RailElement';
 
 // Print
 @media print {
@@ -87,3 +87,10 @@
 @import 'core/responsive-font-sizing';
 @import 'core/responsive-core';
 @import 'core/responsive-mainpage-tag';
+
+// Breakpoints
+// todo Cleanup responsive and old oasis layout files
+@import 'core/breakpoints-variables';
+@import 'core/breakpoints-layout';
+@import 'core/breakpoints-typography';
+@import 'core/breakpoints-background';

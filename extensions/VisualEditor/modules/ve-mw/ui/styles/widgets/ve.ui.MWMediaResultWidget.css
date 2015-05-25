@@ -45,15 +45,7 @@
 	box-shadow: inset 0 0 0 1px #ccc;
 }
 
-.ve-ui-optionWidget-highlighted .ve-ui-mwMediaResultWidget-overlay,
-.ve-ui-optionWidget-selected .ve-ui-mwMediaResultWidget-overlay {
-	box-shadow: inset 0 0 0 1px #a7dcff;
-}
-
-.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-highlighted {
-	box-shadow: 0 0 0.3em #a7dcff, 0 0 0 white;
-}
-
+.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-highlighted,
 .ve-ui-mwMediaResultWidget.oo-ui-optionWidget-selected {
 	box-shadow: 0 0 0.3em #a7dcff, 0 0 0 white;
 }
@@ -66,7 +58,7 @@
 	background-repeat: no-repeat;
 }
 
-.ve-ui-mwMediaResultWidget .oo-ui-labeledElement-label {
+.ve-ui-mwMediaResultWidget .oo-ui-labelElement-label {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -80,11 +72,11 @@
 	text-overflow: ellipsis;
 }
 
-.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-highlighted .oo-ui-labeledElement-label {
+.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-highlighted .oo-ui-labelElement-label {
 	background-color: rgba(0,0,0,0.75);
 }
 
-.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-selected .oo-ui-labeledElement-label {
+.ve-ui-mwMediaResultWidget.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
 	background-color: #000;
 }
 

@@ -1,0 +1,40 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajdar"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-aliennode-tooltip": "Кызганычка, хәзерге вакытта бу элементны бары тик чыганак код мөхәррире режимында гына үзгәртеп була.",
+	"visualeditor-annotationbutton-bold-tooltip": "Калын",
+	"visualeditor-annotationbutton-code-tooltip": "Санак коды",
+	"visualeditor-annotationbutton-italic-tooltip": "Авышлы",
+	"visualeditor-annotationbutton-language-tooltip": "Тел",
+	"visualeditor-annotationbutton-link-tooltip": "Сылтама",
+	"visualeditor-clearbutton-tooltip": "Форматлауны чистарту",
+	"visualeditor-dialog-action-apply": "Үзгәртүләрне кертү",
+	"visualeditor-dialog-action-cancel": "Баш тарту",
+	"visualeditor-dialog-action-goback": "Артка",
+	"visualeditor-formatdropdown-format-heading1": "Башлык 1",
+	"visualeditor-formatdropdown-format-heading2": "Башлык 2",
+	"visualeditor-formatdropdown-format-heading3": "Башлык 3",
+	"visualeditor-formatdropdown-format-heading4": "Башлык 4",
+	"visualeditor-formatdropdown-format-heading5": "Башлык 5",
+	"visualeditor-formatdropdown-format-heading6": "Башлык 6",
+	"visualeditor-formatdropdown-format-paragraph": "Кызыл юл",
+	"visualeditor-formatdropdown-format-preformatted": "Преформатированный",
+	"visualeditor-formatdropdown-title": "Форматны үзгәртү",
+	"visualeditor-historybutton-redo-tooltip": "Кире кайтару",
+	"visualeditor-historybutton-undo-tooltip": "Баш тарту",
+	"visualeditor-indentationbutton-indent-tooltip": "Буш араны арттыру",
+	"visualeditor-indentationbutton-outdent-tooltip": "Буш араны киметү",
+	"visualeditor-inspector-close-tooltip": "Ябу",
+	"visualeditor-inspector-remove-tooltip": "Бетерү",
+	"visualeditor-languageinspector-title": "Тел",
+	"visualeditor-languageinspector-widget-changelang": "Телне үзгәртү",
+	"visualeditor-languageinspector-widget-label-langcode": "Телнең коды",
+	"visualeditor-languageinspector-widget-label-language": "Тел",
+	"visualeditor-linkinspector-title": "Гиперсылтама",
+	"visualeditor-listbutton-bullet-tooltip": "Тамгалы исемлек",
+	"visualeditor-listbutton-number-tooltip": "Санлы исемлек"
+}

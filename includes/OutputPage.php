@@ -2830,12 +2830,10 @@ $templates
 	 * @return String: HTML fragment
 	 */
 	function getHeadScripts() {
-		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableVisualEditorExt;
+		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableNewVisualEditorExt;
 		// Achtung! Achtung!
-		// This is a temporary fix for https://wikia-inc.atlassian.net/browse/VE-688 while we are working
-		// on more permanent and long term solution.
-		if ( !empty( $wgEnableVisualEditorExt ) ) {
-			$extraData = array( 've' => 1 );
+		if ( !empty( $wgEnableNewVisualEditorExt ) ) {
+			$extraData = array( 'newve' => 1 );
 		} else {
 			$extraData = array();
 		}
@@ -3115,6 +3113,10 @@ $templates
 			return false;
 		}
 		if ( !$this->getTitle()->isJsSubpage() && !$this->getTitle()->isCssSubpage() ) {
+			return false;
+		}
+		if ( !$this->getTitle()->isSubpageOf( $this->getUser()->getUserPage() ) ) {
+			// Don't execute another user's CSS or JS on preview (T85855)
 			return false;
 		}
 

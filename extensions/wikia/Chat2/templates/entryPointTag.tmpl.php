@@ -1,9 +1,9 @@
 <section class="ChatModule <?=($isEntryPoint)?'ChatEntryPoint':'module'?> ChatModuleUninitialized">
 	<div class="chat-contents">
-		<h1 class="chat-headline">
+		<h2 class="chat-headline">
 			<span class="chat-live" data-msg-id="chat-live2"> </span>
 			<span class="chat-total"> </span>
-		</h1>
+		</h2>
 		<p class="chat-name"> </p>
 		<div class="chat-join">
 			<button type="button" onclick="ChatEntryPoint.onClickChatButton('<?= $linkToSpecialChat ?>')"> </button>

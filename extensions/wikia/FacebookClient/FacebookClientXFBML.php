@@ -12,8 +12,12 @@
 class FacebookClientXFBML {
 
 	public static $supportedTags = [
-		'fb:recommendations',
+		'fb:facepile',
+		'fb:follow',
 		'fb:like-box',
+		'fb:like',
+		'fb:recommendations',
+		'fb:share-button'
 	];
 
 	/**
@@ -44,11 +48,12 @@ class FacebookClientXFBML {
 			unset( $args['profileid'] );
 		}
 
+		// add custom attribute to look for in DOM. We use this to determine
+		// if the Facebook SDK should be loaded.
+		$args['data-type'] = 'xfbml-tag';
+
 		// Allow other tags by default
 		$attrs = self::implodeAttrs( $args );
-
-		// Load Facebook's JS API on demand
-		$parser->getOutput()->addModules( 'ext.wikia.FacebookClient.XFBML' );
 
 		return "<{$tag}{$attrs}>" . $parser->recursiveTagParse( $text ) . "</$tag>";
 	}

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
-<g style="opacity:0.75">
-	<path d="M22.78,19.46L21,17V5H3v12l-1.757,2.463c-0.252,0.286-0.314,0.695-0.157,1.043C1.243,20.853,1.619,21,2,21
-		h20c0.382,0,0.783-0.148,0.94-0.496C23.096,20.156,23.033,19.746,22.78,19.46z M4,19l1-2V7h14v10l1,2H4z"/>
-	<path d="M7,17h10V9H7V17z M9,15v-3h6v3H9z"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="cite-web" style="opacity:0.75;">
+        <path id="laptop" d="M22.78 19.46l-1.78-2.46v-12h-18v12l-1.757 2.463c-.252.286-.314.695-.157 1.043.157.347.533.494.914.494h20c.382 0 .783-.148.94-.496.156-.348.093-.758-.16-1.044zm-18.78-.46l1-2v-10h14v10l1 2h-16z"/>
+        <path id="window" d="M7 17h10v-8h-10v8zm2-2v-3h6v3h-6z"/>
+    </g>
 </svg>

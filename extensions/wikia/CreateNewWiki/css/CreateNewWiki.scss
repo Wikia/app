@@ -1,17 +1,17 @@
 $color-borders: #CECECE;
 
-@import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/columns";
-@import "skins/shared/mixins/gradient";
-@import "skins/shared/color";
-@import "skins/oasis/css/core/layout";
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/columns';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
 
-@import "../../UserLogin/mixins/tooltip-icon";
-@import "../../ThemeDesigner/css/ThemeTab";
+@import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 
 .WikiaPage {
-	border: none;
+	border: 0;
+
 	.WikiaPageBackground {
 		@include linear-gradient(false, top, #01386e, 20%, #2185da, 70%, #fff, 100%);
 	}
@@ -23,6 +23,7 @@ $color-borders: #CECECE;
 
 .WikiaFooter {
 	padding-bottom: 10px;
+
 	section {
 		display: none;
 	}
@@ -42,82 +43,99 @@ $color-borders: #CECECE;
 	padding: 30px 30px 60px 75px;
 	position: relative;
 	width: 500px;
+
 	h1 {
 		display: none;
 	}
+
 	h2 {
-		border: none;
+		border: 0;
 		color: #2c85d6;
 		font-size: 23px;
 		font-weight: bold;
 		line-height: 26px;
 		margin: 0 0 14px;
 	}
+
 	nav {
 		bottom: 10px;
 		position: absolute;
+
 		&.next-controls {
-			right: 20px;
 			min-width: 150px;
+			right: 20px;
+
 			input {
 				float: right;
 			}
+
 			// fix color change when selecting different themes
 			.wikiaThrobber {
 				background-color: #fff;
 			}
+
 			.error-msg {
 				float: left;
 				margin-right: 10px;
 			}
 		}
+
 		&.back-controls {
 			left: 20px;
 		}
 	}
-	input[type=text],
-	input[type=password] {
 
+	[type=text],
+	[type=password] {
 		background: #e2f1fe;
 		border: 1px solid #dbdbdb;
 		font-size: 17px;
 		outline: 0;
-		padding: 0.3em;
+		padding: .3em;
+
 		&:focus {
-			@include box-shadow(0px, 0px, 6px, #2b5e94);
+			@include box-shadow(0, 0, 6px, #2b5e94);
 		}
 	}
+
 	h3 {
 		/* following !important is used because the existing template has inline styles */
-		font-weight: normal !important;
 		font-size: 17px !important;
+		font-weight: normal !important;
 		line-height: 23px;
+
 		&[for=wpRemember],
 		&[for=wpMarketingOptIn] {
 			font-size: 12px !important;
 		}
 	}
+
 	.creative {
 		font-size: 17px;
 	}
+
 	.wiki-domain-container {
 		position: relative;
+
 		img {
 			bottom: 4px;
-			position: absolute;
 			left: -40px;
+			position: absolute;
 		}
 	}
+
 	.steps {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
+
 	.awesome-box {
 		left: -122px;
 		position: absolute;
 		top: -127px;
 	}
+
 	.error-msg {
 		color: red;
 		font-size: 12px;
@@ -131,11 +149,13 @@ $color-borders: #CECECE;
 	position: absolute;
 	right: 10px;
 	top: 10px;
+
 	li {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
+
 	.step {
 		background-color: #f4f4f4;
 		border-radius: 5px;
@@ -143,6 +163,7 @@ $color-borders: #CECECE;
 		height: 10px;
 		margin-left: 10px;
 		width: 10px;
+
 		&.active {
 			background-color: #fe5a1d;
 		}
@@ -150,25 +171,29 @@ $color-borders: #CECECE;
 }
 
 #NameWiki {
-	@if ( $responsive-layout-enabled ) {
+	width: 500px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 500px;
 	}
+
 	form {
 		font-size: 17px;
+
 		h3 {
 			display: block;
 			margin-top: 15px;
 		}
-		input[type=text],
-		input[type=password] {
+
+		[type=text],
+		[type=password] {
 			width: 365px;
 		}
+
 		.language-default {
 			font-size: 12px;
 			margin-top: 20px;
 		}
+
 		.language-choice {
 			display: none;
 		}
@@ -178,27 +203,32 @@ $color-borders: #CECECE;
 #UserAuth {
 	@include clearfix;
 	display: none;
-	@if ( $responsive-layout-enabled ) {
+	width: 600px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		min-width: 590px;
-	} @else {
-		width: 600px;
+		width: auto;
 	}
+
 	.UserLoginModal {
 		border-right: 1px solid $color-borders;
-		margin: 0 0 15px 0;
+		margin: 0 0 15px;
 		padding: 10px 90px 0 0;
 	}
+
 	.signup-loginmodal {
 		float: left;
 	}
+
 	.signup-marketing {
 		float: right;
 		padding: 30px;
 		width: 175px;
 	}
+
 	.get-account {
 		display: none;
 	}
+
 	.keeploggedin {
 		display: none;
 	}
@@ -206,22 +236,16 @@ $color-borders: #CECECE;
 
 #DescWiki {
 	display: none;
-	@if ( $responsive-layout-enabled ) {
+	width: 700px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 700px;
 	}
+
 	ol {
 		margin: 0;
 		padding: 0;
 
-		@if ( $responsive-layout-enabled ) {
-
-		} @else {
-			/*
-			 * Both left and right are specified for proper ltr and rtl positioning.
-			 * TODO: Fix CSSJanus
-			 */
+		@if (not $responsive-or-breakpoints-layout-enabled) {
 			left: 515px;
 			position: absolute;
 			right: 515px;
@@ -238,75 +262,76 @@ $color-borders: #CECECE;
 			font-weight: bold;
 			list-style: none;
 			margin-bottom: 10px;
-			padding:10px;
-			@if ( $responsive-layout-enabled ) {
+			padding: 10px;
+			@if ($responsive-or-breakpoints-layout-enabled) {
 				display: inline-block;
 				float: left;
-				width: 27%;
 				margin-left: 1%;
+				width: 27%;
 			}
+
 			.tip-creative {
 				font-size: 14px;
 				font-weight: normal;
 			}
 		}
 	}
+
 	textarea {
 		display: block;
 		font-size: 17px;
 		height: 170px;
 		padding: 0;
 		resize: none;
-		@if ( $responsive-layout-enabled ) {
+		width: 425px;
+		@if ($responsive-or-breakpoints-layout-enabled) {
 			width: 510px;
-		} @else{
-			width: 425px;
 		}
+
 		&.placeholder {
 			color: #aaa;
 		}
 	}
+
 	select {
-		margin-bottom:15px;
+		margin-bottom: 15px;
 	}
+
 	h3 {
-		margin-top: 10px;
 		display: block;
+		margin-top: 10px;
 	}
+
 	.checkbox {
 		input {
-			vertical-align:middle;
+			vertical-align: middle;
 		}
 	}
-	.tooltip-icon-wrapper {
-		padding: 0;
-		position: relative;
-		.tooltip-icon {
-			@include tooltip-icon;
-			display: inline-block;
-			position: static;
-		}
-	}
+
 	.select-container {
 		float: left;
-		min-width: 210px;
 		max-width: 490px;
+		min-width: 210px;
 	}
+
 	.categories-sets {
 		display: none;
 	}
+
 	.categories-set {
+		@include column-count(4);
 		display: none;
-		@include column-count( 4 );
 
 		label {
 			display: inline-block;
 			position: relative;
 			width: 100%;
 		}
+
 		input {
 			position: absolute;
 		}
+
 		span {
 			display: block;
 			margin-left: 1.75em;
@@ -316,47 +341,52 @@ $color-borders: #CECECE;
 
 #ThemeWiki {
 	display: none;
-	@if ( $responsive-layout-enabled ) {
+	width: 650px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 650px;
 	}
+
 	.ThemeTab {
 		height: 150px;
 		left: 45px;
 		position: absolute;
 		top: 125px;
+
 		.slider {
 			height: 106px;
 			top: 0;
-			@if ( $responsive-layout-enabled ) {
+			width: 608px;
+			@if ($responsive-or-breakpoints-layout-enabled) {
 				width: 500px;
-			} @else {
-				width: 608px;
 			}
+
 			ul {
 				list-style: none;
 				margin: 0;
-				li {
-					padding-bottom: 0;
-					padding-top: 0;
-					h3{
-						display: none;
-					}
-				}
+			}
+
+			li {
+				padding-bottom: 0;
+				padding-top: 0;
+			}
+
+			h3 {
+				display: none;
 			}
 		}
+
 		.chevron {
 			top: 37px;
+
 			&.next {
-				@if ( $responsive-layout-enabled ) {
+				left: 645px;
+				@if ($responsive-or-breakpoints-layout-enabled) {
 					left: 540px;
-				} @else {
-					left: 645px;
 				}
 			}
 		}
 	}
+
 	.instruction {
 		margin-top: 175px;
 	}
@@ -364,14 +394,15 @@ $color-borders: #CECECE;
 
 #UpgradeWiki {
 	display: none;
-	@if ( $responsive-layout-enabled ) {
+	width: 625px;
+	@if ($responsive-or-breakpoints-layout-enabled) {
 		width: auto;
-	} @else {
-		width: 625px;
 	}
+
 	.marketing {
 		font-size: 17px;
 		position: relative;
+
 		.upgrade {
 			@include linear-gradient(#8ddd56, top, #8ddd56, 20%, #74af39, 100%);
 			border: 1px solid #74af39;
@@ -381,47 +412,28 @@ $color-borders: #CECECE;
 			padding: 9px 12px;
 			position: absolute;
 			top: 40px;
+
 			&:hover {
 				@include linear-gradient(#7dbf43, top, #7dbf43, 20%, #74af39, 100%);
 			}
+
 			&:active {
 				@include linear-gradient(#74af39, top, #74af39, 20%, #8ddd56, 100%);
 			}
 		}
 	}
+
 	ul {
 		@include clearfix;
 		clear: both;
 		margin: 15px 50px;
 		width: 400px;
+
 		li {
 			float: left;
 			font-size: 15px;
 			line-height: 25px;
 			width: 200px;
-		}
-	}
-}
-
-/*
- * TODO: Fix CSSJanus
- */
-html[dir="rtl"] {
-	#DescWiki {
-		ol {
-			@if ( $responsive-layout-enabled ) {
-
-			} @else {
-				left: auto;
-				right: 515px;
-			}
-		}
-		.select-container {
-			float: right;
-		}
-		.categories-set span {
-			margin-left: auto;
-			margin-right: 1.75em;
 		}
 	}
 }

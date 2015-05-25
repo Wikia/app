@@ -1,4 +1,4 @@
-/* global GlobalNotification */
+/* global BannerNotification */
 
 /**
  * JS file for Special:Videos page. Runs on Monobook and Oasis.
@@ -49,10 +49,15 @@ $(function () {
 		 * Only used in Oasis
 		 */
 		initAddVideo: function () {
-			var addVideoButton = $('.addVideo');
+			var addVideoButton = $('.addVideo'),
+				videoEmbedMain;
 			if ($.isFunction($.fn.addVideoButton)) {
 				addVideoButton.addVideoButton({
 					callbackAfterSelect: function (url, VET) {
+						require( ['wikia.throbber'], function( throbber ) {
+							videoEmbedMain = $('#VideoEmbedMain');
+							throbber.show(videoEmbedMain);
+						});
 						$.nirvana.postJson(
 							// controller
 							'VideosController',
@@ -64,9 +69,14 @@ $(function () {
 							},
 							// success callback
 							function (formRes) {
-								window.GlobalNotification.hide();
+								SpecialVideos.bannerNotification.hide();
+								require( ['wikia.throbber'], function( throbber ) {
+									throbber.remove(videoEmbedMain);
+								});
 								if (formRes.error) {
-									window.GlobalNotification.show(formRes.error, 'error');
+									SpecialVideos.bannerNotification
+										.setContent(formRes.error)
+										.show();
 								} else {
 									VET.close();
 									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
@@ -74,7 +84,12 @@ $(function () {
 							},
 							// error callback
 							function () {
-								window.GlobalNotification.show($.msg('vet-error-while-loading'), 'error');
+								require( ['wikia.throbber'], function( throbber ) {
+									throbber.remove(videoEmbedMain);
+								} );
+								SpecialVideos.bannerNotification
+									.setContent($.msg('vet-error-while-loading'))
+									.show();
 							}
 						);
 						// Don't move on to second VET screen.  We're done.
@@ -113,7 +128,9 @@ $(function () {
 										// reload page with cb
 										(new Wikia.Querystring(window.location)).addCb().goTo();
 									} else {
-										GlobalNotification.show(json.msg, 'error');
+										SpecialVideos.bannerNotification
+											.setContent(json.msg)
+											.show();
 									}
 
 								}
@@ -121,12 +138,16 @@ $(function () {
 						}
 					});
 				} else {
-					GlobalNotification.show($.msg('oasis-generic-error'), 'error');
+					SpecialVideos.bannerNotification
+						.setContent($.msg('oasis-generic-error'))
+						.show();
 				}
 			});
 		}
 	};
-
-	SpecialVideos.init();
+	require(['BannerNotification'], function (BannerNotification) {
+		SpecialVideos.bannerNotification = new BannerNotification().setType('error');
+		SpecialVideos.init();
+	});
 
 });

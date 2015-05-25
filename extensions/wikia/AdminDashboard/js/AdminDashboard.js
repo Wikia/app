@@ -44,17 +44,20 @@ var AdminDashboard = {
 						{ url: url },
 						// success callback
 						function( formRes ) {
-							window.GlobalNotification.hide();
 							if ( formRes.error ) {
-								window.GlobalNotification.show( formRes.error, 'error' );
+								new window.BannerNotification(formRes.error, 'error')
+									.show();
 							} else {
 								VET.close();
 								window.location = addVideoButtonReturnUrl;
 							}
 						},
 						// error callback
-						function() {
-							window.GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+						function () {
+							new window.BannerNotification(
+								$.msg('vet-error-while-loading'),
+								'error'
+							).show();
 						}
 					);
 					// Don't move on to second VET screen.  We're done.
@@ -82,7 +85,7 @@ var AdminDashboard = {
 			action: action,
 			browserEvent: event,
 			label: label,
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			value: value
 		}, params);
 	},

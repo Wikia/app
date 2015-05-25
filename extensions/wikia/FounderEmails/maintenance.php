@@ -27,7 +27,7 @@ if (isset($options['help'])) {
 }
 
 $events = array(
-	'daysPassed', 
+	'daysPassed',
 	'viewsDigest',    // Process events for any users that want the daily views digest
 	'completeDigest', // Process events for any users that want the complete digest
 );
@@ -45,6 +45,6 @@ foreach ($events as $event) {
 	if (!isset($options['quiet'])) {
 		echo "Sending Founder Emails ($event).\n";
 	}
-	
-	FounderEmails::getInstance()->processEvents( $event, true, $wikiId );
+
+	FounderEmails::getInstance()->processEvents( $event, false, $wikiId );
 }

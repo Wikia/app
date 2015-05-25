@@ -77,4 +77,19 @@ class PowerUserHooks {
 
 		return true;
 	}
+
+	/**
+	 * If a user is a PowerUser, add the pageviews tracking module
+	 * @see extensions/wikia/PowerUser/js/pageViewTracking.js
+	 *
+	 * @param \OutputPage $out
+	 * @return bool
+	 */
+	public function onBeforePageDisplay( \OutputPage $out ) {
+		global $wgUser;
+		if ( $wgUser instanceof \User && $wgUser->isPowerUser() ) {
+			\Wikia::addAssetsToOutput( 'poweruser' );
+		}
+		return true;
+	}
 }

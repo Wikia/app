@@ -317,16 +317,20 @@ class User {
 			 */
 			$isExpired = true;
 			if(!empty($data)) {
-				$_key = wfSharedMemcKey( "user_touched", $this->mId );
+				$_key = self::getUserTouchedKey( $this->mId );
 				$_touched = $wgMemc->get( $_key );
 				if( empty( $_touched ) ) {
 					$wgMemc->set( $_key, $data['mTouched'] );
+					wfDebug( "Shared user: miss on shared user_touched\n" );
 				} else if( $_touched <= $data['mTouched'] ) {
 					$isExpired = false;
 				}
+				else {
+					wfDebug( "Shared user: invalidating local user cache due to shared user_touched\n" );
+				}
 			}
+			# /Wikia
 		}
-
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "User: cache miss for user {$this->mId}\n" );
 			# Load from DB
@@ -358,6 +362,15 @@ class User {
 			// Anonymous users are uncached
 			return;
 		}
+
+		// prepare mOptionOverrides for caching
+		$this->mOptionOverrides = [];
+		foreach ( $this->mOptions as $optionKey => $optionValue ) {
+			if ( $this->shouldOptionBeStored( $optionKey, $optionValue ) ) {
+				$this->mOptionOverrides[$optionKey] = $optionValue;
+			}
+		}
+
 		$data = array();
 		foreach ( self::$mCacheVars as $name ) {
 			$data[$name] = $this->$name;
@@ -366,6 +379,8 @@ class User {
 		$key = wfMemcKey( 'user', 'id', $this->mId );
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
+
+		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -2026,10 +2041,13 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
+			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
+			$this->saveToCache();
 			# not uncyclo
 			if( !empty( $wgSharedDB ) ) {
-				$memckey = wfSharedMemcKey( "user_touched", $this->mId );
-				$wgMemc->delete( $memckey );
+				$memckey = self::getUserTouchedKey( $this->mId );
+				$wgMemc->set( $memckey, $this->mTouched );
+				wfDebug( "Shared user: updating shared user_touched\n" );
 			}
 		}
 	}
@@ -2685,6 +2703,14 @@ class User {
 	}
 
 	/**
+	 * Whether this user is Wikia staff or not
+	 * @return bool
+	 */
+	public function isStaff() {
+		return in_array( 'staff', $this->getEffectiveGroups() );
+	}
+
+	/**
 	 * Check if user is allowed to access a feature / make an action
 	 *
 	 * @internal param \String $varargs permissions to test
@@ -3026,6 +3052,15 @@ class User {
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
 
+		Wikia\Helios\User::clearAccessTokenCookie();
+
+		// Wikia change - begin (@see PLATFORM-1028)
+		// @author macbre
+		// There's no need to keep the user name (in both session and cookie) when you log out
+		$this->getRequest()->setSessionData( 'wsUserName', null );
+		$this->clearCookie( 'UserName' );
+		// Wikia change - end
+
 		# Remember when user logged out, to prevent seeing cached pages
 		$this->setCookie( 'LoggedOut', wfTimestampNow(), time() + 86400 );
 	}
@@ -3036,7 +3071,6 @@ class User {
 	 */
 	public function saveSettings() {
 		global $wgAuth;
-
 		$this->load();
 		if ( wfReadOnly() ) { return; }
 		if ( 0 == $this->mId ) { return; }
@@ -3175,6 +3209,8 @@ class User {
 			global $wgMemc;
 			$wgMemc->incr( wfSharedMemcKey( "registered-users-number" ) );
 
+			wfRunHooks( 'CreateNewUserComplete', [ &$newUser ] );
+
 		} else {
 			$newUser = null;
 		}
@@ -3206,6 +3242,8 @@ class User {
 			), __METHOD__
 		);
 		$this->mId = $dbw->insertId();
+
+		wfRunHooks( 'AddUserToDatabaseComplete', [ &$this ] );
 
 		// Clear instance cache other than user table data, which is already accurate
 		$this->clearInstanceCache();
@@ -3369,7 +3407,7 @@ class User {
 	 * @param $password String: user password.
 	 * @return Boolean: True if the given password is correct, otherwise False.
 	 */
-	public function checkPassword( $password ) {
+	public function checkPassword( $password, &$errorMessageKey = null ) {
 		global $wgAuth, $wgLegacyEncoding;
 		$this->load();
 
@@ -3381,6 +3419,15 @@ class User {
 		if( !$this->isValidPassword( $password ) ) {
 			return false;
 		}
+
+		// Wikia change - begin - @author: wladek
+		// Helios integration
+		$result = null;
+		wfRunHooks( 'UserCheckPassword', [ $this->mId, $this->mName, $this->mPassword, $password, &$result, &$errorMessageKey ] );
+		if ( $result !== null ) {
+			return $result;
+		}
+		// Wikia change - end
 
 		if( $wgAuth->authenticate( $this->getName(), $password ) ) {
 			return true;
@@ -4330,7 +4377,6 @@ class User {
 			return;
 
 		$this->mOptions = self::getDefaultOptions();
-
 		// Maybe load from the object
 		if ( !is_null( $this->mOptionOverrides ) ) {
 			wfDebug( "User: loading options for user " . $this->getId() . " from override cache.\n" );
@@ -4401,21 +4447,10 @@ class User {
 		foreach( $saveOptions as $key => $value ) {
 			# Don't bother storing default values
 			# <Wikia>
-			if ( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) {
+			if ( $this->shouldOptionBeStored( $key, $value ) ) {
 				$insert_rows[] = array( 'up_user' => $this->getId(), 'up_property' => $key, 'up_value' => $value );
 			}
 			# </Wikia>
-			else {
-				if ( ( is_null( self::getDefaultOption( $key ) ) &&
-						!( $value === false || is_null($value) ) ) ||
-						$value != self::getDefaultOption( $key ) ) {
-					$insert_rows[] = array(
-							'up_user' => $this->getId(),
-							'up_property' => $key,
-							'up_value' => $value,
-						);
-				}
-			}
 			if ( $extuser && isset( $wgAllowPrefChange[$key] ) ) {
 				switch ( $wgAllowPrefChange[$key] ) {
 					case 'local':
@@ -4434,6 +4469,25 @@ class User {
 		if ( $extuser ) {
 			$extuser->updateUser();
 		}
+	}
+
+	/**
+	 * @desc Check if user option should be stored in DataBase.
+	 * We don't want to store default values in order to easily change them in future.
+	 * @param $key
+	 * @param $value
+	 * @return bool
+	 */
+	private function shouldOptionBeStored( $key, $value ) {
+		global $wgGlobalUserProperties;
+		if (
+			( is_array( $wgGlobalUserProperties ) && in_array( $key, $wgGlobalUserProperties ) ) ||
+			( is_null( self::getDefaultOption( $key ) ) && !( $value === false || is_null($value) ) ) ||
+			$value != self::getDefaultOption( $key )
+		) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -4504,5 +4558,19 @@ class User {
 	 */
 	public function wikiaConfirmationTokenUrl( $token ) {
 		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
+	}
+
+	/**
+	 * Return the memcache key for storing cross-wiki "user_touched" value.
+	 *
+	 * It's used to refresh user caches on Wiki B when user changes his setting on Wiki A
+	 *
+	 * @author wikia
+	 *
+	 * @param int $user_id
+	 * @return string memcache key
+	 */
+	public static function getUserTouchedKey( $user_id ) {
+		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
 	}
 }

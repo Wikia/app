@@ -8,11 +8,11 @@
  * @class
  * @extends ve.dm.MWInlineImageNode
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.WikiaInlineVideoNode = function VeDmWikiaInlineVideoNode( length, element ) {
-	ve.dm.WikiaInlineVideoNode.super.call( this, length, element );
+ve.dm.WikiaInlineVideoNode = function VeDmWikiaInlineVideoNode() {
+	ve.dm.WikiaInlineVideoNode.super.apply( this, arguments );
 };
 
 /* Inheritance */

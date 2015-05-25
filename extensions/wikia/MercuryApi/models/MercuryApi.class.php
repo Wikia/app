@@ -3,9 +3,7 @@
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
-
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
-
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -27,7 +25,7 @@ class MercuryApi {
 		return $articleCommentList->getCountAll();
 	}
 
-	public static function getTopContributorsKey ( $articleId, $limit ){
+	public static function getTopContributorsKey ( $articleId, $limit ) {
 		return wfMemcKey( __CLASS__, __METHOD__, $articleId, $limit );
 	}
 
@@ -41,7 +39,7 @@ class MercuryApi {
 	public function topContributorsPerArticle( $articleId, $limit ) {
 		$key = self::getTopContributorsKey( $articleId, $limit );
 		$method = __METHOD__;
-		$contributions = WikiaDataAccess::cache($key, self::CACHE_TIME_TOP_CONTRIBUTORS,
+		$contributions = WikiaDataAccess::cache( $key, self::CACHE_TIME_TOP_CONTRIBUTORS,
 			function() use ( $articleId, $limit, $method ) {
 				// Log DB hit
 				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
@@ -65,7 +63,7 @@ class MercuryApi {
 					]
 				);
 				$result = [];
-				while($row = $db->fetchObject($res)) {
+				while ( $row = $db->fetchObject( $res ) ) {
 					$result[ (int) $row->rev_user ] = (int) $row->cntr;
 				}
 				return $result;
@@ -106,39 +104,40 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		$wg = F::app()->wg;
+		global $wgSitename, $wgCacheBuster, $wgDBname, $wgDefaultSkin,
+			   $wgLang, $wgLanguageCode, $wgContLang, $wgCityId;
 		return [
-			'cacheBuster' => (int) $wg->CacheBuster,
-			'dbName' => $wg->DBname,
-			'id' => (int) $wg->CityId,
+			'cacheBuster' => (int) $wgCacheBuster,
+			'dbName' => $wgDBname,
+			'defaultSkin' => $wgDefaultSkin,
+			'id' => (int) $wgCityId,
 			'language' => [
-				'user' => $wg->Lang->getCode(),
+				'user' => $wgLang->getCode(),
 				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
-				'content' => $wg->LanguageCode,
-				'contentDir' => $wg->ContLang->getDir()
+				'content' => $wgLanguageCode,
+				'contentDir' => $wgContLang->getDir()
 			],
-			'namespaces' => $wg->ContLang->getNamespaces(),
-			'siteName' => $this->getSiteName(),
+			'namespaces' => $wgContLang->getNamespaces(),
+			'siteMessage' => $this->getSiteMessage(),
+			'siteName' => $wgSitename,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
 		];
 	}
 
 	/**
-	 * @desc Gets a wikia sitename either from the message or WF variable
+	 * @desc Gets a wikia site message
+	 * When message doesn't exist - return false
 	 *
-	 * @return null|String
+	 * @return Boolean|String
 	 */
-	public function getSiteName() {
-		$siteName = F::app()->wg->Sitename;
+	public function getSiteMessage() {
 		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
-
-		if( !$msg->isDisabled() ) {
-			$siteName = $msg->text();
+		if ( !$msg->isDisabled() ) {
+			$msgText = $msg->text();
 		}
-
-		return $siteName;
+		return !empty( $msgText ) ? $msgText : false;
 	}
 
 	/**
@@ -208,7 +207,7 @@ class MercuryApi {
 	 * @param array $commentData - ArticleComment Data
 	 * @return string userName
 	 */
-	private function addUser(Array $commentData) {
+	private function addUser( Array $commentData ) {
 		$userName = trim( $commentData['author']->mName );
 		if ( !isset( $this->users[$userName] ) ) {
 			$this->users[$userName] = [
@@ -239,28 +238,158 @@ class MercuryApi {
 	}
 
 	/**
-	 * Get categories titles
+	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
 	 *
-	 * @param array $articleCategories
-	 * @return array
+	 * @param Title $title Title object
+	 * @return array|null Article Ad context
 	 */
-	private function getArticleCategoriesTitles( Array $articleCategories ) {
-		$categories = [];
-		foreach ( $articleCategories as $category ) {
-			$categories[] = $category[ 'title' ];
+	public function getAdsContext( Title $title ) {
+		global $wgEnableAdEngineExt;
+		if ( !empty( $wgEnableAdEngineExt ) ) {
+			$adContext = new AdEngine2ContextService();
+			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 		}
-		return $categories;
+		return null;
 	}
 
 	/**
-	 * Get ads context for Title
-	 * @param Title $title Title object
-	 * @param WikiaGlobalRegistry $wg Reference to the Global registry
-	 * @param array $articleCategories List of Categories
-	 * @return array Article Ad context
+	 * CuratedContent API returns data in a different format than we need.
+	 * Let's clean it up!
+	 *
+	 * @param $rawData
+	 * @return array|null
 	 */
-	public function getAdsContext( Title $title ) {
-		$adContext = new AdEngine2ContextService();
-		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+	public function processCuratedContent( $rawData ) {
+		if ( empty( $rawData ) ) {
+			return null;
+		}
+
+		$data = [];
+		$sections = $this->getCuratedContentSections( $rawData );
+		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
+		$featured = $this->getCuratedContentItems( $rawData[ 'featured' ] );
+
+		if ( !empty( $sections ) || !empty( $items ) ) {
+			$data[ 'items' ] = [];
+		}
+
+		if ( !empty( $sections ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $sections );
+		}
+
+		if ( !empty( $items ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $items );
+		}
+
+		if ( !empty( $featured ) ) {
+			$data[ 'featured' ] = $featured;
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Add `section` type to all sections from CuratedContent data
+	 *
+	 * @param $data
+	 * @return array
+	 */
+	private function getCuratedContentSections( $data ) {
+		$sections = [];
+		if ( !empty( $data[ 'sections' ] ) ) {
+			foreach ( $data[ 'sections' ] as $section ) {
+				$section[ 'type' ] = 'section';
+				$sections[] = $section;
+			}
+		}
+		return $sections;
+	}
+
+	/**
+	 * Process CuratedContent items and sanitize when the item is an article
+	 *
+	 * @param $items
+	 * @return array
+	 */
+	private function getCuratedContentItems( $items ) {
+		$data = [];
+		if ( !empty( $items ) ) {
+			foreach ( $items as $item ) {
+				if ( $item[ 'type' ] === 'article' ) {
+					$processedItem = $this->processCuratedContentArticle($item);
+					if ( !empty( $processedItem ) ) {
+						$data[] = $processedItem;
+					}
+				} else {
+					$data[] = $item;
+				}
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * @desc Mercury can't open article using ID - we need to create a local link.
+	 * If article doesn't exist (Title is null) return null.
+	 * In other case return item with updated article_local_url.
+	 * TODO Implement cache for release version.
+	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
+	 *
+	 * @param $item
+	 * @return mixed
+	 */
+	private function processCuratedContentArticle( $item ) {
+		if ( !empty( $item[ 'article_id' ] ) ) {
+			$title = Title::newFromID( $item[ 'article_id' ] );
+
+			if ( !empty( $title ) ) {
+				$item[ 'article_local_url' ] = $title->getLocalURL();
+				return $item;
+			}
+		}
+		return null;
+	}
+
+	public function processTrendingData( $data, $itemArrayName, $paramsToInclude = [] ) {
+		if ( !isset( $data[ $itemArrayName ] ) || !is_array( $data[ $itemArrayName ] ) ) {
+			return null;
+		}
+
+		$items = [];
+
+		foreach ( $data[ $itemArrayName ] as $item ) {
+			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
+
+			if ( !empty( $processedItem ) ) {
+				$items[] = $processedItem;
+			}
+		}
+
+		return $items;
+	}
+
+	/**
+	 * @desc To save some bandwidth, the unnecessary params are stripped
+	 *
+	 * @param $item array
+	 * @param $paramsToInclude array: leave empty to return all params
+	 * @return array
+	 */
+	private function processTrendingDataItem( $item, $paramsToInclude = [] ) {
+		if ( empty( $paramsToInclude ) ) {
+			return $item;
+		}
+
+		$processedItem = [];
+
+		if ( !empty( $item ) && is_array( $item ) && is_array( $paramsToInclude ) ) {
+			foreach ( $paramsToInclude as $param) {
+				if ( !empty( $item[ $param ] ) ) {
+					$processedItem[ $param ] = $item[ $param ];
+				}
+			}
+		}
+
+		return $processedItem;
 	}
 }

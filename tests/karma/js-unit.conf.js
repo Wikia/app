@@ -16,12 +16,13 @@ module.exports = function (config) {
 	config.set({
 		exclude: [
 			'resources/wikia/ui_components/**/Gruntfile.js',
-			'resources/wikia/ui_components/**/node_modules/**/*.js',
+			'resources/wikia/ui_components/**/node_modules/**/*.js'
 		],
 		files: [
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
+			'resources/wikia/polyfills/bind.js',
 
 			//JSMessages
 			'extensions/wikia/JSMessages/js/JSMessages.js',
@@ -46,16 +47,19 @@ module.exports = function (config) {
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
 			'resources/wikia/modules/geo.js',
+			'resources/wikia/modules/iframeWriter.js',
 			'resources/wikia/modules/imageServing.js',
+			'resources/wikia/modules/krux.js',
 			'resources/wikia/modules/lazyqueue.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/querystring.js',
 			'resources/wikia/modules/history.js',
+			'resources/wikia/modules/scriptwriter.js',
+			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
-			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
 
@@ -77,31 +81,10 @@ module.exports = function (config) {
 			'resources/wikia/ui_components/**/*.js',
 
 			//Advertisement
-			'extensions/wikia/AdEngine/js/AdConfig2.js',
-			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
-			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
-			'extensions/wikia/AdEngine/js/AdContext.js',
-			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
-			'extensions/wikia/AdEngine/js/AdEngine2.js',
-			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
-			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
-			'extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
-			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
-			'extensions/wikia/AdEngine/js/AdProviderLater.js',
-			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
-			'extensions/wikia/AdEngine/js/DartUrl.js',
-			'extensions/wikia/AdEngine/js/EventDispatcher.js',
-			'extensions/wikia/AdEngine/js/EvolveHelper.js',
-			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
-			'extensions/wikia/AdEngine/js/GptSlotConfig.js',
-			'extensions/wikia/AdEngine/js/MessageListener.js',
-			'extensions/wikia/AdEngine/js/AdTracker.js',
-			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
+			'extensions/wikia/AdEngine/js/*.js',
+			'extensions/wikia/AdEngine/js/config/*.js',
+			'extensions/wikia/AdEngine/js/lookup/*.js',
+			'extensions/wikia/AdEngine/js/provider/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',
 
@@ -191,7 +174,17 @@ module.exports = function (config) {
 
 			// User Login and Signup
 			'extensions/wikia/UserLogin/js/MarketingOptIn.js',
-			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js'
+			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js',
+			'extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+			'extensions/wikia/UserLogin/js/spec/UserBaseAjaxForm.spec.js',
+
+			// Banner Notifications
+			'extensions/wikia/BannerNotifications/js/BannerNotifications.js',
+			'extensions/wikia/BannerNotifications/js/spec/BannerNotifications.spec.js',
+
+			// Paid Asset Drop
+			'extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
+			'extensions/wikia/PaidAssetDrop/js/spec/paidAssetDrop.spec.js',
 		]
 	});
 };

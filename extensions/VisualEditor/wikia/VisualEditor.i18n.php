@@ -5,6 +5,7 @@ $messages = array();
  * @author Christian Williams
  */
 $messages['en'] = array(
+	'visualeditor-ca-classiceditor' => 'Classic editor',
 	'wikia-visualeditor-preference-enable' => 'Enable beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Map',
@@ -86,6 +87,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'visualeditor-ca-classiceditor' => 'Link text of the dedicated classic editor',
 	'wikia-visualeditor-preference-enable' => 'The description next to the checkbox to enable or disable VisualEditor in Preferences',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Call-to-action text rendered in the toolbar button for opening the dialog to add media items to the article.
 {{Identical|Media}}',
@@ -175,7 +177,7 @@ $messages['qqq'] = array(
 {{Identical|Watch}}',
 );
 
-/** Tunisian Spoken Arabic ( زَوُن)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Aħmedbaɛl
  */
 $messages['aeb'] = array(
@@ -254,7 +256,7 @@ $messages['az'] = array(
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Şablon',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author Arjanizary
  */
 $messages['azb'] = array(
@@ -384,6 +386,7 @@ $messages['ca'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Llegir sobre noves característiques',
 	'wikia-visualeditor-dialog-preference-link-preferences' => "Gestionar les vostres preferències de l'editor",
 	'wikia-visualeditor-dialog-preference-start-button' => 'Molt bé!',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Cerca fitxers',
 );
 
 /** Chechen (нохчийн)
@@ -399,7 +402,7 @@ $messages['ce'] = array(
 	'wikia-visualeditor-save-error-generic' => 'Хаамаш Ӏалашбеш гӀалат даьлла сервер чохь.',
 	'wikia-visualeditor-dialog-cancel-button' => 'Цаоьшу',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Галерей',
-	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Хьажар',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Хьалха хьажар',
 );
 
 /** Czech (čeština)
@@ -408,6 +411,11 @@ $messages['ce'] = array(
 $messages['cs'] = array(
 	'wikia-visualeditor-preference-enable' => 'Povolit beta verzi VisualEditoru',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Média',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Vytvořit mapu',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Pro vložení vyberte existující mapu nebo vytvořte novou. <a href="$1" target="_blank">Další informace</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Zatím nebyly vytvořeny žádné mapy',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Spolupracujte s ostatními a připínejte zajímavá místa na mapy. <a href="$1" target="_blank">Více informací.</a>',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Přidat média',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Název',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licence',
@@ -428,6 +436,8 @@ $messages['cs'] = array(
 	'wikia-visualeditor-wikitext-warning' => 'Používáte beta verzi vizuálního editoru - wikitext zde nefunguje. Pro jeho použití vyberte zdrojový mód v menu „Více“.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Omlouváme se, ale tento prvek lze zatím editovat jen v klasickém editoru.',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Šablona',
+	'wikia-visualeditor-dialog-transclusion-filter' => 'Hledat konkrétní pole nebo hodnotu',
+	'wikia-visualeditor-dialog-transclusion-zerostate' => 'Tato šablona nemá upravitelná pole. Proveďte změny na stránce šablony.',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Šablona',
 	'wikia-visualeditor-savedialog-label-save' => 'Publikovat',
 	'wikia-visualeditor-savedialog-label-restore' => 'Obnovit stránku',
@@ -443,6 +453,35 @@ $messages['cs'] = array(
 	'wikia-visualeditor-notification-media-permission-denied' => 'Přístup zamítnut',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Omlouváme se, náhled tohoto videa není dostupný.',
 	'wikia-visualeditor-loading' => 'Načítání VisualEditoru...',
+	'wikia-visualeditor-dialog-orientation-headline' => 'Vítejte',
+	'wikia-visualeditor-dialog-orientation-text' => 'Tato stránka je vytvořena, upravována a spravována lidmi jako vy. Proveďte svůj první dnešní příspěvek.',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'Začněte editovat',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => 'Toto je seznam stránek v dalších jazycích, které jsou propojené s touto stránkou. Prozatím ho lze editovat jen v režimu zdrojového kódu.',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => 'Upravujete šablonu „$1”.',
+	'wikia-visualeditor-dialog-map-insert-title' => 'Vložit mapu',
+	'wikia-visualeditor-save-error-generic' => 'Chyba při ukládání dat na server.',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Zdroj',
+	'wikia-visualeditor-dialog-done-button' => 'Hotovo',
+	'wikia-visualeditor-dialog-cancel-button' => 'Zrušit',
+	'wikia-visualeditor-dialog-transclusion-get-info' => 'Získat informace o šabloně „$1”',
+	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Aktualizovat náhled',
+	'wikia-visualeditor-context-transclusion-description' => 'Upravit',
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Hledat šablonu podle názvu nebo podle článku',
+	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Vyskytuje se {{FORMATNUM:$1}} {{PLURAL:$1|krát}}',
+	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Buďte první, kdo ji použije',
+	'wikia-visualeditor-dialog-template-insert-title' => 'Vložit šablonu',
+	'wikia-visualeditor-dialog-preference-headline' => 'Vítejte!',
+	'wikia-visualeditor-dialog-preference-text' => 'Náš editor byl vylepšen a nabízí nyní rozšířené nástroje, které vám pomohou vytvořit bohatší články.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Přečtěte si o nových funkcích',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Spravovat předvolby editoru',
+	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galerie',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Vložit galerii',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Hledat obrázky',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Zobrazit',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Shlédnout',
+	'wikia-visualeditor-media-photo-policy' => 'Dodržujte prosím podmínky pro obrázky při nahrávání nových fotografií.',
+	'wikia-visualeditor-media-video-policy' => 'Dodržujte prosím podmínky pro videa při nahrávání nových videí.',
 );
 
 /** German (Deutsch)
@@ -451,6 +490,7 @@ $messages['cs'] = array(
  * @author Se4598
  */
 $messages['de'] = array(
+	'visualeditor-ca-classiceditor' => 'Klassischer Editor',
 	'wikia-visualeditor-preference-enable' => 'Den Beta-VisualEditor aktivieren',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Medium',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Karte',
@@ -597,6 +637,7 @@ $messages['en-gb'] = array(
  * @author Wifidel
  */
 $messages['es'] = array(
+	'visualeditor-ca-classiceditor' => 'Editor clásico',
 	'wikia-visualeditor-preference-enable' => 'Activar el editor visual (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Archivos multimedia',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -682,6 +723,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Alirezaaa
+ * @author Movyn
  * @author Reza1615
  */
 $messages['fa'] = array(
@@ -690,6 +732,7 @@ $messages['fa'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'عنوان',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'اجازه‌نامه',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'بارگذاری',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'جستجوی برای چیزی یا وارد کردن یک URL',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'بیشتر بخوانید',
 	'wikia-visualeditor-dialog-transclusion-title' => 'الگو',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'الگو',
@@ -702,6 +745,14 @@ $messages['fa'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'خوش آمدید',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'ویرایش را آغاز کنید',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'منبع',
+	'wikia-visualeditor-dialog-done-button' => 'انجام شد',
+	'wikia-visualeditor-dialog-cancel-button' => 'انصراف',
+	'wikia-visualeditor-context-transclusion-description' => 'ویرایش',
+	'wikia-visualeditor-dialog-preference-start-button' => 'متوجه شدید؟',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'گالری',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'جستجوی تصویر',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'نمایش',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'پی‌گیری',
 );
 
 /** Finnish (suomi)
@@ -760,7 +811,7 @@ $messages['fi'] = array(
  */
 $messages['fo'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ger VisualEditor virknan í beta',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg ein miðil afturat',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg ein miðil afturat', # Fuzzy
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Legg afturat miðil',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Heiti',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisensur',
@@ -792,14 +843,15 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'visualeditor-ca-classiceditor' => 'Éditeur classique',
 	'wikia-visualeditor-preference-enable' => 'Activer ÉditeurVisuel (bêta)',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Média',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Médias',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Carte',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Créer une carte',
 	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Sélectionnez une carte existante ou créez-en une pour l’insérer. <a href="$1" target="_blank">En savoir plus.</a>',
 	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Aucune carte n’a été créée pour l’instant',
 	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Collaborez avec la communauté en plaçant des points d’intérêt sur des cartes. <a href="$1" target="_blank">En savoir plus.</a>',
-	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Ajouter un média',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Ajouter médias',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Titre',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licence',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'Supprimer cet élément',
@@ -819,7 +871,7 @@ $messages['fr'] = array(
 	'wikia-visualeditor-wikitext-warning' => 'Vous utilisez ÉditeurVisuel (bêta) - le wikitexte ne fonctionne pas ici. Sélectionnez « Mode source » dans le menu « Plus » pour utiliser le wikitexte.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Désolé, cet élément ne peut être modifié que dans l’Éditeur classique, pour l’instant.',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Modifier',
-	'wikia-visualeditor-dialog-transclusion-filter' => 'Rechercher un champ ou une valeur',
+	'wikia-visualeditor-dialog-transclusion-filter' => 'Rechercher un champ ou une valeur en particulier',
 	'wikia-visualeditor-dialog-transclusion-zerostate' => "Ce modèle n'a aucun champ à modifier. Effectuez les modifications directement sur la page du modèle.",
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Modèle',
 	'wikia-visualeditor-savedialog-label-save' => 'Publier',
@@ -1025,6 +1077,7 @@ $messages['he'] = array(
 
 /** Hungarian (magyar)
  * @author TK-999
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
 	'wikia-visualeditor-preference-enable' => 'A béta állapotú VisualEditor bekapcsolása',
@@ -1046,6 +1099,7 @@ $messages['hu'] = array(
 	'wikia-visualeditor-help-label' => 'Ismert problémák',
 	'wikia-visualeditor-help-link' => 'Segítség:VisualEditor', # Fuzzy
 	'wikia-visualeditor-beta-warning' => 'Ez a Wikia béta állapotú VisualEditor-integrációja. Vannak még hibái, de reméljük, tetszik!',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Képek keresése',
 );
 
 /** Armenian (Հայերեն)
@@ -1062,10 +1116,12 @@ $messages['hy'] = array(
 );
 
 /** Italian (italiano)
+ * @author Macofe
  * @author Ontsed
  * @author Peg60
  */
 $messages['it'] = array(
+	'visualeditor-ca-classiceditor' => 'Editor classico',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mappa',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Crea una mappa',
@@ -1160,9 +1216,11 @@ $messages['ja'] = array(
 );
 
 /** Georgian (ქართული)
+ * @author DevaMK
  * @author MIKHEIL
  */
 $messages['ka'] = array(
+	'visualeditor-ca-classiceditor' => 'კლასიკური რედაქტორი',
 	'wikia-visualeditor-dialog-cancel-button' => 'გაუქმება',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'გალერეა',
 	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'გელერეის ჩასმა',
@@ -1176,7 +1234,7 @@ $messages['ka'] = array(
  */
 $messages['km'] = array(
 	'wikia-visualeditor-preference-enable' => 'បើក VisualEditor បេតា',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'បន្ថែម​មេឌា',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'បន្ថែម​មេឌា', # Fuzzy
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'បន្ថែម​មេឌា',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'ចំណង​ជើង',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'អាជ្ញាបណ្ណ',
@@ -1210,18 +1268,35 @@ $messages['km'] = array(
 /** Korean (한국어)
  * @author Gusdud25
  * @author Miri-Nae
+ * @author SeoJeongHo
  */
 $messages['ko'] = array(
 	'wikia-visualeditor-preference-enable' => '비쥬얼 에디터 베타 사용',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '미디어',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '지도',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => '지도 생성하기',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => '아직 아무런 지도도 생성되지 않았습니다.',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => '미디어 넣기',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => '제목',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => '저작권',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => '취소',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => '이곳에 그림을 올려놓아 주세요',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '검색하시거나 URL을 입력해 주세요.',
+	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => '새 동영상이나 그림을 올리시기 전에 {{SITENAME}}의 그림 정책과 위키아의 [http://www.wikia.com/Terms_of_Use 이용약관]을 읽어 주세요.',
 	'wikia-visualeditor-help-link' => '도움말:시각 편집기', # Fuzzy
+	'wikia-visualeditor-wikitext-warning' => "시각 편집기 베타 버전에서는 위키 문법을 사용하실 수 없습니다. 위키 문법을 사용하시려면 ☰ 메뉴의 '소스 편집기'를 이용해 주세요.",
 	'wikia-visualeditor-dialog-transclusion-title' => '편집',
 	'wikia-visualeditor-dialog-transclusion-filter' => '특정 영역, 혹은 값으로 찾기',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => '틀',
 	'wikia-visualeditor-savedialog-label-save' => '저장',
 	'wikia-visualeditor-toolbar-savedialog' => '저장',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => '소스 편집기',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => '변경 사항 적용',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => '도움말:위키 문법', # Fuzzy
-	'wikia-visualeditor-loading' => '비쥬얼 에디터 불러오는 중...',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => '서식 도움말',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '이 위키에는 <a href="http://video.wikia.com" target="_blank">위키아 비디오 라이브러리</a>에 올라온 허가 받은 동영상만 올릴 수 있습니다. 다음 주소에서 원하는 동영상을 검색해 주세요: <a href="http://video.wikia.com" target="_blank">video.wikia.com</a>',
+	'wikia-visualeditor-loading' => '시각 편집기 불러오는 중...',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => '이 문서에 링크된 다른 언어의 문서 목록입니다. 지금은 소스 모드에서만 편집하실 수 있습니다.',
 	'wikia-visualeditor-dialog-map-insert-title' => '지도 삽입',
 	'wikia-visualeditor-dialog-done-button' => '완료',
 	'wikia-visualeditor-dialog-cancel-button' => '취소',
@@ -1246,10 +1321,28 @@ $messages['ko'] = array(
 	'wikia-visualeditor-media-video-policy' => '그림을 올릴 땐 반드시 위키아 그림 정책을 준수해주세요',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lîsans',
+	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'Zêdetir bixwîne',
+	'wikia-visualeditor-dialog-transclusion-title' => 'Biguherîne',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Şablon',
+	'wikia-visualeditor-savedialog-label-save' => 'Weşandin',
+	'wikia-visualeditor-toolbar-savedialog' => 'Weşandin',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Çavkanî',
+	'wikia-visualeditor-dialog-done-button' => 'Çêbû',
+	'wikia-visualeditor-dialog-cancel-button' => 'Betal bike',
+	'wikia-visualeditor-context-transclusion-description' => 'Biguherîne',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Bibîne',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
+	'visualeditor-ca-classiceditor' => 'Klasseschen Editeur',
 	'wikia-visualeditor-preference-enable' => 'De Beta-VisualEditor aktivéieren',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Kaart',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Eng Kaart uleeën',
@@ -1288,7 +1381,14 @@ $messages['lb'] = array(
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Kucken',
 );
 
-/** لوری (لوری)
+/** Limburgish (Limburgs)
+ * @author Robin0van0der0vliet
+ */
+$messages['li'] = array(
+	'wikia-visualeditor-dialog-orientation-headline' => 'Wilkóm',
+);
+
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1312,6 +1412,7 @@ $messages['lv'] = array(
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
+ * @author Dicto23456
  * @author Монтехристо
  */
 $messages['mk'] = array(
@@ -1342,6 +1443,8 @@ $messages['mk'] = array(
 	'wikia-visualeditor-wikitext-warning' => 'Користите бета-верзија на ВизуеленУредник — тука не работи викитекст. Изберете „Изворен режим“ од менито „Повеќе“ за да користите викитекст.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Нажалост, овој елемент засега може да се уредува само со класичниот уредник.',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Шаблон',
+	'wikia-visualeditor-dialog-transclusion-filter' => 'Пребарајте извесно поле или вредност',
+	'wikia-visualeditor-dialog-transclusion-zerostate' => 'Шаблонот нема полиња за уредување. Направете му измени на неговата страница.',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Шаблон',
 	'wikia-visualeditor-savedialog-label-save' => 'Објави',
 	'wikia-visualeditor-savedialog-label-restore' => 'Поврати страница',
@@ -1365,6 +1468,27 @@ $messages['mk'] = array(
 	'wikia-visualeditor-dialog-map-insert-title' => 'Вметни карта',
 	'wikia-visualeditor-save-error-generic' => 'Грешка при зачувување на податоците во опслужувачот.',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Извор',
+	'wikia-visualeditor-dialog-done-button' => 'Готово',
+	'wikia-visualeditor-dialog-cancel-button' => 'Откажи',
+	'wikia-visualeditor-dialog-transclusion-get-info' => 'Информации за шаблонот „$1“',
+	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Поднови преглед',
+	'wikia-visualeditor-context-transclusion-description' => 'Уреди',
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Пребарајте шаблон по име или статија',
+	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Се јавува {{PLURAL:$1|еднаш|{{FORMATNUM:$1}} пати}}',
+	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Бидете први што ќе го употребите',
+	'wikia-visualeditor-dialog-template-insert-title' => 'Вметни шаблон',
+	'wikia-visualeditor-dialog-preference-headline' => 'Здраво!',
+	'wikia-visualeditor-dialog-preference-text' => 'Нашиот уредник е штотуку надграден и сега нуди подобрени алатки за да можете да создавате побогати статии.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Прочитајте за новите функции',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Уреднички поставки',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Јасно!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Галерија',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Вметни галерија',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Пребарајте слики',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Погл.',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Набљудувај',
+	'wikia-visualeditor-media-photo-policy' => 'Би ве замолиле да се придржувате до правилата за слики кога подигате нови.',
+	'wikia-visualeditor-media-video-policy' => 'Би ве замолиле да се придржувате до правилата за видеа кога подигате нови.',
 );
 
 /** Malayalam (മലയാളം)
@@ -1372,7 +1496,7 @@ $messages['mk'] = array(
  */
 $messages['ml'] = array(
 	'wikia-visualeditor-preference-enable' => 'പരീക്ഷണാടിസ്ഥാനത്തിലുള്ള കണ്ടുതിരുത്തൽ സൗകര്യം സജ്ജമാക്കുക',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'മീഡിയ ചേർക്കുക',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'മീഡിയ ചേർക്കുക', # Fuzzy
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'മീഡിയ ചേർക്കുക',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'തലക്കെട്ട്',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'ഉപയോഗാനുമതി',
@@ -1415,6 +1539,7 @@ $messages['mr'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'visualeditor-ca-classiceditor' => 'Editor klasik',
 	'wikia-visualeditor-preference-enable' => 'Membolehkan beta VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Peta',
@@ -1517,7 +1642,7 @@ $messages['nap'] = array(
  */
 $messages['nb'] = array(
 	'wikia-visualeditor-preference-enable' => 'Skru på VisualEditor (beta)',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg til media',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg til media', # Fuzzy
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Legg til media',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Tittel',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisens',
@@ -1530,9 +1655,11 @@ $messages['nb'] = array(
 );
 
 /** Nepali (नेपाली)
+ * @author Nirjal stha
  * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
+	'visualeditor-ca-classiceditor' => 'पूराना सम्पादक',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'सामग्री',
 );
 
@@ -1764,7 +1891,38 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'رسنۍ',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'کښېده',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'يوه کښېده جوړول',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'تر اوسه پورې کومې کښېدې نه دي جوړې شوي',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'رسنۍ ورگډول',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'سرليک',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'منښتليک',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'همدا توکی غورځول',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'پورته کول',
+	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'نور لوستل',
+	'wikia-visualeditor-dialog-drop-target-callout' => 'خپله دوتنه دلته واچوئ',
+	'wikia-visualeditor-dialog-transclusion-title' => 'سمول',
+	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'کينډۍ',
+	'wikia-visualeditor-savedialog-label-save' => 'خپرول',
+	'wikia-visualeditor-savedialog-label-restore' => 'مخ بيازېرمل',
+	'wikia-visualeditor-toolbar-savedialog' => 'خپرول',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'بدلونونه پلي کول',
+	'wikia-visualeditor-dialog-orientation-headline' => 'ښه راغلئ',
+	'wikia-visualeditor-dialog-orientation-start-button' => 'سمون پيلول',
+	'wikia-visualeditor-dialog-map-insert-title' => 'کښېده ورټومبل',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'سرچينه',
+	'wikia-visualeditor-dialog-done-button' => 'ترسره شو',
+	'wikia-visualeditor-dialog-cancel-button' => 'ناگارل',
+	'wikia-visualeditor-context-transclusion-description' => 'سمول',
+	'wikia-visualeditor-dialog-template-insert-title' => 'کينډۍ ورټومبل',
+	'wikia-visualeditor-dialog-preference-link-help' => 'د نوو ځانتياو په اړه لوستل',
+	'wikia-visualeditor-dialog-preference-start-button' => 'پوه شوم!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'انځورتون',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'انځورتون ورټومبل',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'د دوتنو پلټنه',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'کتل',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'کتل',
 );
 
 /** Portuguese (português)
@@ -1968,8 +2126,10 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author Kopcap94
  * @author Okras
+ * @author Дмитрий
  */
 $messages['ru'] = array(
+	'visualeditor-ca-classiceditor' => 'Классический редактор',
 	'wikia-visualeditor-preference-enable' => 'Включить бета-версию Визуального редактора',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Мультимедиа',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Карта',
@@ -2072,6 +2232,13 @@ $messages['si'] = array(
 	'wikia-visualeditor-context-transclusion-description' => 'සංස්කරණය',
 );
 
+/** Serbian (српски / srpski)
+ * @author Dicto23456
+ */
+$messages['sr'] = array(
+	'wikia-visualeditor-dialog-cancel-button' => 'Откажи',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Milicevic01
  */
@@ -2089,6 +2256,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'visualeditor-ca-classiceditor' => 'Klassisk redigerare',
 	'wikia-visualeditor-preference-enable' => 'Aktivera VisualEditor (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Karta',
@@ -2178,11 +2346,52 @@ $messages['ta'] = array(
 	'wikia-visualeditor-context-transclusion-description' => 'தொகு',
 );
 
+/** Thai (ไทย)
+ * @author Panan2544
+ */
+$messages['th'] = array(
+	'wikia-visualeditor-preference-enable' => 'เปิดใช้งาน VisualEditor รุ่นทดลอง',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'มีเดีย',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'แผนที่',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'สร้างแผนที่',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'เลือกแผนที่มีอยู่หรือสร้างแผนที่เพื่อแทรก <a href="$1" target="_blank">อ่านเพิ่มเติ่ม</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'ยังไม่มีแผนที่ถูกสร้างขึ้น',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'เพิ่ม มีเดีย',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'ชื่อ',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'สัญญาอนุญาต (license)',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => 'ลบรายการนี้',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => 'วางภาพที่จะอัปโหลด',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => 'อัปโหลด',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => 'แย่แล้วล่ะ! ภาพมันมีขนาดใหญ่เกินไป $1MB เป็นขนาดมากที่ใหญ่สุดที่เราสามารถใช้,กัปตัน!',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'แย่แล้วล่ะ! เรารองรับเฉพาะ $1 เท่านั้น',
+	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'เกิดข้อผิดพลาดในการอัพโหลดไฟล์',
+	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => 'ค้นหาบางสิ่งบางอย่างหรือป้อน URL',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => 'ตัวอย่างจะมาเร็ว ๆ นี้!',
+	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'กรุณาเป็นไปตาม นโยบายภาพ ของ{{SITENAME}}และ [http://www.wikia.com/Terms_of_Use terms of use] ของ วิเกีย เมื่อฝังวิดีโอใหม่และอัปโหลดรูปถ่ายใหม่',
+	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => 'อ่านเพิ่มเติม',
+	'wikia-visualeditor-dialog-drop-target-callout' => 'วางไฟล์ของคุณลงที่นี้',
+	'wikia-visualeditor-help-link' => 'Help:ตัวแก้ไขแบบภาพ',
+	'wikia-visualeditor-dialog-transclusion-title' => 'แก้ไข',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode-tooltip' => 'ตัวแก้ไข Source',
+	'wikia-visualeditor-dialog-wikiasourcemode-title' => 'ตัวแก้ไข Source',
+	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'ใช้การเปลี่ยนแปลง',
+	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:ข้อความที่วิกิ',
+	'wikia-visualeditor-dialog-orientation-headline' => 'ยินดีต้อนรับ',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Source',
+	'wikia-visualeditor-dialog-done-button' => 'เสร็จสิ้น',
+	'wikia-visualeditor-dialog-cancel-button' => 'ยกเลิก',
+	'wikia-visualeditor-context-transclusion-description' => 'แก้ไข',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'มุมมอง',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'ดู',
+);
+
 /** Turkish (Türkçe)
+ * @author Captantrips
  * @author Sayginer
  * @author Sucsuzz
  */
 $messages['tr'] = array(
+	'visualeditor-ca-classiceditor' => 'Klasik editör',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Harita',
 	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => 'Harita oluştur',
 	'wikia-visualeditor-dialog-transclusion-get-info' => '"$1" şablonu hakkında bilgi al',
@@ -2196,6 +2405,7 @@ $messages['tr'] = array(
  * @author Base
  * @author Mykola Swarnyk
  * @author Ua2004
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
 	'wikia-visualeditor-preference-enable' => 'Увімкнути бета-версію Візуального редактора',
@@ -2225,6 +2435,8 @@ $messages['uk'] = array(
 	'wikia-visualeditor-wikitext-warning' => "Ви використовуєте бета версію Візуального редактора - вікітекст тут не працює. Виберіть пункт \"Режим коду“ із меню 'Більше' для використання вікітексту.",
 	'wikia-visualeditor-aliennode-tooltip' => 'Вибачте, цей елемент наразі можна редагувати лише у режимі класичного редактора.',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Шаблон',
+	'wikia-visualeditor-dialog-transclusion-filter' => 'Пошук рядка шаблону і значення у ній',
+	'wikia-visualeditor-dialog-transclusion-zerostate' => 'У цього шаблона немає полів для редагування. Внесіть зміни в шаблон на його сторінці.',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Шаблон',
 	'wikia-visualeditor-savedialog-label-save' => 'Опублікувати',
 	'wikia-visualeditor-savedialog-label-restore' => 'Відновити сторінку',
@@ -2248,14 +2460,35 @@ $messages['uk'] = array(
 	'wikia-visualeditor-dialog-map-insert-title' => 'Вставити мапу',
 	'wikia-visualeditor-save-error-generic' => 'Помилка при збереженні даних на сервер.',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Джерело',
+	'wikia-visualeditor-dialog-done-button' => 'Зроблено',
+	'wikia-visualeditor-dialog-cancel-button' => 'Скасувати',
+	'wikia-visualeditor-dialog-transclusion-get-info' => 'Інформація про "$1" шаблон',
+	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Оновлення попереднього перегляда',
+	'wikia-visualeditor-context-transclusion-description' => 'Редагувати',
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => 'Пошук шаблону по імені або статті',
+	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => 'Використовується $1 {{PLURAL:$1|раз|рази|раз}}',
+	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => 'Будьте першим, щоб використовувати цей',
+	'wikia-visualeditor-dialog-template-insert-title' => 'Вставити шаблон',
+	'wikia-visualeditor-dialog-preference-headline' => 'Привіт, Шанувальники!',
+	'wikia-visualeditor-dialog-preference-text' => 'Наш редактор тільки що підвищили, пропонуючи удосконалені інструменти, щоб допомогти вам створювати більш багаті статі.',
+	'wikia-visualeditor-dialog-preference-link-help' => 'Читайте про нові можливості',
+	'wikia-visualeditor-dialog-preference-link-preferences' => 'Управління налаштування редактора',
+	'wikia-visualeditor-dialog-preference-start-button' => 'Зрозумів!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Галерея',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Вставити Галерею',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Пошук зображень',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Вид',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Дивитися',
+	'wikia-visualeditor-media-photo-policy' => 'Будь ласка, дотримуйтесь політики вікі при завантаженні нових зображень.',
+	'wikia-visualeditor-media-video-policy' => 'Будь ласка, дотримуйтеся вікі політики при додаванні нового відео.',
 );
 
-/** vèneto (vèneto)
+/** Venetian (vèneto)
  * @author GatoSelvadego
  */
 $messages['vec'] = array(
 	'wikia-visualeditor-preference-enable' => 'Abiłita VisualEditor (beta)',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Xonta Media',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Xonta Media', # Fuzzy
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Xonta Media',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Tìtoło',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licensa',
@@ -2293,7 +2526,7 @@ $messages['vec'] = array(
  */
 $messages['vep'] = array(
 	'wikia-visualeditor-preference-enable' => 'Kävutada VisualEditor (beta)',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Ližata medijad',
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Ližata medijad', # Fuzzy
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Ližata Maedijad',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Pälkirjutez',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licenzii',
@@ -2302,6 +2535,7 @@ $messages['vep'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  * @author Rémy Lee
  */
 $messages['vi'] = array(
@@ -2369,6 +2603,8 @@ $messages['vi'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Tìm hiểu về tính năng mới',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Quản lý tùy chọn soạn thảo của bạn',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Hiểu rồi!',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Tìm kiếm hình ảnh',
+	'wikia-visualeditor-media-video-policy' => 'Hãy tuân thủ chính sách Video của wiki này khi thêm video mới.',
 );
 
 /** Volapük (Volapük)
@@ -2392,6 +2628,7 @@ $messages['yi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'visualeditor-ca-classiceditor' => '传统编辑器',
 	'wikia-visualeditor-preference-enable' => '启用测试版可视化编辑器',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '媒体',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地图',
@@ -2476,9 +2713,14 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'wikia-visualeditor-preference-enable' => '啟用測試板 VisualEditor',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '媒體',
-	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => '附加媒體',
+	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地圖',
+	'wikia-visualeditor-dialog-wikiamapinsert-create-button' => '建立地圖',
+	'wikia-visualeditor-dialog-wikiamapinsert-headline' => '選擇一個已存在的地圖或插入一個新建立的地圖。 <a href="$1" target="_blank">瞭解更多。</a>',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => '目前沒有已建立的地圖！',
+	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => '與社群一同以視覺的方式標記有趣的地點在地圖上。 <a href="$1" target="_blank">瞭解更多。</a>',
+	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => '加入媒體',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => '標題',
-	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => '授權',
+	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => '授權條款',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' => '移除此項目',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-label' => '拖曳圖片以上傳',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-button' => '上傳',
@@ -2486,16 +2728,18 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => '哎呀！我們僅支援 $1 格式',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => '上傳檔案時發生錯誤',
 	'wikia-visualeditor-dialog-wikiamediainsert-search-input-placeholder' => '可搜尋任何東西或輸入 URL',
-	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => '預覽即將推出！',
+	'wikia-visualeditor-dialog-wikiamediainsert-preview-alert' => '即將推出預覽功能！',
 	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => '嵌入新的影片或上傳新的圖片時，請遵守 {{SITENAME}} 的圖片管理政策與 Wikia 的 [http://www.wikia.com/Terms_of_Use 使用條款]。',
 	'wikia-visualeditor-dialog-wikiamediainsert-read-more' => '閱讀更多',
-	'wikia-visualeditor-dialog-drop-target-callout' => '拖放您的檔案至此處',
+	'wikia-visualeditor-dialog-drop-target-callout' => '拖曳您的檔案至此處',
 	'wikia-visualeditor-help-label' => '已知的問題',
 	'wikia-visualeditor-help-link' => 'Help:VisualEditor',
 	'wikia-visualeditor-beta-warning' => '此為 Wikia 的 VisualEditor Beta 版，目前還可能有一些小問題，但我們仍希望您能喜歡它！',
 	'wikia-visualeditor-wikitext-warning' => "您正使用 Beta 版 VisualEditor，目前尚無法支援 WikiText。請於 '更多' 選單中選擇 '原始碼模式' 以編輯 WikiText。",
 	'wikia-visualeditor-aliennode-tooltip' => '抱歉，此元素目前僅能透過傳統文字編輯器進行編輯。',
 	'wikia-visualeditor-dialog-transclusion-title' => '編輯',
+	'wikia-visualeditor-dialog-transclusion-filter' => '搜尋特定的欄位或數值',
+	'wikia-visualeditor-dialog-transclusion-zerostate' => '此模板沒有欄位可以編輯。 請直接對模板頁面進行修改。',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => '模板',
 	'wikia-visualeditor-savedialog-label-save' => '發佈',
 	'wikia-visualeditor-savedialog-label-restore' => '還原頁面',
@@ -2514,13 +2758,29 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => '歡迎',
 	'wikia-visualeditor-dialog-orientation-text' => '這個頁面是由像您一樣的使用者建立、編輯和維護的。您也可以立刻作出貢獻。',
 	'wikia-visualeditor-dialog-orientation-start-button' => '開始編輯',
-	'wikia-visualeditor-dialog-transclusion-no-template-description' => '您正在編輯\\"$1\\"個模板。',
+	'wikia-visualeditor-dialog-meta-languages-readonlynote' => '此頁面列出所有連結至此頁面的其他語言頁面。 目前只能使用原始碼的模組編輯。',
+	'wikia-visualeditor-dialog-transclusion-no-template-description' => '您正在編輯  "$1" 模板。',
+	'wikia-visualeditor-dialog-map-insert-title' => '插入地圖',
+	'wikia-visualeditor-save-error-generic' => '儲存資料至伺服器錯誤。',
+	'wikia-visualeditor-dialogbutton-wikiasourcemode' => '原始碼',
 	'wikia-visualeditor-dialog-done-button' => '完成',
 	'wikia-visualeditor-dialog-cancel-button' => '取消',
+	'wikia-visualeditor-dialog-transclusion-get-info' => '取得有關 "$1" 模板的資訊',
+	'wikia-visualeditor-dialog-transclusion-preview-button' => '更新預覽',
+	'wikia-visualeditor-context-transclusion-description' => '編輯',
+	'wikia-visualeditor-dialog-wikiatemplateinsert-search' => '使用名稱或文章搜尋模板',
+	'wikia-visualeditor-wikiatemplateoptionwidget-appears' => '出現 {{FORMATNUM:$1}} {{PLURAL:$1|次|次}}',
+	'wikia-visualeditor-wikiatemplateoptionwidget-be-first' => '成為第一位使用此功能的人',
 	'wikia-visualeditor-dialog-template-insert-title' => '插入模板',
-	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => '圖片冊',
-	'wikia-visualeditor-dialog-wikiasinglemedia-title' => '插入圖片冊',
-	'wikia-visualeditor-dialog-wikiasinglemedia-search' => '查找圖片',
+	'wikia-visualeditor-dialog-preference-headline' => '您好，粉絲！',
+	'wikia-visualeditor-dialog-preference-text' => '我們的編輯器在不久前進行了升級，提供了加強的工具協助您建立更豐富的文章。',
+	'wikia-visualeditor-dialog-preference-link-help' => '閱讀有關新的功能',
+	'wikia-visualeditor-dialog-preference-link-preferences' => '管理您的編輯器個人偏好',
+	'wikia-visualeditor-dialog-preference-start-button' => '明白！',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => '圖庫',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => '插入圖庫',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => '搜尋圖片',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => '查看',
-	'wikia-visualeditor-media-photo-policy' => '在您上傳圖片的同時，請遵守這個社區的用戶規範',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => '觀看',
+	'wikia-visualeditor-media-photo-policy' => '在您上傳圖片的同時，請遵守 wikia 圖片政策。',
 );

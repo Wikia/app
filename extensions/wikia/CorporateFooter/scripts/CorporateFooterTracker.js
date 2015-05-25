@@ -1,8 +1,15 @@
 var CorporateFooter = {
 	init: function () {
-		$('.wikiahomepage-footer').click(
-			$.proxy(this.trackClick, this)
-		);
+		$('.wikiahomepage-footer')
+			.on( 'click', $.proxy(this.trackClick, this) )
+			.on( 'click', '.wikia-menu-button.secondary li', function ( event ) {
+				// check if our target is really the event's target we would like to invoke - in order to avoid incidental
+				// calling of event handler from child elements
+				if ( event.target === this ) {
+					event.stopPropagation();
+					$( this ).children( 'a' ).get( 0 ).click();
+				}
+			});
 	},
 	track: function(action, label, params, event) {
 		Wikia.Tracker.track({

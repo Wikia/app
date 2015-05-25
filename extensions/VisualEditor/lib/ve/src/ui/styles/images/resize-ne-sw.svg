@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11">
+    <g id="resize-ne-sw">
+        <path d="M9 2v4l-1.5-1.5-3 3 1.5 1.5h-4v-4l1.5 1.5 3-3-1.5-1.5z" id="shadow" opacity=".25" stroke="#000" stroke-width="3.5" stroke-linejoin="round" fill="none"/>
+        <path d="M9 2v4l-1.5-1.5-3 3 1.5 1.5h-4v-4l1.5 1.5 3-3-1.5-1.5z" id="outline" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M9 2v4l-1.5-1.5-3 3 1.5 1.5h-4v-4l1.5 1.5 3-3-1.5-1.5z" id="fill"/>
+    </g>
+</svg>

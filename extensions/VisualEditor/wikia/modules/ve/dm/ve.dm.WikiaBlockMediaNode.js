@@ -10,11 +10,12 @@
  * @abstract
  * @extends ve.dm.MWBlockImageNode
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.WikiaBlockMediaNode = function VeDmWikiaBlockMediaNode( element ) {
-	ve.dm.WikiaBlockMediaNode.super.call( this, element );
+ve.dm.WikiaBlockMediaNode = function VeDmWikiaBlockMediaNode() {
+	// Parent constructor
+	ve.dm.WikiaBlockMediaNode.super.apply( this, arguments );
 };
 
 /* Inheritance */

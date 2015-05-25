@@ -584,6 +584,12 @@ class DataMartService extends Service {
 				];
 			});
 
+			if ( empty( $topArticles ) ) {
+				WikiaLogger::instance()->error( 'DataMartService::doGetTopArticlesByPageview emptyQueryResult', [
+					'raw_sql' => (string) $sql->injectParams( $db, $sql->build() )
+				]);
+			}
+
 			wfProfileOut( __CLASS__ . '::TopArticlesQuery' );
 			return $topArticles;
 		};
@@ -836,6 +842,32 @@ class DataMartService extends Service {
 		wfProfileOut(__METHOD__);
 
 		return $tagViews;
+	}
+
+	/**
+	 * Gets page views for given articles
+	 *
+	 * @param array $articlesIds
+	 * @param datetime $timeId
+	 * @return array
+	 */
+	public static function getPageViewsForArticles( Array $articlesIds, $timeId, $wikiId, $periodId = self::PERIOD_ID_WEEKLY ) {
+		$app = F::app();
+
+		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+
+		$articlePageViews = ( new WikiaSQL() )->skipIf( !$app->wg->StatsDBEnabled )
+			->SELECT( 'article_id', 'pageviews' )
+			->FROM( 'rollup_wiki_article_pageviews' )
+			->WHERE( 'article_id' )->IN( $articlesIds )
+			->AND_( 'time_id' )->EQUAL_TO( $timeId )
+			->AND_( 'wiki_id' )->EQUAL_TO( intval( $wikiId ) )
+			->AND_( 'period_id' )->EQUAL_TO( intval( $periodId ) )
+			->runLoop( $db, function( &$articlePageViews, $row ) {
+				$articlePageViews[ $row->article_id ] = $row->pageviews;
+			} );
+
+		return $articlePageViews;
 	}
 
 	public static function getWAM200Wikis() {

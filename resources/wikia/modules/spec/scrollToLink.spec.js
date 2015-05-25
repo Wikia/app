@@ -66,15 +66,6 @@ describe("scrollToLink", function() {
 
 	it('gives nice and clean API', function() {
 		expect(typeof scrollToLinkApi.handleScrollTo).toBe('function', 'handleScrollTo');
-		expect(typeof scrollToLinkApi.disableBrowserJump).toBe('function', 'disableBrowserJump');
-	});
-
-	it('properly resets browser jump', function() {
-		windowMock.position.y = 10;
-		windowMock.location.hash = '#hash';
-
-		scrollToLinkApi.disableBrowserJump();
-		expect(windowMock.position.y).toBe(0);
 	});
 
 	it('handles scrollTo for valid hashes', function() {

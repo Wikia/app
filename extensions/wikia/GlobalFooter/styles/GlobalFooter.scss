@@ -1,0 +1,113 @@
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/color';
+
+$branding-background-color: #000;
+$branding-text-color: #fff;
+$base-line-height: 40px;
+$font-size: 12px;
+$wikia-logo-width: 60px;
+$wikia-logo-height: 20px;
+$elements-spacing: 20px;
+//-1px because we don't want to center it vertically
+//We want to make it 2px above vertical center
+$wikia-logo-vertical-position: round($wikia-logo-height / 2) - 1px;
+//Elements spacing * 2 - 20px for each side of logo
+$wikia-logo-container-width: $wikia-logo-width + 2 * $elements-spacing;
+
+.global-footer {
+	font-size: $font-size;
+	line-height: $base-line-height;
+
+	nav {
+		margin: 40px 0 20px 0;
+		text-align: center;
+	}
+
+	.branding {
+		display: inline-block;
+		height: $base-line-height;
+
+		.wikia-logo {
+			display: inline-block;
+			text-decoration: none;
+
+			img {
+				background-color: transparent;
+				background-position: center $wikia-logo-vertical-position;
+				background-repeat: no-repeat;
+				background-size: $wikia-logo-width $wikia-logo-height;
+				display: inline-block;
+				float: left;
+				height: $base-line-height;
+				width: $wikia-logo-container-width;
+			}
+
+			span {
+				display: inline-block;
+				float: left;
+				font-weight: bold;
+				height: $base-line-height;
+				line-height: 42px;
+				margin: 0 $elements-spacing;
+				text-transform: uppercase;
+			}
+		}
+
+		&.black {
+			border: 1px solid $branding-background-color;
+
+			.wikia-logo {
+				color: $branding-text-color;
+
+				img {
+					background-color: $branding-background-color;
+					background-image: url('/extensions/wikia/WikiaLogo/images/wikia_logo_white.svg'); /* inline */
+				}
+			}
+
+			&.vertical-books a {
+				background-color: $color-vertical-books;
+			}
+
+			&.vertical-comics a {
+				background-color: $color-vertical-comics;
+			}
+
+			&.vertical-games a {
+				background-color: $color-vertical-games;
+			}
+
+			&.vertical-lifestyle a {
+				background-color: $color-vertical-lifestyle;
+			}
+
+			&.vertical-movies a {
+				background-color: $color-vertical-movies;
+			}
+
+			&.vertical-music a {
+				background-color: $color-vertical-music;
+			}
+
+			&.vertical-tv a {
+				background-color: $color-vertical-tv;
+			}
+		}
+	}
+
+	ul {
+		line-height: $base-line-height;
+		list-style: none;
+		margin: 0 6px;
+
+		li {
+			display: inline-block;
+			margin-top: 8px;
+			padding: 0 14px;
+
+			a {
+				color: $color-links;
+			}
+		}
+	}
+}

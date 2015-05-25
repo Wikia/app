@@ -1,0 +1,19 @@
+@import 'skins/shared/mixins/forms';
+
+.fancy-captcha {
+
+	margin-top: 10px;
+
+	#wpCaptchaWord {
+		@include wikia-form-input-field;
+		display: inline;
+		width: 105px;
+		margin-top: 10px;
+	}
+
+	img {
+		background-color: white;
+		border: 1px solid $color-page-border;
+		display: block;
+	}
+}

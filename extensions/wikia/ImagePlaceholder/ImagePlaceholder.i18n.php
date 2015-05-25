@@ -90,8 +90,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'imgplc-desc' => "Crea placeholders d'imatge/vídeo",
 	'imgplc-add-image' => 'Afegir imatge',
 	'imgplc-add-video' => 'Afegir vídeo',
 	'imgplc-placeholder' => 'Posicionador',
@@ -101,10 +103,12 @@ $messages['ca'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author H4nek
  */
 $messages['cs'] = array(
+	'imgplc-desc' => 'Vytváří zástupné symboly pro obrázky a videa',
 	'imgplc-add-image' => 'Přidat obrázek',
 	'imgplc-add-video' => 'Přidat video',
 	'imgplc-placeholder' => 'Zástupný symbol',
@@ -285,9 +289,12 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  */
 $messages['id'] = array(
+	'imgplc-add-image' => 'Tambah Gambar',
 	'imgplc-add-video' => 'Tambahkan Video',
+	'imgplc-image' => 'Gambar',
 	'imgplc-notinhistory' => 'Anda tidak dapat menambahkan sebuah gambar pada mode riwayat.',
 	'imgplc-notinhistory-video' => 'Anda tidak dapat menambahkan sebuah video pada mode riwayat.',
 );
@@ -363,7 +370,7 @@ $messages['lb'] = array(
 	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -383,6 +390,7 @@ $messages['lt'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'imgplc-desc' => 'Прави пополнувачи за слики/видеа',
 	'imgplc-add-image' => 'Додај слика',
 	'imgplc-add-video' => 'Додај видео',
 	'imgplc-placeholder' => 'Пополнувач',
@@ -601,7 +609,7 @@ $messages['tl'] = array(
 	'imgplc-notinhistory' => 'Hindi ka makapagdaragdag ng larawan habang nasa modalidad na pangkasaysayan.',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -632,8 +640,10 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Prima klasy4na
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'imgplc-desc' => 'Створення зображення/відео заповнювач',
 	'imgplc-add-image' => 'Додати зображення',
 	'imgplc-add-video' => 'Додати відео',
 	'imgplc-placeholder' => 'Заповнювач',
@@ -644,8 +654,10 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'imgplc-desc' => 'Tạo ra nơi chứa hình ảnh/video',
 	'imgplc-add-image' => 'Thêm hình ảnh',
 	'imgplc-add-video' => 'Thêm đoạn phim',
 	'imgplc-placeholder' => 'Giữ chỗ',
@@ -669,11 +681,13 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
 	'imgplc-add-image' => '增加圖片',
 	'imgplc-add-video' => '增加影片',
+	'imgplc-image' => '圖片',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

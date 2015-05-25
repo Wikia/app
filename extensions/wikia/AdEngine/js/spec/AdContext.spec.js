@@ -1,4 +1,4 @@
-/*global describe, it, modules, expect*/
+/*global describe, it, modules, expect, spyOn*/
 /*jshint maxlen:200*/
 describe('AdContext', function () {
 	'use strict';
@@ -67,21 +67,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().opts.showAds).toBeFalsy();
 	});
 
-	it('makes opts.usePostScribe true when wgAdDriverUseSevenOneMedia = true', function () {
-		var adContext;
-
-		adContext = modules['ext.wikia.adEngine.adContext']({
-			ads: {
-				context: {
-					providers: {
-						sevenOneMedia: true
-					}
-				}
-			}
-		}, {}, geoMock, {});
-		expect(adContext.getContext().opts.usePostScribe).toBeTruthy();
-	});
-
 	it('makes targeting.pageCategories filled with categories properly', function () {
 		var adContext;
 
@@ -113,20 +98,6 @@ describe('AdContext', function () {
 			Wikia: {article: {article: {categories: [{title: 'Category1', url: '/wiki/Category:Category1'}, {title: 'Category2', url: '/wiki/Category:Category2'}]}}}
 		}, {}, geoMock, {});
 		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
-	});
-
-	it('makes opts.alwaysCallDart true when country in instantGlobals.wgAdDriverAlwaysCallDartInCountries', function () {
-		var adContext;
-
-		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
-			wgAdDriverAlwaysCallDartInCountries: ['XX']
-		});
-		expect(adContext.getContext().opts.alwaysCallDart).toBeTruthy();
-
-		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
-			wgAdDriverAlwaysCallDartInCountries: ['YY']
-		});
-		expect(adContext.getContext().opts.alwaysCallDart).toBeFalsy();
 	});
 
 	it('makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true', function () {
@@ -165,17 +136,47 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
-	it('makes providers.remnantGptMobile true when country in instantGlobals.wgAdDriverAlwaysCallDartInCountriesMobile', function () {
+	it('makes providers.turtle true when country in instantGlobals.wgAdDriverTurtleCountries', function () {
 		var adContext;
 
 		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
-			wgAdDriverAlwaysCallDartInCountriesMobile: ['XX']
+			wgAdDriverTurtleCountries: ['XX', 'ZZ']
 		});
-		expect(adContext.getContext().providers.remnantGptMobile).toBeTruthy();
+		expect(adContext.getContext().providers.turtle).toBeTruthy();
 
 		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
-			wgAdDriverAlwaysCallDartInCountriesMobile: ['YY']
+			wgAdDriverTurtleCountries: ['YY']
 		});
-		expect(adContext.getContext().providers.remnantGptMobile).toBeFalsy();
+		expect(adContext.getContext().providers.turtle).toBeFalsy();
+	});
+
+	it('calls whoever registered with addCallback each time setContext is called', function () {
+		var adContext,
+			mocks = {
+				callback: function () {
+					return;
+				}
+			};
+
+		spyOn(mocks, 'callback');
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {});
+		adContext.addCallback(mocks.callback);
+		adContext.setContext({});
+		expect(mocks.callback).toHaveBeenCalled();
+	});
+
+	it('enables high impact slot when country in instantGlobals.wgAdDriverHighImpactSlotCountries', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgAdDriverHighImpactSlotCountries: ['XX', 'ZZ']
+		});
+		expect(adContext.getContext().slots.invisibleHighImpact).toBeTruthy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgAdDriverHighImpactSlotCountries: ['YY']
+		});
+		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
 });

@@ -22,25 +22,25 @@ ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( mode
 	this.$cartViewButtons = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-cartToggle' );
 	this.cartGridButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'frameless': true,
-		'icon': 'cart-grid',
-		'classes': [ 've-ui-wikiaSingleMediaDialog-cartGridButton' ]
+		$: this.$,
+		frameless: true,
+		icon: 'cart-grid',
+		classes: [ 've-ui-wikiaSingleMediaDialog-cartGridButton' ]
 	} );
 	this.cartListButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'frameless': true,
-		'icon': 'cart-list',
-		'classes': [ 've-ui-wikiaSingleMediaDialog-cartListButton' ]
+		$: this.$,
+		frameless: true,
+		icon: 'cart-list',
+		classes: [ 've-ui-wikiaSingleMediaDialog-cartListButton' ]
 	} );
 
 	this.cartModel = model;
 	this.cartSelect = new ve.ui.WikiaSingleMediaCartSelectWidget( this.cartModel );
 
 	// Events
-	this.dialog.connect( this, { 'layout': 'onLayout' } );
-	this.cartGridButton.connect( this, { 'click': [ this.emit, 'layout', 'grid' ] } );
-	this.cartListButton.connect( this, { 'click': [ this.emit, 'layout', 'list' ] } );
+	this.dialog.connect( this, { layout: 'onLayout' } );
+	this.cartGridButton.connect( this, { click: [ this.emit, 'layout', 'grid' ] } );
+	this.cartListButton.connect( this, { click: [ this.emit, 'layout', 'list' ] } );
 
 	// Initialization
 	this.$cartControls.append( this.$cartViewButtons.append( [

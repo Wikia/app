@@ -119,6 +119,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  * @author Tauhid16
  */
 $messages['bn'] = array(
@@ -163,21 +164,25 @@ $messages['bto'] = array(
 /** Catalan (català)
  * @author BroOk
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
-	'ajaxpoll-percentVotes' => '$1%&nbsp; de tots els vots',
+	'ajaxpoll-desc' => "Extensió per MediaWiki d'enquestes impulsada amb peticions Ajax",
+	'ajaxpoll-percentVotes' => '$1%&nbsp;de tots els vots',
 	'ajaxpoll-thankyou' => 'Gràcies pel teu vot!',
 	'ajaxpoll-error' => 'Hi ha hagut un problema en processar el teu vot, si us plau, intenta-ho de nou.',
 	'ajaxpoll-summary' => "L'enquesta va ser creada el $1 $2, i fins ara $3 persones han votat.",
 	'ajaxpoll-submit' => 'Vota!',
-	'ajaxpoll-closed' => "L'enquesta es tancarà ara. Gaudeix dels resultats.",
+	'ajaxpoll-closed' => "L'enquesta s'ha tancat. Gaudeix dels resultats.",
 	'ajaxpoll-submitting' => "Espera si us plau, s'està processant el teu vot.",
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  */
 $messages['cs'] = array(
+	'ajaxpoll-desc' => 'Rozšíření pro ankety používající Ajax požadavky.',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;ze všech hlasů',
 	'ajaxpoll-thankyou' => 'Děkujeme za Váš hlas!',
 	'ajaxpoll-error' => 'Došlo k potížím se zpracováním Vašeho hlasu, zkuste to prosím znovu.',
@@ -260,6 +265,13 @@ $messages['el'] = array(
 	'ajaxpoll-submitting' => 'Παρακαλώ περιμένετε, υποβάλλοντας την ψήφο σας...',
 );
 
+/** British English (British English)
+ * @author Caliburn
+ */
+$messages['en-gb'] = array(
+	'ajaxpoll-submit' => 'Vote!',
+);
+
 /** Esperanto (Esperanto)
  * @author Objectivesea
  * @author Tradukisto
@@ -306,9 +318,11 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Movyn
  * @author Wayiran
  */
 $messages['fa'] = array(
+	'ajaxpoll-desc' => 'افزونه نظرسنجی برای مدیاویکی مبتنی بر ایجکس (Ajax)',
 	'ajaxpoll-percentVotes' => '$1%&nbsp; از همهٔ آراء',
 	'ajaxpoll-thankyou' => 'سپاس از رای‌تان!',
 	'ajaxpoll-error' => 'در پردازش رای شما مشکلی پیش آمد، لطفاً دوباره تلاش کنید.',
@@ -349,10 +363,11 @@ $messages['fo'] = array(
 /** French (français)
  * @author Gomoko
  * @author Jean-Frédéric
+ * @author Nicolapps
  * @author Wyz
  */
 $messages['fr'] = array(
-	'ajaxpoll-desc' => 'Extension de sondage pour Médiawiki basé sur des requêtes Ajax',
+	'ajaxpoll-desc' => 'Extension de sondage pour MediaWiki basé sur des requêtes Ajax',
 	'ajaxpoll-percentVotes' => '$1% de tous les votes',
 	'ajaxpoll-thankyou' => 'Merci pour votre vote !',
 	'ajaxpoll-error' => 'Une erreur est survenue lors du traitement de votre vote, veuillez réessayer.',
@@ -388,7 +403,7 @@ $messages['gsw'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte e Wyyli. Am Ibermittle vu Dyyre Stimm ...',
 );
 
-/** Hakka (客家語/Hak-kâ-ngî)
+/** Hakka Chinese (客家語/Hak-kâ-ngî)
  * @author Anson2812
  */
 $messages['hak'] = array(
@@ -458,9 +473,11 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Irwangatot
  */
 $messages['id'] = array(
+	'ajaxpoll-desc' => 'Ekstensi jajak pendapat untuk MediaWiki dioperasikan oleh permintaan Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;dari semua suara',
 	'ajaxpoll-thankyou' => 'Terima kasih atas suara anda!',
 	'ajaxpoll-error' => 'Ada masalah dengan pengolahan suara anda, silahkan coba lagi.',
@@ -470,12 +487,21 @@ $messages['id'] = array(
 	'ajaxpoll-submitting' => 'Silakan tunggu, mengirim suara Anda...',
 );
 
+/** Ingush (ГӀалгӀай)
+ * @author Sapral Mikail
+ */
+$messages['inh'] = array(
+	'ajaxpoll-submit' => 'Харжа!',
+);
+
 /** Italian (italiano)
  * @author Beta16
  * @author Gifh
  * @author Minerva Titani
+ * @author TecnoMaster
  */
 $messages['it'] = array(
+	'ajaxpoll-desc' => 'estensione del sondaggio di MediaWiki guidato da richieste Ajax',
 	'ajaxpoll-percentVotes' => '$1% di tutti i voti',
 	'ajaxpoll-thankyou' => 'Grazie per aver votato!',
 	'ajaxpoll-error' => "C'è stato un problema con l'elaborazione del tuo voto, si prega di riprovare.",
@@ -555,7 +581,7 @@ $messages['lb'] = array(
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -607,6 +633,7 @@ $messages['map-bms'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'ajaxpoll-desc' => 'Анкетен додаток за МедијаВики на погон на барања со Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;од вкупниот број на гласови',
 	'ajaxpoll-thankyou' => 'Ви благодариме што гласавте!',
 	'ajaxpoll-error' => 'Се појави проблем во обработката на вашиот глас. Обидете се повторно',
@@ -748,7 +775,7 @@ $messages['oc'] = array(
 	'ajaxpoll-submitting' => 'Pacientatz pendent lo mandadís de vòstre vòte...',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -762,11 +789,14 @@ $messages['pfl'] = array(
 );
 
 /** Polish (polski)
+ * @author Devwebtel
+ * @author Pio387
  * @author Sovq
  * @author Sp5uhe
  * @author Vae
  */
 $messages['pl'] = array(
+	'ajaxpoll-desc' => 'Ankiety dla MediaWiki wykorzystujące zapytania Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;wszystkich głosów',
 	'ajaxpoll-thankyou' => 'Dziękujemy za oddanie głosu!',
 	'ajaxpoll-error' => 'Wystąpił problem w trakcie przetwarzania głosu – spróbuj jeszcze raz.',
@@ -774,7 +804,7 @@ $messages['pl'] = array(
 Oddanych głosów: <i>$3</i>',
 	'ajaxpoll-submit' => 'Głosuj!',
 	'ajaxpoll-closed' => 'Głosowanie jest już zakończone. Życzymy przyjemnej lektury wyników.',
-	'ajaxpoll-submitting' => 'Proszę czekać – trwa zapisywanie głosu...',
+	'ajaxpoll-submitting' => 'Proszę czekać, trwa zapisywanie głosu...',
 );
 
 /** Piedmontese (Piemontèis)
@@ -817,8 +847,10 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  * @author Jesielt
+ * @author TheGabrielZaum
  */
 $messages['pt-br'] = array(
+	'ajaxpoll-desc' => 'Extensão de enquetes para MediaWiki dirigida por pedidos em Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
 	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
 	'ajaxpoll-error' => 'Houve um problema com o processamento do seu voto, por favor, tente novamente.',
@@ -865,6 +897,13 @@ $messages['ru'] = array(
 	'ajaxpoll-submit' => 'Проголосовать!',
 	'ajaxpoll-closed' => 'Опрос закрыт. Наслаждайтесь результатами.',
 	'ajaxpoll-submitting' => 'Пожалуйста, подождите, передаётся информация о вашем голосе…',
+);
+
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'ajaxpoll-submit' => 'मतम् !',
 );
 
 /** Sinhala (සිංහල)
@@ -927,8 +966,10 @@ $messages['te'] = array(
 
 /** Thai (ไทย)
  * @author Akkhaporn
+ * @author Panan2544
  */
 $messages['th'] = array(
+	'ajaxpoll-desc' => 'ขยาย Poll สำหรับ "มีเดียวิกิ" ผลักดันโดยการร้องขอของ Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbspของคะแนนเสียงทั้งหมด',
 	'ajaxpoll-thankyou' => 'ขอบคุณสำหรับออกเสียงของคุณ',
 	'ajaxpoll-error' => 'มีปัญหากับการประมวลผลการลงคะแนนเสียงของคุณ, โปรดลองใหม่อีกครั้ง',
@@ -980,8 +1021,10 @@ $messages['tt-cyrl'] = array(
 
 /** Ukrainian (українська)
  * @author Alex Khimich
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'ajaxpoll-desc' => 'Опитування розширення для МедіаВікі Приводитися в дію за допомогою Ajax-запитів.',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;всіх голосів',
 	'ajaxpoll-thankyou' => 'Дякуємо за ваш голос!',
 	'ajaxpoll-error' => 'Виникла проблема з обробкою вашого голосу, будь-ласка, спробуйте знову.',
@@ -992,10 +1035,12 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author KhangND
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'ajaxpoll-desc' => 'Phần mở rộng bảng phiếu của MediaWiki do yêu cầu của Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;trên tổng số phiếu',
 	'ajaxpoll-thankyou' => 'Cảm ơn bạn đã bình chọn!',
 	'ajaxpoll-error' => 'Có trục trặc trong quá trình bình chọn của bạn, xin vui lòng thử lại.',
@@ -1030,15 +1075,18 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
-	'ajaxpoll-thankyou' => '感謝您的投票 ！',
-	'ajaxpoll-error' => '處理您的投票發生問題，請再試一次。',
-	'ajaxpoll-summary' => '這項投票由 $1 在 $2上發起 ，目前為止有 $3 人投票。',
-	'ajaxpoll-submit' => '投票 ！',
-	'ajaxpoll-closed' => '投票現已封閉。享受結果。',
-	'ajaxpoll-submitting' => '請稍候，正提交您的投票...',
+	'ajaxpoll-desc' => '使用 Ajax 請求的 MediaWiki 投票擴充套件',
+	'ajaxpoll-percentVotes' => '所有投票的 $1%&nbsp;',
+	'ajaxpoll-thankyou' => '感謝您的投票！',
+	'ajaxpoll-error' => '處理您的投票時發生問題，請再試一次。',
+	'ajaxpoll-summary' => '這項投票由 $1 在 $2 上發起，到目前為止有 $3 人投票。',
+	'ajaxpoll-submit' => '投票！',
+	'ajaxpoll-closed' => '投票已結束，請查看結果。',
+	'ajaxpoll-submitting' => '請稍候，正送出您的投票...',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

@@ -127,7 +127,9 @@ class FacebookClientHooks {
 				// check if current user is connected to facebook
 				$map = FacebookClient::getInstance()->getMapping();
 				if ( !empty( $map ) ) {
-					NotificationsController::addConfirmation( wfMessage( 'fbconnect-connect-msg' )->plain() );
+					BannerNotificationsController::addConfirmation(
+						wfMessage( 'fbconnect-connect-msg' )->escaped()
+					);
 				}
 			}
 		}
@@ -135,5 +137,11 @@ class FacebookClientHooks {
 		return true;
 	}
 
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 
+		$script = AssetsManager::getInstance()->getURL( 'facebook_client_fbtags_js' );
+		$text .= Html::linkedScript( $script[0] );
+
+		return true;
+	}
 }

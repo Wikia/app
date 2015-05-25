@@ -10,11 +10,7 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<? if ( !empty( $wg->EnableGlobalNavExt ) ): ?>
-	<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
-<? else: ?>
-	<?= $app->renderView( 'GlobalHeader', 'Index' ) ?>
-<? endif ?>
+<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
 
 <?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>
@@ -22,20 +18,18 @@
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<?= $app->renderView( 'Notifications', 'Confirmation' ) ?>
+		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 		<?php
-			if ( empty( $wg->SuppressWikiHeader ) ) {
-				if ( empty( $wg->EnableLocalNavExt ) ) {
-					echo $app->renderView( 'WikiHeader', 'Index' );
-				} else {
-					echo $app->renderView( 'LocalNavigation', 'Index' );
-				}
+			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
+
+			if ( $runNjord ) {
+				echo $app->renderView( 'Njord', 'Index' );
+
 			}
-		?>
-		<?php
-		if ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() ) {
-			echo $app->renderView( 'Njord', 'Index' );
-		}
+
+			if ( empty( $wg->SuppressWikiHeader ) ) {
+				echo $app->renderView( 'WikiHeader', 'Index' );
+			}
 		?>
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
@@ -85,7 +79,9 @@
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}
 						} else {
-							echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+							if ( !$runNjord ) {
+								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+							}
 						}
 					}
 				?>
@@ -111,7 +107,13 @@
 						}
 					?>
 					</div>
+					<?php
+					if ( $runNjord ) {
+						echo $app->renderView( 'Njord', 'Summary' );
+						echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
 
+					}
+					?>
 					<?php
 					// for InfoBox-Testing
 					if ( $wg->EnableInfoBoxTest ) {
@@ -174,7 +176,7 @@
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
 		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<? if( !empty( $wg->EnableGlobalFooterExt ) ) echo $app->renderView( 'GlobalFooter', 'index' ) ?>
+		<?= $app->renderView( 'GlobalFooter', 'index' ); ?>
 	</div>
 </section><!--WikiaPage-->
 

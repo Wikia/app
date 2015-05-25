@@ -21,7 +21,6 @@ $wgHooks['SetupAfterCache']          [] = "Wikia::setupAfterCache";
 $wgHooks['ComposeMail']              [] = "Wikia::ComposeMail";
 $wgHooks['SoftwareInfo']             [] = "Wikia::softwareInfo";
 $wgHooks['AddNewAccount']            [] = "Wikia::ignoreUser";
-$wgHooks['WikiFactory::execute']     [] = "Wikia::switchDBToLightMode";
 $wgHooks['ComposeMail']              [] = "Wikia::isUnsubscribed";
 $wgHooks['AllowNotifyOnPageChange']  [] = "Wikia::allowNotifyOnPageChange";
 $wgHooks['AfterInitialize']          [] = "Wikia::onAfterInitialize";
@@ -70,7 +69,10 @@ $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsU
 class Wikia {
 
 	const REQUIRED_CHARS = '0123456789abcdefG';
-	const COMMUNITY_WIKI_ID = 177;
+
+	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
+	const NEWSLETTER_WIKI_ID = 223496; // wikianewsletter.wikia.com
+
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
 	private static $vars = array();
@@ -433,6 +435,11 @@ class Wikia {
 		 * and use wfDebug as well
 		 */
 		if (function_exists("wfDebug")) {
+			if ( $message instanceof Status ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( "Wikia::log \$message is a Status object", [
+					'exception' => new Exception(),
+				]);
+			}
 			wfDebug( $method . ": " . $message . "\n" );
 		} else {
 			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . "wfDebug is not defined");
@@ -1287,25 +1294,6 @@ class Wikia {
 		return $params;
 	}
 
-
-	/**
-	 * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
-	 * maintanance scripts while something is wrong with performance
-	 *
-	 * @static
-	 * @author Piotr Molski (moli) <moli at wikia-inc.com>
-	 * @param int $maxSleep
-	 * @return null
-	 */
-	static function switchDBToLightMode( $WFLoader ) {
-		// commandline scripts only
-		if ( $WFLoader->mCommandLine ) {
-			// switch db to light mode
-			wfDBLightMode(60);
-		}
-		return true;
-	}
-
 	static public function getAllHeaders() {
 		if ( function_exists( 'getallheaders' ) ) {
 			$headers = getallheaders();
@@ -1600,8 +1588,8 @@ class Wikia {
 	 * @author macbre
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
-		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss,
+				$wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
@@ -1656,46 +1644,6 @@ class Wikia {
 	 */
 	static public function chr( $ord, $encoding = 'UTF-8' ) {
 		return mb_convert_encoding(pack("N",$ord),$encoding,'UCS-4BE');
-	}
-
-	/**
-	 * This function uses the facebook api to get the open graph id for this domain
-	 *
-	 * @global string $wgServer
-	 * @global string $fbAccessToken
-	 * @global string $fbDomain
-	 * @global MemCachedClientforWiki $wgMemc
-	 * @return int
-	 */
-
-	static public function getFacebookDomainId() {
-		global $wgServer, $fbAccessToken, $fbDomain, $wgMemc;
-
-		if (!$fbAccessToken || !$fbDomain)
-			return false;
-
-		wfProfileIn(__METHOD__);
-		$memckey = wfMemcKey('fbDomainId');
-		$result = $wgMemc->get($memckey);
-		if (is_null($result)) {
-			if (preg_match('/\/\/(\w*)\./',$wgServer,$matches)) {
-				$domain = $matches[1].$fbDomain;
-			} else {
-				$domain = str_replace('http://', '', $wgServer);
-			}
-			$url = 'https://graph.facebook.com/?domain='.$domain;
-			$response = json_decode(Http::get($url));
-			if (isset($response->id)) {
-				$result = $response->id;
-			} else {
-				$result = 0;  // If facebook tells us nothing, don't keep trying, just give up until cache expires
-			}
-			$wgMemc->set($memckey, $result, 60*60*24*7);  // 1 week
-
-		}
-		wfProfileOut(__METHOD__);
-
-		return $result;
 	}
 
 	/**

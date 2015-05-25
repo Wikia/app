@@ -1,0 +1,48 @@
+/*!
+ * VisualEditor standalone demo
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+/* Demo */
+
+.ve-demo-menu {
+	margin: 0 2em;
+}
+
+/* Editor */
+
+.ve-ui-surface {
+	margin: 0 2em;
+	box-shadow: 0 0.25em 1.5em 0 #ddd;
+}
+
+.ve-ce-documentNode {
+	border: 1px solid #ccc;
+	border-top: none;
+}
+
+.ve-init-sa-target-toolbar {
+	margin: 0 2em;
+}
+
+.ve-init-sa-target-toolbar .oo-ui-toolbar-bar {
+	border: 1px solid #ccc;
+	border-radius: 0;
+	border-top-right-radius: 0.25em;
+	border-top-left-radius: 0.25em;
+}
+
+.ve-init-sa-target-toolbar.ve-ui-toolbar-floating .oo-ui-toolbar-bar {
+	border-top: none;
+	border-radius: 0;
+}
+
+.ve-ui-debugBar {
+	margin: 0 2em 1em 2em;
+	border: 1px solid #ccc;
+	border-top: 0;
+	border-radius: 0 0 0.5em 0.5em;
+	box-shadow: 0 0.25em 1.5em 0 #ddd;
+}

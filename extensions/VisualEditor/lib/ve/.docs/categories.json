@@ -4,7 +4,7 @@
 		"groups": [
 			{
 				"name": "Utilities",
-				"classes": ["ve", "ve.Range", "ve.EventSequencer"]
+				"classes": ["ve", "ve.Range", "ve.EventSequencer", "ve.Filibuster", "ve.TriggerListener"]
 			},
 			{
 				"name": "Nodes",
@@ -44,6 +44,7 @@
 					"ve.dm.NodeFactory",
 					"ve.dm.Surface",
 					"ve.dm.SurfaceFragment",
+					"ve.dm.*Selection",
 					"ve.dm.Transaction",
 					"ve.dm.TransactionProcessor",
 					"ve.dm.TransactionProcessor.processors"
@@ -72,6 +73,14 @@
 			{
 				"name": "Models",
 				"classes": ["ve.dm.*Model"]
+			},
+			{
+				"name": "Table model",
+				"classes": [
+					"ve.dm.TableMatrix",
+					"ve.dm.TableMatrixCell",
+					"ve.dm.TableNodeCellIterator"
+				]
 			}
 		]
 	},
@@ -87,7 +96,7 @@
 					"ve.ce.NodeFactory",
 					"ve.ce.Surface",
 					"ve.ce.SurfaceObserver",
-					"ve.ce.DomRange"
+					"ve.ce.RangeState"
 				]
 			},
 			{
@@ -107,24 +116,23 @@
 				"name": "General",
 				"classes": [
 					"ve.ui",
-					"ve.ui.Surface",
-					"ve.ui.DesktopSurface",
-					"ve.ui.MobileSurface",
-					"ve.ui.Context",
-					"ve.ui.DesktopContext",
-					"ve.ui.MobileContext",
+					"ve.ui.*Surface",
+					"ve.ui.*Context",
+					"ve.ui.Overlay",
 					"ve.ui.Toolbar",
 					"ve.ui.TargetToolbar",
 					"ve.ui.DebugBar",
-					"ve.ui.WindowSet",
-					"ve.ui.Action",
 					"ve.ui.Trigger",
-					"ve.ui.Command"
+					"ve.ui.*FileDropHandler"
 				]
 			},
 			{
 				"name": "Actions",
 				"classes": ["ve.ui.*Action"]
+			},
+			{
+				"name": "Commands",
+				"classes": ["ve.ui.*Command"]
 			},
 			{
 				"name": "Factories",
@@ -135,20 +143,24 @@
 				"classes": ["ve.ui.*Registry"]
 			},
 			{
-				"name": "Tools",
-				"classes": ["ve.ui.*Tool"]
+				"name": "Sequences",
+				"classes": ["ve.ui.*Sequence"]
 			},
 			{
-				"name": "Inspectors",
-				"classes": ["ve.ui.*Inspector"]
+				"name": "Tools",
+				"classes": ["ve.ui.*Tool"]
 			},
 			{
 				"name": "Widgets",
 				"classes": ["ve.ui.*Widget"]
 			},
 			{
-				"name": "Dialogs",
-				"classes": ["ve.ui.*Dialog"]
+				"name": "Windows",
+				"classes": [
+					"ve.ui.*WindowManager",
+					"ve.ui.*Dialog",
+					"ve.ui.*Inspector"
+				]
 			}
 		]
 	},
@@ -189,39 +201,50 @@
 				"name": "General",
 				"classes": [
 					"OO.ui",
+					"OO.ui.ActionSet",
 					"OO.ui.Element",
-					"OO.ui.Process",
-					"OO.ui.Frame",
-					"OO.ui.Toolbar",
-					"OO.ui.Window",
-					"OO.ui.WindowSet",
-					"OO.ui.Dialog",
-					"OO.ui.ConfirmationDialog"
+						"OO.ui.Layout",
+						"OO.ui.Widget",
+						"OO.ui.Window",
+							"OO.ui.Dialog",
+						"OO.ui.WindowManager",
+					"OO.ui.Error",
+					"OO.ui.Process"
 				]
-			},
-			{
-				"name": "Factories",
-				"classes": ["OO.ui.*Factory"]
-			},
-			{
-				"name": "Tools",
-				"classes": ["OO.ui.*Tool"]
 			},
 			{
 				"name": "Elements",
 				"classes": ["OO.ui.*Element"]
 			},
 			{
+				"name": "Tools",
+				"classes": [
+					"OO.ui.*Tool",
+					"OO.ui.Tool*Factory"
+				]
+			},
+			{
+				"name": "Toolbar and tool groups",
+				"classes": [
+					"OO.ui.Toolbar",
+					"OO.ui.*ToolGroup"
+				]
+			},
+			{
+				"name": "Dialogs",
+				"classes": ["OO.ui.*Dialog"]
+			},
+			{
 				"name": "Layouts",
 				"classes": ["OO.ui.*Layout"]
 			},
 			{
-				"name": "Tool groups",
-				"classes": ["OO.ui.*ToolGroup"]
-			},
-			{
 				"name": "Widgets",
 				"classes": ["OO.ui.*Widget"]
+			},
+			{
+				"name": "Themes",
+				"classes": ["OO.ui.*Theme"]
 			}
 		]
 	},

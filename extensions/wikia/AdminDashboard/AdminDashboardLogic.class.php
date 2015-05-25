@@ -15,7 +15,6 @@ class AdminDashboardLogic {
 			'Listusers' => true,
 			'ListUsers' => true,
 			'MultipleUpload' => true,
-			'PageLayoutBuilder' => true,
 			'Promote' => true,
 			'Recentchanges' => true,
 			'RecentChanges' => true,
@@ -41,7 +40,7 @@ class AdminDashboardLogic {
 		if (!$app->wg->User->isAllowed( 'admindashboard' )) return false;
 		if ($title && $title->isSpecialPage()) {
 			$bits = explode( '/', $title->getDBkey(), 2 );
-			$alias = array_shift(SpecialPageFactory::resolveAlias($bits[0]));
+			$alias = SpecialPageFactory::resolveAlias($bits[0])[0];
 
 
 			// NOTE: keep this list in alphabetical order
@@ -82,8 +81,6 @@ class AdminDashboardLogic {
 				"NewFiles",
 				"Newimages",
 				"Our404Handler",
-				"PageLayoutBuilder",
-				"PageLayoutBuilderForm",
 				"Phalanx",
 				"PhalanxStats",
 				"Places",
@@ -92,6 +89,7 @@ class AdminDashboardLogic {
 				"PromoteImageReview",
 				"ScavengerHunt",
 				"Search",
+				"SendEmail",
 				"Signup",
 				"SiteWideMessages",
 				"SponsorshipDashboard",

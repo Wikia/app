@@ -7,7 +7,7 @@ class WikiaRssHelper {
 	 *
 	 * @return String
 	 */
-	public function renderRssPlaceholder($input) {
+	static public function renderRssPlaceholder($input) {
 		$app = F::app();
 		$rss = new WikiaRssModel($input);
 
@@ -33,6 +33,8 @@ class WikiaRssHelper {
 	 * @brief Gets JavaScript code snippet to be loaded
 	 *
 	 * @param Array $options passed to callback javascript function
+	 *
+	 * @return string
 	 */
 	static private function getJSSnippet($options) {
 		$html = JSSnippets::addToStack(

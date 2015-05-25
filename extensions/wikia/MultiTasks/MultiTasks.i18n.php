@@ -536,8 +536,12 @@ $messages['br'] = array(
  * @author BroOk
  * @author Marcmpujol
  * @author Roxas Nobody 15
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'multiwikifinder-desc' => "Eina de l'staff per buscar un títol específic per tot Wikia",
+	'multidelete-desc' => 'Especial Esborrar Múltiples Wikis',
+	'multiedit-desc' => 'Especial Edició en Múltiples Wikis',
 	'multitasks-link-back-label' => 'aquí',
 	'multiwikiedit' => 'Editar grup de pàgines',
 	'multiwikiedit_button' => 'EDITAR',
@@ -653,13 +657,13 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'multiwikiedit_from_form' => 'формера',
 	'multidelete' => 'АгӀонийн гулам дӀабаккхар',
-	'multidelete_title' => 'Дуккха дӀаяккхар',
+	'multidelete_title' => 'Дуккха дӀаяхар',
 	'multidelete_processing' => 'агӀонаш дӀаяхар',
 	'multiwikienterpagename' => 'ДӀаязъе агӀона цӀе:',
 	'multiwikifinder-redirect' => 'дӀасахьажор',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  */
 $messages['ckb'] = array(
 	'multidelete_button' => 'سڕینەوە',
@@ -1030,8 +1034,8 @@ $messages['es'] = array(
 	'multiwikiedit_task_error' => 'Hubo un error agregando tarea de edición Multi Wiki.',
 	'multiwikiedit_task_none_selected' => 'No seleccionaste ningún artículo. La tarea no fue agregada.',
 	'multiwikiedit_on' => 'Ejecutar el script en',
-	'multiwikiedit_page' => 'Páginas a ser editadas',
-	'multiwikiedit_page_text' => 'Texto a ser grabado',
+	'multiwikiedit_page' => 'Páginas que se editarán',
+	'multiwikiedit_page_text' => 'Texto que se guardará',
 	'multiwikiedit_reason' => 'Motivo para editar',
 	'multiwikiedit_list_caption' => 'Lista de wikis',
 	'multiwikiedit_minoredit_caption' => 'Edición menor',
@@ -1080,7 +1084,7 @@ $messages['es'] = array(
 	'multidelete_task_error' => 'Hubo un error en la adición de una tarea de borrado múltiple.',
 	'multidelete_task_none_selected' => 'No seleccionaste ningún artículo. No se añadió la tarea.',
 	'multidelete_select_all' => 'Seleccionar todo',
-	'multidelete_page' => 'Páginas a ser borradas',
+	'multidelete_page' => 'Páginas que se borrarán',
 	'multidelete_reason' => 'Motivo de borrado',
 	'multidelete_list_caption' => 'en una lista de wikis especificada',
 	'multidelete_choose_articles' => 'escoge cual de los artículos encontrados debería ser borrado',
@@ -1346,6 +1350,7 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'multiwikiedit_button' => 'BEWURKJE',
+	'multidelete_button' => 'FUORTSMITE',
 );
 
 /** Galician (galego)
@@ -1471,6 +1476,7 @@ $messages['ha'] = array(
  * @author Dani
  * @author Glanthor Reviol
  * @author TK-999
+ * @author Tacsipacsi
  */
 $messages['hu'] = array(
 	'multitasks-link-back-label' => 'itt',
@@ -1520,6 +1526,7 @@ $messages['hu'] = array(
 	'multiwikifindpagenames' => 'Lapnevek keresése',
 	'multiwikienterpagename' => 'Adj meg egy lapnevet:',
 	'multiwikirecords' => '$1 wiki található', # Fuzzy
+	'action-multiwikifinder' => 'egy adott cím keresése a teljes Wikiában',
 );
 
 /** Interlingua (interlingua)
@@ -1635,6 +1642,7 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Irwangatot
  */
 $messages['id'] = array(
@@ -1677,7 +1685,7 @@ $messages['id'] = array(
 	'multiwikifinder' => 'Temukan Judul Multiwiki',
 	'multiwikifindpagenames' => 'Cari judul',
 	'multiwikienterpagename' => 'Masukkan judul:',
-	'multiwikirecords' => '$1 wiki ditemukan', # Fuzzy
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wiki-wiki}} ditemukan',
 );
 
 /** Igbo (Igbo)
@@ -1875,11 +1883,40 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'multiwikiedit_button' => '편집',
+	'multiwikiedit_help' => '문서를 일괄 편집합니다. 텍스트박스에 나열된 문서를 편집할 수 있습니다. 또 삭제 기록에 표시될 사용자 계정을 선택할 수 있습니다. 파일의 경우에는 각 줄 마다 문서 이름을 적어야 하며, 원한다면 이유를 적고, | 선을 이용해 구분할 수 있습니다.',
+	'multiwikiedit_title' => '일괄 문서 편집',
+	'multiwikiedit_or' => '<b>혹은</b>',
+	'multiwikiedit_task_none_selected' => '아무 문서도 선택하지 않았습니다. 작업을 추가하는 데에 실패했습니다.',
+	'multiwikiedit_on' => '작업을 수행할 위키',
+	'multiwikiedit_page' => '편집할 문서',
+	'multiwikiedit_page_text' => '저장할 텍스트',
 	'multiwikiedit_list_caption' => '위키 목록',
 	'multiwikiedit_minoredit_caption' => '사소한 편집',
 	'multiwikiedit_botedit_caption' => '봇 (숨겨진) 편집',
+	'multiwikiedit_autosummary_caption' => '자동 요약 활성화',
+	'multiwikiedit_norecentchanges_caption' => '최근 바뀜에서 편집 기록 숨기기',
+	'multiwikiedit_newonly_caption' => '이미 존재하는 문서 스킵하기',
 	'multiwikiedit_summary_text' => '편집 요약',
+	'multiwikiedit_this_wiki' => '이 위키',
+	'multiwikiedit_all_wikis' => '모든 위키',
+	'multiwikiedit_selected_wikis' => '특정 위키',
+	'multiwikiedit_select_script' => '문서 편집 스크립트',
+	'multiwikiedit_split_results' => "선택한 문서 수가 하나의 작업에서 처리되기에는 너무 많습니다. 각 작업 당 최대 문서 수 '''$2'''개로 총 '''$1'''개 작업으로 나뉘어졌습니다.",
+	'multidelete' => '문서 일괄 삭제',
+	'multidelete_help' => '백그라운드 작업을 통해 문서를 일괄 삭제합니다. 작업을 수행할 위키로는 지금 보고 있는 이 위키, 또는 데이터베이스를 공유하고 있는 모든 위키, 특정 위키, 특정 언어의 위키를 선택할 수 있습니다. 작업을 수행할 계정으로는 귀하의 계정이나 미리 준비된 스크립트 계정을 선택할 수 있습니다.',
+	'multidelete_or' => '<b>혹은</b>',
+	'multidelete_task_added' => '일괄 삭제 작업 #$1이 추가되었습니다.',
+	'multidelete_task_error' => '일괄 삭제 작업을 추가하던 중 문제가 발생했습니다.',
+	'multidelete_task_none_selected' => '아무 문서도 선택하지 않았습니다. 작업을 추가하는 데에 실패했습니다.',
 	'multidelete_select_all' => '모두 선택',
+	'multidelete_page' => '삭제할 문서:',
+	'multidelete_reason' => '삭제 이유:',
+	'multidelete_this_wiki' => '이 위키',
+	'multidelete_inbox_caption' => '쉼표로 구분',
+	'multidelete_all_wikis' => '모든 위키',
+	'multidelete_selected_wikis' => '특정 위키',
+	'multidelete_select_script' => '지정된 스크립트 계정',
+	'multidelete_split_results' => "선택한 문서 수가 하나의 작업에서 처리되기에는 너무 많습니다. 각 작업 당 최대 문서 수 '''$2'''개로 총 '''$1'''개 작업으로 나뉘어졌습니다.",
 	'multidelete_brazilian_portuguese_wikis' => '모든 브라질 포르투갈어 위키',
 	'multidelete_hebrew_wikis' => '모든 히브리어 위키',
 	'multidelete_chinese_wikis' => '모든 중국어 위키',
@@ -1934,6 +1971,7 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1941,13 +1979,17 @@ $messages['ku-latn'] = array(
 	'multiwikiedit_confirm' => 'BISEDIQÎNE',
 	'multiwikiedit_or' => '<b>AN</b>',
 	'multiwikiedit_on' => 'li ser', # Fuzzy
+	'multiwikiedit_reason' => 'Sedema guherandine',
 	'multiwikiedit_minoredit_caption' => 'Guhertina biçûk',
-	'multiwikiedit_success_subtitle' => 'ji bo $', # Fuzzy
+	'multiwikiedit_all_wikis' => 'hemû wîkîyan',
+	'multiwikiedit_success_subtitle' => 'ji bo $1',
 	'multiwikiedit_select_yourself' => 'tu',
 	'multidelete_button' => 'JÊ BIBE',
 	'multidelete_or' => '<b>AN</b>',
 	'multidelete_reason' => 'Sedema jêbirinê',
+	'multidelete_all_wikis' => 'hemû wîkîyan',
 	'multidelete_success_subtitle' => 'ji bo $1',
+	'multiwikifinder-redirect' => 'beralîkirin',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -2000,13 +2042,13 @@ $messages['lb'] = array(
 	'multiwikifinder-redirect' => 'viruleeden',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
 	'multitasks-link-back-label' => 'ايچه',
 	'multiwikiedit_button' => 'ویرایشت',
-	'multiwikiedit_confirm' => 'مئکم کردن',
+	'multiwikiedit_confirm' => 'پشت راس کردن',
 	'multiwikiedit_select_yourself' => 'شما',
 	'multidelete_success_subtitle' => 'سی $1',
 );
@@ -2552,17 +2594,61 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
  * @author Hulothe
  */
 $messages['oc'] = array(
+	'multitasks-link-back-label' => 'aicí',
+	'multiwikiedit_button' => 'MODIFICAR',
+	'multiwikiedit_confirm' => 'CONFIRMAR',
+	'multiwikiedit_caption' => 'Lista de paginas',
+	'multiwikiedit_or' => '<b>O</b>',
+	'multiwikiedit_on' => "Executar l'escript sus",
+	'multiwikiedit_page' => 'Paginas de modificar',
+	'multiwikiedit_list_caption' => 'Lista dels wikis',
+	'multiwikiedit_minoredit_caption' => 'Modificacion menora',
 	'multiwikiedit_norecentchanges_caption' => 'Afichar pas lo cambiament dins los Darrièrs Cambiaments',
+	'multiwikiedit_from_form' => 'dempuèi lo formulari',
+	'multiwikiedit_summary_text' => 'Camp del resumit',
+	'multiwikiedit_this_wiki' => 'aqueste wiki',
+	'multiwikiedit_all_wikis' => 'totes los wikis',
+	'multiwikiedit_selected_wikis' => 'los wikis seleccionats',
+	'multiwikiedit_success_subtitle' => 'per $1',
+	'multiwikiedit_select_yourself' => 'vos',
+	'multiwikiedit_edit_options' => 'Opcions de la modificacion',
+	'multidelete_button' => 'SUPRIMIT',
+	'multidelete_caption' => 'Lista de paginas',
+	'multidelete_or' => '<b>O</b>',
+	'multidelete_select_all' => 'Seleccionar tot',
+	'multidelete_page' => 'Paginas de suprimir',
+	'multidelete_this_wiki' => 'aqueste wiki',
+	'multidelete_all_wikis' => 'totes los wikis',
+	'multidelete_selected_wikis' => 'los wikis seleccionats',
+	'multidelete_success_subtitle' => 'per $1',
+	'multidelete_brazilian_portuguese_wikis' => 'totes los wikis en portugués brasilièr',
+	'multidelete_hebrew_wikis' => 'totes los wikis en ebrieu',
+	'multidelete_chinese_wikis' => 'totes los wikis en chinés',
+	'multidelete_polish_wikis' => 'totes los wikis en polonés',
+	'multidelete_czech_wikis' => 'totes los wikis en chèc',
+	'multidelete_portuguese_wikis' => 'totes los wikis en portugués',
+	'multidelete_dutch_wikis' => 'totes los wikis en neerlandés',
+	'multidelete_italian_wikis' => 'totes los wikis en italian',
+	'multidelete_russian_wikis' => 'totes los wikis en rus',
+	'multidelete_english_wikis' => 'totes los wikis en anglés',
+	'multidelete_japanese_wikis' => 'totes los wikis en japonés',
+	'multidelete_finnish_wikis' => 'totes los wikis en finés',
+	'multidelete_spanish_wikis' => 'totes los wikis en espanhòl',
+	'multidelete_french_wikis' => 'totes los wikis en francés',
+	'multidelete_swedish_wikis' => 'totes los wikis en suedés',
+	'multidelete_german_wikis' => 'totes los wikis en alemand',
+	'multiwikifinder-redirect' => 'redireccion',
+	'action-multiwikifinder' => 'recercar un títol especific dins Wikia',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
 	'multidelete_button' => 'VERWISCHE',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -2849,7 +2935,7 @@ $messages['ps'] = array(
 	'multidelete_polish_wikis' => 'ټول پولنډي ويکي گان',
 	'multidelete_czech_wikis' => 'ټول چېکي ويکي گان',
 	'multidelete_german_wikis' => 'ټولې جرمنۍ ويکي گانې',
-	'multiwikifindpagenames' => 'د مخ نوم موندل',
+	'multiwikifindpagenames' => 'مخ نومونه موندل',
 );
 
 /** Portuguese (português)
@@ -3119,12 +3205,14 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author DCamer
+ * @author Kopcap94
  * @author Kuzura
  * @author Lockal
  * @author Okras
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'multiwikifinder-desc' => 'Инструмент персонала для поиска определённого названия статьи на всей Викия',
 	'multitasks-link-back-label' => 'здесь',
 	'multiwikiedit' => 'Изменение набора страниц',
 	'multiwikiedit_button' => 'ПРАВИТЬ',
@@ -3351,6 +3439,9 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'multiwikifinder-desc' => 'Personalverktyg för att söka efter en titel på hela Wikia',
+	'multidelete-desc' => 'Specialverktyg för att radera flera wikis',
+	'multiedit-desc' => 'Specialverktyg för att redigera flera wikis',
 	'multitasks-link-back-label' => 'här',
 	'multiwikiedit' => 'Redigera serier av sidor',
 	'multiwikiedit_button' => 'REDIGERA',
@@ -3685,9 +3776,11 @@ $messages['tt-cyrl'] = array(
  * @author Steve.rusyn
  * @author SteveR
  * @author Ua2004
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
+	'multiwikifinder-desc' => 'Інструмент персоналу для пошуку конкретної назви по всій Вікії',
 	'multitasks-link-back-label' => 'тут',
 	'multiwikiedit' => 'Редагувати групу сторінок',
 	'multiwikiedit_button' => 'РЕДАГУВАТИ',
@@ -3798,18 +3891,85 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
+ * @author KhangND
  * @author Max20091
  */
 $messages['vi'] = array(
+	'multiwikifinder-desc' => 'Công cụ tìm kiếm một tiêu đề đặc biệt trên Wikia cho nhân viên',
+	'multidelete-desc' => 'Xóa nhiều trang Wiki đặc biệt',
+	'multiedit-desc' => 'Chỉnh sửa nhiều trang Wiki đặc biệt',
 	'multitasks-link-back-label' => 'Ở đây',
 	'multiwikiedit' => 'Xóa một nhóm trang',
 	'multiwikiedit_button' => 'CHỈNH SỬA',
 	'multiwikiedit_confirm' => 'XÁC NHẬN',
 	'multiwikiedit_help' => 'Chỉnh sửa hàng loạt của trang. Bạn có thể chỉnh sửa các trang được liệt kê trong một hộp văn bản. Chọn một người dùng sẽ được hiển thị trong xóa Nhật ký. Đã tải lên tệp nên chứa tên trang và tùy chọn lý do tách ra bởi | nhân vật trong mỗi dòng.',
 	'multiwikiedit_caption' => 'Danh sách trang:',
+	'multiwikiedit_title' => 'Biên tập nhiều trang Wiki',
+	'multiwikiedit_as' => 'Chạy kịch bản với:',
+	'multiwikiedit_both_modes' => 'Hãy chọn hoặc một trang cụ thể hoặc một danh sách các trang cho trước.',
+	'multiwikiedit_or' => '<b>HOẶC</b>',
+	'multiwikiedit_on' => 'Chạy kịch bản này trên',
+	'multiwikiedit_page' => 'Các trang sẽ được chỉnh sửa',
+	'multiwikiedit_page_text' => 'Văn bản sẽ được lưu',
 	'multiwikiedit_reason' => 'Lí do để chỉnh sửa',
 	'multiwikiedit_list_caption' => 'Danh sách wiki',
 	'multiwikiedit_minoredit_caption' => 'Sửa đổi nhỏ',
+	'multiwikiedit_autosummary_caption' => 'Kích hoạt tính năng tự động tóm tắt',
+	'multiwikiedit_norecentchanges_caption' => 'Không hiển thị thay đổi trong các thay đổi giần đây',
+	'multiwikiedit_choose_articles' => 'chọn bài viết được tìm mà bạn muốn chỉnh sửa',
+	'multiwikiedit_processing' => 'Các trang chỉnh sửa',
+	'multiwikiedit_from_file' => 'từ danh sách file',
+	'multiwikiedit_from_form' => 'từ biểu mẫu',
+	'multiwikiedit_this_wiki' => 'Wiki này',
+	'multiwikiedit_inbox_caption' => 'chia tách bởi dấu phẩy',
+	'multiwikiedit_all_wikis' => 'Tất cả các wiki',
+	'multiwikiedit_selected_wikis' => 'các wiki đã chọn',
+	'multiwikiedit_file_missing' => 'Không thể đọc tập tin đã chọn',
+	'multiwikiedit_select_script' => 'chỉnh sửa bản thảo của trang',
+	'multiwikiedit_select_yourself' => 'bạn',
+	'multiwikiedit_supply_wikis' => 'Xin cung cấp danh sách các wiki được chọn',
+	'multiwikiedit_tasks_list' => 'Danh sách các tác vụ để chạy',
+	'multiwikiedit_edit_options' => 'Các tùy chọn biên tập',
+	'multidelete_button' => 'Xóa',
+	'multidelete_caption' => 'Danh sách trang:',
+	'multidelete_title' => 'Xóa nhiều lựa chọn cùng lúc',
+	'multidelete_or' => '<b>HOẶC</b>',
+	'multidelete_error_empty_selection' => 'Xin cung cấp danh sách các wiki được chọn',
+	'multidelete_error_empty_pages' => 'Hãy chọn hoặc một trang cụ thể hoặc một danh sách các trang cho trước.',
+	'multidelete_task_added' => 'Xóa nhiều tác vụ #$1 đã được bổ sung.',
+	'multidelete_task_error' => 'Xuất hiện một lỗi khi bổ sung tác vụ xóa đa lựa chọn.',
+	'multidelete_task_none_selected' => 'Bạn chưa chọn bất kỳ bài viết nào. Nhiệm vụ không được bổ sung.',
+	'multidelete_select_all' => 'Chọn tất cả',
+	'multidelete_page' => 'Các trang sẽ bị xóa:',
+	'multidelete_choose_articles' => 'Chọn bài viết để xóa',
+	'multidelete_this_wiki' => 'Wiki này',
+	'multidelete_inbox_caption' => 'hoặc chia tách bởi dấu phẩy',
+	'multidelete_all_wikis' => 'Tất cả các wiki',
+	'multidelete_selected_wikis' => 'wiki được chọn',
+	'multidelete_success_subtitle' => 'Dành cho $1',
+	'multidelete_file_missing' => 'Không thể đọc tập tin đã chọn',
+	'multidelete_chinese_wikis' => 'tất cả wiki tiếng Trung',
+	'multidelete_polish_wikis' => 'tất cả wiki tiếng Ba Lan',
+	'multidelete_czech_wikis' => 'tất cả wiki tiếng Séc',
+	'multidelete_portuguese_wikis' => 'tất cả wiki tiếng Bồ Đào Nha',
+	'multidelete_dutch_wikis' => 'tất cả wiki tiếng Hà Lan',
+	'multidelete_italian_wikis' => 'tất cả wiki tiếng Ý',
+	'multidelete_russian_wikis' => 'tất cả wiki tiếng Nga',
+	'multidelete_english_wikis' => 'tất cả wiki tiếng Anh',
+	'multidelete_japanese_wikis' => 'tất cả wiki tiếng Nhật',
+	'multidelete_finnish_wikis' => 'tất cả wiki tiếng Phần Lan',
+	'multidelete_spanish_wikis' => 'tất cả wiki tiếng Tây Ban Nha',
+	'multidelete_french_wikis' => 'tất cả wiki tiếng Pháp',
+	'multidelete_swedish_wikis' => 'tất cả wiki tiếng Thụy Điển',
+	'multidelete_german_wikis' => 'tất cả wiki tiếng Đức',
+	'action-multidelete' => 'Xóa một nhóm trang',
+	'multiwikifinder' => 'Trình tìm kiếm tiêu đề nhiều trang Wiki',
+	'multiwikifindpagenames' => 'Tìm tên tráng',
+	'multiwikienterpagename' => 'Nhập tên trang:',
+	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} đã tìm thấy',
+	'multiwikifinder-redirect' => 'đổi hướng',
+	'action-multiwikifinder' => 'tìm kiếm một tiêu đề cụ thể trên Wikia',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -3933,6 +4093,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
@@ -3949,7 +4110,7 @@ $messages['zh-hant'] = array(
 	'multidelete_this_wiki' => '此 Wiki',
 	'multidelete_inbox_caption' => '或用逗號隔開',
 	'multidelete_all_wikis' => '所有的 wiki',
-	'multidelete_selected_wikis' => '所選的 wiki',
+	'multidelete_selected_wikis' => '所選的 Wiki',
 	'multidelete_success_subtitle' => '為$1',
 	'multidelete_file_bad_format' => '該檔案應該為純文字',
 	'multidelete_file_missing' => '無法讀取指定的檔案',

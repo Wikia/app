@@ -186,10 +186,12 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Draceane
  * @author H4nek
  */
 $messages['cs'] = array(
+	'filepage-desc' => 'Modifikace standardní MediaWiki stránky pro soubory s podporou videa',
 	'video-page-file-list-header' => 'Vyskytuje se na těchto stránkách',
 	'video-page-global-file-list-header' => 'Vyskytuje se na těchto wiki',
 	'video-page-from-provider' => 'Z $1',
@@ -307,10 +309,13 @@ Sar ezazu deskribapena hemen.',
 );
 
 /** Persian (فارسی)
+ * @author Movyn
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'video-page-from-provider' => 'از $1',
+	'video-page-see-more-info' => 'نمایش اطلاعات بیشتر',
+	'video-page-see-less-info' => 'نمایش اطلاعات کمتر',
 	'video-page-description-heading' => 'توضیحات',
 	'video-page-add-description-link-text' => 'افزودن توضیحات.',
 	'video-page-file-list-pagination' => '$1 از $2',
@@ -437,11 +442,26 @@ Insira aquí a descrición.',
 /** Hebrew (עברית)
  * @author Amire80
  * @author ExampleTomer
+ * @author LaG roiL
  */
 $messages['he'] = array(
+	'video-page-file-list-header' => 'מופיע בדפים להלן',
+	'video-page-global-file-list-header' => 'מופיע במיזמים להלן',
+	'video-page-from-provider' => 'מתוך $1',
+	'video-page-regional-restrictions-unviewable' => 'סרטון זה אינו ניתן לצפייה ממיקומך',
+	'video-page-views' => '$1 {{PLURAL:$1|צפייה אחת|צפיות}}',
+	'video-page-see-more-info' => 'הצגת מידע נוסף',
+	'video-page-see-less-info' => 'הסתרת מידע נוסף',
 	'video-page-description-heading' => 'תיאור',
+	'video-page-description-zero-state' => 'אין תיאור.',
 	'video-page-add-description-link-text' => 'הוספת תיאור.',
+	'video-page-default-description-header-and-text' => '==תיאור==
+הוסיפו תיאור כאן.',
+	'video-page-file-list-pagination' => '$1 מתוך $2',
+	'file-page-replace-button' => 'החלפה',
 	'file-page-tab-about' => 'אודות',
+	'file-page-tab-history' => 'היסטוריה',
+	'file-page-tab-metadata' => 'מטא־נתונים',
 	'file-page-more-links' => 'רשימה מלאה',
 );
 
@@ -469,6 +489,7 @@ $messages['hu'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  * @author Riemogerz
  */
 $messages['id'] = array(
@@ -479,7 +500,7 @@ $messages['id'] = array(
 	'video-page-expires' => 'Konten berakhir pada $1',
 	'video-page-views' => 'dilihat $1 {{PLURAL:$1|kali|kali}}',
 	'video-page-see-more-info' => 'Tampilkan info lanjutan',
-	'video-page-see-less-info' => 'Tampilkan info',
+	'video-page-see-less-info' => 'Tampilkan sedikit info',
 	'video-page-description-heading' => 'Deskripsi',
 	'video-page-description-zero-state' => 'Belum ada deskripsi.',
 	'video-page-add-description-link-text' => 'Tambahkan deskripsi.',
@@ -599,6 +620,14 @@ $messages['ko'] = array(
 	'file-page-more-links' => '전체 목록 보기',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'file-page-tab-about' => 'Derbarê',
+	'file-page-tab-metadata' => 'Daneyên meta',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -619,14 +648,14 @@ Gitt d'Beschreiwung hei an.",
 	'file-page-more-links' => 'Ganz Lëscht weisen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
 	'video-page-from-provider' => 'د $1',
 	'file-page-replace-button' => 'جاگزينشت',
 	'file-page-tab-about' => 'دباره',
-	'file-page-tab-history' => 'ويرگار فايل',
+	'file-page-tab-history' => 'ويرگار جانیا',
 	'file-page-tab-metadata' => 'داديا  فره گپ',
 );
 
@@ -939,9 +968,12 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
  * @author Milicevic01
  */
 $messages['sr-ec'] = array(
+	'video-page-regional-restrictions-viewable' => 'Ово видео је доступно само у појединим регијама.',
+	'video-page-regional-restrictions-unviewable' => 'Ово видео није доступно у вашој локацији',
 	'video-page-add-description-link-text' => 'Додајте опис',
 );
 

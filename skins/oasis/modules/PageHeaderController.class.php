@@ -1,4 +1,6 @@
 <?php
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Renders page header (title, subtitle, comments chicklet button, history dropdown)
  *
@@ -145,25 +147,6 @@ class PageHeaderController extends WikiaController {
 		return $ret;
 	}
 
-	private function isSearchInputDisplayed( $params ) {
-		global $wgEnableGlobalNavExt;
-		return !empty ( $params['showSearchBox'] ) && empty ( $wgEnableGlobalNavExt );
-	}
-
-	public static function formatTimestamp( $stamp ) {
-
-		$diff = time() - strtotime( $stamp );
-
-		// show time difference if it's 14 or less days
-		if ( $diff < 15 * 86400 ) {
-			$ret = wfTimeFormatAgo( $stamp );
-		}
-		else {
-			$ret = '';
-		}
-		return $ret;
-	}
-
 	/**
 	 * Render default page header (with edit dropdown, history dropdown, ...)
 	 *
@@ -204,7 +187,9 @@ class PageHeaderController extends WikiaController {
 			wfRunHooks( 'PageHeaderIndexExtraButtons', array( $response ) );
 		} else {
 			// it happened on TimQ's devbox that $response was probably null fb#28747
-			Wikia::logBacktrace( __METHOD__ );
+			WikiaLogger::instance()->error('Response not an instance of WikiaResponse', [
+				'ex' => new Exception()
+			]);
 		}
 		/** end of wikia changes */
 
@@ -316,12 +301,6 @@ class PageHeaderController extends WikiaController {
 				// remove comments button (fix FB#3404 - Marooned)
 				$this->comments = false;
 
-				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
-				if ( $wgTitle->isSpecial( 'PageLayoutBuilderForm' ) || $wgTitle->isSpecial( 'PageLayoutBuilder' ) ) {
-					$this->displaytitle = true;
-					$this->pageType = "";
-				}
-
 				if ( $wgTitle->isSpecial( 'Newimages' ) ) {
 					$this->isNewFiles = true;
 				}
@@ -370,10 +349,6 @@ class PageHeaderController extends WikiaController {
 			$this->pageType = $this->subtitle;
 			$this->subtitle = '';
 		}
-
-		// if page is rendered using one column layout, show search box as a part of page header
-		// if new global nav is enabled - disable search box
-		$this->showSearchBox = $this->isSearchInputDisplayed( $params );
 
 		if ( !empty( $wgSupressPageTitle ) ) {
 			$this->title = '';
@@ -618,7 +593,6 @@ class PageHeaderController extends WikiaController {
 	 * Render page header for Hubs
 	 *
 	 * @param: array $params
-	 *    key: showSearchBox (default: false)
 	 */
 	public function executeHubs( $params ) {
 		global $wgSupressPageTitle;
@@ -633,9 +607,6 @@ class PageHeaderController extends WikiaController {
 
 		// number of pages on this wiki
 		$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
-
-		// if page is rendered using one column layout, show search box as a part of page header
-		$this->showSearchBox = $this->isSearchInputDisplayed( $params );
 
 		if ( !empty( $wgSupressPageTitle ) ) {
 			$this->title = '';

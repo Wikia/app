@@ -11,6 +11,7 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="<?= AssetsManager::getInstance()->getSassCommonURL('/extensions/wikia/Chat2/css/Chat.scss')?>">
+	<link rel="stylesheet" href="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.css%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.css&only=styles">
 
 	<!-- JS -->
 	<?php
@@ -21,7 +22,7 @@
 	<?php endforeach;?>
 
 	<!-- temporary hack -->
-	<script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
 	<?= $globalVariablesScript ?>
 	<?php //TODO: use js var?>
 
@@ -83,7 +84,7 @@
 		<img width="<?= ChatAjax::CHAT_AVATAR_DIMENSION ?>" height="<?= ChatAjax::CHAT_AVATAR_DIMENSION ?>" class="avatar" src="<%= avatarSrc %>"/>
 		<span class="time"><%= timeStamp %></span>
 		<span class="username"><%= name %></span>
-		<span class="message me-message">* <%= name %> <%= text %></span>
+		<span class="message me-message"><span class="me-username">* <span><%= name %></span></span> <%= text %></span>
 	</script>
 	<script type='text/template' id='inline-alert-template'>
 		<%= text %>
@@ -133,5 +134,6 @@
 		<script src="<?php echo $src ?>"></script>
 	<?php endforeach;?>
 	<script src="<?php echo $jsMessagePackagesUrl ?>"></script>
+	<script type="text/javascript" src="/load.php?lang=en&mode=articles&articles=MediaWiki%3AChat.js%7CUser%3A<?php echo $wg->User->getName(); ?>%2Fchat.js&only=scripts"></script>
 </body>
 </html>

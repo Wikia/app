@@ -31,12 +31,13 @@ define('ext.wikia.adEngine.slotTweaker', [
 		var slot = document.getElementById(slotname);
 
 		if (slot) {
+			removeClass(slot, 'hidden');
 			slot.className += ' hidden';
 		}
 	}
 
 	function show(slotname) {
-		log('hide ' + slotname + ' using class hidden', 6, logGroup);
+		log('show ' + slotname + ' removing class hidden', 6, logGroup);
 
 		var slot = document.getElementById(slotname);
 
@@ -90,7 +91,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 	// TODO: fix it, it's a hack!
 	function adjustLeaderboardSize(slotname) {
 		var slot = document.getElementById(slotname);
-
 		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			slot.className += ' ' + standardLeaderboardSizeClass;
 		}
@@ -108,16 +108,22 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function noop() {
+		return;
+	}
+
 	/**
 	 * Triggers repaint to hide empty slot placeholders in Chrome
 	 * This is a temporary workaround
 	 * @param {string} slotId
 	 */
 	function hackChromeRefresh(slotId) {
-		var parent = document.getElementById(slotId).parentElement;
-		if (parent && slotId.search('INCONTENT') > -1) {
+		var slot = document.getElementById(slotId),
+			parent = slot && slot.parentElement;
+
+		if (parent && slotId.match(/^INCONTENT/)) {
 			parent.style.display = 'none';
-			parent.offsetHeight;
+			noop(parent.offsetHeight);
 			parent.style.display = '';
 		}
 	}

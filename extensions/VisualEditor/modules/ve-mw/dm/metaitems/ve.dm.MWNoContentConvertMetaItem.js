@@ -35,8 +35,8 @@ ve.dm.MWNoContentConvertMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/noconten
 ve.dm.MWNoContentConvertMetaItem.static.toDataElement = function ( domElements ) {
 	// HACK: Don't rely on Parsoid always putting the RDFa type as a property
 	return {
-		'type': this.name,
-		'originalProperty': domElements[0].getAttribute( 'property' )
+		type: this.name,
+		originalProperty: domElements[0].getAttribute( 'property' )
 	};
 };
 

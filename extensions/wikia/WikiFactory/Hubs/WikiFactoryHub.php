@@ -19,14 +19,14 @@ class WikiFactoryHub extends WikiaModel {
 	private $mAllCatefories = array();
 	private $cache_ttl = 86400;  // 1 day
 
-	const HUB_ID_OTHER = 0;
-	const HUB_ID_TV = 1;
-	const HUB_ID_VIDEO_GAMES = 2;
-	const HUB_ID_BOOKS = 3;
-	const HUB_ID_COMICS = 4;
-	const HUB_ID_LIFESTYLE = 5;
-	const HUB_ID_MUSIC = 6;
-	const HUB_ID_MOVIES = 7;
+	const VERTICAL_ID_OTHER = 0;
+	const VERTICAL_ID_TV = 1;
+	const VERTICAL_ID_VIDEO_GAMES = 2;
+	const VERTICAL_ID_BOOKS = 3;
+	const VERTICAL_ID_COMICS = 4;
+	const VERTICAL_ID_LIFESTYLE = 5;
+	const VERTICAL_ID_MUSIC = 6;
+	const VERTICAL_ID_MOVIES = 7;
 
 	const CATEGORY_ID_HUMOR = 1;
 	const CATEGORY_ID_GAMING = 2;
@@ -155,7 +155,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id" )->EQUAL_TO( $city_id )
 			->AND_( "cat_deprecated" )->EQUAL_TO ( 1 )  // always return the "old" category
-			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ) )
+			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id ), true /* $cacheEmpty */ )
 			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
 				$result[]= $row->cat_id;
 			});
@@ -237,10 +237,9 @@ class WikiFactoryHub extends WikiaModel {
 	 * @access public
 	 *
 	 * @param $city_id
-	 * @return array of categories (empty if wiki is not in a category)
-	 *
+	 * @param int $active pass 0 if you want to get deprecated categories
+	 * @return array array of categories (empty if wiki is not in a category)
 	 */
-
 	public function getCategoryIds( $city_id, $active = 1 ) {
 		global $wgExternalSharedDB;
 		if( !$wgExternalSharedDB || empty($city_id) ) {
@@ -266,14 +265,17 @@ class WikiFactoryHub extends WikiaModel {
 	 * This function returns the list of categories AND category metadata for a wiki
 	 * get category metadata (id, name, url, short, deprecated, active) for a wiki
 	 * @param  integer $city_id  wiki_id
+	 * @param int $active pass 0 if you want to get deprecated categories
 	 * @return array of keys/values (id, name, url, short, deprecated, active)
 	 */
 	public function getWikiCategories( $city_id, $active = 1 ) {
-
 		global $wgWikiaEnvironment;
 		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
 			$city_id = 11;
 		}
+
+		// invalidated in clearCache method
+		$memckey = wfSharedMemcKey( __METHOD__, $city_id, $active ? 1 : 0 );
 
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
@@ -282,7 +284,7 @@ class WikiFactoryHub extends WikiaModel {
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id ")->EQUAL_TO( $city_id )
 			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache ( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id, "$active" ) )
+			->cache( $this->cache_ttl, $memckey, true /* $cacheEmpty */ )
 			->runLoop( $this->getSharedDB(), function ( &$result, $row)  {
 				$result[] = get_object_vars($row);
 			});
@@ -446,22 +448,24 @@ class WikiFactoryHub extends WikiaModel {
 			$values[]= ["city_id" => $city_id, "cat_id" => $category];
 		}
 
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+		// Clear categories, add any new ones
+		// Note: this allows a wiki to be in zero categories, which may affect other biz logic
+		$dbw->begin();
+		$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
 		if (!empty ( $values) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-
-			$dbw->begin();
-			$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
 			$dbw->insert( "city_cat_mapping", $values, __METHOD__  );
-			$dbw->commit();
-
-			$this->clearCache( $city_id );
-
-			$aHookParams = [
-				'city_id' => $city_id,
-				'categories' => $categories,
-			];
-			wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 		}
+		$dbw->commit();
+
+		$this->clearCache( $city_id );
+
+		$aHookParams = [
+			'city_id' => $city_id,
+			'categories' => $categories,
+		];
+		wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
 		$this->loadCategories();

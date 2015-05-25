@@ -58,12 +58,17 @@ class WikiaPageType {
 	 * Get article type (as in: games, tv series, etc)
 	 * of current page
 	 *
+	 * @param Title $title
 	 * @return string
 	 */
-	public static function getArticleType() {
+	public static function getArticleType( $title = null ) {
 		global $wgTitle;
 
-		$articleService = new ArticleService( $wgTitle );
+		if ( is_null( $title ) ) {
+			$title = $wgTitle;
+		}
+
+		$articleService = new ArticleService( $title );
 		return $articleService->getArticleType();
 	}
 

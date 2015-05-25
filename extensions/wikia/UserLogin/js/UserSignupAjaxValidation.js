@@ -1,4 +1,4 @@
-/* global  wgScriptPath, UserSignup */
+/* global wgWikiaMaxNameChars, wgMinimalPasswordLength */
 (function () {
 	'use strict';
 
@@ -7,106 +7,125 @@
 	 *
 	 * @param {object} options
 	 * - wikiaForm: instance of WikiaForm
-	 * - inputsToValide: array of input names to be ok'ed before submission
 	 * - submitButton: pointer to main submit button of the form
+	 * - passwordInputName: input name attribute for form's password input
 	 * @constructor
 	 */
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
-		this.inputsToValidate = options.inputsToValidate || [];
-		this.notEmptyFields = options.notEmptyFields || [];
 		this.submitButton = $(options.submitButton);
-
-		this.activateSubmit();
+		this.deferred = false;
+		this.passwordInputName = options.passwordInputName || 'password';
 	};
 
-	UserSignupAjaxValidation.prototype.activateSubmit = function () {
-		var isvalid = this.checkFieldsValid();
-		if (isvalid) {
-			this.submitButton.removeAttr('disabled');
-		} else {
-			this.submitButton.attr('disabled', 'disabled');
-		}
-	};
-
+	/**
+	 * Call back end for validation of input where user action occurred
+	 * @param {Event} e Browser event like input blur
+	 */
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
-		var el = $(e.target),
-			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+		var $el = $(e.target),
+			data = {},
+			inputName = $el.attr('name'),
+			value = $el.val(),
+			usernameAlias = 'userloginext01';
 
-		params.field = paramName;
-		params[paramName] = el.val();
-
-		$.get(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
-	};
-
-	UserSignupAjaxValidation.prototype.validationHandler = function (paramName, response) {
-		if (response.result === 'ok') {
-			this.wikiaForm.clearInputError(paramName);
+		// don't send password values to the server, validated them here in JS
+		if (inputName === this.passwordInputName) {
+			this.validatePassword(value);
 		} else {
-			this.wikiaForm.showInputError(paramName, response.msg);
-		}
+			// back end expects 'userloginext01' instead of 'username'
+			if (inputName === 'username') {
+				data.field = usernameAlias;
+				data[usernameAlias] = value;
+			} else {
+				data.field = inputName;
+				data[inputName] = value;
+			}
 
-		this.activateSubmit();
+			this.sendValidationRequest(data)
+				.done(this.validationHandler.bind(this, inputName));
+		}
 	};
 
-	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
-		var el = $(e.target),
-			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+	/**
+	 * Client side validation that mirrors server side validation for password input. (SOC-316)
+	 * Validating client side reduces passwords being sent over HTTP in plain text.
+	 * @param {string} password
+	 */
+	UserSignupAjaxValidation.prototype.validatePassword = function (password) {
+		var pwLength = password.length,
+			msg = '',
+			inputName = this.passwordInputName,
+			response = {};
 
-		if (UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
-			UserSignup.deferred.reject();
+		// check password isn't too short (defaults to 1 char)
+		if (pwLength < wgMinimalPasswordLength) {
+			msg = mw.message('userlogin-error-wrongpasswordempty').escaped();
+
+		// check password isn't too long (defaults to 50 chars)
+		} else if (pwLength > wgWikiaMaxNameChars) {
+			msg = mw.message('usersignup-error-password-length').escaped();
 		}
 
-		$.extend(params, {
+		if (msg !== '') {
+			response.msg = msg;
+			response.result = 'error';
+		} else {
+			response.result = 'ok';
+		}
+
+		this.validationHandler(inputName, response);
+	};
+
+	/**
+	 * Handle birthday validation as a collection of inputs as opposed to one input.
+	 * @param {Event} e Browser event like select element blur
+	 */
+	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
+		var $el, inputName, data;
+
+		if (this.deferred && typeof this.deferred.reject === 'function') {
+			this.deferred.reject();
+		}
+
+		$el = $(e.target);
+		inputName = $el.attr('name');
+		data = {
 			field: 'birthdate',
 			birthyear: this.wikiaForm.inputs.birthyear.val(),
 			birthmonth: this.wikiaForm.inputs.birthmonth.val(),
 			birthday: this.wikiaForm.inputs.birthday.val()
-		});
+		};
 
-		UserSignup.deferred = $.post(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+		this.deferred = this.sendValidationRequest(data)
+			.done(this.validationHandler.bind(this, inputName));
 	};
 
 	/**
-	 * @todo User $.nivana instead
-	 * @returns {{controller: string, method: string, format: string}}
+	 * Apply error and success handling via WikiaForm instance
+	 * @param {string} inputName Name of input to handle messaging
+	 * @param {object} response Data for error/success handling
 	 */
-	UserSignupAjaxValidation.prototype.getDefaultParamsForAjax = function () {
-		return {
+	UserSignupAjaxValidation.prototype.validationHandler = function (inputName, response) {
+		if (response.result === 'ok') {
+			this.wikiaForm.clearInputError(inputName);
+		} else {
+			this.wikiaForm.showInputError(inputName, response.msg);
+		}
+	};
+
+	/**
+	 * Shared AJAX helper method
+	 * @param {object} data
+	 * @returns {jQuery} Promise
+	 */
+	UserSignupAjaxValidation.prototype.sendValidationRequest = function (data) {
+		return $.nirvana.sendRequest({
 			controller: 'UserSignupSpecial',
 			method: 'formValidation',
-			format: 'json'
-		};
-	};
-
-	UserSignupAjaxValidation.prototype.checkFieldsValid = function () {
-		var isValid = true,
-			inputsToValidate = this.notEmptyFields,
-			i;
-
-		for (i = 0; i < inputsToValidate.length; i++) {
-			if (this.checkFieldEmpty(this.wikiaForm.inputs[inputsToValidate[i]]) ||
-				this.wikiaForm.getInputGroup(inputsToValidate[i]).hasClass('error')) {
-				isValid = false;
-				break;
-			}
-		}
-
-		return isValid;
-	};
-
-	UserSignupAjaxValidation.prototype.checkFieldEmpty = function (field) {
-		return field && ((field.is('input') && field.val() === '') || (field.is('select') && field.val() === -1));
+			type: 'GET',
+			data: data
+		});
 	};
 
 	window.UserSignupAjaxValidation = UserSignupAjaxValidation;

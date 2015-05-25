@@ -389,6 +389,18 @@ $messages['kn'] = array(
 	'tagsreportmainnspace' => 'ಮುಖ್ಯ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'tagsreport' => '태그 목록',
+	'tagsreporttitle' => '태그 목록',
+	'tagsreportnotspecify' => '아직 아무런 특수 태그도 선택하지 않았습니다',
+	'tagsreportpages' => '(<strong>$1</strong>개)',
+	'tagsreportpagesfound' => '특수 태그를 포함하는 문서 <strong>$1</strong>개 발견 (DPL, 유튜브 등)',
+	'tagsreportgenerated' => '$1 $2에 생성됨',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -408,7 +420,7 @@ $messages['lb'] = array(
 	'tagsreportpageremoved' => "D'Säit #$1 gouf ewechgeholl",
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -735,10 +747,12 @@ $messages['tl'] = array(
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Prima klasy4na
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
 	'tagsreport' => 'Звіт про теги',
+	'tagsreport-desc' => "Список статей, які використовують спеціальні теги в тексті (наприклад, \"дпл', 'YouTube')",
 	'tagsreporttitle' => 'Звіт про теги',
 	'tagsreportselecttag' => 'Оберіть тег:',
 	'tagsreportgo' => 'Показати',

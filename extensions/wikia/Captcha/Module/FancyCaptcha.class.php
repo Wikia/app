@@ -50,7 +50,7 @@ class FancyCaptcha extends BaseCaptcha {
 		}
 		$index = $this->storeCaptcha( $info );
 
-		$resultArr['captcha']['type'] = 'image';
+		$resultArr['captcha']['type'] = 'fancyCaptcha';
 		$resultArr['captcha']['mime'] = 'image/png';
 		$resultArr['captcha']['id'] = $index;
 		$resultArr['captcha']['url'] = $this->getImageURL( $index );
@@ -90,21 +90,13 @@ class FancyCaptcha extends BaseCaptcha {
 
 		$this->log( "Captcha id $index using hash ${info['hash']}, salt ${info['salt']}.\n" );
 
-		return "<p>" .
+		return "<div class='fancy-captcha'>" .
 			\Xml::element( 'img', [
 				'src'    => $this->getImageURL( $index ),
 				'width'  => $info['width'],
 				'height' => $info['height'],
 				'alt'    => '',
 			] ) .
-			"</p>\n" .
-			\Xml::element( 'input', [
-				'type'  => 'hidden',
-				'name'  => 'wpCaptchaId',
-				'id'    => 'wpCaptchaId',
-				'value' => $index,
-			] ) .
-			"<p>" .
 			\Html::element( 'input', [
 				'name' => 'wpCaptchaWord',
 				'id'   => 'wpCaptchaWord',
@@ -114,7 +106,19 @@ class FancyCaptcha extends BaseCaptcha {
 				'class' => $class,
 				'placeholder' => wfMessage( 'captcha-input-placeholder' )->escaped(),
 			] ) .
-			"</p>\n";
+			\Xml::element( 'input', [
+				'type'  => 'hidden',
+				'name'  => 'wpCaptchaId',
+				'id'    => 'wpCaptchaId',
+				'value' => $index,
+			] ) .
+			\Xml::element( 'input', [
+				'type'  => 'hidden',
+				'name'  => 'wpCaptchaClass',
+				'id'    => 'wpCaptchaClass',
+				'value'    => '\Captcha\Module\FancyCaptcha',
+			] ) .
+			"</div>\n";
 	}
 
 	/**
@@ -285,16 +289,19 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @return string
 	 */
 	public function getMessage( $action ) {
-		// Possible keys for easy grepping: fancycaptcha-edit, fancycaptcha-addurl, fancycaptcha-createaccount, fancycaptcha-create
-		$name = 'fancycaptcha-' . $action;
+		// Possible keys for easy grepping: recaptcha-edit, recaptcha-addurl, recaptcha-createaccount, recaptcha-create
+		// NOTE: we're using the same messages as reCaptcha. The reCaptcha messages are generic enough to work for both
+		// reCaptcha and FancyCaptcha, and the old FancyCaptcha message included links to a deprecated Special:Captcha/Help page.
+		$name = 'recaptcha-' . $action;
 		$text = wfMessage( $name )->escaped();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMessage( 'fancycaptcha-edit' )->escaped() : $text;
+		return wfEmptyMsg( $name, $text ) ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
 	}
 
 	/**
-	 * Delete a solved captcha image.
+	 * Determine if a captcha is correct. This will possibly delete the solved captcha image
+	 * if wgCaptchaDeleteOnSolve is true
 	 *
 	 * @return bool
 	 */

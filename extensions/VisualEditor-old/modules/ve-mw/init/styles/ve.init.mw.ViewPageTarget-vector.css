@@ -1,0 +1,51 @@
+/*!
+ * VisualEditor MediaWiki Initialization ViewPageTarget Vector skin styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-init-mw-viewPageTarget-surface {
+	/*
+	In order to allow placing the text cursor to the start or end of the text by
+	clicking in the margin area, we expand the outer boundary of the surface
+	outside the parent container using negative margin. Then we shrink the visible
+	rendering by applying inner padding. The end result is that the content is
+	the same width as in read mode, except with the padding around it now being
+	part of it instead of its parent, thus making it treat the area as part
+	of content editable.
+	*/
+	margin: 0.8em -1.5em 0 -1.5em;
+}
+
+.ve-init-mw-viewPageTarget-surface .ve-ce-documentNode {
+	padding: 0 1.714em; /* surface-margin-left (1.5em) / (mw-body-content font-size) 0.875em */
+}
+
+.ve-init-mw-viewPageTarget-surface .oo-ui-menuWidget {
+	font-size: 0.8em;
+}
+
+.ve-init-mw-viewPageTarget-toolbar {
+	margin: -1em -1em 1em -1em;
+	-webkit-transition: margin 200ms ease-out;
+	-moz-transition: margin 200ms ease-out;
+	-o-transition: margin 200ms ease-out;
+	transition: margin 200ms ease-out;
+	position: relative;
+}
+
+.ve-ui-debugBar {
+	padding: 1em;
+	margin: 1em -1em -1em -1em;
+	border-top: solid 1px #ccc;
+	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.15) inset;
+}
+
+.ve-ui-debugBar ol {
+	margin-left: 0;
+}
+
+.ve-ui-surface-overlay-global {
+	z-index: 101; /* #p-personal is z-index 100 in vector :( */
+}

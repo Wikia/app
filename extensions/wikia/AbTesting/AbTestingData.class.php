@@ -16,6 +16,8 @@ class AbTestingData extends WikiaObject {
 	const MIN = 'min';
 	const MAX = 'max';
 
+	protected $useMaster = false;
+
 	protected $blacklistedColumns = array(
 		self::TABLE_EXPERIMENTS => array(
 			'groups',
@@ -27,9 +29,15 @@ class AbTestingData extends WikiaObject {
 	);
 
 	public function getDb( $db_type = DB_SLAVE ) {
+		if ( $this->useMaster ) {
+			$db_type = DB_MASTER;
+		}
 		return wfGetDB( $db_type, array(), $this->wg->ExternalDatawareDB );
 	}
 
+	public function setUseMaster( $useMaster = true ) {
+		$this->useMaster = $useMaster;
+	}
 
 
 	/* READ METHODS */

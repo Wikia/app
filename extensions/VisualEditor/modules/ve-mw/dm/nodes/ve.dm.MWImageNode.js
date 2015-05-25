@@ -4,14 +4,14 @@
  * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
-/*global mw */
 
 /**
- * DataModel generated content node.
+ * DataModel MediaWiki image node.
  *
  * @class
  * @abstract
  * @extends ve.dm.GeneratedContentNode
+ * @mixins ve.dm.FocusableNode
  * @mixins ve.dm.ResizableNode
  *
  * @constructor
@@ -19,8 +19,10 @@
 ve.dm.MWImageNode = function VeDmMWImageNode() {
 	// Parent constructor
 	ve.dm.GeneratedContentNode.call( this );
-	// Mixin constructor
+
+	// Mixin constructors
 	ve.dm.ResizableNode.call( this );
+	ve.dm.FocusableNode.call( this );
 
 	this.scalablePromise = null;
 
@@ -29,83 +31,198 @@ ve.dm.MWImageNode = function VeDmMWImageNode() {
 	this.mediaType = 'BITMAP';
 	// Get wiki defaults
 	this.svgMaxSize = mw.config.get( 'wgVisualEditor' ).svgMaxSize;
-	this.defaultThumbSize = mw.config.get( 'wgVisualEditorConfig' ).defaultUserOptions.defaultthumbsize;
 
 	// Initialize
-	this.syncScalableToType( this.getAttribute( 'type' ) );
+	this.constructor.static.syncScalableToType(
+		this.getAttribute( 'type' ),
+		this.mediaType,
+		this.getScalable()
+	);
 
 	// Events
-	this.connect( this, { 'attributeChange': 'onAttributeChange' } );
+	this.connect( this, { attributeChange: 'onAttributeChange' } );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.dm.MWImageNode, ve.dm.GeneratedContentNode );
 
+OO.mixinClass( ve.dm.MWImageNode, ve.dm.FocusableNode );
+
 OO.mixinClass( ve.dm.MWImageNode, ve.dm.ResizableNode );
 
-/* Methods */
+/* Static methods */
+
+ve.dm.MWImageNode.static.getHashObject = function ( dataElement ) {
+	return {
+		type: dataElement.type,
+		resource: dataElement.attributes.resource,
+		width: dataElement.attributes.width,
+		height: dataElement.attributes.height
+	};
+};
+
+/**
+ * Take the given dimensions and scale them to thumbnail size.
+ * @param {Object} dimensions Width and height of the image
+ * @param {string} [mediaType] Media type 'DRAWING' or 'BITMAP'
+ * @return {Object} The new width and height of the scaled image
+ */
+ve.dm.MWImageNode.static.scaleToThumbnailSize = function ( dimensions, mediaType ) {
+	var defaultThumbSize = mw.config.get( 'wgVisualEditorConfig' ).defaultUserOptions.defaultthumbsize;
+
+	mediaType = mediaType || 'BITMAP';
+
+	if ( dimensions.width && dimensions.height ) {
+		// Use dimensions
+		// Resize to default thumbnail size, but only if the image itself
+		// isn't smaller than the default size
+		// For svg/drawings, the default wiki size is always applied
+		if ( dimensions.width > defaultThumbSize || mediaType === 'DRAWING' ) {
+			return ve.dm.Scalable.static.getDimensionsFromValue( {
+				width: defaultThumbSize
+			}, dimensions.width / dimensions.height );
+		}
+	}
+	return dimensions;
+};
+
+/**
+ * Translate the image dimensions into new ones according to the bounding box.
+ * @param {Object} imageDimension Width and height of the image
+ * @param {Object} boundingBox The limit of the bounding box
+ * @param {boolean} adhereToWidth Resize the image using width consideration only
+ * @returns {Object|null} The new width and height of the scaled image or null if
+ * the given dimensions are missing width or height values and cannot be computed.
+ */
+ve.dm.MWImageNode.static.resizeToBoundingBox = function ( imageDimensions, boundingBox, adhereToWidth ) {
+	var limitNumber, dimCalcObject;
+
+	if ( $.isEmptyObject( boundingBox ) ) {
+		return imageDimensions;
+	}
+
+	if ( imageDimensions.width && imageDimensions.height) {
+		// First, find the bounding box number (which is the bigger
+		// of the two values)
+		if ( boundingBox.width > boundingBox.height || adhereToWidth ) {
+			limitNumber = boundingBox.width;
+		} else {
+			limitNumber = boundingBox.height;
+		}
+
+		// Second, check which of the image dimensions is bigger and apply
+		// the limit to it
+		if ( imageDimensions.width >= imageDimensions.height || adhereToWidth ) {
+			// Check if the width is not smaller than the limit number
+			if ( imageDimensions.width <= limitNumber ) {
+				return imageDimensions;
+			}
+			// Limit by width
+			dimCalcObject = { width: limitNumber };
+		} else {
+			// Check if the height is not smaller than the limit number
+			if ( imageDimensions.height <= limitNumber ) {
+				return imageDimensions;
+			}
+			dimCalcObject = { height: limitNumber };
+		}
+
+		return ve.dm.Scalable.static.getDimensionsFromValue(
+			dimCalcObject,
+			imageDimensions.width / imageDimensions.height
+		);
+	}
+};
 
 /**
  * Update image scalable properties according to the image type.
  *
  * @param {string} type The new image type
+ * @param {string} mediaType Image media type 'DRAWING' or 'BITMAP'
+ * @param {ve.dm.Scalable} scalable The scalable object to update
  */
-ve.dm.MWImageNode.prototype.syncScalableToType = function ( type ) {
+ve.dm.MWImageNode.static.syncScalableToType = function ( type, mediaType, scalable ) {
 	var originalDimensions, dimensions,
-		scalable = this.getScalable(),
-		width = this.getAttribute( 'width' ),
-		height = this.getAttribute( 'height' );
-
-	// If no type is given, assume we are updating per current type
-	type = type || this.getAttribute( 'type' );
+		defaultThumbSize = mw.config.get( 'wgVisualEditorConfig' ).defaultUserOptions.defaultthumbsize;
 
 	originalDimensions = scalable.getOriginalDimensions();
 
-	// Deal with the different default sizes
-	if ( type === 'thumb' || type === 'frameless' ) {
-		// Set the default size to that in the wiki configuration if
-		// 1. The image width is not smaller than the default
-		// 2. If the image is an SVG drawing
-		if ( width >= this.defaultThumbSize || this.getMediaType() === 'DRAWING' ) {
-			dimensions = this.scalable.getDimensionsFromValue( {
-				'width': this.defaultThumbSize
-			} );
+	// We can only set default dimensions if we have the original ones
+	if ( originalDimensions ) {
+		if ( type === 'thumb' || type === 'frameless' ) {
+			// Set the default size to that in the wiki configuration if
+			// 1. The original image width is not smaller than the default
+			// 2. If the image is an SVG drawing
+			if ( originalDimensions.width >= defaultThumbSize || mediaType === 'DRAWING' ) {
+				dimensions = ve.dm.Scalable.static.getDimensionsFromValue( {
+					width: defaultThumbSize
+				}, scalable.getRatio() );
+			} else {
+				dimensions = ve.dm.Scalable.static.getDimensionsFromValue(
+					originalDimensions,
+					scalable.getRatio()
+				);
+			}
+			scalable.setDefaultDimensions( dimensions );
 		} else {
-			dimensions = this.scalable.getDimensionsFromValue( {
-				'width': width
-			} );
-		}
-		scalable.setDefaultDimensions( dimensions );
-	} else {
-		if ( originalDimensions ) {
 			scalable.setDefaultDimensions( originalDimensions );
 		}
 	}
 
 	// Deal with maximum dimensions for images and drawings
-	if ( this.getMediaType() !== 'DRAWING' ) {
+	if ( mediaType !== 'DRAWING' ) {
 		if ( originalDimensions ) {
 			scalable.setMaxDimensions( originalDimensions );
 			scalable.setEnforcedMax( true );
 		} else {
 			scalable.setEnforcedMax( false );
 		}
-	} else {
-		// Set max to svgMaxSize on the shortest side
-		if ( width < height ) {
-			dimensions = scalable.getDimensionsFromValue( {
-				'width': this.svgMaxSize
-			} );
-		} else {
-			dimensions = scalable.getDimensionsFromValue( {
-				'height': this.svgMaxSize
-			} );
-		}
-		scalable.setMaxDimensions( dimensions );
-		scalable.setEnforcedMax( true );
 	}
+	// TODO: Some day, when svgMaxSize works properly in MediaWiki
+	// we can add it back as max dimension consideration.
 };
+
+/**
+ * Get the scalable promise which fetches original dimensions from the API
+ * @param {string} filename The image filename whose details the scalable will represent
+ * @returns {jQuery.Promise} Promise which resolves after the image size details are fetched from the API
+ */
+ve.dm.MWImageNode.static.getScalablePromise = function ( filename ) {
+	var scalablePromise = $.Deferred();
+	// On the first call set off an async call to update the scalable's
+	// original dimensions from the API.
+	if ( ve.init.target ) {
+		ve.init.target.constructor.static.apiRequest(
+			{
+				action: 'query',
+				prop: 'imageinfo',
+				indexpageids: '1',
+				iiprop: 'size|mediatype',
+				titles: filename
+			},
+			{ type: 'POST' }
+		)
+		.done( function ( response ) {
+			var page = response.query && response.query.pages[response.query.pageids[0]],
+				info = page && page.imageinfo && page.imageinfo[0];
+			if ( info ) {
+				scalablePromise.resolve( info );
+			} else {
+				scalablePromise.reject();
+			}
+		} )
+		.fail( function () {
+			scalablePromise.reject();
+		} );
+	} else {
+		scalablePromise.reject();
+	}
+	return scalablePromise;
+};
+
+/* Methods */
+
 /**
  * Respond to attribute change.
  * Update the rendering of the 'align', src', 'width' and 'height' attributes
@@ -118,7 +235,7 @@ ve.dm.MWImageNode.prototype.syncScalableToType = function ( type ) {
  */
 ve.dm.MWImageNode.prototype.onAttributeChange = function ( key, from, to ) {
 	if ( key === 'type' ) {
-		this.syncScalableToType( to );
+		this.constructor.static.syncScalableToType( to, this.mediaType, this.getScalable() );
 	}
 };
 
@@ -128,7 +245,17 @@ ve.dm.MWImageNode.prototype.onAttributeChange = function ( key, from, to ) {
  * @returns {string} Filename
  */
 ve.dm.MWImageNode.prototype.getFilename = function () {
-	return ve.dm.MWImageNode.static.getFilenameFromResource( this.getAttribute( 'resource' ) );
+	// Strip ./ stuff and decode URI encoding
+	var resource = this.getAttribute( 'resource' ) || '',
+		filename = resource.replace( /^(\.+\/)*/, '' );
+
+	// Protect against decodeURIComponent() throwing exceptions
+	try {
+		filename = decodeURIComponent( filename );
+	} catch ( e ) {
+		ve.log( 'URI decoding exception', e );
+	}
+	return filename;
 };
 
 /**
@@ -140,73 +267,32 @@ ve.dm.MWImageNode.prototype.getSizeHash = function () {
 	return 'MWImageOriginalSize:' + this.getFilename();
 };
 
-/* Static methods */
-
-ve.dm.MWImageNode.static.getHashObject = function ( dataElement ) {
-	return {
-		'type': dataElement.type,
-		'resource': dataElement.attributes.resource,
-		'width': dataElement.attributes.width,
-		'height': dataElement.attributes.height
-	};
-};
-
-ve.dm.MWImageNode.static.getFilenameFromResource = function ( resource ) {
-	// Strip ./ stuff and decode URI encoding
-	var filename = resource.replace( /^(.+\/)*/, '' );
-	// Protect against decodeURIComponent() throwing exceptions
-	try {
-		filename = decodeURIComponent( filename );
-	} catch ( e ) {
-		ve.log( 'URI decoding exception', e );
-	}
-	return filename;
-};
-
 /**
  * @inheritdoc
  */
 ve.dm.MWImageNode.prototype.getScalable = function () {
-	this.getScalablePromise();
+	var imageNode = this;
+	if ( !this.scalablePromise ) {
+		this.scalablePromise = ve.dm.MWImageNode.static.getScalablePromise( this.getFilename() )
+			.done( function ( info ) {
+				if ( info ) {
+					imageNode.getScalable().setOriginalDimensions( {
+						width: info.width,
+						height: info.height
+					} );
+					// Update media type
+					imageNode.mediaType = info.mediatype;
+					// Update according to type
+					imageNode.constructor.static.syncScalableToType(
+						imageNode.getAttribute( 'type' ),
+						imageNode.mediaType,
+						imageNode.getScalable()
+					);
+				}
+			} );
+	}
 	// Parent method
 	return ve.dm.ResizableNode.prototype.getScalable.call( this );
-};
-
-/**
- * Get the scalable promise which fetches original dimensions from the API
- *
- * @returns {jQuery.Promise} Promise which resolves setOriginalDimensions has been called (if required)
- */
-ve.dm.MWImageNode.prototype.getScalablePromise = function () {
-	// On the first call set off an async call to update the scalable's
-	// original dimensions from the API.
-	if ( !this.scalablePromise ) {
-		this.scalablePromise = ve.init.target.constructor.static.apiRequest(
-			{
-				'action': 'query',
-				'prop': 'imageinfo',
-				'indexpageids': '1',
-				'iiprop': 'size|mediatype',
-				'titles': this.getFilename()
-			},
-			{ 'type': 'POST' }
-		).then( ve.bind( function ( response ) {
-			var page = response.query && response.query.pages[response.query.pageids[0]],
-				info = page && page.imageinfo && page.imageinfo[0];
-
-			if ( info ) {
-				this.getScalable().setOriginalDimensions( {
-					'width': info.width,
-					'height': info.height
-				} );
-				// Update media type
-				this.mediaType = info.mediatype;
-				// Update according to type
-				this.syncScalableToType();
-			}
-		}, this ) ).promise();
-	}
-	return this.scalablePromise;
 };
 
 /**
@@ -214,13 +300,13 @@ ve.dm.MWImageNode.prototype.getScalablePromise = function () {
  */
 ve.dm.MWImageNode.prototype.createScalable = function () {
 	return new ve.dm.Scalable( {
-		'currentDimensions': {
-			'width': this.getAttribute( 'width' ),
-			'height': this.getAttribute( 'height' )
+		currentDimensions: {
+			width: this.getAttribute( 'width' ),
+			height: this.getAttribute( 'height' )
 		},
-		'minDimensions': {
-			'width': 1,
-			'height': 1
+		minDimensions: {
+			width: 1,
+			height: 1
 		}
 	} );
 };

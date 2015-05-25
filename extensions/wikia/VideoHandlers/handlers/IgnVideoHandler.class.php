@@ -33,7 +33,7 @@ EOT;
 	}
 
 	public function getEmbedUrl() {
-		$metadata = $this->getMetadata(true);
+		$metadata = $this->getVideoMetadata(true);
 		$url = $metadata['videoUrl'];
 
 		return $url;

@@ -1,4 +1,3 @@
-
 //
 //Views
 //
@@ -141,7 +140,7 @@ var ChatView = Backbone.View.extend({
 				msg.text = msg.text.substr(4);
 				var originalTemplate = this.template;
 				this.template = this.meMessageTemplate;
-				$(this.el).html(this.template(msg));
+				$(this.el).html(this.template(msg)).addClass('me-message-line');
 				this.template = originalTemplate;
 			} else {
 				if (msg.text.indexOf('//me ') == 0) {

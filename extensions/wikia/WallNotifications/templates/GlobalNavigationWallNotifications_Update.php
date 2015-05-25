@@ -13,7 +13,6 @@
 						<? else: ?>
 							<li class="notifications-for-wiki"
 							data-notification-key="<?= $notificationKey ?>"
-							data-wiki-path="<?= $wikiData['wgServer'] ?>"
 							data-wiki-id="<?= $wikiData['id'] ?>"
 							data-unread-count="<?= $wikiData['unread'] ?>"
 							>

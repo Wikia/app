@@ -17,11 +17,11 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) {
-	var paramName = parameter.getName();
+	var paramName = parameter.getName(), page = this;
 
 	// Configuration initialization
 	config = ve.extendObject( {
-		'scrollable': false
+		scrollable: false
 	}, config );
 
 	// Parent constructor
@@ -30,67 +30,78 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 	// Properties
 	this.parameter = parameter;
 	this.spec = parameter.getTemplate().getSpec();
-	this.defaultValue = this.spec.getParameterDefaultValue( paramName );
+	this.defaultValue = parameter.getDefaultValue();
+
 	this.$info = this.$( '<div>' );
 	this.$actions = this.$( '<div>' );
-	this.$label = this.$( '<div>' );
+	this.$labelElement = this.$( '<div>' );
 	this.$field = this.$( '<div>' );
 	this.$more = this.$( '<div>' );
 	this.$description = this.$( '<div>' );
 	this.valueInput = new OO.ui.TextInputWidget( {
-			'$': this.$,
-			'multiline': true,
-			'autosize': true,
-			'placeholder': this.defaultValue
-		} )
+		$: this.$,
+		multiline: true,
+		autosize: true,
+		placeholder: this.defaultValue
+	} )
 		.setValue( this.parameter.getValue() )
-		.connect( this, { 'change': 'onValueInputChange' } );
+		.connect( this, { change: 'onValueInputChange' } );
+
 	if ( this.parameter.isRequired() ) {
-		this.valueInput.$input.prop( 'required', true );
+		this.valueInput.$input
+			.prop( 'required', true )
+			.on( 'blur', function () {
+				page.valueInput.setValidation( 'non-empty' );
+				page.valueInput.setValidityFlag();
+			} );
 	}
 
 	this.removeButton = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'remove',
-			'title': ve.msg( 'visualeditor-dialog-transclusion-remove-param' ),
-			'classes': [ 've-ui-mwParameterPage-removeButton' ]
-		} )
-		.connect( this, { 'click': 'onRemoveButtonClick' } );
+		$: this.$,
+		framed: false,
+		icon: 'remove',
+		title: ve.msg( 'visualeditor-dialog-transclusion-remove-param' ),
+		flags: [ 'destructive' ],
+		classes: [ 've-ui-mwParameterPage-removeButton' ]
+	} )
+		.connect( this, { click: 'onRemoveButtonClick' } )
+		.toggle( !this.parameter.isRequired() );
+
 	this.infoButton = new OO.ui.PopupButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'info',
-			'title': ve.msg( 'visualeditor-dialog-transclusion-param-info' ),
-			'classes': [ 've-ui-mwParameterPage-infoButton' ]
-		} );
+		$: this.$,
+		framed: false,
+		icon: 'info',
+		title: ve.msg( 'visualeditor-dialog-transclusion-param-info' ),
+		classes: [ 've-ui-mwParameterPage-infoButton' ]
+	} );
+
 	this.addButton = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'parameter',
-			'label': ve.msg( 'visualeditor-dialog-transclusion-add-param' ),
-			'tabIndex': -1
-		} )
-		.connect( this, { 'click': 'onAddButtonClick' } );
+		$: this.$,
+		framed: false,
+		icon: 'parameter',
+		label: ve.msg( 'visualeditor-dialog-transclusion-add-param' ),
+		tabIndex: -1
+	} )
+		.connect( this, { click: 'onAddButtonFocus' } );
+
 	this.statusIndicator = new OO.ui.IndicatorWidget( {
-		'$': this.$,
-		'classes': [ 've-ui-mwParameterPage-statusIndicator' ]
+		$: this.$,
+		classes: [ 've-ui-mwParameterPage-statusIndicator' ]
 	} );
 
 	// TODO: Use spec.type
 
 	// Events
-	this.$label.on( 'click', ve.bind( this.onLabelClick, this ) );
-	this.$description.on( 'click', ve.bind( this.onDescriptionClick, this ) );
+	this.$labelElement.on( 'click', this.onLabelClick.bind( this ) );
 
 	// Initialization
 	this.$info
 		.addClass( 've-ui-mwParameterPage-info' )
-		.append( this.$label, this.statusIndicator.$element );
+		.append( this.$labelElement, this.statusIndicator.$element );
 	this.$actions
 		.addClass( 've-ui-mwParameterPage-actions' )
 		.append( this.infoButton.$element, this.removeButton.$element );
-	this.$label
+	this.$labelElement
 		.addClass( 've-ui-mwParameterPage-label' )
 		.text( this.spec.getParameterLabel( paramName ) );
 	this.$field
@@ -100,7 +111,8 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 		);
 	this.$more
 		.addClass( 've-ui-mwParameterPage-more' )
-		.append( this.addButton.$element );
+		.append( this.addButton.$element )
+		.focus( this.onAddButtonFocus.bind( this ) );
 	this.$element
 		.addClass( 've-ui-mwParameterPage' )
 		.append( this.$info, this.$actions, this.$field, this.$more );
@@ -165,7 +177,7 @@ ve.ui.MWParameterPage.prototype.onValueInputChange = function () {
 	this.parameter.setValue( value );
 
 	if ( this.outlineItem ) {
-		this.outlineItem.setFlags( { 'empty': this.isEmpty() } );
+		this.outlineItem.setFlags( { empty: this.isEmpty() } );
 	}
 };
 
@@ -173,7 +185,7 @@ ve.ui.MWParameterPage.prototype.onRemoveButtonClick = function () {
 	this.parameter.remove();
 };
 
-ve.ui.MWParameterPage.prototype.onAddButtonClick = function () {
+ve.ui.MWParameterPage.prototype.onAddButtonFocus = function () {
 	var template = this.parameter.getTemplate();
 	template.addParameter( new ve.dm.MWParameterModel( template ) );
 };
@@ -195,7 +207,7 @@ ve.ui.MWParameterPage.prototype.setOutlineItem = function ( outlineItem ) {
 			.setMovable( false )
 			.setRemovable( true )
 			.setLevel( 1 )
-			.setFlags( { 'empty': this.isEmpty() } )
+			.setFlags( { empty: this.isEmpty() } )
 			.setLabel( this.spec.getParameterLabel( this.parameter.getName() ) );
 
 		if ( this.parameter.isRequired() ) {

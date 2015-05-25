@@ -1,11 +1,11 @@
 /**
- * JavasSript for the Google Maps v3 form input of the Semantic Maps extension.
+ * JavaScript for the Google Maps v3 form input of the Semantic Maps extension.
  * @see http://www.mediawiki.org/wiki/Extension:Semantic_Maps
  * 
  * @since 1.0
  * @ingroup SemanticMaps
  * 
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
  */
 
@@ -36,13 +36,13 @@
 		var location = { lat: latLng.lat(), lon: latLng.lng() };
 		this.showCoordinate( location );
 		this.updateInput( [ location ] );		
-	}
+	};
 	
 	this.setupGeocoder = function() {
 		if ( geocoder === false ) {
 			geocoder = new google.maps.Geocoder();
 		}
-	}	
+	};
 	
 	this.geocodeAddress = function( address ) {
 		this.setupGeocoder();

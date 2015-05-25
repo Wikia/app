@@ -4,8 +4,7 @@
 	/*!
 	 * VisualEditor standalone demo
 	 *
-	 * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
-	 * @license The MIT License (MIT); see LICENSE.txt
+	 * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
 	 */
 	-->
 	<head>
@@ -13,16 +12,20 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<title>VisualEditor Standalone Demo</title>
 
-		<!-- STYLES -->
+<!-- STYLES -->
 
 	</head>
 	<body>
-		<ul class="ve-demo-menu">
-				<!-- MENU -->
-		</ul>
+		<div class="ve-demo-menu">
+			<div class="ve-demo-logo"></div>
+		</div>
 		<div class="ve-demo-editor"></div>
 
-		<!-- SCRIPTS -->
+<!-- SCRIPTS -->
+
+		<script>
+		ve.demoPages = <!-- MENU -->;
+		</script>
 
 	</body>
 </html>

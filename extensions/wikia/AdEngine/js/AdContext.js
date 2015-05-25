@@ -13,7 +13,8 @@ define('ext.wikia.adEngine.adContext', [
 
 	instantGlobals = instantGlobals || {};
 
-	var context;
+	var context,
+		callbacks = [];
 
 	function getContext() {
 		return context;
@@ -32,10 +33,15 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function setContext(newContext) {
+		var i,
+			len;
+
+		// Note: consider copying the value, not the reference
 		context = newContext;
 
 		// Always have objects in all categories
 		context.opts = context.opts || {};
+		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
 		context.forceProviders = context.forceProviders || {};
@@ -43,24 +49,6 @@ define('ext.wikia.adEngine.adContext', [
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
-		}
-
-		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		if (context.providers.sevenOneMedia) {
-			context.opts.usePostScribe = true;
-		}
-
-		// Always call DART in specific countries
-		// TODO: make mobile code compatible with desktop (currently one uses opts and the other providers)
-		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
-			alwaysCallDartInCountriesMobile = instantGlobals.wgAdDriverAlwaysCallDartInCountriesMobile || [];
-
-		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
-			context.opts.alwaysCallDart = true;
-		}
-
-		if (alwaysCallDartInCountriesMobile.indexOf(geo.getCountryCode()) > -1) {
-			context.providers.remnantGptMobile = true;
 		}
 
 		// Targeting by page categories
@@ -76,7 +64,26 @@ define('ext.wikia.adEngine.adContext', [
 		// Taboola integration
 		if (context.providers.taboola) {
 			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
-			(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+		}
+
+		// Turtle
+		if (context.forceProviders.turtle) {
+			context.providers.turtle = true;
+		}
+
+		if (instantGlobals.wgAdDriverTurtleCountries &&
+				instantGlobals.wgAdDriverTurtleCountries.indexOf &&
+				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1
+					) {
+			context.providers.turtle = true;
+		}
+
+		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
+				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
+				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
+					) {
+			context.slots.invisibleHighImpact = true;
 		}
 
 		// Export the context back to ads.context
@@ -84,11 +91,20 @@ define('ext.wikia.adEngine.adContext', [
 		if (w.ads && w.ads.context) {
 			w.ads.context = context;
 		}
+
+		for (i = 0, len = callbacks.length; i < len; i += 1) {
+			callbacks[i](context);
+		}
+	}
+
+	function addCallback(callback) {
+		callbacks.push(callback);
 	}
 
 	setContext(w.ads ? w.ads.context : {});
 
 	return {
+		addCallback: addCallback,
 		getContext: getContext,
 		setContext: setContext
 	};

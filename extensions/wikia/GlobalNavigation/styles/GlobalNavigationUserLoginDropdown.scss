@@ -1,0 +1,217 @@
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/placeholder';
+@import 'GlobalNavigationColors';
+@import 'GlobalNavigationVariables';
+
+.AccountNavigation.active .UserLoginDropdown {
+	display: block;
+}
+
+$user-login-content-padding: 19px;
+
+.UserLoginDropdown {
+	background-color: $global-wikia-background-color;
+	border: 1px solid $nav-border-color;
+	color: $nav-foreground-alternative-color;
+	display: none;
+	font-size: 12px;
+	list-style: none;
+	padding: 0 0 $user-login-content-padding 0;
+	position: absolute;
+	right: 0;
+	//box shadow below global navigation takes 2px and it should be covered by dropdown
+	top: 96%;
+	width: 200px;
+	white-space: normal;
+	z-index: 5000100;
+
+	.ajaxRegisterContainer {
+		background-color: $nav-foreground-dark-color;
+		display: table;
+		margin-bottom: 10px;
+		padding: $user-login-content-padding;
+		width: 100%;
+
+		.ajaxRegister {
+			background-color: $nav-foreground-bright-color;
+			color: $global-wikia-background-color;
+			display: table-cell;
+			font-weight: bold;
+			height: 40px;
+			line-height: 16px;
+			padding: 4px;
+			text-align: center;
+			text-transform: uppercase;
+			vertical-align: middle;
+
+			&:hover, &:active {
+				background-color: $signup-background-hover-color;
+				text-decoration: none;
+			}
+		}
+	}
+
+	.hide-label label {
+		display: none;
+	}
+
+	.WikiaForm {
+		padding: 0 $user-login-content-padding;
+
+		.forgot-password {
+			color: $nav-foreground-bright-color;
+			font-size: 12px;
+			margin: 5px 0 20px 5px;
+		}
+
+		.input-group {
+			box-sizing: border-box;
+			line-height: inherit;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+
+			&.login-button {
+				margin-top: 10px;
+				padding: 0;
+			}
+
+			&.keep-logged-in {
+				margin-left: 5px;
+			}
+		}
+
+		.keep-logged-in {
+			padding-bottom: 15px;
+			padding-top: 15px;
+			vertical-align: middle;
+		}
+
+		input[type=text],
+		input[type=password],
+		input[type=submit] {
+			-webkit-appearance: none;
+			-webkit-border-radius: 0;
+		}
+
+		input[type=text],
+		input[type=password] {
+			@include clear-box-shadow;
+
+			@include placeholder {
+				color: $nav-dark-text-color;
+				font-style: italic;
+			}
+
+			border:none;
+			box-sizing: border-box;
+			color: $nav-foreground-dark-color;
+			font-size: 15px;
+			height: 25px;
+			margin: 5px 0;
+			width: 100%;
+
+			&, &:focus, &:active {
+				background-color: $nav-background-light-gray-color;
+				outline: none;
+				padding: 0 5px;
+			}
+		}
+
+		input[type=text] {
+			margin-top: 0px;
+		}
+
+		input[type=checkbox] {
+			margin: 0;
+		}
+
+		input[type=submit] {
+			@include clear-linear-gradient($nav-foreground-dark-color);
+			border: 0;
+			border-radius: 0;
+			color: $global-wikia-background-color;
+			font-weight: bold;
+			line-height: 16px;
+			min-height: 40px;
+			padding: 4px;
+			text-transform: uppercase;
+			white-space: normal;
+			width: 100%;
+			word-break: break-word;
+
+			&:hover, &:active {
+				background-color: $nav-foreground-bright-color;
+			}
+		}
+
+		fieldset {
+			border: 0;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
+
+		label {
+			color: $nav-foreground-alternative-color;
+			margin: 0;
+		}
+	}
+
+	.sso-login {
+		padding: 0 $user-login-content-padding;
+
+		.sso-login-divider {
+			border-top: solid 1px $nav-border-color;
+			height: 0;
+			margin: 20px 0;
+			text-align: center;
+
+			span {
+				background-color: $global-wikia-background-color;
+				color: $nav-border-color;
+				display: inline-block;
+				font-weight: bold;
+				padding: 0 5px;
+				position: relative;
+				text-transform: uppercase;
+				top: -8px;
+			}
+		}
+
+		.wikia-button-facebook {
+			border: 0;
+			border-radius: 0;
+			color: $global-wikia-background-color;
+			display: block;
+			font-weight: bold;
+			height: 40px;
+			line-height: 40px;
+			overflow: hidden;
+			padding: 0;
+			text-align: center;
+			text-transform: uppercase;
+
+			&, &:hover, &:active {
+				@include clear-linear-gradient($facebook-background-color);
+				text-decoration: none;
+			}
+
+			&:hover, &:active {
+				background-color: $facebook-background-hover-color;
+			}
+		}
+
+		.sprite.facebook {
+			background-image: url('/extensions/wikia/UserLogin/images/facebook_icon.png'); /* inline */
+			background-position: 15px bottom;
+			background-repeat: no-repeat;
+			border-right: 1px solid $facebook-button-divider-color;
+			float: left;
+			height: 40px;
+			margin: 0;
+			width: 41px;
+		}
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vikassy",
+			"VASANTH S.N.",
+			"Nayvik"
+		]
+	},
+	"tooltip-ca-createsource": "ಈ ಪುಟದ ಮೂಲ ಸ೦ಕೇತವನ್ನು ಮಾಡಿ",
+	"tooltip-ca-editsource": "ಈ ಪುಟದ ಮೂಲ ಸ೦ಕೇತವನ್ನು ಸಂಪಾದಿವಿಸುವ್ದು",
+	"visualeditor-ca-createsource": "ಮೂಲವನ್ನು ಮಾಡು",
+	"visualeditor-ca-editsource": "ಮೂಲದಲಿ ಸಂಪಾದಿಸು",
+	"visualeditor-ca-editsource-section": "ಮೂಲದಲಿ ಸಂಪಾದಿಸು",
+	"visualeditor-ca-ve-create": "ದ್ರುಶ್ಯ ಸ೦ಪಾದಕರು",
+	"visualeditor-ca-ve-edit": "ದ್ರುಶ್ಯ ಸ೦ಪಾದಕರು",
+	"visualeditor-ca-ve-edit-section": "ದ್ರುಶ್ಯ ಸ೦ಪಾದಕರು",
+	"visualeditor-categories-tool": "ವರ್ಗಗಳು",
+	"visualeditor-cite-tool-name-book": "ಪುಸ್ತಕ",
+	"visualeditor-cite-tool-name-journal": "ದಿನಪತ್ರಿಕೆ",
+	"visualeditor-cite-tool-name-news": "ವಾರ್ತೆಗಳು",
+	"visualeditor-cite-tool-name-web": "ಜಾಲತಾಣ",
+	"visualeditor-descriptionpagelink": "ಯೋಜನೆ:ದ್ರುಶ್ಯ ಸ೦ಪಾದಕ",
+	"visualeditor-dialog-beta-welcome-action-continue": "ಮುಂದುವರೆಸಿ",
+	"visualeditor-dialog-media-noresults": "ಯಾವುದೇ ಫಲಿತಾಂಶಗಳಿಲ್ಲ.",
+	"visualeditor-dialog-media-position-left": "ಎಡ",
+	"visualeditor-dialog-media-position-none": "ಯಾವುದೂ ಇಲ್ಲ",
+	"visualeditor-dialog-media-position-right": "ಬಲ",
+	"visualeditor-dialog-media-position-section": "ಸ್ಥಾನ",
+	"visualeditor-dialog-media-size-section": "ಚಿತ್ರದ ಗಾತ್ರ",
+	"visualeditor-dialog-media-type-border": "ಗಡಿ",
+	"visualeditor-dialog-media-type-none": "ಮೂಲಭೂತ",
+	"visualeditor-dialog-media-type-section": "ಚಿತ್ರ ಮಾದರಿ",
+	"visualeditor-dialog-media-type-thumb": "ಕಿರುನೋಟ",
+	"visualeditor-dialog-meta-categories-category": "ವರ್ಗ",
+	"visualeditor-dialog-meta-categories-data-label": "ವರ್ಗಗಳು",
+	"visualeditor-dialog-meta-settings-hiddencat-label": "ಅಡಗಿಸಲ್ಪಟ್ಟಿರುವ ವರ್ಗ",
+	"visualeditor-mweditmodesource-warning-cancel": "ಇಲ್ಲ, ರದ್ದು ಮಾಡು",
+	"visualeditor-toolbar-cite-label": "ಉಲ್ಲೇಖಿಸಿ",
+	"visualeditor-toolbar-format-tooltip": "ವಾಕ್ಯವೃಂದದ ಹೊ೦ದಾನಿಕೆ",
+	"visualeditor-viewpage-savewarning-discard": "ಸಂಪಾದನೆಗಳನ್ನು ತ್ಯಜಿಸು",
+	"visualeditor-viewpage-savewarning-keep": "ಸಂಪಾದನೆ ಮುಂದುವರಿಸಿ"
+}

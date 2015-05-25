@@ -14,6 +14,9 @@ describe('AdLogicPageParams', function () {
 					targeting: targeting || {},
 					forceProviders: {}
 				};
+			},
+			addCallback: function () {
+				return;
 			}
 		};
 	}
@@ -32,7 +35,8 @@ describe('AdLogicPageParams', function () {
 
 	function mockPageViewCounter(pvCount) {
 		return {
-			increment: function () { return pvCount; }
+			get: function () { return pvCount || 0; },
+			increment: function () { return pvCount || 1; }
 		};
 	}
 
@@ -75,7 +79,12 @@ describe('AdLogicPageParams', function () {
 		opts = opts || {};
 
 		var kruxMock = {
-				segments: opts.kruxSegments || []
+				getSegments: function () {
+					return opts.kruxSegments || [];
+				},
+				getUser: function () {
+					return '';
+				}
 			},
 			abTestMock = opts.abExperiments ? {
 				getExperiments: function () {
@@ -86,20 +95,18 @@ describe('AdLogicPageParams', function () {
 			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
-			logMock,
-			windowMock,
-			windowMock.document,
-			windowMock.location,
-			abTestMock,
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
-			mockAmazonMatch(opts.amazonPageParams),
-			mockAmazonMatchOld(!!opts.amzn_targs),
+			logMock,
+			windowMock.document,
+			windowMock.location,
+			undefined,
+			abTestMock,
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
 
-	it('getPageLevelParams Simple params correct', function () {
+	it('getPageLevelParams simple params correct', function () {
 		var params = getParams({
 			wikiCategory: 'category',
 			wikiDbName: 'dbname',
@@ -198,35 +205,9 @@ describe('AdLogicPageParams', function () {
 		expect(params.key3).toEqual(['value3', 'value4'], 'key3=value3;key3=value4');
 	});
 
-	it('getPageLevelParams Amazon Match params (new)', function () {
-		var params = getParams({}, {amazonPageParams: {amznslots: ['a300x250p1', 'a728x90p2']}});
-
-		expect(params.amznslots).toEqual(['a300x250p1', 'a728x90p2']);
-	});
-
-	it('getPageLevelParams Amazon Match params (old)', function () {
-		var params = getParams({}, {amzn_targs: 'amzn_300x250=1;amzn_728x90=1;'});
-
-		expect(params.amzn_300x250).toEqual(['1']);
-		expect(params.amzn_728x90).toEqual(['1']);
-	});
-
 	it('getPageLevelParams Krux segments', function () {
 		var kruxSegmentsNone = [],
 			kruxSegmentsFew = ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD'],
-			kruxSegmentsLots = ['kxsgmnt1', 'kxsgmnt2', 'kxsgmnt3', 'kxsgmnt4', 'kxsgmnt5',
-					'kxsgmnt6', 'kxsgmnt7', 'kxsgmnt8', 'kxsgmnt9', 'kxsgmnt10', 'kxsgmnt11',
-					'kxsgmnt12', 'kxsgmnt13', 'kxsgmnt14', 'kxsgmnt15', 'kxsgmnt16', 'kxsgmnt17',
-					'kxsgmnt18', 'kxsgmnt19', 'kxsgmnt20', 'kxsgmnt21', 'kxsgmnt22', 'kxsgmnt23',
-					'kxsgmnt24', 'kxsgmnt25', 'kxsgmnt26', 'kxsgmnt27', 'kxsgmnt28', 'kxsgmnt29',
-					'kxsgmnt30', 'kxsgmnt31', 'kxsgmnt32', 'kxsgmnt33', 'kxsgmnt34', 'kxsgmnt35'
-				],
-			kruxSegments27 = ['kxsgmnt1', 'kxsgmnt2', 'kxsgmnt3', 'kxsgmnt4', 'kxsgmnt5',
-					'kxsgmnt6', 'kxsgmnt7', 'kxsgmnt8', 'kxsgmnt9', 'kxsgmnt10', 'kxsgmnt11',
-					'kxsgmnt12', 'kxsgmnt13', 'kxsgmnt14', 'kxsgmnt15', 'kxsgmnt16', 'kxsgmnt17',
-					'kxsgmnt18', 'kxsgmnt19', 'kxsgmnt20', 'kxsgmnt21', 'kxsgmnt22', 'kxsgmnt23',
-					'kxsgmnt24', 'kxsgmnt25', 'kxsgmnt26', 'kxsgmnt27'
-				],
 			params;
 
 		params = getParams({}, {kruxSegments: kruxSegmentsNone});
@@ -234,9 +215,6 @@ describe('AdLogicPageParams', function () {
 
 		params = getParams({}, {kruxSegments: kruxSegmentsFew});
 		expect(params.ksgmnt).toEqual(kruxSegmentsFew, 'A few segments');
-
-		params = getParams({}, {kruxSegments: kruxSegmentsLots});
-		expect(params.ksgmnt).toEqual(kruxSegments27, 'A lot of segments (stripped to first 27 segments)');
 	});
 
 	it('getPageLevelParams Page categories', function () {
@@ -387,8 +365,14 @@ describe('AdLogicPageParams', function () {
 		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
 	});
 
-	it('getPageLevelParams pv param', function () {
-		var params = getParams({}, {pvCount: 13});
+	it('getPageLevelParams pv param - oasis', function () {
+		var params = getParams({skin: 'oasis'}, {pvCount: 13});
+
+		expect(params.pv).toBe('13');
+	});
+
+	it('getPageLevelParams pv param - mercury', function () {
+		var params = getParams({skin: 'mercury'}, {pvCount: 13});
 
 		expect(params.pv).toBe('13');
 	});

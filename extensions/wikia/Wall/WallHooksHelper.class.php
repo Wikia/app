@@ -1,18 +1,25 @@
 <?php
 
+/**
+ * Hooks for Message Wall.
+ *
+ * All of these hooks will be executed when Forums are enabled
+ * even if Message Wall is disabled, so appropriate checks are
+ * needed if the hook should only take effect if Wall is enabled.
+ */
 class WallHooksHelper {
 	const RC_WALL_COMMENTS_MAX_LEN = 50;
 	const RC_WALL_SECURENAME_PREFIX = 'WallMessage_';
-	static private $rcWallActionTypes = array('wall_remove', 'wall_restore', 'wall_admindelete', 'wall_archive', 'wall_reopen');
+	static private $rcWallActionTypes = array( 'wall_remove', 'wall_restore', 'wall_admindelete', 'wall_archive', 'wall_reopen' );
 
-	static public function onBlockIpCompleteWatch($name, $title ) {
+	static public function onBlockIpCompleteWatch( $name, $title ) {
 		$app = F::App();
 		$watchTitle = Title::makeTitle( NS_USER_WALL, $name );
 		$app->wg->User->addWatch( $watchTitle );
 		return true;
 	}
 
-	static public function onUserIsBlockedFrom($user, $title, &$blocked, &$allowUsertalk) {
+	static public function onUserIsBlockedFrom( $user, $title, &$blocked, &$allowUsertalk ) {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
 			$wm = new WallMessage( $title );
@@ -25,21 +32,21 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onArticleViewHeader(&$article, &$outputDone, &$useParserCache) {
-		wfProfileIn(__METHOD__);
+	static public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
+		wfProfileIn( __METHOD__ );
 
 		$app = F::App();
 		$helper = new WallHelper();
 		$title = $article->getTitle();
 
-		if( $title->getNamespace() === NS_USER_WALL_MESSAGE
-				&& intval($title->getText()) > 0
+		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE
+				&& intval( $title->getText() ) > 0
 		) {
-			//message wall index - brick page
+			// message wall index - brick page
 			$outputDone = true;
 
-			$mainTitle = Title::newFromId($title->getText());
-			if(empty($mainTitle)) {
+			$mainTitle = Title::newFromId( $title->getText() );
+			if ( empty( $mainTitle ) ) {
 				$dbkey = null;
 				$fromDeleted = true;
 			} else {
@@ -47,24 +54,24 @@ class WallHooksHelper {
 				$fromDeleted = false;
 			}
 
-			if(empty($dbkey)) {
+			if ( empty( $dbkey ) ) {
 				// try master
-				$mainTitle = Title::newFromId($title->getText(), Title::GAID_FOR_UPDATE);
-				if(!empty($mainTitle)) {
+				$mainTitle = Title::newFromId( $title->getText(), Title::GAID_FOR_UPDATE );
+				if ( !empty( $mainTitle ) ) {
 					$dbkey = $mainTitle->getDBkey();
 					$fromDeleted = false;
 				}
 			}
 
-			if(empty($dbkey) || !$helper->isDbkeyFromWall($dbkey) ) {
+			if ( empty( $dbkey ) || !$helper->isDbkeyFromWall( $dbkey ) ) {
 				// no dbkey or not from wall, redirect to wall
-				$app->wg->Out->redirect(static::getWallTitle()->getFullUrl(), 301);
+				$app->wg->Out->redirect( static::getWallTitle()->getFullUrl(), 301 );
 
-				wfProfileOut(__METHOD__);
+				wfProfileOut( __METHOD__ );
 				return true;
 			} else {
 				// article exists or existed
-				if($fromDeleted) {
+				if ( $fromDeleted ) {
 					$app->wg->SuppressPageHeader = true;
 					$app->wg->Out->addHTML(
 						$app->renderView( 'WallController', 'messageDeleted', [
@@ -74,92 +81,92 @@ class WallHooksHelper {
 					$app->wg->Out->setPageTitle( wfMessage( 'wall-deleted-msg-pagetitle' )->text() );
 					$app->wg->Out->setHTMLTitle( wfMessage( 'errorpagetitle' )->text() );
 				} else {
-					$wallMessage = WallMessage::newFromTitle($mainTitle);
+					$wallMessage = WallMessage::newFromTitle( $mainTitle );
 					$app->wg->SuppressPageHeader = true;
-					if( $wallMessage->isVisible($app->wg->User) ||
-							($wallMessage->canViewDeletedMessage($app->wg->User) && $app->wg->Request->getVal('show') == '1')
+					if ( $wallMessage->isVisible( $app->wg->User ) ||
+							( $wallMessage->canViewDeletedMessage( $app->wg->User ) && $app->wg->Request->getVal( 'show' ) == '1' )
 					) {
-						if(wfRunHooks('WallBeforeRenderThread', array($mainTitle, $wallMessage))) {
-							$app->wg->Out->addHTML($app->renderView('WallController', 'thread',  array('id' => $title->getText(),  'title' => $wallMessage->getArticleTitle() )));
+						if ( wfRunHooks( 'WallBeforeRenderThread', array( $mainTitle, $wallMessage ) ) ) {
+							$app->wg->Out->addHTML( $app->renderView( 'WallController', 'thread',  array( 'id' => $title->getText(),  'title' => $wallMessage->getArticleTitle() ) ) );
 						}
 					} else {
-						$app->wg->Out->addHTML($app->renderView('WallController', 'messageDeleted', array( 'title' => wfMessage( 'wall-deleted-msg-pagetitle' )->text() ) ));
+						$app->wg->Out->addHTML( $app->renderView( 'WallController', 'messageDeleted', array( 'title' => wfMessage( 'wall-deleted-msg-pagetitle' )->text() ) ) );
 					}
 				}
 			}
 
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		if( empty( $app->wg->EnableWallExt ) ) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $app->wg->EnableWallExt ) ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 
-		if( $title->getNamespace() === NS_USER_WALL && !$title->isSubpage()
+		if ( $title->getNamespace() === NS_USER_WALL && !$title->isSubpage()
 		) {
-			//message wall index
+			// message wall index
 			$outputDone = true;
-			$action = $app->wg->request->getVal('action');
-			$app->wg->Out->addHTML($app->renderView('WallController', 'index', array( 'title' => $article->getTitle() ) ));
+			$action = $app->wg->request->getVal( 'action' );
+			$app->wg->Out->addHTML( $app->renderView( 'WallController', 'index', array( 'title' => $article->getTitle() ) ) );
 		}
 
-		if( $title->getNamespace() === NS_USER_TALK
+		if ( $title->getNamespace() === NS_USER_TALK
 				&& !$title->isSubpage()
 		) {
 			$title = static::getWallTitle();
-			if ( empty($title) ) {
-				wfProfileOut(__METHOD__);
+			if ( empty( $title ) ) {
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
-			//user talk page -> redirect to message wall
+			// user talk page -> redirect to message wall
 			$outputDone = true;
-			$app->wg->Out->redirect($title->getFullUrl(), 301);
+			$app->wg->Out->redirect( $title->getFullUrl(), 301 );
 
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$parts = explode('/', $title->getText());
+		$parts = explode( '/', $title->getText() );
 
-		if( $title->getNamespace() === NS_USER_TALK
+		if ( $title->getNamespace() === NS_USER_TALK
 				&& $title->isSubpage()
-				&& !empty($parts[0])
-				&& !empty($parts[1])
+				&& !empty( $parts[0] )
+				&& !empty( $parts[1] )
 		) {
-			//user talk subpage -> redirects to message wall namespace subpage
+			// user talk subpage -> redirects to message wall namespace subpage
 			$outputDone = true;
 
-			$title = Title::newFromText($parts[0].'/'.$parts[1], NS_USER_WALL);
-			$app->wg->Out->redirect($title->getFullUrl(), 301);
+			$title = Title::newFromText( $parts[0] . '/' . $parts[1], NS_USER_WALL );
+			$app->wg->Out->redirect( $title->getFullUrl(), 301 );
 
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		if( $title->getNamespace() === NS_USER_WALL
+		if ( $title->getNamespace() === NS_USER_WALL
 				&& $title->isSubpage()
-				&& !empty($app->wg->EnableWallExt)
-				&& !empty($parts[1])
-				&& mb_strtolower(str_replace(' ', '_', $parts[1])) === mb_strtolower($helper->getArchiveSubPageText())
+				&& !empty( $app->wg->EnableWallExt )
+				&& !empty( $parts[1] )
+				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) === mb_strtolower( $helper->getArchiveSubPageText() )
 		) {
-			//user talk archive
+			// user talk archive
 			$outputDone = true;
 
-			$app->wg->Out->addHTML($app->renderView('WallController', 'renderOldUserTalkPage', array('wallUrl' => static::getWallTitle()->getFullUrl())));
-		} else if( $title->getNamespace() === NS_USER_WALL && $title->isSubpage() ) {
-			//message wall subpage (sometimes there are old user talk subpages)
+			$app->wg->Out->addHTML( $app->renderView( 'WallController', 'renderOldUserTalkPage', array( 'wallUrl' => static::getWallTitle()->getFullUrl() ) ) );
+		} else if ( $title->getNamespace() === NS_USER_WALL && $title->isSubpage() ) {
+			// message wall subpage (sometimes there are old user talk subpages)
 			$outputDone = true;
 
-			$app->wg->Out->addHTML($app->renderView('WallController', 'renderOldUserTalkSubpage', array('subpage' => $parts[1], 'wallUrl' => static::getWallTitle()->getFullUrl()) ));
+			$app->wg->Out->addHTML( $app->renderView( 'WallController', 'renderOldUserTalkSubpage', array( 'subpage' => $parts[1], 'wallUrl' => static::getWallTitle()->getFullUrl() ) ) );
 
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -172,21 +179,21 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onSkinTemplateTabs($template, &$contentActions) {
+	static public function onSkinTemplateTabs( $template, &$contentActions ) {
 		$app = F::App();
 
-		if( !empty($app->wg->EnableWallExt) ) {
+		if ( !empty( $app->wg->EnableWallExt ) ) {
 			$helper = new WallHelper();
 			$title = $app->wg->Title;
 
-			if( $title->getNamespace() === NS_USER ) {
-				if( !empty($contentActions['namespaces']) && !empty($contentActions['namespaces']['user_talk']) ) {
+			if ( $title->getNamespace() === NS_USER ) {
+				if ( !empty( $contentActions['namespaces'] ) && !empty( $contentActions['namespaces']['user_talk'] ) ) {
 
 					$contentActions['namespaces']['user_talk']['text'] = wfMessage( 'wall-message-wall' )->text();
 
 					$userWallTitle = static::getWallTitle();
 
-					if( $userWallTitle instanceof Title ) {
+					if ( $userWallTitle instanceof Title ) {
 						$contentActions['namespaces']['user_talk']['href'] = $userWallTitle->getLocalUrl();
 					}
 
@@ -197,22 +204,22 @@ class WallHooksHelper {
 				}
 			}
 
-			if( $title->getNamespace() === NS_USER_WALL || $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
-				if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
+			if ( $title->getNamespace() === NS_USER_WALL || $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
+				if ( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
 					$text = $title->getText();
-					$id = intval($text);
+					$id = intval( $text );
 
-					if( $id > 0 ) {
-						$wm = WallMessage::newFromId($id);
+					if ( $id > 0 ) {
+						$wm = WallMessage::newFromId( $id );
 					} else {
-						//sometimes (I found it on a revision diff page) $id here isn't a number from (in example) Thread:1234 link
-						//it's a text similar to this: AndLuk/@comment-38.127.199.123-20120111182821
-						//then we need to use WallMessage constructor method
-						$wm = new WallMessage($title);
+						// sometimes (I found it on a revision diff page) $id here isn't a number from (in example) Thread:1234 link
+						// it's a text similar to this: AndLuk/@comment-38.127.199.123-20120111182821
+						// then we need to use WallMessage constructor method
+						$wm = new WallMessage( $title );
 					}
 
-					if( empty($wm) ) {
-						//FB#19394
+					if ( empty( $wm ) ) {
+						// FB#19394
 
 						return true;
 					}
@@ -221,13 +228,13 @@ class WallHooksHelper {
 					$wall = $wm->getWall();
 					$user = $wall->getUser();
 				} else {
-					$wall = Wall::newFromTitle($title);
+					$wall = Wall::newFromTitle( $title );
 					$user = $wall->getUser();
 				}
 
 				$contentActions['namespaces'] = array();
 
-				if( $user instanceof User ) {
+				if ( $user instanceof User ) {
 					$contentActions['namespaces']['user-profile'] = array(
 							'class' => false,
 							'href' => $user->getUserPage()->getFullUrl(),
@@ -242,20 +249,20 @@ class WallHooksHelper {
 				);
 			}
 
-			if( $title->getNamespace() === NS_USER_WALL && $title->isSubpage() ) {
-				$userTalkPageTitle = $helper->getTitle(NS_USER_TALK);
+			if ( $title->getNamespace() === NS_USER_WALL && $title->isSubpage() ) {
+				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK );
 				$contentActions = array();
 				$contentActions['namespaces'] = array();
 
 				$contentActions['namespaces']['view-source'] = array(
 						'class' => false,
-						'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'edit')),
+						'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'edit' ) ),
 						'text' => wfMessage( 'user-action-menu-view-source' )->text(),
 				);
 
 				$contentActions['namespaces']['history'] = array(
 						'class' => false,
-						'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'history')),
+						'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'history' ) ),
 						'text' => wfMessage( 'user-action-menu-history' )->text(),
 				);
 			}
@@ -272,7 +279,7 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onAlternateEdit($editPage) {
+	static public function onAlternateEdit( $editPage ) {
 		static::doSelfRedirect();
 
 		return true;
@@ -290,16 +297,16 @@ class WallHooksHelper {
 	static public function onBeforePageHistory( &$article ) {
 		$title = $article->getTitle();
 		$app = F::App();
-		$page = $app->wg->Request->getVal('page', 1);
+		$page = $app->wg->Request->getVal( 'page', 1 );
 
-		if( !empty( $title ) ) {
-			if(  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isTalkPage() && !$title->isSubpage() ) {
+		if ( !empty( $title ) ) {
+			if (  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isTalkPage() && !$title->isSubpage() ) {
 				$app->wg->SuppressPageHeader = true;
-				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', array( 'title' => $title, 'page' => $page) ) );
+				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', array( 'title' => $title, 'page' => $page ) ) );
 				return false;
 			}
 
-			if(  WallHelper::isWallNamespace( $title->getNamespace() ) && $title->isTalkPage() ) {
+			if (  WallHelper::isWallNamespace( $title->getNamespace() ) && $title->isTalkPage() ) {
 				$app->wg->SuppressPageHeader = true;
 				$app->wg->Out->addHTML( $app->renderView( 'WallHistoryController', 'index', array( 'title' => $title, 'page' => $page, 'threadLevelHistory' => true ) ) );
 				return false;
@@ -319,10 +326,10 @@ class WallHooksHelper {
 	 * @author Jakub Olek
 	 */
 
-	static public function onGetHistoryDescription( &$description ){
+	static public function onGetHistoryDescription( &$description ) {
 		$app = F::app();
 
-		if( WallHelper::isWallNamespace( $app->wg->Title->getNamespace() ) ) {
+		if ( WallHelper::isWallNamespace( $app->wg->Title->getNamespace() ) ) {
 			$description = '';
 		}
 
@@ -338,18 +345,18 @@ class WallHooksHelper {
 	 */
 	static public function onBeforeToolbarMenu( &$items ) {
 		$app = F::app();
-		if( empty( $app->wg->EnableWallExt ) ){
+		if ( empty( $app->wg->EnableWallExt ) ) {
 			return true;
 		}
 
 		$title = $app->wg->Title;
-		$action = $app->wg->Request->getText('action');
+		$action = $app->wg->Request->getText( 'action' );
 
-		if ($title instanceof Title && $title->isTalkPage()  &&  WallHelper::isWallNamespace( $title->getNamespace() ) ){
-			if ( is_array($items) ) {
-				foreach($items as $k=>$value) {
-					if( $value['type'] == 'follow' ) {
-						unset($items[$k]);
+		if ( $title instanceof Title && $title->isTalkPage()  &&  WallHelper::isWallNamespace( $title->getNamespace() ) ) {
+			if ( is_array( $items ) ) {
+				foreach ( $items as $k => $value ) {
+					if ( $value['type'] == 'follow' ) {
+						unset( $items[$k] );
 						break;
 					}
 				}
@@ -357,32 +364,32 @@ class WallHooksHelper {
 			}
 		}
 
-		if( $title instanceof Title &&  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isSubpage() && empty($action) ) {
+		if ( $title instanceof Title &&  WallHelper::isWallNamespace( $title->getNamespace() )  && !$title->isSubpage() && empty( $action ) ) {
 			$item = array(
 					'type' => 'html',
-					'html' => Xml::element('a', array('href' => $title->getFullUrl('action=history')), wfMessage( 'wall-toolbar-history' )->text() )
+					'html' => Xml::element( 'a', array( 'href' => $title->getFullUrl( 'action=history' ) ), wfMessage( 'wall-toolbar-history' )->text() )
 			);
 
-			if( is_array($items) ) {
+			if ( is_array( $items ) ) {
 				$inserted = false;
 				$itemsout = array();
 
-				foreach($items as $value) {
+				foreach ( $items as $value ) {
 					$itemsout[] = $value;
 
-					if( $value['type'] == 'follow' ) {
+					if ( $value['type'] == 'follow' ) {
 						$itemsout[] = $item;
 						$inserted = true;
 					}
 				}
 
-				if( !$inserted ) {
-					array_unshift($items, $item);
+				if ( !$inserted ) {
+					array_unshift( $items, $item );
 				} else {
 					$items = $itemsout;
 				}
 			} else {
-				$items = array($item);
+				$items = array( $item );
 			}
 		}
 
@@ -397,7 +404,7 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onBeforePageProtect(&$article) {
+	static public function onBeforePageProtect( &$article ) {
 		static::doSelfRedirect();
 
 		return true;
@@ -411,7 +418,7 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onBeforePageUnprotect(&$article) {
+	static public function onBeforePageUnprotect( &$article ) {
 		static::doSelfRedirect();
 
 		return true;
@@ -425,7 +432,7 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onBeforePageDelete(&$article) {
+	static public function onBeforePageDelete( &$article ) {
 		static::doSelfRedirect();
 
 		return true;
@@ -441,25 +448,25 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 * @author Piotrek Bablok
 	 */
-	static public function onPersonalUrls(&$personalUrls, &$title) {
+	static public function onPersonalUrls( &$personalUrls, &$title ) {
 		$app = F::App();
 
-		if(empty($app->wg->EnableWallExt)) {
+		if ( empty( $app->wg->EnableWallExt ) ) {
 			return true;
 		}
 
 		$user = $app->wg->User;
-		JSMessages::enqueuePackage('Wall', JSMessages::EXTERNAL);
+		JSMessages::enqueuePackage( 'Wall', JSMessages::EXTERNAL );
 
-		if( $user instanceof User && $user->isLoggedIn() ) {
-			$userWallTitle = static::getWallTitle(null, $user);
-			if( $userWallTitle instanceof Title ) {
+		if ( $user instanceof User && $user->isLoggedIn() ) {
+			$userWallTitle = static::getWallTitle( null, $user );
+			if ( $userWallTitle instanceof Title ) {
 				$personalUrls['mytalk']['href'] = $userWallTitle->getLocalUrl();
 			}
 			$personalUrls['mytalk']['text'] = wfMessage( 'wall-message-wall' )->text();
 
-			if(!empty($personalUrls['mytalk']['class'])){
-				unset($personalUrls['mytalk']['class']);
+			if ( !empty( $personalUrls['mytalk']['class'] ) ) {
+				unset( $personalUrls['mytalk']['class'] );
 			}
 		}
 
@@ -476,19 +483,19 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onUserPagesHeaderModuleAfterGetTabs(&$tabs, $namespace, $userName) {
+	static public function onUserPagesHeaderModuleAfterGetTabs( &$tabs, $namespace, $userName ) {
 		$app = F::App();
 
-		if(!empty($app->wg->EnableWallExt)) {
-			foreach($tabs as $key => $tab) {
-				if( !empty($tab['data-id']) && $tab['data-id'] === 'talk' ) {
+		if ( !empty( $app->wg->EnableWallExt ) ) {
+			foreach ( $tabs as $key => $tab ) {
+				if ( !empty( $tab['data-id'] ) && $tab['data-id'] === 'talk' ) {
 					$userWallTitle = static::getWallTitle();
 
-					if( $userWallTitle instanceof Title ) {
+					if ( $userWallTitle instanceof Title ) {
 						$tabs[$key]['link'] = Xml::element( 'a', [ 'href' => $userWallTitle->getLocalUrl(), 'title' => $userWallTitle->getPrefixedText() ], wfMessage( 'wall-message-wall' )->text() );
 						$tabs[$key]['data-id'] = 'wall';
 
-						if( $namespace === NS_USER_WALL ) {
+						if ( $namespace === NS_USER_WALL ) {
 							$tabs[$key]['selected'] = true;
 						}
 					}
@@ -510,8 +517,8 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onSkinSubPageSubtitleAfterTitle($title, &$ptext, &$cssClass) {
-		if( !empty($title) && $title->getNamespace() == NS_USER_WALL) {
+	static public function onSkinSubPageSubtitleAfterTitle( $title, &$ptext, &$cssClass ) {
+		if ( !empty( $title ) && $title->getNamespace() == NS_USER_WALL ) {
 			$ptext = $title->getText();
 			$cssClass = 'back-user-wall';
 		}
@@ -529,79 +536,79 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onPageHeaderIndexAfterActionButtonPrepared($response, $ns, $skin) {
+	static public function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
 		$app = F::App();
 		$helper = new WallHelper();
 
-		if( !empty($app->wg->EnableWallExt) ) {
+		if ( !empty( $app->wg->EnableWallExt ) ) {
 			$title = $app->wg->Title;
 			$parts = explode( '/', $title->getText() );
-			$action = $response->getVal('action');
-			$dropdown = $response->getVal('dropdown');
-			$canEdit = $app->wg->User->isAllowed('editwallarchivedpages');
+			$action = $response->getVal( 'action' );
+			$dropdown = $response->getVal( 'dropdown' );
+			$canEdit = $app->wg->User->isAllowed( 'editwallarchivedpages' );
 
-			if( $ns === NS_USER_WALL
+			if ( $ns === NS_USER_WALL
 				&& $title->isSubpage()
-				&& !empty($parts[1])
-				&& mb_strtolower(str_replace(' ', '_', $parts[1])) === mb_strtolower($helper->getArchiveSubPageText())
+				&& !empty( $parts[1] )
+				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) === mb_strtolower( $helper->getArchiveSubPageText() )
 			) {
-				//user talk archive
-				$userTalkPageTitle = $helper->getTitle(NS_USER_TALK);
+				// user talk archive
+				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK );
 
 				$action = array(
 						'class' => '',
 						'text' => wfMessage( 'viewsource' )->text(),
-						'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'edit')),
+						'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'edit' ) ),
 				);
 
 				$dropdown = array(
 						'history' => array(
-								'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'history')),
+								'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'history' ) ),
 								'text' => wfMessage( 'history_short' )->text(),
 						),
 				);
 
-				if( $canEdit ) {
+				if ( $canEdit ) {
 					$action['text'] = wfMessage( 'edit' )->text();
 					$action['id'] = 'talkArchiveEditButton';
 				}
 
-				$response->setVal('action', $action);
-				$response->setVal('dropdown', $dropdown);
+				$response->setVal( 'action', $action );
+				$response->setVal( 'dropdown', $dropdown );
 			}
 
-			if( $title->getNamespace() === NS_USER_WALL
+			if ( $title->getNamespace() === NS_USER_WALL
 					&& $title->isSubpage()
-					&& !empty($parts[1])
-					&& mb_strtolower(str_replace(' ', '_', $parts[1])) !== mb_strtolower($helper->getArchiveSubPageText())
+					&& !empty( $parts[1] )
+					&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) !== mb_strtolower( $helper->getArchiveSubPageText() )
 			) {
-				//subpage
-				$userTalkPageTitle = $helper->getTitle(NS_USER_TALK, $parts[1]);
+				// subpage
+				$userTalkPageTitle = $helper->getTitle( NS_USER_TALK, $parts[1] );
 
 				$action = array(
 						'class' => '',
 						'text' => wfMessage( 'viewsource' )->text(),
-						'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'edit')),
+						'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'edit' ) ),
 				);
 
 				$dropdown = array(
 						'history' => array(
-								'href' => $userTalkPageTitle->getLocalUrl(array('action' => 'history')),
+								'href' => $userTalkPageTitle->getLocalUrl( array( 'action' => 'history' ) ),
 								'text' => wfMessage( 'history_short' )->text(),
 						),
 				);
 
-				if( $canEdit ) {
+				if ( $canEdit ) {
 					$action['text'] = wfMessage( 'edit' )->text();
 					$action['id'] = 'talkArchiveEditButton';
 				}
 
-				$response->setVal('action', $action);
-				$response->setVal('dropdown', $dropdown);
+				$response->setVal( 'action', $action );
+				$response->setVal( 'dropdown', $dropdown );
 			}
 			// update the response object with any changes
-			$response->setVal('action', $action);
-			$response->setVal('dropdown', $dropdown);
+			$response->setVal( 'action', $action );
+			$response->setVal( 'dropdown', $dropdown );
 		}
 
 		return true;
@@ -618,22 +625,22 @@ class WallHooksHelper {
 		$app = F::App();
 		$title = $app->wg->Title;
 
-		if($app->wg->Request->getVal('action') == 'history' || $app->wg->Request->getVal('action') == 'historysubmit') {
+		if ( $app->wg->Request->getVal( 'action' ) == 'history' || $app->wg->Request->getVal( 'action' ) == 'historysubmit' ) {
 			return true;
 		}
 
-		if( $title->getNamespace() === NS_USER_WALL ) {
-			$app->wg->Out->redirect($title->getLocalUrl(), 301);
-			$app->wg->Out->enableRedirects(false);
+		if ( $title->getNamespace() === NS_USER_WALL ) {
+			$app->wg->Out->redirect( $title->getLocalUrl(), 301 );
+			$app->wg->Out->enableRedirects( false );
 		}
 
-		if( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
+		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
 			$wm = new WallMessage( $title );
 			$owner = $wm->getWallOwner();
 
-			$title = Title::newFromText($owner->getName(), NS_USER_WALL);
-			$app->wg->Out->redirect($title->getFullUrl(), 301);
-			$app->wg->Out->enableRedirects(false);
+			$title = Title::newFromText( $owner->getName(), NS_USER_WALL );
+			$app->wg->Out->redirect( $title->getFullUrl(), 301 );
+			$app->wg->Out->enableRedirects( false );
 		}
 	}
 
@@ -646,10 +653,10 @@ class WallHooksHelper {
 	 * @param null $user
 	 * @return Title | null
 	 */
-	static protected function getWallTitle($subpage = null, $user = null) {
+	static protected function getWallTitle( $subpage = null, $user = null ) {
 		$helper = new WallHelper();
 
-		return $helper->getTitle(NS_USER_WALL, $subpage, $user);
+		return $helper->getTitle( NS_USER_WALL, $subpage, $user );
 	}
 
 	/**
@@ -660,38 +667,38 @@ class WallHooksHelper {
 	 * @param $id
 	 * @return bool
 	 */
-	static public function onArticleDeleteComplete( &$self, &$user, $reason, $id) {
+	static public function onArticleDeleteComplete( &$self, &$user, $reason, $id ) {
 		$title = $self->getTitle();
 		$app = F::app();
-		if($title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE) {
-			$wh = new WallHistory($app->wg->CityId);
+		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			$wh = new WallHistory( $app->wg->CityId );
 			$wh->remove( $id );
 		}
 		return true;
 	}
 
-	static public function onArticleDelete( $article, &$user, &$reason, &$error ){
+	static public function onArticleDelete( $article, &$user, &$reason, &$error ) {
 		$title = $article->getTitle();
-		if($title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE) {
-			$wallMessage = WallMessage::newFromTitle($title);
-			return $wallMessage->canDelete($user);
+		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			$wallMessage = WallMessage::newFromTitle( $title );
+			return $wallMessage->canDelete( $user );
 		}
 		return true;
 	}
 
-	static public function onRecentChangeSave( $recentChange ){
+	static public function onRecentChangeSave( $recentChange ) {
 		wfProfileIn( __METHOD__ );
 		// notifications
 		$app = F::app();
 
-		if(  MWNamespace::isTalk( $recentChange->getAttribute('rc_namespace') ) && in_array( MWNamespace::getSubject($recentChange->getAttribute('rc_namespace')), $app->wg->WallNS ) ) {
-			$rcType = $recentChange->getAttribute('rc_type');
+		if (  MWNamespace::isTalk( $recentChange->getAttribute( 'rc_namespace' ) ) && in_array( MWNamespace::getSubject( $recentChange->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
+			$rcType = $recentChange->getAttribute( 'rc_type' );
 
-			//FIXME: WallMessage::remove() creates a new RC but somehow there is no rc_this_oldid
-			$revOldId = $recentChange->getAttribute('rc_this_oldid');
-			if( $rcType == RC_EDIT && !empty($revOldId) ) {
+			// FIXME: WallMessage::remove() creates a new RC but somehow there is no rc_this_oldid
+			$revOldId = $recentChange->getAttribute( 'rc_this_oldid' );
+			if ( $rcType == RC_EDIT && !empty( $revOldId ) ) {
 				$helper = new WallHelper();
-				$helper->sendNotification($revOldId, $rcType);
+				$helper->sendNotification( $revOldId, $rcType );
 			}
 		}
 
@@ -699,34 +706,34 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onArticleCommentBeforeWatchlistAdd($comment) {
+	static public function onArticleCommentBeforeWatchlistAdd( $comment ) {
 		$commentTitle = $comment->getTitle();
 		$app = F::app();
-		if ($commentTitle instanceof Title &&
-			in_array(MWNamespace::getSubject( $commentTitle->getNamespace() ), $app->wg->WallNS) ) {
+		if ( $commentTitle instanceof Title &&
+			in_array( MWNamespace::getSubject( $commentTitle->getNamespace() ), $app->wg->WallNS ) ) {
 			$parentTitle = $comment->getTopParentObj();
 
-			if (!($comment->mUser instanceof User)) {
+			if ( !( $comment->mUser instanceof User ) ) {
 				// force load from cache
-				$comment->load(true);
+				$comment->load( true );
 			}
 
-			if (!($comment->mUser instanceof User)) {
+			if ( !( $comment->mUser instanceof User ) ) {
 				// comment in master has no valid User
 				// log error
 				$logmessage = 'WallHooksHelper.class.php, ' . __METHOD__ . ' ';
 				$logmessage .= 'ArticleId: ' . $commentTitle->getArticleID();
 
-				Wikia::log(__METHOD__, false, $logmessage);
+				Wikia::log( __METHOD__, false, $logmessage );
 
 				// parse following hooks
 				return true;
 			}
 
-			if (!empty($parentTitle)) {
-				$comment->mUser->addWatch($parentTitle->getTitle());
+			if ( !empty( $parentTitle ) ) {
+				$comment->mUser->addWatch( $parentTitle->getTitle() );
 			} else {
-				$comment->mUser->addWatch($comment->getTitle());
+				$comment->mUser->addWatch( $comment->getTitle() );
 			}
 
 			return false;
@@ -746,12 +753,12 @@ class WallHooksHelper {
 	 * @param $removeArray
 	 * @return boolean true -- because it's a hook
 	 */
-	static public function onAfterEditPermissionErrors(&$permErrors, $title, $removeArray) {
+	static public function onAfterEditPermissionErrors( &$permErrors, $title, $removeArray ) {
 		$app = F::App();
-		$canEdit = $app->wg->User->isAllowed('editwallarchivedpages');
+		$canEdit = $app->wg->User->isAllowed( 'editwallarchivedpages' );
 
-		if( !empty($app->wg->EnableWallExt)
-				&& defined('NS_USER_TALK')
+		if ( !empty( $app->wg->EnableWallExt )
+				&& defined( 'NS_USER_TALK' )
 				&& $title->getNamespace() == NS_USER_TALK
 				&& !$canEdit
 		) {
@@ -771,29 +778,29 @@ class WallHooksHelper {
 	 *
 	 * @return true because this is a hook
 	 */
-	static public function onSkinTemplateContentActions(&$contentActions) {
+	static public function onSkinTemplateContentActions( &$contentActions ) {
 		$app = F::app();
 
 		$title = null;
-		if( !empty($app->wg->EnableWallExt) && $app->wg->Title instanceof Title ) {
+		if ( !empty( $app->wg->EnableWallExt ) && $app->wg->Title instanceof Title ) {
 			$title = $app->wg->Title;
 			$parts = explode( '/', $title->getText() );
 			$helper = new WallHelper();
 		}
 
-		if( $title instanceof Title
+		if ( $title instanceof Title
 				&& $title->getNamespace() == NS_USER_WALL
 				&& $title->isSubpage() === true
-				&& mb_strtolower(str_replace(' ', '_', $parts[1])) !== mb_strtolower($helper->getArchiveSubPageText())
+				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) !== mb_strtolower( $helper->getArchiveSubPageText() )
 		) {
-			//remove "History" and "View source" tabs in Monobook & don't show history in "My Tools" in Oasis
-			//because it leads to Message Wall (redirected) and a user could get confused
-			if( isset($contentActions['history']['href']) ) {
-				unset($contentActions['history']);
+			// remove "History" and "View source" tabs in Monobook & don't show history in "My Tools" in Oasis
+			// because it leads to Message Wall (redirected) and a user could get confused
+			if ( isset( $contentActions['history']['href'] ) ) {
+				unset( $contentActions['history'] );
 			}
 
-			if( isset($contentActions['view-source']['href']) ) {
-				unset($contentActions['view-source']);
+			if ( isset( $contentActions['view-source']['href'] ) ) {
+				unset( $contentActions['view-source'] );
 			}
 		}
 
@@ -803,7 +810,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method doesn't let display flags for message wall replies (they are displayed only for messages from message wall)
+	 * This method doesn't let display flags for message wall replies (they are displayed only for messages from message wall)
 	 *
 	 * @param ChangesList $list
 	 * @param string $flags
@@ -813,22 +820,22 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onChangesListInsertFlags($list, &$flags, $rc) {
-		if( $rc->getAttribute('rc_type') == RC_NEW && $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
-			//we don't need flags if this is a reply on a message wall
+	static public function onChangesListInsertFlags( $list, &$flags, $rc ) {
+		if ( $rc->getAttribute( 'rc_type' ) == RC_NEW && $rc->getAttribute( 'rc_namespace' ) == NS_USER_WALL_MESSAGE ) {
+			// we don't need flags if this is a reply on a message wall
 
 			$rcTitle = $rc->getTitle();
 
-			if( !($rcTitle instanceof Title) ) {
-				//it can be media wiki deletion of an article -- we ignore them
-				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($rc, true));
+			if ( !( $rcTitle instanceof Title ) ) {
+				// it can be media wiki deletion of an article -- we ignore them
+				Wikia::log( __METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r( $rc, true ) );
 				return true;
 			}
 
-			$wm = new WallMessage($rcTitle);
+			$wm = new WallMessage( $rcTitle );
 			$wm->load();
 
-			if( !$wm->isMain() ) {
+			if ( !$wm->isMain() ) {
 				$flags = '';
 			}
 		}
@@ -839,7 +846,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method shows link to message wall thread page
+	 * This method shows link to message wall thread page
 	 *
 	 * @param ChangesList $list
 	 * @param string $articleLink
@@ -852,38 +859,38 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onChangesListInsertArticleLink($list, &$articleLink, &$s, $rc, $unpatrolled, $watched) {
-		$rcType = $rc->getAttribute('rc_type');
+	static public function onChangesListInsertArticleLink( $list, &$articleLink, &$s, $rc, $unpatrolled, $watched ) {
+		$rcType = $rc->getAttribute( 'rc_type' );
 		$app = F::app();
-		if( in_array($rcType, array(RC_NEW, RC_EDIT, RC_LOG)) && in_array(MWNamespace::getSubject($rc->getAttribute('rc_namespace')), $app->wg->WallNS) ) {
+		if ( in_array( $rcType, array( RC_NEW, RC_EDIT, RC_LOG ) ) && in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
 
-			if( in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
+			if ( in_array( $rc->getAttribute( 'rc_log_action' ), static::$rcWallActionTypes ) ) {
 				$articleLink = '';
 
 				return true;
 			} else {
 				$rcTitle = $rc->getTitle();
 
-				if( !($rcTitle instanceof Title) ) {
-					//it can be media wiki deletion of an article -- we ignore them
-					Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($rc, true));
+				if ( !( $rcTitle instanceof Title ) ) {
+					// it can be media wiki deletion of an article -- we ignore them
+					Wikia::log( __METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r( $rc, true ) );
 					return true;
 				}
 
-				if(!$rcTitle->isTalkPage()) {
+				if ( !$rcTitle->isTalkPage() ) {
 					return true;
 				}
 
 
 
-				$wm = new WallMessage($rcTitle);
+				$wm = new WallMessage( $rcTitle );
 				$wm->load();
 
-				if( !$wm->isMain() ) {
+				if ( !$wm->isMain() ) {
 					$link = $wm->getMessagePageUrl();
 					$wm = $wm->getTopParentObj();
-					if( is_null($wm) ) {
-						Wikia::log(__METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r($rc, true));
+					if ( is_null( $wm ) ) {
+						Wikia::log( __METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r( $rc, true ) );
 						return true;
 					} else {
 						$wm->load();
@@ -897,13 +904,13 @@ class WallHooksHelper {
 				$pageText = $wm->getMainPageText();
 				$class = '';
 
-				$articleLink = ' <a href="'.$link.'" class="'.$class.'" >'.$title.'</a> ' . wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', array( $titleText, $pageText ) )->parse();
+				$articleLink = ' <a href="' . $link . '" class="' . $class . '" >' . $title . '</a> ' . wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-new-message', array( $titleText, $pageText ) )->parse();
 
 				# Bolden pages watched by this user
 				# Check if the user is following the thread or the board
 				$user = $app->wg->User;
 				if ( $wm->isWatched( $user ) || $wm->isWallWatched( $user ) ) {
-					$articleLink = '<strong class="mw-watched">'.$articleLink.'</strong>';
+					$articleLink = '<strong class="mw-watched">' . $articleLink . '</strong>';
 				}
 			}
 
@@ -917,7 +924,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method doesn't let display diff history links
+	 * This method doesn't let display diff history links
 	 *
 	 * @param ChangesList $list
 	 * @param $diffLink
@@ -931,41 +938,41 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onChangesListInsertDiffHist($list, &$diffLink, &$historyLink, &$s, $rc, $unpatrolled) {
-		wfProfileIn(__METHOD__);
+	static public function onChangesListInsertDiffHist( $list, &$diffLink, &$historyLink, &$s, $rc, $unpatrolled ) {
+		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
-		if( in_array(MWNamespace::getSubject(intval($rc->getAttribute('rc_namespace'))), $app->wg->WallNS) ) {
+		if ( in_array( MWNamespace::getSubject( intval( $rc->getAttribute( 'rc_namespace' ) ) ), $app->wg->WallNS ) ) {
 			$rcTitle = $rc->getTitle();
 
-			if( !($rcTitle instanceof Title) ) {
-				//it can be media wiki deletion of an article -- we ignore them
-				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FOR_DIFF_HIST " . print_r(array($rc), true));
-				wfProfileOut(__METHOD__);
+			if ( !( $rcTitle instanceof Title ) ) {
+				// it can be media wiki deletion of an article -- we ignore them
+				Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_DIFF_HIST " . print_r( array( $rc ), true ) );
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
-			if( in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
-				//delete, remove, restore
-				$parts = explode('/@', $rcTitle->getText());
-				$isThread = ( count($parts) === 2 ) ? true : false;
+			if ( in_array( $rc->getAttribute( 'rc_log_action' ), static::$rcWallActionTypes ) ) {
+				// delete, remove, restore
+				$parts = explode( '/@', $rcTitle->getText() );
+				$isThread = ( count( $parts ) === 2 ) ? true : false;
 
-				if( $isThread ) {
-					$wallTitleObj = Title::newFromText($parts[0], NS_USER_WALL);
-					$historyLink = ( !empty($parts[0]) && $wallTitleObj instanceof Title) ? $wallTitleObj->getFullURL(array('action' => 'history')) : '#';
+				if ( $isThread ) {
+					$wallTitleObj = Title::newFromText( $parts[0], NS_USER_WALL );
+					$historyLink = ( !empty( $parts[0] ) && $wallTitleObj instanceof Title ) ? $wallTitleObj->getFullURL( array( 'action' => 'history' ) ) : '#';
 					$historyLink = Xml::element( 'a', array( 'href' => $historyLink ), wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-history-link' )->text() );
 				} else {
-					$wallMessage = new WallMessage($rcTitle);
-					$historyLink = $wallMessage->getMessagePageUrl(true).'?action=history';
+					$wallMessage = new WallMessage( $rcTitle );
+					$historyLink = $wallMessage->getMessagePageUrl( true ) . '?action=history';
 					$historyLink = Xml::element( 'a', array( 'href' => $historyLink ), wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-thread-history-link' )->text() );
 				}
 
 				$s = '(' . $historyLink . ')';
 			} else {
-				//new, edit
-				if( $rc->mAttribs['rc_type'] == RC_NEW || $rc->mAttribs['rc_type'] == RC_LOG ) {
+				// new, edit
+				if ( $rc->mAttribs['rc_type'] == RC_NEW || $rc->mAttribs['rc_type'] == RC_LOG ) {
 					$diffLink = wfMessage( 'diff' )->escaped();
-				} else if( !ChangesList::userCan($rc, Revision::DELETED_TEXT) ) {
+				} else if ( !ChangesList::userCan( $rc, Revision::DELETED_TEXT ) ) {
 					$diffLink = wfMessage( 'diff' )->escaped();
 				} else {
 					$query = array(
@@ -974,33 +981,33 @@ class WallHooksHelper {
 							'oldid' => $rc->mAttribs['rc_last_oldid']
 					);
 
-					if( $unpatrolled ) {
+					if ( $unpatrolled ) {
 						$query['rcid'] = $rc->mAttribs['rc_id'];
 					}
 
-					$diffLink = Xml::element('a', array(
-							'href' => $rcTitle->getLocalUrl($query),
+					$diffLink = Xml::element( 'a', array(
+							'href' => $rcTitle->getLocalUrl( $query ),
 							'tabindex' => $rc->counter,
 							'class' => 'known noclasses',
-					), wfMessage( 'diff' )->text());
+					), wfMessage( 'diff' )->text() );
 				}
 
-				$wallMessage = new WallMessage($rcTitle);
-				$historyLink = $wallMessage->getMessagePageUrl(true).'?action=history';
-				$historyLink = Xml::element('a', array('href' => $historyLink), wfMessage( 'hist' )->text() );
-				$s = '('. $diffLink . wfMessage( 'pipe-separator' )->escaped() . $historyLink . ') . . ';
+				$wallMessage = new WallMessage( $rcTitle );
+				$historyLink = $wallMessage->getMessagePageUrl( true ) . '?action=history';
+				$historyLink = Xml::element( 'a', array( 'href' => $historyLink ), wfMessage( 'hist' )->text() );
+				$s = '(' . $diffLink . wfMessage( 'pipe-separator' )->escaped() . $historyLink . ') . . ';
 			}
 
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method doesn't let display rollback link for message wall inputs
+	 * This method doesn't let display rollback link for message wall inputs
 	 *
 	 * @param ChangesList $list
 	 * @param string $s
@@ -1011,8 +1018,8 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onChangesListInsertRollback($list, &$s, &$rollbackLink, $rc) {
-		if( !empty($rc->mAttribs['rc_namespace']) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
+	static public function onChangesListInsertRollback( $list, &$s, &$rollbackLink, $rc ) {
+		if ( !empty( $rc->mAttribs['rc_namespace'] ) && $rc->mAttribs['rc_namespace'] == NS_USER_WALL_MESSAGE ) {
 			$rollbackLink = '';
 		}
 
@@ -1022,7 +1029,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method creates comment to a recent change line
+	 * This method creates comment to a recent change line
 	 *
 	 * @param ChangesList $list
 	 * @param RecentChange $rc
@@ -1032,24 +1039,24 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onChangesListInsertComment($list, $rc, &$comment) {
-		$rcType = $rc->getAttribute('rc_type');
+	static public function onChangesListInsertComment( $list, $rc, &$comment ) {
+		$rcType = $rc->getAttribute( 'rc_type' );
 		$app = F::app();
-		if( in_array($rcType, array(RC_NEW, RC_EDIT, RC_LOG)) && in_array(MWNamespace::getSubject($rc->getAttribute('rc_namespace')), $app->wg->WallNS) ) {
+		if ( in_array( $rcType, array( RC_NEW, RC_EDIT, RC_LOG ) ) && in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
 
-			if( $rcType == RC_EDIT ) {
+			if ( $rcType == RC_EDIT ) {
 				$comment = ' ';
 
 				$summary = $rc->mAttribs['rc_comment'];
 
-				if(empty($summary)) {
+				if ( empty( $summary ) ) {
 					$summary = wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-edit' )->inContentLanguage()->text();
 				}
 
 				$comment .= Linker::commentBlock( $summary, $rc->getTitle() );
-			} else if( $rcType == RC_LOG && in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
-				//this will be deletion/removal/restore summary
-				$text = $rc->getAttribute('rc_comment');
+			} else if ( $rcType == RC_LOG && in_array( $rc->getAttribute( 'rc_log_action' ), static::$rcWallActionTypes ) ) {
+				// this will be deletion/removal/restore summary
+				$text = $rc->getAttribute( 'rc_comment' );
 
 				$comment = Linker::commentBlock( $text );
 			} else {
@@ -1063,7 +1070,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method creates comment about revision deletion of a message on message wall
+	 * This method creates comment about revision deletion of a message on message wall
 	 *
 	 * @param ChangesList $list
 	 * @param RecentChange $rc
@@ -1075,13 +1082,13 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onChangesListInsertLogEntry($list, $rc, &$s, $formatter, &$mark) {
+	static public function onChangesListInsertLogEntry( $list, $rc, &$s, $formatter, &$mark ) {
 		$app = F::app();
-		if( $rc->getAttribute('rc_type') == RC_LOG
-				&& in_array(MWNamespace::getSubject($rc->getAttribute('rc_namespace')), $app->wg->WallNS)
-				&& in_array($rc->getAttribute('rc_log_action'), static::$rcWallActionTypes) ) {
+		if ( $rc->getAttribute( 'rc_type' ) == RC_LOG
+				&& in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS )
+				&& in_array( $rc->getAttribute( 'rc_log_action' ), static::$rcWallActionTypes ) ) {
 
-			$wfMsgOptsBase = static::getMessageOptions($rc);
+			$wfMsgOptsBase = static::getMessageOptions( $rc );
 
 			$wfMsgOpts = [
 				$wfMsgOptsBase['articleTitle'],
@@ -1091,13 +1098,13 @@ class WallHooksHelper {
 				$wfMsgOptsBase['actionUser']
 			];
 
-			$msgType = ($wfMsgOptsBase['isThread']) ? 'thread' : 'reply';
+			$msgType = ( $wfMsgOptsBase['isThread'] ) ? 'thread' : 'reply';
 
-			//created in WallHooksHelper::getMessageOptions()
-			//and there is not needed to be passed to wfMessage()
-			unset($wfMsgOpts['isThread'], $wfMsgOpts['isNew']);
+			// created in WallHooksHelper::getMessageOptions()
+			// and there is not needed to be passed to wfMessage()
+			unset( $wfMsgOpts['isThread'], $wfMsgOpts['isNew'] );
 
-			switch($rc->getAttribute('rc_log_action')) {
+			switch( $rc->getAttribute( 'rc_log_action' ) ) {
 				case 'wall_remove':
 					$actionText = wfMessage( static::getMessagePrefix( $rc->getAttribute( 'rc_namespace' ) ) . '-removed-' . $msgType, $wfMsgOpts )->parse();
 					break;
@@ -1119,8 +1126,8 @@ class WallHooksHelper {
 			}
 
 			$s = '';
-			$list->insertUserRelatedLinks($s, $rc);
-			$s .= ' '.$actionText.' '.$list->insertComment($rc);
+			$list->insertUserRelatedLinks( $s, $rc );
+			$s .= ' ' . $actionText . ' ' . $list->insertComment( $rc );
 		}
 
 		return true;
@@ -1129,7 +1136,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method clears or leaves as it was the text which is being send as a content of <li /> elements in RC page
+	 * This method clears or leaves as it was the text which is being send as a content of <li /> elements in RC page
 	 *
 	 * @param $changelist
 	 * @param string $s
@@ -1140,25 +1147,25 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onOldChangesListRecentChangesLine($changelist, &$s, $rc) {
-		if( $rc->getAttribute('rc_namespace') == NS_USER_WALL_MESSAGE ) {
+	static public function onOldChangesListRecentChangesLine( $changelist, &$s, $rc ) {
+		if ( $rc->getAttribute( 'rc_namespace' ) == NS_USER_WALL_MESSAGE ) {
 			wfProfileIn( __METHOD__ );
 			$rcTitle = $rc->getTitle();
 
-			if( !($rcTitle instanceof Title) ) {
-				//it can be media wiki deletion of an article -- we ignore them
-				Wikia::log(__METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r($rc, true));
+			if ( !( $rcTitle instanceof Title ) ) {
+				// it can be media wiki deletion of an article -- we ignore them
+				Wikia::log( __METHOD__, false, "WALL_NOTITLE_FROM_RC " . print_r( $rc, true ) );
 				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
-			$wm = new WallMessage($rcTitle);
+			$wm = new WallMessage( $rcTitle );
 			$wm->load();
-			if( !$wm->isMain() ) {
+			if ( !$wm->isMain() ) {
 				$wm = $wm->getTopParentObj();
 
-				if( is_null($wm) ) {
-					Wikia::log(__METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r($rc, true));
+				if ( is_null( $wm ) ) {
+					Wikia::log( __METHOD__, false, "WALL_NO_PARENT_MSG_OBJECT " . print_r( $rc, true ) );
 					wfProfileOut( __METHOD__ );
 					return true;
 				} else {
@@ -1166,7 +1173,7 @@ class WallHooksHelper {
 				}
 			}
 
-			if( $wm->isAdminDelete() && $rc->getAttribute('rc_log_action') != 'wall_admindelete' ) {
+			if ( $wm->isAdminDelete() && $rc->getAttribute( 'rc_log_action' ) != 'wall_admindelete' ) {
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -1178,7 +1185,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method decides rather put a log information about deletion or not
+	 * This method decides rather put a log information about deletion or not
 	 *
 	 * @param WikiPage $wikipage a referance to WikiPage instance
 	 * @param string $logType a referance to string with type of log
@@ -1190,22 +1197,22 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onArticleDoDeleteArticleBeforeLogEntry(&$wikipage, &$logType, $title, $reason, &$hookAddedLogEntry) {
-		if( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wm = new WallMessage($title);
+	static public function onArticleDoDeleteArticleBeforeLogEntry( &$wikipage, &$logType, $title, $reason, &$hookAddedLogEntry ) {
+		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			$wm = new WallMessage( $title );
 			$parentObj = $wm->getTopParentObj();
-			$reason = ''; //we don't want any comment
+			$reason = ''; // we don't want any comment
 			$log = new LogPage( $logType );
 
-			if( empty($parentObj) ) {
-				//thread message
+			if ( empty( $parentObj ) ) {
+				// thread message
 				$log->addEntry( 'delete', $title, $reason, array() );
 			} else {
-				//reply
-				$result = $parentObj->load(true);
+				// reply
+				$result = $parentObj->load( true );
 
-				if( $result ) {
-					//if its parent still exists only this reply is being deleted, so log about it
+				if ( $result ) {
+					// if its parent still exists only this reply is being deleted, so log about it
 					$log->addEntry( 'delete', $title, $reason, array() );
 				}
 			}
@@ -1219,7 +1226,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting recent changes for Wall
 	 *
-	 * @desc This method decides rather put a log information about restored article or not
+	 * This method decides rather put a log information about restored article or not
 	 *
 	 * @param PageArchive $pageArchive a referance to Article instance
 	 * @param LogPage $logPage a referance to LogPage instance
@@ -1231,21 +1238,21 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Lukaszewski
 	 */
-	static public function onPageArchiveUndeleteBeforeLogEntry(&$pageArchive, &$logPage, &$title, $reason, &$hookAddedLogEntry) {
-		if( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
-			$wm = new WallMessage($title);
+	static public function onPageArchiveUndeleteBeforeLogEntry( &$pageArchive, &$logPage, &$title, $reason, &$hookAddedLogEntry ) {
+		if ( $title instanceof Title && $title->getNamespace() == NS_USER_WALL_MESSAGE ) {
+			$wm = new WallMessage( $title );
 			$parentObj = $wm->getTopParentObj();
-			$reason = ''; //we don't want any comment
+			$reason = ''; // we don't want any comment
 
-			if( empty($parentObj) ) {
-				//thread message
+			if ( empty( $parentObj ) ) {
+				// thread message
 				$logPage->addEntry( 'restore', $title, $reason, array() );
 			} else {
-				//reply
-				$result = $parentObj->load(true);
+				// reply
+				$result = $parentObj->load( true );
 
-				if( $result ) {
-					//if its parent still exists only this reply is being restored, so log about it
+				if ( $result ) {
+					// if its parent still exists only this reply is being restored, so log about it
 					$logPage->addEntry( 'restore', $title, $reason, array() );
 				}
 			}
@@ -1262,9 +1269,9 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	static public function onXmlNamespaceSelectorAfterGetFormattedNamespaces( &$namespaces ) {
-		if( defined('NS_USER_WALL') && defined('NS_USER_WALL_MESSAGE') ) {
-			if( isset($namespaces[NS_USER_WALL]) && isset($namespaces[NS_USER_WALL_MESSAGE]) ) {
-				unset($namespaces[NS_USER_WALL], $namespaces[NS_USER_WALL_MESSAGE]);
+		if ( defined( 'NS_USER_WALL' ) && defined( 'NS_USER_WALL_MESSAGE' ) ) {
+			if ( isset( $namespaces[NS_USER_WALL] ) && isset( $namespaces[NS_USER_WALL_MESSAGE] ) ) {
+				unset( $namespaces[NS_USER_WALL], $namespaces[NS_USER_WALL_MESSAGE] );
 				$namespaces[NS_USER_WALL_MESSAGE] = wfMessage( static::getMessagePrefix( NS_USER_WALL ) . '-namespace-selector-message-wall' )->text();
 			}
 		}
@@ -1286,9 +1293,9 @@ class WallHooksHelper {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	static public function onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup( $oChangeList, $r, $oRCCacheEntryArray, &$changeRecentChangesHeader, $oTitle, &$headerTitle ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$namespace = MWNamespace::getSubject($oTitle->getNamespace());
+		$namespace = MWNamespace::getSubject( $oTitle->getNamespace() );
 
 		if ( WallHelper::isWallNamespace( $namespace ) ) {
 			$changeRecentChangesHeader = true;
@@ -1305,7 +1312,7 @@ class WallHooksHelper {
 				->parse();
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -1317,10 +1324,10 @@ class WallHooksHelper {
 	 * @internal param string $message
 	 */
 
-	static protected function getMessagePrefix($namespace) {
-		$namespace = MWNamespace::getSubject($namespace);
+	static protected function getMessagePrefix( $namespace ) {
+		$namespace = MWNamespace::getSubject( $namespace );
 		$prefix = '';
-		if(!wfRunHooks('WallRecentchangesMessagePrefix', array($namespace, &$prefix))) {
+		if ( !wfRunHooks( 'WallRecentchangesMessagePrefix', array( $namespace, &$prefix ) ) ) {
 			return $prefix;
 		}
 
@@ -1331,7 +1338,7 @@ class WallHooksHelper {
 	/**
 	 * @brief Adjusting blocks on Enhanced Recent Changes page
 	 *
-	 * @desc Changes $secureName which is an array key in RC cache by which blocks on enchance RC page are displayed
+	 * Changes $secureName which is an array key in RC cache by which blocks on enchance RC page are displayed
 	 *
 	 * @param ChangesList $changesList
 	 * @param string $secureName
@@ -1340,21 +1347,21 @@ class WallHooksHelper {
 	 * @return bool
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onChangesListMakeSecureName($changesList, &$secureName, $rc) {
-		if( WallHelper::isWallNamespace(intval($rc->getAttribute('rc_namespace'))) ) {
+	static public function onChangesListMakeSecureName( $changesList, &$secureName, $rc ) {
+		if ( WallHelper::isWallNamespace( intval( $rc->getAttribute( 'rc_namespace' ) ) ) ) {
 			$oTitle = $rc->getTitle();
 
-			if( $oTitle instanceof Title ) {
-				$wm = new WallMessage($oTitle);
+			if ( $oTitle instanceof Title ) {
+				$wm = new WallMessage( $oTitle );
 				$parent = $wm->getTopParentObj();
-				$isMain = is_null($parent);
+				$isMain = is_null( $parent );
 
-				if( !$isMain ) {
+				if ( !$isMain ) {
 					$wm = $parent;
-					unset($parent);
+					unset( $parent );
 				}
 
-				$secureName = self::RC_WALL_SECURENAME_PREFIX.$wm->getArticleId();
+				$secureName = self::RC_WALL_SECURENAME_PREFIX . $wm->getArticleId();
 			}
 		}
 
@@ -1378,19 +1385,19 @@ class WallHooksHelper {
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	static public function onLinkBegin($skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret) {
+	static public function onLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
 		// paranoia
-		if( !($target instanceof Title) ) {
+		if ( !( $target instanceof Title ) ) {
 			return true;
 		}
 
 		$namespace = $target->getNamespace();
-		if( WallHelper::isWallNamespace($namespace) ) {
+		if ( WallHelper::isWallNamespace( $namespace ) ) {
 
 			// remove "broken" assumption/override
-			$brokenKey = array_search('broken', $options);
+			$brokenKey = array_search( 'broken', $options );
 			if ( $brokenKey !== false ) {
-				unset($options[$brokenKey]);
+				unset( $options[$brokenKey] );
 			}
 
 			// make the link "blue"
@@ -1415,16 +1422,16 @@ class WallHooksHelper {
 	 */
 	static public function onGetUserPermissionsErrors( &$title, &$user, $action, &$result ) {
 
-		if( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
+		if ( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
 			$result = array();
 
 			$wm = new WallMessage( $title );
 
-			if( $user->isAllowed('walledit') || $wm->isWallOwner( $user ) || $action === 'read' || $action === 'history' ) {
+			if ( $user->isAllowed( 'walledit' ) || $wm->isWallOwner( $user ) || $action === 'read' || $action === 'history' ) {
 				$result = null;
 				return true;
 			} else {
-				$result = array('badaccess-group0');
+				$result = array( 'badaccess-group0' );
 				return false;
 			}
 		}
@@ -1432,24 +1439,20 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onComposeCommonBodyMail($title, &$keys, &$body, $editor) {
-		return true;
-	}
-
-	static public function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		$app = F::app();
 		$title = $article->getTitle();
 
-		if( !empty($app->wg->EnableWallExt)
+		if ( !empty( $app->wg->EnableWallExt )
 				&& $title instanceof Title
 				&& $title->getNamespace() === NS_USER_TALK
 				&& !$title->isSubpage() )
 		{
-			//user talk page was edited -> redirect to user talk archive
+			// user talk page was edited -> redirect to user talk archive
 			$helper = new WallHelper();
 
-			$app->wg->Out->redirect(static::getWallTitle()->getFullUrl().'/'.$helper->getArchiveSubPageText(), 301);
-			$app->wg->Out->enableRedirects(false);
+			$app->wg->Out->redirect( static::getWallTitle()->getFullUrl() . '/' . $helper->getArchiveSubPageText(), 301 );
+			$app->wg->Out->enableRedirects( false );
 		}
 
 		return true;
@@ -1457,72 +1460,72 @@ class WallHooksHelper {
 
 	static public function onAllowNotifyOnPageChange( $editor, $title ) {
 		$app = F::app();
-		if( in_array(MWNamespace::getSubject( $title->getNamespace() ), $app->wg->WallNS) || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING){
+		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), $app->wg->WallNS ) || $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
 			return false;
 		}
 		return true;
 	}
 
-	static public function onWatchArticle(&$user, &$article) {
+	static public function onWatchArticle( &$user, &$article ) {
 		$app = F::app();
 		$title = $article->getTitle();
 
-		if( !empty($app->wg->EnableWallExt) && static::isWallMainPage($title) ) {
-			static::processActionOnWatchlist($user, $title->getText(), 'add');
+		if ( !empty( $app->wg->EnableWallExt ) && static::isWallMainPage( $title ) ) {
+			static::processActionOnWatchlist( $user, $title->getText(), 'add' );
 		}
 
 		return true;
 	}
 
-	static public function onUnwatchArticle(&$user, &$article) {
+	static public function onUnwatchArticle( &$user, &$article ) {
 		$app = F::app();
 		$title = $article->getTitle();
 
-		if( !empty($app->wg->EnableWallExt) && static::isWallMainPage($title) ) {
-			static::processActionOnWatchlist($user, $title->getText(), 'remove');
+		if ( !empty( $app->wg->EnableWallExt ) && static::isWallMainPage( $title ) ) {
+			static::processActionOnWatchlist( $user, $title->getText(), 'remove' );
 		}
 
 		return true;
 	}
 
-	static private function isWallMainPage($title) {
-		if( $title->getNamespace() == NS_USER_WALL && strpos($title->getText(), '/') === false ) {
+	static private function isWallMainPage( $title ) {
+		if ( $title->getNamespace() == NS_USER_WALL && strpos( $title->getText(), '/' ) === false ) {
 			return true;
 		}
 
 		return false;
 	}
 
-	static private function processActionOnWatchlist($user, $followedUserName, $action) {
-		wfProfileIn(__METHOD__);
+	static private function processActionOnWatchlist( $user, $followedUserName, $action ) {
+		wfProfileIn( __METHOD__ );
 
-		$watchTitle = Title::newFromText($followedUserName, NS_USER);
+		$watchTitle = Title::newFromText( $followedUserName, NS_USER );
 
-		if( $watchTitle instanceof Title ) {
+		if ( $watchTitle instanceof Title ) {
 			$wl = new WatchedItem;
 			$wl->mTitle = $watchTitle;
 			$wl->userID = $user->getId();
 			$wl->nameSpace = $watchTitle->getNamespace();
 			$wl->databaseKey = $watchTitle->getDBkey();
 
-			if( $action === 'add' ) {
+			if ( $action === 'add' ) {
 				$wl->addWatch();
-			} elseif( $action === 'remove' ) {
+			} elseif ( $action === 'remove' ) {
 				$wl->removeWatch();
 			}
 		} else {
-			//just-in-case -- it shouldn't happen but if it does we want to know about it
-			Wikia::log( __METHOD__, false, 'WALL_HOOK_ERROR: No title instance while syncing follows. User name: '.$followedUserName);
+			// just-in-case -- it shouldn't happen but if it does we want to know about it
+			Wikia::log( __METHOD__, false, 'WALL_HOOK_ERROR: No title instance while syncing follows. User name: ' . $followedUserName );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	static public function onGetPreferences( $user, &$preferences ) {
 		$app = F::app();
 
-		if( $user->isLoggedIn() ) {
-			if ($app->wg->EnableUserPreferencesV2Ext) {
+		if ( $user->isLoggedIn() ) {
+			if ( $app->wg->EnableUserPreferencesV2Ext ) {
 				$message = 'wallshowsource-toggle-v2';
 				$section = 'under-the-hood/advanced-displayv2';
 			}
@@ -1536,7 +1539,7 @@ class WallHooksHelper {
 					'section' => $section
 			);
 
-			if($user->isAllowed('walldelete')) {
+			if ( $user->isAllowed( 'walldelete' ) ) {
 				$preferences['walldelete'] = array(
 						'type' => 'toggle',
 						'label-message' => 'walldelete-toggle', // a system message
@@ -1557,22 +1560,22 @@ class WallHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onContributionsLineEnding( ContribsPager &$contribsPager, &$ret, $row) {
+	static public function onContributionsLineEnding( ContribsPager &$contribsPager, &$ret, $row ) {
 
-		if( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject($row->page_namespace), array(NS_USER_WALL) ) ) {
+		if ( isset( $row->page_namespace ) && in_array( MWNamespace::getSubject( $row->page_namespace ), array( NS_USER_WALL ) ) ) {
 			return static::contributionsLineEndingProcess( $contribsPager, $ret, $row );
 		}
 		return true;
 	}
 
 	static public function contributionsLineEndingProcess( ContribsPager &$contribsPager, &$ret, $row ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$rev = new Revision($row);
+		$rev = new Revision( $row );
 		$page = $rev->getTitle();
-		$page->resetArticleId($row->rev_page);
+		$page->resetArticleId( $row->rev_page );
 
-		$wfMsgOptsBase = self::getMessageOptions(null, $row);
+		$wfMsgOptsBase = self::getMessageOptions( null, $row );
 
 		$isThread = $wfMsgOptsBase['isThread'];
 		$isNew = $wfMsgOptsBase['isNew'];
@@ -1594,7 +1597,7 @@ class WallHooksHelper {
 			[ 'oldid' => $row->rev_id ]
 		) . ' (';
 
-		if( $isNew ) {
+		if ( $isNew ) {
 			$ret .= $contribsPager->msg( 'diff' )->escaped();
 		} else {
 			$ret .= Linker::linkKnown(
@@ -1608,12 +1611,12 @@ class WallHooksHelper {
 			);
 		}
 
-		$wallMessage = new WallMessage($page);
+		$wallMessage = new WallMessage( $page );
 		$threadId = $wallMessage->getMessagePageId();
 		$threadTitle = Title::newFromText( $threadId, NS_USER_WALL_MESSAGE );
-		$ret .= ' | '. Linker::linkKnown( $threadTitle, $contribsPager->msg( 'hist' )->escaped(), [], [ 'action' => 'history' ] ) . ') ';
+		$ret .= ' | ' . Linker::linkKnown( $threadTitle, $contribsPager->msg( 'hist' )->escaped(), [], [ 'action' => 'history' ] ) . ') ';
 
-		if( $isThread && $isNew ) {
+		if ( $isThread && $isNew ) {
 			$ret .= ChangesList::flag( 'newpage' ) . ' ';
 		}
 
@@ -1628,10 +1631,10 @@ class WallHooksHelper {
 			->params( $wfMsgOptsBase['wallTitleTxt'], $wfMsgOptsBase['wallPageName'] )
 			->parse();
 
-		if( !$isNew ) {
+		if ( !$isNew ) {
 			$summary = $rev->getComment();
 
-			if(empty($summary)) {
+			if ( empty( $summary ) ) {
 				$msg = Linker::commentBlock( $contribsPager->msg( static::getMessagePrefix( $row->page_namespace ) . '-edit' )->inContentLanguage()->text() );
 			} else {
 				$msg = Linker::revComment( $rev, false, true );
@@ -1640,7 +1643,7 @@ class WallHooksHelper {
 			$ret .= ' ' . $contribsPager->getLanguage()->getDirMark() . $msg;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -1648,19 +1651,19 @@ class WallHooksHelper {
 
 	/**
 	 * @brief Collects data basing on RC object or std object
-	 * @desc Those lines of code were used a lot in this class. Better keep them in one place.
+	 * Those lines of code were used a lot in this class. Better keep them in one place.
 	 *
 	 * @param RecentChanges $rc
 	 * @param Object $row
 	 *
 	 * @return Array
 	 */
-	static public function getMessageOptions($rc = null, $row = null) {
+	static public function getMessageOptions( $rc = null, $row = null ) {
 		return WallHelper::getWallTitleData( $rc, $row );
 	}
 
 
-	static public function onFilePageImageUsageSingleLink(&$link, &$element) {
+	static public function onFilePageImageUsageSingleLink( &$link, &$element ) {
 
 		if ( $element->page_namespace == NS_USER_WALL_MESSAGE ) {
 			$titleData = WallHelper::getWallTitleData( null, $element );
@@ -1685,18 +1688,18 @@ class WallHooksHelper {
 	 *
 	 * @return Boolean
 	 */
-	static public function onRenderWhatLinksHereRow(&$row, &$level, &$defaultRendering) {
-		wfProfileIn(__METHOD__);
+	static public function onRenderWhatLinksHereRow( &$row, &$level, &$defaultRendering ) {
+		wfProfileIn( __METHOD__ );
 
-		if( isset($row->page_namespace) && in_array( intval($row->page_namespace), array( NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD )) ) {
+		if ( isset( $row->page_namespace ) && in_array( intval( $row->page_namespace ), array( NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD ) ) ) {
 			$defaultRendering = false;
 
 			$app = F::app();
 			$wlhTitle = SpecialPage::getTitleFor( 'Whatlinkshere' );
-			$titleData = self::getMessageOptions(null, $row);
+			$titleData = self::getMessageOptions( null, $row );
 
 			$app->wg->Out->addHtml(
-					Xml::openElement('li') .
+					Xml::openElement( 'li' ) .
 					wfMessage( 'wall-whatlinkshere-wall-line' )
 						->params( $titleData['articleTitle'] )
 						->rawParams( htmlspecialchars( $titleData['articleTitleTxt'] ) )
@@ -1706,16 +1709,16 @@ class WallHooksHelper {
 					Linker::linkKnown( $wlhTitle, wfMessage( 'whatlinkshere-links' )->escaped(), [],  [ 'target' => $wfMsgOptsBase['articleTitle'] ]
 					) .
 					')' .
-					Xml::closeElement('li')
+					Xml::closeElement( 'li' )
 			);
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
-	 * @desc Changes fields in a DifferenceEngine instance to display correct content in <title /> tag
+	 * Changes fields in a DifferenceEngine instance to display correct content in <title /> tag
 	 *
 	 * @param DifferenceEngine $differenceEngine
 	 * @param Revivion $oldRev
@@ -1723,23 +1726,23 @@ class WallHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onDiffViewHeader($differenceEngine, $oldRev, $newRev) {
-		wfProfileIn(__METHOD__);
+	static public function onDiffViewHeader( $differenceEngine, $oldRev, $newRev ) {
+		wfProfileIn( __METHOD__ );
 
 		$app = F::App();
 
-		if( $app->wg->Title instanceof Title && WallHelper::isWallNamespace($app->wg->Title->getNamespace()) ) {
-			$metaTitle = static::getMetatitleFromTitleObject($app->wg->Title);
+		if ( $app->wg->Title instanceof Title && WallHelper::isWallNamespace( $app->wg->Title->getNamespace() ) ) {
+			$metaTitle = static::getMetatitleFromTitleObject( $app->wg->Title );
 			$differenceEngine->mOldPage->mPrefixedText = $metaTitle;
 			$differenceEngine->mNewPage->mPrefixedText = $metaTitle;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
-	 * @desc Changes fields in a PageHeaderModule instance to display correct content in <h1 /> and <h2 /> tags
+	 * Changes fields in a PageHeaderModule instance to display correct content in <h1 /> and <h2 /> tags
 	 *
 	 * @param PageHeaderModule $pageHeaderModule
 	 * @param int $ns
@@ -1751,14 +1754,14 @@ class WallHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onPageHeaderEditPage($pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory) {
-		if(  WallHelper::isWallNamespace($ns) && $isDiff ) {
+	static public function onPageHeaderEditPage( $pageHeaderModule, $ns, $isPreview, $isShowChanges, $isDiff, $isEdit, $isHistory ) {
+		if (  WallHelper::isWallNamespace( $ns ) && $isDiff ) {
 			$app = F::App();
 
-			$app->wg->Out->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Wall/css/WallDiffPage.scss'));
+			$app->wg->Out->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/WallDiffPage.scss' ) );
 
 			$wmRef = '';
-			$meta = static::getMetatitleFromTitleObject($app->wg->Title, $wmRef);
+			$meta = static::getMetatitleFromTitleObject( $app->wg->Title, $wmRef );
 			$pageHeaderModule->title = wfMessage( 'oasis-page-header-diff' )->rawParams( htmlspecialchars( $meta ) )->parse();
 			$pageHeaderModule->subtitle = Xml::element( 'a', array( 'href' => $wmRef->getMessagePageUrl() ), wfMessage( 'oasis-page-header-back-to-article' )->text() );
 		}
@@ -1767,48 +1770,48 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @desc Helper method which gets meta title from an WallMessage instance; used in WallHooksHelper::onDiffViewHeader() and WallHooksHelper::onPageHeaderEditPage()
+	 * Helper method which gets meta title from an WallMessage instance; used in WallHooksHelper::onDiffViewHeader() and WallHooksHelper::onPageHeaderEditPage()
 	 * @param Title $title
 	 * @param mixed $wmRef a variable which value will be created WallMessage instance
 	 *
 	 * @return String
 	 */
-	static private function getMetatitleFromTitleObject($title, &$wmRef = null) {
-		wfProfileIn(__METHOD__);
+	static private function getMetatitleFromTitleObject( $title, &$wmRef = null ) {
+		wfProfileIn( __METHOD__ );
 
-		$wm = new WallMessage($title);
+		$wm = new WallMessage( $title );
 
-		if( $wm instanceof WallMessage ) {
+		if ( $wm instanceof WallMessage ) {
 			$wm->load();
 			$metaTitle = $wm->getMetaTitle();
-			if( empty($metaTitle) ) {
-			//if wall message is a reply
+			if ( empty( $metaTitle ) ) {
+			// if wall message is a reply
 				$wmParent = $wm->getTopParentObj();
-				if( $wmParent instanceof WallMessage ) {
+				if ( $wmParent instanceof WallMessage ) {
 					$wmParent->load();
-					if( !is_null($wmRef) ) {
+					if ( !is_null( $wmRef ) ) {
 						$wmRef = $wmParent;
 					}
 
-					wfProfileOut(__METHOD__);
+					wfProfileOut( __METHOD__ );
 					return $wmParent->getMetaTitle();
 				}
 			}
 
-			if( !is_null($wmRef) ) {
+			if ( !is_null( $wmRef ) ) {
 				$wmRef = $wm;
 			}
 
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return $metaTitle;
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return '';
 	}
 
 	/**
-	 * @desc Changes link from User_talk: page to Message_wall: page of the user
+	 * Changes link from User_talk: page to Message_wall: page of the user
 	 *
 	 * @param int $id id of user who's contributions page is displayed
 	 * @param Title $nt instance of Title object of the page
@@ -1816,29 +1819,29 @@ class WallHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onContributionsToolLinks($id, $nt, &$tools) {
-		wfProfileIn(__METHOD__);
+	static public function onContributionsToolLinks( $id, $nt, &$tools ) {
+		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
 
-		if( !empty($app->wg->EnableWallExt) && !empty($tools[0]) && $nt instanceof Title ) {
-			//tools[0] is the first link in subheading of Special:Contributions which is "User talk" page
-			$wallTitle = Title::newFromText($nt->getText(), NS_USER_WALL);
+		if ( !empty( $app->wg->EnableWallExt ) && !empty( $tools[0] ) && $nt instanceof Title ) {
+			// tools[0] is the first link in subheading of Special:Contributions which is "User talk" page
+			$wallTitle = Title::newFromText( $nt->getText(), NS_USER_WALL );
 
-			if( $wallTitle instanceof Title ) {
-				$tools[0] = Xml::element('a', array(
+			if ( $wallTitle instanceof Title ) {
+				$tools[0] = Xml::element( 'a', array(
 						'href' => $wallTitle->getFullUrl(),
 						'title' => $wallTitle->getPrefixedText(),
 				), wfMessage( 'wall-message-wall-shorten' )->text() );
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
-	 * @desc Changes user talk page link to user's message wall link added during MW1.19 migration
+	 * Changes user talk page link to user's message wall link added during MW1.19 migration
 	 *
 	 * @param integer $userId
 	 * @param string $userText
@@ -1846,21 +1849,21 @@ class WallHooksHelper {
 	 *
 	 * @return true
 	 */
-	static public function onLinkerUserTalkLinkAfter($userId, $userText, &$userTalkLink) {
-		wfProfileIn(__METHOD__);
+	static public function onLinkerUserTalkLinkAfter( $userId, $userText, &$userTalkLink ) {
+		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
 		static $cache = array();
 
-		if( !empty($app->wg->EnableWallExt) ) {
-			if(empty($cache[$userText])) {
-				$messageWallPage = Title::makeTitle(NS_USER_WALL, $userText);
+		if ( !empty( $app->wg->EnableWallExt ) ) {
+			if ( empty( $cache[$userText] ) ) {
+				$messageWallPage = Title::makeTitle( NS_USER_WALL, $userText );
 				$userTalkLink = Linker::link(
 					$messageWallPage,
 					wfMessage( 'wall-message-wall-shorten' )->escaped(),
 					array(),
 					array(),
-					array('known', 'noclasses')
+					array( 'known', 'noclasses' )
 				);
 				$cache[$userText] = $userTalkLink;
 			} else {
@@ -1868,16 +1871,16 @@ class WallHooksHelper {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 
-	static public function onArticleBeforeVote(&$user_id, &$page, $vote) {
+	static public function onArticleBeforeVote( &$user_id, &$page, $vote ) {
 		$app = F::app();
-		$title = Title::newFromId($page);
+		$title = Title::newFromId( $page );
 
-		if( ($title instanceof Title) && in_array(MWNamespace::getSubject( $title->getNamespace()  ), $app->wg->WallNS) ) {
+		if ( ( $title instanceof Title ) && in_array( MWNamespace::getSubject( $title->getNamespace()  ), $app->wg->WallNS ) ) {
 			return false;
 		}
 
@@ -1893,7 +1896,7 @@ class WallHooksHelper {
 	static public function onBlockIpComplete( $block, $user ) {
 		$blockTarget = $block->getTarget();
 		if ( $blockTarget instanceof User && $blockTarget->isLoggedIn() ) {
-			$vote = new VoteHelper($block->getTarget(), null);
+			$vote = new VoteHelper( $block->getTarget(), null );
 			$vote->invalidateUser();
 		}
 		return true;
@@ -1903,11 +1906,11 @@ class WallHooksHelper {
 		$app = F::App();
 
 		$excludedNS = $app->wg->WallNS;
-		foreach($app->wg->WallNS as $ns) {
+		foreach ( $app->wg->WallNS as $ns ) {
 			$excludedNS[] = MWNamespace::getTalk( $ns );
 		}
 
-		$extraConds[] = 'page_namespace not in('.implode(',', $excludedNS).')';
+		$extraConds[] = 'page_namespace not in(' . implode( ',', $excludedNS ) . ')';
 		return true;
 	}
 
@@ -1915,12 +1918,12 @@ class WallHooksHelper {
 		$app = F::App();
 
 		$namespace = $app->wg->Title->getNamespace();
-		$diff = $app->wg->Request->getVal('diff', false);
+		$diff = $app->wg->Request->getVal( 'diff', false );
 
-		$isDiff = !empty($diff) &&  $app->wg->Request->getVal('oldid', false);
+		$isDiff = !empty( $diff ) &&  $app->wg->Request->getVal( 'oldid', false );
 
-		if ( $isDiff&& WallHelper::isWallNamespace( $namespace )) {
-			//SuppressRail
+		if ( $isDiff && WallHelper::isWallNamespace( $namespace ) ) {
+			// SuppressRail
 			$railModuleList = array();
 		}
 
@@ -1929,8 +1932,8 @@ class WallHooksHelper {
 
 	static public function onSpecialWikiActivityExecute( $out, $user ) {
 		$app = F::App();
-		$out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallWikiActivity.js\"></script>\n");
-		$out->addExtensionStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/Wall/css/WallWikiActivity.scss'));
+		$out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallWikiActivity.js\"></script>\n" );
+		$out->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/WallWikiActivity.scss' ) );
 
 		return true;
 	}
@@ -1939,28 +1942,28 @@ class WallHooksHelper {
 		$app = F::App();
 		$ns = array();
 
-		foreach($app->wg->WallNS as $val) {
+		foreach ( $app->wg->WallNS as $val ) {
 			$ns[] = $val;
-			$ns[] = MWNamespace::getTalk($val);
+			$ns[] = MWNamespace::getTalk( $val );
 		}
-		return implode(',', $ns);
+		return implode( ',', $ns );
 	}
 
 	static public function onListredirectsPageGetQueryInfo( &$self, &$query ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$query['conds'][] = 'p1.page_namespace not in ('. static::getQueryNS() . ')';
+		$query['conds'][] = 'p1.page_namespace not in (' . static::getQueryNS() . ')';
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	static public function onWantedPagesGetQueryInfo( &$self, &$query ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$query['conds'][] = 'pl_namespace not in ('. static::getQueryNS() . ')';
+		$query['conds'][] = 'pl_namespace not in (' . static::getQueryNS() . ')';
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -1975,50 +1978,50 @@ class WallHooksHelper {
 	 */
 	static public function onBeforeInitialize( $title, $unused, $output, $user, $request, $mediawiki ) {
 		global $wgHooks;
-		if( !empty($title) && $title->isSpecial('Allpages') ) {
+		if ( !empty( $title ) && $title->isSpecial( 'Allpages' ) ) {
 			$wgHooks['LanguageGetNamespaces'][] = 'WallHooksHelper::onLanguageGetNamespaces';
 		}
 		return true;
 	}
 
 	static public function onLanguageGetNamespaces( &$namespaces ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 		$app = F::App();
 		$title = $app->wg->Title;
 
-		if(empty($title) || !$title->isSpecial('Allpages') ) {
-			wfProfileOut(__METHOD__);
+		if ( empty( $title ) || !$title->isSpecial( 'Allpages' ) ) {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		foreach($app->wg->WallNS as $val) {
-			$ns = MWNamespace::getTalk($val);
-			if(!empty($namespaces[$ns])) {
-				unset($namespaces[$ns]);
+		foreach ( $app->wg->WallNS as $val ) {
+			$ns = MWNamespace::getTalk( $val );
+			if ( !empty( $namespaces[$ns] ) ) {
+				unset( $namespaces[$ns] );
 			}
 		}
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
-	 * @desc Adds necessary tables if Wall or Forum has just been enabled in Special:WikiFeatures
+	 * Adds necessary tables if Wall or Forum has just been enabled in Special:WikiFeatures
 	 *
 	 * @param String $name
 	 * @param String $val
 	 *
 	 * @return bool
 	 */
-	public static function onAfterToggleFeature($name, $val) {
+	public static function onAfterToggleFeature( $name, $val ) {
 		global $IP;
-		if($name == 'wgEnableWallExt' || $name == 'wgEnableForumExt') {
-			$db = wfGetDB(DB_MASTER);
-			if(!$db->tableExists('wall_history')) {
-				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_history_local.sql");
+		if ( $name == 'wgEnableWallExt' || $name == 'wgEnableForumExt' ) {
+			$db = wfGetDB( DB_MASTER );
+			if ( !$db->tableExists( 'wall_history' ) ) {
+				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_history_local.sql" );
 			}
 
-			if(!$db->tableExists('wall_related_pages')) {
-				$db->sourceFile($IP."/extensions/wikia/Wall/sql/wall_related_pages.sql");
+			if ( !$db->tableExists( 'wall_related_pages' ) ) {
+				$db->sourceFile( $IP . "/extensions/wikia/Wall/sql/wall_related_pages.sql" );
 			}
 
 			$nm = new NavigationModel();
@@ -2027,7 +2030,7 @@ class WallHooksHelper {
 		return true;
 	}
 
-	//TODO: implement this :)
+	// TODO: implement this :)
 	static public function onDiffLoadText( $self, &$oldtext, &$newtext ) {
 		/*
 
@@ -2036,8 +2039,8 @@ class WallHooksHelper {
 		return true;
 	}
 
-	static public function onAdvancedBoxSearchableNamespaces(&$namespace) {
-		$namespace = WallHelper::clearNamespaceList($namespace);
+	static public function onAdvancedBoxSearchableNamespaces( &$namespace ) {
+		$namespace = WallHelper::clearNamespaceList( $namespace );
 		return true;
 	}
 
@@ -2091,16 +2094,16 @@ class WallHooksHelper {
 	}
 
 
-	static public function onChangesListItemGroupRegular(&$link, &$rcObj) {
-		if( WallHelper::isWallNamespace(intval($rcObj->getAttribute('rc_namespace'))) ){
+	static public function onChangesListItemGroupRegular( &$link, &$rcObj ) {
+		if ( WallHelper::isWallNamespace( intval( $rcObj->getAttribute( 'rc_namespace' ) ) ) ) {
 
-			$wallMsg = WallMessage::newFromId($rcObj->getAttribute('rc_cur_id'));
-			if(!empty($wallMsg)) {
+			$wallMsg = WallMessage::newFromId( $rcObj->getAttribute( 'rc_cur_id' ) );
+			if ( !empty( $wallMsg ) ) {
 				/* @var $wallMsg Wall */
 
 				$url = $wallMsg->getMessagePageUrl();
-				$link = '<a href="'.$url.'">'.$rcObj->timestamp.'</a>';
-				$rcObj->curlink = '<a href="'.$url.'">'. wfMessage( 'cur' )->escaped().'</a>';
+				$link = '<a href="' . $url . '">' . $rcObj->timestamp . '</a>';
+				$rcObj->curlink = '<a href="' . $url . '">' . wfMessage( 'cur' )->escaped() . '</a>';
 			}
 		}
 		return true;
@@ -2124,19 +2127,19 @@ class WallHooksHelper {
 		$app = F::app();
 		$title = $app->wg->Title;
 		$curUser = $app->wg->User;
-		if ($title->getNamespace() === NS_USER_WALL) {
-			$user = User::newFromName($title->getText(), false);
+		if ( $title->getNamespace() === NS_USER_WALL ) {
+			$user = User::newFromName( $title->getText(), false );
 		} else {
 			return true;
 		}
-		echo '<li id="t-contributions">' . Linker::link(SpecialPage::getSafeTitleFor('Contributions', $user->getName()), wfMessage( 'contributions' )->escaped() ) . '</li>';
-		if ($curUser->isAllowed('block')) {
-			echo '<li id="t-blockip">' . Linker::link(SpecialPage::getSafeTitleFor('Block', $user->getName()), wfMessage( 'block' )->escaped() ) . '</li>';
+		echo '<li id="t-contributions">' . Linker::link( SpecialPage::getSafeTitleFor( 'Contributions', $user->getName() ), wfMessage( 'contributions' )->escaped() ) . '</li>';
+		if ( $curUser->isAllowed( 'block' ) ) {
+			echo '<li id="t-blockip">' . Linker::link( SpecialPage::getSafeTitleFor( 'Block', $user->getName() ), wfMessage( 'block' )->escaped() ) . '</li>';
 		}
 		if ( $monobook->getSkin()->showEmailUser( $user ) ) {
-			echo '<li id="t-emailuser">' . Linker::link(SpecialPage::getSafeTitleFor('EmailUser', $user->getName()), wfMessage( 'emailuser' )->escaped() ) . '</li>';
+			echo '<li id="t-emailuser">' . Linker::link( SpecialPage::getSafeTitleFor( 'EmailUser', $user->getName() ), wfMessage( 'emailuser' )->escaped() ) . '</li>';
 		}
-		echo '<li id="t-log">' . Linker::link(SpecialPage::getTitleFor('Log'), wfMessage( 'log' )->escaped(), array(), array('user' => $user->getName())) . '</li>';
+		echo '<li id="t-log">' . Linker::link( SpecialPage::getTitleFor( 'Log' ), wfMessage( 'log' )->escaped(), array(), array( 'user' => $user->getName() ) ) . '</li>';
 		return true;
 	}
 
@@ -2152,7 +2155,7 @@ class WallHooksHelper {
 	public static function onFormatForumLinks( &$info, $title, $ns ) {
 
 		// Handle message wall and forum board links
-		if ( isset($ns) && in_array($ns, array(NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD)) ) {
+		if ( isset( $ns ) && in_array( $ns, array( NS_USER_WALL_MESSAGE, NS_WIKIA_FORUM_BOARD_THREAD ) ) ) {
 			// The method expects a DB result row. Set the data and then pass it as an object
 			$row['page_namespace'] = $ns;
 			$row['page_title'] = $title;
@@ -2176,7 +2179,7 @@ class WallHooksHelper {
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
 		wfProfileIn( __METHOD__ );
 
-		if( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
+		if ( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
 			// CONN-430: Resign from default ArticleComment purges
 			$urls = [];
 		}
@@ -2193,7 +2196,7 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @desc Makes sure we don't send unnecessary ArticleComments links to purge
+	 * Makes sure we don't send unnecessary ArticleComments links to purge
 	 *
 	 * @param Title $title
 	 * @param String[] $urls
@@ -2201,9 +2204,28 @@ class WallHooksHelper {
 	 * @return bool
 	 */
 	public static function onArticleCommentGetSquidURLs( $title, &$urls ) {
-		if( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
+		if ( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
 			// CONN-430: Resign from default ArticleComment purges
 			$urls = [];
+		}
+
+		return true;
+	}
+
+	/**
+	 * Convert talk page links to wall page links for wall enabled wikis
+	 *
+	 * @param Title $title
+	 * @param Title $talkPageTitle
+	 *
+	 * @return bool
+	 */
+	public static function onGetTalkPage( Title $title, Title &$talkPageTitle ) {
+		if ( !empty( F::app()->wg->EnableWallExt )
+			&& !$title->isSubpage()
+			&& $title->getNamespace() == NS_USER
+		) {
+			$talkPageTitle = Title::makeTitle( NS_USER_WALL, $title->getDBkey() );
 		}
 
 		return true;

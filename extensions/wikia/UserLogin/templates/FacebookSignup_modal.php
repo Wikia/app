@@ -34,12 +34,15 @@ $signupForm = $baseForm;
 
 // Facebook may or may not provide the user's email
 if ( trim( $fbEmail ) == '' ) {
-	$signupForm['inputs'][] = [
+	$emailInput = [
 		'type' => 'email',
 		'name' => 'email',
 		'isRequired' => true,
 		'label' => wfMessage( 'email' )->escaped(),
 	];
+
+	// insert the email input after the username input for consistency with other forms.
+	array_splice( $signupForm['inputs'], 1, 0, [$emailInput] );
 } else {
 	$signupForm['inputs'][] = [
 		'type' => 'nirvana',

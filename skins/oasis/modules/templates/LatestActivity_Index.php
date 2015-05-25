@@ -1,5 +1,5 @@
 <section class="WikiaActivityModule module" id="WikiaRecentActivity">
-	<h1 class="activity-heading"><?= wfMessage( 'oasis-activity-header' )->escaped() ?></h1>
+	<h2 class="activity-heading"><?= wfMessage( 'oasis-activity-header' )->escaped() ?></h2>
 	<ul>
 	<? foreach ( $changeList as $item ) { ?>
 		<li>

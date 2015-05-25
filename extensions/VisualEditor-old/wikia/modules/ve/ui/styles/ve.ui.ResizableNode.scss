@@ -1,0 +1,32 @@
+@import "skins/shared/mixins/box-shadow";
+
+.ve-ce-resizableNode-handles div {
+	@include box-shadow( 0, 0, .2em, rgba(0,0,0,.75) );
+	box-sizing: border-box;
+	background-color: #FFF;
+	background-image: none;
+	border-color: #6DA9F7;
+	border-radius: 1em;
+	border-style: solid;
+	border-width: 1px;
+	height: .8em;
+	position: absolute;
+	width: .8em;
+}
+
+.ve-ce-resizableNode-nwHandle {
+	left: -.2em;
+	top: -.2em;
+}
+.ve-ce-resizableNode-neHandle {
+	right: -.2em;
+	top: -.2em;
+}
+.ve-ce-resizableNode-swHandle {
+	bottom: -.2em;
+	left: -.2em;
+}
+.ve-ce-resizableNode-seHandle {
+	bottom: -.2em;
+	right: -.2em;
+}

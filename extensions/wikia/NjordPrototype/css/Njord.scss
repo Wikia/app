@@ -1,404 +1,488 @@
 @import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/flexbox";
+@import "skins/oasis/css/core/responsive-variables";
+@import "extensions/wikia/Venus/styles/fonts/venus-icons";
+@import "extensions/wikia/Venus/styles/mixins";
+
+$btn-bar-color: mix($color-page, #000, 90);
+@if $is-dark-wiki {
+	$btn-bar-color: mix($color-page, #fff, 90);
+}
 
 .MainPageHero {
-  background-color: $color-buttons;
-  max-height: 400px;
-  position: relative;
-  width: 100%;
+	background-color: $color-buttons;
+	max-height: 400px;
+	position: relative;
+	width: 100%;
 
-  h1 {
-    background: none;
-  }
+	h1 {
+		background: none;
+	}
 
-  .btn-bar {
-    align-items: center;
-    border: 1px solid #092140;
-    background-color: white;
-    display: flex;
-    display: -webkit-flex;
-    justify-content: flex-end;
-    padding: 10px 15px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
-    -webkit-justify-content: flex-end;
-    -webkit-align-items: center;
-  }
+	.btn-bar {
+		align-items: center;
+		border: 1px solid $color-page-border-subtle;
+		background-color: $btn-bar-color;
+		display: flex;
+		display: -webkit-flex;
+		justify-content: flex-end;
+		padding: 10px 15px;
+		box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
+		-webkit-justify-content: flex-end;
+		-webkit-align-items: center;
+	}
 
-  .drag-cursor {
-    cursor: move;
-  }
+	.drag-cursor {
+		cursor: move;
+	}
 
-  .image-window {
-    height: 100%;
-    overflow: hidden;
-    &:after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top:0;
-      background: -webkit-linear-gradient(bottom, rgba(0,0,0,.3), rgba(0,0,0,.05)); /* For Safari 5.1 to 6.0 */
-      background: -o-linear-gradient(bottom, rgba(0,0,0,.3), rgba(0,0,0,.05)); /* For Opera 11.1 to 12.0 */
-      background: -moz-linear-gradient(bottom, rgba(0,0,0,.3), rgba(0,0,0,.05)); /* For Firefox 3.6 to 15 */
-      background: linear-gradient(bottom, rgba(0,0,0,.3), rgba(0,0,0,.05)); /* Standard syntax */
-    }
-  }
+	.image-window {
+		height: 100%;
+		overflow: hidden;
 
-  .image-wrap {
-    height: 100%;
-  }
+		picture {
+			height: 100%;
 
-  .title-wrap {
-    .edit-box {
-      background-color: rgba(0, 0, 0, .2);
-      bottom: -64px;
-      display: none;
-      position: absolute;
-      width: 100%;
-    }
-    .hero-title {
-      min-height: 44px;
-      outline: none;
-      word-wrap: break-word;
-    }
-    .title-edit-btn {
-      cursor: pointer;
-      height: 24px;
-    }
-    .title-text {
-      word-wrap: break-word;
-      max-width: 400px;
-    }
-    bottom: 6%;
-    color: #fff;
-    display: inline-block;
-    left: 10px;
-    position: absolute;
-    text-align: left;
-    width: 425px;
-  }
+			&::before,
+			&::after {
+				content: '';
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				z-index: 1;
+			}
 
-  .hero-image {
-    vertical-align: bottom;
-    width: 100%;
-  }
-  .position-info {
-    cursor: move;
-    display: none;
-    position: absolute;
-    padding-top: 15px;
-    width: 100%;
-    z-index: 1;
-    .position-text {
-      background-color: #C7D1D8;
-      border-radius: 3px;
-      color: #092140;
-      margin: auto;
-      padding: 5px 10px;
-      text-transform: uppercase;
-    }
-  }
+			&::after {
+				@include linear-gradient(transparent, top, rgba(0, 0, 0, 0.1), 10%, rgba(0, 0, 0, 0.5), 100%);
+			}
 
-  .upload-group {
-    .update-btn {
-      cursor: pointer;
-    }
-    .update-text {
-      text-transform: uppercase;
-      vertical-align: super;
-    }
-    .upload-btn {
-      cursor: pointer;
-      text-align: left;
-    }
-    .upload-desc {
-      margin-left: 5px;
-      text-align: left;
-    }
-    .upload-icon {
-      height: 25px;
-    }
-    .upload-text {
-      text-transform: uppercase;
-      vertical-align: super;
-    }
-    color: #fff;
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: column;
-    margin: 5px auto auto 2px;
-    z-index: 1;
-    -webkit-flex-direction: column;
-  }
+			&::before {
+				background-color: rgba($color-buttons, 0.15);
+			}
 
-  .overlay {
-    background-color: rgba(0, 0, 0, 0.2);
-    display: none;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-    .overlay-flex {
-      display: flex;
-      display: -webkit-flex;
-      height: 100%;
-    }
-    .overlay-text {
-      color: #FFFFFF;
-      margin: auto;
-      text-transform: uppercase;
-    }
-  }
+		}
+	}
 
-  .upload-mask {
-    display: none;
-    top: -1px;
-    right: -1px;
-    left: -1px;
-    bottom: -1px;
-    position: absolute;
-    z-index: 3;
-  }
+	.image-wrap:not(.zero-state) {
+		height: 100%;
+	}
+
+	.image-wrap.zero-state {
+		height: 140px;
+	}
+
+	.hero-image {
+		vertical-align: bottom;
+		width: 100%;
+		position: relative;
+	}
+	.position-info {
+		box-sizing: border-box;
+		cursor: move;
+		display: none;
+		height: 100%;
+		position: absolute;
+		padding-top: 106px;
+		width: 100%;
+		z-index: 2;
+		.position-text {
+			color: #fff;
+			display: inline-block;
+			font-size: 24px;
+			padding: 5px 10px;
+			text-shadow: rgba(0,0,0,0.8) 0 1px 3px;
+		}
+	}
+
+	.upload-group {
+		color: #fff;
+		width: 100%;
+		text-shadow: rgba(0,0,0,0.8) 0 1px 3px;
+		z-index: 2;
+
+		.update-btn,
+		.upload-btn {
+			cursor: pointer;
+			position: absolute;
+			right: 24px;
+			text-align: right;
+			top: 20px;
+		}
+
+		.update-text,
+		.upload-text {
+			padding-right: 5px;
+			text-transform: uppercase;
+			vertical-align: super;
+		}
+
+		.upload-desc {
+			margin-left: 5px;
+			text-align: left;
+		}
+
+		.upload-icon {
+			font-size: 35px;
+			position: relative;
+			top: 2px;
+		}
+	}
+
+	.overlay {
+		background-color: rgba(0, 0, 0, 0.2);
+		display: none;
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		z-index: 2;
+		.overlay-flex {
+			display: flex;
+			display: -webkit-flex;
+			height: 100%;
+		}
+		.overlay-text {
+			color: #FFFFFF;
+			margin: auto;
+			text-transform: uppercase;
+		}
+	}
+
+	.upload-mask {
+		display: none;
+		top: -1px;
+		right: -1px;
+		left: -1px;
+		bottom: -1px;
+		position: absolute;
+		z-index: 3;
+	}
 }
 
 .MainPageHeroHeader {
-  overflow: hidden;
-  .btn-bar {
-    align-items: center;
-    border: 1px solid #092140;
-    background-color: white;
-    display: flex;
-    display: -webkit-flex;
-    justify-content: flex-end;
-    padding: 10px 15px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
-    -webkit-justify-content: flex-end;
-    -webkit-align-items: center;
-  }
+	[contenteditable=true]:empty:before{
+		content: attr(placeholder);
+		color: #a9a9a9;
+		display: block; /* For Firefox */
+	}
 
-  .edit-box {
-    background-color: rgba(0, 0, 0, .03);
-    display: none;
-    position: relative;
-    .edited-text {
-      outline: none;
-      min-height: 1.2em;
-      display: block;
-    }
-  }
-  .edit-btn {
-    cursor: pointer;
-  }
+	&.hero-image-wrapper {
+		overflow: hidden;
+	}
 
-  .hero-description {
-    margin: 20px 10px 20px 10px;
-    word-wrap: break-word;
-  }
+	.btn-bar {
+		align-items: center;
+		background-color: $btn-bar-color;
+		border-top: 1px solid $color-page-border;
+		border-bottom: 1px solid $color-page-border;
+		display: flex;
+		display: -webkit-flex;
+		justify-content: flex-end;
+		padding: 10px 15px;
+		-webkit-justify-content: flex-end;
+		-webkit-align-items: center;
+	}
 
-  .hero-description-text {
-    word-wrap: break-word;
-  }
+	.edit-box {
+		display: none;
 
-  .image-save-bar {
-    align-items: center;
-    border-bottom: 1px solid #092140;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, .25);
-    box-sizing: border-box;
-    background-color: white;
-    display: none;
-    justify-content: flex-end;
-    padding: 10px 15px 10px 10px;
-    width: 100%;
-    -webkit-justify-content: flex-end;
-    -webkit-align-items: center;
-    .save-text {
-      display: block;
-      flex-grow: 1;
-      width: 75%;
-      -webkit-flex-grow: 1;
-    }
-  }
-  .new-btn {
-    border: 1px solid #092140;
-    cursor: pointer;
-    display: block;
-    height: 20px;
-    margin: 0 5px;
-    padding: 10px 20px;
-    text-align: center;
-    text-transform: uppercase;
-    &.edit-btn {
-      display: none;
-    }
-  }
-  .new-btn.discard-btn {
-    background-color: #FFFFFF;
-    color: #092140;
-    &:hover {
-      background-color: #0a5fa3;
-      border: 1px solid #0a5fa3;
-      color: #fff;
-    }
-  }
-  .new-btn.save-btn {
-    background-color: #092140;
-    color: #fff;
-    &:hover {
-      background-color: #0a5fa3;
-      border: 1px solid #0a5fa3;
-    }
-  }
-  .sg-main {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 28px;
-  }
-  .sg-main-small {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 26px;
-  }
+		.btn-bar {
+			border: none;
+			margin-top: 50px;
+			padding: 20px;
+		}
 
-  .sg-title {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 44px;
-  }
+		.edited-text {
+			display: block;
+			font-size: 18px;
+			font-weight: normal;
+			line-height: 28px;
+			min-height: 1.2em;
+			outline: none;
+			padding-left: 30px;
+			padding-right: 20px;
+		}
+	}
 
-  .sg-sub {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-  }
+	.edit-btn {
+		cursor: pointer;
+	}
 
-  .sg-sub-title {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 27px;
-    font-weight: 700;
-    line-height: 32px;
-  }
-//states
-  &.no-edit-state {
-    .MainPageHero {
-      box-sizing: border-box;
-      padding-top: 25%;
-    }
-    .edit-btn {
-      display: none;
-    }
-    .image-wrap {
-      height: 100%;
-      position: absolute;
-      width: 100%;
-      top: 0;
-    }
-    .title-edit-btn {
-      display: none;
-    }
-    .upload-wrap {
-      display: none;
-    }
-  }
-  .edit-state {
-    .edit-box {
-      display: block;
-    }
-    .title-edit-btn {
-      display: none;
-    }
-    .title-default-text {
-      display: none;
-    }
-    .title-text {
-      display: none;
-    }
-    .hero-description-text {
-      display: none;
-    }
-    .hero-description-default-text {
-      display: none;
-    }
-    .edit-btn{
-      display: none;
-    }
-  }
+	.hero-description-text {
+		display: inline;
+		font-size: 18px;
+		line-height: 28px;
+		margin-bottom: 5px;
+		word-wrap: break-word;
 
-  .filled-state {
-    .title-default-text {
-      display: none;
-    }
-    .desc-default-text {
-      display: none;
-    }
-    .update-btn {
-      display: inherit;
-    }
-    .upload-btn {
-      display: none;
-    }
-    .upload {
-      display: flex;
-      display: -webkit-flex;
-      height: 100%;
-      position: absolute;
-      width: 100%;
-    }
-    .upload-desc {
-      display: none;
-    }
-    .upload-group {
-      margin: 5px auto auto 2px;
-      position: absolute;
-      z-index: 1;
-    }
-    .hero-description-default-text {
-      display: none;
-    }
-  }
+	}
 
-  .upload-state {
-    .image-window:after {
-      display: none;
-    }
-    .position-info {
-      display: flex;
-      display: -webkit-flex;
-    }
-    .upload-wrap {
-      display: none;
-    }
-    &.image-save-bar {
-      display: flex;
-      display: -webkit-flex;
-    }
-  }
+	.image-save-bar {
+		align-items: center;
+		border-bottom: 1px solid $color-page-border;
+		box-shadow: 4px 4px 10px rgba(0, 0, 0, .25);
+		box-sizing: border-box;
+		display: none;
+		justify-content: flex-end;
+		padding: 10px 15px 10px 10px;
+		width: 100%;
+		-webkit-justify-content: flex-end;
+		-webkit-align-items: center;
+		.save-text {
+			display: block;
+			flex-grow: 1;
+			width: 75%;
+			-webkit-flex-grow: 1;
+		}
+	}
 
-  .zero-state {
-    .title-text {
-      display: none;
-    }
-    .update-btn {
-      display: none;
-    }
-    .upload {
-      border: 1px dashed white;
-      display: flex;
-      display: -webkit-flex;
-      height: 97.1%;
-      margin: 0.3%;
-      position: absolute;
-      text-align: center;
-      width: 99.3%;
-    }
-    .hero-description-text {
-      display: none;
-    }
-    .hero-description-default-text {
-      display: inline-block;
-    }
-  }
+	button.new-btn {
+		height: 40px;
+	}
+
+	.new-btn {
+		background-image: none;
+		border: 1px solid $color-buttons;
+		border-radius: 0;
+		cursor: pointer;
+		display: block;
+		margin: 0 5px;
+		padding: 10px 20px;
+		text-align: center;
+		text-transform: uppercase;
+
+		&.edit-btn {
+			display: none;
+		}
+
+		&:hover {
+			background-image: none;
+		}
+	}
+	.new-btn.discard-btn {
+		background-color: transparent;
+		color: $color-buttons;
+
+		&:hover {
+			background-color: $color-button-highlight;
+			border: 1px solid $color-button-highlight;
+			color: $color-button-text;
+		}
+	}
+	.new-btn.save-btn {
+		background-color: $color-buttons;
+		color: $color-button-text;
+
+		&:hover {
+			background-color: $color-button-highlight;
+			border: 1px solid $color-button-highlight;
+		}
+	}
+
+	.sg-main {
+		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 28px;
+	}
+
+	.sg-main-small {
+		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 26px;
+	}
+
+	.sg-sub {
+		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 20px;
+	}
+
+	.sg-sub-title {
+		font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+		font-size: 27px;
+		font-weight: 700;
+		line-height: 32px;
+	}
+
+	//states
+	&.no-edit-state {
+		.MainPageHero {
+			box-sizing: border-box;
+			padding-top: 25%;
+		}
+
+		.edit-btn {
+			display: none;
+		}
+
+		.image-wrap {
+			height: 100%;
+			position: absolute;
+			width: 100%;
+			top: 0;
+		}
+
+		.title-edit-btn {
+			display: none;
+		}
+
+		.upload-wrap {
+			display: none;
+		}
+	}
+
+	.edit-state {
+		.edit-box {
+			display: block;
+		}
+
+		.title-edit-btn {
+			display: none;
+		}
+
+		.hero-description-text {
+			display: none;
+		}
+
+		.hero-description-default-text {
+			display: none;
+		}
+
+		.edit-btn {
+			display: none;
+		}
+	}
+
+	.filled-state {
+		.desc-default-text {
+			display: none;
+		}
+
+		.update-btn {
+			display: inherit;
+		}
+
+		.upload-btn {
+			display: none;
+		}
+
+		.upload {
+			display: flex;
+			display: -webkit-flex;
+			height: 100%;
+			position: absolute;
+			width: 100%;
+		}
+
+		.upload-desc {
+			display: none;
+		}
+
+		.upload-group {
+			position: absolute;
+			z-index: 2;
+		}
+
+		.hero-description-default-text {
+			display: none;
+		}
+	}
+
+	.upload-state {
+		.image-window:after {
+			display: none;
+		}
+
+		.position-info {
+			display: block;
+			text-align: center;
+		}
+
+		.upload-wrap {
+			display: none;
+		}
+
+		&.image-save-bar {
+			display: flex;
+			display: -webkit-flex;
+		}
+	}
+
+	.zero-state {
+		.update-btn {
+			display: none;
+		}
+
+		.upload {
+			display: flex;
+			display: -webkit-flex;
+			height: 97.1%;
+			margin: 0.3%;
+			position: absolute;
+			text-align: center;
+			width: 99.3%;
+		}
+
+		.hero-description-text {
+			display: none;
+		}
+
+		.hero-description-default-text {
+			display: inline-block;
+		}
+	}
+}
+
+header.MainPageHeroHeader {
+	&:after {
+		border-bottom: solid 1px $color-page-border;
+		content: '';
+		display: block;
+		margin: 6px 320px 10px 0;
+	}
+
+	+ nav {
+		margin-bottom: 15px;
+	}
+}
+
+.WikiaArticle {
+	.hero-description {
+		margin: 20px 320px 40px 30px;
+		word-wrap: break-word;
+
+	.title-edit-btn {
+		color: $color-links;
+		cursor: pointer;
+		display: inline;
+		padding-left: 6px;
+		position: relative;
+		top: -3px;
+		//pencil icon and "edit" text should be always in the same line
+		white-space: nowrap;
+	}
+
+		&.edit-state {
+			border: 1px solid #ccc;
+			padding: 20px 0 0 0;
+			margin: 0 320px 30px 0;
+
+			.title-edit-btn {
+				display: none;
+			}
+		}
+
+		@media screen and (max-width: $breakpoint-small) {
+			margin-right: 20px;
+		}
+	}
+}
+
+.mainpage .WikiaPage {
+	border: none;
 }

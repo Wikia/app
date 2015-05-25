@@ -1,5 +1,5 @@
 <nav class="global-navigation" id="globalNavigation">
-	<div class="page-width">
+	<div class="global-navigation-container">
 		<div class="wikia-logo-container table-cell">
 			<a href="<?= htmlspecialchars( $centralUrl ) ?>"
 				class="wikia-logo"
@@ -8,8 +8,8 @@
 				<img src="<?= $wg->BlankImgUrl ?>"
 					height="24"
 					width="91"
-					alt="<?= wfMessage( 'venus-wikia' )->escaped() ?>"
-					title="<?= wfMessage( 'venus-wikia' )->escaped() ?>">
+					alt="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>"
+					title="<?= wfMessage( 'oasis-global-page-header' )->escaped() ?>">
 			</a>
 		</div>
 		<div class="hubs-container table-cell" id="hubsEntryPoint">

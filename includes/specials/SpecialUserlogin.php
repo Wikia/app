@@ -92,6 +92,21 @@ class LoginForm extends SpecialPage {
 		$this->mType = $request->getText( 'type' );
 		$this->mUsername = $request->getText( 'wpName' );
 		$this->mPassword = $request->getText( 'wpPassword' );
+
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			// The line below duplicates what WebRequest::__construct() does. The reason for that
+			// is that raw and unprocessed data are required here for debugging purposes. This will
+			// provided the information whether the original user input is somehow malformed
+			// before it is passed to hashing methods.
+			$aData = $_POST + $_GET;
+			if ( isset( $aData['wpPassword'] ) ) {
+				\Wikia\Helios\User::debugLogin( $aData['wpPassword'], __METHOD__ . '-raw' );
+			}
+			unset( $aData );
+			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ . '-getText' );
+		}
+
 		$this->mRetype = $request->getText( 'wpRetype' );
 		$this->mDomain = $request->getText( 'wpDomain' );
 		$this->mReason = $request->getText( 'wpReason' );
@@ -236,8 +251,8 @@ class LoginForm extends SpecialPage {
 
 		# Create the account and abort if there's a problem doing so
 		$u = $this->addNewAccountInternal();
-		if( $u == null ) {
-			return;
+		if( ! $u  ) {
+			return false;
 		}
 
 		# If we showed up language selection links, and one was in use, be
@@ -345,6 +360,11 @@ class LoginForm extends SpecialPage {
 	 * @private
 	 * Wikia change - add new param ($errParam) to function mainLoginForm()
 	 * Wikia change - add prefix to message key for User Login Ext
+	 *
+	 * @return bool|User User on success; false otherwise.
+	 *
+	 * @throws ReadOnlyError
+	 * @throws PermissionsError
 	 */
 	function addNewAccountInternal() {
 		global $wgAuth, $wgMemc, $wgAccountCreationThrottle,
@@ -516,17 +536,12 @@ class LoginForm extends SpecialPage {
 
 		self::clearCreateaccountToken();
 		$u->mBirthDate = date( 'Y-m-d', $this->wpUserBirthDay );
-		$u = $this->initUser( $u, false );
-		$user_id = $u->getID();
-		if( !empty($user_id) ) {
-			$dbw = wfGetDB(DB_MASTER);
-			$dbw->update(
-				'user',
-				array( 'user_birthdate' => date( 'Y-m-d', $this->wpUserBirthDay ) ),
-				array( 'user_id' => $user_id ),
-				__METHOD__
-			);
+
+		if ( ! $this->initUser( $u, false ) ) {
+			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'externaldberror' )->text() );
+			return false;
 		}
+
 		return $u;
 	}
 
@@ -536,18 +551,20 @@ class LoginForm extends SpecialPage {
 	 *
 	 * @param $u User object.
 	 * @param $autocreate boolean -- true if this is an autocreation via auth plugin
-	 * @return User object.
+	 * @return boolean true on success; false otherwise
 	 * @private
 	 */
-	function initUser( $u, $autocreate ) {
+	function initUser( User &$u, $autocreate ) {
 		global $wgAuth, $wgExternalAuthType;
 
 		if ( $wgExternalAuthType ) {
-			$u = ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
-			if ( is_object( $u ) ) {
+			if ( ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
 				$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+			} else {
+				// Terminate on failure.
+				return false;
 			}
-		} else{
+		} else {
 			$u->addToDatabase();
 		}
 
@@ -579,7 +596,7 @@ class LoginForm extends SpecialPage {
 		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
 		$ssUpdate->doUpdate();
 
-		return $u;
+		return true;
 	}
 
 	/**
@@ -649,6 +666,11 @@ class LoginForm extends SpecialPage {
 
 		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
 
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			\Wikia\Helios\User::debugLogin( $this->mPassword, __METHOD__ );
+		}
+
 		global $wgExternalAuthType;
 		if ( $wgExternalAuthType
 		&& is_object( $this->mExtUser )
@@ -657,6 +679,16 @@ class LoginForm extends SpecialPage {
 			# password, so we assume they're the same.
 			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
 		}
+
+		// Wikia change - begin - author: @wladek
+		if ( $wgExternalAuthType
+			&& is_object( $this->mExtUser )
+			&& $this->mExtUser->getLastAuthenticationError() )
+		{
+			$this->mAbortLoginErrorMsg = $this->mExtUser->getLastAuthenticationError();
+			return self::ABORTED;
+		}
+		// Wikia change - end
 
 		# TODO: Allow some magic here for invalid external names, e.g., let the
 		# user choose a different wiki name.
@@ -682,7 +714,12 @@ class LoginForm extends SpecialPage {
 		}
 
 		global $wgBlockDisablesLogin;
-		if ( !$u->checkPassword( $this->mPassword ) ) {
+		$abortedMessageKey = null;
+		if ( !$u->checkPassword( $this->mPassword, $abortedMessageKey ) ) {
+			if ( $abortedMessageKey ) {
+				$this->mAbortLoginErrorMsg = $abortedMessageKey;
+				return self::ABORTED;
+			}
 			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
 				// The e-mailed temporary password should not be used for actu-
 				// al logins; that's a very sloppy habit, and insecure if an
@@ -1043,14 +1080,7 @@ class LoginForm extends SpecialPage {
 
 		$np = $u->randomPassword();
 		$u->setNewpassword( $np, $throttle );
-
-		/* Wikia change begin */
-		//@TODO get rid of TempUser handling when it will be globally disabled
-		$tempUser = null;
-		wfRunHooks( 'MailPasswordTempUser' , array( &$u, &$tempUser ) );
-		if ( empty($tempUser) ) {
-			$u->saveSettings();
-		}
+		$u->saveSettings();
 
 		/* Wikia change begin - @author: Uberfuzzy */
 		/* use noReply address (if available) */
@@ -1443,17 +1473,12 @@ class LoginForm extends SpecialPage {
 	 * Renew the user's session id, using strong entropy
 	 */
 	private function renewSessionId() {
-		if ( wfCheckEntropy() ) {
-			session_regenerate_id( false );
-		} else {
-			//If we don't trust PHP's entropy, we have to replace the session manually
-			$tmp = $_SESSION;
-			session_unset();
-			session_write_close();
-			session_id( MWCryptRand::generateHex( 32 ) );
-			session_start();
-			$_SESSION = $tmp;
+		global $wgSecureLogin, $wgCookieSecure;
+		if ( $wgSecureLogin && !$this->mStickHTTPS ) {
+			$wgCookieSecure = false;
 		}
+
+		wfResetSessionID();
 	}
 
 	/**

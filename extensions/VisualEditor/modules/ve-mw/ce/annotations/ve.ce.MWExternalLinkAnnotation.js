@@ -15,15 +15,12 @@
  * @param {ve.ce.ContentBranchNode} [parentNode] Node rendering this annotation
  * @param {Object} [config] Configuration options
  */
-ve.ce.MWExternalLinkAnnotation = function VeCeMWExternalLinkAnnotation( model, parentNode, config ) {
+ve.ce.MWExternalLinkAnnotation = function VeCeMWExternalLinkAnnotation() {
 	// Parent constructor
-	ve.ce.LinkAnnotation.call( this, model, parentNode, config );
+	ve.ce.MWExternalLinkAnnotation.super.apply( this, arguments );
 
 	// DOM changes
 	this.$element.addClass( 'external' );
-	// Put the href in the title
-	// Deliberately not using getResolvedAttribute() here
-	this.$element.attr( 'title', model.getAttribute( 'href' ) );
 };
 
 /* Inheritance */

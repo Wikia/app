@@ -110,7 +110,7 @@ class LightboxControllerTest extends WikiaBaseTest {
 		];
 		$latestPhotos = [
 			'photo abc',
-		    'photo xyz',
+			'photo xyz',
 		];
 		$imageList = [
 			'images' => $images,
