@@ -2,9 +2,8 @@
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker',
-	'wikia.log'
-], function (factory, slotTweaker, log) {
+	'ext.wikia.adEngine.slotTweaker'
+], function (factory, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',

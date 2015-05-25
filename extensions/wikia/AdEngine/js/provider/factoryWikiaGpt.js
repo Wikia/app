@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'wikia.log',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.gptHelper',
-	'ext.wikia.adEngine.gptSraHelper',
+	require.optional('ext.wikia.adEngine.gptSraHelper'),
 	require.optional('ext.wikia.adEngine.lookup.services')
 ], function (log, adLogicPageParams, gptHelper, gptSraHelper, lookups) {
 	'use strict';
