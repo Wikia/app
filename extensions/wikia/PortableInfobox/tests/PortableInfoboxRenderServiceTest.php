@@ -105,7 +105,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 				],
 				'output' => '<aside class="portable-infobox">
 								<div class="portable-infobox-item item-type-image no-margins">
-									<figure>
+									<figure class="portable-infobox-image-wrapper">
 										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
 											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
 										</a>
@@ -113,7 +113,7 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 									</figure>
 								</div>
 							</aside>',
-				'description' => 'Only image for mobile'
+				'description' => 'Only image'
 			],
 			[
 				'input' => [
@@ -128,27 +128,6 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 								<footer class="portable-infobox-footer portable-infobox-item-margins portable-infobox-header-background portable-infobox-header-font">Footer value</footer>
 							</aside>',
 				'description' => 'Footer only'
-			],
-			[
-				'input' => [
-					[
-						'type' => 'image',
-						'data' => [
-							'alt' => 'image alt',
-							'url' => 'http://image.jpg'
-						]
-					]
-				],
-				'output' => '<aside class="portable-infobox">
-								<div class="portable-infobox-item item-type-image no-margins">
-									<figure class="portable-infobox-image-wrapper">
-										<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-											<img src="http://image.jpg" class="portable-infobox-image" alt="image alt" data-image-key="" data-image-name=""/>
-										</a>
-									</figure>
-								</div>
-							</aside>',
-				'description' => 'Only image'
 			],
 			[
 				'input' => [
