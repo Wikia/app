@@ -56,7 +56,7 @@ require(['jquery'], function($) {
 					'pageId': window.wgArticleId
 				}
 			}],
-			styles: '/extensions/wikia/Flags/styles/Modal.scss',
+			styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
 			callback: handlePackage
 		});
 	}
