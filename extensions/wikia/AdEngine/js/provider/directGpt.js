@@ -70,10 +70,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 					slotTweaker.removeDefaultHeight(slotName);
 					slotTweaker.removeTopButtonIfNeeded(slotName);
 					slotTweaker.adjustLeaderboardSize(slotName);
-					removePendingSlot(slotName);
+					removePendingSlotAndPushDelayedQueue(slotName);
 				},
 				beforeHop: function (slotName) {
-					removePendingSlot(slotName);
+					removePendingSlotAndPushDelayedQueue(slotName);
 				},
 				shouldFlush: function (slotName) {
 					log(['shouldFlush', slotName]);
@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			}
 		);
 
-	function removePendingSlot(slotName) {
+	function removePendingSlotAndPushDelayedQueue(slotName) {
 		if (!context.opts.delayBtf) {
 			return;
 		}
