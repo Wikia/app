@@ -192,7 +192,6 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param string|int $newValue
 	 */
 	protected function updateTables( $fieldType, $oldValue, $newValue ) {
-		// update user_id in MW tables
 		$dbw = $this->getUncycloDB(DB_MASTER);
 
 		foreach( self::$mTableRenameRules as $entry ) {
@@ -203,6 +202,13 @@ class UncycloUserMigrator extends Maintenance {
 			}
 
 			$columnName = $entry[ $fieldType ];
+			$tableName = $entry[ 'table' ];
+
+			if ( !$dbw->tableExists( $tableName ) ) {
+				$this->error( 'Table does not exist', [ 'tableName' => $tableName ] );
+				continue;
+			}
+
 			$dbw->update(
 				$entry[ 'table' ],
 				[ $columnName => $newValue ], // SET
@@ -257,11 +263,15 @@ class UncycloUserMigrator extends Maintenance {
 		$newName = self::PREFIX_RENAME_UNCYCLO . $user->getName();
 		$this->output( sprintf('> renaming uncyclo user to "%s"...', $newName) );
 
-		// TODO
-
 		$this->renamedUnclycloAccounts++;
 
-		// TODO: move user page
+		// update user_name in MW tables
+		$this->updateTables( self::UPDATE_TABLE_USER_NAME, $user->getName(), $newName);
+
+		// move user page
+		$oldUserPage = Title::newFromText( $user->getName(), NS_USER );
+		$newUserPage = Title::newFromText( $newName, NS_USER );
+		$oldUserPage->moveTo( $newUserPage, false /* do not check permissions to move */, 'Migrating Uncyclopedia accounts' );
 
 		// return the updated user object
 		$user->setName( $newName );
@@ -463,6 +473,9 @@ class UncycloUserMigrator extends Maintenance {
 	 * Script entry point
 	 */
 	public function execute() {
+		global $wgUser;
+		$wgUser = User::newFromName( 'WikiaBot' );
+
 		$this->isDryRun = $this->hasOption( 'dry-run' );
 
 		if ( $this->hasOption( 'csv' ) ) {
