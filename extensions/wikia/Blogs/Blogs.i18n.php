@@ -2020,6 +2020,8 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
  * @author Robin0van0der0vliet
  */
 $messages['fy'] = array(
+	'create-blog-categories-submit' => 'Ferstjoere',
+	'create-blog-save' => 'Side bewarje',
 	'create-blog-listing-sortby-author' => 'Auteur',
 	'blog-comment-delete' => 'fuortsmite',
 	'blog-comment-history' => 'skiednis',
@@ -3252,6 +3254,7 @@ $messages['ku'] = array(
  */
 $messages['ku-latn'] = array(
 	'createblogpage' => 'Blogek çêke',
+	'create-blog-empty-title-error' => 'Sernav pêwist e',
 	'create-blog-invalid-title-error' => 'Sernava ne-derbasdar',
 	'create-blog-save' => 'Rûpelê tomar bike',
 	'create-blog-preview' => 'Pêşdîtin',
@@ -4863,13 +4866,26 @@ $messages['roa-tara'] = array(
 	'create-blog-listing-sortby-author' => 'Autore',
 	'create-blog-listing-sortby-comments' => 'Condegge de le commende',
 	'blog-defaulttitle' => 'Blog',
+	'blog-readfullpost' => 'Ligge de cchiù',
 	'blog-olderposts' => 'Messàgge cchiù vecchie',
 	'blog-newerposts' => 'Messàgge cchiù nuève',
+	'blog-nbrcomments' => "{{PLURAL:$1|'Nu commende|$1 commende}}",
+	'blog-nopostfound' => 'Nisciune messàgge acchiate.',
+	'blog-writeone' => 'Scrivene une!',
+	'blog-empty-user-blog' => "Stu utende non g'ha scritte nisciune messàgge d'u blog!",
 	'blog-added' => 'aggiunde',
 	'blog-edited' => 'cangiate',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Angore nisciune commende!',
+	'blog-comment-post' => "Manne 'nu commende",
 	'blog-comments' => 'Commende',
+	'blog-rc-comments' => "Commende d'u blog",
+	'blog-comments-new' => "Commende nuéve jndr'à 'u blog",
+	'blog-comments-save' => "Reggistre 'nu commende jndr'à 'u blog",
+	'blog-comments-label' => 'Stoche a commende',
+	'blog-voting-label' => 'Stoche a vote',
+	'blog-comments-info' => "Sta buatte ause 'nu 'ngresse de stile wikitext",
+	'blog-comments-login' => '<a href="$1" rel="nofollow">Tràse</a> pe commendà',
 	'blog-comments-anonymous' => 'Utende anonime',
 	'blog-comment-delete' => 'scangille',
 	'blog-comment-hide' => 'scunne',
@@ -5011,6 +5027,27 @@ $messages['ru'] = array(
 	'blogs-searchprofile' => 'Блоги',
 	'blogs-searchprofile-tooltip' => 'Поиск в блогах и в списках блогов',
 	'user-blog-url-link' => 'Блог участника:$1',
+);
+
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'create-blog-invalid-title-error' => 'अमान्यं शीर्षकम्',
+	'create-blog-no-login' => 'प्रवेशः न कृतः',
+	'create-blog-categories-submit' => 'उपस्थाप्यताम्',
+	'create-blog-save' => 'पृष्ठं रक्ष्यताम्',
+	'create-blog-preview' => 'प्राग्दृश्यं दृश्यताम्',
+	'create-blog-listing-preview' => 'प्राग्दृश्यम्',
+	'create-blog-listing-sortby' => 'एतदाधृत्य क्रमागतीकरोतु',
+	'create-blog-listing-sortby-author' => 'लेखकः',
+	'blog-readfullpost' => 'अधिकं पठ्यताम्',
+	'blog-voting-label' => 'मतदानम्',
+	'blog-comment-delete' => 'अपाक्रियताम्',
+	'blog-comment-hide' => 'गोप्यताम्',
+	'blog-comment-history' => 'इतिहासः',
+	'blog-comment-edit' => 'सम्पाद्यताम्',
+	'blog-fromsitename' => '$1 इत्यस्मात्',
 );
 
 /** Scots (Scots)
@@ -5986,6 +6023,7 @@ $messages['vep'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author KhangND
  * @author Minh Nguyen
  * @author Rémy Lee
  * @author Xiao Qiao
@@ -5993,7 +6031,7 @@ $messages['vep'] = array(
 $messages['vi'] = array(
 	'blog-file-page' => "<a href='$1'>$2</a> đăng vào blog <a href='$3'>của $4</a>",
 	'createblogpage' => 'Tạo blog',
-	'createbloglistingpage' => 'Tạo danh sách blog',
+	'createbloglistingpage' => 'Tạo blog danh sách',
 	'create-blog-spam' => 'Trông giống thư rác',
 	'create-blog-cant-edit' => 'Không thể thực hiện sửa đổi',
 	'create-blog-post-category' => 'Bài đăng blog',

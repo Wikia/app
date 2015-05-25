@@ -3334,6 +3334,22 @@ $messages['ru'] = array(
 	'chat-status-away' => 'Отсутствует',
 );
 
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'chat-ban-modal-label-reason' => 'कारणम्',
+	'chat-log-reason-undo' => 'पूर्ववत्',
+	'chat-ban-undolink' => 'पूर्ववत्',
+	'chat-ban-modal-button-cancel' => 'निरस्यताम्',
+	'chat-log-reason-banchange' => 'न किमपि कारणं दत्तम्',
+	'chat-log-reason-banremove' => 'न किमपि कारणं दत्तम्',
+	'chat-you-are-banned' => 'अनुमतिदोषः',
+	'chat-user-menu-talk-page' => 'सम्भाषणपृष्ठम्',
+	'chat-user-menu-contribs' => 'योगदानानि',
+	'chat-user-menu-private' => 'वैय्यक्तिकसन्देशाः',
+);
+
 /** Scots (Scots)
  * @author John Reid
  */

@@ -490,6 +490,17 @@ $messages['ce'] = array(
 	'editaccount-log-entry-pass' => '$2 декъашхочун пароль хийцина',
 );
 
+/** Central Kurdish (کوردیی ناوەندی)
+ * @author Asoxor
+ */
+$messages['ckb'] = array(
+	'editaccount' => 'دەستکاری کردنی ھەژمار',
+	'editaccount-label-reason' => 'ھۆکار:',
+	'editaccount-submit-button' => 'پاشەکەوتی بکە',
+	'editaccount-labal-account-status' => 'رەوشی ھەژمار',
+	'editaccount-labal-email-status' => 'رەوشی ئیمێل',
+);
+
 /** Czech (čeština)
  * @author Aktron
  * @author Chmee2
@@ -2542,6 +2553,13 @@ $messages['ru'] = array(
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Эта учётная запись была отключена на всей Викия.</div>',
 	'right-editaccount' => 'Редактировать настройки других участников',
 	'action-editaccount' => 'редактировать информацию других пользователей',
+);
+
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'editaccount-label-reason' => 'कारणम् :',
 );
 
 /** Sakha (саха тыла)

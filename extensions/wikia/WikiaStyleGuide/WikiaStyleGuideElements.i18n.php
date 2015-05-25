@@ -297,8 +297,10 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'wikiastyleguide-desc' => 'mở rộng WikiaStyleGuide',
 	'wikiastyleguide-dropdown-all' => 'Tất cả',
 	'wikiastyleguide-dropdown-select-all' => 'Chọn tất cả',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 và $2 thêm',

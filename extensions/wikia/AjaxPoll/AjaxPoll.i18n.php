@@ -898,6 +898,13 @@ $messages['ru'] = array(
 	'ajaxpoll-submitting' => 'Пожалуйста, подождите, передаётся информация о вашем голосе…',
 );
 
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'ajaxpoll-submit' => 'मतम् !',
+);
+
 /** Sinhala (සිංහල)
  * @author පසිඳු කාවින්ද
  * @author බිඟුවා

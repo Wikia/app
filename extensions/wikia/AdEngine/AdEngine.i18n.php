@@ -779,6 +779,7 @@ $messages['uk'] = array(
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Dinhxuanduyet
+ * @author KhangND
  * @author Max20091
  * @author Xiao Qiao
  */
@@ -788,7 +789,7 @@ $messages['vi'] = array(
 	'adengine-exitstitial-redirecting' => 'Trình duyệt của bạn sẽ chuyển hướng bạn đến trang web mà bạn yêu cầu trong vài giây nữa.',
 	'adengine-exitstitial-go-back' => 'Bạn muốn quay trở lại?',
 	'adengine-exitstitial-button' => 'Bỏ qua quảng cáo này',
-	'adengine-desc' => 'Engine Quảng cáo của Wikia',
+	'adengine-desc' => 'Cơ chế quảng cáo của Wikia',
 );
 
 /** Waray (Winaray)

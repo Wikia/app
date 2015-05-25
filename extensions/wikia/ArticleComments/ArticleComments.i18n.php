@@ -2338,6 +2338,7 @@ $messages['ku-latn'] = array(
 	'article-comments-delete' => 'jê bibe',
 	'article-comments-edit' => 'biguherîne',
 	'article-comments-history' => 'dîrok',
+	'article-comments-toc-item' => 'Şîrove',
 	'article-comments-reply' => 'Bersiv bide',
 	'article-comments-next-page' => 'Pêşve',
 );
@@ -2641,6 +2642,7 @@ $messages['map-bms'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'article-comments-desc' => 'Коментари за статии на викистраници',
 	'article-comments-file-page' => "<a href='$1'>Коментар од $2</a> на <a href='$3'>$4</a>",
 	'article-blog-comments-file-page' => "<a href='$1'>Коментар од $2</a> на објава од <a href='$3'>$4</a> на блогот на <a href='$5'>$6</a>",
 	'article-comments-anonymous' => 'Анонимен корисник',
@@ -2669,6 +2671,7 @@ $messages['mk'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Матичната статија / матичниот коментар е избришан.',
 	'article-comments-empty-comment' => "Не можете да објавите празен коментар. <a href='$1'>Да го избришам?</a>",
+	'article-comments-show-more' => 'Дај уште коментари',
 	'wikiamobile-article-comments-counter' => '{{PLURAL:$1|Еден коментар|$1 коментари}}',
 	'wikiamobile-article-comments-header' => 'коментари',
 	'wikiamobile-article-comments-more' => 'Вчитај уште',
@@ -3663,6 +3666,24 @@ ___________________________________________
 <li>Хотите контролировать, какие электронные письма вы хотите получать? Вы можете настроить рассылку или отписаться от неё на странице личных настроек: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
+);
+
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'article-comments-cancel' => 'निरस्यताम्',
+	'article-comments-delete' => 'अपाक्रियताम्',
+	'article-comments-edit' => 'सम्पाद्यताम्',
+	'article-comments-history' => 'इतिहासः',
+	'article-comments-toc-item' => 'टिप्पणी',
+	'article-comments-prev-page' => 'पूर्वतनम्',
+	'article-comments-next-page' => 'अग्रिमम्',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-header' => 'टिप्पणी',
+	'wikiamobile-article-comments-more' => 'अधिकम् अवारोप्यताम्',
+	'wikiamobile-article-comments-prev' => 'पूर्वतनम् अवारोप्यताम्',
+	'wikiamobile-article-comments-none' => 'टिप्पण्यः न सन्ति',
 );
 
 /** Scots (Scots)

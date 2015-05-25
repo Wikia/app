@@ -600,6 +600,14 @@ $messages['ru'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Ошибка: Требуется тело страницы',
 );
 
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'शीर्षकम्',
+	'contentfeeds-firstfewarticles-tag-next' => 'अग्रिमम्',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */

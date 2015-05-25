@@ -1098,9 +1098,12 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
  */
 $messages['fy'] = array(
 	'phalanx' => 'Phalanx',
+	'phalanx-type-user' => 'brûker',
 	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-label-reason' => 'Reden:',
 	'phalanx-label-lang' => 'Taal:',
 	'phalanx-stats-table-language' => 'Taal',
+	'phalanx-stats-table-reason' => 'Reden',
 );
 
 /** Galician (galego)

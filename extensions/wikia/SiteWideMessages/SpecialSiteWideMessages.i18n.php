@@ -1492,7 +1492,10 @@ $messages['frr'] = array(
  */
 $messages['fy'] = array(
 	'swm-label-edit' => 'Bewurkje',
+	'swm-label-recipient-users' => 'Brûkers',
 	'swm-label-language' => 'Taal',
+	'swm-button-save' => '[ Bewarje ]',
+	'swm-button-new' => '[ Nij ]',
 	'swm-list-table-lang' => 'Talen',
 	'swm-yes' => 'Ja',
 	'swm-no' => 'Nee',
@@ -3393,11 +3396,13 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'sidewidemessages-desc' => 'Denna tillägg tillhandahåller ett gränssnitt för att skicka meddelanden som syns på alla wikis.',
 	'sitewidemessages' => 'Meddelanden för hela webbplatsen',
 	'swm-page-title-editor' => 'Meddelanden för hela webbplatsen :: Redigeringsprogram',
 	'swm-page-title-preview' => 'Meddelanden för hela webbplatsen :: Förhandsgranska',
@@ -3425,6 +3430,8 @@ $messages['sv'] = array(
 	'swm-label-mode-users-active' => 'Aktiva användare',
 	'swm-label-mode-users-group' => 'Användare som tillhör gruppen',
 	'swm-label-mode-users-group-hint' => '<i>Välj en grupp från rullgardinsmenyn eller skriv namnet för hand för att skriva över valet i rullgardinsmenyn.</i>',
+	'swm-label-mode-users-poweruser' => 'Typ av stark användare',
+	'swm-label-mode-users-poweruser-hint' => 'Plocka typerna av en stark användare från en lista. Meddelandet kommer att skickas till samtliga Wikias.',
 	'swm-label-mode-users-user' => 'Vald användare',
 	'swm-label-mode-users-user-hint' => '<i>Det här alternativet ignorerar markeringen i gruppen "Wikis".</i>',
 	'swm-label-mode-users-user-multi' => 'Lista över användare',

@@ -2255,11 +2255,12 @@ $messages['lb'] = array(
 	'tooltip-pt-myhome' => 'Op meng Haaptsäit goen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
 	'myhome' => 'سرآسونه مه',
+	'myhome-watchlist-feed' => 'سئیل بأرگ',
 	'prefs-myhome' => 'سرآسونه مه',
 	'myhome-feed-newpage' => 'بلگه نو',
 	'myhome-feed-edit' => 'ويرايشت',

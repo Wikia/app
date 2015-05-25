@@ -443,8 +443,10 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'wikiawidget-desc' => 'Tạo Wikia Widget để sử dụng trên các trang web bên ngoài hoặc để đưa vào wiki của bạn',
 	'wikiawidget' => 'Wikia widget',
 );
 

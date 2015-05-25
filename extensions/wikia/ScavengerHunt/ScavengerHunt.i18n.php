@@ -1109,6 +1109,7 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'scavengerhunt-list-edit' => 'bewurkje',
+	'scavengerhunt-button-delete' => 'Fuortsmite',
 	'scavengerhunt-quit-game-button-cancel' => 'Annulearje',
 );
 

@@ -2349,10 +2349,12 @@ $messages['fy'] = array(
 	'wikiaPhotoGallery-upload-findbutton' => 'Sykje',
 	'wikiaPhotoGallery-upload-page-next' => 'Folgjende 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Foarige 8',
+	'wikiaPhotoGallery-preview-hover-delete' => 'fuortsmite',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Grut',
 	'wikiaPhotoGallery-preview-captionsize-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-captionsize-large' => 'Grut',
+	'wikiaPhotoGallery-preview-bordersize-none' => 'Gjin',
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'Grut',
 );
@@ -3432,6 +3434,13 @@ $messages['ja'] = array(
 	'wikiaPhotoGallery-upload-image-size' => '画像は 670 x 360 ピクセル以上でなければなりません。',
 	'wikiaPhotoGallery-not-displayed' => '表示されません',
 	'galery-slider-read-more' => '続きを読む >',
+);
+
+/** Georgian (ქართული)
+ * @author Otogi
+ */
+$messages['ka'] = array(
+	'wikiaPhotoGallery-photooptions-done' => 'გაკეთდა',
 );
 
 /** Kannada (ಕನ್ನಡ)

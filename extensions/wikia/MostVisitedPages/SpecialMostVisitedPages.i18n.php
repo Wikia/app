@@ -735,14 +735,16 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Farewell
+ * @author KhangND
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'mostvisitedpages-desc' => 'Hiện danh sách các trang được xem nhiều nhất',
 	'mostvisitedpages' => 'Các trang được xem nhiều nhất',
 	'mostvisitedpagessearchtext' => 'Tên trang',
 	'mostvisitedpagessearchbtn' => 'Tìm kiếm',
-	'mostvisitedpageslatest' => 'trong $1 phút cuối',
+	'mostvisitedpageslatest' => 'trong $1 {{PLURAL:$1|minute|phút}} cuối',
 	'mostvisitedpageslatestlink' => 'Xem trang được truy cập mới nhất',
 	'mostvisitedpagesalllink' => 'Xem trang được truy cập nhiều nhất',
 );

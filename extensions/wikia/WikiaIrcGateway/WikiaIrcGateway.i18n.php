@@ -562,10 +562,12 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Dinhxuanduyet
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'ircgate-desc' => 'Cho phép người dùng nhúng khung đăng nhập IRC vào bất kỳ trang nào',
 	'ircgate-username' => 'Tên đăng nhập:',
 	'ircgate-channel' => 'Kênh:',
 );

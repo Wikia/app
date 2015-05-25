@@ -2891,6 +2891,7 @@ $messages['fa'] = array(
 	'wall-topic-input-heading' => 'مبحث',
 	'wall-topic-edit-save' => 'ذخیره',
 	'wall-topic-edit-cancel' => 'لغو',
+	'group-threadmoderator-member' => 'مدیر',
 );
 
 /** Finnish (suomi)
@@ -3535,10 +3536,14 @@ $messages['fy'] = array(
 	'wall-button-cancel-changes' => 'Annulearje',
 	'wall-message-edit' => 'Bewurkje',
 	'wall-message-more' => 'Mear',
+	'wall-message-delete' => 'Fuortsmite',
 	'wall-action-all-confirm-cancel' => 'Annulearje',
 	'wall-delete-error-title' => 'Flater',
+	'wall-action-close-confirm-ok' => 'Slute',
+	'wall-action-admin-confirm-ok' => 'Fuortsmite',
 	'wall-notifications-all' => 'Alle meldingen',
 	'wall-history' => 'Skiednis',
+	'wall-topic-edit-save' => 'Bewarje',
 	'wall-topic-edit-cancel' => 'Annulearje',
 );
 
@@ -4731,6 +4736,7 @@ http://ja.wikia.com/wiki/Special:Following</p>',
 
 /** Georgian (ქართული)
  * @author DevaMK
+ * @author Otogi
  */
 $messages['ka'] = array(
 	'wall-message-loadmore' => 'იხილე $1-ვე პასუხი',
@@ -4745,6 +4751,7 @@ $messages['ka'] = array(
 	'wall-button-to-submit-comment' => 'გამოაქვეყნე',
 	'wall-button-to-submit-reply' => 'უპასუხე',
 	'wall-button-to-submit-comment-no-topic' => 'გამოაქვეყნე სათაურის გარეშე',
+	'wall-button-done-source' => 'გაკეთდა',
 	'wall-message-edit' => 'რედაქტირება',
 	'wall-message-more' => 'მეტი',
 	'wall-message-close-thread' => 'ბმულის დახურვა',
@@ -4934,7 +4941,7 @@ $messages['ksh'] = array(
 	'wall-button-to-preview-comment' => '{{int:preview}}',
 	'wall-button-to-cancel-preview' => 'Ändere',
 	'wall-button-to-submit-reply' => 'Antwoote',
-	'wall-button-save-changes' => 'Änderunge faßhallde',
+	'wall-button-save-changes' => 'Änderonge faßhallde',
 	'wall-button-cancel-changes' => 'Ophüre',
 	'wall-button-done-source' => 'Fäädesch',
 	'wall-message-edit' => 'Ändere',
@@ -5679,6 +5686,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
 	'wall-topic-edit-cancel' => 'Batalkan',
 	'group-threadmoderator' => 'Pengawal Selia',
 	'group-threadmoderator-member' => 'Pengawal Selia',
+	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
 /** Neapolitan (Napulitano)

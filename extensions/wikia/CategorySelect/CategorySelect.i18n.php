@@ -1229,6 +1229,20 @@ $messages['ru'] = array(
 	'tog-disablecategoryselect-v2' => 'Отключить модуль Категорий (активно только при редактировании в режиме Исходного кода)',
 );
 
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'categoryselect-button-add' => 'वर्गः योज्यताम्',
+	'categoryselect-button-cancel' => 'निरस्यताम्',
+	'categoryselect-button-save' => 'रक्ष्यताम्',
+	'categoryselect-category-add' => 'वर्गः योज्यताम्...',
+	'categoryselect-category-edit' => 'वर्गः सम्पाद्यताम्',
+	'categoryselect-category-remove' => 'वर्गः निष्कास्यताम्',
+	'categoryselect-edit-summary' => 'वर्गान् योजयति',
+	'categoryselect-error-db-locked' => 'दत्तांशनिधिः (database) कीलितः',
+);
+
 /** Slovenian (slovenščina)
  * @author Dbc334
  */
