@@ -1,9 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.turtle', [
 	'wikia.log',
-	'ext.wikia.adEngine.gptHelper',
+	'ext.wikia.adEngine.gptSraHelper',
 	'ext.wikia.adEngine.slotTweaker'
-], function (log, gptHelper, slotTweaker) {
+], function (log, gptSraHelper, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.turtle',
@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 	function fillInSlot(slotName, success, hop) {
 		log(['fillInSlot', slotName, success, hop], 'debug', logGroup);
 
-		gptHelper.pushAd(
+		gptSraHelper.pushAd(
 			slotName,
 			'/98544404/Wikia/Nordics_RoN/' + slotName,
 			slotMap[slotName],
@@ -43,7 +43,6 @@ define('ext.wikia.adEngine.provider.turtle', [
 			hop,
 			'turtle'
 		);
-		gptHelper.flushAds();
 
 		log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
 	}
