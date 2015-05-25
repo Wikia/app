@@ -9,14 +9,15 @@
 			<a href="<?= Sanitizer::cleanUrl( $flag['flag_view_url'] ) ?>" target="_blank"><?= wfMessage( 'flags-edit-form-more-info' )->escaped() ?></a>
 			<?php
 			$flagParamsNames = json_decode( $flag['flag_params_names'] );
-			if ( !empty( $flagParamsNames ) ): ?>
+			if ( !empty( $flagParamsNames ) ):
+			?>
 				<fieldset class="params">
 				<?php
 				foreach ( $flagParamsNames as $flagParamName => $flagParamDescription ):
 					$flagParamValue = (string)$flag['params'][$flagParamName];
-					?>
+				?>
 					<input type="text" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$flagParamName}" ) ?>" value="<?= Sanitizer::encodeAttribute( $flagParamValue ) ?>" placeholder="<?= Sanitizer::encodeAttribute( $flagParamDescription ) ?>" class="param">
-					<?php
+				<?php
 				endforeach;
 				?>
 				</fieldset>
