@@ -238,12 +238,12 @@ class MoveNotices extends Maintenance {
 		}
 
 		$flagType = [
-			'wikiId' => $this->wikiId,
-			'flagGroup' => $flagTypeModel->getFlagGroupId( $data[2] ),
-			'flagName' => $data[1],
-			'flagView' => $data[0],
-			'flagTargeting' => $flagTypeModel->getFlagTargetingId( $data[3] ),
-			'flagParamsNames' => $parameters
+			'wiki_id' => $this->wikiId,
+			'flag_group' => $flagTypeModel->getFlagGroupId( $data[2] ),
+			'flag_name' => $data[1],
+			'flag_view' => $data[0],
+			'flag_targeting' => $flagTypeModel->getFlagTargetingId( $data[3] ),
+			'flag_params_names' => $parameters
 		];
 
 		return $flagType;
@@ -254,11 +254,11 @@ class MoveNotices extends Maintenance {
 	 */
 	private function prepareDataForFlagsToPage( $params ) {
 		$flagsToPages = [
-			'wikiId' => $this->wikiId,
-			'pageId' => $this->pageId,
+			'wiki_id' => $this->wikiId,
+			'page_id' => $this->pageId,
 			'flags' => [
 				[
-					'flagTypeId' => $this->flagId,
+					'flag_type_id' => $this->flagId,
 					'params' => $params
 				]
 			]
