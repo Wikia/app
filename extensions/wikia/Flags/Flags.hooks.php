@@ -75,7 +75,7 @@ class Hooks {
 			&& $helper->shouldDisplayFlags()
 			&& !( $wgRequest->getVal( 'action' ) == 'visualeditor' )
 		) {
-			$addText = $helper->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
+			$addText = ( new \FlagsController )->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 
 			if ( $addText !== null ) {
 				$mwf = \MagicWord::get( 'flags' );

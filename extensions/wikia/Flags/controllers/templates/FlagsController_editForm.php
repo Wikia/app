@@ -28,5 +28,5 @@
 		<?php endforeach; ?>
 	</ul>
 	<input type="hidden" name="page_id" value="<?= Sanitizer::encodeAttribute( $pageId ) ?>">
-	<input type="hidden" name="token" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>">
+	<input type="hidden" name="edit_token" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>">
 </form>
