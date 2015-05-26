@@ -350,6 +350,10 @@ class UncycloUserMigrator extends Maintenance {
 			// update user ID in uncyclo database
 			$this->doChangeUncycloUserId( $user, $extUser->getId() );
 
+			// invalidate user cache
+			global $wgMemc;
+			$wgMemc->delete( wfMemcKey( 'user', 'id', $user->getId() ) );
+
 			$dbw->commit(__METHOD__);
 		}
 		catch(Exception $e) {
