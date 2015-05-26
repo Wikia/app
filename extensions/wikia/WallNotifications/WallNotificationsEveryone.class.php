@@ -55,7 +55,7 @@ class WallNotificationsEveryone extends WallNotifications {
 		$this->remNotificationsForUniqueID( false, $this->cityId, $pageId );
 
 		// remove notification from notification queue
-		$this->getDB(true)->delete( 'wall_notification_queue',
+		$this->getDB( true )->delete( 'wall_notification_queue',
 			[
 				'wiki_id' => $this->cityId,
 				'page_id' => $pageId
@@ -63,8 +63,8 @@ class WallNotificationsEveryone extends WallNotifications {
 			__METHOD__
 		);
 
-		$this->getDB(true)->commit();
-		wfProfileOut(__METHOD__);
+		$this->getDB( true )->commit();
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -157,9 +157,9 @@ class WallNotificationsEveryone extends WallNotifications {
 		$this->getDB( true )->insert( 'wall_notification_queue_processed', [
 			'user_id' => $userId,
 			'entity_key' => $entityKey
-		], __METHOD__);
+		], __METHOD__ );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function getEntityProcessed( $userId, $entityKey ) {
@@ -279,13 +279,13 @@ class WallNotificationsEveryone extends WallNotifications {
 		$notificationToDeleteIds = [];
 
 		// Group notifications by user_id / wiki_id as the cache is per (user_id, wiki_id) pairs
-		while( $row = $db->fetchRow( $res ) ) {
+		while ( $row = $db->fetchRow( $res ) ) {
 			$user_id = $row['user_id'];
 			$wiki_id = $row['wiki_id'];
-			if( !isset( $notifications[$user_id] ) ) {
+			if ( !isset( $notifications[$user_id] ) ) {
 				$notifications[$user_id] = [];
 			}
-			if( !isset( $notifications[$user_id][$wiki_id] ) ) {
+			if ( !isset( $notifications[$user_id][$wiki_id] ) ) {
 				$notifications[$user_id][$wiki_id] = [];
 			}
 			$notifications[$user_id][$wiki_id][] = $row['unique_id'];
@@ -300,9 +300,9 @@ class WallNotificationsEveryone extends WallNotifications {
 	 * @param array $notifications grouped list of notifications
 	 */
 	private function removeExpiredNotificationsFromCache( $notifications ) {
-		foreach( $notifications as $userId => $wikis ) {
+		foreach ( $notifications as $userId => $wikis ) {
 			foreach ( $wikis as $wikiId => $uniqueIds ) {
-				if( $this->isCachedData( $userId, $wikiId ) ) {
+				if ( $this->isCachedData( $userId, $wikiId ) ) {
 					$memCacheSync = $this->getCache( $userId, $wikiId );
 					$memCacheSync->lockAndSetData(
 						function() use( $memCacheSync, $userId, $wikiId, $uniqueIds ) {
@@ -328,11 +328,11 @@ class WallNotificationsEveryone extends WallNotifications {
 	 */
 	private function deleteNotificationsFromDB( $notificationToDeleteIds ) {
 		// delete ids by chunks as they can be many
-		while ( $chunk = array_splice( $notificationToDeleteIds, 0, self::DELETE_IDS_BATCH_SIZE )) {
+		while ( $chunk = array_splice( $notificationToDeleteIds, 0, self::DELETE_IDS_BATCH_SIZE ) ) {
 			$deleteIds = '(' . implode( ',', $chunk ) . ')';
 
 			$this->getDB( true )->delete( 'wall_notification',
-				[ 'id IN '. $deleteIds ],
+				[ 'id IN ' . $deleteIds ],
 				__METHOD__
 			);
 		};
@@ -345,7 +345,7 @@ class WallNotificationsEveryone extends WallNotifications {
 	private function getDbExpireDate() {
 		$db = $this->getDB( true );
 		return $db->addQuotes(
-			$db->timestamp( strtotime( -WallHelper::NOTIFICATION_EXPIRE_DAYS .' days' ) )
+			$db->timestamp( strtotime( -WallHelper::NOTIFICATION_EXPIRE_DAYS . ' days' ) )
 		);
 	}
 
@@ -355,8 +355,8 @@ class WallNotificationsEveryone extends WallNotifications {
 	 * @param bool $onlyCache - clears only users' cache
 	 */
 	public function clearQueue( $onlyCache = false ) {
-		//TODO: it causes db deadlocks - bugid 97359
-		//this should be called at most once a day in a background task
+		// TODO: it causes db deadlocks - bugid 97359
+		// this should be called at most once a day in a background task
 		wfProfileIn( __METHOD__ );
 
 		$preparedDbExpireTime = $this->getDbExpireDate();
@@ -372,7 +372,7 @@ class WallNotificationsEveryone extends WallNotifications {
 			}
 		}
 
-		//TODO: performance of this queries
+		// TODO: performance of this queries
 		if ( !$onlyCache ) {
 			$db = $this->getDB( true );
 			$db->query( 'DELETE FROM wall_notification_queue WHERE event_date < ' . $preparedDbExpireTime );

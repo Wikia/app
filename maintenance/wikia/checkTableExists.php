@@ -45,7 +45,8 @@ $cluster_dbs = [
 	"c" => "wikicities_c3",
 	"d" => "wikicities_c4",
 	"e" => "wikicities_c5",
-	"f" => "wikicities_c6"
+	"f" => "wikicities_c6",
+	"g" => "wikicities_c7",
 ];
 
 $missing = [];

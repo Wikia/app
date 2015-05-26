@@ -5,6 +5,7 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
 @import 'ads-floor';
+@import 'ads-in-content';
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
@@ -208,7 +209,6 @@ body >a >img[src$="noad.gif"] {
 	.ad-centered-wrapper {
 		height: 400px;
 		margin-bottom: 20px;
-		margin-top: 20;
 	}
 }
 
@@ -266,41 +266,23 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-.ad-in-content-lb {
-	clear: both;
-	margin: 0 auto;
-	text-align: center;
-
-	.wikia-ad {
-		display: inline-block;
-	}
-
-	> .default-height {
-		height: 90px;
-		width: 728px;
-	}
-}
-
-.ad-in-content {
-	clear: right;
-	float: right;
-
-	> .default-height {
-		height: 265px;
-		width: 300px;
-	}
-
-	> .wikia-ad {
-		margin: 0 0 30px 30px;
-	}
-}
-
-.clear-right-after-ad-in-content {
-	clear: right;
-}
-
 @media screen and (max-width: $breakpoint-small) {
 	.home-top-right-ads.top-right-ads-in-content {
 		display: block;
+	}
+}
+
+/* ADEN-1716 AB testing experiment with medrec viewability */
+#TOP_RIGHT_BOXAD.ads-viewability-test {
+	&.GUTTER_150 {
+		margin-top: 150px;
+	}
+
+	&.GUTTER_300 {
+		margin-top: 300px;
+	}
+
+	&.GUTTER_450 {
+		margin-top: 450px;
 	}
 }

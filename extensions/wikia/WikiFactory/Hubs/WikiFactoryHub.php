@@ -448,22 +448,24 @@ class WikiFactoryHub extends WikiaModel {
 			$values[]= ["city_id" => $city_id, "cat_id" => $category];
 		}
 
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+		// Clear categories, add any new ones
+		// Note: this allows a wiki to be in zero categories, which may affect other biz logic
+		$dbw->begin();
+		$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
 		if (!empty ( $values) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-
-			$dbw->begin();
-			$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
 			$dbw->insert( "city_cat_mapping", $values, __METHOD__  );
-			$dbw->commit();
-
-			$this->clearCache( $city_id );
-
-			$aHookParams = [
-				'city_id' => $city_id,
-				'categories' => $categories,
-			];
-			wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 		}
+		$dbw->commit();
+
+		$this->clearCache( $city_id );
+
+		$aHookParams = [
+			'city_id' => $city_id,
+			'categories' => $categories,
+		];
+		wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
 		$this->loadCategories();

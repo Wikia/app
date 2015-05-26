@@ -2,13 +2,23 @@
 
 class PortableInfoboxRenderService extends WikiaService {
 	const LOGGER_LABEL = 'portable-infobox-render-not-supported-type';
+	const DESKTOP_THUMBNAIL_WIDTH = 270;
+	const MOBILE_THUMBNAIL_WIDTH = 360;
+	// TODO: https://wikia-inc.atlassian.net/browse/MAIN-4601 - request for the missing vignette feature which will
+	// allow us to remove THUMBNAIL_HEIGHT from the code. Currently we need this value cause it it impossible to get
+	// vignette thumbnail without upsampling only specifying width. The height need to be big enough so each image width
+	// will reach our thumbnail width based on its aspect ratio
+
+	const THUMBNAIL_HEIGHT = 1000;
+	const MOBILE_TEMPLATE_POSTFIX = '-mobile';
 
 	private $templates = [
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'header' => 'PortableInfoboxItemHeader.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
-		'pair' => 'PortableInfoboxItemKeyVal.mustache',
+		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
+		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
 		'comparison' => 'PortableInfoboxItemComparison.mustache',
 		'comparison-set' => 'PortableInfoboxItemComparisonSet.mustache',
@@ -29,17 +39,13 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $infoboxdata
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata ) {
+	public function renderInfobox( array $infoboxdata, $theme ) {
 		wfProfileIn( __METHOD__ );
 		$infoboxHtmlContent = '';
 
 		foreach ( $infoboxdata as $item ) {
 			$data = $item[ 'data' ];
 			$type = $item[ 'type' ];
-
-			if ( $item['isEmpty'] ) {
-				continue;
-			}
 
 			switch ( $type ) {
 				case 'comparison':
@@ -59,7 +65,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if(!empty($infoboxHtmlContent)) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent ] );
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme ] );
 		} else {
 			$output = '';
 		}
@@ -82,16 +88,8 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ($comparisonData as $set) {
 			$setHTMLContent = '';
 
-			if ($set['isEmpty']) {
-				continue;
-			}
-
 			foreach ($set['data']['value'] as $item) {
 				$type = $item['type'];
-
-				if ($item['isEmpty']) {
-					continue;
-				}
 
 				if ($type === 'header') {
 					$setHTMLContent .= $this->renderItem(
@@ -132,10 +130,6 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ( $groupData as $item ) {
 			$type = $item['type'];
 
-			if ( $item['isEmpty'] ) {
-				continue;
-			}
-
 			if ( $this->validateType( $type ) ) {
 				$groupHTMLContent .= $this->renderItem( $type, $item['data'] );
 			}
@@ -152,9 +146,39 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @return string - HTML
 	 */
 	private function renderItem( $type, array $data ) {
+		//TODO: with validated the performance of render Service and in the next phase we want to refactor it (make
+		// it modular) While doing this we also need to move this logic to appropriate image render class
+		if ( $type === 'image' ) {
+			$data[ 'thumbnail' ] = $this->getThumbnailUrl( $data['url'] );
+			$data[ 'key' ] = urlencode( $data[ 'key' ] );
+
+			if ( $this->isWikiaMobile() ) {
+				$type = $type . self::MOBILE_TEMPLATE_POSTFIX;
+			}
+		}
+
 		return $this->templateEngine->clearData()
 			->setData( $data )
 			->render( $this->templates[ $type ] );
+	}
+
+	protected function getThumbnailUrl( $url ) {
+		return VignetteRequest::fromUrl( $url )
+			->thumbnailDown()
+			->width( $this->isWikiaMobile() ?
+				self::MOBILE_THUMBNAIL_WIDTH :
+				self::DESKTOP_THUMBNAIL_WIDTH
+			)
+			->height(self::THUMBNAIL_HEIGHT)
+			->url();
+	}
+
+	/**
+	 * required for testing mobile template rendering
+	 * @return bool
+	 */
+	protected function isWikiaMobile() {
+		return F::app()->checkSkin( 'wikiamobile' );
 	}
 
 	/**

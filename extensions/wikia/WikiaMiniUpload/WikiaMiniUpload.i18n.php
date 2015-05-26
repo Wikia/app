@@ -369,7 +369,7 @@ $messages['az'] = array(
 	'wmu-gallery' => 'Qalereya',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author Erdemaslancan
  */
 $messages['azb'] = array(
@@ -1125,6 +1125,7 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'wmu-upload' => 'Igo',
@@ -1144,10 +1145,14 @@ $messages['eu'] = array(
 	'wmu-insert2' => 'Fitxategia txertatu',
 	'wmu-prev' => 'Aurreko 8',
 	'wmu-next' => 'Hurrengo 8',
-	'wmu-back' => 'atzera', # Fuzzy
+	'wmu-back' => 'Hautatu beste argazki bat',
 	'wmu-imagelink' => '<b>Berria!</b> Irudiak gehitu',
 	'wmu-imagebutton' => 'Irudiak gehitu',
+	'wmu-columns' => '{{PLURAL:$1|Zutabe bat|$1 zutabe}}',
 	'wmu-column' => 'Zutabeak',
+	'wmu-more-options' => 'Aukera gehiago',
+	'wmu-fewer-options' => 'Aukera gutxiago',
+	'wmu-file-not-found' => 'Ez da fitxategia aurkitu',
 );
 
 /** Persian (فارسی)
@@ -1313,6 +1318,7 @@ $messages['fy'] = array(
 	'wmu-find' => 'Sykje',
 	'wmu-find-btn' => 'Sykje',
 	'wmu-name' => 'Namme',
+	'wmu-optional' => '(opsjoneel)',
 	'wmu-prev' => 'Foarige 8',
 	'wmu-next' => 'Folgjende 8',
 );
@@ -1849,6 +1855,7 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  * @author Ghybu
  */
@@ -1867,7 +1874,7 @@ $messages['ku-latn'] = array(
 	'wmu-license' => 'Lîsans',
 	'wmu-thumbnail' => 'Thumbnail',
 	'wmu-link' => 'Girêdan',
-	'wmu-back' => 'paşve biçe', # Fuzzy
+	'wmu-back' => 'wêneyên din hilbijêre',
 	'wmu-imagebutton' => 'Wêneyan zêde bike',
 	'wmu-hide-license-msg' => 'lîsansa nivîsê veşêre',
 	'wmu-show-license-msg' => 'lîsansa nivîsê nîşan bide',
@@ -2325,7 +2332,32 @@ Klik hieronder om meer afbeeldingen aan de galerij toe te voegen.',
 	'wmu-no-rights' => 'Je mag geen afbeeldingen toevoegen aan deze pagina',
 );
 
-/** Deitsch (Deitsch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wmu-find' => 'Recercar',
+	'wmu-thiswiki' => 'Aqueste wiki',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Importar',
+	'wmu-find-btn' => 'Recercar',
+	'wmu-insert' => 'Inserir',
+	'wmu-name' => 'Nom',
+	'wmu-license' => 'Licéncia',
+	'wmu-licensing' => 'Licéncia',
+	'wmu-size' => 'Talha',
+	'wmu-thumbnail' => 'Miniatura',
+	'wmu-width' => 'Largor',
+	'wmu-layout' => 'Orientacion',
+	'wmu-caption' => 'Legenda',
+	'wmu-link' => 'Ligam',
+	'wmu-optional' => '(opcional)',
+	'wmu-prev' => 'Precedent 8',
+	'wmu-next' => 'Seguent 8',
+	'wmu-license-cc' => 'Jos licéncia Creative Commons Attribution-Share Alike 3.0',
+);
+
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -2334,7 +2366,7 @@ $messages['pdc'] = array(
 	'wmu-back' => 'zerrick', # Fuzzy
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  */
 $messages['pfl'] = array(
 	'wmu-prev' => 'Voriche 8',
@@ -2913,6 +2945,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wmu-desc' => 'WikiaMiniUpload-tillägg',
 	'wmu-upload-image' => 'Ladda upp bild',
 	'wmu-title' => 'Ladda upp foto',
 	'wmu-upload' => 'Ladda upp',
@@ -3275,7 +3308,7 @@ $messages['uk'] = array(
 	'wmu-error-bad-aspect-ratio' => 'Хибний формат зображення ($1 x $2 px)',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  */
 $messages['uz'] = array(

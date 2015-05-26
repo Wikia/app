@@ -16,9 +16,6 @@ use Email\EmailController;
 class ForgotPasswordController extends EmailController {
 
 	public function initEmail() {
-		// Set the recipient user
-		$this->setTargetUser();
-
 		$this->fromAddress = new \MailAddress(
 			$this->wg->PasswordSender,
 			$this->wg->PasswordSenderName
@@ -76,11 +73,6 @@ class ForgotPasswordController extends EmailController {
 		if ( !$this->wg->Auth->allowPasswordChange() ) {
 			throw new Fatal( 'This user is not allowed to change their password' );
 		}
-	}
-
-	protected function setTargetUser() {
-		$username = $this->getRequest()->getVal( 'username' );
-		$this->targetUser = $this->getUserFromName( $username );
 	}
 
 	protected function assertPasswordReminderNotThrottled() {

@@ -3,51 +3,125 @@
 class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
 	protected function setUp() {
+		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
-		require_once( dirname( __FILE__ ) . '/../PortableInfobox.setup.php' );
+		$this->parser = $this->setUpParser();
+		$this->controller = new PortableInfoboxParserTagController();
+	}
+
+	protected function setUpParser() {
+		$parser = new Parser();
+		$options = new ParserOptions();
+		$title = Title::newFromText( 'Test' );
+		$parser->Options( $options );
+		$parser->startExternalParse( $title, $options, 'text', true );
+		return $parser;
+	}
+
+	protected function checkClassName( $output, $class ) {
+		$result = new DOMDocument();
+		$result->loadHTML( $output );
+		$xpath = new DOMXPath( $result );
+		return $xpath->query( '//aside[contains(@class, \'' . $class . '\')]' )->length > 0 ? true : false;
 	}
 
 	public function testEmptyInfobox() {
 		$text = '';
-		$controller = new PortableInfoboxParserTagController();
 
-		$parser = new Parser();
-		$options = new ParserOptions();
-		$title = Title::newFromText( 'Test' );
-		$parser->Options( $options );
-		$parser->startExternalParse( $title, $options, 'text', true );
-		$frame = $parser->getPreprocessor()->newFrame();
-		$output = trim( $controller->renderInfobox( $text, [ ], $parser, $frame )[0] );
+		$marker = $this->controller->renderInfobox( $text, [ ], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
 
 		$this->assertEquals( $output, '' );
 	}
 
-	public function testNoWrappingParagraphs() {
-		$this->markTestSkipped( 'DAT-2738 - awaiting decision whether this is a behavior to be fixed' );
-		$text = PHP_EOL . '<infobox><pair><default>Val</default></pair></infobox>' . PHP_EOL;
+	public function testThemedInfobox() {
+		$text = '<data><default>test</default></data>';
+		$defaultTheme = 'test';
 
-		$parser = new Parser();
-		$options = new ParserOptions();
-		$title = Title::newFromText( 'Test' );
-		$parser->Options( $options );
-		$parser->startExternalParse( $title, $options, 'text', true );
-		$output = $parser->parse( $text, $title, $options )->getText();
+		$marker = $this->controller->renderInfobox( $text, [ 'theme' => $defaultTheme ], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertFalse( startsWith( trim( $output ), '<p>' ) );
-		$this->assertFalse( endsWith( trim( $output ), '<p>' ) );
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
+		) );
 	}
 
-	public function testNoPreTag() {
-		$this->markTestSkipped( 'DAT-2736 - awaiting decision whether this is a behavior to be fixed' );
-		$text = '<infobox><pair><default>Val</default></pair></infobox>' . PHP_EOL . ' Test';
+	public function testSourceThemedInfobox() {
+		$text = '<data><default>test</default></data>';
+		$themeVariableName = 'variableName';
+		$themeName = 'variable';
 
-		$parser = new Parser();
-		$options = new ParserOptions();
-		$title = Title::newFromText( 'Test' );
-		$parser->Options( $options );
-		$parser->startExternalParse( $title, $options, 'text', true );
-		$output = trim( $parser->parse( $text, $title, $options, false )->getText() );
+		$marker = $this->controller->renderInfobox( $text, [ 'theme-source' => $themeVariableName ], $this->parser,
+			$this->parser->getPreprocessor()->newCustomFrame( [ $themeVariableName => $themeName ] ) )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
 
-		$this->assertFalse( strpos( $output, '<pre>Test' . PHP_EOL . '</pre>' ) );
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $themeName
+		) );
+	}
+
+	public function testEmptySourceDefaultThemedInfobox() {
+		$text = '<data><default>test</default></data>';
+		$themeVariableName = 'variableName';
+		$themeName = 'variable';
+		$defaultTheme = 'default';
+
+		$marker = $this->controller->renderInfobox( $text,
+			[ 'theme' => $defaultTheme, 'theme-source' => $themeVariableName ],
+			$this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $defaultTheme
+		) );
+	}
+
+	public function testNoThemeInfobox() {
+		$text = '<data><default>test</default></data>';
+
+		$marker = $this->controller->renderInfobox( $text, [ ], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . PortableInfoboxParserTagController::DEFAULT_THEME_NAME
+		) );
+	}
+
+	public function testWhiteSpacedThemeInfobox() {
+		$text = '<data><default>test</default></data>';
+		$defaultTheme = 'test test';
+		$expectedName = 'test-test';
+
+		$marker = $this->controller->renderInfobox( $text, [ 'theme' => $defaultTheme ], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
+		) );
+	}
+
+	public function testMultiWhiteSpacedThemeInfobox() {
+		$text = '<data><default>test</default></data>';
+		$defaultTheme = "test    test\n test\ttest";
+		$expectedName = 'test-test-test-test';
+
+		$marker = $this->controller->renderInfobox( $text, [ 'theme' => $defaultTheme ], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
+		) );
 	}
 }
