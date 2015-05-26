@@ -54,7 +54,7 @@ class FlagsHelper {
 				 */
 				$flagsToRemove[] = $flag['flag_id'];
 
-			} elseif ( $flag['flag_param_names'] !== null ) {
+			} elseif ( $flag['flag_params_names'] !== null ) {
 				/**
 				 * 4. The flag type HAS an instance on this page and WAS posted
 				 * and HAS parameters - update the parameters of the instance.
@@ -106,7 +106,7 @@ class FlagsHelper {
 			 * Check only for names of parameters defined in the flag_param_names field.
 			 * This is a protection from users modifying names of parameters in the DOM.
 			 */
-			foreach ( $paramNames as $paramName ) {
+			foreach ( $paramNames as $paramName => $paramDescription ) {
 				$key = $this->composeInputName( $flagTypeId, $paramName );
 				if ( isset( $postData[$key] ) ) {
 					/**
@@ -131,47 +131,18 @@ class FlagsHelper {
 	 * @return bool
 	 */
 	public function shouldDisplayFlags() {
-		global $wgRequest;
+		global $wgTitle, $wgRequest;
 
-		return !in_array(
-			$wgRequest->getVal( 'action', 'view' ),
-			[ 'edit', 'formedit' , 'history' ]
-		);
-	}
-
-	/**
-	 * A wrapper for a request to the FlagsController for flags for the given page
-	 * that returns a wikitext string with calls to templates of the flags.
-	 * @param int $pageId
-	 * @return null|string
-	 */
-	public function getFlagsForPageWikitext( $pageId ) {
-		$flags = $this->sendGetFlagsForPageRequest( $pageId );
-		if ( !empty( $flags ) ) {
-			$flagsWikitext = '';
-			$flagView = new FlagView();
-			foreach ( $flags as $flagId => $flag ) {
-				$flagsWikitext .= $flagView->createWikitextCall( $flag['flag_view'], $flag['params'] );
-			}
-			return $flagsWikitext;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Sends a request to the FlagsController to get data on flags for the given page.
-	 * @param int $pageId
-	 * @return array
-	 */
-	private function sendGetFlagsForPageRequest( $pageId ) {
-		$app = \F::app();
-		return $app->sendRequest( 'FlagsController',
-			'getFlagsForPage',
-			[
-				'pageId' => $pageId,
-			]
-		)->getData();
+		return
+			/* Don't display flags when parsing message (wgTitle doesn't exist then) */
+			$wgTitle instanceof \Title
+			/* Display flags only on content namespaces */
+			&& \Wikia::isContentNamespace()
+			/* Don't display flags on edit pages that are content namespaces */
+			&& !in_array(
+				$wgRequest->getVal( 'action', 'view' ),
+				[ 'edit', 'formedit' , 'history' ]
+			);
 	}
 
 	/**

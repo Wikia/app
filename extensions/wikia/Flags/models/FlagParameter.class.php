@@ -18,25 +18,21 @@ class FlagParameter extends FlagsBaseModel {
 	 * Performs an INSERT query that adds rows to store parameters of a given instance of a flag.
 	 * @param int $flagId
 	 * @param int $flagTypeId
-	 * @param int $wikiId
-	 * @param int $pageId
 	 * @param array $params `paramName` => `paramValue`
 	 * @return bool
 	 */
-	public function createParametersForFlag( $flagId, $flagTypeId, $wikiId, $pageId, $params ) {
+	public function createParametersForFlag( $flagId, $flagTypeId, $params ) {
 		$db = $this->getDatabaseForWrite();
 
 		$values = [];
 		foreach ( $params as $paramName => $paramValue ) {
-			$values[] = [ $flagId, $flagTypeId, $wikiId, $pageId, $paramName, $paramValue ];
+			$values[] = [ $flagId, $flagTypeId, $paramName, $paramValue ];
 		}
 
 		( new \WikiaSQL )
 			->INSERT()->INTO( self::FLAGS_PARAMS_TABLE, [
 				'flag_id',
 				'flag_type_id',
-				'wiki_id',
-				'page_id',
 				'param_name',
 				'param_value',
 			] )

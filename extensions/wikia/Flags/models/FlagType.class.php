@@ -127,7 +127,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function verifyParamsForAdd( $params ) {
-		$required = [ 'wikiId', 'flagGroup', 'flagName', 'flagView', 'flagTargeting' ];
+		$required = [ 'wiki_id', 'flagGroup', 'flagName', 'flagView', 'flagTargeting' ];
 
 		foreach ( $required as $requiredField ) {
 			if ( !isset( $params[$requiredField] ) ) {
@@ -158,7 +158,7 @@ class FlagType extends FlagsBaseModel {
 
 		$sql = ( new \WikiaSQL() )
 			->INSERT( self::FLAGS_TYPES_TABLE )
-			->SET( 'wiki_id', $params['wikiId'] )
+			->SET( 'wiki_id', $params['wiki_id'] )
 			// flag_type_id is auto_increment
 			->SET( 'flag_group', $params['flagGroup'] )
 			->SET( 'flag_name', $params['flagName'] )
@@ -190,7 +190,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function verifyParamsForRemove( $params ) {
-		if ( !isset( $params['flagTypeId'] ) ) {
+		if ( !isset( $params['flag_type_id'] ) ) {
 			return false;
 		}
 
@@ -212,7 +212,7 @@ class FlagType extends FlagsBaseModel {
 
 		( new \WikiaSQL() )
 			->DELETE( self::FLAGS_TYPES_TABLE )
-			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flagTypeId'] )
+			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flag_type_id'] )
 			->run( $db );
 
 		$status = $db->affectedRows() > 0;
