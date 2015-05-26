@@ -59,7 +59,7 @@ class SitemapPageModel extends WikiaModel {
 	}
 
 	/**
-	 * Get list of wikis for the page
+	 * Get list of wikis ordered by title (for detail page)
 	 * @param string $from - from wiki (dbname)
 	 * @param string $to - to wiki (dbname)
 	 * @return array
@@ -105,7 +105,7 @@ class SitemapPageModel extends WikiaModel {
 	}
 
 	/**
-	 * Get list of wikis (top level)
+	 * Get list of wikis ordered by dbname (for top level page)
 	 * @param int $level - page level
 	 * @param string $from - from wiki (dbname)
 	 * @param string $to - to wiki (dbname)
