@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.gptSraHelper', [
 ], function (gptHelper, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.wikiaGptSraHelper',
+	var logGroup = 'ext.wikia.adEngine.gptSraHelper',
 		flushed = false,
 		sraSlots = [
 			'CORP_TOP_LEADERBOARD',
@@ -16,7 +16,8 @@ define('ext.wikia.adEngine.gptSraHelper', [
 			'TOP_LEADERBOARD'
 		],
 		flushOnlySlots = [
-			'GPT_FLUSH'
+			'GPT_FLUSH',
+			'TURTLE_FLUSH'
 		];
 
 	function shouldPush(slotName) {
@@ -36,6 +37,7 @@ define('ext.wikia.adEngine.gptSraHelper', [
 	}
 
 	function pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType) {
+
 		if (shouldPush(slotName)) {
 			gptHelper.pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType);
 			log(['push', 'Pushed slot:', slotName], 'debug', logGroup);

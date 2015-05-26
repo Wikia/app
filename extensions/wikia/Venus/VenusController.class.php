@@ -81,6 +81,7 @@ class VenusController extends WikiaController {
 		$this->adPrefooterLeftBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'PREFOOTER_LEFT_BOXAD', 'includeLabel' => true ] );
 		$this->adPrefooterRightBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'PREFOOTER_RIGHT_BOXAD', 'includeLabel' => true ] );
 		$this->adsBottom = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'GPT_FLUSH' ] );
+		$this->adsBottom = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TURTLE_FLUSH' ] );
 		$this->adsBottom .= $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'SEVENONEMEDIA_FLUSH' ] );
 	}
 
