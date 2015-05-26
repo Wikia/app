@@ -294,37 +294,20 @@ class UncycloUserMigrator extends Maintenance {
 			return;
 		}
 
-		// get the list of wikis where the global user made edits
-		$wikis = RenameUserHelper::lookupRegisteredUserActivity( $user->getId() );
+		$renameProcess = new RenameUserProcess( $user->getName(), $newName, true, 'Migrating Uncyclo accounts' );
+		$res = $renameProcess->run();
 
-		foreach( $wikis as $wikiId ) {
-			$cmd = sprintf( 'SERVER_ID=%s php %s/../maintenance/wikia/RenameUser_local.php --rename-user-id=%d --rename_old_name="%s" --rename_new_name="%s"',
-				$wikiId,
-				__DIR__,
-				$wgUser->getId(),
-				escapeshellarg( $user->getName() ),
-				escapeshellarg( $newName )
-			);
+		if ( $res !== true ) {
+			$this->error( __METHOD__, [
+				'user' => $user->getId(),
+				'errors' => $renameProcess->getErrors(),
+				'warnings' => $renameProcess->getWarnings(),
+			]);
 
-			$retVal = 0;
-			$output = wfShellExec( $cmd, $retVal );
-
-			if ( $retVal > 0 ) {
-				$this->error( __METHOD__, [
-					'cmd' => $cmd,
-					'exception' => new Exception( $output, $retVal )
-				]);
-
-				throw new UncycloUserMigratorException( $output, $retVal );
-			}
+			throw new UncycloUserMigratorException( 'RenameUserProcess::run failed for ' . $user->getName() );
 		}
 
-		// TODO: update shared DB and each cluster with the new user name
-
-		$this->info( __METHOD__, [
-			'user' => $user->getName(),
-			'wikis' => count( $wikis )
-		] );
+		$this->info( __METHOD__, [ 'user' => $user->getName() ] );
 
 		$this->renamedWikiaAccounts++;
 	}
@@ -605,8 +588,9 @@ class UncycloUserMigrator extends Maintenance {
 	}
 }
 
-// RenameUserHelper::lookupRegisteredUserActivity
+// UserRenameTool
 require_once( __DIR__ . "/../../extensions/wikia/UserRenameTool/RenameUserHelper.class.php" );
+require_once( __DIR__ . "/../../extensions/wikia/UserRenameTool/RenameUserProcess.class.php" );
 
 $maintClass = "UncycloUserMigrator";
 require_once( RUN_MAINTENANCE_IF_MAIN );
