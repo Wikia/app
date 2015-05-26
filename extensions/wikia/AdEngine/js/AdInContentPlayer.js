@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.adInContentPlayer', [
+define('ext.wikia.adEngine.slot.adInContentPlayer', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.geo',
 	'wikia.instantGlobals',
@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.adInContentPlayer', [
 ], function (adTracker, geo, instantGlobals, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.adInContentPlayer',
+	var logGroup = 'ext.wikia.adEngine.slot.adInContentPlayer',
 		selector = '#mw-content-text > h2',
 		slotName = 'INCONTENT_PLAYER',
 		adHtml = '<div id="' + slotName + '" class="wikia-ad default-height"></div>',
