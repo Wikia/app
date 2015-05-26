@@ -38,11 +38,18 @@ class NodeImage extends Node {
 		return $title;
 	}
 
+	/**
+	 * @desc returns image url for given image title
+	 * @param string $title
+	 * @return string url or '' if image doesn't exist
+	 */
 	public function resolveImageUrl( $title ) {
-		if ( $title && $title->exists() ) {
-			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
-		} else {
-			return '';
+		if ( $title ) {
+			$file = \WikiaFileHelper::getFileFromTitle( $title );
+			if ( $file ) {
+				return $file->getUrl();
+			}
 		}
+		return '';
 	}
 }
