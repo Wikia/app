@@ -709,7 +709,7 @@ $messages['ce'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха хьажар',
 );
 
-/** Central Kurdish (کوردیی ناوەندی)
+/** Sorani Kurdish (کوردی)
  * @author Calak
  */
 $messages['ckb'] = array(
@@ -1461,10 +1461,8 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'rte-ck-errorPopupTitle' => 'Flater!',
-	'rte-ck-hoverPreview-delete' => 'fuortsmite',
 	'rte-ck-hoverPreview-edit' => 'bewurkje',
 	'rte-ck-link-error-title' => 'Flater',
-	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-signature-label' => 'ûndertekening',
 	'rte-ck-templateDropDown-label' => 'Berjocht',
 	'rte-ck-templateEditor-editor-previewButton' => 'Proefbyld',
@@ -2232,7 +2230,7 @@ $messages['lb'] = array(
 	'rte-ck-unlink' => 'Link ewechhuelen',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -2873,7 +2871,7 @@ $messages['oc'] = array(
 	'rte-ck-format-tag_h5' => 'Títol 5',
 );
 
-/** Pennsylvania German (Deitsch)
+/** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -2881,7 +2879,7 @@ $messages['pdc'] = array(
 	'rte-ck-hoverPreview-delete' => 'verwische',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(

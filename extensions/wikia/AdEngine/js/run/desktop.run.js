@@ -15,7 +15,6 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.slot.exitstitial'),
 	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
 ], function (
 	adEngine,
@@ -30,7 +29,6 @@ require([
 	slotTweaker,
 	krux,
 	window,
-	exitstitial,
 	inContentDesktop
 ) {
 	'use strict';
@@ -86,11 +84,6 @@ require([
 	// Start loading in content slots
 	if (inContentDesktop) {
 		window.addEventListener('load', inContentDesktop.init);
-	}
-
-	// Start loading in content slots
-	if (exitstitial) {
-		window.addEventListener('load', exitstitial.init);
 	}
 });
 

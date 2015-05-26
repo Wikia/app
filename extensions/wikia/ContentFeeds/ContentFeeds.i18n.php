@@ -385,7 +385,7 @@ $messages['lb'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Feeler: De Säitentitel ass obligatoresch',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -492,7 +492,7 @@ $messages['oc'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Error : lo còs de la pagina es necessari',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -600,14 +600,6 @@ $messages['ru'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Ошибка: Требуется тело страницы',
 );
 
-/** Sanskrit (संस्कृतम्)
- * @author NehalDaveND
- */
-$messages['sa'] = array(
-	'contentfeeds-firstfewarticles-tag-title' => 'शीर्षकम्',
-	'contentfeeds-firstfewarticles-tag-next' => 'अग्रिमम्',
-);
-
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
@@ -666,7 +658,7 @@ $messages['tl'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Kamalian: Kailangan ang isang katawan ng pahina',
 );
 
-/** Talysh (толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(

@@ -39,7 +39,6 @@ $messages['az'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
- * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'centralhelpsearch-placeholder' => 'সাহায্য অনুসন্ধান করুন...',
@@ -201,7 +200,7 @@ $messages['lb'] = array(
 	'centralhelpsearch-placeholder' => 'An der Hëllef sichen...',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(

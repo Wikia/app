@@ -10,7 +10,7 @@ class NodeComparison extends Node {
 		if ( $this->externalParser ) {
 			$nodeFactory->setExternalParser( $this->externalParser );
 		}
-		return [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode, $this ) ];
+		return [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode ) ];
 	}
 
 	public function isEmpty( $data ) {

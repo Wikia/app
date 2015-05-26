@@ -25,10 +25,8 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 				return {
 					opts: {
 						showAds: showAds,
-						pageType: 'all_ads'
-					},
-					slots: {
-						invisibleHighImpact: enableInvisibleHighImpactSlot
+						pageType: 'all_ads',
+						enableInvisibleHighImpactSlot: enableInvisibleHighImpactSlot
 					},
 					providers: {},
 					forceProviders: {}

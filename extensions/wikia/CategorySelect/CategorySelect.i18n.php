@@ -197,7 +197,6 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
- * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'categoryselect-button-add' => 'বিষয়শ্রেণী যোগ',
@@ -262,7 +261,7 @@ $messages['ca'] = array(
 	'tog-disablecategoryselect-v2' => "Desactivar el mòdul de categories (només s'aplica si l'edició en mode visual està desactivada).",
 );
 
-/** Central Kurdish (کوردیی ناوەندی)
+/** Sorani Kurdish (کوردی)
  */
 $messages['ckb'] = array(
 	'categoryselect-button-save' => 'پاشەکەوت',
@@ -517,7 +516,6 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'categoryselect-button-add' => 'Kategory tafoegje',
 	'categoryselect-button-cancel' => 'Annulearje',
-	'categoryselect-button-save' => 'Bewarje',
 	'categoryselect-category-add' => 'Kategory tafoegje...',
 	'categoryselect-category-edit' => 'Kategory bewurkje',
 	'categoryselect-category-remove' => 'Kategory fuortsmite',
@@ -817,7 +815,7 @@ $messages['lb'] = array(
 	'categoryselect-tooltip-add' => "Dréckt 'Enter' oder 'Return' wann Dir fäerdeg sidd",
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1020,14 +1018,14 @@ $messages['or'] = array(
 	'categoryselect-button-cancel' => 'ନାକଚ',
 );
 
-/** Pennsylvania German (Deitsch)
+/** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
 	'categoryselect-button-save' => 'Beilege',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -1231,20 +1229,6 @@ $messages['ru'] = array(
 	'tog-disablecategoryselect-v2' => 'Отключить модуль Категорий (активно только при редактировании в режиме Исходного кода)',
 );
 
-/** Sanskrit (संस्कृतम्)
- * @author NehalDaveND
- */
-$messages['sa'] = array(
-	'categoryselect-button-add' => 'वर्गः योज्यताम्',
-	'categoryselect-button-cancel' => 'निरस्यताम्',
-	'categoryselect-button-save' => 'रक्ष्यताम्',
-	'categoryselect-category-add' => 'वर्गः योज्यताम्...',
-	'categoryselect-category-edit' => 'वर्गः सम्पाद्यताम्',
-	'categoryselect-category-remove' => 'वर्गः निष्कास्यताम्',
-	'categoryselect-edit-summary' => 'वर्गान् योजयति',
-	'categoryselect-error-db-locked' => 'दत्तांशनिधिः (database) कीलितः',
-);
-
 /** Slovenian (slovenščina)
  * @author Dbc334
  */
@@ -1253,20 +1237,15 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Aktron
  * @author Milicevic01
  * @author Rancher
  * @author Verlor
  */
 $messages['sr-ec'] = array(
-	'categoryselect-button-add' => 'Додајте категорију',
 	'categoryselect-button-cancel' => 'Откажи',
 	'categoryselect-button-save' => 'Сачувај',
-	'categoryselect-category-add' => 'Додајте категорију...',
 	'categoryselect-category-edit' => 'Уреди категорију',
-	'categoryselect-category-remove' => 'Уклоните категорију',
 	'categoryselect-edit-summary' => 'Додавање категорија',
-	'categoryselect-error-article-doesnt-exist' => 'Страница [id=$1]  не постоји',
 	'categoryselect-error-db-locked' => 'База података је закључана.',
 	'categoryselect-error-user-rights' => 'Грешка у корисничким правима.', # Fuzzy
 );
@@ -1346,7 +1325,7 @@ $messages['tl'] = array(
 	'tog-disablecategoryselect-v2' => 'Huwag paganahin ang modyul ng Kategorya (nailalapat lamang kapag hindi pinagagana ang pamamatnugot na nasa gawi na nakikita)',
 );
 
-/** Talysh (толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -1415,7 +1394,7 @@ $messages['ur'] = array(
 	'categoryselect-button-cancel' => 'منسوخ',
 );
 
-/** Uzbek (oʻzbekcha/ўзбекча)
+/** Uzbek (oʻzbekcha)
  * @author Sociologist
  */
 $messages['uz'] = array(
@@ -1456,7 +1435,7 @@ $messages['vi'] = array(
 	'tog-disablecategoryselect-v2' => 'Vô hiệu hóa bản Thể loại (chỉ áp dụng khi sửa đổi ở chế độ trực quan bị vô hiệu hoá)',
 );
 
-/** Wu Chinese (吴语)
+/** Wu (吴语)
  */
 $messages['wuu'] = array(
 	'categoryselect-button-cancel' => '取消',

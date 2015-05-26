@@ -266,7 +266,7 @@ $messages['ko'] = array(
  */
 $messages['ksh'] = array(
 	'wikiarelatedpages-desc' => 'Brängk en Leß verwandte Sigge en et Wiki.',
-	'wikiarelatedpages-heading' => 'Mih lässe',
+	'wikiarelatedpages-heading' => 'Mieh lässe',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -353,17 +353,13 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
- * @author Pio387
  * @author Sovq
  * @author Sp5uhe
  * @author TOR
- * @author Wedkarski
  */
 $messages['pl'] = array(
 	'wikiarelatedpages-desc' => 'Dodaje do stron zestawienie stron podobnych',
 	'wikiarelatedpages-heading' => 'Podobne strony',
-	'wikiamobile-related-article' => 'Polecany artykuł',
-	'wikiamobile-people-also-read' => 'Inni czytają także',
 );
 
 /** Piedmontese (Piemontèis)

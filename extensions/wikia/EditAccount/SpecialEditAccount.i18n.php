@@ -272,7 +272,7 @@ $messages['az'] = array(
 	'editaccount-submit-realname' => 'Əsl adı qeyd et',
 );
 
-/** South Azerbaijani (تۆرکجه)
+/** South Azerbaijani (تورکجه)
  * @author Koroğlu
  */
 $messages['azb'] = array(
@@ -488,17 +488,6 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'editaccount-label-clearemail' => 'Электронан поштан адрес дӀацӀандан',
 	'editaccount-log-entry-pass' => '$2 декъашхочун пароль хийцина',
-);
-
-/** Central Kurdish (کوردیی ناوەندی)
- * @author Asoxor
- */
-$messages['ckb'] = array(
-	'editaccount' => 'دەستکاری کردنی ھەژمار',
-	'editaccount-label-reason' => 'ھۆکار:',
-	'editaccount-submit-button' => 'پاشەکەوتی بکە',
-	'editaccount-labal-account-status' => 'رەوشی ھەژمار',
-	'editaccount-labal-email-status' => 'رەوشی ئیمێل',
 );
 
 /** Czech (čeština)
@@ -794,18 +783,6 @@ $messages['es'] = array(
 	'action-editaccount' => 'editar la información de otros usuarios',
 );
 
-/** Basque (euskara)
- * @author Subi
- */
-$messages['eu'] = array(
-	'editaccount-label-clearemail' => 'Garbitu helbide elektronikoa',
-	'editaccount-submit-email' => 'Gorde eta berretsi helbide elektronikoa',
-	'editaccount-submit-pass' => 'Gorde pasahitza',
-	'editaccount-submit-realname' => 'Gorde benetako izena',
-	'editaccount-submit-close' => 'Kontua itxi',
-	'editaccount-submit-button' => 'Gorde',
-);
-
 /** Persian (فارسی)
  * @author Alirezaaa
  * @author BlueDevil
@@ -1046,7 +1023,6 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'editaccount-label-reason' => 'Reden:',
-	'editaccount-submit-button' => 'Bewarje',
 );
 
 /** Galician (galego)
@@ -1663,7 +1639,7 @@ $messages['lb'] = array(
 	'action-editaccount' => 'anere Benotzer hir Informatiounen änneren',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -2568,13 +2544,6 @@ $messages['ru'] = array(
 	'action-editaccount' => 'редактировать информацию других пользователей',
 );
 
-/** Sanskrit (संस्कृतम्)
- * @author NehalDaveND
- */
-$messages['sa'] = array(
-	'editaccount-label-reason' => 'कारणम् :',
-);
-
 /** Sakha (саха тыла)
  * @author HalanTul
  */
@@ -2716,7 +2685,6 @@ $messages['sk'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Aktron
  * @author Rancher
  * @author Verlor
  */
@@ -2729,12 +2697,10 @@ $messages['sr-ec'] = array(
 	'editaccount-label-email' => 'Постави нову е-адресу',
 	'editaccount-label-pass' => 'Постави нову лозинку',
 	'editaccount-label-realname' => 'Унесите право име',
-	'editaccount-label-reason' => 'Разлог:',
 	'editaccount-submit-email' => 'Сачувај е-адресу',
 	'editaccount-submit-pass' => 'Сачувај лозинку',
 	'editaccount-submit-realname' => 'Сачувај право име',
 	'editaccount-submit-close' => 'Затвори налог',
-	'editaccount-submit-button' => 'Сачувај',
 	'editaccount-status' => 'Статусна порука',
 	'editaccount-success-email' => 'Е-адреса за налог $1 на $2 је измењена.',
 	'editaccount-success-pass' => 'Лозинка за налог $1 је измењена.',
@@ -2742,7 +2708,6 @@ $messages['sr-ec'] = array(
 	'editaccount-success-close' => 'Налог $1 је успешно затворен.',
 	'editaccount-invalid-email' => '„$1“ није исправна е-адреса!',
 	'editaccount-nouser' => '„$1“ налог не постоји!',
-	'editaccount-status-tempuser' => 'Привремени корисник',
 	'editaccount-log' => 'Дневник корисничких налога',
 	'editaccount-log-entry-email' => 'е-адреса корисника $2 је измењена',
 	'editaccount-log-entry-pass' => 'лозинка корисника $2 је измењена',
@@ -3092,7 +3057,6 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
- * @author KhangND
  * @author Minh Nguyen
  * @author Xiao Qiao
  */
@@ -3152,8 +3116,6 @@ $messages['vi'] = array(
 	'editaccount-status-tempuser' => 'Người sử dụng tạm thời',
 	'editaccount-error-tempuser-email' => 'Người sử dụng tạm thời không thể có email trống trường địa chỉ, xin vui lòng nhập một địa chỉ email.',
 	'editaccount-email-change-requested' => 'Yêu cầu người dùng thay đổi email thông qua các tùy chọn để  $1 . Để xác nhận thay đổi địa chỉ thư điện tử được yêu cầu cho người dùng, nhập địa chỉ email yêu cầu vào trường dưới đây và nhấp vào "Lưu và xác nhận."',
-	'editaccount-closure-requested' => 'Tài khoản này được lịch trình sẽ đóng bởi yêu cầu của chủ nhân.',
-	'editaccount-submit-clearclosurerequest' => 'Xóa yêu cầu đóng',
 	'editaccount-log' => 'Nhật trình Tài khoản người dùng',
 	'editaccount-log-header' => 'Trang này liệt kê những thay đổi thông tin người dùng được thực hiện bởi Nhân viên Wikia',
 	'editaccount-log-entry-email' => 'thư điện tử đã thay đổi cho người dùng $2',

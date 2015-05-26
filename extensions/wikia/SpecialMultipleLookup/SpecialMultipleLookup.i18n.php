@@ -445,7 +445,6 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'multilookupnext' => 'folgjende',
 	'multilookupprevious' => 'foarige',
-	'multilookupwikiurl' => 'URL',
 );
 
 /** Galician (galego)
@@ -641,7 +640,7 @@ $messages['lb'] = array(
 	'multilookupwikititle' => 'Titel',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -804,31 +803,13 @@ $messages['nl-informal'] = array(
 	'multilookupnotspecify' => 'Je hebt nog geen IP-adres opgegeven',
 );
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
-	'multilookupgo' => 'Anar',
-	'multilookupnext' => 'seguent',
-	'multilookupprevious' => 'precedent',
-	'multilookupnbrresult' => 'Nombre de resultats',
-	'multilookupinvalidresults' => 'Resultats invalids !',
-	'multilookupwiki' => 'Wiki',
-	'multilookupdetails' => 'Veire los detalhs',
-	'multilookupwikidbname' => 'Nom de la Banca de Donadas',
-	'multilookupwikiurl' => 'URL',
-	'multilookupwikititle' => 'Títol',
-	'multilookupwikioptions' => 'Opcions',
-	'multilookuplastedithdr' => 'Darrièr cambiament',
-);
-
-/** Pennsylvania German (Deitsch)
+/** Deitsch (Deitsch)
  */
 $messages['pdc'] = array(
 	'multilookupnext' => 'Neegschte',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -1140,7 +1121,7 @@ $messages['tl'] = array(
 	'action-multilookup' => 'tumingin ng kabatiran hinggil sa mga tagagamit sa loob ng maramihang mga wiki',
 );
 
-/** Talysh (толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */
@@ -1165,7 +1146,7 @@ $messages['tt-cyrl'] = array(
 	'multilookupwiki' => 'Вики',
 );
 
-/** Muslim Tat (Tati)
+/** Tati (Tati)
  * @author Erdemaslancan
  */
 $messages['ttt'] = array(
@@ -1227,7 +1208,6 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
- * @author Impersonator 1
  * @author Liuxinyu970226
  * @author Mywood
  * @author Yfdyh000

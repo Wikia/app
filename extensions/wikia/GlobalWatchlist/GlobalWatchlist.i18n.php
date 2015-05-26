@@ -252,37 +252,6 @@ $messages['diq'] = array(
 	'globalwatchlist-no-blog-page-found' => 'Qet qeydê pele nêvêniya.',
 );
 
-/** British English (British English)
- * @author Chase me ladies, I'm the Cavalry
- */
-$messages['en-gb'] = array(
-	'globalwatchlist-desc' => 'Sends weekly digest e-mails with watchlisted pages on all wikis',
-	'tog-watchlistdigest' => 'E-mail me a Weekly Watchlist Digest',
-	'tog-watchlistdigestclear' => 'Mark all pages from my Weekly Watchlist Digest as visited',
-	'globalwatchlist-see-more' => 'Please check your local watchlists for more changes',
-	'globalwatchlist-digest-email-subject' => 'Weekly Digest',
-	'globalwatchlist-digest-email-body' => 'Dear $1,
-
-This is a list of pages on your Wikia watchlist that have been edited since you last visited them.
-
-$2
-
-
-This is a list of blog pages on your Wikia watchlist that have been edited or commented since you last visited them.
-
-$3
-
-Please visit and edit often...
-
-Wikia
-
-* To change your preferences for watchlist notifications, please visit http://www.wikia.com/wiki/Special:Preferences
-* To mark all pages from this Weekly Digest as visited, see the option in the "Watchlist" tab of your Preferences page',
-	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comment|comments}})',
-	'globalwatchlist-no-page-found' => 'No page found.',
-	'globalwatchlist-no-blog-page-found' => 'No blog page found.',
-);
-
 /** Spanish (español)
  * @author Translationista
  * @author VegaDark
@@ -820,7 +789,7 @@ $messages['oc'] = array(
 	'globalwatchlist-no-blog-page-found' => 'Cap de pagina de blog pas trobada.',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(

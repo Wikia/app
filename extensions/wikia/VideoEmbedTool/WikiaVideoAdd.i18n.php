@@ -91,7 +91,6 @@ $messages['bjn'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
- * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'wva-success' => 'ভিডিও পাতা [[:$1]] সফলভাবে যোগ করা হয়েছে।',
@@ -280,11 +279,11 @@ $messages['fi'] = array(
  * @author EileenSanda
  */
 $messages['fo'] = array(
-	'wva-success' => 'Video-síðan [[:$1]] varð løgd til.',
-	'wva-success-replaced' => 'Video-síðan [[:$1]] varð skift út.',
+	'wva-success' => 'Video-síðan [[:$1]] varð løgd til.', # Fuzzy
+	'wva-success-replaced' => 'Video-síðan [[:$1]] varð skift út.', # Fuzzy
 	'wva-failure' => 'Vinarliga skriva galdandi parametur.',
-	'wva-name' => 'Video navn:',
-	'wva-url' => "URL'ur fyri video:",
+	'wva-name' => 'Video navn:', # Fuzzy
+	'wva-url' => "URL'ur fyri video:", # Fuzzy
 	'wva-add' => 'Legg afturat',
 	'wva-title' => 'Innset skjótt video frá URL (heimasíðuadressu)',
 	'wva-protected' => 'Hetta filmsklippið er vart.',
@@ -693,11 +692,11 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'wva-success' => "'A pàgene d'u video [[:$1]] ha state aggiunde.",
-	'wva-success-replaced' => "'A pàgene d'u video [[:$1]] ha state sostituite.",
+	'wva-success' => "'A pàgene d'u video [[:$1]] ha state aggiunde.", # Fuzzy
+	'wva-success-replaced' => "'A pàgene d'u video [[:$1]] ha state sostituite.", # Fuzzy
 	'wva-failure' => 'Pe piacere dè le parametre valide.',
-	'wva-name' => "Nome d'u video:",
-	'wva-url' => "URL d'u video:",
+	'wva-name' => "Nome d'u video:", # Fuzzy
+	'wva-url' => "URL d'u video:", # Fuzzy
 	'wva-add' => 'Aggiunge',
 	'wva-title' => "Veloce veloce aggiunge 'nu video da 'na URL",
 	'wva-protected' => 'Stu video jè prutette.',
@@ -724,11 +723,10 @@ $messages['ru'] = array(
 );
 
 /** Sinhala (සිංහල)
- * @author හරිත
  */
 $messages['si'] = array(
-	'wva-name' => 'වීඩියෝවේ නම:',
-	'wva-url' => 'වීඩියෝවේ සබැඳිය:',
+	'wva-name' => 'නම යොදන්න:', # Fuzzy
+	'wva-url' => 'URLඑක යොදන්න:', # Fuzzy
 	'wva-add' => 'එක්කරන්න',
 	'wva-protected' => 'මෙම වීඩියෝව ආරක්‍ෂිතය',
 );
@@ -799,7 +797,7 @@ $messages['tl'] = array(
 	'wva-thumbnail-upload-failed' => 'Nabigo ang pagbabaon ng bidyo, hindi nagawang ang pagkuha ng naaangkop na kagyat',
 );
 
-/** Talysh (толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(

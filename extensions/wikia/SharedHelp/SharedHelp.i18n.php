@@ -47,7 +47,7 @@ $messages['qqq'] = array(
  * @author Malhargan
  */
 $messages['ar'] = array(
-	'sharedhelp-desc' => 'تأخذ صفحات من [[w:Help:Contents|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي',
+	'sharedhelp-desc' => 'تأخذ صفحات من [[w:Help:Contents|ويكي المساعدة]] وتدرجها في نطاق ال{{ns:help}} في هذه الويكي', # Fuzzy
 	'sharedhelp-autotalkcreate-summary' => 'إنشاء صفحة نقاش تلقائيا',
 	'sharedhelp-searchprofile' => 'صفحات المساعدة',
 	'sharedhelp-searchprofile-tooltip' => 'البحث في صفحات المساعدة',
@@ -531,14 +531,12 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
- * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'sharedhelp-desc' => 'Mất trang từ [[w:Help:Contents|Community Central]] và chèn chúng vào không gian tên {{ns:help}} wiki này',
 	'sharedhelp-autotalkcreate-summary' => 'Thảo luận trang tự động tạo ra',
 	'sharedhelp-searchprofile' => 'Trang trợ giúp',
 	'sharedhelp-searchprofile-tooltip' => 'Trang trợ giúp tìm kiếm',
-	'shared_help_info' => 'Muốn hỏi? Hãy yêu cầu trên [[w:Special:Forum|Diễn đàn cộng đồng]].',
 );
 
 /** Simplified Chinese (中文（简体）‎)

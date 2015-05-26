@@ -173,7 +173,7 @@ $messages['ko'] = array(
 	'site-layout' => '사이트 배치',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -334,7 +334,7 @@ $messages['uk'] = array(
 	'site-layout' => 'Оформлення сайту',
 );
 
-/** Uzbek (oʻzbekcha/ўзбекча)
+/** Uzbek (oʻzbekcha)
  * @author Akmalzhon
  */
 $messages['uz'] = array(

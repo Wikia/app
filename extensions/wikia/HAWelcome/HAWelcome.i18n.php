@@ -1051,13 +1051,6 @@ $messages['ko'] = array(
 도움이 필요하시다면 제게 메시지를 남겨주세요!", # Fuzzy
 );
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author Bikarhêner
- */
-$messages['ku-latn'] = array(
-	'hawelcomeedit' => 'HAWelcomeEdit',
-);
-
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */

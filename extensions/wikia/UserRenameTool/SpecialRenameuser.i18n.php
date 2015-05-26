@@ -282,7 +282,7 @@ $messages['arc'] = array(
 	'right-renameuser' => 'ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
 );
 
-/** Egyptian Arabic (مصرى)
+/** Egyptian Spoken Arabic (مصرى)
  * @author Ghaly
  * @author Meno25
  * @author Ramsis II
@@ -831,7 +831,7 @@ $messages['ce'] = array(
 	'action-renameuser' => 'декъашхойн цӀерш хийцар',
 );
 
-/** Central Kurdish (کوردیی ناوەندی)
+/** Sorani Kurdish (کوردی)
  * @author Calak
  */
 $messages['ckb'] = array(
@@ -1540,7 +1540,7 @@ Vous serez informé par courriel quand cela sera terminé.',
 	'action-renameuser' => 'renommer les utilisateurs',
 );
 
-/** Arpitan (arpetan)
+/** Franco-Provençal (arpetan)
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
@@ -1587,7 +1587,7 @@ $messages['fy'] = array(
 	'renameuser' => 'Feroarje in meidochnamme',
 	'userrenametool-old' => 'Alde namme:',
 	'userrenametool-new' => 'Nije namme:',
-	'userrenametool-move' => 'Omneam meidogger en oerlis siden (mei ûnderlizzende siden) nei de nije namme',
+	'userrenametool-move' => 'Werneam meidogger en oerlis siden (mei ûnderlizzende siden) nei de nije namme',
 	'userrenametool-warnings' => 'Warskôgings:',
 	'userrenametool-submit' => 'Feroarje',
 	'userrenametool-errordoesnotexist' => 'Der is gjin meidogger mei de namme "<nowiki>$1</nowiki>"',
@@ -2965,7 +2965,7 @@ $messages['my'] = array(
 	'right-renameuser' => 'အသုံးပြုသူအား အမည်ပြန်မှည့်ရန်',
 );
 
-/** Nāhuatl (Nāhuatl)
+/** Nahuatl (Nāhuatl)
  * @author Fluence
  */
 $messages['nah'] = array(
@@ -3297,13 +3297,13 @@ $messages['pcd'] = array(
 	'right-renameuser' => 'Érlonmer chés uzeus',
 );
 
-/** Pennsylvania German (Deitsch)
+/** Deitsch (Deitsch)
  */
 $messages['pdc'] = array(
 	'renameuser' => 'Naame vum Yuuser ennere',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  * @author Manuae
  * @author SPS
  */
@@ -4113,7 +4113,7 @@ $messages['sr-el'] = array(
 	'right-renameuser' => 'preimenovanje korisničkih imena',
 );
 
-/** Saterland Frisian (Seeltersk)
+/** Seeltersk (Seeltersk)
  * @author Maartenvdbent
  * @author Pyt
  */
@@ -4444,7 +4444,7 @@ Pababatiran ka sa pamamagitan ng e-liham kapag nabuo na ito.',
 	'right-renameuser' => 'Muling pangalanan ang mga tagagamit',
 );
 
-/** Talysh (толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -4603,7 +4603,7 @@ $messages['ur'] = array(
 	'userrenametool-log' => 'جن کی $1 ترامیم تھیں. $2',
 );
 
-/** Venetian (vèneto)
+/** vèneto (vèneto)
  * @author Candalua
  */
 $messages['vec'] = array(
@@ -5026,17 +5026,6 @@ $messages['zh-hant'] = array(
 	'userrenametool-move-log' => '當由"[[User:$1|$1]]"重新命名為"[[User:$2|$2]]"時已經自動移動使用者頁面',
 	'right-renameuser' => '重新命名使用者',
 	'action-renameuser' => '重新命名使用者',
-);
-
-/** Chinese (Hong Kong) (中文（香港）‎)
- * @author Liuxinyu970226
- */
-$messages['zh-hk'] = array(
-	'renameuser' => '重新命名用戶',
-	'userrenametool-desc' => "加入一個[[Special:UserRenameTool|特殊頁面]]以重命名用戶 (需要 ''renameuser'' 權限)，并處理相關資料",
-	'userrenametool-new' => '新的用戶名稱：',
-	'right-renameuser' => '重新命名用戶',
-	'action-renameuser' => '重新命名用戶',
 );
 
 /** Zulu (isiZulu)

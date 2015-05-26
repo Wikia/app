@@ -104,7 +104,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$value = isset( $params[ 'theme-source' ] ) ? $frame->getArgument( $params[ 'theme-source' ] ) : false;
 		$themeName = $this->getThemeName( $params, $value );
 		//make sure no whitespaces, prevents side effects
-		return Sanitizer::escapeClass( self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $themeName ) );
+		return self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $themeName );
 	}
 
 	private function getThemeName( $params, $value ) {

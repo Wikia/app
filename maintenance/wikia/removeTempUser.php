@@ -95,6 +95,11 @@ class RemoveTempUserAccounts extends Maintenance {
 
 		$dbw->commit( __METHOD__ );
 
+		// remove from wikicities_cX
+		foreach ( $batch as $userId ) {
+			ExternalUser_Wikia::removeFromSecondaryClusters( $userId );
+		}
+
 		$this->info( 'Batch removed', [
 			'batch' => count( $batch ),
 			'rows'  => $rows,
@@ -140,7 +145,7 @@ class RemoveTempUserAccounts extends Maintenance {
 
 			// prevent slave lag
 			// we're potentially performing deletes on all clusters
-			wfWaitForSlaves( $db );
+			sleep( 15 );
 		}
 
 		$this->output( "\n\nDone!\n" );

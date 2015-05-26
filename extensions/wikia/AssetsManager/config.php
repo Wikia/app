@@ -89,6 +89,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
+		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//resources/wikia/modules/krux.js',
@@ -136,14 +137,6 @@ $config['adengine2_oasis_in_content_ads_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/slot/inContent.js',
 		'//extensions/wikia/AdEngine/js/slot/inContentDesktop.js',
-	),
-);
-
-$config['adengine2_oasis_exitstitial_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'oasis',
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/slot/exitstitial.js',
 	),
 );
 
@@ -364,6 +357,7 @@ $config['oasis_anon_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_user_login_js_anon',
+		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//skins/oasis/js/LatestActivity.js',
 	]
 ];
@@ -2312,11 +2306,11 @@ $config['cookie_policy_js'] = [
 	]
 ];
 
-$config['facebook_client_fbtags_js'] = [
+$config['facebook_client_xfbml_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'monobook'],
 	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/FacebookClient.facebookTags.js',
+		'//extensions/wikia/FacebookClient/scripts/FacebookClient.XFBML.js',
 	]
 ];
 

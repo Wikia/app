@@ -515,17 +515,6 @@ $messages['ar'] = array(
 	'galery-slider-read-more' => 'اقرأ المزيد >',
 );
 
-/** Egyptian Arabic (مصرى)
- * @author Ghaly
- */
-$messages['arz'] = array(
-	'wikiaPhotoGallery-lightbox-caption' => 'عن طريق $1',
-	'wikiaPhotoGallery-add-gallery' => 'إضافة معرض صور أو عرض شرايح',
-	'wikiaPhotoGallery-viewmode-addphoto' => 'إضافة صوره للمعرض ده',
-	'wikiaPhotoGallery-edit-summary' => 'تعديل معرض',
-	'wikiaPhotoGallery-error-caption' => 'غلط',
-);
-
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Vago
@@ -1178,7 +1167,7 @@ $messages['ce'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Харжа',
 );
 
-/** Central Kurdish (کوردیی ناوەندی)
+/** Sorani Kurdish (کوردی)
  */
 $messages['ckb'] = array(
 	'wikiaPhotoGallery-preview-hover-delete' => 'سڕینەوە',
@@ -1917,8 +1906,6 @@ Describe esta imagen.",
  * @author Subi
  */
 $messages['eu'] = array(
-	'wikiaPhotoGallery-upload-page-next' => 'Hurrengo 8',
-	'wikiaPhotoGallery-upload-page-prev' => 'Aurreko 8',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Gehitu argazkia',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Hurrengo argazkia',
 	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Aurreko argazkia',
@@ -2362,12 +2349,10 @@ $messages['fy'] = array(
 	'wikiaPhotoGallery-upload-findbutton' => 'Sykje',
 	'wikiaPhotoGallery-upload-page-next' => 'Folgjende 8',
 	'wikiaPhotoGallery-upload-page-prev' => 'Foarige 8',
-	'wikiaPhotoGallery-preview-hover-delete' => 'fuortsmite',
 	'wikiaPhotoGallery-preview-spacing-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-spacing-large' => 'Grut',
 	'wikiaPhotoGallery-preview-captionsize-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-captionsize-large' => 'Grut',
-	'wikiaPhotoGallery-preview-bordersize-none' => 'Gjin',
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Lyts',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'Grut',
 );
@@ -3447,13 +3432,6 @@ $messages['ja'] = array(
 	'wikiaPhotoGallery-upload-image-size' => '画像は 670 x 360 ピクセル以上でなければなりません。',
 	'wikiaPhotoGallery-not-displayed' => '表示されません',
 	'galery-slider-read-more' => '続きを読む >',
-);
-
-/** Georgian (ქართული)
- * @author Otogi
- */
-$messages['ka'] = array(
-	'wikiaPhotoGallery-photooptions-done' => 'გაკეთდა',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -4603,7 +4581,7 @@ $messages['oc'] = array(
 	'galery-slider-read-more' => ' Legir mai >',
 );
 
-/** Pennsylvania German (Deitsch)
+/** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -4614,7 +4592,7 @@ $messages['pdc'] = array(
 	'wikiaPhotoGallery-preview-bordersize-small' => 'Glee',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  */
 $messages['pfl'] = array(
 	'wikiaPhotoGallery-upload-page-next' => 'Negschte 8',
@@ -6527,7 +6505,7 @@ $messages['uk'] = array(
 	'galery-slider-read-more' => 'Читати далі >',
 );
 
-/** Uzbek (oʻzbekcha/ўзбекча)
+/** Uzbek (oʻzbekcha)
  * @author CoderSI
  */
 $messages['uz'] = array(

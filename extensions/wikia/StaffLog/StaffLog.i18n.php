@@ -52,7 +52,6 @@ $messages['qqq'] = array(
 * $4 is the reason of the change.',
 	'stafflog-filter-label' => '{{Identical|Filter}}',
 	'stafflog-filter-user' => '{{Identical|User}}',
-	'stafflog-filter-apply' => '{{Identical|Apply filter}}',
 	'action-stafflog' => '{{doc-action|stafflog}}',
 );
 
@@ -263,13 +262,6 @@ $messages['fr'] = array(
 	'action-stafflog' => 'voir le journal de l’équipe d’administration',
 );
 
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
-$messages['fy'] = array(
-	'stafflog-filter-user' => 'Brûker:',
-);
-
 /** Galician (galego)
  * @author Toliño
  */
@@ -386,7 +378,7 @@ $messages['lb'] = array(
 	'stafflog-filter-user' => 'Benotzer:',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -777,11 +769,4 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'stafflog-filter-label' => '篩選器',
 	'stafflog-filter-user' => '使用者：',
-);
-
-/** Chinese (Hong Kong) (中文（香港）‎)
- * @author Liuxinyu970226
- */
-$messages['zh-hk'] = array(
-	'stafflog-filter-user' => '用戶：',
 );

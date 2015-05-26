@@ -177,7 +177,7 @@ $messages['qqq'] = array(
 {{Identical|Watch}}',
 );
 
-/** Tunisian Arabic (تونسي/Tûnsî)
+/** Tunisian Spoken Arabic ( زَوُن)
  * @author Aħmedbaɛl
  */
 $messages['aeb'] = array(
@@ -256,7 +256,7 @@ $messages['az'] = array(
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Şablon',
 );
 
-/** South Azerbaijani (تۆرکجه)
+/** South Azerbaijani (تورکجه)
  * @author Arjanizary
  */
 $messages['azb'] = array(
@@ -745,14 +745,7 @@ $messages['fa'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'خوش آمدید',
 	'wikia-visualeditor-dialog-orientation-start-button' => 'ویرایش را آغاز کنید',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'منبع',
-	'wikia-visualeditor-dialog-done-button' => 'انجام شد',
-	'wikia-visualeditor-dialog-cancel-button' => 'انصراف',
-	'wikia-visualeditor-context-transclusion-description' => 'ویرایش',
-	'wikia-visualeditor-dialog-preference-start-button' => 'متوجه شدید؟',
-	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'گالری',
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'جستجوی تصویر',
-	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'نمایش',
-	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'پی‌گیری',
 );
 
 /** Finnish (suomi)
@@ -811,7 +804,7 @@ $messages['fi'] = array(
  */
 $messages['fo'] = array(
 	'wikia-visualeditor-preference-enable' => 'Ger VisualEditor virknan í beta',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg ein miðil afturat', # Fuzzy
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg ein miðil afturat',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Legg afturat miðil',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Heiti',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisensur',
@@ -1216,11 +1209,9 @@ $messages['ja'] = array(
 );
 
 /** Georgian (ქართული)
- * @author DevaMK
  * @author MIKHEIL
  */
 $messages['ka'] = array(
-	'visualeditor-ca-classiceditor' => 'კლასიკური რედაქტორი',
 	'wikia-visualeditor-dialog-cancel-button' => 'გაუქმება',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'გალერეა',
 	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'გელერეის ჩასმა',
@@ -1234,7 +1225,7 @@ $messages['ka'] = array(
  */
 $messages['km'] = array(
 	'wikia-visualeditor-preference-enable' => 'បើក VisualEditor បេតា',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'បន្ថែម​មេឌា', # Fuzzy
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'បន្ថែម​មេឌា',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'បន្ថែម​មេឌា',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'ចំណង​ជើង',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'អាជ្ញាបណ្ណ',
@@ -1388,7 +1379,7 @@ $messages['li'] = array(
 	'wikia-visualeditor-dialog-orientation-headline' => 'Wilkóm',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1496,7 +1487,7 @@ $messages['mk'] = array(
  */
 $messages['ml'] = array(
 	'wikia-visualeditor-preference-enable' => 'പരീക്ഷണാടിസ്ഥാനത്തിലുള്ള കണ്ടുതിരുത്തൽ സൗകര്യം സജ്ജമാക്കുക',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'മീഡിയ ചേർക്കുക', # Fuzzy
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'മീഡിയ ചേർക്കുക',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'മീഡിയ ചേർക്കുക',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'തലക്കെട്ട്',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'ഉപയോഗാനുമതി',
@@ -1642,7 +1633,7 @@ $messages['nap'] = array(
  */
 $messages['nb'] = array(
 	'wikia-visualeditor-preference-enable' => 'Skru på VisualEditor (beta)',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg til media', # Fuzzy
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Legg til media',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Legg til media',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Tittel',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Lisens',
@@ -1655,11 +1646,9 @@ $messages['nb'] = array(
 );
 
 /** Nepali (नेपाली)
- * @author Nirjal stha
  * @author सरोज कुमार ढकाल
  */
 $messages['ne'] = array(
-	'visualeditor-ca-classiceditor' => 'पूराना सम्पादक',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'सामग्री',
 );
 
@@ -2126,10 +2115,8 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author Kopcap94
  * @author Okras
- * @author Дмитрий
  */
 $messages['ru'] = array(
-	'visualeditor-ca-classiceditor' => 'Классический редактор',
 	'wikia-visualeditor-preference-enable' => 'Включить бета-версию Визуального редактора',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Мультимедиа',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Карта',
@@ -2230,13 +2217,6 @@ $messages['sco'] = array(
 $messages['si'] = array(
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'මාධ්‍යය',
 	'wikia-visualeditor-context-transclusion-description' => 'සංස්කරණය',
-);
-
-/** Serbian (српски / srpski)
- * @author Dicto23456
- */
-$messages['sr'] = array(
-	'wikia-visualeditor-dialog-cancel-button' => 'Откажи',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -2483,12 +2463,12 @@ $messages['uk'] = array(
 	'wikia-visualeditor-media-video-policy' => 'Будь ласка, дотримуйтеся вікі політики при додаванні нового відео.',
 );
 
-/** Venetian (vèneto)
+/** vèneto (vèneto)
  * @author GatoSelvadego
  */
 $messages['vec'] = array(
 	'wikia-visualeditor-preference-enable' => 'Abiłita VisualEditor (beta)',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Xonta Media', # Fuzzy
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Xonta Media',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Xonta Media',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Tìtoło',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licensa',
@@ -2526,7 +2506,7 @@ $messages['vec'] = array(
  */
 $messages['vep'] = array(
 	'wikia-visualeditor-preference-enable' => 'Kävutada VisualEditor (beta)',
-	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Ližata medijad', # Fuzzy
+	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Ližata medijad',
 	'wikia-visualeditor-dialog-wikiamediainsert-insert-button' => 'Ližata Maedijad',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-title-label' => 'Pälkirjutez',
 	'wikia-visualeditor-dialog-wikiamediainsert-item-license-label' => 'Licenzii',

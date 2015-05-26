@@ -431,7 +431,6 @@ Si vous préférez utiliser la messagerie électronique classique ou souhaitez j
  * @author Robin0van0der0vliet
  */
 $messages['fy'] = array(
-	'specialcontact-yourmail' => 'E-mailadres',
 	'specialcontact-problem' => 'Ûnderwerp',
 	'specialcontact-notyou' => 'Bin jo dit net?',
 );
@@ -629,7 +628,7 @@ $messages['lb'] = array(
 	'specialcontact-submitcomplete' => 'Merci datt Dir Wikia kontaktéiert hutt.',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -803,25 +802,6 @@ Als je liever gebruik maakt van e-mail of bijlagen wilt meesturen, stuur dan een
 	'specialcontact-notyou' => 'Ben jij dit niet?',
 	'specialcontact-ccheader' => 'Dit is een kopie van je bericht aan Wikia-gebruikersondersteuning',
 	'specialcontact-submitcomplete' => 'Dank je wel voor het contact opnemen met Wikia.',
-);
-
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
-	'contact' => 'Contactar Wikia',
-	'specialcontact-wikia' => 'Contactar Wikia',
-	'specialcontact-pagetitle' => 'Contactar Wikia',
-	'specialcontact-username' => "Vòstre nom d'utilizaire",
-	'specialcontact-wikiname' => 'Quin wiki ?',
-	'specialcontact-realname' => 'Vòstre nom',
-	'specialcontact-yourmail' => 'Adreça de corrièr electronic',
-	'specialcontact-problem' => 'Subjècte',
-	'specialcontact-problemdesc' => 'Messatge',
-	'specialcontact-notyou' => 'Sètz pas vos ?',
-	'specialcontact-formtitle' => "Contactar l'equipa d’ajuda de Wikia",
-	'specialcontact-mailsub' => 'Corrièr electronic de contacte amb Wikia',
-	'specialcontact-mailsubcc' => 'Còpia del corrièr electronic de contacte amb Wikia',
 );
 
 /** Polish (polski)
@@ -1173,7 +1153,7 @@ Kung mas nais mong gamitin ang pangkaraniwang e-liham o maglagay ng mga kalakip,
 	'specialcontact-submitcomplete' => 'Salamat sa pakikipag-ugnayan mo sa Wikia.',
 );
 
-/** Talysh (толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -1297,7 +1277,7 @@ $messages['zh-hans'] = array(
 	'specialcontact-notyou' => '不是您？',
 	'specialcontact-captchainfo' => '请输入图像中的文本。',
 	'specialcontact-captchatitle' => '模糊词',
-	'specialcontact-formtitle' => '联系 Wikia 支持工作人员',
+	'specialcontact-formtitle' => '联系 Wikia 支援人员',
 	'specialcontact-nomessage' => '请填写留言',
 	'specialcontact-captchafail' => '验证码错误或丢失',
 	'specialcontact-mailsub' => 'Wikia 联络邮件',

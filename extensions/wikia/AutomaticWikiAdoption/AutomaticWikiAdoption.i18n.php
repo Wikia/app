@@ -344,7 +344,6 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
- * @author Aftabuzzaman
  * @author Tauhid16
  */
 $messages['bn'] = array(
@@ -524,21 +523,17 @@ Eines útils:
 );
 
 /** Czech (čeština)
- * @author Aktron
  * @author Chmee2
  * @author H4nek
  * @author Jezevec
  */
 $messages['cs'] = array(
-	'wikiadoption' => 'Automatické přijetí wiki',
 	'wikiadoption-header' => 'Přijmout tuto wiki',
 	'wikiadoption-button-adopt' => 'Ano, chci přijmout {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Zjistěte více!',
 	'wikiadoption-know-more-header' => 'Chcete vědět více?',
 	'wikiadoption-adoption-successed' => 'Blahopřejeme! Pro tento okamžik jste správce této wiki.',
-	'wikiadoption-adoption-failed' => 'Je nám líto. Pokoušeli jsme se vám přidat správcovská oprávnění, nicméně nespěšně. Můžete nás nicméně [http://community.wikia.com/Special:Contact kontaktovat] a my se vám pokusíme pomoci.',
 	'wikiadoption-not-allowed' => 'Je nám to líto. Právě teď nemůžete přijmout tuto wiki.',
-	'wikiadoption-not-enough-edits' => 'Ajaj! Jestli chcete tuto wiki přijmout, musíte mít více než 10 editací.',
 	'wikiadoption-log-reason' => 'Automatické přijetí Wiki',
 	'wikiadoption-mail-first-subject' => 'Chvíli jsme vás zde neviděli',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME byla přijata',
@@ -1830,7 +1825,7 @@ $messages['lb'] = array(
 	'wikiadoption-welcome-header' => 'Gratulatioun! Dir hutt {{SITENAME}} adoptéiert!',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -3017,7 +3012,6 @@ $messages['ru'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Aktron
  * @author Rancher
  */
 $messages['sr-ec'] = array(
@@ -3027,7 +3021,6 @@ $messages['sr-ec'] = array(
 	'wikiadoption-adopt-inquiry' => 'Сазнајте више.',
 	'wikiadoption-know-more-header' => 'Желите да сазнате више?',
 	'wikiadoption-adoption-successed' => 'Честитамо! Постали сте администратор овог викија!',
-	'wikiadoption-mail-first-subject' => 'Нисмо се дуго видели.',
 );
 
 /** Swedish (svenska)
@@ -3405,13 +3398,12 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
- * @author KhangND
  */
 $messages['vi'] = array(
-	'wikiadoption' => 'Tự động nhận wiki',
+	'wikiadoption' => 'Nhận tự động wiki',
 	'wikiadoption-desc' => 'Một phần mở rộng AutomaticWikiAdoption cho MediaWiki',
-	'wikiadoption-header' => 'Nhận wiki này',
-	'wikiadoption-button-adopt' => 'Có, tôi muốn nhận {{SITENAME}}!',
+	'wikiadoption-header' => 'Áp dụng wiki này',
+	'wikiadoption-button-adopt' => 'Có, tôi muốn áp dụng {{SITENAME}}!',
 	'wikiadoption-adopt-inquiry' => 'Tìm hiểu thêm',
 	'wikiadoption-description' => '$1, sẵn sàng để áp dụng {{SITENAME}}?
 <br /><br />
@@ -3421,13 +3413,13 @@ Bằng việc áp dụng wiki, bạn sẽ được lên đến người quản t
 <br /><br />
 Bạn đã sẵn sàng để thực hiện các bước tiếp theo để giúp {{SITENAME}} trở nên thành công hơn?',
 	'wikiadoption-know-more-header' => 'Bạn có muốn biết thêm chi tiết?',
-	'wikiadoption-know-more-description' => 'Kiểm tra những liên kết này để biết thêm thông tin. Và tất nhiên, thoải mái liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi!',
+	'wikiadoption-know-more-description' => 'Kiểm tra những liên kết này cho biết thêm thông tin. Và tất nhiên, cảm thấy tự do để liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi!',
 	'wikiadoption-adoption-successed' => 'Chúc mừng bạn! Bây giờ bạn là một bảo quản viên trên wiki này!',
-	'wikiadoption-adoption-failed' => 'Chúng tôi rất tiếc. Chúng tôi đã cố gắng cấp cho bạn quyền bảo quản viên, nhưng không thành công. Xin vui lòng [http://community.wikia.com/Special:Contact liên hệ chúng tôi], và chúng tôi sẽ cố gắng hỗ trợ bạn.',
-	'wikiadoption-not-allowed' => 'Chúng tôi rất tiếc. Bạn không thể nhận wiki này ngay bây giờ.',
+	'wikiadoption-adoption-failed' => 'Chúng tôi rất tiếc. Chúng tôi đã cố gắng để làm cho bạn một bảo quản viên, nhưng không có hiệu quả. Xin vui lòng [http://community.wikia.com/Special:Contact liên hệ chúng tôi], và chúng tôi sẽ cố gắng giúp bạn ra ngoài.',
+	'wikiadoption-not-allowed' => 'Chúng tôi rất tiếc. Bạn không thể áp dụng wiki này ngay bây giờ được.',
 	'wikiadoption-not-enough-edits' => 'Rất tiếc! Bạn cần phải có hơn 10 sửa đổi mới có quyền nhận wiki này.',
-	'wikiadoption-adopted-recently' => 'Rất tiếc! Bạn đã vừa mới nhận một wiki gần đây. Bạn cần phải đợi một thời gian nữa trước khi bạn có thể nhận một wiki mới.',
-	'wikiadoption-log-reason' => 'Tự động nhận wiki',
+	'wikiadoption-adopted-recently' => 'Rất tiếc! Bạn đã thông qua một wiki mới. Bạn sẽ cần phải chờ đợi một thời gian nữa trước khi bạn có thể áp dụng một wiki mới.',
+	'wikiadoption-log-reason' => 'Nhận tự động wiki',
 	'wikiadoption-notification' => '{{SITENAME}} là wiki có thể được nhận. Muốn trở thành một quản trị ở đây? Nhận wiki này để bắt đầu! $2',
 	'wikiadoption-mail-first-subject' => 'Chúng tôi đã không nhìn thấy bạn xung quanh trong một thời gian',
 	'wikiadoption-mail-first-content' => 'Xin chào $1,

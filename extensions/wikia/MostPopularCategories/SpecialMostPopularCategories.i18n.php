@@ -64,7 +64,6 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
- * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'mostpopularcategories' => 'সবচেয়ে জনপ্রিয় বিষয়শ্রেণীসমূহ',
@@ -495,11 +494,9 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
- * @author KhangND
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
-	'mostpopularcategories-desc' => 'Hiện danh sách các thể loại phổ biến nhất',
 	'mostpopularcategories' => 'Thể loại phổ biến nhất',
 );
 

@@ -25,7 +25,7 @@ Article '''$1''' could not be found.
 * To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]"
 );
 
-/** Tunisian Arabic (تونسي/Tûnsî)
+/** Tunisian Spoken Arabic (تونسي)
  * @author Csisc
  */
 $messages['aeb'] = array(
@@ -222,23 +222,6 @@ $messages['el'] = array(
 *Μπορείτε να δοκιμάσετε το άρθρο [[$2]]
 *Μπορείτε να χρησιμοποιήσετε το κουτί αναζήτησης στα αριστερά της σελίδας
 *Για την κύρια σελίδα του ιστότοπου, πατήστε στο σύνδεσμο: [{{SERVER}}{{SITENAME}}]",
-);
-
-/** British English (British English)
- * @author Chase me ladies, I'm the Cavalry
- */
-$messages['en-gb'] = array(
-	'our404handler-desc' => 'Our 404 handler for non-existent pages tricks',
-	'our404handler' => 'Error 404: Page not found!',
-	'our404handler-oops' => "These aren't the pages you're looking for. Move along, please.",
-	'message404' => "
-'''We're really sorry, but for some reason the page you've asked for doesn't exist.'''
-
-Article '''$1''' could not be found.
-
-* You can try article [[$2]]
-* You can use the search box on the left side of the page
-* To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Spanish (español)
@@ -501,11 +484,11 @@ $messages['ksh'] = array(
 	'our404handler-oops' => 'Dat sin nit de Sigge, woh De noh aam looere bes. Nemm andere!',
 	'message404' => "'''Et deihd uns leid, ävver di Sigg, di De han wullts, di jidd_et nit.'''
 
-Di Sigg '''$1''' ham_mer nit jefonge.
+Dä Atikel '''$1''' ham_mer nit jefonge.
 
-* Velleich helft Der di Sigg [[$2]]
-* Do kanns övver dat Fäld op de lengke Sigg noh jät söhke
-* Öm op de Houpsigg ze kumme, klegg op: [{{SERVER}} {{SITENAME}}]",
+* Velleich helft Der dä Atikel [[$2]]
+* Do kanns övver dat Feld op de linke Sigg noh jät söhke
+* Öm op de Houpsigg ze kumme, kleck op: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -691,7 +674,7 @@ $messages['pa'] = array(
 	'our404handler-oops' => 'ਇਹ ਸਫ਼ੇ ਨਹੀਂ ਹੈ, ਜਿੰਨ੍ਹਾਂ ਨੂੰ ਤੁਸੀਂ ਲੱਭਦੇ ਸੀ। ਜਾਰੀ ਰੱਖੋ ਜੀ।',
 );
 
-/** Pennsylvania German (Deitsch)
+/** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(

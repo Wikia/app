@@ -17,7 +17,6 @@ class CaptchaController extends WikiaController {
 			*/
 			exit();
 		}
-		$this->skipRendering();
 	}
 
 	/**

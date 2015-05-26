@@ -246,7 +246,7 @@ $messages['lb'] = array(
 	'paginator-back' => 'Zréck',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -312,7 +312,7 @@ $messages['oc'] = array(
 	'paginator-back' => 'Precedent',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(

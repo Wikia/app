@@ -1492,10 +1492,7 @@ $messages['frr'] = array(
  */
 $messages['fy'] = array(
 	'swm-label-edit' => 'Bewurkje',
-	'swm-label-recipient-users' => 'Brûkers',
 	'swm-label-language' => 'Taal',
-	'swm-button-save' => '[ Bewarje ]',
-	'swm-button-new' => '[ Nij ]',
 	'swm-list-table-lang' => 'Talen',
 	'swm-yes' => 'Ja',
 	'swm-no' => 'Nee',
@@ -2146,7 +2143,7 @@ $messages['lb'] = array(
 	'swm-mode-wikis-created-before' => 'Virum',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -2716,7 +2713,7 @@ $messages['os'] = array(
 	'swm-list-table-lang' => 'Æвзæгтæ',
 );
 
-/** Pennsylvania German (Deitsch)
+/** Deitsch (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -2731,7 +2728,7 @@ $messages['pdc'] = array(
 	'swm-no' => 'Nee',
 );
 
-/** Palatine German (Pälzisch)
+/** Pälzisch (Pälzisch)
  */
 $messages['pfl'] = array(
 	'swm-label-edit' => 'Bearwaide',
@@ -3396,13 +3393,11 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
- * @author Jopparn
  * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
-	'sidewidemessages-desc' => 'Denna tillägg tillhandahåller ett gränssnitt för att skicka meddelanden som syns på alla wikis.',
 	'sitewidemessages' => 'Meddelanden för hela webbplatsen',
 	'swm-page-title-editor' => 'Meddelanden för hela webbplatsen :: Redigeringsprogram',
 	'swm-page-title-preview' => 'Meddelanden för hela webbplatsen :: Förhandsgranska',
@@ -3430,8 +3425,6 @@ $messages['sv'] = array(
 	'swm-label-mode-users-active' => 'Aktiva användare',
 	'swm-label-mode-users-group' => 'Användare som tillhör gruppen',
 	'swm-label-mode-users-group-hint' => '<i>Välj en grupp från rullgardinsmenyn eller skriv namnet för hand för att skriva över valet i rullgardinsmenyn.</i>',
-	'swm-label-mode-users-poweruser' => 'Typ av stark användare',
-	'swm-label-mode-users-poweruser-hint' => 'Plocka typerna av en stark användare från en lista. Meddelandet kommer att skickas till samtliga Wikias.',
 	'swm-label-mode-users-user' => 'Vald användare',
 	'swm-label-mode-users-user-hint' => '<i>Det här alternativet ignorerar markeringen i gruppen "Wikis".</i>',
 	'swm-label-mode-users-user-multi' => 'Lista över användare',
@@ -3642,7 +3635,7 @@ $messages['tl'] = array(
 	'swm-error-registered-tobeforefrom' => 'Ang petsa ng pagwawakas ng pagkakapatala ng tagagamit ay bago ang petsa ng pagsisimula.',
 );
 
-/** Talysh (толышә зывон)
+/** толышә зывон (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -3858,7 +3851,7 @@ $messages['uk'] = array(
 	'swm-error-created-tobeforefrom' => 'Кінцева дата створення вікі є ранішою за початкову дату.',
 );
 
-/** Uzbek (oʻzbekcha/ўзбекча)
+/** Uzbek (oʻzbekcha)
  * @author CoderSI
  */
 $messages['uz'] = array(
@@ -4023,15 +4016,7 @@ $messages['zh-hant'] = array(
 	'swm-label-mode-users-anon' => '所有匿名使用者',
 	'swm-label-content' => '內容',
 	'swm-label-language' => '語言',
-	'swm-button-save' => '[ 儲存 ]',
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-content' => '內容',
 	'swm-list-table-tools' => '工具',
-);
-
-/** Chinese (Hong Kong) (中文（香港）‎)
- * @author Liuxinyu970226
- */
-$messages['zh-hk'] = array(
-	'swm-label-recipient-users' => '用戶',
 );

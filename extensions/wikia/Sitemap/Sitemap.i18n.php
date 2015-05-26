@@ -259,7 +259,7 @@ $messages['ru'] = array(
 	'sitemap-desc' => 'Создание файлов Sitemap для вики на лету',
 );
 
-/** Saterland Frisian (Seeltersk)
+/** Seeltersk (Seeltersk)
  * @author Pyt
  */
 $messages['stq'] = array(

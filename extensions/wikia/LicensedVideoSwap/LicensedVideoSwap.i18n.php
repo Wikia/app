@@ -263,7 +263,7 @@ $messages['br'] = array(
 	'lvs-button-swap' => 'Eskemm',
 	'lvs-button-yes' => 'Ya',
 	'lvs-button-no' => 'Ket',
-	'lvs-more-suggestions' => "muioc'h a ginnigoù",
+	'lvs-more-suggestions' => "muioc'h a ginnigoù", # Fuzzy
 	'lvs-undo-swap' => 'Dizober',
 	'lvs-undo-keep' => 'Dizober',
 	'lvs-restore-video-success' => 'Adlakaet ho peus ar video er roll-mañ.',
@@ -355,11 +355,9 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
- * @author Aktron
  * @author H4nek
  */
 $messages['cs'] = array(
-	'lvs-history-button-text' => 'Historie',
 	'lvs-callout-title-quality' => 'Vysoká kvalita',
 	'lvs-callout-reason-quality' => 'Wikia videa jsou vysoce kvalitní',
 	'lvs-callout-title-collaborative' => 'Kolaborativní',
@@ -369,12 +367,6 @@ $messages['cs'] = array(
 	'lvs-button-swap' => 'Zaměnit',
 	'lvs-button-yes' => 'Ano',
 	'lvs-button-no' => 'Ne',
-	'lvs-more-suggestions' => 'Další návrhy',
-	'lvs-error-permission-access' => 'K této stránce nemáte přístup.',
-	'lvs-error-invalid-page-status' => 'Toto video nemůžete obnovit.',
-	'lvs-posted-in-more' => 'více',
-	'lvs-confirm-undo-keep-title' => 'Potvrďte vrácení změny',
-	'lvs-new-flag' => 'Nový',
 );
 
 /** German (Deutsch)
@@ -630,7 +622,7 @@ $messages['fo'] = array(
 	'lvs-callout-reason-quality' => 'Wikia Video hava høga góðsku',
 	'lvs-callout-title-collaborative' => 'Samstarv',
 	'lvs-instructions-header' => 'Hvussu man nýtir hesa síðu',
-	'lvs-more-suggestions' => 'fleiri uppskot', # Fuzzy
+	'lvs-more-suggestions' => 'fleiri uppskot',
 	'lvs-error-permission' => 'Tú kanst ikki umbýta hetta video.',
 );
 
@@ -706,7 +698,6 @@ $messages['fy'] = array(
 	'lvs-button-yes' => 'Ja',
 	'lvs-button-no' => 'Nee',
 	'lvs-posted-in-more' => 'mear',
-	'lvs-new-flag' => 'Nij',
 );
 
 /** Galician (galego)
@@ -916,7 +907,7 @@ $messages['lb'] = array(
 	'lvs-new-flag' => 'Nei',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -924,7 +915,7 @@ $messages['lrc'] = array(
 	'lvs-button-keep' => 'واداشتن',
 	'lvs-button-yes' => 'هری',
 	'lvs-button-no' => 'نه',
-	'lvs-more-suggestions' => 'پیشنادیا هنی', # Fuzzy
+	'lvs-more-suggestions' => 'پیشنادیا هنی',
 	'lvs-undo-swap' => 'انجوم ندی ئن',
 	'lvs-undo-keep' => 'انجوم ندی ئن',
 	'lvs-posted-in-more' => 'بيشتر',
@@ -1329,6 +1320,7 @@ $messages['sco'] = array(
 	'lvs-confirm-undo-keep-title' => 'Confirm Ondae',
 	'lvs-confirm-undo-keep-message' => 'Ar ye sair that ye want tae eik this video back oantae the leet?',
 	'lvs-no-matching-videos' => "Thaur's nae premium videos relatit tae this video the nou",
+	'lvs-log-swap' => 'Swapt video fae [[{{ns:File}}:$1]] tae [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => 'Restored swapt video ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Remuived reguidit airtin',
 	'lvs-zero-state' => 'At this time we hae nae matchin videos fae Wikia Video fer videos oan yer wiki. Check back again suin!',
@@ -1439,7 +1431,7 @@ $messages['te'] = array(
 	'lvs-button-swap' => 'మార్పిడి',
 	'lvs-button-yes' => 'అవును',
 	'lvs-button-no' => 'వద్దు',
-	'lvs-more-suggestions' => 'మరిన్ని సూచనలు', # Fuzzy
+	'lvs-more-suggestions' => 'మరిన్ని సూచనలు',
 	'lvs-undo-swap' => 'రద్దుచెయ్యి',
 	'lvs-undo-keep' => 'రద్దుచెయ్యి',
 	'lvs-swap-video-success' => 'అభినందనలు. అసలు వీడియోను తొలగించేసాం. దానికి చెందిన అవతారాలు ఇముడ్పులతో సహా, అన్నిటినీ సరిపోలే వికియా వీడియోతో మార్పిడి చేసాం. $1',
@@ -1480,7 +1472,7 @@ $messages['tr'] = array(
 	'lvs-history-button-text' => 'Geçmiş',
 	'lvs-button-yes' => 'Evet',
 	'lvs-button-no' => 'Hayır',
-	'lvs-more-suggestions' => 'daha fazla öneri', # Fuzzy
+	'lvs-more-suggestions' => 'daha fazla öneri',
 	'lvs-undo-swap' => 'Geri al',
 	'lvs-undo-keep' => 'Geri al',
 	'lvs-posted-in-more' => 'daha fazla',
@@ -1617,7 +1609,7 @@ $messages['vi'] = array(
 	'lvs-new-flag' => 'Mới',
 );
 
-/** Wu Chinese (吴语)
+/** Wu (吴语)
  * @author 十弌
  */
 $messages['wuu'] = array(

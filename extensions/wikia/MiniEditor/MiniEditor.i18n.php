@@ -241,7 +241,7 @@ $messages['lb'] = array(
 	'minieditor-reply' => 'Äntwerten',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(

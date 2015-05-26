@@ -28,27 +28,17 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 	}
 
 	public function testNodeImage() {
-		$string = '<image source="image2">
-						<alt source="alt-source"><default>default-alt</default></alt>
-						<caption source="caption"><default>default caption</default></caption>
-					</image>';
+		$string = '<image source="image2"><alt source="alt-source"><default>default-alt</default></alt></image>';
 		$xml = simplexml_load_string( $string );
 
 		$nodeDefault = new Wikia\PortableInfobox\Parser\Nodes\NodeImage( $xml, [ ] );
 
-		$node = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\Nodes\NodeImage' )
-						->setConstructorArgs( [ $xml, [ 'image2' => 'aaa.jpg',
-														'alt-source' => 'bbb',
-														'caption' => 'capt' ] ] )
-						->setMethods( [ 'resolveImageUrl' ] )
-						->getMock();
+		$node = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\Nodes\NodeImage' )->setConstructorArgs( [ $xml, [ 'image2' => 'aaa.jpg', 'alt-source' => 'bbb' ] ] )->setMethods( [ 'resolveImageUrl' ] )->getMock();
 		$node->expects( $this->any() )->method( 'resolveImageUrl' )->will( $this->returnValue( 'aaa.jpg' ) );
 		$this->assertTrue( $node->getData()[ 'url' ] == 'aaa.jpg', 'value is not aaa.jpg' );
 		$this->assertTrue( $node->getData()[ 'name' ] == 'Aaa.jpg', 'value is not aaa.jpg' );
 		$this->assertTrue( $node->getData()[ 'alt' ] == 'bbb', 'alt is not bbb' );
-		$this->assertTrue( $node->getData()[ 'caption' ] == 'capt', 'caption is not "capt"' );
 		$this->assertTrue( $nodeDefault->getData()[ 'alt' ] == 'default-alt', 'default alt' );
-		$this->assertTrue( $nodeDefault->getData()[ 'caption' ] == 'default caption', 'default caption' );
 	}
 
 	public function testNodeHeader() {

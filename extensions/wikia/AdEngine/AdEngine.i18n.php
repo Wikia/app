@@ -37,15 +37,6 @@ $messages['ar'] = array(
 	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
 );
 
-/** Egyptian Arabic (مصرى)
- * @author Ghaly
- */
-$messages['arz'] = array(
-	'adengine-exitstitial-title-template' => 'أنت ماشى $1...',
-	'adengine-exitstitial-go-back' => 'عاوز ترجع ؟',
-	'adengine-exitstitial-button' => 'سيب الإعلان ده',
-);
-
 /** Azerbaijani (azərbaycanca)
  * @author Mushviq Abdulla
  */
@@ -282,7 +273,7 @@ $messages['gv'] = array(
 	'adengine-advertisement' => 'soilsheen',
 );
 
-/** Hakka Chinese (客家語/Hak-kâ-ngî)
+/** Hakka (客家語/Hak-kâ-ngî)
  * @author EagerLin
  */
 $messages['hak'] = array(
@@ -447,7 +438,7 @@ $messages['lez'] = array(
 	'adengine-exitstitial-button' => 'Реклама кими авун',
 );
 
-/** Northern Luri (لوری مینجایی)
+/** لوری (لوری)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -680,17 +671,6 @@ $messages['sco'] = array(
 	'adengine-exitstitial-button' => 'Pass ower this Ad',
 );
 
-/** Sinhala (සිංහල)
- * @author හරිත
- */
-$messages['si'] = array(
-	'adengine-advertisement' => 'ප්‍රචාරක දැන්වීම',
-	'adengine-exitstitial-title-template' => 'ඔබ හැරයන්නේ $1…',
-	'adengine-exitstitial-redirecting' => 'ඔබේ ගවේෂකය ඔබට අවශ්‍ය පිටුවට ඔබව තත්පර කිහිපයකින් යළියොමු කරනු ඇත.',
-	'adengine-exitstitial-go-back' => 'ආපසු යාමට වුවමනා ද?',
-	'adengine-exitstitial-button' => 'මේ දැන්වීම මගහරින්න',
-);
-
 /** Slovenian (slovenščina)
  * @author Dbc334
  * @author Mitja i
@@ -705,11 +685,9 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Aktron
  * @author Rancher
  */
 $messages['sr-ec'] = array(
-	'adengine-advertisement' => 'реклама',
 	'adengine-exitstitial-title-template' => 'Напуштате $1…',
 	'adengine-exitstitial-redirecting' => 'Прегледач ће вас за који секунд одвести на тражену страницу.',
 	'adengine-exitstitial-go-back' => 'Желите да се вратите назад?',
@@ -801,7 +779,6 @@ $messages['uk'] = array(
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Dinhxuanduyet
- * @author KhangND
  * @author Max20091
  * @author Xiao Qiao
  */
@@ -811,7 +788,7 @@ $messages['vi'] = array(
 	'adengine-exitstitial-redirecting' => 'Trình duyệt của bạn sẽ chuyển hướng bạn đến trang web mà bạn yêu cầu trong vài giây nữa.',
 	'adengine-exitstitial-go-back' => 'Bạn muốn quay trở lại?',
 	'adengine-exitstitial-button' => 'Bỏ qua quảng cáo này',
-	'adengine-desc' => 'Cơ chế quảng cáo của Wikia',
+	'adengine-desc' => 'Engine Quảng cáo của Wikia',
 );
 
 /** Waray (Winaray)

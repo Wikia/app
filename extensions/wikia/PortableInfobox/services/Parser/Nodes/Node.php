@@ -12,7 +12,6 @@ class Node {
 	const LABEL_TAG_NAME = 'label';
 
 	protected $xmlNode;
-	protected $parent = null;
 
 	/* @var $externalParser ExternalParser */
 	protected $externalParser;
@@ -20,24 +19,6 @@ class Node {
 	public function __construct( \SimpleXMLElement $xmlNode, $infoboxData ) {
 		$this->xmlNode = $xmlNode;
 		$this->infoboxData = $infoboxData;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getParent() {
-		return $this->parent;
-	}
-
-	/**
-	 * @param mixed $parent
-	 */
-	public function setParent( Node $parent ) {
-		$this->parent = $parent;
-	}
-
-	public function ignoreNodeWhenEmpty() {
-		return true;
 	}
 
 	/**
@@ -58,13 +39,7 @@ class Node {
 	}
 
 	public function getType() {
-		/*
-		 * Node type generation is based on XML tag name.
-		 * It's worth to remember that SimpleXMLElement::getName method is
-		 * case - sensitive ( "<Data>" != "<data>" ), so we need to sanitize Node Type
-		 * by using strtolower function
-		 */
-		return strtolower( $this->xmlNode->getName() );
+		return $this->xmlNode->getName();
 	}
 
 	public function getData() {

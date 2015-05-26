@@ -292,12 +292,8 @@ class MercuryApiController extends WikiaController {
 				$data[ 'relatedPages' ] = $relatedPages;
 			}
 
-			if ( $title->isMainPage() ) {
-				$data['isMainPage'] = true;
-
-				if ( !empty( $wgEnableMainPageDataMercuryApi ) ) {
-					$data['mainPageData'] = $this->getMainPageData();
-				}
+			if ( $title->isMainPage() && !empty( $wgEnableMainPageDataMercuryApi ) ) {
+				$data[ 'mainPageData' ] = $this->getMainPageData();
 			}
 
 		} catch ( WikiaHttpException $exception ) {
@@ -339,10 +335,9 @@ class MercuryApiController extends WikiaController {
 		$mainPageData = [];
 		$curatedContent = $this->getCuratedContentData();
 		$trendingArticles = $this->getTrendingArticlesData();
-		$trendingVideos = $this->getTrendingVideosData();
 
-		if ( !empty( $curatedContent[ 'items' ] ) ) {
-			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
+		if ( !empty( $curatedContent[ 'sections' ] ) ) {
+			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'sections' ];
 		}
 
 		if ( !empty( $curatedContent[ 'featured' ] ) ) {
@@ -351,10 +346,6 @@ class MercuryApiController extends WikiaController {
 
 		if ( !empty( $trendingArticles ) ) {
 			$mainPageData[ 'trendingArticles' ] = $trendingArticles;
-		}
-
-		if ( !empty( $trendingVideos ) ) {
-			$mainPageData[ 'trendingVideos' ] = $trendingVideos;
 		}
 
 		return $mainPageData;
@@ -403,27 +394,9 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = $this->mercuryApi->processTrendingData( $rawData, 'items', [ 'title', 'thumbnail', 'url' ] );
+			$data = $this->mercuryApi->processTrendingArticles( $rawData );
 		} catch ( NotFoundApiException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
-		}
-
-		return $data;
-	}
-
-	private function getTrendingVideosData() {
-		$params = [
-			'sort' => 'trend',
-			'getThumbnail' => false,
-			'format' => 'json',
-		];
-		$data = [];
-
-		try {
-			$rawData = $this->sendRequest( 'SpecialVideosSpecial', 'getVideos', $params )->getData();
-			$data = $this->mercuryApi->processTrendingData( $rawData, 'videos', [ 'title', 'fileUrl', 'duration', 'thumbUrl' ] );
-		} catch ( NotFoundApiException $ex ) {
-			WikiaLogger::instance()->info( 'Trending videos data is empty' );
 		}
 
 		return $data;

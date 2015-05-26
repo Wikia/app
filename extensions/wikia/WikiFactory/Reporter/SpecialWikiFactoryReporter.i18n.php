@@ -88,7 +88,7 @@ $messages['ce'] = array(
 	'wikifactoryreporter' => 'Хааманча WikiFactory',
 );
 
-/** Central Kurdish (کوردیی ناوەندی)
+/** Sorani Kurdish (کوردی)
  * @author Muhammed taha
  */
 $messages['ckb'] = array(
@@ -487,7 +487,7 @@ $messages['uk'] = array(
 	'wikifactoryreporter' => 'Звітник WikiFactory',
 );
 
-/** Venetian (vèneto)
+/** vèneto (vèneto)
  * @author Vajotwo
  */
 $messages['vec'] = array(
