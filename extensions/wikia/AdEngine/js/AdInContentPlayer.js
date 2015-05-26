@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.adInContentPlayer', [
 	 * If conditions are met adds dynamically new slot in the right place and sends tracking data
 	 */
 	function init() {
-		var incontentPlayerCountries = instantGlobals.wgIncontentPlayerCountries,
+		var incontentPlayerCountries = instantGlobals.wgAdDriverIncontentPlayerSlotCountries,
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
 			$header;

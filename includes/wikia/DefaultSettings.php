@@ -1733,8 +1733,8 @@ $wgEnablePageShareExt = true;
 $wgPaidAssetDropConfig = false;
 
 /**
- * @name $wgIncontentPlayerCountries
+ * @name $wgAdDriverIncontentPlayerSlotCountries
  * Enables INCONTENT_PLAYER slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgIncontentPlayerCountries = null;
+$wgAdDriverIncontentPlayerSlotCountries = null;
