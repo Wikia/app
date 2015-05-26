@@ -360,6 +360,9 @@ class UncycloUserMigrator extends Maintenance {
 					__METHOD__
 				);
 
+				// mark migrated accounts
+				$extUser->setOption( 'uncyclo_user', $user->getId() );
+
 				$extUser->setId($dbw->insertId());
 				$extUser->setToken();
 				$extUser->saveSettings();
