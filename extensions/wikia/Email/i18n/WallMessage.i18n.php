@@ -6,6 +6,12 @@ $messages['en'] = array(
 	'emailext-wallmessage-following-subject' => '$1 wrote $2 a new message on {{SITENAME}}',
 	'emailext-wallmessage-owned-summary' => "'''[$1 $2] wrote you a new message on [{{SERVER}} {{SITENAME}}]. Lucky you!'''",
 	'emailext-wallmessage-following-summary' => "'''[$1 $2] wrote $3 a new message on [{{SERVER}} {{SITENAME}}].'''",
+
+	'emailext-wallmessage-anon-owned-subject' => 'A Wikia fan wrote you a new message on {{SITENAME}}',
+	'emailext-wallmessage-anon-following-subject' => 'A Wikia fan wrote $1 a new message on {{SITENAME}}',
+	'emailext-wallmessage-anon-owned-summary' => "'''A Wikia fan wrote you a new message on {{SITENAME}}. Lucky you!'''",
+	'emailext-wallmessage-anon-following-summary' => "'''A Wikia fan wrote $1 a new message on {{SITENAME}}.'''",
+
 	'emailext-wallmessage-full-conversation' => 'Full conversation',
 	'emailext-wallmessage-recent-messages' => '[$1 All recent messages on $2]',
 );
@@ -15,6 +21,12 @@ $messages['qqq'] = array(
 	'emailext-wallmessage-following-subject' => "Email subject when a user wrote a new message on another user's wall, and you are following the thread. $1 is the name of the user who posted the message, $2 is the wall owner (user).",
 	'emailext-wallmessage-owned-summary' => 'Text describing that another user wrote a new message on your wall. $1 is url to message author user profile page, $2 is the name of the user who posted the message',
 	'emailext-wallmessage-following-summary' => "Text describing that a user wrote a new message on another user's wall. $1 is url to message author user profile page, $2 is the name of the user who posted the message, $3 is the wall owner (user).",
+
+	'emailext-wallmessage-anon-owned-subject' => 'Email subject when an anonymous user wrote a new message on your wall.',
+	'emailext-wallmessage-anon-following-subject' => "Email subject when an anonymous user wrote a new message on another user's wall, and you are following the thread. $1 is the wall owner (user).",
+	'emailext-wallmessage-anon-owned-summary' => 'Text describing that an anonymous user wrote a new message on your wall.',
+	'emailext-wallmessage-anon-following-summary' => "Text describing that an anonymous user wrote a new message on another user's wall. $1 is the wall owner (user).",
+
 	'emailext-wallmessage-full-conversation' => 'Text for button that, when clicked, navigates to the full message wall conversation',
 	'emailext-wallmessage-recent-messages' => "Call to action to view all recent messages on the user's message wall. $1 -> link to message wall, $2 message wall name",
 );
