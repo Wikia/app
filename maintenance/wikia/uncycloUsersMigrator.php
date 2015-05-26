@@ -282,13 +282,49 @@ class UncycloUserMigrator extends Maintenance {
 	/**
 	 * Rename global user
 	 *
-	 * @param User $user
+	 * @param User $user global user
 	 */
 	protected function doRenameGlobalUser( User $user ) {
-		$newName = self::PREFIX_RENAME_GLOBAL . $user->getName();
-		$this->output( sprintf('> renaming global user to "%s"...', $newName) );
+		global $wgUser;
 
-		// TODO
+		$newName = self::PREFIX_RENAME_GLOBAL . $user->getName();
+		$this->output( sprintf( '> renaming global user to "%s" (#%d)...', $newName, $user->getId() ) );
+
+		if ( $this->isDryRun ) {
+			return;
+		}
+
+		// get the list of wikis where the global user made edits
+		$wikis = RenameUserHelper::lookupRegisteredUserActivity( $user->getId() );
+
+		foreach( $wikis as $wikiId ) {
+			$cmd = sprintf( 'SERVER_ID=%s php %s/../maintenance/wikia/RenameUser_local.php --rename-user-id=%d --rename_old_name="%s" --rename_new_name="%s"',
+				$wikiId,
+				__DIR__,
+				$wgUser->getId(),
+				$user->getName(),
+				$newName
+			);
+
+			$retVal = 0;
+			$output = wfShellExec( $cmd, $retVal );
+
+			if ( $retVal > 0 ) {
+				$this->error( __METHOD__, [
+					'cmd' => $cmd,
+					'exception' => new Exception( $output, $retVal )
+				]);
+
+				throw new UncycloUserMigratorException( $output, $retVal );
+			}
+		}
+
+		// TODO: update shared DB and each cluster with the new user name
+
+		$this->info( __METHOD__, [
+			'user' => $user->getName(),
+			'wikis' => count( $wikis )
+		] );
 
 		$this->renamedWikiaAccounts++;
 	}
@@ -436,7 +472,7 @@ class UncycloUserMigrator extends Maintenance {
 					$action = 'rename uncyclo account';
 				}
 				elseif ( $uncycloEdits > 0 && $globalEdits == 0 ) {
-					$this->doRenameGlobalUser( $user );
+					$this->doRenameGlobalUser( $globalUser );
 					$action = 'rename wikia account';
 				}
 				elseif ( $uncycloEdits < 1000 ) {
@@ -446,7 +482,7 @@ class UncycloUserMigrator extends Maintenance {
 				else {
 					// rename the one with the least edits
 					if ( $uncycloEdits > $globalEdits ) {
-						$this->doRenameGlobalUser( $user );
+						$this->doRenameGlobalUser( $globalUser );
 						$action = 'rename wikia account';
 					}
 					else {
@@ -495,7 +531,7 @@ class UncycloUserMigrator extends Maintenance {
 	 */
 	public function execute() {
 		global $wgUser;
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = $this->getGlobalUserByName( 'WikiaBot' );
 
 		$this->isDryRun = $this->hasOption( 'dry-run' );
 
@@ -568,6 +604,9 @@ class UncycloUserMigrator extends Maintenance {
 		}
 	}
 }
+
+// RenameUserHelper::lookupRegisteredUserActivity
+require_once( __DIR__ . "/../../extensions/wikia/UserRenameTool/RenameUserHelper.class.php" );
 
 $maintClass = "UncycloUserMigrator";
 require_once( RUN_MAINTENANCE_IF_MAIN );
