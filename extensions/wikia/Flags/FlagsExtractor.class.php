@@ -135,7 +135,7 @@ class FlagsExtractor {
 	 */
 	private function findTemplatePosition( $templateName, $offset ) {
 		while ( ( $offsetStart = stripos($this->text, $templateName, $offset) ) !== false ) {
-			$offset = $offsetStart + strlen($templateName);
+			$offset = $offsetStart + strlen( $templateName );
 			if ( $this->isSearchedTemplate( $templateName, $offsetStart ) ) {
 				return $offsetStart;
 			}
@@ -144,7 +144,7 @@ class FlagsExtractor {
 	}
 
 	private function isSearchedTemplate( $templateName, $offsetStart ) {
-		$offset = $offsetStart + strlen($templateName);
+		$offset = $offsetStart + strlen( $templateName );
 
 		return !$this->isWrappedByNoWikiTag( $offsetStart )
 			&& ( $this->text[$offset] == '}' || $this->text[$offset] == '|' );
@@ -163,9 +163,9 @@ class FlagsExtractor {
 		);
 
 		if ( $isParamWithName ) {
-			list($paramName, $paramValue) = explode('=', $param, 2);
-			$paramName = trim($paramName);
-			$paramValue = trim($paramValue);
+			list( $paramName, $paramValue ) = explode( '=', $param, 2 );
+			$paramName = trim( $paramName );
+			$paramValue = trim( $paramValue );
 			$templateParams[$paramName] = $paramValue;
 		} else {
 			$templateParams[$paramsCounter] = $param;

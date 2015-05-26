@@ -1,7 +1,7 @@
 <?php
 
-$dir = dirname( __FILE__ ) . "/../../../../";
-$extDir = __DIR__ . "/../";
+$dir = dirname( __FILE__ ) . '/../../../../';
+$extDir = __DIR__ . '/../';
 
 require_once( $dir . 'includes/wikia/nirvana/WikiaObject.class.php' );
 require_once( $dir . 'includes/wikia/nirvana/WikiaModel.class.php' );
@@ -108,12 +108,12 @@ class MoveNotices extends Maintenance {
 					continue;
 				}
 
-				$this->log = "Adding flag type: " . json_encode( $flagType ) ."\n";
+				$this->log = 'Adding flag type: ' . json_encode( $flagType ) . "\n";
 			}
 
 			$this->log .= "Start processing template: $this->templateName \n";
 
-			$title = Title::newFromText('Template:' . $this->templateName);
+			$title = Title::newFromText( 'Template:' . $this->templateName );
 
 			$rows = $this->showIndirectLinks( 0, $title, 0 );
 
@@ -144,12 +144,12 @@ class MoveNotices extends Maintenance {
 				$content = $article->getContent();
 
 				if ( !is_null( $section )  ) {
-					$content = $wgParser->getSection($content, $section);
+					$content = $wgParser->getSection( $content, $section );
 				}
 
 				$this->log .= "Looking for template on $pageName [" . $this->pageId . "]\n";
 
-				$flagsExtractor->init( $content, $this->templateName);
+				$flagsExtractor->init( $content, $this->templateName );
 				$templates = $flagsExtractor->getAllTemplates();
 
 				$size = sizeof( $templates );
@@ -180,7 +180,7 @@ class MoveNotices extends Maintenance {
 			$this->log = "Processing template: $this->templateName completed \n";
 			$this->log .= "================================================== \n\n\n";
 
-			fwrite($this->logFile, $this->log);
+			fwrite( $this->logFile, $this->log );
 			$this->output( $this->log );
 		}
 
@@ -215,7 +215,7 @@ class MoveNotices extends Maintenance {
 		foreach ( $templates as $template ) {
 			$this->log .= "Processing template: " . $template['template'] ."\n";
 
-			if (empty($template['params'])) {
+			if ( empty( $template['params'] ) ) {
 				$this->log .= "No parameters found\n";
 			} else {
 				$this->log .= "Found parameters: \n";
@@ -319,13 +319,13 @@ class MoveNotices extends Maintenance {
 		$params = [];
 
 		if ($csvParams[0] == '|') {
-			$csvParams = substr($csvParams, 1);
+			$csvParams = substr( $csvParams, 1 );
 		}
 
-		$csvParams = explode('|', $csvParams);
+		$csvParams = explode( '|', $csvParams );
 
-		foreach ($csvParams as $param) {
-			list($paramName, $paramValue) = explode('=', $param, 2);
+		foreach ( $csvParams as $param ) {
+			list( $paramName, $paramValue ) = explode( '=', $param, 2 );
 			$params[$paramName] = $paramValue;
 		}
 
@@ -349,30 +349,30 @@ class MoveNotices extends Maintenance {
 		$hidetrans = false;
 		$hideimages = false; //$target->getNamespace() != NS_FILE;
 
-		$fetchlinks = (!$hidelinks || !$hideredirs);
+		$fetchlinks = ( !$hidelinks || !$hideredirs );
 
 		// Make the query
-		$plConds = array(
+		$plConds = [
 			'page_id=pl_from',
 			'pl_namespace' => $target->getNamespace(),
 			'pl_title' => $target->getDBkey(),
-		);
+		];
 		if( $hideredirs ) {
 			$plConds['rd_from'] = null;
 		} elseif( $hidelinks ) {
 			$plConds[] = 'rd_from is NOT NULL';
 		}
 
-		$tlConds = array(
+		$tlConds = [
 			'page_id=tl_from',
 			'tl_namespace' => $target->getNamespace(),
 			'tl_title' => $target->getDBkey(),
-		);
+		];
 
-		$ilConds = array(
+		$ilConds = [
 			'page_id=il_from',
 			'il_to' => $target->getDBkey(),
-		);
+		];
 
 		if ( is_array( $wgContentNamespaces ) && !empty( $wgContentNamespaces ) ) {
 			$namespaces = implode( ',', $wgContentNamespaces );
@@ -391,34 +391,54 @@ class MoveNotices extends Maintenance {
 		$options[] = 'STRAIGHT_JOIN';
 
 		//$options['LIMIT'] = $queryLimit;
-		$fields = array( 'page_id', 'page_namespace', 'page_title', 'rd_from' );
+		$fields = [ 'page_id', 'page_namespace', 'page_title', 'rd_from' ];
 
-		$joinConds = array( 'redirect' => array( 'LEFT JOIN', array(
-			'rd_from = page_id',
-			'rd_namespace' => $target->getNamespace(),
-			'rd_title' => $target->getDBkey(),
-			'(rd_interwiki is NULL) or (rd_interwiki = \'\')'
-		)));
+		$joinConds = [
+			'redirect' => [
+				'LEFT JOIN',
+				[
+					'rd_from = page_id',
+					'rd_namespace' => $target->getNamespace(),
+					'rd_title' => $target->getDBkey(),
+					'(rd_interwiki is NULL) or (rd_interwiki = \'\')',
+				]
+			]
+		];
 
 		if( $fetchlinks ) {
 			$options['ORDER BY'] = 'pl_from';
-			$plRes = $dbr->select( array( 'pagelinks', 'page', 'redirect' ), $fields,
-				$plConds, __METHOD__, $options,
-				$joinConds);
+			$plRes = $dbr->select(
+				[ 'pagelinks', 'page', 'redirect' ],
+				$fields,
+				$plConds,
+				__METHOD__,
+				$options,
+				$joinConds
+			);
 		}
 
 		if( !$hidetrans ) {
 			$options['ORDER BY'] = 'tl_from';
-			$tlRes = $dbr->select( array( 'templatelinks', 'page', 'redirect' ), $fields,
-				$tlConds, __METHOD__, $options,
-				$joinConds);
+			$tlRes = $dbr->select(
+				[ 'templatelinks', 'page', 'redirect' ],
+				$fields,
+				$tlConds,
+				__METHOD__,
+				$options,
+				$joinConds
+			);
 		}
 
 		if( !$hideimages ) {
 			$options['ORDER BY'] = 'il_from';
-			$ilRes = $dbr->select( array( 'imagelinks', 'page', 'redirect' ), $fields,
-				$ilConds, __METHOD__, $options,
-				$joinConds);
+			$ilRes = $dbr->select(
+				[ 'imagelinks', 'page', 'redirect' ],
+				$fields,
+				$ilConds,
+				__METHOD__,
+				$options,
+				$joinConds
+			);
 		}
 
 		// Read the rows into an array and remove duplicates
@@ -452,7 +472,6 @@ class MoveNotices extends Maintenance {
 
 			if ( $row->rd_from && $level < 2 ) {
 				$this->showIndirectLinks( $level + 1, $nt );
-
 			}
 		}
 
@@ -461,5 +480,5 @@ class MoveNotices extends Maintenance {
 
 }
 
-$maintClass = "MoveNotices";
+$maintClass = 'MoveNotices';
 require_once( RUN_MAINTENANCE_IF_MAIN );
