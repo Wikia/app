@@ -172,11 +172,11 @@ describe('AdContext', function () {
 		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
 			wgAdDriverHighImpactSlotCountries: ['XX', 'ZZ']
 		});
-		expect(adContext.getContext().opts.enableInvisibleHighImpactSlot).toBeTruthy();
+		expect(adContext.getContext().slots.invisibleHighImpact).toBeTruthy();
 
 		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
 			wgAdDriverHighImpactSlotCountries: ['YY']
 		});
-		expect(adContext.getContext().opts.enableInvisibleHighImpactSlot).toBeFalsy();
+		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
 });
