@@ -7,6 +7,7 @@ class SitemapPageModel extends WikiaModel {
 	const CACHE_TTL = 86400;
 	const DEFAULT_LIMIT_PER_PAGE = 100;
 	const MAX_LEVEL = 3;
+	const MIN_LEVEL = 1;
 	const VERTICAL_UNKNOWN = 'Unknown';
 
 	protected static $verticalNames = [
@@ -21,20 +22,20 @@ class SitemapPageModel extends WikiaModel {
 	];
 
 	/**
-	 * Get limit per page
-	 * @param int $level
+	 * Get limit for each list (top level)
+	 * @param $level
 	 * @return int
 	 */
-	public function getLimitPerPage( $level = 0 ) {
-		$base = $this->getLimitPerPageBase();
-		return ( $level == 1 ) ? pow( $base, self::MAX_LEVEL - 1 ) : $base;
+	public function getLimitPerList( $level ) {
+		$base = $this->getLimitPerPage();
+		return pow( $base, self::MAX_LEVEL - $level );
 	}
 
 	/**
-	 * Get base value for limit per pages
+	 * Get limit per page
 	 * @return int
 	 */
-	protected function getLimitPerPageBase() {
+	public function getLimitPerPage() {
 		$total = (int) $this->getTotalWikis();
 		$base = self::DEFAULT_LIMIT_PER_PAGE;
 		while ( pow( $base, self::MAX_LEVEL ) < $total ) {
@@ -122,7 +123,7 @@ class SitemapPageModel extends WikiaModel {
 			$wikis = $this->getWikiTitles( $where, 'city_dbname ASC', 1 );
 			if ( !empty( $wikis ) ) {
 				$done = false;
-				$offset = $this->getLimitPerPage( $level ) - 1;
+				$offset = $this->getLimitPerList( $level ) - 1;
 				while ( !$done ) {
 					$list = $this->getWikiTitles( $where, 'city_dbname ASC', 2, $offset );
 					if ( empty( $list ) ) {
