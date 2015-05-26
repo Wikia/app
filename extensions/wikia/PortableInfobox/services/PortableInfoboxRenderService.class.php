@@ -212,6 +212,8 @@ class PortableInfoboxRenderService extends WikiaService {
 			);
 		}
 		return '';
+	}
+
 	/** 
 	 * required for testing mobile template rendering
 	 * @return bool
