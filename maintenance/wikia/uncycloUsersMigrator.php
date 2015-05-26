@@ -28,6 +28,7 @@ class UncycloUserMigratorException extends Exception {}
 class UncycloUserMigrator extends Maintenance {
 
 	const USER_TABLE = '`user`'; # backticks prevent any magical prefixes appends
+	const SHARED_DB = 'wikicities';
 
 	const PREFIX_RENAME_UNCYCLO = 'Un-';
 	const PREFIX_RENAME_GLOBAL = 'W-';
@@ -306,32 +307,44 @@ class UncycloUserMigrator extends Maintenance {
 		$extUser = clone $user;
 
 		// this code was borrowed from ExternalUser_Wikia::addToDatabase
-		$dbw = wfGetDB( DB_MASTER, [], 'wikicities' ); // $wgExternalSharedDB is not set on uncyclo
+		$dbw = wfGetDB( DB_MASTER, [], self::SHARED_DB );
 		$dbw->begin( __METHOD__ );
 
 		try {
-			$dbw->insert(
-				self::USER_TABLE,
-				[
-					'user_id' => null,
-					'user_name' => $user->getName(),
-					'user_real_name' => $user->getRealName(),
-					'user_password' => $user->mPassword,
-					'user_newpassword' => '',
-					'user_email' => $user->getEmail(),
-					'user_touched' => '',
-					'user_token' => '',
-					'user_options' => '',
-					'user_registration' => $dbw->timestamp($user->mRegistration),
-					'user_editcount' => $user->getEditCount(), // use uncyclo counter
-					'user_birthdate' => $user->mBirthDate
-				],
-				__METHOD__
-			);
+			/**
+			 * Uncyclo does not have $wgSharedDB set so all queries from User class goes to the LOCAL database
+			 *
+			 * As we want to register and modify a GLOBAL user, set both $wgSharedDB and wgExternalSharedDB to "wikicities".
+			 * This wil make User::saveSettings write to the shared database
+			 */
+			$wrapper = new Wikia\Util\GlobalStateWrapper( [
+				'wgSharedDB'         => self::SHARED_DB,
+				'wgExternalSharedDB' => self::SHARED_DB,
+			] );
+			$wrapper->wrap(function () use ( $dbw, $extUser, $user ) {
+				$dbw->insert(
+					self::USER_TABLE,
+					[
+						'user_id' => null,
+						'user_name' => $user->getName(),
+						'user_real_name' => $user->getRealName(),
+						'user_password' => $user->mPassword,
+						'user_newpassword' => '',
+						'user_email' => $user->getEmail(),
+						'user_touched' => '',
+						'user_token' => '',
+						'user_options' => '',
+						'user_registration' => $dbw->timestamp($user->mRegistration),
+						'user_editcount' => $user->getEditCount(), // use uncyclo counter
+						'user_birthdate' => $user->mBirthDate
+					],
+					__METHOD__
+				);
 
-			$extUser->setId( $dbw->insertId() );
-			$extUser->setToken();
-			$extUser->saveSettings();
+				$extUser->setId($dbw->insertId());
+				$extUser->setToken();
+				$extUser->saveSettings();
+			});
 
 			// we have a new ID for a global account
 			// update user ID in uncyclo database
