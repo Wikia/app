@@ -1,14 +1,6 @@
 <?php
 
-$dir = dirname( __FILE__ ) . '/../../../../';
-$extDir = __DIR__ . '/../';
-
-require_once( $dir . 'includes/wikia/nirvana/WikiaObject.class.php' );
-require_once( $dir . 'includes/wikia/nirvana/WikiaModel.class.php' );
-require_once( $extDir . 'FlagsExtractor.class.php' );
-require_once( $extDir . 'models/FlagsBaseModel.class.php' );
-require_once( $extDir . 'models/Flag.class.php' );
-require_once( $extDir . 'models/FlagType.class.php' );
+$dir = dirname( __FILE__ ) . "/../../../../";
 require_once( $dir . 'maintenance/Maintenance.php' );
 
 use Flags\FlagsExtractor;
@@ -17,13 +9,17 @@ use Flags\Models\FlagType;
 
 class MoveNotices extends Maintenance {
 
+	const
+		SECTION_DEFAULT = 0,
+		SECTION_ALL = 'all';
+
 	private
 		$log = '',
 		$logFile,
 		$templateName,
 		$wikiId,
 		$pageId,
-		$flagId;
+		$flagTypeId;
 
 	/**
 	 * Set script options
@@ -32,7 +28,7 @@ class MoveNotices extends Maintenance {
 		parent::__construct();
 		$this->addOption( 'csv', 'CSV file with data' );
 		$this->addOption( 'list', 'Run script without adding data to database' );
-		$this->addOption( 'section', 'Search template in given section. Otherwise all article is searched.' );
+		$this->addOption( 'section', 'Search template in given section (default is 0). All article can be parsed by setting value "all".' );
 	}
 
 	public function execute() {
@@ -88,7 +84,7 @@ class MoveNotices extends Maintenance {
 
 		foreach( $csvData as $data ) {
 			$this->log = '';
-			$flagId = null;
+			$this->flagTypeId = null;
 
 			$error = $this->validateCSVData( $data );
 
@@ -104,7 +100,7 @@ class MoveNotices extends Maintenance {
 				// Prepare data to add flag type
 				$flagType = $this->prepareDataForFlagType( $flagTypeModel, $data );
 
-				if ( !($this->flagId = $this->addFlagType( $flagTypeModel, $flagType ) ) ) {
+				if ( !($this->flagTypeId = $this->addFlagType( $flagTypeModel, $flagType ) ) ) {
 					continue;
 				}
 
@@ -125,10 +121,13 @@ class MoveNotices extends Maintenance {
 				continue;
 			}
 
-			if ( !is_null( $section )  ) {
-				$this->log .= "Searching in section $section\n";
-			} else {
+			if ( is_null( $section )  ) {
+				$this->log .= "Searching in section " . self::SECTION_DEFAULT . " (by default)\n";
+				$section = self::SECTION_DEFAULT;
+			} elseif ( $section == self::SECTION_ALL ) {
 				$this->log .= "Searching in all article content\n";
+			} else {
+				$this->log .= "Searching in section $section\n";
 			}
 
 			fwrite( $this->logFile, $this->log );
@@ -143,8 +142,8 @@ class MoveNotices extends Maintenance {
 				$article = Article::newFromID( $this->pageId );
 				$content = $article->getContent();
 
-				if ( !is_null( $section )  ) {
-					$content = $wgParser->getSection( $content, $section );
+				if ( $section != self::SECTION_ALL  ) {
+					$content = $wgParser->getSection($content, $section);
 				}
 
 				$this->log .= "Looking for template on $pageName [" . $this->pageId . "]\n";
@@ -194,10 +193,10 @@ class MoveNotices extends Maintenance {
 	 */
 	private function addFlagType( FlagType $flagTypeModel, $flagType ) {
 		$flagTypeModel->verifyParamsForAdd( $flagType );
-		$flagId = $flagTypeModel->addFlagType( $flagType );
+		$flagTypeId = $flagTypeModel->addFlagType( $flagType );
 
-		if ( $flagId ) {
-			$this->log .= "Flag ID: $flagId added.\n";
+		if ( $flagTypeId ) {
+			$this->log .= "Flag ID: $flagTypeId added.\n";
 		} else {
 			$this->log .= "[ERROR] Flag is not added!\n";
 			$this->log .= "================================================== \n\n\n";
@@ -205,7 +204,7 @@ class MoveNotices extends Maintenance {
 			$this->output( $this->log );
 		}
 
-		return $flagId;
+		return $flagTypeId;
 	}
 
 	/**
@@ -258,7 +257,7 @@ class MoveNotices extends Maintenance {
 			'page_id' => $this->pageId,
 			'flags' => [
 				[
-					'flag_type_id' => $this->flagId,
+					'flag_type_id' => $this->flagTypeId,
 					'params' => $params
 				]
 			]

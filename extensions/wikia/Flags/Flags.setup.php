@@ -28,6 +28,7 @@ $wgExtensionCredits['other'][] = [
  * Controllers
  */
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
+$wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 
 /**
  * Models
@@ -47,14 +48,19 @@ $wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.ph
  */
 $wgAutoloadClasses['Flags\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
 $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
+$wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
 
 /**
  * Hooks
  */
 $wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
+$wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
+$wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
 $wgHooks['ParserBeforeInternalParse'][] = 'Flags\Hooks::onParserBeforeInternalParse';
+$wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
 
 /**
  * Messages
  */
+$wgExtensionMessagesFiles['Flags'] = __DIR__ . '/Flags.i18n.php';
 $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
