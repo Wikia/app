@@ -207,6 +207,14 @@ $messages['es'] = array(
 	'unsubscribe-preferences-notice' => 'Los correos electrónicos han sido deshabilitados para tu cuenta. Visita la pestaña de tu perfil para reactivarlos.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'unsubscribe' => 'Harpidetza kendu',
+	'unsubscribe-confirm-button' => 'Bai, ziur nago',
+);
+
 /** Persian (فارسی)
  * @author Mjbmr
  * @author Reza1615
@@ -369,7 +377,7 @@ $messages['ksh'] = array(
 	'unsubscribe-badtime' => 'Leider deiht et dä Lengk nit mih. Nemm ene Lengk uß dä <i lang="en">e-mail</i> aan Desch, dä winnijer wi en Woch ald_es.',
 	'unsubscribe-nousers' => 'Mer han keine Metmaacher met dä <i lang="en">e-mail</i> Adräß jefonge.',
 	'unsubscribe-noconfusers' => 'Mer han keine beschtääteschte Metmaacher met dä <i lang="en">e-mail</i> Adräß jefonge.',
-	'unsubscribe-confirm-legend' => 'Beshtähtejje',
+	'unsubscribe-confirm-legend' => 'Beschtähtejje',
 	'unsubscribe-confirm-text' => 'Donn alle Abonnomangs met <code>$1</code> ußdraare?',
 	'unsubscribe-confirm-button' => 'Joh, esch ben mer sescher, esch well dat han.',
 	'unsubscribe-working' => 'Mer sen de $1 {{PLURAL:$1|Abonnomang|Abonnomangs}} för $2 am ußdraare&nbsp;…',
@@ -426,6 +434,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'unsubscribe' => 'Berhenti melanggan',
+	'unsubscribe-desc' => 'Pusat sehenti untuk membatalkan langganan emel',
 	'unsubscribe-badaccess' => 'Maaf, laman ini tidak boleh digunakan secara terus. Sila ikuti pautan dari e-mel anda.',
 	'unsubscribe-badtoken' => 'Maaf, token keselamatan ini ada masalah.',
 	'unsubscribe-bademail' => 'Maaf, e-mel ini ada masalah.',

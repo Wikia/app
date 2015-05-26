@@ -10,7 +10,7 @@ class NodeGroup extends Node {
 		if ( $this->externalParser ) {
 			$nodeFactory->setExternalParser( $this->externalParser );
 		}
-		return [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode ) ];
+		return [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode, $this ) ];
 	}
 
 	public function isEmpty( $data ) {

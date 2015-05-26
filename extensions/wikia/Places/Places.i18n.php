@@ -439,7 +439,7 @@ $messages['lb'] = array(
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -559,7 +559,19 @@ $messages['nl'] = array(
 	'places-category-switch-off' => 'Geocodering inschakelen',
 );
 
-/** Pälzisch (Pälzisch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'places-editor-search' => 'Recercar',
+	'places-editor-title-create-new' => 'Apondre una balisa geografica',
+	'places-editor-title-edit' => 'Modificar una balisa geografica',
+	'places-geolocation-button-label' => 'Apondre un emplaçament',
+	'places-geolocation-modal-add-title' => 'Apondètz un emplaçament',
+	'places-geolocation-modal-error-title' => 'Error',
+);
+
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
