@@ -42,7 +42,7 @@ class RemoveTempUserAccounts extends Maintenance {
 	 * Get temp user accounts
 	 *
 	 * - check if these accounts are really temp ones
-	 * - skip accounts with user_touched changed in the last year
+	 * - do not remove accounts with password set (122 of them)
 	 *
 	 * @param DatabaseBase $db
 	 * @return array
@@ -56,7 +56,7 @@ class RemoveTempUserAccounts extends Maintenance {
 			],
 			[
 				'user_name ' . $db->buildLike( self::TEMPUSER_PREFIX, $db->anyString() ),
-				sprintf( 'user_touched < "%s"', wfTimestamp( TS_DB, time() - 86400 * 365 ) ),
+				'user_password' => '',
 			],
 			__METHOD__
 		);
