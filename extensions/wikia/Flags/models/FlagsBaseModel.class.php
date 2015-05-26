@@ -24,7 +24,7 @@ class FlagsBaseModel extends \WikiaModel {
 	 * @return \DatabaseBase
 	 */
 	protected function getDatabaseForRead() {
-		return wfGetDB( DB_SLAVE, [], $this->wg->ExternalSharedDB );
+		return wfGetDB( DB_SLAVE, [], $this->wg->FlagsDB );
 	}
 
 	/**
@@ -32,7 +32,7 @@ class FlagsBaseModel extends \WikiaModel {
 	 * @return \DatabaseBase
 	 */
 	protected function getDatabaseForWrite() {
-		return wfGetDB( DB_MASTER, [], $this->wg->ExternalSharedDB );
+		return wfGetDB( DB_MASTER, [], $this->wg->FlagsDB );
 	}
 
 	public function debug( $a ) {
