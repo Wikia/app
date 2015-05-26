@@ -65,6 +65,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
