@@ -81,8 +81,7 @@ class AssetsManagerController extends WikiaController {
 					$builder = $this->getBuilder( 'sass', $styleFile );
 
 					if ( !is_null( $builder ) ) {
-						$skin = RequestContext::getMain()->getSkin();
-						if ( $this->app->checkSkin( 'oasis', $skin ) ) {
+						if ( $this->app->checkSkin( 'oasis' ) ) {
 							$builder->addParams( SassUtil::getOasisSettings() );
 						}
 						$data .= $builder->getContent();
