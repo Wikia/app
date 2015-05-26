@@ -302,8 +302,8 @@ class UncycloUserMigrator extends Maintenance {
 				$wikiId,
 				__DIR__,
 				$wgUser->getId(),
-				$user->getName(),
-				$newName
+				escapeshellarg( $user->getName() ),
+				escapeshellarg( $newName )
 			);
 
 			$retVal = 0;
