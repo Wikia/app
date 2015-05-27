@@ -47,6 +47,7 @@ class UncycloUserMigrator extends Maintenance {
 	/* @var resource $csv */
 	private $csv;
 	private $isDryRun = true;
+	private $onlyRenameGlobalUsers = true;
 
 	/**
 	 * Stores the predefined tasks to do for every local wiki database.
@@ -106,6 +107,7 @@ class UncycloUserMigrator extends Maintenance {
 
 		$this->addOption( 'csv', 'Generate a report in CSV file' );
 		$this->addOption( 'dry-run', 'Don\'t perform any operations' );
+		$this->addOption( 'only-rename-global-users', 'Perform global users rename ONLY' );
 
 		$this->mDescription = 'This script migrates uncyclopedia user accounts to the shared database';
 	}
@@ -126,8 +128,8 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param string $msg
 	 * @param array $context
 	 */
-	protected function error( $msg, Array $context = [] ) {
-		Wikia\Logger\WikiaLogger::instance()->error( $msg, $context );
+	protected function err( $msg, Array $context = [] ) {
+		Wikia\Logger\WikiaLogger::instance()->err( $msg, $context );
 	}
 
 	/**
@@ -147,8 +149,7 @@ class UncycloUserMigrator extends Maintenance {
 	 * @return DatabaseMysqli
 	 */
 	private function getSharedDB($flag = DB_SLAVE) {
-		global $wgExternalSharedDB;
-		return wfGetDB($flag, [], $wgExternalSharedDB);
+		return wfGetDB( $flag, [], self::SHARED_DB );
 	}
 
 	/**
@@ -208,7 +209,7 @@ class UncycloUserMigrator extends Maintenance {
 			$tableName = $entry[ 'table' ];
 
 			if ( !$dbw->tableExists( $tableName ) ) {
-				$this->error( 'Table does not exist', [ 'tableName' => $tableName ] );
+				$this->err( 'Table does not exist', [ 'tableName' => $tableName ] );
 				continue;
 			}
 
@@ -233,6 +234,11 @@ class UncycloUserMigrator extends Maintenance {
 	protected function doChangeUncycloUserId( User $user, $newUserId ) {
 		// "OptiPest" and "MrFlashlight" accounts have the same ID on uncyclo and shared DB
 		if ( $newUserId == $user->getId() ) {
+			return;
+		}
+
+		// don't touch uncyclo users in "global users only" mode
+		if ( $this->onlyRenameGlobalUsers ) {
 			return;
 		}
 
@@ -261,6 +267,11 @@ class UncycloUserMigrator extends Maintenance {
 	 * @return User user object with a changed name
 	 */
 	protected function doRenameUncycloUser( User $uncycloUser ) {
+		// don't touch uncyclo users in "global users only" mode
+		if ( $this->onlyRenameGlobalUsers ) {
+			return $uncycloUser;
+		}
+
 		$user = clone $uncycloUser;
 
 		$newName = self::PREFIX_RENAME_UNCYCLO . $user->getName();
@@ -268,13 +279,15 @@ class UncycloUserMigrator extends Maintenance {
 
 		$this->renamedUnclycloAccounts++;
 
-		// update user_name in MW tables
-		$this->updateTables( self::UPDATE_TABLE_USER_NAME, $user->getName(), $newName);
+		if ( !$this->isDryRun ) {
+			// update user_name in MW tables
+			$this->updateTables(self::UPDATE_TABLE_USER_NAME, $user->getName(), $newName);
 
-		// move user page
-		$oldUserPage = Title::newFromText( $user->getName(), NS_USER );
-		$newUserPage = Title::newFromText( $newName, NS_USER );
-		$oldUserPage->moveTo( $newUserPage, false /* do not check permissions to move */, 'Migrating Uncyclopedia accounts' );
+			// move user page
+			$oldUserPage = Title::newFromText($user->getName(), NS_USER);
+			$newUserPage = Title::newFromText($newName, NS_USER);
+			$oldUserPage->moveTo($newUserPage, false /* do not check permissions to move */, 'Migrating Uncyclopedia accounts');
+		}
 
 		// return the updated user object
 		$user->setName( $newName );
@@ -305,7 +318,7 @@ class UncycloUserMigrator extends Maintenance {
 		$output = wfShellExec( $cmd, $retVal );
 
 		if ( $retVal > 0 ) {
-			$this->error( __METHOD__, [
+			$this->err( __METHOD__, [
 				'cmd' => $cmd,
 				'exception' => new Exception( $output, $retVal )
 			]);
@@ -325,6 +338,13 @@ class UncycloUserMigrator extends Maintenance {
 	 * @return User|false created global account (with a new ID and migrated user settings)
 	 */
 	protected function doCreateGlobalUser( User $user ) {
+		// don't touch uncyclo users in "global users only" mode
+		if ( $this->onlyRenameGlobalUsers ) {
+			return;
+		}
+
+		$this->output( sprintf( "\n\tcreating a shared account for %s...", $user->getName() ) );
+
 		if ( $this->isDryRun ) {
 			return false;
 		}
@@ -429,10 +449,11 @@ class UncycloUserMigrator extends Maintenance {
 		$globalUser = $this->getGlobalUserByName( $user->getName() );
 
 		if ( $globalUser instanceof User ) {
-			$this->output( sprintf(' - conflicts with the global user #%d <%s>', $globalUser->getId(), $globalUser->getEmail() ?: 'MISSING_EMAIL' ) );
+			// HACK: calling getEmail() on global user will trigger a SQL query on uncyclo database
+			$this->output( sprintf( ' - conflicts with the global user #%d <%s>', $globalUser->getId(), $globalUser->mEmail ?: 'MISSING_EMAIL' ) );
 
 			// global and shared DB accounts match
-			if ( $isValidEmail && $globalUser->getEmail() === $user->getEmail() ) {
+			if ( $isValidEmail && $globalUser->mEmail === $user->getEmail() ) {
 				$this->output( ' - emails match' );
 				$this->output( "\n\tmerging accounts..." );
 
@@ -489,8 +510,6 @@ class UncycloUserMigrator extends Maintenance {
 		}
 		else {
 			// there's no accounts conflict - create a shared account and update the uncyclopedia user_id entries
-			$this->output( sprintf( "\n\tcreating a shared account for %s...", $user->getName() ) );
-
 			$this->createdAccounts++;
 
 			$action = 'move to shared DB';
@@ -525,8 +544,11 @@ class UncycloUserMigrator extends Maintenance {
 		global $wgUser;
 		$wgUser = $this->getGlobalUserByName( 'WikiaBot' );
 
+		// read options
 		$this->isDryRun = $this->hasOption( 'dry-run' );
+		$this->onlyRenameGlobalUsers = $this->hasOption( 'only-rename-global-users' );
 
+		// setup the CSV header
 		if ( $this->hasOption( 'csv' ) ) {
 			$this->csv = fopen( $this->getOption( 'csv' ), 'w' );
 
@@ -572,7 +594,7 @@ class UncycloUserMigrator extends Maintenance {
 			catch ( Exception $e ) {
 				$dbw->rollback();
 
-				$this->error( __METHOD__ , [
+				$this->err( __METHOD__ , [
 					'exception' => $e,
 					'user_id' => $user->getId(),
 					'user_name' => $user->getName(),
