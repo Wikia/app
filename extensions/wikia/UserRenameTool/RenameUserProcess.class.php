@@ -514,7 +514,7 @@ class RenameUserProcess {
 
 			$problems = array_merge($this->mErrors, $this->mWarnings);
 
-			$this->addMainLog("fail", RenameUserLogFormatter::fail($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason, $tasks));
+			$this->addMainLog("fail", RenameUserLogFormatter::fail($this->mRequestorName, $this->mOldUsername, $this->mNewUsername, $this->mReason));
 		}
 
 		wfProfileOut(__METHOD__);
