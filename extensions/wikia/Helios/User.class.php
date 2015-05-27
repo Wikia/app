@@ -198,6 +198,8 @@ class User {
 		 * This is a temporary change which will be deleted while implementing SOC-798
 		 */
 		self::clearCookie( self::MERCURY_ACCESS_TOKEN_COOKIE_NAME );
+
+		return true; // So that wfRunHooks evaluates to true.
 	}
 
 	/**
