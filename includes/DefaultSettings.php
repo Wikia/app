@@ -2803,7 +2803,7 @@ $wgLocalInterwiki = false;
 /**
  * Expiry time for cache of interwiki table
  */
-$wgInterwikiExpiry = 10800;
+$wgInterwikiExpiry = 86400;
 
 /** Interwiki caching settings.
 	$wgInterwikiCache specifies path to constant database file

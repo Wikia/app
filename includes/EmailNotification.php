@@ -479,7 +479,7 @@ class EmailNotification {
 		if ( !empty( $controller ) ) {
 			$params = [
 				'targetUser' => $user->getName(),
-				'title' => $this->title->getText(),
+				'pageTitle' => $this->title->getText(),
 				'namespace' => $this->title->getNamespace(),
 				'summary' => $this->summary,
 				'currentRevId' => $this->currentRevId,
