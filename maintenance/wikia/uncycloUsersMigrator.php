@@ -89,7 +89,6 @@ class UncycloUserMigrator extends Maintenance {
 		[ 'table' => 'wikia_user_properties', 'userid_column' => 'wup_user', 'username_column' => null ],
 		[ 'table' => 'video_info', 'userid_column' => 'added_by', 'username_column' => null ],
 		[ 'table' => 'wall_history', 'userid_column' => 'post_user_id', 'username_column' => null ],
-		[ 'table' => 'comments_index', 'userid_column' => 'post_user_id', 'username_column' => null ],
 		[ 'table' => 'page_vote', 'userid_column' => 'user_id', 'username_column' => null ],
 
 		# Template entry
