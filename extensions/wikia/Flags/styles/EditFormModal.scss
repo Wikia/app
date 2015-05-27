@@ -2,15 +2,20 @@
 
 .edit-flags.modal {
 
+	ul { /* Override monobbok styles */
+		list-style: none;
+		margin: 0;
+	}
+
 	li {
 		background-color: $color-unified-module-background;
 	}
 
-	input[type="checkbox"] ~ fieldset {
+	input[type="checkbox"] ~ .params {
 		display: none;
 	}
 
-	input[type="checkbox"]:checked ~ fieldset {
+	input[type="checkbox"]:checked ~ .params {
 		display: block;
 	}
 
@@ -32,8 +37,9 @@
 	}
 
 	.params {
-		margin-top: 10px;
-		padding-left: 24px;
+		border: 0; /* Override monobbok styles */
+		margin: 10px 0 0 0;
+		padding: 0 0 0 24px;
 	}
 
 	.param {

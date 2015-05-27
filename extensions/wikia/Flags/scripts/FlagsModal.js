@@ -1,4 +1,4 @@
-require(['jquery'], function ($) {
+require(['jquery', 'wikia.loader'], function ($, loader) {
 	'use strict';
 
 	/* Modal component configuration */
@@ -47,17 +47,19 @@ require(['jquery'], function ($) {
 	 */
 	function showModal(event) {
 		event.preventDefault();
-		Wikia.getMultiTypePackage({
-			templates: [{
-				controller: 'Flags',
-				method: 'editForm',
-				params: {
-					'page_id': window.wgArticleId
-				}
-			}],
-			styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
-			callback: handlePackage
-		});
+		loader({
+			type: loader.MULTI,
+			resources: {
+				templates: [{
+					controller: 'Flags',
+					method: 'editForm',
+					params: {
+						'page_id': window.wgArticleId
+					}
+				}],
+				styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
+			}
+		}).done(handlePackage);
 	}
 
 	/**
