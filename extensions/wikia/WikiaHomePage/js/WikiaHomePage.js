@@ -543,7 +543,7 @@ WikiaHomePageRemix.prototype = {
 		if( this.heroImage !== null ) {
 			img = $(this.heroImage)
 				.attr('alt', imgData.title)
-				.attr('witdh', this.SPONSOR_HERO_IMAGE_WIDTH)
+				.attr('width', this.SPONSOR_HERO_IMAGE_WIDTH)
 				.attr('height', this.SPONSOR_HERO_IMAGE_HEIGHT);
 
 			container = $('<div />').attr('id', this.SPONSOR_HERO_IMG_CONTAINER_ID);
