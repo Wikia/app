@@ -41,6 +41,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool|mixed
 	 */
 	public function getFlagTypesForWikia( $wikiId ) {
+		$this->debug($wikiId);
 		$db = $this->getDatabaseForRead();
 
 		$flagTypesForWikia = ( new \WikiaSQL() )
