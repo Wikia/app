@@ -57,7 +57,6 @@ var WikiaHomePageRemix = function () {
 	this.remixesWhenShowCollection = [0, 3, 5];
 	this.heroImage = null;
 
-
 	this.SPONSOR_IMAGE_WIDTH = 330;
 	this.SPONSOR_IMAGE_HEIGHT = 210;
 	this.SPONSOR_HERO_IMAGE_WIDTH = 1010;
