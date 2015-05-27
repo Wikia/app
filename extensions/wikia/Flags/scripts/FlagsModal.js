@@ -1,4 +1,4 @@
-require(['jquery', 'mw'], function ($, mw) {
+require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	'use strict';
 
 	/* Modal component configuration */
@@ -47,17 +47,19 @@ require(['jquery', 'mw'], function ($, mw) {
 	 */
 	function showModal(event) {
 		event.preventDefault();
-		Wikia.getMultiTypePackage({
-			templates: [{
-				controller: 'Flags',
-				method: 'editForm',
-				params: {
-					'page_id': window.wgArticleId
-				}
-			}],
-			styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
-			callback: handlePackage
-		});
+		loader({
+			type: loader.MULTI,
+			resources: {
+				templates: [{
+					controller: 'Flags',
+					method: 'editForm',
+					params: {
+						'page_id': mw.config.get('wgArticleId')
+					}
+				}],
+				styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
+			}
+		}).done(handlePackage);
 	}
 
 	/**
@@ -67,9 +69,7 @@ require(['jquery', 'mw'], function ($, mw) {
 	 */
 	function handlePackage(pkg) {
 		/* Load styles */
-		require(['wikia.loader'], function (loader) {
-			loader.processStyle(pkg.styles);
-		});
+		loader.processStyle(pkg.styles);
 
 		/* Add content to modal */
 		modalConfig.vars.content = pkg.templates.Flags_editForm;
