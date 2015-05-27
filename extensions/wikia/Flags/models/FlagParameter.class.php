@@ -21,9 +21,7 @@ class FlagParameter extends FlagsBaseModel {
 	 * @param array $params `paramName` => `paramValue`
 	 * @return bool
 	 */
-	public function createParametersForFlag( $flagId, $flagTypeId, $params ) {
-		$db = $this->getDatabaseForWrite();
-
+	public function createParametersForFlag( \DatabaseBase $db, $flagId, $flagTypeId, $params ) {
 		$values = [];
 		foreach ( $params as $paramName => $paramValue ) {
 			$values[] = [ $flagId, $flagTypeId, $paramName, $paramValue ];
@@ -41,9 +39,7 @@ class FlagParameter extends FlagsBaseModel {
 
 		$status = $db->affectedRows() > 0;
 
-		$db->commit();
-
-		return $status;
+		return $this->status;
 	}
 
 	/**

@@ -57,7 +57,6 @@ class FlagsController extends WikiaController {
 		}
 
 		$flags = $this->requestGetFlagsForPageForEdit( $pageId );
-
 		$this->setVal( 'editToken', $this->wg->User->getEditToken() );
 		$this->setVal( 'flags', $flags );
 		$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
@@ -82,6 +81,7 @@ class FlagsController extends WikiaController {
 	 * @return null|bool
 	 */
 	public function postFlagsEditForm() {
+		( new \Flags\Models\FlagsBaseModel() )->debug( $this->request->getParams() );
 		$this->skipRendering();
 		$this->params = $this->request->getParams();
 		if ( !$this->isValidPostRequest() || !isset( $this->params['page_id'] ) ) {
@@ -164,6 +164,16 @@ class FlagsController extends WikiaController {
 		}
 	}
 
+	private function processApiResponse( WikiaResponse $response ) {
+		if ( $response->hasException() ) {
+
+		} elseif ( $response->getVal( FlagsApiController::FLAGS_API_RESPONSE_STATUS ) ) {
+			return $response->getVal( FlagsApiController::FLAGS_API_RESPONSE_DATA );
+		} else {
+			$response->getVal( FlagsApiController::FLAGS_API_RESPONSE_STATUS );
+		}
+	}
+
 	/**
 	 * Sends a request to the FlagsApiController to get data on flags for the given page.
 	 * @param int $pageId
@@ -202,14 +212,16 @@ class FlagsController extends WikiaController {
 	 * @see FlagsApiController::addFlagsToPage() for a structure of the $flags array
 	 */
 	private function requestAddFlagsToPage( $editToken, $pageId, $flags ) {
-		return $this->sendRequest( 'FlagsApiController',
+		$response = $this->sendRequest( 'FlagsApiController',
 			'addFlagsToPage',
 			[
 				'edit_token' => $editToken,
 				'page_id' => $pageId,
 				'flags' => $flags,
 			]
-		)->getData();
+		);
+
+		var_dump( $response ); die;
 	}
 
 	/**

@@ -51,6 +51,12 @@ $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
 $wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
 
 /**
+ * Exceptions
+ */
+$wgAutoloadClasses['Flags\Exceptions\FlagsException'] = __DIR__ . '/FlagsExceptions.php';
+$wgAutoloadClasses['Flags\Exceptions\InvalidRequest'] = __DIR__ . '/FlagsExceptions.php';
+
+/**
  * Hooks
  */
 $wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';

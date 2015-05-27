@@ -9,11 +9,16 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
+use Flags\Exceptions;
 use Flags\FlagsCache;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 
 class FlagsApiController extends WikiaApiController {
+	const FLAGS_API_RESPONSE_STATUS = 'status';
+	const FLAGS_API_RESPONSE_DATA = 'data';
+	const FLAGS_API_RESPONSE_DETAILS = 'details';
+
 	private
 		$cache,
 		$params,
@@ -28,7 +33,7 @@ class FlagsApiController extends WikiaApiController {
 	 * with an intent of rendering them. To get all types of flags:
 	 * @see getFlagsForPageForEdit()
 	 *
-	 * @requestParam int wiki_id
+	 * @requestParam int wiki_id (optional) You can overwrite a default wiki_id with it
 	 * @requestParam int page_id
 	 * @response Array A list of flags with flag_type_id values as indexes.
 	 *  One item contains the following fields:
@@ -48,15 +53,16 @@ class FlagsApiController extends WikiaApiController {
 	 *		]
 	 */
 	public function getFlagsForPage() {
-		$this->getRequestParams();
+		try {
+			$this->getRequestParams();
+			if ( !isset( $this->params['page_id'] ) ) throw new MissingParameterApiException( 'page_id' );
 
-		if ( !isset( $this->params['page_id'] ) ) {
-			return null;
+			$flagsForPage = $this->getFlagsForPageRawData( $this->params['wiki_id'], $this->params['page_id'] );
+
+			$this->makeSuccessResponse( $flagsForPage );
+		} catch ( Exception $e ) {
+			$this->response->setException( $e );
 		}
-
-		$flagsForPage = $this->getFlagsForPageRawData( $this->params['wiki_id'], $this->params['page_id'] );
-
-		$this->setResponseData( $flagsForPage );
 	}
 
 	/**
@@ -67,7 +73,7 @@ class FlagsApiController extends WikiaApiController {
 	 * To retrieve only types with instances on the given page:
 	 * @see getFlagsForPage()
 	 *
-	 * @requestParam int wiki_id
+	 * @requestParam int wiki_id (optional) You can overwrite a default wiki_id with it
 	 * @requestParam int page_id
 	 * @response Array A list of flags with flag_type_id values as indexes.
 	 *  One item contains the following fields:
@@ -90,15 +96,16 @@ class FlagsApiController extends WikiaApiController {
 	 *		]
 	 */
 	public function getFlagsForPageForEdit() {
-		$this->getRequestParams();
+		try {
+			$this->getRequestParams();
+			if ( !isset( $this->params['page_id'] ) ) throw new MissingParameterApiException( 'page_id' );
+			$allFlagTypes = $this->getAllFlagTypes( $this->params['wiki_id'], $this->params['page_id'] );
+			( new Flags\Models\FlagsBaseModel() )->debug( $allFlagTypes );
 
-		if ( !isset( $this->params['page_id'] ) ) {
-			return null;
+			$this->setResponseData( $allFlagTypes );
+		} catch ( Exception $e ) {
+			$this->response->setException( $e );
 		}
-
-		$allFlagTypes = $this->getAllFlagTypes( $this->params['wiki_id'], $this->params['page_id'] );
-
-		$this->setResponseData( $allFlagTypes );
 	}
 
 	/**
@@ -119,17 +126,19 @@ class FlagsApiController extends WikiaApiController {
 	 * ]
 	 */
 	public function addFlagsToPage() {
-		# @TODO: CE-1849 Proper error handling
-		if ( !$this->processRequest() ) {
-			return false;
-		}
-		$flagModel = new Flag();
+		try {
+			$this->processRequest();
 
-		if ( $flagModel->verifyParamsForAdd( $this->params ) ) {
-			$this->status = $flagModel->addFlagsToPage( $this->params );
-		}
+			$flagModel = new Flag();
 
-		$this->setVal( 'status', $this->status );
+			if ( $flagModel->verifyParamsForAdd( $this->params ) ) {
+				$this->status = $flagModel->addFlagsToPage( $this->params );
+			}
+
+			$this->setVal( 'status', $this->status );
+		} catch ( Exception $e ) {
+			$this->response->setException( $e );
+		}
 	}
 
 	/**
@@ -140,17 +149,16 @@ class FlagsApiController extends WikiaApiController {
 	 * @requestParam array flags_ids An array of IDs of flags to remove
 	 */
 	public function removeFlagsFromPage() {
-		# @TODO: CE-1849 Proper error handling
-		if ( !$this->processRequest() ) {
-			return false;
-		}
-		$flagModel = new Flag();
+		try {
+			$this->processRequest();
 
-		if ( $flagModel->verifyParamsForRemove( $this->params ) ) {
-			$this->status = $flagModel->removeFlagsFromPage( $this->params['flags'] );
-		}
+			$flagModel = new Flag();
+			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags_ids'] );
 
-		$this->setVal( 'status', $this->status );
+			$this->makeSuccessResponse( $modelResponse );
+		} catch ( Exception $e ) {
+			$this->response->setException( $e );
+		}
 	}
 
 	/**
@@ -158,15 +166,17 @@ class FlagsApiController extends WikiaApiController {
 	 * @return bool
 	 */
 	public function updateFlagsForPage() {
-		# @TODO: CE-1849 Proper error handling
-		if ( !$this->processRequest() ) {
-			return false;
+		try {
+			$this->processRequest();
+
+			$flagModel = new Flag();
+			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
+
+			$this->makeSuccessResponse( $modelResponse );
+		} catch ( Exception $e ) {
+			$this->response->setException( $e );
+			return;
 		}
-		$flagModel = new Flag();
-
-		$this->status = $flagModel->updateFlagsForPage( $this->params['flags'] );
-
-		$this->setVal( 'status', $this->status );
 	}
 
 	/**
@@ -188,20 +198,16 @@ class FlagsApiController extends WikiaApiController {
 	 * 		It's used for rendering inputs in the "Add a flag" form.
 	 */
 	public function addFlagType() {
-		# @TODO: CE-1849 Proper error handling
-		if ( !$this->processRequest() ) {
-			return false;
-		}
-		$flagTypeId = null;
-		$flagTypeModel = new FlagType();
+		try {
+			$this->processRequest();
 
-		if ( $flagTypeModel->verifyParamsForAdd( $this->params ) ) {
-			$flagTypeId = $flagTypeModel->addFlagType( $this->params );
-			$this->status = (bool) $flagTypeId;
-		}
+			$flagTypeModel = new FlagType();
+			$modelResponse = $flagTypeModel->addFlagType( $this->params );
 
-		$this->setVal( 'flag_type_id', $flagTypeId );
-		$this->setVal( 'status', $this->status );
+			$this->makeSuccessResponse( $modelResponse );
+		} catch ( Exception $e ) {
+			$this->response->setException( $e );
+		}
 	}
 
 	/**
@@ -215,17 +221,16 @@ class FlagsApiController extends WikiaApiController {
 	 * of flags with ALL of their parameters per the database's configuration.
 	 */
 	public function removeFlagType() {
-		# @TODO: CE-1849 Proper error handling
-		if ( !$this->processRequest() ) {
-			return false;
-		}
-		$flagTypeModel = new FlagType();
+		try {
+			$this->processRequest();
 
-		if ( $flagTypeModel->verifyParamsForRemove( $this->params ) ) {
-			$this->status = $flagTypeModel->removeFlagType( $this->params );
-		}
+			$flagTypeModel = new FlagType();
+			$modelResponse = $flagTypeModel->removeFlagType( $this->params );
 
-		$this->setVal( 'status', $this->status );
+			$this->makeSuccessResponse( $modelResponse );
+		} catch( Exception $e ) {
+			$this->response->setException( $e );
+		}
 	}
 
 	/**
@@ -260,18 +265,24 @@ class FlagsApiController extends WikiaApiController {
 	 * To prevent CSRF attacks it checks if a request is a POST one
 	 * and if a sent token matches the user's one.
 	 * Calls getRequestParams if the request is valid.
-	 * @return bool
+	 * @throws BadRequestApiException
+	 * @throws MissingParameterApiException
 	 */
 	private function processRequest() {
-		if ( !$this->request->isInternal()
-			&& ( !$this->request->wasPosted() || $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) ) )
-		) {
-			$this->response->setException( new \Exception( 'Invalid request' ) );
-			return false;
+		if ( !$this->request->isInternal() ) {
+			if ( !$this->request->wasPosted() ) throw new BadRequestApiException;
+			if ( !$this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) ) ) {
+				throw new MissingParameterApiException( 'edit_token' );
+			}
 		}
-
 		$this->getRequestParams();
-		return true;
+	}
+
+	private function makeSuccessResponse( $data ) {
+		$this->response->setValues( [
+			self::FLAGS_API_RESPONSE_STATUS => true,
+			self::FLAGS_API_RESPONSE_DATA => $data,
+		] );
 	}
 
 	/**
