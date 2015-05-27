@@ -21,7 +21,7 @@ $wgExtensionCredits['other'][] = [
 	'version'			=> '1.0',
 	'author'			=> 'Adam Karmiński',
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Flags',
-	'descriptionmsg'    => 'flags-desc'
+	'descriptionmsg'    => 'flags-desc',
 ];
 
 /**
