@@ -5,7 +5,9 @@ class SitemapPageModel extends WikiaModel {
 	const SITEMAP_PAGE = 'Sitemap';
 	const CACHE_VERSION = '1';
 	const CACHE_TTL = 86400;
-	const WIKI_LIMIT_PER_PAGE = 100;
+	const DEFAULT_LIMIT_PER_PAGE = 100;
+	const MAX_LEVEL = 3;
+	const MIN_LEVEL = 1;
 	const VERTICAL_UNKNOWN = 'Unknown';
 
 	protected static $verticalNames = [
@@ -19,19 +21,28 @@ class SitemapPageModel extends WikiaModel {
 		WikiFactoryHub::VERTICAL_ID_MOVIES => 'Movies',
 	];
 
-	protected $maxDate;	// maximum date
-
-	public function __construct() {
-		parent::__construct();
-		$this->maxDate = date( 'Ymd' );
+	/**
+	 * Get limit for each list (top level)
+	 * @param $level
+	 * @return int
+	 */
+	public function getLimitPerList( $level ) {
+		$base = $this->getLimitPerPage();
+		return pow( $base, self::MAX_LEVEL - $level );
 	}
 
 	/**
-	 * Get maximum date
-	 * @return string
+	 * Get limit per page
+	 * @return int
 	 */
-	public function getMaxDate() {
-		return $this->maxDate;
+	public function getLimitPerPage() {
+		$total = (int) $this->getTotalWikis();
+		$base = self::DEFAULT_LIMIT_PER_PAGE;
+		while ( pow( $base, self::MAX_LEVEL ) < $total ) {
+			$base += 50;
+		}
+
+		return $base;
 	}
 
 	/**
@@ -48,39 +59,133 @@ class SitemapPageModel extends WikiaModel {
 	}
 
 	/**
-	 * Get list of wikis for the page
-	 * @param int $page
+	 * Get list of wikis ordered by title (for detail page)
+	 * @param string $from - from wiki (dbname)
+	 * @param string $to - to wiki (dbname)
 	 * @return array
 	 */
-	public function getWikis( $page ) {
+	public function getWikiList( $from, $to ) {
+		$limit = $this->getLimitPerPage();
 		$db = $this->getSharedDB();
-		$memcKey = $this->getMemcKeyWikis( $page );
+		$memcKey = $this->getMemcKeyWikiList( $from, $to );
 		$query = ( new WikiaSQL() )->cacheGlobal( self::CACHE_TTL, $memcKey )
 			->SELECT()
 				->FIELD( 'city_list.city_id' )
 				->FIELD( 'trim(city_list.city_title) as title' )
 				->FIELD( 'city_list.city_url' )
-				->FIELD( 'city_visualization.city_lang_code' )
-				->FIELD( 'city_visualization.city_vertical' )
+				->FIELD( 'city_list.city_lang' )
+				->FIELD( 'city_list.city_vertical' )
 				->FIELD( 'trim(city_visualization.city_description) as description' )
 			->FROM( 'city_list' )
 			->LEFT_JOIN( 'city_visualization' )->ON( 'city_list.city_id', 'city_visualization.city_id' )
 			->WHERE( 'city_list.city_public' )->EQUAL_TO( 1 )
-				->AND_( 'city_list.city_created' )->LESS_THAN( $this->getMaxDate() )
+				->AND_( 'city_list.city_created' )->LESS_THAN( 'curdate()' )
 			->ORDER_BY( 'title' )
-			->LIMIT( self::WIKI_LIMIT_PER_PAGE );
+			->LIMIT( $limit );
 
-		if ( $page > 1 ) {
-			$query->OFFSET( ($page - 1) * self::WIKI_LIMIT_PER_PAGE );
+		if ( !empty( $from ) ) {
+			$query->AND_( 'city_list.city_dbname' )->GREATER_THAN_OR_EQUAL( $from );
+		}
+
+		if ( !empty( $to ) ) {
+			$query->AND_( 'city_list.city_dbname' )->LESS_THAN_OR_EQUAL( $to );
 		}
 
 		$wikis = $query->runLoop( $db, function( &$wikis, $row ) {
-			$wikis[$row->city_id] = [
+			$wikis[] = [
 				'title'       => $row->title,
 				'url'         => $row->city_url,
-				'language'    => strtoupper( $row->city_lang_code ),
+				'language'    => strtoupper( $row->city_lang ),
 				'vertical'    => $this->getVerticalName( $row->city_vertical ),
 				'description' => empty( $row->description ) ? '' : $row->description,
+			];
+		});
+
+		return empty( $wikis ) ? [] : $wikis;
+	}
+
+	/**
+	 * Get list of wikis ordered by dbname (for top level page)
+	 * @param int $level - page level
+	 * @param string $from - from wiki (dbname)
+	 * @param string $to - to wiki (dbname)
+	 * @return array
+	 */
+	public function getWikiListTopLevel( $level, $from, $to ) {
+		$memcKey = $this->getMemcKeyWikiListTopLevel( $level, $from, $to );
+		$wikis = $this->wg->Memc->get( $memcKey );
+		if ( !is_array( $wikis ) ) {
+			$where = [
+				'mainFrom'  => $from,
+				'mainTo'    => $to,
+				'chunkFrom' => '',
+			];
+			$wikis = $this->getWikiTitles( $where, 'city_dbname ASC', 1 );
+			if ( !empty( $wikis ) ) {
+				$done = false;
+				$offset = $this->getLimitPerList( $level ) - 1;
+				while ( !$done ) {
+					$list = $this->getWikiTitles( $where, 'city_dbname ASC', 2, $offset );
+					if ( empty( $list ) ) {
+						$done = true;
+						$last = $this->getWikiTitles( $where, 'city_dbname DESC', 1 );
+						if ( !empty( $last ) && !array_key_exists( key( $last ), $wikis ) ) {
+							$wikis += $last;
+						}
+					} else {
+						$wikis += $list;
+						end( $list );
+						$where['chunkFrom'] = key( $list );
+					}
+				}
+			}
+
+			$this->wg->Memc->set( $memcKey, $wikis, self::CACHE_TTL );
+		}
+
+		return $wikis;
+	}
+
+	/**
+	 * Get list of wiki titles
+	 * @param array $where - query conditions. Format: [ 'mainFrom' => '', 'mainTo' => '', 'chunkFrom' => '' ]
+	 * @param string $order
+	 * @param int $limit
+	 * @param int|null $offset
+	 * @return array
+	 */
+	public function getWikiTitles( $where, $order, $limit, $offset = null ) {
+		$db = $this->getSharedDB();
+		$query = ( new WikiaSQL() )->cacheGlobal( 5 )
+			->SELECT()
+			->FIELD( 'city_dbname' )
+			->FIELD( 'trim(city_title) as title' )
+			->FROM( 'city_list' )
+			->WHERE( 'city_public' )->EQUAL_TO( 1 )
+				->AND_( 'city_created' )->LESS_THAN( 'curdate()' )
+			->ORDER_BY( $order )
+			->LIMIT( $limit );
+
+		if ( !empty( $where['mainFrom'] ) ) {
+			$query->AND_( 'city_dbname' )->GREATER_THAN_OR_EQUAL( $where['mainFrom'] );
+		}
+
+		if ( !empty( $where['mainTo'] ) ) {
+			$query->AND_( 'city_dbname' )->LESS_THAN_OR_EQUAL( $where['mainTo'] );
+		}
+
+		if ( !empty( $where['chunkFrom'] ) ) {
+			$query->AND_( 'city_dbname' )->GREATER_THAN_OR_EQUAL( $where['chunkFrom'] );
+		}
+
+		if ( !empty( $offset ) ) {
+			$query->OFFSET( $offset );
+		}
+
+		$wikis = $query->runLoop( $db, function( &$wikis, $row ) {
+			$wikis[$row->city_dbname] = [
+				'title'       => $row->title,
+				'dbname'      => $row->city_dbname,
 			];
 		});
 
@@ -97,9 +202,8 @@ class SitemapPageModel extends WikiaModel {
 		$total = ( new WikiaSQL() )->cacheGlobal( self::CACHE_TTL, $memcKey )
 			->SELECT( 'count(*) total' )
 			->FROM( 'city_list' )
-			->LEFT_JOIN( 'city_visualization' )->ON( 'city_list.city_id', 'city_visualization.city_id' )
-			->WHERE( 'city_list.city_public' )->EQUAL_TO( 1 )
-				->AND_( 'city_list.city_created' )->LESS_THAN( $this->getMaxDate() )
+			->WHERE( 'city_public' )->EQUAL_TO( 1 )
+				->AND_( 'city_created' )->LESS_THAN( 'curdate()' )
 			->run( $db, function ( $result ) {
 				$row = $result->fetchObject( $result );
 				return empty( $row ) ? 0 : $row->total;
@@ -109,30 +213,24 @@ class SitemapPageModel extends WikiaModel {
 	}
 
 	/**
-	 * Get Pagination (HTML)
-	 * @param int $page
-	 * @return string $pagination
+	 * Get memcache key for getWikiListTopLevel
+	 * @param int $level
+	 * @param string $from - from wiki (dbname)
+	 * @param string $to - to wiki (dbname)
+	 * @return string
 	 */
-	public function getPagination( $page ) {
-		$pagination = '';
-		$totalWikis = $this->getTotalWikis();
-		if ( $totalWikis > self::WIKI_LIMIT_PER_PAGE ) {
-			$pages = Paginator::newFromArray( array_fill( 0, $totalWikis, '' ), self::WIKI_LIMIT_PER_PAGE );
-			$pages->setActivePage( $page - 1 );
-			$pagination = $pages->getBarHTML( $this->wg->Title->getLocalURL( 'page=%s' ) );
-		}
-
-		return $pagination;
+	protected function getMemcKeyWikiListTopLevel( $level, $from, $to ) {
+		return wfSharedMemcKey( 'sitemap_page', 'wiki_list_level', self::CACHE_VERSION, $level, $from, $to );
 	}
 
 	/**
-	 * Get memcache key for getWikis
-	 * @param int $page
+	 * Get memcache key for getWikiList
+	 * @param string $from - from wiki (dbname)
+	 * @param string $to - to wiki (dbname)
 	 * @return string
 	 */
-	protected function getMemcKeyWikis( $page ) {
-		$date = $this->getMaxDate();
-		return wfSharedMemcKey( 'sitemap_page', 'wikis', self::CACHE_VERSION, $date, $page );
+	protected function getMemcKeyWikiList( $from, $to ) {
+		return wfSharedMemcKey( 'sitemap_page', 'wiki_list', self::CACHE_VERSION, $from, $to );
 	}
 
 	/**
@@ -140,8 +238,7 @@ class SitemapPageModel extends WikiaModel {
 	 * @return string
 	 */
 	protected function getMemcKeyTotalWikis() {
-		$date = $this->getMaxDate();
-		return wfSharedMemcKey( 'sitemap_page', 'total_wikis', self::CACHE_VERSION, $date );
+		return wfSharedMemcKey( 'sitemap_page', 'total_wikis', self::CACHE_VERSION );
 	}
 
 	/**
