@@ -370,7 +370,7 @@ $messages['lb'] = array(
 	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -609,7 +609,7 @@ $messages['tl'] = array(
 	'imgplc-notinhistory' => 'Hindi ka makapagdaragdag ng larawan habang nasa modalidad na pangkasaysayan.',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(

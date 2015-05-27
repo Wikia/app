@@ -3,9 +3,7 @@
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
-
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
-
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -241,6 +239,7 @@ class MercuryApi {
 
 	/**
 	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
+	 *
 	 * @param Title $title Title object
 	 * @return array|null Article Ad context
 	 */
@@ -253,30 +252,79 @@ class MercuryApi {
 		return null;
 	}
 
-	public function processCuratedContent( $data ) {
-		if ( empty( $data ) ) {
-			return false;
+	/**
+	 * CuratedContent API returns data in a different format than we need.
+	 * Let's clean it up!
+	 *
+	 * @param $rawData
+	 * @return array|null
+	 */
+	public function processCuratedContent( $rawData ) {
+		if ( empty( $rawData ) ) {
+			return null;
 		}
 
-		$process = false;
+		$data = [];
+		$sections = $this->getCuratedContentSections( $rawData );
+		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
+		$featured = $this->getCuratedContentItems( $rawData[ 'featured' ] );
 
-		if ( !empty( $data[ 'featured' ] ) ) {
-			$process = 'featured';
-		} else if ( !empty( $data[ 'items' ] ) ) {
-			$process = 'items';
+		if ( !empty( $sections ) || !empty( $items ) ) {
+			$data[ 'items' ] = [];
 		}
 
-		if ( $process ) {
-			$items = [];
-			foreach ( $data[ $process ] as $item ) {
-				$processedItem = $this->processCuratedContentItem( $item );
-				if ( !empty( $processedItem ) ) {
-					$items[] = $processedItem;
+		if ( !empty( $sections ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $sections );
+		}
+
+		if ( !empty( $items ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $items );
+		}
+
+		if ( !empty( $featured ) ) {
+			$data[ 'featured' ] = $featured;
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Add `section` type to all sections from CuratedContent data
+	 *
+	 * @param $data
+	 * @return array
+	 */
+	private function getCuratedContentSections( $data ) {
+		$sections = [];
+		if ( !empty( $data[ 'sections' ] ) ) {
+			foreach ( $data[ 'sections' ] as $section ) {
+				$section[ 'type' ] = 'section';
+				$sections[] = $section;
+			}
+		}
+		return $sections;
+	}
+
+	/**
+	 * Process CuratedContent items and sanitize when the item is an article
+	 *
+	 * @param $items
+	 * @return array
+	 */
+	private function getCuratedContentItems( $items ) {
+		$data = [];
+		if ( !empty( $items ) ) {
+			foreach ( $items as $item ) {
+				if ( $item[ 'type' ] === 'article' ) {
+					$processedItem = $this->processCuratedContentArticle($item);
+					if ( !empty( $processedItem ) ) {
+						$data[] = $processedItem;
+					}
+				} else {
+					$data[] = $item;
 				}
 			}
-			$data[ $process ] = $items;
 		}
-
 		return $data;
 	}
 
@@ -290,14 +338,58 @@ class MercuryApi {
 	 * @param $item
 	 * @return mixed
 	 */
-	private function processCuratedContentItem( $item ) {
+	private function processCuratedContentArticle( $item ) {
 		if ( !empty( $item[ 'article_id' ] ) ) {
 			$title = Title::newFromID( $item[ 'article_id' ] );
+
 			if ( !empty( $title ) ) {
 				$item[ 'article_local_url' ] = $title->getLocalURL();
 				return $item;
 			}
 		}
 		return null;
+	}
+
+	public function processTrendingData( $data, $itemArrayName, $paramsToInclude = [] ) {
+		if ( !isset( $data[ $itemArrayName ] ) || !is_array( $data[ $itemArrayName ] ) ) {
+			return null;
+		}
+
+		$items = [];
+
+		foreach ( $data[ $itemArrayName ] as $item ) {
+			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
+
+			if ( !empty( $processedItem ) ) {
+				$items[] = $processedItem;
+			}
+		}
+
+		return $items;
+	}
+
+	/**
+	 * @desc To save some bandwidth, the unnecessary params are stripped
+	 *
+	 * @param $item array
+	 * @param $paramsToInclude array: leave empty to return all params
+	 * @return array
+	 */
+	private function processTrendingDataItem( $item, $paramsToInclude = [] ) {
+		if ( empty( $paramsToInclude ) ) {
+			return $item;
+		}
+
+		$processedItem = [];
+
+		if ( !empty( $item ) && is_array( $item ) && is_array( $paramsToInclude ) ) {
+			foreach ( $paramsToInclude as $param) {
+				if ( !empty( $item[ $param ] ) ) {
+					$processedItem[ $param ] = $item[ $param ];
+				}
+			}
+		}
+
+		return $processedItem;
 	}
 }

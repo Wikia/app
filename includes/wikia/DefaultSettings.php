@@ -1255,6 +1255,13 @@ $wgEnableAmazonMatch = true;
 $wgAmazonMatchCountries = null;
 
 /**
+ * @name $wgAmazonMatchCountriesMobile
+ * Enables AmazonMatch on mobile in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAmazonMatchCountriesMobile = null;
+
+/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
@@ -1726,3 +1733,10 @@ $wgEnablePageShareExt = true;
  * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
  */
 $wgPaidAssetDropConfig = false;
+
+/**
+ * @name $wgAdDriverIncontentPlayerSlotCountries
+ * Enables INCONTENT_PLAYER slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentPlayerSlotCountries = null;

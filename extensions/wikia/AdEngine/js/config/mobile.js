@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [openX];
 		}
 
-		if (!context.opts.enableInvisibleHighImpactSlot && slotName === 'INVISIBLE_HIGH_IMPACT') {
+		if (!context.slots.invisibleHighImpact && slotName === 'INVISIBLE_HIGH_IMPACT') {
 			return [];
 		}
 
