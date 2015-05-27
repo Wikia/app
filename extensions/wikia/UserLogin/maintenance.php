@@ -1,7 +1,7 @@
 <?php
 
 	/**
-	 * Maintenance script to 
+	 * Maintenance script to
 	 *    - remove old not confirmed users (user's registered date > 30 days)
 	 *    - run reminder process: get list of wikis and send reminder for each wiki
 	 *    - send reminder (user's registered date = 7 days) for current wiki ONLY
@@ -12,7 +12,7 @@
 
 	/**
 	 * Get list of wikis for sending reminder (user's registered date = 7 days)
-	 * 
+	 *
 	 * @return array $wikis
 	 */
 	function getWikis() {
@@ -26,11 +26,11 @@
 		$result = $db->select(
 			'user_properties',
 			array( 'distinct up_value' ),
-			array( 'up_property = "'. UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME .'"'),
+			array( 'up_property = "' . UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME . '"' ),
 			__METHOD__
 		);
 
-		while ( $row = $db->fetchObject($result) ) {
+		while ( $row = $db->fetchObject( $result ) ) {
 			$wikis[] = $row->up_value;
 		}
 		$db->freeResult( $result );
@@ -48,7 +48,7 @@
 	 * - users created on current wiki ($wgCityId)
 	 * - users signed up 7 days ago
 	 * - users with NotConfirmedSignup property set to 1
-	 * 
+	 *
 	 * @return $recepients Array of Users
 	 */
 	function getRecipientsForCurrentWiki() {
@@ -58,9 +58,9 @@
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$res = $dbr->select(
-			array( '`user`', 'user_properties'),
+			array( '`user`', 'user_properties' ),
 			array( 'user_id' ),
-			array(/* WHERE */
+			array( /* WHERE */
 				'user_email_authenticated' => NULL,
 				'up_property' => UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME,
 				'up_value' => $wgCityId,
@@ -94,7 +94,7 @@
 	 * - user email not authenticated
 	 * - NotConfirmedSignup property set to 1
 	 * - users signed up > 30 days ago
-	 * 
+	 *
 	 * @return $oldUnconfirmed Array of Users
 	 */
 	function getOldUnconfirmedUsers() {
@@ -104,9 +104,9 @@
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$res = $dbr->select(
-			array( '`user`', 'user_properties'),//added `` to use central DB instead of cluster DB
+			array( '`user`', 'user_properties' ),// added `` to use central DB instead of cluster DB
 			array( 'user_id' ),
-			array(/* WHERE */
+			array( /* WHERE */
 				'user_email_authenticated' => NULL,
 				'up_property' => UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME,
 				'up_value' => 1,
@@ -133,7 +133,7 @@
 
 	/**
 	 * Remove users that weren't confirmed for 30days after signup
-	 * 
+	 *
 	 */
 	function removeOldUnconfirmed() {
 		global $wgExternalSharedDB;
@@ -148,7 +148,7 @@
 
 			// remove old unconfirmed users
 			$cnt = 0;
-			foreach( $users as $user ) {
+			foreach ( $users as $user ) {
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$userId = $user->getId();
 				$username = $user->getName();
@@ -190,22 +190,22 @@
 		$users = getRecipientsForCurrentWiki();
 
 		$cnt = 0;
-		$userLoginHelper = (new UserLoginHelper);
+		$userLoginHelper = ( new UserLoginHelper );
 		foreach ( $users as $user ) {
 
 			// send reminder email
 			$result = $userLoginHelper->sendConfirmationReminderEmail( $user );
 
-			if( !$result->isGood() ) {
-				echo "Error: Cannot send reminder to user (id=".$user->getId().", email=".$user->getEmail()."): ".$result->getMessage()."\n";
+			if ( !$result->isGood() ) {
+				echo "Error: Cannot send reminder to user (id=" . $user->getId() . ", email=" . $user->getEmail() . "): " . $result->getMessage() . "\n";
 			} else {
 				$cnt++;
-				echo "Sent reminder to user (id=".$user->getId().", email=".$user->getEmail().").\n";
+				echo "Sent reminder to user (id=" . $user->getId() . ", email=" . $user->getEmail() . ").\n";
 			}
 
 		}
 
-		echo "WikiId $wgCityId: ". sizeof( $users ) ." of total $cnt confirmation reminder emails sent.\n";
+		echo "WikiId $wgCityId: " . sizeof( $users ) . " of total $cnt confirmation reminder emails sent.\n";
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -216,7 +216,7 @@
 
 	require_once( "commandLine.inc" );
 
-	if ( isset($options['help']) || !(isset($options['cleanup']) || isset($options['reminder']) || isset($options['wiki_reminder'])) ) {
+	if ( isset( $options['help'] ) || !( isset( $options['cleanup'] ) || isset( $options['reminder'] ) || isset( $options['wiki_reminder'] ) ) ) {
 		die( "Usage: php maintenance.php [--cleanup] [--reminder] [--wiki_reminder] [--help]
 		--cleanup			remove older temp user (user's registered date is older than 30 days)
 		--reminder			send reminder (user's registered date = 7 days ago) for ALL wikis
@@ -224,35 +224,35 @@
 		--help				you are reading it right now\n\n" );
 	}
 
-	if ( empty($wgCityId) ) {
+	if ( empty( $wgCityId ) ) {
 		die( "Error: Invalid wiki id." );
 	}
 
 	// remove old temp user
-	if ( isset($options['cleanup']) ) {
+	if ( isset( $options['cleanup'] ) ) {
 		removeOldUnconfirmed();
 	}
 
 	// send reminder for all wikis
-	if ( isset($options['reminder']) ) {
+	if ( isset( $options['reminder'] ) ) {
 		// get list of wikis
 		$wikis = getWikis();
 
 		// send reminder for each wiki
-		foreach( $wikis as $wikiId) {
+		foreach ( $wikis as $wikiId ) {
 			$cmd = "SERVER_ID={$wikiId} php {$IP}/extensions/wikia/UserLogin/maintenance.php --conf={$wgWikiaLocalSettingsPath} --wiki_reminder";
 			echo "Command: $cmd\n";
 			$result = wfShellExec( $cmd, $retval );
-			if ($retval) {
+			if ( $retval ) {
 				echo "Error code $retval: $result \n";
 			} else {
 				echo "$result \n";
 			}
 		}
-		echo "Reminder emails sent for ".count($wikis)." wikis.\n";
+		echo "Reminder emails sent for " . count( $wikis ) . " wikis.\n";
 	}
 
 	// send reminder for current wiki
-	if ( isset($options['wiki_reminder']) ) {
+	if ( isset( $options['wiki_reminder'] ) ) {
 		sendReminder();
 	}
