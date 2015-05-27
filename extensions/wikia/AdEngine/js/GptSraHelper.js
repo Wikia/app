@@ -35,14 +35,14 @@ define('ext.wikia.adEngine.gptSraHelper', [
 	function pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType) {
 		if (shouldPush(slotName, slotTargeting)) {
 			gptHelper.pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType);
-			log(['pushAd', 'Pushed slot:', slotName], 'debug', logGroup);
+			log(['pushAd', 'Pushed slot', slotName], 'debug', logGroup);
 		} else {
 			success({});
 		}
 
 		if (shouldFlush(slotName)) {
 			gptHelper.flushAds();
-			log(['pushAd', 'Flushing slot:', slotName], 'debug', logGroup);
+			log(['pushAd', 'Flushing slot', slotName], 'debug', logGroup);
 		}
 	}
 
