@@ -113,7 +113,7 @@ $messages['az'] = array(
 	'quickstats-number-shortening-billions' => '$1milyard',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author E THP
  * @author Mousa
  */
@@ -189,6 +189,19 @@ $messages['bg'] = array(
 	'quickstats-number-shortening' => '$1 хил.',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Western Balochi (بلوچی رخشانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bgn'] = array(
+	'quickstats-header-date' => 'تاریخ',
+	'quickstats-header-views' => 'دیستینین',
+	'quickstats-header-edits' => 'ایڈیٹ',
+	'quickstats-header-photos' => 'اکس هان',
+	'quickstats-number-shortening' => '$1 هزار',
+	'quickstats-number-shortening-millions' => '$1 میلیون',
+	'quickstats-number-shortening-billions' => '$1 میلیارد',
 );
 
 /** Bhojpuri (भोजपुरी)
@@ -306,7 +319,7 @@ $messages['ce'] = array(
 	'quickstats-header-edits' => 'Нисдарш',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  * @author Calak
  */
 $messages['ckb'] = array(
@@ -590,7 +603,7 @@ $messages['gl'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** Hakka (客家語/Hak-kâ-ngî)
+/** Hakka Chinese (客家語/Hak-kâ-ngî)
  * @author Anson2812
  */
 $messages['hak'] = array(
@@ -872,7 +885,7 @@ $messages['lez'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1028,6 +1041,22 @@ $messages['mt'] = array(
 	'quickstats-number-shortening-billions' => '$1B',
 );
 
+/** Min Nan Chinese (Bân-lâm-gú)
+ * @author Ianbu
+ */
+$messages['nan'] = array(
+	'quickstats-header-label' => '簡便的統計資料',
+	'quickstats-header-date' => 'Ji̍t-kî',
+	'quickstats-header-views' => 'Khoàⁿ',
+	'quickstats-header-edits' => '改過的筆數',
+	'quickstats-header-photos' => '圖像數量',
+	'quickstats-totals-label' => '合計',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|閣看其他的統計]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  */
@@ -1146,7 +1175,7 @@ $messages['pms'] = array(
 	'quickstats-header-edits' => 'Modìfiche',
 	'quickstats-header-photos' => 'Fòto',
 	'quickstats-totals-label' => 'Totaj',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|Varda pi statìstiche]]',
+	'quickstats-see-more-stats-link' => '[[Special:Insights|Vëdde pi dë statìstiche]]',
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1Mrd',
@@ -1162,7 +1191,7 @@ $messages['ps'] = array(
 	'quickstats-header-edits' => 'سمونونه',
 	'quickstats-header-photos' => 'انځورونه',
 	'quickstats-totals-label' => 'ټولټال',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|نورې شمارنې کتل]]',
+	'quickstats-see-more-stats-link' => '[[Special:Insights|نورې شمارنې وگورئ]]',
 	'quickstats-number-shortening' => '$1زر',
 	'quickstats-number-shortening-millions' => '$1ميليون',
 	'quickstats-number-shortening-billions' => '$1بيليون',
@@ -1241,6 +1270,20 @@ $messages['ru'] = array(
 	'quickstats-number-shortening-billions' => '$1миллиард',
 );
 
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'quickstats-header-date' => 'दिनाङ्कः',
+	'quickstats-header-views' => 'मतानि',
+	'quickstats-header-edits' => 'सम्पादनानि',
+	'quickstats-header-photos' => 'चित्राणि',
+	'quickstats-totals-label' => 'योगः',
+	'quickstats-number-shortening' => '$1 सहस्राणि',
+	'quickstats-number-shortening-millions' => '$1 कोटिः',
+	'quickstats-number-shortening-billions' => '$1 अर्बुदं',
+);
+
 /** Scots (Scots)
  * @author John Reid
  */
@@ -1273,13 +1316,14 @@ $messages['sh'] = array(
 /** Sinhala (සිංහල)
  * @author පසිඳු කාවින්ද
  * @author බිඟුවා
+ * @author හරිත
  */
 $messages['si'] = array(
 	'quickstats-header-label' => 'ඉක්මන් තොරතුර',
 	'quickstats-header-date' => 'දිනය',
-	'quickstats-header-views' => 'නැරඹුම්',
+	'quickstats-header-views' => 'නැරඹීම්',
 	'quickstats-header-edits' => 'සංස්කරණ',
-	'quickstats-header-photos' => 'රූප',
+	'quickstats-header-photos' => 'පින්තූර',
 	'quickstats-totals-label' => 'සියල්ල',
 	'quickstats-number-shortening' => '$1K',
 );
@@ -1429,7 +1473,7 @@ $messages['tl'] = array(
 	'quickstats-number-shortening-billions' => '$1 Bilyon',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(

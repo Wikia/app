@@ -206,10 +206,14 @@ class RequestContext implements IContextSource {
 		if ( $this->user === null && $wgUserForceAnon ) {
 			$this->user = new User();
 		}
-		// Wikia change - end
+
 		if ( $this->user === null ) {
+		// Wikia change - end
 			$this->user = User::newFromSession( $this->getRequest() );
 		}
+
+		// Replace the user object according to the context, e.g. Piggyback.
+		wfRunHooks( 'RequestContextOverrideUser', [ &$this->user, $this->getRequest() ] );
 		return $this->user;
 	}
 

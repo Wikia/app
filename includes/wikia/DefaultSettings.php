@@ -1253,6 +1253,13 @@ $wgEnableAmazonMatch = true;
 $wgAmazonMatchCountries = null;
 
 /**
+ * @name $wgAmazonMatchCountriesMobile
+ * Enables AmazonMatch on mobile in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAmazonMatchCountriesMobile = null;
+
+/**
  * @name $wgAdPageLevelCategoryLangs
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
@@ -1327,6 +1334,17 @@ $wgSitewideDisableIVW2 = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableLiftium = false;
+
+/**
+ * @name $wgSitewideDisablePaidAssetDrop
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
+ *
+ * Disable Paid Asset Drop (PAD) sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisablePaidAssetDrop = false;
 
 /**
  * @name $wgSitewideDisableRubiconRTP
@@ -1674,14 +1692,14 @@ $wgImageServingForceNoResults = false;
  * Enable typography changes on oasis breakpoints.
  * Works only if wgOasisBreakpoints set to true
  */
-$wgOasisTypography = false;
+$wgOasisTypography = true;
 
 /**
  * Force new breakpoints $wgOasisBreakpoints
  * see CONCF-186
  * todo Remove when removing responsive
  */
-$wgOasisBreakpoints = false;
+$wgOasisBreakpoints = true;
 
 /**
  * Force new breakpoints $wgOasisBreakpoints for German wikis
@@ -1713,3 +1731,10 @@ $wgEnablePageShareExt = true;
  * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
  */
 $wgPaidAssetDropConfig = false;
+
+/**
+ * @name $wgAdDriverIncontentPlayerSlotCountries
+ * Enables INCONTENT_PLAYER slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentPlayerSlotCountries = null;

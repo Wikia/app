@@ -92,6 +92,7 @@ $messages['bg'] = array(
  * @author Aftabuzzaman
  */
 $messages['bn'] = array(
+	'mostvisitedpages-desc' => 'সর্বাধিক দেখা পাতার তালিকা দেয়',
 	'mostvisitedpages' => 'সর্বাধিক দেখা পাতাসমূহ',
 	'mostvisitedpagessearchtext' => 'নিবন্ধের নাম:',
 	'mostvisitedpagessearchbtn' => 'অনুসন্ধান',
@@ -417,7 +418,7 @@ $messages['lb'] = array(
 	'mostvisitedpagesalllink' => 'Déi am dackst besicht Säite kucken',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -645,6 +646,7 @@ $messages['sv'] = array(
  * @author Krol111
  */
 $messages['szl'] = array(
+	'mostvisitedpages-desc' => 'Lista nojczyńśći uobrzyranych zajt',
 	'mostvisitedpages' => 'Nojczyńśći uobźyrane zajty',
 	'mostvisitedpagessearchtext' => 'Mjano artikla:',
 	'mostvisitedpagessearchbtn' => 'sznupej',
@@ -690,7 +692,7 @@ $messages['tl'] = array(
 	'mostvisitedpagesalllink' => 'Tingnan ang pinakadinadalaw na mga pahina',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -734,14 +736,16 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Farewell
+ * @author KhangND
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'mostvisitedpages-desc' => 'Hiện danh sách các trang được xem nhiều nhất',
 	'mostvisitedpages' => 'Các trang được xem nhiều nhất',
 	'mostvisitedpagessearchtext' => 'Tên trang',
 	'mostvisitedpagessearchbtn' => 'Tìm kiếm',
-	'mostvisitedpageslatest' => 'trong $1 phút cuối',
+	'mostvisitedpageslatest' => 'trong $1 {{PLURAL:$1|minute|phút}} cuối',
 	'mostvisitedpageslatestlink' => 'Xem trang được truy cập mới nhất',
 	'mostvisitedpagesalllink' => 'Xem trang được truy cập nhiều nhất',
 );

@@ -320,6 +320,7 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Aktron
  * @author Chmee2
  * @author H4nek
  */
@@ -330,6 +331,13 @@ $messages['cs'] = array(
 	'founderprogressbar-total-edit75-label' => 'Dosáhli jste 75 editací',
 	'founderprogressbar-gallery-add-label' => 'Přidat fotogalerii',
 	'founderprogressbar-video-add-label' => 'Přidat video',
+	'founderprogressbar-user-add5-label' => 'Dosáhněte 5 uživatelských profilů.',
+	'founderprogressbar-user-add5-description' => 'Skvělou wiki tvoří skvělá komunita. Nejlepší wiki mají hodně editorů, 5 uživatelů je do začátku velmi dobrý počet.',
+	'founderprogressbar-recentchanges-visit-label' => 'Navštivte Poslední změny.',
+	'founderprogressbar-fb-likes3-label' => 'Dosáhněte $1 likeů na Facebooku',
+	'founderprogressbar-uncategorized-visit-label' => 'Navštivte Nekategorizované stránky',
+	'founderprogressbar-bonus-photo-add10-label' => 'Přidejte ještě $1 fotografií',
+	'founderprogressbar-bonus-photo-add10-description' => 'Svojí wiki můžete vždy rozvíjet přidáním dalších obrázků. Přidejte deset dalších; splníte tak bonusový úkol',
 	'founderprogressbar-browse-page-name' => 'Procházet',
 );
 
@@ -1221,7 +1229,7 @@ $messages['lb'] = array(
 	'founderprogressbar-bonus-photo-add10-label' => 'Setzt $1 Fotoen derbäi',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
