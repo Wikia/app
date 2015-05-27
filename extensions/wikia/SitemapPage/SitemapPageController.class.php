@@ -26,6 +26,8 @@ class SitemapPageController extends WikiaController {
 		$sitemapPage = new SitemapPageModel();
 		$this->wikis = $sitemapPage->getWikiListTopLevel( $level, $from, $to );
 		$this->level = $level + 1;
+
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	/**
@@ -37,6 +39,8 @@ class SitemapPageController extends WikiaController {
 
 		$sitemapPage = new SitemapPageModel();
 		$this->wikis = $sitemapPage->getWikiList( $from, $to );
+
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 }
