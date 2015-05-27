@@ -570,7 +570,7 @@ class UncycloUserMigrator extends Maintenance {
 				'Action'
 			] );
 
-			$this->output( sprintf( "Will generate CSV file - <%s>...\n", $this->csv ) );
+			$this->output( sprintf( "Will generate CSV file - <%s>...\n", $this->getOption( 'csv' ) ) );
 		}
 
 		// get all uncyclopedia accounts
