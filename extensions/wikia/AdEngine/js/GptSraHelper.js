@@ -16,13 +16,6 @@ define('ext.wikia.adEngine.gptSraHelper', [
 			'TOP_LEADERBOARD'
 		];
 
-	function shouldPush(slotName, slotTargeting) {
-		var result = !(slotTargeting && slotTargeting.flushOnly);
-
-		log(['shouldPush', slotName, result], 'debug', logGroup);
-		return result;
-	}
-
 	function shouldFlush(slotName) {
 		if (sraSlots.indexOf(slotName) === -1) {
 			flushed = true;
@@ -33,11 +26,11 @@ define('ext.wikia.adEngine.gptSraHelper', [
 	}
 
 	function pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType) {
-		if (shouldPush(slotName, slotTargeting)) {
+		if (slotTargeting && slotTargeting.flushOnly) {
+			success({});
+		} else {
 			gptHelper.pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType);
 			log(['pushAd', 'Pushed slot', slotName], 'debug', logGroup);
-		} else {
-			success({});
 		}
 
 		if (shouldFlush(slotName)) {
