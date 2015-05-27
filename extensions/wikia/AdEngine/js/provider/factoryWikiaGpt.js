@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {Object} [extra]      - optional extra params
 	 * @param {function} [extra.beforeSuccess] - function to call before calling success
 	 * @param {function} [extra.beforeHop]     - function to call before calling hop
-	 * @param {function} [extra.shouldFlush]   - should ads be flushed after given slotname
+	 * @param {function} [extra.sraEnabled]    - enable SRA and call gpt using GptSraHelper
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
 	 * @returns {{name: string, canHandleSlot: function, fillInSlot: function}}
 	 */
