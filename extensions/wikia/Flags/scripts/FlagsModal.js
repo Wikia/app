@@ -1,4 +1,4 @@
-require(['jquery'], function ($) {
+require(['jquery', 'mw'], function ($, mw) {
 	'use strict';
 
 	/* Modal component configuration */
@@ -8,11 +8,11 @@ require(['jquery'], function ($) {
 			classes: ['edit-flags'],
 			size: 'medium', // size of the modal
 			content: '', // content
-			title: 'Flags',
+			title: mw.message('flags-edit-modal-title').escaped(),
 			buttons: [ // buttons in the footer
 				{
 					vars: {
-						value: 'Done',
+						value: mw.message('flags-edit-modal-done-button-text').escaped(),
 						data: [
 							{
 								key: 'event',
@@ -23,7 +23,7 @@ require(['jquery'], function ($) {
 				},
 				{
 					vars: {
-						value: 'Cancel',
+						value: mw.message('flags-edit-modal-cancel-button-text').escaped(),
 						data: [
 							{
 								key: 'event',

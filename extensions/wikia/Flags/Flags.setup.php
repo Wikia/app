@@ -21,7 +21,7 @@ $wgExtensionCredits['other'][] = [
 	'version'			=> '1.0',
 	'author'			=> 'Adam Karmiński',
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Flags',
-	'descriptionmsg'    => 'flags-desc'
+	'descriptionmsg'    => 'flags-desc',
 ];
 
 /**
@@ -64,3 +64,16 @@ $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
  */
 $wgExtensionMessagesFiles['Flags'] = __DIR__ . '/Flags.i18n.php';
 $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
+
+/**
+ * Resources Loader module
+ */
+$wgResourceModules['ext.wikia.Flags'] = [
+	'messages' => [
+		'flags-edit-modal-title',
+		'flags-edit-modal-done-button-text',
+		'flags-edit-modal-cancel-button-text',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Flags'
+];
