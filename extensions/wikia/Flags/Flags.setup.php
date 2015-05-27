@@ -48,6 +48,7 @@ $wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.ph
  */
 $wgAutoloadClasses['Flags\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
 $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
+$wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
 
 /**
  * Hooks
