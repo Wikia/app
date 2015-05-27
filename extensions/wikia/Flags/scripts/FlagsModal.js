@@ -54,7 +54,7 @@ require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 					controller: 'Flags',
 					method: 'editForm',
 					params: {
-						'page_id': window.wgArticleId
+						'page_id': mw.config.get('wgArticleId')
 					}
 				}],
 				styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
@@ -69,9 +69,7 @@ require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	 */
 	function handlePackage(pkg) {
 		/* Load styles */
-		require(['wikia.loader'], function (loader) {
-			loader.processStyle(pkg.styles);
-		});
+		loader.processStyle(pkg.styles);
 
 		/* Add content to modal */
 		modalConfig.vars.content = pkg.templates.Flags_editForm;
