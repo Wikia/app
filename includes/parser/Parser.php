@@ -4569,12 +4569,6 @@ class Parser {
 				$refers[$legacyArrayKey] = 1;
 			}
 
-			# Don't number the heading if it is the only one (looks silly)
-			if ( count( $matches[3] ) > 1 && $this->mOptions->getNumberHeadings() ) {
-				# the two are different if the line contains a link
-				$headline = $numbering . ' ' . $headline;
-			}
-
 			# Create the anchor for linking from the TOC to the section
 			$anchor = $safeHeadline;
 			$legacyAnchor = $legacyHeadline;

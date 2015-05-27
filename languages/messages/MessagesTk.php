@@ -45,7 +45,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Patrullyk edilen sahypalary täze sahypalaryň sanawynda gizle',
 'tog-extendwatchlist'         => 'Gözegçilik sanawyny, diňe soňky däl-de, eýsem ähli üýtgeşmeleri görkezer ýaly edip giňelt',
 'tog-usenewrc'                => 'Güýçlendirilen soňky üýtgeşmelerden peýdalanyň (JavaScript bolmaly)',
-'tog-numberheadings'          => 'Atlary awtomatik usulda belgile',
 'tog-showtoolbar'             => 'Redaktirleme mahalynda gural panelini görkez (JavaScript)',
 'tog-editondblclick'          => 'Sahypany jübüt tyklap, redaktirläp başla (JavaScript)',
 'tog-editsection'             => 'Her bir bölümde [redaktirle] çykgydyny görkez',

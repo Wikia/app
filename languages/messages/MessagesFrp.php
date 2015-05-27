@@ -317,7 +317,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => 'Cachiér les pâges survelyês entre-mié les pâges novèles',
 'tog-extendwatchlist' => 'Ètendre la lista de survelyence por fâre vêre tôs los changements et pas solament los ples novéls',
 'tog-usenewrc' => 'Rassemblar los changements per pâge dedens los dèrriérs changements et la lista de survelyence (at fôta de JavaScript)',
-'tog-numberheadings' => 'Numerotar ôtomaticament los titros de sèccion',
 'tog-showtoolbar' => 'Fâre vêre la bârra d’outils de changement (at fôta de JavaScript)',
 'tog-editondblclick' => 'Changiér des pâges sur doblo-clic (at fôta de JavaScript)',
 'tog-editsection' => 'Activar lo changement de sèccions avouéc los lims « [changiér] »',

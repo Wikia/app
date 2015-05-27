@@ -319,7 +319,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ellenőrzött lapok elrejtése az új lapok listájáról',
 'tog-extendwatchlist'         => 'A figyelőlistán az összes változtatás látszódjon, ne csak az utolsó',
 'tog-usenewrc'                => 'Fejlettebb friss változások listája (JavaScript-alapú)',
-'tog-numberheadings'          => 'Fejezetcímek automatikus számozása',
 'tog-showtoolbar'             => 'Szerkesztőeszközsor megjelenítése (JavaScript-alapú)',
 'tog-editondblclick'          => 'A lapok szerkesztése dupla kattintásra (JavaScript-alapú)',
 'tog-editsection'             => '[szerkesztés] linkek az egyes szakaszok szerkesztéséhez',

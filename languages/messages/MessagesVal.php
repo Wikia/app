@@ -51,7 +51,6 @@ $messages = array(
 'tog-hideminor'               => 'Amaga les edicions menors en la pàgina de canvis recents',
 'tog-extendwatchlist'         => 'Desplega la llista de seguiment per a mostrar tots els canvis afectats',
 'tog-usenewrc'                => 'Presentació millorada dels canvis recents (fa falta JavaScript)',
-'tog-numberheadings'          => 'Enumera automàticament els encapçalaments',
 'tog-showtoolbar'             => "Mostra la barra de ferramentes d'edició (fa falta JavaScript)",
 'tog-editondblclick'          => "Inicia l'edició de la pàgina al fer clic dos vegades (fa falta JavaScript)",
 'tog-editsection'             => "Activa l'edició per seccions mediant l'enllaç específic corresponent",

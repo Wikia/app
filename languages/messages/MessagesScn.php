@@ -145,7 +145,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Ammuccia li pàggini virificati di l'alencu dî pàgging cchiù novi",
 'tog-extendwatchlist'         => "Attiva tutti li funzioni avanzati pi l'ossirvati spiciali, nun sulu l'ultima",
 'tog-usenewrc'                => 'Utilizza Ùrtimi canciamenti avanzati (richiedi JavaScript)',
-'tog-numberheadings'          => 'Nummirazzioni automàtica dî tìtuli di paràgrafu',
 'tog-showtoolbar'             => 'Ammustra la barra dî strumenta pi lu canciamentu',
 'tog-editondblclick'          => "Duppiu click pi canciari l'artìculu (richiedi Javascript)",
 'tog-editsection'             => 'Abbìlita lu canciamentu dî sezzioni tràmiti lu culligamentu [cancia]',

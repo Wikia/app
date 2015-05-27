@@ -35,7 +35,6 @@ $wgMessageStructure = array(
 		'tog-newpageshidepatrolled',
 		'tog-extendwatchlist',
 		'tog-usenewrc',
-		'tog-numberheadings',
 		'tog-showtoolbar',
 		'tog-editondblclick',
 		'tog-editsection',

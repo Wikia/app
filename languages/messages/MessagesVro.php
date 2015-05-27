@@ -50,7 +50,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Käkiq vahtsidõ lehti nimekirän ärq ülekaeduq leheq',
 'tog-extendwatchlist'         => 'Laendaq perräkaemisnimekirjä, et nätäq kõiki muutmiisi, mitte õnnõ kõgõ perämäidsi',
 'tog-usenewrc'                => 'Laendõduq perämädseq muutmisõq (vaia JavaScripti)',
-'tog-numberheadings'          => 'Päälkirjo automaatnummõrdus',
 'tog-showtoolbar'             => 'Näütäq toimõndusõ riistakasti',
 'tog-editondblclick'          => 'Artiklidõ toimõndaminõ topõltklõpsu pääle (JavaScript)',
 'tog-editsection'             => 'Lupaq lõikõ toimõndaq [toimõndaq]-linkõga',

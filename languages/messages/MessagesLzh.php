@@ -76,7 +76,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '隱新巡',
 'tog-extendwatchlist'         => '展列見變',
 'tog-usenewrc'                => '青出近易（JavaScript）',
-'tog-numberheadings'          => '生章數',
 'tog-showtoolbar'             => '多寶列見（JavaScript）',
 'tog-editondblclick'          => '纂頁雙擊（JavaScript）',
 'tog-editsection'             => '纂段擊鏈',

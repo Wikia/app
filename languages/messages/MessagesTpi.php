@@ -37,7 +37,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Noken soim ol lukluk senis insait long ol nupela pes',
 'tog-extendwatchlist'         => 'Larim lukautbuk i go longpela long soim olgeta senis',
 'tog-usenewrc'                => 'Moa beta stail bilong nupela senis (i nidim JavaScript)',
-'tog-numberheadings'          => 'Putim ol namba i go long wanwan hap bilong pes',
 'tog-showtoolbar'             => 'Soim ol liklik link long wokim senis kwiktaim (i nidim JavaScript)',
 'tog-editondblclick'          => 'Senisim pes taim yu paitim tupela taim kwiktaim (i nidim JavaScript)',
 'tog-editsection'             => 'Soim ol [senisim] link long wanwan hap bilong ol pes',

@@ -86,7 +86,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Scunder  páiginas patrulhadas na lhista de páiginas nuobas',
 'tog-extendwatchlist'         => 'Lhistaige spandida de todas las altaraçones a las páiginas begiadas, nun solo de las redadeiras',
 'tog-usenewrc'                => 'Ousar la berson melhorada de las mudanças recentes (requer JavaScrit)',
-'tog-numberheadings'          => 'Outo-numerar cabeçalhos',
 'tog-showtoolbar'             => "Amostrar barra d'eidiçon (JavaScrit)",
 'tog-editondblclick'          => 'Eiditar páiginas quando houbir un clique duplo (JavaScrit)',
 'tog-editsection'             => "Possiblitar l'eidiçon de cachos cun lhigaçones [eiditar]",

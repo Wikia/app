@@ -52,7 +52,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Gemarkeerde pagina's verbarg'n in de lieste mei nuwe pagina's",
 'tog-extendwatchlist'         => "Uutebreide volglieste hebruuk'n om aolle wiezigieng'n te bekiek'n, en nie alleêne de laeste",
 'tog-usenewrc'                => 'Uutebreide lèste wiezigiengen-pagina gebruken (JavaScript vereist)',
-'tog-numberheadings'          => 'Koppn automaotisch nummern',
 'tog-showtoolbar'             => 'Bewerkiengswerkbalke weerheven (JavaScript vereist)',
 'tog-editondblclick'          => 'Dubbelklikkn voe bewerkn (JavaScript vereist)',
 'tog-editsection'             => "Bewerken van deêlpahina's meuhlijk maeken via [bewerken]-koppeliengen",

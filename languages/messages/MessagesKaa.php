@@ -160,7 +160,6 @@ $messages = array(
 'tog-hideminor'               => "Aqırg'ı o'zgerislerden kishilerin jasır",
 'tog-extendwatchlist'         => "Baqlaw dizimin barlıq o'zgerislerdi ko'rsetetug'ın qılıp ken'eyt (tek aqırg'ıların emes)",
 'tog-usenewrc'                => "Ken'eytilgen jaqındag'ı o'zgerislerdi qollan (JavaScript bolıwın talap etedi)",
-'tog-numberheadings'          => 'Atamalardı avtomat nomerle',
 'tog-showtoolbar'             => "O'zgertiw a'sbapların ko'rset (JavaScript)",
 'tog-editondblclick'          => "Eki ma'rte basıp o'zgertiw (JavaScript)",
 'tog-editsection'             => "Bo'limlerdi [o'zgertiw] siltew arqalı o'zgertiwdi qos",

@@ -128,11 +128,6 @@ class ParserOptions {
 	 * Transform wiki markup when saving the page?
 	 */
 	var $mPreSaveTransform = true;
-
-	/**
-	 * Automatically number headings?
-	 */
-	var $mNumberHeadings;
 	
 	/**
 	 * User math preference (as integer). Not used (1.19)
@@ -191,8 +186,6 @@ class ParserOptions {
 	function getAllowExternalImagesFrom()       { return $this->mAllowExternalImagesFrom; }
 	function getEnableImageWhitelist()          { return $this->mEnableImageWhitelist; }
 	function getEditSection()                   { return $this->mEditSection; }
-	function getNumberHeadings()                { $this->optionUsed( 'numberheadings' );
-												  return $this->mNumberHeadings; }
 	function getAllowSpecialInclusion()         { return $this->mAllowSpecialInclusion; }
 	function getTidy()                          { return $this->mTidy; }
 	function getInterfaceMessage()              { return $this->mInterfaceMessage; }
@@ -275,7 +268,6 @@ class ParserOptions {
 	function setEnableImageWhitelist( $x )      { return wfSetVar( $this->mEnableImageWhitelist, $x ); }
 	function setDateFormat( $x )                { return wfSetVar( $this->mDateFormat, $x ); }
 	function setEditSection( $x )               { return wfSetVar( $this->mEditSection, $x ); }
-	function setNumberHeadings( $x )            { return wfSetVar( $this->mNumberHeadings, $x ); }
 	function setAllowSpecialInclusion( $x )     { return wfSetVar( $this->mAllowSpecialInclusion, $x ); }
 	function setTidy( $x )                      { return wfSetVar( $this->mTidy, $x ); }
 
@@ -398,7 +390,6 @@ class ParserOptions {
 		$this->mExternalLinkTarget = $wgExternalLinkTarget;
 
 		$this->mUser = $user;
-		$this->mNumberHeadings = $user->getOption( 'numberheadings' );
 		$this->mMath = $user->getOption( 'math' );
 		$this->mThumbSize = $user->getOption( 'thumbsize' );
 		$this->mStubThreshold = $user->getStubThreshold();
@@ -481,11 +472,8 @@ class ParserOptions {
 			$confstr .= '!' . $this->getDateFormat();
 		}
 
-		if ( in_array( 'numberheadings', $forOptions ) ) {
-			$confstr .= '!' . ( $this->mNumberHeadings ? '1' : '' );
-		} else {
-			$confstr .= '!*';
-		}
+		// Placeholder for numberheadings
+		$confstr .= '!*';
 
 		if ( in_array( 'userlang', $forOptions ) ) {
 			$confstr .= '!' . $this->mUserLang->getCode();

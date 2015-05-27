@@ -92,7 +92,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Rûpelên hatine kontrolkirin ji lîsteya rûpelên nû veşêre',
 'tog-extendwatchlist'         => 'Lîsteya şopandinê berfireh bike ji bo dîtina hemû guherandinan, ne tenê yên nû',
 'tog-usenewrc'                => 'Weşandina zêdetir (JavaScript pêwîst e)',
-'tog-numberheadings'          => 'Sernavan otomatîk bihejmêre',
 'tog-showtoolbar'             => 'Tiştên guherandinê bibîne (JavaScript bibîne)',
 'tog-editondblclick'          => 'Rûpelan bi du klîkan biguherîne (Java Script gireke)',
 'tog-editsection'             => 'Girêdanan ji bo guherandina beşan biweşîne',

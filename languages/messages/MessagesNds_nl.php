@@ -317,7 +317,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Pagina's die emarkeerd bin, verbargen in de lieste mit nieje artikels",
 'tog-extendwatchlist'         => 'Volglieste uutbreien, zodat alle wiezigingen zichtbaor bin, en niet allinnig de leste wieziging',
 'tog-usenewrc'                => "Gebruuk de pagina uutebreiden leste wiezigingen (hierveur he'j JavaScript neudig)",
-'tog-numberheadings'          => 'Koppen vanzelf nummeren',
 'tog-showtoolbar'             => 'Laot de warkbalke zien',
 'tog-editondblclick'          => 'Mit dubbelklik bewarken (JavaScript)',
 'tog-editsection'             => 'Mit bewarkgedeeltes',

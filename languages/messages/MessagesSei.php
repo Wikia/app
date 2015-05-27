@@ -19,7 +19,6 @@ $messages = array(
 'tog-hideminor'               => 'Camaát editicúnos pac-quimáaxat camjöx cmaa iti',
 'tog-extendwatchlist'         => 'Expand listade cáminot zo cohuatlöx jömde quíix applicablix',
 'tog-usenewrc'                => 'Camjöx cmaa enhancöx (JavaScript)',
-'tog-numberheadings'          => 'Auto-numberom text corridór',
 'tog-showtoolbar'             => 'Cohuatlöx ticpatlöx toolbar (JavaScript)',
 'tog-editondblclick'          => 'Ticpatlöx páhinám 2 clickám mii (JavaScript)',
 'tog-editsection'             => 'Ton ticpatlöx seccion [edit] linkám via',

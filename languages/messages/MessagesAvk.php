@@ -105,7 +105,6 @@ $messages = array(
 'tog-hideminor'               => 'Palsera va <i>Noeltaf betakseem</i> mezolonaf',
 'tog-extendwatchlist'         => 'Divatcera va suzdasiki ta nedira va kot rorewan betaks',
 'tog-usenewrc'                => 'Noeltaf betakseem tulogijayan<br /> (anton abic exulesik)',
-'tog-numberheadings'          => 'Mivaskafa vergumveltotukara',
 'tog-showtoolbar'             => 'Nedira va tidexekak ke betararude',
 'tog-editondblclick'          => 'Ta bubetara tolon vulegal (JavaScript tir adraf)',
 'tog-editsection'             => 'Betara va gabot kan "[Betara]" gluyasiki',

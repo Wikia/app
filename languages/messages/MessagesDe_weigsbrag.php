@@ -189,7 +189,6 @@ $messages = array(
 'tog-hideminor'               => 'Gleines Ändes ausblend',
 'tog-extendwatchlist'         => 'Erweiderdes Beobagdlisd',
 'tog-usenewrc'                => 'Erweiderdes Darschdel (Sgribd benödigdes)',
-'tog-numberheadings'          => 'Übschriwdes audomadisches numerär',
 'tog-showtoolbar'             => 'Bearbeid-Wergseugleisd anseig',
 'tog-editondblclick'          => 'Seides mid Dobbgligg bearbeid (JawaSgribd)',
 'tog-editsection'             => 'Werweises su Bearbeid won einselnes Absädses anseig',

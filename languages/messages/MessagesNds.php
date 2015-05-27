@@ -223,7 +223,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Nakeken Ännern bi „Ne’e Sieden“ nich wiesen',
 'tog-extendwatchlist'         => 'Oppasslist utwieden, dat se all, un nich blot de jüngsten, wiest',
 'tog-usenewrc'                => 'Utwiedt letzte Ännern (bruukt JavaScript)',
-'tog-numberheadings'          => 'Överschrieven automatsch nummereern',
 'tog-showtoolbar'             => 'Editeer-Warktüüchlist wiesen',
 'tog-editondblclick'          => 'Sieden mit Dubbelklick ännern (JavaScript)',
 'tog-editsection'             => 'Links för dat Ännern vun en Afsatz wiesen',

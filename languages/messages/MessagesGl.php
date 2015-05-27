@@ -230,7 +230,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Agochar as páxinas revisadas da lista de páxinas novas',
 'tog-extendwatchlist'         => 'Expandir a lista de vixilancia para mostrar todos os cambios e non só os máis recentes',
 'tog-usenewrc'                => 'Usar os cambios recentes avanzados (cómpre JavaScript)',
-'tog-numberheadings'          => 'Numerar automaticamente as cabeceiras',
 'tog-showtoolbar'             => 'Mostrar a caixa de ferramentas de edición (cómpre JavaScript)',
 'tog-editondblclick'          => 'Editar as páxinas logo de facer dobre clic (cómpre JavaScript)',
 'tog-editsection'             => 'Permitir a edición de seccións mediante as ligazóns "[editar]"',

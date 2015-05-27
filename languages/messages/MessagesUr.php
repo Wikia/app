@@ -53,7 +53,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'جدید صفحاتی فہرست میں گشتی صفحات چُھپاؤ',
 'tog-extendwatchlist'         => 'زیرِنظرفہرست کو پھیلاؤ تاکہ اِس میں تمام ترمیمات نظر آئیں، نہ کہ صرف حالیہ ترین',
 'tog-usenewrc'                => 'افزودہ حالیہ تبدیلیاں استعمال کرو (JavaScript چاہئے ہوگا)',
-'tog-numberheadings'          => 'سرخیوں کو خود نمبر دو',
 'tog-showtoolbar'             => 'تدوینی اوزاردان دکھاؤ ( JavaScript چاہئے)',
 'tog-editondblclick'          => 'طقین پر صفحات کی ترمیم (JavaScript چاہئے)',
 'tog-editsection'             => '[ترمیم] روابط کے ذریعے سطری ترمیم کاری فعال کرو',

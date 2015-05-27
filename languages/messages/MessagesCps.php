@@ -22,7 +22,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Itago ang mga napatrolya nga mga pahina halin sa bag-o nga lista sang pahina',
 'tog-extendwatchlist'         => 'Palapadon ang lista sang mga ginabantayan para makita ang tanan nga nagla-in, indi lang man ang pinakabag-o',
 'tog-usenewrc'                => 'Gamiton ang ginpatahum nga mga bag-ong ilis {kinanglan ang Javascript}',
-'tog-numberheadings'          => 'Insigida nga pag-isip sang numero sa mga titulo',
 'tog-showtoolbar'             => 'Ipakita ang toolbar sang pag-ilis (kinahanglan ang JavaScript)',
 'tog-editondblclick'          => 'Liwaton ang mga pahina sa duwa ka pindot {kinahanglan ang Javascript}',
 'tog-editsection'             => 'Pasugtan ang pagilis sang mga seksyon pamaagi sa mga [ilis] nga link',

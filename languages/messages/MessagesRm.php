@@ -51,7 +51,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Zuppentar paginas controlladas en las «paginas novas»',
 'tog-extendwatchlist'         => "Extender la glista d'observaziun per mussar tut las midadas e betg be las ultimas",
 'tog-usenewrc'                => "Duvrar la versiun extendida da las ''Ultimas midadas'' (basegna JavaScript)",
-'tog-numberheadings'          => 'Numerar automaticamain ils titels',
 'tog-showtoolbar'             => "Mussa la trav d'utensils (basegna JavaScript)",
 'tog-editondblclick'          => 'Modifitgar paginas cun in clic dubel (basegna JavaScript)',
 'tog-editsection'             => 'Mussar colliaziuns [modifitgar] per modifitgar singulas secziuns',

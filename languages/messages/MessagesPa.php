@@ -63,7 +63,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => 'ਨਵੀ ਸੁਚੀ ਮੈ ਸੈ ਗਸ਼ਤ ਪਰਚੇ ਕੌ ਛੁਪਾਏ.',
 'tog-extendwatchlist'       => 'ਸਾਰੀ ਨਵੀ ਤਬਦੀਲੀਆ ਹੀ ਨਹੀ ,ਪੂਰਾਣੀ ਤਬਦੀਲੀਆ ਨੂੰ ਵੀ ਨਵੀ ਸੂਚੀ ਵਿਚ ਵਧਾ ਕੈ ਸ਼ਾਮੀਲ ਕਰੌ.',
 'tog-usenewrc'              => 'ਸੁਦਾਰ ਕੀਤੇ ਹੌਂਂਞੇ ਰੂਚੀ ਦੀ  ਵਰਤੌ ਕਰੌ (ਜਰੂਰਤ ਹੈ ਜਾਵਾ ਸਕ੍ਰਿਪ੍ਟ ਕੀ)',
-'tog-numberheadings'        => 'ਆਟੋ-ਨੰਬਰ ਹੈਡਿੰਗ',
 'tog-showtoolbar'           => 'ਐਡਿਟ ਟੂਲਬਾਰ ਵੇਖੋ (JavaScript)',
 'tog-showtoc'               => 'ਟੇਬਲ ਆਫ਼ ਕੰਨਟੈੱਟ ਵੇਖਾਓ (for pages with more than 3 headings)',
 'tog-rememberpassword'      => 'ਇਸ ਬਰਾਊਜ਼ਰ ਉੱਤੇ ਮੇਰਾ ਲਾਗਇਨ ਯਾਦ ਰੱਖੋ ($1 {{PLURAL:$1|ਦਿਨ|ਦਿਨਾਂ}} ਲਈ ਵੱਧ ਤੋਂ ਵੱਧ)',

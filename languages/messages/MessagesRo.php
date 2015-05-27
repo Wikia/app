@@ -306,7 +306,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ascunde paginile patrulate din lista de pagini noi',
 'tog-extendwatchlist'         => 'Extinde lista de articole urmărite pentru a arăta toate schimbările efectuate, nu doar pe cele mai recente',
 'tog-usenewrc'                => 'Afișează varianta îmbunătățită a schimbărilor recente (necesită JavaScript)',
-'tog-numberheadings'          => 'Numerotează automat secțiunile',
 'tog-showtoolbar'             => 'Afișează bara de unelte pentru modificare (JavaScript)',
 'tog-editondblclick'          => 'Activează modificarea paginii prin dublu clic (JavaScript)',
 'tog-editsection'             => 'Activează modificarea secțiunilor prin legăturile [modifică]',

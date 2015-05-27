@@ -77,7 +77,6 @@ $messages = array(
 'tog-hideminor'               => 'Èn nén mostrer les <i>dierins candjmints</i> mineurs',
 'tog-extendwatchlist'         => "Ragrandi l' djivêye po mostrer tos les candjmints",
 'tog-usenewrc'                => 'Ramidrés <i>dierins candjmints</i> (JavaScript)',
-'tog-numberheadings'          => 'Limerotaedje otomatike des tites',
 'tog-showtoolbar'             => "Mostrer l' bår d' usteyes e môde candjmint (JavaScript)",
 'tog-editondblclick'          => 'Candjî les pådjes avou on dobe-clitch (JavaScript)',
 'tog-editsection'             => "Eployî les loyéns «[candjî]» po candjî rén k' ene seccion",

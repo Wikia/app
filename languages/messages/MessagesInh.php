@@ -24,7 +24,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Керда оагӀувни дагарчеча дӀанийсъя хувцамаш къайлаяккха',
 'tog-extendwatchlist'         => 'Шеръя теркама дагарче, массайола хувцамаш чулоацаш',
 'tog-usenewrc'                => 'Тоая керда хувцама дагаршкара пайда эца (JavaScript эша)',
-'tog-numberheadings'          => 'Кертера-деша таьрахь ший лоӀамаца оттайе',
 'tog-showtoolbar'             => 'ГӀалатнийcдара юкъе лакхера гӀирсий гартакх хьахокха (JavaScript)',
 'tog-editondblclick'          => 'Шозза цлицкацa oагӀув хувца (JavaScript)',
 'tog-editsection'             => 'ХӀара дакъа "хувца" яха Ӏинк хьахокха',

@@ -20,7 +20,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Mu lukalala olw'empapula mpya tolaga ezimaz'okulawunibwa",
 'tog-extendwatchlist'         => "Olukalala lw'empapula zengoberera lulabike mu bujjuvu, nga ebikyuse byonna mwebiri so ssi ebisinga obugya byokka",
 'tog-usenewrc'                => "Olukalala olw'ebikyuse lweyambise obusobozi obw'enyongeza (kyetaagisa 'JavaScript')",
-'tog-numberheadings'          => "Emitwe gy'emiko ku mpapula gibengako ennamba",
 'tog-showtoolbar'             => "Amapeesa g'ebiyamba mu kuwandika galabikenga (kino kyetaagisa JavaScript)",
 'tog-editondblclick'          => "Okunyiga eppeesa emirundi ebiri kubikkulenga w'okyusiza olupapula  (kyetaagisa 'JavaScript')",
 'tog-editsection'             => "Emiko ku mpapula gibengako enyunzi eza '[kyusa]' ezikuggusa w'osobolera okugikyusiza.",

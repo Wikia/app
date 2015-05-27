@@ -56,7 +56,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'በተደጋጋሚ የታዩ ገፆችን ከአዲስ ገፆች ዝርዝር ውስጥ ደብቅ።',
 'tog-extendwatchlist'         => 'የሚደረጉ ለውጦችን ለማሳየት መቆጣጠሪያ-ዝርዝርን ዘርጋ',
 'tog-usenewrc'                => 'የተሻሻሉ የቅርብ ጊዜ ለውጦች ተጠቀም (JavaScript ያስፈልጋል)',
-'tog-numberheadings'          => 'አርዕስቶችን በራስገዝ ቁጥር ስጥ',
 'tog-showtoolbar'             => 'አርም ትዕዛዝ-ማስጫ ይታይ (JavaScript)',
 'tog-editondblclick'          => 'ሁለቴ መጫን ገጹን ማረም ያስችል (JavaScript)',
 'tog-editsection'             => 'በ[አርም] መያያዣ ክፍል ማረምን አስችል',

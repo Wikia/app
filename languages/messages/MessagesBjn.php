@@ -62,7 +62,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Sungkupakan tungkaran nang diitihi matan daptar tungkaran hanyar',
 'tog-extendwatchlist'         => 'Singkaiakan daptar itihan hagan manampaiakan samunyaan parubahan, kada nang hanyar haja.',
 'tog-usenewrc'                => 'Purukakan panampaian parubahan tahanyar tingkat tinggi (parlu ada JavaScript)',
-'tog-numberheadings'          => 'Bari numur judul utumatis',
 'tog-showtoolbar'             => 'Tampaiakan bilah-pakakas babak (parlu ada JavaScript)',
 'tog-editondblclick'          => 'Babak tutungkaran wan klik ganda (parlu ada JavaScript)',
 'tog-editsection'             => "Kawa'akan pambabakan sub-hagian malalui tautan [babak]",

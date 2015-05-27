@@ -44,7 +44,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Zatacë sprôdzoné edicëje w lësce nowich starnów',
 'tog-extendwatchlist'         => 'Rozwinie lëstã ùzérónëch artiklów bë wëskrzënic wszëtczé zmianë, ni le blós slédné',
 'tog-usenewrc'                => 'Ùżëjé rozwinãti wëzdrzatk slédnych zjinaków (nót je JavaScript)',
-'tog-numberheadings'          => 'Aùtomatné numerowanié nôgłówków',
 'tog-showtoolbar'             => 'Wëskrzrni listwã nôrzãdzów edicëji (nót je JavaScript)',
 'tog-editondblclick'          => 'Editëjë starnë przez dëbeltné klëkniãcé (nót je JavaScript)',
 'tog-editsection'             => 'Włączô edicëjã dzélów starnë przez lënczi [edicëjô]',

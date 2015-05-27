@@ -36,7 +36,6 @@ $messages = array(
 'tog-underline'           => 'Cur linnaghyn fo chianglaghyn:',
 'tog-highlightbroken'     => 'Croo kianglaghyn brisht <a href="" class="new">myr shoh</a> (aght elley: myr shoh<a href="" class="internal">?</a>).',
 'tog-hideminor'           => "Follaghey myn-arraghyn ayns caghlaaghyn s'noa",
-'tog-numberheadings'      => 'Cur earrooyn gyn smooinaght er kione-linnaghyn',
 'tog-showtoolbar'         => 'Taishbyney barr greieyn (ta feme ec er JavaScript)',
 'tog-editondblclick'      => 'Reaghey duillagyn lesh crig dooblit (ta feme ec er JavaScript)',
 'tog-rememberpassword'    => "Cooinnee m'ockle arrey er y cho-earrooder shoh",

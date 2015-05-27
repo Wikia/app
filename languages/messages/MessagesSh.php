@@ -217,7 +217,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Sakrij patrolirane stranice sa spiska novih stranica',
 'tog-extendwatchlist'         => 'Proširi spisak praćenja za pogled svih izmjena, ne samo nedavnih',
 'tog-usenewrc'                => 'Korištenje poboljšanog spiska nedavnih izmjena (zahtijeva JavaScript)',
-'tog-numberheadings'          => 'Automatski numeriši podnaslove',
 'tog-showtoolbar'             => 'Pokaži alatnu traku (potreban JavaScript)',
 'tog-editondblclick'          => 'Izmijeni stranice dvostrukim klikom (potreban JavaScript)',
 'tog-editsection'             => 'Omogući uređivanje sekcija preko [uredi] linkova',

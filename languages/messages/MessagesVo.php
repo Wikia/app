@@ -119,7 +119,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Klänedön padis pezepöl in lised padas nulik',
 'tog-extendwatchlist'         => 'Stäänükön galädalisedi ad jonön votükamis tefik valik, e no te nulikünos',
 'tog-usenewrc'                => 'Gebön votükamis nulik patik (me JavaScript)',
-'tog-numberheadings'          => 'Givön itjäfidiko nümis dilädatiädes',
 'tog-showtoolbar'             => 'Jonön redakamastumemi (JavaScript)',
 'tog-editondblclick'          => 'Dälön redakön padis pö drän telik mugaknopa (JavaScript)',
 'tog-editsection'             => 'Dälön redakami dilädas me yüms: [redakön]',

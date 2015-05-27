@@ -150,7 +150,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Markearre siden ferskûlje yn 'e list mei nije siden",
 'tog-extendwatchlist'         => 'Wreidzje folchlist út om alle wizigings sjen te litten, net allinnich de lêste wizigings',
 'tog-usenewrc'                => "Utwreide ferzje fan 'Koartlyn feroare' brûke (JavaScript fereaske)",
-'tog-numberheadings'          => 'Koppen fansels nûmerje',
 'tog-showtoolbar'             => 'Brûk arkbalke by bewurkjen',
 'tog-editondblclick'          => 'Dûbelklik jout bewurkingsside (freget JavaScript)',
 'tog-editsection'             => 'Jou [bewurk]-keppelings foar seksjebewurking',

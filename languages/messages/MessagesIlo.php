@@ -21,7 +21,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ilemmeng dagiti napatruliaan a panid idiay baro a listaan ti panid',
 'tog-extendwatchlist'         => 'Ipalawam ti listaan ti bambantayan tapno maipakita amin a nasukatan, ta saan laeng dagita nabiit',
 'tog-usenewrc'                => 'Usaren dagiti napasayaat a kinaudian a sinuk-sukatan (masapul ti JavaScript)',
-'tog-numberheadings'          => 'Automatiko a pabilangan dagiti paulo',
 'tog-showtoolbar'             => 'Ipakita ti alikamen ti panag-urnos (masapul ti JavaScript)',
 'tog-editondblclick'          => 'Urnosen ti pampanid iti mamindua a panagtakla (masapul ti JavaScript)',
 'tog-editsection'             => 'Pakabaelan ti panag-urnos iti paset babaen kadagiti [urnosen] a  panilpo',

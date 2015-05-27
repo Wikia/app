@@ -360,7 +360,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => 'הסתרת דפים בדוקים ברשימת הדפים החדשים',
 'tog-extendwatchlist' => 'הרחבת רשימת המעקב כך שתציג את כל השינויים, לא רק את השינויים האחרונים בכל דף',
 'tog-usenewrc' => 'קיבוץ השינויים לפי דף בשינויים האחרונים וברשימת המעקב (דרוש JavaScript)',
-'tog-numberheadings' => 'מספור כותרות אוטומטי',
 'tog-showtoolbar' => 'הצגת סרגל העריכה (דרוש JavaScript)',
 'tog-editondblclick' => 'עריכת דפים בלחיצה כפולה (דרוש JavaScript)',
 'tog-editsection' => 'עריכת פסקאות באמצעות קישורי [עריכה]',

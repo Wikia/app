@@ -32,7 +32,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => "Scunne le pàggene tenute sotte condrolle da 'a liste de le pàggene nuève",
 'tog-extendwatchlist'         => "Spanne 'a liste de le pàggene condrollete pe fa vedè tutte le cangiaminde fatte, none sulamende l'urteme",
 'tog-usenewrc'                => "Ause le cangiaminde recende migliorate (richiede 'u JavaScript)",
-'tog-numberheadings'          => 'Testete auto-numerete',
 'tog-showtoolbar'             => "Fà vedè 'a barra de le cangiaminde (JavaScript)",
 'tog-editondblclick'          => "Cange le pàggene cu 'nu doppie clic (JavaScript)",
 'tog-editsection'             => 'Abilite le cangiaminde a sezione ausanne [cange]',

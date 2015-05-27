@@ -18,7 +18,6 @@ $messages = array(
 'tog-justify'              => 'Tururupungun ang kilid kang manga paragraph',
 'tog-hideminor'            => "Tagoon ang gagmay nga ''edit'' sa mga bag-o nga ilis",
 'tog-extendwatchlist'      => "Palapadun ang ''watchlist'' agud nga mapakita ang tanan nga ginasogtan nga pag-ilis",
-'tog-numberheadings'       => "Automatiko nga togroan kang nomero ang manga ''heading''",
 'tog-showtoolbar'          => 'Ipakita ang pangbolig sa pag-ilis (JavaScript)',
 'tog-rememberpassword'     => "Tandaan ang akun nga ''log-in'' sa dya nga ''computer'' (for a maximum of $1 {{PLURAL:$1|day|days}})",
 'tog-watchcreations'       => "Idogang sa akun nga ''watchlist'' ang manga pahina nga ginpanghimo ko",

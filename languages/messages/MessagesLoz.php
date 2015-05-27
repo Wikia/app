@@ -16,7 +16,6 @@ $messages = array(
 'tog-highlightbroken'      => 'Kamukile ling\'ki bufosi <a href="" class="new">sa</a> (lyam: sa<a href="" class="internal">?</a>).',
 'tog-justify'              => 'Singanyekile silamina',
 'tog-usenewrc'             => 'Inenset petuho nca (JavaScript)',
-'tog-numberheadings'       => 'Auto-palo mukunguna',
 'tog-showtoolbar'          => "Kamukile hloli ye ng'i toolbar (bulukezi JavaScript)",
 'tog-editondblclick'       => "Hloli ye ng'i petulo di 'klik' dubo (JavaScript)",
 'tog-editsection'          => "Nyembulisize [hloli ye ng'i] di akes di lyangutukezi ling'ki",

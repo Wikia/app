@@ -35,7 +35,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ƿeardede sīdan hȳdan in nīƿe hƿearfas',
 'tog-extendwatchlist'         => 'Ƿæccȝetale sprædan to scēaƿenne ealle hƿearfas, ne efne þā nīƿoste',
 'tog-usenewrc'                => 'Benota forðod ȝetæl nīƿra hƿeorfunȝa (þis þearf JavaScript)',
-'tog-numberheadings'          => 'Selffremmende-rīm hēafodingas',
 'tog-showtoolbar'             => 'Þone tōlstæf scēaƿian (þearf JavaScript)',
 'tog-editondblclick'          => 'Sīdan ādihtan bȳ tƿicnæppende (þearf JavaScript)',
 'tog-editsection'             => 'Dǣla ādihtende þafian bȳ [ādihtan] hlenċum',

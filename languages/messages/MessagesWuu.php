@@ -25,7 +25,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '来拉新页面列表里向拿已巡查歇个页面囥脱',
 'tog-extendwatchlist'         => '扩展监控列表，显示所有改动，而弗仅仅是最近个',
 'tog-usenewrc'                => '使用强化版个近段辰光个改动（JavaScript）',
-'tog-numberheadings'          => '标题自动编号',
 'tog-showtoolbar'             => '显示编辑工具条（JavaScript）',
 'tog-editondblclick'          => '双击个辰光编辑页面（JavaScript）',
 'tog-editsection'             => '允许通过点击【编辑】链接来编辑段落',

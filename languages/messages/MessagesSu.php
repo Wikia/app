@@ -137,7 +137,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Sumputkeun nu geus diroris tina béréndélan kaca anyar',
 'tog-extendwatchlist'         => 'Legaan béréndélan ngarah sakabéh parobahanana kaawaskeun',
 'tog-usenewrc'                => 'Nu anyar robah dina wanda séjén (maké JavaScript)',
-'tog-numberheadings'          => 'Nomeran lulugu sacara otomatis',
 'tog-showtoolbar'             => "Témbongkeun ''toolbar'' édit (JavaScript)",
 'tog-editondblclick'          => 'Édit kaca ku klik ganda (JavaScript)',
 'tog-editsection'             => 'Tambahkeun tumbu [édit] ngarah bisa ngarobah eusi bab',

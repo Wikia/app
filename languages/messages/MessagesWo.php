@@ -89,7 +89,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Nëbb xët yi ñuy fuglu, yi ci limu xët yu bees yi',
 'tog-extendwatchlist'         => 'Yatalal limu toppte bi ngir muy wone bépp coppite, déet yu mujj yi rekk',
 'tog-usenewrc'                => 'Jëfandikool coppite yu mujj yees gënal (laaj na JavaScript)',
-'tog-numberheadings'          => 'Koj yi jox lim seen bopp',
 'tog-showtoolbar'             => 'Wone bànqaasu njëlu coppite bi (JavaScript)',
 'tog-editondblclick'          => 'Cuq cuqaatal ngir soppi aw xët (JavaScript)',
 'tog-editsection'             => 'Soppi ab xaaj jaare ko cib lëkkalekaay [Soppi]',

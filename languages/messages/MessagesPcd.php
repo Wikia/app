@@ -21,7 +21,6 @@ $messages = array(
 'tog-hidepatrolled'           => 'Mucher chés wardés édichons din chés nouvieus canjemints',
 'tog-newpageshidepatrolled'   => 'Muche ches paches pormenées del lisse ed ches nouvèles paches',
 'tog-extendwatchlist'         => "Étènne l'lisse pou vir tortous ches cangemints, poin seulemint ches nouvieus",
-'tog-numberheadings'          => 'liméro automatique ed ches intétes',
 'tog-showtoolbar'             => "Afiquer chés otis pou l'édichon (i feut JavaScript)",
 'tog-editondblclick'          => 'Éditer ches paches aveuc un doube buke (i feut JavaScript)',
 'tog-editsection'             => "Pérmet l'édichion del sekchion via [edit] loïens",

@@ -163,7 +163,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Peusom ôn teupatroli nibak dapeuta ôn barô',
 'tog-extendwatchlist'         => 'Peuhah dapeuta keunalön keu peuleumah ban dum neuubah, kon nyang paléng barô mantöng',
 'tog-usenewrc'                => 'Nguy neuleumah neuubah paléng barô tingkat lanjut (peureulèë JavaScript)',
-'tog-numberheadings'          => 'Bôh numbô nan keudroë',
 'tog-showtoolbar'             => 'Peuleumah <em>toolbar</em> (bateuëng alat) andam',
 'tog-editondblclick'          => 'Andam ôn deungon duagoe klik',
 'tog-editsection'             => 'Peujeuet andam bideueng rot hubong [andam]',

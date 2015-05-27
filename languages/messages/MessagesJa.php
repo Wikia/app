@@ -373,7 +373,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '新しいページの一覧に巡回済みのページを表示しない',
 'tog-extendwatchlist'         => 'ウォッチリストを拡張し、最新のものだけではなくすべての変更を表示する',
 'tog-usenewrc'                => '最近の更新ページを拡張する（JavaScriptが必要）',
-'tog-numberheadings'          => '自動的に見出しに番号を振る',
 'tog-showtoolbar'             => '編集用のツールバーを表示する（JavaScriptが必要）',
 'tog-editondblclick'          => 'ダブルクリックで編集する（JavaScriptが必要）',
 'tog-editsection'             => '[編集]リンクから節を編集できるようにする',

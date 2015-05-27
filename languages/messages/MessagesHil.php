@@ -24,7 +24,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Taguon ang mga nabantayan  nga pahina sa bag-ong lista sang mga pahina',
 'tog-extendwatchlist'         => 'Palaparon ang watchlist para makita ang tanan nga mga na-islan, indi lang man sa pinaka bag-o',
 'tog-usenewrc'                => 'Gamiton ang ginpanami nga bag-o lang gid nga na-islan (nagakilanlan JavaScript)',
-'tog-numberheadings'          => 'Auto-numero heading',
 'tog-showtoolbar'             => 'Ipakita ang edit toolbar (nagakilanlan JavaScript)',
 'tog-editondblclick'          => 'Islan ang pahina kung i-doble klik mo (nagakilanlan JavaScript)',
 'tog-editsection'             => 'Sugtan ang pag-ilis sang seksyon paagi sa [ilisan] nga mga tabid',

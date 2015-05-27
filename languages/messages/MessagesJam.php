@@ -22,7 +22,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Aid pachruol piej frahn nyuu piej lis',
 'tog-extendwatchlist'         => 'Expan wachlis fi shuo aal chienj, no jos di muos riisant',
 'tog-usenewrc'                => 'Yuuz enans riisant chienj (rikwaya JavaScript)',
-'tog-numberheadings'          => 'Aato-nomba edndem',
 'tog-showtoolbar'             => 'Shuo edit tuulbaar (rikwaya JavaScript)',
 'tog-editondblclick'          => 'Edit piej pahn dobl klik (rikwaya JavaScript)',
 'tog-editsection'             => 'Eniebl sekshan editin vaya [edit] lingk',

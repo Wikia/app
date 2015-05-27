@@ -43,7 +43,6 @@ $messages = array(
 'tog-newpageshidepatrolled'  => 'Mushuk pankakunapak kamupi, ña rikushka pankakunata pakana',
 'tog-extendwatchlist'        => 'Rikushka pankakunapak mushuk killkaykunapak kamupi, ama yallik mushuk killkaykunatalla rikuchina, tukuykunatami rikuchina',
 'tog-usenewrc'               => 'Mushuk killkaykunata ashtawan alli rikuchina (Javascriptwanlla)',
-'tog-numberheadings'         => 'Uma killkaykunata yupayta churak antawata llankachina',
 'tog-showtoolbar'            => 'Llamkana antakunata rikuchina (Javascriptwanlla)',
 'tog-editondblclick'         => 'Ishkayta klik rurashpa pankapi killkanata kallarina (JavaScriptwanlla)',
 'tog-editsection'            => 'Rakikunata [Killkana] tinkiwan killkankapak arinina',

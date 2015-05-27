@@ -151,7 +151,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Celar le paginas patruliate del lista de nove paginas',
 'tog-extendwatchlist'         => 'Displicar le observatorio pro monstrar tote le modificationes, non solmente les plus recente',
 'tog-usenewrc'                => 'Usar le modificationes recente meliorate (require JavaScript)',
-'tog-numberheadings'          => 'Numerar titulos automaticamente',
 'tog-showtoolbar'             => 'Monstrar instrumentario de modification (require JavaScript)',
 'tog-editondblclick'          => 'Duple clic pro modificar un pagina (require JavaScript)',
 'tog-editsection'             => 'Activar le modification de sectiones con ligamines "[modificar]"',

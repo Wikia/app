@@ -317,7 +317,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Esconder páginas patrulhadas na lista de páginas novas',
 'tog-extendwatchlist'         => 'Listagem expandida de todas as mudanças às páginas vigiadas, não apenas das mais recentes',
 'tog-usenewrc'                => 'Usar a versão melhorada das mudanças recentes (requer JavaScript)',
-'tog-numberheadings'          => 'Auto-numerar cabeçalhos',
 'tog-showtoolbar'             => 'Mostrar barra de edição (JavaScript)',
 'tog-editondblclick'          => 'Editar páginas quando houver um clique duplo (JavaScript)',
 'tog-editsection'             => 'Possibilitar a edição de secções com links [editar]',

@@ -71,7 +71,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Mshef redaktimet e mbikëqyruna prej listës së faqeve të reja',
 'tog-extendwatchlist'         => 'Zgjâno listën e mbikëqyrjeve që me i pa tâna ndryshimet, jo veç ato mâ të fresktat',
 'tog-usenewrc'                => 'Përdor ndryshimet e freskëta me vegla të përparueme (lyp JavaScript)',
-'tog-numberheadings'          => 'Numëro automatikisht mbititujt',
 'tog-showtoolbar'             => 'Trego butonat për redaktim (JavaScript)',
 'tog-editondblclick'          => 'Redakto faqet me klikim të dyfishtë (JavaScript)',
 'tog-editsection'             => 'Lejo redaktimin e seksioneve me opcionin [redakto]',

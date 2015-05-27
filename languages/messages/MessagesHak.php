@@ -19,7 +19,6 @@ $messages = array(
 'tog-hideminor'               => 'Chui-khiûn ke kiên-kói chûng yún-chhòng séu siû-kói',
 'tog-extendwatchlist'         => 'Chen-kâ kam-sṳ chhîn-tân yî-khi̍p hién-sṳ só-yû khó chhái-yung ke kiên-kói',
 'tog-usenewrc'                => 'Chen-khiòng chui-khiûn ke kiên-kói （JavaScript）',
-'tog-numberheadings'          => 'Phêu-thì chhṳ-thung phiên-ho',
 'tog-showtoolbar'             => 'Hién-sṳ phiên-cho kûng-khí-làn （JavaScript）',
 'tog-editondblclick'          => 'Sûng-kit phiên-cho hong-mien （JavaScript）',
 'tog-editsection'             => 'Yún-chún thûng-ko tiám-kit [phiên-siá] lièn-kiet phiên-cho thon-lo̍k',

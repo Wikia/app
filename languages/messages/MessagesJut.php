@@ -22,7 +22,6 @@ $messages = array(
 'tog-hideminor'               => "Skjul mendre ændrenger i'n liste åver seneste ændrenger",
 'tog-extendwatchlist'         => 'Udvedet liste ve seneste ændrenger',
 'tog-usenewrc'                => 'Førbedret liste åver seneste ændrenger (JavaScript)',
-'tog-numberheadings'          => 'Åtåmatisk nåmererenge åf åverskrefter',
 'tog-showtoolbar'             => 'Ves værktøjslenje til redigærenge (JavaScript)',
 'tog-editondblclick'          => 'Redigær sider ve dåbeltklik (JavaScript)',
 'tog-editsection'             => 'Redigær åfsnet ve hjælp åf [redigær]-henvesnenger',

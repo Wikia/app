@@ -237,7 +237,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => 'Fela yfirfarnar breytingar í listanum yfir nýjar síður',
 'tog-extendwatchlist' => 'Sýna allar breytingar á vaktlistanum, ekki einungis þær nýjustu',
 'tog-usenewrc' => 'Endurbættar auknar nýlegar breytingar (þarfnast JavaScript)',
-'tog-numberheadings' => 'Númera fyrirsagnir sjálfkrafa',
 'tog-showtoolbar' => 'Sýna breytingarverkfærastiku (JavaScript)',
 'tog-editondblclick' => 'Breyta síðum þegar tvísmellt er (JavaScript)',
 'tog-editsection' => 'Virkja hlutabreytingu með [breyta] tenglum',

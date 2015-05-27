@@ -28,7 +28,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Pelanê qontrolkerdeyan lista pelanê neweyan de bınımne',
 'tog-extendwatchlist'         => 'Lista seyrkerdışi hera bıke ke vurnayışi pêro bıasê, tenya tewr peyêni nê',
 'tog-usenewrc'                => 'Vurnayışanê peyênanê herakerdeyan bıxebetne (JavaScript lazımo)',
-'tog-numberheadings'          => 'Sernuşteyan be xo numre cı şane',
 'tog-showtoolbar'             => 'Goceganê hacetanê vurnayışi bımocne (JavaScript lazımo)',
 'tog-editondblclick'          => 'Pê dı rey tıknayış pele sero bıxebetiye (JavaScript lazımo)',
 'tog-editsection'             => 'Vurnayışê qısımi be gıreyanê [bıvurne] ra feal ke',

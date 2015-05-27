@@ -404,7 +404,6 @@ $messages = array(
 'tog-hideminor'               => 'جۋىقتاعى وزگەرىستەردەن شاعىن وڭدەمەلەردى جاسىر',
 'tog-extendwatchlist'         => 'باقىلاۋ ٴتىزىمدى ۇلعايت (بارلىق جارامدى وزگەرىستەردى كورسەت)',
 'tog-usenewrc'                => 'كەڭەيتىلگەن جۋىقتاعى وزگەرىستەر (JavaScript)',
-'tog-numberheadings'          => 'باس جولداردى وزدىكتىك نومىرلە',
 'tog-showtoolbar'             => 'وڭدەۋ قۋرالدار جولاعىن كورسەت (JavaScript)',
 'tog-editondblclick'          => 'قوس نۇقىمداپ وڭدەۋ (JavaScript)',
 'tog-editsection'             => 'بولىمدەردى [وڭدەۋ] سىلتەمەسىمەن وڭدەۋىن قوس',

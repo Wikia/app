@@ -54,7 +54,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Delikna kaca sing wis dipatroli saka daftar kaca anyar',
 'tog-extendwatchlist'         => 'Kembangna daftar pangawasan kanggo nuduhaké kabèh pangowahan, ora mung sing paling anyar',
 'tog-usenewrc'                => 'Gunakna tampilan pangowahan pungkasan sing wis dikembangake (mbutuhake JavaScript)',
-'tog-numberheadings'          => 'Wènèhana nomer judul secara otomatis',
 'tog-showtoolbar'             => 'Tuduhna <em>toolbar</em> (batang piranti) panyuntingan',
 'tog-editondblclick'          => 'Sunting kaca nganggo klik ping loro (JavaScript)',
 'tog-editsection'             => 'Fungsèkna panyuntingan sub-bagian ngliwati pranala [sunting]',

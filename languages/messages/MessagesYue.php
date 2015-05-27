@@ -239,7 +239,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => '響新頁清單度隱藏巡查過嘅版',
 'tog-extendwatchlist'         => '展開監視清單去顯示全部更改，唔係淨係最新嘅',
 'tog-usenewrc'                => '用強化版最近更改（需要JavaScript）',
-'tog-numberheadings'          => '標題自動編號',
 'tog-showtoolbar'             => '顯示修改工具列（需要JavaScript）',
 'tog-editondblclick'          => '撳兩下改嘢（需要JavaScript）',
 'tog-editsection'             => '可以用 [修改] 掣更改個別段落',

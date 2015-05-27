@@ -151,7 +151,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kache paj ki siveye yo nan mitan lis nouvo paj yo',
 'tog-extendwatchlist'         => 'Etann lis swivi pou ou kapab wè tout chanjman yo, pa sèlman sa ki fèk fèt yo',
 'tog-usenewrc'                => 'Itilize vèsyon modifikasyon ki fèk fèt yo ki miyò a (li bezwen ou aktive JavaScript)',
-'tog-numberheadings'          => 'Nimewote otomatikman tit yo',
 'tog-showtoolbar'             => 'Montre meni modifikasyon an',
 'tog-editondblclick'          => 'Klike de fwa pou modifye yon paj (JavaScript)',
 'tog-editsection'             => 'Pemèt modifye yon seksyon grasa lyen [modifye] yo',

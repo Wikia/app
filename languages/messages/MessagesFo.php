@@ -120,7 +120,6 @@ $messages = array(
 'tog-newpageshidepatrolled' => 'Goym eftirkannaðar síður frá listanum yvir nýggjar síður',
 'tog-extendwatchlist' => 'Víðka eftirlitslistan fyri at vísa allar broytingar, ikki bara tær seinastu',
 'tog-usenewrc' => 'Nýt betraðar seinastu broytingar (krevur JavaScript)',
-'tog-numberheadings' => 'Sjálvtalmerking av yvirskrift',
 'tog-showtoolbar' => 'Vís amboðslinju í rætting',
 'tog-editondblclick' => 'Rætta síðu við at tvíklikkja (JavaScript)',
 'tog-editsection' => 'Rætta greinpart við hjálp av [rætta]-ávísing',

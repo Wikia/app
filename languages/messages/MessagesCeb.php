@@ -70,7 +70,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Tagoa ang napatrol nga mga panid gikan sa talaan sa mga bag-ong panid',
 'tog-extendwatchlist'         => 'Padak-a ang gibantayan aron mapakita ang tanang kausaban, dili lang ang labing bag-o',
 'tog-usenewrc'                => 'Gamita ang na-enhance nga mga bag-ong giusab (JavaScript kinahanglan)',
-'tog-numberheadings'          => 'Awtomatiko ang pagnumero sa mga heading',
 'tog-showtoolbar'             => 'Ipakita ang toolbar sa pag-edit (JavaScript)',
 'tog-editondblclick'          => 'I-edit ang panid inig dobol-klik (JavaScript)',
 'tog-editsection'             => 'Mausab ang mga seksiyon gamit ang [usba] nga sumpay',

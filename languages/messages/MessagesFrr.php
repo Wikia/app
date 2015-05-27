@@ -27,7 +27,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Kontroliirde side aw e list "Naie side" fersteege',
 'tog-extendwatchlist'         => 'Ütwidede wåchelist tun wisen foon åle änringe',
 'tog-usenewrc'                => 'Ütwidede deerstaling foon da "Leeste Änringe" (brükt JavaScript)',
-'tog-numberheadings'          => 'Ouerschrafte automatisch numeriire',
 'tog-showtoolbar'             => 'Beårbe-wärktjüch wise',
 'tog-editondblclick'          => 'Side ma dööweltklik beårbe (brükt JavaScript)',
 'tog-editsection'             => 'Ferbininge tun wisen foon änkelte oufsnaase',

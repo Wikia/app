@@ -130,7 +130,6 @@ $messages = array(
 'tog-newpageshidepatrolled'   => 'Ascondi e paggine verifiché da-o elenco de paggine ciù reçenti',
 'tog-extendwatchlist'         => 'mostrâ tùtte e modifiche a-i òsserve speciali',
 'tog-usenewrc'                => 'Usâ e ùrtime modifiche avansê (serve Javascript)',
-'tog-numberheadings'          => 'Nùmeraçion aotomàtica di tìtoli de seçión',
 'tog-showtoolbar'             => 'Fâ vedde a barra de strumenti de modìffica (con JavaScript)',
 'tog-editondblclick'          => 'Modifica e paggine co-o dópio clic (serve Javascrpt)',
 'tog-editsection'             => 'Modifica e seçión co-o colegamento [modifica]',

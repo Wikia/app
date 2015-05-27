@@ -123,7 +123,6 @@ $messages = array(
 'tog-justify'                 => 'Justifiche paragraf',
 'tog-hideminor'               => 'Plate lis piçulis modifichis tai ultins cambiaments',
 'tog-usenewrc'                => 'Dopre i ultins cambiaments avanzâts (covente JavaScript)',
-'tog-numberheadings'          => 'Numerazion automatiche dai titui',
 'tog-showtoolbar'             => 'Mostre sbare dai imprescj pe modifiche (JavaScript)',
 'tog-editondblclick'          => 'Cambie lis pagjinis fracant dôs voltis (JavaScript)',
 'tog-editsection'             => 'Inserìs un leam [cambie] pe editazion veloç di une sezion',
