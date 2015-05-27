@@ -65,6 +65,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
@@ -2448,3 +2449,11 @@ $config['special_email_admin_css'] = [
 		'//extensions/wikia/Email/styles/specialSendEmail.scss'
 	]
 ];
+
+$config['sitemap_page_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'wikiamobile' ],
+	'assets' => [
+		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
+	]
+);
