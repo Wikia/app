@@ -108,7 +108,7 @@ class FlagsApiController extends WikiaApiController {
 	 * Required parameters:
 	 * @requestParam int page_id
 	 * @requestParam array flags
-	 * @requestParam int flags[]['flagTypeId'] An ID of a flag type
+	 * @requestParam int flags[]['flag_type_id'] An ID of a flag type
 	 *
 	 * Optional parameters:
 	 * @requestParam int wiki_id You can overwrite the current city_id
@@ -178,10 +178,10 @@ class FlagsApiController extends WikiaApiController {
 	 *
 	 * Required parameters:
 	 * @requestParam int wiki_id
-	 * @requestParam int flagGroup One of the keys in flagGroups property of the FlagType model
-	 * @requestParam string flagName A name of the flag (not longer than 128 characters)
-	 * @requestParam string flagView A title of a template used for rendering the flag
-	 * @requestParam int flagTargeting A level of targeting: 0 -> readers, 1 -> contibutors, 2 -> admins
+	 * @requestParam int flag_group One of the keys in flagGroups property of the FlagType model
+	 * @requestParam string flag_name A name of the flag (not longer than 128 characters)
+	 * @requestParam string flag_view A title of a template used for rendering the flag
+	 * @requestParam int flag_targeting A level of targeting: 0 -> readers, 1 -> contibutors, 2 -> admins
 	 *
 	 * Optional parameters:
 	 * @requestParam string flagParamsNames A JSON-encoded array of names of parameters
@@ -192,12 +192,15 @@ class FlagsApiController extends WikiaApiController {
 		if ( !$this->processRequest() ) {
 			return false;
 		}
+		$flagTypeId = null;
 		$flagTypeModel = new FlagType();
 
 		if ( $flagTypeModel->verifyParamsForAdd( $this->params ) ) {
-			$this->status = $flagTypeModel->addFlagType( $this->params );
+			$flagTypeId = $flagTypeModel->addFlagType( $this->params );
+			$this->status = (bool) $flagTypeId;
 		}
 
+		$this->setVal( 'flag_type_id', $flagTypeId );
 		$this->setVal( 'status', $this->status );
 	}
 
@@ -260,8 +263,8 @@ class FlagsApiController extends WikiaApiController {
 	 * @return bool
 	 */
 	private function processRequest() {
-		if ( !$this->request->wasPosted()
-			|| !$this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) )
+		if ( !$this->request->isInternal()
+			&& ( !$this->request->wasPosted() || $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) ) )
 		) {
 			$this->response->setException( new \Exception( 'Invalid request' ) );
 			return false;

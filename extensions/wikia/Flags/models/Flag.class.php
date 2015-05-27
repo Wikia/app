@@ -165,6 +165,8 @@ class Flag extends FlagsBaseModel {
 	 * @return bool
 	 */
 	private function addFlag( $flagTypeId, $wikiId, $pageId, Array $params = [] ) {
+		$status = true;
+
 		$db = $this->getDatabaseForWrite();
 
 		( new \WikiaSQL() )

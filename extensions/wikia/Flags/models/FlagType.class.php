@@ -127,7 +127,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function verifyParamsForAdd( $params ) {
-		$required = [ 'wiki_id', 'flagGroup', 'flagName', 'flagView', 'flagTargeting' ];
+		$required = [ 'wiki_id', 'flag_group', 'flag_name', 'flag_view', 'flag_targeting' ];
 
 		foreach ( $required as $requiredField ) {
 			if ( !isset( $params[$requiredField] ) ) {
@@ -135,7 +135,7 @@ class FlagType extends FlagsBaseModel {
 			}
 		}
 
-		if ( !isset( self::$flagGroups[$params['flagGroup']] ) ) {
+		if ( !isset( self::$flagGroups[$params['flag_group']] ) ) {
 			return false; // Unrecognized flag group
 		}
 
@@ -160,13 +160,13 @@ class FlagType extends FlagsBaseModel {
 			->INSERT( self::FLAGS_TYPES_TABLE )
 			->SET( 'wiki_id', $params['wiki_id'] )
 			// flag_type_id is auto_increment
-			->SET( 'flag_group', $params['flagGroup'] )
-			->SET( 'flag_name', $params['flagName'] )
-			->SET( 'flag_view', $params['flagView'] )
-			->SET( 'flag_targeting', $params['flagTargeting'] );
+			->SET( 'flag_group', $params['flag_group'] )
+			->SET( 'flag_name', $params['flag_name'] )
+			->SET( 'flag_view', $params['flag_view'] )
+			->SET( 'flag_targeting', $params['flag_targeting'] );
 
-		if ( $params['flagParamsNames'] !== null  ) {
-			$sql->SET('flag_params_names', $params['flagParamsNames'] );
+		if ( $params['flag_params_names'] !== null  ) {
+			$sql->SET('flag_params_names', $params['flag_params_names'] );
 		}
 
 		$sql->run( $db );

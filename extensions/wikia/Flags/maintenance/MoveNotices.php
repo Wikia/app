@@ -19,7 +19,8 @@ class MoveNotices extends Maintenance {
 		$templateName,
 		$wikiId,
 		$pageId,
-		$flagTypeId;
+		$flagTypeId,
+		$app;
 
 	/**
 	 * Set script options
@@ -33,6 +34,8 @@ class MoveNotices extends Maintenance {
 
 	public function execute() {
 		global $wgCityId, $wgParser;
+
+		$this->app = F::app();
 
 		if ( empty ( $wgCityId ) ) {
 			exit( "Wiki ID is not set\n" );
@@ -100,34 +103,34 @@ class MoveNotices extends Maintenance {
 				// Prepare data to add flag type
 				$flagType = $this->prepareDataForFlagType( $flagTypeModel, $data );
 
-				if ( !($this->flagTypeId = $this->addFlagType( $flagTypeModel, $flagType ) ) ) {
+				if ( !($this->flagTypeId = $this->addFlagType( $flagType ) ) ) {
 					continue;
 				}
 
 				$this->log = 'Adding flag type: ' . json_encode( $flagType ) . "\n";
 			}
 
-			$this->log .= "Start processing template: $this->templateName \n";
+			$this->addToLog( "Start processing template: $this->templateName \n" );
 
 			$title = Title::newFromText( 'Template:' . $this->templateName );
 
 			$rows = $this->showIndirectLinks( 0, $title, 0 );
 
 			if ( empty( $rows ) ) {
-				$this->log .= "[WARNING] This template is not used \n";
-				$this->log .= "================================================== \n\n\n";
+				$this->addToLog( "[WARNING] This template is not used \n" );
+				$this->addToLog( "================================================== \n\n\n" );
 				fwrite( $this->logFile, $this->log );
 				$this->output( $this->log );
 				continue;
 			}
 
 			if ( is_null( $section )  ) {
-				$this->log .= "Searching in section " . self::SECTION_DEFAULT . " (by default)\n";
+				$this->addToLog( "Searching in section " . self::SECTION_DEFAULT . " (by default)\n" );
 				$section = self::SECTION_DEFAULT;
 			} elseif ( $section == self::SECTION_ALL ) {
-				$this->log .= "Searching in all article content\n";
+				$this->addToLog( "Searching in all article content\n" );
 			} else {
-				$this->log .= "Searching in section $section\n";
+				$this->addToLog( "Searching in section $section\n" );
 			}
 
 			fwrite( $this->logFile, $this->log );
@@ -146,7 +149,7 @@ class MoveNotices extends Maintenance {
 					$content = $wgParser->getSection($content, $section);
 				}
 
-				$this->log .= "Looking for template on $pageName [" . $this->pageId . "]\n";
+				$this->addToLog( "Looking for template on $pageName [" . $this->pageId . "]\n" );
 
 				$flagsExtractor->init( $content, $this->templateName );
 				$templates = $flagsExtractor->getAllTemplates();
@@ -154,9 +157,9 @@ class MoveNotices extends Maintenance {
 				$size = sizeof( $templates );
 
 				if ( !$size ) {
-					$this->log .= "[WARNING] No templates found on page $pageName\n";
+					$this->addToLog( "[WARNING] No templates found on page $pageName\n" );
 				} elseif ( $size > 1 ) {
-					$this->log .= "[WARNING] Found more than one ($size) template $this->templateName on page $pageName\n";
+					$this->addToLog( "[WARNING] Found more than one ($size) template $this->templateName on page $pageName\n" );
 				}
 
 				if ( $size ) {
@@ -165,10 +168,12 @@ class MoveNotices extends Maintenance {
 					$flagsToPages = $this->prepareDataForFlagsToPage( $templates[0]['params'] );
 
 					if ( !$list ) {
-						$flagModel->verifyParamsForAdd( $flagsToPages );
-						$flagModel->addFlagsToPage( $flagsToPages );
+						$this->app->sendRequest( 'FlagsApiController',
+							'addFlagsToPage',
+							$flagsToPages
+						)->getData();
 
-						$this->log .= "Adding flags to pages: " . json_encode( $flagsToPages ) ."\n";
+						$this->addToLog( "Adding flags to pages: " . json_encode( $flagsToPages ) ."\n" );
 					}
 				}
 
@@ -177,7 +182,7 @@ class MoveNotices extends Maintenance {
 			}
 
 			$this->log = "Processing template: $this->templateName completed \n";
-			$this->log .= "================================================== \n\n\n";
+			$this->addToLog( "================================================== \n\n\n" );
 
 			fwrite( $this->logFile, $this->log );
 			$this->output( $this->log );
@@ -191,15 +196,19 @@ class MoveNotices extends Maintenance {
 	/**
 	 * Add flag type
 	 */
-	private function addFlagType( FlagType $flagTypeModel, $flagType ) {
-		$flagTypeModel->verifyParamsForAdd( $flagType );
-		$flagTypeId = $flagTypeModel->addFlagType( $flagType );
+	private function addFlagType( $flagType ) {
+		$response = $this->app->sendRequest( 'FlagsApiController',
+			'addFlagType',
+			$flagType
+		)->getData();
+
+		$flagTypeId = $response['flag_type_id'];
 
 		if ( $flagTypeId ) {
-			$this->log .= "Flag ID: $flagTypeId added.\n";
+			$this->addToLog( "Flag ID: $flagTypeId added.\n" );
 		} else {
-			$this->log .= "[ERROR] Flag is not added!\n";
-			$this->log .= "================================================== \n\n\n";
+			$this->addToLog( "[ERROR] Flag is not added!\n" );
+			$this->addToLog( "================================================== \n\n\n" );
 			fwrite( $this->logFile, $this->log );
 			$this->output( $this->log );
 		}
@@ -208,19 +217,26 @@ class MoveNotices extends Maintenance {
 	}
 
 	/**
+	 * Add text to log
+	 */
+	private function addToLog( $text ) {
+		$this->log .= $text;
+	}
+
+	/**
 	 * Log info about all found templates
 	 */
 	private function logTemplatesInfo( $templates ) {
 		foreach ( $templates as $template ) {
-			$this->log .= "Processing template: " . $template['template'] ."\n";
+			$this->addToLog( "Processing template: " . $template['template'] ."\n" );
 
 			if ( empty( $template['params'] ) ) {
-				$this->log .= "No parameters found\n";
+				$this->addToLog( "No parameters found\n" );
 			} else {
-				$this->log .= "Found parameters: \n";
+				$this->addToLog( "Found parameters: \n" );
 
 				foreach( $template['params'] as $name => $value ) {
-					$this->log .= "Parameter $name = $value \n";
+					$this->addToLog( "Parameter $name = $value \n" );
 				}
 			}
 		}
@@ -242,7 +258,7 @@ class MoveNotices extends Maintenance {
 			'flag_name' => $data[1],
 			'flag_view' => $data[0],
 			'flag_targeting' => $flagTypeModel->getFlagTargetingId( $data[3] ),
-			'flag_params_names' => $parameters
+			'flag_params_names' => $parameters,
 		];
 
 		return $flagType;
@@ -284,7 +300,7 @@ class MoveNotices extends Maintenance {
 
 		if ( empty( $data[0] ) ) {
 			$this->output( "[WARNING] Template name is not set.\n" );
-			$this->log .= "[WARNING] Template name is not set.\n";
+			$this->addToLog( "[WARNING] Template name is not set.\n" );
 			$error = true;
 		}
 
@@ -292,19 +308,19 @@ class MoveNotices extends Maintenance {
 
 		if ( empty( $data[1] ) ) {
 			$this->output( "[WARNING] Template display name for template $templateName is not set.\n" );
-			$this->log .= "[WARNING] Template name is not set.\n";
+			$this->addToLog( "[WARNING] Template name is not set.\n" );
 			$error = true;
 		}
 
 		if ( empty( $data[2] ) ) {
 			$this->output( "[WARNING] Flag type for template $templateName is not set.\n" );
-			$this->log .= "[WARNING] Template name for template $templateName is not set.\n";
+			$this->addToLog( "[WARNING] Template name for template $templateName is not set.\n" );
 			$error = true;
 		}
 
 		if ( empty( $data[3] ) ) {
 			$this->output( "[WARNING] Flag targeting for template $templateName is not set.\n" );
-			$this->log .= "[WARNING] Template name for template $templateName is not set.\n";
+			$this->addToLog( "[WARNING] Template name for template $templateName is not set.\n" );
 			$error = true;
 		}
 
