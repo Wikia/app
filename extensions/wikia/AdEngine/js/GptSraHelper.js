@@ -14,14 +14,10 @@ define('ext.wikia.adEngine.gptSraHelper', [
 			'HUB_TOP_LEADERBOARD',
 			'INVISIBLE_SKIN',
 			'TOP_LEADERBOARD'
-		],
-		flushOnlySlots = [
-			'GPT_FLUSH',
-			'TURTLE_FLUSH'
 		];
 
-	function shouldPush(slotName) {
-		var result = flushOnlySlots.indexOf(slotName) === -1;
+	function shouldPush(slotName, slotTargeting) {
+		var result = !(slotTargeting && slotTargeting.flushOnly);
 
 		log(['shouldPush', slotName, result], 'debug', logGroup);
 		return result;
@@ -37,17 +33,16 @@ define('ext.wikia.adEngine.gptSraHelper', [
 	}
 
 	function pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType) {
-
-		if (shouldPush(slotName)) {
+		if (shouldPush(slotName, slotTargeting)) {
 			gptHelper.pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType);
-			log(['push', 'Pushed slot:', slotName], 'debug', logGroup);
+			log(['pushAd', 'Pushed slot:', slotName], 'debug', logGroup);
 		} else {
 			success({});
 		}
 
 		if (shouldFlush(slotName)) {
 			gptHelper.flushAds();
-			log(['push', 'Flushing slot:', slotName], 'debug', logGroup);
+			log(['pushAd', 'Flushing slot:', slotName], 'debug', logGroup);
 		}
 	}
 

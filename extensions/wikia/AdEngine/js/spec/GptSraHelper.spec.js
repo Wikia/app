@@ -22,7 +22,7 @@ describe('ext.wikia.adEngine.gptSraHelper', function () {
 	it('Do not push when flush-only slot passed', function () {
 		spyOn(mocks.gptHelper, 'pushAd');
 
-		getModule().pushAd('GPT_FLUSH', '', {}, noop);
+		getModule().pushAd('GPT_FLUSH', '', {flushOnly: true}, noop, noop);
 
 		expect(mocks.gptHelper.pushAd).not.toHaveBeenCalled();
 	});

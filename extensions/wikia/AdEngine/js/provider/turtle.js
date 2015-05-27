@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 			LEFT_SKYSCRAPER_2:       {size: '160x600'},
 			TOP_LEADERBOARD:         {size: '728x90,970x250,970x90'},
 			TOP_RIGHT_BOXAD:         {size: '300x250,300x600'},
-			TURTLE_FLUSH:            {}
+			TURTLE_FLUSH:            {flushOnly: true}
 		};
 
 	function canHandleSlot(slotName) {

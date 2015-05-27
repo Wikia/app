@@ -42,12 +42,12 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		);
 	}
 
-	function getProvider(extra, slotMap) {
+	function getProvider(extra) {
 		return getModule().createProvider(
 			'logGroup',
 			'testProvider',
 			'testSource',
-			slotMap || {
+			{
 				TOP_LEADERBOARD:         {size: '728x90,970x250,970x90', pos: 'top'},
 				TOP_RIGHT_BOXAD:         {size: '300x250,300x600', pos: 'top'},
 				LEFT_SKYSCRAPER_2:       {size: '160x600', pos: 'middle'},
