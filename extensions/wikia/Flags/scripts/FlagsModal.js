@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.loader'], function ($, loader) {
+require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	'use strict';
 
 	/* Modal component configuration */
@@ -8,11 +8,11 @@ require(['jquery', 'wikia.loader'], function ($, loader) {
 			classes: ['edit-flags'],
 			size: 'medium', // size of the modal
 			content: '', // content
-			title: 'Flags',
+			title: mw.message('flags-edit-modal-title').escaped(),
 			buttons: [ // buttons in the footer
 				{
 					vars: {
-						value: 'Done',
+						value: mw.message('flags-edit-modal-done-button-text').escaped(),
 						data: [
 							{
 								key: 'event',
@@ -23,7 +23,7 @@ require(['jquery', 'wikia.loader'], function ($, loader) {
 				},
 				{
 					vars: {
-						value: 'Cancel',
+						value: mw.message('flags-edit-modal-cancel-button-text').escaped(),
 						data: [
 							{
 								key: 'event',
