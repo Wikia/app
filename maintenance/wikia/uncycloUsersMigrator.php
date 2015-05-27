@@ -303,6 +303,8 @@ class UncycloUserMigrator extends Maintenance {
 		$newName = self::PREFIX_RENAME_GLOBAL . $user->getName();
 		$this->output( sprintf( '> renaming global user to "%s" (#%d)...', $newName, $user->getId() ) );
 
+		$this->renamedWikiaAccounts++;
+
 		if ( $this->isDryRun ) {
 			return;
 		}
@@ -328,8 +330,6 @@ class UncycloUserMigrator extends Maintenance {
 
 		$this->info( __METHOD__, [ 'user' => $user->getName() ] );
 		$this->output( sprintf( "\n%s: %s\n", __METHOD__, trim( $output ) ) );
-
-		$this->renamedWikiaAccounts++;
 	}
 
 	/**
