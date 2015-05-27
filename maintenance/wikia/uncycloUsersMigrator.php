@@ -308,7 +308,7 @@ class UncycloUserMigrator extends Maintenance {
 			return;
 		}
 
-		$cmd = sprintf( 'php %s/renameUser.php --old-username=%s --new-username=%s--reason=%s',
+		$cmd = sprintf( 'php %s/renameUser.php --old-username=%s --new-username=%s --reason=%s',
 			__DIR__,
 			escapeshellarg( $user->getName() ),
 			escapeshellarg( $newName ),
@@ -595,7 +595,7 @@ class UncycloUserMigrator extends Maintenance {
 		}
 
 		// get all uncyclopedia accounts
-		$this->output( "Prepating the list of accounts to migrate..." );
+		$this->output( "Preparing the list of accounts to migrate..." );
 		$res = $this->getUncycloDB()->select(
 			self::USER_TABLE,
 			'*',
