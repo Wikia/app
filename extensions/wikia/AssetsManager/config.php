@@ -2449,3 +2449,11 @@ $config['special_email_admin_css'] = [
 		'//extensions/wikia/Email/styles/specialSendEmail.scss'
 	]
 ];
+
+$config['sitemap_page_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'wikiamobile' ],
+	'assets' => [
+		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
+	]
+);
