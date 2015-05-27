@@ -129,7 +129,7 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param array $context
 	 */
 	protected function err( $msg, Array $context = [] ) {
-		Wikia\Logger\WikiaLogger::instance()->err( $msg, $context );
+		Wikia\Logger\WikiaLogger::instance()->error( $msg, $context );
 	}
 
 	/**
@@ -307,7 +307,7 @@ class UncycloUserMigrator extends Maintenance {
 			return;
 		}
 
-		$cmd = sprintf( 'php %s/renameUser.php --old-username=%d --new-username="%s" --reason="%s"',
+		$cmd = sprintf( 'php %s/renameUser.php --old-username=%s --new-username=%s--reason=%s',
 			__DIR__,
 			escapeshellarg( $user->getName() ),
 			escapeshellarg( $newName ),
@@ -327,6 +327,7 @@ class UncycloUserMigrator extends Maintenance {
 		}
 
 		$this->info( __METHOD__, [ 'user' => $user->getName() ] );
+		$this->output( sprintf( "\n%s: %s\n", __METHOD__, trim( $output ) ) );
 
 		$this->renamedWikiaAccounts++;
 	}
@@ -544,6 +545,10 @@ class UncycloUserMigrator extends Maintenance {
 		global $wgUser;
 		$wgUser = $this->getGlobalUserByName( 'WikiaBot' );
 
+		// do not use ulimit4 when calling wfShellExec()
+		global $wgMaxShellTime;
+		$wgMaxShellTime = 0;
+
 		// read options
 		$this->isDryRun = $this->hasOption( 'dry-run' );
 		$this->onlyRenameGlobalUsers = $this->hasOption( 'only-rename-global-users' );
@@ -594,6 +599,7 @@ class UncycloUserMigrator extends Maintenance {
 			catch ( Exception $e ) {
 				$dbw->rollback();
 
+				$this->output( sprintf( "\n%s: %s\n", get_class( $e ), $e->getMessage() ) );
 				$this->err( __METHOD__ , [
 					'exception' => $e,
 					'user_id' => $user->getId(),

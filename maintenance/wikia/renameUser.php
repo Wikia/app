@@ -59,10 +59,15 @@ class RenameUserMaintenance extends Maintenance {
 				'warnings' => $renameProcess->getWarnings(),
 			] );
 
+			// die with exit code 1
 			$this->error( 'RenameUserProcess::run failed for ' . $oldName, 1 );
 		}
 
-		$logger->info( __CLASS__ . ': done' );
+		$logger->info( __CLASS__ . ': done', [
+			'task_id' => $renameProcess->getUserRenameTaskId()
+		] );
+
+		$this->output( sprintf( "Renaming of '%s' to '%s' done, task_id is '%s'\n", $oldName, $newName, $renameProcess->getUserRenameTaskId() ) );
 	}
 }
 
