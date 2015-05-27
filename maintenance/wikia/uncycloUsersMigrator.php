@@ -20,7 +20,7 @@ putenv('SERVER_ID=425'); // run in the context of uncyclopedia wiki
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
-class UncycloUserMigratorException extends Exception {}
+class UncycloUsersMigratorException extends Exception {}
 
 /**
  * Maintenance script class
@@ -34,6 +34,8 @@ class UncycloUserMigrator extends Maintenance {
 	const PREFIX_RENAME_GLOBAL = 'W-';
 
 	const UNCYCLO_EDITS_AFTER = '20140101000000' ; // Jan 2014
+
+	const RENAME_REASON = 'Uncyclopedia users migration';
 
 	private $createdAccounts         = 0;
 	private $mergedAccounts          = 0;
@@ -239,7 +241,7 @@ class UncycloUserMigrator extends Maintenance {
 
 		if ( $whoIs !== false ) {
 			$this->output( sprintf( "\nCan't change the ID of %s - clashes with %s!\n", $user->getName(), $whoIs ) );
-			throw new UncycloUserMigratorException( sprintf( 'IDs clash for %s (new ID #%d)', $user->getName(), $newUserId ) );
+			throw new UncycloUsersMigratorException( sprintf( 'IDs clash for %s (new ID #%d)', $user->getName(), $newUserId ) );
 		}
 
 		if ( $this->isDryRun ) {
@@ -285,8 +287,6 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param User $user global user
 	 */
 	protected function doRenameGlobalUser( User $user ) {
-		global $wgUser;
-
 		$newName = self::PREFIX_RENAME_GLOBAL . $user->getName();
 		$this->output( sprintf( '> renaming global user to "%s" (#%d)...', $newName, $user->getId() ) );
 
@@ -294,17 +294,23 @@ class UncycloUserMigrator extends Maintenance {
 			return;
 		}
 
-		$renameProcess = new RenameUserProcess( $user->getName(), $newName, true, 'Migrating Uncyclo accounts' );
-		$res = $renameProcess->run();
+		$cmd = sprintf( 'php %s/renameUser.php --old-username=%d --new-username="%s" --reason="%s"',
+			__DIR__,
+			escapeshellarg( $user->getName() ),
+			escapeshellarg( $newName ),
+			escapeshellarg( self::RENAME_REASON )
+		);
 
-		if ( $res !== true ) {
+		$retVal = 0;
+		$output = wfShellExec( $cmd, $retVal );
+
+		if ( $retVal > 0 ) {
 			$this->error( __METHOD__, [
-				'user' => $user->getId(),
-				'errors' => $renameProcess->getErrors(),
-				'warnings' => $renameProcess->getWarnings(),
+				'cmd' => $cmd,
+				'exception' => new Exception( $output, $retVal )
 			]);
 
-			throw new UncycloUserMigratorException( 'RenameUserProcess::run failed for ' . $user->getName() );
+			throw new UncycloUsersMigratorException( $output, $retVal );
 		}
 
 		$this->info( __METHOD__, [ 'user' => $user->getName() ] );
@@ -590,10 +596,6 @@ class UncycloUserMigrator extends Maintenance {
 		}
 	}
 }
-
-// UserRenameTool
-require_once( __DIR__ . "/../../extensions/wikia/UserRenameTool/RenameUserHelper.class.php" );
-require_once( __DIR__ . "/../../extensions/wikia/UserRenameTool/RenameUserProcess.class.php" );
 
 $maintClass = "UncycloUserMigrator";
 require_once( RUN_MAINTENANCE_IF_MAIN );
