@@ -325,7 +325,7 @@ class UncycloUserMigrator extends Maintenance {
 				'exception' => new Exception( $output, $retVal )
 			]);
 
-			throw new UncycloUsersMigratorException( $output, $retVal );
+			throw new UncycloUsersMigratorException( "#{$retVal}: {$output}", $retVal );
 		}
 
 		$this->info( __METHOD__, [ 'user' => $user->getName() ] );
@@ -350,11 +350,17 @@ class UncycloUserMigrator extends Maintenance {
 			return false;
 		}
 
+		/* @var User $extUser */
 		$extUser = clone $user;
+		$extUser->setToken();
+
+		// mark migrated accounts
+		$extUser->setOption( 'uncyclo_user', $user->getId() );
 
 		// this code was borrowed from ExternalUser_Wikia::addToDatabase
+		$fname = __METHOD__;
 		$dbw = wfGetDB( DB_MASTER, [], self::SHARED_DB );
-		$dbw->begin( __METHOD__ );
+		$dbw->begin( $fname );
 
 		try {
 			/**
@@ -367,7 +373,7 @@ class UncycloUserMigrator extends Maintenance {
 				'wgSharedDB'         => self::SHARED_DB,
 				'wgExternalSharedDB' => self::SHARED_DB,
 			] );
-			$wrapper->wrap(function () use ( $dbw, $extUser, $user ) {
+			$wrapper->wrap(function () use ( $dbw, $extUser, $fname, $user ) {
 				$dbw->insert(
 					self::USER_TABLE,
 					[
@@ -376,7 +382,7 @@ class UncycloUserMigrator extends Maintenance {
 						'user_real_name' => $user->getRealName(),
 						'user_password' => $user->mPassword,
 						'user_newpassword' => '',
-						'user_email' => $user->getEmail(),
+						'user_email' => $user->mEmail, // getEmail() would make a DB query
 						'user_touched' => '',
 						'user_token' => '',
 						'user_options' => '',
@@ -384,15 +390,30 @@ class UncycloUserMigrator extends Maintenance {
 						'user_editcount' => $user->getEditCount(), // use uncyclo counter
 						'user_birthdate' => $user->mBirthDate
 					],
-					__METHOD__
+					$fname
 				);
 
-				// mark migrated accounts
-				$extUser->setOption( 'uncyclo_user', $user->getId() );
+				$extUser->mId = $dbw->insertId();
 
-				$extUser->setId($dbw->insertId());
-				$extUser->setToken();
-				$extUser->saveSettings();
+				// move user settings to the shared DB
+				$res = $this->getUncycloDB()->select(
+					'user_properties',
+					[ 'up_property', 'up_value' ],
+					array( 'up_user' => $user->getId() ),
+					$fname
+				);
+
+				foreach ( $res as $row ) {
+					$dbw->insert(
+						'user_properties',
+						[
+							'up_user'     => $extUser->mId,
+							'up_property' => $row->up_property,
+							'up_value'    => $row->up_value,
+						],
+						$fname
+					);
+				}
 			});
 
 			// we have a new ID for a global account
@@ -402,6 +423,7 @@ class UncycloUserMigrator extends Maintenance {
 			// invalidate user cache
 			global $wgMemc;
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $user->getId() ) );
+			$wgMemc->delete( wfMemcKey( 'user', 'id', $extUser->getId() ) );
 
 			$dbw->commit(__METHOD__);
 		}
@@ -600,6 +622,7 @@ class UncycloUserMigrator extends Maintenance {
 				$dbw->rollback();
 
 				$this->output( sprintf( "\n%s: %s\n", get_class( $e ), $e->getMessage() ) );
+				$this->output( $e->getTraceAsString() );
 				$this->err( __METHOD__ , [
 					'exception' => $e,
 					'user_id' => $user->getId(),
