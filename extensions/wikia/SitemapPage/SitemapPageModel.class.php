@@ -10,16 +10,7 @@ class SitemapPageModel extends WikiaModel {
 	const MIN_LEVEL = 1;
 	const VERTICAL_UNKNOWN = 'Unknown';
 
-	protected static $verticalNames = [
-		WikiFactoryHub::VERTICAL_ID_OTHER => 'Other',
-		WikiFactoryHub::VERTICAL_ID_TV => 'TV',
-		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES => 'Games',
-		WikiFactoryHub::VERTICAL_ID_BOOKS => 'Books',
-		WikiFactoryHub::VERTICAL_ID_COMICS => 'Comics',
-		WikiFactoryHub::VERTICAL_ID_LIFESTYLE => 'Lifestyle',
-		WikiFactoryHub::VERTICAL_ID_MUSIC => 'Music',
-		WikiFactoryHub::VERTICAL_ID_MOVIES => 'Movies',
-	];
+	protected $verticals = null;
 
 	/**
 	 * Get limit for each list (top level)
@@ -242,18 +233,25 @@ class SitemapPageModel extends WikiaModel {
 	}
 
 	/**
+	 * Get all verticals
+	 * @return array
+	 */
+	protected function getVerticals() {
+		if ( is_null( $this->verticals ) ) {
+			$this->verticals = WikiFactoryHub::getInstance()->getAllVerticals();
+		}
+
+		return $this->verticals;
+	}
+
+	/**
 	 * Get vertical name
 	 * @param int $verticalId - vertical id
 	 * @return string $name - vertical name
 	 */
-	protected function getVerticalName( $verticalId ) {
-		if ( empty( self::$verticalNames[$verticalId] ) ) {
-			$name = self::VERTICAL_UNKNOWN;
-		} else {
-			$name = self::$verticalNames[$verticalId];
-		}
-
-		return $name;
+	public function getVerticalName( $verticalId ) {
+		$verticals = $this->getVerticals();
+		return ( empty( $verticals[$verticalId]['name'] ) ) ? self::VERTICAL_UNKNOWN : $verticals[$verticalId]['name'];
 	}
 
 }
