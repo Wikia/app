@@ -40,6 +40,14 @@ $messages['ar'] = array(
 	'wikianewfiles-more' => 'المزيد...',
 );
 
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'wikianewfiles-uploadby' => '{{GENDER:$2|$1}}ৰ দ্বাৰা',
+	'wikianewfiles-more' => 'অধিক...',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
@@ -149,6 +157,13 @@ $messages['ka'] = array(
 	'wikianewfiles-uploadby' => 'ამტვირთავი - {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'გამოყენებულია გვერდში',
 	'wikianewfiles-more' => 'მეტი...',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'wikianewfiles-more' => 'zêdetir...',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

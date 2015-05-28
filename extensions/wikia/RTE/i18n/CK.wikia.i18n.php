@@ -709,7 +709,7 @@ $messages['ce'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха хьажар',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  * @author Calak
  */
 $messages['ckb'] = array(
@@ -1461,8 +1461,10 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'rte-ck-errorPopupTitle' => 'Flater!',
+	'rte-ck-hoverPreview-delete' => 'fuortsmite',
 	'rte-ck-hoverPreview-edit' => 'bewurkje',
 	'rte-ck-link-error-title' => 'Flater',
+	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-signature-label' => 'ûndertekening',
 	'rte-ck-templateDropDown-label' => 'Berjocht',
 	'rte-ck-templateEditor-editor-previewButton' => 'Proefbyld',
@@ -2165,10 +2167,12 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  * @author Ghybu
  */
 $messages['ku-latn'] = array(
+	'rte-ck-bucket-controls' => 'Kontrol',
 	'rte-ck-errorPopupTitle' => 'Çewtî!',
 	'rte-ck-hoverPreview-comment-title' => 'Şîrove',
 	'rte-ck-hoverPreview-delete' => 'jê bibe',
@@ -2186,6 +2190,7 @@ $messages['ku-latn'] = array(
 	'rte-ck-link-status-exists' => 'Rûpel heye',
 	'rte-ck-link-status-notexists' => 'Rûpel tune ye',
 	'rte-ck-link-status-external' => 'Lînka derve',
+	'rte-ck-modeSwitch-toSource' => 'Çavkanî',
 	'rte-ck-signature-label' => 'Îmze',
 	'rte-ck-templateDropDown-label' => 'Şablon',
 	'rte-ck-templateEditor-editor-parameters' => 'Parametre',
@@ -2211,6 +2216,7 @@ $messages['lb'] = array(
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-pageName' => 'Säitennumm',
 	'rte-ck-link-internal-tab' => 'Interne Link',
+	'rte-ck-link-status-external' => 'Externe Link',
 	'rte-ck-media-delete' => 'ewechhuelen',
 	'rte-ck-media-edit' => 'änneren',
 	'rte-ck-modeSwitch-toSource' => 'Quell',
@@ -2226,7 +2232,7 @@ $messages['lb'] = array(
 	'rte-ck-unlink' => 'Link ewechhuelen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -2867,7 +2873,7 @@ $messages['oc'] = array(
 	'rte-ck-format-tag_h5' => 'Títol 5',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -2875,7 +2881,7 @@ $messages['pdc'] = array(
 	'rte-ck-hoverPreview-delete' => 'verwische',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -4374,6 +4380,7 @@ $messages['zh-hant'] = array(
 	'rte-ck-bucket-insert' => '插入',
 	'rte-ck-hoverPreview-delete' => '刪除',
 	'rte-ck-image-photo' => '照片',
+	'rte-ck-link-status-notexists' => '頁面不存在',
 	'rte-ck-templateDropDown-label' => '模板',
 	'rte-ck-templateEditor-dialog-insert' => '插入',
 	'rte-ck-templateEditor-editor-previewButton' => '預覽',

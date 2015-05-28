@@ -235,7 +235,10 @@ class ArticleService extends WikiaObject {
 		return $content;
 	}
 
-	private function getContentFromParser( ParserOutput $output ) {
+	private function getContentFromParser( $output ) {
+		if ( !$output instanceof ParserOutput ) {
+			throw new Exception("Not ParserOutput instance.");
+		}
 		return $output->getText();
 	}
 

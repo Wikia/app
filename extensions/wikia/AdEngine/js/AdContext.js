@@ -41,6 +41,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Always have objects in all categories
 		context.opts = context.opts || {};
+		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
 		context.forceProviders = context.forceProviders || {};
@@ -48,11 +49,6 @@ define('ext.wikia.adEngine.adContext', [
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
-		}
-
-		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		if (context.providers.sevenOneMedia) {
-			context.opts.usePostScribe = true;
 		}
 
 		// Targeting by page categories
@@ -84,10 +80,10 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
-			instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
-			instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
-		) {
-			context.opts.enableInvisibleHighImpactSlot = true;
+				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
+				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
+					) {
+			context.slots.invisibleHighImpact = true;
 		}
 
 		// Export the context back to ads.context

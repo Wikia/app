@@ -1230,7 +1230,7 @@ $messages['ce'] = array(
 	'newwikisgraph-param-other' => 'Кхин',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  */
 $messages['ckb'] = array(
 	'wf_cc_name' => 'پۆل',
@@ -2193,6 +2193,10 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'wf_city_lang' => 'Taal',
 	'wf_cc_name' => 'Kategory',
+	'wikifactory-label-close' => 'Slute',
+	'awc-metrics-close' => 'Slute',
+	'awc-metrics-close-action' => 'slute',
+	'closed-reason' => 'Reden:',
 );
 
 /** Galician (galego)
@@ -3168,6 +3172,7 @@ $messages['lb'] = array(
 	'wf_city_public' => 'Statut',
 	'wf_city_lang' => 'Sprooch',
 	'wf_cc_name' => 'Kategorie',
+	'wikifactory-label-info' => 'Informatioun',
 	'wikifactory-label-variables' => 'Variabelen',
 	'wikifactory-label-variables2' => 'Allgemeng',
 	'wikifactory-label-return' => "Zréck op d'Lëscht",
@@ -3571,6 +3576,7 @@ $messages['ms'] = array(
 	'closed-wiki-dump-noexists' => 'Wiki ini telah ditutup. Longgokan kandungan akan disediakan dalam masa 24 jam. Sila semak semula.',
 	'closed-wiki-create-wiki' => 'Cipta wiki baru',
 	'closed-wiki-policy' => 'Lihat Dasar Penutupan Wikia',
+	'closed-wiki-invalid-redirect-url' => 'Ralat: URL lencongan tidak menuju ke sebarang wiki yang wujud: "$1"',
 	'closed-create-dump' => 'Cipta longgokan pangkalan data',
 	'closed-create-image-archive' => 'Cipta arkib gambar',
 	'closed-delete-database-images' => 'Hapuskan pangkalan data dan gambar',
@@ -3959,6 +3965,8 @@ $messages['oc'] = array(
 	'closewiki-confirm-button' => 'Confirmar « $1 » de $2',
 	'closewiki-nbr-wiki' => '$1 Wikis',
 	'closewiki-wiki-closed' => "'''$1''' es estat clausurat ($2)",
+	'awc-metrics-search' => 'Opcions de recèrca :',
+	'awc-metrics-hubs' => 'Wikis novèls (per mes)',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -3969,7 +3977,7 @@ $messages['pa'] = array(
 	'wikifactory-label-domain' => "'''ਮਿਲਖ''':",
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -5360,7 +5368,7 @@ $messages['tl'] = array(
 	'newwikisgraph-param-other' => 'Iba Pa',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  */
 $messages['tly'] = array(
@@ -5604,7 +5612,7 @@ $messages['ur'] = array(
 	'closed-reason' => 'وجہ:',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  */
 $messages['uz'] = array(
@@ -5649,6 +5657,7 @@ $messages['vi'] = array(
 	'closewiki-confirm-button' => "Xác nhận '$1' của $2",
 	'closewiki-nbr-wiki' => '$1 Wiki',
 	'closewiki-images-url' => 'Lưu trữ hình ảnh: $1',
+	'awc-metrics-all' => 'Tất cả các wiki',
 	'awc-metrics-one-week' => 'tạo < 1 tuần trước đây',
 	'awc-metrics-two-weeks' => 'tạo < 2 tuần trước',
 	'awc-metrics-three-weeks' => 'tạo < 3 tuần trước',
@@ -5657,6 +5666,7 @@ $messages['vi'] = array(
 	'awc-metrics-three-months' => 'tạo < 3 tháng trước đây',
 	'awc-metrics-half-year' => 'tạo < 6 tháng trước',
 	'awc-metrics-not-found' => 'Không tìm thấy Wiki nào cả',
+	'awc-metrics-edits' => 'Sửa đổi',
 	'awc-metrics-images' => 'Hình ảnh',
 	'closed-wiki' => 'Xóa Wiki',
 	'closed-wiki-info' => 'Wiki này đã bị xóa',
@@ -5666,7 +5676,7 @@ $messages['vi'] = array(
 	'closed-delete-database-images' => 'Xóa cơ sở dữ liệu và hình ảnh',
 );
 
-/** Wu (吴语)
+/** Wu Chinese (吴语)
  */
 $messages['wuu'] = array(
 	'closed-reason' => '理由：',

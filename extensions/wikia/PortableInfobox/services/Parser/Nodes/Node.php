@@ -12,6 +12,7 @@ class Node {
 	const LABEL_TAG_NAME = 'label';
 
 	protected $xmlNode;
+	protected $parent = null;
 
 	/* @var $externalParser ExternalParser */
 	protected $externalParser;
@@ -19,6 +20,24 @@ class Node {
 	public function __construct( \SimpleXMLElement $xmlNode, $infoboxData ) {
 		$this->xmlNode = $xmlNode;
 		$this->infoboxData = $infoboxData;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getParent() {
+		return $this->parent;
+	}
+
+	/**
+	 * @param mixed $parent
+	 */
+	public function setParent( Node $parent ) {
+		$this->parent = $parent;
+	}
+
+	public function ignoreNodeWhenEmpty() {
+		return true;
 	}
 
 	/**
@@ -39,23 +58,26 @@ class Node {
 	}
 
 	public function getType() {
-		return $this->xmlNode->getName();
+		/*
+		 * Node type generation is based on XML tag name.
+		 * It's worth to remember that SimpleXMLElement::getName method is
+		 * case - sensitive ( "<Data>" != "<data>" ), so we need to sanitize Node Type
+		 * by using strtolower function
+		 */
+		return strtolower( $this->xmlNode->getName() );
 	}
 
 	public function getData() {
 		return [ 'value' => (string)$this->xmlNode ];
 	}
 
+	/**
+	 * @desc Check if node is empty.
+	 * Note that a '0' value cannot be treated like a null
+	 */
 	public function isEmpty( $data ) {
-		return !( isset( $data[ 'value' ] ) ) || empty( $data[ 'value' ] );
-	}
-
-	protected function getInnerXML( \SimpleXMLElement $node ) {
-		$innerXML= '';
-		foreach ( dom_import_simplexml( $node )->childNodes as $child ) {
-			$innerXML .= $child->ownerDocument->saveXML( $child );
-		}
-		return $innerXML;
+		$value = $data[ 'value' ];
+		return !( isset( $value ) ) || (empty( $value ) && $value != '0');
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
@@ -71,7 +93,9 @@ class Node {
 				 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
 				 * parse it.
 				 */
-				$value = $this->getInnerXML( $xmlNode->{self::DEFAULT_TAG_NAME} );
+				$value = \Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance()->getInnerXML(
+					$xmlNode->{self::DEFAULT_TAG_NAME}
+				);
 				$value = $this->getExternalParser()->parseRecursive( $value );
 			}
 		}

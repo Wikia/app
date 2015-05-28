@@ -3,8 +3,7 @@ namespace Wikia\ExactTarget;
 use Wikia\Logger\WikiaLogger;
 
 class ExactTargetSoapErrorHandler {
-	static function requeueConnectionResetWarning( $errno, $errstr = null, $errfile = null, $errline = null, $errcontext = null ) {
-		$request = isset( $errcontext['request'] ) ? $errcontext['request'] : null;
+	public static function requeueConnectionResetWarning( $errno, $errstr = null, $errfile = null, $errline = null, $errcontext = null ) {
 
 		if ( strpos( $errstr, 'Connection reset by peer' ) !== false ) {
 			if ( isset( $errcontext['retryAttempt'] ) && $errcontext['retryAttempt'] !== false ) {
@@ -16,6 +15,7 @@ class ExactTargetSoapErrorHandler {
 				$saction = isset( $errcontext['saction'] ) ? $errcontext['saction'] : null;
 				$version = isset( $errcontext['version'] ) ? $errcontext['version'] : null;
 				$one_way = isset( $errcontext['one_way'] ) ? $errcontext['one_way'] : null;
+				$request = isset( $errcontext['request'] ) ? $errcontext['request'] : null;
 
 				/* Requeue request */
 				$task = new ExactTargetRedoSoapRequestTask();
@@ -24,11 +24,7 @@ class ExactTargetSoapErrorHandler {
 			}
 		}
 
-		WikiaLogger::instance()->warning( $errstr, [
-			'err_no' =>$errno,
-			'file' =>$errfile,
-			'line' =>$errline,
-			'request' => $request
-		] );
+		/* Use default WikiaLogger to store default logs as well */
+		WikiaLogger::instance()->onError( $errno, $errstr, $errfile, $errline, $errcontext );
 	}
 }

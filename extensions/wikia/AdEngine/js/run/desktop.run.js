@@ -11,10 +11,13 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.slot.adInContentPlayer',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
-	'wikia.window'
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.slot.exitstitial'),
+	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
 ], function (
 	adEngine,
 	adLogicHighValueCountry,
@@ -24,10 +27,13 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
+	adInContentPlayer,
 	slotTracker,
 	slotTweaker,
 	krux,
-	window
+	window,
+	exitstitial,
+	inContentDesktop
 ) {
 	'use strict';
 
@@ -68,6 +74,8 @@ require([
 	// Custom ads (skins, footer, etc)
 	window.loadCustomAd = customAdsLoader.loadCustomAd;
 
+	adInContentPlayer.init();
+
 	// Everything starts after content and JS
 	window.wgAfterContentAndJS.push(function () {
 		// Ads
@@ -78,6 +86,27 @@ require([
 		// Krux
 		krux.load(kruxSiteId);
 	});
+
+	// Start loading in content slots
+	if (inContentDesktop) {
+		window.addEventListener('load', inContentDesktop.init);
+	}
+
+	// Start loading in content slots
+	if (exitstitial) {
+		window.addEventListener('load', exitstitial.init);
+	}
+});
+
+require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.document'], function (adContext, abTest, doc) {
+	'use strict';
+
+	var group = abTest.getGroup('ADS_VIEWABILITY_MEDREC'),
+		medrec = doc.getElementById('TOP_RIGHT_BOXAD');
+
+	if (group && medrec && !adContext.getContext().providers.sevenOneMedia) {
+		medrec.className += ' ads-viewability-test ' + group;
+	}
 });
 
 // FPS meter

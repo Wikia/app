@@ -187,6 +187,7 @@ class Parser {
 	 */
 
 	var $mIsMainParse;	# Is main article content currently parsed
+	var $mFlagsParsed = false; # Have you already parsed the article's flags?
 
 	/**
 	 * Wikia change end
@@ -341,7 +342,6 @@ class Parser {
 		 * First pass--just handle <nowiki> sections, pass the rest off
 		 * to internalParse() which does all the real work.
 		 */
-
 		global $wgUseTidy, $wgAlwaysUseTidy, $wgDisableLangConversion, $wgDisableTitleConversion;
 		$fname = __METHOD__.'-' . wfGetCaller();
 		wfProfileIn( __METHOD__ );
@@ -390,7 +390,6 @@ class Parser {
 		/* Wikia change end */
 
 		$text = $this->doBlockLevels( $text, $linestart );
-
 		$this->replaceLinkHolders( $text );
 
 		/**

@@ -28,34 +28,28 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 	}
 
 	public function testNodeImage() {
-		$string = '<image source="image2"><alt source="alt-source"><default>default-alt</default></alt></image>';
+		$string = '<image source="image2">
+						<alt source="alt-source"><default>default-alt</default></alt>
+						<caption source="caption"><default>default caption</default></caption>
+					</image>';
 		$xml = simplexml_load_string( $string );
 
 		$nodeDefault = new Wikia\PortableInfobox\Parser\Nodes\NodeImage( $xml, [ ] );
 
-		$node = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\Nodes\NodeImage' )->setConstructorArgs( [ $xml, [ 'image2' => 'aaa.jpg', 'alt-source' => 'bbb' ] ] )->setMethods( [ 'resolveImageUrl' ] )->getMock();
+		$node = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\Nodes\NodeImage' )
+						->setConstructorArgs( [ $xml, [ 'image2' => 'aaa.jpg',
+														'alt-source' => 'bbb',
+														'caption' => 'capt' ] ] )
+						->setMethods( [ 'resolveImageUrl' ] )
+						->getMock();
 		$node->expects( $this->any() )->method( 'resolveImageUrl' )->will( $this->returnValue( 'aaa.jpg' ) );
 		$this->assertTrue( $node->getData()[ 'url' ] == 'aaa.jpg', 'value is not aaa.jpg' );
 		$this->assertTrue( $node->getData()[ 'name' ] == 'Aaa.jpg', 'value is not aaa.jpg' );
 		$this->assertTrue( $node->getData()[ 'alt' ] == 'bbb', 'alt is not bbb' );
+		$this->assertTrue( $node->getData()[ 'caption' ] == 'capt', 'caption is not "capt"' );
 		$this->assertTrue( $nodeDefault->getData()[ 'alt' ] == 'default-alt', 'default alt' );
+		$this->assertTrue( $nodeDefault->getData()[ 'caption' ] == 'default caption', 'default caption' );
 	}
-
-	/**
-	 * @dataProvider testNodeImageVariableReplaceProvider
-	 * @todo rethink this test cause after changes to NodeImage it doesn't make sense in this form
-	 */
-//	public function testNodeImageVariableReplace( $xmlString, $data, $expValue ) {
-//		$xml = simplexml_load_string($xmlString);
-//		$node = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\Nodes\NodeImage' )
-//			->setConstructorArgs( [ $xml, $data ] )
-//			->setMethods( [ 'resolveImageUrl' ] )
-//			->getMock();
-//		$node->expects( $this->any() )->method( 'resolveImageUrl' )->with( $this->equalTo( $expValue ) );
-//		$externalParser = new \Wikia\PortableInfobox\Parser\DummyParser();
-//		$node->setExternalParser( $externalParser );
-//		$node->getData();
-//	}
 
 	public function testNodeHeader() {
 		$string = '<header>Comandantes</header>';
@@ -115,41 +109,5 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 0 ][ 'data' ][ 'value' ] == 'Combatientes' );
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 1 ][ 'type' ] == 'data' );
 		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 2 ][ 'data' ][ 'value' ] == 2 );
-	}
-
-	public function testNodeImageVariableReplaceProvider() {
-		return [
-			[
-				'<image source="image2"><alt source="alt-source"><default>default-alt</default></alt></image>',
-				[
-					'image2' => 'Wiki-image'
-				],
-				'Wiki-image',
-				'Regular filename should be untouched'
-			],
-			[
-				'<image source="image2"><alt source="alt-source"><default>default-alt</default></alt></image>',
-				[
-					'image2' => '[[Wiki-image]]'
-				],
-				'[[Wiki-image]]',
-				'Link to filename should be untouched'
-			],
-			[
-			'<image source="image2"><alt source="alt-source"><default>default-alt</default></alt></image>',
-				[
-					'image2' => '[[File:Wiki-image]]'
-				],
-				'[[File:Wiki-image]]',
-				'File invocation in params should be untouched'
-			],
-			[
-				'<image source="image2"><default>[[File:Wiki-image]]</default><alt source="alt-source"><default>default-alt</default></alt></image>',
-				[ ],
-				'replaceVariables([[File:Wiki-image]])',
-				'File invocation in default should invoke replace variables'
-			],
-
-		];
 	}
 }

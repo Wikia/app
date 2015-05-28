@@ -388,6 +388,7 @@ $messages['ko'] = array(
 	'timeago-hour' => '{{PLURAL:$1|1시간|$1시간}} 전',
 	'timeago-minute' => '{{PLURAL:$1|1분|$1분}} 전',
 	'timeago-second' => '1분 전',
+	'timeago-second-from-now' => '지금부터 1분',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
