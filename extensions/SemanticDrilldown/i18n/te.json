@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chaduvari",
+			"Veeven"
+		]
+	},
+	"browsedata": "భోగట్టాని చూడండి",
+	"sd_browsedata_choosecategory": "ఓ వర్గాన్ని ఎంచుకోండి",
+	"sd_browsedata_viewcategory": "వర్గాన్ని చూడండి",
+	"sd_browsedata_subcategory": "ఉపవర్గం",
+	"sd_browsedata_other": "ఇతర",
+	"sd_browsedata_none": "ఏమీలేదు",
+	"sd_browsedata_or": "లేదా",
+	"sd_browsedata_removefilter": "ఈ వడపోతని తొలగించు",
+	"sd_browsedata_addanothervalue": "మరో విలువను చేర్చడానికి బాణం గుర్తును నొక్కండి",
+	"sd_browsedata_daterangestart": "మొదలు:",
+	"sd_browsedata_daterangeend": "ముగింపు:",
+	"sd_browsedata_novalues": "ఈ వడపోతకి విలువలు ఏమీ లేవు",
+	"sd_createfilter_usecategoryvalues": "వడపోతకి విలువలని ఈ వర్గంనుండి తీసుకోవాలి:",
+	"sd-pageschemas-values": "విలువలు"
+}

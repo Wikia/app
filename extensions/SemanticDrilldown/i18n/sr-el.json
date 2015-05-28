@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Michaello",
+			"Rancher"
+		]
+	},
+	"sd_browsedata_choosecategory": "Izaberi kategoriju",
+	"sd_browsedata_viewcategory": "pogledaj kategoriju",
+	"sd_browsedata_subcategory": "Potkategorija",
+	"sd_browsedata_other": "Drugo",
+	"sd_browsedata_none": "Nema",
+	"sd_browsedata_or": "ili",
+	"sd_browsedata_daterangestart": "Početak:",
+	"sd_browsedata_daterangeend": "Kraj:"
+}
