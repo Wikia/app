@@ -356,9 +356,6 @@ class UncycloUserMigrator extends Maintenance {
 		$extUser = clone $user;
 		$extUser->setToken();
 
-		// mark migrated accounts
-		$extUser->setOption( 'uncyclo_user', $user->getId() );
-
 		// this code was borrowed from ExternalUser_Wikia::addToDatabase
 		$fname = __METHOD__;
 		$dbw = wfGetDB( DB_MASTER, [], self::SHARED_DB );
@@ -416,14 +413,26 @@ class UncycloUserMigrator extends Maintenance {
 						$fname
 					);
 				}
+
+				// mark migrated accounts
+				$dbw->insert(
+					'user_properties',
+					[
+						'up_user'     => $extUser->mId,
+						'up_property' => 'uncyclo_user',
+						'up_value'    => $user->getId(),
+					],
+					$fname
+				);
 			});
 
 			// we have a new ID for a global account
 			// update user ID in uncyclo database
 			$this->doChangeUncycloUserId( $user, $extUser->getId() );
 
-			// delete the user from the uncyclo DB
-			$this->getUncycloDB( DB_MASTER )->delete( self::USER_TABLE, [ 'user_id' => $user->getId() ], $fname );
+			// delete the user and his settings from the uncyclo DB
+			$this->getUncycloDB( DB_MASTER )->delete( self::USER_TABLE,  [ 'user_id' => $user->getId() ], $fname );
+			$this->getUncycloDB( DB_MASTER )->delete( 'user_properties', [ 'up_user' => $user->getId() ], $fname );
 
 			// invalidate user cache
 			global $wgMemc;
