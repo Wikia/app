@@ -445,6 +445,7 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'multilookupnext' => 'folgjende',
 	'multilookupprevious' => 'foarige',
+	'multilookupwikiurl' => 'URL',
 );
 
 /** Galician (galego)
@@ -613,11 +614,17 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'multilookupgo' => 'Biçe',
+	'multilookupnext' => 'pêş',
+	'multilookupwiki' => 'Wîkî',
+	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => 'Sernav',
+	'multilookupwikioptions' => 'Vebijêrk',
+	'multilookuplastedithdr' => 'Guherandina dawî',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -634,7 +641,7 @@ $messages['lb'] = array(
 	'multilookupwikititle' => 'Titel',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -797,13 +804,31 @@ $messages['nl-informal'] = array(
 	'multilookupnotspecify' => 'Je hebt nog geen IP-adres opgegeven',
 );
 
-/** Deitsch (Deitsch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'multilookupgo' => 'Anar',
+	'multilookupnext' => 'seguent',
+	'multilookupprevious' => 'precedent',
+	'multilookupnbrresult' => 'Nombre de resultats',
+	'multilookupinvalidresults' => 'Resultats invalids !',
+	'multilookupwiki' => 'Wiki',
+	'multilookupdetails' => 'Veire los detalhs',
+	'multilookupwikidbname' => 'Nom de la Banca de Donadas',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Títol',
+	'multilookupwikioptions' => 'Opcions',
+	'multilookuplastedithdr' => 'Darrièr cambiament',
+);
+
+/** Pennsylvania German (Deitsch)
  */
 $messages['pdc'] = array(
 	'multilookupnext' => 'Neegschte',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -1115,7 +1140,7 @@ $messages['tl'] = array(
 	'action-multilookup' => 'tumingin ng kabatiran hinggil sa mga tagagamit sa loob ng maramihang mga wiki',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */
@@ -1140,7 +1165,7 @@ $messages['tt-cyrl'] = array(
 	'multilookupwiki' => 'Вики',
 );
 
-/** Tati (Tati)
+/** Muslim Tat (Tati)
  * @author Erdemaslancan
  */
 $messages['ttt'] = array(
@@ -1189,6 +1214,7 @@ $messages['vi'] = array(
 	'multilookupnoresultfound' => 'Không tìm thấy kết quả',
 	'multilookupwiki' => 'Wiki',
 	'multilookupdetails' => 'Xem chi tiết',
+	'multilookuplastedithdr' => 'Chỉnh sửa lần cuối',
 );
 
 /** Yiddish (ייִדיש)
@@ -1201,6 +1227,7 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Impersonator 1
  * @author Liuxinyu970226
  * @author Mywood
  * @author Yfdyh000

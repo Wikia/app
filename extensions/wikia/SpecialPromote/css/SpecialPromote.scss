@@ -266,7 +266,7 @@
 }
 
 // RESPONSIVE START
-@if ( $responsive-layout-enabled ) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
 	@media screen and (max-width: $width-outside) {
 		.WikiaArticle .UploadTool {
 			fieldset

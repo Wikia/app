@@ -33,10 +33,6 @@ $messages['qqq'] = array(
 	'rte-edgecase-triplecurls' => '{{Identical|Template parameter}}',
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
 	'enablerichtexteditor' => '{{Related|Source mode (wikia)}}',
-	'tag-rte-source' => 'Rich Text Editor: source mode',
-	'tag-rte-source-description' => "Edit made using source mode of Wikia's Rich Text Editor",
-	'tag-rte-wysiwyg' => 'Rich Text Editor: WYSIWYG mode',
-	'tag-rte-wysiwyg-description' => "Edit made using WYSIWYG mode of Wikia's Rich Text Editor",
 );
 
 /** Afrikaans (Afrikaans)
@@ -450,6 +446,13 @@ $messages['ko'] = array(
  */
 $messages['ksh'] = array(
 	'rte-edgecase-redirect' => 'en Ömleidong',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'rte-edgecase-redirect' => 'beralîkirin',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

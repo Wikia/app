@@ -21,7 +21,7 @@
 	</div>
 </div>
 
-<h1 class="achievements-title"><?= wfMsg('leaderboard-title') ?></h1>
+<h2 class="achievements-title"><?= wfMsg('leaderboard-title') ?></h2>
 
 <table id="LeaderboardTable" class="LeaderboardTable">
 	<thead>

@@ -3052,8 +3052,6 @@ class User {
 		$this->clearCookie( 'UserID' );
 		$this->clearCookie( 'Token' );
 
-		Wikia\Helios\User::clearAccessTokenCookie();
-
 		// Wikia change - begin (@see PLATFORM-1028)
 		// @author macbre
 		// There's no need to keep the user name (in both session and cookie) when you log out
@@ -3572,7 +3570,7 @@ class User {
 	 * @param $type String: message to send, either "created", "changed" or "set"
 	 * @return Status object
 	 */
-	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '' ) {
+	public function sendConfirmationMail( $type = 'created', $mailtype = "ConfirmationMail", $mailmsg = '', $ip_arg = true, $emailTextTemplate = '', $langCode = null ) {
 		global $wgLang;
 		$expiration = null; // gets passed-by-ref and defined in next line.
 		$token = $this->confirmationToken( $expiration );
@@ -3626,8 +3624,11 @@ class User {
 				$wgLang->time( $expiration, false ) ), null, null, $mailtype, null, $priority );
 		} else {
 			$wantHTML = $this->isAnon() || $this->getOption( 'htmlemails' );
+			if ( empty( $langCode ) ) {
+				$langCode = $this->getOption( 'language' );
+			}
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getOption('language'), array(), $args, $wantHTML );
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $langCode, array(), $args, $wantHTML );
 
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
