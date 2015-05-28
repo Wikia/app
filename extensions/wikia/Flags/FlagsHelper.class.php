@@ -95,11 +95,12 @@ class FlagsHelper {
 			$flagFromPost['flag_type_id'] = $flagTypeId;
 		}
 
+		$flagFromPost['params'] = [];
+
 		/**
 		 * Check if params should be posted
 		 */
 		if ( $flag['flag_params_names'] !== null ) {
-			$flagFromPost['params'] = [];
 			$paramNames = json_decode( $flag['flag_params_names'] );
 
 			/**
