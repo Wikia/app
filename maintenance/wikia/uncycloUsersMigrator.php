@@ -455,6 +455,7 @@ class UncycloUserMigrator extends Maintenance {
 
 		// check if the uncyclo account has a valid email set
 		$isValidEmail = Sanitizer::validateEmail( $user->getEmail() );
+		$uncycloEdits = (int) $user->getEditCount();
 		$uncycloEditsSince = $this->getEditsCountAfter( $user, self::UNCYCLO_EDITS_AFTER );
 
 		if ( !$isValidEmail ) {
@@ -469,10 +470,13 @@ class UncycloUserMigrator extends Maintenance {
 
 		// check the shared users database
 		$globalUser = $this->getGlobalUserByName( $user->getName() );
+		$globalEdits = null;
 
 		if ( $globalUser instanceof User ) {
 			// HACK: calling getEmail() on global user will trigger a SQL query on uncyclo database
 			$this->output( sprintf( ' - conflicts with the global user #%d <%s>', $globalUser->getId(), $globalUser->mEmail ?: 'MISSING_EMAIL' ) );
+
+			$globalEdits  = (int) $globalUser->getEditCount();
 
 			// global and shared DB accounts match
 			if ( $isValidEmail && $globalUser->mEmail === $user->getEmail() ) {
@@ -489,10 +493,6 @@ class UncycloUserMigrator extends Maintenance {
 			else {
 				// resolve conflicts
 				$this->output( "\n\tresolving account conflicts..." );
-
-				$uncycloEdits = $user->getEditCount();
-				$globalEdits  = $globalUser->getEditCount();
-
 				$this->output( sprintf(" uncyclo edits: %d / global edits: %d\n\t", $uncycloEdits, $globalEdits ) );
 
 				/**
@@ -502,11 +502,11 @@ class UncycloUserMigrator extends Maintenance {
 				< 1000 edits on Uncyclopedia = rename Uncyclopedia account
 				> 1000 edits on Uncyclopedia = rename account with least edits
 				 **/
-				if ( $uncycloEdits == 0 && $globalEdits == 0 ) {
+				if ( $uncycloEdits === 0 && $globalEdits === 0 ) {
 					$user = $this->doRenameUncycloUser( $user );
 					$action = 'rename uncyclo account';
 				}
-				elseif ( $uncycloEdits > 0 && $globalEdits == 0 ) {
+				elseif ( $uncycloEdits > 0 && $globalEdits === 0 ) {
 					$this->doRenameGlobalUser( $globalUser );
 					$action = 'rename wikia account';
 				}
@@ -551,7 +551,7 @@ class UncycloUserMigrator extends Maintenance {
 				$isMerged ? 'Y' : 'N',
 				$user->getEditCount(),
 				$uncycloEditsSince,
-				$globalEdits ?: 0,
+				is_int( $globalEdits ) ? $globalEdits : 'none',
 				$action
 			] );
 		}
