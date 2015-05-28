@@ -10,7 +10,8 @@ class MoveNotices extends Maintenance {
 
 	const
 		SECTION_DEFAULT = 0,
-		SECTION_ALL = 'all';
+		SECTION_ALL = 'all',
+		EDIT_SUMMARY = 'Moving content notices to flags.';
 
 	private
 		$log = '',
@@ -178,6 +179,21 @@ class MoveNotices extends Maintenance {
 				$flagsExtractor->init( $content, $this->templateName, $actions, $actionParams );
 				$templates = $flagsExtractor->getAllTemplates();
 
+				if ( $actionsSum & (
+						FlagsExtractor::ACTION_REPLACE_FIRST_FLAG
+						| FlagsExtractor::ACTION_REPLACE_ALL_FLAGS
+						| FlagsExtractor::ACTION_REMOVE_FIRST_FLAG
+						| FlagsExtractor::ACTION_REMOVE_ALL_FLAGS
+					)
+				) {
+					$text = $flagsExtractor->getText();
+
+					if ( strcmp( $content, $text ) !== 0 ) {
+						$flags = EDIT_UPDATE + EDIT_FORCE_BOT;
+						$wiki->doEdit( $text, self::EDIT_SUMMARY, $flags );
+					}
+				}
+
 				$this->logTemplatesInfo( $templates, $actionsSum, $actionParams, $list );
 
 				fwrite( $this->logFile, $this->log );
@@ -270,8 +286,8 @@ class MoveNotices extends Maintenance {
 					|| $actionsSum & FlagsExtractor::ACTION_REPLACE_ALL_FLAGS
 				) {
 					$tag = isset( $actionParams['replacementTag'] )
-							? $actionParams['replacementTag']
-							: FlagsExtractor::FLAGS_DEFAULT_TAG;
+						? $actionParams['replacementTag']
+						: FlagsExtractor::FLAGS_DEFAULT_TAG;
 					$this->addToLog( "$listWarning Replace template by tag $tag on page: $this->pageName\n" );
 				}
 			}
@@ -305,7 +321,7 @@ class MoveNotices extends Maintenance {
 			if ( $replace === 'all' ) {
 				$actions[] = FlagsExtractor::ACTION_REPLACE_ALL_FLAGS;
 			} else {
-				$actions[] = FlagsExtractor::ACTION_REPLACE_ALL_FLAGS;
+				$actions[] = FlagsExtractor::ACTION_REPLACE_FIRST_FLAG;
 			}
 		}
 
