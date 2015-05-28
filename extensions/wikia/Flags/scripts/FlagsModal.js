@@ -1,38 +1,50 @@
 require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	'use strict';
 
+	/* Modal buttons config for done and cancel buttons */
+	var buttonsForFlagsExistingState = [{
+		vars: {
+			value: mw.message('flags-edit-modal-done-button-text').escaped(),
+			data: [
+				{
+					key: 'event',
+					value: 'done'
+				}
+			]
+		}
+	},
+	{
+		vars: {
+			value: mw.message('flags-edit-modal-cancel-button-text').escaped(),
+			data: [
+				{
+					key: 'event',
+					value: 'close'
+				}
+			]
+		}
+	}],
+
+	/* Modal close button config*/
+	buttonForEmptyState = [{
+		vars: {
+			value: mw.message('flags-edit-modal-close-button-text').escaped(),
+			data: [
+				{
+					key: 'event',
+					value: 'close'
+				}]
+		}
+	}],
+
 	/* Modal component configuration */
-	var modalConfig = {
+	modalConfig = {
 		vars: {
 			id: 'FlagsModal',
 			classes: ['edit-flags'],
 			size: 'medium', // size of the modal
 			content: '', // content
-			title: mw.message('flags-edit-modal-title').escaped(),
-			buttons: [ // buttons in the footer
-				{
-					vars: {
-						value: mw.message('flags-edit-modal-done-button-text').escaped(),
-						data: [
-							{
-								key: 'event',
-								value: 'done'
-							}
-						]
-					}
-				},
-				{
-					vars: {
-						value: mw.message('flags-edit-modal-cancel-button-text').escaped(),
-						data: [
-							{
-								key: 'event',
-								value: 'close'
-							}
-						]
-					}
-				}
-			]
+			title: mw.message('flags-edit-modal-title').escaped()
 		}
 	};
 
@@ -96,11 +108,20 @@ require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	 */
 	function processInstance(modalInstance) {
 		var $flagsEditForm = modalInstance.$element.find('#flagsEditForm');
+		if ($flagsEditForm.length > 0) {
+			/* Render and add Done and Cancel buttons */
+			modalInstance.renderButtons(buttonsForFlagsExistingState);
+			modalInstance.$element.find('footer').html(buttonsForFlagsExistingState);
 
-		/* Submit flags edit form on Done button click */
-		modalInstance.bind('done', function () {
-			$flagsEditForm.trigger('submit');
-		});
+			/* Submit flags edit form on Done button click */
+			modalInstance.bind('done', function () {
+				$flagsEditForm.trigger('submit');
+			});
+		} else {
+			/* Render and add Close button */
+			modalInstance.renderButtons(buttonForEmptyState);
+			modalInstance.$element.find('footer').html(buttonForEmptyState);
+		}
 
 		/* Show the modal */
 		modalInstance.show();

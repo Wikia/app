@@ -73,6 +73,7 @@ $wgResourceModules['ext.wikia.Flags'] = [
 		'flags-edit-modal-title',
 		'flags-edit-modal-done-button-text',
 		'flags-edit-modal-cancel-button-text',
+		'flags-edit-modal-close-button-text',
 	],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Flags'
