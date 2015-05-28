@@ -8,11 +8,9 @@
 @import "skins/shared/mixins/image-replacement";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
-$modal-secondary-color: darken( $color-page, 10% );
 
 @if( $is-dark-wiki ) {
 	$close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
-	$modal-secondary-color: lighten( $color-page, 3% );
 }
 
 // modals dimensions
@@ -43,7 +41,7 @@ $large-modal-margin: 50px;
 	> footer {
 		@include flex-grow(0);
 		@include flex-shrink(0);
-		background-color: $modal-secondary-color;
+		background-color: $color-unified-module-background;
 		height: $header-footer-height; // flex-basis is not supported on Safari 6 so fixed height is needed
 		padding: 13px 20px 18px;
 	}

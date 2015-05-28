@@ -765,6 +765,7 @@ $wgWikiFactoryTags = array();
 /**
  * external databases
  */
+$wgFlagsDB = 'flags';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';

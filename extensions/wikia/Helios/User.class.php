@@ -198,6 +198,8 @@ class User {
 		 * This is a temporary change which will be deleted while implementing SOC-798
 		 */
 		self::clearCookie( self::MERCURY_ACCESS_TOKEN_COOKIE_NAME );
+
+		return true; // So that wfRunHooks evaluates to true.
 	}
 
 	/**
@@ -270,11 +272,12 @@ class User {
 	 * @param string $username The username
 	 * @param string $password The plaintext password the user entered
 	 * @param string $email The user's email
+	 * @param string $langCode The language code of the community the user is registering on
 	 * @param string $birthDate
 	 *
 	 * @return bool true on success, false otherwise
 	 */
-	public static function register( $username, $password, $email, $birthDate ) {
+	public static function register( $username, $password, $email, $birthDate, $langCode ) {
 		$logger = WikiaLogger::instance();
 		$logger->info( 'HELIOS_REGISTRATION START', [ 'method' => __METHOD__ ] );
 
@@ -282,7 +285,7 @@ class User {
 		$helios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 		try {
-			$registration = $helios->register( $username, $password, $email, $birthDate );
+			$registration = $helios->register( $username, $password, $email, $birthDate, $langCode );
 			$result = !empty( $registration->success );
 
 			if ( !empty( $registration->error ) ) {
@@ -314,9 +317,10 @@ class User {
 	 * @return bool
 	 */
 	public static function onRegister( &$result, &$userId, $user, $password, $email ) {
+		global $wgLang;
 
 		$heliosUserId = null;
-		$heliosResult = self::register( $user->mName, $password, $email, $user->mBirthDate );
+		$heliosResult = self::register( $user->mName, $password, $email, $user->mBirthDate, $wgLang->getCode() );
 		$logger = WikiaLogger::instance();
 
 		global $wgHeliosRegistrationShadowMode;
