@@ -246,7 +246,10 @@ class UncycloUserMigrator extends Maintenance {
 
 		if ( $whoIs !== false ) {
 			$this->output( sprintf( "\nCan't change the ID of %s - clashes with %s!\n", $user->getName(), $whoIs ) );
-			throw new UncycloUsersMigratorException( sprintf( 'IDs clash for %s (new ID #%d)', $user->getName(), $newUserId ) );
+
+			if (!$this->isDryRun) {
+				throw new UncycloUsersMigratorException(sprintf('IDs clash for %s (new ID taken from shared DB would be #%d)', $user->getName(), $newUserId));
+			}
 		}
 
 		if ( $this->isDryRun ) {
