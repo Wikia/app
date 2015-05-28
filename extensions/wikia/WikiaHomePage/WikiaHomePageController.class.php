@@ -233,33 +233,31 @@ class WikiaHomePageController extends WikiaController {
 	protected function getCollectionsWikiList() {
 		if (!isset(self::$collectionsList)) {
 			$collectionsBatches = [];
-			if( $this->wg->EnableWikiaHomePageCollections ) {
-				$visualization = $this->getVisualization();
+			$visualization = $this->getVisualization();
+			$collections = new WikiaCollectionsModel();
+			$collectionsList = $collections->getListForVisualization($this->wg->ContLang->getCode());
 
-				$collections = new WikiaCollectionsModel();
-				$collectionsList = $collections->getListForVisualization($this->wg->ContLang->getCode());
+			foreach ($collectionsList as $collection) {
+				if (count($collection['wikis']) == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
+					$processedCollection = $visualization->getCollectionsWikisData([$collection['id'] => $collection['wikis']])[0];
+					$processedCollection['name'] = $collection['name'];
+					$processedCollection['id'] = $collection['id'];
 
-				foreach ($collectionsList as $collection) {
-					if (count($collection['wikis']) == WikiaHomePageHelper::SLOTS_IN_TOTAL) {
-						$processedCollection = $visualization->getCollectionsWikisData([$collection['id'] => $collection['wikis']])[0];
-						$processedCollection['name'] = $collection['name'];
-						$processedCollection['id'] = $collection['id'];
-
-						if (!empty($collection['sponsor_hero_image'])) {
-							$processedCollection['sponsor_hero_image'] = $collection['sponsor_hero_image'];
-						}
-
-						if (!empty($collection['sponsor_image'])) {
-							$processedCollection['sponsor_image'] = $collection['sponsor_image'];
-						}
-
-						if (!empty($collection['sponsor_url'])) {
-							$processedCollection['sponsor_url'] = $collection['sponsor_url'];
-						}
-						$collectionsBatches[] = $processedCollection;
+					if (!empty($collection['sponsor_hero_image'])) {
+						$processedCollection['sponsor_hero_image'] = $collection['sponsor_hero_image'];
 					}
+
+					if (!empty($collection['sponsor_image'])) {
+						$processedCollection['sponsor_image'] = $collection['sponsor_image'];
+					}
+
+					if (!empty($collection['sponsor_url'])) {
+						$processedCollection['sponsor_url'] = $collection['sponsor_url'];
+					}
+					$collectionsBatches[] = $processedCollection;
 				}
 			}
+
 			self::$collectionsList = $collectionsBatches;
 		}
 
