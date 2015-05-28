@@ -1,8 +1,10 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
+@import "skins/oasis/css/core/breakpoints-variables";
 @import "skins/shared/mixins/bodytext";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/calc";
 
 $color-search-form-background: mix($color-page, #000, 97%);
 @if $is-dark-wiki {
@@ -636,6 +638,42 @@ $form-negative-side-padding: $form-side-padding*-1;
 		#TOP_RIGHT_BOXAD,
 		#CORP_TOP_RIGHT_BOXAD {
 			padding: 0;
+		}
+	}
+}
+
+//Breakpoints related changes
+@if ( $breakpoints-layout-enabled ) {
+	.Search .WikiaSearch {
+		.SearchInput {
+			p {
+				margin: 0;
+			}
+
+			.grid-1.alpha {
+				width: 170px;
+				float: left;
+			}
+
+			@media #{$breakpoint-below-small-plus} {
+				.search-v2-input {
+					width: 280px;
+				}
+			}
+		}
+
+		.search-tabs {
+			float: left;
+			margin: 35px 0 0 0;
+			width: 170px;
+		}
+
+		.results-wrapper {
+			@include width-calc("100% - 500px");
+			@media #{$breakpoint-below-small-plus} {
+				@include width-calc("100% - 180px");
+			}
+			float: left;
 		}
 	}
 }
