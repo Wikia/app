@@ -90,6 +90,7 @@ abstract class WallMessageController extends EmailController {
 			'contentFooterMessages' => [
 				$this->getRecentMessagesText()
 			],
+			'hasContentFooterMessages' => true,
 		] );
 	}
 

@@ -50,7 +50,8 @@ class ForumController extends EmailController {
 			'detailsHeader' => $this->titleText,
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->titleUrl,
-			'contentFooterMessages' => $this->getContentFooterMessages()
+			'contentFooterMessages' => $this->getContentFooterMessages(),
+			'hasContentFooterMessages' => true,
 		] );
 	}
 
