@@ -254,6 +254,12 @@ class FlagsApiController extends WikiaApiController {
 		if ( !isset( $this->params['wiki_id'] ) ) {
 			$this->params['wiki_id'] = $this->wg->CityId;
 		}
+
+		foreach ( $this->params['flags'] as $key => $flag ) {
+			if ( !isset( $flag['params'] ) ) {
+				$this->params['flags'][$key] = [];
+			}
+		}
 	}
 
 	/**
