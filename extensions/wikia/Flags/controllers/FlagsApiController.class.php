@@ -5,6 +5,7 @@
  * It provides a set of CRUD methods to manipulate Flags instances and their types.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -226,6 +227,19 @@ class FlagsApiController extends WikiaApiController {
 		}
 
 		$this->setVal( 'status', $this->status );
+	}
+
+	public function getFlagTypeIdByTemplate() {
+		$this->getRequestParams();
+
+		if ( !isset( $this->params['flag_view'] ) ) {
+			return null;
+		}
+
+		$flagTypeModel = new FlagType();
+		$flagTypeId = $flagTypeModel->getFlagTypeIdByTemplate( $this->params['wiki_id'], $this->params['flag_view']);
+
+		return $flagTypeId;
 	}
 
 	/**
