@@ -8,7 +8,6 @@ $messages['en'] = array(
 	'emailext-watchedpage-article-unprotected-subject' => '$1 on {{SITENAME}} has been unprotected by $2',
 	'emailext-watchedpage-article-renamed-subject' => '$1 on {{SITENAME}} has been renamed by $2',
 	'emailext-watchedpage-article-deleted-subject' => '$1 on {{SITENAME}} has been deleted by $2',
-	'emailext-watchedpage-salutation' => 'Hi $1,',
 	'emailext-watchedpage-article-edited' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited. Check it out!'''",
 	'emailext-watchedpage-article-protected' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been protected. Check it out!'''",
 	'emailext-watchedpage-article-unprotected' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been unprotected. Check it out!'''",
@@ -27,7 +26,6 @@ $messages['qqq'] = array(
 	'emailext-watchedpage-article-unprotected-subject' => 'Subject line for watched article email when article was unprotected. $1 -> article name, $2 -> username of user who edited the article',
 	'emailext-watchedpage-article-renamed-subject' => 'Subject line for watched article email when article was renamed. $1 -> article name, $2 -> username of user who edited the article',
 	'emailext-watchedpage-article-deleted-subject' => 'Subject line for watched article email when article was deleted. $1 -> article name, $2 -> username of user who edited the article',
-	'emailext-watchedpage-salutation' => "Email greeting. $1 is the recipient's username.",
 	'emailext-watchedpage-article-edited' => 'Message to the user that an article they are following has been edited. $1 -> article url, $2 -> article title',
 	'emailext-watchedpage-article-protected' => 'Message to the user that an article they are following has been protected. $1 -> article url, $2 -> article title',
 	'emailext-watchedpage-article-unprotected' => 'Message to the user that an article they are following has been unprotected. $1 -> article url, $2 -> article title',
@@ -42,7 +40,6 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'emailext-watchedpage-article-edited-subject' => '{{SITENAME}}: Der Artikel „$1“ wurde von $2 bearbeitet',
-	'emailext-watchedpage-salutation' => 'Hallo $1,',
 	'emailext-watchedpage-article-edited' => "'''[$1 $2] auf [{{SERVER}} {{SITENAME}}] wurde bearbeitet. Sieh es dir an!'''",
 	'emailext-watchedpage-diff-button-text' => 'Änderungen vergleichen',
 	'emailext-watchedpage-article-link-text' => "[$1 Unter '''$2''' siehst du, was es Neues gibt]",
@@ -62,7 +59,6 @@ $messages['de'] = array(
 
 $messages['es'] = array(
 	'emailext-watchedpage-article-edited-subject' => '$1 en {{SITENAME}} ha sido editado por $2',
-	'emailext-watchedpage-salutation' => 'Hola, $1;',
 	'emailext-watchedpage-article-edited' => "'''[\$1 \$2] en [{{SERVER}} {{SITENAME}}] ha sido editado. ¡Revísalo!'\"",
 	'emailext-watchedpage-diff-button-text' => 'Mostrar cambios',
 	'emailext-watchedpage-article-link-text' => "[$1 Visita la página '''$2''' para ver qué hay de nuevo].",
@@ -82,7 +78,6 @@ $messages['es'] = array(
 
 $messages['fr'] = array(
 	'emailext-watchedpage-article-edited-subject' => '$2 a modifié $1 sur {{SITENAME}}',
-	'emailext-watchedpage-salutation' => 'Bonjour $1,',
 	'emailext-watchedpage-article-edited' => "'''Quelqu'un a modifié [$1 $2] sur [{{SERVER}} {{SITENAME}}]. Consultez les modifications !'''",
 	'emailext-watchedpage-diff-button-text' => 'Comparer les modifications',
 	'emailext-watchedpage-article-link-text' => "[$1 Rendez-vous sur '''$2''' pour voir ce qui a été modifié]",
@@ -102,7 +97,6 @@ $messages['fr'] = array(
 
 $messages['it'] = array(
 	'emailext-watchedpage-article-edited-subject' => '$2 ha modificato $1 nella {{SITENAME}}',
-	'emailext-watchedpage-salutation' => 'Ciao, $1.',
 	'emailext-watchedpage-article-edited' => "'''Qualcuno ha modificato [$1 $2] nella [{{SERVER}} {{SITENAME}}]. Dacci un'occhiata!'''",
 	'emailext-watchedpage-diff-button-text' => 'Mostra cambiamenti',
 	'emailext-watchedpage-article-link-text' => "[$1 Clicca su '''$2''' per vedere cosa c'è di nuovo]",
@@ -122,7 +116,6 @@ $messages['it'] = array(
 
 $messages['ja'] = array(
 	'emailext-watchedpage-article-edited-subject' => '$2さんが{{SITENAME}}の$1に編集を加えたようです',
-	'emailext-watchedpage-salutation' => '$1さん',
 	'emailext-watchedpage-article-edited' => "'''[{{SERVER}} {{SITENAME}}]の[$1 $2]に編集が加えられたようです。最新の記事をチェックしてみましょう！'''",
 	'emailext-watchedpage-diff-button-text' => '変更を比較する',
 	'emailext-watchedpage-article-link-text' => "[$1 '''$2'''にアクセスして最新の内容を確認する]",
@@ -142,7 +135,6 @@ $messages['ja'] = array(
 
 $messages['nl'] = array(
 	'emailext-watchedpage-article-edited-subject' => '$1 on {{SITENAME}} has been edited by $2',
-	'emailext-watchedpage-salutation' => 'Hi $1,',
 	'emailext-watchedpage-article-edited' => "'''[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited. Check it out!'''",
 	'emailext-watchedpage-diff-button-text' => 'Compare changes',
 	'emailext-watchedpage-article-link-text' => "[$1 Head over to '''$2''' to see what's new]",
@@ -162,7 +154,6 @@ $messages['nl'] = array(
 
 $messages['pl'] = array(
 	'emailext-watchedpage-article-edited-subject' => 'Użytkownik $2 dokonał edycji $1 na {{SITENAME}}',
-	'emailext-watchedpage-salutation' => 'Cześć $1,',
 	'emailext-watchedpage-article-edited' => "'''Dokonano edycji [$1 $2] na [{{SERVER}} {{SITENAME}}]. Sprawdź!'''",
 	'emailext-watchedpage-diff-button-text' => 'Porównaj zmiany',
 	'emailext-watchedpage-article-link-text' => "[$1 Przejdź do '''$2''' i zobacz co się zmieniło]",
@@ -182,7 +173,6 @@ $messages['pl'] = array(
 
 $messages['pt'] = array(
 	'emailext-watchedpage-article-edited-subject' => '$1 foi editado por $2 na {{SITENAME}}',
-	'emailext-watchedpage-salutation' => 'Olá $1,',
 	'emailext-watchedpage-article-edited' => "'''[$1 $2] na [{{SERVER}} {{SITENAME}}] foi editado. Confira!'''",
 	'emailext-watchedpage-diff-button-text' => 'Comparar mudanças',
 	'emailext-watchedpage-article-link-text' => "[$1 Vá para '''$2''' para ver o que há de novo]",
@@ -202,7 +192,6 @@ $messages['pt'] = array(
 
 $messages['ru'] = array(
 	'emailext-watchedpage-article-edited-subject' => '$2 отредактировал(а) страницу $1 на {{SITENAME}}',
-	'emailext-watchedpage-salutation' => 'Здравствуйте, $1!',
 	'emailext-watchedpage-article-edited' => "'''Страница [$1 $2] на [{{SERVER}} {{SITENAME}}] была отредактирована. Посмотрите правки!'''",
 	'emailext-watchedpage-diff-button-text' => 'Сравнить изменения',
 	'emailext-watchedpage-article-link-text' => "[$1 Для просмотра новых правок перейдите к «'''$2'''».]",
@@ -222,7 +211,6 @@ $messages['ru'] = array(
 
 $messages['zh-hans'] = array(
 	'emailext-watchedpage-article-edited-subject' => '{{SITENAME}}网站上题为$1的文章已被$2编辑',
-	'emailext-watchedpage-salutation' => '$1，您好！',
 	'emailext-watchedpage-article-edited' => "'''[{{SERVER}} {{SITENAME}}]网站上题为[$1 $2]的文章已被编辑。快来查看吧！'''",
 	'emailext-watchedpage-diff-button-text' => '查看更改之处',
 	'emailext-watchedpage-article-link-text' => "[$1 前往'''$2'''查看新内容]",
@@ -242,7 +230,6 @@ $messages['zh-hans'] = array(
 
 $messages['zh-tw'] = array(
 	'emailext-watchedpage-article-edited-subject' => '{{SITENAME}}網站上題爲$1的文章已被$2編輯',
-	'emailext-watchedpage-salutation' => '$1，您好！',
 	'emailext-watchedpage-article-edited' => "'''[{{SERVER}} {{SITENAME}}]網站上題爲[$1 $2]的文章已被編輯。快來查看吧！'''",
 	'emailext-watchedpage-diff-button-text' => '查看更改之處',
 	'emailext-watchedpage-article-link-text' => "[$1 前往'''$2'''查看新内容]",

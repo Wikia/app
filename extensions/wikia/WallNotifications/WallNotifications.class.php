@@ -1,7 +1,7 @@
 <?php
 use Wikia\Logger\WikiaLogger;
 
-/*
+/**
  * Wall notifications allows us to manage notifications about new messages
  * and replies on users Walls
  *
@@ -13,7 +13,7 @@ use Wikia\Logger\WikiaLogger;
  *
  */
 class WallNotifications {
-
+	const MAX_ABSTRACT_LENGTH = 3000;
 	const TTL = 300; // 5 minutes
 
 	/**
@@ -370,7 +370,6 @@ class WallNotifications {
 	 * @param WallNotificationEntity $notification
 	 */
 	public function notifyEveryone( WallNotificationEntity $notification ) {
-
 		if ( empty( $notification->data_noncached ) || empty( $notification->data_noncached->parent_title_dbkey ) ) {
 			$title = "";
 		} else {
@@ -394,34 +393,8 @@ class WallNotifications {
 		$this->sendEmails( array_keys( $users ), $notification );
 	}
 
-	protected function createKeyForMailNotification( $watcher, WallNotificationEntity $notification ) {
-		$data = $notification->data;
-
-		if ( $notification->isMain() ) {
-			if ( $watcher == $data->wall_userid ) {
-				$key = 'mail-notification-new-your';
-			} else {
-				$key = 'mail-notification-new-someone';
-			}
-		} else {
-			if ( $watcher == $data->parent_user_id ) {
-				$key = 'mail-notification-reply-your';
-			} elseif ( $data->msg_author_id == $data->parent_user_id && $data->msg_author_id != 0 ) {
-				$key = 'mail-notification-reply-his';
-			} else {
-				$key = 'mail-notification-reply-someone';
-			}
-		}
-		return $key;
-	}
-
 	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
-		$text = strip_tags( $notification->data_noncached->msg_text, '<p><br>' );
-		$text = substr( $text, 0, 3000 ) . ( strlen( $text ) > 3000 ? '...' : '' );
-
-		$textNoHtml = preg_replace( '#<br\s*/?>#i', "\n", $text );
-		$textNoHtml = trim( preg_replace( '#</?p\s*/?>#i', "\n", $textNoHtml ) );
-		$textNoHtml = substr( $textNoHtml, 0, 3000 ) . ( strlen( $textNoHtml ) > 3000 ? '...' : '' );
+		$text = $this->getAbstract( $notification->data_noncached->msg_text );
 
 		$entityKey = $notification->getId();
 
@@ -429,85 +402,95 @@ class WallNotifications {
 			$this->uniqueUsers[$entityKey] = [];
 		}
 
-		foreach ( $watchers as $val ) {
-			$watcher = $this->getUser( $val );
-			$mode = $watcher->getOption( 'enotifwallthread' );
+		foreach ( $watchers as $watcherUserId ) {
+			$watcher = $this->getUser( $watcherUserId );
 
-			if ( !empty( $mode ) && $watcher->getId() != 0 && (
-				( $mode == WALL_EMAIL_EVERY ) ||
-				( $mode == WALL_EMAIL_SINCEVISITED && empty( $this->uniqueUsers[$entityKey][$watcher->getId()] ) )
-			) ) {
-
-				$key = $this->createKeyForMailNotification( $watcher->getId(), $notification );
-				$watcherName = $watcher->getName();
-
-				if ( $notification->data->msg_author_username == $notification->data->msg_author_displayname ) {
-					$author_signature = $notification->data->msg_author_username;
-				} else {
-					$author_signature = $notification->data->msg_author_displayname .
-						' (' . $notification->data->msg_author_username . ')';
-				}
-
-				$data = [];
-				wfRunHooks( 'NotificationGetMailNotificationMessage', [
-					&$notification, &$data, $key, $watcherName, $author_signature, $textNoHtml, $text
-				] );
-				if ( empty( $data ) ) {
-					$data = [
-						'$WATCHER' => $watcherName,
-						'$WIKI' => $notification->data->wikiname,
-						'$PARENT_AUTHOR_NAME' => 	( empty( $notification->data->parent_displayname )
-													? ''
-													: $notification->data->parent_displayname ),
-						'$AUTHOR_NAME' => $notification->data->msg_author_displayname,
-						'$AUTHOR' => $notification->data->msg_author_username,
-						'$AUTHOR_SIGNATURE' => $author_signature,
-						'$MAIL_SUBJECT' => wfMessage( 'mail-notification-subject', [
-							'$1' => $notification->data->thread_title,
-							'$2' => $notification->data->wikiname
-						] )->text(),
-						'$METATITLE' => $notification->data->thread_title,
-						'$MESSAGE_LINK' =>  $notification->data->url,
-						'$MESSAGE_NO_HTML' =>  $textNoHtml,
-						'$MESSAGE_HTML' =>  $text,
-						'$MSG_KEY_SUBJECT' => $key,
-						'$MSG_KEY_BODY' => 'mail-notification-body',
-						'$MSG_KEY_GREETING' => 'mail-notification-html-greeting',
-					];
-				}
-
-				if ( !( $watcher->getBoolOption( 'unsubscribed' ) === true ) ) {
-					$this->sendEmail( $watcher, $data );
-				}
+			if ( !$this->canSendToWatcher( $watcher, $entityKey ) ) {
+				continue;
 			}
+
+			$watcherName = $watcher->getName();
+			$controller = $this->getEmailExtensionController( $notification, $watcherName );
+
+			$params = [
+				'boardNamespace' => $notification->data->article_title_ns,
+				'boardTitle' => $notification->data->article_title_text,
+				'titleText' => $notification->data->thread_title,
+				'titleUrl' => $notification->data->url,
+				'details' => $text,
+				'targetUser' => $watcherName,
+				'fromAddress' => $this->app->wg->PasswordSender,
+				'replyToAddress' => $this->app->wg->NoReplyAddress,
+				'fromName' => $this->app->wg->PasswordSenderName,
+				'wallUserName' => $notification->data->wall_username,
+				'threadId' => $notification->data->parent_id
+			];
+
+			F::app()->sendRequest( $controller, 'handle', $params );
 		}
 
 		return true;
 	}
 
-	protected function sendEmail( User $watcher, array $data ) {
-		global $wgPasswordSender, $wgNoReplyAddress;
+	protected function canSendToWatcher( User $watcher, $entityKey ) {
+		if ( $watcher->getId() == 0 ) {
+			return false;
+		}
 
-		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
-		$replyTo = new MailAddress ( $wgNoReplyAddress );
+		// Don't send an email to users that unsubscribed their email address
+		if ( $watcher->getBoolOption( 'unsubscribed' ) === true ) {
+			return false;
+		}
 
-		$keys = array_keys( $data );
-		$values =  array_values( $data );
+		$mode = $watcher->getOption( 'enotifwallthread' );
+		if ( empty( $mode ) ) {
+			return false;
+		}
 
-		$subject = wfMessage( $data['$MSG_KEY_SUBJECT'] )->inContentLanguage()->text();
+		if ( $mode == WALL_EMAIL_EVERY ) {
+			return true;
+		}
 
-		$text = wfMessage( $data['$MSG_KEY_BODY'] )->inContentLanguage()->text();
+		if ( $mode == WALL_EMAIL_SINCEVISITED ) {
+			return empty( $this->uniqueUsers[$entityKey][$watcher->getId()] );
+		}
 
-		$subject = str_replace( $keys, $values, $subject );
+		return false;
+	}
 
-		$keys[] = '$SUBJECT';
-		$values[] = $subject;
+	protected function getEmailExtensionController( WallNotificationEntity $notification, $watcherName ) {
+		if ( !empty( $notification->data->article_title_ns )
+			&& MWNamespace::getSubject( $notification->data->article_title_ns ) == NS_WIKIA_FORUM_BOARD
+		) {
+			if ( $notification->isMain() ) {
+				$controller = 'Email\Controller\Forum';
+			} else {
+				$controller = 'Email\Controller\ReplyForum';
+			}
+		} else if ( $notification->data->wall_username != $watcherName ) {
+			$controller = 'Email\Controller\FollowedWallMessage';
+		} else if ( !$notification->isMain() ) {
+			$controller = 'Email\Controller\ReplyWallMessage';
+		} else {
+			$controller = 'Email\Controller\OwnWallMessage';
+		}
 
-		$data['$SUBJECT'] = $subject;
-		$html = $this->app->getView( 'WallExternal', 'mail', ['data' => $data] )->render();
-		$text = str_replace( $keys, $values, $text );
+		return $controller;
+	}
 
-		return $watcher->sendMail( $data['$MAIL_SUBJECT'], $text, $from, $replyTo, 'WallNotification', $html );
+	/**
+	 * Get abstract from whole entity text.
+	 * HTML tags are stripped out, except <p> <br> which are used to make it easier to read.
+	 *
+	 * @param $text
+	 * @return string
+	 */
+	private function getAbstract( $text ) {
+		$text = strip_tags( $text, '<p><br>' );
+		$text = mb_substr( $text, 0, self::MAX_ABSTRACT_LENGTH, 'UTF-8' )
+			. ( mb_strlen( $text, 'UTF-8' ) > self::MAX_ABSTRACT_LENGTH ? '...' : '' );
+
+		return $text;
 	}
 
 	protected function getWatchlist( $name, $titleDbkey, $ns = NS_USER_WALL ) {
@@ -521,7 +504,8 @@ class WallNotifications {
 			[
 				'wl_title' => [ $titleDbkey, $userTitle->getDBkey() ],
 				'wl_namespace' => [ MWNamespace::getSubject( $ns ), MWNamespace::getTalk( $ns ) ],
-				// THIS hack will be removed after runing script with will clear all notification copy
+				// THIS hack will be removed after running script with will clear all notification copy
+				// FYI diff for this 3 year old hack: https://github.com/Wikia/app/commit/affdeb1557b2479b9819da1a5f8daacb4dab0bf9
                 "((wl_wikia_addedtimestamp > '2012-01-31' and wl_namespace = " . MWNamespace::getSubject( $ns ) . ") or ( wl_namespace = " . MWNamespace::getTalk( $ns ) . " ))"
 			],
 			__METHOD__
@@ -556,7 +540,7 @@ class WallNotifications {
 				'unique_id' => $notification->getUniqueId(),
 				'entity_key' => $notification->getId(),
 				'author_id' => $notification->data->msg_author_id,
-				'is_reply' => !$notification->isMain(),
+				'is_reply' => $notification->isReply(),
 				'notifyeveryone' => $notification->data->notifyeveryone
 			]
 		);
@@ -1101,5 +1085,4 @@ class WallNotifications {
 		}
 		return $this->cachedUsers[$userId];
 	}
-
 }
