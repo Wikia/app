@@ -1,10 +1,10 @@
 @import "skins/shared/color";
-@import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/breakpoints-variables";
+@import "skins/oasis/css/core/layout";
 @import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
-@import "skins/shared/mixins/calc";
 
 $color-search-form-background: mix($color-page, #000, 97%);
 @if $is-dark-wiki {
