@@ -612,7 +612,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	@include clearfix;
 }
 
-@if ( $responsive-layout-enabled ) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
 	.Search.this-wiki .SearchAdsTopWrapper {
 		padding: 0 0 10px 0;
 	}

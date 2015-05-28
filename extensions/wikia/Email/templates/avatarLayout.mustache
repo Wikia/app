@@ -39,13 +39,15 @@
 			<a class="button" href="{{buttonLink}}">{{buttonText}}</a>
 		</td>
 	</tr>
-	<tr>
-		<td colspan="2">
-			<div class="content-footer-messages">
-				{{#contentFooterMessages}}
-					<p>{{{.}}}</p>
-				{{/contentFooterMessages}}
-			</div>
-		</td>
-	</tr>
+	{{# hasContentFooterMessages}}
+		<tr>
+			<td colspan="2">
+				<div class="content-footer-messages">
+					{{#contentFooterMessages}}
+						<p>{{{.}}}</p>
+					{{/contentFooterMessages}}
+				</div>
+			</td>
+		</tr>
+	{{/ hasContentFooterMessages}}
 </table>

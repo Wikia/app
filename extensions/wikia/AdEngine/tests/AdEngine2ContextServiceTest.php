@@ -37,12 +37,15 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			[ ],
 
 			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
+			[ 'article', ['wgAdDriverEnableInvisibleHighImpactSlot'], [], [], [], [], ['invisibleHighImpact' => true] ],
 			[ 'article', ['wgAdDriverForceTurtleAd'], [], [], [], ['turtle' => true] ],
 			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
 			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
 			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
 			[ 'article', ['wgEnableAdsInContent'], ['adsInContent' => true] ],
 			[ 'article', ['wgEnableKruxTargeting'], [], ['enableKruxTargeting' => true] ],
+			[ 'article', ['wgEnableOutboundScreenExt'], [], [], [], [], ['exitstitial' => true] ],
+			[ 'article', ['wgOutboundScreenRedirectDelay'], [], [], [], [], ['exitstitialRedirectDelay' => true] ],
 			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], ['wikiIsCorporate' => true] ],
 			[ 'article', ['wgEnableWikiaHubsV3Ext'], ['pageType' => 'corporate'], ['pageIsHub' => true, 'wikiIsCorporate' => true] ],
 			[ 'article', ['wgWikiDirectedAtChildrenByFounder'], [], ['wikiDirectedAtChildren' => true] ],
@@ -65,7 +68,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedOpts = [],
 		$expectedTargeting = [],
 		$expectedProviders = [],
-		$expectedForceProviders = []
+		$expectedForceProviders = [],
+		$expectedSlots = []
 	) {
 		$langCode = 'xx';
 		$artId = 777;
@@ -93,6 +97,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		// Flags
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
+		$this->mockGlobalVariable( 'wgAdDriverEnableInvisibleHighImpactSlot', false );
 		$this->mockGlobalVariable( 'wgAdDriverForceTurtleAd', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
@@ -100,6 +105,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
+		$this->mockGlobalVariable( 'wgEnableOutboundScreenExt', false );
+		$this->mockGlobalVariable( 'wgOutboundScreenRedirectDelay', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 
@@ -155,6 +162,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		foreach ( $expectedForceProviders as $var => $val ) {
 			$expected['forceProviders'][$var] = $val;
+		}
+
+		foreach ( $expectedSlots as $var => $val ) {
+			$expected['slots'][$var] = $val;
 		}
 
 		// Extra check for SevenOne Media URL

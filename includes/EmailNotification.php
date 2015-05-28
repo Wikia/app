@@ -432,7 +432,7 @@ class EmailNotification {
 	 * @param $user User
 	 */
 	private function compose( \User $user ) {
-		if ( $this->canUseEmailExtension() ) {
+		if ( $this->getEmailExtensionController() !== false ) {
 			$this->sendUsingEmailExtension( $user );
 		} else {
 			\Wikia\Logger\WikiaLogger::instance()->notice( 'Sending via UserMailer', [
@@ -447,18 +447,31 @@ class EmailNotification {
 		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
 	}
 
-	private function canUseEmailExtension() {
+	private function getEmailExtensionController() {
 		// Definitely can't send if the extension isn't enabled
 		if ( empty( F::app()->wg->EnableEmailExt ) ) {
 			return false;
 		}
 
-		// List of conditions we currently handle using the Email extension
-		return (
-			$this->isArticlePageEdit() ||
-			$this->isArticleComment() ||
-			$this->isBlogComment()
-		);
+		$controller = false;
+
+		if ( $this->isArticlePageEdit() ) {
+			$controller = 'Email\Controller\WatchedPageEdited';
+		} elseif ( $this->isArticlePageRenamed() ) {
+			$controller = 'Email\Controller\WatchedPageRenamed';
+		} elseif ( $this->isArticlePageProtected() ) {
+			$controller = 'Email\Controller\WatchedPageProtected';
+		} elseif ( $this->isArticlePageUnprotected() ) {
+			$controller = 'Email\Controller\WatchedPageUnprotected';
+		} elseif ( $this->isArticlePageDeleted() ) {
+			$controller = 'Email\Controller\WatchedPageDeleted';
+		} elseif ( $this->isArticleComment() ) {
+			$controller = 'Email\Controller\ArticleComment';
+		} elseif ( $this->isBlogComment() ) {
+			$controller = 'Email\Controller\BlogComment';
+		}
+
+		return $controller;
 	}
 
 	/**
@@ -467,19 +480,12 @@ class EmailNotification {
 	 * @param User $user
 	 */
 	private function sendUsingEmailExtension( \User $user ) {
-
-		if ( $this->isArticlePageEdit() ) {
-			$controller = 'Email\Controller\WatchedPage';
-		} elseif ( $this->isArticleComment() ) {
-			$controller = 'Email\Controller\ArticleComment';
-		} elseif ( $this->isBlogComment() ) {
-			$controller = 'Email\Controller\BlogComment';
-		}
+		$controller = $this->getEmailExtensionController();
 
 		if ( !empty( $controller ) ) {
 			$params = [
 				'targetUser' => $user->getName(),
-				'title' => $this->title->getText(),
+				'pageTitle' => $this->title->getText(),
 				'namespace' => $this->title->getNamespace(),
 				'summary' => $this->summary,
 				'currentRevId' => $this->currentRevId,
@@ -501,6 +507,42 @@ class EmailNotification {
 	 */
 	private function isArticlePageEdit() {
 		return empty( $this->action ) && !$this->isNewPage();
+	}
+
+	/**
+	 * Check if performed action is page rename
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageRenamed() {
+		return in_array( $this->action, [ 'move_redir', 'move' ] );
+	}
+
+	/**
+	 * Check if performed action is adding page protection
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageProtected() {
+		return in_array( $this->action, [ 'protect', 'modify' ] );
+	}
+
+	/**
+	 * Check if performed action is removal of page protection
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageUnprotected() {
+		return in_array( $this->action, [ 'unprotect' ] );
+	}
+
+	/**
+	 * Check if performed action is page deletion
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageDeleted() {
+		return in_array( $this->action, [ 'delete' ] );
 	}
 
 	/**

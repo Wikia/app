@@ -684,7 +684,7 @@ $messages['es'] = array(
 	'themedesigner-button-upload' => 'Subir',
 	'themedesigner-button-upload-wordmark' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif o png. De máximo {{PLURAL:$1|$1 kilobyte|$1 kilobytes}}',
-	'themedesigner-default' => 'Por defecto',
+	'themedesigner-default' => 'Predeterminado',
 	'themedesigner-font' => 'fuente',
 	'themedesigner-size' => 'tamaño',
 	'themedesigner-button-save' => 'Guardar',
@@ -710,7 +710,9 @@ $messages['es'] = array(
  * @author Subi
  */
 $messages['eu'] = array(
+	'themedesigner-previous-versions' => 'Aurreko bertsioak',
 	'themedesigner-button-ok' => 'Ados',
+	'themedesigner-button-save' => 'Gorde',
 );
 
 /** Persian (فارسی)
@@ -1300,7 +1302,7 @@ $messages['lb'] = array(
 	'themedesigner-wordmark-preview-error' => 'Ups! Den Numm vun der Wiki kann net eidel sinn, gitt w.e.g. den Numm vun der Wiki a fir se ze späicheren.',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1667,7 +1669,7 @@ $messages['oc'] = array(
 	'themedesigner-wodmark-preview' => 'Apercebut',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  */
 $messages['pdc'] = array(
 	'themedesigner-small' => 'Glee',
@@ -2289,7 +2291,7 @@ $messages['tl'] = array(
 	'themedesigner-wodmark-preview' => 'Paunang tingin',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  */
 $messages['tly'] = array(
@@ -2433,7 +2435,7 @@ $messages['vi'] = array(
 	'themedesigner-upload-disabled' => 'Xin lỗi, chúng tôi đã tạm thời vô hiệu hóa việc tải lên. Hãy quay lại sau khi có thay đổi',
 );
 
-/** Wu (吴语)
+/** Wu Chinese (吴语)
  * @author 十弌
  */
 $messages['wuu'] = array(

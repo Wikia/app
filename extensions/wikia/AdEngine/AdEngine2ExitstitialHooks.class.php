@@ -39,7 +39,7 @@ class AdEngine2ExitstitialHooks {
 	}
 
 	/**
-	 * Export variables necessary for Exitstitial.js to work
+	 * Export variables necessary for exitstitial.js to work
 	 *
 	 * @param array $vars
 	 *
@@ -125,5 +125,15 @@ class AdEngine2ExitstitialHooks {
 		}
 
 		return $whiteList;
+	}
+
+	public static function onOasisSkinAssetGroups( &$jsAssets ) {
+		global $wgEnableOutboundScreenExt;
+
+		if ( !empty( $wgEnableOutboundScreenExt ) ) {
+			$jsAssets[] = 'adengine2_oasis_exitstitial_js';
+		}
+
+		return true;
 	}
 }

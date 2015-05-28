@@ -221,6 +221,14 @@ $messages['es'] = array(
 	'iwedit-trans' => 'Activar la transclusión temeraria',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'iwedit-all-interwikis' => 'interwiki guztiak',
+	'iwedit-update' => 'Eguneratu',
+);
+
 /** Persian (فارسی)
  * @author Mjbmr
  */
@@ -420,7 +428,7 @@ $messages['lb'] = array(
 	'iwedit-success' => 'De Link gouf ugeluecht.',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -643,6 +651,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'interwikiedit-desc' => 'Special:InterwikiEdit för webbaserad hantering av interwikilänkar',
 	'interwikiedit' => 'Interwiki-redigerare',
 	'iwedit-title' => 'Interwikiredigerare',
 	'iwedit-language-interwikis' => 'bara språkinterwikis',

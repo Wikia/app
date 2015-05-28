@@ -16,7 +16,7 @@ abstract class CommentController extends EmailController {
 
 	public function initEmail() {
 		// This title is for the article being commented upon
-		$titleText = $this->request->getVal( 'title' );
+		$titleText = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace' );
 
 		$this->title = \Title::newFromText( $titleText, $titleNamespace );
@@ -84,6 +84,7 @@ abstract class CommentController extends EmailController {
 			'contentFooterMessages' => [
 				$this->getCommentSectionLink(),
 			],
+			'hasContentFooterMessages' => true
 		] );
 	}
 
@@ -144,6 +145,25 @@ abstract class CommentController extends EmailController {
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		$formFields =  [
+			"inputs" => [
+				[
+					'type' => 'text',
+					'name' => 'currentRevId',
+					'label' => "Comment Revision ID"
+				]
+			]
+		];
+
+		return $formFields;
+	}
 }
 
 class ArticleCommentController extends CommentController {
@@ -154,6 +174,31 @@ class ArticleCommentController extends CommentController {
 	protected function getSummaryKey() {
 		return 'emailext-articlecomment-summary';
 	}
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'pageTitle',
+					'label' => "Article Title",
+					'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
+				],
+				[
+					'type' => 'hidden',
+					'name' => 'namespace',
+					'value' => NS_MAIN
+				]
+			]
+		];
+
+		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
+	}
 }
 
 class BlogCommentController extends CommentController {
@@ -163,5 +208,28 @@ class BlogCommentController extends CommentController {
 
 	protected function getSummaryKey() {
 		return 'emailext-blogcomment-summary';
+	}
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		$formFields['inputs'] = [
+			[
+				'type' => 'text',
+				'name' => 'pageTitle',
+				'label' => "Blog Post Title",
+				'tooltip' => "eg 'Gcheung28/New_sharing_options_on_Wikia' (make sure it's on this wikia!)",
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'namespace',
+				'value' => NS_BLOG_ARTICLE
+			]
+		];
+
+		return  array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
 }

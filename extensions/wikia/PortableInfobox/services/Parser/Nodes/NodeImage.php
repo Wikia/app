@@ -5,18 +5,22 @@ use Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer;
 
 class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';
+	const CAPTION_TAG_NAME = 'caption';
 
 	public function getData() {
 		$title = $this->getImageAsTitleObject( $this->getRawValueWithDefault( $this->xmlNode ) );
 		$ref = null;
 		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
+		$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
 
 		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
 
 		return [
 			'url' => $this->resolveImageUrl( $title ),
-			'name' => ( $title ) ? $title->getDBkey() : '',
+			'name' => ( $title ) ? $title->getText() : '',
+			'key' => ( $title ) ? $title->getDBKey() : '',
 			'alt' => $alt,
+			'caption' => $caption,
 			'ref' => $ref
 		];
 	}
@@ -34,11 +38,18 @@ class NodeImage extends Node {
 		return $title;
 	}
 
+	/**
+	 * @desc returns image url for given image title
+	 * @param string $title
+	 * @return string url or '' if image doesn't exist
+	 */
 	public function resolveImageUrl( $title ) {
-		if ( $title && $title->exists() ) {
-			return \WikiaFileHelper::getFileFromTitle( $title )->getUrlGenerator()->url();
-		} else {
-			return '';
+		if ( $title ) {
+			$file = \WikiaFileHelper::getFileFromTitle( $title );
+			if ( $file ) {
+				return $file->getUrl();
+			}
 		}
+		return '';
 	}
 }

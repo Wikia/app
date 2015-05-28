@@ -14,6 +14,10 @@ abstract class EmailController extends \WikiaController {
 	 * and intended to be overridden by child classes. */
 	const LAYOUT_CSS = 'avatarLayout.css';
 
+	/** Regular expression pattern used to find all email controller classes inside
+	 * of $wgAutoLoadClasses */
+	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
+
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
 
@@ -537,5 +541,107 @@ abstract class EmailController extends \WikiaController {
 		if ( $this->currentUser->isBlocked() ) {
 			throw new Check( 'User is blocked from taking this action' );
 		}
+	}
+
+	/**
+	 * Get the form field for this email to be used on Special:SendEmail
+	 * @return array
+	 */
+	public static function getAdminForm() {
+		return array_merge_recursive(
+			self::getBaseFormFields(),
+			static::getEmailSpecificFormFields()
+		);
+	}
+
+	/**
+	 * Get the common form fields used by all emails on Special:SendEmail.
+	 * @return array
+	 */
+	private static function getBaseFormFields() {
+		$baseForm = [
+			'inputs' => [
+				[
+					'type' => 'hidden',
+					'name' => 'token',
+					'value' => \F::app()->wg->User->getEditToken()
+				],
+				[
+					'type' => 'hidden',
+					'name' => 'emailController',
+					'value' => get_called_class()
+				],
+				[
+					'type' => 'hidden',
+					'name' => 'fromAddress',
+					'value' => \F::app()->wg->PasswordSender
+				],
+				[
+					'type' => 'hidden',
+					'name' => 'fromName',
+					'value' => \F::app()->wg->PasswordSenderName
+				],
+				[
+					'type' => 'text',
+					'name' => 'targetUser',
+					'label' => 'Target User',
+					'tooltip' => 'User to send the email to',
+					'value' => htmlspecialchars(  \F::app()->wg->User->getName(), ENT_QUOTES )
+				],
+				[
+					'type' => 'select',
+					'name' => 'targetLang',
+					'label' => 'Language',
+					'tooltip' => 'The language of the email',
+					'options' => [
+						[ 'value' => 'en', 'content' => 'English' ],
+						[ 'value' => 'de', 'content' => 'German' ],
+						[ 'value' => 'es', 'content' => 'Spanish' ],
+						[ 'value' => 'fr', 'content' => 'French' ],
+						[ 'value' => 'it', 'content' => 'Italian' ],
+						[ 'value' => 'ja', 'content' => 'Japanese' ],
+						[ 'value' => 'nl', 'content' => 'Dutch' ],
+						[ 'value' => 'pl', 'content' => 'Polish' ],
+						[ 'value' => 'pt', 'content' => 'Portuguese' ],
+						[ 'value' => 'ru', 'content' => 'Russian' ],
+						[ 'value' => 'zh-hans', 'content' => 'Chinese Simplified' ],
+						[ 'value' => 'zh-tw', 'content' => 'Chinese Taiwan' ],
+					]
+
+				],
+			],
+			'submits' => [
+				'value' => "Send Email",
+			],
+			'method' => 'post',
+			'legend' => self::getLegendName()
+		];
+
+		return $baseForm;
+	}
+
+	/**
+	 * This method is overridden by most subclasses of the EmailController. It returns a list of
+	 * form fields which are specific to that email and are required for it's form found on
+	 * Special:SendEmail (eg, the WatchedPage email requires a Title and 2 revision IDs, in addition
+	 * to all of the fields from EmailController::getBaseFormFields).
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		return [];
+	}
+
+	/**
+	 * Get the legend to display over this emails Special:SendEmail form. eg "WatchedPage Email" or
+	 * "ForgottenPassword Email"
+	 * @return string
+	 */
+	private static function getLegendName() {
+		$legendName = "";
+		if ( preg_match( self::EMAIL_CONTROLLER_REGEX, get_called_class(), $matches ) ) {
+			$legendName = $matches[1] . " Email";
+		}
+
+		return $legendName;
 	}
 }
