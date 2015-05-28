@@ -6,7 +6,7 @@ class ForumExternalController extends WallExternalController {
 	}
 
 	public function getCommentsPage() {
-		//workaround to prevent index data expose
+		// workaround to prevent index data expose
 		$title = Title::newFromText( $this->request->getVal( 'pagetitle' ), $this->request->getVal( 'pagenamespace' ) );
 		$this->response->setVal( 'html', $this->app->renderView( 'ForumController', 'board', array( 'title' => $title, 'page' => $this->request->getVal( 'page', 1 ) ) ) );
 	}

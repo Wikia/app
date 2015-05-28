@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
 * Maintenance script to collect comment data and insert into comments_index table
@@ -8,16 +8,16 @@
 // get parent page
 function getParentPage( $articleComment ) {
 	$titleText = $articleComment->getTitle()->getDBkey();
-	$parts = explode('/@', $titleText);
+	$parts = explode( '/@', $titleText );
 	$titleText = $parts[0];
 	$namespace = MWNamespace::getSubject( $articleComment->getTitle()->getNamespace() );
 	$title = Title::newFromText( $titleText, $namespace );
 
-	if( $title instanceof Title ) {
+	if ( $title instanceof Title ) {
 		// create message wall if not exist
 		if ( !$title->exists() && $namespace == NS_USER_WALL ) {
 			$title = WallMessage::addMessageWall( $title );
-			echo ".....Wall message NOT found.\n\tAdded wall message '$titleText' (".$title->getArticleID().")";
+			echo ".....Wall message NOT found.\n\tAdded wall message '$titleText' (" . $title->getArticleID() . ")";
 			return $title->getArticleId();
 		}
 	}
@@ -37,7 +37,7 @@ function getCommentProperties( $articleComment ) {
 			'removed' => intval( $wallMessage->isRemove() ),
 		);
 	}
-	
+
 	return $properties;
 }
 
@@ -49,7 +49,7 @@ function getLastChildCommentId( $articleComment ) {
 		array(
 			'page_wikia_props.page_id is NULL',
 			'page.page_namespace' => $articleComment->getTitle()->getNamespace(),
-			'page.page_title '.$db->buildLike( sprintf( "%s/%s", $articleComment->getTitle()->getDBkey(), ARTICLECOMMENT_PREFIX ), $db->anyString() ),
+			'page.page_title ' . $db->buildLike( sprintf( "%s/%s", $articleComment->getTitle()->getDBkey(), ARTICLECOMMENT_PREFIX ), $db->anyString() ),
 		),
 		__METHOD__,
 		array(),
@@ -58,8 +58,8 @@ function getLastChildCommentId( $articleComment ) {
 				'LEFT JOIN',
 				array(
 					'page.page_id' => 'page_wikia_props.page_id',
-					'page_wikia_props.propname in ('.WPP_WALL_ARCHIVE.','.WPP_WALL_REMOVE.','.WPP_WALL_ADMINDELETE.')',
-					'page_wikia_props.props' => serialize(1)
+					'page_wikia_props.propname in (' . WPP_WALL_ARCHIVE . ',' . WPP_WALL_REMOVE . ',' . WPP_WALL_ADMINDELETE . ')',
+					'page_wikia_props.props' => serialize( 1 )
 				)
 			)
 		)
@@ -88,8 +88,8 @@ function insertIntoCommentsIndex( $parentPageId, $articleComment, $parentComment
 		'lastRevId' => $articleComment->mLastRevId,
 	);
 
-	$data = array_merge($data, getCommentProperties($articleComment) );
-	$commentsIndex = new CommentsIndex($data);
+	$data = array_merge( $data, getCommentProperties( $articleComment ) );
+	$commentsIndex = new CommentsIndex( $data );
 
 	if ( !$isDryrun ) {
 		$commentsIndex->addToDatabase();
