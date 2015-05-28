@@ -149,19 +149,7 @@ define( 'wikia.ui.modal', [
 		}
 
 		buttons = params.vars.buttons;
-		if ( $.isArray( buttons ) ) {
-			// Create buttons
-			buttons.forEach(function( button, index ) {
-				if ( typeof button === 'object' ) {
-
-					// Extend the button param with the modal default, get the button uicomponent,
-					// and render the params then replace the button params with the rendered html
-					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
-						$.extend( true, {}, btnConfig, button )
-					);
-				}
-			});
-		}
+		Modal.prototype.renderButtons(buttons);
 
 		// extend default modal params with the one passed in constructor call
 		params = $.extend( true, {}, modalDefaults, params );
@@ -372,6 +360,26 @@ define( 'wikia.ui.modal', [
 	 */
 	Modal.prototype.setTitle = function( title ) {
 		this.$element.find( 'header h3' ).text( title );
+	};
+
+	/**
+	 * Renders buttons HTML and overrides buttons param with rendered values
+	 * @param {Array} title text
+	 */
+	Modal.prototype.renderButtons = function ( buttons ) {
+		if ( $.isArray( buttons ) ) {
+			// Create buttons
+			buttons.forEach(function( button, index ) {
+				if ( typeof button === 'object' ) {
+
+					// Extend the button param with the modal default, get the button uicomponent,
+					// and render the params then replace the button params with the rendered html
+					buttons[ index ] = uiComponent.getSubComponent( 'button' ).render(
+						$.extend( true, {}, btnConfig, button )
+					);
+				}
+			});
+		}
 	};
 
 	/** Public API */
