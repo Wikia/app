@@ -19,7 +19,7 @@ else:
 				<fieldset class="params">
 				<?php
 				foreach ( $flagParamsNames as $flagParamName => $flagParamDescription ):
-					$flagParamValue = (string)$flag['params'][$flagParamName];
+					$flagParamValue = isset( $flag['params'][$flagParamName] ) ? (string)$flag['params'][$flagParamName] : '';
 				?>
 					<input type="text" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$flagParamName}" ) ?>" value="<?= Sanitizer::encodeAttribute( $flagParamValue ) ?>" placeholder="<?= Sanitizer::encodeAttribute( $flagParamDescription ) ?>" class="param">
 				<?php
