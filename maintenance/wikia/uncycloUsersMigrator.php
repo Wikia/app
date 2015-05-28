@@ -422,6 +422,9 @@ class UncycloUserMigrator extends Maintenance {
 			// update user ID in uncyclo database
 			$this->doChangeUncycloUserId( $user, $extUser->getId() );
 
+			// delete the user from the uncyclo DB
+			$this->getUncycloDB( DB_MASTER )->delete( self::USER_TABLE, [ 'user_id' => $user->getId() ], $fname );
+
 			// invalidate user cache
 			global $wgMemc;
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $user->getId() ) );
@@ -631,6 +634,8 @@ class UncycloUserMigrator extends Maintenance {
 					'user_name' => $user->getName(),
 				] );
 			}
+
+			wfWaitForSlaves();
 		}
 
 		// print the stats
