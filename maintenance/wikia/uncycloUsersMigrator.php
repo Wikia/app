@@ -649,18 +649,18 @@ class UncycloUserMigrator extends Maintenance {
 
 		// close the current transaction (if any)
 		$dbw = $this->getUncycloDB( DB_MASTER );
-		$dbw->commit();
+		$dbw->commit( __METHOD__ );
 
 		while( $row = $res->fetchObject() ) {
 			$user = User::newFromRow((object)$row);
 
 			try {
-				$dbw->begin();
+				$dbw->begin( __METHOD__ );
 				$this->migrateUser( $user );
-				$dbw->commit();
+				$dbw->commit( __METHOD__ );
 			}
 			catch ( Exception $e ) {
-				$dbw->rollback();
+				$dbw->rollback( __METHOD__ );
 
 				$this->output( sprintf( "\n%s: %s\n", get_class( $e ), $e->getMessage() ) );
 				$this->output( $e->getTraceAsString() );
