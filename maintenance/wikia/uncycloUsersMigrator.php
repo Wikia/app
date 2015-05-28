@@ -275,8 +275,13 @@ class UncycloUserMigrator extends Maintenance {
 		}
 
 		$user = clone $uncycloUser;
-
 		$newName = self::PREFIX_RENAME_UNCYCLO . $user->getName();
+
+		// check user name conflicts
+		if ( $this->getGlobalUserByName( $newName ) ) {
+			$newName .= '-1';
+		}
+
 		$this->output( sprintf('> renaming uncyclo user to "%s"...', $newName) );
 
 		$this->renamedUnclycloAccounts++;
@@ -297,12 +302,31 @@ class UncycloUserMigrator extends Maintenance {
 	}
 
 	/**
+	 * Remove given Uncyclopedia account
+	 *
+	 * @param User $user
+	 */
+	protected function deleteUncycloUser( User $user ) {
+		// delete the user and his settings from the uncyclo DB
+		$dbw = $this->getUncycloDB( DB_MASTER );
+
+		$dbw->delete( self::USER_TABLE,  [ 'user_id' => $user->getId() ], __METHOD__ );
+		$dbw->delete( 'user_properties', [ 'up_user' => $user->getId() ], __METHOD__ );
+	}
+
+	/**
 	 * Rename global user
 	 *
 	 * @param User $user global user
 	 */
 	protected function doRenameGlobalUser( User $user ) {
 		$newName = self::PREFIX_RENAME_GLOBAL . $user->getName();
+
+		// check user name conflicts
+		if ( $this->getGlobalUserByName( $newName ) ) {
+			$newName .= '-1';
+		}
+
 		$this->output( sprintf( '> renaming global user to "%s" (#%d)...', $newName, $user->getId() ) );
 
 		$this->renamedWikiaAccounts++;
@@ -431,8 +455,7 @@ class UncycloUserMigrator extends Maintenance {
 			$this->doChangeUncycloUserId( $user, $extUser->getId() );
 
 			// delete the user and his settings from the uncyclo DB
-			$this->getUncycloDB( DB_MASTER )->delete( self::USER_TABLE,  [ 'user_id' => $user->getId() ], $fname );
-			$this->getUncycloDB( DB_MASTER )->delete( 'user_properties', [ 'up_user' => $user->getId() ], $fname );
+			$this->deleteUncycloUser( $user );
 
 			// invalidate user cache
 			global $wgMemc;
@@ -504,6 +527,9 @@ class UncycloUserMigrator extends Maintenance {
 				$action = 'merge';
 
 				$this->doChangeUncycloUserId( $user, $globalUser->getId() );
+
+				// delete the user and his settings from the uncyclo DB
+				$this->deleteUncycloUser( $user );
 			}
 			else {
 				// resolve conflicts
@@ -619,6 +645,7 @@ class UncycloUserMigrator extends Maintenance {
 		);
 
 		$this->output( sprintf( "\nMigrating %d accounts...\n", $res->numRows() ) );
+		$this->readconsole( "Hit enter to continue..." );
 
 		// close the current transaction (if any)
 		$dbw = $this->getUncycloDB( DB_MASTER );
