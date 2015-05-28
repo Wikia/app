@@ -102,14 +102,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 	function pushDelayedQueue() {
 		delayedSlotsQueue.forEach(function (slot) {
-			if (window.ads.runtime.disableBtf) {
-				slot.success({
-					adType: 'blocked'
-				});
-				slotTweaker.hide(slot.slotName);
-				return;
-			}
-			provider.fillInSlot(slot.slotName, slot.success, slot.hop);
+			fillInSlotWithDelay(slot.slotName, slot.success, slot.hop);
 		});
 	}
 
@@ -129,9 +122,18 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		});
 	}
 
+	function blockBtfSlot(slotName, success) {
+		success({
+			adType: 'blocked'
+		});
+		slotTweaker.hide(slotName);
+	}
+
 	function fillInSlotWithDelay(slotName, success, hop) {
 		if (context.opts.delayBtf && (!gptFlushed || pendingSlots.length > 0)) {
 			delayBtfSlot(slotName, success, hop);
+		} else if (window.ads.runtime.disableBtf && !gptConfig[slotName]) {
+			blockBtfSlot(slotName, success);
 		} else {
 			provider.fillInSlot(slotName, success, hop);
 		}
