@@ -4,7 +4,6 @@ $dir = dirname( __FILE__ ) . "/../../../../";
 require_once( $dir . 'maintenance/Maintenance.php' );
 
 use Flags\FlagsExtractor;
-use Flags\Models\Flag;
 use Flags\Models\FlagType;
 
 class MoveNotices extends Maintenance {
@@ -19,6 +18,7 @@ class MoveNotices extends Maintenance {
 		$templateName,
 		$wikiId,
 		$pageId,
+		$pageName,
 		$flagTypeId,
 		$app;
 
@@ -29,7 +29,20 @@ class MoveNotices extends Maintenance {
 		parent::__construct();
 		$this->addOption( 'csv', 'CSV file with data' );
 		$this->addOption( 'list', 'Run script without adding data to database' );
-		$this->addOption( 'section', 'Search template in given section (default is 0). All article can be parsed by setting value "all".' );
+		$this->addOption( 'section', 'Search template in given section (default is 0). Whole article can be parsed by setting value "all".' );
+		$this->addOption( 'add', "Add template as a flag.\n
+									Accepted values:\n
+									first (default) - first template will be added\n
+									all - all tempaltes will be added");
+		$this->addOption( 'remove', "Remove template from text.\n
+									Accepted values:\n
+									first (default) - first template will be removed\n
+									all - all tempaltes will be removed");
+		$this->addOption( 'replace', "Replace template by a tag.\n
+									Accepted values:\n
+									first (default) - first template will be replaced\n
+									all - all tempaltes will be replaced");
+		$this->addOption( 'tag', 'Tag to replace template. If not set, default __FLAGS__ tag will be used.');
 	}
 
 	public function execute() {
@@ -46,6 +59,15 @@ class MoveNotices extends Maintenance {
 		$csv = $this->getOption( 'csv' );
 		$section = $this->getOption( 'section' );
 		$list = $this->getOption( 'list' );
+
+		$tag = $this->getOption( 'tag', null );
+
+		$actions = [];
+
+		if ( !$list ) {
+			$actions = $this->prepareActionOptions();
+		}
+		$actionsSum = array_sum( $actions );
 
 		if ( empty( $csv ) ) {
 			$this->output( "You must attach CSV file.\n" );
@@ -81,7 +103,6 @@ class MoveNotices extends Maintenance {
 
 		$this->output( "Start processing\n" );
 
-		$flagModel = new Flag();
 		$flagTypeModel = new FlagType();
 		$flagsExtractor = new FlagsExtractor();
 
@@ -141,41 +162,23 @@ class MoveNotices extends Maintenance {
 				$this->pageId = $row->page_id;
 
 				$page = Title::makeTitle( $row->page_namespace, $row->page_title );
-				$pageName = $page->getPrefixedText();
-				$article = Article::newFromID( $this->pageId );
-				$content = $article->getContent();
+				$this->pageName = $page->getPrefixedText();
+				$wiki = WikiPage::newFromID( $this->pageId );
+
+				$content = $wiki->getText();
 
 				if ( $section != self::SECTION_ALL  ) {
 					$content = $wgParser->getSection($content, $section);
 				}
 
-				$this->addToLog( "Looking for template on $pageName [" . $this->pageId . "]\n" );
+				$this->addToLog( "Looking for template on $this->pageName [" . $this->pageId . "]\n" );
 
-				$flagsExtractor->init( $content, $this->templateName );
+				$actionParams = $this->prepareActionParams( $actionsSum, $tag );
+
+				$flagsExtractor->init( $content, $this->templateName, $actions, $actionParams );
 				$templates = $flagsExtractor->getAllTemplates();
 
-				$size = sizeof( $templates );
-
-				if ( !$size ) {
-					$this->addToLog( "[WARNING] No templates found on page $pageName\n" );
-				} elseif ( $size > 1 ) {
-					$this->addToLog( "[WARNING] Found more than one ($size) template $this->templateName on page $pageName\n" );
-				}
-
-				if ( $size ) {
-					$this->logTemplatesInfo( $templates );
-
-					$flagsToPages = $this->prepareDataForFlagsToPage( $templates[0]['params'] );
-
-					if ( !$list ) {
-						$this->app->sendRequest( 'FlagsApiController',
-							'addFlagsToPage',
-							$flagsToPages
-						)->getData();
-
-						$this->addToLog( "Adding flags to pages: " . json_encode( $flagsToPages ) ."\n" );
-					}
-				}
+				$this->logTemplatesInfo( $templates, $actionsSum, $actionParams, $list );
 
 				fwrite( $this->logFile, $this->log );
 				$this->output( $this->log );
@@ -224,22 +227,109 @@ class MoveNotices extends Maintenance {
 	}
 
 	/**
-	 * Log info about all found templates
+	 * Log info about all found templates and actions
 	 */
-	private function logTemplatesInfo( $templates ) {
-		foreach ( $templates as $template ) {
-			$this->addToLog( "Processing template: " . $template['template'] ."\n" );
+	private function logTemplatesInfo( $templates, $actionsSum, $actionParams, $list ) {
+		$size = sizeof( $templates );
 
-			if ( empty( $template['params'] ) ) {
-				$this->addToLog( "No parameters found\n" );
-			} else {
-				$this->addToLog( "Found parameters: \n" );
+		if ( !$size ) {
+			$this->addToLog( "[WARNING] No templates found on page $this->pageName\n" );
+		} elseif ( $size > 1 ) {
+			$this->addToLog( "[WARNING] Found more than one ($size) template $this->templateName on page $this->pageName\n" );
+		}
 
-				foreach( $template['params'] as $name => $value ) {
-					$this->addToLog( "Parameter $name = $value \n" );
+		if ( $size ) {
+			$listWarning = $list ? '[LIST] ' : '';
+
+			foreach ( $templates as $key => $template ) {
+				$this->addToLog( "Processing template: " . $template['template'] ."\n" );
+
+				if ( empty( $template['params'] ) ) {
+					$this->addToLog( "No parameters found\n" );
+				} else {
+					$this->addToLog( "Found parameters: \n" );
+
+					foreach( $template['params'] as $name => $value ) {
+						$this->addToLog( "Parameter $name = $value \n" );
+					}
+				}
+
+				if ( ( $actionsSum & FlagsExtractor::ACTION_ADD_FIRST_FLAG && $key == 0 )
+					|| $actionsSum & FlagsExtractor::ACTION_ADD_ALL_FLAGS
+				) {
+					$this->addToLog( "$listWarning Adding template as flag to page: " . json_encode( $actionParams ) ."\n" );
+				}
+
+				if ( $actionsSum & FlagsExtractor::ACTION_REMOVE_FIRST_FLAG && $key == 0
+					|| $actionsSum & FlagsExtractor::ACTION_REMOVE_ALL_FLAGS
+				) {
+					$this->addToLog( "$listWarning Remove template from text on page: $this->pageName\n" );
+				}
+
+				if ( $actionsSum & FlagsExtractor::ACTION_REPLACE_FIRST_FLAG && $key == 0
+					|| $actionsSum & FlagsExtractor::ACTION_REPLACE_ALL_FLAGS
+				) {
+					$tag = isset( $actionParams['replacementTag'] )
+							? $actionParams['replacementTag']
+							: FlagsExtractor::FLAGS_DEFAULT_TAG;
+					$this->addToLog( "$listWarning Replace template by tag $tag on page: $this->pageName\n" );
 				}
 			}
 		}
+	}
+
+	private function prepareActionOptions() {
+		$actions = [];
+
+		$add = $this->getOption( 'add' );
+		$remove = $this->getOption( 'remove' );
+		$replace = $this->getOption( 'replace' );
+
+		if ( !empty( $add ) ) {
+			if ( $add === 'all' ) {
+				$actions[] = FlagsExtractor::ACTION_ADD_ALL_FLAGS;
+			} else {
+				$actions[] = FlagsExtractor::ACTION_ADD_FIRST_FLAG;
+			}
+		}
+
+		if ( !empty( $remove ) ) {
+			if ( $remove === 'all' ) {
+				$actions[] = FlagsExtractor::ACTION_REMOVE_ALL_FLAGS;
+			} else {
+				$actions[] = FlagsExtractor::ACTION_REMOVE_FIRST_FLAG;
+			}
+		}
+
+		if ( !empty( $replace ) ) {
+			if ( $replace === 'all' ) {
+				$actions[] = FlagsExtractor::ACTION_REPLACE_ALL_FLAGS;
+			} else {
+				$actions[] = FlagsExtractor::ACTION_REPLACE_ALL_FLAGS;
+			}
+		}
+
+		return $actions;
+	}
+
+	private function prepareActionParams( $actionsSum, $tag ) {
+		$actionParams = [];
+
+		if ( $actionsSum & ( FlagsExtractor::ACTION_ADD_FIRST_FLAG | FlagsExtractor::ACTION_ADD_ALL_FLAGS ) ) {
+			$actionParams = [
+				'wiki_id' => $this->wikiId,
+				'page_id' => $this->pageId,
+				'flag_type_id' => $this->flagTypeId
+			];
+		}
+
+		if ( $actionsSum & ( FlagsExtractor::ACTION_REPLACE_FIRST_FLAG | FlagsExtractor::ACTION_REPLACE_ALL_FLAGS )
+			&& !is_null( $tag )
+		) {
+			$actionParams['replacementTag'] = $tag;
+		}
+
+		return $actionParams;
 	}
 
 	/**
@@ -262,24 +352,6 @@ class MoveNotices extends Maintenance {
 		];
 
 		return $flagType;
-	}
-
-	/**
-	 * Prepare data to add flags to page
-	 */
-	private function prepareDataForFlagsToPage( $params ) {
-		$flagsToPages = [
-			'wiki_id' => $this->wikiId,
-			'page_id' => $this->pageId,
-			'flags' => [
-				[
-					'flag_type_id' => $this->flagTypeId,
-					'params' => $params
-				]
-			]
-		];
-
-		return $flagsToPages;
 	}
 
 	/**
