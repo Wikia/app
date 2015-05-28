@@ -20,7 +20,7 @@
 		Weppy.setOptions(config);
 		$(context).on('load', function () {
 			setTimeout(function () {
-				Weppy.sendPagePerformance(false);
+				Weppy.sendPagePerformance();
 			}, 0);
 		});
 	});
