@@ -33,7 +33,8 @@ require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 				{
 					key: 'event',
 					value: 'close'
-				}]
+				}
+			]
 		}
 	}],
 
@@ -97,6 +98,12 @@ require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	 * One of sub-tasks for getting modal shown
 	 */
 	function createComponent(uiModal) {
+		/* Look for existence of form tag to determine whether there are any flags on the wikia */
+		if (modalConfig.vars.content.indexOf('<form') > -1) {
+			modalConfig.vars.buttons = buttonsForFlagsExistingState;
+		} else {
+			modalConfig.vars.buttons = buttonForEmptyState;
+		}
 		/* Create the wrapping JS Object using the modalConfig */
 		uiModal.createComponent(modalConfig, processInstance);
 	}
@@ -109,18 +116,10 @@ require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	function processInstance(modalInstance) {
 		var $flagsEditForm = modalInstance.$element.find('#flagsEditForm');
 		if ($flagsEditForm.length > 0) {
-			/* Render and add Done and Cancel buttons */
-			modalInstance.renderButtons(buttonsForFlagsExistingState);
-			modalInstance.$element.find('footer').html(buttonsForFlagsExistingState);
-
 			/* Submit flags edit form on Done button click */
 			modalInstance.bind('done', function () {
 				$flagsEditForm.trigger('submit');
 			});
-		} else {
-			/* Render and add Close button */
-			modalInstance.renderButtons(buttonForEmptyState);
-			modalInstance.$element.find('footer').html(buttonForEmptyState);
 		}
 
 		/* Show the modal */
