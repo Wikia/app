@@ -1,6 +1,6 @@
 <?php
 if ( empty($flags) ) :
-	echo wfMessage( 'flags-edit-modal-no-flags-on-community' )->parse();
+	echo wfMessage( 'flags-edit-modal-no-flags-on-community' )->parseAsBlock();
 else:
  ?>
 <form action="<?= Sanitizer::cleanUrl( $formSubmitUrl ) ?>" method="POST" id="flagsEditForm">
