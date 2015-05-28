@@ -84,6 +84,7 @@ abstract class CommentController extends EmailController {
 			'contentFooterMessages' => [
 				$this->getCommentSectionLink(),
 			],
+			'hasContentFooterMessages' => true
 		] );
 	}
 
@@ -95,13 +96,6 @@ abstract class CommentController extends EmailController {
 	}
 
 	abstract protected function getSubjectKey();
-
-	protected function getSalutation() {
-		return wfMessage(
-			'emailext-comment-salutation',
-			$this->targetUser->getName()
-		)->inLanguage( $this->targetLang )->text();
-	}
 
 	protected function getSummary() {
 		$articleTitle = $this->title->getText();
