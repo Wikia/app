@@ -84,6 +84,7 @@ abstract class CommentController extends EmailController {
 			'contentFooterMessages' => [
 				$this->getCommentSectionLink(),
 			],
+			'hasContentFooterMessages' => true
 		] );
 	}
 
