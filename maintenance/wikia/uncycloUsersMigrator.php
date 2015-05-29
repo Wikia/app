@@ -261,6 +261,31 @@ class UncycloUserMigrator extends Maintenance {
 	}
 
 	/**
+	 * Returns the new name for a given user and prefix provided
+	 *
+	 * @param User $user
+	 * @param $prefix
+	 * @throws UncycloUsersMigratorException if a new name can't be generated
+	 * @return string
+	 */
+	protected function getNewUserName( User $user, $prefix ) {
+		$newName = $prefix . $user->getName();
+
+		// check user name conflicts
+		// if there is one: try using suffixes -1, -2 and so on
+		$suffix = 1;
+		while ( $this->getGlobalUserByName( $newName ) instanceof User ) {
+			$newName = $prefix . $user->getName() . '-' . $suffix++;
+
+			if ($suffix > 5) {
+				throw new UncycloUsersMigratorException( "Can't find a new name for {$user->getName()} (using '{$prefix}' prefix)" );
+			}
+		}
+
+		return $newName;
+	}
+
+	/**
 	 * Rename uncyclopedia user
 	 *
 	 * Updates fields with user name only!
@@ -275,13 +300,8 @@ class UncycloUserMigrator extends Maintenance {
 		}
 
 		$user = clone $uncycloUser;
-		$newName = self::PREFIX_RENAME_UNCYCLO . $user->getName();
 
-		// check user name conflicts
-		if ( $this->getGlobalUserByName( $newName ) ) {
-			$newName .= '-1';
-		}
-
+		$newName = $this->getNewUserName( $user, self::PREFIX_RENAME_UNCYCLO );
 		$this->output( sprintf('> renaming uncyclo user to "%s"...', $newName) );
 
 		$this->renamedUnclycloAccounts++;
@@ -324,13 +344,7 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param User $user global user
 	 */
 	protected function doRenameGlobalUser( User $user ) {
-		$newName = self::PREFIX_RENAME_GLOBAL . $user->getName();
-
-		// check user name conflicts
-		if ( $this->getGlobalUserByName( $newName ) ) {
-			$newName .= '-1';
-		}
-
+		$newName = $this->getNewUserName( $user, self::PREFIX_RENAME_GLOBAL );
 		$this->output( sprintf( '> renaming global user to "%s" (#%d)...', $newName, $user->getId() ) );
 
 		$this->renamedWikiaAccounts++;
@@ -488,7 +502,7 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param User $user
 	 */
 	private function migrateUser(User $user) {
-		$this->output( sprintf( "%d: %s <%s>", $user->getId(), $user->getName(), $user->getEmail() ?: 'MISSING_EMAIL' ) );
+		$this->output( sprintf( "%d: %s <%s>", $user->getId(), $user->getName(), $user->mEmail ?: 'MISSING_EMAIL' ) );
 
 		// keep data that will be saved to CSV file
 		$action = false;
@@ -496,7 +510,7 @@ class UncycloUserMigrator extends Maintenance {
 		$isMerged = false;
 
 		// check if the uncyclo account has a valid email set
-		$isValidEmail = Sanitizer::validateEmail( $user->getEmail() );
+		$isValidEmail = Sanitizer::validateEmail( $user->mEmail );
 		$uncycloEdits = (int) $user->getEditCount();
 		$uncycloEditsSince = $this->getEditsCountAfter( $user, self::UNCYCLO_EDITS_AFTER );
 
@@ -521,7 +535,7 @@ class UncycloUserMigrator extends Maintenance {
 			$globalEdits  = (int) $globalUser->getEditCount();
 
 			// global and shared DB accounts match
-			if ( $isValidEmail && $globalUser->mEmail === $user->getEmail() ) {
+			if ( $isValidEmail && $globalUser->mEmail === $user->mEmail ) {
 				$this->output( ' - emails match' );
 				$this->output( "\n\tmerging accounts..." );
 
@@ -591,7 +605,7 @@ class UncycloUserMigrator extends Maintenance {
 				$user->getId(),
 				$userName,
 				$user->getName(),
-				$user->getEmail(),
+				$user->mEmail,
 				$isValidEmail ? 'Y' : 'N',
 				$globalUser ? $globalUser->mEmail : 'none',
 				$isMerged ? 'Y' : 'N',
@@ -694,7 +708,9 @@ class UncycloUserMigrator extends Maintenance {
 				] );
 			}
 
-			wfWaitForSlaves();
+			if ( !$this->isDryRun ) {
+				wfWaitForSlaves();
+			}
 		}
 
 		// print the stats
