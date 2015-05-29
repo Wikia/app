@@ -126,10 +126,14 @@ class Flag extends FlagsBaseModel {
 		if ( !isset( $params['wiki_id'] ) ) throw new \MissingParameterApiException( 'wiki_id' );
 		if ( !isset( $params['page_id'] ) ) throw new \MissingParameterApiException( 'page_id' );
 		if ( !isset( $params['flags'] ) ) throw new \MissingParameterApiException( 'flags' );
+
+		if ( !is_numeric( $params['wiki_id'] ) ) throw new \InvalidParameterApiException( 'wiki_id' );
+		if ( !is_numeric( $params['page_id'] ) ) throw new \InvalidParameterApiException( 'page_id' );
 		if ( !is_array( $params['flags'] ) ) throw new \InvalidParameterApiException( 'flags' );
 
 		foreach( $params['flags'] as $flag ) {
 			if ( !isset( $flag['flag_type_id'] ) ) throw new \MissingParameterApiException( 'flag_type_id' );
+			if ( !is_numeric( $flag['flag_type_id'] ) ) throw new \InvalidParameterApiException( 'flag_type_id' );
 		}
 
 		return true;
@@ -144,14 +148,17 @@ class Flag extends FlagsBaseModel {
 	 * @throws \MissingParameterApiException
 	 */
 	public function addFlagsToPage( $params ) {
-		$this->verifyParamsForAdd( $params );
 		try {
+			$this->verifyParamsForAdd( $params );
+
 			$db = $this->getDatabaseForWrite();
 
 			$addedFlags = [];
 			foreach ( $params['flags'] as $flag ) {
 				$addedFlags[] = $this->addFlag( $db, $flag[ 'flag_type_id' ], $params[ 'wiki_id' ], $params[ 'page_id' ], $flag[ 'params' ] );
 			}
+
+			$db->commit();
 
 			return $addedFlags;
 		} catch ( \Exception $e ) {
@@ -207,19 +214,32 @@ class Flag extends FlagsBaseModel {
 	 * @return array An array of statuses for each flag
 	 */
 	public function updateFlagsForPage( $flags ) {
-		$status = [];
-
 		$flagParameterModel = new FlagParameter();
 		foreach ( $flags as $flag ) {
-			$status[] = $flagParameterModel->updateParametersForFlag( $flag['flag_id'], $flag['params'] );
+			$modelResponse[$flag['flag_id']] = $flagParameterModel->updateParametersForFlag( $flag['flag_id'], $flag['params'] );
 		}
 
-		return $status;
+		return $modelResponse;
 	}
 
 	/**
 	 * Removing flags
 	 */
+
+	/**
+	 * Verifies if parameters have a flags_ids field and if it is an array
+	 * @param array $flags Should have a `flags_ids` key that contains an array of IDs
+	 * @return bool
+	 * @throws \InvalidParameterApiException
+	 */
+	public function verifyParamsForRemove( $flags ) {
+		if ( !is_array( $flags ) ) throw new \InvalidParameterApiException( 'flags' );
+		foreach ( $flags as $flagId ) {
+			if ( !is_numeric( $flagId ) ) throw new \InvalidParameterApiException( 'flags' );
+		}
+
+		return true;
+	}
 
 	/**
 	 * Checks if parameters have been verified and
@@ -235,21 +255,6 @@ class Flag extends FlagsBaseModel {
 	}
 
 	/**
-	 * Verifies if parameters have a flags_ids field and if it is an array
-	 * @param array $flags Should have a `flags_ids` key that contains an array of IDs
-	 * @return bool
-	 * @throws \InvalidParameterApiException
-	 */
-	public function verifyParamsForRemove( $flags ) {
-		if ( !is_array( $flags ) ) throw new \InvalidParameterApiException( 'flags' );
-		foreach ( $flags as $flagId ) {
-			if ( !is_int( $flagId ) ) throw new \InvalidParameterApiException( 'flags' );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Performs a removal SQL query on instances of flags based on the passed flags_ids
 	 * @param array $flags
 	 * @return bool
@@ -261,7 +266,6 @@ class Flag extends FlagsBaseModel {
 			->DELETE( self::FLAGS_TO_PAGES_TABLE )
 			->WHERE( 'flag_id' )->IN( $flags )
 			->run( $db );
-
 		$status = $db->affectedRows() > 0;
 		$db->commit();
 

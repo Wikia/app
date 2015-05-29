@@ -39,7 +39,7 @@ class FlagParameter extends FlagsBaseModel {
 
 		$status = $db->affectedRows() > 0;
 
-		return $this->status;
+		return $status;
 	}
 
 	/**

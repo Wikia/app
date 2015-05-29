@@ -12,6 +12,8 @@ namespace Flags\Views;
 
 class FlagView {
 	const FLAGVIEW_LIMIT_MAGIC_WORD_INSTANCES = 1;
+	const FLAGVIEW_WIKITEXT_WRAP_OPEN = '<div class="portable-notices">';
+	const FLAGVIEW_WIKITEXT_WRAP_CLOSE = '</div>';
 
 	public function createWikitextCall( $flagView, $params ) {
 		$viewCall = '{{' . $flagView;
@@ -25,5 +27,11 @@ class FlagView {
 		$viewCall .= "}}\n";
 
 		return $viewCall;
+	}
+
+	public function wrapTemplateCalls( Array $templateCalls ) {
+		return self::FLAGVIEW_WIKITEXT_WRAP_OPEN
+			. implode( '', $templateCalls )
+			. self::FLAGVIEW_WIKITEXT_WRAP_CLOSE;
 	}
 }

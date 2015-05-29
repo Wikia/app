@@ -21,8 +21,7 @@ class FlagsApiController extends WikiaApiController {
 
 	private
 		$cache,
-		$params,
-		$status = false;
+		$params;
 
 	/**
 	 * Article level API
@@ -56,6 +55,7 @@ class FlagsApiController extends WikiaApiController {
 		try {
 			$this->getRequestParams();
 			if ( !isset( $this->params['page_id'] ) ) throw new MissingParameterApiException( 'page_id' );
+			if ( !is_numeric( $this->params['page_id'] ) ) throw new InvalidParameterApiException( 'page_id' );
 
 			$flagsForPage = $this->getFlagsForPageRawData( $this->params['wiki_id'], $this->params['page_id'] );
 
@@ -99,10 +99,11 @@ class FlagsApiController extends WikiaApiController {
 		try {
 			$this->getRequestParams();
 			if ( !isset( $this->params['page_id'] ) ) throw new MissingParameterApiException( 'page_id' );
-			$allFlagTypes = $this->getAllFlagTypes( $this->params['wiki_id'], $this->params['page_id'] );
-			( new Flags\Models\FlagsBaseModel() )->debug( $allFlagTypes );
+			if ( !is_numeric( $this->params['page_id'] ) ) throw new InvalidParameterApiException( 'page_id' );
 
-			$this->setResponseData( $allFlagTypes );
+			$allFlagTypes = $this->getAllFlagTypes( $this->params['wiki_id'], $this->params['page_id'] );
+
+			$this->makeSuccessResponse( $allFlagTypes );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
 		}
@@ -130,12 +131,9 @@ class FlagsApiController extends WikiaApiController {
 			$this->processRequest();
 
 			$flagModel = new Flag();
+			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
-			if ( $flagModel->verifyParamsForAdd( $this->params ) ) {
-				$this->status = $flagModel->addFlagsToPage( $this->params );
-			}
-
-			$this->setVal( 'status', $this->status );
+			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
 		}
@@ -151,9 +149,8 @@ class FlagsApiController extends WikiaApiController {
 	public function removeFlagsFromPage() {
 		try {
 			$this->processRequest();
-
 			$flagModel = new Flag();
-			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags_ids'] );
+			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
@@ -266,7 +263,7 @@ class FlagsApiController extends WikiaApiController {
 	 * and if a sent token matches the user's one.
 	 * Calls getRequestParams if the request is valid.
 	 * @throws BadRequestApiException
-	 * @throws MissingParameterApiException
+	 * @throws InvalidParameterApiException
 	 */
 	private function processRequest() {
 		if ( !$this->request->isInternal() ) {
@@ -280,7 +277,7 @@ class FlagsApiController extends WikiaApiController {
 
 	private function makeSuccessResponse( $data ) {
 		$this->response->setValues( [
-			self::FLAGS_API_RESPONSE_STATUS => true,
+			self::FLAGS_API_RESPONSE_STATUS => !empty( $data ),
 			self::FLAGS_API_RESPONSE_DATA => $data,
 		] );
 	}
