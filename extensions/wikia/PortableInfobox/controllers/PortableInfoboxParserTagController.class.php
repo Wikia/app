@@ -43,6 +43,31 @@ class PortableInfoboxParserTagController extends WikiaController {
 	}
 
 	/**
+	 * @param $markup
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 * @return array|string
+	 * @throws UnimplementedNodeException when node used in markup does not exists
+	 * @throws XmlMarkupParseErrorException xml not well formatted
+	 */
+	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
+		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser(
+			array_merge( $frame->getNamedArguments(), $frame->getArguments() ) );
+		$infoboxParser->setExternalParser( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) );
+
+		//get params if not overridden
+		if ( !isset( $params ) ) {
+			$params = $infoboxParser->getInfoboxParams( $markup );
+		}
+		$data = $infoboxParser->getDataFromXmlString( $markup );
+		//save for later api usage
+		$this->saveToParserOutput( $parser->getOutput(), $data );
+
+		$theme = $this->getThemeWithDefault( $params, $frame );
+		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme );
+	}
+
+	/**
 	 * @desc Renders Infobox
 	 *
 	 * @param String $text
@@ -56,23 +81,14 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$this->markerNumber++;
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
-		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $frame->getNamedArguments() );
-		$infoboxParser->setExternalParser( ( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) ) );
-
 		try {
-			$data = $infoboxParser->getDataFromXmlString( $markup );
+			$renderedValue = $this->render( $markup, $parser, $frame, $params );
 		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
 			return $this->handleError( wfMessage( 'unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
 			return $this->handleError( wfMessage( 'xml-parse-error' ) );
 		}
 
-		//save for later api usage
-		$this->saveToParserOutput( $parser->getOutput(), $data );
-
-		$renderer = new PortableInfoboxRenderService();
-		$theme = $this->getThemeWithDefault( $params, $frame );
-		$renderedValue = $renderer->renderInfobox( $data, $theme );
 		if ( $wgArticleAsJson ) {
 			// (wgArticleAsJson == true) it means that we need to encode output for use inside JSON
 			$renderedValue = trim( json_encode( $renderedValue ), '"' );

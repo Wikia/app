@@ -2,6 +2,11 @@
 
 class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 
+	/** @var PortableInfoboxParserTagController */
+	protected $parser;
+	/** @var Parser */
+	protected $controller;
+
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();

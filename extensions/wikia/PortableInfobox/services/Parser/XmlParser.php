@@ -55,23 +55,20 @@ class XmlParser {
 	public function getDataFromXmlString( $xmlString ) {
 		wfProfileIn( __METHOD__ );
 
-		$global_libxml_setting = libxml_use_internal_errors();
-		libxml_use_internal_errors( true );
-		$xml = simplexml_load_string( $xmlString );
-		$errors = libxml_get_errors();
-		libxml_use_internal_errors( $global_libxml_setting );
-
-		if ( $xml === false ) {
-			foreach ( $errors as $xmlerror ) {
-				$this->logXmlParseError( $xmlerror->level, $xmlerror->code, trim( $xmlerror->message ) );
-			}
-			libxml_clear_errors();
-			throw new XmlMarkupParseErrorException();
-		}
+		$xml = $this->parseXmlString( $xmlString );
 		$data = $this->getDataFromNodes( $xml );
 
 		wfProfileOut( __METHOD__ );
 		return $data;
+	}
+
+	public function getInfoboxParams( $xmlString ) {
+		$xml = $this->parseXmlString( $xmlString );
+		$result = [];
+		foreach ( $xml->attributes() as $k => $v ) {
+			$result[$k] = (string) $v;
+		}
+		return $result;
 	}
 
 	protected function logXmlParseError( $level, $code, $message ) {
@@ -104,6 +101,28 @@ class XmlParser {
 		}
 		wfProfileOut( __METHOD__ );
 		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
+	}
+
+	/**
+	 * @param $xmlString
+	 * @return \SimpleXMLElement
+	 * @throws XmlMarkupParseErrorException
+	 */
+	protected function parseXmlString( $xmlString ) {
+		$global_libxml_setting = libxml_use_internal_errors();
+		libxml_use_internal_errors( true );
+		$xml = simplexml_load_string( $xmlString );
+		$errors = libxml_get_errors();
+		libxml_use_internal_errors( $global_libxml_setting );
+
+		if ( $xml === false ) {
+			foreach ( $errors as $xmlerror ) {
+				$this->logXmlParseError( $xmlerror->level, $xmlerror->code, trim( $xmlerror->message ) );
+			}
+			libxml_clear_errors();
+			throw new XmlMarkupParseErrorException();
+		}
+		return $xml;
 	}
 
 }
