@@ -2,9 +2,9 @@
 	<?php // only display header block for the BlogListingBox
 	if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) { ?>
 	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
-	<h3>
+	<h2>
 		<?= $title ?>
-	</h3>
+	</h2>
 	<?php } // end BlogListingBox header ?>
 	<ul>
 		<?php
