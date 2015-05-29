@@ -73,6 +73,30 @@ describe('pageShare', function () {
 			{
 				mock: {
 					window: {
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {
+							language: 'pl'
+						}
+					}
+				},
+				expectedResult: 'pl'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: null,
+						wgUserLanguage: 'de',
+						navigator: {
+							language: 'en-US'
+						}
+					}
+				},
+				expectedResult: 'en'
+			},
+			{
+				mock: {
+					window: {
 						wgUserName: 'Warkot',
 						wgUserLanguage: 'pl',
 						navigator: {
@@ -119,6 +143,19 @@ describe('pageShare', function () {
 					useLang: 'pl'
 				},
 				expectedResult: 'pl'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {
+							userLanguage: 'en-GB'
+						}
+					},
+					useLang: 'Quenya'
+				},
+				expectedResult: 'Quenya'
 			}
 		];
 
