@@ -48,8 +48,12 @@ class SitemapPageTest extends WikiaBaseTest {
 
 	public function getLimitPerListDataProvider() {
 		return [
-			[ 1, 10000],
-			[ 2, 100]
+			[ 1, 10000 ],
+			[ 2, 100 ],
+			[ 3, 1 ],
+			[ 7, 1 ],
+			[ 0, 1 ],
+			[ -1, 1 ]
 		];
 	}
 

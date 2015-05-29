@@ -13,13 +13,23 @@ class SitemapPageModel extends WikiaModel {
 	protected $verticals = null;
 
 	/**
+	 * Check for top level
+	 * @param int $level
+	 * @return bool
+	 */
+	public static function isTopLevel( $level ) {
+		return ( $level >= self::MIN_LEVEL && $level < self::MAX_LEVEL );
+	}
+
+	/**
 	 * Get limit for each list (top level)
 	 * @param $level
 	 * @return int
 	 */
 	public function getLimitPerList( $level ) {
+		$exp = self::isTopLevel( $level ) ? self::MAX_LEVEL - $level : 0 ;
 		$base = $this->getLimitPerPage();
-		return pow( $base, self::MAX_LEVEL - $level );
+		return pow( $base, $exp );
 	}
 
 	/**
