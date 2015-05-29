@@ -62,23 +62,35 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 		});
 	}
 
+	/**
+	 * @desc Returns a language code.
+	 * If user is logged in, language code is read from user's preferences.
+	 * For anonymous users first two letters of the browser/system regional preferences are used.
+	 * Both values are ignored and overwritten if function is provided with a non-false parameter.
+	 *
+	 * @param {*} useLangQueryStringParam
+	 * @returns {String|null}
+	 */
 	function getShareLang(useLangQueryStringParam) {
-		var browserLang;
-
+		// forced by param
 		if (useLangQueryStringParam) {
 			return useLangQueryStringParam;
+		// logged in user
 		} else if (win.wgUserName) {
 			return win.wgUserLanguage;
+		// anonumous user who uses
+		// Chrome or Firefox
+		} else if (win.navigator.languages) {
+			return win.navigator.languages[0].substr(0, 2);
+		// Safari
+		} else if (win.navigator.language) {
+			return win.navigator.language.substr(0, 2);
+		// Internet Exploder
+		} else if (win.navigator.userLanguage) {
+			return win.navigator.userLanguage.substr(0, 2);
+		// something exotic
 		} else {
-			// Chrome and Firefox : Safari || Internet Explorer
-			browserLang = win.navigator.languages ?
-				win.navigator.languages[0] : win.navigator.language || win.navigator.userLanguage;
-
-			if (browserLang) {
-				return browserLang.substr(0, 2);
-			} else {
-				return null;
-			}
+			return null;
 		}
 	}
 
