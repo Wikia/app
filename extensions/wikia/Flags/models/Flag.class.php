@@ -62,15 +62,15 @@ class Flag extends FlagsBaseModel {
 	private function getFlagsForPageFromDatabase( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();
 
-		$flagsTypes = ( new \WikiaSQL() )
+		$flagsWithTypes = ( new \WikiaSQL() )
 			->SELECT_ALL( 'flags_to_pages', 'flags_types' )
 			->FROM( 'flags_to_pages' )
 			->INNER_JOIN( 'flags_types' )
 				->ON( 'flags_types.flag_type_id', 'flags_to_pages.flag_type_id' )
 			->WHERE( 'flags_to_pages.wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'flags_to_pages.page_id' )->EQUAL_TO( $pageId )
-			->runLoop( $db, function( &$flagsTypes, $row ) {
-				$flagsTypes[$row->flag_type_id] = get_object_vars( $row );
+			->runLoop( $db, function( &$flagsWithTypes, $row ) {
+				$flagsWithTypes[$row->flag_type_id] = get_object_vars( $row );
 
 				/**
 				 * Get a URL for a template of the flag.
@@ -78,12 +78,10 @@ class Flag extends FlagsBaseModel {
 				 * display a red link so there is no need to check if $title exists.
 				 */
 				$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
-				$flagsTypes[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
+				$flagsWithTypes[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
 			} );
 
-		$db->close();
-
-		return $flagsTypes;
+		return $flagsWithTypes;
 	}
 
 	/**
@@ -101,8 +99,6 @@ class Flag extends FlagsBaseModel {
 			->runLoop( $db, function( &$flagsParams, $row ) {
 				$flagsParams[$row->flag_type_id][$row->param_name] = $row->param_value;
 			} );
-
-		$db->close();
 
 		return $flagsParams;
 	}

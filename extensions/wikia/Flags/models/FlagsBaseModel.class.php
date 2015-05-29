@@ -11,10 +11,6 @@
 namespace Flags\Models;
 
 class FlagsBaseModel extends \WikiaModel {
-	protected
-		$status,
-		$error;
-
 	/**
 	 * Names of tables used by the extension
 	 */

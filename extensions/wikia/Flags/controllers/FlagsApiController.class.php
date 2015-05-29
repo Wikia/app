@@ -17,7 +17,6 @@ use Flags\Models\FlagType;
 class FlagsApiController extends WikiaApiController {
 	const FLAGS_API_RESPONSE_STATUS = 'status';
 	const FLAGS_API_RESPONSE_DATA = 'data';
-	const FLAGS_API_RESPONSE_DETAILS = 'details';
 
 	private
 		$cache,

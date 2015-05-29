@@ -33,37 +33,31 @@ $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiContr
 /**
  * Models
  */
-$wgAutoloadClasses['Flags\\Models\\FlagsBaseModel'] = __DIR__ . '/models/FlagsBaseModel.class.php';
-$wgAutoloadClasses['Flags\\Models\\Flag'] = __DIR__ . '/models/Flag.class.php';
-$wgAutoloadClasses['Flags\\Models\\FlagType'] = __DIR__ . '/models/FlagType.class.php';
-$wgAutoloadClasses['Flags\\Models\\FlagParameter'] = __DIR__ . '/models/FlagParameter.class.php';
+$wgAutoloadClasses['Flags\Models\FlagsBaseModel'] = __DIR__ . '/models/FlagsBaseModel.class.php';
+$wgAutoloadClasses['Flags\Models\Flag'] = __DIR__ . '/models/Flag.class.php';
+$wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.php';
+$wgAutoloadClasses['Flags\Models\FlagParameter'] = __DIR__ . '/models/FlagParameter.class.php';
 
 /**
  * Views
  */
-$wgAutoloadClasses['Flags\\Views\\FlagView'] = __DIR__ . '/views/FlagView.class.php';
+$wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.php';
 
 /**
  * Helpers
  */
-$wgAutoloadClasses['Flags\\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
-$wgAutoloadClasses['Flags\\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
-$wgAutoloadClasses['Flags\\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
-
-/**
- * Exceptions
- */
-$wgAutoloadClasses['Flags\\Exceptions\\FlagsException'] = __DIR__ . '/FlagsExceptions.php';
-$wgAutoloadClasses['Flags\\Exceptions\\InvalidRequest'] = __DIR__ . '/FlagsExceptions.php';
+$wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
+$wgAutoloadClasses['Flags\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
+$wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
 
 /**
  * Hooks
  */
-$wgAutoloadClasses['Flags\\Hooks'] = __DIR__ . '/Flags.hooks.php';
-$wgHooks['BeforePageDisplay'][] = 'Flags\\Hooks::onBeforePageDisplay';
-$wgHooks['PageHeaderDropdownActions'][] = 'Flags\\Hooks::onPageHeaderDropdownActions';
-$wgHooks['ParserBeforeInternalParse'][] = 'Flags\\Hooks::onParserBeforeInternalParse';
-$wgHooks['SkinTemplateNavigation'][] = 'Flags\\Hooks::onSkinTemplateNavigation';
+$wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
+$wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
+$wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
+$wgHooks['ParserBeforeInternalParse'][] = 'Flags\Hooks::onParserBeforeInternalParse';
+$wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
 
 /**
  * Messages
