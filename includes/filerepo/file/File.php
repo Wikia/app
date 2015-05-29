@@ -1786,15 +1786,15 @@ abstract class File implements UrlGeneratorInterface {
 	 *
 	 */
 	public function getUrlGenerator() {
-			$timestamp = $this->isOld() ? $this->getArchiveTimestamp() : $this->getTimestamp();
+		$timestamp = $this->isOld() ? $this->getArchiveTimestamp() : $this->getTimestamp();
 
-			return VignetteRequest::fromConfigMap( [
-				'is-archive' => $this->isOld(),
-				'timestamp' => $timestamp,
-				'relative-path' => $this->getHashPath() . rawurlencode( $this->getName() ),
-				'bucket' => $this->getBucket(),
-				'path-prefix' => $this->getPathPrefix(),
-			] );
+		return VignetteRequest::fromConfigMap( [
+			'is-archive' => $this->isOld(),
+			'timestamp' => $timestamp,
+			'relative-path' => $this->getHashPath() . rawurlencode( $this->getName() ),
+			'bucket' => $this->getBucket(),
+			'path-prefix' => $this->getPathPrefix(),
+		] );
 	}
 
 	/**

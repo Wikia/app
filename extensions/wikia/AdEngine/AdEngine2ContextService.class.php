@@ -29,6 +29,7 @@ class AdEngine2ContextService {
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
+					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'pageType' => $adPageTypeService->getPageType(),
 					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop

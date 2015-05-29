@@ -177,6 +177,7 @@ class MagicWord {
 	static public $mDoubleUnderscoreIDs = array(
 		'notoc',
 		'nogallery',
+		'flags',
 		'forcetoc',
 		'toc',
 		'noeditsection',

@@ -11,6 +11,7 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.slot.adInContentPlayer',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
@@ -26,6 +27,7 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
+	adInContentPlayer,
 	slotTracker,
 	slotTweaker,
 	krux,
@@ -71,6 +73,8 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	window.loadCustomAd = customAdsLoader.loadCustomAd;
+
+	adInContentPlayer.init();
 
 	// Everything starts after content and JS
 	window.wgAfterContentAndJS.push(function () {

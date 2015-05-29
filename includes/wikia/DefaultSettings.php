@@ -765,6 +765,7 @@ $wgWikiFactoryTags = array();
 /**
  * external databases
  */
+$wgFlagsDB = 'portable_flags';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
@@ -1279,6 +1280,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverDelayBelowTheFold
+ * Prevents from loading BTF before ATF ad slots
+ */
+$wgAdDriverDelayBelowTheFold = false;
+
+/**
  * @name $wgAdDriverUseAdsAfterInfobox
  * Enable new mobile_in_content slot after infobox placement
  */
@@ -1461,6 +1468,13 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
+ * @name $wgAdDriverOpenXCountries
+ * List of countries to call OpenX ad partner in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverOpenXCountries = null;
+
+/**
  * @name $wgAnalyticsProviderPageFair
  * Site ID for PageFair analytics provider.
  */
@@ -1637,6 +1651,7 @@ $wgBuckyEnabledSkins = [
 	'oasis',
 	'venus',
 	'uncyclopedia',
+	'wikiamobile',
 ];
 
 /**
@@ -1731,3 +1746,10 @@ $wgEnablePageShareExt = true;
  * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
  */
 $wgPaidAssetDropConfig = false;
+
+/**
+ * @name $wgAdDriverIncontentPlayerSlotCountries
+ * Enables INCONTENT_PLAYER slot in these countries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIncontentPlayerSlotCountries = null;

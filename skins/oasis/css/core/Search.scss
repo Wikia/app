@@ -73,37 +73,3 @@
 	}
 }
 // WikiaNav - end
-
-@if ( $breakpoints-layout-enabled ) {
-	.Search .WikiaSearch {
-		.SearchInput {
-			p {
-				margin: 0;
-			}
-
-			.grid-1.alpha {
-				width: 170px;
-				float: left;
-			}
-			@media #{$breakpoint-below-small-plus} {
-				#advanced-link {
-					display: none;
-				}
-			}
-		}
-
-		.search-tabs {
-			float: left;
-			margin: 35px 0 0 0;
-			width: 170px;
-		}
-
-		.results-wrapper {
-			@include width-calc("100% - 500px");
-			@media #{$breakpoint-below-small-plus} {
-				@include width-calc("100% - 180px");
-			}
-			float: left;
-		}
-	}
-}

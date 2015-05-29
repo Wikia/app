@@ -65,6 +65,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
+		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
@@ -86,6 +87,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.js',
+		'//extensions/wikia/AdEngine/js/provider/openX.targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
@@ -564,6 +566,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 		//tracker
 		'#group_tracker_js',
 
+		// performance
+		'#group_bucky_js',
+
 		//modules
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
@@ -707,6 +712,7 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/directGptMobile.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/openX.js',
+		'//extensions/wikia/AdEngine/js/provider/openX.targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 
@@ -2434,6 +2440,14 @@ $config['portable_infobox_monobook_scss'] = [
 	]
 ];
 
+$config['flags_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/Flags/scripts/FlagsModal.js'
+	]
+];
+
 $config['paid_asset_drop_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -2448,3 +2462,11 @@ $config['special_email_admin_css'] = [
 		'//extensions/wikia/Email/styles/specialSendEmail.scss'
 	]
 ];
+
+$config['sitemap_page_css'] = array(
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'wikiamobile' ],
+	'assets' => [
+		'//extensions/wikia/SitemapPage/styles/SitemapPage.scss',
+	]
+);
