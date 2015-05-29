@@ -143,7 +143,6 @@ define('ext.wikia.adEngine.gptHelper', [
 	 * @param {function} success            - on success callback
 	 * @param {function} error              - on error callback
 	 * @param {Object}   extra              - optional parameters
-	 *
 	 * @param {boolean}  extra.sraEnabled   - decide if SRA should be used
 	 * @param {string}   extra.forceAdType  - ad type for callbacks info
 	 */
@@ -287,7 +286,6 @@ define('ext.wikia.adEngine.gptHelper', [
 			log(['flushAds', 'refresh', slotQueue], 'debug', logGroup);
 
 			if (slotQueue.length) {
-				console.log(slotQueue);
 				googletag.pubads().refresh(slotQueue);
 				slotQueue = [];
 			}
