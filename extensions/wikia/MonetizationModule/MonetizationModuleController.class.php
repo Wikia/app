@@ -7,11 +7,8 @@ class MonetizationModuleController extends WikiaController {
 	 * @responseParam array data - list of modules
 	 */
 	public function getModules() {
-		wfProfileIn( __METHOD__ );
-
 		if ( !MonetizationModuleHelper::canShowModule() ) {
 			$this->data = '';
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -53,8 +50,6 @@ class MonetizationModuleController extends WikiaController {
 		if ( !empty( $this->data['blocked_pages'] ) && in_array( $this->wg->title->getArticleID(), $this->data['blocked_pages'] ) ) {
 			$this->data = '';
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 }

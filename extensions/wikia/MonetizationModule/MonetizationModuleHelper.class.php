@@ -65,8 +65,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return boolean
 	 */
 	public static function canShowModule() {
-		wfProfileIn( __METHOD__ );
-
 		$app = F::app();
 		$status = false;
 		if ( !WikiaPageType::isCorporatePage()
@@ -81,8 +79,6 @@ class MonetizationModuleHelper extends WikiaModel {
 			$status = true;
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $status;
 	}
 
@@ -91,16 +87,12 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return string - wiki vertical
 	 */
 	public function getWikiVertical() {
-		wfProfileIn( __METHOD__ );
-
 		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $this->wg->CityId );
 		if ( empty( self::$verticals[$verticalId] ) ) {
 			$verticalId = WikiFactoryHub::VERTICAL_ID_OTHER;
 		}
 
 		$name = self::$verticals[$verticalId];
-
-		wfProfileOut( __METHOD__ );
 
 		return $name;
 	}
@@ -111,8 +103,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return array|false $result
 	 */
 	public function getMonetizationUnits( $params ) {
-		wfProfileIn( __METHOD__ );
-
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
@@ -124,7 +114,6 @@ class MonetizationModuleHelper extends WikiaModel {
 			$json_results = $this->wg->Memc->get( $cacheKey );
 			if ( !empty( $json_results ) ) {
 				$log->info( "MonetizationModule: memcache hit.", $loggingParams );
-				wfProfileOut( __METHOD__ );
 				return $this->processData( $json_results, $params, false );
 			}
 
@@ -158,8 +147,6 @@ class MonetizationModuleHelper extends WikiaModel {
 		} else if ( !empty( $result ) ) {
 			$result = $this->processData( $result, $params );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $result;
 	}
@@ -210,8 +197,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return array
 	 */
 	public function setThemeSettings( $adUnits, $memcKey, $setMemc = true ) {
-		wfProfileIn( __METHOD__ );
-
 		$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->escaped();
 		$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
 
@@ -238,8 +223,6 @@ class MonetizationModuleHelper extends WikiaModel {
 		if ( $setMemc ) {
 			$this->setMemcache( $memcKey, $adUnits, [ 'method' => __METHOD__ ] );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $adUnits;
 	}
@@ -334,11 +317,8 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return string
 	 */
 	public static function insertIncontentUnit( $body, &$monetizationUnits ) {
-		wfProfileIn( __METHOD__ );
-
 		// Check for in_content ad
 		if ( empty( $monetizationUnits[self::SLOT_TYPE_IN_CONTENT] ) ) {
-			wfProfileOut( __METHOD__ );
 			return $body;
 		}
 
@@ -353,7 +333,6 @@ class MonetizationModuleHelper extends WikiaModel {
 			if ( $posTOC === false ) {
 				// TOC not exist. Insert the ad above the 2nd <H2> tag.
 				$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
-				wfProfileOut( __METHOD__ );
 				return $body;
 			} else {
 				// TOC exists. Check for the 3rd <H2> tag.
@@ -361,7 +340,6 @@ class MonetizationModuleHelper extends WikiaModel {
 				if ( $pos3 !== false ) {
 					// The 3rd <H2> tag exists. Insert the ad above the 3rd <H2> tag.
 					$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos3, 0 );
-					wfProfileOut( __METHOD__ );
 					return $body;
 				}
 			}
@@ -380,8 +358,6 @@ class MonetizationModuleHelper extends WikiaModel {
 			unset( $monetizationUnits[self::SLOT_TYPE_BELOW_CATEGORY] );
 			WikiaLogger::instance()->info( "MonetizationModule: remove below_category ad", $loggingParams );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $body;
 	}
