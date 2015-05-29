@@ -126,3 +126,12 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 		}
 	}
 }
+table.portable-infobox-debug {
+  border-spacing: 10px;
+  border-collapse: collapse;
+  width: 100%;
+}
+table.portable-infobox-debug td {
+  border:1px solid lightgray;
+  padding: 4px;
+}

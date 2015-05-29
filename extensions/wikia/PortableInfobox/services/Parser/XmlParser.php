@@ -5,9 +5,24 @@ class XmlParser {
 
 	protected $infoboxData;
 	protected $externalParser;
+	protected $xmlParseErrors;
 
 	public function __construct( $infoboxData ) {
 		$this->infoboxData = $infoboxData;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getXmlParseErrors() {
+		return $this->xmlParseErrors;
+	}
+
+	/**
+	 * @param mixed $xmlParseErrors
+	 */
+	public function setXmlParseErrors( $xmlParseErrors ) {
+		$this->xmlParseErrors = $xmlParseErrors;
 	}
 
 	/**
@@ -66,6 +81,7 @@ class XmlParser {
 				$this->logXmlParseError( $xmlerror->level, $xmlerror->code, trim( $xmlerror->message ) );
 			}
 			libxml_clear_errors();
+			$this->setXmlParseErrors( $errors );
 			throw new XmlMarkupParseErrorException();
 		}
 		$data = $this->getDataFromNodes( $xml );

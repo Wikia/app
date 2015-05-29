@@ -64,7 +64,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
 			return $this->handleError( wfMessage( 'unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
-			return $this->handleError( wfMessage( 'xml-parse-error' ) );
+			return $this->handleXmlParseError( $infoboxParser->getXmlParseErrors(), $text );
 		}
 
 		//save for later api usage
@@ -97,6 +97,13 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function handleError( $message ) {
 		$renderedValue = '<strong class="error"> ' . $message . '</strong>';
+		return [ $renderedValue, 'markerType' => 'nowiki' ];
+	}
+
+	private function handleXmlParseError( $errors, $xmlMarkup ) {
+		$errorRenderer = new PortableInfoboxErrorRenderService( $errors );
+		$renderedValue = $errorRenderer->renderMarkupDebugView( $xmlMarkup );
+
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 

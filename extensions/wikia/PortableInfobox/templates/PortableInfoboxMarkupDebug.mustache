@@ -1,0 +1,15 @@
+<p>
+    <strong class="error"> {{message}} </strong>
+</p>
+<table class="portable-infobox-debug">
+    {{# code }}
+    <tr{{# error }} class="error"{{/ error}}>
+        <td>
+            {{ line }}
+        </td>
+        <td>
+            {{ codeLine }}
+        </td>
+    </tr>
+    {{/ code }}
+</table>
