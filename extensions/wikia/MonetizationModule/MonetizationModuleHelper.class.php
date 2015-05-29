@@ -62,15 +62,16 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	/**
 	 * Show the Module only on File pages, Article pages, and Main pages
+	 * @param Title $title
 	 * @return boolean
 	 */
-	public static function canShowModule() {
+	public static function canShowModule( $title ) {
 		$app = F::app();
 		$status = false;
 		if ( !WikiaPageType::isCorporatePage()
-			&& $app->wg->Title->exists()
-			&& !$app->wg->Title->isMainPage()
-			&& in_array( $app->wg->Title->getNamespace(), $app->wg->ContentNamespaces )
+			&& $title->exists()
+			&& !$title->isMainPage()
+			&& in_array( $title->getNamespace(), $app->wg->ContentNamespaces )
 			&& in_array( $app->wg->request->getVal( 'action' ), [ 'view', null ] )
 			&& $app->wg->request->getVal( 'diff' ) === null
 			&& $app->wg->User->isAnon()
@@ -99,10 +100,11 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	/**
 	 * Get monetization units
+	 * @param Title $title
 	 * @param array $params
 	 * @return array|false $result
 	 */
-	public function getMonetizationUnits( $params ) {
+	public function getMonetizationUnits( $title, $params ) {
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
@@ -114,7 +116,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			$json_results = $this->wg->Memc->get( $cacheKey );
 			if ( !empty( $json_results ) ) {
 				$log->info( "MonetizationModule: memcache hit.", $loggingParams );
-				return $this->processData( $json_results, $params, false );
+				return $this->processData( $title, $json_results, $params, false );
 			}
 
 			$log->info( "MonetizationModule: memcache miss.", $loggingParams );
@@ -145,7 +147,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			];
 			$log->debug( "MonetizationModule: cannot get monetization units.", $loggingParams );
 		} else if ( !empty( $result ) ) {
-			$result = $this->processData( $result, $params );
+			$result = $this->processData( $title, $result, $params );
 		}
 
 		return $result;
@@ -153,12 +155,13 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	/**
 	 * Process data for the ad units (include logic to handle the data)
+	 * @param Title $title
 	 * @param string $data - data from API (json format)
 	 * @param array $params - API parameters
 	 * @param boolean $setMemc - set to true to set to memcache
 	 * @return mixed
 	 */
-	public function processData( $data, $params, $setMemc = true ) {
+	public function processData( $title, $data, $params, $setMemc = true ) {
 		$found = strpos( $data, self::KEYWORD_PREFIX );
 		$data = json_decode( $data, true );
 		if ( !is_array( $data ) ) {
@@ -173,8 +176,8 @@ class MonetizationModuleHelper extends WikiaModel {
 				$this->setMemcache( $memcKey, $data, ['method' => __METHOD__] );
 			}
 
-			$params['page_id'] = $this->wg->Title->getArticleID();
-			return $this->getMonetizationUnits( $params );
+			$params['page_id'] = $title->getArticleID();
+			return $this->getMonetizationUnits( $title, $params );
 		}
 
 		// check for placeholder

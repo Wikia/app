@@ -7,18 +7,21 @@ class MonetizationModuleController extends WikiaController {
 	 * @responseParam array data - list of modules
 	 */
 	public function getModules() {
-		if ( !MonetizationModuleHelper::canShowModule() ) {
+		$articleId = $this->request->getInt( 'articleId' );
+		if ( empty( $articleId ) ) {
+			$title = $this->wg->Title;
+		} else {
+			$title = Title::newFromID( $articleId );
+			if ( !$title instanceof Title ) {
+				$this->data = '';
+				return true;
+			}
+		}
+
+		if ( !MonetizationModuleHelper::canShowModule( $title ) ) {
 			$this->data = '';
 			return true;
 		}
-
-		if ( empty( $this->wg->OasisBreakpoints ) ) {
-			$this->response->addAsset( 'monetization_module_css_no_breakpoints' );
-		} else {
-			$this->response->addAsset( 'monetization_module_css' );
-		}
-
-		$this->response->addAsset( 'monetization_module_js' );
 
 		$helper = new MonetizationModuleHelper();
 
@@ -34,22 +37,38 @@ class MonetizationModuleController extends WikiaController {
 			$params['mcache'] = $mcachePurge;
 		}
 
-		$adEngine = $this->request->getVal( 'adEngine', false );
-		$fromSearch = $this->request->getVal( 'from_search', false );
+		$adEngine = $this->request->getBool( 'adEngine', false );
 		if ( $adEngine ) {
 			$params['ad_engine'] = $adEngine;
 			$params['geo'] = $helper->getCountryCode();
+
+			$fromSearch = $this->request->getBool( 'fromSearch', false );
 			if ( $fromSearch ) {
 				$params['from_search'] = $fromSearch;
 			}
+		} else {
+			$this->addAssets();
 		}
 
-		$this->data = $helper->getMonetizationUnits( $params );
+		$this->data = $helper->getMonetizationUnits( $title, $params );
 
 		// check if the article page is blocked
-		if ( !empty( $this->data['blocked_pages'] ) && in_array( $this->wg->title->getArticleID(), $this->data['blocked_pages'] ) ) {
+		if ( !empty( $this->data['blocked_pages'] ) && in_array( $title->getArticleID(), $this->data['blocked_pages'] ) ) {
 			$this->data = '';
 		}
+	}
+
+	/**
+	 * Add assets
+	 */
+	protected function addAssets() {
+		if ( empty( $this->wg->OasisBreakpoints ) ) {
+			$this->response->addAsset( 'monetization_module_css_no_breakpoints' );
+		} else {
+			$this->response->addAsset( 'monetization_module_css' );
+		}
+
+		$this->response->addAsset( 'monetization_module_js' );
 	}
 
 }
