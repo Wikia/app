@@ -57,7 +57,6 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageU
 
 //notification hooks
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
-$wgHooks['NotificationGetMailNotificationMessage'][] = 'ForumNotificationPlugin::onGetMailNotificationMessage';
 
 //old forum archive
 $wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::onGetUserPermissionsErrors';

@@ -42,7 +42,7 @@ class RemoveTempUserAccounts extends Maintenance {
 	 * Get temp user accounts
 	 *
 	 * - check if these accounts are really temp ones
-	 * - skip accounts with user_touched changed in the last year
+	 * - do not remove accounts with password set (122 of them)
 	 *
 	 * @param DatabaseBase $db
 	 * @return array
@@ -56,7 +56,7 @@ class RemoveTempUserAccounts extends Maintenance {
 			],
 			[
 				'user_name ' . $db->buildLike( self::TEMPUSER_PREFIX, $db->anyString() ),
-				sprintf( 'user_touched < "%s"', wfTimestamp( TS_DB, time() - 86400 * 365 ) ),
+				'user_password' => '',
 			],
 			__METHOD__
 		);
@@ -94,11 +94,6 @@ class RemoveTempUserAccounts extends Maintenance {
 		$rows += $dbw->affectedRows();
 
 		$dbw->commit( __METHOD__ );
-
-		// remove from wikicities_cX
-		foreach ( $batch as $userId ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $userId );
-		}
 
 		$this->info( 'Batch removed', [
 			'batch' => count( $batch ),
@@ -145,7 +140,7 @@ class RemoveTempUserAccounts extends Maintenance {
 
 			// prevent slave lag
 			// we're potentially performing deletes on all clusters
-			sleep( 15 );
+			wfWaitForSlaves( $db );
 		}
 
 		$this->output( "\n\nDone!\n" );

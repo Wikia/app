@@ -11,10 +11,12 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.slot.adInContentPlayer',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.slot.exitstitial'),
 	require.optional('ext.wikia.adEngine.slot.inContentDesktop')
 ], function (
 	adEngine,
@@ -25,10 +27,12 @@ require([
 	dartHelper,
 	messageListener,
 	providerEvolve,
+	adInContentPlayer,
 	slotTracker,
 	slotTweaker,
 	krux,
 	window,
+	exitstitial,
 	inContentDesktop
 ) {
 	'use strict';
@@ -70,6 +74,8 @@ require([
 	// Custom ads (skins, footer, etc)
 	window.loadCustomAd = customAdsLoader.loadCustomAd;
 
+	adInContentPlayer.init();
+
 	// Everything starts after content and JS
 	window.wgAfterContentAndJS.push(function () {
 		// Ads
@@ -84,6 +90,11 @@ require([
 	// Start loading in content slots
 	if (inContentDesktop) {
 		window.addEventListener('load', inContentDesktop.init);
+	}
+
+	// Start loading in content slots
+	if (exitstitial) {
+		window.addEventListener('load', exitstitial.init);
 	}
 });
 

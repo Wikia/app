@@ -58,11 +58,13 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
+		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
+		$vars[] = 'wgAdDriverTurtleCountries';
+		$vars[] = 'wgAdDriverOpenXCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgAmazonMatchOldCountries';
 		$vars[] = 'wgHighValueCountries'; // Used by Liftium only
-		$vars[] = 'wgAdDriverTurtleCountries';
 
 		/**
 		 * Disaster Recovery
@@ -92,7 +94,10 @@ class AdEngine2Hooks {
 
 		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
 
-		$vars['ads'] = ['context' => $adContext];
+		$vars['ads'] = [
+			'context' => $adContext,
+			'runtime' => [],
+		];
 
 		// Legacy vars:
 		$vars['adslots2'] = [];                  // Queue for ads registration

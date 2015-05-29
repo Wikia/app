@@ -1,0 +1,52 @@
+@import "skins/shared/color";
+
+.edit-flags.modal {
+
+	ul { /* Override monobbok styles */
+		list-style: none;
+		margin: 0;
+	}
+
+	li {
+		background-color: $color-unified-module-background;
+	}
+
+	input[type="checkbox"] ~ .params {
+		display: none;
+	}
+
+	input[type="checkbox"]:checked ~ .params {
+		display: block;
+	}
+
+	label {
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 19px;
+	}
+
+	li {
+		margin-bottom: 5px;
+		padding: 15px;
+
+		a {
+			display: block;
+			float: right;
+			line-height: 20px;
+		}
+	}
+
+	.params {
+		border: 0; /* Override monobbok styles */
+		margin: 10px 0 0 0;
+		padding: 0 0 0 24px;
+	}
+
+	.param {
+		border: 0;
+		display: block;
+		margin-bottom: 5px;
+		padding: 5px 10px;
+		width: calc(100% - 20px);
+	}
+}

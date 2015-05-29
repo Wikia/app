@@ -39,6 +39,10 @@ if ($table == false) {
 	exit();
 }
 
+if ($limit > 2000) {
+	echo "max --limit=2000 right now due to db connection leak";
+}
+
 $cluster_dbs = [
 	"a" => "wikicities_c1",
 	"b" => "wikicities_c2",
@@ -77,11 +81,14 @@ while ( $row = $db->fetchObject($sth) ) {
 		$wiki_db = wfGetDB(DB_SLAVE, [], $row->Database);
 		if (! $wiki_db->tableExists($table)) {
 			$wiki_id = WikiFactory::DBToId($row->Database);
-			$missing[$wiki_id] = $row->Database;
+			if ($wiki_id != 0 ) {
+				$missing[$wiki_id] = $row->Database;
+			}
 		};
 		$wiki_db->close();
 
 	} catch (Exception $e) {
+		print_r($e);
 		continue;
 	}
 

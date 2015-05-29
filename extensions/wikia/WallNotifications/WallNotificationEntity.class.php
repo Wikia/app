@@ -28,6 +28,8 @@ class WallNotificationEntity {
 			$wn->save();
 			return $wn;
 		}
+
+		return null;
 	}
 
 	public static function getByWikiAndRevId( $RevId, $wikiId ) {
@@ -50,8 +52,22 @@ class WallNotificationEntity {
 		return $wn;
 	}
 
+	/**
+	 * Tests whether this is a notification for a message that is a new thread topic.
+	 *
+	 * @return bool True if the message is a new topic, false if it is a reply to a thread topic
+	 */
 	public function isMain() {
 		return empty( $this->data->parent_id );
+	}
+
+	/**
+	 * Tests whether this is a notification for a reply to a thread topic.
+	 *
+	 * @return bool True if the message is a *reply* to a thread topic, false if it is a new thread topic
+	 */
+	public function isReply() {
+		return !$this->isMain();
 	}
 
 	public function getUniqueId() {
@@ -74,8 +90,6 @@ class WallNotificationEntity {
 		$wm = WallMessage::newFromTitle( $rev->getTitle() ); /* @var $wm WallMessage */
 		$wm->load();
 
-		$app = F::app();
-
 		$this->data = new stdClass;
 		$this->data_noncached = new stdClass;
 
@@ -87,7 +101,7 @@ class WallNotificationEntity {
 			$this->data = null;
 			// FIXME: shouldn't it be data_non_cached ?
 			$this->data_noncached = null;
-			return;
+			return false;
 		}
 
 		$this->data = new StdClass();

@@ -1230,7 +1230,7 @@ $messages['ce'] = array(
 	'newwikisgraph-param-other' => 'Кхин',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  */
 $messages['ckb'] = array(
 	'wf_cc_name' => 'پۆل',
@@ -2193,6 +2193,10 @@ $messages['fr'] = array(
 $messages['fy'] = array(
 	'wf_city_lang' => 'Taal',
 	'wf_cc_name' => 'Kategory',
+	'wikifactory-label-close' => 'Slute',
+	'awc-metrics-close' => 'Slute',
+	'awc-metrics-close-action' => 'slute',
+	'closed-reason' => 'Reden:',
 );
 
 /** Galician (galego)
@@ -3961,6 +3965,8 @@ $messages['oc'] = array(
 	'closewiki-confirm-button' => 'Confirmar « $1 » de $2',
 	'closewiki-nbr-wiki' => '$1 Wikis',
 	'closewiki-wiki-closed' => "'''$1''' es estat clausurat ($2)",
+	'awc-metrics-search' => 'Opcions de recèrca :',
+	'awc-metrics-hubs' => 'Wikis novèls (per mes)',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -3971,7 +3977,7 @@ $messages['pa'] = array(
 	'wikifactory-label-domain' => "'''ਮਿਲਖ''':",
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -5362,7 +5368,7 @@ $messages['tl'] = array(
 	'newwikisgraph-param-other' => 'Iba Pa',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  */
 $messages['tly'] = array(
@@ -5606,7 +5612,7 @@ $messages['ur'] = array(
 	'closed-reason' => 'وجہ:',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  */
 $messages['uz'] = array(
@@ -5670,7 +5676,7 @@ $messages['vi'] = array(
 	'closed-delete-database-images' => 'Xóa cơ sở dữ liệu và hình ảnh',
 );
 
-/** Wu (吴语)
+/** Wu Chinese (吴语)
  */
 $messages['wuu'] = array(
 	'closed-reason' => '理由：',
