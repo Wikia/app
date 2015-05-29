@@ -130,13 +130,17 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	}
 
 	function fillInSlotWithDelay(slotName, success, hop) {
-		if (context.opts.delayBtf && (!gptFlushed || pendingSlots.length > 0)) {
-			delayBtfSlot(slotName, success, hop);
-		} else if (window.ads.runtime.disableBtf && !gptConfig[slotName]) {
-			blockBtfSlot(slotName, success);
-		} else {
-			provider.fillInSlot(slotName, success, hop);
+		if (context.opts.delayBtf) {
+			if (!gptFlushed || pendingSlots.length > 0) {
+				delayBtfSlot(slotName, success, hop);
+				return;
+			} else if (window.ads.runtime.disableBtf && !gptConfig[slotName]) {
+				blockBtfSlot(slotName, success);
+				return;
+			}
 		}
+
+		provider.fillInSlot(slotName, success, hop);
 	}
 
 	return {
