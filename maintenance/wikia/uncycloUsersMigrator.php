@@ -605,6 +605,19 @@ class UncycloUserMigrator extends Maintenance {
 	}
 
 	/**
+	 * Set database to read-only mode when running in dry-run mode
+	 */
+	protected function dryRunMode() {
+		global $wgReadOnly, $wgDBReadOnly;
+		$this->output("Running in dry-run mode, forcing read-only mode\n");
+
+		$wgReadOnly = $this->getName() . ' executed in dry-run mode';
+		$wgDBReadOnly = true;
+
+		wfDebug( $wgReadOnly . "\n" );
+	}
+
+	/**
 	 * Script entry point
 	 */
 	public function execute() {
@@ -618,6 +631,10 @@ class UncycloUserMigrator extends Maintenance {
 		// read options
 		$this->isDryRun = $this->hasOption( 'dry-run' );
 		$this->onlyRenameGlobalUsers = $this->hasOption( 'only-rename-global-users' );
+
+		if ( $this->isDryRun ) {
+			$this->dryRunMode();
+		}
 
 		// setup the CSV header
 		if ( $this->hasOption( 'csv' ) ) {

@@ -904,6 +904,7 @@ abstract class DatabaseBase implements DatabaseType {
 				'exception' => new Exception( $sql ),
 				'server'    => $this->mServer
 			] );
+			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
 			return false;
 		}
 		# </Wikia>
