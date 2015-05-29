@@ -178,7 +178,7 @@ $messages['ady-cyrl'] = array(
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
 );
 
-/** Tunisian Spoken Arabic ( زَوُن)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Aħmedbaɛl
  */
 $messages['aeb'] = array(
@@ -302,6 +302,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'wikiamobile-search' => 'অনুসন্ধান',
@@ -473,7 +474,7 @@ $messages['ce'] = array(
 	'wikiamobile-toc-header' => 'Чулацам',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  * @author Serwan
  */
 $messages['ckb'] = array(
@@ -1002,6 +1003,13 @@ $messages['he'] = array(
  $1',
 );
 
+/** Hungarian (magyar)
+ * @author Tacsipacsi
+ */
+$messages['hu'] = array(
+	'wikiamobile-search' => 'Keresés',
+);
+
 /** Interlingua (interlingua)
  * @author McDutchie
  */
@@ -1213,6 +1221,7 @@ $messages['krc'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author Gomada
  */
 $messages['ku-latn'] = array(
@@ -1223,6 +1232,9 @@ $messages['ku-latn'] = array(
 	'wikiamobile-password' => 'Şîfre',
 	'wikiamobile-login-submit' => 'Têkeve',
 	'wikiamobile-menu' => 'Menû',
+	'wikiamobile-article-categories' => 'Kategorî',
+	'wikiamobile-back' => 'Paşve',
+	'wikiamobile-profile' => 'Profîl',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1239,6 +1251,7 @@ $messages['lb'] = array(
 	'wikiamobile-feedback' => 'Feedback',
 	'wikiamobile-back' => 'Zréck',
 	'wikiamobile-profile' => 'Profil',
+	'wikiamobile-last-edited-by' => 'vum $1',
 	'wikiamobile-anonymous-edited-by' => 'Anonym',
 	'wikiamobile-categories-tagline' => 'Säit vun der Kategorie',
 	'wikiamobile-media-group-footer' => '1 vu(n) $1',
@@ -1864,16 +1877,52 @@ $messages['sah'] = array(
  */
 $messages['sco'] = array(
 	'wikiamobile-trending-articles-heading' => 'Trendin Airticles',
-	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Preevacie Policie]]',
+	'wikiamobile-footer-link-privacy' => '[[w:Privacy_Policy|Preevacie Policie]]', # Fuzzy
 	'wikiamobile-categories-blogs' => 'Blog posts',
 	'wikiamobile-toc-header' => 'Buird o Contents',
 );
 
 /** Sinhala (සිංහල)
  * @author Sahan.ssw
+ * @author හරිත
  */
 $messages['si'] = array(
+	'wikiamobile-search' => 'සොයන්න',
+	'wikiamobile-search-this-wiki' => 'මෙම විකියේ සොයන්න',
+	'wikiamobile-search-wiki' => 'විකි',
+	'wikiamobile-search-wikia' => 'විකියා',
+	'wikiamobile-login' => 'පිවිසීම',
+	'wikiamobile-password' => 'මුරපදය',
+	'wikiamobile-login-submit' => 'පිවිසෙන්න',
+	'wikiamobile-article-categories' => 'ප්‍රවර්ග',
+	'wikiamobile-feedback' => 'ප්‍රතිචාරය',
+	'wikiamobile-back' => 'ආපසු',
+	'wikiamobile-hide-section' => 'සඟවන්න',
+	'wikiamobile-profile' => 'පැතිකඩ',
+	'wikiamobile-last-edited-on' => 'අවසන් සංස්කරණය කළේ $1',
+	'wikiamobile-last-edited-by' => '$1 විසින්',
+	'wikiamobile-anonymous-edited-by' => 'නිර්නාමික',
+	'mobile-full-site' => 'සම්පූර්ණ අඩවිය',
+	'wikiamobile-categories-tagline' => 'ප්‍රවර්ග පිටුව',
+	'wikiamobile-categories-items-total' => '{{PLURAL:$1|ලිපිය|ලිපි $1}}',
+	'wikiamobile-category-items-more' => 'තවත් පෙන්වන්න',
+	'wikiamobile-categories-expand' => 'සියල්ලම පෙන්වන්න',
+	'wikiamobile-categories-collapse' => 'සියල්ලම සඟවන්න',
+	'wikiamobile-sharing-media-image' => 'රූපය',
+	'wikiamobile-sharing-page-text' => '$1 - $2',
+	'wikiamobile-sharing-modal-text' => '$2 හි $1 - $3',
+	'wikiamobile-sharing-email-text' => 'මේ,
+ඔබ අනිවාර්‍යයෙන් ම මෙය බලන්න ඕනෙ:
+
+$1',
+	'wikiamobile-media-group-footer' => '$1කින් 1',
 	'wikiamobile-videos' => 'වීඩියෝ',
+	'wikiamobile-image-not-loaded' => 'රූපය ලබාගත නොහැක',
+	'wikiamobile-page-not-found' => 'ඕහ්! <b>$1</b> නොපවතියි.',
+	'wikiasmartbanner-appstore' => 'ඇප් ස්ටොර් හි',
+	'wikiasmartbanner-googleplay' => 'ගූගල් ප්ලේ හි',
+	'wikiasmartbanner-price' => 'නොමිලේ',
+	'wikiasmartbanner-view' => 'නරඹන්න',
 );
 
 /** Slovak (slovenčina)
@@ -2384,6 +2433,37 @@ $1',
 	'wikiamobile-page-not-found' => '哎呀！<b>$1</b>不存在。',
 	'wikiasmartbanner-appstore' => '在 App Store 上',
 	'wikiasmartbanner-googleplay' => '在Google Play',
+	'wikiasmartbanner-price' => '免費',
+	'wikiasmartbanner-view' => '檢視',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
+ * @author Theodoreianmo2
+ */
+$messages['zh-hk'] = array(
+	'wikiamobile-search' => '搜尋',
+	'wikiamobile-search-this-wiki' => '在該wiki上搜尋',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-login' => '登入',
+	'wikiamobile-password' => '您的密碼',
+	'wikiamobile-login-submit' => '登入',
+	'wikiamobile-menu' => '選單',
+	'wikiamobile-article-categories' => '頁面分類',
+	'wikiamobile-feedback' => '您的意見',
+	'wikiamobile-back' => '回到上一進度',
+	'wikiamobile-hide-section' => '隱藏',
+	'wikiamobile-profile' => '基本資料',
+	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|私隱政策]]',
+	'mobile-full-site' => '完整的網站',
+	'wikiamobile-categories-tagline' => '分類頁',
+	'wikiamobile-category-items-more' => '載入更多',
+	'wikiamobile-category-items-prev' => '載入前一個',
+	'wikiamobile-categories-expand' => '顯示全部',
+	'wikiamobile-categories-collapse' => '隱藏全部',
+	'wikiamobile-categories-blogs' => '部落格帖',
+	'wikiamobile-sharing-media-image' => '相片',
 	'wikiasmartbanner-price' => '免費',
 	'wikiasmartbanner-view' => '檢視',
 );

@@ -13,6 +13,7 @@ class Client
 	protected $baseUri;
 	protected $clientId;
 	protected $clientSecret;
+	protected $status;
 	
 	/**
 	 * The constructor.
@@ -22,6 +23,14 @@ class Client
 		$this->baseUri = $baseUri;
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret;
+	}
+
+	/**
+	 * Returns the status of the last request.
+	 */
+	public function getStatus()
+	{
+		return $this->status;
 	}
 
 	/**
@@ -70,15 +79,10 @@ class Client
 			return \Http::request( $options['method'], $uri, $options );
 		} );
 
-		$status = $request->status;
-
-		// Response handling.
-		if ( !$status->isGood() ) {
-			throw new ClientException( 'Request failed.', 0, null, $status->getErrorsArray() );
-		}
+		$this->status = $request->status;
 
 		$output = json_decode( $request->getContent() );
-		
+
 		if ( !$output ) {
 			throw new ClientException( 'Invalid response.' );
 		}
@@ -140,25 +144,26 @@ class Client
     /**
      * A shortcut method for register requests.
      */
-    public function register( $username, $password, $email, $birthdate )
+    public function register( $username, $password, $email, $birthdate, $langCode )
     {
-        // Convert the array to URL-encoded query string, so the Content-Type
-        // for the POST request is application/x-www-form-urlencoded.
-        // It would be multipart/form-data which is not supported
-        // by the Helios service.
-        $postData = http_build_query( [
-            'username'  => $username,
-            'password'  => $password,
-            'email'     => $email,
-            'birthdate' => $birthdate,
-        ] );
+			// Convert the array to URL-encoded query string, so the Content-Type
+			// for the POST request is application/x-www-form-urlencoded.
+			// It would be multipart/form-data which is not supported
+			// by the Helios service.
+			$postData = http_build_query( [
+				'username'  => $username,
+				'password'  => $password,
+				'email'     => $email,
+				'birthdate' => $birthdate,
+				'langCode'  => $langCode,
+			] );
 
-        return $this->request(
-            'register',
-            [],
-            $postData,
-            [ 'method'	=> 'POST' ]
-        );
+			return $this->request(
+				'register',
+				[],
+				$postData,
+				[ 'method'	=> 'POST' ]
+			);
     }
 
 }

@@ -16,7 +16,8 @@ define('ext.wikia.adEngine.config.mobile', [
 		};
 
 	function getProviderList(slotName) {
-		var context = adContext.getContext();
+		var context = adContext.getContext(),
+			providerList = [];
 
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
@@ -33,7 +34,7 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [openX];
 		}
 
-		if (!context.opts.enableInvisibleHighImpactSlot && slotName === 'INVISIBLE_HIGH_IMPACT') {
+		if (!context.slots.invisibleHighImpact && slotName === 'INVISIBLE_HIGH_IMPACT') {
 			return [];
 		}
 
@@ -49,19 +50,18 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [];
 		}
 
-		return [directGptMobile, remnantGptMobile];
+		providerList.push(directGptMobile);
+		providerList.push(remnantGptMobile);
+
+		if (context.providers.openX && openX.canHandleSlot(slotName)) {
+			providerList.push(openX);
+		}
+
+		return providerList;
 	}
 
 	return {
 		getDecorators: function () { return []; },
 		getProviderList: getProviderList
 	};
-});
-
-// Can be removed after ADEN-1921 is done
-define('ext.wikia.adEngine.adConfigMobile', [
-	'ext.wikia.adEngine.config.mobile'
-], function (configMobile) {
-	'use strict';
-	return configMobile;
 });

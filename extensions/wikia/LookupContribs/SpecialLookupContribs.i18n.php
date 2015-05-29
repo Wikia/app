@@ -347,10 +347,16 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Aktron
  * @author Chmee2
  * @author Mormegil
  */
 $messages['cs'] = array(
+	'lookupcontribs-desc' => 'Zobrazení příspěvků uživatele na několika wiki najednou.',
+	'lookupcontribs' => 'Vyhledání příspěvků uživatele.',
+	'lookupcontribstitle' => 'Vyhledání příspěvků uživatele.',
+	'lookupcontribsrecentcontributions' => 'Poslední příspěvky uživatele $1',
+	'lookupcontribusernotspecify' => 'Ještě jste nespecifikovali uživatele.',
 	'lookupcontribsselectuser' => 'Vyberte uživatele:',
 	'lookupcontribsselectfor' => 'Vyberte pro:',
 	'lookupcontribsdisplaymode' => 'Režim zobrazení:',
@@ -1032,12 +1038,16 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'lookupcontribsgo' => 'Biçe',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Sernav',
 	'lookupcontribswikioptions' => 'Vebijêrk',
+	'lookupcontribsnext' => 'pêş',
 	'lookupcontribscontent' => 'naverok',
 	'lookupcontribsnormal' => 'niha',
 	'lookupcontribsall' => 'hemû',
@@ -1071,7 +1081,7 @@ Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'lookupcontribsall' => 'All',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1408,14 +1418,14 @@ $messages['oc'] = array(
 	'lookupcontribsall' => 'tot',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
 	'lookupcontribsgo' => 'Zeige',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -1976,7 +1986,7 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribsall' => 'lahat',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */
@@ -2100,7 +2110,7 @@ $messages['vi'] = array(
 	'lookupcontribsselectuser' => 'Chọn người dùng:',
 	'lookupcontribsselectfor' => 'Chọn cho:',
 	'lookupcontribsdisplaymode' => 'Chế độ hiển thị:',
-	'lookupcontribsselectmodenormal' => 'Đóng góp gần đây cho người dùng đó',
+	'lookupcontribsselectmodenormal' => 'Các đóng góp gần đây cho người dùng này',
 	'lookupcontribsselectmodefinal' => 'Các đóng góp cuối cùng cho người dùng',
 	'lookupcontribsselectmodeall' => 'Tất cả các đóng góp cho người dùng đó',
 	'lookupcontribsfullurls' => 'URL đầy đủ',
@@ -2134,6 +2144,7 @@ $messages['vi'] = array(
 	'lookupcontribsnormal' => 'Gần đây',
 	'lookupcontribsfinal' => 'Cuối cùng',
 	'lookupcontribsall' => 'tất cả',
+	'action-lookupcontribs' => 'Tra các đóng góp của một người dùng trên nhiều trang wiki khác nhau',
 );
 
 /** Yiddish (ייִדיש)

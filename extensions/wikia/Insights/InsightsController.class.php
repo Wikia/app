@@ -58,6 +58,7 @@ class InsightsController extends WikiaSpecialPageController {
 			$params = $this->request->getParams();
 			$this->content = $this->model->getContent( $params );
 			$this->preparePagination();
+			$this->prepareSortingData();
 			$this->data = $this->model->getViewData();
 			$this->overrideTemplate( $this->model->getTemplate() );
 		} else {
@@ -79,6 +80,7 @@ class InsightsController extends WikiaSpecialPageController {
 				$isFixed = false;
 				$articleName = $this->getVal( 'article', null );
 				$title = Title::newFromText( $articleName );
+				$next = $model->getNextItem( $model->getInsightType(), $articleName );
 
 				$isEdit = $this->request->getBool( 'isEdit', false );
 
@@ -99,7 +101,7 @@ class InsightsController extends WikiaSpecialPageController {
 					$params = $this->getCongratulationsNotificationParams( $subpage );
 					$type = self::FLOW_STATUS_ALLDONE;
 				} elseif ( $isFixed ) {
-					$params = $this->getInsightFixedNotificationParams( $subpage, $articleName, $model );
+					$params = $this->getInsightFixedNotificationParams( $subpage, $next );
 					$type = self::FLOW_STATUS_FIXED;
 				}
 
@@ -162,8 +164,8 @@ class InsightsController extends WikiaSpecialPageController {
 	 * @param String $articleName current article name
 	 * @param InsightsModel $model
 	 */
-	private function getInsightFixedNotificationParams( $subpage, $articleName, InsightsModel $model ) {
-		$params = $this->getInsightNextLinkParams( $subpage, $articleName, $model );
+	private function getInsightFixedNotificationParams( $subpage, $next ) {
+		$params = $this->getInsightNextLinkParams( $subpage, $next );
 		$params = array_merge( $params, $this->getInsightListLinkParams( $subpage ));
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_FIXED_MSG_PREFIX . $subpage )->plain();
 
@@ -177,9 +179,7 @@ class InsightsController extends WikiaSpecialPageController {
 	 * @param String $articleName current article name
 	 * @param InsightsModel $model
 	 */
-	private function getInsightNextLinkParams( $subpage, $articleName, InsightsModel $model ) {
-		$next = $model->getNextItem( $model->getInsightType(), $articleName );
-
+	private function getInsightNextLinkParams( $subpage, $next ) {
 		return [
 			'nextArticleText' => wfMessage( 'insights-notification-next-item-' . $subpage )->plain(),
 			'nextArticleTitle' => $next['link']['text'],
@@ -230,18 +230,54 @@ class InsightsController extends WikiaSpecialPageController {
 	private function preparePagination() {
 		$total = $this->model->getTotalResultsNum();
 		$itemsPerPage = $this->model->getLimitResultsNum();
+		$params['page'] = '%s';
+
+		$sorting = $this->request->getVal( 'sort', null );
+		if ( $sorting ) {
+			$params['sort'] = $sorting;
+		}
 
 		if( $total > $itemsPerPage ) {
 			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );
 			$paginator->setActivePage( $this->model->getPage() );
-			$url = urldecode( $this->getSpecialInsightsUrl( $this->subpage, [ 'page' => '%s' ] ) );
+			$url = urldecode( $this->getSpecialInsightsUrl( $this->subpage, $params ) );
 			$this->paginatorBar = $paginator->getBarHTML( $url );
 		}
 	}
 
+	/**
+	 * Prepare data needed to sort list
+	 */
+	private function prepareSortingData() {
+		$dropdown = [];
+
+		if( $this->model->arePageViewsRequired() ) {
+			$sort = $this->request->getVal( 'sort', $this->model->getDefaultSorting() );
+
+			/**
+			 * Used to create the following messages:
+			 *
+			 * 'insights-list-pv7',
+			 * 'insights-list-pv28',
+			 * 'insights-list-pvDiff',
+			 * 'insights-list-title'
+			 */
+			foreach ( $this->model->sorting as $key => $sorting ) {
+				$dropdown[ $key ] = wfMessage( 'insights-sort-' . $key )->escaped();
+			}
+
+			$this->current = $sort;
+			$this->metadata = isset( $this->model->sorting[ $sort ]['metadata'] )
+				? $this->model->sorting[ $sort ]['metadata']
+				: $sort;
+		}
+
+		$this->dropdown = $dropdown;
+	}
+
 	private function addAssets() {
 		$this->response->addAsset( '/extensions/wikia/Insights/styles/insights-lists.scss' );
-		$this->response->addAsset( '/extensions/wikia/Insights/scripts/InsightsPageTracking.js' );
+		$this->response->addAsset( '/extensions/wikia/Insights/scripts/InsightsPage.js' );
 	}
 
 	/**

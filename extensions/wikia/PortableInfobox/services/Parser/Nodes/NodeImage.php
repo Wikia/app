@@ -1,22 +1,55 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
+use Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer;
+
 class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';
+	const CAPTION_TAG_NAME = 'caption';
 
 	public function getData() {
-		$node = [];
-		$imageName = $this->getInfoboxData( $this->getXmlAttribute($this->xmlNode, self::DATA_SRC_ATTR_NAME ) );
-		$node['value'] = $this->resolveImageUrl( $imageName );
-		$node['alt'] = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
-		return $node;
+		$title = $this->getImageAsTitleObject( $this->getRawValueWithDefault( $this->xmlNode ) );
+		$ref = null;
+		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
+		$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
+
+		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
+
+		return [
+			'url' => $this->resolveImageUrl( $title ),
+			'name' => ( $title ) ? $title->getText() : '',
+			'key' => ( $title ) ? $title->getDBKey() : '',
+			'alt' => $alt,
+			'caption' => $caption,
+			'ref' => $ref
+		];
 	}
 
-	protected function resolveImageUrl( $filename ) {
-		$title = \Title::newFromText( $filename, NS_FILE );
-		if ( $title && $title->exists() ) {
-			return \WikiaFileHelper::getFileFromTitle($title)->getUrlGenerator()->url();
+	public function isEmpty( $data ) {
+		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
+	}
+
+	private function getImageAsTitleObject( $imageName ) {
+		global $wgContLang;
+		$title = \Title::newFromText(
+			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $imageName, $wgContLang ),
+			NS_FILE
+		);
+		return $title;
+	}
+
+	/**
+	 * @desc returns image url for given image title
+	 * @param string $title
+	 * @return string url or '' if image doesn't exist
+	 */
+	public function resolveImageUrl( $title ) {
+		if ( $title ) {
+			$file = \WikiaFileHelper::getFileFromTitle( $title );
+			if ( $file ) {
+				return $file->getUrl();
+			}
 		}
-		return "";
+		return '';
 	}
 }

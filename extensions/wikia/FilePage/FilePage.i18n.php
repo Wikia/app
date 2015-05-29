@@ -620,6 +620,14 @@ $messages['ko'] = array(
 	'file-page-more-links' => '전체 목록 보기',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'file-page-tab-about' => 'Derbarê',
+	'file-page-tab-metadata' => 'Daneyên meta',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -640,7 +648,7 @@ Gitt d'Beschreiwung hei an.",
 	'file-page-more-links' => 'Ganz Lëscht weisen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -960,9 +968,12 @@ $messages['sl'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
  * @author Milicevic01
  */
 $messages['sr-ec'] = array(
+	'video-page-regional-restrictions-viewable' => 'Ово видео је доступно само у појединим регијама.',
+	'video-page-regional-restrictions-unviewable' => 'Ово видео није доступно у вашој локацији',
 	'video-page-add-description-link-text' => 'Додајте опис',
 );
 

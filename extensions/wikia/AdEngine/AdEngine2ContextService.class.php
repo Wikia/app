@@ -29,9 +29,7 @@ class AdEngine2ContextService {
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
-					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
-					'enableInvisibleHighImpactSlot' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 					'pageType' => $adPageTypeService->getPageType(),
 					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
@@ -40,7 +38,7 @@ class AdEngine2ContextService {
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
-					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
+					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
@@ -63,6 +61,9 @@ class AdEngine2ContextService {
 					'taboola' => $wg->AdDriverUseTaboola,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
+					'exitstitial' => $wg->EnableOutboundScreenExt,
+					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
+					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
 				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [

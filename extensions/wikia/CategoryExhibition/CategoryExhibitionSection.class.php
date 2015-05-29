@@ -43,8 +43,16 @@ class CategoryExhibitionSection {
 	 */
 	public function isCategoryExhibitionEnabled() {
 		if ( !isset( $this->categoryExhibitionEnabled ) ) {
-			$this->categoryExhibitionEnabled =
-				CategoryDataService::getArticleCount( $this->categoryTitle->getDBkey() ) > self::EXHIBITION_LIMIT ? false : true;
+			$this->categoryExhibitionEnabled = false;
+			$oTmpArticle = new Article( $this->categoryTitle );
+			if ( !is_null( $oTmpArticle ) ) {
+				$rdTitle = $oTmpArticle->getRedirectTarget();
+				if ( !is_null( $rdTitle ) && ( $rdTitle->getNamespace() == NS_CATEGORY ) ) {
+					$sCategoryDBKey = $rdTitle->getDBkey();
+					$this->categoryExhibitionEnabled =
+						CategoryDataService::getArticleCount( $sCategoryDBKey ) > self::EXHIBITION_LIMIT ? false : true;
+				}
+			}
 		}
 		return $this->categoryExhibitionEnabled;
 	}

@@ -340,7 +340,7 @@ $messages['az'] = array(
 	'scavengerhunt-entry-form-email' => 'Sizin e-poçt ünvanınız:',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author Erdemaslancan
  */
 $messages['azb'] = array(
@@ -1109,6 +1109,7 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'scavengerhunt-list-edit' => 'bewurkje',
+	'scavengerhunt-button-delete' => 'Fuortsmite',
 	'scavengerhunt-quit-game-button-cancel' => 'Annulearje',
 );
 
@@ -1545,6 +1546,7 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
@@ -1555,6 +1557,10 @@ $messages['ku-latn'] = array(
 	'scavengerhunt-button-delete' => 'Jê bibe',
 	'scavengerhunt-entry-form-name' => 'Navê te:',
 	'scavengerhunt-entry-form-submit' => 'Gotarê qeyd bike',
+	'scavengerhunt-quit-game-button-quit' => 'Derkeve',
+	'scavengerhunt-quit-game-button-cancel' => 'Betal bike',
+	'scavengerhunt-label-entry-form-email' => 'E-nameya Bikarhêner',
+	'scavengerhunt-label-entry-form-username' => 'Navê Bikarhêner',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1587,7 +1593,7 @@ $messages['lb'] = array(
 	'scavengerhunt-label-entry-form-username' => 'Benotzernumm',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -3088,7 +3094,7 @@ $messages['tl'] = array(
 	'scavengerhunt-facebook-description' => 'Teksto ng pagpapamahagi sa Facebook',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -3265,6 +3271,7 @@ $messages['uk'] = array(
  * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'scavengerhunt-list-edit' => 'sửa',
 	'scavengerhunt-label-image-check' => '(Hiển thị hình ảnh)',
 	'scavengerhunt-label-article-hidden-image' => 'Hình ảnh bị ẩn:',
 	'scavengerhunt-button-delete' => 'Xóa',

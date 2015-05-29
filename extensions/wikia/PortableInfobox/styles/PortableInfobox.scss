@@ -37,6 +37,17 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 		padding: $infobox-item-margin $infobox-item-margin * 4 $infobox-item-margin $infobox-item-margin * 2;
 	}
 
+	.portable-infobox-image-wrapper {
+		text-align: center;
+	}
+
+	.portable-infobox-image-caption {
+		color: $color-alternate-text;
+		font-size: 12px;
+		font-style: italic;
+		text-align: left;
+	}
+
 	.portable-infobox-header-background {
 		background-color: $infobox-section-header-background;
 		color: $color-alternate-text;
@@ -73,7 +84,7 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 	.portable-infobox-item-value {
 		padding-left: $infobox-item-margin * 2;
 
-		// experiment with removing margins on all children of pair value
+		// experiment with removing margins on all children of data value
 		> * {
 			margin: 0;
 		}

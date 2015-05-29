@@ -9,13 +9,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	const
 		INSIGHTS_MEMC_PREFIX = 'insights',
 		INSIGHTS_MEMC_VERSION = '1.0',
+		INSIGHTS_MEMC_TTL = 259200, // Cache for 3 days
 		INSIGHTS_MEMC_ARTICLES_KEY = 'articlesData',
-		INSIGHTS_LIST_MAX_LIMIT = 100;
+		INSIGHTS_LIST_MAX_LIMIT = 100,
+		INSIGHTS_DEFAULT_SORTING = 'pv7';
 
 	private
 		$queryPageInstance,
 		$template = 'subpageList',
-		$cacheTtl,
 		$offset = 0,
 		$limit = 100,
 		$total = 0,
@@ -24,9 +25,16 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 	public
 		$sorting = [
-			'pv7' => SORT_NUMERIC,
-			'pv28' => SORT_NUMERIC,
-			'pvDiff' => SORT_NUMERIC,
+			'pv7' => [
+				'sortType' => SORT_NUMERIC,
+			],
+			'pv28' => [
+				'sortType' => SORT_NUMERIC,
+			],
+			'pvDiff' => [
+				'sortType' => SORT_NUMERIC,
+				'metadata' => 'pv7',
+			]
 		];
 
 	abstract function getDataProvider();
@@ -47,6 +55,10 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 	public function getPage() {
 		return $this->page;
+	}
+
+	public function getDefaultSorting() {
+		return self::INSIGHTS_DEFAULT_SORTING;
 	}
 
 	/**
@@ -90,6 +102,8 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 * @return array
 	 */
 	public function getContent( $params ) {
+		global $wgMemc;
+
 		$this->queryPageInstance = $this->getDataProvider();
 		$content = [];
 
@@ -106,7 +120,11 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 			 */
 			$this->prepareParams( $params );
 			if ( !isset( $this->sortingArray ) ) {
-				$this->sortingArray = array_keys( $articlesData );
+				if ( $this->arePageViewsRequired() ) {
+					$this->sortingArray = $wgMemc->get($this->getMemcKey( self::INSIGHTS_DEFAULT_SORTING ) );
+				} else {
+					$this->sortingArray = array_keys( $articlesData );
+				}
 			}
 			$ids = array_slice( $this->sortingArray, $this->offset, $this->limit, true );
 
@@ -156,8 +174,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	 */
 	public function fetchArticlesData() {
 		$cacheKey = $this->getMemcKey( self::INSIGHTS_MEMC_ARTICLES_KEY );
-		$this->cacheTtl = 259200; // Cache for 3 days
-		$articlesData = WikiaDataAccess::cache( $cacheKey, $this->cacheTtl, function () {
+		$articlesData = WikiaDataAccess::cache( $cacheKey, self::INSIGHTS_MEMC_TTL, function () {
 			$res = $this->queryPageInstance->doQuery();
 
 			if ( $res->numRows() > 0 ) {
@@ -199,7 +216,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 
 		if ( isset( $articleData[$articleId] ) ) {
 			unset( $articleData[$articleId] );
-			$wgMemc->set( $cacheKey, $articleData, $this->cacheTtl );
+			$wgMemc->set( $cacheKey, $articleData, self::INSIGHTS_MEMC_TTL );
 		}
 	}
 
@@ -214,10 +231,11 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		foreach ( $this->sorting as $key => $flag ) {
 			$cacheKey = $this->getMemcKey( $key );
 			$sortingArray = $wgMemc->get( $cacheKey );
+			$key = array_search( $articleId, $sortingArray );
 
-			if ( $key = array_search( $articleId, $sortingArray ) !== false ) {
+			if ( $key !== false && $key !== null ) {
 				unset( $sortingArray[$key] );
-				$wgMemc->set( $cacheKey, $sortingArray, $this->cacheTtl );
+				$wgMemc->set( $cacheKey, $sortingArray, self::INSIGHTS_MEMC_TTL );
 			}
 		}
 	}
@@ -255,10 +273,22 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 	public function createSortingArray( $sortingArray, $key ) {
 		global $wgMemc;
 
-		arsort( $sortingArray, $this->sorting[ $key ] );
+		if ( isset( $this->sorting[ $key ]['sortFunction'] ) ) {
+			usort( $sortingArray, $this->sorting[ $key ]['sortFunction'] );
+		} else {
+			arsort( $sortingArray, $this->sorting[ $key ]['sortType'] );
+		}
+
 		$cacheKey = $this->getMemcKey( $key );
 
-		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), $this->cacheTtl );
+		$wgMemc->set( $cacheKey, array_keys( $sortingArray ), self::INSIGHTS_MEMC_TTL );
+	}
+
+	/**
+	 * Function for sorting list alphabetical
+	 */
+	public function sortInsightsAlphabetical( $a, $b ) {
+		return strcasecmp( $a['link']['text'], $b['link']['text'] );
 	}
 
 	/**
@@ -311,7 +341,9 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		}
 
 		foreach ( $this->sorting as $key => $flag ) {
-			$this->createSortingArray( $sortingData[ $key ], $key );
+			if ( isset( $sortingData[$key] ) ) {
+				$this->createSortingArray( $sortingData[ $key ], $key );
+			}
 		}
 
 		return $articlesData;
@@ -332,7 +364,7 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 				$article = [];
 				$params = $this->getUrlParams();
 
-				$title = Title::newFromText( $row->title );
+				$title = Title::newFromText( $row->title, $row->namespace );
 				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
 
 				$lastRev = $title->getLatestRevID();

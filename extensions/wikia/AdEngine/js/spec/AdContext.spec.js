@@ -67,21 +67,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().opts.showAds).toBeFalsy();
 	});
 
-	it('makes opts.usePostScribe true when wgAdDriverUseSevenOneMedia = true', function () {
-		var adContext;
-
-		adContext = modules['ext.wikia.adEngine.adContext']({
-			ads: {
-				context: {
-					providers: {
-						sevenOneMedia: true
-					}
-				}
-			}
-		}, {}, geoMock, {});
-		expect(adContext.getContext().opts.usePostScribe).toBeTruthy();
-	});
-
 	it('makes targeting.pageCategories filled with categories properly', function () {
 		var adContext;
 
@@ -165,6 +150,20 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
 	});
 
+	it('makes providers.openX true when country in instantGlobals.wgAdDriverOpenXCountries', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgAdDriverOpenXCountries: ['AA', 'XX', 'ZZ']
+		});
+		expect(adContext.getContext().providers.openX).toBeTruthy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgAdDriverOpenXCountries: ['YY']
+		});
+		expect(adContext.getContext().providers.openX).toBeFalsy();
+	});
+
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext,
 			mocks = {
@@ -187,11 +186,11 @@ describe('AdContext', function () {
 		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
 			wgAdDriverHighImpactSlotCountries: ['XX', 'ZZ']
 		});
-		expect(adContext.getContext().opts.enableInvisibleHighImpactSlot).toBeTruthy();
+		expect(adContext.getContext().slots.invisibleHighImpact).toBeTruthy();
 
 		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
 			wgAdDriverHighImpactSlotCountries: ['YY']
 		});
-		expect(adContext.getContext().opts.enableInvisibleHighImpactSlot).toBeFalsy();
+		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
 });

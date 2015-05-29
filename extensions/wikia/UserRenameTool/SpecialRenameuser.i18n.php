@@ -282,7 +282,7 @@ $messages['arc'] = array(
 	'right-renameuser' => 'ܬܢܝ ܫܘܡܗܐ ܕܡܦܠܚܢܐ',
 );
 
-/** Egyptian Spoken Arabic (مصرى)
+/** Egyptian Arabic (مصرى)
  * @author Ghaly
  * @author Meno25
  * @author Ramsis II
@@ -824,14 +824,14 @@ $messages['ce'] = array(
 	'userrenametool-info-wiki-finished' => '$1 цӀе хийцина $2 → $3 (→ $4).
 Бахьна: "$5".',
 	'userrenametool-page-exists' => 'Агӏо $1 йолуш ю цундела и ша юху дӏаязъян йиш яц.',
-	'userrenametool-logpagetext' => 'ХӀокху тептар чохь гойту дӀабазбелла декъашхойн цӀераш хийцар.',
+	'userrenametool-logpagetext' => 'ХӀокху тептар чохь гойту дӀабазбелла декъашхойн цӀерш хийцар.',
 	'userrenametool-logentry' => 'цӀе хийцина $1 → «$2»',
 	'userrenametool-move-log' => 'Автоматически декъашхочун цӀе хийцина дела «[[User:$1|$1]]» → «[[User:$2|$2]]»',
 	'right-renameuser' => 'Декъашхойн цӀе хийцар',
-	'action-renameuser' => 'декъашхойн цӀераш хийцар',
+	'action-renameuser' => 'декъашхойн цӀерш хийцар',
 );
 
-/** Sorani Kurdish (کوردی)
+/** Central Kurdish (کوردیی ناوەندی)
  * @author Calak
  */
 $messages['ckb'] = array(
@@ -1540,7 +1540,7 @@ Vous serez informé par courriel quand cela sera terminé.',
 	'action-renameuser' => 'renommer les utilisateurs',
 );
 
-/** Franco-Provençal (arpetan)
+/** Arpitan (arpetan)
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
@@ -1587,7 +1587,7 @@ $messages['fy'] = array(
 	'renameuser' => 'Feroarje in meidochnamme',
 	'userrenametool-old' => 'Alde namme:',
 	'userrenametool-new' => 'Nije namme:',
-	'userrenametool-move' => 'Werneam meidogger en oerlis siden (mei ûnderlizzende siden) nei de nije namme',
+	'userrenametool-move' => 'Omneam meidogger en oerlis siden (mei ûnderlizzende siden) nei de nije namme',
 	'userrenametool-warnings' => 'Warskôgings:',
 	'userrenametool-submit' => 'Feroarje',
 	'userrenametool-errordoesnotexist' => 'Der is gjin meidogger mei de namme "<nowiki>$1</nowiki>"',
@@ -2501,6 +2501,7 @@ Bes esu joot un versöök et noch ens.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  * @author Ghybu
  */
@@ -2510,6 +2511,7 @@ $messages['ku-latn'] = array(
 	'userrenametool-old' => 'Navî niha:',
 	'userrenametool-new' => 'Navî nuh:',
 	'userrenametool-reason' => 'Sedema ji bo navguhertinê:',
+	'userrenametool-warnings' => 'Hişyarî:',
 	'userrenametool-confirm' => 'Erê, navê vî bikarhênerî biguherîne',
 	'userrenametool-submit' => 'Bike',
 	'userrenametool-errordoesnotexist' => ' Bikarhêner "<nowiki>$1</nowiki>" tune ye.',
@@ -2963,7 +2965,7 @@ $messages['my'] = array(
 	'right-renameuser' => 'အသုံးပြုသူအား အမည်ပြန်မှည့်ရန်',
 );
 
-/** Nahuatl (Nāhuatl)
+/** Nāhuatl (Nāhuatl)
  * @author Fluence
  */
 $messages['nah'] = array(
@@ -3295,13 +3297,13 @@ $messages['pcd'] = array(
 	'right-renameuser' => 'Érlonmer chés uzeus',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  */
 $messages['pdc'] = array(
 	'renameuser' => 'Naame vum Yuuser ennere',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  * @author SPS
  */
@@ -3795,7 +3797,7 @@ $messages['ru'] = array(
 	'userrenametool-error-cannot-create-block' => 'Создание блока с помощью Phalanx не удалось.',
 	'userrenametool-error-cannot-rename-unexpected' => 'Произошла непредвиденная ошибка, проверьте журналы или попробуйте еще раз.',
 	'userrenametool-error-invalid-ip' => 'Предоставлен недопустимый IP-адрес.',
-	'userrenametool-warnings-characters' => 'Новое имя пользователя содержит недопустимые символы!',
+	'userrenametool-warnings-characters' => 'Новое имя учётной записи содержит недопустимые символы!',
 	'userrenametool-warnings-maxlength' => 'Длина нового имени пользователя не может превышать 255 символов!',
 	'userrenametool-warning-phalanx-block' => 'Фраза «$1» глобально заблокирована с помощью расширения Phalanx. $2.',
 	'userrenametool-see-list-of-blocks' => 'Здесь можно посмотреть список блокировок',
@@ -4111,7 +4113,7 @@ $messages['sr-el'] = array(
 	'right-renameuser' => 'preimenovanje korisničkih imena',
 );
 
-/** Seeltersk (Seeltersk)
+/** Saterland Frisian (Seeltersk)
  * @author Maartenvdbent
  * @author Pyt
  */
@@ -4442,7 +4444,7 @@ Pababatiran ka sa pamamagitan ng e-liham kapag nabuo na ito.',
 	'right-renameuser' => 'Muling pangalanan ang mga tagagamit',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -4601,7 +4603,7 @@ $messages['ur'] = array(
 	'userrenametool-log' => 'جن کی $1 ترامیم تھیں. $2',
 );
 
-/** vèneto (vèneto)
+/** Venetian (vèneto)
  * @author Candalua
  */
 $messages['vec'] = array(
@@ -4800,13 +4802,31 @@ $messages['wa'] = array(
  * @author פוילישער
  */
 $messages['yi'] = array(
+	'userrenametool' => "ענדערן א באניצער'ס נאמען",
 	'renameuser' => 'בײַטן באַניצער נאָמען',
 	'userrenametool-old' => 'לויפיגער באניצער-נאמען:',
 	'userrenametool-new' => 'נייער באניצער-נאמען',
+	'userrenametool-encoded' => 'URL-קאדירט:',
+	'userrenametool-reason' => 'גרונד:',
+	'userrenametool-move' => 'באַוועגן באַניצער און שמועס בלעטער (מיט זייערע אונטערבלעטער) צו נײַעם נאָמען',
+	'userrenametool-reserve' => 'בלאקירן דעם אַלטן באַניצער־נאָמען פֿון נוץ אין צוקונפֿט',
+	'userrenametool-warnings' => 'ווארענונגען:',
 	'userrenametool-errordoesnotexist' => 'דער באניצער "<nowiki>$1</nowiki>" עקסיסטירט נישט.',
 	'userrenametool-errorexists' => 'דער באניצער "<nowiki>$1</nowiki>" עקסיסטירט שוין.',
 	'userrenametool-errorinvalid' => 'דער באניצער נאמען "<nowiki>$1</nowiki>" איז נישט גילטיק.',
+	'userrenametool-errorlocked' => 'באניצער <nowiki>$1</nowiki> איז בלאקירט.',
+	'userrenametool-errorbot' => 'באניצער <nowiki>$1</nowiki> איז א באט.',
+	'userrenametool-error-request' => 'געווען א פראבלעם מיט באַקומען די בקשה.
+ביטע גייט צוריק און פרואווט ווידעראַמאָל.',
+	'userrenametool-error-same-user' => 'מען קען נישט ענדערן א באַניצער צום זעלבן נאָמען.',
+	'userrenametool-confirm-yes' => 'יא',
+	'userrenametool-confirm-no' => 'ניין',
+	'userrenametool-page-moved' => 'דער בלאַט $1 איז געווארן באַוועגט צו $2.',
+	'userrenametool-page-unmoved' => 'דעם בלאט  $1 קען מען נישט באוועגן צו $2.',
 	'userrenametool-logpage' => 'באַניצער נאָמען-טויש לאָג-בוך',
+	'userrenametool-logentry' => 'האט געענדערט דעם נאמען פון באניצער $1 צו "$2"',
+	'userrenametool-log' => '{{PLURAL:$1|1 רעדאקטירונג|$1 רעדאקטירונגען}}.
+אורזאך: $2',
 	'right-renameuser' => 'בײַטן באַניצער נעמען',
 );
 
@@ -5006,6 +5026,17 @@ $messages['zh-hant'] = array(
 	'userrenametool-move-log' => '當由"[[User:$1|$1]]"重新命名為"[[User:$2|$2]]"時已經自動移動使用者頁面',
 	'right-renameuser' => '重新命名使用者',
 	'action-renameuser' => '重新命名使用者',
+);
+
+/** Chinese (Hong Kong) (中文（香港）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hk'] = array(
+	'renameuser' => '重新命名用戶',
+	'userrenametool-desc' => "加入一個[[Special:UserRenameTool|特殊頁面]]以重命名用戶 (需要 ''renameuser'' 權限)，并處理相關資料",
+	'userrenametool-new' => '新的用戶名稱：',
+	'right-renameuser' => '重新命名用戶',
+	'action-renameuser' => '重新命名用戶',
 );
 
 /** Zulu (isiZulu)

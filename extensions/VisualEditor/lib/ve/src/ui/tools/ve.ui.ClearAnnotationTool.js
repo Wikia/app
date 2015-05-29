@@ -38,6 +38,16 @@ ve.ui.ClearAnnotationTool.static.title =
 
 ve.ui.ClearAnnotationTool.static.commandName = 'clear';
 
+/* Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ui.ClearAnnotationTool.prototype.onSelect = function () {
+	ve.track( 'tool.annotation.select', { name: this.constructor.static.name } );
+	ve.ui.Tool.prototype.onSelect.apply( this, arguments );
+};
+
 /* Registration */
 
 ve.ui.toolFactory.register( ve.ui.ClearAnnotationTool );

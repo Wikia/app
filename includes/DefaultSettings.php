@@ -1422,7 +1422,7 @@ $wgDefaultExternalStore = false;
  *
  * Set to 0 to disable, or number of seconds before cache expiry.
  */
-$wgRevisionCacheExpiry = 86400;
+$wgRevisionCacheExpiry = 86400 * 30; // a month
 
 /** @} */ # end text storage }
 
@@ -2803,7 +2803,7 @@ $wgLocalInterwiki = false;
 /**
  * Expiry time for cache of interwiki table
  */
-$wgInterwikiExpiry = 10800;
+$wgInterwikiExpiry = 86400;
 
 /** Interwiki caching settings.
 	$wgInterwikiCache specifies path to constant database file

@@ -12,13 +12,24 @@ abstract class CommentController extends EmailController {
 	protected $title;
 
 	/** @var \Title */
-	protected $latestComment;
+	protected $commentTitle;
 
 	public function initEmail() {
-		$titleText = $this->request->getVal( 'title' );
+		// This title is for the article being commented upon
+		$titleText = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace' );
 
 		$this->title = \Title::newFromText( $titleText, $titleNamespace );
+
+		// This revision ID is for the comment that was left
+		$commentRevID = $this->getVal( 'currentRevId', false );
+		if ( $commentRevID ) {
+			$rev = \Revision::newFromId( $commentRevID, \Revision::USE_MASTER_DB );
+
+			if ( $rev ) {
+				$this->commentTitle = $rev->getTitle( \Revision::USE_MASTER_DB );
+			}
+		}
 
 		$this->assertValidParams();
 	}
@@ -28,6 +39,7 @@ abstract class CommentController extends EmailController {
 	 */
 	private function assertValidParams() {
 		$this->assertValidTitle();
+		$this->assertValidCommentTitle();
 	}
 
 	/**
@@ -40,6 +52,19 @@ abstract class CommentController extends EmailController {
 
 		if ( !$this->title->exists() ) {
 			throw new Check( "Title doesn't exist." );
+		}
+	}
+
+	/**
+	 * @throws \Email\Check
+	 */
+	private function assertValidCommentTitle() {
+		if ( !$this->commentTitle instanceof \Title ) {
+			throw new Check( "Could not find comment for revision ID given by currentRevId" );
+		}
+
+		if ( !$this->title->exists() ) {
+			throw new Check( "Comment doesn't exist." );
 		}
 	}
 
@@ -59,6 +84,7 @@ abstract class CommentController extends EmailController {
 			'contentFooterMessages' => [
 				$this->getCommentSectionLink(),
 			],
+			'hasContentFooterMessages' => true
 		] );
 	}
 
@@ -71,13 +97,6 @@ abstract class CommentController extends EmailController {
 
 	abstract protected function getSubjectKey();
 
-	protected function getSalutation() {
-		return wfMessage(
-			'emailext-comment-salutation',
-			$this->targetUser->getName()
-		)->inLanguage( $this->targetLang )->text();
-	}
-
 	protected function getSummary() {
 		$articleTitle = $this->title->getText();
 
@@ -89,18 +108,11 @@ abstract class CommentController extends EmailController {
 	abstract protected function getSummaryKey();
 
 	protected function getDetails() {
-		$comment = $this->getLatestComment();
-		$articleID = $comment->getArticleID();
+		$article = \Article::newFromTitle( $this->commentTitle, \RequestContext::getMain() );
+		$service = new \ArticleService( $article );
+		$snippet = $service->getTextSnippet();
 
-		$res = $this->sendRequest( 'ArticleSummary', 'blurb', [
-			'ids' => $articleID,
-		] )->getData();
-
-		if ( empty( $res['summary'][$articleID] ) ) {
-			return '';
-		}
-
-		return $res['summary'][$articleID]['snippet'];
+		return $snippet;
 	}
 
 	protected function getCommentLabel() {
@@ -110,7 +122,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getCommentLink() {
-		$comment = $this->getLatestComment();
+		$comment = $this->commentTitle;
 		return $comment->getCanonicalURL();
 	}
 
@@ -126,24 +138,31 @@ abstract class CommentController extends EmailController {
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
 
-	protected function getLatestComment() {
-		if ( empty( $this->latestComment ) ) {
-			$articleComment = \ArticleComment::latestFromTitle( $this->title );
-			if ( empty( $articleComment ) ) {
-				throw new Fatal( 'Could not find latest comment' );
-			}
-			$this->latestComment = $articleComment->getTitle();
-		}
-
-		return $this->latestComment;
-	}
-
 	protected function getCommentSectionLink() {
 		$url = $this->title->getFullURL( '#WikiaArticleComments' );
 
 		return wfMessage( 'emailext-comment-view-all', $url )
 			->inLanguage( $this->targetLang )
 			->parse();
+	}
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		$formFields =  [
+			"inputs" => [
+				[
+					'type' => 'text',
+					'name' => 'currentRevId',
+					'label' => "Comment Revision ID"
+				]
+			]
+		];
+
+		return $formFields;
 	}
 }
 
@@ -155,6 +174,31 @@ class ArticleCommentController extends CommentController {
 	protected function getSummaryKey() {
 		return 'emailext-articlecomment-summary';
 	}
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'pageTitle',
+					'label' => "Article Title",
+					'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
+				],
+				[
+					'type' => 'hidden',
+					'name' => 'namespace',
+					'value' => NS_MAIN
+				]
+			]
+		];
+
+		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
+	}
 }
 
 class BlogCommentController extends CommentController {
@@ -164,5 +208,28 @@ class BlogCommentController extends CommentController {
 
 	protected function getSummaryKey() {
 		return 'emailext-blogcomment-summary';
+	}
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		$formFields['inputs'] = [
+			[
+				'type' => 'text',
+				'name' => 'pageTitle',
+				'label' => "Blog Post Title",
+				'tooltip' => "eg 'Gcheung28/New_sharing_options_on_Wikia' (make sure it's on this wikia!)",
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'namespace',
+				'value' => NS_BLOG_ARTICLE
+			]
+		];
+
+		return  array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
 }

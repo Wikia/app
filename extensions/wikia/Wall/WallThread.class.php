@@ -35,49 +35,49 @@ class WallThread {
 	}
 
 	public function loadIfCached() {
-		if($this->mCached === null) {
+		if ( $this->mCached === null ) {
 			$this->loadFromMemcache();
 		}
 		return $this->mCached;
 	}
-	
-	public function move(Wall $dest, $user) {
-		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId);
-		
+
+	public function move( Wall $dest, $user ) {
+		CommentsIndex::changeParent( 0, $dest->getId(), $this->mThreadId );
+
 		$wallHistory = new WallHistory( $this->mCityId );
 		$wallHistory->moveThread( $this->mThreadId, $dest->getId() );
-		
+
 		$main = $this->getThreadMainMsg();
 		$main->load();
-		//this is use to build a history in contribiution page
-		$main->markAsMove($user);
+		// this is use to build a history in contribiution page
+		$main->markAsMove( $user );
 		$this->invalidateCache();
 	}
-	
+
 
 	public function setReplies( $ids ) {
 		// set and cache replies of this thread
 		$this->initializeReplyData();
-		
+
 		$this->data->threadReplyIds = $ids;
 
 		$this->saveToMemcache();
 	}
 
 	private function loadReplyObjs() {
-		if( $this->data->threadReplyIds === false ) {
+		if ( $this->data->threadReplyIds === false ) {
 			$this->loadReplyIdsFromDB();
 		}
 
 		$this->data->threadReplyObjs = array();
 
-		if(empty($this->data->threadReplyIds)) {
+		if ( empty( $this->data->threadReplyIds ) ) {
 			$this->data->threadReplyIds = array();
 		}
 
-		foreach( $this->data->threadReplyIds as $id ) {
+		foreach ( $this->data->threadReplyIds as $id ) {
 			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
-			if($wm instanceof WallMessage && !$wm->isAdminDelete()) {
+			if ( $wm instanceof WallMessage && !$wm->isAdminDelete() ) {
 				$this->data->threadReplyObjs[] = $wm;
 			}
 		}
@@ -95,25 +95,20 @@ class WallThread {
 		// the other one is in Wall.class done in a grouped way
 		// (fetch for many threads at once, set with ->setReplies)
 
-		$conditions = [ 'parent_comment_id = '.$this->mThreadId ];
+		$query = ( new WikiaSQL() )
+			->SELECT( 'distinct comment_id' )
+			->FROM( 'comments_index' )
+			->WHERE( 'parent_comment_id' )->EQUAL_TO( $this->mThreadId );
 
 		if ( (int) $afterId > 0 ) {
-			array_push( $conditions, 'comment_id > '.$afterId );
+			$query->AND_( 'comment_id' )->GREATER_THAN( $afterId );
 		}
 
-		$result = $dbr->select(
-				[ 'comments_index' ],
-				[ 'distinct comment_id' ],
-				$conditions,
-				__METHOD__,
-				[ 'ORDER BY' => 'comment_id ASC',
-					'LIMIT' => self::FETCHED_REPLIES_LIMIT ]
-		);
-
-		$list = [];
-		while ( $row = $dbr->fetchObject( $result ) ) {
-			$list[] = $row->comment_id;
-		}
+		$list = $query->ORDER_BY( [ 'comment_id', 'ASC' ] )
+			->LIMIT( self::FETCHED_REPLIES_LIMIT )
+			->runLoop( $dbr, function( &$list, $oRow ) {
+				$list[] = $oRow->comment_id;
+			} );
 
 		$lastId = end( $list );
 
@@ -139,7 +134,7 @@ class WallThread {
 	}
 
 	private function getThreadKey() {
-		return  wfMemcKey(__CLASS__, '-thread-key-v17-', $this->mThreadId);
+		return  wfMemcKey( __CLASS__, '-thread-key-v17-', $this->mThreadId );
 	}
 
 	private function getCache() {
@@ -150,8 +145,8 @@ class WallThread {
 		$cache = $this->getCache();
 		$key = $this->getThreadKey();
 
-		$ret = $cache->get($key);
-		if($ret === false || $ret === null) {
+		$ret = $cache->get( $key );
+		if ( $ret === false || $ret === null ) {
 			$this->mCached = false;
 		} else {
 			$this->data = $ret;
@@ -168,44 +163,44 @@ class WallThread {
 	public function getThreadMainMsg() {
 		return WallMessage::newFromId( $this->mThreadId );
 	}
-	
-	public function getRepliesCount() {
-		if($this->data->threadReplyObjs === false) {
-			$this->loadReplyObjs();	
-		}
-		
-		return count($this->data->threadReplyObjs);
-	}
-	//TODO: fix the performace of Replies Wall
 
-	public function getRepliesWallMessages($limit = 0, $order = "ASC" ) {
-		if($this->data->threadReplyObjs === false) {
-			$this->loadReplyObjs();	
+	public function getRepliesCount() {
+		if ( $this->data->threadReplyObjs === false ) {
+			$this->loadReplyObjs();
 		}
-		
+
+		return count( $this->data->threadReplyObjs );
+	}
+	// TODO: fix the performace of Replies Wall
+
+	public function getRepliesWallMessages( $limit = 0, $order = "ASC" ) {
+		if ( $this->data->threadReplyObjs === false ) {
+			$this->loadReplyObjs();
+		}
+
 		$out = $this->data->threadReplyObjs;
-		
-		if($order == "DESC") {
-			$out = array_reverse($out);	
+
+		if ( $order == "DESC" ) {
+			$out = array_reverse( $out );
 		}
-				
-		if($limit > 0) {
-			$out = array_slice($out, 0, $limit);
+
+		if ( $limit > 0 ) {
+			$out = array_slice( $out, 0, $limit );
 		}
-		
+
 		return $out;
 	}
-	
+
 	public function purgeLastMessage() {
-		$key = wfMemcKey(__CLASS__, '-thread-lastreply-key', $this->mThreadId);
-		WikiaDataAccess::cachePurge($key);
+		$key = wfMemcKey( __CLASS__, '-thread-lastreply-key', $this->mThreadId );
+		WikiaDataAccess::cachePurge( $key );
 	}
-	
+
 	public function getLastMessage() {
-		$key = wfMemcKey(__CLASS__, '-thread-lastreply-key', $this->mThreadId);
+		$key = wfMemcKey( __CLASS__, '-thread-lastreply-key', $this->mThreadId );
 		$threadId = $this->mThreadId;
-		$data = WikiaDataAccess::cache( $key, 30*24*60*60, function() use ($threadId) {
-			$db = wfGetDB(DB_SLAVE);
+		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() use ( $threadId ) {
+			$db = wfGetDB( DB_SLAVE );
 			$row = $db->selectRow(
 				array( 'comments_index' ),
 				array( 'max(first_rev_id) rev_id' ),
@@ -218,19 +213,19 @@ class WallThread {
 				__METHOD__
 			);
 			return $row;
-		});
-		
+		} );
+
 		// get last post info
 		$revision = Revision::newFromId( $data->rev_id );
 		if ( $revision instanceof Revision ) {
 			$title = $revision->getTitle();
-			$wallMessage = WallMessage::newFromId($title->getArticleId());
-			if(!empty($wallMessage)) {
+			$wallMessage = WallMessage::newFromId( $title->getArticleId() );
+			if ( !empty( $wallMessage ) ) {
 				$wallMessage->load();
 				return $wallMessage;
-			} 
+			}
 		}
-		
+
 		return null;
 	}
 }

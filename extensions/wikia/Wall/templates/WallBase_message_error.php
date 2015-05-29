@@ -1,6 +1,6 @@
 <li class="SpeechBubble message">
-	<blockquote class="speech-bubble-message">
+	<div class="speech-bubble-message">
 		<?= wfMsgExt('wall-message-not-found', array('parseinline')) ?>
-	</blockquote>
+	</div>
 </li>
 
