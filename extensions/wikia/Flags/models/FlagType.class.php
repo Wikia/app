@@ -27,8 +27,64 @@ class FlagType extends FlagsBaseModel {
 		8 => 'other'
 	];
 
+	/**
+	 * Flags can be targeted to different user groups.	 *
+	 * @var array
+	 */
+	public static $flagTargeting = [
+		1 => 'readers',
+		2 => 'contributors'
+	];
+
+	/**
+	 * Get flag groups mapping
+	 * @return array flag groups mapping
+	 */
 	public function getFlagGroupsMapping() {
 		return self::$flagGroups;
+	}
+
+	/**
+	 * Get flag group name by id
+	 * @param $flagGroupId
+	 * @return string|null
+	 */
+	public function getFlagGroupName( $flagGroupId ) {
+		return isset( self::$flagGroups[$flagGroupId] ) ? self::$flagGroups[$flagGroupId] : null;
+	}
+
+	/**
+	 * Get flag group id by name
+	 * @param $flagGroupName
+	 * @return int|false
+	 */
+	public function getFlagGroupId ( $flagGroupName ) {
+		return array_search( strtolower( $flagGroupName ), self::$flagGroups );
+	}
+
+	/**
+	 * Get flag user targeting mapping
+	 * @return array
+	 */
+	public function getFlagTargetingMapping() {
+		return self::$flagTargeting;
+	}
+
+	/*
+	 * Get flag user targeting name by id
+	 * @return string|null
+	 */
+	public function getFlagTargetingName( $flagTargetingId ) {
+		return isset( self::$flagTargeting[$flagTargetingId] ) ? self::$flagTargeting[$flagTargetingId] : null;
+	}
+
+	/**
+	 * Get flag user targeting id by name
+	 * @param $flagTargetingName
+	 * @return string|false
+	 */
+	public function getFlagTargetingId ( $flagTargetingName ) {
+		return array_search( strtolower( $flagTargetingName ), self::$flagTargeting );
 	}
 
 	/**
@@ -101,17 +157,19 @@ class FlagType extends FlagsBaseModel {
 			->SET( 'flag_view', $params['flag_view'] )
 			->SET( 'flag_targeting', $params['flag_targeting'] );
 
-		if ( $params['flagParamsNames'] !== null  ) {
-			$sql->SET('flag_params_names', $params['flagParamsNames'] );
+		if ( $params['flag_params_names'] !== null  ) {
+			$sql->SET('flag_params_names', $params['flag_params_names'] );
 		}
 
 		$sql->run( $db );
 
-		$this->status = $db->affectedRows() > 0;
+		$flagTypeId = $db->insertId();
 
 		$db->commit();
 
-		return $this->status;
+		$this->paramsVerified = false;
+
+		return $flagTypeId;
 	}
 
 	/**
@@ -145,10 +203,10 @@ class FlagType extends FlagsBaseModel {
 			->WHERE( 'flag_type_id' )->EQUAL_TO( $params['flag_type_id'] )
 			->run( $db );
 
-		$this->status = $db->affectedRows() > 0;
+		$status = $db->affectedRows() > 0;
 
 		$db->commit();
 
-		return $this->status;
+		return $status;
 	}
 }

@@ -38,7 +38,8 @@ class FlagsController extends WikiaController {
 			$flags = $this->getResponseData( $response );
 
 			$flagView = new FlagView();
-			foreach ( $flags as $flagId => $flag ) {
+
+			foreach ( $flags as $flagTypeId => $flag ) {
 				$templatesCalls[] = $flagView->createWikitextCall( $flag['flag_view'], $flag['params'] );
 			}
 

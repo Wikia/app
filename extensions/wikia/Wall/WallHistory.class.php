@@ -86,7 +86,7 @@ class WallHistory extends WikiaModel {
 			(int) $feed->data->parent_page_id,
 			(int) $user->getID(),
 			$user->getName(),
-			!$feed->isMain(),
+			$feed->isReply(),
 			$feed->data->title_id,
 			$feed->data->article_title_ns,
 			$feed->data->parent_id,
@@ -98,7 +98,7 @@ class WallHistory extends WikiaModel {
 		return true;
 	}
 
-	private function addStatChangeAction( $action, $feed, $user ) {
+	private function addStatChangeAction( $action, $feed ) {
 		if ( !( $feed instanceof WallNotificationAdminEntity ) ) {
 			return false;
 		}

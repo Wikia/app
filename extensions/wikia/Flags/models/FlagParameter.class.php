@@ -39,6 +39,8 @@ class FlagParameter extends FlagsBaseModel {
 
 		$status = $db->affectedRows() > 0;
 
+		$db->commit();
+
 		return $status;
 	}
 

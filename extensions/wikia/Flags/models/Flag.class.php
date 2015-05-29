@@ -33,9 +33,11 @@ class Flag extends FlagsBaseModel {
 		 * 2. Get parameters for flags that need them
 		 */
 		$flagsWithParams = [];
-		foreach ( $flagsForPage as $flag ) {
+		foreach ( $flagsForPage as $flagTypeId => $flag ) {
 			if ( !empty( $flag['flag_params_names'] ) ) {
 				$flagsWithParams[] = $flag['flag_id'];
+			} else {
+				$flagsForPage[$flagTypeId]['params'] = [];
 			}
 		}
 
@@ -197,7 +199,9 @@ class Flag extends FlagsBaseModel {
 			$status['params_added'] = $paramsAdded;
 		}
 
-		return $status;
+		$this->paramsVerified = false;
+
+		return $flagId && $status;
 	}
 
 	/**
