@@ -78,17 +78,10 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 		// logged in user
 		} else if (win.wgUserName) {
 			return win.wgUserLanguage;
-		// anonumous user who uses
-		// Chrome or Firefox
-		} else if (win.navigator.languages) {
-			return win.navigator.languages[0].substr(0, 2);
-		// Safari
-		} else if (win.navigator.language) {
-			return win.navigator.language.substr(0, 2);
-		// Internet Exploder
-		} else if (win.navigator.userLanguage) {
-			return win.navigator.userLanguage.substr(0, 2);
-		// something exotic
+		// anonymous user
+		} else if (win.wgAcceptLangList) {
+			return win.wgAcceptLangList[0].substr(0, 2);
+		// something went wrong
 		} else {
 			return null;
 		}

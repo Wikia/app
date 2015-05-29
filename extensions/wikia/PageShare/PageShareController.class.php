@@ -11,6 +11,7 @@ class PageShareController extends WikiaController {
 
 	public function getShareIcons() {
 		$requestlang = $this->getVal( 'lang' );
+		$requestlang = is_array( $requestlang ) ? substr( $requestlang[0], 0, 2) : $requestlang;
 		$title = $this->getVal( 'title' );
 		$url = $this->getVal( 'url' );
 		$lang = PageShareHelper::getLangForPageShare( $requestlang );
