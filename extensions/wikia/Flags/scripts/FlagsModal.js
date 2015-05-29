@@ -1,38 +1,51 @@
-require(['jquery'], function ($) {
+require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	'use strict';
 
+	/* Modal buttons config for done and cancel buttons */
+	var buttonsForFlagsExistingState = [{
+		vars: {
+			value: mw.message('flags-edit-modal-done-button-text').escaped(),
+			data: [
+				{
+					key: 'event',
+					value: 'done'
+				}
+			]
+		}
+	},
+	{
+		vars: {
+			value: mw.message('flags-edit-modal-cancel-button-text').escaped(),
+			data: [
+				{
+					key: 'event',
+					value: 'close'
+				}
+			]
+		}
+	}],
+
+	/* Modal close button config*/
+	buttonForEmptyState = [{
+		vars: {
+			value: mw.message('flags-edit-modal-close-button-text').escaped(),
+			data: [
+				{
+					key: 'event',
+					value: 'close'
+				}
+			]
+		}
+	}],
+
 	/* Modal component configuration */
-	var modalConfig = {
+	modalConfig = {
 		vars: {
 			id: 'FlagsModal',
 			classes: ['edit-flags'],
 			size: 'medium', // size of the modal
 			content: '', // content
-			title: 'Flags',
-			buttons: [ // buttons in the footer
-				{
-					vars: {
-						value: 'Done',
-						data: [
-							{
-								key: 'event',
-								value: 'done'
-							}
-						]
-					}
-				},
-				{
-					vars: {
-						value: 'Cancel',
-						data: [
-							{
-								key: 'event',
-								value: 'close'
-							}
-						]
-					}
-				}
-			]
+			title: mw.message('flags-edit-modal-title').escaped()
 		}
 	};
 
@@ -47,17 +60,19 @@ require(['jquery'], function ($) {
 	 */
 	function showModal(event) {
 		event.preventDefault();
-		Wikia.getMultiTypePackage({
-			templates: [{
-				controller: 'Flags',
-				method: 'editForm',
-				params: {
-					'page_id': window.wgArticleId
-				}
-			}],
-			styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
-			callback: handlePackage
-		});
+		loader({
+			type: loader.MULTI,
+			resources: {
+				templates: [{
+					controller: 'Flags',
+					method: 'editForm',
+					params: {
+						'page_id': mw.config.get('wgArticleId')
+					}
+				}],
+				styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
+			}
+		}).done(handlePackage);
 	}
 
 	/**
@@ -67,9 +82,7 @@ require(['jquery'], function ($) {
 	 */
 	function handlePackage(pkg) {
 		/* Load styles */
-		require(['wikia.loader'], function (loader) {
-			loader.processStyle(pkg.styles);
-		});
+		loader.processStyle(pkg.styles);
 
 		/* Add content to modal */
 		modalConfig.vars.content = pkg.templates.Flags_editForm;
@@ -85,6 +98,12 @@ require(['jquery'], function ($) {
 	 * One of sub-tasks for getting modal shown
 	 */
 	function createComponent(uiModal) {
+		/* Look for existence of form tag to determine whether there are any flags on the wikia */
+		if (modalConfig.vars.content.indexOf('<form') > -1) {
+			modalConfig.vars.buttons = buttonsForFlagsExistingState;
+		} else {
+			modalConfig.vars.buttons = buttonForEmptyState;
+		}
 		/* Create the wrapping JS Object using the modalConfig */
 		uiModal.createComponent(modalConfig, processInstance);
 	}
@@ -96,11 +115,12 @@ require(['jquery'], function ($) {
 	 */
 	function processInstance(modalInstance) {
 		var $flagsEditForm = modalInstance.$element.find('#flagsEditForm');
-
-		/* Submit flags edit form on Done button click */
-		modalInstance.bind('done', function () {
-			$flagsEditForm.trigger('submit');
-		});
+		if ($flagsEditForm.length > 0) {
+			/* Submit flags edit form on Done button click */
+			modalInstance.bind('done', function () {
+				$flagsEditForm.trigger('submit');
+			});
+		}
 
 		/* Show the modal */
 		modalInstance.show();

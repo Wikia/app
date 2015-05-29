@@ -19,6 +19,7 @@ class Hooks {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		if ( \Wikia::isContentNamespace() ) {
 			\Wikia::addAssetsToOutput('flags_js');
+			$out->addModules( 'ext.wikia.Flags' );
 		}
 		return true;
 	}

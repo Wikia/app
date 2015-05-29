@@ -59,6 +59,34 @@ class XmlParserTest extends WikiaBaseTest {
 		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parseRecursive(LALALA)' );
 	}
 
+	public function testNotProvidingDataSource() {
+		$xmlParser = new \Wikia\PortableInfobox\Parser\XmlParser( ['a'=>'1'] );
+
+		$data1 = $xmlParser->getDataFromXmlString('<infobox><data source="b" /><data source="a" /></infobox>');
+		$this->assertTrue( $data1[0]['data']['value'] == '1', 'Data with empty source "b" should be ignored' );
+	}
+
+	public function testNotProvidingDataSourceInsideComparison() {
+		$xmlParser = new \Wikia\PortableInfobox\Parser\XmlParser( ['a'=>'1'] );
+
+		$data1 = $xmlParser->getDataFromXmlString( '<infobox>
+														<comparison>
+															<set>
+																<data source="b" />
+																<data source="a" />
+															</set>
+														</comparison>
+													 </infobox>' );
+
+		$setElement = $data1[0]['data']['value'][0]['data']['value'];
+
+		//Data with empty source "b" should not be ignored inside comparison:
+		$this->assertTrue( $setElement[0]['data']['value'] == '', 'Data with empty source "b" inside comparison' );
+		$this->assertTrue( $setElement[0]['isEmpty'] == true );
+
+		$this->assertTrue( $setElement[1]['data']['value'] == '1', '' );
+	}
+
 	/**
 	 * @dataProvider errorHandlingDataProvider
 	 */

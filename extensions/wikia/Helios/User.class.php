@@ -10,6 +10,7 @@ use Wikia\Logger\WikiaLogger;
 class User {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
+	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
 
 	// This is set to 6 months,(365/2)*24*60*60 = 15768000
 	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
@@ -189,13 +190,16 @@ class User {
 	 * Clear the access token cookie by setting a time in the past
 	 */
 	public static function clearAccessTokenCookie() {
-		$response = \RequestContext::getMain()->getRequest()->response();
-		$response->setcookie(
-			self::ACCESS_TOKEN_COOKIE_NAME,
-			'',
-			time() - self::ACCESS_TOKEN_COOKIE_TTL,
-			\WebResponse::NO_COOKIE_PREFIX
-		);
+		self::clearCookie( self::ACCESS_TOKEN_COOKIE_NAME );
+
+		/*
+		 * Mercury's backend (Hapi) is setting access_token cookie in an encrypted form, so we need
+		 * to destroy this one as well on UserLogout
+		 * This is a temporary change which will be deleted while implementing SOC-798
+		 */
+		self::clearCookie( self::MERCURY_ACCESS_TOKEN_COOKIE_NAME );
+
+		return true; // So that wfRunHooks evaluates to true.
 	}
 
 	/**
@@ -268,11 +272,12 @@ class User {
 	 * @param string $username The username
 	 * @param string $password The plaintext password the user entered
 	 * @param string $email The user's email
+	 * @param string $langCode The language code of the community the user is registering on
 	 * @param string $birthDate
 	 *
 	 * @return bool true on success, false otherwise
 	 */
-	public static function register( $username, $password, $email, $birthDate ) {
+	public static function register( $username, $password, $email, $birthDate, $langCode ) {
 		$logger = WikiaLogger::instance();
 		$logger->info( 'HELIOS_REGISTRATION START', [ 'method' => __METHOD__ ] );
 
@@ -280,7 +285,7 @@ class User {
 		$helios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 		try {
-			$registration = $helios->register( $username, $password, $email, $birthDate );
+			$registration = $helios->register( $username, $password, $email, $birthDate, $langCode );
 			$result = !empty( $registration->success );
 
 			if ( !empty( $registration->error ) ) {
@@ -312,9 +317,10 @@ class User {
 	 * @return bool
 	 */
 	public static function onRegister( &$result, &$userId, $user, $password, $email ) {
+		global $wgLang;
 
 		$heliosUserId = null;
-		$heliosResult = self::register( $user->mName, $password, $email, $user->mBirthDate );
+		$heliosResult = self::register( $user->mName, $password, $email, $user->mBirthDate, $wgLang->getCode() );
 		$logger = WikiaLogger::instance();
 
 		global $wgHeliosRegistrationShadowMode;
@@ -371,5 +377,20 @@ class User {
 	public static function onUserSave( \User $user ) {
 		self::purgeAuthenticationCache( $user->getName() );
 		return true;
+	}
+
+	/**
+	 * Clears selected cookie
+	 *
+	 * @param $cookieName
+	 */
+	private static function clearCookie( $cookieName ) {
+		$response = \RequestContext::getMain()->getRequest()->response();
+		$response->setcookie(
+			$cookieName,
+			'',
+			time() - self::ACCESS_TOKEN_COOKIE_TTL,
+			\WebResponse::NO_COOKIE_PREFIX
+		);
 	}
 }

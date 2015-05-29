@@ -100,6 +100,7 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 			if ( !UploadBase::isEnabled() ) {
 				$this->dieUsageMsg( 'uploaddisabled' );
 			}
+			F::app()->wg->DisableProxy = true;
 			$this->mUpload = new UploadFromUrl();
 			$this->mUpload->initializeFromRequest( new FauxRequest(
 				array(

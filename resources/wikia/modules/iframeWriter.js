@@ -36,6 +36,7 @@ define('wikia.iframeWriter', [
 
 		iframe.onload = function () {
 			iframe.contentWindow.document.write(code);
+			iframe.contentWindow.document.close();
 		};
 
 		return iframe;

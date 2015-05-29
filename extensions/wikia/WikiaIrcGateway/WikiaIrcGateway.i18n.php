@@ -335,7 +335,7 @@ $messages['ln'] = array(
 	'ircgate-channel' => 'Lileko:',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -413,7 +413,7 @@ $messages['oc'] = array(
 	'ircgate-channel' => 'Canal :',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -507,8 +507,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'ircgate-desc' => 'Låter användare infoga IRC-inloggningsformulär på valfri sida',
 	'ircgate-username' => 'Användarnamn:',
 	'ircgate-channel' => 'Kanal:',
 );
@@ -562,10 +564,12 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Dinhxuanduyet
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'ircgate-desc' => 'Cho phép người dùng nhúng khung đăng nhập IRC vào bất kỳ trang nào',
 	'ircgate-username' => 'Tên đăng nhập:',
 	'ircgate-channel' => 'Kênh:',
 );
