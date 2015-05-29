@@ -11,10 +11,6 @@
 namespace Flags\Models;
 
 class FlagType extends FlagsBaseModel {
-	private
-		$status,
-		$paramsVerified = false;
-
 	/**
 	 * Flags are organized in groups. We store this information as integers in the database.
 	 * Let's translate the numbers into something more readable!
@@ -41,7 +37,6 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool|mixed
 	 */
 	public function getFlagTypesForWikia( $wikiId ) {
-		$this->debug($wikiId);
 		$db = $this->getDatabaseForRead();
 
 		$flagTypesForWikia = ( new \WikiaSQL() )
@@ -71,21 +66,18 @@ class FlagType extends FlagsBaseModel {
 	 * before performing an INSERT query.
 	 * @param array $params
 	 * @return bool
+	 * @throws \InvalidParameterApiException
+	 * @throws \MissingParameterApiException
 	 */
 	public function verifyParamsForAdd( $params ) {
-		$required = [ 'wiki_id', 'flagGroup', 'flagName', 'flagView', 'flagTargeting' ];
+		$required = [ 'wiki_id', 'flag_group', 'flag_name', 'flag_view', 'flag_targeting' ];
 
 		foreach ( $required as $requiredField ) {
-			if ( !isset( $params[$requiredField] ) ) {
-				return false; // Lack of a required parameter
-			}
+			if ( !isset( $params[$requiredField] ) ) throw new \MissingParameterApiException( $requiredField ) ;
 		}
 
-		if ( !isset( self::$flagGroups[$params['flagGroup']] ) ) {
-			return false; // Unrecognized flag group
-		}
+		if ( !isset( self::$flagGroups[$params['flag_group']] ) ) throw new \InvalidParameterApiException( 'flag_group' );
 
-		$this->paramsVerified = true;
 		return true;
 	}
 
@@ -96,9 +88,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function addFlagType( $params ) {
-		if ( !$this->paramsVerified ) {
-			return false;
-		}
+		$this->verifyParamsForAdd( $params );
 
 		$db = $this->getDatabaseForWrite();
 
@@ -106,10 +96,10 @@ class FlagType extends FlagsBaseModel {
 			->INSERT( self::FLAGS_TYPES_TABLE )
 			->SET( 'wiki_id', $params['wiki_id'] )
 			// flag_type_id is auto_increment
-			->SET( 'flag_group', $params['flagGroup'] )
-			->SET( 'flag_name', $params['flagName'] )
-			->SET( 'flag_view', $params['flagView'] )
-			->SET( 'flag_targeting', $params['flagTargeting'] );
+			->SET( 'flag_group', $params['flag_group'] )
+			->SET( 'flag_name', $params['flag_name'] )
+			->SET( 'flag_view', $params['flag_view'] )
+			->SET( 'flag_targeting', $params['flag_targeting'] );
 
 		if ( $params['flagParamsNames'] !== null  ) {
 			$sql->SET('flag_params_names', $params['flagParamsNames'] );
@@ -132,13 +122,11 @@ class FlagType extends FlagsBaseModel {
 	 * Verifies if a `flagTypeId` has been set
 	 * @param array $params
 	 * @return bool
+	 * @throws \MissingParameterApiException
 	 */
 	public function verifyParamsForRemove( $params ) {
-		if ( !isset( $params['flag_type_id'] ) ) {
-			return false;
-		}
+		if ( !isset( $params['flag_type_id'] ) ) throw new \MissingParameterApiException( 'flag_type_id' );
 
-		$this->paramsVerified = true;
 		return true;
 	}
 
@@ -148,9 +136,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function removeFlagType( $params ) {
-		if ( !$this->paramsVerified ) {
-			return false;
-		}
+		$this->verifyParamsForRemove( $params );
 
 		$db = $this->getDatabaseForWrite();
 

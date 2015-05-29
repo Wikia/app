@@ -14,9 +14,6 @@ class FlagParameter extends FlagsBaseModel {
 
 	const FLAG_PARAMETER_REGEXP = "/[^A-Za-z0-9-_:.]/"; // See W3C documentation for the name and id HTML attributes
 
-	private
-		$status;
-
 	/**
 	 * Performs an INSERT query that adds rows to store parameters of a given instance of a flag.
 	 * @param int $flagId
@@ -40,9 +37,9 @@ class FlagParameter extends FlagsBaseModel {
 			->VALUES( $values )
 			->run( $db );
 
-		$this->status = $db->affectedRows() > 0;
+		$status = $db->affectedRows() > 0;
 
-		return $this->status;
+		return $status;
 	}
 
 	/**
@@ -63,11 +60,11 @@ class FlagParameter extends FlagsBaseModel {
 				->run( $db );
 		}
 
-		$this->status = $db->affectedRows() > 0;
+		$status = $db->affectedRows() > 0;
 
 		$db->commit();
 
-		return $this->status;
+		return $status;
 	}
 
 	public static function isValidParameterName( $paramName ) {
