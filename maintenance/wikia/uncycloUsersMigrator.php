@@ -212,12 +212,21 @@ class UncycloUserMigrator extends Maintenance {
 				continue;
 			}
 
-			$dbw->update(
-				$entry[ 'table' ],
-				[ $columnName => $newValue ], // SET
-				[ $columnName => $oldValue ], // WHERE
-				__METHOD__
-			);
+			// perform table update in batches of 500 rows
+			// UPDATE /* method */ `foo` SET foo_id = "new" WHERE foo_id = "old" LIMIT 500
+			do {
+				// Database::update method does not support passing LIMIT option
+				$sql = sprintf(
+					'UPDATE /* %s */ `%s` SET %s = %s WHERE %s = %s LIMIT 500',
+					__METHOD__,
+					$entry['table'],
+					$columnName,
+					$dbw->addQuotes( $newValue ),
+					$columnName,
+					$dbw->addQuotes( $oldValue )
+				);
+				$dbw->query( $sql );
+			} while ($dbw->affectedRows() > 0);
 		}
 	}
 
