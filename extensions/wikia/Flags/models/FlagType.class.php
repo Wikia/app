@@ -103,8 +103,11 @@ class FlagType extends FlagsBaseModel {
 			->SELECT( 'flag_type_id' )
 			->FROM( self::FLAGS_TYPES_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
-			->WHERE( 'flag_view')->EQUAL_TO( $flag_view )
-			->run( $db );
+			->AND_( 'flag_view')->EQUAL_TO( $flag_view )
+			->run( $db, function( $result ) {
+				$row = $result->fetchObject();
+				return $row->flag_type_id;
+			} );
 
 		return $flagTypeId;
 	}

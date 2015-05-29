@@ -209,7 +209,7 @@ class FlagsApiController extends WikiaApiController {
 	 * Removes a type of flags.
 	 *
 	 * Required parameters:
-	 * @requestParam int flagTypeId
+	 * @requestParam int flag_type_id
 	 *
 	 * IMPORTANT!
 	 * When using this method be aware that it removes ALL instances of this type
@@ -229,6 +229,17 @@ class FlagsApiController extends WikiaApiController {
 		$this->setVal( 'status', $this->status );
 	}
 
+	/**
+	 * Get flag type id by template (view) name
+	 *
+	 * Required parameter:
+	 * @requestParam string flag_view
+	 *
+	 * Optional parameters:
+	 * @requestParam int wiki_id You can overwrite the current city_id
+	 *
+	 * @return int|null
+	 */
 	public function getFlagTypeIdByTemplate() {
 		$this->getRequestParams();
 
@@ -239,7 +250,7 @@ class FlagsApiController extends WikiaApiController {
 		$flagTypeModel = new FlagType();
 		$flagTypeId = $flagTypeModel->getFlagTypeIdByTemplate( $this->params['wiki_id'], $this->params['flag_view']);
 
-		return $flagTypeId;
+		$this->setVal( 'flag_type_id', $flagTypeId );
 	}
 
 	/**

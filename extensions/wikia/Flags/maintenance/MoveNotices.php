@@ -32,17 +32,17 @@ class MoveNotices extends Maintenance {
 		$this->addOption( 'list', 'Run script without adding data to database' );
 		$this->addOption( 'section', 'Search template in given section (default is 0). Whole article can be parsed by setting value "all".' );
 		$this->addOption( 'add', "Add template as a flag.\n
-									Accepted values:\n
-									first (default) - first template will be added\n
-									all - all tempaltes will be added");
+							Accepted values:\n
+							first (default) - first template will be added\n
+							all - all tempaltes will be added");
 		$this->addOption( 'remove', "Remove template from text.\n
-									Accepted values:\n
-									first (default) - first template will be removed\n
-									all - all tempaltes will be removed");
+							Accepted values:\n
+							first (default) - first template will be removed\n
+							all - all tempaltes will be removed");
 		$this->addOption( 'replace', "Replace template by a tag.\n
-									Accepted values:\n
-									first (default) - first template will be replaced\n
-									all - all tempaltes will be replaced");
+							Accepted values:\n
+							first (default) - first template will be replaced\n
+							all - all tempaltes will be replaced");
 		$this->addOption( 'tag', 'Tag to replace template. If not set, default __FLAGS__ tag will be used.');
 	}
 
@@ -294,6 +294,11 @@ class MoveNotices extends Maintenance {
 		}
 	}
 
+	/**
+	 * Prepare action parameters (add / replace / remove)
+	 *
+	 * @return array
+	 */
 	private function prepareActionOptions() {
 		$actions = [];
 
@@ -328,6 +333,13 @@ class MoveNotices extends Maintenance {
 		return $actions;
 	}
 
+	/**
+	 * Prepare parameters for given actions
+	 *
+	 * @param int $actionsSum sum of actions
+	 * @param string $tag replacement tag
+	 * @return array
+	 */
 	private function prepareActionParams( $actionsSum, $tag ) {
 		$actionParams = [];
 
