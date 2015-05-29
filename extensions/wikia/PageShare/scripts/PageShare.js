@@ -70,8 +70,9 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 		} else if (win.wgUserName) {
 			return win.wgUserLanguage;
 		} else {
-			// Chrome and Firefox : Internet Explorer
-			browserLang = win.navigator.languages ? win.navigator.languages[0] : win.navigator.userLanguage;
+			// Chrome and Firefox : Safari || Internet Explorer
+			browserLang = win.navigator.languages ?
+				win.navigator.languages[0] : win.navigator.language || win.navigator.userLanguage;
 
 			if (browserLang) {
 				return browserLang.substr(0, 2);
