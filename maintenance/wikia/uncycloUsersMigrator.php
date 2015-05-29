@@ -307,6 +307,10 @@ class UncycloUserMigrator extends Maintenance {
 	 * @param User $user
 	 */
 	protected function deleteUncycloUser( User $user ) {
+		if ( $this->isDryRun ) {
+			return;
+		}
+
 		// delete the user and his settings from the uncyclo DB
 		$dbw = $this->getUncycloDB( DB_MASTER );
 
