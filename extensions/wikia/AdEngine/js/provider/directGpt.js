@@ -48,17 +48,16 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'},
 			GPT_FLUSH:                  {flushOnly: true}
 		},
-		gptConfig = { // slots to use SRA with
-			CORP_TOP_LEADERBOARD: 'wait',
-			HUB_TOP_LEADERBOARD:  'wait',
-			TOP_LEADERBOARD:      'wait',
-			HOME_TOP_LEADERBOARD: 'wait',
-			INVISIBLE_SKIN:       'wait',
-			CORP_TOP_RIGHT_BOXAD: 'flush',
-			TOP_RIGHT_BOXAD:      'flush',
-			HOME_TOP_RIGHT_BOXAD: 'flush',
-			GPT_FLUSH:            'flush'
-		},
+		atfSlots = [
+			'CORP_TOP_LEADERBOARD',
+			'HUB_TOP_LEADERBOARD',
+			'TOP_LEADERBOARD',
+			'HOME_TOP_LEADERBOARD',
+			'INVISIBLE_SKIN',
+			'CORP_TOP_RIGHT_BOXAD',
+			'TOP_RIGHT_BOXAD',
+			'HOME_TOP_RIGHT_BOXAD'
+		],
 		provider = factory.createProvider(
 			logGroup,
 			'DirectGpt',
@@ -86,7 +85,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		if (index > -1) {
 			pendingSlots.splice(index, 1);
 			if (pendingSlots.length === 0 && delayedSlotsQueue.length) {
-				window.ads.runtime.disableBtf = true;
 				pushDelayedQueue();
 			}
 		}
@@ -99,7 +97,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	}
 
 	function delayBtfSlot(slotName, success, hop) {
-		if (!!gptConfig[slotName]) {
+		if (atfSlots.indexOf(slotName) > -1) {
 			if (!atfFlushed) {
 				pendingSlots.push(slotName);
 			}
@@ -127,7 +125,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			if (!atfFlushed || pendingSlots.length > 0) {
 				delayBtfSlot(slotName, success, hop);
 				return;
-			} else if (window.ads.runtime.disableBtf && !gptConfig[slotName]) {
+			} else if (window.ads.runtime.disableBtf && atfSlots.indexOf(slotName) === -1) {
 				blockBtfSlot(slotName, success);
 				return;
 			}

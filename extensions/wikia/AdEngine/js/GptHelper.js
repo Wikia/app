@@ -5,9 +5,10 @@ define('ext.wikia.adEngine.gptHelper', [
 	'wikia.window',
 	'wikia.document',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.gptSraHelper',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptAdDetect'
-], function (log, window, document, adLogicPageParams, slotTweaker, gptAdDetect) {
+], function (log, window, document, adLogicPageParams, sraHelper, slotTweaker, gptAdDetect) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
@@ -133,11 +134,25 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 	}
 
-	function pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType) {
+	/**
+	 * Push ad to queue and flush if it should be
+	 *
+	 * @param {string}   slotName           - slot name
+	 * @param {string}   slotPath           - slot path
+	 * @param {Object}   slotTargeting      - slot targeting details
+	 * @param {function} success            - on success callback
+	 * @param {function} error              - on error callback
+	 * @param {Object}   extra              - optional parameters
+	 *
+	 * @param {boolean}  extra.sraEnabled   - decide if SRA should be used
+	 * @param {string}   extra.forceAdType  - ad type for callbacks info
+	 */
+	function pushAd(slotName, slotPath, slotTargeting, success, error, extra) {
 		var slotDiv = document.getElementById(slotName),
 			adDiv, // set in queueAd
 			adDivId = 'wikia_gpt_helper' + slotPath;
 
+		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
 		function callSuccess(adInfo) {
@@ -243,15 +258,21 @@ define('ext.wikia.adEngine.gptHelper', [
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				gptAdDetect.onAdLoad(adDivId, event, iframe, callSuccess, callError, forcedAdType);
+				gptAdDetect.onAdLoad(adDivId, event, iframe, callSuccess, callError, extra.forcedAdType);
 			}, 0);
 		}
 
 		log(['pushAd', slotName], 'info', logGroup);
 
-		loadGptOnce();
-		registerGptCallback(adDivId, gptCallback);
-		googletag.cmd.push(queueAd);
+		if (slotTargeting.flushOnly) {
+			loadGptOnce();
+			registerGptCallback(adDivId, gptCallback);
+			googletag.cmd.push(queueAd);
+		}
+
+		if (!extra.sraEnabled || sraHelper.shouldFlush(slotName)) {
+			flushAds();
+		}
 	}
 
 	function flushAds() {
@@ -266,6 +287,7 @@ define('ext.wikia.adEngine.gptHelper', [
 			log(['flushAds', 'refresh', slotQueue], 'debug', logGroup);
 
 			if (slotQueue.length) {
+				console.log(slotQueue);
 				googletag.pubads().refresh(slotQueue);
 				slotQueue = [];
 			}
@@ -275,8 +297,7 @@ define('ext.wikia.adEngine.gptHelper', [
 	}
 
 	return {
-		pushAd: pushAd,
-		flushAds: flushAds
+		pushAd: pushAd
 	};
 
 });

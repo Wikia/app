@@ -1,9 +1,8 @@
 /*global define,setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.gptSraHelper', [
-	'ext.wikia.adEngine.gptHelper',
 	'wikia.log'
-], function (gptHelper, log) {
+], function (log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.gptSraHelper',
@@ -16,22 +15,16 @@ define('ext.wikia.adEngine.gptSraHelper', [
 			'TOP_LEADERBOARD'
 		];
 
-	function pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType) {
-		if (slotTargeting && slotTargeting.flushOnly) {
-			success({});
-		} else {
-			gptHelper.pushAd(slotName, slotPath, slotTargeting, success, error, forcedAdType);
-			log(['pushAd', 'Pushed slot', slotName], 'debug', logGroup);
+	function shouldFlush(slotName) {
+		if (sraSlots.indexOf(slotName) === -1) {
+			flushed = true;
 		}
 
-		if (flushed || sraSlots.indexOf(slotName) === -1) {
-			gptHelper.flushAds();
-			flushed = true;
-			log(['pushAd', 'Flushing slot', slotName], 'debug', logGroup);
-		}
+		log(['shouldFlush', slotName, flushed], 'debug', logGroup);
+		return flushed;
 	}
 
 	return {
-		pushAd: pushAd
+		shouldFlush: shouldFlush
 	}
 });

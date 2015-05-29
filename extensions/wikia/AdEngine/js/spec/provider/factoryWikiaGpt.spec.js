@@ -19,11 +19,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				pushAd: function (slotName, slotPath, slotTargeting, doSuccess, doHop) {
 					doSuccess();
 					doHop();
-				},
-				flushAds: noop
-			},
-			gptSraHelper: {
-				pushAd: noop
+				}
 			},
 			lookups: {
 				extendSlotTargeting: noop
@@ -37,7 +33,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			mocks.log,
 			mocks.adLogicPageParams,
 			mocks.gptHelper,
-			mocks.gptSraHelper,
 			mocks.lookups
 		);
 	}
@@ -97,27 +92,5 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		}).fillInSlot('TOP_LEADERBOARD', noop, noop);
 
 		expect(mocks.beforeHop).toHaveBeenCalled();
-	});
-
-	it('Push ad using gptHelper if SRA is disabled', function () {
-		spyOn(mocks.gptHelper, 'pushAd');
-		spyOn(mocks.gptSraHelper, 'pushAd');
-
-		getProvider().fillInSlot('TOP_LEADERBOARD');
-
-		expect(mocks.gptHelper.pushAd).toHaveBeenCalled();
-		expect(mocks.gptSraHelper.pushAd).not.toHaveBeenCalled();
-	});
-
-	it('Push ad using gptSraHelper if SRA is enabled', function () {
-		spyOn(mocks.gptHelper, 'pushAd');
-		spyOn(mocks.gptSraHelper, 'pushAd');
-
-		getProvider({
-			sraEnabled: true
-		}).fillInSlot('TOP_LEADERBOARD');
-
-		expect(mocks.gptSraHelper.pushAd).toHaveBeenCalled();
-		expect(mocks.gptHelper.pushAd).not.toHaveBeenCalled();
 	});
 });

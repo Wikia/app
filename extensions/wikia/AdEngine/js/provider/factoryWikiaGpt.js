@@ -3,9 +3,8 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'wikia.log',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.gptHelper',
-	require.optional('ext.wikia.adEngine.gptSraHelper'),
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (log, adLogicPageParams, gptHelper, gptSraHelper, lookups) {
+], function (log, adLogicPageParams, gptHelper, lookups) {
 	'use strict';
 
 	/**
@@ -18,7 +17,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {Object} [extra]      - optional extra params
 	 * @param {function} [extra.beforeSuccess] - function to call before calling success
 	 * @param {function} [extra.beforeHop]     - function to call before calling hop
-	 * @param {function} [extra.sraEnabled]    - enable SRA and call gpt using GptSraHelper
+	 * @param {boolean}  [extra.sraEnabled]    - decide if use SRA
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
 	 * @returns {{name: string, canHandleSlot: function, fillInSlot: function}}
 	 */
@@ -36,7 +35,10 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		function fillInSlot(slotName, success, hop) {
 			log(['fillInSlot', slotName, success, hop], 'debug', logGroup);
 
-			var pageParams = adLogicPageParams.getPageLevelParams(),
+			var extraParams = {
+					sraEnabled: extra.sraEnabled
+				},
+				pageParams = adLogicPageParams.getPageLevelParams(),
 				slotTargeting = slotMap[slotName],
 				slotPath = [
 					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slotName
@@ -63,13 +65,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				lookups.extendSlotTargeting(slotName, slotTargeting);
 			}
 
-			if (extra.sraEnabled) {
-				gptSraHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop);
-			} else {
-				gptHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop);
-				gptHelper.flushAds();
-			}
-
+			gptHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop, extraParams);
 			log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
 		}
 
