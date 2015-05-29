@@ -263,7 +263,7 @@ define('ext.wikia.adEngine.gptHelper', [
 
 		log(['pushAd', slotName], 'info', logGroup);
 
-		if (slotTargeting.flushOnly) {
+		if (!slotTargeting.flushOnly) {
 			loadGptOnce();
 			registerGptCallback(adDivId, gptCallback);
 			googletag.cmd.push(queueAd);
