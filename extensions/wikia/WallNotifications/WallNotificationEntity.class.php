@@ -101,16 +101,10 @@ class WallNotificationEntity {
 	}
 
 	/**
-<<<<<<< Updated upstream
-	 * Tests whether this is a notification for a message that is a new thread topic.
-	 *
-	 * @return bool True if the message is a new topic, false if it is a reply to a thread topic
-=======
 	 * Returns true if this entity represents a forum topic and false if it represents
 	 * a comment to a topic
 	 *
 	 * @return bool
->>>>>>> Stashed changes
 	 */
 	public function isMain() {
 		return empty( $this->data->parent_id );
