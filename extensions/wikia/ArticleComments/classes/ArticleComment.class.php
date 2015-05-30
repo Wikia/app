@@ -30,35 +30,25 @@ class ArticleComment {
 	public $mHeadItems;
 	public $mNamespaceTalk;
 
-	/**
-	 * @var $mTitle Title
-	 */
+	/** @var Title */
 	public $mTitle;
 
-	/**
-	 * @var $mUser User comment creator
-	 */
+	/** @var User comment creator */
 	public $mUser;
 
-	/**
-	 * @var $mArticle Article
-	 */
+	/** @var Article */
 	public $mArticle;
 
-	/**
-	 * @var $mLastRevision Revision for author & time
-	 */
+	/** @var Revision Last revision for author & time */
 	public $mLastRevision;
 
-	/**
-	 * @var $mFirstRevId Revision for displaying text
-	 */
+	/** @var Revision The revision used for displaying text */
 	public $mFirstRevision;
 
 	protected $minRevIdFromSlave;
 
 	/**
-	 * @param $title Title
+	 * @param Title $title
 	 */
 	public function __construct( $title ) {
 		$this->mTitle = $title;
@@ -70,9 +60,6 @@ class ArticleComment {
 	/**
 	 * newFromTitle -- static constructor
 	 *
-	 * @static
-	 * @access public
-	 *
 	 * @param Title $title -- Title object connected to comment
 	 *
 	 * @return ArticleComment object
@@ -83,9 +70,6 @@ class ArticleComment {
 
 	/**
 	 * newFromTitle -- static constructor
-	 *
-	 * @static
-	 * @access public
 	 *
 	 * @param Article $article object connected to comment
 	 * @return ArticleComment object

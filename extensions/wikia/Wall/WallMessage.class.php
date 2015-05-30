@@ -92,11 +92,11 @@ class WallMessage {
 		}
 
 		// if message wall was just created, we should later use MASTER db when creating title object
-		$newMessageWall = false;
+		$useMasterDB = false;
 		// create wall page by bot if not exist
 		if ( $userPageTitle instanceof Title && !$userPageTitle->exists() ) {
 			$userPageTitle = self::addMessageWall( $userPageTitle );
-			$newMessageWall = true;
+			$useMasterDB = true;
 		}
 
 		if ( empty( $userPageTitle ) ) {
@@ -162,7 +162,7 @@ class WallMessage {
 		// Build data for sweet url ? id#number_of_comment
 		// notify
 		if ( $notify ) {
-			$class->sendNotificationAboutLastRev( $newMessageWall );
+			$class->sendNotificationAboutLastRev( $useMasterDB );
 		}
 
 		if ( $parent === false && $notifyEveryone ) {
@@ -448,7 +448,7 @@ class WallMessage {
 					wfMessage( 'wall-message-update-highlight-summary' )->inContentLanguage()->text(),
 					false, true );
 				$rev = $this->getArticleComment()->mLastRevision;
-				$entity = WallNotificationEntity::createFromRev( $rev, $this->cityId );
+				$entity = WallNotificationEntity::createFromRev( $rev );
 				$wne->addNotificationToQueue( $entity );
 			} else {
 				$this->getArticleComment()->removeMetadata( 'notify_everyone' );
@@ -498,8 +498,8 @@ class WallMessage {
 		return $wallOwnerName;
 	}
 
-	public function getWallOwner( $master = false ) {
-		$parts = explode( '/', $this->getArticleTitle( $master )->getText() );
+	public function getWallOwner( $useMasterDB = false ) {
+		$parts = explode( '/', $this->getArticleTitle( $useMasterDB )->getText() );
 		$userName = $parts[0];
 		$titleText = $this->title->getText();
 		$parts = explode( '/', $titleText );
@@ -535,7 +535,7 @@ class WallMessage {
 		return $this->getArticleTitle()->getFullUrl();
 	}
 
-	public function getArticleTitle( $master = false ) {
+	public function getArticleTitle( $useMasterDB = false ) {
 		$commentsIndex = $this->getCommentsIndex();
 
 		if ( empty( $commentsIndex ) ) {
@@ -546,7 +546,7 @@ class WallMessage {
 
 		static $cache = array();
 		if ( empty( $cache[$pageId] ) ) {
-			if ( !$master ) {
+			if ( !$useMasterDB ) {
 				$cache[$pageId] = Title::newFromId( $pageId );
 				// make sure this did not happen due to master-slave delay
 				// if so, this is a bug in the code, as $master flag should be set to true
@@ -846,7 +846,7 @@ class WallMessage {
 			return true;
 		}
 
-		$notif = WallNotificationEntity::createFromRev( $rev, $this->cityId );
+		$notif = WallNotificationEntity::createFromRev( $rev );
 
 		/*
 		 * experimental notfieverone
@@ -897,7 +897,7 @@ class WallMessage {
 		return $this->getArticleComment()->mLastRevId != $this->getArticleComment()->mFirstRevId;
 	}
 
-	public function getLastEditSummery() {
+	public function getLastEditSummary() {
 		$lastRev = Revision::newFromId( $this->getArticleComment()->mLastRevId );
 
 		if ( empty( $lastRev ) ) {
@@ -1514,11 +1514,11 @@ class WallMessage {
 		return $this->getArticleComment()->getData( $master, $title );
 	}
 
-	public function sendNotificationAboutLastRev( $master = false ) {
+	public function sendNotificationAboutLastRev( $useMasterDB = false ) {
 		$this->load();
 		$lastRevId = $this->getArticleComment()->mLastRevId;
 		if ( !empty( $lastRevId ) ) {
-			$this->helper->sendNotification( $lastRevId, RC_NEW, $master );
+			$this->helper->sendNotification( $lastRevId, RC_NEW, $useMasterDB );
 		}
 	}
 

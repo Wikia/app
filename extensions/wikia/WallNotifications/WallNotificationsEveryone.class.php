@@ -70,14 +70,11 @@ class WallNotificationsEveryone extends WallNotifications {
 	/**
 	 * Processes the notification queue for user
 	 *
-	 * @param integer $userId
-	 * @return bool
+	 * @param int $userId
 	 */
 	public function processQueue( $userId ) {
-		wfProfileIn( __METHOD__ );
 		if ( $this->getQueueProcessed( $userId ) ) {
-			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		$preparedDbExpireTime = $this->getDbExpireDate();
@@ -89,36 +86,25 @@ class WallNotificationsEveryone extends WallNotifications {
 			],
 			__METHOD__
 		);
+
 		if ( $res ) {
 			while ( $val = $res->fetchRow() ) {
 				$this->processEntities( $userId, $val['entity_key'] );
 			}
 			$this->setQueueProcessed( $userId );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function processEntities( $userId, $entityKey ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( !$this->getEntityProcessed( $userId, $entityKey ) ) {
-			$entityKeyArray = explode( '_', $entityKey );
-
-			$rev = Revision::newFromId( $entityKeyArray[0] );
-
-			if ( !empty( $rev ) ) {
-				$notifications = WallNotificationEntity::createFromRev( $rev, $this->cityId );
-				if ( !empty( $notifications ) ) {
-					$wn = new WallNotifications();
-					$wn->addNotificationLinks( [ $userId ], $notifications );
-				}
+			$notification = WallNotificationEntity::createFromId( $entityKey );
+			if ( !empty( $notification ) ) {
+				$wn = new WallNotifications();
+				$wn->addNotificationLinks( [ $userId ], $notification );
 			}
 
 			$this->setEntityProcessed( $userId, $entityKey );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public function setGlobalCacheBuster() {

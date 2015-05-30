@@ -366,33 +366,52 @@ class WallNotifications {
 	 * @param WallNotificationEntity $notification
 	 */
 	public function notifyEveryone( WallNotificationEntity $notification ) {
-		if ( empty( $notification->data_noncached ) || empty( $notification->data_noncached->parent_title_dbkey ) ) {
-			$title = "";
-		} else {
-			$title = $notification->data_noncached->parent_title_dbkey;
-		}
+		$title = $notification->parentTitleDbKey;
+		$notifData = $notification->data;
 
-		if ( !empty( $notification->data->article_title_ns ) ) {
-			$users = $this->getWatchlist( $notification->data->wall_username, $title, $notification->data->article_title_ns );
+		if ( !empty( $notifData->article_title_ns ) ) {
+			$users = $this->getWatchlist( $notifData->wall_username, $title, $notifData->article_title_ns );
 		} else {
-			$users = $this->getWatchlist( $notification->data->wall_username, $title );
+			$users = $this->getWatchlist( $notifData->wall_username, $title );
 		}
 
 		// FB:#11089
-		$users[$notification->data->wall_userid] = $notification->data->wall_userid;
+		$users[$notifData->wall_userid] = $notifData->wall_userid;
 
-		if ( !empty( $users[$notification->data->msg_author_id] ) ) {
-			unset( $users[$notification->data->msg_author_id] );
+		if ( !empty( $users[$notifData->msg_author_id] ) ) {
+			unset( $users[$notifData->msg_author_id] );
 		}
 
 		$this->addNotificationLinks( $users, $notification );
 		$this->sendEmails( array_keys( $users ), $notification );
 	}
 
-	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
-		$text = $this->getAbstract( $notification->data_noncached->msg_text );
+	protected function createKeyForMailNotification( $watcher, WallNotificationEntity $notification ) {
+		$notifData = $notification->data;
 
-		$entityKey = $notification->getId();
+		if ( $notification->isMain() ) {
+			if ( $watcher == $notifData->wall_userid ) {
+				$key = 'mail-notification-new-your';
+			} else {
+				$key = 'mail-notification-new-someone';
+			}
+		} else {
+			if ( $watcher == $notifData->parent_user_id ) {
+				$key = 'mail-notification-reply-your';
+			} elseif ( $notifData->msg_author_id == $notifData->parent_user_id && $notifData->msg_author_id != 0 ) {
+				$key = 'mail-notification-reply-his';
+			} else {
+				$key = 'mail-notification-reply-someone';
+			}
+		}
+		return $key;
+	}
+
+	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
+		$text = $this->getAbstract( $notification->msgText );
+
+		$entityKey = $notification->id;
+		$notifData = $notification->data;
 
 		if ( empty( $this->uniqueUsers[$entityKey] ) ) {
 			$this->uniqueUsers[$entityKey] = [];
@@ -409,17 +428,17 @@ class WallNotifications {
 			$controller = $this->getEmailExtensionController( $notification, $watcherName );
 
 			$params = [
-				'boardNamespace' => $notification->data->article_title_ns,
-				'boardTitle' => $notification->data->article_title_text,
-				'titleText' => $notification->data->thread_title,
-				'titleUrl' => $notification->data->url,
+				'boardNamespace' => $notifData->article_title_ns,
+				'boardTitle' => $notifData->article_title_text,
+				'titleText' => $notifData->thread_title,
+				'titleUrl' => $notifData->url,
 				'details' => $text,
 				'targetUser' => $watcherName,
 				'fromAddress' => $this->app->wg->PasswordSender,
 				'replyToAddress' => $this->app->wg->NoReplyAddress,
 				'fromName' => $this->app->wg->PasswordSenderName,
-				'wallUserName' => $notification->data->wall_username,
-				'threadId' => $notification->data->parent_id
+				'wallUserName' => $notifData->wall_username,
+				'threadId' => $notifData->parent_id
 			];
 
 			F::app()->sendRequest( $controller, 'handle', $params );
@@ -529,15 +548,17 @@ class WallNotifications {
 	}
 
 	protected function addNotificationLink( $userId, WallNotificationEntity $notification ) {
+		$notifData = $notification->data;
+
 		$this->addNotificationLinkInternal(
 			$userId,
-			$notification->data->wiki,
+			$notifData->wiki,
 			[
 				'unique_id' => $notification->getUniqueId(),
-				'entity_key' => $notification->getId(),
-				'author_id' => $notification->data->msg_author_id,
+				'entity_key' => $notification->id,
+				'author_id' => $notifData->msg_author_id,
 				'is_reply' => $notification->isReply(),
-				'notifyeveryone' => $notification->data->notifyeveryone
+				'notifyeveryone' => $notifData->notifyeveryone
 			]
 		);
 	}
