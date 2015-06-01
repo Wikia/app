@@ -52,7 +52,7 @@ class FlagsHelper {
 				/**
 				 * 3. The flag type HAS an instance on this page and WAS NOT posted - remove flag
 				 */
-				$flagsToRemove[$flag['flag_id']] = $this->getFlagFromPostData( $flag, $postData );
+				$flagsToRemove[$flag['flag_id']] = $flag; // Pass old flag data to enable logging it
 
 			} elseif ( $flag['flag_params_names'] !== null ) {
 				/**

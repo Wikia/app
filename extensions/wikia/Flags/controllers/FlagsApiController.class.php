@@ -156,7 +156,7 @@ class FlagsApiController extends WikiaApiController {
 		try {
 			$this->processRequest();
 			$flagModel = new Flag();
-			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
+			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'], $this->params['page_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
