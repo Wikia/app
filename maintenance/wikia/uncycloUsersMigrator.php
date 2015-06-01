@@ -109,6 +109,7 @@ class UncycloUserMigrator extends Maintenance {
 		$this->addOption( 'force', 'Apply the changes made by the script' );
 		$this->addOption( 'only-rename-global-users', 'Perform global users rename ONLY' );
 		$this->addOption( 'do-not-create-global-users', 'Do not touch shared users database' );
+		$this->addOption( 'cluster', 'Use the provided cluster instead of $wgDBcluster' ); // e.g. --cluster=c5
 
 		$this->mDescription = 'This script migrates uncyclopedia user accounts to the shared database';
 	}
@@ -649,6 +650,12 @@ class UncycloUserMigrator extends Maintenance {
 			$wgDBReadOnly = false;
 		}
 
+		// allow cluster to be forced via --cluster option
+		if ( $forceCluster = $this->getOption( 'cluster' ) ) {
+			global $wgDBcluster;
+			$wgDBcluster = $forceCluster;
+		}
+
 		// setup the CSV header
 		if ( $this->hasOption( 'csv' ) ) {
 			$this->csv = fopen( $this->getOption( 'csv' ), 'w' );
@@ -670,9 +677,11 @@ class UncycloUserMigrator extends Maintenance {
 			$this->output( sprintf( "Will generate CSV file - <%s>...\n", $this->getOption( 'csv' ) ) );
 		}
 
-		// get all uncyclopedia accounts
 		global $wgDBname, $wgDBcluster;
-		$this->output( "Preparing the list of accounts to migrate on {$wgDBname} database (cluster {$wgDBcluster})..." );
+		$this->output( "Working on {$wgDBname} database (cluster {$wgDBcluster}, server {$this->getUncycloDB()->getServer()})\n" );
+
+		// get all uncyclopedia accounts
+		$this->output( "Preparing the list of accounts to migrate..." );
 		$res = $this->getUncycloDB()->select(
 			self::USER_TABLE,
 			'*',
