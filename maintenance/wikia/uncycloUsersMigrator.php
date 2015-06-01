@@ -265,9 +265,8 @@ class UncycloUserMigrator extends Maintenance {
 		// update user_id in the local user database
 		$dbw = $this->getUncycloDB( DB_MASTER );
 		$dbw->update( self::USER_TABLE,  [ 'user_id' => $newUserId ], [ 'user_id' => $user->getId() ], __METHOD__ );
-		$dbw->update( 'user_properties', [ 'up_user' => $newUserId ], [ 'up_user' => $user->getId() ], __METHOD__ );
 
-		// update user_id in MW tables
+		// update user_id in the rest of MW & Wikia-specific tables
 		$this->updateTables( self::UPDATE_TABLE_USER_ID, $user->getId(), $newUserId );
 	}
 
