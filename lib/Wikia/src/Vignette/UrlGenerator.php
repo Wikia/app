@@ -31,6 +31,10 @@ class UrlGenerator {
 
 	const REVISION_LATEST = 'latest';
 
+	const BASE_URL_PROD = 'http://vignette<SHARD>.wikia.nocookie.net';
+	const BASE_URL_DEV_SJC = 'http://vignette.wikia-dev.com';
+	const BASE_URL_DEV_POZ = 'http://vignette-poz.wikia-dev.com';
+
 	/** @var UrlConfig */
 	private $config;
 
