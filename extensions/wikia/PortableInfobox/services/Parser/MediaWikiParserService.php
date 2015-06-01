@@ -56,9 +56,9 @@ class MediaWikiParserService implements ExternalParser {
 	 */
 	public function addImage( $title ) {
 		$file = wfFindFile( $title );
-		if ( $file ) {
-			$this->parser->getOutput()->addImage( $file->getName(), $file->getTimestamp(), $file->getSha1() );
-		}
+		$tmstmp = $file ? $file->getTimestamp() : false;
+		$sha1 = $file ? $file->getSha1() : false;
+		$this->parser->getOutput()->addImage( $title, $tmstmp, $sha1 );
 	}
 
 	private function getParserTitle() {
