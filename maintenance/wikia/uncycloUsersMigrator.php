@@ -551,7 +551,7 @@ class UncycloUserMigrator extends Maintenance {
 				$this->mergedAccounts++;
 
 				$isMerged = true;
-				$action = 'merge';
+				$action = 'merge accounts';
 
 				$this->doChangeUncycloUserId( $user, $globalUser->getId() );
 
@@ -572,25 +572,25 @@ class UncycloUserMigrator extends Maintenance {
 				 **/
 				if ( $uncycloEdits === 0 && $globalEdits === 0 ) {
 					$user = $this->doRenameUncycloUser( $user );
-					$action = 'rename uncyclo account';
+					$action = 'rename uncyclo account [no edits on either wikia]';
 				}
 				elseif ( $uncycloEdits > 0 && $globalEdits === 0 ) {
 					$this->doRenameGlobalUser( $globalUser );
-					$action = 'rename wikia account';
+					$action = 'rename wikia account [uncyclo edits, no global edits]';
 				}
 				elseif ( $uncycloEdits < 1000 ) {
 					$user = $this->doRenameUncycloUser( $user );
-					$action = 'rename uncyclo account';
+					$action = 'rename uncyclo account [uncyclo edits < 1k]';
 				}
 				else {
 					// rename the one with the least edits
 					if ( $uncycloEdits > $globalEdits ) {
 						$this->doRenameGlobalUser( $globalUser );
-						$action = 'rename wikia account';
+						$action = 'rename wikia account [more uncyclo edits than global ones]';
 					}
 					else {
 						$user = $this->doRenameUncycloUser( $user );
-						$action = 'rename uncyclo account';
+						$action = 'rename uncyclo account [less uncyclo edits than global ones]';
 					}
 				}
 
@@ -602,7 +602,7 @@ class UncycloUserMigrator extends Maintenance {
 			// there's no accounts conflict - create a shared account and update the uncyclopedia user_id entries
 			$this->createdAccounts++;
 
-			$action = 'move to shared DB';
+			$action = 'create a global account';
 
 			// now create a shared account using the "local" uncyclo user object
 			$this->doCreateGlobalUser( $user );
@@ -618,7 +618,7 @@ class UncycloUserMigrator extends Maintenance {
 				$isValidEmail ? 'Y' : 'N',
 				$globalUser ? $globalUser->mEmail : 'none',
 				$isMerged ? 'Y' : 'N',
-				$user->getEditCount(),
+				$uncycloEdits,
 				$uncycloEditsSince,
 				is_int( $globalEdits ) ? $globalEdits : 'none',
 				$action
