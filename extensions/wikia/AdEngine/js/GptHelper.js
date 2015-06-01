@@ -5,10 +5,10 @@ define('ext.wikia.adEngine.gptHelper', [
 	'wikia.window',
 	'wikia.document',
 	'ext.wikia.adEngine.adLogicPageParams',
-	require.optional('ext.wikia.adEngine.gptSraHelper'),
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.wikiaGptAdDetect'
-], function (log, window, document, adLogicPageParams, sraHelper, slotTweaker, gptAdDetect) {
+	'ext.wikia.adEngine.wikiaGptAdDetect',
+	require.optional('ext.wikia.adEngine.gptSraHelper')
+], function (log, window, document, adLogicPageParams, slotTweaker, gptAdDetect, sraHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
