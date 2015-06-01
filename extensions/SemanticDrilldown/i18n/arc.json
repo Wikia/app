@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Basharh"
+		]
+	},
+	"sd_browsedata_choosecategory": "ܓܒܝ ܣܕܪܐ",
+	"sd_browsedata_viewcategory": "ܚܘܝ ܣܕܪܐ",
+	"sd_browsedata_subcategory": "ܣܕܪ̈ܐ ܦܪ̈ܥܝܐ",
+	"sd_browsedata_other": "ܐܚܪܢܐ",
+	"sd_browsedata_none": "ܠܐ ܡܕܡ",
+	"sd_browsedata_or": "ܐܘ",
+	"sd_browsedata_daterangestart": "ܫܘܪܝܐ:",
+	"sd_browsedata_daterangeend": "ܫܘܠܡܐ:"
+}

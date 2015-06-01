@@ -15,34 +15,20 @@
 
 /*global define*/
 define('ext.wikia.adEngine.provider.openX', [
+	'ext.wikia.adEngine.provider.openX.targeting',
 	'wikia.document',
 	'wikia.iframeWriter',
 	'wikia.log'
-], function (doc, iframeWriter, log) {
+], function (targeting, doc, iframeWriter, log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.openX',
-		slotMap = {
-			'HOME_TOP_LEADERBOARD':   {size: '728x90',  auid: 537201006},
-			'HOME_TOP_RIGHT_BOXAD':   {size: '300x250', auid: 537200993},
-			'INCONTENT_BOXAD_1':      {size: '300x250', auid: 537201005},
-			'INCONTENT_1A':           {size: '300x250', auid: 537200993},
-			'INCONTENT_1B':           {size: '300x250', auid: 537200993},
-			'INCONTENT_1C':           {size: '300x250', auid: 537200993},
-			'LEFT_SKYSCRAPER_2':      {size: '160x600', auid: 537200991},
-			'LEFT_SKYSCRAPER_3':      {size: '160x600', auid: 537200991},
-			'MOBILE_IN_CONTENT':      {size: '300x250', auid: 537208059},
-			'MOBILE_PREFOOTER':       {size: '300x250', auid: 537208059},
-			'MOBILE_TOP_LEADERBOARD': {size: '320x50',  auid: 537208060},
-			'PREFOOTER_LEFT_BOXAD':   {size: '300x250', auid: 537201004},
-			'PREFOOTER_RIGHT_BOXAD':  {size: '300x250', auid: 537201004},
-			'TOP_LEADERBOARD':        {size: '728x90',  auid: 537201006},
-			'TOP_RIGHT_BOXAD':        {size: '300x250', auid: 537200993}
-		};
+	var logGroup = 'ext.wikia.adEngine.provider.openX';
 
 	function canHandleSlot(slotName) {
-		log(['canHandleSlot', slotName, !!slotMap[slotName]], 'info', logGroup);
-		return (!!slotMap[slotName]);
+		var result = !!targeting.getItem(slotName);
+
+		log(['canHandleSlot', slotName, result], 'info', logGroup);
+		return result;
 	}
 
 	function getCode(auid) {
@@ -60,7 +46,7 @@ define('ext.wikia.adEngine.provider.openX', [
 		log(['fillInSlot', slotName], 'info', logGroup);
 
 		var slot = doc.getElementById(slotName),
-			slotItem = slotMap[slotName],
+			slotItem = targeting.getItem(slotName),
 			size = slotItem.size.split('x'),
 			width = size[0],
 			height = size[1];

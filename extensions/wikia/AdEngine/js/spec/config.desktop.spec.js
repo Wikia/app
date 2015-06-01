@@ -46,7 +46,8 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					canHandleSlot: noop
 				},
 				openX: {
-					name: 'openX'
+					name: 'openX',
+					canHandleSlot: noop
 				},
 				remnantGpt: {
 					name: 'remnant'
@@ -208,5 +209,16 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	it('any country, Monetization Service on, non Monetization Service slot', function () {
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
 		expect(getProviders('foo')).not.toEqual('monetizationService');
+	});
+
+	it('any country, OpenX on and can handle slot: Direct, Remnant, OpenX', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({openX: true});
+		spyOn(mocks.providers.openX, 'canHandleSlot').and.returnValue(true);
+		expect(getProviders('foo')).toEqual('direct,remnant,openX');
+	});
+
+	it('any country, OpenX on but cannot handle slot: Direct, Remnant, Liftium', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({openX: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 });

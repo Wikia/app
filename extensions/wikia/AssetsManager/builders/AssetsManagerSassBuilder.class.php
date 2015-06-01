@@ -102,6 +102,14 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 	}
 
 	/**
+	 * Add more params to already existing
+	 * @param array $params
+	 */
+	public function addParams( array $params ) {
+		$this->mParams = array_merge( $this->mParams, $params );
+	}
+
+	/**
 	 * Get a JS/CSS comment with the given text
 	 *
 	 * @param $text string Text to be put in the comment

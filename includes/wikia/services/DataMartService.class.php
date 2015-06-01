@@ -467,7 +467,7 @@ class DataMartService extends Service {
 				->AND_( 'period_id' )->EQUAL_TO( $period_id )
 				->LIMIT( 1 )
 				->cache( self::CACHE_TOP_ARTICLES )
-				->run( $db, function ( $result ) {
+				->run( $db, function ( ResultWrapper $result ) {
 					$row = $result->fetchObject( $result );
 
 					if ( $row && isset( $row->c ) ) {
@@ -583,6 +583,12 @@ class DataMartService extends Service {
 					'pageviews' => $row->pv
 				];
 			});
+
+			if ( empty( $topArticles ) ) {
+				WikiaLogger::instance()->error( 'DataMartService::doGetTopArticlesByPageview emptyQueryResult', [
+					'raw_sql' => (string) $sql->injectParams( $db, $sql->build() )
+				]);
+			}
 
 			wfProfileOut( __CLASS__ . '::TopArticlesQuery' );
 			return $topArticles;

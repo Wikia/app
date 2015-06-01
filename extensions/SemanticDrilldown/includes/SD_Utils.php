@@ -7,30 +7,43 @@
 
 class SDUtils {
 
+	static function setGlobalJSVariables( &$vars ) {
+		global $sdgScriptPath;
+
+		$vars['sdgDownArrowImage'] = "$sdgScriptPath/skins/down-arrow.png";
+		$vars['sdgRightArrowImage'] = "$sdgScriptPath/skins/right-arrow.png";
+		return true;
+	}
+
 	/**
-	 * Helper function to handle getPropertyValues() in both SMW 1.6
-	 * and earlier versions.
-	 * 
+	 * Helper function to get the SMW data store for different versions
+	 * of SMW.
+	 */
+	public static function getSMWStore() {
+		if ( class_exists( '\SMW\StoreFactory' ) ) {
+			// SMW 1.9+
+			return \SMW\StoreFactory::getStore();
+		} else {
+			return smwfGetStore();
+		}
+	}
+
+	/**
+	 * Helper function to handle getPropertyValues().
+	 *
 	 * @param SMWStore $store
 	 * @param string $pageName
 	 * @param integer $pageNamespace
 	 * @param string $propID
 	 * @param null|SMWRequestOptions $requestOptions
-	 * 
+	 *
 	 * @return array of SMWDataItem
 	 */
 	public static function getSMWPropertyValues( SMWStore $store, $pageName, $pageNamespace, $propID, $requestOptions = null ) {
-		// SMWDIProperty was added in SMW 1.6
-		if ( class_exists( 'SMWDIProperty' ) ) {
-			$pageName = str_replace( ' ', '_', $pageName );
-			$page = new SMWDIWikiPage( $pageName, $pageNamespace, null );
-			$property = new SMWDIProperty( $propID );
-			return $store->getPropertyValues( $page, $property, $requestOptions );
-		} else {
-			$title = Title::makeTitleSafe( $pageNamespace, $pageName );
-			$property = SMWPropertyValue::makeProperty( $propID );
-			return $store->getPropertyValues( $title, $property, $requestOptions );
-		}
+		$pageName = str_replace( ' ', '_', $pageName );
+		$page = new SMWDIWikiPage( $pageName, $pageNamespace, '' );
+		$property = new SMWDIProperty( $propID );
+		return $store->getPropertyValues( $page, $property, $requestOptions );
 	}
 
 	/**
@@ -75,6 +88,9 @@ class SDUtils {
 			}
 		}
 		sort( $categories );
+		// This shouldn't be necessary, but sometimes it is, due
+		// to faulty storage in either MW or SMW.
+		$categories = array_unique( $categories );
 		return $categories;
 	}
 
@@ -122,84 +138,23 @@ class SDUtils {
 	}
 
 	/**
-	 * Gets a list of the names of all properties in the wiki
-	 */
-	static function getSemanticProperties() {
-		global $smwgContLang;
-		$smw_namespace_labels = $smwgContLang->getNamespaces();
-		$all_properties = array();
-
-		$options = new SMWRequestOptions();
-		$options->limit = 10000;
-		$used_properties = smwfGetStore()->getPropertiesSpecial( $options );
-		foreach ( $used_properties as $property ) {
-			if ( $property[0] instanceof SMWDIProperty ) {
-				// SMW 1.6+
-				$propName = $property[0]->getKey();
-				if ( $propName{0} != '_' ) {
-					$all_properties[] = str_replace( '_', ' ', $propName );
-				}
-			} else {
-				$all_properties[] = $property[0]->getWikiValue();
-			}
-		}
-		$unused_properties = smwfGetStore()->getUnusedPropertiesSpecial( $options );
-		foreach ( $unused_properties as $property ) {
-			if ( $property instanceof SMWDIProperty ) {
-				// SMW 1.6+
-				$all_properties[] = str_replace( '_', ' ', $property->getKey() );
-			} else {
-				$all_properties[] = $property->getWikiValue();
-			}
-		}
-		// remove the special properties of Semantic Drilldown from this list...
-		global $sdgContLang;
-		$sd_props = $sdgContLang->getPropertyLabels();
-		$sd_prop_aliases = $sdgContLang->getPropertyAliases();
-		foreach ( $all_properties as $i => $prop_name ) {
-			foreach ( $sd_props as $prop => $label ) {
-				if ( $prop_name == $label ) {
-					unset( $all_properties[$i] );
-				}
-			}
-			foreach ( $sd_prop_aliases as $alias => $cur_prop ) {
-				if ( $prop_name == $alias ) {
-					unset( $all_properties[$i] );
-				}
-			}
-		}
-		sort( $all_properties );
-		return $all_properties;
-	}
-
-	/**
-	 * Gets the names of all the filter pages, i.e. pages in the Filter
-	 * namespace
-	 */
-	static function getFilters() {
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'page', 'page_title', array( 'page_namespace' => SD_NS_FILTER ) );
-		$filters = array();
-		while ( $row = $dbr->fetchRow( $res ) ) {
-			$filters[] = $row[0];
-		}
-		$dbr->freeResult( $res );
-		return $filters;
-	}
-
-	/**
 	 * Generic static function - gets all the values that a specific page
 	 * points to with a specific property
+	 *
+	 * @deprecated as of SD 2.0 - will be removed when the "Filter:"
+	 * namespace goes away.
 	 */
-	static function getValuesForProperty( $subject, $subject_namespace, $special_prop ) {
-		$store = smwfGetStore();
-		$res = self::getSMWPropertyValues( $store, $subject, $subject_namespace, $special_prop );
+	static function getValuesForProperty( $subject, $subjectNamespace, $specialPropID ) {
+		$store = SDUtils::getSMWStore();
+		$res = self::getSMWPropertyValues( $store, $subject, $subjectNamespace, $specialPropID );
 		$values = array();
 		foreach ( $res as $prop_val ) {
 			// depends on version of SMW
 			if ( $prop_val instanceof SMWDIWikiPage ) {
 				$actual_val = $prop_val->getDBkey();
 			} elseif ( $prop_val instanceof SMWDIString ) {
+				$actual_val = $prop_val->getString();
+			} elseif ( $prop_val instanceof SMWDIBlob ) {
 				$actual_val = $prop_val->getString();
 			} elseif ( method_exists( $prop_val, 'getValueKey' ) ) {
 				$actual_val = $prop_val->getValueKey();
@@ -216,10 +171,48 @@ class SDUtils {
 	 */
 	static function loadFiltersForCategory( $category ) {
 		$filters = array();
-		$filters_ps = array();
+
+		$title = Title::newFromText( $category, NS_CATEGORY );
+		$pageId = $title->getArticleID();
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'page_props',
+			array(
+				'pp_value'
+			),
+			array(
+				'pp_page' => $pageId,
+				'pp_propname' => 'SDFilters'
+			)
+		);
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			// There should only be one row.
+			$filtersStr = $row['pp_value'];
+			$filtersInfo = unserialize( $filtersStr );
+			foreach ( $filtersInfo as $filterName => $filterValues ) {
+				$curFilter = new SDFilter();
+				$curFilter->setName( $filterName );
+				foreach ( $filterValues as $key => $value ) {
+					if ( $key == 'property' ) {
+						$curFilter->setProperty( $value );
+						$curFilter->loadPropertyTypeFromProperty();
+					} elseif ( $key == 'category' ) {
+						$curFilter->setCategory( $value );
+					} elseif ( $key == 'requires' ) {
+						$curFilter->addRequiredFilter( $value );
+					}
+				}
+				$filters[] = $curFilter;
+			}
+		}
+
+		// Get "legacy" filters defined via the SMW special property
+		// "Has filter" and the Filter: namespace.
 		$filter_names = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_F' );
 		foreach ( $filter_names as $filter_name ) {
-			$filters[] = SDFilter::load( $filter_name );
+			$filter = SDFilter::load( $filter_name );
+			$filter->required_filters = SDUtils::getValuesForProperty( $filter_name, SD_NS_FILTER, '_SD_RF', SD_SP_REQUIRES_FILTER, SD_NS_FILTER );
+			$filters[] = $filter;
 		}
 		// Read from the Page Schemas schema for this category, if
 		// it exists, and add any filters defined there.
@@ -235,15 +228,64 @@ class SDUtils {
 	}
 
 	/**
+	 * Gets the custom drilldown title for a category, if there is one.
+	 */
+	static function getDrilldownTitleForCategory( $category ) {
+		$title = Title::newFromText( $category, NS_CATEGORY );
+		$pageID = $title->getArticleID();
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'page_props',
+			array(
+				'pp_value'
+			),
+			array(
+				'pp_page' => $pageID,
+				'pp_propname' => 'SDTitle'
+			)
+		);
+
+		if ( $row = $dbr->fetchRow( $res ) ) {
+			return $row['pp_value'];
+		}
+
+		// Get "legacy" title defined via special properties.
+		$titles_for_category = SDUtils::getValuesForProperty( $category, NS_CATEGORY, '_SD_DT', SD_SP_HAS_DRILLDOWN_TITLE, NS_MAIN );
+		if ( count( $titles_for_category ) > 0 ) {
+			return str_replace( '_', ' ', $titles_for_category[0] );
+		}
+	}
+
+	/**
 	 * Gets all the display parameters defined for a category
 	 */
 	static function getDisplayParamsForCategory( $category ) {
-		$all_display_params = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_DP' );
-
 		$return_display_params = array();
+
+		$title = Title::newFromText( $category, NS_CATEGORY );
+		$pageID = $title->getArticleID();
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'page_props',
+			array(
+				'pp_value'
+			),
+			array(
+				'pp_page' => $pageID,
+				'pp_propname' => 'SDDisplayParams'
+			)
+		);
+
+		while ( $row = $dbr->fetchRow( $res ) ) {
+			// There should only be one row.
+			$displayParamsStr = $row['pp_value'];
+			$return_display_params[] = explode( ';', $displayParamsStr );
+		}
+
+		// Get "legacy" parameters defined via special properties.
+		$all_display_params = SDUtils::getValuesForProperty( str_replace( ' ', '_', $category ), NS_CATEGORY, '_SD_DP' );
 		foreach ( $all_display_params as $display_params ) {
 			$return_display_params[] = explode( ';', $display_params );
 		}
+
 		return $return_display_params;
 	}
 
@@ -257,10 +299,9 @@ class SDUtils {
 		extract( $dbr->tableNames( 'page', 'categorylinks' ) );
 		$cat_ns = NS_CATEGORY;
 		$query_category = str_replace( ' ', '_', $category_name );
-		$query_category = str_replace( "'", "\'", $query_category );
 		$sql = "SELECT p.page_title, p.page_namespace FROM $categorylinks cl
 	JOIN $page p on cl.cl_from = p.page_id
-	WHERE cl.cl_to = '$query_category'\n";
+	WHERE cl.cl_to = {$dbr->addQuotes( $query_category )}\n";
 		if ( $get_categories )
 			$sql .= "AND p.page_namespace = $cat_ns\n";
 		$sql .= "ORDER BY cl.cl_sortkey";
@@ -285,67 +326,64 @@ class SDUtils {
 
 	static function monthToString( $month ) {
 		if ( $month == 1 ) {
-			return wfMsg( 'january' );
+			return wfMessage( 'january' )->text();
 		} elseif ( $month == 2 ) {
-			return wfMsg( 'february' );
+			return wfMessage( 'february' )->text();
 		} elseif ( $month == 3 ) {
-			return wfMsg( 'march' );
+			return wfMessage( 'march' )->text();
 		} elseif ( $month == 4 ) {
-			return wfMsg( 'april' );
+			return wfMessage( 'april' )->text();
 		} elseif ( $month == 5 ) {
 			// Needed to avoid using 3-letter abbreviation
-			return wfMsg( 'may_long' );
+			return wfMessage( 'may_long' )->text();
 		} elseif ( $month == 6 ) {
-			return wfMsg( 'june' );
+			return wfMessage( 'june' )->text();
 		} elseif ( $month == 7 ) {
-			return wfMsg( 'july' );
+			return wfMessage( 'july' )->text();
 		} elseif ( $month == 8 ) {
-			return wfMsg( 'august' );
+			return wfMessage( 'august' )->text();
 		} elseif ( $month == 9 ) {
-			return wfMsg( 'september' );
+			return wfMessage( 'september' )->text();
 		} elseif ( $month == 10 ) {
-			return wfMsg( 'october' );
+			return wfMessage( 'october' )->text();
 		} elseif ( $month == 11 ) {
-			return wfMsg( 'november' );
+			return wfMessage( 'november' )->text();
 		} else { // if ($month == 12) {
-			return wfMsg( 'december' );
+			return wfMessage( 'december' )->text();
 		}
 	}
 
 	static function stringToMonth( $str ) {
-		if ( $str == wfMsg( 'january' ) ) {
+		if ( $str == wfMessage( 'january' )->text() ) {
 			return 1;
-		} elseif ( $str == wfMsg( 'february' ) ) {
+		} elseif ( $str == wfMessage( 'february' )->text() ) {
 			return 2;
-		} elseif ( $str == wfMsg( 'march' ) ) {
+		} elseif ( $str == wfMessage( 'march' )->text() ) {
 			return 3;
-		} elseif ( $str == wfMsg( 'april' ) ) {
+		} elseif ( $str == wfMessage( 'april' )->text() ) {
 			return 4;
-		} elseif ( $str == wfMsg( 'may_long' ) ) {
+		} elseif ( $str == wfMessage( 'may_long' )->text() ) {
 			return 5;
-		} elseif ( $str == wfMsg( 'june' ) ) {
+		} elseif ( $str == wfMessage( 'june' )->text() ) {
 			return 6;
-		} elseif ( $str == wfMsg( 'july' ) ) {
+		} elseif ( $str == wfMessage( 'july' )->text() ) {
 			return 7;
-		} elseif ( $str == wfMsg( 'august' ) ) {
+		} elseif ( $str == wfMessage( 'august' )->text() ) {
 			return 8;
-		} elseif ( $str == wfMsg( 'september' ) ) {
+		} elseif ( $str == wfMessage( 'september' )->text() ) {
 			return 9;
-		} elseif ( $str == wfMsg( 'october' ) ) {
+		} elseif ( $str == wfMessage( 'october' )->text() ) {
 			return 10;
-		} elseif ( $str == wfMsg( 'november' ) ) {
+		} elseif ( $str == wfMessage( 'november' )->text() ) {
 			return 11;
-		} else { // if ($strmonth == wfMsg('december')) {
+		} else { // if ($strmonth == wfMessage('december')->text()) {
 			return 12;
 		}
 	}
 
 	static function booleanToString( $bool_value ) {
-		if ( function_exists( 'wfLoadExtensionMessages' ) ) {
-			wfLoadExtensionMessages( 'SemanticMediaWiki' );
-		}
 		$words_field_name = ( $bool_value == true ) ? 'smw_true_words' : 'smw_false_words';
-		$words_array = explode( ',', wfMsgForContent( $words_field_name ) );
+		$words_array = explode( ',', wfMessage( $words_field_name )->inContentLanguage()->text() );
 		// go with the value in the array that tends to be "yes" or
 		// "no", which is the 3rd
 		$index_of_word = 2;
@@ -358,53 +396,6 @@ class SDUtils {
 			$string_value = ucwords( $words_array[0] );
 		}
 		return $string_value;
-	}
-
-	/**
-	 * Prints the mini-form contained at the bottom of various pages, that
-	 * allows pages to spoof a normal edit page, that can preview, save,
-	 * etc.
-	 */
-	static function printRedirectForm( $title, $page_contents, $edit_summary, $is_save, $is_preview, $is_diff, $is_minor_edit, $watch_this ) {
-		$article = new Article( $title );
-		$new_url = $title->getLocalURL( 'action=submit' );
-		$starttime = wfTimestampNow();
-		$edittime = $article->getTimestamp();
-		global $wgUser;
-		if ( $wgUser->isLoggedIn() )
-			$token = htmlspecialchars( $wgUser->editToken() );
-		else
-			$token = EDIT_TOKEN_SUFFIX;
-
-		if ( $is_save )
-			$action = "wpSave";
-		elseif ( $is_preview )
-			$action = "wpPreview";
-		else // $is_diff
-			$action = "wpDiff";
-
-		$text = <<<END
-	<form id="editform" name="editform" method="post" action="$new_url">
-	<input type="hidden" name="wpTextbox1" id="wpTextbox1" value="$page_contents" />
-	<input type="hidden" name="wpSummary" value="$edit_summary" />
-	<input type="hidden" name="wpStarttime" value="$starttime" />
-	<input type="hidden" name="wpEdittime" value="$edittime" />
-	<input type="hidden" name="wpEditToken" value="$token" />
-	<input type="hidden" name="$action" />
-
-END;
-		if ( $is_minor_edit )
-			$text .= '    <input type="hidden" name="wpMinoredit">' . "\n";
-		if ( $watch_this )
-			$text .= '    <input type="hidden" name="wpWatchthis">' . "\n";
-		$text .= <<<END
-	</form>
-	<script type="text/javascript">
-	document.editform.submit();
-	</script>
-
-END;
-		return $text;
 	}
 
 	/**
@@ -445,15 +436,33 @@ END;
 		return true;
 	}
 
+	public static function getIDsTableName() {
+		global $smwgDefaultStore;
+
+		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
+			return 'smw_object_ids';
+		} else {
+			return 'smw_ids';
+		}
+	}
+
+	public static function getCategoryInstancesTableName() {
+		global $smwgDefaultStore;
+
+		if ( $smwgDefaultStore === 'SMWSQLStore3' || $smwgDefaultStore === 'SMWSparqlStore' ) {
+			return 'smw_fpt_inst';
+		} else {
+			return 'smw_inst2';
+		}
+	}
+
 	public static function addToAdminLinks( &$admin_links_tree ) {
-		$browse_search_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_browsesearch' ) );
+		$browse_search_section = $admin_links_tree->getSection( wfMessage( 'adminlinks_browsesearch' )->text() );
 		$sd_row = new ALRow( 'sd' );
 		$sd_row->addItem( ALItem::newFromSpecialPage( 'BrowseData' ) );
-		$sd_row->addItem( ALItem::newFromSpecialPage( 'Filters' ) );
-		$sd_row->addItem( ALItem::newFromSpecialPage( 'CreateFilter' ) );
-		$sd_name = wfMsg( 'specialpages-group-sd_group' );
-		$sd_docu_label = wfMsg( 'adminlinks_documentation', $sd_name );
-		$sd_row->addItem( AlItem::newFromExternalLink( "http://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
+		$sd_name = wfMessage( 'specialpages-group-sd_group' )->text();
+		$sd_docu_label = wfMessage( 'adminlinks_documentation', $sd_name )->text();
+		$sd_row->addItem( AlItem::newFromExternalLink( "https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown", $sd_docu_label ) );
 
 		$browse_search_section->addRow( $sd_row );
 

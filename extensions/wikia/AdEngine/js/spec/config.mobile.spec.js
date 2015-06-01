@@ -19,16 +19,18 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			canHandleSlot: function () { return true; }
 		};
 
-	function mockAdContext(showAds, enableInvisibleHighImpactSlot) {
+	function mockAdContext(showAds, enableInvisibleHighImpactSlot, providers) {
 		return {
 			getContext: function () {
 				return {
 					opts: {
 						showAds: showAds,
-						pageType: 'all_ads',
-						enableInvisibleHighImpactSlot: enableInvisibleHighImpactSlot
+						pageType: 'all_ads'
 					},
-					providers: {},
+					slots: {
+						invisibleHighImpact: enableInvisibleHighImpactSlot
+					},
+					providers: providers || {},
 					forceProviders: {}
 				};
 			}
@@ -81,5 +83,34 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		);
 
 		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT')).toEqual([]);
+	});
+
+	it('getProviderLists returns DirectGPT, RemnantGPT, OpenX when OpenX provider is turned on', function () {
+		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+			mockAdContext(true, false, {
+				openX: true
+			}),
+			adProviderDirectMock,
+			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
+			adProviderRemnantMock
+		);
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock, adProviderOpenXMock]);
+	});
+
+	it('getProviderLists returns DirectGPT, RemnantGPT when OpenX provider is turned on but cannot handle slot', function () {
+		spyOn(adProviderOpenXMock, 'canHandleSlot').and.returnValue(false);
+		var adConfigMobile = modules['ext.wikia.adEngine.config.mobile'](
+			mockAdContext(true, false, {
+				openX: true
+			}),
+			adProviderDirectMock,
+			adProviderOpenXMock,
+			adProviderPaidAssetDropMock,
+			adProviderRemnantMock
+		);
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 });

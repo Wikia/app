@@ -1,0 +1,13 @@
+// fix issues with default infobox styles on monobook
+
+.portable-infobox {
+	background-color: #f9f9f9;
+
+	figure {
+		margin: 0;
+	}
+
+	.portable-infobox-header-background {
+		background-color: #e5e5e5;
+	}
+}

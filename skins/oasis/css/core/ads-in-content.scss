@@ -1,0 +1,41 @@
+
+.ad-in-content-lb {
+	clear: both;
+	margin: 0 auto;
+	text-align: center;
+
+	.wikia-ad {
+		display: inline-block;
+	}
+
+	> .default-height {
+		height: 90px;
+		width: 728px;
+	}
+}
+
+.ad-in-content {
+	clear: right;
+	float: right;
+
+	> .default-height {
+		height: 250px;
+		width: 300px;
+
+		&.height-600 {
+			height: 600px;
+		}
+	}
+
+	> .wikia-ad {
+		margin: 0 0 30px 30px;
+	}
+}
+
+.clear-right-after-ad-in-content {
+	clear: right;
+}
+
+.clear-both-after-ad-in-content {
+	clear: both;
+}
