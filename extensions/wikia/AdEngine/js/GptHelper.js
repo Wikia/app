@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.gptHelper', [
 	'wikia.window',
 	'wikia.document',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.gptSraHelper',
+	require.optional('ext.wikia.adEngine.gptSraHelper'),
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptAdDetect'
 ], function (log, window, document, adLogicPageParams, sraHelper, slotTweaker, gptAdDetect) {
