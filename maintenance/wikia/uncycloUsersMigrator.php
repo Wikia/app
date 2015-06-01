@@ -265,6 +265,11 @@ class UncycloUserMigrator extends Maintenance {
 			return;
 		}
 
+		// update user_id in the local user database
+		$dbw = $this->getUncycloDB( DB_MASTER );
+		$dbw->update( self::USER_TABLE,  [ 'user_id' => $newUserId ], [ 'user_id' => $user->getId() ], __METHOD__ );
+		$dbw->update( 'user_properties', [ 'up_user' => $newUserId ], [ 'up_user' => $user->getId() ], __METHOD__ );
+
 		// update user_id in MW tables
 		$this->updateTables( self::UPDATE_TABLE_USER_ID, $user->getId(), $newUserId );
 	}
@@ -328,23 +333,6 @@ class UncycloUserMigrator extends Maintenance {
 		// return the updated user object
 		$user->setName( $newName );
 		return $user;
-	}
-
-	/**
-	 * Remove given Uncyclopedia account
-	 *
-	 * @param User $user
-	 */
-	protected function deleteUncycloUser( User $user ) {
-		if ( $this->isDryRun ) {
-			return;
-		}
-
-		// delete the user and his settings from the uncyclo DB
-		$dbw = $this->getUncycloDB( DB_MASTER );
-
-		$dbw->delete( self::USER_TABLE,  [ 'user_id' => $user->getId() ], __METHOD__ );
-		$dbw->delete( 'user_properties', [ 'up_user' => $user->getId() ], __METHOD__ );
 	}
 
 	/**
@@ -481,9 +469,6 @@ class UncycloUserMigrator extends Maintenance {
 			// update user ID in uncyclo database
 			$this->doChangeUncycloUserId( $user, $extUser->getId() );
 
-			// delete the user and his settings from the uncyclo DB
-			$this->deleteUncycloUser( $user );
-
 			// invalidate user cache
 			global $wgMemc;
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $user->getId() ) );
@@ -554,9 +539,6 @@ class UncycloUserMigrator extends Maintenance {
 				$action = 'merge accounts';
 
 				$this->doChangeUncycloUserId( $user, $globalUser->getId() );
-
-				// delete the user and his settings from the uncyclo DB
-				$this->deleteUncycloUser( $user );
 			}
 			else {
 				// resolve conflicts
