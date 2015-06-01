@@ -108,7 +108,7 @@ class UncycloUserMigrator extends Maintenance {
 		$this->addOption( 'dry-run', 'Don\'t perform any operations [default]' );
 		$this->addOption( 'force', 'Apply the changes made by the script' );
 		$this->addOption( 'only-rename-global-users', 'Perform global users rename ONLY' );
-		$this->addOption( 'do-not-create-global-users', 'Do not touch shared users database' );
+		$this->addOption( 'do-not-touch-global-users', 'Do not touch shared users database (no renames nor creation)' );
 		$this->addOption( 'cluster', 'Use the provided cluster instead of $wgDBcluster' ); // e.g. --cluster=c5
 
 		$this->mDescription = 'This script migrates uncyclopedia user accounts to the shared database';
@@ -346,6 +346,11 @@ class UncycloUserMigrator extends Maintenance {
 			return;
 		}
 
+		// do not touch shared users database
+		if ( $this->hasOption( 'do-not-touch-global-users' ) ) {
+			return;
+		}
+
 		$cmd = sprintf( 'php %s/renameUser.php --old-username=%s --new-username=%s --reason=%s',
 			__DIR__,
 			escapeshellarg( $user->getName() ),
@@ -400,7 +405,7 @@ class UncycloUserMigrator extends Maintenance {
 			/**
 			 * Now create a shared DB user and update the local user (and his settings) to have the matching ID
 			 */
-			if ( !$this->hasOption( 'do-not-create-global-users' ) ) {
+			if ( !$this->hasOption( 'do-not-touch-global-users' ) ) {
 				$dbw->insert(
 					self::USER_TABLE,
 					[
@@ -455,7 +460,7 @@ class UncycloUserMigrator extends Maintenance {
 			}
 			else {
 				// fake the new user ID to perform the users ID remap procedure
-				$extUser->mId = $user->getId() + 500000; // move user IDs by 500k (see --do-not-create-global-users option)
+				$extUser->mId = $user->getId() + 500000; // move user IDs by 500k (see --do-not-touch-global-users option)
 				wfDebug( __METHOD__ . " - faking new user ID - #{$extUser->mId}\n" );
 			}
 
