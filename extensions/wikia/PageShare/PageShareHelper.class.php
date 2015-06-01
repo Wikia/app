@@ -33,11 +33,7 @@ class PageShareHelper {
 
 	public static function isValidShareService( $service, $lang, $isTouchScreen ) {
 		// Don't display LINE social network or any other mobile app on desktops
-		if (
-			!$isTouchScreen
-			&& array_key_exists( 'displayOnlyOnTouchDevices', $service )
-			&& $service['displayOnlyOnTouchDevices']
-		) {
+		if ( !$isTouchScreen && !empty( $service['displayOnlyOnTouchDevices'] ) ) {
 			return false;
 		}
 
