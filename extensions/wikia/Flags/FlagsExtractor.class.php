@@ -387,9 +387,7 @@ class FlagsExtractor {
 
 		$templateLength = strlen( $template['template'] );
 
-		if ( !$this->isTagAdded() ) {
-			$this->text = substr_replace( $this->text, $tag, $this->templateOffsetStart, $templateLength );
-		}
+		$this->text = substr_replace( $this->text, $tag, $this->templateOffsetStart, $templateLength );
 	}
 
 	public function isTagAdded( $tag = null, $text = null ) {

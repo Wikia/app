@@ -48,7 +48,7 @@ class MoveNotices extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId, $wgParser, $wgUser;
+		global $wgCityId, $wgParser;
 
 		$this->app = F::app();
 
