@@ -78,7 +78,7 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 		// logged in user
 		} else if (win.wgUserName) {
 			return win.wgUserLanguage;
-		// anonumous user who uses
+		// anonymous user who uses
 		// Chrome or Firefox
 		} else if (win.navigator.languages) {
 			return win.navigator.languages[0].substr(0, 2);
