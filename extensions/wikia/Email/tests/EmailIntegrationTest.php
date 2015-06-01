@@ -16,15 +16,24 @@ class EmailIntegrationTest extends WikiaBaseTest {
 	 * Make sure all the images we're using exist
 	 */
 	public function testEmailImages() {
-		$this->markTestSkipped();
 
-		$icons = Email\ImageHelper::getIconInfo();
+		$this->setVignetteEnvToProd();
 
-		foreach ( $icons as $info ) {
-			$url = $info['url'];
-			$name = $info['name'];
+		foreach ( Email\ImageHelper::getIconInfo() as $iconInfo ) {
+			$url = $iconInfo['url'];
+			$name = $iconInfo['name'];
 			$response = HTTP::get( $url );
 			$this->assertTrue( $response !== false, "{$name} should return HTTP 200" );
 		}
+	}
+
+	/**
+	 * Set the Vignette base URL to point to production. The testEmailImages test above
+	 * was failing frequently in dev and since prod images are what our user's see as
+	 * part of our emails, we're updating that test to only run in prod. See SOC-860.
+	 */
+	private function setVignetteEnvToProd() {
+		global $wgVignetteUrl;
+		$wgVignetteUrl = \Wikia\Vignette\UrlGenerator::BASE_URL_PROD;
 	}
 }
