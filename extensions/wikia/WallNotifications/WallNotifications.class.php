@@ -30,10 +30,6 @@ class WallNotifications {
 		$this->removedEntities = [];
 	}
 
-	/*
-	 * Public Interface
-	 */
-
 	/**
 	 * Get all notifications for a user on a wiki
 	 *

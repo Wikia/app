@@ -566,6 +566,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 		//tracker
 		'#group_tracker_js',
 
+		// performance
+		'#group_bucky_js',
+
 		//modules
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',

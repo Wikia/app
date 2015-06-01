@@ -15,7 +15,7 @@ class SitemapPageController extends WikiaController {
 	 */
 	public function index() {
 		$level = $this->request->getInt( 'level', 1 );
-		if ( $level < SitemapPageModel::MIN_LEVEL || $level >= SitemapPageModel::MAX_LEVEL ) {
+		if ( !SitemapPageModel::isTopLevel( $level ) ) {
 			$this->forward( __CLASS__, 'showList' );
 			return true;
 		}

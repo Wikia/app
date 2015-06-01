@@ -19,6 +19,7 @@ $messages['en'] = [
 		*Special:Contact|Contact
 		*http://www.wikia.com/Terms_of_Use|Terms of Use
 		*http://www.wikia.com/Privacy_Policy|Privacy Policy
+		*http://www.wikia.com/Sitemap|Site Map
 		*_LICENSE_',
 
 	//Monobook

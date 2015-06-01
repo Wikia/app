@@ -16,6 +16,8 @@ $messages['en'] = [
 	'flags-edit-modal-done-button-text' => 'Done',
 	'flags-edit-modal-no-flags-on-community' => 'This community doesn\'t have any flags set up. [[Help:Flags|Learn more about flags]] or [[Special:Flags|define the flags for this community]].',
 	'flags-edit-modal-title' => 'Flags',
+	'flags-edit-modal-exception' => "Unfortunately, we are not able to display this due to the following error:\n\n\n\n$1\n\n\n\nThis error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Wikia support team if you continue to see this issue.",
+	'flags-edit-modal-post-exception' => "Unfortunately, we are not able to complete the process due to the following error:\n\n\n\n$1\n\n\n\nThis error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Wikia support team if you continue to see this issue.",
 	'log-name-flags' => 'Flags log',
 	'logentry-flags-flag-added' => '$1 added flag \'$4\' to page $3',
 	'logentry-flags-flag-removed' => '$1 removed flag \'$4\' from page $3'
@@ -32,6 +34,8 @@ $messages['qqq'] = [
 	'flags-edit-modal-done-button-text' => 'Text on the button that submits changes done to flags.',
 	'flags-edit-modal-no-flags-on-community' => 'Message on modal appearing when there are no flags types defined on the wiki.',
 	'flags-edit-modal-title' => 'Title of the form for editing flags displayed on headline of modal containing the form.',
+	'flags-edit-modal-exception' => 'A message shown in the modal instead of an edit form if an error makes it impossible to display it. $1 is a text of the error.',
+	'flags-edit-modal-post-exception' => 'A message shown in a banner notification if posting of edit forms fails due to an error. $1 is a text of the error.',
 	'log-name-flags' => 'Name of log type displayed on Special:Log',
 	'logentry-flags-flag-added' => 'Message used for generating log entry on Special:Log with info about added flag
 		$1 info about user that added a flag passed as a generated link to user page

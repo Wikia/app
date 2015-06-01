@@ -16,7 +16,7 @@ class WikiFactoryHub extends WikiaModel {
 	private static $mInstance = false;
 	private $mOldCategories = array();
 	private $mNewCategories = array();
-	private $mAllCatefories = array();
+	private $mAllCategories = array();
 	private $cache_ttl = 86400;  // 1 day
 
 	const VERTICAL_ID_OTHER = 0;
