@@ -49,10 +49,14 @@ $messages['qqq'] = [
  * Polish (pl)
  */
 $messages['pl'] = [
+	'flags-description' => 'Flagi to informacje o artykule dla czytających lub edytorów, które opisują treść artykułu lib wymaganą akcję',
 	'flags-edit-form-more-info' => 'Więcej informacji >',
 	'flags-edit-modal-cancel-button-text' => 'Anuluj',
 	'flags-edit-modal-close-button-text' => 'Zamknij',
 	'flags-edit-modal-done-button-text' => 'Gotowe',
 	'flags-edit-modal-no-flags-on-community' => 'Ta społeczność nie ma zdefiniowanych żadnych flag. [[Help:Flags|Dowiedz się więcej o flagach]] or [[Special:Flags|zdefiniuj flagi dla tej społeczności]].',
 	'flags-edit-modal-title' => 'Flagi',
+	'log-name-flags' => 'Log flag',
+	'logentry-flags-flag-added' => '$1 {{GENDER:$2|dodał|dodała}} flagę \'$4\' do strony $3',
+	'logentry-flags-flag-removed' => '$1 {{GENDER:$2|usunął|usunęła}} flagę \'$4\' do strony $3'
 ];
