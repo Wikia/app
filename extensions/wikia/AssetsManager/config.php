@@ -558,6 +558,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/instantGlobals.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
@@ -692,7 +693,6 @@ $config['mobile_base_ads_js'] = array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/iframeWriter.js',
-		'//resources/wikia/modules/instantGlobals.js',
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/AdContext.js',
