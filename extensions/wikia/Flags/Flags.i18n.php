@@ -15,7 +15,9 @@ $messages['en'] = [
 	'flags-edit-modal-close-button-text' => 'Close',
 	'flags-edit-modal-done-button-text' => 'Done',
 	'flags-edit-modal-no-flags-on-community' => 'This community doesn\'t have any flags set up. [[Help:Interwiki_link|Learn more about flags]] or [[Special:Flags|define the flags for this community]].',
-	'flags-edit-modal-title' => 'Flags'
+	'flags-edit-modal-title' => 'Flags',
+	'flags-edit-modal-exception' => "Unfortunately, we are not able to display this due to the following error:\n\n\n\n$1\n\n\n\nThis error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Wikia support team if you continue to see this issue.",
+	'flags-edit-modal-post-exception' => "Unfortunately, we are not able to complete the process due to the following error:\n\n\n\n$1\n\n\n\nThis error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Wikia support team if you continue to see this issue.",
 ];
 
 /**
@@ -28,5 +30,7 @@ $messages['qqq'] = [
 	'flags-edit-modal-close-button-text' => 'Text on the button that closes flags edit modal.',
 	'flags-edit-modal-done-button-text' => 'Text on the button that submits changes done to flags.',
 	'flags-edit-modal-no-flags-on-community' => 'Message on modal appearing when there are no flags types defined on the wiki.',
-	'flags-edit-modal-title' => 'Title of the form for editing flags displayed on headline of modal containing the form.'
+	'flags-edit-modal-title' => 'Title of the form for editing flags displayed on headline of modal containing the form.',
+	'flags-edit-modal-exception' => 'A message shown in the modal instead of an edit form if an error makes it impossible to display it. $1 is a text of the error.',
+	'flags-edit-modal-post-exception' => 'A message shown in a banner notification if posting of edit forms fails due to an error. $1 is a text of the error.',
 ];

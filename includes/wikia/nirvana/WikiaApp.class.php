@@ -604,10 +604,12 @@ class WikiaApp {
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
 	 * @param boolean $internal whether it's an internal (PHP to PHP) or external request
+	 * @param int $exceptionMode exception mode
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
-	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true ) {
+	public function sendRequest( $controllerName = null, $methodName = null, $params = array(), $internal = true,
+								 $exceptionMode = null ) {
 		wfProfileIn(__METHOD__);
 		$values = array();
 
@@ -628,6 +630,10 @@ class WikiaApp {
 		$request = new WikiaRequest($params);
 
 		$request->setInternal( $internal );
+
+		if ( $exceptionMode !== null ) {
+			$request->setExceptionMode( $exceptionMode );
+		}
 
 		$out = $this->getDispatcher()->dispatch( $this, $request );
 		wfProfileOut(__METHOD__);
