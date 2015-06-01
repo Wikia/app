@@ -23,7 +23,7 @@ class FlagsLogTask extends BaseTask {
 
 			/* Log info about changes */
 			$log = new \LogPage( 'flags' );
-			$log->addEntry( $actionType, $title, '', [ $wikiaFlagTypes[$flagTypeId]['flag_name'] ] );
+			$log->addEntry( $actionType, $title, '', [ $wikiaFlagTypes[$flagTypeId]['flag_name'] ], $this->createdByUser() );
 		}
 
 	}
