@@ -6,6 +6,9 @@
  * @group Integration
  */
 class EmailIntegrationTest extends WikiaBaseTest {
+
+	const VIGNETTE_BASE_URL_PROD = 'http://vignette<SHARD>.wikia.nocookie.net';
+
 	function setUp() {
 		$this->setupFile = __DIR__ . '/../Email.setup.php';
 		include_once( __DIR__ . '/../../../../includes/HttpFunctions.php');
@@ -34,6 +37,6 @@ class EmailIntegrationTest extends WikiaBaseTest {
 	 */
 	private function setVignetteEnvToProd() {
 		global $wgVignetteUrl;
-		$wgVignetteUrl = \Wikia\Vignette\UrlGenerator::BASE_URL_PROD;
+		$wgVignetteUrl = self::VIGNETTE_BASE_URL_PROD;
 	}
 }
