@@ -103,10 +103,11 @@ require(
 			param, params, flags = [];
 
 		for( flagTypeId in flagsData) {
-			params = []; param = [];
+			params = [];
 			if (flagsData[flagTypeId]['flag_params_names']) {
 				paramsNames  = JSON.parse(flagsData[flagTypeId]['flag_params_names']);
 				for (paramName in paramsNames) {
+					param = [];
 					param['param_name'] = paramName;
 					param['param_description'] = paramsNames[paramName];
 					param['param_value'] = flagsData[flagTypeId].params ? flagsData[flagTypeId].params[paramName] : '';
