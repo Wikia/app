@@ -82,6 +82,8 @@ class FlagsController extends WikiaController {
 			throw new MissingParameterApiException( 'page_id' );
 		}
 
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
 		/**
 		 * Disable caching for the rendered HTML. The API response is cached which is enough.
 		 */
@@ -94,12 +96,13 @@ class FlagsController extends WikiaController {
 			$this->overrideTemplate( 'editFormException' );
 			$this->setVal( 'exceptionMessage', $response->getException()->getDetails() );
 		} elseif ( $this->getResponseStatus( $response ) ) {
-			$flags = $this->getResponseData( $response );
+			$flags = array_values( $this->getResponseData( $response ) );
 			$this->setVal( 'editToken', $this->wg->User->getEditToken() );
 			$this->setVal( 'flags', $flags );
 			$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
 			$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
 			$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
+			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->escaped() );
 			$this->setVal( 'pageId', $pageId );
 		} else {
 			$this->overrideTemplate( 'editFormEmpty' );
