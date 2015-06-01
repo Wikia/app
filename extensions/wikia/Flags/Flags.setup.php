@@ -51,6 +51,11 @@ $wgAutoloadClasses['Flags\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
 $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
 
 /**
+ * Tasks
+ */
+$wgAutoloadClasses['Flags\FlagsLogTask'] = __DIR__ . '/tasks/FlagsLogTask.php';
+
+/**
  * Hooks
  */
 $wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
@@ -78,3 +83,11 @@ $wgResourceModules['ext.wikia.Flags'] = [
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Flags'
 ];
+
+/**
+ * Logs
+ */
+$wgLogTypes[] = 'flags';
+$wgLogNames['flags'] = 'flags-log-name';
+$wgLogHeaders['flags'] = 'flags-description';
+$wgLogActionsHandlers[ 'flags/*' ] = 'LogFormatter';
