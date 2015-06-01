@@ -977,18 +977,30 @@ class WallNotifications {
 		// for many notifications we want to make sure we 50 notifications from different pages hance distinct
 		$db = $this->getDB( $useMaster );
 		$res = $db->select(
-			[ 'wall_notification' ],
-			[ 'unique_id' ],
+			[ 'wn1' => 'wall_notification', 'wn2' => 'wall_notification' ],
+			[ 'wn1.unique_id' ],
 			[
-				'user_id' => $userId,
-				'wiki_id' => $wikiId,
-				'is_hidden' => 0,
+				'wn1.user_id' => $userId,
+				'wn1.wiki_id' => $wikiId,
+				'wn1.is_hidden' => 0,
+				'wn2.id' => null
 			],
 			__METHOD__,
 			[
-				'DISTINCT',
 				'LIMIT' => '50',
-				'ORDER BY' => 'id DESC'
+				'ORDER BY' => 'wn1.id DESC'
+			],
+			[
+				'wn2' => [
+					'LEFT JOIN',
+					[
+						'wn1.user_id = wn2.user_id',
+						'wn1.wiki_id = wn2.wiki_id',
+						'wn1.is_hidden = wn2.is_hidden',
+						'wn1.unique_id = wn2.unique_id',
+						'wn2.id < wn1.id'
+					]
+				],
 			]
 		);
 
