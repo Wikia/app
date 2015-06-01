@@ -85,7 +85,9 @@ require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 		loader.processStyle(pkg.styles);
 
 		/* Add content to modal */
-		modalConfig.vars.content = pkg.templates.Flags_editForm;
+		var template = Object.keys(pkg.templates)[0];
+
+		modalConfig.vars.content = pkg.templates[template];
 
 		require(['wikia.ui.factory'], function (uiFactory) {
 			/* Initialize the modal component */

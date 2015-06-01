@@ -112,30 +112,6 @@ class Flag extends FlagsBaseModel {
 	 */
 
 	/**
-	 * Verifies if a passed array has all of the required keys and values set
-	 * @param array $params An array to analyze
-	 * @return bool
-	 * @throws \InvalidParameterApiException
-	 * @throws \MissingParameterApiException
-	 */
-	public function verifyParamsForAdd( Array $params ) {
-		if ( !isset( $params['wiki_id'] ) ) throw new \MissingParameterApiException( 'wiki_id' );
-		if ( !isset( $params['page_id'] ) ) throw new \MissingParameterApiException( 'page_id' );
-		if ( !isset( $params['flags'] ) ) throw new \MissingParameterApiException( 'flags' );
-
-		if ( !is_numeric( $params['wiki_id'] ) ) throw new \InvalidParameterApiException( 'wiki_id' );
-		if ( !is_numeric( $params['page_id'] ) ) throw new \InvalidParameterApiException( 'page_id' );
-		if ( !is_array( $params['flags'] ) ) throw new \InvalidParameterApiException( 'flags' );
-
-		foreach( $params['flags'] as $flag ) {
-			if ( !isset( $flag['flag_type_id'] ) ) throw new \MissingParameterApiException( 'flag_type_id' );
-			if ( !is_numeric( $flag['flag_type_id'] ) ) throw new \InvalidParameterApiException( 'flag_type_id' );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Wrapper for an addition of multiple flags
 	 * @param array $params
 	 * @return array|bool Returns an array of status codes or false if params have not been verified
@@ -157,9 +133,11 @@ class Flag extends FlagsBaseModel {
 			$db->commit();
 
 			return $addedFlags;
-		} catch ( \Exception $e ) {
-			$db->rollback();
-			throw $e;
+		} catch ( \Exception $exception ) {
+			if ( $db !== null ) {
+				$db->rollback();
+			}
+			throw $exception;
 		}
 	}
 
@@ -195,9 +173,27 @@ class Flag extends FlagsBaseModel {
 			$status['params_added'] = $paramsAdded;
 		}
 
-		$this->paramsVerified = false;
-
 		return $flagId && $status;
+	}
+
+	/**
+	 * Verifies if a passed array has all of the required keys and values set
+	 * @param array $params An array to analyze
+	 * @return bool
+	 * @throws \InvalidParameterApiException
+	 * @throws \MissingParameterApiException
+	 */
+	private function verifyParamsForAdd( Array $params ) {
+		$this->areParamsSet( $params, [ 'wiki_id', 'page_id', 'flags' ] );
+		$this->arePositiveNumbers( [ $params['wiki_id'], $params['page_id'] ] );
+		$this->areArrays( [ $params['flags'] ] );
+
+		foreach( $params['flags'] as $flag ) {
+			$this->areParamsSet( $flag, [ 'flag_type_id' ] );
+			$this->arePositiveNumbers( $flag['flag_type_id'] );
+		}
+
+		return true;
 	}
 
 	/**
@@ -208,14 +204,46 @@ class Flag extends FlagsBaseModel {
 	 * Updates parameters of the given flags
 	 * @param array $flags Should have flag_id values as indexes
 	 * @return array An array of statuses for each flag
+	 * @throws \Exception
 	 */
 	public function updateFlagsForPage( $flags ) {
-		$flagParameterModel = new FlagParameter();
+		try {
+			$this->verifyParamsForUpdate( $flags );
+
+			$db = $this->getDatabaseForWrite();
+
+			$flagParameterModel = new FlagParameter();
+
+			foreach ( $flags as $flag ) {
+				$modelResponse[$flag['flag_id']] = $flagParameterModel->updateParametersForFlag( $db, $flag['flag_id'], $flag['params'] );
+			}
+
+			$db->commit();
+
+			return $modelResponse;
+		} catch( \Exception $exception ) {
+			if ( $db !== null ) {
+				$db->rollback();
+			}
+			throw $exception;
+		}
+	}
+
+	/**
+	 * Verifies if the passed arguments are valid
+	 * @param array $flags An array to analyze
+	 * @return bool
+	 * @throws \InvalidParameterApiException
+	 * @throws \MissingParameterApiException
+	 */
+	private function verifyParamsForUpdate( $flags ) {
+		$this->areArrays( [ $flags ] );
 		foreach ( $flags as $flag ) {
-			$modelResponse[$flag['flag_id']] = $flagParameterModel->updateParametersForFlag( $flag['flag_id'], $flag['params'] );
+			$this->areArrays( [ $flag ] );
+			$this->arePositiveNumbers( $flag['flag_id'] );
 		}
 
-		return $modelResponse;
+		return true;
 	}
 
 	/**
@@ -223,48 +251,60 @@ class Flag extends FlagsBaseModel {
 	 */
 
 	/**
-	 * Verifies if parameters have a flags_ids field and if it is an array
-	 * @param array $flags Should have a `flags_ids` key that contains an array of IDs
-	 * @return bool
-	 * @throws \InvalidParameterApiException
-	 */
-	public function verifyParamsForRemove( $flags ) {
-		if ( !is_array( $flags ) ) throw new \InvalidParameterApiException( 'flags' );
-		foreach ( $flags as $flagId ) {
-			if ( !is_numeric( $flagId ) ) throw new \InvalidParameterApiException( 'flags' );
-		}
-
-		return true;
-	}
-
-	/**
 	 * Checks if parameters have been verified and
 	 * sends a request to remove flags with the passed IDs
 	 * @param array $flags An array of IDs of flags to remove
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public function removeFlagsFromPage( Array $flags ) {
-		if ( $this->verifyParamsForRemove( $flags ) ) {
-			$status = $this->removeFlags( $flags );
-			return $status;
+		try {
+			$this->verifyParamsForRemove( $flags );
+
+			$db = $this->getDatabaseForWrite();
+
+			$flagsIds = [];
+			foreach ( $flags as $flag ) {
+				$flagsIds[] = $flag['flag_id'];
+			}
+
+			if ( $this->removeFlags( $db, $flagsIds ) ) {
+				$db->commit();
+			}
+		} catch( \Exception $exception ) {
+			if ( $db !== null ) {
+				$db->rollback();
+			}
+			throw $exception;
 		}
 	}
 
 	/**
 	 * Performs a removal SQL query on instances of flags based on the passed flags_ids
-	 * @param array $flags
+	 * @param array $flagsIds
 	 * @return bool
 	 */
-	private function removeFlags( Array $flags ) {
-		$db = $this->getDatabaseForWrite();
-
+	private function removeFlags( \DatabaseBase $db, Array $flagsIds ) {
 		( new \WikiaSQL() )
 			->DELETE( self::FLAGS_TO_PAGES_TABLE )
-			->WHERE( 'flag_id' )->IN( $flags )
+			->WHERE( 'flag_id' )->IN( $flagsIds )
 			->run( $db );
 		$status = $db->affectedRows() > 0;
-		$db->commit();
-
 		return $status;
+	}
+
+	/**
+	 * Verifies if parameters have a flags_ids field and if it is an array
+	 * @param array $flags Should have a `flags_ids` key that contains an array of IDs
+	 * @return bool
+	 * @throws \InvalidParameterApiException
+	 */
+	private function verifyParamsForRemove( $flags ) {
+		$this->areArrays( [ $flags ] );
+		foreach ( $flags as $flag ) {
+			$this->arePositiveNumbers( $flag['flag_id'] );
+		}
+
+		return true;
 	}
 }
