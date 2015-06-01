@@ -93,7 +93,7 @@ $color-highlight-column: rgba($color-page, 0);
 	border: 0;
 	padding: 10px 0 0 0;
 	position: absolute;
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		right: $admin-dashboard-rail-width;
 	} @else {
 		right: $width-outside - $admin-dashboard-content-width;
@@ -144,7 +144,7 @@ $color-highlight-column: rgba($color-page, 0);
 .AdminDashboard {
 	position: relative;
 
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		overflow: hidden;
 	}
 
@@ -164,7 +164,7 @@ $color-highlight-column: rgba($color-page, 0);
 				font-style: italic;
 				padding: 5px 20px 0;
 				position: absolute;
-				@if ( $responsive-layout-enabled ) {
+				@if ( $responsive-or-breakpoints-layout-enabled ) {
 					width: 100%;
 				} @else {
 					width: $admin-dashboard-content-width - 40px;
@@ -351,13 +351,13 @@ $color-highlight-column: rgba($color-page, 0);
 	@include box-shadow(1px, 1px, 1px, $color-admin-article-box-shadow);
 	border-bottom: 1px solid $color-admin-article-border;
 	border-right: 1px solid $color-admin-article-border;
-	@if ( not $responsive-layout-enabled ) {
+	@if (not $responsive-or-breakpoints-layout-enabled ) {
 		float: left;
 	}
 	padding: 20px 0 0 0;
 	position: relative;
 	z-index: $base-z;
-	@if ( $responsive-layout-enabled ) {
+	@if ( $responsive-or-breakpoints-layout-enabled ) {
 		width: 100%;
 	} @else {
 		width: $admin-dashboard-content-width;
@@ -369,7 +369,7 @@ $color-highlight-column: rgba($color-page, 0);
 		border-right: 0;
 		float: none;
 		padding: 0 12px 0 5px;
-		@if ( $responsive-layout-enabled ) {
+		@if ( $responsive-or-breakpoints-layout-enabled ) {
 			width: auto;
 		} @else {
 			width: $width-outside - 18px;
@@ -380,11 +380,12 @@ $color-highlight-column: rgba($color-page, 0);
 	}
 }
 
-@if ( not $responsive-layout-enabled ) {
+@if ( not $responsive-or-breakpoints-layout-enabled ) {
 	.WikiaMainContent {
 		width: 690px;
 	}
 }
+
 
 .WikiaGrid {
 	.AdminDashboardChromedArticle {
@@ -409,7 +410,7 @@ $color-highlight-column: rgba($color-page, 0);
 	.shadow-mask {
 		display: none;
 	}
-	@if ( not $responsive-layout-enabled ) {
+	@if ( not $responsive-or-breakpoints-layout-enabled ) {
 		>.buttons {
 			bottom: auto;
 			top: 15px;
@@ -511,7 +512,7 @@ $color-highlight-column: rgba($color-page, 0);
 	}
 }
 
-@if ( $responsive-layout-enabled ) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
 	// TODO: To be changed when final proposal for new search placement for small screens layout will be decided
 	@media screen and (max-width: 1023px) {
 		.adm-dash-search {
@@ -528,10 +529,12 @@ $color-highlight-column: rgba($color-page, 0);
 	}
 
 	.mw-special-AdminDashboard .WikiaMainContentContainer {
-		margin-right: $admin-dashboard-rail-width;
+		@if ( $responsive-layout-enabled ) {
+			margin-right: $admin-dashboard-rail-width;
+		}
 		padding: 0;
 
-		@media screen and (max-width: $breakpoint-small) {
+		@media screen and (max-width: 1023px) {
 			margin-right: 0;
 		}
 	}

@@ -3,9 +3,7 @@
 class MercuryApi {
 
 	const MERCURY_SKIN_NAME = 'mercury';
-
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
-
 	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
 
 	/**
@@ -27,7 +25,7 @@ class MercuryApi {
 		return $articleCommentList->getCountAll();
 	}
 
-	public static function getTopContributorsKey ( $articleId, $limit ){
+	public static function getTopContributorsKey ( $articleId, $limit ) {
 		return wfMemcKey( __CLASS__, __METHOD__, $articleId, $limit );
 	}
 
@@ -41,7 +39,7 @@ class MercuryApi {
 	public function topContributorsPerArticle( $articleId, $limit ) {
 		$key = self::getTopContributorsKey( $articleId, $limit );
 		$method = __METHOD__;
-		$contributions = WikiaDataAccess::cache($key, self::CACHE_TIME_TOP_CONTRIBUTORS,
+		$contributions = WikiaDataAccess::cache( $key, self::CACHE_TIME_TOP_CONTRIBUTORS,
 			function() use ( $articleId, $limit, $method ) {
 				// Log DB hit
 				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
@@ -65,7 +63,7 @@ class MercuryApi {
 					]
 				);
 				$result = [];
-				while($row = $db->fetchObject($res)) {
+				while ( $row = $db->fetchObject( $res ) ) {
 					$result[ (int) $row->rev_user ] = (int) $row->cntr;
 				}
 				return $result;
@@ -209,7 +207,7 @@ class MercuryApi {
 	 * @param array $commentData - ArticleComment Data
 	 * @return string userName
 	 */
-	private function addUser(Array $commentData) {
+	private function addUser( Array $commentData ) {
 		$userName = trim( $commentData['author']->mName );
 		if ( !isset( $this->users[$userName] ) ) {
 			$this->users[$userName] = [
@@ -240,50 +238,158 @@ class MercuryApi {
 	}
 
 	/**
-	 * Get ads context for Title
+	 * Get ads context for Title. Return null if Ad Engine extension is not enabled
+	 *
 	 * @param Title $title Title object
-	 * @return array Article Ad context
+	 * @return array|null Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
-		$adContext = new AdEngine2ContextService();
-		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+		global $wgEnableAdEngineExt;
+		if ( !empty( $wgEnableAdEngineExt ) ) {
+			$adContext = new AdEngine2ContextService();
+			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
+		}
+		return null;
 	}
 
-	public function processCuratedContent( $data ) {
-		if ( empty( $data ) ) {
-			return false;
+	/**
+	 * CuratedContent API returns data in a different format than we need.
+	 * Let's clean it up!
+	 *
+	 * @param $rawData
+	 * @return array|null
+	 */
+	public function processCuratedContent( $rawData ) {
+		if ( empty( $rawData ) ) {
+			return null;
 		}
 
-		$process = false;
+		$data = [];
+		$sections = $this->getCuratedContentSections( $rawData );
+		$items = $this->getCuratedContentItems( $rawData[ 'items' ] );
+		$featured = $this->getCuratedContentItems( $rawData[ 'featured' ] );
 
-		if ( !empty( $data[ 'featured' ] ) ) {
-			$process = 'featured';
-		} else if ( !empty( $data[ 'items' ] ) ) {
-			$process = 'items';
+		if ( !empty( $sections ) || !empty( $items ) ) {
+			$data[ 'items' ] = [];
 		}
 
-		if ( $process ) {
-			foreach ( $data[ $process ] as &$item ) {
-				$item = $this->addArticleUrlToCuratedContentItem( $item );
-			}
+		if ( !empty( $sections ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $sections );
+		}
+
+		if ( !empty( $items ) ) {
+			$data[ 'items' ] = array_merge( $data[ 'items' ], $items );
+		}
+
+		if ( !empty( $featured ) ) {
+			$data[ 'featured' ] = $featured;
 		}
 
 		return $data;
 	}
 
 	/**
-	 * @desc Mercury can't open article using ID - we need to create a local link
+	 * Add `section` type to all sections from CuratedContent data
+	 *
+	 * @param $data
+	 * @return array
+	 */
+	private function getCuratedContentSections( $data ) {
+		$sections = [];
+		if ( !empty( $data[ 'sections' ] ) ) {
+			foreach ( $data[ 'sections' ] as $section ) {
+				$section[ 'type' ] = 'section';
+				$sections[] = $section;
+			}
+		}
+		return $sections;
+	}
+
+	/**
+	 * Process CuratedContent items and sanitize when the item is an article
+	 *
+	 * @param $items
+	 * @return array
+	 */
+	private function getCuratedContentItems( $items ) {
+		$data = [];
+		if ( !empty( $items ) ) {
+			foreach ( $items as $item ) {
+				if ( $item[ 'type' ] === 'article' ) {
+					$processedItem = $this->processCuratedContentArticle($item);
+					if ( !empty( $processedItem ) ) {
+						$data[] = $processedItem;
+					}
+				} else {
+					$data[] = $item;
+				}
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * @desc Mercury can't open article using ID - we need to create a local link.
+	 * If article doesn't exist (Title is null) return null.
+	 * In other case return item with updated article_local_url.
 	 * TODO Implement cache for release version.
 	 * Platform Team is OK with hitting DB for MVP (10-15 wikis)
 	 *
 	 * @param $item
 	 * @return mixed
 	 */
-	private function addArticleUrlToCuratedContentItem( $item ) {
+	private function processCuratedContentArticle( $item ) {
 		if ( !empty( $item[ 'article_id' ] ) ) {
-			$item[ 'article_local_url' ] = Title::newFromID( $item[ 'article_id' ] )->getLocalURL();
+			$title = Title::newFromID( $item[ 'article_id' ] );
+
+			if ( !empty( $title ) ) {
+				$item[ 'article_local_url' ] = $title->getLocalURL();
+				return $item;
+			}
+		}
+		return null;
+	}
+
+	public function processTrendingData( $data, $itemArrayName, $paramsToInclude = [] ) {
+		if ( !isset( $data[ $itemArrayName ] ) || !is_array( $data[ $itemArrayName ] ) ) {
+			return null;
 		}
 
-		return $item;
+		$items = [];
+
+		foreach ( $data[ $itemArrayName ] as $item ) {
+			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
+
+			if ( !empty( $processedItem ) ) {
+				$items[] = $processedItem;
+			}
+		}
+
+		return $items;
+	}
+
+	/**
+	 * @desc To save some bandwidth, the unnecessary params are stripped
+	 *
+	 * @param $item array
+	 * @param $paramsToInclude array: leave empty to return all params
+	 * @return array
+	 */
+	private function processTrendingDataItem( $item, $paramsToInclude = [] ) {
+		if ( empty( $paramsToInclude ) ) {
+			return $item;
+		}
+
+		$processedItem = [];
+
+		if ( !empty( $item ) && is_array( $item ) && is_array( $paramsToInclude ) ) {
+			foreach ( $paramsToInclude as $param) {
+				if ( !empty( $item[ $param ] ) ) {
+					$processedItem[ $param ] = $item[ $param ];
+				}
+			}
+		}
+
+		return $processedItem;
 	}
 }

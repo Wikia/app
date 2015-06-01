@@ -187,6 +187,7 @@ class Parser {
 	 */
 
 	var $mIsMainParse;	# Is main article content currently parsed
+	var $mFlagsParsed = false; # Have you already parsed the article's flags?
 
 	/**
 	 * Wikia change end
@@ -341,7 +342,6 @@ class Parser {
 		 * First pass--just handle <nowiki> sections, pass the rest off
 		 * to internalParse() which does all the real work.
 		 */
-
 		global $wgUseTidy, $wgAlwaysUseTidy, $wgDisableLangConversion, $wgDisableTitleConversion;
 		$fname = __METHOD__.'-' . wfGetCaller();
 		wfProfileIn( __METHOD__ );
@@ -390,7 +390,6 @@ class Parser {
 		/* Wikia change end */
 
 		$text = $this->doBlockLevels( $text, $linestart );
-
 		$this->replaceLinkHolders( $text );
 
 		/**
@@ -2564,7 +2563,7 @@ class Parser {
 				wfProfileIn( __METHOD__."-paragraph" );
 				# No prefix (not in list)--go to paragraph mode
 				# XXX: use a stack for nestable elements like span, table and div
-				$openmatch = preg_match('/(?:<table|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
+				$openmatch = preg_match('/(?:<aside|<table|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
 
 				/**
 				 * Wikia change start
@@ -2573,9 +2572,9 @@ class Parser {
 				 * Stop the parser from wrapping figure tags in paragraphs
 				 */
 				$closematch = preg_match(
-					'/(?:<\\/table|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
+					'/(?:<\\/?aside|<\\/table|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
 				#	'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
-					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+					'<td|<th|<\\/?div|<\\/?figure|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|'.$this->mUniqPrefix.'-bloglist|'.$this->mUniqPrefix.'-infobox|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
 				/**
 				 * Wikia change end
 				 */

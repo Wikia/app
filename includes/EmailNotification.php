@@ -97,6 +97,11 @@ class EmailNotification {
 			return;
 		}
 
+		if ( ( $this->isArticleComment() || $this->isBlogComment() ) && $this->previousRevId !== 0 ) {
+			// Ignore edited or deleted comments
+			return;
+		}
+
 		// Build a list of users to notify
 		$watchers = [];
 		if ( F::app()->wg->EnotifWatchlist || F::app()->wg->ShowUpdatedMarker ) {
@@ -116,7 +121,6 @@ class EmailNotification {
 	 * Add a timeout to the watchlist email block
 	 */
 	private function getTimeOutSql() {
-
 		if ( !empty( $this->otherParam['notisnull'] ) ) {
 			$notificationTimeoutSql = "1";
 		} elseif ( !empty( F::app()->wg->EnableWatchlistNotificationTimeout ) && isset( F::app()->wg->WatchlistNotificationTimeout ) ) {
@@ -191,24 +195,14 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function canSendUserTalkEmail() {
-		$targetUser = User::newFromName( $this->title->getText() );
-
 		// Should we notify users when their user talk page is changed?
 		if ( empty( F::app()->wg->EnotifUserTalk ) ) {
 			return false;
 		}
 
-		// Is it a minor edit? If so, do we want to notify users about minor edits?
-		if ( $this->isMinorEdit() && !F::app()->wg->EnotifMinorEdits ) {
-			return false;
-		}
+		$targetUser = User::newFromName( $this->title->getText() );
 
-		// Is it a minor edit? If so, does the editor does want users to be notified when they make minor edits on a discussion page?
-		if ( $this->isMinorEdit() && $this->editor->isAllowed( 'nominornewtalk' ) ) {
-			return false;
-		}
-
-		// Does the user whose talk page was edited exists?
+		// Does the user whose talk page was edited exist?
 		if ( !$targetUser instanceof User ) {
 			return false;
 		}
@@ -223,6 +217,24 @@ class EmailNotification {
 			return false;
 		}
 
+		// Is it a minor edit?
+		if ( $this->isMinorEdit() ) {
+			// Do we want to notify users about minor edits?
+			if ( !F::app()->wg->EnotifMinorEdits ) {
+				return false;
+			}
+
+			// Does the editor does want users to be notified when they make minor edits on a discussion page?
+			if ( $this->editor->isAllowed( 'nominornewtalk' ) ) {
+				return false;
+			}
+
+			// Does that user want to know about minor edits?
+			if ( !$targetUser->getOption( 'enotifminoredits' ) ) {
+				return false;
+			}
+		}
+
 		// Does that user want to be notified about changes to their talk page?
 		if ( !$targetUser->getOption( 'enotifusertalkpages' ) ) {
 			return false;
@@ -230,11 +242,6 @@ class EmailNotification {
 
 		// Does that user have a confirmed email?
 		if ( !$targetUser->isEmailConfirmed() ) {
-			return false;
-		}
-
-		// Is it a minor edit? If so, does that user want to know about minor edits?
-		if ( $this->isMinorEdit() &&  $targetUser->getOption( 'enotifminoredits' ) )  {
 			return false;
 		}
 
@@ -432,7 +439,7 @@ class EmailNotification {
 	 * @param $user User
 	 */
 	private function compose( \User $user ) {
-		if ( $this->canUseEmailExtension() ) {
+		if ( $this->getEmailExtensionController() !== false ) {
 			$this->sendUsingEmailExtension( $user );
 		} else {
 			\Wikia\Logger\WikiaLogger::instance()->notice( 'Sending via UserMailer', [
@@ -447,18 +454,31 @@ class EmailNotification {
 		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
 	}
 
-	private function canUseEmailExtension() {
+	private function getEmailExtensionController() {
 		// Definitely can't send if the extension isn't enabled
 		if ( empty( F::app()->wg->EnableEmailExt ) ) {
 			return false;
 		}
 
-		// List of conditions we currently handle using the Email extension
-		return (
-			$this->isArticlePageEdit() ||
-			$this->isArticleComment() ||
-			$this->isBlogComment()
-		);
+		$controller = false;
+
+		if ( $this->isArticlePageEdit() ) {
+			$controller = 'Email\Controller\WatchedPageEdited';
+		} elseif ( $this->isArticlePageRenamed() ) {
+			$controller = 'Email\Controller\WatchedPageRenamed';
+		} elseif ( $this->isArticlePageProtected() ) {
+			$controller = 'Email\Controller\WatchedPageProtected';
+		} elseif ( $this->isArticlePageUnprotected() ) {
+			$controller = 'Email\Controller\WatchedPageUnprotected';
+		} elseif ( $this->isArticlePageDeleted() ) {
+			$controller = 'Email\Controller\WatchedPageDeleted';
+		} elseif ( $this->isArticleComment() ) {
+			$controller = 'Email\Controller\ArticleComment';
+		} elseif ( $this->isBlogComment() ) {
+			$controller = 'Email\Controller\BlogComment';
+		}
+
+		return $controller;
 	}
 
 	/**
@@ -467,19 +487,12 @@ class EmailNotification {
 	 * @param User $user
 	 */
 	private function sendUsingEmailExtension( \User $user ) {
-
-		if ( $this->isArticlePageEdit() ) {
-			$controller = 'Email\Controller\WatchedPage';
-		} elseif ( $this->isArticleComment() ) {
-			$controller = 'Email\Controller\ArticleComment';
-		} elseif ( $this->isBlogComment() ) {
-			$controller = 'Email\Controller\BlogComment';
-		}
+		$controller = $this->getEmailExtensionController();
 
 		if ( !empty( $controller ) ) {
 			$params = [
 				'targetUser' => $user->getName(),
-				'title' => $this->title->getText(),
+				'pageTitle' => $this->title->getText(),
 				'namespace' => $this->title->getNamespace(),
 				'summary' => $this->summary,
 				'currentRevId' => $this->currentRevId,
@@ -501,6 +514,42 @@ class EmailNotification {
 	 */
 	private function isArticlePageEdit() {
 		return empty( $this->action ) && !$this->isNewPage();
+	}
+
+	/**
+	 * Check if performed action is page rename
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageRenamed() {
+		return in_array( $this->action, [ 'move_redir', 'move' ] );
+	}
+
+	/**
+	 * Check if performed action is adding page protection
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageProtected() {
+		return in_array( $this->action, [ 'protect', 'modify' ] );
+	}
+
+	/**
+	 * Check if performed action is removal of page protection
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageUnprotected() {
+		return in_array( $this->action, [ 'unprotect' ] );
+	}
+
+	/**
+	 * Check if performed action is page deletion
+	 *
+	 * @return bool
+	 */
+	private function isArticlePageDeleted() {
+		return in_array( $this->action, [ 'delete' ] );
 	}
 
 	/**

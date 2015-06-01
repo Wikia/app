@@ -37,6 +37,14 @@ class CloseWikiMaintenance {
 	}
 
 	/**
+	 * @param string $msg
+	 * @param array $context
+	 */
+	private function info( $msg, Array $context = [] ) {
+		\Wikia\Logger\WikiaLogger::instance()->info( $msg, $context );
+	}
+
+	/**
 	 * 1. go through all wikis which are marked for closing and check which one
 	 * 	want to have images packed.
 	 *
@@ -62,6 +70,12 @@ class CloseWikiMaintenance {
 			return;
 		}
 
+		$this->info( 'start', [
+			'cluster' => $cluster,
+			'first'   => $first,
+			'limit'   => $this->mOptions[ "limit" ] ?: false
+		] );
+
 		/**
 		 * if $first is set skip limit checking
 		 */
@@ -85,6 +99,10 @@ class CloseWikiMaintenance {
 			__METHOD__,
 			$condition
 		);
+
+		$this->info( 'wikis to remove', [
+			'wikis' => $sth->numRows()
+		] );
 
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			/**
@@ -245,6 +263,12 @@ class CloseWikiMaintenance {
 			if(  $newFlags ) {
 				WikiFactory::resetFlags( $row->city_id, $newFlags );
 			}
+
+			$this->info( 'closed', [
+				'cluster' => $cluster,
+				'city_id' => (int) $cityid,
+				'dbname'  => $dbname,
+			] );
 
 			/**
 			 * just one?

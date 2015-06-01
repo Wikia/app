@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Karduelis",
+			"Suelnur",
+			"Vito Genovese"
+		]
+	},
+	"browsedata": "Verilere gözat",
+	"sd_browsedata_choosecategory": "Bir kategori seç",
+	"sd_browsedata_viewcategory": "kategoriyi gör",
+	"sd_browsedata_subcategory": "Alt kategori",
+	"sd_browsedata_other": "Diğer",
+	"sd_browsedata_none": "Hiçbiri",
+	"sd_browsedata_removefilter": "Bu süzgeci kaldır",
+	"sd_browsedata_removesubcategoryfilter": "Bu alt kategori filtresini kaldır",
+	"sd_browsedata_resetfilters": "Filtreleri sıfırla",
+	"sd_browsedata_daterangestart": "Başlangıç:",
+	"sd_browsedata_daterangeend": "Bitiş:",
+	"sd_browsedata_novalues": "Bu filtre için değer yok",
+	"sd-pageschemas-filter": "Süzgeç"
+}

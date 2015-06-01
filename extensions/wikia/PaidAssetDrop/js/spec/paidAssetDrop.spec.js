@@ -6,17 +6,22 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 		return;
 	}
 
-	var mocks = {
-		log: noop,
-		qs: {
-			getVal: noop
-		},
-		getInstantGlobals: function () { return {}; },
-		querystring: function () {
-			return mocks.qs;
-		},
-		win: {}
-	};
+	var apiEntryPoint = '/api.php?action=query&prop=revisions&rvlimit=1&rvprop=content&format=json&titles=',
+		mocks = {
+			log: noop,
+			qs: {
+				getVal: noop
+			},
+			getInstantGlobals: function () { return {}; },
+			querystring: function () {
+				return mocks.qs;
+			},
+			win: {
+				$: {
+					ajax: noop
+				}
+			}
+		};
 
 	function getModule() {
 		return modules['ext.wikia.paidAssetDrop.paidAssetDrop'](mocks.getInstantGlobals(), mocks.log, mocks.querystring, mocks.win);
@@ -119,5 +124,63 @@ describe('ext.wikia.paidAssetDrop.paidAssetDrop', function () {
 			}
 		});
 		expect(getModule().isNowValid(config)).toEqual(true);
+	});
+
+	it('Invalid page type to injectPad', function () {
+		spyOn(mocks.win.$, 'ajax');
+
+		getModule().injectPAD('.selector', 'desktop', 'invalidPageType');
+
+		expect(mocks.win.$.ajax.calls.count()).toEqual(0);
+	});
+
+	it('On home page for desktop platform, should call API for desktop home PAD', function () {
+		spyOn(mocks.win.$, 'ajax').and.returnValue({ then: noop });
+
+		getModule().injectPAD('.selector', 'desktop', 'home');
+
+		expect(mocks.win.$.ajax.calls.mostRecent().args[0].url)
+			.toEqual(apiEntryPoint + 'MediaWiki:PAD_desktop_home.html&*');
+	});
+
+	it('On article page for desktop platform, should call API for desktop article PAD', function () {
+		spyOn(mocks.win.$, 'ajax').and.returnValue({ then: noop });
+
+		getModule().injectPAD('.selector', 'desktop', 'article');
+
+		expect(mocks.win.$.ajax.calls.mostRecent().args[0].url)
+			.toEqual(apiEntryPoint + 'MediaWiki:PAD_desktop_article.html&*');
+	});
+
+	it('On home page for mobile platform, should call API for mobile home PAD', function () {
+		spyOn(mocks.win.$, 'ajax').and.returnValue({ then: noop });
+
+		getModule().injectPAD('.selector', 'mobile', 'home');
+
+		expect(mocks.win.$.ajax.calls.mostRecent().args[0].url)
+			.toEqual(apiEntryPoint + 'MediaWiki:PAD_mobile_home.html&*');
+	});
+
+	it('On article page for mobile platform, should call API for mobile article PAD', function () {
+		spyOn(mocks.win.$, 'ajax').and.returnValue({ then: noop });
+
+		getModule().injectPAD('.selector', 'mobile', 'article');
+
+		expect(mocks.win.$.ajax.calls.mostRecent().args[0].url)
+			.toEqual(apiEntryPoint + 'MediaWiki:PAD_mobile_article.html&*');
+	});
+
+	it('Force param URL, should call API with cb parameter', function () {
+		spyOn(mocks.win.$, 'ajax').and.returnValue({ then: noop });
+		spyOn(mocks, 'querystring').and.returnValue({
+			getVal: function (param) {
+				return param === 'forcepad' ? '1' : undefined;
+			}
+		});
+
+		getModule().injectPAD('.selector', 'desktop', 'article');
+
+		expect(mocks.win.$.ajax.calls.mostRecent().args[0].url)
+			.toMatch(/&cb=\d+$/);
 	});
 });

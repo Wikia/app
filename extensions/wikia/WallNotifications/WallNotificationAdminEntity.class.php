@@ -2,7 +2,7 @@
 
 
 class WallNotificationAdminEntity {
-	public function __construct($wikiId, $data) {
+	public function __construct( $wikiId, $data ) {
 		$this->data = new stdClass;
 
 		$this->data->type = 'ADMIN';
@@ -16,7 +16,7 @@ class WallNotificationAdminEntity {
 		$this->data->user_wallowner_id = $data['userIdWallOwner'];
 		$this->data->message_id = $data['messageId'];
 		$this->data->is_reply = $data['isReply'];
-		if( $data['parentId'] == 0 ) {
+		if ( $data['parentId'] == 0 ) {
 			$this->data->hide_for_userid = [ $data['userIdRemoving'] => true ];
 		} else {
 			$this->data->hide_for_userid = [ $data['userIdRemoving'] => true, $data['userIdWallOwner'] => true ];

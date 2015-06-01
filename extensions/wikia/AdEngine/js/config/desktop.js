@@ -133,8 +133,12 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Last resort provider: Liftium
-		providerList.push(adProviderLiftium);
+		// Last resort provider: OpenX or Liftium
+		if (context.providers.openX && adProviderOpenX.canHandleSlot(slotName)) {
+			providerList.push(adProviderOpenX);
+		} else {
+			providerList.push(adProviderLiftium);
+		}
 
 		return providerList;
 	}

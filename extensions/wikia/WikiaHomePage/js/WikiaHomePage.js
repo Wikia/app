@@ -56,6 +56,11 @@ var WikiaHomePageRemix = function () {
 	this.collections = window.wgCollectionsBatches || [];
 	this.remixesWhenShowCollection = [0, 3, 5];
 	this.heroImage = null;
+
+	this.SPONSOR_IMAGE_WIDTH = 330;
+	this.SPONSOR_IMAGE_HEIGHT = 210;
+	this.SPONSOR_HERO_IMAGE_WIDTH = 1010;
+	this.SPONSOR_HERO_IMAGE_HEIGHT = 650;
 	
 	function retriveHeroImageSrc(collections) {
 		var firstCollection = collections[0] || [];
@@ -394,27 +399,29 @@ WikiaHomePageRemix.prototype = {
 				previewDivWrapper = $('<div class="'+previewDivWrapperClass+'"></div>'),
 				previewVisitHtml;
 
-			if (currentlink.is('a')) {
-				currentlink.attr('href', listslot.wikiurl);
-				currentlink.attr('data-wikiurl', listslot.wikiurl);
-			}
-			currentslot.find('span').remove().end().find('img').attr('src', listslot.image);
-			currentslot.data('wiki-id', listslot.wikiid);
-			wikinamehtml.append(listslot.wikiname);
+			if (listslot) {
+				if (currentlink.is('a')) {
+					currentlink.attr('href', listslot.wikiurl);
+					currentlink.attr('data-wikiurl', listslot.wikiurl);
+				}
+				currentslot.find('span').remove().end().find('img').attr('src', listslot.image);
+				currentslot.data('wiki-id', listslot.wikiid);
+				wikinamehtml.append(listslot.wikiname);
 
-			if (currentslot.hasClass('slot-small')) {
-				previewVisitHtml = $('<span class="previewVisit"><a href="#" class="goPreview"><img src="' + wgBlankImgUrl + '" class="previcon" /></a><a href="' + listslot.wikiurl + '" class="goVisit"><img src="' + wgBlankImgUrl + '" class="visicon" /></span></a>');
-			} else {
-				previewVisitHtml = $('<span class="previewVisit"><a href="#" class="goPreview"><img src="' + wgBlankImgUrl + '" class="previcon" />' + $.msg('wikia-home-page-preview') + '</a><a href="' + listslot.wikiurl + '" class="goVisit"><img src="' + wgBlankImgUrl + '" class="visicon" />' + $.msg('wikia-home-page-visit') + '</span></a>');
+				if (currentslot.hasClass('slot-small')) {
+					previewVisitHtml = $('<span class="previewVisit"><a href="#" class="goPreview"><img src="' + wgBlankImgUrl + '" class="previcon" /></a><a href="' + listslot.wikiurl + '" class="goVisit"><img src="' + wgBlankImgUrl + '" class="visicon" /></span></a>');
+				} else {
+					previewVisitHtml = $('<span class="previewVisit"><a href="#" class="goPreview"><img src="' + wgBlankImgUrl + '" class="previcon" />' + $.msg('wikia-home-page-preview') + '</a><a href="' + listslot.wikiurl + '" class="goVisit"><img src="' + wgBlankImgUrl + '" class="visicon" />' + $.msg('wikia-home-page-visit') + '</span></a>');
+				}
+				previewDiv.append(wikinamehtml.clone()).append($('<span class="hotNewSeparator"></span>')).append(previewVisitHtml);
+				previewDivWrapper.append(previewDiv);
+				currentslot
+					.find('.'+previewDivWrapperClass)
+					.remove()
+					.end()
+					.append(wikinamehtml)
+					.append(previewDivWrapper);
 			}
-			previewDiv.append(wikinamehtml.clone()).append($('<span class="hotNewSeparator"></span>')).append(previewVisitHtml);
-			previewDivWrapper.append(previewDiv);
-			currentslot
-				.find('.'+previewDivWrapperClass)
-				.remove()
-				.end()
-				.append(wikinamehtml)
-				.append(previewDivWrapper);
 		});
 	},
 
@@ -507,8 +514,8 @@ WikiaHomePageRemix.prototype = {
 		var imgData = collection.sponsor_image,
 			img = $('<img />')
 				.attr('alt', imgData.title)
-				.attr('width', imgData.width)
-				.attr('height', imgData.height)
+				.attr('width', this.SPONSOR_IMAGE_WIDTH)
+				.attr('height', this.SPONSOR_IMAGE_HEIGHT)
 				.attr('src', imgData.url)
 				.addClass('sponsor-image-link')
 				.data('collection-id', collection.id ),
@@ -535,8 +542,8 @@ WikiaHomePageRemix.prototype = {
 		if( this.heroImage !== null ) {
 			img = $(this.heroImage)
 				.attr('alt', imgData.title)
-				.attr('witdh', imgData.width)
-				.attr('witdh', imgData.height);
+				.attr('width', this.SPONSOR_HERO_IMAGE_WIDTH)
+				.attr('height', this.SPONSOR_HERO_IMAGE_HEIGHT);
 
 			container = $('<div />').attr('id', this.SPONSOR_HERO_IMG_CONTAINER_ID);
 			container.append(img);

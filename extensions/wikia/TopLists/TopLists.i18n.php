@@ -767,6 +767,18 @@ Puedes <a href="$4">cancelar</a>  tu subscripción de los cambios a la lista.',
 	'toplists-oasis-only' => 'La creación y edición de las listas "Top 10" no está disponible en Monobook. Si deseas utilizar esta función, cambia tus preferencias a la piel Wikia.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'toplists-image-browser-upload-btn' => 'Aukeratu',
+	'toplists-seconds' => '{{PLURAL:$1|Segundu $1|$1 segundu}}',
+	'toplists-minutes' => '{{PLURAL:$1|Minutu $1|$1 minutu}}',
+	'toplists-hours' => '{{PLURAL:$1|Ordu bat|$1 ordu}}',
+	'toplists-days' => '({{PLURAL:$1|Egun bat|$1 egun}})',
+	'toplists-weeks' => '{{PLURAL: $1|Aste bat|$1 aste}}',
+);
+
 /** Persian (فارسی)
  * @author Mjbmr
  * @author Reza1615
@@ -1363,11 +1375,13 @@ $messages['ksh'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
 	'toplists-editor-title-label' => 'Navê lîstê',
 	'toplists-cancel-button' => 'Betal bike',
+	'toplists-image-browser-upload-btn' => 'Hilbijêre',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1376,6 +1390,7 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'toplists-editor-title-label' => 'Numm vun der Lëscht',
 	'toplists-cancel-button' => 'Ofbriechen',
+	'toplists-list-created-by' => 'vum [[User:$1|$1]]',
 	'toplists-seconds' => '$1 {{PLURAL:$1|Sekonn|Sekonnen}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|Minutt|Minutten}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|Stonn|Stonnen}}',
@@ -1778,7 +1793,17 @@ Je kunt <a href="$4">uitschrijven</a> van wijzigingen op deze lijst.',
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'toplists-desc' => 'Listas de top 10',
+	'toplists-editor-title-label' => 'Nom de la lista',
 	'toplists-editor-description-placeholder' => 'Entratz una descripcion',
+	'toplists-cancel-button' => 'Anullar',
+	'toplists-image-browser-upload-btn' => 'Causir',
+	'toplists-seconds' => '$1 {{PLURAL:$1|segonda|segondas}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minuta|minutas}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|ora|oras}}',
+	'toplists-days' => '$1 {{PLURAL:$1|jorn|jorns}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|setmana|setmanas}}',
+	'toplists-create-button-msg' => 'Crear una lista',
 );
 
 /** Polish (polski)
@@ -2666,15 +2691,66 @@ $messages['uk'] = array(
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Dinhxuanduyet
+ * @author KhangND
  */
 $messages['vi'] = array(
+	'toplists-desc' => 'Các danh sách tốp 10',
+	'right-toplists-create-edit-list' => 'Tạo và chỉnh sửa các trang danh sách tốp 10',
+	'right-toplists-create-item' => 'Tạo và thêm các mục vào trang danh sách top 10.',
+	'right-toplists-edit-item' => 'Chỉnh sửa các mục trong trang danh sách top 10',
 	'right-toplists-delete-item' => 'Xóa các mục từ trang danh sách top 10',
+	'createtoplist' => 'Tạo mới một danh sách top 10',
+	'edittoplist' => 'Chỉnh sửa danh sách Top 10',
+	'toplists-category' => 'Các danh sách top 10',
 	'toplists-error-invalid-title' => 'Văn bản cung cấp không hợp lệ',
 	'toplists-error-invalid-picture' => 'Hình ảnh được chọn không hợp lệ',
+	'toplists-error-title-exists' => 'Trang này đã tồn tại. Bạn có thể đi đến <a href="$2" target="_blank">$1</a> hoặc cung cấp một tên khác.',
+	'toplists-error-title-spam' => 'Văn bản đã cung cấp có chứa vài từ được xem là spam.',
+	'toplists-error-article-blocked' => 'Bạn không được phép tạo trang với tên này. Rất tiếc.',
 	'toplists-error-article-not-exists' => '"$1" không tồn tại. Bạn có muốn <a href="$2" target="_blank">tạo nó</a>?',
+	'toplists-error-picture-not-exists' => '"$1" không tồn tại. Bạn có muốn <a href="$2" target="_blank">tải lên</a>?',
+	'toplists-error-duplicated-entry' => 'Bạn không thể sử dụng cùng một tên nhiều lần.',
+	'toplists-error-empty-item-name' => 'Tên của một mục tồn tại không thể trống.',
+	'toplists-item-cannot-delete' => 'Thất bại khi xóa mục này.',
 	'toplists-error-image-already-exists' => 'Một hình ảnh có cùng tên đã tồn tại.',
-	'toplists-editor-related-article-label' => 'Trang liên quan <small>(tùy chon, nhưng phải chọn một hình)</small>',
+	'toplists-error-add-item-anon' => 'Người dùng vô danh không được phép thêm mục vào danh sách. Vui lòng <a class="ajaxLogin" id="login" href="$1">đăng nhập</a> hoặc <a href="$2">đăng ký tài khoản mới</a>.',
+	'toplists-error-add-item-permission' => 'Lỗi quyền truy cập: Tài khoản của bạn chưa được cấp quyền tạo mục mới.',
+	'toplists-error-add-item-list-not-exists' => 'Danh sách top 10 "$1" không tồn tại.',
+	'toplists-upload-error-unknown' => 'Có lỗi xảy ra trong quá trình yêu cầu tải lên. Vui lòng thử lại.',
+	'action-toplists-create-edit-list' => 'Tạo và chỉnh sửa các trang danh sách tốp 10',
+	'toplists-editor-title-label' => 'Tên danh sách',
+	'toplists-editor-title-placeholder' => 'Nhập tên cho danh sách',
+	'toplists-editor-related-article-label' => 'Trang liên quan <small>(tùy chọn, nhưng phải chọn một hình)</small>',
+	'toplists-editor-related-article-placeholder' => 'Nhập tên một trang có tồn tại',
+	'toplists-editor-description-label' => 'Mô tả ngắn về danh sách top 10 của bạn',
+	'toplists-editor-description-placeholder' => 'Nhập mô tả',
+	'toplists-editor-image-browser-tooltip' => 'Chèn hình ảnh',
+	'toplists-editor-remove-item-tooltip' => 'Xóa mục',
+	'toplists-editor-drag-item-tooltip' => 'Kéo để thay đổi thứ tự',
+	'toplists-editor-add-item-label' => 'Thêm một mục mới',
+	'toplists-editor-add-item-tooltip' => 'Thêm một mục mới vào danh sách',
+	'toplists-create-button' => 'Tạo danh sách',
+	'toplists-update-button' => 'Lưu danh sách',
+	'toplists-cancel-button' => 'Hủy bỏ',
+	'toplists-items-removed' => '{{PLURAL:$1|item|Mục}} $1 đã được gỡ bỏ',
+	'toplists-items-created' => '{{PLURAL:$1|item|Mục}} $1 đã được tạo',
+	'toplists-items-updated' => '{{PLURAL:$1|item|Mục}} $1 đã được cập nhật',
 	'toplists-items-nochange' => 'Không mục nào được thay đổi',
+	'toplits-image-browser-no-picture-selected' => 'Không ảnh nào được chọn',
+	'toplits-image-browser-clear-picture' => 'Xóa ảnh',
+	'toplits-image-browser-selected-picture' => 'Đang được chọn: $1',
+	'toplists-image-browser-upload-btn' => 'Chọn',
+	'toplists-image-browser-upload-label' => 'Tải lên của riêng bạn',
+	'toplists-list-creation-summary' => 'Tạo một danh sách, $1',
+	'toplists-list-update-summary' => 'Cập nhật một danh sách, $1',
+	'toplists-item-creation-summary' => 'Tạo một mục danh sách',
+	'toplists-item-update-summary' => 'Cập nhật một mục danh sách',
+	'toplists-item-remove-summary' => 'Mục được gỡ bỏ khỏi danh sách',
+	'toplists-item-restored' => 'Mục được khôi phục',
+	'toplists-list-related-to' => 'Liên quan tới:',
+	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />vote|$1<br />đã bỏ phiếu}}',
+	'toplists-list-created-by' => 'bởi [[User:$1|$1]]',
+	'toplists-list-vote-up' => 'Bình chọn',
 	'toplists-seconds' => '$1 {{PLURAL:$1|giây|giây}}',
 	'toplists-minutes' => '$1 {{PLURAL:$1|phút|phút}}',
 	'toplists-hours' => '$1 {{PLURAL:$1|giờ|giờ}}',

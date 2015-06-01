@@ -471,7 +471,7 @@ class WikiFactoryPage extends SpecialPage {
 	 */
 	private function doUpdateHubs( &$request ) {
 		$vertical_id = $request->getVal("wpWikiVertical", null);
-		$cat_ids = $request->getArray( "wpWikiCategory", null );
+		$cat_ids = $request->getArray( "wpWikiCategory", array() );
 		$reason = $request->getVal( "wpReason", null );
 		$hub = WikiFactoryHub::getInstance();
 

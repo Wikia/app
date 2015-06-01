@@ -1,5 +1,8 @@
 <div class="portable-infobox-item item-type-image no-margins">
-	<figure>
-		<img class="portable-infobox-image" alt="{{alt}}" data-url="{{value}}" />
+	<figure class="portable-infobox-image-wrapper">
+		<a href="{{url}}" class="image image-thumbnail" title="{{alt}}">
+			<img src="{{thumbnail}}" class="portable-infobox-image" alt="{{alt}}" data-image-key="{{name}}" data-image-name="{{name}}"/>
+		</a>
+		{{#caption}}<figcaption class="portable-infobox-item-margins portable-infobox-image-caption">{{{caption}}}</figcaption>{{/caption}}
 	</figure>
 </div>

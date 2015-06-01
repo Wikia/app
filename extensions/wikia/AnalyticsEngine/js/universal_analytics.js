@@ -58,7 +58,7 @@
     if (isProductionEnv) {
         // Production Environment
         window.ga(
-            'create', 'UA-32129070-4', 'auto',
+            'create', 'UA-32129070-1', 'auto',
             {
                 'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
                 'allowLinker': true,
@@ -69,7 +69,7 @@
     } else {
         // Development Environment
         window.ga(
-            'create', 'UA-32129070-3', 'auto',
+            'create', 'UA-32129070-2', 'auto',
             {
                 'sampleRate': (cookieExists('qualaroo_survey_submission') ? 100 : 10),
                 'allowLinker': true,
@@ -83,7 +83,7 @@
         if (isProductionEnv) {
             // Production Environment
             window.ga(
-                'create', 'UA-32129070-4', 'auto',
+                'create', 'UA-32132943-1', 'auto',
                 {
                     'name': 'special',
                     'sampleRate': 100,
@@ -94,7 +94,7 @@
         } else {
             // Development Environment
             window.ga(
-                'create', 'UA-32129070-3', 'auto',
+                'create', 'UA-32132943-2', 'auto',
                 {
                     'name': 'special',
                     'sampleRate': 100,
@@ -111,7 +111,7 @@
     if (isProductionEnv) {
         // VE account - UA-32132943-4'
         window.ga(
-            'create', 'UA-32129070-4', 'auto',
+            'create', 'UA-32132943-4', 'auto',
             {
                 'name': 've',
                 'sampleRate': 100,
@@ -215,11 +215,13 @@
     }
 
     /**** High-Priority Custom Dimensions ****/
-    window.ga('set', 'dimension1', window.wgDBname);                        // DBname
-    window.ga('set', 'dimension2', window.wgContentLanguage);               // ContentLanguage
-    window.ga('set', 'dimension3', window.cscoreCat);                       // Hub
-    window.ga('set', 'dimension4', window.skin);                            // Skin
-    window.ga('set', 'dimension5', !!window.wgUserName ? 'user' : 'anon');  // LoginStatus
+    _gaWikiaPush(
+        ['set', 'dimension1', window.wgDBname],                        // DBname
+        ['set', 'dimension2', window.wgContentLanguage],               // ContentLanguage
+        ['set', 'dimension3', window.cscoreCat],                       // Hub
+        ['set', 'dimension4', window.skin],                            // Skin
+        ['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
+    );
 
     /*
      * Remove when SOC-217 ABTest is finished
@@ -247,18 +249,21 @@
          */
 
     /**** Medium-Priority Custom Dimensions ****/
-    window.ga('set', 'dimension8', window.wikiaPageType);                           // PageType
-    window.ga('set', 'dimension9', window.wgCityId);                                // CityId
-    window.ga('set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No');              // HasAds
-    window.ga('set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No');    // IsCorporatePage
-    window.ga('set', 'dimension16', getKruxSegment());                              // Krux Segment
-    window.ga('set', 'dimension17', window.wgWikiVertical);                         // Vertical
-    window.ga('set', 'dimension18', window.wgWikiCategories.join(','));             // Categories
-    window.ga('set', 'dimension19', window.wgArticleType);                          // ArticleType
+    _gaWikiaPush(
+        ['set', 'dimension8', window.wikiaPageType],                           // PageType
+        ['set', 'dimension9', window.wgCityId],                                // CityId
+        ['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],              // HasAds
+        ['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],    // IsCorporatePage
+        ['set', 'dimension16', getKruxSegment()],                              // Krux Segment
+        ['set', 'dimension17', window.wgWikiVertical],                         // Vertical
+        ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
+        ['set', 'dimension19', window.wgArticleType]                          // ArticleType
+    );
+
     /*
      * Remove when SOC-217 ABTest is finished
      */
-    window.ga('set', 'dimension20', getUnconfirmedEmailUserType());                 // UnconfirmedEmailUserType
+    _gaWikiaPush(['set', 'dimension39', getUnconfirmedEmailUserType()]);      // UnconfirmedEmailUserType
     /*
      * end remove
      */
@@ -316,7 +321,7 @@
     // Advertisment Account UA-32129071-1/UA-32129071-2
     if (isProductionEnv) {
         window.ga(
-            'create', 'UA-32129070-4', 'auto',
+            'create', 'UA-32129071-1', 'auto',
             {
                 'name': 'ads',
                 'sampleRate': 100,
@@ -326,7 +331,7 @@
         );
     } else {
         window.ga(
-            'create', 'UA-32129070-3', 'auto',
+            'create', 'UA-32129071-2', 'auto',
             {
                 'name': 'ads',
                 'sampleRate': 100,
@@ -361,8 +366,9 @@
 
     /**** Include A/B testing status ****/
     if (window.Wikia && window.Wikia.AbTest) {
-        if (abCustomVarsForAds.length) {
-            window.ga.apply(window, abCustomVarsForAds);
+        var i;
+        for (i = 0; i < abCustomVarsForAds.length; i++) {
+            window.ga.apply(window, abCustomVarsForAds[i]);
         }
     }
 

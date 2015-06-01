@@ -1,12 +1,11 @@
 define('ext.wikia.adEngine.monetizationsServiceHelper', [
 	'jquery',
-	'wikia.cache',
 	'wikia.geo',
 	'wikia.loader',
 	'wikia.scriptwriter',
 	'wikia.tracker',
 	'wikia.window',
-], function ($, cache, geo, loader, scriptWriter, tracker, window) {
+], function ($, geo, loader, scriptWriter, tracker, window) {
 	'use strict';
 
 	var isEndOfContent = false,
@@ -17,40 +16,29 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		});
 
 	/**
-	 * Loads all assets for monetization ads
+	 * @desc loads all assets for monetization ads
 	 */
 	function loadAssets() {
-		var assets,
-			cacheKey = 'monetization_ads',
-			scripts = 'monetization_module_js',
-			styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModule.scss',
-			ttl = 604800;
+		var scripts = 'monetization_module_js',
+			styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModule.scss';
 
-		assets = cache.getVersioned(cacheKey);
-		if (assets) {
-			loader.processStyle(assets[0]);
-			loader.processScript(assets[1]);
-		} else {
-			if (window.wgOasisBreakpoints) {
-				styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModuleNoBreakpoints.scss';
-			}
-
-			loader({
-				type: loader.MULTI,
-				resources: {
-					styles: styles,
-					scripts: scripts
-				}
-			}).done(function (res) {
-				var script = res.scripts,
-					style = res.styles;
-
-				loader.processStyle(style);
-				loader.processScript(script);
-
-				cache.setVersioned(cacheKey, [style, script], ttl);
-			});
+		if (window.wgOasisBreakpoints) {
+			styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModuleNoBreakpoints.scss';
 		}
+
+		loader({
+			type: loader.MULTI,
+			resources: {
+				styles: styles,
+				scripts: scripts
+			}
+		}).done(function (res) {
+			var script = res.scripts,
+				style = res.styles;
+
+			loader.processStyle(style);
+			loader.processScript(script);
+		});
 	}
 
 	/**

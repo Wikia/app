@@ -212,11 +212,11 @@ define('ext.wikia.adEngine.gptHelper', [
 				googletag.display(adDivId);
 
 				gptSlots[adDivId] = slot;
-
-				// Save slot level params for easier ad delivery debugging
-				adDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
-				adDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
 			}
+
+			// Save slot level params for easier ad delivery debugging
+			adDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
+			adDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
 
 			// Save page level params for easier ad delivery debugging
 			adDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));

@@ -2962,7 +2962,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param $timeout Integer: the maximum number of seconds to wait for
 	 *   synchronisation
 	 *
-	 * @return An integer: zero if the slave was past that position already,
+	 * @return integer: zero if the slave was past that position already,
 	 *   greater than zero if we waited for some period of time, less than
 	 *   zero if we timed out.
 	 */
