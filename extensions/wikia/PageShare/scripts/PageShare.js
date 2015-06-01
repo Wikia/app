@@ -65,7 +65,8 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 	/**
 	 * @desc Returns a language code.
 	 * If user is logged in, language code is read from user's preferences.
-	 * For anonymous users first two letters of the browser/system regional preferences are used.
+	 * For anonymous users first two letters of the first item from the Accept-Language header
+	 * which was sent with a request for the wiki(a) page are used.
 	 * Both values are ignored and overwritten if function is provided with a non-false parameter.
 	 *
 	 * @param {*} useLangQueryStringParam
