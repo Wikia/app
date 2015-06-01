@@ -31,23 +31,24 @@ class MoveNotices extends Maintenance {
 		$this->addOption( 'csv', 'CSV file with data' );
 		$this->addOption( 'list', 'Run script without adding data to database' );
 		$this->addOption( 'section', 'Search template in given section (default is 0). Whole article can be parsed by setting value "all".' );
+		$this->addOption( 'replaceTop', 'Replace template of the top of the page' );
 		$this->addOption( 'add', "Add template as a flag.\n
 							Accepted values:\n
-							first (default) - first template will be added\n
-							all - all tempaltes will be added");
+							first (default) - first template with given name will be added\n
+							all - all tempaltes with given name will be added");
 		$this->addOption( 'remove', "Remove template from text.\n
 							Accepted values:\n
-							first (default) - first template will be removed\n
-							all - all tempaltes will be removed");
+							first (default) - first template with given name will be removed\n
+							all - all tempaltes with given name will be removed");
 		$this->addOption( 'replace', "Replace template by a tag.\n
 							Accepted values:\n
-							first (default) - first template will be replaced\n
-							all - all tempaltes will be replaced");
+							first (default) - first template with given name will be replaced\n
+							all - all tempaltes with given name will be replaced");
 		$this->addOption( 'tag', 'Tag to replace template. If not set, default __FLAGS__ tag will be used.');
 	}
 
 	public function execute() {
-		global $wgCityId, $wgParser;
+		global $wgCityId, $wgParser, $wgUser;
 
 		$this->app = F::app();
 
@@ -60,6 +61,7 @@ class MoveNotices extends Maintenance {
 		$csv = $this->getOption( 'csv' );
 		$section = $this->getOption( 'section' );
 		$list = $this->getOption( 'list' );
+		$replaceTop = $this->getOption( 'replaceTop' );
 
 		$tag = $this->getOption( 'tag', null );
 
@@ -89,6 +91,7 @@ class MoveNotices extends Maintenance {
 
 		$csvFile = fopen( $csv, 'r' );
 		$csvData = [];
+		$templateNames = [];
 
 		if ( !$csvFile ) {
 			$this->output( "Cannot read file: $csv" );
@@ -98,6 +101,7 @@ class MoveNotices extends Maintenance {
 		// Get data from scv file
 		while( ( $data = fgetcsv( $csvFile ) ) !== false ) {
 			$csvData[] = $data;
+			$templateNames[] = $data[0];
 		}
 
 		fclose( $csvFile );
@@ -167,16 +171,32 @@ class MoveNotices extends Maintenance {
 				$wiki = WikiPage::newFromID( $this->pageId );
 
 				$content = $wiki->getText();
+				$textToParse = $content;
 
-				if ( $section != self::SECTION_ALL  ) {
-					$content = $wgParser->getSection($content, $section);
+				if ( $section !== self::SECTION_ALL ) {
+					$textToParse = $wgParser->getSection($content, $section);
+				}
+
+				if ( $replaceTop && !$list ) {
+					$this->addToLog( "Looking for top template on $this->pageName [" . $this->pageId . "]\n" );
+
+					if ( !$flagsExtractor->isTagAdded( FlagsExtractor::FLAGS_DEFAULT_TAG, $textToParse ) ) {
+						$firstTemplate = $flagsExtractor->findFirstTemplateFromList( $templateNames, $textToParse );
+						$this->addToLog( "First template on $this->pageName [" . $this->pageId . "] is $firstTemplate\n" );
+						if ( !is_null( $firstTemplate ) && $this->templateName == $firstTemplate ) {
+							$actions[] = FlagsExtractor::ACTION_REPLACE_FIRST_FLAG;
+							$actionsSum = array_sum( $actions );
+						}
+					} else {
+						$this->addToLog( "Tag is already added on $this->pageName [" . $this->pageId . "]\n" );
+					}
 				}
 
 				$this->addToLog( "Looking for template on $this->pageName [" . $this->pageId . "]\n" );
 
 				$actionParams = $this->prepareActionParams( $actionsSum, $tag );
 
-				$flagsExtractor->init( $content, $this->templateName, $actions, $actionParams );
+				$flagsExtractor->init( $textToParse, $this->templateName, $actions, $actionParams );
 				$templates = $flagsExtractor->getAllTemplates();
 
 				if ( $actionsSum & (
@@ -184,14 +204,23 @@ class MoveNotices extends Maintenance {
 						| FlagsExtractor::ACTION_REPLACE_ALL_FLAGS
 						| FlagsExtractor::ACTION_REMOVE_FIRST_FLAG
 						| FlagsExtractor::ACTION_REMOVE_ALL_FLAGS
-					)
+					) || $replaceTop
+
 				) {
 					$text = $flagsExtractor->getText();
 
-					if ( strcmp( $content, $text ) !== 0 ) {
-						$flags = EDIT_UPDATE + EDIT_FORCE_BOT;
-						$wiki->doEdit( $text, self::EDIT_SUMMARY, $flags );
+					if ( $section !== self::SECTION_ALL  ) {
+						$text = str_replace( $textToParse, $text, $content );
 					}
+
+					if ( strcmp( $content, $text ) !== 0 ) {
+						$wiki->doEdit( $text, self::EDIT_SUMMARY );
+					}
+				}
+
+				if ( $replaceTop && !$list ) {
+					$actions = $this->prepareActionOptions();
+					$actionsSum = array_sum( $actions );
 				}
 
 				$this->logTemplatesInfo( $templates, $actionsSum, $actionParams, $list );

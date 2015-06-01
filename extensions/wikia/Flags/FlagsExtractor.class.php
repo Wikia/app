@@ -186,6 +186,37 @@ class FlagsExtractor {
 	}
 
 	/**
+	 * Find template (from given list) which is first in the text
+	 *
+	 * @param array $templateNames list with allowed templates
+	 * @return null|string template name
+	 */
+	public function findFirstTemplateFromList( Array $templateNames, $text = null ) {
+		$minPosition = null;
+		$firstTemplate = null;
+
+		if ( !is_null( $text ) ) {
+			$this->text = $text;
+		}
+
+		foreach ( $templateNames as $templateName ) {
+			$templateBegin = "{{{$templateName}";
+			if ( ( $position = $this->findTemplatePosition( $templateBegin, 0 ) ) !== false ) {
+				if ( $position === 0 ) {
+					return $templateName;
+				}
+
+				if ( is_null( $minPosition ) || $position < $minPosition ) {
+					$minPosition = $position;
+					$firstTemplate = $templateName;
+				}
+			}
+		}
+
+		return $firstTemplate;
+	}
+
+	/**
 	 * Do some action after template is parsed
 	 *
 	 * Actions:
@@ -356,7 +387,21 @@ class FlagsExtractor {
 
 		$templateLength = strlen( $template['template'] );
 
-		$this->text = substr_replace( $this->text, $tag, $this->templateOffsetStart, $templateLength );
+		if ( !$this->isTagAdded() ) {
+			$this->text = substr_replace( $this->text, $tag, $this->templateOffsetStart, $templateLength );
+		}
+	}
+
+	public function isTagAdded( $tag = null, $text = null ) {
+		if ( is_null( $tag ) ) {
+			$tag = $this->getReplacementTag();
+		}
+
+		if ( is_null( $text ) ) {
+			$text = $this->text;
+		}
+
+		return strpos( $text, $tag ) !== false;
 	}
 
 	/**
@@ -431,33 +476,6 @@ class FlagsExtractor {
 
 		return !$this->isWrappedByNoWikiTag( $offsetStart )
 		&& ( $this->text[$offset] == '}' || $this->text[$offset] == '|' );
-	}
-
-	/**
-	 * Find template (from given list) which is first in the text
-	 *
-	 * @param array $templateNames list with allowed templates
-	 * @return null|string template name
-	 */
-	private function findFirstTemplateFromList( Array $templateNames ) {
-		$minPosition = null;
-		$firstTemplate = null;
-
-		foreach ( $templateNames as $templateName ) {
-			$templateBegin = "{{{$templateName}";
-			if ( ( $position = $this->findTemplatePosition( $templateBegin, 0 ) ) !== false ) {
-				if ( $position === 0 ) {
-					return $templateName;
-				}
-
-				if ( is_null( $minPosition ) || $position < $minPosition ) {
-					$minPosition = $position;
-					$firstTemplate = $templateName;
-				}
-			}
-		}
-
-		return $firstTemplate;
 	}
 
 	/**
