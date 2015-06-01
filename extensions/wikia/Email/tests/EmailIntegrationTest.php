@@ -26,7 +26,7 @@ class EmailIntegrationTest extends WikiaBaseTest {
 			$url = $iconInfo['url'];
 			$name = $iconInfo['name'];
 			$response = HTTP::get( $url );
-			$this->assertTrue( $response !== false, "{$name} should return HTTP 200" );
+			$this->assertTrue( $response !== false, "{$name} should return HTTP 200 -- {$url}" );
 		}
 	}
 
@@ -36,7 +36,6 @@ class EmailIntegrationTest extends WikiaBaseTest {
 	 * part of our emails, we're updating that test to only run in prod. See SOC-860.
 	 */
 	private function setVignetteEnvToProd() {
-		global $wgVignetteUrl;
-		$wgVignetteUrl = self::VIGNETTE_BASE_URL_PROD;
+		$this->mockGlobalVariable('wgVignetteUrl', self::VIGNETTE_BASE_URL_PROD);
 	}
 }
