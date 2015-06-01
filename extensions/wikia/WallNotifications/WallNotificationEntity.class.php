@@ -23,7 +23,7 @@ class WallNotificationEntity {
 	 * @param Revision $rev A revision object
 	 * @param bool $useMasterDB Whether to query the MASTER DB on Title lookup.
 	 *
-	 * @return WallNotificationEntity
+	 * @return WallNotificationEntity|null
 	 */
 	public static function createFromRev( Revision $rev, $useMasterDB = false ) {
 		$wn = new WallNotificationEntity();
@@ -45,7 +45,7 @@ class WallNotificationEntity {
 	 * @param int $wikiId The wiki where this revision exists
 	 * @param bool $useMasterDB Whether to query the MASTER DB on Title lookup.
 	 *
-	 * @return WallNotificationEntity
+	 * @return WallNotificationEntity|null
 	 */
 	public static function createFromRevId( $revId, $wikiId, $useMasterDB = false ) {
 		$wn = new WallNotificationEntity();
@@ -70,7 +70,7 @@ class WallNotificationEntity {
 	 * @param int $entityId An entity ID
 	 * @param bool $useMasterDB Whether to query the MASTER DB on Title lookup.
 	 *
-	 * @return WallNotificationEntity
+	 * @return WallNotificationEntity|null
 	 */
 	public static function createFromId( $entityId, $useMasterDB = false ) {
 		list( $revId, $wikiId ) = explode( '_', $entityId );
@@ -188,14 +188,12 @@ class WallNotificationEntity {
 		$data->wikiname = F::app()->wg->Sitename;
 
 		$this->setMessageAuthorData( $data, $rev->getUser() );
-		$this->id = $rev->getId() . '_' .  $data->wiki;
 		$data->rev_id = $rev->getId();
+		$this->id = $data->rev_id . '_' .  $data->wiki;
 		$data->timestamp = $rev->getTimestamp();
 
 		// Set all data related to the WallMessage
-		/* @var $wm WallMessage */
-		$wm = WallMessage::newFromTitle( $rev->getTitle() );
-		$wm->load();
+		$wm = $this->getWallMessageFromRev( $rev );
 
 		if ( !$this->setWallUserData( $data, $wm, $useMasterDB ) ) {
 			return false;
@@ -203,7 +201,6 @@ class WallNotificationEntity {
 		$this->setArticleTitleData( $data, $wm );
 
 		$this->msgText = $wm->getText();
-		$data->parent_page_id = $wm->getArticleTitle()->getArticleId();
 		$data->title_id = $wm->getTitle()->getArticleId();
 		$data->url = $wm->getMessagePageUrl();
 
@@ -215,6 +212,20 @@ class WallNotificationEntity {
 		$this->data = $data;
 
 		return true;
+	}
+
+	/**
+	 * Loads a new WallMessage object from a Revision object
+	 *
+	 * @param Revision $rev
+	 *
+	 * @return WallMessage
+	 */
+	private function getWallMessageFromRev( Revision $rev ) {
+		$wm = WallMessage::newFromTitle( $rev->getTitle() );
+		$wm->load();
+
+		return $wm;
 	}
 
 	private function setWallUserData( stdClass $data, WallMessage $wm, $useMasterDB ) {
@@ -243,29 +254,47 @@ class WallNotificationEntity {
 			$data->article_title_text = $wallTitle->getText();
 			$data->article_title_dbkey = $wallTitle->getDBkey();
 			$data->article_title_id = $wallTitle->getArticleId();
+
+			$data->parent_page_id = $data->article_title_id;
 		} else {
 			$data->article_title_ns = null;
 			$data->article_title_text = null;
 			$data->article_title_dbkey = null;
 			$data->article_title_id = null;
+
+			$data->parent_page_id = null;
 		}
 	}
 
-	private function setMessageAuthorData( stdClass $data, $userID ) {
-		$authorUser = User::newFromId( $userID );
+	private function setMessageAuthorData( stdClass $data, $userId ) {
+		$authorName = $this->getUserName( $userId );
 
-		if ( $authorUser instanceof User ) {
-			$data->msg_author_id = $authorUser->getId();
-			$data->msg_author_username = $authorUser->getName();
-			if ( $authorUser->getId() > 0 ) {
-				$data->msg_author_displayname = $data->msg_author_username;
-			} else {
-				$data->msg_author_displayname = wfMessage( 'oasis-anon-user' )->text();
-			}
-		} else {
-			// Treat a user we can't find as anon
+		// This knowingly may be null, an anonymous user's IP or a real users username
+		$data->msg_author_username = $authorName;
+
+		// If we're missing either of these, treat as an anonymous user
+		if ( empty( $authorName ) || empty( $userId ) ) {
 			$data->msg_author_id = 0;
 			$data->msg_author_displayname = wfMessage( 'oasis-anon-user' )->text();
+		} else {
+			$data->msg_author_id = $userId;
+			$data->msg_author_displayname = $data->msg_author_username;
+		}
+	}
+
+	/**
+	 * This method returns a user object given a user ID.
+	 *
+	 * @param int $userId User ID for the author of this post
+	 *
+	 * @return User
+	 */
+	private function getUserName( $userId ) {
+		$user = User::newFromId( $userId );
+		if ( $user instanceof User ) {
+			return $user->getName();
+		} else {
+			return null;
 		}
 	}
 
@@ -276,7 +305,7 @@ class WallNotificationEntity {
 			$this->threadTitleFull = $wm->getMetaTitle();
 
 			$data->parent_id = null;
-			$data->thread_title = $wm->getMetaTitle();
+			$data->thread_title = $this->threadTitleFull;
 			$data->parent_username = $data->wall_username;
 		} else {
 			$acParent->load();
@@ -286,7 +315,7 @@ class WallNotificationEntity {
 
 			$this->setMessageParentUserData( $data, $acParent );
 			$data->parent_id = $acParent->getId();
-			$data->thread_title = $acParent->getMetaTitle();
+			$data->thread_title = $this->threadTitleFull;
 		}
 	}
 

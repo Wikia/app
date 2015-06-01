@@ -20,7 +20,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 	 */
 	public function testNotifyEveryoneForMainThread() {
 		/** @var PHPUnit_Framework_MockObject_MockObject|WallNotifications $wn */
-		$wn = $this->getMock( 'WallNotifications', [ 'sendEmails','addNotificationLinks' ] );
+		$wn = $this->getMock( 'WallNotifications', [ 'sendEmails', 'addNotificationLinks' ] );
 
 		/** @var WallNotificationEntity $notification */
 		$notification = $this->getMock( 'WallNotificationEntity', [ 'isMain' ] );
