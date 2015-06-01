@@ -8,7 +8,9 @@ class NodeImage extends Node {
 	const CAPTION_TAG_NAME = 'caption';
 
 	public function getData() {
-		$title = $this->getImageAsTitleObject( $this->getRawValueWithDefault( $this->xmlNode ) );
+		$imageName = $this->getRawValueWithDefault( $this->xmlNode );
+		$title = $this->getImageAsTitleObject( $imageName );
+		$this->getExternalParser()->addImage( $imageName );
 		$ref = null;
 		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 		$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );

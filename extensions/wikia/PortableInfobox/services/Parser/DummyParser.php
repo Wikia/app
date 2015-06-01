@@ -14,4 +14,8 @@ class DummyParser implements ExternalParser {
 	public function replaceVariables( $text ) {
 		return "replaceVariables($text)";
 	}
+
+	public function addImage( $title ) {
+		//do nothing
+	}
 }

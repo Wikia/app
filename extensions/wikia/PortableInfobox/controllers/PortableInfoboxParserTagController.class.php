@@ -78,7 +78,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$renderedValue = trim( json_encode( $renderedValue ), '"' );
 		}
 
-		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}-QINU";
+		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}\x7f-QINU";
 		$this->markers[ $marker ] = $renderedValue;
 		return [ $marker, 'markerType' => 'nowiki' ];
 	}

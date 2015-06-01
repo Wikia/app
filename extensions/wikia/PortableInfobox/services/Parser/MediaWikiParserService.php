@@ -23,9 +23,8 @@ class MediaWikiParserService implements ExternalParser {
 			//fix for first item list elements
 			$wikitext = "\n" . $wikitext;
 		}
-		$parsedText = $this->getParserInstance()
-			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
-			->getText();
+		$parsedText = $this->parser->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(),
+			false, false )->getText();
 		wfProfileOut( __METHOD__ );
 		return $parsedText;
 	}
@@ -47,8 +46,19 @@ class MediaWikiParserService implements ExternalParser {
 	}
 
 	public function replaceVariables( $wikitext ) {
-		$output = $this->parser->replaceVariables ( $wikitext, $this->frame );
+		$output = $this->parser->replaceVariables( $wikitext, $this->frame );
 		return $output;
+	}
+
+	/**
+	 * Add image to parser output for later usage
+	 * @param string $title
+	 */
+	public function addImage( $title ) {
+		$file = wfFindFile( $title );
+		if ( $file ) {
+			$this->parser->getOutput()->addImage( $file->getName(), $file->getTimestamp(), $file->getSha1() );
+		}
 	}
 
 	private function getParserTitle() {
@@ -59,12 +69,5 @@ class MediaWikiParserService implements ExternalParser {
 		$options = $this->parser->getOptions();
 		$options->enableLimitReport( false );
 		return $options;
-	}
-
-	private function getParserInstance() {
-		if ( !isset( $this->localParser ) ) {
-			$this->localParser = new \Parser();
-		}
-		return $this->localParser;
 	}
 }
