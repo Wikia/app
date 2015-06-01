@@ -103,7 +103,9 @@ ul.tabbernav li.tabberactive a:hover
 
 /* If desired, hide the heading since a heading is provided by the tab */
 /*
-Disabled as CONCF-598 fixes needs those back.
+This section is commented out; as discovered wile working on CONCF-598
+we want to display blog entries' titles on tabbed pages - previously 
+we hid headers and blogs used H1.
 
 .tabberlive .tabbertab h2 {
  display:none;
