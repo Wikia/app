@@ -44,3 +44,15 @@ $messages['qqq'] = [
 		$4 name of flag added',
 	'logentry-flags-flag-removed' => 'Same as logentry-flags-flag-added message but concerns removal'
 ];
+
+/**
+ * Polish (pl)
+ */
+$messages['pl'] = [
+	'flags-edit-form-more-info' => 'Więcej informacji >',
+	'flags-edit-modal-cancel-button-text' => 'Anuluj',
+	'flags-edit-modal-close-button-text' => 'Zamknij',
+	'flags-edit-modal-done-button-text' => 'Gotowe',
+	'flags-edit-modal-no-flags-on-community' => 'Ta społeczność nie ma zdefiniowanych żadnych flag. [[Help:Flags|Dowiedz się więcej o flagach]] or [[Special:Flags|zdefiniuj flagi dla tej społeczności]].',
+	'flags-edit-modal-title' => 'Flagi',
+];

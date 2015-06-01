@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06",
+			"Brest"
+		]
+	},
+	"semanticdrilldown-desc": "Посредник за истенчена навигација по семантички податоци",
+	"specialpages-group-sd_group": "Семантичко истенчување",
+	"browsedata": "Прелистај податоци",
+	"sd_browsedata_choosecategory": "Одберете категорија",
+	"sd_browsedata_viewcategory": "види категорија",
+	"sd_browsedata_docu": "Стиснете на еден или повеќе елементи подолу за да ги истенчите резултатите.",
+	"sd_browsedata_subcategory": "Поткатегорија",
+	"sd_browsedata_other": "Други",
+	"sd_browsedata_none": "Нема",
+	"sd_browsedata_filterbyvalue": "Филтрирај по оваа вредност",
+	"sd_browsedata_filterbysubcategory": "Филтрирај по оваа категорија",
+	"sd_browsedata_otherfilter": "Прикажи страници со друга вредност за овој филтер",
+	"sd_browsedata_nonefilter": "Прикажи страници без вредности за овој филтер",
+	"sd_browsedata_or": "или",
+	"sd_browsedata_removefilter": "Отстрани го филтерот",
+	"sd_browsedata_removesubcategoryfilter": "Отстрани го овој филтер за поткатегории",
+	"sd_browsedata_resetfilters": "Врати ги филтрите по основно",
+	"sd_browsedata_addanothervalue": "Стиснете на стрелката за да додадете друга вредност",
+	"sd_browsedata_daterangestart": "Почеток:",
+	"sd_browsedata_daterangeend": "Крај:",
+	"sd_browsedata_novalues": "Нема зададено вредности за овој филтер",
+	"sd_createfilter_usepropertyvalues": "Користи ги сите вредности на ова својство за филтерот",
+	"sd_createfilter_usecategoryvalues": "Преземи вредности за филтер од оваа категорија:",
+	"sd_createfilter_requirefilter": "Побарувај да биде избран друг филтер пред да се прикаже овој:",
+	"sd-pageschemas-filter": "Филтер",
+	"sd-pageschemas-values": "Вредности"
+}

@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eduardo.mps",
+			"Enqd",
+			"Giro720",
+			"Jaideraf"
+		]
+	},
+	"semanticdrilldown-desc": "Uma interface de introspecção para navegar através de dados semânticos",
+	"specialpages-group-sd_group": "Introspecção Semântica",
+	"browsedata": "Navegar pelo dados",
+	"sd_browsedata_choosecategory": "Escolha uma categoria",
+	"sd_browsedata_viewcategory": "ver categoria",
+	"sd_browsedata_docu": "Clique abaixo em um ou mais itens para restringir os seus resultados.",
+	"sd_browsedata_subcategory": "Subcategoria",
+	"sd_browsedata_other": "Outro",
+	"sd_browsedata_none": "Nenhum",
+	"sd_browsedata_filterbyvalue": "Filtrar por este valor",
+	"sd_browsedata_filterbysubcategory": "Filtrar por esta subcategoria",
+	"sd_browsedata_otherfilter": "Exibir páginas com outro valor para este filtro",
+	"sd_browsedata_nonefilter": "Exibir páginas sem valores para este filtro",
+	"sd_browsedata_or": "ou",
+	"sd_browsedata_removefilter": "Remover este filtro",
+	"sd_browsedata_removesubcategoryfilter": "Remover o filtro por esta subcategoria",
+	"sd_browsedata_resetfilters": "Zerar filtros",
+	"sd_browsedata_addanothervalue": "Clique na seta para adicionar outro valor",
+	"sd_browsedata_daterangestart": "Início:",
+	"sd_browsedata_daterangeend": "Fim:",
+	"sd_browsedata_novalues": "Não há valores para este filtro",
+	"sd_createfilter_usepropertyvalues": "Usar todos os valores desta propriedade no filtro",
+	"sd_createfilter_usecategoryvalues": "Obter valores de filtro a partir desta categoria:",
+	"sd_createfilter_requirefilter": "Necessita de outro filtro selecionado antes deste ser exibido:",
+	"sd-pageschemas-filter": "Filtro",
+	"sd-pageschemas-values": "Valores"
+}
