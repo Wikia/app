@@ -96,10 +96,10 @@ class WikiaRequest {
 	 * set exception mode
 	 * @param int $value One of WikiaRequest::EXCEPTION_MODE_*
 	 */
-	public function setExceptionMode($value) {
+	public function setExceptionMode( $value ) {
 		$value = (int) $value;
 		if ( !in_array( $value, self::$exceptionModes ) ) {
-			throw new InvalidArgumentException('Exception mode is invalid');
+			throw new InvalidArgumentException( 'Exception mode is invalid' );
 		}
 		$this->exceptionMode = $value;
 	}
