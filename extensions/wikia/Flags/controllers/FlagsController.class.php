@@ -71,7 +71,9 @@ class FlagsController extends WikiaController {
 		} catch ( Exception $exception ) {
 			$this->error(
 				$exception->getMessage(),
-				[ $this->getContext() ]
+				[
+					'backtrace' => $exception->getTraceAsString(),
+				]
 			);
 		}
 	}
@@ -176,7 +178,9 @@ class FlagsController extends WikiaController {
 			 */
 			$this->error(
 				$exception->getMessage(),
-				[ $this->getContext() ]
+				[
+					'backtrace' => $exception->getTraceAsString(),
+				]
 			);
 
 			/**
@@ -184,7 +188,7 @@ class FlagsController extends WikiaController {
 			 */
 			BannerNotificationsController::addConfirmation(
 				wfMessage( 'flags-edit-modal-post-exception' )
-					->params( $exception->getTraceAsString() )
+					->params( $exception->getMessage() )
 					->escaped(),
 				BannerNotificationsController::CONFIRMATION_ERROR,
 				true
