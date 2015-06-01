@@ -15,6 +15,15 @@ describe('pageShare', function () {
 		trackingModuleMock = {
 			buildTrackingFunction: _
 		},
+		logModuleMock = (function () {
+			var log = _;
+
+			log.levels = {
+				debug: ''
+			};
+
+			return log;
+		})(),
 		testDataSet = [
 			{
 				mock: {
@@ -160,7 +169,7 @@ describe('pageShare', function () {
 		];
 
 	it('should be defined', function () {
-		var pageShareModule = modules['wikia.pageShare'](windowMock, trackingModuleMock, _);
+		var pageShareModule = modules['wikia.pageShare'](windowMock, trackingModuleMock, logModuleMock, _);
 
 		expect(pageShareModule).toBeDefined();
 		expect(typeof pageShareModule.loadShareIcons).toBe('function');
@@ -172,7 +181,7 @@ describe('pageShare', function () {
 
 		testDataSet.forEach(function (testData) {
 			testData.mock.window.Wikia = windowMock.Wikia;
-			pageShareModule = modules['wikia.pageShare'](testData.mock.window, trackingModuleMock, _);
+			pageShareModule = modules['wikia.pageShare'](testData.mock.window, trackingModuleMock, logModuleMock, _);
 			expect(pageShareModule.getShareLang(testData.mock.useLang)).toBe(testData.expectedResult);
 		});
 	});
