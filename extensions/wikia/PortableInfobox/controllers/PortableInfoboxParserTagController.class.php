@@ -46,13 +46,12 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @param $markup
 	 * @param Parser $parser
 	 * @param PPFrame $frame
-	 * @return array|string
+	 * @return string
 	 * @throws UnimplementedNodeException when node used in markup does not exists
 	 * @throws XmlMarkupParseErrorException xml not well formatted
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
-		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser(
-			array_merge( $frame->getNamedArguments(), $frame->getArguments() ) );
+		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $this->getFrameParams( $frame ) );
 		$infoboxParser->setExternalParser( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) );
 
 		//get params if not overridden
@@ -127,6 +126,21 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return !empty( $value ) ? $value :
 			// default logic
 			( isset( $params[ 'theme' ] ) ? $params[ 'theme' ] : self::DEFAULT_THEME_NAME );
+	}
+
+	/**
+	 * Function ensures that arrays are used for merging
+	 * @param PPFrame $frame
+	 * @return array
+	 */
+	protected function getFrameParams( PPFrame $frame ) {
+		//we use both getNamedArguments and getArguments to ensure we acquire variables no matter what frame is used
+		$namedArgs = $frame->getNamedArguments();
+		$namedArgs = isset( $namedArgs ) ? ( is_array( $namedArgs ) ? $namedArgs : [ $namedArgs ] ) : [ ];
+		$args = $frame->getArguments();
+		$args = isset( $args ) ? ( is_array( $args ) ? $args : [ $args ] ) : [ ];
+
+		return array_merge( $namedArgs, $args );
 	}
 
 }
