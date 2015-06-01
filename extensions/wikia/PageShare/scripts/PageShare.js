@@ -1,4 +1,9 @@
-define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function (win, tracker, $) {
+define('wikia.pageShare', [
+	'wikia.window',
+	'wikia.tracker',
+	'wikia.log',
+	'jquery'
+], function (win, tracker, log, $) {
 	'use strict';
 
 	var trackFunc = tracker.buildTrackingFunction({
@@ -90,6 +95,7 @@ define('wikia.pageShare', ['wikia.window', 'wikia.tracker', 'jquery'], function 
 			return win.navigator.userLanguage.substr(0, 2);
 		// something exotic
 		} else {
+			log('Couldn\'t pick a language for Page Share extension.', log.levels.debug, 'PageShare');
 			return null;
 		}
 	}
