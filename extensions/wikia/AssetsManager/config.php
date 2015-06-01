@@ -350,7 +350,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/tabs.js',
-		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
 		'//skins/oasis/js/Tracking.js',
 
 		'//skins/shared/scripts/onScroll.js',
@@ -1745,16 +1744,6 @@ $config['special_videos_css_mobile'] = array(
 	'assets' => array(
 		'//skins/oasis/css/core/thumbnails.scss',
 		'//extensions/wikia/SpecialVideos/styles/mobile.scss',
-	)
-);
-
-/* SharingToolbar */
-$config['sharingtoolbar_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//skins/oasis/js/SharingToolbar/SharingToolbar.js',
-		'//extensions/wikia/ShareButtons/js/ShareButtons.js',
-		'#function_SharingToolbarController::getAssets'
 	)
 );
 

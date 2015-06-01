@@ -441,22 +441,6 @@ jQuery(function ($) {
 		}
 	})();
 
-	/** share **/
-
-	(function () {
-		var category = 'share';
-
-		$wikiHeader.on('mousedown', '.share-button', {
-			category: category,
-			label: 'share-button'
-		}, trackWithEventData);
-
-		$wikiHeader.on('mousedown', '.SharingToolbar .email-link', {
-			category: category,
-			label: 'email'
-		}, trackWithEventData);
-	})();
-
 	/** thread-module **/
 
 	$('#RelatedForumDiscussion').on('mousedown', 'a', function (e) {
