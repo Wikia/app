@@ -63,10 +63,9 @@ class FlagsController extends WikiaController {
 				}
 
 				$flagsWikitext = $flagView->wrapTemplateCalls( $templatesCalls );
-
-				wfProfileOut( __METHOD__ );
 			}
 
+			wfProfileOut( __METHOD__ );
 			return $flagsWikitext;
 		} catch ( Exception $exception ) {
 			$this->error(
