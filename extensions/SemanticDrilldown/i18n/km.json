@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chhorran",
+			"Lovekhmer",
+			"Thearith",
+			"គីមស៊្រុន"
+		]
+	},
+	"browsedata": "រាវរកទិន្នន័យ",
+	"sd_browsedata_choosecategory": "ជ្រើសរើសចំណាត់ថ្នាក់ក្រុម",
+	"sd_browsedata_viewcategory": "មើលចំណាត់ថ្នាក់ក្រុម",
+	"sd_browsedata_subcategory": "ចំណាត់ក្រុមរង",
+	"sd_browsedata_other": "ផ្សេងៗទៀត",
+	"sd_browsedata_none": "ទទេ",
+	"sd_browsedata_filterbyvalue": "តម្រង​តាមរយៈ​តម្លៃ​នេះ",
+	"sd_browsedata_filterbysubcategory": "តម្រង​តាមរយៈ​ចំណាត់ថ្នាក់ក្រុម​នេះ",
+	"sd_browsedata_otherfilter": "បង្ហាញ​ទំព័រ​ជាមួយ​តម្លៃ​ផ្សេង​សម្រាប់​តម្រង​នេះ",
+	"sd_browsedata_nonefilter": "បង្ហាញ​ទំព័រ​ដោយ​គ្មាន​តម្លៃ​សម្រាប់​តម្រង​នេះ",
+	"sd_browsedata_or": "ឬ",
+	"sd_browsedata_removefilter": "ដក​តម្រង​នេះចេញ",
+	"sd_browsedata_removesubcategoryfilter": "ដក​តម្រង​ចំណាត់ថ្នាក់ក្រុមរង​នេះ​ចេញ",
+	"sd_browsedata_resetfilters": "កំណត់​តម្រង​ឡើងវិញ",
+	"sd_browsedata_addanothervalue": "ចុចលើសញ្ញាព្រួញដើម្បីបន្ថែម​តម្លៃ​ផ្សេង",
+	"sd_browsedata_daterangestart": "ចាប់ផ្ដើម:",
+	"sd_browsedata_daterangeend": "បញ្ចប់:",
+	"sd_createfilter_usepropertyvalues": "តម្លៃ​ទាំងអស់​នៃលក្ខណៈសម្បត្តិ​នេះ​សម្រាប់​តម្រង",
+	"sd_createfilter_usecategoryvalues": "ទទួល​តម្លៃ​សម្រាប់​តម្រង​ពី​ចំណាត់ថ្នាក់ក្រុម​នេះ:",
+	"sd_createfilter_requirefilter": "ទាមទារ​តម្រង​ផ្សេងទៀត​ដើម្បី​ធ្វើការ​ជ្រើសរើស មុនពេល​តម្រង​មួយនេះ​ត្រូវ​បាន​បង្ហាញ:"
+}

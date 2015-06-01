@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Event",
+			"Harald Khan",
+			"Nghtwlkr",
+			"Njardarlogar"
+		]
+	},
+	"semanticdrilldown-desc": "Et «drilldown»-grensesnitt for navigering gjennom semantiske data",
+	"specialpages-group-sd_group": "Semantisk «drilldown»",
+	"browsedata": "Bla gjennom data",
+	"sd_browsedata_choosecategory": "Velg en kategori",
+	"sd_browsedata_viewcategory": "se kategori",
+	"sd_browsedata_docu": "Klikk på en eller flere enheter nedenfor for å smalne inn søket.",
+	"sd_browsedata_subcategory": "Underkategori",
+	"sd_browsedata_other": "Annen",
+	"sd_browsedata_none": "Ingen",
+	"sd_browsedata_filterbyvalue": "Filtrer etter denne verdien",
+	"sd_browsedata_filterbysubcategory": "Filtrer etter denne underkategorien",
+	"sd_browsedata_otherfilter": "Vis sider med en annen verdi for dette filteret",
+	"sd_browsedata_nonefilter": "Vis sider uten noen verdi for dette filteret",
+	"sd_browsedata_or": "eller",
+	"sd_browsedata_removefilter": "Fjern dette filteret",
+	"sd_browsedata_removesubcategoryfilter": "Fjern dette underkategorifilteret",
+	"sd_browsedata_resetfilters": "Resett filtre",
+	"sd_browsedata_addanothervalue": "Klikk på pilen for å legge til enda en verdi",
+	"sd_browsedata_daterangestart": "Start:",
+	"sd_browsedata_daterangeend": "Slutt:",
+	"sd_browsedata_novalues": "Det er ingen verdier for dette filteret",
+	"sd_createfilter_usepropertyvalues": "Bruk alle verdier av denne egenskapen for filteret",
+	"sd_createfilter_usecategoryvalues": "Få verdier for filteret fra denne kategorien:",
+	"sd_createfilter_requirefilter": "Krev at et annet filter velges før dette vises:",
+	"sd-pageschemas-filter": "Filter",
+	"sd-pageschemas-values": "Verdier"
+}
