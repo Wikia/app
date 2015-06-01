@@ -35,6 +35,10 @@ class ArticleAsJson extends WikiaService {
 			$media['link'] = $link;
 		}
 
+		if ( is_string( $details['context'] ) && $details['context'] !== '' ) {
+			$media['context'] = $details['context'];
+		}
+
 		if ( !empty( $details['width'] ) ) {
 			$media['width'] = (int) $details['width'];
 		}
@@ -118,6 +122,7 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			$details['context'] = 'infobox-big';
 			self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
 			$ref = count( self::$media ) - 1;
 		}
