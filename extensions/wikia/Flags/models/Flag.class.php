@@ -136,13 +136,13 @@ class Flag extends FlagsBaseModel {
 				$addedFlags[] = $this->addFlag( $db, $flag[ 'flag_type_id' ], $params[ 'wiki_id' ], $params[ 'page_id' ], $flag[ 'params' ] );
 			}
 
+			$db->commit();
+
 			/* Queue task for logging flag change */
 			$task = new FlagsLogTask();
 			$task->wikiId( $params['wiki_id'] );
 			$task->call( 'logFlagChange', $params['flags'], $params['wiki_id'], $params['page_id'], self::LOG_FLAG_ADDED_ACTION );
 			$task->queue();
-
-			$db->commit();
 
 			return $addedFlags;
 		} catch ( \Exception $exception ) {
