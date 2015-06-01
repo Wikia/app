@@ -15,7 +15,7 @@ use Flags\Models\FlagsBaseModel;
 
 class FlagsCache {
 	const FLAGS_MEMC_KEY_PREFIX = 'flagsData';
-	const FLAGS_MEMC_VERSION = '1.1';
+	const FLAGS_MEMC_VERSION = '1.3';
 
 	private $memcache;
 
