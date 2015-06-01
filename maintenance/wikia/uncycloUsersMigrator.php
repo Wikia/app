@@ -105,7 +105,8 @@ class UncycloUserMigrator extends Maintenance {
 		parent::__construct();
 
 		$this->addOption( 'csv', 'Generate a report in CSV file' );
-		$this->addOption( 'dry-run', 'Don\'t perform any operations' );
+		$this->addOption( 'dry-run', 'Don\'t perform any operations [default]' );
+		$this->addOption( 'force', 'Apply the changes made by the script' );
 		$this->addOption( 'only-rename-global-users', 'Perform global users rename ONLY' );
 
 		$this->mDescription = 'This script migrates uncyclopedia user accounts to the shared database';
@@ -635,7 +636,7 @@ class UncycloUserMigrator extends Maintenance {
 		$wgMaxShellTime = 0;
 
 		// read options
-		$this->isDryRun = $this->hasOption( 'dry-run' );
+		$this->isDryRun = $this->hasOption( 'dry-run' ) || !$this->hasOption( 'force' );
 		$this->onlyRenameGlobalUsers = $this->hasOption( 'only-rename-global-users' );
 
 		if ( $this->isDryRun ) {
