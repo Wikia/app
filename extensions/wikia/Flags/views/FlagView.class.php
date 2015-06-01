@@ -15,6 +15,13 @@ class FlagView {
 	const FLAGVIEW_WIKITEXT_WRAP_OPEN = '<div class="portable-notices">';
 	const FLAGVIEW_WIKITEXT_WRAP_CLOSE = '</div>';
 
+	/**
+	 * Creates wikitext calls out of an array of names of templates and an array
+	 * of matching params.
+	 * @param $flagView
+	 * @param $params
+	 * @return string
+	 */
 	public function createWikitextCall( $flagView, $params ) {
 		$viewCall = '{{' . $flagView;
 
@@ -29,6 +36,11 @@ class FlagView {
 		return $viewCall;
 	}
 
+	/**
+	 * Wraps calls of notice templates in a div of a class portable-notices.
+	 * @param array $templateCalls
+	 * @return string
+	 */
 	public function wrapTemplateCalls( Array $templateCalls ) {
 		return \Xml::element( 'div', [
 			'class' => 'portable-notices'
