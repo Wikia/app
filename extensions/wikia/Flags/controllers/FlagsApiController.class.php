@@ -52,8 +52,12 @@ class FlagsApiController extends WikiaApiController {
 	public function getFlagsForPage() {
 		try {
 			$this->getRequestParams();
-			if ( !isset( $this->params['page_id'] ) ) throw new MissingParameterApiException( 'page_id' );
-			if ( !is_numeric( $this->params['page_id'] ) ) throw new InvalidParameterApiException( 'page_id' );
+			if ( !isset( $this->params['page_id'] ) ) {
+				throw new MissingParameterApiException( 'page_id' );
+			}
+			if ( !is_numeric( $this->params['page_id'] ) ) {
+				throw new InvalidParameterApiException( 'page_id' );
+			}
 
 			$flagsForPage = $this->getFlagsForPageRawData( $this->params['wiki_id'], $this->params['page_id'] );
 
@@ -96,8 +100,12 @@ class FlagsApiController extends WikiaApiController {
 	public function getFlagsForPageForEdit() {
 		try {
 			$this->getRequestParams();
-			if ( !isset( $this->params['page_id'] ) ) throw new MissingParameterApiException( 'page_id' );
-			if ( !is_numeric( $this->params['page_id'] ) ) throw new InvalidParameterApiException( 'page_id' );
+			if ( !isset( $this->params['page_id'] ) ) {
+				throw new MissingParameterApiException( 'page_id' );
+			}
+			if ( !is_numeric( $this->params['page_id'] ) ) {
+				throw new InvalidParameterApiException( 'page_id' );
+			}
 
 			$allFlagTypes = $this->getAllFlagTypes( $this->params['wiki_id'], $this->params['page_id'] );
 
@@ -170,7 +178,6 @@ class FlagsApiController extends WikiaApiController {
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
-			return;
 		}
 	}
 
@@ -265,7 +272,9 @@ class FlagsApiController extends WikiaApiController {
 	 */
 	private function processRequest() {
 		if ( !$this->request->isInternal() ) {
-			if ( !$this->request->wasPosted() ) throw new BadRequestApiException;
+			if ( !$this->request->wasPosted() ) {
+				throw new BadRequestApiException;
+			}
 			if ( !$this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) ) ) {
 				throw new MissingParameterApiException( 'edit_token' );
 			}

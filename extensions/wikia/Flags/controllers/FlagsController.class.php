@@ -22,12 +22,6 @@ class FlagsController extends WikiaController {
 	const FLAGS_CONTROLLER_ACTION_REMOVE = 'toRemove';
 	const FLAGS_CONTROLLER_ACTION_UPDATE = 'toUpdate';
 
-	public static $flagsActions = [
-		self::FLAGS_CONTROLLER_ACTION_ADD,
-		self::FLAGS_CONTROLLER_ACTION_REMOVE,
-		self::FLAGS_CONTROLLER_ACTION_UPDATE,
-	];
-
 	public static $flagsActionsToMethodsMapping = [
 		self::FLAGS_CONTROLLER_ACTION_ADD => 'requestAddFlagsToPage',
 		self::FLAGS_CONTROLLER_ACTION_REMOVE => 'requestRemoveFlagsFromPage',
@@ -84,7 +78,15 @@ class FlagsController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		$pageId = $this->request->getVal( 'page_id' );
-		if ( empty( $pageId ) ) throw new MissingParameterApiException( 'page_id' );
+		if ( empty( $pageId ) ) {
+			throw new MissingParameterApiException( 'page_id' );
+		}
+
+		/**
+		 * Disable caching for the rendered HTML. The API response is cached which is enough.
+		 */
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED, 0 );
 
 		$response = $this->requestGetFlagsForPageForEdit( $pageId );
 
@@ -129,14 +131,20 @@ class FlagsController extends WikiaController {
 			/**
 			 * Validate the request
 			 */
-			if ( !$this->isValidPostRequest() ) throw new BadRequestApiException();
+			if ( !$this->isValidPostRequest() ) {
+				throw new BadRequestApiException();
+			}
 
 			$this->params = $this->request->getParams();
-			if ( !isset( $this->params['page_id'] ) ) throw new MissingParameterApiException( 'page_id' );
+			if ( !isset( $this->params['page_id'] ) ) {
+				throw new MissingParameterApiException( 'page_id' );
+			}
 			$pageId = $this->params['page_id'];
 
 			$title = Title::newFromID( $pageId );
-			if ( $title === null ) throw new InvalidParameterApiException( 'page_id' );
+			if ( $title === null ) {
+				throw new InvalidParameterApiException( 'page_id' );
+			}
 
 			/**
 			 * Get the current status to compare
@@ -170,7 +178,9 @@ class FlagsController extends WikiaController {
 
 			wfProfileOut( __METHOD__ );
 		} catch ( Exception $exception ) {
-			if ( $title === null ) throw $exception;
+			if ( $title === null ) {
+				throw $exception;
+			}
 
 			/**
 			 * Log the exception
@@ -210,16 +220,17 @@ class FlagsController extends WikiaController {
 	 * @throws MissingParameterApiException
 	 */
 	private function sendRequestsUsingPostedData( $pageId, Array $flagsToChange ) {
-		if ( !isset( $this->params['edit_token'] ) ) throw new MissingParameterApiException( 'edit_token' );
+		if ( !isset( $this->params['edit_token'] ) ) {
+			throw new MissingParameterApiException( 'edit_token' );
+		}
 
 		$responseData = [];
 
-		foreach ( self::$flagsActions as $action ) {
+		foreach ( self::$flagsActionsToMethodsMapping as $action => $requestMethodName ) {
 			if ( empty( $flagsToChange[$action] ) ) {
 				continue;
 			}
 
-			$requestMethodName = self::$flagsActionsToMethodsMapping[$action];
 			$response = $this->$requestMethodName( $this->params['edit_token'], $pageId, $flagsToChange[$action] );
 
 			if ( $response->hasException() ) {

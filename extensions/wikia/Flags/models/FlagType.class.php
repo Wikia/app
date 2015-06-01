@@ -129,10 +129,14 @@ class FlagType extends FlagsBaseModel {
 		$required = [ 'wiki_id', 'flag_group', 'flag_name', 'flag_view', 'flag_targeting' ];
 
 		foreach ( $required as $requiredField ) {
-			if ( !isset( $params[$requiredField] ) ) throw new \MissingParameterApiException( $requiredField ) ;
+			if ( !isset( $params[$requiredField] ) ) {
+				throw new \MissingParameterApiException( $requiredField ) ;
+			}
 		}
 
-		if ( !isset( self::$flagGroups[$params['flag_group']] ) ) throw new \InvalidParameterApiException( 'flag_group' );
+		if ( !isset( self::$flagGroups[$params['flag_group']] ) ) {
+			throw new \InvalidParameterApiException( 'flag_group' );
+		}
 
 		return true;
 	}
@@ -183,7 +187,9 @@ class FlagType extends FlagsBaseModel {
 	 * @throws \MissingParameterApiException
 	 */
 	public function verifyParamsForRemove( $params ) {
-		if ( !isset( $params['flag_type_id'] ) ) throw new \MissingParameterApiException( 'flag_type_id' );
+		if ( !isset( $params['flag_type_id'] ) ) {
+			throw new \MissingParameterApiException( 'flag_type_id' );
+		}
 
 		return true;
 	}

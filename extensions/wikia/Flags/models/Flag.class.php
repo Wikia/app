@@ -164,7 +164,9 @@ class Flag extends FlagsBaseModel {
 			->run( $db );
 
 		$flagId = $db->insertId();
-		if ( !$flagId > 0 ) throw new \Exception( 'The database INSERT operation failed.' );
+		if ( !$flagId > 0 ) {
+			throw new \Exception( 'The database INSERT operation failed.' );
+		}
 		$status['flag_id'] = $flagId;
 
 		if ( !empty( $params ) ) {
@@ -173,7 +175,7 @@ class Flag extends FlagsBaseModel {
 			$status['params_added'] = $paramsAdded;
 		}
 
-		return $flagId && $status;
+		return $status;
 	}
 
 	/**

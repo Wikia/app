@@ -30,8 +30,8 @@ class FlagView {
 	}
 
 	public function wrapTemplateCalls( Array $templateCalls ) {
-		return self::FLAGVIEW_WIKITEXT_WRAP_OPEN
-			. implode( '', $templateCalls )
-			. self::FLAGVIEW_WIKITEXT_WRAP_CLOSE;
+		return \Xml::element( 'div', [
+			'class' => 'portable-notices'
+		], implode( '', $templateCalls ) );
 	}
 }
