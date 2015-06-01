@@ -438,14 +438,8 @@ class MercuryApiController extends WikiaController {
 	private function getWikiStats() {
 		global $wgCityId;
 
-		$wikiStats = [];
 		$service = new WikiDetailsService();
 		$wikiDetails = $service->getWikiDetails( $wgCityId );
-
-		if ( !empty( $wikiDetails['stats'] ) ) {
-			$wikiStats = $wikiDetails['stats'];
-		}
-
-		return $wikiStats;
+		return $wikiDetails[ 'stats' ];
 	}
 }
