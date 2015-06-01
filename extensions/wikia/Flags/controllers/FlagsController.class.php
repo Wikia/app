@@ -198,7 +198,7 @@ class FlagsController extends WikiaController {
 			BannerNotificationsController::addConfirmation(
 				wfMessage( 'flags-edit-modal-post-exception' )
 					->params( $exception->getMessage() )
-					->escaped(),
+					->parse(),
 				BannerNotificationsController::CONFIRMATION_ERROR,
 				true
 			);
