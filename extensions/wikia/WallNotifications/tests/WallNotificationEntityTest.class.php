@@ -11,6 +11,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 
 		$entity->loadDataFromRev( $rev );
 
+		$this->assertEquals( $entity->id, $params['id'] );
 		$this->assertEquals( $entity->data, $params['data'] );
 		$this->assertEquals( $entity->parentTitleDbKey, $params['parentTitleDbKey'] );
 		$this->assertEquals( $entity->msgText, $params['msgText'] );
@@ -209,37 +210,78 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 
 	public function loadDataFromRevDataProvider() {
 		return [
-			'revision' => [
-				'userId' => '',
-			],
-			'wallOwner' => [
-				'id' => '',
-				'name' => '',
-			],
-			'articleTitle' => [
-				'exists' => '',
-				'namespace' => '',
-				'text' => '',
-				'dbKey' => '',
-				'articleId' => '',
-			],
-			'title' => [
-				'articleId' => '',
-			],
-			'wallMessage' => [
-				'getText' => '',
-				'getMessagePageUrl' => '',
-				'getNotifyeveryone' => '',
-				'isEdited' => '',
-				'getLastEditSummary' => '',
-				'getMetaTitle' => '',
-			],
-			'data' => [
+			[
+				'revision' => [
+					'id' => '',
+					'userId' => '',
+					'timestamp' => '',
+				],
+				'wallOwner' => [
+					'id' => '',
+					'name' => '',
+				],
+				'articleTitle' => [
+					'exists' => '',
+					'namespace' => '',
+					'text' => '',
+					'dbKey' => '',
+					'articleId' => '',
+				],
+				'title' => [
+					'articleId' => '',
+				],
+				'wallMessage' => [
+					'text' => '',
+					'messagePageUrl' => '',
+					'notifyeveryone' => '',
+					'isEdited' => '',
+					'lastEditSummary' => '',
+					'metaTitle' => '',
+				],
+				'data' => [
 
+				],
+				'id' => '',
+				'parentTitleDbKey' => '',
+				'msgText' => '',
+				'threadTitleFull' => '',
 			],
-			'parentTitleDbKey' => '',
-			'msgText' => '',
-			'threadTitleFull' => '',
+			[ // Anonymous topic
+				'revision' => [
+					'id' => '5329',
+					'userId' => '0',
+					'timestamp' => '20150601192816',
+				],
+				'wallOwner' => [
+					'id' => '2035791',
+					'name' => 'Garthwebb',
+				],
+				'articleTitle' => [
+					'exists' => '',
+					'namespace' => '',
+					'text' => '',
+					'dbKey' => '',
+					'articleId' => '',
+				],
+				'title' => [
+					'articleId' => '',
+				],
+				'wallMessage' => [
+					'text' => '',
+					'messagePageUrl' => '',
+					'notifyeveryone' => '',
+					'isEdited' => '',
+					'lastEditSummary' => '',
+					'metaTitle' => '',
+				],
+				'data' => [
+
+				],
+				'id' => '',
+				'parentTitleDbKey' => '',
+				'msgText' => '',
+				'threadTitleFull' => '',
+			]
 		];
 	}
 }
