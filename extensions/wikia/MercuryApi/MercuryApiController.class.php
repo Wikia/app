@@ -336,7 +336,6 @@ class MercuryApiController extends WikiaController {
 	}
 
 	private function getMainPageData() {
-
 		$mainPageData = [];
 		$curatedContent = $this->getCuratedContentData();
 		$trendingArticles = $this->getTrendingArticlesData();
@@ -360,7 +359,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( !empty( $wikiStats ) ) {
-			$mainPageData['wikiStats'] = $wikiStats;
+			$mainPageData[ 'wikiStats' ] = $wikiStats;
 		}
 
 		return $mainPageData;
