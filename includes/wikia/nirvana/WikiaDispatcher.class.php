@@ -259,10 +259,16 @@ class WikiaDispatcher {
 
 		} while ( $controller && $controller->hasNext() );
 
-		if ( $request->isInternal() && $response->hasException() ) {
+		if ( $request->isInternal() && $response->hasException() && $request->getExceptionMode() !== WikiaRequest::EXCEPTION_MODE_RETURN ) {
 			Wikia::logBacktrace(__METHOD__ . '::exception');
 			wfProfileOut(__METHOD__);
-			throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
+			switch ( $request->getExceptionMode() ) {
+				case WikiaRequest::EXCEPTION_MODE_THROW:
+					throw $response->getException();
+				// case WikiaRequest::EXCEPTION_MODE_WRAP_AND_THROW:
+				default:
+					throw new WikiaDispatchedException( "Internal Throw ({$response->getException()->getMessage()})", $response->getException() );
+			}
 		}
 
 		wfProfileOut(__METHOD__);
