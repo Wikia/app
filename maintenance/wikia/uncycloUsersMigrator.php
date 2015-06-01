@@ -671,7 +671,8 @@ class UncycloUserMigrator extends Maintenance {
 		}
 
 		// get all uncyclopedia accounts
-		$this->output( "Preparing the list of accounts to migrate..." );
+		global $wgDBname, $wgDBcluster;
+		$this->output( "Preparing the list of accounts to migrate on {$wgDBname} database (cluster {$wgDBcluster})..." );
 		$res = $this->getUncycloDB()->select(
 			self::USER_TABLE,
 			'*',
