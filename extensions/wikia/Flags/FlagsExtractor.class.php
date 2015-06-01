@@ -390,6 +390,13 @@ class FlagsExtractor {
 		$this->text = substr_replace( $this->text, $tag, $this->templateOffsetStart, $templateLength );
 	}
 
+	/**
+	 * Check is tag already added
+	 *
+	 * @param string|null $tag tag name
+	 * @param string|null $text text to check
+	 * @return bool
+	 */
 	public function isTagAdded( $tag = null, $text = null ) {
 		if ( is_null( $tag ) ) {
 			$tag = $this->getReplacementTag();
