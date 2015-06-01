@@ -149,10 +149,6 @@ class WikiaMobileService extends WikiaService {
 				AnalyticsEngine::track(
 					'Datonics',
 					AnalyticsEngine::EVENT_PAGEVIEW
-				) .
-				AnalyticsEngine::track(
-					'ClarityRay',
-					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
 

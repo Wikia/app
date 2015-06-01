@@ -20,7 +20,6 @@ $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProvi
 $wgAutoloadClasses['AnalyticsProviderIVW2'] = __DIR__ . '/AnalyticsProviderIVW2.php';
 $wgAutoloadClasses['AnalyticsProviderBlueKai'] = __DIR__ . '/AnalyticsProviderBlueKai.php';
 $wgAutoloadClasses['AnalyticsProviderDatonics'] = __DIR__ . '/AnalyticsProviderDatonics.php';
-$wgAutoloadClasses['AnalyticsProviderClarityRay'] = __DIR__ . '/AnalyticsProviderClarityRay.php';
 $wgAutoloadClasses['AnalyticsProviderPageFair'] = __DIR__ . '/AnalyticsProviderPageFair.php';
 $wgAutoloadClasses['AnalyticsProviderRubiconRTP'] = __DIR__ . '/AnalyticsProviderRubiconRTP.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
@@ -28,7 +27,6 @@ $wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderG
 //hooks
 //register hook to inject GA js library (MW 1.19)
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGoogleUA::onWikiaSkinTopScripts';
-$wgHooks['SkinAfterBottomScripts'][] = 'AnalyticsProviderClarityRay::onSkinAfterBottomScripts';
 $wgHooks['SkinAfterBottomScripts'][] = 'AnalyticsProviderPageFair::onSkinAfterBottomScripts';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AnalyticsProviderGoogleUA::onOasisSkinAssetGroupsBlocking';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW2::onInstantGlobalsGetVariables';
