@@ -1,3 +1,3 @@
 <div class="flags-edit-form-message">
-	<?= wfMessage( 'flags-edit-modal-exception' )->params( $exceptionMessage )->parseAsBlock() ?>
+	<?= wfMessage( 'flags-edit-modal-exception' )->params( $exceptionMessage )->escaped() ?>
 </div>
