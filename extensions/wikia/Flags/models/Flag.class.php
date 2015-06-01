@@ -10,7 +10,13 @@
 
 namespace Flags\Models;
 
+use Flags\FlagsLogTask;
+
 class Flag extends FlagsBaseModel {
+	const
+		LOG_FLAG_ADDED_ACTION = 'flag-added',
+		LOG_FLAG_REMOVED_ACTION = 'flag-removed';
+
 	private
 		$paramsVerified = false;
 
@@ -153,6 +159,12 @@ class Flag extends FlagsBaseModel {
 		foreach ( $params['flags'] as $i => $flag ) {
 			$status[$i] = $this->addFlag( $flag['flag_type_id'], $params['wiki_id'], $params['page_id'], $flag['params'] );
 		}
+
+		/* Queue task for logging flag change */
+		$task = new FlagsLogTask();
+		$task->wikiId( $params['wiki_id'] );
+		$task->call( 'logFlagChange', $params['flags'], $params['wiki_id'], $params['page_id'], self::LOG_FLAG_ADDED_ACTION );
+		$task->queue();
 
 		return $status;
 	}
