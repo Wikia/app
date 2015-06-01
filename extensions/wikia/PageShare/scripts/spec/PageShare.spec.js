@@ -18,7 +18,9 @@ describe('pageShare', function () {
 		testDataSet = [
 			{
 				mock: {
-					window: {}
+					window: {
+						navigator: {}
+					}
 				},
 				expectedResult: null
 			},
@@ -26,7 +28,8 @@ describe('pageShare', function () {
 				mock: {
 					window: {
 						wgUserName: null,
-						wgUserLanguage: 'en'
+						wgUserLanguage: 'en',
+						navigator: {}
 					}
 				},
 				expectedResult: null
@@ -36,7 +39,9 @@ describe('pageShare', function () {
 					window: {
 						wgUserName: 'Warkot',
 						wgUserLanguage: 'pl',
-						wgAcceptLangList: ['pl', 'en-US', 'en-GB', 'en']
+						navigator: {
+							languages: ['pl', 'en-US', 'en-GB', 'en']
+						}
 					}
 				},
 				expectedResult: 'pl'
@@ -46,7 +51,9 @@ describe('pageShare', function () {
 					window: {
 						wgUserName: null,
 						wgUserLanguage: 'en',
-						wgAcceptLangList: ['ja', 'en-US', 'en-GB', 'en']
+						navigator: {
+							languages: ['ja', 'en-US', 'en-GB', 'en']
+						}
 					}
 				},
 				expectedResult: 'ja'
@@ -56,7 +63,9 @@ describe('pageShare', function () {
 					window: {
 						wgUserName: null,
 						wgUserLanguage: 'en',
-						wgAcceptLangList: ['zn-CN', 'en-US', 'en-GB', 'en']
+						navigator: {
+							languages: ['zn-CN', 'en-US', 'en-GB', 'en']
+						}
 					}
 				},
 				expectedResult: 'zn'
@@ -64,8 +73,11 @@ describe('pageShare', function () {
 			{
 				mock: {
 					window: {
-						wgUserName: 'Warkot',
-						wgUserLanguage: 'pl'
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {
+							language: 'pl'
+						}
 					}
 				},
 				expectedResult: 'pl'
@@ -73,8 +85,47 @@ describe('pageShare', function () {
 			{
 				mock: {
 					window: {
+						wgUserName: null,
+						wgUserLanguage: 'de',
+						navigator: {
+							language: 'en-US'
+						}
+					}
+				},
+				expectedResult: 'en'
+			},
+			{
+				mock: {
+					window: {
 						wgUserName: 'Warkot',
-						wgUserLanguage: 'pl'
+						wgUserLanguage: 'pl',
+						navigator: {
+							userLanguage: 'de'
+						}
+					}
+				},
+				expectedResult: 'pl'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: null,
+						wgUserLanguage: 'en',
+						navigator: {
+							userLanguage: 'ru'
+						}
+					}
+				},
+				expectedResult: 'ru'
+			},
+			{
+				mock: {
+					window: {
+						wgUserName: 'Warkot',
+						wgUserLanguage: 'pl',
+						navigator: {
+							userLanguage: 'de'
+						}
 					},
 					useLang: 'ru'
 				},
@@ -84,7 +135,10 @@ describe('pageShare', function () {
 				mock: {
 					window: {
 						wgUserName: null,
-						wgUserLanguage: 'en'
+						wgUserLanguage: 'en',
+						navigator: {
+							userLanguage: 'ru'
+						}
 					},
 					useLang: 'pl'
 				},
@@ -94,7 +148,10 @@ describe('pageShare', function () {
 				mock: {
 					window: {
 						wgUserName: null,
-						wgUserLanguage: 'en'
+						wgUserLanguage: 'en',
+						navigator: {
+							userLanguage: 'en-GB'
+						}
 					},
 					useLang: 'Quenya'
 				},

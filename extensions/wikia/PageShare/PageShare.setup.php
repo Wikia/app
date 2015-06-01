@@ -12,10 +12,6 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 	'version' => 1
 ];
 
-// classes
+// controller classes
 $wgAutoloadClasses[ 'PageShareController' ] =  __DIR__ . '/PageShareController.class.php';
 $wgAutoloadClasses[ 'PageShareHelper' ] =  __DIR__ . '/PageShareHelper.class.php';
-$wgAutoloadClasses[ 'PageShareHooks' ] = __DIR__ . '/PageShareHooks.class.php';
-
-// hooks
-$wgHooks['MakeGlobalVariablesScript'][] = 'PageShareHooks::onMakeGlobalVariablesScript';
