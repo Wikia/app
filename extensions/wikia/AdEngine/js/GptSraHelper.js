@@ -17,6 +17,7 @@ define('ext.wikia.adEngine.gptSraHelper', [
 
 	function shouldFlush(slotName) {
 		if (sraSlots.indexOf(slotName) === -1) {
+			log(['shouldFlush', 'Non-SRA slot', slotName], 'debug', logGroup);
 			flushed = true;
 		}
 

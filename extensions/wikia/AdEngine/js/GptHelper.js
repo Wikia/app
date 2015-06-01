@@ -143,7 +143,7 @@ define('ext.wikia.adEngine.gptHelper', [
 	 * @param {function} success            - on success callback
 	 * @param {function} error              - on error callback
 	 * @param {Object}   extra              - optional parameters
-	 * @param {boolean}  extra.sraEnabled   - decide if SRA should be used
+	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forceAdType  - ad type for callbacks info
 	 */
 	function pushAd(slotName, slotPath, slotTargeting, success, error, extra) {
