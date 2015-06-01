@@ -56,5 +56,5 @@ $wgHooks['ParserAfterTidy'][] = 'PortableInfoboxParserTagController::replaceInfo
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
 
-//MW API
+// MW API
 $wgAPIModules['infobox'] = 'ApiPortableInfobox';
