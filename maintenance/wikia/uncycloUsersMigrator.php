@@ -108,6 +108,7 @@ class UncycloUserMigrator extends Maintenance {
 		$this->addOption( 'dry-run', 'Don\'t perform any operations [default]' );
 		$this->addOption( 'force', 'Apply the changes made by the script' );
 		$this->addOption( 'only-rename-global-users', 'Perform global users rename ONLY' );
+		$this->addOption( 'do-not-create-global-users', 'Do not touch shared users database' );
 
 		$this->mDescription = 'This script migrates uncyclopedia user accounts to the shared database';
 	}
@@ -403,16 +404,9 @@ class UncycloUserMigrator extends Maintenance {
 
 		try {
 			/**
-			 * Uncyclo does not have $wgSharedDB set so all queries from User class goes to the LOCAL database
-			 *
-			 * As we want to register and modify a GLOBAL user, set both $wgSharedDB and wgExternalSharedDB to "wikicities".
-			 * This wil make User::saveSettings write to the shared database
+			 * Now create a shared DB user and update the local user (and his settings) to have the matching ID
 			 */
-			$wrapper = new Wikia\Util\GlobalStateWrapper( [
-				'wgSharedDB'         => self::SHARED_DB,
-				'wgExternalSharedDB' => self::SHARED_DB,
-			] );
-			$wrapper->wrap(function () use ( $dbw, $extUser, $fname, $user ) {
+			if ( !$this->hasOption( 'do-not-create-global-users' ) ) {
 				$dbw->insert(
 					self::USER_TABLE,
 					[
@@ -464,7 +458,11 @@ class UncycloUserMigrator extends Maintenance {
 					],
 					$fname
 				);
-			});
+			}
+			else {
+				// fake the new user ID to perform the users ID remap procedure
+				$extUser->mId = $user->getId() + 500000; // move user IDs by 500k (see --do-not-create-global-users option)
+			}
 
 			// we have a new ID for a global account
 			// update user ID in uncyclo database
@@ -476,6 +474,7 @@ class UncycloUserMigrator extends Maintenance {
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $extUser->mId ) );
 
 			$dbw->commit(__METHOD__);
+
 		}
 		catch(Exception $e) {
 			$dbw->rollback();
