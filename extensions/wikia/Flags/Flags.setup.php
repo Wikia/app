@@ -88,5 +88,6 @@ $wgResourceModules['ext.wikia.Flags'] = [
  * Logs
  */
 $wgLogTypes[] = 'flags';
+$wgLogNames['flags'] = 'flags-log-name';
 $wgLogHeaders['flags'] = 'flags-description';
 $wgLogActionsHandlers[ 'flags/*' ] = 'LogFormatter';
