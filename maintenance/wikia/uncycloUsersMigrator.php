@@ -641,6 +641,13 @@ class UncycloUserMigrator extends Maintenance {
 		if ( $this->isDryRun ) {
 			$this->dryRunMode();
 		}
+		else {
+			// disable read-only mode for this script to work
+			// even if disabled via WikiFactory
+			global $wgReadOnly, $wgDBReadOnly;
+			$wgReadOnly = null;
+			$wgDBReadOnly = false;
+		}
 
 		// setup the CSV header
 		if ( $this->hasOption( 'csv' ) ) {
