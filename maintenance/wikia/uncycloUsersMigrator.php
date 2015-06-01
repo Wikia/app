@@ -210,25 +210,19 @@ class UncycloUserMigrator extends Maintenance {
 			$columnName = $entry[ $fieldType ];
 			$tableName = $entry[ 'table' ];
 
-			if ( !$dbw->tableExists( $tableName ) ) {
-				$this->err( 'Table does not exist', [ 'tableName' => $tableName ] );
-				continue;
-			}
-
 			// perform table update in batches of 500 rows
 			// UPDATE /* method */ `foo` SET foo_id = "new" WHERE foo_id = "old" LIMIT 500
 			do {
 				// Database::update method does not support passing LIMIT option
 				$sql = sprintf(
-					'UPDATE /* %s */ `%s` SET %s = %s WHERE %s = %s LIMIT 500',
-					__METHOD__,
+					'UPDATE `%s` SET %s = %s WHERE %s = %s LIMIT 500',
 					$entry['table'],
 					$columnName,
 					$dbw->addQuotes( $newValue ),
 					$columnName,
 					$dbw->addQuotes( $oldValue )
 				);
-				$dbw->query( $sql );
+				$dbw->query( $sql, __METHOD__ );
 			} while ($dbw->affectedRows() > 0);
 		}
 	}
@@ -400,7 +394,7 @@ class UncycloUserMigrator extends Maintenance {
 
 		// this code was borrowed from ExternalUser_Wikia::addToDatabase
 		$fname = __METHOD__;
-		$dbw = wfGetDB( DB_MASTER, [], self::SHARED_DB );
+		$dbw = $this->getSharedDB( DB_MASTER );
 		$dbw->begin( $fname );
 
 		try {
@@ -463,6 +457,7 @@ class UncycloUserMigrator extends Maintenance {
 			else {
 				// fake the new user ID to perform the users ID remap procedure
 				$extUser->mId = $user->getId() + 500000; // move user IDs by 500k (see --do-not-create-global-users option)
+				wfDebug( __METHOD__ . " - faking new user ID - #{$extUser->mId}\n" );
 			}
 
 			// we have a new ID for a global account
