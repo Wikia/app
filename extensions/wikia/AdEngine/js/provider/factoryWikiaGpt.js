@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {Object} [extra]      - optional extra params
 	 * @param {function} [extra.beforeSuccess] - function to call before calling success
 	 * @param {function} [extra.beforeHop]     - function to call before calling hop
-	 * @param {boolean}  [extra.sraEnabled]    - decide if use SRA
+	 * @param {boolean}  [extra.sraEnabled]    - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
 	 * @returns {{name: string, canHandleSlot: function, fillInSlot: function}}
 	 */
