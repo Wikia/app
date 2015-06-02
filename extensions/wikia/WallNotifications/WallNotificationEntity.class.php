@@ -221,7 +221,7 @@ class WallNotificationEntity {
 	 *
 	 * @return WallMessage
 	 */
-	private function getWallMessageFromRev( Revision $rev ) {
+	public function getWallMessageFromRev( Revision $rev ) {
 		$wm = WallMessage::newFromTitle( $rev->getTitle() );
 		$wm->load();
 
@@ -289,7 +289,7 @@ class WallNotificationEntity {
 	 *
 	 * @return User
 	 */
-	private function getUserName( $userId ) {
+	public function getUserName( $userId ) {
 		$user = User::newFromId( $userId );
 		if ( $user instanceof User ) {
 			return $user->getName();
