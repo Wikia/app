@@ -10,10 +10,10 @@ $messages[ 'en' ] = [
 	'xml_err_document_end' => 'Extra content at the end of the document',
 	'xml_err_undeclared_entity' => 'Undeclared entity (for example: &nbsp;)',
 	'xml_err_attribute_not_started' => 'Attribute value should be inside quotation marks',
-	'xml_err_attribute_without_value' => 'Specification mandate value for attribute caption',
+	'xml_err_attribute_without_value' => 'Tag attribute needs to have value',
 	'xml_err_space_required' => 'Attributes construct error',
 	'xml_err_name_required' => 'Error parsing attribute name',
-	'xml_err_gt_required' => "Couldn't find end of Start Tag",
+	'xml_err_gt_required' => "Tag definition is not properly terminated",
 	'xml_err_tag_name_mismatch' => 'Opening and ending tag mismatch',
 	'xml_err_tag_not_finished' => 'Premature end of tag'
 ];
@@ -29,7 +29,7 @@ $messages[ 'qqq' ] = [
 	'xml_err_attribute_without_value' => 'XML Error: tag attribute was provided without value',
 	'xml_err_space_required' => 'XML Error: issue with parsing tag attributes',
 	'xml_err_name_required' => 'XML Error: error parsing name attribute',
-	'xml_err_gt_required' => 'XML Error: could not find end tag',
+	'xml_err_gt_required' => 'XML Error: could not find end of tag definition (for example: <data><label </data>',
 	'xml_err_tag_name_mismatch' => 'XML Error: Opening and ending tag mismatch (for example: <data></label>)',
 	'xml_err_tag_not_finished' => 'XML Error: premature end of tag'
 ];
