@@ -59,5 +59,5 @@ $messages['pl'] = [
 	'flags-edit-modal-title' => 'Flagi',
 	'flags-log-name' => 'Rejestr flag',
 	'logentry-flags-flag-added' => '$1 {{GENDER:$2|dodał|dodała}} flagę \'$4\' do strony $3',
-	'logentry-flags-flag-removed' => '$1 {{GENDER:$2|usunął|usunęła}} flagę \'$4\' do strony $3'
+	'logentry-flags-flag-removed' => '$1 {{GENDER:$2|usunął|usunęła}} flagę \'$4\' ze strony $3'
 ];
