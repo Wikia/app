@@ -38,10 +38,10 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	}
 
 	public function loadData(EditHubModel $model, $params) {
-		$hubsParams = $this->getHubsParams();
+		$hubParams = $this->getHubsParams();
 
 		$lastTimestamp = $model->getLastPublishedTimestamp(
-			$hubsParams,
+			$hubParams,
 			$params['ts']
 		);
 
