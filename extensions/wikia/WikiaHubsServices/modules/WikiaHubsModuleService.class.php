@@ -52,6 +52,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 				return $this->loadStructuredData( $model, $params );
 			}
 		);
+
 		if ( $this->getShouldFilterCommercialData() ) {
 			$structuredData = $this->filterCommercialData( $structuredData );
 		}
@@ -59,7 +60,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		return $structuredData;
 	}
 
-	protected function loadStructuredData( $model, $params ) {
+	protected function loadStructuredData( EditHubModel $model, $params ) {
 		$hubParams = $this->getHubsParams();
 
 		$moduleData = $model->getPublishedData(
@@ -76,7 +77,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 
 		$structuredData = array();
 		if (!empty($moduleData)) {
-			$structuredData = $this->getStructuredData($moduleData);
+			$structuredData = $this->getStructuredData($moduleData, $hubParams);
 		}
 
 		return $structuredData;
@@ -90,8 +91,8 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		return $this->app->getView(get_class($this), $viewName, $data);
 	}
 
-	protected function getImageInfo($fileName, $destSize = 0) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize, ImagesService::EXT_JPG);
+	protected function getImageInfo($fileName) {
+		return GlobalFile::newFromText($fileName, $this->cityId);
 	}
 
 	/**
@@ -104,11 +105,11 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		$sponsoredImageInfo = $this->getImageInfo($imageTitleText);
 
 		return Xml::element('img', array(
-			'alt' => $sponsoredImageInfo->title,
+			'alt' => $sponsoredImageInfo->getName(),
 			'class' => 'sponsored-image',
-			'height' => $sponsoredImageInfo->height,
-			'src' => $sponsoredImageInfo->url,
-			'width' => $sponsoredImageInfo->width,
+			'height' => $sponsoredImageInfo->getHeight(),
+			'src' => $sponsoredImageInfo->getUrlGenerator()->url(),
+			'width' => $sponsoredImageInfo->getWidth(),
 		), '', true);
 	}
 

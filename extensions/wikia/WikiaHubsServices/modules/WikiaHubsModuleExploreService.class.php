@@ -212,10 +212,10 @@ class WikiaHubsModuleExploreService extends WikiaHubsModuleEditableService {
 		$fileNameField = $data['form']->getField('fileName');
 		if( !empty($fileNameField['value']) ) {
 			$model = new EditHubModel();
-			$imageData = $this->getImageInfo($fileNameField['value'], $model->getThumbnailSize());
-			$data['fileUrl'] = $imageData->url;
-			$data['imageWidth'] = $imageData->width;
-			$data['imageHeight'] = $imageData->height;
+			$imageData = $this->getImageInfo($fileNameField['value']);
+			$data['fileUrl'] = $imageData->getUrlGenerator()->width( $model->getThumbnailSize() )->url();
+			$data['imageWidth'] = $imageData->getWidth();
+			$data['imageHeight'] = $imageData->getHeight();
 		}
 		
 		return parent::renderEditor($data);
@@ -248,8 +248,8 @@ class WikiaHubsModuleExploreService extends WikiaHubsModuleEditableService {
 			
 			if( !empty($data['fileName']) ) {
 				$imageData = $this->getImageInfo($data['fileName']);
-				$structuredData['imageUrl'] = $imageData->url;
-				$structuredData['imageAlt'] = $imageData->title;
+				$structuredData['imageUrl'] = $imageData->getUrlGenerator()->url();
+				$structuredData['imageAlt'] = $imageData->getName();
 			} else {
 				$structuredData['imageUrl'] = null;
 			}

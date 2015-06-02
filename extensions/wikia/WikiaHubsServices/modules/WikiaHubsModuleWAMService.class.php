@@ -55,7 +55,7 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 		]);
 	}
 
-	public function loadData($model, $params) {
+	public function loadData(EditHubModel $model, $params) {
 		$hubParams = $this->getHubsParams();
 		$lastTimestamp = $model->getLastPublishedTimestamp(
 			$hubParams,
@@ -82,7 +82,7 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 		return $structuredData;
 	}
 
-	protected function loadStructuredData($model, $params) {
+	protected function loadStructuredData(EditHubModel $model, $params) {
 		try {
 
 			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();

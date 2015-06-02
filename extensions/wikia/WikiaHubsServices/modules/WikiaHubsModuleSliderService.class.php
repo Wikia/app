@@ -96,9 +96,9 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 			$photo = $data['form']->getField('photo' . $i);
 			if (!empty($photo['value'])) {
 				$imageData = $this->getImageInfo($photo['value'], $imageSize);
-				$data['photos'][$i]['url'] = $imageData->url;
-				$data['photos'][$i]['imageWidth'] = $imageData->width;
-				$data['photos'][$i]['imageHeight'] = $imageData->height;
+				$data['photos'][$i]['url'] = $imageData->getUrlGenerator()->url();
+				$data['photos'][$i]['imageWidth'] = $imageData->getWidth();
+				$data['photos'][$i]['imageHeight'] = $imageData->getHeight();
 			}
 		}
 
@@ -129,16 +129,14 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 			$slidesCount =  $model->getSlidesCount();
 
 			for( $i = 1; $i <= $slidesCount; $i++ ) {
-				$imageData = $this->getImageData($data['photo'.$i]);
-
-				$structuredData['slides'][] = array(
-									'photoUrl' => $imageData->url,
-									'strapline' => $data['strapline'.$i],
-									'shortDesc' => $data['shortDesc'.$i],
-									'longDesc' => $data['longDesc'.$i],
-									'url' => $data['url'.$i],
-									'photoName' => $data['photo'.$i],
-								);
+				$structuredData['slides'][] = [
+					'photoUrl' => $this->getImageInfo($data['photo'.$i])->getUrlGenerator()->url(),
+					'strapline' => $data['strapline'.$i],
+					'shortDesc' => $data['shortDesc'.$i],
+					'longDesc' => $data['longDesc'.$i],
+					'url' => $data['url'.$i],
+					'photoName' => $data['photo'.$i],
+				];
 			}
 		}
 
@@ -165,11 +163,6 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 		}
 		$galleryText .= "\n</gallery>";
 		return $galleryText;
-	}
-
-	public function getImageData( $image ) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
-
 	}
 
 	/**

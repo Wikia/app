@@ -309,7 +309,7 @@ class EditHubModel extends WikiaModel {
 		return $this->specialPageClass;
 	}
 
-	public function setSpecialPageClass(SpecialPage $specialPageClass) {
+	public function setSpecialPageClass($specialPageClass) {
 		$this->specialPageClass = $specialPageClass;
 	}
 

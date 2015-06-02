@@ -214,10 +214,11 @@ class WikiaHubsModuleFromthecommunityService extends WikiaHubsModuleEditableServ
 		for ($i = 1; $i <= $data['boxesCount']; $i++) {
 			$photoField = $data['form']->getField('photo' . $i);
 			if (!empty($photoField['value'])) {
-				$imageData = $this->getImageInfo($photoField['value'], $imageSize);
-				$data['photos'][$i]['url'] = $imageData->url;
-				$data['photos'][$i]['imageWidth'] = $imageData->width;
-				$data['photos'][$i]['imageHeight'] = $imageData->height;
+				$imageData = $this->getImageInfo($photoField['value']);
+
+				$data['photos'][$i]['url'] = $imageData->getUrlGenerator()->width($imageSize)->url();
+				$data['photos'][$i]['imageWidth'] = $imageData->getWidth();
+				$data['photos'][$i]['imageHeight'] = $imageData->getHeight();
 			}
 		}
 
@@ -259,21 +260,24 @@ class WikiaHubsModuleFromthecommunityService extends WikiaHubsModuleEditableServ
 		$entries = array();
 		for($i = 1; $i <= $boxesCount; $i++) {
 			if( $this->isEntryFilledIn($i, $data) ) {
-				if( !empty($data['photo' . $i]) ) {
-					$imageData = $this->getImageInfo($data['photo' . $i]);
-				}
-
 				$entries[] = array(
 					'articleTitle' => $data['title' . $i],
 					'articleUrl' => str_replace(' ', '_', $data['url' . $i]),
-					'imageAlt' => empty($imageData->title) ? null : $imageData->title,
-					'imageUrl' => empty($imageData->url) ? null : $imageData->url,
 					'userName' => $data['UserName' . $i],
 					'userUrl' => str_replace(' ', '_', $data['usersUrl' . $i]),
 					'wikiUrl' => $data['wikiUrl' . $i],
 					'quote' => $data['quote' . $i],
 					'photoName' => isset($data['photo'.$i]) ? $data['photo'.$i] : ''
 				);
+
+				if( !empty($data['photo' . $i]) ) {
+					$imageData = $this->getImageInfo($data['photo' . $i]);
+
+					if ($imageData) {
+						$entries['imageAlt'] = $imageData->getName();
+						$entries['imageUrl'] = $imageData->getUrl();
+					}
+				}
 			}
 		}
 		
