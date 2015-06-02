@@ -104,7 +104,10 @@ function upgradeYouTubeTag( $editpage, $request ) {
 
 			// Separate the Youtube ID and parameters
 			$paramText = trim($matches[3]);
-			$ytid   = $matches[4];
+			//Node value can look like: <youtube_id>|400px|thumb|center
+			//@TODO evaluate calling parser to parse params and upload correctly styled video
+			$nodeValues = explode('|', $matches[4]);
+			$ytid   = trim($nodeValues[0]);
 
 			// Check to see if the whole URL is used
 			$ytid = preg_replace('/^.*youtube.com\/watch?.*v=([^&]+).*$/', '$1', $ytid);
@@ -121,7 +124,15 @@ function upgradeYouTubeTag( $editpage, $request ) {
 			$url = 'http://www.youtube.com/watch?v='.$ytid;
 
 			$videoService = new VideoService();
+			$videoFileUploader = new VideoFileUploader();
+			$videoFileUploader->setExternalUrl( $url );
+			$apiWrapper = $videoFileUploader->getApiWrapper();
+			if (!$apiWrapper->videoExists()) {
+				return createRawOutput($matches[0]);
+			}
+
 			$retval = $videoService->addVideo( $url );
+
 			if ( is_array($retval) ) {
 				list( $title, $videoPageId, $videoProvider ) = $retval;
 				return "[[$title|".$params['width']."px]]";
@@ -170,6 +181,16 @@ function parseSizeParams ( $paramText ) {
 	}
 
 	return $params;
+}
+
+/**
+ * Create raw value which would be displayed inside article and no object would be created.
+ *
+ * @param string $value
+ * @return string
+ */
+function createRawOutput($value) {
+	return '<nowiki>' . $value . '</nowiki>';
 }
 
 /**
