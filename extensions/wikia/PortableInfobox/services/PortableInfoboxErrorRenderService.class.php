@@ -28,22 +28,30 @@ class PortableInfoboxErrorRenderService extends WikiaService {
 	}
 
 	public function renderMarkupDebugView( $sourceCode ) {
-
 		if ( count( $this->errorList ) ) {
-			$error = array_values( $this->errorList )[0];
+			$errorsByLine = [];
+			foreach ( $this->errorList as $error ) {
+				$errorsByLine[ $error->line - 1 ][ $error->code ] = $error;
+			}
 
 			$sourceCodeByLines = explode( "\n", ( $sourceCode ) );
 
 			$templateData = [];
 			$templateData['code'] = [];
 			foreach ( $sourceCodeByLines as $i => $codeLine ) {
-				$templateData['code'][] = [
+				$line = [
 					'line' => $i,
 					'codeLine' => $codeLine,
-					'error' => $i == $error->line -1 ? true : false
+					'error' => false,
 				];
+				if ( isset( $errorsByLine[ $i ] ) ) {
+					$line['error'] = true;
+					foreach ( $errorsByLine[ $i ] as $error ) {
+						$line['error_messages'][] = [ 'message' => $this->getErrorMessage( $error ) ];
+					}
+				}
+				$templateData['code'][] = $line;
 			}
-			$templateData['message'] = $this->getErrorMessage( $error );
 			$templateData['info'] = wfMessage( 'xml-parse-error-info' )->escaped();
 
 			return $this->templateEngine->clearData()->setData( $templateData )->render( self::XML_DEBUG_TEMPLATE );
@@ -52,14 +60,16 @@ class PortableInfoboxErrorRenderService extends WikiaService {
 		return false;
 	}
 
-	public function getErrorMessage( libXMLError $error ) {
+	public function renderArticleMsgView() {
+		return wfMessage( 'xml-parse-error-info' )->escaped();
+	}
 
+	public function getErrorMessage( libXMLError $error ) {
 		if ( isset( $this->supportedErrors[ $error->code ] ) ) {
 			$key = $this->supportedErrors[ $error->code ];
 		} else {
 			$key = self::XML_ERR_GENERAL;
 		}
-
 		return wfMessage( strtolower( $key ) )->escaped();
 	}
 

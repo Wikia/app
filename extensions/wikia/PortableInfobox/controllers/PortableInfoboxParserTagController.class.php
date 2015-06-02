@@ -102,8 +102,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function handleXmlParseError( $errors, $xmlMarkup ) {
 		$errorRenderer = new PortableInfoboxErrorRenderService( $errors );
-		$renderedValue = $errorRenderer->renderMarkupDebugView( $xmlMarkup );
-
+		if ( $this->wg->Title->getNamespace() == NS_TEMPLATE ) {
+			$renderedValue = $errorRenderer->renderMarkupDebugView( $xmlMarkup );
+		} else {
+			$renderedValue = $errorRenderer->renderArticleMsgView();
+		}
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 

@@ -5,7 +5,7 @@ $messages[ 'en' ] = [
 	'portable-infobox-desc' => 'Create portable infoboxes which can be rendered using clean semantic HTML markup on
 	any skin / platform using using easy to understand powerful XML-like markup',
 	'unimplemented-infobox-tag' => 'Unimplemented infobox tag: <$1>',
-	'xml-parse-error-info' => 'There is some problem parsing infobox.',
+	'xml-parse-error-info' => 'There was a problem parsing infobox.',
 	'xml-parse-error' => 'Incorrect XML markup. Please validate your XML',
 	'xml_err_document_end' => 'Extra content at the end of the document',
 	'xml_err_undeclared_entity' => 'Undeclared entity (for example: &nbsp;)',
