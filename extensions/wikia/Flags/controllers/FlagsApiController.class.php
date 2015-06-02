@@ -10,12 +10,22 @@
  */
 
 use Flags\FlagsCache;
+use Flags\FlagsLogTask;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
 
+
 class FlagsApiController extends WikiaApiController {
+
 	const FLAGS_API_RESPONSE_STATUS = 'status';
 	const FLAGS_API_RESPONSE_DATA = 'data';
+	/**
+	 * Messages generated using following constants
+	 * logentry-flags-flag-added
+	 * logentry-flags-flag-removed
+	 */
+	const LOG_FLAG_ADDED_ACTION = 'flag-added';
+	const LOG_FLAG_REMOVED_ACTION = 'flag-removed';
 
 	private
 		$cache,
@@ -140,6 +150,7 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
 			$this->makeSuccessResponse( $modelResponse );
+			$this->logFlagChange( $this->params['flags'], $this->params['page_id'], self::LOG_FLAG_ADDED_ACTION );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
 		}
@@ -156,9 +167,10 @@ class FlagsApiController extends WikiaApiController {
 		try {
 			$this->processRequest();
 			$flagModel = new Flag();
-			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'], $this->params['page_id'] );
+			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
+			$this->logFlagChange( $this->params['flags'], $this->params['page_id'], self::LOG_FLAG_REMOVED_ACTION );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
 		}
@@ -347,5 +359,18 @@ class FlagsApiController extends WikiaApiController {
 		$flagTypesForWikia = $this->getFlagTypesForWikiaRawData( $wikiId );
 
 		return $flagsForPage + $flagTypesForWikia;
+	}
+
+	/**
+	 * Queue task for logging flag change
+	 * @param array $flags list of flags changed, each item of that list is an array with flag fields as items
+	 * @param int $pageId ID of article where flags were changed
+	 * @param string $actionType Type of action performed on flag represented by constants in \FlagsApiController class
+	 */
+	private function logFlagChange( $flags, $pageId, $actionType ) {
+		$task = new FlagsLogTask();
+		$task->wikiId( $this->wg->CityId );
+		$task->call( 'logFlagChange', $flags, $pageId, $actionType );
+		$task->queue();
 	}
 }

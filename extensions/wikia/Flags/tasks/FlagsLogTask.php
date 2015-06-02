@@ -14,7 +14,7 @@ class FlagsLogTask extends BaseTask {
 	 *
 	 * @param array $flags list of flags changed, each item of that list is an array with flag fields as items
 	 * @param int $pageId ID of article where flags were changed
-	 * @param string $actionType Type of action performed on flag represented by constants in Flags\Models\Flag class
+	 * @param string $actionType Type of action performed on flag represented by constants in \FlagsApiController class
 	 */
 	public function logFlagChange( array $flags, $pageId, $actionType ) {
 		global $wgCityId;

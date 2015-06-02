@@ -10,18 +10,7 @@
 
 namespace Flags\Models;
 
-use Flags\FlagsLogTask;
-
 class Flag extends FlagsBaseModel {
-	/**
-	 * Messages generated using following constants
-	 * logentry-flags-flag-added
-	 * logentry-flags-flag-removed
-	 */
-	const
-		LOG_FLAG_ADDED_ACTION = 'flag-added',
-		LOG_FLAG_REMOVED_ACTION = 'flag-removed';
-
 	/**
 	 * GET methods
 	 */
@@ -142,8 +131,6 @@ class Flag extends FlagsBaseModel {
 			}
 
 			$db->commit();
-
-			$this->logFlagChange( $params['flags'], $params['page_id'], self::LOG_FLAG_ADDED_ACTION );
 
 			return $addedFlags;
 		} catch ( \Exception $exception ) {
@@ -269,11 +256,10 @@ class Flag extends FlagsBaseModel {
 	 * Checks if parameters have been verified and
 	 * sends a request to remove flags with the passed IDs
 	 * @param array $flags An array of IDs of flags to remove
-	 * @param int $pageId ID of page from which flags were removed
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function removeFlagsFromPage( Array $flags, $pageId ) {
+	public function removeFlagsFromPage( Array $flags ) {
 		try {
 			$this->verifyParamsForRemove( $flags );
 
@@ -286,7 +272,6 @@ class Flag extends FlagsBaseModel {
 
 			if ( $this->removeFlags( $db, $flagsIds ) ) {
 				$db->commit();
-				$this->logFlagChange( $flags, $pageId, self::LOG_FLAG_REMOVED_ACTION );
 			}
 		} catch( \Exception $exception ) {
 			if ( $db !== null ) {
@@ -323,18 +308,5 @@ class Flag extends FlagsBaseModel {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Queue task for logging flag change
-	 * @param array $flags list of flags changed, each item of that list is an array with flag fields as items
-	 * @param int $pageId ID of article where flags were changed
-	 * @param string $action Type of action performed on flag represented by constants in Flags\Models\Flag class
-	 */
-	private function logFlagChange( $flags, $pageId, $action ) {
-		$task = new FlagsLogTask();
-		$task->wikiId( $this->wg->CityId );
-		$task->call( 'logFlagChange', $flags, $pageId, $action );
-		$task->queue();
 	}
 }
