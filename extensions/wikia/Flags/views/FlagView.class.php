@@ -42,8 +42,8 @@ class FlagView {
 	 * @return string
 	 */
 	public function wrapTemplateCalls( Array $templateCalls ) {
-		return \Xml::element( 'div', [
-			'class' => 'portable-notices'
+		return \Html::rawElement( 'div', [
+			'class' => 'portable-notices',
 		], implode( '', $templateCalls ) );
 	}
 }

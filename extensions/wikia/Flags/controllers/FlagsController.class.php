@@ -62,12 +62,7 @@ class FlagsController extends WikiaController {
 			wfProfileOut( __METHOD__ );
 			return $flagsWikitext;
 		} catch ( Exception $exception ) {
-			$this->error(
-				$exception->getMessage(),
-				[
-					'backtrace' => $exception->getTraceAsString(),
-				]
-			);
+			$this->logResponseException( $exception, $response->getRequest() );
 		}
 	}
 
@@ -82,6 +77,8 @@ class FlagsController extends WikiaController {
 			throw new MissingParameterApiException( 'page_id' );
 		}
 
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
 		/**
 		 * Disable caching for the rendered HTML. The API response is cached which is enough.
 		 */
@@ -94,12 +91,13 @@ class FlagsController extends WikiaController {
 			$this->overrideTemplate( 'editFormException' );
 			$this->setVal( 'exceptionMessage', $response->getException()->getDetails() );
 		} elseif ( $this->getResponseStatus( $response ) ) {
-			$flags = $this->getResponseData( $response );
+			$flags = array_values( $this->getResponseData( $response ) );
 			$this->setVal( 'editToken', $this->wg->User->getEditToken() );
 			$this->setVal( 'flags', $flags );
 			$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
 			$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
 			$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
+			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->escaped() );
 			$this->setVal( 'pageId', $pageId );
 		} else {
 			$this->overrideTemplate( 'editFormEmpty' );
@@ -181,16 +179,6 @@ class FlagsController extends WikiaController {
 			if ( $title === null ) {
 				throw $exception;
 			}
-
-			/**
-			 * Log the exception
-			 */
-			$this->error(
-				$exception->getMessage(),
-				[
-					'backtrace' => $exception->getTraceAsString(),
-				]
-			);
 
 			/**
 			 * Show a friendly error message to a user after redirect
@@ -346,5 +334,15 @@ class FlagsController extends WikiaController {
 
 	private function getResponseStatus( WikiaResponse $response ) {
 		return $response->getData()[FlagsApiController::FLAGS_API_RESPONSE_STATUS];
+	}
+
+	private function logResponseException( Exception $e, WikiaRequest $request ) {
+		$this->error(
+			'FlagsLog Exception',
+			[
+				'exception' => $e,
+				'prms' => $request->getParams(),
+			]
+		);
 	}
 }
