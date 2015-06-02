@@ -10,8 +10,11 @@
 
 namespace Flags;
 
+use Wikia\Logger\Loggable;
 
 class FlagsExtractor {
+
+	use Loggable;
 
 	const
 		// Number of opening and ending brackets
@@ -50,6 +53,14 @@ class FlagsExtractor {
 		$this->actions = $actions;
 		$this->actionParams = $actionParams;
 		$this->isFirst = true;
+
+		$this->logInfoMessage(
+			"Flags extractor init",
+			[
+				'actions' => $actions,
+				'action_params' => $actionParams
+			]
+		);
 	}
 
 	/**
@@ -247,6 +258,7 @@ class FlagsExtractor {
 	 */
 	private function doTemplateActions() {
 		if ( empty( $this->actions ) ) {
+			$this->logInfoMessage( 'No actions found' );
 			return false;
 		}
 
@@ -293,6 +305,10 @@ class FlagsExtractor {
 			$flagsToPages = $this->prepareParameters();
 
 			if ( !$flagsToPages ) {
+				$this->logErrorMessage(
+					'Required flag parameters for adding missing',
+					[ 'flag_params' => $flagsToPages ]
+				);
 				return false;
 			}
 
@@ -301,7 +317,18 @@ class FlagsExtractor {
 				$flagsToPages
 			)->getData();
 
+			if ( $response['status'] ) {
+				$this->logInfoMessage( 'Flag added to page', [ 'flag_params' => $flagsToPages ] );
+			} else {
+				$this->logErrorMessage( 'Flag not added to page', [ 'flag_params' => $flagsToPages ] );
+			}
+
 			return $response['status'];
+		} else {
+			$this->logErrorMessage(
+				'Required parameters for adding flag missing',
+				[ 'action_params' => $this->actionParams ]
+			);
 		}
 
 		return false;
@@ -318,6 +345,7 @@ class FlagsExtractor {
 		$template = $this->getLastTemplate();
 
 		if ( !$template ) {
+			$this->logInfoMessage( 'No template found' );
 			return false;
 		}
 
@@ -329,6 +357,7 @@ class FlagsExtractor {
 			if ( $flagTypeId = $this->getFlagTypeIdByTemplate( $template['name'] ) ) {
 				$this->actionParams['flag_type_id'] =  $flagTypeId;
 			} else {
+				$this->logErrorMessage( 'Cannot get flag type ID', [ 'action_params' => $this->actionParams ] );
 				return false;
 			}
 
@@ -379,11 +408,17 @@ class FlagsExtractor {
 	 * @param null $tag
 	 */
 	private function replaceTemplateByTag( $tag = null ) {
+		$template = $this->getLastTemplate();
+
 		if ( is_null( $tag ) ) {
 			$tag = $this->getReplacementTag();
 		}
 
-		$template = $this->getLastTemplate();
+		if ( $tag == '' ) {
+			$this->logInfoMessage( 'Template removed from text', [ 'template' => $template['template'] ] );
+		} else {
+			$this->logInfoMessage( 'Template replaced in text', [ 'template' => $template['template'] ] );
+		}
 
 		$templateLength = strlen( $template['template'] );
 
@@ -510,5 +545,51 @@ class FlagsExtractor {
 		}
 
 		return $templateParams;
+	}
+
+	/**
+	 * Log info message
+	 *
+	 * @param string $message text
+	 * @param array $params additional parameters
+	 */
+	private function logInfoMessage( $message, $params = [] ) {
+		$params = array_merge( $params, $this->getCommonParams() );
+
+		$this->info( $this->getLogMessage( $message ), $params );
+	}
+
+	/**
+	 * Log error message
+	 *
+	 * @param string $message text
+	 * @param array $params additional parameters
+	 */
+	private function logErrorMessage( $message, $params = [] ) {
+		$params = array_merge( $params, $this->getCommonParams() );
+
+		$this->error( $this->getLogMessage( $message ), $params );
+	}
+
+	/**
+	 * Added prefix to message
+	 *
+	 * @param string $message text
+	 * @return string
+	 */
+	private function getLogMessage( $message ) {
+		return FlagsHelper::FLAGS_LOG_PREFIX . ' ' . $message;
+	}
+
+	/**
+	 * Get common parameters
+	 *
+	 * @return array
+	 */
+	private function getCommonParams() {
+		return [
+			'template_name' => $this->templateName,
+			'is_first' => $this->isFirst
+		];
 	}
 } 
