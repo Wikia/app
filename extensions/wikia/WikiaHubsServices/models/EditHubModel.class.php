@@ -269,6 +269,9 @@ class EditHubModel extends WikiaModel {
 		return $out;
 	}
 
+	/**
+	 * @return User
+	 */
 	protected function getUserClass() {
 		return $this->userClass;
 	}
@@ -299,11 +302,14 @@ class EditHubModel extends WikiaModel {
 		);
 	}
 
+	/**
+	 * @return SpecialPage
+	 */
 	protected function getSpecialPageClass() {
 		return $this->specialPageClass;
 	}
 
-	public function setSpecialPageClass($specialPageClass) {
+	public function setSpecialPageClass(SpecialPage $specialPageClass) {
 		$this->specialPageClass = $specialPageClass;
 	}
 

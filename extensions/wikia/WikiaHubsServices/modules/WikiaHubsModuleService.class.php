@@ -21,7 +21,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	/**
 	 * @param $name
 	 * @param $cityId
-	 * @return WikiaHubsModuleService
+	 * @return WikiaHubsModuleEditableService|WikiaHubsModuleNonEditableService
 	 */
 	static public function getModuleByName($name, $cityId) {
 		$moduleClassName = self::CLASS_NAME_PREFIX . $name . self::CLASS_NAME_SUFFIX;
@@ -50,7 +50,8 @@ abstract class WikiaHubsModuleService extends WikiaService {
 			6 * 60 * 60,
 			function () use( $model, $params ) {
 				return $this->loadStructuredData( $model, $params );
-			}
+			},
+			WikiaDataAccess::SKIP_CACHE
 		);
 		if ( $this->getShouldFilterCommercialData() ) {
 			$structuredData = $this->filterCommercialData( $structuredData );

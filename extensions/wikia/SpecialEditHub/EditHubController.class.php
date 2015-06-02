@@ -1,7 +1,13 @@
 <?php
 
 class EditHubController extends WikiaSpecialPageController {
+	/**
+	 * @var EditHubModel $editHubModel
+	 */
 	protected $editHubModel;
+	/**
+	 * @var WikiaHubsServicesHelper
+	 */
 	private $hubsServicesHelper;
 
 	public function __construct() {
@@ -116,7 +122,6 @@ class EditHubController extends WikiaSpecialPageController {
 		]);
 
 		$this->checkDate($this->date);
-
 
 		$this->flashMessage = FlashMessages::pop();
 
@@ -391,6 +396,9 @@ class EditHubController extends WikiaSpecialPageController {
 		$this->videoUrl = $url;
 	}
 
+	/**
+	 * @param $module WikiaHubsModuleService
+	 */
 	private function purgeCache($module) {
 		global $wgCityId, $wgDisableWAMOnHubs;
 
