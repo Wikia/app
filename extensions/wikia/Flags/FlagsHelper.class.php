@@ -52,7 +52,7 @@ class FlagsHelper {
 				/**
 				 * 3. The flag type HAS an instance on this page and WAS NOT posted - remove flag
 				 */
-				$flagsToRemove[] = $flag['flag_id'];
+				$flagsToRemove[$flag['flag_id']] = $this->getFlagFromPostData( $flag, $postData );
 
 			} elseif ( $flag['flag_params_names'] !== null ) {
 				/**
@@ -66,9 +66,9 @@ class FlagsHelper {
 		}
 
 		return [
-			'toAdd' => $flagsToAdd,
-			'toRemove' => $flagsToRemove,
-			'toUpdate' => $flagsToUpdate,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_ADD => $flagsToAdd,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_REMOVE => $flagsToRemove,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_UPDATE => $flagsToUpdate,
 		];
 	}
 
@@ -95,11 +95,12 @@ class FlagsHelper {
 			$flagFromPost['flag_type_id'] = $flagTypeId;
 		}
 
+		$flagFromPost['params'] = [];
+
 		/**
 		 * Check if params should be posted
 		 */
 		if ( $flag['flag_params_names'] !== null ) {
-			$flagFromPost['params'] = [];
 			$paramNames = json_decode( $flag['flag_params_names'] );
 
 			/**

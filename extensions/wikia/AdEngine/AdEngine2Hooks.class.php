@@ -60,6 +60,7 @@ class AdEngine2Hooks {
 	{
 		$vars[] = 'wgAdDriverIncontentPlayerSlotCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
+		$vars[] = 'wgAdDriverOpenXCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgAmazonMatchOldCountries';
@@ -93,7 +94,10 @@ class AdEngine2Hooks {
 
 		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
 
-		$vars['ads'] = ['context' => $adContext];
+		$vars['ads'] = [
+			'context' => $adContext,
+			'runtime' => [],
+		];
 
 		// Legacy vars:
 		$vars['adslots2'] = [];                  // Queue for ads registration

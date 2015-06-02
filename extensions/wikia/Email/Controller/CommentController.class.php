@@ -9,7 +9,7 @@ use Email\Fatal;
 abstract class CommentController extends EmailController {
 
 	/** @var \Title */
-	protected $title;
+	protected $pageTitle;
 
 	/** @var \Title */
 	protected $commentTitle;
@@ -19,7 +19,7 @@ abstract class CommentController extends EmailController {
 		$titleText = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace' );
 
-		$this->title = \Title::newFromText( $titleText, $titleNamespace );
+		$this->pageTitle = \Title::newFromText( $titleText, $titleNamespace );
 
 		// This revision ID is for the comment that was left
 		$commentRevID = $this->getVal( 'currentRevId', false );
@@ -46,11 +46,11 @@ abstract class CommentController extends EmailController {
 	 * @throws \Email\Check
 	 */
 	private function assertValidTitle() {
-		if ( !$this->title instanceof \Title ) {
+		if ( !$this->pageTitle instanceof \Title ) {
 			throw new Check( "Invalid value passed for title" );
 		}
 
-		if ( !$this->title->exists() ) {
+		if ( !$this->pageTitle->exists() ) {
 			throw new Check( "Title doesn't exist." );
 		}
 	}
@@ -63,7 +63,7 @@ abstract class CommentController extends EmailController {
 			throw new Check( "Could not find comment for revision ID given by currentRevId" );
 		}
 
-		if ( !$this->title->exists() ) {
+		if ( !$this->pageTitle->exists() ) {
 			throw new Check( "Comment doesn't exist." );
 		}
 	}
@@ -78,17 +78,18 @@ abstract class CommentController extends EmailController {
 			'editorUserName' => $this->getCurrentUserName(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'summary' => $this->getSummary(),
-			'details' => $this->getDetails(),
 			'buttonText' => $this->getCommentLabel(),
 			'buttonLink' => $this->getCommentLink(),
 			'contentFooterMessages' => [
 				$this->getCommentSectionLink(),
 			],
+			'details' => $this->getDetails(),
+			'hasContentFooterMessages' => true
 		] );
 	}
 
 	public function getSubject() {
-		$articleTitle = $this->title->getText();
+		$articleTitle = $this->pageTitle->getText();
 		return wfMessage( $this->getSubjectKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
 			->text();
@@ -96,15 +97,8 @@ abstract class CommentController extends EmailController {
 
 	abstract protected function getSubjectKey();
 
-	protected function getSalutation() {
-		return wfMessage(
-			'emailext-comment-salutation',
-			$this->targetUser->getName()
-		)->inLanguage( $this->targetLang )->text();
-	}
-
 	protected function getSummary() {
-		$articleTitle = $this->title->getText();
+		$articleTitle = $this->pageTitle->getText();
 
 		return wfMessage( $this->getSummaryKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
@@ -133,8 +127,8 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getFooterMessages() {
-		$parentUrl = $this->title->getCanonicalURL( 'action=unwatch' );
-		$parentTitleText = $this->title->getPrefixedText();
+		$parentUrl = $this->pageTitle->getFullURL( 'action=unwatch' );
+		$parentTitleText = $this->pageTitle->getPrefixedText();
 
 		$footerMessages = [
 			wfMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
@@ -145,7 +139,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getCommentSectionLink() {
-		$url = $this->title->getFullURL( '#WikiaArticleComments' );
+		$url = $this->pageTitle->getFullURL( '#WikiaArticleComments' );
 
 		return wfMessage( 'emailext-comment-view-all', $url )
 			->inLanguage( $this->targetLang )

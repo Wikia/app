@@ -150,6 +150,20 @@ describe('AdContext', function () {
 		expect(adContext.getContext().providers.turtle).toBeFalsy();
 	});
 
+	it('makes providers.openX true when country in instantGlobals.wgAdDriverOpenXCountries', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgAdDriverOpenXCountries: ['AA', 'XX', 'ZZ']
+		});
+		expect(adContext.getContext().providers.openX).toBeTruthy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgAdDriverOpenXCountries: ['YY']
+		});
+		expect(adContext.getContext().providers.openX).toBeFalsy();
+	});
+
 	it('calls whoever registered with addCallback each time setContext is called', function () {
 		var adContext,
 			mocks = {

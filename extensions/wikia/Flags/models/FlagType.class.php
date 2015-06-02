@@ -11,9 +11,6 @@
 namespace Flags\Models;
 
 class FlagType extends FlagsBaseModel {
-	private
-		$paramsVerified = false;
-
 	/**
 	 * Flags are organized in groups. We store this information as integers in the database.
 	 * Let's translate the numbers into something more readable!
@@ -125,21 +122,22 @@ class FlagType extends FlagsBaseModel {
 	 * before performing an INSERT query.
 	 * @param array $params
 	 * @return bool
+	 * @throws \InvalidParameterApiException
+	 * @throws \MissingParameterApiException
 	 */
 	public function verifyParamsForAdd( $params ) {
 		$required = [ 'wiki_id', 'flag_group', 'flag_name', 'flag_view', 'flag_targeting' ];
 
 		foreach ( $required as $requiredField ) {
 			if ( !isset( $params[$requiredField] ) ) {
-				return false; // Lack of a required parameter
+				throw new \MissingParameterApiException( $requiredField ) ;
 			}
 		}
 
 		if ( !isset( self::$flagGroups[$params['flag_group']] ) ) {
-			return false; // Unrecognized flag group
+			throw new \InvalidParameterApiException( 'flag_group' );
 		}
 
-		$this->paramsVerified = true;
 		return true;
 	}
 
@@ -150,9 +148,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function addFlagType( $params ) {
-		if ( !$this->paramsVerified ) {
-			return false;
-		}
+		$this->verifyParamsForAdd( $params );
 
 		$db = $this->getDatabaseForWrite();
 
@@ -188,13 +184,13 @@ class FlagType extends FlagsBaseModel {
 	 * Verifies if a `flagTypeId` has been set
 	 * @param array $params
 	 * @return bool
+	 * @throws \MissingParameterApiException
 	 */
 	public function verifyParamsForRemove( $params ) {
 		if ( !isset( $params['flag_type_id'] ) ) {
-			return false;
+			throw new \MissingParameterApiException( 'flag_type_id' );
 		}
 
-		$this->paramsVerified = true;
 		return true;
 	}
 
@@ -204,9 +200,7 @@ class FlagType extends FlagsBaseModel {
 	 * @return bool
 	 */
 	public function removeFlagType( $params ) {
-		if ( !$this->paramsVerified ) {
-			return false;
-		}
+		$this->verifyParamsForRemove( $params );
 
 		$db = $this->getDatabaseForWrite();
 
