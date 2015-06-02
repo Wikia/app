@@ -111,6 +111,9 @@ class UncycloUserMigrator extends Maintenance {
 		$this->addOption( 'do-not-touch-global-users', 'Do not touch shared users database (no renames nor creation)' );
 		$this->addOption( 'cluster', 'Use the provided cluster instead of $wgDBcluster' ); // e.g. --cluster=c5
 
+		$this->addOption( 'from', 'Uncyclo user ID to start the migration from' );
+		$this->addOption( 'to', 'Uncyclo user ID to finish the migration at' );
+
 		$this->mDescription = 'This script migrates uncyclopedia user accounts to the shared database';
 	}
 
@@ -690,11 +693,19 @@ class UncycloUserMigrator extends Maintenance {
 		$this->output( "Working on {$wgDBname} database (cluster {$wgDBcluster}, master {$this->getUncycloDB(DB_MASTER)->getServer()}, slave {$this->getUncycloDB(DB_SLAVE)->getServer()})\n" );
 
 		// get all uncyclopedia accounts
-		$this->output( "Preparing the list of accounts to migrate..." );
+		$conds = [];
+
+		$from_id = intval( $this->getOption( 'from' ) );
+		$to_id   = intval( $this->getOption( 'to' ) );
+
+		if ( $from_id ) $conds[] = 'user_id >= ' . $from_id;
+		if ( $to_id )   $conds[] = 'user_id <= ' . $to_id;
+
+		$this->output( "Preparing the list of accounts to migrate... conds = " . json_encode( $conds ) );
 		$res = $this->getUncycloDB()->select(
 			self::USER_TABLE,
 			'*',
-			[],
+			$conds,
 			__METHOD__
 		);
 
