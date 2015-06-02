@@ -499,6 +499,8 @@ class UncycloUserMigrator extends Maintenance {
 	private function migrateUser(User $user) {
 		$this->output( sprintf( "%d: %s <%s>", $user->getId(), $user->getName(), $user->mEmail ?: 'MISSING_EMAIL' ) );
 
+		$then = microtime( true );
+
 		// keep data that will be saved to CSV file
 		$action = false;
 		$userName = $user->getName();
@@ -608,6 +610,13 @@ class UncycloUserMigrator extends Maintenance {
 			] );
 		}
 
+		$this->info( __METHOD__, [
+			'took'      => microtime( true ) - $then,
+			'user_id'   => $user->getId(),
+			'user_name' => $userName,
+			'action'    => $action
+		] );
+
 		$this->output( "\n" );
 	}
 
@@ -696,7 +705,10 @@ class UncycloUserMigrator extends Maintenance {
 		$dbw = $this->getUncycloDB( DB_MASTER );
 		$dbw->commit( __METHOD__ );
 
+		$i = 0;
+
 		while( $row = $res->fetchObject() ) {
+			$i++;
 			$user = User::newFromRow((object)$row);
 
 			try {
@@ -717,7 +729,9 @@ class UncycloUserMigrator extends Maintenance {
 			}
 
 			if ( !$this->isDryRun ) {
-				wfWaitForSlaves();
+				if ( $i % 50 === 0 ) {
+					wfWaitForSlaves();
+				}
 			}
 		}
 
