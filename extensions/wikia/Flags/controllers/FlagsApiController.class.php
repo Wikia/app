@@ -12,8 +12,12 @@
 use Flags\FlagsCache;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
+use Wikia\Logger\Loggable;
 
 class FlagsApiController extends WikiaApiController {
+
+	use Loggable;
+
 	const FLAGS_API_RESPONSE_STATUS = 'status';
 	const FLAGS_API_RESPONSE_DATA = 'data';
 
@@ -63,6 +67,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $flagsForPage );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -111,6 +116,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $allFlagTypes );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -141,6 +147,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -160,6 +167,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -177,6 +185,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -208,6 +217,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -231,6 +241,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -305,6 +316,9 @@ class FlagsApiController extends WikiaApiController {
 			$flagsForPage = $flagModel->getFlagsForPage( $wikiId, $pageId );
 
 			$flagsCache->setFlagsForPage( $pageId, $flagsForPage );
+			$this->logCache( 'getFlagsForPage', 'MISS' );
+		} else {
+			$this->logCache( 'getFlagsForPage', 'HIT' );
 		}
 
 		return $flagsForPage;
@@ -325,6 +339,9 @@ class FlagsApiController extends WikiaApiController {
 			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
 
 			$flagsCache->setFlagTypesForWikia( $flagTypesForWikia );
+			$this->logCache( 'getFlagsForPageForEdit', 'MISS' );
+		} else {
+			$this->logCache( 'getFlagsForPageForEdit', 'HIT' );
 		}
 
 		return $flagTypesForWikia;
@@ -347,5 +364,25 @@ class FlagsApiController extends WikiaApiController {
 		$flagTypesForWikia = $this->getFlagTypesForWikiaRawData( $wikiId );
 
 		return $flagsForPage + $flagTypesForWikia;
+	}
+
+	/**
+	 * Logging methods
+	 */
+	private function logResponseException( Exception $e, WikiaRequest $request ) {
+		$this->error(
+			'FlagsLog Exception',
+			[
+				'exception' => $e,
+				'prms' => $request->getParams(),
+			]
+		);
+	}
+
+	private function logCache( $method, $hit ) {
+		$this->info( 'FlagsLog Cache', [
+			'ht' => $hit,
+			'mthd' => $method,
+		] );
 	}
 }
