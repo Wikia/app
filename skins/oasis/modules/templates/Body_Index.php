@@ -158,8 +158,8 @@
 					}
 				?>
 				<div id="WikiaArticleBottomAd" class="noprint">
-					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD'] ) ?>
-					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD'] ) ?>
+					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD', 'onLoad' => true] ) ?>
+					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD', 'onLoad' => true] ) ?>
 				</div>
 			</div>
 		</article><!-- WikiaMainContent -->
