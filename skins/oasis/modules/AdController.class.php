@@ -5,7 +5,6 @@ class AdController extends WikiaController {
 	public function index() {
 		$this->slotName = $this->request->getVal('slotName');
 		$this->pageTypes = $this->request->getVal('pageTypes');
-		$this->pageFairId = $this->request->getVal('pageFairId', null);
 		$this->includeLabel = $this->request->getVal('includeLabel');
 	}
 
