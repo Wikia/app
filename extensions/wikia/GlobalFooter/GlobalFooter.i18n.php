@@ -12,6 +12,7 @@ $messages['en'] = [
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'global-footer-desc' => 'GlobalFooter',
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>About</span>
+		*http://community.wikia.com/wiki/Help:Contents|Help
 		*http://community.wikia.com|<span>Community Central</span>
 		*http://www.wikia.com/Careers|Careers
 		*http://www.wikia.com/Advertising|Advertise
@@ -19,7 +20,7 @@ $messages['en'] = [
 		*Special:Contact|Contact
 		*http://www.wikia.com/Terms_of_Use|Terms of Use
 		*http://www.wikia.com/Privacy_Policy|Privacy Policy
-		*http://www.wikia.com/Sitemap|Site Map
+		*http://www.wikia.com/Sitemap|Sitemap
 		*_LICENSE_',
 
 	//Monobook
@@ -38,15 +39,16 @@ $messages['de'] = [
 	'global-footer-vertical-books-link' => 'http://de.literaturhub.wikia.com/wiki/Literatur_Hub',
 	'global-footer-vertical-games-link' => 'http://de.videospielehub.wikia.com/wiki/Videospiele_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://de.lifestylehub.wikia.com/wiki/Lifestyle_Hub',
-	'shared-Oasis-footer-wikia-links' => '*http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
-		*http://de.community.wikia.com|Community-Wiki
+	'shared-Oasis-footer-wikia-links' => '**http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
+		*http://de.community.wikia.com/wiki/Hilfe:%C3%9Cbersicht|Hilfe
+		*http://de.community.wikia.com|Community Deutschland
 		*http://de.wikia.com/Stellen|Stellenangebote
 		*http://www.wikia.com/Advertising|Auf Wikia werben
 		*http://api.wikia.com/|API
 		*Special:Contact|Kontakt
 		*http://de.wikia.com/Nutzungsbedingungen|Nutzungsbedingungen
 		*http://de.wikia.com/Datenschutz|Datenschutz
-		*_LICENSE_',
+		*http://de.wikia.com/Lizenz|CC-BY-SA',
 
 	//Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
@@ -62,15 +64,16 @@ $messages['fr'] = [
 	'global-footer-vertical-books-link' => 'http://portail-divertissement.wikia.com/wiki/Portail_divertissement',
 	'global-footer-vertical-games-link' => 'http://portail-jeuxvideo.wikia.com/wiki/Portail_jeux_vid%C3%A9o',
 	'global-footer-vertical-lifestyle-link' => 'http://portail-modedevie.wikia.com/wiki/Portail_mode_de_vie',
-	'shared-Oasis-footer-wikia-links' => '*http://fr.wikia.com/À_propos|<span>À propos</span>
-		*http://communaute.wikia.com|<span>Wiki des communautés</span>
+	'shared-Oasis-footer-wikia-links' => '*http://fr.wikia.com/À_propos|À propos
+		*http://communaute.wikia.com/wiki/Aide:Contenu|Aide
+		*http://communaute.wikia.com|Centre des communautés
 		*http://www.wikia.com/Careers|Emplois
 		*http://www.wikia.com/Advertising|Publicité
-		*http://api.wikia.com/|<span>API</span>
+		*http://api.wikia.com/|API
 		*Special:Contact|Nous contacter
-		*http://fr.wikia.com/Conditions_d\'utilisation|Conditions d’utilisation
-		*http://www.wikia.com/Privacy_Policy|Politique de confidentialité
-		*_LICENSE_',
+		*http://fr.wikia.com/Conditions_d\'utilisation|Conditions d\'utilisation
+		*http://fr.wikia.com/Politique_de_confidentialité|Politique de confidentialité
+		*http://fr.wikia.com/Licence|Sous licence CC-BY-SA',
 
 	//Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
@@ -89,8 +92,9 @@ $messages['pl'] = [
 	'global-footer-vertical-games-link' => 'http://gryhub.wikia.com/wiki/Gry',
 	'global-footer-vertical-lifestyle-link' => 'http://pl.lifestylehub.wikia.com/wiki/Lifestyle',
 	'shared-Oasis-footer-wikia-links' => '*http://pl.wikia.com/O_nas|O nas
+		*http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87|Pomoc
 		*http://www.spolecznosc.wikia.com|Centrum Społeczności
-		*http://www.wikia.com/Careers|Kariera
+		*http://kariera.wikia.com/|Kariera
 		*http://www.wikia.com/Advertising|Reklama
 		*http://api.wikia.com/|API
 		*Special:Contact|Kontakt
@@ -116,13 +120,14 @@ $messages['es'] = [
 	'global-footer-vertical-games-link' => 'http://es.gameshub.wikia.com/wiki/Wiki_Videojuegos_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://es.lifestylehub.wikia.com/wiki/Wiki_Estilo_de_vida_Hub',
 	'shared-Oasis-footer-wikia-links' => '*http://es.wikia.com/Sobre_nosotros|<span>Sobre Wikia</span>
+		*http://comunidad.wikia.com/wiki/Ayuda:Contenidos|Ayuda
 		*http://comunidad.wikia.com|<span>Comunidad Central</span>
 		*http://www.wikia.com/Hiring|Contrataciones
 		*http://mediakit.wikia.com/wiki/Media_Kit_Wiki|Publicidad
 		*http://api.wikia.com/|<span>API</span>
-		*Special:Contact|Contacto
-		*http://es.wikia.com/T%C3%A9rminos_de_Uso|Términos de Uso
-		*http://es.wikia.com/Pol%C3%ADtica_de_Privacidad|Política de Privacidad
+		*Special:Contact|Contactar
+		*http://es.wikia.com/T%C3%A9rminos_de_uso|Términos de uso
+		*http://es.wikia.com/Pol%C3%ADtica_de_privacidad|Política de privacidad
 		*http://es.wikia.com/Licencia|CC-BY-SA',
 
 	//Monobook
@@ -139,19 +144,22 @@ $messages['ja'] = [
 	'global-footer-vertical-movies-link' => 'http://ja.entertainmenthub.wikia.com/wiki/%E3%82%A8%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%86%E3%82%A4%E3%83%A1%E3%83%B3%E3%83%88%E3%83%8F%E3%83%96_Wiki',
 	'global-footer-vertical-books-link' => 'http://ja.community.wikia.com/wiki/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%83%96%E3%83%AD%E3%82%B0:Gurgate/%E6%80%A7%E6%A0%BC%E8%A8%BA%E6%96%AD%E3%83%86%E3%82%B9%E3%83%88%E3%82%92%E3%82%84%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86',
 	'global-footer-vertical-games-link' => 'http://ja.videogameshub.wikia.com/wiki/%E3%83%93%E3%83%87%E3%82%AA%E3%82%B2%E3%83%BC%E3%83%A0%E3%83%8F%E3%83%96_Wiki',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>ウィキアについて</span>
-		*http://www.wikia.com/Hiring|キャリア
+	'shared-Oasis-footer-wikia-links' => '*http://ja.wikia.com/ウィキアについて|<span>ウィキアについて</span>
+		*http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ|ヘルプ
+		*w:c:ja.community|<span>コミュニティセントラル</span>
+		*http://www.wikia.com/Careers|キャリア
 		*http://www.wikia.com/Advertising|広告
-		*Special:Contact|コンタクト
-		*http://ja.community.wikia.com/wiki/Wikia:%E3%82%A6%E3%82%A3%E3%82%AD%E3%82%A2%E3%81%AE%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84|<span>ウィキアの利用規約</span>
-		*http://www.wikia.com/Privacy_Policy|Privacy Policy　
-		*http://www.wikia.com/Special:CreateWiki|Create a wiki
-		*_LICENSE_',
+		*http://api.wikia.com/|<span>API</span>
+		*Special:Contact|お問い合わせ
+		*http://ja.wikia.com/利用規約|利用規約
+		*http://ja.wikia.com/プライバシーポリシー|プライバシーポリシー
+		*http://ja.wikia.com/Licensing|コンテンツはCC-BY-SAのもとに提供されています',
 ];
 
 $messages['it'] = [
 	//Oasis
 	'shared-Oasis-footer-wikia-links' => '* http://www.wikia.com/About_Us |Su di noi
+		* http://it.community.wikia.com/wiki/Aiuto |Aiuto
 		* http://www.wikia.com/Hiring |Lavoro
 		* http://www.wikia.com/Advertising |Pubblicità
 		* Special:Contact|Contattaci
@@ -170,7 +178,8 @@ $messages['it'] = [
 
 $messages['ko'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>회사 소개</span>
-		*http://ko.wikia.com|<span>중앙 커뮤니티</span>
+		*http://ko.community.wikia.com/wiki/도움말:콘텐츠|도움말
+		*http://ko.community.wikia.com|<span>중앙 커뮤니티</span>
 		*http://www.wikia.com/Hiring|채용정보
 		*http://www.wikia.com/Advertising|광고 문의
 		*http://api.wikia.com/|<span>API</span>
@@ -182,11 +191,12 @@ $messages['ko'] = [
 
 $messages['ru'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>О Викия</span>
+		*http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5|Справка
 		*http://www.community.wikia.com|<span>Центральная Вики</span>
 		*http://www.wikia.com/Careers|Карьера
 		*http://www.wikia.com/Advertising|Реклама
 		http://api.wikia.com/wiki/Wikia_API_Wiki|<span>API</span>
-		*Special:Contact|Contact
+		*Special:Contact|Связаться с Викия
 		*http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F|Условия использования
 		*http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C|Конфиденциальность
 		*_LICENSE_',
@@ -201,9 +211,10 @@ $messages['ru'] = [
 
 $messages['zh'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
+		*http://zh.community.wikia.com/wiki/Help:内容|帮助
 		*http://www.wikia.com/Hiring|<span>维基招聘</span>
 		*http://www.wikia.com/Advertising|<span>广告服务</span>
-		*http://zh.community.wikia.com/wiki/Special:Contact|<span>联系我们</span>
+		*Special:Contact|联系我们
 		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用条款</span>
 		*http://www.wikia.com/Privacy_Policy|<span>隐私政策</span>
 		*http://www.wikia.com/Special:CreateWiki|<span>创建维基</span>
@@ -231,13 +242,14 @@ $messages['pt-br'] = [
 	'global-footer-vertical-games-link' => 'http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub',
 	'global-footer-vertical-lifestyle-link' => 'http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida',
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>Sobre nós</span>
-		*http://www.wikia.com/Hiring|Carreiras
-		*http://www.wikia.com/Advertising|Advertise
-		*Special:Contact|Contate a Wikia
-		*http://www.wikia.com/Terms_of_Use|Termos de Uso
-		*http://www.wikia.com/Privacy_Policy|Privacy Policy
+		*http://comunidade.wikia.com/wiki/Ajuda:Conteúdos| Ajuda
+		*http://www.wikia.com/Hiring| Carreiras
+		*http://www.wikia.com/Advertising| Anuncie
+		*Special:Contact| Contate a Wikia
+		*http://www.pt.wikia.com/Termos_de_Uso| Termos de Uso
+		*http://www.wikia.com/Privacy_Policy| Políticas de privacidade
 		*_LICENSE_
-		*http://www.wikia.com/Special:CreateWiki|Criar uma wiki'
+		*http://www.pt.wikia.com/Special:CreateWiki| Criar uma wiki'
 ];
 
 $messages['ca'] = [
@@ -258,6 +270,78 @@ $messages['cs'] = [
 
 $messages['gl'] = [
 	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes?uselang=gl',
+];
+
+$messages['fi'] = [
+	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>Tietoa meistä</span>
+		*http://yhteiso.wikia.com|Yhteisöwiki
+		*http://www.wikia.com/Hiring|Rekrytointi
+		*http://www.wikia.com/Advertising|Mainonta
+		*Special:Contact|Ota yhteyttä
+		*http://www.wikia.com/Terms_of_Use|Käyttöehdot
+		*http://www.wikia.com/Privacy_Policy|Yksityisyyssäädökset
+		*_LICENSE_',
+];
+
+$messages['vi'] = [
+	'shared-Oasis-footer-wikia-links' => '*http://congdong.wikia.com/wiki/Giới_thiệu|<span>Giới thiệu</span>
+		*http://congdong.wikia.com|<span>Cộng đồng Wikia tiếng Việt</span>
+		*http://www.wikia.com/Careers|Tuyển dụng
+		*http://www.wikia.com/Advertising|Quảng cáo
+		*http://api.wikia.com/|<span>API</span>
+		*Special:Contact|Liên hệ Wikia
+		*http://congdong.wikia.com/wiki/Điều_khoản_sử_dụng|Điều khoản sử dụng
+		*http://congdong.wikia.com/wiki/Chính_sách_bảo_mật|Chính sách bảo mật
+		*_LICENSE_',
+];
+
+
+$messages['zh-hans'] = [
+	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
+		*http://zh.community.wikia.com/wiki/Help:内容|帮助
+		*http://www.wikia.com/Hiring|<span>维基招聘</span>
+		*http://www.wikia.com/Advertising|<span>广告服务</span>
+		*Special:Contact|联系我们
+		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用条款</span>
+		*http://www.wikia.com/Privacy_Policy|<span>隐私政策</span>
+		*http://www.wikia.com/Special:CreateWiki|<span>创建维基</span>
+		*_LICENSE_',
+];
+
+$messages['zh-hant'] = [
+	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>關於我們</span>
+		*http://zh.community.wikia.com/wiki/Help:内容|說明
+		*http://www.wikia.com/Hiring|<span>維基招聘</span>
+		*http://www.wikia.com/Advertising|<span>廣告服務</span>
+		*Special:Contact|聯繫我們
+		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用條款</span>
+		*http://www.wikia.com/Privacy_Policy|<span>隱私政策</span>
+		*http://www.wikia.com/Special:CreateWiki|<span>創建維基</span>
+		*_LICENSE_',
+];
+
+$messages['zh-hk'] = [
+	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>關於我們</span>
+		*http://zh.community.wikia.com/wiki/Help:内容|說明
+		*http://www.wikia.com/Hiring|<span>維基招聘</span>
+		*http://www.wikia.com/Advertising|<span>廣告服務</span>
+		*Special:Contact|聯繫我們
+		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用條款</span>
+		*http://www.wikia.com/Privacy_Policy|<span>隱私政策</span>
+		*http://www.wikia.com/Special:CreateWiki|<span>創建維基</span>
+		*_LICENSE_',
+];
+
+$messages['zh-tw'] = [
+	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>關於我們</span>
+		*http://zh.community.wikia.com/wiki/Help:内容|使用說明
+		*http://www.wikia.com/Hiring|<span>維基招聘</span>
+		*http://www.wikia.com/Advertising|<span>廣告服務</span>
+		*Special:Contact|聯繫我們
+		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用條款</span>
+		*http://www.wikia.com/Privacy_Policy|<span>隱私政策</span>
+		*http://www.wikia.com/Special:CreateWiki|<span>創建維基</span>
+		*_LICENSE_',
 ];
 
 $messages['qqq'] = [
