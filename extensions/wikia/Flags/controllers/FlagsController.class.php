@@ -62,12 +62,7 @@ class FlagsController extends WikiaController {
 			wfProfileOut( __METHOD__ );
 			return $flagsWikitext;
 		} catch ( Exception $exception ) {
-			$this->error(
-				$exception->getMessage(),
-				[
-					'backtrace' => $exception->getTraceAsString(),
-				]
-			);
+			$this->logResponseException( $exception, $response->getRequest() );
 		}
 	}
 
@@ -184,16 +179,6 @@ class FlagsController extends WikiaController {
 			if ( $title === null ) {
 				throw $exception;
 			}
-
-			/**
-			 * Log the exception
-			 */
-			$this->error(
-				$exception->getMessage(),
-				[
-					'backtrace' => $exception->getTraceAsString(),
-				]
-			);
 
 			/**
 			 * Show a friendly error message to a user after redirect
@@ -349,5 +334,15 @@ class FlagsController extends WikiaController {
 
 	private function getResponseStatus( WikiaResponse $response ) {
 		return $response->getData()[FlagsApiController::FLAGS_API_RESPONSE_STATUS];
+	}
+
+	private function logResponseException( Exception $e, WikiaRequest $request ) {
+		$this->error(
+			'FlagsLog Exception',
+			[
+				'exception' => $e,
+				'prms' => $request->getParams(),
+			]
+		);
 	}
 }
