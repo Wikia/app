@@ -2441,6 +2441,14 @@ $config['portable_infobox_monobook_scss'] = [
 	]
 ];
 
+$config['flags_css'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/styles/Flags.scss',
+	],
+];
+
 $config['flags_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'monobook'],

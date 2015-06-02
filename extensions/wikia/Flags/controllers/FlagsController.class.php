@@ -10,8 +10,8 @@
  */
 
 use Flags\FlagsCache;
-use Flags\Views\FlagView;
 use Flags\FlagsHelper;
+use Flags\Views\FlagView;
 use Wikia\Logger\Loggable;
 
 class FlagsController extends WikiaController {
@@ -47,16 +47,20 @@ class FlagsController extends WikiaController {
 			$response = $this->requestGetFlagsForPage( $pageId );
 
 			if ( $this->getResponseStatus( $response ) ) {
-				$templatesCalls = [ ];
+				$templatesCalls = [];
 				$flags = $this->getResponseData( $response );
 
 				$flagView = new FlagView();
 
 				foreach ( $flags as $flagId => $flag ) {
-					$templatesCalls[] = $flagView->createWikitextCall( $flag['flag_view'], $flag['params'] );
+					$templatesCalls[] = $flagView->wrapSingleFlag(
+						$flag['flag_targeting'],
+						$flag['flag_view'],
+						$flag['params']
+					);
 				}
 
-				$flagsWikitext = $flagView->wrapTemplateCalls( $templatesCalls );
+				$flagsWikitext = $flagView->wrapAllFlags( $templatesCalls );
 			}
 
 			wfProfileOut( __METHOD__ );
