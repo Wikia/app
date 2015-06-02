@@ -62,7 +62,7 @@ abstract class EmailController extends \WikiaController {
 			$this->test = $this->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
-			$noReplyName = wfMessage( 'emailext-no-reply-name' )->escaped();
+			$noReplyName = $this->getMessage( 'emailext-no-reply-name' )->escaped();
 
 			$this->replyToAddress = new \MailAddress(
 				$this->getVal( 'replyToAddress', $this->wg->NoReplyAddress ),
@@ -331,11 +331,11 @@ abstract class EmailController extends \WikiaController {
 
 	protected function getFooterMessages() {
 		return [
-			wfMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
+			$this->getMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
 				->inLanguage( $this->targetLang )->parse(),
-			wfMessage( 'emailext-update-frequency' )
+			$this->getMessage( 'emailext-update-frequency' )
 				->inLanguage( $this->targetLang )->parse(),
-			wfMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
+			$this->getMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
 				->inLanguage( $this->targetLang )->parse(),
 		];
 	}
@@ -345,7 +345,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return String
 	 */
 	protected function getTagline() {
-		return wfMessage( 'emailext-fans-tagline' )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( 'emailext-fans-tagline' )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
@@ -420,7 +420,7 @@ abstract class EmailController extends \WikiaController {
 		if ( $this->currentUser->isLoggedIn() )	 {
 			return $this->currentUser->getName();
 		}
-		return wfMessage( "emailext-anonymous-editor" )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( "emailext-anonymous-editor" )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
@@ -463,7 +463,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getSalutation() {
-		return wfMessage( 'emailext-salutation',
+		return $this->getMessage( 'emailext-salutation',
 			$this->targetUser->getName() )->inLanguage( $this->targetLang )->text();
 	}
 
@@ -643,5 +643,14 @@ abstract class EmailController extends \WikiaController {
 		}
 
 		return $legendName;
+	}
+
+	/**
+	 * A wrapper for wfMessage() which removes possibility of database lookup for message text
+	 *
+	 * @return Message
+	 */
+	protected function getMessage() {
+		return wfMessage( func_get_args() )->useDatabase( false );
 	}
 }

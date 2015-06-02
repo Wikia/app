@@ -21,7 +21,7 @@ abstract class WatchedPageController extends EmailController {
 	protected abstract function getSummaryMessageKey();
 
 	public function getSubject() {
-		return wfMessage( $this->getSubjectMessageKey(), $this->title->getPrefixedText(), $this->getCurrentUserName() )
+		return $this->getMessage( $this->getSubjectMessageKey(), $this->title->getPrefixedText(), $this->getCurrentUserName() )
 			->inLanguage( $this->targetLang )
 			->text();
 	}
@@ -67,7 +67,7 @@ abstract class WatchedPageController extends EmailController {
 
 	protected function getFooterMessages() {
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text',
+			$this->getMessage( 'emailext-unfollow-text',
 				$this->title->getCanonicalUrl( 'action=unwatch' ),
 				$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse()
 		];
@@ -98,7 +98,7 @@ abstract class WatchedPageController extends EmailController {
 	 * @return String
 	 */
 	private function getSummary() {
-		return wfMessage( $this->getSummaryMessageKey(),
+		return $this->getMessage( $this->getSummaryMessageKey(),
 			$this->title->getFullURL(),
 			$this->title->getPrefixedText()
 		)->inLanguage( $this->targetLang )->parse();
@@ -111,14 +111,14 @@ abstract class WatchedPageController extends EmailController {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}
-		return wfMessage( 'emailext-watchedpage-no-summary' )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( 'emailext-watchedpage-no-summary' )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
 	 * @return String
 	 */
 	protected function getButtonText() {
-		return wfMessage( $this->getButtonTextMessageKey() )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( $this->getButtonTextMessageKey() )->inLanguage( $this->targetLang )->text();
 	}
 
 	/**
@@ -141,7 +141,7 @@ abstract class WatchedPageController extends EmailController {
 	 * @return String
 	 */
 	protected function getArticleLinkText() {
-		return wfMessage( 'emailext-watchedpage-article-link-text',
+		return $this->getMessage( 'emailext-watchedpage-article-link-text',
 			$this->title->getFullURL( [
 				'diff' => 0,
 				'oldid' => $this->previousRevId
@@ -156,7 +156,7 @@ abstract class WatchedPageController extends EmailController {
 	 * @throws \MWException
 	 */
 	protected function getAllChangesText( $title ) {
-		return wfMessage( 'emailext-watchedpage-view-all-changes',
+		return $this->getMessage( 'emailext-watchedpage-view-all-changes',
 			$title->getFullURL( [
 				'action' => 'history'
 			] ),
@@ -292,7 +292,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 * @return String
 	 */
 	protected function getArticleLinkText() {
-		return wfMessage( 'emailext-watchedpage-article-link-text',
+		return $this->getMessage( 'emailext-watchedpage-article-link-text',
 			$this->newTitle->getFullURL( [
 					'diff' => 0,
 					'oldid' => $this->currentRevId
