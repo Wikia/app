@@ -24,10 +24,12 @@ class AdEngine2ContextService {
 				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
 			}
 
-			$monetizationServiceAds = null;
 			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
-				$params = [ 'adEngine' => true ];
-				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'getModules', $params )->getData()['data'];
+				if ( empty( $this->wg->OasisBreakpoints ) ) {
+					Wikia::addAssetsToOutput( 'monetization_module_css_no_breakpoints' );
+				} else {
+					Wikia::addAssetsToOutput( 'monetization_module_scss' );
+				}
 			}
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -64,7 +66,6 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
-					'monetizationServiceAds' => $monetizationServiceAds,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola,

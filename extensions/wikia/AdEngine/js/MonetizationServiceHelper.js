@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		});
 
 	/**
-	 * @desc loads all assets for monetization ads
+	 * @desc Loads all assets for monetization ads
 	 */
 	function loadAssets() {
 		var scripts = 'monetization_module_js',
@@ -95,6 +95,23 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		window.adslots2.push(slot);
 	}
 
+	/**
+	 * @desc Get maximum number of ads for the page
+	 * @returns {number}
+	 */
+	function getMaxAds() {
+		var pageHeight = $('#WikiaArticle').height();
+		if (pageHeight > 5000) {
+			return 3;
+		} else if (pageHeight > 1500) {
+			return 2;
+		}
+		return 1;
+	}
+
+	/**
+	 * @desc Track impression
+	 */
 	function trackImpression($container) {
 		// track impression for each placement
 		$container.each(function () {
@@ -129,6 +146,9 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		});
 	}
 
+	/**
+	 * @desc Track click event
+	 */
 	function trackClickEvent($container) {
 		var elements = [
 			'.module-title',
@@ -169,8 +189,9 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 
 	return {
 		addInContentSlot: addInContentSlot,
-		validateSlot: validateSlot,
+		getMaxAds: getMaxAds,
 		injectContent: injectContent,
-		loadAssets: loadAssets
+		loadAssets: loadAssets,
+		validateSlot: validateSlot
 	};
 });

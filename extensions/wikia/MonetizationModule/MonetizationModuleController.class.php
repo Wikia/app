@@ -27,7 +27,6 @@ class MonetizationModuleController extends WikiaController {
 
 		$params = [
 			's_id' => $this->wg->CityId,
-			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
 			'vertical' => $helper->getWikiVertical(),
 			'cache' => $helper->getCacheVersion(),
 		];
@@ -41,12 +40,14 @@ class MonetizationModuleController extends WikiaController {
 		if ( $adEngine ) {
 			$params['ad_engine'] = $adEngine;
 			$params['geo'] = $helper->getCountryCode();
+			$params['max'] = $this->request->getInt( 'max' );
 
 			$fromSearch = $this->request->getBool( 'fromSearch', false );
 			if ( $fromSearch ) {
 				$params['from_search'] = $fromSearch;
 			}
 		} else {
+			$params['max'] = MonetizationModuleHelper::calculateNumberOfAds( $title->mLength );
 			$this->addAssets();
 		}
 

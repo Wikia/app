@@ -2,8 +2,11 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.monetizationsServiceHelper',
 	'jquery',
+	'wikia.geo',
 	'wikia.log',
-], function (adContext, monetizationService, $, log) {
+	'wikia.nirvana',
+	'wikia.window',
+], function (adContext, monetizationService, $, geo, log, nirvana, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
@@ -31,35 +34,45 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	}
 
 	function fillInSlot(slot, success) {
-		log(['fillInSlot', slot], 'info', logGroup);
+		log(['fillInSlot', slot], 'debug', logGroup);
 
-		var slotName = slotMap[slot],
-			context = adContext.getContext();
-
-		init();
-
-		if (context.providers.monetizationServiceAds[slotName] && monetizationService.validateSlot(slotName)) {
-			log(['fillInSlot', slot, 'injectScript'], 'info', logGroup);
-			monetizationService.injectContent(slot, context.providers.monetizationServiceAds[slotName], success);
+		if (!isLoaded) {
+			log(['fillInSlot', slot, 'getModules'], 'debug', logGroup);
+			getModules(success);
+			isLoaded = true;
 		}
 	}
 
-	function init() {
-		if (isLoaded) {
-			return;
-		}
+	function getModules(success) {
+		nirvana.getJson(
+			'MonetizationModule',
+			'getModules',
+			{
+				adEngine: true,
+				articleId: window.wgArticleId,
+				fromSearch: window.fromsearch,
+				max: monetizationService.getMaxAds(),
+				geo: geo.getCountryCode()
+			}
+		).done(function (json) {
+			var modules = json.data;
+			if (modules) {
+				var slotNameInContent = slotMap[slotInContent];
+				if (modules[slotNameInContent]) {
+					log(['getModules', slotInContent, 'addInContenSlot'], 'debug', logGroup);
+					monetizationService.addInContentSlot(slotInContent);
+				}
 
-		log(['init', 'loadAssets'], 'info', logGroup);
-		monetizationService.loadAssets();
-
-		var slotName = slotMap[slotInContent];
-
-		if (adContext.getContext().providers.monetizationServiceAds[slotName]) {
-			log(['init', 'addInContentSlot', slotInContent], 'info', logGroup);
-			monetizationService.addInContentSlot(slotInContent);
-		}
-
-		isLoaded = true;
+				$.each(slotMap, function (slot, slotName) {
+					if (modules[slotName] && monetizationService.validateSlot(slotName)) {
+						log(['getModules', slot, 'injectScript'], 'debug', logGroup);
+						monetizationService.injectContent(slot, modules[slotName], success);
+					} else {
+						log(['getModules', slot, 'Empty data'], 'debug', logGroup);
+					}
+				});
+			}
+		});
 	}
 
 	return {
