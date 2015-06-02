@@ -530,7 +530,7 @@ class UncycloUserMigrator extends Maintenance {
 			$globalEdits  = (int) $globalUser->getEditCount();
 
 			// global and shared DB accounts match
-			if ( $isValidEmail && $globalUser->mEmail === $user->mEmail ) {
+			if ( $isValidEmail && strtolower( $globalUser->mEmail ) === strtolower( $user->mEmail ) ) {
 				$this->output( ' - emails match' );
 				$this->output( "\n\tmerging accounts..." );
 
