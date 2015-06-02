@@ -20,6 +20,7 @@ class FlagsHelper {
 	 */
 	const FLAGS_INPUT_NAME_PREFIX = 'editFlags';
 	const FLAGS_INPUT_NAME_CHECKBOX = 'checkbox';
+	const FLAGS_LOG_PREFIX = 'FlagsLog';
 
 	/**
 	 * Compares the data posted from the edit form with the database results.

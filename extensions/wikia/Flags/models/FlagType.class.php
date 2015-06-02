@@ -4,6 +4,7 @@
  * A model that reflects a type of flag that wikia's admins can define for their community.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -85,6 +86,27 @@ class FlagType extends FlagsBaseModel {
 	 */
 	public function getFlagTargetingId ( $flagTargetingName ) {
 		return array_search( strtolower( $flagTargetingName ), self::$flagTargeting );
+	}
+
+	/**
+	 * Fetches all types of flags available on a wikia from the database
+	 * @param int $wikiId
+	 * @return bool|mixed
+	 */
+	public function getFlagTypeIdByTemplate( $wikiId, $flag_view ) {
+		$db = $this->getDatabaseForRead();
+
+		$flagTypeId = ( new \WikiaSQL() )
+			->SELECT( 'flag_type_id' )
+			->FROM( self::FLAGS_TYPES_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'flag_view')->EQUAL_TO( $flag_view )
+			->run( $db, function( $result ) {
+				$row = $result->fetchObject();
+				return $row->flag_type_id;
+			} );
+
+		return $flagTypeId;
 	}
 
 	/**

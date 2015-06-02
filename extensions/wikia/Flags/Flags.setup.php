@@ -11,7 +11,9 @@
  * This extension provides a new way of storing and managing of the Flags that allows them
  * to be portable and behave accordingly to a given context.
  *
- * @author Adam Karmiński
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
+ * @author Kamil Koterba <kamil@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */

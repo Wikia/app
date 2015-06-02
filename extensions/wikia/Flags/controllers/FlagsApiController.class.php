@@ -5,6 +5,7 @@
  * It provides a set of CRUD methods to manipulate Flags instances and their types.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -236,7 +237,7 @@ class FlagsApiController extends WikiaApiController {
 	 * Removes a type of flags.
 	 *
 	 * Required parameters:
-	 * @requestParam int flagTypeId
+	 * @requestParam int flag_type_id
 	 *
 	 * IMPORTANT!
 	 * When using this method be aware that it removes ALL instances of this type
@@ -250,6 +251,35 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagTypeModel->removeFlagType( $this->params );
 
 			$this->makeSuccessResponse( $modelResponse );
+		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
+	 * Get flag type id by template (view) name
+	 *
+	 * Required parameter:
+	 * @requestParam string flag_view
+	 *
+	 * Optional parameters:
+	 * @requestParam int wiki_id You can overwrite the current city_id
+	 *
+	 * @return int|null
+	 */
+	public function getFlagTypeIdByTemplate() {
+		try {
+			$this->getRequestParams();
+
+			if ( !isset( $this->params['flag_view'] ) ) {
+				return null;
+			}
+
+			$flagTypeModel = new FlagType();
+			$flagTypeId = $flagTypeModel->getFlagTypeIdByTemplate( $this->params['wiki_id'], $this->params['flag_view']);
+
+			$this->makeSuccessResponse( $flagTypeId );
 		} catch( Exception $e ) {
 			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
