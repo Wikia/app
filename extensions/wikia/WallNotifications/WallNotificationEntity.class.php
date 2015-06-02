@@ -81,7 +81,7 @@ class WallNotificationEntity {
 	/**
 	 * This method attempts to load data from the cache first before
 	 *
-	 * @param $id
+	 * @param int $id
 	 *
 	 * @return WallNotificationEntity
 	 */
@@ -149,8 +149,8 @@ class WallNotificationEntity {
 		if ( !empty( $response['status'] ) && $response['status'] == 'ok' ) {
 			$this->parentTitleDbKey = $response['parentTitleDbKey'];
 			$this->msgText = $response['msgText'];
-			$this->threadTitleFull = ['threadTitleFull'];
-			$this->data = ['data'];
+			$this->threadTitleFull = $response['threadTitleFull'];
+			$this->data = $response['data'];
 
 			return true;
 		}
@@ -275,7 +275,7 @@ class WallNotificationEntity {
 		// If we're missing either of these, treat as an anonymous user
 		if ( empty( $authorName ) || empty( $userId ) ) {
 			$data->msg_author_id = 0;
-			$data->msg_author_displayname = wfMessage( 'oasis-anon-user' )->text();
+			$data->msg_author_displayname = wfMessage( 'oasis-anon-user' )->escaped();
 		} else {
 			$data->msg_author_id = $userId;
 			$data->msg_author_displayname = $data->msg_author_username;
@@ -287,7 +287,7 @@ class WallNotificationEntity {
 	 *
 	 * @param int $userId User ID for the author of this post
 	 *
-	 * @return User
+	 * @return User|null
 	 */
 	public function getUserName( $userId ) {
 		$user = User::newFromId( $userId );
@@ -329,7 +329,7 @@ class WallNotificationEntity {
 			if ( $data->parent_user_id > 0 ) {
 				$data->parent_displayname = $data->parent_username;
 			} else {
-				$data->parent_displayname = wfMessage( 'oasis-anon-user' )->text();
+				$data->parent_displayname = wfMessage( 'oasis-anon-user' )->escaped();
 			}
 		} else {
 			/* parent was deleted and somehow reply stays in the system
@@ -338,7 +338,7 @@ class WallNotificationEntity {
 			 * an edge case but it needs to be handled
 			 * --nAndy
 			 */
-			$data->parent_username = wfMessage( 'oasis-anon-user' )->text();
+			$data->parent_username = wfMessage( 'oasis-anon-user' )->escaped();
 			$data->parent_displayname = $data->parent_username;
 			$data->parent_user_id = 0;
 		}
