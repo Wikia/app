@@ -17,10 +17,11 @@ class Hooks {
 	const FLAGS_DROPDOWN_ACTION = 'flags';
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( \Wikia::isContentNamespace() ) {
-			\Wikia::addAssetsToOutput( 'flags_css' );
-			\Wikia::addAssetsToOutput( 'flags_js' );
-			$out->addModules( 'ext.wikia.Flags' );
+		$helper = new FlagsHelper();
+		if ( $helper->shouldDisplayFlags() ) {
+			\Wikia::addAssetsToOutput( 'flags_view_scss' );
+			\Wikia::addAssetsToOutput( 'flags_editform_js' );
+			$out->addModules( 'ext.wikia.Flags.EditFormMessages' );
 		}
 		return true;
 	}
@@ -34,7 +35,8 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onSkinTemplateNavigation( $skin, &$links ) {
-		if ( \Wikia::isContentNamespace() ) {
+		$helper = new FlagsHelper();
+		if ( $helper->shouldDisplayFlags() ) {
 			$links['views'][self::FLAGS_DROPDOWN_ACTION] = [
 				'href' => '#',
 				'text' => wfMessage( 'flags-edit-modal-title' )->escaped(),
@@ -50,7 +52,8 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onPageHeaderDropdownActions( array &$actions ) {
-		if ( \Wikia::isContentNamespace() ) {
+		$helper = new FlagsHelper();
+		if ( $helper->shouldDisplayFlags() ) {
 			$actions[] = self::FLAGS_DROPDOWN_ACTION;
 		}
 		return true;
@@ -74,10 +77,7 @@ class Hooks {
 		 * - the request is from VE
 		 */
 		$helper = new FlagsHelper();
-		if ( !$parser->mFlagsParsed
-			&& $helper->shouldDisplayFlags()
-			&& !( $wgRequest->getVal( 'action' ) == 'visualeditor' )
-		) {
+		if ( !$parser->mFlagsParsed && $helper->shouldInjectFlags() ) {
 			$addText = ( new \FlagsController )->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 
 			if ( $addText !== null ) {

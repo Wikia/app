@@ -75,7 +75,7 @@ $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
 /**
  * Resources Loader module
  */
-$wgResourceModules['ext.wikia.Flags'] = [
+$wgResourceModules['ext.wikia.Flags.EditFormMessages'] = [
 	'messages' => [
 		'flags-edit-modal-title',
 		'flags-edit-modal-done-button-text',
