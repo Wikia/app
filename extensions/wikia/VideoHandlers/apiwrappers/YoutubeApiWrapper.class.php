@@ -81,11 +81,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	}
 
 	public function videoExists() {
-		if ( empty( $this->interfaceObj['snippet']['title'] ) ) {
-			return false;
-		} else {
-			return true;
-		}
+		return !empty( $this->interfaceObj['snippet']['title'] );
 	}
 
 	/**
@@ -109,6 +105,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 		if ( !empty( $this->interfaceObj['snippet']['title'] ) ) {
 			return $this->interfaceObj['snippet']['title'];
 		}
+
+		return '';
 	}
 
 	/**

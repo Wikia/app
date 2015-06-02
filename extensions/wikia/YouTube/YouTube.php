@@ -107,7 +107,7 @@ function upgradeYouTubeTag( $editpage, $request ) {
 			// Node value can look like: <youtube_id>|400px|thumb|center
 			// @TODO evaluate calling parser to parse params and upload correctly styled video
 			$nodeValues = explode( '|', $matches[4] );
-			$ytid   = trim( $nodeValues[0] );
+			$ytid = trim( $nodeValues[0] );
 
 			// Check to see if the whole URL is used
 			$ytid = preg_replace( '/^.*youtube.com\/watch?.*v=([^&]+).*$/', '$1', $ytid );
@@ -344,8 +344,8 @@ function embedYouTube_url2aovid( $url ) {
 }
 
 function embedArchiveOrgVideo( $input, $argv, $parser ) {
-	$aovid   = '';
-	$width  = $width_max  = 320;
+	$aovid = '';
+	$width = $width_max  = 320;
 	$height = $height_max = 263;
 
 	if ( !empty( $argv['aovid'] ) ) {
