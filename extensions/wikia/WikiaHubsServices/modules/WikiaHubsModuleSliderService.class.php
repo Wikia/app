@@ -145,7 +145,6 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 		return $structuredData;
 	}
 
-
 	public function render($structureData) {
 		$data['wikitextslider'] = $this->getWikitext($structureData);
 

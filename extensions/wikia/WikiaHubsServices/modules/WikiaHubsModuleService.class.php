@@ -19,8 +19,8 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	abstract public function getStructuredData($data);
 
 	/**
-	 * @param $name
-	 * @param $cityId
+	 * @param string $name
+	 * @param int $cityId
 	 * @return WikiaHubsModuleEditableService|WikiaHubsModuleNonEditableService
 	 */
 	static public function getModuleByName($name, $cityId) {
@@ -37,11 +37,11 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		return $this->getView('index', $data);
 	}
 
-	public function loadData($model, $params) {
-		$hubParams = $this->getHubsParams();
+	public function loadData(EditHubModel $model, $params) {
+		$hubsParams = $this->getHubsParams();
 
 		$lastTimestamp = $model->getLastPublishedTimestamp(
-			$hubParams,
+			$hubsParams,
 			$params['ts']
 		);
 
@@ -50,8 +50,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 			6 * 60 * 60,
 			function () use( $model, $params ) {
 				return $this->loadStructuredData( $model, $params );
-			},
-			WikiaDataAccess::SKIP_CACHE
+			}
 		);
 		if ( $this->getShouldFilterCommercialData() ) {
 			$structuredData = $this->filterCommercialData( $structuredData );

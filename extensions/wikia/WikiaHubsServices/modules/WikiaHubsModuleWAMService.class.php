@@ -58,9 +58,9 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 	public function loadData($model, $params) {
 		$hubParams = $this->getHubsParams();
 		$lastTimestamp = $model->getLastPublishedTimestamp(
-									$hubParams,
-									$params['ts']
-						);
+			$hubParams,
+			$params['ts']
+		);
 
 		$params = $this->prepareParameters($params);
 
