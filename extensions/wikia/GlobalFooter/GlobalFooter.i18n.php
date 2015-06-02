@@ -295,7 +295,6 @@ $messages['vi'] = [
 		*_LICENSE_',
 ];
 
-
 $messages['zh-hans'] = [
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
 		*http://zh.community.wikia.com/wiki/Help:内容|帮助
