@@ -150,7 +150,7 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
 			$this->makeSuccessResponse( $modelResponse );
-			$this->logFlagChange( $this->params['flags'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
+			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
 		}
@@ -170,7 +170,7 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
-			$this->logFlagChange( $this->params['flags'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
+			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
 		}
@@ -364,12 +364,13 @@ class FlagsApiController extends WikiaApiController {
 	/**
 	 * Queue task for logging flag change
 	 * @param array $flags list of flags changed, each item of that list is an array with flag fields as items
+	 * @param int $wikiId ID of wiki where flags were changed
 	 * @param int $pageId ID of article where flags were changed
 	 * @param string $actionType Type of action performed on flag represented by constants in \FlagsApiController class
 	 */
-	private function logFlagChange( $flags, $pageId, $actionType ) {
+	private function logFlagChange( $flags, $wikiId, $pageId, $actionType ) {
 		$task = new FlagsLogTask();
-		$task->wikiId( $this->wg->CityId );
+		$task->wikiId( $wikiId );
 		$task->call( 'logFlagChange', $flags, $pageId, $actionType );
 		$task->queue();
 	}
