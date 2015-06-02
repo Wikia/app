@@ -321,6 +321,7 @@ class UncycloUserMigrator extends Maintenance {
 			$this->updateTables(self::UPDATE_TABLE_USER_NAME, $user->getName(), $newName);
 
 			// move user page
+			// TODO: include subpages as well
 			$oldUserPage = Title::newFromText($user->getName(), NS_USER);
 			$newUserPage = Title::newFromText($newName, NS_USER);
 			$oldUserPage->moveTo($newUserPage, false /* do not check permissions to move */, 'Migrating Uncyclopedia accounts');
