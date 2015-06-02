@@ -259,16 +259,21 @@ class FlagsApiController extends WikiaApiController {
 	 * @return int|null
 	 */
 	public function getFlagTypeIdByTemplate() {
-		$this->getRequestParams();
+		try {
+			$this->getRequestParams();
 
-		if ( !isset( $this->params['flag_view'] ) ) {
-			return null;
+			if ( !isset( $this->params['flag_view'] ) ) {
+				return null;
+			}
+
+			$flagTypeModel = new FlagType();
+			$flagTypeId = $flagTypeModel->getFlagTypeIdByTemplate( $this->params['wiki_id'], $this->params['flag_view']);
+
+			$this->makeSuccessResponse( $flagTypeId );
+		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
 		}
-
-		$flagTypeModel = new FlagType();
-		$flagTypeId = $flagTypeModel->getFlagTypeIdByTemplate( $this->params['wiki_id'], $this->params['flag_view']);
-
-		$this->setVal( 'flag_type_id', $flagTypeId );
 	}
 
 	/**
