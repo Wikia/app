@@ -36,7 +36,7 @@ class Hooks {
 		if ( \Wikia::isContentNamespace() ) {
 			$links['views'][self::FLAGS_DROPDOWN_ACTION] = [
 				'href' => '#',
-				'text' => 'Flags',
+				'text' => wfMessage( 'flags-edit-modal-title' )->escaped(),
 				'class' => 'flags-access-class',
 			];
 		}

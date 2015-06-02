@@ -213,5 +213,9 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 
 			//AbTesting
 			'wgCdnApiUrl',
+
+			// performance
+			'wgWeppyConfig',
+			'wgTransactionContext',
 		];
 }

@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"AnakngAraw"
+		]
+	},
+	"semanticdrilldown-desc": "Isang pambutas (\"pambarena\") na ugnayang-hangganan para sa paglilibot sa kahabaan ng datong semantiko (hinggil sa kahulugan ng salita)",
+	"specialpages-group-sd_group": "Semantikong Pababang Pagbubutas (\"Pagbabarena\")",
+	"browsedata": "Tumingin-tingin sa dato",
+	"sd_browsedata_choosecategory": "Pumili ng isang kaurian (kategorya)",
+	"sd_browsedata_viewcategory": "tingnan ang kaurian",
+	"sd_browsedata_docu": "Pindutin ang isa o mahigit pang mga bagay na nasa ibaba upang mapakipot/mapakaunti pa ang mga kinalabasan.",
+	"sd_browsedata_subcategory": "Kabahaging kaurian",
+	"sd_browsedata_other": "Iba pa",
+	"sd_browsedata_none": "Wala",
+	"sd_browsedata_filterbyvalue": "Salain sa pamamagitan ng ganitong halaga",
+	"sd_browsedata_filterbysubcategory": "Salain sa pamamagitan ng ganitong kabahaging kaurian",
+	"sd_browsedata_otherfilter": "Ipakita ang mga pahinang may iba pang halaga para sa ganitong pansala",
+	"sd_browsedata_nonefilter": "Ipakita ang mga pahinang walang halaga para sa pansalang ito",
+	"sd_browsedata_or": "o",
+	"sd_browsedata_removefilter": "Tanggalin ang pansalang ito",
+	"sd_browsedata_removesubcategoryfilter": "Tanggalin ang ganitong pansala ng kabahaging kaurian",
+	"sd_browsedata_resetfilters": "Muling itakda ang mga pansala",
+	"sd_browsedata_addanothervalue": "Pindutin ang palaso upang makapagdagdag ng ibang halaga",
+	"sd_browsedata_daterangestart": "Simula:",
+	"sd_browsedata_daterangeend": "Wakas:",
+	"sd_browsedata_novalues": "Walang mga halaga para sa pansalang ito",
+	"sd_createfilter_usepropertyvalues": "Gamitin ang lahat ng mga halaga ng pag-aaring ito para sa pansalang ito",
+	"sd_createfilter_usecategoryvalues": "Kumuha ng mga halaga para sa pansala mula sa kauriang ito:",
+	"sd_createfilter_requirefilter": "Pilitin ang iba pang pansala na mapili bago ipakita ang isang ito:",
+	"sd-pageschemas-filter": "Pansala",
+	"sd-pageschemas-values": "Mga halaga"
+}

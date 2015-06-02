@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fohanno",
+			"Fulup",
+			"Y-M D"
+		]
+	},
+	"semanticdrilldown-desc": "Un etrefas poelladennoù evit merdeiñ dre roadennoù ereadurel",
+	"specialpages-group-sd_group": "Poelladenn semantek",
+	"browsedata": "Furchal ar roadennoù",
+	"sd_browsedata_choosecategory": "Dibab ur rummad",
+	"sd_browsedata_viewcategory": "gwelet ar rummad",
+	"sd_browsedata_docu": "Klikit war unan pe meur a elfenn da-heul evit resisaat an disoc'hoù.",
+	"sd_browsedata_subcategory": "Isrummad",
+	"sd_browsedata_other": "Unan all",
+	"sd_browsedata_none": "Hini ebet",
+	"sd_browsedata_filterbyvalue": "Silañ war-bouez an talvoud-mañ",
+	"sd_browsedata_filterbysubcategory": "Silañ gant an isrummad-mañ",
+	"sd_browsedata_otherfilter": "Gwelet ar bajennoù gant un talvoud all evit ar sil-mañ",
+	"sd_browsedata_nonefilter": "Gwelet ar pajennoù gant talvoud ebet evit ar sil-mañ",
+	"sd_browsedata_or": "pe",
+	"sd_browsedata_removefilter": "Lemel ar sil-mañ",
+	"sd_browsedata_removesubcategoryfilter": "Tennañ an is-rummad a siloù",
+	"sd_browsedata_resetfilters": "Adderaouekaat ar siloù",
+	"sd_browsedata_addanothervalue": "Klikit war ar bir da ouzhpennañ un talvoud all",
+	"sd_browsedata_daterangestart": "Penn kentañ :",
+	"sd_browsedata_daterangeend": "Dibenn :",
+	"sd_browsedata_novalues": "N'eus talvoud ebet evit ar sil-mañ",
+	"sd_createfilter_usepropertyvalues": "Implijout holl talvoudoù ar berc'henniezh evit ar sil-mañ",
+	"sd_createfilter_usecategoryvalues": "Kaout an talvoudoù evit ar sil adalek ar rummad-mañ :",
+	"sd_createfilter_requirefilter": "Goulenn ma vo diuzet ur sil all a-raok na zeufe hemañ war wel :",
+	"sd-pageschemas-filter": "Sil",
+	"sd-pageschemas-values": "Talvoudoù"
+}

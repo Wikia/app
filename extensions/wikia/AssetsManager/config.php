@@ -566,6 +566,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 		//tracker
 		'#group_tracker_js',
 
+		// performance
+		'#group_bucky_js',
+
 		//modules
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
@@ -2376,7 +2379,8 @@ $config['page_share_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PageShare/scripts/PageShare.js'
+		'//extensions/wikia/PageShare/scripts/PageShare.js',
+		'//extensions/wikia/PageShare/scripts/PageShareInit.js'
 	]
 ];
 
@@ -2384,7 +2388,7 @@ $config['page_share_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PageShare/styles/share.scss'
+		'//extensions/wikia/PageShare/styles/PageShare.scss'
 	],
 ];
 
