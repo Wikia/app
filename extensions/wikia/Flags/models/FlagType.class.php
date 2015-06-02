@@ -12,6 +12,10 @@
 namespace Flags\Models;
 
 class FlagType extends FlagsBaseModel {
+
+	const FLAG_TARGETING_READERS = 1;
+	const FLAG_TARGETING_CONTRIBUTORS = 2;
+
 	/**
 	 * Flags are organized in groups. We store this information as integers in the database.
 	 * Let's translate the numbers into something more readable!
@@ -33,8 +37,8 @@ class FlagType extends FlagsBaseModel {
 	 * @var array
 	 */
 	public static $flagTargeting = [
-		1 => 'readers',
-		2 => 'contributors'
+		self::FLAG_TARGETING_READERS => 'readers',
+		self::FLAG_TARGETING_CONTRIBUTORS => 'contributors'
 	];
 
 	/**
