@@ -1,7 +1,6 @@
 @import "variables.scss";
 
 $infobox-item-margin: 5px;
-$infobox-section-header-background: #e5e5e5;
 
 // not using mixins for flexbox - for mobile traffic we only need -webkit- prefix for safari
 // our mixins will add a lot of other prefixes for browsers that we do not support on mobile skin
@@ -15,10 +14,6 @@ $infobox-section-header-background: #e5e5e5;
 
 	.portable-infobox-item-margins {
 		padding: $infobox-item-margin $infobox-item-margin * 3 $infobox-item-margin * 2;
-	}
-
-	.portable-infobox-header-background {
-		background-color: $infobox-section-header-background;
 	}
 
 	.portable-infobox-title,
@@ -42,7 +37,7 @@ $infobox-section-header-background: #e5e5e5;
 	}
 
 	.item-type-key-val:not(:last-of-type) {
-		border-bottom: 1px solid $infobox-section-header-background;
+		border-bottom: 1px solid $border-color;
 	}
 
 	.portable-infobox-item-label {
@@ -103,7 +98,7 @@ $infobox-section-header-background: #e5e5e5;
 		}
 
 		&:first-of-type {
-			border-right: 1px solid $infobox-section-header-background;
+			border-right: 1px solid $border-color;
 		}
 
 		.item-type-key-val {
@@ -142,7 +137,7 @@ $infobox-section-header-background: #e5e5e5;
 	.portable-infobox-expand-button {
 		background-color: $page-background-color;
 		box-sizing: border-box;
-		border: 1px solid $infobox-section-header-background;
+		border: 1px solid $border-color;
 		padding: $infobox-item-margin 0;
 		text-align: center;
 		width: 100%;
