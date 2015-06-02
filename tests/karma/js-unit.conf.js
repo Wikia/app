@@ -86,7 +86,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/lookup/*.js',
 			'extensions/wikia/AdEngine/js/provider/*.js',
 
-			'extensions/wikia/AdEngine/js/spec/*.spec.js',
+			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
 
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',

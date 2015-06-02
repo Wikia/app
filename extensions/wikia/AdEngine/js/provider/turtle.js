@@ -13,7 +13,8 @@ define('ext.wikia.adEngine.provider.turtle', [
 			INVISIBLE_SKIN:          {size: '1000x1000,1x1'},
 			LEFT_SKYSCRAPER_2:       {size: '160x600'},
 			TOP_LEADERBOARD:         {size: '728x90,970x250,970x90'},
-			TOP_RIGHT_BOXAD:         {size: '300x250,300x600'}
+			TOP_RIGHT_BOXAD:         {size: '300x250,300x600'},
+			TURTLE_FLUSH:            {flushOnly: true}
 		};
 
 	function canHandleSlot(slotName) {
@@ -41,9 +42,11 @@ define('ext.wikia.adEngine.provider.turtle', [
 				success(adInfo);
 			},
 			hop,
-			'turtle'
+			{
+				forceAdType: 'turtle',
+				sraEnabled: true
+			}
 		);
-		gptHelper.flushAds();
 
 		log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
 	}
