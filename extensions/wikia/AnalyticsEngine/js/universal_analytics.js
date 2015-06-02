@@ -127,17 +127,6 @@
     // Enable Demographics and Interests Reports
     window.ga('require', 'displayfeatures');
 
-    // Setting up the cross domain autolink
-    // [@see: https://developers.google.com/analytics/devguides/collection/analyticsjs/cross-domain#autolink]
-    _gaWikiaPush(
-        ['require', 'linker'],
-        ['linker:autoLink', [
-            'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
-            'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
-            'websitewiki.de', 'wowwiki.com', 'yoyowiki.org']
-        ]
-    );
-
     /**
      * Wrapper function to a generic ga() function call.
      *
@@ -343,9 +332,6 @@
 
     // Enable Demographics and Interests Reports
     window.ga('ads.require', 'displayfeatures');
-
-    window.ga('ads.require', 'linker');
-    window.ga('ads.linker:autoLink', [document.location.hostname]);
 
     /* Ads Account Custom Dimensions */
     window.ga('ads.set', 'dimension1', window.wgDBname);                                // DBname
