@@ -24,8 +24,8 @@ class FlagsApiController extends WikiaApiController {
 	 * logentry-flags-flag-added
 	 * logentry-flags-flag-removed
 	 */
-	const LOG_FLAG_ADDED_ACTION = 'flag-added';
-	const LOG_FLAG_REMOVED_ACTION = 'flag-removed';
+	const LOG_ACTION_FLAG_ADDED = 'flag-added';
+	const LOG_ACTION_FLAG_REMOVED = 'flag-removed';
 
 	private
 		$cache,
@@ -150,7 +150,7 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
 			$this->makeSuccessResponse( $modelResponse );
-			$this->logFlagChange( $this->params['flags'], $this->params['page_id'], self::LOG_FLAG_ADDED_ACTION );
+			$this->logFlagChange( $this->params['flags'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
 		}
@@ -170,7 +170,7 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
-			$this->logFlagChange( $this->params['flags'], $this->params['page_id'], self::LOG_FLAG_REMOVED_ACTION );
+			$this->logFlagChange( $this->params['flags'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
 		} catch ( Exception $e ) {
 			$this->response->setException( $e );
 		}
