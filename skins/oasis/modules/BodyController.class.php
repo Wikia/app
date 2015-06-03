@@ -414,6 +414,14 @@ class BodyController extends WikiaController {
 			OasisController::addBodyClass('wikia-grid');
 		}
 
+		if( $this->isOasisBreakpoints() ) {
+			OasisController::addBodyClass( 'oasis-breakpoints' );
+		}
+
+		if( $this->isResponsiveLayoutEnabled() ) {
+			OasisController::addBodyClass( 'oasis-responsive' );
+		}
+
 		// if we are on a special search page, pull in the css file and don't render a header
 		if($wgTitle && $wgTitle->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault) {
 			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL("skins/oasis/css/modules/SpecialSearch.scss"));

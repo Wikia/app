@@ -287,7 +287,9 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-.WikiaPage #WikiaArticleBottomAd {
-	clear: both;
-	margin: 0;
+.oasis-breakpoints, .oasis-responsive {
+	#WikiaArticleBottomAd {
+		clear: both;
+		margin: 0;
+	}
 }
