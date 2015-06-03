@@ -553,7 +553,7 @@ class FlagsExtractor {
 	 * @param string $message text
 	 * @param array $params additional parameters
 	 */
-	private function logInfoMessage( $message, $params = [] ) {
+	protected function logInfoMessage( $message, $params = [] ) {
 		$params = array_merge( $params, $this->getCommonParams() );
 
 		$this->info( $this->getLogMessage( $message ), $params );
