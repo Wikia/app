@@ -11,7 +11,7 @@ class MoveNotices extends Maintenance {
 	const
 		SECTION_DEFAULT = 0,
 		SECTION_ALL = 'all',
-		EDIT_SUMMARY = 'Moving content notices to flags.';
+		EDIT_SUMMARY = 'Moving notices templates to our new Flags feature.';
 
 	private
 		$log = '',
@@ -35,15 +35,15 @@ class MoveNotices extends Maintenance {
 		$this->addOption( 'add', "Add template as a flag.\n
 							Accepted values:\n
 							first (default) - first template with given name will be added\n
-							all - all tempaltes with given name will be added");
+							all - all templates with given name will be added");
 		$this->addOption( 'remove', "Remove template from text.\n
 							Accepted values:\n
 							first (default) - first template with given name will be removed\n
-							all - all tempaltes with given name will be removed");
+							all - all templates with given name will be removed");
 		$this->addOption( 'replace', "Replace template by a tag.\n
 							Accepted values:\n
 							first (default) - first template with given name will be replaced\n
-							all - all tempaltes with given name will be replaced");
+							all - all templates with given name will be replaced");
 		$this->addOption( 'tag', 'Tag to replace template. If not set, default __FLAGS__ tag will be used.');
 	}
 
@@ -107,6 +107,12 @@ class MoveNotices extends Maintenance {
 		fclose( $csvFile );
 
 		$this->output( "Start processing\n" );
+
+		/**
+		 * Perform all edits as WikiaBot and overwrite wgUser so it is
+		 * available in the Flags logs
+		 */
+		$this->app->wg->User = $user = User::newFromName( 'WikiaBot' );
 
 		$flagTypeModel = new FlagType();
 		$flagsExtractor = new FlagsExtractor();
@@ -174,7 +180,7 @@ class MoveNotices extends Maintenance {
 				$textToParse = $content;
 
 				if ( $section !== self::SECTION_ALL ) {
-					$textToParse = $wgParser->getSection($content, $section);
+					$textToParse = $wgParser->getSection( $content, $section );
 				}
 
 				if ( $replaceTop && !$list ) {
@@ -214,7 +220,10 @@ class MoveNotices extends Maintenance {
 					}
 
 					if ( strcmp( $content, $text ) !== 0 ) {
-						$wiki->doEdit( $text, self::EDIT_SUMMARY );
+						$wiki->doEdit( $text,
+							self::EDIT_SUMMARY,
+							EDIT_SUPPRESS_RC | EDIT_FORCE_BOT
+						);
 					}
 				}
 
@@ -250,9 +259,10 @@ class MoveNotices extends Maintenance {
 			$flagType
 		)->getData();
 
-		$flagTypeId = $response['flag_type_id'];
+		$flagTypeId = null;
 
-		if ( $flagTypeId ) {
+		if ( $response['status'] ) {
+			$flagTypeId = $response['data'];
 			$this->addToLog( "Flag ID: $flagTypeId added.\n" );
 		} else {
 			$this->addToLog( "[ERROR] Flag is not added!\n" );
