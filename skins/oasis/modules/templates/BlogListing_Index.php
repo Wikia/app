@@ -2,9 +2,9 @@
 	<?php // only display header block for the BlogListingBox
 	if (strpos($blogListingClass, 'WikiaBlogListingBox') !== false) { ?>
 	<?= Wikia::specialPageLink('CreateBlogPage', 'blog-create-post-label', 'wikia-button', 'blank.gif', 'blog-create-post-label', 'sprite blog') ?>
-	<h2>
+	<h3>
 		<?= $title ?>
-	</h2>
+	</h3>
 	<?php } // end BlogListingBox header ?>
 	<ul>
 		<?php
@@ -16,7 +16,7 @@
 
 				<?= $post['avatar'] ?>
 				<div class="author-details">
-					<h2><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h2>
+					<h1><a href="<?= htmlspecialchars($title->getLocalUrl()) ?>"><?= htmlspecialchars(BlogTemplateClass::getSubpageText($title)) ?></a></h1>
 					<span><?= wfMsg('blog-by', $post['date'], Xml::element('a', array('href' => htmlspecialchars($post['userpage'])), $post['username'], false)) ?></span>
 				</div>
 

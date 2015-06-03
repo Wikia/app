@@ -46,12 +46,7 @@ class CategoryExhibitionSection {
 			$this->categoryExhibitionEnabled = false;
 			$oTmpArticle = new Article( $this->categoryTitle );
 			if ( !is_null( $oTmpArticle ) ) {
-				if ( $this->categoryTitle->isRedirect() ) {
-					$rdTitle = $oTmpArticle->getRedirectTarget();
-				} else {
-					$rdTitle = $this->categoryTitle;
-				}
-
+				$rdTitle = $oTmpArticle->getRedirectTarget();
 				if ( !is_null( $rdTitle ) && ( $rdTitle->getNamespace() == NS_CATEGORY ) ) {
 					$sCategoryDBKey = $rdTitle->getDBkey();
 					$this->categoryExhibitionEnabled =

@@ -5,13 +5,7 @@
 		<label class="wikia-ad-label"><?= wfMessage( 'adengine-advertisement' )->escaped() ?></label>
 	<? endif; ?>
 <script>
-	<? if ($onLoad) { ?>
-		wgAfterContentAndJS.push(function () {
-			window.adslots2.push(<?= json_encode([$slotName]) ?>);
-		});
-	<? } else { ?>
-		window.adslots2.push(<?= json_encode([$slotName]) ?>);
-	<? } ?>
+	window.adslots2.push(<?= json_encode([$slotName]) ?>);
 </script>
 </div>
 <!-- END SLOTNAME: <?= htmlspecialchars($slotName) ?> -->

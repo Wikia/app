@@ -1,4 +1,4 @@
-[[Semantic Drilldown 2.0.1]]
+[[Semantic Drilldown 1.1]]
 
 Contents:
 * Disclaimer
@@ -12,9 +12,9 @@ For a proper legal disclaimer, see the file "COPYING".
 
 == Requirements ==
 
-The extension requires an install of Semantic MediaWiki 1.6 or greater, as
-well as MediaWiki 1.18 or greater. For more details, see Semantic
-MediaWiki's own installation requirements.
+The extension requires an install of Semantic MediaWiki 1.5 or
+greater. For more details, see Semantic MediaWiki's own
+installation requirements.
 
 == Installation ==
 
@@ -22,13 +22,13 @@ MediaWiki's own installation requirements.
     that contains all relevant files. Copy this directory (or
     extract/download it) to "[wikipath]/extensions/".
 (2) Insert the following line into the file "[wikipath]/LocalSettings.php":
-      include_once('extensions/SemanticDrilldown/SemanticDrilldown.php');
+      include_once('extensions/SemanticDrilldown/includes/SD_Settings.php');
 
 '''Remark:'''  Semantic Drilldown creates an additional custom namespace,
-"Filter" (see http://www.mediawiki.org/wiki/Manual:Using_custom_namespaces).
-If you have your own custom namespaces, you have to set the parameter
-$sdgNamespaceIndex before including SemanticDrilldown.php. See
-SemanticDrilldown.php for more details.
+"Filter" (see http://www.mediawiki.org/wiki/Manual:Using_custom_namespaces). If
+you have your own custom namespaces, you have to set the parameter
+$sdgNamespaceIndex before including SD_Settings.php. See SD_Settings.php
+for more details.
 
 == Contact ==
 

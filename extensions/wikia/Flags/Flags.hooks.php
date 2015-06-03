@@ -4,8 +4,6 @@
  * A class that contains all methods that are hooked to events occurring in the stack.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
- * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
- * @author Kamil Koterba <kamil@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -18,8 +16,7 @@ class Hooks {
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		if ( \Wikia::isContentNamespace() ) {
-			\Wikia::addAssetsToOutput( 'flags_css' );
-			\Wikia::addAssetsToOutput( 'flags_js' );
+			\Wikia::addAssetsToOutput('flags_js');
 			$out->addModules( 'ext.wikia.Flags' );
 		}
 		return true;
@@ -37,7 +34,7 @@ class Hooks {
 		if ( \Wikia::isContentNamespace() ) {
 			$links['views'][self::FLAGS_DROPDOWN_ACTION] = [
 				'href' => '#',
-				'text' => wfMessage( 'flags-edit-modal-title' )->escaped(),
+				'text' => 'Flags',
 				'class' => 'flags-access-class',
 			];
 		}

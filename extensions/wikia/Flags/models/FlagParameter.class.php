@@ -21,7 +21,9 @@ class FlagParameter extends FlagsBaseModel {
 	 * @param array $params `paramName` => `paramValue`
 	 * @return bool
 	 */
-	public function createParametersForFlag( \DatabaseBase $db, $flagId, $flagTypeId, $params ) {
+	public function createParametersForFlag( $flagId, $flagTypeId, $params ) {
+		$db = $this->getDatabaseForWrite();
+
 		$values = [];
 		foreach ( $params as $paramName => $paramValue ) {
 			$values[] = [ $flagId, $flagTypeId, $paramName, $paramValue ];
@@ -39,6 +41,8 @@ class FlagParameter extends FlagsBaseModel {
 
 		$status = $db->affectedRows() > 0;
 
+		$db->commit();
+
 		return $status;
 	}
 
@@ -48,7 +52,9 @@ class FlagParameter extends FlagsBaseModel {
 	 * @param array $params `paramName` => `paramValue`
 	 * @return bool
 	 */
-	public function updateParametersForFlag( \DatabaseBase $db, $flagId, $params ) {
+	public function updateParametersForFlag( $flagId, $params ) {
+		$db = $this->getDatabaseForWrite();
+
 		foreach ( $params as $paramName => $paramValue ) {
 			( new \WikiaSQL )
 				->UPDATE( self::FLAGS_PARAMS_TABLE )
@@ -59,14 +65,12 @@ class FlagParameter extends FlagsBaseModel {
 		}
 
 		$status = $db->affectedRows() > 0;
+
+		$db->commit();
+
 		return $status;
 	}
 
-	/**
-	 * Checks if a parameter can be use as a name HTML attribute value.
-	 * @param $paramName
-	 * @return bool
-	 */
 	public static function isValidParameterName( $paramName ) {
 		return preg_match( self::FLAG_PARAMETER_REGEXP, $paramName ) === 0;
 	}

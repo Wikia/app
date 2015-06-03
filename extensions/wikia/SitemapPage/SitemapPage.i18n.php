@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'sitemap-page-desc' => 'Sitemap Page',
-	'sitemap-page-header' => 'Community Sitemap',
+	'sitemap-page-header' => 'Community Site Map',
 	'sitemap-page-html-title' => 'Sitemap Page - Wikia.com/Sitemap',
 	'sitemap-page-wiki-title' => 'Title',
 	'sitemap-page-wiki-language' => 'Language',

@@ -14,11 +14,12 @@ class SD_LanguageNl extends SD_Language {
 
 		// filter properties
 		SD_SP_COVERS_PROPERTY           => 'Omvat eigenschap',
+		SD_SP_HAS_VALUE                 => 'Heeft waarde',
 		SD_SP_GETS_VALUES_FROM_CATEGORY => 'Haalt waarden uit categorie',
+		SD_SP_USES_TIME_PERIOD          => 'Gebruikt periode',
+		SD_SP_HAS_INPUT_TYPE            => 'Heeft invoertype',
 		SD_SP_REQUIRES_FILTER           => 'Benodigt filter',
-		SD_SP_HAS_LABEL                 => 'Heeft label',
-		// display properties
-		SD_SP_HAS_DISPLAY_PARAMETERS    => 'Heeft weergave parameters',
+		SD_SP_HAS_LABEL                 => 'Heeft label'
 	);
 
 	var $m_Namespaces = array(

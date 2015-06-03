@@ -11,6 +11,7 @@
 namespace Flags\Models;
 
 class FlagsBaseModel extends \WikiaModel {
+
 	/**
 	 * Names of tables used by the extension
 	 */
@@ -32,58 +33,6 @@ class FlagsBaseModel extends \WikiaModel {
 	 */
 	protected function getDatabaseForWrite() {
 		return wfGetDB( DB_MASTER, [], $this->wg->FlagsDB );
-	}
-
-	/**
-	 * Checks if values of $paramsToCheck are keys in $originalParams.
-	 * @param array $originalParams An array to check the keys in
-	 * @param mixed $paramsToCheck An array of required fields or a string with a name
-	 * @return bool
-	 * @throws \MissingParameterApiException
-	 */
-	protected function areParamsSet( Array $originalParams, $paramsToCheck ) {
-		if ( !is_array( $paramsToCheck ) ) {
-			$paramsToCheck = [ $paramsToCheck ];
-		}
-		foreach ( $paramsToCheck as $paramName ) {
-			if ( !isset( $originalParams[$paramName] ) ) {
-				throw new \MissingParameterApiException( $paramName );
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Checks if the $paramsToCheck consists only of positive numbers.
-	 * @param mixed $paramsToCheck An array of numbers, a numeric string or an integer
-	 * @return bool
-	 * @throws \InvalidParameterApiException
-	 */
-	protected function arePositiveNumbers( $paramsToCheck ) {
-		if ( !is_array( $paramsToCheck ) ) {
-			$paramsToCheck = [ $paramsToCheck ];
-		}
-		foreach ( $paramsToCheck as $param ) {
-			if ( !is_numeric( $param ) || $param <= 0 )	{
-				throw new \InvalidParameterApiException( $param );
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Checks if all elements of $paramsToCheck are arrays
-	 * @param Array $paramsToCheck An array of arrays
-	 * @return bool
-	 * @throws \InvalidParameterApiException
-	 */
-	protected function areArrays( Array $paramsToCheck ) {
-		foreach ( $paramsToCheck as $param ) {
-			if ( !is_array( $param ) ) {
-				throw new \InvalidParameterApiException( $param );
-			}
-		}
-		return true;
 	}
 
 	public function debug( $a ) {

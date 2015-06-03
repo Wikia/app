@@ -1,7 +1,4 @@
-require(
-	['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'],
-	function ($, loader, nirvana, mustache, mw)
-{
+require(['jquery', 'wikia.loader', 'mw'], function ($, loader, mw) {
 	'use strict';
 
 	/* Modal buttons config for done and cancel buttons */
@@ -61,64 +58,39 @@ require(
 	 * First function in showing modal process.
 	 * Performs all necessary job to display modal with flags ready to edit
 	 */
-	function showModal() {
-		$.when(
-				nirvana.sendRequest({
+	function showModal(event) {
+		event.preventDefault();
+		loader({
+			type: loader.MULTI,
+			resources: {
+				templates: [{
 					controller: 'Flags',
 					method: 'editForm',
-					data: {
-						page_id: window.wgArticleId
-					},
-					type: 'get'
-				}),
-				loader({
-					type: loader.MULTI,
-					resources: {
-						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache',
-						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
+					params: {
+						'page_id': mw.config.get('wgArticleId')
 					}
-				})
-			).done(function (flagsData, res) {
-				var template;
-
-				loader.processStyle(res.styles);
-				template = res.mustache[0];
-
-				flagsData[0].flags = prepareFlagsData(flagsData[0].flags);
-
-				modalConfig.vars.content = mustache.render(template, flagsData[0]);
-
-				require(['wikia.ui.factory'], function (uiFactory) {
-					/* Initialize the modal component */
-					uiFactory.init(['modal']).then(createComponent);
-				});
-			});
+				}],
+				styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
+			}
+		}).done(handlePackage);
 	}
 
 	/**
-	 * Prepare data for mustache template
+	 * Handles package provided by getMultiTypePackage from server.
+	 * Loads received styles, adds content to modal and initializes modal component
+	 * One of sub-tasks for getting modal shown
 	 */
-	function prepareFlagsData(flagsData) {
-		var flagTypeId, paramName, paramsNames,
-			param, params, flags = [];
+	function handlePackage(pkg) {
+		/* Load styles */
+		loader.processStyle(pkg.styles);
 
-		for( flagTypeId in flagsData) {
-			params = [];
-			if (flagsData[flagTypeId]['flag_params_names']) {
-				paramsNames  = JSON.parse(flagsData[flagTypeId]['flag_params_names']);
-				for (paramName in paramsNames) {
-					param = [];
-					param['param_name'] = paramName;
-					param['param_description'] = paramsNames[paramName];
-					param['param_value'] = flagsData[flagTypeId].params ? flagsData[flagTypeId].params[paramName] : '';
-					params.push(param);
-				}
-			}
-			flagsData[flagTypeId]['flag_params_names'] = params;
-			flags[flagTypeId] = flagsData[flagTypeId];
-		}
+		/* Add content to modal */
+		modalConfig.vars.content = pkg.templates.Flags_editForm;
 
-		return flags;
+		require(['wikia.ui.factory'], function (uiFactory) {
+			/* Initialize the modal component */
+			uiFactory.init(['modal']).then(createComponent);
+		});
 	}
 
 	/**

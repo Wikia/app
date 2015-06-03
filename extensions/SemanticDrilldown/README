@@ -12,14 +12,13 @@ Notes on installing Semantic Drilldown can be found in the file INSTALL.
 
 == Credits ==
 
-Semantic Drilldown was mainly written by Yaron Koren.
+Semantic Drilldown was mainly written by Yaron Koren and David Loomer.
 
 Important contributions were made by Sanyam Goyal as part of the 2010
-Google Summer of Code, by Ankit Garg as part of the 2011 Google Summer
-of Code, and by David Loomer, MWJames and others.
+Google Summer of Code.
 
-Language translations were provided by many people; see the files in
-the /i18n directory for the full listings.
+Language translations were provided by many people; see the
+file /languages/SD_Messages.php for the full listing.
 
 == Contact ==
 
@@ -37,5 +36,8 @@ Bug reports should be submitted at the MediaWiki Bugzilla site:
 
 == Credits to other projects ==
 
-* The Semantic Drilldown extension makes use of the jQuery and jQuery UI
-Javascript libraries, embedded within MediaWiki.
+* The Semantic Drilldown extension includes CSS and Javascript files
+from the jQuery and jQuery UI Javascript libraries (http://jquery.org,
+http://jqueryui.com). Both libraries are distributed under both the GPL
+and MIT licenses, both of which are compatible with the GPL license under
+which Semantic Drilldown is distributed.

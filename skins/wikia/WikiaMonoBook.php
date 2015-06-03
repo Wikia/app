@@ -93,8 +93,6 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	public function addBodyClasses(&$classes) {
 		$classes .= ($this->ads ? ' with-adsense' : ' without-adsense');
-		$classes .= $this->getUserLoginStatusClass();
-
 		return true;
 	}
 

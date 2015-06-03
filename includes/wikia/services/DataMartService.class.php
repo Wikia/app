@@ -467,7 +467,7 @@ class DataMartService extends Service {
 				->AND_( 'period_id' )->EQUAL_TO( $period_id )
 				->LIMIT( 1 )
 				->cache( self::CACHE_TOP_ARTICLES )
-				->run( $db, function ( ResultWrapper $result ) {
+				->run( $db, function ( $result ) {
 					$row = $result->fetchObject( $result );
 
 					if ( $row && isset( $row->c ) ) {

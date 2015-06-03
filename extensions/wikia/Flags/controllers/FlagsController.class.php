@@ -10,104 +10,60 @@
  */
 
 use Flags\FlagsCache;
-use Flags\FlagsHelper;
 use Flags\Views\FlagView;
-use Wikia\Logger\Loggable;
+use Flags\FlagsHelper;
 
 class FlagsController extends WikiaController {
-
-	use Loggable;
-
-	const FLAGS_CONTROLLER_ACTION_ADD = 'toAdd';
-	const FLAGS_CONTROLLER_ACTION_REMOVE = 'toRemove';
-	const FLAGS_CONTROLLER_ACTION_UPDATE = 'toUpdate';
-
-	public static $flagsActionsToMethodsMapping = [
-		self::FLAGS_CONTROLLER_ACTION_ADD => 'requestAddFlagsToPage',
-		self::FLAGS_CONTROLLER_ACTION_REMOVE => 'requestRemoveFlagsFromPage',
-		self::FLAGS_CONTROLLER_ACTION_UPDATE => 'requestUpdateFlagsForPage',
-	];
-
 	private
 		$params;
+
+	private function isValidPostRequest() {
+		return $this->request->wasPosted()
+			&& $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) );
+	}
 
 	/**
 	 * Sends a request for all instances of flags for the given page.
 	 * A result of the request is transformed into a set of wikitext templates calls
 	 * that are supposed to be injected into Parser before expanding templates.
 	 * @param $pageId
-	 * @return string
+	 * @return null|string
 	 */
 	public function getFlagsForPageWikitext( $pageId ) {
-		wfProfileIn( __METHOD__ );
+		$flags = $this->requestGetFlagsForPage( $pageId );
 
-		try {
+		if ( !empty( $flags ) ) {
 			$flagsWikitext = '';
 
-			$response = $this->requestGetFlagsForPage( $pageId );
-
-			if ( $this->getResponseStatus( $response ) ) {
-				$templatesCalls = [];
-				$flags = $this->getResponseData( $response );
-
-				$flagView = new FlagView();
-
-				foreach ( $flags as $flagId => $flag ) {
-					$templatesCalls[] = $flagView->wrapSingleFlag(
-						$flag['flag_targeting'],
-						$flag['flag_view'],
-						$flag['params']
-					);
-				}
-
-				$flagsWikitext = $flagView->wrapAllFlags( $templatesCalls );
+			$flagView = new FlagView();
+			foreach ( $flags as $flag ) {
+				$flagsWikitext .= $flagView->createWikitextCall( $flag['flag_view'], $flag['params'] );
 			}
 
-			wfProfileOut( __METHOD__ );
 			return $flagsWikitext;
-		} catch ( Exception $exception ) {
-			$this->logResponseException( $exception, $response->getRequest() );
 		}
+
+		return null;
 	}
 
 	/**
 	 * Generates html contents for Flags modal for editing flags
 	 */
 	public function editForm() {
-		wfProfileIn( __METHOD__ );
-
 		$pageId = $this->request->getVal( 'page_id' );
 		if ( empty( $pageId ) ) {
-			throw new MissingParameterApiException( 'page_id' );
+			$this->response->setException( new \Exception( 'Required param page_id not provided' ) );
+			return true;
 		}
 
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$flags = $this->requestGetFlagsForPageForEdit( $pageId );
 
-		/**
-		 * Disable caching for the rendered HTML. The API response is cached which is enough.
-		 */
-		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED, 0 );
-
-		$response = $this->requestGetFlagsForPageForEdit( $pageId );
-
-		if ( $response->hasException() ) {
-			$this->overrideTemplate( 'editFormException' );
-			$this->setVal( 'exceptionMessage', $response->getException()->getDetails() );
-		} elseif ( $this->getResponseStatus( $response ) ) {
-			$flags = array_values( $this->getResponseData( $response ) );
-			$this->setVal( 'editToken', $this->wg->User->getEditToken() );
-			$this->setVal( 'flags', $flags );
-			$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
-			$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
-			$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
-			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->escaped() );
-			$this->setVal( 'pageId', $pageId );
-		} else {
-			$this->overrideTemplate( 'editFormEmpty' );
-		}
-
-		wfProfileOut( __METHOD__ );
+		$this->setVal( 'editToken', $this->wg->User->getEditToken() );
+		$this->setVal( 'flags', $flags );
+		$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
+		$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
+		$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
+		$this->setVal( 'pageId', $pageId );
 	}
 
 	/**
@@ -122,82 +78,52 @@ class FlagsController extends WikiaController {
 	 *
 	 * Input fields of the form should have a prefix `editFlags:flag_type_id:`
 	 * @see const values in FlagsHelper.class.php
-	 * @return bool|null
-	 * @throws Exception
+	 *
+	 * @return null|bool
 	 */
 	public function postFlagsEditForm() {
-		wfProfileIn( __METHOD__ );
-		try {
-			$this->skipRendering();
-
-			/**
-			 * Validate the request
-			 */
-			if ( !$this->isValidPostRequest() ) {
-				throw new BadRequestApiException();
-			}
-
-			$this->params = $this->request->getParams();
-			if ( !isset( $this->params['page_id'] ) ) {
-				throw new MissingParameterApiException( 'page_id' );
-			}
-			$pageId = $this->params['page_id'];
-
-			$title = Title::newFromID( $pageId );
-			if ( $title === null ) {
-				throw new InvalidParameterApiException( 'page_id' );
-			}
-
-			/**
-			 * Get the current status to compare
-			 */
-			$currentFlags = $this->getResponseData( $this->requestGetFlagsForPageForEdit( $pageId ) );
-
-			$helper = new FlagsHelper();
-			$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
-
-			if ( !empty( $flagsToChange ) ) {
-				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
-
-				/**
-				 * Purge cache values for the page
-				 */
-				$flagsCache = new FlagsCache();
-				$flagsCache->purgeFlagsForPage( $pageId );
-
-				/**
-				 * Purge article after updating flags
-				 */
-				$wikiPage = WikiPage::factory( $title );
-				$wikiPage->doPurge();
-			}
-
-			/**
-			 * Redirect back to article view after saving flags
-			 */
-			$pageUrl = $title->getFullURL();
-			$this->response->redirect( $pageUrl );
-
-			wfProfileOut( __METHOD__ );
-		} catch ( Exception $exception ) {
-			if ( $title === null ) {
-				throw $exception;
-			}
-
-			/**
-			 * Show a friendly error message to a user after redirect
-			 */
-			BannerNotificationsController::addConfirmation(
-				wfMessage( 'flags-edit-modal-post-exception' )
-					->params( $exception->getMessage() )
-					->parse(),
-				BannerNotificationsController::CONFIRMATION_ERROR,
-				true
-			);
-
-			$pageUrl = $title->getFullURL();
-			$this->response->redirect( $pageUrl );
+		$this->skipRendering();
+		$this->params = $this->request->getParams();
+		if ( !$this->isValidPostRequest() || !isset( $this->params['page_id'] ) ) {
+			return null;
 		}
+		$pageId = $this->params['page_id'];
+
+		$title = Title::newFromID( $pageId );
+		if ( $title === null ) {
+			$this->response->setException( new \Exception( "Article with ID {$pageId} doesn't exist" ) );
+			return true;
+		}
+
+		/**
+		 * Get the current status to compare
+		 */
+		$currentFlags = $this->requestGetFlagsForPageForEdit( $pageId );
+
+		$helper = new FlagsHelper();
+		$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
+		if ( !empty( $flagsToChange ) ) {
+			$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
+
+			/**
+			 * Purge cache values for the page
+			 */
+			$flagsCache = new FlagsCache();
+			$flagsCache->purgeFlagsForPage( $pageId );
+
+			/**
+			 * Purge article after updating flags
+			 */
+			$wikiPage = WikiPage::factory( $title );
+			$wikiPage->doPurge();
+		}
+
+		/**
+		 * Redirect back to article view after saving flags
+		 */
+		$pageUrl = $title->getFullURL();
+		$this->response->redirect( $pageUrl );
+		return true;
 	}
 
 	/**
@@ -209,70 +135,62 @@ class FlagsController extends WikiaController {
 	 * @param int $pageId
 	 * @param Array $flagsToChange an array with three possible nested arrays:
 	 * @return null
-	 * @throws MissingParameterApiException
 	 */
 	private function sendRequestsUsingPostedData( $pageId, Array $flagsToChange ) {
 		if ( !isset( $this->params['edit_token'] ) ) {
-			throw new MissingParameterApiException( 'edit_token' );
+			return null;
+		}
+		$editToken = $this->params['edit_token'];
+
+		/**
+		 * Add flags
+		 */
+		if ( !empty( $flagsToChange['toAdd'] ) ) {
+			$this->requestAddFlagsToPage( $editToken, $pageId, $flagsToChange['toAdd'] );
 		}
 
-		$responseData = [];
-
-		foreach ( self::$flagsActionsToMethodsMapping as $action => $requestMethodName ) {
-			if ( empty( $flagsToChange[$action] ) ) {
-				continue;
-			}
-
-			$response = $this->$requestMethodName( $this->params['edit_token'], $pageId, $flagsToChange[$action] );
-
-			if ( $response->hasException() ) {
-				throw $response->getException();
-			} elseif ( $this->getResponseStatus( $response ) ) {
-				$responseData[$action] = $this->getResponseData( $response );
-			} else {
-				$responseData[$action] = $this->getResponseStatus( $response );
-			}
+		/**
+		 * Remove flags
+		 */
+		if ( !empty( $flagsToChange['toRemove'] ) ) {
+			$this->requestRemoveFlagsFromPage( $editToken, $pageId, $flagsToChange['toRemove'] );
 		}
 
-		return $responseData;
-	}
-
-	/**
-	 * Checks if a request is a POST one and if it carries a valid edit_token for the user.
-	 * @return bool
-	 */
-	private function isValidPostRequest() {
-		return $this->request->wasPosted()
-		&& $this->wg->User->matchEditToken( $this->getVal( 'edit_token' ) );
+		/**
+		 * Update flags
+		 */
+		if ( !empty( $flagsToChange['toUpdate'] ) ) {
+			$this->requestUpdateFlagsForPage( $editToken, $pageId, $flagsToChange['toUpdate'] );
+		}
 	}
 
 	/**
 	 * Sends a request to the FlagsApiController to get data on flags for the given page.
 	 * @param int $pageId
-	 * @return WikiaResponse
+	 * @return array
 	 */
 	private function requestGetFlagsForPage( $pageId ) {
-		return $this->sendRequestAcceptExceptions( 'FlagsApiController',
+		return $this->sendRequest( 'FlagsApiController',
 			'getFlagsForPage',
 			[
 				'page_id' => $pageId,
 			]
-		);
+		)->getData();
 	}
 
 	/**
 	 * Sends a request to the FlagsApiController to get data on flag types
 	 * with and without instances to display in the edit form.
 	 * @param int $pageId
-	 * @return WikiaResponse
+	 * @return array
 	 */
 	private function requestGetFlagsForPageForEdit( $pageId ) {
-		return $this->sendRequestAcceptExceptions( 'FlagsApiController',
+		return $this->sendRequest( 'FlagsApiController',
 			'getFlagsForPageForEdit',
 			[
 				'page_id' => $pageId,
 			]
-		);
+		)->getData();
 	}
 
 	/**
@@ -280,18 +198,18 @@ class FlagsController extends WikiaController {
 	 * @param $editToken
 	 * @param $pageId
 	 * @param $flags
-	 * @return WikiaResponse
+	 * @return array
 	 * @see FlagsApiController::addFlagsToPage() for a structure of the $flags array
 	 */
 	private function requestAddFlagsToPage( $editToken, $pageId, $flags ) {
-		return $this->sendRequestAcceptExceptions( 'FlagsApiController',
+		return $this->sendRequest( 'FlagsApiController',
 			'addFlagsToPage',
 			[
 				'edit_token' => $editToken,
 				'page_id' => $pageId,
 				'flags' => $flags,
 			]
-		);
+		)->getData();
 	}
 
 	/**
@@ -299,18 +217,18 @@ class FlagsController extends WikiaController {
 	 * @param $editToken
 	 * @param $pageId
 	 * @param $flags
-	 * @return WikiaResponse
+	 * @return array
 	 * @see FlagsApiController::removeFlagsFromPage() for a structure of the $flagsIds array
 	 */
 	private function requestRemoveFlagsFromPage( $editToken, $pageId, $flags ) {
-		return $this->sendRequestAcceptExceptions( 'FlagsApiController',
+		return $this->sendRequest( 'FlagsApiController',
 			'removeFlagsFromPage',
 			[
 				'edit_token' => $editToken,
 				'page_id' => $pageId,
 				'flags' => $flags,
 			]
-		);
+		)->getData();
 	}
 
 	/**
@@ -318,35 +236,17 @@ class FlagsController extends WikiaController {
 	 * @param $editToken
 	 * @param $pageId
 	 * @param $flags
-	 * @return WikiaResponse
+	 * @return array
 	 * @see FlagsApiController::updateFlagsForPage() for a structure of the $flags array
 	 */
 	private function requestUpdateFlagsForPage( $editToken, $pageId, $flags ) {
-		return $this->sendRequestAcceptExceptions( 'FlagsApiController',
-			'updateFlagsForPage',
-			[
-				'edit_token' => $editToken,
-				'page_id' => $pageId,
-				'flags' => $flags
-			]
-		);
-	}
-
-	private function getResponseData( WikiaResponse $response ) {
-		return $response->getData()[FlagsApiController::FLAGS_API_RESPONSE_DATA];
-	}
-
-	private function getResponseStatus( WikiaResponse $response ) {
-		return $response->getData()[FlagsApiController::FLAGS_API_RESPONSE_STATUS];
-	}
-
-	private function logResponseException( Exception $e, WikiaRequest $request ) {
-		$this->error(
-			'FlagsLog Exception',
-			[
-				'exception' => $e,
-				'prms' => $request->getParams(),
-			]
-		);
+		return $this->sendRequest( 'FlagsApiController',
+		'updateFlagsForPage',
+		[
+			'edit_token' => $editToken,
+			'page_id' => $pageId,
+			'flags' => $flags
+		]
+		)->getData();
 	}
 }

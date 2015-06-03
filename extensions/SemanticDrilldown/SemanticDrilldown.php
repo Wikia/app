@@ -13,40 +13,43 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'SD_VERSION', '2.0.1' );
+define( 'SD_VERSION', '1.1' );
 
 $wgExtensionCredits[defined( 'SEMANTIC_EXTENSION_TYPE' ) ? 'semantic' : 'specialpage'][] = array(
 	'path'        => __FILE__,
 	'name'        => 'Semantic Drilldown',
 	'version'     => SD_VERSION,
-	'author'      => array( 'Yaron Koren', '...' ),
+	'author'      => array( 'Yaron Koren', 'David Loomer' ),
 	'url'         => 'https://www.mediawiki.org/wiki/Extension:Semantic_Drilldown',
 	'descriptionmsg'  => 'semanticdrilldown-desc',
 );
 
-// Constants for special properties - these are all deprecated
-// as of version 2.0.
+// constants for special properties
 define( 'SD_SP_HAS_FILTER', 1 );
 define( 'SD_SP_COVERS_PROPERTY', 2 );
-//define( 'SD_SP_HAS_VALUE', 3 );
+define( 'SD_SP_HAS_VALUE', 3 );
 define( 'SD_SP_GETS_VALUES_FROM_CATEGORY', 4 );
-//define( 'SD_SP_USES_TIME_PERIOD', 5 );
+define( 'SD_SP_USES_TIME_PERIOD', 5 );
 define( 'SD_SP_REQUIRES_FILTER', 6 );
 define( 'SD_SP_HAS_LABEL', 7 );
 define( 'SD_SP_HAS_DRILLDOWN_TITLE', 8 );
-//define( 'SD_SP_HAS_INPUT_TYPE', 9 );
+define( 'SD_SP_HAS_INPUT_TYPE', 9 );
 define( 'SD_SP_HAS_DISPLAY_PARAMETERS', 10 );
 
 $sdgIP = dirname( __FILE__ );
 
 require_once( $sdgIP . '/languages/SD_Language.php' );
 
-$wgMessagesDirs['SemanticDrilldown'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Messages.php';
-$wgExtensionMessagesFiles['SemanticDrilldownAlias'] = $sdgIP . '/languages/SD_Aliases.php';
-$wgExtensionMessagesFiles['SemanticDrilldownMagic'] = $sdgIP . '/languages/SemanticDrilldown.i18n.magic.php';
+$wgExtensionAliasesFiles['SemanticDrilldown'] = $sdgIP . '/languages/SD_Aliases.php';
 
 // register all special pages and other classes
+$wgSpecialPages['Filters'] = 'SDFilters';
+$wgAutoloadClasses['SDFilters'] = $sdgIP . '/specials/SD_Filters.php';
+$wgSpecialPageGroups['Filters'] = 'sd_group';
+$wgSpecialPages['CreateFilter'] = 'SDCreateFilter';
+$wgAutoloadClasses['SDCreateFilter'] = $sdgIP . '/specials/SD_CreateFilter.php';
+$wgSpecialPageGroups['CreateFilter'] = 'sd_group';
 $wgSpecialPages['BrowseData'] = 'SDBrowseData';
 $wgAutoloadClasses['SDBrowseData'] = $sdgIP . '/specials/SD_BrowseData.php';
 $wgSpecialPageGroups['BrowseData'] = 'sd_group';
@@ -56,15 +59,13 @@ $wgAutoloadClasses['SDFilter'] = $sdgIP . '/includes/SD_Filter.php';
 $wgAutoloadClasses['SDFilterValue'] = $sdgIP . '/includes/SD_FilterValue.php';
 $wgAutoloadClasses['SDAppliedFilter'] = $sdgIP . '/includes/SD_AppliedFilter.php';
 $wgAutoloadClasses['SDPageSchemas'] = $sdgIP . '/includes/SD_PageSchemas.php';
-$wgAutoloadClasses['SDParserFunctions'] = $sdgIP . '/includes/SD_ParserFunctions.php';
 
 $wgHooks['smwInitProperties'][] = 'sdfInitProperties';
 $wgHooks['AdminLinks'][] = 'SDUtils::addToAdminLinks';
 $wgHooks['MagicWordwgVariableIDs'][] = 'SDUtils::addMagicWordVariableIDs';
-$wgHooks['MakeGlobalVariablesScript'][] = 'SDUtils::setGlobalJSVariables';
+$wgHooks['LanguageGetMagic'][] = 'SDUtils::addMagicWordLanguage';
 $wgHooks['ParserBeforeTidy'][] = 'SDUtils::handleShowAndHide';
 $wgHooks['PageSchemasRegisterHandlers'][] = 'SDPageSchemas::registerClass';
-$wgHooks['ParserFirstCallInit'][] = 'SDParserFunctions::registerFunctions';
 
 $wgPageProps['hidefromdrilldown'] = 'Whether or not the page is set as HIDEFROMDRILLDOWN';
 $wgPageProps['showindrilldown'] = 'Whether or not the page is set as SHOWINDRILLDOWN';
@@ -86,10 +87,15 @@ $sdgScriptPath = $wgScriptPath . '/extensions/SemanticDrilldown';
 # than 170.
 # #
 if ( !isset( $sdgNamespaceIndex ) ) {
-	sdfInitNamespaces( 170 );
+        sdfInitNamespaces( 170 );
 } else {
-	sdfInitNamespaces();
+        sdfInitNamespaces();
 }
+
+# ##
+# # List separator character
+# ##
+$sdgListSeparator = ",";
 
 # ##
 # # Variables for display
@@ -103,9 +109,6 @@ $sdgFiltersSmallestFontSize = - 1;
 $sdgFiltersLargestFontSize = - 1;
 // print categories list as tabs
 $sdgShowCategoriesAsTabs = false;
-// other display settings
-$sdgMinValuesForComboBox = 40;
-$sdgNumRangesForNumberFilters = 6;
 
 
 /**********************************************/
@@ -129,6 +132,7 @@ function sdfInitNamespaces() {
 	sdfInitContentLanguage( $wgLanguageCode );
 
 	// Register namespace identifiers
+	if ( !is_array( $wgExtraNamespaces ) ) { $wgExtraNamespaces = array(); }
 	$wgExtraNamespaces = $wgExtraNamespaces + $sdgContLang->getNamespaces();
 	$wgNamespaceAliases = $wgNamespaceAliases + $sdgContLang->getNamespaceAliases();
 
@@ -203,10 +207,10 @@ function sdfInitProperties() {
 	$sd_property_vals = array(
 		SD_SP_HAS_FILTER => array( '_SD_F', '_wpg' ),
 		SD_SP_COVERS_PROPERTY => array( '_SD_CP', '_wpp' ),
-		//SD_SP_HAS_VALUE => array( '_SD_V', '_str' ),
+		SD_SP_HAS_VALUE => array( '_SD_V', '_str' ),
 		SD_SP_GETS_VALUES_FROM_CATEGORY => array( '_SD_VC', '_wpc' ),
-		//SD_SP_USES_TIME_PERIOD => array( '_SD_TP', '_str' ),
-		//SD_SP_HAS_INPUT_TYPE => array( '_SD_IT', '_str' ),
+		SD_SP_USES_TIME_PERIOD => array( '_SD_TP', '_str' ),
+		SD_SP_HAS_INPUT_TYPE => array( '_SD_IT', '_str' ),
 		SD_SP_REQUIRES_FILTER => array( '_SD_RF', '_wpg' ),
 		SD_SP_HAS_LABEL => array( '_SD_L', '_str' ),
 		SD_SP_HAS_DRILLDOWN_TITLE => array( '_SD_DT', '_str' ),
@@ -237,30 +241,25 @@ function sdfInitProperties() {
 	return true;
 }
 
-$sdgResourceTemplate = array(
-	'localBasePath' => $sdgIP,
-	'remoteExtPath' => 'SemanticDrilldown'
-);
-
-$wgResourceModules += array(
-	'ext.semanticdrilldown.main' => $sdgResourceTemplate + array(
-		'styles' => array(
-			'skins/SD_main.css',
-			'skins/SD_jquery_ui_overrides.css',
+// register client-side modules
+if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
+	$sfgResourceTemplate = array(
+		'localBasePath' => $sdgIP,
+		'remoteExtPath' => 'SemanticDrilldown'
+	);
+	$wgResourceModules += array(
+		'ext.semanticdrilldown.combobox' => $sfgResourceTemplate + array(
+			'scripts' => array(
+				'libs/SemanticDrilldown.js',
+			),
+			'styles' => array(
+				'skins/SD_jquery_ui_overrides.css',
+			),
+			'dependencies' => array(
+				'jquery.ui.autocomplete',
+				'jquery.ui.button',
+			),
 		),
-		'scripts' => array(
-			'libs/SemanticDrilldown.js',
-		),
-		'dependencies' => array(
-			'jquery.ui.autocomplete',
-			'jquery.ui.button',
-		),
-		'position' => 'top',
-	),
-	'ext.semanticdrilldown.info' => $sdgResourceTemplate + array(
-		'styles' => array(
-			'skins/SD_info.css',
-		),
-	),
-);
+	);
+}
 

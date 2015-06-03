@@ -164,11 +164,6 @@ class OasisController extends WikiaController {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
 
-		/**
-		 * Login status based CSS class
-		 */
-		$bodyClasses[] = $skin->getUserLoginStatusClass();
-
 		// sets background settings by adding classes to <body>
 		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
 

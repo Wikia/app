@@ -159,7 +159,7 @@ class Client
 			] );
 
 			return $this->request(
-				'users',
+				'register',
 				[],
 				$postData,
 				[ 'method'	=> 'POST' ]

@@ -5,221 +5,324 @@
  * @file
  * @ingroup Extensions
  */
-// @codingStandardsIgnoreFile
 
 $specialPageAliases = array();
 
 /** English (English) */
 $specialPageAliases['en'] = array(
 	'BrowseData' => array( 'BrowseData' ),
+	'CreateFilter' => array( 'CreateFilter' ),
+	'Filters' => array( 'Filters' ),
 );
 
 /** Arabic (العربية) */
 $specialPageAliases['ar'] = array(
 	'BrowseData' => array( 'تصفح_بيانات' ),
+	'CreateFilter' => array( 'إنشاء_فلتر' ),
+	'Filters' => array( 'فلاتر' ),
 );
 
 /** Aramaic (ܐܪܡܝܐ) */
 $specialPageAliases['arc'] = array(
-	'BrowseData' => array( 'ܦܐܬ_ܝܕ̈ܥܬܐ' ),
+	'Filters' => array( 'ܡܨܦܝܢܝܬ̈ܐ' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى) */
 $specialPageAliases['arz'] = array(
 	'BrowseData' => array( 'براوز_للداتا' ),
+	'CreateFilter' => array( 'اعمل_فيلتر' ),
+	'Filters' => array( 'فلاتر' ),
 );
 
-/** Assamese (অসমীয়া) */
-$specialPageAliases['as'] = array(
-	'BrowseData' => array( 'তথ্য_বিচাৰক' ),
+/** Breton (Brezhoneg) */
+$specialPageAliases['br'] = array(
+	'CreateFilter' => array( 'KrouiñSil' ),
+	'Filters' => array( 'Siloù' ),
 );
 
-/** Western Balochi (بلوچی رخشانی) */
-$specialPageAliases['bgn'] = array(
-	'BrowseData' => array( 'بانکی_مالوماتی__مرور_کورتین' ),
-);
-
-/** Banjar (Bahasa Banjar) */
-$specialPageAliases['bjn'] = array(
-	'BrowseData' => array( 'Ambahi_data' ),
-);
-
-/** Bosnian (bosanski) */
+/** Bosnian (Bosanski) */
 $specialPageAliases['bs'] = array(
 	'BrowseData' => array( 'PregledPodataka' ),
-);
-
-/** Czech (čeština) */
-$specialPageAliases['cs'] = array(
-	'BrowseData' => array( 'Procházet_data', 'Prochazet_data' ),
+	'CreateFilter' => array( 'PravljenjeFiltera' ),
+	'Filters' => array( 'Filteri' ),
 );
 
 /** German (Deutsch) */
 $specialPageAliases['de'] = array(
-	'BrowseData' => array( 'Daten_durchsuchen', 'Daten_browsen' ),
+	'BrowseData' => array( 'Daten_browsen' ),
+	'CreateFilter' => array( 'Filter_erstellen' ),
+	'Filters' => array( 'Filter' ),
 );
 
-/** Zazaki (Zazaki) */
-$specialPageAliases['diq'] = array(
-	'BrowseData' => array( 'MalumatBıgeyré' ),
-);
-
-/** Lower Sorbian (dolnoserbski) */
+/** Lower Sorbian (Dolnoserbski) */
 $specialPageAliases['dsb'] = array(
 	'BrowseData' => array( 'Daty pśepytaś' ),
+	'CreateFilter' => array( 'Filter napóraś' ),
+	'Filters' => array( 'Filtry' ),
 );
 
-/** Spanish (español) */
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'CreateFilter' => array( 'Krei_filtrilon' ),
+	'Filters' => array( 'Filtriloj' ),
+);
+
+/** Spanish (Español) */
 $specialPageAliases['es'] = array(
 	'BrowseData' => array( 'Buscar_datos' ),
+	'CreateFilter' => array( 'Crear_filtro' ),
+	'Filters' => array( 'Filtros' ),
 );
 
 /** Persian (فارسی) */
 $specialPageAliases['fa'] = array(
 	'BrowseData' => array( 'مرور_داده' ),
+	'CreateFilter' => array( 'ایجاد_پالایه' ),
+	'Filters' => array( 'پالایه‌ها' ),
 );
 
-/** Franco-Provençal (arpetan) */
+/** Finnish (Suomi) */
+$specialPageAliases['fi'] = array(
+	'CreateFilter' => array( 'Luo_suodin' ),
+	'Filters' => array( 'Suotimet' ),
+);
+
+/** French (Français) */
+$specialPageAliases['fr'] = array(
+	'CreateFilter' => array( 'Créer_filtre', 'CréerFiltre' ),
+	'Filters' => array( 'Filtres' ),
+);
+
+/** Franco-Provençal (Arpetan) */
 $specialPageAliases['frp'] = array(
 	'BrowseData' => array( 'Chèrchiér_les_balyês', 'ChèrchiérLesBalyês' ),
+	'CreateFilter' => array( 'Fâre_un_filtro', 'FâreUnFiltro' ),
+	'Filters' => array( 'Filtros' ),
 );
 
-/** Galician (galego) */
+/** Galician (Galego) */
 $specialPageAliases['gl'] = array(
-	'BrowseData' => array( 'Explorar_os_datos' ),
+	'CreateFilter' => array( 'Crear_un_filtro' ),
+	'Filters' => array( 'Filtros' ),
 );
 
 /** Swiss German (Alemannisch) */
 $specialPageAliases['gsw'] = array(
-	'BrowseData' => array( 'Date_duresueche' ),
+	'CreateFilter' => array( 'Filter aalege' ),
+	'Filters' => array( 'Filter' ),
 );
 
-/** Upper Sorbian (hornjoserbsce) */
+/** Hebrew (עברית) */
+$specialPageAliases['he'] = array(
+	'Filters' => array( 'מסננים' ),
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
 $specialPageAliases['hsb'] = array(
-	'BrowseData' => array( 'Daty_přepytać' ),
+	'BrowseData' => array( 'Daty přepytać' ),
+	'CreateFilter' => array( 'Filter wutworić' ),
+	'Filters' => array( 'Filtry' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
 $specialPageAliases['ht'] = array(
 	'BrowseData' => array( 'NavigeDòne' ),
+	'CreateFilter' => array( 'KreyeFilt' ),
+	'Filters' => array( 'Filt' ),
 );
 
-/** Hungarian (magyar) */
+/** Hungarian (Magyar) */
 $specialPageAliases['hu'] = array(
 	'BrowseData' => array( 'Adatok_böngészése' ),
+	'CreateFilter' => array( 'Szűrőkészítés' ),
+	'Filters' => array( 'Szűrők' ),
 );
 
-/** Interlingua (interlingua) */
+/** Interlingua (Interlingua) */
 $specialPageAliases['ia'] = array(
 	'BrowseData' => array( 'Percurrer_datos' ),
+	'CreateFilter' => array( 'Crear_filtro' ),
+	'Filters' => array( 'Filtros' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
 $specialPageAliases['id'] = array(
 	'BrowseData' => array( 'Jelajahi_data', 'JelajahiData' ),
+	'CreateFilter' => array( 'Buat_filter', 'BuatFilter' ),
+	'Filters' => array( 'Filter' ),
 );
 
-/** Italian (italiano) */
+/** Italian (Italiano) */
 $specialPageAliases['it'] = array(
 	'BrowseData' => array( 'EsploraDati' ),
+	'CreateFilter' => array( 'CreaFiltro' ),
+	'Filters' => array( 'Filtri' ),
 );
 
 /** Japanese (日本語) */
 $specialPageAliases['ja'] = array(
 	'BrowseData' => array( 'データ閲覧' ),
+	'CreateFilter' => array( 'フィルター作成', 'フィルタ作成' ),
+	'Filters' => array( 'フィルター一覧', 'フィルタ一覧' ),
+);
+
+/** Georgian (ქართული) */
+$specialPageAliases['ka'] = array(
+	'CreateFilter' => array( 'ფილტრის_შექმნა' ),
+	'Filters' => array( 'ფილტრები' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
 $specialPageAliases['km'] = array(
 	'BrowseData' => array( 'រាវរកទិន្នន័យ' ),
-);
-
-/** Korean (한국어) */
-$specialPageAliases['ko'] = array(
-	'BrowseData' => array( '데이터찾아보기' ),
+	'CreateFilter' => array( 'បង្កើត​តម្រង' ),
+	'Filters' => array( 'តម្រង' ),
 );
 
 /** Colognian (Ripoarisch) */
 $specialPageAliases['ksh'] = array(
 	'BrowseData' => array( 'Bläddere en de' ),
+	'CreateFilter' => array( 'Felter opsäze', 'Söke opsäze' ),
+	'Filters' => array( 'Feltere', 'Fenge' ),
 );
 
-/** Cornish (kernowek) */
-$specialPageAliases['kw'] = array(
-	'BrowseData' => array( 'PeuriData' ),
+/** Luxembourgish (Lëtzebuergesch) */
+$specialPageAliases['lb'] = array(
+	'CreateFilter' => array( 'Filter_uleeën' ),
+	'Filters' => array( 'Filteren' ),
 );
 
-/** Macedonian (македонски) */
+/** Macedonian (Македонски) */
 $specialPageAliases['mk'] = array(
 	'BrowseData' => array( 'ПрелистајПодатоци' ),
+	'CreateFilter' => array( 'СоздајФилтер' ),
+	'Filters' => array( 'Филтри' ),
 );
 
 /** Malayalam (മലയാളം) */
 $specialPageAliases['ml'] = array(
 	'BrowseData' => array( 'വിവരങ്ങൾബ്രൗസ്‌‌ചെയ്യുക' ),
+	'CreateFilter' => array( 'അരിപ്പസൃഷ്ടിക്കുക' ),
+	'Filters' => array( 'അരിപ്പകൾ' ),
 );
 
 /** Marathi (मराठी) */
 $specialPageAliases['mr'] = array(
 	'BrowseData' => array( 'विदान्याहाळा' ),
+	'CreateFilter' => array( 'चाळणीनिर्मितकरा' ),
+	'Filters' => array( 'चाळण्या' ),
 );
 
-/** Norwegian Bokmål (norsk bokmål) */
-$specialPageAliases['nb'] = array(
-	'BrowseData' => array( 'Naviger_data' ),
+/** Maltese (Malti) */
+$specialPageAliases['mt'] = array(
+	'Filters' => array( 'Filtri' ),
 );
 
-/** Low Saxon (Netherlands) (Nedersaksies) */
+/** Erzya (Эрзянь) */
+$specialPageAliases['myv'] = array(
+	'Filters' => array( 'Сувтеметь' ),
+);
+
+/** Nedersaksisch (Nedersaksisch) */
 $specialPageAliases['nds-nl'] = array(
 	'BrowseData' => array( 'Gegevens_bekieken' ),
+	'CreateFilter' => array( 'Filter_anmaken' ),
 );
 
 /** Dutch (Nederlands) */
 $specialPageAliases['nl'] = array(
 	'BrowseData' => array( 'GegevensBekijken' ),
+	'CreateFilter' => array( 'FilterAanmaken' ),
 );
 
-/** Portuguese (português) */
-$specialPageAliases['pt'] = array(
-	'BrowseData' => array( 'Navegar_pelos_dados' ),
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
+$specialPageAliases['no'] = array(
+	'BrowseData' => array( 'Naviger_data' ),
+	'CreateFilter' => array( 'Opprett_filter' ),
+	'Filters' => array( 'Filtere' ),
 );
 
-/** Sicilian (sicilianu) */
-$specialPageAliases['scn'] = array(
-	'BrowseData' => array( 'EsploraDati' ),
+/** Occitan (Occitan) */
+$specialPageAliases['oc'] = array(
+	'CreateFilter' => array( 'CrearFiltre', 'Crear filtre' ),
+	'Filters' => array( 'Filtres' ),
 );
 
-/** Slovak (slovenčina) */
+/** Pashto (پښتو) */
+$specialPageAliases['ps'] = array(
+	'CreateFilter' => array( 'چاڼګر جوړول' ),
+	'Filters' => array( 'چاڼګرونه' ),
+);
+
+/** Brazilian Portuguese (Português do Brasil) */
+$specialPageAliases['pt-br'] = array(
+	'CreateFilter' => array( 'Criar filtro' ),
+	'Filters' => array( 'Filtros' ),
+);
+
+/** Romanian (Română) */
+$specialPageAliases['ro'] = array(
+	'Filters' => array( 'Filtre' ),
+);
+
+/** Slovak (Slovenčina) */
 $specialPageAliases['sk'] = array(
 	'BrowseData' => array( 'PrehliadaťDáta' ),
+	'CreateFilter' => array( 'VytvoriťFilter' ),
+	'Filters' => array( 'Filtre' ),
+);
+
+/** Albanian (Shqip) */
+$specialPageAliases['sq'] = array(
+	'CreateFilter' => array( 'KrijoFiltrues' ),
+	'Filters' => array( 'Filtruesit' ),
+);
+
+/** Swedish (Svenska) */
+$specialPageAliases['sv'] = array(
+	'Filters' => array( 'Filter' ),
 );
 
 /** Swahili (Kiswahili) */
 $specialPageAliases['sw'] = array(
 	'BrowseData' => array( 'FunguaData' ),
+	'CreateFilter' => array( 'UndaChujio' ),
+	'Filters' => array( 'Machujio' ),
 );
 
 /** Tagalog (Tagalog) */
 $specialPageAliases['tl'] = array(
-	'BrowseData' => array( 'Tumingin-tingin_sa_dato' ),
+	'BrowseData' => array( 'Tumingin-tingin sa dato' ),
+	'CreateFilter' => array( 'Likhain ang pansala' ),
+	'Filters' => array( 'Mga pansala' ),
 );
 
 /** Turkish (Türkçe) */
 $specialPageAliases['tr'] = array(
 	'BrowseData' => array( 'VeriGezintisi' ),
+	'CreateFilter' => array( 'SüzgeçOluştur', 'FiltreOluştur' ),
+	'Filters' => array( 'Süzgeçler', 'Filtreler' ),
+);
+
+/** Vèneto (Vèneto) */
+$specialPageAliases['vec'] = array(
+	'CreateFilter' => array( 'CreaFiltro' ),
+	'Filters' => array( 'Filtri' ),
 );
 
 /** Vietnamese (Tiếng Việt) */
 $specialPageAliases['vi'] = array(
 	'BrowseData' => array( 'Duyệt_dữ_liệu' ),
+	'CreateFilter' => array( 'Tạo_bộ_lọc' ),
+	'Filters' => array( 'Bộ_lọc' ),
 );
 
-/** Simplified Chinese (中文（简体）‎) */
-$specialPageAliases['zh-hans'] = array(
-	'BrowseData' => array( '浏览数据' ),
+/** Yiddish (ייִדיש) */
+$specialPageAliases['yi'] = array(
+	'Filters' => array( 'פֿילטערס' ),
 );
 
-/** Traditional Chinese (中文（繁體）‎) */
-$specialPageAliases['zh-hant'] = array(
-	'BrowseData' => array( '瀏覽資料' ),
-);
+/**
+ * For backwards compatibility with MediaWiki 1.15 and earlier.
+ */
+$aliases =& $specialPageAliases;

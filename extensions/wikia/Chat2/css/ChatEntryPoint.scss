@@ -46,7 +46,7 @@ body.skin-oasis .ChatMonobookEntryPoint {
 		}
 	}
 
-	h2.chat-headline {
+	h1.chat-headline {
 		@include clearfix;
 		font-size: 17px;
 		font-weight: bold;
@@ -64,7 +64,7 @@ body.skin-oasis .ChatMonobookEntryPoint {
 			font-size: 12px;
 			font-weight: normal;
 			line-height: 14px;
-			margin: 2px 0 0 8px;
+			margin-left: 8px;
 			padding: 1px 4px;
 		}
 	}

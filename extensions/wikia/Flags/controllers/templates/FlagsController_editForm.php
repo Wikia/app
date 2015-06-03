@@ -1,3 +1,8 @@
+<?php
+if ( empty($flags) ) :
+	echo wfMessage( 'flags-edit-modal-no-flags-on-community' )->parseAsBlock();
+else:
+ ?>
 <form action="<?= Sanitizer::cleanUrl( $formSubmitUrl ) ?>" method="POST" id="flagsEditForm">
 	<ul>
 		<?php foreach ( $flags as $flagTypeId => $flag ): ?>
@@ -30,3 +35,6 @@
 	<input type="hidden" name="page_id" value="<?= Sanitizer::encodeAttribute( $pageId ) ?>">
 	<input type="hidden" name="edit_token" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>">
 </form>
+<?php
+endif;
+?>

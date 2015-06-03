@@ -60,7 +60,7 @@
 		padding: 0 10px;
 	}
 
-	h2 {
+	h1 {
 		font-size: 22px;
 		margin: 0 90px 0 0;
 	}
@@ -146,7 +146,7 @@
 	ul {
 		margin: 15px 0 0;
 
-		h3 {
+			h1 {
 			margin-bottom: 0 !important;
 		}
 
@@ -161,13 +161,13 @@
 				border: 0;
 			}
 
-			h2,
+			h1,
 			details span,
 			.author-details span {
 				padding-left: 0;
 			}
 
-			h2 {
+			h1 {
 				font-weight: bold;
 				margin: 0;
 			}
@@ -182,7 +182,7 @@
 		vertical-align: middle;
 	}
 
-	h2 {
+	h1 {
 		padding-bottom: 0;
 
 		a {
@@ -259,6 +259,10 @@
 #wpCategoryInput,
 #wpCategoryButton {
 	margin: 4px 2px 0;
+}
+
+wpCategoryInput {
+	width: 230px;
 }
 
 .matches-info {

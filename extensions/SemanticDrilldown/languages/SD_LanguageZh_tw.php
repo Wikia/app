@@ -13,12 +13,11 @@ class SD_LanguageZh_tw extends SD_Language {
         SD_SP_HAS_FILTER  => '設置篩選器', //'Has filter'
 	// filter properties
         SD_SP_COVERS_PROPERTY  => '涵蓋性質', //'Covers property',
+        SD_SP_HAS_VALUE  => '篩選值',  //'Has value',
         SD_SP_GETS_VALUES_FROM_CATEGORY => '設分類為篩選值', //'Gets values from category',
+        SD_SP_USES_TIME_PERIOD => '時間期限', //'Uses time period', 
         SD_SP_REQUIRES_FILTER => '基礎篩選器', //'Requires filter', 
-        SD_SP_HAS_LABEL  => '設置標籤',  //'Has label'
-	// English stuff, to avoid crashes
-	SD_SP_HAS_DRILLDOWN_TITLE  => 'Has drilldown title',
-	SD_SP_HAS_DISPLAY_PARAMETERS => 'Has display parameters',
+        SD_SP_HAS_LABEL  => '設置標籤'  //'Has label'
 );
 
 var $m_Namespaces = array(

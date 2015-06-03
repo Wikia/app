@@ -94,10 +94,7 @@ class AdEngine2Hooks {
 
 		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
 
-		$vars['ads'] = [
-			'context' => $adContext,
-			'runtime' => [],
-		];
+		$vars['ads'] = ['context' => $adContext];
 
 		// Legacy vars:
 		$vars['adslots2'] = [];                  // Queue for ads registration

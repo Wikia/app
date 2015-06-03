@@ -2,7 +2,6 @@
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/flexbox";
 @import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/core/breakpoints-variables";
 @import "extensions/wikia/Venus/styles/fonts/venus-icons";
 @import "extensions/wikia/Venus/styles/mixins";
 
@@ -449,28 +448,6 @@ header.MainPageHeroHeader {
 
 	+ nav {
 		margin-bottom: 15px;
-	}
-}
-
-.MainPageHeroHeader.hero-image-wrapper {
-	@media #{$breakpoint-small-up} {
-		margin-left: -#{$padding-width-small};
-		margin-right: -#{$padding-width-small};
-	}
-
-	@media #{$breakpoint-small-plus-up} {
-		margin-left: -#{$padding-width-small-plus};
-		margin-right: -#{$padding-width-small-plus};
-	}
-
-	@media #{$breakpoint-medium-up} {
-		margin-left: -#{$padding-width-medium};
-		margin-right: -#{$padding-width-medium};
-	}
-
-	@media #{$breakpoint-large-up} {
-		margin-left: -#{$padding-width-large};
-		margin-right: -#{$padding-width-large};
 	}
 }
 

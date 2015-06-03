@@ -16,7 +16,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola')
+	require.optional('ext.wikia.adEngine.provider.taboola'),
+	require.optional('ext.wikia.adEngine.adDecoratorTopInContent')
 ], function (
 	// regular dependencies
 	log,
@@ -34,7 +35,9 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
-	adProviderTaboola
+	adProviderTaboola,
+
+	adDecoratorTopInContent
 ) {
 	'use strict';
 
@@ -51,7 +54,13 @@ define('ext.wikia.adEngine.config.desktop', [
 		dartEnabled = !instantGlobals.wgSitewideDisableGpt;
 
 	function getDecorators() {
-		return [adDecoratorPageDimensions];
+		var decorators = [adDecoratorPageDimensions];
+
+		if (adDecoratorTopInContent) {
+			decorators.push(adDecoratorTopInContent);
+		}
+
+		return decorators;
 	}
 
 	function getProviderList(slotName) {
