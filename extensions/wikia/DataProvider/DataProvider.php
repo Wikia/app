@@ -450,25 +450,48 @@ class DataProvider {
 				global $wgCityId, $wgStatsDB;
 
 				$dbr = wfGetDB(DB_SLAVE);
-				$users_list = $dbr->selectField("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), $fname);
+				$users_list = $dbr->selectFieldValues(
+					"user_groups",
+					"ug_user",
+					[ 'ug_group' => [ 'staff', 'bot' ] ],
+					$fname
+				);
+
+				// add more blacklisted user IDs
+				$users_list[] = 0;
+				$users_list[] = 22439; // Wikia
+				$users_list[] = 929702; // CreateWiki script
 
 				$dbs = wfGetDB(DB_SLAVE, [], $wgStatsDB);
-				// user #929702 is "CreateWiki script"
-				$query = "SELECT user_id AS rev_user, edits AS cnt FROM specials.events_local_users WHERE wiki_id = '" . intval( $wgCityId ) . "' " . (!empty($users_list) ? "AND user_id NOT IN (" . $users_list . ",'0','929702')" : "") . " ORDER BY edits DESC";
-
-				$res = $dbs->query($dbs->limitResult($query, self::TOP_USERS_MAX_LIMIT * 4), $fname);
+				$res = $dbs->select(
+					'specials.events_local_users',
+					'user_id',
+					[
+						'wiki_id' => $wgCityId,
+						sprintf( 'user_id NOT IN (%s)', $dbs->makeList( $users_list ) )
+					],
+					$fname,
+					[
+						'LIMIT' => self::TOP_USERS_MAX_LIMIT * 4,
+						'ORDER BY' => 'edits DESC'
+					]
+				);
 
 				$results = [];
 				while ($row = $dbs->fetchObject($res)) {
-					$user = User::newFromID($row->rev_user);
+					$user = User::newFromID($row->user_id);
 
 					if (!$user->isBlocked() && !$user->isAllowed('bot')
-						&& ($user->getName() != 'Wikia') # rt24706
 						&& $user->getUserPage()->exists()
 					) {
 						$article['url'] = $user->getUserPage()->getLocalUrl();
 						$article['text'] = $user->getName();
 						$results[] = $article;
+					}
+
+					// no need to check more users here
+					if (count($results) >= self::TOP_USERS_MAX_LIMIT) {
+						break;
 					}
 				}
 				$dbs->freeResult($res);
