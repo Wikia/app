@@ -1,0 +1,16 @@
+/**
+ * CSS file for the #drilldowninfo parser function.
+ *
+ * @author Yaron Koren
+ */
+table.drilldownInfo {
+	border: 1px solid #ccc;
+}
+
+tr.drilldownInfoHeader {
+	background: #fdd;
+}
+
+td.drilldownFilterName {
+	font-weight: bold;
+}

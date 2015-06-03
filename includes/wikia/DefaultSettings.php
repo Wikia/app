@@ -1280,6 +1280,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverDelayBelowTheFold
+ * Prevents from loading BTF before ATF ad slots
+ */
+$wgAdDriverDelayBelowTheFold = false;
+
+/**
  * @name $wgAdDriverUseAdsAfterInfobox
  * Enable new mobile_in_content slot after infobox placement
  */
@@ -1469,18 +1475,6 @@ $wgAdDriverTurtleCountries = null;
 $wgAdDriverOpenXCountries = null;
 
 /**
- * @name $wgAnalyticsProviderPageFair
- * Site ID for PageFair analytics provider.
- */
-$wgAnalyticsProviderPageFair = null;
-
-/**
- * @name $wgAnalyticsProviderPageFairSlotIds
- * Slot IDs for PageFair analytics provider.
- */
-$wgAnalyticsProviderPageFairSlotIds = [ 'LEADERBOARD' => null, 'MEDREC' => null, 'SKYSCRAPER' => null ];
-
-/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
@@ -1645,6 +1639,7 @@ $wgBuckyEnabledSkins = [
 	'oasis',
 	'venus',
 	'uncyclopedia',
+	'wikiamobile',
 ];
 
 /**

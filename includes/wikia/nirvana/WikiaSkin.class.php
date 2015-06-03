@@ -12,6 +12,9 @@ abstract class WikiaSkin extends SkinTemplate {
 
 	const SKIN_VENUS = 'venus';
 
+	const USER_LOGIN_STATUS_CLASS_LOGGED = ' user-logged';
+	const USER_LOGIN_STATUS_CLASS_ANON = ' user-anon';
+
 	protected $app = null;
 	protected $wg = null;
 	protected $wf = null;
@@ -387,6 +390,18 @@ abstract class WikiaSkin extends SkinTemplate {
 			wfProfileOut(__METHOD__ );
 			return '';
 		}
+	}
+
+	/**
+	 * Returns a name of a class that is associated with a login status of the current user.
+	 * @return string
+	 */
+	public function getUserLoginStatusClass() {
+		if ( F::app()->wg->User->isLoggedIn() ) {
+			return self::USER_LOGIN_STATUS_CLASS_LOGGED;
+		}
+
+		return self::USER_LOGIN_STATUS_CLASS_ANON;
 	}
 
 	public function initPage( OutputPage $out ) {

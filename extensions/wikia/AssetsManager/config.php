@@ -76,6 +76,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
+		'//extensions/wikia/AdEngine/js/GptSraHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -565,6 +566,9 @@ $config['wikiamobile_js_body_minimal'] = array(
 
 		//tracker
 		'#group_tracker_js',
+
+		// performance
+		'#group_bucky_js',
 
 		//modules
 		'//resources/wikia/modules/nirvana.js',
@@ -2376,7 +2380,8 @@ $config['page_share_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PageShare/scripts/PageShare.js'
+		'//extensions/wikia/PageShare/scripts/PageShare.js',
+		'//extensions/wikia/PageShare/scripts/PageShareInit.js'
 	]
 ];
 
@@ -2384,7 +2389,7 @@ $config['page_share_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/PageShare/styles/share.scss'
+		'//extensions/wikia/PageShare/styles/PageShare.scss'
 	],
 ];
 
@@ -2435,6 +2440,14 @@ $config['portable_infobox_monobook_scss'] = [
 		'#group_portable_infobox_scss',
 		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss'
 	]
+];
+
+$config['flags_css'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/styles/Flags.scss',
+	],
 ];
 
 $config['flags_js'] = [

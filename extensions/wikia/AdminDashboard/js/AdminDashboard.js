@@ -124,7 +124,7 @@ var AdminDashboard = {
 	},
 	modalLoad: {
 		loadAddPage: function() {
-			CreatePage.openDialog();
+			CreatePage.requestDialog();
 		},
 		loadAddPhoto: function() {
 			UploadPhotos.showDialog();

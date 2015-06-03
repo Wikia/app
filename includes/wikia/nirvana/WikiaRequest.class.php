@@ -11,7 +11,18 @@
  */
 class WikiaRequest {
 
+	const EXCEPTION_MODE_RETURN = 0;
+	const EXCEPTION_MODE_WRAP_AND_THROW = 1;
+	const EXCEPTION_MODE_THROW = 2;
+
+	static private $exceptionModes = [
+		self::EXCEPTION_MODE_RETURN,
+		self::EXCEPTION_MODE_WRAP_AND_THROW,
+		self::EXCEPTION_MODE_THROW,
+	];
+
 	private $isInternal = false;
+	private $exceptionMode = self::EXCEPTION_MODE_WRAP_AND_THROW;
 	protected $params = array();
 
 	/**
@@ -71,6 +82,26 @@ class WikiaRequest {
 	 */
 	public function setInternal($value) {
 		$this->isInternal = (bool) $value;
+	}
+
+	/**
+	 * checks what exception mode is set
+	 * @return int One of WikiaRequest::EXCEPTION_MODE_*
+	 */
+	public function getExceptionMode() {
+		return $this->exceptionMode;
+	}
+
+	/**
+	 * set exception mode
+	 * @param int $value One of WikiaRequest::EXCEPTION_MODE_*
+	 */
+	public function setExceptionMode( $value ) {
+		$value = (int) $value;
+		if ( !in_array( $value, self::$exceptionModes ) ) {
+			throw new InvalidArgumentException( 'Exception mode is invalid' );
+		}
+		$this->exceptionMode = $value;
 	}
 
 	/**

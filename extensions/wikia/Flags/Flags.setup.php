@@ -11,7 +11,9 @@
  * This extension provides a new way of storing and managing of the Flags that allows them
  * to be portable and behave accordingly to a given context.
  *
- * @author Adam Karmiński
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
+ * @author Kamil Koterba <kamil@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -35,8 +37,8 @@ $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiContr
  */
 $wgAutoloadClasses['Flags\Models\FlagsBaseModel'] = __DIR__ . '/models/FlagsBaseModel.class.php';
 $wgAutoloadClasses['Flags\Models\Flag'] = __DIR__ . '/models/Flag.class.php';
-$wgAutoloadClasses['Flags\Models\FlagParameter'] = __DIR__ . '/models/FlagParameter.class.php';
 $wgAutoloadClasses['Flags\Models\FlagType'] = __DIR__ . '/models/FlagType.class.php';
+$wgAutoloadClasses['Flags\Models\FlagParameter'] = __DIR__ . '/models/FlagParameter.class.php';
 
 /**
  * Views
@@ -46,9 +48,14 @@ $wgAutoloadClasses['Flags\Views\FlagView'] = __DIR__ . '/views/FlagView.class.ph
 /**
  * Helpers
  */
+$wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
 $wgAutoloadClasses['Flags\FlagsHelper'] = __DIR__ . '/FlagsHelper.class.php';
 $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
-$wgAutoloadClasses['Flags\FlagsExtractor'] = __DIR__ . '/FlagsExtractor.class.php';
+
+/**
+ * Tasks
+ */
+$wgAutoloadClasses['Flags\FlagsLogTask'] = __DIR__ . '/tasks/FlagsLogTask.php';
 
 /**
  * Hooks
@@ -78,3 +85,11 @@ $wgResourceModules['ext.wikia.Flags'] = [
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Flags'
 ];
+
+/**
+ * Logs
+ */
+$wgLogTypes[] = 'flags';
+$wgLogNames['flags'] = 'flags-log-name';
+$wgLogHeaders['flags'] = 'flags-description';
+$wgLogActionsHandlers[ 'flags/*' ] = 'LogFormatter';

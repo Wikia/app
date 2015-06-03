@@ -129,10 +129,6 @@ Disallow: /
 User-agent: WebReaper
 Disallow: /
 
-# threshold for MSN bot (PLATFORM-1194)
-User-agent: msnbot
-Crawl-delay: 30
-
 EOT;
 	echo getDynamicRobots('goog');
 	echo getDynamicRobots();
