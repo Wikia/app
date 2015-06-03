@@ -125,4 +125,25 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 			padding-right: $infobox-item-margin * 2;
 		}
 	}
+
+	&.portable-infobox-layout-tabular {
+		.portable-infobox-item.item-type-key-val.portable-infobox-item-margins {
+			font-size: 16px;
+			overflow: hidden;
+		}
+
+		.portable-infobox-item-label.portable-infobox-header-font {
+			display: inline-block;
+			margin: 0;
+			width: 30%;
+			vertical-align: top;
+		}
+
+		.portable-infobox-item-value {
+			display: inline-block;
+			font-size: 16px;
+			width: 60%;
+			vertical-align: top;
+		}
+	}
 }
