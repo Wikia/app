@@ -10,7 +10,7 @@ class NodeImage extends Node {
 	public function getData() {
 		$imageName = $this->getRawValueWithDefault( $this->xmlNode );
 		$title = $this->getImageAsTitleObject( $imageName );
-		$this->getExternalParser()->addImage( $imageName );
+		$this->getExternalParser()->addImage( $title ? $title->getDBkey() : $imageName );
 		$ref = null;
 		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 		$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
@@ -37,12 +37,15 @@ class NodeImage extends Node {
 			ImageFilenameSanitizer::getInstance()->sanitizeImageFileName( $imageName, $wgContLang ),
 			NS_FILE
 		);
+
 		return $title;
 	}
 
 	/**
 	 * @desc returns image url for given image title
+	 *
 	 * @param string $title
+	 *
 	 * @return string url or '' if image doesn't exist
 	 */
 	public function resolveImageUrl( $title ) {
@@ -52,6 +55,7 @@ class NodeImage extends Node {
 				return $file->getUrl();
 			}
 		}
+
 		return '';
 	}
 }
