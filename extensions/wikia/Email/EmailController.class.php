@@ -646,7 +646,7 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * A wrapper for wfMessage() which removes possibility of database lookup for message text
+	 * A wrapper for wfMessage() which removes the possibility of messages being overridden in the MediaWiki namespace
 	 *
 	 * @return Message
 	 */
