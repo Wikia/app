@@ -10,8 +10,8 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// adProviders
 	'ext.wikia.adEngine.provider.evolve',
-	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
@@ -30,8 +30,8 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// AdProviders
 	adProviderEvolve,
-	adProviderLiftium,
 	adProviderDirectGpt,
+	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderOpenX,
 	adProviderRemnantGpt,

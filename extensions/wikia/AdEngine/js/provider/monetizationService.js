@@ -1,10 +1,10 @@
 define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.cache',
 	'wikia.loader',
 	'wikia.log',
-	'wikia.scriptwriter'
-], function (adContext, loader, log, scriptWriter) {
+	'wikia.scriptwriter',
+	'wikia.window',
+], function (adContext, loader, log, scriptWriter, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
@@ -23,11 +23,18 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	 */
 	function loadAssets() {
 		if (!isLoaded) {
+			var scripts = 'monetization_module_js',
+				styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModule.scss';
+
+			if (window.wgOasisBreakpoints) {
+				styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModuleNoBreakpoints.scss';
+			}
+
 			loader({
 				type: loader.MULTI,
 				resources: {
-					styles: '/extensions/wikia/MonetizationModule/styles/MonetizationModule.scss',
-					scripts: 'monetization_module_js'
+					styles: styles,
+					scripts: scripts
 				}
 			}).done(function (res) {
 				var script = res.scripts,
@@ -53,13 +60,13 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	}
 
 	function fillInSlot(slot, success) {
-		log(['fillInSlot', slot], 'info', logGroup);
+		log(['fillInSlot', slot], 'debug', logGroup);
 
 		var slotName = slotMap[slot],
 			context = adContext.getContext();
 
 		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
-			log(['fillInSlot', slot, 'injectScript'], 'info', logGroup);
+			log(['fillInSlot', slot, 'injectScript'], 'debug', logGroup);
 
 			loadAssets();
 
