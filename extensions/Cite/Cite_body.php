@@ -1070,7 +1070,7 @@ class Cite {
 			return $parser->extCite->checkRefsNoReferences( $parser, $text );
 		}
 
-		if ( $parser->getOptions()->getIsSectionPreview() ) {
+		if ( $parser->getOptions()->getIsSectionPreview() || $parser->getOptions()->getIsPartialParse() ) {
 			return true;
 		}
 
