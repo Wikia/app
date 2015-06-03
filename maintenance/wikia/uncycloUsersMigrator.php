@@ -332,16 +332,61 @@ class UncycloUserMigrator extends Maintenance {
 			// update user_name in MW tables
 			$this->updateTables(self::UPDATE_TABLE_USER_NAME, $user->getName(), $newName);
 
-			// move user page
-			// TODO: include subpages as well
-			$oldUserPage = Title::newFromText($user->getName(), NS_USER);
-			$newUserPage = Title::newFromText($newName, NS_USER);
-			$oldUserPage->moveTo($newUserPage, false /* do not check permissions to move */, 'Migrating Uncyclopedia accounts');
+			$this->moveUserPages( $user->getName(), $newName );
 		}
 
 		// return the updated user object
 		$user->setName( $newName );
 		return $user;
+	}
+
+	/**
+	 * Move user and user talk pages (including subpages)
+	 *
+	 * Code "inspired" by /extensions/Renameuser/Renameuser_body.php
+	 *
+	 * @param string $oldName old user name
+	 * @param string $newName new user name
+	 */
+	protected function moveUserPages( $oldName, $newName ) {
+		$oldName = Title::makeTitleSafe( NS_USER, $oldName )->getDBkey();
+
+		$dbr = $this->getUncycloDB(DB_SLAVE);
+		$pages = $dbr->select(
+			'page',
+			array( 'page_namespace', 'page_title' ),
+			array(
+				'page_namespace IN (' . $dbr->makeList([NS_USER , NS_USER_TALK]) . ')',
+				'(page_title ' . $dbr->buildLike( $oldName . '/', $dbr->anyString() ) .
+				' OR page_title = ' . $dbr->addQuotes( $oldName ) . ')'
+			),
+			__METHOD__
+		);
+
+		$candidates = $dbr->affectedRows();
+		$moved = 0;
+
+		foreach ( $pages as $row ) {
+			$oldUserPage = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
+			$newUserPage = Title::makeTitleSafe( $row->page_namespace,
+				preg_replace( '!^[^/]+!', $newName, $row->page_title ) );
+
+			if ( $newUserPage && $oldUserPage && !$newUserPage->exists() && $oldUserPage->isValidMoveTarget( $newUserPage ) ) {
+				$res = $oldUserPage->moveTo($newUserPage, false /* do not check permissions to move */, 'Migrating Uncyclopedia accounts', false /* don't leave redirects */);
+
+				if ($res === true) {
+					$moved++;
+				}
+			}
+		}
+
+		$this->info( __METHOD__, [
+			'user_id' => $user->getId(),
+			'from' => $user->getName(),
+			'to' => $newName,
+			'candidates' => $candidates,
+			'moved' => $moved
+		] );
 	}
 
 	/**
