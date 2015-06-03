@@ -3,8 +3,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	'wikia.loader',
 	'wikia.log',
 	'wikia.scriptwriter',
-	'wikia.window',
-], function (adContext, loader, log, scriptWriter, window) {
+], function (adContext, loader, log, scriptWriter) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
@@ -15,37 +14,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 			MON_BELOW_CATEGORY: 'below_category',
 			MON_ABOVE_FOOTER: 'above_footer',
 			MON_FOOTER: 'footer'
-		},
-		isLoaded = false;
-
-	/**
-	 * @desc loads all assets for monetization ads
-	 */
-	function loadAssets() {
-		if (!isLoaded) {
-			var scripts = 'monetization_module_js',
-				styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModule.scss';
-
-			if (window.wgOasisBreakpoints) {
-				styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModuleNoBreakpoints.scss';
-			}
-
-			loader({
-				type: loader.MULTI,
-				resources: {
-					styles: styles,
-					scripts: scripts
-				}
-			}).done(function (res) {
-				var script = res.scripts,
-					style = res.styles;
-
-				loader.processStyle(style);
-				loader.processScript(script);
-			});
-			isLoaded = true;
-		}
-	}
+		};
 
 	function canHandleSlot(slotName) {
 		log(['canHandleSlot', slotName], 'debug', logGroup);
@@ -67,8 +36,6 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 
 		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
 			log(['fillInSlot', slot, 'injectScript'], 'debug', logGroup);
-
-			loadAssets();
 
 			scriptWriter.injectHtml(slot, context.providers.monetizationServiceAds[slotName], function () {
 				success();
