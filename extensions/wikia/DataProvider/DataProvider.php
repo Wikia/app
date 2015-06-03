@@ -30,6 +30,8 @@ $wgExtensionMessagesFiles['DataProvider'] = __DIR__ . '/DataProvider.i18n.php';
 class DataProvider {
 	private $skin;
 
+	const TOP_USERS_MAX_LIMIT = 7;
+
 	/**
 	 * Author: Tomasz Klim (tomek at wikia.com)
 	 */
@@ -427,30 +429,35 @@ class DataProvider {
 
 	/**
 	 * Return array of top five users
+	 *
+	 * Called by NavigationModel::handleExtraWords
+	 *
 	 * Author: Inez Korczynski (inez at wikia.com)
 	 * @return array
 	 */
 	final public static function GetTopFiveUsers($limit = 7) {
 		wfProfileIn(__METHOD__);
-		global $wgStatsDB, $wgMemc, $wgCityId, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled;
+
+		$fname = __METHOD__;
+		$limit = min( $limit, self::TOP_USERS_MAX_LIMIT );
 
 		if (empty($wgStatsDB) || empty($wgStatsDBEnabled)) {
-			$result = array();
+			$results = [];
 		}
 		else {
-			$memckey = wfMemcKey("TopFiveUsers", $limit);
-			$results = $wgMemc->get($memckey);
+			$results = WikiaDataAccess::cacheWithLock( wfMemcKey( __CLASS__, 'GetTopFiveUsers' ), WikiaResponse::CACHE_STANDARD, function() use ($fname) {
+				global $wgCityId, $wgStatsDB;
 
-			if (!is_array($results)) {
 				$dbr = wfGetDB(DB_SLAVE);
-				$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__);
+				$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), $fname);
 
 				$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-				$query = "SELECT user_id AS rev_user, edits AS cnt FROM specials.events_local_users WHERE wiki_id = '" . $wgCityId . "' " . (!empty($row->user_list) ? "AND user_id NOT IN (" . $row->user_list . ",'0','929702')" : "") . " ORDER BY edits DESC";
+				$query = "SELECT user_id AS rev_user, edits AS cnt FROM specials.events_local_users WHERE wiki_id = '" . intval( $wgCityId ) . "' " . (!empty($row->user_list) ? "AND user_id NOT IN (" . $row->user_list . ",'0','929702')" : "") . " ORDER BY edits DESC";
 
-				$res = $dbs->query($dbs->limitResult($query, $limit * 4, 0));
+				$res = $dbs->query($dbs->limitResult($query, self::TOP_USERS_MAX_LIMIT * 4), $fname);
 
-				$results = array();
+				$results = [];
 				while ($row = $dbs->fetchObject($res)) {
 					$user = User::newFromID($row->rev_user);
 
@@ -464,10 +471,12 @@ class DataProvider {
 					}
 				}
 				$dbs->freeResult($res);
+				return $results;
+			});
 
-				$results = array_slice($results, 0, $limit);
-				$wgMemc->set($memckey, $results, 60 * 60 * 12);
-			}
+			// we cache self::TOP_USERS_MAX_LIMIT items
+			// now return the requested number of items
+			$results = array_slice($results, 0, $limit);
 		}
 		wfProfileOut(__METHOD__);
 		return $results;
