@@ -112,7 +112,7 @@ class MoveNotices extends Maintenance {
 		 * Perform all edits as WikiaBot and overwrite wgUser so it is
 		 * available in the Flags logs
 		 */
-		$this->app->wg->User = $user = User::newFromName( 'WikiaBot' );
+		$this->app->wg->User = User::newFromName( 'WikiaBot' );
 
 		$flagTypeModel = new FlagType();
 		$flagsExtractor = new FlagsExtractor();
