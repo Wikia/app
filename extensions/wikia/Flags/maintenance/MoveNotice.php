@@ -145,7 +145,7 @@ class MoveNotice extends Maintenance {
 			$textToParse = $content;
 
 			if ( $section !== self::SECTION_ALL ) {
-				$textToParse = $wgParser->getSection($content, $section);
+				$textToParse = $wgParser->getSection( $content, $section );
 			}
 
 			if ( $replaceTop && !$list ) {
@@ -185,7 +185,7 @@ class MoveNotice extends Maintenance {
 				}
 
 				if ( strcmp( $content, $text ) !== 0 ) {
-					$wiki->doEdit( $text, self::EDIT_SUMMARY );
+					$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_SUPPRESS_RC | EDIT_FORCE_BOT );
 				}
 			}
 
