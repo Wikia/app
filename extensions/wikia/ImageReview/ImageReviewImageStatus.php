@@ -8,7 +8,7 @@
 $wgHooks['ImagePageAfterImageLinks'][] = 'efImageReviewDisplayStatus';
 $wgGroupPermissions['staff']['imagereviewstats'] = true;
 
-function efImageReviewDisplayStatus( $imagePage, &$html ) {
+function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 	global $wgCityId, $wgExternalDatawareDB, $wgUser;
 
 	if ( !$wgUser->isAllowed( 'imagereviewstats' ) ) {
@@ -50,8 +50,22 @@ function efImageReviewDisplayStatus( $imagePage, &$html ) {
 		);
 
 		if ( false === $imgCurState ) {
+			/**
+			 * If the file is older than 1 hour - send it to ImageReview
+			 * since it's probably been restored, and is not a fresh file.
+			 */
+			$lastTouched = new DateTime( $imagePage->getRevisionFetched()->getTimestamp() );
+			$now = new DateTime();
+			if ( $lastTouched < $now->modify( '-1 hour' ) ) {
+				$scribeEventProducer = new ScribeEventProducer( 'edit' );
+				$user = $imagePage->getContext()->getUser();
+				$file = $imagePage->getDisplayedFile();
+				$scribeEventProducer->buildEditPackage( $imagePage, $user, null, null, $file );
+			}
+
 			// oh oh, image is not in queue at all
 			$html .= wfMsg( 'imagereview-imagepage-not-in-queue' );
+
 		} else {
 			// image is in the queue but not reviewed yet
 			$html .= wfMsg( 'imagereview-state-0' );
