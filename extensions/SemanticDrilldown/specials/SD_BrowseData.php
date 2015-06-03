@@ -1199,6 +1199,52 @@ END;
 		return $params;
 	}
 
+	/**
+	 * Wikia change - begin
+	 * Override this method so we can set the DB to use the SMW cluster
+	 */
+	function reallyDoQuery( $limit, $offset = false ) {
+		$fname = get_class( $this ) . '::reallyDoQuery';
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$query = $this->getQueryInfo();
+		$order = $this->getOrderFields();
+		if ( $this->sortDescending() ) {
+			foreach ( $order as &$field ) {
+				$field .= ' DESC';
+			}
+		}
+		if ( is_array( $query ) ) {
+			$tables = isset( $query['tables'] ) ? (array)$query['tables'] : array();
+			$fields = isset( $query['fields'] ) ? (array)$query['fields'] : array();
+			$conds = isset( $query['conds'] ) ? (array)$query['conds'] : array();
+			$options = isset( $query['options'] ) ? (array)$query['options'] : array();
+			$join_conds = isset( $query['join_conds'] ) ? (array)$query['join_conds'] : array();
+			if ( count( $order ) ) {
+				$options['ORDER BY'] = implode( ', ', $order );
+			}
+			if ( $limit !== false ) {
+				$options['LIMIT'] = intval( $limit );
+			}
+			if ( $offset !== false ) {
+				$options['OFFSET'] = intval( $offset );
+			}
+
+			$res = $dbr->select( $tables, $fields, $conds, $fname,
+					$options, $join_conds
+			);
+		} else {
+			// Old-fashioned raw SQL style, deprecated
+			$sql = $this->getSQL();
+			$sql .= ' ORDER BY ' . implode( ', ', $order );
+			$sql = $dbr->limitResult( $sql, $limit, $offset );
+			$res = $dbr->query( $sql, $fname );
+		}
+		return $dbr->resultObject( $res );
+	}
+	/**
+	 * Wikia change - end
+	 */
+
 	function getSQL() {
 		// QueryPage uses the value from this SQL in an ORDER clause,
 		// so return page_title as title.
