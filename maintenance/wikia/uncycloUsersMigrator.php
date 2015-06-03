@@ -750,7 +750,7 @@ class UncycloUserMigrator extends Maintenance {
 			}
 
 			if ( !$this->isDryRun ) {
-				if ( $i % 50 === 0 ) {
+				if ( $i % 25 === 0 ) {
 					wfWaitForSlaves();
 				}
 			}
