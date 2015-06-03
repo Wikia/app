@@ -35,15 +35,15 @@ class MoveNotices extends Maintenance {
 		$this->addOption( 'add', "Add template as a flag.\n
 							Accepted values:\n
 							first (default) - first template with given name will be added\n
-							all - all tempaltes with given name will be added");
+							all - all templates with given name will be added");
 		$this->addOption( 'remove', "Remove template from text.\n
 							Accepted values:\n
 							first (default) - first template with given name will be removed\n
-							all - all tempaltes with given name will be removed");
+							all - all templates with given name will be removed");
 		$this->addOption( 'replace', "Replace template by a tag.\n
 							Accepted values:\n
 							first (default) - first template with given name will be replaced\n
-							all - all tempaltes with given name will be replaced");
+							all - all templates with given name will be replaced");
 		$this->addOption( 'tag', 'Tag to replace template. If not set, default __FLAGS__ tag will be used.');
 	}
 
@@ -214,7 +214,8 @@ class MoveNotices extends Maintenance {
 					}
 
 					if ( strcmp( $content, $text ) !== 0 ) {
-						$wiki->doEdit( $text, self::EDIT_SUMMARY );
+						$user = User::newFromName( 'WikiaBot' );
+						$wiki->doEdit( $text, self::EDIT_SUMMARY, 0, false, $user );
 					}
 				}
 
