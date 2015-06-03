@@ -446,7 +446,7 @@ class DataProvider {
 			$results = [];
 		}
 		else {
-			$results = WikiaDataAccess::cacheWithLock( wfMemcKey( __CLASS__, 'GetTopFiveUsers' ), WikiaResponse::CACHE_STANDARD, function() use ($fname) {
+			$results = WikiaDataAccess::cacheWithLock( wfMemcKey( __METHOD__ ), WikiaResponse::CACHE_STANDARD, function() use ($fname) {
 				global $wgCityId, $wgStatsDB;
 
 				$dbr = wfGetDB(DB_SLAVE);
