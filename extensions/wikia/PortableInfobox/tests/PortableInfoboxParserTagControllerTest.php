@@ -124,4 +124,60 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			PortableInfoboxParserTagController::INFOBOX_THEME_PREFIX . $expectedName
 		) );
 	}
+
+	/**
+	 * @dataProvider testGetLayoutDataProvider
+	 */
+	public function testGetLayout( $layout, $expectedOutput, $message ) {
+		$text = '<data><default>test</default></data>';
+
+		$marker = $this->controller->renderInfobox( $text, [ 'layout' => $layout ], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			$expectedOutput,
+			$message
+		) );
+	}
+
+	public function testGetLayoutNotSet() {
+		$text = '<data><default>test</default></data>';
+
+		$marker = $this->controller->renderInfobox( $text, [], $this->parser,
+			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
+		$output = $this->controller->replaceMarkers( $marker );
+
+		$this->assertTrue( $this->checkClassName(
+			$output,
+			PortableInfoboxParserTagController::INFOBOX_LAYOUT_PREFIX . PortableInfoboxParserTagController::DEFAULT_LAYOUT_NAME,
+			"don't set not existing layout"
+		) );
+	}
+
+	public function testGetLayoutDataProvider() {
+		return [
+			[
+				'layout' => 'tabular',
+				'expectedOutput' => 'portable-infobox-layout-tabular',
+				'message' => 'set tabular layout'
+			],
+			[
+				'layout' => 'looool',
+				'expectedOutput' => 'portable-infobox-layout-default',
+				'message' => 'invalid layout name'
+			],
+			[
+				'layout' => '',
+				'expectedOutput' => 'portable-infobox-layout-default',
+				'message' => 'layout is empty string'
+			],
+			[
+				'layout' => 5,
+				'expectedOutput' => 'portable-infobox-layout-default',
+				'message' => 'layout is an integer'
+			]
+		];
+	}
 }

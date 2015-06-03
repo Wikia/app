@@ -4,10 +4,15 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 	const DEFAULT_THEME_NAME = 'wikia';
-	const INFOBOX_THEME_PREFIX = "portable-infobox-theme-";
+	const DEFAULT_LAYOUT_NAME = 'default';
+	const INFOBOX_THEME_PREFIX = 'portable-infobox-theme-';
+	const INFOBOX_LAYOUT_PREFIX = 'portable-infobox-layout-';
 
 	private $markerNumber = 0;
 	private $markers = [ ];
+	private $layoutNames = [
+		"tabular"
+	];
 
 	protected static $instance;
 
@@ -72,7 +77,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$renderer = new PortableInfoboxRenderService();
 		$theme = $this->getThemeWithDefault( $params, $frame );
-		$renderedValue = $renderer->renderInfobox( $data, $theme );
+		$layout = $this->getLayout( $params );
+		$renderedValue = $renderer->renderInfobox( $data, $theme, $layout );
 		if ( $wgArticleAsJson ) {
 			// (wgArticleAsJson == true) it means that we need to encode output for use inside JSON
 			$renderedValue = trim( json_encode( $renderedValue ), '"' );
@@ -113,4 +119,12 @@ class PortableInfoboxParserTagController extends WikiaController {
 			( isset( $params[ 'theme' ] ) ? $params[ 'theme' ] : self::DEFAULT_THEME_NAME );
 	}
 
+	private function getLayout( $params ) {
+		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
+		if ( $layoutName && in_array( $layoutName, $this->layoutNames ) ) {
+			//make sure no whitespaces, prevents side effects
+			return Sanitizer::escapeClass( self::INFOBOX_LAYOUT_PREFIX . preg_replace( '|\s+|s', '-', $layoutName ) );
+		}
+		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
+	}
 }
