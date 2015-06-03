@@ -202,6 +202,7 @@ class UncycloUserMigrator extends Maintenance {
 	 */
 	protected function updateTables( $fieldType, $oldValue, $newValue ) {
 		$dbw = $this->getUncycloDB(DB_MASTER);
+		$rows = 0;
 
 		foreach( self::$mTableRenameRules as $entry ) {
 			// a single entry:
@@ -226,8 +227,16 @@ class UncycloUserMigrator extends Maintenance {
 					$dbw->addQuotes( $oldValue )
 				);
 				$dbw->query( $sql, __METHOD__ );
+				$rows += $dbw->affectedRows();
 			} while ($dbw->affectedRows() > 0);
 		}
+
+		$this->info( __METHOD__, [
+			'rows' => $rows,
+			'field_type' => $fieldType,
+			'old' => $oldValue,
+			'new' => $newValue
+		] );
 	}
 
 	/**
