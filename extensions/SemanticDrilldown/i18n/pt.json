@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hamilton Abreu",
+			"Lijealso",
+			"Luckas",
+			"Malafaya",
+			"SandroHc",
+			"Waldir",
+			"555"
+		]
+	},
+	"semanticdrilldown-desc": "Uma interface de prospecção para navegar através de dados semânticos",
+	"specialpages-group-sd_group": "Prospecção Semântica",
+	"browsedata": "Navegar pelos dados",
+	"sd_browsedata_choosecategory": "Escolha uma categoria",
+	"sd_browsedata_viewcategory": "ver categoria",
+	"sd_browsedata_docu": "Clique abaixo em um ou mais itens para restringir os seus resultados.",
+	"sd_browsedata_subcategory": "subcategoria",
+	"sd_browsedata_other": "Outro",
+	"sd_browsedata_none": "Nenhum",
+	"sd_browsedata_filterbyvalue": "Filtrar por este valor",
+	"sd_browsedata_filterbysubcategory": "Filtrar por esta subcategoria",
+	"sd_browsedata_otherfilter": "Apresentar páginas com outro valor para este filtro",
+	"sd_browsedata_nonefilter": "Apresentar páginas sem valores para este filtro",
+	"sd_browsedata_or": "ou",
+	"sd_browsedata_removefilter": "Remover este filtro",
+	"sd_browsedata_removesubcategoryfilter": "Remover esta subcategoria da função de filtro",
+	"sd_browsedata_resetfilters": "Repor filtros",
+	"sd_browsedata_addanothervalue": "Clique na seta para adicionar outro valor",
+	"sd_browsedata_daterangestart": "Início:",
+	"sd_browsedata_daterangeend": "Fim:",
+	"sd_browsedata_novalues": "Não há valores para este filtro",
+	"sd_createfilter_usepropertyvalues": "Usar todos os valores desta propriedade no filtro",
+	"sd_createfilter_usecategoryvalues": "Obter valores de filtro a partir desta categoria:",
+	"sd_createfilter_requirefilter": "Exigir que outro filtro seja selecionado antes de apresentar este:",
+	"sd-pageschemas-filter": "Filtro",
+	"sd-pageschemas-values": "Valores"
+}

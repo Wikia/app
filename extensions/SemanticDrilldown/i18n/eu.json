@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"An13sa",
+			"Kobazulo",
+			"පසිඳු කාවින්ද"
+		]
+	},
+	"browsedata": "Datuak arakatu",
+	"sd_browsedata_choosecategory": "Kategoria aukeratu",
+	"sd_browsedata_viewcategory": "kategoria ikusi",
+	"sd_browsedata_subcategory": "Azpikategoria",
+	"sd_browsedata_other": "Bestelakoa",
+	"sd_browsedata_none": "Bat ere ez",
+	"sd_browsedata_or": "edo",
+	"sd_browsedata_removefilter": "Iragazki hau kendu",
+	"sd_browsedata_resetfilters": "Iragazkiak berrezarri",
+	"sd_browsedata_addanothervalue": "Gezian klikatu beste balio bat gehitzeko",
+	"sd_browsedata_daterangestart": "Hasiera:",
+	"sd_browsedata_daterangeend": "Amaiera:",
+	"sd-pageschemas-filter": "Iragazkia"
+}

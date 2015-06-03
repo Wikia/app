@@ -159,7 +159,7 @@ class BodyController extends WikiaController {
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt, $wgAnalyticsProviderPageFairSlotIds;
+			$wgEnableForumExt;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -174,10 +174,7 @@ class BodyController extends WikiaController {
 			$railModuleList = array (
 				1202 => array('Forum', 'forumRelatedThreads', null),
 				1201 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', [
-					'slotName' => 'TOP_RIGHT_BOXAD',
-					'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
-				]),
+				1490 => array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']),
 			);
 
 			// Include additional modules from other extensions (like chat)
@@ -297,14 +294,8 @@ class BodyController extends WikiaController {
 			return array();
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', [
-			'slotName' => 'TOP_RIGHT_BOXAD',
-			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
-		]);
-		$railModuleList[1100] = array('Ad', 'Index', [
-			'slotName' => 'LEFT_SKYSCRAPER_2',
-			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER']) ? $wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER'] : null
-		]);
+		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
+		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
 
 		unset($railModuleList[1450]);
 

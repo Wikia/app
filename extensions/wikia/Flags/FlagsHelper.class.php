@@ -20,6 +20,7 @@ class FlagsHelper {
 	 */
 	const FLAGS_INPUT_NAME_PREFIX = 'editFlags';
 	const FLAGS_INPUT_NAME_CHECKBOX = 'checkbox';
+	const FLAGS_LOG_PREFIX = 'FlagsLog';
 
 	/**
 	 * Compares the data posted from the edit form with the database results.
@@ -52,7 +53,7 @@ class FlagsHelper {
 				/**
 				 * 3. The flag type HAS an instance on this page and WAS NOT posted - remove flag
 				 */
-				$flagsToRemove[] = $flag['flag_id'];
+				$flagsToRemove[$flag['flag_id']] = $flag; // Pass old flag data to enable logging it
 
 			} elseif ( $flag['flag_params_names'] !== null ) {
 				/**
@@ -66,9 +67,9 @@ class FlagsHelper {
 		}
 
 		return [
-			'toAdd' => $flagsToAdd,
-			'toRemove' => $flagsToRemove,
-			'toUpdate' => $flagsToUpdate,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_ADD => $flagsToAdd,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_REMOVE => $flagsToRemove,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_UPDATE => $flagsToUpdate,
 		];
 	}
 
@@ -95,11 +96,12 @@ class FlagsHelper {
 			$flagFromPost['flag_type_id'] = $flagTypeId;
 		}
 
+		$flagFromPost['params'] = [];
+
 		/**
 		 * Check if params should be posted
 		 */
 		if ( $flag['flag_params_names'] !== null ) {
-			$flagFromPost['params'] = [];
 			$paramNames = json_decode( $flag['flag_params_names'] );
 
 			/**

@@ -765,7 +765,7 @@ $wgWikiFactoryTags = array();
 /**
  * external databases
  */
-$wgFlagsDB = 'flags';
+$wgFlagsDB = 'portable_flags';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
@@ -1280,6 +1280,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverDelayBelowTheFold
+ * Prevents from loading BTF before ATF ad slots
+ */
+$wgAdDriverDelayBelowTheFold = false;
+
+/**
  * @name $wgAdDriverUseAdsAfterInfobox
  * Enable new mobile_in_content slot after infobox placement
  */
@@ -1462,16 +1468,11 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name $wgAnalyticsProviderPageFair
- * Site ID for PageFair analytics provider.
+ * @name $wgAdDriverOpenXCountries
+ * List of countries to call OpenX ad partner in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAnalyticsProviderPageFair = null;
-
-/**
- * @name $wgAnalyticsProviderPageFairSlotIds
- * Slot IDs for PageFair analytics provider.
- */
-$wgAnalyticsProviderPageFairSlotIds = [ 'LEADERBOARD' => null, 'MEDREC' => null, 'SKYSCRAPER' => null ];
+$wgAdDriverOpenXCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1638,6 +1639,7 @@ $wgBuckyEnabledSkins = [
 	'oasis',
 	'venus',
 	'uncyclopedia',
+	'wikiamobile',
 ];
 
 /**
