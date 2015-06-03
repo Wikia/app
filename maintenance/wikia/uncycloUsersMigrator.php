@@ -752,6 +752,11 @@ class UncycloUserMigrator extends Maintenance {
 			if ( !$this->isDryRun ) {
 				if ( $i % 25 === 0 ) {
 					wfWaitForSlaves();
+
+					$this->info( __METHOD__ . '::lag', [
+						'lag'    => $this->getUncycloDB(DB_SLAVE)->getLag(),
+						'server' => $this->getUncycloDB(DB_SLAVE)->getServer()
+					] );
 				}
 			}
 		}
