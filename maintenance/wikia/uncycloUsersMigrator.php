@@ -381,8 +381,7 @@ class UncycloUserMigrator extends Maintenance {
 		}
 
 		$this->info( __METHOD__, [
-			'user_id' => $user->getId(),
-			'from' => $user->getName(),
+			'from' => $oldName,
 			'to' => $newName,
 			'candidates' => $candidates,
 			'moved' => $moved
