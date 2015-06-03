@@ -107,7 +107,11 @@ class FlagType extends FlagsBaseModel {
 			->AND_( 'flag_view')->EQUAL_TO( $flag_view )
 			->run( $db, function( $result ) {
 				$row = $result->fetchObject();
-				return $row->flag_type_id;
+				if ( $row ) {
+					return $row->flag_type_id;
+				} else {
+					return null;
+				}
 			} );
 
 		return $flagTypeId;
