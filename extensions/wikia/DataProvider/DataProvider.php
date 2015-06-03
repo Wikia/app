@@ -453,6 +453,7 @@ class DataProvider {
 				$users_list = $dbr->selectField("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), $fname);
 
 				$dbs = wfGetDB(DB_SLAVE, [], $wgStatsDB);
+				// user #929702 is "CreateWiki script"
 				$query = "SELECT user_id AS rev_user, edits AS cnt FROM specials.events_local_users WHERE wiki_id = '" . intval( $wgCityId ) . "' " . (!empty($users_list) ? "AND user_id NOT IN (" . $users_list . ",'0','929702')" : "") . " ORDER BY edits DESC";
 
 				$res = $dbs->query($dbs->limitResult($query, self::TOP_USERS_MAX_LIMIT * 4), $fname);
