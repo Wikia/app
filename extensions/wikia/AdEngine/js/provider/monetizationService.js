@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		return false;
 	}
 
-	function fillInSlot(slot, success) {
+	function fillInSlot(slot, success, hop) {
 		log(['fillInSlot', slot], 'debug', logGroup);
 
 		var slotName = slotMap[slot],
@@ -73,6 +73,8 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 			scriptWriter.injectHtml(slot, context.providers.monetizationServiceAds[slotName], function () {
 				success();
 			});
+		} else {
+			hop();
 		}
 	}
 
