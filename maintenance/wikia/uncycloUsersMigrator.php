@@ -719,7 +719,8 @@ class UncycloUserMigrator extends Maintenance {
 		);
 
 		$this->output( sprintf( "\nMigrating %d accounts...\n", $res->numRows() ) );
-		$this->readconsole( "Hit enter to continue..." );
+		$this->output( "Will start in 5 seconds...\n" );
+		sleep(5);
 
 		// close the current transaction (if any)
 		$dbw = $this->getUncycloDB( DB_MASTER );
