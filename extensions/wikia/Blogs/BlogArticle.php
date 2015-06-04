@@ -91,7 +91,7 @@ class BlogArticle extends Article {
 		$page = $wg->Request->getVal( "page", 0 );
 		$blogPostCount = null;
 
-		$memc = F::app()->wg->Memc;
+		$memc = $wg->Memc;
 		$memKey = $this->blogListingMemcacheKey( $owner, $page );
 
 		 // Use cache unless action=purge was used
@@ -119,7 +119,7 @@ class BlogArticle extends Article {
 					offset=$offset>
 					<author>$owner</author>
 				</bloglist>";
-			$parserOutput = F::app()->wg->Parser->parse( $text, $this->mTitle, new ParserOptions() );
+			$parserOutput = $wg->Parser->parse( $text, $this->mTitle, new ParserOptions() );
 			$listing = $parserOutput->getText();
 			$blogPostCount = $parserOutput->getProperty( "blogPostCount" );
 
