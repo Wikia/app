@@ -10,7 +10,7 @@ class FollowHelper {
 	const LOG_ACTION_CATEGORY_ADD = 'categoryadd';
 
 	/**
-	 * watchCategory -- static hook/entry for foolow article category
+	 * watchCategory -- static hook/entry for follow article category
 	 *
 	 * @static
 	 * @access public

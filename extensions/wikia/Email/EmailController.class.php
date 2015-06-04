@@ -56,6 +56,11 @@ abstract class EmailController extends \WikiaController {
 		try {
 			$this->assertCanAccessController();
 
+			// If we're calling an internal handler, don't go through this init again
+			if ( $this->getVal( 'disableInit', false ) ) {
+				return;
+			}
+
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
 			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getOption( 'language' ) );
@@ -102,7 +107,7 @@ abstract class EmailController extends \WikiaController {
 
 	protected function assertValidFromAddress( $email ) {
 		if ( !\Sanitizer::validateEmail( $email ) ) {
-			throw new Check( "Invalid from address" );
+			throw new Check( "Invalid from address '$email'" );
 		}
 
 		return true;
@@ -125,6 +130,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \MWException
 	 */
 	public function handle() {
+
 		// If something previously has thrown an error (likely 'init') don't continue
 		if ( $this->hasErrorResponse ) {
 			return;
@@ -263,6 +269,7 @@ abstract class EmailController extends \WikiaController {
 				'hubsMessages' => $this->getHubsMessages(),
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
+				'disableInit' => true,
 			]
 		);
 
