@@ -476,8 +476,10 @@ class EmailNotification {
 			$controller = 'Email\Controller\ArticleComment';
 		} elseif ( $this->isBlogComment() ) {
 			$controller = 'Email\Controller\BlogComment';
-		} elseif ( $this->isBlogPost() ) {
-			$controller = 'Email\Controller\BlogPost';
+		} elseif ( $this->isListBlogPost() ) {
+			$controller = 'Email\Controller\ListBlogPost';
+		} elseif ( $this->isUserBlogPost() ) {
+			$controller = 'Email\Controller\UserBlogPost';
 		}
 
 		return $controller;
@@ -588,10 +590,19 @@ class EmailNotification {
 		);
 	}
 
-	private function isBlogPost() {
+	private function isUserBlogPost() {
+		$ns = $this->title->getNamespace();
 		return (
 			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
-			( $this->title->getNamespace() == NS_BLOG_LISTING )
+			( $ns == NS_BLOG_ARTICLE )
+		);
+	}
+
+	private function isListBlogPost() {
+		$ns = $this->title->getNamespace();
+		return (
+			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
+			( $ns == NS_BLOG_LISTING )
 		);
 	}
 

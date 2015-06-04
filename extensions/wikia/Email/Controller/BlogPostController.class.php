@@ -5,7 +5,7 @@ namespace Email\Controller;
 use Email\Check;
 use Email\EmailController;
 
-class BlogPostController extends EmailController {
+abstract class BlogPostController extends EmailController {
 
 	/** @var \Title */
 	protected $pageTitle;
@@ -74,34 +74,27 @@ class BlogPostController extends EmailController {
 			'editorUserName' => $this->getCurrentUserName(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'summary' => $this->getSummary(),
+			'detailsHeader' => $this->getDetailsHeader(),
+			'details' => $this->getDetails(),
 			'buttonText' => $this->getPostLabel(),
 			'buttonLink' => $this->getPostLink(),
 			'contentFooterMessages' => [
 				$this->getPostListingLink(),
 			],
-			'details' => $this->getDetails(),
 			'hasContentFooterMessages' => true
 		] );
 	}
 
-	public function getSubject() {
-		$authorName = $this->getCurrentUserName();
-		$listingTitle = $this->pageTitle->getText();
-		$postTitle = $this->postTitle->getText();
-
-		return wfMessage( 'emailext-blogpost-subject', $authorName, $listingTitle, $postTitle )
-			->inLanguage( $this->targetLang )
-			->text();
-	}
-
 	protected function getSummary() {
-		$listingURL = $this->pageTitle->getFullURL();
+		$blogURL = $this->pageTitle->getFullURL();
 		$listingTitle = $this->pageTitle->getText();
 
-		return wfMessage( 'emailext-blogpost-summary', $listingURL, $listingTitle )
+		return wfMessage( $this->getSummaryKey(), $blogURL, $listingTitle )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
+
+	abstract protected function getSummaryKey();
 
 	protected function getDetails() {
 		$article = \Article::newFromTitle( $this->postTitle, \RequestContext::getMain() );
@@ -109,6 +102,11 @@ class BlogPostController extends EmailController {
 		$snippet = $service->getTextSnippet();
 
 		return $snippet;
+	}
+
+	protected function getDetailsHeader() {
+		$post = $this->postTitle;
+		return $post->getSubpageText();
 	}
 
 	protected function getPostLabel() {
@@ -119,7 +117,7 @@ class BlogPostController extends EmailController {
 
 	protected function getPostLink() {
 		$post = $this->postTitle;
-		return $post->getCanonicalURL();
+		return $post->getFullURL();
 	}
 
 	protected function getFooterMessages() {
@@ -160,5 +158,52 @@ class BlogPostController extends EmailController {
 		];
 
 		return $formFields;
+	}
+}
+
+/**
+ * Class UserBlogPostController
+ *
+ * This class represents emails sent for updates to a user blog, i.e., in the
+ * "User_blog:XXX" namespace.
+ *
+ * @package Email\Controller
+ */
+class UserBlogPostController extends BlogPostController {
+	public function getSubject() {
+		$authorName = $this->getCurrentUserName();
+		$postTitle = $this->postTitle->getSubpageText();
+
+		return wfMessage( 'emailext-blogpost-user-subject', $authorName, $postTitle )
+			->inLanguage( $this->targetLang )
+			->text();
+	}
+
+	protected function getSummaryKey() {
+		return 'emailext-blogpost-user-summary';
+	}
+}
+
+/**
+ * Class ListBlogPostController
+ *
+ * This class represents emails sent for updates to a blog listing page, i.e. in
+ * the "Blog:XXX" namespace
+ *
+ * @package Email\Controller
+ */
+class ListBlogPostController extends BlogPostController {
+	public function getSubject() {
+		$authorName = $this->getCurrentUserName();
+		$listingTitle = $this->pageTitle->getText();
+		$postTitle = $this->postTitle->getSubpageText();
+
+		return wfMessage( 'emailext-blogpost-list-subject', $authorName, $listingTitle, $postTitle )
+			->inLanguage( $this->targetLang )
+			->text();
+	}
+
+	protected function getSummaryKey() {
+		return 'emailext-blogpost-list-summary';
 	}
 }
