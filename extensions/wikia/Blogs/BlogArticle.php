@@ -83,23 +83,21 @@ class BlogArticle extends Article {
 	 * @access private
 	 */
 	private function showBlogListing() {
-		global $wgOut, $wgRequest, $wgMemc, $wgParser;
+		$wg = F::app()->wg;
+		$wg->Out->setSyndicated( true );
 
-		/**
-		 * use cache or skip cache when action=purge
-		 */
 		$owner = $this->getBlogOwner();
 		$listing = false;
-		$purge   = $wgRequest->getVal( "action" ) == 'purge';
-		$page    = $wgRequest->getVal( "page", 0 );
-		$offset  = $page * $this->mCount;
+		$page = $wg->Request->getVal( "page", 0 );
 		$blogPostCount = null;
 
-		$wgOut->setSyndicated( true );
+		$memc = F::app()->wg->Memc;
 		$memKey = $this->blogListingMemcacheKey( $owner, $page );
 
-		if ( !$purge ) {
-			$cachedValue = $wgMemc->get( $memKey );
+		 // Use cache unless action=purge was used
+		$useCache = $wg->Request->getVal( 'action' ) != 'purge';
+		if ( $useCache ) {
+			$cachedValue = $memc->get( $memKey );
 
 			if ( $cachedValue && isset( $cachedValue['listing'] ) ) {
 				$listing = $cachedValue['listing'];
@@ -110,6 +108,7 @@ class BlogArticle extends Article {
 		}
 
 		if ( !$listing ) {
+			$offset = $page * $this->mCount;
 			$text = "
 				<bloglist
 					count=$this->mCount
@@ -120,11 +119,11 @@ class BlogArticle extends Article {
 					offset=$offset>
 					<author>$owner</author>
 				</bloglist>";
-			$parserOutput = $wgParser->parse( $text, $this->mTitle, new ParserOptions() );
+			$parserOutput = F::app()->wg->Parser->parse( $text, $this->mTitle, new ParserOptions() );
 			$listing = $parserOutput->getText();
 			$blogPostCount = $parserOutput->getProperty( "blogPostCount" );
 
-			$wgMemc->set( $memKey,
+			$memc->set( $memKey,
 				[
 					'listing' => $listing,
 					'blogPostCount' => $blogPostCount
@@ -133,11 +132,10 @@ class BlogArticle extends Article {
 		}
 		if ( isset( $blogPostCount ) && $blogPostCount == 0 ) {
 			// bugid: PLA-844
-			$wgOut->setRobotPolicy( "noindex,nofollow" );
+			$wg->Out->setRobotPolicy( "noindex,nofollow" );
 		}
-		$wgOut->addHTML( $listing );
+		$wg->Out->addHTML( $listing );
 	}
-
 
 	/**
 	 * clear data from memcache and purge any pages in Category:BlogListingPage
