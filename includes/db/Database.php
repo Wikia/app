@@ -868,6 +868,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @throws MWException
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
+		if (preg_match("/watchlist/", $sql)) {
+			jbug("sql: ", $sql);
+		}
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
 		if ( !Profiler::instance()->isStub() ) {
 			# generalizeSQL will probably cut down the query to reasonable

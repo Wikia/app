@@ -3,6 +3,7 @@
 namespace Email\Controller;
 
 use \Email\EmailController;
+use \Email;
 
 class WeeklyDigestController extends EmailController {
 
@@ -29,17 +30,12 @@ class WeeklyDigestController extends EmailController {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
-			'digestData' => $this->getDigestData(),
+			'digestData' => $this->digestData,
 			'hasContentFooterMessages' => true,
 			'contentFooterMessages' => [
 				'Thanks for your participation on Wikia!',
 				'- Wikia Community Support'
 			]
 		] );
-	}
-
-	private function getDigestData() {
-		$foo = new \GlobalWatchlistBot();
-		return $foo->sendDigestToUser( 5654073 );
 	}
 }
