@@ -10,13 +10,13 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// adProviders
 	'ext.wikia.adEngine.provider.evolve',
-	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.liftium',
+	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.monetizationService'),
 	require.optional('ext.wikia.adEngine.provider.taboola'),
 	require.optional('ext.wikia.adEngine.adDecoratorTopInContent')
 ], function (
@@ -30,13 +30,13 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// AdProviders
 	adProviderEvolve,
-	adProviderLiftium,
 	adProviderDirectGpt,
+	adProviderLiftium,
+	adProviderMonetizationService,
 	adProviderOpenX,
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
-	adProviderMonetizationService,
 	adProviderTaboola,
 
 	adDecoratorTopInContent
@@ -109,9 +109,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// MonetizationService
-		if (context.providers.monetizationService && adProviderMonetizationService &&
-			adProviderMonetizationService.canHandleSlot(slotName)
-		) {
+		if (context.providers.monetizationService && adProviderMonetizationService.canHandleSlot(slotName)) {
 			if (instantGlobals.wgSitewideDisableMonetizationService) {
 				log('MonetizationService disabled by DR. No ads', 'warn', logGroup);
 				return [];

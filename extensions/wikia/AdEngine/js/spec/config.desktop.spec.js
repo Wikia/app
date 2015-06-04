@@ -83,13 +83,13 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			},
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.evolve,
-			mocks.providers.liftium,
 			mocks.providers.directGpt,
+			mocks.providers.liftium,
+			mocks.providers.monetizationService,
 			mocks.providers.openX,
 			mocks.providers.remnantGpt,
 			mocks.providers.sevenOneMedia,
 			mocks.providers.turtle,
-			mocks.providers.monetizationService,
 			mocks.providers.taboola
 		);
 	}
