@@ -58,6 +58,7 @@ $wgExtensionMessagesFiles['EmailWatchedPage'] = $dir . 'i18n/WatchedPage.i18n.ph
 $wgExtensionMessagesFiles['EmailComment'] = $dir . 'i18n/Comment.i18n.php';
 $wgExtensionMessagesFiles['EmailForum'] = $dir . 'i18n/Forum.i18n.php';
 $wgExtensionMessagesFiles['EmailWallMessage'] = $dir . 'i18n/WallMessage.i18n.php';
+$wgExtensionMessagesFiles['EmailWeeklyDigest'] = $dir . 'i18n/WeeklyDigest.i18n.php';
 $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
 
 

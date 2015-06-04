@@ -12,11 +12,11 @@ class WeeklyDigestController extends EmailController {
 	protected $digestData;
 
 	protected function getSubject() {
-		return "foo";
+		return wfMessage( 'emailext-weeklydigest-subject' )->escaped();
 	}
 
 	protected function getSummary() {
-		return "Since you're last visist, Wikia Community members have made improvements to pages that you follow.";
+		return wfMessage( 'emailext-weeklydigest-summary' )->escaped();
 	}
 
 	public function initEmail() {
