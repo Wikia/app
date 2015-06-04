@@ -1,0 +1,8 @@
+// portable_infoboxes.scss is shared with mobile apps
+// custom portable infobox colors for wikia mobile are abstracted here so thay will not break colors on Single Wikia Apps
+
+.portable-infobox {
+	.portable-infobox-header-background {
+		background-color: $border-color;
+	}
+}
