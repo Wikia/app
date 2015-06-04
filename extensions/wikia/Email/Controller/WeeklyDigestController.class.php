@@ -31,11 +31,6 @@ class WeeklyDigestController extends EmailController {
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
 			'digestData' => $this->digestData,
-			'hasContentFooterMessages' => true,
-			'contentFooterMessages' => [
-				'Thanks for your participation on Wikia!',
-				'- Wikia Community Support'
-			]
 		] );
 	}
 }

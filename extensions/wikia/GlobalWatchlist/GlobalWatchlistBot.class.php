@@ -16,7 +16,7 @@ class GlobalWatchlistBot {
 	public function sendWeeklyDigest() {
 		foreach ( $this->getUserIDs() as $userID ) {
 			$this->sendDigestToUser( $userID );
-//			$this->clearWatchLists( $userID );
+			$this->clearWatchLists( $userID );
 		}
 	}
 
@@ -98,7 +98,7 @@ class GlobalWatchlistBot {
 
 
 	/**
-	 * send email to user
+	 * Send weekly digest to user
 	 * @param $userID integer
 	 */
 	public function sendDigestToUser( $userID ) {
@@ -121,7 +121,7 @@ class GlobalWatchlistBot {
 		];
 
 		F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $params );
-		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $userID ] );
+		$this->logSentDigest( $userID );
 	}
 
 	/**
@@ -253,6 +253,8 @@ class GlobalWatchlistBot {
 	}
 
 	/**
+	 * Get all entries for the given user from the global watchlist
+	 * table.
 	 * @param $userId
 	 * @return bool|mixed
 	 */
@@ -313,5 +315,9 @@ class GlobalWatchlistBot {
 	 */
 	private function getPageName( GlobalTitle $title ) {
 		return str_replace( '_', ' ', rawurldecode( $title->getArticleName() ) );
+	}
+
+	private function logSentDigest( $userId ) {
+		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $userId ] );
 	}
 }
