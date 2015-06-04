@@ -130,7 +130,6 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \MWException
 	 */
 	public function handle() {
-
 		// If something previously has thrown an error (likely 'init') don't continue
 		if ( $this->hasErrorResponse ) {
 			return;
