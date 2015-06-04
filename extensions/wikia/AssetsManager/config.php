@@ -97,11 +97,13 @@ $config['adengine2_desktop_js'] = array(
 
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/EvolveHelper.js',
+		'//extensions/wikia/AdEngine/js/MonetizationServiceHelper.js',
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/SevenOneMediaHelper.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
+		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
@@ -171,15 +173,6 @@ $config['adengine2_amazon_match_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatchOld.js',
-	),
-);
-
-$config['adengine2_monetization_service_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/MonetizationServiceHelper.js',
-		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 	),
 );
 
