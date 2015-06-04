@@ -9,17 +9,13 @@ ul {
 	margin: 0;
 }
 
-td h3:first-child {
-	margin-top: 20px;
-}
-
 td h3:not(:first-child) {
 	margin-top: 50px;
 }
 
 li {
 	list-style: none;
-	padding-top: 30px;
+	padding-top: 20px;
 }
 
 li a {

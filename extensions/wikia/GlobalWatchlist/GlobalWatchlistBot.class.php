@@ -10,11 +10,6 @@ class GlobalWatchlistBot {
 	const REPLY_ADDRESS = 'noreply@wikia.com';
 	const EMAIL_CONTROLLER = 'Email\Controller\WeeklyDigestController';
 
-	public function __construct() {
-		$messageFiles = \F::app()->wg->ExtensionMessagesFiles;
-		$messageFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
-	}
-
 	/**
 	 * Sends the weekly digest to all users in the global_watchlist table
 	 */
@@ -129,77 +124,6 @@ class GlobalWatchlistBot {
 		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $userID ] );
 	}
 
-	private function getDigestData( $userId ) {
-
-		$loop = 0;
-		$digestData = [];
-		foreach( $this->getWatchedPagesForUser( $userId ) as $watchedPage ) {
-
-			if ( $loop >= self::MAX_PAGES_PER_DIGEST ) {
-				break;
-			}
-
-			$wikiaName = $this->getWikiaName( $watchedPage->gwa_city_id );
-			if ( empty( $wikiaName ) ) {
-				continue;
-			}
-
-			$title = $this->getTitle( $watchedPage );
-			if ( !$title->exists() ) {
-				continue;
-			}
-
-			if ( empty( $digestData[$wikiaName] ) ) {
-				$digestData[$wikiaName] = [
-					'wikiaName' => $wikiaName,
-					'pages' => []
-				];
-			}
-
-			$digestData[$wikiaName]['pages'][] = [
-				'pageUrl' => $this->getPageUrl( $title, $watchedPage->gwa_rev_id ),
-				'pageName' => $this->getPageName( $title )
-			];
-
-			$loop++;
-		}
-
-		return array_values( $digestData );
-	}
-
-	private function getWikiaName( $wikiaId ) {
-		$wikiaName = "";
-		$wikia = WikiFactory::getWikiByID( $wikiaId );
-		// Make sure city isn't private
-		if ( !empty( $wikia->city_public ) ) {
-			$wikiaName = $wikia->city_title;
-		}
-
-		return $wikiaName;
-	}
-
-	private function getTitle( $watchedPage ) {
-		return GlobalTitle::newFromText( $watchedPage->gwa_title, $watchedPage->gwa_namespace, $watchedPage->gwa_city_id );
-	}
-
-	private function getWatchedPagesForUser( $userId ) {
-		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
-		$watchedPages = ( new WikiaSQL() )
-			->SELECT()
-			->FIELD( GlobalWatchlistTable::COLUMN_CITY_ID )
-			->FIELD( GlobalWatchlistTable::COLUMN_TITLE )
-			->FIELD( GlobalWatchlistTable::COLUMN_NAMESPACE )
-			->FIELD( GlobalWatchlistTable::COLUMN_REVISION_ID )
-			->FROM( GlobalWatchlistTable::TABLE_NAME )
-			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userId )
-			->ORDER_BY( GlobalWatchlistTable::COLUMN_TIMESTAMP, GlobalWatchlistTable::COLUMN_CITY_ID )
-			->runLoop( $db, function ( &$watchedPages, $row ) {
-				$watchedPages[] = $row;
-			} );
-
-		return $watchedPages;
-	}
-
 	/**
 	 * @param int $userID
 	 * @param bool $sendLogging
@@ -285,21 +209,109 @@ class GlobalWatchlistBot {
 		}
 	}
 
+
 	/**
-	 * @param \Title $title
+	 * @param $userId
+	 * @return array
+	 */
+	private function getDigestData( $userId ) {
+
+		$loop = 0;
+		$digestData = [];
+		foreach( $this->getWatchedPagesForUser( $userId ) as $watchedPage ) {
+
+			if ( $loop >= self::MAX_PAGES_PER_DIGEST ) {
+				break;
+			}
+
+			$wikiaName = $this->getWikiaName( $watchedPage->gwa_city_id );
+			if ( empty( $wikiaName ) ) {
+				continue;
+			}
+
+			$title = $this->getTitle( $watchedPage );
+			if ( !$title->exists() ) {
+				continue;
+			}
+
+			if ( empty( $digestData[$wikiaName] ) ) {
+				$digestData[$wikiaName] = [
+					'wikiaName' => $wikiaName,
+					'pages' => []
+				];
+			}
+
+			$digestData[$wikiaName]['pages'][] = [
+				'pageUrl' => $this->getPageUrl( $title, $watchedPage->gwa_rev_id ),
+				'pageName' => $this->getPageName( $title )
+			];
+
+			$loop++;
+		}
+
+		return array_values( $digestData );
+	}
+
+	/**
+	 * @param $userId
+	 * @return bool|mixed
+	 */
+	private function getWatchedPagesForUser( $userId ) {
+		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
+		$watchedPages = ( new WikiaSQL() )
+			->SELECT()
+			->FIELD( GlobalWatchlistTable::COLUMN_CITY_ID )
+			->FIELD( GlobalWatchlistTable::COLUMN_TITLE )
+			->FIELD( GlobalWatchlistTable::COLUMN_NAMESPACE )
+			->FIELD( GlobalWatchlistTable::COLUMN_REVISION_ID )
+			->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userId )
+			->ORDER_BY( GlobalWatchlistTable::COLUMN_TIMESTAMP, GlobalWatchlistTable::COLUMN_CITY_ID )
+			->runLoop( $db, function ( &$watchedPages, $row ) {
+				$watchedPages[] = $row;
+			} );
+
+		return $watchedPages;
+	}
+
+	/**
+	 * @param $wikiaId
+	 * @return string
+	 */
+	private function getWikiaName( $wikiaId ) {
+		$wikiaName = "";
+		$wikia = WikiFactory::getWikiByID( $wikiaId );
+		// Make sure city isn't private
+		if ( !empty( $wikia->city_public ) ) {
+			$wikiaName = $wikia->city_title;
+		}
+
+		return $wikiaName;
+	}
+
+	/**
+	 * @param $watchedPage
+	 * @return GlobalTitle
+	 */
+	private function getTitle( $watchedPage ) {
+		return GlobalTitle::newFromText( $watchedPage->gwa_title, $watchedPage->gwa_namespace, $watchedPage->gwa_city_id );
+	}
+
+	/**
+	 * @param GlobalTitle $title
 	 * @param $revisionId
 	 * @return string
 	 */
-	private function getPageUrl( Title $title, $revisionId ) {
+	private function getPageUrl( GlobalTitle $title, $revisionId ) {
 		return $title->getFullURL('s=dgdiff' . ( $revisionId ? "&diff=" . $revisionId . "&oldid=prev" : "" )
 		);
 	}
 
 	/**
-	 * @param \Title $title
+	 * @param GlobalTitle $title
 	 * @return string
 	 */
-	private function getPageName( Title $title ) {
+	private function getPageName( GlobalTitle $title ) {
 		return str_replace( '_', ' ', rawurldecode( $title->getArticleName() ) );
 	}
 }
