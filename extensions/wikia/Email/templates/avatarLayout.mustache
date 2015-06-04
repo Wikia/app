@@ -1,8 +1,4 @@
-<div class="greeting">
-	<p>{{salutation}}</p>
-	<p>{{{summary}}}</p>
-</div>
-
+{{> greeting}}
 <table>
 	<tr>
 		<td valign="top">
@@ -39,15 +35,5 @@
 			<a class="button" href="{{buttonLink}}">{{buttonText}}</a>
 		</td>
 	</tr>
-	{{# hasContentFooterMessages}}
-		<tr>
-			<td colspan="2">
-				<div class="content-footer-messages">
-					{{#contentFooterMessages}}
-						<p>{{{.}}}</p>
-					{{/contentFooterMessages}}
-				</div>
-			</td>
-		</tr>
-	{{/ hasContentFooterMessages}}
+	{{> contentFooterMessages}}
 </table>

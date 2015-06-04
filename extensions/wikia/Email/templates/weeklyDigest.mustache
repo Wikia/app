@@ -1,0 +1,18 @@
+{{> greeting}}
+<table>
+	<tr>
+		<td class="widest">
+			{{# digestData}}
+				<h3>{{wikiaName}}</h3>
+				<ul>
+					{{# pages}}
+						<li>
+							<a href="{{pageUrl}}">{{pageName}}</a>
+						</li>
+					{{/pages}}
+				</ul>
+			{{/ digestData}}
+		</td>
+	</tr>
+	{{> contentFooterMessages}}
+</table>

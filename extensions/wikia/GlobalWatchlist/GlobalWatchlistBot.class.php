@@ -5,8 +5,10 @@ use \Wikia\Logger\WikiaLogger;
 class GlobalWatchlistBot {
 
 	const MAX_ARTICLES_PER_WIKI = 50;
-	const FROM_ADDRESS = 'Wikia <community@wikia.com>';
+	const FROM_NAME = 'Wikia';
+	const FROM_ADDRESS = 'community@wikia.com';
 	const REPLY_ADDRESS = 'noreply@wikia.com';
+	const EMAIL_CONTROLLER = 'Email\Controller\WeeklyDigestController';
 
 	public function __construct() {
 		$messageFiles = \F::app()->wg->ExtensionMessagesFiles;
@@ -19,7 +21,7 @@ class GlobalWatchlistBot {
 	public function sendWeeklyDigest() {
 		foreach ( $this->getUserIDs() as $userID ) {
 			$this->sendDigestToUser( $userID );
-			$this->clearWatchLists( $userID );
+//			$this->clearWatchLists( $userID );
 		}
 	}
 
@@ -195,7 +197,8 @@ class GlobalWatchlistBot {
 		}
 
 		if ( count( $aDigestData ) ) {
-			$this->sendMail( $userID, $aDigestData, $bTooManyPages );
+			return $this->prepareDigestDataForEmail( $aDigestData );
+			//return $this->sendMail( $userID, $aDigestData, $bTooManyPages );
 		}
 
 		if ( count( $aRemove ) ) {
@@ -298,165 +301,58 @@ class GlobalWatchlistBot {
 	/**
 	 * send email
 	 */
-	private function sendMail( $iUserId, $aDigestData, $isDigestLimited ) {
-		$oUser = User::newFromId( $iUserId );
-		$oUser->load();
+	private function sendMail( $iUserId, $aDigestData ) {
 
-		$sEmailSubject = $this->getLocalizedMsg( 'globalwatchlist-digest-email-subject', $oUser->getOption( 'language' ) );
-		list( $sEmailBody, $sEmailBodyHTML ) = $this->composeMail( $oUser, $aDigestData, $isDigestLimited );
+		$digestDataForEmail = $this->prepareDigestDataForEmail( $aDigestData );
+		$params = [
+			'targetUser' => User::newFromId( $iUserId )->getName(),
+			'replyToAddress' => self::REPLY_ADDRESS,
+			'fromAddress' => self::FROM_ADDRESS,
+			'fromName' => self::FROM_NAME,
+			'digestData' => $digestDataForEmail
+		];
 
-		// yes this needs to be a MA object, not string (the docs for sendMail are wrong)
-		$oReply = new MailAddress( self::REPLY_ADDRESS );
+		print_r($digestDataForEmail);
 
-		$oUser->sendMail( $sEmailSubject, $sEmailBody, self::FROM_ADDRESS, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
-
+		F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $params );
 		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $iUserId ] );
 	}
 
 	/**
-	 * compose digest email for user
-	 * TODO Break this method up a bit. It does way way too many things.
 	 */
-	function composeMail ( $oUser, $aDigestsData, $isDigestLimited ) {
+	function prepareDigestDataForEmail ( $digestsData ) {
 
-		$sDigests = "";
-		$sDigestsHTML = "";
-		$sDigestsBlogs = "";
-		$sDigestsBlogsHTML = "";
-		$iPagesCount = 0; $iBlogsCount = 0;
-
-		$sBodyHTML = null;
-		$usehtmlemail = false;
-		if ( $oUser->isAnon() || $oUser->getOption( 'htmlemails' ) ) {
-			$usehtmlemail = true;
-		}
-		$oUserLanguage = $oUser->getOption( 'language' ); // get this once, since its used 10 times in this func
-		foreach ( $aDigestsData as $aDigest ) {
-			$wikiname = $aDigest['wikiName'] . ( $aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "" ) . ':';
-
-			$sDigests .=  $wikiname . "\n";
-			if ( $usehtmlemail ) {
-				$sDigestsHTML .= "<b>" . $wikiname . "</b><br/>\n";
-			}
-
-			if ( !empty( $aDigest['pages'] ) ) {
-				if ( $usehtmlemail ) {
-					$sDigestsHTML .= "<ul>\n";
-				}
-
-				foreach ( $aDigest['pages'] as $aPageData ) {
-					// watchlist tracking, rt#33913
-					$url = $aPageData['title']->getFullURL( 's=dgdiff' . ( $aPageData['revisionId'] ? "&diff=" . $aPageData['revisionId'] . "&oldid=prev" : "" ) );
-
-					// plain email
-					$sDigests .= $url . "\n";
-
-					// html email
-					if ( $usehtmlemail ) {
-						$pagename = $aPageData['title']->getArticleName();
-						$pagename = str_replace( '_', ' ', rawurldecode( $pagename ) );
-						$sDigestsHTML .= '<li><a href="' . $url . '">' . $pagename . "</a></li>\n";
-					}
-
-					$iPagesCount++;
-				}
-
-				if ( $usehtmlemail ) {
-					$sDigestsHTML .= "</ul>\n<br/>\n";
-				}
-			}
-
-			# blog comments
-			if ( !empty( $aDigest['blogs'] ) ) {
-				foreach ( $aDigest['blogs'] as $blogTitle => $blogComments ) {
-					# $countComments = ($blogComments['comments'] >= $blogComments['own_comments']) ? intval($blogComments['comments'] - $blogComments['own_comments']) : $blogComments['comments'];
-					$countComments = $blogComments['comments'];
-
-					$tracking_url = $blogComments['blogpage']->getFullURL( 's=dg' ); // watchlist tracking, rt#33913
-
-					$message = wfMsgReplaceArgs(
-						( $countComments != 0 ) ? $this->getLocalizedMsg( 'globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
-						[
-							0 => $tracking_url, // send the ugly tracking url to the plain emails
-							1 => $countComments
-						]
-					);
-					$sDigestsBlogs .= $message . "\n";
-
-					if ( $usehtmlemail ) {
-						// for html emails, remake some things
-						$clean_url = $blogComments['blogpage']->getFullURL();
-						$clean_url = str_replace( '_', ' ', rawurldecode( $clean_url ) );
-						$message = wfMsgReplaceArgs(
-							( $countComments != 0 ) ? $this->getLocalizedMsg( 'globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
-							[
-								0 => "<a href=\"{$tracking_url}\">" . $clean_url . "</a>", // but use the non-tracking one for html display
-								1 => $countComments
-							]
-						);
-						$sDigestsBlogsHTML .= $message . "<br/>\n";
-					}
-
-					$iBlogsCount++;
-				}
-				$sDigestsBlogs .= "\n";
-			}
-
-			$sDigests .= "\n";
-		}
-		if ( $isDigestLimited ) {
-			$sDigests .= $this->getLocalizedMsg( 'globalwatchlist-see-more', $oUserLanguage ) . "\n";
-		}
-		$aEmailArgs = [
-			0 => ucfirst( $oUser->getName() ),
-			1 => ( $iPagesCount > 0 ) ? $sDigests : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
-			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : "",
-		];
-
-		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUserLanguage ) . "\n";
-		if ( empty( $aEmailArgs[2] ) ) $sMessage = $this->cutOutPart( $sMessage, '$2', '$3' );
-		$sBody = wfMsgReplaceArgs( $sMessage, $aEmailArgs );
-		if ( $usehtmlemail ) {
-			// rebuild the $ args using the HTML text we've built
-			$aEmailArgs = [
-				0 => ucfirst( $oUser->getName() ),
-				1 => ( $iPagesCount > 0 ) ? $sDigestsHTML : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
-				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : "",
+		$iPagesCount = 0;
+		$allWikiDigestData = [];
+		foreach ( $digestsData as $digest ) {
+			$currentWikiDigestData = [
+				'wikiaName' => $digest['wikiName'],
+				'pages' => []
 			];
 
-			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-html', $oUserLanguage );
-			if ( !wfEmptyMsg( 'globalwatchlist-digest-email-body-html', $sMessageHTML ) ) {
-				if ( empty( $aEmailArgs[2] ) ) $sMessageHTML = $this->cutOutPart( $sMessageHTML, '$2', '$3' );
-				$sBodyHTML = wfMsgReplaceArgs( $sMessageHTML, $aEmailArgs );
+			if ( !empty( $digest['pages'] ) ) {
+				foreach ( $digest['pages'] as $pageData ) {
+					$currentWikiDigestData['pages'][] = [
+						'pageUrl' => $this->getPageUrl( $pageData ),
+						'pageName' => $this->getPageName( $pageData )
+					];
+					$iPagesCount++;
+				}
+				$allWikiDigestData[] = $currentWikiDigestData;
 			}
 		}
 
-		return [ $sBody, $sBodyHTML ];
+		return $allWikiDigestData;
 	}
 
-	private function cutOutPart( $message, $startMarker, $endMarker, $replacement = " " ) {
-		// this is a quick way to skip some parts of email message without remaking all the i18n messages.
-		$startPos = strpos( $message, $startMarker );
-		$endPos = strpos( $message, $endMarker );
-		if ( $startPos !== FALSE && $endPos !== FALSE ) {
-			$message = substr( $message, 0, $startPos + strlen( $startMarker ) ) . $replacement . substr( $message, $endPos );
-		}
-		return $message;
+	private function getPageUrl( $pageData ) {
+		return $pageData['title']->getFullURL(
+			's=dgdiff' . ( $pageData['revisionId'] ? "&diff=" . $pageData['revisionId'] . "&oldid=prev" : "" )
+		);
 	}
 
-	private function getLocalizedMsg( $sMsgKey, $sLangCode ) {
-		$sBody = null;
-
-		if ( ( $sLangCode != 'en' ) && !empty( $sLangCode ) ) {
-			// custom lang translation
-			$sBody = wfMessage( $sMsgKey )->inLanguage( $sLangCode )->text();
-		}
-
-		if ( $sBody == null ) {
-			$sBody = wfMessage( $sMsgKey )->text();
-		}
-
-		return $sBody;
+	private function getPageName( $pageData ) {
+		return str_replace( '_', ' ', rawurldecode( $pageData['title']->getArticleName() ) );
 	}
 
 	/**
@@ -512,4 +408,41 @@ class GlobalWatchlistBot {
 			$aWikiDigest[ 'blogs' ][ $blogTitle ]['own_comments']++;
 		}
 	}
+
+//	private function doTheBlogStuff() {
+//		# blog comments
+//		if ( !empty( $aDigest['blogs'] ) ) {
+//			foreach ( $aDigest['blogs'] as $blogTitle => $blogComments ) {
+//				# $countComments = ($blogComments['comments'] >= $blogComments['own_comments']) ? intval($blogComments['comments'] - $blogComments['own_comments']) : $blogComments['comments'];
+//				$countComments = $blogComments['comments'];
+//
+//				$tracking_url = $blogComments['blogpage']->getFullURL( 's=dg' ); // watchlist tracking, rt#33913
+//
+//				$message = wfMsgReplaceArgs(
+//					( $countComments != 0 ) ? $this->getLocalizedMsg( 'globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
+//					[
+//						0 => $tracking_url, // send the ugly tracking url to the plain emails
+//						1 => $countComments
+//					]
+//				);
+//				$sDigestsBlogs .= $message . "\n";
+//
+//				// for html emails, remake some things
+//				$clean_url = $blogComments['blogpage']->getFullURL();
+//				$clean_url = str_replace( '_', ' ', rawurldecode( $clean_url ) );
+//				$message = wfMsgReplaceArgs(
+//					( $countComments != 0 ) ? $this->getLocalizedMsg( 'globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
+//					[
+//						0 => "<a href=\"{$tracking_url}\">" . $clean_url . "</a>", // but use the non-tracking one for html display
+//						1 => $countComments
+//					]
+//				);
+//				$sDigestsBlogsHTML .= $message . "<br/>\n";
+//
+//				$iBlogsCount++;
+//			}
+//			$sDigestsBlogs .= "\n";
+//		}
+//
+//	}
 }
