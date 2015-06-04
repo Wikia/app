@@ -104,7 +104,6 @@ class GlobalWatchlistBot {
 
 	/**
 	 * send email to user
-	 * TODO Break this method up a bit. It does way way too many things.
 	 * @param $userID integer
 	 */
 	public function sendDigestToUser( $userID ) {
@@ -113,9 +112,28 @@ class GlobalWatchlistBot {
 			return;
 		}
 
+		$digestData = $this->getDigestData( $userID );
+		if ( empty( $digestData ) ) {
+			return;
+		}
+
+		$params = [
+			'targetUser' => User::newFromId( $userID )->getName(),
+			'replyToAddress' => self::REPLY_ADDRESS,
+			'fromAddress' => self::FROM_ADDRESS,
+			'fromName' => self::FROM_NAME,
+			'digestData' => $digestData
+		];
+
+		F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $params );
+		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $userID ] );
+	}
+
+	private function getDigestData( $userId ) {
+
 		$loop = 0;
 		$digestData = [];
-		foreach( $this->getUsersWatchedPages( $userID ) as $watchedPage ) {
+		foreach( $this->getWatchedPagesForUser( $userId ) as $watchedPage ) {
 
 			if ( $loop >= self::MAX_PAGES_PER_DIGEST ) {
 				break;
@@ -146,9 +164,7 @@ class GlobalWatchlistBot {
 			$loop++;
 		}
 
-		if ( !empty( $digestData ) ) {
-			$this->sendMail( $userID, array_values( $digestData ) );
-		}
+		return array_values( $digestData );
 	}
 
 	private function getWikiaName( $wikiaId ) {
@@ -166,7 +182,7 @@ class GlobalWatchlistBot {
 		return GlobalTitle::newFromText( $watchedPage->gwa_title, $watchedPage->gwa_namespace, $watchedPage->gwa_city_id );
 	}
 
-	private function getUsersWatchedPages( $userId ) {
+	private function getWatchedPagesForUser( $userId ) {
 		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
 		$watchedPages = ( new WikiaSQL() )
 			->SELECT()
@@ -267,23 +283,6 @@ class GlobalWatchlistBot {
 		if ( !$user->getBoolOption( 'watchlistdigest' ) ) {
 			throw new Exception( 'Not subscribed to weekly digest' );
 		}
-	}
-
-	/**
-	 * send email
-	 */
-	private function sendMail( $iUserId, $digestData ) {
-
-		$params = [
-			'targetUser' => User::newFromId( $iUserId )->getName(),
-			'replyToAddress' => self::REPLY_ADDRESS,
-			'fromAddress' => self::FROM_ADDRESS,
-			'fromName' => self::FROM_NAME,
-			'digestData' => $digestData
-		];
-
-		F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $params );
-		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $iUserId ] );
 	}
 
 	/**
