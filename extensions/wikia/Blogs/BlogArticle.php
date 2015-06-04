@@ -97,7 +97,7 @@ class BlogArticle extends Article {
 
 		$wgOut->setSyndicated( true );
 		$memKey = $this->blogListingMemcacheKey( $owner, $page );
-gmark("Getting $memKey");
+
 		if ( !$purge ) {
 			$cachedValue = $wgMemc->get( $memKey );
 
@@ -124,7 +124,6 @@ gmark("Getting $memKey");
 			$listing = $parserOutput->getText();
 			$blogPostCount = $parserOutput->getProperty( "blogPostCount" );
 
-gmark("setting: $memKey");
 			$wgMemc->set( $memKey,
 				[
 					'listing' => $listing,
@@ -155,7 +154,6 @@ gmark("setting: $memKey");
 		$count = $this->getBlogListingPageCount();
 		foreach ( range( 0, $count - 1 ) as $page ) {
 			$mcKey = $this->blogListingMemcacheKey( $this->getBlogOwner(), $page );
-gmark("deleting $mcKey");
 			$wgMemc->delete( $mcKey );
 		}
 
