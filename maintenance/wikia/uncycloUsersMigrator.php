@@ -376,6 +376,12 @@ class UncycloUserMigrator extends Maintenance {
 
 				if ($res === true) {
 					$moved++;
+
+					$this->info( __METHOD__, [
+						'user' => $oldName,
+						'from' => $oldUserPage->getPrefixedDBkey(),
+						'to' => $newUserPage->getPrefixedDBkey(),
+					] );
 				}
 				else {
 					$this->err( __METHOD__, [
@@ -702,7 +708,7 @@ class UncycloUserMigrator extends Maintenance {
 	 */
 	public function execute() {
 		global $wgUser;
-		$wgUser = $this->getGlobalUserByName( 'WikiaBot' );
+		$wgUser = User::newFromName( 'WikiaBot' );
 
 		// do not use ulimit4 when calling wfShellExec()
 		global $wgMaxShellTime;
