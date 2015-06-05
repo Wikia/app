@@ -3,12 +3,12 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-weeklydigest-subject' => "See what's new on your favorite Wikia pages this week",
-	'emailext-weeklydigest-summary' => "Since you're last visit, Wikia Community members have made improvements to pages that you follow.",
+	'emailext-weeklydigest-summary' => "Since your last visit, Wikia Community members have made improvements to pages that you follow.",
 );
 
 $messages['qqq'] = array(
 	'emailext-weeklydigest-subject' => 'Subject line Weekly Digest email. This email includes links to pages the user is following across Wikia which have been edited in the last week',
-	'emailext-weeklydigest-summary' => "Line telling the user that the links below are for pages which they follow and have been edited since they're last visit to the page",
+	'emailext-weeklydigest-summary' => "Line telling the user that the links below are for pages which they follow and have been edited since their last visit to the page",
 );
 
 $messages['de'] = array(
