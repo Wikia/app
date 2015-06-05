@@ -13,7 +13,8 @@ require(
 					key: 'event',
 					value: 'done'
 				}
-			]
+			],
+			classes: [ 'primary' ]
 		}
 	},
 	{
@@ -61,7 +62,8 @@ require(
 	 * First function in showing modal process.
 	 * Performs all necessary job to display modal with flags ready to edit
 	 */
-	function showModal() {
+	function showModal(event) {
+		event.preventDefault();
 		$.when(
 				nirvana.sendRequest({
 					controller: 'Flags',
@@ -75,7 +77,7 @@ require(
 					type: loader.MULTI,
 					resources: {
 						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache',
-						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
+						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
 					}
 				})
 			).done(function (flagsData, res) {
@@ -150,8 +152,21 @@ require(
 			});
 		}
 
+		removeDefaultButtonClass(modalInstance);
+
 		/* Show the modal */
 		modalInstance.show();
+	}
+
+	/**
+	 * Remove 'secondary' css class that is by default added to modal buttons
+	 * in order to avoid overriding styles of 'primary' class by 'secondary'
+	 */
+	function removeDefaultButtonClass(modalInstance) {
+		var doneBtn = modalInstance.$element.find('button.primary').removeClass('secondary');
+		if (doneBtn.length > 0) {
+			doneBtn.removeClass('secondary');
+		}
 	}
 
 	// Run initialization method on DOM ready
