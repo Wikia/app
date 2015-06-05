@@ -22,7 +22,6 @@ abstract class WatchedPageController extends EmailController {
 
 	public function getSubject() {
 		return $this->getMessage( $this->getSubjectMessageKey(), $this->title->getPrefixedText(), $this->getCurrentUserName() )
-			->inLanguage( $this->targetLang )
 			->text();
 	}
 
@@ -69,7 +68,7 @@ abstract class WatchedPageController extends EmailController {
 		$footerMessages = [
 			$this->getMessage( 'emailext-unfollow-text',
 				$this->title->getCanonicalUrl( 'action=unwatch' ),
-				$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse()
+				$this->title->getPrefixedText() )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
@@ -101,7 +100,7 @@ abstract class WatchedPageController extends EmailController {
 		return $this->getMessage( $this->getSummaryMessageKey(),
 			$this->title->getFullURL(),
 			$this->title->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+		)->parse();
 	}
 
 	/**
@@ -111,14 +110,14 @@ abstract class WatchedPageController extends EmailController {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}
-		return $this->getMessage( 'emailext-watchedpage-no-summary' )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( 'emailext-watchedpage-no-summary' )->text();
 	}
 
 	/**
 	 * @return String
 	 */
 	protected function getButtonText() {
-		return $this->getMessage( $this->getButtonTextMessageKey() )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( $this->getButtonTextMessageKey() )->text();
 	}
 
 	/**
@@ -147,7 +146,7 @@ abstract class WatchedPageController extends EmailController {
 				'oldid' => $this->previousRevId
 			] ),
 			$this->title->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+		)->parse();
 	}
 
 	/**
@@ -161,7 +160,7 @@ abstract class WatchedPageController extends EmailController {
 				'action' => 'history'
 			] ),
 			$title->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+		)->parse();
 	}
 
 	/**
@@ -298,7 +297,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 					'oldid' => $this->currentRevId
 			] ),
 			$this->newTitle->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+		)->parse();
 	}
 
 	/**

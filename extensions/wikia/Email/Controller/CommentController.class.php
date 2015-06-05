@@ -90,9 +90,7 @@ abstract class CommentController extends EmailController {
 
 	public function getSubject() {
 		$articleTitle = $this->pageTitle->getText();
-		return $this->getMessage( $this->getSubjectKey(), $articleTitle )
-			->inLanguage( $this->targetLang )
-			->text();
+		return $this->getMessage( $this->getSubjectKey(), $articleTitle )->text();
 	}
 
 	abstract protected function getSubjectKey();
@@ -100,9 +98,7 @@ abstract class CommentController extends EmailController {
 	protected function getSummary() {
 		$articleTitle = $this->pageTitle->getText();
 
-		return $this->getMessage( $this->getSummaryKey(), $articleTitle )
-			->inLanguage( $this->targetLang )
-			->text();
+		return $this->getMessage( $this->getSummaryKey(), $articleTitle )->text();
 	}
 
 	abstract protected function getSummaryKey();
@@ -116,9 +112,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getCommentLabel() {
-		return $this->getMessage( 'emailext-comment-link-label')
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( 'emailext-comment-link-label' )->parse();
 	}
 
 	protected function getCommentLink() {
@@ -131,9 +125,7 @@ abstract class CommentController extends EmailController {
 		$parentTitleText = $this->pageTitle->getPrefixedText();
 
 		$footerMessages = [
-			$this->getMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
-				->inLanguage( $this->targetLang )
-				->parse()
+			$this->getMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
@@ -141,9 +133,7 @@ abstract class CommentController extends EmailController {
 	protected function getCommentSectionLink() {
 		$url = $this->pageTitle->getFullURL( '#WikiaArticleComments' );
 
-		return $this->getMessage( 'emailext-comment-view-all', $url )
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( 'emailext-comment-view-all', $url )->parse();
 	}
 
 	/**
