@@ -110,7 +110,9 @@ function upgradeYouTubeTag( $editpage, $request ) {
 			$ytid = trim( $nodeValues[0] );
 
 			// Check to see if the whole URL is used
-			$ytid = preg_replace( '/(?:youtube\.com\/watch\?(?:[^&]*&)*v=|youtu\.be\/)([^?&\n]+)/', '$1', $ytid );
+			if ( preg_match( '/(?:youtube\.com\/watch\?(?:[^&]*&)*v=|youtu\.be\/)([^?&\n]+)/', $ytid, $ytidMatches ) === 1 ) {
+				$ytid = $ytidMatches[1];
+			}
 
 			// Parse out the width and height parameters
 			$params = parseSizeParams( $paramText );
