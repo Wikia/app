@@ -648,7 +648,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * A wrapper for wfMessage() which removes the possibility of messages being overridden in the MediaWiki namespace
 	 *
-	 * @return Message
+	 * @return \Message
 	 */
 	protected function getMessage() {
 		return wfMessage( func_get_args() )->useDatabase( false );
