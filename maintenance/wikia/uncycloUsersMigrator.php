@@ -371,7 +371,7 @@ class UncycloUserMigrator extends Maintenance {
 			$newUserPage = Title::makeTitleSafe( $row->page_namespace,
 				preg_replace( '!^[^/]+!', $newName, $row->page_title ) );
 
-			if ( $newUserPage && $oldUserPage && !$newUserPage->exists() && $oldUserPage->isValidMoveTarget( $newUserPage ) ) {
+			if ( $newUserPage && $oldUserPage && !$newUserPage->exists() ) {
 				$res = $oldUserPage->moveTo($newUserPage, false /* do not check permissions to move */, 'Migrating Uncyclopedia accounts', false /* don't leave redirects */);
 
 				if ($res === true) {
