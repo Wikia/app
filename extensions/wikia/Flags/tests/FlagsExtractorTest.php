@@ -46,6 +46,23 @@ class FlagsExtractorTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedResult, $templates );
 	}
 
+	/**
+	 * @test
+	 * @dataProvider shouldFindFirstTemplateFromListDataProvider
+	 */
+	function shouldFindFirstTemplateFromList( $mockTemplatesNames, $mockText, $expectedResult ) {
+
+		/* @var Flags\FlagsExtractor $flagsExtractorMock mock of Flags\FlagsExtractor class */
+		$flagsExtractorMock = $this->getMockBuilder( 'Flags\FlagsExtractor' )
+			->disableOriginalConstructor()
+			->setMethods( null )
+			->getMock();
+
+		/* Run tested method */
+		$templates = $flagsExtractorMock->findFirstTemplateFromList( $mockTemplatesNames, $mockText );
+		$this->assertEquals( $expectedResult, $templates );
+	}
+
 
 	/**
 	 * DataProviders
@@ -117,6 +134,49 @@ class FlagsExtractorTest extends WikiaBaseTest {
 			[ $mockTemplateName, $mockTextTemplateAtTheBeginning, $expectedResultOneTemplate ],
 			[ $mockTemplateName, $mockTextTwoTemplatesOneByOne, $expectedResultTwoTemplates ],
 			[ $mockTemplateName, $mockTextTwoTemplatesAndText, $expectedResultTwoTemplates ]
+		];
+	}
+
+	function shouldFindFirstTemplateFromListDataProvider() {
+		$tpl1 = 'tpl1';
+		$tpl2 = 'tpl2';
+		$tpl3 = 'tpl3';
+
+		$mockTemplate1 = '{{' . $tpl1 . '
+| id = Oou
+| bg = #F7F7F7
+| image = [[File:Ewokdirector.jpg|130px]]
+| caption = Piece of test text
+| message = This is a {{{1}}} for {{{2|Łukasz}}} to test his notice script
+| comment = {{{comment}}}
+}}';
+		$mockTemplate2 = '{{' . $tpl2 . '
+| id = Oou
+| bg = #F7F7F7
+| image = [[File:Ewokdirector.jpg|130px]]
+| caption = Piece of test text
+}}';
+
+		$mockTemplate3 = '{{' . $tpl3 . '
+| image = [[File:Ewokdirector.jpg|130px]]
+}}';
+
+		$mockTemplatesNames123 = [ $tpl1, $tpl2, $tpl3 ];
+		$mockTemplatesNames321 = [ $tpl3, $tpl2, $tpl1 ];
+		$mockTemplatesNames3 = [ $tpl3 ];
+
+		$mockTextTpl1 = $mockTemplate1;
+		$mockTextTpl12 = $mockTemplate1 . $mockTemplate2;
+		$mockTextTpl123 = $mockTemplate1 . $mockTemplate2 . $mockTemplate3;
+		$mockTextTpl321 = $mockTemplate3 . $mockTemplate1 . $mockTemplate2;
+
+		return [
+			[ $mockTemplatesNames123, $mockTextTpl123, $tpl1 ],
+			[ $mockTemplatesNames123, $mockTextTpl321, $tpl3 ],
+			[ $mockTemplatesNames321, $mockTextTpl123, $tpl1 ],
+			[ $mockTemplatesNames3, $mockTextTpl321, $tpl3 ],
+			[ $mockTemplatesNames3, $mockTextTpl12, null ],
+			[ $mockTemplatesNames321, $mockTextTpl1, $tpl1 ],
 		];
 	}
 }
