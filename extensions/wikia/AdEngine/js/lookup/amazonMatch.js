@@ -111,6 +111,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 	function renderAd(doc, adId) {
 		log(['renderAd', doc, adId, 'available: ' + !!amazonResponse[adId]], 'debug', logGroup);
+		amazonRendered = true;
 		doc.write(amazonResponse[adId]);
 	}
 
