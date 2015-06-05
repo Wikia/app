@@ -8,13 +8,13 @@ require(
 	var buttonsForFlagsExistingState = [{
 		vars: {
 			value: mw.message('flags-edit-modal-done-button-text').escaped(),
+			classes: ['normal', 'primary'],
 			data: [
 				{
 					key: 'event',
 					value: 'done'
 				}
-			],
-			classes: [ 'primary' ]
+			]
 		}
 	},
 	{
@@ -152,21 +152,8 @@ require(
 			});
 		}
 
-		removeDefaultButtonClass(modalInstance);
-
 		/* Show the modal */
 		modalInstance.show();
-	}
-
-	/**
-	 * Remove 'secondary' css class that is by default added to modal buttons
-	 * in order to avoid overriding styles of 'primary' class by 'secondary'
-	 */
-	function removeDefaultButtonClass(modalInstance) {
-		var doneBtn = modalInstance.$element.find('button.primary').removeClass('secondary');
-		if (doneBtn.length > 0) {
-			doneBtn.removeClass('secondary');
-		}
 	}
 
 	// Run initialization method on DOM ready
