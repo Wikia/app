@@ -458,9 +458,11 @@ class DataProvider {
 				);
 
 				// add more blacklisted user IDs
-				$users_list[] = 0;
-				$users_list[] = 22439; // Wikia
-				$users_list[] = 929702; // CreateWiki script
+				$users_list[] = '0';
+				$users_list[] = '22439'; // Wikia
+				$users_list[] = '929702'; // CreateWiki script
+
+				$users_list = array_unique($users_list);
 
 				$dbs = wfGetDB(DB_SLAVE, [], $wgStatsDB);
 				$res = $dbs->select(
