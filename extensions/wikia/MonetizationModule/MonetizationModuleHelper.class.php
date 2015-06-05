@@ -296,17 +296,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return bool
 	 */
 	public function isPageSpecificResponse( $data ) {
-		// TODO: remove after service is updated
-		if ( !empty( $data['special_instructions'] ) ) {
-			if ( is_array( $data['special_instructions'] ) ) {
-				return ( in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
-			} else {
-				return ( $data['special_instructions'] == self::PAGE_SPECIFIC );
-			}
-		}
-
-		return false;
-		// return ( !empty( $data['special_instructions'] ) && in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
+		 return ( !empty( $data['special_instructions'] ) && in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
 	}
 
 	/**
