@@ -14,6 +14,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		amazonResponse,
 		amazonTiming,
 		amazonCalled = false,
+		amazonRendered = false,
 		amazonParamPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
 		sizeMapping = {
 			'1x6': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
@@ -109,7 +110,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	}
 
 	function renderAd(doc, adId) {
-		log(['getPageParams', doc, adId, 'available: ' + !!amazonResponse[adId]], 'debug', logGroup);
+		log(['renderAd', doc, adId, 'available: ' + !!amazonResponse[adId]], 'debug', logGroup);
 		doc.write(amazonResponse[adId]);
 	}
 
@@ -145,8 +146,22 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return amazonCalled;
 	}
 
+	function wasRendered() {
+		log(['wasRendered', amazonRendered], 'debug', logGroup);
+		return amazonRendered;
+	}
+
 	function getSlotParams(slotName) {
 		log(['getSlotParams', slotName], 'debug', logGroup);
+
+		if (wasCalled() && wasRendered()) {
+			log([
+				'getSlotParams',
+				slotName,
+				'Not adding amznSlots since the Amazon ads has been already rendered'
+			], 'debug', logGroup);
+			return {};
+		}
 
 		var amznSlots = [];
 
@@ -181,7 +196,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		trackState: function () {
 			log('fake trackState - module is not supported in IE8', 'debug', logGroup);
 		},
-		wasCalled: wasCalled
+		wasCalled: wasCalled,
+		wasRendered: wasRendered
 	};
 
 	if (!Object.keys) {
