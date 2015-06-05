@@ -18,7 +18,7 @@ class FlagsExtractorTest extends WikiaBaseTest {
 		/* @var Flags\FlagsExtractor $flagsExtractorMock mock of Flags\FlagsExtractor class */
 		$flagsExtractorMock = $this->getMockBuilder( 'Flags\FlagsExtractor' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'logInfoMessage' ] )
+			->setMethods( [ 'info' ] )
 			->getMock();
 
 		/* Run tested method */
