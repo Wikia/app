@@ -258,6 +258,27 @@ class FlagsApiController extends WikiaApiController {
 	}
 
 	/**
+	 * Get all flag types for given wiki
+	 *
+	 * Optional parameters:
+	 * @requestParam int wiki_id You can overwrite the current city_id
+	 *
+	 * @response Array all flag types
+	 */
+	public function getFlagTypes() {
+		try {
+			$this->getRequestParams();
+
+			$flagTypes = $this->getFlagTypesForWikiaRawData( $this->params['wiki_id'] );
+
+			$this->makeSuccessResponse( $flagTypes );
+		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
 	 * Get flag type id by template (view) name
 	 *
 	 * Required parameter:
