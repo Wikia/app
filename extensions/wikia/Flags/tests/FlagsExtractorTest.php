@@ -63,6 +63,22 @@ class FlagsExtractorTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedResult, $templates );
 	}
 
+	/**
+	 * @test
+	 * @dataProvider shouldCheckForTagDataProvider
+	 */
+	function shouldCheckForTag( $mockTagName, $mockText, $expectedResult ) {
+		/* @var Flags\FlagsExtractor $flagsExtractorMock mock of Flags\FlagsExtractor class */
+		$flagsExtractorMock = $this->getMockBuilder( 'Flags\FlagsExtractor' )
+			->disableOriginalConstructor()
+			->setMethods( null )
+			->getMock();
+
+		/* Run tested method */
+		$isAdded = $flagsExtractorMock->isTagAdded( $mockTagName, $mockText );
+		$this->assertEquals( $expectedResult, $isAdded );
+	}
+
 
 	/**
 	 * DataProviders
@@ -176,7 +192,20 @@ class FlagsExtractorTest extends WikiaBaseTest {
 			[ $mockTemplatesNames321, $mockTextTpl123, $tpl1 ],
 			[ $mockTemplatesNames3, $mockTextTpl321, $tpl3 ],
 			[ $mockTemplatesNames3, $mockTextTpl12, null ],
-			[ $mockTemplatesNames321, $mockTextTpl1, $tpl1 ],
+			[ $mockTemplatesNames321, $mockTextTpl1, $tpl1 ]
+		];
+	}
+
+	function shouldCheckForTagDataProvider() {
+		$mockTagName = '__SOME_FLAG_TAG__';
+		$mockDefaultTagName = '__FLAGS__';
+
+		return [
+			[ $mockTagName, 'Lorem ipsum', false ],
+			[ $mockTagName, "Lorem ipsum\n{$mockTagName}", true ],
+			[ $mockTagName, "0{$mockTagName}Lorem ipsum", true ],
+			[ $mockTagName, $mockTagName, true ],
+			[ null, "Lorem ipsum {$mockDefaultTagName}", true ]
 		];
 	}
 }
