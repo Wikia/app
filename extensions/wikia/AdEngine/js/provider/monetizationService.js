@@ -2,11 +2,10 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.monetizationsServiceHelper',
 	'jquery',
-	'wikia.geo',
 	'wikia.log',
 	'wikia.nirvana',
 	'wikia.window',
-], function (adContext, monetizationService, $, geo, log, nirvana, window) {
+], function (adContext, monetizationService, $, log, nirvana, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
@@ -52,7 +51,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 				articleId: window.wgArticleId,
 				fromSearch: window.fromsearch,
 				max: monetizationService.getMaxAds(),
-				geo: geo.getCountryCode()
+				geo: monetizationService.getCountryCode()
 			}
 		).done(function (json) {
 			var modules = json.data;

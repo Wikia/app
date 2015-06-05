@@ -1,11 +1,10 @@
 define('ext.wikia.adEngine.monetizationsServiceHelper', [
 	'jquery',
 	'wikia.geo',
-	'wikia.loader',
 	'wikia.scriptwriter',
 	'wikia.tracker',
 	'wikia.window',
-], function ($, geo, loader, scriptWriter, tracker, window) {
+], function ($, geo, scriptWriter, tracker, window) {
 	'use strict';
 
 	var isEndOfContent = false,
@@ -14,32 +13,6 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 			category: 'monetization-module',
 			geo: geo.getCountryCode()
 		});
-
-	/**
-	 * @desc Loads all assets for monetization ads
-	 */
-	function loadAssets() {
-		var scripts = 'monetization_module_js',
-			styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModule.scss';
-
-		if (window.wgOasisBreakpoints) {
-			styles = '/extensions/wikia/MonetizationModule/styles/MonetizationModuleNoBreakpoints.scss';
-		}
-
-		loader({
-			type: loader.MULTI,
-			resources: {
-				styles: styles,
-				scripts: scripts
-			}
-		}).done(function (res) {
-			var script = res.scripts,
-				style = res.styles;
-
-			loader.processStyle(style);
-			loader.processScript(script);
-		});
-	}
 
 	/**
 	 * @desc Validate slot
@@ -107,6 +80,21 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 			return 2;
 		}
 		return 1;
+	}
+
+	/**
+	 * @desc Get country code
+	 * @returns {string}
+	 */
+	function getCountryCode() {
+		var countryCodeROW = 'ROW',
+			countryCodes = ['AU', 'CA', 'DE', 'HK', 'MX', 'RU', 'TW', 'UK', 'US'],
+			countryCode = geo.getCountryCode();
+		if (countryCodes.indexOf(countryCode) >= 0) {
+			return countryCode;
+		} else {
+			return countryCodeROW;
+		}
 	}
 
 	/**
@@ -189,9 +177,9 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 
 	return {
 		addInContentSlot: addInContentSlot,
+		getCountryCode: getCountryCode,
 		getMaxAds: getMaxAds,
 		injectContent: injectContent,
-		loadAssets: loadAssets,
 		validateSlot: validateSlot
 	};
 });

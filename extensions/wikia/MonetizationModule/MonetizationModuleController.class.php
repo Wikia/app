@@ -39,7 +39,7 @@ class MonetizationModuleController extends WikiaController {
 		$adEngine = $this->request->getBool( 'adEngine', false );
 		if ( $adEngine ) {
 			$params['ad_engine'] = $adEngine;
-			$params['geo'] = $helper->getCountryCode();
+			$params['geo'] = $this->request->getVal( 'geo', MonetizationModuleHelper::COUNTRY_CODE_REST_OF_THE_WORLD );
 			$params['max'] = $this->request->getInt( 'max' );
 
 			$fromSearch = $this->request->getBool( 'fromSearch', false );
@@ -48,7 +48,9 @@ class MonetizationModuleController extends WikiaController {
 			}
 		} else {
 			$params['max'] = MonetizationModuleHelper::calculateNumberOfAds( $title->mLength );
-			$this->addAssets();
+
+			$this->addStyleAssets();
+			$this->response->addAsset( 'monetization_module_js' );
 		}
 
 		$this->data = $helper->getMonetizationUnits( $title, $params );
@@ -60,16 +62,14 @@ class MonetizationModuleController extends WikiaController {
 	}
 
 	/**
-	 * Add assets
+	 * Add style assets
 	 */
-	protected function addAssets() {
+	public function addStyleAssets() {
 		if ( empty( $this->wg->OasisBreakpoints ) ) {
 			$this->response->addAsset( 'monetization_module_css_no_breakpoints' );
 		} else {
 			$this->response->addAsset( 'monetization_module_css' );
 		}
-
-		$this->response->addAsset( 'monetization_module_js' );
 	}
 
 }

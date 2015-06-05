@@ -38,8 +38,6 @@ class MonetizationModuleHelper extends WikiaModel {
 	const COUNTRY_CODE_ALL = 'ALL';
 	const COUNTRY_CODE_REST_OF_THE_WORLD = 'ROW';
 
-	protected static $country_codes = ['AU', 'CA', 'DE', 'HK', 'MX', 'RU', 'TW', 'UK', 'US'];
-
 	protected static $mapThemeSettings = [
 		'data-color-bg'     => 'color-page',
 		'data-color-border' => 'color-page',
@@ -363,19 +361,6 @@ class MonetizationModuleHelper extends WikiaModel {
 		}
 
 		return $body;
-	}
-
-	/**
-	 * Get country code
-	 * @return string $countryCode
-	 */
-	public function getCountryCode() {
-		$countryCode = $this->wg->request->getVal( 'geo', self::COUNTRY_CODE_REST_OF_THE_WORLD );
-		if ( !in_array( $countryCode, self::$country_codes ) ) {
-			$countryCode = self::COUNTRY_CODE_REST_OF_THE_WORLD;
-		}
-
-		return $countryCode;
 	}
 
 }
