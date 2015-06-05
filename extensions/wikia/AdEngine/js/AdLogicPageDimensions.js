@@ -26,11 +26,11 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		pageHeight,
 
 		/**
-		 * Slots based on whether there's a right rail on page or not
+		 * Slots based on screen width for responsive design
+		 *
+		 * @see skins/oasis/css/core/responsive-variables.scss
+		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
-		slotsOnlyWithRail = {
-			LEFT_SKYSCRAPER_3: true
-		},
 		slotsToHideOnMediaQuery = {
 			VIRTUAL_INCONTENT:       'twoColumns', // "virtual" slot to launch INCONTENT_* slots
 			INCONTENT_1A:            'twoColumns',
@@ -47,12 +47,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			INCONTENT_PLAYER:        'oneColumn',
 			INVISIBLE_SKIN:          'noSkins'
 		},
-		/**
-		 * Slots based on screen width for responsive
-		 *
-		 * @see skins/oasis/css/core/responsive-variables.scss
-		 * @see skins/oasis/css/core/responsive-background.scss
-		 */
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
@@ -61,10 +55,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		},
 		mediaQueriesMet,
 		matchMedia;
-
-	function isRightRailPresent() {
-		return !!doc.getElementById('WikiaRail');
-	}
 
 	function matchMediaMoz(query) {
 		return win.matchMedia(query).matches;
@@ -110,18 +100,12 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			return false;
 		}
 
-		if (slotsOnlyWithRail[slotname]) {
-			if (!isRightRailPresent()) {
-				return false;
-			}
-		}
-
 		return true;
 	}
 
 	/**
 	 * Refresh an ad and show/hide based on the changed window size
-	 * No logging here, it needs to be super fast
+	 * Logging on state changes only, it needs to be super fast
 	 *
 	 * @param {object} ad one of the wrappedAds
 	 */
@@ -168,8 +152,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 		pageHeight = doc.documentElement.scrollHeight;
 
-		// All ads should be shown on non-responsive oasis and venus
-		if ((win.wgOasisResponsive || win.wgOasisBreakpoints) && win.skin !== 'venus') {
+		// All ads should be shown on non-responsive oasis
+		if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {
@@ -243,8 +227,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 		return !!(
 			slotsOnlyOnLongPages[slotname] ||
-			slotsToHideOnMediaQuery[slotname] ||
-			slotsOnlyWithRail[slotname]
+			slotsToHideOnMediaQuery[slotname]
 		);
 	}
 
