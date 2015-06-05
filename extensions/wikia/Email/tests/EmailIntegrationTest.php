@@ -21,6 +21,7 @@ class EmailIntegrationTest extends WikiaBaseTest {
 	public function testEmailImages() {
 
 		$this->setVignetteEnvToProd();
+		$this->disableMemCache();
 
 		foreach ( Email\ImageHelper::getIconInfo() as $iconInfo ) {
 			$url = $iconInfo['url'];
