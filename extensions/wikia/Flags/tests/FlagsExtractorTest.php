@@ -10,7 +10,7 @@ class FlagsExtractorTest extends WikiaBaseTest {
 	/**
 	 * @test
 	 */
-	function shouldInitFields() {
+	function shouldInitTextField() {
 		/* Params to compare */
 		$mockText = 'sometext';
 		$mockTemplateName = 'somename';
@@ -30,9 +30,29 @@ class FlagsExtractorTest extends WikiaBaseTest {
 
 	/**
 	 * @test
+	 * @dataProvider shouldExtractTemplateFromContentDataProvider
 	 */
-	function shouldExtractTemplateFromContent() {
-		$mockText = '{{iumb
+	function shouldExtractTemplatesFromContent( $mockTemplateName, $mockText, $expectedResult ) {
+
+		/* @var Flags\FlagsExtractor $flagsExtractorMock mock of Flags\FlagsExtractor class */
+		$flagsExtractorMock = $this->getMockBuilder( 'Flags\FlagsExtractor' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'logInfoMessage' ] )
+			->getMock();
+
+		/* Run tested method */
+		$flagsExtractorMock->init( $mockText, $mockTemplateName );
+		$templates = $flagsExtractorMock->getAllTemplates();
+		$this->assertEquals( $expectedResult, $templates );
+	}
+
+
+	/**
+	 * DataProviders
+	 */
+
+	function shouldExtractTemplateFromContentDataProvider() {
+		$mockTemplate1 = '{{iumb
 | id = Oou
 | bg = #F7F7F7
 | image = [[File:Ewokdirector.jpg|130px]]
@@ -40,12 +60,23 @@ class FlagsExtractorTest extends WikiaBaseTest {
 | message = This is a {{{1}}} for {{{2|Łukasz}}} to test his notice script
 | comment = {{{comment}}}
 }}';
+		$mockTemplate2 = '{{iumb
+| id = Oou
+| bg = #F7F7F7
+| image = [[File:Ewokdirector.jpg|130px]]
+| caption = Piece of test text
+}}';
+
+		$mockTextTemplateAtTheBeginning = $mockTemplate1;
+		$mockTextTwoTemplatesOneByOne = $mockTemplate1 . $mockTemplate2;
+		$mockTextTwoTemplatesAndText = "Some text \n" . $mockTemplate1 . "Some text \n" . $mockTemplate2 . "\nSome text \n";
+
 		$mockTemplateName = 'iumb';
 
-		$expectedResult = [
+		$expectedResultOneTemplate = [
 			[
 				'name' => 'iumb',
-				'template' => $mockText,
+				'template' => $mockTemplate1,
 				'params' => [
 					'id' => 'Oou',
 					'bg' => '#F7F7F7',
@@ -57,15 +88,35 @@ class FlagsExtractorTest extends WikiaBaseTest {
 			]
 		];
 
-		/* @var Flags\FlagsExtractor $flagsExtractorMock mock of Flags\FlagsExtractor class */
-		$flagsExtractorMock = $this->getMockBuilder( 'Flags\FlagsExtractor' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'logInfoMessage' ] )
-			->getMock();
+		$expectedResultTwoTemplates = [
+			[
+				'name' => 'iumb',
+				'template' => $mockTemplate1,
+				'params' => [
+					'id' => 'Oou',
+					'bg' => '#F7F7F7',
+					'image' => '[[File:Ewokdirector.jpg|130px]]',
+					'caption' => 'Piece of test text',
+					'message' => 'This is a {{{1}}} for {{{2|Łukasz}}} to test his notice script',
+					'comment' => '{{{comment}}}'
+				]
+			],
+			[
+				'name' => 'iumb',
+				'template' => $mockTemplate2,
+				'params' => [
+					'id' => 'Oou',
+					'bg' => '#F7F7F7',
+					'image' => '[[File:Ewokdirector.jpg|130px]]',
+					'caption' => 'Piece of test text'
+				]
+			]
+		];
 
-		/* Run tested method */
-		$flagsExtractorMock->init( $mockText, $mockTemplateName );
-		$templates = $flagsExtractorMock->getTemplate();
-		$this->assertEquals( $expectedResult, $templates );
+		return [
+			[ $mockTemplateName, $mockTextTemplateAtTheBeginning, $expectedResultOneTemplate ],
+			[ $mockTemplateName, $mockTextTwoTemplatesOneByOne, $expectedResultTwoTemplates ],
+			[ $mockTemplateName, $mockTextTwoTemplatesAndText, $expectedResultTwoTemplates ]
+		];
 	}
 }
