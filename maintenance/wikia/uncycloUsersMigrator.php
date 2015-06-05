@@ -377,6 +377,14 @@ class UncycloUserMigrator extends Maintenance {
 				if ($res === true) {
 					$moved++;
 				}
+				else {
+					$this->err( __METHOD__, [
+						'title' => $oldUserPage->getPrefixedDBkey(),
+						'from' => $oldName,
+						'to' => $newName,
+						'ret' => $ret
+					] );
+				}
 			}
 		}
 
