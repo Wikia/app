@@ -156,12 +156,18 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		log(['getSlotParams', slotName], 'debug', logGroup);
 
 		if (wasCalled() && wasRendered()) {
-			log([
-				'getSlotParams',
+			log(
+				['getSlotParams',
 				slotName,
-				'Not adding amznSlots since the Amazon ads has been already rendered'
-			], 'debug', logGroup);
-			return {};
+				'Cleaning amznSlots since the Amazon ads has been already rendered before'
+				],
+				'debug',
+				logGroup
+			);
+
+			return {
+				amznslots: []
+			};
 		}
 
 		var amznSlots = [];
