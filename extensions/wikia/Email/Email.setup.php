@@ -23,6 +23,7 @@ $dir = dirname( __FILE__ ) . '/';
  * classes
  */
 $wgAutoloadClasses['Email\EmailController'] =  $dir . 'EmailController.class.php';
+$wgAutoloadClasses['Email\Helper'] =  $dir . 'EmailHelper.class.php';
 $wgAutoloadClasses['Email\ImageHelper'] =  $dir . 'EmailImageHelper.class.php';
 $wgAutoloadClasses['Email\ControllerException'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Fatal'] =  $dir . 'EmailExceptions.class.php';
@@ -59,10 +60,10 @@ $wgExtensionMessagesFiles['EmailForum'] = $dir . 'i18n/Forum.i18n.php';
 $wgExtensionMessagesFiles['EmailWallMessage'] = $dir . 'i18n/WallMessage.i18n.php';
 $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
 
-
 /**
  * permissions
  */
 $wgGroupPermissions['*']['access-sendemail'] = false;
 $wgGroupPermissions['staff']['access-sendemail'] = true;
 $wgGroupPermissions['helper']['access-sendemail'] = true;
+$wgGroupPermissions['translator']['access-sendemail'] = true;

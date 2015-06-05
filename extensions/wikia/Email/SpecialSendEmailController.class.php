@@ -30,7 +30,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @throws \PermissionsError
 	 */
 	private function assertCanAccess() {
-		if ( !$this->wg->User->isAllowed( self::REQUIRED_USER_RIGHT ) ) {
+		if ( !Helper::userCanAccess() ) {
 			throw new \PermissionsError( self::REQUIRED_USER_RIGHT );
 		}
 	}

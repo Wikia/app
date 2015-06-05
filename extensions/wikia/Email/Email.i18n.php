@@ -2,6 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'group-translator-member' => 'Wikia Translator',
 	'emailext-desc' => 'An extension to handle delivering email',
 	'emailext-anonymous-editor' => 'A Wikia fan',
 	'emailext-no-reply-name' => 'No Reply',
