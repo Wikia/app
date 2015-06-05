@@ -46,7 +46,7 @@ class MemcacheUserBlock {
 	public function getBlock() {
 		$blockData = $this->memc->get( $this->getMemcacheBlockKey() );
 
-		if ( is_array($blockData) ) {
+		if ( is_array( $blockData ) ) {
 			$blocker = User::newFromName( self::BLOCKER_NAME );
 
 			$block = new Block();
