@@ -651,6 +651,6 @@ abstract class EmailController extends \WikiaController {
 	 * @return Message
 	 */
 	protected function getMessage() {
-		return wfMessage( func_get_args() )->useDatabase( false )->inLanguage( $this->targetLang );
+		return call_user_func_array( 'wfMessage', func_get_args() )->useDatabase( false )->inLanguage( $this->targetLang );
 	}
 }
