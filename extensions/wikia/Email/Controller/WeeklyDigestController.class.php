@@ -3,7 +3,6 @@
 namespace Email\Controller;
 
 use \Email\EmailController;
-use \Email;
 
 class WeeklyDigestController extends EmailController {
 

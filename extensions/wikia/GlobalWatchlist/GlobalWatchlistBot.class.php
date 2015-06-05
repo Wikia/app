@@ -283,7 +283,7 @@ class GlobalWatchlistBot {
 	private function getWikiaName( $wikiaId ) {
 		$wikiaName = "";
 		$wikia = WikiFactory::getWikiByID( $wikiaId );
-		// Make sure city isn't private
+		// Make sure wikia isn't private
 		if ( !empty( $wikia->city_public ) ) {
 			$wikiaName = $wikia->city_title;
 		}
