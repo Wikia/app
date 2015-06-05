@@ -64,6 +64,7 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 					$logParams = [
 						'cityId' => $wgCityId,
 						'pageId' => $imagePage->getID(),
+						'pageTitle' => $imagePage->getTitle()->getText(),
 						'uploadUser' => $user->getName(),
 					];
 					\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewLog',
