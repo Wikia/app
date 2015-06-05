@@ -167,13 +167,12 @@ class FlagsHelper {
 	 * @return bool
 	 */
 	public function areFlagsEditable() {
-		global $wgUser;
+		global $wgTitle;
 		return
 			/* Check condition for view */
 			$this->shouldDisplayFlags()
 			/* Don't display flags when user is not allowed to edit */
-			&& $wgUser instanceof \User
-			&& $wgUser->isAllowed( 'edit' );
+			&& $wgTitle->userCan( 'edit' );
 	}
 
 	/**
