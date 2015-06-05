@@ -130,6 +130,7 @@ class FlagsHelper {
 
 	/**
 	 * Checks if a request for flags does not come from an edit page
+	 * Used for determining whether flags should be injected to parsed output
 	 * @return bool
 	 */
 	public function shouldInjectFlags() {
@@ -148,7 +149,7 @@ class FlagsHelper {
 	}
 
 	/**
-	 * Checks if flags can be edited on current page to decide whether include edit modal
+	 * Checks if flags should be displayed on a page
 	 * @return bool
 	 */
 	public function shouldDisplayFlags() {
@@ -159,6 +160,20 @@ class FlagsHelper {
 			$wgTitle->exists()
 			/* Display flags only on content namespaces */
 			&& \Wikia::isContentNamespace();
+	}
+
+	/**
+	 * Checks if flags can be edited on current page to decide whether include edit modal
+	 * @return bool
+	 */
+	public function areFlagsEditable() {
+		global $wgUser;
+		return
+			/* Check condition for view */
+			$this->shouldDisplayFlags()
+			/* Don't display flags when user is not allowed to edit */
+			&& $wgUser instanceof \User
+			&& $wgUser->isAllowed( 'edit' );
 	}
 
 	/**

@@ -18,8 +18,12 @@ class Hooks {
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$helper = new FlagsHelper();
+		/* Assets for flags view */
 		if ( $helper->shouldDisplayFlags() ) {
 			\Wikia::addAssetsToOutput( 'flags_view_scss' );
+		}
+		/* Assets for flags edit form */
+		if ( $helper->areFlagsEditable() ) {
 			\Wikia::addAssetsToOutput( 'flags_editform_js' );
 			$out->addModules( 'ext.wikia.Flags.EditFormMessages' );
 		}
@@ -36,7 +40,7 @@ class Hooks {
 	 */
 	public static function onSkinTemplateNavigation( $skin, &$links ) {
 		$helper = new FlagsHelper();
-		if ( $helper->shouldDisplayFlags() ) {
+		if ( $helper->areFlagsEditable() ) {
 			$links['views'][self::FLAGS_DROPDOWN_ACTION] = [
 				'href' => '#',
 				'text' => wfMessage( 'flags-edit-modal-title' )->escaped(),
@@ -53,7 +57,7 @@ class Hooks {
 	 */
 	public static function onPageHeaderDropdownActions( array &$actions ) {
 		$helper = new FlagsHelper();
-		if ( $helper->shouldDisplayFlags() ) {
+		if ( $helper->areFlagsEditable() ) {
 			$actions[] = self::FLAGS_DROPDOWN_ACTION;
 		}
 		return true;
