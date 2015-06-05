@@ -99,6 +99,10 @@ class MemcacheUserBlock {
 		if ( $block instanceof Block ) {
 			$user->mBlock = $block;
 			$blocked = true;
+
+			// dirty hack to make the block be displayed properly to the user
+			$user->mBlockreason = $block->mReason;
+			$user->mBlockedby = $block->getByName();
 		}
 
 		return true;
