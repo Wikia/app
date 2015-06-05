@@ -325,7 +325,7 @@ class AntiSpoof {
 			return array( "ERROR", wfMsg( 'antispoof-blacklisted' ) );
 		}
 
-		# Perform Unicode _compatibility_ decomposition
+		# Perform Unicode normalization
 		$testName = UtfNormal::toNFD( $testName );
 		$testChars = self::stringToList( $testName );
 
