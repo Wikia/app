@@ -25,6 +25,7 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 );
 
 $messages['qqq'] = array(
+	'group-translator-member' => 'A label for the Wikia Translator user group.  Shown on the Special:UserRights page',
 	'email-desc' => 'The description for this extension',
 	'emailext-anonymous-editor' => 'Phrase used in place of a username when the page was edited by an anonymous (logged out) user.',
 	'emailext-no-reply-name' => 'Name for sender of "no reply" email address',
