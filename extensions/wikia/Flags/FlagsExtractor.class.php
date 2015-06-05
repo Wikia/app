@@ -78,7 +78,7 @@ class FlagsExtractor {
 	 * @return bool
 	 */
 	public function hasTemplate() {
-		return (bool) $this->templateOffsetStart;
+		return $this->templateOffsetStart !== false;
 	}
 
 	/**
