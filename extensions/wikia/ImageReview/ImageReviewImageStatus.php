@@ -52,7 +52,7 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 		if ( false === $imgCurState ) {
 			/**
 			 * If the file is older than 1 hour - send it to ImageReview
-			 * since it's probably been restored, and is not a fresh file.
+			 * since it's probably been restored, and is not just a fresh file.
 			 */
 			$lastTouched = new DateTime( $imagePage->getRevisionFetched()->getTimestamp() );
 			$now = new DateTime();
@@ -60,7 +60,21 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 				$scribeEventProducer = new ScribeEventProducer( 'edit' );
 				$user = $imagePage->getContext()->getUser();
 				$file = $imagePage->getDisplayedFile();
-				$scribeEventProducer->buildEditPackage( $imagePage, $user, null, null, $file );
+				if ( $scribeEventProducer->buildEditPackage( $imagePage, $user, null, null, $file ) ) {
+					$logParams = [
+						'cityId' => $wgCityId,
+						'pageId' => $imagePage->getID(),
+						'uploadUser' => $user->getName(),
+					];
+					\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewLog',
+						[
+							'message' => 'Image moved back to queue',
+							'params' => $logParams,
+						]
+					);
+
+					$scribeEventProducer->sendLog();
+				}
 			}
 
 			// oh oh, image is not in queue at all
