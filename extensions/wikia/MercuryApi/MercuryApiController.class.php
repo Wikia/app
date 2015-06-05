@@ -340,7 +340,7 @@ class MercuryApiController extends WikiaController {
 		$curatedContent = $this->getCuratedContentData();
 		$trendingArticles = $this->getTrendingArticlesData();
 		$trendingVideos = $this->getTrendingVideosData();
-		$wikiStats = $this->getWikiStats();
+		$wikiaStats = $this->getWikiaStatsData();
 
 		if ( !empty( $curatedContent[ 'items' ] ) ) {
 			$mainPageData[ 'curatedContent' ] = $curatedContent[ 'items' ];
@@ -358,8 +358,8 @@ class MercuryApiController extends WikiaController {
 			$mainPageData[ 'trendingVideos' ] = $trendingVideos;
 		}
 
-		if ( !empty( $wikiStats ) ) {
-			$mainPageData[ 'wikiStats' ] = $wikiStats;
+		if ( !empty( $wikiaStats ) ) {
+			$mainPageData[ 'wikiaStats' ] = $wikiaStats;
 		}
 
 		return $mainPageData;
@@ -434,7 +434,7 @@ class MercuryApiController extends WikiaController {
 		return $data;
 	}
 
-	private function getWikiStats() {
+	private function getWikiaStatsData() {
 		global $wgCityId;
 
 		$service = new WikiDetailsService();
