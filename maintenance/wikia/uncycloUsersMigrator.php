@@ -708,7 +708,7 @@ class UncycloUserMigrator extends Maintenance {
 	 */
 	public function execute() {
 		global $wgUser;
-		$wgUser = User::newFromName( 'WikiaBot' );
+		$wgUser = $this->getGlobalUserByName( 'WikiaBot' );
 
 		// do not use ulimit4 when calling wfShellExec()
 		global $wgMaxShellTime;
