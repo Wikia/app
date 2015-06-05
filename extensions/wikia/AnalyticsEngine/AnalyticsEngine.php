@@ -51,8 +51,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderBlueKai();
 			case 'Datonics':
 				return new AnalyticsProviderDatonics();
-			case 'PageFair':
-				return new AnalyticsProviderPageFair();
 			case 'RubiconRTP':
 				return new AnalyticsProviderRubiconRTP();
 		}

@@ -56,7 +56,7 @@ class ForumController extends EmailController {
 	}
 
 	public function getSubject() {
-		return wfMessage( $this->getSubjectKey(), $this->board->getText() )
+		return $this->getMessage( $this->getSubjectKey(), $this->board->getText() )
 			->inLanguage( $this->targetLang )
 			->text();
 	}
@@ -66,13 +66,13 @@ class ForumController extends EmailController {
 	}
 
 	protected function getSummary() {
-		return wfMessage( 'emailext-forum-summary', $this->board->getFullURL(), $this->board->getText() )
+		return $this->getMessage( 'emailext-forum-summary', $this->board->getFullURL(), $this->board->getText() )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
 
 	protected function getButtonText() {
-		return wfMessage( $this->getButtonTextKey() )
+		return $this->getMessage( $this->getButtonTextKey() )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
@@ -90,7 +90,7 @@ class ForumController extends EmailController {
 		] );
 
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text', $boardUrl, $this->board->getText() )
+			$this->getMessage( 'emailext-unfollow-text', $boardUrl, $this->board->getText() )
 				->inLanguage( $this->targetLang )
 				->parse()
 		];
@@ -153,13 +153,13 @@ class ReplyForumController extends ForumController {
 	}
 
 	public function getSubject() {
-		return wfMessage( $this->getSubjectKey(), $this->titleText )
+		return $this->getMessage( $this->getSubjectKey(), $this->titleText )
 			->inLanguage( $this->targetLang )
 			->text();
 	}
 
 	protected function getSummary() {
-		return wfMessage( $this->getSummaryKey(), $this->titleText, $this->threadUrl )
+		return $this->getMessage( $this->getSummaryKey(), $this->titleText, $this->threadUrl )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
@@ -169,7 +169,7 @@ class ReplyForumController extends ForumController {
 	}
 
 	protected function getViewAll() {
-		return wfMessage( 'emailext-forum-reply-view-all', $this->threadUrl )
+		return $this->getMessage( 'emailext-forum-reply-view-all', $this->threadUrl )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
@@ -180,7 +180,7 @@ class ReplyForumController extends ForumController {
 		] );
 
 		$footerMessages = [
-			wfMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $this->threadUrl )
+			$this->getMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $this->threadUrl )
 				->inLanguage( $this->targetLang )
 				->parse()
 		];
