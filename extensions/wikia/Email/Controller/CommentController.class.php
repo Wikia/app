@@ -90,7 +90,7 @@ abstract class CommentController extends EmailController {
 
 	public function getSubject() {
 		$articleTitle = $this->pageTitle->getText();
-		return wfMessage( $this->getSubjectKey(), $articleTitle )
+		return $this->getMessage( $this->getSubjectKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
 			->text();
 	}
@@ -100,7 +100,7 @@ abstract class CommentController extends EmailController {
 	protected function getSummary() {
 		$articleTitle = $this->pageTitle->getText();
 
-		return wfMessage( $this->getSummaryKey(), $articleTitle )
+		return $this->getMessage( $this->getSummaryKey(), $articleTitle )
 			->inLanguage( $this->targetLang )
 			->text();
 	}
@@ -116,7 +116,7 @@ abstract class CommentController extends EmailController {
 	}
 
 	protected function getCommentLabel() {
-		return wfMessage( 'emailext-comment-link-label')
+		return $this->getMessage( 'emailext-comment-link-label')
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
@@ -131,7 +131,7 @@ abstract class CommentController extends EmailController {
 		$parentTitleText = $this->pageTitle->getPrefixedText();
 
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
+			$this->getMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
 				->inLanguage( $this->targetLang )
 				->parse()
 		];
@@ -141,7 +141,7 @@ abstract class CommentController extends EmailController {
 	protected function getCommentSectionLink() {
 		$url = $this->pageTitle->getFullURL( '#WikiaArticleComments' );
 
-		return wfMessage( 'emailext-comment-view-all', $url )
+		return $this->getMessage( 'emailext-comment-view-all', $url )
 			->inLanguage( $this->targetLang )
 			->parse();
 	}
