@@ -200,27 +200,16 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('turtle,liftium');
 	});
 
-	it('any country, Monetization Service on, Monetization Service slot, any ads', function () {
-		var providers = {monetizationService: true, monetizationServiceAds:['test']};
+	it('any country, Monetization Service on, Monetization Service slot', function () {
+		var providers = {monetizationService: true};
 		spyOn(mocks, 'getAdContextProviders').and.returnValue(providers);
 		spyOn(mocks.providers.monetizationService, 'canHandleSlot').and.returnValue(true);
 		expect(getProviders('foo')).toEqual('monetizationService');
 	});
 
-	it('any country, Monetization Service on, Monetization Service slot, no ads', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
-		spyOn(mocks.providers.monetizationService, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo')).not.toEqual('monetizationService');
-	});
-
-	it('any country, Monetization Service on, not Monetization Service slot, any ads', function () {
-		var providers = {monetizationService: true, monetizationServiceAds:['test']};
+	it('any country, Monetization Service on, not Monetization Service slot', function () {
+		var providers = {monetizationService: true};
 		spyOn(mocks, 'getAdContextProviders').and.returnValue(providers);
-		expect(getProviders('foo')).not.toEqual('monetizationService');
-	});
-
-	it('any country, Monetization Service on, not Monetization Service slot, no ads', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
 		expect(getProviders('foo')).not.toEqual('monetizationService');
 	});
 
