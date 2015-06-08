@@ -51,15 +51,15 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 
 		if ( false === $imgCurState ) {
 			/**
-			 * If the file is older than 1 hour - send it to ImageReview
+			 * If the file is a local one and is older than 1 hour - send it to ImageReview
 			 * since it's probably been restored, and is not just a fresh file.
 			 */
 			$lastTouched = new DateTime( $imagePage->getRevisionFetched()->getTimestamp() );
 			$now = new DateTime();
-			if ( $lastTouched < $now->modify( '-1 hour' ) ) {
+			$file = $imagePage->getDisplayedFile();
+			if ( $file instanceof LocalFile && $lastTouched < $now->modify( '-1 hour' ) ) {
 				$scribeEventProducer = new ScribeEventProducer( 'edit' );
-				$user = $imagePage->getContext()->getUser();
-				$file = $imagePage->getDisplayedFile();
+				$user = User::newFromId( $file->getUser() );
 				if ( $scribeEventProducer->buildEditPackage( $imagePage, $user, null, null, $file ) ) {
 					$logParams = [
 						'cityId' => $wgCityId,
