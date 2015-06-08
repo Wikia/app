@@ -3518,7 +3518,9 @@ class User {
 					'MAIN-4660',
 					[
 						'method'      => 'setSessionData',
-						'wsEditToken' => $token,
+						'salt'        => $salt,
+						'session_val' => $token,
+						'ret_val'     => md5( $token . ( is_array( $salt ) ? implode('|', $salt) : $salt ) ) . EDIT_TOKEN_SUFFIX,
 						'user_id'     => $this->getId(),
 						'user_name'   => $this->getName(),
 						'exception'   => new Exception(),
@@ -3565,6 +3567,7 @@ class User {
 				'MAIN-4660',
 				[
 					'method'      => 'mismatch',
+					'salt'        => $salt,
 					'client_val'  => $val,
 					'session_val' => $sessionToken,
 					'user_id'     => $this->getId(),
