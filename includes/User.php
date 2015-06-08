@@ -3520,9 +3520,10 @@ class User {
 						'method'      => 'setSessionData',
 						'salt'        => $salt,
 						'session_val' => $token,
-						'ret_token'   => md5( $token . ( is_array( $salt ) ? implode('|', $salt) : $salt ) ) . EDIT_TOKEN_SUFFIX,
 						'user_id'     => $this->getId(),
 						'user_name'   => $this->getName(),
+						'session_id'  => session_id(),
+						'session_data' => json_encode($_SESSION),
 						'exception'   => new Exception(),
 					]
 				);
@@ -3572,6 +3573,8 @@ class User {
 					'session_val' => $sessionToken,
 					'user_id'     => $this->getId(),
 					'user_name'   => $this->getName(),
+					'session_id'  => session_id(),
+					'session_data' => json_encode($_SESSION),
 					'exception'   => new Exception(),
 				]
 			);
