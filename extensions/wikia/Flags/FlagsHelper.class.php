@@ -10,7 +10,7 @@
 
 namespace Flags;
 
-use Flags\Views\FlagView;
+use Flags\Models\FlagType;
 
 class FlagsHelper {
 
@@ -173,6 +173,52 @@ class FlagsHelper {
 			$this->shouldDisplayFlags()
 			/* Don't display flags when user is not allowed to edit */
 			&& $wgTitle->userCan( 'edit' );
+	}
+
+	/**
+	 * Get a localized and human-readable names of Flags targets (readers and contibutors)
+	 *
+	 * @return array An array of localized names of targets of Flags
+	 */
+	public function getFlagTargetFullNames() {
+		$flagTargetFullNames = [];
+
+		/**
+		 * Generates the following messages:
+		 * flags-target-readers
+		 * flags-target-contributors
+		 */
+		foreach ( FlagType::$flagTargeting as $flagTargetId => $flagTargetKey ) {
+			$flagTargetFullNames[$flagTargetId] = wfMessage( "flags-target-{$flagTargetKey}" )->escaped();
+		}
+
+		return $flagTargetFullNames;
+	}
+
+	/**
+	 * Get a localized and human-readable names of Flags groups
+	 *
+	 * @return array An array of localized names of groups of Flags
+	 */
+	public function getFlagGroupsFullNames() {
+		$flagGroupsFullNames = [];
+
+		/**
+		 * Generates the following messages:
+		 * flags-groups-spoiler
+		 * flags-groups-disambig
+		 * flags-groups-canon
+		 * flags-groups-stub
+		 * flags-groups-delete
+		 * flags-groups-improvements
+		 * flags-groups-status
+		 * flags-groups-other
+		 */
+		foreach ( FlagType::$flagGroups as $flagGroupId => $flagGroupKey ) {
+			$flagGroupsFullNames[$flagGroupId] = wfMessage( "flags-groups-{$flagGroupKey}" )->escaped();
+		}
+
+		return $flagGroupsFullNames;
 	}
 
 	/**

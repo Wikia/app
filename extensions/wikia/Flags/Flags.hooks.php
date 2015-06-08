@@ -19,7 +19,8 @@ class Hooks {
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		$helper = new FlagsHelper();
 		/* Assets for flags view */
-		if ( $helper->shouldDisplayFlags() ) {
+		if ( $helper->shouldDisplayFlags()
+			|| $out->getTitle()->isSpecial( 'Flags' ) ) {
 			\Wikia::addAssetsToOutput( 'flags_view_scss' );
 		}
 		/* Assets for flags edit form */
