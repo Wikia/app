@@ -129,7 +129,7 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 
 	&.portable-infobox-layout-tabular {
 
-		.portable-infobox-item-margins {
+		.portable-infobox-item.item-type-key-val {
 			@include flex-direction(row);
 			box-sizing: border-box;
 			display: flex;
@@ -137,7 +137,7 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 			width: 100%;
 		}
 
-		.portable-infobox-header-font {
+		.portable-infobox-item-label {
 			@include flex-basis(30%);
 			font-size: inherit;
 		}
