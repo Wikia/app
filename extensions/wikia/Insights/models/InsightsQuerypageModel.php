@@ -231,11 +231,13 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		foreach ( $this->sorting as $key => $flag ) {
 			$cacheKey = $this->getMemcKey( $key );
 			$sortingArray = $wgMemc->get( $cacheKey );
-			$key = array_search( $articleId, $sortingArray );
+			if ( is_array( $sortingArray ) ) {
+				$key = array_search( $articleId, $sortingArray );
 
-			if ( $key !== false && $key !== null ) {
-				unset( $sortingArray[$key] );
-				$wgMemc->set( $cacheKey, $sortingArray, self::INSIGHTS_MEMC_TTL );
+				if ( $key !== false && $key !== null ) {
+					unset( $sortingArray[$key] );
+					$wgMemc->set( $cacheKey, $sortingArray, self::INSIGHTS_MEMC_TTL );
+				}
 			}
 		}
 	}
