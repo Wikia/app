@@ -3449,6 +3449,7 @@ function wfFixSessionID() {
 		'event' => __METHOD__,
 		'old_session_id' => $sOldSessionId,
 		'new_session_id' => $sNewSessionId,
+		'cookies'        => $_COOKIE,
 	];
 	session_id( $sNewSessionId );
 }
