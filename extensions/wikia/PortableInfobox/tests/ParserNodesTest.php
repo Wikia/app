@@ -85,7 +85,25 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		$this->assertTrue( $data[ 'value' ][ 2 ][ 'isNotEmpty' ] == false, 'empty' );
 	}
 
-	public function testNodeComparition() {
+	public function testNodeGroupInline() {
+		$string = '<group layout="inline">
+				<data source="elem1"><label>l1</label><default>def1</default></data>
+				<data source="elem2"><label>l2</label><default>def2</default></data>
+				<data source="elem3"><label>l2</label></data>
+					</group>
+						';
+		$xml = simplexml_load_string( $string );
+
+		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeGroup( $xml, [ 'elem1' => 1, 'elem2' => 2 ] );
+		$data = $node->getData();
+		$this->assertTrue( is_array( $data[ 'value' ] ), 'value is array' );
+		$this->assertTrue( $data[ 'value' ][ 0 ][ 'data' ][ 'value' ] == 1, 'first elem' );
+		$this->assertTrue( $data[ 'value' ][ 1 ][ 'data' ][ 'value' ] == 2, 'second elem' );
+		$this->assertTrue( $data[ 'value' ][ 1 ][ 'data' ][ 'label' ] == 'l2', 'second elem - label' );
+		$this->assertTrue( $data[ 'value' ][ 2 ][ 'isNotEmpty' ] == false, 'empty' );
+	}
+
+	public function testNodeComparison() {
 		$string = '<comparison>
 			   <set>
 				  <header>Combatientes</header>
