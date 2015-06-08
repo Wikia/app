@@ -95,8 +95,7 @@ class BlogArticle extends Article {
 		$memKey = $this->blogListingMemcacheKey( $owner, $page );
 
 		 // Use cache unless action=purge was used
-		$useCache = $wg->Request->getVal( 'action' ) != 'purge';
-		if ( $useCache ) {
+		if ( $wg->Request->getVal( 'action' ) != 'purge' ) {
 			$cachedValue = $memc->get( $memKey );
 
 			if ( $cachedValue && isset( $cachedValue['listing'] ) ) {
@@ -191,8 +190,8 @@ class BlogArticle extends Article {
 	}
 
 	/**
-	 * @param $userKey - user's DB key
-	 * @param $offset - offset into paged results
+	 * @param string $userKey - user's DB key
+	 * @param int $offset - offset into paged results
 	 *
 	 * @return String
 	 */
@@ -234,8 +233,8 @@ class BlogArticle extends Article {
 
 		/** @var ChannelFeed $feed */
 		$feed = new $wgFeedClasses[ $format ](
-			wfMsg( "blog-userblog", $user ),
-			wfMsg( "blog-fromsitename", $wgSitename ),
+			wfMessage( "blog-userblog", $user )->escaped(),
+			wfMessage( "blog-fromsitename", $wgSitename )->escaped(),
 			$wgTitle->getFullUrl()
 		);
 

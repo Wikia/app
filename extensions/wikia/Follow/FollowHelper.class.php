@@ -265,7 +265,7 @@ class FollowHelper {
 
 			$userBlogTitleText = $postTitle->getBaseText();
 			$userBlogTitle = Title::makeTitle( NS_BLOG_ARTICLE, $userBlogTitleText );
-			if ( $userBlogTitle && $userBlogTitle->exists() ) {
+			if ( $userBlogTitle->exists() ) {
 				$userBlog[] = ucfirst( $userBlogTitle->getDBKey() );
 
 				self::emailNotification(
