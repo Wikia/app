@@ -57,9 +57,9 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 			$lastTouched = new DateTime( $imagePage->getRevisionFetched()->getTimestamp() );
 			$now = new DateTime();
 			$file = $imagePage->getDisplayedFile();
-			if ( $file instanceof LocalFile && $lastTouched < $now->modify( '-1 hour' ) ) {
+			if ( $file instanceof WikiaLocalFile && $lastTouched < $now->modify( '-1 hour' ) ) {
 				$scribeEventProducer = new ScribeEventProducer( 'edit' );
-				$user = User::newFromId( $file->getUser() );
+				$user = User::newFromText( $file->getUser() );
 				if ( $scribeEventProducer->buildEditPackage( $imagePage, $user, null, null, $file ) ) {
 					$logParams = [
 						'cityId' => $wgCityId,
