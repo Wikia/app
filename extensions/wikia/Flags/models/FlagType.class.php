@@ -33,6 +33,22 @@ class FlagType extends FlagsBaseModel {
 	];
 
 	/**
+	 * The first var was created for the use of the converting maintenance script. This one
+	 * is for user-facing purposes.
+	 * @var array
+	 */
+	public static $flagGroupsFullNames = [
+		1 => 'Spoiler',
+		2 => 'Disambiguation',
+		3 => 'Canon',
+		4 => 'Stub',
+		5 => 'Delete',
+		6 => 'Improvements',
+		7 => 'Status',
+		8 => 'Other',
+	];
+
+	/**
 	 * Flags can be targeted to different user groups.	 *
 	 * @var array
 	 */
