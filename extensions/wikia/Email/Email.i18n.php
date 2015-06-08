@@ -3,6 +3,8 @@ $messages = array();
 
 $messages['en'] = array(
 	'group-translator-member' => 'Wikia Translator',
+	'group-translator' => 'Wikia Translators',
+	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-desc' => 'An extension to handle delivering email',
 	'emailext-anonymous-editor' => 'A Wikia fan',
 	'emailext-no-reply-name' => 'No Reply',
@@ -25,6 +27,9 @@ Questions or concerns? Feel free to <a href="http://community.wikia.com/wiki/Spe
 );
 
 $messages['qqq'] = array(
+	'group-translator-member' => 'The display name for a member of the translator group',
+	'group-translator' => 'The display name for the translator group',
+	'grouppage-translator' => 'A URL describing this group.  Should not need any i18n since its just a URL',
 	'email-desc' => 'The description for this extension',
 	'emailext-anonymous-editor' => 'Phrase used in place of a username when the page was edited by an anonymous (logged out) user.',
 	'emailext-no-reply-name' => 'Name for sender of "no reply" email address',

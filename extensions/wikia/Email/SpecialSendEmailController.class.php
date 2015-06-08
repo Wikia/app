@@ -6,7 +6,6 @@ namespace Email;
 class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const REQUIRED_USER_RIGHT = "access-sendemail";
 	const PAGE_NAME = "SendEmail";
 
 	public function __construct() {
@@ -31,7 +30,7 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 */
 	private function assertCanAccess() {
 		if ( !Helper::userCanAccess() ) {
-			throw new \PermissionsError( self::REQUIRED_USER_RIGHT );
+			throw new \PermissionsError( Helper::REQUIRED_USER_RIGHT );
 		}
 	}
 
