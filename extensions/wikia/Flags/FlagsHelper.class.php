@@ -130,9 +130,10 @@ class FlagsHelper {
 
 	/**
 	 * Checks if a request for flags does not come from an edit page
+	 * Used for determining whether flags should be injected to parsed output
 	 * @return bool
 	 */
-	public function shouldDisplayFlags() {
+	public function shouldInjectFlags() {
 		global $wgTitle, $wgRequest;
 
 		return
@@ -143,8 +144,35 @@ class FlagsHelper {
 			/* Don't display flags on edit pages that are content namespaces */
 			&& !in_array(
 				$wgRequest->getVal( 'action', 'view' ),
-				[ 'edit', 'formedit' , 'history' ]
+				[ 'edit', 'formedit' , 'history', 'visualeditor' ]
 			);
+	}
+
+	/**
+	 * Checks if flags should be displayed on a page
+	 * @return bool
+	 */
+	public function shouldDisplayFlags() {
+		global $wgTitle;
+
+		return
+			/* Don't display flags for non existent pages */
+			$wgTitle->exists()
+			/* Display flags only on content namespaces */
+			&& \Wikia::isContentNamespace();
+	}
+
+	/**
+	 * Checks if flags can be edited on current page to decide whether include edit modal
+	 * @return bool
+	 */
+	public function areFlagsEditable() {
+		global $wgTitle;
+		return
+			/* Check condition for view */
+			$this->shouldDisplayFlags()
+			/* Don't display flags when user is not allowed to edit */
+			&& $wgTitle->userCan( 'edit' );
 	}
 
 	/**

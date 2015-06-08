@@ -103,6 +103,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
+		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
@@ -2442,7 +2443,7 @@ $config['portable_infobox_monobook_scss'] = [
 	]
 ];
 
-$config['flags_css'] = [
+$config['flags_view_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
@@ -2450,7 +2451,7 @@ $config['flags_css'] = [
 	],
 ];
 
-$config['flags_js'] = [
+$config['flags_editform_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'monobook'],
 	'assets' => [
