@@ -138,7 +138,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
 		if ( $layoutName && in_array( $layoutName, $this->supportedLayouts ) ) {
 			//make sure no whitespaces, prevents side effects
-			return Sanitizer::escapeClass( self::INFOBOX_LAYOUT_PREFIX . preg_replace( '|\s+|s', '-', $layoutName ) );
+			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
 		}
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
 	}

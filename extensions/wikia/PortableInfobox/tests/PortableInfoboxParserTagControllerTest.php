@@ -133,9 +133,7 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetLayoutDataProvider
 	 */
-	public function testGetLayout( $layout, $expectedOutput, $message ) {
-		$text = '<data><default>test</default></data>';
-
+	public function testGetLayout( $layout, $expectedOutput, $text, $message ) {
 		$marker = $this->controller->renderInfobox( $text, [ 'layout' => $layout ], $this->parser,
 			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
 		$output = $this->controller->replaceMarkers( $marker );
@@ -152,26 +150,31 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 			[
 				'layout' => 'tabular',
 				'expectedOutput' => 'portable-infobox-layout-tabular',
+				'text' => '<data><default>test</default></data>',
 				'message' => 'set tabular layout'
 			],
 			[
 				'layout' => 'looool',
 				'expectedOutput' => 'portable-infobox-layout-default',
+				'text' => '<data><default>test</default></data>',
 				'message' => 'invalid layout name'
 			],
 			[
 				'layout' => '',
 				'expectedOutput' => 'portable-infobox-layout-default',
+				'text' => '<data><default>test</default></data>',
 				'message' => 'layout is empty string'
 			],
 			[
 				'layout' => 5,
 				'expectedOutput' => 'portable-infobox-layout-default',
+				'text' => '<data><default>test</default></data>',
 				'message' => 'layout is an integer'
 			],
 			[
 				'layout' => [],
 				'expectedOutput' => 'portable-infobox-layout-default',
+				'text' => '<data><default>test</default></data>',
 				'message' => 'layout is not set'
 			]
 		];
