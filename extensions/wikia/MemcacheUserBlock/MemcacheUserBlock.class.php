@@ -23,7 +23,8 @@ class MemcacheUserBlock {
 			$this->getMemcacheBlockKey(),
 			[
 				'expiry' => time() + $ttl,
-				'reason' => $reason
+				'reason' => $reason,
+				'set_at' => time()
 			],
 			$ttl
 		);
@@ -55,6 +56,7 @@ class MemcacheUserBlock {
 			$block->setBlockEmail( $blocker->getEmail() );
 			$block->mReason = $blockData['reason'];
 			$block->mExpiry = $blockData['expiry'];
+			$block->mTimestamp = wfTimestamp( TS_MW, $blockData['set_at'] );
 
 			$this->info( __METHOD__, [
 				'reason' => $block->mReason,
