@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
+use Wikia\PortableInfobox\Helpers\SimpleXmlUtil;
 use Wikia\PortableInfobox\Parser\ExternalParser;
 use Wikia\PortableInfobox\Parser\SimpleParser;
 
@@ -47,6 +48,7 @@ class Node {
 		if ( !isset( $this->externalParser ) ) {
 			$this->setExternalParser( new SimpleParser() );
 		}
+
 		return $this->externalParser;
 	}
 
@@ -77,28 +79,18 @@ class Node {
 	 */
 	public function isEmpty( $data ) {
 		$value = $data[ 'value' ];
-		return !( isset( $value ) ) || (empty( $value ) && $value != '0');
+
+		return !( isset( $value ) ) || ( empty( $value ) && $value != '0' );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
-		$value = null;
-		if ( !empty( $source ) ) {
-			$value = $this->getInfoboxData( $source );
-		}
+		$value = $this->extractDataFromSource( $xmlNode );
 		if ( !$value ) {
 			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				/*
-				 * <default> tag can contain <ref> or other WikiText parser hooks
-				 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
-				 * parse it.
-				 */
-				$value = \Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance()->getInnerXML(
-					$xmlNode->{self::DEFAULT_TAG_NAME}
-				);
-				$value = $this->getExternalParser()->parseRecursive( $value );
+				$value = $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
 			}
 		}
+
 		return $value;
 	}
 
@@ -114,21 +106,59 @@ class Node {
 				$value = $this->getExternalParser()->replaceVariables( $value );
 			}
 		}
+
 		return $value;
 	}
 
+	protected function getValueWithData( \SimpleXMLElement $xmlNode ) {
+		$value = $this->extractDataFromSource( $xmlNode );
+
+		return $value ? $value : $this->extractDataFromNode( $xmlNode );
+	}
+
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
-		if ( isset( $xmlNode[ $attribute ] ) )
+		if ( isset( $xmlNode[ $attribute ] ) ) {
 			return (string)$xmlNode[ $attribute ];
+		}
+
 		return null;
 	}
 
-	protected function getRawInfoboxData ( $key ) {
+	protected function getRawInfoboxData( $key ) {
 		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
+
 		return $data;
 	}
 
 	protected function getInfoboxData( $key ) {
-		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData ( $key ) );
+		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData( $key ) );
+	}
+
+	/**
+	 * @param \SimpleXMLElement $xmlNode
+	 *
+	 * @return mixed
+	 */
+	protected function extractDataFromSource( \SimpleXMLElement $xmlNode ) {
+		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
+		if ( !empty( $source ) ) {
+			return $this->getInfoboxData( $source );
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param \SimpleXMLElement $xmlNode
+	 *
+	 * @return mixed
+	 */
+	protected function extractDataFromNode( \SimpleXMLElement $xmlNode ) {
+		/*
+		 * <default> tag can contain <ref> or other WikiText parser hooks
+		 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
+		 * parse it.
+		 */
+		return $this->getExternalParser()->parseRecursive( SimpleXmlUtil::getInstance()->getInnerXML( $xmlNode ) );
 	}
 }
