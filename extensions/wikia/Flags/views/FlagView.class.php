@@ -10,19 +10,28 @@
 
 namespace Flags\Views;
 
+use Flags\Models\FlagType;
+
 class FlagView {
-	const FLAGVIEW_LIMIT_MAGIC_WORD_INSTANCES = 1;
-	const FLAGVIEW_WIKITEXT_WRAP_OPEN = '<div class="portable-notices">';
-	const FLAGVIEW_WIKITEXT_WRAP_CLOSE = '</div>';
+
+	public static $flagsTargetingCssClasses = [
+		FlagType::FLAG_TARGETING_READERS => 'flags-targeting-readers',
+		FlagType::FLAG_TARGETING_CONTRIBUTORS => 'flags-targeting-contributors',
+	];
 
 	/**
 	 * Creates wikitext calls out of an array of names of templates and an array
-	 * of matching params.
+	 * of matching params. The wikitext calls are wrapped in an HTML element that
+	 * enables targeting control.
 	 * @param $flagView
 	 * @param $params
 	 * @return string
 	 */
-	public function createWikitextCall( $flagView, $params ) {
+	public function wrapSingleFlag( $flagTargeting, $flagView, $params ) {
+		if ( !isset( self::$flagsTargetingCssClasses[$flagTargeting] ) ) {
+			$flagTargeting = FlagType::FLAG_TARGETING_READERS;
+		}
+
 		$viewCall = '{{' . $flagView;
 
 		if ( !empty( $params ) ) {
@@ -33,7 +42,9 @@ class FlagView {
 
 		$viewCall .= "}}\n";
 
-		return $viewCall;
+		return \Html::rawElement( 'div', [
+			'class' => self::$flagsTargetingCssClasses[$flagTargeting]
+		], $viewCall );
 	}
 
 	/**
@@ -41,9 +52,9 @@ class FlagView {
 	 * @param array $templateCalls
 	 * @return string
 	 */
-	public function wrapTemplateCalls( Array $templateCalls ) {
+	public function wrapAllFlags( Array $templateCalls ) {
 		return \Html::rawElement( 'div', [
-			'class' => 'portable-notices',
+			'class' => 'portable-flags',
 		], implode( '', $templateCalls ) );
 	}
 }

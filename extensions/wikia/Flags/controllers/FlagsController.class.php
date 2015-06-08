@@ -10,8 +10,8 @@
  */
 
 use Flags\FlagsCache;
-use Flags\Views\FlagView;
 use Flags\FlagsHelper;
+use Flags\Views\FlagView;
 use Wikia\Logger\Loggable;
 
 class FlagsController extends WikiaController {
@@ -47,27 +47,26 @@ class FlagsController extends WikiaController {
 			$response = $this->requestGetFlagsForPage( $pageId );
 
 			if ( $this->getResponseStatus( $response ) ) {
-				$templatesCalls = [ ];
+				$templatesCalls = [];
 				$flags = $this->getResponseData( $response );
 
 				$flagView = new FlagView();
 
 				foreach ( $flags as $flagId => $flag ) {
-					$templatesCalls[] = $flagView->createWikitextCall( $flag['flag_view'], $flag['params'] );
+					$templatesCalls[] = $flagView->wrapSingleFlag(
+						$flag['flag_targeting'],
+						$flag['flag_view'],
+						$flag['params']
+					);
 				}
 
-				$flagsWikitext = $flagView->wrapTemplateCalls( $templatesCalls );
+				$flagsWikitext = $flagView->wrapAllFlags( $templatesCalls );
 			}
 
 			wfProfileOut( __METHOD__ );
 			return $flagsWikitext;
 		} catch ( Exception $exception ) {
-			$this->error(
-				$exception->getMessage(),
-				[
-					'backtrace' => $exception->getTraceAsString(),
-				]
-			);
+			$this->logResponseException( $exception, $response->getRequest() );
 		}
 	}
 
@@ -184,16 +183,6 @@ class FlagsController extends WikiaController {
 			if ( $title === null ) {
 				throw $exception;
 			}
-
-			/**
-			 * Log the exception
-			 */
-			$this->error(
-				$exception->getMessage(),
-				[
-					'backtrace' => $exception->getTraceAsString(),
-				]
-			);
 
 			/**
 			 * Show a friendly error message to a user after redirect
@@ -349,5 +338,15 @@ class FlagsController extends WikiaController {
 
 	private function getResponseStatus( WikiaResponse $response ) {
 		return $response->getData()[FlagsApiController::FLAGS_API_RESPONSE_STATUS];
+	}
+
+	private function logResponseException( Exception $e, WikiaRequest $request ) {
+		$this->error(
+			'FlagsLog Exception',
+			[
+				'exception' => $e,
+				'prms' => $request->getParams(),
+			]
+		);
 	}
 }

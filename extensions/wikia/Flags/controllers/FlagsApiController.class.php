@@ -5,17 +5,30 @@
  * It provides a set of CRUD methods to manipulate Flags instances and their types.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 use Flags\FlagsCache;
+use Flags\FlagsLogTask;
 use Flags\Models\Flag;
 use Flags\Models\FlagType;
+use Wikia\Logger\Loggable;
 
 class FlagsApiController extends WikiaApiController {
+
+	use Loggable;
+
 	const FLAGS_API_RESPONSE_STATUS = 'status';
 	const FLAGS_API_RESPONSE_DATA = 'data';
+	/**
+	 * Messages generated using following constants
+	 * logentry-flags-flag-added
+	 * logentry-flags-flag-removed
+	 */
+	const LOG_ACTION_FLAG_ADDED = 'flag-added';
+	const LOG_ACTION_FLAG_REMOVED = 'flag-removed';
 
 	private
 		$cache,
@@ -63,6 +76,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $flagsForPage );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -111,6 +125,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $allFlagTypes );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -140,7 +155,9 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
 			$this->makeSuccessResponse( $modelResponse );
+			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -159,7 +176,9 @@ class FlagsApiController extends WikiaApiController {
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
+			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -177,6 +196,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -208,6 +228,7 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -216,7 +237,7 @@ class FlagsApiController extends WikiaApiController {
 	 * Removes a type of flags.
 	 *
 	 * Required parameters:
-	 * @requestParam int flagTypeId
+	 * @requestParam int flag_type_id
 	 *
 	 * IMPORTANT!
 	 * When using this method be aware that it removes ALL instances of this type
@@ -231,6 +252,57 @@ class FlagsApiController extends WikiaApiController {
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
+	 * Get all flag types for given wiki
+	 *
+	 * Optional parameters:
+	 * @requestParam int wiki_id You can overwrite the current city_id
+	 *
+	 * @response Array all flag types
+	 */
+	public function getFlagTypes() {
+		try {
+			$this->getRequestParams();
+
+			$flagTypes = $this->getFlagTypesForWikiaRawData( $this->params['wiki_id'] );
+
+			$this->makeSuccessResponse( $flagTypes );
+		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
+			$this->response->setException( $e );
+		}
+	}
+
+	/**
+	 * Get flag type id by template (view) name
+	 *
+	 * Required parameter:
+	 * @requestParam string flag_view
+	 *
+	 * Optional parameters:
+	 * @requestParam int wiki_id You can overwrite the current city_id
+	 *
+	 * @return int|null
+	 */
+	public function getFlagTypeIdByTemplate() {
+		try {
+			$this->getRequestParams();
+
+			if ( !isset( $this->params['flag_view'] ) ) {
+				return null;
+			}
+
+			$flagTypeModel = new FlagType();
+			$flagTypeId = $flagTypeModel->getFlagTypeIdByTemplate( $this->params['wiki_id'], $this->params['flag_view']);
+
+			$this->makeSuccessResponse( $flagTypeId );
+		} catch( Exception $e ) {
+			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
 		}
 	}
@@ -305,6 +377,9 @@ class FlagsApiController extends WikiaApiController {
 			$flagsForPage = $flagModel->getFlagsForPage( $wikiId, $pageId );
 
 			$flagsCache->setFlagsForPage( $pageId, $flagsForPage );
+			$this->logCache( 'getFlagsForPage', 'MISS' );
+		} else {
+			$this->logCache( 'getFlagsForPage', 'HIT' );
 		}
 
 		return $flagsForPage;
@@ -325,6 +400,9 @@ class FlagsApiController extends WikiaApiController {
 			$flagTypesForWikia = $flagTypeModel->getFlagTypesForWikia( $wikiId );
 
 			$flagsCache->setFlagTypesForWikia( $flagTypesForWikia );
+			$this->logCache( 'getFlagsForPageForEdit', 'MISS' );
+		} else {
+			$this->logCache( 'getFlagsForPageForEdit', 'HIT' );
 		}
 
 		return $flagTypesForWikia;
@@ -347,5 +425,39 @@ class FlagsApiController extends WikiaApiController {
 		$flagTypesForWikia = $this->getFlagTypesForWikiaRawData( $wikiId );
 
 		return $flagsForPage + $flagTypesForWikia;
+	}
+
+	/**
+	 * Logging methods
+	 */
+	private function logResponseException( Exception $e, WikiaRequest $request ) {
+		$this->error(
+			'FlagsLog Exception',
+			[
+				'exception' => $e,
+				'prms' => $request->getParams(),
+			]
+		);
+	}
+
+	private function logCache( $method, $hit ) {
+		$this->info( 'FlagsLog Cache', [
+			'ht' => $hit,
+			'mthd' => $method,
+		] );
+	}
+
+	/**
+	 * Queue task for logging flag change
+	 * @param array $flags list of flags changed, each item of that list is an array with flag fields as items
+	 * @param int $wikiId ID of wiki where flags were changed
+	 * @param int $pageId ID of article where flags were changed
+	 * @param string $actionType Type of action performed on flag represented by constants in \FlagsApiController class
+	 */
+	private function logFlagChange( $flags, $wikiId, $pageId, $actionType ) {
+		$task = new FlagsLogTask();
+		$task->wikiId( $wikiId );
+		$task->call( 'logFlagChange', $flags, $pageId, $actionType );
+		$task->queue();
 	}
 }

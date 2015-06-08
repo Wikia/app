@@ -4,24 +4,14 @@
  * A model that reflects an instance of a Flag
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 namespace Flags\Models;
 
-use Flags\FlagsLogTask;
-
 class Flag extends FlagsBaseModel {
-	/**
-	 * Messages generated using following constants
-	 * logentry-flags-flag-added
-	 * logentry-flags-flag-removed
-	 */
-	const
-		LOG_FLAG_ADDED_ACTION = 'flag-added',
-		LOG_FLAG_REMOVED_ACTION = 'flag-removed';
-
 	/**
 	 * GET methods
 	 */
@@ -142,12 +132,6 @@ class Flag extends FlagsBaseModel {
 			}
 
 			$db->commit();
-
-			/* Queue task for logging flag change */
-			$task = new FlagsLogTask();
-			$task->wikiId( $params['wiki_id'] );
-			$task->call( 'logFlagChange', $params['flags'], $params['wiki_id'], $params['page_id'], self::LOG_FLAG_ADDED_ACTION );
-			$task->queue();
 
 			return $addedFlags;
 		} catch ( \Exception $exception ) {

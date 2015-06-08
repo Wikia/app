@@ -8,6 +8,7 @@ require(
 	var buttonsForFlagsExistingState = [{
 		vars: {
 			value: mw.message('flags-edit-modal-done-button-text').escaped(),
+			classes: ['normal', 'primary'],
 			data: [
 				{
 					key: 'event',
@@ -61,7 +62,8 @@ require(
 	 * First function in showing modal process.
 	 * Performs all necessary job to display modal with flags ready to edit
 	 */
-	function showModal() {
+	function showModal(event) {
+		event.preventDefault();
 		$.when(
 				nirvana.sendRequest({
 					controller: 'Flags',
@@ -75,7 +77,7 @@ require(
 					type: loader.MULTI,
 					resources: {
 						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache',
-						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
+						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
 					}
 				})
 			).done(function (flagsData, res) {
