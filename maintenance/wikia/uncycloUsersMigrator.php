@@ -790,6 +790,10 @@ class UncycloUserMigrator extends Maintenance {
 			$i++;
 			$user = User::newFromRow((object)$row);
 
+			// block the user for five minutes
+			$block = new MemcacheUserBlock( $user );
+			$block->setBlock( 'Uncyclopedia account migration', 300 );
+
 			try {
 				$dbw->begin( __METHOD__ );
 				$this->migrateUser( $user );
@@ -817,6 +821,9 @@ class UncycloUserMigrator extends Maintenance {
 					wfWaitForSlaves();
 				}
 			}
+
+			// we're done migrating the account, remove the block
+			$block->removeBlock();
 		}
 
 		// print the stats
