@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-use Flags\Models\FlagType;
+use Flags\FlagsHelper;
 
 class SpecialFlagsController extends WikiaSpecialPageController {
 
@@ -25,8 +25,9 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 
 		$responseData = $this->requestGetFlagTypesForWikia( $this->wg->CityId )->getData();
 		if ( $responseData['status'] ) {
-			$this->flagGroups = FlagType::$flagGroupsFullNames;
-			$this->flagTargeting = FlagType::$flagTargeting;
+			$helper = new FlagsHelper();
+			$this->flagGroups = $helper->getFlagGroupsFullNames();
+			$this->flagTargeting = $helper->getFlagTargetFullNames();
 			$this->flagTypes = $responseData['data'];
 		}
 
