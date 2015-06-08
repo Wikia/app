@@ -3520,7 +3520,7 @@ class User {
 						'method'      => 'setSessionData',
 						'salt'        => $salt,
 						'session_val' => $token,
-						'ret_val'     => md5( $token . ( is_array( $salt ) ? implode('|', $salt) : $salt ) ) . EDIT_TOKEN_SUFFIX,
+						'ret_token'   => md5( $token . ( is_array( $salt ) ? implode('|', $salt) : $salt ) ) . EDIT_TOKEN_SUFFIX,
 						'user_id'     => $this->getId(),
 						'user_name'   => $this->getName(),
 						'exception'   => new Exception(),
