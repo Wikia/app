@@ -73,7 +73,6 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
-	const EDIT_TOKEN_LOGGING_RATE = 10;
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -3515,18 +3514,18 @@ class User {
 				$request->setSessionData( 'wsEditToken', $token );
 				
 				// MAIN-4660 logging begin
-				if ( rand( 1, 100 ) <= self::EDIT_TOKEN_LOGGING_RATE ) {
-					Wikia\Logger\WikiaLogger::instance()->debug(
-						'MAIN-4660::'. __METHOD__,
-						[
-							'wsEditToken' => $token,
-							'user_id'     => $this->getId(),
-							'user_name'   => $this->getName()
-						]
-					);
-					global $wgSessionDebugData;
-					$wgSessionDebugData['wsEditToken'][] = $token;
-				}
+				Wikia\Logger\WikiaLogger::instance()->debug(
+					'MAIN-4660',
+					[
+						'method'      => 'setSessionData',
+						'wsEditToken' => $token,
+						'user_id'     => $this->getId(),
+						'user_name'   => $this->getName(),
+						'exception'   => new Exception(),
+					]
+				);
+				global $wgSessionDebugData;
+				$wgSessionDebugData['wsEditToken'][] = $token;
 				// MAIN-4660 logging end
 			}
 			if( is_array( $salt ) ) {
@@ -3562,17 +3561,17 @@ class User {
 		$sessionToken = $this->getEditToken( $salt, $request );
 		if ( $val != $sessionToken ) {
 			// MAIN-4660 logging begin
-			if ( rand( 1, 100 ) <= self::EDIT_TOKEN_LOGGING_RATE ) {
-				Wikia\Logger\WikiaLogger::instance()->debug(
-					'MAIN-4660::' . __METHOD__,
-					[
-						'client_val'  => $val,
-						'session_val' => $sessionToken,
-						'user_id'     => $this->getId(),
-						'user_name'   => $this->getName()
-					]
-				);
-			}
+			Wikia\Logger\WikiaLogger::instance()->debug(
+				'MAIN-4660',
+				[
+					'method'      => 'mismatch',
+					'client_val'  => $val,
+					'session_val' => $sessionToken,
+					'user_id'     => $this->getId(),
+					'user_name'   => $this->getName(),
+					'exception'   => new Exception(),
+				]
+			);
 			// MAIN-4660 logging end
 			wfDebug( "User::matchEditToken: broken session data\n" );
 		}
