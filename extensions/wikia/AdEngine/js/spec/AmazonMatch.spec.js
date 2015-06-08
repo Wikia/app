@@ -17,6 +17,23 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		);
 	}
 
+	function initAndTestAmazon(amazonMatch, input) {
+		var callback;
+
+		// Call Amazon integration
+		// Expect the winMock.amznads.updateAds to be populated with the callback
+		// Expect a script tag to be appended to body
+		spyOn(mocks.document.body, 'appendChild');
+		amazonMatch.call();
+		expect(typeof mocks.window.amznads.updateAds).toBe('function');
+		expect(typeof mocks.window.amznads.renderAd).toBe('function');
+		expect(mocks.document.body.appendChild).toHaveBeenCalled();
+		callback = mocks.window.amznads.updateAds;
+
+		// Call back what Amazon would call
+		callback({ads: input, status: 'ok'});
+	}
+
 	mocks = {
 		adTracker: {
 			measureTime: function () {
@@ -33,6 +50,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		},
 		document: {
 			createElement: function () { return {}; },
+			write: noop,
 			body: {
 				appendChild: noop
 			}
@@ -93,20 +111,10 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	Object.keys(testCases).forEach(function (k) {
 		it('filters out correct amazon slots #' + k, function () {
 			var amazonMatch = getModule(),
-				testCase = testCases[k],
-				callback;
+				testCase = testCases[k];
 
-			// Call Amazon integration
-			// Expect the winMock.amznads.updateAds to be populated with the callback
-			// Expect a script tag to be appended to body
-			spyOn(mocks.document.body, 'appendChild');
-			amazonMatch.call();
-			expect(typeof mocks.window.amznads.updateAds).toBe('function');
-			expect(mocks.document.body.appendChild).toHaveBeenCalled();
-			callback = mocks.window.amznads.updateAds;
+			initAndTestAmazon(amazonMatch, testCases[k].input);
 
-			// Call back what Amazon would call
-			callback({ads: testCase.input, status: 'ok'});
 			expect(amazonMatch.getSlotParams('TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
 			expect(amazonMatch.getSlotParams('HOME_TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
 			expect(amazonMatch.getSlotParams('HUB_TOP_LEADERBOARD').amznslots).toEqual(testCase.expected.leaderboard);
@@ -122,5 +130,14 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			).toEqual(testCase.expected.mobileleaderboard);
 			expect(amazonMatch.getSlotParams('MOBILE_IN_CONTENT').amznslots).toEqual(testCase.expected.mobileincontent);
 		});
+	});
+
+	it('returns empty amznslots when already rendered', function () {
+		var amazonMatch = getModule();
+
+		initAndTestAmazon(amazonMatch, {'a3x5p14': 1});
+		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(['a3x5p14']);
+		mocks.window.amznads.renderAd(mocks.document);
+		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual([]);
 	});
 });
