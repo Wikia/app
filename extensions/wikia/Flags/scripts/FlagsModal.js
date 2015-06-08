@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'],
-	function ($, loader, nirvana, mustache, mw)
+	['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
+	function ($, loader, nirvana, mustache, mw, tracker)
 {
 	'use strict';
 
@@ -50,7 +50,13 @@ require(
 			content: '', // content
 			title: mw.message('flags-edit-modal-title').escaped()
 		}
-	};
+	},
+
+	track = Wikia.Tracker.buildTrackingFunction({
+		category: 'insights-loop-notification',
+		trackingMethod: 'analytics',
+		action: tracker.ACTIONS.IMPRESSION
+	});
 
 	function init() {
 		$('#ca-flags').on('click', showModal);
@@ -152,6 +158,9 @@ require(
 
 		/* Show the modal */
 		modalInstance.show();
+		track({
+			label: 'flags-edit-modal-shown'
+		});
 	}
 
 	// Run initialization method on DOM ready
