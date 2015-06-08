@@ -147,20 +147,6 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		) );
 	}
 
-	public function testGetLayoutNotSet() {
-		$text = '<data><default>test</default></data>';
-
-		$marker = $this->controller->renderInfobox( $text, [], $this->parser,
-			$this->parser->getPreprocessor()->newFrame() )[ 0 ];
-		$output = $this->controller->replaceMarkers( $marker );
-
-		$this->assertTrue( $this->checkClassName(
-			$output,
-			PortableInfoboxParserTagController::INFOBOX_LAYOUT_PREFIX . PortableInfoboxParserTagController::DEFAULT_LAYOUT_NAME,
-			"don't set not existing layout"
-		) );
-	}
-
 	public function testGetLayoutDataProvider() {
 		return [
 			[
@@ -182,6 +168,11 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 				'layout' => 5,
 				'expectedOutput' => 'portable-infobox-layout-default',
 				'message' => 'layout is an integer'
+			],
+			[
+				'layout' => [],
+				'expectedOutput' => 'portable-infobox-layout-default',
+				'message' => 'layout is not set'
 			]
 		];
 	}
