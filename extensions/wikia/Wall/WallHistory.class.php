@@ -77,23 +77,25 @@ class WallHistory extends WikiaModel {
 		$this->getDB( DB_MASTER )->commit();
 	}
 
-	private function addNewOrEdit( $action, $feed, $user ) {
-		if ( !( $feed instanceof WallNotificationEntity ) ) {
+	private function addNewOrEdit( $action, $feed, User $user ) {
+		if ( !$feed instanceof WallNotificationEntity ) {
 			return false;
 		}
 
+		$data = $feed->data;
+
 		$this->internalAdd(
-			(int) $feed->data->parent_page_id,
+			(int) $data->parent_page_id,
 			(int) $user->getID(),
 			$user->getName(),
 			$feed->isReply(),
-			$feed->data->title_id,
-			$feed->data->article_title_ns,
-			$feed->data->parent_id,
-			$feed->data_noncached->thread_title_full,
+			$data->title_id,
+			$data->article_title_ns,
+			$data->parent_id,
+			$feed->threadTitleFull,
 			$action,
-			$feed->data->reason,
-			$feed->data->rev_id
+			$data->reason,
+			$data->rev_id
 		);
 		return true;
 	}
@@ -103,23 +105,24 @@ class WallHistory extends WikiaModel {
 			return false;
 		}
 
-		$title = Title::newFromId( $feed->data->message_id );
+		$data = $feed->data;
+		$title = Title::newFromId( $data->message_id );
 
 		if ( empty( $title ) ) {
 			return false;
 		}
 
 		$this->internalAdd(
-			$feed->data->parent_page_id,
-			$feed->data->user_removing_id,
+			$data->parent_page_id,
+			$data->user_removing_id,
 			'',
-			$feed->data->is_reply,
-			$feed->data->message_id,
+			$data->is_reply,
+			$data->message_id,
 			$title->getNamespace(),
-			$feed->data->parent_id,
-			$feed->data->title,
+			$data->parent_id,
+			$data->title,
 			$action,
-			$feed->data->reason,
+			$data->reason,
 			null
 		);
 
@@ -128,7 +131,7 @@ class WallHistory extends WikiaModel {
 			'wall_history',
 			array( 'deleted_or_removed' => ( $action == WH_DELETE || $action == WH_REMOVE ) ? 1: 0 ),
 			array(
-				'comment_id' => $feed->data->message_id
+				'comment_id' => $data->message_id
 			),
 			__METHOD__
 		);

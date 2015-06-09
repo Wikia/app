@@ -172,6 +172,33 @@ abstract class WatchedPageController extends EmailController {
 			$this->getAllChangesText( $this->title ),
 		];
 	}
+
+	protected static function getEmailSpecificFormFields() {
+		$form = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'pageTitle',
+					'label' => "Article Title",
+					'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
+				],
+				[
+					'type' => 'text',
+					'name' => 'currentRevId',
+					'label' => "Current Revision ID",
+					'tooltip' => "The current revision you want to compare to"
+				],
+				[
+					'type' => 'text',
+					'name' => 'previousRevId',
+					'label' => "Previous Revision ID",
+					'tooltip' => 'The previous revision you want to compare to'
+				],
+			]
+		];
+
+		return $form;
+	}
 }
 
 class WatchedPageEditedController extends WatchedPageController {
@@ -308,32 +335,5 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 */
 	protected function getAllChangesText( $title ) {
 		return parent::getAllChangesText( $this->newTitle );
-	}
-
-	protected static function getEmailSpecificFormFields() {
-			$form = [
-				'inputs' => [
-					[
-						'type' => 'text',
-						'name' => 'pageTitle',
-						'label' => "Article Title",
-						'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
-					],
-					[
-						'type' => 'text',
-						'name' => 'currentRevId',
-						'label' => "Current Revision ID",
-						'tooltip' => "The current revision you want to compare to"
-					],
-					[
-						'type' => 'text',
-						'name' => 'previousRevId',
-						'label' => "Previous Revision ID",
-						'tooltip' => 'The previous revision you want to compare to'
-					],
-				]
-			];
-
-		return $form;
 	}
 }
