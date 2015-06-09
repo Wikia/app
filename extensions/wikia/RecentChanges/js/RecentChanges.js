@@ -44,5 +44,5 @@ jQuery(function($) {
 	};
 
 	RecentChanges.init();
-	Wikia.RecentChanges = RecentChanges; //needed for AjaxRC
+	window.Wikia.RecentChanges = RecentChanges; //needed for AjaxRC
 });
