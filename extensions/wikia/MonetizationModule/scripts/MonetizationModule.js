@@ -15,8 +15,14 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 
 	var MonetizationModule = {
 		init: function () {
+			var $container = $('.monetization-module');
+
+			this.trackImpression($container);
+			this.trackClickEvent($container);
+		},
+		trackImpression: function ($container) {
 			// track impression for each placement
-			$('.monetization-module').each(function () {
+			$container.each(function () {
 				var $this = $(this),
 					value = $this.children().children().length,	// check if the ad is blocked
 					monType = $this.attr('data-mon-type'),
@@ -32,7 +38,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				});
 
 				// track impression for each product
-				if (monType === 'ecommerce') {
+				if (monType === 'ecommerce' || monType === 'amazon_video') {
 					$this.find('.affiliate').each(function (idx, element) {
 						var $element = $(element);
 						track({
@@ -46,25 +52,9 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 					});
 				}
 			});
-
-			this.initEllipses();
-			this.initClickTracking();
 		},
-		initEllipses: function () {
-			$(window)
-				.on('resize.monetizationmodule', function () {
-					$('.monetization-module').find('.placard a').ellipses({
-						maxLines: 3
-					});
-				})
-				.trigger('resize.monetizationmodule');
-		},
-		initClickTracking: function () {
-			var containers = [
-				'.monetization-module.ecommerce',
-				'.monetization-module.amazon-video'
-			],
-				elements = [
+		trackClickEvent: function ($container) {
+			var elements = [
 				'.module-title',
 				'.product-thumb',
 				'.product-name',
@@ -73,7 +63,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				'.product-btn'
 			];
 
-			$(containers.join(', ')).on('click', elements.join(', '), function () {
+			$container.on('click', elements.join(', '), function () {
 				var $this = $(this),
 					$module = $this.closest('.monetization-module'),
 					$products = $module.find('.affiliate'),

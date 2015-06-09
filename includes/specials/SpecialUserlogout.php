@@ -44,6 +44,9 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 			throw new HttpError( 400, wfMessage( 'suspicious-userlogout' ), wfMessage( 'loginerror' ) );
 		}
 
+		// Clean up any facebook cookies/data
+		FacebookClient::getInstance()->logout();
+
 		$this->setHeaders();
 		$this->outputHeader();
 
@@ -60,6 +63,11 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		 * Once the old-style global wgUser object is fully deprecated, this line can be removed.
 		*/
 		$wgUser->logout();	 /* wikia change */
+
+		// Wikia change
+		// regenerate session ID on user logout to avoid race conditions with
+		// long running requests logging the user back in (@see PLATFORM-1028)
+		wfResetSessionID();
 
 		$out = $this->getOutput();
 		$out->addWikiMsg( 'logouttext' );

@@ -10,6 +10,7 @@
  *
  * @class
  * @extends ve.dm.LeafNode
+ * @mixins ve.dm.FocusableNode
  *
  * @constructor
  * @param {Object} [element] Reference to element in linear model
@@ -18,16 +19,21 @@ ve.dm.MWReferenceNode = function VeDmMWReferenceNode() {
 	// Parent constructor
 	ve.dm.LeafNode.apply( this, arguments );
 
+	// Mixin constructors
+	ve.dm.FocusableNode.call( this );
+
 	// Event handlers
 	this.connect( this, {
-		'root': 'onRoot',
-		'unroot': 'onUnroot'
+		root: 'onRoot',
+		unroot: 'onUnroot'
 	} );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.dm.MWReferenceNode, ve.dm.LeafNode );
+
+OO.mixinClass( ve.dm.MWReferenceNode, ve.dm.FocusableNode );
 
 /* Static members */
 
@@ -63,16 +69,16 @@ ve.dm.MWReferenceNode.static.toDataElement = function ( domElements, converter )
 		contentsUsed = ( body !== '' && queueResult.isNew );
 
 	dataElement = {
-		'type': this.name,
-		'attributes': {
-			'mw': mwData,
-			'originalMw': mwDataJSON,
-			'childDomElements': ve.copy( Array.prototype.slice.apply( domElements[0].childNodes ) ),
-			'listIndex': listIndex,
-			'listGroup': listGroup,
-			'listKey': listKey,
-			'refGroup': refGroup,
-			'contentsUsed': contentsUsed
+		type: this.name,
+		attributes: {
+			mw: mwData,
+			originalMw: mwDataJSON,
+			childDomElements: ve.copy( Array.prototype.slice.apply( domElements[0].childNodes ) ),
+			listIndex: listIndex,
+			listGroup: listGroup,
+			listKey: listKey,
+			refGroup: refGroup,
+			contentsUsed: contentsUsed
 		}
 	};
 	return dataElement;
@@ -154,7 +160,7 @@ ve.dm.MWReferenceNode.static.toDomElements = function ( dataElement, doc, conver
 				dataElement.attributes.listKey,
 				// Generate a name starting with ':' to distinguish it from normal names
 				'literal/:'
-			).substr( 'literal/'.length );
+			).slice( 'literal/'.length );
 		} else {
 			name = undefined;
 		}

@@ -88,7 +88,6 @@ class DefaultContent extends AbstractService
 
 		$returnValue = array_merge(
 				$this->getPageContentFromParseResponse( $response ),
-				$this->getArticleSnippet( $response ),
 				$this->getCategoriesFromParseResponse( $response ),
 				$this->getHeadingsFromParseResponse( $response ),
 				$this->getOutboundLinks(),
@@ -141,15 +140,6 @@ class DefaultContent extends AbstractService
 	 */
 	protected function field( $field ) {
 		return $this->getService()->getGlobal( 'AppStripsHtml' ) ? (new Utilities)->field( $field ) : $field;
-	}
-
-	protected function getArticleSnippet( array $response ) {
-		$html = empty( $response['parse']['text']['*'] ) ? '' : $response['parse']['text']['*'];
-		$jsonFormatService = new JsonFormatService();
-		$text = $jsonFormatService->getArticleSnippet( $html );
-		return [
-			'snippet_s' => $text
-		];
 	}
 
 	/**

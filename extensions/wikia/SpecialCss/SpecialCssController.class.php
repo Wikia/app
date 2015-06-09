@@ -41,29 +41,31 @@ class SpecialCssController extends WikiaSpecialPageController {
 				);
 
 				if (!$status) {
-					NotificationsController::addConfirmation(
-						wfMessage('special-css-merge-error')->plain(),
-						NotificationsController::CONFIRMATION_ERROR
+					BannerNotificationsController::addConfirmation(
+						wfMessage('special-css-merge-error')->escaped(),
+						BannerNotificationsController::CONFIRMATION_ERROR
 					);
 					$this->diff = $this->app->sendRequest(__CLASS__, 'getDiff', ['wikitext' => $content])->getVal('diff');
 				} else if ($status->isOk()) {
-					NotificationsController::addConfirmation( wfMessage('special-css-save-message')->plain() );
+					BannerNotificationsController::addConfirmation(
+						wfMessage('special-css-save-message')->escaped()
+					);
 					$this->wg->Out->redirect($this->specialPage->getTitle()->getLocalURL());
 					wfProfileOut(__METHOD__);
 					return false; // skip rendering
 				} else {
-					NotificationsController::addConfirmation(
+					BannerNotificationsController::addConfirmation(
 						$status->getMessage(),
-						NotificationsController::CONFIRMATION_ERROR
+						BannerNotificationsController::CONFIRMATION_ERROR
 					);
 					$this->cssContent = $content;
 				}
 		}
 
 		if ($this->request->getVal('oldid', null) !== null) {
-			NotificationsController::addConfirmation(
-				wfMessage('special-css-oldid-message')->plain(),
-				NotificationsController::CONFIRMATION_WARN
+			BannerNotificationsController::addConfirmation(
+				wfMessage('special-css-oldid-message')->escaped(),
+				BannerNotificationsController::CONFIRMATION_WARN
 			);
 		}
 

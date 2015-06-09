@@ -9,11 +9,11 @@
  * @class
  * @extends ve.dm.WikiaBlockMediaNode
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
 ve.dm.WikiaBlockVideoNode = function VeDmWikiaBlockVideoNode() {
-	ve.dm.WikiaBlockMediaNode.apply( this, arguments );
+	ve.dm.WikiaBlockVideoNode.super.apply( this, arguments );
 };
 
 /* Inheritance */

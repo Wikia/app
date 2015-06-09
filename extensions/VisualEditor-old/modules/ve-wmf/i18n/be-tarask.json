@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"EugeneZelenko",
+			"Wizardist",
+			"Чаховіч Уладзіслаў"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Праўка зробленая празь [[{{MediaWiki:visualeditor-descriptionpagelink}}|візуальны рэдактар]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Праверыць]]",
+	"tag-visualeditor-needcheck-description": "Праўка была зроблена [[{{MediaWiki:visualeditor-descriptionpagelink}}|візуальным рэдактарам]], і сыстэма заўважыла патэнцыйна непажаданыя зьмены ў вікітэксьце.",
+	"visualeditor-feedback-link": "Project:Візуальны рэдактар/Водгукі",
+	"visualeditor-feedback-tool": "Пакінуць водгук",
+	"visualeditor-help-label": "Прачытайце дапаможнік",
+	"visualeditor-help-title": "Дапаможнік па карыстаньні рэдактарам"
+}

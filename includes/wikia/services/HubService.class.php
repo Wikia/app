@@ -61,6 +61,33 @@ class HubService extends Service {
 	}
 
 	/**
+	 * Get canonical vertical name for given cityId.
+	 * For Lifestyle and Gaming return their names.
+	 * For corporate pages return false - we don't want to track traffic from there in Comscore
+	 * For rest of values return Entertainment.
+	 * @param $cityId
+	 * @return Boolean|String
+	 */
+	public static function getVerticalNameForComscore( $cityId ) {
+		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $cityId );
+
+		switch ($verticalId) {
+			case WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES:
+				return 'gaming';
+			case WikiFactoryHub::VERTICAL_ID_LIFESTYLE:
+				return 'lifestyle';
+			case WikiFactoryHub::VERTICAL_ID_OTHER:
+				if ( WikiaPageType::isCorporatePage() ) {
+					return false;
+				} else {
+					return 'lifestyle';
+				}
+			default:
+				return 'entertainment';
+		}
+	}
+
+	/**
 	 * Get category info for given cityId
 	 *
 	 * @param int $city_id city id

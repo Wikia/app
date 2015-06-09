@@ -5,31 +5,29 @@
  */
 class CaptchaController extends WikiaController {
 
-	/** @var Captcha\Module\BaseCaptcha */
-	private $captcha;
-
-	public function __construct() {
-		$this->captcha = Captcha\Factory\Module::getInstance();
-		parent::__construct();
-	}
-
 	/**
-	 * Displays a captcha image
+	 * Displays a captcha image. This is used exclusively by FancyCaptcha.
 	 */
 	public function showImage() {
-		if ( method_exists( $this->captcha, 'showImage' ) ) {
-			if ( !$this->captcha->showImage() ) {
-				$this->response->setData( [
-					'error' => wfMessage( 'captcha-no-image' )->escaped(),
-				] );
-			}
+		$fancyCaptcha = new \Captcha\Module\FancyCaptcha();
+		if ( $fancyCaptcha->showImage() ) {
+			/*
+			* Stop immediately when captcha is sent to browser.
+			* We don't want to send additional headers and other nirvana stuff
+			*/
+			exit();
 		}
+		$this->skipRendering();
 	}
 
 	/**
-	 * Display information about how this captcha works
+	 * Get the FancyCaptcha form. This is used as a fallback when reCaptcha
+	 * fails to load.
 	 */
-	public function showHelp() {
-		$this->captcha->showHelp();
+	public function getFancyCaptcha() {
+		$fancyCaptcha = new \Captcha\Module\FancyCaptcha();
+		$this->response->setData(
+			[ 'form' => $fancyCaptcha->getForm() ]
+		);
 	}
 }

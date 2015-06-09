@@ -15,7 +15,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		adTracker.track('test/event');
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/test/event',
-			ga_action: '',
+			ga_action: 'nodata',
 			ga_label: '',
 			ga_value: 0,
 			trackingMethod: 'ad'
@@ -26,10 +26,10 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		var adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowMock);
 
 		spyOn(trackerMock, 'track');
-		adTracker.track('test/event', {data1: 'one', data2: 'two'});
+		adTracker.track('test/event', {data1: 'one', data2: ['two', 'three']});
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/test/event',
-			ga_action: 'data1=one;data2=two',
+			ga_action: 'data1=one;data2=two,three',
 			ga_label: '',
 			ga_value: 0,
 			trackingMethod: 'ad'
@@ -65,7 +65,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			adTracker.track('test/event', {}, value);
 			expect(trackerMock.track).toHaveBeenCalledWith({
 				ga_category: 'ad/test/event',
-				ga_action: '',
+				ga_action: 'nodata',
 				ga_label: timeBucket,
 				ga_value: value,
 				trackingMethod: 'ad'
@@ -96,7 +96,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			adTracker.track('test/event', {}, value);
 			expect(trackerMock.track).toHaveBeenCalledWith({
 				ga_category: 'ad/error/test/event',
-				ga_action: '',
+				ga_action: 'nodata',
 				ga_label: timeBucket,
 				ga_value: value,
 				trackingMethod: 'ad'
@@ -135,7 +135,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			adTracker.track('test/event', {}, value);
 			expect(trackerMock.track).toHaveBeenCalledWith({
 				ga_category: 'ad/test/event',
-				ga_action: '',
+				ga_action: 'nodata',
 				ga_label: timeBucket,
 				ga_value: expectedValue,
 				trackingMethod: 'ad'
@@ -151,7 +151,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		adTracker.track('test/event', {}, 'goat');
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/error/test/event',
-			ga_action: '',
+			ga_action: 'nodata',
 			ga_label: 'invalid',
 			ga_value: 0,
 			trackingMethod: 'ad'

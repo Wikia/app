@@ -636,7 +636,10 @@ function axWFactoryDomainQuery() {
 				"city_domain not like '%.wikicities.com'",
 				"city_domain {$cityDomainLike}"
 			],
-			__METHOD__
+			__METHOD__,
+			[
+				'LIMIT' => 15
+			]
 		);
 
 		while( $domain = $dbr->fetchObject( $sth ) ) {
@@ -654,7 +657,9 @@ function axWFactoryDomainQuery() {
 		$return[ "data" ] = array_merge( $exact[ "data" ], $match[ "suggestions" ] );
 	}
 
-	return json_encode( $return );
+	$resp = new AjaxResponse( json_encode( $return ) );
+	$resp->setContentType( 'application/json; charset=utf-8' );
+	return $resp;
 }
 
 /**

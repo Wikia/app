@@ -1,0 +1,56 @@
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
+
+@import "color";
+@import "mixins/ve-icon";
+
+.oo-ui-popupToolGroup {
+	.oo-ui-toolGroup-tools {
+		background: $color-page;
+		border-color: $color-page-border;
+		padding: 0.5em;
+
+		.oo-ui-tool {
+			border: 0;
+
+			&:hover:not(.oo-ui-widget-disabled) {
+				background: $color-ve-hover;
+			}
+			.oo-ui-tool-link {
+				.oo-ui-tool-title {
+					color: $color-text;
+				}
+			}
+			&.oo-ui-widget-disabled {
+				.oo-ui-tool-title {
+					opacity: .2;
+				}
+			}
+		}
+	}
+}
+
+.oo-ui-menuToolGroup {
+	.oo-ui-tool-link {
+		padding: 0 1em 0 0;
+	}
+	.oo-ui-tool-active {
+		.oo-ui-tool-link {
+			.oo-ui-iconedElement-icon {
+				@include ve-icon(check, oo);
+			}
+		}
+	}
+}
+
+.oo-ui-barToolGroup.oo-ui-widget-enabled .oo-ui-tool-active.oo-ui-widget-enabled,
+.oo-ui-listToolGroup .oo-ui-tool-active.oo-ui-widget-enabled,
+.oo-ui-popupToolGroup-active.oo-ui-widget-enabled {
+	@include linear-gradient(
+		$color-ve-gradient, top,
+		$color-ve-gradient-dark, 0%,
+		$color-ve-gradient-light, 50%,
+		$color-ve-gradient-light, 80%,
+		mix( $color-ve-gradient-light, $color-ve-gradient-dark, 50% ), 100%
+	);
+}

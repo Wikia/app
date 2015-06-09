@@ -52,7 +52,7 @@ require([
 	function trackEditAction($dropdown) {
 		var track = tracker.buildTrackingFunction({
 			action: tracker.ACTIONS.CLICK,
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		});
 
 		$dropdown.on('mousedown touchstart', 'a', function (event) {

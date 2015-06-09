@@ -1,0 +1,31 @@
+@import "skins/shared/color";
+
+$basePath: "/extensions/VisualEditor-old";
+
+/*
+ * $name - name of the icon (bold, media, etc)
+ * $vendor - who is providing the icon? (ve, mw, wikia)
+ * $baseColor - the color that the icon sits on
+ */
+@mixin ve-icon($name, $vendor, $baseColor: $color-page) {
+	$vendorPath: "";
+	$white: "";
+
+	@if lightness($baseColor) < 50 {
+		$white: "-white";
+	}
+
+	@if $vendor == mw {
+		$vendorPath: "/modules/ve-mw/ui/styles/images/icons/";
+	} @elseif $vendor == oo {
+		$vendorPath: "/lib/ve/lib/oojs-ui/images/icons/";
+	} @elseif $vendor == oo-indicators {
+		$vendorPath: "/lib/ve/lib/oojs-ui/images/indicators/";
+	} @elseif $vendor == ve {
+		$vendorPath: "/lib/ve/modules/ve/ui/styles/images/icons/";
+	} @elseif $vendor == wikia {
+		$vendorPath: "/wikia/modules/ve/ui/styles/images/icons/";
+	}
+
+	background-image: url($basePath + $vendorPath + $name + $white + ".svg"); /* $wgCdnStylePath */
+}

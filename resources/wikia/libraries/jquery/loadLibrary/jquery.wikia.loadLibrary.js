@@ -4,7 +4,7 @@
 	/**
 	 * Loads library file if it's not already loaded and fires callback
 	 * For "internal" use only. Please use $.loadFooBar() functions in extension code.
-	 * @deprecated Use $.loadExternalLibrary instead for better error handling
+	 * @deprecated Use loadExternalLibrary instead for better error handling
 	 */
 	$.loadLibrary = function (name, files, typeCheck, callback, failureFn) {
 		var dfd = new jQuery.Deferred();

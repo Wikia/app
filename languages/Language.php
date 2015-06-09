@@ -788,7 +788,7 @@ class Language {
 	 * @param $code string
 	 * @return string
 	 */
-	function getLanguageName( $code ) {
+	static function getLanguageName( $code ) {
 		$names = self::getLanguageNames();
 		if ( !array_key_exists( $code, $names ) ) {
 			return '';

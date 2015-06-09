@@ -19,6 +19,7 @@ use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\NlpPipelineQueue;
+use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
@@ -95,6 +96,9 @@ class AsyncTaskList {
 				break;
 			case SMWQueue::NAME:
 				$queue = new SMWQueue();
+				break;
+			case PurgeQueue::NAME:
+				$queue = new PurgeQueue();
 				break;
 			default:
 				$queue = new Queue();
@@ -238,10 +242,14 @@ class AsyncTaskList {
 
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = gethostname();
+			$executionMethod = 'http';
 
 			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host, $matches ) ) {
-				$executionMethod = 'http';
 				$executionRunner = ["http://tasks.{$matches[1]}.wikia-dev.com/proxy.php"];
+			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
+				$executionRunner = ["http://{$host}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
+			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
+				$executionRunner = ["http://{$wgWikiaEnvironment}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} else { // in other environments or when apache isn't available, ssh into this exact node to execute
 				$executionMethod = 'remote_shell';
 				$executionRunner = [

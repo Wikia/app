@@ -5,15 +5,15 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-.ve-ui-mwTransclusionDialog-addTemplateFieldset .oo-ui-widget {
+.ve-ui-mwTransclusionDialog-addTemplateFieldset > .oo-ui-widget {
 	display: inline-block;
 }
 
-.ve-ui-mwTransclusionDialog-addTemplateFieldset .oo-ui-buttonedElement-framed {
+.ve-ui-mwTransclusionDialog-addTemplateFieldset > .oo-ui-buttonElement-framed {
 	margin-left: 0.5em;
 }
 
-.ve-ui-mwTransclusionDialog-addTemplateFieldset .ve-ui-mwTitleInputWidget {
+.ve-ui-mwTransclusionDialog-addTemplateFieldset > .ve-ui-mwTitleInputWidget {
 	width: 20em;
 }
 
@@ -35,8 +35,8 @@
 	top: 1.5em;
 }
 
-.ve-ui-mwTransclusionDialog.ve-ui-mwTemplateDialog-ready .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-labeledElement-label,
-.ve-ui-mwTransclusionDialog.ve-ui-mwTemplateDialog-ready .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-iconedElement-icon,
+.ve-ui-mwTransclusionDialog.ve-ui-mwTemplateDialog-ready .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-labelElement-label,
+.ve-ui-mwTransclusionDialog.ve-ui-mwTemplateDialog-ready .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-iconElement-icon,
 .ve-ui-mwTransclusionDialog.ve-ui-mwTemplateDialog-ready .oo-ui-bookletLayout .ve-ui-mwTransclusionDialog-removeButton,
 .ve-ui-mwTransclusionDialog.ve-ui-mwTemplateDialog-ready .oo-ui-bookletLayout .ve-ui-mwTemplatePage-more,
 .ve-ui-mwTransclusionDialog.ve-ui-mwTemplateDialog-ready .oo-ui-bookletLayout .ve-ui-mwParameterPage-more,
@@ -47,12 +47,12 @@
 	transition: all 250ms ease-in-out;
 }
 
-.ve-ui-mwTransclusionDialog .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-labeledElement-label {
+.ve-ui-mwTransclusionDialog .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-labelElement-label {
 	height: 1.5em;
 	overflow: hidden;
 }
 
-.ve-ui-mwTransclusionDialog-single .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-labeledElement-label {
+.ve-ui-mwTransclusionDialog-single .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-labelElement-label {
 	opacity: 0;
 	height: 0;
 	padding-top: 0;
@@ -60,7 +60,7 @@
 	margin-bottom: 0;
 }
 
-.ve-ui-mwTransclusionDialog-single .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-iconedElement-icon,
+.ve-ui-mwTransclusionDialog-single .oo-ui-bookletLayout .oo-ui-fieldsetLayout > .oo-ui-iconElement-icon,
 .ve-ui-mwTransclusionDialog-single .oo-ui-bookletLayout .ve-ui-mwTransclusionDialog-removeButton,
 .ve-ui-mwTransclusionDialog-multiple .oo-ui-bookletLayout .ve-ui-mwTemplatePage-more,
 .ve-ui-mwTransclusionDialog-multiple .oo-ui-bookletLayout .ve-ui-mwParameterPage-more {

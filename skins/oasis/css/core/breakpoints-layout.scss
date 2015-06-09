@@ -1,0 +1,317 @@
+@import 'skins/shared/mixins/calc';
+@import 'breakpoints-variables';
+//todo remove styling by ID after cleanup after removal of responsive layout
+
+@if $widthType == 0 {
+	// consider using https://github.com/stowball/mqGenie for release
+	@media #{$breakpoint-small-only} {
+		.WikiaPage {
+			padding: 0 $padding-width-small;
+			width: $page-width-small - 2 * $content-border-width;
+		}
+	}
+
+	@media #{$breakpoint-medium-only} {
+		.WikiaPage {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium;
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		.WikiaPage {
+			padding: 0 $padding-width-large;
+			width: $page-width-large;
+		}
+	}
+
+	// hacks and changes
+	// here be dragons
+
+	// two following declarations fix scrollbar blinking while preview (and probably some other cases)
+	// see CONCF-345
+	html {
+		overflow-y: auto;
+	}
+
+	body {
+		overflow: hidden;
+		position: relative;
+
+		@media #{$breakpoint-not-supported} {
+			overflow: auto;
+		}
+	}
+
+	.WikiaMainContent {
+		width: 100%;
+
+		@media #{$breakpoint-medium-up} {
+			@include calc(width, '100% - 320px');
+		}
+	}
+
+	.WikiaArticle {
+		padding: 0;
+	}
+
+	.oasis-one-column .WikiaMainContent {
+		width: 100%;
+	}
+
+	.wikinav2.oasis-one-column .WikiaPageHeader .tally {
+		@media #{$breakpoint-small-only} {
+			right: 0;
+		}
+	}
+
+	@media #{$breakpoint-small-only} {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
+			width: 100%;
+		}
+
+		//Center ads on small breakpoint
+		.WikiaTopAds {
+			width: 100%;
+		}
+
+		.WikiHeader {
+			min-height: 145px;
+
+			> nav {
+				left: 0;
+				top: 90px;
+			}
+
+			.buttons {
+				top: 57px;
+			}
+		}
+
+		.WikiNav li.nav-item:first-child {
+			margin-left: 10px;
+		}
+
+		.wikinav2.oasis-one-column .WikiaPageHeader {
+			padding: 0;
+		}
+
+		.WikiHeader > nav.WikiNav .navbackground {
+			left: -24px;
+			width: 772px;
+		}
+	}
+
+	@media #{$breakpoint-medium-up} {
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded {
+			@include width-calc('100% - 320px');
+		}
+
+		.main-page-tag-rcs {
+			width: 300px;
+		}
+
+		.WikiHeader > nav.WikiNav {
+			@include width-calc('100% - 250px');
+
+			.navbackground {
+				width: 100%;
+			}
+
+			.subnav-2 {
+				width: auto;
+			}
+		}
+	}
+
+	@media #{$breakpoint-large-up} {
+		.WikiHeader > nav.WikiNav .navbackground {
+			@include width-calc('100% + 9px');
+		}
+	}
+
+	.WikiaRail,
+	.main-page-tag-rcs {
+		padding: 0;
+
+		@media #{$breakpoint-below-small-plus} {
+			// this is copied from responsive-core.scss
+			clear: both;
+			float: none;
+			margin: 0;
+			padding: 13px 10px 0;
+			width: auto;
+
+			&.loaded,
+			&.AdminDashboardRail {
+				-moz-column-count: 2;
+				-webkit-column-count: 2;
+				column-count: 2;
+			}
+
+			.module,
+			.admin-dashboard-module {
+				box-sizing: border-box;
+
+				-moz-column-break-inside: avoid;
+				-webkit-column-break-inside: avoid;
+				column-break-inside: avoid;
+
+				// fallback, because column-break-inside is currently NYI
+				display: inline-block;
+				position: static;
+				width: 100%;
+
+			}
+		}
+	}
+
+	@media #{$breakpoint-small-only} {
+		.EditPage .cke_toolbar_widescreen .cke_button.cke_button_big > a {
+			margin: 0 1px;
+		}
+
+		.EditPageToolbar .cke_toolbar_widescreen .cke_toolbar_insert {
+			padding: 0;
+		}
+	}
+
+	.EditPage.editpage-visualwidemode .EditPageMain {
+		width: 100%;
+	}
+
+	.EditPage.editpage-sourcewidemode-off .EditPageMain {
+		margin-right: -310px;
+		padding: 0;
+		width: 100%;
+
+		.EditPageMainContainer {
+			margin-right: 300px;
+		}
+	}
+
+	.EditPageRail {
+		width: 300px;
+	}
+
+	.EditPageHeader {
+		> h1 {
+			margin-left: 5px;
+			margin-top: 2px;
+		}
+
+		> h2 {
+			display: inline-block;
+			float: left;
+		}
+	}
+
+	.banner-notifications-wrapper {
+		width: auto;
+		&.float {
+			@media #{$breakpoint-small-only} {
+				margin-left: $page-width-small / -2;
+				width: $page-width-small;
+			}
+
+			@media #{$breakpoint-small-plus} {
+				margin-left: $page-width-small-plus / -2;
+				width: $page-width-small-plus;
+			}
+
+			@media #{$breakpoint-medium-only} {
+				margin-left: $page-width-medium / -2;
+				width: $page-width-medium;
+			}
+
+			@media #{$breakpoint-large-up} {
+				margin-left: $page-width-large / -2;
+				width: $page-width-large;
+			}
+		}
+	}
+
+	.WikiHeader {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.WikiaPageHeader {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	//
+	.ve-activated .WikiaMainContent {
+		position: static;
+	}
+
+	// 'special case' for 1024px tablets (think landscape iPad)
+	@media #{$breakpoint-small-plus} {
+		.WikiaPage {
+			padding: 0 $padding-width-small-plus;
+			width: $page-width-small-plus;
+		}
+
+		.wikia-main-page-tag-lcs,
+		.main-page-tag-lcs-exploded,
+		.WikiaMainContent {
+			// right rail width + space between RR and content
+			@include width-calc('100% - 320px');
+		}
+
+		.main-page-tag-rcs {
+			// right rail width
+			width: 300px;
+		}
+
+		.WikiHeader {
+			// values here are mostly copied from WikiHeader.scss
+			// so it will override small breakpoint's values
+			min-height: 69px;
+
+			.buttons {
+				top: 22px;
+			}
+
+			> nav.WikiNav {
+				@include width-calc('100% - 250px');
+
+				left: 275px;
+				top: 20px;
+
+				.subnav-2 {
+					left: 10px;
+					width: auto;
+				}
+
+				.navbackground {
+					left: 10px;
+					width: 734px; // it's 100% of content minus wordmark
+				 }
+			}
+		}
+
+		// needs to be nested in this way, so it it'll override styles in GlobalNav extension
+		.WikiaSiteWrapper > .global-navigation > .global-navigation-container {
+			width: $content-width-small-plus - $scroll-bar-width;
+		}
+	}
+
+	@media #{$breakpoint-not-supported} {
+		body {
+			//This has to be visible to allow for zooming out
+			overflow: visible;
+		}
+
+		.WikiHeader > nav.WikiNav .navbackground {
+			width: $content-width-small - $content-border-width;
+
+			img {
+				display: none;
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jagwar"
+		]
+	},
+	"visualeditor": "VisualEditor",
+	"visualeditor-aliennode-tooltip": "Miala tsiny fa ovaina amin'ny fanovana ny fango ihany ity zavatra ity.",
+	"visualeditor-annotationbutton-bold-tooltip": "Soramatevina",
+	"visualeditor-annotationbutton-code-tooltip": "Kaodin-tsolosaina",
+	"visualeditor-annotationbutton-language-tooltip": "Fiteny",
+	"visualeditor-annotationbutton-link-tooltip": "Rohy",
+	"visualeditor-dialog-action-apply": "Hampihatra ny fanovana",
+	"visualeditor-dialog-action-cancel": "Aoka ihany",
+	"visualeditor-dialog-action-goback": "Hiverina",
+	"visualeditor-formatdropdown-format-heading1": "Lohanteny 1",
+	"visualeditor-formatdropdown-format-heading2": "Lohateny 2",
+	"visualeditor-formatdropdown-format-heading3": "Lohateny 3",
+	"visualeditor-formatdropdown-format-heading4": "Lohateny 4",
+	"visualeditor-formatdropdown-format-heading5": "Lohateny 5",
+	"visualeditor-formatdropdown-format-heading6": "Lohateny 6",
+	"visualeditor-historybutton-redo-tooltip": "Averina atao",
+	"visualeditor-historybutton-undo-tooltip": "Hamoana ny fanovana",
+	"visualeditor-inspector-close-tooltip": "Hidiana",
+	"visualeditor-inspector-remove-tooltip": "Esorina",
+	"visualeditor-languageinspector-title": "Fiteny",
+	"visualeditor-languageinspector-widget-changelang": "Hitady fiteny",
+	"visualeditor-languageinspector-widget-label-language": "Fiteny"
+}

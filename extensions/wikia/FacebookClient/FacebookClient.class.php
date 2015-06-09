@@ -110,7 +110,6 @@ class FacebookClient {
 
 	private function getSessionFromMemcached() {
 		$memc = F::app()->wg->memc;
-		$log = WikiaLogger::instance();
 
 		// Get the access token for this user
 		$accessToken = $memc->get( $this->getTokenMemcKey() );
@@ -122,31 +121,49 @@ class FacebookClient {
 				$session->validate();
 				$this->session = $session;
 			} catch ( \Exception $ex ) {
-				$log->warning( __CLASS__ . ': Invalid Facebook session found', [
-					'fbUserId' => $this->facebookUserId,
-					'method' => __METHOD__,
-					'message' => $ex->getMessage(),
-				] );
+				$this->logInvalidSession( __METHOD__, $ex->getMessage() );
 			}
+		}
+	}
+
+	/**
+	 * Clear out the session saved for this user
+	 */
+	public function clearSessionFromMemcache() {
+		if ( $this->getUserId() ) {
+			$memc = F::app()->wg->memc;
+			$memc->delete( $this->getTokenMemcKey() );
 		}
 	}
 
 	private function getSessionFromCookie() {
 		$memc = F::app()->wg->memc;
-		$log = WikiaLogger::instance();
-
 		$session = $this->facebookAPI->getSession();
+
+		if ( empty( $session ) ) {
+			$this->logInvalidSession( __METHOD__, 'Session object empty' );
+			return;
+		}
+
 		try {
 			$session->validate();
 			$this->session = $session;
 			$memc->set( $this->getTokenMemcKey(), $session->getAccessToken(), self::TOKEN_TTL );
 		} catch ( \Exception $ex ) {
-			$log->warning( __CLASS__ . ': Invalid Facebook session found', [
-				'fbUserId' => $this->facebookUserId,
-				'method' => __METHOD__,
-				'message' => $ex->getMessage(),
-			] );
+			$this->logInvalidSession( __METHOD__, $ex->getMessage() );
 		}
+	}
+
+	/**
+	 * @param string $method
+	 * @param string $message
+	 */
+	private function logInvalidSession( $method, $message ) {
+		WikiaLogger::instance()->warning( __CLASS__ . ': Invalid Facebook session found', [
+			'fbUserId' => $this->facebookUserId,
+			'method' => $method,
+			'message' => $message,
+		] );
 	}
 
 	private function getTokenMemcKey() {
@@ -167,7 +184,7 @@ class FacebookClient {
 		if ( !empty( $this->facebookUserId ) ) {
 			try {
 				// Try and create a session to see if facebookUserId is valid
-				$session = $this->getSession();
+				$this->getSession();
 			} catch ( \Exception $e ) {
 				$this->facebookUserId = 0;
 				WikiaLogger::instance()->warning( 'Unable to create valid session', [
@@ -274,6 +291,19 @@ class FacebookClient {
 			return null;
 		}
 
+		// Create a new mapping that includes the app ID.  Leave the default App ID behind
+		// as there is no way to tell what other apps this user had connected, and removing this
+		// default mapping will force the user to reconnect on those apps.
+		if ( $map->isDefaultAppId() ) {
+			$this->migrateMapping( $map );
+		}
+
+		// Update the business token for this user if not already set.  The business token
+		// gives us a unique ID across all apps that we can use to reference a user.
+		if ( !$map->getBizToken() ) {
+			$this->updateBizTokenMapping( $map );
+		}
+
 		$wikiUserId = $map->getWikiaUserId();
 		if ( !$wikiUserId ) {
 			return null;
@@ -294,6 +324,88 @@ class FacebookClient {
 		}
 
 		return $user;
+	}
+
+	/**
+	 * Retrieve the business token for this user
+	 *
+	 * @return string|null
+	 * @throws Exception
+	 */
+	public function getBizToken() {
+		$session = $this->getSession();
+		if ( empty( $session ) ) {
+			return null;
+		}
+		try {
+			/** @var Facebook\GraphUser $userProfile */
+			$userProfile = (new Facebook\FacebookRequest(
+				$session, 'GET', '/me?fields=token_for_business'
+			))->execute()->getGraphObject( Facebook\GraphUser::className() );
+
+			$token = $userProfile->getProperty( 'token_for_business' );
+		} catch(Facebook\FacebookRequestException $e) {
+			WikiaLogger::instance()->warning( 'Failed to retrieve business token', [
+				'errorCode' => $e->getCode(),
+				'errorMessage' => $e->getMessage(),
+			] );
+			return null;
+		}
+
+		return $token;
+	}
+
+	/**
+	 * Updates old v1 mappings to a new mapping with an App ID
+	 *
+	 * @param FacebookMapModel $map
+	 */
+	public function migrateMapping( FacebookMapModel $map ) {
+		WikiaLogger::instance()->notice( 'Migrating FB user mapping', [
+			'wikiaUserId' => $map->getWikiaUserId(),
+			'facebookUserId' => $map->getFacebookUserId(),
+			'appId' => $map->getAppId()
+		] );
+
+		$newMapping = FacebookMapModel::createUserMapping(
+			$map->getWikiaUserId(),
+			$map->getFacebookUserId()
+		);
+
+		if ( !$newMapping ) {
+			WikiaLogger::instance()->warning( 'Unable to migrate mapping', [
+				'wikiaUserId' => $map->getWikiaUserId(),
+				'facebookUserId' => $map->getFacebookUserId(),
+				'appId' => $map->getAppId()
+			] );
+		}
+	}
+
+	/**
+	 * Update the FacebookMapModel object with the correct business token
+	 *
+	 * @param FacebookMapModel $map
+	 *
+	 * @throws FacebookMapModelDbException
+	 */
+	public function updateBizTokenMapping( FacebookMapModel $map ) {
+		$token = $this->getBizToken();
+
+		if ( $token ) {
+			WikiaLogger::instance()->info( 'Updating business token', [
+				'wikiaUserId' => $map->getWikiaUserId(),
+				'facebookUserId' => $map->getFacebookUserId(),
+				'appId' => $map->getAppId(),
+				'bizToken' => $token,
+			] );
+			$map->updateBizToken( $token );
+		} else {
+			WikiaLogger::instance()->warning( 'Unable to get business token', [
+				'wikiaUserId' => $map->getWikiaUserId(),
+				'facebookUserId' => $map->getFacebookUserId(),
+				'appId' => $map->getAppId(),
+			] );
+		}
 	}
 
 	/**
@@ -346,6 +458,8 @@ class FacebookClient {
 
 			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
 		}
+
+		$this->clearSessionFromMemcache();
 	}
 
 	/**

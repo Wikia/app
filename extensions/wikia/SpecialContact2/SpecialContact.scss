@@ -61,9 +61,6 @@ img.contactCaptch {
 			height: 3em;
 		}
 	}
-	.additionalScreenShot {
-		display: none;
-	}
 }
 
 .errorbox{
@@ -74,7 +71,7 @@ img.contactCaptch {
 	width: 675px;
 }
 
-@if ( $responsive-layout-enabled ) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
 	.special-contact-picker {
 		width: 100%;
 	}

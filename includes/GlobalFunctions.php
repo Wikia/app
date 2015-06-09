@@ -2967,10 +2967,6 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	$output = ob_get_contents();
 	ob_end_clean();
 
-	if ( $retval == 127 ) {
-		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
-	}
-
 	// Wikia change - begin
 	if ( $retval > 0 ) {
 		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
@@ -2980,6 +2976,10 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 		]);
 	}
 	// Wikia change - end
+
+	if ( $retval == 127 ) {
+		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
+	}
 
 	return $output;
 }
@@ -3454,6 +3454,29 @@ function wfFixSessionID() {
 }
 
 /**
+ * Reset the session_id
+ *
+ * Backported from MW 1.22
+ */
+function wfResetSessionID() {
+	global $wgCookieSecure;
+	$oldSessionId = session_id();
+	$cookieParams = session_get_cookie_params();
+	if ( wfCheckEntropy() && $wgCookieSecure == $cookieParams['secure'] ) {
+		session_regenerate_id( true ); // Wikia - $delete_old_session = true
+	} else {
+		$tmp = $_SESSION;
+		session_destroy();
+		wfSetupSession( MWCryptRand::generateHex( 32 ) );
+		$_SESSION = $tmp;
+	}
+	$newSessionId = session_id();
+	Hooks::run( 'ResetSessionID', array( $oldSessionId, $newSessionId ) );
+
+	wfDebug( sprintf( "%s: new ID is '%s'\n", __METHOD__, $newSessionId ) );
+}
+
+/**
  * Initialise php session
  *
  * @param $sessionId Bool
@@ -3635,7 +3658,7 @@ function wfGetLB( $wiki = false ) {
 /**
  * Get the load balancer factory object
  *
- * @return LBFactory_Wikia
+ * @return LBFactory
  */
 function &wfGetLBFactory() {
 	return LBFactory::singleton();
@@ -3794,6 +3817,24 @@ function wfWaitForSlaves( $wiki = false ) {
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
 		$lb->waitForAll( $pos, $wiki );
+
+		// Wikia change - begin
+		// OPS-6313 - sleep-based implementaion for consul-powered DB clusters
+		$masterHostName = $lb->getServerName(0);
+		if ( strpos( $masterHostName, '.service.consul' ) !== false ) {
+			# I am terribly sorry, but we do really need to wait for all slaves
+			# not just the one returned by consul
+			sleep( 1 );
+
+			/* @var MySQLMasterPos $pos */
+			\Wikia\Logger\WikiaLogger::instance()->info( 'wfWaitForSlaves for consul clusters',  [
+				'exception' => new Exception(),
+				'master' => $masterHostName,
+				'pos' => $pos->__toString(),
+				'wiki' => $wiki
+			] );
+		}
+		// Wikia change - end
 	}
 }
 

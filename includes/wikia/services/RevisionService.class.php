@@ -69,7 +69,7 @@ class RevisionService {
 	 * @return array
 	 */
 	public function getLatestRevisions( $limit, $namespaces ) {
-		$key = self::createCacheKey( $this->queryLimit, $namespaces, $this->getFilterMethod() );
+		$key = self::createCacheKey( $this->queryLimit, $namespaces );
 		$listOfRevisions = WikiaDataAccess::cache( $key, $this->cacheTime, function() use( $namespaces ) {
 			return $this->getLatestRevisionsNoCacheAllowDuplicates( $this->queryLimit, $namespaces );
 		});
@@ -212,9 +212,9 @@ class RevisionService {
 		}
 		$key = implode("_", [
 			"RevisionService",
-			$dbName,
 			strval($limit),
-			implode(",",$namespaces)
+			implode(",",$namespaces),
+			$dbName
 		]);
 		return $key;
 	}

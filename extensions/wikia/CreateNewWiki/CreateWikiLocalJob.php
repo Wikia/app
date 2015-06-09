@@ -225,7 +225,7 @@ class CreateWikiLocalJob extends Job {
 		 * set apropriate staff member
 		 */
 		$wgUser = Wikia::staffForLang( $this->wikiaLang );
-		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( "Angela" );
+		$wgUser = ( $wgUser instanceof User ) ? $wgUser : User::newFromName( CreateWiki::DEFAULT_STAFF );
 
 		$talkParams = array(
 			$this->mFounder->getName(),

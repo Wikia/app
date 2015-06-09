@@ -1,47 +1,52 @@
-@import "skins/shared/color";
-@import "skins/oasis/css/core/layout";
-@import "skins/shared/mixins/bodytext";
-@import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/gradient";
-@import "skins/shared/mixins/multiple-box-shadow";
-@import "skins/shared/mixins/wordmark";
-@import "skins/shared/mixins/ellipses";
-@import "extensions/wikia/UserLogin/mixins/tooltip-icon";
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/shared/mixins/bodytext';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/multiple-box-shadow';
+@import 'skins/shared/mixins/wordmark';
+@import 'skins/shared/mixins/ellipses';
 // Colors
-@import "core/colors";
+@import 'core/colors';
 // Mixins
-@import "mixins/button-resize";
-@import "mixins/gradients";
-@import "mixins/inputs";
-@import "mixins/splotch";
-@import "mixins/sprite-edit-page";
-@import "mixins/sprite-edit-mw-toolbar";
+@import 'mixins/button-resize';
+@import 'mixins/gradients';
+@import 'mixins/inputs';
+@import 'mixins/splotch';
+@import 'mixins/sprite-edit-page';
+@import 'mixins/sprite-edit-mw-toolbar';
 // Core
-@import "core/buttons";
-@import "core/dimensions";
-@import "core/dropdowns";
-@import "core/header";
-@import "core/modals";
-@import "core/modules";
-@import "core/notices";
-@import "core/syntaxhighlighting";
-@import "core/tabs";
-@import "core/toolbar";
-@import "core/wide";
-@import "skins/oasis/css/core/responsive-core";
-@import "skins/oasis/css/core/responsive-variables";
+@import 'core/buttons';
+@import 'core/dimensions';
+@import 'core/dropdowns';
+@import 'core/header';
+@import 'core/modals';
+@import 'core/modules';
+@import 'core/notices';
+@import 'core/syntaxhighlighting';
+@import 'core/tabs';
+@import 'core/toolbar';
+@import 'core/wide';
+@import 'skins/oasis/css/core/responsive-core';
+@import 'skins/oasis/css/core/responsive-variables';
+
+
+.popover-inner {
+	padding: 3px 8px;
+}
 
 body {
 	padding: 0;
+
 	&.EditPageScrollable {
 		overflow-y: auto;
 	}
 }
 
 .WikiaPage {
-	border-bottom: none;
-	@if ( $responsive-layout-enabled == false) {
+	border-bottom: 0;
+	@if (not $responsive-or-breakpoints-layout-enabled) {
 		margin: 0 auto;
 	}
 	padding: 0;
@@ -69,6 +74,7 @@ body {
 	b {
 		font-weight: bold;
 	}
+
 	i {
 		font-style: italic;
 	}
@@ -88,21 +94,18 @@ body {
 
 .EditPageRail {
 	// Special variable with shadow details to be passed to multiple-box-shadow mixin -- check multiple-box-shadow.scss for details
-	$EditPageRailShadow: -2px 2px 2px $color-epl-gradient-shadow, -1px 0 0 $color-page-border;
-	@include multiple-box-shadow($EditPageRailShadow);
+	$edit-page-rail-shadow: -2px 2px 2px $color-epl-gradient-shadow, -1px 0 0 $color-page-border;
+	@include multiple-box-shadow($edit-page-rail-shadow);
 
 	background-color: $color-epl-page-tertiary;
 	float: right;
+	position: relative; // Make sure the box shadow of #EditPageRail is layered on top of #EditPageMain
 	width: $width-rail-epl;
-
-	// Make sure the box shadow of #EditPageRail is layered on top of #EditPageMain
-	// and the loading status indicator (z-index: 100)
-	position: relative;
-	z-index: 101;
+	z-index: 101; // and the loading status indicator (z-index: 100)
 
 	.rail-auto-height {
-		position: relative; // IE 7 needs this
 		overflow: hidden;
+		position: relative; // IE 7 needs this
 
 		> * {
 			width: $width-rail-epl;
@@ -123,7 +126,7 @@ body {
 .editpage-intro {
 	border-color: $color-page-border;
 	border-style: solid;
-	border-width: 0 1px 1px 1px;
+	border-width: 0 1px 1px;
 	margin-bottom: 10px;
 	position: relative;
 
@@ -151,6 +154,7 @@ body {
 		> .editpage-intro-wrapper {
 			max-height: 150px;
 			overflow: auto;
+
 			> div {
 				// give space for "less" link
 				padding-bottom: 35px;
@@ -167,16 +171,19 @@ body {
 		display: none;
 		font-size: 11px;
 		opacity: .8;
-		position: absolute;
 		padding: 5px;
+		position: absolute;
 		right: 15px;
 		text-align: center;
+
 		&:hover {
 			text-decoration: none;
 		}
+
 		> label {
 			cursor: pointer;
 		}
+
 		> span {
 			font-size: 14px;
 			font-weight: bold;
@@ -238,8 +245,8 @@ body {
 		position: relative;
 
 		textarea {
-			color: $color-text;
 			background-color: $color-page;
+			color: $color-text;
 
 			// hide when replaced by ckeditor
 			&.replaced {
@@ -255,44 +262,44 @@ body {
 	.loading-indicator {
 		.loading-background, .loading-message {
 			background-color: $color-page;
-			position: absolute;
 			display: block;
+			position: absolute;
 		}
 
 		.loading-background {
-			z-index: 100;
+			bottom: 0;
 			display: block;
 			left: 0;
 			// Don't overlap wide mode toggle left border
 			right: 1px;
 			top: 0;
-			bottom: 0;
+			z-index: 100;
 		}
 
 		.loading-message {
 			background: transparent;
-			z-index: 101;
+			color: $color-links;
+			text-align: center;
 			top: 20%;
 			width: 100%;
-			text-align: center;
-			color: $color-links;
+			z-index: 101;
 
 			.loading-throbber, .loading-text {
 				display: inline-block;
-				vertical-align: middle;
 				padding: 10px;
+				vertical-align: middle;
 				zoom: 1;
 			}
 
 			.loading-throbber {
-				background: $color-page url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
-				width: 16px;
+				background: $color-page url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgCdnStylePath */
 				height: 16px;
+				width: 16px;
 			}
 
 			.loading-text {
-				padding-left: 9px;
 				font-size: 16px;
+				padding-left: 9px;
 			}
 		}
 	}
@@ -304,47 +311,77 @@ body {
 		position: absolute;
 		top: 50%;
 	}
+
 	&.preview {
 		> h1 {
 			float: left;
 			margin-right: 20px;
 		}
+
 		> form {
 			float: left;
 			margin-top: 20px;
 			position: relative;
 		}
-		.tooltip-icon {
-			@include tooltip-icon;
-			right: -17px;
-			top: 6px;
-		}
+
 		.modalContent {
 			border-color: transparent;
 			clear: both;
 			padding: 0;
+
 			.ArticlePreview {
-				-webkit-overflow-scrolling:touch;
 				border: 1px solid $color-page-border;
+				clear: both;
+				min-height: 140px;
+				-webkit-overflow-scrolling: touch;
 				overflow-y: scroll;
-				min-height: 320px;
 				padding: 10px;
 				position: relative;
-				.global-notification {
+
+				.banner-notifications-wrapper {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
+				}
+			}
+
+			.ArticlePreviewInner {
+				height: 100%;
+			}
+
+			.preview-modal-msg-wrapper {
+				border: 1px solid $color-page-border;
+				border-bottom: 0;
+				box-sizing: border-box;
+				max-height: 100px;
+				overflow-y: auto;
+				width: 100%;
+			}
+
+			.preview-modal-msg {
+				display: table;
+
+				.preview-message {
+					display: table-cell;
+					padding: 18px;
+				}
+
+				.preview-link {
+					display: table-cell;
+					padding: 0 18px;
+					text-align: right;
 				}
 			}
 
 			// FB#8087 - styling for interlanguage links in RTE popup preview
 			.WikiaArticleInterlang {
 				h3 {
-					margin: 2px 14px 0 0;
 					font: {
 						size: 14px;
 						weight: normal;
 					}
+					margin: 2px 14px 0 0;
 				}
+
 				ul {
 					list-style: none;
 				}
@@ -360,10 +397,11 @@ body {
 }
 
 #EditPagePreviewEditSummary {
+	@include ellipses();
 	display: inline-block;
 	float: left;
 	margin-top: 20px;
-	@include ellipses();
+
 	> p {
 		line-height: 18px;
 	}
@@ -381,19 +419,23 @@ body {
 	.EditPageRail {
 		> .module {
 			display: none;
+
 			&.module_page_controls {
 				@include gradient-module;
 				display: block;
 				height: 300px;
+
 				> .module_content {
 					visibility: hidden;
 				}
 			}
+
 			&.module_license {
 				display: block;
 			}
 		}
 	}
+
 	.editpage-sourcewidemode-on {
 		.EditPageRail {
 			> .module_page_controls {
@@ -408,7 +450,8 @@ body {
 	input {
 		display: block;
 	}
-	input[type="text"],
+
+	[type='text'],
 	textarea {
 		width: 100%;
 	}
@@ -432,12 +475,12 @@ body {
 	@include sprite-edit-mw-toolbar-deep-embed(23px, 23px);
 }
 
-@if ( $responsive-layout-enabled ) {
+@if ($responsive-or-breakpoints-layout-enabled) {
 	// START - edit page fixes
-
 	.editor .WikiaMainContent {
 		float: none;
 		width: 100%;
+
 		.editform {
 			z-index: 1;
 		}
@@ -452,47 +495,6 @@ body {
 
 			.EditPageMainContainer {
 				margin-right: 0;
-			}
-
-			@media screen and (max-width: $width-outside) {
-				#wpSave {
-					// fix for touch devices, because in touchScreen.scss height is set to 30px !important
-					height: 21px !important;
-					margin: 0;
-					right: 20px;
-					top: 40px;
-				}
-				#wpSummaryLabel {
-					clear: none;
-				}
-				.EditPageToolbar {
-					height: 70px;
-				}
-				.EditPageRail {
-					.module_page_controls {
-						.wikia-menu-button {
-							margin: 0;
-							right: 145px;
-							top: 40px;
-						}
-						.checkboxes {
-							position: absolute;
-							right: 275px;
-							top: 37px;
-							label {
-								float: right;
-								margin: 0 0 0 10px;
-								position: static;
-							}
-						}
-						textarea {
-							float: right;
-							margin: 0 0 0 10px;
-							position: static;
-							width: 350px;
-						}
-					}
-				}
 			}
 		}
 
@@ -515,7 +517,7 @@ body {
 			padding-right: $width-rail;
 
 			.cke_toolbar_expand > a {
-				right: $width-rail + $width-padding;
+				right: $width-rail + 5px;
 			}
 		}
 	}
@@ -538,22 +540,45 @@ body {
 	.preview .WikiaArticle {
 		overflow: inherit;
 	}
+
+	#EditPage {
+		&.toolbar-expanded {
+			#wpSave {
+				// fix for touch devices, because in touchScreen.scss height is set to 30px !important
+				height: 21px !important;
+				margin: 0;
+			}
+
+			#wpSummaryLabel {
+				clear: none;
+			}
+
+			.EditPageToolbar {
+				height: 70px;
+			}
+
+			.EditPageRail {
+				.module_page_controls {
+					.wikia-menu-button {
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
 }
 // END - edit page fixes
 
 //Mobile preview styles
 .mobile-preview {
 	border: 1px solid $color-page-border;
-	height: 480px;
-	width: 320px;
-	overflow: auto;
+	box-sizing: border-box;
+	height: 100%;
 	margin: 0 auto;
-
+	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	-webkit-transform: translate3d(0, 0, 0);
-
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+	width: 320px;
 
 	iframe {
 		display: block;

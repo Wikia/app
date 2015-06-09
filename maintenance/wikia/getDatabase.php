@@ -184,11 +184,11 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		require_once( $dirName . "/../../../config/DB.php" );
 	}
 
-	if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgLBFactoryConf['hostsByName']['sharedb-s1'] ) ) {
+	if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgLBFactoryConf['hostsByName']['sharedb-s4'] ) ) {
 		// prepare raw output for consumption as csv. changes " => \"; \t => ","; beginning of line => ", end of line => "
 		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
 
-		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s1'];
+		$dbhost = $wgLBFactoryConf['hostsByName']['sharedb-s4'];
 	    // dump city_list row to local CSV file and import into local database
 		$response = `mysql -u $wgDBbackenduser -p$wgDBbackendpassword --database wikicities -h $dbhost -ss -e "SELECT * from city_list where city_id = $city_id " | $prepareCsv > /tmp/city_list.csv`;
 		print "city_list dump ok\n";

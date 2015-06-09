@@ -20,3 +20,8 @@
 /**
  * @property {string} [dateString=""] Formatted date or empty string
  */
+
+/**
+ * @class mw.Title
+ * @source <https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.Title>
+ */

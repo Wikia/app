@@ -1,0 +1,50 @@
+/*!
+ * VisualEditor ContentEditable FocusableNode styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ce-surface-highlights-focused .ve-ce-focusableNode-highlights {
+	opacity: 0.5;
+}
+
+.ve-ce-surface-highlights-blurred .ve-ce-focusableNode-highlights {
+	opacity: 0.15;
+}
+
+/* Set opacity directly on the highlights, rather than their containers,
+   otherwise the opacity isn't applied at all */
+.ve-init-target-ie .ve-ce-surface-highlights-focused .ve-ce-focusableNode-highlight {
+	opacity: 0.5;
+}
+
+.ve-init-target-ie .ve-ce-surface-highlights-blurred .ve-ce-focusableNode-highlight {
+	opacity: 0.15;
+}
+
+.ve-ce-focusableNode {
+	cursor: default;
+}
+
+.ve-ce-focusableNode-dropMarker {
+	height: 1px;
+	background: #999;
+	pointer-events: none;
+	position: absolute;
+}
+
+.ve-ce-focusableNode-highlight {
+	background: #6da9f7;
+	box-shadow: inset 0 0 0 1px #4C76ac;
+	position: absolute;
+}
+
+.ve-ce-focusableNode-highlight-relocatable-marker {
+	width: 100%;
+	height: 100%;
+}
+
+.ve-ce-focusableNode-highlights-relocating .ve-ce-focusableNode-highlight-relocatable-marker {
+	background: #000;
+	background: rgba(0, 0, 0, 1);
+}

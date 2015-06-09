@@ -40,6 +40,14 @@ $messages['ar'] = array(
 	'wikianewfiles-more' => 'المزيد...',
 );
 
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'wikianewfiles-uploadby' => '{{GENDER:$2|$1}}ৰ দ্বাৰা',
+	'wikianewfiles-more' => 'অধিক...',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
@@ -151,6 +159,13 @@ $messages['ka'] = array(
 	'wikianewfiles-more' => 'მეტი...',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'wikianewfiles-more' => 'zêdetir...',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -195,6 +210,17 @@ $messages['nl'] = array(
 	'wikianewfiles-more' => 'meer...',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikianewfiles-title' => 'Fichièrs novèls sus aqueste wiki',
+	'wikianewfiles-desc' => 'Espandís una [[Special:NewFiles|pagina especiala]] per espotir certanas mesas en forma de l’entèsta',
+	'wikianewfiles-uploadby' => 'per {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Postat dins',
+	'wikianewfiles-more' => 'mai...',
+);
+
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Aalam
  */
@@ -219,6 +245,7 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'wikianewfiles-title' => 'په دې ويکي باندې نوې دوتنې',
 	'wikianewfiles-more' => 'نور ...',
 );
 

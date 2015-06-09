@@ -1,6 +1,5 @@
 {
 	"preset": "wikimedia",
 
-	"disallowQuotedKeysInObjects": null,
 	"requireSpacesInsideArrayBrackets": null
 }

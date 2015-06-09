@@ -3,75 +3,85 @@
  *
  * @author Kamil Koterba <kamil@wikia-inc.com>
  */
+(function ( window, $ ) {
+		'use strict';
 
-require(['wikia.window', 'jquery', 'wikia.log'], function(window, $) {
-	'use strict';
+		var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable()),
+			WikiTextSyntaxHighlighter;
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
+		WE.plugins.syntaxhighlighterqueueinit = $.createClass(WE.plugin, {
 
-	WE.plugins.syntaxhighlighterqueueinit = $.createClass(WE.plugin, {
+			init: function () {
+				this.editor.on('mode', this.proxy(this.initSyntaxHighlighting));
+				this.editor.on('editorReady', this.proxy(this.initSyntaxHighlighting));
 
-		init: function () {
-			this.editor.on('mode', this.proxy(this.initSyntaxHighlighting));
-			this.editor.on('editorReady', this.proxy(this.initSyntaxHighlighting));
-		},
+				require(['WikiTextSyntaxHighlighter'], this.proxy(function (syntaxHighlighter) {
+					WikiTextSyntaxHighlighter = syntaxHighlighter;
 
-		initConfig: function () {
-			var config;
+					this.initSyntaxHighlighting();
+				}));
+			},
 
-			if (window.wgIsDarkTheme) {
-				config = this.initDarkThemeColors();
-			} else {
-				config = this.initLightThemeColors();
+			initConfig: function () {
+				var config;
+
+				if (window.wgIsDarkTheme) {
+					config = this.initDarkThemeColors();
+				} else {
+					config = this.initLightThemeColors();
+				}
+
+				return config;
+			},
+
+			initSyntaxHighlighting: function () {
+				if (WikiTextSyntaxHighlighter) {
+					if (this.editor.mode === 'source') {
+						var textarea = this.editor.getEditbox()[0],
+							config = this.initConfig();
+
+						WikiTextSyntaxHighlighter.init(textarea, config);
+					} else {
+						WikiTextSyntaxHighlighter.reset();
+					}
+				}
+			},
+
+			initDarkThemeColors: function() {
+				return {
+					boldOrItalicColor: '#44466d',
+					commentColor: '#4d1a19',
+					entityColor: '#474d23',
+					externalLinkColor: '#244d491',
+					headingColor: '#44466d',
+					hrColor: '#44466d',
+					listOrIndentColor: '#4d1a19',
+					parameterColor: '#66331e',
+					signatureColor: '#66331e',
+					tagColor: '#662946',
+					tableColor: '#5e5129',
+					templateColor: '#5e5129',
+					wikilinkColor: '#245477'
+				};
+			},
+
+			initLightThemeColors: function() {
+				return {
+					boldOrItalicColor: '#e4e5f3',
+					commentColor: '#f8dbda',
+					entityColor: '#e8ebda',
+					externalLinkColor: '#dbeceb',
+					headingColor: '#e4e5f3',
+					hrColor: '#e4e5f3',
+					listOrIndentColor: '#f8dbda',
+					parameterColor: '#f5e0d8',
+					signatureColor: '#f5e0d8',
+					tagColor: '#f6dde9',
+					tableColor: '#f0ebdb',
+					templateColor: '#f0ebdb',
+					wikilinkColor: '#d9eaf6'
+				};
 			}
+		});
 
-			return config;
-		},
-
-		initSyntaxHighlighting: function () {
-			if (this.editor.mode === 'source') {
-				var textarea = this.editor.getEditbox()[0],
-					config = this.initConfig();
-				require(['WikiTextSyntaxHighlighter'], function (WikiTextSyntaxHighlighter) {
-					WikiTextSyntaxHighlighter.init(textarea, config);
-				});
-			}
-		},
-
-		initDarkThemeColors: function() {
-			return {
-				boldOrItalicColor: '#44466d',
-				commentColor: '#4d1a19',
-				entityColor: '#474d23',
-				externalLinkColor: '#244d491',
-				headingColor: '#44466d',
-				hrColor: '#44466d',
-				listOrIndentColor: '#4d1a19',
-				parameterColor: '#66331e',
-				signatureColor: '#66331e',
-				tagColor: '#662946',
-				tableColor: '#5e5129',
-				templateColor: '#5e5129',
-				wikilinkColor: '#245477'
-			};
-		},
-
-		initLightThemeColors: function() {
-			return {
-				boldOrItalicColor: '#e8e9ff',
-				commentColor: '#ffb8b6',
-				entityColor: '#c5cf86',
-				externalLinkColor: '#97d8d2',
-				headingColor: '#e8e9ff',
-				hrColor: '#e8e9ff',
-				listOrIndentColor: '#ffb8b6',
-				parameterColor: '#ffb692',
-				signatureColor: '#ffb692',
-				tagColor: '#ffc0e8',
-				tableColor: '#ecddb1',
-				templateColor: '#ecddb1',
-				wikilinkColor: '#b0e8ff'
-			};
-		}
-	});
-});
+})( this, jQuery );

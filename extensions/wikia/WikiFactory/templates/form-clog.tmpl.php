@@ -4,7 +4,7 @@
 	.WikiaArticle #wiki-factory-panel .TablePager td.TablePager_col_cl_text { display: table-cell !important; }
 	.TablePager .ChangeLogPager_cl_value {
 		width: 100%;
-		max-height: 100px;
+		max-height: 250px;
 		overflow-y: auto;
 	}
 	.TablePager .ChangeLogPager_cl_value .v1 {

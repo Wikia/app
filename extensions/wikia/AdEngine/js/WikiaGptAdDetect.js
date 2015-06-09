@@ -90,25 +90,25 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		}
 	}
 
-	function getAdType(slotname, gptEvent, iframe) {
+	function getAdType(slotName, gptEvent, iframe) {
 		var status, height, gptEmpty, iframeOk = false;
 
-		log(['getAdType', slotname], 'info', logGroup);
+		log(['getAdType', slotName], 'info', logGroup);
 
 		try {
 			iframeOk = !!iframe.contentWindow.document.querySelector;
 		} catch (e) {
 			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
-			log(['getAdType', slotname, 'ad iframe not accessible (or not found)'], 'error', logGroup);
+			log(['getAdType', slotName, 'ad iframe not accessible (or not found)'], 'error', logGroup);
 		}
 
 		if (iframeOk && iframe.contentWindow.AdEngine_adType) {
-			log(['getAdType', slotname, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
+			log(['getAdType', slotName, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
 
 			return iframe.contentWindow.AdEngine_adType;
 		}
 
-		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotname];
+		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotName];
 
 		if (status === 'success') {
 			return 'forced_success';
@@ -118,30 +118,40 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		gptEmpty = gptEvent.isEmpty;
 
 		if (gptEmpty || height <= 1) {
+			log(['getAdType', slotName, 'ad is empty (GPT event)', 'empty'], 'info', logGroup);
 			return 'empty';
 		}
 
 		if (!isMobile()) {
+			log(['getAdType', slotName, 'not mobile', 'always_success'], 'info', logGroup);
 			return 'always_success';
 		}
 
 		if (!iframeOk) {
-			log(['getAdType', slotname, 'running ad callback (!iframeOk)'], 'error', logGroup);
+			log(['getAdType', slotName, 'running ad callback (!iframeOk)', 'always_success'], 'info', logGroup);
+			return 'always_success';
+		}
+
+		// A special case for AdSense/AdX. They serve with creative and line item ids null
+		// Most of the time their iframes are inspectable, but when inspecting the inner height is 0
+		if (gptEvent.creativeId === null && gptEvent.lineItemId === null) {
+			log(['getAdType', slotName, 'creativeId and lineItemId are null', 'always_success'], 'error', logGroup);
 			return 'always_success';
 		}
 
 		// Check specifically for some ads
 		if (iframe.contentWindow.document.querySelector(specialAdSelector)) {
-			log(['getAdType', slotname, 'special ad'], 'info', logGroup);
+			log(['getAdType', slotName, 'special ad'], 'info', logGroup);
 			return 'always_success';
 		}
 
+		log(['getAdType', slotName, 'inspect_iframe'], 'info', logGroup);
 		return 'inspect_iframe';
 	}
 
-	function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback) {
+	function onAdLoad(slotname, gptEvent, iframe, adCallback, noAdCallback, forcedAdType) {
 
-		var adType = getAdType(slotname, gptEvent, iframe),
+		var adType = forcedAdType || getAdType(slotname, gptEvent, iframe),
 			shouldPollForSuccess = false,
 			expectAsyncHop = false,
 			expectAsyncHopWithSlotName = false,
@@ -202,7 +212,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			}
 		}
 
-		if (adType === 'openx' || adType === 'rubicon' || adType === 'saymedia') {
+		if (adType === 'openx' || adType === 'rubicon' || adType === 'saymedia' || adType === 'turtle') {
 			shouldPollForSuccess = true;
 			expectAsyncHop = true;
 		}

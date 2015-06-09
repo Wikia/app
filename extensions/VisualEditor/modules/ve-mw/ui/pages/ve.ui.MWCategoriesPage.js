@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw*/
-
 /**
  * MediaWiki meta dialog categories page.
  *
@@ -16,7 +14,8 @@
  * @constructor
  * @param {string} name Unique symbolic name of page
  * @param {Object} [config] Configuration options
- * @cfg {jQuery} [$overlay] Overlay to render category settings popups in
+ * @cfg {jQuery} [$overlay] Overlay to render dropdowns in
+ * @cfg {jQuery} [$popupOverlay] Overlay to render popups in
  */
 ve.ui.MWCategoriesPage = function VeUiMWCategoriesPage( name, config ) {
 	// Configuration initialization
@@ -30,20 +29,20 @@ ve.ui.MWCategoriesPage = function VeUiMWCategoriesPage( name, config ) {
 	this.defaultSortKeyTouched = false;
 	this.fallbackDefaultSortKey = mw.config.get( 'wgTitle' );
 	this.categoriesFieldset = new OO.ui.FieldsetLayout( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-meta-categories-data-label' ),
-		'icon': 'tag'
+		$: this.$,
+		label: ve.msg( 'visualeditor-dialog-meta-categories-data-label' ),
+		icon: 'tag'
 	} );
 	this.categoryOptionsFieldset = new OO.ui.FieldsetLayout( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-meta-categories-options' ),
-		'icon': 'settings'
+		$: this.$,
+		label: ve.msg( 'visualeditor-dialog-meta-categories-options' ),
+		icon: 'settings'
 	} );
 	this.categoryWidget = new ve.ui.MWCategoryWidget( {
-		'$': this.$, '$overlay': config.$overlay
+		$: this.$, $overlay: config.$overlay, $popupOverlay: config.$popupOverlay
 	} );
 	this.defaultSortInput = new OO.ui.TextInputWidget( {
-		'$': this.$, 'placeholder': this.fallbackDefaultSortKey
+		$: this.$, placeholder: this.fallbackDefaultSortKey
 	} );
 
 	this.defaultSortInput.$element.addClass( 've-ui-mwCategoriesPage-defaultsort' );
@@ -51,19 +50,20 @@ ve.ui.MWCategoriesPage = function VeUiMWCategoriesPage( name, config ) {
 	this.defaultSort = new OO.ui.FieldLayout(
 		this.defaultSortInput,
 		{
-			'$': this.$,
-			'align': 'top',
-			'label': ve.msg( 'visualeditor-dialog-meta-categories-defaultsort-label' )
+			$: this.$,
+			align: 'top',
+			label: ve.msg( 'visualeditor-dialog-meta-categories-defaultsort-label' ),
+			help: ve.msg( 'visualeditor-dialog-meta-categories-defaultsort-help' )
 		}
 	);
 
 	// Events
 	this.categoryWidget.connect( this, {
-		'newCategory': 'onNewCategory',
-		'updateSortkey': 'onUpdateSortKey'
+		newCategory: 'onNewCategory',
+		updateSortkey: 'onUpdateSortKey'
 	} );
 	this.defaultSortInput.connect( this, {
-		'change': 'onDefaultSortChange'
+		change: 'onDefaultSortChange'
 	} );
 
 	// Initialization
@@ -188,11 +188,11 @@ ve.ui.MWCategoriesPage.prototype.getCategoryItemFromMetaListItem = function ( me
 		value = title ? title.getMainText() : '';
 
 	return {
-		'name': metaItem.element.attributes.category,
-		'value': value,
+		name: metaItem.element.attributes.category,
+		value: value,
 		// TODO: sortkey is lcase, make consistent throughout CategoryWidget
-		'sortKey': metaItem.element.attributes.sortkey,
-		'metaItem': metaItem
+		sortKey: metaItem.element.attributes.sortkey,
+		metaItem: metaItem
 	};
 };
 
@@ -205,8 +205,8 @@ ve.ui.MWCategoriesPage.prototype.getCategoryItemFromMetaListItem = function ( me
  */
 ve.ui.MWCategoriesPage.prototype.getCategoryItemForInsertion = function ( item, oldData ) {
 	var newData = {
-		'attributes': { 'category': item.name, 'sortkey': item.sortKey || '' },
-		'type': 'mwCategory'
+		attributes: { category: item.name, sortkey: item.sortKey || '' },
+		type: 'mwCategory'
 	};
 	if ( oldData ) {
 		return ve.extendObject( {}, oldData, newData );
@@ -232,8 +232,8 @@ ve.ui.MWCategoriesPage.prototype.insertMetaListItem = function ( metaBase ) {
 ve.ui.MWCategoriesPage.prototype.setup = function ( metaList ) {
 	this.metaList = metaList;
 	this.metaList.connect( this, {
-		'insert': 'onMetaListInsert',
-		'remove': 'onMetaListRemove'
+		insert: 'onMetaListInsert',
+		remove: 'onMetaListRemove'
 	} );
 
 	var defaultSortKeyItem = this.getDefaultSortKeyItem();
@@ -246,9 +246,9 @@ ve.ui.MWCategoriesPage.prototype.setup = function ( metaList ) {
 	this.defaultSortKeyTouched = false;
 
 	// Update input position once visible
-	setTimeout( ve.bind( function () {
+	setTimeout( function () {
 		this.categoryWidget.fitInput();
-	}, this ) );
+	}.bind( this ) );
 };
 
 /**
@@ -258,8 +258,8 @@ ve.ui.MWCategoriesPage.prototype.teardown = function () {
 	var currentDefaultSortKeyItem = this.getDefaultSortKeyItem(),
 		newDefaultSortKey = this.defaultSortInput.getValue(),
 		newDefaultSortKeyData = {
-			'type': 'mwDefaultSort',
-			'attributes': { 'content': newDefaultSortKey }
+			type: 'mwDefaultSort',
+			attributes: { content: newDefaultSortKey }
 		};
 
 	// Alter the default sort key iff it's been touched & is actually different

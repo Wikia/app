@@ -143,8 +143,3 @@ $wgAutoloadClasses['Captcha\Store\Cache'] = "$dir/Store/Cache.class.php";
 $wgAutoloadClasses['Captcha\Handler'] = "$dir/Captcha.class.php";
 $wgAutoloadClasses['CaptchaController'] = "$dir/CaptchaController.class.php";
 $wgAutoloadClasses['Captcha\Hooks'] = "$dir/CaptchaHooks.class.php";
-
-$wgCaptchaPrecedence = [
-	'Captcha\Module\ReCaptcha',
-	'Captcha\Module\FancyCaptcha',
-];

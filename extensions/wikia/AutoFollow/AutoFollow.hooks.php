@@ -18,14 +18,13 @@ class AutoFollowHooks {
 	 * Checks if a user's language in one of the sanctioned ones
 	 * and has agreed to receive marketing information.
 	 * If yes it adds a task to add the user to watchlists.
-	 * @param  User object The user's object
-	 * @return {bool} true
+	 * @param  \User object The user's object
+	 * @return bool
 	 */
 	public function addAutoFollowTask( \User $oUser ) {
 		global $wgAutoFollowLangCityIdMap;
 		// Check only a core of the language code
 		$sUserLanguage = explode( '-', $oUser->getOption( 'language' ) )[0];
-
 		if ( isset( $wgAutoFollowLangCityIdMap[ $sUserLanguage ] ) &&
 			$this->checkAutoFollowConditions( $oUser )
 		) {
@@ -40,15 +39,14 @@ class AutoFollowHooks {
 	/**
 	 * Check if the user hasn't been subscribed to a watchlist
 	 * and if he agreed to receive marketing information
-	 * @param  User   $oUser A user's object
-	 * @return {bool}        true is the conditions are met
+	 * @param  \User $oUser A user's object
+	 * @return bool
 	 */
 	private function checkAutoFollowConditions( \User $oUser ) {
 		global $wgAutoFollowFlag;
-
-		if ( intval( $oUser->getOption( $wgAutoFollowFlag ) ) === 1 ) {
+		if ( $oUser->getBoolOption( $wgAutoFollowFlag ) === true ) {
 			return false;
-		} elseif ( $oUser->getOption( 'marketingallowed' ) === 0 ) {
+		} elseif ( $oUser->getBoolOption( 'marketingallowed' ) === false ) {
 			return false;
 		}
 

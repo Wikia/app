@@ -8,7 +8,6 @@
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/box-sizing-border-box";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/box-shadow";
 
@@ -263,7 +262,7 @@ $color-related-videos-background: darken($color-page, 20%);
 		width: 50000px;
 	}
 	li {
-		@include box-sizing-border-box;
+		box-sizing: border-box;
 		text-align: center;
 		float: left;
 		font-size: 12px;
@@ -271,8 +270,8 @@ $color-related-videos-background: darken($color-page, 20%);
 		padding-right: 6px;
 		width: 166px;
 		&.in-preview .video-thumbnail {
-			@include box-sizing-border-box;
 			border: 4px solid $color-buttons;
+			box-sizing: border-box;
 			opacity: 1;
 		}
 		&:last {
@@ -374,8 +373,8 @@ $color-related-videos-background: darken($color-page, 20%);
 			}
 			> div,
 			> textarea {
+				box-sizing: border-box;
 				width: 412px;
-				@include box-sizing-border-box;
 			}
 			> textarea {
 				min-height: 75px;

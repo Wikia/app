@@ -9,12 +9,12 @@ namespace Wikia\WikiaInYourLang;
 class WikiaInYourLangHooks {
 
 	/**
-	 * Add JS module to the output
-	 * @param  \OutputPage $out  An output object passed from a hook
+	 * Add JS assets package to the output
+	 * @param \OutputPage $out  An output object passed from a hook
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
-		$out->addModules( 'ext.wikiaInYourLang' );
+		\Wikia::addAssetsToOutput( 'wikia_in_your_lang_js' );
 		return true;
 	}
 }

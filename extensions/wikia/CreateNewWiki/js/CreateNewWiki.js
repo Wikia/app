@@ -83,19 +83,18 @@
 								}
 							)
 						};
-						FacebookLogin.callbacks['login-success'] = function () {
-							self.transition('UserAuth', true, '+');
-							FacebookLogin.closeSignupModal();
-						};
+						if (typeof FacebookLogin !== 'undefined') {
+							FacebookLogin.callbacks['login-success'] = function () {
+								self.transition('UserAuth', true, '+');
+								FacebookLogin.closeSignupModal();
+							};
+						}
 					}
 
 					self.transition('NameWiki', true, '+');
 
 					// Load facebook assets before going to the login form
-					$.loadFacebookAPI()
-						.done(function () {
-							$('.sso-login').removeClass('hidden');
-						});
+					$.loadFacebookSDK();
 				}
 			});
 			this.wikiDomain.keyup(function () {

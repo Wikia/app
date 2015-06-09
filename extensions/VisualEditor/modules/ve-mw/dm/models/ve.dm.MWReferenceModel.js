@@ -23,6 +23,9 @@ ve.dm.MWReferenceModel = function VeDmMWReferenceModel() {
 	this.listIndex = null;
 	this.group = '';
 	this.doc = null;
+	this.deferDoc = null;
+	this.dir = null;
+	this.lang = null;
 };
 
 /* Inheritance */
@@ -47,7 +50,12 @@ ve.dm.MWReferenceModel.static.newFromReferenceNode = function ( node ) {
 	ref.setListGroup( attr.listGroup );
 	ref.setListIndex( attr.listIndex );
 	ref.setGroup( attr.refGroup );
-	ref.setDocument( doc.cloneFromRange( internalList.getItemNode( attr.listIndex ).getRange() ) );
+	ref.setDir( doc.getDir() );
+	ref.setLang( doc.getLang() );
+	ref.deferDoc = function () {
+		// cloneFromRange is very expensive, so lazy evaluate it
+		return doc.cloneFromRange( internalList.getItemNode( attr.listIndex ).getRange() );
+	};
 
 	return ref;
 };
@@ -135,7 +143,7 @@ ve.dm.MWReferenceModel.prototype.updateInternalItem = function ( surfaceModel ) 
 			txs.push( ve.dm.Transaction.newFromAttributeChanges(
 				doc,
 				refNodes[i].getOuterRange().start,
-				{ 'refGroup': this.group, 'listGroup': listGroup }
+				{ refGroup: this.group, listGroup: listGroup }
 			) );
 		}
 		surfaceModel.change( txs );
@@ -149,7 +157,7 @@ ve.dm.MWReferenceModel.prototype.updateInternalItem = function ( surfaceModel ) 
 	itemNodeRange = internalList.getItemNode( this.listIndex ).getRange();
 	surfaceModel.change( ve.dm.Transaction.newFromRemoval( doc, itemNodeRange, true ) );
 	surfaceModel.change(
-		ve.dm.Transaction.newFromDocumentInsertion( doc, itemNodeRange.start, this.doc )
+		ve.dm.Transaction.newFromDocumentInsertion( doc, itemNodeRange.start, this.getDocument() )
 	);
 };
 
@@ -162,49 +170,49 @@ ve.dm.MWReferenceModel.prototype.insertReferenceNode = function ( surfaceFragmen
 	surfaceFragment
 		.insertContent( [
 			{
-				'type': 'mwReference',
-				'attributes': {
-					'listKey': this.listKey,
-					'listGroup': this.listGroup,
-					'listIndex': this.listIndex,
-					'refGroup': this.group
+				type: 'mwReference',
+				attributes: {
+					listKey: this.listKey,
+					listGroup: this.listGroup,
+					listIndex: this.listIndex,
+					refGroup: this.group
 				}
 			},
-			{ 'type': '/mwReference' }
+			{ type: '/mwReference' }
 		] );
 };
 
 /**
- * Get key of reference in list.
+ * Get the key of a reference in the references list.
  *
- * @returns {string} Reference list key
+ * @returns {string} Reference's list key
  */
 ve.dm.MWReferenceModel.prototype.getListKey = function () {
 	return this.listKey;
 };
 
 /**
- * Get name of group reference list is in.
+ * Get the name of the group a references list is in.
  *
- * @returns {string} Reference list group
+ * @returns {string} References list's group
  */
 ve.dm.MWReferenceModel.prototype.getListGroup = function () {
 	return this.listGroup;
 };
 
 /**
- * Get index of reference in list.
+ * Get the index of reference in the references list.
  *
- * @returns {string} Reference list group
+ * @returns {string} Reference's index
  */
 ve.dm.MWReferenceModel.prototype.getListIndex = function () {
 	return this.listIndex;
 };
 
 /**
- * Get name of group reference is in.
+ * Get the name of the group a reference is in.
  *
- * @returns {string} Reference group
+ * @returns {string} Reference's group
  */
 ve.dm.MWReferenceModel.prototype.getGroup = function () {
 	return this.group;
@@ -219,54 +227,96 @@ ve.dm.MWReferenceModel.prototype.getGroup = function () {
  */
 ve.dm.MWReferenceModel.prototype.getDocument = function () {
 	if ( !this.doc ) {
-		this.doc = new ve.dm.Document( [
-			{ 'type': 'paragraph', 'internal': { 'generated': 'wrapper' } },
-			{ 'type': '/paragraph' },
-			{ 'type': 'internalList' },
-			{ 'type': '/internalList' }
-		] );
+		if ( this.deferDoc ) {
+			this.doc = this.deferDoc();
+		} else {
+			this.doc = new ve.dm.Document( [
+				{ type: 'paragraph', internal: { generated: 'wrapper' } },
+				{ type: '/paragraph' },
+				{ type: 'internalList' },
+				{ type: '/internalList' }
+			],
+			/* htmlDocument */ null,
+			/* parentDocument */ null,
+			/* internalList */ null,
+			/* innerWhitespace */ null,
+			/* lang */ this.getLang(),
+			/* dir */ this.getDir() );
+		}
 	}
 	return this.doc;
 };
 
 /**
+ * Set the directionality of the reference document
+ * @param {string} dir Document directionality
+ */
+ve.dm.MWReferenceModel.prototype.setDir = function ( dir ) {
+	this.dir = dir;
+};
+
+/**
+ * Get the directionality of the reference document
+ * @returns {string} Document directionality
+ */
+ve.dm.MWReferenceModel.prototype.getDir = function () {
+	return this.dir;
+};
+
+/**
+ * Set the language of the reference document
+ * @param {string} lang Document language
+ */
+ve.dm.MWReferenceModel.prototype.setLang = function ( lang ) {
+	this.lang = lang;
+};
+
+/**
+ * Get the language of the reference document
+ * @returns {string} Document language
+ */
+ve.dm.MWReferenceModel.prototype.getLang = function () {
+	return this.lang;
+};
+
+/**
  * Set key of reference in list.
  *
- * @param {string} Reference list key
+ * @param {string} Reference's list key
  */
 ve.dm.MWReferenceModel.prototype.setListKey = function ( listKey ) {
 	this.listKey = listKey;
 };
 
 /**
- * Set name of group reference list is in.
+ * Set name of the group a references list is in.
  *
- * @param {string} Reference list group
+ * @param {string} References list's group
  */
 ve.dm.MWReferenceModel.prototype.setListGroup = function ( listGroup ) {
 	this.listGroup = listGroup;
 };
 
 /**
- * Set index of reference in list.
+ * Set the index of reference in list.
  *
- * @param {string} Reference list group
+ * @param {string} Reference's list index
  */
 ve.dm.MWReferenceModel.prototype.setListIndex = function ( listIndex ) {
 	this.listIndex = listIndex;
 };
 
 /**
- * Set name of group reference is in.
+ * Set the name of the group a reference is in.
  *
- * @param {string} group Reference group
+ * @param {string} group Reference's group
  */
 ve.dm.MWReferenceModel.prototype.setGroup = function ( group ) {
 	this.group = group;
 };
 
 /**
- * Set reference document.
+ * Set the reference document.
  *
  * @param {ve.dm.Document} Reference document
  */

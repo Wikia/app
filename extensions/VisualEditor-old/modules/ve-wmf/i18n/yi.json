@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Malafaya",
+			"פוילישער",
+			"十弌"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|וויזועלער רעדאקטירער]]",
+	"tag-visualeditor-description": "רעדאקטירונג געמאכט מיטן [[{{MediaWiki:visualeditor-descriptionpagelink}}|וויזועלן רעדאקטירער]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|וויזועלער רעדאקטירער: קאנטראלירן]]",
+	"tag-visualeditor-needcheck-description": "רעדאקטירונג געמאכט מיטן [[{{MediaWiki:visualeditor-descriptionpagelink}}|וויזועל־רעדאַקטירער]] וואו די סיסטעם האט אנטדעקט אז דער וויקיטעקסט האט מעגלעך אומגעוואונטשטע ענדערונגען.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|וויזועל־רעדאקטירער: געטוישט]]",
+	"tag-visualeditor-switched-description": "באניצער האט אנגעהויבן רעדאקטירן מיטן וויזועל-רעדאקטירער און איז ארבער צום וויקיטעקסט רעדאקטירער.",
+	"visualeditor-feedback-link": "Project:VisualEditor/פֿידבעק",
+	"visualeditor-feedback-tool": "איבערלאזאן פֿידבעק",
+	"visualeditor-help-label": "לייענען דאס באניצער־האנטבוך",
+	"visualeditor-help-title": "באניצער־האנטבוך וויאזוי צו ניצן דעם רעדאקטירער"
+}

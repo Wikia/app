@@ -16,9 +16,9 @@
 *
 */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named SharedUserrights.\n";
-	exit(1) ;
+	exit( 1 ) ;
 }
 
 $wgExtensionCredits[ 'other' ][ ] = array(
@@ -31,10 +31,10 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SharedUserrights',
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['SharedUserrights'] = __DIR__ . '/SharedUserrights.i18n.php';
 
-if (!empty($wgSharedDB)) {
+if ( !empty( $wgSharedDB ) ) {
 	$wgHooks['UserEffectiveGroups'][] = 'UserRights::userEffectiveGroups';
 	$wgHooks['UserRights::groupCheckboxes'][] = 'UserRights::groupCheckboxes';
 	$wgHooks['UserRights::showEditUserGroupsForm'][] = 'UserRights::showEditUserGroupsForm';
@@ -46,6 +46,6 @@ if (!empty($wgSharedDB)) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Shared UserRights' ,
-	'author' => array("[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]", '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
+	'author' => array( "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]", '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]' ),
 	'description' => 'Easy global user rights administration'
 );

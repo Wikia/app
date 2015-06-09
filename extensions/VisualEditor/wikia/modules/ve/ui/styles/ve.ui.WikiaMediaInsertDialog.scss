@@ -1,7 +1,6 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/helpers/table-layout";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/cursor";
@@ -81,9 +80,9 @@ $width-cart: 120px;
 
 /* Cart */
 .ve-ui-wikiaCartWidget-wrapper {
-	@include box-sizing( border-box );
 	border-left: $color-page-border 1px solid;
 	bottom: 0;
+	box-sizing: border-box;
 	overflow: auto;
 	padding: $width-gutter;
 	position: absolute;
@@ -124,7 +123,7 @@ $width-cart: 120px;
 		}
 	}
 
-	.oo-ui-labeledElement-label {
+	.oo-ui-labelElement-label {
 		display: none;
 	}
 }
@@ -137,7 +136,7 @@ $width-cart: 120px;
 		margin-left: $width-media-item-max + $width-gutter;
 	}
 
-	.oo-ui-labeledElement-label {
+	.oo-ui-labelElement-label {
 		padding-top: 0;
 	}
 
@@ -182,7 +181,7 @@ $width-cart: 120px;
 
 /* Query */
 .ve-ui-wikiaMediaQueryWidget {
-	@include box-sizing( border-box );
+	box-sizing: border-box;
 	height: 75px;
 	padding: $width-gutter;
 
@@ -230,14 +229,17 @@ $width-cart: 120px;
 	top: 0;
 	right: 0;
 
-	.ve-ui-wikiaMediaOptionWidget-check {
+	.oo-ui-buttonElement-framed.ve-ui-wikiaMediaOptionWidget-check {
 		cursor: pointer;
 		position: absolute;
 		right: 0;
 		top: 0;
 
-		.oo-ui-buttonedElement-button {
-			.oo-ui-iconedElement-icon {
+		.oo-ui-buttonElement-button {
+			border: 0;
+			margin: 0;
+			padding: 0;
+			.oo-ui-iconElement-icon {
 				@if lightness($color-page) < 50 {
 					background-color: lighten($color-page, 9%);
 				} @else {
@@ -262,7 +264,7 @@ $width-cart: 120px;
 		margin: 0 10px 60px 0;
 		overflow: visible;
 
-		.oo-ui-labeledElement-label {
+		.oo-ui-labelElement-label {
 			background: $color-page;
 			bottom: auto;
 			color: $color-text;
@@ -324,8 +326,8 @@ $width-cart: 120px;
 
 /* Upload - TODO: Move to Widget.scss when Sass work is merged */
 .ve-ui-wikiaUploadButtonWidget {
-	@include box-sizing( border-box );
 	border: 3px dashed mix($color-page, black, 90%);
+	box-sizing: border-box;
 	cursor: pointer;
 	padding: 20px;
 	position: relative;

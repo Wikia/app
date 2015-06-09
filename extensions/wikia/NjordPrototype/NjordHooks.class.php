@@ -9,11 +9,15 @@ class NjordHooks {
 		return true;
 	}
 
+	/**
+	 * Removes Hero Module from WikiLabs if it is disabled (allows for opt-out only)
+	 * @return bool
+	 */
 	public static function onGetFeatureLabs( ) {
-		global $wgContLang, $wgWikiFeatures;
+		global $wgWikiFeatures, $wgEnableNjordExt;
 
-		if ( $wgContLang->getCode() == 'en' ) {
-			$wgWikiFeatures['labs'] [] = 'wgEnableNjordExt';
+		if ( empty( $wgEnableNjordExt ) ) {
+			$wgWikiFeatures['labs'] = array_diff( $wgWikiFeatures['labs'], [ 'wgEnableNjordExt' ] );
 		}
 
 		return true;
@@ -35,5 +39,24 @@ class NjordHooks {
 			}
 		}
 		return F::app()->renderView( 'Njord', 'modula', $attributes );
+	}
+
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		if ( WikiaPageType::isMainPage() ) {
+			$scripts = AssetsManager::getInstance()->getURL( 'njord_js' );
+
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+		return true;
+	}
+
+	static public function purgeMainPage( $args ) {
+		if ( $args['name'] === 'wgEnableNjordExt' ) {
+			Article::newFromTitle( Title::newFromText( self::MAINPAGE_PAGE ), RequestContext::getMain() )->doPurge();
+		}
+
+		return true;
 	}
 }

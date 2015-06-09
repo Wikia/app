@@ -1,1 +1,0 @@
-This directory contains the job control system used to run DumpHTML on Wikimedia. It is Wikimedia-specific and will require some tweaking to make it work in other environments.

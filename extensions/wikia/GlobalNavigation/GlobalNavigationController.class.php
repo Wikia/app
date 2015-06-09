@@ -12,9 +12,15 @@ class GlobalNavigationController extends WikiaController {
 	 */
 	private $helper;
 
+	/**
+	 * @var GlobalNavigationHelper
+	 */
+	private $wikiaLogoHelper;
+
 	public function __construct() {
 		parent::__construct();
 		$this->helper = new GlobalNavigationHelper();
+		$this->wikiaLogoHelper = new WikiaLogoHelper();
 	}
 
 	public function index() {
@@ -22,14 +28,11 @@ class GlobalNavigationController extends WikiaController {
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
-		Wikia::addAssetsToOutput( 'global_navigation_facebook_login_js' );
-		// TODO remove after when Oasis is retired
-		Wikia::addAssetsToOutput( 'global_navigation_oasis_scss' );
 
 		//Lang for centralUrl and CNW should be the same as user language not content language
 		//That's why $wgLang global is used
 		$lang = $wgLang->getCode();
-		$centralUrl = $this->helper->getCentralUrlForLang( $lang );
+		$centralUrl = $this->wikiaLogoHelper->getCentralUrlForLang( $lang );
 		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $lang );
 		$userCanRead = $wgUser->isAllowed( 'read' );
 
@@ -41,7 +44,7 @@ class GlobalNavigationController extends WikiaController {
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
 		if ( $isGameStarLogoEnabled ) {
-			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/css/GlobalNavigationGameStar.scss' );
+			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
 		}
 	}
 

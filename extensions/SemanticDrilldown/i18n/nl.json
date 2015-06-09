@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie",
+			"SPQRobin",
+			"Siebrand"
+		]
+	},
+	"semanticdrilldown-desc": "Een drilldowninterface voor het navigeren door semantische gegevens",
+	"specialpages-group-sd_group": "Semantic Drilldown",
+	"browsedata": "Gegevens bekijken",
+	"sd_browsedata_choosecategory": "Kies een categorie",
+	"sd_browsedata_viewcategory": "categorie bekijken",
+	"sd_browsedata_docu": "Selecteer een of meer van de onderstaande termen om het aantal resultaten te verkleinen.",
+	"sd_browsedata_subcategory": "Ondercategorie",
+	"sd_browsedata_other": "Andere",
+	"sd_browsedata_none": "Geen",
+	"sd_browsedata_filterbyvalue": "Op deze waarde filteren",
+	"sd_browsedata_filterbysubcategory": "Op deze ondercategorie filteren",
+	"sd_browsedata_otherfilter": "Pagina's met een andere waarde voor deze filter bekijken",
+	"sd_browsedata_nonefilter": "Pagina's zonder waarde voor deze filter bekijken",
+	"sd_browsedata_or": "of",
+	"sd_browsedata_removefilter": "Deze filter verwijderen",
+	"sd_browsedata_removesubcategoryfilter": "Deze ondercategoriefilter verwijderen",
+	"sd_browsedata_resetfilters": "Filters opnieuw instellen",
+	"sd_browsedata_addanothervalue": "Klik op de pijl om nog een waarde toe te voegen",
+	"sd_browsedata_daterangestart": "Begin:",
+	"sd_browsedata_daterangeend": "Einde:",
+	"sd_browsedata_novalues": "Er zijn geen waarden voor dit filter",
+	"sd_createfilter_usepropertyvalues": "Alle waarden voor deze eigenschap voor deze filter gebruiken",
+	"sd_createfilter_usecategoryvalues": "Waarden voor deze filter uit de volgende categorie halen:",
+	"sd_createfilter_requirefilter": "Selectie van een andere filter voor deze filter zichtbaar is vereisen:",
+	"sd-pageschemas-filter": "Filter",
+	"sd-pageschemas-values": "Waarden"
+}

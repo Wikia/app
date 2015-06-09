@@ -3,7 +3,7 @@
 class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 	const TTL_SCRIPTS = 1800; // half an hour -- cache scripts from ad.71i.de for this time
 	const TTL_GRACE = 300;    // five minutes -- cache last response additionally for this time if we can't download the scripts anymore
-	const CACHE_BUSTER = 6;   // increase this any time the local files change
+	const CACHE_BUSTER = 7;   // increase this any time the local files change
 
 	private function generateData() {
 		$global = Http::get('http://ad.71i.de/global_js/globalV6.js');
@@ -19,11 +19,13 @@ class ResourceLoaderAdEngineSevenOneMediaModule extends ResourceLoaderModule {
 		$myCss = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.css');
 		$myJs = file_get_contents(__DIR__ . '/SevenOneMedia/my_ad_integration.js');
 		$excludeAds = 'if (window.myAd && myAd.excludeAds) myAd.excludeAds();';
+		$cssForHubs = "#ads-outer { max-width: 1030px; width: 1030px; margin: 0 auto; }";
 
 		// $myCss = CSSMin::minify($myCss);
 
 		$script = [
-			'var SEVENONEMEDIA_CSS = ' . json_encode($myCss) . ';',
+			'var SEVENONEMEDIA_CSS = ' . json_encode($myCss) . ' + ',
+			'(window.wgOasisResponsive ? "" : ' . json_encode($cssForHubs) . ');',
 			$myJs,
 			$excludeAds,
 			$site,

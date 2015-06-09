@@ -47,20 +47,12 @@ $wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
 $wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'FacebookClientHooks::onSkinTemplatePageBeforeUserMsg';
+$wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::onSkinAfterBottomScripts';
 
 /**
  * messages
  */
 $wgExtensionMessagesFiles['FacebookClient'] = $dir . 'FacebookClient.i18n.php';
-
-/**
- * ResourceLoader modules
- */
-$wgResourceModules['ext.wikia.FacebookClient.XFBML'] = [
-	'scripts' => 'scripts/FacebookClient.XFBML.js',
-	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'wikia/FacebookClient',
-];
 
 JSMessages::registerPackage( 'FacebookClient', [
 	'fbconnect-preferences-connected',

@@ -290,7 +290,7 @@ class WikiFactoryLoader {
 							"city_dbname"
 						),
 						($this->mCityID) ? array( "city_list.city_id" => $this->mCityID ) : array( "city_list.city_dbname" => $this->mCityDB ),
-						__METHOD__
+						__METHOD__ . '::domaindb'
 					);
 
 				if( isset( $oRow->city_id ) )  {
@@ -334,7 +334,7 @@ class WikiFactoryLoader {
 						"city_domains.city_id = city_list.city_id",
 						"city_domains.city_domain" => $this->mServerName
 					),
-					__METHOD__
+					__METHOD__ . '::servername'
 				);
 				if( isset( $oRow->city_id ) &&  $oRow->city_id > 0 ) {
 					$oRow->city_domain = strtolower( $oRow->city_domain );
@@ -573,7 +573,7 @@ class WikiFactoryLoader {
 					"cv_id = cv_variable_id",
 					"cv_city_id = {$this->mWikiID}"
 				),
-				__METHOD__
+				__METHOD__ . '::varsdb'
 			);
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
 				#--- some magic, rewritting path, etc legacy data
@@ -618,7 +618,7 @@ class WikiFactoryLoader {
 					"city_tag.id = city_tag_map.tag_id",
 					"city_id = {$this->mWikiID}"
 				),
-				__METHOD__
+				__METHOD__ . '::tagsdb'
 			);
 			while( $row = $dbr->fetchObject( $sth ) ) {
 				$this->mVariables[ "wgWikiFactoryTags" ][ $row->id ] = $row->name;

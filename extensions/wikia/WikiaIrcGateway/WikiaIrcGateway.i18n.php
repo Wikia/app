@@ -335,7 +335,7 @@ $messages['ln'] = array(
 	'ircgate-channel' => 'Lileko:',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -413,7 +413,7 @@ $messages['oc'] = array(
 	'ircgate-channel' => 'Canal :',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -424,8 +424,10 @@ $messages['pdc'] = array(
 /** Polish (polski)
  * @author Sovq
  * @author Sp5uhe
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'ircgate-desc' => 'Pozwala użytkownikom na wstawianie formularza logującego do IRC na dowolnej stronie',
 	'ircgate-username' => 'Nazwa użytkownika:',
 	'ircgate-channel' => 'Kanał:',
 );
@@ -505,8 +507,10 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Tobulos1
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'ircgate-desc' => 'Låter användare infoga IRC-inloggningsformulär på valfri sida',
 	'ircgate-username' => 'Användarnamn:',
 	'ircgate-channel' => 'Kanal:',
 );
@@ -550,18 +554,22 @@ $messages['tt-cyrl'] = array(
 );
 
 /** Ukrainian (українська)
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
+	'ircgate-desc' => 'Дозволяє користувачам вставляти IRC форму входу на будь-які сторінці',
 	'ircgate-username' => "Ім'я користувача:",
 	'ircgate-channel' => 'Канал:',
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Dinhxuanduyet
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'ircgate-desc' => 'Cho phép người dùng nhúng khung đăng nhập IRC vào bất kỳ trang nào',
 	'ircgate-username' => 'Tên đăng nhập:',
 	'ircgate-channel' => 'Kênh:',
 );

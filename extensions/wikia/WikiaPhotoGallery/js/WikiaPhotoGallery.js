@@ -2546,7 +2546,7 @@
 		track: (function() {
 			var config = {
 					action: Wikia.Tracker.ACTIONS.CLICK,
-					trackingMethod: 'both'
+					trackingMethod: 'analytics'
 				},
 				slice = [].slice;
 

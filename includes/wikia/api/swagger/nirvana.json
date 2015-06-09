@@ -19,6 +19,10 @@
       "description": "Articles API"
     },
     {
+      "name": "mercury",
+      "decription": "Mercury API"
+    },
+    {
       "name": "navigation",
       "description": "Navigation API"
     },
@@ -704,6 +708,22 @@
             "default": ""
           }
         ]
+      }
+    },
+    "/Mercury/WikiVariables": {
+      "get": {
+        "tags": ["mercury"],
+        "responses": {
+          "200": {
+            "description": "Wiki dariable data",
+            "schema": {
+              "$ref": "WikiDataContainer"
+            }
+          }
+        },
+        "description": "",
+        "summary": "get wiki data, including key values, navigation data, and more",
+        "operationId": "getWikiData"
       }
     },
     "/Navigation/Data": {
@@ -2713,6 +2733,121 @@
           "items": {
             "$ref": "#/definitions/WikiaItem"
           }
+        }
+      }
+    },
+    "WikiDataContainer": {
+      "id": "WikiDataContainer",
+      "name": "",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/WikiData",
+          "description": "wiki data"
+        }
+      }
+    },
+    "WikiData": {
+      "id": "WikiData",
+      "name": "",
+      "required": [
+        "cacheBuster",
+        "dbName",
+        "defaultSkin",
+        "id",
+        "language",
+        "namespaces",
+        "sitename",
+        "mainPageTitle",
+        "wikiCategories",
+        "navData",
+        "vertical",
+        "basePath",
+        "isGASpecialWiki",
+        "articlePath",
+        "facebookAppId"
+      ],
+      "properties": {
+        "cacheBuster": {
+          "type": "integer",
+          "format": "int32",
+          "description": "current wiki cachebuster value"
+        },
+        "dbName": {
+          "type": "string"
+        },
+        "defaultSkin": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "language": {
+          "$ref": "#/definitions/WikiLanguageData"
+        },
+        "namespaces": {
+          "type": "object",
+          "properties": {},
+          "patternProperties": {
+            "^(-?[0-9]+)$": {}
+          }
+        },
+        "sitename": {
+          "type": "string"
+        },
+        "mainPageTitle": {
+          "type": "string"
+        },
+        "wikiCategories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "navData": {
+          "$ref": "#/definitions/NavigationResultSet"
+        },
+        "vertical": {
+          "type": "string"
+        },
+        "basePath": {
+          "type": "string"
+        },
+        "isGASpecialWiki": {
+          "type": "boolean"
+        },
+        "articlePath": {
+          "type": "string"
+        },
+        "facebookAppId": {
+          "type": "string"
+        }
+      }
+    },
+    "WikiLanguageData": {
+      "id": "WikiLanguageData",
+      "name": "",
+      "required": [
+        "user",
+        "userDir",
+        "content",
+        "contentDir"
+      ],
+      "properties": {
+        "user": {
+          "type": "string"
+        },
+        "userDir": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "contentDir": {
+          "type": "string"
         }
       }
     },

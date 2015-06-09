@@ -14,12 +14,19 @@ class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 	}
 
 	private function getIntegrationScript( $moduleName, $instantGlobalName ) {
-		$moduleName = json_encode( $moduleName );
+		$moduleName1 = json_encode( 'ext.wikia.adEngine.lookup.' . $moduleName );
+		$moduleName2 = json_encode( 'ext.wikia.adEngine.' . $moduleName );
 		$instantGlobalName = json_encode( $instantGlobalName );
 
 		$code = <<< CODE
-	require([$moduleName, "wikia.geo", "wikia.instantGlobals"], function (amazon, geo, globals) {
-		var ac = globals[$instantGlobalName];
+	require([
+		"wikia.geo",
+		"wikia.instantGlobals",
+		require.optional($moduleName1), // new name
+		require.optional($moduleName2)  // old name
+	], function (geo, globals, amazon1, amazon2) {
+		var ac = globals[$instantGlobalName],
+			amazon = amazon1 || amazon2;
 
 		if (ac && ac.indexOf && ac.indexOf(geo.getCountryCode()) > -1) {
 			amazon.call();
@@ -46,13 +53,13 @@ CODE;
 		}
 
 		if ( $wgEnableAmazonMatchOld ) {
-			$oldScript = self::getIntegrationScript( 'ext.wikia.adEngine.amazonMatchOld', 'wgAmazonMatchOldCountries' );
+			$oldScript = self::getIntegrationScript( 'amazonMatchOld', 'wgAmazonMatchOldCountries' );
 		} else {
 			$oldScript = '/* old integration disabled */';
 		}
 
 		if ( $wgEnableAmazonMatch ) {
-			$newScript = self::getIntegrationScript( 'ext.wikia.adEngine.amazonMatch', 'wgAmazonMatchCountries' );
+			$newScript = self::getIntegrationScript( 'amazonMatch', 'wgAmazonMatchCountries' );
 		} else {
 			$newScript = '/* new integration disabled */';
 		}

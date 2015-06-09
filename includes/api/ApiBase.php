@@ -24,6 +24,8 @@
  * @file
  */
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * This abstract class implements many basic API functions, and is the base of
  * all API classes.
@@ -61,6 +63,15 @@ abstract class ApiBase extends ContextSource {
 
 	private $mMainModule, $mModuleName, $mModulePrefix;
 	private $mParamCache = array();
+
+	// Wikia Change - BEGIN
+
+	/**
+	 * @var array List of parameters being added to log context.
+	 */
+	protected $mLogContextVariables = ['action', 'prop'];
+
+	// Wikia Change - END
 
 	/**
 	 * Constructor
@@ -1568,4 +1579,38 @@ abstract class ApiBase extends ContextSource {
 	public static function getBaseVersion() {
 		return __CLASS__ . ': $Id$';
 	}
+
+	// Wikia Change - BEGIN
+
+	/**
+	 * Sets up the WikiaLogger context for all log entries for current API call.
+	 * Adds extra information about module which handles the call and parameters
+	 * defined in mLogContextVariables array (if passed to a call).
+	 *
+	 * @param $params array Current query parameters
+	 */
+	protected function setupLogContext($params) {
+		$logContext = [];
+
+		foreach ( $params as $paramName => $paramValue) {
+			if ( !in_array ($paramName, $this->mLogContextVariables) ) {
+				continue;
+			}
+
+			$logContext[$paramName] = $paramValue;
+		}
+
+		$logContext['module_name'] = $this->getModuleName();
+
+		WikiaLogger::instance()->pushContext( $logContext );
+	}
+
+	/**
+	 * Removes the context from WikiaLogger. Must be called after setupLogContext().
+	 */
+	protected function destroyLogContext() {
+		WikiaLogger::instance()->popContext();
+	}
+
+	// Wikia Change - END
 }

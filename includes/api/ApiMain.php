@@ -718,11 +718,15 @@ class ApiMain extends ApiBase {
 			$this->setupExternalResponse( $module, $params );
 		}
 
+		$module->setupLogContext( $params ); // Wikia Change
+
 		// Execute
 		$module->profileIn();
 		$module->execute();
 		wfRunHooks( 'APIAfterExecute', array( &$module ) );
 		$module->profileOut();
+
+		$module->destroyLogContext(); // Wikia Change
 
 		if ( !$this->mInternalMode ) {
 			// Print result data

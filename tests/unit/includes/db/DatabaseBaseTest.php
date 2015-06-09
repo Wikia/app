@@ -23,7 +23,7 @@ class DatabaseBaseTester extends DatabaseBase {
 	function indexInfo( $table, $index, $fname = 'Database::indexInfo' ) {}
 	function affectedRows() {}
 	function strencode( $s ) {}
-	static function getSoftwareLink() {}
+	function getSoftwareLink() {}
 	function getServerVersion() {}
 	function getServerInfo() {}
 

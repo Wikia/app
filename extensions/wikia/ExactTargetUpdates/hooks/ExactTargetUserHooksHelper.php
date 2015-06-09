@@ -15,7 +15,7 @@ class ExactTargetUserHooksHelper {
 			'user_email' => $oUser->getEmail(),
 			'user_email_authenticated' => $oUser->getEmailAuthenticationTimestamp(),
 			'user_registration' => $oUser->getRegistration(),
-			'user_editcount' => $oUser->getEditCount(),
+			'user_editcount' => (int)$oUser->getEditCount(),
 			'user_touched' => $oUser->getTouched()
 		];
 		return $aUserParams;

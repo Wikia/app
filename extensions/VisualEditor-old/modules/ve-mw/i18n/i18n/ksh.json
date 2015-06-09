@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Purodha"
+		]
+	},
+	"visualeditor-ca-editsource": "der Quälltäx ändere",
+	"visualeditor-ca-ve-create": "Sigge beldlesch beärbeide",
+	"visualeditor-ca-ve-edit": "Sigge beldlesch beärbeide",
+	"visualeditor-desc": "Määd_et müjjelesch, em MedijaWikki Sigge beldlesch ze beärbeide.",
+	"visualeditor-dialog-meta-languages-name-label": "schprohch",
+	"visualeditor-editsummary": "Donn beschriive, wat De jeändert häs.",
+	"visualeditor-linkinspector-suggest-external-link": "Ene Wäblengk",
+	"visualeditor-linkinspector-suggest-new-page": "En neue Sigg",
+	"visualeditor-loadwarning": "Ene Fähler es opjetrodde beim Daate Laade vum däm ẞööver: <i lang=\"en\">$1</i>.",
+	"visualeditor-notification-created": "Di Sigg „$1“ es aanjelaat woode.",
+	"visualeditor-notification-saved": "Ding Änderonge aan dä Sigg „$1“ sin faßjehalde.",
+	"visualeditor-savedialog-label-create": "De Sigg aanlääje",
+	"visualeditor-savedialog-label-report": "E Probleem mälde",
+	"visualeditor-savedialog-label-restore": "Donn di Sigg zeröck holle",
+	"visualeditor-savedialog-label-review-good": "Sühd jood uß för mesch",
+	"visualeditor-savedialog-label-save": "De Sigg faßhallde",
+	"visualeditor-savedialog-title-save": "Donn Ding Änderonge faßhallde",
+	"visualeditor-saveerror": "Ene Fähler es opjetrodde beim Daate Faßhallde op däm ẞööver: <i lang=\"en\">$1</i>.",
+	"visualeditor-viewpage-savewarning": "Wells De verhaftesch retuur jonn op et beldlesch Beärbeide, der ohne eeds_ens di Sigg met Dinge Änderonge em Wiki faßzehallde?"
+}

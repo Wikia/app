@@ -2,7 +2,7 @@
 	<div class="avatar">
 		<a href="<?= $user_author_url ?>"><?= AvatarService::renderAvatar($username, 50) ?></a>
 	</div>
-	<blockquote class="message">
+	<div class="message">
 		<div class="social-toolbar">
 			<? if ($isWatched): ?>
 				<button class="follow following" data-iswatched="1"><?= wfMessage( 'forum-board-thread-following' )->escaped() ?></button>
@@ -63,7 +63,7 @@
 			<?= $app->getView('MiniEditorController', 'Footer')->render() ?>
 		<? endif ?>
 		<div class="throbber"></div>
-	</blockquote>
+	</div>
 </div>
 <? // TODO: refactor threadMessage so this can live in its own template ?>
 <ul class="replies">

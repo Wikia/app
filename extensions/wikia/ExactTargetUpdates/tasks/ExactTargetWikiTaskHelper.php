@@ -4,24 +4,6 @@ namespace Wikia\ExactTarget;
 class ExactTargetWikiTaskHelper {
 
 	/**
-	 * Merges tables with data for city_list and city_cat_mapping
-	 * @param  int $iCityId  A wiki's ID
-	 * @return array         An array with DataExtension objects data in a valid format
-	 */
-	public function prepareDataExtensionsForCreate( $iCityId ) {
-		$aWikiDataExtension = $this->prepareWikiDataExtensionForCreate( $iCityId );
-		$aCityCatMappingDataExtension = $this->prepareCityCatMappingDataExtensionForCreate( $iCityId );
-
-		$aDataExtensionsForCreate = [
-			'DataExtension' => [],
-		];
-
-		$aDataExtensionsForCreate['DataExtension'] = array_merge( $aDataExtensionsForCreate['DataExtension'], $aWikiDataExtension, $aCityCatMappingDataExtension );
-
-		return $aDataExtensionsForCreate;
-	}
-
-	/**
 	 * Prepares DataExtension objects data from a city_list record
 	 * @param  int $iCityId  A wiki's ID
 	 * @return array         An array with city_list DataExtension objects data in a valid format
@@ -74,6 +56,32 @@ class ExactTargetWikiTaskHelper {
 	}
 
 	/**
+	 * Prepares array of params for ExactTarget API for retrieving DataExtension objects from city_list table
+	 * @param array $aProperties list of fields to retrieve
+	 * @param string $sFilterProperty name of field to filter
+	 * @param array $aFilterValues possible values to filter
+	 * @return array
+	 */
+	public function prepareWikiDataExtensionRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = $this->getCustomerKeys();
+
+		$aApiParams = [
+			'DataExtension' => [
+				'ObjectType' => "DataExtensionObject[{$aCustomerKeys['city_list']}]",
+				'Properties' => $aProperties,
+			],
+			'SimpleFilterPart' => [
+				'Property' => $sFilterProperty,
+				'Value' => $aFilterValues
+			]
+		];
+
+		return $aApiParams;
+	}
+
+
+	/**
 	 * Prepares DataExtension objects data for Update from a city_list record
 	 * @param  int $iCityId  A wiki's ID
 	 * @return array         An array with city_list DataExtension objects data in a valid format
@@ -84,30 +92,56 @@ class ExactTargetWikiTaskHelper {
 		$aKeys = [
 			'city_id' => $iCityId,
 		];
-		
-		/* Get wikidata from master */
-		$oWiki = \WikiFactory::getWikiById( $iCityId, true );
-		$aWikiData = [
-			'city_url' => $oWiki->city_url,
-			'city_created' => $oWiki->city_created,
-			'city_founding_user' => $oWiki->city_founding_user,
-			'city_title' => $oWiki->city_title,
-			'city_lang' => $oWiki->city_lang,
-			'city_cluster' => $oWiki->city_cluster,
-			'city_vertical' => $oWiki->city_vertical,
-		];
 
-		$aWikiDataExtension = [
-			'DataExtension' => [
-				[
-					'CustomerKey' => $aCustomerKeys['city_list'],
-					'Keys' => $aKeys,
-					'Properties' => $aWikiData,
-				],
-			],
+		$aWikiData = $this->getWikiDataArray( $iCityId );
+		$aWikiDataExtension = [ 'DataExtension' => [] ];
+		$aWikiDataExtension['DataExtension'][] =  [
+				'CustomerKey' => $aCustomerKeys['city_list'],
+				'Keys' => $aKeys,
+				'Properties' => $aWikiData,
 		];
 
 		return $aWikiDataExtension;
+	}
+
+	/**
+	 * Returns array with fields values from city_list for provided city_id that are required for ExactTarget updates
+	 * @param int $iCityId
+	 * @return array
+	 */
+	public function getWikiDataArray( $iCityId ) {
+		/* Get wikidata from master */
+		$oWiki = \WikiFactory::getWikiById( $iCityId, true );
+		$aWikiData = [
+			'city_path' => $oWiki->city_path,
+			'city_dbname' => $oWiki->city_dbname,
+			'city_sitename' => $oWiki->city_sitename,
+			'city_url' => $oWiki->city_url,
+			'city_created' => $oWiki->city_created,
+			'city_founding_user' => $oWiki->city_founding_user,
+			'city_adult' => $oWiki->city_adult,
+			'city_public' => $oWiki->city_public,
+			'city_title' => $oWiki->city_title,
+			'city_founding_email' => $oWiki->city_founding_email,
+			'city_lang' => $oWiki->city_lang,
+			'city_special' => $oWiki->city_special,
+			'city_umbrella' => $oWiki->city_umbrella,
+			'city_ip' => $oWiki->city_ip,
+			'city_google_analytics' => $oWiki->city_google_analytics,
+			'city_google_search' => $oWiki->city_google_search,
+			'city_google_maps' => $oWiki->city_google_maps,
+			'city_indexed_rev' => $oWiki->city_indexed_rev,
+			'city_lastdump_timestamp' => $oWiki->city_lastdump_timestamp,
+			'city_factory_timestamp' => $oWiki->city_factory_timestamp,
+			'city_useshared' => $oWiki->city_useshared,
+			'ad_cat' => $oWiki->ad_cat,
+			'city_flags' => $oWiki->city_flags,
+			'city_cluster' => $oWiki->city_cluster,
+			'city_last_timestamp' => $oWiki->city_last_timestamp,
+			'city_founding_ip' => $oWiki->city_founding_ip,
+			'city_vertical' => $oWiki->city_vertical,
+		];
+		return $aWikiData;
 	}
 
 	/**
@@ -146,8 +180,10 @@ class ExactTargetWikiTaskHelper {
 
 		$oWikiFactoryHub = new \WikiFactoryHub();
 		$aCategories = $oWikiFactoryHub->getWikiCategories( $iCityId );
-		foreach( $aCategories as $aCategory ) {
-			$aCityCatMappingDataExtension[] = [
+		$aCityCatMappingDataExtension['DataExtension'] = [];
+
+		foreach ( $aCategories as $aCategory ) {
+			$aCityCatMappingDataExtension['DataExtension'][] = [
 				'CustomerKey' => $aCustomerKeys['city_cat_mapping'],
 				'Properties' => [
 					'city_id' => $iCityId,
@@ -169,7 +205,7 @@ class ExactTargetWikiTaskHelper {
 
 		$aCityCatMappingDataForRetrieve = [
 			'DataExtension' => [
-				'ObjectType' => "DataExtension[{$aCustomerKeys['city_cat_mapping']}]",
+				'ObjectType' => "DataExtensionObject[{$aCustomerKeys['city_cat_mapping']}]",
 				'Properties' => [ 'city_id', 'cat_id' ],
 			],
 			'SimpleFilterPart' => [

@@ -3,7 +3,6 @@
 @import "skins/oasis/css/core/responsive-variables";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/box-sizing";
 @import "skins/shared/mixins/gradient";
 
 $edit-box-color: mix($color-page, #000, 95%);
@@ -30,14 +29,14 @@ $edit-box-color: mix($color-page, #000, 95%);
 
 	.css-diff {
 		border: 1px solid $color-page-border;
+		box-sizing: border-box;
 		max-height: 400px;
 		overflow: auto;
 		padding: 10px;
-		@include box-sizing();
 	}
 
 	.css-editor-container {
-		@include box-sizing();
+		box-sizing: border-box;
 		min-height: 250px;
 		font-size: 13px;
 		padding: 0;
@@ -76,9 +75,9 @@ $edit-box-color: mix($color-page, #000, 95%);
 		}
 
 		.edit-summary {
-			@include box-sizing();
 			border: 1px solid $color-page-border;
 			border-radius: 4px;
+			box-sizing: border-box;
 			clear: both;
 			margin: 5px 0;
 			padding: 5px;
@@ -219,8 +218,8 @@ $edit-box-color: mix($color-page, #000, 95%);
 	}
 }
 
-@if ( $responsive-layout-enabled ) {
-	@media screen and (max-width: $breakpoint-small) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
+	@media screen and (max-width: 1024px) {
 		.css-editor,
 		.css-side-bar {
 			float: none;

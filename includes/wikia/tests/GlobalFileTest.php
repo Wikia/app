@@ -25,14 +25,17 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
 	}
 
+	private function getSelectRowMock() {
+		return $this->getMethodMock( 'DatabaseBase', 'selectRow' );
+	}
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.04145 ms
 	 * @dataProvider newFromTextProvider
 	 */
 	public function testNewFromText($row, $cityId, $path, $exists, $width, $height, $crop, $mime, $url) {
-		$mockSelectRow = $this->getMethodMock( 'DatabaseMysql', 'selectRow' );
-		$mockSelectRow
+		$this->getSelectRowMock()
 			->expects( $this->any() )
 			->method( 'selectRow' )
 			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {
@@ -120,8 +123,7 @@ class GlobalFileTest extends WikiaBaseTest {
 	 * @group UsingDB
 	 */
 	public function testNewFromTextDbNameMatch($row, $cityId) {
-		$mockSelectRow = $this->getMethodMock( 'DatabaseMysql', 'selectRow' );
-		$mockSelectRow
+		$this->getSelectRowMock()
 			->expects( $this->any() )
 			->method( 'selectRow' )
 			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {

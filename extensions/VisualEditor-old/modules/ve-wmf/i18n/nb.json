@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Danmichaelo",
+			"Event",
+			"Jeblad",
+			"Laaknor",
+			"Njardarlogar"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Redigering gjort ved hjelp av [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Sjekk]]",
+	"tag-visualeditor-needcheck-description": "Redigering gjort med [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] med mulige utilsiktede endringer i wikiteksten.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Byttet]]",
+	"tag-visualeditor-switched-description": "Brukeren begynte å redigere med VisualEditor og byttet deretter til wikitekst-redigering.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
+	"visualeditor-feedback-tool": "Gi tilbakemelding",
+	"visualeditor-help-label": "Les brukerhåndboka",
+	"visualeditor-help-title": "Brukerhåndbok for bruk av editoren"
+}

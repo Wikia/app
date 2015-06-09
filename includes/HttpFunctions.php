@@ -54,10 +54,6 @@ class Http {
 			}
 		}
 
-		// @author macbre
-		// pass Request ID to internal requests
-		$req->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
-
 		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
@@ -248,6 +244,17 @@ class MWHttpRequest {
 	protected $respStatus = "200 Ok";
 	protected $respHeaders = array();
 
+	// Wikia change - begin - @author: wladek
+	/**
+	 * Send X-Request-Id and X-Request-Origin-Host headers
+	 * @var bool
+	 */
+	protected $internalRequest = false;
+	// Wikia change - end
+
+	/**
+	 * @var Status
+	 */
 	public $status;
 
 	/**
@@ -278,6 +285,7 @@ class MWHttpRequest {
 		// Wikia change - @author: wladek - begin
 		// allow overriding of curl options
 		$members[] = "curlOptions";
+		$members[] = "internalRequest";
 		// Wikia change - end
 
 		foreach ( $members as $o ) {
@@ -478,6 +486,17 @@ class MWHttpRequest {
 		if ( !isset( $this->reqHeaders['User-Agent'] ) ) {
 			$this->setUserAgent( Http::userAgent() );
 		}
+
+		// @author macbre
+		// pass Request ID to internal requests
+		$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+
+		// Wikia change - begin - @author: wladek
+		// Append extra headers for internal requests, currently only X-Request-Origin-Host
+		if ( $this->internalRequest ) {
+			$this->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname() );
+		}
+		// Wikia change - end
 	}
 
 	/**

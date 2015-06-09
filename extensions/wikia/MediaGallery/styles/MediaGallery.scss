@@ -1,13 +1,15 @@
-@import 'skins/shared/mixins/background-opacity.scss';
-@import 'skins/shared/color.scss';
+@import 'skins/shared/mixins/background-opacity';
+@import 'skins/shared/color';
 
 $media-margin: 2.5px;
 
 .ve {
 	.media-gallery-wrapper {
+
 		.media {
 			transition: none;
 		}
+
 		// Hide "Show more" button when gallery is displayed in VE
 		.more {
 			display: none;
@@ -24,14 +26,19 @@ $media-margin: 2.5px;
 
 .media-gallery-wrapper {
 	@include grid-row();
-	clear: both;
 	margin: 0 $media-margin * -1;
 	padding: 1px; // leave room for the image outlines
 	width: auto;
 
+	// galleries don't need a clearfix after them.
+	&:after {
+		clear: none;
+	}
+
 	// default is 8 or more images
 	.media {
-		@include grid-column(3);
+		@include grid-column(3, $float: false);
+		display: inline-block;
 		position: relative;
 		transition: all 1s ease-in-out;
 
@@ -52,38 +59,38 @@ $media-margin: 2.5px;
 	}
 
 	&.count-1 .media {
-		@include grid-column(6, false, false, 3);
+		@include grid-column(6, false, false, 3, $float: false);
 	}
 
 	&.count-2 .media {
-		@include grid-column(6);
+		@include grid-column(6, $float: false);
 	}
 
 	&.count-3 .media {
-		@include grid-column(4);
+		@include grid-column(4, $float: false);
 	}
 
 	&.count-4 .media {
-		@include grid-column(3);
+		@include grid-column(3, $float: false);
 	}
 
 	&.count-5 .media {
 		@include grid-column(6);
 
 		&:nth-child(n+2) {
-			@include grid-column(3);
+			@include grid-column(3, $float: false);
 		}
 	}
 
 	&.count-6 .media {
-		@include grid-column(4);
+		@include grid-column(4, $float: false);
 	}
 
 	&.count-7 .media {
-		@include grid-column(4);
+		@include grid-column(4, $float: false);
 
 		&:nth-child(n+4) {
-			@include grid-column(3);
+			@include grid-column(3, $float: false);
 		}
 	}
 
@@ -92,7 +99,6 @@ $media-margin: 2.5px;
 	}
 
 	.toggler {
-		clear: both;
 		margin-left: $media-margin * -1;
 		padding: .5em;
 		text-align: center;
@@ -166,6 +172,10 @@ $media-margin: 2.5px;
 		float: right;
 		margin-right: $media-margin + .1; // add a little space for right border
 	}
+}
+
+.media-gallery-inner {
+	overflow: hidden;
 }
 
 // display the add image button on the same line as headers that come directly before the gallery

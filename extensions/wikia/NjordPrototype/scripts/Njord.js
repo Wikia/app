@@ -2,26 +2,29 @@
 	'use strict';
 
 	$.event.props.push('dataTransfer');
+
 	function placeCaretAtEnd(el) {
 		el.focus();
-		if (typeof window.getSelection != "undefined"
-			&& typeof document.createRange != "undefined") {
+
+		if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
 			var range = document.createRange();
+
 			range.selectNodeContents(el);
 			range.collapse(false);
+
 			var sel = window.getSelection();
 			sel.removeAllRanges();
 			sel.addRange(range);
 		} else if (typeof document.body.createTextRange != "undefined") {
 			var textRange = document.body.createTextRange();
+
 			textRange.moveToElementText(el);
 			textRange.collapse(false);
 			textRange.select();
 		}
-	};
+	}
 
-	var
-		HERO_ASPECT_RATIO = 4 / 16,
+	var HERO_ASPECT_RATIO = 3.89 / 16,
 		States = {
 			list: [
 				'zero-state',
@@ -40,8 +43,8 @@
 				}
 			}
 		},
+
 		heroData = {
-			oTitle: null,
 			oDescription: null,
 			oImage: null,
 			oCropposition: 0,
@@ -53,34 +56,22 @@
 			imagechanged: false,
 			datachanged: false
 		},
-	//hero image elements
+
+		//hero image elements
 		$imageElement = $('.MainPageHeroHeader .image-wrap'),
 		$imageSaveElement = $('.MainPageHeroHeader .image-save-bar'),
-		$titleElement = $('.MainPageHeroHeader .title-wrap'),
-		$titleEditElement = $('.MainPageHeroHeader .title-wrap .edit-box'),
-		$titleEditBoxText = $('.MainPageHeroHeader .title-wrap .edit-box .hero-title'),
-
 		$imageDiscardBtn = $('.MainPageHeroHeader .image-save-bar .discard-btn'),
 		$imageSaveBtn = $('.MainPageHeroHeader .image-save-bar .save-btn'),
-
-		$titleEditBtn = $('.MainPageHeroHeader .title-wrap .title-edit-btn'),
-		$titleSaveBtn = $('.MainPageHeroHeader .title-wrap .save-btn'),
-		$titleDiscardBtn = $('.MainPageHeroHeader .title-wrap .discard-btn'),
-		$titleText = $('.MainPageHeroHeader .title-wrap .title-text'),
-
+		$titleEditBtn = $('.MainPageHeroHeader .title-edit-btn'),
 		$descriptionElement = $('.MainPageHeroHeader .hero-description'),
-		$descriptionEditElement = $('.MainPageHeroHeader .hero-description .edit-box'),
-		$descriptionEditBtn = $('.MainPageHeroHeader .hero-description .edit-btn'),
 		$descriptionSaveBtn = $('.MainPageHeroHeader .hero-description .save-btn'),
 		$descriptionDiscardBtn = $('.MainPageHeroHeader .hero-description .discard-btn'),
 		$descriptionEditBoxText = $('.MainPageHeroHeader .hero-description .edit-box .edited-text'),
 		$descriptionText = $('.hero-description-text'),
-
 		$body = $('body'),
 		$heroHeader = $('.MainPageHeroHeader'),
 		$overlay = $('#MainPageHero .overlay'),
 		$heroModule = $('#MainPageHero'),
-		$heroModuleTitle = $('#MainPageHero .hero-title'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
 		$heroModuleUploadMask = $('#MainPageHero .upload-mask'),
 		$heroModuleAddButton = $('#MainPageHero .upload .upload-btn'),
@@ -88,7 +79,6 @@
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
 		$heroPositionText = $('#MainPageHero .position-info'),
-
 		$wikiaArticle = $('#WikiaArticle'),
 
 		trackDragOnlyOncePerImage = false,
@@ -96,10 +86,6 @@
 		saveHeroImageLabel = 'publish-hero-image',
 		saveHeroImageFailLabel = 'hero-image-fail',
 		revertHeroImageLabel = 'discard-hero-image',
-		editTitleLabel = 'edit-hero-title',
-		saveTitleLabel = 'publish-hero-title',
-		saveTitleFailLabel = 'hero-title-fail',
-		revertTitleFailLabel = 'discard-hero-title',
 		saveSummaryLabel = 'publish-hero-summary',
 		saveSummaryFailLabel = 'hero-summary-fail',
 		revertSummaryLabel = 'discard-hero-summary',
@@ -122,12 +108,14 @@
 				ga_action: trackAction,
 				ga_category: trackCategory,
 				label: trackLabel,
-				trackingMethod: 'ga'
+				trackingMethod: 'analytics'
 			});
 		},
+
 		trackMom = function (trackLabel, trackAction) {
 			trackHelper(trackLabel, trackAction, 'MOM');
 		},
+
 		saveImage = function () {
 			States.setState($imageSaveElement, 'filled-state');
 			$imageElement.startThrobbing();
@@ -160,6 +148,7 @@
 				}
 			});
 		},
+
 		revertImage = function () {
 			$imageElement.startThrobbing();
 			$heroModuleImage.draggable({disabled: true});
@@ -180,77 +169,38 @@
 				States.setState($imageSaveElement, 'filled-state');
 			}
 		},
-		editTitle = function () {
-			//turn off description editing
-			revertDescription();
-			States.setState($titleElement, 'edit-state');
-			$heroModuleTitle.focus();
-			$heroModuleTitle.change();
-			placeCaretAtEnd($titleEditBoxText.get(0));
-		},
-		saveTitle = function () {
-			$titleEditElement.startThrobbing();
+
+		saveDescription = function() {
+			var description = heroData.description.trim();
+
+			$descriptionElement.startThrobbing();
+
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
-				method: 'saveHeroTitle',
+				method: 'saveTitleAndDescription',
 				type: 'POST',
 				data: {
-					'title': heroData.title
-				},
-				callback: function (data) {
-					if (data.success) {
-						$titleText.text(heroData.oTitle = heroData.title);
-						States.setState($titleElement, 'filled-state');
-					} else {
-						revertTitle();
-					}
-					$titleEditElement.stopThrobbing();
-				},
-				onErrorCallback: function () {
-					revertTitle();
-					$titleEditElement.stopThrobbing();
-					trackMom(saveTitleFailLabel, trackerActionError);
-				}
-			});
-		},
-		revertTitle = function () {
-			$heroModuleTitle.text(heroData.oTitle);
-			$titleText.text(heroData.oTitle);
-			if (heroData.oTitle === "") {
-				States.setState($titleElement, 'zero-state');
-			} else {
-				States.setState($titleElement, 'filled-state');
-			}
-		},
-		saveDescription = function () {
-			$descriptionEditElement.startThrobbing();
-			$.nirvana.sendRequest({
-				controller: 'NjordController',
-				method: 'saveHeroDescription',
-				type: 'POST',
-				data: {
-					'description': heroData.description
+					'description': description
 				},
 				callback: function (data) {
 					if (data.success) {
 						States.setState($descriptionElement, 'filled-state');
-						heroData.oDescription = heroData.description;
-						$descriptionText.text(heroData.description);
+						heroData.oDescription = description;
+						$descriptionText.text(description);
 					} else {
 						revertDescription();
 					}
-					$descriptionEditElement.stopThrobbing();
+					$descriptionElement.stopThrobbing();
 				},
 				onErrorCallback: function () {
 					revertDescription();
-					$descriptionEditElement.stopThrobbing();
-					trackMom(saveSummaryFailLabel, trackerActionPost);
+					$descriptionElement.stopThrobbing();
+					trackMom(saveSummaryFailLabel, trackerActionError);
 				}
 			});
 		},
+
 		editDescription = function () {
-			//turn off title editing
-			revertTitle();
 			States.setState($descriptionElement, 'edit-state');
 
 			//FIXME: fix onChange event, caret at end on focus
@@ -259,6 +209,7 @@
 			$descriptionEditBoxText.change();
 			placeCaretAtEnd($descriptionEditBoxText.get(0));
 		},
+
 		revertDescription = function () {
 			heroData.description = heroData.oDescription;
 			if (heroData.oDescription == undefined || heroData.oDescription.trim() === "") {
@@ -270,31 +221,37 @@
 		},
 
 		initializeData = function () {
-			heroData.title = heroData.oTitle = $heroModuleTitle.text();
 			heroData.description = heroData.oDescription = $descriptionText.text();
 			heroData.imagepath = heroData.oImage = $heroModuleImage.data('fullpath');
 			heroData.cropposition = heroData.oCropposition = $heroModuleImage.data('cropposition');
-		}, onPaste = function (e) {
+		},
+
+		onPaste = function (e) {
 			var $this = $(this);
 			window.setTimeout(function() {
 				$this.html($this.text());
 				placeCaretAtEnd($this.get(0));
 			}, 1);
 			return $this;
-		}, onFocus = function () {
+		},
+
+		onFocus = function () {
 			var $this = $(this);
 			$this.data('before', $this.html());
 			return $this;
-		}, onInput = function () {
+		},
+
+		onInput = function () {
 			var $this = $(this);
 			if ($this.data('before') !== $this.html()) {
 				$this.data('before', $this.html());
 				$this.trigger('change');
 			}
 			return $this;
-		}, onChange = function (event, imagePath, imageName) {
+		},
+
+		onChange = function (event, imagePath, imageName) {
 			var target = $(event.target);
-			heroData.title = $heroModuleTitle.text();
 			heroData.description = $descriptionEditBoxText.text();
 			if (imagePath || imageName) {
 				heroData.imagepath = imagePath;
@@ -304,12 +261,20 @@
 			} else {
 				if (typeof target !== 'undefined' && target.caret === 'function') {
 					var caretSave = target.caret();
-					$heroModuleTitle.text($heroModuleTitle.text());
 					target.caret(caretSave);
 				}
 			}
+
+			if (heroData.description.trim().length === 0) {
+				$descriptionSaveBtn.attr("disabled", "disabled");
+			} else {
+				$descriptionSaveBtn.removeAttr("disabled");
+			}
+
 			heroData.changed = true;
-		}, onImageLoad = function () {
+		},
+
+		onImageLoad = function () {
 			var top = -heroData.cropposition * $heroModuleImage.height();
 			if (top + $heroModuleImage.height() >= $heroModule.height()) {
 				$heroModuleImage.css({top: top});
@@ -319,9 +284,15 @@
 			$heroModule.stopThrobbing();
 			$heroModule.trigger('resize');
 			trackDragOnlyOncePerImage = false;
-		}, onResize = function () {
-			$heroModule.outerHeight($heroModule.width() * HERO_ASPECT_RATIO);
-		}, onDraggingEnabled = function () {
+		},
+
+		onResize = function () {
+			if (!$imageElement.hasClass('zero-state')) {
+				$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
+			}
+		},
+
+		onDraggingEnabled = function () {
 			var heroHeight = $heroModuleImage.height(),
 				heroModuleHeight = $heroModule.height(),
 				heroOffsetTop = $heroModule.offset().top,
@@ -340,12 +311,18 @@
 					}
 				}
 			});
-		}, onDragDisabled = function () {
+		},
+
+		onDragDisabled = function () {
 			return false;
 		},
+
 		onAfterSendForm = function (data) {
 			if (data.isOk) {
 				$heroModuleImage.bind('load', function () {
+					if ($imageElement.hasClass('zero-state')) {
+						$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
+					}
 					States.setState($imageElement, 'upload-state');
 					States.setState($imageSaveElement, 'upload-state');
 					$heroModule.trigger('enableDragging');
@@ -356,12 +333,14 @@
 				$heroModule.trigger('resize');
 				$heroModule.trigger('change', [data.url, data.filename]);
 				trackMom(imageLoadedLabel, trackerActionSuccess);
+
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				$.showModal(data.errTitle, data.errMessage);
+				new window.GlobalNotification(data.errMessage, 'error').show();
 				$heroModule.stopThrobbing();
 			}
 		},
+
 		sendForm = function (formdata) {
 			$heroModule.startThrobbing();
 			$.nirvana.sendRequest({
@@ -377,8 +356,9 @@
 				processData: false,
 				contentType: false
 			});
+		},
 
-		}, initializeEditMode = function () {
+		initializeEditMode = function () {
 			//load messages
 			$imageSaveBtn.on('click', saveImage)
 				.on('click', function () {
@@ -388,23 +368,10 @@
 				.on('click', function () {
 					trackMom(revertHeroImageLabel, trackerActionClick);
 				});
-			$titleEditBtn.on('click', editTitle)
+			$titleEditBtn.on('click', editDescription)
 				.on('click', function () {
-					trackMom(editTitleLabel, trackerActionClick);
+					trackMom(editSummaryLabel, trackerActionClick);
 				});
-			$titleSaveBtn.on('click', saveTitle)
-				.on('click', function () {
-					trackMom(saveTitleLabel, trackerActionClick);
-				});
-			$titleDiscardBtn.on('click', revertTitle)
-				.on('click', function () {
-					trackMom(revertTitleFailLabel, trackerActionClick);
-				});
-
-			$heroModuleTitle.on('focus', onFocus)
-				.on('blur keyup paste input', onInput)
-				.on('paste', onPaste)
-				.on('change', onChange);
 
 			//on(load) on img buged on this jquery
 			$heroModuleImage[0].addEventListener('load', onImageLoad);
@@ -416,10 +383,6 @@
 				.on('blur keyup paste input', onInput)
 				.on('change', onChange);
 
-			$descriptionEditBtn.on('click', editDescription)
-				.on('click', function () {
-					trackMom(editSummaryLabel, trackerActionClick);
-				});
 			$descriptionDiscardBtn.on('click', revertDescription)
 				.on('click', function () {
 					trackMom(revertSummaryLabel, trackerActionClick);
@@ -439,12 +402,14 @@
 				$heroModuleUploadMask.show();
 				return false;
 			});
+
 			$heroModuleUploadMask.on('dragleave', function (e) {
 				$overlay.hide();
 				$heroModuleUploadMask.hide();
 				e.stopImmediatePropagation();
 				return false;
 			});
+
 			$heroModuleUploadMask.on('dragend', function () {
 				return false;
 			});
@@ -495,21 +460,25 @@
 			$heroPositionText.on('mousedown', function(e) {
 				$heroModuleImage.trigger(e);
 			});
-		}, initializeEditButton = function () {
+		},
+
+		initializeEditButton = function () {
 			var onclose = new MutationObserver(function (m) {
 				$('.MainPageHeroHeader .global-edit-wrap').show();
 				onclose.disconnect();
-			});
-			var onload = new MutationObserver(function (m) {
+			}),
+				onload = new MutationObserver(function (m) {
 				$('.MainPageHeroHeader .global-edit-wrap').hide();
 				onload.disconnect();
 				onclose.observe($wikiaArticle[0], {childList: true});
 			});
+
 			$('#ca-ve-edit').on('click', function () {
 				onload.observe($wikiaArticle[0], {childList: true});
 				//TODO make a distinction between Visual editor and old one
 				trackHelper('edit', 'click', 'article');
 			});
+
 			if (window.location.search.indexOf('veaction=edit') >= 0) {
 				onload.observe($wikiaArticle[0], {childList: true});
 			}
@@ -520,7 +489,9 @@
 		States.clearState($heroHeader);
 		initializeEditMode();
 	}
+
 	initializeEditButton();
+
 	$heroModule.trigger('resize');
 	$(window).resize(onResize);
 })(window, jQuery);

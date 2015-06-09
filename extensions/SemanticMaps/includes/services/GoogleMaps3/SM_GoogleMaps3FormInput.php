@@ -7,7 +7,7 @@
  * @file SM_GoogleMaps3FormInput.php
  * @ingroup SemanticMaps
  *
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class SMGoogleMaps3FormInput extends SMFormInput {
@@ -20,7 +20,7 @@ class SMGoogleMaps3FormInput extends SMFormInput {
 	 * @return array of string
 	 */
 	protected function getResourceModules() {
-		return array_merge( parent::getResourceModules(), array( 'ext.sm.fi.googlemaps3.single' ) );
+		return array_merge( parent::getResourceModules(), array( 'ext.sm.fi.googlemaps3' ) );
 	}	
 	
 }

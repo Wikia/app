@@ -61,7 +61,6 @@ class CreateNewWikiController extends WikiaController {
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
-		$this->isUserEmailConfirmed = $wgUser->isEmailConfirmed();
 
 		// remove wikia plus for now for all languages
 		$skipWikiaPlus = true;
@@ -109,7 +108,7 @@ class CreateNewWikiController extends WikiaController {
 		$allCategories = WikiFactoryHub::getInstance()->getAllCategories( true );
 
 		// Defines order in which verticals are going to be displayed in the <select>
-		$verticalsOrder = array( 2, 7, 4, 3, 1, 6, 5, 0 );
+		$verticalsOrder = array( 2, 7, 4, 3, 1, 6, 5 );
 
 		// Defines sets of categories and order of categories in each set
 		$categoriesSetsOrder = array(
@@ -118,23 +117,61 @@ class CreateNewWikiController extends WikiaController {
 		);
 
 		// Defines mapping between vertical and categories set
-		$verticalToCategoriesSetMapping = array( 2 => 1, 7 => 1, 4 => 1, 3 => 1, 1 => 1, 6 => 1, 5 => 2, 0 => 2 );
+		$verticalToCategoriesSetMapping = array( 2 => 1, 7 => 1, 4 => 1, 3 => 1, 1 => 1, 6 => 1, 5 => 2 );
 
-		$this->verticals = array();
+		/**
+		 * Current keys for translating Vertical ID to string:
+		 * 'oasis-label-wiki-vertical-id-1' => 'TV',
+		 * 'oasis-label-wiki-vertical-id-2' => 'Video Games',
+		 * 'oasis-label-wiki-vertical-id-3' => 'Books',
+		 * 'oasis-label-wiki-vertical-id-4' => 'Comics',
+		 * 'oasis-label-wiki-vertical-id-5' => 'Lifestyle',
+		 * 'oasis-label-wiki-vertical-id-6' => 'Music',
+		 * 'oasis-label-wiki-vertical-id-7' => 'Movies',
+		 */
+		$this->verticals = [];
 		foreach($verticalsOrder as $verticalId) {
-			$this->verticals[] = array(
-				'id' => $allVerticals[$verticalId]['id'],
-				'name' => $allVerticals[$verticalId]['name'],
-				'short' => $allVerticals[$verticalId]['short'],
+			$verticalData = $allVerticals[$verticalId];
+			$this->verticals[] = [
+				'id' => $verticalData['id'],
+				'name' => wfMessage( 'oasis-label-wiki-vertical-id-' . $verticalData['id'] )->escaped(),
+				'short' => $verticalData['short'],
 				'categoriesSet' => $verticalToCategoriesSetMapping[$verticalId]
-			);
+			];
 		}
 
-		$this->categoriesSets = array();
+		/**
+		 * Current keys for translating Category ID to string:
+		 * 'oasis-label-wiki-category-id-1' => 'Humor',
+		 * 'oasis-label-wiki-category-id-5' => 'Toys',
+		 * 'oasis-label-wiki-category-id-6' => 'Food and Drink',
+		 * 'oasis-label-wiki-category-id-7' => 'Travel',
+		 * 'oasis-label-wiki-category-id-8' => 'Education',
+		 * 'oasis-label-wiki-category-id-10' => 'Finance',
+		 * 'oasis-label-wiki-category-id-11' => 'Politics',
+		 * 'oasis-label-wiki-category-id-12' => 'Technology',
+		 * 'oasis-label-wiki-category-id-13' => 'Science',
+		 * 'oasis-label-wiki-category-id-14' => 'Philosophy',
+		 * 'oasis-label-wiki-category-id-15' => 'Sports',
+		 * 'oasis-label-wiki-category-id-16' => 'Music',
+		 * 'oasis-label-wiki-category-id-17' => 'Creative',
+		 * 'oasis-label-wiki-category-id-18' => 'Auto',
+		 * 'oasis-label-wiki-category-id-21' => 'TV',
+		 * 'oasis-label-wiki-category-id-22' => 'Video Games',
+		 * 'oasis-label-wiki-category-id-23' => 'Books',
+		 * 'oasis-label-wiki-category-id-24' => 'Comics',
+		 * 'oasis-label-wiki-category-id-25' => 'Fanon',
+		 * 'oasis-label-wiki-category-id-26' => 'Home and Garden',
+		 * 'oasis-label-wiki-category-id-27' => 'Movies',
+		 * 'oasis-label-wiki-category-id-28' => 'Anime',
+		 */
+		$this->categoriesSets = [];
 		foreach($categoriesSetsOrder as $setId => $categoriesOrder) {
-			$categoriesSet = array();
+			$categoriesSet = [];
 			foreach($categoriesOrder as $categoryId) {
-				$categoriesSet[] = $allCategories[$categoryId];
+				$categoryData = $allCategories[$categoryId];
+				$categoryData['name'] = wfMessage( 'oasis-label-wiki-category-id-' . $categoryId )->escaped();
+				$categoriesSet[] = $categoryData;
 			}
 			$this->categoriesSets[$setId] = $categoriesSet;
 		}

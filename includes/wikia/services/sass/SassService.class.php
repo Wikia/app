@@ -25,7 +25,7 @@ use Wikia\Sass\Compiler\ExternalRubyCompiler;
  */
 class SassService extends WikiaObject {
 
-	const CACHE_VERSION = 5; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
+	const CACHE_VERSION = 6; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
