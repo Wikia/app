@@ -15,16 +15,24 @@ class PortableInfoboxDataService {
 		return $data;
 	}
 
-	public function getImageListFromInfoboxData( $data ) {
+	/**
+	 * Get image list from infobox data
+	 * @param $data array in format returned by PortableInfoboxDataService::getInfoboxDataByTitle which is
+	 * an array of arrays returned by Wikia\PortableInfobox\Parser\XmlParser::getDataFromXmlString
+	 * @return array
+	 */
+	public function getImageListFromInfoboxesData( $data ) {
 		$images = [];
-		foreach ( $data as $infobox ) {
-			foreach ( $infobox as $field ) {
-				if ( $field['type'] == self::IMAGE_FIELD_TYPE && isset( $field['data'] ) && !empty( $field['data']['key'] ) ) {
-					$images[ $field['data']['key'] ] = true;
+
+		if ( is_array( $data ) ) {
+			foreach ( $data as $infobox ) {
+				foreach ( $infobox as $field ) {
+					if ( $field['type'] == self::IMAGE_FIELD_TYPE && isset( $field['data'] ) && !empty( $field['data']['key'] ) ) {
+						$images[ $field['data']['key'] ] = true;
+					}
 				}
 			}
 		}
-
 		return array_keys( $images );
 	}
 }
