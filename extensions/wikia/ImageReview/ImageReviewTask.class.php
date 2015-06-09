@@ -25,7 +25,7 @@ class ImageReviewTask extends BaseTask {
 				continue;
 			}
 
-			$dbname = \WikiFactory::getWikisByID( $wikiId );
+			$dbname = \WikiFactory::getWikiByID( $wikiId );
 			if ( !$dbname ) {
 				$this->warning( 'did not find database', ['wiki_id' => $wikiId] );
 				continue;
