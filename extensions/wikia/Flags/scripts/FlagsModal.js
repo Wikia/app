@@ -158,7 +158,7 @@ require(
 				$flagsEditForm.trigger('submit');
 			});
 			/* Track clicks on modal form */
-			$flagsEditForm.bind('mousedown', trackModalFormClicks);
+			$flagsEditForm.bind('click', trackModalFormClicks);
 		}
 
 		/* Track all ways of closing modal */
@@ -177,18 +177,36 @@ require(
 	}
 
 	/**
-	 * Track clicks on links within modal form
+	 * Track clicks within modal form
+	 * (links and checkboxes)
 	 */
 	function trackModalFormClicks(e) {
-		var $targetLink = $(e.target).closest('a'),
+		var $target = $(e.target),
 			$targetLinkDataId;
 
-		if ($targetLink.length > 0) {
-			$targetLinkDataId = $targetLink.data('id');
+		/* Track checkbox toggling */
+		if ($target.is('input[type=checkbox]')) {
+			if ($target[0].checked) {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'checkbox-checked'
+				});
+			} else {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'checkbox-unchecked'
+				});
+			}
+			return;
+		}
+
+		/* Track links clicks */
+		if ($target.is('a')) {
+			$targetLinkDataId = $target.data('id');
 			if($targetLinkDataId) {
 				track({
 					action: tracker.ACTIONS.CLICK_LINK_TEXT,
-					label: $targetLink.data('id')
+					label: $targetLinkDataId
 				});
 			}
 		}
