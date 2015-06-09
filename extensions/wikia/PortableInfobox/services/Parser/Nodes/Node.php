@@ -15,7 +15,9 @@ class Node {
 	protected $xmlNode;
 	protected $parent = null;
 
-	/* @var $externalParser ExternalParser */
+	/**
+	 * @var $externalParser ExternalParser
+	 */
 	protected $externalParser;
 
 	public function __construct( \SimpleXMLElement $xmlNode, $infoboxData ) {
@@ -23,12 +25,16 @@ class Node {
 		$this->infoboxData = $infoboxData;
 	}
 
-	/** @return mixed */
+	/**
+	 * @return mixed
+	 */
 	public function getParent() {
 		return $this->parent;
 	}
 
-	/** @param mixed $parent */
+	/**
+	 * @param mixed $parent
+	 */
 	public function setParent( Node $parent ) {
 		$this->parent = $parent;
 	}
@@ -37,7 +43,9 @@ class Node {
 		return true;
 	}
 
-	/** @return ExternalParser */
+	/**
+	 * @return ExternalParser
+	 */
 	public function getExternalParser() {
 		if ( !isset( $this->externalParser ) ) {
 			$this->setExternalParser( new SimpleParser() );
@@ -46,7 +54,9 @@ class Node {
 		return $this->externalParser;
 	}
 
-	/** @param mixed $externalParser */
+	/**
+	 * @param mixed $externalParser
+	 */
 	public function setExternalParser( ExternalParser $externalParser ) {
 		$this->externalParser = $externalParser;
 	}
