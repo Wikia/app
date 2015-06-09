@@ -52,7 +52,7 @@ class PortableInfoboxRenderService extends WikiaService {
 					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
 					break;
 				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data['value'] );
+					$infoboxHtmlContent .= $this->renderGroup( $data );
 					break;
 				case 'footer':
 					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
@@ -126,8 +126,10 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	private function renderGroup( $groupData ) {
 		$groupHTMLContent = '';
+		$dataItems = $groupData['value'];
+		$theme = $groupData['theme'];
 
-		foreach ( $groupData as $item ) {
+		foreach ( $dataItems as $item ) {
 			$type = $item['type'];
 
 			if ( $this->validateType( $type ) ) {
@@ -135,7 +137,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent ] );
+		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent, 'theme' => $theme] );
 	}
 
 	/**
