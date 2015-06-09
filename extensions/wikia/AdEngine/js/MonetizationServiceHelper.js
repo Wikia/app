@@ -38,11 +38,8 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 			num = $(elementName).length,
 			content = '<div id="' + slot + '" class="wikia-ad noprint default-height"></div>';
 
-		// TOC exists. Insert the ad above the 3rd <H2> tag.
-		if ($('#toc').length > 0 && num > 3) {
-			$(elementName).eq(2).before(content);
-		// TOC not exist. Insert the ad above the 2nd <H2> tag.
-		} else if (num > 2) {
+		// Insert the ad above the 2nd <H2> tag. (Insert the ad above the 3rd <H2> tag if TOC exists)
+		if (num >= 2) {
 			$(elementName).eq(1).before(content);
 		// Otherwise, insert to the end of content
 		} else {
