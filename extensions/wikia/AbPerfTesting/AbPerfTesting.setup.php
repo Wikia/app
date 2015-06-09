@@ -9,19 +9,29 @@
  * @author macbre
  */
 
-$wgExtensionCredits['other'][] = array(
-	'name' => 'A/B Performance Tests',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AbPerfTesting'
-);
+$wgExtensionCredits['other'][] = [
+	'name'   => 'A/B Performance Tests',
+	'url'    => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AbPerfTesting',
+	'author' => [
+		'[http://community.wikia.com/wiki/User:Macbre Maciej Brencz]'
+	],
+];
 
-# experiments classes
-#$wgAutoloadClasses['Wikia\\AbPerfTesting\\Experiment'] = __DIR__ . '/experiments/Experiment.class.php';
+// generic classes
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Hooks' ] = __DIR__ . '/classes/Hooks.class.php';
 
-# criteria
+// experiments
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiment'                ] = __DIR__ . '/experiments/Experiment.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay' ] = __DIR__ . '/experiments/BackendDelay.class.php';
+
+// criteria
 $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criterion'       ] = __DIR__ . '/criteria/Criterion.class.php';
 $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\Wikis' ] = __DIR__ . '/criteria/Wikis.class.php';
 
-// experiments config goes here
+// hooks setup
+$wgExtensionFunctions[] = 'Wikia\\AbPerfTesting\\Hooks::onSetup';
+
+// experiments config goes below
 $wgABPerfTestingExperiments = [];
 
 /**
@@ -45,7 +55,7 @@ $wgABPerfTestingExperiments = [];
  *];
 **/
 
-$wgABPerfTestingExperiments['backend_delay_25'] = [
+$wgABPerfTestingExperiments['backend_delay_a'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay',
 	'params' => [
 		'delay' => 25,
@@ -55,7 +65,7 @@ $wgABPerfTestingExperiments['backend_delay_25'] = [
 	]
 ];
 
-$wgABPerfTestingExperiments['backend_delay_50'] = [
+$wgABPerfTestingExperiments['backend_delay_b'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay',
 	'params' => [
 		'delay' => 50,
@@ -65,7 +75,7 @@ $wgABPerfTestingExperiments['backend_delay_50'] = [
 	]
 ];
 
-$wgABPerfTestingExperiments['backend_delay_100'] = [
+$wgABPerfTestingExperiments['backend_delay_c'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay',
 	'params' => [
 		'delay' => 100,
