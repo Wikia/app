@@ -58,7 +58,10 @@ require(
 		action: tracker.ACTIONS.CLICK,
 		category: 'flags-edit',
 		trackingMethod: 'analytics'
-	});
+	}),
+
+	/* Label for on submit tracking event */
+	labelForSubmitAction = 'submit-form-untouched';
 
 	function init() {
 		$('#ca-flags').on('click', showModal);
@@ -157,16 +160,21 @@ require(
 			modalInstance.bind('done', function () {
 				track({
 					action: tracker.ACTIONS.CLICK_LINK_BUTTON,
-					label: 'submit'
+					label: labelForSubmitAction
 				});
 				$flagsEditForm.trigger('submit');
 			});
 			/* Track clicks on modal form */
 			$flagsEditForm.bind('click', trackModalFormClicks);
+			/* Detect form change */
+			$flagsEditForm.on('change', function() {
+				labelForSubmitAction = 'submit-form-touched';
+				$flagsEditForm.off('change');
+			});
 		}
 
 		/* Track all ways of closing modal */
-		modalInstance.bind( 'close', function() {
+		modalInstance.bind('close', function() {
 			track({
 				label: 'modal-close'
 			});
