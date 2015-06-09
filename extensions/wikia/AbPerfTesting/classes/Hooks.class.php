@@ -12,8 +12,6 @@ class Hooks {
 
 		// loop through all registered experiments and run those matching criteria
 		foreach( $wgABPerfTestingExperiments as $name => $experiment ) {
-			#wfDebug( sprintf("%s: checking '%s' experiment...\n", __METHOD__, $name) );
-
 			if ( Experiment::isEnabled( $experiment ) ) {
 				wfDebug( sprintf("%s: starting '%s' experiment using %s class with %s params\n",
 					__METHOD__, $name, $experiment['handler'], json_encode( $experiment['params'] ) ) );

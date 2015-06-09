@@ -13,10 +13,9 @@ class BackendDelay extends Experiment {
 	 * @param int $delay delay in ms
 	 */
 	function __construct($delay) {
-		global $wgHooks;
-
 		$this->on('RestInPeace', function() use ($delay) {
 			wfDebug( sprintf("%s: sleeping for %d ms\n", __CLASS__, $delay) );
+
 			usleep( $delay * 1000 );
 			return true;
 		});
