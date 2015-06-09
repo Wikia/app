@@ -56,7 +56,7 @@ require(
 	/* Tracking wrapper function */
 	track = Wikia.Tracker.buildTrackingFunction({
 		action: tracker.ACTIONS.CLICK,
-		category: 'insights-loop-notification',
+		category: 'flags-edit',
 		trackingMethod: 'analytics'
 	});
 
@@ -157,12 +157,14 @@ require(
 			modalInstance.bind('done', function () {
 				$flagsEditForm.trigger('submit');
 			});
+			/* Track clicks on modal form */
+			$flagsEditForm.bind('mousedown', trackModalFormClicks);
 		}
 
 		/* Track all ways of closing modal */
 		modalInstance.bind( 'close', function() {
 			track({
-				label: 'flags-edit-modal-close'
+				label: 'modal-close'
 			});
 		});
 
@@ -170,8 +172,26 @@ require(
 		modalInstance.show();
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
-			label: 'flags-edit-modal-shown'
+			label: 'modal-shown'
 		});
+	}
+
+	/**
+	 * Track clicks on links within modal form
+	 */
+	function trackModalFormClicks(e) {
+		var $targetLink = $(e.target).closest('a'),
+			$targetLinkDataId;
+
+		if ($targetLink.length > 0) {
+			$targetLinkDataId = $targetLink.data('id');
+			if($targetLinkDataId) {
+				track({
+					action: tracker.ACTIONS.CLICK_LINK_TEXT,
+					label: $targetLink.data('id')
+				});
+			}
+		}
 	}
 
 	// Run initialization method on DOM ready
