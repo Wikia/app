@@ -23,11 +23,17 @@ class MediaWikiParserService implements ExternalParser {
 			//fix for first item list elements
 			$wikitext = "\n" . $wikitext;
 		}
-		$parsedText = $this->getParserInstance()
-			->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(), false )
-			->getText();
+		//save current options state, as it'll be overridden by new instance when parse is invoked
+		$options = $this->getParserOptions();
+		$tmpOptions = clone $options;
+		$tmpOptions->setIsPartialParse( true );
+
+		$output = $this->parser->parse( $wikitext, $this->getParserTitle(), $tmpOptions, false, false )->getText();
+		//restore options state
+		$this->parser->Options( $options );
+
 		wfProfileOut( __METHOD__ );
-		return $parsedText;
+		return $output;
 	}
 
 	/**
@@ -47,8 +53,19 @@ class MediaWikiParserService implements ExternalParser {
 	}
 
 	public function replaceVariables( $wikitext ) {
-		$output = $this->parser->replaceVariables ( $wikitext, $this->frame );
+		$output = $this->parser->replaceVariables( $wikitext, $this->frame );
 		return $output;
+	}
+
+	/**
+	 * Add image to parser output for later usage
+	 * @param string $title
+	 */
+	public function addImage( $title ) {
+		$file = wfFindFile( $title );
+		$tmstmp = $file ? $file->getTimestamp() : false;
+		$sha1 = $file ? $file->getSha1() : false;
+		$this->parser->getOutput()->addImage( $title, $tmstmp, $sha1 );
 	}
 
 	private function getParserTitle() {
@@ -59,12 +76,5 @@ class MediaWikiParserService implements ExternalParser {
 		$options = $this->parser->getOptions();
 		$options->enableLimitReport( false );
 		return $options;
-	}
-
-	private function getParserInstance() {
-		if ( !isset( $this->localParser ) ) {
-			$this->localParser = new \Parser();
-		}
-		return $this->localParser;
 	}
 }

@@ -338,11 +338,11 @@ abstract class EmailController extends \WikiaController {
 	protected function getFooterMessages() {
 		return [
 			$this->getMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
-				->inLanguage( $this->targetLang )->parse(),
+				->parse(),
 			$this->getMessage( 'emailext-update-frequency' )
-				->inLanguage( $this->targetLang )->parse(),
+				->parse(),
 			$this->getMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
-				->inLanguage( $this->targetLang )->parse(),
+				->parse(),
 		];
 	}
 
@@ -351,7 +351,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return String
 	 */
 	protected function getTagline() {
-		return $this->getMessage( 'emailext-fans-tagline' )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( 'emailext-fans-tagline' )->text();
 	}
 
 	/**
@@ -426,7 +426,7 @@ abstract class EmailController extends \WikiaController {
 		if ( $this->currentUser->isLoggedIn() )	 {
 			return $this->currentUser->getName();
 		}
-		return $this->getMessage( "emailext-anonymous-editor" )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( "emailext-anonymous-editor" )->text();
 	}
 
 	/**
@@ -470,7 +470,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getSalutation() {
 		return $this->getMessage( 'emailext-salutation',
-			$this->targetUser->getName() )->inLanguage( $this->targetLang )->text();
+			$this->targetUser->getName() )->text();
 	}
 
 	/**
@@ -657,6 +657,8 @@ abstract class EmailController extends \WikiaController {
 	 * @return Message
 	 */
 	protected function getMessage() {
-		return wfMessage( func_get_args() )->useDatabase( false );
+		return call_user_func_array( 'wfMessage', func_get_args() )
+			->useDatabase( false )
+			->inLanguage( $this->targetLang );
 	}
 }

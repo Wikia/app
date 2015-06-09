@@ -56,9 +56,7 @@ class ForumController extends EmailController {
 	}
 
 	public function getSubject() {
-		return $this->getMessage( $this->getSubjectKey(), $this->board->getText() )
-			->inLanguage( $this->targetLang )
-			->text();
+		return $this->getMessage( $this->getSubjectKey(), $this->board->getText() )->text();
 	}
 
 	protected function getSubjectKey() {
@@ -66,15 +64,11 @@ class ForumController extends EmailController {
 	}
 
 	protected function getSummary() {
-		return $this->getMessage( 'emailext-forum-summary', $this->board->getFullURL(), $this->board->getText() )
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( 'emailext-forum-summary', $this->board->getFullURL(), $this->board->getText() )->parse();
 	}
 
 	protected function getButtonText() {
-		return $this->getMessage( $this->getButtonTextKey() )
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( $this->getButtonTextKey() )->parse();
 	}
 	protected function getButtonTextKey() {
 		return 'emailext-forum-button-label';
@@ -90,9 +84,7 @@ class ForumController extends EmailController {
 		] );
 
 		$footerMessages = [
-			$this->getMessage( 'emailext-unfollow-text', $boardUrl, $this->board->getText() )
-				->inLanguage( $this->targetLang )
-				->parse()
+			$this->getMessage( 'emailext-unfollow-text', $boardUrl, $this->board->getText() )->parse()
 		];
 
 		return array_merge( $footerMessages, parent::getFooterMessages() );
@@ -153,15 +145,11 @@ class ReplyForumController extends ForumController {
 	}
 
 	public function getSubject() {
-		return $this->getMessage( $this->getSubjectKey(), $this->titleText )
-			->inLanguage( $this->targetLang )
-			->text();
+		return $this->getMessage( $this->getSubjectKey(), $this->titleText )->text();
 	}
 
 	protected function getSummary() {
-		return $this->getMessage( $this->getSummaryKey(), $this->titleText, $this->threadUrl )
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( $this->getSummaryKey(), $this->titleText, $this->threadUrl )->parse();
 	}
 
 	protected function getContentFooterMessages() {
@@ -169,9 +157,7 @@ class ReplyForumController extends ForumController {
 	}
 
 	protected function getViewAll() {
-		return $this->getMessage( 'emailext-forum-reply-view-all', $this->threadUrl )
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( 'emailext-forum-reply-view-all', $this->threadUrl )->parse();
 	}
 
 	protected function getFooterMessages() {
@@ -180,9 +166,7 @@ class ReplyForumController extends ForumController {
 		] );
 
 		$footerMessages = [
-			$this->getMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $this->threadUrl )
-				->inLanguage( $this->targetLang )
-				->parse()
+			$this->getMessage( 'emailext-forumreply-unfollow-text', $unfollowUrl, $this->threadUrl )->parse()
 		];
 
 		return array_merge( $footerMessages, EmailController::getFooterMessages() );
