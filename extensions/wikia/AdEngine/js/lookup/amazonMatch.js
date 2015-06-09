@@ -157,31 +157,20 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 		var amznSlots = [];
 
-		if (wasRendered()) {
-			log(
-				['getSlotParams',
-				slotName,
-				'Cleaning amznSlots since the Amazon ads has been already rendered before'
-				],
-				'debug',
-				logGroup
-			);
+		if (!wasRendered()) {
+			Object.keys(sizeMapping).forEach(function (amazonSize) {
+				var validSlotNames = sizeMapping[amazonSize],
+					amazonPricePoint = bestPricePointForSize[amazonSize];
 
-			return {
-				amznslots: amznSlots
-			};
+				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
+					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
+				}
+			});
+
+			log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
+		} else {
+			log(['getSlotParams - no amznSlots since ads has been already displayed', slotName], 'debug', logGroup);
 		}
-
-		Object.keys(sizeMapping).forEach(function (amazonSize) {
-			var validSlotNames = sizeMapping[amazonSize],
-				amazonPricePoint = bestPricePointForSize[amazonSize];
-
-			if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
-				amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
-			}
-		});
-
-		log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
 
 		if (amznSlots.length) {
 			return {

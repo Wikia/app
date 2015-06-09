@@ -138,6 +138,6 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		initAndTestAmazon(amazonMatch, {'a3x5p14': 1});
 		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(['a3x5p14']);
 		mocks.window.amznads.renderAd(mocks.document);
-		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual([]);
+		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(undefined);
 	});
 });

@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 					sraEnabled: extra.sraEnabled
 				},
 				pageParams = adLogicPageParams.getPageLevelParams(),
-				slotTargeting = slotMap[slotName],
+				slotTargeting = JSON.parse(JSON.stringify(slotMap[slotName])), // copy value
 				slotPath = [
 					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slotName
 				].join('/');

@@ -79,6 +79,7 @@ define('ext.wikia.adEngine.gptHelper', [
 
 		log(['setSlotLevelParams', slotTargeting], 'debug', logGroup);
 
+		slot.clearTargeting();
 		for (name in slotTargeting) {
 			if (slotTargeting.hasOwnProperty(name)) {
 				value = slotTargeting[name];
