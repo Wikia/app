@@ -89,9 +89,7 @@ abstract class BlogPostController extends EmailController {
 		$blogURL = $this->pageTitle->getFullURL();
 		$listingTitle = $this->pageTitle->getText();
 
-		return wfMessage( $this->getSummaryKey(), $blogURL, $listingTitle )
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( $this->getSummaryKey(), $blogURL, $listingTitle )->parse();
 	}
 
 	abstract protected function getSummaryKey();
@@ -110,9 +108,7 @@ abstract class BlogPostController extends EmailController {
 	}
 
 	protected function getPostLabel() {
-		return wfMessage( 'emailext-blogpost-link-label')
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( 'emailext-blogpost-link-label')->parse();
 	}
 
 	protected function getPostLink() {
@@ -125,9 +121,7 @@ abstract class BlogPostController extends EmailController {
 		$parentTitleText = $this->pageTitle->getPrefixedText();
 
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
-				->inLanguage( $this->targetLang )
-				->parse()
+			$this->getMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
@@ -136,9 +130,7 @@ abstract class BlogPostController extends EmailController {
 		$url = $this->pageTitle->getFullURL();
 		$name = $this->pageTitle->getText();
 
-		return wfMessage( 'emailext-blogpost-view-all', $url, $name )
-			->inLanguage( $this->targetLang )
-			->parse();
+		return $this->getMessage( 'emailext-blogpost-view-all', $url, $name )->parse();
 	}
 
 	/**
@@ -174,8 +166,7 @@ class UserBlogPostController extends BlogPostController {
 		$authorName = $this->getCurrentUserName();
 		$postTitle = $this->postTitle->getSubpageText();
 
-		return wfMessage( 'emailext-blogpost-user-subject', $authorName, $postTitle )
-			->inLanguage( $this->targetLang )
+		return $this->getMessage( 'emailext-blogpost-user-subject', $authorName, $postTitle )
 			->text();
 	}
 
@@ -198,9 +189,12 @@ class ListBlogPostController extends BlogPostController {
 		$listingTitle = $this->pageTitle->getText();
 		$postTitle = $this->postTitle->getSubpageText();
 
-		return wfMessage( 'emailext-blogpost-list-subject', $authorName, $listingTitle, $postTitle )
-			->inLanguage( $this->targetLang )
-			->text();
+		return $this->getMessage(
+			'emailext-blogpost-list-subject',
+			$authorName,
+			$listingTitle,
+			$postTitle
+		)->text();
 	}
 
 	protected function getSummaryKey() {

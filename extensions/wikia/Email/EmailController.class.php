@@ -361,20 +361,20 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getHubsMessages() {
 		return [
-			'tv' => wfMessage( 'oasis-label-wiki-vertical-id-1' )->inLanguage( $this->targetLang )->text(),
-			'tvURL' => wfMessage( 'oasis-label-wiki-vertical-id-1-link' )->inLanguage( $this->targetLang )->text(),
-			'videoGames' => wfMessage( 'oasis-label-wiki-vertical-id-2' )->inLanguage( $this->targetLang )->text(),
-			'videoGamesURL' => wfMessage( 'oasis-label-wiki-vertical-id-2-link' )->inLanguage( $this->targetLang )->text(),
-			'books' => wfMessage( 'oasis-label-wiki-vertical-id-3' )->inLanguage( $this->targetLang )->text(),
-			'booksURL' => wfMessage( 'oasis-label-wiki-vertical-id-3-link' )->inLanguage( $this->targetLang )->text(),
-			'comics' => wfMessage( 'oasis-label-wiki-vertical-id-4' )->inLanguage( $this->targetLang )->text(),
-			'comicsURL' => wfMessage( 'oasis-label-wiki-vertical-id-4-link' )->inLanguage( $this->targetLang )->text(),
-			'lifestyle' => wfMessage( 'oasis-label-wiki-vertical-id-5' )->inLanguage( $this->targetLang )->text(),
-			'lifestyleURL' => wfMessage( 'oasis-label-wiki-vertical-id-5-link' )->inLanguage( $this->targetLang )->text(),
-			'music' => wfMessage( 'oasis-label-wiki-vertical-id-6' )->inLanguage( $this->targetLang )->text(),
-			'musicURL' => wfMessage( 'oasis-label-wiki-vertical-id-6-link' )->inLanguage( $this->targetLang )->text(),
-			'movies' => wfMessage( 'oasis-label-wiki-vertical-id-7' )->inLanguage( $this->targetLang )->text(),
-			'moviesURL' => wfMessage( 'oasis-label-wiki-vertical-id-7-link' )->inLanguage( $this->targetLang )->text(),
+			'tv' => $this->getMessage( 'oasis-label-wiki-vertical-id-1' )->text(),
+			'tvURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-1-link' )->text(),
+			'videoGames' => $this->getMessage( 'oasis-label-wiki-vertical-id-2' )->text(),
+			'videoGamesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-2-link' )->text(),
+			'books' => $this->getMessage( 'oasis-label-wiki-vertical-id-3' )->text(),
+			'booksURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-3-link' )->text(),
+			'comics' => $this->getMessage( 'oasis-label-wiki-vertical-id-4' )->text(),
+			'comicsURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-4-link' )->text(),
+			'lifestyle' => $this->getMessage( 'oasis-label-wiki-vertical-id-5' )->text(),
+			'lifestyleURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-5-link' )->text(),
+			'music' => $this->getMessage( 'oasis-label-wiki-vertical-id-6' )->text(),
+			'musicURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-6-link' )->text(),
+			'movies' => $this->getMessage( 'oasis-label-wiki-vertical-id-7' )->text(),
+			'moviesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-7-link' )->text(),
 		];
 	}
 
@@ -385,12 +385,12 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getSocialMessages() {
 		return [
-			'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $this->targetLang )->text(),
-			'facebook-link' => wfMessage( 'oasis-social-facebook-link' )->inLanguage( $this->targetLang )->text(),
-			'twitter' => wfMessage( 'oasis-social-twitter' )->inLanguage( $this->targetLang )->text(),
-			'twitter-link' => wfMessage( 'oasis-social-twitter-link' )->inLanguage( $this->targetLang )->text(),
-			'youtube' => wfMessage( 'oasis-social-youtube' )->inLanguage( $this->targetLang )->text(),
-			'youtube-link' => wfMessage( 'oasis-social-youtube-link' )->inLanguage( $this->targetLang )->text(),
+			'facebook' => $this->getMessage( 'oasis-social-facebook' )->text(),
+			'facebook-link' => $this->getMessage( 'oasis-social-facebook-link' )->text(),
+			'twitter' => $this->getMessage( 'oasis-social-twitter' )->text(),
+			'twitter-link' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
+			'youtube' => $this->getMessage( 'oasis-social-youtube' )->text(),
+			'youtube-link' => $this->getMessage( 'oasis-social-youtube-link' )->text(),
 		];
 	}
 
@@ -654,7 +654,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * A wrapper for wfMessage() which removes the possibility of messages being overridden in the MediaWiki namespace
 	 *
-	 * @return Message
+	 * @return \Message
 	 */
 	protected function getMessage() {
 		return call_user_func_array( 'wfMessage', func_get_args() )
