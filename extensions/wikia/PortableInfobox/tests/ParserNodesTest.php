@@ -40,6 +40,10 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 			  [ 'Season' => 1 ], [ 'value' => 1, 'label' => 'Season(s)' ] ],
 			[ '<data source="Season"><label>Season(s)</label><default>Lorem ipsum</default></data>',
 			  [ ], [ 'value' => 'Lorem ipsum', 'label' => 'Season(s)' ] ],
+			[ '<data source="Season"><label>Season 1</label><label>Season 2</label></data>',
+			  [ 'Season' => 1 ], [ 'value' => 1, 'label' => 'Season 1' ] ],
+			[ '<data source="Season"><default>Season 1</default><default>Season 2</default></data>',
+			  [ ], [ 'value' => 'Season 1', 'label' => '' ] ],
 		];
 	}
 

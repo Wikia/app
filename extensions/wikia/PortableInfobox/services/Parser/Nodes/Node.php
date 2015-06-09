@@ -23,16 +23,12 @@ class Node {
 		$this->infoboxData = $infoboxData;
 	}
 
-	/**
-	 * @return mixed
-	 */
+	/** @return mixed */
 	public function getParent() {
 		return $this->parent;
 	}
 
-	/**
-	 * @param mixed $parent
-	 */
+	/** @param mixed $parent */
 	public function setParent( Node $parent ) {
 		$this->parent = $parent;
 	}
@@ -41,9 +37,7 @@ class Node {
 		return true;
 	}
 
-	/**
-	 * @return ExternalParser
-	 */
+	/** @return ExternalParser */
 	public function getExternalParser() {
 		if ( !isset( $this->externalParser ) ) {
 			$this->setExternalParser( new SimpleParser() );
@@ -52,9 +46,7 @@ class Node {
 		return $this->externalParser;
 	}
 
-	/**
-	 * @param mixed $externalParser
-	 */
+	/** @param mixed $externalParser */
 	public function setExternalParser( ExternalParser $externalParser ) {
 		$this->externalParser = $externalParser;
 	}
@@ -76,6 +68,10 @@ class Node {
 	/**
 	 * @desc Check if node is empty.
 	 * Note that a '0' value cannot be treated like a null
+	 *
+	 * @param $data
+	 *
+	 * @return bool
 	 */
 	public function isEmpty( $data ) {
 		$value = $data[ 'value' ];
@@ -85,26 +81,17 @@ class Node {
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
 		$value = $this->extractDataFromSource( $xmlNode );
-		if ( !$value ) {
-			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				$value = $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
-			}
+		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
+			$value = $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
 		}
 
 		return $value;
 	}
 
 	protected function getRawValueWithDefault( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
-		$value = null;
-		if ( !empty( $source ) ) {
-			$value = $this->getRawInfoboxData( $source );
-		}
-		if ( !$value ) {
-			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				$value = (string)$xmlNode->{self::DEFAULT_TAG_NAME};
-				$value = $this->getExternalParser()->replaceVariables( $value );
-			}
+		$value = $this->getRawInfoboxData( $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) );
+		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
+			$value = $this->getExternalParser()->replaceVariables( (string)$xmlNode->{self::DEFAULT_TAG_NAME} );
 		}
 
 		return $value;
@@ -113,21 +100,18 @@ class Node {
 	protected function getValueWithData( \SimpleXMLElement $xmlNode ) {
 		$value = $this->extractDataFromSource( $xmlNode );
 
-		return $value ? $value : $this->extractDataFromNode( $xmlNode );
+		return $value ? $value
+			: $this->extractDataFromNode( $xmlNode );
 	}
 
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
-		if ( isset( $xmlNode[ $attribute ] ) ) {
-			return (string)$xmlNode[ $attribute ];
-		}
-
-		return null;
+		return ( isset( $xmlNode[ $attribute ] ) ) ? (string)$xmlNode[ $attribute ]
+			: null;
 	}
 
 	protected function getRawInfoboxData( $key ) {
-		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
-
-		return $data;
+		return isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ]
+			: null;
 	}
 
 	protected function getInfoboxData( $key ) {
@@ -141,17 +125,15 @@ class Node {
 	 */
 	protected function extractDataFromSource( \SimpleXMLElement $xmlNode ) {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
-		if ( !empty( $source ) ) {
-			return $this->getInfoboxData( $source );
-		}
 
-		return null;
+		return ( !empty( $source ) ) ? $this->getInfoboxData( $source )
+			: null;
 	}
 
 	/**
 	 * @param \SimpleXMLElement $xmlNode
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	protected function extractDataFromNode( \SimpleXMLElement $xmlNode ) {
 		/*
