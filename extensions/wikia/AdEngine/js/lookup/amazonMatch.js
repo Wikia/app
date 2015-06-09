@@ -203,8 +203,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		trackState: function () {
 			log('fake trackState - module is not supported in IE8', 'debug', logGroup);
 		},
-		wasCalled: wasCalled,
-		wasRendered: wasRendered
+		wasCalled: wasCalled
 	};
 
 	if (!Object.keys) {
