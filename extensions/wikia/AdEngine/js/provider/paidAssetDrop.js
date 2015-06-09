@@ -15,13 +15,14 @@ define('ext.wikia.adEngine.provider.paidAssetDrop', [
 		return (slotName === paidAssetDropSlot);
 	}
 
-	function fillInSlot(slotName, success, hop) {
-		var pageType = adContext.getContext().targeting.pageType;
-		log(['fillInSlot', slotName], 'debug', logGroup);
+	function fillInSlot(slotName, slotElement, success, hop) {
+		var slotElementId = slotElement.id,
+			pageType = adContext.getContext().targeting.pageType;
+		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
 
 		if (pad.isNowValid(adContext.getContext().opts.paidAssetDropConfig)) {
-			doc.getElementById(slotName).innerHTML = '';
-			pad.injectPAD('#' + slotName, 'mobile', pageType);
+			doc.getElementById(slotElementId).innerHTML = '';
+			pad.injectPAD('#' + slotElementId, 'mobile', pageType);
 			success();
 		} else {
 			hop();

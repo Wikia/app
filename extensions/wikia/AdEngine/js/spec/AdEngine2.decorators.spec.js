@@ -21,6 +21,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 		decoratedFillInSlot: noop,
 		decoratedFillInSlotFake1: noop,
 		decoratedFillInSlotFake2: noop,
+		doc: {},
 		lazyQueue: {
 			makeQueue: noop
 		},
@@ -36,6 +37,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 
 	function getAdEngine() {
 		return modules['ext.wikia.adEngine.adEngine'](
+			mocks.doc,
 			mocks.log,
 			mocks.lazyQueue,
 			mocks.adDecoratorLegacyParamFormat,
