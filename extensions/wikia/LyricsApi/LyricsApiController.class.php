@@ -14,6 +14,11 @@ class LyricsApiController extends WikiaController {
 
 	const SEARCH_RESULTS_DEFAULT_LIMIT = 25;
 	const SEARCH_RESULTS_DEFAULT_OFFSET = 0;
+	
+	// New songs that we don't have yet are likely to get hit repeatedly by a
+	// ton of users until we get the song, so this is a special case where it
+	// is helpful to cache 404s for a little while.
+	const CACHE_DURATION_FOR_404 = (5*60); // 5 minutes
 
 	private $lyricsApiHandler = null;
 
@@ -58,6 +63,10 @@ class LyricsApiController extends WikiaController {
 
 		// Validate result
 		if( is_null( $results ) ) {
+			// Since there will often be a ton of repeated 404s for the same song, cache
+			// it for a little while to lighten the load on the backend.
+			$this->response->setCacheValidity( self::CACHE_DURATION_FOR_404 );
+
 			throw new NotFoundApiException( $this->getNotFoundDetails( $method ) );
 		}
 
