@@ -68,9 +68,9 @@ $messages['de'] = array(
 	'global-footer-vertical-lifestyle-link' => 'http://de.lifestylehub.wikia.com/wiki/Lifestyle_Hub',
 	'shared-Oasis-footer-wikia-links' => '**http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
 		*http://de.community.wikia.com/wiki/Hilfe:%C3%9Cbersicht|Hilfe
-		*http://de.community.wikia.com|Community Deutschland
+		*http://de.community.wikia.com|Community
 		*http://de.wikia.com/Stellen|Stellenangebote
-		*http://www.wikia.com/Advertising|Auf Wikia werben
+		*http://www.wikia.com/Advertising|Werbung
 		*http://api.wikia.com/|API
 		*Special:Contact|Kontakt
 		*http://de.wikia.com/Nutzungsbedingungen|Nutzungsbedingungen
@@ -341,20 +341,20 @@ $messages['ru'] = array(
 		*Special:Contact|Связаться с Викия
 		*http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F|Условия использования
 		*http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C|Конфиденциальность
-*http://www.wikia.com/Sitemap|Карта сайта
+		*http://www.wikia.com/Sitemap|Карта сайта
 		*_LICENSE_',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 		* [http://www.wikia.com/wiki/Wikia:About About Wikia]
 		* [http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-	'global-footer-vertical-tv-link' => 'http://tvhub.wikia.com/wiki/TV_Hub',
-	'global-footer-vertical-comics-link' => 'http://comicshub.wikia.com/wiki/Comics_Hub',
-	'global-footer-vertical-movies-link' => 'http://movieshub.wikia.com/wiki/Movies_Hub',
+	'global-footer-vertical-tv-link' => 'http://ru.tvhub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%A2%D0%B5%D0%BB%D0%B5%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5',
+	'global-footer-vertical-comics-link' => 'http://ru.comicshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%9A%D0%BE%D0%BC%D0%B8%D0%BA%D1%81%D1%8B',
+	'global-footer-vertical-movies-link' => 'http://ru.movieshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%9A%D0%B8%D0%BD%D0%BE',
 	'global-footer-vertical-music-link' => 'http://musichub.wikia.com/wiki/Music_Hub',
-	'global-footer-vertical-books-link' => 'http://bookshub.wikia.com/wiki/Books_Hub',
-	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
-	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
+	'global-footer-vertical-books-link' => 'http://ru.bookshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%9A%D0%BD%D0%B8%D0%B3%D0%B8',
+	'global-footer-vertical-games-link' => 'http://ru.gameshub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%D0%B8%D0%B3%D1%80%D1%8B',
+	'global-footer-vertical-lifestyle-link' => 'http://ru.lifestylehub.wikia.com/wiki/%D0%9F%D0%BE%D1%80%D1%82%D0%B0%D0%BB_%D0%A3%D0%B2%D0%BB%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D1%8F',
 	'global-footer-desc' => 'GlobalFooter',
 );
 
