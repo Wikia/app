@@ -1,7 +1,6 @@
 <?php
 
 class PortableInfoboxDataServiceTest extends PHPUnit_Framework_TestCase {
-	private $infoboxRenderService;
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
@@ -53,7 +52,7 @@ class PortableInfoboxDataServiceTest extends PHPUnit_Framework_TestCase {
 	public function testImageListRemoveDuplicates() {
 		$dataService = new PortableInfoboxDataService();
 		$images = $dataService->getImageListFromInfoboxesData( $this->getInfoboxData() );
-		$this->assertTrue( count( $images ) == 2 );
+		$this->assertTrue( count( $images ) === 2 );
 	}
 
 	public function testImageListFetchImages() {
