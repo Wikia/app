@@ -15,7 +15,7 @@ define('ext.wikia.adEngine.slot.skyScraper3', [
 		var $footer = $('#WikiaFooter'),
 			$rail = $('#WikiaRail'),
 			slotName = 'LEFT_SKYSCRAPER_3',
-			$slot = $('<div></div>').attr('id', slotName),
+			$slot = $('<div class="wikia-ad"></div>').attr('id', slotName),
 			context = adContext.getContext();
 
 		log('init', 'debug', logGroup);

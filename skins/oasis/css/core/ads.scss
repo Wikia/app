@@ -64,35 +64,31 @@
 }
 
 /** Skyscrapers **/
-#WikiaRail.left-skyscraper-3-present {
-	padding-bottom: 650px;
+@media #{$breakpoint-small-plus-up} {
+	#WikiaRail.left-skyscraper-3-present {
+		padding-bottom: 660px;
+	}
+}
+
+#LEFT_SKYSCRAPER_2 {
+	margin-bottom: 20px;
+	font-size: 0;
+	text-align: center;
+	> div, > iframe {
+		display: inline-block;
+	}
 }
 
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
-	right: 80px;
+	right: 70px;
 	top: -640px;
-}
-
-#RIGHT_SKYSCRAPER {
-	// FIXME: this is bad. Is it necessary?
-	@extend .module;
-	text-align: center;
-	img {
-		margin: 40px auto;
-	}
 }
 
 /** Box ads **/
 .home-top-right-ads {
 	float: right;
-}
-
-.home-top-right-ads.top-right-ads-in-content {
-  display: none;
-  margin-left: 10px;
-  margin-bottom: 10px;
 }
 
 .home-top-right-ads.hidden {
@@ -229,16 +225,6 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-// Right rail ads centering
-#LEFT_SKYSCRAPER_2 {
-	margin-bottom: 20px;
-	font-size: 0;
-	text-align: center;
-	> div, > iframe {
-		display: inline-block;
-	}
-}
-
 // Floating medrec
 #WikiaAdInContentPlaceHolder {
 	position: absolute;
@@ -246,10 +232,6 @@ body >a >img[src$="noad.gif"] {
 		height: 250px;
 		width: 300px;
 		position: relative;
-		@if ( not $responsive-layout-enabled ) {
-			margin-left: 15px;
-			margin-right: 15px;
-		}
 	}
 }
 
@@ -267,11 +249,5 @@ body >a >img[src$="noad.gif"] {
 	& > iframe {
 		width: 320px;
 		height: 50px;
-	}
-}
-
-@media screen and (max-width: $breakpoint-small) {
-	.home-top-right-ads.top-right-ads-in-content {
-		display: block;
 	}
 }
