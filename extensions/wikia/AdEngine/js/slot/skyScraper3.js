@@ -22,28 +22,33 @@ define('ext.wikia.adEngine.slot.skyScraper3', [
 
 		// Don't start those slots on no_ads, corporate, home etc
 		if (context.opts.pageType !== 'all_ads') {
-			log('skyscraper3 not started, because context.opts.pageType is not all_ads', 'info', logGroup);
+			log('skyScraper3 not started, because context.opts.pageType is not all_ads', 'info', logGroup);
 			return;
 		}
 
 		if (!$rail.length) {
-			log('skyscraper3 not started, because there is no rail', 'info', logGroup);
+			log('skyScraper3 not started, because there is no rail', 'info', logGroup);
 			return;
 		}
 
 		if (!$footer.length) {
-			log('skyscraper3 not started, because there is no footer', 'info', logGroup);
+			log('skyScraper3 not started, because there is no footer', 'info', logGroup);
 			return;
 		}
 
 		// In case old HTML is served with new JS, safe to remove later:
 		if ($('#' + slotName).length) {
-			log('skyscraper3 not added. It was already there', 'error', logGroup);
+			log('skyScraper3 not added. It was already there', 'error', logGroup);
 			return;
 		}
 
 		$footer.prepend($slot);
-		win.adslots2.push(slotName);
+		win.adslots2.push({
+			slotName: slotName,
+			onSuccess: function () {
+				$rail.addClass('left-skyscraper-3-present');
+			}
+		});
 	}
 
 	return {
