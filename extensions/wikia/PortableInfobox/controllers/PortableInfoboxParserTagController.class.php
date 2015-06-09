@@ -67,6 +67,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$data = $infoboxParser->getDataFromXmlString( $markup );
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $data );
+
 		$theme = $this->getThemeWithDefault( $params, $frame );
 		$layout = $this->getLayout( $params );
 		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout );
