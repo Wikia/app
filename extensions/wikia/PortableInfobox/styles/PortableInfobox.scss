@@ -138,15 +138,19 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 			width: 100%;
 
 			.portable-infobox-item-label {
-				@include flex-basis(30%);
-				font-size: inherit;
-				line-height: 26px;
+				@include flex-basis($infobox-width / 3);
+				line-height: 18px;
 				margin-top: inherit;
 			}
 
 			.portable-infobox-item-value {
-				@include flex-basis(70%);
-				vertical-align: top;
+				@include flex-basis($infobox-width * 2 / 3);
+				font-size: 14px;
+				line-height: 20px;
+			}
+			
+			.portable-infobox-item-margins {
+				padding: $infobox-item-margin * 3 $infobox-item-margin * 2 $infobox-item-margin * 3 $infobox-item-margin * 2;
 			}
 		}
 	}
