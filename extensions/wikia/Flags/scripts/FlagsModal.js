@@ -155,6 +155,10 @@ require(
 		if ($flagsEditForm.length > 0) {
 			/* Submit flags edit form on Done button click */
 			modalInstance.bind('done', function () {
+				track({
+					action: tracker.ACTIONS.CLICK_LINK_BUTTON,
+					label: 'submit'
+				});
 				$flagsEditForm.trigger('submit');
 			});
 			/* Track clicks on modal form */
