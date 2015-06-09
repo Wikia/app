@@ -155,7 +155,9 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	function getSlotParams(slotName) {
 		log(['getSlotParams', slotName], 'debug', logGroup);
 
-		if (wasCalled() && wasRendered()) {
+		var amznSlots = [];
+
+		if (wasRendered()) {
 			log(
 				['getSlotParams',
 				slotName,
@@ -166,11 +168,9 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			);
 
 			return {
-				amznslots: []
+				amznslots: amznSlots
 			};
 		}
-
-		var amznSlots = [];
 
 		Object.keys(sizeMapping).forEach(function (amazonSize) {
 			var validSlotNames = sizeMapping[amazonSize],

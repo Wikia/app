@@ -224,14 +224,14 @@ define('ext.wikia.adEngine.gptHelper', [
 				slot = googletag.defineSlot(slotPath, sizes, adDivId);
 				slot.addService(pubads);
 
-				delete slotTargeting.size;
-
 				// Display div through GPT
 				log(['googletag.display', adDivId], 'debug', logGroup);
 				googletag.display(adDivId);
 
 				gptSlots[adDivId] = slot;
 			}
+
+			delete slotTargeting.size;
 
 			// Set it after we are sure slot is defined
 			setSlotLevelParams(gptSlots[adDivId], slotTargeting);
