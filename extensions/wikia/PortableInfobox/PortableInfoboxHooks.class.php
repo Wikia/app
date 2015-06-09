@@ -16,7 +16,7 @@ class PortableInfoboxHooks {
 
 			$dataService = new PortableInfoboxDataService();
 			$infoboxData = $dataService->getInfoboxDataByTitle( $articleTitle );
-			$infoboxImages = $dataService->getImageListFromInfoboxData( $infoboxData );
+			$infoboxImages = $dataService->getImageListFromInfoboxesData( $infoboxData );
 			if ( !empty( $infoboxImages ) ) {
 				$imageNamesArray = array_merge( $infoboxImages, (array) $imageNamesArray );
 			}
