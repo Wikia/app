@@ -148,10 +148,10 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 				font-size: 14px;
 				line-height: 20px;
 			}
-			
-			.portable-infobox-item-margins {
-				padding: $infobox-item-margin * 3 $infobox-item-margin * 2 $infobox-item-margin * 3 $infobox-item-margin * 2;
-			}
+		}
+
+		.portable-infobox-item-margins {
+			padding: $infobox-item-margin * 3 $infobox-item-margin * 2 $infobox-item-margin * 3 $infobox-item-margin * 2;
 		}
 	}
 }
