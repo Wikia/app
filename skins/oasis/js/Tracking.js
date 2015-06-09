@@ -104,6 +104,7 @@ jQuery(function ($) {
 			case 'history':
 			case 'move':
 			case 'protect':
+			case 'flags':
 				label = 'edit-' + id;
 				break;
 			}
