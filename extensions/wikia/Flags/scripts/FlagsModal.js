@@ -53,10 +53,11 @@ require(
 		}
 	},
 
+	/* Tracking wrapper function */
 	track = Wikia.Tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
 		category: 'insights-loop-notification',
-		trackingMethod: 'analytics',
-		action: tracker.ACTIONS.IMPRESSION
+		trackingMethod: 'analytics'
 	});
 
 	function init() {
@@ -158,9 +159,17 @@ require(
 			});
 		}
 
+		/* Track all ways of closing modal */
+		modalInstance.bind( 'close', function() {
+			track({
+				label: 'flags-edit-modal-close'
+			});
+		});
+
 		/* Show the modal */
 		modalInstance.show();
 		track({
+			action: tracker.ACTIONS.IMPRESSION,
 			label: 'flags-edit-modal-shown'
 		});
 	}
