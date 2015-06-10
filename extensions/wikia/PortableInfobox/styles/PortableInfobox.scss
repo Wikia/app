@@ -1,11 +1,15 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/columns';
+@import 'skins/shared/mixins/flexbox';
 
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 5px;
 $infobox-background: mix($color-page, $color-links, 92%);
 $infobox-section-header-background: transparentize($color-links, 0.9);
+$infobox-debug-line-number-width: 50px;
+
+
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -127,18 +131,71 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 	}
 }
 
-table.portable-infobox-debug {
-  border-collapse: collapse;
-  border-spacing: 5px;
-  width: 100%;
+.WikiaArticle {
+	.portable-infobox-error-info {
+		background-color: $color-error;
+		color: white;
+		font-size: 18px;
+		line-height: 28px;
+		margin: 0;
+		padding: $infobox-margin * 2 $infobox-debug-line-number-width;
+	}
 
-  td {
-    border: 1px solid lightgray;
-    padding: 5px;
-  }
+	.portable-infobox-debug {
+		background-color: $color-unified-module-background;
+		font-family: monospace;
+		list-style: none;
+		margin: 0;
+		width: 100%;
 
-  .error {
-    font-size: inherit;
-  }
+		li {
+			margin: 0;
+		}
 
+		.error {
+			font-size: inherit;
+		}
+	}
+}
+
+.portable-infobox-debug-line {
+	@include flexbox();
+}
+
+.portable-infobox-debug-line-number,
+.portable-infobox-debug-line-code {
+	box-sizing: border-box;
+}
+
+.portable-infobox-debug-line-number {
+	@include flex-basis($infobox-debug-line-number-width);
+	@include flex-shrink(0);
+	padding-left: $infobox-item-margin * 2;
+}
+
+.portable-infobox-debug-error-massage {
+	background-color: black;
+	color: white;
+	font-family: Helvetica, Arial, sans-serif;
+	margin: 20px 0 10px 25px;
+	padding: $infobox-item-margin * 2 $infobox-item-margin * 3;
+	position: relative;
+	width: 400px;
+
+	&:before {
+		border-bottom: $infobox-margin solid black;
+		border-left: $infobox-margin solid transparent;
+		border-right: $infobox-margin solid transparent;
+		content: "";
+		display: block;
+		height: 0;
+		left: 25px;
+		position: absolute;
+		top: -$infobox-margin;
+		width: 0;
+	}
+
+	.portable-infobox-debug-error-massage-item {
+		margin: $infobox-item-margin 0;
+	}
 }
