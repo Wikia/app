@@ -3672,6 +3672,8 @@ class User {
 			$controller = 'Email\Controller\EmailConfirmation';
 		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
 			$controller = 'Email\Controller\EmailConfirmationReminder';
+		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
+			$controller = 'Email\Controller\ReConfirmationMail';
 		}
 
 		return $controller;
@@ -3683,6 +3685,10 @@ class User {
 
 	private function isConfirmationReminderMail( $mailType ) {
 		return $mailType == "ConfirmationReminderMail";
+	}
+
+	private function isChangeEmailConfirmationMail( $mailType ) {
+		return $mailType == "ReConfirmationMail";
 	}
 
 	private function sendUsingEmailExtension( $emailController, $url ) {
@@ -3702,7 +3708,7 @@ class User {
 	}
 
 	/**
-	 * Confirmation after change the emial
+	 * Confirmation after change the email
 	 *
 	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
 	 */

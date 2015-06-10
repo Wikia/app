@@ -3,15 +3,23 @@
 namespace Email\Controller;
 
 use Email\EmailController;
+use Email\Check;
 
 abstract class AbstractEmailConfirmationController extends EmailController {
 
-	const LAYOUT_CSS = "confirmationEmail.css";
+	const LAYOUT_CSS = EmailController::NO_ADDITIONAL_STYLES;
 
 	private $confirmUrl;
 
 	public function initEmail() {
 		$this->confirmUrl = $this->request->getVal( 'confirmUrl' );
+		$this->assertValidParams();
+	}
+
+	protected function assertValidParams() {
+		if ( empty( $this->confirmUrl ) ) {
+			throw new Check( "Must pass value for confirmUrl" );
+		}
 	}
 
 	/**
@@ -22,7 +30,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
 			'buttonLink' => $this->confirmUrl,
-			'buttonText' => 'Confirmation Link',
+			'buttonText' => $this->getMessage( 'emailext-emailconfirmation-button-text' ),
 			'contentFooterMessages' => $this->getContentFooterMessages()
 		] );
 	}
@@ -32,7 +40,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 	protected function getContentFooterMessages() {
 		$commonFooterMessage = $this->getCommonFooterMessages();
 		$emailSpecificFooterMessages = $this->getEmailSpecificFooterMessages();
-		return array_merge( $commonFooterMessage, $emailSpecificFooterMessages );
+		return array_merge( $emailSpecificFooterMessages, $commonFooterMessage );
 	}
 
 	private function getCommonFooterMessages() {
@@ -56,8 +64,8 @@ class EmailConfirmationController extends AbstractEmailConfirmationController {
 
 	protected function getEmailSpecificFooterMessages() {
 		return [
-			$this->getMessage( 'emailext-emailconfirmation-why-confirm' )->text(),
-			$this->getMessage( 'emailext-emailconfirmation-cant-wait' )->text()
+			$this->getMessage( 'emailext-emailconfirmation-footer-1' )->text(),
+			$this->getMessage( 'emailext-emailconfirmation-footer-2' )->text()
 		];
 
 	}
@@ -66,7 +74,7 @@ class EmailConfirmationController extends AbstractEmailConfirmationController {
 class EmailConfirmationReminderController extends AbstractEmailConfirmationController {
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject' )->text();
+		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->targetUser->getName() )->parse();
 	}
 
 	protected function getSummary() {
@@ -75,8 +83,26 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 
 	protected function getEmailSpecificFooterMessages() {
 		return [
-			$this->getMessage( 'emailext-emailconfirmation-reminder-lose-username',
+			$this->getMessage( 'emailext-emailconfirmation-reminder-footer-1',
 				$this->targetUser->getName() )->parse()
+		];
+	}
+}
+
+class EmailConfirmationChangedController extends AbstractEmailConfirmationController {
+
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-emailconfirmation-changed-subject' )->text();
+	}
+
+	protected  function getSummary() {
+		return $this->getMessage( 'emailext-emailconfirmation-changed-summary' )->text();
+	}
+
+	protected function getEmailSpecificFooterMessages() {
+		return [
+			$this->getMessage( 'emailext-emailconfirmation-changed-footer-1' )->text(),
+			$this->getMessage( 'emailext-emailconfirmation-changed-footer-2' )->text(),
 		];
 	}
 }

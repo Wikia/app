@@ -14,6 +14,9 @@ abstract class EmailController extends \WikiaController {
 	 * and intended to be overridden by child classes. */
 	const LAYOUT_CSS = 'avatarLayout.css';
 
+	/** Used by emails that don't want to apply any additional styles */
+	const NO_ADDITIONAL_STYLES = '';
+
 	/** Regular expression pattern used to find all email controller classes inside
 	 * of $wgAutoLoadClasses */
 	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
