@@ -56,7 +56,6 @@ class UserLoginController extends WikiaController {
 				$this->content = wfMessage( 'userlogin-'.$this->type.'-content' )->inLanguage( $this->language )->text();
 				$this->signature = wfMessage( 'userlogin-'.$this->type.'-signature' )->inLanguage( $this->language )->text();
 				break;
-			case 'confirmation-email':
 			case 'reconfirmation-email':
 			case 'account-creation-email':
 			case 'confirmation-reminder-email' :

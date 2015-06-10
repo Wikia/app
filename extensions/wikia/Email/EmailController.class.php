@@ -69,12 +69,12 @@ abstract class EmailController extends \WikiaController {
 				$this->getVal( 'replyToName', $noReplyName )
 			);
 
-			$fromAddress = $this->getVal( 'fromAddress', '' );
+			$fromAddress = $this->getVal( 'fromAddress', $this->wg->wgPasswordSender );
 			$this->assertValidFromAddress( $fromAddress );
 
 			$this->fromAddress = new \MailAddress(
 				$fromAddress,
-				$this->getVal( 'fromName', '' )
+				$this->getVal( 'fromName', $this->wg->PasswordSenderName )
 			);
 
 			$this->initEmail();
@@ -570,16 +570,6 @@ abstract class EmailController extends \WikiaController {
 					'type' => 'hidden',
 					'name' => 'emailController',
 					'value' => get_called_class()
-				],
-				[
-					'type' => 'hidden',
-					'name' => 'fromAddress',
-					'value' => \F::app()->wg->PasswordSender
-				],
-				[
-					'type' => 'hidden',
-					'name' => 'fromName',
-					'value' => \F::app()->wg->PasswordSenderName
 				],
 				[
 					'type' => 'text',

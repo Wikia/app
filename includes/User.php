@@ -3626,6 +3626,11 @@ class User {
 		$priority = 0;
 		wfRunHooks( 'UserSendConfirmationMail' , array( &$this, &$args, &$priority, &$url, $token, $ip_arg, $type ) );
 
+		$emailController = $this->getEmailController( $mailtype );
+		if ( !empty( $emailController ) ) {
+			return $this->sendUsingEmailExtension( $emailController, $url );
+		}
+
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;
@@ -3661,6 +3666,41 @@ class User {
 		/* Wikia change end */
 	}
 
+	private function getEmailController( $mailType ) {
+		$controller = "";
+		if ( $this->isConfirmationMail( $mailType ) ) {
+			$controller = 'Email\Controller\EmailConfirmation';
+		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
+			$controller = 'Email\Controller\EmailConfirmationReminder';
+		}
+
+		return $controller;
+	}
+
+	private function isConfirmationMail( $mailType ) {
+		return $mailType == "ConfirmationMail";
+	}
+
+	private function isConfirmationReminderMail( $mailType ) {
+		return $mailType == "ConfirmationReminderMail";
+	}
+
+	private function sendUsingEmailExtension( $emailController, $url ) {
+		$params = [
+			'targetUser' => $this->getName(), // TODO do I need to send this? Are they logged in at this point?
+			'confirmUrl' => $url,
+		];
+
+		$responseData =  F::app()->sendRequest( $emailController, 'handle', $params )->getData();
+
+		if ( $responseData['result'] == 'ok' ) {
+			return Status::newGood();
+		} else {
+			return Status::newFatal( $responseData['error'] );
+		}
+
+	}
+
 	/**
 	 * Confirmation after change the emial
 	 *
@@ -3669,15 +3709,7 @@ class User {
 	function sendReConfirmationMail() {
 		$this->setOption("mail_edited","1");
 		$this->saveSettings();
-		/* Wikia change - begin */
-		$result = null;
-		wfRunHooks( 'UserSendReConfirmationMail', array( &$this, &$result ) );
-		if ( empty($result) ) {
-			$result = $this->sendConfirmationMail( false, 'ReConfirmationMail', 'reconfirmemail' );
-		}
-
-		return $result;
-		/* Wikia change - end */
+		return $this->sendConfirmationMail( false, 'ReConfirmationMail' );
 	}
 
 	/**
