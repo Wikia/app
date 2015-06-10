@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.adEngine', [
 		return func;
 	}
 
-	function createAdProviderContainer(providerName, slotName) {
+	function prepareAdProviderContainer(providerName, slotName) {
 		var providerContainerId = providerName + '_' + slotName.split('.')[0],
 			adContainer = doc.getElementById(slotName),
 			providerContainer = doc.getElementById(providerContainerId);
@@ -36,7 +36,9 @@ define('ext.wikia.adEngine.adEngine', [
 			providerContainer.id = providerContainerId;
 			adContainer.appendChild(providerContainer);
 		}
+		providerContainer.innerHTML = '';
 
+		log(['prepareAdProviderContainer', providerName, slotName, providerContainer], 'debug', logGroup);
 		return providerContainer;
 	}
 
@@ -47,7 +49,7 @@ define('ext.wikia.adEngine.adEngine', [
 			log(['fillInSlotUsingProvider', provider.name, slot], 'debug', logGroup);
 
 			var slotName = slot.slotName,
-				slotElement = createAdProviderContainer(provider.name, slotName),
+				slotElement = prepareAdProviderContainer(provider.name, slotName),
 				aSlotTracker = slotTracker(provider.name, slotName, queueName);
 
 			// Notify people there's the slot handled

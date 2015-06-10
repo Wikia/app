@@ -169,16 +169,6 @@ define('ext.wikia.adEngine.gptHelper', [
 			}
 		}
 
-		function hideOldDivs() {
-			var oldDivs = slotElement.querySelectorAll('[id^="wikia_gpt_helper"]'),
-				i,
-				len;
-
-			for (i = 0, len = oldDivs.length; i < len; i += 1) {
-				slotTweaker.hide(oldDivs[i].id);
-			}
-		}
-
 		function queueAd() {
 			var name,
 				value,
@@ -234,9 +224,6 @@ define('ext.wikia.adEngine.gptHelper', [
 
 			// Save page level params for easier ad delivery debugging
 			adDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
-
-			// Quick hack/fix for Mercury:
-			hideOldDivs();
 
 			// Some broken ads never fire "success" event, so we show the div now (and maybe hide later)
 			slotTweaker.show(adDivId);

@@ -50,7 +50,6 @@ define('ext.wikia.adEngine.provider.openX', [
 			width = size[0],
 			height = size[1];
 
-		slotElement.innerHTML = '';
 		slotElement.appendChild(iframeWriter.getIframe({
 			code: getCode(slotItem.auid),
 			width: width,
