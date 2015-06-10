@@ -23,17 +23,10 @@ class MediaWikiParserService implements ExternalParser {
 			//fix for first item list elements
 			$wikitext = "\n" . $wikitext;
 		}
-		//save current options state, as it'll be overridden by new instance when parse is invoked
-		$options = $this->getParserOptions();
-		$tmpOptions = clone $options;
-		$tmpOptions->setIsPartialParse( true );
-
-		$output = $this->parser->parse( $wikitext, $this->getParserTitle(), $tmpOptions, false, false )->getText();
-		//restore options state
-		$this->parser->Options( $options );
-
+		$parsedText = $this->parser->parse( $wikitext, $this->getParserTitle(), $this->getParserOptions(),
+			false, false )->getText();
 		wfProfileOut( __METHOD__ );
-		return $output;
+		return $parsedText;
 	}
 
 	/**
