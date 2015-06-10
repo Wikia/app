@@ -136,7 +136,7 @@ class XmlParser {
 			}
 			libxml_clear_errors();
 			$this->setXmlParseErrors( $errors );
-			throw new XmlMarkupParseErrorException();
+			throw new XmlMarkupParseErrorException( $this->getXmlParseErrors() );
 		}
 		return $xml;
 	}
@@ -144,4 +144,14 @@ class XmlParser {
 }
 
 class XmlMarkupParseErrorException extends \Exception {
+	private $errors;
+
+	public function __construct( $errors ) {
+		$this->errors = $errors;
+		return parent::__construct();
+	}
+
+	public function getErrors() {
+		return $this->errors;
+	}
 }
