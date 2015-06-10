@@ -64,29 +64,30 @@ $wgABPerfTestingExperiments = [];
 $wgABPerfTestingExperiments['backend_delay_a'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay',
 	'params' => [
-		'delay' => 25,
+		'delay' => 100,
 	],
 	'criteria' => [
-		'wikis' => 915,
+		'traffic' => 1,
+		'wikis' => 915, // TODO: for debug only
 	]
 ];
 
 $wgABPerfTestingExperiments['backend_delay_b'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay',
 	'params' => [
-		'delay' => 50,
+		'delay' => 200,
 	],
 	'criteria' => [
-		'wikis' => 2,
+		'traffic' => 2,
 	]
 ];
 
 $wgABPerfTestingExperiments['backend_delay_c'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay',
 	'params' => [
-		'delay' => 100,
+		'delay' => 300,
 	],
 	'criteria' => [
-		'wikis' => 3,
+		'traffic' => 3,
 	]
 ];

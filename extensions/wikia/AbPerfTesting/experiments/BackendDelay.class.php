@@ -9,16 +9,22 @@ use Wikia\AbPerfTesting\Experiment;
  */
 class BackendDelay extends Experiment {
 
+	private $mDelay;
+
 	/**
 	 * @param int $delay delay in ms
 	 */
 	function __construct($delay) {
-		$this->on('RestInPeace', function() use ($delay) {
-			wfDebug( sprintf("%s: sleeping for %d ms\n", __CLASS__, $delay) );
+		$this->mDelay = $delay;
 
-			usleep( $delay * 1000 );
+		$this->on('RestInPeace', function() {
+			$this->sleep();
 			return true;
 		});
 	}
 
+	private function sleep() {
+		wfDebug( sprintf("%s: sleeping for %d ms\n", __CLASS__, $this->mDelay) );
+		usleep( $this->mDelay * 1000 );
+	}
 }
