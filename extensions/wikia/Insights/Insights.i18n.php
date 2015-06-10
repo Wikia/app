@@ -30,6 +30,13 @@ $messages['en'] = array(
 	'insights-notification-message-inprogress-wantedpages' => 'This page needs to be created. ',
 	'insights-notification-message-fixed-wantedpages' => 'Thanks for making this page!',
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
+
+	'insights-list-subtitle-unconvertedinfoboxes' => 'Unconverted Infoboxes',
+	'insights-list-description-unconvertedinfoboxes' => 'The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:Infobox|Infobox markup]] so they render appropriately to all visitors. Learn more on [[w:c:Community Central|Community Central]].',
+	'insights-notification-message-inprogress-unconvertedinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
+	'insights-notification-message-fixed-unconvertedinfoboxes' => 'Awesome! The infobox on this page has been converted.',
+	'insights-notification-next-item-unconvertedinfoboxes' => 'Convert the next infobox.',
+
 	'insights-list-subtitle-popularpages' => 'Popular pages',
 	'insights-list-description-popularpages' => 'These pages are gaining traction with your readers! Make sure they are up to your standards and have all the latest images and information.',
 	'insights-notification-message-inprogress-popularpages' => 'This page is frequently read. Make sure it looks great!',
@@ -41,9 +48,12 @@ $messages['en'] = array(
 	'insights-sort-title' => 'Alphabetical',
 	'insights-notification-message-alldone' => 'Congratulations! There are no more items in this queue.',
 	'insights-notification-message-fixit' => "Let's fix it.",
-	'insights-notification-list-button' => 'Go back to the list',
+	'insights-notification-list-button' => 'Go back to the list.',
 	'insights-notification-see-more' => 'See more insights.',
+
 	'insights-wanted-by' => '$1 referral links',
+	'insights-used-on' => 'Used on $1 articles',
+
 	'insights-module-see-more' => 'See more insights',
 );
 

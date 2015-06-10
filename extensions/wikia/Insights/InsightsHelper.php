@@ -7,7 +7,7 @@ class InsightsHelper {
 	 * 'insights-list-subtitle-uncategorizedpages',
 	 * 'insights-list-subtitle-withoutimages',
 	 * 'insights-list-subtitle-deadendpages',
-	 * 'insights-list-subtitle-wantedpages' 
+	 * 'insights-list-subtitle-wantedpages'
 	 */
 	const INSIGHT_SUBTITLE_MSG_PREFIX = 'insights-list-subtitle-';
 
@@ -38,14 +38,16 @@ class InsightsHelper {
 	 * 'insights-notification-message-fixed-withoutimages',
 	 * 'insights-notification-message-fixed-deadendpages',
 	 * 'insights-notification-message-fixed-wantedpages'
+	 * 'insights-notification-message-fixed-nonportableinfoboxes'
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
 	public static $insightsPages = [
+		InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel',
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
 		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
-		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
+		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel',
 	];
 
 	/**

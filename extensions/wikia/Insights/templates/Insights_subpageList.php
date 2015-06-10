@@ -14,7 +14,7 @@
 	<div class="insights-container-main-inner">
 		<div class="insights-header insights-icon-<?= Sanitizer::encodeAttribute( $subpage ) ?> clearfix">
 			<h2 class="insights-header-subtitle"><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $subpage )->escaped() ?></h2>
-			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->escaped() ?></p>
+			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->parse() ?></p>
 		</div>
 		<?php if (!empty($dropdown)): ?>
 			<div class="insights-header-sorting">
@@ -53,6 +53,8 @@
 											date( 'F j, Y', $item['metadata']['lastRevision']['timestamp'] )
 											)->escaped() ?>
 										<?php endif; ?>
+									</p>
+									<p class="insights-list-item-metadata">
 										<?php if ( isset( $item['metadata']['wantedBy'] ) ) : ?>
 											<?= $item['metadata']['wantedBy'] ?>
 										<?php endif; ?>
