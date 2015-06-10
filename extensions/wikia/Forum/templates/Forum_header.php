@@ -9,5 +9,5 @@
 			</div>
 		</div>
 	<? endif; ?>
-    <h1><?= $pageHeading ?></h1>
+	<h1><?= $pageHeading ?></h1>
 </header>
