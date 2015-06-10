@@ -45,9 +45,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	function validateSlot(slot) {
 		log(['validateSlot', slot], 'debug', logGroup);
 
-		var $inContent = $('#MON_IN_CONTENT');
-
-		if (slot === 'MON_BELOW_CATEGORY' && ($inContent.length === 0 || $inContent.hasClass('end-content'))) {
+		if (slot === 'MON_BELOW_CATEGORY' && $('#MON_IN_CONTENT').hasClass('end-content')) {
 			log(['validateSlot', slot, false], 'debug', logGroup);
 			return false;
 		}
