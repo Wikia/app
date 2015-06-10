@@ -557,9 +557,11 @@ class EditHubModel extends WikiaModel {
 	public function getVideoData ($fileName, $thumbSize) {
 		$videoData = [];
 		$title = Title::newFromText($fileName, NS_FILE);
+
 		if (!empty($title)) {
-			$file = wffindFile($title);
+			$file = wfFindFile($title);
 		}
+
 		if (!empty($file)) {
 			$htmlParams = [
 				'file-link' => true,

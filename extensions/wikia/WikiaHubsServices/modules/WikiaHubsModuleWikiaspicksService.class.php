@@ -123,19 +123,19 @@ class WikiaHubsModuleWikiaspicksService extends WikiaHubsModuleEditableService {
 		
 		if (!empty($data['sponsoredImage'])) {
 			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImage']);
-
-			$structuredData['sponsoredImageUrl'] = $sponsoredImageInfo->getUrlGenerator()->url();
-			$structuredData['sponsoredImageAlt'] = $sponsoredImageInfo->getName();
 		}
+
+		$structuredData['sponsoredImageUrl'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->url : null;
+		$structuredData['sponsoredImageAlt'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->title : null;
 
 		$structuredData['imageLink'] = (!empty($data['imageLink'])) ? $data['imageLink'] : null;
 
 		if (!empty($data['fileName'])) {
 			$imageInfo = $this->getImageInfo($data['fileName']);
-
-			$structuredData['imageUrl'] = $imageInfo->getUrlGenerator()->url();
-			$structuredData['imageAlt'] = $imageInfo->getName();
 		}
+
+		$structuredData['imageUrl'] = (isset($imageInfo)) ? $imageInfo->url : null;
+		$structuredData['imageAlt'] = (isset($imageInfo)) ? $imageInfo->title : null;
 
 		$structuredData['title'] = $data['moduleTitle'];
 		$structuredData['text'] = $data['text'];

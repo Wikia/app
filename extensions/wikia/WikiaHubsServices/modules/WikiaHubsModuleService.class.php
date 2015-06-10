@@ -10,10 +10,32 @@ abstract class WikiaHubsModuleService extends WikiaService {
 	private $shouldFilterCommercialData = false;
 
 	public function __construct($cityId) {
+		global $wgForeignFileRepos;
 		parent::__construct();
 
 		$this->cityId = $cityId;
 		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
+
+		$hubWiki = WikiFactory::getWikiByID($cityId);
+		$hubDbName = $hubWiki->city_dbname;
+		$hubUrl = $hubWiki->city_url;
+
+		$wgForeignFileRepos[] = [
+			'class'            => 'WikiaForeignDBViaLBRepo',
+			'name'             => $hubDbName,
+			'directory'        => "/images/c/{$hubDbName}/images",
+			'url'              => "http://images.wikia.com/{$hubDbName}/images",
+			'hashLevels'       => 2,
+			'thumbScriptUrl'   => '',
+			'transformVia404'  => true,
+			'hasSharedCache'   => true,
+			'descBaseUrl'      => "{$hubUrl}wiki/File:",
+			'fetchDescription' => true,
+			'wiki'             => $hubDbName,
+			'checkRedirects'   => false,
+			'checkDuplicates'  => false,
+			'backend'          => "wikia{$hubDbName}-backend"
+		];
 	}
 
 	abstract public function getStructuredData($data);
@@ -27,7 +49,6 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		$moduleClassName = self::CLASS_NAME_PREFIX . $name . self::CLASS_NAME_SUFFIX;
 		return new $moduleClassName($cityId);
 	}
-
 
 	protected function getHubsParams() {
 		return $this->cityId;
@@ -50,7 +71,8 @@ abstract class WikiaHubsModuleService extends WikiaService {
 			6 * 60 * 60,
 			function () use( $model, $params ) {
 				return $this->loadStructuredData( $model, $params );
-			}
+			},
+			WikiaDataAccess::SKIP_CACHE
 		);
 
 		if ( $this->getShouldFilterCommercialData() ) {
@@ -91,8 +113,8 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		return $this->app->getView(get_class($this), $viewName, $data);
 	}
 
-	protected function getImageInfo($fileName) {
-		return GlobalFile::newFromText($fileName, $this->cityId);
+	protected function getImageInfo($fileName, $destSize = 0) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($fileName, $destSize, ImagesService::EXT_JPG);
 	}
 
 	/**

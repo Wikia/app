@@ -121,22 +121,23 @@ class WikiaHubsModuleFeaturedvideoService extends WikiaHubsModuleEditableService
 
 		if (!empty($data['sponsoredImage'])) {
 			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImage']);
-
-			$structuredData['sponsoredImageUrl'] = $sponsoredImageInfo->getUrlGenerator()->url();
-			$structuredData['sponsoredImageAlt'] = $sponsoredImageInfo->getName();
 		}
+
+		$structuredData['sponsoredImageUrl'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->url : null;
+		$structuredData['sponsoredImageAlt'] = (isset($sponsoredImageInfo)) ? $sponsoredImageInfo->title : null;
+
 
 		$editHubModel = $this->getEditHubModel();
 		$moduleModel = new WikiaHubsFeaturedvideoModel();
 		$videoData = $editHubModel->getVideoData($data['video'], $moduleModel->getVideoThumbSize());
 
-		$structuredData['video'] = array(
+		$structuredData['video'] = [
 			'title' => isset($videoData['title']) ? $videoData['title'] : null,
 			'fileUrl' => isset($videoData['fileUrl']) ? $videoData['fileUrl'] : null,
 			'thumbUrl' => isset($videoData['thumbUrl']) ? $videoData['thumbUrl'] : null,
 			'duration' => isset($videoData['duration']) ? $videoData['duration'] : null,
 			'thumbMarkup' => isset($videoData['videoThumb']) ? $videoData['videoThumb'] : null,
-		);
+		];
 
 		return $structuredData;
 	}
@@ -173,9 +174,11 @@ class WikiaHubsModuleFeaturedvideoService extends WikiaHubsModuleEditableService
 	protected function filterCommercialData( $data ) {
 		$data['video'] = null;
 		$service = $this->getLicensedWikisService();
+
 		if ( isset($data['articleUrl']) && !$service->isCommercialUseAllowedByUrl($data['articleUrl']) ) {
 			$data = null;
 		}
+
 		return $data;
 	}
 }

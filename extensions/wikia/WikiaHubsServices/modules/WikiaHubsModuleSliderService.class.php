@@ -96,9 +96,9 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 			$photo = $data['form']->getField('photo' . $i);
 			if (!empty($photo['value'])) {
 				$imageData = $this->getImageInfo($photo['value'], $imageSize);
-				$data['photos'][$i]['url'] = $imageData->getUrlGenerator()->url();
-				$data['photos'][$i]['imageWidth'] = $imageData->getWidth();
-				$data['photos'][$i]['imageHeight'] = $imageData->getHeight();
+				$data['photos'][$i]['url'] = $imageData->url;
+				$data['photos'][$i]['imageWidth'] = $imageData->width;
+				$data['photos'][$i]['imageHeight'] = $imageData->height;
 			}
 		}
 
@@ -130,7 +130,7 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 
 			for( $i = 1; $i <= $slidesCount; $i++ ) {
 				$structuredData['slides'][] = [
-					'photoUrl' => $this->getImageInfo($data['photo'.$i])->getUrlGenerator()->url(),
+					'photoUrl' => $this->getImageInfo($data['photo'.$i])->url,
 					'strapline' => $data['strapline'.$i],
 					'shortDesc' => $data['shortDesc'.$i],
 					'longDesc' => $data['longDesc'.$i],
