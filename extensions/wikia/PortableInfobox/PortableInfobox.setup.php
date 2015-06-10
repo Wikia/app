@@ -46,6 +46,7 @@ $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\SimpleXmlUtil' ] = $dir . 'se
 
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
+$wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 
 // hooks
@@ -55,3 +56,6 @@ $wgHooks['ParserAfterTidy'][] = 'PortableInfoboxParserTagController::replaceInfo
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
+
+// MW API
+$wgAPIModules['infobox'] = 'ApiPortableInfobox';

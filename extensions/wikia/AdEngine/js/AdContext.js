@@ -79,6 +79,13 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
+		if (instantGlobals.wgAdDriverOpenXCountries &&
+			instantGlobals.wgAdDriverOpenXCountries.indexOf &&
+			instantGlobals.wgAdDriverOpenXCountries.indexOf(geo.getCountryCode()) > -1
+		) {
+			context.providers.openX = true;
+		}
+
 		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
 				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
 				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1

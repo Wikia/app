@@ -70,6 +70,10 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 
 		// add messages package
 		JSMessages::enqueuePackage('AdminDashboard', JSMessages::INLINE);
+
+		// Add Upload Photos Dialog
+		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );
+		Wikia::addAssetsToOutput( 'upload_photos_dialog_scss' );
 	}
 
 	/**

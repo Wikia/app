@@ -4,6 +4,7 @@
  * A model that reflects an instance of a Flag
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -11,9 +12,6 @@
 namespace Flags\Models;
 
 class Flag extends FlagsBaseModel {
-	private
-		$paramsVerified = false;
-
 	/**
 	 * GET methods
 	 */
@@ -51,9 +49,6 @@ class Flag extends FlagsBaseModel {
 			}
 		}
 
-		/**
-		 * 3. Return the ready table
-		 */
 		return $flagsForPage;
 	}
 
@@ -68,24 +63,26 @@ class Flag extends FlagsBaseModel {
 	private function getFlagsForPageFromDatabase( $wikiId, $pageId ) {
 		$db = $this->getDatabaseForRead();
 
-		$flagsTypes = ( new \WikiaSQL() )
+		$flagsWithTypes = ( new \WikiaSQL() )
 			->SELECT_ALL( 'flags_to_pages', 'flags_types' )
 			->FROM( 'flags_to_pages' )
 			->INNER_JOIN( 'flags_types' )
 				->ON( 'flags_types.flag_type_id', 'flags_to_pages.flag_type_id' )
 			->WHERE( 'flags_to_pages.wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'flags_to_pages.page_id' )->EQUAL_TO( $pageId )
-			->runLoop( $db, function( &$flagsTypes, $row ) {
-				$flagsTypes[$row->flag_type_id] = get_object_vars( $row );
+			->runLoop( $db, function( &$flagsWithTypes, $row ) {
+				$flagsWithTypes[$row->flag_type_id] = get_object_vars( $row );
 
 				/**
-				 * Create URLs for a template of the flag
+				 * Get a URL for a template of the flag.
+				 * If the template under flag_view does not exist - we will just
+				 * display a red link so there is no need to check if $title exists.
 				 */
 				$title = \Title::newFromText( $row->flag_view, NS_TEMPLATE );
-				$flagsTypes[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
+				$flagsWithTypes[$row->flag_type_id]['flag_view_url'] = $title->getFullURL();
 			} );
 
-		return $flagsTypes;
+		return $flagsWithTypes;
 	}
 
 	/**
@@ -116,60 +113,48 @@ class Flag extends FlagsBaseModel {
 	 */
 
 	/**
-	 * Verifies if a passed array has all of the required keys and values set
-	 * @param array $params An array to analyze
-	 * @return bool
-	 */
-	public function verifyParamsForAdd( Array $params ) {
-		if ( !isset( $params['wiki_id'] )
-			|| !isset( $params['page_id'] )
-			|| ( !isset( $params['flags'] ) && !is_array( $params['flags'] ) )
-		) {
-			return false;
-		}
-
-		foreach( $params['flags'] as $flag ) {
-			if ( !isset( $flag['flag_type_id'] ) ) {
-				return false;
-			}
-		}
-
-		$this->paramsVerified = true;
-		return true;
-	}
-
-	/**
 	 * Wrapper for an addition of multiple flags
 	 * @param array $params
 	 * @return array|bool Returns an array of status codes or false if params have not been verified
+	 * @throws \Exception
+	 * @throws \InvalidParameterApiException
+	 * @throws \MissingParameterApiException
 	 */
 	public function addFlagsToPage( $params ) {
-		if ( !$this->paramsVerified ) {
-			return false;
+		try {
+			$this->verifyParamsForAdd( $params );
+
+			$db = $this->getDatabaseForWrite();
+
+			$addedFlags = [];
+			foreach ( $params['flags'] as $flag ) {
+				$addedFlags[] = $this->addFlag( $db, $flag[ 'flag_type_id' ], $params[ 'wiki_id' ], $params[ 'page_id' ], $flag[ 'params' ] );
+			}
+
+			$db->commit();
+
+			return $addedFlags;
+		} catch ( \Exception $exception ) {
+			if ( $db !== null ) {
+				$db->rollback();
+			}
+			throw $exception;
 		}
-
-		$status = [];
-
-		foreach ( $params['flags'] as $i => $flag ) {
-			$status[$i] = $this->addFlag( $flag['flag_type_id'], $params['wiki_id'], $params['page_id'], $flag['params'] );
-		}
-
-		return $status;
 	}
 
 	/**
 	 * Adds an instance of a flag. Performs an SQL query to the flags_to_pages table
 	 * and then adds flags parameters if they are fetched, using the last inserted flag_id.
+	 * @param \DatabaseBase $db
 	 * @param int $flagTypeId
 	 * @param int $wikiId
 	 * @param int $pageId
 	 * @param array $params
 	 * @return bool
+	 * @throws \Exception
 	 */
-	private function addFlag( $flagTypeId, $wikiId, $pageId, Array $params = [] ) {
-		$status = true;
-
-		$db = $this->getDatabaseForWrite();
+	private function addFlag( \DatabaseBase $db, $flagTypeId, $wikiId, $pageId, Array $params = [] ) {
+		$status = [];
 
 		( new \WikiaSQL() )
 			->INSERT( self::FLAGS_TO_PAGES_TABLE )
@@ -180,17 +165,38 @@ class Flag extends FlagsBaseModel {
 			->run( $db );
 
 		$flagId = $db->insertId();
+		if ( !$flagId > 0 ) {
+			throw new \Exception( 'The database INSERT operation failed.' );
+		}
+		$status['flag_id'] = $flagId;
 
-		$db->commit();
-
-		if ( $flagId && !empty( $params ) ) {
+		if ( !empty( $params ) ) {
 			$paramsModel = new FlagParameter();
-			$status = $paramsModel->createParametersForFlag( $flagId, $flagTypeId, $params );
+			$paramsAdded = $paramsModel->createParametersForFlag( $db, $flagId, $flagTypeId, $params );
+			$status['params_added'] = $paramsAdded;
 		}
 
-		$this->paramsVerified = false;
+		return $status;
+	}
 
-		return $flagId && $status;
+	/**
+	 * Verifies if a passed array has all of the required keys and values set
+	 * @param array $params An array to analyze
+	 * @return bool
+	 * @throws \InvalidParameterApiException
+	 * @throws \MissingParameterApiException
+	 */
+	private function verifyParamsForAdd( Array $params ) {
+		$this->areParamsSet( $params, [ 'wiki_id', 'page_id', 'flags' ] );
+		$this->arePositiveNumbers( [ $params['wiki_id'], $params['page_id'] ] );
+		$this->areArrays( [ $params['flags'] ] );
+
+		foreach( $params['flags'] as $flag ) {
+			$this->areParamsSet( $flag, [ 'flag_type_id' ] );
+			$this->arePositiveNumbers( $flag['flag_type_id'] );
+		}
+
+		return true;
 	}
 
 	/**
@@ -201,16 +207,46 @@ class Flag extends FlagsBaseModel {
 	 * Updates parameters of the given flags
 	 * @param array $flags Should have flag_id values as indexes
 	 * @return array An array of statuses for each flag
+	 * @throws \Exception
 	 */
 	public function updateFlagsForPage( $flags ) {
-		$status = [];
+		try {
+			$this->verifyParamsForUpdate( $flags );
 
-		$flagParameterModel = new FlagParameter();
+			$db = $this->getDatabaseForWrite();
+
+			$flagParameterModel = new FlagParameter();
+
+			foreach ( $flags as $flag ) {
+				$modelResponse[$flag['flag_id']] = $flagParameterModel->updateParametersForFlag( $db, $flag['flag_id'], $flag['params'] );
+			}
+
+			$db->commit();
+
+			return $modelResponse;
+		} catch( \Exception $exception ) {
+			if ( $db !== null ) {
+				$db->rollback();
+			}
+			throw $exception;
+		}
+	}
+
+	/**
+	 * Verifies if the passed arguments are valid
+	 * @param array $flags An array to analyze
+	 * @return bool
+	 * @throws \InvalidParameterApiException
+	 * @throws \MissingParameterApiException
+	 */
+	private function verifyParamsForUpdate( $flags ) {
+		$this->areArrays( [ $flags ] );
 		foreach ( $flags as $flag ) {
-			$status[] = $flagParameterModel->updateParametersForFlag( $flag['flag_id'], $flag['params'] );
+			$this->areArrays( [ $flag ] );
+			$this->arePositiveNumbers( $flag['flag_id'] );
 		}
 
-		return $status;
+		return true;
 	}
 
 	/**
@@ -222,47 +258,56 @@ class Flag extends FlagsBaseModel {
 	 * sends a request to remove flags with the passed IDs
 	 * @param array $flags An array of IDs of flags to remove
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public function removeFlagsFromPage( Array $flags ) {
-		if ( !$this->paramsVerified ) {
-			return false;
-		}
+		try {
+			$this->verifyParamsForRemove( $flags );
 
-		$status = $this->removeFlags( $flags );
+			$db = $this->getDatabaseForWrite();
+
+			$flagsIds = [];
+			foreach ( $flags as $flag ) {
+				$flagsIds[] = $flag['flag_id'];
+			}
+
+			if ( $this->removeFlags( $db, $flagsIds ) ) {
+				$db->commit();
+			}
+		} catch( \Exception $exception ) {
+			if ( $db !== null ) {
+				$db->rollback();
+			}
+			throw $exception;
+		}
+	}
+
+	/**
+	 * Performs a removal SQL query on instances of flags based on the passed flags_ids
+	 * @param array $flagsIds
+	 * @return bool
+	 */
+	private function removeFlags( \DatabaseBase $db, Array $flagsIds ) {
+		( new \WikiaSQL() )
+			->DELETE( self::FLAGS_TO_PAGES_TABLE )
+			->WHERE( 'flag_id' )->IN( $flagsIds )
+			->run( $db );
+		$status = $db->affectedRows() > 0;
 		return $status;
 	}
 
 	/**
 	 * Verifies if parameters have a flags_ids field and if it is an array
-	 * @param array $params Should have a `flags_ids` key that contains an array of IDs
+	 * @param array $flags Should have a `flags_ids` key that contains an array of IDs
 	 * @return bool
+	 * @throws \InvalidParameterApiException
 	 */
-	public function verifyParamsForRemove( $params ) {
-		if ( !isset( $params['flags'] ) || !is_array( $params['flags'] ) ) {
-			$this->paramsVerified = false;
-			return false;
+	private function verifyParamsForRemove( $flags ) {
+		$this->areArrays( [ $flags ] );
+		foreach ( $flags as $flag ) {
+			$this->arePositiveNumbers( $flag['flag_id'] );
 		}
 
-		$this->paramsVerified = true;
 		return true;
-	}
-
-	/**
-	 * Performs a removal SQL query on instances of flags based on the passed flags_ids
-	 * @param array $flags
-	 * @return bool
-	 */
-	private function removeFlags( Array $flags ) {
-		$db = $this->getDatabaseForWrite();
-
-		( new \WikiaSQL() )
-			->DELETE( self::FLAGS_TO_PAGES_TABLE )
-			->WHERE( 'flag_id' )->IN( $flags )
-			->run( $db );
-
-		$status = $db->affectedRows() > 0;
-		$db->commit();
-
-		return $status;
 	}
 }

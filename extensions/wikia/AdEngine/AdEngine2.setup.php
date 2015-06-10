@@ -46,3 +46,9 @@ $wgExtensionFunctions[] = function() {
 $wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(
 	'class' => 'ResourceLoaderAdEngineSevenOneMediaModule',
 );
+
+// Special page for importing ad test
+if ( !empty( $wgDevelEnvironment ) && $wgDBname === 'adtest' ) {
+	$wgAutoloadClasses['SpecialAdTestImport'] = __DIR__ . '/SpecialAdTestImport.class.php';
+	$wgSpecialPages['AdTestImport'] = 'SpecialAdTestImport';
+}

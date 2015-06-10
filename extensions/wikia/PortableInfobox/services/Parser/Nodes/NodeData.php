@@ -11,16 +11,13 @@ class NodeData extends Node {
 				return false;
 			}
 		}
+
 		return true;
 	}
 
 	public function getData() {
 		return [
-			'label' => $this->getExternalParser()->parseRecursive(
-				\Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance()->getInnerXML(
-					$this->xmlNode->{self::LABEL_TAG_NAME}
-				)
-			),
+			'label' => $this->getValueWithData( $this->xmlNode->{self::LABEL_TAG_NAME} ),
 			'value' => $this->getValueWithDefault( $this->xmlNode )
 		];
 	}

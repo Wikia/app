@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Meno25",
+			"Ouda",
+			"Ramsis II"
+		]
+	},
+	"semanticdrilldown-desc": "واجهة نزول للإبحار خلال بيانات سيمانتيك",
+	"specialpages-group-sd_group": "سيمانتيك دريل داون",
+	"browsedata": "تصفح البيانات",
+	"sd_browsedata_choosecategory": "اختر تصنيفا",
+	"sd_browsedata_viewcategory": "عرض التصنيف",
+	"sd_browsedata_docu": "اضغط على واحد أو أكثر من المدخلات بالأسفل لتضييق نتائجك.",
+	"sd_browsedata_subcategory": "تصنيف فرعي",
+	"sd_browsedata_other": "آخر",
+	"sd_browsedata_none": "لا شيء",
+	"sd_browsedata_filterbyvalue": "فلترة بواسطة هذه القيمة",
+	"sd_browsedata_filterbysubcategory": "فلترة بواسطة هذا التصنيف الفرعي",
+	"sd_browsedata_otherfilter": "اعرض الصفحات بقيمة أخرى لهذا الفلتر",
+	"sd_browsedata_nonefilter": "اعرض الصفحات التى هى بدون قيمة لهذا الفلتر",
+	"sd_browsedata_or": "أو",
+	"sd_browsedata_removefilter": "أزل هذا الفلتر",
+	"sd_browsedata_removesubcategoryfilter": "أزل فلتر التصنيف الفرعى هذا",
+	"sd_browsedata_resetfilters": "أعد ضبط الفلاتر",
+	"sd_browsedata_addanothervalue": "اضغط على السهم لإضافة قيمة أخرى",
+	"sd_browsedata_daterangestart": ":البداية",
+	"sd_browsedata_daterangeend": ":النهاية",
+	"sd_createfilter_usepropertyvalues": "استخدم كل قيم هذه الخاصية للفلتر",
+	"sd_createfilter_usecategoryvalues": "احصل على القيم للفلتر من هذا التصنيف:",
+	"sd_createfilter_requirefilter": "يتطلب اختيار فلتر آخر قبل أن يتم عرض هذا:"
+}

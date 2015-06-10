@@ -16,7 +16,8 @@ define('ext.wikia.adEngine.config.mobile', [
 		};
 
 	function getProviderList(slotName) {
-		var context = adContext.getContext();
+		var context = adContext.getContext(),
+			providerList = [];
 
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
@@ -49,7 +50,14 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [];
 		}
 
-		return [directGptMobile, remnantGptMobile];
+		providerList.push(directGptMobile);
+		providerList.push(remnantGptMobile);
+
+		if (context.providers.openX && openX.canHandleSlot(slotName)) {
+			providerList.push(openX);
+		}
+
+		return providerList;
 	}
 
 	return {

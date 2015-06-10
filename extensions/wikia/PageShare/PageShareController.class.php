@@ -10,15 +10,14 @@ class PageShareController extends WikiaController {
 	}
 
 	public function getShareIcons() {
-		$browserLang = $this->getVal( 'browserLang' );
-		$useLang = $this->getVal( 'useLang' );
+		$requestlang = $this->getVal( 'lang' );
 		$title = $this->getVal( 'title' );
 		$url = $this->getVal( 'url' );
-		$shareLang = PageShareHelper::getLangForPageShare( $browserLang, $useLang );
+		$lang = PageShareHelper::getLangForPageShare( $requestlang );
 
 		$renderedSocialIcons = \MustacheService::getInstance()->render(
 			__DIR__ . '/templates/PageShare_index.mustache',
-			['services' => $this->prepareShareServicesData( $shareLang, $title, $url )]
+			['services' => $this->prepareShareServicesData( $lang, $title, $url )]
 		);
 
 		$this->setVal( 'socialIcons', $renderedSocialIcons );
@@ -28,17 +27,17 @@ class PageShareController extends WikiaController {
 	/**
 	 * Prepare and normalize data from $wgPageShareServices
 	 *
-	 * @param String $shareLang
+	 * @param String $lang
 	 * @return Array
 	 */
-	private function prepareShareServicesData( $shareLang ) {
+	private function prepareShareServicesData( $lang ) {
 		global $wgPageShareServices;
 		$isTouchScreen = $this->getVal( 'isTouchScreen' );
 
 		$services = [];
 
 		foreach ( $wgPageShareServices as $service ) {
-			if ( PageShareHelper::isValidShareService( $service, $shareLang, $isTouchScreen ) ) {
+			if ( PageShareHelper::isValidShareService( $service, $lang, $isTouchScreen ) ) {
 				$service['icon'] = PageShareHelper::getIcon( $service['name'] );
 				$services[] = $service;
 			}
