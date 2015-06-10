@@ -13,7 +13,6 @@ class Node {
 	const LABEL_TAG_NAME = 'label';
 
 	protected $xmlNode;
-	protected $parent = null;
 	protected $data = null;
 
 	/* @var $externalParser ExternalParser */
@@ -22,24 +21,6 @@ class Node {
 	public function __construct( \SimpleXMLElement $xmlNode, $infoboxData ) {
 		$this->xmlNode = $xmlNode;
 		$this->infoboxData = $infoboxData;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getParent() {
-		return $this->parent;
-	}
-
-	/**
-	 * @param mixed $parent
-	 */
-	public function setParent( Node $parent ) {
-		$this->parent = $parent;
-	}
-
-	public function ignoreNodeWhenEmpty() {
-		return true;
 	}
 
 	public function getSource() {
@@ -66,12 +47,15 @@ class Node {
 	}
 
 	/**
-	 * @param mixed $externalParser
+	 * @param ExternalParser|null $externalParser
 	 *
 	 * @return $this
 	 */
-	public function setExternalParser( ExternalParser $externalParser ) {
-		$this->externalParser = $externalParser;
+	public function setExternalParser( $externalParser ) {
+		// we can pass anything, and ignore it if not ExternalParser instance
+		if ( $externalParser instanceof ExternalParser ) {
+			$this->externalParser = $externalParser;
+		}
 
 		return $this;
 	}
@@ -102,6 +86,22 @@ class Node {
 		$data = $this->getData()[ 'value' ];
 
 		return !( isset( $data ) ) || ( empty( $data ) && $data != '0' );
+	}
+
+	protected function getChildNodes() {
+		$result = [ ];
+		foreach ( $this->xmlNode as $child ) {
+			$node = NodeFactory::newFromSimpleXml( $child, $this->infoboxData )
+				->setExternalParser( $this->externalParser );
+			$result[ ] = [
+				'type' => $node->getType(),
+				'data' => $node->getData(),
+				'isEmpty' => $node->isEmpty(),
+				'source' => $node->getSource()
+			];
+		}
+
+		return $result;
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {

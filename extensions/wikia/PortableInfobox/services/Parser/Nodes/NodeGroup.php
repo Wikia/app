@@ -1,17 +1,11 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Parser\XmlParser;
-
 class NodeGroup extends Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$nodeFactory = new XmlParser( $this->infoboxData );
-			if ( $this->externalParser ) {
-				$nodeFactory->setExternalParser( $this->externalParser );
-			}
-			$this->data = [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode, $this ) ];
+			$this->data = [ 'value' => $this->getChildNodes() ];
 		}
 
 		return $this->data;
@@ -26,5 +20,18 @@ class NodeGroup extends Node {
 		}
 
 		return true;
+	}
+
+	public function getSource() {
+		$data = $this->getData();
+		$result = [ ];
+		foreach ( $data[ 'value' ] as $item ) {
+			if ( isset( $item[ 'source' ] ) ) {
+				$source = !is_array( $item[ 'source' ] ) ? [ $item[ 'source' ] ] : $item[ 'source' ];
+				$result = array_merge( $result, $source );
+			}
+		}
+
+		return array_unique( $result );
 	}
 }

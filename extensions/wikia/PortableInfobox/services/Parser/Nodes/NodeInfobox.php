@@ -1,7 +1,9 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-class NodeSet extends Node {
+class NodeInfobox extends Node {
+
+	protected $params;
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
@@ -13,13 +15,25 @@ class NodeSet extends Node {
 
 	public function isEmpty() {
 		$data = $this->getData();
-		foreach ( $data[ 'value' ] as $elem ) {
-			if ( $elem[ 'type' ] != 'header' && !( $elem[ 'isEmpty' ] ) ) {
+		foreach ( $data[ 'value' ] as $item ) {
+			if ( $item[ 'isEmpty' ] == false ) {
 				return false;
 			}
 		}
 
 		return true;
+	}
+
+	public function getParams() {
+		if ( !isset( $this->params ) ) {
+			$result = [ ];
+			foreach ( $this->xmlNode->attributes() as $k => $v ) {
+				$result[ $k ] = (string)$v;
+			}
+			$this->params = $result;
+		}
+
+		return $this->params;
 	}
 
 	public function getSource() {
