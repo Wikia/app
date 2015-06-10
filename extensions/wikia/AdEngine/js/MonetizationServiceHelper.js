@@ -3,24 +3,14 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 	'wikia.geo',
 	'wikia.scriptwriter',
 	'wikia.tracker',
-	'wikia.window',
-], function ($, geo, scriptWriter, tracker, window) {
+], function ($, geo, scriptWriter, tracker) {
 	'use strict';
 
-	var isEndOfContent = false,
-		track = tracker.buildTrackingFunction({
+	var track = tracker.buildTrackingFunction({
 			trackingMethod: 'internal',
 			category: 'monetization-module',
 			geo: geo.getCountryCode()
 		});
-
-	function validateSlot(slotName) {
-		if (slotName === 'below_category' && isEndOfContent) {
-			return false;
-		}
-
-		return true;
-	}
 
 	function injectContent(slot, content, success) {
 		scriptWriter.injectHtml(slot, content, function () {
@@ -31,23 +21,6 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 
 			success();
 		});
-	}
-
-	function addInContentSlot(slot) {
-		var elementName = '#mw-content-text > h2',
-			num = $(elementName).length,
-			content = '<div id="' + slot + '" class="wikia-ad noprint default-height"></div>';
-
-		// Insert the ad above the 2nd <H2> tag. (Insert the ad above the 3rd <H2> tag if TOC exists)
-		if (num >= 2) {
-			$(elementName).eq(1).before(content);
-		// Otherwise, insert to the end of content
-		} else {
-			$('#mw-content-text').append(content);
-			isEndOfContent = true;
-		}
-
-		window.adslots2.push(slot);
 	}
 
 	function trackImpression($container) {
@@ -123,8 +96,6 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 	}
 
 	return {
-		addInContentSlot: addInContentSlot,
-		validateSlot: validateSlot,
 		injectContent: injectContent
 	};
 });

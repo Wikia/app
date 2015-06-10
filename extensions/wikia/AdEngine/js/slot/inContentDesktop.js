@@ -5,10 +5,11 @@ define('ext.wikia.adEngine.slot.inContentDesktop', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.adLogicPageDimensions',
 	'ext.wikia.adEngine.slot.inContent',
+	'ext.wikia.adEngine.slot.monetizationServiceInContent',
 	'jquery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adTracker, adLogicPageDimensions, inContent, jQuery, log, win) {
+], function (adContext, adTracker, adLogicPageDimensions, inContent, monetizationServiceInContent, jQuery, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContentDesktop',
@@ -75,6 +76,11 @@ define('ext.wikia.adEngine.slot.inContentDesktop', [
 
 			adTracker.track('slot/in_content', trackedData, totalTime);
 		});
+
+		if (context.providers.monetizationService && context.providers.monetizationServiceAds) {
+			log('init monetizationServiceInContent', 'debug', logGroup);
+			monetizationServiceInContent.init();
+		}
 	}
 
 	return {

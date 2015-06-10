@@ -1,13 +1,12 @@
 define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.monetizationsServiceHelper',
+	'jquery',
 	'wikia.log',
-], function (adContext, monetizationService, log) {
+], function (adContext, monetizationService, $, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
-		isLoaded = false,
-		slotInContent = 'MON_IN_CONTENT',
 		slotMap = {
 			MON_ABOVE_TITLE: 'above_title',
 			MON_BELOW_TITLE: 'below_title',
@@ -35,9 +34,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		var slotName = slotMap[slot],
 			context = adContext.getContext();
 
-		init();
-
-		if (context.providers.monetizationServiceAds[slotName] && monetizationService.validateSlot(slotName)) {
+		if (context.providers.monetizationServiceAds[slotName] && validateSlot(slot)) {
 			log(['fillInSlot', slot, 'injectScript'], 'debug', logGroup);
 			monetizationService.injectContent(slot, context.providers.monetizationServiceAds[slotName], success);
 		} else {
@@ -45,19 +42,18 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		}
 	}
 
-	function init() {
-		if (isLoaded) {
-			return;
+	function validateSlot(slot) {
+		log(['validateSlot', slot], 'debug', logGroup);
+
+		var $inContent = $('#MON_IN_CONTENT');
+
+		if (slot === 'MON_BELOW_CATEGORY' && ($inContent.length === 0 || $inContent.hasClass('end-content'))) {
+			log(['validateSlot', slot, false], 'debug', logGroup);
+			return false;
 		}
 
-		var slotName = slotMap[slotInContent];
-
-		if (adContext.getContext().providers.monetizationServiceAds[slotName]) {
-			log(['init', 'addInContentSlot', slotInContent], 'info', logGroup);
-			monetizationService.addInContentSlot(slotInContent);
-		}
-
-		isLoaded = true;
+		log(['validateSlot', slot, true], 'debug', logGroup);
+		return true;
 	}
 
 	return {
