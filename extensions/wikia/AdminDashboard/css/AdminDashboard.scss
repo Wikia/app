@@ -306,7 +306,6 @@ $color-highlight-column: rgba($color-page, 0);
 	@include linear-gradient($color-admin-header-shadow, top, $color-admin-header-highlight, 40%, $color-admin-header-shadow, 100%);
 	border-bottom: 1px solid $color-admin-header-shadow;
 	border-top: 1px solid $color-admin-header-shadow;
-	//height: 25px;
 	padding-top: 5px;
 	h1 {
 		color: $color-admin-header-text;
