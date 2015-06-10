@@ -71,8 +71,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 			6 * 60 * 60,
 			function () use( $model, $params ) {
 				return $this->loadStructuredData( $model, $params );
-			},
-			WikiaDataAccess::SKIP_CACHE
+			}
 		);
 
 		if ( $this->getShouldFilterCommercialData() ) {
