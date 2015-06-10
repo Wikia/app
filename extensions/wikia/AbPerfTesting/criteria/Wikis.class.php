@@ -9,7 +9,7 @@ use Wikia\AbPerfTesting\Criterion;
  *
  * Uses 1000 buckets for city_id values
  */
-class Wikis {
+class Wikis extends Criterion {
 	const BUCKETS = 1000;
 	private $mCityId;
 

@@ -2,9 +2,6 @@
 
 namespace Wikia\AbPerfTesting;
 
-use Wikia\AbPerfTesting\Criteria\Traffic;
-use Wikia\AbPerfTesting\Criteria\Wikis;
-
 abstract class Experiment {
 
 	/**
@@ -26,18 +23,8 @@ abstract class Experiment {
 	 */
 	static function isEnabled(Array $experimentData) {
 		foreach( $experimentData['criteria'] as $criterion => $value) {
-			switch($criterion) {
-				case 'traffic':
-					if ( (new Traffic())->applies($value) ) {
-						return true;
-					}
-					break;
-
-				case 'wikis':
-					if ( (new Wikis())->applies($value) ) {
-						return true;
-					}
-					break;
+			if (Criterion::factory($criterion)->applies($value)) {
+				return true;
 			}
 		}
 

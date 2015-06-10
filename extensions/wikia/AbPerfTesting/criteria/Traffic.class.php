@@ -12,7 +12,7 @@ use Wikia\AbPerfTesting\Criterion;
  * beacon=3j-YqSr9BQ
  * beacon=8gQHS-Q4_c
  */
-class Traffic {
+class Traffic extends Criterion {
 	const BUCKETS = 1000;
 	private $mBeaconId;
 
