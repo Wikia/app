@@ -124,10 +124,8 @@ class WikiaHubsModuleWikiaspicksService extends WikiaHubsModuleEditableService {
 		if (!empty($data['sponsoredImage'])) {
 			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImage']);
 
-			if ($sponsoredImageInfo instanceof GlobalFile) {
-				$structuredData['sponsoredImageUrl'] = $sponsoredImageInfo->getUrlGenerator()->url();
-				$structuredData['sponsoredImageAlt'] = $sponsoredImageInfo->getName();
-			}
+			$structuredData['sponsoredImageUrl'] = $sponsoredImageInfo->getUrlGenerator()->url();
+			$structuredData['sponsoredImageAlt'] = $sponsoredImageInfo->getName();
 		}
 
 		$structuredData['imageLink'] = (!empty($data['imageLink'])) ? $data['imageLink'] : null;
@@ -135,10 +133,8 @@ class WikiaHubsModuleWikiaspicksService extends WikiaHubsModuleEditableService {
 		if (!empty($data['fileName'])) {
 			$imageInfo = $this->getImageInfo($data['fileName']);
 
-			if ($imageInfo instanceof GlobalFile) {
-				$structuredData['imageUrl'] = $imageInfo->getUrlGenerator()->url();
-				$structuredData['imageAlt'] = $imageInfo->getName();
-			}
+			$structuredData['imageUrl'] = $imageInfo->getUrlGenerator()->url();
+			$structuredData['imageAlt'] = $imageInfo->getName();
 		}
 
 		$structuredData['title'] = $data['moduleTitle'];

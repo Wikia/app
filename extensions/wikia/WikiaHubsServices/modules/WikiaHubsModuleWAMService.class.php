@@ -84,15 +84,11 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 
 	protected function loadStructuredData(EditHubModel $model, $params) {
 		try {
-
 			$apiResponse = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
-
 		} catch (WikiaHttpException $e) {
-
 			$logMsg = 'Message: ' . $e->getLogMessage() . ' Details: ' . $e->getDetails();
 			Wikia::log(__METHOD__, false, $logMsg );
 			Wikia::logBacktrace(__METHOD__);
-
 		}
 
 		$data = [
