@@ -18,22 +18,12 @@ abstract class WikiaHubsModuleService extends WikiaService {
 
 		$hubWiki = WikiFactory::getWikiByID($cityId);
 		$hubDbName = $hubWiki->city_dbname;
-		$hubUrl = $hubWiki->city_url;
 
 		$wgForeignFileRepos[] = [
 			'class'            => 'WikiaForeignDBViaLBRepo',
 			'name'             => $hubDbName,
-			'directory'        => "/images/c/{$hubDbName}/images",
-			'url'              => "http://images.wikia.com/{$hubDbName}/images",
-			'hashLevels'       => 2,
-			'thumbScriptUrl'   => '',
 			'transformVia404'  => true,
-			'hasSharedCache'   => true,
-			'descBaseUrl'      => "{$hubUrl}wiki/File:",
-			'fetchDescription' => true,
 			'wiki'             => $hubDbName,
-			'checkRedirects'   => false,
-			'checkDuplicates'  => false,
 			'backend'          => "wikia{$hubDbName}-backend"
 		];
 	}
