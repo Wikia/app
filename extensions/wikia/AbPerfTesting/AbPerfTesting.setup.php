@@ -66,7 +66,7 @@ $wgABPerfTestingExperiments['backend_delay_a'] = [
 		'delay' => 25,
 	],
 	'criteria' => [
-		'wikis' => 1,
+		'wikis' => 915,
 	]
 ];
 

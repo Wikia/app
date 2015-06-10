@@ -19,7 +19,8 @@ class Hooks {
 				$reflector = new \ReflectionClass($experiment['handler']);
 				$reflector->newInstanceArgs($experiment['params']);
 
-				// TODO: mark a transaction with an experiment nanme
+				// mark a transaction with an experiment name
+				\Transaction::getInstance()->set(\Transaction::PARAM_AB_PERFORMANCE_TEST, $name);
 
 				// leave now, we handle only a single experiment at a time now
 				return;
