@@ -1,6 +1,8 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
+use Wikia\PortableInfobox\Helpers\SimpleXmlUtil;
+
 class NodeData extends Node {
 
 	public function ignoreNodeWhenEmpty() {
@@ -11,17 +13,22 @@ class NodeData extends Node {
 				return false;
 			}
 		}
+
 		return true;
 	}
 
 	public function getData() {
-		return [
-			'label' => $this->getExternalParser()->parseRecursive(
-				\Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance()->getInnerXML(
-					$this->xmlNode->{self::LABEL_TAG_NAME}
-				)
-			),
-			'value' => $this->getValueWithDefault( $this->xmlNode )
-		];
+		if ( !isset( $this->data ) ) {
+			$this->data = [
+				'label' => $this->getExternalParser()->parseRecursive(
+					SimpleXmlUtil::getInstance()->getInnerXML(
+						$this->xmlNode->{self::LABEL_TAG_NAME}
+					)
+				),
+				'value' => $this->getValueWithDefault( $this->xmlNode )
+			];
+		}
+
+		return $this->data;
 	}
 }

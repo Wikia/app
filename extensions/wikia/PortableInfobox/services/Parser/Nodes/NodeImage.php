@@ -17,7 +17,7 @@ class NodeImage extends Node {
 
 		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
 
-		return [
+		$this->data = [
 			'url' => $this->resolveImageUrl( $title ),
 			'name' => ( $title ) ? $title->getText() : '',
 			'key' => ( $title ) ? $title->getDBKey() : '',
@@ -25,10 +25,12 @@ class NodeImage extends Node {
 			'caption' => $caption,
 			'ref' => $ref
 		];
+
+		return $this->data;
 	}
 
-	public function isEmpty( $data ) {
-		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
+	public function isEmpty() {
+		return !( isset( $this->data[ 'url' ] ) ) || empty( $this->data[ 'url' ] );
 	}
 
 	private function getImageAsTitleObject( $imageName ) {

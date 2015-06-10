@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
+use Wikia\PortableInfobox\Helpers\SimpleXmlUtil;
 use Wikia\PortableInfobox\Parser\ExternalParser;
 use Wikia\PortableInfobox\Parser\SimpleParser;
 
@@ -13,6 +14,7 @@ class Node {
 
 	protected $xmlNode;
 	protected $parent = null;
+	protected $data = null;
 
 	/* @var $externalParser ExternalParser */
 	protected $externalParser;
@@ -40,6 +42,18 @@ class Node {
 		return true;
 	}
 
+	public function getSource() {
+		$source = $this->getXmlAttribute( $this->xmlNode, self::DATA_SRC_ATTR_NAME );
+		if ( $this->xmlNode->{self::DEFAULT_TAG_NAME} ) {
+			preg_match_all( '/{{{(.*)}}}/sU', (string)$this->xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
+
+
+			return $source ? array_unique( $sources[ 1 ] + [ $source ] ) : array_unique( $sources[ 1 ] );
+		}
+
+		return $source ? [ $source ] : [ ];
+	}
+
 	/**
 	 * @return ExternalParser
 	 */
@@ -47,14 +61,19 @@ class Node {
 		if ( !isset( $this->externalParser ) ) {
 			$this->setExternalParser( new SimpleParser() );
 		}
+
 		return $this->externalParser;
 	}
 
 	/**
 	 * @param mixed $externalParser
+	 *
+	 * @return $this
 	 */
 	public function setExternalParser( ExternalParser $externalParser ) {
 		$this->externalParser = $externalParser;
+
+		return $this;
 	}
 
 	public function getType() {
@@ -68,16 +87,21 @@ class Node {
 	}
 
 	public function getData() {
-		return [ 'value' => (string)$this->xmlNode ];
+		if ( !isset( $this->data ) ) {
+			$this->data = [ 'value' => (string)$this->xmlNode ];
+		}
+
+		return $this->data;
 	}
 
 	/**
 	 * @desc Check if node is empty.
 	 * Note that a '0' value cannot be treated like a null
 	 */
-	public function isEmpty( $data ) {
-		$value = $data[ 'value' ];
-		return !( isset( $value ) ) || (empty( $value ) && $value != '0');
+	public function isEmpty() {
+		$data = $this->getData()[ 'value' ];
+
+		return !( isset( $data ) ) || ( empty( $data ) && $data != '0' );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
@@ -93,12 +117,13 @@ class Node {
 				 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
 				 * parse it.
 				 */
-				$value = \Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance()->getInnerXML(
+				$value = SimpleXmlUtil::getInstance()->getInnerXML(
 					$xmlNode->{self::DEFAULT_TAG_NAME}
 				);
 				$value = $this->getExternalParser()->parseRecursive( $value );
 			}
 		}
+
 		return $value;
 	}
 
@@ -114,21 +139,25 @@ class Node {
 				$value = $this->getExternalParser()->replaceVariables( $value );
 			}
 		}
+
 		return $value;
 	}
 
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
-		if ( isset( $xmlNode[ $attribute ] ) )
+		if ( isset( $xmlNode[ $attribute ] ) ) {
 			return (string)$xmlNode[ $attribute ];
+		}
+
 		return null;
 	}
 
-	protected function getRawInfoboxData ( $key ) {
+	protected function getRawInfoboxData( $key ) {
 		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
+
 		return $data;
 	}
 
 	protected function getInfoboxData( $key ) {
-		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData ( $key ) );
+		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData( $key ) );
 	}
 }

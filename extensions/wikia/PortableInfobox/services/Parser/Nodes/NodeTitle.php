@@ -1,8 +1,12 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-class NodeTitle extends  Node {
+class NodeTitle extends Node {
 	public function getData() {
-		return [ 'value' => $this->getValueWithDefault( $this->xmlNode ) ];
+		if ( !isset( $this->data ) ) {
+			$this->data = [ 'value' => $this->getValueWithDefault( $this->xmlNode ) ];
+		}
+
+		return $this->data;
 	}
 }

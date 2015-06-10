@@ -32,14 +32,21 @@ class XmlParser {
 		wfProfileIn(__METHOD__);
 		$data = [ ];
 		foreach ( $xmlIterable as $node ) {
-			$nodeHandler = $this->getNode( $node, $parentNode );
+			$nodeHandler = Nodes\NodeFactory::newFromSimpleXml( $node, $this->infoboxData );
+			if ( $this->getExternalParser() ) {
+				$nodeHandler->setExternalParser( $this->getExternalParser() );
+			}
+			if ( $parentNode ) {
+				$nodeHandler->setParent( $parentNode );
+			}
 			$nodeData = $nodeHandler->getData();
 			// add data if node is not empty or - when node can not be ignored when empty
-			if ( !$nodeHandler->isEmpty( $nodeData ) || !$nodeHandler->ignoreNodeWhenEmpty() ) {
+			if ( !$nodeHandler->isEmpty() || !$nodeHandler->ignoreNodeWhenEmpty() ) {
 				$data[ ] = [
 					'type' => $nodeHandler->getType(),
 					'data' => $nodeData,
-					'isEmpty' => $nodeHandler->isEmpty( $nodeData )
+					'isEmpty' => $nodeHandler->isEmpty( $nodeData ),
+					'source' => $nodeHandler->getSource()
 				];
 			}
 		}
@@ -76,31 +83,6 @@ class XmlParser {
 			"level" => $level,
 			"code" => $code,
 			"message" => $message ] );
-	}
-
-	/**
-	 * @param \SimpleXMLElement $xmlNode
-	 * @param Node $parent
-	 * @return \Wikia\PortableInfobox\Parser\Nodes\Node
-	 */
-	public function getNode( \SimpleXMLElement $xmlNode, $parent = null ) {
-		wfProfileIn(__METHOD__);
-		$tagType = $xmlNode->getName();
-		$className = 'Wikia\\PortableInfobox\\Parser\\Nodes\\' . 'Node' . ucfirst( strtolower( $tagType ) );
-		if ( class_exists( $className ) ) {
-			/* @var $instance \Wikia\PortableInfobox\Parser\Nodes\Node */
-			$instance = new $className( $xmlNode, $this->infoboxData );
-			if ( !empty( $this->externalParser ) ) {
-				$instance->setExternalParser( $this->externalParser );
-			}
-			if ( $parent ) {
-				$instance->setParent( $parent );
-			}
-			wfProfileOut( __METHOD__ );
-			return $instance;
-		}
-		wfProfileOut( __METHOD__ );
-		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
 	}
 
 	/**

@@ -62,8 +62,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $data );
 
+		//filter out empty nodes
+		$render = array_filter( $data, function($item) { return !$item['isEmpty']; } );
+
 		$theme = $this->getThemeWithDefault( $params, $frame );
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme );
+		return ( new PortableInfoboxRenderService() )->renderInfobox( $render, $theme );
 	}
 
 	/**
