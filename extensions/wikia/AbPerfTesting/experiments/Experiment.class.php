@@ -2,6 +2,8 @@
 
 namespace Wikia\AbPerfTesting;
 
+use Wikia\AbPerfTesting\Criteria\Wikis;
+
 abstract class Experiment {
 
 	/**
@@ -22,7 +24,15 @@ abstract class Experiment {
 	 * @return boolean
 	 */
 	static function isEnabled(Array $experimentData) {
-		// TODO: implement
-		return true;
+		foreach( $experimentData['criteria'] as $criterion => $value) {
+			switch($criterion) {
+				case 'wikis':
+					if ( (new Wikis())->applies($value) ) {
+						return true;
+					}
+			}
+		}
+
+		return false;
 	}
 }
