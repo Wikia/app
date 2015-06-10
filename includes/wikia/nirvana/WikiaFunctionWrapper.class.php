@@ -25,6 +25,7 @@
  * @method ReadOnly
  * @method Timestamp
  * @method TimestampNow
+ * @method GetBeaconId
  *
  * @deprecated
  */

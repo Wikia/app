@@ -5,6 +5,8 @@
  *
  * Defines a set of expirements with criterias of when to enable them
  *
+ * Inspired by https://github.com/etsy/feature
+ *
  * @see PLATFORM-1246
  * @author macbre
  */
@@ -25,8 +27,9 @@ $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiment'                ] = __DIR_
 $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay' ] = __DIR__ . '/experiments/BackendDelay.class.php';
 
 // criteria
-$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criterion'       ] = __DIR__ . '/criteria/Criterion.class.php';
-$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\Wikis' ] = __DIR__ . '/criteria/Wikis.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criterion'         ] = __DIR__ . '/criteria/Criterion.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\Traffic' ] = __DIR__ . '/criteria/Traffic.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\Wikis'   ] = __DIR__ . '/criteria/Wikis.class.php';
 
 // hooks setup
 $wgExtensionFunctions[] = 'Wikia\\AbPerfTesting\\Hooks::onSetup';
@@ -38,10 +41,10 @@ $wgABPerfTestingExperiments = [];
  * Example entry:
  *
  * $wgABPerfTestingExperiments['an_experiment_42'] = [
- *   # PHP class that will be created when the experiment is considered active
+ *  # PHP class that will be created when the experiment is considered active
  *	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\AExperimentClass',
  *
- *   # parameters to be passed to the constructor as arguments
+ *  # parameters to be passed to the constructor as arguments
  *	'params' => [
  *		'foo' => 25,
  *		'bar' => 42,
@@ -49,8 +52,10 @@ $wgABPerfTestingExperiments = [];
  *
  *  # set of criteria to which bucket given experiment should be assigned
  *	'criteria' => [
- *       # all wikis are split into 1000 buckets (modulo of city ID), pick one here
+ *      # all wikis are split into 1000 buckets (modulo of city ID), pick one here
  *		'wikis' => 1,
+ *      # all clients are split into 1000 buckets (modulo of beacon_id md5 hash), pick one here
+ * 		'traffic' => 1,
  *	]
  *];
 **/

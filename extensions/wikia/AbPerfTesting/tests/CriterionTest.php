@@ -1,12 +1,27 @@
 <?php
 
+use Wikia\AbPerfTesting\Criteria\Traffic;
 use Wikia\AbPerfTesting\Criteria\Wikis;
 
-class CriterionWikisTest extends WikiaBaseTest {
+class CriterionTest extends WikiaBaseTest {
 
 	public function setUp() {
 		$this->setupFile = __DIR__ . "/../AbPerfTesting.setup.php";
 		parent::setUp();
+	}
+
+	function testTrafficCriterion() {
+		$this->mockGlobalFunction( 'wfGetBeaconId', '' );
+		$this->assertFalse( ( new Traffic() )->applies(0) );
+
+		$this->mockGlobalFunction( 'wfGetBeaconId', '8gQHS-Q4_c' );
+		$this->assertTrue( ( new Traffic() )->applies(87) );
+
+		$this->mockGlobalFunction( 'wfGetBeaconId', '3j-YqSr9BQ' );
+		$this->assertFalse( ( new Traffic() )->applies(87) );
+
+		$this->mockGlobalFunction( 'wfGetBeaconId', '3j-YqSr9BQ' );
+		$this->assertTrue( ( new Traffic() )->applies(158) );
 	}
 
 	function testWikisCriterion() {
