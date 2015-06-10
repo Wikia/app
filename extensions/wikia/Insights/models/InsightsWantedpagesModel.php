@@ -25,9 +25,11 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 				$params = $this->getUrlParams();
 
 				$title = Title::newFromText( $row->title, $row->namespace );
+				if ( $title === null ) {
+					continue;
+				}
 
 				$article['link'] = InsightsHelper::getTitleLink( $title, $params );
-
 				$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
 
 				$data[] = $article;

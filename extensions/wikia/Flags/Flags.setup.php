@@ -27,8 +27,19 @@ $wgExtensionCredits['other'][] = [
 ];
 
 /**
+ * Special page
+ */
+
+$wgSpecialPages['Flags'] = 'SpecialFlagsController';
+$wgSpecialPageGroups['Flags'] = 'wikia';
+
+$wgAvailableRights[] = 'flagshq';
+$wgGroupPermissions['*']['flagshq'] = true;
+
+/**
  * Controllers
  */
+$wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/controllers/SpecialFlagsController.class.php';
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
 $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 
@@ -75,7 +86,7 @@ $wgExtensionMessagesFiles['FlagsMagic'] = __DIR__ . '/Flags.magic.i18n.php';
 /**
  * Resources Loader module
  */
-$wgResourceModules['ext.wikia.Flags'] = [
+$wgResourceModules['ext.wikia.Flags.EditFormMessages'] = [
 	'messages' => [
 		'flags-edit-modal-title',
 		'flags-edit-modal-done-button-text',

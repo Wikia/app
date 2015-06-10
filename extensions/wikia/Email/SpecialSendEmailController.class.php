@@ -134,11 +134,25 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		$emailControllerClasses = [];
 		foreach ( $allClasses as $className => $classPath ) {
 			if ( preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $className, $matches ) ) {
-				$emailControllerClasses[] = $matches[0];
+				if ( !$this->isClassAbstract( $className ) ) {
+					$emailControllerClasses[] = $matches[0];
+				}
 			}
 		}
 
 		return $emailControllerClasses;
+	}
+
+	/**
+	 * Checks if the given class is abstract or not. We only want concrete classes when
+	 * creating the forms for Special:SendEmail. The abstract classes these concrete
+	 * classes inherit from create forms which throw fatals when submitted.
+	 * @param $className
+	 * @return bool
+	 */
+	public function isClassAbstract( $className ) {
+		$reflectionClass = new \ReflectionClass( $className );
+		return $reflectionClass->isAbstract();
 	}
 
 	/**

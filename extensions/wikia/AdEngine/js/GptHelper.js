@@ -144,7 +144,7 @@ define('ext.wikia.adEngine.gptHelper', [
 	 * @param {function} error              - on error callback
 	 * @param {Object}   extra              - optional parameters
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
-	 * @param {string}   extra.forceAdType  - ad type for callbacks info
+	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
 	function pushAd(slotName, slotPath, slotTargeting, success, error, extra) {
 		var slotDiv = document.getElementById(slotName),
