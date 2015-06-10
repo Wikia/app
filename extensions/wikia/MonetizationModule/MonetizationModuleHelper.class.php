@@ -66,10 +66,11 @@ class MonetizationModuleHelper extends WikiaModel {
 	public static function canShowModule( $title ) {
 		$app = F::app();
 		$status = false;
+		$showableNameSpaces = array_merge( $app->wg->ContentNamespaces, [ NS_FILE ] );
 		if ( !WikiaPageType::isCorporatePage()
 			&& $title->exists()
 			&& !$title->isMainPage()
-			&& in_array( $title->getNamespace(), $app->wg->ContentNamespaces )
+			&& in_array( $title->getNamespace(), $showableNameSpaces )
 			&& in_array( $app->wg->request->getVal( 'action' ), [ 'view', null ] )
 			&& $app->wg->request->getVal( 'diff' ) === null
 			&& $app->wg->User->isAnon()
