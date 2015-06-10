@@ -165,6 +165,10 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 		return $galleryText;
 	}
 
+	public function getImageInfo( $image ) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
+	}
+
 	/**
 	 * Remove slides from
 	 * @param $data
