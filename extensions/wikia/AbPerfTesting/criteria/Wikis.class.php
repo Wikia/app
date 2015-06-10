@@ -21,7 +21,7 @@ class Wikis extends Criterion {
 	 * @param int $bucket wiki bucket ID to check
 	 * @return boolean
 	 */
-	function applies($bucket) {
+	function applies( $bucket ) {
 		return $this->mCityId % self::BUCKETS === $bucket;
 	}
 }

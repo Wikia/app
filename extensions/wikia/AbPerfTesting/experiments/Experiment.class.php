@@ -10,7 +10,7 @@ abstract class Experiment {
 	 * @param string $hookName
 	 * @param callable $func function to bind
 	 */
-	protected function on($hookName, callable $func) {
+	protected function on( $hookName, callable $func ) {
 		global $wgHooks;
 		$wgHooks[$hookName][] = $func;
 	}
@@ -21,9 +21,9 @@ abstract class Experiment {
 	 * @param array $experimentData
 	 * @return boolean
 	 */
-	static function isEnabled(Array $experimentData) {
-		foreach( $experimentData['criteria'] as $criterion => $value) {
-			if (Criterion::factory($criterion)->applies($value)) {
+	static function isEnabled( Array $experimentData ) {
+		foreach ( $experimentData['criteria'] as $criterion => $value ) {
+			if ( Criterion::factory( $criterion )->applies( $value ) ) {
 				return true;
 			}
 		}

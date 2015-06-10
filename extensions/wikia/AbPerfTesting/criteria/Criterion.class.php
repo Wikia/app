@@ -9,7 +9,7 @@ abstract class Criterion {
 	 * @param int $bucket bucket ID to check
 	 * @return boolean
 	 */
-	abstract function applies($bucket);
+	abstract function applies( $bucket );
 
 	/**
 	 * Returns an instance of a given criterion
@@ -17,11 +17,11 @@ abstract class Criterion {
 	 * @param string $criterionName
 	 * @return Criterion
 	 */
-	static function factory($criterionName) {
-		$className = sprintf('Wikia\\AbPerfTesting\\Criteria\\%s', ucfirst(strtolower($criterionName)));
+	static function factory( $criterionName ) {
+		$className = sprintf( 'Wikia\\AbPerfTesting\\Criteria\\%s', ucfirst( strtolower( $criterionName ) ) );
 
-		if (!class_exists($className)) {
-			throw new UnknownCriterionException( sprintf('Criterion "%s" does not exist', $criterionName) );
+		if ( !class_exists( $className ) ) {
+			throw new UnknownCriterionException( sprintf( 'Criterion "%s" does not exist', $criterionName ) );
 		}
 
 		return new $className;

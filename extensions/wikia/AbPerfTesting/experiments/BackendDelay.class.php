@@ -16,25 +16,25 @@ class BackendDelay extends Experiment {
 	/**
 	 * @param int $delay delay in ms
 	 */
-	function __construct($delay) {
+	function __construct( $delay ) {
 		$this->mDelay = $delay;
 
-		$this->on('BeforePageDisplay', function(\OutputPage $out, \Skin $skin) {
+		$this->on( 'BeforePageDisplay', function( \OutputPage $out, \Skin $skin ) {
 			$title = $out->getTitle();
 
-			if ( \F::app()->checkSkin('oasis', $skin) && $title->isContentPage() && $title->exists() ) {
+			if ( \F::app()->checkSkin( 'oasis', $skin ) && $title->isContentPage() && $title->exists() ) {
 				$this->sleep();
 			}
 			return true;
-		});
+		} );
 	}
 
 	private function sleep() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		wfDebug( sprintf("%s: sleeping for %d ms\n", __CLASS__, $this->mDelay) );
+		wfDebug( sprintf( "%s: sleeping for %d ms\n", __CLASS__, $this->mDelay ) );
 		usleep( $this->mDelay * 1000 );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 }
