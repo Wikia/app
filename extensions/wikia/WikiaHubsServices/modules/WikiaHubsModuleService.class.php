@@ -98,7 +98,7 @@ abstract class WikiaHubsModuleService extends WikiaService {
 
 		$structuredData = array();
 		if (!empty($moduleData)) {
-			$structuredData = $this->getStructuredData($moduleData, $hubParams);
+			$structuredData = $this->getStructuredData($moduleData);
 		}
 
 		return $structuredData;
@@ -126,11 +126,11 @@ abstract class WikiaHubsModuleService extends WikiaService {
 		$sponsoredImageInfo = $this->getImageInfo($imageTitleText);
 
 		return Xml::element('img', array(
-			'alt' => $sponsoredImageInfo->getName(),
+			'alt' => $sponsoredImageInfo->title,
 			'class' => 'sponsored-image',
-			'height' => $sponsoredImageInfo->getHeight(),
-			'src' => $sponsoredImageInfo->getUrlGenerator()->url(),
-			'width' => $sponsoredImageInfo->getWidth(),
+			'height' => $sponsoredImageInfo->height,
+			'src' => $sponsoredImageInfo->url,
+			'width' => $sponsoredImageInfo->width,
 		), '', true);
 	}
 
