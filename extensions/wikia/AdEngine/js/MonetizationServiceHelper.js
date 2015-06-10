@@ -3,29 +3,14 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 	'wikia.geo',
 	'wikia.scriptwriter',
 	'wikia.tracker',
-	'wikia.window',
-], function ($, geo, scriptWriter, tracker, window) {
+], function ($, geo, scriptWriter, tracker) {
 	'use strict';
 
-	var isEndOfContent = false,
-		track = tracker.buildTrackingFunction({
+	var track = tracker.buildTrackingFunction({
 			trackingMethod: 'internal',
 			category: 'monetization-module',
 			geo: geo.getCountryCode()
 		});
-
-	/**
-	 * @desc Validate slot
-	 * @param {string} slotName
-	 * @returns {boolean}
-	 */
-	function validateSlot(slotName) {
-		if (slotName === 'below_category' && isEndOfContent) {
-			return false;
-		}
-
-		return true;
-	}
 
 	/**
 	 * @desc Inject content to the slot
@@ -42,30 +27,6 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 
 			success();
 		});
-	}
-
-	/**
-	 * @desc Add in-content slot
-	 * @param {string} slot
-	 */
-	function addInContentSlot(slot) {
-		var elementName = '#mw-content-text > h2',
-			num = $(elementName).length,
-			content = '<div id="' + slot + '" class="wikia-ad noprint default-height"></div>';
-
-		// TOC exists. Insert the ad above the 3rd <H2> tag.
-		if ($('#toc').length > 0 && num > 3) {
-			$(elementName).eq(2).before(content);
-		// TOC not exist. Insert the ad above the 2nd <H2> tag.
-		} else if (num > 2) {
-			$(elementName).eq(1).before(content);
-		// Otherwise, insert to the end of content
-		} else {
-			$('#mw-content-text').append(content);
-			isEndOfContent = true;
-		}
-
-		window.adslots2.push(slot);
 	}
 
 	/**
@@ -90,7 +51,7 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 		var countryCodeROW = 'ROW',
 			countryCodes = ['AU', 'CA', 'DE', 'HK', 'MX', 'RU', 'TW', 'UK', 'US'],
 			countryCode = geo.getCountryCode();
-		if (countryCodes.indexOf(countryCode) >= 0) {
+		if ($.inArray(countryCode, countryCodes) >= 0) {
 			return countryCode;
 		} else {
 			return countryCodeROW;
@@ -176,10 +137,8 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 	}
 
 	return {
-		addInContentSlot: addInContentSlot,
 		getCountryCode: getCountryCode,
 		getMaxAds: getMaxAds,
-		injectContent: injectContent,
-		validateSlot: validateSlot
+		injectContent: injectContent
 	};
 });
