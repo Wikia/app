@@ -1,0 +1,19 @@
+@import 'skins/shared/mixins/flexbox';
+
+.portable-infobox .group-layout-horizontal {
+
+	&.item-type-group {
+		@include flexbox;
+		@include flex-direction(row);
+		@include flex-wrap(wrap);
+	}
+
+	.item-type-header {
+		@include flex-basis(100%);
+	}
+
+	.item-type-key-val {
+		@include flex-grow(1);
+		display: inline-block;
+	}
+}
