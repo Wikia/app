@@ -8,7 +8,7 @@ use Email\Tracking\TrackingCategories;
 
 abstract class WallMessageController extends EmailController {
 
-	const TRACKING_CATEGORY = TrackingCategories::WALL_NOTIFICATIONS;
+	const TRACKING_CATEGORY = TrackingCategories::WALL_NOTIFICATION;
 
 	protected $titleUrl;
 	protected $titleText;
