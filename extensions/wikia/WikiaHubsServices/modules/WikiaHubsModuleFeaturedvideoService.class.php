@@ -122,11 +122,11 @@ class WikiaHubsModuleFeaturedvideoService extends WikiaHubsModuleEditableService
 		if (!empty($data['sponsoredImage'])) {
 			$sponsoredImageInfo = $this->getImageInfo($data['sponsoredImage']);
 
-			$structuredData['sponsoredImageUrl'] = $sponsoredImageInfo->getUrlGenerator()->url();
-			$structuredData['sponsoredImageAlt'] = $sponsoredImageInfo->getName();
+			if ($sponsoredImageInfo instanceof GlobalFile) {
+				$structuredData['sponsoredImageUrl'] = $sponsoredImageInfo->getUrlGenerator()->url();
+				$structuredData['sponsoredImageAlt'] = $sponsoredImageInfo->getName();
+			}
 		}
-
-
 
 		$editHubModel = $this->getEditHubModel();
 		$moduleModel = new WikiaHubsFeaturedvideoModel();
