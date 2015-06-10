@@ -12,8 +12,9 @@ define('ext.wikia.adEngine.slot.exitstitial', [
 	var modalId = 'ExitstitialInfobox',
 		modalWidth = 840,
 		adSlot = 'EXIT_STITIAL_BOXAD_1',
-		enabled = adContext.getContext().slots.exitstitial,
-		redirectDelay = adContext.getContext().slots.exitstitialRedirectDelay || 10;
+		context = adContext.getContext(),
+		enabled = context.slots.exitstitial && context.opts.pageType === 'all_ads',
+		redirectDelay = context.slots.exitstitialRedirectDelay || 10;
 
 	function init() {
 		// Check if external links should be ad-guarded
