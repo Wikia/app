@@ -398,7 +398,6 @@ $wgAutoloadClasses['ArticleInterlangController'] = $IP.'/skins/oasis/modules/Art
 $wgAutoloadClasses['PagesOnWikiController'] = $IP.'/skins/oasis/modules/PagesOnWikiController.class.php';
 $wgAutoloadClasses['ContributeMenuController'] = $IP.'/skins/oasis/modules/ContributeMenuController.class.php';
 $wgAutoloadClasses['WikiNavigationController'] = $IP.'/skins/oasis/modules/WikiNavigationController.class.php';
-$wgAutoloadClasses['SharingToolbarController'] = $IP.'/skins/oasis/modules/SharingToolbarController.class.php';
 $wgAutoloadClasses['UploadPhotosController'] = $IP.'/skins/oasis/modules/UploadPhotosController.class.php';
 $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';
 $wgAutoloadClasses['ThemeSettings'] = $IP.'/extensions/wikia/ThemeDesigner/ThemeSettings.class.php';
@@ -1280,6 +1279,12 @@ $wgEnableJavaScriptErrorLogging = false;
 $wgEnableAdEngineExt = true;
 
 /**
+ * @name $wgAdDriverDelayBelowTheFold
+ * Prevents from loading BTF before ATF ad slots
+ */
+$wgAdDriverDelayBelowTheFold = false;
+
+/**
  * @name $wgAdDriverUseAdsAfterInfobox
  * Enable new mobile_in_content slot after infobox placement
  */
@@ -1381,6 +1386,17 @@ $wgSitewideDisableSevenOneMedia = false;
 $wgSitewideDisableKrux = false;
 
 /**
+ * @name $wgSitewideDisableMonetizationService
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableMonetizationService
+ *
+ * Disable MonetizationService sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableMonetizationService = false;
+
+/**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
  * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
@@ -1467,18 +1483,6 @@ $wgAdDriverTurtleCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverOpenXCountries = null;
-
-/**
- * @name $wgAnalyticsProviderPageFair
- * Site ID for PageFair analytics provider.
- */
-$wgAnalyticsProviderPageFair = null;
-
-/**
- * @name $wgAnalyticsProviderPageFairSlotIds
- * Slot IDs for PageFair analytics provider.
- */
-$wgAnalyticsProviderPageFairSlotIds = [ 'LEADERBOARD' => null, 'MEDREC' => null, 'SKYSCRAPER' => null ];
 
 /**
  * trusted proxy service registry
@@ -1645,6 +1649,7 @@ $wgBuckyEnabledSkins = [
 	'oasis',
 	'venus',
 	'uncyclopedia',
+	'wikiamobile',
 ];
 
 /**

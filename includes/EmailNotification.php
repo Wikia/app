@@ -97,6 +97,11 @@ class EmailNotification {
 			return;
 		}
 
+		if ( ( $this->isArticleComment() || $this->isBlogComment() ) && $this->previousRevId !== 0 ) {
+			// Ignore edited or deleted comments
+			return;
+		}
+
 		// Build a list of users to notify
 		$watchers = [];
 		if ( F::app()->wg->EnotifWatchlist || F::app()->wg->ShowUpdatedMarker ) {
@@ -116,7 +121,6 @@ class EmailNotification {
 	 * Add a timeout to the watchlist email block
 	 */
 	private function getTimeOutSql() {
-
 		if ( !empty( $this->otherParam['notisnull'] ) ) {
 			$notificationTimeoutSql = "1";
 		} elseif ( !empty( F::app()->wg->EnableWatchlistNotificationTimeout ) && isset( F::app()->wg->WatchlistNotificationTimeout ) ) {
@@ -191,24 +195,14 @@ class EmailNotification {
 	 * @return bool
 	 */
 	private function canSendUserTalkEmail() {
-		$targetUser = User::newFromName( $this->title->getText() );
-
 		// Should we notify users when their user talk page is changed?
 		if ( empty( F::app()->wg->EnotifUserTalk ) ) {
 			return false;
 		}
 
-		// Is it a minor edit? If so, do we want to notify users about minor edits?
-		if ( $this->isMinorEdit() && !F::app()->wg->EnotifMinorEdits ) {
-			return false;
-		}
+		$targetUser = User::newFromName( $this->title->getText() );
 
-		// Is it a minor edit? If so, does the editor does want users to be notified when they make minor edits on a discussion page?
-		if ( $this->isMinorEdit() && $this->editor->isAllowed( 'nominornewtalk' ) ) {
-			return false;
-		}
-
-		// Does the user whose talk page was edited exists?
+		// Does the user whose talk page was edited exist?
 		if ( !$targetUser instanceof User ) {
 			return false;
 		}
@@ -223,6 +217,24 @@ class EmailNotification {
 			return false;
 		}
 
+		// Is it a minor edit?
+		if ( $this->isMinorEdit() ) {
+			// Do we want to notify users about minor edits?
+			if ( !F::app()->wg->EnotifMinorEdits ) {
+				return false;
+			}
+
+			// Does the editor does want users to be notified when they make minor edits on a discussion page?
+			if ( $this->editor->isAllowed( 'nominornewtalk' ) ) {
+				return false;
+			}
+
+			// Does that user want to know about minor edits?
+			if ( !$targetUser->getOption( 'enotifminoredits' ) ) {
+				return false;
+			}
+		}
+
 		// Does that user want to be notified about changes to their talk page?
 		if ( !$targetUser->getOption( 'enotifusertalkpages' ) ) {
 			return false;
@@ -230,11 +242,6 @@ class EmailNotification {
 
 		// Does that user have a confirmed email?
 		if ( !$targetUser->isEmailConfirmed() ) {
-			return false;
-		}
-
-		// Is it a minor edit? If so, does that user want to know about minor edits?
-		if ( $this->isMinorEdit() &&  $targetUser->getOption( 'enotifminoredits' ) )  {
 			return false;
 		}
 

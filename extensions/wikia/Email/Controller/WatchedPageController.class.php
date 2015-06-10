@@ -21,8 +21,7 @@ abstract class WatchedPageController extends EmailController {
 	protected abstract function getSummaryMessageKey();
 
 	public function getSubject() {
-		return wfMessage( $this->getSubjectMessageKey(), $this->title->getPrefixedText(), $this->getCurrentUserName() )
-			->inLanguage( $this->targetLang )
+		return $this->getMessage( $this->getSubjectMessageKey(), $this->title->getPrefixedText(), $this->getCurrentUserName() )
 			->text();
 	}
 
@@ -67,9 +66,9 @@ abstract class WatchedPageController extends EmailController {
 
 	protected function getFooterMessages() {
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text',
+			$this->getMessage( 'emailext-unfollow-text',
 				$this->title->getCanonicalUrl( 'action=unwatch' ),
-				$this->title->getPrefixedText() )->inLanguage( $this->targetLang )->parse()
+				$this->title->getPrefixedText() )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
@@ -98,10 +97,10 @@ abstract class WatchedPageController extends EmailController {
 	 * @return String
 	 */
 	private function getSummary() {
-		return wfMessage( $this->getSummaryMessageKey(),
+		return $this->getMessage( $this->getSummaryMessageKey(),
 			$this->title->getFullURL(),
 			$this->title->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+		)->parse();
 	}
 
 	/**
@@ -111,14 +110,14 @@ abstract class WatchedPageController extends EmailController {
 		if ( !empty( $this->summary ) ) {
 			return $this->summary;
 		}
-		return wfMessage( 'emailext-watchedpage-no-summary' )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( 'emailext-watchedpage-no-summary' )->text();
 	}
 
 	/**
 	 * @return String
 	 */
 	protected function getButtonText() {
-		return wfMessage( $this->getButtonTextMessageKey() )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( $this->getButtonTextMessageKey() )->text();
 	}
 
 	/**
@@ -141,13 +140,13 @@ abstract class WatchedPageController extends EmailController {
 	 * @return String
 	 */
 	protected function getArticleLinkText() {
-		return wfMessage( 'emailext-watchedpage-article-link-text',
+		return $this->getMessage( 'emailext-watchedpage-article-link-text',
 			$this->title->getFullURL( [
 				'diff' => 0,
 				'oldid' => $this->previousRevId
 			] ),
 			$this->title->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+		)->parse();
 	}
 
 	/**
@@ -156,12 +155,12 @@ abstract class WatchedPageController extends EmailController {
 	 * @throws \MWException
 	 */
 	protected function getAllChangesText( $title ) {
-		return wfMessage( 'emailext-watchedpage-view-all-changes',
+		return $this->getMessage( 'emailext-watchedpage-view-all-changes',
 			$title->getFullURL( [
 				'action' => 'history'
 			] ),
 			$title->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+		)->parse();
 	}
 
 	/**
@@ -172,6 +171,33 @@ abstract class WatchedPageController extends EmailController {
 			$this->getArticleLinkText(),
 			$this->getAllChangesText( $this->title ),
 		];
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		$form = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'pageTitle',
+					'label' => "Article Title",
+					'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
+				],
+				[
+					'type' => 'text',
+					'name' => 'currentRevId',
+					'label' => "Current Revision ID",
+					'tooltip' => "The current revision you want to compare to"
+				],
+				[
+					'type' => 'text',
+					'name' => 'previousRevId',
+					'label' => "Previous Revision ID",
+					'tooltip' => 'The previous revision you want to compare to'
+				],
+			]
+		];
+
+		return $form;
 	}
 }
 
@@ -292,13 +318,13 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 * @return String
 	 */
 	protected function getArticleLinkText() {
-		return wfMessage( 'emailext-watchedpage-article-link-text',
+		return $this->getMessage( 'emailext-watchedpage-article-link-text',
 			$this->newTitle->getFullURL( [
 					'diff' => 0,
 					'oldid' => $this->currentRevId
 			] ),
 			$this->newTitle->getPrefixedText()
-		)->inLanguage( $this->targetLang )->parse();
+		)->parse();
 	}
 
 	/**
@@ -309,32 +335,5 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 */
 	protected function getAllChangesText( $title ) {
 		return parent::getAllChangesText( $this->newTitle );
-	}
-
-	protected static function getEmailSpecificFormFields() {
-			$form = [
-				'inputs' => [
-					[
-						'type' => 'text',
-						'name' => 'pageTitle',
-						'label' => "Article Title",
-						'tooltip' => "eg 'Rachel_Berry' (make sure it's on this wikia!)"
-					],
-					[
-						'type' => 'text',
-						'name' => 'currentRevId',
-						'label' => "Current Revision ID",
-						'tooltip' => "The current revision you want to compare to"
-					],
-					[
-						'type' => 'text',
-						'name' => 'previousRevId',
-						'label' => "Previous Revision ID",
-						'tooltip' => 'The previous revision you want to compare to'
-					],
-				]
-			];
-
-		return $form;
 	}
 }

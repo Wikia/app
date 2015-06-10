@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ilmarmors",
+			"Wertuose"
+		]
+	},
+	"browsedata": "Pārlūkot datus",
+	"sd_browsedata_choosecategory": "Izvēlieties kategoriju",
+	"sd_browsedata_viewcategory": "skatīt kategoriju",
+	"sd_browsedata_subcategory": "Apakškategorija",
+	"sd_browsedata_other": "Cita",
+	"sd_browsedata_none": "Neviena",
+	"sd_browsedata_filterbyvalue": "Filtrēt pēc šīs vērtības",
+	"sd_browsedata_filterbysubcategory": "Filtrēt pēc šīs apakškategorijas",
+	"sd_browsedata_otherfilter": "Parādīt lapas ar citu šī filtra vērtību",
+	"sd_browsedata_nonefilter": "Rādīt lapas bez šī filtra vērtības",
+	"sd_browsedata_or": "vai",
+	"sd_browsedata_removefilter": "Noņemt šo filtru",
+	"sd_browsedata_removesubcategoryfilter": "Noņemt šo apakškategorijas filtru",
+	"sd_browsedata_resetfilters": "Atiestatīt filtrus",
+	"sd_browsedata_addanothervalue": "Noklikšķiniet uz bultiņas, lai pievienotu citu vērtību",
+	"sd_browsedata_daterangestart": "Sākums:",
+	"sd_browsedata_daterangeend": "Beigas:",
+	"sd-pageschemas-filter": "Filtrs",
+	"sd-pageschemas-values": "Vērtības"
+}

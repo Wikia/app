@@ -4,9 +4,12 @@ namespace Email;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Wikia\Logger\WikiaLogger;
+use Email\Tracking\TrackingCategories;
 
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
+	const TRACKING_CATEGORY = TrackingCategories::DEFAULT_CATEGORY;
 
 	const AVATAR_SIZE = 50;
 
@@ -62,7 +65,7 @@ abstract class EmailController extends \WikiaController {
 			$this->test = $this->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
 
-			$noReplyName = wfMessage( 'emailext-no-reply-name' )->escaped();
+			$noReplyName = $this->getMessage( 'emailext-no-reply-name' )->escaped();
 
 			$this->replyToAddress = new \MailAddress(
 				$this->getVal( 'replyToAddress', $this->wg->NoReplyAddress ),
@@ -152,7 +155,9 @@ abstract class EmailController extends \WikiaController {
 					$fromAddress,
 					$subject,
 					$body,
-					$replyToAddress
+					$replyToAddress,
+					$contentType = null,
+					static::TRACKING_CATEGORY
 				);
 				$this->assertGoodStatus( $status );
 			}
@@ -331,12 +336,12 @@ abstract class EmailController extends \WikiaController {
 
 	protected function getFooterMessages() {
 		return [
-			wfMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
-				->inLanguage( $this->targetLang )->parse(),
-			wfMessage( 'emailext-update-frequency' )
-				->inLanguage( $this->targetLang )->parse(),
-			wfMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
-				->inLanguage( $this->targetLang )->parse(),
+			$this->getMessage( 'emailext-recipient-notice', $this->targetUser->getEmail() )
+				->parse(),
+			$this->getMessage( 'emailext-update-frequency' )
+				->parse(),
+			$this->getMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
+				->parse(),
 		];
 	}
 
@@ -345,7 +350,7 @@ abstract class EmailController extends \WikiaController {
 	 * @return String
 	 */
 	protected function getTagline() {
-		return wfMessage( 'emailext-fans-tagline' )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( 'emailext-fans-tagline' )->text();
 	}
 
 	/**
@@ -420,7 +425,7 @@ abstract class EmailController extends \WikiaController {
 		if ( $this->currentUser->isLoggedIn() )	 {
 			return $this->currentUser->getName();
 		}
-		return wfMessage( "emailext-anonymous-editor" )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( "emailext-anonymous-editor" )->text();
 	}
 
 	/**
@@ -463,8 +468,8 @@ abstract class EmailController extends \WikiaController {
 	 * @return string
 	 */
 	protected function getSalutation() {
-		return wfMessage( 'emailext-salutation',
-			$this->targetUser->getName() )->inLanguage( $this->targetLang )->text();
+		return $this->getMessage( 'emailext-salutation',
+			$this->targetUser->getName() )->text();
 	}
 
 	/**
@@ -643,5 +648,16 @@ abstract class EmailController extends \WikiaController {
 		}
 
 		return $legendName;
+	}
+
+	/**
+	 * A wrapper for wfMessage() which removes the possibility of messages being overridden in the MediaWiki namespace
+	 *
+	 * @return Message
+	 */
+	protected function getMessage() {
+		return call_user_func_array( 'wfMessage', func_get_args() )
+			->useDatabase( false )
+			->inLanguage( $this->targetLang );
 	}
 }

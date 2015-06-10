@@ -38,8 +38,11 @@
 
 	.params {
 		border: 0; /* Override monobbok styles */
-		margin: 10px 0 0 0;
 		padding: 0 0 0 24px;
+
+		.param:first-child {
+			margin-top: 10px;
+		}
 	}
 
 	.param {

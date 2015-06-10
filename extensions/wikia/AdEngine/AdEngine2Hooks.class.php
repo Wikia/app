@@ -73,6 +73,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
 		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableMonetizationService';
 		$vars[] = 'wgSitewideDisableRubiconRTP';
 		$vars[] = 'wgSitewideDisableSevenOneMedia';
 
@@ -94,7 +95,10 @@ class AdEngine2Hooks {
 
 		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
 
-		$vars['ads'] = ['context' => $adContext];
+		$vars['ads'] = [
+			'context' => $adContext,
+			'runtime' => [],
+		];
 
 		// Legacy vars:
 		$vars['adslots2'] = [];                  // Queue for ads registration

@@ -1,8 +1,3 @@
-<?php
-if ( empty($flags) ) :
-	echo wfMessage( 'flags-edit-modal-no-flags-on-community' )->parseAsBlock();
-else:
- ?>
 <form action="<?= Sanitizer::cleanUrl( $formSubmitUrl ) ?>" method="POST" id="flagsEditForm">
 	<ul>
 		<?php foreach ( $flags as $flagTypeId => $flag ): ?>
@@ -11,7 +6,7 @@ else:
 			<?php isset( $flag['flag_id'] ) ? $checked = 'checked' : $checked = '';	?>
 			<input type="checkbox" id="<?= Sanitizer::encodeAttribute( $prefix ) ?>" name="<?= Sanitizer::encodeAttribute( "{$prefix}:{$inputNameCheckbox}" ) ?>" <?= $checked ?>>
 			<label for="<?= Sanitizer::encodeAttribute( $prefix ) ?>"><?= $flag['flag_name'] ?></label>
-			<a href="<?= Sanitizer::cleanUrl( $flag['flag_view_url'] ) ?>" target="_blank"><?= wfMessage( 'flags-edit-form-more-info' )->escaped() ?></a>
+			<a href="<?= Sanitizer::cleanUrl( $flag['flag_view_url'] ) ?>" data-id="more-info" target="_blank"><?= wfMessage( 'flags-edit-form-more-info' )->escaped() ?></a>
 			<?php
 			$flagParamsNames = json_decode( $flag['flag_params_names'] );
 			if ( !empty( $flagParamsNames ) ):
@@ -35,6 +30,3 @@ else:
 	<input type="hidden" name="page_id" value="<?= Sanitizer::encodeAttribute( $pageId ) ?>">
 	<input type="hidden" name="edit_token" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>">
 </form>
-<?php
-endif;
-?>

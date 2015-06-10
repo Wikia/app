@@ -159,7 +159,7 @@ class BodyController extends WikiaController {
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt, $wgAnalyticsProviderPageFairSlotIds;
+			$wgEnableForumExt;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -174,10 +174,7 @@ class BodyController extends WikiaController {
 			$railModuleList = array (
 				1202 => array('Forum', 'forumRelatedThreads', null),
 				1201 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', [
-					'slotName' => 'TOP_RIGHT_BOXAD',
-					'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
-				]),
+				1490 => array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']),
 			);
 
 			// Include additional modules from other extensions (like chat)
@@ -297,14 +294,8 @@ class BodyController extends WikiaController {
 			return array();
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', [
-			'slotName' => 'TOP_RIGHT_BOXAD',
-			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
-		]);
-		$railModuleList[1100] = array('Ad', 'Index', [
-			'slotName' => 'LEFT_SKYSCRAPER_2',
-			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER']) ? $wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER'] : null
-		]);
+		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
+		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
 
 		unset($railModuleList[1450]);
 
@@ -461,8 +452,15 @@ class BodyController extends WikiaController {
 
 		// MonetizationModule Extension
 		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-			$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
+				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
+				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			} else {
+				$this->monetizationModules = [
+					MonetizationModuleHelper::SLOT_TYPE_IN_CONTENT => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_IN_CONTENT'] ),
+					MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_BELOW_CATEGORY'] ),
+				];
+			}
 			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 

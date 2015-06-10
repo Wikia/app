@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alma",
+			"Toliño"
+		]
+	},
+	"semanticdrilldown-desc": "Unha interface para navegar a través de datos semánticos",
+	"specialpages-group-sd_group": "Exercicio de semántica",
+	"browsedata": "Datos do navegador",
+	"sd_browsedata_choosecategory": "Elixir unha categoría",
+	"sd_browsedata_viewcategory": "ver categoría",
+	"sd_browsedata_docu": "Prema nun ou máis elementos dos de embaixo para estreitar os seus resultados.",
+	"sd_browsedata_subcategory": "Subcategoría",
+	"sd_browsedata_other": "Outro",
+	"sd_browsedata_none": "Ningún",
+	"sd_browsedata_filterbyvalue": "Filtrar por este valor",
+	"sd_browsedata_filterbysubcategory": "Filtrar por esta subcategoría",
+	"sd_browsedata_otherfilter": "Mostrar páxinas con outro valor para este filtro",
+	"sd_browsedata_nonefilter": "Mostrar páxinas con ningún valor para este filtro",
+	"sd_browsedata_or": "ou",
+	"sd_browsedata_removefilter": "Eliminar este filtro",
+	"sd_browsedata_removesubcategoryfilter": "Eliminar este filtro de subcategorías",
+	"sd_browsedata_resetfilters": "Eliminar filtros",
+	"sd_browsedata_addanothervalue": "Prema na frecha para engadir outro valor",
+	"sd_browsedata_daterangestart": "Comezo:",
+	"sd_browsedata_daterangeend": "Fin:",
+	"sd_browsedata_novalues": "Non hai valores para este filtro",
+	"sd_createfilter_usepropertyvalues": "Usar todos os valores da propiedade para o filtro",
+	"sd_createfilter_usecategoryvalues": "Obter os valores para o filtro desta categoría:",
+	"sd_createfilter_requirefilter": "Requírese que sexa seleccionado outro filtro antes de que este sexa amosado:",
+	"sd-pageschemas-filter": "Filtro",
+	"sd-pageschemas-values": "Valores"
+}

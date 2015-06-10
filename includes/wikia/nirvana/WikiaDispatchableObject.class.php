@@ -95,6 +95,9 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 		return $this->app->sendRequest( $controllerName, $methodName, $params );
 	}
 
+	protected function sendRequestAcceptExceptions( $controllerName, $methodName, $params = [] ) {
+		return $this->app->sendRequest( $controllerName, $methodName, $params, true, WikiaRequest::EXCEPTION_MODE_RETURN );
+	}
 	/**
 	 * Convenience method for sending requests to the same controller
 	 *

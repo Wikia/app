@@ -3545,6 +3545,24 @@ class User {
 		$sessionToken = $this->getEditToken( $salt, $request );
 		if ( $val != $sessionToken ) {
 			wfDebug( "User::matchEditToken: broken session data\n" );
+
+			// Wikia change - begin
+			// @see MAIN-4660 log edit tokens mismatches
+			if ($val != '') {
+				Wikia\Logger\WikiaLogger::instance()->error(
+					__METHOD__ . '::tokenMismatch',
+					[
+						'client_val'  => $val,
+						'session_val' => $sessionToken,
+						'session_id'  => session_id(),
+						'salt'        => $salt,
+						'user_id'     => $this->getId(),
+						'user_name'   => $this->getName(),
+						'exception'   => new Exception(),
+					]
+				);
+			}
+			// Wikia change - end
 		}
 		return $val == $sessionToken;
 	}

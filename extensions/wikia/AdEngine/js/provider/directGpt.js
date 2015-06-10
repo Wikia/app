@@ -1,14 +1,17 @@
 /*global define*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker',
-	'wikia.log'
-], function (factory, slotTweaker, log) {
+	'ext.wikia.adEngine.slotTweaker'
+], function (adContext, factory, slotTweaker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
-		gptFlushed = false,
+	var context = adContext.getContext(),
+		logGroup = 'ext.wikia.adEngine.provider.directGpt',
+		atfFlushed = false,
+		pendingSlots = [],
+		delayedSlotsQueue = [],
 		slotMap = {
 			CORP_TOP_LEADERBOARD:       {size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			CORP_TOP_RIGHT_BOXAD:       {size: '300x250,300x600,300x1050', loc: 'top'},
@@ -36,41 +39,97 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			PREFOOTER_RIGHT_BOXAD:      {size: '300x250', loc: 'footer'},
 			TOP_LEADERBOARD:            {size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'},
-			GPT_FLUSH:                  {skipCall: true}
+			GPT_FLUSH:                  {flushOnly: true}
 		},
-		gptConfig = { // slots to use SRA with
-			CORP_TOP_LEADERBOARD: 'wait',
-			HUB_TOP_LEADERBOARD:  'wait',
-			TOP_LEADERBOARD:      'wait',
-			HOME_TOP_LEADERBOARD: 'wait',
-			INVISIBLE_SKIN:       'wait',
-			CORP_TOP_RIGHT_BOXAD: 'flush',
-			TOP_RIGHT_BOXAD:      'flush',
-			HOME_TOP_RIGHT_BOXAD: 'flush',
-			GPT_FLUSH:            'flushonly'
-		};
+		atfSlots = [
+			'CORP_TOP_LEADERBOARD',
+			'HUB_TOP_LEADERBOARD',
+			'TOP_LEADERBOARD',
+			'HOME_TOP_LEADERBOARD',
+			'INVISIBLE_SKIN',
+			'CORP_TOP_RIGHT_BOXAD',
+			'TOP_RIGHT_BOXAD',
+			'HOME_TOP_RIGHT_BOXAD'
+		],
+		provider = factory.createProvider(
+			logGroup,
+			'DirectGpt',
+			'gpt',
+			slotMap,
+			{
+				beforeSuccess: function (slotName) {
+					slotTweaker.removeDefaultHeight(slotName);
+					slotTweaker.removeTopButtonIfNeeded(slotName);
+					slotTweaker.adjustLeaderboardSize(slotName);
+					removePendingSlotAndPushDelayedQueue(slotName);
+				},
+				beforeHop: function (slotName) {
+					removePendingSlotAndPushDelayedQueue(slotName);
+				},
+				sraEnabled: true
+			}
+		);
 
-	return factory.createProvider(
-		logGroup,
-		'DirectGpt',
-		'gpt',
-		slotMap,
-		{
-			beforeSuccess: function (slotName) {
-				slotTweaker.removeDefaultHeight(slotName);
-				slotTweaker.removeTopButtonIfNeeded(slotName);
-				slotTweaker.adjustLeaderboardSize(slotName);
-			},
-			shouldFlush: function (slotName) {
-				log(['shouldFlush', slotName]);
-
-				if (gptConfig[slotName] === 'flushonly' || gptConfig[slotName] === 'flush') {
-					gptFlushed = true; // Setting the module-scope var here
-				}
-
-				log(['shouldFlush', slotName, gptFlushed]);
-				return gptFlushed;
+	function removePendingSlotAndPushDelayedQueue(slotName) {
+		if (!context.opts.delayBtf) {
+			return;
+		}
+		var index = pendingSlots.indexOf(slotName);
+		if (index > -1) {
+			pendingSlots.splice(index, 1);
+			if (pendingSlots.length === 0 && delayedSlotsQueue.length) {
+				pushDelayedQueue();
 			}
 		}
-	);
+	}
+
+	function pushDelayedQueue() {
+		delayedSlotsQueue.forEach(function (slot) {
+			fillInSlotWithDelay(slot.slotName, slot.success, slot.hop);
+		});
+	}
+
+	function delayBtfSlot(slotName, success, hop) {
+		if (atfSlots.indexOf(slotName) > -1) {
+			if (!atfFlushed) {
+				pendingSlots.push(slotName);
+			}
+			provider.fillInSlot(slotName, success, hop);
+			return;
+		}
+
+		atfFlushed = true;
+		delayedSlotsQueue.push({
+			slotName: slotName,
+			success: success,
+			hop: hop
+		});
+	}
+
+	function blockBtfSlot(slotName, success) {
+		success({
+			adType: 'blocked'
+		});
+		slotTweaker.hide(slotName);
+	}
+
+	function fillInSlotWithDelay(slotName, success, hop) {
+		if (context.opts.delayBtf) {
+			if (!atfFlushed || pendingSlots.length > 0) {
+				delayBtfSlot(slotName, success, hop);
+				return;
+			} else if (window.ads.runtime.disableBtf && atfSlots.indexOf(slotName) === -1) {
+				blockBtfSlot(slotName, success);
+				return;
+			}
+		}
+
+		provider.fillInSlot(slotName, success, hop);
+	}
+
+	return {
+		name: provider.providerName,
+		canHandleSlot: provider.canHandleSlot,
+		fillInSlot: fillInSlotWithDelay
+	};
 });
