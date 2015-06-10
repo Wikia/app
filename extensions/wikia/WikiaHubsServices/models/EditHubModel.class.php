@@ -270,7 +270,7 @@ class EditHubModel extends WikiaModel {
 	}
 
 	/**
-	 * @return User
+	 * @return String|User
 	 */
 	protected function getUserClass() {
 		return $this->userClass;
@@ -303,7 +303,7 @@ class EditHubModel extends WikiaModel {
 	}
 
 	/**
-	 * @return SpecialPage
+	 * @return String|SpecialPage
 	 */
 	protected function getSpecialPageClass() {
 		return $this->specialPageClass;
