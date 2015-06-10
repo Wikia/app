@@ -4,6 +4,8 @@
  * A class that contains all methods that are hooked to events occurring in the stack.
  *
  * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
+ * @author Kamil Koterba <kamil@wikia-inc.com>
  * @copyright (c) 2015 Wikia, Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -15,9 +17,16 @@ class Hooks {
 	const FLAGS_DROPDOWN_ACTION = 'flags';
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
-		if ( \Wikia::isContentNamespace() ) {
-			\Wikia::addAssetsToOutput('flags_js');
-			$out->addModules( 'ext.wikia.Flags' );
+		$helper = new FlagsHelper();
+		/* Assets for flags view */
+		if ( $helper->shouldDisplayFlags()
+			|| $out->getTitle()->isSpecial( 'Flags' ) ) {
+			\Wikia::addAssetsToOutput( 'flags_view_scss' );
+		}
+		/* Assets for flags edit form */
+		if ( $helper->areFlagsEditable() ) {
+			\Wikia::addAssetsToOutput( 'flags_editform_js' );
+			$out->addModules( 'ext.wikia.Flags.EditFormMessages' );
 		}
 		return true;
 	}
@@ -31,7 +40,8 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onSkinTemplateNavigation( $skin, &$links ) {
-		if ( \Wikia::isContentNamespace() ) {
+		$helper = new FlagsHelper();
+		if ( $helper->areFlagsEditable() ) {
 			$links['views'][self::FLAGS_DROPDOWN_ACTION] = [
 				'href' => '#',
 				'text' => wfMessage( 'flags-edit-modal-title' )->escaped(),
@@ -47,7 +57,8 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onPageHeaderDropdownActions( array &$actions ) {
-		if ( \Wikia::isContentNamespace() ) {
+		$helper = new FlagsHelper();
+		if ( $helper->areFlagsEditable() ) {
 			$actions[] = self::FLAGS_DROPDOWN_ACTION;
 		}
 		return true;
@@ -71,10 +82,7 @@ class Hooks {
 		 * - the request is from VE
 		 */
 		$helper = new FlagsHelper();
-		if ( !$parser->mFlagsParsed
-			&& $helper->shouldDisplayFlags()
-			&& !( $wgRequest->getVal( 'action' ) == 'visualeditor' )
-		) {
+		if ( !$parser->mFlagsParsed && $helper->shouldInjectFlags() ) {
 			$addText = ( new \FlagsController )->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 
 			if ( $addText !== null ) {

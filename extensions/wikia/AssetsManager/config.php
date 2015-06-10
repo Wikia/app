@@ -76,6 +76,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
 		'//extensions/wikia/AdEngine/js/GptHelper.js',
+		'//extensions/wikia/AdEngine/js/GptSraHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -102,6 +103,7 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve.js',
 		'//extensions/wikia/AdEngine/js/provider/liftium.js',
+		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 		'//extensions/wikia/AdEngine/js/provider/sevenOneMedia.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
@@ -350,7 +352,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/tabs.js',
-		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
 		'//skins/oasis/js/Tracking.js',
 
 		'//skins/shared/scripts/onScroll.js',
@@ -1748,16 +1749,6 @@ $config['special_videos_css_mobile'] = array(
 	)
 );
 
-/* SharingToolbar */
-$config['sharingtoolbar_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//skins/oasis/js/SharingToolbar/SharingToolbar.js',
-		'//extensions/wikia/ShareButtons/js/ShareButtons.js',
-		'#function_SharingToolbarController::getAssets'
-	)
-);
-
 /* CategorySelect */
 $config['categoryselect_edit_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
@@ -2441,7 +2432,15 @@ $config['portable_infobox_monobook_scss'] = [
 	]
 ];
 
-$config['flags_js'] = [
+$config['flags_view_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/Flags/styles/Flags.scss',
+	],
+];
+
+$config['flags_editform_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis', 'monobook'],
 	'assets' => [

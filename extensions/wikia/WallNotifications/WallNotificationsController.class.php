@@ -296,5 +296,26 @@ class WallNotificationsController extends WikiaController {
 		$this->response->setVal( 'exists' , $result );
 	}
 
+	public function getEntityData() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$revId = $this->getVal( 'revId' );
+		$useMasterDB = $this->getVal( 'useMasterDB', false );
+
+		$wn = new WallNotificationEntity();
+		if ( $wn->loadDataFromRevId( $revId, $useMasterDB ) ) {
+			$this->response->setData( [
+				'data' => $wn->data,
+				'parentTitleDbKey' => $wn->parentTitleDbKey,
+				'msgText' => $wn->msgText,
+				'threadTitleFull' => $wn->threadTitleFull,
+				'status' => 'ok',
+			] );
+		} else {
+			$this->response->setData( [
+				'status' => 'error'
+			] );
+		}
+	}
 }
 
