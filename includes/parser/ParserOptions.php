@@ -181,11 +181,6 @@ class ParserOptions {
 	var $mExtraKey = '';
 
 	/**
-	 * Parsing part of wikitext (should turn off global context)
-	 */
-	var $mIsPartialParse = false;
-
-	/**
 	 * Function to be called when an option is accessed.
 	 */
 	protected $onAccessCallback = null;
@@ -220,7 +215,6 @@ class ParserOptions {
 
 	function getIsPreview()                     { return $this->mIsPreview; }
 	function getIsSectionPreview()              { return $this->mIsSectionPreview; }
-	function getIsPartialParse()                { return $this->mIsPartialParse; }
 	function getIsPrintable()                   { $this->optionUsed( 'printable' );
 												  return $this->mIsPrintable; }
 	function getUser()                          { return $this->mUser; }
@@ -311,7 +305,6 @@ class ParserOptions {
 
 	function setIsPreview( $x )                 { return wfSetVar( $this->mIsPreview, $x ); }
 	function setIsSectionPreview( $x )          { return wfSetVar( $this->mIsSectionPreview, $x ); }
-	function setIsPartialParse( $x )            { return wfSetVar( $this->mIsPartialParse, $x ); }
 	function setIsPrintable( $x )               { return wfSetVar( $this->mIsPrintable, $x ); }
 
 	/**
