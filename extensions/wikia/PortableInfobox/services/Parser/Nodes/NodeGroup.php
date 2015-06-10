@@ -4,17 +4,16 @@ namespace Wikia\PortableInfobox\Parser\Nodes;
 use Wikia\PortableInfobox\Parser\XmlParser;
 
 class NodeGroup extends Node {
-	const DATA_THEME_ATTR_NAME = 'theme';
+	const DATA_LAYOUT_ATTR_NAME = 'layout';
 
 	public function getData() {
 		$nodeFactory = new XmlParser( $this->infoboxData );
 		if ( $this->externalParser ) {
 			$nodeFactory->setExternalParser( $this->externalParser );
 		}
-		$theme = $this->getXmlAttribute( $this->xmlNode, self::DATA_THEME_ATTR_NAME );
+		$layout = $this->getXmlAttribute( $this->xmlNode, self::DATA_LAYOUT_ATTR_NAME );
 		$value = $nodeFactory->getDataFromNodes( $this->xmlNode, $this );
-		//var_dump("theme: ", $theme);
-		return [ 'value' =>  $value, 'theme' => $theme ];
+		return [ 'value' =>  $value, 'layout' => $layout ];
 	}
 
 	public function isEmpty( $data ) {

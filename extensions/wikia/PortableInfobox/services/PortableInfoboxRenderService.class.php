@@ -127,7 +127,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	private function renderGroup( $groupData ) {
 		$groupHTMLContent = '';
 		$dataItems = $groupData['value'];
-		$theme = $groupData['theme'];
+		$layout = $groupData['layout'];
 
 		foreach ( $dataItems as $item ) {
 			$type = $item['type'];
@@ -137,7 +137,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent, 'theme' => $theme] );
+		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent, 'layout' => $layout] );
 	}
 
 	/**

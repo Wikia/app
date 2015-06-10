@@ -12,7 +12,7 @@ class NodeGroupTest extends WikiaBaseTest {
 		$xml = simplexml_load_string( $string );
 		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeGroup( $xml, [ 'val1' => $val1, 'val2' => $val2 ] );
 		$data = $node->getData();
-		$this->assertTrue( $data['theme'] === $expectedOutput['theme'] );
+		$this->assertTrue( $data['layout'] === $expectedOutput['layout'] );
 	}
 
 	public function testGetDataDataProvider() {
@@ -20,7 +20,7 @@ class NodeGroupTest extends WikiaBaseTest {
 			[
 				'val1' => 'damage',
 				'val2' => 'prize',
-				'string' => '<group theme="inline">
+				'string' => '<group layout="inline">
 						<header>Weapon Characteristics</header>
 							<data source="val1">
 								<label>Weapon damage</label>
@@ -28,7 +28,7 @@ class NodeGroupTest extends WikiaBaseTest {
 					</group>',
 				'expectedOutput' => [
 					'value' => '',
-					'theme' => 'inline'
+					'layout' => 'inline'
 				]
 			],
 			[
@@ -42,7 +42,7 @@ class NodeGroupTest extends WikiaBaseTest {
 					</group>',
 				'expectedOutput' => [
 					'value' => '',
-					'theme' => null
+					'layout' => null
 				]
 			],
 			[
@@ -59,7 +59,7 @@ class NodeGroupTest extends WikiaBaseTest {
 					</group>',
 				'expectedOutput' => [
 					'value' => '',
-					'theme' => 'inline'
+					'layout' => 'inline'
 				]
 			],
 		];
