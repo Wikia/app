@@ -19,6 +19,11 @@ abstract class Criterion {
 	 */
 	static function factory($criterionName) {
 		$className = sprintf('Wikia\\AbPerfTesting\\Criteria\\%s', ucfirst(strtolower($criterionName)));
+
+		if (!class_exists($className)) {
+			throw new UnknownCriterionException( sprintf('Criterion "%s" does not exist', $criterionName) );
+		}
+
 		return new $className;
 	}
 }

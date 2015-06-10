@@ -20,7 +20,8 @@ $wgExtensionCredits['other'][] = [
 ];
 
 // generic classes
-$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Hooks' ] = __DIR__ . '/classes/Hooks.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Hooks'                     ] = __DIR__ . '/classes/Hooks.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\UnknownCriterionException' ] = __DIR__ . '/classes/UnknownCriterionException.class.php';
 
 // experiments
 $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiment'                ] = __DIR__ . '/experiments/Experiment.class.php';

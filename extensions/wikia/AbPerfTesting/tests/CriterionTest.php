@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\AbPerfTesting\Criterion;
 use Wikia\AbPerfTesting\Criteria\Traffic;
 use Wikia\AbPerfTesting\Criteria\Wikis;
 
@@ -8,6 +9,19 @@ class CriterionTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . "/../AbPerfTesting.setup.php";
 		parent::setUp();
+	}
+
+	function testCriterionFactory() {
+		$this->assertInstanceOf( 'Wikia\AbPerfTesting\Criteria\Traffic', Criterion::factory('traffic') );
+		$this->assertInstanceOf( 'Wikia\AbPerfTesting\Criteria\Traffic', Criterion::factory('Traffic') );
+		$this->assertInstanceOf( 'Wikia\AbPerfTesting\Criteria\Traffic', Criterion::factory('TRAFFIC') );
+	}
+
+	/**
+	 * @expectedException Wikia\AbPerfTesting\UnknownCriterionException
+	 */
+	function testCriterionFactoryErrorHandling() {
+		Criterion::factory('foobar');
 	}
 
 	function testTrafficCriterion() {
