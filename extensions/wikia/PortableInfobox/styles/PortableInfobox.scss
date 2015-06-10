@@ -6,8 +6,10 @@ $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 5px;
 $infobox-background: mix($color-page, $color-links, 92%);
-$infobox-section-header-background: transparentize($color-links, 0.9);
+$infobox-section-header-background: transparentize($color-links, .9);
 $infobox-debug-line-number-width: 50px;
+$infobox-debug-error-msg-color: white;
+$infobox-debug-error-msg-bg: black;
 
 
 
@@ -134,7 +136,7 @@ $infobox-debug-line-number-width: 50px;
 .WikiaArticle {
 	.portable-infobox-error-info {
 		background-color: $color-error;
-		color: white;
+		color: $infobox-debug-error-msg-color;
 		font-size: 18px;
 		line-height: 28px;
 		margin: 0;
@@ -174,8 +176,8 @@ $infobox-debug-line-number-width: 50px;
 }
 
 .portable-infobox-debug-error-massage {
-	background-color: black;
-	color: white;
+	background-color: $infobox-debug-error-msg-bg;
+	color: $infobox-debug-error-msg-color;
 	font-family: Helvetica, Arial, sans-serif;
 	margin: 20px 0 10px 25px;
 	padding: $infobox-item-margin * 2 $infobox-item-margin * 3;
@@ -183,10 +185,10 @@ $infobox-debug-line-number-width: 50px;
 	width: 400px;
 
 	&:before {
-		border-bottom: $infobox-margin solid black;
+		border-bottom: $infobox-margin solid $infobox-debug-error-msg-bg;
 		border-left: $infobox-margin solid transparent;
 		border-right: $infobox-margin solid transparent;
-		content: "";
+		content: '';
 		display: block;
 		height: 0;
 		left: 25px;
