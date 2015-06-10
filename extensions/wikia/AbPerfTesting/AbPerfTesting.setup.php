@@ -24,8 +24,9 @@ $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Hooks'                     ] = __DIR_
 $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\UnknownCriterionException' ] = __DIR__ . '/classes/UnknownCriterionException.class.php';
 
 // experiments
-$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiment'                ] = __DIR__ . '/experiments/Experiment.class.php';
-$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay' ] = __DIR__ . '/experiments/BackendDelay.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiment'                 ] = __DIR__ . '/experiments/Experiment.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay'  ] = __DIR__ . '/experiments/BackendDelay.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiments\\FrontendDelay' ] = __DIR__ . '/experiments/FrontendDelay.class.php';
 
 // criteria
 $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criterion'         ] = __DIR__ . '/criteria/Criterion.class.php';
@@ -68,7 +69,6 @@ $wgABPerfTestingExperiments['backend_delay_a'] = [
 	],
 	'criteria' => [
 		'traffic' => 1,
-		'wikis' => 915, // TODO: for debug only
 	]
 ];
 
@@ -89,5 +89,16 @@ $wgABPerfTestingExperiments['backend_delay_c'] = [
 	],
 	'criteria' => [
 		'traffic' => 3,
+	]
+];
+
+// TODO: apply for logged-in only?
+$wgABPerfTestingExperiments['frontend_delay_a'] = [
+	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\FrontendDelay',
+	'params' => [
+		'delay' => 300,
+	],
+	'criteria' => [
+		'wikis' => 915, // TODO: for debug only
 	]
 ];
