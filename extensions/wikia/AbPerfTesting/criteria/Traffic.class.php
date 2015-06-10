@@ -17,7 +17,7 @@ class Traffic {
 	private $mBeaconId;
 
 	function __construct() {
-		$this->mBeaconId = \F::app()->wf->GetBeaconId();
+		$this->mBeaconId = wfGetBeaconId();
 	}
 
 	/**
