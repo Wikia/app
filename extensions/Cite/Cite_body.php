@@ -1070,12 +1070,7 @@ class Cite {
 			return $parser->extCite->checkRefsNoReferences( $parser, $text );
 		}
 
-
-		if ( $parser->getOptions()->getIsSectionPreview()
-			/** Wikia change */
-			|| $parser->getOptions()->getIsPartialParse()
-			/** Wikia change end */
-		) {
+		if ( $parser->getOptions()->getIsSectionPreview() ) {
 			return true;
 		}
 

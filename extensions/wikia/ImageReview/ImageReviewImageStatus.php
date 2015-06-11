@@ -59,7 +59,7 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 			$file = $imagePage->getDisplayedFile();
 			if ( $file instanceof WikiaLocalFile && $lastTouched < $now->modify( '-1 hour' ) ) {
 				$scribeEventProducer = new ScribeEventProducer( 'edit' );
-				$user = User::newFromText( $file->getUser() );
+				$user = User::newFromName( $file->getUser() );
 				if ( $scribeEventProducer->buildEditPackage( $imagePage, $user, null, null, $file ) ) {
 					$logParams = [
 						'cityId' => $wgCityId,
