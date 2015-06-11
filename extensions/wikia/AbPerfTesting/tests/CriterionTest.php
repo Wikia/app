@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\AbPerfTesting\Criterion;
+use Wikia\AbPerfTesting\Criteria\OasisArticles;
 use Wikia\AbPerfTesting\Criteria\Traffic;
 use Wikia\AbPerfTesting\Criteria\Wikis;
 
@@ -49,5 +50,64 @@ class CriterionTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable( 'wgCityId', 5123 );
 		$this->assertFalse( ( new Wikis() )->applies( 23 ) );
+	}
+
+	/**
+	 * @dataProvider oasisArticlesCriterionDataProvider
+	 */
+	function testOasisArticlesCriterion( $skinName, $titleExists, $isContentPage, $expected ) {
+		$skinMock = $this->mockClassWithMethods( 'Skin', [
+			'getSkinName' => $skinName,
+
+			// required by an abstract class
+			'outputPage' => null,
+			'setupSkinUserCss' => null,
+		] );
+
+		$titleMock =  $this->mockClassWithMethods( 'Title', [
+			'exists' => $titleExists,
+			'isContentPage' => $isContentPage
+		] );
+
+		// mock \RequestContext::getMain()
+		$this->mockClassWithMethods( 'RequestContext', [
+			'getSkin' => $skinMock,
+			'getTitle' => $titleMock,
+		], 'getMain' );
+
+		$this->assertEquals( $expected, ( new OasisArticles() )->applies( true ) );
+	}
+
+	function oasisArticlesCriterionDataProvider() {
+		return [
+			// only pass for Oasis and existing content pages
+			[
+				'skinName' => 'oasis',
+				'titleExists' => true,
+				'isContentPage' => true,
+				'expected' => true,
+			],
+			// other skin
+			[
+				'skinName' => 'monobook',
+				'titleExists' => true,
+				'isContentPage' => true,
+				'expected' => false,
+			],
+			// not existing page
+			[
+				'skinName' => 'oasis',
+				'titleExists' => false,
+				'isContentPage' => true,
+				'expected' => false,
+			],
+			// not a content page
+			[
+				'skinName' => 'oasis',
+				'titleExists' => true,
+				'isContentPage' => false,
+				'expected' => false,
+			],
+		];
 	}
 }
