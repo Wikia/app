@@ -67,3 +67,6 @@ $wgGroupPermissions['*']['access-sendemail'] = false;
 $wgGroupPermissions['staff']['access-sendemail'] = true;
 $wgGroupPermissions['helper']['access-sendemail'] = true;
 $wgGroupPermissions['translator']['access-sendemail'] = true;
+
+$wgAddGroups['staff'][] = 'translator';
+$wgRemoveGroups['staff'][] = 'translator';
