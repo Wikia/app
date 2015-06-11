@@ -294,15 +294,6 @@ class UserLoginHelper extends WikiaModel {
 	}
 
 	/**
-	 * @param User $user
-	 * @return string
-	 */
-	public function getReconfirmationEmailTempalte( $user ) {
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'reconfirmation-email' ) );
-		return $emailTextTemplate;
-	}
-
-	/**
 	 * Send reconfirmation email to the email address without saving that email address
 	 *
 	 * @param User $user

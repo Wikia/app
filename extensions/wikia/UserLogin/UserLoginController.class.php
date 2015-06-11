@@ -40,7 +40,7 @@ class UserLoginController extends WikiaController {
 	/**
 	 * General Mail template
 	 * @requestParam Array params
-	 * @responseParam String type [password-email, reconfirmation-email, account-creation-email, confirmation-reminder-email]
+	 * @responseParam String type [password-email, account-creation-email]
 	 * @responseParam String language
 	 * @responseParam String greeting
 	 * @responseParam String content
@@ -56,7 +56,6 @@ class UserLoginController extends WikiaController {
 				$this->content = wfMessage( 'userlogin-'.$this->type.'-content' )->inLanguage( $this->language )->text();
 				$this->signature = wfMessage( 'userlogin-'.$this->type.'-signature' )->inLanguage( $this->language )->text();
 				break;
-			case 'reconfirmation-email':
 			case 'account-creation-email':
 				$this->greeting = wfMessage( 'usersignup-'.$this->type.'-greeting' )->inLanguage( $this->language )->text();
 				$this->content = wfMessage( 'usersignup-'.$this->type.'-content' )->inLanguage( $this->language )->text();
