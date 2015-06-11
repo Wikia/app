@@ -165,8 +165,16 @@ class WikiaHubsModuleSliderService extends WikiaHubsModuleEditableService {
 		return $galleryText;
 	}
 
-	public function getImageInfo( $image ) {
-		return ImagesService::getLocalFileThumbUrlAndSizes($image, 0, ImagesService::EXT_JPG);
+	/**
+	 * @desc This is exactly the same as in WikiaHubsModuleService class
+	 * and is here only for testing purposes
+	 *
+	 * @param $image
+	 * @param int $destSize
+	 * @return stdClass
+	 */
+	public function getImageInfo( $image, $destSize = 0 ) {
+		return ImagesService::getLocalFileThumbUrlAndSizes($image, $destSize, ImagesService::EXT_JPG);
 	}
 
 	/**

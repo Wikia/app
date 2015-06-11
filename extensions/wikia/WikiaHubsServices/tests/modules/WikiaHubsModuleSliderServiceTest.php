@@ -151,6 +151,7 @@ WIKI_TEXT;
 			for ($i = 1; $i <= 5; $i++) {
 				$map[] = array(
 					$flatArray['photo' . $i],
+					0,
 					(object) array('url' => $expectedData['slides'][$i - 1]['photoUrl'])
 				);
 			}
