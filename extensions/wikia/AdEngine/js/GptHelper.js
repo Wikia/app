@@ -5,10 +5,11 @@ define('ext.wikia.adEngine.gptHelper', [
 	'wikia.window',
 	'wikia.document',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.provider.gptAdSizeConverter',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptAdDetect',
 	require.optional('ext.wikia.adEngine.gptSraHelper')
-], function (log, window, document, adLogicPageParams, slotTweaker, gptAdDetect, sraHelper) {
+], function (log, window, document, adLogicPageParams, adSizeConverter, slotTweaker, gptAdDetect, sraHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
@@ -17,44 +18,7 @@ define('ext.wikia.adEngine.gptHelper', [
 		gptSlots = {},
 		gptCallbacks = {},
 		googletag,
-		pubads,
-		fallbackSize = [1, 1]; // Size to return if there are no sizes matching the screen dimensions
-
-	function convertSizesToGpt(slotsize) {
-		log(['convertSizeToGpt', slotsize], 'debug', logGroup);
-		var tmp1 = slotsize.split(','),
-			sizes = [],
-			tmp2,
-			i;
-
-		for (i = 0; i < tmp1.length; i += 1) {
-			tmp2 = tmp1[i].split('x');
-			sizes.push([parseInt(tmp2[0], 10), parseInt(tmp2[1], 10)]);
-		}
-
-		return sizes;
-	}
-
-	function filterOutSizesBiggerThanScreenSize(sizes) {
-		log(['filterOutSizesBiggerThanScreenSize', sizes], 'debug', logGroup);
-		var goodSizes = [], i, len, minWidth;
-
-		minWidth = document.documentElement.offsetWidth;
-
-		for (i = 0, len = sizes.length; i < len; i += 1) {
-			if (sizes[i][0] <= minWidth) {
-				goodSizes.push(sizes[i]);
-			}
-		}
-
-		if (goodSizes.length === 0) {
-			log(['filterOutSizesBiggerThanScreenSize', 'No sizes left. Returning fallbackSize only'], 'error', logGroup);
-			goodSizes.push(fallbackSize);
-		}
-
-		log(['filterOutSizesBiggerThanScreenSize', 'result', goodSizes], 'debug', logGroup);
-		return goodSizes;
-	}
+		pubads;
 
 	function setPageLevelParams(pageLevelParams) {
 		var name,
@@ -205,11 +169,7 @@ define('ext.wikia.adEngine.gptHelper', [
 			}
 
 			if (!gptSlots[adDivId]) {
-				sizes = convertSizesToGpt(slotTargeting.size);
-
-				if (slotName.match(/TOP_LEADERBOARD/)) {
-					sizes = filterOutSizesBiggerThanScreenSize(sizes);
-				}
+				sizes = adSizeConverter.convert(slotName, slotTargeting.size);
 
 				log(['defineSlot', 'googletag.defineSlot', slotPath, sizes, adDivId], 'debug', logGroup);
 				slot = googletag.defineSlot(slotPath, sizes, adDivId);
