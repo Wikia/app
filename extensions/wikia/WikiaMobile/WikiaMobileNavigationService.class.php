@@ -27,6 +27,8 @@ class  WikiaMobileNavigationService extends WikiaService {
 		}
 
 
+		$this->setupLoginLink();
+
 		$themeSettings = new ThemeSettings();
 		$settings = $themeSettings->getSettings();
 
@@ -38,6 +40,17 @@ class  WikiaMobileNavigationService extends WikiaService {
 			$this->response->setVal( 'wordmarkUrl', $themeSettings->getWordmarkUrl() );
 		} else {
 			$this->response->setVal( 'wikiName', ( !empty( $settings['wordmark-text'] ) ) ? $settings['wordmark-text'] : $this->wg->SiteName );
+		}
+	}
+
+	private function setupLoginLink() {
+		if ($this->app->wg->get('wgEnableNewAuth')) {
+			$this->loginUrl = '/join?redirect=' .wfExpandUrl($this->request->getScriptUrl());
+			$this->loginClass = 'new-login';
+		}
+		else {
+			$this->loginUrl = SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
+			$this->loginClass = '';
 		}
 	}
 
