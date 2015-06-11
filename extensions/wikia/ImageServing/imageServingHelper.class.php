@@ -184,7 +184,7 @@ class ImageServingHelper {
 		$out = array();
 		preg_match_all("/(?<=(image mw=')).*(?=')/U", $editInfo->output->getText(), $out );
 		$imageList = $out[0];
-		wfRunHooks( "ImageServing::buildAndGetIndex", [ &$imageList, $article] );
+		wfRunHooks( "ImageServing::buildAndGetIndex", [ &$imageList, $title ] );
 		$images = self::buildIndex($article->getID(), $imageList, $ignoreEmpty, $dryRun);
 
 		wfProfileOut(__METHOD__);
