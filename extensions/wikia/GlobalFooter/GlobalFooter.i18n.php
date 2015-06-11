@@ -312,25 +312,6 @@ $messages['pt'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 );
 
-$messages['pt-br'] = array(
-	'global-footer-vertical-tv-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
-	'global-footer-vertical-comics-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
-	'global-footer-vertical-movies-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
-	'global-footer-vertical-music-link' => 'http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento',
-	'global-footer-vertical-books-link' => 'http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida',
-	'global-footer-vertical-games-link' => 'http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub',
-	'global-footer-vertical-lifestyle-link' => 'http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida',
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>Sobre nós</span>
-		*http://comunidade.wikia.com/wiki/Ajuda:Conteúdos| Ajuda
-		*http://www.wikia.com/Hiring| Carreiras
-		*http://www.wikia.com/Advertising| Anuncie
-		*Special:Contact| Contate a Wikia
-		*http://www.pt.wikia.com/Termos_de_Uso| Termos de Uso
-		*http://www.wikia.com/Privacy_Policy| Políticas de privacidade
-		*_LICENSE_
-		*http://www.pt.wikia.com/Special:CreateWiki| Criar uma wiki',
-);
-
 $messages['ru'] = array(
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>О Викия</span>
 		*http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5|Справка
@@ -370,18 +351,6 @@ $messages['vi'] = array(
 		*_LICENSE_',
 );
 
-$messages['zh'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
-		*http://zh.community.wikia.com/wiki/Help:内容|帮助
-		*http://www.wikia.com/Hiring|<span>维基招聘</span>
-		*http://www.wikia.com/Advertising|<span>广告服务</span>
-		*Special:Contact|联系我们
-		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用条款</span>
-		*http://www.wikia.com/Privacy_Policy|<span>隐私政策</span>
-		*http://www.wikia.com/Special:CreateWiki|<span>创建维基</span>
-		*_LICENSE_',
-);
-
 $messages['zh-hans'] = array(
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>关于我们</span>
 		*http://zh.community.wikia.com/wiki/Help:内容|帮助
@@ -406,30 +375,6 @@ $messages['zh-hans'] = array(
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 		* [[Special:Contact|Contact]]
 		* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
-);
-
-$messages['zh-hant'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>關於我們</span>
-		*http://zh.community.wikia.com/wiki/Help:内容|說明
-		*http://www.wikia.com/Hiring|<span>維基招聘</span>
-		*http://www.wikia.com/Advertising|<span>廣告服務</span>
-		*Special:Contact|聯繫我們
-		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用條款</span>
-		*http://www.wikia.com/Privacy_Policy|<span>隱私政策</span>
-		*http://www.wikia.com/Special:CreateWiki|<span>創建維基</span>
-		*_LICENSE_',
-);
-
-$messages['zh-hk'] = array(
-	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About_Us|<span>關於我們</span>
-		*http://zh.community.wikia.com/wiki/Help:内容|說明
-		*http://www.wikia.com/Hiring|<span>維基招聘</span>
-		*http://www.wikia.com/Advertising|<span>廣告服務</span>
-		*Special:Contact|聯繫我們
-		*http://zh.community.wikia.com/wiki/Wikia中文:使用条款|<span>使用條款</span>
-		*http://www.wikia.com/Privacy_Policy|<span>隱私政策</span>
-		*http://www.wikia.com/Special:CreateWiki|<span>創建維基</span>
-		*_LICENSE_',
 );
 
 $messages['zh-tw'] = array(
