@@ -174,6 +174,12 @@ class Node {
 		return $value;
 	}
 
+	protected function getInnerValue( \SimpleXMLElement $xmlNode ) {
+		return $this->getExternalParser()->parseRecursive(
+			SimpleXmlUtil::getInstance()->getInnerXML( $xmlNode )
+		);
+	}
+
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
 		if ( isset( $xmlNode[ $attribute ] ) ) {
 			return (string)$xmlNode[ $attribute ];
@@ -201,9 +207,9 @@ class Node {
 	protected function extractSourceFromNode( \SimpleXMLElement $xmlNode ) {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			preg_match_all( '/{{{(.*)}}}/sU', (string)$xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
+			preg_match_all( '/{{{(.*)}}}/s', (string)$xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
 
-			return $source ? array_unique( $sources[ 1 ] + [ $source ] ) : array_unique( $sources[ 1 ] );
+			return $source ? array_unique( array_merge( [ $source ], $sources[ 1 ] ) ) : array_unique( $sources[ 1 ] );
 		}
 
 		return $source ? [ $source ] : [ ];

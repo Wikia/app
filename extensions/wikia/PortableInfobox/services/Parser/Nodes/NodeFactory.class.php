@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: adamr
- * Date: 10/06/15
- * Time: 09:48
- */
-
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 

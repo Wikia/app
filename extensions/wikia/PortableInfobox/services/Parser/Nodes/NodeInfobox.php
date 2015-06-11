@@ -14,11 +14,7 @@ class NodeInfobox extends Node {
 	}
 
 	public function getRenderData() {
-		return array_map( function ( Node $item ) {
-			return $item->getRenderData();
-		}, array_filter( $this->getChildNodes(), function ( Node $item ) {
-			return !$item->isEmpty();
-		} ) );
+		return $this->getRenderDataForChildren();
 	}
 
 	public function isEmpty() {
