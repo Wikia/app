@@ -10,7 +10,7 @@ Performance experiments can be enabled based on the following criteria:
 * `traffic`: enable site-wide on a fraction of traffic (each bucket is 0.1% of all clients - uses `beacon_id`)
 * `oasisArticles`: if provided with the value of `true` will cause the experiment to be run on Oasis content namespace articles only
 
-Only up to one experiment can be run for the same request. The first match will be used. The name of the selected experiment will be report to Universal Analytics (via custom variable) and to InfluxDB (via Transaction parameter - for both backend and frontend related metrics).
+Only up to one experiment can be run for the same request. The first match will be used. The name of the selected experiment will be reported to Universal Analytics (via custom variable) and to InfluxDB (via Transaction parameter - for both backend and frontend related metrics).
 
 ```js
 wgTransactionContext.perf_test
@@ -40,4 +40,4 @@ $wgABPerfTestingExperiments['backend_delay_b'] = [
 ### Experiments implemented
 
 * `BackendDelay` - add a small delay at the end of the request.
-* `FrontDelay` - add a small delay before onDOMReady events is handled by jQuery
+* `FrontendDelay` - add a small delay before onDOMReady events is handled by jQuery
