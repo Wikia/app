@@ -49,7 +49,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return string
 	 * @throws UnimplementedNodeException when node used in markup does not exists
 	 * @throws XmlMarkupParseErrorException xml not well formatted
-	 * @throws notValidInfoboxAttributesErrorException when unsupported attributes exist in params array
+	 * @throws InvalidInfoboxParamsException when unsupported attributes exist in params array
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
 		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $this->getFrameParams( $frame ) );
