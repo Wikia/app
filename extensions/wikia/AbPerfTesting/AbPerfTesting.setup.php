@@ -59,8 +59,15 @@ $wgABPerfTestingExperiments = [];
  *		'wikis' => 1,
  *      # all clients are split into 1000 buckets (modulo of beacon_id md5 hash), pick one here
  * 		'traffic' => 1,
+ *      # run the test on Oasis and content namespaces only
+ * 		'oasisArticles' => true
  *	]
  *];
+ *
+ * Devbox debugging of traffic criterion:
+ *
+ * 1. Set the beacon cookie: document.cookie = 'wikia_beacon_id=3j-YqSr9BQ'
+ * 2. Set the "traffic" criterion to '158'
 **/
 
 $wgABPerfTestingExperiments['backend_delay_a'] = [

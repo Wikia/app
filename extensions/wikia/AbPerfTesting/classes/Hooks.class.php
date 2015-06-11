@@ -17,7 +17,7 @@ class Hooks {
 	 */
 	static function onAfterInitialize( \Title $title, \Article $article, \OutputPage $output, \User $user, \WebRequest $request, \MediaWiki $wiki) {
 		global $wgABPerfTestingExperiments;
-		wfDebug( __METHOD__. " - checking experiments...\n" );
+		wfDebug( sprintf("%s - checking experiments (with beacon ID set to '%s')...\n", __METHOD__, wfGetBeaconId() ) );
 
 		// loop through all registered experiments and run those matching criteria
 		foreach ( $wgABPerfTestingExperiments as $name => $experiment ) {
