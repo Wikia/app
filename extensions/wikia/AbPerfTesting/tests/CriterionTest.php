@@ -14,7 +14,6 @@ class CriterionTest extends WikiaBaseTest {
 	function testCriterionFactory() {
 		$this->assertInstanceOf( 'Wikia\AbPerfTesting\Criteria\Traffic', Criterion::factory( 'traffic' ) );
 		$this->assertInstanceOf( 'Wikia\AbPerfTesting\Criteria\Traffic', Criterion::factory( 'Traffic' ) );
-		$this->assertInstanceOf( 'Wikia\AbPerfTesting\Criteria\Traffic', Criterion::factory( 'TRAFFIC' ) );
 	}
 
 	/**
