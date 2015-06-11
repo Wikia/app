@@ -34,6 +34,6 @@ $messages[ 'qqq' ] = [
 	'portable-infobox-xml-parse-error-gt-required' => 'XML Error: could not find end of tag definition (for example: <data><label </data>',
 	'portable-infobox-xml-parse-error-tag-name-mismatch' => 'XML Error: Opening and ending tag mismatch (for example: <data></label>)',
 	'portable-infobox-xml-parse-error-tag-not-finished' => 'XML Error: premature end of tag',
-	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag'
+	'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported' => 'Unsupported attribute used inside <infobox> tag. $1 param contains attribute name.'
 
 ];
