@@ -110,6 +110,10 @@ abstract class ApiWrapper {
 		return false;
 	}
 
+	public function videoExists() {
+		return true;
+	}
+
 	public function getNonemptyMetadata() {
 		$meta = $this->getMetadata();
 		// get rid of empty fields - no need to store them in db
@@ -156,8 +160,6 @@ abstract class ApiWrapper {
 				if ( empty( $response ) ) {
 					wfProfileOut( __METHOD__ );
 					throw new EmptyResponseException($apiUrl);
-				} else {
-
 				}
 			} else {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );

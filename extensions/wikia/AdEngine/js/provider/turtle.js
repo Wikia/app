@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.provider.turtle', [
 			},
 			hop,
 			{
-				forceAdType: 'turtle',
+				forcedAdType: 'turtle',
 				sraEnabled: true
 			}
 		);

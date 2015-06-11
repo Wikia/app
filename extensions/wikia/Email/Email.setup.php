@@ -44,6 +44,7 @@ $wgAutoloadClasses['Email\Controller\ForumController'] =  $dir . 'Controller/For
 $wgAutoloadClasses['Email\Controller\ReplyForumController'] =  $dir . 'Controller/ForumController.class.php';
 $wgAutoloadClasses['Email\Controller\WeeklyDigestController'] =  $dir . 'Controller/WeeklyDigestController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
+$wgAutoloadClasses['Email\Tracking\TrackingCategories'] = $dir .  'tracking/TrackingCategories.class.php';
 
 /**
  * special pages
