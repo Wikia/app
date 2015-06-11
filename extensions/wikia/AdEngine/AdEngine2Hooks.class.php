@@ -73,6 +73,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
 		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableMonetizationService';
 		$vars[] = 'wgSitewideDisableRubiconRTP';
 		$vars[] = 'wgSitewideDisableSevenOneMedia';
 

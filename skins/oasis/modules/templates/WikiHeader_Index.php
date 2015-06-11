@@ -9,7 +9,6 @@
 	<? if ( $displayHeaderButtons ) : ?>
     <div class="buttons">
 		<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
-		<?= $app->renderView( 'SharingToolbar', 'ShareButton' ) ?>
     </div>
 	<? endif ?>
     <div class="hiddenLinks">
