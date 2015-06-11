@@ -99,7 +99,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 
 			// If a portable infobox markup was found
 			// it means that the template doesn't have a non-portable infobox
-			return !( strpos( $contentText, $portableInfoboxNeedle ) !== false );
+			return strpos( $contentText, $portableInfoboxNeedle ) === false;
 		} else {
 			$nonportableInfoboxRegEx = '/class=\"[^\"]*infobox[^\"]*\"/i';
 			$nonportableInfoboxRegExMatch = preg_match( $nonportableInfoboxRegEx, $contentText );
