@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.monetizationsServiceHelper', [
 	 */
 	function getCountryCode() {
 		var countryCodeROW = 'ROW',
-			countryCodes = ['AU', 'CA', 'DE', 'HK', 'MX', 'RU', 'TW', 'UK', 'US'],
+			countryCodes = ['AU', 'CA', 'DE', 'GB', 'HK', 'JP', 'MX', 'RU', 'TW', 'US'],
 			countryCode = geo.getCountryCode();
 		if ($.inArray(countryCode, countryCodes) >= 0) {
 			return countryCode;

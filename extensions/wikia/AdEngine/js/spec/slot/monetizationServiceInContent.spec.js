@@ -59,7 +59,7 @@ describe('ext.wikia.adEngine.slot.monetizationServiceInContent', function () {
 	];
 
 	Object.keys(testCases).forEach(function (key) {
-		it('Init: Monetization Service on, add incontent slot, element size ' + key, function () {
+		it('Init: Monetization Service on, add incontent slot. Test: ' + key, function () {
 			var testCase = testCases[key];
 
 			spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
