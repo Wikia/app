@@ -418,6 +418,7 @@ class BodyController extends WikiaController {
 			OasisController::addBodyClass( 'oasis-breakpoints' );
 		}
 
+		//@TODO remove this check after deprecating responsive (July 2015)
 		if( $this->isResponsiveLayoutEnabled() ) {
 			OasisController::addBodyClass( 'oasis-responsive' );
 		}
