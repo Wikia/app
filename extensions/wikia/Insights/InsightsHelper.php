@@ -46,8 +46,8 @@ class InsightsHelper {
 		InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel',
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
-		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel',
+		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
+		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
 
 	/**
