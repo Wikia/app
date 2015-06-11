@@ -13,6 +13,7 @@ class Node {
 	const LABEL_TAG_NAME = 'label';
 
 	protected $xmlNode;
+	protected $children;
 	protected $data = null;
 
 	/* @var $externalParser ExternalParser */
@@ -70,12 +71,25 @@ class Node {
 		return strtolower( $this->xmlNode->getName() );
 	}
 
+	public function isType( $type ) {
+		return strcmp( $this->getType(), strtolower( $type ) ) == 0;
+	}
+
 	public function getData() {
 		if ( !isset( $this->data ) ) {
 			$this->data = [ 'value' => (string)$this->xmlNode ];
 		}
 
 		return $this->data;
+	}
+
+	public function getRenderData() {
+		return [
+			'type' => $this->getType(),
+			'data' => $this->getData(),
+			'isEmpty' => $this->isEmpty(),
+			'source' => $this->getSource()
+		];
 	}
 
 	/**
@@ -89,19 +103,34 @@ class Node {
 	}
 
 	protected function getChildNodes() {
-		$result = [ ];
-		foreach ( $this->xmlNode as $child ) {
-			$node = NodeFactory::newFromSimpleXml( $child, $this->infoboxData )
-				->setExternalParser( $this->externalParser );
-			$result[ ] = [
-				'type' => $node->getType(),
-				'data' => $node->getData(),
-				'isEmpty' => $node->isEmpty(),
-				'source' => $node->getSource()
-			];
+		if ( !isset( $this->children ) ) {
+			$this->children = [ ];
+			foreach ( $this->xmlNode as $child ) {
+				$this->children[ ] = NodeFactory::newFromSimpleXml( $child, $this->infoboxData )
+					->setExternalParser( $this->externalParser );
+			}
 		}
 
-		return $result;
+		return $this->children;
+	}
+
+	protected function getDataForChildren() {
+		return array_map( function ( Node $item ) {
+			return [
+				'type' => $item->getType(),
+				'data' => $item->getData(),
+				'isEmpty' => $item->isEmpty(),
+				'source' => $item->getSource()
+			];
+		}, $this->getChildNodes() );
+	}
+
+	protected function getRenderDataForChildren() {
+		return array_map( function ( Node $item ) {
+			return $item->getRenderData();
+		}, array_filter( $this->getChildNodes(), function ( Node $item ) {
+			return !$item->isEmpty();
+		} ) );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {

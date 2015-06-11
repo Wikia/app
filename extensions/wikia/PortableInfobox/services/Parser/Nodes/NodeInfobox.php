@@ -7,16 +7,24 @@ class NodeInfobox extends Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$this->data = [ 'value' => $this->getChildNodes() ];
+			$this->data = [ 'value' => $this->getDataForChildren() ];
 		}
 
 		return $this->data;
 	}
 
+	public function getRenderData() {
+		return array_map( function ( Node $item ) {
+			return $item->getRenderData();
+		}, array_filter( $this->getChildNodes(), function ( Node $item ) {
+			return !$item->isEmpty();
+		} ) );
+	}
+
 	public function isEmpty() {
-		$data = $this->getData();
-		foreach ( $data[ 'value' ] as $item ) {
-			if ( $item[ 'isEmpty' ] == false ) {
+		/** @var Node $child */
+		foreach ( $this->getChildNodes() as $child ) {
+			if ( !$child->isEmpty() ) {
 				return false;
 			}
 		}

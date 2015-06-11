@@ -69,10 +69,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 		if ( !isset( $params ) ) {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
-		$data = $infoboxNode->getData()[ 'value' ];
-		$data = array_values( array_filter( $data, function ( $item ) {
-			return !$item[ 'isEmpty' ];
-		} ) );
+		$data = $infoboxNode->getRenderData();
+
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $data );
 

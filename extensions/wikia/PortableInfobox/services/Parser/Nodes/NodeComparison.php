@@ -5,16 +5,25 @@ class NodeComparison extends Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$this->data = [ 'value' => $this->getChildNodes() ];
+			$this->data = [ 'value' => $this->getDataForChildren() ];
 		}
 
 		return $this->data;
 	}
 
+	public function getRenderData() {
+		return [
+			'type' => $this->getType(),
+			'data' => [ 'value' => $this->getRenderDataForChildren() ],
+			'isEmpty' => $this->isEmpty(),
+			'source' => $this->getSource()
+		];
+	}
+
 	public function isEmpty() {
-		$data = $this->getData();
-		foreach ( $data[ 'value' ] as $group ) {
-			if ( $group[ 'isEmpty' ] == false ) {
+		/** @var Node $child */
+		foreach ( $this->getChildNodes() as $child ) {
+			if ( !$child->isEmpty() ) {
 				return false;
 			}
 		}
