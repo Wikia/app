@@ -60,8 +60,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$params = $infoboxParser->getInfoboxParams( $markup );
 		}
 
-		$infoboxAttributesValidator = new Wikia\PortableInfobox\Helpers\InfoboxTagAttrValidator();
-		$infoboxAttributesValidator->validateAttributes( $params );
+		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboParamsValidator();
+		$infoboxParamsValidator->validateParams( $params );
 
 		$data = $infoboxParser->getDataFromXmlString( $markup );
 		//save for later api usage
@@ -91,7 +91,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
 			return $this->handleXmlParseError( $e->getErrors(), $text );
-		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxAttributeException $e ) {
+		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
