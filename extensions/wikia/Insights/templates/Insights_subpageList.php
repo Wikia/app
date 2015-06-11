@@ -16,12 +16,12 @@
 			<h2 class="insights-header-subtitle"><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $subpage )->escaped() ?></h2>
 			<p class="insights-header-description"><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $subpage )->parse() ?></p>
 		</div>
-		<?php if (!empty($dropdown)): ?>
+		<?php if ( !empty( $dropdown ) ): ?>
 			<div class="insights-header-sorting">
 				<form class="insights-sorting-form" method="GET">
 					<label for="sort"><?= wfMessage( 'insights-sort-label' )->escaped() ?></label>
 					<select class="insights-sorting" name="sort">
-						<?php foreach($dropdown as $sortType => $sortLabel): ?>
+						<?php foreach( $dropdown as $sortType => $sortLabel ): ?>
 							<option value="<?= $sortType ?>" <?php if ( $sortType == $current ): ?>selected<?php endif ?>><?= $sortLabel ?></option>
 						<?php endforeach ?>
 					</select>
