@@ -13,13 +13,16 @@ class InfoboParamsValidator {
 	 * @param array $params
 	 * @throws InvalidInfoboxParamsException
 	 * @todo: consider using hashmap instead of array ones validator grows
+	 * @returns boolean
 	 */
 	public function validateParams( $params ) {
 		foreach ( array_keys( $params ) as $param ) {
-			if ( !in_array( $param, $this->$supportedParams ) ) {
+			if ( !in_array( $param, $this->supportedParams ) ) {
 				throw new InvalidInfoboxParamsException( $param );
 			}
 		}
+
+		return true;
 	}
 }
 
