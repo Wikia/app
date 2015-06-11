@@ -16,10 +16,20 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 		return self::INSIGHT_TYPE;
 	}
 
+	/**
+	 * Should a number of referring pages be displayed next to each list item?
+	 *
+	 * @return bool
+	 */
 	public function isWlhLinkRequired() {
 		return true;
 	}
 
+	/**
+	 * A key of a message that wraps the number of pages referring to each item of the list.
+	 *
+	 * @return string
+	 */
 	public function wlhLinkMessage() {
 		return 'insights-used-on';
 	}
@@ -35,6 +45,8 @@ class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
 	 * @return bool
 	 */
 	public function isItemFixed( Title $title ) {
-		return !UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $title );
+		$titleText = $title->getText();
+		$contentText = ( new WikiPage( $title ) )->getText();
+		return !UnconvertedInfoboxesPage::isTitleWithNonportableInfobox( $titleText, $contentText );
 	}
 }

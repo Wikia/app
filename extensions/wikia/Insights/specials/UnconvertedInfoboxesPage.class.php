@@ -19,10 +19,24 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		return true;
 	}
 
+	/**
+	 * A wrapper for calling the querycache table
+	 *
+	 * @param bool $offset
+	 * @param int $limit
+	 * @return ResultWrapper
+	 */
 	public function doQuery( $offset = false, $limit = self::LIMIT ) {
 		return $this->fetchFromCache( $limit, $offset );
 	}
 
+	/**
+	 * Update the querycache table
+	 *
+	 * @param bool $limit Only for consistency
+	 * @param bool $ignoreErrors Only for consistency
+	 * @return bool|int
+	 */
 	public function recache( $limit = false, $ignoreErrors = true ) {
 		$dbw = wfGetDB( DB_MASTER );
 
@@ -68,11 +82,19 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		return $num;
 	}
 
+	/**
+	 * Queries all templates and for the ones with non-portable infoboxes checks how many pages
+	 * uses the them.
+	 *
+	 * @param bool $limit Only for consistency
+	 * @param bool $offset Only for consistency
+	 * @return bool|mixed
+	 */
 	public function reallyDoQuery( $limit = false, $offset = false ) {
 		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__, 'vslow' ] );
 
 		$nonportableTemplates = ( new WikiaSQL() )
-			->SELECT( 'page_title as title' )
+			->SELECT( 'page_title' )->AS_( 'title' )
 			->FROM( 'page' )
 			->WHERE( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
 			->runLoop( $dbr, function( &$nonportableTemplates, $row ) {
@@ -92,6 +114,19 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		return $nonportableTemplates;
 	}
 
+	/**
+	 * Checks if a page contains non-portable infoboxes based on its title and content.
+	 * The first check is if the title includes a word "infobox":
+	 * - if yes, check for a new markup (<infobox>) in the content. If it is missing - it indicates that
+	 *   the template contains a non-portable infobox
+	 * - if no, check for an occurrence of a word "infobox" inside all class HTML attributes
+	 *
+	 * Returns true if a page may consist a non-portable infobox
+	 *
+	 * @param string $titleText
+	 * @param string $contentText
+	 * @return bool
+	 */
 	public static function isTitleWithNonportableInfobox( $titleText, $contentText ) {
 		$titleNeedle = 'infobox';
 		if ( strripos( $titleText, $titleNeedle ) !== false ) {
