@@ -87,30 +87,30 @@ define('ext.wikia.adEngine.gptHelper', [
 	 * @param {Object}   slotElement        - slot div container
 	 * @param {string}   slotPath           - slot path
 	 * @param {Object}   slotTargeting      - slot targeting details
-	 * @param {function} success            - on success callback
-	 * @param {function} error              - on error callback
 	 * @param {Object}   extra              - optional parameters
+	 * @param {function} extra.success      - on success callback
+	 * @param {function} extra.error        - on error callback
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
-	function pushAd(slotName, slotElement, slotPath, slotTargeting, success, error, extra) {
+	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
 		var element = new AdElement('wikia_gpt_helper' + slotPath);
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
 
 		function callSuccess(adInfo) {
-			if (typeof success === 'function') {
-				success(adInfo);
+			if (typeof extra.success === 'function') {
+				extra.success(adInfo);
 			}
 		}
 
 		function callError(adInfo) {
 			slotTweaker.hide(element.getId());
-			if (typeof error === 'function') {
+			if (typeof extra.error === 'function') {
 				adInfo = adInfo || {};
 				adInfo.method = 'hop';
-				error(adInfo);
+				extra.error(adInfo);
 			}
 		}
 
