@@ -24,14 +24,21 @@ class ExperimentTest extends WikiaBaseTest {
 
 	function testTrafficExperimentIsEnabled() {
 		$this->assertTrue( Experiment::isEnabled( ['criteria' => ['traffic' => 87]] ) );
-		$this->assertTrue( Experiment::isEnabled( ['criteria' => ['traffic' => 87, 'wikis' => 23]] ) );
+	}
+
+	/**
+	 * @expectedException Wikia\AbPerfTesting\UnknownCriterionException
+	 */
+	function testNotExistingCriteriaHandling() {
+		Experiment::isEnabled( ['criteria' => ['foo' => 87]] );
 	}
 
 	function testComplexExperimentIsEnabled() {
+		// all criteria need to me meet in order to make the expirement enabled
 		$this->assertTrue( Experiment::isEnabled( [ 'criteria' => [ 'traffic' => 87, 'wikis' => 123 ] ] ) );
-		$this->assertTrue( Experiment::isEnabled( [ 'criteria' => [ 'traffic' => 87, 'wikis' => 23 ] ] ) );
-		$this->assertTrue( Experiment::isEnabled( [ 'criteria' => [ 'traffic' => 7, 'wikis' => 123 ] ] ) );
 
+		$this->assertFalse( Experiment::isEnabled( [ 'criteria' => [ 'traffic' => 7, 'wikis' => 123 ] ] ) );
+		$this->assertFalse( Experiment::isEnabled( [ 'criteria' => [ 'traffic' => 87, 'wikis' => 23 ] ] ) );
 		$this->assertFalse( Experiment::isEnabled( [ 'criteria' => [ 'traffic' => 7, 'wikis' => 23 ] ] ) );
 	}
 }

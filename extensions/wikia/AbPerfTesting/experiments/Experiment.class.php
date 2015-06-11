@@ -22,12 +22,16 @@ abstract class Experiment {
 	 * @return boolean
 	 */
 	static function isEnabled( Array $experimentData ) {
+		if ( empty( $experimentData['criteria'] ) ) {
+			return false;
+		}
+
 		foreach ( $experimentData['criteria'] as $criterion => $value ) {
-			if ( Criterion::factory( $criterion )->applies( $value ) ) {
-				return true;
+			if ( !Criterion::factory( $criterion )->applies( $value ) ) {
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 }
