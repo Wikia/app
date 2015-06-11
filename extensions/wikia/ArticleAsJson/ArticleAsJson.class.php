@@ -257,7 +257,6 @@ class ArticleAsJson extends WikiaService {
 
 	/**
 	 * Because we take captions out of main parser flow we have to replace links manually
-	 * @TODO: If there are issues with performance consider caching identical captions
 	 *
 	 * @param Parser $parser
 	 * @param $media
