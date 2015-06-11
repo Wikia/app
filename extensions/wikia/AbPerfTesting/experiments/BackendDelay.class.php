@@ -20,12 +20,7 @@ class BackendDelay extends Experiment {
 		$this->mDelay = $delay;
 
 		$this->on( 'BeforePageDisplay', function( \OutputPage $out, \Skin $skin ) {
-			$title = $out->getTitle();
-
-			// TODO: create a new criterium from this check - "OasisLoggedInArticles"
-			if ( \F::app()->checkSkin( 'oasis', $skin ) && $title->isContentPage() && $title->exists() ) {
-				$this->sleep();
-			}
+			$this->sleep();
 			return true;
 		} );
 	}

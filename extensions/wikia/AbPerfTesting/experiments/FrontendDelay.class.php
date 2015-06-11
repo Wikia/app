@@ -22,12 +22,7 @@ class FrontendDelay extends Experiment {
 		} );
 
 		$this->on( 'BeforePageDisplay', function( \OutputPage $out, \Skin $skin ) {
-			$title = $out->getTitle();
-
-			// TODO: create a new criterium from this check - "OasisLoggedInArticles"
-			if ( \F::app()->checkSkin( 'oasis', $skin ) && $title->isContentPage() && $title->exists() ) {
-				$out->addScriptFile( \AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/AbPerfTesting/js/FrontendDelay.js' ) );
-			}
+			$out->addScriptFile( \AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/AbPerfTesting/js/FrontendDelay.js' ) );
 			return true;
 		} );
 	}
