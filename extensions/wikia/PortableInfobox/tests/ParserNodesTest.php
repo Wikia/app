@@ -118,8 +118,29 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 					[
 						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1 ] ],
 						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2 ] ]
-					]
+					],
+				  'layout' => 'default'
 			  ] ],
+			[ '<group layout="horizontal"><data source="elem1"><label>l1</label><default>def1</default></data><data source="elem2">
+				<label>l2</label><default>def2</default></data><data source="elem3"><label>l2</label></data></group>',
+				[ 'elem1' => 1, 'elem2' => 2 ],
+				[ 'value' =>
+					[
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1 ] ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2 ] ]
+					],
+					'layout' => 'horizontal'
+				] ],
+			[ '<group  layout="loool"><data source="elem1"><label>l1</label><default>def1</default></data><data source="elem2">
+				<label>l2</label><default>def2</default></data><data source="elem3"><label>l2</label></data></group>',
+				[ 'elem1' => 1, 'elem2' => 2 ],
+				[ 'value' =>
+					[
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1 ] ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2 ] ]
+					],
+					'layout' => 'default'
+				] ],
 		];
 	}
 
