@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
+use Wikia\PortableInfobox\Helpers\SimpleXmlUtil;
 use Wikia\PortableInfobox\Parser\ExternalParser;
 use Wikia\PortableInfobox\Parser\SimpleParser;
 
@@ -14,7 +15,9 @@ class Node {
 	protected $xmlNode;
 	protected $parent = null;
 
-	/* @var $externalParser ExternalParser */
+	/**
+	 * @var $externalParser ExternalParser
+	 */
 	protected $externalParser;
 
 	public function __construct( \SimpleXMLElement $xmlNode, $infoboxData ) {
@@ -47,6 +50,7 @@ class Node {
 		if ( !isset( $this->externalParser ) ) {
 			$this->setExternalParser( new SimpleParser() );
 		}
+
 		return $this->externalParser;
 	}
 
@@ -74,69 +78,79 @@ class Node {
 	/**
 	 * @desc Check if node is empty.
 	 * Note that a '0' value cannot be treated like a null
+	 *
+	 * @param $data
+	 *
+	 * @return bool
 	 */
 	public function isEmpty( $data ) {
 		$value = $data[ 'value' ];
-		return !( isset( $value ) ) || (empty( $value ) && $value != '0');
+
+		return !( isset( $value ) ) || ( empty( $value ) && $value != '0' );
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
-		$value = null;
-		if ( !empty( $source ) ) {
-			$value = $this->getInfoboxData( $source );
+		$value = $this->extractDataFromSource( $xmlNode );
+		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
+			$value = $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
 		}
-		if ( !$value ) {
-			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				/*
-				 * <default> tag can contain <ref> or other WikiText parser hooks
-				 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
-				 * parse it.
-				 */
-				$value = \Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance()->getInnerXML(
-					$xmlNode->{self::DEFAULT_TAG_NAME}
-				);
-				$value = $this->getExternalParser()->parseRecursive( $value );
-			}
-		}
+
 		return $value;
 	}
 
 	protected function getRawValueWithDefault( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
-		$value = null;
-		if ( !empty( $source ) ) {
-			$value = $this->getRawInfoboxData( $source );
+		$value = $this->getRawInfoboxData( $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) );
+		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
+			$value = $this->getExternalParser()->replaceVariables( (string)$xmlNode->{self::DEFAULT_TAG_NAME} );
 		}
-		if ( !$value ) {
-			if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-				$value = (string)$xmlNode->{self::DEFAULT_TAG_NAME};
-				$value = $this->getExternalParser()->replaceVariables( $value );
-			}
-		}
+
 		return $value;
 	}
 
+	protected function getValueWithData( \SimpleXMLElement $xmlNode ) {
+		$value = $this->extractDataFromSource( $xmlNode );
+
+		return $value ? $value
+			: $this->extractDataFromNode( $xmlNode );
+	}
+
 	protected function getXmlAttribute( \SimpleXMLElement $xmlNode, $attribute ) {
-		if ( isset( $xmlNode[ $attribute ] ) )
-			return (string)$xmlNode[ $attribute ];
-		return null;
+		return ( isset( $xmlNode[ $attribute ] ) ) ? (string)$xmlNode[ $attribute ]
+			: null;
 	}
 
-	protected function getXmlAttributeFromSupported( \SimpleXMLElement $xmlNode, $attribute, $supportedAttributes ) {
-		$attr = $this->getXmlAttribute( $xmlNode, $attribute );
-		if ( isset($attr) && in_array( $attr, $supportedAttributes ) ) {
-			return $attr;
-		}
-		return self::DEFAULT_TAG_NAME;
-	}
-
-	protected function getRawInfoboxData ( $key ) {
-		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
-		return $data;
+	protected function getRawInfoboxData( $key ) {
+		return isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ]
+			: null;
 	}
 
 	protected function getInfoboxData( $key ) {
-		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData ( $key ) );
+		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData( $key ) );
+	}
+
+	/**
+	 * @param \SimpleXMLElement $xmlNode
+	 *
+	 * @return mixed
+	 */
+	protected function extractDataFromSource( \SimpleXMLElement $xmlNode ) {
+		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
+
+		return ( !empty( $source ) ) ? $this->getInfoboxData( $source )
+			: null;
+	}
+
+	/**
+	 * @param \SimpleXMLElement $xmlNode
+	 *
+	 * @return string
+	 */
+	protected function extractDataFromNode( \SimpleXMLElement $xmlNode ) {
+		/*
+		 * <default> tag can contain <ref> or other WikiText parser hooks
+		 * We should not parse it's contents as XML but return pure text in order to let MediaWiki Parser
+		 * parse it.
+		 */
+		return $this->getExternalParser()->parseRecursive( SimpleXmlUtil::getInstance()->getInnerXML( $xmlNode ) );
 	}
 }

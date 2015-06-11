@@ -7,107 +7,167 @@ class PortableInfoboxParserNodesTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testNodeTitle() {
-		$string = '<title source="nombre"><default>def</default></title>';
-		$xml = simplexml_load_string( $string );
+	/** @dataProvider titleNodeTestProvider */
+	public function testNodeTitle( $markup, $params, $expected ) {
+		$data = ( new Wikia\PortableInfobox\Parser\Nodes\NodeTitle( simplexml_load_string( $markup ), $params ) )
+			->getData();
 
-		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeTitle( $xml, [ 'nombre' => 1 ] );
-		$nodeDefault = new Wikia\PortableInfobox\Parser\Nodes\NodeTitle( $xml, [ ] );
-		$this->assertTrue( $node->getData()[ 'value' ] == 1 );
-		$this->assertTrue( $nodeDefault->getData()[ 'value' ] == 'def' );
+		$this->assertEquals( $expected, $data );
 	}
 
-	public function testNodeData() {
-		$string = '<data source="Season"><label>Season(s)</label><default>Lorem ipsum</default></data>';
-		$xml = simplexml_load_string( $string );
-
-		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeData( $xml, [ 'Season' => 1 ] );
-		$nodeDefault = new Wikia\PortableInfobox\Parser\Nodes\NodeData( $xml, [ ] );
-		$this->assertTrue( $node->getData()[ 'value' ] == 1 );
-		$this->assertTrue( $nodeDefault->getData()[ 'value' ] == 'Lorem ipsum' );
+	public function titleNodeTestProvider() {
+		return [
+			// markup, params, expected
+			[ '<title source="nombre"><default>def</default></title>',
+			  [ 'nombre' => 1 ], [ 'value' => 1 ] ],
+			[ '<title source="nombre"><default>def</default></title>',
+			  [ ], [ 'value' => 'def' ] ],
+		];
 	}
 
-	public function testNodeImage() {
-		$string = '<image source="image2">
-						<alt source="alt-source"><default>default-alt</default></alt>
-						<caption source="caption"><default>default caption</default></caption>
-					</image>';
-		$xml = simplexml_load_string( $string );
+	/** @dataProvider dataNodeTestProvider */
+	public function testNodeData( $markup, $params, $expected ) {
+		$data = ( new Wikia\PortableInfobox\Parser\Nodes\NodeData( simplexml_load_string( $markup ), $params ) )
+			->getData();
 
-		$nodeDefault = new Wikia\PortableInfobox\Parser\Nodes\NodeImage( $xml, [ ] );
+		$this->assertEquals( $expected, $data );
+	}
 
+	public function dataNodeTestProvider() {
+		return [
+			// markup, params, expected
+			[ '<data source="Season"><label>Season(s)</label><default>Lorem ipsum</default></data>',
+			  [ 'Season' => 1 ], [ 'value' => 1, 'label' => 'Season(s)' ] ],
+			[ '<data source="Season"><label>Season(s)</label><default>Lorem ipsum</default></data>',
+			  [ ], [ 'value' => 'Lorem ipsum', 'label' => 'Season(s)' ] ],
+			[ '<data source="Season"><label>Season 1</label><label>Season 2</label></data>',
+			  [ 'Season' => 1 ], [ 'value' => 1, 'label' => 'Season 1' ] ],
+			[ '<data source="Season"><default>Season 1</default><default>Season 2</default></data>',
+			  [ ], [ 'value' => 'Season 1', 'label' => '' ] ],
+		];
+	}
+
+	/** @dataProvider imageNodeTestProvider */
+	public function testNodeImage( $markup, $params, $imageUrl, $expected ) {
 		$node = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\Nodes\NodeImage' )
-						->setConstructorArgs( [ $xml, [ 'image2' => 'aaa.jpg',
-														'alt-source' => 'bbb',
-														'caption' => 'capt' ] ] )
-						->setMethods( [ 'resolveImageUrl' ] )
-						->getMock();
-		$node->expects( $this->any() )->method( 'resolveImageUrl' )->will( $this->returnValue( 'aaa.jpg' ) );
-		$this->assertTrue( $node->getData()[ 'url' ] == 'aaa.jpg', 'value is not aaa.jpg' );
-		$this->assertTrue( $node->getData()[ 'name' ] == 'Aaa.jpg', 'value is not aaa.jpg' );
-		$this->assertTrue( $node->getData()[ 'alt' ] == 'bbb', 'alt is not bbb' );
-		$this->assertTrue( $node->getData()[ 'caption' ] == 'capt', 'caption is not "capt"' );
-		$this->assertTrue( $nodeDefault->getData()[ 'alt' ] == 'default-alt', 'default alt' );
-		$this->assertTrue( $nodeDefault->getData()[ 'caption' ] == 'default caption', 'default caption' );
+			->setConstructorArgs( [ simplexml_load_string( $markup ), $params ] )
+			->setMethods( [ 'resolveImageUrl' ] )
+			->getMock();
+		$node->expects( $this->any() )->method( 'resolveImageUrl' )->will( $this->returnValue( $imageUrl ) );
+
+		$this->assertEquals( $expected, $node->getData() );
 	}
 
-	public function testNodeHeader() {
-		$string = '<header>Comandantes</header>';
-		$xml = simplexml_load_string( $string );
-
-		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeHeader( $xml, [ ] );
-		$this->assertTrue( $node->getData()[ 'value' ] == 'Comandantes' );
+	public function imageNodeTestProvider() {
+		return [
+			// markup, params, mocked image name, expected
+			[ '<image source="image2"><alt source="alt-source"><default>default-alt</default></alt>
+				<caption source="caption"><default>default caption</default></caption></image>',
+			  [ 'image2' => 'aaa.jpg', 'alt-source' => 'bbb', 'caption' => 'capt' ], 'aaa.jpg',
+			  [ 'url' => 'aaa.jpg', 'name' => 'Aaa.jpg', 'key' => 'Aaa.jpg', 'alt' => 'bbb', 'caption' => 'capt',
+				'ref' => 0 ] ],
+			[ '<image source="image2"><alt source="alt-source"><default>default-alt</default></alt>
+				<caption source="caption"><default>default caption</default></caption></image>',
+			  [ ], 'aaa.jpg',
+			  [ 'url' => 'aaa.jpg', 'name' => '', 'key' => '', 'alt' => 'default-alt', 'caption' => 'default caption',
+				'ref' => null ] ],
+		];
 	}
 
-	public function testNodeFooter() {
-		$string = '<footer>123</footer>';
-		$xml = simplexml_load_string( $string );
-
-		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeFooter( $xml, [ ] );
-		$this->assertTrue( $node->getData()[ 'value' ] == '123' );
+	/** @dataProvider headerNodeTestProvider */
+	public function testNodeHeader( $markup, $params, $expected ) {
+		$data = ( new Wikia\PortableInfobox\Parser\Nodes\NodeHeader( simplexml_load_string( $markup ), $params ) )
+			->getData();
+		$this->assertEquals( $expected, $data );
 	}
 
-	public function testNodeGroup() {
-		$string = '<group>
-				<data source="elem1"><label>l1</label><default>def1</default></data>
-				<data source="elem2"><label>l2</label><default>def2</default></data>
-				<data source="elem3"><label>l2</label></data>
-					</group>
-						';
-		$xml = simplexml_load_string( $string );
-
-		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeGroup( $xml, [ 'elem1' => 1, 'elem2' => 2 ] );
-		$data = $node->getData();
-		$this->assertTrue( is_array( $data[ 'value' ] ), 'value is array' );
-		$this->assertTrue( $data[ 'value' ][ 0 ][ 'data' ][ 'value' ] == 1, 'first elem' );
-		$this->assertTrue( $data[ 'value' ][ 1 ][ 'data' ][ 'value' ] == 2, 'second elem' );
-		$this->assertTrue( $data[ 'value' ][ 1 ][ 'data' ][ 'label' ] == 'l2', 'second elem - label' );
-		$this->assertTrue( $data[ 'value' ][ 2 ][ 'isNotEmpty' ] == false, 'empty' );
+	public function headerNodeTestProvider() {
+		return [
+			// markup, params, expected
+			[ '<header>Comandantes</header>', [ ], [ 'value' => 'Comandantes' ] ]
+		];
 	}
 
-	public function testNodeComparison() {
-		$string = '<comparison>
-			   <set>
-				  <header>Combatientes</header>
-				  <data source="lado1" />
-				  <data source="lado2" />
-			   </set>
-			   <set>
-				  <header>Comandantes</header>
-				  <data source="comandantes1" />
-				  <data source="comandantes2" />
-			   </set>
-			</comparison>
-						';
-		$xml = simplexml_load_string( $string );
+	/** @dataProvider footerNodeTestProvider */
+	public function testNodeFooter( $markup, $params, $expected ) {
+		$data = ( new Wikia\PortableInfobox\Parser\Nodes\NodeFooter( simplexml_load_string( $markup ), $params ) )
+			->getData();
+		$this->assertEquals( $expected, $data );
+	}
 
-		$node = new Wikia\PortableInfobox\Parser\Nodes\NodeComparison( $xml, [ 'lado1' => 1, 'lado2' => 2 ] );
-		$data = $node->getData();
+	public function footerNodeTestProvider() {
+		return [
+			[ '<footer>123</footer>', [ ], [ 'value' => '123' ] ]
+		];
+	}
 
-		$this->assertTrue( is_array( $data[ 'value' ] ), 'value is array' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 0 ][ 'type' ] == 'header' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 0 ][ 'data' ][ 'value' ] == 'Combatientes' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 1 ][ 'type' ] == 'data' );
-		$this->assertTrue( $data[ 'value' ][ 0 ]['data']['value'][ 2 ][ 'data' ][ 'value' ] == 2 );
+	/** @dataProvider groupNodeTestProvider */
+	public function testNodeGroup( $markup, $params, $expected ) {
+		$data = ( new Wikia\PortableInfobox\Parser\Nodes\NodeGroup( simplexml_load_string( $markup ), $params ) )
+			->getData();
+
+		$this->assertEquals( $expected, $data );
+	}
+
+	public function groupNodeTestProvider() {
+		return [
+			[ '<group><data source="elem1"><label>l1</label><default>def1</default></data><data source="elem2">
+				<label>l2</label><default>def2</default></data><data source="elem3"><label>l2</label></data></group>',
+			  [ 'elem1' => 1, 'elem2' => 2 ],
+			  [ 'value' =>
+					[
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l1', 'value' => 1 ] ],
+						[ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => 'l2', 'value' => 2 ] ]
+					]
+			  ] ],
+		];
+	}
+
+	/** @dataProvider comparisonNodeTestProvider */
+	public function testNodeComparison( $markup, $params, $expected ) {
+		$data = ( new Wikia\PortableInfobox\Parser\Nodes\NodeComparison( simplexml_load_string( $markup ), $params ) )
+			->getData();
+
+		$this->assertEquals( $expected, $data );
+	}
+
+	public function comparisonNodeTestProvider() {
+		return [
+			[ '<comparison><set><header>Combatientes</header><data source="lado1" /><data source="lado2" /></set>
+			   <set><header>Comandantes</header><data source="comandantes1" /><data source="comandantes2" /></set>
+			</comparison>', [ 'lado1' => 1, 'lado2' => 2 ],
+			  [ 'value' => [
+				  [
+					  'type' => 'set', 'isEmpty' => false, 'data' => [
+					  'value' => [
+						  [ 'type' => 'header', 'isEmpty' => false, 'data' => [ 'value' => 'Combatientes' ] ],
+						  [ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => '', 'value' => 1 ] ],
+						  [ 'type' => 'data', 'isEmpty' => false, 'data' => [ 'label' => '', 'value' => 2 ] ]
+					  ]
+				  ]
+				  ] ] ] ],
+		];
+	}
+
+	/** @dataProvider labelTestProvider */
+	public function testLabelTag( $markup, $params, $expected ) {
+		$data = ( new \Wikia\PortableInfobox\Parser\Nodes\NodeData( simplexml_load_string( $markup ), $params ) )
+			->getData();
+
+		$this->assertEquals( $expected, $data );
+	}
+
+	public function labelTestProvider() {
+		return [
+			// markup, params, expected
+			[ '<data source="test"><label source="test label">Test default</label></data>',
+			  [ 'test' => 1, 'test label' => 2 ], [ 'label' => 2, 'value' => 1 ] ],
+			[ '<data source="test"><label source="test label">default</label></data>',
+			  [ 'test' => 1 ], [ 'label' => 'default', 'value' => 1 ] ],
+			[ '<data source="test"><label>default</label></data>',
+			  [ 'test' => 1 ], [ 'label' => 'default', 'value' => 1 ] ],
+			[ '<data source="test"></data>',
+			  [ 'test' => 1 ], [ 'label' => '', 'value' => 1 ] ],
+		];
 	}
 }
