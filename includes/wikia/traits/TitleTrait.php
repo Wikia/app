@@ -37,9 +37,10 @@ trait TitleTrait {
 			'pl_namespace' => $this->getNamespace(),
 			'pl_title' => $this->getDBkey(),
 		];
-		if( $hideredirs ) {
+
+		if ( $hideredirs ) {
 			$plConds['rd_from'] = null;
-		} elseif( $hidelinks ) {
+		} elseif ( $hidelinks ) {
 			$plConds[] = 'rd_from is NOT NULL';
 		}
 
@@ -85,7 +86,7 @@ trait TitleTrait {
 			]
 		];
 
-		if( $fetchlinks ) {
+		if ( $fetchlinks ) {
 			$options['ORDER BY'] = 'pl_from';
 			$plRes = $dbr->select(
 				[ 'pagelinks', 'page', 'redirect' ],
@@ -97,7 +98,7 @@ trait TitleTrait {
 			);
 		}
 
-		if( !$hidetrans ) {
+		if ( !$hidetrans ) {
 			$options['ORDER BY'] = 'tl_from';
 			$tlRes = $dbr->select(
 				[ 'templatelinks', 'page', 'redirect' ],
@@ -109,7 +110,7 @@ trait TitleTrait {
 			);
 		}
 
-		if( !$hideimages ) {
+		if ( !$hideimages ) {
 			$options['ORDER BY'] = 'il_from';
 			$ilRes = $dbr->select(
 				[ 'imagelinks', 'page', 'redirect' ],
@@ -124,21 +125,21 @@ trait TitleTrait {
 		// Read the rows into an array and remove duplicates
 		// templatelinks comes second so that the templatelinks row overwrites the
 		// pagelinks row, so we get (inclusion) rather than nothing
-		if( $fetchlinks ) {
+		if ( $fetchlinks ) {
 			foreach ( $plRes as $row ) {
 				$row->is_template = 0;
 				$row->is_image = 0;
 				$rows[$row->page_id] = $row;
 			}
 		}
-		if( !$hidetrans ) {
+		if ( !$hidetrans ) {
 			foreach ( $tlRes as $row ) {
 				$row->is_template = 1;
 				$row->is_image = 0;
 				$rows[$row->page_id] = $row;
 			}
 		}
-		if( !$hideimages ) {
+		if ( !$hideimages ) {
 			foreach ( $ilRes as $row ) {
 				$row->is_template = 0;
 				$row->is_image = 1;
@@ -147,7 +148,6 @@ trait TitleTrait {
 		}
 
 		foreach ( $rows as $row ) {
-
 			$nt = Title::makeTitle( $row->page_namespace, $row->page_title );
 
 			if ( $row->rd_from && $level < 2 ) {
