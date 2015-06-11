@@ -1,6 +1,5 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/columns';
-@import 'portableInfoboxHorizontalGroup';
 
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
@@ -124,6 +123,41 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 		.item-type-key-val {
 			border-bottom: 0;
 			padding-right: $infobox-item-margin * 2;
+		}
+	}
+
+	.group-layout-horizontal {
+
+		&.item-type-group {
+			display: table;
+			table-layout: fixed;
+			width: 100%
+		}
+
+		.item-type-header {
+			display: table-caption;
+		}
+
+		.item-type-key-val {
+			border-bottom: none;
+			display: table-cell;
+			padding: $infobox-item-margin;
+			text-align: center;
+
+			&:not(:last-of-type) {
+				border-right: 1px solid $infobox-section-header-background;
+			}
+		}
+
+		.portable-infobox-item-label {
+			font-size: inherit;
+			overflow: hidden;
+			vertical-align: top;
+			white-space: nowrap;
+		}
+
+		.portable-infobox-item-value {
+			padding-left: 0;
 		}
 	}
 }
