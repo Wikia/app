@@ -7,6 +7,10 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		parent::__construct( $name );
 	}
 
+	public function isListed() {
+		return false;
+	}
+
 	public function sortDescending() {
 		return true;
 	}
