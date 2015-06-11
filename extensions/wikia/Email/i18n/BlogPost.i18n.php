@@ -17,5 +17,6 @@ $messages['qqq'] = array(
 	'emailext-blogpost-user-summary' => "Information about the post on a user's blog.  $1 is a link to the user's blog page and $2 is the user's name",
 	'emailext-blogpost-list-summary' => 'Information about the post on the blog listing.  $1 is the link to the listing and $2 is the title of the blog listing page.',
 	'emailext-blogpost-link-label' => 'Label text for a button a user can click to view the post',
-	'emailext-blogpost-view-all' => 'A link to the listing page with all recent posts.  $1 is the link itself, and must remain at the beginning of the string with a space after it and $2 is the name of the listing page'
+	'emailext-blogpost-view-all' => 'A link to the listing page with all recent posts.  $1 is the link itself, and must remain at the beginning of the string with a space after it and $2 is the name of the listing page',
+	'emailext-blogpost-unfollow-text' => "Asks the user if they want to stop following this blog and provides a link to unfollow the blog. $1 -> unfollow url, $2 blog author name",
 );
