@@ -3729,7 +3729,6 @@ class User {
 		}
 		$this->setOption("cr_mailed","1");
 		$this->saveSettings();
-		// TODO Make sure you didn't delete that 4th parameter for other like method calls that needed it
 		return $this->sendConfirmationMail( false, 'ConfirmationReminder', '', false );
 	}
 
