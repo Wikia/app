@@ -6,7 +6,6 @@ use Wikia\PortableInfobox\Parser\XmlParser;
 class NodeGroup extends Node {
 	const DATA_LAYOUT_ATTR_NAME = 'layout';
 	const GROUP_LAYOUT_PREFIX = 'group-layout-';
-	const DEFAULT_LAYOUT_NAME = 'default';
 
 	private $supportedGroupLayouts = [
 		'default',
@@ -19,7 +18,7 @@ class NodeGroup extends Node {
 			$nodeFactory->setExternalParser( $this->externalParser );
 		}
 
-		$layout = $this->getGroupLayout();
+		$layout = $this->getXmlAttributeFromSupported( $this->xmlNode, self::DATA_LAYOUT_ATTR_NAME, $this->supportedGroupLayouts);
 		$value = $nodeFactory->getDataFromNodes( $this->xmlNode, $this );
 		return [ 'value' =>  $value, 'layout' => $layout ];
 	}
@@ -31,13 +30,5 @@ class NodeGroup extends Node {
 			}
 		}
 		return true;
-	}
-
-	private function getGroupLayout() {
-		$layoutName = $this->getXmlAttribute( $this->xmlNode, self::DATA_LAYOUT_ATTR_NAME );
-		if ( isset($layoutName) && in_array( $layoutName, $this->supportedGroupLayouts ) ) {
-			return $layoutName;
-		}
-		return self::DEFAULT_LAYOUT_NAME;
 	}
 }

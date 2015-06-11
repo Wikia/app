@@ -123,6 +123,14 @@ class Node {
 		return null;
 	}
 
+	protected function getXmlAttributeFromSupported( \SimpleXMLElement $xmlNode, $attribute, $supportedAttributes ) {
+		$attr = $this->getXmlAttribute( $xmlNode, $attribute );
+		if ( isset($attr) && in_array( $attr, $supportedAttributes ) ) {
+			return $attr;
+		}
+		return self::DEFAULT_TAG_NAME;
+	}
+
 	protected function getRawInfoboxData ( $key ) {
 		$data = isset( $this->infoboxData[ $key ] ) ? $this->infoboxData[ $key ] : null;
 		return $data;
