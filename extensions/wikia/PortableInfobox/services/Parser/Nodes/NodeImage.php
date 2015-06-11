@@ -33,7 +33,22 @@ class NodeImage extends Node {
 
 	public function isEmpty() {
 		$data = $this->getData();
+
 		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
+	}
+
+	public function getSource() {
+		$sources = $this->extractSourceFromNode( $this->xmlNode );
+		if ( $this->xmlNode->{self::ALT_TAG_NAME} ) {
+			$sources = array_merge( $sources,
+				$this->extractSourceFromNode( $this->xmlNode->{self::ALT_TAG_NAME} ) );
+		}
+		if ( $this->xmlNode->{self::CAPTION_TAG_NAME} ) {
+			$sources = array_merge( $sources,
+				$this->extractSourceFromNode( $this->xmlNode->{self::CAPTION_TAG_NAME} ) );
+		}
+
+		return array_unique( $sources );
 	}
 
 	private function getImageAsTitleObject( $imageName ) {

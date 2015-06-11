@@ -25,15 +25,7 @@ class Node {
 	}
 
 	public function getSource() {
-		$source = $this->getXmlAttribute( $this->xmlNode, self::DATA_SRC_ATTR_NAME );
-		if ( $this->xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			preg_match_all( '/{{{(.*)}}}/sU', (string)$this->xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
-
-
-			return $source ? array_unique( $sources[ 1 ] + [ $source ] ) : array_unique( $sources[ 1 ] );
-		}
-
-		return $source ? [ $source ] : [ ];
+		return $this->extractSourceFromNode( $this->xmlNode );
 	}
 
 	/**
@@ -133,6 +125,16 @@ class Node {
 		} ) );
 	}
 
+	protected function getSourceForChildren() {
+		/** @var Node $item */
+		$result = [ ];
+		foreach ( $this->getChildNodes() as $item ) {
+			$result = array_merge( $result, $item->getSource() );
+		}
+
+		return array_unique( $result );
+	}
+
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 		$value = null;
@@ -188,5 +190,22 @@ class Node {
 
 	protected function getInfoboxData( $key ) {
 		return $this->getExternalParser()->parseRecursive( $this->getRawInfoboxData( $key ) );
+	}
+
+	/**
+	 * @param \SimpleXMLElement $xmlNode
+	 *
+	 * @return array
+	 *
+	 */
+	protected function extractSourceFromNode( \SimpleXMLElement $xmlNode ) {
+		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
+		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
+			preg_match_all( '/{{{(.*)}}}/sU', (string)$xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
+
+			return $source ? array_unique( $sources[ 1 ] + [ $source ] ) : array_unique( $sources[ 1 ] );
+		}
+
+		return $source ? [ $source ] : [ ];
 	}
 }

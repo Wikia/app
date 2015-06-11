@@ -32,15 +32,6 @@ class NodeGroup extends Node {
 	}
 
 	public function getSource() {
-		$data = $this->getData();
-		$result = [ ];
-		foreach ( $data[ 'value' ] as $item ) {
-			if ( isset( $item[ 'source' ] ) ) {
-				$source = !is_array( $item[ 'source' ] ) ? [ $item[ 'source' ] ] : $item[ 'source' ];
-				$result = array_merge( $result, $source );
-			}
-		}
-
-		return array_unique( $result );
+		return $this->getSourceForChildren();
 	}
 }
