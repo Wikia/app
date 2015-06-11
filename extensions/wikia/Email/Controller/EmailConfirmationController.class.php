@@ -54,6 +54,8 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 
 class EmailConfirmationController extends AbstractEmailConfirmationController {
 
+	const TRACKING_CATEGORY = "ConfirmationMail";
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-subject' )->text();
 	}
@@ -73,6 +75,8 @@ class EmailConfirmationController extends AbstractEmailConfirmationController {
 
 class EmailConfirmationReminderController extends AbstractEmailConfirmationController {
 
+	const TRACKING_CATEGORY = "ConfirmationReminderMail";
+
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->targetUser->getName() )->parse();
 	}
@@ -90,6 +94,8 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 }
 
 class EmailConfirmationChangedController extends AbstractEmailConfirmationController {
+
+	const TRACKING_CATEGORY = "ReConfirmationMail";
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-changed-subject' )->text();
