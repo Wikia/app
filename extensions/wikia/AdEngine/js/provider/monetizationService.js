@@ -57,7 +57,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 			var modules = json.data;
 			if (modules) {
 				$.each(slotMap, function (slot, slotName) {
-					if (modules[slotName] && monetizationService.validateSlot(slotName)) {
+					if (modules[slotName] && validateSlot(slotName)) {
 						log(['getModules', slot, 'injectScript'], 'debug', logGroup);
 						monetizationService.injectContent(slot, modules[slotName], success);
 					} else {
