@@ -4,9 +4,12 @@ namespace Email;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Wikia\Logger\WikiaLogger;
+use Email\Tracking\TrackingCategories;
 
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
+
+	const TRACKING_CATEGORY = TrackingCategories::DEFAULT_CATEGORY;
 
 	const AVATAR_SIZE = 50;
 
@@ -155,7 +158,9 @@ abstract class EmailController extends \WikiaController {
 					$fromAddress,
 					$subject,
 					$body,
-					$replyToAddress
+					$replyToAddress,
+					$contentType = null,
+					static::TRACKING_CATEGORY
 				);
 				$this->assertGoodStatus( $status );
 			}

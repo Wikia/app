@@ -38,7 +38,6 @@ $wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
 $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
 $wgHooks['ConfirmEmailComplete'][] = 'UserLoginHooksHelper::onConfirmEmailComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserLoginHooksHelper::onWikiaMobileAssetsPackages';
-$wgHooks['AbortNewAccount'][] = 'UserLoginHooksHelper::onAbortNewAccount';
 // Add the JavaScript messages to the output
 $wgHooks['BeforePageDisplay'][] = "UserLoginHooksHelper::onBeforePageDisplay";
 

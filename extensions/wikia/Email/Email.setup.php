@@ -48,6 +48,7 @@ $wgAutoloadClasses['Email\Controller\EmailConfirmationReminderController'] =  $d
 $wgAutoloadClasses['Email\Controller\EmailConfirmationChangedController'] = $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\Controller\ConfirmationChangedEmailController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
+$wgAutoloadClasses['Email\Tracking\TrackingCategories'] = $dir .  'tracking/TrackingCategories.class.php';
 
 /**
  * special pages

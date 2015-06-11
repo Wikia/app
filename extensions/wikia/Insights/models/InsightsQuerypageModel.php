@@ -82,6 +82,14 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		return true;
 	}
 
+	public function isWlhLinkRequired() {
+		return false;
+	}
+
+	public function wlhLinkMessage() {
+		return 'insights-wanted-by';
+	}
+
 	/**
 	 * Returns an array of boolean values that you can use
 	 * to toggle columns of a subpage's table view
@@ -376,6 +384,10 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 					$article['metadata']['lastRevision'] = $this->prepareRevisionData( $rev );
 				}
 
+				if ( $this->isWlhLinkRequired() ) {
+					$article['metadata']['wantedBy'] = $this->makeWlhLink( $title, $row );
+				}
+
 				if ( $this->arePageViewsRequired() ) {
 					$article['metadata']['pv7'] = 0;
 					$article['metadata']['pv28'] = 0;
@@ -411,6 +423,21 @@ abstract class InsightsQuerypageModel extends InsightsModel {
 		$data['userpage'] = $userpage;
 
 		return $data;
+	}
+
+	/**
+	 * Prepares a link to a Special:WhatLinksHere page
+	 * for the article
+	 * @param Title $title The target article's title object
+	 * @param $result A number of referring links
+	 * @param string $message A message key
+	 * @return string A URL to the WLH page
+	 * @throws MWException
+	 */
+	public function makeWlhLink( Title $title, $result ) {
+		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
+		$label = wfMessage( $this->wlhLinkMessage() )->numParams( $result->value )->escaped();
+		return Linker::link( $wlh, $label );
 	}
 
 	/**

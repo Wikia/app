@@ -23,7 +23,7 @@ class EventsCleanup extends Maintenance {
 	const BATCH = 50;
 
 	// remove entries for wikis closed before this date
-	const CLOSED_BEFORE = '20130601000000';
+	const CLOSED_BEFORE = '20150101000000'; // Jan 2015
 
 	/**
 	 * Set script options
@@ -94,6 +94,9 @@ class EventsCleanup extends Maintenance {
 
 		$batches = array_chunk( $closedWikis, self::BATCH );
 		$this->output( sprintf( "Got %d closed wikis (before %s) in %d batches\n", count( $closedWikis ), self::CLOSED_BEFORE, count( $batches ) ) );
+
+		$this->output( "Starting in 5 seconds...\n" );
+		sleep(5);
 
 		foreach ( $batches as $n => $batch ) {
 			$this->cleanupBatch( $batch );
