@@ -167,10 +167,12 @@ class FlagsHelper {
 	 * @return bool
 	 */
 	public function areFlagsEditable() {
-		global $wgTitle;
+		global $wgHideFlagsExt, $wgTitle;
 		return
+			/* Should signs of Flags extension be hidden? */
+			$wgHideFlagsExt !== true
 			/* Check condition for view */
-			$this->shouldDisplayFlags()
+			&& $this->shouldDisplayFlags()
 			/* Don't display flags when user is not allowed to edit */
 			&& $wgTitle->userCan( 'edit' );
 	}
