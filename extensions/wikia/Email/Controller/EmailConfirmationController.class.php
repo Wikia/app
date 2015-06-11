@@ -50,6 +50,21 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 	}
 
 	abstract protected function getEmailSpecificFooterMessages();
+
+	protected static function getEmailSpecificFormFields() {
+			$form = [
+				'inputs' => [
+					[
+						'type' => 'hidden',
+						'name' => 'confirmUrl',
+						'value' => "#",
+					],
+				]
+			];
+
+			return $form;
+
+	}
 }
 
 class EmailConfirmationController extends AbstractEmailConfirmationController {
@@ -93,7 +108,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 	}
 }
 
-class EmailConfirmationChangedController extends AbstractEmailConfirmationController {
+class ConfirmationChangedEmailController extends AbstractEmailConfirmationController {
 
 	const TRACKING_CATEGORY = "ReConfirmationMail";
 

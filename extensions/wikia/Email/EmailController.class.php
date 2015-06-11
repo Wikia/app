@@ -72,7 +72,7 @@ abstract class EmailController extends \WikiaController {
 				$this->getVal( 'replyToName', $noReplyName )
 			);
 
-			$fromAddress = $this->getVal( 'fromAddress', $this->wg->wgPasswordSender );
+			$fromAddress = $this->getVal( 'fromAddress', $this->wg->PasswordSender );
 			$this->assertValidFromAddress( $fromAddress );
 
 			$this->fromAddress = new \MailAddress(

@@ -45,7 +45,8 @@ $wgAutoloadClasses['Email\Controller\ReplyForumController'] =  $dir . 'Controlle
 $wgAutoloadClasses['Email\Controller\WeeklyDigestController'] =  $dir . 'Controller/WeeklyDigestController.class.php';
 $wgAutoloadClasses['Email\Controller\EmailConfirmationController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\Controller\EmailConfirmationReminderController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
-$wgAutoloadClasses['Email\Controller\EmailConfirmationChangedController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
+$wgAutoloadClasses['Email\Controller\EmailConfirmationChangedController'] = $dir . 'Controller/EmailConfirmationController.class.php';
+$wgAutoloadClasses['Email\Controller\ConfirmationChangedEmailController'] =  $dir . 'Controller/EmailConfirmationController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
 
 /**

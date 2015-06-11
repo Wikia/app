@@ -3673,7 +3673,7 @@ class User {
 		} elseif ( $this->isConfirmationReminderMail( $mailType ) ) {
 			$controller = 'Email\Controller\EmailConfirmationReminder';
 		} elseif ( $this->isChangeEmailConfirmationMail( $mailType ) ) {
-			$controller = 'Email\Controller\ReConfirmationMail';
+			$controller = 'Email\Controller\ConfirmationChangedEmail';
 		}
 
 		return $controller;
@@ -3693,7 +3693,7 @@ class User {
 
 	private function sendUsingEmailExtension( $emailController, $url ) {
 		$params = [
-			'targetUser' => $this->getName(), // TODO do I need to send this? Are they logged in at this point?
+			'targetUser' => $this->getName(),
 			'confirmUrl' => $url,
 		];
 
