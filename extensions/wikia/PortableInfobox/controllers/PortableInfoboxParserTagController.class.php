@@ -72,7 +72,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$data = $infoboxNode->getRenderData();
 
 		//save for later api usage
-		$this->saveToParserOutput( $parser->getOutput(), $data );
+		$this->saveToParserOutput( $parser->getOutput(), $infoboxNode );
 
 		$theme = $this->getThemeWithDefault( $params, $frame );
 
@@ -117,10 +117,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return strtr( $text, $this->markers );
 	}
 
-	protected function saveToParserOutput( \ParserOutput $parserOutput, $raw ) {
-		if ( !empty( $raw ) ) {
+	protected function saveToParserOutput( \ParserOutput $parserOutput, Nodes\NodeInfobox $raw ) {
+		if ( $raw ) {
 			$infoboxes = $parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME );
-			$infoboxes[ ] = $raw;
+			$infoboxes[ ] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
 			$parserOutput->setProperty( self::INFOBOXES_PROPERTY_NAME, $infoboxes );
 		}
 	}

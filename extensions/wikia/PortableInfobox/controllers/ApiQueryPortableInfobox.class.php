@@ -8,19 +8,7 @@ class ApiQueryPortableInfobox extends ApiQueryGeneratorBase {
 	}
 
 	public function execute() {
-		$articles = array_map( function ( Title $item ) {
-			return Article::newFromTitle( $item, RequestContext::getMain() );
-		}, array_filter( $this->getPageSet()->getGoodTitles(), function ( Title $el ) {
-			return $el->inNamespace( NS_TEMPLATE );
-		} ) );
-		/**
-		 * @var Article $article
-		 */
-		foreach ( $articles as $id => $article ) {
-			dd( $article->getParserOutput()->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME ) );
-		}
-		dd( $articles );
-		$this->getResult()->addValue( null, $this->getModuleName(), $this->extractRequestParams() );
+		$this->runOnPageSet( $this->getPageSet() );
 	}
 
 	public function getVersion() {
@@ -34,6 +22,33 @@ class ApiQueryPortableInfobox extends ApiQueryGeneratorBase {
 	 *  this object
 	 */
 	public function executeGenerator( $resultPageSet ) {
-		// TODO: Implement executeGenerator() method.
+		$this->runOnPageSet( $resultPageSet );
+	}
+
+	protected function runOnPageSet( ApiPageSet $pageSet ) {
+		$articles = array_map( function ( Title $item ) {
+			return Article::newFromTitle( $item, RequestContext::getMain() );
+		}, $pageSet->getGoodTitles() );
+		/**
+		 * @var Article $article
+		 */
+		foreach ( $articles as $id => $article ) {
+			$d = $article->getParserOutput()->getProperty( PortableInfoboxParserTagController::INFOBOXES_PROPERTY_NAME );
+			if ( is_array( $d ) ) {
+
+				$inf = [ ];
+				foreach ( array_keys( $d ) as $k => $v ) {
+					$inf[ $k ] = [ ];
+				}
+				$pageSet->getResult()->setIndexedTagName( $inf, 'infobox' );
+				$pageSet->getResult()->addValue( [ 'query', 'pages', $id ], 'infoboxes', $inf );
+				foreach ( $d as $count => $infobox ) {
+					$s = isset( $infobox[ 'sources' ] ) ? $infobox[ 'sources' ] : [ ];
+					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'id', $count );
+					$pageSet->getResult()->setIndexedTagName( $s, "source" );
+					$pageSet->getResult()->addValue( [ 'query', 'pages', $id, 'infoboxes', $count ], 'sources', $s );
+				}
+			}
+		}
 	}
 }
