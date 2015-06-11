@@ -4,6 +4,7 @@ namespace Email\Controller;
 
 use Email\EmailController;
 use Email\Check;
+use Email\Tracking\TrackingCategories;
 
 abstract class AbstractEmailConfirmationController extends EmailController {
 
@@ -69,7 +70,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 
 class EmailConfirmationController extends AbstractEmailConfirmationController {
 
-	const TRACKING_CATEGORY = "ConfirmationMail";
+	const TRACKING_CATEGORY = TrackingCategories::EMAIL_CONFIRMATION;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-subject' )->text();
@@ -90,7 +91,7 @@ class EmailConfirmationController extends AbstractEmailConfirmationController {
 
 class EmailConfirmationReminderController extends AbstractEmailConfirmationController {
 
-	const TRACKING_CATEGORY = "ConfirmationReminderMail";
+	const TRACKING_CATEGORY = TrackingCategories::EMAIL_CONFIRMATION_REMINDER;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-reminder-subject', $this->targetUser->getName() )->parse();
@@ -110,7 +111,7 @@ class EmailConfirmationReminderController extends AbstractEmailConfirmationContr
 
 class ConfirmationChangedEmailController extends AbstractEmailConfirmationController {
 
-	const TRACKING_CATEGORY = "ReConfirmationMail";
+	const TRACKING_CATEGORY = TrackingCategories::CHANGED_EMAIL_CONFIRMATION;
 
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-emailconfirmation-changed-subject' )->text();
