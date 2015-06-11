@@ -77,8 +77,8 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			->WHERE( 'page_namespace' )->EQUAL_TO( NS_TEMPLATE )
 			->runLoop( $dbr, function( &$nonportableTemplates, $row ) {
 				$title = Title::newFromText( $row->title, NS_TEMPLATE );
-
-				if ( $title !== null && self::isTitleWithNonportableInfobox( $title ) ) {
+				$contentText = ( new WikiPage( $title ) )->getText();
+				if ( $title !== null && self::isTitleWithNonportableInfobox( $title->getText(), $contentText ) ) {
 					$links = $title->getIndirectLinks();
 					$nonportableTemplates[] = [
 						$this->getName(),
@@ -92,21 +92,17 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 		return $nonportableTemplates;
 	}
 
-	public static function isTitleWithNonportableInfobox( Title $title ) {
-		$content = ( new WikiPage( $title ) )->getText();
+	public static function isTitleWithNonportableInfobox( $titleText, $contentText ) {
+		$titleNeedle = 'infobox';
+		if ( strripos( $titleText, $titleNeedle ) !== false ) {
+			$portableInfoboxNeedle = '<infobox>';
 
-		$titleRegEx = '/infobox/i';
-		$titleRegExMatch = preg_match( $titleRegEx, $title->getText() );
-		if ( !empty( $titleRegExMatch ) ) {
-			$portableInfoboxRegEx = '/\<infobox\>/';
-			$portableInfoboxRegExMatch = preg_match( $portableInfoboxRegEx, $content );
-
-			// If a portable infobox markup was not found
-			// the $portableInfoboxRegExMatch is empty
-			return empty( $portableInfoboxRegExMatch );
+			// If a portable infobox markup was found
+			// it means that the template doesn't have a non-portable infobox
+			return !( strpos( $contentText, $portableInfoboxNeedle ) !== false );
 		} else {
-			$nonportableInfoboxRegEx = '/(class=\".*infobox.*\")|(/i';
-			$nonportableInfoboxRegExMatch = preg_match( $nonportableInfoboxRegEx, $content );
+			$nonportableInfoboxRegEx = '/class=\"[^\"]*infobox[^\"]*\"/i';
+			$nonportableInfoboxRegExMatch = preg_match( $nonportableInfoboxRegEx, $contentText );
 
 			// If a non-portable infobox markup was found
 			// the $nonportableInfoboxRegExMatch is not empty
