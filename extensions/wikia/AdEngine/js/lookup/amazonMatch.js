@@ -147,17 +147,12 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return amazonCalled;
 	}
 
-	function wasRendered() {
-		log(['wasRendered', amazonRendered], 'debug', logGroup);
-		return amazonRendered;
-	}
-
 	function getSlotParams(slotName) {
 		log(['getSlotParams', slotName], 'debug', logGroup);
 
 		var amznSlots = [];
 
-		if (!wasRendered()) {
+		if (!amazonRendered) {
 			Object.keys(sizeMapping).forEach(function (amazonSize) {
 				var validSlotNames = sizeMapping[amazonSize],
 					amazonPricePoint = bestPricePointForSize[amazonSize];
