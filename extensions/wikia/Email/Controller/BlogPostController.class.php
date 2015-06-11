@@ -120,10 +120,10 @@ abstract class BlogPostController extends EmailController {
 
 	protected function getFooterMessages() {
 		$parentUrl = $this->pageTitle->getFullURL( 'action=unwatch' );
-		$parentTitleText = $this->pageTitle->getPrefixedText();
+		$authorName = $this->getCurrentUserName();
 
 		$footerMessages = [
-			$this->getMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )->parse()
+			$this->getMessage( 'emailext-blogpost-unfollow-text', $parentUrl, $authorName )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
