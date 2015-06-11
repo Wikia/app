@@ -54,18 +54,4 @@ class InsightsWantedpagesModel extends InsightsQuerypageModel {
 		}
 		return false;
 	}
-
-	/**
-	 * Prepares a link to a Special:WhatLinksHere page
-	 * for the article
-	 * @param Title $title The target article's title object
-	 * @param $result A number of referring links
-	 * @return string A URL to the WLH page
-	 * @throws MWException
-	 */
-	private function makeWlhLink( Title $title, $result ) {
-		$wlh = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() );
-		$label = wfMessage( 'insights-wanted-by' )->numParams( $result->value )->escaped();
-		return Linker::link( $wlh, $label );
-	}
 }

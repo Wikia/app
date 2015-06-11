@@ -119,7 +119,9 @@ class ImageReviewTask extends BaseTask {
 		];
 		$from = $recipients[0];
 
-		\UserMailer::send( $recipients, $from, $subject, $body );
+		foreach ( $recipients as $recipient ) {
+			\UserMailer::send( $recipient, $from, $subject, $body );
+		}
 
 		WikiaLogger::instance()->error( "ImageReviewLog", [
 			'method' => __METHOD__,

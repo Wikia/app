@@ -27,10 +27,11 @@ class MediaWikiParserService implements ExternalParser {
 		}
 		$output = $this->parser->internalParse( $wikitext, false, $this->frame );
 		$this->parser->replaceLinkHolders( $output );
+		$result = $this->parser->killMarkers( $output );
 
 		wfProfileOut( __METHOD__ );
 
-		return $output;
+		return $result;
 	}
 
 	/**

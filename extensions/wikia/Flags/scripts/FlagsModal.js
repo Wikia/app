@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw'],
-	function ($, loader, nirvana, mustache, mw)
+	['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
+	function ($, loader, nirvana, mustache, mw, tracker)
 {
 	'use strict';
 
@@ -51,7 +51,17 @@ require(
 			content: '', // content
 			title: mw.message('flags-edit-modal-title').escaped()
 		}
-	};
+	},
+
+	/* Tracking wrapper function */
+	track = Wikia.Tracker.buildTrackingFunction({
+		action: tracker.ACTIONS.CLICK,
+		category: 'flags-edit',
+		trackingMethod: 'analytics'
+	}),
+
+	/* Label for on submit tracking event */
+	labelForSubmitAction = 'submit-form-untouched';
 
 	function init() {
 		$('#ca-flags').on('click', showModal);
@@ -148,12 +158,70 @@ require(
 		if ($flagsEditForm.length > 0) {
 			/* Submit flags edit form on Done button click */
 			modalInstance.bind('done', function () {
+				track({
+					action: tracker.ACTIONS.CLICK_LINK_BUTTON,
+					label: labelForSubmitAction
+				});
 				$flagsEditForm.trigger('submit');
+			});
+			/* Track clicks on modal form */
+			$flagsEditForm.bind('click', trackModalFormClicks);
+			/* Detect form change */
+			$flagsEditForm.on('change', function() {
+				labelForSubmitAction = 'submit-form-touched';
+				$flagsEditForm.off('change');
 			});
 		}
 
+		/* Track all ways of closing modal */
+		modalInstance.bind('close', function() {
+			track({
+				label: 'modal-close'
+			});
+		});
+
 		/* Show the modal */
 		modalInstance.show();
+		track({
+			action: tracker.ACTIONS.IMPRESSION,
+			label: 'modal-shown'
+		});
+	}
+
+	/**
+	 * Track clicks within modal form
+	 * (links and checkboxes)
+	 */
+	function trackModalFormClicks(e) {
+		var $target = $(e.target),
+			$targetLinkDataId;
+
+		/* Track checkbox toggling */
+		if ($target.is('input[type=checkbox]')) {
+			if ($target[0].checked) {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'checkbox-checked'
+				});
+			} else {
+				track({
+					action: tracker.ACTIONS.CLICK,
+					label: 'checkbox-unchecked'
+				});
+			}
+			return;
+		}
+
+		/* Track links clicks */
+		if ($target.is('a')) {
+			$targetLinkDataId = $target.data('id');
+			if($targetLinkDataId) {
+				track({
+					action: tracker.ACTIONS.CLICK_LINK_TEXT,
+					label: $targetLinkDataId
+				});
+			}
+		}
 	}
 
 	// Run initialization method on DOM ready

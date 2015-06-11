@@ -1,18 +1,12 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Helpers\SimpleXmlUtil;
-
 class NodeData extends Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
 			$this->data = [
-				'label' => $this->getExternalParser()->parseRecursive(
-					SimpleXmlUtil::getInstance()->getInnerXML(
-						$this->xmlNode->{self::LABEL_TAG_NAME}
-					)
-				),
+				'label' => $this->getValueWithData( $this->xmlNode->{self::LABEL_TAG_NAME} ),
 				'value' => $this->getValueWithDefault( $this->xmlNode )
 			];
 		}
