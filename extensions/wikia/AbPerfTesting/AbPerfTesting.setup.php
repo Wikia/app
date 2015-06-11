@@ -29,12 +29,13 @@ $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay'  ] = __DIR
 $wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Experiments\\FrontendDelay' ] = __DIR__ . '/experiments/FrontendDelay.class.php';
 
 // criteria
-$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criterion'         ] = __DIR__ . '/criteria/Criterion.class.php';
-$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\Traffic' ] = __DIR__ . '/criteria/Traffic.class.php';
-$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\Wikis'   ] = __DIR__ . '/criteria/Wikis.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criterion'               ] = __DIR__ . '/criteria/Criterion.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\OasisArticles' ] = __DIR__ . '/criteria/OasisArticles.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\Traffic'       ] = __DIR__ . '/criteria/Traffic.class.php';
+$wgAutoloadClasses[ 'Wikia\\AbPerfTesting\\Criteria\\Wikis'         ] = __DIR__ . '/criteria/Wikis.class.php';
 
-// hooks setup
-$wgExtensionFunctions[] = 'Wikia\\AbPerfTesting\\Hooks::onSetup';
+// initialize the experiments when we have full page context available (skin, title, user, etc.)
+$wgHooks['AfterInitialize'][] = 'Wikia\\AbPerfTesting\\Hooks::onAfterInitialize';
 
 // experiments config goes below
 $wgABPerfTestingExperiments = [];
@@ -52,7 +53,7 @@ $wgABPerfTestingExperiments = [];
  *		'bar' => 42,
  *	],
  *
- *  # set of criteria to which bucket given experiment should be assigned
+ *  # set of criteria to which bucket given experiment should be assigned (all needs to be met)
  *	'criteria' => [
  *      # all wikis are split into 1000 buckets (modulo of city ID), pick one here
  *		'wikis' => 1,
@@ -68,6 +69,7 @@ $wgABPerfTestingExperiments['backend_delay_a'] = [
 		'delay' => 100,
 	],
 	'criteria' => [
+		'oasisArticles' => true,
 		'traffic' => 1,
 	]
 ];
@@ -78,6 +80,7 @@ $wgABPerfTestingExperiments['backend_delay_b'] = [
 		'delay' => 200,
 	],
 	'criteria' => [
+		'oasisArticles' => true,
 		'traffic' => 2,
 	]
 ];
@@ -88,17 +91,15 @@ $wgABPerfTestingExperiments['backend_delay_c'] = [
 		'delay' => 300,
 	],
 	'criteria' => [
+		'oasisArticles' => true,
 		'traffic' => 3,
 	]
 ];
 
-// TODO: apply for logged-in only?
-$wgABPerfTestingExperiments['frontend_delay_a'] = [
+$wgABPerfTestingExperiments['frontend_delay'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\FrontendDelay',
-	'params' => [
-		'delay' => 300,
-	],
 	'criteria' => [
-		'wikis' => 915, // TODO: for debug only
+		// this test performs bucketing logic in JS code
+		'oasisArticles' => true,
 	]
 ];
