@@ -91,7 +91,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
 			return $this->handleXmlParseError( $e->getErrors(), $text );
-		} catch ( \Wikia\PortableInfobox\Helpers\notValidInfoboxAttributesErrorException $e ) {
+		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxAttributeException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 

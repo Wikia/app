@@ -11,16 +11,16 @@ class InfoboxTagAttrValidator {
 	/**
 	 * validates infobox tags attribute names
 	 * @param array $attributes
-	 * @throws notValidInfoboxAttributesErrorException
+	 * @throws InvalidInfoboxAttributeException
 	 */
 	public function validateAttributes( $attributes ) {
 		foreach ( array_keys( $attributes ) as $attr ) {
 			if ( !in_array( $attr, $this->supportedAttributes ) ) {
-				throw new notValidInfoboxAttributesErrorException( $attr );
+				throw new InvalidInfoboxAttributeException( $attr );
 			}
 		}
 	}
 }
 
-class notValidInfoboxAttributesErrorException extends \Exception {
+class InvalidInfoboxAttributeException extends \Exception {
 }
