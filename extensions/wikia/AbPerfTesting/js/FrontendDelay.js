@@ -18,7 +18,7 @@
 		// should match the PHP code in /extensions/wikia/AbPerfTesting/classes/Hooks.class.php
 		if (perf_test) {
 			w._gaq.push(
-				['_setCustomVar', 50, 'PerfTest', perf_test, 3]
+				['set', 'dimension20', perf_test]
 			);
 		}
 	}

@@ -35,7 +35,7 @@ class Hooks {
 				global $wgHooks;
 				$wgHooks['WikiaSkinTopScripts'][] = function( Array &$vars, &$scripts ) use ( $name ) {
 					$name = \Xml::encodeJsVar( $name );
-					$scripts .= \Html::inlineScript( "_gaq.push(['_setCustomVar', 50, 'PerfTest', {$name}, 3]);" );
+					$scripts .= \Html::inlineScript( "_gaq.push(['set', 'dimension20', {$name}]);" );
 					return true;
 				} ;
 
