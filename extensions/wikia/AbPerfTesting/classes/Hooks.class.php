@@ -15,9 +15,9 @@ class Hooks {
 	 * @param \MediaWiki $wiki
 	 * @return bool it's a hook
 	 */
-	static function onAfterInitialize( \Title $title, \Article $article, \OutputPage $output, \User $user, \WebRequest $request, \MediaWiki $wiki) {
+	static function onAfterInitialize( \Title $title, \Article $article, \OutputPage $output, \User $user, \WebRequest $request, \MediaWiki $wiki ) {
 		global $wgABPerfTestingExperiments;
-		wfDebug( sprintf("%s - checking experiments (with beacon ID set to '%s')...\n", __METHOD__, wfGetBeaconId() ) );
+		wfDebug( sprintf( "%s - checking experiments (with beacon ID set to '%s')...\n", __METHOD__, wfGetBeaconId() ) );
 
 		// loop through all registered experiments and run those matching criteria
 		foreach ( $wgABPerfTestingExperiments as $name => $experiment ) {
@@ -26,10 +26,12 @@ class Hooks {
 					__METHOD__, $name, $experiment['handler'], json_encode( $experiment['params'] ) ) );
 
 				$reflector = new \ReflectionClass( $experiment['handler'] );
-				$reflector->newInstanceArgs( $experiment['params'] ?: [] );
+				$reflector->newInstanceArgs( $experiment['params'] ? : [] );
 
 				// mark a transaction with an experiment name
 				\Transaction::getInstance()->set( \Transaction::PARAM_AB_PERFORMANCE_TEST, $name );
+
+				// TODO: mark a transaction using UA's custom dimensions
 
 				// leave now, we handle only a single experiment at a time now
 				return true;

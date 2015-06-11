@@ -25,6 +25,6 @@ class OasisArticles extends Criterion {
 		$title = $this->mContext->getTitle();
 
 		// return true if the oasis & content namespace article check returns the same value as $bucket argument is set to
-		return (\F::app()->checkSkin('oasis', $skin) && $title->exists() && $title->isContentPage()) === $bucket;
+		return ( \F::app()->checkSkin( 'oasis', $skin ) && $title->exists() && $title->isContentPage() ) === $bucket;
 	}
 }

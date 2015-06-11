@@ -16,13 +16,16 @@ class FrontendDelay extends Experiment {
 	 */
 	function __construct( $delay ) {
 		// add a JS global variable with the defined delay
+		// TODO: the bucketing logic is now in the front-end part
+		/**
 		$this->on( 'WikiaSkinTopScripts', function( Array &$vars ) use ( $delay ) {
 			$vars['wgPerfTestFrontEndDelay'] = intval( $delay );
 			return true;
 		} );
+		**/
 
 		$this->on( 'BeforePageDisplay', function( \OutputPage $out, \Skin $skin ) {
-			$out->addScriptFile( \AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/AbPerfTesting/js/FrontendDelay.js' ) );
+			$out->addScript( \Html::linkedScript( \AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/AbPerfTesting/js/FrontendDelay.js' ) ) );
 			return true;
 		} );
 	}
