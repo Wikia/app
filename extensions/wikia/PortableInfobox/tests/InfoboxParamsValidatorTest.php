@@ -2,7 +2,7 @@
 
 class InfoboxParamsValidatorTest extends WikiaBaseTest {
 	private $InfoboxParamsValidator;
-	private $invalidParamsExpectionNname =
+	private $invalidParamsExpectionName =
 		'Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException';
 
 	protected function setUp() {
@@ -17,7 +17,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 	 * @dataProvider testInfoboxParamsFailValidationDataProvider
 	 */
 	public function testInfoboxParamsFailValidation ( $params ) {
-		$this->setExpectedException( $this->invalidParamsExpectionNname );
+		$this->setExpectedException( $this->invalidParamsExpectionName );
 		$this->InfoboxParamsValidator->validateParams( $params );
 	}
 
