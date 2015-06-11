@@ -27,7 +27,7 @@ abstract class Experiment {
 		}
 
 		foreach ( $experimentData['criteria'] as $criterion => $value ) {
-			if ( !Criterion::factory( $criterion )->applies( $value ) ) {
+			if ( !Criterion::factory( $criterion )->matches( $value ) ) {
 				return false;
 			}
 		}

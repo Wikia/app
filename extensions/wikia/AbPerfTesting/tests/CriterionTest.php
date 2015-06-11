@@ -26,30 +26,30 @@ class CriterionTest extends WikiaBaseTest {
 
 	function testTrafficCriterion() {
 		$this->mockGlobalFunction( 'wfGetBeaconId', '' );
-		$this->assertFalse( ( new Traffic() )->applies( 0 ) );
+		$this->assertFalse( ( new Traffic() )->matches( 0 ) );
 
 		$this->mockGlobalFunction( 'wfGetBeaconId', '8gQHS-Q4_c' );
-		$this->assertTrue( ( new Traffic() )->applies( 87 ) );
+		$this->assertTrue( ( new Traffic() )->matches( 87 ) );
 
 		$this->mockGlobalFunction( 'wfGetBeaconId', '3j-YqSr9BQ' );
-		$this->assertFalse( ( new Traffic() )->applies( 87 ) );
+		$this->assertFalse( ( new Traffic() )->matches( 87 ) );
 
 		$this->mockGlobalFunction( 'wfGetBeaconId', '3j-YqSr9BQ' );
-		$this->assertTrue( ( new Traffic() )->applies( 158 ) );
+		$this->assertTrue( ( new Traffic() )->matches( 158 ) );
 	}
 
 	function testWikisCriterion() {
 		$this->mockGlobalVariable( 'wgCityId', 5123 );
-		$this->assertTrue( ( new Wikis() )->applies( 123 ) );
+		$this->assertTrue( ( new Wikis() )->matches( 123 ) );
 
 		$this->mockGlobalVariable( 'wgCityId', 1 );
-		$this->assertTrue( ( new Wikis() )->applies( 1 ) );
+		$this->assertTrue( ( new Wikis() )->matches( 1 ) );
 
 		$this->mockGlobalVariable( 'wgCityId', 1000 );
-		$this->assertTrue( ( new Wikis() )->applies( 0 ) );
+		$this->assertTrue( ( new Wikis() )->matches( 0 ) );
 
 		$this->mockGlobalVariable( 'wgCityId', 5123 );
-		$this->assertFalse( ( new Wikis() )->applies( 23 ) );
+		$this->assertFalse( ( new Wikis() )->matches( 23 ) );
 	}
 
 	/**
@@ -75,7 +75,7 @@ class CriterionTest extends WikiaBaseTest {
 			'getTitle' => $titleMock,
 		], 'getMain' );
 
-		$this->assertEquals( $expected, ( new OasisArticles() )->applies( true ) );
+		$this->assertEquals( $expected, ( new OasisArticles() )->matches( true ) );
 	}
 
 	function oasisArticlesCriterionDataProvider() {

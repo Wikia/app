@@ -24,7 +24,7 @@ class Traffic extends Criterion {
 	 * @param int $bucket traffic bucket ID to check
 	 * @return boolean
 	 */
-	function applies( $bucket ) {
+	function matches( $bucket ) {
 		return ( $this->mBeaconId != '' ) && ( crc32( $this->mBeaconId ) % self::BUCKETS === $bucket );
 	}
 }

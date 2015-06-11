@@ -20,7 +20,7 @@ class OasisArticles extends Criterion {
 	 * @param bool $bucket
 	 * @return boolean
 	 */
-	function applies( $bucket ) {
+	function matches( $bucket ) {
 		$skin = $this->mContext->getSkin();
 		$title = $this->mContext->getTitle();
 

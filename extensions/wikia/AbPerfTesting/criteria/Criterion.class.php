@@ -9,7 +9,7 @@ abstract class Criterion {
 	 * @param int $bucket bucket ID to check
 	 * @return boolean
 	 */
-	abstract function applies( $bucket );
+	abstract function matches( $bucket );
 
 	/**
 	 * Returns an instance of a given criterion
