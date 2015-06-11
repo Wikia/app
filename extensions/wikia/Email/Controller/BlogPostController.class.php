@@ -97,7 +97,9 @@ abstract class BlogPostController extends EmailController {
 	protected function getDetails() {
 		$article = \Article::newFromTitle( $this->postTitle, \RequestContext::getMain() );
 		$service = new \ArticleService( $article );
-		$snippet = $service->getTextSnippet();
+
+		// Include +3 characters here for the ellipsis added when we have to truncate
+		$snippet = $service->getTextSnippet( $length = 303, $breakLimit = 500 );
 
 		return $snippet;
 	}
