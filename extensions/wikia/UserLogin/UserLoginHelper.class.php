@@ -280,9 +280,7 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
-		// TODO delete the messages form this renderView
-		//$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'confirmation-email' ) );
-		$response = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true );
+		$response = $user->sendConfirmationMail( false, 'ConfirmationMail' );
 		if ( !$response->isGood() ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-mail-error' )->escaped();

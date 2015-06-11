@@ -40,7 +40,7 @@ class UserLoginController extends WikiaController {
 	/**
 	 * General Mail template
 	 * @requestParam Array params
-	 * @responseParam String type [password-email, confirmation-email, reconfirmation-email, account-creation-email, confirmation-reminder-email]
+	 * @responseParam String type [password-email, reconfirmation-email, account-creation-email, confirmation-reminder-email]
 	 * @responseParam String language
 	 * @responseParam String greeting
 	 * @responseParam String content
