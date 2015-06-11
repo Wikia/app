@@ -148,10 +148,10 @@ trait TitleTrait {
 		}
 
 		foreach ( $rows as $row ) {
-			$nt = Title::makeTitle( $row->page_namespace, $row->page_title );
+			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 
 			if ( $row->rd_from && $level < 2 ) {
-				$this->getIndirectLinks( $level + 1, $nt );
+				$this->getIndirectLinks( $level + 1, $title );
 			}
 		}
 
