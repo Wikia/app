@@ -32,7 +32,7 @@ $messages['en'] = array(
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
 
 	'insights-list-subtitle-unconvertedinfoboxes' => 'Unconverted Infoboxes',
-	'insights-list-description-unconvertedinfoboxes' => 'The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:Infobox|Infobox markup]] so they render appropriately to all visitors. Learn more on [[w:c:Community Central|Community Central]].',
+	'insights-list-description-unconvertedinfoboxes' => 'The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|Infobox markup]] so they render appropriately to all visitors.',
 	'insights-notification-message-inprogress-unconvertedinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
 	'insights-notification-message-fixed-unconvertedinfoboxes' => 'Awesome! The infobox on this page has been converted.',
 	'insights-notification-next-item-unconvertedinfoboxes' => 'Convert the next infobox.',
