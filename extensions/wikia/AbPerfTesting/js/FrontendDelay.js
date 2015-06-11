@@ -5,7 +5,7 @@
  */
 (function(w, log, weppy, $) {
 
-	function updateTransactionName() {
+	function updateTransactionName(perf_test) {
 		// update Weppy config when transaction context is updated
 		// matches \Transaction::PARAM_AB_PERFORMANCE_TEST const
 		w.wgTransactionContext['perf_test'] = perf_test;
@@ -14,9 +14,12 @@
 			context: w.wgTransactionContext
 		});
 
-		// TODO: set UA custom dimension
+		// set UA custom dimension
+		// should match the PHP code in /extensions/wikia/AbPerfTesting/classes/Hooks.class.php
 		if (perf_test) {
-			// ...
+			w._gaq.push(
+				['_setCustomVar', 50, 'PerfTest', perf_test, 3]
+			);
 		}
 	}
 
