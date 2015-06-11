@@ -11,9 +11,10 @@ trait TitleTrait {
 	abstract function getDBkey();
 
 	/**
-	 * Returns a list of pages that link to that Title
+	 * Returns a list of pages that link to that Title. It is based on the method used in
+	 * Special:WhatLinksHere but returns raw results instead of a ready (and useless) HTML markup.
 	 *
-	 * @param int $level How deep should you go?
+	 * @param int $level How deep should I go? 0 means to the bottom (which is limited to 2)
 	 * @return array
 	 */
 	public function getIndirectLinks( $level = 0 ) {
@@ -56,7 +57,7 @@ trait TitleTrait {
 		];
 
 		if ( is_array( $wgContentNamespaces ) && !empty( $wgContentNamespaces ) ) {
-			$namespaces = implode( ',', $wgContentNamespaces );
+			$namespaces = $dbr->makeList( $wgContentNamespaces );
 
 			$plConds[] = 'page_namespace IN (' . $namespaces . ')';
 			$tlConds[] = 'page_namespace IN (' . $namespaces . ')';
@@ -86,7 +87,11 @@ trait TitleTrait {
 			]
 		];
 
-		if ( $fetchlinks ) {
+		// Read the rows into an array and remove duplicates
+		// templatelinks comes second so that the templatelinks row overwrites the
+		// pagelinks row, so we get (inclusion) rather than nothing
+
+		if( $fetchlinks ) {
 			$options['ORDER BY'] = 'pl_from';
 			$plRes = $dbr->select(
 				[ 'pagelinks', 'page', 'redirect' ],
@@ -96,6 +101,11 @@ trait TitleTrait {
 				$options,
 				$joinConds
 			);
+			foreach ( $plRes as $row ) {
+				$row->is_template = 0;
+				$row->is_image = 0;
+				$rows[$row->page_id] = $row;
+			}
 		}
 
 		if ( !$hidetrans ) {
@@ -108,6 +118,11 @@ trait TitleTrait {
 				$options,
 				$joinConds
 			);
+			foreach ( $tlRes as $row ) {
+				$row->is_template = 1;
+				$row->is_image = 0;
+				$rows[$row->page_id] = $row;
+			}
 		}
 
 		if ( !$hideimages ) {
@@ -120,26 +135,6 @@ trait TitleTrait {
 				$options,
 				$joinConds
 			);
-		}
-
-		// Read the rows into an array and remove duplicates
-		// templatelinks comes second so that the templatelinks row overwrites the
-		// pagelinks row, so we get (inclusion) rather than nothing
-		if ( $fetchlinks ) {
-			foreach ( $plRes as $row ) {
-				$row->is_template = 0;
-				$row->is_image = 0;
-				$rows[$row->page_id] = $row;
-			}
-		}
-		if ( !$hidetrans ) {
-			foreach ( $tlRes as $row ) {
-				$row->is_template = 1;
-				$row->is_image = 0;
-				$rows[$row->page_id] = $row;
-			}
-		}
-		if ( !$hideimages ) {
 			foreach ( $ilRes as $row ) {
 				$row->is_template = 0;
 				$row->is_image = 1;
@@ -148,10 +143,10 @@ trait TitleTrait {
 		}
 
 		foreach ( $rows as $row ) {
-			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+			$nt = Title::makeTitle( $row->page_namespace, $row->page_title );
 
 			if ( $row->rd_from && $level < 2 ) {
-				$this->getIndirectLinks( $level + 1, $title );
+				$nt->getIndirectLinks( $level + 1 );
 			}
 		}
 
