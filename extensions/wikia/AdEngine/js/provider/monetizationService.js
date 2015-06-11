@@ -1,9 +1,9 @@
 define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.loader',
+	'ext.wikia.adEngine.monetizationsServiceHelper',
+	'jquery',
 	'wikia.log',
-	'wikia.scriptwriter',
-], function (adContext, loader, log, scriptWriter) {
+], function (adContext, monetizationService, $, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
@@ -34,15 +34,24 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 		var slotName = slotMap[slot],
 			context = adContext.getContext();
 
-		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
+		if (context.providers.monetizationServiceAds[slotName] && validateSlot(slot)) {
 			log(['fillInSlot', slot, 'injectScript'], 'debug', logGroup);
-
-			scriptWriter.injectHtml(slot, context.providers.monetizationServiceAds[slotName], function () {
-				success();
-			});
+			monetizationService.injectContent(slot, context.providers.monetizationServiceAds[slotName], success);
 		} else {
 			hop();
 		}
+	}
+
+	function validateSlot(slot) {
+		log(['validateSlot', slot], 'debug', logGroup);
+
+		if (slot === 'MON_BELOW_CATEGORY' && $('#MON_IN_CONTENT').hasClass('end-content')) {
+			log(['validateSlot', slot, false], 'debug', logGroup);
+			return false;
+		}
+
+		log(['validateSlot', slot, true], 'debug', logGroup);
+		return true;
 	}
 
 	return {

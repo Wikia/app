@@ -12,6 +12,7 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.slot.adInContentPlayer',
+	'ext.wikia.adEngine.slot.monetizationServiceInContent',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
@@ -28,6 +29,7 @@ require([
 	messageListener,
 	providerEvolve,
 	adInContentPlayer,
+	monetizationServiceInContent,
 	slotTracker,
 	slotTweaker,
 	krux,
@@ -75,6 +77,7 @@ require([
 	window.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	adInContentPlayer.init();
+	monetizationServiceInContent.init();
 
 	// Everything starts after content and JS
 	window.wgAfterContentAndJS.push(function () {
