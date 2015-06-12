@@ -21,7 +21,13 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 		decoratedFillInSlot: noop,
 		decoratedFillInSlotFake1: noop,
 		decoratedFillInSlotFake2: noop,
-		doc: {},
+		doc: {
+			getElementById: function () {
+				return {
+					childNodes: {}
+				};
+			}
+		},
 		lazyQueue: {
 			makeQueue: noop
 		},

@@ -12,7 +12,9 @@ describe('ext.wikia.adEngine.adEngine', function () {
 		slotTweakerMock = { show: noop, hide: noop },
 		docMock = {
 			getElementById: function () {
-				return {};
+				return {
+					childNodes: {}
+				};
 			}
 		},
 		logMock = noop;
