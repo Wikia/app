@@ -85,6 +85,11 @@ class InsightsHooks {
 		return true;
 	}
 
+	/**
+	 * Adds query page. Tie query page subclass with special page name.
+	 * @param Array $wgQueryPages List of query pages: [ [ 'QueryPage subclass', 'SpecialPageName' ] ]
+	 * @return bool
+	 */
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
 		$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
 		return true;
