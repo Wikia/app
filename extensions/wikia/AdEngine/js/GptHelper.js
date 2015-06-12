@@ -2,83 +2,15 @@
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.gptHelper', [
 	'wikia.log',
-	'wikia.window',
-	'wikia.document',
+	'ext.wikia.adEngine.provider.googleTag',
 	'ext.wikia.adEngine.provider.gptAdElement',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptAdDetect',
 	require.optional('ext.wikia.adEngine.gptSraHelper')
-], function (log, window, document, AdElement, slotTweaker, gptAdDetect, sraHelper) {
+], function (log, googleTag, AdElement, slotTweaker, gptAdDetect, sraHelper) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
-		gptLoaded = false,
-		slotQueue = [],
-		gptSlots = {},
-		gptCallbacks = {},
-		googletag,
-		pubads;
-
-	function registerGptCallback(adElementId, gptCallback) {
-		log(['registerGptCallback', adElementId], 'info', logGroup);
-		gptCallbacks[adElementId] = gptCallback;
-	}
-
-	function dispatchGptEvent(event) {
-		var adElementId;
-
-		log(['dispatchGptEvent', event], 'info', logGroup);
-
-		for (adElementId in gptCallbacks) {
-			if (gptCallbacks.hasOwnProperty(adElementId)) {
-				if (gptCallbacks[adElementId] && event.slot && event.slot === gptSlots[adElementId]) {
-					log(['dispatchGptEvent', event, 'Launching registered callback'], 'debug', logGroup);
-					gptCallbacks[adElementId](event);
-					return;
-				}
-			}
-		}
-
-		log(['dispatchGptEvent', event, 'No callback registered for this slot render ended event'], 'error', logGroup);
-	}
-
-	function loadGptOnce() {
-		if (!gptLoaded) {
-			log('loadGpt', 'debug', logGroup);
-
-			var gads = document.createElement('script'),
-				node = document.getElementsByTagName('script')[0];
-
-			gptLoaded = true;
-
-			window.googletag = window.googletag || {};
-			window.googletag.cmd = window.googletag.cmd || [];
-
-			gads.async = true;
-			gads.type = 'text/javascript';
-			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
-
-			log('Appending GPT script to head', 'debug', logGroup);
-
-			node.parentNode.insertBefore(gads, node);
-			googletag = window.googletag;
-
-			// Enable services
-			log(['loadGpt', 'googletag.cmd.push'], 'info', logGroup);
-			googletag.cmd.push(function () {
-				pubads = googletag.pubads();
-
-				pubads.collapseEmptyDivs();
-				pubads.enableSingleRequest();
-				pubads.disableInitialLoad(); // manually request ads using refresh
-				pubads.addEventListener('slotRenderEnded', dispatchGptEvent);
-
-				googletag.enableServices();
-
-				log(['loadGpt', 'googletag.cmd.push', 'done'], 'debug', logGroup);
-			});
-		}
-	}
+	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper';
 
 	/**
 	 * Push ad to queue and flush if it should be
@@ -115,31 +47,13 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 
 		function queueAd() {
-			var slot;
-
-			element.setPageLevelParams(pubads);
-
 			log(['queueAd', slotName, slotDiv, element], 'debug', logGroup);
 			slotElement.appendChild(element.getNode());
 
-			if (!gptSlots[element.getId()]) {
-				element.setSizes(slotName, slotTargeting.size);
-
-				log(['defineSlot', 'googletag.defineSlot', slotPath, element], 'debug', logGroup);
-				slot = googletag.defineSlot(slotPath, element.getSizes(), element.getId());
-				slot.addService(pubads);
-
-				// Display div through GPT
-				log(['googletag.display', element.getId()], 'debug', logGroup);
-				googletag.display(element.getId());
-
-				gptSlots[element.getId()] = slot;
-			}
+			googleTag.addSlot(slotName, slotPath, slotTargeting, element);
 
 			// Some broken ads never fire "success" event, so we show the div now (and maybe hide later)
 			slotTweaker.show(element.getId());
-			log(['adding slot to the queue', element.getId()], 'debug', logGroup);
-			slotQueue.push(gptSlots[element.getId()]);
 		}
 
 		function gptCallback(event) {
@@ -155,39 +69,22 @@ define('ext.wikia.adEngine.gptHelper', [
 			}, 0);
 		}
 
+		if (!googleTag.isInitialized()) {
+			googleTag.init();
+		}
+
 		log(['pushAd', slotName], 'info', logGroup);
 		if (!slotTargeting.flushOnly) {
-			loadGptOnce();
-			registerGptCallback(element.getId(), gptCallback);
-			googletag.cmd.push(queueAd);
+			googleTag.registerCallback(element.getId(), gptCallback);
+			googleTag.push(queueAd);
 		}
 
 		if (!extra.sraEnabled || sraHelper.shouldFlush(slotName)) {
-			flushAds();
+			googleTag.flush();
 		}
-	}
-
-	function flushAds() {
-		if (!gptLoaded) {
-			log(['flushAds', 'done', 'no slots to flush'], 'info', logGroup);
-			return;
-		}
-
-		googletag.cmd.push(function () {
-			log(['flushAds', 'start'], 'info', logGroup);
-
-			log(['flushAds', 'refresh', slotQueue], 'debug', logGroup);
-			if (slotQueue.length) {
-				googletag.pubads().refresh(slotQueue);
-				slotQueue = [];
-			}
-
-			log(['flushAds', 'done'], 'info', logGroup);
-		});
 	}
 
 	return {
 		pushAd: pushAd
 	};
-
 });
