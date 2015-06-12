@@ -48,6 +48,8 @@ class Node {
 	 */
 	public function setExternalParser( $externalParser ) {
 		// we can pass anything, and ignore it if not ExternalParser instance
+		// we use builder pattern here, for fluently passing external parser to children nodes,
+		// type hinting was removed to prevent catchable fatal error appearing
 		if ( $externalParser instanceof ExternalParser ) {
 			$this->externalParser = $externalParser;
 		}
