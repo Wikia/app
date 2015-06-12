@@ -5,6 +5,11 @@ namespace Wikia\AbPerfTesting;
 abstract class Experiment {
 
 	/**
+	 * @param array $params experiment parameters
+	 */
+	abstract function __construct( Array $params );
+
+	/**
 	 * Bind a function to a hook
 	 *
 	 * @param string $hookName

@@ -14,10 +14,10 @@ class BackendDelay extends Experiment {
 	private $mDelay;
 
 	/**
-	 * @param int $delay delay in ms
+	 * @param array $params experiment parameters
 	 */
-	function __construct( $delay ) {
-		$this->mDelay = $delay;
+	function __construct( Array $params ) {
+		$this->mDelay = $params['delay'];
 
 		$this->on( 'BeforePageDisplay', function( \OutputPage $out, \Skin $skin ) {
 			$this->sleep();

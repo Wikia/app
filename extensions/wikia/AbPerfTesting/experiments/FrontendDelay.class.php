@@ -12,9 +12,11 @@ use Wikia\AbPerfTesting\Experiment;
 class FrontendDelay extends Experiment {
 
 	/**
-	 * @param int $delay delay in ms
+	 * @param array $params experiment parameters
 	 */
-	function __construct( $delay ) {
+	function __construct( Array $params ) {
+		// $delay = $params['delay'];
+
 		// add a JS global variable with the defined delay
 		// TODO: the bucketing logic is now in the front-end part
 		/**
