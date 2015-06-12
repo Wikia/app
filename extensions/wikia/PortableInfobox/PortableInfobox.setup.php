@@ -5,6 +5,7 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 	'name' => 'Portable Infobox',
 	'author' => [
 		'Adam Robak',
+		'Diana Falkowska',
 		'Jacek Jursza',
 		'Mateusz Rybarski',
 		'Rafał Leszczyński',
