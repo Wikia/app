@@ -1,22 +1,18 @@
 <p class="portable-infobox-error-info">{{info}}</p>
-<table class="portable-infobox-debug">
-    {{# code }}
-    <tr{{# error }} class="error"{{/ error}}>
-        <td>
-            {{ line }}
-        </td>
-        <td>
-            {{ codeLine }}
-        </td>
-    </tr>
-    {{# error }}
-    <tr>
-        <td></td>
-        <td>
-        {{# error_messages }}
-        <p>{{{ message }}}</p>
-        {{/ error_messages }}
-    </td></tr>
-    {{/ error }}
-    {{/ code }}
-</table>
+<ul class="portable-infobox-debug">
+	{{#code}}
+	<li>
+		<div class="portable-infobox-debug-line{{#error}} error{{/error}}">
+			<div class="portable-infobox-debug-line-number">{{line}}</div>
+			<div class="portable-infobox-debug-line-code">{{codeLine}}</div>
+		</div>
+		{{#error}}
+		<div class="portable-infobox-debug-error-massage">
+			{{#error_messages}}
+				<p class="portable-infobox-debug-error-massage-item">{{{message}}}</p>
+			{{/error_messages}}
+		</div>
+		{{/error}}
+	</li>
+	{{/code}}
+</ul>
