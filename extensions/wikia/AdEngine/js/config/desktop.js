@@ -137,3 +137,5 @@ define('ext.wikia.adEngine.config.desktop', [
 		getProviderList: getProviderList
 	};
 });
+
+alert('ABC!');
