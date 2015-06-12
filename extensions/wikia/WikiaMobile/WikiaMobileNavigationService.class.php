@@ -49,8 +49,8 @@ class  WikiaMobileNavigationService extends WikiaService {
 	 * Otherwise it sets url to the old Special:Login page.
 	 */
 	private function setupLoginLink() {
-		if ($this->app->wg->get('wgEnableNewAuth')) {
-			$this->loginUrl = '/join?redirect=' .wfExpandUrl($this->request->getScriptUrl());
+		if ($this->app->wg->get( 'wgEnableNewAuth' )) {
+			$this->loginUrl = '/join?redirect=' . urlencode ( wfExpandUrl( $this->request->getScriptUrl() ) );
 			$this->loginClass = 'new-login';
 		}
 		else {
