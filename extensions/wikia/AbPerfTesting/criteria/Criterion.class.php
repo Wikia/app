@@ -24,7 +24,13 @@ abstract class Criterion {
 	 * @return boolean
 	 */
 	protected function isInBucket( $value, $expected ) {
-		return $value === $expected;
+		if ( is_array( $expected ) ) {
+			list( $min, $max ) = $expected;
+			return ( $value >= $min ) && ( $value <= $max );
+		}
+		else {
+			return $value === $expected;
+		}
 	}
 
 	/**

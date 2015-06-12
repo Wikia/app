@@ -36,6 +36,13 @@ class CriterionTest extends WikiaBaseTest {
 
 		$this->mockGlobalFunction( 'wfGetBeaconId', '3j-YqSr9BQ' );
 		$this->assertTrue( ( new Traffic() )->matches( 158 ) );
+
+		// ranges matching
+		$this->assertFalse( ( new Traffic() )->matches( [140, 150] ) );
+
+		$this->assertTrue( ( new Traffic() )->matches( [150, 160] ) );
+		$this->assertTrue( ( new Traffic() )->matches( [158, 160] ) ); // left boundary
+		$this->assertTrue( ( new Traffic() )->matches( [150, 158] ) ); // right boundary
 	}
 
 	function testWikisCriterion() {
