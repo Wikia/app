@@ -77,11 +77,14 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		if ( empty( $clusterNumberParam ) ) {
 			$clusterNumberParam = $matches[2];
 		}
-		if ( $clusterNumberParam > 9 ) {
-			echo "Clusters higher than 9 are not yet operated by this script. Time to update the script.\n";
+		if ( $clusterNumberParam > 26 ) {
+			echo "Clusters higher than 26 (Z letter) are not yet operated by this script. Time to update the script.\n";
 			exit;
 		}
-		$clusterLetter = strtr( $clusterNumberParam, '123456789', 'ABCDEFGHI' );
+		/* Map cluster numbers to letters
+		 * 1->A, 2->B
+		 * chr(65)=='A' */
+		$clusterLetter = chr( 64 + $clusterNumberParam );
 		$databaseDirectory = "database_{$clusterLetter}";
 		if ( $clusterNumberParam >= 6 ) {
 			// Way of combining s3_bucket name changed from cluster 6
