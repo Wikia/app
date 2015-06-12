@@ -78,4 +78,13 @@
 		$.holdReady(false);
 	}, delay);
 
+	// report the delayed onDOMReady
+	// will be stored in rum_metrics_performance_tests series in InfluxDB
+	$(function() {
+		var sink = weppy('performance_tests::metrics');
+		if (w.wgNow) {
+			sink.store('domCompleteDelayed', new Date() - w.wgNow); // metrics.domCompleteDelayed [ms]
+		}
+	});
+
 })(window, window.Wikia.log, window.Weppy, jQuery);
