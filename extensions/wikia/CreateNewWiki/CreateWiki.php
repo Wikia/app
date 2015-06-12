@@ -91,6 +91,7 @@ class CreateWiki {
 				"de" => "destarter",
 				"en" => "starter",
 				"es" => "esstarter",
+				"fi" => "fistarter",
 				"fr" => "starterbeta",
 				"it" => "italianstarter",
 				"ja" => "jastarter",
