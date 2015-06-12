@@ -21,10 +21,10 @@ class Traffic extends Criterion {
 	}
 
 	/**
-	 * @param int $bucket traffic bucket ID to check
+	 * @param int|array $bucket wiki bucket ID or range to check
 	 * @return boolean
 	 */
 	function matches( $bucket ) {
-		return ( $this->mBeaconId != '' ) && ( crc32( $this->mBeaconId ) % self::BUCKETS === $bucket );
+		return ( $this->mBeaconId != '' ) && $this->isInBucket( crc32( $this->mBeaconId ) % self::BUCKETS, $bucket );
 	}
 }

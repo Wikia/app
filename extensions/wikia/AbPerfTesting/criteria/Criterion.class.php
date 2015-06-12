@@ -6,10 +6,26 @@ abstract class Criterion {
 	/**
 	 * Does given criterion applies in the current context?
 	 *
-	 * @param int $bucket bucket ID to check
+	 * @param int|array $bucket wiki bucket ID or range to check
 	 * @return boolean
 	 */
 	abstract function matches( $bucket );
+
+	/**
+	 * Check if the given bucket $value is the one we expect.
+	 *
+	 * Examples:
+	 *  isInBucket( 1, 1 ) => true
+	 *  isInBucket( 1, 2 ) => false
+	 *  isInBucket( 1, [1, 10] ) => true (range matching)
+	 *
+	 * @param $value the bucket value to check
+	 * @param int|array $expected the expected bucket value or range (as an array - e.g. [1, 10])
+	 * @return boolean
+	 */
+	protected function isInBucket( $value, $expected ) {
+		return $value === $expected;
+	}
 
 	/**
 	 * Returns an instance of a given criterion

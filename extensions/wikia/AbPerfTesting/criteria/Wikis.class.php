@@ -18,10 +18,10 @@ class Wikis extends Criterion {
 	}
 
 	/**
-	 * @param int $bucket wiki bucket ID to check
+	 * @param int|array $bucket wiki bucket ID or range to check
 	 * @return boolean
 	 */
 	function matches( $bucket ) {
-		return $this->mCityId % self::BUCKETS === $bucket;
+		return $this->isInBucket( $this->mCityId % self::BUCKETS, $bucket );
 	}
 }
