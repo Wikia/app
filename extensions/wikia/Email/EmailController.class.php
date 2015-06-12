@@ -17,6 +17,9 @@ abstract class EmailController extends \WikiaController {
 	 * and intended to be overridden by child classes. */
 	const LAYOUT_CSS = 'avatarLayout.css';
 
+	/** Used by emails that don't want to apply any additional styles */
+	const NO_ADDITIONAL_STYLES = '';
+
 	/** Regular expression pattern used to find all email controller classes inside
 	 * of $wgAutoLoadClasses */
 	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
@@ -72,12 +75,12 @@ abstract class EmailController extends \WikiaController {
 				$this->getVal( 'replyToName', $noReplyName )
 			);
 
-			$fromAddress = $this->getVal( 'fromAddress', '' );
+			$fromAddress = $this->getVal( 'fromAddress', $this->wg->PasswordSender );
 			$this->assertValidFromAddress( $fromAddress );
 
 			$this->fromAddress = new \MailAddress(
 				$fromAddress,
-				$this->getVal( 'fromName', '' )
+				$this->getVal( 'fromName', $this->wg->PasswordSenderName )
 			);
 
 			$this->initEmail();
@@ -577,16 +580,6 @@ abstract class EmailController extends \WikiaController {
 					'value' => get_called_class()
 				],
 				[
-					'type' => 'hidden',
-					'name' => 'fromAddress',
-					'value' => \F::app()->wg->PasswordSender
-				],
-				[
-					'type' => 'hidden',
-					'name' => 'fromName',
-					'value' => \F::app()->wg->PasswordSenderName
-				],
-				[
 					'type' => 'text',
 					'name' => 'targetUser',
 					'label' => 'Target User',
@@ -653,7 +646,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * A wrapper for wfMessage() which removes the possibility of messages being overridden in the MediaWiki namespace
 	 *
-	 * @return Message
+	 * @return \Message
 	 */
 	protected function getMessage() {
 		return call_user_func_array( 'wfMessage', func_get_args() )
