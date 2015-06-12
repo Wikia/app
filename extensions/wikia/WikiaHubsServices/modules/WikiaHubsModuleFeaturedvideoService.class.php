@@ -172,11 +172,10 @@ class WikiaHubsModuleFeaturedvideoService extends WikiaHubsModuleEditableService
 	 * @return mixed
 	 */
 	protected function filterCommercialData( $data ) {
-		$data['video'] = null;
 		$service = $this->getLicensedWikisService();
 
 		if ( isset($data['articleUrl']) && !$service->isCommercialUseAllowedByUrl($data['articleUrl']) ) {
-			$data = null;
+			return null;
 		}
 
 		return $data;
