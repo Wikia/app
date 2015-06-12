@@ -3697,7 +3697,7 @@ class User {
 			'confirmUrl' => $url,
 		];
 
-		$responseData =  F::app()->sendRequest( $emailController, 'handle', $params )->getData();
+		$responseData = F::app()->sendRequest( $emailController, 'handle', $params )->getData();
 
 		if ( $responseData['result'] == 'ok' ) {
 			return Status::newGood();
@@ -3710,7 +3710,7 @@ class User {
 	/**
 	 * Confirmation after change the email
 	 *
-	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure.
+	 * @return WikiError|bool True on success, a WikiError object on failure.
 	 */
 	function sendReConfirmationMail() {
 		$this->setOption("mail_edited","1");

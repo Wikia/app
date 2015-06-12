@@ -31,7 +31,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
 			'buttonLink' => $this->confirmUrl,
-			'buttonText' => $this->getMessage( 'emailext-emailconfirmation-button-text' ),
+			'buttonText' => $this->getMessage( 'emailext-emailconfirmation-button-text' )->text(),
 			'contentFooterMessages' => $this->getContentFooterMessages()
 		] );
 	}
