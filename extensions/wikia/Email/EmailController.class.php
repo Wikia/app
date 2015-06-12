@@ -448,6 +448,11 @@ abstract class EmailController extends \WikiaController {
 			return $default;
 		}
 
+		// Allow an anonymous user to be specified
+		if ( $userName == -1 ) {
+			return \User::newFromId( 0 );
+		}
+
 		return $this->getUserFromName( $userName );
 	}
 
