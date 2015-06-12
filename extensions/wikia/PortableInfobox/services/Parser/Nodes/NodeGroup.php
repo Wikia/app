@@ -15,8 +15,6 @@ class NodeGroup extends Node {
 		return [
 			'type' => $this->getType(),
 			'data' => [ 'value' => $this->getRenderDataForChildren() ],
-			'isEmpty' => $this->isEmpty(),
-			'source' => $this->getSource()
 		];
 	}
 

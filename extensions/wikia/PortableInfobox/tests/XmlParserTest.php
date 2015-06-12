@@ -16,16 +16,19 @@ class XmlParserTest extends WikiaBaseTest {
 			->getMock();
 
 		$errors = [ ];
-		// parseXmlString should throw an exception, but we want to proceed in order to check parameters
-		// from logXmlParseError
 		try {
 			$data = $parser->parseXmlString( $markup, $errors );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
+			// parseXmlString should throw an exception, but we want to proceed in order to check parameters
+			// from logXmlParseError
 		}
 
-		$this->assertEquals( $expectedErrors, array_map( function ( LibXMLError $error ) {
-			return [ 'level' => $error->level, 'code' => $error->code, 'msg' => trim( $error->message ) ];
-		}, $errors ) );
+		$this->assertEquals( $expectedErrors, array_map(
+			function ( LibXMLError $error ) {
+				return [ 'level' => $error->level, 'code' => $error->code, 'msg' => trim( $error->message ) ];
+			},
+			$errors
+		) );
 	}
 
 	public function errorHandlingDataProvider() {

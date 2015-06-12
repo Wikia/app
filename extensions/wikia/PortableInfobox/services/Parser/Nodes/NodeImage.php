@@ -34,7 +34,7 @@ class NodeImage extends Node {
 	public function isEmpty() {
 		$data = $this->getData();
 
-		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
+		return empty( $data[ 'url' ] );
 	}
 
 	public function getSource() {

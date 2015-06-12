@@ -60,13 +60,13 @@ class Node {
 		 * Node type generation is based on XML tag name.
 		 * It's worth to remember that SimpleXMLElement::getName method is
 		 * case - sensitive ( "<Data>" != "<data>" ), so we need to sanitize Node Type
-		 * by using strtolower function
+		 * by using mb_strtolower function
 		 */
-		return strtolower( $this->xmlNode->getName() );
+		return mb_strtolower( $this->xmlNode->getName() );
 	}
 
 	public function isType( $type ) {
-		return strcmp( $this->getType(), strtolower( $type ) ) == 0;
+		return strcmp( $this->getType(), mb_strtolower( $type ) ) == 0;
 	}
 
 	public function getData() {
@@ -81,8 +81,6 @@ class Node {
 		return [
 			'type' => $this->getType(),
 			'data' => $this->getData(),
-			'isEmpty' => $this->isEmpty(),
-			'source' => $this->getSource()
 		];
 	}
 
@@ -90,14 +88,12 @@ class Node {
 	 * @desc Check if node is empty.
 	 * Note that a '0' value cannot be treated like a null
 	 *
-	 * @param $data
-	 *
 	 * @return bool
 	 */
 	public function isEmpty() {
 		$data = $this->getData()[ 'value' ];
 
-		return !( isset( $data ) ) || ( empty( $data ) && $data != '0' );
+		return ( empty( $data ) && $data != '0' );
 	}
 
 	protected function getChildNodes() {
@@ -113,14 +109,17 @@ class Node {
 	}
 
 	protected function getDataForChildren() {
-		return array_map( function ( Node $item ) {
-			return [
-				'type' => $item->getType(),
-				'data' => $item->getData(),
-				'isEmpty' => $item->isEmpty(),
-				'source' => $item->getSource()
-			];
-		}, $this->getChildNodes() );
+		return array_map(
+			function ( Node $item ) {
+				return [
+					'type' => $item->getType(),
+					'data' => $item->getData(),
+					'isEmpty' => $item->isEmpty(),
+					'source' => $item->getSource()
+				];
+			},
+			$this->getChildNodes()
+		);
 	}
 
 	protected function getRenderDataForChildren() {

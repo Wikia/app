@@ -61,8 +61,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @throws XmlMarkupParseErrorException xml not well formatted
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
-		$infoboxNode = Wikia\PortableInfobox\Parser\Nodes\NodeFactory::newFromXML(
-			$markup, $this->getFrameParams( $frame ) );
+		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $this->getFrameParams( $frame ) );
 		$infoboxNode->setExternalParser( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) );
 
 		//get params if not overridden

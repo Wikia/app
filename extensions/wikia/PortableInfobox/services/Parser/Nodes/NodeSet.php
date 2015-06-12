@@ -15,11 +15,13 @@ class NodeSet extends Node {
 		return [
 			'type' => $this->getType(),
 			'data' => [
-				'value' => array_map( function ( Node $item ) {
-					return $item->getRenderData();
-				}, $this->getChildNodes() ) ],
-			'isEmpty' => $this->isEmpty(),
-			'source' => $this->getSource()
+				'value' => array_map(
+					function ( Node $item ) {
+						return $item->getRenderData();
+					},
+					$this->getChildNodes()
+				)
+			],
 		];
 	}
 

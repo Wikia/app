@@ -24,28 +24,28 @@ class NodeSetTest extends WikiaBaseTest {
 		return [
 			[ '<set><header>h</header><data source="1"/><data source="2"/></set>', [ '1' => 'one', '2' => 'two' ],
 			  [ 'type' => 'set', 'data' => [ 'value' => [
-				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '' ],
-					'isEmpty' => false, 'source' => [ '1' ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => 'two', 'label' => '' ],
-					'isEmpty' => false, 'source' => [ '2' ] ],
-			  ] ], 'isEmpty' => false, 'source' => [ '1', '2' ] ] ],
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => 'two', 'label' => '' ] ],
+			  ] ]
+			  ]
+			],
 			[ '<set><header>h</header><data source="1"/><data source="2"/></set>', [ '1' => 'one' ],
 			  [ 'type' => 'set', 'data' => [ 'value' => [
-				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '' ],
-					'isEmpty' => false, 'source' => [ '1' ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ],
-					'isEmpty' => true, 'source' => [ '2' ] ],
-			  ] ], 'isEmpty' => false, 'source' => [ '1', '2' ] ] ],
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => '' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ] ]
+			  ] ]
+			  ]
+			],
 			[ '<set><header>h</header><data source="1"/><data source="2"/></set>', [ ],
 			  [ 'type' => 'set', 'data' => [ 'value' => [
-				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ], 'isEmpty' => false, 'source' => [ ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ],
-					'isEmpty' => true, 'source' => [ '1' ] ],
-				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ],
-					'isEmpty' => true, 'source' => [ '2' ] ],
-			  ] ], 'isEmpty' => true, 'source' => [ '1', '2' ] ] ],
+				  [ 'type' => 'header', 'data' => [ 'value' => 'h' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ] ],
+				  [ 'type' => 'data', 'data' => [ 'value' => null, 'label' => '' ] ],
+			  ] ]
+			  ]
+			]
 		];
 	}
 

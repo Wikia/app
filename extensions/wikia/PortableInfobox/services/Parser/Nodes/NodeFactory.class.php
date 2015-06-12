@@ -23,7 +23,8 @@ class NodeFactory {
 	protected static function getInstance( \SimpleXMLElement $xmlNode, array $data ) {
 		wfProfileIn( __METHOD__ );
 		$tagType = $xmlNode->getName();
-		$className = 'Wikia\\PortableInfobox\\Parser\\Nodes\\' . 'Node' . ucfirst( strtolower( $tagType ) );
+		$className = 'Wikia\\PortableInfobox\\Parser\\Nodes\\' . 'Node' .
+					 mb_convert_case( mb_strtolower( $tagType ), MB_CASE_TITLE );
 		if ( class_exists( $className ) ) {
 			/* @var $instance \Wikia\PortableInfobox\Parser\Nodes\Node */
 			$instance = new $className( $xmlNode, $data );

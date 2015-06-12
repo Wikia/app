@@ -23,6 +23,8 @@ class NodeDataTest extends WikiaBaseTest {
 	public function sourceDataProvider() {
 		return [
 			[ '<data source="test"></data>', [ ], [ 'test' ] ],
+			[ '<data source="test"><label source="test">{{{test}}}</label><default>{{{test}}}</default></data>',
+			  [ ], [ 'test' ] ],
 			[ '<data source="test"><default>{{{test 2}}}</default></data>', [ ], [ 'test', 'test 2' ] ],
 			[ '<data></data>', [ ], [ ] ]
 		];
@@ -92,8 +94,7 @@ class NodeDataTest extends WikiaBaseTest {
 	public function dataRenderProvider() {
 		return [
 			[ '<data source="test"></data>', [ 'test' => 'test' ],
-			  [ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '' ],
-				'isEmpty' => false, 'source' => [ 'test' ] ] ],
+			  [ 'type' => 'data', 'data' => [ 'value' => 'test', 'label' => '' ] ] ],
 		];
 	}
 

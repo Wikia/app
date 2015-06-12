@@ -73,14 +73,19 @@ class NodeComparisonTest extends WikiaBaseTest {
 		return [
 			[ '<comparison><set><data source="1"/><data source="2"/></set></comparison>',
 			  [ '1' => 'one', '2' => 'two' ],
-			  [ 'type' => 'comparison', 'isEmpty' => false, 'source' => [ '1', '2' ], 'data' => [ 'value' => [
+			  [ 'type' => 'comparison', 'data' => [ 'value' => [
 				  [ 'type' => 'set', 'data' => [ 'value' => [
-					  [ 'type' => 'data', 'data' => [ 'label' => '', 'value' => 'one' ], 'isEmpty' => false,
-						'source' => [ '1' ] ],
-					  [ 'type' => 'data', 'data' => [ 'label' => '', 'value' => 'two' ], 'isEmpty' => false,
-						'source' => [ '2' ] ]
-				  ] ], 'isEmpty' => false, 'source' => [ '1', '2' ] ] ] ],
-
+					  [ 'type' => 'data', 'data' => [ 'label' => '', 'value' => 'one' ] ],
+					  [ 'type' => 'data', 'data' => [ 'label' => '', 'value' => 'two' ] ]
+				  ] ], ] ] ],
+			  ] ],
+			[ '<comparison><set><data source="1"><default>{{{1}}}</default></data><data source="2"/></set></comparison>',
+			  [ '1' => 'one', '2' => 'two' ],
+			  [ 'type' => 'comparison', 'data' => [ 'value' => [
+				  [ 'type' => 'set', 'data' => [ 'value' => [
+					  [ 'type' => 'data', 'data' => [ 'label' => '', 'value' => 'one' ] ],
+					  [ 'type' => 'data', 'data' => [ 'label' => '', 'value' => 'two' ] ]
+				  ] ], ] ] ],
 			  ] ],
 		];
 	}
