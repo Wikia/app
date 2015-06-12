@@ -3,7 +3,7 @@
 class UnconvertedInfoboxesPage extends PageQueryPage {
 	const LIMIT = 1000;
 
-	function __construct( $name = 'UnconvertedInfoboxes' ) {
+	function __construct( $name = 'Nonportableinfoboxes' ) {
 		parent::__construct( $name );
 	}
 

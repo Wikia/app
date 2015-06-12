@@ -6,7 +6,7 @@
  * without categories.
  */
 class InsightsUnconvertedInfoboxesModel extends InsightsQuerypageModel {
-	const INSIGHT_TYPE = 'unconvertedinfoboxes';
+	const INSIGHT_TYPE = 'nonportableinfoboxes';
 
 	public function getDataProvider() {
 		return new UnconvertedInfoboxesPage();
