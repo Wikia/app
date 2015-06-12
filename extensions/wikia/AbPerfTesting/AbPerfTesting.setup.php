@@ -70,6 +70,9 @@ $wgABPerfTestingExperiments = [];
  * 2. Set the "traffic" criterion to '158'
 **/
 
+/**
+ * Wikia\\AbPerfTesting\\Experiments\\BackendDelay
+ */
 $wgABPerfTestingExperiments['backend_delay_0'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay',
 	'params' => [
@@ -114,11 +117,49 @@ $wgABPerfTestingExperiments['backend_delay_3'] = [
 	]
 ];
 
-$wgABPerfTestingExperiments['frontend_delay'] = [
+/**
+ * Wikia\\AbPerfTesting\\Experiments\\FrontendDelay
+ */
+$wgABPerfTestingExperiments['frontend_delay_0'] = [
 	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\FrontendDelay',
+	'params' => [
+		'delay' => 0, // control group to compare other three groups against
+	],
 	'criteria' => [
-		// this test performs bucketing logic in JS code
-		// the test will be reported as "frontend_delay_[0-3]"
 		'oasisArticles' => true,
+		'traffic' => 10,
+	]
+];
+
+$wgABPerfTestingExperiments['frontend_delay_1'] = [
+	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\FrontendDelay',
+	'params' => [
+		'delay' => 100,
+	],
+	'criteria' => [
+		'oasisArticles' => true,
+		'traffic' => 11,
+	]
+];
+
+$wgABPerfTestingExperiments['frontend_delay_2'] = [
+	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\FrontendDelay',
+	'params' => [
+		'delay' => 200,
+	],
+	'criteria' => [
+		'oasisArticles' => true,
+		'traffic' => 12,
+	]
+];
+
+$wgABPerfTestingExperiments['frontend_delay_3'] = [
+	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\FrontendDelay',
+	'params' => [
+		'delay' => 300,
+	],
+	'criteria' => [
+		'oasisArticles' => true,
+		'traffic' => 13,
 	]
 ];
