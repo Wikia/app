@@ -17,8 +17,6 @@ class FlagsLogTask extends BaseTask {
 	 * @param string $actionType Type of action performed on flag represented by constants in \FlagsApiController class
 	 */
 	public function logFlagChange( array $flags, $pageId, $actionType ) {
-		global $wgCityId;
-
 		$app = \F::app();
 		$wikiaFlagTypesResponse = $app->sendRequest(
 			'FlagsApiController',
@@ -45,7 +43,7 @@ class FlagsLogTask extends BaseTask {
 				);
 			}
 		} else {
-			$this->error( "No flags types found for wikia (city_id:$wgCityId)" );
+			$this->error( "No flags types found for wikia (city_id:{$this->getWikiId()})" );
 		}
 
 	}
