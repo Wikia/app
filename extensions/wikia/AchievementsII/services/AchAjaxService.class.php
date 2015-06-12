@@ -117,7 +117,7 @@ class AchAjaxService {
 			if ( $badgeImage instanceof File ) {
 				$badgeImageUrl = $badgeImage->createThumb( 90 ) . "?cb=" . rand();
 			} else {
-				$badgeImageUrl = ""	;
+				$badgeImageUrl = "";
 				WikiaLogger::instance()->error( 'Error Reporter: Badge Image not found', [
 					'method' => __METHOD__,
 					'badge_type_id' => $badge_type_id
