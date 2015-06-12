@@ -65,7 +65,7 @@ $wgHooks['BeforeToolbarMenu'][] = 'WallHooksHelper::onBeforeToolbarMenu';
 $wgHooks['BeforePageHistory'][] = 'WallHooksHelper::onBeforePageHistory';
 $wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription';
 
-$wgHooks['UserMailerBeforeSendEmail'][] = 'WallHooksHelper::onUserMailerBeforeSendEmail';
+$wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageChange';
 $wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
 // recent changes adjusting
