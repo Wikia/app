@@ -86,7 +86,7 @@ class InsightsHooks {
 	}
 
 	public static function onwgQueryPages( Array &$wgQueryPages ) {
-		$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'UnconvertedInfoboxes' ];
+		$wgQueryPages[] = [ 'UnconvertedInfoboxesPage', 'Nonportableinfoboxes' ];
 		return true;
 	}
 } 
