@@ -2,6 +2,8 @@
 
 namespace Wikia\AbPerfTesting;
 
+use \Wikia\Logger\WikiaLogger;
+
 class Hooks {
 
 	/**
@@ -26,6 +28,26 @@ class Hooks {
 			$scripts .= \Html::inlineScript( "_gaq.push(['set', 'dimension20', {$val}]);" );
 			return true;
 		} ;
+
+		/*
+		 * Start the session to bypass CDN cache
+		 *
+		 * We don't want to polute the CDN cache with the A/B performance testing tracking data.
+		 * As the test are run for only a small subset of the traffic, start the session for client
+		 * that are in the test groups to bypass the CDN cache.
+		 */
+		if ( session_id() == '' ) {
+			wfSetupSession();
+			wfDebug( __METHOD__ . " - session started\n" );
+
+			// log started sessions
+			global $wgUser;
+			WikiaLogger::instance()->info( __METHOD__, [
+				'experiment' => $experimentName,
+				'session_id' => session_id(),
+				'is_anon' => $wgUser->isAnon()
+			] );
+		}
 	}
 
 	/**
