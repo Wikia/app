@@ -24,21 +24,17 @@ $USAGE =
 	"\t\t--help      show this message\n" .
 	"\t\t-h          Fetch and import to dev db by hostname (short name or fully qualified name ok)\n" .
 	"\t\t-f          Fetch a new database file from s3\n" .
-	"\t\t-c          Use different cluster to look for the dump: c1, c2, etc (optional, fetched automatically by) \n".
 	"\t\t-i          Import a downloaded file to dev db\n" .
 	"\t\t-p          Which dev database to use for target: sjc or poz (optional, defaults to WIKIA_DATACENTER) \n".
 	"\n";
 
-$opts = getopt ("c:h:i:f:p:?::");
+$opts = getopt ("h:i:f:p:?::");
 if( empty( $opts ) ) die( $USAGE );
 
 if (array_key_exists('p', $opts)) {
 	$wgWikiaDatacenter = $opts['p'];
 } else {
 	$wgWikiaDatacenter = getenv('WIKIA_DATACENTER');
-}
-if (array_key_exists('c', $opts)) {
-	$clusterNumberParam = ltrim( $opts['c'], 'c' );
 }
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
@@ -73,10 +69,7 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 		$pattern = '/city_id: (\d+), cluster: c([1-9])/';
 		preg_match($pattern, $page, $matches);
 		$city_id = $matches[1];
-		// Don't use fetched cluster number if it was provided on script invoke params list
-		if ( empty( $clusterNumberParam ) ) {
-			$clusterNumberParam = $matches[2];
-		}
+		$clusterNumberParam = $matches[2];
 		if ( $clusterNumberParam > 26 ) {
 			echo "Clusters higher than 26 (Z letter) are not yet operated by this script. Time to update the script.\n";
 			exit;
