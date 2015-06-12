@@ -147,6 +147,11 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return amazonCalled;
 	}
 
+	function hasResponse() {
+		log(['hasResponse', amazonResponse], 'debug', logGroup);
+		return (amazonResponse) ? true : false;
+	}
+
 	function getSlotParams(slotName) {
 		log(['getSlotParams', slotName], 'debug', logGroup);
 
@@ -187,7 +192,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		trackState: function () {
 			log('fake trackState - module is not supported in IE8', 'debug', logGroup);
 		},
-		wasCalled: wasCalled
+		wasCalled: wasCalled,
+		hasResponse: hasResponse
 	};
 
 	if (!Object.keys) {

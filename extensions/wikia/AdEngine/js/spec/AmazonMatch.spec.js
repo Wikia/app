@@ -140,4 +140,11 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 		mocks.window.amznads.renderAd(mocks.document);
 		expect(amazonMatch.getSlotParams('MOBILE_TOP_LEADERBOARD').amznslots).toEqual(undefined);
 	});
+
+	it('switch the flag when response from Amazon recieved', function () {
+		var amazonMatch = getModule();
+
+		initAndTestAmazon(amazonMatch, {'a3x5p14': 1});
+		expect(amazonMatch.hasResponse()).toEqual(true);
+	});
 });
