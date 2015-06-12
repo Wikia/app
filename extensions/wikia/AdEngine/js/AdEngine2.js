@@ -26,6 +26,14 @@ define('ext.wikia.adEngine.adEngine', [
 		return func;
 	}
 
+	function cleanProviderContainers(slotName) {
+		var containers = doc.getElementById(slotName).childNodes;
+
+		for (var i = 0; i < containers.length; i++) {
+			containers[i].innerHTML = '';
+		}
+	}
+
 	function prepareAdProviderContainer(providerName, slotName) {
 		// TODO: remove after Liftium-era
 		var providerContainerId = providerName + '_' + slotName.split('.')[0],
@@ -37,7 +45,6 @@ define('ext.wikia.adEngine.adEngine', [
 			providerContainer.id = providerContainerId;
 			adContainer.appendChild(providerContainer);
 		}
-		providerContainer.innerHTML = '';
 
 		log(['prepareAdProviderContainer', providerName, slotName, providerContainer], 'debug', logGroup);
 		return providerContainer;
@@ -109,6 +116,7 @@ define('ext.wikia.adEngine.adEngine', [
 				} while (provider);
 			}
 
+			cleanProviderContainers(slotName);
 			nextProvider();
 		}
 
