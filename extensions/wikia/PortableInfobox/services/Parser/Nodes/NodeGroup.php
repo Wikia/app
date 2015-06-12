@@ -5,7 +5,7 @@ use Wikia\PortableInfobox\Parser\XmlParser;
 
 class NodeGroup extends Node {
 	const DATA_LAYOUT_ATTR_NAME = 'layout';
-	const GROUP_LAYOUT_PREFIX = 'group-layout-';
+	const DEFAULT_TAG_NAME = 'default';
 
 	private $supportedGroupLayouts = [
 		'default',
