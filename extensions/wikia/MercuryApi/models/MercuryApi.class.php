@@ -111,6 +111,7 @@ class MercuryApi {
 			'cacheBuster' => (int) $wgCacheBuster,
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
+			'enableNewAuth' => $wgEnableNewAuth,
 			'id' => (int) $wgCityId,
 			'language' => [
 				'user' => $wgLang->getCode(),
@@ -118,13 +119,12 @@ class MercuryApi {
 				'content' => $wgLanguageCode,
 				'contentDir' => $wgContLang->getDir()
 			],
+			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'namespaces' => $wgContLang->getNamespaces(),
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
-			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
-			'enableNewAuth' => $wgEnableNewAuth
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId )
 		];
 	}
 
