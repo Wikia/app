@@ -34,3 +34,7 @@ JSMessages::registerPackage('EditPreview', [
 	'wikia-editor-preview-mobile-width',
 	'wikia-editor-preview-type-tooltip'
 ]);
+
+JSMessages::registerPackage('EditPreviewInContLang', [
+	'wikia-editor-preview-best-practices-button-link'
+]);

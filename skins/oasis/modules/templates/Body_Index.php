@@ -18,7 +18,7 @@
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<?= $app->renderView( 'Notifications', 'Confirmation' ) ?>
+		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 		<?php
 			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
 
@@ -28,11 +28,7 @@
 			}
 
 			if ( empty( $wg->SuppressWikiHeader ) ) {
-				if ( !empty( $wg->EnableLocalNavExt ) || $runNjord ) {
-					echo $app->renderView( 'LocalNavigation', 'Index' );
-				} else {
-					echo $app->renderView( 'WikiHeader', 'Index' );
-				}
+				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
 		?>
 		<?php
@@ -105,7 +101,6 @@
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
 							echo $app->renderView( 'Ad', 'Index', [
 								'slotName' => 'HOME_TOP_RIGHT_BOXAD',
-								'pageFairId' => isset( $wg->AnalyticsProviderPageFairSlotIds['MEDREC'] ) ? $wg->AnalyticsProviderPageFairSlotIds['MEDREC'] : null,
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
 							] );
 						}
@@ -143,9 +138,9 @@
 				?>
 
 				<?php
-					if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY] ) ) {
-						echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY];
-					}
+				if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY] ) ) {
+					echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY];
+				}
 				?>
 
 				<?php if ( !empty( $afterContentHookText ) ) { ?>
@@ -155,15 +150,17 @@
 				<?php } ?>
 
 				<?php
-					if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-						if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER] ) ) {
-							echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER];
-						}
+				if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
+					if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
+						echo $app->renderView( 'Ad', 'Index', ['slotName' => 'MON_ABOVE_FOOTER'] );
+					} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER] ) ) {
+						echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_FOOTER];
 					}
+				}
 				?>
 				<div id="WikiaArticleBottomAd" class="noprint">
-					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD'] ) ?>
-					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD'] ) ?>
+					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD', 'onLoad' => true] ) ?>
+					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD', 'onLoad' => true] ) ?>
 				</div>
 			</div>
 		</article><!-- WikiaMainContent -->
@@ -180,7 +177,7 @@
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
 		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<? if( !empty( $wg->EnableGlobalFooterExt ) ) echo $app->renderView( 'GlobalFooter', 'index' ) ?>
+		<?= $app->renderView( 'GlobalFooter', 'index' ); ?>
 	</div>
 </section><!--WikiaPage-->
 

@@ -175,11 +175,6 @@ class UserPreferencesV2 {
 			}
 		}
 
-		if ( isset( $defaultPreferences['htmlemails'] ) ) {
-			$defaultPreferences['htmlemails']['section'] = 'emailv2/email-advanced-v2';
-			$defaultPreferences['htmlemails']['label-message'] = 'tog-htmlemails-v2';
-			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'htmlemails' );
-		}
 		if ( isset( $defaultPreferences['disablemail'] ) ) {
 			$defaultPreferences['disablemail']['section'] = 'emailv2/email-advanced-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'disablemail' );

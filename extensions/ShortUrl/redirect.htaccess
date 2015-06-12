@@ -1,3 +1,0 @@
-RewriteEngine On
-# Needs fixing to remove extra Redirect
-RewriteRule ^([a-zA-Z0-9_-]+)$ /mediawiki/index.php/Special:ShortUrl/$1 [R]

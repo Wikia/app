@@ -55,24 +55,6 @@ class VenusController extends WikiaController {
 		$this->setHeadItems();
 		$this->setAssets();
 
-		// FIXME: create separate module for stats stuff?
-		// load Google Analytics code
-		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
-		// onewiki GA
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-
-		// track page load time
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-
-		// record which varnish this page was served by
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
-
-		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
-		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
-
 		$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 		$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 		$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
@@ -105,9 +87,8 @@ class VenusController extends WikiaController {
 	private function setBodyModules() {
 		$this->globalNavigation = $this->getGlobalNavigation();
 		$this->localNavigation = $this->getLocalNavigation();
-		$this->globalFooter = $this->getGlobalFooter();
 		$this->categorySelect = $this->getCategorySelect();
-		$this->notifications = $this->app->renderView('Notifications', 'Confirmation');
+		$this->notifications = $this->app->renderView('BannerNotifications', 'Confirmation');
 
 		if ($this->isUserLoggedIn) {
 			$this->recentWikiActivity = $this->getRecentWikiActivity();
@@ -240,14 +221,6 @@ class VenusController extends WikiaController {
 
 	private function getLocalNavigation() {
 		return $this->app->renderView('LocalNavigation', 'Index');
-	}
-
-	private function getGlobalFooter() {
-		global $wgEnableGlobalFooterExt;
-
-		return !empty( $wgEnableGlobalFooterExt ) ?
-			$this->app->renderView('GlobalFooter', 'indexVenus') :
-			'';
 	}
 
 	public function getRecentWikiActivity() {

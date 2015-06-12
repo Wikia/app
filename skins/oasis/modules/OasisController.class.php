@@ -56,6 +56,7 @@ class OasisController extends WikiaController {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
+		$vars['wgOasisBreakpoints'] = BodyController::isOasisBreakpoints();
 		$vars['verticalName'] = HubService::getCurrentWikiaVerticalName();
 		return true;
 	}
@@ -163,6 +164,11 @@ class OasisController extends WikiaController {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
 
+		/**
+		 * Login status based CSS class
+		 */
+		$bodyClasses[] = $skin->getUserLoginStatusClass();
+
 		// sets background settings by adding classes to <body>
 		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
 
@@ -202,33 +208,6 @@ class OasisController extends WikiaController {
 
 		// setup loading of JS/CSS
 		$this->loadJs();
-
-		// FIXME: create separate module for stats stuff?
-		// load Google Analytics code
-		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
-		// onewiki GA
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-
-		// track page load time
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-
-		// track browser height TODO NEF no browser height tracking code anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
-
-		// record which varnish this page was served by
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
-
-		// TODO NEF not used, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
-
-		// TODO NEF we dont do AB this way anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
-
-		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
-		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {

@@ -164,10 +164,6 @@ $wgAutoloadClasses['MovieclipsVideoHandler'] =  $dir . '/handlers/MovieclipsVide
 $wgAutoloadClasses['MovieclipsApiWrapper'] =  $dir . '/apiwrappers/MovieclipsApiWrapper.class.php';
 $wgMediaHandlers['video/movieclips'] = 'MovieclipsVideoHandler';
 
-$wgAutoloadClasses['MyvideoVideoHandler'] =  $dir . '/handlers/MyvideoVideoHandler.class.php';
-$wgAutoloadClasses['MyvideoApiWrapper'] =  $dir . '/apiwrappers/MyvideoApiWrapper.class.php';
-$wgMediaHandlers['video/myvideo'] = 'MyvideoVideoHandler';
-
 // Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
 
@@ -260,7 +256,6 @@ $wgVideoMigrationProviderMap = array(
 	11 => 'Metacafe',
 	12 => 'Sevenload',
 	13 => 'Vimeo',
-	15 => 'Myvideo',
 	18 => 'Dailymotion',
 	19 => 'Viddler',
 	21 => 'Screenplay',

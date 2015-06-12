@@ -109,7 +109,7 @@
 							</div>
 							<?php if ( $showMobilePreview ): ?>
 								<div class="preview_box">
-									<h3><?= wfMessage( 'preview' )->escaped() ?></h3>
+									<h3 class="preview-header"><?= wfMessage( 'preview' )->escaped() ?></h3>
 									<a id="wpPreviewMobile" class="preview_mobile preview_icon" href="#">
 										<svg xmlns="http://www.w3.org/2000/svg" version="1.0" x="0px" y="0px" viewBox="0 0 32 48" xml:space="preserve">
 											<path d="M28 0C26.5 0 5.4 0 4 0C2.1 0 0 2.2 0 4c0 37.9 0 2.6 0 40c0 2 2.2 4 4 4c2 0 22.2 0 24 0 c1.8 0 3.9-2 3.9-4C31.9 30.2 32 5.2 32 4C32 1.9 29.8 0 28 0z M16 46c-1.1 0-2-0.9-2-2c0-1.1 0.9-2 2-2s2 0.9 2 2 C18 45.1 17.1 46 16 46z M28 40H4c0 0 0-25.7 0-36c7.1 0 24 0 24 0V40z"/>

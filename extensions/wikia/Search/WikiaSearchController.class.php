@@ -13,7 +13,6 @@ use \Wikia\Logger\WikiaLogger;
  */
 class WikiaSearchController extends WikiaSpecialPageController {
 
-	const DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD = 25;
 	use Wikia\Search\Traits\NamespaceConfigurable;
 
 	/**
@@ -579,13 +578,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		if ( $this->isCorporateWiki() ) {
 			$searchConfig->setLanguageCode( $request->getVal( 'resultsLang' ) );
-			if ( $searchConfig->getLanguageCode() !== 'en' ) {
-				$threshold = self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD;
-				if ( in_array( 'staff', $this->wg->user->getEffectiveGroups() ) ) {
-					$threshold = $request->getVal( 'minArticleCount', self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD );
-				}
-				$searchConfig->setXwikiArticleThreshold( $threshold );
+
+			$languageService = new \Wikia\Search\Language\LanguageService();
+			$languageService->setLanguageCode( $searchConfig->getLanguageCode() );
+			$wikiArticleThreshold = $languageService->getWikiArticlesThreshold();
+
+			if ( in_array( 'staff', $this->wg->user->getEffectiveGroups() ) ) {
+				$wikiArticleThreshold = $request->getVal( 'minArticleCount', $wikiArticleThreshold );
 			}
+			$searchConfig->setXwikiArticleThreshold( $wikiArticleThreshold );
 		}
 
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
@@ -607,7 +608,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ) {
-			$response->setData( $searchConfig->getResults()->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) ) );
+			$results = $searchConfig->getResults();
+			if ( $results ) {
+				$response->setData( $results->toArray( explode( ',', $this->getVal( 'jsonfields', 'title,url,pageid' ) ) ) );
+			} else {
+				$response->setData( [] );
+			}
 			return;
 		}
 		if ( ! $searchConfig->getInterWiki() ) {

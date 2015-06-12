@@ -17,7 +17,7 @@ ve.ui.MWWikitextWarningCommand = function VeUiMWWikitextWarningCommand() {
 	ve.ui.MWWikitextWarningCommand.super.call(
 		this, 'mwWikitextWarning'
 	);
-	this.warning = null;
+	this.isOpen = false;
 };
 
 /* Inheritance */
@@ -30,20 +30,24 @@ OO.inheritClass( ve.ui.MWWikitextWarningCommand, ve.ui.Command );
  * @inheritdoc
  */
 ve.ui.MWWikitextWarningCommand.prototype.execute = function () {
-	if ( this.warning && this.warning.isOpen ) {
+	if ( this.isOpen ) {
 		return false;
 	}
-	var command = this;
-	mw.notify(
-		$( $.parseHTML( ve.init.platform.getParsedMessage( 'visualeditor-wikitext-warning' ) ) )
-			.filter( 'a' ).attr( 'target', '_blank' ).end(),
+	$.showModal(
+		ve.msg( 'visualeditor-wikitext-warning-title' ),
+		$( $.parseHTML( ve.init.platform.getParsedMessage( 'wikia-visualeditor-wikitext-warning' ) ) )
+			.filter( 'a' ).attr( 'target', '_blank ' ).end(),
 		{
-			title: ve.msg( 'visualeditor-wikitext-warning-title' ),
-			tag: 'visualeditor-wikitext-warning'
+			onClose: function () {
+				this.isOpen = false;
+				ve.track( 'wikia', { action: ve.track.actions.CLOSE, label: 'modal-wikitext-warning' } );
+			}.bind( this ),
+			onCreate: function () {
+				this.isOpen = true;
+				ve.track( 'wikia', { action: ve.track.actions.OPEN, label: 'modal-wikitext-warning' } );
+			}.bind( this )
 		}
-	).then( function ( message ) {
-		command.warning = message;
-	} );
+	);
 	return true;
 };
 

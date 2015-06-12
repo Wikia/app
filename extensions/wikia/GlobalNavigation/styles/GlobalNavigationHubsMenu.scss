@@ -1,11 +1,10 @@
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/calc';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationMixins';
+@import 'GlobalNavigationVariables';
 
 $hub-menu-icon-width: 16px;
 $hub-menu-icon-arrow-space: 6px;
@@ -79,7 +78,7 @@ $more-z-index: 10000;
 .hubs-menu-wrapper {
 	@include calc(top, "100% - 2px");
 
-	left: -105px;
+	left: -108px;
 	position: absolute;
 }
 
@@ -112,9 +111,9 @@ $more-z-index: 10000;
 	}
 
 	.hub-link {
-		@include font-size-base;
 		background-color: $global-wikia-background-color;
 		display: block;
+		font-size: 16px;
 		height: 50px;
 		line-height: 50px;
 		position: relative;
@@ -172,7 +171,7 @@ $more-z-index: 10000;
 			color: $global-navigation-active-color;
 			display: inline-block;
 			float: left;
-			font-size: $font-size-base;
+			font-size: 16px;
 			height: 50px;
 			padding-left: 20px;
 			width: 164px;
@@ -189,9 +188,9 @@ $more-z-index: 10000;
 	}
 
 	.hub-menu-section {
-		@include font-size-xs;
 		display: none;
 		float: left;
+		font-size: 14px;
 		line-height: 17px;
 		min-height: 409px;
 		padding-bottom: 60px;

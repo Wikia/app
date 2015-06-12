@@ -14,12 +14,18 @@ class ExactTargetUserTaskHelper {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
 
+		$sSimpleOperator = 'equals';
+		if ( count( $aFilterValues ) > 1 ) {
+			$sSimpleOperator = 'IN';
+		}
+
 		$aApiParams = [
 			'DataExtension' => [
-				'ObjectType' => "DataExtensionObject[{$aCustomerKeys[ 'user' ]}]",
+				'ObjectType' => "DataExtensionObject[{$aCustomerKeys['user']}]",
 				'Properties' => $aProperties,
 			],
 			'SimpleFilterPart' => [
+				'SimpleOperator' => $sSimpleOperator,
 				'Property' => $sFilterProperty,
 				'Value' => $aFilterValues
 			]
@@ -34,21 +40,28 @@ class ExactTargetUserTaskHelper {
 	 * @param  array $aUserData  User key value array
 	 * @return array             Array of DataExtension data arrays (nested arrays)
 	 */
-	public function prepareUserUpdateParams( array $aUserData ) {
-		$userId = $this->extractUserIdFromData( $aUserData );
-		/* Get Customer Keys specific for production or development */
-		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys[ 'user' ];
-
+	public function prepareUsersUpdateParams( array $aUsersData ) {
 		$aApiParams = [
-			'DataExtension' => [
-				[
-					'CustomerKey' => $sCustomerKey,
-					'Properties' => $aUserData,
-					'Keys' => [ 'user_id' => $userId ]
-				]
-			]
+			'DataExtension' => []
 		];
+
+		foreach ( $aUsersData as $aUserData ) {
+
+			/* Get Customer Keys specific for production or development */
+			$aCustomerKeys = $this->getCustomerKeys();
+			$sCustomerKey = $aCustomerKeys['user'];
+
+			$userId = $this->extractUserIdFromData( $aUserData );
+
+			/* Prepare API params for one user */
+			$aApiParams['DataExtension'][] = [
+				'CustomerKey' => $sCustomerKey,
+				'Properties' => $aUserData,
+				'Keys' => [ 'user_id' => $userId ]
+			];
+
+		};
+
 		return $aApiParams;
 	}
 
@@ -60,7 +73,7 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserDeleteParams( $iUserId ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys[ 'user' ];
+		$sCustomerKey = $aCustomerKeys['user'];
 
 		$aApiParams = [
 			'DataExtension' => [
@@ -86,7 +99,7 @@ class ExactTargetUserTaskHelper {
 		$aCustomerKeys = $this->getCustomerKeys();
 		$aApiParams = [ 'DataExtension' => [] ];
 		foreach ( $aGroup as $sGroup ) {
-			$aApiParams[ 'DataExtension' ][] = [
+			$aApiParams['DataExtension'][] = [
 				'CustomerKey' => $aCustomerKeys['user_groups'],
 				'Properties' => [
 					'ug_user' => $iUserId,
@@ -108,7 +121,7 @@ class ExactTargetUserTaskHelper {
 		$aCustomerKeys = $this->getCustomerKeys();
 		$aApiParams = [ 'DataExtension' => [] ];
 		foreach ( $aGroup as $sGroup ) {
-			$aApiParams[ 'DataExtension' ][] = [
+			$aApiParams['DataExtension'][] = [
 				'CustomerKey' => $aCustomerKeys['user_groups'],
 				'Keys' => [
 					'ug_user' => $iUserId,
@@ -164,10 +177,10 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserEditsRetrieveParams( array $aUsersIds ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys[ 'UserID_WikiID' ];
+		$sCustomerKey = $aCustomerKeys['UserID_WikiID'];
 		$aApiParams = [ 'DataExtension' => [] ];
 
-		$aApiParams[ 'DataExtension' ] = [
+		$aApiParams['DataExtension'] = [
 			'ObjectType' => "DataExtensionObject[$sCustomerKey]",
 			'Properties' => [ 'user_id', 'wiki_id', 'contributions' ],
 		];
@@ -177,7 +190,7 @@ class ExactTargetUserTaskHelper {
 			$sSimpleOperator = 'IN';
 		}
 
-		$aApiParams[ 'SimpleFilterPart' ] = [
+		$aApiParams['SimpleFilterPart'] = [
 			'SimpleOperator' => $sSimpleOperator,
 			'Property' => 'user_id',
 			'Value' => $aUsersIds
@@ -195,11 +208,11 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserEditsUpdateParams( array $aUsersEdits ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys[ 'UserID_WikiID' ];
+		$sCustomerKey = $aCustomerKeys['UserID_WikiID'];
 		$aApiParams = [ 'DataExtension' => [] ];
 		foreach ( $aUsersEdits as $iUserId => $aWikiContributions ) {
 			foreach ( $aWikiContributions as $iWikiId => $iContributions ) {
-				$aApiParams[ 'DataExtension' ][] = [
+				$aApiParams['DataExtension'][] = [
 					'CustomerKey' => $sCustomerKey,
 					'Properties' => [ 'contributions' => $iContributions ],
 					'Keys' => [
@@ -221,11 +234,11 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserPropertiesUpdateParams( $iUserId, array $aUserProperties ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys[ 'user_properties' ];
+		$sCustomerKey = $aCustomerKeys['user_properties'];
 
 		$aApiParams = [ 'DataExtension' => [] ];
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
-			$aApiParams[ 'DataExtension' ][] = [
+			$aApiParams['DataExtension'][] = [
 				'CustomerKey' => $sCustomerKey,
 				'Properties' => [ 'up_value' => $sValue ],
 				'Keys' => [
@@ -236,6 +249,33 @@ class ExactTargetUserTaskHelper {
 		}
 		return $aApiParams;
 	}
+
+
+	/**
+	 * Prepares array of params for ExactTarget API for retrieving DataExtension objects from user_properties table
+	 * @param array $aProperties list of fields to retrieve
+	 * @param string $sFilterProperty name of field to filter
+	 * @param array $aFilterValues possible values to filter
+	 * @return array
+	 */
+	public function prepareUserPropertiesRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = $this->getCustomerKeys();
+
+		$aApiParams = [
+			'DataExtension' => [
+				'ObjectType' => "DataExtensionObject[{$aCustomerKeys['user_properties']}]",
+				'Properties' => $aProperties,
+			],
+			'SimpleFilterPart' => [
+				'Property' => $sFilterProperty,
+				'Value' => $aFilterValues
+			]
+		];
+
+		return $aApiParams;
+	}
+
 
 	/**
 	 * Prepares array of params for ExactTarget API for removing DataExtension objects for user_properties table
@@ -258,7 +298,7 @@ class ExactTargetUserTaskHelper {
 
 		$aApiParams = [ 'DataExtension' => [] ];
 		foreach ( $aUserProperties as $sProperty ) {
-			$aApiParams[ 'DataExtension' ][] = [
+			$aApiParams['DataExtension'][] = [
 				'CustomerKey' => $sCustomerKey,
 				'Keys' => [
 					'up_user' => $iUserId,
@@ -271,13 +311,24 @@ class ExactTargetUserTaskHelper {
 
 	/**
 	 * Returns user_id element from $aUserData array and removes it from array
+	 * This for API params preparation. Allows to use user_id separately as key
+	 * and user data as update parameters without user_id
 	 * @param array $aUserData key value data from user table
 	 * @return int
 	 */
 	public function extractUserIdFromData( &$aUserData ) {
-		$iUserId = $aUserData[ 'user_id' ];
-		unset( $aUserData[ 'user_id' ] );
+		$iUserId = $aUserData['user_id'];
+		unset( $aUserData['user_id'] );
 		return $iUserId;
+	}
+
+	/**
+	 * Returns User object for provided user ID
+	 * @param int $iUserId
+	 * @return \User
+	 */
+	public function getUserFromId( $iUserId ) {
+		return \User::newFromId( $iUserId );
 	}
 
 	/**
@@ -304,7 +355,7 @@ class ExactTargetUserTaskHelper {
 	public function mergeUsersEditsData( array &$aUsersEditsData, array $aUserEditsDataFromET ) {
 		foreach ( $aUserEditsDataFromET as $iUserId => $aWikiContributions ) {
 			foreach ( $aWikiContributions as $iWikiId => $iContributions ) {
-				if ( isset($aUsersEditsData[$iUserId][$iWikiId]) ) {
+				if ( isset( $aUsersEditsData[$iUserId][$iWikiId] ) ) {
 					$aUsersEditsData[$iUserId][$iWikiId] += $iContributions;
 				}
 			}

@@ -198,7 +198,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 
 			WikiaMapsLogger::addLogEntry( $action, $this->wg->User, $mapId, $mapId );
 
-			NotificationsController::addConfirmation(
+			BannerNotificationsController::addConfirmation(
 				$deleted ?
 					wfMessage( 'wikia-interactive-maps-delete-map-success' )->text() :
 					wfMessage( 'wikia-interactive-maps-undelete-map-success' )->text()

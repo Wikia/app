@@ -20,48 +20,18 @@ class ClientTest extends \WikiaBaseTest {
 		$client->request( 'resource', [], [], [] );
 	}
 
-	public function testRequestFailed()
-	{
-		$this->setExpectedException('Wikia\Helios\ClientException','Request failed.');
-
-		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
-
-		$statusMock = $this->getMock( '\Status', [ 'isGood' ], [], '', true );
-		$statusMock->expects( $this->once() )
-			->method( 'isGood' )
-			->willReturn( false );
-
-		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute' ], [ 'http://example.com' ], '', false );
-		$requestMock->expects( $this->once() )
-			->method( 'execute' )
-			->willReturn( $statusMock );
-
-		$this->mockStaticMethod( '\MWHttpRequest', 'factory', $requestMock );
-
-		$client = new Client( 'http://example.com', 'id', 'secret' );
-		$client->request( 'resource', [], [], [] );
-	}
-
 	public function testInvalidResponse()
 	{
 		$this->setExpectedException('Wikia\Helios\ClientException','Invalid response.');
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 
-		$statusMock = $this->getMock( '\Status', [ 'isGood' ], [], '', true );
-		$statusMock->expects( $this->once() )
-			->method( 'isGood' )
-			->willReturn( true );
-
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute', 'getContent' ], [ 'http://example.com' ], '', false );
-		$requestMock->expects( $this->once() )
-			->method( 'execute' )
-			->willReturn( $statusMock );
 		$requestMock->expects( $this->once() )
 			->method( 'getContent' )
 			->willReturn( null );
 
-		$this->mockStaticMethod( '\MWHttpRequest', 'factory', $requestMock );
+		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
 		$client = new Client( 'http://example.com', 'id', 'secret' );
 		$client->request( 'resource', [], [], [] );
@@ -71,20 +41,12 @@ class ClientTest extends \WikiaBaseTest {
 	{
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 
-		$statusMock = $this->getMock( '\Status', [ 'isGood' ], [], '', true );
-		$statusMock->expects( $this->once() )
-			->method( 'isGood' )
-			->willReturn( true );
-
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute', 'getContent' ], [ 'http://example.com' ], '', false );
-		$requestMock->expects( $this->once() )
-			->method( 'execute' )
-			->willReturn( $statusMock );
 		$requestMock->expects( $this->once() )
 			->method( 'getContent' )
 			->willReturn( '{}' );
 
-		$this->mockStaticMethod( '\MWHttpRequest', 'factory', $requestMock );
+		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
 		$client = new Client( 'http://example.com', 'id', 'secret' );
 		$this->assertInternalType( 'object', $client->request( 'resource', [], [], [] ) );

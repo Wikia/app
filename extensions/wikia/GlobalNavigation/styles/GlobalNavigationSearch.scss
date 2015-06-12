@@ -1,9 +1,6 @@
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
 @import 'GlobalNavigationMixins';
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/mixins/calc';
 
 $search-button-background: rgb(238, 241, 244);
@@ -30,18 +27,21 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 	}
 
 	.autocomplete {
-		@include font-size-xs;
 		background-color: $global-wikia-background-color;
+		border-radius: 0;
 		border: 2px solid rgba(0, 0, 0, .7);
 		border-top: 0;
+		box-shadow: none;
 		color: $global-navigation-active-color;
+		font-size: 14px;
 		line-height: 18px;
 		margin-top: 10px;
+		padding: 0;
 
 		div {
-			@include font-size-xs;
 			border-bottom: 1px solid $autocomplete-border-bottom;
 			cursor: pointer;
+			font-size: 14px;
 			height: 44px;
 			line-height: 23px;
 			padding: 12px 10px 8px 42px;
@@ -76,9 +76,9 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 	width: 0;
 
 	.search-select {
-		@include font-size-xs;
 		border: 0;
 		cursor: pointer;
+		font-size: 14px;
 		height: 100%;
 		left: 0;
 		opacity: 0;
@@ -108,10 +108,10 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 	width: 100%;
 
 	.search-input {
-		@include font-size-xs;
 		background-color: $search-input-background-color;
 		border: solid 1px $search-input-border-color;
 		color: $search-input-text-color;
+		font-size: 14px;
 		font-weight: bold;
 		height: $search-input-height;
 		outline: none;

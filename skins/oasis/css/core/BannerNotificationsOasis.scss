@@ -1,0 +1,67 @@
+@import 'layout';
+@import 'skins/shared/mixins/calc';
+@import 'extensions/wikia/BannerNotifications/css/BannerNotifications';
+
+/* temp transition code until grid is fully rolled out, remove and integrate after transition */
+.wikia-grid {
+	.banner-notifications-wrapper {
+		width: 988px;
+
+		&.float {
+			margin-left: -505px;
+
+			// DAR-2719: Hidden banner notification when window shrank
+			@media screen and (max-width: 1020px) {
+				@include calc(width, '100% - 20px');
+				left: 0;
+				margin: 0;
+			}
+		}
+	}
+}
+
+/* end temp transistion code */
+
+.modalWrapper .banner-notifications-wrapper {
+	@include box-shadow(0, 0, 0, #000);
+	margin: auto;
+	width: auto;
+
+	.close {
+		display: none;
+	}
+
+	&.float {
+		left: 0;
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		width: 100%;
+	}
+
+	.msg {
+		padding: 8px 10px;
+	}
+}
+
+.modal .banner-notifications-wrapper {
+	width: 100%;
+
+	.close {
+		display: none;
+	}
+}
+
+// VisualEditor specific notification styling
+.ve-ui-window-body {
+	.banner-notifications-wrapper {
+		box-sizing: border-box;
+		position: absolute;
+		width: 100%;
+
+		.close {
+			position: absolute;
+			right: 15px;
+		}
+	}
+}

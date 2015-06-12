@@ -3,7 +3,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
-<?php if ( BodyController::isResponsiveLayoutEnabled() ) : ?>
+<?php if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ) : ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <?php else : ?>
 	<meta name="viewport" content="width=1200">
@@ -62,7 +62,7 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>"<?= $itemType ?>>
-<? if ( BodyController::isResponsiveLayoutEnabled() ): ?>
+<? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
@@ -78,6 +78,7 @@
 
 	<?php
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH', 'pageTypes' => ['*']]);
+		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'TURTLE_FLUSH', 'pageTypes' => ['*']]);
 		echo F::app()->renderView('Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH', 'pageTypes' => ['*']]);
 	?>
 </div>

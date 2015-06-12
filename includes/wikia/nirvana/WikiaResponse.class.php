@@ -12,11 +12,6 @@
  */
 class WikiaResponse {
 	/**
-	 * headers
-	 */
-	const ERROR_HEADER_NAME = 'X-Wikia-Error';
-
-	/**
 	 * Response codes
 	 */
 	const RESPONSE_CODE_OK = 200;
@@ -97,6 +92,9 @@ class WikiaResponse {
 		$this->request = $request;
 	}
 
+	/**
+	 * @return WikiaRequest
+	 */
 	public function getRequest() {
 		return $this->request;
 	}
@@ -404,7 +402,7 @@ class WikiaResponse {
 	}
 
 	/**
-	 * @return WikiaException
+	 * @return WikiaException|WikiaHttpException
 	 */
 	public function getException() {
 		return $this->exception;
@@ -444,11 +442,6 @@ class WikiaResponse {
 	}
 
 	public function sendHeaders() {
-		if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) && $this->hasException() ) {
-			// set error header for JSON response (as requested for mobile apps)
-			$this->setHeader( self::ERROR_HEADER_NAME, $this->getException()->getMessage() );
-		}
-
 		if ( !$this->hasContentType() ) {
 			if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
 				$this->setContentType( 'application/json; charset=utf-8' );

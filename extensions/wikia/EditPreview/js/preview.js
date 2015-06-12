@@ -75,7 +75,7 @@ define('wikia.preview', [
 						action: Wikia.Tracker.ACTIONS.CLICK,
 						category: 'edit-preview',
 						label: 'button-best-practices',
-						trackingMethod: 'both'
+						trackingMethod: 'analytics'
 					});
 				});
 
@@ -92,17 +92,23 @@ define('wikia.preview', [
 			window.stylepath +
 			'/common/images/ajax.gif" class="loading"></div></div>';
 
-		loader({
-			type: loader.MULTI,
-			resources: {
-				mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
-			}
-		}).done(function (response) {
+		$.when(
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
+				}
+			}),
+			msg.getForContent('EditPreviewInContLang')
+		).done(function(response){
 			var params = {
 					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
 					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
-					bestPracticesLinkUrl: $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					bestPracticesLinkUrl:  window.wgArticlePath.replace(
+						'$1', $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
+					)
 				},
+
 				template = response.mustache[0],
 				html = mustache.render(template, params);
 
@@ -208,7 +214,7 @@ define('wikia.preview', [
 				handleDesktopPreview(data);
 			}
 
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				if (opening) {
 
 					if (isRailDropped || isWidePage) {
@@ -346,7 +352,7 @@ define('wikia.preview', [
 				handler: options.onPublishButton
 			}],
 			// set modal width based on screen size
-			width: ((isRailDropped === false && isWidePage === false) || !window.wgOasisResponsive) ?
+			width: ((isRailDropped === false && isWidePage === false) || !window.wgOasisResponsive || !window.wgOasisBreakpoints) ?
 				options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function () {
@@ -364,7 +370,7 @@ define('wikia.preview', [
 
 			loadPreview(previewTypes[currentTypeName].name, true);
 
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				// adding type dropdown to preview
 				if (!previewTemplate) {
 					loader({
@@ -435,7 +441,7 @@ define('wikia.preview', [
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'edit-preview',
 			label: 'preview-type-changed',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			value: type
 		});
 	}

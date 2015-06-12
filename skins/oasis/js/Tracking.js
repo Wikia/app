@@ -20,7 +20,7 @@ jQuery(function ($) {
 
 	track = Wikia.Tracker.buildTrackingFunction({
 		action: Wikia.Tracker.ACTIONS.CLICK,
-		trackingMethod: 'ga'
+		trackingMethod: 'analytics'
 	});
 
 	trackWithEventData = function (e) {
@@ -104,6 +104,7 @@ jQuery(function ($) {
 			case 'history':
 			case 'move':
 			case 'protect':
+			case 'flags':
 				label = 'edit-' + id;
 				break;
 			}
@@ -365,7 +366,6 @@ jQuery(function ($) {
 					browserEvent: e,
 					category: category,
 					label: label,
-					trackingMethod: 'both'
 				});
 			}).on('mousedown', '.Results .wiki-thumb-tracking', function (e) {
 				var el = $(e.currentTarget),
@@ -377,7 +377,6 @@ jQuery(function ($) {
 					browserEvent: e,
 					category: category,
 					label: label,
-					trackingMethod: 'both'
 				});
 			}).on('mousedown', '.thumb-tracking', function (e) {
 				var el = $(e.currentTarget),
@@ -388,7 +387,6 @@ jQuery(function ($) {
 					browserEvent: e,
 					category: category,
 					label: label,
-					trackingMethod: 'both'
 				});
 			}).on('mousedown', '.image', function (e) {
 				var $currentTarget = $(e.currentTarget),
@@ -442,22 +440,6 @@ jQuery(function ($) {
 				});
 			});
 		}
-	})();
-
-	/** share **/
-
-	(function () {
-		var category = 'share';
-
-		$wikiHeader.on('mousedown', '.share-button', {
-			category: category,
-			label: 'share-button'
-		}, trackWithEventData);
-
-		$wikiHeader.on('mousedown', '.SharingToolbar .email-link', {
-			category: category,
-			label: 'email'
-		}, trackWithEventData);
 	})();
 
 	/** thread-module **/

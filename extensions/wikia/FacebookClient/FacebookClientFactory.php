@@ -27,7 +27,12 @@ class FacebookClientFactory {
 				$status->setResult( false );
 				$status->error( 'fbconnect-error-already-connected' );
 			} else {
-				$map = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
+				$bizToken = \FacebookClient::getInstance()->getBizToken();
+				$map = \FacebookMapModel::createUserMapping(
+					$wikiaUserId,
+					$fbUserId,
+					$bizToken
+				);
 				if ( $map instanceof \FacebookMapModel ) {
 					$status->setResult( true, $map );
 				} else {

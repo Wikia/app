@@ -54,8 +54,8 @@
 	}
 }
 
-@if ( $responsive-layout-enabled ) {
-	@media screen and (max-width: $breakpoint-small) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
+	@media screen and (max-width: 1024px) {
 		.EditPageHeader {
 			> h1 {
 				float: none;

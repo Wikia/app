@@ -222,20 +222,22 @@ class WikiService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$fname = __METHOD__;
 
 		$topEditors = WikiaDataAccess::cache(
 			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
 			static::TOPUSER_CACHE_VALID,
-			function() use ( $wikiId, $excludeBots ) {
+			function() use ( $wikiId, $excludeBots, $fname ) {
+				global $wgSpecialsDB;
 				$topEditors = array();
 
-				$db = wfGetDB( DB_SLAVE, array(), 'specials' );
+				$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 
 				$result = $db->select(
 					array( 'events_local_users' ),
 					array( 'user_id', 'edits', 'all_groups' ),
 					array( 'wiki_id' => $wikiId, 'edits != 0' ),
-					__METHOD__,
+					$fname,
 					array( 'ORDER BY' => 'edits desc', 'LIMIT' => static::TOPUSER_LIMIT )
 				);
 

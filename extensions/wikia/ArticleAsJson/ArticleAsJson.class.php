@@ -7,7 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.2';
+	const CACHE_VERSION = '0.0.3';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -21,7 +21,8 @@ class ArticleAsJson extends WikiaService {
 
 	private static function createMediaObj( $details, $imageName, $caption = '', $link = null ) {
 		wfProfileIn( __METHOD__ );
-
+		
+		$context = '';
 		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
@@ -30,6 +31,14 @@ class ArticleAsJson extends WikiaService {
 			'caption' => $caption,
 			'user' => $details['userName']
 		];
+
+		if ( isset( $details['context'] ) ) {
+			$context = $details['context'];
+		}
+
+		if ( is_string( $context ) && $context !== '' ) {
+			$media['context'] = $context;
+		}
 
 		if ( is_string( $link ) && $link !== '' ) {
 			$media['link'] = $link;
@@ -107,6 +116,21 @@ class ArticleAsJson extends WikiaService {
 			ParserPool::release( $parser );
 			wfProfileOut( __METHOD__ );
 			return false;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	public static function onPortableInfoboxNodeImageGetData( $title, &$ref, $alt ) {
+
+		wfProfileIn( __METHOD__ );
+		if ( $title ) {
+			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			//TODO: When there will be more image contexts, move strings to const
+			$details['context'] = 'infobox-big';
+			self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
+			$ref = count( self::$media ) - 1;
 		}
 
 		wfProfileOut( __METHOD__ );

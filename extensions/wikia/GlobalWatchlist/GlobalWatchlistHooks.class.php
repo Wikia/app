@@ -34,7 +34,6 @@ class GlobalWatchlistHooks {
 			$wg = \F::app()->wg;
 			$task = new GlobalWatchlistTask();
 			( new AsyncTaskList() )
-				->wikiId( $wg->CityId )
 				->add( $task->call( 'clearGlobalWatchlistAll', $wg->User->getId() ) )
 				->queue();
 		}
@@ -120,7 +119,6 @@ class GlobalWatchlistHooks {
 	 * @return bool (always true)
 	 */
 	public static function clearGlobalWatch( $userID ) {
-
 		$task = new GlobalWatchlistTask();
 		( new AsyncTaskList() )
 			->wikiId( F::app()->wg->CityId )

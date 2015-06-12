@@ -145,7 +145,7 @@ class AbTesting extends WikiaObject {
 		}
 
 		$expConfig = array(
-			'experiments' => $config
+			'experiments' => (object) $config
 		);
 
 		return sprintf("Wikia.AbTestConfig = %s;\n",json_encode($expConfig));

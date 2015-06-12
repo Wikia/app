@@ -217,7 +217,7 @@ function(
 					track.event( 'special-videos', track.CLICK, {
 						label: 'thumbnail',
 						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t ),
-						method: 'both'
+						method: 'analytics'
 					});
 				}
 

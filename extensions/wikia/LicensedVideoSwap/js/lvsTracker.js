@@ -6,7 +6,7 @@ define('lvs.tracker', ['wikia.tracker'], function (tracker) {
 	return {
 		track: tracker.buildTrackingFunction({
 			category: 'lvs',
-			trackingMethod: 'ga',
+			trackingMethod: 'analytics',
 			value: 0
 		}),
 		labels: {

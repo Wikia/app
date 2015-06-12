@@ -155,7 +155,7 @@ class ArticleService extends WikiaObject {
 					wfProfileIn( $fname . '::CacheMiss' );
 
 					$content = '';
-					if ( !empty( $this->wg->SolrMaster ) ) {
+					if ( !$this->wg->DevelEnvironment && !empty( $this->wg->SolrMaster ) ) {
 						$content = $service->getTextFromSolr();
 					}
 
@@ -180,8 +180,7 @@ class ArticleService extends WikiaObject {
 	 * Accesses a snippet from MediaWiki.
 	 * @return string
 	 */
-	public function getUncachedSnippetFromArticle()
-	{
+	public function getUncachedSnippetFromArticle() {
 		// get standard parser cache for anons,
 		// 99% of the times it will be available but
 		// generate it in case is not
@@ -236,7 +235,10 @@ class ArticleService extends WikiaObject {
 		return $content;
 	}
 
-	private function getContentFromParser( ParserOutput $output ) {
+	private function getContentFromParser( $output ) {
+		if ( !$output instanceof ParserOutput ) {
+			throw new Exception("Not ParserOutput instance.");
+		}
 		return $output->getText();
 	}
 

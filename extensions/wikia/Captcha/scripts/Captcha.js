@@ -63,7 +63,7 @@ $(function () {
 				action: Wikia.Tracker.ACTIONS.ERROR,
 				category: 'captcha',
 				label: 'captcha-load-fail',
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				country: Wikia.geo.getCountryCode()
 			});
 		}

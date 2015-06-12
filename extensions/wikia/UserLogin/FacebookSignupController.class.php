@@ -24,7 +24,7 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
-	 * This method is called when user successfully logins using FB credentials
+	 * This method is called when user successfully logs in using FB credentials
 	 *
 	 * Facebook user ID is passed to our backend:
 	 *  - if there's Wikia account connected, log the user in,

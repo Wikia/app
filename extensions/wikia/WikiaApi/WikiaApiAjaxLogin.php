@@ -96,6 +96,10 @@ class WikiaApiAjaxLogin extends ApiBase {
 					$result['result'] = 'Throttled';
 					$result['text'] = wfMsg('login-throttled');
 					break;
+				case LoginForm :: ABORTED :
+					$result['result'] = 'Aborted';
+					$result['text'] = wfMsg($loginForm->mAbortLoginErrorMsg);
+					break;
 				default :
 					ApiBase :: dieDebug(__METHOD__, "Unhandled case value: \"$caseCode\"");
 			}

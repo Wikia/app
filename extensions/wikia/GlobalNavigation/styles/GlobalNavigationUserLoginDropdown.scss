@@ -1,29 +1,28 @@
 @import 'skins/shared/mixins/box-shadow';
-@import 'skins/shared/mixins/box-sizing';
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/placeholder';
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationColors';
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables';
+@import 'GlobalNavigationColors';
+@import 'GlobalNavigationVariables';
 
 .AccountNavigation.active .UserLoginDropdown {
 	display: block;
 }
 
+$user-login-content-padding: 19px;
+
 .UserLoginDropdown {
-	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
 	background-color: $global-wikia-background-color;
 	border: 1px solid $nav-border-color;
 	color: $nav-foreground-alternative-color;
 	display: none;
 	font-size: 12px;
 	list-style: none;
-	padding: 0 0 $large-content-padding 0;
+	padding: 0 0 $user-login-content-padding 0;
 	position: absolute;
 	right: 0;
 	//box shadow below global navigation takes 2px and it should be covered by dropdown
 	top: 96%;
+	width: 200px;
 	white-space: normal;
 	z-index: 5000100;
 
@@ -31,7 +30,7 @@
 		background-color: $nav-foreground-dark-color;
 		display: table;
 		margin-bottom: 10px;
-		padding: $large-content-padding;
+		padding: $user-login-content-padding;
 		width: 100%;
 
 		.ajaxRegister {
@@ -58,7 +57,7 @@
 	}
 
 	.WikiaForm {
-		padding: 0 $large-content-padding;
+		padding: 0 $user-login-content-padding;
 
 		.forgot-password {
 			color: $nav-foreground-bright-color;
@@ -67,7 +66,7 @@
 		}
 
 		.input-group {
-			@include box-sizing;
+			box-sizing: border-box;
 			line-height: inherit;
 			margin: 0;
 			padding: 0;
@@ -98,7 +97,6 @@
 
 		input[type=text],
 		input[type=password] {
-			@include box-sizing;
 			@include clear-box-shadow;
 
 			@include placeholder {
@@ -107,6 +105,7 @@
 			}
 
 			border:none;
+			box-sizing: border-box;
 			color: $nav-foreground-dark-color;
 			font-size: 15px;
 			height: 25px;
@@ -161,7 +160,7 @@
 	}
 
 	.sso-login {
-		padding: 0 $large-content-padding;
+		padding: 0 $user-login-content-padding;
 
 		.sso-login-divider {
 			border-top: solid 1px $nav-border-color;
@@ -213,42 +212,6 @@
 			height: 40px;
 			margin: 0;
 			width: 41px;
-		}
-	}
-}
-
-@media #{$small-only} {
-	.UserLoginDropdown {
-		@include grid-column-width('small', 3, - $small-grid-column-padding + $small-content-padding);
-
-		.sso-login {
-			padding: 0 $small-content-padding;
-		}
-
-		.ajaxRegisterContainer {
-			padding: $small-content-padding;
-		}
-
-		.WikiaForm {
-			padding: 0 $small-content-padding;
-		}
-	}
-}
-
-@media #{$medium-only} {
-	.UserLoginDropdown {
-		@include grid-column-width('medium', 2, $medium-grid-column-padding + $medium-grid-gutter + $medium-content-padding);
-
-		.sso-login {
-			padding: 0 $medium-content-padding;
-		}
-
-		.ajaxRegisterContainer {
-			padding: $medium-content-padding;
-		}
-
-		.WikiaForm {
-			padding: 0 $medium-content-padding;
 		}
 	}
 }

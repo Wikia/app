@@ -1,5 +1,5 @@
 /* global jQuery, mediaWiki */
-(function ($, mw) {
+(function (window, $, mw) {
 	'use strict';
 
 	var fbPreferences = (function () {
@@ -53,11 +53,14 @@
 				callback: function (data) {
 					if (data.status === 'ok') {
 
-						window.GlobalNotification.show($.msg('fbconnect-preferences-connected'), 'confirm');
+						new window.BannerNotification()
+							.setContent($.msg('fbconnect-preferences-connected'))
+							.setType('confirm')
+							.show();
 
 						window.Wikia.Tracker.track({
 							category: 'user-sign-up',
-							trackingMethod: 'both',
+							trackingMethod: 'analytics',
 							action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 							label: 'facebook-login'
 						});
@@ -102,10 +105,13 @@
 				type: 'POST',
 				callback: function (data) {
 					if (data.status === 'ok') {
-						window.GlobalNotification.show($.msg(disconnectMsg), 'confirm');
+						new window.BannerNotification()
+							.setType('confirm')
+							.setContent($.msg(disconnectMsg))
+							.show();
 						window.Wikia.Tracker.track({
 							category: 'user-sign-up',
-							trackingMethod: 'both',
+							trackingMethod: 'analytics',
 							action: window.Wikia.Tracker.ACTIONS.CLICK,
 							label: 'fb-disconnect'
 						});
@@ -137,7 +143,8 @@
 				msg = $.msg('oasis-generic-error');
 			}
 
-			window.GlobalNotification.show(msg, 'error');
+			new window.BannerNotification(msg, 'error')
+				.show();
 		}
 
 		function facebookError() {
@@ -188,4 +195,4 @@
 
 	// instantiate singleton on DOM ready
 	$(fbPreferences.getInstance);
-})(jQuery, mediaWiki);
+})(window, jQuery, mediaWiki);

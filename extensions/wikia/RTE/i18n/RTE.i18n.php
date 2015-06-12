@@ -33,10 +33,6 @@ $messages['qqq'] = array(
 	'rte-edgecase-triplecurls' => '{{Identical|Template parameter}}',
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
 	'enablerichtexteditor' => '{{Related|Source mode (wikia)}}',
-	'tag-rte-source' => 'Rich Text Editor: source mode',
-	'tag-rte-source-description' => "Edit made using source mode of Wikia's Rich Text Editor",
-	'tag-rte-wysiwyg' => 'Rich Text Editor: WYSIWYG mode',
-	'tag-rte-wysiwyg-description' => "Edit made using WYSIWYG mode of Wikia's Rich Text Editor",
 );
 
 /** Afrikaans (Afrikaans)
@@ -421,6 +417,13 @@ $messages['ja'] = array(
 	'prefs-rte' => 'リッチテキストエディタ',
 );
 
+/** Georgian (ქართული)
+ * @author Otogi
+ */
+$messages['ka'] = array(
+	'rte-edgecase-triplecurls' => 'თარგის პარამეტრები',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
@@ -443,6 +446,13 @@ $messages['ko'] = array(
  */
 $messages['ksh'] = array(
 	'rte-edgecase-redirect' => 'en Ömleidong',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'rte-edgecase-redirect' => 'beralîkirin',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -848,6 +858,7 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
 	'rte-desc' => 'CKeditor tích hợp cho MediaWiki',
@@ -857,6 +868,7 @@ $messages['vi'] = array(
 	'rte-edgecase-comment' => 'Ý kiến về HTML',
 	'rte-edgecase-triplecurls' => 'Tham số bản mẫu',
 	'rte-edgecase-nowysiwyg' => 'lệnh "không WYSIWYG"',
+	'rte-edgecase-syntax' => 'cú pháp này không được phép',
 	'rte-edgecase-redirect' => 'đổi hướng',
 	'rte-enablerichtexteditormessage' => 'Trình Soạn Thảo Văn Bản đã được kích hoạt!',
 	'rte-first-run-notice' => 'Chúng tôi đã thực hiện một số cải tiến để trình biên tập. Để tìm hiểu thêm, xin vui lòng đọc [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news thông báo] để biết thêm chi tiết.',

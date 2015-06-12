@@ -126,6 +126,7 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaTemplateInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaTransclusionDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
+			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
@@ -246,3 +247,23 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';
+
+/* Configuration */
+
+$wgDefaultUserOptions['useeditwarning'] = true;
+
+// Disable VE for blog namespaces
+if ( !empty( $wgEnableBlogArticles ) ) {
+	$tempArray = array();
+	foreach ( $wgVisualEditorNamespaces as $key => &$value ) {
+		if ( $value === NS_BLOG_ARTICLE || $value === NS_BLOG_ARTICLE_TALK ) {
+			continue;
+		}
+		$tempArray[] = $value;
+	}
+	$wgVisualEditorNamespaces = $tempArray;
+}
+
+// Add additional valid namespaces for Wikia
+$wgVisualEditorNamespaces[] = NS_CATEGORY;
+$wgVisualEditorNamespaces[] = NS_PROJECT;

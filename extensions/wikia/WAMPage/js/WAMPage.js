@@ -36,7 +36,7 @@ WAMPage.prototype = {
 
 		var track = Wikia.Tracker.buildTrackingFunction({
 			category: 'wam-page',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: Wikia.Tracker.ACTIONS.IMPRESSION
 		});
 
@@ -94,7 +94,7 @@ WAMPage.prototype = {
 			browserEvent: event,
 			category: category,
 			label: label,
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			value: value
 		}, params);
 	},

@@ -1,9 +1,10 @@
-describe('AdLogicHighValueCountry', function(){
+/*global describe, expect, it, modules*/
+describe('AdLogicHighValueCountry', function () {
+	'use strict';
 
-	it('wgHighValueCountries present in window', function() {
+	it('wgHighValueCountries present in InstantGlobals', function () {
 		var instantGlobalsMock = {wgHighValueCountries: {'XX': 5, 'YY': 7, 'ZZ': 0, 'aa': 7}},
-			adLogicHighValueCountry = modules['ext.wikia.adEngine.adLogicHighValueCountry'](instantGlobalsMock),
-			undef;
+			adLogicHighValueCountry = modules['ext.wikia.adEngine.adLogicHighValueCountry'](instantGlobalsMock);
 
 		expect(adLogicHighValueCountry.isHighValueCountry('aa')).toBeFalsy('aa isHighValueCountry');
 
@@ -18,31 +19,13 @@ describe('AdLogicHighValueCountry', function(){
 		expect(adLogicHighValueCountry.isHighValueCountry('CC')).toBeFalsy('CC isHighValueCountry');
 		expect(adLogicHighValueCountry.isHighValueCountry('cc')).toBeFalsy('cc isHighValueCountry');
 
-		expect(adLogicHighValueCountry.isHighValueCountry(undef)).toBeFalsy('undefined isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry()).toBeFalsy('undefined isHighValueCountry');
 		expect(adLogicHighValueCountry.isHighValueCountry(null)).toBeFalsy('null isHighValueCountry');
 		expect(adLogicHighValueCountry.isHighValueCountry('unknown')).toBeFalsy('unknown isHighValueCountry');
-
-		expect(adLogicHighValueCountry.getMaxCallsToDART('aa')).toBe(0, 'aa getMaxCallsToDART');
-
-		expect(adLogicHighValueCountry.getMaxCallsToDART('XX')).toBe(5, 'XX getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('xx')).toBe(5, 'xx getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('YY')).toBe(7, 'YY getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('yy')).toBe(7, 'yy getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('ZZ')).toBe(0, 'ZZ getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('zz')).toBe(0, 'zz getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('BB')).toBe(0, 'BB getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('bb')).toBe(0, 'bb getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('CC')).toBe(0, 'CC getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('cc')).toBe(0, 'cc getMaxCallsToDART');
-
-		expect(adLogicHighValueCountry.getMaxCallsToDART(undef)).toBeFalsy('undefined getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART(null)).toBeFalsy('null getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('unknown')).toBe(0, 'unknown getMaxCallsToDART');
 	});
 
-	it('wgHighValueCountries not present in window', function() {
-		var adLogicHighValueCountry = modules['ext.wikia.adEngine.adLogicHighValueCountry']({}),
-			undef;
+	it('wgHighValueCountries not present in InstantGlobals', function () {
+		var adLogicHighValueCountry = modules['ext.wikia.adEngine.adLogicHighValueCountry']({});
 
 		expect(adLogicHighValueCountry.isHighValueCountry('CA')).toBeTruthy('CA isHighValueCountry');
 		expect(adLogicHighValueCountry.isHighValueCountry('ca')).toBeTruthy('ca isHighValueCountry');
@@ -57,25 +40,8 @@ describe('AdLogicHighValueCountry', function(){
 		expect(adLogicHighValueCountry.isHighValueCountry('RO')).toBeFalsy('RO isHighValueCountry');
 		expect(adLogicHighValueCountry.isHighValueCountry('ro')).toBeFalsy('ro isHighValueCountry');
 
-		expect(adLogicHighValueCountry.isHighValueCountry(undef)).toBeFalsy('undefined isHighValueCountry');
+		expect(adLogicHighValueCountry.isHighValueCountry()).toBeFalsy('undefined isHighValueCountry');
 		expect(adLogicHighValueCountry.isHighValueCountry(null)).toBeFalsy('null isHighValueCountry');
 		expect(adLogicHighValueCountry.isHighValueCountry('unknown')).toBeFalsy('unknown isHighValueCountry');
-
-		expect(adLogicHighValueCountry.getMaxCallsToDART('CA')).toBe(3, 'CA getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('ca')).toBe(3, 'ca getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('US')).toBe(3, 'US getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('us')).toBe(3, 'us getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('UK')).toBe(3, 'UK getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('uk')).toBe(3, 'uk getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('RU')).toBe(0, 'RU getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('ru')).toBe(0, 'ru getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('BG')).toBe(0, 'BG getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('bg')).toBe(0, 'bg getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('RO')).toBe(0, 'RO getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('ro')).toBe(0, 'ro getMaxCallsToDART');
-
-		expect(adLogicHighValueCountry.getMaxCallsToDART(undef)).toBeFalsy('undefined getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART(null)).toBeFalsy('null getMaxCallsToDART');
-		expect(adLogicHighValueCountry.getMaxCallsToDART('unknown')).toBe(0, 'unknown getMaxCallsToDART');
 	});
 });

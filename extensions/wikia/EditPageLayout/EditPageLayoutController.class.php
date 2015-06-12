@@ -71,7 +71,7 @@ class EditPageLayoutController extends WikiaController {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()
 				->getSassCommonURL( 'extensions/wikia/EditPageLayout/css/EditPageLayout.scss' ) );
 
-			if ( $helper->isCodePage( $editPage->getTitle() ) ) {
+			if ( $helper->isCodeSyntaxHighlightingEnabled( $editPage->getTitle() ) ) {
 				$this->pagetype = 'codepage';
 				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>" );
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'ace_editor_js' );

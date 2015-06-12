@@ -82,15 +82,6 @@ $config['EditPageLayout_mw_toolbar'] = array(
 	)
 );
 
-/*
-$config['PageLayoutEditor'] = array(
-	'name'   => 'page-layout-builder',
-	'source' => "$IP/extensions/wikia/PageLayoutBuilder/images/sprite-page-layout-builder/",
-	'sprite' => "$IP/extensions/wikia/PageLayoutBuilder/images/sprite-page-layout-builder.png",
-	'scss'   => "$IP/extensions/wikia/PageLayoutBuilder/css/_sprite-page-layout-builder.scss",
-);
-*/
-
 $config['MiniEditor'] = array(
 	'name'   => 'MiniEditor',
 	'source' => "$IP/extensions/wikia/MiniEditor/images/sprite-MiniEditor/",

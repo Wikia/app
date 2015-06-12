@@ -1,4 +1,6 @@
 <?php
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Renders page header (title, subtitle, comments chicklet button, history dropdown)
  *
@@ -136,26 +138,15 @@ class PageHeaderController extends WikiaController {
 		$actions = array_merge( $editActions,
 			array( 'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file' ) );
 
+		// Enable to modify actions list on dropdown
+		wfRunHooks( 'PageHeaderDropdownActions', [ &$actions ] );
+
 		foreach ( $actions as $action ) {
 			if ( isset( $this->content_actions[$action] ) ) {
 				$ret[$action] = $this->content_actions[$action];
 			}
 		}
 
-		return $ret;
-	}
-
-	public static function formatTimestamp( $stamp ) {
-
-		$diff = time() - strtotime( $stamp );
-
-		// show time difference if it's 14 or less days
-		if ( $diff < 15 * 86400 ) {
-			$ret = wfTimeFormatAgo( $stamp );
-		}
-		else {
-			$ret = '';
-		}
 		return $ret;
 	}
 
@@ -199,7 +190,9 @@ class PageHeaderController extends WikiaController {
 			wfRunHooks( 'PageHeaderIndexExtraButtons', array( $response ) );
 		} else {
 			// it happened on TimQ's devbox that $response was probably null fb#28747
-			Wikia::logBacktrace( __METHOD__ );
+			WikiaLogger::instance()->error('Response not an instance of WikiaResponse', [
+				'ex' => new Exception()
+			]);
 		}
 		/** end of wikia changes */
 
@@ -310,12 +303,6 @@ class PageHeaderController extends WikiaController {
 
 				// remove comments button (fix FB#3404 - Marooned)
 				$this->comments = false;
-
-				// FIXME: use PageHeaderIndexAfterExecute hook or $wgSupressPageSubtitle instead
-				if ( $wgTitle->isSpecial( 'PageLayoutBuilderForm' ) || $wgTitle->isSpecial( 'PageLayoutBuilder' ) ) {
-					$this->displaytitle = true;
-					$this->pageType = "";
-				}
 
 				if ( $wgTitle->isSpecial( 'Newimages' ) ) {
 					$this->isNewFiles = true;

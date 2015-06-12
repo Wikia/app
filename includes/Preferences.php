@@ -461,13 +461,6 @@ class Preferences {
 			}
 
 			/* Wikia change begin - @author: Inez */
-			$defaultPreferences['htmlemails'] =
-				array(
-					'type' => 'toggle',
-					'section' => 'personal/email',
-					'label-message' => 'tog-htmlemails',
-				);
-
 			$defaultPreferences['marketingallowed'] =
 				array(
 					'type' => 'toggle',
@@ -713,110 +706,118 @@ class Preferences {
 		global $wgUseExternalEditor, $wgLivePreview, $wgAllowUserCssPrefs;
 
 		/* Wikia change begin - @author: Macbre */
-		wfRunHooks( 'EditingPreferencesBefore', array($user, &$defaultPreferences ) );
+		wfRunHooks( 'EditingPreferencesBefore', [ $user, &$defaultPreferences ] );
 		/* Wikia change end */
 
 		## Editing #####################################
-		$defaultPreferences['cols'] = array(
+		$defaultPreferences['cols'] = [
 			'type' => 'int',
 			'label-message' => 'columns',
 			'section' => 'editing/textboxsize',
 			'min' => 4,
 			'max' => 1000,
-		);
-		$defaultPreferences['rows'] = array(
+		];
+		$defaultPreferences['rows'] = [
 			'type' => 'int',
 			'label-message' => 'rows',
 			'section' => 'editing/textboxsize',
 			'min' => 4,
 			'max' => 1000,
-		);
+		];
 
 		if ( $wgAllowUserCssPrefs ) {
-			$defaultPreferences['editfont'] = array(
+			$defaultPreferences['editfont'] = [
 				'type' => 'select',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'editfont-style',
-				'options' => array(
+				'options' => [
 					$context->msg( 'editfont-default' )->text() => 'default',
 					$context->msg( 'editfont-monospace' )->text() => 'monospace',
 					$context->msg( 'editfont-sansserif' )->text() => 'sans-serif',
 					$context->msg( 'editfont-serif' )->text() => 'serif',
-				)
-			);
+				]
+			];
 		}
-		$defaultPreferences['previewontop'] = array(
+		$defaultPreferences['previewontop'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-previewontop',
-		);
-		$defaultPreferences['previewonfirst'] = array(
+		];
+		$defaultPreferences['previewonfirst'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-previewonfirst',
-		);
+		];
 
 		if ( $wgAllowUserCssPrefs ) {
-			$defaultPreferences['editsection'] = array(
+			$defaultPreferences['editsection'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-editsection',
-			);
+			];
 		}
-		$defaultPreferences['editsectiononrightclick'] = array(
+		$defaultPreferences['editsectiononrightclick'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-editsectiononrightclick',
-		);
-		$defaultPreferences['editondblclick'] = array(
+		];
+		$defaultPreferences['editondblclick'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-editondblclick',
-		);
-		$defaultPreferences['editwidth'] = array(
+		];
+		$defaultPreferences['editwidth'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-editwidth',
-		);
-		$defaultPreferences['showtoolbar'] = array(
+		];
+		$defaultPreferences['showtoolbar'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-showtoolbar',
-		);
+		];
 
 		if ( $user->isAllowed( 'minoredit' ) ) {
-			$defaultPreferences['minordefault'] = array(
+			$defaultPreferences['minordefault'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-minordefault',
-			);
+			];
 		}
 
 		if ( $wgUseExternalEditor ) {
-			$defaultPreferences['externaleditor'] = array(
+			$defaultPreferences['externaleditor'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-externaleditor',
-			);
-			$defaultPreferences['externaldiff'] = array(
+			];
+			$defaultPreferences['externaldiff'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-externaldiff',
-			);
+			];
 		}
 
-		$defaultPreferences['forceeditsummary'] = array(
+		$defaultPreferences['forceeditsummary'] = [
 			'type' => 'toggle',
 			'section' => 'editing/advancedediting',
 			'label-message' => 'tog-forceeditsummary',
-		);
+		];
+
+		/* Wikia change begin - @author: Lukaszk */
+		$defaultPreferences['disablesyntaxhighlighting'] =[
+			'type' => 'toggle',
+			'section' => 'editing/advancedediting',
+			'label-message' => 'tog-disablesyntaxhighlighting',
+		];
+		/* Wikia change end */
 
 		if ( $wgLivePreview ) {
-			$defaultPreferences['uselivepreview'] = array(
+			$defaultPreferences['uselivepreview'] = [
 				'type' => 'toggle',
 				'section' => 'editing/advancedediting',
 				'label-message' => 'tog-uselivepreview',
-			);
+			];
 		}
 	}
 

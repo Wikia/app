@@ -1,12 +1,20 @@
 /* global define */
-define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jquery', 'wikia.ui.factory', 'mw'], function(win, browserDetect, $, uiFactory, mw) {
+define('wikia.toolsCustomization', [
+	'wikia.window',
+	'wikia.browserDetect',
+	'jquery',
+	'wikia.ui.factory',
+	'mw',
+	'BannerNotification'
+], function(win, browserDetect, $, uiFactory, mw, BannerNotification) {
 	'use strict';
 
 		win.ToolbarCustomize = win.ToolbarCustomize || {};
 
 		var TC = win.ToolbarCustomize,
 			isIPad = false,
-			wgBlankImgUrl = win.wgBlankImgUrl;
+			wgBlankImgUrl = win.wgBlankImgUrl,
+			bannerNotification = new BannerNotification().setType('error');
 
 			isIPad = browserDetect.isIPad();
 
@@ -279,7 +287,7 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 			},
 
 			onLoadFailure: function( req, textStatus, errorThrown ) {
-				win.GlobalNotification.show( errorThrown, 'error' );
+				bannerNotification.setContent(errorThrown).show();
 			},
 
 			checkLoad: function() {
@@ -534,7 +542,7 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 					$('body').trigger('userToolsItemAdded', [data.toolbar]);
 					this.modal.trigger( 'close' );
 				} else {
-					win.GlobalNotification.show( status, 'error' );
+					bannerNotification.setContent(status).show();
 				}
 			}
 

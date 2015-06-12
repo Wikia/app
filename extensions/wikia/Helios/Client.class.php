@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Helios;
 use Wikia\Util\RequestId;
+use Wikia\Util\GlobalStateWrapper;
 
 /**
  * A client for Wikia authentication service.
@@ -12,6 +13,7 @@ class Client
 	protected $baseUri;
 	protected $clientId;
 	protected $clientSecret;
+	protected $status;
 	
 	/**
 	 * The constructor.
@@ -24,9 +26,17 @@ class Client
 	}
 
 	/**
+	 * Returns the status of the last request.
+	 */
+	public function getStatus()
+	{
+		return $this->status;
+	}
+
+	/**
 	 * The general method for handling the communication with the service.
 	 */
-	public function request( $resourceName, $getParams = [], $postData = [], $requestOptions = [] )
+	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] )
 	{
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
@@ -39,30 +49,40 @@ class Client
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
 		
 		// Request options pre-processing.
-		$defaultOptions = [
-			'method'		=> 'GET',
-			'timeout'		=> 5,
-			'postData'		=> $postData,
-			'noProxy'		=> true,
-			'followRedirects'	=> false,
-			'returnInstance'	=> true
+		$options = [
+			'method'          => 'GET',
+			'timeout'         => 5,
+			'postData'        => $postData,
+			'noProxy'         => true,
+			'followRedirects' => false,
+			'returnInstance'  => true,
+			'internalRequest' => true,
 		];
 
-		$aOptions = array_merge( $defaultOptions, $requestOptions );
+		$options = array_merge( $options, $extraRequestOptions );
+
+		/*
+		 * MediaWiki's MWHttpRequest class heavily relies on Messaging API
+		 * (wfMessage()) which happens to rely on the value of $wgLang.
+		 * $wgLang is set after $wgUser. On per-request authentication with
+		 * an access token we use MWHttpRequest before wgUser is created so
+		 * we need $wgLang to be present. With GlobalStateWrapper we can set
+		 * the global variable in the local, function's scope, so it is the
+		 * same as the already existing $wgContLang.
+		 */
+		global $wgContLang;
+		$wrapper = new GlobalStateWrapper( [ 'wgLang' => $wgContLang ] );
 
 		// Request execution.
-		$request = \MWHttpRequest::factory( $uri, $aOptions );
-		$request->setHeader(RequestId::REQUEST_HEADER_NAME, RequestId::instance()->getRequestId());
-		$request->setHeader(RequestId::REQUEST_HEADER_ORIGIN_HOST, wfHostname());
-		$status = $request->execute();
+		/** @var \MWHttpRequest $request */
+		$request = $wrapper->wrap( function() use ( $options, $uri ) {
+			return \Http::request( $options['method'], $uri, $options );
+		} );
 
-		// Response handling.
-		if ( !$status->isGood() ) {
-			throw new ClientException( 'Request failed.', 0, null, $status->getErrorsArray() );
-		}
+		$this->status = $request->status;
 
 		$output = json_decode( $request->getContent() );
-		
+
 		if ( !$output ) {
 			throw new ClientException( 'Invalid response.' );
 		}
@@ -72,6 +92,8 @@ class Client
 
 	/**
 	 * A shortcut method for login requests.
+	 *
+	 * @throws ClientException
 	 */
 	public function login( $username, $password )
 	{
@@ -84,12 +106,14 @@ class Client
 			'password'	=> $password
 		]);
 
-		return $this->request(
+		$response = $this->request(
 			'token',
 			[ 'grant_type'	=> 'password' ],
 			$postData,
 			[ 'method'	=> 'POST' ]
 		);
+
+		return $response;
 	}
 
 	/**
@@ -117,17 +141,29 @@ class Client
 		);
 	}
 
-}
+    /**
+     * A shortcut method for register requests.
+     */
+    public function register( $username, $password, $email, $birthdate, $langCode )
+    {
+			// Convert the array to URL-encoded query string, so the Content-Type
+			// for the POST request is application/x-www-form-urlencoded.
+			// It would be multipart/form-data which is not supported
+			// by the Helios service.
+			$postData = http_build_query( [
+				'username'  => $username,
+				'password'  => $password,
+				'email'     => $email,
+				'birthdate' => $birthdate,
+				'langCode'  => $langCode,
+			] );
 
-/**
- * An exception class for the client.
- */
-class ClientException extends \Exception
-{
-	use \Wikia\Logger\Loggable;
+			return $this->request(
+				'users',
+				[],
+				$postData,
+				[ 'method'	=> 'POST' ]
+			);
+    }
 
-	public function __construct( $message = null, $code = 0, \Exception $previous = null, $data = null ) {
-		parent::__construct( $message, $code, $previous );
-		$this->error( 'HELIOS_CLIENT' , [ 'exception' => $this, 'context' => $data ] );
-	}
 }

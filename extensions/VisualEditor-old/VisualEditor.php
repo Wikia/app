@@ -41,7 +41,7 @@ $wgAutoloadClasses['ApiVisualEditor'] = $dir . 'ApiVisualEditor.php';
 $wgAutoloadClasses['ApiVisualEditorEdit'] = $dir . 'ApiVisualEditorEdit.php';
 $wgAutoloadClasses['VisualEditorHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['VisualEditorDataModule'] = $dir . 'VisualEditorDataModule.php';
-$wgExtensionMessagesFiles['VisualEditor'] = $dir . 'VisualEditor.i18n.php';
+$wgExtensionMessagesFiles['VisualEditor-old'] = $dir . 'VisualEditor.i18n.php';
 $wgMessagesDirs['VisualEditor'] = array(
 	__DIR__ . '/lib/ve/modules/ve/i18n',
 	__DIR__ . '/modules/ve-mw/i18n',

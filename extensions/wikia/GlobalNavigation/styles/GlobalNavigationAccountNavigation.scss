@@ -1,6 +1,3 @@
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
 @import 'GlobalNavigationMixins';
@@ -12,15 +9,20 @@
 .AccountNavigation {
 	cursor: pointer;
 	height: $global-navigation-height;
-	padding: 0 21px;
 	margin: 0;
+	padding: 0 21px;
 
 	&.active {
 		background-color: $global-navigation-background-color;
+
 		.user-menu {
 			display: table;
 			table-layout: fixed;
 		}
+	}
+
+	.avatar {
+		border: 0;
 	}
 
 	.account-navigation-first-item {
@@ -63,8 +65,8 @@
 			&.logged-avatar,
 			&.logged-avatar-placeholder {
 				border: rgb(199, 209, 216) 1px solid;
-				height: 30px;
 				border-radius: 50%;
+				height: 30px;
 				margin: 0;
 				width: 30px;
 			}
@@ -72,9 +74,9 @@
 	}
 
 	.sign-in-label {
-		@include font-size-xxs;
 		color: $global-navigation-text-color;
 		display: table-cell;
+		font-size: 12px;
 		padding-top: 2px;
 		vertical-align: middle;
 
@@ -84,10 +86,10 @@
 	}
 
 	.user-menu {
-		@include grid-column-width('medium', 2, $medium-content-padding);
-		@include font-size-xs;
 		border: 1px solid $nav-border-color;
 		display: none;
+		font-size: 14px;
+		min-width: 150px;
 		padding: 0;
 		position: absolute;
 		right: 0;
@@ -107,6 +109,7 @@
 				padding: 8px 20px;
 				text-decoration: none;
 				vertical-align: middle;
+				white-space: nowrap;
 				width: 100%;
 
 				&:hover {
@@ -118,23 +121,6 @@
 			&:first-child a {
 				border-top: 0;
 			}
-		}
-	}
-}
-
-@media #{$small-only} {
-	.AccountNavigation {
-		.user-menu {
-			@include grid-column-width('small', 3, $small-content-padding);
-			right: 0;
-		}
-	}
-}
-
-@media #{$large-up} {
-	.AccountNavigation {
-		.user-menu {
-			@include grid-column-width('large', 2, $large-content-padding);
 		}
 	}
 }

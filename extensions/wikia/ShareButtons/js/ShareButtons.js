@@ -51,7 +51,7 @@ var ShareButtons = {
 	track: Wikia.Tracker.buildTrackingFunction({
 		action: Wikia.Tracker.ACTIONS.CLICK,
 		category: 'share',
-		trackingMethod: 'ga'
+		trackingMethod: 'analytics'
 	})
 };
 

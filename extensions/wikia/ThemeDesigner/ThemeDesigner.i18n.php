@@ -684,7 +684,7 @@ $messages['es'] = array(
 	'themedesigner-button-upload' => 'Subir',
 	'themedesigner-button-upload-wordmark' => 'Subir',
 	'themedesigner-rules-background' => 'jpg, gif o png. De máximo {{PLURAL:$1|$1 kilobyte|$1 kilobytes}}',
-	'themedesigner-default' => 'Por defecto',
+	'themedesigner-default' => 'Predeterminado',
 	'themedesigner-font' => 'fuente',
 	'themedesigner-size' => 'tamaño',
 	'themedesigner-button-save' => 'Guardar',
@@ -710,7 +710,9 @@ $messages['es'] = array(
  * @author Subi
  */
 $messages['eu'] = array(
+	'themedesigner-previous-versions' => 'Aurreko bertsioak',
 	'themedesigner-button-ok' => 'Ados',
+	'themedesigner-button-save' => 'Gorde',
 );
 
 /** Persian (فارسی)
@@ -1095,9 +1097,9 @@ $messages['ia'] = array(
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
-	'themedesigner-page' => 'ОагIув',
-	'themedesigner-color' => 'бос', # Fuzzy
-	'themedesigner-links' => 'Iинкаш',
+	'themedesigner-page' => 'Оаг|ув',
+	'themedesigner-color' => 'кертера',
+	'themedesigner-links' => 'хьожадергаш',
 );
 
 /** Japanese (日本語)
@@ -1266,11 +1268,16 @@ $messages['ko'] = array(
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'themedesigner-or' => 'an',
 	'themedesigner-page' => 'rûpel',
-	'themedesigner-color' => 'reng', # Fuzzy
+	'themedesigner-color' => 'sereke',
+	'themedesigner-graphic' => 'grafîk',
+	'themedesigner-buttons' => 'bişkoj',
+	'themedesigner-links' => 'girêdan',
 	'themedesigner-small' => 'Biçûk',
 	'themedesigner-large' => 'Mezin',
 	'themedesigner-button-cancel' => 'Betal bike',
@@ -1285,6 +1292,9 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'themedesigner-background' => 'Hannergrond',
 	'themedesigner-page' => 'Säit',
+	'themedesigner-small' => 'Kleng',
+	'themedesigner-medium' => 'Mëttel',
+	'themedesigner-large' => 'Grouss',
 	'themedesigner-button-cancel' => 'Ofbriechen',
 	'themedesigner-button-ok' => 'OK',
 	'themedesigner-button-upload' => 'Eroplueden',
@@ -1292,7 +1302,7 @@ $messages['lb'] = array(
 	'themedesigner-wordmark-preview-error' => 'Ups! Den Numm vun der Wiki kann net eidel sinn, gitt w.e.g. den Numm vun der Wiki a fir se ze späicheren.',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1311,7 +1321,7 @@ $messages['lrc'] = array(
 	'themedesigner-default' => 'پيش فرض',
 	'themedesigner-font' => 'فونت',
 	'themedesigner-size' => 'انازه',
-	'themedesigner-button-save' => 'ذخيره كردن',
+	'themedesigner-button-save' => 'اماییه كردن',
 	'themedesigner-dont-use-a-graphic' => 'ؤرداشتن',
 	'themedesigner-history-item' => '$1 وا
 $2',
@@ -1659,7 +1669,7 @@ $messages['oc'] = array(
 	'themedesigner-wodmark-preview' => 'Apercebut',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  */
 $messages['pdc'] = array(
 	'themedesigner-small' => 'Glee',
@@ -2281,7 +2291,7 @@ $messages['tl'] = array(
 	'themedesigner-wodmark-preview' => 'Paunang tingin',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  */
 $messages['tly'] = array(
@@ -2425,7 +2435,7 @@ $messages['vi'] = array(
 	'themedesigner-upload-disabled' => 'Xin lỗi, chúng tôi đã tạm thời vô hiệu hóa việc tải lên. Hãy quay lại sau khi có thay đổi',
 );
 
-/** Wu (吴语)
+/** Wu Chinese (吴语)
  * @author 十弌
  */
 $messages['wuu'] = array(
@@ -2554,7 +2564,7 @@ $messages['zh-hant'] = array(
 	'themedesigner-button-save' => '儲存',
 	'themedesigner-upload-a-graphic' => '上傳一個圖案',
 	'themedesigner-rules-wordmark' => '上傳一個250 x 65 圖元或更少的.png 檔 。',
-	'themedesigner-rules-favicon' => '上傳一个16x16像素的.ico檔案。Favicon就是出现在wiki瀏覽器標簽左上角的小圖標。 [http://community.wikia.com/wiki/Help:Favicon 了解更多。]',
+	'themedesigner-rules-favicon' => '上傳一个16x16像素的.ico檔案。Favicon就是出现在wiki瀏覽器分頁左上角的小圖示。 [http://community.wikia.com/wiki/Help:Favicon 瞭解更多。]',
 	'themedesigner-dont-use-a-graphic' => '移除',
 	'themedesigner-history-item' => '$1 由 $2',
 	'themedesigner-button-change-text' => '更改文本',

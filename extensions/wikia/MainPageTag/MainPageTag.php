@@ -83,6 +83,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	$isOasis = F::app()->checkSkin( 'oasis' );
 	$isGridLayoutEnabled = $isOasis && BodyController::isGridLayoutEnabled();
 	$isResponsiveLayoutEnabled = $isOasis && BodyController::isResponsiveLayoutEnabled();
+	$areBreakpointsLayoutEnabled = $isOasis && BodyController::isOasisBreakpoints();
 	$gutter = isset( $args['gutter'] ) ? str_replace( 'px', '', $args['gutter'] ) : 10;
 
 	$html = '<div class="main-page-tag-lcs ';
@@ -94,7 +95,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	if ( $wfMainPageTag_rcs_called ) {
 		$html .= 'main-page-tag-lcs-collapsed"';
 
-		if ( !$isResponsiveLayoutEnabled ) {
+		if ( !$isResponsiveLayoutEnabled && !$areBreakpointsLayoutEnabled ) {
 			$html .= ' style="padding-right: '. $gutter .'px"';
 		}
 
@@ -102,7 +103,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 	} else {
 		$gutter += 300;
 		$html .= 'main-page-tag-lcs-exploded" ';
-		if ( $isGridLayoutEnabled || $isResponsiveLayoutEnabled ) {
+		if ( $isGridLayoutEnabled || $isResponsiveLayoutEnabled || $areBreakpointsLayoutEnabled ) {
 			$html .= '><div class="lcs-container">';
 		} else {
 			$html .= 'style="margin-right: -'. $gutter .'px; "><div class="lcs-container" style="margin-right: '. $gutter .'px;">';

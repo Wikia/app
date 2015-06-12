@@ -1,7 +1,7 @@
 <? if ($userBlocked !== true): ?>
 	<div id="ForumNewMessage" class="ForumNewMessage DiscussionBox">
 		<?= AvatarService::renderAvatar($username, 50) ?>
-		<blockquote class="message">
+		<div class="message">
 			<div class="message-container">
 				<h4 class="heading"><?= wfMessage( 'forum-board-new-message-heading' )->escaped() ?></h4>
 				<? if($isTopicPage): ?>
@@ -51,6 +51,6 @@
 				<?= F::app()->renderPartialCached( 'Wall', 'messageTopic', array() ) ?>
 			</div>
 			<div class="throbber"></div>
-		</blockquote>
+		</div>
 	</div>
 <? endif ?>

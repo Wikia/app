@@ -27,6 +27,8 @@
  */
 class WebResponse {
 
+	const NO_COOKIE_PREFIX = '';
+
 	/**
 	 * Output a HTTP header, wrapper for PHP's
 	 * header()
@@ -40,11 +42,11 @@ class WebResponse {
 
 	/**
 	 * Set the browser cookie
-	 * @param $name String: name of cookie
-	 * @param $value String: value to give cookie
-	 * @param $expire Int: number of seconds til cookie expires
-	 * @param $prefix String: Prefix to use, if not $wgCookiePrefix (use '' for no prefix)
-	 * @param @domain String: Cookie domain to use, if not $wgCookieDomain
+	 * @param string $name : name of cookie
+	 * @param string $value : value to give cookie
+	 * @param int $expire : Expire time in seconds (a unix epoch time)
+	 * @param string $prefix : Prefix to use, if not $wgCookiePrefix (use '' for no prefix)
+	 * @param string $domain : Cookie domain to use, if not $wgCookieDomain
 	 */
 	public function setcookie( $name, $value, $expire = 0, $prefix = null, $domain = null ) {
 		global $wgCookiePath, $wgCookiePrefix, $wgCookieDomain;

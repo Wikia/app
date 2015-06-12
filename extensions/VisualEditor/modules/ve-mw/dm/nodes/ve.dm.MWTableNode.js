@@ -35,7 +35,7 @@ OO.mixinClass( ve.dm.MWTableNode, ve.dm.ClassAttributeNode );
 ve.dm.MWTableNode.static.name = 'mwTable';
 
 ve.dm.MWTableNode.static.classAttributes = {
-	wikitable: { wikitable: true },
+	'article-table': { 'article-table': true },
 	sortable: { sortable: true }
 };
 

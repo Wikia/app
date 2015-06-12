@@ -18,7 +18,7 @@
 				self.trackerActions = tracker.ACTIONS;
 				self.track = tracker.buildTrackingFunction({
 					category: 'force-login-modal',
-					trackingMethod: 'both'
+					trackingMethod: 'analytics'
 				});
 			});
 

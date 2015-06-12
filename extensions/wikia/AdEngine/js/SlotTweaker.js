@@ -31,6 +31,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		var slot = document.getElementById(slotname);
 
 		if (slot) {
+			removeClass(slot, 'hidden');
 			slot.className += ' hidden';
 		}
 	}

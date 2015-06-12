@@ -34,7 +34,6 @@ class GamestarApiWrapperTest extends WikiaBaseTest {
 	 * @group Infrastructure
 	 */
 	public function testgetDataFromValidHtmlResponse() {
-
 		// setup
 		$this->setUpMock();
 

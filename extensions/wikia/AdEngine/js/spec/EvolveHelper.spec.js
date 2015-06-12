@@ -1,11 +1,17 @@
 /*global describe, it, modules, expect*/
 describe('EvolveHelper', function () {
 	'use strict';
-	var logMock = function () {};
+	var noop = function () { return; },
+		logMock = noop;
 
-	function mockKrux(dartKeyValues) {
+	function mockKrux() {
 		return {
-			dartKeyValues: dartKeyValues
+			getSegments: function () {
+				return '';
+			},
+			getUser: function () {
+				return '';
+			}
 		};
 	}
 
@@ -27,101 +33,105 @@ describe('EvolveHelper', function () {
 		};
 	}
 
+	function mockDartUrl() {
+		return {
+			trimParam: noop,
+			decorateParam: noop
+		};
+	}
+
 	it('getSect', function () {
-		var logMock = function () {},
-			adContextMock = {targeting: {}},
+		var adContextMock = {targeting: {}},
 			adContextModuleMock = mockAdContext(adContextMock),
 			evolveHelper;
-
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextModuleMock, mockAdLogicPageParams(), mockKrux());
 
 		adContextMock.targeting.wikiDbName = null;
 		adContextMock.targeting.wikiCustomKeyValues = null;
 		adContextMock.targeting.wikiVertical = null;
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextModuleMock, mockAdLogicPageParams(), mockKrux());
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
 
 		expect(evolveHelper.getSect()).toBe('ros', 'ros');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar;media=tv';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextModuleMock, mockAdLogicPageParams(), mockKrux());
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
 
 		expect(evolveHelper.getSect()).toBe('tv', 'tv entertainment');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextModuleMock, mockAdLogicPageParams(), mockKrux());
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
 
 		expect(evolveHelper.getSect()).toBe('entertainment', 'foo entertainment');
 
 		adContextMock.targeting.wikiCustomKeyValues = 'foo=bar;media=movie';
 		adContextMock.targeting.wikiVertical = 'Entertainment';
-		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](logMock, adContextModuleMock, mockAdLogicPageParams(), mockKrux());
+		evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](adContextModuleMock, mockAdLogicPageParams(), mockDartUrl(), mockKrux(), logMock);
 
 		expect(evolveHelper.getSect()).toBe('movies', 'movie entertainment');
 	});
 
 	it('getTargeting returns nothing if nothing is set', function() {
-		var dartUrlMock = {
-				trimParam: function (param) { return param; },
-				decorateParam: function (key, value) { return value ? key +'=' + value + ';' : ''; }
-			},
+		var dartUrlMock = mockDartUrl(),
 			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
-				logMock,
 				mockAdContext(),
 				mockAdLogicPageParams(),
+				dartUrlMock,
 				mockKrux(),
-				dartUrlMock
+				logMock
 			);
+
+		spyOn(dartUrlMock, 'decorateParam').and.returnValue('');
 
 		expect(evolveHelper.getTargeting()).toBe('');
 	});
 
 	it('getCustomKeyValues', function () {
-		var paramToTrim,
-			dartUrlMock = {
-				trimParam: function (param) { paramToTrim = param; return 'trimmed'; },
-				decorateParam: function (key, value) { return value ? key +'=' + value + ';' : ''; }
-			},
+		var dartUrlMock = mockDartUrl(),
+			customKeyValuesMock = 'key1=value1;key2=value2',
 			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
-				logMock,
-				mockAdContext({ targeting: { wikiCustomKeyValues: 'key1=value1;key2=value2' }}),
+				mockAdContext({ targeting: { wikiCustomKeyValues: customKeyValuesMock }}),
 				mockAdLogicPageParams(),
+				dartUrlMock,
 				mockKrux(),
-				dartUrlMock
+				logMock
 			);
 
-		expect(evolveHelper.getTargeting()).toBe('trimmed');
-		expect(paramToTrim).toBe('key1=value1;key2=value2;');
+		spyOn(dartUrlMock, 'trimParam').and.returnValue(customKeyValuesMock + ';');
+		spyOn(dartUrlMock, 'decorateParam').and.returnValue('');
+		expect(evolveHelper.getTargeting()).toBe(customKeyValuesMock + ';');
 	});
 
 	it('getKruxKeyValues', function () {
-		var paramToTrim,
-			dartUrlMock = {
-				trimParam: function (param) { paramToTrim = param; return 'trimmed'; },
-				decorateParam: function (key, value) { return value ? key +'=' + value + ';' : ''; }
-			},
+		var dartUrlMock = mockDartUrl(),
+			kruxMock = mockKrux(),
 			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
-				logMock,
 				mockAdContext(),
 				mockAdLogicPageParams(),
-				mockKrux('krux=dart;key=values;'),
-				dartUrlMock
+				dartUrlMock,
+				kruxMock,
+				logMock
 			);
 
-		expect(evolveHelper.getTargeting()).toBe('trimmed');
-		expect(paramToTrim).toBe('krux=dart;key=values;');
+		spyOn(dartUrlMock, 'decorateParam').and.callFake(function (key) {
+			if ( key === 'segments' ) {
+				return 'segments=segment1,segment2;';
+			}
+
+			return '';
+		});
+
+		expect(evolveHelper.getTargeting()).toBe('segments=segment1,segment2;');
 	});
 
 	it('getTargeting returns right targeting', function () {
-		var logMock = function () {},
-			result,
+		var result,
 			evolveHelper = modules['ext.wikia.adEngine.evolveHelper'](
-				logMock,
 				mockAdContext(),
 				mockAdLogicPageParams({ hostpre: 'someprefix', rawDbName: 'mock' }),
+				modules['ext.wikia.adEngine.dartUrl'](),
 				mockKrux(),
-				modules['ext.wikia.adEngine.dartUrl']()
+				logMock
 			);
 
 		result = evolveHelper.getTargeting();

@@ -21,7 +21,7 @@ $wgAutoloadClasses['CuratedContentModel'] =  "{$dir}/CuratedContentModel.class.p
  * message files
  */
 $wgExtensionMessagesFiles['CuratedContent'] = "{$dir}/CuratedContent.i18n.php";
-
+$wgExtensionMessagesFiles['CuratedContentAlias'] = "{$dir}/CuratedContent.alias.php";
 
 //Special Page for Content Managment Tool
 $wgAutoloadClasses[ 'CuratedContentSpecialController'] =  "{$dir}/CuratedContentSpecialController.class.php" ;

@@ -1,7 +1,0 @@
-This extension is designed for managing the annual Wikimania conference.
-
-* Install like a normal extension in LocalSettings.php
-* Configure $wgWikimaniaConf (see docs in Wikimania.php)
-* Add a line after your configuration called "Wikimania::host( 2012 );" where
-  '2012' is the year in question
-* Run update.php to create the schema

@@ -19,6 +19,7 @@ describe('BuckyResourcesTiming', function () {
 		var resourcesTiming = getModule(),
 			urls = {
 				// Wikia assets
+				'http://vignette1.wikia.nocookie.net/nordycka/images/d/d7/Mykines_2.jpg/revision/latest/scale-to-width/300?cb=20141031093541&path-prefix=pl': true,
 				'http://img4.wikia.nocookie.net/__cb4/nordycka/pl/images/b/bc/Wiki.png': true,
 				'http://slot1.images2.wikia.nocookie.net/__am/1418375407/sasses/foo/extensions/wikia/Qualaroo/css/Qualaroo.scss': true,
 				'http://nordycka.wikia.com/__load/-/cb%3D1418375407%26debug%3Dfalse%26lang%3Dpl%26only%3Dstyles%26skin%3Doasis/site': true,

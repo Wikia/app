@@ -375,7 +375,7 @@ function WMU_show( event, options ) {
 			category: track.category || 'vet',
 			label: track.label || '',
 			value: track.value || null,
-			trackingMethod: track.method || 'both'
+			trackingMethod: track.method || 'analytics'
 		});
 	}
 
@@ -1325,5 +1325,5 @@ var WMU_uploadCallback = {
 var WMU_track = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 	action: Wikia.Tracker.ACTIONS.CLICK,
 	category: 'photo-tool',
-	trackingMethod: 'both'
+	trackingMethod: 'analytics'
 });

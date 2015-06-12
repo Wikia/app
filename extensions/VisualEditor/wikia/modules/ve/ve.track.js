@@ -140,7 +140,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 		var i, mwEvent, topics,
 			params = {
 				category: 'editor-ve',
-				trackingMethod: 'both'
+				trackingMethod: 'analytics'
 			};
 
 		// MW events
@@ -199,7 +199,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 		funnelEvent = data.label + '/' + data.action;
 
 		if ( funnelEvents.indexOf( funnelEvent ) !== -1 ) {
-			window.gaTrackPageview( '/fake-visual-editor/' + funnelEvent, 've' );
+			window.guaTrackPageview( '/fake-visual-editor/' + funnelEvent, 've' );
 		}
 	}
 

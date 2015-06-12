@@ -160,7 +160,7 @@ class EditorPreference {
 	 *
 	 * @return boolean True if VisualEditor is primary and false otherwise
 	 */
-	private static function isVisualEditorPrimary() {
+	public static function isVisualEditorPrimary() {
 		return self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
 	}
 

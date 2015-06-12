@@ -87,7 +87,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 
 			// Prevent cache poisoning if we are serving sass from preview server
 			if ( !empty($cacheId) && getHostPrefix() == null && !$this->mForceProfile && !$hasErrors ) {
-				$memc->set( $cacheId, $this->mContent, 0 );
+				$memc->set( $cacheId, $this->mContent, WikiaResponse::CACHE_STANDARD );
 			}
 		}
 
@@ -99,6 +99,14 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		wfProfileOut(__METHOD__);
 
 		return $this->mContent;
+	}
+
+	/**
+	 * Add more params to already existing
+	 * @param array $params
+	 */
+	public function addParams( array $params ) {
+		$this->mParams = array_merge( $this->mParams, $params );
 	}
 
 	/**

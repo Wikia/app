@@ -25,6 +25,8 @@ class ChatEntryPoint {
 	/**
 	 * @param $isEntryPoint - set to true for chat entry point embeded in the article, false for rail module
 	 * Return an array of variables needed to render chat entry point template
+	 *
+	 * @return array
 	 */
 	static public function getEntryPointTemplateVars( $isEntryPoint ) {
 		global $wgEnableWallExt, $wgBlankImgUrl;
@@ -79,6 +81,7 @@ class ChatEntryPoint {
 	 * @return array array containing chatters info
 	 */
 	static public function getChatUsersInfo() {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgReadOnly;
 		wfProfileIn( __METHOD__ );
 		$chatters = [];
@@ -130,5 +133,4 @@ class ChatEntryPoint {
 		wfProfileOut( __METHOD__ );
 		return $chatters;
 	}
-
 }

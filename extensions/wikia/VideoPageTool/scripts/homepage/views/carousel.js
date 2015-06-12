@@ -21,7 +21,7 @@ define('videohomepage.views.carousel', [
 
 	track = Tracker.buildTrackingFunction({
 		category: 'video-home-page',
-		trackingMethod: 'both',
+		trackingMethod: 'analytics',
 	});
 
 	CarouselView = OwlCarouselBase.extend({

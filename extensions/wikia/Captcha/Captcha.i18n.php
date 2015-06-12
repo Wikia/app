@@ -40,7 +40,6 @@ Hit the 'back' button in your browser to return to the page editor.",
  #</pre> <!-- leave this line exactly as it is -->',
 	'right-skipcaptcha' => 'Perform CAPTCHA-triggering actions without having to go through the CAPTCHA',
 	'captcha-input-placeholder' => 'Enter text here',
-	'captcha-no-image' => 'No captcha image could be found',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 	'recaptcha-edit' => 'To help protect against automated edit spam, please complete the challenge below:',
 	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please complete the challenge below:',
@@ -89,7 +88,6 @@ See also
 	'captchahelp-text' => 'This is the help text shown on [[Special:Captcha/help]].',
 	'captcha-addurl-whitelist' => "See also: [[MediaWiki:Spam-blacklist]] and [[MediaWiki:Spam-whitelist]]. Leave all the wiki markup, including the spaces, as is. You can translate the text, including 'Leave this line exactly as it is'. The first line of this messages has one (1) leading space.",
 	'right-skipcaptcha' => '{{doc-right|skipcaptcha}}',
-	'captcha-no-image' => "Error message when Fancycaptcha can't find an image to display to the user.",
 );
 
 /** Afrikaans (Afrikaans)
@@ -788,7 +786,7 @@ Zum Schutz vor automatisiertem Spamming löse die nachfolgende Rechenaufgabe und
 	'captcha-disabledinapi' => 'Diese Aktion benötigt ein CAPTCHA. Sie kann nicht über die API ausgeführt werden.',
 	'captchahelp-title' => 'CAPTCHA-Hilfe',
 	'captchahelp-cookies-needed' => "'''Wichtiger Hinweis:''' Es müssen Cookies im Browser erlaubt sein.",
-	'captchahelp-text' => 'Dieses Projekt ist ein offenes Wiki. Das bedeutet, dass praktisch jeder Beiträge einstellen kann. Solche Projekte sind daher häufiges Ziel von Spammern, die spezielle Programme benutzen, um automatisierte Weblinks in anderen Internetseiten zu platzieren. Da diese unerwünschten Links einzeln wieder entfernt werden müssen, können sie die Arbeit an diesem Projekt enorm beeinträchtigen. 
+	'captchahelp-text' => 'Dieses Projekt ist ein offenes Wiki. Das bedeutet, dass praktisch jeder Beiträge einstellen kann. Solche Projekte sind daher häufiges Ziel von Spammern, die spezielle Programme benutzen, um automatisierte Weblinks in anderen Internetseiten zu platzieren. Da diese unerwünschten Links einzeln wieder entfernt werden müssen, können sie die Arbeit an diesem Projekt enorm beeinträchtigen.
 
 Um zu verhindern, dass so genannte „Spam-“ oder „Vandal-Bots“ automatisch externe Links einfügen oder zahllose neue Benutzerkonten für spätere Spam- oder Vandalismusattacken registrieren können, verwendet Wikia sogenannte „Captchas“ (kleine Aufgaben, die für Menschen gut, für Bots aber nur schwer lösbar sind).
 
@@ -802,7 +800,6 @@ Bitte den "Zurück" Button in deinem Browser verwenden um zum Editor zurückzuke
  #</pre> <!-- Diese Zeile darf nicht verändert werden! -->',
 	'right-skipcaptcha' => 'Überspringen der CAPTCHA-Eingabe',
 	'captcha-input-placeholder' => 'Text eingeben',
-	'captcha-no-image' => 'Es wurde kein Captcha-Bild gefunden',
 	'recaptcha-desc' => 'reCAPTCHA-Modul für die Erweiterung „Confirm Edit“',
 	'recaptcha-edit' => 'Zum Schutz vor automatisiertem Spam, gib bitte die beiden folgenden Wörter in das untenstehende Feld ein:',
 	'recaptcha-addurl' => 'Deine Bearbeitung enthält neue externe Links. Zum Schutz vor automatisiertem Spam gib bitte die beiden folgenden Wörter in das folgende Feld ein:',
@@ -1049,7 +1046,7 @@ Klaku la 'reiru' butonon en via retumilo por reiri al la paĝo-redaktilo.",
 $messages['es'] = array(
 	'captcha-edit' => 'Para editar esta página, es necesario que resuelvas esta simple suma que se muestra abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
 	'captcha-desc' => 'Proporciona técnicas CAPTCHA para protección contra spam y adivinación de contraseñas.',
-	'captcha-addurl' => 'Tu edición incluye nuevos enlaces externos. 
+	'captcha-addurl' => 'Tu edición incluye nuevos enlaces externos.
 Como medida de protección contra el spam automatizado, es necesario que resuelvas esta sencilla suma de abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
 	'captcha-badlogin' => 'Como medida de protección contra los programas de crackeo de contraseñas, es necesario que resuelvas esta simple suma de abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
 	'captcha-createaccount' => 'Como medida de protección contra la creación automática de cuentas, es necesario que resuelvas esta simple suma de abajo e introduzcas la respuesta en la caja ([[Special:Captcha/help|más información]]):',
@@ -1060,24 +1057,23 @@ Como medida de protección contra el spam automatizado, es necesario que resuelv
 	'captcha-disabledinapi' => 'Esta acción requiere un código CAPTCHA, por lo que no puede completarse a través de la API.',
 	'captchahelp-title' => 'Ayuda sobre el CAPTCHA',
 	'captchahelp-cookies-needed' => 'Necesitarás tener activadas las cookies en tu navegador para que funcione.',
-	'captchahelp-text' => 'Los sitios web que aceptan contribuciones del público, como esta wikia, son a menudo objeto de abusos por spammers que utilizan programas para incluir automáticamente sus enlaces a varios sitios web. 
-Si bien estos enlaces pueden quitarse, son una gran molestia. 
+	'captchahelp-text' => 'Los sitios web que aceptan contribuciones del público, como esta wikia, son a menudo objeto de abusos por spammers que utilizan programas para incluir automáticamente sus enlaces a varios sitios web.
+Si bien estos enlaces pueden quitarse, son una gran molestia.
 
-En algunas ocasiones, especialmente cuando añadas nuevos enlaces a una página, la wikia te mostrará una imagen de texto coloreado o distorsionado y te pedirá que escribas las palabras que muestra. 
-Dado que esta es una tarea difícil de automatizar, permite a la mayoría de las personas enviar sus textos, a la vez que detiene a la mayoría de los spammers y otros robots de ataque. 
+En algunas ocasiones, especialmente cuando añadas nuevos enlaces a una página, la wikia te mostrará una imagen de texto coloreado o distorsionado y te pedirá que escribas las palabras que muestra.
+Dado que esta es una tarea difícil de automatizar, permite a la mayoría de las personas enviar sus textos, a la vez que detiene a la mayoría de los spammers y otros robots de ataque.
 
-Desafortunadamente, la medida puede ser un inconveniente para usuarios con visión limitada o aquellos que utilizan navegadores de texto o de voz. Por el momento, no tenemos una alternativa sonora disponible. 
+Desafortunadamente, la medida puede ser un inconveniente para usuarios con visión limitada o aquellos que utilizan navegadores de texto o de voz. Por el momento, no tenemos una alternativa sonora disponible.
 Por favor, contacta con los [[{{MediaWiki:Grouppage-sysop}}|administradores del sitio]] si necesitas asistencia o si está entorpeciendo la publicación de ediciones legítimas.
 
 Haz clic en el botón "atrás" de tu navegador para volver a la página del editor.',
-	'captcha-addurl-whitelist' => ' #<!-- deje esta línea exactamente como está --> <pre> 
-# La sintaxis es la siguiente: 
-# * Todo desde un caracter "#" hasta el final de la línea es un comentario 
-# * Toda línea que no esté en blanco es un fragmento de expresión regular que se comparará con las URLs 
+	'captcha-addurl-whitelist' => ' #<!-- deje esta línea exactamente como está --> <pre>
+# La sintaxis es la siguiente:
+# * Todo desde un caracter "#" hasta el final de la línea es un comentario
+# * Toda línea que no esté en blanco es un fragmento de expresión regular que se comparará con las URLs
  #</pre> <!-- deje esta línea exactamente como está -->',
 	'right-skipcaptcha' => 'Realiza acciones que disparan la protección CAPTCHA sin tener que escribir el código.',
 	'captcha-input-placeholder' => 'Introduce el texto aquí',
-	'captcha-no-image' => 'No se pudo encontrar la imagen CAPTCHA',
 	'recaptcha-desc' => 'Módulo reCAPTCHA para confirmar la edición',
 	'recaptcha-edit' => 'Como medida de protección contra el spam automatizado en las ediciones, es necesario que completes la siguiente prueba:',
 	'recaptcha-addurl' => 'Tu edición incluye enlaces externos. Como medida de protección contra el spam automatizado, es necesario que completes la siguiente prueba:',
@@ -1223,7 +1219,6 @@ Paina selaimesi 'taaksepäin'-painiketta palataksesi muokkaimeen.",
  #</pre> <!--  jätä tämä rivi sellaiseksi kuin se on -->',
 	'right-skipcaptcha' => 'Suorita CAPTCHA:n laukaisevat toiminnot joutumatta käyttämään CAPTCHA-koodia',
 	'captcha-input-placeholder' => 'Syötä tekstiä tähän',
-	'captcha-no-image' => 'CAPTCHA-kuvaa ei löytynyt',
 	'recaptcha-desc' => 'reCAPTCHA-moduuli muokkauksen vahvistamiseen',
 	'recaptcha-edit' => 'Suojautuksesi automatisoituja muokkausroskapoteja vastaan, suorita alla oleva testi:',
 	'recaptcha-addurl' => 'Muokkauksesi saattaa sisältää uusia ulkoisia linkkejä. Suojautuksesi automatisoituja roskapoteja vastaan, suorita alla oleva testi:',
@@ -1289,7 +1284,6 @@ Cliquez sur le bouton « Précédent » de votre navigateur pour revenir à la p
  #</pre><!-- laissez cette ligne exactement telle quelle -->",
 	'right-skipcaptcha' => 'Réaliser des actions qui déclenchent CAPTCHA sans avoir à passer par celui-ci',
 	'captcha-input-placeholder' => 'Saisir le texte ici',
-	'captcha-no-image' => 'Aucune image captcha trouvée',
 	'recaptcha-desc' => 'Module reCAPTCHA pour confirmer les modifications',
 	'recaptcha-edit' => 'Afin de nous aider à empêcher les modifications de type spam par des outils automatisés, veuillez accomplir le défi ci-dessous :',
 	'recaptcha-addurl' => 'Votre modification inclut de nouveaux liens externes. Pour nous aider à empêcher le spam par des outils automatisés, veuillez accomplir le défi ci-dessous :',
@@ -1861,7 +1855,6 @@ Premi il pulsante \"indietro\" nel tuo browser per tornare all'editor della pagi
  #</pre> <!-- leave this line exactly as it is -->',
 	'right-skipcaptcha' => 'Eseguire azioni che attivano un CAPTCHA senza dover risolvere il CAPTCHA',
 	'captcha-input-placeholder' => 'Inserisci qui il testo',
-	'captcha-no-image' => 'Non è stata trovata nessuna immagine CAPTCHA',
 	'recaptcha-desc' => 'Modulo reCAPTCHA per confermare la modifica',
 	'recaptcha-edit' => 'Per aiutarci a prevenire modifiche spam automatiche, completa per favore la sfida qui sotto:',
 	'recaptcha-addurl' => 'La tua modifica include nuovi link esterni. Per aiutarci a prevenire spam automatici, completa per favore la sfida qui sotto:',
@@ -1914,7 +1907,6 @@ $messages['ja'] = array(
  #</pre> <!-- この行は変更しないでください -->',
 	'right-skipcaptcha' => 'CAPTCHAを行わずにCAPTCHAを起こす操作を実行します',
 	'captcha-input-placeholder' => 'ここにテキストを入力してください',
-	'captcha-no-image' => '画像認証用の画像が見つかりませんでした',
 	'recaptcha-desc' => '編集の確認用reCAPTCHAモジュール',
 	'recaptcha-edit' => '自動化された編集スパムを防止するため、下の画像認証を行ってください:',
 	'recaptcha-addurl' => '編集内容に新しい外部リンクが含まれています。自動化されたスパムを防止するため、下の画像認証を行ってください:',
@@ -2156,7 +2148,6 @@ $messages['ko'] = array(
  #</pre> <!-- 이 줄은 수정하지 마세요 -->',
 	'right-skipcaptcha' => '캡차를 통하지 않고도 캡차 호출 작업을 수행합니다',
 	'captcha-input-placeholder' => '이곳에 텍스트를 입력하세요',
-	'captcha-no-image' => '캡차 이미지를 찾을 수 없습니다',
 	'recaptcha-desc' => '편집 확인을 위한 리캡차 모듈',
 	'recaptcha-edit' => '자동 스팸을 방지하기 위해 먼저 아래 질문을 완료해 주세요:',
 	'recaptcha-addurl' => '귀하의 편집에 새 외부 링크가 포함되어 있습니다. 자동 스팸을 방지하기 위해 먼저 아래 질문을 완료해 주세요:',
@@ -2670,7 +2661,6 @@ Hit the 'back' button in your browser to return to the page editor.",
  #</pre> <!-- leave this line exactly as it is -->',
 	'right-skipcaptcha' => 'Perform CAPTCHA-triggering actions without having to go through the CAPTCHA',
 	'captcha-input-placeholder' => 'Enter text here',
-	'captcha-no-image' => 'No captcha image could be found',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 	'recaptcha-edit' => 'To help protect against automated edit spam, please complete the challenge below:',
 	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please complete the challenge below:',
@@ -2838,7 +2828,6 @@ Wciśnij przycisk „wstecz” w przeglądarce by powrócić do edycji strony.',
 	'right-skipcaptcha' => 'Dostęp do czynności zabezpieczonych pytaniem o treść obrazka lub rozwiązanie zadania, z pominięciem tego zabezpieczenia
 ',
 	'captcha-input-placeholder' => 'Wpisz tekst tutaj',
-	'captcha-no-image' => 'Nie znaleziono obrazu z captcha',
 	'recaptcha-desc' => 'Moduł reCAPTCHA do potwierdzenia edycji',
 	'recaptcha-edit' => 'Aby pomóc w ochronie przed zautomatyzowanym spamem, proszę uzupełnić odpowiednie pola:',
 	'recaptcha-addurl' => 'Dodałeś nowe linki zewnętrzne. Ze względu na ochronę przed zautomatyzowanym spamem, proszę uzupełnić odpowiednie pola:',
@@ -2935,7 +2924,7 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'captcha-edit' => 'Para editar esta página, por favor resolva a adição simples abaixo e digite a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
 	'captcha-desc' => 'Fornece técnicas CAPTCHA para proteger contra spam e adivinhação de senha',
-	'captcha-addurl' => 'A sua edição inclui novos links externos. 
+	'captcha-addurl' => 'A sua edição inclui novos links externos.
 Para ajudar a proteção contra spam automático, por favor, resolva a adição simples abaixo e digite a sua resposta na caixa ([[Special:Captcha/help | mais informações]]):',
 	'captcha-badlogin' => 'Para ajudar a proteção contra quebra automática de senha, por favor, resolver a simples adição abaixo e digite a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
 	'captcha-createaccount' => 'Para ajudar a proteção contra criação de contas automáticas, por favor, resolva a simples adição e digite a resposta na caixa ([[Special:Captcha/help|mais informações]]):',
@@ -2946,13 +2935,13 @@ Para ajudar a proteção contra spam automático, por favor, resolva a adição 
 	'captcha-disabledinapi' => 'Esta ação requer um captcha, então isso não pode ser executado por meio do API.',
 	'captchahelp-title' => 'Ajuda CAPTCHA',
 	'captchahelp-cookies-needed' => 'Você precisará ter os cookies ativados em seu navegador para que isto funcione.',
-	'captchahelp-text' => "Websites que aceitam postagens do público, como esta wikia, geralmente são usados por spammers que usam ferramentas automatizadas para postar os seus links em muitos sites. Embora esses links possam ser removidos, eles causam bastante incômodo. 
+	'captchahelp-text' => "Websites que aceitam postagens do público, como esta wikia, geralmente são usados por spammers que usam ferramentas automatizadas para postar os seus links em muitos sites. Embora esses links possam ser removidos, eles causam bastante incômodo.
 
-Às vezes, especialmente quando novos links são adicionados à página, esta wikia pode lhe mostrar uma imagem de um texto colorido ou distorcido e pedir para que você digite as palavras mostradas. Já que esta é uma tarefa difícil de ser automatizada, ela permitirá que a maioria dos humanos escrevam as suas postagem ao mesmo tempo que para a maioria dos spammers e outros invasores robotizados. 
+Às vezes, especialmente quando novos links são adicionados à página, esta wikia pode lhe mostrar uma imagem de um texto colorido ou distorcido e pedir para que você digite as palavras mostradas. Já que esta é uma tarefa difícil de ser automatizada, ela permitirá que a maioria dos humanos escrevam as suas postagem ao mesmo tempo que para a maioria dos spammers e outros invasores robotizados.
 
-Infelizmente, isso pode causar algumas inconveniências para alguns usuários com visão limitada ou usando navegadores baseados em textos ou discurso. 
-No momento, nós não temos uma alternativa de áudio disponível. 
-Por favor, contate os [[{{MediaWiki:Grouppage-sysop}}|administradores do site]] para maior assistência, se isso está prevenindo que você escreva posts legítimos. 
+Infelizmente, isso pode causar algumas inconveniências para alguns usuários com visão limitada ou usando navegadores baseados em textos ou discurso.
+No momento, nós não temos uma alternativa de áudio disponível.
+Por favor, contate os [[{{MediaWiki:Grouppage-sysop}}|administradores do site]] para maior assistência, se isso está prevenindo que você escreva posts legítimos.
 
 Clique no botão 'voltar' no seu navegador para retornar ao editor da página.",
 	'captcha-addurl-whitelist' => ' #<!-- deixe essa frase exatamente como está--> <pre>
@@ -2962,7 +2951,6 @@ Clique no botão 'voltar' no seu navegador para retornar ao editor da página.",
  #</pre> <!-- deixe esta frase exatamente como está -->',
 	'right-skipcaptcha' => 'Execute ações que geram CAPTCHA sem ter que usar o CAPTCHA',
 	'captcha-input-placeholder' => 'Entre o texto aqui',
-	'captcha-no-image' => 'Nenhuma imagem captcha pôde ser encontrada',
 	'recaptcha-desc' => 'Módulo reCAPTCHA para Confirmação de Edições',
 	'recaptcha-edit' => 'Para ajudar a proteção contra spam automático, por favor, complete o desafio abaixo:',
 	'recaptcha-addurl' => 'Sua edição inclui novos links externos. Para ajudar a proteger contra spam automatizado, por favor, complete o desafio abaixo:',
@@ -3111,7 +3099,6 @@ $messages['ru'] = array(
  #</pre> <!--не изменяйте этот текст -->',
 	'right-skipcaptcha' => 'Позволяет выполнять действия, для которых требуется ввод CAPTCHA, без этого ввода',
 	'captcha-input-placeholder' => 'Введите текст сюда',
-	'captcha-no-image' => 'Изображение не найдено',
 	'recaptcha-desc' => 'Модуль reCAPTCHA для подтверждения правки',
 	'recaptcha-edit' => 'Для защиты от автоматизированного спама, пожалуйста, выполните следующее задание:',
 	'recaptcha-addurl' => 'Ваша правка содержит ссылки на внешние сайты. Для защиты от автоматизированного спама, пожалуйста, выполните следующее задание:',
@@ -3818,7 +3805,6 @@ Hit the 'back' button in your browser to return to the page editor.",
  #</pre> <!-- leave this line exactly as it is -->',
 	'right-skipcaptcha' => 'Perform CAPTCHA-triggering actions without having to go through the CAPTCHA',
 	'captcha-input-placeholder' => 'Enter text here',
-	'captcha-no-image' => 'No captcha image could be found',
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
 	'recaptcha-edit' => 'To help protect against automated edit spam, please complete the challenge below:',
 	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please complete the challenge below:',
@@ -3939,13 +3925,12 @@ $messages['zh-hans'] = array(
 令人遗憾是，这可能会使得视力不好，或者使用纯文字或声音的浏览器用户感到不便。而目前我们还没有提供声音形式的验证码。如果这阻碍了你进行正常的编辑，请和 [[{{MediaWiki:Grouppage-sysop}}|管理员]]联系获得帮助。
 点击你浏览器中的“后退”按钮返回页面编辑画面。',
 	'captcha-addurl-whitelist' => ' #<!-- 不要更改本行的內容 --> <pre>
-# 语法像下面这样: 
+# 语法像下面这样:
 # * 所有在 "#" 字符后的内容全部是注释
 # * 所有非空白行是一个正则表达式，只会对URL中的内容进行匹配
  #</pre> <!-- 不要更改本行的內容 -->',
 	'right-skipcaptcha' => '进行会触发验证码的操作时无需通过验证码',
 	'captcha-input-placeholder' => '在此处输入文字',
-	'captcha-no-image' => '找不到验证码图片',
 	'recaptcha-desc' => '用来确认编辑的验证码模组',
 	'recaptcha-edit' => '为了帮助防止自动编辑垃圾信息，请完成以下的问题：',
 	'recaptcha-addurl' => '您的编辑包括新的外部连结。为了避免自动编辑的垃圾讯息，请完成以下问题：',
@@ -4009,13 +3994,12 @@ $messages['zh-tw'] = array(
 令人遺憾是，這可能會使得視力不好，或者使用純文字或聲音的瀏覽器用戶感到不便。而目前我們還沒有提供聲音形式的驗證碼。如果這阻礙了你進行正常的編輯，請和 [[{{MediaWiki:Grouppage-sysop}}|管理員]]聯繫獲得幫助。
 點擊你瀏覽器中的“後退”按鈕返回頁面編輯畫面。',
 	'captcha-addurl-whitelist' => ' #<!-- 不要更改本行的內容 --> <pre>
-# 語法像下面這樣: 
+# 語法像下面這樣:
 # * 所有在 "#" 字符後的內容全部是注釋
 # * 所有非空白行是一個正規表示式，只會對網址中的內容進行匹配 #
  #</pre> <!-- 不要更改本行的內容 -->',
 	'right-skipcaptcha' => '進行會觸發驗證碼的操作時無需通過驗證碼',
 	'captcha-input-placeholder' => '在此處輸入文字',
-	'captcha-no-image' => '找不到驗證碼圖片',
 	'recaptcha-desc' => '用來確認編輯的驗證碼模組',
 	'recaptcha-edit' => '為了幫助防止自動编辑垃圾訊息，請完成以下的問題：',
 	'recaptcha-addurl' => '您的編輯包括新的外部連結。為了避免自動編輯的垃圾訊息，請完成以下問題：',

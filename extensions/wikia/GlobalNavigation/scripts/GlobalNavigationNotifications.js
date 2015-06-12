@@ -101,6 +101,7 @@ require(
 						controller: 'WallNotificationsExternalController',
 						method: 'getUpdateCounts',
 						format: 'json',
+						type: 'GET',
 						data: data,
 						callback: callback
 					});
@@ -252,6 +253,7 @@ require(
 				nirvana.sendRequest({
 					controller: 'WallNotificationsExternalController',
 					method: 'getUpdateWiki',
+					type: 'GET',
 					data: data,
 					callback: this.proxy(function (data) {
 						if (data.status !== true || data.html === '') {

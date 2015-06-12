@@ -225,7 +225,21 @@ ve.ui.MWReferenceDialog.prototype.getBodyHeight = function () {
  * @chainable
  */
 ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
-	var group;
+	var group,
+		toolbarGroups = [
+			// History
+			{ include: [ 'undo' ] },
+			// Style
+			{ include: [ 'bold', 'italic', 'link' ] },
+			{
+				type: 'list',
+				icon: 'text-style',
+				indicator: 'down',
+				title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+				include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
+			}
+		];
+
 	// Properties
 	if ( ref instanceof ve.dm.MWReferenceModel ) {
 		// Use an existing reference
@@ -247,7 +261,7 @@ ve.ui.MWReferenceDialog.prototype.useReference = function ( ref ) {
 		this.referenceModel.getDocument(),
 		{
 			$: this.$,
-			tools: this.constructor.static.toolbarGroups,
+			tools: toolbarGroups,
 			excludeCommands: this.constructor.static.excludeCommands,
 			importRules: this.constructor.static.getImportRules()
 		}

@@ -68,12 +68,7 @@ class ArticlesUsingMediaQuery {
 	}
 
 	public function getMemcKey() {
-		$key = '';
-		$key .= $this->app->wg->cityId;
-		$key .= 'ArticlesUsingMediaQuery_v3_';
-		$key .= md5($this->fileTitle->getDBKey());
-
-		return $key;
+		return wfMemcKey( 'ArticlesUsingMediaQuery', 'v3', md5( $this->fileTitle->getDBKey() ) );
 	}
 
 	public function unsetCache() {

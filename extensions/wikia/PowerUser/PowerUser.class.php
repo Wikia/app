@@ -24,14 +24,24 @@ class PowerUser {
 	const TYPE_LIFETIME = 'poweruser_lifetime';
 
 	/**
+	 * Name of a group rights given to PowerUsers
+	 */
+	const GROUP_NAME = 'poweruser';
+
+	/**
 	 * Requirement to meet to become a PowerUser
 	 */
 	const MIN_LIFETIME_EDITS = 2000;
 	const MIN_FREQUENT_EDITS = 140;
 
+	/**
+	 * Logging parameters
+	 */
 	const LOG_MESSAGE = 'PowerUsersLog';
-	const ACTION_ADD = 'add';
-	const ACTION_REMOVE = 'remove';
+	const ACTION_ADD_SET_OPTION = 'Add option';
+	const ACTION_ADD_GROUP = 'Add group';
+	const ACTION_REMOVE_SET_OPTION = 'Remove option';
+	const ACTION_REMOVE_GROUP = 'Remove group';
 
 	/**
 	 * A table of all poweruser properties' names
@@ -62,48 +72,153 @@ class PowerUser {
 		'sysop',
 	];
 
+	/**
+	 * An array with names of properties that
+	 * give users the PowerUser group right
+	 * @var array
+	 */
+	public static $aPowerUsersRightsMapping = [
+		self::TYPE_FREQUENT,
+		self::TYPE_LIFETIME
+	];
+
 	private $oUser;
 
 	function __construct( \User $oUser ) {
+		global $wgEnableSharedUserRightsExt;
 		$this->oUser = $oUser;
+		$this->bUseGroups = $wgEnableSharedUserRightsExt;
 	}
 
 	/**
-	 * Adds a given PowerUser property to a user
+	 * Gets current PowerUser types for a user
+	 *
+	 * @return array
+	 */
+	public function getTypesForUser() {
+		$aUserTypes = [];
+		foreach ( self::$aPowerUserProperties as $sProperty ) {
+			if ( $this->oUser->isSpecificPowerUser( $sProperty ) ) {
+				$aUserTypes[] = $sProperty;
+			}
+		}
+		return $aUserTypes;
+	}
+
+	/**
+	 * Perform all actions to make a user a PowerUser
 	 *
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
 	public function addPowerUserProperty( $sProperty ) {
+		return ( $this->addPowerUserSetOption( $sProperty )
+			&& $this->addPowerUserAddGroup( $sProperty ) );
+	}
+
+	/**
+	 * Sets a specified PowerUser option to 1 in user_properties
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool
+	 */
+	public function addPowerUserSetOption( $sProperty ) {
 		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
 			$this->oUser->setOption( $sProperty, true );
 			$this->oUser->saveSettings();
-			$this->logSuccess( $sProperty, self::ACTION_ADD );
+			$this->logSuccess( $sProperty, self::ACTION_ADD_SET_OPTION );
 			return true;
 		} else {
-			$this->logError( $sProperty, self::ACTION_ADD );
+			$this->logError( $sProperty, self::ACTION_ADD_SET_OPTION );
 			return false;
 		}
 	}
 
 	/**
-	 * Removes a given PowerUser property from a user
+	 * Adds group rights to a user if the property's name
+	 * matches one in the aPowerUsersRightsMapping array
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool Always return true until the groups is only companion
+	 */
+	public function addPowerUserAddGroup( $sProperty ) {
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& $this->bUseGroups
+			&& !in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) )
+		) {
+				\UserRights::addGlobalGroup( $this->oUser, self::GROUP_NAME );
+				$this->logSuccess( $sProperty, self::ACTION_ADD_GROUP );
+		}
+		return true;
+	}
+
+	/**
+	 * Performs all actions to downgrade a PowerUser to a user
 	 *
 	 * @param string $sProperty One of the types in consts
 	 * @return bool
 	 */
 	public function removePowerUserProperty( $sProperty ) {
-		if ( in_array( $sProperty, self::$aPowerUserProperties ) &&
-			$this->oUser->getBoolOption( $sProperty ) === true
-		) {
-			$this->oUser->setOption( $sProperty, null );
-			$this->oUser->saveSettings();
-			$this->logSuccess( $sProperty, self::ACTION_REMOVE );
+		return ( $this->removePowerUserSetOption( $sProperty )
+			&& $this->removePowerUserRemoveGroup( $sProperty ) );
+	}
+
+	/**
+	 * Sets a specified PowerUser option to 0 in user_properties
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool
+	 */
+	public function removePowerUserSetOption( $sProperty ) {
+		if ( in_array( $sProperty, self::$aPowerUserProperties ) ) {
+			if ( $this->oUser->getBoolOption( $sProperty ) === true ) {
+				$this->oUser->setOption( $sProperty, null );
+				$this->oUser->saveSettings();
+				$this->logSuccess( $sProperty, self::ACTION_REMOVE_SET_OPTION );
+			}
 			return true;
 		} else {
-			$this->logError( $sProperty, self::ACTION_REMOVE );
+			$this->logError( $sProperty, self::ACTION_REMOVE_SET_OPTION );
 			return false;
 		}
+	}
+
+	/**
+	 * Removes group rights from a user if the property's name
+	 * matches one in the aPowerUsersRightsMapping array and
+	 * a user actually has it
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool Always return true until the groups is only companion
+	 */
+	public function removePowerUserRemoveGroup( $sProperty ) {
+		if ( in_array( $sProperty, self::$aPowerUsersRightsMapping )
+			&& $this->bUseGroups
+			&& $this->isGroupForRemoval( $sProperty )
+		) {
+			\UserRights::removeGlobalGroup( $this->oUser, self::GROUP_NAME );
+			$this->logSuccess( $sProperty, self::ACTION_REMOVE_GROUP );
+		}
+		return true;
+	}
+
+	/**
+	 * Checks if removal of a property should remove a group
+	 * and if a user still has a PowerUser type that qualifies him
+	 * to have the 'poweruser' group
+	 *
+	 * @param string $sProperty One of the types in consts
+	 * @return bool
+	 */
+	public function isGroupForRemoval( $sProperty ) {
+		foreach ( self::$aPowerUsersRightsMapping as $sMappedProperty ) {
+			if ( $sMappedProperty !== $sProperty
+				&& $this->oUser->isSpecificPowerUser( $sMappedProperty )
+			) {
+				return false;
+			}
+		}
+		return in_array( self::GROUP_NAME, \UserRights::getGlobalGroups( $this->oUser ) );
 	}
 
 	/**
@@ -121,7 +236,6 @@ class PowerUser {
 	 *
 	 * @param string $sType One of the types in consts
 	 * @param string $sAction One of the actions in consts
-	 * @param int $iUserId A user's ID
 	 */
 	private function logSuccess( $sType, $sAction ) {
 		$this->info( self::LOG_MESSAGE, [
@@ -135,7 +249,6 @@ class PowerUser {
 	 *
 	 * @param string $sType One of the types in consts
 	 * @param string $sAction One of the actions in consts
-	 * @param int $iUserId A user's ID
 	 */
 	private function logError( $sType, $sAction ) {
 		$this->error( self::LOG_MESSAGE, [

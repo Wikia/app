@@ -140,7 +140,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 		var i, mwEvent, topics,
 			params = {
 				category: 'editor-ve',
-				trackingMethod: 'both'
+				trackingMethod: 'analytics'
 			};
 
 		// MW events

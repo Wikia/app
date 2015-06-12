@@ -338,6 +338,8 @@
 		 * @dataProvider changeUnconfirmedUserEmailDataProvider
 		 */
 		public function testChangeUnconfirmedUserEmail( $params, $mockUserParams, $mockSessionParams, $mockCacheParams, $expResult, $expMsg, $expErrParam ) {
+			$this->markTestSkipped( 'Needs to be refactored' );
+
 			// setup
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 
@@ -348,7 +350,7 @@
 					'get' => UserLoginHelper::LIMIT_EMAIL_CHANGES + $mockCacheParams,
 				);
 			}
-			$this->setUpMock( $mockCacheParams );
+			$this->setUpMock( $mockCacheParams ); // TODO: mock memcache in a more strict way - mock selected keys only
 
 			// test
 			$response = $this->app->sendRequest( 'UserSignupSpecial', 'changeUnconfirmedUserEmail', $params );

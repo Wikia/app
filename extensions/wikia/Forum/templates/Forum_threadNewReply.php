@@ -9,7 +9,7 @@
 			))->render() ?>
 		<? endif ?>
 		<div class="avatar"><?= AvatarService::renderAvatar($username, 30) ?></div>
-		<blockquote class="message">
+		<div class="message">
 			<? if ($wg->EnableMiniEditorExtForWall): ?>
 				<?= $app->getView('MiniEditorController', 'Editor_Header')->render() ?>
 			<? endif ?>
@@ -24,6 +24,6 @@
 				<?= $app->getView('MiniEditorController', 'Footer')->render() ?>
 			<? endif ?>
 			<div class="throbber"></div>
-		</blockquote>
+		</div>
 	</li>
 <? endif ?>

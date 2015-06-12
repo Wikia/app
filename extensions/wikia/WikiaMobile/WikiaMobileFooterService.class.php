@@ -12,6 +12,7 @@ class WikiaMobileFooterService extends WikiaService {
 	}
 
 	public function index(){
+		global $wgLang;
 
 		if ( self::$skipRendering ) {
 			return false;
@@ -28,6 +29,7 @@ class WikiaMobileFooterService extends WikiaService {
 		$this->response->setVal( 'defaultSkin', urlencode( $this->wg->User->getOption( 'skin' ) ) );
 		$this->response->setVal( 'privacyLink', $this->getLinkFromMessage( 'wikiamobile-footer-link-privacy' ) );
 		$this->response->setVal( 'feedbackLink', SpecialPage::getTitleFor( 'Contact' )->getLocalURL() );
+		$this->response->setVal( 'centralUrl', ( new WikiaLogoHelper() )->getCentralUrlForLang( $wgLang->getCode() ) );
 		return true;
 	}
 

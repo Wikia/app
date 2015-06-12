@@ -48,6 +48,10 @@ class Module {
 	 * Load Captcha.js on demand when we're getting an instance of a Captcha.
 	 */
 	public static function addCaptchaJS() {
-		\Wikia::addAssetsToOutput( 'captcha_js' );
+		// Make sure we only load FancyCaptcha library once
+		if ( !\F::app()->wg->CaptchaLibraryLoaded ) {
+			\Wikia::addAssetsToOutput( 'captcha_js' );
+			\F::app()->wg->CaptchaLibraryLoaded = true;
+		}
 	}
 }

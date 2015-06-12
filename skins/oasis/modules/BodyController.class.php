@@ -48,6 +48,10 @@ class BodyController extends WikiaController {
 	 * Returns if current layout should be applying gridlayout
 	 */
 	public static function isGridLayoutEnabled() {
+		if ( self::isOasisBreakpoints( ) ) {
+			return false;
+		}
+
 		$app = F::app();
 
 		// Don't enable when responsive layout is enabled
@@ -73,13 +77,36 @@ class BodyController extends WikiaController {
 	}
 
 	/**
+	 * @return Boolean
+	 */
+	public static function isOasisBreakpoints() {
+		global $wgOasisBreakpoints, $wgRequest, $wgLanguageCode, $wgOasisBreakpointsDE;
+
+		//For now we want to disable breakpoints for German wikis if not turn on explicitly.
+		//@TODO remove when 71Media fixes their styles and $wgOasisBreakpointsDE will retire
+		if ( strtolower( $wgLanguageCode ) == 'de' && empty( $wgOasisBreakpointsDE ) ) {
+			$wgOasisBreakpoints = false;
+		}
+
+		$wgOasisBreakpoints = $wgRequest->getBool( 'oasisbreakpoints', $wgOasisBreakpoints ) !== false;
+		return !empty( $wgOasisBreakpoints );
+	}
+
+	/**
 	 * Decide on which pages responsive / liquid layout should be turned on.
 	 * @return Boolean
 	 */
 	public static function isResponsiveLayoutEnabled() {
 		global $wgOasisResponsive;
 
-		return !empty( $wgOasisResponsive );
+		return !self::isOasisBreakpoints() && !empty( $wgOasisResponsive );
+	}
+
+	public static function isOasisTypography() {
+		global $wgOasisTypography, $wgRequest;
+
+		$wgOasisTypography = $wgRequest->getBool( 'oasistypography', $wgOasisTypography ) !== false;
+		return !empty( $wgOasisTypography );
 	}
 
 	/**
@@ -132,7 +159,7 @@ class BodyController extends WikiaController {
 			$wgExtraNamespaces, $wgExtraNamespacesLocal,
 			$wgEnableWikiAnswers, $wgEnableHuluVideoPanel,
 			$wgEnableWallEngine, $wgRequest,
-			$wgEnableForumExt, $wgAnalyticsProviderPageFairSlotIds;
+			$wgEnableForumExt;
 
 		$namespace = $wgTitle->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject($namespace);
@@ -147,10 +174,7 @@ class BodyController extends WikiaController {
 			$railModuleList = array (
 				1202 => array('Forum', 'forumRelatedThreads', null),
 				1201 => array('Forum', 'forumActivityModule', null),
-				1490 => array('Ad', 'Index', [
-					'slotName' => 'TOP_RIGHT_BOXAD',
-					'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
-				]),
+				1490 => array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']),
 			);
 
 			// Include additional modules from other extensions (like chat)
@@ -200,10 +224,6 @@ class BodyController extends WikiaController {
 						$railModuleList[$huluVideoPanelKey] = array('HuluVideoPanel', 'Index', null);
 					}
 				}
-			} else if( $wgTitle->isSpecial('PageLayoutBuilderForm') ) {
-				$railModuleList = array (
-					1500 => array('PageLayoutBuilderForm', 'Index', null)
-				);
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = array();
@@ -274,14 +294,8 @@ class BodyController extends WikiaController {
 			return array();
 		}
 
-		$railModuleList[1440] = array('Ad', 'Index', [
-			'slotName' => 'TOP_RIGHT_BOXAD',
-			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['MEDREC']) ? $wgAnalyticsProviderPageFairSlotIds['MEDREC'] : null
-		]);
-		$railModuleList[1100] = array('Ad', 'Index', [
-			'slotName' => 'LEFT_SKYSCRAPER_2',
-			'pageFairId' => isset($wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER']) ? $wgAnalyticsProviderPageFairSlotIds['SKYSCRAPER'] : null
-		]);
+		$railModuleList[1440] = array('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
+		$railModuleList[1100] = array('Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2']);
 
 		unset($railModuleList[1450]);
 
@@ -438,8 +452,15 @@ class BodyController extends WikiaController {
 
 		// MonetizationModule Extension
 		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-			$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
+				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
+				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
+			} else {
+				$this->monetizationModules = [
+					MonetizationModuleHelper::SLOT_TYPE_IN_CONTENT => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_IN_CONTENT'] ),
+					MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY => $this->app->renderView( 'Ad', 'Index', ['slotName' => 'MON_BELOW_CATEGORY'] ),
+				];
+			}
 			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 

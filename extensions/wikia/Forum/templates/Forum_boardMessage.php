@@ -40,7 +40,7 @@
 			<? endif ?>
 		</a>
 	</div>
-	<blockquote class="speech-bubble-message">
+	<div class="speech-bubble-message">
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Header', array(
 				'attributes' => array(
@@ -98,5 +98,5 @@
 				<button class="wikia-button cancel-edit secondary"><?php echo wfMsg('wall-button-cancel-changes'); ?></button>
 			</div>
 		</div>
-	</blockquote>
+	</div>
 </li>

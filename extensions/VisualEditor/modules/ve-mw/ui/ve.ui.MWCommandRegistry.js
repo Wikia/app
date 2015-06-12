@@ -128,7 +128,7 @@ ve.ui.commandRegistry.register(
 				rows: 3,
 				cols: 4,
 				type: 'mwTable',
-				attributes: { wikitable: true }
+				attributes: { 'article-table': true }
 			} ],
 			supportedSelections: ['linear']
 		}

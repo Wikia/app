@@ -313,7 +313,7 @@ var WikiaBar = {
 			this.hide();
 		}
 
-		if (window.wgAction == 'edit' && !window.wgIsCodePage) {
+		if (window.wgAction == 'edit' && !window.wgEnableCodePageEditor) {
 			var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
 				editorInstance = WE.getInstance();
 
@@ -405,7 +405,7 @@ var WikiaBar = {
 				action: action,
 				category: category,
 				label: label,
-				trackingMethod: 'ga',
+				trackingMethod: 'analytics',
 				value: value
 			}, params);
 		}
