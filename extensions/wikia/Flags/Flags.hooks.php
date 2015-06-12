@@ -99,4 +99,8 @@ class Hooks {
 
 		return true;
 	}
+
+	public static function onLinksUpdateInsertTemplates( Array $templates ) {
+		
+	}
 }
