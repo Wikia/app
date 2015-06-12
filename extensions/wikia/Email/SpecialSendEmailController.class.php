@@ -6,7 +6,6 @@ namespace Email;
 class SpecialSendEmailController extends \WikiaSpecialPageController {
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-	const REQUIRED_USER_RIGHT = "access-sendemail";
 	const PAGE_NAME = "SendEmail";
 
 	public function __construct() {
@@ -30,8 +29,8 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 	 * @throws \PermissionsError
 	 */
 	private function assertCanAccess() {
-		if ( !$this->wg->User->isAllowed( self::REQUIRED_USER_RIGHT ) ) {
-			throw new \PermissionsError( self::REQUIRED_USER_RIGHT );
+		if ( !Helper::userCanAccess() ) {
+			throw new \PermissionsError( Helper::REQUIRED_USER_RIGHT );
 		}
 	}
 
@@ -135,11 +134,25 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		$emailControllerClasses = [];
 		foreach ( $allClasses as $className => $classPath ) {
 			if ( preg_match( EmailController::EMAIL_CONTROLLER_REGEX, $className, $matches ) ) {
-				$emailControllerClasses[] = $matches[0];
+				if ( !$this->isClassAbstract( $className ) ) {
+					$emailControllerClasses[] = $matches[0];
+				}
 			}
 		}
 
 		return $emailControllerClasses;
+	}
+
+	/**
+	 * Checks if the given class is abstract or not. We only want concrete classes when
+	 * creating the forms for Special:SendEmail. The abstract classes these concrete
+	 * classes inherit from create forms which throw fatals when submitted.
+	 * @param $className
+	 * @return bool
+	 */
+	public function isClassAbstract( $className ) {
+		$reflectionClass = new \ReflectionClass( $className );
+		return $reflectionClass->isAbstract();
 	}
 
 	/**

@@ -10,7 +10,8 @@ class MoveNotice extends Maintenance {
 	const
 		SECTION_DEFAULT = 0,
 		SECTION_ALL = 'all',
-		EDIT_SUMMARY = 'Moving content notices to flags.';
+		EDIT_SUMMARY = 'Moving notices templates to our new Flags feature.',
+		EDIT_USER = 'WikiaBot';
 
 	private
 		$log = '',
@@ -48,7 +49,7 @@ class MoveNotice extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId, $wgParser;
+		global $wgCityId, $wgParser, $wgUser;
 
 		$this->app = F::app();
 
@@ -112,7 +113,7 @@ class MoveNotice extends Maintenance {
 
 		$title = Title::newFromText( 'Template:' . $this->templateName );
 
-		$rows = $this->showIndirectLinks( 0, $title, 0 );
+		$rows = $title->getIndirectLinks();
 
 		if ( empty( $rows ) ) {
 			$this->addToLog( "[WARNING] This template is not used \n" );
@@ -132,6 +133,11 @@ class MoveNotice extends Maintenance {
 		}
 
 		$this->writeToLog();
+
+		/**
+		 * Perform all edits as WikiaBot
+		 */
+		$wgUser = User::newFromName( self::EDIT_USER );
 
 		foreach ( $rows as $row ) {
 			$this->log = '';
@@ -185,7 +191,7 @@ class MoveNotice extends Maintenance {
 				}
 
 				if ( strcmp( $content, $text ) !== 0 ) {
-					$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_SUPPRESS_RC | EDIT_FORCE_BOT );
+					$wiki->doEdit( $text, self::EDIT_SUMMARY );
 				}
 			}
 
@@ -410,153 +416,6 @@ class MoveNotice extends Maintenance {
 			$this->logFile = fopen( $logName, 'a' );
 		}
 	}
-
-	/**
-	 * Get list of pages with searched template
-	 * Based on Special:Whatlinkshere showIndirectLinks method
-	 */
-	public function showIndirectLinks( $level, $target ) {
-		global $wgContentNamespaces;
-
-		$rows = [];
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$options = [];
-
-		$hidelinks = false;
-		$hideredirs = false;
-		$hidetrans = false;
-		$hideimages = false; //$target->getNamespace() != NS_FILE;
-
-		$fetchlinks = ( !$hidelinks || !$hideredirs );
-
-		// Make the query
-		$plConds = [
-			'page_id=pl_from',
-			'pl_namespace' => $target->getNamespace(),
-			'pl_title' => $target->getDBkey(),
-		];
-		if( $hideredirs ) {
-			$plConds['rd_from'] = null;
-		} elseif( $hidelinks ) {
-			$plConds[] = 'rd_from is NOT NULL';
-		}
-
-		$tlConds = [
-			'page_id=tl_from',
-			'tl_namespace' => $target->getNamespace(),
-			'tl_title' => $target->getDBkey(),
-		];
-
-		$ilConds = [
-			'page_id=il_from',
-			'il_to' => $target->getDBkey(),
-		];
-
-		if ( is_array( $wgContentNamespaces ) && !empty( $wgContentNamespaces ) ) {
-			$namespaces = implode( ',', $wgContentNamespaces );
-
-			$plConds[] = 'page_namespace IN (' . $namespaces . ')';
-			$tlConds[] = 'page_namespace IN (' . $namespaces . ')';
-			$ilConds[] = 'page_namespace IN (' . $namespaces . ')';
-		} elseif ( is_int( $wgContentNamespaces ) ) {
-			$plConds['page_namespace'] = $wgContentNamespaces;
-			$tlConds['page_namespace'] = $wgContentNamespaces;
-			$ilConds['page_namespace'] = $wgContentNamespaces;
-		}
-
-		// Enforce join order, sometimes namespace selector may
-		// trigger filesorts which are far less efficient than scanning many entries
-		$options[] = 'STRAIGHT_JOIN';
-
-		//$options['LIMIT'] = $queryLimit;
-		$fields = [ 'page_id', 'page_namespace', 'page_title', 'rd_from' ];
-
-		$joinConds = [
-			'redirect' => [
-				'LEFT JOIN',
-				[
-					'rd_from = page_id',
-					'rd_namespace' => $target->getNamespace(),
-					'rd_title' => $target->getDBkey(),
-					'(rd_interwiki is NULL) or (rd_interwiki = \'\')',
-				]
-			]
-		];
-
-		if( $fetchlinks ) {
-			$options['ORDER BY'] = 'pl_from';
-			$plRes = $dbr->select(
-				[ 'pagelinks', 'page', 'redirect' ],
-				$fields,
-				$plConds,
-				__METHOD__,
-				$options,
-				$joinConds
-			);
-		}
-
-		if( !$hidetrans ) {
-			$options['ORDER BY'] = 'tl_from';
-			$tlRes = $dbr->select(
-				[ 'templatelinks', 'page', 'redirect' ],
-				$fields,
-				$tlConds,
-				__METHOD__,
-				$options,
-				$joinConds
-			);
-		}
-
-		if( !$hideimages ) {
-			$options['ORDER BY'] = 'il_from';
-			$ilRes = $dbr->select(
-				[ 'imagelinks', 'page', 'redirect' ],
-				$fields,
-				$ilConds,
-				__METHOD__,
-				$options,
-				$joinConds
-			);
-		}
-
-		// Read the rows into an array and remove duplicates
-		// templatelinks comes second so that the templatelinks row overwrites the
-		// pagelinks row, so we get (inclusion) rather than nothing
-		if( $fetchlinks ) {
-			foreach ( $plRes as $row ) {
-				$row->is_template = 0;
-				$row->is_image = 0;
-				$rows[$row->page_id] = $row;
-			}
-		}
-		if( !$hidetrans ) {
-			foreach ( $tlRes as $row ) {
-				$row->is_template = 1;
-				$row->is_image = 0;
-				$rows[$row->page_id] = $row;
-			}
-		}
-		if( !$hideimages ) {
-			foreach ( $ilRes as $row ) {
-				$row->is_template = 0;
-				$row->is_image = 1;
-				$rows[$row->page_id] = $row;
-			}
-		}
-
-		foreach ( $rows as $row ) {
-
-			$nt = Title::makeTitle( $row->page_namespace, $row->page_title );
-
-			if ( $row->rd_from && $level < 2 ) {
-				$this->showIndirectLinks( $level + 1, $nt );
-			}
-		}
-
-		return $rows;
-	}
-
 }
 
 $maintClass = 'MoveNotice';

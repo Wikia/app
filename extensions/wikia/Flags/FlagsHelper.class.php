@@ -10,7 +10,7 @@
 
 namespace Flags;
 
-use Flags\Views\FlagView;
+use Flags\Models\FlagType;
 
 class FlagsHelper {
 
@@ -130,9 +130,10 @@ class FlagsHelper {
 
 	/**
 	 * Checks if a request for flags does not come from an edit page
+	 * Used for determining whether flags should be injected to parsed output
 	 * @return bool
 	 */
-	public function shouldDisplayFlags() {
+	public function shouldInjectFlags() {
 		global $wgTitle, $wgRequest;
 
 		return
@@ -143,8 +144,83 @@ class FlagsHelper {
 			/* Don't display flags on edit pages that are content namespaces */
 			&& !in_array(
 				$wgRequest->getVal( 'action', 'view' ),
-				[ 'edit', 'formedit' , 'history' ]
+				[ 'edit', 'formedit' , 'history', 'visualeditor' ]
 			);
+	}
+
+	/**
+	 * Checks if flags should be displayed on a page
+	 * @return bool
+	 */
+	public function shouldDisplayFlags() {
+		global $wgTitle;
+
+		return
+			/* Don't display flags for non existent pages */
+			$wgTitle->exists()
+			/* Display flags only on content namespaces */
+			&& \Wikia::isContentNamespace();
+	}
+
+	/**
+	 * Checks if flags can be edited on current page to decide whether include edit modal
+	 * @return bool
+	 */
+	public function areFlagsEditable() {
+		global $wgHideFlagsExt, $wgTitle;
+		return
+			/* Should signs of Flags extension be hidden? */
+			$wgHideFlagsExt !== true
+			/* Check condition for view */
+			&& $this->shouldDisplayFlags()
+			/* Don't display flags when user is not allowed to edit */
+			&& $wgTitle->userCan( 'edit' );
+	}
+
+	/**
+	 * Get a localized and human-readable names of Flags targets (readers and contibutors)
+	 *
+	 * @return array An array of localized names of targets of Flags
+	 */
+	public function getFlagTargetFullNames() {
+		$flagTargetFullNames = [];
+
+		/**
+		 * Generates the following messages:
+		 * flags-target-readers
+		 * flags-target-contributors
+		 */
+		foreach ( FlagType::$flagTargeting as $flagTargetId => $flagTargetKey ) {
+			$flagTargetFullNames[$flagTargetId] = wfMessage( "flags-target-{$flagTargetKey}" )->escaped();
+		}
+
+		return $flagTargetFullNames;
+	}
+
+	/**
+	 * Get a localized and human-readable names of Flags groups
+	 *
+	 * @return array An array of localized names of groups of Flags
+	 */
+	public function getFlagGroupsFullNames() {
+		$flagGroupsFullNames = [];
+
+		/**
+		 * Generates the following messages:
+		 * flags-groups-spoiler
+		 * flags-groups-disambig
+		 * flags-groups-canon
+		 * flags-groups-stub
+		 * flags-groups-delete
+		 * flags-groups-improvements
+		 * flags-groups-status
+		 * flags-groups-other
+		 */
+		foreach ( FlagType::$flagGroups as $flagGroupId => $flagGroupKey ) {
+			$flagGroupsFullNames[$flagGroupId] = wfMessage( "flags-groups-{$flagGroupKey}" )->escaped();
+		}
+
+		return $flagGroupsFullNames;
 	}
 
 	/**

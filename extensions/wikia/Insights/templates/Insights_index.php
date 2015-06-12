@@ -10,7 +10,7 @@
 					<a href="<?= InsightsHelper::getSubpageLocalUrl( $key ) ?>">
 						<h3><?= wfMessage( InsightsHelper::INSIGHT_SUBTITLE_MSG_PREFIX . $key )->escaped() ?></h3>
 					</a>
-					<p><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $key )->escaped() ?></p>
+					<p><?= wfMessage( InsightsHelper::INSIGHT_DESCRIPTION_MSG_PREFIX . $key )->parse() ?></p>
 				</li>
 			<?php endforeach; ?>
 		</ul>
