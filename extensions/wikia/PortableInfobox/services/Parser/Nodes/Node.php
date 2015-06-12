@@ -124,7 +124,7 @@ class Node {
 		if ( isset($attr) && in_array( $attr, $supportedAttributes ) ) {
 			return $attr;
 		}
-		return (string)$xmlNode->{self::DEFAULT_TAG_NAME};
+		return static::DEFAULT_TAG_NAME;
 	}
 
 	protected function getRawInfoboxData( $key ) {
