@@ -74,6 +74,7 @@ class AdEngine2ExitstitialHooks {
 		if ( !$wgEnableOutboundScreenExt
 			|| $wgRTEParserEnabled    // skip logic when in FCK
 			|| empty( $wgTitle )      // setup functions can call MakeExternalLink before wgTitle is set
+			|| filter_var( $url, FILTER_VALIDATE_URL ) === false
 			|| strpos( $url, 'http://' ) !== 0
 		) {
 			return;
