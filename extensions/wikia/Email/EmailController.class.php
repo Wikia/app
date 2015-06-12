@@ -97,7 +97,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Fatal
 	 */
 	public function assertCanAccessController() {
-		if ( $this->wg->User->isStaff() ) {
+		if ( Helper::userCanAccess() ) {
 			return;
 		}
 
@@ -567,6 +567,7 @@ abstract class EmailController extends \WikiaController {
 
 	/**
 	 * Get the common form fields used by all emails on Special:SendEmail.
+	 *
 	 * @return array
 	 */
 	private static function getBaseFormFields() {
@@ -636,6 +637,7 @@ abstract class EmailController extends \WikiaController {
 	 * form fields which are specific to that email and are required for it's form found on
 	 * Special:SendEmail (eg, the WatchedPage email requires a Title and 2 revision IDs, in addition
 	 * to all of the fields from EmailController::getBaseFormFields).
+	 *
 	 * @return array
 	 */
 	protected static function getEmailSpecificFormFields() {
@@ -645,6 +647,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * Get the legend to display over this emails Special:SendEmail form. eg "WatchedPage Email" or
 	 * "ForgottenPassword Email"
+	 *
 	 * @return string
 	 */
 	private static function getLegendName() {
