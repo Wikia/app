@@ -19,15 +19,33 @@ class FlagsLogTask extends BaseTask {
 	public function logFlagChange( array $flags, $pageId, $actionType ) {
 		global $wgCityId;
 
-		foreach ( $flags as $i => $flag ) {
-			$flagTypeId = $flag['flag_type_id'];
-			$title = \Title::newFromID( $pageId );
-			$flagType = new FlagType();
-			$wikiaFlagTypes = $flagType->getFlagTypesForWikia( $wgCityId );
+		$app = \F::app();
+		$wikiaFlagTypesResponse = $app->sendRequest(
+			'FlagsApiController',
+			'getFlagTypes',
+			[],
+			true,
+			\WikiaRequest::EXCEPTION_MODE_RETURN
+		);
+		$wikiaFlagTypes = $wikiaFlagTypesResponse->getData();
 
-			/* Log info about changes */
-			$log = new \LogPage( 'flags' );
-			$log->addEntry( $actionType, $title, '', [ $wikiaFlagTypes[$flagTypeId]['flag_name'] ], $this->createdByUser() );
+		if ( $wikiaFlagTypes['status'] === true ) {
+			foreach ( $flags as $i => $flag ) {
+				$flagTypeId = $flag['flag_type_id'];
+				$title = \Title::newFromID( $pageId );
+
+				/* Log info about changes */
+				$log = new \LogPage( 'flags' );
+				$log->addEntry(
+					$actionType,
+					$title,
+					'',
+					[ $wikiaFlagTypes['data'][$flagTypeId]['flag_name'] ],
+					$this->createdByUser()
+				);
+			}
+		} else {
+			$this->error( "No flags types found for wikia (city_id:$wgCityId)" );
 		}
 
 	}
