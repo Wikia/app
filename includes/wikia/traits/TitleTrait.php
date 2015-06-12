@@ -34,7 +34,7 @@ trait TitleTrait {
 
 		// Make the query
 		$plConds = [
-			'page_id' => 'pl_from',
+			'page_id=pl_from',
 			'pl_namespace' => $this->getNamespace(),
 			'pl_title' => $this->getDBkey(),
 		];
@@ -46,13 +46,13 @@ trait TitleTrait {
 		}
 
 		$tlConds = [
-			'page_id' => 'tl_from',
+			'page_id=tl_from',
 			'tl_namespace' => $this->getNamespace(),
 			'tl_title' => $this->getDBkey(),
 		];
 
 		$ilConds = [
-			'page_id' => 'il_from',
+			'page_id=il_from',
 			'il_to' => $this->getDBkey(),
 		];
 
@@ -77,7 +77,7 @@ trait TitleTrait {
 			'redirect' => [
 				'LEFT JOIN',
 				[
-					'rd_from' => 'page_id',
+					'rd_from = page_id',
 					'rd_namespace' => $this->getNamespace(),
 					'rd_title' => $this->getDBkey(),
 					'(rd_interwiki is NULL) or (rd_interwiki = \'\')',
