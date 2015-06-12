@@ -10,6 +10,12 @@ class SimpleXmlUtilTest extends WikiaBaseTest {
 		$this->simpleXmlUtil = \Wikia\PortableInfobox\Helpers\SimpleXmlUtil::getInstance();
 	}
 
+	public function tearDown() {
+		// we use libxml only for tests here
+		libxml_clear_errors();
+		parent::tearDown();
+	}
+
 	/**
 	 * @dataProvider testGetInnerXMLDataProvider
 	 */
