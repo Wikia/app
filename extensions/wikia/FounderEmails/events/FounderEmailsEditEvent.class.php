@@ -87,8 +87,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'$WIKIURL' => $foundingWiki->city_url,
 		];
 
-		$msgKeys = [];
-
 		foreach ( $user_ids as $user_id ) {
 			$user = User::newFromId( $user_id );
 			if ( $this->shouldSkipUser( $user, $eventData ) ) {
@@ -100,6 +98,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 			self::addParamsUser( $wgCityId, $user->getName(), $emailParams );
 			$mailCategory = $mailKey = '';
+			$msgKeys = [];
 
 			if ( $this->hasHitNotificationLimit( $user ) ) {
 				$msgKeys['subject'] = 'founderemails-lot-happening-subject';
