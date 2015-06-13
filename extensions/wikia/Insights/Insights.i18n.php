@@ -37,11 +37,11 @@ $messages['en'] = array(
 	'insights-notification-message-fixed-wantedpages' => 'Thanks for making this page!',
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
 
-	'insights-list-subtitle-unconvertedinfoboxes' => 'Unconverted Infoboxes',
-	'insights-list-description-unconvertedinfoboxes' => 'The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|Infobox markup]] so they render appropriately to all visitors.',
-	'insights-notification-message-inprogress-unconvertedinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
-	'insights-notification-message-fixed-unconvertedinfoboxes' => 'Awesome! The infobox on this page has been converted.',
-	'insights-notification-next-item-unconvertedinfoboxes' => 'Convert the next infobox.',
+	'insights-list-subtitle-nonportableinfoboxes' => 'Non-portable infoboxes',
+	'insights-list-description-nonportableinfoboxes' => 'The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors.',
+	'insights-notification-message-inprogress-nonportableinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
+	'insights-notification-message-fixed-nonportableinfoboxes' => 'Awesome! The infobox on this page has been converted.',
+	'insights-notification-next-item-nonportableinfoboxes' => 'Convert the next infobox.',
 
 	'insights-sort-label' => 'Sort by',
 	'insights-sort-pv7' => 'Page views, last week',

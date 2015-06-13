@@ -4,13 +4,23 @@ namespace Wikia\PortableInfobox\Parser\Nodes;
 use Wikia\PortableInfobox\Parser\XmlParser;
 
 class NodeGroup extends Node {
+	const DATA_LAYOUT_ATTR_NAME = 'layout';
+	const DEFAULT_TAG_NAME = 'default';
+
+	private $supportedGroupLayouts = [
+		'default',
+		'horizontal'
+	];
 
 	public function getData() {
 		$nodeFactory = new XmlParser( $this->infoboxData );
 		if ( $this->externalParser ) {
 			$nodeFactory->setExternalParser( $this->externalParser );
 		}
-		return [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode, $this ) ];
+
+		$layout = $this->getXmlAttributeFromSupported( $this->xmlNode, self::DATA_LAYOUT_ATTR_NAME, $this->supportedGroupLayouts);
+		$value = $nodeFactory->getDataFromNodes( $this->xmlNode, $this );
+		return [ 'value' =>  $value, 'layout' => $layout ];
 	}
 
 	public function isEmpty( $data ) {
