@@ -6,11 +6,16 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 	var timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0];
 
 	function encodeAsQueryString(extraParams) {
-		var out = [], key;
+		var out = [], key, keys = [], i, len;
 		for (key in extraParams) {
 			if (extraParams.hasOwnProperty(key)) {
-				out.push(key + '=' + extraParams[key]);
+				keys.push(key);
 			}
+		}
+		keys.sort();
+		for (i = 0, len = keys.length; i < len; i += 1) {
+			key = keys[i];
+			out.push(key + '=' + extraParams[key]);
 		}
 		return out.join(';');
 	}
@@ -64,6 +69,9 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 		}
 
 		gaValue = Math.round(value);
+
+		// Empty action is not allowed by Google Analytics, thus:
+		action = action || 'nodata';
 
 		tracker.track({
 			ga_category: category,

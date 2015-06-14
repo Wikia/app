@@ -302,7 +302,7 @@
           // wikia change - start
           suggestion = this.suggestions[i];
         div = $((me.selectedIndex === i ? '<div class="' + this.options.selectedClass + '"' : '<div')
-            + ' title="' + suggestion + '">' + f(suggestion, this.data[i], v)
+            + ' title="' + $.htmlentities(suggestion) + '">' + f($.htmlentities(suggestion), this.data[i], $.htmlentities(v))
             + '</div>');
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));

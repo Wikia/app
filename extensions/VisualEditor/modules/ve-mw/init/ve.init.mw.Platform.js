@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
-
 /**
  * Initialization MediaWiki platform.
  *
@@ -20,8 +18,9 @@ ve.init.mw.Platform = function VeInitMwPlatform() {
 	ve.init.Platform.call( this );
 
 	// Properties
-	this.externalLinkUrlProtocolsRegExp = new RegExp( '^(' + mw.config.get( 'wgUrlProtocols' ) + ')' );
-	this.modulesUrl = mw.config.get( 'wgExtensionAssetsPath' ) + '/VisualEditor/modules';
+	this.externalLinkUrlProtocolsRegExp = new RegExp(
+		'^(' + mw.config.get( 'wgUrlProtocols' ) + ')'
+	);
 	this.parsedMessages = {};
 	this.linkCache = new ve.init.mw.LinkCache();
 };
@@ -30,16 +29,23 @@ ve.init.mw.Platform = function VeInitMwPlatform() {
 
 OO.inheritClass( ve.init.mw.Platform, ve.init.Platform );
 
+/* Static Methods */
+
+/** @inheritdoc */
+ve.init.mw.Platform.static.getSystemPlatform = function () {
+	return $.client.profile().platform;
+};
+
+/** @inheritdoc */
+ve.init.mw.Platform.static.isInternetExplorer = function () {
+	return $.client.profile().name === 'msie';
+};
+
 /* Methods */
 
 /** @inheritdoc */
 ve.init.mw.Platform.prototype.getExternalLinkUrlProtocolsRegExp = function () {
 	return this.externalLinkUrlProtocolsRegExp;
-};
-
-/** @inheritdoc */
-ve.init.mw.Platform.prototype.getModulesUrl = function () {
-	return this.modulesUrl;
 };
 
 /** @inheritdoc */
@@ -51,7 +57,7 @@ ve.init.mw.Platform.prototype.addMessages = function ( messages ) {
  * @method
  * @inheritdoc
  */
-ve.init.mw.Platform.prototype.getMessage = ve.bind( mw.msg, mw );
+ve.init.mw.Platform.prototype.getMessage = mw.msg.bind( mw );
 
 /** @inheritdoc */
 ve.init.mw.Platform.prototype.addParsedMessages = function ( messages ) {
@@ -62,17 +68,12 @@ ve.init.mw.Platform.prototype.addParsedMessages = function ( messages ) {
 
 /** @inheritdoc */
 ve.init.mw.Platform.prototype.getParsedMessage = function ( key ) {
-	if ( key in this.parsedMessages ) {
+	if ( Object.prototype.hasOwnProperty.call( this.parsedMessages, key ) ) {
 		// Prefer parsed results from VisualEditorDataModule if available.
 		return this.parsedMessages[key];
 	}
 	// Fallback to regular messages, with mw.message html escaping applied.
 	return mw.message( key ).escaped();
-};
-
-/** @inheritdoc */
-ve.init.mw.Platform.prototype.getSystemPlatform = function () {
-	return $.client.profile().platform;
 };
 
 /** @inheritdoc */
@@ -87,7 +88,7 @@ ve.init.mw.Platform.prototype.getLanguageCodes = function () {
 ve.init.mw.Platform.prototype.getLanguageName = function ( code ) {
 	var languageNames = mw.language.getData( mw.config.get( 'wgUserLanguage' ), 'languageNames' ) ||
 		$.uls.data.getAutonyms();
-	return languageNames[code];
+	return languageNames[code] || '';
 };
 
 /**
@@ -104,15 +105,9 @@ ve.init.mw.Platform.prototype.getLanguageDirection = $.uls.data.getDir;
 
 /** @inheritdoc */
 ve.init.mw.Platform.prototype.getUserLanguages = function () {
-	var lang = mw.config.get( 'wgUserLanguage' ),
-		langParts = lang.split( '-' ),
-		langs = [ lang ];
-
-	if ( langParts.length > 1 ) {
-		langs.push( langParts[0] );
-	}
-
-	return langs;
+	// Wikia change
+	return [ mw.config.get( 'wgUserLanguage' ), mw.config.get( 'wgContentLanguage' ) ];
+	//return mw.language.getFallbackLanguageChain();
 };
 
 /* Initialization */
@@ -121,6 +116,6 @@ ve.init.platform = new ve.init.mw.Platform();
 
 /* Extension */
 
-OO.ui.getUserLanguages = ve.bind( ve.init.platform.getUserLanguages, ve.init.platform );
+OO.ui.getUserLanguages = ve.init.platform.getUserLanguages.bind( ve.init.platform );
 
-OO.ui.msg = ve.bind( ve.init.platform.getMessage, ve.init.platform );
+OO.ui.msg = ve.init.platform.getMessage.bind( ve.init.platform );

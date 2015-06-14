@@ -19,7 +19,7 @@ fieldset {
 .input-group {
 	margin: 0 0 10px 0;
 
-	input {
+	input:not([type=checkbox]) {
 		background-color: $transparent;
 		border: {
 			radius: 2px;
@@ -53,7 +53,7 @@ fieldset {
 
 .success:not(.birthday-group) {
 	background: {
-		image: url('/extensions/wikia/UserLogin/images/check.png'); /* base64 */
+		image: url('/extensions/wikia/UserLogin/images/check.png'); /* inline */
 		position: 95% 50%;
 		size: 14px 10px;
 		repeat: no-repeat;
@@ -69,7 +69,7 @@ fieldset {
 select {
 	background: {
 		color: $transparent;
-		image: url('/extensions/wikia/UserLogin/images/chevronline.png'); /* base64 */
+		image: url('/extensions/wikia/UserLogin/images/chevronline.png'); /* inline */
 		size: contain;
 		position: center right;
 		repeat: no-repeat;
@@ -111,10 +111,6 @@ input[type=submit] {
 
 .submit-pane {
 	margin-top: 25px;
-}
-
-.login a {
-	font-weight: 800;
 }
 
 //ToDo: appropriate styles for confirmation login page

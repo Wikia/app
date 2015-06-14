@@ -16,7 +16,7 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
-		// Note: if these change make sure to update UserLoginFacebookForm class also
+
 		if ( $request->getText( 'userloginext01', '' ) != '' ) {
 			$this->mUsername = $request->getText( 'userloginext01', '' );
 		}
@@ -52,24 +52,30 @@ class UserLoginForm extends LoginForm {
 		$this->wpUserBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
 	}
 
-	// add new account
+	/**
+	 * Adds a new user account and sends a confirmation email.
+	 *
+	 * @return User an instance of User on success; null otherwise.
+	 * @throws PermissionsError
+	 * @throws ReadOnlyError
+	 */
 	public function addNewAccount() {
 		$u = $this->addNewAccountInternal();
-		if( $u == null )
-			return false;
 
-		// send confirmation email
-		$userLoginHelper = new UserLoginHelper();
-		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername, $u );
-		$this->mainLoginForm( $result['msg'], $result['result'] );
-
+		if ( $u instanceof User ) {
+			// send confirmation email
+			$userLoginHelper = new UserLoginHelper();
+			$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
+			$this->mainLoginForm( $result['msg'], $result['result'] );
+		}
+        
 		return $u;
 	}
 
 	// add new accout by proxy
 	public function addNewAccountMailPassword() {
 		$u = $this->addNewAccountInternal();
-		if ($u == null) {
+		if ( ! $u ) {
 			return false;
 		}
 
@@ -205,6 +211,13 @@ class UserLoginForm extends LoginForm {
 		return $result;
 	}
 
+	/**
+	 * Adds a user account going through all MW built-in checks.
+	 *
+	 * @return bool|User an instance of User on success, boolean false otherwise.
+	 * @throws PermissionsError
+	 * @throws ReadOnlyError
+	 */
 	public function addNewAccountInternal() {
 		if (!$this->initValidationUsername()) {
 			return false;
@@ -231,11 +244,34 @@ class UserLoginForm extends LoginForm {
 		$this->errParam = $errParam;
 	}
 
-	public function initUser( $u, $autocreate, $skipConfirm = false ) {
+	public function initUser( User &$u, $autocreate, $skipConfirm = false ) {
 		global $wgCityId;
-		$u = parent::initUser( $u, $autocreate );
+		if ( ! parent::initUser( $u, $autocreate ) ) {
+			return false;
+		}
+
+		/*
+		 * Remove when SOC-217 ABTest is finished
+		 */
+		$isAllowRegisterUnconfirmed = $this->isAllowedRegisterUnconfirmed();
+		/*
+		 * end remove
+		 */
 
 		if ( $skipConfirm === false ) {
+			/*
+			 * Remove when SOC-217 ABTest is finished
+			 */
+			$u->setOption(
+				UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME,
+				$isAllowRegisterUnconfirmed
+					? UserLoginSpecialController::NOT_CONFIRMED_LOGIN_ALLOWED
+					: UserLoginSpecialController::NOT_CONFIRMED_LOGIN_NOT_ALLOWED
+			);
+			/*
+			 * end remove
+			 */
+
 			//Set properties that will require user to confirm email after signup
 			$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
 			$u->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
@@ -246,7 +282,17 @@ class UserLoginForm extends LoginForm {
 
 		wfRunHooks( 'AddNewAccount', array( $u, false ) );
 
-		return $u;
+		/*
+		 * Remove when SOC-217 ABTest is finished
+		 */
+		if ( $isAllowRegisterUnconfirmed ) {
+			$u->setCookies();
+		}
+		/*
+		 * end remove
+		 */
+
+		return true;
 	}
 
 	public function userNotPrivilegedMessage() {
@@ -276,4 +322,24 @@ class UserLoginForm extends LoginForm {
 		return false;
 	}
 
+
+	/*
+	 * Remove when SOC-217 ABTest is finished
+	 */
+	/**
+	 * Check if user is allowed to register account without email confirmation
+	 *
+	 * @return bool
+	 */
+	public function isAllowedRegisterUnconfirmed() {
+		$registerUnconfirmedCookie = $this->getRequest()->getCookie( 'RegisterUnconfirmed' );
+
+		if ( !empty( F::app()->wg->EnableRegisterUnconfirmed ) && !empty( $registerUnconfirmedCookie ) ) {
+			return true;
+		}
+		return false;
+	}
+	/*
+	 * end remove
+	 */
 }

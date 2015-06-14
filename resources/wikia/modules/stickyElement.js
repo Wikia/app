@@ -122,6 +122,8 @@ define('wikia.stickyElement', [
 		 */
 		return {
 			init: init,
+			updatePosition: updatePosition,
+			updateSize: updateSize,
 			sourceElementPosition: sourceElementPosition
 		};
 	};

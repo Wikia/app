@@ -39,7 +39,7 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 	$input['img_minor_mime'] = 'swf';
 	$input['img_sha1'] = '';
 
-	wfWaitForSlaves( 5 );
+	wfWaitForSlaves();
 	$dbw->insert( 'image', $input, 'fixNYCVideo', 'IGNORE' );
 
 	echo "Inserted video: " . $input['img_name'] . "\n";

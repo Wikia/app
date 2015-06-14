@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80",
+			"Rotemliss",
+			"YaronSh"
+		]
+	},
+	"semanticdrilldown-desc": "ממשק מעבר מהיר לניווט במידע סמנטי",
+	"specialpages-group-sd_group": "מעבר מהיר במידע סמנטי",
+	"browsedata": "עיון בנתונים",
+	"sd_browsedata_choosecategory": "בחירת קטגוריה",
+	"sd_browsedata_viewcategory": "צפייה בקטגוריה",
+	"sd_browsedata_docu": "לחצו על פריט אחד או יותר להלן כדי לצמצם את התוצאות.",
+	"sd_browsedata_subcategory": "קטגוריית משנה",
+	"sd_browsedata_other": "אחר",
+	"sd_browsedata_none": "ללא",
+	"sd_browsedata_filterbyvalue": "סינון לפי ערך זה",
+	"sd_browsedata_filterbysubcategory": "סינון לפי קטגוריית משנה זו",
+	"sd_browsedata_otherfilter": "הצגת דפים עם ערך אחר עבור מסנן זה",
+	"sd_browsedata_nonefilter": "הצגת דפים ללא ערך עבור מסנן זה",
+	"sd_browsedata_or": "או",
+	"sd_browsedata_removefilter": "הסרת מסנן זה",
+	"sd_browsedata_removesubcategoryfilter": "הסרת המסנן של קטגוריית משנה זו",
+	"sd_browsedata_resetfilters": "איפוס המסננים",
+	"sd_browsedata_addanothervalue": "יש ללחוץ על החץ כדי להוסיף ערך נוסף",
+	"sd_browsedata_daterangestart": "התחלה:",
+	"sd_browsedata_daterangeend": "סיום:",
+	"sd_browsedata_novalues": "אין ערכים עבור מסנן זה",
+	"sd_createfilter_usepropertyvalues": "שימוש בכל הערכים של מאפיין זה עבור המסנן",
+	"sd_createfilter_usecategoryvalues": "קבלת הערכים עבור המסנן מקטגוריה זו:",
+	"sd_createfilter_requirefilter": "הצבת דרישה לבחירת מסנן אחר לפני שזה יוצג:",
+	"sd-pageschemas-filter": "מסנן",
+	"sd-pageschemas-values": "ערכים"
+}

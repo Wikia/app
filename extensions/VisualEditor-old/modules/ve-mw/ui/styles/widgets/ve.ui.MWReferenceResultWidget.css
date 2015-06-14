@@ -1,0 +1,28 @@
+/*!
+ * VisualEditor MediaWiki UserInterface MWReferenceResultWidget styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwReferenceResultWidget {
+	position: relative;
+	padding: 1em;
+	border-bottom: solid 1px #eee;
+}
+
+.ve-ui-mwReferenceResultWidget .oo-ui-labeledElement-label {
+	white-space: normal;
+}
+
+.ve-ui-mwReferenceResultWidget-shield {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+.ve-ui-mwReferenceResultWidget-divider {
+	font-weight: bold;
+}

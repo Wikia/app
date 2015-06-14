@@ -6,6 +6,7 @@
  * retriving thumbnails of those images which are scaled either by an aspect-ratio
  * or specific dimensions.
  */
+
 class ImageServing {
 	private $articles = array();
 	private $width;
@@ -59,7 +60,7 @@ class ImageServing {
 		$this->app = F::app();
 		$this->width = $width;
 		$this->memc =  $this->app->wg->Memc;
-		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
+		$this->imageServingDrivers = $this->app->wg->ImageServingDrivers;
 
 		$this->db = $db;
 	}
@@ -90,7 +91,7 @@ class ImageServing {
 	 *
 	 * @return mixed array of images for each requested article
 	 */
-	public function getImages( $limit = 5, $driver = null) {
+	public function getImages( $limit = 5, $driverName = null) {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
@@ -147,12 +148,12 @@ class ImageServing {
 
 			wfProfileOut( __METHOD__  . '::fetchMetadata');
 
-			if(empty($driver)) {
+			if(empty($driverName)) {
 				foreach($this->imageServingDrivers as $key => $value ) {
 					if(!empty($this->articlesByNS[$key])) {
 						/* @var ImageServingDriverBase $driver */
 						$driver = new $value($db, $this, $this->proportionString);
-						$driver->setArticlesList($this->articlesByNS[$key]);
+						$driver->setArticles($this->articlesByNS[$key]);
 						unset($this->articlesByNS[$key]);
 						$out = $out + $driver->execute($limit);
 					}
@@ -160,12 +161,12 @@ class ImageServing {
 
 				$driver = new ImageServingDriverMainNS($db, $this, $this->proportionString);
 			} else {
-				$driver = new $driver($db, $this, $this->proportionString);
+				$driver = new $driverName($db, $this, $this->proportionString);
 			}
 
 			//rest of article in MAIN name spaces
 			foreach( $this->articlesByNS as $value ) {
-				$driver->setArticlesList( $value );
+				$driver->setArticles( $value );
 				$out = $out + $driver->execute();
 			}
 
@@ -304,22 +305,33 @@ class ImageServing {
 	}
 
 	/**
-	 * @param File $image
+	 * @param File|GlobalFile $image
 	 * @param $width
 	 * @param $height
 	 * @return string
 	 */
-	private function getVignetteUrl($image, $width, $height) {
+	private function getVignetteUrl(URLGeneratorInterface $image, $width, $height) {
 		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height);
 
-		return VignetteRequest::fromFile($image)
-			->windowCrop()
-			->width($this->width)
-			->xOffset($left)
-			->yOffset($top)
-			->windowWidth($right - $left)
-			->windowHeight($bottom - $top)
-			->url();
+		$generator = $image->getUrlGenerator()
+			->width($this->width);
+
+		/**
+		 * negative offsets are ignored in the legacy thumbnailer. Vignette respects these, so explicitly set
+		 * the mode to scale-to-width to maintain consistency with the legacy thumbnailer
+		 */
+		if ($top < 0 || $bottom < 0 || $right < 0 || $left < 0) {
+			$generator->scaleToWidth();
+		} else {
+			$generator
+				->windowCrop()
+				->xOffset($left)
+				->yOffset($top)
+				->windowWidth($right - $left)
+				->windowHeight($bottom - $top);
+		}
+
+		return $generator->url();
 	}
 
 	/**
@@ -359,7 +371,13 @@ class ImageServing {
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
 		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height, $align, $issvg);
-		return "{$this->width}px-$left,$right,$top,$bottom";
+		$cut = "{$this->width}px";
+
+		if ($left >= 0 && $right >= 0 && $top >= 0 && $bottom >= 0) {
+			$cut .= "-$left,$right,$top,$bottom";
+		}
+
+		return $cut;
 	}
 
 	private function getCutParams($width, $height, $align="center", $issvg=false) {
@@ -434,7 +452,10 @@ class ImageServing {
 		if( is_array( $articleIds ) ) {
 			foreach ( $articleIds as $article ) {
 				$articleId = ( int ) $article;
-				$this->articles[ $articleId ] = $articleId;
+
+				if ($articleId > 0) {
+					$this->articles[$articleId] = $articleId;
+				}
 			}
 		}
 	}

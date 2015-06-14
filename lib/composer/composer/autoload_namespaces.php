@@ -7,6 +7,8 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'PhpAmqpLib' => array($vendorDir . '/videlalvaro/php-amqplib'),
+    '' => array($vendorDir . '/cssjanus/cssjanus/src'),
 );

@@ -33,6 +33,8 @@ class MonetizationModuleHelper extends WikiaModel {
 	const KEYWORD_AD_TITLE = '$setAdTitle';
 	const KEYWORD_ECOMMERCE_TITLE = '$setEcommTitle';
 
+	const PAGE_SPECIFIC = 'page_specific';
+
 	protected static $mapThemeSettings = [
 		'data-color-bg'     => 'color-page',
 		'data-color-border' => 'color-page',
@@ -43,14 +45,14 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	// list of verticals
 	protected static $verticals = [
-		WikiFactoryHub::HUB_ID_OTHER       => 'other',
-		WikiFactoryHub::HUB_ID_TV          => 'tv',
-		WikiFactoryHub::HUB_ID_VIDEO_GAMES => 'gaming',
-		WikiFactoryHub::HUB_ID_BOOKS       => 'book',
-		WikiFactoryHub::HUB_ID_COMICS      => 'comics',
-		WikiFactoryHub::HUB_ID_LIFESTYLE   => 'lifestyle',
-		WikiFactoryHub::HUB_ID_MUSIC       => 'music',
-		WikiFactoryHub::HUB_ID_MOVIES      => 'movies',
+		WikiFactoryHub::VERTICAL_ID_OTHER       => 'other',
+		WikiFactoryHub::VERTICAL_ID_TV          => 'tv',
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES => 'gaming',
+		WikiFactoryHub::VERTICAL_ID_BOOKS       => 'book',
+		WikiFactoryHub::VERTICAL_ID_COMICS      => 'comics',
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE   => 'lifestyle',
+		WikiFactoryHub::VERTICAL_ID_MUSIC       => 'music',
+		WikiFactoryHub::VERTICAL_ID_MOVIES      => 'movies',
 	];
 
 	/**
@@ -89,7 +91,7 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		$verticalId = WikiFactoryHub::getInstance()->getVerticalId( $this->wg->CityId );
 		if ( empty( self::$verticals[$verticalId] ) ) {
-			$verticalId = WikiFactoryHub::HUB_ID_OTHER;
+			$verticalId = WikiFactoryHub::VERTICAL_ID_OTHER;
 		}
 
 		$name = self::$verticals[$verticalId];
@@ -110,17 +112,20 @@ class MonetizationModuleHelper extends WikiaModel {
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
-		$cacheKey = $this->getMemcKey( $params );
-		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
+		// get data from cache for non page specific module only
+		if ( !$this->isPageSpecificRequest( $params ) ) {
+			$cacheKey = $this->getMemcKey( $params );
+			$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
 
-		$json_results = $this->wg->Memc->get( $cacheKey );
-		if ( !empty( $json_results ) ) {
-			$log->info( "MonetizationModule: memcache hit.", $loggingParams );
-			wfProfileOut( __METHOD__ );
-			return $this->setThemeSettings( $json_results, $cacheKey );
+			$json_results = $this->wg->Memc->get( $cacheKey );
+			if ( !empty( $json_results ) ) {
+				$log->info( "MonetizationModule: memcache hit.", $loggingParams );
+				wfProfileOut( __METHOD__ );
+				return $this->processData( $json_results, $params, false );
+			}
+
+			$log->info( "MonetizationModule: memcache miss.", $loggingParams );
 		}
-
-		$log->info( "MonetizationModule: memcache miss.", $loggingParams );
 
 		$url = $this->wg->MonetizationServiceUrl;
 		if ( !endsWith( $url, '/' ) ) {
@@ -147,7 +152,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			];
 			$log->debug( "MonetizationModule: cannot get monetization units.", $loggingParams );
 		} else if ( !empty( $result ) ) {
-			$result = $this->setThemeSettings( $result, $cacheKey );
+			$result = $this->processData( $result, $params );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -156,45 +161,78 @@ class MonetizationModuleHelper extends WikiaModel {
 	}
 
 	/**
+	 * Process data for the ad units (include logic to handle the data)
+	 * @param string $data - data from API (json format)
+	 * @param array $params - API parameters
+	 * @param boolean $setMemc - set to true to set to memcache
+	 * @return mixed
+	 */
+	public function processData( $data, $params, $setMemc = true ) {
+		$found = strpos( $data, self::KEYWORD_PREFIX );
+		$data = json_decode( $data, true );
+		if ( !is_array( $data ) ) {
+			return $data;
+		}
+
+		$memcKey = $this->getMemcKey( $params );
+
+		// for page specific module
+		if ( $this->isPageSpecificResponse( $data ) ) {
+			if ( $setMemc ) {
+				$this->setMemcache( $memcKey, $data, ['method' => __METHOD__] );
+			}
+
+			$params['page_id'] = $this->wg->Title->getArticleID();
+			return $this->getMonetizationUnits( $params );
+		}
+
+		// check for placeholder
+		if ( $found === false ) {
+			return $data;
+		}
+
+		// set to cache for non page specific
+		$setMemc = ( !$this->isPageSpecificRequest( $params ) );
+		$data = $this->setThemeSettings( $data, $memcKey, $setMemc );
+
+		return $data;
+	}
+
+	/**
 	 * Set wiki theme setting to the ad units
 	 * @param array $adUnits
 	 * @param string $memcKey
+	 * @param boolean $setMemc - set to true to set data to memcache
 	 * @return array
 	 */
-	public function setThemeSettings( $adUnits, $memcKey ) {
+	public function setThemeSettings( $adUnits, $memcKey, $setMemc = true ) {
 		wfProfileIn( __METHOD__ );
 
-		$found = strpos( $adUnits, self::KEYWORD_PREFIX );
-		$adUnits = json_decode( $adUnits, true );
-		if ( $found !== false && is_array( $adUnits ) ) {
-			$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->plain();
-			$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
+		$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->escaped();
+		$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
 
-			$ecommTitle = $this->wf->Message( 'monetization-module-ecommerce-title' )->text();
-			$adUnits = str_replace( self::KEYWORD_ECOMMERCE_TITLE, $ecommTitle, $adUnits );
+		$ecommTitle = $this->wf->Message( 'monetization-module-ecommerce-title' )->escaped();
+		$adUnits = str_replace( self::KEYWORD_ECOMMERCE_TITLE, $ecommTitle, $adUnits );
 
-			$theme = SassUtil::getOasisSettings();
-			if ( SassUtil::isThemeDark() ) {
-				$theme['color'] = self::FONT_COLOR_DARK_THEME;
-			} else {
-				$theme['color'] = self::FONT_COLOR_LIGHT_THEME;
+		$theme = SassUtil::getOasisSettings();
+		if ( SassUtil::isThemeDark() ) {
+			$theme['color'] = self::FONT_COLOR_DARK_THEME;
+		} else {
+			$theme['color'] = self::FONT_COLOR_LIGHT_THEME;
+		}
+
+		$adSettings = '';
+		foreach ( self::$mapThemeSettings as $key => $value ) {
+			if ( !empty( $theme[$value] ) ) {
+				$adSettings .= $key.'="'.$theme[$value].'" ';
 			}
+		}
 
-			$adSettings = '';
-			foreach( self::$mapThemeSettings as $key => $value ) {
-				if ( !empty( $theme[$value] ) ) {
-					$adSettings .= $key.'="'.$theme[$value].'" ';
-				}
-			}
+		$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
 
-			$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
-
-			// set cache
-			$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
-			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), $cacheTtl );
-
-			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey, 'cacheTtl' => $cacheTtl ];
-			WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
+		// set data to cache
+		if ( $setMemc ) {
+			$this->setMemcache( $memcKey, $adUnits, [ 'method' => __METHOD__ ] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -203,12 +241,27 @@ class MonetizationModuleHelper extends WikiaModel {
 	}
 
 	/**
+	 * Set memcache data (json format)
+	 * @param string $memcKey
+	 * @param array $data
+	 * @param array $loggingParams
+	 */
+	public function setMemcache( $memcKey, $data, $loggingParams ) {
+		$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
+		$this->wg->Memc->set( $memcKey, json_encode( $data ), $cacheTtl );
+
+		$loggingParams['memcKey'] = $memcKey;
+		$loggingParams['cacheTtl'] = $cacheTtl;
+		WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
+	}
+
+	/**
 	 * Get memcache key
 	 * @param array $params
 	 * @return string
 	 */
 	public function getMemcKey( $params ) {
-		$geo = empty( $params['geo'] ) ? 'ROW' : $params['geo'];
+		$geo = empty( $params['geo'] ) ? 'ALL' : $params['geo'];
 		$memcKey = wfMemcKey( 'monetization_module', $params['cache'], $geo, $params['max'] );
 		return $memcKey;
 	}
@@ -226,6 +279,24 @@ class MonetizationModuleHelper extends WikiaModel {
 			$defaultVersion
 		);
 		return $version;
+	}
+
+	/**
+	 * Check for page specific request
+	 * @param array $params
+	 * @return bool
+	 */
+	public function isPageSpecificRequest( $params ) {
+		return array_key_exists( 'page_id', $params );
+	}
+
+	/**
+	 * Check for page specific response
+	 * @param array $data
+	 * @return bool
+	 */
+	public function isPageSpecificResponse( $data ) {
+		 return ( !empty( $data['special_instructions'] ) && in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
 	}
 
 	/**

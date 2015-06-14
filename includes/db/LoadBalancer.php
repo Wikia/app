@@ -142,10 +142,10 @@ class LoadBalancer {
 		foreach ( $lags as $i => $lag ) {
 			if ( $i != 0 ) {
 				if ( $lag === false ) {
-					wfDebugLog( 'replication', "Server #$i is not replicating\n" );
+					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n" );
 					unset( $loads[$i] );
 				} elseif ( isset( $this->mServers[$i]['max lag'] ) && $lag > $this->mServers[$i]['max lag'] ) {
-					wfDebugLog( 'replication', "Server #$i is excessively lagged ($lag seconds)\n" );
+					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n" );
 					unset( $loads[$i] );
 				}
 			}
@@ -248,6 +248,14 @@ class LoadBalancer {
 							'while the slave database servers catch up to the master';
 						$i = $this->pickRandom( $currentLoads );
 						$laggedSlaveMode = true;
+
+						// Wikia change - begin
+						Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
+							'exception' => new Exception(),
+							'group'     => $group,
+							'wiki'      => $wiki
+						] );
+						// Wikia change - end
 					}
 				}
 
@@ -264,7 +272,7 @@ class LoadBalancer {
 				$conn = $this->openConnection( $i, $wiki );
 
 				if ( !$conn ) {
-					wfDebugLog( 'connect', __METHOD__.": Failed connecting to $i/$wiki\n" );
+					wfDebugLog( 'connect', __METHOD__.": Failed connecting to $i/$wiki ({$this->mServers[$i]['host']})\n" );
 					unset( $nonErrorLoads[$i] );
 					unset( $currentLoads[$i] );
 					continue;
@@ -370,12 +378,13 @@ class LoadBalancer {
 	/**
 	 * Set the master wait position and wait for ALL slaves to catch up to it
 	 * @param $pos int
+	 * @param $wiki
 	 */
-	public function waitForAll( $pos ) {
+	public function waitForAll( $pos, $wiki ) {
 		wfProfileIn( __METHOD__ );
 		$this->mWaitForPos = $pos;
 		for ( $i = 1; $i < count( $this->mServers ); $i++ ) {
-			$this->doWait( $i , true );
+			$this->doWait( $i , true, $wiki );
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -400,9 +409,10 @@ class LoadBalancer {
 	 * Wait for a given slave to catch up to the master pos stored in $this
 	 * @param $index
 	 * @param $open bool
+	 * @param $wiki
 	 * @return bool
 	 */
-	function doWait( $index, $open = false ) {
+	function doWait( $index, $open = false, $wiki = false ) {
 		# Find a connection to wait on
 		$conn = $this->getAnyOpenConnection( $index );
 		if ( !$conn ) {
@@ -410,7 +420,7 @@ class LoadBalancer {
 				wfDebug( __METHOD__ . ": no connection open\n" );
 				return false;
 			} else {
-				$conn = $this->openConnection( $index );
+				$conn = $this->openConnection( $index, $wiki );
 				if ( !$conn ) {
 					wfDebug( __METHOD__ . ": failed to open connection\n" );
 					return false;
@@ -418,12 +428,28 @@ class LoadBalancer {
 			}
 		}
 
+		$then = microtime( true ); // Wikia change
+
 		wfDebug( __METHOD__.": Waiting for slave #$index to catch up...\n" );
 		$result = $conn->masterPosWait( $this->mWaitForPos, $this->mWaitTimeout );
 
 		if ( $result == -1 || is_null( $result ) ) {
 			# Timed out waiting for slave, use master instead
 			wfDebug( __METHOD__.": Timed out waiting for slave #$index pos {$this->mWaitForPos}\n" );
+
+			// Wikia change - begin
+			// log failed wfWaitForSlaves
+			// @see PLATFORM-1219
+			Wikia\Logger\WikiaLogger::instance()->error( 'LoadBalancer::doWait timed out', [
+				'exception' => new Exception(),
+				'db'        => $conn->getDBname(),
+				'host'      => $conn->getServer(),
+				'pos'       => (string) $this->mWaitForPos,
+				'result'    => $result,
+				'waited'    => microtime( true ) - $then,
+			] );
+			// Wikia change - end
+
 			return false;
 		} else {
 			wfDebug( __METHOD__.": Done\n" );
@@ -492,40 +518,9 @@ class LoadBalancer {
 			}
 		}
 
-		// Wikia change - begin
-		// check the status of selected master
-		if ( $i == $this->getWriterIndex() ) {
-			// will return an instance of MastersPoll when LBFactory_Wikia is used
-			$mastersPoll = wfGetLBFactory()->getMastersPoll();
-
-			if ( $mastersPoll instanceof \Wikia\MastersPoll && $mastersPoll->isMasterBroken( $this->mServers[0] ) ) {
-				// handle broken master - connect to a different master
-				$clusterInfo = $this->parentInfo()['id'];
-				$newMaster = $mastersPoll->getNextMasterForSection( $clusterInfo );
-
-				// replace the master in LoadBalancer config
-				if ( !empty( $newMaster ) ) {
-					$this->mServers[$i] = $newMaster;
-				}
-			}
-		}
-		// Wikia change - end
-
 		# Now we have an explicit index into the servers array
 		$conn = $this->openConnection( $i, $wiki );
 		if ( !$conn ) {
-			// Wikia change - begin
-			# master connection error handling
-			// will return an instance of MastersPoll when LBFactory_Wikia is used
-			$mastersPoll = wfGetLBFactory()->getMastersPoll();
-
-			if ( $i == $this->getWriterIndex() ) {
-				if ( $mastersPoll instanceof \Wikia\MastersPoll ) {
-					$mastersPoll->markMasterAsBroken( $this->mServers[$i] );
-				}
-			}
-			// Wikia change - end
-
 			$this->reportConnectionError( $this->mErrorConnection );
 		}
 
@@ -586,10 +581,8 @@ class LoadBalancer {
 	 * error will be available via $this->mErrorConnection.
 	 *
 	 * @param $i Integer server index
-	 * @param $wiki String wiki ID to open
+	 * @param $wiki String|bool wiki ID to open
 	 * @return DatabaseBase
-	 *
-	 * @access private
 	 */
 	function openConnection( $i, $wiki = false ) {
 		wfProfileIn( __METHOD__ );
@@ -735,11 +728,6 @@ class LoadBalancer {
 			$db = $e->db;
 		}
 
-		if ( $db->isOpen() ) {
-			wfDebug( "Connected to $host $dbname.\n" );
-		} else {
-			wfDebug( "Connection failed to $host $dbname.\n" );
-		}
 		$db->setLBInfo( $server );
 		if ( isset( $server['fakeSlaveLag'] ) ) {
 			$db->setFakeSlaveLag( $server['fakeSlaveLag'] );
@@ -747,6 +735,17 @@ class LoadBalancer {
 		if ( isset( $server['fakeMaster'] ) ) {
 			$db->setFakeMaster( true );
 		}
+
+		// Wikia change - begin
+		if ( $db->getSampler()->shouldSample() ) {
+			$db->getWikiaLogger()->info( "LoadBalancer::reallyOpenConnection", [
+				'caller' => wfGetCallerClassMethod( __CLASS__ ),
+				'host'   => $server['hostName'], // eg. db-archive-s7
+				'dbname' => $dbname
+			] );
+		}
+		// Wikia change - end
+
 		return $db;
 	}
 
@@ -988,6 +987,7 @@ class LoadBalancer {
 		foreach ( $this->mConns as $conns2 ) {
 			foreach ( $conns2 as $conns3 ) {
 				foreach ( $conns3 as $conn ) {
+					/* @var DatabaseMysqlBase $conn */
 					if ( !$conn->ping() ) {
 						$success = false;
 					}

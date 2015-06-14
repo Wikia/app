@@ -24,8 +24,8 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'InterwikiDispatcher',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description' => 'This extension solves interwiki links to reduce amount of apache redirects',
 	'descriptionmsg' => 'interwikidispatcher-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InterwikiDispatcher'
 );
 
 $wgExtensionMessagesFiles['SpecialInterwikiDispatcher'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.i18n.php';

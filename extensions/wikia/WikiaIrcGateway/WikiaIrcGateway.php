@@ -21,7 +21,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'Wikia IRC Gateway',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'description' => 'Lets users insert IRC login form on any page'
+	'descriptionmsg' => 'ircgate-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaIrcGateway'
 );
 
 $wgExtensionMessagesFiles['WikiaIrcGateway'] = dirname( __FILE__ ) . '/WikiaIrcGateway.i18n.php';

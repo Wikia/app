@@ -150,4 +150,13 @@ $messages = array_merge( $messages , array(
 'hub-Video_Games' => 'ゲーム',
 'hub-Lifestyle' => 'ライフスタイル',
 'hub-Wikia' => 'Wikia',
+
+
+# vertical names
+'vertical-tv' => 'テレビ番組',
+'vertical-games' => 'ゲーム',
+'vertical-books' => '性格診断テスト',
+'vertical-comics' => '漫画',
+'vertical-lifestyle' => 'ライフスタイル',
+'vertical-movies' => '映画',
 ));

@@ -1,6 +1,14 @@
 <?php
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages, array(
+
+# vertical names
+'vertical-tv' => 'Télévision',
+'vertical-games' => 'Jeux vidéo',
+'vertical-books' => 'Littérature',
+'vertical-lifestyle' => 'Mode de vie',
+'vertical-movies' => 'Films',
+
 'login_greeting' => "Bienvenue sur Wikia, [[User:$1|$1]]!",
 'create_an_account' => "Créer un compte",
 'login_as_another' => "Se connecter sous un autre compte",

@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Anakmalaysia",
+			"Aurora"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Disunting dengan menggunakan [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor:Semak]]",
+	"tag-visualeditor-needcheck-description": "Suntingan dilakukan dengan menggunakan [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] di mana sistem telah mengesan wikiteks yang mungkin mengalami perubahan yang tidak diingini.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Bertukar]]",
+	"tag-visualeditor-switched-description": "Pengguna mula-mula menyunting dengan VisualEditor, kemudian beralih kepada editor wikiteks.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Maklum balas",
+	"visualeditor-feedback-tool": "Tinggalkan maklum balas",
+	"visualeditor-help-label": "Baca panduan pengguna",
+	"visualeditor-help-title": "Panduan pengguna untuk menggunakan VisualEditor"
+}

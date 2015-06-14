@@ -73,4 +73,4 @@ echo "Flipping the switch\n";
 WikiFactory::setVarByName('wgEnableAchievementsStoreLocalData', $wgCityId, 1);
 
 
-wfWaitForSlaves(2);
+wfWaitForSlaves();

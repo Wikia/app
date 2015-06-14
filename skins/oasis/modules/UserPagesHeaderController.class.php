@@ -16,8 +16,6 @@ class UserPagesHeaderController extends WikiaController {
 		$this->actionMenu = array();
 		$this->comments = null;
 		$this->editTimestamp = null;
-
-		$this->fbAccessRequestURL = '';
 	}
 
 	/**
@@ -278,85 +276,6 @@ class UserPagesHeaderController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-
-
-	/**
-	 * Sets up Facebook Connect request URLS and does the requests and stores the data
-	 *
-	 * @param bool $arg Users has granted access (true or false)*
-	 */
-	public function executeFacebookConnect( $arg ) {
-		global $wgRequest, $wgFacebookSyncAppID, $wgFacebookSyncAppSecret, $IP, $wgTitle, $wgSitename;
-		wfProfileIn( __METHOD__ );
-
-		if ( $arg['fbAccess'] == true ) {
-			include( $IP . '/extensions/FBConnect/facebook-sdk/facebook.php' );
-			$facebook = new FacebookAPI( array( 'appId' =>$wgFacebookSyncAppID,'secret'=>$wgFacebookSyncAppSecret,	'cookie' =>true, ) );
-
-			// taken from http://trac.wikia-code.com/changeset/34764
-			$fbRedirectUrl = $wgTitle->getFullURL() .'?fbrequest=sent&action=purge';
-
-			$token_url = 'https://graph.facebook.com/oauth/access_token?client_id=' .$wgFacebookSyncAppID .'&redirect_uri=' . urlencode($fbRedirectUrl) .'&client_secret=' .$wgFacebookSyncAppSecret .'&code=' .$wgRequest->getVal( 'code' );
-			$access_token = Http::get( $token_url );
-			$graph_url = "https://graph.facebook.com/me?" . $access_token;
-			$user = json_decode( Http::get( $graph_url ) );
-
-			$likes_url = "https://graph.facebook.com/me/likes?" . $access_token;
-			$likes = json_decode( Http::get( $likes_url ) );
-
-			$interests_url = "https://graph.facebook.com/me/likes?" . $access_token;
-			$interests = json_decode( Http::get( $interests_url ) );
-
-			$this->fbSelectFormURL = $wgRequest->appendQueryValue( 'title', $this->getUserURL() );
-			$this->fbSelectFormURL = $wgRequest->appendQueryValue( 'fbrequest', 'save' );
-
-			$this->fbUser = $user;
-			$this->fbUserLikes = $likes;
-			$this->fbUserInterests = $interests;
-			$this->fbAccess = true;
-
-			$this->fbUserNameWiki = $this->getUserURL() . "|Wiki:'" .$wgSitename ."'";
-		}
-		else {
-			// error message - no access granted
-			$this->fbAccess = false;
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-
-
-	/**
-	 * form processor for Facebook Connect data
-	 *
-	 */
-	public function executeFacebookConnectArticle() {
-		global $wgRequest;
-
-		$formElements = array(
-			'fb-name',
-			'fb-birthday',
-			'fb-relationshipstatus',
-			'fb-languages',
-			'fb-hometown',
-			'fb-location',
-			'fb-education',
-			'fb-gender',
-			'fb-work',
-			'fb-religion',
-			'fb-political',
-			'fb-website',
-			'fb-interests'
-		);
-
-		$this->fbSaveData = array();
-
-		foreach ( $formElements as $formElement ) {
-			$this->fbSaveData[$formElement] = $wgRequest->getVal( $formElement );
-		}
-	}
-
 	/**
 	 * dirty way to get the user url
 	 * returns the full path of the users
@@ -369,57 +288,6 @@ class UserPagesHeaderController extends WikiaController {
 		$userURL = $userURL[count( $userURL ) -1];
 		return $userURL;
 	}
-
-
-
-	/**
-	 * hook function  - save Facebook profile data
-	 *
-	 * @param string $article the article
-	 * @param string $outputDone the output is done
-	 * @param string $userParserCache enable or disable cache
-	 * @return bool need to return true
-	 *
-	 */
-	public static function saveFacebookConnectProfile( $article, $outputDone, $userParserCache ) { //$fbContent
-		global $wgArticle, $wgTitle, $wgOut, $wgRequest;
-
-		if ( $wgRequest->getVal( 'fbrequest' ) != 'save' ) {
-			return true;
-		}
-
-		$fbContent = F::app()->renderView( 'UserPagesHeader', 'FacebookConnectArticle' );
-
-		if ($fbContent) {
-			// getting users page url, not the clean way?
-			$userURL = self::getUserURL();
-
-			$articleTitle = Title::newFromText( $userURL );
-			$wgArticle = new Article( $articleTitle );
-			$userProfileContent = $wgArticle->getContent(); // reading content
-
-			// remove already existing sync
-			$regex = '#<table class="fbconnect-synced-profile[^>]+>[\w\W]*?</table>#i';
-			$userProfileContent = preg_replace( $regex, '', $userProfileContent );
-
-			$newUserProfileContent = $fbContent .$userProfileContent;
-
-			// save updated profile
-			$summary = "Synced profile with Facebook.";
-			NotificationsController::addConfirmation( wfMsg( 'fb-sync-success-message' ) );
-
-			$wgArticle->doEdit( $newUserProfileContent, $summary,
-					( 0 ) |
-					( 0 ) |
-					( 0 ) |
-					( 0 ) );
-
-			$wgOut->redirect( $wgTitle->getFullUrl() );
-		}
-
-		return true;
-	}
-
 
 	/**
 	 * Render header for blog post

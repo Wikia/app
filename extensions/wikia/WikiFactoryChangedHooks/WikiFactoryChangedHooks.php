@@ -14,3 +14,4 @@ $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::BlogArticle';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::FounderProgressBar';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::recipesTweaks';
 $wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::onAbuseFilterEnabled';
+$wgHooks['WikiFactoryChanged'][] = 'WikiFactoryChangedHooks::VisualEditor';

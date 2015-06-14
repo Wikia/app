@@ -190,7 +190,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 			$user = User::newFromName( $this->username );
 			if ( $user->getId() != $expUser->getId() ) {
 				$this->success = false;
-				$this->resultMessage = $this->msg( 'wikiaconfirmemail-error-user-not-match' )->escaped();
+				$this->resultMessage = $this->msg( 'wikiaconfirmemail-error-user-not-match' )->parse();
 				$this->errParam = 'username';
 				wfProfileOut( __METHOD__ );
 				return;

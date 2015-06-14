@@ -1,6 +1,5 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
-@import 'skins/shared/mixins/box-sizing';
 @import 'skins/shared/color';
 @import 'skins/shared/styles/jquery.ui.autocomplete';
 @import 'extensions/wikia/Venus/styles/variables';
@@ -139,7 +138,7 @@ $category-height: 16px;
 	}
 
 	@media #{$small-only} {
-		margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $categories-vertical-spacing;
+		margin: 0 $small-content-padding - $content-border-width $categories-vertical-spacing $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
 		padding: 0 $small-grid-column-padding;
 	}
 
@@ -193,7 +192,7 @@ $category-height: 16px;
 
 		input,
 		.input-group {
-			@include box-sizing(border-box);
+			box-sizing: border-box;
 			width: 100%;
 		}
 	}

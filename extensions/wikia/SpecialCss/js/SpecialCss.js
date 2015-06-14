@@ -6,7 +6,7 @@ var trackSpecialCssClick = function ( action, label, value, params, event ) {
 		action: action,
 		browserEvent: event,
 		label: label,
-		trackingMethod: 'both',
+		trackingMethod: 'analytics',
 		value: value
 	}, params );
 };
@@ -17,7 +17,7 @@ $(function() {
 	// impressions
 	Wikia.Tracker.buildTrackingFunction({
 		category: 'special-css',
-		trackingMethod: 'both',
+		trackingMethod: 'analytics',
 		action: Wikia.Tracker.ACTIONS.IMPRESSION
 	});
 
@@ -42,100 +42,101 @@ $(function() {
 		}
 	});
 
-	var disableBeforeUnload = false,
-		EDITOR_BOTTOM_MARGIN = 10,
-		ace = window.ace,
-		heightUpdateFunction = function( editor ) {
-			var $editorContainer = $( '#cssEditorContainer' ),
-				newHeight = $( '.css-side-bar' ).height() -
-					$( '.editor-changes-info-wrapper' ).children().outerHeight( true ) -
-					EDITOR_BOTTOM_MARGIN;
+	require(['wikia.ace.editor'], function(ace){
+		var options = {
+				showPrintMargin: false,
+				fontFamily: 'Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace'
+			},
+			// aceScriptsPath is set in PHP controller SpecialCssController.class.php:99
+			config = {
+				workerPath: window.aceScriptsPath
+			},
+			inputAttr = {
+				name: 'cssContent'
+			},
+			editorInitContent,
+			disableBeforeUnload = false,
+			EDITOR_BOTTOM_MARGIN = 10,
+			heightUpdateFunction = function( editor ) {
+				var $editorContainer = $( '#cssEditorContainer' ),
+					newHeight = $( '.css-side-bar' ).height() -
+						$( '.editor-changes-info-wrapper' ).children().outerHeight( true ) -
+						EDITOR_BOTTOM_MARGIN;
 
-			$editorContainer.outerHeight( newHeight );
+				$editorContainer.outerHeight( newHeight );
 
-			// This call is required for the editor to fix all of
-			// its inner structure for adapting to a change in size
-			editor.resize();
-		},
-		editor,
-		editorSession,
-		editorInitContent;
+				// This call is required for the editor to fix all of
+				// its inner structure for adapting to a change in size
+				editor.resize();
+			},
+			showChangesModalConfig = {
+				vars: {
+					id: 'ShowChangesModal',
+					title: $.msg( 'special-css-diff-modal-title' ),
+					size: 'large',
+					content: '<div class="diffContent modalContent"></div>'
+				}
+			},
+			modalCallback = function(showChangesModal){
+				showChangesModal.deactivate();
+				$.when(
+						$.nirvana.sendRequest({
+							controller: 'SpecialCss',
+							method: 'getDiff',
+							type: 'post',
+							data: {
+								wikitext: ace.getContent()
+							}
+						}),
 
-	// aceScriptsPath is set in PHP controller SpecialCssController.class.php:99
-	ace.config.set( 'workerPath', window.aceScriptsPath ); /* JSlint ignore */
+						// load CSS for diff
+						mw.loader.use( 'mediawiki.action.history.diff' )
+					).done(function( ajaxData ) {
+						showChangesModal.$content.find( '.diffContent' ).html( ajaxData[ 0 ].diff );
+						showChangesModal.activate();
+					});
+				showChangesModal.show();
+			};
 
-	editor = ace.edit( 'cssEditorContainer' );
-	editor.setTheme( 'ace/theme/geshi' );
-	editor.setShowPrintMargin( false );
-	editorSession = editor.getSession();
-	editorSession.setMode( 'ace/mode/css' );
+		ace.setConfig( config );
+		ace.init( 'cssEditorContainer', inputAttr );
+		ace.setOptions( options );
+		ace.setTheme();
+		ace.setMode();
 
-	editorInitContent = editorSession.getValue();
+		editorInitContent = ace.getContent();
 
-	heightUpdateFunction( editor );
+		heightUpdateFunction( ace.getEditorInstance() );
 
-	$( '#cssEditorForm' ).submit(function( e ) {
-		var $form = $( this ),
-			hiddenInput = $( '<input/>' )
-				.attr( 'type', 'hidden' )
-				.attr( 'name', 'cssContent' )
-				.val( editorSession.getValue() );
+		$( '#cssEditorForm' ).submit(function( e ) {
+			var $form = $( this ),
+				hiddenInput = ace.getInput().val( ace.getContent() );
 
-		disableBeforeUnload = true;
-		trackSpecialCssClick( Wikia.Tracker.ACTIONS.SUBMIT, 'publish', null, {}, e );
+			disableBeforeUnload = true;
+			trackSpecialCssClick( Wikia.Tracker.ACTIONS.SUBMIT, 'publish', null, {}, e );
 
-		$form.append( hiddenInput );
+			$form.append( hiddenInput );
 
-		// prevent submitting immediately so we can track this event
-		e.preventDefault();
-		$form.unbind( 'submit' );
-		setTimeout(function() {
-			$form.submit();
-		}, 100 );
-	});
-
-	$( '#showChanges' ).click(function( event ) {
-		event.preventDefault();
-
-		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
-				var showChangesModalConfig = {
-					vars: {
-						id: 'ShowChangesModal',
-						title: $.msg( 'special-css-diff-modal-title' ),
-						size: 'large',
-						content: '<div class="diffContent modalContent"></div>'
-					}
-				};
-
-				uiModal.createComponent( showChangesModalConfig, function( showChangesModal ) {
-					showChangesModal.deactivate();
-					$.when(
-							$.nirvana.sendRequest({
-								controller: 'SpecialCss',
-								method: 'getDiff',
-								type: 'post',
-								data: {
-									wikitext: editor.getSession().getValue()
-								}
-							}),
-
-							// load CSS for diff
-							mw.loader.use( 'mediawiki.action.history.diff' )
-						).done(function( ajaxData ) {
-							showChangesModal.$content.find( '.diffContent' ).html( ajaxData[ 0 ].diff );
-							showChangesModal.activate();
-						});
-					showChangesModal.show();
-				});
-			});
+			// prevent submitting immediately so we can track this event
+			e.preventDefault();
+			$form.unbind( 'submit' );
+			setTimeout(function() {
+				$form.submit();
+			}, 100 );
 		});
-	});
 
-	//noinspection FunctionWithInconsistentReturnsJS,JSUnusedLocalSymbols
-	$( window ).bind( 'beforeunload', function() {
-		if ( !disableBeforeUnload && editorInitContent !== editorSession.getValue() ) {
-			return $.msg( 'special-css-leaveconfirm-message' );
-		}
+		$( '#showChanges' ).click(function( event ) {
+			event.preventDefault();
+
+			ace.showDiff(showChangesModalConfig, modalCallback);
+		});
+
+		//noinspection FunctionWithInconsistentReturnsJS,JSUnusedLocalSymbols
+		$( window ).bind( 'beforeunload', function() {
+			if ( !disableBeforeUnload && editorInitContent !== ace.getContent() ) {
+				return $.msg( 'special-css-leaveconfirm-message' );
+			}
+		});
+
 	});
 });

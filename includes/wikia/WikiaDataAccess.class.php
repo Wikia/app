@@ -82,7 +82,10 @@ class WikiaDataAccess {
 		$negativeCacheTTL = isset( $options['negativeCacheTTL'] ) ? $options['negativeCacheTTL'] : $cacheTTL;
 
 		if ( $command == self::SKIP_CACHE ) {
-			Wikia::log( __METHOD__, 'debug', "Cache disabled for key:{$key}, if this is on production please contact the author of the code.", true);
+			WikiaLogger::instance()->error( "WikiaDataAccess: cache disabled" , [
+				'key' => $key,
+				'exception' => new Exception()
+			] );
 		}
 
 		$result = ($command == self::USE_CACHE) ? $wg->Memc->get( $key ) : null;
@@ -157,8 +160,11 @@ class WikiaDataAccess {
 			Wikia::log( __METHOD__, 'debug', "Cache disabled for key:{$key}, if this is on production please contact the author of the code.", true);
 		}
 
+		$baseKey = $key;
 		$keyLock = $key . ':lock';
 		$key .= '-withDate';
+
+		$startTime = microtime(true);
 
 		$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key) : null;
 
@@ -166,18 +172,27 @@ class WikiaDataAccess {
 
 			list($gotLock, $wasLocked) = self::lock( $keyLock, true, $lockTimeout );
 
-			if( $wasLocked && $gotLock ) {
-				self::unlock( $keyLock );
-				$gotLock = false;
-				$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key, true) : null;
-			}
+			// give it a try and check if the data is present
+			$result = ($command == self::USE_CACHE) ? static::getDataAndVerify($app, $key, true) : null;
 
-			if( is_null( $result ) ) {
-				$result = array(
-					'data' => $getData(),
-					'time' => wfTimestamp( TS_UNIX )
-				);
-				self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+			if ( is_null( $result ) ) {
+				// no luck, let's see what we can do
+				if ( $gotLock ) {
+					// if we got a lock regenerate data
+					$result = array(
+						'data' => $getData(),
+						'time' => wfTimestamp( TS_UNIX )
+					);
+					self::setCache( $key, $result, $cacheTime * self::CACHE_TIME_FACTOR_FOR_LOCK, $command );
+				} else {
+					// fail early and do not blow the entire system
+					WikiaLogger::instance()->debug("WikiaDataAccess could not obtain lock to generate data for: {$baseKey}",[
+						'wasLocked' => $wasLocked,
+						'timeProcessed' => microtime(true) - $startTime,
+						'key' => $baseKey,
+					]);
+					throw new MWException("WikiaDataAccess could not obtain lock to generate data for: {$baseKey}");
+				}
 			}
 
 			if( $gotLock ) self::unlock( $keyLock );
@@ -193,7 +208,7 @@ class WikiaDataAccess {
 				if( $gotLock && !$wasLocked ) {
 					// we are the first thread to find that data older than $cacheTime but fresher than $oldCacheTime
 					// let's try to get new data
-					// because we hold the lock other threads won't try to generate it in the same time
+					// because we hold the lock other threads won't try to generate it at the same time
 					$result = array(
 						'data' => $getData(),
 						'time' => wfTimestamp( TS_UNIX )
@@ -281,7 +296,7 @@ class WikiaDataAccess {
 			$app->wg->Memc->clearLocalCache( $key );
 		}
 		$result = $app->wg->Memc->get( $key );
-		if( !is_array($result) || $result === false || !isset($result['data']) || !isset($result['time'])) {
+		if( !is_array($result) || !array_key_exists('data',$result) || !array_key_exists('time',$result)) {
 			$result = null;
 		}
 		return $result;

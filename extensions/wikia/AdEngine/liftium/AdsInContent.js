@@ -1,3 +1,4 @@
+/*global window*/
 // AdsInContent2 a.k.a. AIC2
 var AIC2 = {
 	$placeHolder         : false,
@@ -11,13 +12,27 @@ var AIC2 = {
 	visible              : false
 };
 
-AIC2.enabled = window.top === window.self
-	&& (window.ads && window.ads.context && window.ads.context.opts)
-	&& window.ads.context.opts.showAds
-	&& window.ads.context.opts.adsInContent
-	&& !window.wgIsMainpage
-	&& !window.wikiaPageIsCorporate
-	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search');
+AIC2.enabled = (function () {
+	'use strict';
+	try {
+		var isTopWindow = (window.top === window.self),
+			opts = window.ads.context.opts,
+			isEnabled = opts.showAds && opts.adsInContent,
+			targeting = window.ads.context.targeting,
+			isArticle = targeting.pageType === 'article' && window.wgIsContentNamespace,
+			isSearchPage = targeting.pageType === 'search',
+			isCorporate = targeting.wikiIsCorporate;
+
+		return isTopWindow &&
+			isEnabled &&
+			!isCorporate &&
+			(isArticle || isSearchPage);
+
+	} catch (e) {
+		AIC2.disabledReason = e;
+		return false;
+	}
+}());
 
 AIC2.init = function() {
 	if (!AIC2.enabled || AIC2.called) {
@@ -144,8 +159,8 @@ AIC2.onScroll = function() {
 		if (!AIC2.visible) {
 			Liftium.d("AIC2.showAd", 5);
 			if (!AIC2.checkStartStopPosition()) { return; }
-			if ($incontentBoxAd.hasClass('wikia-ad') == false) {
-				window.adslots2.push(['INCONTENT_BOXAD_1', null, 'AdEngine2', null]);
+			if ($incontentBoxAd.hasClass('wikia-ad') === false) {
+				window.adslots2.push('INCONTENT_BOXAD_1');
 				$incontentBoxAd.addClass('wikia-ad');
 			}
 			$incontentBoxAd.css({

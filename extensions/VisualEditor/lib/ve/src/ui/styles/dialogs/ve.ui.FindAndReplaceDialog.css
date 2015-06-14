@@ -1,0 +1,79 @@
+/*!
+ * VisualEditor UserInterface FindAndReplaceDialog styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-findAndReplaceDialog-row {
+	display: table;
+	min-width: 30em;
+	padding-bottom: 0.3em;
+}
+
+.ve-ui-findAndReplaceDialog-row:last-child {
+	/* Extra pixel for button shadows */
+	padding-bottom: 1px;
+}
+
+.ve-ui-findAndReplaceDialog-row .ve-ui-findAndReplaceDialog-cell {
+	display: table-cell;
+	vertical-align: middle;
+	white-space: nowrap;
+	padding-right: 1em;
+}
+
+.ve-ui-findAndReplaceDialog-row .ve-ui-findAndReplaceDialog-cell:last-child {
+	padding-right: 0;
+}
+
+.ve-ui-findAndReplaceDialog-findText input {
+	padding-right: 6em;
+}
+
+.ve-ui-findAndReplaceDialog-findText-error input {
+	background-color: #edd;
+}
+
+.ve-ui-findAndReplaceDialog-focusedIndexLabel {
+	position: absolute;
+	right: 1.4em;
+	color: #888;
+}
+
+/* @noflip */
+.ve-ui-findAndReplaceDialog-findResults {
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+}
+
+.ve-ui-findAndReplaceDialog-findResult {
+	opacity: 0.2;
+}
+
+.ve-ui-findAndReplaceDialog-findResult > div {
+	background: #28bb0b;
+	position: absolute;
+	margin-top: -0.15em;
+	padding: 0.15em 0;
+	border-radius: 0.15em;
+}
+
+.ve-ui-findAndReplaceDialog-findResult-focused {
+	opacity: 0.4;
+}
+
+.ve-ui-findAndReplaceDialog-findResult-focused > div {
+	background: #1f850b;
+}
+
+/* Set opacity directly on the highlights, rather than their containers,
+   otherwise the opacity isn't applied at all */
+.ve-init-target-ie .ve-ui-findAndReplaceDialog-findResult > div {
+	opacity: 0.2;
+}
+
+.ve-init-target-ie .ve-ui-findAndReplaceDialog-findResult-focused > div {
+	opacity: 0.4;
+}

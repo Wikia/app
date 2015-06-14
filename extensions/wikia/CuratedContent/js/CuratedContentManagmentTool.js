@@ -1,6 +1,6 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
 $(function () {
-	require(['wikia.window', 'jquery', 'wikia.nirvana', 'JSMessages'], function (window, $, nirvana, msg) {
+	require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'], function (window, $, nirvana, tracker, msg) {
 		'use strict';
 
 		var d = document,
@@ -14,6 +14,7 @@ $(function () {
 			emptyLabelError = msg('wikiacuratedcontent-content-emptylabel-error'),
 			videoNotSupportedError = msg('wikiacuratedcontent-content-videonotsupported-error'),
 			notSupportedType = msg('wikiacuratedcontent-content-notsupportedtype-error'),
+			noCategoryInTag = msg('wikiacuratedcontent-content-nocategoryintag-error'),
 			addItem = d.getElementById('addItem'),
 			addSection = d.getElementById('addSection'),
 			$save = $(d.getElementById('save')),
@@ -103,17 +104,17 @@ $(function () {
 				$ul.find('.item:not(.section ~ .item)').each(function () {
 					var $t = $(this);
 					$t.addClass('error')
-							.popover('destroy')
-							.popover({
-								content: orphanError
-							});
+						.popover('destroy')
+						.popover({
+							content: orphanError
+						});
 				});
 
 				$ul.find('.section').each(function () {
 					var $t = $(this),
 						$items = $t.nextUntil('.section');
 
-					if ($items.length === 0) {
+					if ($items.length === 0 && !$t.hasClass('featured')) {
 						$t.find('.section-input')
 							.addClass('error')
 							.popover('destroy')
@@ -132,7 +133,12 @@ $(function () {
 					$save.attr('disabled', false);
 					return true;
 				}
-			};
+			},
+			track = tracker.buildTrackingFunction({
+				action: Wikia.Tracker.ACTIONS.CLICK,
+				category: 'special-curated-content',
+				trackingMethod: 'analytics'
+			});
 
 		$form
 			.on('focus', 'input', function () {
@@ -161,7 +167,7 @@ $(function () {
 				if (ev.keyCode === 13) {
 					$(this).next().focus();
 				}
-			}).keyup(function(ev){
+			}).keyup(function (ev) {
 				setTimeout(checkForm, 0);
 			});
 
@@ -173,7 +179,7 @@ $(function () {
 			addNew(section);
 		});
 
-		function getData(li) {
+		function getItemData(li) {
 			var $lia = $(li);
 			return {
 				title: $lia.find('.item-input').val(),
@@ -182,45 +188,52 @@ $(function () {
 			}
 		}
 
+		function getSectionData(li) {
+			var $lia = $(li),
+				name = $lia.find('.section-input').val() || '',
+				imageId = $lia.find('.image').data('id') || 0,
+				featured = $lia.hasClass('featured') || false,
+				items = [],
+				result = {};
+
+			$lia.nextUntil('.section').each(function () {
+				items.push(getItemData(this));
+			});
+
+			result = {
+				title: name,
+				image_id: imageId,
+				items: items
+			}
+			if (featured) {
+				result['featured'] = true;
+			}
+			return result;
+		}
+
+		window._gaq.push(['_setSampleRate', '100']);
+
 		$save.on('click', function () {
 			var data = [],
 				orphans = [];
 
 			if (checkForm()) {
 				$ul.find('.item:not(.section ~ .item)').each(function () {
-					orphans.push(getData(this));
+					orphans.push(getItemData(this));
 				});
 
 				$ul.find('.section').each(function () {
-					var $t = $(this),
-							name = $t.find('.section-input').val(),
-							imageId = $t.find('.image').data('id') || 0,
-							items = [];
-
-					if (orphans.length > 0){
-					// adopts the orphans to the top of topmost section
-					// since that what probably orphaned them in the first place
-						items = orphans;
+					var sectionData = getSectionData(this);
+					if (orphans.length > 0) {
+						// adopts the orphans to the top of topmost section
+						// since that what probably orphaned them in the first place
+						sectionData.items = sectionData.items.reduce(function (self, item) {
+							self.push(item);
+							return self;
+						}, orphans);
 						orphans = [];
 					}
-
-					$t.nextUntil('.section').each(function () {
-						items.push(getData(this));
-					});
-
-					if (name) {
-						data.push({
-							title: name,
-							image_id: imageId,
-							items: items
-						});
-					} else {
-						data.push({
-							title: '',
-							image_id: imageId,
-							items: items
-						});
-					}
+					data.push(sectionData);
 				});
 				nirvana.sendRequest({
 					controller: 'CuratedContentSpecial',
@@ -242,6 +255,9 @@ $(function () {
 							}
 							if (errReason === 'notSupportedType') {
 								return notSupportedType;
+							}
+							if (errReason === 'noCategoryInTag') {
+								return noCategoryInTag;
 							}
 							return errReason;
 						}
@@ -282,14 +298,15 @@ $(function () {
 
 							$save.addClass('err');
 							$save.attr('disabled', true);
+							track({ label: 'save-error' });
 						} else if (data.status) {
 							$save.addClass('ok');
+							track({ label: 'save' });
 						}
-					}).fail(
-					function () {
+					}).fail(function () {
 						$save.addClass('err');
-					}
-				).then(function () {
+						track({ label: 'save-error' });
+					}).then(function () {
 						$form.stopThrobbing();
 					});
 			}
@@ -320,12 +337,12 @@ $(function () {
 					function (data) {
 						if (data.url && data.id) {
 							$currentImage.css('backgroundImage', 'url(' + data.url + ')')
+							$currentImage.data('id', data.id);
+							$currentImage.attr('data-id', data.id);
 
 							if (!catImage) {
-								$currentImage.attr('data-id', data.id);
 								$currentImage.siblings().last().addClass('photo-remove');
 							}
-							;
 
 							$currentImage.stopThrobbing();
 						} else {
@@ -365,6 +382,7 @@ $(function () {
 				containment: '#contentManagmentForm',
 				cursor: 'move',
 				handle: '.drag',
+				items: 'li:not(.sort-disabled)',
 				placeholder: 'drop',
 				update: function () {
 					checkForm();

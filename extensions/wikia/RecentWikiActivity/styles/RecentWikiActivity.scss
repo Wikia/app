@@ -16,7 +16,7 @@ $recent-wiki-activity-background-color: mix($color-page, $color-page-opposite, 9
 	word-wrap: break-word;
 
 	header {
-		@include font-size-l;
+		font-size: 18px; // hardcoded because of CON-2202
 		font-weight: bold;
 		margin: 31px 0 25px;
 	}

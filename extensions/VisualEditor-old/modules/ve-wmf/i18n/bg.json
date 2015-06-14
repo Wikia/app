@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"DCLXVI",
+			"Hristofor.mirchev",
+			"පසිඳු කාවින්ද",
+			"Mitzev"
+		]
+	},
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Switched]]",
+	"tag-visualeditor-switched-description": "Потребителят започва да редактира чрез VisualEditor и след това преминава към уикитекст редактора.",
+	"visualeditor-feedback-tool": "Обратна връзка",
+	"visualeditor-help-label": "Прочитане на наръчника",
+	"visualeditor-help-title": "Наръчник за употреба на редактора"
+}

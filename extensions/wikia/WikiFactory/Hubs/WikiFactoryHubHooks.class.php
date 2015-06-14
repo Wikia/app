@@ -19,15 +19,9 @@ class WikiFactoryHubHooks extends WikiaModel {
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		global $wgCityId;
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$wikiCategories = [];
-
-		$categories = $wikiFactoryHub->getWikiCategories( $wgCityId );
-		foreach( $categories as $category ) {
-			$wikiCategories[] = $category['cat_short'];
-		}
 
 		$vars['wgWikiVertical'] = $wikiFactoryHub->getWikiVertical( $wgCityId )['short'];
-		$vars['wgWikiCategories'] = $wikiCategories;
+		$vars['wgWikiCategories'] = $wikiFactoryHub->getWikiCategoryNames( $wgCityId );
 
 		return true;
 	}

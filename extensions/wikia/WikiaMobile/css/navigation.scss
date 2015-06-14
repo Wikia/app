@@ -27,12 +27,12 @@
 }
 
 #wkNavTgl {
-	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_menu.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/topbar_menu.png'); /* inline */
 }
 
 #wkPrfTgl {
 	&.lgdout{
-		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedout.png'); /* base64 */
+		background-image:  url('/extensions/wikia/WikiaMobile/images/user_loggedout.png'); /* inline */
 	}
 
 	&.lgdin {

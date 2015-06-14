@@ -2,7 +2,7 @@
 class AvatarService extends Service {
 
 	const AVATAR_SIZE_SMALL = 20;
-	const AVATAR_SIZE_SMALL_PLUS = 36;
+	const AVATAR_SIZE_SMALL_PLUS = 30;
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
@@ -161,8 +161,6 @@ class AvatarService extends Service {
 		// We allow HTML tag to resize to any size.
 		if ( $avatarSize <= self::AVATAR_SIZE_SMALL ) {
 			$allowedSize = self::AVATAR_SIZE_SMALL;
-		} else if ( $avatarSize <= self::AVATAR_SIZE_SMALL_PLUS ) {
-			$allowedSize = self::AVATAR_SIZE_SMALL_PLUS;
 		} else if ( $avatarSize <= self::AVATAR_SIZE_MEDIUM ) {
 			$allowedSize = self::AVATAR_SIZE_MEDIUM;
 		} else {
@@ -271,7 +269,7 @@ class AvatarService extends Service {
 				$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );
 			}
 		} else { // default avatar
-			$legacyDefaultUrl = array_shift( $masthead->getDefaultAvatars( 'thumb/' ) );
+			$legacyDefaultUrl = $masthead->getDefaultAvatars( 'thumb/' )[0];
 			$bucket = VignetteRequest::parseBucket( $legacyDefaultUrl );
 			$relativePath = VignetteRequest::parseRelativePath( $legacyDefaultUrl );
 			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp, false );

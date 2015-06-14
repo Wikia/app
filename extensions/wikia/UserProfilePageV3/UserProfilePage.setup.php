@@ -43,6 +43,7 @@ $wgAutoloadClasses['HiddenWikisFilter'] = $dir . '/filters/HiddenWikisFilter.cla
 $wgAutoloadClasses['UserWikisFilterDecorator'] = $dir . '/filters/UserWikisFilterDecorator.class.php';
 $wgAutoloadClasses['UserWikisFilterUniqueDecorator'] = $dir . '/filters/UserWikisFilterUniqueDecorator.class.php';
 $wgAutoloadClasses['UserWikisFilterRestrictedDecorator'] = $dir . '/filters/UserWikisFilterRestrictedDecorator.class.php';
+$wgAutoloadClasses['UserWikisFilterPrivateDecorator'] = $dir . '/filters/UserWikisFilterPrivateDecorator.class.php';
 
 /**
  * hooks

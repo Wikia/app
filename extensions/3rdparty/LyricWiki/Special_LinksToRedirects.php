@@ -172,8 +172,7 @@ class Linkstoredirects extends SpecialPage{
 										12 => "Help",
 										13 => "Help_talk",
 										14 => ":Category",
-										15 => "Category_talk",
-										NS_GRACENOTE => "Gracenote"
+										15 => "Category_talk"
 									);
 						$idToTitle = array();
 						$ids = array_unique($ids);

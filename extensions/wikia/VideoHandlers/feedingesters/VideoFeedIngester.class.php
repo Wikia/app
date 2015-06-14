@@ -8,7 +8,6 @@ abstract class VideoFeedIngester {
 	// Caching constants; all integers are seconds
 	const CACHE_KEY = 'videofeedingester-2';
 	const CACHE_EXPIRY = 3600;
-	const THROTTLE_INTERVAL = 1;
 
 	// Names a city variable to look for additional category data.  Used in the reingestBrokenVideo.php
 	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
@@ -368,7 +367,7 @@ abstract class VideoFeedIngester {
 				$msg = "Ingested {$uploadedTitle->getText()} from partner clip id {$this->metaData['videoId']}. $fullUrl\n";
 				$this->logger->videoIngested( $msg, $this->pageCategories );
 
-				wfWaitForSlaves( self::THROTTLE_INTERVAL );
+				wfWaitForSlaves();
 				wfRunHooks( 'VideoIngestionComplete', [ $uploadedTitle, $this->pageCategories ] );
 				return 1;
 			}
@@ -519,12 +518,11 @@ abstract class VideoFeedIngester {
 			'city_variables_pool',
 			'city_list',
 		];
-		$varName = mysql_real_escape_string( self::WIKI_INGESTION_DATA_VARNAME );
 		$aWhere = [ 'city_id = cv_city_id', 'cv_id = cv_variable_id' ];
 
 		$aWhere[] = "cv_value is not null";
 
-		$aWhere[] = "cv_name = '$varName'";
+		$aWhere['cv_name'] = self::WIKI_INGESTION_DATA_VARNAME;
 
 
 		$oRes = $dbr->select(

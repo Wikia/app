@@ -20,8 +20,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "MostPopularCategories",
-    "description" => "Get list of most popular categories",
-    "author" => "Moli <moli at wikia.com>"
+    "descriptionmsg" => "mostpopularcategories-desc",
+    "author" => "Moli <moli at wikia.com>",
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MostPopularCategories'
 );
 
 $wgHooks['wgQueryPages'][] = 'wfSetupMostPopularCategories';

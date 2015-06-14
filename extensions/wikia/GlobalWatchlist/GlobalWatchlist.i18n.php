@@ -252,6 +252,37 @@ $messages['diq'] = array(
 	'globalwatchlist-no-blog-page-found' => 'Qet qeydê pele nêvêniya.',
 );
 
+/** British English (British English)
+ * @author Chase me ladies, I'm the Cavalry
+ */
+$messages['en-gb'] = array(
+	'globalwatchlist-desc' => 'Sends weekly digest e-mails with watchlisted pages on all wikis',
+	'tog-watchlistdigest' => 'E-mail me a Weekly Watchlist Digest',
+	'tog-watchlistdigestclear' => 'Mark all pages from my Weekly Watchlist Digest as visited',
+	'globalwatchlist-see-more' => 'Please check your local watchlists for more changes',
+	'globalwatchlist-digest-email-subject' => 'Weekly Digest',
+	'globalwatchlist-digest-email-body' => 'Dear $1,
+
+This is a list of pages on your Wikia watchlist that have been edited since you last visited them.
+
+$2
+
+
+This is a list of blog pages on your Wikia watchlist that have been edited or commented since you last visited them.
+
+$3
+
+Please visit and edit often...
+
+Wikia
+
+* To change your preferences for watchlist notifications, please visit http://www.wikia.com/wiki/Special:Preferences
+* To mark all pages from this Weekly Digest as visited, see the option in the "Watchlist" tab of your Preferences page',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comment|comments}})',
+	'globalwatchlist-no-page-found' => 'No page found.',
+	'globalwatchlist-no-blog-page-found' => 'No blog page found.',
+);
+
 /** Spanish (español)
  * @author Translationista
  * @author VegaDark
@@ -281,6 +312,26 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentario|comentarios}})',
 	'globalwatchlist-no-page-found' => 'No se encontró ninguna página.',
 	'globalwatchlist-no-blog-page-found' => 'No se encontró ninguna página de blog.',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'globalwatchlist-blog-page-title-comment' => '$1 ({{PLURAL:$2|iruzkin $2|$2 iruzkin}})',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ * @author Movyn
+ */
+$messages['fa'] = array(
+	'globalwatchlist-desc' => 'ارسال هفتگی بروزرسانی‌های خلاصه مطالب پیگیری شده در همه ویکی‌ها به ایمیل',
+	'tog-watchlistdigest' => 'به صورت هفتگی خلاصه‌ای از فهرست پیگیری‌هایم را به ایمیل بفرست',
+	'tog-watchlistdigestclear' => 'به همه صفحات پیگری‌شده‌ام که به صورت هفتگی انتخاب کردم علامت خوانده شده بزن',
+	'globalwatchlist-digest-email-subject' => 'خلاصه هفتگی',
+	'globalwatchlist-no-page-found' => 'صفحه پیدا نشد',
+	'globalwatchlist-no-blog-page-found' => 'وبلاگ پیدا نشد',
 );
 
 /** Finnish (suomi)
@@ -565,6 +616,15 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'ブログページは見つかりませんでした。',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'globalwatchlist-digest-email-subject' => '주간 주시문서 편집 내역',
+	'globalwatchlist-no-page-found' => '문서를 찾을 수 없습니다.',
+	'globalwatchlist-no-blog-page-found' => '블로그 글을 찾을 수 없습니다.',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -619,7 +679,7 @@ $3
 * За да ги промените вашите нагодувања за известувања за списокот на набљудувања, посетете ја страницата http://www.wikia.com/wiki/Special:Preferences
 * За да ги означите сите страници од овој Неделен преглед како посетени, одберете ја таа можност во јазичето „Список на набљудувања“ на вашата страница за нагодувања',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|коментар|коментари}})',
-	'globalwatchlist-no-page-found' => 'Нема пронајдено ниедна страница.',
+	'globalwatchlist-no-page-found' => 'Не пронајдов ниедна страница.',
 	'globalwatchlist-no-blog-page-found' => 'Нема пронајдено блог-страница.',
 );
 
@@ -718,7 +778,7 @@ Groet, Wikia
 
 * Op de pagina http://www.wikia.com/wiki/Special:Preferences kunt u uw instellingen wijzigen voor volglijste-mails.
 * Zie het tabblad "Volglijst" in uw voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
-	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|opmerking|opmerkingen}})',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|reactie|reacties}})',
 	'globalwatchlist-no-page-found' => 'Geen pagina aangetroffen.',
 	'globalwatchlist-no-blog-page-found' => 'Geen blogpagina aangetroffen.',
 );
@@ -750,13 +810,17 @@ Groet, Wikia
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'globalwatchlist-desc' => 'Manda un resumit setmanièr per corrièl amb las paginas seguidas sus totes los wikis',
+	'tog-watchlistdigest' => 'Me mandar un resumit per corrièl un còp per setmana',
+	'tog-watchlistdigestclear' => 'Marcar totas las paginas de mon resumit setmanièr coma visitadas',
+	'globalwatchlist-see-more' => 'Verificatz vòstras listas de seguiment localas per afichar mai de modificacions',
 	'globalwatchlist-digest-email-subject' => 'Somari de la setmana',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentari|comentaris}})',
 	'globalwatchlist-no-page-found' => 'Cap de pagina pas trobada.',
 	'globalwatchlist-no-blog-page-found' => 'Cap de pagina de blog pas trobada.',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(

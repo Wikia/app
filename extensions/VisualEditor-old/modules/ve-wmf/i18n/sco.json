@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"John Reid"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VeesualEediter]]",
+	"tag-visualeditor-description": "Eedit dun uisin the [[{{MediaWiki:visualeditor-descriptionpagelink}}|VeesualEediter]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VeesualEediter: Check]]",
+	"tag-visualeditor-needcheck-description": "Eedit dun uisin the [[{{MediaWiki:visualeditor-descriptionpagelink}}|VeesualEediter]] whaur the system detectit the wikitex possiblie haein on-ettled-fer chynges.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VeesualEiditer: Switched]]",
+	"tag-visualeditor-switched-description": "Uiser stairted tae eidit uising VeesualEditer than chynged til the wikitex eiditer.",
+	"visualeditor-feedback-link": "Project:VeesualEediter/Feedback",
+	"visualeditor-feedback-tool": "Lea feedback",
+	"visualeditor-help-label": "Read the uiser guide",
+	"visualeditor-help-title": "Uiser guide fer hou tae uise the eediter"
+}

@@ -1,0 +1,544 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
+@import './mixins/sprite-monetization-module';
+
+.monetization-module {
+	clear: left;
+
+	.amazon-logo, .product-btn, .default-thumb, .rating-bar, .rating {
+		@include sprite-monetization-module-base();
+	}
+
+	&.adunit {
+		margin-bottom: 50px;
+		margin-top: 24px;
+	}
+
+	&.ecommerce {
+		clear: both;
+		font-family: Helvetica,sans-serif;
+		line-height: 1.8em;
+		margin-bottom: 40px;
+	}
+
+	&.amazon-video {
+		background-color: #535353;
+		border-radius: 3px;
+		clear: both;
+		color: #fff;
+		font-family: Helvetica,sans-serif;
+		margin-bottom: 25px;
+		margin-top: 25px;
+
+		&.above-title {
+			margin-top: 0;
+		}
+
+		a {
+			color: #fff;
+		}
+
+		.affiliate-header {
+			float: left;
+		}
+
+		.product-name {
+			float: left;
+
+			span {
+				display: block;
+			}
+		}
+
+		.product-title {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.product-button {
+			float: right;
+
+			&.non-prime {
+				padding-top: 7px;
+			}
+		}
+
+		.product-btn {
+			@include sprite-monetization-module('watch-now-btn');
+			display: block;
+			height: 45px;
+			width: 178px;
+		}
+
+		.product-price {
+			font-size: 12px;
+			margin-left: 5px;
+		}
+
+		.default-thumb {
+			@include sprite-monetization-module('no_image_video');
+			height: 122px;
+			width: 160px;
+		}
+	}
+
+	.ad-header {
+		color: $color-alternate-text;
+		font-size: 10px;
+		font-weight: normal;
+		margin-bottom: 6px;
+		padding-left: 10px;
+		text-align: left;
+		text-transform: uppercase;
+	}
+
+	.ad-responsive {
+		height: 90px;
+		width: 728px;
+	}
+
+	.ad-responsive-ic {
+		height: 90px;
+		width: 320px;
+	}
+
+	@media(min-width: 850px) {
+		.ad-responsive-ic {
+			width: 418px;
+		}
+	}
+
+	@media(min-width: 1024px) {
+		.ad-responsive-ic {
+			width: 320px;
+		}
+
+		.ad-responsive {
+			width: 690px;
+		}
+	}
+
+	@media(min-width: 1440px) {
+		.ad-responsive-ic {
+			width: 418px;
+		}
+
+		.ad-responsive {
+			width: 728px;
+		}
+	}
+
+	@media(min-width: 1665px) {
+		.ad-responsive-ic {
+			width: 630px;
+		}
+	}
+
+	@media(min-width: 1700px) {
+		.ad-responsive-ic {
+			width: 678px;
+		}
+	}
+
+	.affiliate-wrapper {
+		overflow: hidden;
+	}
+
+	.module-title {
+		overflow: hidden;
+	}
+
+	.product-thumb {
+		padding: 0;
+	}
+
+
+	.default-thumb {
+		display: block;
+	}
+
+	.product-name {
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: normal;
+	}
+
+	.product-price {
+		display: inline-block;
+		position: relative;
+		text-align: center;
+	}
+
+	.rating-bar {
+		@include sprite-monetization-module('star-inactive');
+		background-repeat: repeat-x;
+		height: 16px;
+		text-align: left;
+		width: 80px;
+	}
+
+	.rating {
+		@include sprite-monetization-module('star-active');
+		background-repeat: repeat-x;
+		height: 16px;
+		width: 0;
+	}
+}
+
+.ecommerce-multiple-product {
+	@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
+	border: 1px solid $color-page-border;
+	padding: 10px;
+
+	.affiliate-wrapper {
+		height: 285px;
+	}
+
+	.affiliate-header {
+		margin-top: 5px;
+	}
+
+	.module-title {
+		@if $is-dark-wiki {
+			color: #fff;
+		} @else {
+			color: #000;
+		}
+		font-size: 30px;
+	}
+
+	.affiliate {
+		float: left;
+		margin-bottom: 50px;
+		margin-right: 40px;
+		padding-bottom: 4px;
+		padding-right: 0;
+		padding-top: 8px;
+		width: 160px;
+	}
+
+	.product-thumb img {
+		border: 1px solid #ccc;
+		float: left;
+		height: 160px;
+		width: 160px;
+	}
+
+	.default-thumb {
+		@include sprite-monetization-module('no_image_commerce', 0, 0, 0, 19px);
+		width: 160px;
+	}
+
+	.product-name {
+		border-bottom: 1px solid #ccc;
+		border-left: 1px solid #ccc;
+		border-right: 1px solid #ccc;
+		float: left;
+		font-size: 14px;
+		height: 2.4em;
+		-webkit-line-clamp: 2;
+		line-height: 1.4;
+		padding: 5px 5px 7px;
+		width: 150px;
+	}
+
+	.product-price {
+		background-color: #5d98d4;
+		border-radius: 3px;
+		color: #000;
+		font-size: 14px;
+		font-weight: bold;
+		height: 20px;
+		left: 85px;
+		padding: 6px 12px;
+		position: relative;
+		text-align: center;
+		top: -100px;
+		width: 60px;
+	}
+
+	.amazon-logo {
+		@if $is-dark-wiki {
+			@include sprite-monetization-module('amazon-logo-white', 0, 0, 0, -3px);
+		} @else {
+			@include sprite-monetization-module('amazon-logo-black', 0, 0, 0, -3px);
+		}
+		display: inline-block;
+		height: 38px;
+		margin-left: 6px;
+		vertical-align: top;
+		width: 160px;
+	}
+}
+
+.ecommerce-single-product {
+	background-color: #fff;
+	border: 1px solid #d8d8d8;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, .2);
+	padding: 6px;
+
+	.affiliate-wrapper {
+		border: 1px solid #d8d8d8;
+		height: 202px;
+	}
+
+	.affiliate-header {
+		background-color: #000;
+		float: left;
+		height: 100%;
+		padding-top: 70px;
+		text-align: center;
+		width: 30%;
+	}
+
+	.module-title {
+		color: #fff;
+		font-size: 20px;
+		font-weight: 400;
+	}
+
+	.affiliate {
+		background-color: #f6f6f6;
+		height: 182px;
+		margin-left: 30%;
+		padding: 10px;
+	}
+
+	.product-thumb {
+		background-color: #fff;
+		border: 1px solid #c6c6c6;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+		float: left;
+		height: 180px;
+		text-align: center;
+		width: 256px;
+
+		img {
+			border: 0;
+			height: 180px;
+			max-width: 256px;
+		}
+	}
+
+	.default-thumb {
+		@include sprite-monetization-module('no_image_commerce', 0, 0, 0, 29px);
+		height: 122px;
+		margin-left: 48px;
+		width: 160px;
+	}
+
+	.product-name {
+		font-size: 20px;
+		height: 80px;
+		-webkit-line-clamp: 4;
+		line-height: 1.1;
+		padding: 5px 10px;
+
+		a {
+			color: #004b91;
+		}
+
+		strong {
+			font-weight: 400;
+		}
+	}
+
+	.product-price {
+		@include linear-gradient(#ec850c, top, #f19a16, 50%, #ec850c, 100%);
+		background-color: #f09512;
+		border: 1px solid #e38600;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+		color: #fff;
+		font-size: 20px;
+		font-weight: 400;
+		height: 33px;
+		left: 10px;
+		padding-top: 15px;
+		text-shadow: 0 1px 0 rgba(0, 0, 0, .2);
+		top: 41px;
+		width: 116px;
+	}
+
+	.amazon-logo {
+		background-image: url('/extensions/wikia/MonetizationModule/images/sprite-monetization-module/amazon-logo-white.png'); /* base64 */
+		background-position: center;
+		background-size: 160px 38px;
+		display: block;
+		height: 38px;
+	}
+}
+
+.amazon-video-light {
+	padding: 7px;
+
+	.affiliate {
+		height: 60px;
+	}
+
+	.affiliate-header {
+		padding: 13px;
+		width: 139px;
+	}
+
+	.amazon-logo {
+		@include sprite-monetization-module('amazon-logo-video');
+		display: block;
+		height: 36px;
+		width: 139px;
+	}
+
+	.product-name {
+		font-size: 15px;
+		line-height: 1.2;
+		padding: 0 0 0 7px;
+		width: 47%;
+	}
+
+	.product-title {
+		font-size: 22px;
+	}
+
+	.product-detail {
+		color: #c6c6c6;
+	}
+
+	.product-type {
+		font-weight: bold;
+	}
+}
+
+.amazon-video-full {
+	padding: 15px;
+
+	.affiliate {
+		height: 135px;
+	}
+
+	.product-thumb {
+		box-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
+		float: left;
+		text-align: center;
+
+		img {
+			border: 0;
+			max-height: 132px;
+			max-width: 160px;
+			min-height: 110px;
+		}
+	}
+
+	.product-name {
+		font-size: 16px;
+		line-height: 1.4;
+		padding: 10px 0 0 15px;
+		width: 45%;
+	}
+
+	.product-title {
+		font-size: 26px;
+	}
+
+	.product-detail {
+		color: #c6c6c6;
+	}
+
+	.product-type {
+		font-size: 20px;
+	}
+
+	.amazon-logo {
+		@include sprite-monetization-module('amazon-logo-video-horz');
+		display: block;
+		height: 20px;
+		margin: 10px 0 10px 18px;
+		width: 141px;
+	}
+
+	&.in-content {
+		display: inline-block;
+		margin: 10px;
+		width: 600px;
+
+		.product-name {
+			padding: 0;
+		}
+
+		.product-title {
+			font-size: 21px;
+		}
+
+		.product-thumb {
+			display: none;
+		}
+
+		.affiliate {
+			height: 100%;
+		}
+
+		.amazon-logo {
+			margin-top: 0;
+		}
+
+		@media(max-width: 849px), (min-width: 1024px) and (max-width: 1439px) {
+			width: 290px;
+
+			.product-name {
+				font-size: 14px;
+				width: 100%;
+			}
+
+			.product-title {
+				font-size: 18px;
+			}
+
+			.product-button {
+				float: left;
+				padding-top: 10px;
+				width: 100%;
+			}
+
+			.amazon-logo {
+				@include sprite-monetization-module('amzon_no_iv');
+				float: left;
+				height: 35px;
+				margin: 0;
+				width: 106px;
+			}
+
+			.product-btn {
+				float: right;
+			}
+
+			.product-price {
+				float: right;
+				margin-right: 10px;
+			}
+		}
+
+		@media(min-width: 850px) and (max-width: 1023px), (min-width: 1440px) {
+			width: 388px;
+
+			.product-name {
+				width: 50%;
+			}
+		}
+
+		@media(min-width: 1665px) {
+			width: 600px;
+
+			.product-name {
+				width: 70%;
+			}
+		}
+
+		@media(min-width: 1700px) {
+			width: 648px;
+		}
+	}
+}

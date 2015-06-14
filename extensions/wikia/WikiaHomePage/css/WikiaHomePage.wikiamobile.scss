@@ -26,7 +26,7 @@
 			height: 100px;
 			width: 100%;
 			img {
-				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-en-mobile.png'); /* base64 */
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-en-mobile.png'); /* inline */
 				background-position: 0 0;
 				background-repeat: no-repeat;
 				height: 62px;
@@ -116,7 +116,7 @@
 
 #wkTopBar {
 	&:before {
-		background-image: url('/extensions/wikia/WikiaHomePage/images/wikialogo-mobile.png'); /* base64 */
+		background-image: url('/extensions/wikia/WikiaHomePage/images/wikialogo-mobile.png'); /* inline */
 		background-position: 0 0px;
 		background-repeat: no-repeat;
 		content: "";

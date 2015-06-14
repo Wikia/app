@@ -3,10 +3,14 @@
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'article.json',
 	'version'			=> '0.1',
-	'descriptionmsg'	=> 'Extension that extracts from an article as much as we can to send it as an json to a client',
+	'descriptionmsg'	=> 'articleasjson-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ArticleAsJson',
 );
 
 $dir = dirname(__FILE__) . '/';
+
+//i18n
+$wgExtensionMessagesFiles['ArticleAsJson'] = $dir . 'ArticleAsJson.i18n.php';
 
 //classes
 $wgAutoloadClasses['ArticleAsJson'] =  $dir . 'ArticleAsJson.class.php';
@@ -19,3 +23,4 @@ $wgHooks['PageRenderingHash'][] = 'ArticleAsJson::onPageRenderingHash';
 $wgHooks['ParserAfterTidy'][] = 'ArticleAsJson::onParserAfterTidy';
 $wgHooks['Parser::showEditLink'][] = 'ArticleAsJson::onShowEditLink';
 $wgHooks['ParserLimitReport'][] = 'ArticleAsJson::reportLimits';
+$wgHooks['PortableInfoboxNodeImage::getData'][] = 'ArticleAsJson::onPortableInfoboxNodeImageGetData';

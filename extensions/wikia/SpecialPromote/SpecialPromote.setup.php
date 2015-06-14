@@ -10,10 +10,11 @@
  */
 
 $wgExtensionCredits['other'][] = array(
-	'name'			=> 'SpecialPromote',
-	'author'		=> 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
-	'description'	=> 'SpecialPromote page is enable for admins to add information about their wiki. After review of those informations it can show up on wikia.com',
-	'version'		=> 1.0
+	'name'				=> 'SpecialPromote',
+	'author'			=> 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
+	'descriptionmsg'	=> 'promote-desc',
+	'version'			=> 1.0,
+	'url'           	=> 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialPromote'
 );
 
 $dir = dirname(__FILE__) . '/';

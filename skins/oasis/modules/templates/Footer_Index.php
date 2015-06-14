@@ -17,5 +17,7 @@
 		<?= F::app()->renderView('Notifications', 'Index'); ?>
 	<?php endif; ?>
 
-	<?= F::app()->renderView('Spotlights', 'Index'); ?>
+	<? if ( $wg->EnableOpenXSPC ) : ?>
+		<?= F::app()->renderView('Spotlights', 'Index'); ?>
+	<? endif; ?>
 </footer>

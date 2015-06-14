@@ -346,6 +346,10 @@ class DefaultMessagesCache {
 	protected function saveToCaches( $cache, $memc = true, $code = false ) {
 		wfProfileIn( __METHOD__ );
 
+		if ( F::app()->wg->AllowMemcacheDisable && ( F::app()->wg->AllowMemcacheWrites == false ) ) {
+			return true;
+		}
+
 		$cacheKey = $this->memcKey( 'messages', $code );
 		$statusKey = $this->memcKey( 'messages', $code, 'status' );
 

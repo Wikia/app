@@ -56,30 +56,10 @@ class OasisController extends WikiaController {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgOasisResponsive'] = BodyController::isResponsiveLayoutEnabled();
+		$vars['wgOasisBreakpoints'] = BodyController::isOasisBreakpoints();
 		$vars['verticalName'] = HubService::getCurrentWikiaVerticalName();
 		return true;
 	}
-
-	/*
-	 * TODO remove after Global Header ABtesting
-	 */
-	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		$app = F::app();
-		if ( $app->checkSkin( ['oasis'], $skin ) ) {
-			$globalSearch = GlobalTitle::newFromText(
-				'Search',
-				NS_SPECIAL,
-				WikiService::WIKIAGLOBAL_CITY_ID
-			)->getFullURL();
-
-			$vars['wgGlobalSearchUrl'] = $globalSearch;
-		}
-
-		return true;
-	}
-	/*
-	 *  END TODO
-	 */
 
 	/**
 	 * Business-logic for determining if the javascript should be at the bottom of the page (it usually should be
@@ -184,6 +164,11 @@ class OasisController extends WikiaController {
 			$bodyClasses[] = 'oasis-dark-theme';
 		}
 
+		/**
+		 * Login status based CSS class
+		 */
+		$bodyClasses[] = $skin->getUserLoginStatusClass();
+
 		// sets background settings by adding classes to <body>
 		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
 
@@ -223,33 +208,6 @@ class OasisController extends WikiaController {
 
 		// setup loading of JS/CSS
 		$this->loadJs();
-
-		// FIXME: create separate module for stats stuff?
-		// load Google Analytics code
-		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-
-		// onewiki GA
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-
-		// track page load time
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-
-		// track browser height TODO NEF no browser height tracking code anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
-
-		// record which varnish this page was served by
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
-
-		// TODO NEF not used, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
-
-		// TODO NEF we dont do AB this way anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
-
-		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
-		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
@@ -323,7 +281,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgEnableGlobalNavExt, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -337,16 +295,12 @@ class OasisController extends WikiaController {
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
-			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				$blockingFile = $this->assetsManager->rewriteJSlinks( $blockingFile );
-			}
-
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
 		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
-	
+
 			foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to the queue
 			if ( !empty( $s['url'] ) ) {
@@ -360,9 +314,6 @@ class OasisController extends WikiaController {
 					if ( $wgAllInOne ) {
 						$url = $this->minifySingleAsset( $url );
 					}
-					if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-						$url = $this->assetsManager->rewriteJSlinks( $url );
-					}
 					$jsReferences[] = $url;
 				}
 			} else {
@@ -373,18 +324,10 @@ class OasisController extends WikiaController {
 
 		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
 
-		if ( empty( $wgEnableGlobalNavExt ) ) {
-			$assetGroups[] = 'global_header_js';
-		}
-
 		if ( $isLoggedIn ) {
 			$assetGroups[] = 'oasis_user_js';
 		} else {
-			if ( empty( $wgEnableGlobalNavExt ) ) {
-				$assetGroups[] = 'oasis_anon_js';
-			} else {
-				$assetGroups[] = 'oasis_anon_with_new_global_nav_js';
-			}
+			$assetGroups[] = 'oasis_anon_js';
 		}
 
 
@@ -401,14 +344,7 @@ class OasisController extends WikiaController {
 		// disabled - not needed atm (and skipped in wsl-version anyway)
 		// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
 
-		// get urls
-		if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
-			foreach ($assets as $index => $url) {
-				$assets[$index] = $this->assetsManager->rewriteJSlinks( $url );
-			}
-		}
-
-		// as $jsReferences
+		// add $jsReferences
 		$assets = array_merge($assets, $jsReferences);
 
 		// generate direct script tags

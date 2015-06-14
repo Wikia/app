@@ -26,6 +26,14 @@ function answersStyle() {
 	return true;
 }
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'Answers',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'answers-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Answers',
+	
+);
+
 // FIXME: Migrate require_once's to inclues for performance reasons.
 require_once( dirname(__FILE__) . "/AnswersClass.php");
 require_once( dirname(__FILE__) . "/AttributionCache.class.php");

@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'wikiagameguides-preview-description' => 'This is just a preview of how pages would look like in a Wikia Game Guides application.',
 
 	//Content Managment tool
+	'wikiagameguides-content-have-been-deprecated-by' => 'Game Guides content management tool have been deprecated. Please use <a href="$1">$2</a> instead.',
 	'wikiagameguides-content-title' => 'Wikia Game Guides content managment tool',
 	'wikiagameguides-content-category' => 'Category',
 	'wikiagameguides-content-tag' => 'Category Tag (optional)',
@@ -54,7 +55,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'wikiagameguides-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
-
+	'wikiagameguides-content-have-been-deprecated-by' => 'Information about GameGuides being deprecated and functionality moved to CuratedContent',
 
 	//Preview page
 	'wikiagameguides-preview-description' => 'Message displayed on GameGuidesPreview page indicating that what user see is just a preview',

@@ -7,6 +7,8 @@
  * @author Nelson Monterroso <nelson@wikia-inc.com>
  */
 
+use Wikia\Logger\WikiaLogger;
+
 class TaskRunner {
 	const TASK_NOTIFY_TIMEOUT = 120; // number of seconds required before we notify flower of our job status
 
@@ -72,7 +74,9 @@ class TaskRunner {
 				}
 			}
 
+			WikiaLogger::instance()->pushContext( [ 'task_call' => get_class($task)."::{$method}"] );
 			$result = $task->execute( $method, $args );
+			WikiaLogger::instance()->popContext();
 			$this->results [] = $result;
 
 			if ( $result instanceof Exception ) {

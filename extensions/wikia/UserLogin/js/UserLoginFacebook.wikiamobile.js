@@ -1,3 +1,4 @@
+/* global wgScriptPath */
 require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', 'wikia.window'],
 	function (track, Qs, toast, nirvana, msg, window) {
 	'use strict';
@@ -8,7 +9,6 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 
 			return function () {
 				if (!initialized) {
-					//see fbconnect.js
 					window.FB.init({
 						appId: window.fbAppId,
 						status: true, // Check login status
@@ -22,49 +22,63 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 			};
 		})();
 
-	btn.addEventListener('click', function () {
-		fbInit();
+		if (window.FB) {
+			btn.disabled = false;
+			btn.addEventListener('click', function () {
+				fbInit();
 
-		window.FB.login(
-			function (response) {
-				if (response && response.status === 'connected') {
-					// now check FB account (is it connected with Wikia account?)
-					nirvana.postJson('FacebookSignup', 'index').done(
-						function (resp) {
-							if (resp.loggedIn) {
-								track.event('login', track.CLICK, {
-									label: 'facebook',
-									value: 1
-								});
+				window.FB.login(loginCallback, {
+					scope: 'email'
+				});
+			});
+		}
 
-								var reload = new Qs(),
-									returnto = reload.getVal('returnto',
-										(window.wgCanonicalSpecialPageName &&
-										window.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ?
-											window.wgMainPageTitle :
-											''
-									);
+	function loginCallback(response) {
+		if (response && response.status === 'connected') {
+			// now check FB account (is it connected with Wikia account?)
+			nirvana.postJson('FacebookSignup', 'index').done(
+				FBSignUpControllerCallBack
+			);
+		}
+	}
 
-								if (returnto) {
-									reload.setPath(window.wgArticlePath.replace('$1', returnto));
-								}
+	function FBSignUpControllerCallBack(resp) {
+		if (resp.loggedIn) {
+			track.event('login', track.CLICK, {
+				label: 'facebook',
+				value: 1
+			});
 
-								reload.removeVal('returnto').removeHash('topbar').addCb().goTo();
+			var reload = new Qs(),
+				returnto = reload.getVal('returnto',
+					// TODO: special page URL matching needs to be consolidated. @see UC-187
+					(window.wgCanonicalSpecialPageName &&
+						window.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/)) ?
+						window.wgMainPageTitle :
+						''
+				);
 
-							} else {
-								track.event('login', track.CLICK, {
-									label: 'facebook',
-									value: 0
-								});
-								toast.show(msg('wikiamobile-facebook-connect-fail'), {error: true});
-							}
-						}
-					);
-				}
-			},
-			{scope: 'email'}
-		);
-	});
+			if (returnto) {
+				reload.setPath(window.wgArticlePath.replace('$1', returnto));
+			}
 
-	btn.disabled = false;
+			reload.removeVal('returnto').removeHash('topbar').addCb().goTo();
+		} else if (resp.unconfirmed) {
+			$.get(wgScriptPath + '/wikia.php', {
+				controller: 'UserLoginSpecial',
+				method: 'getUnconfirmedUserRedirectUrl',
+				format: 'json',
+				username: resp.userName
+			}, function (json) {
+				window.location = json.redirectUrl;
+			});
+		} else {
+			track.event('login', track.CLICK, {
+				label: 'facebook',
+				value: 0
+			});
+			toast.show(msg('wikiamobile-facebook-connect-fail'), {error: true});
+		}
+	}
+
 });

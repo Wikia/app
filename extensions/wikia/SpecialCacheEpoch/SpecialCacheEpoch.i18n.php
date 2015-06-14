@@ -151,6 +151,13 @@ $messages['ia'] = array(
 	'cacheepoch-no-wf' => 'WikiFactory non es activate in iste wiki. Impossibile alterar wgCacheEpoch.',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'cacheepoch-no-wf' => '이 위키에서는 위키팩토리를 사용할 수 없습니다. wgCacheEpoch를 수정할 수 없습니다.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -390,6 +397,7 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -397,7 +405,7 @@ $messages['zh-hans'] = array(
 	'cacheepoch' => 'Cache Epoch接口',
 	'cacheepoch-header' => '增加wgCacheEpoch',
 	'cacheepoch-value' => 'wgCacheEpoch的当前值是“$1”。按下按钮将其设置为当前的时间戳。',
-	'cacheepoch-submit' => '更新该值',
+	'cacheepoch-submit' => '更新值',
 	'cacheepoch-updated' => 'wgCacheEpoch已更新为“$1”',
 	'cacheepoch-not-updated' => '更新wgCacheEpoch失败。',
 	'cacheepoch-wf-reason' => '通过 Special:CacheEpoch 更新数值',

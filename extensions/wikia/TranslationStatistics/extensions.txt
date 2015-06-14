@@ -5,10 +5,6 @@ Action Panel
 
 Ad SS
 
-Combo Ajax Login
-file = AjaxLogin/ComboAjaxLogin.i18n.php
-descmsg = comboajaxlogin-desc
-
 Ajax Poll
 
 Auto Create Wiki

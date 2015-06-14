@@ -1,13 +1,13 @@
 @import "variables";
 
 .imgPlcHld, wkSlider img, .lazy {
-	background-image: url('/extensions/wikia/WikiaPhotoGallery/images/wikiamobile_img_placeholder.png'); /* base64 */
+	background-image: url('/extensions/wikia/WikiaPhotoGallery/images/wikiamobile_img_placeholder.png'); /* inline */
 	background-repeat: no-repeat;
 	background-position: center;
 }
 
 .galPlc.image, .galPlcHld {
-	background-image: url('/extensions/wikia/WikiaMobile/images/gallery_placeholder.png'); /* base64 */
+	background-image: url('/extensions/wikia/WikiaMobile/images/gallery_placeholder.png'); /* inline */
 	background-repeat: no-repeat;
 	background-position: center;
 }

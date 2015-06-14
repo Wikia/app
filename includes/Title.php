@@ -34,6 +34,13 @@ class Title {
 	static private $titleCache = array();
 	// @}
 
+	# Wikia change begins
+	/**
+	 * Traits
+	 */
+	use TitleTrait;
+	# Wikia change ends
+
 	/**
 	 * Title::newFromText maintains a cache to avoid expensive re-normalization of
 	 * commonly used titles. On a batch operation this can become a memory leak
@@ -1095,6 +1102,30 @@ class Title {
 	}
 
 	/**
+	 * Is this a .js page?
+	 *
+	 * @return Bool
+	 */
+	public function isJsPage() {
+		$retval = $this->mNamespace == NS_MEDIAWIKI
+			&& preg_match( '!\.(js)$!u', $this->mTextform ) > 0;
+
+		return $retval;
+	}
+
+	/**
+	 * Is this a .css page?
+	 *
+	 * @return Bool
+	 */
+	public function isCssPage() {
+		$retval = $this->mNamespace == NS_MEDIAWIKI
+			&& preg_match( '!\.(css)$!u', $this->mTextform ) > 0;
+
+		return $retval;
+	}
+
+	/**
 	 * Is this a .css subpage of a user page?
 	 *
 	 * @return Bool
@@ -1127,7 +1158,12 @@ class Title {
 	 * @return Title the object for the talk page
 	 */
 	public function getTalkPage() {
-		return Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		// begin wikia change
+		// VOLDEV-66
+		$talkPageTitle = Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		wfRunHooks( 'GetTalkPage', [$this, &$talkPageTitle] );
+		return $talkPageTitle;
+		// end wikia change
 	}
 
 	/**

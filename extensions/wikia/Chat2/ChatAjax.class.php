@@ -13,7 +13,7 @@ class ChatAjax {
 	 * The returned info is just a custom subset of what the node server needs and does not contain an exhaustive list of rights.
 	 *
 	 * The 'isLoggedIn' field and 'canChat' field of the result should be checked by the calling code before allowing
-	 * the user to chat.  This is the last line of security against any users attemptin to circumvent our protections.  Otherwise,
+	 * the user to chat.  This is the last line of security against any users attempting to circumvent our protections.  Otherwise,
 	 * a banned user could copy the entire client code (HTML/JS/etc.) from an unblocked user, then run that code while logged in as
 	 * under a banned account, and they would still be given access.
 	 *
@@ -22,6 +22,7 @@ class ChatAjax {
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
 	static public function getUserInfo(){
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
 		wfProfileIn( __METHOD__ );
 
@@ -115,6 +116,7 @@ class ChatAjax {
 	 */
 
 	static public function setUsersList() {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
@@ -134,6 +136,7 @@ class ChatAjax {
 	 */
 
 	static public function getPrivateRoomID() {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
@@ -160,6 +163,7 @@ class ChatAjax {
 	 */
 
 	static public function blockOrBanChat(){
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
@@ -211,6 +215,7 @@ class ChatAjax {
 	 * returns "error" => [error message].
 	 */
 	static public function giveChatMod() {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest, $wgUser;
 		wfProfileIn( __METHOD__ );
 
@@ -236,6 +241,7 @@ class ChatAjax {
 
 
 	function BanModal( ) {
+		ChatHelper::info( __METHOD__ . ': Method called' );
 		global $wgRequest, $wgCityId, $wgLang;
 		wfProfileIn( __METHOD__ );
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
@@ -268,6 +274,4 @@ class ChatAjax {
 		wfProfileOut( __METHOD__ );
 		return $retVal;
 	}
-
-
 } // end class ChatAjax

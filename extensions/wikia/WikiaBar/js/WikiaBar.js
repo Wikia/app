@@ -67,7 +67,7 @@ var WikiaBar = {
 
 		if( WikiaBarBoxAd.hasClass('wikia-ad') == false && showAds && window.wgEnableWikiaBarAds ) {
 			// TODO: refactor this once AdEngine calls you back on error/success
-			window.adslots2.push([this.WIKIA_BAR_BOXAD_NAME, null, 'AdEngine2', null]);
+			window.adslots2.push(this.WIKIA_BAR_BOXAD_NAME);
 			WikiaBarBoxAd.addClass('wikia-ad');
 		}
 	},
@@ -313,7 +313,7 @@ var WikiaBar = {
 			this.hide();
 		}
 
-		if (window.wgAction == 'edit') {
+		if (window.wgAction == 'edit' && !window.wgEnableCodePageEditor) {
 			var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
 				editorInstance = WE.getInstance();
 
@@ -405,7 +405,7 @@ var WikiaBar = {
 				action: action,
 				category: category,
 				label: label,
-				trackingMethod: 'ga',
+				trackingMethod: 'analytics',
 				value: value
 			}, params);
 		}

@@ -17,6 +17,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'SearchDigest',
 	'author' => array( '[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]', '[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]' ),
 	'descriptionmsg' => 'searchdigest-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SearchDigest'
 );
 
 $dir = dirname(__FILE__);

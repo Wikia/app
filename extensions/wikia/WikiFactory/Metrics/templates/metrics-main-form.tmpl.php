@@ -19,7 +19,7 @@ div#sidebar { display: none !important; }
 <script type="text/javascript" charset="utf-8">
 
 function __makeParamValue() {
-	var f = document.getElementById('wfm-form');	
+	var f = document.getElementById('wfm-form');
 	var target = "";
 	if (f.wfm_target && f.wfm_target.length > 0) {
 		for ( i = 0; i < f.wfm_target.length; i++ ) {
@@ -32,7 +32,7 @@ function __makeParamValue() {
 
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=axAWCMetrics";
-				
+
 	var oTable = $('#wfm-table').dataTable( {
 		bAutoWidth: false,
 		"oLanguage": {
@@ -54,7 +54,7 @@ $(document).ready(function() {
 		"sCookiePrefix" : "awc-metrics",
 		"aLengthMenu": [[10,15,20,25], [10,15,20,25]],
 		"sDom": '<"dttoolbar"><"top"flip>rt<"bottom"p><"clear">',
-		"aoColumnDefs": [ 
+		"aoColumnDefs": [
 			{ "bVisible": true,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "bVisible": false,  "aTargets": [ 1 ], "bSortable" : false },
 			{ "bVisible": false,  "aTargets": [ 2 ], "bSortable" : false },
@@ -66,7 +66,7 @@ $(document).ready(function() {
 				"bUseRendered": true,
 				"aTargets": [ 3 ],
 				"bSortable" : true
-			},			
+			},
 			{ "bVisible": false,  "aTargets": [ 4 ], "bSortable" : false },
 			{ "bVisible": true,  "aTargets": [ 14 ], "bSortable" : false },
 			{ "fnRender": function ( oObj ) {
@@ -77,11 +77,11 @@ $(document).ready(function() {
 				"aTargets": [ 15 ],
 				"bSortable" : false
 			}
-		],	
+		],
 		"aoColumns": [
 			{ "sName": "id" },
 			{ "sName": "active" },
-			{ "sName": "wikiid" },			
+			{ "sName": "wikiid" },
 			{ "sName": "title" },
 			{ "sName": "url" },
 			{ "sName": "db" },
@@ -107,19 +107,19 @@ $(document).ready(function() {
 		},*/
 		"fnServerData": function ( sSource, aoData, fnCallback ) {
 			var limit		= 30;
-			var offset 		= 0;		
+			var offset 		= 0;
 			var groups	 	= __makeParamValue();
 			var loop		= 1;
 			var order 		= '';
-			
+
 			var sortingCols = 0;
 			var _tmp = new Array();
-			var _tmpDesc = new Array();			
+			var _tmpDesc = new Array();
 			var columns		= new Array();
 			var sortColumns = new Array();
 			var sortOrder	= new Array();
 			var iColumns	= 0;
-			
+
 			for ( i in aoData ) {
 				switch ( aoData[i].name ) {
 					case 'iDisplayLength'	: limit = aoData[i].value; break;
@@ -129,14 +129,14 @@ $(document).ready(function() {
 					case 'iColumns'			: iColumns = aoData[i].value; break;
 					case 'iSortingCols'		: sortingCols = aoData[i].value; break;
 				}
-				
-				if ( aoData[i].name.indexOf( 'iSortCol_', 0) !== -1 ) 
+
+				if ( aoData[i].name.indexOf( 'iSortCol_', 0) !== -1 )
 					sortColumns.push(aoData[i].value);
-				
-				if ( aoData[i].name.indexOf( 'sSortDir_', 0) !== -1 ) 
+
+				if ( aoData[i].name.indexOf( 'sSortDir_', 0) !== -1 )
 					sortOrder.push(aoData[i].value);
 			}
-				
+
 			if ( sortingCols > 0 ) {
 				for ( i = 0; i < sortingCols; i++ ) {
 					var info = columns[sortColumns[i]] + ":" + sortOrder[i];
@@ -146,15 +146,16 @@ $(document).ready(function() {
 			}
 
 			$.ajax( {
-				"dataType": 'json', 
-				"type": "POST", 
-				"url": sSource, 
+				"dataType": 'json',
+				"type": "POST",
+				"url": sSource,
 				"data": [
 					{ 'name' : 'awc-created',  'value' : ( $('#awc-metrics-created').exists() ) ? $('#awc-metrics-created').val() : 0 },
 					{ 'name' : 'awc-from',     'value' : ( $('#awc-metrics-between-from').exists() ) ? $('#awc-metrics-between-from').val() : '' },
 					{ 'name' : 'awc-to',       'value' : ( $('#awc-metrics-between-to').exists() ) ? $('#awc-metrics-between-to').val() : '' },
 					{ 'name' : 'awc-language', 'value' : ( $('#awc-metrics-language').exists() ) ? $('#awc-metrics-language').val() : 0 },
-					{ 'name' : 'awc-hub',      'value' : ( $('#awc-metrics-category-hub').exists() ) ? $('#awc-metrics-category-hub').val() : '' },
+					{ 'name' : 'awc-category', 'value' : ( $('#awc-metrics-category').exists() ) ? $('#awc-metrics-category').val() : '' },
+					{ 'name' : 'awc-vertical', 'value' : ( $('#awc-metrics-vertical').exists() ) ? $('#awc-metrics-vertical').val() : '' },
 					{ 'name' : 'awc-dbname',   'value' : ( $('#awc-metrics-dbname').exists() ) ? $('#awc-metrics-dbname').val() : '' },
 					{ 'name' : 'awc-domain',   'value' : ( $('#awc-metrics-domains').exists() ) ? $('#awc-metrics-domains').val() : '' },
 					{ 'name' : 'awc-exactDomain',   'value' : ( $('#awc-metrics-domains-exact').exists() ) ? $('#awc-metrics-domains-exact').val() : '' },
@@ -173,14 +174,14 @@ $(document).ready(function() {
 					{ 'name' : 'awc-loop', 		'value' : loop },
 					{ 'name' : 'awc-numOrder',	'value' : sortingCols },
 					{ 'name' : 'awc-order',		'value' : order }
-				], 
+				],
 				"success": fnCallback
 			} );
-		}		
+		}
 	} );
-	
+
 	var toolbar = '';
-	
+
 	$("div.dttoolbar").html( toolbar );
 	$('#awc-metrics-submit').click( function() { oTable.fnDraw(); } );
 } );
@@ -190,7 +191,7 @@ $(document).ready(function() {
 <p class='error'><?=$error?></p>
 <div>
 <form method="post" action="<?=$action?>" id="wfm-form">
-<? $found = 0; $i = 0; $isSelected = false; ?>	
+<? $found = 0; $i = 0; $isSelected = false; ?>
 <!-- options -->
 	<div>
 	<fieldset class="awc-metrics-fieldset">
@@ -201,18 +202,20 @@ $(document).ready(function() {
 				<span style="vertical-align:middle">
 					<select name="awc-metrics-created" id="awc-metrics-created">
 			<? foreach ($mPeriods as $value => $text) : ?>
-			<? $selected = ""; $selected = $obj->setDefaultOption($params, 'created', $mDefPeriod, $value); ?> 
+			<? $selected = ""; $selected = $obj->setDefaultOption($params, 'created', $mDefPeriod, $value); ?>
 					<option <?=$selected?> value="<?=$value?>"><?= wfMsg('awc-metrics-' . $text) ?></option>
 			<? endforeach ?>
 					</select>
 				</span>
+			</tr></td>
+			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-language')?></span>
 				<span style="vertical-align:middle">
 					<select name="awc-metrics-language" id="awc-metrics-language"><option value="0"><?=wfMsg('awc-metrics-all-languages')?></option>
 <?php 			if (!empty($aTopLanguages) && is_array($aTopLanguages)) : ?>
 					<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
 <?php 				foreach ($aTopLanguages as $sLang) : ?>
-<?php 					$selected = $obj->setDefaultOption($params, 'lang', '', $sLang); ?> 
+<?php 					$selected = $obj->setDefaultOption($params, 'lang', '', $sLang); ?>
 						<option <?=$selected?> value="<?=$sLang?>"><?=$sLang?>: <?=$aLanguages[$sLang]?></option>
 <?php 				endforeach ?>
 					</optgroup>
@@ -220,7 +223,7 @@ $(document).ready(function() {
 					<optgroup label="<?= wfMsg('autocreatewiki-language-all') ?>">
 <?php 			if (!empty($aLanguages) && is_array($aLanguages)) : ?>
 <?php				foreach ($aLanguages as $sLang => $sLangName) : ?>
-<?php 					$selected = $obj->setDefaultOption($params, 'lang', '', $sLang); ?> 
+<?php 					$selected = $obj->setDefaultOption($params, 'lang', '', $sLang); ?>
 						<option <?= $selected ?> value="<?=$sLang?>"><?=$sLang?>: <?=$sLangName?></option>
 <?php 				endforeach ?>
 					</optgroup>
@@ -229,10 +232,19 @@ $(document).ready(function() {
 				</span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-category')?></span>
 				<span style="vertical-align:middle">
-					<select name="awc-metrics-category-hub" id="awc-metrics-category-hub"><option value=""> </option>
+					<select name="awc-metrics-category" id="awc-metrics-category"><option value=""> </option>
 			<? foreach ($aCategories as $id => $catName) : ?>
-<?php 				$selected = $obj->setDefaultOption($params, 'cat', '', $id); ?> 
+<?php 				$selected = $obj->setDefaultOption($params, 'cat', '', $id); ?>
 					<option <?= $selected ?> value="<?=$id?>"><?=$catName['name']?></option>
+			<? endforeach ?>
+					</select>
+				</span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-vertical')?></span>
+				<span style="vertical-align:middle">
+					<select name="awc-metrics-vertical" id="awc-metrics-vertical"><option value=""> </option>
+			<? foreach ($aVerticals as $vertical) : ?>
+<?php 				$selected = $obj->setDefaultOption($params, 'vertical', '', $vertical['id']); ?>
+					<option <?= $selected ?> value="<?=$vertical['id']?>"><?=$vertical['name']?></option>
 			<? endforeach ?>
 					</select>
 				</span>
@@ -241,8 +253,8 @@ $(document).ready(function() {
 		<table width="100%" style="text-align:left;">
 			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle">
-					<?= wfMsg('awc-metrics-created-between', 
-						'<input name="awc-metrics-between-from" id="awc-metrics-between-from" size="20" value="'.@$params['from'].'" />', 
+					<?= wfMsg('awc-metrics-created-between',
+						'<input name="awc-metrics-between-from" id="awc-metrics-between-from" size="20" value="'.@$params['from'].'" />',
 						'<input name="awc-metrics-between-to" id="awc-metrics-between-to" size="20" value="'.@$params['to'].'" />'
 					) ?>
 				</span>
@@ -268,18 +280,18 @@ $(document).ready(function() {
 $months = '<select name="awc-nbr-edits-days" id="awc-nbr-edits-days">';
 $months .= '<option value="1">'.wfMsg('awc-metrics-this-month').'</option>';
 for ($i = 2; $i <= 12; $i++ ) {
-	$selected = $obj->setDefaultOption($params, 'etime', '', $i); 
+	$selected = $obj->setDefaultOption($params, 'etime', '', $i);
 	$months .= '<option '.$selected.' value="'.$i.'">'.wfMsgExt('awc-metrics-last-month', 'parsemag', $i).'</option>';
 }
 $months .= '</select>';
 
 $days = '<select name="awc-nbr-pageviews-days" id="awc-nbr-pageviews-days">';
 foreach ( array(30, 60, 90, 120, 180, 365) as $id ) {
-	$selected = $obj->setDefaultOption($params, 'ptime', 90, $id); 
+	$selected = $obj->setDefaultOption($params, 'ptime', 90, $id);
 	$days .= '<option value="'.$id.'" '.$selected.'>'.$id.'</option>';
 }
 $days .= '</select>';
-?>			
+?>
 			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle"><?=wfMsgExt('awc-metrics-fewer-than', 'parsemag', '<input name="awc-nbr-articles" id="awc-nbr-articles" size="2" value="'.@$params['articles'].'" />')?></span>
 				<span style="vertical-align:middle"><?=wfMsgExt('awc-metrics-edits-label', 'parsemag', '<input name="awc-nbr-edits" id="awc-nbr-edits" size="2" value="'.@$params['edits'].'" />', $months)?></span>
@@ -301,7 +313,7 @@ $days .= '</select>';
 		</table>
 	</fieldset>
 	</div>
-</form> 
+</form>
 </div>
 <form method="post" action="<?=$action?>" id="wfm-form">
 <table cellpadding="0" cellspacing="0" border="0" class="TablePager" id="wfm-table">
@@ -321,7 +333,7 @@ $days .= '</select>';
 			<th width="5%" rowspan="2"><?=wfMsg('awc-metrics-close-checked')?></th>
 		</tr>
 		<tr>
-			<th width="7%"><?=wfMsg('awc-metrics-all-users')?></th>			
+			<th width="7%"><?=wfMsg('awc-metrics-all-users')?></th>
 			<th width="7%"><?=wfMsg('awc-metrics-all-users-edit-main-ns')?></th>
 			<th width="7%"><?=wfMsg('awc-metrics-articles')?></th>
 			<th width="7%"><?=wfMsg('awc-metrics-edits')?></th>
@@ -344,7 +356,7 @@ $days .= '</select>';
 			<th rowspan="2" width="7%">Language</th>
 			<th rowspan="2" width="10%">Created</th>
 			<th rowspan="2" width="15%">Founder</th>
-			<th width="7%"><?=wfMsg('awc-metrics-all-users')?></th>			
+			<th width="7%"><?=wfMsg('awc-metrics-all-users')?></th>
 			<th width="7%"><?=wfMsg('awc-metrics-all-users-edit-main-ns')?></th>
 			<th width="7%"><?=wfMsg('awc-metrics-articles')?></th>
 			<th width="7%"><?=wfMsg('awc-metrics-edits')?></th>

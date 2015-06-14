@@ -589,31 +589,14 @@ class AssetsManager {
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
-		wfProfileIn( __METHOD__ );
-
-		global $wgAssetsManagerQuery, $IP, $wgSpeedBox, $wgDevelEnvironment;
-
-		$cb = $this->mCacheBuster;
-
-		if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-			if ( $type == 'sass' ) {
-				$cb = hexdec( substr( wfAssetManagerGetSASShash( $IP . '/' . $oid ), 0, 8 ) );
-
-			} else if ( $type == 'one' && endsWith( $oid, '.js' ) ) {
-				$cb = filemtime( $IP . '/' . $oid );
-			}
-		}
-
+		global $wgAssetsManagerQuery;
 		$url = sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
 			/* 2 */ $oid,
 			/* 3 */ !empty($params) ? urlencode(http_build_query($params)) : '-',
-			/* 4 */ $cb);
-
-		wfProfileOut( __METHOD__ );
+			/* 4 */ $this->mCacheBuster);
 		return $url;
 	}
-
 
 	public function getAllowedAssetExtensions(){
 		return $this->mAllowedAssetExtensions;
@@ -684,22 +667,19 @@ class AssetsManager {
 	/**
 	 * Checks if given asset's group should be loaded for provided skin
 	 * @param string $group - Asset Manager group name
-	 * @param WikiaSkin $skin - Wikia Skin instance
+	 * @param Skin $skin - skin instance
 	 * @return bool whether group should be loaded for given skin
 	 */
-	public function checkIfGroupForSkin($group, WikiaSkin $skin) {
+	public function checkIfGroupForSkin($group, Skin $skin) {
 		$this->loadConfig();
 		$skinName = $skin->getSkinName();
 		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
-
 		$check = ( is_array( $registeredSkin ) ) ?
 			in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
-
 		//if not strict packages with no skin registered are positive
-		if ( $skin->isStrict() === false ) {
+		if ( ( $skin instanceof WikiaSkin ) && ( $skin->isStrict() === false ) ) {
 			$check = $check || empty( $registeredSkin );
 		}
-
 		return $check;
 	}
 
@@ -792,41 +772,6 @@ class AssetsManager {
 			wfProfileOut( __METHOD__ );
 			throw new WikiaException( 'No resources to load specified' );
 		}
-	}
-
-	public function rewriteJSlinks( $link ) {
-		global $IP;
-		wfProfileIn( __METHOD__ );
-
-		$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
-
-		if ( count( $parts ) == 2 ) {
-			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
-			$fileName = $parts[0];
-			$fileName = preg_replace("#^(https?:)?//[^/]+#","",$fileName);
-			$hash = filemtime( $IP . '/' . $fileName);
-			$link = $parts[0].'?cb='.$hash;
-		} else {
-			$ret = preg_replace_callback(
-				'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
-				function ( $matches ) {
-					global $IP, $wgStyleVersion;
-					$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
-					//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
-					$hash = filemtime( $IP . '/' . $filename[0] );
-					return str_replace( $wgStyleVersion, $hash, $matches[0]);
-				},
-				$link
-			);
-
-			if ( $ret ) {
-				$link = $ret;
-			}
-		}
-		//error_log( $link );
-
-		wfProfileOut( __METHOD__ );
-		return $link;
 	}
 
 	/**

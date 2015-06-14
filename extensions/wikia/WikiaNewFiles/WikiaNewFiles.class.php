@@ -9,7 +9,8 @@ class WikiaNewFiles extends SpecialNewFiles {
 	function execute( $par ) {
 		$this->mName  = 'WikiaNewFiles';
 		$this->setHeaders();
-
+		Wikia::addAssetsToOutput('upload_photos_dialog_js');
+		Wikia::addAssetsToOutput('upload_photos_dialog_scss');
 		wfSpecialWikiaNewFiles( $par, $this );
 	}
 

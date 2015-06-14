@@ -1,11 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.evolveHelper', [
-	'wikia.log',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.krux',
-	'ext.wikia.adEngine.dartUrl'
-], function (log, adContext, adLogicPageParams, Krux, dartUrl) {
+	'ext.wikia.adEngine.dartUrl',
+	'wikia.krux',
+	'wikia.log'
+], function (adContext, adLogicPageParams, dartUrl, krux, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.evolveHelper',
@@ -56,15 +56,17 @@ define('ext.wikia.adEngine.evolveHelper', [
 	}
 
 	function getKruxKeyValues() {
-		if (Krux && Krux.dartKeyValues) {
-			return dartUrl.trimParam(Krux.dartKeyValues);
+		if (krux) {
+			return dartUrl.decorateParam('segments', krux.getSegments());
 		}
+
 		return '';
 	}
 
 	function getTargeting() {
 		var i, decorated, additionalParams = getCustomKeyValues() + getKruxKeyValues(),
 			params = {
+				artid: pageParams.artid,
 				s1: pageParams.rawDbName,
 				esrb: pageParams.esrb,
 				dmn: pageParams.dmn,

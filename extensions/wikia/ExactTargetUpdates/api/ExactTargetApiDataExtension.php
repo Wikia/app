@@ -3,6 +3,8 @@ namespace Wikia\ExactTarget;
 
 class ExactTargetApiDataExtension extends ExactTargetApi {
 
+	const OBJECTS_PER_REQUEST_LIMIT = 2500;
+
 	/**
 	 * An entry point for DataExtension Create requests
 	 * @param  Array  $aApiCallParams
@@ -40,13 +42,15 @@ class ExactTargetApiDataExtension extends ExactTargetApi {
 	 * This array must be prepared in the following format:
 	 * 	Array (
 	 * 		'DataExtension' => [
-	 * 			'ObjectType' => "DataExtension[customer key]",
+	 * 			'ObjectType' => "DataExtensionObject[customer key]",
 	 * 			'Properties' => [ 'fieldnames', 'to', 'retrieve' ],
 	 * 		],
 	 * 		// SimpleFilterPart is an equivalent of a WHERE statement
 	 * 		'SimpleFilterPart' => [
-	 * 			'Property' => 'Key fieldname'
-	 * 			'Value' => 'Value to match'
+	 * 			'Property' => 'Key fieldname',
+	 * 			'Value' => 'Value to match',
+	 * 			'SimpleOperator' => 'IN', // optional (default: equals)
+	 * 			// for IN operator provide array in Value field
 	 * 		],
 	 *  );
 	 * @return stdObject|false  Returns false when an Exception happens and an stdObject otherwise

@@ -19,6 +19,7 @@
 @import "../../WikiaMobile/css/videos";
 @import "../../WikiaMobile/css/image_stack";
 @import "../../WikiaMobile/css/infobox";
+@import "../../WikiaMobile/css/portable_infoboxes";
 @import '../../WikiaMobile/css/modal';
 @import '../../WikiaMobile/css/media_modal';
 @import "../../WikiaMobile/css/mediagallery";
@@ -309,7 +310,7 @@ figure {
 }
 
 .imgPlcHld, .wkSlider img, .lazy {
-	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_light.png'); /* base64 */
+	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_light.png'); /* inline */
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -329,7 +330,7 @@ figure {
 .light .imgPlcHld,
 .light .wkSlider img,
 .light .lazy {
-	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_dark.png'); /* base64 */
+	background-image: url('/extensions/wikia/GameGuides/images/img_placeholder_dark.png'); /* inline */
 }
 
 .galPlc.img, .galPlcHld {
@@ -349,7 +350,7 @@ figure {
 
 .wkMedGal {
 	#wkGalTgl {
-		background-image: url('/extensions/wikia/GameGuides/images/gallery_green.png'); /* base64 */
+		background-image: url('/extensions/wikia/GameGuides/images/gallery_green.png'); /* inline */
 	}
 }
 

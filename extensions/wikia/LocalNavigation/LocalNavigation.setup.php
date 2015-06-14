@@ -17,8 +17,9 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 		'Łukasz Konieczny',
 		'Mateusz \'Warkot\' Warkocki'
 	],
-	'description' => 'LocalNavigation',
-	'version' => 1.0
+	'descriptionmsg' => 'local-navigation-desc',
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LocalNavigation'
 ];
 
 // controller classes

@@ -12,7 +12,12 @@
 		$sortableTables = $content.find( 'table.sortable' );
 		if ( $sortableTables.length ) {
 			mw.loader.using( 'jquery.tablesorter', function () {
-				$sortableTables.tablesorter();
+				$sortableTables.tablesorter( {
+					// react to sorting completion BAC-718
+					complete: function() {
+						$( document ).trigger( 'tablesorter_sortComplete' );
+					}
+				} );
 			} );
 		}
 	} );
@@ -24,22 +29,6 @@ jQuery( document ).ready( function( $ ) {
 	/* Emulate placeholder if not supported by browser */
 	if ( !( 'placeholder' in document.createElement( 'input' ) ) ) {
 		$( 'input[placeholder]' ).placeholder();
-	}
-
-	/* Enable makeCollapsible */
-	$( '.mw-collapsible' ).makeCollapsible();
-
-	/* Lazy load jquery.tablesorter */
-	if ( $( 'table.sortable' ).length ) {
-		mw.loader.using( 'jquery.tablesorter', function() {
-			$( 'table.sortable' ).tablesorter({
-				// wikia change start - react to sorting completion BAC-718
-				complete: function() {
-					$(document).trigger('tablesorter_sortComplete');
-				}
-				// wikia change end
-			});
-		});
 	}
 
 	/* Enable CheckboxShiftClick */

@@ -41,6 +41,7 @@ define(
 				},
 
 				// cached DOM elements
+				$dropdownWrapper,
 				$sectionsWrapper,
 				$sectionsInnerWrapper,
 				$subSectionsWrapper,
@@ -100,6 +101,7 @@ define(
 					.addClass(params.activeClass);
 
 				if ($subSection.length) {
+					$dropdownWrapper.addClass('wide');
 					$subSectionsWrapper.addClass(params.activeClass);
 					addScrollable($subSectionsInnerWrapper);
 				}
@@ -118,6 +120,7 @@ define(
 					.removeClass(params.activeClass);
 
 				removeScrollable($subSectionsInnerWrapper);
+				$dropdownWrapper.removeClass('wide');
 			}
 
 			/**
@@ -139,7 +142,7 @@ define(
 			 * @param {Object} options - configuration options
 			 */
 			function init(options) {
-				var $dropdownTrigger, $parent, $dropdownWrapper;
+				var $dropdownTrigger, $parent;
 
 				$.extend(params, options);
 

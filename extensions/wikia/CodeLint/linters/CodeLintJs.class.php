@@ -25,12 +25,11 @@ class CodeLintJs extends CodeLint {
 		$this->knownGlobals = array(
 			'$',
 			'$G',
-			'AjaxLogin',
 			'CKEDITOR',
 			'define',
 			'FB',
 			'Geo',
-			'GlobalNotification',
+			'BannerNotifications',
 			'GlobalTriggers',
 			'jQuery',
 			'Liftium',

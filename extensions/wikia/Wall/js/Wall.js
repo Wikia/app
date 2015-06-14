@@ -19,7 +19,7 @@
 			this.deletedMessages = {};
 			this.isMonobook = window.skin && window.skin === 'monobook';
 			this.hasMiniEditor = typeof window.wgEnableMiniEditorExt !== 'undefined' && !this.isMonobook;
-			this.title = window.wgTitle.split('/')[0];
+			this.title = window.wgTitle;
 			this.page = {
 				title: this.title,
 				namespace: window.wgNamespaceNumber

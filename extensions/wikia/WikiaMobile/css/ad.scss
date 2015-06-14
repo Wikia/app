@@ -6,8 +6,8 @@ $slotTopHeight: 50px;
 
 #MOBILE_TOP_LEADERBOARD {
 	background-color: white;
-	height: 50px;
-	margin: 0 auto;
+	min-height: 50px;
+	margin: 3px auto 0;
 	width: 320px;
 
 	&.hidden, .hidden {
@@ -21,23 +21,14 @@ $slotTopHeight: 50px;
 }
 
 .ad-in-content {
-	visibility: hidden;
-
-	position: relative;
-	margin: 1rem auto;
-
+	border-top: 1px solid $border-color;
 	//compensate for wkPage margin
 	left: -3.125%;
+	margin: 1rem auto;
 	min-width: $slotWidth;
-
-	&.show {
-		visibility: visible;
-
-		padding: 15px 0;
-		text-align: center;
-
-		border-top: 1px solid $border-color;
-	}
+	padding: 15px 0;
+	position: relative;
+	text-align: center;
 
 	&.hidden, .hidden {
 		display: none;

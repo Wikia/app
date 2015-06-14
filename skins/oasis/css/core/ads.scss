@@ -1,8 +1,11 @@
-@import "skins/shared/color";
-@import "layout";
-@import "responsive-variables";
-@import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/gradient";
+@import 'skins/shared/color';
+@import 'layout';
+@import 'responsive-variables';
+@import 'breakpoints-variables';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
+@import 'ads-floor';
+@import 'ads-in-content';
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
@@ -52,6 +55,9 @@
 	>div[id^=Liftium_] {
 		text-align: center;
 	}
+}
+
+#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
@@ -184,11 +190,6 @@
 	}
 }
 
-/** Invisible ads **/
-#INVISIBLE_1, #INVISIBLE_2 {
-	position: absolute;
-}
-
 /** DART calls for INVISIBLE slots return a pixel. Hide this pixel. **/
 body >a >img[src$="noad.gif"] {
 	position: absolute;
@@ -208,7 +209,6 @@ body >a >img[src$="noad.gif"] {
 	.ad-centered-wrapper {
 		height: 400px;
 		margin-bottom: 20px;
-		margin-top: 20;
 	}
 }
 
@@ -249,37 +249,25 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-#BOTTOM_LEADERBOARD {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 1;
-  text-align: center;
-
-  & > div {
-    display: inline-block;
-  }
-}
-
 #NATIVE_TABOOLA {
   max-width: 700px;
 }
 
 .wikia-ad-interactive-map {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 320px;
-  height: 50px;
+	height: 50px;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 320px;
 
-  & > iframe {
-    width: 320px;
-    height: 50px;
-  }
+	& > iframe {
+		width: 320px;
+		height: 50px;
+	}
 }
 
 @media screen and (max-width: $breakpoint-small) {
-  .home-top-right-ads.top-right-ads-in-content {
-    display: block;
-  }
+	.home-top-right-ads.top-right-ads-in-content {
+		display: block;
+	}
 }

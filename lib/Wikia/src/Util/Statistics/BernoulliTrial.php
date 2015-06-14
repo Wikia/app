@@ -42,7 +42,7 @@ class BernoulliTrial {
 	 * 100% sample rate.
 	 *
 	 * @param float $probability the probability of success
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	function __construct( $probability ) {
 		$this->checkProbability( $probability );

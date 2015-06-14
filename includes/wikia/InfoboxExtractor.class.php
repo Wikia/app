@@ -46,11 +46,13 @@ class InfoboxExtractor {
 			$encoding = self::UTF8_ENCODING;
 		}
 
+		libxml_use_internal_errors(true);
 		$this->domDocument = new DOMDocument( '1.0', $encoding );
 		$this->domDocument->loadHTML(
 			mb_convert_encoding( $content, 'HTML-ENTITIES', $encoding ),
 			LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
 		);
+		libxml_use_internal_errors(false);
 	}
 
 	/**

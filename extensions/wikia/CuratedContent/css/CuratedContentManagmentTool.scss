@@ -105,7 +105,7 @@
   }
 
   .photo-remove {
-    background-image: url('/extensions/wikia/CuratedContent/images/remove_photo.png'); /* base64 */
+    background-image: url('/extensions/wikia/CuratedContent/images/remove_photo.png'); /* inline */
     background-position: center;
 
     padding: 0 1px;
@@ -123,7 +123,7 @@
   width: 50px;
 
   background-size: cover;
-  background-image: url('/extensions/wikia/CuratedContent/images/placeholder_search.png'); /* base64 */
+  background-image: url('/extensions/wikia/CuratedContent/images/placeholder_search.png'); /* inline */
 
   box-shadow: 0 0 10px -4px;
 }

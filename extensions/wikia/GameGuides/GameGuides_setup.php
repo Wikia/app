@@ -4,6 +4,14 @@
  * 
  * @author Federico "Lox" Lucignano
  */
+ 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'Game Guides',
+	'author' => 'Federico "Lox" Lucignano',
+	'descriptionmsg' => 'wikiagameguides-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GameGuides',
+);
+
 $dir = dirname( __FILE__ );
 
 /**
@@ -28,8 +36,11 @@ $wgGroupPermissions['staff']['gameguidespreview'] = true;
 $wgGroupPermissions['sysop']['gameguidespreview'] = true;
 
 //Special Page for Content Managment Tool
-$wgAutoloadClasses[ 'GameGuidesSpecialContentController'] =  "{$dir}/GameGuidesSpecialContentController.class.php" ;
-$wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
+//Replaced by Special:CuratedContent
+//@author tor
+//@date 2015-03-27
+//$wgAutoloadClasses[ 'GameGuidesSpecialContentController'] =  "{$dir}/GameGuidesSpecialContentController.class.php" ;
+//$wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
 
 $wgGroupPermissions['*']['gameguidescontent'] = false;
 $wgGroupPermissions['staff']['gameguidescontent'] = true;
@@ -76,9 +87,6 @@ JSMessages::registerPackage( 'GameGuidesSponsoredMsg', [
 $wgHooks['GameGuidesContentSave'][] = 'GameGuidesController::onGameGuidesContentSave';
 $wgHooks['GameGuidesSponsoredVideosSave'][] = 'GameGuidesController::onGameGuidesSponsoredSave';
 $wgHooks['TitleGetSquidURLs'][] = 'GameGuidesController::onTitleGetSquidURLs';
-//add Game Guides Content to WikiFeatures
-$wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
-$wgHooks['WikiFeatures::onToggleFeature'][] = 'GameGuidesSpecialContentController::onWikiFeatures';
 
 //minimal package of messages in Game Gudes
 JSMessages::registerPackage( 'GameGuides', array(

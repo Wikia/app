@@ -14,51 +14,59 @@ require(
 		'wikia.geo',
 		'wikia.cache',
 		'wikia.tracker',
+		'BannerNotification'
 	],
-	function ($, mw, w, geo, cache, tracker) {
+	function ($, mw, w, geo, cache, tracker, BannerNotification) {
 		'use strict';
 
-		/**
-		 * An array of language codes for which we want to look for a native wikia
-		 * @type {Array}
-		 */
-		var supportedLanguages = ['ja'],
-			// Get user's geographic data and a country code
-			targetLanguage = getTargetLanguage();
+		// Get user's geographic data and a country code
+		var targetLanguage = getTargetLanguage(),
+			// Per request we should unify dialects like pt and pt-br
+			// @see CE-1220
+			contentLanguage = w.wgContentLanguage.split('-')[0],
+			// Cache version
+			cacheVersion = '1.01';
 
 		function init() {
-			if (targetLanguage !== false) {
+			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
-				if (cache.get('wikiaInYourLangRequestSent') !== true && cache.get('wikiaInYourLangNotificationShown') !== true) {
+				if (cache.get('wikiaInYourLangRequestSent' + cacheVersion) !== true &&
+					cache.get('wikiaInYourLangNotificationShown' + cacheVersion) !== true) {
 					// Update JS cache and set the notification shown indicator to true
-					var ttl = 60 * 60 * 24 * 30; // Cache for a month
-					cache.set('wikiaInYourLangRequestSent', true, ttl);
+					// Cache for a day
+					cache.set('wikiaInYourLangRequestSent' + cacheVersion, true, cache.CACHE_STANDARD);
 
 					getNativeWikiaInfo();
-				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage') === 'string') {
-					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage'));
+				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion) === 'string') {
+					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion));
 				}
 			}
 		}
 
 		function getTargetLanguage() {
 			var browserLanguage = window.navigator.language || window.navigator.userLanguage,
-				geoCountryCode = geo.getCountryCode().toLowerCase();
+				geoCountryCode = geo.getCountryCode().toLowerCase(),
+				targetLanguage;
 
-			// Check if a browser's language is one of the supported languages
-			if (typeof browserLanguage === 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages) !== -1) {
-				targetLanguage = browserLanguage.substr(0, 2);
-				// Check if the country code is one of the supported languages
-			} else if ($.inArray(geoCountryCode, supportedLanguages) !== -1) {
+			if (w.wgUserName !== null) {
+				// Check if a user is logged and if so - use a lang from settings
+				targetLanguage = w.wgUserLanguage;
+			} else if (typeof browserLanguage === 'string') {
+				// Check if a browser's language is accessible
+				targetLanguage = browserLanguage.split('-')[0];
+			} else if (typeof geoCountryCode === 'string') {
+				// Check if a langcode from Geo cookie is accessible
 				targetLanguage = geoCountryCode;
-				// If neither - return an empty string
 			} else {
+				// If neither - return false
 				targetLanguage = false;
 			}
 
-			return targetLanguage;
+			// Per request we should unify dialects like pt and pt-br
+			// @see CE-1220
+			return targetLanguage.split('-')[0];
 		}
 
 		function getNativeWikiaInfo() {
@@ -85,47 +93,60 @@ require(
 						displayNotification(results.message);
 
 						// Save the message in cache to display until a user closes it
-						cache.set(targetLanguage + 'WikiaInYourLangMessage', results.message);
+						// Cache for a day
+						cache.set(
+							targetLanguage + 'WikiaInYourLangMessage' + cacheVersion,
+							results.message,
+							cache.CACHE_STANDARD
+						);
 					}
 				}
 			});
 		}
 
 		function displayNotification(message) {
-			w.GlobalNotification.show(message, 'notify');
-
-			// Track a view of the notification
-			var trackingParams = {
-				trackingMethod: 'ga',
-				category: 'wikia-in-your-lang',
-				action: tracker.ACTIONS.VIEW,
-				label: targetLanguage + '-notification-view',
-			};
+			var bannerNotification = new BannerNotification(message, 'notify').show(),
+				// Track a view of the notification
+				trackingParams = {
+					trackingMethod: 'analytics',
+					category: 'wikia-in-your-lang',
+					action: tracker.ACTIONS.VIEW,
+					label: targetLanguage + '-notification-view'
+				};
 
 			tracker.track(trackingParams);
 
 			// Bind tracking of clicks on a link and events on close
-			bindEvents();
+			bindEvents(bannerNotification);
 		}
 
-		function bindEvents() {
-			$('.global-notification.notify').click(function (event) {
-				if (event.target.parentElement.className.indexOf('close') !== -1) {
-					onNotificationClosed();
-				} else if (event.target.id.indexOf('wikia-in-your-lang-link') !== -1) {
-					onLinkClick();
-				}
-			})
+		function bindEvents(bannerNotification) {
+			bannerNotification
+				.onClose(onNotificationClosed);
+			bannerNotification
+				.$element
+				.on('click', '.text', onLinkClick);
 		}
 
 		function onNotificationClosed() {
-			cache.set(targetLanguage + 'WikiaInYourLangMessage', null);
-			cache.set('wikiaInYourLangNotificationShown', true);
+			// Track closing of a notification
+			var trackingParams = {
+				trackingMethod: 'analytics',
+				category: 'wikia-in-your-lang',
+				action: tracker.ACTIONS.CLOSE,
+				label: targetLanguage + '-notification-close',
+			};
+			tracker.track(trackingParams);
+
+			cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, null);
+			// Cache for a month
+			cache.set('wikiaInYourLangNotificationShown' + cacheVersion, true, cache.CACHE_LONG);
 		}
 
 		function onLinkClick() {
+			// Track a click on a notification link
 			var trackingParams = {
-				trackingMethod: 'ga',
+				trackingMethod: 'analytics',
 				category: 'wikia-in-your-lang',
 				action: tracker.ACTIONS.CLICK_LINK_TEXT,
 				label: targetLanguage + '-notification-link-click',
@@ -134,6 +155,8 @@ require(
 			tracker.track(trackingParams);
 		}
 
-		$(init);
+		if (!w.wikiaPageIsCorporate) {
+			$(init);
+		}
 	}
 );

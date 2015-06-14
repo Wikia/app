@@ -13,7 +13,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'RelatedPages',
 	'author'         => 'Adrian \'ADi\' Wieczorek',
 	'descriptionmsg' => 'wikirelatedpages-desc',
-	'url'            => 'http://www.wikia.com',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RelatedPages',
 );
 
 $dir = dirname(__FILE__) . '/';

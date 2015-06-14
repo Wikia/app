@@ -9,7 +9,6 @@
 		// cached thumbnail arrays and detailed info
 		cache: {
 			articleMedia: [], // Article Media
-			latestPhotos: [], // Latest Photos from DOM
 			wikiPhotos: [], // Back fill of photos from wiki
 			videosModule: [],
 			details: {}, // all media details
@@ -64,7 +63,7 @@
 		videoThumbWidthThreshold: 400,
 		init: function (customSettings) {
 			var self = this,
-				$article, $photos, $comments, $footer, $videosModule, $videoHomePage;
+				$article, $comments, $footer, $videosModule, $videoHomePage, $recommendations;
 
 			// performance profiling
 			bucky = window.Bucky('LightboxLoader');
@@ -72,16 +71,16 @@
 			bucky.timer.start('init');
 
 			$article = $('#WikiaArticle');
-			$photos = $('#LatestPhotosModule');
 			$comments = $('#WikiaArticleComments'); // event handled with $footer
 			$footer = $('#WikiaArticleFooter'); // bottom videos module
 			$videosModule = $('.videos-module-rail'); // right rail videos module
 			$videoHomePage = $('#latest-videos-wrapper');
+			$recommendations = $('#recommendations');
 
 			$.extend(self.lightboxSettings, customSettings);
 
 			// Bind click event to initiate lightbox
-			$article.add($photos).add($footer).add($videosModule)
+			$article.add($footer).add($videosModule).add($recommendations)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
@@ -103,10 +102,10 @@
 						$parent = $videoHomePage;
 					} else if ($this.closest($article).length) {
 						$parent = $article;
-					} else if ($this.closest($photos).length) {
-						$parent = $photos;
 					} else if ($this.closest($comments).length) {
 						$parent = $comments;
+					} else if ($this.closest($recommendations).length) {
+						$parent = $recommendations;
 					} else if ($this.closest('#videosModule').length) {
 						// Don't use cached object because it may not have been in the DOM on init
 						$parent = $('#videosModule');
@@ -411,7 +410,6 @@
 
 		// Constants for tracking the source of a click
 		clickSource: {
-			LP: 'latestPhotos',
 			EMBED: 'embed',
 			SEARCH: 'search',
 			SV: 'specialVideos',

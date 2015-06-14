@@ -1103,7 +1103,7 @@ abstract class FileBackendStore extends FileBackend {
 		wfProfileIn( __METHOD__ );
 		$stat = $this->getFileStat( $params );
 		wfProfileOut( __METHOD__ );
-		return $stat ? $stat['mtime'] : false;
+		return is_array( $stat ) ? $stat['mtime'] : false;
 	}
 
 	/**
@@ -1113,14 +1113,20 @@ abstract class FileBackendStore extends FileBackend {
 		wfProfileIn( __METHOD__ );
 		$stat = $this->getFileStat( $params );
 		wfProfileOut( __METHOD__ );
-		return $stat ? $stat['size'] : false;
+		return is_array( $stat ) ? $stat['size'] : false;
 	}
 
 	/**
 	 * @see FileBackend::getFileStat()
 	 */
+
 	// Wikia change - begin
-	// @author Moli
+	/**
+	 * @author Moli
+	 *
+	 * @param array $params
+	 * @return Array|string|false|null
+	 */
 	final public function getFileStat( array $params ) {
 		wfProfileIn( __METHOD__ );
 		$path = self::normalizeStoragePath( $params['src'] );

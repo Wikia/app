@@ -13,6 +13,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Image Placeholder (Add Images)',
 	'author' => 'Bartek Łapiński',
 	'version' => '0.61',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImagePlaceholder',
+	'descriptionmsg' => 'imgplc-desc'
 );
 
 global $wgWikiaImagesFoundInTemplates;
@@ -32,7 +34,7 @@ $wgExtensionFunctions[] = 'ImagePlaceholder_init';
 /**
  * message files
  */
-$wgExtensionMessagesFiles['ImagePlaceholder'] = $dir.'/ImagePlaceholder.i18n.php';
+$wgExtensionMessagesFiles['ImagePlaceholder'] = $dir . 'ImagePlaceholder.i18n.php';
 
 JSMessages::registerPackage('ImagePlaceholder', array('imgplc-*'));
 JSMessages::enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);
@@ -360,9 +362,13 @@ function MediaPlaceholderMatch ( $text, $box = 0, $isVideo = false ) {
 
 	$placeholder = '(?:' . implode('|', array(
 			$ns_vid . ':' . $placeholder_msg,
+			$ns_vid . ':' . $en_placeholder_msg,
 			$ns_img . ':' . $placeholder_msg,
+			$ns_img . ':' . $en_placeholder_msg,
 			$en_ns_vid . ':' . $en_placeholder_msg,
-			$en_ns_img . ':' . $en_placeholder_msg)) . ')';
+			$en_ns_vid . ':' . $placeholder_msg,
+			$en_ns_img . ':' . $en_placeholder_msg,
+			$en_ns_img . ':' . $placeholder_msg)) . ')';
 
 	preg_match_all( '/\[\[' . $placeholder . '[^\]]*\]\]/si', $text, $matches, PREG_OFFSET_CAPTURE );
 

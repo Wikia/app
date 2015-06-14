@@ -335,6 +335,7 @@ class ApiEditPage extends ApiBase {
 					$r['newrevid'] = intval( $newRevId );
 					$r['newtimestamp'] = wfTimestamp( TS_ISO_8601,
 						$articleObj->getTimestamp() );
+					wfRunHooks( 'ApiEditPage::SuccessfulApiEdit', [ $newRevId ] );
 				}
 				break;
 

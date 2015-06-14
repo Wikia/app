@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	/*!
+	 * VisualEditor standalone demo
+	 *
+	 * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+	 */
+	-->
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<title>VisualEditor Standalone Demo</title>
+
+		<!-- oojs-ui-mediawiki -->
+		<link rel=stylesheet href="../../lib/oojs-ui/oojs-ui-mediawiki.svg.css" class="stylesheet-ltr">
+		<link rel=stylesheet href="../../lib/oojs-ui/oojs-ui-mediawiki.svg.rtl.css" class="stylesheet-rtl" disabled>
+
+		<!-- visualEditor.dist -->
+		<link rel=stylesheet href="../../dist/visualEditor.css" class="stylesheet-ltr">
+		<link rel=stylesheet href="../../dist/visualEditor.rtl.css" class="stylesheet-rtl" disabled>
+
+		<!-- visualEditor.standalone.demo -->
+		<link rel=stylesheet href="../../demos/ve/demo.css">
+
+		<!-- visualEditor.mobile.standalone.demo.dist -->
+		<link rel=stylesheet href="../../demos/ve/demo.mobile.css">
+
+	</head>
+	<body>
+		<div class="ve-demo-menu">
+			<div class="ve-demo-logo"></div>
+		</div>
+		<div class="ve-demo-editor"></div>
+
+		<!-- jquery -->
+		<script src="../../lib/jquery/jquery.js"></script>
+
+		<!-- oojs -->
+		<script src="../../lib/oojs/oojs.jquery.js"></script>
+
+		<!-- oojs-ui -->
+		<script src="../../lib/oojs-ui/oojs-ui.js"></script>
+
+		<!-- jquery.i18n -->
+		<script src="../../lib/jquery.i18n/src/jquery.i18n.js"></script>
+		<script src="../../lib/jquery.i18n/src/jquery.i18n.messagestore.js"></script>
+		<script src="../../lib/jquery.i18n/src/jquery.i18n.parser.js"></script>
+		<script src="../../lib/jquery.i18n/src/jquery.i18n.emitter.js"></script>
+		<script src="../../lib/jquery.i18n/src/jquery.i18n.language.js"></script>
+		<script src="../../lib/jquery.i18n/src/jquery.i18n.fallbacks.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/bs.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/dsb.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/fi.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/ga.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/he.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/hsb.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/hu.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/hy.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/la.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/ml.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/os.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/ru.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/sl.js"></script>
+		<script src="../../lib/jquery.i18n/src/languages/uk.js"></script>
+
+		<!-- jquery.uls.data -->
+		<script src="../../lib/jquery.uls/src/jquery.uls.data.js"></script>
+		<script src="../../lib/jquery.uls/src/jquery.uls.data.utils.js"></script>
+
+		<!-- papaparse -->
+		<script src="../../lib/papaparse/papaparse.js"></script>
+
+		<!-- oojs-ui-mediawiki -->
+		<script src="../../lib/oojs-ui/oojs-ui-mediawiki.js"></script>
+
+		<!-- visualEditor.dist -->
+		<script src="../../dist/visualEditor.js"></script>
+
+		<!-- visualEditor.standalone.demo -->
+		<script src="../../demos/ve/demo.js"></script>
+
+		<!-- visualEditor.mobile.standalone.demo.dist -->
+		<script src="../../demos/ve/demo.mobile.js"></script>
+
+		<script>
+			ve.init.platform.addMessagePath( '../../dist/i18n/' );
+			ve.init.platform.addMessagePath( '../../lib/oojs-ui/i18n/' );
+			ve.availableLanguages = ["ace","af","am","ar","arc","arq","as","ast","av","az","ba","bcc","bcl","be-tarask","be","bg","bn","br","bs","ca","ce","ckb","co","cs","cu","cy","da","de","diq","dsb","egl","el","eml","en-gb","en","eo","es","et","eu","fa","fi","fo","fr","frp","frr","fur","fy","ga","gd","gl","gsw","gu","gv","he","hi","hr","hsb","hu","hy","ia","id","ie","ilo","is","it","ja","jv","ka","kk-cyrl","km","kn","ko","krc","kri","ksh","kw","ky","lb","lez","lmo","lrc","lt","lv","lzh","lzz","mg","min","mk","ml","mn","mr","ms","mt","nap","nb","nds-nl","nds","ne","nl","nn","oc","om","or","os","pa","pfl","pl","pms","ps","pt-br","pt","qqq","qu","rm","ro","roa-tara","ru","rue","sah","sc","scn","sco","sh","si","sk","sl","sq","sr-ec","sr-el","sv","sw","ta","te","tg-cyrl","th","tl","tr","tt-cyrl","tzm","ug-arab","uk","ur","uz","vec","vi","vo","wuu","yi","yue","zh-hans","zh-hant","ace","af","am","ar","arc","arq","ast","az","ba","bcc","bcl","be-tarask","be","bg","bn","br","bs","ca","ce","ckb","co","crh-cyrl","crh-latn","cs","cu","cy","da","de","diq","dsb","egl","el","eml","en","eo","es","et","eu","fa","fi","fo","fr","frr","fur","fy","gd","gl","gu","he","hi","hr","hsb","hu","hy","ia","id","ie","ilo","is","it","ja","jv","ka","kk-cyrl","km","kn","ko","krc","kw","ky","lb","lmo","lt","lv","lzh","mg","min","mk","ml","mr","ms","nap","nb","nds-nl","nds","ne","nl","nn","oc","om","or","pa","pfl","pl","pms","ps","pt-br","pt","qqq","qu","ro","roa-tara","ru","sah","scn","sco","sh","si","sk","sl","sq","sr-ec","sr-el","sv","sw","ta","te","tg-cyrl","th","tl","tr","tt-cyrl","ug-arab","uk","uz","vec","vi","vo","wuu","yi","yo","yue","zh-hans","zh-hant"];
+		</script>
+
+		<script>
+		ve.demoPages = {
+			"aliens": "pages/aliens.html",
+			"comments": "pages/comments.html",
+			"complex": "pages/complex.html",
+			"empty": "pages/empty.html",
+			"h1": "pages/h1.html",
+			"image": "pages/image.html",
+			"isolation": "pages/isolation.html",
+			"rtl": "pages/rtl.html",
+			"simple": "pages/simple.html",
+			"slugs": "pages/slugs.html",
+			"tables": "pages/tables.html"
+		};
+		</script>
+
+	</body>
+</html>

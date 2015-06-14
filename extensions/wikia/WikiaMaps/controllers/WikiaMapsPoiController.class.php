@@ -219,10 +219,11 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	 * @return bool
 	 */
 	public function isValidArticleTitle() {
-		$articleTitle = $this->getData( 'articleTitleOrExternalUrl' );
+		$articleTitleText = $this->getData( 'articleTitleOrExternalUrl' );
+		$articleTitle = Title::newFromText( $articleTitleText );
 		$valid = false;
 
-		if ( ( !empty( $articleTitle ) && Title::newFromText( $articleTitle )->exists() ) || empty( $articleTitle ) ) {
+		if ( ( !empty( $articleTitle ) && $articleTitle->exists() ) || empty( $articleTitleText ) ) {
 			$valid = true;
 		}
 

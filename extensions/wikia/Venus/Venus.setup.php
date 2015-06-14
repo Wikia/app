@@ -15,10 +15,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] =
 	[
 		"name" => "Venus",
-		"description" => "Venus Skin for Wikia",
+		"descriptionmsg" => "venus-desc",
 		"author" => [
 			'Consumer Team',
-		]
+		],
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Venus'
 	];
 
 /**
@@ -65,7 +66,8 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'VenusHooks::onMakeGlobalVariablesScri
 $wgHooks['ParserAfterTidy'][] = 'VenusHooks::onParserAfterTidy';
 $wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
 $wgHooks['MakeHeadline'][] = 'VenusHooks::onMakeHeadline';
-$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
+$wgHooks['UserLogoutComplete'][] = 'BannerNotificationsController::addLogOutConfirmation';
+$wgHooks['BeforeSkinLoad'][] = 'VenusHooks::onBeforeSkinLoad';
 
 //404 Pages
 

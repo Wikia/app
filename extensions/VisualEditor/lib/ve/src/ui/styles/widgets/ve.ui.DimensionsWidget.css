@@ -1,0 +1,18 @@
+/*!
+ * VisualEditor UserInterface DimensionsWidget styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see http://ve.mit-license.org
+ */
+
+.ve-ui-dimensionsWidget,
+.ve-ui-dimensionsWidget > .oo-ui-textInputWidget {
+	display: inline-block;
+}
+
+.ve-ui-dimensionsWidget .oo-ui-textInputWidget {
+	width: 5em;
+}
+
+.ve-ui-dimensionsWidget .oo-ui-labelWidget {
+	padding: 0.5em;
+}

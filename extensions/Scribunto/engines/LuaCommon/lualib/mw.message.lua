@@ -172,6 +172,11 @@ function message.newFallbackSequence( ... )
 	return makeMessage{ keys = { ... } }
 end
 
+function message.newRawMessage( msg, ... )
+        checkType( 'message.newRawMessage', 1, msg, 'string' )
+        return makeMessage{ rawMessage = msg }:params( ... )
+end
+
 function message.rawParam( value )
 	value = checkScalar( 'message.rawParam', 1, value )
 	return setmetatable( { raw = value }, valuemt )

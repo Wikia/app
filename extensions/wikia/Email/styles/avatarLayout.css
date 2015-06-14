@@ -1,0 +1,28 @@
+.avatar-wrapper {
+	padding-right: 10px;
+}
+
+.avatar {
+	border-radius: 100%;
+}
+
+.avatar img {
+	height: 50px;
+	width: 50px;
+}
+
+.username {
+	font-size: 12px;
+}
+
+.message {
+	margin-bottom: 20px;
+}
+
+.message p {
+	font-size: 14px;
+}
+
+.content-footer-messages {
+	padding-top: 70px;
+}

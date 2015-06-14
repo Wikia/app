@@ -222,20 +222,22 @@ class WikiService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
+		$fname = __METHOD__;
 
 		$topEditors = WikiaDataAccess::cache(
 			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
 			static::TOPUSER_CACHE_VALID,
-			function() use ( $wikiId, $excludeBots ) {
+			function() use ( $wikiId, $excludeBots, $fname ) {
+				global $wgSpecialsDB;
 				$topEditors = array();
 
-				$db = wfGetDB( DB_SLAVE, array(), 'specials' );
+				$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 
 				$result = $db->select(
 					array( 'events_local_users' ),
 					array( 'user_id', 'edits', 'all_groups' ),
 					array( 'wiki_id' => $wikiId, 'edits != 0' ),
-					__METHOD__,
+					$fname,
 					array( 'ORDER BY' => 'edits desc', 'LIMIT' => static::TOPUSER_LIMIT )
 				);
 
@@ -359,7 +361,7 @@ class WikiService extends WikiaModel {
 		try {
 			$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
 			$tables = array( 'city_visualization' );
-			$fields = array( 'city_id', 'city_main_image' );
+			$fields = array( 'city_id', 'city_lang_code', 'city_main_image' );
 			$conds = array( 'city_id' => $wikiIds );
 			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
@@ -367,7 +369,8 @@ class WikiService extends WikiaModel {
 				$promoImage = PromoImage::fromPathname($row->city_main_image);
 				$promoImage->ensureCityIdIsSet($row->city_id);
 
-				$file = $promoImage->corporateFileByLang($this->wg->ContLanguageCode);
+				$file = $promoImage->corporateFileByLang($row->city_lang_code);
+
 				if ( $file->exists() ) {
 					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
 					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
@@ -479,7 +482,12 @@ class WikiService extends WikiaModel {
 	public function getMostActiveAdmins($wikiId, $avatarSize) {
 		$edits = $ids = $lastRevision = [];
 		$admins = $this->getWikiAdmins($wikiId, $avatarSize);
-		$ids = array_map(function($item) { return $item['userId']; }, $admins);
+
+		foreach ( $admins as $admin ) {
+			if ( isset( $admin['userId'] ) ) {
+				$ids[] = $admin['userId'];
+			}
+		}
 
 		$adminsEdits = DataMartService::getUserEditsByWikiId( $ids, $wikiId);
 

@@ -33,7 +33,7 @@ $wgConf = new SiteConfiguration;
 /** @endcond */
 
 /** MediaWiki version number */
-$wgVersion = '1.19.20';
+$wgVersion = '1.19.24';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename = 'MediaWiki';
@@ -1422,7 +1422,7 @@ $wgDefaultExternalStore = false;
  *
  * Set to 0 to disable, or number of seconds before cache expiry.
  */
-$wgRevisionCacheExpiry = 0;
+$wgRevisionCacheExpiry = 86400 * 30; // a month
 
 /** @} */ # end text storage }
 
@@ -2678,6 +2678,19 @@ $wgResourceLoaderValidateStaticJS = false;
 $wgResourceLoaderExperimentalAsyncLoading = false;
 
 /**
+ * Whether to allow site-wide CSS (MediaWiki:Common.css and friends) on
+ * restricted pages like Special:UserLogin or Special:Preferences where
+ * JavaScript is disabled for security reasons. As it is possible to
+ * execute JavaScript through CSS, setting this to true opens up a
+ * potential security hole. Some sites may "skin" their wiki by using
+ * site-wide CSS, causing restricted pages to look unstyled and different
+ * from the rest of the site.
+ *
+ * @since 1.25
+ */
+$wgAllowSiteCSSOnRestrictedPages = false;
+
+/**
  * When OutputHandler is used, mangle any output that contains
  * <cross-domain-policy>. Without this, an attacker can send their own
  * cross-domain policy unless it is prevented by the crossdomain.xml file at
@@ -2790,7 +2803,7 @@ $wgLocalInterwiki = false;
 /**
  * Expiry time for cache of interwiki table
  */
-$wgInterwikiExpiry = 10800;
+$wgInterwikiExpiry = 86400;
 
 /** Interwiki caching settings.
 	$wgInterwikiCache specifies path to constant database file
@@ -5605,7 +5618,7 @@ $wgJobRunRate = 1;
 /**
  * Number of rows to update per job
  */
-$wgUpdateRowsPerJob = 500;
+$wgUpdateRowsPerJob = 50;
 
 /**
  * Number of rows to update per query

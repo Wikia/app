@@ -5,16 +5,16 @@
 
 
 class EditPageLayoutHooks {
-	static function onAlternateEditPageClass(&$editPage) {
+	static function onAlternateEditPageClass( &$editPage ) {
 		global $wgArticle;
 		$app = F::app();
 		$helper = EditPageLayoutHelper::getInstance();
 		// apply only for Oasis
 		if ( $app->checkSkin( 'oasis' ) ) {
-			$instance = $helper->setupEditPage($wgArticle);
+			$instance = $helper->setupEditPage( $wgArticle );
 
 			// $instance will be false in read-only mode (BugId:9460)
-			if (!empty($instance)) {
+			if ( !empty( $instance ) ) {
 				$editPage = $instance;
 			}
 		}
@@ -25,10 +25,10 @@ class EditPageLayoutHooks {
 	/**
 	 * Add wgIsEditPage global JS variable on edit pages
 	 */
-	static function onMakeGlobalVariablesScript(Array &$vars) {
+	static function onMakeGlobalVariablesScript( Array &$vars ) {
 		global $wgUser;
 
-		wfRunHooks('EditPageMakeGlobalVariablesScript', array(&$vars));
+		wfRunHooks( 'EditPageMakeGlobalVariablesScript', array( &$vars ) );
 		$helper = EditPageLayoutHelper::getInstance();
 		$js = $helper->getJsVars();
 		foreach( $js as $key => $value ) {
@@ -36,7 +36,7 @@ class EditPageLayoutHooks {
 		}
 
 		// Export JS Variable to check to see if Admin Only Video Upload is enabled for this wiki
-		$vars['showAddVideoBtn'] = $wgUser->isAllowed('videoupload');
+		$vars['showAddVideoBtn'] = $wgUser->isAllowed( 'videoupload' );
 
 		return true;
 	}
@@ -44,13 +44,13 @@ class EditPageLayoutHooks {
 	/**
 	 * Add CSS class to <body> element when there's an conflict edit or undo revision is about to be performed
 	 */
-	static function onSkinGetPageClasses(&$classes) {
+	static function onSkinGetPageClasses( &$classes ) {
 		$helper = EditPageLayoutHelper::getInstance();
-		if ($helper->editPage->isConflict || $helper->editPage->formtype == 'diff') {
+		if ( $helper->editPage->isConflict || $helper->editPage->formtype == 'diff' ) {
 			$classes .= ' EditPageScrollable';
 		}
 
-		if (!empty($helper->editPage->mHasPermissionError)) {
+		if ( !empty( $helper->editPage->mHasPermissionError ) ) {
 			$classes .= ' EditPagePermissionError';
 		}
 
@@ -60,10 +60,10 @@ class EditPageLayoutHooks {
 	/**
 	 * Reverse parse wikitext when performing diff for edit conflict
 	 */
-	static function onEditPageBeforeConflictDiff(&$editform, &$out ) {
+	static function onEditPageBeforeConflictDiff( &$editform, &$out ) {
 		$helper = EditPageLayoutHelper::getInstance();
-		if (class_exists('RTE') && $helper->getRequest()->getVal('RTEMode') == 'wysiwyg') {
-			$editform->textbox2 = RTE::HtmlToWikitext($editform->textbox2);
+		if ( class_exists( 'RTE' ) && $helper->getRequest()->getVal( 'RTEMode' ) == 'wysiwyg') {
+			$editform->textbox2 = RTE::HtmlToWikitext( $editform->textbox2 );
 		}
 
 		return true;
@@ -72,10 +72,10 @@ class EditPageLayoutHooks {
 	/**
 	 * Get warning note shown when preview mode is forced and add it to the nofitication area
 	 */
-	static function onEditPageGetPreviewNote($editform, &$note) {
+	static function onEditPageGetPreviewNote( $editform, &$note ) {
 		$helper = EditPageLayoutHelper::getInstance();
-		if (($helper->editPage instanceof EditPageLayout) && ($note != '')) {
-			$helper->editPage->addEditNotice($note);
+		if ( ( $helper->editPage instanceof EditPageLayout ) && ( $note != '' ) ) {
+			$helper->editPage->addEditNotice( $note );
 		}
 
 		return true;
@@ -84,7 +84,7 @@ class EditPageLayoutHooks {
 	/**
 	 * Apply user preferences changes
 	 */
-	static function onGetPreferences($user, &$defaultPreferences) {
+	static function onGetPreferences( $user, &$defaultPreferences ) {
 		// modify sections for the following user options
 		$prefs = array(
 			// General
@@ -104,6 +104,7 @@ class EditPageLayoutHooks {
 			'disablecategoryselect' => 'editing-experience',
 			'editwidth' => 'editing-experience',
 			'disablelinksuggest' => 'editing-experience', // handled in wfLinkSuggestGetPreferences()
+			'disablesyntaxhighlighting' => 'editing-experience',
 
 			// Monobook layout only
 			'showtoolbar' => 'monobook-layout',
@@ -116,8 +117,8 @@ class EditPageLayoutHooks {
 		);
 
 		// move checkboxes / inputs to different section on "Editing" tab
-		foreach($prefs as $name => $section) {
-			if (isset($defaultPreferences[$name])) {
+		foreach( $prefs as $name => $section ) {
+			if ( isset( $defaultPreferences[$name] ) ) {
 				$defaultPreferences[$name]['section'] = 'editing/' . $section;
 			}
 		}
@@ -145,11 +146,11 @@ class EditPageLayoutHooks {
 	 * - wrap String: Wrap the message in html (usually something like "<div ...>$1</div>").
 	 * @return boolean return false, so notice will not be emitted by core, but by EditPageLayout code
 	 */
-	static function onLogEventsListShowLogExtract($s, $types, $page, $user, $param) {
+	static function onLogEventsListShowLogExtract( $s, $types, $page, $user, $param ) {
 		$helper = EditPageLayoutHelper::getInstance();
-		if ($helper->editPage instanceof EditPageLayout) {
-			if (!empty($s)) {
-				$helper->editPage->addEditNotice($s, $param['msgKey'][0]);
+		if ( $helper->editPage instanceof EditPageLayout ) {
+			if ( !empty( $s ) ) {
+				$helper->editPage->addEditNotice( $s, $param['msgKey'][0] );
 			}
 
 			// don't emit notices on the screen - they will be handled by addEditNotice()
@@ -167,10 +168,10 @@ class EditPageLayoutHooks {
 	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	static function onBeforeDisplayingTextbox(EditPage $editPage, &$hidden) {
+	static function onBeforeDisplayingTextbox( EditPage $editPage, &$hidden ) {
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis' ) ) {
-			$app->wg->Out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
+			$app->wg->Out->addHtml( '<div id="editarea" class="editpage-editarea" data-space-type="editarea">' );
 		}
 
 		return true;
@@ -183,7 +184,7 @@ class EditPageLayoutHooks {
 	 * @param $hidden boolean not used
 	 * @return boolean return true
 	 */
-	static function onAfterDisplayingTextbox(EditPage $editPage, &$hidden) {
+	static function onAfterDisplayingTextbox( EditPage $editPage, &$hidden ) {
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis') ) {
 			$params = array(
@@ -191,7 +192,7 @@ class EditPageLayoutHooks {
 			);
 			$html = $app->getView( 'EditPageLayout', 'Loader', $params )->render();
 			$html .= '</div>';
-			$app->wg->Out->addHtml($html);
+			$app->wg->Out->addHtml( $html );
 		}
 
 		return true;

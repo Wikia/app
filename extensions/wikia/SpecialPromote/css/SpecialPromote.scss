@@ -161,10 +161,10 @@
 				height: 16px;
 				background-repeat: no-repeat;
 				&.ok {
-					background-image: url('/extensions/wikia/SpecialPromote/images/correct.png'); /* base64 */
+					background-image: url('/extensions/wikia/SpecialPromote/images/correct.png'); /* inline */
 				}
 				&.error {
-					background-image: url('/extensions/wikia/SpecialPromote/images/x.png'); /* base64 */
+					background-image: url('/extensions/wikia/SpecialPromote/images/x.png'); /* inline */
 				}
 			}
 		}
@@ -266,7 +266,7 @@
 }
 
 // RESPONSIVE START
-@if ( $responsive-layout-enabled ) {
+@if ( $responsive-or-breakpoints-layout-enabled ) {
 	@media screen and (max-width: $width-outside) {
 		.WikiaArticle .UploadTool {
 			fieldset

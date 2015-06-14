@@ -9,7 +9,7 @@ class Bucky {
 	const BASE_URL = '//speed.wikia.net/__rum';
 
 	/**
-	 * Adds wgBuckyConfig global JS variable
+	 * Adds wgWeppyConfig global JS variable
 	 *
 	 * @param array $vars
 	 * @param OutputPage $out
@@ -28,10 +28,9 @@ class Bucky {
 				'host' => $url,
 				'sample' => $sample,
 				'aggregationInterval' => 1000,
-				'protocol' => 2,
 			);
 
-			$vars['wgBuckyConfig'] = $config;
+			$vars['wgWeppyConfig'] = $config;
 		}
 
 		return true;

@@ -42,7 +42,8 @@ class Lucene extends AbstractSelect
 				'html',
 				'article_quality_i',
 				'recommendations_ss',
-				'snippet_s'
+				'snippet_s',
+				'article_type_s'
 			];
 	
 	/**

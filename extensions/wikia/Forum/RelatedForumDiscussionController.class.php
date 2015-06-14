@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Logger\WikiaLogger;
+
 class RelatedForumDiscussionController extends WikiaController {
 
 	/** Expiry time to use in cache requests */
@@ -30,6 +33,13 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		$this->seeMoreUrl = $topicTitle->getFullUrl();
 		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
+
+		// TODO: move classes to template when Venus will be live on all wikis
+		$this->venusBtnClasses = '';
+		if ($this->app->checkSkin( 'venus' ) ) {
+			$this->venusBtnClasses = 'wikia-button secondary';
+			Wikia::addAssetsToOutput( 'related_forum_discussion_css' );
+		}
 	}
 
 	/**
@@ -70,14 +80,19 @@ class RelatedForumDiscussionController extends WikiaController {
 	 * @param int $threadId
 	 */
 	public static function purgeCache( $threadId ) {
-		$rm = new WallRelatedPages();
-		$ids = $rm->getMessagesRelatedArticleIds($threadId, 'order_index', DB_MASTER);
+		$relatedPages = new WallRelatedPages();
+		$ids = $relatedPages->getMessagesRelatedArticleIds( $threadId, 'order_index', DB_MASTER );
 
-		foreach($ids as $id) {
+		foreach( $ids as $id ) {
 			$key = wfMemcKey( __CLASS__, 'getData', $id );
-			WikiaDataAccess::cachePurge($key);
+			WikiaDataAccess::cachePurge( $key );
 			// VOLDEV-46: Update module by purging page, not via AJAX
-			WikiPage::newFromID( $id )->doPurge();
+			$wikiaPage = WikiPage::newFromID( $id );
+			if ( $wikiaPage ) {
+				$wikiaPage->doPurge();
+			} else {
+				self::logError( "Found a null related wikipage on thread purge", [ "articleID" => $id, "threadID" => $threadId ] );
+			}
 		}
 	}
 
@@ -93,5 +108,9 @@ class RelatedForumDiscussionController extends WikiaController {
 			$messages = $wlp->getArticlesRelatedMessgesSnippet( $articleId, 2, 2 );
 			return $messages;
 		});
+	}
+
+	private static function logError( $message, array $param = [] ) {
+		WikiaLogger::instance()->error( 'RelatedForumDiscussionController: ' . $message, $param );
 	}
 }

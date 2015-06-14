@@ -11,7 +11,8 @@ $wgExtensionCredits['other'][] = array(
 		'Bartek Łapiński',
 		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]',
 		'Władysław Bodzek',
-	)
+	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Phalanx'
 );
 
 // users immune to Phalanx

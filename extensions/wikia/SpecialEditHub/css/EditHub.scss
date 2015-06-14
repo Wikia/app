@@ -16,12 +16,12 @@ $horizontal-border-color: #eee;
 	margin-top: 15px;
 
 	h3 {
-		width: 30px;
+		width: 40px;
 		font-size: 24px;
 		text-align: right;
 		float: left;
 		margin-right: 10px;
-		margin-left: -40px;
+		margin-left: -50px;
 	}
 
 	form {
@@ -70,7 +70,7 @@ $horizontal-border-color: #eee;
 	.input-group:not(.borderNone) {
 		border-bottom: 1px solid #e5e5e5;
 	}
-	
+
 	.grid-4.wide {
 		margin-bottom: 28px;
 		input[type="text"], textarea {
@@ -151,7 +151,7 @@ $horizontal-border-color: #eee;
 			width: 55px;
 		}
 		.input-icon {
-			background-image: url("/extensions/wikia/SpecialEditHub/images/url.png"); /* base64 */
+			background-image: url("/extensions/wikia/SpecialEditHub/images/url.png"); /* inline */
 			height: 7px;
 			width: 15px;
 		}

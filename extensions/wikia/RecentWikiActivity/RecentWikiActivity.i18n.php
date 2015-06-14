@@ -8,6 +8,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'recent-wiki-activity-desc' => 'Wikia\'s Recent Wiki Activity',
 	'recent-wiki-activity-header' => 'Recent Wiki Activity',
 	'recent-wiki-activity-see-more' => 'see more',
 	'recent-wiki-activity-new-details' => 'created by $1 $2',
@@ -272,6 +273,7 @@ $messages['zh-tw'] = [
 ];
 
 $messages['qqq'] = [
+	'recent-wiki-activity-desc' => '{{desc}}',
 	'recent-wiki-activity-header' => 'Header for Recent Wiki Activity module which displays recent changes on wiki',
 	'recent-wiki-activity-see-more' => 'Label for see more link in recent wiki activity module',	'recent-wiki-activity-new-details' => 'Parameters:
 * $1 is a username

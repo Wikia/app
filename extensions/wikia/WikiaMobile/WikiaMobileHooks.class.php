@@ -164,17 +164,18 @@ class WikiaMobileHooks {
 	 * @return bool
 	 */
 	static public function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
+		global $wgArticleAsJson;
 		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
-			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
-			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
-
-            if ( F::app()->wg->User->isAnon() ) {
+			//retrieve section index from mw:editsection tag
+			preg_match( '#section="(.*?)"#', $link, $matches );
+			if ( $wgArticleAsJson || F::app()->wg->User->isAnon() ) {
 				$link = '';
 			}
-
-			$ret = "<h{$level} id='{$anchor}' {$attribs}{$text}{$link}</h{$level}>";
+			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
+			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
+			$ret = "<h{$level} id='{$anchor}' section='{$matches[1]}' {$attribs}{$text}{$link}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -371,13 +372,11 @@ class WikiaMobileHooks {
 
 			//get all the possible variations of the File namespace
 			//and the translation in the wiki's language
-			foreach ( array( NS_FILE, NS_IMAGE ) as $ns ) {
-				$translatedNs[] = $wgContLang->getNsText( $ns );
+			$translatedNs[] = $wgContLang->getNsText( NS_FILE );
 
-				foreach( $wgNamespaceAliases as $alias => $nsAlias ) {
-					if( $nsAlias == $ns ) {
-						$translatedNs[] = $alias;
-					}
+			foreach ( $wgNamespaceAliases as $alias => $nsAlias ) {
+				if ( $nsAlias == NS_FILE ) {
+					$translatedNs[] = $alias;
 				}
 			}
 

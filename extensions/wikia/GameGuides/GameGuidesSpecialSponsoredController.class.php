@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated
+ */
 class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
@@ -151,7 +154,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 							$handler = $vid->getHandler();
 
 							if ( $handler instanceof OoyalaVideoHandler ) {
-								$metadata = $handler->getMetadata( true );
+								$metadata = $handler->getVideoMetadata( true );
 
 								$video['video_id'] = $metadata['videoId'];
 								$video['duration'] = WikiaFileHelper::formatDuration( $metadata['duration'] );

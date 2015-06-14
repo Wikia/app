@@ -20,6 +20,7 @@ $wgExtensionCredits['facebookclient'][] = array(
 		"Armon Rabiyan <armon@wikia-inc.com>",
 	),
 	'descriptionmsg' => 'fbconnect-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FacebookClient'
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -29,10 +30,10 @@ $dir = dirname( __FILE__ ) . '/';
  */
 $wgAutoloadClasses['FacebookClient'] =  $dir . 'FacebookClient.class.php';
 $wgAutoloadClasses['FacebookClientHelper'] =  $dir . 'FacebookClientHelper.class.php';
-$wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
 $wgAutoloadClasses['FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class.php';
 $wgAutoloadClasses['FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
-$wgAutoloadClasses['SpecialFacebookConnectController'] =  $dir . 'SpecialFacebookConnectController.class.php';
+$wgAutoloadClasses['FacebookClientFactory'] =  $dir . 'FacebookClientFactory.php';
+$wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
 $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
 
 /**
@@ -40,34 +41,24 @@ $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
  */
 $wgAutoloadClasses['FacebookClientHooks'] =  $dir . 'FacebookClientHooks.class.php';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariablesScript';
-$wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
+$wgHooks['GetHTMLAfterBody'][] = 'FacebookClientHooks::onGetHTMLAfterBody';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
 $wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
-
-// special pages
-$wgSpecialPages[ 'FacebookConnect' ] =  'SpecialFacebookConnectController';
+$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'FacebookClientHooks::onSkinTemplatePageBeforeUserMsg';
+$wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::onSkinAfterBottomScripts';
 
 /**
  * messages
  */
 $wgExtensionMessagesFiles['FacebookClient'] = $dir . 'FacebookClient.i18n.php';
 
-/**
- * ResourceLoader modules
- */
-$wgResourceModules['ext.wikia.FacebookClient.XFBML'] = [
-	'scripts' => 'scripts/FacebookClient.XFBML.js',
-	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'wikia/FacebookClient',
-];
-
 JSMessages::registerPackage( 'FacebookClient', [
-	'fbconnect-logout-confirm',
 	'fbconnect-preferences-connected',
-	'fbconnect-preferences-connected-error',
 	'fbconnect-disconnect-info-existing',
 	'fbconnect-disconnect-info',
+	'fbconnect-error-fb-unavailable-title',
+	'fbconnect-error-fb-unavailable-text',
 ] );
 

@@ -195,15 +195,25 @@ class RequestContext implements IContextSource {
 	 * @return User
 	 */
 	public function getUser() {
+		// Wikia change - begin - @author: Michał Roszka
+		global $wgEnableHeliosExt;
+		if ( $this->user === null && $wgEnableHeliosExt ) {
+			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
+		}
+		// Wikia change - end
 		// Wikia change - begin - @author: wladek
 		global $wgUserForceAnon;
 		if ( $this->user === null && $wgUserForceAnon ) {
 			$this->user = new User();
 		}
-		// Wikia change - end
+
 		if ( $this->user === null ) {
+		// Wikia change - end
 			$this->user = User::newFromSession( $this->getRequest() );
 		}
+
+		// Replace the user object according to the context, e.g. Piggyback.
+		wfRunHooks( 'RequestContextOverrideUser', [ &$this->user, $this->getRequest() ] );
 		return $this->user;
 	}
 
@@ -321,12 +331,12 @@ class RequestContext implements IContextSource {
 	/**
 	 * Get the Skin object
 	 *
-	 * @return Skin
+	 * @return Skin|Linker
 	 */
 	public function getSkin() {
 		if ( $this->skin === null ) {
 			wfProfileIn( __METHOD__ . '-createskin' );
-			
+
 			$skin = null;
 			wfRunHooks( 'RequestContextCreateSkin', array( $this, &$skin ) );
 

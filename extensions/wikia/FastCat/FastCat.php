@@ -23,7 +23,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
         'name' => 'FastCat',
         'author' => array( "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]", 'Jochen Kornitzky' ),
-        'description' => 'One-click categorization from a predefined list of categories.'
+        'descriptionmsg' => 'fastcat-desc',
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FastCat'
 );
 
 $dir = dirname( __FILE__ );

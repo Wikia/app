@@ -2,6 +2,7 @@
 $messages = [];
 
 $messages[ 'en' ] = [
+	'wikia-interactive-maps-desc' => 'Create your own maps with point of interest or add your own point of interest into a real world map',
 	'wikia-interactive-maps-title' => 'Maps',
 	'wikia-interactive-maps-create-a-map' => 'Create a Map',
 	'wikia-interactive-maps-no-maps-header' => 'There are no maps created yet.',
@@ -83,7 +84,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-edit-poi-description-placeholder' => 'Add a Description',
 	'wikia-interactive-maps-edit-poi-error-name' => 'Name must be set',
 	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'Pin category must be set',
-	'wikia-interactive-maps-edit-poi-wrong-article-name-or-url' => 'Error message: there is no $1 article on this wikia nor it\'s valid URL address.',
+	'wikia-interactive-maps-edit-poi-wrong-article-name-or-url' => 'Error: either there is no $1 article on this wikia, or the URL entered is invalid.',
 	'wikia-interactive-maps-embed-map-code-header' => 'Embed Map',
 	'wikia-interactive-maps-embed-map-code-info' => 'Use the embed code below to include the map on your personal site.',
 	'wikia-interactive-maps-embed-map-code-size-label' => 'Map Size',
@@ -1655,6 +1656,7 @@ $messages[ 'nl' ] = [
 ];
 
 $messages[ 'qqq' ] = [
+	'wikia-interactive-maps-desc' => '{{desc}}',
 	'wikia-interactive-maps-title' => 'Maps special page title',
 	'wikia-interactive-maps-create-a-map' => 'Label for create new map button',
 	'wikia-interactive-maps-no-maps-header' => 'No maps created yet for this wikia header.',

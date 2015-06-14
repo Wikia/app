@@ -11,7 +11,7 @@
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'Wikia RSS feed',
 	'author' => array("Andrzej 'nAndy' Łukaszewski"),
-	'url' => 'http://www.wikia.com',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaRSS',
 	'descriptionmsg' => 'wikia-rss-desc',
 );
 

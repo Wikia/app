@@ -1,13 +1,12 @@
-<footer class="global-footer row">
+<footer class="global-footer">
 	<nav>
-		<h1><?= wfMessage('oasis-corporatefooter-navigation-header')->text(); ?></h1>
-		<div class="branding <?= (!$isCorporate ? 'black' : ''); ?>">
-			<div class="wordmark">
-				<img src="<?= $wg->BlankImgUrl; ?>" class="wordmark<?= $hub->cat_id ?>">
-			</div>
-			<?php if(!$isCorporate): ?>
-				<div class="hub"><a class="hub<?= $hub->cat_id; ?>" href="<?=$hub->cat_link?>">[ <?=$hub->cat_name?> ]</a></div>
-			<?php endif; ?>
+		<div class="branding <?= ( !empty( $verticalShort ) ? 'vertical-' . $verticalShort : '' ); ?> <?= ( !$isCorporate ? 'black' : '' ); ?>">
+			<a class="wikia-logo" href="<?=Sanitizer::encodeAttribute( $logoLink ); ?>">
+				<img src="<?= $wg->BlankImgUrl; ?>">
+				<?php if( !$isCorporate && !empty( $verticalShort ) ): ?>
+					<span><?=$verticalNameMessage->escaped(); ?></span>
+				<?php endif; ?>
+			</a>
 		</div>
 		<ul>
 			<?php

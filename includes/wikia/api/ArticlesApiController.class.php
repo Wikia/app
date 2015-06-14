@@ -8,6 +8,7 @@ use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\QueryService\DependencyContainer;
 use Wikia\Util\GlobalStateWrapper;
+use Wikia\Logger\WikiaLogger;
 
 class ArticlesApiController extends WikiaApiController {
 
@@ -159,20 +160,6 @@ class ArticlesApiController extends WikiaApiController {
 			false,
 			self::MAX_ITEMS + 1 //compensation for Main Page
 		);
-
-		if ( empty( $articles ) ) {
-			$fallbackDate = DataMartService::findLastRollupsDate( DataMartService::PERIOD_ID_WEEKLY );
-			if ( $fallbackDate ) {
-				$articles = DataMartService::getTopArticlesByPageview(
-					$this->wg->CityId,
-					$ids,
-					$namespaces,
-					false,
-					self::MAX_ITEMS + 1, //compensation for Main Page
-					$fallbackDate
-				);
-			}
-		}
 
 		$collection = [];
 
@@ -371,18 +358,20 @@ class ArticlesApiController extends WikiaApiController {
 			$ns = array_unique( $ns );
 		}
 
-		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) , $minArticleQuality ] );
+		$key = self::getCacheKey( self::NEW_ARTICLES_CACHE_ID, '', [ implode( '-', $ns ) , $minArticleQuality, $limit ] );
 		$results = $this->wg->Memc->get( $key );
 		if ( $results === false ) {
-			$solrResults = $this->getNewArticlesFromSolr( $ns, self::MAX_NEW_ARTICLES_LIMIT, $minArticleQuality );
+			$solrResults = $this->getNewArticlesFromSolr( $ns, $limit, $minArticleQuality );
 			if ( empty( $solrResults ) ) {
 				$results = [];
 			} else {
 				$articles = array_keys( $solrResults );
+				$articles = array_slice( $articles, 0, $limit );
+
 				$rev = new RevisionService();
 				$revisions = $rev->getFirstRevisionByArticleId( $articles );
 				$creators = $this->getUserDataForArticles( $articles, $revisions );
-				$thumbs = $this->getArticlesThumbnails( array_keys( $solrResults ) );
+				$thumbs = $this->getArticlesThumbnails( $articles );
 
 				$results = [];
 				foreach ( $solrResults as $id => $item ) {
@@ -405,7 +394,6 @@ class ArticlesApiController extends WikiaApiController {
 			throw new NotFoundApiException( 'No members' );
 		}
 
-		$results = array_slice( $results, 0, $limit );
 		$this->setResponseData(
 			[ 'items' => $results, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url', 'avatar' ] ],
@@ -632,7 +620,6 @@ class ArticlesApiController extends WikiaApiController {
 		if ( empty( $articles ) && empty( $params[ 'titleKeys' ] ) ) {
 			throw new MissingParameterApiException( self::PARAMETER_ARTICLES );
 		}
-
 		$collection = $this->getArticlesDetails( $articles, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ] );
 
 		/*
@@ -680,6 +667,7 @@ class ArticlesApiController extends WikiaApiController {
 		$articles = is_array( $articleIds ) ? $articleIds : [ $articleIds ];
 		$ids = [];
 		$collection = [];
+		$resultingCollectionIds = [];
 		$titles = [];
 		foreach ( $articles as $i ) {
 			//data is cached on a per-article basis
@@ -691,6 +679,7 @@ class ArticlesApiController extends WikiaApiController {
 				$ids[] = $i;
 			} else {
 				$collection[$i] = $cache;
+				$resultingCollectionIds []= $i;
 			}
 		}
 
@@ -707,6 +696,7 @@ class ArticlesApiController extends WikiaApiController {
 				}
 			}
 		}
+
 		if ( !empty( $titles ) ) {
 			foreach ( $titles as $t ) {
 				$fileData = [];
@@ -738,8 +728,16 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id]['comments'] = ( class_exists( 'ArticleCommentList' ) ) ? ArticleCommentList::newFromTitle( $t )->getCountAllNested() : false;
 					//add file data
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
-					$articles[] = $id;
+					$resultingCollectionIds []= $id;
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
+				} else {
+					$dataLog = [
+						'titleText' => $t->getText(),
+						'articleId' => $t->getArticleID(),
+						'revId' => $revId
+					];
+
+					WikiaLogger::instance()->info( 'No revision found for article', $dataLog );
 				}
 
 			}
@@ -751,7 +749,7 @@ class ArticlesApiController extends WikiaApiController {
 		//make the thumbnail's size parametrical without
 		//invalidating the titles details' cache
 		//or the need to duplicate it
-		$thumbnails = $this->getArticlesThumbnails( $articles, $width, $height );
+		$thumbnails = $this->getArticlesThumbnails( $resultingCollectionIds, $width, $height );
 
 		$articles = null;
 
@@ -777,17 +775,31 @@ class ArticlesApiController extends WikiaApiController {
 		$collection = $this->appendMetadata( $collection );
 
 		$thumbnails = null;
-		//if strict return to original ids order
-		if ( $strict ) {
-			foreach( $articleIds as $id ) {
-				if ( !empty( $collection[ $id ] ) ) {
-					$result[] = $collection[ $id ];
-				}
-			}
-			return $result;
-		}
+		//The collection can be in random order (depends if item was found in memcache or not)
+		//lets preserve original order even if we are not using strict mode:
+		//to keep things consistent over time (some other APIs that are using sorted results are using
+		//ArticleApi::getDetails to fetch info about articles)
+		$orderedIdsFromTitles = array_diff( array_keys( $collection ), $articleIds );
+		//typecasting to convert falsy values into empty array (array_merge require arrays only)
+		$orderedIds = array_merge( (array)$articleIds, (array)$orderedIdsFromTitles );
+		$collection = $this->preserveOriginalOrder( $orderedIds, $collection );
 
-		return $collection;
+		//if strict - return array instead of associative array (dict)
+		if ( $strict ) {
+			return array_values( $collection );
+		} else {
+			return $collection;
+		}
+	}
+
+	protected function preserveOriginalOrder( $originalOrder, $collection ) {
+		$result = [];
+		foreach ( $originalOrder as $id ) {
+			if ( !empty( $collection[ $id ] ) ) {
+				$result[ $id ] = $collection[ $id ];
+			}
+		}
+		return $result;
 	}
 
 	protected function getUserDataForArticles( $articles, $revisions ) {
@@ -851,7 +863,7 @@ class ArticlesApiController extends WikiaApiController {
 				/* @var VideoHandler $handler */
 				$handler = VideoHandler::getHandler( $file->getMimeType() );
 				$typeInfo = explode( '/', $file->getMimeType() );
-				$metadata = ( $handler ) ? $handler->getMetadata( true ) : null;
+				$metadata = ( $handler ) ? $handler->getVideoMetadata( true ) : null;
 				return [
 					'type' => static::VIDEO_TYPE,
 					'provider' => isset( $typeInfo[1] ) ? $typeInfo[1] : static::UNKNOWN_PROVIDER,
@@ -961,77 +973,80 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	public function getAsJson() {
-		if ( $this->wg->EnableArticleAsJsonApi ) {
-			$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
-			$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
-			$redirect = $this->request->getVal('redirect');
+		$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
+		$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+		$redirect = $this->request->getVal('redirect');
 
-			if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
-				throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
+		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
+		}
+
+		if ( empty( $articleId ) && empty( $articleTitle ) ) {
+			throw new BadRequestApiException( 'You need to pass title or id of an article' );
+		}
+
+		if ( !empty( $articleId ) ) {
+			$article = Article::newFromID( $articleId );
+		} else {
+			$title = Title::newFromText( $articleTitle, NS_MAIN );
+
+			if ( $title instanceof Title && $title->exists() ) {
+				$article = Article::newFromTitle( $title, RequestContext::getMain() );
 			}
+		}
 
-			if ( empty( $articleId ) && empty( $articleTitle ) ) {
-				throw new BadRequestApiException( 'You need to pass title or id of an article' );
+		if ( empty( $article ) ) {
+			throw new NotFoundApiException( "Unable to find any article" );
+		}
+
+		if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
+			// false, Title object of local target or string with URL
+			$followRedirect = $article->getPage()->followRedirect();
+
+			if ( $followRedirect && !is_string( $followRedirect ) ) {
+				$article = Article::newFromTitle( $followRedirect, RequestContext::getMain() );
 			}
+		}
 
-			if ( !empty( $articleId ) ) {
-				$article = Article::newFromID( $articleId );
-			} else {
-				$title = Title::newFromText( $articleTitle, NS_MAIN );
+		//Response is based on wikiamobile skin as this already removes inline style
+		//and make response smaller
+		RequestContext::getMain()->setSkin(
+			Skin::newFromKey( 'wikiamobile' )
+		);
 
-				if ( $title instanceof Title && $title->exists() ) {
-					$article = Article::newFromTitle( $title, RequestContext::getMain() );
-				}
-			}
+		global $wgArticleAsJson;
+		$wgArticleAsJson = true;
 
-			if ( empty( $article ) ) {
-				throw new NotFoundApiException( "Unable to find any article" );
-			}
+		$parsedArticle = $article->getParserOutput();
 
-			if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
-				$article = Article::newFromTitle( $article->getPage()->followRedirect(), RequestContext::getMain() );
-			}
+		if ( $parsedArticle instanceof ParserOutput ) {
+			$articleContent = json_decode( $parsedArticle->getText() );
+		} else {
+			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
+		}
 
-			//Response is based on wikiamobile skin as this already removes inline style
-			//and make response smaller
-			RequestContext::getMain()->setSkin(
-				Skin::newFromKey( 'wikiamobile' )
-			);
+		$wgArticleAsJson = false;
+		$categories = [];
 
-			global $wgArticleAsJson;
-			$wgArticleAsJson = true;
-
-			$parsedArticle = $article->getParserOutput();
-
-			if ( $parsedArticle instanceof ParserOutput ) {
-				$articleContent = json_decode( $parsedArticle->getText() );
-			} else {
-				throw new ArticleAsJsonParserException( 'Parser is currently not available' );
-			}
-
-			$wgArticleAsJson = false;
-			$categories = [];
-
-			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
-				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
-
+		foreach( array_keys( $parsedArticle->getCategories() ) as $category ) {
+			$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
+			if ( $categoryTitle ) {
 				$categories[] = [
 					'title' => $categoryTitle->getText(),
 					'url' => $categoryTitle->getLocalURL()
 				];
 			}
-
-			$result = [
-				'content' => $articleContent->content,
-				'media' => $articleContent->media,
-				'users' => $articleContent->users,
-				'categories' => $categories,
-			];
-
-			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
-		} else {
-			throw new BadRequestApiException( 'This entry point is disabled' );
 		}
+
+		$result = [
+			'content' => $articleContent->content,
+			'media' => $articleContent->media,
+			'users' => $articleContent->users,
+			'categories' => $categories,
+			'description' => $this->getArticleDescription( $article )
+		];
+
+		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 	}
 
 	public function getPopular() {
@@ -1351,5 +1366,35 @@ class ArticlesApiController extends WikiaApiController {
 			$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
 			throw new BadRequestApiException( $message );
 		}
+	}
+
+	/**
+	 * Returns description for the article's meta tag.
+	 *
+	 * This is mostly copied from the ArticleMetaDescription extension.
+	 *
+	 * @param Article $article
+	 * @param int $descLength
+	 * @return string
+	 * @throws WikiaException
+	 */
+	protected function getArticleDescription( Article $article, $descLength = 100 ) {
+		$title = $article->getTitle();
+		$sMessage = null;
+
+		if ( $title->isMainPage() ) {
+			// we're on Main Page, check MediaWiki:Description message
+			$sMessage = wfMessage( 'Description' )->text();
+		}
+
+		if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
+			$articleService = new ArticleService( $article );
+			$description = $articleService->getTextSnippet( $descLength );
+		} else {
+			// MediaWiki:Description message found, use it
+			$description = $sMessage;
+		}
+
+		return $description;
 	}
 }

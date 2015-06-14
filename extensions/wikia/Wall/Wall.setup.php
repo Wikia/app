@@ -13,13 +13,13 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'User Wall',
 	'author' => array( 'Tomek Odrobny', 'Christian Williams', "Andrzej 'nAndy' Lukaszewski", 'Piotr Bablok' ),
-	'url' => 'http://www.wikia.com',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Wall',
 	'descriptionmsg' => 'wall-desc',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
-include($dir . '/WallNamespaces.php');
+include( $dir . '/WallNamespaces.php' );
 
 $wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
 
@@ -60,7 +60,7 @@ $wgHooks['UserIsBlockedFrom'][] = 'WallHooksHelper::onUserIsBlockedFrom';
 
 $wgHooks['ArticleRobotPolicy'][] = 'WallHooksHelper::onArticleRobotPolicy';
 
-//wall history in toolbar
+// wall history in toolbar
 $wgHooks['BeforeToolbarMenu'][] = 'WallHooksHelper::onBeforeToolbarMenu';
 $wgHooks['BeforePageHistory'][] = 'WallHooksHelper::onBeforePageHistory';
 $wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription';
@@ -68,7 +68,7 @@ $wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription'
 $wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageChange';
 $wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
-//recent changes adjusting
+// recent changes adjusting
 
 $wgHooks['AC_RecentChange_Save'][] = 'WallHooksHelper::onRecentChangeSave';
 $wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
@@ -89,36 +89,35 @@ $wgHooks['ArticleDeleteComplete'][] = 'WallHooksHelper::onArticleDeleteComplete'
 $wgHooks['FilePageImageUsageSingleLink'][] = 'WallHooksHelper::onFilePageImageUsageSingleLink';
 
 $wgHooks['getUserPermissionsErrors'][] = 'WallHooksHelper::onGetUserPermissionsErrors';
-$wgHooks['ComposeCommonBodyMail'][] = 'WallHooksHelper::onComposeCommonBodyMail';
 
-//Special:Contributions adjusting
+// Special:Contributions adjusting
 $wgHooks['ContributionsLineEnding'][] = 'WallHooksHelper::onContributionsLineEnding';
 
-//Special:Whatlinkshere adjustinb
+// Special:Whatlinkshere adjustinb
 $wgHooks['SpecialWhatlinkshere::renderWhatLinksHereRow'][] = 'WallHooksHelper::onRenderWhatLinksHereRow';
 $wgHooks['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLinks';
 
-//watchlist
+// watchlist
 $wgHooks['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
-//$wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
-//$wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
+// $wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
+// $wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
-//diff page adjusting
+// diff page adjusting
 $wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
 $wgHooks['PageHeaderEditPage'][] = 'WallHooksHelper::onPageHeaderEditPage';
 $wgHooks['DiffLoadText'][] = 'WallHooksHelper::onDiffLoadText';
 
-//right rail adjusting
+// right rail adjusting
 $wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
 
-//handmade links to message wall adjusting
+// handmade links to message wall adjusting
 $wgHooks['LinkBegin'][] = 'WallHooksHelper::onLinkBegin';
 $wgHooks['LinkerUserTalkLinkAfter'][] = 'WallHooksHelper::onLinkerUserTalkLinkAfter';
 
-//saving user talk archive redirects to user talk archive
+// saving user talk archive redirects to user talk archive
 $wgHooks['ArticleSaveComplete'][] = 'WallHooksHelper::onArticleSaveComplete';
 
-//cancel API vote adding
+// cancel API vote adding
 $wgHooks['ArticleBeforeVote'][] = 'WallHooksHelper::onArticleBeforeVote';
 
 // vote invalidation
@@ -151,7 +150,11 @@ $wgHooks['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 $wgHooks['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
 $wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
 
-JSMessages::registerPackage('Wall', array(
+// Fix User_talk links for profile page diff on wall enabled wikis
+// VOLDEV-66
+$wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
+
+JSMessages::registerPackage( 'Wall', array(
 	'wall-notifications',
 	'wall-notifications-reminder',
 	'wall-notifications-wall-disabled',
@@ -180,17 +183,17 @@ JSMessages::registerPackage('Wall', array(
 	'preview',
 	'savearticle',
 	'back',
-));
+) );
 
 /**
  * extension related configuration
  */
 
 
-define( 'WALL_EMAIL_NOEMAIL', -1);
-define( 'WALL_EMAIL_EVERY', 1);
-define( 'WALL_EMAIL_SINCEVISITED', 2);
-define( 'WALL_EMAIL_REMINDER', 3);
+define( 'WALL_EMAIL_NOEMAIL', -1 );
+define( 'WALL_EMAIL_EVERY', 1 );
+define( 'WALL_EMAIL_SINCEVISITED', 2 );
+define( 'WALL_EMAIL_REMINDER', 3 );
 
 $wgDefaultUserOptions['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
 $wgDefaultUserOptions['wallshowsource'] = false;
@@ -200,16 +203,16 @@ $wgUserProfileNamespaces = array(
 	NS_USER, NS_USER_TALK, NS_USER_WALL
 );
 
-define( 'WH_EDIT', 0);
-define( 'WH_NEW', 1);
-define( 'WH_DELETE', 2);
-define( 'WH_REMOVE', 4);
-define( 'WH_RESTORE', 5);
-define( 'WH_ARCHIVE', 6);
-define( 'WH_REOPEN', 7);
+define( 'WH_EDIT', 0 );
+define( 'WH_NEW', 1 );
+define( 'WH_DELETE', 2 );
+define( 'WH_REMOVE', 4 );
+define( 'WH_RESTORE', 5 );
+define( 'WH_ARCHIVE', 6 );
+define( 'WH_REOPEN', 7 );
 
 
-//wall
+// wall
 $wgGroupPermissions['*']['walldelete'] = false;
 $wgGroupPermissions['util']['walldelete'] = true;
 
@@ -224,15 +227,21 @@ $wgGroupPermissions['staff']['wallarchive'] = true;
 $wgGroupPermissions['vstf']['wallarchive'] = true;
 $wgGroupPermissions['helper']['wallarchive'] = true;
 $wgGroupPermissions['sysop']['wallarchive'] = true;
+$wgGroupPermissions['threadmoderator']['wallarchive'] = true;
 
 $wgGroupPermissions['*']['wallremove'] = false;
-$wgGroupPermissions['user']['wallremove'] = true;
+$wgGroupPermissions['staff']['wallremove'] = true;
+$wgGroupPermissions['vstf']['wallremove'] = true;
+$wgGroupPermissions['helper']['wallremove'] = true;
+$wgGroupPermissions['sysop']['wallremove'] = true;
+$wgGroupPermissions['threadmoderator']['wallremove'] = true;
 
 $wgGroupPermissions['*']['walledit'] = false;
 $wgGroupPermissions['staff']['walledit'] = true;
 $wgGroupPermissions['vstf']['walledit'] = true;
 $wgGroupPermissions['helper']['walledit'] = true;
 $wgGroupPermissions['sysop']['walledit'] = true;
+$wgGroupPermissions['threadmoderator']['walledit'] = true;
 
 $wgGroupPermissions['*']['editwallarchivedpages'] = false;
 $wgGroupPermissions['sysop']['editwallarchivedpages'] = true;
@@ -248,6 +257,7 @@ $wgGroupPermissions['sysop']['notifyeveryone'] = true;
 $wgGroupPermissions['vstf']['notifyeveryone'] = true;
 $wgGroupPermissions['staff']['notifyeveryone'] = true;
 $wgGroupPermissions['helper']['notifyeveryone'] = true;
+$wgGroupPermissions['threadmoderator']['notifyeveryone'] = true;
 
 $wgGroupPermissions['*']['wallfastadmindelete'] = false;
 $wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
@@ -255,4 +265,17 @@ $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
 $wgGroupPermissions['staff']['wallfastadmindelete'] = true;
 
 $wgGroupPermissions['*']['wallmessagemove'] = false;
-$wgGroupPermissions['user']['wallmessagemove'] = true;
+$wgGroupPermissions['threadmoderator']['wallmessagemove'] = true;
+$wgGroupPermissions['sysop']['wallmessagemove'] = true;
+$wgGroupPermissions['vstf']['wallmessagemove'] = true;
+$wgGroupPermissions['helper']['wallmessagemove'] = true;
+$wgGroupPermissions['staff']['wallmessagemove'] = true;
+
+$wgAddGroups['bureaucrat'][] = 'threadmoderator';
+$wgRemoveGroups['bureaucrat'][] = 'threadmoderator';
+$wgAddGroups['sysop'][] = 'threadmoderator';
+$wgRemoveGroups['sysop'][] = 'threadmoderator';
+$wgAddGroups['staff'][] = 'threadmoderator';
+$wgRemoveGroups['staff'][] = 'threadmoderator';
+$wgAddGroups['helper'][] = 'threadmoderator';
+$wgRemoveGroups['helper'][] = 'threadmoderator';

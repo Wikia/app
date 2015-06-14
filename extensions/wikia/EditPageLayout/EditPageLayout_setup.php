@@ -18,7 +18,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'EditPageLayout',
 	'version' => '1.0',
 	'author' => 'Maciej Brencz',
-	'description' => 'Applies updated layout for edit pages',
+	'descriptionmsg' => 'editpagelayout-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditPageLayout'
 );
 
 $dir = dirname(__FILE__);
@@ -73,6 +74,8 @@ JSMessages::registerPackage('EditPageLayout', array(
 	'editpagelayout-more',
 	'editpagelayout-less',
 	'editpagelayout-pageControls-changes',
+	'editpagelayout-preview-label-desktop',
+	'editpagelayout-preview-label-mobile',
 	'editpagelayout-loadingStates-*',
 	'editpagelayout-modules-*',
 	'wikia-editor-*',

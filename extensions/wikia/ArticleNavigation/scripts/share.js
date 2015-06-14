@@ -28,7 +28,7 @@ require([
 	trackFunc = tracker.buildTrackingFunction({
 		action: Wikia.Tracker.ACTIONS.CLICK,
 		category: 'share',
-		trackingMethod: 'both'
+		trackingMethod: 'analytics'
 	});
 
 	/**

@@ -15,8 +15,6 @@ module.exports = function (config) {
 
 	config.set({
 		files: [
-			'tests/lib/jasmine/jasmine.async.js',
-
 			'tests/lib/jasmine/helpers.js',
 
 			'resources/jquery/jquery-1.8.2.js',

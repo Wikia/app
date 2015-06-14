@@ -1,10 +1,10 @@
 /*global describe, it, expect, modules*/
 /*jshint camelcase:false*/
+/*jshint maxlen:200*/
 describe('AdLogicPageParams', function () {
 	'use strict';
 
-	var logMock = function () {},
-		undef;
+	var logMock = function () { return; };
 
 	function mockAdContext(targeting) {
 		return {
@@ -14,25 +14,60 @@ describe('AdLogicPageParams', function () {
 					targeting: targeting || {},
 					forceProviders: {}
 				};
+			},
+			addCallback: function () {
+				return;
 			}
 		};
 	}
 
-	function mockWindow(hostname, amzn_targs) {
+	function mockWindow(document, hostname, amzn_targs) {
+
+		hostname = hostname || 'example.org';
+
 		return {
-			location: {hostname: hostname || 'example.org'},
-			amzn_targs: amzn_targs
+			document: document || {},
+			location: { origin: 'http://' + hostname, hostname: hostname },
+			amzn_targs: amzn_targs,
+			wgCookieDomain: hostname.substr(hostname.indexOf('.'))
 		};
 	}
 
 	function mockPageViewCounter(pvCount) {
 		return {
-			increment: function () { return pvCount; }
+			get: function () { return pvCount || 0; },
+			increment: function () { return pvCount || 1; }
+		};
+	}
+
+	function mockAmazonMatch(amazonPageParams) {
+		return {
+			getPageParams: function () {
+				return amazonPageParams;
+			},
+			wasCalled: function () {
+				return !!amazonPageParams;
+			},
+			trackState: function () {
+				return;
+			}
+		};
+	}
+
+	function mockAmazonMatchOld(enabled) {
+		return {
+			wasCalled: function () {
+				return !!enabled;
+			},
+			trackState: function () {
+				return;
+			}
 		};
 	}
 
 	/**
 	 * Keys for opts:
+	 *  - amazonPageParams
 	 *  - amzn_targs
 	 *  - kruxSegments
 	 *  - abExperiments
@@ -43,30 +78,35 @@ describe('AdLogicPageParams', function () {
 	function getParams(targeting, opts) {
 		opts = opts || {};
 
-		var adLogicPageDimensionsMock = {
-			},
-			kruxMock = {
-				segments: opts.kruxSegments || []
+		var kruxMock = {
+				getSegments: function () {
+					return opts.kruxSegments || [];
+				},
+				getUser: function () {
+					return '';
+				}
 			},
 			abTestMock = opts.abExperiments ? {
 				getExperiments: function () {
 					return opts.abExperiments || [];
 				},
-				getGroup: function () { }
-			} : undef;
+				getGroup: function () { return; }
+			} : undefined,
+			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
-			logMock,
-			mockWindow(opts.hostname, opts.amzn_targs),
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
-			kruxMock,
-			adLogicPageDimensionsMock,
-			abTestMock
+			logMock,
+			windowMock.document,
+			windowMock.location,
+			undefined,
+			abTestMock,
+			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
 
-	it('getPageLevelParams Simple params correct', function () {
+	it('getPageLevelParams simple params correct', function () {
 		var params = getParams({
 			wikiCategory: 'category',
 			wikiDbName: 'dbname',
@@ -112,11 +152,10 @@ describe('AdLogicPageParams', function () {
 	});
 
 	it('getPageLevelParams wpage param', function () {
-		var undef,
-			params;
+		var params;
 
 		params = getParams({});
-		expect(params.wpage).toBe(undef, 'undef');
+		expect(params.wpage).toBe(undefined, 'undefined');
 
 		params = getParams({pageName: 'Muppet_Wiki'});
 		expect(params.wpage).toBe('muppet_wiki', 'Muppet_Wiki');
@@ -166,29 +205,9 @@ describe('AdLogicPageParams', function () {
 		expect(params.key3).toEqual(['value3', 'value4'], 'key3=value3;key3=value4');
 	});
 
-	it('getPageLevelParams Amazon Direct Targeted Buy params', function () {
-		var params = getParams({}, {amzn_targs: 'amzn_300x250=1;amzn_728x90=1;'});
-
-		expect(params.amzn_300x250).toEqual(['1']);
-		expect(params.amzn_728x90).toEqual(['1']);
-	});
-
 	it('getPageLevelParams Krux segments', function () {
 		var kruxSegmentsNone = [],
 			kruxSegmentsFew = ['kxsgmntA', 'kxsgmntB', 'kxsgmntC', 'kxsgmntD'],
-			kruxSegmentsLots = ['kxsgmnt1', 'kxsgmnt2', 'kxsgmnt3', 'kxsgmnt4', 'kxsgmnt5',
-					'kxsgmnt6', 'kxsgmnt7', 'kxsgmnt8', 'kxsgmnt9', 'kxsgmnt10', 'kxsgmnt11',
-					'kxsgmnt12', 'kxsgmnt13', 'kxsgmnt14', 'kxsgmnt15', 'kxsgmnt16', 'kxsgmnt17',
-					'kxsgmnt18', 'kxsgmnt19', 'kxsgmnt20', 'kxsgmnt21', 'kxsgmnt22', 'kxsgmnt23',
-					'kxsgmnt24', 'kxsgmnt25', 'kxsgmnt26', 'kxsgmnt27', 'kxsgmnt28', 'kxsgmnt29',
-					'kxsgmnt30', 'kxsgmnt31', 'kxsgmnt32', 'kxsgmnt33', 'kxsgmnt34', 'kxsgmnt35'
-				],
-			kruxSegments27 = ['kxsgmnt1', 'kxsgmnt2', 'kxsgmnt3', 'kxsgmnt4', 'kxsgmnt5',
-					'kxsgmnt6', 'kxsgmnt7', 'kxsgmnt8', 'kxsgmnt9', 'kxsgmnt10', 'kxsgmnt11',
-					'kxsgmnt12', 'kxsgmnt13', 'kxsgmnt14', 'kxsgmnt15', 'kxsgmnt16', 'kxsgmnt17',
-					'kxsgmnt18', 'kxsgmnt19', 'kxsgmnt20', 'kxsgmnt21', 'kxsgmnt22', 'kxsgmnt23',
-					'kxsgmnt24', 'kxsgmnt25', 'kxsgmnt26', 'kxsgmnt27'
-				],
 			params;
 
 		params = getParams({}, {kruxSegments: kruxSegmentsNone});
@@ -196,9 +215,6 @@ describe('AdLogicPageParams', function () {
 
 		params = getParams({}, {kruxSegments: kruxSegmentsFew});
 		expect(params.ksgmnt).toEqual(kruxSegmentsFew, 'A few segments');
-
-		params = getParams({}, {kruxSegments: kruxSegmentsLots});
-		expect(params.ksgmnt).toEqual(kruxSegments27, 'A lot of segments (stripped to first 27 segments)');
 	});
 
 	it('getPageLevelParams Page categories', function () {
@@ -349,9 +365,84 @@ describe('AdLogicPageParams', function () {
 		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
 	});
 
-	it('getPageLevelParams pv param', function () {
-		var params = getParams({}, {pvCount: 13});
+	it('getPageLevelParams pv param - oasis', function () {
+		var params = getParams({skin: 'oasis'}, {pvCount: 13});
 
 		expect(params.pv).toBe('13');
+	});
+
+	it('getPageLevelParams pv param - mercury', function () {
+		var params = getParams({skin: 'mercury'}, {pvCount: 13});
+
+		expect(params.pv).toBe('13');
+	});
+
+	it('getPageLevelParams ref param', function () {
+		var params;
+
+
+		params = getParams({}, { document: {
+			referrer: ''
+		}});
+
+		expect(params.ref).toBe('direct');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gta.wikia.com/wiki/Special:Search?search=text' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wiki_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gta.wikia.com/wiki/Other_PAGE' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wiki');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gaming.wikia.com/wiki/Special:Search?search=text' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://wikia.com/wiki/Special:Search?search=text' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gaming.wikia.com/wiki/Other_PAGE' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia');
+
+		params = getParams({}, {
+			document: { referrer: 'http://wowwiki.com/' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia');
+
+		params = getParams({}, {
+			document: { referrer: 'http://www.google.com/' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('external_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://yahoo.com/' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('external');
+
+
 	});
 });

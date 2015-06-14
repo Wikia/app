@@ -44,9 +44,9 @@
 				'ga_label',
 				'ga_value'
 			],
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
-			gaTrackAdEvent = window.gaTrackAdEvent,
-			gaTrackEvent = window.gaTrackEvent,
+			// @see /extensions/wikia/AnalyticsEngine/js/universal_analytics.js
+			guaTrackEvent = window.guaTrackEvent,
+			guaTrackAdEvent = window.guaTrackAdEvent,
 			logGroup = 'Wikia.Tracker',
 			// These keys will be removed from tracking data before it gets sent to
 			// GA or the internal datawarehouse.
@@ -206,11 +206,11 @@
 		 *        A key-value hash of parameters.
 		 *
 		 *        keys: (Please ping tracking team leads before adding new ones)
-		 *            action (required for GA tracking)
+		 *            action (required for analytics tracking)
 		 *                One of the values in Wikia.Tracker.ACTIONS.
 		 *            browserEvent (optional)
 		 *                The browser event object that triggered this tracking call.
-		 *            category (required for GA tracking)
+		 *            category (required for analytics tracking)
 		 *                The category for the event.
 		 *            eventName (optional)
 		 *                The name of the event. Defaults to "trackingevent".
@@ -219,11 +219,12 @@
 		 *                The href string for a link. This was used by outbound links
 		 *                to ensure tracking execution. Where posible, bind to "mousedown" instead of "click"
 		 *                to prevent navigation before tracking calls go through.
-		 *            label (optional for GA tracking)
+		 *            label (optional for analytics tracking)
 		 *                The label for the event.
 		 *            trackingMethod (required)
-		 *                Where to track the event to ("ad", "both", "ga", "internal").
-		 *            value (optional for GA tracking)
+		 *                Where to track the event to ("ad", "analytics", "internal").
+		 *                (WARNING: that "analytics" includes "internal" but not "ad")
+		 *            value (optional for analytics tracking)
 		 *                The integer value for the event.
 		 *
 		 * @param {...Object} [optionsN]
@@ -232,7 +233,7 @@
 		 * @example
 		 *
 		 *     var defaults = {
-		 *         trackingMethod: 'ga',
+		 *         trackingMethod: 'analytics',
 		 *         category: 'myCategory'
 		 *     };
 		 *
@@ -245,7 +246,7 @@
 				browserEvent = window.event,
 				data = {},
 				eventName = 'trackingevent',
-				gaqArgs = [],
+				analyticsArgs = [],
 				i,
 				key,
 				l,
@@ -269,20 +270,10 @@
 			browserEvent = data.browserEvent || browserEvent;
 			eventName = data.eventName || eventName;
 			trackingMethod = data.trackingMethod || trackingMethod;
-
-			// AN-672: temporarily sending all data to internal warehouse
-			if (trackingMethod === 'ga') {
-				trackingMethod = 'both';
-			}
-
 			tracking[ trackingMethod ] = true;
 
-			if ( tracking.both ) {
-				tracking.ga = tracking.internal = true;
-			}
-
-			if ( tracking.none || ( tracking.ga &&
-				// Category and action are compulsory for GA tracking
+			if ( tracking.none || ( tracking.analytics &&
+				// Category and action are compulsory for analytics tracking
 				( !data.ga_category || !data.ga_action || !trackerStub.ACTIONS_REVERSE[ data.ga_action ] )
 			) ) {
 				Wikia.log( 'Missing or invalid parameters', 'error', logGroup );
@@ -295,28 +286,32 @@
 				delete data[ purgeFromData[ i ] ];
 			}
 
-			// Enqueue GA parameters in the proper order
+			// Enqueue analytics parameters in the proper order
 			for ( i = 0, l = gaPushOrder.length; i < l; i++ ) {
-				gaqArgs.push( data[ gaPushOrder[ i ] ] );
+				analyticsArgs.push( data[ gaPushOrder[ i ] ] );
 			}
 
 			Wikia.log( eventName + ' ' +
-				gaqArgs.join( '/' ).replace( rDoubleSlash, '/' ) +
+				analyticsArgs.join( '/' ).replace( rDoubleSlash, '/' ) +
 				' [' + trackingMethod + ' track]', 'info', logGroup );
 
 			// No-interactive = true
-			// @see /extensions/wikia/AnalyticsEngine/js/analytics_prod.js
-			gaqArgs.push( true );
+			// @see /extensions/wikia/AnalyticsEngine/js/analytics.js
+			analyticsArgs.push( true );
 
-			if ( tracking.ad && gaTrackAdEvent ) {
-				gaTrackAdEvent.apply( null, gaqArgs );
+			if ( tracking.ad ) {
+				if ( guaTrackAdEvent ) {
+					guaTrackAdEvent.apply( null, analyticsArgs );
+				}
 			} else {
-				if ( tracking.ga && gaTrackEvent ) {
-					gaTrackEvent.apply( null, gaqArgs );
+				if ( tracking.analytics ) {
+					if ( guaTrackEvent ) {
+						guaTrackEvent.apply( null, analyticsArgs );
+					}
 				}
 
-				if ( tracking.internal ) {
-					internalTrack( eventName, data );
+				if ( tracking.analytics || tracking.internal ) {
+					internalTrack(eventName, data);
 				}
 			}
 

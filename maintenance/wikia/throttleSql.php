@@ -24,11 +24,10 @@ Usage: php {$argv[0]} --inputfile=my.sql --database=mydatabase [options]
 	--inputfile     : use this inputfile for sql statements, use '-' for STDIN (required)
 	--database      : use this database as the destination for the sql statements (required)
 	--checkinterval : check for slave lag every x sql statements (default 10)
-	--maxlag        : limit slave lag to this many seconds (default 10)
 	--limit         : only process this many sql statements
 	--offset        : skip this many sql statements before issuing
 	--debug         : number for debug output: 0-9, the higher the more verbose\n";
-$options = array('inputfile', 'database', 'checkinterval', 'maxlag', 'limit', 'offset', 'progress', 'debug');
+$options = array('inputfile', 'database', 'checkinterval', 'limit', 'offset', 'progress', 'debug');
 require_once( 'commandLine.inc' );
 
 ///// Command line options. Defaults, and required fields
@@ -51,9 +50,6 @@ if (empty($options['inputfile'])){
 if (! $fh=fopen($options['inputfile'],'r')){
   echo " Error opening input file ({$options['inputfile']})\n";
   exit;
-}
-if (empty($options['maxlag'])){
-  $options['maxlag']=10; 
 }
 if (empty($options['checkinterval'])){
   $options['checkinterval']=10;
@@ -114,7 +110,7 @@ while ($line=fgets($fh)){
   //// Here's the magic. Every few sql statements, check the slave lag to make sure everything is ok.
   if (($sqlcount % $options['checkinterval'])==0){
     if ($options['debug'] >=5 ) echo "Checking slave lag\n";
-    wfWaitForSlaves( $options['maxlag'] );
+    wfWaitForSlaves();
   }
 }
 echo "Done. $linecount lines processed, $sqlcount sql statements executed, $sqlerrors errors.\n";

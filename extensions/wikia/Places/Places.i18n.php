@@ -88,6 +88,13 @@ $messages['az'] = array(
 	'places-geolocation-modal-error-title' => 'Xəta',
 );
 
+/** Southern Balochi (بلوچی مکرانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bcc'] = array(
+	'places-in-category' => 'جاگه بی $1 تهرِ تا',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -145,7 +152,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'places-editor-search' => 'Лаха',
+	'places-editor-search' => 'Лахар',
 	'places-editor-geoposition' => 'ХӀинца йолу меттиг',
 );
 
@@ -290,6 +297,14 @@ $messages['fr'] = array(
 	'places-category-switch-off' => 'Activer le balisage géographique',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'places-editor-search' => 'Sykje',
+	'places-geolocation-modal-error-title' => 'Flater',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -396,14 +411,18 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'places-editor-search' => '검색',
+	'places-geolocation-button-label' => '장소 추가',
+	'places-geolocation-modal-add-title' => '장소 추가',
 	'places-geolocation-modal-error-title' => '오류',
 	'places-geolocation-modal-not-available' => '이런! 이 기능은 아직 모바일 환경에서만 이용할 수 있습니다.<br /><br />이 기능을 이용하고 싶으시면 모바일을 통해 접속해 주세요.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  */
 $messages['ku-latn'] = array(
+	'places-editor-search' => 'Lê bigere',
 	'places-geolocation-modal-error-title' => 'Çewtî',
 );
 
@@ -420,7 +439,7 @@ $messages['lb'] = array(
 	'places-error-no-article' => 'Dir musst eng Säit uginn',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -540,7 +559,19 @@ $messages['nl'] = array(
 	'places-category-switch-off' => 'Geocodering inschakelen',
 );
 
-/** Pälzisch (Pälzisch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'places-editor-search' => 'Recercar',
+	'places-editor-title-create-new' => 'Apondre una balisa geografica',
+	'places-editor-title-edit' => 'Modificar una balisa geografica',
+	'places-geolocation-button-label' => 'Apondre un emplaçament',
+	'places-geolocation-modal-add-title' => 'Apondètz un emplaçament',
+	'places-geolocation-modal-error-title' => 'Error',
+);
+
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -609,6 +640,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'places' => 'ځايونه په دې ويکي',
 	'places-editor-search' => 'پلټل',
 	'places-geolocation-button-label' => 'ځای ورگډول',
 	'places-geolocation-modal-add-title' => 'ځای ورگډول',
@@ -879,4 +911,11 @@ $messages['zh-hans'] = array(
 	'places-updated-geolocation' => '已在此页添加地理标签',
 	'places-category-switch' => '禁用地理标签',
 	'places-category-switch-off' => '启用地理标签',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'places-editor-search' => '搜尋',
 );

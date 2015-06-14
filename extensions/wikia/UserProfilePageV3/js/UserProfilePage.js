@@ -11,6 +11,7 @@ var UserProfilePage = {
 	forceRedirect: false,
 	reloadUrl: false,
 	bucky: window.Bucky('UserProfilePage'),
+	bannerNotification: null,
 
 	// reference to modal UI component
 	modalComponent: {},
@@ -19,9 +20,11 @@ var UserProfilePage = {
 		'use strict';
 
 		var $userIdentityBoxEdit = $('#userIdentityBoxEdit');
-
 		UserProfilePage.userId = $('#user').val();
 		UserProfilePage.reloadUrl = $('#reloadUrl').val();
+		require(['BannerNotification'], function (BannerNotification) {
+			UserProfilePage.bannerNotification = new BannerNotification().setType('error');
+		});
 
 		if (UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false) {
 			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName;
@@ -302,7 +305,7 @@ var UserProfilePage = {
 							userId: UserProfilePage.userId
 						};
 						UserProfilePage.wasDataChanged = true;
-						window.GlobalNotification.hide();
+						UserProfilePage.bannerNotification.hide();
 					} else {
 						if (typeof (response.result.error) !== 'undefined') {
 							UserProfilePage.error(response.result.error);
@@ -371,7 +374,11 @@ var UserProfilePage = {
 		UserProfilePage.bucky.timer.start('saveUserDataSuccess');
 		UserProfilePage.bucky.timer.start('saveUserDataFail');
 
-		var userData = UserProfilePage.getFormData();
+		var userData = UserProfilePage.getFormData(),
+			saveButton = $('button[data-event=save]');
+
+		//prevent from multiple clicks on 'save' button
+		saveButton.prop('disabled', true);
 
 		if (UserProfilePage.newAvatar) {
 			userData.avatarData = UserProfilePage.newAvatar;
@@ -381,7 +388,7 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
-			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify(userData),
+			data: {'userId': UserProfilePage.userId, 'data': JSON.stringify(userData)},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
@@ -395,7 +402,10 @@ var UserProfilePage = {
 					window.location = UserProfilePage.reloadUrl;
 				}
 			},
-			error: UserProfilePage.error
+			error: UserProfilePage.error,
+			complete: function () {
+				saveButton.prop('disabled', false);
+			}
 		});
 	},
 
@@ -410,7 +420,7 @@ var UserProfilePage = {
 			msg = $.msg('oasis-generic-error');
 		}
 
-		window.GlobalNotification.show(msg, 'error');
+		UserProfilePage.bannerNotification.setContent(msg).show();
 	},
 
 	getFormData: function () {
@@ -423,6 +433,7 @@ var UserProfilePage = {
 				gender: null,
 				website: null,
 				twitter: null,
+				fbPage: null,
 				year: null,
 				month: null,
 				day: null

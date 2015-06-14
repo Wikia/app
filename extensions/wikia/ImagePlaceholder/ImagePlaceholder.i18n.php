@@ -2,6 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'imgplc-desc' => 'Creates image/video placeholders',
 	'imgplc-add-image' => 'Add Image',
 	'imgplc-add-video' => 'Add Video',
 	'imgplc-placeholder' => 'Placeholder',
@@ -14,6 +15,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'imgplc-desc' => '{{desc}}',
 	'imgplc-image' => '{{Identical|Image}}',
 );
 
@@ -88,8 +90,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'imgplc-desc' => "Crea placeholders d'imatge/vídeo",
 	'imgplc-add-image' => 'Afegir imatge',
 	'imgplc-add-video' => 'Afegir vídeo',
 	'imgplc-placeholder' => 'Posicionador',
@@ -99,10 +103,12 @@ $messages['ca'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author H4nek
  */
 $messages['cs'] = array(
+	'imgplc-desc' => 'Vytváří zástupné symboly pro obrázky a videa',
 	'imgplc-add-image' => 'Přidat obrázek',
 	'imgplc-add-video' => 'Přidat video',
 	'imgplc-placeholder' => 'Zástupný symbol',
@@ -116,6 +122,7 @@ $messages['cs'] = array(
  * @author Metalhead64
  */
 $messages['de'] = array(
+	'imgplc-desc' => 'Erstellt Bild-/Video-Platzhalter',
 	'imgplc-add-image' => 'Bild hinzufügen',
 	'imgplc-add-video' => 'Video hinzufügen',
 	'imgplc-placeholder' => 'Platzhalter',
@@ -152,6 +159,7 @@ $messages['eo'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'imgplc-desc' => 'Crea marcadores de posición de imagen/video',
 	'imgplc-add-image' => 'Añadir imagen',
 	'imgplc-add-video' => 'Añadir un vídeo',
 	'imgplc-placeholder' => 'Posicionador',
@@ -206,12 +214,20 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'imgplc-desc' => 'Crée des substituts aux images/vidéos',
 	'imgplc-add-image' => 'Ajouter une image',
 	'imgplc-add-video' => 'Ajouter une vidéo',
 	'imgplc-placeholder' => 'Espace réservé',
 	'imgplc-image' => 'Image',
 	'imgplc-notinhistory' => "Vous ne pouvez pas ajouter d'image en mode historique.",
 	'imgplc-notinhistory-video' => 'Vous ne pouvez pas ajouter une vidéo en mode historique.',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'imgplc-image' => 'Ôfbylding',
 );
 
 /** Galician (galego)
@@ -273,9 +289,12 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Fate Kage
  */
 $messages['id'] = array(
+	'imgplc-add-image' => 'Tambah Gambar',
 	'imgplc-add-video' => 'Tambahkan Video',
+	'imgplc-image' => 'Gambar',
 	'imgplc-notinhistory' => 'Anda tidak dapat menambahkan sebuah gambar pada mode riwayat.',
 	'imgplc-notinhistory-video' => 'Anda tidak dapat menambahkan sebuah video pada mode riwayat.',
 );
@@ -311,11 +330,13 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 아라
  * @author 한글화담당
  */
 $messages['ko'] = array(
 	'imgplc-add-image' => '그림 추가',
+	'imgplc-add-video' => '동영상 추가',
 	'imgplc-placeholder' => '플레이스홀더',
 	'imgplc-image' => '그림',
 	'imgplc-notinhistory' => '역사 모드에서 그림을 추가할 수 없습니다.',
@@ -349,7 +370,7 @@ $messages['lb'] = array(
 	'imgplc-notinhistory' => 'Dir kënnt am Historique Modus kee Bild derbäisetzen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -369,6 +390,7 @@ $messages['lt'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'imgplc-desc' => 'Прави пополнувачи за слики/видеа',
 	'imgplc-add-image' => 'Додај слика',
 	'imgplc-add-video' => 'Додај видео',
 	'imgplc-placeholder' => 'Пополнувач',
@@ -389,6 +411,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'imgplc-desc' => 'Membuat placeholder imej/video',
 	'imgplc-add-image' => 'Sisipkan Gambar',
 	'imgplc-add-video' => 'Tambah video',
 	'imgplc-placeholder' => 'Pemegang tempat',
@@ -517,6 +540,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'imgplc-desc' => "Ccreje 'nu sione de immaggine/video",
 	'imgplc-add-image' => "Aggiunge 'n'immaggine",
 	'imgplc-add-video' => "Aggiunge 'nu video",
 	'imgplc-placeholder' => 'Sione',
@@ -555,6 +579,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'imgplc-desc' => 'Skapar platshållare för bilder och videor',
 	'imgplc-add-image' => 'Lägg till bild',
 	'imgplc-add-video' => 'Lägg till video',
 	'imgplc-placeholder' => 'Platshållare',
@@ -584,7 +609,7 @@ $messages['tl'] = array(
 	'imgplc-notinhistory' => 'Hindi ka makapagdaragdag ng larawan habang nasa modalidad na pangkasaysayan.',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -615,8 +640,10 @@ $messages['tt-cyrl'] = array(
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Prima klasy4na
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'imgplc-desc' => 'Створення зображення/відео заповнювач',
 	'imgplc-add-image' => 'Додати зображення',
 	'imgplc-add-video' => 'Додати відео',
 	'imgplc-placeholder' => 'Заповнювач',
@@ -627,8 +654,10 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'imgplc-desc' => 'Tạo ra nơi chứa hình ảnh/video',
 	'imgplc-add-image' => 'Thêm hình ảnh',
 	'imgplc-add-video' => 'Thêm đoạn phim',
 	'imgplc-placeholder' => 'Giữ chỗ',
@@ -639,8 +668,10 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'imgplc-desc' => '创建图像/视频占位符',
 	'imgplc-add-image' => '添加照片',
 	'imgplc-add-video' => '添加视频',
 	'imgplc-placeholder' => '占位符',
@@ -650,11 +681,13 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
 	'imgplc-add-image' => '增加圖片',
 	'imgplc-add-video' => '增加影片',
+	'imgplc-image' => '圖片',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

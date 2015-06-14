@@ -2089,8 +2089,9 @@ Pages on [[Special:Watchlist|your watchlist]] are '''bold'''.",
 'upload-tryagain'             => 'Submit modified file description',
 'uploadnologin'               => 'Not logged in',
 /* Wikia change begin - @author: Jakub Olek */
-/* remove 'be' for better message and allow of use of returnto and returntoquery in a link*/
-'uploadnologintext'           => 'You must $1 to upload files.',
+/* remove 'be' for better message and allow of use of returnto and returntoquery in a link */
+/* added ' and insert videos' to make message more universal */
+'uploadnologintext'           => 'You must $1 to upload files and insert videos.',
 /* Wikia change end */
 'upload_directory_missing'    => 'The upload directory ($1) is missing and could not be created by the webserver.',
 'upload_directory_read_only'  => 'The upload directory ($1) is not writable by the webserver.',
@@ -4553,35 +4554,36 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
 
 # Special:Version
-'version'                       => 'Version',
-'version-extensions'            => 'Installed extensions',
-'version-specialpages'          => 'Special pages',
-'version-parserhooks'           => 'Parser hooks',
-'version-variables'             => 'Variables',
-'version-antispam'              => 'Spam prevention',
-'version-skins'                 => 'Skins',
-'version-api'                   => 'API', # only translate this message to other languages if you have to change it
-'version-other'                 => 'Other',
-'version-mediahandlers'         => 'Media handlers',
-'version-hooks'                 => 'Hooks',
-'version-extension-functions'   => 'Extension functions',
-'version-parser-extensiontags'  => 'Parser extension tags',
-'version-parser-function-hooks' => 'Parser function hooks',
-'version-hook-name'             => 'Hook name',
-'version-hook-subscribedby'     => 'Subscribed by',
-'version-version'               => '(Version $1)',
-'version-svn-revision'          => '(r$2)', # only translate this message to other languages if you have to change it
-'version-license'               => 'License',
-'version-poweredby-credits'     => "This wiki is powered by '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
-'version-poweredby-others'      => 'others',
-'version-license-info'          => 'MediaWiki is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+'version'                         => 'Version',
+'version-extensions'              => 'Installed extensions',
+'version-specialpages'            => 'Special pages',
+'version-parserhooks'             => 'Parser hooks',
+'version-variables'               => 'Variables',
+'version-antispam'                => 'Spam prevention',
+'version-skins'                   => 'Skins',
+'version-api'                     => 'API', # only translate this message to other languages if you have to change it
+'version-other'                   => 'Other',
+'version-mediahandlers'           => 'Media handlers',
+'version-hooks'                   => 'Hooks',
+'version-extension-functions'     => 'Extension functions',
+'version-parser-extensiontags'    => 'Parser extension tags',
+'version-parser-function-hooks'   => 'Parser function hooks',
+'version-hook-name'               => 'Hook name',
+'version-hook-subscribedby'       => 'Subscribed by',
+'version-version'                 => '(Version $1)',
+'version-svn-revision'            => '(r$2)', # only translate this message to other languages if you have to change it
+'version-license'                 => 'License',
+'version-poweredby-credits'       => "This wiki is powered by '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
+'version-poweredby-others'        => 'others',
+'version-license-info'            => 'MediaWiki is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
 MediaWiki is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received [{{SERVER}}{{SCRIPTPATH}}/COPYING a copy of the GNU General Public License] along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA or [//www.gnu.org/licenses/old-licenses/gpl-2.0.html read it online].',
-'version-software'              => 'Installed software',
-'version-software-product'      => 'Product',
-'version-software-version'      => 'Version',
+'version-software'                => 'Installed software',
+'version-software-product'        => 'Product',
+'version-software-version'        => 'Version',
+'version-file-extensions-allowed' => 'File extensions allowed for upload',
 
 # Special:FilePath
 'filepath'         => 'File path',

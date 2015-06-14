@@ -7,14 +7,14 @@ describe('VideoPageTool: Admin CategoryData Collection ( Backbone ):', function 
 	beforeEach(function () {
 		CategoryDataCollection = modules['videopageadmin.collections.categorydata']();
 		instance = new CategoryDataCollection();
-		spyOn(Backbone.Collection.prototype, 'fetch').andCallFake(function () {
+		spyOn(Backbone.Collection.prototype, 'fetch').and.callFake(function () {
 			instance.parse({
 				thumbnails: [{
 					foo: 'bar'
 				}]
 			});
 		});
-		spyOn(instance, 'parse').andCallThrough();
+		spyOn(instance, 'parse').and.callThrough();
 	});
 
 	it('should export a constructor', function () {
@@ -38,7 +38,7 @@ describe('VideoPageTool: Admin CategoryData Collection ( Backbone ):', function 
 	it('should perform fetch ( up to prototype chain ) with the right data', function () {
 		var recentCall;
 		instance.fetch();
-		recentCall = Backbone.Collection.prototype.fetch.mostRecentCall.args[0];
+		recentCall = Backbone.Collection.prototype.fetch.calls.mostRecent().args[0];
 		expect(Backbone.Collection.prototype.fetch).toHaveBeenCalled();
 		expect(recentCall.data).toBeDefined();
 		expect(recentCall.data.controller).toBe('VideoPageAdminSpecial');

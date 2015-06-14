@@ -49,7 +49,7 @@ class RebuildTitleKeys extends Maintenance {
 			
 			TitleKey::setBatchKeys( $titles );
 			
-			wfWaitForSlaves( 20 );
+			wfWaitForSlaves();
 		}
 		if( $lastId ) {
 			$this->output( "... $lastId ok.\n" );

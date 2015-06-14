@@ -116,7 +116,7 @@ while ($row = $dbr->fetchObject($res)) {
 			}
 		}
 	}
-	wfWaitForSlaves( 5 );
+	wfWaitForSlaves();
 }
 
 if (!$quiet) {

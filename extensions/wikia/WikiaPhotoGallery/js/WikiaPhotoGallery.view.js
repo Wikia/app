@@ -74,7 +74,7 @@ var WikiaPhotoGalleryView = {
 				action: 'click',
 				category: 'article',
 				label: 'show-gallery-' + linkType,
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				value: 0
 			}, {});
 		});

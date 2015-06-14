@@ -6,7 +6,7 @@
  * @author macbre
  */
 
-class GlobalFile extends WikiaObject {
+class GlobalFile extends WikiaObject implements UrlGeneratorInterface {
 
 	private $mTitle;
 
@@ -49,6 +49,8 @@ class GlobalFile extends WikiaObject {
 	 *
 	 * @param string $title file name
 	 * @param int $wikiId city ID
+	 *
+	 * @return GlobalFile
 	 */
 	static public function newFromText($title, $wikiId) {
 		$title = GlobalTitle::newFromText($title, NS_FILE, $wikiId);
@@ -177,10 +179,16 @@ class GlobalFile extends WikiaObject {
 	}
 
 	/**
-	 * @return UrlGenerator object
+	 * @return \Wikia\Vignette\UrlGenerator object
 	 */
 	public function getUrlGenerator() {
-		return VignetteRequest::fromGlobalFile( $this );
+		return VignetteRequest::fromConfigMap( [
+			'is-archive' => false,
+			'timestamp' => $this->getTimestamp(),
+			'relative-path' => $this->getUrlRel(),
+			'bucket' => $this->getBucket(),
+			'path-prefix' => $this->getPathPrefix(),
+		] );
 	}
 
 	/**

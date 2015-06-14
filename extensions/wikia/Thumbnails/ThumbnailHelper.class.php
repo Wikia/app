@@ -101,12 +101,13 @@ class ThumbnailHelper extends WikiaModel {
 	public static function setImageAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		/** @var Title $title */
 		$title = $thumb->file->getTitle();
-		$titleText = '';
 
 		if ( $title instanceof Title ) {
 			$titleText = $title->getText();
 			$controller->mediaKey = htmlspecialchars( urlencode( $title->getDBKey() ) );
 			$controller->mediaName = htmlspecialchars( $titleText );
+		} else {
+			$titleText = '';
 		}
 
 		$controller->alt = Sanitizer::encodeAttribute(
@@ -146,18 +147,10 @@ class ThumbnailHelper extends WikiaModel {
 		$title = false;
 		$target = false;
 
-		// If we have the details icon enabled, have the anchor wrapping the image link to the
-		// raw file.  If not, keep previous behavior and link to the file page
-		if ( F::app()->wg->ShowArticleThumbDetailsIcon && !F::app()->checkSkin( 'monobook' ) ) {
-			$defaultHref = $thumb->file->getUrl();
-		} else {
-			$defaultHref = $thumb->file->getTitle()->getLocalURL();
-		}
-
 		if ( !empty( $options['custom-url-link'] ) ) {
 			$href = $options['custom-url-link'];
 			if ( !empty( $options['title'] ) ) {
-				$title = Sanitizer::encodeAttribute( $options['title'] );
+				$title = $options['title'];
 			}
 			if ( !empty( $options['custom-target-link'] ) ) {
 				$target = $options['custom-target-link'];
@@ -167,23 +160,39 @@ class ThumbnailHelper extends WikiaModel {
 			/** @var Title $title */
 			$titleObj = $options['custom-title-link'];
 			$href = $titleObj->getLinkURL();
-			$title = Sanitizer::encodeAttribute(
-				empty( $options['title'] ) ? $titleObj->getFullText() : $options['title']
-			);
+			$title = empty( $options['title'] ) ? $titleObj->getFullText() : $options['title'];
 
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			$href = $defaultHref;
+			$href = self::getContextualFileUrl( $thumb );
 			if ( !empty( $options['title'] ) ) {
-				$title = Sanitizer::encodeAttribute( $options['title'] );
+				$title = $options['title'];
 			}
 
 		} elseif ( !empty( $options['file-link'] ) ) {
-			$href = $defaultHref;
+			$href = self::getContextualFileUrl( $thumb );
 		}
 
 		$controller->linkHref = $href;
 		$controller->title = $title;
 		$controller->target = $target;
+	}
+
+	/**
+	 * Get the proper file URL for given thumb
+	 *
+	 * @param MediaTransformOutput $thumb
+	 * @return String
+	 */
+	public static function getContextualFileUrl( MediaTransformOutput $thumb ) {
+		// If skin is not monobook, have the anchor wrapping the image link to the
+		// raw file. If not, keep previous behavior and link to the file page
+		if ( !F::app()->checkSkin( 'monobook' ) ) {
+			$defaultHref = $thumb->file->getUrl();
+		} else {
+			$defaultHref = $thumb->file->getTitle()->getLocalURL();
+		}
+
+		return $defaultHref;
 	}
 
 	/**
@@ -347,9 +356,8 @@ class ThumbnailHelper extends WikiaModel {
 	 * @return bool
 	 */
 	public static function setLazyLoad( WikiaController $controller, array $options = [] ) {
-		$lazyLoaded = false;
-		if ( self::shouldLazyLoad( $controller, $options ) ) {
-			$lazyLoaded = true;
+		$lazyLoaded = self::shouldLazyLoad( $controller, $options );
+		if ( $lazyLoaded ) {
 			$controller->noscript = $controller->app->renderView(
 				'ThumbnailController',
 				'imgTag',

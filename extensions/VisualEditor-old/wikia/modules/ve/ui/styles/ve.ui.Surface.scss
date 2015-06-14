@@ -1,0 +1,12 @@
+/**
+ * There are a couple of conflicting z-indexes that require that we set a high z-index for our overlay.
+ *
+ * #WikiaPage element in Oasis has z-index=1
+ *
+ */
+.ve-ui-surface-overlay-local {
+	z-index: $zTop + 1;
+}
+.ve-ui-surface-overlay-global {
+	z-index: $zTop + 4;
+}

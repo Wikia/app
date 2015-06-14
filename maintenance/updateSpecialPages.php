@@ -119,17 +119,19 @@ class UpdateSpecialPages extends Maintenance {
 						}
 						$this->output( sprintf( "%.2fs\n", $seconds ) );
 					}
-					# Reopen any connections that have closed
-					if ( !wfGetLB()->pingAll() )  {
+
+					# Commit the results
+					$res = $dbw->commit( __METHOD__ );
+
+					# try to reconnect to the master
+					if ( $res === false ) {
+						Wikia\Logger\WikiaLogger::instance()->error( 'updateSpecialPages - commit failed, reconnecting...' );
 						$this->output( "\n" );
 						do {
 							$this->error( "Connection failed, reconnecting in 10 seconds..." );
 							sleep( 10 );
-						} while ( !wfGetLB()->pingAll() );
+						} while ( !$dbw->ping() );
 						$this->output( "Reconnected\n\n" );
-					} else {
-						# Commit the results
-						$dbw->commit();
 					}
 					# Wait for the slave to catch up
 					wfWaitForSlaves();

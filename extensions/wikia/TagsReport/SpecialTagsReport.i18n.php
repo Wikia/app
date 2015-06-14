@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'tagsreport' => 'Tags report',
+	'tagsreport-desc' => 'List of articles which use special tags in text (like \'dpl\', \'youtube\')',
 	'tagsreporttitle'  => 'Tags report', 
 	'tagsreportselecttag' => 'Select tag:',
 	'tagsreportgo' => 'Show',
@@ -23,6 +24,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'tagsreport-desc' => '{{desc}}',
 	'tagsreportselecttag' => '{{Identical|Select tag}}',
 	'tagsreportgo' => '{{Identical|Show}}',
 	'tagsreportmainnspace' => '{{Identical|Main}}',
@@ -164,6 +166,7 @@ $messages['cs'] = array(
  */
 $messages['de'] = array(
 	'tagsreport' => 'Verwendung von Tags',
+	'tagsreport-desc' => 'Liste von Artikeln, die spezielle Tags im Text verwenden (wie „dpl“, „youtube“)',
 	'tagsreporttitle' => 'Verwendung von Tags',
 	'tagsreportselecttag' => 'Tag wählen:',
 	'tagsreportgo' => 'Anzeigen',
@@ -204,6 +207,7 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'tagsreport' => 'Informe de etiquetas',
+	'tagsreport-desc' => "Lista de artículos que usan etiquetas especiales en el texto (como 'dpl', 'youtube')",
 	'tagsreporttitle' => 'Informe de etiquetas',
 	'tagsreportselecttag' => 'Seleccionar etiqueta:',
 	'tagsreportgo' => 'Mostrar',
@@ -244,6 +248,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'tagsreport' => 'Rapport de balises',
+	'tagsreport-desc' => "Liste des articles qui utilisent les balises spéciales dans le texte (comme 'dpl', 'youtube')",
 	'tagsreporttitle' => 'Rapport de balises',
 	'tagsreportselecttag' => 'Sélectionnez la balise :',
 	'tagsreportgo' => 'Afficher',
@@ -384,6 +389,18 @@ $messages['kn'] = array(
 	'tagsreportmainnspace' => 'ಮುಖ್ಯ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'tagsreport' => '태그 목록',
+	'tagsreporttitle' => '태그 목록',
+	'tagsreportnotspecify' => '아직 아무런 특수 태그도 선택하지 않았습니다',
+	'tagsreportpages' => '(<strong>$1</strong>개)',
+	'tagsreportpagesfound' => '특수 태그를 포함하는 문서 <strong>$1</strong>개 발견 (DPL, 유튜브 등)',
+	'tagsreportgenerated' => '$1 $2에 생성됨',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -403,7 +420,7 @@ $messages['lb'] = array(
 	'tagsreportpageremoved' => "D'Säit #$1 gouf ewechgeholl",
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -454,6 +471,7 @@ $messages['mr'] = array(
  */
 $messages['ms'] = array(
 	'tagsreport' => 'Laporan tag',
+	'tagsreport-desc' => "Senarai rencana yang menggunakan teg istimewa dalam teks (seperti 'dpl', 'youtube')",
 	'tagsreporttitle' => 'Laporan tag',
 	'tagsreportselecttag' => 'Pilih tag:',
 	'tagsreportgo' => 'Paparkan',
@@ -534,10 +552,12 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Matik7
  * @author Sovq
  */
 $messages['pl'] = array(
 	'tagsreport' => 'Rejestr znaczników',
+	'tagsreport-desc' => 'Lista stron używających specjalnych tagów w tekście (jak "dpl" czy "youtube")',
 	'tagsreporttitle' => 'Rejestr znaczników',
 	'tagsreportselecttag' => 'Wybierz znacznik:',
 	'tagsreportgo' => 'Pokaż',
@@ -620,6 +640,7 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'tagsreport' => 'Riepiloghe de le tag',
+	'tagsreport-desc' => "Elenghe de le vôsce ca ausane le tag speciale jndr'à 'u teste (cumme 'dpl', 'youtube')",
 	'tagsreporttitle' => 'Riepiloghe de le tag',
 	'tagsreportselecttag' => "Scacchie 'u tag:",
 	'tagsreportgo' => 'Fà vedè',
@@ -676,6 +697,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'tagsreport' => 'Taggrapport',
+	'tagsreport-desc' => "Lista över artikel som använder specialtaggar i text (som 'dpl', 'youtube')",
 	'tagsreporttitle' => 'Taggrapport',
 	'tagsreportselecttag' => 'Välj tagg:',
 	'tagsreportgo' => 'Visa',
@@ -725,10 +747,12 @@ $messages['tl'] = array(
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Prima klasy4na
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
 	'tagsreport' => 'Звіт про теги',
+	'tagsreport-desc' => "Список статей, які використовують спеціальні теги в тексті (наприклад, \"дпл', 'YouTube')",
 	'tagsreporttitle' => 'Звіт про теги',
 	'tagsreportselecttag' => 'Оберіть тег:',
 	'tagsreportgo' => 'Показати',
@@ -781,6 +805,7 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'tagsreport' => '标签报告',
+	'tagsreport-desc' => "在文本中使用特殊标签（像是'dpl'、'youtube'）的条目列表",
 	'tagsreporttitle' => '标签报告',
 	'tagsreportselecttag' => '选择标签：',
 	'tagsreportgo' => '显示',

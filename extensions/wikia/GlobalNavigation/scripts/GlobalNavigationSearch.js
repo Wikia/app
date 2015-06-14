@@ -1,37 +1,21 @@
 require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], function ($, browserDetect, scrollFix) {
 	'use strict';
-	var $selectElement,
-		$chevron,
-		$searchInput,
-		$globalNav,
-		$inputResultLang,
-		$formElement,
-		$searchLabel,
+	var $selectElement = $('#searchSelect'),
+		$searchInput = $('#searchInput'),
 		$autocompleteObj;
-
-	/**
-	 * Look up elements in global navigation's search form
-	 */
-	function setElements() {
-		$inputResultLang = $('#searchInputResultLang');
-		$formElement = $('#searchForm');
-		$searchLabel = $('#searchLabelInline');
-		$selectElement = $('#searchSelect');
-		$chevron = $('#searchFormChevron');
-		$searchInput = $('#searchInput');
-		$globalNav = $('#globalNavigation');
-	}
 
 	/**
 	 * Set options on search form
 	 */
 	function setFormOptions() {
-		var $selectedOption = $selectElement.find('option:selected');
-		$searchLabel.text($selectedOption.text());
-		$formElement.attr('action', $selectedOption.attr('data-search-url'));
+		var $selectedOption = $selectElement.find('option:selected'),
+			isLocalSearchDisabled = !$selectElement.length;
+
+		$searchInput.attr('placeholder', $selectedOption.data('placeholder'));
+		$('#searchForm').attr('action', $selectedOption.attr('data-search-url'));
 		//Setting reference to jQuery search autocomplete object
 		$autocompleteObj = $autocompleteObj || $searchInput.data('autocomplete');
-		if ($selectedOption.val() === 'global') {
+		if ($selectedOption.val() === 'global' || isLocalSearchDisabled) {
 			setPropertiesOnInput(false);
 		} else {
 			setPropertiesOnInput(true);
@@ -43,7 +27,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	 * @param {boolean} enable - should autocomplete be enabled and lang input disabled
 	 */
 	function setPropertiesOnInput(enable) {
-		$inputResultLang.prop('disabled', enable);
+		$('#searchInputResultLang').prop('disabled', enable);
 		if ($autocompleteObj) {
 			if (enable) {
 				$autocompleteObj.enable();
@@ -54,19 +38,21 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	}
 
 	$(function () {
-		setElements();
+		var $globalNav = $('#globalNavigation'),
+			$searchForm = $('#searchForm');
+
+		//Checks whether the searchInput is empty and prevents any action if true
+		$searchForm.submit(function () {
+			if (!$searchInput.val()) {
+				return false;
+			}
+		})
 
 		if ($selectElement) {
 			setFormOptions();
 			$selectElement
 				.on('change keyup keydown', function () {
 					setFormOptions();
-				})
-				.on('focus', function () {
-					$chevron.addClass('dark');
-				})
-				.on('blur', function () {
-					$chevron.removeClass('dark');
 				});
 		}
 

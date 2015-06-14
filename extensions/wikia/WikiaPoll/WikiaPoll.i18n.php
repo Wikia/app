@@ -186,6 +186,7 @@ $messages['br'] = array(
 /** Catalan (català)
  * @author BroOk
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wikiapoll-desc' => 'Proporciona una forma fàcil de crear i gestionar enquestes',
@@ -200,7 +201,7 @@ $messages['ca'] = array(
 	'wikiapoll-addnewitem-label' => 'Afegeix un element nou',
 	'wikiapoll-cancel-label' => 'Anuŀla',
 	'wikiapoll-publish-label' => 'Publica',
-	'wikiapoll-error-duplicate' => 'Una enquesta amb aquest nom ja existeix.',
+	'wikiapoll-error-duplicate' => 'Ja existeix una enquesta amb aquest nom.',
 	'wikiapoll-error-invalid-title' => 'Text de la pregunta no és vàlid.',
 	'wikiamobile-wikiapoll-open-poll' => 'Què et sembla?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Gràcies per votar!',
@@ -293,6 +294,13 @@ $messages['diq'] = array(
 	'wikiamobile-wikiapoll-poll' => 'Anket',
 );
 
+/** British English (British English)
+ * @author Caliburn
+ */
+$messages['en-gb'] = array(
+	'wikiapoll-question' => '$1?',
+);
+
 /** Spanish (español)
  * @author Ciencia Al Poder
  * @author VegaDark
@@ -322,6 +330,7 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  * @author Xabier Armendaritz
  */
 $messages['eu'] = array(
@@ -339,6 +348,9 @@ $messages['eu'] = array(
 	'wikiapoll-publish-label' => 'Argitaratu',
 	'wikiapoll-error-duplicate' => 'Izen hori duen bozketa existitzen da.',
 	'wikiapoll-error-invalid-title' => 'Galderaren testua ez da onartzen.',
+	'wikiamobile-wikiapoll-open-poll' => 'Zer deritzozu?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Mila esker bozkatzeagatik!',
+	'wikiamobile-wikiapoll-poll' => 'Inkesta',
 );
 
 /** Persian (فارسی)
@@ -401,6 +413,13 @@ $messages['fr'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => "Merci d'avoir voté !",
 	'wikiamobile-wikiapoll-poll' => 'Sondage',
 	'wikiamobile-wikiapoll-user-voted' => 'Vous avez voté pour $1',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiapoll-cancel-label' => 'Annulearje',
 );
 
 /** Galician (galego)
@@ -767,6 +786,8 @@ $messages['ps'] = array(
 	'wikiapoll-publish-label' => 'خپرول',
 	'wikiapoll-error-duplicate' => 'په دې نوم يوه ټولپوښتنه له پخوا نه شته.',
 	'wikiapoll-error-invalid-title' => 'د پوښتنې متن سم نه دی.',
+	'wikiamobile-wikiapoll-open-poll' => 'تاسې څه فکر کوۍ؟',
+	'wikiamobile-wikiapoll-thanks-voting' => 'ستاسې له رايې څخه مننه!',
 );
 
 /** Portuguese (português)
@@ -886,6 +907,13 @@ $messages['ru'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => 'Спасибо за ваш голос!',
 	'wikiamobile-wikiapoll-poll' => 'Опрос',
 	'wikiamobile-wikiapoll-user-voted' => 'Вы проголосовали за $1',
+);
+
+/** Scots (Scots)
+ * @author Caliburn
+ */
+$messages['sco'] = array(
+	'wikiapoll-question' => '$1?',
 );
 
 /** Slovak (slovenčina)
@@ -1114,6 +1142,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
@@ -1123,7 +1152,7 @@ $messages['zh-hant'] = array(
 	'wikiapoll-thanks-for-vote' => '謝謝！',
 	'wikiapoll-vote' => '投票 ！',
 	'wikiapoll-votes' => '$1 票',
-	'wikiapoll-createpoll-headline' => '創建投票',
+	'wikiapoll-createpoll-headline' => '建立投票',
 	'wikiapoll-editpoll-headline' => '編輯投票',
 	'wikiapoll-question-label' => '問題',
 	'wikiapoll-addnewitem-label' => '增加新項目',

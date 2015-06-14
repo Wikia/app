@@ -1,26 +1,28 @@
 /*jshint camelcase:false*/
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
-	'wikia.log',
-	'wikia.window',
 	'ext.wikia.adEngine.adContext',
-	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
-	require.optional('ext.wikia.adEngine.krux'),
-	require.optional('ext.wikia.adEngine.adLogicPageDimensions'),
-	require.optional('wikia.abTest')
-], function (log, window, adContext, pvCounter, Krux, adLogicPageDimensions, abTest) {
+	'ext.wikia.adEngine.adLogicPageViewCounter',
+	'wikia.log',
+	'wikia.document',
+	'wikia.location',
+	require.optional('ext.wikia.adEngine.lookup.services'),
+	require.optional('wikia.abTest'),
+	require.optional('wikia.krux')
+], function (adContext, pvCounter, log, doc, loc, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		hostname = window.location.hostname.toString(), // TODO: move to wikia.location module
-		adsInHeadExperiment = adContext.getContext().opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
+		hostname = loc.hostname,
 		maxNumberOfCategories = 3,
-		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
-		pvs = pvCounter && pvCounter.increment();
+		skin = adContext.getContext().targeting.skin,
+		context = {};
+
+	function updateContext() {
+		context = adContext.getContext();
+	}
 
 	function getDartHubName() {
-		var context = adContext.getContext();
-
 		if (context.targeting.wikiVertical === 'Entertainment') {
 			return 'ent';
 		}
@@ -57,7 +59,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getCategories() {
-		var categories = adContext.getContext().targeting.pageCategories,
+		var categories = context.targeting.pageCategories,
 			outCategories;
 
 		if (categories instanceof Array && categories.length > 0) {
@@ -133,6 +135,55 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
+
+	function getRefParam() {
+		var hostnameMatch,
+			ref = doc.referrer,
+			refHostname,
+			searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/,
+			wikiDomains = [
+				'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
+				'memory-alpha.org', 'uncyclopedia.org',
+				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
+			],
+			wikiDomainsRegex = new RegExp('(^|\\.)(' + wikiDomains.join('|').replace(/\./g, '\\.') + ')$');
+
+		if (!ref || typeof ref !== 'string') {
+			return 'direct';
+		}
+
+		refHostname = ref.match(/\/\/([^\/]+)\//);
+
+		if (refHostname) {
+			refHostname = refHostname[1];
+		}
+
+		hostnameMatch = refHostname === loc.hostname;
+
+		if (hostnameMatch && ref.indexOf('search=') > -1) {
+			return 'wiki_search';
+		}
+		if (hostnameMatch) {
+			return 'wiki';
+		}
+
+		hostnameMatch = wikiDomainsRegex.test(refHostname);
+
+		if (hostnameMatch && ref.indexOf('search=') > -1) {
+			return 'wikia_search';
+		}
+
+		if (hostnameMatch) {
+			return 'wikia';
+		}
+
+		if (searchDomains.test(refHostname)) {
+			return 'external_search';
+		}
+
+		return 'external';
+	}
+
 	/**
 	 * options
 	 * @param options {includeRawDbName: bool}
@@ -140,7 +191,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	 */
 	function getPageLevelParams(options) {
 		// TODO: cache results (keep in mind some of them may change while executing page)
-
 		log('getPageLevelParams', 9, logGroup);
 
 		var site,
@@ -148,7 +198,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1,
 			zone2,
 			params,
-			targeting = adContext.getContext().targeting;
+			targeting = context.targeting,
+			pvs = pvCounter.get();
 
 		options = options || {};
 
@@ -175,20 +226,21 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			hostpre: getHostname(),
 			skin: targeting.skin,
 			lang: targeting.wikiLanguage || 'unknown',
-			wpage: targeting.pageName && targeting.pageName.toLowerCase()
+			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
+			ref: getRefParam()
 		};
 
 		if (pvs) {
-			params.pv =  pvs.toString();
+			params.pv = pvs.toString();
 		}
 
 		if (options.includeRawDbName) {
 			params.rawDbName = dbName;
 		}
 
-		if (Krux && !targeting.wikiDirectedAtChildren) {
-			params.u = Krux.user;
-			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
+		if (krux && !targeting.wikiDirectedAtChildren) {
+			params.u = krux.getUser();
+			params.ksgmnt = krux.getSegments();
 		}
 
 		if (targeting.wikiIsTop1000) {
@@ -196,19 +248,24 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+		if (lookups) {
+			lookups.extendPageTargeting(params);
+		}
 
 		if (!params.esrb) {
 			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
 		}
 
-		if (!adsInHeadExperiment) {
-			// This is set in client side (don't move to adContext)
-			extend(params, decodeLegacyDartParams(window.amzn_targs));
-		}
-
 		log(params, 9, logGroup);
 		return params;
 	}
+
+	if (skin && skin !== 'mercury') {
+		pvCounter.increment();
+	}
+
+	updateContext();
+	adContext.addCallback(updateContext);
 
 	return {
 		getPageLevelParams: getPageLevelParams

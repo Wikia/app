@@ -31,9 +31,24 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		slotsOnlyWithRail = {
 			LEFT_SKYSCRAPER_3: true
 		},
-
+		slotsToHideOnMediaQuery = {
+			VIRTUAL_INCONTENT:       'twoColumns', // "virtual" slot to launch INCONTENT_* slots
+			INCONTENT_1A:            'twoColumns',
+			INCONTENT_1B:            'twoColumns',
+			INCONTENT_1C:            'twoColumns',
+			INCONTENT_LEADERBOARD_1: 'twoColumns',
+			TOP_BUTTON_WIDE:         'noTopButton',
+			'TOP_BUTTON_WIDE.force': 'noTopButton',
+			TOP_RIGHT_BOXAD:         'oneColumn',
+			HOME_TOP_RIGHT_BOXAD:    'oneColumn',
+			LEFT_SKYSCRAPER_2:       'oneColumn',
+			LEFT_SKYSCRAPER_3:       'oneColumn',
+			INCONTENT_BOXAD_1:       'oneColumn',
+			INCONTENT_PLAYER:        'oneColumn',
+			INVISIBLE_SKIN:          'noSkins'
+		},
 		/**
-		 * Slots based on screen width
+		 * Slots based on screen width for responsive
 		 *
 		 * @see skins/oasis/css/core/responsive-variables.scss
 		 * @see skins/oasis/css/core/responsive-background.scss
@@ -41,19 +56,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1030px)',
+			noTopButton: 'screen and (max-width: 1063px)',
 			noSkins: 'screen and (max-width: 1260px)'
-		},
-		slotsToHideOnMediaQuery = {
-			TOP_INCONTENT_BOXAD: 'twoColumns',
-			TOP_BUTTON_WIDE: 'noTopButton',
-			'TOP_BUTTON_WIDE.force': 'noTopButton',
-			TOP_RIGHT_BOXAD: 'oneColumn',
-			HOME_TOP_RIGHT_BOXAD: 'oneColumn',
-			LEFT_SKYSCRAPER_2: 'oneColumn',
-			LEFT_SKYSCRAPER_3: 'oneColumn',
-			INCONTENT_BOXAD_1: 'oneColumn',
-			INVISIBLE_SKIN: 'noSkins'
 		},
 		mediaQueriesMet,
 		matchMedia;
@@ -82,7 +86,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	/**
 	 * Logic to check for given slot on every window resize
 	 *
-	 * @param slotname
+	 * @param {string} slotname
 	 * @returns {boolean}
 	 */
 	function shouldBeShown(slotname) {
@@ -119,7 +123,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	 * Refresh an ad and show/hide based on the changed window size
 	 * No logging here, it needs to be super fast
 	 *
-	 * @param ad one of the wrappedAds
+	 * @param {object} ad one of the wrappedAds
 	 */
 	function refresh(ad) {
 		if (shouldBeShown(ad.slotname)) {
@@ -141,12 +145,14 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 				log(['Hiding empty slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.hide(ad.slotname);
+				slotTweaker.hackChromeRefresh(ad.slotname);
 				ad.state = 'ready';
 
 			} else if (ad.state === 'shown') {
 				log(['Hiding slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.hide(ad.slotname);
+				slotTweaker.hackChromeRefresh(ad.slotname);
 				ad.state = 'hidden';
 			}
 		}
@@ -163,7 +169,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		pageHeight = doc.documentElement.scrollHeight;
 
 		// All ads should be shown on non-responsive oasis and venus
-		if (win.wgOasisResponsive && win.skin !== 'venus') {
+		if ((win.wgOasisResponsive || win.wgOasisBreakpoints) && win.skin !== 'venus') {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {
@@ -188,7 +194,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		}
 	}
 
-
 	/**
 	 * If supported, bind to resize event (and fire it once)
 	 */
@@ -208,8 +213,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	/**
 	 * Add an ad to the wrappedAds
 	 *
-	 * @param slotname
-	 * @param loadCallback -- the function to call when an ad shows up the first time
+	 * @param {string} slotname
+	 * @param {function} loadCallback -- the function to call when an ad shows up the first time
 	 */
 	function add(slotname, loadCallback) {
 		log(['add', slotname, loadCallback], 'debug', logGroup);
@@ -230,7 +235,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	/**
 	 * Check if window size logic is applicable to the given slot
 	 *
-	 * @param slotname
+	 * @param {string} slotname
 	 * @return {boolean}
 	 */
 	function isApplicable(slotname) {
@@ -238,8 +243,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 		return !!(
 			slotsOnlyOnLongPages[slotname] ||
-				slotsToHideOnMediaQuery[slotname] ||
-				slotsOnlyWithRail[slotname]
+			slotsToHideOnMediaQuery[slotname] ||
+			slotsOnlyWithRail[slotname]
 		);
 	}
 

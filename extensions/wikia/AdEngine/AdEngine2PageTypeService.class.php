@@ -49,8 +49,9 @@ class AdEngine2PageTypeService {
 			return $pageLevel;
 		}
 
-		$runAds = WikiaPageType::isSearch()
+		$runAds = WikiaPageType::isFilePage()
 			|| WikiaPageType::isForum()
+			|| WikiaPageType::isSearch()
 			|| WikiaPageType::isWikiaHub();
 
 		if ( !$runAds ) {
@@ -70,9 +71,10 @@ class AdEngine2PageTypeService {
 					|| ( defined( 'NS_PROJECT' ) && $namespace == NS_PROJECT )
 
 					// Chosen special pages:
-					|| $title->isSpecial( 'Videos' )
 					|| $title->isSpecial( 'Leaderboard' )
-					|| $title->isSpecial( 'Maps' );
+					|| $title->isSpecial( 'Maps' )
+					|| $title->isSpecial( 'Newimages' )
+					|| $title->isSpecial( 'Videos' );
 			}
 		}
 

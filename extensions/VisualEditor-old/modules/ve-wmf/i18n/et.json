@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Avjoska",
+			"Pikne"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Muudatus tehtud [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditoriga]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Kontrollida]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditoriga]] tehtud muudatus, mille tõttu võis vikitekst muutuda ettekavatsemata viisil.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Ümberlülitus]]",
+	"tag-visualeditor-switched-description": "Kasutaja alustas redigeerimist VisualEditoriga, aga läks seejärel üle vikiteksti redaktorile.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Tagasiside",
+	"visualeditor-feedback-tool": "Anna tagasisidet",
+	"visualeditor-help-label": "Loe kasutusjuhendit",
+	"visualeditor-help-title": "Redaktori kasutusjuhend"
+}

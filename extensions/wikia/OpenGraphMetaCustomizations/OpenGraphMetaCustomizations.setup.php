@@ -15,6 +15,7 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '0.3',
 	'author' => array('[http://lyrics.wikia.com/User:Sean_Colombo Sean Colombo]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'descriptionmsg' => 'ogmc-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/OpenGraphMetaCustomizations'
 );
 
 $wgExtensionMessagesFiles['OpenGraphMetaCustomizations'] = __DIR__ . '/OpenGraphMetaCustomizations.i18n.php';
@@ -55,10 +56,6 @@ function egOgmcParserOutputApplyValues( OutputPage $out, ParserOutput $parserOut
 	if (!empty($titleDescription)) {
 		$parserOutput->setProperty('description', $titleDescription);
 		$out->mDescription = $parserOutput->getProperty('description');
-	}
-
-	if ($page_id = Wikia::getFacebookDomainId()) {
-		$out->addMeta('property:fb:page_id', $page_id);
 	}
 
 	wfProfileOut(__METHOD__);

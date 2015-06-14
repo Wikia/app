@@ -11,7 +11,7 @@
  */
 
 /**
- * @global Array The list of extension credits.
+ * @global Array $wgExtensionCredits The list of extension credits.
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionCredits
  */
 $wgExtensionCredits['other'][] = array(
@@ -29,23 +29,6 @@ $wgExtensionMessagesFiles['WikiaInYourLang'] = __DIR__ . '/WikiaInYourLang.i18n.
 
 $wgAutoloadClasses['Wikia\WikiaInYourLang\WikiaInYourLangHooks'] = __DIR__ . '/WikiaInYourLang.hooks.php';
 $wgAutoloadClasses['WikiaInYourLangController'] = __DIR__ . '/WikiaInYourLangController.class.php';
-
-/**
- * Use ResourceLoader to load the JavaScript module
- */
-$wgResourceModules['ext.wikiaInYourLang'] = [
-	'localBasePath' => __DIR__ . '/modules',
-	'remoteExtPath' => 'wikia/WikiaInYourLang/modules',
-	'scripts' => 'ext.wikiaInYourLang.js',
-	'messages' => [
-		'wikia-in-your-lang-available',
-	],
-	'dependencies' => [
-		'wikia.cache',
-		'wikia.geo',
-		'wikia.tracker',
-	],
-];
 
 /**
  * Add the JavaScript module to the output

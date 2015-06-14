@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Create Page',
 	'author' => array( 'Bartek Lapinski', 'Adrian Wieczorek' ),
-	'url' => 'http://www.wikia.com' ,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CreatePage',
 	'descriptionmsg' => 'createpage-desc',
 );
 
@@ -89,7 +89,14 @@ function wfCreatePageSetupVars(Array &$vars ) {
 		$contentNamespaces[] = $wgContLang->getNsText( $contentNs );
 	}
 
-	$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
+	/**
+	 * In some cases create page popup may be disabled
+	 * This avoids overwriting this variable if it's already set
+	 * For example see: InsightsHooks::onMakeGlobalVariablesScript
+	 */
+	if ( !isset( $vars['WikiaEnableNewCreatepage'] ) ) {
+		$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
+	}
 
 	if (!empty( $wgWikiaDisableDynamicLinkCreatePagePopup )) {
 		$vars['WikiaDisableDynamicLinkCreatePagePopup'] = true;

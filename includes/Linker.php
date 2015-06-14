@@ -282,7 +282,7 @@ class Linker {
 		global $wgWikiaEnableAutoPageCreateExt;
 		$isAutoPageCreateEnabled =  isset( $wgWikiaEnableAutoPageCreateExt ) && $wgWikiaEnableAutoPageCreateExt == true;
 		//do not add queries to link if this is a link to user page and message wall is enabled
-		if ( $target->isTalkPage() && F::app()->wg->EnableWallExt ) {
+		if ( $target->getNamespace() == NS_USER_TALK && F::app()->wg->EnableWallExt ) {
 			$num = array_search( 'broken', $options );
 			if($num !== false) unset($options[$num]);
 		}
@@ -319,7 +319,7 @@ class Linker {
 
 		//wikia change - start
 		// do not add 'new' class to link to user talk page if wall is enabled
-		if ( $target->isTalkPage() && F::app()->wg->EnableWallExt ) {
+		if ( $target->getNamespace() == NS_USER_TALK && F::app()->wg->EnableWallExt ) {
 			$num = array_search( 'broken', $options );
 			if ( $num !== false ) unset( $options[$num] );
 		}
@@ -463,6 +463,13 @@ class Linker {
 	 * @return string
 	 */
 	private static function fnamePart( $url ) {
+		if (VignetteRequest::isVignetteUrl($url)) {
+			$basename = VignetteRequest::getImageFilename( $url );
+			if ( $basename ) {
+				return $basename;
+			}
+		}
+
 		$basename = strrchr( $url, '/' );
 		if ( false === $basename ) {
 			$basename = $url;

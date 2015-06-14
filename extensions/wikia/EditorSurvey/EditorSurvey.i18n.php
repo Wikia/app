@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'editorsurvey-desc' => 'Create surveys for users to take about their editing experience.',
 	'editorsurvey-heading' => 'Take our survey!',
 	'editorsurvey-cancelButton' => 'Cancel',
 	'editorsurvey-takeSurveyButton' => 'Take the Survey!',

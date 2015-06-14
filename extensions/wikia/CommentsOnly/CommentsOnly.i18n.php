@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'comments-only-desc' => 'Comments Only extension',
 	'comments-only-delete-thread' => 'Delete thread',
 	'comments-only-forum-home' => 'Forum Home',
 	'comments-only-page-header-created-by' => 'Created $1 by $2',

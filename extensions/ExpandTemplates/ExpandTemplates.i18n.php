@@ -25,6 +25,13 @@ It does this by calling the relevant parser stage from MediaWiki itself.',
 	'expand_templates_remove_nowiki'   => 'Suppress <nowiki> tags in result',
 	'expand_templates_generate_xml'    => 'Show XML parse tree',
 	'expand_templates_preview'         => 'Preview',
+	'expand_templates_preview_fail_html' => '<em>Because {{SITENAME}} has raw HTML enabled and there was a loss of session data, the preview is hidden as a precaution against JavaScript attacks.</em>
+
+<strong>If this is a legitimate preview attempt, please try again.</strong>
+If it still does not work, try [[Special:UserLogout|logging out]] and logging back in.',
+	'expand_templates_preview_fail_html_anon' => '<em>Because {{SITENAME}} has raw HTML enabled and you are not logged in, the preview is hidden as a precaution against JavaScript attacks.</em>
+
+<strong>If this is a legitimate preview attempt, please [[Special:UserLogin|log in]] and try again.</strong>',
 );
 
 /** Message documentation (Message documentation)
@@ -47,6 +54,8 @@ For more information, see [[mw:Extension:ExpandTemplates]]',
 	'expand_templates_remove_comments' => 'Check box to tell [[mw:Extension:ExpandTemplates]] to not show comments in the expanded template.',
 	'expand_templates_remove_nowiki' => 'Option on [[Special:Expandtemplates]]',
 	'expand_templates_preview' => '{{Identical|Preview}}',
+	'expand_templates_preview_fail_html' => 'Used as error message in Preview section of [[Special:ExpandTemplates]] page.',
+	'expand_templates_preview_fail_html_anon' => 'Used as error message in Preview section of [[Special:ExpandTemplates]] page.',
 );
 
 /** Afrikaans (Afrikaans)

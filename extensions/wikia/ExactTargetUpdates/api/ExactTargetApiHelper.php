@@ -11,7 +11,7 @@ class ExactTargetApiHelper {
 	public function getClient() {
 		global $wgExactTargetApiConfig;
 		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
-		$oClient = new \ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
+		$oClient = new \ExactTargetSoapClient( $wsdl, [ 'trace' => 1, 'exceptions' => true ] );
 		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 		return $oClient;
@@ -37,7 +37,7 @@ class ExactTargetApiHelper {
 	 */
 	public function prepareSoapVars( $aObjects, $sObjectType = 'DataExtensionObject' ) {
 		$aSoapVars = [];
-		foreach( $aObjects as $object ) {
+		foreach ( $aObjects as $object ) {
 			$aSoapVars[] = $this->wrapToSoapVar( $object, $sObjectType );
 		}
 		return $aSoapVars;
@@ -75,7 +75,11 @@ class ExactTargetApiHelper {
 	public function wrapSimpleFilterPart( Array $aSimpleFilterParams ) {
 		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
 		$oSimpleFilterPart->Value = $aSimpleFilterParams['Value'];
-		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
+		if ( isset( $aSimpleFilterParams['SimpleOperator'] ) ) {
+			$oSimpleFilterPart->SimpleOperator = $this->getProperSimpleOperator( $aSimpleFilterParams['SimpleOperator'] );
+		} else {
+			$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
+		}
 		$oSimpleFilterPart->Property = $aSimpleFilterParams['Property'];
 		return $oSimpleFilterPart;
 	}
@@ -156,13 +160,13 @@ class ExactTargetApiHelper {
 	public function prepareDataExtensionObjects( $aObjectsParams ) {
 		$aDE = [];
 
-		foreach( $aObjectsParams as $aObjectParams ) {
+		foreach ( $aObjectsParams as $aObjectParams ) {
 			$oDE = new \ExactTarget_DataExtensionObject();
 			$oDE->CustomerKey = $aObjectParams[ 'CustomerKey' ];
 
 			if( isset( $aObjectParams[ 'Properties' ] ) ) {
 				$aApiProperties = [];
-				foreach( $aObjectParams[ 'Properties' ] as $sKey => $sValue ) {
+				foreach ( $aObjectParams[ 'Properties' ] as $sKey => $sValue ) {
 					$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
 				}
 				$oDE->Properties = $aApiProperties;
@@ -170,7 +174,7 @@ class ExactTargetApiHelper {
 
 			if( isset( $aObjectParams[ 'Keys' ] ) ) {
 				$aApiKeys = [];
-				foreach( $aObjectParams[ 'Keys' ] as $sKey => $sValue ) {
+				foreach ( $aObjectParams[ 'Keys' ] as $sKey => $sValue ) {
 					$aApiKeys[] = $this->wrapApiProperty( $sKey, $sValue );
 				}
 				$oDE->Keys = $aApiKeys;
@@ -202,5 +206,20 @@ class ExactTargetApiHelper {
 		}
 
 		return $aSubscribers;
+	}
+
+	/**
+	 * Uses proper compare operator from ExactTarget_SimpleOperators class
+	 * @param string $sSimpleOperator
+	 * @return null|string
+	 */
+	protected function getProperSimpleOperator( $sSimpleOperator ) {
+		switch( $sSimpleOperator ) {
+			case 'equals':
+				return \ExactTarget_SimpleOperators::equals;
+			case 'IN':
+				return \ExactTarget_SimpleOperators::IN;
+		}
+		return null;
 	}
 }

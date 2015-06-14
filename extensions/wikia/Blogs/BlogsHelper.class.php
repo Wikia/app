@@ -11,7 +11,7 @@ class BlogsHelper {
 	/**
 	 * add a tab to special search page
 	 */
-	public static function OnSpecialSearchProfiles(&$profiles) {
+	public static function OnSpecialSearchProfiles( &$profiles ) {
 
 		$blogSearchProfile = array(
 			'message' => 'blogs-searchprofile',
@@ -19,12 +19,12 @@ class BlogsHelper {
 			'namespaces' => array( NS_BLOG_ARTICLE, NS_BLOG_LISTING )
 		);
 
-		if ( !array_key_exists('users', $profiles) ) {
+		if ( !array_key_exists( 'users', $profiles ) ) {
 			$profiles['blogs'] = $blogSearchProfile;
 		} else {
 			$newProfiles = array();
-			foreach ($profiles as $k => $value) {
-				if ($k === 'users') {
+			foreach ( $profiles as $k => $value ) {
+				if ( $k === 'users' ) {
 					$newProfiles['blogs'] = $blogSearchProfile;
 				}
 				$newProfiles[$k] = $value;
@@ -90,8 +90,8 @@ class BlogsHelper {
 		if ( NS_BLOG_ARTICLE == $oArticle->getTitle()->getNamespace() ) {
 			global $wgCityId;
 
-			$task = (new \Wikia\Blogs\BlogTask())->wikiId($wgCityId);
-			$task->call('deferredPurge');
+			$task = ( new \Wikia\Blogs\BlogTask() )->wikiId( $wgCityId );
+			$task->call( 'deferredPurge' );
 			$task->queue();
 		}
 		wfProfileOut( __METHOD__ );
@@ -103,18 +103,45 @@ class BlogsHelper {
 		wfProfileIn( __METHOD__ );
 		$ns = $element->page_namespace;
 
-		if( $ns == NS_BLOG_ARTICLE ) {
+		if ( $ns == NS_BLOG_ARTICLE ) {
 			$title = Title::newFromText( $element->page_title, $ns );
 			$userBlog = Title::newFromText( $title->getBaseText(), $ns );
 
 			$link = wfMsgExt(
 				'blog-file-page',
-				array ('parsemag'),
+				array ( 'parsemag' ),
 				$title->getLocalURL(),
 				$title->getSubpageText(),
 				$userBlog->getLocalURL(),
 				$userBlog->getText()
 			);
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Enables commenting for a blog post that has been moved from another namespace
+	 * @param Title $oOldTitle An object for the old article's name
+	 * @param Title $oNewTitle An object for the new article's name
+	 * @param User $oUser
+	 * @param integer $iOldId
+	 * @param integer $iNewId
+	 * @return bool
+	 */
+	public static function onTitleMoveComplete( Title $oOldTitle, Title $oNewTitle, User $oUser, $iOldId, $iNewId ) {
+		global $wgArticleCommentsNamespaces;
+		wfProfileIn( __METHOD__ );
+
+		// Enables comments if an article has been moved to
+		// a Blog namespace from a non-blog one
+		// and if the new namespace has comments enabled.
+		if ( ArticleComment::isBlog( $oNewTitle ) &&
+			in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
+			$oOldTitle->getNamespace() !== $oNewTitle->getNamespace()
+		) {
+			BlogArticle::setProps( $oNewTitle->getArticleID(), [ 'commenting' => '1' ] );
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -1245,7 +1245,8 @@ class WikiPage extends Page {
 	 *
 	 *  Compatibility note: this function previously returned a boolean value indicating success/failure
 	 */
-	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null ) {
+	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
+							$forcePatrolled = false) {
 		global $wgUser, $wgDBtransactions, $wgUseAutomaticEditSummaries;
 
 		# Low-level sanity check
@@ -1375,7 +1376,7 @@ class WikiPage extends Page {
 						# Add RC row to the DB
 						$rc = RecentChange::notifyEdit( $now, $this->mTitle, $isminor, $user, $summary,
 							$oldid, $this->getTimestamp(), $bot, '', $oldsize, $newsize,
-							$revisionId, $patrolled
+							$revisionId, $patrolled || $forcePatrolled
 						);
 
 						# Log auto-patrolled edits
@@ -1461,7 +1462,7 @@ class WikiPage extends Page {
 					$this->mTitle->getUserPermissionsErrors( 'autopatrol', $user ) );
 				# Add RC row to the DB
 				$rc = RecentChange::notifyNew( $now, $this->mTitle, $isminor, $user, $summary, $bot,
-					'', strlen( $text ), $revisionId, $patrolled );
+					'', strlen( $text ), $revisionId, $patrolled || $forcePatrolled);
 
 				# Log auto-patrolled edits
 				if ( $patrolled ) {
@@ -1594,17 +1595,9 @@ class WikiPage extends Page {
 
 		if ( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
 			if ( 0 == mt_rand( 0, 99 ) ) {
-				// Flush old entries from the `recentchanges` table; we do this on
-				// random requests so as to avoid an increase in writes for no good reason
-				global $wgRCMaxAge;
-
-				$dbw = wfGetDB( DB_MASTER );
-				$cutoff = $dbw->timestamp( time() - $wgRCMaxAge );
-				$dbw->delete(
-					'recentchanges',
-					array( "rc_timestamp < '$cutoff'" ),
-					__METHOD__
-				);
+				// Flush old entries from the `recentchanges` table
+				// Wikia: use a job backported from MediaWiki 1.25 (@see PLATFORM-965)
+				Wikia\Tasks\Tasks\RecentChangesUpdateTask::newPurgeTask();
 			}
 		}
 

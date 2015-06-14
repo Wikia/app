@@ -50,4 +50,19 @@ class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
 
 		$this->assertEquals( $headers[0]['value'], 'a,b,t,t,m,p' );
 	}
+
+	public function testShouldProperlyReadCORSConfigFromGlobal()
+	{
+		global $wgCORSAllowOrigin;
+		$wgCORSAllowOrigin = [ "a", "b", "c" ];
+		$dummyResponse = new WikiaResponse( "tmp" );
+
+		$cors = new CrossOriginResourceSharingHeaderHelper();
+		$cors->readConfig()->setHeaders( $dummyResponse );
+
+		$headers = $dummyResponse->getHeader(
+			CrossOriginResourceSharingHeaderHelper::ALLOW_ORIGIN_HEADER_NAME
+		);
+		$this->assertEquals( $headers[0]['value'], 'a,b,c' );
+	}
 }

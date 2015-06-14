@@ -5,12 +5,12 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 	const WAM_SCORE_NO_CHANGE = 0;
 	const WAM_SCORE_CHANGE_DOWN = -1;
 	const WAM_SCORE_DECIMALS = 2;
-	
+
 	/**
 	 * @var WikiaHubsWAMModel
 	 */
 	protected $model;
-	
+
 	const MODULE_ID = 10;
 
 	/**
@@ -33,7 +33,7 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 		}
 
 		if( empty($this->verticalId) ) {
-			$this->verticalId = WikiFactoryHub::getInstance()->getCategoryId($this->cityId);
+			$this->verticalId = WikiFactoryHub::getInstance()->getVerticalId($this->cityId);
 		}
 
 		if( empty($this->langCode) ) {
@@ -42,7 +42,7 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 
 		return parent::prepareParameters([
 			'wam_day' => $params['ts'],
-			'vertical_id' => HubService::getCanonicalCategoryId($this->verticalId),
+			'vertical_id' => $this->verticalId,
 			'wiki_lang' => $this->langCode,
 			'exclude_blacklist' => true,
 			'fetch_admins' => true,
@@ -63,119 +63,17 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 						);
 
 		$params = $this->prepareParameters($params);
-		
-		if( !empty($this->app->wg->DevelEnvironment) ) {
-			$apiResponse = ['vertical_id' => 2, 'wam_index' => [
-					304 => [ //mocket data - need for testing WAM on devbox
-						'wiki_id' => '304',
-						'wam'=> '99.9554',
-						'wam_rank' => '1',
-						'peak_wam_rank' => '1',
-						'peak_hub_wam_rank' => '1',
-						'top_1k_days' => '431',
-						'top_1k_weeks' => '62',
-						'first_peak' => '2012-01-03',
-						'last_peak' => '2013-03-06',
-						'title' => 'RuneScape Wiki',
-						'url' => 'runescape.wikia.com',
-						'hub_id' => '2',
-						'wam_change' => '0.0045',
-						'admins' => [],
-						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images1.wikia.nocookie.net/__cb20121004184329/wikiaglobal/images/thumb/8/8b/Wikia-Visualization-Main%2Crunescape.png/150px-Wikia-Visualization-Main%2Crunescape.png', ImagesService::EXT_JPG),
-					],
-					14764 => [
-						'wiki_id' => '14764',
-						'wam'=> '99.8767',
-						'wam_rank' => '2',
-						'hub_wam_rank' => '2',
-						'peak_wam_rank' => '1',
-						'peak_hub_wam_rank' => '1',
-						'top_1k_days' => '431',
-						'top_1k_weeks' => '62',
-						'first_peak' => '2012-04-21',
-						'last_peak' => '2013-02-18',
-						'title' => 'League of Legends Wiki',
-						'url' => 'leagueoflegends.wikia.com',
-						'hub_id' => '2',
-						'wam_change' => '0.0039',
-						'admins' => [],
-						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images4.wikia.nocookie.net/__cb20120828154214/wikiaglobal/images/thumb/e/ea/Wikia-Visualization-Main%2Cleagueoflegends.png/150px-Wikia-Visualization-Main%2Cleagueoflegends.png.jpeg', ImagesService::EXT_JPG),
-					],
-					1706 => [
-						'wiki_id' => '1706',
-						'wam'=> '99.7942',
-						'wam_rank' => '4',
-						'hub_wam_rank' => '3',
-						'peak_wam_rank' => '1',
-						'peak_hub_wam_rank' => '1',
-						'top_1k_days' => '431',
-						'top_1k_weeks' => '62',
-						'first_peak' => '2012-01-01',
-						'last_peak' => '2013-02-13',
-						'title' => 'Elder Scrolls',
-						'url' => 'elderscrolls.wikia.com',
-						'hub_id' => '2',
-						'wam_change' => '-0.0016',
-						'admins' => [],
-						'wiki_image' => ImagesService::overrideThumbnailFormat('http://images1.wikia.nocookie.net/__cb20121214183339/wikiaglobal/images/thumb/d/d4/Wikia-Visualization-Main%2Celderscrolls.png/150px-Wikia-Visualization-Main%2Celderscrolls.png', ImagesService::EXT_JPG),
-					],
-					3035 => [
-						'wiki_id' => '3035',
-						'wam'=> '99.6520',
-						'wam_rank' => '9',
-						'hub_wam_rank' => '4',
-						'peak_wam_rank' => '4',
-						'peak_hub_wam_rank' => '3',
-						'top_1k_days' => '431',
-						'top_1k_weeks' => '62',
-						'first_peak' => '2012-01-02',
-						'last_peak' => '2013-09-11',
-						'title' => 'Fallout Wiki',
-						'url' => 'fallout.wikia.com',
-						'hub_id' => '2',
-						'wam_change' => '0.0091',
-						'admins' => [],
-						'wiki_image' => null,
-					],
-				113 => [
-						'wiki_id' => '113',
-						'wam'=> '99.5000',
-						'wam_rank' => '17',
-						'hub_wam_rank' => '5',
-						'peak_wam_rank' => '2',
-						'peak_hub_wam_rank' => '2',
-						'top_1k_days' => '431',
-						'top_1k_weeks' => '62',
-						'first_peak' => '2012-05-04',
-						'last_peak' => '2013-05-07',
-						'title' => 'Memmory Alpha Wiki',
-						'url' => 'en.memory-alpha.org',
-						'hub_id' => '2',
-						'wam_change' => '-0.1000',
-						'admins' => [],
-						'wiki_image' => null,
-					],
-			]];
 
-			$data = [
-				'vertical_id' => $this->verticalId,
-				'api_response' => $apiResponse,
-			];
-
-			$structuredData = $this->getStructuredData($data);
-
-		} else {
-			$structuredData = WikiaDataAccess::cache(
-				$this->getMemcacheKey(
-					$lastTimestamp,
-					$this->skinName
-				),
-				6 * 60 * 60,
-				function () use( $model, $params ) {
-					return $this->loadStructuredData($model, $params);
-				}
-			);
-		}
+		$structuredData = WikiaDataAccess::cache(
+			$this->getMemcacheKey(
+				$lastTimestamp,
+				$this->skinName
+			),
+			WikiaResponse::CACHE_SHORT,
+			function () use( $model, $params ) {
+				return $this->loadStructuredData($model, $params);
+			}
+		);
 
 		if ( $this->getShouldFilterCommercialData() ) {
 			$structuredData = $this->filterCommercialData( $structuredData );
@@ -223,11 +121,10 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 	public function getStructuredData($data) {
 		$hubModel = $this->getWikiaHubsModel();
 
-		$realVerticalId = HubService::getCanonicalCategoryId($data['vertical_id']);
 		$structuredData = [
 			'wamPageUrl' => $this->getWamPageUrl(),
-			'verticalName' => $hubModel->getVerticalName($realVerticalId),
-			'canonicalVerticalName' => str_replace(' ', '', $hubModel->getCanonicalVerticalName($realVerticalId)),
+			'verticalName' => $hubModel->getVerticalName($data['vertical_id']),
+			'canonicalVerticalName' => str_replace(' ', '', $hubModel->getCanonicalVerticalName($data['vertical_id'])),
 			'ranking' => []
 		];
 
@@ -278,12 +175,12 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 
 		return parent::render($data);
 	}
-	
+
 	public function getModel() {
 		if( !$this->model ) {
 			$this->model = new WikiaHubsWAMModel();
 		}
-		
+
 		return $this->model;
 	}
 

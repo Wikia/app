@@ -7,12 +7,10 @@ class CorporateFooterController extends WikiaController {
 		$this->response->addAsset( 'extensions/wikia/CorporateFooter/styles/CorporateFooter.scss' );
 
 		$helper = new WikiaHomePageHelper();
-		$corporateWikis = $helper->getVisualizationWikisData();
-		$corporateHubWikis = $helper->getCorporateHubWikis();
-		$corporateWikis = array_merge( $corporateWikis, $corporateHubWikis );
+		$wikisIncludedInCorporateFooterDropdown = $helper->getWikisIncludedInCorporateFooterDropdown();
 
 		$this->selectedLang = $this->wg->ContLang->getCode();
-		$this->dropDownItems = $this->prepareDropdownItems( $corporateWikis, $this->selectedLang );
+		$this->dropDownItems = $this->prepareDropdownItems( $wikisIncludedInCorporateFooterDropdown, $this->selectedLang );
 
 		if ( $this->app->wg->EnableWAMPageExt ) {
 			$wamModel = new WAMPageModel();

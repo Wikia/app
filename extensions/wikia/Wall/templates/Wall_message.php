@@ -18,7 +18,7 @@
 		</a>
 	</div>
 	
-	<blockquote class="speech-bubble-message">
+	<div class="speech-bubble-message">
 		<? if(!$isreply): ?>
 			<?php if($isWatched): ?>
 				<a <?php if(!$showFollowButton): ?>style="display:none"<?php endif;?> data-iswatched="1" class="follow wikia-button"><?= wfMsg('wikiafollowedpages-following'); ?></a>
@@ -101,7 +101,7 @@
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->renderPartialCached( 'MiniEditorController', 'Footer', 'Wall_message' );
 		endif; ?>
-	</blockquote>
+	</div>
 	
 	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showClosedBox, 'comment' => $comment) ); ?>
 	

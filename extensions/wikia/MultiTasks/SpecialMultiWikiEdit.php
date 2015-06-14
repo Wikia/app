@@ -16,8 +16,9 @@ require_once ( dirname(__FILE__) . '/MultiTasksCore.php' );
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Multi Wiki Edit",
-    "description" => "Special Multi Wiki Edit",
-    "author" => "Bartek Łapiński, Piotr Molski"
+    "descriptionmsg" => "multiwikiedit-desc",
+    "author" => "Bartek Łapiński, Piotr Molski",
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/MultiTasks"
 );
 
 $wgExtensionMessagesFiles["Multiwikiedit"] = dirname(__FILE__) . '/MultiTasks.i18n.php';

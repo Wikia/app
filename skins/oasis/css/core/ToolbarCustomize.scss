@@ -2,7 +2,6 @@
 @import "skins/shared/color";
 
 // mixins
-@import "skins/shared/mixins/box-sizing-border-box";
 @import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/clearfix";
@@ -14,7 +13,7 @@
 		float: none;
 
 		input[type="text"] {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			width: 100%;
 
 		}
@@ -50,7 +49,7 @@
 		}
 
 		input[type="text"] {
-			@include box-sizing-border-box;
+			box-sizing: border-box;
 			width: 100%;
 
 			&::-webkit-input-placeholder {
@@ -68,8 +67,8 @@
 	}
 
 	.autocomplete {
-		@include box-sizing-border-box;
 		@include menu-regular;
+		box-sizing: border-box;
 		margin-top: 2px;
 		overflow: auto;
 		overflow-x: hidden;
@@ -146,7 +145,7 @@
 		}
 
 		img {
-			background: url(/skins/oasis/images/icon_return_6.png); /* base64 */
+			background: url(/skins/oasis/images/icon_return_6.png); /* inline */
 			background-repeat: no-repeat;
 			background-position: top left;
 			height: 6px;
@@ -211,7 +210,7 @@
 		}
 
 		.folder-icon {
-			background-image: url(/skins/oasis/images/icon_folder_16.png); /* base64 */
+			background-image: url(/skins/oasis/images/icon_folder_16.png); /* inline */
 			verical-align: middle;
 			height: 16px;
 			width: 16px;

@@ -12,8 +12,8 @@ describe('VideosModule -- sData Data: ', function () {
 		bucky = modules['bucky.mock'];
 		VideosData = modules['videosmodule.models.videos'](nirvana, geo, bucky);
 		instance = new VideosData();
-		spyOn(geo, 'getCountryCode').andReturn('US');
-		spyOn(nirvana, 'getJson').andReturn({
+		spyOn(geo, 'getCountryCode').and.returnValue('US');
+		spyOn(nirvana, 'getJson').and.returnValue({
 			done: function (cb) {
 				cb('foo');
 			}

@@ -1,4 +1,4 @@
-$(function($) {
+$(function ($) {
 	'use strict';
 	var searchSuggestionsShowed, track, $globalNavigation, $globalNavigationSearch;
 
@@ -6,39 +6,77 @@ $(function($) {
 	$globalNavigationSearch = $globalNavigation.find('#searchForm');
 	searchSuggestionsShowed = false;
 
+	/**
+	 * Tracking helper function with most commonly used options. Overrides are passed in by callers.
+	 */
+	track = Wikia.Tracker.buildTrackingFunction({
+		category: 'search',
+		trackingMethod: 'analytics',
+		action: Wikia.Tracker.ACTIONS.CLICK
+	});
+
+	/**
+	 * Parent click handler for events in the global nav
+	 * @param {object} event
+	 */
 	function globalNavigationClickTrackingHandler(event) {
-		var $element, label, $parent;
+		var $element, label;
 
 		//Track only primary mouse button click
 		if (event.type === 'mousedown' && event.which !== 1) {
 			return;
 		}
 
-		track = Wikia.Tracker.buildTrackingFunction({
-			action: Wikia.Tracker.ACTIONS.CLICK,
-			category: 'top-nav',
-			trackingMethod: 'ga'
-		});
-
 		$element = $(event.target);
-		if ($element.closest('.wikia-logo').length > 0) {
-			label = 'wikia-logo';
-		} else if ($element.closest('.hub-links').length > 0 || $element.closest('.hub-list').length > 0) {
+
+		label = getLabelByIdentifier($element) ||
+			getLabelByDOM($element);
+
+		if (label !== false) {
+			track({
+				category: 'top-nav',
+				label: label
+			});
+		}
+	}
+
+	/**
+	 * Get the label for tracking based on data-id attribute
+	 * @param {jQuery} $element
+	 * @returns {string|boolean}
+	 */
+	function getLabelByIdentifier($element) {
+		//Get element's data id or get data-id from closest element with this attribute
+		var dataId = $element.data('id') || $element.closest('[data-id]').data('id'),
+			map = {
+				'logout': 'user-menu-logout',
+				'help': 'user-menu-help',
+				'preferences': 'user-menu-preferences',
+				'facebook': 'facebook',
+				'register': 'register',
+				'start-wikia': 'start-a-wiki',
+				'wikia-logo': 'wikia-logo',
+				'mytalk': (function () {
+					return $element.hasClass('message-wall') ?
+						'user-menu-message-wall' :
+						'user-menu-talk';
+				})()
+			};
+
+		return map[dataId] || false;
+	}
+
+	/**
+	 * Get the label for tracking based on surrounding DOM of clicked element
+	 * @param {jQuery} $element
+	 * @returns {string|boolean}
+	 */
+	function getLabelByDOM($element) {
+		var label = false,
+			$parent;
+
+		if ($element.closest('.hub-links').length > 0 || $element.closest('.hub-list').length > 0) {
 			label = 'hub-item';
-		} else if ($element.data('id') === 'logout') {
-			label = 'user-menu-logout';
-		} else if ($element.data('id') === 'help') {
-			label = 'user-menu-help';
-		} else if ($element.data('id') === 'preferences') {
-			label = 'user-menu-preferences';
-		} else if ($element.data('id') === 'mytalk') {
-			if ($element.hasClass('message-wall')) {
-				label = 'user-menu-message-wall';
-			} else {
-				label = 'user-menu-talk';
-			}
-		} else if ($element.closest('.ajaxRegisterContainer').length > 0) {
-			label = 'register';
 		} else if ($element.closest('.notifications-for-wiki').length > 0) {
 			$parent = $element.closest('.notifications-for-wiki');
 			if ($parent.data('wiki-id') === parseInt(window.wgCityId)) {
@@ -46,20 +84,13 @@ $(function($) {
 			} else {
 				label = 'notification-item-cross-wiki';
 			}
-		} else if ($element.closest('.start-wikia').length > 0) {
-			label = 'start-a-wiki';
 		} else if ($element.hasClass('login-button')) {
 			label = 'login';
 		} else if ($element.closest('.ajaxLogin').attr('accesskey') === '.') {
 			label = 'user-menu-profile';
-		} else {
-			//If none of above was clicked, don't track
-			return;
 		}
 
-		track({
-			label: label
-		});
+		return label;
 	}
 
 	function searchSuggestionsClickTrackingHandler(event) {
@@ -67,7 +98,7 @@ $(function($) {
 			return;
 		}
 
-		trackSearch({
+		track({
 			browserEvent: event,
 			label: 'search-suggest'
 		});
@@ -75,22 +106,22 @@ $(function($) {
 
 	function searchSubmitButtonClickTrackingHandler(event) {
 		if (event.which === 1 && event.clientX > 0) {
-			trackSearch({
+			track({
 				label: !searchSuggestionsShowed ? 'search-button' : 'search-after-suggest-button'
 			});
 		}
 	}
 
 	function searchSubmitEnterPressTrackingHandler(event) {
-		if (event.which === 13 && $(this).is(':focus') ) {
-			trackSearch({
+		if (event.which === 13 && $(event.target).is(':focus')) {
+			track({
 				label: !searchSuggestionsShowed ? 'search-enter' : 'search-after-suggest-enter'
 			});
 		}
 	}
 
 	function searchSuggestionsEnterPressOnSuggestionsTrackingHandler() {
-		trackSearch({
+		track({
 			label: 'search-suggest-enter'
 		});
 	}
@@ -98,26 +129,16 @@ $(function($) {
 	function searchSuggestionsShowedTrackingHandler() {
 		searchSuggestionsShowed = true;
 
-		trackSearch({
+		track({
 			action: Wikia.Tracker.ACTIONS.VIEW,
 			label: 'search-suggest-show'
 		});
 	}
 
-	function trackSearch(data) {
-		track = Wikia.Tracker.buildTrackingFunction({
-			category: 'search',
-			trackingMethod: 'both'
-		});
-		data.action = data.action || Wikia.Tracker.ACTIONS.CLICK;
-
-		track(data);
-	}
-
 	$globalNavigation.on('mousedown touchstart', globalNavigationClickTrackingHandler);
 	$globalNavigationSearch
 		.on('mousedown touchstart', '.autocomplete', searchSuggestionsClickTrackingHandler)
-		.on('mousedown touchstart', '.search-submit', searchSubmitButtonClickTrackingHandler)
+		.on('mousedown touchstart', '.search-button', searchSubmitButtonClickTrackingHandler)
 		.on('keypress', '[name=search]', searchSubmitEnterPressTrackingHandler)
 		.on('suggestEnter', searchSuggestionsEnterPressOnSuggestionsTrackingHandler)
 		.one('suggestShow', searchSuggestionsShowedTrackingHandler);

@@ -320,6 +320,10 @@ class NavigationModel extends WikiaModel {
 		$this->forContent = $forContent;
 
 		$cacheKey = $this->getMemcKey( $source );
+		if ( $forContent === false) {
+			$cacheKey .= ':forUserLang';
+		}
+
 		$nodes = $this->wg->Memc->get( $cacheKey );
 
 		if ( empty( $nodes ) ) {

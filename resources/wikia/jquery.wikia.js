@@ -562,32 +562,6 @@ $.showCustomModal('title', '<b>content</b>',
 		}
 	});
 
-	$.openPopup = function (url, name, moduleName, width, height) {
-		if (wgUserName) {
-			window.open(
-				url,
-				name,
-				'width=' + width + ',height=' + height + ',menubar=no,status=no,location=no,toolbar=no,scrollbars=no,resizable=yes'
-			);
-		} else {
-			showComboAjaxForPlaceHolder(false, '', function () {
-				AjaxLogin.doSuccess = function () {
-					$('.modalWrapper').children().not('.close').not('.modalContent').not('h1').remove();
-
-					$.nirvana.sendRequest({
-						controller: moduleName,
-						method: 'AnonLoginSuccess',
-						format: 'html',
-						type: 'get',
-						callback: function (html) {
-							$('.modalContent').html(html);
-						}
-					});
-				}
-			}, false);
-		}
-	}
-
 	// Anything that needs DOM ready should go in here
 	$(function () {
 		// page loading time: onDomReady

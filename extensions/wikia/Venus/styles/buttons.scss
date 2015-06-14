@@ -16,10 +16,12 @@
 }
 
 /*
- * .skin-venus class added to override
- * resources/wikia/ui_components/button/css/button_default.scss
+ * Scoping Venus button styles to .article (Venus article) and .oo-ui-frame-content (VisualEditor dialogs)
+ *
+ * TODO: This should be designed for easier extendability with Sass.
+ * Perhaps redefine the button selectors as placeholder selectors.
 */
-.skin-venus {
+.article, .oo-ui-frame-content {
 	a.wikia-button,
 	input[type="submit"],
 	input[type="reset"],
@@ -43,7 +45,7 @@
 			}
 		}
 
-		&:hover {
+		&:hover:not(.close) {
 			@extend %outline-button;
 		}
 	}
@@ -53,6 +55,7 @@
 	input[type="submit"].secondary,
 	input[type="reset"].secondary,
 	input[type="button"].secondary,
+	.button.secondary,
 	button.secondary {
 		@extend %outline-button;
 		@extend %common-button-styles;
@@ -63,7 +66,7 @@
 			}
 		}
 
-		&:hover {
+		&:hover:not(.close) {
 			@extend %glyph-button;
 		}
 	}

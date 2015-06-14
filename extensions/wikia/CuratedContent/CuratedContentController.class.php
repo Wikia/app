@@ -155,9 +155,24 @@ class CuratedContentController extends WikiaController {
 		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
 		$this->response->setVal( 'messages', JSMessages::getPackages( array( 'CuratedContent' ) ) );
 		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
-		$this->response->setVal( 'html', $html[ 'parse' ][ 'text' ][ '*' ] );
+		//TODO: Remove 'infoboxFixSectionReplace', it's temporary fix for mobile aps
+		//See: DAT-2864 and DAT-2859
+		$this->response->setVal( 'html', $this->infoboxFixSectionReplace( $html[ 'parse' ][ 'text' ][ '*' ] ) );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function infoboxFixSectionReplace( $html ) {
+		$matches = [];
+		preg_match_all( "/<aside class=\"portable-infobox.+?>(.+?)<\\/aside>/ms", $html, $matches );
+		if ( isset( $matches[1] ) ) {
+			foreach ( $matches[1] as $to_replace ) {
+				$new_markup = str_replace( '<section', '<div', $to_replace );
+				$new_markup = str_replace( '</section', '</div', $new_markup );
+				$html = str_replace( $to_replace, $new_markup, $html );
+			}
+		}
+		return $html;
 	}
 
 	/**
@@ -203,6 +218,7 @@ class CuratedContentController extends WikiaController {
 			if ( empty( $section ) ) {
 				$this->cacheResponseFor( 14, self::DAYS );
 				$this->getSections( $content );
+				$this->getFeaturedSection( $content );
 			} else {
 				$this->getSectionItems( $content, $section );
 			}
@@ -234,7 +250,7 @@ class CuratedContentController extends WikiaController {
 				return ApiService::call(
 					[
 						'action' => 'query',
-						'list' => 'allitems',
+						'list' => 'allcategories',
 						'redirects' => true,
 						'aclimit' => $limit,
 						'acfrom' => $offset,
@@ -247,24 +263,24 @@ class CuratedContentController extends WikiaController {
 		);
 
 		$allCategories = $items[ 'query' ][ 'allcategories' ];
-
 		if ( !empty( $allCategories ) ) {
 
 			$ret = [ ];
+			$app = F::app();
+			$categoryName = $app->wg->contLang->getNsText( NS_CATEGORY );
 
 			foreach ( $allCategories as $value ) {
 				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
 					$ret[ ] = $this::getJsonItem( $value[ '*' ],
-						'category',
-						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0,
-						NS_CATEGORY );
+						$categoryName,
+						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0 );
 				}
 			}
 
 			$this->response->setVal( 'items', $ret );
 
-			if ( !empty( $categories[ 'query-continue' ] ) ) {
-				$this->response->setVal( 'offset', $categories[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
+			if ( !empty( $items[ 'query-continue' ] ) ) {
+				$this->response->setVal( 'offset', $items[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
 			}
 
 		} else {
@@ -281,33 +297,56 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @param $content
 	 * @param $requestSection
+	 * @param string $sectionName
 	 *
+	 * @throws CuratedContentSectionNotFoundException
 	 * @responseReturn Array|false Items or false if section was not found
 	 */
 	private function getSectionItems( $content, $requestSection ) {
 		$ret = false;
 
 		foreach ( $content as $section ) {
-			if ( $requestSection == $section[ 'title' ] ) {
+			if ( $requestSection == $section[ 'title' ] && $section[ 'featured' ] == false ) {
 				$ret = $section[ 'items' ];
 			}
 		}
 
 		if ( !empty( $ret ) ) {
-			foreach ( $ret as &$value ) {
-
-				list( $image_id, $image_url ) =
-					CuratedContentSpecialController::findImageIfNotSet(
-						$value[ 'image_id' ],
-						$value[ 'article_id' ] );
-				$value[ 'image_id' ] = $image_id;
-				$value[ 'image_url' ] = $image_url;
-			}
-
-			$this->response->setVal( 'items', $ret );
+			$this->setSectionItemsResponse( 'items', $ret );
 		} else if ( $requestSection !== '' ) {
 			throw new CuratedContentSectionNotFoundException( $requestSection );
 		}
+	}
+
+	private function getFeaturedSection( $content ) {
+		$ret = false;
+		foreach ( $content as $section ) {
+			if ( $section[ 'featured' ] ) {
+				$ret = $section[ 'items' ];
+			}
+		}
+		if ( !empty( $ret ) ) {
+			$this->setSectionItemsResponse( 'featured', $ret );
+		}
+	}
+
+
+	/**
+	 * @param $sectionName
+	 * @param $ret
+	 * @param $value
+	 * @return mixed
+	 */
+	private function setSectionItemsResponse( $sectionName, $ret ) {
+		foreach ( $ret as &$value ) {
+			list( $image_id, $image_url ) =
+				CuratedContentSpecialController::findImageIfNotSet(
+					$value[ 'image_id' ],
+					$value[ 'article_id' ] );
+			$value[ 'image_id' ] = $image_id;
+			$value[ 'image_url' ] = $image_url;
+		}
+		$this->response->setVal( $sectionName, $ret );
 	}
 
 	/**
@@ -323,7 +362,7 @@ class CuratedContentController extends WikiaController {
 			array_reduce(
 				$content,
 				function ( $ret, $item ) {
-					if ( $item[ 'title' ] !== '' ) {
+					if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
 						$imageId = $item[ 'image_id' ] != 0 ? $item[ 'image_id' ] : null;
 						$ret[ ] = [
 							'title' => $item[ 'title' ],
@@ -341,27 +380,30 @@ class CuratedContentController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-
-	function getJsonItem( $titleName, $ns, $pageId, $type ) {
+	function getJsonItem( $titleName, $ns, $pageId ) {
 		$title = Title::makeTitle( $ns, $titleName );
-
+		list( $image_id, $image_url ) = CuratedContentSpecialController::findImageIfNotSet( 0, $pageId );
 		return [
-			'title' => $title->getFullText(),
-			'type' => $type,
-			'id' => $pageId,
-			'nsId' => $ns,
+			'title' => $ns . ':' . $title->getFullText(),
+			'label' => $title->getFullText(),
+			'image_id' => $image_id,
+			'article_id' => $pageId,
+			'type' => 'category',
+			'image_url' => $image_url
 		];
 	}
 
 	/**
-	 * @brief Whenever data is saved in GG Content Managment Tool
-	 * purge Varnish cache for it
+	 * @brief Whenever data is saved in Curated Content Management Tool
+	 * purge Varnish cache for it and Game Guides
 	 *
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
 		self::purgeMethod( 'getList' );
-
+		if ( class_exists( 'GameGuidesController' ) ) {
+			GameGuidesController::purgeMethod( 'getList' );
+		}
 		return true;
 	}
 }

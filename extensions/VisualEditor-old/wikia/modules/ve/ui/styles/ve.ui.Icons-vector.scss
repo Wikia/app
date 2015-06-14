@@ -1,0 +1,364 @@
+@import "mixins/ve-icon";
+@import "color";
+
+/*
+ * oojs-ui
+ *
+ * Selectors copied from lib/ve/lib/oojs-ui/oojs-ui.svg.css
+ */
+.oo-ui-icon-add-item {
+	@include ve-icon(add-item, oo);
+}
+.oo-ui-icon-advanced {
+	@include ve-icon(advanced, oo);
+}
+.oo-ui-icon-alert {
+	@include ve-icon(alert, oo);
+}
+.oo-ui-icon-check {
+	@include ve-icon(check, oo);
+}
+.oo-ui-icon-clear {
+	@include ve-icon(clear, oo);
+}
+.oo-ui-icon-close {
+	@include ve-icon(close, oo);
+}
+.oo-ui-icon-code {
+	@include ve-icon(code, oo);
+}
+.oo-ui-icon-collapse {
+	@include ve-icon(collapse, oo);
+}
+.oo-ui-icon-comment {
+ 	@include ve-icon(comment, oo);
+}
+.oo-ui-icon-expand {
+	@include ve-icon(expand, oo);
+}
+.oo-ui-icon-help {
+	@include ve-icon(help, oo);
+}
+.oo-ui-icon-link {
+	@include ve-icon(link, oo);
+}
+.oo-ui-icon-menu {
+	@include ve-icon(menu, oo);
+}
+.oo-ui-icon-next {
+	@include ve-icon(move-ltr, oo);
+}
+.oo-ui-icon-picture {
+	@include ve-icon(picture, oo);
+}
+.oo-ui-icon-previous {
+	@include ve-icon(move-rtl, oo);
+}
+.oo-ui-icon-redo {
+	@include ve-icon(arched-arrow-ltr, oo);
+}
+.oo-ui-icon-remove {
+	@include ve-icon(remove, oo);
+}
+.oo-ui-icon-search {
+	@include ve-icon(search, oo);
+}
+.oo-ui-icon-settings {
+	@include ve-icon(settings, oo);
+}
+.oo-ui-icon-tag {
+	@include ve-icon(tag, oo);
+}
+.oo-ui-icon-undo {
+	@include ve-icon(arched-arrow-rtl, oo);
+}
+.oo-ui-icon-window {
+  @include ve-icon(window, oo);
+}
+
+/*
+ * oojs-ui indicators
+ *
+ * Selectors copied from lib/ve/lib/oojs-ui/oojs-ui.svg.css
+ */
+.oo-ui-indicator-down {
+	@include ve-icon(arrow-down, oo-indicators);
+}
+.oo-ui-indicator-required {
+	@include ve-icon(required, oo-indicators);
+}
+.oo-ui-indicator-up {
+	@include ve-icon(arrow-up, oo-indicators);
+}
+
+/*
+ * ve
+ *
+ * Selectors copied from lib/ve/modules/ve/ui/styles/ve.ui.Icons-vector.css
+ */
+.oo-ui-icon-align-center {
+	@include ve-icon(align-center, ve);
+}
+.oo-ui-icon-align-float-left {
+	@include ve-icon(align-float-left, ve);
+}
+.oo-ui-icon-align-float-right {
+	@include ve-icon(align-float-right, ve);
+}
+.oo-ui-icon-bold-a {
+	@include ve-icon(bold-a, ve);
+}
+.oo-ui-icon-bold-b {
+	@include ve-icon(bold-b, ve);
+}
+.oo-ui-icon-bold-arab-ain {
+	@include ve-icon(bold-arab-ain, ve);
+}
+.oo-ui-icon-bold-arab-dad {
+	@include ve-icon(bold-arab-dad, ve);
+}
+.oo-ui-icon-bold-cyrl-be {
+	@include ve-icon(bold-cyrl-be, ve);
+}
+.oo-ui-icon-bold-cyrl-te {
+	@include ve-icon(bold-cyrl-te, ve);
+}
+.oo-ui-icon-bold-cyrl-zhe {
+	@include ve-icon(bold-cyrl-zhe, ve);
+}
+.oo-ui-icon-bold-f {
+	@include ve-icon(bold-f, ve);
+}
+.oo-ui-icon-bold-g {
+	@include ve-icon(bold-g, ve);
+}
+.oo-ui-icon-bold-geor-man {
+	@include ve-icon(bold-geor-man, ve);
+}
+.oo-ui-icon-bold-l {
+	@include ve-icon(bold-l, ve);
+}
+.oo-ui-icon-bold-n {
+	@include ve-icon(bold-n, ve);
+}
+.oo-ui-icon-bold-v {
+	@include ve-icon(bold-v, ve);
+}
+.oo-ui-icon-bullet-list {
+	@include ve-icon(bullet-list-ltr, ve);
+}
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-bullet-list {
+	@include ve-icon(bullet-list-rtl, ve);
+}
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-bullet-list {
+	@include ve-icon(bullet-list-ltr, ve);
+}
+.oo-ui-icon-indent-list {
+	@include ve-icon(ident-list-ltr, ve);
+}
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-indent-list {
+	@include ve-icon(indent-list-rtl, ve);
+}
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-indent-list {
+	@include ve-icon(indent-list-ltr, ve);
+}
+.oo-ui-icon-italic-a {
+	@include ve-icon(italic-a, ve);
+}
+.oo-ui-icon-italic-c {
+	@include ve-icon(italic-c, ve);
+}
+.oo-ui-icon-italic-d {
+	@include ve-icon(italic-d, ve);
+}
+.oo-ui-icon-italic-e {
+	@include ve-icon(italic-e, ve);
+}
+.oo-ui-icon-italic-s {
+	@include ve-icon(italic-s, ve);
+}
+.oo-ui-icon-italic-arab-meem {
+	@include ve-icon(italic-arab-meem, ve);
+}
+.oo-ui-icon-italic-arab-keheh-jeem {
+	@include ve-icon(italic-arab-keheh-jeem, ve);
+}
+.oo-ui-icon-italic-geor-kan {
+	@include ve-icon(italic-geor-kan, ve);
+}
+.oo-ui-icon-italic-i {
+	@include ve-icon(italic-i, ve);
+}
+.oo-ui-icon-italic-k,
+.oo-ui-icon-italic-cyrl-ka {
+	/* Latin K and Cyrillic Ka use same glyph */
+	@include ve-icon(italic-k, ve);
+}
+.oo-ui-icon-language {
+	@include ve-icon(language, ve);
+}
+.oo-ui-icon-number-list {
+	@include ve-icon(number-list-ltr, ve);
+}
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-number-list {
+	@include ve-icon(number-list-rtl, ve);
+}
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-number-list {
+	@include ve-icon(number-list-ltr, ve);
+}
+.oo-ui-icon-outdent-list {
+	@include ve-icon(outdent-list-ltr, ve);
+}
+/* @noflip */
+.ve-ui-dir-block-rtl .oo-ui-icon-outdent-list {
+	@include ve-icon(outdent-list-rtl, ve);
+}
+/* @noflip */
+.ve-ui-dir-block-ltr .oo-ui-icon-outdent-list {
+	@include ve-icon(outdent-list-ltr, ve);
+}
+.oo-ui-icon-special-character {
+	@include ve-icon(special-character, ve);
+}
+.oo-ui-icon-strikethrough-a {
+	@include ve-icon(strikethrough-a, ve);
+}
+.oo-ui-icon-strikethrough-s {
+	@include ve-icon(strikethrough-s, ve);
+}
+.oo-ui-icon-strikethrough-y {
+	@include ve-icon(strikethrough-y, ve);
+}
+.oo-ui-icon-subscript {
+	@include ve-icon(subscript, ve);
+}
+.oo-ui-icon-superscript {
+	@include ve-icon(superscript, ve);
+}
+/* @noflip */
+.oo-ui-icon-text-dir-ltr {
+	@include ve-icon(text-dir-ltr, ve);
+}
+/* @noflip */
+.oo-ui-icon-text-dir-rtl {
+	@include ve-icon(text-dir-rtl, ve);
+}
+.oo-ui-icon-text-style {
+	@include ve-icon(text-style, ve);
+}
+.oo-ui-icon-underline-a {
+	@include ve-icon(underline-a, ve);
+}
+.oo-ui-icon-underline-u {
+	@include ve-icon(underline-u, ve);
+}
+
+/*
+ * mw
+ *
+ * Selectors copied from modules/ve-mw/ui/styles/ve.ui.Icons-vector.css
+ */
+.oo-ui-icon-alienextension {
+	@include ve-icon(alienextension, mw);
+}
+.oo-ui-icon-gallery {
+	@include ve-icon(gallery, mw);
+}
+.oo-ui-icon-hiero {
+	@include ve-icon(hiero, mw);
+}
+.oo-ui-icon-math {
+	@include ve-icon(math, mw);
+}
+.oo-ui-icon-parameter {
+	@include ve-icon(parameter, mw);
+}
+.oo-ui-icon-parameter-set {
+	@include ve-icon(parameter-set, mw);
+}
+.oo-ui-icon-reference {
+	@include ve-icon(reference, mw);
+}
+.oo-ui-icon-references {
+	@include ve-icon(references, mw);
+}
+.oo-ui-icon-ref-cite-book {
+	@include ve-icon(ref-cite-book, mw);
+}
+.oo-ui-icon-ref-cite-journal {
+	@include ve-icon(ref-cite-journal, mw);
+}
+.oo-ui-icon-ref-cite-news {
+	@include ve-icon(ref-cite-news, mw);
+}
+.oo-ui-icon-ref-cite-web {
+	@include ve-icon(ref-cite-web, mw);
+}
+.oo-ui-icon-source {
+	@include ve-icon(source, mw);
+}
+.oo-ui-icon-template {
+	@include ve-icon(template, mw);
+}
+.oo-ui-icon-template-inverted {
+	@include ve-icon(template, mw, $color-page-opposite);
+}
+
+/*
+ * wikia
+ */
+.oo-ui-icon-checked {
+	@include ve-icon(checked, wikia);
+}
+.oo-ui-icon-edit {
+	@include ve-icon(edit, wikia);
+}
+.oo-ui-icon-keyboard {
+	@include ve-icon(keyboard, wikia);
+}
+.oo-ui-icon-media {
+	@include ve-icon(media, wikia);
+}
+.oo-ui-icon-unchecked {
+	@include ve-icon(unchecked, wikia);
+}
+.oo-ui-icon-upload-small {
+	@include ve-icon(upload-small, wikia, $color-buttons);
+}
+.oo-ui-icon-upload {
+	@include ve-icon(upload, wikia);
+}
+.oo-ui-icon-map {
+	@include ve-icon(map, wikia);
+}
+.oo-ui-icon-grabber {
+	@include ve-icon(grabber, wikia);
+}
+.oo-ui-icon-arrow-circled {
+	@include ve-icon(arrow-circled, wikia);
+}
+.oo-ui-icon-cart-grid {
+	@include ve-icon(cart-grid, wikia);
+}
+.oo-ui-icon-cart-list {
+	@include ve-icon(cart-list, wikia);
+}
+.oo-ui-icon-preview-photo {
+	@include ve-icon(preview-photo, wikia);
+}
+
+/*
+ * Specific overrides
+ */
+.ve-init-mw-viewPageTarget-saveDialog-prevButton {
+	@include ve-icon(move-rtl, oo);
+}
+.ve-init-mw-viewPageTarget-saveDialog-closeButton {
+	@include ve-icon(collapse, ve);
+}

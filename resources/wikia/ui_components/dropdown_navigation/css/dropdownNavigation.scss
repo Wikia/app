@@ -19,7 +19,11 @@ $shadow: rgba($color-text, 0.2);
 	position: absolute;
 	top: 0;
 	text-align: left;
-	width: $dropdown-width * 2;
+	width: $dropdown-width;
+
+	&.wide {
+		width: $dropdown-width * 2;
+	}
 
 	.active > & {
 		visibility: visible;

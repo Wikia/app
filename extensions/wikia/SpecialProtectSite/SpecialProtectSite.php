@@ -31,6 +31,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'description'    => 'Allows a site administrator to temporarily block various site modifications',
 	'author'         => array( '[http://uncyclopedia.wikia.com/wiki/User:Dawg Eric Johnston (Dawg)]', 'C. \'Uberfuzzy\' Stafford' ),
 	'descriptionmsg' => 'specialprotectsite-desc',
+	'url'			 => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialProtectSite'
 );
 
 $wgExtensionMessagesFiles['SpecialProtectSite'] = $dir . '/SpecialProtectSite.i18n.php';

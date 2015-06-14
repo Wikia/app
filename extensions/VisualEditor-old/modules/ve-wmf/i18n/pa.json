@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amikeco",
+			"Babanwalia",
+			"Bouron",
+			"Nasir8891"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়াল এডিটর]]",
+	"tag-visualeditor-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়াল এডিটর]] দ্বারা সম্পাদিত",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়াল এডিটর: পরীক্ষা]]",
+	"tag-visualeditor-needcheck-description": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|ভিজ্যুয়াল এডিটর]] দ্বারা সম্পাদিত যেখানে সিস্টেম ধারণ করছে উইকিটেক্সটগুলো অনিচ্ছাকৃতভাবে পরিবর্তীত হয়েছে।"
+}

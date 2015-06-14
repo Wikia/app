@@ -3,7 +3,7 @@ namespace Wikia\Api\Recommendations\DataProviders;
 
 /**
  * Video recommendations for RecommendationsApi
- * @author Maciej Brench <macbre@wikia-inc.com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  * @author Damian Jozwiak <damian@wikia-inc.com>
  * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  *
@@ -40,6 +40,9 @@ class Video implements IDataProvider {
 				$recommendations = $this->prepareData( $randomVideos );
 			}
 		}
+		else {
+			wfDebug( __METHOD__ . ": \$wgEnableVideosModuleExt is set to false, no data returned!\n" );
+		}
 
 		return $recommendations;
 	}
@@ -58,7 +61,7 @@ class Video implements IDataProvider {
 				'type' => self::VIDEO_TYPE,
 				'title' => $video[ 'title' ],
 				'url' => $video[ 'url' ],
-				'description' => '',
+				'description' => $video[ 'description' ],
 				'source' => self::VIDEO_SOURCE,
 				'media' => [
 					'thumbUrl' => $video[ 'thumbUrl' ],

@@ -1,4 +1,4 @@
-<div id="UserLoginDropdown" class="UserLoginDropdown">
+<div id="UserLoginDropdown" class="UserLoginDropdown global-nav-dropdown">
 	<div class="ajaxRegisterContainer"><?= $registerLink ?></div>
 	<?
 	$tabIndex = 0;
@@ -44,9 +44,9 @@
 				'tabindex' => ++$tabIndex,
 			],
 			[
-				'type' => 'custom',
-				'output' => '<a href="#" class="forgot-password" tabindex="0">'
-					. wfMessage( 'userlogin-forgot-password' )->escaped() . '</a>',
+				'type' => 'nirvanaview',
+				'controller' => 'UserLogin',
+				'view' => 'forgotPasswordLink',
 			],
 			[
 				'type' => 'checkbox',

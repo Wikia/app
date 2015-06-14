@@ -10,6 +10,8 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Forum',
 	'author' => array( 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Forum',
+	'descriptionmsg' => 'forum-desc'
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -55,7 +57,6 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageU
 
 //notification hooks
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
-$wgHooks['NotificationGetMailNotificationMessage'][] = 'ForumNotificationPlugin::onGetMailNotificationMessage';
 
 //old forum archive
 $wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::onGetUserPermissionsErrors';
@@ -116,14 +117,12 @@ $wgGroupPermissions['staff']['forumoldedit'] = true;
 $wgGroupPermissions['helper']['forumoldedit'] = true;
 $wgGroupPermissions['sysop']['forumoldedit'] = true;
 $wgGroupPermissions['bureaucrat']['forumoldedit'] = true;
-$wgGroupPermissions['helper']['forumoldedit'] = true;
 
 $wgGroupPermissions['*']['forumadmin'] = false;
 $wgGroupPermissions['staff']['forumadmin'] = true;
 $wgGroupPermissions['helper']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
-$wgGroupPermissions['helper']['forumadmin'] = true;
-
+$wgGroupPermissions['threadmoderator']['forumadmin'] = true;
 
 JSMessages::registerPackage('Forum', array(
 	'back',

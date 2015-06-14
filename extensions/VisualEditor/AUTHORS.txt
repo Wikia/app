@@ -1,16 +1,20 @@
 Principal Authors (major contributors, alphabetically)
 
 Alex Monk <krenair@wikimedia.org>
+Bartosz Dziewoński <matmarex@wikimedia.org>
 Christian Williams <christian@wikia-inc.com>
 David Chan <dchan@wikimedia.org>
 Ed Sanders <esanders@wikimedia.org>
 Inez Korczyński <inez@wikia-inc.com>
 James Forrester  <jforrester@wikimedia.org>
+Marielle Volz <marielle.volz@gmail.com>
 Moriel Schottlender <mschottlender@wikimedia.org>
 Roan Kattouw <roan@wikimedia.org>
 Rob Moen <rmoen@wikimedia.org>
+Sucheta Ghoshal <sghoshal@wikimedia.org>
 Timo Tijhof <timo@wikimedia.org>
 Trevor Parscal <trevor@wikimedia.org>
+
 
 Patch Contributors (minor contributors, alphabetically)
 
@@ -18,22 +22,95 @@ Aaron Schulz <aschulz@wikimedia.org>
 Adam Wight <spam@ludd.net>
 Alexander Emsenhuber <ialex.wiki@gmail.com>
 Amir E. Aharoni <amir.aharoni@mail.huji.ac.il>
+Andrew Garrett <agarrett@wikimedia.org>
 Antoine Musso <hashar@free.fr>
 Audrey Tang <audreyt@audreyt.org>
-Bartosz Dziewoński <matma.rex@gmail.com>
+Brad Jorsch <bjorsch@wikimedia.org>
 Brion Vibber <brion@wikimedia.org>
 C. Scott Ananian <cananian@wikimedia.org>
 Chris McMahon <cmcmahon@wikimedia.org>
+Dan Duvall <dduvall@wikimedia.org>
+Derk-Jan Hartman <hartman.wiki@gmail.com>
 Erik Moeller <erik@wikimedia.org>
+Federico Leva <federicoleva@tiscali.it>
 Gabriel Wicke <gwicke@wikimedia.org>
 Jeff Hall <jeffreyehall@gmail.com>
+Jon Robson <jrobson@wikimedia.org>
+Juliusz Gonera <jgonera@gmail.com>
+Kaity Hammerstein <khammerstein@wikimedia.org>
+Kunal Mehta <legoktm@gmail.com>
 Matthew Flaschen <mflaschen@wikimedia.org>
-Neil Kandalgaonkar <neilk@brevity.org>
 Mark A. Hershberger <mah@everybody.org>
 Mark Holmquist <mtraceur@member.fsf.org>
+Niklas Laxström <niklas.laxstrom@gmail.com>
 Ori Livneh <ori@wikimedia.org>
+Quim Gil <quimgil@gmail.com>
 Raimond Spekking <raimond.spekking@gmail.com>
 Ryan Kaldari <rkaldari@wikimedia.org>
+Sam Reed <reedy@wikimedia.org>
+Sam Smith <git@samsmith.io>
 Siebrand Mazeland <siebrand@kitano.nl>
 Subramanya Sastry <ssastry@wikimedia.org>
+Vikas S Yaligar <vikasyaligar.it@gmail.com>
 Željko Filipin <zfilipin@wikimedia.org>
+addshore <addshorewiki@gmail.com>
+Helder <he7d3r@gmail.com>
+Jiabao <jiabao.foss@gmail.com>
+
+
+Libraries used (alphabetically)
+
+Base64.js
+ – https://github.com/davidchambers/Base64.js
+ – DWTFYWT licence
+ – David Chambers, based off gist by yahiko
+
+Easy-Deflate
+ – https://github.com/Jacob-Christian-Munch-Andersen/Easy-Deflate
+ – BSD license
+ – Jacob Christian Munch-Andersen for the package; Gildas Lormeau for the Deflate utility
+
+jQuery
+ – https://jquery.com/
+ – MIT license
+ – jQuery Foundation and other contributors
+
+jQuery i18n
+ – https://github.com/wikimedia/jquery.i18n
+ – MIT license (dual with GPL v2)
+ – Wikimedia Language Engineering Team and other contributors
+
+jQuery ULS
+ – https://github.com/wikimedia/jquery.uls
+ – MIT license (dual with GPL v2)
+ – Wikimedia Language Engineering Team and other contributors
+
+jsdifflib
+ – http://snowtide.com/jsdifflib
+ – BSD license
+ – Snowtide Informatics Systems, Inc.
+
+OOjs
+ – https://www.mediawiki.org/wiki/OOjs
+ – MIT license
+ – OOjs Team and other contributors
+
+OOjs UI
+ – https://www.mediawiki.org/wiki/OOjs_UI
+ – MIT license
+ – OOjs UI Team and other contributors
+
+RangeFix
+ – https://github.com/edg2s/rangefix
+ – MIT license
+ – Ed Sanders and other contributors
+
+UnicodeJS
+ – https://www.mediawiki.org/wiki/OOjs_UI
+ – MIT license
+ – UnicodeJS Team and other contributors
+
+VisualEditor
+ – https://www.mediawiki.org/wiki/VisualEditor
+ – MIT license
+ – VisualEditor Team and other contributors

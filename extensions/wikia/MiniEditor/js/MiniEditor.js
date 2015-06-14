@@ -234,8 +234,36 @@ var MiniEditor = {
 				startupFocus: !preloading
 			}, options.config), event);
 
+			// VOLDEV-25: Provide LinkSuggest support if necessary
+			if (window.wgEnableMiniEditorLinkSuggest) {
+				if (this.config.editorSuite === 'ckeditor') {
+					// RTE
+					wikiaEditor.on('ck-mode', function () {
+						if (wikiaEditor.ck.mode !== 'wysiwyg') {
+							// load the module only if the user actually switches to source
+							MiniEditor.initLinkSuggest($wrapper, 'textarea.cke_source');
+						}
+					});
+				} else {
+					// mweditor
+					this.initLinkSuggest($wrapper, '#' + wikiaEditor.instanceId);
+				}
+			}
+
 			$element.addClass('wikiaEditor').triggerHandler('editorInit', [wikiaEditor, event]);
 		}
+	},
+
+	/**
+	 * @desc VOLDEV-25: Loads and initializes linksuggest for a given element
+	 * @param {object} $wrapper jQuery object for MiniEditor wrapper
+	 * @param {string} selector CSS selector for the target element
+	 * @author TK-999
+	 */
+	initLinkSuggest: function ($wrapper, selector) {
+		mw.loader.using('ext.wikia.LinkSuggest', function() {
+			$wrapper.find(selector).linksuggest();
+		});
 	},
 
 	// Return the startup mode for an editor instance

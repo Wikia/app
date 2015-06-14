@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiastats-desc' => 'WikiaStats',
 	'wikiastats-heading' => 'Collaboration in action',
 	'wikiastats-visitors' => 'Monthly visitors',
 	'wikiastats-visitors-tooltip' => 'Monthly Visitors is based on Quantcast\'s Global "People" metric which is composed of online and mobile web.',
@@ -16,6 +17,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
+	'wikiastats-desc' => '{{desc}}',
 	'wikiastats-heading' => 'The title in "stats container" it\'s above different statistic numbers connected to Wikia community',
 	'wikiastats-visitors' => 'The text above number telling about our monthly visitors',
 	'wikiastats-mobile-visitors' => 'The text above number telling about our monthly mobile visitors',

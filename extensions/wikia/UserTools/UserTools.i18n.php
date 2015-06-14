@@ -98,6 +98,7 @@ $messages['fa'] = [
 ];
 
 $messages['en'] = [
+	'user-tools-desc' => 'Customization of user tools enabled in user\'s toolbar and article navigation',
 	'user-tools-edit-cancel' => 'Cancel',
 	'user-tools-edit-save' => 'Save',
 	'user-tools-edit-rename' => 'Rename Item',

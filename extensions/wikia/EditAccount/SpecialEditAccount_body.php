@@ -37,7 +37,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgEnableUserLoginExt, $wgExternalAuthType;
+		global $wgExternalAuthType;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -240,18 +240,15 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
 	function setEmail( $email, $changeReason = '' ) {
-		global $wgEnableUserLoginExt;
 		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			$this->mUser->setEmail( $email );
 			if ( $email != '' ) {
-				if ( !empty( $wgEnableUserLoginExt ) ) {// Clear not confirmed signup flag
-					UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
-				}
+				UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 				$this->mUser->confirmEmail();
 				$this->mUser->setOption( 'new_email', null );
 			} else {
-				if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+				if ( $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup can't has empty email
 					// @TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
 					$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
@@ -371,7 +368,6 @@ class EditAccount extends SpecialPage {
 	 * @return boolean               true on success, false on failure
 	 */
 	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '', $keepEmail = true ) {
-		global $wgEnableFacebookConnectExt;
 		if ( empty( $user ) ) {
 			throw new Exception( 'User object is invalid.' );
 		}
@@ -398,11 +394,11 @@ class EditAccount extends SpecialPage {
 			}
 		}
 
-		# close account and invalidate cache + cluster data
+		// close account and invalidate cache + cluster data
 		Wikia::invalidateUser( $user, true, $keepEmail, true );
-		if ( !empty( $wgEnableFacebookConnectExt ) ) {
-			self::disconnectFBConnect( $user );
-		}
+
+		// if they are connected from facebook, disconnect them
+		self::disconnectFromFacebook( $user );
 
 		if ( $user->getEmail() == '' ) {
 			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
@@ -424,15 +420,13 @@ class EditAccount extends SpecialPage {
 	}
 
 	/**
-	 * Disconnect Facebook account from Wikia account
+	 * Make sure a wikia user account is disconnected from their facebook account.
 	 *
-	 * @param  User   $user The user account to disconnect
-	 * @return void
+	 * @param  User $user The user account to disconnect
 	 */
-	public static function disconnectFBConnect( User $user ) {
-		$fbIds = FBConnectDB::getFacebookIDs( $user );
-		if ( !empty( $fbIds ) ) {
-			FBConnectDB::removeFacebookID( $user );
+	public static function disconnectFromFacebook( User $user ) {
+		if ( !empty( F::app()->wg->EnableFacebookClientExt ) ) {
+			FacebookMapModel::deleteFromWikiaID( $user->getId() );
 		}
 	}
 

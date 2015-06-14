@@ -4,13 +4,12 @@ class RelatedPages {
 
 	protected $pages = null;
 	protected $categories = null;
-	protected $categoryCacheTTL = 8; // in hours
-	protected $categoryRankCacheTTL = 24; // in hours
 	protected $categoriesLimit = 6;
 	protected $pageSectionNo = 4; // number of section before which module should be injected (for long articles)
 	protected $isRendered = false;
-	protected $memcKeyPrefix = '';
 	static protected $instance = null;
+
+	const MCACHE_VER = '1.01';
 
 	const LIMIT_MAX = 10;
 
@@ -118,28 +117,31 @@ class RelatedPages {
 		}
 
 		// get up to self::LIMIT_MAX items and cache them
-		$data = WikiaDataAccess::cache( wfMemcKey( __METHOD__, $articleId ), WikiaResponse::CACHE_STANDARD, function() use ( $articleId ) {
-			$this->setData( [] );
-			$categories = $this->getCategories( $articleId );
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, $articleId, self::MCACHE_VER ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $articleId ) {
+				$this->setData( [] );
+				$categories = $this->getCategories( $articleId );
 
-			if ( count( $categories ) > 0 ) {
-				// RT#80681/RT#139837: apply category blacklist
-				$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
-				$categories = $this->getCategoriesByRank( $categories );
+				if ( count( $categories ) > 0 ) {
+					// RT#80681/RT#139837: apply category blacklist
+					$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
+					$categories = $this->getCategoriesByRank( $categories );
 
-				if ( count( $categories ) > $this->categoriesLimit ) {
-					// limit the number of categories to look for
-					$categories = array_slice( $categories, 0, $this->categoriesLimit );
+					if ( count( $categories ) > $this->categoriesLimit ) {
+						// limit the number of categories to look for
+						$categories = array_slice( $categories, 0, $this->categoriesLimit );
+					}
+
+					// limit * 2 - get more pages (some can be filtered out - RT #72703)
+					$pages = $this->getPagesForCategories( $articleId, self::LIMIT_MAX * 2, $categories );
+
+					$this->afterGet( $pages, self::LIMIT_MAX );
 				}
-
-				// limit * 2 - get more pages (some can be filtered out - RT #72703)
-				$pages = $this->getPagesForCategories( $articleId, self::LIMIT_MAX * 2, $categories );
-
-				$this->afterGet( $pages, self::LIMIT_MAX );
+				return $this->getData();
 			}
-
-			return $this->getData();
-		} );
+		);
 
 		// apply the limit
 		$this->setData( array_slice( $data, 0, $limit ) );
@@ -156,6 +158,9 @@ class RelatedPages {
 
 		foreach ( $pages as $pageId => $data ) {
 			$data[ 'imgUrl' ] = isset( $images[ $pageId ] ) ? $images[ $pageId ][ 0 ][ 'url' ] : null;
+			$data[ 'imgOriginalDimensions' ] = isset( $images[ $pageId ] )
+				? $images[ $pageId ][ 0 ][ 'original_dimensions' ]
+				: null;
 			$data[ 'text' ] = $this->getArticleSnippet( $pageId );
 			$this->pushData( $data );
 			if ( count( $this->getData() ) >= $limit ) {
@@ -175,12 +180,9 @@ class RelatedPages {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, $category );
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $category );
-		}
+		$cacheKey = wfMemcKey( __METHOD__, md5($category) );
 		$cache = $wgMemc->get( $cacheKey );
+
 		if ( is_array( $cache ) ) {
 			wfProfileOut( __METHOD__ );
 			return $cache;
@@ -204,25 +206,32 @@ class RelatedPages {
 			$pages[] = $row->page_id;
 		}
 
-		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
+		$wgMemc->set( $cacheKey, $pages, WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
 
 	/**
-	* get pages that belong to a list of categories
-	* @author Owen
-	*/
+	 * get pages that belong to a list of categories
+	 * @author Owen
+	 *
+	 * @param int $articleId
+	 * @param int $limit
+	 * @param array $categories
+	 * @return array
+	 * @throws DBUnexpectedError|MWException
+	 */
 	protected function getPagesForCategories( $articleId, $limit, Array $categories ) {
 		global $wgMemc;
 
-		wfProfileIn( __METHOD__ );
-		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, $articleId );
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, $articleId );
+		if ( empty( $categories ) ) {
+			return [];
 		}
+
+		wfProfileIn( __METHOD__ );
+
+		$cacheKey = wfMemcKey( __METHOD__, $articleId );
 		$cache = $wgMemc->get( $cacheKey );
 
 		if ( is_array( $cache ) ) {
@@ -232,11 +241,6 @@ class RelatedPages {
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$pages = array();
-
-		if ( empty( $categories ) ) {
-			wfProfileOut( __METHOD__ );
-			return $pages;
-		}
 
 		$tables = array( "categorylinks" );
 		$joinSql = $this->getPageJoinSql( $dbr, $tables );
@@ -268,7 +272,7 @@ class RelatedPages {
 			}
 		}
 
-		$wgMemc->set( $cacheKey, $pages, ( $this->categoryCacheTTL * 3600 ) );
+		$wgMemc->set( $cacheKey, $pages, WikiaResponse::CACHE_STANDARD );
 		wfProfileOut( __METHOD__ );
 		return $pages;
 	}
@@ -333,13 +337,14 @@ class RelatedPages {
 	 * @return array
 	 */
 	protected function getCategoryRank() {
-		global $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
 
 		$results = WikiaDataAccess::cacheWithLock(
-			( empty( $this->memcKeyPrefix ) ) ? wfMemcKey( __METHOD__ ) : wfMemcKey( $this->memcKeyPrefix, __METHOD__ ),
-			$this->categoryRankCacheTTL * 3600,
-			function () use ( $wgContentNamespaces ) {
+			wfMemcKey( __METHOD__ ),
+			WikiaResponse::CACHE_STANDARD,
+			function () {
+				global $wgContentNamespaces;
+
 				$db = wfGetDB( DB_SLAVE );
 				$sql = ( new WikiaSQL() )
 					->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FIELD( 'cl_to' )
@@ -370,32 +375,30 @@ class RelatedPages {
 		return $results;
 	}
 
+	/**
+	 * @param string $category
+	 * @return int
+	 */
 	private function getCategoryRankByName( $category ) {
-		global $wgContentNamespaces, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->memcKeyPrefix ) ) {
-			$cacheKey = wfMemcKey( __METHOD__, md5( $category ) );
-		} else {
-			$cacheKey = wfMemcKey( $this->memcKeyPrefix, __METHOD__, md5( $category ) );
-		}
-		$count = $wgMemc->get( $cacheKey );
+		$count = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, md5( $category ) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $category ) {
+				global $wgContentNamespaces;
 
-		if ( !isset( $count ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$sql = ( new WikiaSQL() )->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FROM( 'categorylinks' )->WHERE( 'cl_to' )->EQUAL_TO( $category );
-			if ( count( $wgContentNamespaces ) > 0 ) {
-				$join_cond = ( count( $wgContentNamespaces ) == 1 ) ? "page_namespace = " . intval( reset( $wgContentNamespaces ) ) : "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )";
-				$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
+				$dbr = wfGetDB( DB_SLAVE );
+				$sql = ( new WikiaSQL() )->SELECT( "COUNT(cl_to)" )->AS_( "count" )->FROM( 'categorylinks' )->WHERE( 'cl_to' )->EQUAL_TO( $category );
+				if ( count( $wgContentNamespaces ) > 0 ) {
+					$join_cond = ( count( $wgContentNamespaces ) == 1 ) ? "page_namespace = " . intval( reset( $wgContentNamespaces ) ) : "page_namespace in ( " . $dbr->makeList( $wgContentNamespaces ) . " )";
+					$sql->JOIN( 'page' )->ON( "page_id = cl_from AND $join_cond" );
+				}
+
+				$result = $sql->run( $dbr, function( $result ) { return $result->fetchObject(); } );
+				return ( is_object( $result ) ) ? intval( $result->count ) : 0;
 			}
-
-			$result = $sql->run( $dbr, function( $result ) { return $result->fetchObject(); } );
-
-			$count = ( is_object( $result ) ) ? $result->count : 0;
-			if ( $count > 0 ) {
-				$wgMemc->set( $cacheKey, $count, $this->categoryRankCacheTTL * 3600 );
-			}
-		}
+		);
 
 		wfProfileOut( __METHOD__ );
 		return $count;

@@ -4,16 +4,20 @@
  *
  * @author Evgeniy 'aquilax' Vasilev
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['api'][] = [
 	'name' => 'Mercury API',
-	'description' => 'This extensions provides API classes for the Mercury project',
+	'descriptionmsg' => 'mercuryapi-desc',
 	'authors' => array(
 		'Evgeniy "aquilax" Vasilev',
 	),
-	'version' => 1.0
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MercuryApi'
 ];
+
+// i18n
+$wgExtensionMessagesFiles['MercuryApi'] = $dir . 'MercuryApi.i18n.php';
 
 // Load needed classes
 $wgAutoloadClasses['MercuryApiController'] = $dir . 'MercuryApiController.class.php';
@@ -30,6 +34,7 @@ $wgWikiaApiControllers['MercuryApiController'] = $dir . 'MercuryApiController.cl
 $wgHooks['ArticleSaveComplete'][] = 'MercuryApiHooks::onArticleSaveComplete';
 $wgHooks['ArticleRollbackComplete'][] = 'MercuryApiHooks::onArticleRollbackComplete';
 $wgHooks['TitleGetSquidURLs'][] = 'MercuryApiHooks::onTitleGetSquidURLs';
+$wgHooks['InstantGlobalsGetVariables'][] = 'MercuryApiHooks::onInstantGlobalsGetVariables';
 
 // Special pages
 $wgSpecialPages['Mercury'] = 'MercurySpecialPageController';

@@ -80,7 +80,7 @@ class EditPageService extends Service {
 		 * We still rely on the parser for other stuff
 		 */
 		if ( $this->mTitle->isCssOrJsPage() ) {
-			$html = '<pre>' . $originalWikitext . '</pre>';
+			$html = '<pre>' . htmlspecialchars( $originalWikitext ) . '</pre>';
 		}
 
 		wfProfileOut(__METHOD__);

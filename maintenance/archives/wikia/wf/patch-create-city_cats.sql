@@ -59,7 +59,7 @@ CREATE TABLE `city_verticals` (
 REPLACE INTO /*$wgDBprefix*/city_verticals (vertical_id, vertical_name, vertical_url, vertical_short ) VALUES
 ( 0, 'Other', 'http://www.wikia.com', 'other' ),
 ( 1, 'TV', 'http://tvhub.wikia.com/', 'tv' ),
-( 2, 'Video Games', 'http://gameshub.wikia.com/', 'games' ),
+( 2, 'Games', 'http://gameshub.wikia.com/', 'games' ),
 ( 3, 'Books', 'http://bookshub.wikia.com/', 'books' ),
 ( 4, 'Comics', 'http://comicshub.wikia.com/', 'comics' ),
 ( 5, 'Lifestyle', 'http://lifestylehub.wikia.com/', 'lifestyle' ),

@@ -198,6 +198,18 @@ $messages['es'] = array(
 	'timeago-second-from-now' => 'un minuto desde ahora',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'timeago-year' => 'Duela {{PLURAL:$1|urte bat|$1 urte}}',
+	'timeago-month' => 'Duela {{PLURAL:$1|hilabete bat|$1 hilabete}}',
+	'timeago-day' => 'Duela {{PLURAL:$1|egun bat|$1 egun}}',
+	'timeago-hour' => 'Duela {{PLURAL:$1|ordu bat|$1 ordu}}',
+	'timeago-minute' => 'Duela {{PLURAL:$1|minutu bat|$1 minutu}}',
+	'timeago-second' => 'duela minutu bat',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -367,14 +379,16 @@ $messages['kk-cyrl'] = array(
 
 /** Korean (한국어)
  * @author Miri-Nae
+ * @author 아라
  */
 $messages['ko'] = array(
-	'timeago-year' => '{{PLURAL:$1|$1년|$1년}} 전',
-	'timeago-month' => '{{PLURAL:$1|$1개월|$1개월}} 전',
-	'timeago-day' => '{{PLURAL:$1|$1일|$1일}} 전',
-	'timeago-hour' => '{{PLURAL:$1|$1시간|$1시간}} 전',
-	'timeago-minute' => '{{PLURAL:$1|$1분|$1분}} 전',
+	'timeago-year' => '{{PLURAL:$1|1년|$1년}} 전',
+	'timeago-month' => '{{PLURAL:$1|한 달|$1달}} 전',
+	'timeago-day' => '{{PLURAL:$1|1일|$1일}} 전',
+	'timeago-hour' => '{{PLURAL:$1|1시간|$1시간}} 전',
+	'timeago-minute' => '{{PLURAL:$1|1분|$1분}} 전',
 	'timeago-second' => '1분 전',
+	'timeago-second-from-now' => '지금부터 1분',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -540,7 +554,7 @@ $messages['ps'] = array(
 	'timeago-year' => '{{PLURAL:$1|يو کال|$1 کالونه}} دمخه',
 	'timeago-month' => '{{PLURAL:$1|يوه مياشت|$1 مياشتې}} دمخه',
 	'timeago-day' => '{{PLURAL:$1|يوه ورځ|$1 ورځې}} دمخه',
-	'timeago-hour' => '{{PLURAL:$1|يو ساعت|$1 ساعتونه}} دمخه',
+	'timeago-hour' => '{{PLURAL:$1|يو گړۍ|$1 گړۍ}} دمخه',
 	'timeago-minute' => '{{PLURAL:$1|يوه دقيقه|$1 دقيقې}} دمخه',
 	'timeago-second' => 'يوه دقيقه دمخه',
 );

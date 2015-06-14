@@ -25,6 +25,12 @@ class ChangeTags {
 		$classes = array();
 
 		$tags = explode( ',', $tags );
+
+		wfRunHooks( 'FormatSummaryRow', [ &$tags ] );
+
+		if( !$tags )
+			return array( '', array() );
+
 		$displayTags = array();
 		foreach( $tags as $tag ) {
 			$displayTags[] = Xml::tags(

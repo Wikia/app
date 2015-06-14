@@ -24,24 +24,27 @@ class AdEngine2ContextService {
 				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
 			}
 
+			$monetizationServiceAds = null;
+			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
+				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
+			}
+
 			$langCode = $title->getPageLanguage()->getCode();
 
 			return [
 				'opts' => $this->filterOutEmptyItems( [
-					'adsInContent' => !!$wg->EnableAdsInContent,
-					'adsInHead' => !!$wg->LoadAdsInHead,
-					'alwaysCallDart' => $wg->AdDriverAlwaysCallDart,
-					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
+					'adsInContent' => $wg->EnableAdsInContent,
+					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
-					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
 					'pageType' => $adPageTypeService->getPageType(),
+					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
-					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'trackSlotState' => $wg->AdDriverTrackState,
+					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
-					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
+					'enablePageCategories' => array_search( $langCode, $wg->AdPageLevelCategoryLangs ) !== false,
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
@@ -53,21 +56,28 @@ class AdEngine2ContextService {
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,
 					'wikiDirectedAtChildren' => $wg->WikiDirectedAtChildrenByFounder || $wg->WikiDirectedAtChildrenByStaff,
+					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
-					'remnantGptMobile' => !!$wg->AdDriverEnableRemnantGptMobile,
-					'sevenOneMedia' => !!$wg->AdDriverUseSevenOneMedia,
+					'monetizationService' => $wg->AdDriverUseMonetizationService,
+					'monetizationServiceAds' => $monetizationServiceAds,
+					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
-					'taboola' => !!$wg->AdDriverUseTaboola,
+					'taboola' => $wg->AdDriverUseTaboola,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
+					'exitstitial' => $wg->EnableOutboundScreenExt,
+					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
+					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
+				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [
-					'directGpt' => $wg->AdDriverForceDirectGptAd,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
+					'openX' => $wg->AdDriverForceOpenXAd,
+					'turtle' => $wg->AdDriverForceTurtleAd,
 				] ),
 			];
 		} );

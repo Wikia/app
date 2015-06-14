@@ -137,85 +137,85 @@
 	@if $imageName == 'big_arrow_black' {
 		$image-width: 49px;
 		$image-height: 31px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_arrow_black.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_arrow_black.png'); /* inline */
 	}
 	// @autosprite-image-details: big_arrow_white.png@133,0,5f66ce3d0f67caec72a159b3ff9c68c6
 	@if $imageName == 'big_arrow_white' {
 		$image-width: 49px;
 		$image-height: 31px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_arrow_white.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_arrow_white.png'); /* inline */
 	}
 	// @autosprite-image-details: big_black_arrow.png@194,0,121662448b5607e7f8f17b42132be4b0
 	@if $imageName == 'big_black_arrow' {
 		$image-width: 49px;
 		$image-height: 31px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_black_arrow.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_black_arrow.png'); /* inline */
 	}
 	// @autosprite-image-details: big_white_arrow.png@255,0,5f66ce3d0f67caec72a159b3ff9c68c6
 	@if $imageName == 'big_white_arrow' {
 		$image-width: 49px;
 		$image-height: 31px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_white_arrow.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/big_white_arrow.png'); /* inline */
 	}
 	// @autosprite-image-details: black_small_arrow.png@316,0,5a7b696995edf9742febd5093683e4d6
 	@if $imageName == 'black_small_arrow' {
 		$image-width: 13px;
 		$image-height: 9px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/black_small_arrow.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/black_small_arrow.png'); /* inline */
 	}
 	// @autosprite-image-details: collaboration_icon_black.png@341,0,4e296f48ed84e7f2cc8db6737ddbfea9
 	@if $imageName == 'collaboration_icon_black' {
 		$image-width: 23px;
 		$image-height: 21px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/collaboration_icon_black.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/collaboration_icon_black.png'); /* inline */
 	}
 	// @autosprite-image-details: collaboration_icon_white.png@376,0,0959cca012cfb6820591e03438ca4b4b
 	@if $imageName == 'collaboration_icon_white' {
 		$image-width: 23px;
 		$image-height: 21px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/collaboration_icon_white.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/collaboration_icon_white.png'); /* inline */
 	}
 	// @autosprite-image-details: high_quality_icon_black.png@411,0,1380b24b57b1399df0205e050b52846c
 	@if $imageName == 'high_quality_icon_black' {
 		$image-width: 20px;
 		$image-height: 20px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/high_quality_icon_black.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/high_quality_icon_black.png'); /* inline */
 	}
 	// @autosprite-image-details: high_quality_icon_white.png@443,0,38771dccfd29b7ccd92919f2ba268b68
 	@if $imageName == 'high_quality_icon_white' {
 		$image-width: 19px;
 		$image-height: 21px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/high_quality_icon_white.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/high_quality_icon_white.png'); /* inline */
 	}
 	// @autosprite-image-details: license_icon_black.png@474,0,321c904fab4c5fa73e903383ee48d194
 	@if $imageName == 'license_icon_black' {
 		$image-width: 21px;
 		$image-height: 20px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/license_icon_black.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/license_icon_black.png'); /* inline */
 	}
 	// @autosprite-image-details: license_icon_white.png@507,0,b610c7dfe1e78e07a3c69cf2ab6d600e
 	@if $imageName == 'license_icon_white' {
 		$image-width: 20px;
 		$image-height: 21px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/license_icon_white.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/license_icon_white.png'); /* inline */
 	}
 	// @autosprite-image-details: small_arrow_black.png@539,0,5a7b696995edf9742febd5093683e4d6
 	@if $imageName == 'small_arrow_black' {
 		$image-width: 13px;
 		$image-height: 9px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/small_arrow_black.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/small_arrow_black.png'); /* inline */
 	}
 	// @autosprite-image-details: small_arrow_white.png@564,0,caf71b236205056840dd065187d73627
 	@if $imageName == 'small_arrow_white' {
 		$image-width: 13px;
 		$image-height: 9px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/small_arrow_white.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/small_arrow_white.png'); /* inline */
 	}
 	// @autosprite-image-details: white_small_arrow.png@589,0,caf71b236205056840dd065187d73627
 	@if $imageName == 'white_small_arrow' {
 		$image-width: 13px;
 		$image-height: 9px;
-		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/white_small_arrow.png'); /* base64 */
+		background-image: url('/extensions/wikia/LicensedVideoSwap/images/sprite-LicensedVideoSwap/white_small_arrow.png'); /* inline */
 	}
 	@if $image-width != -1 {
 		$position-x: 0px;

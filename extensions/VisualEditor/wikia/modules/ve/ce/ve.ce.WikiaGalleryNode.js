@@ -29,8 +29,8 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 	this.rebuild();
 
 	// Events
-	this.model.connect( this, { 'update': 'onUpdate' } );
-	this.$element.on( 'mediaLoaded', ve.bind( function () {
+	this.model.connect( this, { update: 'onUpdate' } );
+	this.$element.on( 'mediaLoaded', function () {
 		var focusWidget = this.surface.getSurface().getFocusWidget();
 		if ( focusWidget ) {
 			focusWidget.adjustLayout();
@@ -38,7 +38,7 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 		if ( this.isFocused() ) {
 			this.redrawHighlights();
 		}
-	}, this ) );
+	}.bind( this ) );
 };
 
 /* Inheritance */
@@ -78,22 +78,22 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
 			continue;
 		}
 		itemModel = item.getModel();
-		title = mw.Title.newFromText( ve.dm.MWImageNode.static.getFilenameFromResource( itemModel.getAttribute( 'resource' ) ) );
+		title = mw.Title.newFromText( ve.dm.MWImageNode.prototype.getFilename.call( itemModel ) );
 		titleUrl = title.getUrl();
 		titleName = title.getMainText();
 		thumbUrl = ve.ce.WikiaGalleryNode.static.getThumbUrl( itemModel.getAttribute( 'src' ) );
 
 		galleryData.push( {
-			'title': titleName,
-			'thumbUrl': thumbUrl,
-			'thumbHtml': ve.ce.WikiaGalleryNode.static.getThumbHtml(
+			title: titleName,
+			thumbUrl: thumbUrl,
+			thumbHtml: ve.ce.WikiaGalleryNode.static.getThumbHtml(
 					titleUrl,
 					thumbUrl,
 					titleName
 				),
-			'linkHref': titleUrl,
-			'dbKey': titleName,
-			'caption': item.children[0] && item.children[0].getLength() > 0 ? item.children[0].$element.html() : null
+			linkHref: titleUrl,
+			dbKey: titleName,
+			caption: item.children[0] && item.children[0].getLength() > 0 ? item.children[0].$element.html() : null
 		} );
 	}
 
@@ -104,7 +104,7 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
  * @method
  */
 ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
-	require([ 'mediaGallery.views.gallery' ], ve.bind( function ( Gallery ) {
+	require([ 'mediaGallery.views.gallery' ], function ( Gallery ) {
 		var galleryOptions = {
 				$el: this.$( '<div></div>' ),
 				$wrapper: this.$element,
@@ -127,7 +127,7 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 
 		// TODO: Remove after https://wikia-inc.atlassian.net/browse/VID-2112 is done
 		gallery.$el.trigger('galleryInserted');
-	}, this ) );
+	}.bind( this ) );
 };
 
 ve.ce.WikiaGalleryNode.static.getThumbUrl = function ( url ) {

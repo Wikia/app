@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wmu-desc' => 'WikiaMiniUpload extension',
 	'wmu-upload-image' => 'Upload Photo',
 	'wmu-title' => 'Upload Photo',
 	'wmu-upload' => 'Upload',
@@ -89,6 +90,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'wmu-desc' => '{{desc}}',
 	'wmu-upload' => '{{Identical|Upload}}',
 	'wmu-find' => 'Text of a heading (H1)
 {{Identical|Find}}',
@@ -367,7 +369,7 @@ $messages['az'] = array(
 	'wmu-gallery' => 'Qalereya',
 );
 
-/** South Azerbaijani (تورکجه)
+/** South Azerbaijani (تۆرکجه)
  * @author Erdemaslancan
  */
 $messages['azb'] = array(
@@ -564,6 +566,7 @@ $messages['br'] = array(
  * @author Fitoschido
  * @author Gemmaa
  * @author Paucabot
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wmu-upload-image' => 'Carregar una imatge',
@@ -638,6 +641,10 @@ $messages['ca'] = array(
 	'wmu-alignment' => 'Alineació',
 	'wmu-file-protected' => 'Aquesta imatge està protegida',
 	'wmu-file-error' => 'Hi ha hagut un error durant el procés de càrrega. Intenta-ho de nou.',
+	'wmu-file-not-found' => "No s'ha trobat el fitxer",
+	'wmu-error-exact-height' => "L'alçada de la imatge ha de ser eactamanet $1 px (aquesta té $2 px)",
+	'wmu-error-exact-width' => "L'amplada de la imatge ha de ser exactament $1 (aquesta té $2 px)",
+	'wmu-error-exact-width-height' => 'La mida de la imatge ha de ser exactamanet $1 x $3 px (aquesta fa $2 x $4 px)',
 );
 
 /** Chechen (нохчийн)
@@ -646,7 +653,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'wmu-upload' => 'Чуяккха',
-	'wmu-find' => 'Лаха',
+	'wmu-find' => 'Лахар',
 	'wmu-upload-btn' => 'Чуяккха',
 	'wmu-find-btn' => 'Каро',
 	'wmu-insert' => 'Чуйилла',
@@ -815,6 +822,7 @@ $messages['cy'] = array(
  * @author Tiin
  */
 $messages['de'] = array(
+	'wmu-desc' => 'WikiaMiniUpload-Erweiterung',
 	'wmu-upload-image' => 'Bild hochladen',
 	'wmu-title' => 'Foto hochladen',
 	'wmu-upload' => 'Hochladen',
@@ -970,14 +978,14 @@ $messages['de-formal'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'wmu-upload-image' => 'Resim Barke',
-	'wmu-title' => 'Resim Barke',
+	'wmu-upload-image' => 'Resım Bar ke',
+	'wmu-title' => 'Resım Bar ke',
 	'wmu-upload' => 'Bar ke',
-	'wmu-find' => 'Bıvin',
+	'wmu-find' => 'Bıvêne',
 	'wmu-thiswiki' => 'E na wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => 'Bar ke',
-	'wmu-find-btn' => 'Bıvin',
+	'wmu-find-btn' => 'Bıvêne',
 	'wmu-rename' => 'Resimi fına name ke',
 	'wmu-insert' => 'Têare ker',
 	'wmu-name' => 'Name',
@@ -986,7 +994,7 @@ $messages['diq'] = array(
 	'wmu-size' => 'Gırdiye',
 	'wmu-thumbnail' => 'Resmo qıckek',
 	'wmu-fullsize' => 'Full-gırdiye ($1x$2px)',
-	'wmu-width' => 'Herayey',
+	'wmu-width' => 'Herayiye',
 	'wmu-layout' => 'Ca gınayiş',
 	'wmu-caption' => 'Bınnuşte',
 	'wmu-link' => 'Link',
@@ -1035,6 +1043,7 @@ $messages['eo'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'wmu-desc' => 'Extensión WikiaMiniUpload',
 	'wmu-upload-image' => 'Subir una imagen',
 	'wmu-title' => 'Subir imagen',
 	'wmu-upload' => 'Subir',
@@ -1116,6 +1125,7 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  */
 $messages['eu'] = array(
 	'wmu-upload' => 'Igo',
@@ -1135,10 +1145,14 @@ $messages['eu'] = array(
 	'wmu-insert2' => 'Fitxategia txertatu',
 	'wmu-prev' => 'Aurreko 8',
 	'wmu-next' => 'Hurrengo 8',
-	'wmu-back' => 'atzera', # Fuzzy
+	'wmu-back' => 'Hautatu beste argazki bat',
 	'wmu-imagelink' => '<b>Berria!</b> Irudiak gehitu',
 	'wmu-imagebutton' => 'Irudiak gehitu',
+	'wmu-columns' => '{{PLURAL:$1|Zutabe bat|$1 zutabe}}',
 	'wmu-column' => 'Zutabeak',
+	'wmu-more-options' => 'Aukera gehiago',
+	'wmu-fewer-options' => 'Aukera gutxiago',
+	'wmu-file-not-found' => 'Ez da fitxategia aurkitu',
 );
 
 /** Persian (فارسی)
@@ -1217,6 +1231,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'wmu-desc' => 'Extension WikiaMiniUpload',
 	'wmu-upload-image' => 'Téléverser une image',
 	'wmu-title' => 'Importer une image',
 	'wmu-upload' => 'Importer',
@@ -1303,6 +1318,7 @@ $messages['fy'] = array(
 	'wmu-find' => 'Sykje',
 	'wmu-find-btn' => 'Sykje',
 	'wmu-name' => 'Namme',
+	'wmu-optional' => '(opsjoneel)',
 	'wmu-prev' => 'Foarige 8',
 	'wmu-next' => 'Folgjende 8',
 );
@@ -1699,7 +1715,7 @@ $messages['id'] = array(
  * @author Sapral Mikail
  */
 $messages['inh'] = array(
-	'wmu-gallery' => 'Суртанче',
+	'wmu-gallery' => 'Суртгуллам',
 );
 
 /** Italian (italiano)
@@ -1810,24 +1826,36 @@ $messages['kn'] = array(
  * @author Hym411
  * @author Miri-Nae
  * @author Revi
+ * @author SeoJeongHo
  * @author 아라
  */
 $messages['ko'] = array(
+	'wmu-upload-image' => '그림 올리기',
+	'wmu-title' => '그림 올리기',
+	'wmu-upload' => '올리기',
 	'wmu-find' => '찾기',
+	'wmu-flickr' => '플리커',
+	'wmu-upload-btn' => '올리기',
 	'wmu-find-btn' => '찾기',
+	'wmu-flickr-inf' => '플리커에서 허가 받은 그림을 찾고, 귀하의 위키에 넣어 보세요.',
 	'wmu-license' => '라이선스',
 	'wmu-licensing' => '라이선스',
 	'wmu-size' => '크기',
 	'wmu-thumbnail' => '섬네일',
 	'wmu-width' => '너비',
+	'wmu-layout' => '배치',
 	'wmu-caption' => '설명',
 	'wmu-link' => '링크',
+	'wmu-optional' => '(선택 사항)',
 	'wmu-gallery' => '갤러리',
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
+	'wmu-more-options' => '더 많은 옵션들',
+	'wmu-fewer-options' => '설명 가리기',
 	'wmu-file-not-found' => '파일을 찾지 못했습니다',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
  * @author George Animal
  * @author Ghybu
  */
@@ -1846,7 +1874,7 @@ $messages['ku-latn'] = array(
 	'wmu-license' => 'Lîsans',
 	'wmu-thumbnail' => 'Thumbnail',
 	'wmu-link' => 'Girêdan',
-	'wmu-back' => 'paşve biçe', # Fuzzy
+	'wmu-back' => 'wêneyên din hilbijêre',
 	'wmu-imagebutton' => 'Wêneyan zêde bike',
 	'wmu-hide-license-msg' => 'lîsansa nivîsê veşêre',
 	'wmu-show-license-msg' => 'lîsansa nivîsê nîşan bide',
@@ -1880,6 +1908,7 @@ $messages['lb'] = array(
 	'wmu-thumbnail' => 'Miniaturbild',
 	'wmu-width' => 'Breet',
 	'wmu-link' => 'Link',
+	'wmu-optional' => '(fakultativ)',
 	'wmu-prev' => 'Vireg 8',
 	'wmu-next' => 'Nächst 8',
 	'wmu-insert3' => 'Dëst Bild drasetzen',
@@ -1911,6 +1940,7 @@ $messages['lv'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'wmu-desc' => 'Додаток ВикијаМиниПодигање',
 	'wmu-upload-image' => 'Подигни слика',
 	'wmu-title' => 'Подигни слика',
 	'wmu-upload' => 'Подигање',
@@ -1995,6 +2025,7 @@ $messages['mk'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'wmu-desc' => 'Sambungan WikiaMiniUpload',
 	'wmu-upload-image' => 'Muat Naik Gambar',
 	'wmu-title' => 'Muat Naik Gambar',
 	'wmu-upload' => 'Muat naik',
@@ -2076,9 +2107,10 @@ $messages['ms'] = array(
 
 /** Maltese (Malti)
  * @author Chrisportelli
+ * @author Leli Forte
  */
 $messages['mt'] = array(
-
+	'wmu-fewer-options' => 'Inqas għażliet',
 );
 
 /** Burmese (မြန်မာဘာသာ)
@@ -2300,7 +2332,32 @@ Klik hieronder om meer afbeeldingen aan de galerij toe te voegen.',
 	'wmu-no-rights' => 'Je mag geen afbeeldingen toevoegen aan deze pagina',
 );
 
-/** Deitsch (Deitsch)
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wmu-find' => 'Recercar',
+	'wmu-thiswiki' => 'Aqueste wiki',
+	'wmu-flickr' => 'Flickr',
+	'wmu-upload-btn' => 'Importar',
+	'wmu-find-btn' => 'Recercar',
+	'wmu-insert' => 'Inserir',
+	'wmu-name' => 'Nom',
+	'wmu-license' => 'Licéncia',
+	'wmu-licensing' => 'Licéncia',
+	'wmu-size' => 'Talha',
+	'wmu-thumbnail' => 'Miniatura',
+	'wmu-width' => 'Largor',
+	'wmu-layout' => 'Orientacion',
+	'wmu-caption' => 'Legenda',
+	'wmu-link' => 'Ligam',
+	'wmu-optional' => '(opcional)',
+	'wmu-prev' => 'Precedent 8',
+	'wmu-next' => 'Seguent 8',
+	'wmu-license-cc' => 'Jos licéncia Creative Commons Attribution-Share Alike 3.0',
+);
+
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
@@ -2309,7 +2366,7 @@ $messages['pdc'] = array(
 	'wmu-back' => 'zerrick', # Fuzzy
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  */
 $messages['pfl'] = array(
 	'wmu-prev' => 'Voriche 8',
@@ -2320,8 +2377,10 @@ $messages['pfl'] = array(
  * @author BeginaFelicysym
  * @author Clamira
  * @author Sovq
+ * @author VerMa
  */
 $messages['pl'] = array(
+	'wmu-desc' => 'Rozszerzenie WikiaMiniUpload',
 	'wmu-upload-image' => 'Prześlij obraz',
 	'wmu-title' => 'Prześlij obraz',
 	'wmu-upload' => 'Prześlij',
@@ -2505,7 +2564,10 @@ $messages['ps'] = array(
 	'wmu-back' => 'يو بل انځور ټاکل',
 	'wmu-imagebutton' => 'انځورونه ورگډول',
 	'wmu-gallery' => 'انځورتون',
+	'wmu-columns' => '$1 {{PLURAL:$1|ستنې|ستنې}}', # Fuzzy
 	'wmu-gallery-btn1' => 'يو بل انځور ورگډول',
+	'wmu-gallery-btn2' => 'په مخ کې انځورتون ورگډول',
+	'wmu-no-preview' => 'د مخ مخليدنې حالت په وخت کې تاسې انځور نه شی ورگډولی',
 	'wmu-more-options' => 'نورې خوښنې',
 	'wmu-fewer-options' => 'لږې خوښنې',
 );
@@ -2883,6 +2945,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wmu-desc' => 'WikiaMiniUpload-tillägg',
 	'wmu-upload-image' => 'Ladda upp bild',
 	'wmu-title' => 'Ladda upp foto',
 	'wmu-upload' => 'Ladda upp',
@@ -3161,9 +3224,11 @@ $messages['tyv'] = array(
  * @author Andriykopanytsia
  * @author Prima klasy4na
  * @author Ua2004
+ * @author Капитан Джон Шепард
  * @author Тест
  */
 $messages['uk'] = array(
+	'wmu-desc' => 'ВікіяМініЗавантажити розширення',
 	'wmu-upload-image' => 'Завантажити світлину',
 	'wmu-title' => 'Завантажити світлину',
 	'wmu-upload' => 'Завантажити',
@@ -3243,7 +3308,7 @@ $messages['uk'] = array(
 	'wmu-error-bad-aspect-ratio' => 'Хибний формат зображення ($1 x $2 px)',
 );
 
-/** Uzbek (oʻzbekcha)
+/** Uzbek (oʻzbekcha/ўзбекча)
  * @author CoderSI
  */
 $messages['uz'] = array(
@@ -3350,6 +3415,7 @@ $messages['yi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wmu-desc' => 'WikiaMiniUpload扩展',
 	'wmu-upload-image' => '上载图片',
 	'wmu-title' => '上载图片',
 	'wmu-upload' => '上载',
@@ -3423,10 +3489,15 @@ $messages['zh-hans'] = array(
 	'wmu-file-protected' => '本图片受到保护',
 	'wmu-file-error' => '抱歉，上传过程中出错了。请再试一次。',
 	'wmu-file-not-found' => '无法找到文件',
+	'wmu-error-exact-height' => '图像高度必须刚好是 $1 像素（得到的是 $2 像素）',
+	'wmu-error-exact-width' => '图像宽度必须刚好是 $1 像素（得到的是 $2 像素）',
+	'wmu-error-exact-width-height' => '图像宽度和高度必须刚好是 $1 x $3 像素（得到的是 $2 x $4 像素）',
+	'wmu-error-bad-aspect-ratio' => '纵横比不正确（$1 x $2 像素）',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'wmu-upload-image' => '上傳圖片',
@@ -3434,11 +3505,11 @@ $messages['zh-hant'] = array(
 	'wmu-upload' => '上傳',
 	'wmu-notlogged' => '登入或註冊後從您的電腦中上傳圖片',
 	'wmu-find' => '尋找',
-	'wmu-thiswiki' => '本維基',
+	'wmu-thiswiki' => '本 wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => '上傳',
 	'wmu-find-btn' => '尋找',
-	'wmu-flickr-inf' => '在Flickr搜尋適合的自由授權圖片並將之導入你的維基中',
+	'wmu-flickr-inf' => '在 Flickr 搜尋適合的自由授權圖片並將之匯入你的 wiki 中。',
 	'wmu-conflict-inf' => '<h1>抱歉，這個檔案名已存在。</h1>您打算如何處理<b>$1</b>?',
 	'wmu-rename' => '重命名您的圖片',
 	'wmu-existing' => '使用已有圖片',
@@ -3463,7 +3534,7 @@ $messages['zh-hant'] = array(
 	'wmu-flickr2' => 'Flickr圖片（$1個{{PLURAL:$1|結果|結果}}）',
 	'wmu-insert3' => '插入這個圖片',
 	'wmu-recent-inf' => '最近上傳的圖片',
-	'wmu-thiswiki2' => '本維基圖片 ($1個 {{PLURAL:$1|result|結果}})',
+	'wmu-thiswiki2' => '本 wiki 圖片 ($1個 {{PLURAL:$1|result|結果}})',
 	'wmu-success' => '<h1>成功</h1>您已插入圖片。',
 	'wmu-success-placeholder' => '<h1>成功</h1>',
 	'wmu-return' => '返回到編輯',
@@ -3480,12 +3551,12 @@ $messages['zh-hant'] = array(
 	'wmu-hide-license-msg' => '隱藏授權文本',
 	'wmu-show-license-msg' => '顯示授權文本',
 	'wmu-max-thumb' => '縮圖尺寸過大，恢復為原來的尺寸',
-	'wmu-notallowed' => '您不能在本維基中上傳圖片',
-	'wmu-readonly' => '您不能上傳圖片，本維基處於唯讀狀態。',
+	'wmu-notallowed' => '您不能在本 wiki 中上傳圖片',
+	'wmu-readonly' => '您不能上傳圖片，本 wiki 處於唯讀狀態。',
 	'wmu-gallery' => '圖庫',
 	'wmu-columns' => '$1{{PLURAL:$1|列|列}}',
 	'wmu-column' => '列數',
-	'wmu-uploaddisabled' => '本維基禁止了檔案的上傳',
+	'wmu-uploaddisabled' => '本 wiki 禁止了檔案的上傳',
 	'wmu-gallery-success' => '您将新圖片增加到了一個新的圖庫中。點擊下面以增加更多的圖片或者插入圖庫',
 	'wmu-gallery-btn1' => '增加另一張圖片',
 	'wmu-gallery-btn2' => '將圖庫插入文章中',

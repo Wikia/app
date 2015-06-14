@@ -133,18 +133,21 @@ foreach($csv as $line) {
 		//echo "checking $name against $cat1 $cat2\n";
 		//echo "result: " . var_dump(stristr($name, $cat1)) . "\n";
 		//echo "result: " . var_dump(stristr($name, $cat2)) . "\n";
-		if (stristr($name, $cat1) !== false) {
+		if ( !empty($cat1) && stristr($name, $cat1) !== false) {
 			$cat1_id = $id;
 		}
-		if (stristr($name, $cat2) !== false) {
+		if ( !empty($cat2) && stristr($name, $cat2) !== false) {
 			$cat2_id = $id;
 		}
 	}
 
-	echo "Changing $city_url ($city_id) to $vertical_id\n";
 	if ( !$dryrun ) {
+		echo "Changing $city_url ($city_id) to $vertical_id\n";
 		$hub->setVertical( $city_id, $vertical_id, $reason );
+	} else {
+		echo "NOT Changing $city_url ($city_id) to $vertical_id\n";
 	}
+
 	$categories = [];
 	if ( !empty($cat1_id) ) {
 		$categories[] = $cat1_id;
@@ -152,9 +155,11 @@ foreach($csv as $line) {
 	if ( !empty($cat2_id) ) {
 		$categories[] = $cat2_id;
 	}
-	echo "Changing categories to $cat1 ($cat1_id) $cat2 ($cat2_id)\n";
 	if ( !$dryrun && !empty($categories)) {
+		echo "Changing categories to $cat1 ($cat1_id) $cat2 ($cat2_id)\n";
 		$hub->updateCategories( $city_id, $categories, $reason );
+	} else {
+		echo "NOT changing categories to $cat1 ($cat1_id) $cat2 ($cat2_id)\n";
 	}
 
 }

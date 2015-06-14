@@ -4,6 +4,8 @@
  * @author Inez Korczyński <korczynski@gmail.com>
  */
 
+use Wikia\Util\GlobalStateWrapper;
+
 class AssetsManagerBaseBuilder {
 
 	protected $mOid;
@@ -32,6 +34,11 @@ class AssetsManagerBaseBuilder {
 		}
 	}
 
+	/**
+	 * @param float $processingTimeStart Unix timestamp in microseconds used for profiling (when profiling is forced)
+	 * @return string
+	 * @throws Exception
+	 */
 	public function getContent( $processingTimeStart = null ) {
 		$minifyTimeStart = null;
 
@@ -78,7 +85,6 @@ class AssetsManagerBaseBuilder {
 	public function getCacheDuration() {
 		global $wgResourceLoaderMaxage, $wgStyleVersion;
 		if($this->mCb > $wgStyleVersion) {
-			Wikia::log(__METHOD__, false, "shorter TTL set for {$this->mOid}", true);
 			return $wgResourceLoaderMaxage['unversioned'];
 		} else {
 			return $wgResourceLoaderMaxage['versioned'];
@@ -93,6 +99,12 @@ class AssetsManagerBaseBuilder {
 		return 'Accept-Encoding';
 	}
 
+	/**
+	 * @param $content
+	 * @param bool $useYUI
+	 * @return string
+	 * @throws Exception
+	 */
 	public static function minifyJS($content, $useYUI = false) {
 		global $IP;
 		wfProfileIn(__METHOD__);
@@ -100,31 +112,50 @@ class AssetsManagerBaseBuilder {
 		$tempInFile = tempnam(sys_get_temp_dir(), 'AMIn');
 		file_put_contents($tempInFile, $content);
 
+		$retval = 1;
+
 		if($useYUI) {
-			$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
-			shell_exec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
-			$out = file_get_contents($tempOutFile);
-			unlink($tempOutFile);
+			wfProfileIn(__METHOD__ . '::yui');
+
+			$wrapper = new GlobalStateWrapper( [
+				'wgMaxShellMemory' => 0, // because Java is hungry
+			] );
+
+			$out = $wrapper->wrap( function () use ( $IP, &$retval, $tempInFile ) {
+				$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
+				wfShellExec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}", $retval);
+				$out = file_get_contents($tempOutFile);
+				unlink($tempOutFile);
+
+				return $out;
+			});
+
+			wfProfileOut(__METHOD__ . '::yui');
 		} else {
+			wfProfileIn(__METHOD__ . '::jsmin');
 			$jsmin = "{$IP}/lib/vendor/jsmin";
-			$out = shell_exec("cat $tempInFile | $jsmin");
+			$out = wfShellExec("cat $tempInFile | $jsmin", $retval);
+			wfProfileOut(__METHOD__ . '::jsmin');
 		}
 
 		unlink($tempInFile);
+
+		if ( $retval !== 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'AssetsManagerBaseBuilder::minifyJS failed', [
+				'exception' => new Exception()
+			]);
+
+			throw new Exception( 'JS minification failed' );
+		}
 
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
 	private function minifyCSS($content) {
-		$minifyTimeStart = microtime(true);
-
 		wfProfileIn(__METHOD__);
 		$out = CSSMin::minify($content);
 		wfProfileOut(__METHOD__);
-
-		\Wikia::log('sass-minify-WIKIA', false,
-			sprintf('%s: took %.2f ms', $this->mOid, ((microtime(true) - $minifyTimeStart) * 1000)), true /* $force */);
 
 		return $out;
 	}

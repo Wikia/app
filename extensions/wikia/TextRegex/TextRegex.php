@@ -16,6 +16,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Moli',
 	'description' => 'A special page with the interface for blocking, and unblocking of unwanted phrases in any text',
 	'descriptionmsg' => 'textregex-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TextRegex'
 );
 
 // New user right

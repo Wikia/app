@@ -6,81 +6,47 @@ class GlobalNavigationTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	/**
-	 * @param $lang
-	 * @param $expectedUrl
-	 * @dataProvider testGetCentralServerUrlDataProvider
-	 */
-	public function testGetCentralServerUrl( $lang, $expectedUrl ) {
-		$globalTitleMock = $this->getMock( 'GlobalTitle', ['getServer'] );
-		$globalTitleMock->expects( $this->any() )
-			->method( 'getServer' )
-			->will( $this->returnValue( $expectedUrl ) );
+	public function testGetCreateNewWikiWhenLangDifferentThanDefault() {
+		$globalNavHelperMock = $this->getMock( 'GlobalNavigationHelper', ['createCNWUrlFromGlobalTitle'] );
+		$globalNavHelperMock->expects( $this->any() )
+			->method( 'createCNWUrlFromGlobalTitle' )
+			->will( $this->returnValue( 'bar' ) );
 
-		$globalNavMock = $this->getMock( 'GlobalNavigationController', ['getCentralWikiTitleForLang'] );
-		$globalNavMock->expects( $this->any() )
-			->method( 'getCentralWikiTitleForLang' )->will( $this->returnValue( $globalTitleMock ) );
-
-		$result = $globalNavMock->getCentralUrlForLang( $lang );
-		$this->assertEquals( $expectedUrl, $result, 'Wiki Central server url is different than expected' );
+		$this->assertEquals( $globalNavHelperMock->getCreateNewWikiUrl( 'foo' ), 'bar?uselang=foo' );
 	}
 
-	public function testGetCentralServerUrlDataProvider() {
-		return [
-			['de', 'http://de.wikia.com'],
-			['en', 'http://www.wikia.com'],
-			['it', 'http://www.wikia.com'],
-			['zh', 'http://www.wikia.com'],
-		];
+	public function testGetCreateNewWikiUrlWhenLangIsDefault() {
+		$globalNavHelperMock = $this->getMock( 'GlobalNavigationHelper', ['createCNWUrlFromGlobalTitle'] );
+		$globalNavHelperMock->expects( $this->any() )
+			->method( 'createCNWUrlFromGlobalTitle' )
+			->will( $this->returnValue( 'foo' ) );
+
+		$this->assertEquals( $globalNavHelperMock->getCreateNewWikiUrl( 'en' ), 'foo' );
 	}
 
-	/**
-	 * @param $lang
-	 * @param $centralUrl
-	 * @param $searchLocalUrl
-	 * @param $expectedUrl
-	 * @dataProvider testGetGlobalSearchUrlDataProvider
-	 */
-	public function testGetGlobalSearchUrl( $lang, $centralUrl, $searchLocalUrl, $expectedUrl ) {
-		$globalNavMock = $this->getMock( 'GlobalNavigationController', ['getTitleForSearch'] );
-		$globalNavMock->expects( $this->any() )
-			->method( 'getTitleForSearch' )
-			->will( $this->returnValue( $searchLocalUrl ) );
+	public function testGetLangForSearchResultsIfResultsLangSet() {
+		$wgRequestMock = $this->getMock( 'WebRequest', [ 'getVal' ] );
+		$wgRequestMock->expects($this->any())
+			->method('getVal')
+			->will($this->returnValue('foo'));
+		$this->mockGlobalVariable('wgRequest', $wgRequestMock);
 
-		$result = $globalNavMock->getGlobalSearchUrl( $centralUrl, $lang );
-		$this->assertEquals( $expectedUrl, $result, 'Global Search url is different than expected' );
+		$globalNavHelper = new GlobalNavigationHelper();
+
+		$this->assertEquals($globalNavHelper->getLangForSearchResults(), 'foo');
 	}
 
-	public function testGetGlobalSearchUrlDataProvider() {
-		return [
-			['de', 'http://de.wikia.com', '/wiki/Spezial:Suche', 'http://de.wikia.com/wiki/Spezial:Suche'],
-			['en', 'http://www.wikia.com', '/wiki/Special:Search', 'http://www.wikia.com/wiki/Special:Search'],
-			['it', 'http://www.wikia.com', null, 'http://www.wikia.com/wiki/Special:Search'],
-			['zh', 'http://www.wikia.com', null, 'http://www.wikia.com/wiki/Special:Search'],
-		];
-	}
+	public function testGetLangForSearchResultsIfResultsLangNotSet() {
+		$wgRequestMock = $this->getMock( 'WebRequest', [ 'getVal' ] );
+		$wgRequestMock->expects($this->any())
+			->method('getVal')
+			->will($this->returnValue(null));
+		$this->mockGlobalVariable('wgRequest', $wgRequestMock);
 
-	/**
-	 * @param $lang
-	 * @param $expectedUrl
-	 * @dataProvider testGetCreateNewWikiUrlDataProvider
-	 */
-	public function testGetCreateNewWikiUrl( $lang, $expectedUrl ) {
-		$globalNavMock = $this->getMock( 'GlobalNavigationController', ['getCreateNewWikiFullUrl'] );
-		$globalNavMock->expects( $this->any() )
-			->method( 'getCreateNewWikiFullUrl' )
-			->will( $this->returnValue( 'http://www.wikia.com/Special:CreateNewWiki' ) );
+		$this->mockGlobalVariable('wgLanguageCode', 'bar');
 
-		$result = $globalNavMock->getCreateNewWikiUrl( $lang );
-		$this->assertEquals( $expectedUrl, $result, 'Create New Wiki URL is different than expected' );
-	}
+		$globalNavHelper = new GlobalNavigationHelper();
 
-	public function testGetCreateNewWikiUrlDataProvider() {
-		return [
-			['de', 'http://www.wikia.com/Special:CreateNewWiki?uselang=de'],
-			['en', 'http://www.wikia.com/Special:CreateNewWiki'],
-			['it', 'http://www.wikia.com/Special:CreateNewWiki?uselang=it'],
-			['zh', 'http://www.wikia.com/Special:CreateNewWiki?uselang=zh'],
-		];
+		$this->assertEquals($globalNavHelper->getLangForSearchResults(), 'bar');
 	}
 }

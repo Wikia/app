@@ -1304,34 +1304,6 @@ if (!function_exists('http_build_url')) {
 }
 
 /**
- * Sleep until wgDBLightMode is enable. This variable is used to disable (sleep) all
- * maintanance scripts while something is wrong with performance
- *
- * @author Piotr Molski (moli) <moli at wikia-inc.com>
- * @param int $maxSleep
- * @return null
- */
-function wfDBLightMode( $maxSleep ) {
-	global $wgExternalSharedDB;
-
-	if ( !$maxSleep ) return false;
-
-	while ( WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ) ) ) {
-		Wikia::log( __METHOD__, "info", "All crons works in DBLightMode ( sleep $maxSleep ) ..." );
-		sleep($maxSleep);
-	}
-
-	return true;
-}
-
-function wfIsDBLightMode() {
-	global $wgExternalSharedDB;
-
-	$dbLightMode = WikiFactory::getVarValueByName( 'wgDBLightMode', WikiFactory::DBToId( $wgExternalSharedDB ) );
-	return (bool) $dbLightMode;
-}
-
-/**
  * return status code if the last failure was due to the database being read-only.
  *
  * @author Piotr Molski (moli) <moli at wikia-inc.com>
@@ -1393,27 +1365,6 @@ function json_encode_jsfunc($input=array(), $funcs=array(), $level=0)
       return $input_json;
      }
  }
-
-/**
- * generate correct version of session key
- *
- * @author Piotr Molski (moli) <moli at wikia-inc.com>
- *
- * @return String $key
- */
-function wfGetSessionKey( $id ) {
-	global $wgSharedDB, $wgDBname, $wgExternalUserEnabled, $wgExternalSharedDB;
-
-	if ( !empty( $wgExternalUserEnabled ) ) {
-		$key = "{$wgExternalSharedDB}:session:{$id}";
-	} elseif ( !empty( $wgSharedDB ) ) {
-		$key = "{$wgSharedDB}:session:{$id}";
-	} else {
-		$key = "{$wgDBname}:session:{$id}";
-	}
-
-	return $key;
-}
 
 /**
  * @brief Handles pagination for arrays
@@ -1517,103 +1468,6 @@ function wfGetBeaconId() {
 	return ( isset( $_COOKIE['wikia_beacon_id'] ) )
 	? $_COOKIE['wikia_beacon_id']
 	: '';
-}
-
-/**
- * @brief Function that calculates content hash including dependencies for SASS files
- *
- * @author Piotr Bablok <piotr.bablok@gmail.com>
- */
-function wfAssetManagerGetSASShash( $file ) {
-	$processedFiles = array();
-	$hash = '';
-	wfAssetManagerGetSASShashCB( $file, $processedFiles, $hash );
-	//error_log("done $file = $hash");
-	return md5( $hash ); // shorten it
-}
-
-/**
- * @brief Generates the absolute file path to a Sass file
- *
- * @author Piotr Bablok <piotr.bablok@gmail.com>
- * @author Kyle Florence <kflorence@wikia-inc.com>
- */
-function wfAssetManagerGetSASSFilePath( $file, $relativeToPath = false ) {
-	global $IP;
-
-	if ( empty( $file ) ) {
-		return null;
-	}
-
-	$fileExists = file_exists( $file );
-
-	if ( !$fileExists ) {
-		$parts = explode( '/', $file );
-		$filename = array_pop( $parts );
-		$directory = implode( '/', $parts ) . '/';
-
-		if ( !startsWith( $directory, '/' ) ) {
-			$directory = '/' . $directory;
-		}
-
-		// Directories to search in.
-		// These should be arranged in order of likeliness.
-		$directories = array();
-
-		if ( $relativeToPath ) {
-			$directories[] = rtrim( $relativeToPath, '/' ) . $directory;
-		}
-
-		$directories[] = $IP . $directory;
-		$directories[] = $directory;
-
-		// Filenames to check.
-		// These should be arranged in order of likeliness.
-		$filenames = array();
-		$filenames[] = $filename;
-		$filenames[] = $filename . '.scss';
-		$filenames[] = '_' . $filename . '.scss';
-		$filenames[] = $filename . '.sass';
-		$filenames[] = '_' . $filename . '.sass';
-
-		foreach( $directories as $d ) {
-			if ( file_exists( $d ) ) {
-				foreach( $filenames as $f ) {
-					$fullPath = $d . $f;
-					$fileExists = file_exists( $fullPath );
-					if ( $fileExists ) {
-						$file = $fullPath;
-						break 2;
-					}
-				}
-			}
-		}
-
-		if ( !$fileExists ) {
-			error_log( 'wfAssetManagerGetSASSFilePath: file not found: ' . $file );
-			return null;
-		}
-	}
-
-	return realpath( $file );
-}
-
-function wfAssetManagerGetSASShashCB( $file, &$processedFiles, &$hash ) {
-	$file = wfAssetManagerGetSASSFilePath( $file );
-
-	// File not found or already processed
-	if ( !$file || isset( $processedFiles[ $file ] ) ) {
-		return;
-	}
-
-	$processedFiles[ $file ] = true;
-	$contents = file_get_contents( $file );
-	$hash .= md5( $contents );
-
-	// Look for imported files within this one so we can include those too
-	preg_replace_callback( '/\\@import(\\s)*[\\"\']([^\\"\']*)[\\"\']/', function( $match ) use ( $file, &$processedFiles, &$hash ) {
-		wfAssetManagerGetSASShashCB( wfAssetManagerGetSASSFilePath( $match[ 2 ], dirname( $file ) ), $processedFiles, $hash );
-	}, $contents);
 }
 
 /**

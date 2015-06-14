@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lam-ang"
+		]
+	},
+	"ooui-dialog-action-close": "Irekep",
+	"ooui-outline-control-move-down": "Ipababa ti banag",
+	"ooui-outline-control-move-up": "Ipangato ti banag",
+	"ooui-outline-control-remove": "Ikkaten ti banag",
+	"ooui-toolbar-more": "Adu pay",
+	"ooui-dialog-confirm-title": "Pasingkedan",
+	"ooui-dialog-confirm-default-prompt": "Siguradoka kadi?",
+	"ooui-dialog-confirm-default-ok": "Sige",
+	"ooui-dialog-confirm-default-cancel": "Ukasen"
+}

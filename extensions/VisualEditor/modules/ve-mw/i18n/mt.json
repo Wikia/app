@@ -2,18 +2,20 @@
 	"@metadata": {
 		"authors": [
 			"Chrisportelli",
-			"CharlieTheCabbie"
+			"CharlieTheCabbie",
+			"Leli Forte"
 		]
 	},
 	"visualeditor-beta-appendix": "beta",
 	"visualeditor-beta-label": "beta",
-	"visualeditor-beta-warning": "VisualEditor huwa f'verżjoni ta' prova. Għadek tista' tiltaqa' ma' xi kwistjonijiet tas-softwer, u ma tkunx tista' tirranġa xi partijiet tal-paġna. Sabiex taqleb għall-editjar tas-sors f'kwalunkwe ħin mingħajr ma titlef xejn, iftaħ il-menu fejn \"{{int:visualeditor-toolbar-cancel}}\" u agħżel \"{{int: visualeditor-mweditmodesource-title}}\".",
+	"visualeditor-beta-warning": "Il-VisualEditor qiegħed f' 'beta'. Tista' tiltaqa' ma' xi problemi tas-software, u ma tkunx tista' timmodifika xi partijiet tal-paġna. Sabiex taqleb għall-editjar tas-sors f'kwalunkwe ħin mingħajr ma titlef xejn, iftaħ il-kexxa li tinżel \"{{int:visualeditor-toolbar-savedialog}}\" u agħżel \"{{int: visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-ca-editsource": "Editja s-sors",
 	"visualeditor-ca-editsource-section": "editja s-sors",
 	"visualeditor-categories-tool": "Kategoriji",
 	"visualeditor-dialog-beta-welcome-action-continue": "Kompli",
 	"visualeditor-dialog-beta-welcome-content": "Dan huwa l-mod ġdid u eħfef kif teditja. Għadu xorta' f'verżjoni beta, li jfisser li mat-triq tista' ssib xi partijiet fil-paġna li ma tistax tirranġa, jew issib quddiemek kwistjonijiet li jkunu meħtieġa li jittranġaw. Inħeġġuk li tirrevedi l-bidliet tiegħek, u nilqgħu senjalazzjonijiet ta' kwalunkwe problema li ssibu fl-użu tal-VisualEditor (agħfas il-buttuna \"{{int:visualeditor-help-tool}}\" sabiex tibgħat il-messaġġ tiegħek). Tista' tibqa' tuża l-editur tat-test wiki billi tagħfas fuq \"$1\" minflok – bidliet li mhumiex issjejvjati jintilfu.",
 	"visualeditor-dialog-beta-welcome-title": "Merħba fil-VisualEditor",
+	"visualeditor-dialog-media-change-image": "Agħżel stampa differenti",
 	"visualeditor-dialog-meta-categories-data-label": "Kategoriji",
 	"visualeditor-dialog-meta-categories-input-newcategorylabel": "Kategorija ġdida",
 	"visualeditor-dialog-meta-categories-input-placeholder": "Żid kategorija",
@@ -23,14 +25,17 @@
 	"visualeditor-dialog-meta-languages-section": "Lingwi",
 	"visualeditor-dialog-meta-settings-hiddencat-label": "Kategoriji moħbija",
 	"visualeditor-dialog-reference-title": "Referenza",
-	"visualeditor-dialog-referencelist-title": "Lista ta' referenzi",
+	"visualeditor-dialog-referenceslist-title": "Lista ta' referenzi",
 	"visualeditor-dialog-transclusion-placeholder": "Mudell ġdid",
 	"visualeditor-dialog-transclusion-remove-content": "Neħħi l-kontenut",
 	"visualeditor-dialog-transclusion-remove-template": "Neħħi l-mudell",
+	"visualeditor-dialog-transclusion-required-parameter-dialog-cancel": "Erġa' lura",
+	"visualeditor-dialog-transclusion-required-parameter-dialog-ok": "Kompli xorta waħda",
+	"visualeditor-dialog-transclusion-required-parameter-dialog-title": "Meħtieġa  {{PLURAL:$1| parametru obligatorju nieqes|parametri obligatorji nieqsa}}",
+	"visualeditor-dialog-transclusion-required-parameter-is-blank": "Żgur li tixtieq tkompli mingħajr ma tagħti l- {{PLURAL:$2|parametru|parametri}} $1?",
 	"visualeditor-languages-tool": "Lingwi",
 	"visualeditor-linkinspector-suggest-matching-page": "{{PLURAL:$1|Paġna li taqbel|Paġni li jaqblu}}",
 	"visualeditor-linkinspector-suggest-new-page": "Paġna ġdida",
 	"visualeditor-mweditmodesource-title": "Aqleb għall-editjar tas-sors",
-	"visualeditor-toolbar-cancel": "Ikkanċella",
 	"visualeditor-wikitext-warning-link": "Help:Sintassi"
 }

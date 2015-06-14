@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'category-exhibition-desc'              => 'New look to category page',
 	'category-exhibition-sorttype'			=> 'Sorting type:',
 	'category-exhibition-alphabetical'		=> 'Alphabetical',
 	'category-exhibition-mostvisited'		=> 'Most visited',
@@ -19,6 +20,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'category-exhibition-desc' => '{{desc}}',
 	'category-exhibition-subcategories-header' => '{{Identical|Subcategory}}',
 );
 
@@ -41,9 +43,11 @@ $messages['af'] = array(
 /** Arabic (العربية)
  * @author Achraf94
  * @author Mutarjem horr
+ * @author Test Create account
  * @author زكريا
  */
 $messages['ar'] = array(
+	'category-exhibition-desc' => 'تصميم جديد لصفحة التصنيفات',
 	'category-exhibition-sorttype' => 'نوع الفرز:',
 	'category-exhibition-alphabetical' => 'أبجديأّ',
 	'category-exhibition-mostvisited' => 'الأكثر مشاهدة',
@@ -114,13 +118,15 @@ $messages['br'] = array(
 /** Catalan (català)
  * @author Fitoschido
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'category-exhibition-desc' => 'Nova vista a una pàgina de categoria',
 	'category-exhibition-sorttype' => 'Classificant tipus:',
 	'category-exhibition-alphabetical' => 'Alfabètic',
 	'category-exhibition-mostvisited' => 'Més visitat',
 	'category-exhibition-recentedits' => 'Editades recentement',
-	'category-exhibition-page-header' => 'Pàgines en la categoraa "$1"',
+	'category-exhibition-page-header' => 'Pàgines dins la categoria «$1»',
 	'category-exhibition-subcategories-header' => 'Subcategories',
 	'category-exhibition-media-header' => 'Multimèdia en la categoria «$1»',
 	'category-exhibition-blogs-header' => 'Entrades de bloc',
@@ -129,10 +135,12 @@ $messages['ca'] = array(
 );
 
 /** Czech (čeština)
+ * @author Darth Daron
  * @author Dontlietome7
  * @author Matěj Grabovský
  */
 $messages['cs'] = array(
+	'category-exhibition-desc' => 'Nový vzhled stránek kategorie',
 	'category-exhibition-sorttype' => 'Typ řazení:',
 	'category-exhibition-alphabetical' => 'Abecední',
 	'category-exhibition-mostvisited' => 'Nejvíce navštěvované',
@@ -163,8 +171,10 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author George Animal
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
+	'category-exhibition-desc' => 'Neuer Look für die Kategorienseite',
 	'category-exhibition-sorttype' => 'Sortierung:',
 	'category-exhibition-alphabetical' => 'Alphabetisch',
 	'category-exhibition-mostvisited' => 'Meistbesucht',
@@ -200,8 +210,10 @@ $messages['el'] = array(
 );
 
 /** Spanish (español)
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'category-exhibition-desc' => 'Nueva mirada a la página de categoría',
 	'category-exhibition-sorttype' => 'Clasificando tipo:',
 	'category-exhibition-alphabetical' => 'Alfabético',
 	'category-exhibition-mostvisited' => 'Lo más visitado',
@@ -214,13 +226,22 @@ $messages['es'] = array(
 	'category-exhibition-display-new' => 'Vista de exposición de la categoría',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'category-exhibition-subcategories-header' => 'Azpikategoriak',
+);
+
 /** Persian (فارسی)
+ * @author Movyn
  * @author Reza1615
  * @author پاناروما
  */
 $messages['fa'] = array(
 	'category-exhibition-sorttype' => 'دسته بندی بر اساس نوع',
 	'category-exhibition-alphabetical' => 'الفبایی',
+	'category-exhibition-mostvisited' => 'بیشترین مشاهده',
 	'category-exhibition-recentedits' => 'ویرایش‌های اخیر',
 	'category-exhibition-page-header' => 'صفحه‌های موجود در این رده «$1»',
 	'category-exhibition-subcategories-header' => 'زیررده‌ها',
@@ -261,8 +282,10 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  */
 $messages['fr'] = array(
+	'category-exhibition-desc' => 'Nouvel aspect de la page de catégorie',
 	'category-exhibition-sorttype' => 'Type de tri :',
 	'category-exhibition-alphabetical' => 'Alphabétique',
 	'category-exhibition-mostvisited' => 'Les plus visités',
@@ -334,8 +357,10 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
+ * @author Fate Kage
  */
 $messages['id'] = array(
+	'category-exhibition-desc' => 'Tampilan baru untuk kategori halaman',
 	'category-exhibition-sorttype' => 'Menyortir jenis:',
 	'category-exhibition-alphabetical' => 'Abjad',
 	'category-exhibition-mostvisited' => 'Paling sering dikunjungi',
@@ -413,6 +438,14 @@ $messages['ko'] = array(
 	'category-exhibition-display-old' => '분류 목록 보기',
 );
 
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author George Animal
+ */
+$messages['ku-latn'] = array(
+	'category-exhibition-page-header' => 'Rûpelên di kategoriya "$1" de',
+	'category-exhibition-subcategories-header' => 'Binkategorî',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  */
 $messages['lb'] = array(
@@ -441,6 +474,7 @@ $messages['lt'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
+	'category-exhibition-desc' => 'Нов изглед на категориските страници',
 	'category-exhibition-sorttype' => 'Вид на подредување:',
 	'category-exhibition-alphabetical' => 'Азбучно',
 	'category-exhibition-mostvisited' => 'Најгледани',
@@ -467,6 +501,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'category-exhibition-desc' => 'Wajah baru laman kategori',
 	'category-exhibition-sorttype' => 'Jenis turutan:',
 	'category-exhibition-alphabetical' => 'Ikut turutan abjad',
 	'category-exhibition-mostvisited' => 'Paling kerap dikunjungi',
@@ -530,9 +565,11 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Pio387
  * @author Sovq
  */
 $messages['pl'] = array(
+	'category-exhibition-desc' => 'Nowy wygląd stron kategorii',
 	'category-exhibition-sorttype' => 'Sposób sortowania:',
 	'category-exhibition-alphabetical' => 'Alfabetycznie',
 	'category-exhibition-mostvisited' => 'Najczęściej odwiedzane',
@@ -578,11 +615,12 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
 	'category-exhibition-sorttype' => 'Tipo de ordenação:',
 	'category-exhibition-alphabetical' => 'Alfabética',
-	'category-exhibition-mostvisited' => 'Mais visitas',
+	'category-exhibition-mostvisited' => 'Mais visitadas',
 	'category-exhibition-recentedits' => 'Editadas recentemente',
 	'category-exhibition-page-header' => 'Páginas na categoria "$1"',
 	'category-exhibition-subcategories-header' => 'Subcategorias',
@@ -594,8 +632,10 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
+	'category-exhibition-desc' => 'Novo visual na página de categoria',
 	'category-exhibition-sorttype' => 'Tipo de ordenação:',
 	'category-exhibition-alphabetical' => 'Alfabética',
 	'category-exhibition-mostvisited' => 'Mais visitas',
@@ -626,6 +666,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'category-exhibition-desc' => "Arrede diverse 'a pàgene d'a categorije",
 	'category-exhibition-sorttype' => 'Tipe de ordinamende:',
 	'category-exhibition-alphabetical' => 'Alfabbetiche',
 	'category-exhibition-mostvisited' => 'Cchiù visitate',
@@ -640,8 +681,10 @@ $messages['roa-tara'] = array(
 
 /** Russian (русский)
  * @author Kuzura
+ * @author Капитан Джон Шепард
  */
 $messages['ru'] = array(
+	'category-exhibition-desc' => 'Новий погляд на сторінці категорії',
 	'category-exhibition-sorttype' => 'Тип сортировки:',
 	'category-exhibition-alphabetical' => 'В алфавитном порядке',
 	'category-exhibition-mostvisited' => 'Самые посещаемые',
@@ -655,12 +698,17 @@ $messages['ru'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
+ * @author Milicevic01
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'category-exhibition-sorttype' => 'Тип сврставања:',
 	'category-exhibition-mostvisited' => 'Најпосећеније',
+	'category-exhibition-recentedits' => 'Недавно уређивано',
+	'category-exhibition-page-header' => 'Странице у категорији „$1“',
 	'category-exhibition-subcategories-header' => 'Поткатегорије',
+	'category-exhibition-media-header' => 'Датотеке у категорији „$1“',
 	'category-exhibition-blogs-header' => 'Поруке на блогу',
 );
 
@@ -669,6 +717,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'category-exhibition-desc' => 'Nytt utseende för kategorisidor',
 	'category-exhibition-sorttype' => 'Sortering:',
 	'category-exhibition-alphabetical' => 'Alfabetisk',
 	'category-exhibition-mostvisited' => 'Mest visade',
@@ -716,21 +765,27 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Boracasli2
  * @author Sayginer
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetik',
+	'category-exhibition-mostvisited' => 'En çok ziyaret edilen',
+	'category-exhibition-recentedits' => 'Son düzenlenen',
 	'category-exhibition-page-header' => '"$1" kategorisindeki sayfalar',
 	'category-exhibition-subcategories-header' => 'Alt kategoriler',
 	'category-exhibition-media-header' => '"$1" kategorisindeki dosyalar',
 	'category-exhibition-blogs-header' => 'Blog yazıları',
+	'category-exhibition-display-old' => 'Kategori Liste görünümü',
 );
 
 /** Ukrainian (українська)
  * @author Ua2004
+ * @author Капитан Джон Шепард
  */
 $messages['uk'] = array(
+	'category-exhibition-desc' => 'Новий погляд на сторінці категорії',
 	'category-exhibition-sorttype' => 'Тип сортування:',
 	'category-exhibition-alphabetical' => 'Алфавітний',
 	'category-exhibition-mostvisited' => 'Популярні',
@@ -745,8 +800,10 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
  */
 $messages['vi'] = array(
+	'category-exhibition-desc' => 'Giao diện mới của trang thể loại',
 	'category-exhibition-sorttype' => 'Phân loại các loại:',
 	'category-exhibition-alphabetical' => 'Bảng chữ cái',
 	'category-exhibition-mostvisited' => 'Truy cập nhiều nhất',
@@ -762,8 +819,10 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hzy980512
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'category-exhibition-desc' => '为分类页面提供崭新面貌',
 	'category-exhibition-sorttype' => '排序方式：',
 	'category-exhibition-alphabetical' => '按首字母顺序排列',
 	'category-exhibition-mostvisited' => '最多访问',
@@ -777,8 +836,12 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Citizen01
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
+	'category-exhibition-alphabetical' => '依字母順序',
+	'category-exhibition-recentedits' => '最近修改',
+	'category-exhibition-blogs-header' => '部落格文章',
 	'category-exhibition-display-new' => '分類展示',
 );

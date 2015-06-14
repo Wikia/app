@@ -626,15 +626,20 @@ function axWFactoryDomainQuery() {
 		 */
 		$query = strtolower( $query );
 		$dbr = WikiFactory::db( DB_SLAVE );
+		$cityDomainLike = $dbr->buildLike( $dbr->anyString(), $query, $dbr->anyString() );
+
 		$sth = $dbr->select(
-			array( "city_domains" ),
-			array( "city_id", "city_domain" ),
-			array(
+			[ "city_domains" ],
+			[ "city_id", "city_domain" ],
+			[
 				"city_domain not like 'www.%'",
 				"city_domain not like '%.wikicities.com'",
-				"city_domain like '%{$query}%'"
-			),
-			__METHOD__
+				"city_domain {$cityDomainLike}"
+			],
+			__METHOD__,
+			[
+				'LIMIT' => 15
+			]
 		);
 
 		while( $domain = $dbr->fetchObject( $sth ) ) {
@@ -652,7 +657,9 @@ function axWFactoryDomainQuery() {
 		$return[ "data" ] = array_merge( $exact[ "data" ], $match[ "suggestions" ] );
 	}
 
-	return json_encode( $return );
+	$resp = new AjaxResponse( json_encode( $return ) );
+	$resp->setContentType( 'application/json; charset=utf-8' );
+	return $resp;
 }
 
 /**

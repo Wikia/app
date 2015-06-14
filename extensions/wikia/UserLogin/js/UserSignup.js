@@ -1,40 +1,58 @@
-var UserSignup = {
-	inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
-	notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-	captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
-	invalidInputs: {},
-	init: function () {
-		'use strict';
+/* global WikiaForm, UserSignupAjaxValidation, UserSignupMixin */
+(function () {
+	'use strict';
 
-		$('.wikia_terms > a').on('click', function (event) {
-			var url = $(this).attr('href');
-			event.preventDefault();
-			window.open(url, '_blank');
-		});
+	/**
+	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
+	 */
+	var UserSignup = {
+		invalidInputs: {},
 
-		this.wikiaForm = new WikiaForm('#WikiaSignupForm');
-		this.signupAjaxForm = new UserSignupAjaxForm(
-			this.wikiaForm,
-			this.inputsToValidate,
-			this.wikiaForm.inputs['submit'],
-			this.notEmptyFields,
-			this.captchaField
-		);
-		this.wikiaForm.el
-			.find('input[name=userloginext01], input[name=email], input[name=userloginext02]')
-			.on('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
-		this.wikiaForm.el
-			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
-			.on('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
+		/**
+		 * Enable user signup form with ajax validation
+		 */
+		init: function () {
+			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
+			this.submitButton = this.wikiaForm.inputs.submit;
 
-		// dom pre-cache
-		this.submitButton = this.wikiaForm.inputs['submit'];
-		if( window.wgUserLoginDisableCaptcha !== true && this.wikiaForm.inputs['recaptcha_response_field']) {
-			this.wikiaForm.inputs['recaptcha_response_field'].on('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
+			this.setupValidation();
+
+			// imported via UserSignupMixin
+			this.setCountryValue(this.wikiaForm);
+			this.initOptIn(this.wikiaForm);
+		},
+
+		/**
+		 * Applying ajax validation to the form fields that have been cached via WikiaForm
+		 */
+		setupValidation: function () {
+			var inputs = this.wikiaForm.inputs;
+
+			this.validator = new UserSignupAjaxValidation({
+				wikiaForm: this.wikiaForm,
+				submitButton: this.submitButton,
+				passwordInputName: 'userloginext02'
+			});
+
+			inputs.userloginext01
+				.add(inputs.email)
+				.add(inputs.userloginext02)
+				.on('blur.UserSignup', this.validator.validateInput.bind(this.validator));
+
+			inputs.birthday
+				.add(inputs.birthmonth)
+				.add(inputs.birthyear)
+				.on('change.UserSignup', this.validator.validateBirthdate.bind(this.validator));
 		}
-    }
-};
+	};
 
-$( window ).on('load', function() {
-	UserSignup.init();
-});
+	// Add common user signup mixin functions for use in this class
+	UserSignupMixin.call(UserSignup);
+
+	// expose global
+	window.UserSignup = UserSignup;
+
+	$(function () {
+		UserSignup.init();
+	});
+})();

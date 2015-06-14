@@ -19,13 +19,18 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'DataProvider',
-	'description' => 'data provider for wikia skins',
-	'author' => 'Inez Korczyński, Tomasz Klim'
+	'descriptionmsg' => 'dataprovider-desc',
+	'author' => array('Inez Korczyński', 'Tomasz Klim', 'Maciej Brencz', 'Gerard Adamczewski'),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/DataProvider'
 );
 
+//i18n
+$wgExtensionMessagesFiles['DataProvider'] = __DIR__ . '/DataProvider.i18n.php';
 
 class DataProvider {
 	private $skin;
+
+	const TOP_USERS_MAX_LIMIT = 7;
 
 	/**
 	 * Author: Tomasz Klim (tomek at wikia.com)
@@ -340,34 +345,31 @@ class DataProvider {
 	 */
 	final public static function GetMostVisitedArticles($limit = 7, $ns = array(NS_MAIN), $fillUpMostPopular = true) {
 		wfProfileIn(__METHOD__);
-		global $wgMemc, $wgCityId;
+		global $wgCityId;
 
-		$memckey = wfMemcKey("MostVisited", $limit, implode(",", $ns), $fillUpMostPopular);
-		$results = $wgMemc->get($memckey);
+		$results = array();
+		$data = DataMartService::getTopArticlesByPageview( $wgCityId, null, $ns, false, 2 * $limit );
+		if ( !empty( $data ) ) {
+			$mainPage = Title::newMainPage();
 
-		if (!is_array($results)) {
-			$results = array();
-			$data = DataMartService::getTopArticlesByPageview( $wgCityId, null, $ns, false, 2 * $limit );
-			if ( !empty( $data ) ) {
-				foreach ( $data as $article_id => $row ) {
-					$title = Title::newFromID($article_id);
-					if ( is_object($title) ) {
-						if ( wfMsg("mainpage") != $title->getText() ) {
-							$article = array(
-								'url'	=> $title->getLocalUrl(),
-								'text'	=> $title->getPrefixedText(),
-								'count' => $row['pageviews']
-							);
-							$results[] = $article;
-						}
+			foreach ( $data as $article_id => $row ) {
+				$title = Title::newFromID($article_id);
+				if ( is_object($title) ) {
+					if ( !$mainPage->equals( $title ) ) {
+						$article = array(
+							'url'	=> $title->getLocalUrl(),
+							'text'	=> $title->getPrefixedText(),
+							'count' => $row['pageviews']
+						);
+						$results[] = $article;
 					}
 				}
+			}
 
-				self::removeAdultPages($results);
+			self::removeAdultPages($results);
 
-				if (!empty($results)) {
-					$results = array_slice($results, 0, $limit);
-				}
+			if (!empty($results)) {
+				$results = array_slice($results, 0, $limit);
 			}
 		}
 
@@ -427,47 +429,80 @@ class DataProvider {
 
 	/**
 	 * Return array of top five users
+	 *
+	 * Called by NavigationModel::handleExtraWords
+	 *
 	 * Author: Inez Korczynski (inez at wikia.com)
 	 * @return array
 	 */
 	final public static function GetTopFiveUsers($limit = 7) {
 		wfProfileIn(__METHOD__);
-		global $wgStatsDB, $wgMemc, $wgCityId, $wgStatsDBEnabled;
+		global $wgStatsDB, $wgStatsDBEnabled;
+
+		$fname = __METHOD__;
+		$limit = min( $limit, self::TOP_USERS_MAX_LIMIT );
 
 		if (empty($wgStatsDB) || empty($wgStatsDBEnabled)) {
-			$result = array();
+			$results = [];
 		}
 		else {
-			$memckey = wfMemcKey("TopFiveUsers", $limit);
-			$results = $wgMemc->get($memckey);
+			$results = WikiaDataAccess::cacheWithLock( wfMemcKey( __METHOD__ ), WikiaResponse::CACHE_STANDARD, function() use ($fname) {
+				global $wgCityId, $wgStatsDB;
 
-			if (!is_array($results)) {
 				$dbr = wfGetDB(DB_SLAVE);
-				$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__);
+				$users_list = $dbr->selectFieldValues(
+					"user_groups",
+					"ug_user",
+					[ 'ug_group' => [ 'staff', 'bot' ] ],
+					$fname
+				);
 
-				$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-				$query = "SELECT user_id AS rev_user, edits AS cnt FROM specials.events_local_users WHERE wiki_id = '" . $wgCityId . "' " . (!empty($row->user_list) ? "AND user_id NOT IN (" . $row->user_list . ",'0','929702')" : "") . " ORDER BY edits DESC";
+				// add more blacklisted user IDs
+				$users_list[] = '0';
+				$users_list[] = '22439'; // Wikia
+				$users_list[] = '929702'; // CreateWiki script
 
-				$res = $dbs->query($dbs->limitResult($query, $limit * 4, 0));
+				$users_list = array_unique($users_list);
 
-				$results = array();
+				$dbs = wfGetDB(DB_SLAVE, [], $wgStatsDB);
+				$res = $dbs->select(
+					'specials.events_local_users',
+					'user_id',
+					[
+						'wiki_id' => $wgCityId,
+						sprintf( 'user_id NOT IN (%s)', $dbs->makeList( $users_list ) )
+					],
+					$fname,
+					[
+						'LIMIT' => self::TOP_USERS_MAX_LIMIT * 4,
+						'ORDER BY' => 'edits DESC'
+					]
+				);
+
+				$results = [];
 				while ($row = $dbs->fetchObject($res)) {
-					$user = User::newFromID($row->rev_user);
+					$user = User::newFromID($row->user_id);
 
 					if (!$user->isBlocked() && !$user->isAllowed('bot')
-						&& ($user->getName() != 'Wikia') # rt24706
 						&& $user->getUserPage()->exists()
 					) {
 						$article['url'] = $user->getUserPage()->getLocalUrl();
 						$article['text'] = $user->getName();
 						$results[] = $article;
 					}
+
+					// no need to check more users here
+					if (count($results) >= self::TOP_USERS_MAX_LIMIT) {
+						break;
+					}
 				}
 				$dbs->freeResult($res);
+				return $results;
+			});
 
-				$results = array_slice($results, 0, $limit);
-				$wgMemc->set($memckey, $results, 60 * 60 * 12);
-			}
+			// we cache self::TOP_USERS_MAX_LIMIT items
+			// now return the requested number of items
+			$results = array_slice($results, 0, $limit);
 		}
 		wfProfileOut(__METHOD__);
 		return $results;
@@ -739,3 +774,4 @@ class DataProvider {
 	}
 
 }
+

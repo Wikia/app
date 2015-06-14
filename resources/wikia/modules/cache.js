@@ -13,6 +13,10 @@
 		CACHE_VALUE_PREFIX = CACHE_PREFIX + 'val_',
 		CACHE_TTL_PREFIX = CACHE_PREFIX + 'ttl_',
 		CACHE_VARY_PREFIX = CACHE_PREFIX + 'vary_',
+		// Memcache-like ttl values
+		CACHE_LONG = 2592000, // 1 month
+		CACHE_STANDARD = 86400, // 24 hours
+		CACHE_SHORT = 10800, // 3 hours
 		undef;
 
 	function cache ( window, localStorage ) {
@@ -170,6 +174,9 @@
 		}
 
 		return {
+			CACHE_LONG: CACHE_LONG,
+			CACHE_STANDARD: CACHE_STANDARD,
+			CACHE_SHORT: CACHE_SHORT,
 			get: get,
 			set: set,
 			del: del,

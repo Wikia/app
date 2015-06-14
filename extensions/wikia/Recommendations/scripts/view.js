@@ -1,7 +1,7 @@
 define(
 	'wikia.recommendations.view',
-	['wikia.mustache', 'JSMessages', 'wikia.thumbnailer', 'wikia.arrayHelper', 'venus.layout', 'wikia.window'],
-	function(mustache, msg, thumbnailer, arrayHelper, layout, w) {
+	['wikia.mustache', 'JSMessages', 'wikia.imageServing', 'wikia.thumbnailer', 'wikia.arrayHelper', 'venus.layout', 'wikia.window'],
+	function(mustache, msg, imageServing, thumbnailer, arrayHelper, layout, w) {
 		'use strict';
 
 		/**
@@ -11,7 +11,8 @@ define(
 		var slotColumnCounts = {
 			big: 6,
 			small: 3
-		};
+		},
+			slotSizes;
 
 		/**
 		 * @desc Get image width in px
@@ -64,7 +65,7 @@ define(
 			var out = '',
 				hours   = Math.floor(duration / 3600),
 				minutes = Math.floor((duration - (hours * 3600)) / 60),
-				seconds = duration - (hours * 3600) - (minutes * 60);
+				seconds = Math.round(duration - (hours * 3600) - (minutes * 60));
 
 			if (hours > 0){
 				if (hours < 10) {
@@ -85,6 +86,37 @@ define(
 		}
 
 		/**
+		 * @desc Get numer of slots that should be shown
+		 * @param number availableSlotsCount
+		 * @returns {number}
+		 */
+		function getSlotsToShowCount(availableSlotsCount) {
+			var out = 0;
+			if (availableSlotsCount >= 9) {
+				out = 9;
+			} else if (availableSlotsCount >= 5) {
+				out = 5;
+			} else if (availableSlotsCount >= 4) {
+				out = 4;
+			}
+			return out;
+		}
+
+		/**
+		 * @desc Check whether current slot should be displayed as big one
+		 * @param number index slot index
+		 * @param number slotsToShowCount number of slots that should be shown
+		 * @returns {boolean}
+		 */
+		function shouldDisplayBigSlot(index, slotsToShowCount) {
+			var out = false;
+			if (index === 0 && slotsToShowCount !== 4) {
+				out = true;
+			}
+			return out;
+		}
+
+		/**
 		 * @desc Render recommendations module
 		 * @param object slotsData
 		 * @param array mustacheTemplates
@@ -95,12 +127,11 @@ define(
 				i,
 				slot = {},
 				slots = [],
-				slotsDataLength = slotsData.length,
-				slotSizes,
-				template;
+				slotsToShowCount = getSlotsToShowCount(slotsData.length);
 
 			slotSizes = getSlotSizes();
-			for (i = 0; i < slotsDataLength; i++) {
+
+			for (i = 0; i < slotsToShowCount; i++) {
 				slot = {
 					title: slotsData[i].title,
 					url: slotsData[i].url,
@@ -108,32 +139,14 @@ define(
 					type: slotsData[i].type
 				};
 
-				if (i === 0) {
+				if (shouldDisplayBigSlot(i, slotsToShowCount)) {
 					slot.slotType = 'big';
 				} else {
 					slot.slotType = 'small';
 				}
 
 				if (slotsData[i].media) {
-					if (slotsData[i].media.thumbUrl) {
-						slot.thumbUrl = thumbnailer.getThumbURL(
-							slotsData[i].media.thumbUrl,
-							'image',
-							slotSizes[slot.slotType].width,
-							slotSizes[slot.slotType].height
-						);
-					} else {
-						slot.thumbUrl = w.wgCdnApiUrl + '/extensions/wikia/Recommendations/images/image_placeholder.svg';
-					}
-
-					if (slotsData[i].type === 'video') {
-						slot.videoKey = slotsData[i].media.videoKey;
-						slot.duration = formatDuration(slotsData[i].media.duration);
-						template = mustacheTemplates[2];
-					} else {
-						template = mustacheTemplates[1];
-					}
-					slot.media = mustache.render(template, slot);
+					slot.media = renderMedia(slot, slotsData[i], mustacheTemplates);
 				}
 				slots.push(slot);
 			}
@@ -143,6 +156,45 @@ define(
 				slots: slots
 			};
 			return mustache.render(mustacheTemplates[0], data);
+		}
+
+		/**
+		 * @desc Render recommendation media
+		 * @param object slot
+		 * @param object slotsData
+		 * @param array mustacheTemplates
+		 * @returns {string}
+		 */
+		function renderMedia(slot, slotsData, mustacheTemplates) {
+			var template;
+
+			if (slot.type === 'video') {
+				slot.videoKey = slotsData.media.videoKey;
+				slot.duration = formatDuration(slotsData.media.duration);
+				template = mustacheTemplates[2];
+
+				slot.thumbUrl = thumbnailer.getThumbURL(
+					slotsData.media.thumbUrl,
+					'image',
+					slotSizes[slot.slotType].width,
+					slotSizes[slot.slotType].height
+				);
+			} else {
+				template = mustacheTemplates[1];
+
+				if (slotsData.media.thumbUrl) {
+					slot.thumbUrl = imageServing.getThumbUrl(
+						slotsData.media.thumbUrl,
+						slotsData.media.originalWidth,
+						slotsData.media.originalHeight,
+						slotSizes[slot.slotType].width,
+						slotSizes[slot.slotType].height
+					);
+				} else {
+					slot.thumbUrl = w.wgCdnApiUrl + '/extensions/wikia/Recommendations/images/image_placeholder.svg';
+				}
+			}
+			return mustache.render(template, slot);
 		}
 
 		return {

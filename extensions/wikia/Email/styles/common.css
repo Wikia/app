@@ -1,0 +1,59 @@
+/**
+ * Include this file in all templates to maintain consistant common styles
+ */
+
+* {
+	color: #656e78;
+	font-family: 'Helvetica Neue', Arial, sans-serif;
+	font-size: 16px;
+}
+
+a, a * {
+	color: #1a5eB8;
+	text-decoration: none;
+}
+
+sub, sup {
+	font-size: 8px;
+}
+
+p {
+	font-size: 16px;
+	line-height: 1.5em;
+	margin: 0 0 18px 0;
+	padding: 0;
+}
+
+img {
+	border: 0;
+}
+
+td {
+	padding: 0;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: separate;
+}
+
+.button {
+	background-color: #1a5eb8;
+	color: #fff;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	height: auto;
+	line-height: 47px;
+	padding: 0 23px;
+	text-transform: uppercase;
+}
+
+td.widest {
+	width: 100%;
+}
+
+.greeting {
+	margin-bottom: 50px;
+}
+

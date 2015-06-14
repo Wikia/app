@@ -18,7 +18,12 @@ class WikiaPageType {
 		// follow redirects
 		if ( $title instanceof Title && $title->isRedirect() ) {
 			$page = WikiPage::factory( $title );
-			$title = $page->getRedirectTarget();
+			$tmpTitle = $page->getRedirectTarget();
+
+			// TODO check why $title->isRedirect() is true and there is no redirectTarget
+			if ( $tmpTitle instanceof Title ) {
+				$title = $tmpTitle;
+			}
 		}
 
 		return $title;
@@ -40,11 +45,31 @@ class WikiaPageType {
 			$type = 'forum';
 		} elseif ( self::isExtra() ) {
 			$type = 'extra';
+		} elseif ( self::isSpecial() ) {
+			$type = 'special';
 		} else {
 			$type = 'article';
 		}
 
 		return $type;
+	}
+
+	/**
+	 * Get article type (as in: games, tv series, etc)
+	 * of current page
+	 *
+	 * @param Title $title
+	 * @return string
+	 */
+	public static function getArticleType( $title = null ) {
+		global $wgTitle;
+
+		if ( is_null( $title ) ) {
+			$title = $wgTitle;
+		}
+
+		$articleService = new ArticleService( $title );
+		return $articleService->getArticleType();
 	}
 
 	/**
@@ -110,7 +135,7 @@ class WikiaPageType {
 		$pageNames = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 
 		return ( $title instanceof Title ) && $title->isSpecialPage()
-			&& in_array( array_shift( $pageNames ), $searchPageNames );
+		&& in_array( array_shift( $pageNames ), $searchPageNames );
 	}
 
 	/**
@@ -136,6 +161,17 @@ class WikiaPageType {
 			( defined( 'NS_FORUM' ) && $title instanceof Title && $title->getNamespace() === NS_FORUM ) // old forum
 			|| ( F::app()->wg->EnableForumExt && ForumHelper::isForum() )                               // new forum
 		);
+	}
+
+	/**
+	 * Check if current page is a special page (Special:*)
+	 *
+	 * @return bool
+	 */
+	public static function isSpecial() {
+		$title = self::getTitle();
+
+		return $title->isSpecialPage();
 	}
 
 	/**

@@ -22,10 +22,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'HealthCheck',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'descriptionmsg' => 'healthcheck-desc'
+	'descriptionmsg' => 'healthcheck-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialHealthcheck'
 );
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['HealthCheck'] = $dir . 'SpecialHealthcheck_body.php';
+$wgAutoloadClasses['HealthController'] = $dir . 'HealthController.class.php';
 $wgSpecialPages['HealthCheck'] = 'HealthCheck';

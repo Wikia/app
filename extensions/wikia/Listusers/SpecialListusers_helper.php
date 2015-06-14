@@ -70,21 +70,27 @@ class ListusersData {
 			$orders = array( Listusers::DEF_ORDER );
 		}
 
+		$validSortDirections = [
+			'asc',
+			'desc',
+		];
+
 		# order by
 		$this->mOrder = array();
-		if ( !empty($orders) ) {
+		if ( !empty( $orders ) ) {
 			foreach ( $orders as $order ) {
 				list ( $orderName, $orderDesc ) = explode( ":", $order );
-				if ( isset( $this->mOrderOptions[$orderName] ) ) {
+				if ( isset( $this->mOrderOptions[$orderName] ) && in_array( $orderDesc, $validSortDirections ) ) {
 					foreach ( $this->mOrderOptions[$orderName] as $orderStr ) {
 						$this->mOrder[] = sprintf( $orderStr, $orderDesc );
 					}
-					$this->mUseKey = $this->mUseKeyOptions[$orderName];
+					// disable mUseKey temporarily due to PLATFORM-1174 MAIN-4386
+					// $this->mUseKey = $this->mUseKeyOptions[$orderName];
 				}
 			}
 		}
-		if ( empty($this->mOrder) ) {
-			$this->mOrder[] = sprintf( $this->mOrderOptions[Listusers::DEF_ORDER] );
+		if ( empty( $this->mOrder ) ) {
+			$this->mOrder[] = 'user_name ASC';
 		}
 	}
 
@@ -120,7 +126,7 @@ class ListusersData {
 		$memkey = wfForeignMemcKey( $this->mCityId, null, "ludata", md5( implode(', ', $subMemkey) ) );
 		$cached = $wgMemc->get($memkey);
 
-		if ( 1 && empty($cached) && !empty($this->mDBEnable) ) {
+		if ( empty($cached) && !empty($this->mDBEnable) ) {
 			/* db handle */
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
@@ -133,8 +139,16 @@ class ListusersData {
 				foreach ( $this->mFilterGroup as $group ) {
 					if ( !empty($group) ) {
 						if ( $group == Listusers::DEF_GROUP_NAME ) {
+							/**
+							 * @see CE-1487
+							 * Until poweruser group is still being evaluated
+							 * and developed - we consider it as 'invisible'
+							 * and include it in the No group checkbox
+							 */
+							$powerUserGroupName = \Wikia\PowerUser\PowerUser::GROUP_NAME;
+							$whereGroup[] = " single_group = '{$powerUserGroupName}' ";
+
 							$whereGroup[] = " all_groups = '' ";
-							$whereGroup[] = " all_groups = 'fb-user' ";
 						} else {
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );
@@ -388,7 +402,7 @@ class ListusersData {
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
 						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );
 					} else {
-						$where[] = " all_groups = '' OR all_groups = 'fb-user' ";
+						$where[] = " all_groups = '' ";
 					}
 
 					$unions[] = $dbs->selectSQLText(

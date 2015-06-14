@@ -1,0 +1,31 @@
+@import "skins/shared/color";
+@import "skins/oasis/css/core/layout";
+
+// Toolbar
+.oo-ui-toolbar {
+	position: relative;
+}
+.oo-ui-toolbar-bar {
+	@include linear-gradient($color-ve-gradient, top, $color-ve-gradient-light, 50%, $color-ve-gradient-dark, 100%);
+	border-bottom-color: $color-page-border;
+}
+
+.oo-ui-toolbar-shadow {
+	@include linear-gradient(transparent, top, rgba(0,0,0,.5), 0%, transparent, 100%);
+	bottom: -10px;
+	opacity: 0;
+}
+
+.ve-init-mw-viewPageTarget-toolbar {
+	border-top: 1px solid $color-page-border;
+	// Negative margins on main toolbar to align with focus mode blackouts
+	margin-left: -10px;
+	margin-right: -10px;
+	// Overlap with page header bottom border
+	top: -1px;
+	z-index: $zTop + 3;
+
+	&.transition {
+		z-index: $zTop - 1;
+	}
+}

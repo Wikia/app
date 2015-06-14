@@ -121,10 +121,10 @@ class UserIdentityBox {
 		}
 
 		// Sanitize data to prevent XSS (VE-720)
-		$keysToSanitize = [ 'gender', 'location', 'occupation', 'realName', 'twitter', 'website' ];
+		$keysToSanitize = [ 'gender', 'location', 'occupation', 'realName', 'twitter', 'fbPage', 'website' ];
 		foreach( $keysToSanitize as $key ) {
 			if ( !empty( $data[ $key ] ) ) {
-				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ) );
+				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ), ENT_QUOTES );
 			}
 		}
 
@@ -516,7 +516,7 @@ class UserIdentityBox {
 
 		$result = true;
 
-		$fieldsToCheck = array('location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'topWikis');
+		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis' ];
 
 		foreach ($data as $property => $value) {
 			if (in_array($property, $fieldsToCheck) && !empty($value)) {

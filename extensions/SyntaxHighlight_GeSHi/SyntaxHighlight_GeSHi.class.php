@@ -267,6 +267,8 @@ class SyntaxHighlight_GeSHi {
 	 * @return GeSHi
 	 */
 	public static function prepare( $text, $lang ) {
+		global $wgTitle, $wgOut;
+
 		self::initialise();
 		$geshi = new GeSHi( $text, $lang );
 		if( $geshi->error() == GESHI_ERROR_NO_SUCH_LANG ) {
@@ -276,6 +278,20 @@ class SyntaxHighlight_GeSHi {
 		$geshi->enable_classes();
 		$geshi->set_overall_class( "source-$lang" );
 		$geshi->enable_keyword_links( false );
+
+		// Wikia change start
+		if( $wgTitle instanceof Title && EditPageLayoutHelper::isCodeSyntaxHighlightingEnabled( $wgTitle ) ) {
+			$theme = 'solarized-light';
+			if( SassUtil::isThemeDark() ) {
+				$theme = 'solarized-dark';
+			}
+			$geshi->set_language_path(GESHI_ROOT . $theme . DIRECTORY_SEPARATOR);
+			$geshi->set_overall_id('theme-' . $theme);
+
+			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/SyntaxHighlight_GeSHi/styles/solarized.scss'));
+		}
+		// Wikia change end
+
 		return $geshi;
 	}
 

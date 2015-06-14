@@ -14,6 +14,7 @@ $wgExtensionCredits['specialpage'][] = [
 	'author' => [
 		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	],
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CloseMyAccount',
 	'license-name' => 'GPLv2',
 ];
 

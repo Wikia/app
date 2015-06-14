@@ -702,12 +702,24 @@ class FeedRenderer {
 				$attribs['href'] = $title->getLocalUrl();
 			}
 
-			$thumb = $item['html'];
-			// Only wrap the line in an anchor if it doesn't already include one
-			if ( preg_match('/<a[^>]+href/', $thumb) ) {
-				$thumbs[] = "<li>$thumb</li>";
+			$hookDummy = new DummyLinker;
+			$hookFile = false;
+			$hookFrameParams = [];
+			$hookHandlerParams = [];
+			$hookTime = false;
+			$hookRes = null;
+
+			if ( !wfRunHooks( 'ImageBeforeProduceHTML',
+				array( &$hookDummy, &$title, &$hookFile, &$hookFrameParams, &$hookHandlerParams, &$hookTime, &$hookRes ) ) ) {
+				$thumbs[] = "<li>$hookRes</li>";
 			} else {
-				$thumbs[] = "<li><a data-image-link href=\"{$title->getLocalUrl()}\">$thumb</a></li>";
+				$thumb = $item['html'];
+				// Only wrap the line in an anchor if it doesn't already include one
+				if ( preg_match('/<a[^>]+href/', $thumb) ) {
+					$thumbs[] = "<li>$thumb</li>";
+				} else {
+					$thumbs[] = "<li><a data-image-link href=\"{$title->getLocalUrl()}\">$thumb</a></li>";
+				}
 			}
 		}
 

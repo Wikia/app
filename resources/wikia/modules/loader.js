@@ -116,8 +116,6 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 			}
 			return urls.length - 1;
 		},
-	// This line can be simplified to just 'sdk.js' when the old FBConnect extension is decommissioned
-		fbScriptVersion = (window.wgEnableFacebookClientExt ? 'sdk.js' : 'all.js'),
 		librariesMap = {
 			jqueryUI: 'wikia.jquery.ui',
 			yui: 'wikia.yui',
@@ -137,7 +135,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 			},
 			facebook: {
-				file: window.fbScript || '//connect.facebook.net/en_US/' + fbScriptVersion,
+				file: window.fbScript || '//connect.facebook.net/en_US/sdk.js',
 				check: function () {
 					return typeof window.FB;
 				},

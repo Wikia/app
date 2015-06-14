@@ -273,13 +273,18 @@ class AbstractServiceTest extends BaseTest
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdExists' )
 		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( false ) )
-		;
+		    ->will   ( $this->returnValue( false ) );
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getCurrentDocumentId' )
-		    ->will   ( $this->returnValue( '321_123' ) )
-		;
+		    ->will   ( $this->returnValue( '321_123' ) );
+
+		$service
+			->expects( $this->at( 1 ) )
+			->method ( 'getCurrentDocumentId' )
+			->will   ( $this->returnValue( '321_123' ) );
+
 		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
 		$reflIf->setValue( $service, $mwservice );
@@ -290,7 +295,7 @@ class AbstractServiceTest extends BaseTest
 				$service->getResponseForPageIds()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @group Broken

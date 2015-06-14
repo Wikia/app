@@ -32,8 +32,9 @@ class PipelineEventProducer {
 	// Hooks handlers
 	static public function onArticleSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
 		wfDebug( "IndexingPipeline:onArticleSaveComplete\n" );
+		$rev = isset($oRevision) ? $oRevision->getId() : $oRevision;
 		self::send( 'onArticleSaveComplete', $oPage->getId(),
-			[ 'prevRevision' => $baseRevId, 'revision' => $oRevision->getId() ] );
+			[ 'prevRevision' => $baseRevId, 'revision' => $rev ] );
 		return true;
 	}
 

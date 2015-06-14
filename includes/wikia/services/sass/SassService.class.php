@@ -6,7 +6,7 @@ use Wikia\Sass\Source\StringSource;
 use Wikia\Sass\Filter\Filter;
 use Wikia\Sass\Filter\CssImportsFilter;
 use Wikia\Sass\Filter\CdnRewriteFilter;
-use Wikia\Sass\Filter\Base64Filter;
+use Wikia\Sass\Filter\InlineImageFilter;
 use Wikia\Sass\Filter\JanusFilter;
 use Wikia\Sass\Filter\MinifyFilter;
 use Wikia\Sass\Compiler\Compiler;
@@ -25,7 +25,7 @@ use Wikia\Sass\Compiler\ExternalRubyCompiler;
  */
 class SassService extends WikiaObject {
 
-	const CACHE_VERSION = 3; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
+	const CACHE_VERSION = 6; # SASS caching does not depend on $wgStyleVersion, use this constant to bust SASS cache
 
 	const FILTER_IMPORT_CSS = 1;
 	const FILTER_CDN_REWRITE = 2;
@@ -293,7 +293,7 @@ class SassService extends WikiaObject {
 			$filters[] = new CdnRewriteFilter($this->wg->CdnStylePath);
 		}
 		if ( $this->filters & self::FILTER_BASE64 ) {
-			$filters[] = new Base64Filter($IP);
+			$filters[] = new InlineImageFilter($IP);
 		}
 		if ( $this->filters & self::FILTER_JANUS ) {
 			$filters[] = new JanusFilter($IP,$this->getRtl());

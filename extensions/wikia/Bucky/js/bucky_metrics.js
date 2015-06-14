@@ -2,9 +2,11 @@
  * This file is used for setting frontend data we want to track in Bucky
  */
 require([
+	'jquery',
 	'wikia.geo',
-	'wikia.window'
-], function (geo, window) {
+	'wikia.window',
+	'bucky.resourceTiming'
+], function ($, geo, window, resourceTiming) {
 	'use strict';
 
 	$(function () {
@@ -18,4 +20,27 @@ require([
 		wgTransactionContext.bodySize = document.getElementsByTagName('body')[0].innerHTML.length;
 	});
 
+	/**
+	 * Report detailed statistics on assets fetched while loading the page
+	 *
+	 * @see PLATFORM-645
+	 *
+	 * Bind to onDOMReady, windowLoad and five-seconds-after-windowLoad events
+	 * and send ResourceTiming statistics for resources fetched before these events
+	 */
+	if (!resourceTiming.isSupported()) {
+		return;
+	}
+
+	$(function () {
+		resourceTiming.reportToBucky('DomReady');
+	});
+
+	$(window).on('load', function () {
+		resourceTiming.reportToBucky('WindowLoad');
+
+		setTimeout(function () {
+			resourceTiming.reportToBucky('AfterWindowLoad');
+		}, 5000);
+	});
 });

@@ -16,10 +16,24 @@ class WikiaHubsModuleWAMServiceTest extends WikiaBaseTest {
 	 * @dataProvider getStructuredDataProvider
 	 */
 	public function testGetStructuredData($inputData, $expectedData) {
-		$wamServiceMock = $this->getMock('WikiaHubsModuleWAMService', array('getWamPageUrl'), array($inputData['lang'], 1, $inputData['vertical_id']));
+		$wikiaHubsModelMock = $this->getMock('WikiaHubsModel', ['getVerticalName', 'getCanonicalVerticalName']);
+		$wikiaHubsModelMock->expects($this->any())
+			->method('getVerticalName')
+			->will($this->returnValue('Video Games'));
+
+		$wikiaHubsModelMock->expects($this->any())
+			->method('getCanonicalVerticalName')
+			->will($this->returnValue('Video Games'));
+
+		$wamServiceMock = $this->getMock('WikiaHubsModuleWAMService', ['getWamPageUrl', 'getWikiaHubsModel'], [$inputData['lang'], 1, $inputData['vertical_id']]);
 		$wamServiceMock->expects($this->any())
 			->method('getWamPageUrl')
 			->will($this->returnValue('http://www.wikia.com/WAM'));
+
+		$wamServiceMock->expects($this->any())
+			->method('getWikiaHubsModel')
+			->will($this->returnValue($wikiaHubsModelMock));
+
 		$result = $wamServiceMock->getStructuredData($inputData);
 		$this->assertEquals($expectedData, $result);
 	}

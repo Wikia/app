@@ -1,15 +1,14 @@
-
 /*!
  * VisualEditor user interface WikiaSourceModeDialog class.
  */
 
-/*global alert, mw, veTrack */
+/*global alert, veTrack */
 
 /**
  * Dialog for editing wikitext in source mode.
  *
  * @class
- * @extends ve.ui.Dialog
+ * @extends OO.ui.ProcessDialog
  *
  * @constructor
  * @param {Object} [config] Config options
@@ -17,11 +16,14 @@
 ve.ui.WikiaSourceModeDialog = function VeUiWikiaSourceModeDialog( config ) {
 	// Parent constructor
 	ve.ui.WikiaSourceModeDialog.super.call( this, config );
+
+	// Properties
+	this.surface = null;
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.Dialog );
+OO.inheritClass( ve.ui.WikiaSourceModeDialog, ve.ui.FragmentDialog );
 
 /* Static Properties */
 
@@ -29,61 +31,71 @@ ve.ui.WikiaSourceModeDialog.static.name = 'wikiaSourceMode';
 
 ve.ui.WikiaSourceModeDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-wikiasourcemode-title' );
 
+// as in OO.ui.WindowManager.static.sizes
+ve.ui.WikiaSourceModeDialog.static.size = 'large';
+
 ve.ui.WikiaSourceModeDialog.static.icon = 'source';
+
+ve.ui.WikiaSourceModeDialog.static.actions = [
+	{
+		action: 'apply',
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-apply' ),
+		flags: [ 'progressive', 'primary' ]
+	},
+	{
+		label: OO.ui.deferMsg( 'visualeditor-dialog-action-cancel' ),
+		flags: 'safe'
+	}
+];
 
 /* Methods */
 
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaSourceModeDialog.prototype.getBodyHeight = function () {
+	return 600;
+};
+
+/**
+ * @inheritdoc
+ */
 ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.WikiaSourceModeDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.openCount = 0;
-	this.timings = {};
+	this.openCount = 0; // tracking
+	this.timings = {}; // tracking
 	this.sourceModeTextarea = new OO.ui.TextInputWidget({
-		'$': this.$,
-		'multiline': true
+		$: this.$,
+		multiline: true
 	});
-	this.applyButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'label': ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-apply-button' ),
-		'flags': ['primary']
-	} );
-	this.$helpLink = this.$('<a>')
-		.addClass( 've-ui-wikiaSourceModeDialog-helplink' )
-		.attr( {
-			'href': new mw.Title( ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-help-link' ) ).getUrl(),
-			'target': '_blank'
-		} )
-		.text( ve.msg( 'wikia-visualeditor-dialog-wikiasourcemode-help-text' ) );
 
-	// Events
-	this.applyButton.connect( this, { 'click': [ 'onApply' ] } );
-
-	// Initialization
-	if ( !!mw.loader.getState( 'ext.wikia.LinkSuggest' ) ) {
-		this.initLinkSuggest();
-	}
+	this.initLinkSuggest();
 	this.$body.append( this.sourceModeTextarea.$element );
-	this.$foot.append( this.$helpLink, this.applyButton.$element );
-	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
+	this.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
 };
 
 /**
- * Initialize Wikia's link suggest for autocompleting links
+ * Initialize link suggest (if available)
  *
  * @method
  */
 ve.ui.WikiaSourceModeDialog.prototype.initLinkSuggest = function () {
-	// Add class to iframe body that is required for linksuggest styling
-	this.$( 'body' ).addClass( 'skin-oasis' );
-	// Initialize linksuggest on the dialog textarea
-	mw.loader.using(
-		'ext.wikia.LinkSuggest',
-		ve.bind( function () {
-			this.sourceModeTextarea.$input.linksuggest();
-		}, this )
-	);
+	if ( !!mw.loader.getState( 'ext.wikia.LinkSuggest' ) ) {
+		// jquery.ui.autocomplete.js
+		this.sourceModeTextarea.$input.css( {
+			'z-index': 9999999,
+			position: 'relative'
+		} );
+		mw.loader.using(
+			'ext.wikia.LinkSuggest',
+			function () {
+				this.sourceModeTextarea.$input.linksuggest();
+			}.bind( this )
+		);
+	}
 };
 
 /**
@@ -92,18 +104,15 @@ ve.ui.WikiaSourceModeDialog.prototype.initLinkSuggest = function () {
 ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 	return ve.ui.WikiaSourceModeDialog.super.prototype.getSetupProcess.call( this, data )
 		.first( function () {
-			this.target = this.surface.getTarget();
+			this.surface = data.surface;
 			this.openCount++;
 			this.timings.serializeStart = ve.now();
 		}, this )
 		.next( function () {
-			var doc = this.getFragment().getDocument();
-			this.$body.startThrobbing();
-			this.applyButton.setDisabled( true );
-			// Use the WikiaViewPageTarget object as the target here
-			this.target.serialize(
-				ve.dm.converter.getDomFromModel( doc, false ),
-				ve.bind( this.onSerialize, this )
+			this.$content.startThrobbing();
+			this.surface.getTarget().serialize(
+				ve.dm.converter.getDomFromModel( this.getFragment().getDocument(), false ),
+				this.onSerialize.bind( this )
 			);
 		}, this );
 };
@@ -115,114 +124,82 @@ ve.ui.WikiaSourceModeDialog.prototype.getSetupProcess = function ( data ) {
 ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.sourceModeTextarea.setValue( wikitext );
 	this.sourceModeTextarea.$input.focus();
-	this.$body.stopThrobbing();
-	this.applyButton.setDisabled( false );
+	this.$content.stopThrobbing();
 
 	ve.track( 'wikia', {
-		'action': ve.track.actions.SUCCESS,
-		'label': 'dialog-source-serialize',
-		'value': ve.now() - this.timings.serializeStart
+		action: ve.track.actions.SUCCESS,
+		label: 'dialog-source-serialize',
+		value: ve.now() - this.timings.serializeStart
 	} );
 };
 
-/**
- * @method
- */
-ve.ui.WikiaSourceModeDialog.prototype.onApply = function () {
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'dialog-source-button-save' } );
-	this.timings.parseStart = ve.now();
-	this.$frame.startThrobbing();
-	this.parse();
-};
-
-/**
- * @method
- */
-ve.ui.WikiaSourceModeDialog.prototype.getWikitext = function () {
-	return this.sourceModeTextarea.getValue();
-};
-
-/**
- * @method
- */
-ve.ui.WikiaSourceModeDialog.prototype.parse = function ( ) {
-	$.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'action': 'visualeditor',
-			'paction': 'parsewt',
-			'page': mw.config.get( 'wgRelevantPageName' ),
-			'wikitext': this.sourceModeTextarea.getValue(),
-			'token': mw.user.tokens.get( 'editToken' ),
-			'format': 'json'
-		},
-		'dataType': 'json',
-		'type': 'POST',
-		// Wait up to 100 seconds before giving up
-		'timeout': 100000,
-		'cache': 'false',
-		'success': ve.bind( this.onParseSuccess, this ),
-		'error': ve.bind( this.onParseError, this ),
-		'complete': ve.bind( function () {
-			this.$frame.stopThrobbing();
-		}, this )
-	} );
-};
-
-/**
- * @method
- */
-ve.ui.WikiaSourceModeDialog.prototype.onParseSuccess = function ( response ) {
-	var target, parseStart;
-	if ( !response || response.error || !response.visualeditor ||
-		response.visualeditor.result !== 'success' || response.visualeditor.content === false ) {
-		return this.onParseError.call( this );
+ve.ui.WikiaSourceModeDialog.prototype.getActionProcess = function ( action ) {
+	if ( action === 'apply' ) {
+		return new OO.ui.Process( function () {
+			this.timings.parseStart = ve.now();
+			this.$content.startThrobbing();
+			this.parse()
+				.done( this.onParseDone.bind( this) )
+				.fail( this.onParseFail.bind( this) );
+		}, this );
 	}
-
-	// TODO: Close is called in this way in order to be synchronous (compare with OO.ui.Dialog.close)
-	// otherwise it was causing problems with stealing the focus from newly created surface.
-	OO.ui.Window.prototype.close.call( this );
-	$( window ).off( 'mousewheel', this.onWindowMouseWheelHandler );
-	$( document ).off( 'keydown', this.onDocumentKeyDownHandler );
-
-	// TODO: This whole approach is based on ve.init.mw.ViewPageTarget.js and contains a lot of code
-	// duplication, it should be discussed with WMF guys and refactored.
-	target = this.target;
-
-	target.deactivating = true;
-	target.tearDownToolbarButtons();
-	target.detachToolbarButtons();
-
-	target.tearDownSurface( false );
-	target.deactivating = false;
-
-	target.wikitext = this.sourceModeTextarea.getValue();
-
-	target.activating = true;
-	target.edited = true;
-	target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
-	target.docToSave = null;
-	target.clearPreparedCacheKey();
-	parseStart = this.timings.parseStart;
-	target.setupSurface( target.doc, ve.bind( function () {
-		this.startSanityCheck();
-		this.emit( 'surfaceReady' );
-		ve.track( 'wikia', {
-			'action': ve.track.actions.SUCCESS,
-			'label': 'dialog-source-parse',
-			'value': ve.now() - parseStart
-		} );
-	}, target ) );
+	return ve.ui.WikiaSourceModeDialog.super.prototype.getActionProcess.call( this, action );
 };
 
-/**
- * @method
- */
-ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
+ve.ui.WikiaSourceModeDialog.prototype.parse = function () {
+	return $.ajax( {
+		url: mw.util.wikiScript( 'api' ),
+		data: {
+			action: 'visualeditor',
+			paction: 'parsefragment',
+			page: mw.config.get( 'wgRelevantPageName' ),
+			wikitext: this.sourceModeTextarea.getValue(),
+			token: mw.user.tokens.get( 'editToken' ),
+			format: 'json'
+		},
+		dataType: 'json',
+		type: 'POST',
+		// Wait up to 100 seconds before giving up
+		timeout: 100000,
+		cache: 'false'
+	} );
+};
+
+ve.ui.WikiaSourceModeDialog.prototype.onParseDone = function ( response ) {
+	if ( !response ||
+		response.error ||
+		!response.visualeditor ||
+		response.visualeditor.result !== 'success' ||
+		response.visualeditor.content === false ) {
+		return this.onParseFail.call( this );
+	}
+	this.close().done( function () {
+		var target = this.surface.getTarget();
+		target.deactivating = true;
+		target.toolbarSaveButton.disconnect( target );
+		target.toolbarSaveButton.$element.detach();
+		target.getToolbar().$actions.empty();
+		target.tearDownSurface( true ).done( function () {
+			target.deactivating = false;
+			target.wikitext = this.sourceModeTextarea.getValue();
+			target.activating = true;
+			target.edited = true;
+			target.doc = ve.createDocumentFromHtml( response.visualeditor.content );
+			target.docToSave = null;
+			target.clearPreparedCacheKey();
+			target.setupSurface( target.doc, function () {
+				target.startSanityCheck();
+				target.emit( 'surfaceReady' );
+			} );
+		}.bind( this ) );
+	}.bind( this ) );
+};
+
+ve.ui.WikiaSourceModeDialog.prototype.onParseFail = function ( ) {
 	ve.track( 'wikia', {
-		'action': ve.track.actions.ERROR,
-		'label': 'dialog-source-parse',
-		'value': ve.now() - this.timings.parseStart
+		action: ve.track.actions.ERROR,
+		label: 'dialog-source-parse',
+		value: ve.now() - this.timings.parseStart
 	} );
 	if ( window.veTrack ) {
 		veTrack( {
@@ -230,6 +207,7 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseError = function ( ) {
 		} );
 	}
 	alert( ve.msg( 'wikia-visualeditor-save-error-generic' ) );
+	this.$content.stopThrobbing();
 };
 
 ve.ui.windowFactory.register( ve.ui.WikiaSourceModeDialog );

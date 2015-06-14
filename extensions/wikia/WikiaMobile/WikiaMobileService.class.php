@@ -49,10 +49,6 @@ class WikiaMobileService extends WikiaService {
 				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
 			}
 
-			if ( $this->wg->AdDriverEnableRemnantGptMobile ) {
-				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
-			}
-
 			$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 		}
 
@@ -140,8 +136,7 @@ class WikiaMobileService extends WikiaService {
 			$trackingCode .= AnalyticsEngine::track(
 					'QuantServe',
 					AnalyticsEngine::EVENT_PAGEVIEW,
-					[],
-					['extraLabels'=> ['mobilebrowser']]
+					['extraLabels'=> ['Category.MobileWeb.WikiaMobile']]
 				) .
 				AnalyticsEngine::track(
 					'Comscore',
@@ -154,27 +149,11 @@ class WikiaMobileService extends WikiaService {
 				AnalyticsEngine::track(
 					'Datonics',
 					AnalyticsEngine::EVENT_PAGEVIEW
-				) .
-				AnalyticsEngine::track(
-					'ClarityRay',
-					AnalyticsEngine::EVENT_PAGEVIEW
-				) .
-				AnalyticsEngine::track(
-					'PageFair',
-					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
 
 		//Stats for Gracenote reporting
-		if ( $this->wg->cityId == self::LYRICSWIKI_ID ){
-			$trackingCode .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
-		}
-
-		$trackingCode .= AnalyticsEngine::track( 'GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW ).
-			AnalyticsEngine::track( 'GA_Urchin', 'onewiki', [$this->wg->cityId] ).
-			AnalyticsEngine::track( 'GA_Urchin', 'pagetime', ['wikiamobile'] ).
-			AnalyticsEngine::track( 'GA_Urchin', 'varnish-stat').
-			AnalyticsEngine::track( 'GAS', 'usertiming' );
+		$trackingCode .= AnalyticsEngine::track( 'GoogleUA', 'usertiming' );
 
 		$this->response->setVal( 'trackingCode', $trackingCode );
 
@@ -257,9 +236,15 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'toc', $toc );
 	}
 
+	private function disableSiteCSS() {
+		global $wgUseSiteCss;
+		$wgUseSiteCss = false;
+	}
+
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
+		$this->disableSiteCSS();
 		$this->handleMessages();
 		$this->handleSmartBanner();
 		$this->handleContent();

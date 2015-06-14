@@ -725,11 +725,11 @@ Por favor, déixame unha mensaxe se necesitas axuda con algunha cousa!',
 	'welcome-message-wall-user-staff' => 'Boas:
 
 Dámoslle a benvida a {{SITENAME}} e agradecemos a súa edición na páxina "[[:$1]]". Se necesita axuda, empece consultando as [[Help:Contents|páxinas de axuda]]. Visite a [[w:c:community|central da comunidade]] para informarse a través do [[w:c:community:Blog:Wikia_Staff_Blog|blogue do persoal]], facer preguntas no noso [[w:c:community:Special:Forum|foro comunitario]], participar na nosa [[w:c:community:Help:Webinars|serie webinar]] ou conversar en tempo real con outros compañeiros de Wikia. Páseo ben!',
-	'welcome-message-wall-anon' => "Ola, dámoslle a benvida a {{SITENAME}}! Grazas pola súa edición na páxina \"[[:\$1]]\".
+	'welcome-message-wall-anon' => "Ola, dámosche a benvida a {{SITENAME}}! Grazas pola túa edición na páxina \"[[:\$1]]\".
 
-'''Por favor, [[Special:Userlogin|rexístrese e cree unha conta de usuario]]'''. É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
+'''Por favor, [[Special:Userlogin|rexístrate e crea unha conta de usuario]]'''. É un xeito doado de manter baixo control as túas achegas e axuda á comunicación co resto da comunidade.
 
-Por favor, déixeme unha mensaxe se quere que lle axude con algunha cousa!",
+Por favor, déixame unha mensaxe se queres que che axude con algunha cousa!",
 	'welcome-message-wall-anon-staff' => 'Boas:
 
 Dámoslle a benvida a {{SITENAME}} e agradecemos a súa edición na páxina "[[:$1]]". Animamos a todos os colaboradores a [[Special:UserLogin|crear unha conta de usuario]], un xeito doado de manter baixo control as súas achegas, acceder a máis características de Wikia e axudar a darse a coñecer no resto da comunidade de {{SITENAME}}.
@@ -1012,6 +1012,50 @@ $messages['ja'] = array(
 もし、まだアカウントをお持ちでなければ、[[Special:Userlogin|ぜひアカウントを取得してみてください]]。他の方とコミュニケーションがとりやすくなりますし、アカウントユーザーだけが利用できる機能も多くあります。
 
 もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3', # Fuzzy
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'welcome-user-page' => '==저에 대해서==
+
+이 문서는 당신의 사용자 문서입니다. 이 단락에 당신에 대해 소개하는 글을 남겨보세요.
+
+==기여 내역==
+
+* [[특수기능:기여/$1|기여 내역]]
+
+==관심 있는 문서 목록==
+
+* 여기에 관심 있는 문서들을 링크로 추가해보세요.
+* 2번째 관심 문서
+* 3번째 관심 문서', # Fuzzy
+	'welcome-message-user' => '안녕하세요, {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서에 기여를 해주셔서 감사합니다.
+
+도움이 필요하시다면 제 [[$2|토론 문서]]에 메시지를 남겨주세요! $3',
+	'welcome-message-anon' => "안녕하세요, {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서에 기여를 해주셔서 감사합니다.
+
+'''[[특수기능:로그인|사용자 계정을 생성하시는 것은 어떨까요]]'''?
+사용자 계정이 있으면 자신의 기여 내역을 확인할 수 있고, 더 많은 커뮤니티에서 더 쉽게 활동할 수 있습니다.
+
+도움이 필요하시다면 제 [[$2|토론 문서]]에 메시지를 남겨주세요! $3", # Fuzzy
+	'welcome-message-log' => '새 기여자 환영하기',
+	'welcome-message-wall-user' => '안녕하세요, {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서에 기여를 해주셔서 감사합니다.
+
+도움이 필요하시다면 제게 메시지를 남겨주세요!',
+	'welcome-message-wall-anon' => "안녕하세요, {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서에 기여를 해주셔서 감사합니다.
+
+'''[[특수기능:로그인|사용자 계정을 생성하시는 것은 어떨까요]]'''? 사용자 계정이 있으면 자신의 기여 내역을 확인할 수 있고, 더 많은 커뮤니티에서 더 쉽게 활동할 수 있습니다.
+
+도움이 필요하시다면 제게 메시지를 남겨주세요!", # Fuzzy
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'hawelcomeedit' => 'HAWelcomeEdit',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1541,12 +1585,12 @@ $messages['pt'] = array(
 * Página preferida #3",
 	'welcome-message-user' => 'Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela tua edição na página [[:$1]].
 
-Por favor, deixa uma mensagem na [[$2|minha página de discussão]] se eu posso-te ajudar nalguma coisa! $3',
+Por favor, deixa uma mensagem na [[$2|minha página de discussão]] se eu posso ajudar-te nalguma coisa! $3',
 	'welcome-message-anon' => "Olá, bem-vindo(a) à {{SITENAME}}! Muito obrigado pela tua edição em [[:$1]]. 
 
 Porque não '''[[Special:Userlogin|crias uma conta e te identificas]]'''? Desta forma será muito mais fácil saber as páginas que tu editaste e o teu trabalho será atribuido a ti na wiki, além do mais será de grande ajuda na hora de comunicar-te com o resto da comunidade.
 
-Por favor, se tiveres alguma dúvida, sente-te à vontade para deixar uma mensagem na [[$2|minha página de discussão]] para ver se eu posso-te ajudar com alguma coisa. $3",
+Por favor, se tiveres alguma dúvida, sente-te à vontade para deixar uma mensagem na [[$2|minha página de discussão]] para ver se eu posso ajudar-te com alguma coisa. $3",
 	'welcome-message-log' => 'boas-vindas a novo colaborador',
 	'welcome-message-user-staff' => '==Bem-vindo(a)==
 
@@ -2211,22 +2255,23 @@ $3',
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'welcome-user-page' => "==關於我==
 
-''這是您的用戶頁面。請編輯本頁向整個社區介紹您！''
+''這是您的使用者頁面。請編輯本頁向整個社群介紹您自己！''
 
 ==我的貢獻==
 
-* [[Special:Contributions/$1|用戶貢獻]]
+* [[Special:Contributions/$1|使用者貢獻]]
 
-==我喜愛的頁面==
+==我最愛的頁面==
 
 * 在此為您喜愛的頁面增加連結！
-* 喜愛的頁面 #2
-* 喜愛的頁面 #3",
+* 最愛的頁面 #2
+* 最愛的頁面 #3",
 	'welcome-message-user' => 'Hi，歡迎來到{{SITENAME}}！ 感謝您對[[:$1]]頁面的編輯。
 
 如果我能幫助您的話，請在[[$2|我的討論頁]]留言。$3',

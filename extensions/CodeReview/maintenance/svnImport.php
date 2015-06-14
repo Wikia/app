@@ -130,7 +130,7 @@ class SvnImport extends Maintenance {
 					$codeRev->getAuthor(),
 					$revSpeed ) );
 			}
-			wfWaitForSlaves( 5 );
+			wfWaitForSlaves();
 		}
 
 		if ( $cacheSize !== 0 ) {

@@ -187,9 +187,9 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
 
 		if ( $mapDeleted && $this->app->checkSkin( 'oasis' ) ) {
-			NotificationsController::addConfirmation(
+			BannerNotificationsController::addConfirmation(
 				wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
-				NotificationsController::CONFIRMATION_WARN
+				BannerNotificationsController::CONFIRMATION_WARN
 			);
 		}
 
@@ -330,8 +330,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * @param String $selectedSort a sorting option passed in $_GET
 	 */
 	private function prepareTemplateData( $mapsResponse, $selectedSort ) {
-		global $wgEnableGlobalNavExt;
-
 		$isWikiaMobileSkin = $this->app->checkSkin( self::WIKIA_MOBILE_SKIN_NAME );
 
 		$thumbWidth = ( $isWikiaMobileSkin ? self::MAP_MOBILE_THUMB_WIDTH : self::MAP_THUMB_WIDTH );
@@ -357,9 +355,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 				'create-a-map' => wfMessage( 'wikia-interactive-maps-create-a-map' ),
 			] );
 			$this->setVal( 'sortingOptions', $this->getModel()->getSortingOptions( $selectedSort ) );
-			if ( empty( $wgEnableGlobalNavExt ) ) {
-				$this->setVal( 'searchInput', $this->app->renderView( 'Search', 'Index' ) );
-			}
 		}
 
 		// template variables shared between skins

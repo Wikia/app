@@ -28,7 +28,7 @@ describe('dropdownNavigation utils', function () {
 		cases.forEach(function (params) {
 			expect(function () {
 				return utils.validateParams(params);
-			}).toThrow(params.errorMessage);
+			}).toThrow(new Error(params.errorMessage));
 		});
 	});
 

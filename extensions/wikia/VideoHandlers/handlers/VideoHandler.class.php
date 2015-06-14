@@ -151,7 +151,7 @@ abstract class VideoHandler extends BitmapHandler {
 	function getAspectRatio() {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
-		$metadata = $this->getMetadata(true);
+		$metadata = $this->getVideoMetadata(true);
 		$ratio = static::$aspectRatio;
 		if ( !empty($metadata['aspectRatio']) ) {
 			if ( floatval($metadata['aspectRatio']) == 0 ) {
@@ -192,7 +192,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @param bool $unserialize
 	 * @return mixed array of data, or serialized version
 	 */
-	function getMetadata( $unserialize = false ) {
+	function getVideoMetadata( $unserialize = false ) {
 		wfProfileIn( __METHOD__ );
 		if ( empty($this->metadata) ) {
 			$this->metadata = $this->getApi() instanceof ApiWrapper
@@ -245,7 +245,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return boolean
 	 */
 	protected function isHd() {
-		$metadata = $this->getMetadata(true);
+		$metadata = $this->getVideoMetadata(true);
 		return (!empty($metadata['hd']));
 	}
 
@@ -254,7 +254,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return boolean
 	 */
 	protected function isAgeGate() {
-		$metadata = $this->getMetadata(true);
+		$metadata = $this->getVideoMetadata(true);
 		return (!empty($metadata['ageGate']));
 	}
 
@@ -263,7 +263,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return integer|null
 	 */
 	public function getExpirationDate() {
-		$metadata = $this->getMetadata(true);
+		$metadata = $this->getVideoMetadata(true);
 		return (!empty($metadata['expirationDate']) ? $metadata['expirationDate'] : null);
 	}
 
@@ -272,7 +272,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string|null
 	 */
 	public function getRegionalRestrictions() {
-		$metadata = $this->getMetadata(true);
+		$metadata = $this->getVideoMetadata(true);
 		return ( !empty( $metadata['regionalRestrictions'] ) ? $metadata['regionalRestrictions'] : null );
 	}
 
@@ -281,7 +281,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return int duration in seconds, or null
 	 */
 	protected function getDuration() {
-		$metadata = $this->getMetadata(true);
+		$metadata = $this->getVideoMetadata(true);
 		return (!empty($metadata['duration']) ? $metadata['duration'] : null);
 	}
 
@@ -290,7 +290,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string
 	 */
 	public function getFormattedDuration() {
-		$metadata = $this->getMetadata( true );
+		$metadata = $this->getVideoMetadata( true );
 		if ( !empty( $metadata['duration'] ) ) {
 			$sec = $metadata['duration'];
 			if ( is_numeric( $sec ) ) {
@@ -309,7 +309,7 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string
 	 */
 	protected function getEmbedVideoId() {
-		$metadata = $this->getMetadata(true);
+		$metadata = $this->getVideoMetadata(true);
 		if ( !empty($metadata['altVideoId']) ) {
 			return $metadata['altVideoId'];
 		}

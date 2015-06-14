@@ -36,7 +36,7 @@ define('wikia.hubs', ['wikia.window', 'jquery'], function wikiaHubs(window, $) {
 				category: category,
 				eventName: 'wikiahubs',
 				label: label,
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				value: value
 			}, params );
 		},

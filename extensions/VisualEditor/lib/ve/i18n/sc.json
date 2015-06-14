@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"L2212",
+			"Taxandru"
+		]
+	},
+	"visualeditor-annotationbutton-bold-tooltip": "Grassu",
+	"visualeditor-annotationbutton-italic-tooltip": "Corsivu",
+	"visualeditor-annotationbutton-language-tooltip": "Limba",
+	"visualeditor-annotationbutton-link-tooltip": "Ligòngiu",
+	"visualeditor-clipboard-copy": "Còpia",
+	"visualeditor-clipboard-cut": "Sega",
+	"visualeditor-clipboard-paste": "Incolla",
+	"visualeditor-commentinspector-edit": "Càmbia cummentu",
+	"visualeditor-commentinspector-title": "Cummentu",
+	"visualeditor-commentinspector-tooltip": "Cummentu",
+	"visualeditor-contextitemwidget-label-secondary": "Modìfica",
+	"visualeditor-dialog-action-apply": "Àplica is càmbios",
+	"visualeditor-dialog-action-cancel": "Annudda",
+	"visualeditor-dialog-action-done": "Fatu",
+	"visualeditor-dialog-action-goback": "Bae in dae segus",
+	"visualeditor-dialog-action-insert": "Inserta",
+	"visualeditor-dialog-error-dismiss": "Bae in segus",
+	"visualeditor-help-tool": "Agiudu",
+	"visualeditor-inspector-remove-tooltip": "Remove",
+	"visualeditor-languageinspector-title": "Limba",
+	"visualeditor-languageinspector-widget-changelang": "Agata sa limba",
+	"visualeditor-linkinspector-open": "Aperi",
+	"visualeditor-linkinspector-title": "Ligòngiu",
+	"visualeditor-shortcuts-history": "Istòria",
+	"visualeditor-shortcuts-other": "Àteru",
+	"visualeditor-toolbar-history": "Istòria"
+}

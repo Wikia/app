@@ -10,6 +10,9 @@
 $wgExtensionCredits['other'][] = [
 	'name' => 'Oasis Skin',
 	'version' => '1.0',
+	'author' => 'Maciej Brencz',
+	'descriptionmsg' => 'oasis-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Oasis'
 ];
 
 // Messages
@@ -29,24 +32,10 @@ function wfOasisSetup() {
 	$wgHooks['EditPage::showEditForm:initial'][] = 'BodyController::onEditPageRender';
 	$wgHooks['EditPageLayoutModifyPreview'][] = 'WikiNavigationController::onEditPageLayoutModifyPreview';
 	$wgHooks['EditPageMakeGlobalVariablesScript'][] = 'WikiNavigationController::onEditPageMakeGlobalVariablesScript';
-	$wgHooks['FileDeleteComplete'][] = 'LatestPhotosController::onImageDelete';
 	$wgHooks['MakeHeadline'][] = 'ContentDisplayController::onMakeHeadline';
-	$wgHooks['MessageCacheReplace'][] = 'LatestPhotosController::onMessageCacheReplace';
 	$wgHooks['MessageCacheReplace'][] = 'WikiNavigationController::onMessageCacheReplace';
 	$wgHooks['Parser::showEditLink'][] = 'ContentDisplayController::onShowEditLink';
-	$wgHooks['UploadComplete'][] = 'LatestPhotosController::onImageUploadComplete';
-	$wgHooks['FileUpload'][] = 'LatestPhotosController::onImageUpload';
-	$wgHooks['SpecialMovepageAfterMove'][] = 'LatestPhotosController::onImageRenameCompleated';
 	$wgHooks['WikiFactoryChanged'][] = 'WikiNavigationController::onWikiFactoryChanged';
-
-	// confirmations
-	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
-	$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
-	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
-	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsController::addFacebookConnectConfirmation';
-	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
-	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
-	$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
 
 	// notifications
 	$wgHooks['AchievementsNotification'][] = 'NotificationsController::addBadgeNotification';
@@ -56,16 +45,7 @@ function wfOasisSetup() {
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMessageNotification';
 
 	// misc
-	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
-
-	/*
-	 * TODO remove after Global Header ABtesting
-	 */
-	$wgHooks['WikiaSkinTopScripts'][] = 'OasisController::onWikiaSkinTopScripts';
-	/*
-	 *  END TODO
-	 */
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
@@ -82,10 +62,10 @@ function wfOasisSetup() {
 	));
 
 	// Generic messages that can be used by all extensions such as error messages
-	$jsMessages->registerPackage('Oasis-generic', array(
+	$jsMessages->registerPackage( 'Oasis-generic', [
 		'oasis-generic-error',
-	));
-	$jsMessages->enqueuePackage('Oasis-generic', JSMessages::EXTERNAL);
+	] );
+	$jsMessages->enqueuePackage( 'Oasis-generic', JSMessages::EXTERNAL );
 }
 
 

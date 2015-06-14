@@ -47,11 +47,16 @@ class LocalNavigationController extends WikiaController {
 			wfProfileIn( __METHOD__ . 'graphicWordmark' );
 			$imageTitle = Title::newFromText( $themeSettings::WordmarkImageName, NS_IMAGE );
 			$file = wfFindFile( $imageTitle );
+			$attributes = [];
+			$wordmarkStyle = '';
 			if ( $file instanceof File ) {
-				$wordmarkURL = $file->createThumb(
-					self::WORDMARK_MAX_WIDTH,
-					self::WORDMARK_MAX_HEIGHT
-				);
+				$wordmarkURL = $file->getUrl();
+				$attributes [] = 'width="' . $file->width . '"';
+				$attributes [] = 'height="' . $file->height . '"';
+
+				if (!empty($attributes)) {
+					$this->wordmarkStyle = ' ' . implode(' ', $attributes) . ' ';
+				}
 			}
 			wfProfileOut( __METHOD__ . 'graphicWordmark' );
 		}
@@ -62,5 +67,6 @@ class LocalNavigationController extends WikiaController {
 		$this->setVal( 'wordmarkText', $settings['wordmark-text'] );
 		$this->setVal( 'wordmarkFontSize', $settings['wordmark-font-size'] );
 		$this->setVal( 'wordmarkUrl', $wordmarkURL );
+		$this->setVal( 'wordmarkStyle', $wordmarkStyle );
 	}
 }

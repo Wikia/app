@@ -703,8 +703,7 @@
 				}
 			},
 			autocomplete: {
-				appendTo: '.article-categories',
-
+				appendTo: '.article-categories, .CategorySelect',
 				// Non-standard
 				limit: 6
 			},
@@ -743,7 +742,7 @@
 		track: Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
 			action: Wikia.Tracker.ACTIONS.CLICK,
 			category: 'category-tool',
-			trackingMethod: 'both'
+			trackingMethod: 'analytics'
 		})
 	});
 

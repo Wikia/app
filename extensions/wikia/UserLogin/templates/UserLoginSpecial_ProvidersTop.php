@@ -1,4 +1,4 @@
-	<div class="sso-login">
+	<div class="sso-login hidden">
 		<?= $app->renderView('FacebookButton', 'index', array(
 			'class' => 'sso-login-facebook',
 			'text' => wfMessage('fbconnect-wikia-signup-w-facebook')->escaped()

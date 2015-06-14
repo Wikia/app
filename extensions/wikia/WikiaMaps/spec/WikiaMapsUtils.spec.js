@@ -9,13 +9,13 @@ describe('wikia.maps.utils', function () {
 		expect(typeof utilsModule.inArray).toBe('function');
 	});
 
-	it('triggers page refresh if requested in onBeforeClose', function() {
+	it('triggers page refresh if requested in onBeforeClose', function () {
 		spyOn(utilsModule, 'onBeforeCloseModal');
 		utilsModule.onBeforeCloseModal(true);
 		expect(utilsModule.refreshIfAfterForceLogin);
 	});
 
-	it('checks if a key is present in an array', function() {
+	it('checks if a key is present in an array', function () {
 		var testData = [
 			{
 				input: {
@@ -59,7 +59,7 @@ describe('wikia.maps.utils', function () {
 		};
 		expect(function () {
 			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
-		}).not.toThrow('Could not find the file');
+		}).not.toThrow(new Error('Could not find the file'));
 	});
 
 	it('checks if an error is thrown where there is no file', function () {
@@ -68,7 +68,7 @@ describe('wikia.maps.utils', function () {
 		};
 		expect(function () {
 			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
-		}).toThrow('Could not find the file');
+		}).toThrow(new Error('Could not find the file'));
 	});
 
 	it('checks if an error is thrown where there is no files array', function () {
@@ -77,6 +77,6 @@ describe('wikia.maps.utils', function () {
 		};
 		expect(function () {
 			utilsModule.getFormDataForFileUpload(inputElementStub, 'just-for-test');
-		}).toThrow('Could not find the file');
+		}).toThrow(new Error('Could not find the file'));
 	});
 });

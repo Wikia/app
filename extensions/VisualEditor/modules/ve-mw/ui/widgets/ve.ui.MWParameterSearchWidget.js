@@ -17,10 +17,10 @@
  * @cfg {number|null} [limit=3] Limit on the number of initial options to show, null to show all
  */
 ve.ui.MWParameterSearchWidget = function VeUiMWParameterSearchWidget( template, config ) {
-	// Configuration intialization
+	// Configuration initialization
 	config = ve.extendObject( {
-		'placeholder': ve.msg( 'visualeditor-parameter-input-placeholder' ),
-		'limit': 3
+		placeholder: ve.msg( 'visualeditor-parameter-input-placeholder' ),
+		limit: 3
 	}, config );
 
 	// Parent constructor
@@ -33,7 +33,7 @@ ve.ui.MWParameterSearchWidget = function VeUiMWParameterSearchWidget( template, 
 	this.limit = config.limit || null;
 
 	// Events
-	this.template.connect( this, { 'add': 'buildIndex', 'remove': 'buildIndex' } );
+	this.template.connect( this, { add: 'buildIndex', remove: 'buildIndex' } );
 
 	// Initialization
 	this.$element.addClass( 've-ui-mwParameterSearchWidget' );
@@ -107,13 +107,13 @@ ve.ui.MWParameterSearchWidget.prototype.buildIndex = function () {
 
 		this.index.push( {
 			// Query information
-			'text': [ label, description ].join( ' ' ).toLowerCase(),
-			'names': [ name ].concat( aliases ).join( '|' ).toLowerCase(),
+			text: [ label, description ].join( ' ' ).toLowerCase(),
+			names: [ name ].concat( aliases ).join( '|' ).toLowerCase(),
 			// Display information
-			'name': name,
-			'label': label,
-			'aliases': aliases,
-			'description': description
+			name: name,
+			label: label,
+			aliases: aliases,
+			description: description
 		} );
 	}
 
@@ -143,12 +143,12 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 			nameMatch = item.names.indexOf( query ) >= 0;
 		}
 		if ( !hasQuery || textMatch || nameMatch ) {
-			items.push( new ve.ui.MWParameterResultWidget( item, { '$': this.$ } ) );
+			items.push( new ve.ui.MWParameterResultWidget( { $: this.$, data: item } ) );
 			if ( hasQuery && nameMatch ) {
 				exactMatch = true;
 			}
 		}
-		if ( !hasQuery && !this.showAll && items.length > this.limit ) {
+		if ( !hasQuery && !this.showAll && items.length >= this.limit ) {
 			remainder = len - i;
 			break;
 		}
@@ -156,21 +156,27 @@ ve.ui.MWParameterSearchWidget.prototype.addResults = function () {
 
 	if ( hasQuery && !exactMatch && value.length && !this.template.hasParameter( value ) ) {
 		items.unshift( new ve.ui.MWParameterResultWidget( {
-			'name': value,
-			'label': value,
-			'aliases': [],
-			'description': ve.msg( 'visualeditor-parameter-search-unknown' )
-		}, { '$': this.$ } ) );
+			$: this.$,
+			data: {
+				name: value,
+				label: value,
+				aliases: [],
+				description: ve.msg( 'visualeditor-parameter-search-unknown' )
+			}
+		} ) );
 	}
 
 	if ( !items.length ) {
-		items.push( new ve.ui.MWNoParametersResultWidget(
-			{}, { '$': this.$, 'disabled': true }
-		) );
+		items.push( new ve.ui.MWNoParametersResultWidget( {
+			$: this.$,
+			data: {},
+			disabled: true
+		} ) );
 	} else if ( remainder ) {
-		items.push( new ve.ui.MWMoreParametersResultWidget(
-			{ 'remainder': remainder }, { '$': this.$ }
-		) );
+		items.push( new ve.ui.MWMoreParametersResultWidget( {
+			$: this.$,
+			data: { remainder: remainder }
+		} ) );
 	}
 
 	this.results.addItems( items );

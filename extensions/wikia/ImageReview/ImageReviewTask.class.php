@@ -25,7 +25,7 @@ class ImageReviewTask extends BaseTask {
 				continue;
 			}
 
-			$dbname = \WikiFactory::getWikisByID( $wikiId );
+			$dbname = \WikiFactory::getWikiByID( $wikiId );
 			if ( !$dbname ) {
 				$this->warning( 'did not find database', ['wiki_id' => $wikiId] );
 				continue;
@@ -87,7 +87,12 @@ class ImageReviewTask extends BaseTask {
 
 		$oDB = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 
-		foreach ( $aDeletionList as $aImageData ) {
+		foreach ( $aDeletionList as $aRow ) {
+			$aImageData = [
+				'wiki_id' => $aRow['wiki_id'],
+				'page_id' => $aRow['page_id'],
+			];
+
 			$oDB->delete(
 				'image_review',
 				$aImageData,
@@ -97,7 +102,7 @@ class ImageReviewTask extends BaseTask {
 			WikiaLogger::instance()->info( 'ImageReviewLog', [
 				'method' => __METHOD__,
 				'message' => 'Image removed from queue',
-				'params' => $aImageData,
+				'params' => $aRow,
 			] );
 		}
 	}
@@ -114,7 +119,9 @@ class ImageReviewTask extends BaseTask {
 		];
 		$from = $recipients[0];
 
-		\UserMailer::send( $recipients, $from, $subject, $body );
+		foreach ( $recipients as $recipient ) {
+			\UserMailer::send( $recipient, $from, $subject, $body );
+		}
 
 		WikiaLogger::instance()->error( "ImageReviewLog", [
 			'method' => __METHOD__,

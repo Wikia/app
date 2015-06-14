@@ -738,5 +738,5 @@ class BaseRssModelTest extends WikiaBaseTest
 			);
 		return $processedData;
 	}
-
 }
+

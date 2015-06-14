@@ -12,8 +12,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Tags report",
-    "description" => "List of articles which use special tags in text (like 'dpl', 'youtube')",
-    "author" => "Piotr Molski"
+    "descriptionmsg" => "tagsreport-desc",
+    "author" => "Piotr Molski",
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/TagsReport"
 );
 
 $wgExtensionMessagesFiles["TagsReport"] = dirname(__FILE__) . '/SpecialTagsReport.i18n.php';

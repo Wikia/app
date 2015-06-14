@@ -16,6 +16,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  */
 $messages['qqq'] = array(
 	'wikianewfiles-title' => 'Title of the special page.',
@@ -24,7 +25,8 @@ $messages['qqq'] = array(
 * $1 is a link to the user page of the user who uploaded the file.
 * $2 is the user name for GENDER support.',
 	'wikianewfiles-postedin' => 'Text displayed below a file to indicate which articles the file is posted in.',
-	'wikianewfiles-more' => 'Text displayed when there are more articles the file is posted in.',
+	'wikianewfiles-more' => 'Text displayed when there are more articles the file is posted in.
+{{Identical|More}}',
 );
 
 /** Arabic (العربية)
@@ -36,6 +38,14 @@ $messages['ar'] = array(
 	'wikianewfiles-uploadby' => 'من قبل {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'نشرت في',
 	'wikianewfiles-more' => 'المزيد...',
+);
+
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'wikianewfiles-uploadby' => '{{GENDER:$2|$1}}ৰ দ্বাৰা',
+	'wikianewfiles-more' => 'অধিক...',
 );
 
 /** Breton (brezhoneg)
@@ -52,6 +62,17 @@ $messages['bs'] = array(
 	'wikianewfiles-more' => 'više...',
 );
 
+/** Catalan (català)
+ * @author Unapersona
+ */
+$messages['ca'] = array(
+	'wikianewfiles-title' => 'Nous fitxers en aquest wiki',
+	'wikianewfiles-desc' => 'Estén una [[Special:NewFiles|pàgina especial]] per a substituir algunes de les capçalera format',
+	'wikianewfiles-uploadby' => 'per {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Publicat a',
+	'wikianewfiles-more' => 'més...',
+);
+
 /** Chechen (нохчийн)
  * @author Умар
  */
@@ -62,10 +83,11 @@ $messages['ce'] = array(
 
 /** German (Deutsch)
  * @author Metalhead64
+ * @author Purodha
  */
 $messages['de'] = array(
 	'wikianewfiles-title' => 'Neue Dateien auf diesem Wiki',
-	'wikianewfiles-desc' => 'Ergänzt eine [[Special:NewFiles|Spezialseite]] zum Überschreiben einiger Überschriftsformatierungen',
+	'wikianewfiles-desc' => 'Erzeugt eine [[Special:NewFiles|Spezialseite]] zum Überschreiben einiger Überschriftsformatierungen',
 	'wikianewfiles-uploadby' => 'von {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Gepostet in',
 	'wikianewfiles-more' => 'mehr …',
@@ -80,6 +102,13 @@ $messages['es'] = array(
 	'wikianewfiles-uploadby' => 'por {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Publicado en',
 	'wikianewfiles-more' => 'más...',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikianewfiles-more' => 'gehiago...',
 );
 
 /** French (français)
@@ -120,6 +149,23 @@ $messages['hu'] = array(
 	'wikianewfiles-title' => 'Új fájlok a wikin',
 );
 
+/** Georgian (ქართული)
+ * @author DevaMK
+ */
+$messages['ka'] = array(
+	'wikianewfiles-title' => 'ახალი ფაილები',
+	'wikianewfiles-uploadby' => 'ამტვირთავი - {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'გამოყენებულია გვერდში',
+	'wikianewfiles-more' => 'მეტი...',
+);
+
+/** Kurdish (Latin script) (Kurdî (latînî)‎)
+ * @author Bikarhêner
+ */
+$messages['ku-latn'] = array(
+	'wikianewfiles-more' => 'zêdetir...',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -153,13 +199,26 @@ $messages['ms'] = array(
 
 /** Dutch (Nederlands)
  * @author SPQRobin
+ * @author Siebrand
  * @author Sjoerddebruin
  */
 $messages['nl'] = array(
 	'wikianewfiles-title' => 'Nieuwe bestanden op deze wiki',
+	'wikianewfiles-desc' => 'Voegt functionaliteit toe aan een [[Special:NewFiles|speciale pagina]] zodat kopteksten gewijzigd kunnen worden',
 	'wikianewfiles-uploadby' => 'door {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Geplaatst in',
 	'wikianewfiles-more' => 'meer...',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'wikianewfiles-title' => 'Fichièrs novèls sus aqueste wiki',
+	'wikianewfiles-desc' => 'Espandís una [[Special:NewFiles|pagina especiala]] per espotir certanas mesas en forma de l’entèsta',
+	'wikianewfiles-uploadby' => 'per {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Postat dins',
+	'wikianewfiles-more' => 'mai...',
 );
 
 /** Punjabi (ਪੰਜਾਬੀ)
@@ -186,6 +245,7 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'wikianewfiles-title' => 'په دې ويکي باندې نوې دوتنې',
 	'wikianewfiles-more' => 'نور ...',
 );
 
@@ -200,6 +260,17 @@ $messages['pt-br'] = array(
 	'wikianewfiles-uploadby' => 'por {{GENDER:$2|$1}}',
 	'wikianewfiles-postedin' => 'Postado em',
 	'wikianewfiles-more' => 'mais...',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'wikianewfiles-title' => 'File nuève sus a sta uicchi',
+	'wikianewfiles-desc' => "Estende 'na [[Special:NewFiles|pàgena speciale]] pe sovrascrivere quacche formattazzione d'a testate",
+	'wikianewfiles-uploadby' => 'da {{GENDER:$2|$1}}',
+	'wikianewfiles-postedin' => 'Mannate',
+	'wikianewfiles-more' => 'de cchiù...',
 );
 
 /** Russian (русский)

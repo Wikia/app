@@ -1,5 +1,8 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+use \Wikia\Util\GlobalStateWrapper;
+
 class VenusHooks {
 
 	/**
@@ -8,10 +11,10 @@ class VenusHooks {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		global $wgEnableVenusArticle;
 
-		if ($wgEnableVenusArticle) {
+		if ( $wgEnableVenusArticle ) {
 			$vars['wgEnableVenusArticle'] = $wgEnableVenusArticle;
 		}
 
@@ -34,35 +37,44 @@ class VenusHooks {
 			return true;
 		}
 
-		if ( self::isInfoboxInFirstSection( $parser, $section, $content ) ) {
-			$infoboxExtractor = new InfoboxExtractor( $content );
+		try {
+			if ( self::isInfoboxInFirstSection( $parser, $section, $content ) ) {
+				$infoboxExtractor = new InfoboxExtractor( $content );
 
-			$dom = $infoboxExtractor->getDOMDocument();
+				$dom = $infoboxExtractor->getDOMDocument();
 
-			$nodes = $infoboxExtractor->getInfoboxNodes();
-			$node = $nodes->item(0);
+				$nodes = $infoboxExtractor->getInfoboxNodes();
+				$node = $nodes->item( 0 );
 
-			if ( $node instanceof DOMElement ) {
-				$body = $dom->documentElement->firstChild;
+				if ( $node instanceof DOMElement ) {
+					$body = $dom->documentElement->firstChild;
 
-				// replace extracted infobox with a dummy element to prevent newlines from creating empty paragraphs (CON-2166)
-				// <table infobox-placeholder="1"></table>
-				$placeholder = $dom->createElement( 'table' );
-				$placeholder->setAttribute( 'infobox-placeholder', 'true' );
-				$body->insertBefore( $placeholder, $node );
+					// replace extracted infobox with a dummy element to prevent newlines from creating empty paragraphs (CON-2166)
+					// <table infobox-placeholder="1"></table>
+					$placeholder = $dom->createElement( 'table' );
+					$placeholder->setAttribute( 'infobox-placeholder', 'true' );
 
-				// perform a magic around infobox wrapper
-				$node = $infoboxExtractor->clearInfoboxStyles( $node );
-				$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
-				$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
+					$node->parentNode->insertBefore( $placeholder, $node );
 
-				// move infobox to the beginning of article content
-				$infoboxExtractor->insertNode( $body, $infoboxContainer, true );
+					// perform a magic around infobox wrapper
+					$node = $infoboxExtractor->clearInfoboxStyles( $node );
+					$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
+					$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
 
-				$content = $dom->saveHTML();
+					// move infobox to the beginning of article content
+					$infoboxExtractor->insertNode( $body, $infoboxContainer, true );
 
-				$parser->getOutput()->addModules( 'ext.wikia.venus.article.infobox' );
+					$content = $dom->saveHTML();
+
+					$parser->getOutput()->addModules( 'ext.wikia.venus.article.infobox' );
+				}
 			}
+		}
+		catch ( DOMException $e ) {
+			// log exceptions
+			WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+			] );
 		}
 
 		return true;
@@ -75,7 +87,7 @@ class VenusHooks {
 	 * @param $text string text from the parse to replacer
 	 * @return bool true, it's a hook
 	 */
-	static public function onParserAfterTidy(Parser $parser, &$text ) {
+	static public function onParserAfterTidy( Parser $parser, &$text ) {
 		$text = str_replace( '<table infobox-placeholder="true"></table>', '', $text );
 		return true;
 	}
@@ -89,7 +101,7 @@ class VenusHooks {
 	 * @return bool
 	 */
 	static public function isInfoboxInFirstSection( $parser, $section, $content ) {
-		return $parser->mIsMainParse && $section === 0 && stripos($content, InfoboxExtractor::INFOBOX_CLASS_NAME);
+		return $parser->mIsMainParse && $section === 0 && stripos( $content, InfoboxExtractor::INFOBOX_CLASS_NAME );
 	}
 
 	/**
@@ -116,5 +128,55 @@ class VenusHooks {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check if venus skin can be show and set it if all conditions are met
+	 *
+	 * @param string $userSkin skin chosen by SkinChooser
+	 * @param string $useskin skin name passed via useskin parameter in url
+	 * @param Title $title page title
+	 * @return bool
+	 */
+	public static function onBeforeSkinLoad( &$userSkin, $useskin, Title $title ) {
+		if ( ( !$useskin || $useskin == 'venus' ) && self::showVenusSkin( $title ) ) {
+			$userSkin = 'venus';
+		}
+
+		return true;
+	}
+
+	/**
+     * Check if the current page should be rendered using Venus
+     *
+     * @param Title $title
+     * @return bool
+	 */
+	public static function showVenusSkin( Title $title ) {
+		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
+
+		$wrapper = new GlobalStateWrapper( [
+			'wgTitle' => $title,
+		] );
+
+		$isSearch = false;
+		$isArticlePage = false;
+
+		$wrapper->wrap( function () use ( &$isSearch, &$isArticlePage ) {
+			$isSearch = WikiaPageType::isSearch();
+			$isArticlePage = WikiaPageType::isArticlePage();
+		} );
+
+		$action = $wgRequest->getVal( 'action' );
+		$diff = $wgRequest->getVal( 'diff' );
+
+		$isSpecialSearch = $isSearch && $wgEnableVenusSpecialSearch;
+		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
+		$isVenusArticle = $isArticlePage  &&
+			$wgEnableVenusArticle &&
+			( empty( $action ) || $action == 'view' ) &&
+			empty( $diff );
+
+		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest || $isVenusArticle );
 	}
 }

@@ -1,4 +1,4 @@
-/* global describe, modules, expect, it, spyOn */
+/* global describe, modules, expect, it */
 describe('wikia.dom', function () {
 	'use strict';
 	var tree, docMock = {},
@@ -67,7 +67,7 @@ describe('wikia.dom', function () {
 		expect(domModule.closestByClassName(tree[6], '1', 6)).toBe(tree[1]);
 	});
 
-	it('Find closest element with given tag name', function(){
+	it('Find closest element with given tag name', function () {
 		tree = createTree(1);
 		//Check if correct element is returned when first element is the wanted one
 		expect(domModule.closestByTagName(tree[1], 'div')).toBe(tree[1]);
@@ -110,7 +110,7 @@ describe('wikia.dom', function () {
 		//Check if Error is thrown when wrong type of argument is provided
 		expect(function () {
 			domModule.createElementWithClass('div', 'foo');
-		}).toThrow('Classes argument must be an array');
+		}).toThrow(new Error('Classes argument must be an array'));
 	});
 
 	it('Check if class is added when class list was initially empty', function () {

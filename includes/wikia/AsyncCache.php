@@ -102,7 +102,7 @@ class AsyncCache {
 	private $currTime;
 
 	/**
-	 * @param BagOStuff $cache - An alternate caching package
+	 * @param \BagOStuff $cache - An alternate caching package
 	 */
 	public function __construct( $cache = null ) {
 		$this->currTime = time();
@@ -360,7 +360,11 @@ class AsyncCache {
 			$this->key,
 			$this->callback,
 			$this->callbackParams,
-			[ 'ttl' => $this->ttl, 'negativeResponseTTL' => $this->negativeResponseTTL ] );
+			[
+				'ttl' => $this->ttl,
+				'negativeResponseTTL' => $this->negativeResponseTTL
+			]
+		);
 
 		return $value;
 	}

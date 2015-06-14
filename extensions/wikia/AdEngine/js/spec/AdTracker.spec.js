@@ -15,7 +15,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		adTracker.track('test/event');
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/test/event',
-			ga_action: '',
+			ga_action: 'nodata',
 			ga_label: '',
 			ga_value: 0,
 			trackingMethod: 'ad'
@@ -26,10 +26,10 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		var adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowMock);
 
 		spyOn(trackerMock, 'track');
-		adTracker.track('test/event', {data1: 'one', data2: 'two'});
+		adTracker.track('test/event', {data1: 'one', data2: ['two', 'three']});
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/test/event',
-			ga_action: 'data1=one;data2=two',
+			ga_action: 'data1=one;data2=two,three',
 			ga_label: '',
 			ga_value: 0,
 			trackingMethod: 'ad'
@@ -65,7 +65,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			adTracker.track('test/event', {}, value);
 			expect(trackerMock.track).toHaveBeenCalledWith({
 				ga_category: 'ad/test/event',
-				ga_action: '',
+				ga_action: 'nodata',
 				ga_label: timeBucket,
 				ga_value: value,
 				trackingMethod: 'ad'
@@ -96,7 +96,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			adTracker.track('test/event', {}, value);
 			expect(trackerMock.track).toHaveBeenCalledWith({
 				ga_category: 'ad/error/test/event',
-				ga_action: '',
+				ga_action: 'nodata',
 				ga_label: timeBucket,
 				ga_value: value,
 				trackingMethod: 'ad'
@@ -135,7 +135,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			adTracker.track('test/event', {}, value);
 			expect(trackerMock.track).toHaveBeenCalledWith({
 				ga_category: 'ad/test/event',
-				ga_action: '',
+				ga_action: 'nodata',
 				ga_label: timeBucket,
 				ga_value: expectedValue,
 				trackingMethod: 'ad'
@@ -151,7 +151,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		adTracker.track('test/event', {}, 'goat');
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/error/test/event',
-			ga_action: '',
+			ga_action: 'nodata',
 			ga_label: 'invalid',
 			ga_value: 0,
 			trackingMethod: 'ad'
@@ -166,7 +166,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		spyOn(trackerMock, 'track');
 
-		adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123}).track();
+		adTracker.measureTime('test/event', {abc: 'def', xyz: 123}).track();
 
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/timing/test/event',
@@ -176,8 +176,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			trackingMethod: 'ad'
 		});
 
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(888);
-
+		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeLessThan(888);
 	});
 
 	it('measureTime: no track call after measure', function () {
@@ -188,10 +187,10 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		spyOn(trackerMock, 'track');
 
-		adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123});
+		adTracker.measureTime('test/event', {abc: 'def', xyz: 123});
 
 		// No tracking yet
-		expect(trackerMock.track.calls.length).toBe(0);
+		expect(trackerMock.track.calls.count()).toBe(0);
 	});
 
 	it('measureTime with eventType param and track', function () {
@@ -202,7 +201,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		spyOn(trackerMock, 'track');
 
-		adTracker.measureTime('testEvent', {abc: 'def', 'xyz': 123}, 'start').track();
+		adTracker.measureTime('testEvent', {abc: 'def', xyz: 123}, 'start').track();
 
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/timing/testEvent/start',
@@ -212,9 +211,9 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			trackingMethod: 'ad'
 		});
 
-		expect(trackerMock.track.calls.length).toBe(1);
+		expect(trackerMock.track.calls.count()).toBe(1);
 
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(888);
+		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeLessThan(888);
 	});
 
 	it('measureDiff: no track call after measure', function () {
@@ -225,10 +224,10 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		spyOn(trackerMock, 'track');
 
-		adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123}).measureDiff({def: 'abc', '123': 'xyz'}, 'diff');
+		adTracker.measureTime('test/event', {abc: 'def', xyz: 123}).measureDiff({abc: 'def', xyz: 123}, 'diff');
 
 		// No tracking yet
-		expect(trackerMock.track.calls.length).toBe(0);
+		expect(trackerMock.track.calls.count()).toBe(0);
 	});
 
 	it('measureTime, measureDiff and track', function () {
@@ -240,27 +239,25 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		spyOn(trackerMock, 'track');
 
-		timer = adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123});
+		timer = adTracker.measureTime('test/event', {abc: 'def', xyz: 123});
 
 		windowPerformanceMock.wgNow = new Date(new Date().getTime() - 999);
 
-		timer = timer.measureDiff({def: 'abc', '123': 'xyz'}, 'diff');
+		timer = timer.measureDiff({abc: 'def', xyz: 123}, 'diff');
 
 		timer.track();
 
 		expect(trackerMock.track).toHaveBeenCalledWith({
 			ga_category: 'ad/timing/test/event/diff',
-			ga_action: 'def=abc;123=xyz',
+			ga_action: 'abc=def;xyz=123',
 			ga_label: '0-0.5',
 			ga_value: jasmine.any(Number),
 			trackingMethod: 'ad'
 		});
 
-		expect(trackerMock.track.calls.length).toBe(1);
+		expect(trackerMock.track.calls.count()).toBe(1);
 
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(110);
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeGreaterThan(888);
-
+		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeLessThan(110);
+		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeGreaterThan(888);
 	});
-
 });

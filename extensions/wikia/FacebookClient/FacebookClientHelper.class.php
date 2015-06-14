@@ -9,10 +9,10 @@ class FacebookClientHelper {
 	 */
 	public static function track( $label, $action = 'submit' ) {
 		\Track::event( 'trackingevent', [
-				'ga_action' => $action,
-				'ga_category' => 'user-sign-up',
-				'ga_label' => $label,
-				'beacon' => !empty( F::app()->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
+			'ga_action' => $action,
+			'ga_category' => 'user-sign-up',
+			'ga_label' => $label,
+			'beacon' => !empty( F::app()->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
 		] );
 	}
 

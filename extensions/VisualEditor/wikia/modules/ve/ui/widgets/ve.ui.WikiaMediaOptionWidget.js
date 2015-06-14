@@ -16,11 +16,12 @@
  * @param {Object} [config] Configuration options
  * @cfg {number} [size] Media thumbnail size
  */
-ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config ) {
+ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( config ) {
 	// Parent constructor
-	ve.ui.WikiaMediaOptionWidget.super.call( this, data, config );
+	ve.ui.WikiaMediaOptionWidget.super.call( this, config );
 
 	// Properties
+	this.data = config.data;
 	this.size = config.size || 158;
 	this.mwTitle = new mw.Title( this.data.title ).getNameText();
 	this.image = new Image();
@@ -34,24 +35,24 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 	this.$previewText = this.$( '<span>' );
 	// TODO: Presence of checkbox perhaps should depend on the configuration
 	this.check = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'icon': 'unchecked',
-		'frameless': true
+		$: this.$,
+		icon: 'unchecked',
+		frameless: true
 	} );
 
 	// Events
 	this.$image
-		.load( ve.bind( this.onThumbnailLoad, this ) )
-		.error( ve.bind( this.onThumbnailError, this ) );
-	this.check.on( 'click', ve.bind( function () {
+		.load( this.onThumbnailLoad.bind( this ) )
+		.error(this.onThumbnailError.bind( this ) );
+	this.check.on( 'click', function () {
 		this.emit( 'check', this );
-	}, this ) );
-	this.$metaData.on( 'mousedown', ve.bind( function ( event ) {
+	}.bind( this ) );
+	this.$metaData.on( 'mousedown', function ( event ) {
 		this.emit( 'metadata', this, event );
-	}, this ) );
-	this.$label.on( 'mousedown', ve.bind( function ( event ) {
+	}.bind( this ) );
+	this.$label.on( 'mousedown', function ( event ) {
 		this.emit( 'label', this, event );
-	}, this ) );
+	}.bind( this ) );
 
 	// Initialization
 	this.loadThumbnail();
@@ -69,7 +70,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 		.insertBefore( this.$label );
 	this.$element
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.data.type )
-		.css( { 'width': this.size, 'height': this.size } )
+		.css( { width: this.size, height: this.size } )
 		.prepend( this.$thumb, this.check.$element );
 };
 
@@ -77,16 +78,16 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 
 OO.inheritClass( ve.ui.WikiaMediaOptionWidget, OO.ui.OptionWidget );
 
-ve.ui.WikiaMediaOptionWidget.newFromData = function ( data, config ) {
-	switch ( data.type ) {
+ve.ui.WikiaMediaOptionWidget.newFromData = function ( config ) {
+	switch ( config.data.type ) {
 		case 'photo':
-			return new ve.ui.WikiaPhotoOptionWidget( data, config );
+			return new ve.ui.WikiaPhotoOptionWidget( config );
 		case 'video':
-			return new ve.ui.WikiaVideoOptionWidget( data, config );
+			return new ve.ui.WikiaVideoOptionWidget( config );
 		case 'map':
-			return new ve.ui.WikiaMapOptionWidget( data, config );
+			return new ve.ui.WikiaMapOptionWidget( config );
 		default:
-			throw new Error( 'Uknown type: ' + data.type );
+			throw new Error( 'Uknown type: ' + config.data.type );
 	}
 };
 
@@ -98,7 +99,7 @@ ve.ui.WikiaMediaOptionWidget.newFromData = function ( data, config ) {
  * @method
  */
 ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
-	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
+	require( ['wikia.thumbnailer'], function ( thumbnailer ) {
 		var src = thumbnailer.getThumbURL( this.data.url, 'image', this.size - 2, this.size - 2);
 		// FIXME: Using Thumbnailer should not require this trick of adding "thumb"
 		if ( src.indexOf( '/thumb/') === -1 && src.indexOf( 'vignette') === -1 ) {
@@ -111,7 +112,7 @@ ve.ui.WikiaMediaOptionWidget.prototype.loadThumbnail = function () {
 			've-ui-mwMediaResultWidget-thumbnail ve-ui-WikiaMediaOptionWidget-thumbnail'
 		);
 		this.$thumb.last().css( 'background-image', 'url(' + this.image.src + ')' );
-	}, this ) );
+	}.bind( this ) );
 };
 
 /**
@@ -128,19 +129,19 @@ ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailLoad = function () {
 	if ( this.image.width >= this.size && this.image.height >= this.size ) {
 		this.$front.addClass( 've-ui-mwMediaResultWidget-crop' );
 		this.$thumb.css( {
-			'width': '100%',
-			'height': '100%'
+			width: '100%',
+			height: '100%'
 		} );
 	} else {
 		this.$thumb.eq(0).css( {
-			'width': this.size - 2,
-			'height': this.size - 2
+			width: this.size - 2,
+			height: this.size - 2
 		} );
 		this.$thumb.eq(1).css( {
-			'width': this.image.width,
-			'height': this.image.height,
-			'left': '50%',
-			'top': '50%',
+			width: this.image.width,
+			height: this.image.height,
+			left: '50%',
+			top: '50%',
 			'margin-left': ( -this.image.width / 2 ) + 1,
 			'margin-top': ( -this.image.height / 2 ) + 1
 		} );

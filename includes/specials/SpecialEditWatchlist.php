@@ -330,7 +330,8 @@ class SpecialEditWatchlist extends UnlistedSpecialPage {
 			array( 'wl_user' => $user->getId() ),
 			__METHOD__
 		);
-		wfRunHooks( 'SpecialEditWatchlist::clearWatchlist', array ( $user ) );	
+
+		wfRunHooks( 'SpecialEditWatchlist::clearWatchlist', array ( $user ) );
 	}
 
 	/**

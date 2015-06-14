@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiahome-desc' => 'WikiaHomePage',
 	'wikiahome-page-header-heading' => 'Create. Collaborate. Be Original.',
 	'wikiahome-page-header-heading-mobile' => 'Create.
 Collaborate.
@@ -15,7 +16,6 @@ Be Original.',
 	'wikiahome-page-header-subheading' => '&nbsp;',
 	'wikiahome-page-header-create-wiki-button' => 'Start a Wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki',
-	'wikiahome-page-section-yearinfandom' => 'Celebrate and watch them all!',
 
 	'wikiahome-visualisation-remix-mixitup' => 'Welcome to the Social Universe for Fans, by Fans!',
 	'wikiahome-visualisation-remix-mixituptext' => 'There are thousands of communities on Wikia. Find yours.',
@@ -433,6 +433,7 @@ $messages['ja'] = array(
 
 
 $messages['qqq'] = array(
+	'wikiahome-desc' => '{{desc}}',
 	'wikiahome-page-header-heading' => 'The page title text in H1 tag on the top of the page',
 	'wikiahome-page-header-subheading' => 'The page subtitle text in H4 tag below H1 tag',
 	'wikiahome-page-header-create-wiki-button' => 'A button label',

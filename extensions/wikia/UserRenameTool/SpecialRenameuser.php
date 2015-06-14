@@ -24,7 +24,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'UserRenameTool',
 	'author'         => array( 'Federico "Lox" Lucignano', 'Władysław Bodzek' ),
-	'url'            => '',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserRenameTool',
 	'description'    => 'Renames a user (need \'\'renameuser\'\' right)',
 	'descriptionmsg' => 'userrenametool-desc',
 );

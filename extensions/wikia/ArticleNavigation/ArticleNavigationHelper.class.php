@@ -32,7 +32,7 @@ class ArticleNavigationHelper {
 		return $allowedInLanguage && array_key_exists( 'url', $service ) && array_key_exists( 'name', $service );
 	}
 
-	public function onOverwriteTOC( &$title, &$toc ) {
+	public static function onOverwriteTOC( &$title, &$toc ) {
 		if ( F::app()->checkSkin( 'venus' ) ) {
 			$toc = '';
 		}

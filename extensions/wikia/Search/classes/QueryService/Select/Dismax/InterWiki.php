@@ -19,7 +19,7 @@ class InterWiki extends AbstractDismax
 	 * @var string
 	 */
 	protected $searchType = 'inter';
-	
+
 	/**
 	 * Because this service uses a different core, we need different requested fields.
 	 * @var array
@@ -42,27 +42,27 @@ class InterWiki extends AbstractDismax
 				'hub_s',
 				'lang_s'
 			];
-	
-	/** 
+
+	/**
 	 * Boost functions used in interwiki search
 	 * @var array
 	 */
 	protected $boostFunctions = array(
 		'wam_i^100',
 	);
-	
+
 	/**
 	 * Uses the xwiki core, where a wiki is a document.
 	 * @var string
 	 */
 	protected $core = 'xwiki';
-	
+
 	/**
 	 * Default time allowed for a query.
 	 * @var int
 	 */
 	protected $timeAllowed = 1000;
-	
+
 	/**
 	 * Reuses AbstractSelect's extractWikiMatch as the primary match method
 	 * @see \Wikia\Search\QueryService\Select\AbstractSelect::extractMatch()
@@ -71,7 +71,7 @@ class InterWiki extends AbstractDismax
 	public function extractMatch() {
 		return $this->extractWikiMatch();
 	}
-	
+
 	/**
 	 * Registers grouping, query parameters, and filters.
 	 * @param Solarium_Query_Select $query
@@ -80,7 +80,7 @@ class InterWiki extends AbstractDismax
 	protected function registerNonDismaxComponents( Solarium_Query_Select $query ) {
 		return $this->registerFilterQueries( $query );
 	}
-	
+
 
 	/**
 	 * Registers a filter query for documents matching the wiki ID of a match, if available.
@@ -95,8 +95,7 @@ class InterWiki extends AbstractDismax
 		}
 		return $this;
 	}
-	
-	
+
 	/**
 	 * Handles initial configuration when invoking search.
 	 * @return \Wikia\Search\QueryService\Select\InterWiki
@@ -108,21 +107,21 @@ class InterWiki extends AbstractDismax
 		}
 		return $this;
 	}
-	
+
 	/**
 	 * Builds the string used with filter queries based on search config
 	 * @return string
 	 */
 	protected function getFilterQueryString() {
 		$wid = $this->getService()->getWikiId();
-		$filterQueries = [ 'articles_i:[50 TO *]', "-id:{$wid}" ];
+		$filterQueries = [ 'articles_i:[' . $this->config->getXwikiArticleThreshold() . ' TO *]', "-id:{$wid}" ];
 		if( $this->getConfig()->getCommercialUse() ) {
 			$filterQueries[] = "-( commercial_use_allowed_b:false )";
 		}
 		//removed hub query from filter (PLA-1166)
 		return implode( ' AND ', $filterQueries );
 	}
-	
+
 	/**
 	 * Builds the necessary query clauses based on values set in the searchconfig object
 	 * @return string

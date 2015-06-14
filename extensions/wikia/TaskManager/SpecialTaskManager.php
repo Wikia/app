@@ -17,9 +17,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $sSpecialPage = "TaskManager";
 $wgExtensionCredits['specialpage'][] = array(
 	"name" => $sSpecialPage,
-	"description" => "Display and manage background tasks",
-	"url" => "http://www.wikia.com/",
-	"author" => "Krzysztof Krzyżaniak (eloy)"
+	"descriptionmsg" => "taskmanager-desc",
+	"author" => "Krzysztof Krzyżaniak (eloy)",
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/TaskManager"
 );
 
 $dir = __DIR__;

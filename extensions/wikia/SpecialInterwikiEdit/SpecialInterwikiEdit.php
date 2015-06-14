@@ -19,6 +19,16 @@ if (!defined('MEDIAWIKI')){
     echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
 }
 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'SpecialInterwikiEdit',
+	'author' => array(
+		'Lucas \'TOR\' Garczewski <tor@wikia.com>',
+		'Lucas \'Egon\' Matysiak <egon@wikia.com>'
+	),
+	'descriptionmsg' => 'interwikiedit-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialInterwikiEdit',
+);
+
 $wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
 $wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
@@ -551,3 +561,4 @@ function wfSIWEClearCache() {
 
 	return 'Cache cleared for ' . $db;
 }
+

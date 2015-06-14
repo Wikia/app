@@ -10,8 +10,6 @@ $messages['en'] = array(
 	'wva-url' => 'Video URL:',
 	'wva-add' => 'Add',
 	'wva-title' => 'Quickly add video From URL',
-	'wva-notlogged' => 'You need to log in or register to insert videos.',
-	'wva-notallowed' => 'You cannot insert videos on this wiki.',
 	'wva-protected' => 'This video is protected.',
 	'wva-thumbnail-upload-failed' => 'Video embed failed, unable to get proper thumbnail'
 );
@@ -34,8 +32,6 @@ $messages['af'] = array(
 	'wva-url' => 'Sleutel die URL in:', # Fuzzy
 	'wva-add' => 'Voeg by',
 	'wva-title' => "Voeg vinnig 'n video vanaf URL by",
-	'wva-notlogged' => "U moet aanmeld of registreer om video's by te kan voeg.",
-	'wva-notallowed' => "U kan nie video's op hierdie wiki byvoeg nie.",
 );
 
 /** Arabic (العربية)
@@ -51,8 +47,6 @@ $messages['ar'] = array(
 	'wva-url' => 'عنوان URL الفيديو:',
 	'wva-add' => 'أضف',
 	'wva-title' => 'إضافة فيديو بسرعة من العنوان (URL)',
-	'wva-notlogged' => 'يجب أن تكون مسجلا إذا أردت إضافة فيديو',
-	'wva-notallowed' => 'لا يمكنك إضافة فيديو في هذه الويكي',
 	'wva-protected' => 'هذا الفيديو. محمي',
 	'wva-thumbnail-upload-failed' => 'فشل في الفيديو المضمن، لا يمكن الحصول على صورة مصغرة سليمة',
 );
@@ -78,8 +72,6 @@ $messages['be-tarask'] = array(
 	'wva-url' => 'URL-адрас відэа:',
 	'wva-add' => 'Дадаць',
 	'wva-title' => 'Хуткае даданьне відэа па URL-адрасу',
-	'wva-notlogged' => 'Каб дадаць відэа, Вам неабходна ўвайсьці ў сыстэму альбо зарэгістравацца.',
-	'wva-notallowed' => 'Вы ня можаце устаўляць відэа ў {{GRAMMAR:месны|{{SITENAME}}}}.',
 	'wva-protected' => 'Гэтае відэа абароненае.',
 );
 
@@ -99,6 +91,7 @@ $messages['bjn'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'wva-success' => 'ভিডিও পাতা [[:$1]] সফলভাবে যোগ করা হয়েছে।',
@@ -108,8 +101,6 @@ $messages['bn'] = array(
 	'wva-url' => 'ভিডিওর URL:',
 	'wva-add' => 'যোগ',
 	'wva-title' => 'দ্রুত URL থেকে ভিডিও যোগ করুন',
-	'wva-notlogged' => 'ভিডিও যোগ করতে হবে আপনাকে লগ ইন বা নিবন্ধন করা প্রয়োজন।',
-	'wva-notallowed' => 'আপনি এই উইকিতে ভিডিও যোগ করতে পারবেন না।',
 	'wva-protected' => 'এই ভিডিওটি সুরক্ষিত।',
 	'wva-thumbnail-upload-failed' => 'ভিডিও এম্বেড করতে ব্যর্থ, সঠিক থাম্বনেইল পেতে অসমর্থ',
 );
@@ -127,8 +118,6 @@ $messages['br'] = array(
 	'wva-url' => 'URL ar video :',
 	'wva-add' => 'Ouzhpennañ',
 	'wva-title' => 'Ouzhpennañ buan ur video adalek e URL',
-	'wva-notlogged' => "Ezhomm ho peus da vezañ kevreañ pe enrollet evit ensoc'hañ videoioù.",
-	'wva-notallowed' => "Ne c'hallit ket ensoc'hañ videoioù war ar wiki-mañ",
 	'wva-protected' => 'Gwarezet eo ar video-mañ',
 );
 
@@ -136,17 +125,16 @@ $messages['br'] = array(
  * @author Gemmaa
  * @author Marcmpujol
  * @author Paucabot
+ * @author Unapersona
  */
 $messages['ca'] = array(
-	'wva-success' => "Pàgina de vídeo de  $1  s'afegia reeixidament.", # Fuzzy
-	'wva-success-replaced' => 'Pàgina de vídeo de  $1  va ser substituït amb èxit.', # Fuzzy
+	'wva-success' => "La pàgina de vídeo [[:$1]] s'ha afegit correctament.",
+	'wva-success-replaced' => 'La pàgina de vídeo de [[:$1]] ha estat subtituïda amb èxit.',
 	'wva-failure' => 'Si us plau proporcionar els paràmetres vàlids.',
-	'wva-name' => 'Escriviu el nom:', # Fuzzy
-	'wva-url' => 'Introduïu la URL:', # Fuzzy
+	'wva-name' => 'Nom del vídeo:',
+	'wva-url' => 'URL del vídeo:',
 	'wva-add' => 'Afegeix',
 	'wva-title' => "De pressa afegir des d'URL de vídeo",
-	'wva-notlogged' => "Vostè necessita connectar-se o inscriure's per inserir vídeos.",
-	'wva-notallowed' => 'No es pot inserir vídeos en aquest wiki.',
 	'wva-protected' => 'Aquest vídeo està protegit.',
 	'wva-thumbnail-upload-failed' => "Error al afegir el vídeo, no s'ha pogut obtindre una miniatura adequada",
 );
@@ -164,8 +152,6 @@ $messages['cs'] = array(
 	'wva-url' => 'Zadejte URL:', # Fuzzy
 	'wva-add' => 'Přidat',
 	'wva-title' => 'Přidat rychle video z URL',
-	'wva-notlogged' => 'Pro vkládání videí se musíte přihlásit nebo zaregistrovat.',
-	'wva-notallowed' => 'Na této wiki nemůžete vkládat videa.',
 	'wva-protected' => 'Toto video je zamčeno.',
 	'wva-thumbnail-upload-failed' => 'Vložení videa selhalo, nelze získat odpovídající miniaturu',
 );
@@ -190,8 +176,6 @@ $messages['de'] = array(
 	'wva-url' => 'URL-Adresse des Videos:',
 	'wva-add' => 'Hinzufügen',
 	'wva-title' => 'Video von URL hinzufügen',
-	'wva-notlogged' => 'Du musst dich einloggen oder registrieren um Videos einzufügen.',
-	'wva-notallowed' => 'Du kannst in diesem Wiki keine Videos einfügen.',
 	'wva-protected' => 'Dieses Video ist geschützt',
 	'wva-thumbnail-upload-failed' => 'Videoeinbettung fehlgeschlagen, kein brauchbares Vorschaubild erhalten',
 );
@@ -207,8 +191,6 @@ $messages['de-formal'] = array(
 	'wva-url' => 'Geben Sie die URL hier ein:', # Fuzzy
 	'wva-add' => 'Hinzufügen',
 	'wva-title' => 'Video von URL hinzufügen',
-	'wva-notlogged' => 'Sie müssen sich einloggen oder registrieren um Videos einzufügen.',
-	'wva-notallowed' => 'Sie können in diesem Wiki keine Videos einfügen.',
 );
 
 /** Zazaki (Zazaki)
@@ -245,8 +227,6 @@ $messages['es'] = array(
 	'wva-url' => 'URL del video:',
 	'wva-add' => 'Añadir',
 	'wva-title' => 'Añadir vídeo de forma rápida desde una URL',
-	'wva-notlogged' => 'Necesitas acceder o registrarte para insertar videos.',
-	'wva-notallowed' => 'No puedes insertar videos en este wiki.',
 	'wva-protected' => 'Este video está protegido',
 	'wva-thumbnail-upload-failed' => 'Error al añadir el vídeo, no se pudo obtener una miniatura adecuada',
 );
@@ -272,8 +252,6 @@ $messages['fa'] = array(
 	'wva-url' => 'نشانی اینترنتی ویدئو:',
 	'wva-add' => 'افزودن',
 	'wva-title' => 'به سرعت فیلم را از نشانی اینترنتی واردکردن',
-	'wva-notlogged' => 'برای وارد کردن فیلم، شما باید به سامانه وارد شوید یا ثبت نام کنید.',
-	'wva-notallowed' => 'شما نمی‌توانید در این ویکی فیلم وارد کنید.',
 	'wva-protected' => 'این ویدیو محافظت شده‌است.',
 	'wva-thumbnail-upload-failed' => 'ویدئو توکار شکست خرد، ناتوان به دریافت بنداگشتی مناسب',
 );
@@ -294,8 +272,6 @@ $messages['fi'] = array(
 	'wva-url' => 'Videon verkko-osoite:',
 	'wva-add' => 'Lisää',
 	'wva-title' => 'Lisää nopeasti video verkko-osoitteesta',
-	'wva-notlogged' => 'Sinun täytyy kirjautua sisään tai rekisteröityä, jotta voit lisätä videoita.',
-	'wva-notallowed' => 'Et voi lisätä videoita tälle wikisivulle.',
 	'wva-protected' => 'Tämä video on suojattu.',
 	'wva-thumbnail-upload-failed' => 'Videon upottaminen epäonnistui, kunnollista pikkukuvaa ei voitu luoda',
 );
@@ -304,15 +280,13 @@ $messages['fi'] = array(
  * @author EileenSanda
  */
 $messages['fo'] = array(
-	'wva-success' => 'Video-síðan [[:$1]] varð løgd til.', # Fuzzy
-	'wva-success-replaced' => 'Video-síðan [[:$1]] varð skift út.', # Fuzzy
+	'wva-success' => 'Video-síðan [[:$1]] varð løgd til.',
+	'wva-success-replaced' => 'Video-síðan [[:$1]] varð skift út.',
 	'wva-failure' => 'Vinarliga skriva galdandi parametur.',
-	'wva-name' => 'Video navn:', # Fuzzy
-	'wva-url' => "URL'ur fyri video:", # Fuzzy
+	'wva-name' => 'Video navn:',
+	'wva-url' => "URL'ur fyri video:",
 	'wva-add' => 'Legg afturat',
 	'wva-title' => 'Innset skjótt video frá URL (heimasíðuadressu)',
-	'wva-notlogged' => 'Tú mást rita inn ella skráseta teg sum brúkara fyri at innseta videoklipp.',
-	'wva-notallowed' => 'Tú kanst ikki innseta videoklipp á hesa wiki.',
 	'wva-protected' => 'Hetta filmsklippið er vart.',
 	'wva-thumbnail-upload-failed' => 'Tað miseydnaðist at innlima video, tað bar ikki til at heinta eina ordiliga minimynd (thumbnail).',
 );
@@ -320,6 +294,7 @@ $messages['fo'] = array(
 /** French (français)
  * @author Gomoko
  * @author Iluvalar
+ * @author Zetud
  */
 $messages['fr'] = array(
 	'wva-success' => 'La page de vidéo [[:$1]] a bien été ajoutée.',
@@ -329,10 +304,8 @@ $messages['fr'] = array(
 	'wva-url' => 'URL de la vidéo :',
 	'wva-add' => 'Ajouter',
 	'wva-title' => 'Ajouter une vidéo rapidement à partir de son URL',
-	'wva-notlogged' => 'Vous devez vous inscrire ou bien vous enregistrer pour ajouter des vidéos',
-	'wva-notallowed' => 'Vous ne pouvez pas ajouter de vidéos sur ce wiki',
 	'wva-protected' => 'Cette vidéo est protégée',
-	'wva-thumbnail-upload-failed' => 'La vidéo incluse a échouée, impossible de trouver la bonne miniature',
+	'wva-thumbnail-upload-failed' => 'La vidéo incluse a échoué, impossible de trouver la bonne miniature',
 );
 
 /** Galician (galego)
@@ -346,8 +319,6 @@ $messages['gl'] = array(
 	'wva-url' => 'URL do vídeo:',
 	'wva-add' => 'Engadir',
 	'wva-title' => 'Engadir un vídeo de xeito rápido desde un URL',
-	'wva-notlogged' => 'Debe acceder ao sistema ou rexistrarse para inserir vídeos.',
-	'wva-notallowed' => 'Non pode inserir vídeos neste wiki.',
 	'wva-protected' => 'Este vídeo está protexido.',
 	'wva-thumbnail-upload-failed' => 'Erro ao engadir o vídeo; non se puido obter a miniatura axeitada',
 );
@@ -365,8 +336,6 @@ $messages['he'] = array(
 	'wva-url' => 'הוספת כתובת האתר:', # Fuzzy
 	'wva-add' => 'הוספה',
 	'wva-title' => 'הוספה מהירה של סרטון מכתובת',
-	'wva-notlogged' => 'התחברו או הרשמו כדי להוסיף סרטונים.',
-	'wva-notallowed' => 'לא ניתן להוסיף סרטונים לאתר.',
 	'wva-protected' => 'סרטון זה מוגן.',
 	'wva-thumbnail-upload-failed' => 'הטבעת הסרטון נכשלה, לא ניתן לקבל תמונה ממוזערת נכונה',
 );
@@ -383,8 +352,6 @@ $messages['hu'] = array(
 	'wva-url' => 'Add meg az URL-t:', # Fuzzy
 	'wva-add' => 'Hozzáadás',
 	'wva-title' => 'Videó gyors hozzáadása URL alapján',
-	'wva-notlogged' => 'Lépj be vagy regisztrálj a videók beszúrásához.',
-	'wva-notallowed' => 'Nem szúrhatsz be videókat ezen a wikin.',
 	'wva-protected' => 'Ez a videó védett.',
 	'wva-thumbnail-upload-failed' => 'Nem sikerült a videó beágyazása&mdash;a megfelelő miniatűr előállítása nem volt lehetséges.',
 );
@@ -400,8 +367,6 @@ $messages['ia'] = array(
 	'wva-url' => 'Entra le URL:', # Fuzzy
 	'wva-add' => 'Adder',
 	'wva-title' => 'Adder video rapidemente con URL',
-	'wva-notlogged' => 'Tu debe aperir un session o registrar te pro inserer videos.',
-	'wva-notallowed' => 'Non es possibile inserer videos in iste wiki.',
 	'wva-protected' => 'Iste video es protegite.',
 	'wva-thumbnail-upload-failed' => 'Le insertion del video ha fallite. Non esseva possibile obtener un bon miniatura.',
 );
@@ -420,8 +385,6 @@ $messages['id'] = array(
 	'wva-url' => 'URL video:',
 	'wva-add' => 'Tambahkan',
 	'wva-title' => 'Cara cepat menambah Video dari URL',
-	'wva-notlogged' => 'Anda harus login atau daftar untuk memasukkan video.',
-	'wva-notallowed' => 'Anda tidak dapat menyisipkan video di wiki ini.',
 	'wva-protected' => 'Video ini dilindungi.',
 );
 
@@ -445,8 +408,6 @@ $messages['it'] = array(
 	'wva-url' => 'URL del video:',
 	'wva-add' => 'Aggiungi',
 	'wva-title' => 'Aggiungi rapidamente video da URL',
-	'wva-notlogged' => 'Devi accedere o registrati per inserire video.',
-	'wva-notallowed' => 'Non puoi inserire video su questo wiki.',
 	'wva-protected' => 'Questo video è protetto.',
 	'wva-thumbnail-upload-failed' => 'Incorporazione del video fallita, impossibile ottenere una miniatura corretta',
 );
@@ -462,8 +423,6 @@ $messages['ja'] = array(
 	'wva-url' => '動画のURL:',
 	'wva-add' => '追加',
 	'wva-title' => '手軽にURLから動画を追加',
-	'wva-notlogged' => '動画を追加するにはログインするかアカウントを作成する必要があります。',
-	'wva-notallowed' => 'このウィキでは動画を追加できません。',
 	'wva-protected' => 'この動画は保護されています。',
 	'wva-thumbnail-upload-failed' => '動画の埋め込みに失敗しました。適切なサムネイルを取得できません。',
 );
@@ -479,8 +438,6 @@ $messages['km'] = array(
 	'wva-url' => 'បញ្ចូល URL៖', # Fuzzy
 	'wva-add' => 'បន្ថែម',
 	'wva-title' => 'បន្ថែមវីដេអូពីURLតាមរបៀបរហ័ស',
-	'wva-notlogged' => 'អ្នកត្រូវតែកត់ឈ្មោះចូលឬចុះឈ្មោះថ្មីដើម្បីមានសិទ្ធិបញ្ចូលវីដេអូ។',
-	'wva-notallowed' => 'អ្នកមិនអាចបញ្ចូលវីដេអូនៅក្នុងវិគីនេះទេ។',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -511,8 +468,6 @@ $messages['krc'] = array(
 	'wva-url' => 'URL адресни джазыгъыз:', # Fuzzy
 	'wva-add' => 'Къош',
 	'wva-title' => 'URL-ден видеоны дженгил къошууу',
-	'wva-notlogged' => 'Видеоны къошар ючюн системагъа кесигизни танытыгъыз неда регистрацияны ётюгюз.',
-	'wva-notallowed' => 'Бу викиде видео салаллыкъ тюлсюз.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -537,8 +492,6 @@ $messages['mk'] = array(
 	'wva-url' => 'URL на видеото:',
 	'wva-add' => 'Додај',
 	'wva-title' => 'Брзо додавање на видеоснимка од URL-адреса',
-	'wva-notlogged' => 'Треба да сте најавени или да се регистрирате за да можете да вметнувате видеоснимки.',
-	'wva-notallowed' => 'Не можете да вметнувате видеоснимки на ова вики.',
 	'wva-protected' => 'Оваа видеоснимка е заштитена.',
 	'wva-thumbnail-upload-failed' => 'Вметнувањето на видеото не успеа. Не можев да добијам правилна минијатура',
 );
@@ -562,8 +515,6 @@ $messages['ms'] = array(
 	'wva-url' => 'URL video:',
 	'wva-add' => 'Tambahkan',
 	'wva-title' => 'Tambahkan video dengan segera dari URL',
-	'wva-notlogged' => 'Anda perlu log masuk atau berdaftar untuk menyisipkan video.',
-	'wva-notallowed' => 'Anda tidak boleh menyisipkan video ke dalam wiki ini.',
 	'wva-protected' => 'Video ini dilindungi.',
 	'wva-thumbnail-upload-failed' => 'Pembenaman video gagal, gambar kenit yang sebetulnya tidak dapat diperoleh',
 );
@@ -587,8 +538,6 @@ $messages['nb'] = array(
 	'wva-url' => 'Skriv inn internettadressen:', # Fuzzy
 	'wva-add' => 'Legg til',
 	'wva-title' => 'Legg til video raskt fra internettadresse',
-	'wva-notlogged' => 'Du må logge inn eller registrere deg for å legge til videoer.',
-	'wva-notallowed' => 'Du kan ikke legge til videoer på denne wikien.',
 	'wva-protected' => 'Denne videoen er beskyttet',
 	'wva-thumbnail-upload-failed' => 'Videoinnebyggingen mislyktes, kunne ikke hente miniatyrbilde',
 );
@@ -604,8 +553,6 @@ $messages['nl'] = array(
 	'wva-url' => 'Video-URL:',
 	'wva-add' => 'Toevoegen',
 	'wva-title' => 'Video vanuit URL toevoegen',
-	'wva-notlogged' => "U moet aanmelden of registreren om video's te kunnen toevoegen.",
-	'wva-notallowed' => "U kunt geen video's toevoegen in deze wiki.",
 	'wva-protected' => 'Deze video is beveiligd.',
 	'wva-thumbnail-upload-failed' => 'Het inbedden van de video is mislukt. Het was niet mogelijk om een miniatuurafbeelding te maken',
 );
@@ -614,8 +561,6 @@ $messages['nl'] = array(
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'wva-notlogged' => "Je moet aanmelden of registreren om video's te kunnen toevoegen.",
-	'wva-notallowed' => "Je kunt geen video's toevoegen in deze wiki.",
 );
 
 /** Occitan (occitan)
@@ -643,8 +588,6 @@ $messages['pap'] = array(
 	'wva-url' => 'Hinka e adrès di URL:', # Fuzzy
 	'wva-add' => 'Agregá',
 	'wva-title' => 'Agregá vidio via URL di forma rápido',
-	'wva-notlogged' => 'Bo mester login of inskribí bo mes pa por hinka vidionan.',
-	'wva-notallowed' => 'Bo no por hinka vidio den e wiki aki.',
 );
 
 /** Polish (polski)
@@ -662,8 +605,6 @@ $messages['pl'] = array(
 	'wva-url' => 'URL filmu:',
 	'wva-add' => 'Dodaj',
 	'wva-title' => 'Dodaj film z adresu URL',
-	'wva-notlogged' => 'Dodawanie filmów jest możliwe po zarejestrowaniu i zalogowaniu się.',
-	'wva-notallowed' => 'Nie możesz dodawać filmów do tej wiki.',
 	'wva-protected' => 'Ten film jest zabezpieczony.',
 	'wva-thumbnail-upload-failed' => 'Osadzanie filmu nie powiodło się, wystąpił błąd w trakcie generowania miniatury.',
 );
@@ -680,8 +621,6 @@ $messages['pms'] = array(
 	'wva-url' => "Anserì l'URL:", # Fuzzy
 	'wva-add' => 'Gionta',
 	'wva-title' => 'Gionta video an pressa da URL',
-	'wva-notlogged' => 'A deuv rintré ant ël sistema o argistresse për anserì ëd filmà',
-	'wva-notallowed' => 'It peule pa anserì video su sta wiki-sì.',
 	'wva-protected' => "Ës filmà-sì a l'é protegiù.",
 	'wva-thumbnail-upload-failed' => "Anseriment dël filmà falì, a l'é pa podusse pijé la miniadura aproprià",
 );
@@ -697,9 +636,8 @@ $messages['ps'] = array(
 	'wva-url' => 'د ويډيو URL:',
 	'wva-add' => 'ورگډول',
 	'wva-title' => 'په چټکۍ له يو آر اېل (URL) نه ويډيو ورگډول',
-	'wva-notlogged' => 'د ويډيو د ورننوېستلو لپاره پکار ته چې تاسې غونډال ته ننوځۍ او يا هم ځان ثبت کړی.',
-	'wva-notallowed' => 'تاسې په دې ويکي کې ويډيو نه شی ورننوېستلی.',
 	'wva-protected' => 'دا ويډيو ژغورل شوې',
+	'wva-thumbnail-upload-failed' => 'ويډيو ورټومبنه نابرياله شوه، سم بټنوک مو ترلاسه نه شو کړلای',
 );
 
 /** Portuguese (português)
@@ -717,8 +655,6 @@ $messages['pt'] = array(
 	'wva-url' => 'URL do vídeo:',
 	'wva-add' => 'Adicionar',
 	'wva-title' => 'Adição Rápida de Vídeo a Partir da URL',
-	'wva-notlogged' => 'Precisa de se autenticar ou registar para inserir vídeos.',
-	'wva-notallowed' => 'Não pode inserir vídeos nesta wiki.',
 	'wva-protected' => 'Este vídeo está protegido.',
 	'wva-thumbnail-upload-failed' => 'A incorporação de vídeo falhou, não foi possível obter uma miniatura',
 );
@@ -736,8 +672,6 @@ $messages['pt-br'] = array(
 	'wva-url' => 'Especifique a URL:', # Fuzzy
 	'wva-add' => 'Adicionar',
 	'wva-title' => 'Adicionar Vídeo Rapidamente Via URL',
-	'wva-notlogged' => 'Você precisa se autenticar ou registrar para inserir vídeos.',
-	'wva-notallowed' => 'Você não pode inserir vídeos nesta wiki.',
 	'wva-protected' => 'Este vídeo está protegido.',
 	'wva-thumbnail-upload-failed' => 'Erro ao adicionar o vídeo. Não foi possível obter uma miniatura adequada',
 );
@@ -752,8 +686,6 @@ $messages['ro'] = array(
 	'wva-name' => 'Introdu numele:', # Fuzzy
 	'wva-url' => 'Introduceți adresa URL:', # Fuzzy
 	'wva-add' => 'Adaugă',
-	'wva-notlogged' => 'Trebuie să vă autentificați sau să vă înregistrați pentru a putea adăuga clipuri video.',
-	'wva-notallowed' => 'Nu puteți adăuga clipuri video pe acest wiki.',
 	'wva-protected' => 'Acest clip este protejat.',
 );
 
@@ -761,15 +693,13 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'wva-success' => "'A pàgene d'u video [[:$1]] ha state aggiunde.", # Fuzzy
-	'wva-success-replaced' => "'A pàgene d'u video [[:$1]] ha state sostituite.", # Fuzzy
+	'wva-success' => "'A pàgene d'u video [[:$1]] ha state aggiunde.",
+	'wva-success-replaced' => "'A pàgene d'u video [[:$1]] ha state sostituite.",
 	'wva-failure' => 'Pe piacere dè le parametre valide.',
-	'wva-name' => "Nome d'u video:", # Fuzzy
-	'wva-url' => "URL d'u video:", # Fuzzy
+	'wva-name' => "Nome d'u video:",
+	'wva-url' => "URL d'u video:",
 	'wva-add' => 'Aggiunge',
 	'wva-title' => "Veloce veloce aggiunge 'nu video da 'na URL",
-	'wva-notlogged' => 'Tu è abbesògne de trasè o reggistrarte pe sckaffà video.',
-	'wva-notallowed' => "Non ge puè 'nzerì video sus a sta uicchi.",
 	'wva-protected' => 'Stu video jè prutette.',
 	'wva-thumbnail-upload-failed' => "'Ngapsulamende d'u video fallite, non ge se riesce a pigghià 'na miniature corrette",
 );
@@ -789,17 +719,16 @@ $messages['ru'] = array(
 	'wva-url' => 'URL видео:',
 	'wva-add' => 'Добавить',
 	'wva-title' => 'Быстрое добавление видео по URL',
-	'wva-notlogged' => 'Чтобы добавить видео вам необходимо представиться системе или зарегистрироваться.',
-	'wva-notallowed' => 'Вы не можете вставлять видео в этой вики.',
 	'wva-protected' => 'Это видео защищено.',
 	'wva-thumbnail-upload-failed' => 'Видео добавлено с ошибкой, невозможно получить корректной миниатюры',
 );
 
 /** Sinhala (සිංහල)
+ * @author හරිත
  */
 $messages['si'] = array(
-	'wva-name' => 'නම යොදන්න:', # Fuzzy
-	'wva-url' => 'URLඑක යොදන්න:', # Fuzzy
+	'wva-name' => 'වීඩියෝවේ නම:',
+	'wva-url' => 'වීඩියෝවේ සබැඳිය:',
 	'wva-add' => 'එක්කරන්න',
 	'wva-protected' => 'මෙම වීඩියෝව ආරක්‍ෂිතය',
 );
@@ -817,8 +746,6 @@ $messages['sr-ec'] = array(
 	'wva-url' => 'Унесите URL адресу:', # Fuzzy
 	'wva-add' => 'Додај',
 	'wva-title' => 'Брзо додавање видео-снимка с адресе',
-	'wva-notlogged' => 'Треба да будете пријављени или да отворите налог да бисте убацивали видео-снимке.',
-	'wva-notallowed' => 'Не можете да убацујете видео-снимке на овај вики.',
 	'wva-protected' => 'Овај видео-снимак је заштићен.',
 );
 
@@ -834,8 +761,6 @@ $messages['sv'] = array(
 	'wva-url' => 'Video-URL:',
 	'wva-add' => 'Lägg till',
 	'wva-title' => 'Lägg till video snabbt från URL',
-	'wva-notlogged' => 'Du måste logga in eller registrera dig för att infoga videoklipp.',
-	'wva-notallowed' => 'Du kan inte infoga videoklipp på denna wiki.',
 	'wva-protected' => 'Denna video är skyddad.',
 	'wva-thumbnail-upload-failed' => 'Inbäddningen av videoklippet misslyckades; det gick inte att hämta en miniatyr',
 );
@@ -849,8 +774,6 @@ $messages['ta'] = array(
 	'wva-url' => 'உரலியை உள்ளிடவும்:', # Fuzzy
 	'wva-add' => 'சேர்க்கவும்',
 	'wva-title' => 'உரலியிலிருந்து விரைந்து காணொளியைச் சேர்க்கவும்',
-	'wva-notlogged' => 'காணொளிகளைச் சேர்ப்பதற்கு நீங்கள் உள்நுழைய அல்லது பதிவு செய்ய வேண்டும்.',
-	'wva-notallowed' => 'இவ்விக்கியில் நீங்கள் காணொளிகளைச் சேர்க்க முடியாது.',
 	'wva-protected' => 'இக்காணொளி காக்கப்பட்டுள்ளது.',
 );
 
@@ -872,13 +795,11 @@ $messages['tl'] = array(
 	'wva-url' => 'Ipasok ang URL:', # Fuzzy
 	'wva-add' => 'Idagdag',
 	'wva-title' => 'Mabilisang Idagdag ang Bidyo Mula sa URL',
-	'wva-notlogged' => 'Kailangan mong lumagda o magpatala upang makapagsingit ng mga bidyo.',
-	'wva-notallowed' => 'Hindi ka makapagsisingit ng mga bidyo sa wiking ito.',
 	'wva-protected' => 'Ang bidyo ay nakaprutekta.',
 	'wva-thumbnail-upload-failed' => 'Nabigo ang pagbabaon ng bidyo, hindi nagawang ang pagkuha ng naaangkop na kagyat',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Гусейн
  */
 $messages['tly'] = array(
@@ -891,8 +812,6 @@ $messages['tly'] = array(
 $messages['tr'] = array(
 	'wva-add' => 'Ekle',
 	'wva-title' => "URL'den hızlıca video ekle",
-	'wva-notlogged' => 'Video eklemek için kayıt olmanız veya giriş yapmanız gerekli.',
-	'wva-notallowed' => 'Bu wikiye video ekleyemezsiniz.',
 	'wva-protected' => 'Bu video korunmaktadır.',
 );
 
@@ -911,8 +830,6 @@ $messages['uk'] = array(
 	'wva-url' => 'URL відео:',
 	'wva-add' => 'Додати',
 	'wva-title' => 'Швидке додавання відео по URL',
-	'wva-notlogged' => 'Для того, щоб вставити відео, Вам потрібно увійти до системи або зареєструватися.',
-	'wva-notallowed' => 'Ви не можете додавати відео у цю Вікі.',
 	'wva-protected' => 'Це відео захищено.',
 	'wva-thumbnail-upload-failed' => 'Вставлення відео не вдалося, неможливо отримати належну мініатюрку',
 );
@@ -928,8 +845,6 @@ $messages['vi'] = array(
 	'wva-url' => 'URL của video:',
 	'wva-add' => 'Thêm',
 	'wva-title' => 'Một cách nhanh chóng LÀ thêm video từ URL',
-	'wva-notlogged' => 'Bạn cần phải đăng nhập hoặc đăng ký để chèn video.',
-	'wva-notallowed' => 'Bạn không thể chèn video trên wiki này.',
 	'wva-protected' => 'Video này đã bị khóa.',
 	'wva-thumbnail-upload-failed' => 'Video bạn nhúng thất bại, không thể để có được hình ảnh thu nhỏ thích hợp',
 );
@@ -948,14 +863,13 @@ $messages['zh-hans'] = array(
 	'wva-url' => '视频URL：',
 	'wva-add' => '添加',
 	'wva-title' => '从URL快速添加视频',
-	'wva-notlogged' => '您需要登录或注册来插入视频。',
-	'wva-notallowed' => '您不能在此wiki插入视频。',
 	'wva-protected' => '此视频已被保护。',
 	'wva-thumbnail-upload-failed' => '视频嵌入失败，无法得到适合的缩略图',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'wva-success' => '成功增加影片[[:$1]]',
@@ -965,8 +879,6 @@ $messages['zh-hant'] = array(
 	'wva-url' => '影片連結：',
 	'wva-add' => '新增',
 	'wva-title' => '從網路快速新增影片',
-	'wva-notlogged' => '您需要登錄或註冊來插入影片。',
-	'wva-notallowed' => '您不能在這個wiki搜入影片',
-	'wva-protected' => '這咎影片被保護。',
+	'wva-protected' => '這個影片已被保護。',
 	'wva-thumbnail-upload-failed' => '影片嵌入失敗，無法獲取適當的縮圖',
 );

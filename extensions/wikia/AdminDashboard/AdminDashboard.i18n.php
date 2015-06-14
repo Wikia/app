@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'admindashboard-loading' => 'Loading…',
 	'admindashboard-title' => '{{SITENAME}} Dashboard',
 	'admindashboard-header' => 'Admin Dashboard',
@@ -66,6 +67,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
+	'admindashboard-desc' => '{{desc}}',
 	'admindashboard-title' => 'html <title> element displayed on admin dashboard pages',
 	'admindashboard-header' => 'page header for Admin Dashboard - html <h1> element',
 	'admindashboard-toolbar-link' => 'used by wikia toolbar extension as a label for the link to the admin dashboard',

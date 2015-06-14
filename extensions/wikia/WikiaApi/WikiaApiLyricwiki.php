@@ -282,7 +282,7 @@ function albumResult($artist, $album, $year){
 				$state = getVal($result, 'state');
 				$country = getVal($result, 'country');
 				$this->htmlHead("$artist - $hometown, $state, $country");
-				print "<h3><a href='$this->root".$this->linkEncode($artist)."'>$artist</a>'s Hometown</h3>\n";
+				print "<h3><a href='$this->root".$this->linkEncode($artist)."'>" . htmlspecialchars($artist) . "</a>'s Hometown</h3>\n";
 				print "<ul>\n";
 					print "<li>Hometown: <a href='{$this->root}Category:Hometown/$country/$state/$hometown'>$hometown</a></li>\n";
 					print "<li>State: <a href='{$this->root}Category:Hometown/$country/$state'>$state</a></li>\n";
@@ -348,7 +348,7 @@ function albumResult($artist, $album, $year){
 				$result = getArtist($artist);
 				$artist = getVal($result, 'artist');
 				$albums = $result['albums'];
-				print "<h3><a href='$this->root".$this->linkEncode($artist)."'>$artist</a></h3>\n";
+				print "<h3><a href='$this->root".$this->linkEncode($artist)."'>" . htmlspecialchars($artist) . "</a></h3>\n";
 				if(count($albums) > 0){
 					print "<ul class='albums'>\n";
 					foreach($albums as $currAlbum){
@@ -431,7 +431,7 @@ function albumResult($artist, $album, $year){
 				$year = getVal($result, 'year');
 				$amznLink = getVal($result, 'amazonLink');
 				$songs = getVal($result, 'songs');
-				print "<a href='$this->root".$this->linkEncode("$artist:$albumName".($year==""?"":"_($year)"))."'>$albumName".($year==""?"":"_($year)")."</a>";
+				print "<a href='$this->root".$this->linkEncode("$artist:$albumName".($year==""?"":"_($year)"))."'>" . htmlspecialchars($albumName.($year==""?"":"_($year)"))."</a>";
 				if($amznLink != ""){
 						print " - (at <a href='$amznLink' title=\"$albumName at amazon\">amazon</a>)";
 				}

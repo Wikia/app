@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ArticleCommentList is a listing, basicly it's an array of comments
+ * ArticleCommentList is a listing, basically it's an array of comments
  */
 class ArticleCommentList {
 	const CACHE_VERSION = 'v2';
@@ -424,7 +424,6 @@ class ArticleCommentList {
 			'countCommentsNested' => $countCommentsNested,
 			'isAnon' => $wgUser->isAnon(),
 			'isBlocked' => $isBlocked,
-			'isFBConnectionProblem' => ArticleCommentInit::isFbConnectionNeeded(),
 			'isReadOnly' => $isReadOnly,
 			'page' => $page,
 			'pagination' => $pagination,

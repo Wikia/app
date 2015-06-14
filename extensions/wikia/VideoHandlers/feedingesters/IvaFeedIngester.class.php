@@ -460,6 +460,17 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		'The Empire Strikes Back' => [ 2846 ],
 		'Star Wars' => [ 3883 ],
 		'Star Wars Episode II: Attack of the Clones' => [ 862846 ],
+		'Galavant' => [ 280387 ],
+		'The White Queen' => [ 153637 ],
+		'iZombie' => [ 77189 ],
+		'Wayard Pines' => [ 862586 ],
+		'Black Sails' => [ 37712 ],
+		'Scandal' => [ 615399 ],
+		'How To Get Away With Murder' => [ 990626 ],
+		'Outlander' => [ 527844 ],
+		'True Detective' => [ 589103 ],
+		'Helix' => [ 536734 ],
+		'Reign' => [ 810025 ],
 	];
 
 	// exclude song and movie types
@@ -496,8 +507,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return int
 	 */
 	public function import( $content = '', array $params = [] ) {
-		wfProfileIn( __METHOD__ );
-
 		$startDate = empty( $params['startDate'] ) ? '' : $params['startDate'];
 		$endDate = empty( $params['endDate'] ) ? '' : $params['endDate'];
 
@@ -514,7 +523,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 				$result = $this->ingestVideos( $startDate, $endDate, $videoParams );
 				if ( $result === false ) {
-					wfProfileOut( __METHOD__ );
 					return 0;
 				}
 
@@ -526,13 +534,10 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		$videoParams = [ 'apiType' => 'VideoAssets' ];
 		$result = $this->ingestVideosAsset( $startDate, $endDate, $videoParams );
 		if ( $result === false ) {
-			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
 		$articlesCreated += $result;
-
-		wfProfileOut( __METHOD__ );
 
 		return $articlesCreated;
 	}
@@ -545,7 +550,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return integer|false $articlesCreated - number of articles created or false
 	 */
 	protected function ingestVideos( $startDate, $endDate, $videoParams ) {
-		wfProfileIn( __METHOD__ );
 
 		$page = 0;
 		$articlesCreated = 0;
@@ -557,7 +561,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 			// Retrieve the video data from IVA
 			$programs = $this->requestData( $url );
 			if ( $programs === false ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -598,7 +601,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 					$result = $this->ingestVideos( $startDate, $endDate, $params );
 					if ( $result === false ) {
-						wfProfileOut( __METHOD__ );
 						return false;
 					}
 
@@ -607,7 +609,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 			}
 		} while ( $numPrograms == self::API_PAGE_SIZE );
 
-		wfProfileOut( __METHOD__ );
 
 		return $articlesCreated;
 	}
@@ -621,7 +622,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return integer|false $articlesCreated - number of articles created or false
 	 */
 	protected function ingestVideosAsset( $startDate, $endDate, $videoParams ) {
-		wfProfileIn( __METHOD__ );
 
 		$page = 0;
 		$articlesCreated = 0;
@@ -633,7 +633,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 			// Retrieve the video data from IVA
 			$videoAssets = $this->requestData( $url );
 			if ( $videoAssets === false ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 
@@ -662,7 +661,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 			}
 		} while ( $numVideos == self::API_PAGE_SIZE );
 
-		wfProfileOut( __METHOD__ );
 
 		return $articlesCreated;
 	}
@@ -674,7 +672,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return array|false $clipdata
 	 */
 	protected function getDataFromProgram( $videoParams, $program ) {
-		wfProfileIn( __METHOD__ );
 
 		$clipData = [];
 
@@ -685,7 +682,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 		if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
 			$this->logger->videoSkipped( "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n" );
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -694,7 +690,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 			$msg = "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) release date ";
 			$msg .= "{$program['FirstReleasedYear']} before ".self::MIN_RELEASE_YEAR."\n";
 			$this->logger->videoSkipped( $msg );
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -741,8 +736,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		}
 		$clipData['actors'] = implode( ', ', $actors );
 
-		wfProfileOut( __METHOD__ );
-
 		return $clipData;
 	}
 
@@ -756,7 +749,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return array|bool|false
 	 */
 	protected function getDataFromAsset( $videoParams, $videoAsset, $clipData ) {
-		wfProfileIn( __METHOD__ );
 
 		$clipData['titleName'] = empty( $videoAsset['DisplayTitle'] ) ? trim( $videoAsset['Title'] ) : trim( $videoAsset['DisplayTitle'] );
 		$clipData['titleName'] = $this->updateTitle( $clipData['titleName'] );
@@ -781,7 +773,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 		if ( !empty( $videoAsset['ExpirationDate'] ) ) {
 			$this->logger->videoSkipped( "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n" );
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -842,8 +833,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		}
 		$clipData['keywords'] = implode( ', ', wfGetUniqueArrayCI( $keywords ) );
 
-		wfProfileOut( __METHOD__ );
-
 		return $clipData;
 	}
 
@@ -856,7 +845,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return string $url - A feed URL
 	 */
 	private function makeSetFeedURL( $videoParams, $startDate, $endDate, $page ) {
-		wfProfileIn( __METHOD__ );
 
 		$filter = "(DateModified gt datetime'$startDate') " .
 			"and (DateModified le datetime'$endDate') ";
@@ -890,8 +878,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 		$url = $this->initFeedUrl( $feedUrl, $filter, $expand, $page );
 
-		wfProfileOut( __METHOD__ );
-
 		return $url;
 	}
 
@@ -901,9 +887,8 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return array $expand - The expand fields to include in the URL to expand the video metadata
 	 */
 	protected function getApiExpandFields( $videoParams ) {
-		wfProfileIn( __METHOD__ );
 
-		if (  $videoParams['apiType'] == 'VideoAssets' ) {
+		if ( $videoParams['apiType'] == 'VideoAssets' ) {
 			$expand = [ 'EntertainmentProgram' ];
 		} else {
 			$expand = [ 'VideoAssets' ];
@@ -912,8 +897,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		foreach ( self::$API_EXPAND_FIELDS as $key => $value ) {
 			$expand[] = ( $videoParams['apiType'] == $value ) ? $key : "$value/$key";
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $expand;
 	}
@@ -927,15 +910,12 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return string $url - A feed URL
 	 */
 	private function initFeedUrl( $feedUrl, $filter, $expand, $page ) {
-		wfProfileIn( __METHOD__ );
 
 		$url = str_replace( '$1', self::API_PAGE_SIZE, $feedUrl );
 		$url = str_replace( '$2', self::API_PAGE_SIZE * $page, $url );
 		$url = str_replace( '$3', urlencode( $filter ), $url );
 		$url = str_replace( '$4', implode( ',', $expand ), $url );
 		$url = str_replace( '$5', F::app()->wg->IvaApiConfig['DeveloperId'], $url );
-
-		wfProfileOut( __METHOD__ );
 
 		return $url;
 	}
@@ -946,14 +926,12 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return array|bool
 	 */
 	private function requestData( $url ) {
-		wfProfileIn( __METHOD__ );
 
 		print( "Connecting to $url...\n" );
 
 		$resp = Http::request( 'GET', $url, [ 'noProxy' => true ] );
 		if ( $resp === false ) {
 			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
-			wfProfileOut( __METHOD__ );
 
 			return false;
 		}
@@ -961,7 +939,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		// parse response
 		$response = json_decode( $resp, true );
 
-		wfProfileOut( __METHOD__ );
 		return ( empty($response['d']['results']) ) ? [] : $response['d']['results'];
 	}
 
@@ -971,7 +948,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	 * @return array $categories
 	 */
 	public function generateCategories( array $addlCategories ) {
-		wfProfileIn( __METHOD__ );
 
 		$addlCategories[] = $this->getVideoData('name');
 		$addlCategories[] = $this->getVideoData('series');
@@ -998,8 +974,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		}
 
 		$addlCategories[] = 'IVA';
-
-		wfProfileOut( __METHOD__ );
 
 		return preg_replace( '/\s*,\s*/', ' ', wfGetUniqueArrayCI( $addlCategories ) );
 	}

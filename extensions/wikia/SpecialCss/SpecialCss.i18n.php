@@ -1,5 +1,6 @@
 <?php
 $messages['en'] = [
+	'specialcss-desc' => 'Admin tool for editing CSS files',
 	'css' => 'Cascading Style Sheets',
 	'action-editinterface' => 'edit the user interface',
 	'special-css-title' => 'CSS Editor',
@@ -128,6 +129,7 @@ $messages['pl'] = [
 
 
 $messages['qqq'] = [
+	'specialcss-desc' => '{{desc}}',
 	'css' => 'Name of the link to Special:CSS page on Special:SpacialPages list; more about CSS: https://en.wikipedia.org/wiki/Cascading_Style_Sheets',
 	'action-editinterface' => '{{doc-action|editinterface}}',
 	'special-css-title' => 'Page title visible in the title bar of a browser or on the browser tab',

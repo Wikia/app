@@ -22,8 +22,8 @@ $wgExtensionCredits['parserhook'][] = array(
 		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'
 	],
 	'version' => '1.2',
-	'description' => 'Poll extension for MediaWiki driven by Ajax requests',
-	'url' => 'http://help.wikia.com/wiki/Help:Polls'
+	'descriptionmsg' => 'ajaxpoll-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AjaxPoll',
 );
 
 $wgHooks['ParserFirstCallInit'][] = "wfAjaxPollTag";

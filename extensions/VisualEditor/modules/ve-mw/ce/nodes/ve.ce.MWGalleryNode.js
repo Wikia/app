@@ -15,12 +15,9 @@
  * @param {ve.dm.MWGalleryNode} model Model to observe
  * @param {Object} [config] Configuration options
  */
-ve.ce.MWGalleryNode = function VeCeMWGalleryNode( model, config ) {
+ve.ce.MWGalleryNode = function VeCeMWGalleryNode() {
 	// Parent constructor
-	ve.ce.MWBlockExtensionNode.call( this, model, config );
-
-	// DOM changes
-	this.$element.addClass( 've-ce-mwGalleryNode' );
+	ve.ce.MWGalleryNode.super.apply( this, arguments );
 };
 
 /* Inheritance */
@@ -41,9 +38,11 @@ ve.ce.MWGalleryNode.static.primaryCommandName = 'gallery';
  * @inheritdoc
  */
 ve.ce.MWGalleryNode.prototype.onSetup = function () {
-	ve.ce.MWGalleryNode.super.prototype.onSetup.apply( this, arguments );
-	// The ul.gallery is 100% width, so don't give it a highlight
-	this.$element.find( '.gallery' ).addClass( 've-ce-noHighlight' );
+	// Parent method
+	ve.ce.MWGalleryNode.super.prototype.onSetup.call( this );
+
+	// DOM changes
+	this.$element.addClass( 've-ce-mwGalleryNode' );
 };
 
 /**
@@ -56,6 +55,14 @@ ve.ce.MWGalleryNode.prototype.doneGenerating = function ( generatedContents ) {
 		generatedContents = [ this.$( alternativeRendering )[0] ];
 	}
 	ve.ce.MWGalleryNode.super.prototype.doneGenerating.apply( this, arguments );
+};
+
+/**
+ * @inheritdoc ve.ce.GeneratedContentNode
+ */
+ve.ce.MWGalleryNode.prototype.getFocusableElement = function () {
+	var $gallery = this.$element.find( '.gallery' ).addBack( '.gallery' );
+	return $gallery.length ? $gallery.children() : this.$element;
 };
 
 /* Registration */

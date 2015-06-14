@@ -9,9 +9,6 @@ class WAMPageModel extends WikiaModel {
 
 	const TAB_INDEX_TOP_WIKIS = 0;
 	const TAB_INDEX_BIGGEST_GAINERS = 1;
-	const TAB_INDEX_GAMING = 2;
-	const TAB_INDEX_ENTERTAINMENT = 3;
-	const TAB_INDEX_LIFESTYLE = 4;
 
 	/**
 	 * @desc Cache for config array from WikiFactory
@@ -27,24 +24,21 @@ class WAMPageModel extends WikiaModel {
 	 */
 	protected $pagesMap = null;
 
-	static protected $failoverTabsNames = [
-		self::TAB_INDEX_TOP_WIKIS => 'Top wikias',
-		self::TAB_INDEX_BIGGEST_GAINERS => 'The biggest gainers',
-		self::TAB_INDEX_GAMING => 'Top video games wikias',
-		self::TAB_INDEX_ENTERTAINMENT => 'Top entertainment wikias',
-		self::TAB_INDEX_LIFESTYLE => 'Top lifestyle wikias'
-	];
-
 	static protected $verticalIds = [
-		WikiFactoryHub::CATEGORY_ID_GAMING,
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+		WikiFactoryHub::VERTICAL_ID_OTHER,
+		WikiFactoryHub::VERTICAL_ID_COMICS,
+		WikiFactoryHub::VERTICAL_ID_TV,
+		WikiFactoryHub::VERTICAL_ID_MOVIES,
+		WikiFactoryHub::VERTICAL_ID_MUSIC,
+		WikiFactoryHub::VERTICAL_ID_BOOKS,
+		WikiFactoryHub::VERTICAL_ID_VIDEO_GAMES,
+		WikiFactoryHub::VERTICAL_ID_LIFESTYLE,
 	];
 
 	public function __construct() {
 		parent::__construct();
 
-		if( is_null($this->config) ) {
+		if ( is_null( $this->config ) ) {
 			$this->config = $this->app->wg->WAMPageConfig;
 		}
 	}
@@ -71,18 +65,26 @@ class WAMPageModel extends WikiaModel {
 	 * @param int $tabIndex
 	 * @return mixed
 	 */
-	public function getVisualizationWikis( $tabIndex ) {
-		switch( $tabIndex ) {
-			case self::TAB_INDEX_BIGGEST_GAINERS: $params = $this->getVisualizationParams( null, 'wam_change' ); break;
-			case self::TAB_INDEX_GAMING: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_GAMING ); break;
-			case self::TAB_INDEX_ENTERTAINMENT: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT ); break;
-			case self::TAB_INDEX_LIFESTYLE: $params = $this->getVisualizationParams( WikiFactoryHub::CATEGORY_ID_LIFESTYLE ); break;
-			default: $params = $this->getVisualizationParams(); break;
-		}
+	public function getVisualizationWikis( $iVerticalId ) {
+		$aParams = $this->getVisualizationParams( $iVerticalId );
+		$WAMData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', $aParams )->getData();
 
-		$WAMData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', $params )->getData();
+		return $this->prepareIndex( $WAMData[ 'wam_index' ], self::TAB_INDEX_BIGGEST_GAINERS );
+	}
 
-		return $this->prepareIndex( $WAMData[ 'wam_index' ], $tabIndex );
+
+	protected function getVisualizationParams( $iVerticalId = 0 ) {
+		$aParams = [
+			'vertical_id' => intval( $iVerticalId ),
+			'sort_column' => 'wam_change',
+			'limit' => $this->getVisualizationItemsCount(),
+			'sort_direction' => 'DESC',
+			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
+			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
+			'fetch_wiki_images' => true,
+		];
+
+		return $aParams;
 	}
 
 	/**
@@ -96,30 +98,30 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	public function getIndexWikis($params) {
-		$params = $this->getIndexParams($params);
-		$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
-		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS);
+	public function getIndexWikis( Array $aParams ) {
+		$aParams = $this->getIndexParams( $aParams );
+		$WAMData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', $aParams )->getData();
+		$WAMData['wam_index'] = $this->prepareIndex( $WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS );
 
 		return $WAMData;
 	}
 
 	public function getMinMaxIndexDate() {
-		$dates = $this->app->sendRequest('WAMApi', 'getMinMaxWamIndexDate')->getData();
-		if (isset($dates['min_max_dates'])) {
-			$dates = $dates['min_max_dates'];
+		$aDates = $this->app->sendRequest( 'WAMApi', 'getMinMaxWamIndexDate' )->getData();
+		if ( isset( $aDates['min_max_dates'] ) ) {
+			$aDates = $aDates['min_max_dates'];
 
 			// Set min date as next day, because we don't have previous data
-			if (!empty($dates['min_date'])) {
-				$dates['min_date'] += 60 * 60 * 24;
+			if ( !empty( $aDates['min_date'] ) ) {
+				$aDates['min_date'] += 60 * 60 * 24;
 			}
 		} else {
-			$dates = [
+			$aDates = [
 				'min_date' => null,
-				'max_date' => null
+				'max_date' => null,
 			];
 		}
-		return $dates;
+		return $aDates;
 	}
 
 	public function getWAMMainPageName() {
@@ -166,75 +168,13 @@ class WAMPageModel extends WikiaModel {
 		return mb_strtolower($title->getText()) === mb_strtolower($this->getWAMFAQPageName());
 	}
 
-	public function getTabsNamesArray() {
-		$config = $this->getConfig();
-		return !empty($config['tabsNames']) ? $config['tabsNames'] : $this->getDefaultTabsNames();
-	}
-
-	public function getTabIndexBySubpageText($subpageText) {
-		return array_search($subpageText, $this->getTabsNamesArray());
-	}
-
-	public function getTabNameByIndex($tabIndex) {
-		$tabNames = $this->getTabsNamesArray();
-		return array_key_exists($tabIndex, $tabNames) ? $tabNames[$tabIndex] : false;
-	}
-
-	/**
-	 * @desc Return proper string for subtitleText - it's same as in tabs.
-	 *
-	 * @param int $tabIndex tab index
-	 * @param string $defaultTitle fallback title
-	 *
-	 * @return string
-	 */
-	public function getSubpageTextByIndex($tabIndex, $defaultTitle) {
-		$tabs = $this->getTabs();
-		$tabIndex = (int)$tabIndex; // first tab has 'false' as tabIndex
-
-		// we don't have that index - return default title
-		return isset($tabs[$tabIndex]['name']) ? $tabs[$tabIndex]['name'] : $defaultTitle;
-	}
-
-	/**
-	 * @desc Returns array with tab names and urls by default it's in English taken from global variable $wgWAMPageConfig['tabsNames']
-	 *
-	 * @param int $selectedIdx array index of selected tab
-	 * @params array $filterParams filter params
-	 */
-	public function getTabs($selectedIdx = 0, $filterParams = array()) {
-		$tabs = [];
-		$pageName = $this->getWAMMainPageName();
-		$tabsNames = $this->getTabsNamesArray();
-		$filterParamsQueryString = $this->getParamsAsQuery($filterParams);
-
-		foreach($tabsNames as $tabName) {
-			$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
-			$tabUrl = $tabTitle->getLocalURL() . $filterParamsQueryString;
-			$tabs[] = ['name' => $tabName, 'url' => $tabUrl];
-		}
-
-		if( !empty($tabs[$selectedIdx]) ) {
-			$tabs[$selectedIdx]['selected'] = true;
-		}
-
-		return $tabs;
-	}
-
 	public function getWamPagesDbKeysMap() {
-		if( is_null($this->pagesMap) ) {
+		if( is_null( $this->pagesMap ) ) {
 			$this->pagesMap = [];
 			$pageName = $this->getWAMMainPageName();
-
-			foreach($this->getTabsNamesArray() as $tabName) {
-				$tabTitle = $this->getTitleFromText($pageName . '/'. $tabName);
-				$this->pagesMap[mb_strtolower($tabTitle->getDBKey())] = $tabTitle->getDBKey();
-			}
-
-			$this->pagesMap[mb_strtolower($pageName)] = $pageName;
-			$this->pagesMap[mb_strtolower($this->getWAMFAQPageName())] = $this->getWAMFAQPageName();
+			$this->pagesMap[mb_strtolower( $pageName )] = $pageName;
+			$this->pagesMap[mb_strtolower( $this->getWAMFAQPageName() )] = $this->getWAMFAQPageName();
 		}
-
 		return $this->pagesMap;
 	}
 
@@ -261,58 +201,77 @@ class WAMPageModel extends WikiaModel {
 		return $verticals;
 	}
 
-	protected function getDefaultTabsNames() {
-		return self::$failoverTabsNames;
-	}
-
-	protected function prepareIndex($wamWikis, $tabIndex) {
-		$wamScoreName = ($tabIndex != self::TAB_INDEX_BIGGEST_GAINERS) ? 'wam' : 'wam_change';
-		foreach ($wamWikis as &$wiki) {
-			$wamScore = $wiki[$wamScoreName];
-			$wiki['change'] = $this->getScoreChangeName($wiki['wam'], $wiki['wam_change']);
-			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
-			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
-		}
-
-		return $wamWikis;
-	}
-
-	protected function getScoreChangeName($score, $change) {
-		$prevScore = $score - $change;
-		$score = round($score, self::SCORE_ROUND_PRECISION);
-		$prevScore = round($prevScore, self::SCORE_ROUND_PRECISION);
-		$wamChange = $score - $prevScore;
-
-		if($wamChange > 0) {
-			$out = 'up';
-		} elseif($wamChange < 0) {
-			$out = 'down';
-		} else {
-			$out = 'eq';
-		}
-
-		return $out;
-	}
-
-	protected function getVerticalName($verticalId) {
-		/** @var WikiFactoryHub $wikiFactoryHub */
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return wfMessage('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
-	}
-
-	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {
-		$params = [
-			'vertical_id' => $verticalId,
-			'sort_column' => $sortColumn,
-			'limit' => $this->getVisualizationItemsCount(),
-			'sort_direction' => 'DESC',
-			'wiki_image_height' => self::VISUALIZATION_ITEM_IMAGE_HEIGHT,
-			'wiki_image_width' => self::VISUALIZATION_ITEM_IMAGE_WIDTH,
-			'fetch_wiki_images' => true,
+	/**
+	 * Get verticals' machine-friendly names
+	 * @return array  An [ id => short ] array
+	 */
+	public function getVerticalsShorts() {
+		$aVerticalsShorts = [
+			WikiFactoryHub::VERTICAL_ID_OTHER => 'all',
 		];
+		$oWikiFactoryHub = WikiFactoryHub::getInstance();
+		$aVerticals = $oWikiFactoryHub->getAllVerticals();
+		foreach ( $aVerticals as $iVerticalId => $aVerticalData ) {
+			if ( $iVerticalId !== WikiFactoryHub::VERTICAL_ID_OTHER ) {
+				$aVerticalsShorts[$iVerticalId] = $aVerticalData['short'];
+			}
+		}
+		return $aVerticalsShorts;
+	}
 
-		return $params;
+	/**
+	 * Generate message keys from verticals' short names:
+	 * wam-all, wam-tv, wam-games, wam-books, wam-comics, wam-lifestyle,
+	 * wam-music, wam-movies (see WAMPage.i18n.php)
+	 * @param  Array  $aShorts An array of verticals' short names
+	 * @return Array           An array of message keys
+	 */
+	public function generateVerticalsNamesMsgKeys( $aShortNames ) {
+		$aMsgKeys = [];
+		foreach ( $aShortNames as $iCityId => $sShortName ) {
+			$aMsgKeys[$iCityId] = "wam-{$sShortName}";
+		}
+		return $aMsgKeys;
+	}
+
+	protected function prepareIndex( $aWamWikis, $iTabIndex ) {
+		$sWamScoreName = ( $iTabIndex != self::TAB_INDEX_BIGGEST_GAINERS ) ? 'wam' : 'wam_change';
+		foreach ( $aWamWikis as &$aWiki ) {
+			$fWamScore = $aWiki[ $sWamScoreName ];
+			$aWiki['change'] = $this->getScoreChangeName( $aWiki['wam'], $aWiki['wam_change'] );
+			$aWiki['wam'] = round( $fWamScore, self::SCORE_ROUND_PRECISION );
+			$aWiki['verticalId'] = $this->getVerticalName( $aWiki['vertical_id'] );
+		}
+
+		return $aWamWikis;
+	}
+
+	protected function getScoreChangeName($fScore, $fChange) {
+		$fPrevScore = $fScore - $fChange;
+		$fScore = round( $fScore, self::SCORE_ROUND_PRECISION );
+		$fPrevScore = round( $fPrevScore, self::SCORE_ROUND_PRECISION );
+		$fWamChange = $fScore - $fPrevScore;
+
+		if( $fWamChange > 0 ) {
+			$sOut = 'up';
+		} elseif( $fWamChange < 0 ) {
+			$sOut = 'down';
+		} else {
+			$sOut = 'eq';
+		}
+
+		return $sOut;
+	}
+
+	protected function getVerticalName( $iVerticalId ) {
+		$oWikiFactoryHub = WikiFactoryHub::getInstance();
+		$aAllVerticals = $oWikiFactoryHub->getAllVerticals();
+		if ( isset( $aAllVerticals[ $iVerticalId ] ) ) {
+			$aVertical = $aAllVerticals[ $iVerticalId ];
+			return wfMessage( 'wam-' . $aVertical['short'] )->inContentLanguage()->escaped();
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -326,26 +285,26 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	protected function getIndexParams($params) {
-		$itemsPerPage = $this->getItemsPerPage();
-		$firstPageNo = $this->getFirstPage();
-		$page = !empty($params['page']) ? intval($params['page']) : $firstPageNo;
-		$offset = ($page > $firstPageNo) ? (($page - 1) * $itemsPerPage) : 0;
+	protected function getIndexParams( Array $aParams ) {
+		$iItemsPerPage = $this->getItemsPerPage();
+		$iFirstPageNo = $this->getFirstPage();
+		$iPage = !empty( $aParams['page'] ) ? intval( $aParams['page'] ) : $iFirstPageNo;
+		$iOffset = ( $iPage > $iFirstPageNo ) ? ( ($iPage - 1) * $iItemsPerPage ) : 0;
 
-		$apiParams = [
+		$aApiParams = [
 			'avatar_size' => 21,
 			'fetch_admins' => true,
-			'limit' => $itemsPerPage,
-			'offset' => $offset,
+			'limit' => $iItemsPerPage,
+			'offset' => $iOffset,
 			'sort_column' => 'wam_index',
 			'sort_direction' => 'DESC',
-			'wiki_word' => isset($params['searchPhrase']) ? $params['searchPhrase'] : null,
-			'vertical_id' => isset($params['verticalId']) ? $params['verticalId'] : null,
-			'wiki_lang' =>  isset($params['langCode']) ? $params['langCode'] : null,
-			'wam_day' => isset($params['date']) ? $params['date'] : null,
+			'wiki_word' => isset( $aParams['searchPhrase'] ) ? $aParams['searchPhrase'] : null,
+			'vertical_id' => isset( $aParams['verticalId'] ) ? $aParams['verticalId'] : null,
+			'wiki_lang' =>  isset( $aParams['langCode'] ) ? $aParams['langCode'] : null,
+			'wam_day' => isset( $aParams['date'] ) ? $aParams['date'] : null,
 		];
 
-		return $apiParams;
+		return $aApiParams;
 	}
 
 	/**
@@ -355,37 +314,37 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return string
 	 */
-	private function getParamsAsQuery($filterParams) {
-		$queryParams = array();
+	private function getParamsAsQuery( $filterParams ) {
+		$sQueryParams = [];
 
 		foreach ( $filterParams as $key => $value ) {
-			if ( !empty($value) ) {
-				$queryParams[$key] = $value;
+			if ( !empty( $value ) ) {
+				$sQueryParams[ $key ] = $value;
 			}
 		}
 
-		return count($queryParams) ? '?'.http_build_query($queryParams) : '';
+		return count( $sQueryParams ) ? '?' . http_build_query( $sQueryParams ) : '';
 	}
 
 	/**
 	 * Check if title is WAM page or subPage
 	 *
-	 * @param $title
+	 * @param $oTitle
 	 * @return bool
 	 */
-	public function isWAMPage($title) {
-		wfProfileIn(__METHOD__);
+	public function isWAMPage( $oTitle ) {
+		wfProfileIn( __METHOD__ );
 		$dbKey = null;
 
-		if( $title instanceof Title ) {
-			$dbKey = mb_strtolower( $title->getDBKey() );
+		if( $oTitle instanceof Title ) {
+			$dbKey = mb_strtolower( $oTitle->getDBKey() );
 		}
 
-		wfProfileOut(__METHOD__);
-		return in_array($dbKey, array_keys($this->getWamPagesDbKeysMap()));
+		wfProfileOut( __METHOD__ );
+		return in_array( $dbKey, array_keys($this->getWamPagesDbKeysMap() ) );
 	}
 
-	protected function getTitleFromText($text) {
-		return Title::newFromText($text);
+	protected function getTitleFromText( $text ) {
+		return Title::newFromText( $text );
 	}
 }

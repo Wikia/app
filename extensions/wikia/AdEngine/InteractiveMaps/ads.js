@@ -2,7 +2,7 @@
 /*jshint camelcase:false*/
 var ads = (function (window, document) {
 	'use strict';
-	function noop() {}
+	function noop() { return; }
 
 	function defines() {
 		define('ext.wikia.adEngine.adLogicPageParams', function () {
@@ -10,31 +10,9 @@ var ads = (function (window, document) {
 			var hashParams = JSON.parse(document.location.hash.substr(1));
 
 			return {
-				getPageLevelParams: function() {
+				getPageLevelParams: function () {
 					return hashParams.adParams;
 				}
-			};
-		});
-
-		define('ext.wikia.adEngine.gptSlotConfig', function () {
-			var slotMapConfig = {
-				maps: {
-					MAPS_BUTTON: { size: '320x50,1x1' }
-				}
-			};
-
-			function getConfig(src) {
-				var undef;
-
-				if (src === undef) {
-					return slotMapConfig;
-				}
-
-				return slotMapConfig[src];
-			}
-
-			return {
-				getConfig: getConfig
 			};
 		});
 

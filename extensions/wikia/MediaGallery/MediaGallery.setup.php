@@ -14,6 +14,8 @@ $wgExtensionCredits['other'][] = array(
 		'James Sutterfield',
 		'Armon Rabiyan',
 	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MediaGallery',
+	'descriptionmsg' => 'mediagallery-desc'
 );
 
 $dir = dirname(__FILE__) . '/';

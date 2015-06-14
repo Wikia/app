@@ -44,6 +44,9 @@ class RefreshLinksForTitleTask extends BaseTask {
 		return \ParserOptions::newFromUserAndLang( new \User, $this->getLanguage() );
 	}
 
+	/**
+	 * @return \Parser
+	 */
 	protected function getParser() {
 		global $wgParser;
 		return $wgParser;
