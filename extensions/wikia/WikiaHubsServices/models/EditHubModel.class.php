@@ -580,7 +580,6 @@ class EditHubModel extends WikiaModel {
 			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
 			$videoData['title'] = $title->getText();
 			$videoData['fileUrl'] = $this->getFileUrl($fileName, $file);
-
 			$videoData['thumbUrl'] = $thumb->getUrl();
 		}
 
