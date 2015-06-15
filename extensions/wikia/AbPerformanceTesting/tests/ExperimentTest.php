@@ -1,11 +1,11 @@
 <?php
 
-use Wikia\AbPerfTesting\Experiment;
+use Wikia\AbPerformanceTesting\Experiment;
 
 class ExperimentTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . "/../AbPerfTesting.setup.php";
+		$this->setupFile = __DIR__ . "/../AbPerformanceTesting.setup.php";
 		parent::setUp();
 
 		$this->mockGlobalVariable( 'wgCityId', 5123 );
@@ -27,7 +27,7 @@ class ExperimentTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @expectedException Wikia\AbPerfTesting\UnknownCriterionException
+	 * @expectedException Wikia\AbPerformanceTesting\UnknownCriterionException
 	 */
 	function testNotExistingCriteriaHandling() {
 		Experiment::isEnabled( ['criteria' => ['foo' => 87]] );

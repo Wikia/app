@@ -19,11 +19,11 @@ wgTransactionContext.perf_test
 
 ### Experiments config
 
-All performance experiments are defined in `$wgABPerfTestingExperiments` global array with a single entry as follows:
+All performance experiments are defined in `$wgAbPerformanceTestingExperiments` global array with a single entry as follows:
 
 ```php
-$wgABPerfTestingExperiments['backend_delay_b'] = [
-	'handler' => 'Wikia\\AbPerfTesting\\Experiments\\BackendDelay',
+$wgAbPerformanceTestingExperiments['backend_delay_b'] = [
+	'handler' => 'Wikia\\AbPerformanceTesting\\Experiments\\BackendDelay',
 	'params' => [
 		'delay' => 50,
 	],

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\AbPerfTesting;
+namespace Wikia\AbPerformanceTesting;
 
 abstract class Experiment {
 

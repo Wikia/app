@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\AbPerfTesting;
+namespace Wikia\AbPerformanceTesting;
 
 use \Wikia\Logger\WikiaLogger;
 
@@ -62,11 +62,11 @@ class Hooks {
 	 * @return bool it's a hook
 	 */
 	static function onAfterInitialize( \Title $title, \Article $article, \OutputPage $output, \User $user, \WebRequest $request, \MediaWiki $wiki ) {
-		global $wgABPerfTestingExperiments;
+		global $wgAbPerformanceTestingExperiments;
 		wfDebug( sprintf( "%s - checking experiments (with beacon ID set to '%s')...\n", __METHOD__, wfGetBeaconId() ) );
 
 		// loop through all registered experiments and run those matching criteria
-		foreach ( $wgABPerfTestingExperiments as $experimentName => $experimentConfig ) {
+		foreach ( $wgAbPerformanceTestingExperiments as $experimentName => $experimentConfig ) {
 			if ( Experiment::isEnabled( $experimentConfig ) ) {
 				self::startExperiment( $experimentName, $experimentConfig );
 

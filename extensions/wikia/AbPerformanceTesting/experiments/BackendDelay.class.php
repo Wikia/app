@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikia\AbPerfTesting\Experiments;
+namespace Wikia\AbPerformanceTesting\Experiments;
 
-use Wikia\AbPerfTesting\Experiment;
+use Wikia\AbPerformanceTesting\Experiment;
 
 /**
  * Adds a sleep on the backend for a given number of miliseconds

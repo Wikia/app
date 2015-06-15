@@ -1,24 +1,24 @@
 <?php
 
-use Wikia\AbPerfTesting\Criterion;
-use Wikia\AbPerfTesting\Criteria\OasisArticles;
-use Wikia\AbPerfTesting\Criteria\Traffic;
-use Wikia\AbPerfTesting\Criteria\Wikis;
+use Wikia\AbPerformanceTesting\Criterion;
+use Wikia\AbPerformanceTesting\Criteria\OasisArticles;
+use Wikia\AbPerformanceTesting\Criteria\Traffic;
+use Wikia\AbPerformanceTesting\Criteria\Wikis;
 
 class CriterionTest extends WikiaBaseTest {
 
 	public function setUp() {
-		$this->setupFile = __DIR__ . "/../AbPerfTesting.setup.php";
+		$this->setupFile = __DIR__ . "/../AbPerformanceTesting.setup.php";
 		parent::setUp();
 	}
 
 	function testCriterionFactory() {
-		$this->assertInstanceOf( 'Wikia\AbPerfTesting\Criteria\Traffic', Criterion::factory( 'traffic' ) );
-		$this->assertInstanceOf( 'Wikia\AbPerfTesting\Criteria\Traffic', Criterion::factory( 'Traffic' ) );
+		$this->assertInstanceOf( 'Wikia\AbPerformanceTesting\Criteria\Traffic', Criterion::factory( 'traffic' ) );
+		$this->assertInstanceOf( 'Wikia\AbPerformanceTesting\Criteria\Traffic', Criterion::factory( 'Traffic' ) );
 	}
 
 	/**
-	 * @expectedException Wikia\AbPerfTesting\UnknownCriterionException
+	 * @expectedException Wikia\AbPerformanceTesting\UnknownCriterionException
 	 */
 	function testCriterionFactoryErrorHandling() {
 		Criterion::factory( 'foobar' );

@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikia\AbPerfTesting\Criteria;
+namespace Wikia\AbPerformanceTesting\Criteria;
 
-use Wikia\AbPerfTesting\Criterion;
+use Wikia\AbPerformanceTesting\Criterion;
 
 /**
  * Define a "oasisArticles" criterion

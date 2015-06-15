@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\AbPerfTesting;
+namespace Wikia\AbPerformanceTesting;
 
 abstract class Criterion {
 	/**
@@ -40,7 +40,7 @@ abstract class Criterion {
 	 * @return Criterion
 	 */
 	static function factory( $criterionName ) {
-		$className = sprintf( 'Wikia\\AbPerfTesting\\Criteria\\%s', ucfirst(  $criterionName ) );
+		$className = sprintf( 'Wikia\\AbPerformanceTesting\\Criteria\\%s', ucfirst(  $criterionName ) );
 
 		if ( !class_exists( $className ) ) {
 			throw new UnknownCriterionException( sprintf( 'Criterion "%s" does not exist', $criterionName ) );

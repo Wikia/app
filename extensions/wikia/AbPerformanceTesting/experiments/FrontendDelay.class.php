@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikia\AbPerfTesting\Experiments;
+namespace Wikia\AbPerformanceTesting\Experiments;
 
-use Wikia\AbPerfTesting\Experiment;
+use Wikia\AbPerformanceTesting\Experiment;
 
 /**
  * Adds a sleep on the frontend onDOMReady event for a given number of miliseconds
@@ -24,7 +24,7 @@ class FrontendDelay extends Experiment {
 		} );
 
 		$this->on( 'BeforePageDisplay', function( \OutputPage $out, \Skin $skin ) {
-			$out->addScript( \Html::linkedScript( \AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/AbPerfTesting/js/FrontendDelay.js' ) ) );
+			$out->addScript( \Html::linkedScript( \AssetsManager::getInstance()->getOneCommonURL( 'extensions/wikia/AbPerformanceTesting/js/FrontendDelay.js' ) ) );
 			return true;
 		} );
 	}
