@@ -3,11 +3,11 @@
 define('ext.wikia.adEngine.gptHelper', [
 	'wikia.log',
 	'ext.wikia.adEngine.provider.googleTag',
+	'ext.wikia.adEngine.provider.gptAdDetect',
 	'ext.wikia.adEngine.provider.gptAdElement',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.wikiaGptAdDetect',
 	require.optional('ext.wikia.adEngine.gptSraHelper')
-], function (log, googleTag, AdElement, slotTweaker, gptAdDetect, sraHelper) {
+], function (log, googleTag, adDetect, AdElement, slotTweaker, sraHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper';
@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.gptHelper', [
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				gptAdDetect.onAdLoad(element.getId(), event, iframe, callSuccess, callError, extra.forcedAdType);
+				adDetect.onAdLoad(element.getId(), event, iframe, callSuccess, callError, extra.forcedAdType);
 			}, 0);
 		}
 
