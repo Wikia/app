@@ -256,13 +256,13 @@ describe('AdLogicPageParams', function () {
 		var params;
 
 		params = getParams();
-		expect(params.perfab).toEqual('');
+		expect(params.perfab).toEqual(undefined);
 
 		params = getParams({}, {transaction_context: {perf_test: 'foo'}});
 		expect(params.perfab).toEqual('foo');
 
 		params = getParams({}, {transaction_context: {perf_test: true}});
-		expect(params.perfab).toEqual('');
+		expect(params.perfab).toEqual(undefined);
 	});
 
 	it('getPageLevelParams includeRawDbName', function () {

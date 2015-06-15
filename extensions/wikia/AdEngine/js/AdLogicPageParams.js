@@ -89,7 +89,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	 * @returns {string}
 	 */
 	function getPerformanceAb() {
-		var ab = '';
+		var ab;
 
 		if (win.wgTransactionContext && typeof win.wgTransactionContext.perf_test === 'string') {
 			ab = win.wgTransactionContext.perf_test;
