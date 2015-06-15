@@ -149,16 +149,12 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 	private function hasExceededNotificationLimit( User $user ) {
 		$count = $this->getUserNotificationCount( $user );
-		if ( $count > self::DAILY_NOTIFICATION_LIMIT ) {
-			return true;
-		}
+		return $count > self::DAILY_NOTIFICATION_LIMIT;
 	}
 
 	private function hasHitNotificationLimit( User $user ) {
 		$count = $this->getUserNotificationCount( $user );
-		if ( $count == self::DAILY_NOTIFICATION_LIMIT ) {
-			return true;
-		}
+		return $count == self::DAILY_NOTIFICATION_LIMIT;
 	}
 
 	private function getUserNotificationCount( User $user ) {
