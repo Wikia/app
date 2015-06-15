@@ -414,7 +414,7 @@ class FlagsExtractor {
 			$tag = $this->getReplacementTag();
 		}
 
-		if ( $tag == '' ) {
+		if ( $tag === '' ) {
 			$this->logInfoMessage( 'Template removed from text', [ 'template' => $template['template'] ] );
 		} else {
 			$this->logInfoMessage( 'Template replaced in text', [ 'template' => $template['template'] ] );

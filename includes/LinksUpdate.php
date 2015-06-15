@@ -542,7 +542,7 @@ class LinksUpdate {
 				);
 			}
 
-			wfRunHooks( 'LinksUpdateInsertTemplates', [ $diffs ] );
+			wfRunHooks( 'LinksUpdateInsertTemplates', [ $this->mId, $diffs ] );
 		}
 		return $arr;
 	}

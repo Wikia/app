@@ -67,6 +67,7 @@ $wgAutoloadClasses['Flags\FlagsCache'] = __DIR__ . '/FlagsCache.class.php';
  * Tasks
  */
 $wgAutoloadClasses['Flags\FlagsLogTask'] = __DIR__ . '/tasks/FlagsLogTask.php';
+$wgAutoloadClasses['Flags\FlagsExtractTemplatesTask'] = __DIR__ . '/tasks/FlagsExtractTemplatesTask.php';
 
 /**
  * Hooks

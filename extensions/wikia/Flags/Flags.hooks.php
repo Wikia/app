@@ -73,8 +73,6 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onParserBeforeInternalParse( \Parser $parser, &$text, &$stripState ) {
-		global $wgRequest;
-
 		/**
 		 * Don't check for flags if:
 		 * - you've already checked
@@ -100,7 +98,44 @@ class Hooks {
 		return true;
 	}
 
-	public static function onLinksUpdateInsertTemplates( Array $templates ) {
-		
+	public static function onLinksUpdateInsertTemplates( $pageId, Array $templates ) {
+		global $wgHideFlagsExt;
+
+		if ( $wgHideFlagsExt !== true ) {
+			$app = \F::app();
+			$flagTypesResponse = $app->sendRequest( 'FlagsApiController',
+				'getFlagTypes',
+				[
+					'wiki_id' => $app->wg->CityId,
+				]
+			)->getData();
+
+			if ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
+				$flagTypesToExtract = $flagTypesToExtractNames = [ ];
+				foreach ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA] as $flagType ) {
+					if ( isset( $templates[$flagType['flag_view']] ) ) {
+						$flagTypesToExtract[] = $flagType;
+						$flagTypesToExtractNames[] = $flagType['flag_view'];
+					}
+				}
+
+				if ( !empty( $flagTypesToExtract ) ) {
+					$task = new FlagsExtractTemplatesTask();
+					$task->wikiId( $app->wg->CityId );
+					$task->call( 'extractTemplatesFromPage', $pageId, $flagTypesToExtract );
+					$task->queue();
+
+					\BannerNotificationsController::addConfirmation(
+						wfMessage( 'flags-notification-templates-extraction' )
+							->params( implode( ', ', $flagTypesToExtractNames ) )
+							->parse(),
+						\BannerNotificationsController::CONFIRMATION_WARN,
+						true
+					);
+				}
+			}
+		}
+
+		return true;
 	}
 }
