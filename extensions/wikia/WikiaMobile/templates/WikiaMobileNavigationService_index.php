@@ -31,7 +31,7 @@
 		// This gives me image 50x50 but adds html attributes width and height with values 25
 		echo '<a id="wkPrfTgl" class="tgl lgdin" href="#">' . AvatarService::renderAvatar( $userName, 25 ) . '</a>';
 	} else {
-		echo '<a id="wkPrfTgl" class="tgl lgdout ' . $loginClass .'" href="' . Sanitizer::encodeAttribute( $loginUrl ) . '"></a>';
+		echo '<a id="wkPrfTgl" class="tgl lgdout ' . $loginButtonClass .'" href="' . Sanitizer::encodeAttribute( $loginUrl ) . '"></a>';
 	}	?>
 	</div>
 	<div id=wkSrh>

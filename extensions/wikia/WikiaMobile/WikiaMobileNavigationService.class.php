@@ -50,12 +50,12 @@ class  WikiaMobileNavigationService extends WikiaService {
 	 */
 	private function setupLoginLink() {
 		if ($this->app->wg->get( 'wgEnableNewAuth' )) {
-			$this->loginUrl = '/join?redirect=' . urlencode ( wfExpandUrl( $this->request->getScriptUrl() ) );
-			$this->loginClass = 'new-login';
+			$this->loginUrl = '/join?redirect=' . urlencode ( wfExpandUrl( $this->app->wg->request->getRequestURL() ) );
+			$this->loginButtonClass = 'new-login';
 		}
 		else {
 			$this->loginUrl = SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
-			$this->loginClass = '';
+			$this->loginButtonClass = '';
 		}
 	}
 
