@@ -16,7 +16,6 @@ class AdEngine2ContextService {
 			$hubService = new HubService();
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
-			$adEngineService = new AdEngine2Service();
 
 			$sevenOneMediaCombinedUrl = null;
 			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
