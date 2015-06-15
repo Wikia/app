@@ -160,6 +160,6 @@ $wgAbPerformanceTestingExperiments['frontend_delay_3'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 158,
+		'traffic' => 13,
 	]
 ];
