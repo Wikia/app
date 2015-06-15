@@ -210,7 +210,7 @@ define('wikia.ui.modal', [
 
 		// Close modal when the escape key is pressed
 		if (params.vars.escapeToClose) {
-			$(window).bind('keydown.modal' + id, function (event) {
+			$(window).on('keydown.modal' + id, function (event) {
 				if (event.keyCode === 27) {
 					this.trigger('close', event);
 				}

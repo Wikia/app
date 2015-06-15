@@ -20,7 +20,6 @@ describe('Modal module', function () {
 					};
 				},
 				on: function () {},
-				bind: function () {},
 				click: function () {}
 			};
 		},
