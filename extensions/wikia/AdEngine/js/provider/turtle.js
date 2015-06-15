@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.turtle', [
 	'wikia.log',
-	'ext.wikia.adEngine.gptHelper',
+	'ext.wikia.adEngine.provider.gptHelper',
 	'ext.wikia.adEngine.slotTweaker'
 ], function (log, gptHelper, slotTweaker) {
 	'use strict';

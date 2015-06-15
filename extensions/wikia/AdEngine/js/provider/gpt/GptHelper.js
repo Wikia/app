@@ -1,16 +1,16 @@
 /*global define,setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define('ext.wikia.adEngine.gptHelper', [
+define('ext.wikia.adEngine.provider.gptHelper', [
 	'wikia.log',
 	'ext.wikia.adEngine.provider.googleTag',
 	'ext.wikia.adEngine.provider.gptAdDetect',
 	'ext.wikia.adEngine.provider.gptAdElement',
 	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.adEngine.gptSraHelper')
+	require.optional('ext.wikia.adEngine.provider.gptSraHelper')
 ], function (log, googleTag, adDetect, AdElement, slotTweaker, sraHelper) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper';
+	var logGroup = 'ext.wikia.adEngine.provider.gptHelper';
 
 	/**
 	 * Push ad to queue and flush if it should be
