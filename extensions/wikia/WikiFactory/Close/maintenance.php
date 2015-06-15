@@ -229,11 +229,23 @@ class CloseWikiMaintenance {
 				 */
 				$local = wfGetDB( DB_MASTER, array(), $centralDB );
 				$server = $local->getLBInfo( 'host' );
-				$dbw = new DatabaseMysql( $server, $wgDBadminuser, $wgDBadminpassword, $centralDB );
-				$dbw->begin();
-				$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
-				$dbw->commit();
-				$this->log(  "{$row->city_dbname} dropped from cluster {$cluster}" );
+
+				try {
+					$dbw = new DatabaseMysql($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
+					$dbw->begin();
+					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
+					$dbw->commit();
+					$this->log("{$row->city_dbname} dropped from cluster {$cluster}");
+				}
+				catch (Exception $e) {
+					$this->log("{$row->city_dbname} database drop failed! {$e->getMessage()}");
+					$this->error( 'drop database', [
+						'cluster'   => $cluster,
+						'dbname'    => $row->city_dbname,
+						'exception' => $e,
+						'server'    => $server
+					] );
+				}
 
 				/**
 				 * update search index
