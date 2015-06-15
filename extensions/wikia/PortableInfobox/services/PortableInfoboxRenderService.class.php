@@ -39,7 +39,7 @@ class PortableInfoboxRenderService extends WikiaService {
 	 * @param array $infoboxdata
 	 * @return string - infobox HTML
 	 */
-	public function renderInfobox( array $infoboxdata, $theme ) {
+	public function renderInfobox( array $infoboxdata, $theme, $layout ) {
 		wfProfileIn( __METHOD__ );
 		$infoboxHtmlContent = '';
 
@@ -52,7 +52,7 @@ class PortableInfoboxRenderService extends WikiaService {
 					$infoboxHtmlContent .= $this->renderComparisonItem( $data['value'] );
 					break;
 				case 'group':
-					$infoboxHtmlContent .= $this->renderGroup( $data['value'] );
+					$infoboxHtmlContent .= $this->renderGroup( $data );
 					break;
 				case 'footer':
 					$infoboxHtmlContent .= $this->renderItem( 'footer', $data );
@@ -65,7 +65,7 @@ class PortableInfoboxRenderService extends WikiaService {
 		}
 
 		if(!empty($infoboxHtmlContent)) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme ] );
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'theme' => $theme, 'layout' => $layout ] );
 		} else {
 			$output = '';
 		}
@@ -126,8 +126,10 @@ class PortableInfoboxRenderService extends WikiaService {
 	 */
 	private function renderGroup( $groupData ) {
 		$groupHTMLContent = '';
+		$dataItems = $groupData['value'];
+		$layout = $groupData['layout'];
 
-		foreach ( $groupData as $item ) {
+		foreach ( $dataItems as $item ) {
 			$type = $item['type'];
 
 			if ( $this->validateType( $type ) ) {
@@ -135,7 +137,7 @@ class PortableInfoboxRenderService extends WikiaService {
 			}
 		}
 
-		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent ] );
+		return $this->renderItem( 'group', [ 'content' => $groupHTMLContent, 'layout' => $layout] );
 	}
 
 	/**
