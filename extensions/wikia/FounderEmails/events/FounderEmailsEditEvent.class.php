@@ -46,7 +46,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		$eventData = $event['data'];
 
 		// quit if this particular user has generated an edit email in the last hour
-		$memcKey = wfMemcKey( 'FounderEmail', 'EditEvent', $eventData['data']['editorName'] );
+		$memcKey = wfMemcKey( 'FounderEmail', 'EditEvent', $eventData['editorName'] );
 		if ( $wgMemc->get( $memcKey ) == '1' ) {
 			return true;
 		}
