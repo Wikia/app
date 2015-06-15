@@ -62,16 +62,9 @@ class CloseWikiMaintenance {
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 15;
-		$cluster   = isset( $this->mOptions[ "cluster" ] ) ? $this->mOptions[ "cluster" ] : false; // eg. c6
 		$condition = array( "ORDER BY" => "city_id" );
 
-		if ($cluster === false) {
-			$this->log('--cluster needs to be provided');
-			return;
-		}
-
 		$this->info( 'start', [
-			'cluster' => $cluster,
 			'first'   => $first,
 			'limit'   => $this->mOptions[ "limit" ] ?: false
 		] );
@@ -94,7 +87,6 @@ class CloseWikiMaintenance {
 				"city_public" => array( 0, -1 ),
 				"city_flags <> 0 && city_flags <> 32",
 				"city_last_timestamp < '{$timestamp}'",
-				"city_cluster" => $cluster
 			),
 			__METHOD__,
 			$condition
