@@ -1511,6 +1511,7 @@ class WikiPage extends Page {
 		}
 		$options->enableLimitReport(); // show inclusion/loop reports
 		$options->setTidy( true ); // fix bad HTML
+		$options->setShouldDisplayFlags( true ); // display flags after an edit
 		return $options;
 	}
 
