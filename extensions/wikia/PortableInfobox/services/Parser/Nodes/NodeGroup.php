@@ -13,8 +13,7 @@ class NodeGroup extends Node {
 	public function getData() {
 		if ( !isset( $this->data ) ) {
 			$this->data = [ 'value' => $this->getDataForChildren(),
-							'layout' => $this->getXmlAttributeFromSupported( $this->xmlNode,
-								self::DATA_LAYOUT_ATTR_NAME, $this->supportedGroupLayouts) ];
+							'layout' => $this->getLayout() ];
 		}
 
 		return $this->data;
@@ -23,9 +22,8 @@ class NodeGroup extends Node {
 	public function getRenderData() {
 		return [
 			'type' => $this->getType(),
-			'data' => [ 'value' => $this->getRenderDataForChildren(), 
-						'layout' => $this->getXmlAttributeFromSupported( $this->xmlNode, 
-							self::DATA_LAYOUT_ATTR_NAME, $this->supportedGroupLayouts) ],
+			'data' => [ 'value' => $this->getRenderDataForChildren(),
+						'layout' => $this->getLayout() ],
 		];
 	}
 
@@ -42,5 +40,15 @@ class NodeGroup extends Node {
 
 	public function getSource() {
 		return $this->getSourceForChildren();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getLayout() {
+		$layout = $this->getXmlAttribute( $this->xmlNode, self::DATA_LAYOUT_ATTR_NAME );
+
+		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupLayouts ) ) ? $layout
+			: self::DEFAULT_TAG_NAME;
 	}
 }
