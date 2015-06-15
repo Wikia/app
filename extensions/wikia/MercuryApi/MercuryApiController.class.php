@@ -77,9 +77,43 @@ class MercuryApiController extends WikiaController {
 		$articleDetails = $this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
 			->getData()[ 'items' ][ $articleId ];
 
+		$description = $this->getArticleDescription( $articleId );
+
 		$articleDetails[ 'abstract' ] = htmlspecialchars( $articleDetails[ 'abstract' ] );
+		$articleDetails[ 'description' ] = htmlspecialchars( $description );
 
 		return $articleDetails;
+	}
+
+	/**
+	 * @desc Returns description for the article's meta tag.
+	 *
+	 * This is mostly copied from the ArticleMetaDescription extension.
+	 *
+	 * @param int $articleId
+	 * @param int $descLength
+	 * @return string
+	 * @throws WikiaException
+	 */
+	private function getArticleDescription( $articleId, $descLength = 100 ) {
+		$article = Article::newFromID( $articleId );
+		$title = $article->getTitle();
+		$sMessage = null;
+
+		if ( $title->isMainPage() ) {
+			// we're on Main Page, check MediaWiki:Description message
+			$sMessage = wfMessage( 'Description' )->text();
+		}
+
+		if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
+			$articleService = new ArticleService( $article );
+			$description = $articleService->getTextSnippet( $descLength );
+		} else {
+			// MediaWiki:Description message found, use it
+			$description = $sMessage;
+		}
+
+		return $description;
 	}
 
 	/**
@@ -95,8 +129,6 @@ class MercuryApiController extends WikiaController {
 			'id' => $articleId,
 			'redirect' => $redirect
 		] )->getData();
-
-		$articleAsJson[ 'description' ] = htmlspecialchars( $articleAsJson[ 'description' ] );
 
 		$articleType = WikiaPageType::getArticleType( $title );
 
