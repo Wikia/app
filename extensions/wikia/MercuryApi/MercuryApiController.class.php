@@ -388,7 +388,7 @@ class MercuryApiController extends WikiaController {
 		try {
 			$rawData = $this->sendRequest( 'CuratedContent', 'getList', $params )->getData();
 			$data = $this->mercuryApi->processCuratedContent( $rawData );
-		} catch ( NotFoundApiException $ex ) {
+		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Curated content and categories are empty' );
 		}
 
@@ -409,7 +409,7 @@ class MercuryApiController extends WikiaController {
 		try {
 			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
 			$data = $this->mercuryApi->processTrendingData( $rawData, 'items', [ 'title', 'thumbnail', 'url' ] );
-		} catch ( NotFoundApiException $ex ) {
+		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
 
@@ -427,7 +427,7 @@ class MercuryApiController extends WikiaController {
 		try {
 			$rawData = $this->sendRequest( 'SpecialVideosSpecial', 'getVideos', $params )->getData();
 			$data = $this->mercuryApi->processTrendingData( $rawData, 'videos', [ 'title', 'fileUrl', 'duration', 'thumbUrl' ] );
-		} catch ( NotFoundApiException $ex ) {
+		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending videos data is empty' );
 		}
 
