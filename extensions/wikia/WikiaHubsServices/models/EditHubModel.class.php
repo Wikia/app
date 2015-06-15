@@ -596,7 +596,7 @@ class EditHubModel extends WikiaModel {
 	 * @return string
 	 * @throws Exception
 	 */
-	private function getFileUrl ($fileName, File $file) {
+	private function getFileUrl($fileName, File $file) {
 		return GlobalTitle::newFromText(
 			$fileName,
 			NS_FILE,
