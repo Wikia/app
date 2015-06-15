@@ -239,7 +239,7 @@ class CloseWikiMaintenance {
 				}
 				catch (Exception $e) {
 					$this->log("{$row->city_dbname} database drop failed! {$e->getMessage()}");
-					$this->error( 'drop database', [
+					$this->info( 'drop database', [
 						'cluster'   => $cluster,
 						'dbname'    => $row->city_dbname,
 						'exception' => $e,
