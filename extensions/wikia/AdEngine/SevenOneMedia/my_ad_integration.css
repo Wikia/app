@@ -33,7 +33,7 @@
 #ad-skyscraper1-outer {
 	position: absolute;
 	z-index: 1;
-	right: -190px;
+	right: -187px;
 	width: 160px;
 }
 #ad-skyscraper1 {
@@ -74,26 +74,30 @@
 }
 
 /*
-	responsive fluid design
+	Oasis breakpoints
 	keep width and horizontal margins synced with .WikiaPage
 */
 #ads-outer {
 	max-width: 1600px;
 }
-@media screen and (max-width: 1030px) {
+@media screen and (max-width: 1575px) {
 	#ads-outer {
 		width: auto;
 	}
 }
-@media screen and (min-width: 1370px) {
+@media screen and (min-width: 1575px) {
 	#ads-outer {
 		width: auto;
-		margin: 0 170px;
+		margin: 0 190px;
 	}
 }
-@media screen and (min-width: 1940px) {
+@media screen and (min-width: 1596px) {
 	#ads-outer {
 		margin: 0 auto;
+	}
+
+	#ad-skyscraper1-outer {
+		right: -274px;
 	}
 }
 
