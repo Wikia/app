@@ -127,7 +127,7 @@ $wgAbPerformanceTestingExperiments['frontend_delay_0'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 10,
+		'traffic' => 500,
 	]
 ];
 
@@ -138,7 +138,7 @@ $wgAbPerformanceTestingExperiments['frontend_delay_1'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 11,
+		'traffic' => 501,
 	]
 ];
 
@@ -149,7 +149,7 @@ $wgAbPerformanceTestingExperiments['frontend_delay_2'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 12,
+		'traffic' => 502,
 	]
 ];
 
@@ -160,6 +160,6 @@ $wgAbPerformanceTestingExperiments['frontend_delay_3'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 13,
+		'traffic' => 503,
 	]
 ];
