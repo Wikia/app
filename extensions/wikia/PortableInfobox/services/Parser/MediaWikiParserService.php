@@ -21,17 +21,17 @@ class MediaWikiParserService implements ExternalParser {
 	 */
 	public function parse( $wikitext ) {
 		wfProfileIn( __METHOD__ );
-		if ( substr( $wikitext, 0, 1 ) == "*" ) {
+		if ( in_array( substr( $wikitext, 0, 1 ), [ '*', '#' ] ) ) {
 			//fix for first item list elements
 			$wikitext = "\n" . $wikitext;
 		}
-		$output = $this->parser->internalParse( $wikitext, false, $this->frame );
+		$parsed = $this->parser->internalParse( $wikitext, false, $this->frame );
+		$output = $this->parser->doBlockLevels( $parsed, false );
 		$this->parser->replaceLinkHolders( $output );
-		$result = $this->parser->killMarkers( $output );
 
 		wfProfileOut( __METHOD__ );
 
-		return $result;
+		return $output;
 	}
 
 	/**
@@ -69,16 +69,5 @@ class MediaWikiParserService implements ExternalParser {
 		$tmstmp = $file ? $file->getTimestamp() : false;
 		$sha1 = $file ? $file->getSha1() : false;
 		$this->parser->getOutput()->addImage( $title, $tmstmp, $sha1 );
-	}
-
-	private function getParserTitle() {
-		return $this->parser->getTitle();
-	}
-
-	private function getParserOptions() {
-		$options = $this->parser->getOptions();
-		$options->enableLimitReport( false );
-
-		return $options;
 	}
 }
