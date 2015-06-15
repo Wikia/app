@@ -32,7 +32,6 @@ abstract class FounderController extends EmailController {
 	 */
 	private function assertValidParams() {
 		$this->assertValidTitle();
-
 		$this->assertValidRevisionIds();
 	}
 
