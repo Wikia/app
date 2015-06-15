@@ -579,11 +579,37 @@ class EditHubModel extends WikiaModel {
 			$meta = unserialize($file->getMetadata());
 			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
 			$videoData['title'] = $title->getText();
-			$videoData['fileUrl'] = $title->getFullURL();
+			$videoData['fileUrl'] = GlobalTitle::newFromText(
+				$fileName,
+				NS_FILE,
+				$this->getFileCityId( $file )
+			)->getFullUrl();
+
 			$videoData['thumbUrl'] = $thumb->getUrl();
 		}
 
 		return $videoData;
+	}
+
+	/**
+	 * @desc Return city_id for a given file
+	 * This is needed as File here is returned from wfFindFile
+	 * that can fallback to some other wikis
+	 *
+	 * @param File $file
+	 * @return int|null|string
+	 */
+	private function getFileCityId(File $file) {
+		global $wgCityId;
+
+		$dbName = $file->getRepo()->getDBName();
+		$wiki = WikiFactory::getWikiByDB( $dbName );
+
+		if ( !empty ( $wiki ) ) {
+			return $wiki->city_id;
+		}
+
+		return $wgCityId;
 	}
 
 	/**
