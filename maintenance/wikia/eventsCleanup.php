@@ -6,8 +6,11 @@
  *  - stats.events table
  *  - dataware.pages
  *
+ * Wikis closed 3 months ago and earlier are processed.
+ *
  * @see PLATFORM-1173
  * @see PLATFORM-1204
+ * @see PLATFORM-1270 (remove entries via weekly cron job)
  *
  * @author Macbre
  * @ingroup Maintenance
@@ -22,15 +25,12 @@ class EventsCleanup extends Maintenance {
 
 	const BATCH = 50;
 
-	// remove entries for wikis closed before this date
-	const CLOSED_BEFORE = '20150101000000'; // Jan 2015
-
 	/**
 	 * Set script options
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'This script removes entries from events-related tables';
+		$this->mDescription = 'This script removes entries from events-related tables for wikis closed 3 months ago and earlier';
 	}
 
 	/**
@@ -82,21 +82,22 @@ class EventsCleanup extends Maintenance {
 		// get all closed wikis
 		$WF_db = WikiFactory::db( DB_SLAVE );
 
+		$closedBefore = wfTimestamp( TS_MW, strtotime( '-3 months' ) );
 		$closedWikis = $WF_db->selectFieldValues(
 			'city_list',
 			'city_id',
 			[
 				'city_public' => WikiFactory::CLOSE_ACTION,
-				sprintf( 'city_lastdump_timestamp < "%s"', self::CLOSED_BEFORE )
+				sprintf( 'city_lastdump_timestamp < "%s"', $closedBefore )
 			],
 			__METHOD__
 		);
 
 		$batches = array_chunk( $closedWikis, self::BATCH );
-		$this->output( sprintf( "Got %d closed wikis (before %s) in %d batches\n", count( $closedWikis ), self::CLOSED_BEFORE, count( $batches ) ) );
+		$this->output( sprintf( "Got %d closed wikis (before %s) in %d batches\n", count( $closedWikis ), $closedBefore, count( $batches ) ) );
 
 		$this->output( "Starting in 5 seconds...\n" );
-		sleep(5);
+		sleep( 5 );
 
 		foreach ( $batches as $n => $batch ) {
 			$this->cleanupBatch( $batch );
