@@ -457,6 +457,18 @@ class Article extends Page {
 
 		$parserOptions = $this->getParserOptions();
 		# Render printable version, use printable version cache
+
+		/**
+		 * Wikia change begin
+		 */
+		$skin = $wgOut->getSkin();
+		if ( in_array( $skin->getSkinName(), [ 'oasis', 'monobook' ] ) ) {
+			$parserOptions->setShouldDisplayFlags( true );
+		}
+		/**
+		 * Wikia change end
+		 */
+
 		if ( $wgOut->isPrintable() ) {
 			$parserOptions->setIsPrintable( true );
 			$parserOptions->setEditSection( false );

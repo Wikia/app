@@ -73,8 +73,6 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onParserBeforeInternalParse( \Parser $parser, &$text, &$stripState ) {
-		global $wgRequest;
-
 		/**
 		 * Don't check for flags if:
 		 * - you've already checked
@@ -82,8 +80,9 @@ class Hooks {
 		 * - the request is from VE
 		 */
 		$helper = new FlagsHelper();
-		if ( !$parser->mFlagsParsed && $helper->shouldInjectFlags() ) {
-			$addText = ( new \FlagsController )->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
+		if ( $parser->getOptions()->getShouldDisplayFlags() && $helper->shouldInjectFlags() ) {
+			$addText = ( new \FlagsController )
+				->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 
 			if ( $addText !== null ) {
 				$mwf = \MagicWord::get( 'flags' );
