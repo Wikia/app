@@ -75,12 +75,12 @@ class Hooks {
 	public static function onParserBeforeInternalParse( \Parser $parser, &$text, &$stripState ) {
 		/**
 		 * Don't check for flags if:
-		 * - you've already checked
+		 * - Parser is not used for the main content
 		 * - a user is on an edit page
 		 * - the request is from VE
 		 */
 		$helper = new FlagsHelper();
-		if ( $parser->getOptions()->getShouldDisplayFlags() && $helper->shouldInjectFlags() ) {
+		if ( $parser->getOptions()->getIsMain() && $helper->shouldInjectFlags() ) {
 			$addText = ( new \FlagsController )
 				->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 

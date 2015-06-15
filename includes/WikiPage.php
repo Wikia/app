@@ -1511,7 +1511,6 @@ class WikiPage extends Page {
 		}
 		$options->enableLimitReport(); // show inclusion/loop reports
 		$options->setTidy( true ); // fix bad HTML
-		$options->setShouldDisplayFlags( true ); // display flags after an edit
 		return $options;
 	}
 
@@ -1539,6 +1538,13 @@ class WikiPage extends Page {
 		$edit->newText = $text;
 		$edit->pst = $wgParser->preSaveTransform( $text, $this->mTitle, $user, $popts );
 		$edit->popts = $this->makeParserOptions( 'canonical' );
+		/**
+		 * Wikia change begin
+		 */
+		$edit->popts->setIsMain( true );
+		/**
+		 * Wikia change end
+		 */
 		$edit->output = $wgParser->parse( $edit->pst, $this->mTitle, $edit->popts, true, true, $revid );
 		$edit->oldText = $this->getRawText();
 

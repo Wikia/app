@@ -180,7 +180,11 @@ class ParserOptions {
 	 */
 	var $mExtraKey = '';
 
-	var $mShouldDisplayFlags = false;
+	/**
+	 * Parsing the main content? BEWARE! This might not be set to true in all contexts, always
+	 * check it before using.
+	 */
+	var $mIsMain = false;
 
 	/**
 	 * Function to be called when an option is accessed.
@@ -220,7 +224,7 @@ class ParserOptions {
 	function getIsPrintable()                   { $this->optionUsed( 'printable' );
 												  return $this->mIsPrintable; }
 
-	function getShouldDisplayFlags()            { return $this->mShouldDisplayFlags; }
+	function getIsMain()                        { return $this->mIsMain; }
 
 	function getUser()                          { return $this->mUser; }
 	function getPreSaveTransform()              { return $this->mPreSaveTransform; }
@@ -312,7 +316,7 @@ class ParserOptions {
 	function setIsSectionPreview( $x )          { return wfSetVar( $this->mIsSectionPreview, $x ); }
 	function setIsPrintable( $x )               { return wfSetVar( $this->mIsPrintable, $x ); }
 
-	function setShouldDisplayFlags( $x )        { return wfSetVar( $this->mShouldDisplayFlags, $x ); }
+	function setIsMain( $x )                    { return wfSetVar( $this->mIsMain, $x ); }
 
 	/**
 	 * Extra key that should be present in the parser cache key.
