@@ -71,7 +71,7 @@ abstract class FounderEmailsEvent {
 		$this->mData = $data;
 	}
 
-	abstract public function enabled ( $wgCityId, User $user );
+	abstract public function enabled ( $wikiId, User $user );
 
 	public function enabled_wiki( $wgCityId ) {
 		$wikiService = ( new WikiService );

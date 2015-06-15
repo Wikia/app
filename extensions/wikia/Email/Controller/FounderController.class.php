@@ -11,12 +11,18 @@ abstract class FounderController extends EmailController {
 	/** @var \Title */
 	protected $pageTitle;
 
+	protected $previousRevId;
+	protected $currentRevId;
+
 	public function initEmail() {
 		// This title is for the article being commented upon
 		$titleText = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'pageNs' );
 
 		$this->pageTitle = \Title::newFromText( $titleText, $titleNamespace );
+
+		$this->previousRevId = $this->request->getVal( 'previousRevId' );
+		$this->currentRevId = $this->request->getVal( 'currentRevId' );
 
 		$this->assertValidParams();
 	}
@@ -26,6 +32,8 @@ abstract class FounderController extends EmailController {
 	 */
 	private function assertValidParams() {
 		$this->assertValidTitle();
+
+		$this->assertValidRevisionIds();
 	}
 
 	/**
@@ -38,6 +46,19 @@ abstract class FounderController extends EmailController {
 
 		if ( !$this->pageTitle->exists() ) {
 			throw new Check( "Title doesn't exist." );
+		}
+	}
+
+	/**
+	 * @throws \Email\Check
+	 */
+	private function assertValidRevisionIds() {
+		if ( empty( $this->previousRevId ) ) {
+			throw new Check( "Invalid value passed for previousRevId" );
+		}
+
+		if ( empty( $this->currentRevId ) ) {
+			throw new Check( "Invalid value passed for currentRevId" );
 		}
 	}
 
@@ -93,7 +114,8 @@ abstract class FounderController extends EmailController {
 
 	protected function getChangesLink() {
 		return $this->pageTitle->getFullURL( [
-			'action' => 'history'
+			'diff' => $this->currentRevId,
+			'oldid' => $this->previousRevId,
 		] );
 	}
 
@@ -122,9 +144,8 @@ abstract class FounderController extends EmailController {
 
 	protected function getFooterArticleLink() {
 		$articleTitle = $this->pageTitle->getText();
-		$revId = $this->pageTitle->getLatestRevID( \Title::GAID_FOR_UPDATE );
 		$url = $this->pageTitle->getFullURL( [
-			'diff' => $revId,
+			'diff' => $this->currentRevId,
 		] );
 
 		return $this->getMessage( 'emailext-founder-footer-article', $url, $articleTitle )
