@@ -50,6 +50,11 @@ class InsightsHelper {
 	];
 
 
+	/**
+	 * Prepare array with all available insights pages
+	 *
+	 * @return array
+	 */
 	public static function getInsightsPages() {
 		global $wgEnableInsightsInfoboxes;
 
