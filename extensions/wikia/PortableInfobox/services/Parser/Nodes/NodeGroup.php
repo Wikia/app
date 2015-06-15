@@ -2,10 +2,19 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 class NodeGroup extends Node {
+	const DATA_LAYOUT_ATTR_NAME = 'layout';
+	const DEFAULT_TAG_NAME = 'default';
+
+	private $supportedGroupLayouts = [
+		'default',
+		'horizontal'
+	];
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$this->data = [ 'value' => $this->getDataForChildren() ];
+			$this->data = [ 'value' => $this->getDataForChildren(),
+							'layout' => $this->getXmlAttributeFromSupported( $this->xmlNode,
+								self::DATA_LAYOUT_ATTR_NAME, $this->supportedGroupLayouts) ];
 		}
 
 		return $this->data;
@@ -14,7 +23,9 @@ class NodeGroup extends Node {
 	public function getRenderData() {
 		return [
 			'type' => $this->getType(),
-			'data' => [ 'value' => $this->getRenderDataForChildren() ],
+			'data' => [ 'value' => $this->getRenderDataForChildren(), 
+						'layout' => $this->getXmlAttributeFromSupported( $this->xmlNode, 
+							self::DATA_LAYOUT_ATTR_NAME, $this->supportedGroupLayouts) ],
 		];
 	}
 

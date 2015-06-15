@@ -6,10 +6,16 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
 	const DEFAULT_THEME_NAME = 'wikia';
-	const INFOBOX_THEME_PREFIX = "portable-infobox-theme-";
+	const DEFAULT_LAYOUT_NAME = 'default';
+	const INFOBOX_THEME_PREFIX = 'portable-infobox-theme-';
+	const INFOBOX_LAYOUT_PREFIX = 'portable-infobox-layout-';
 
 	private $markerNumber = 0;
 	private $markers = [ ];
+	private $supportedLayouts = [
+		'default',
+		'tabular'
+	];
 
 	protected static $instance;
 
@@ -74,8 +80,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$this->saveToParserOutput( $parser->getOutput(), $infoboxNode );
 
 		$theme = $this->getThemeWithDefault( $params, $frame );
-
-		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme );
+		$layout = $this->getLayout( $params );
+		return ( new PortableInfoboxRenderService() )->renderInfobox( $data, $theme, $layout );
 	}
 
 	/**
@@ -144,6 +150,15 @@ class PortableInfoboxParserTagController extends WikiaController {
 			( isset( $params[ 'theme' ] ) ? $params[ 'theme' ] : self::DEFAULT_THEME_NAME );
 	}
 
+	private function getLayout( $params ) {
+		$layoutName = isset( $params[ 'layout' ] ) ? $params[ 'layout' ] : false;
+		if ( $layoutName && in_array( $layoutName, $this->supportedLayouts ) ) {
+			//make sure no whitespaces, prevents side effects
+			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
+		}
+		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
+	}
+
 	/**
 	 * Function ensures that arrays are used for merging
 	 *
@@ -160,5 +175,4 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		return array_merge( $namedArgs, $args );
 	}
-
 }

@@ -10,7 +10,8 @@ class MoveNotice extends Maintenance {
 	const
 		SECTION_DEFAULT = 0,
 		SECTION_ALL = 'all',
-		EDIT_SUMMARY = 'Moving content notices to flags.';
+		EDIT_SUMMARY = 'Moving notices templates to our new Flags feature.',
+		EDIT_USER = 'WikiaBot';
 
 	private
 		$log = '',
@@ -48,7 +49,7 @@ class MoveNotice extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId, $wgParser;
+		global $wgCityId, $wgParser, $wgUser;
 
 		$this->app = F::app();
 
@@ -133,6 +134,11 @@ class MoveNotice extends Maintenance {
 
 		$this->writeToLog();
 
+		/**
+		 * Perform all edits as WikiaBot
+		 */
+		$wgUser = User::newFromName( self::EDIT_USER );
+
 		foreach ( $rows as $row ) {
 			$this->log = '';
 			$this->pageId = $row->page_id;
@@ -185,7 +191,7 @@ class MoveNotice extends Maintenance {
 				}
 
 				if ( strcmp( $content, $text ) !== 0 ) {
-					$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_SUPPRESS_RC | EDIT_FORCE_BOT );
+					$wiki->doEdit( $text, self::EDIT_SUMMARY );
 				}
 			}
 
