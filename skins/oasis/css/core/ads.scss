@@ -251,3 +251,12 @@ body >a >img[src$="noad.gif"] {
 		height: 50px;
 	}
 }
+
+
+//@TODO remove .oasis-responsive after deprecating responsive (July 2015)
+.oasis-breakpoints, .oasis-responsive {
+	#WikiaArticleBottomAd {
+		clear: both;
+		margin: 0;
+	}
+}
