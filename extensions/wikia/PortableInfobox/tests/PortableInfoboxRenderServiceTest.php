@@ -274,6 +274,43 @@ class PortableInfoboxRenderServiceTest extends PHPUnit_Framework_TestCase {
 			[
 				'input' => [
 					[
+						'type' => 'group',
+						'data' => [
+							'value' => [
+								[
+									'type' => 'header',
+									'data' => [
+										'value' => 'Test Header'
+									]
+								],
+								[
+									'type' => 'data',
+									'data' => [
+										'label' => 'test label',
+										'value' => 'test value'
+									]
+								]
+							],
+							'layout' => 'horizontal'
+						]
+					]
+				],
+				'output' => '<aside class="portable-infobox">
+								<section class="portable-infobox-item item-type-group group-layout-horizontal">
+									<div class="portable-infobox-item item-type-header portable-infobox-item-margins portable-infobox-header-background">
+										<h2 class="portable-infobox-header portable-infobox-header-font">Test Header</h2>
+									</div>
+									<div class="portable-infobox-item item-type-key-val portable-infobox-item-margins">
+										<h3 class="portable-infobox-item-label portable-infobox-header-font">test label</h3>
+										<div class="portable-infobox-item-value">test value</div>
+									</div>
+								</section>
+							</aside>',
+				'description' => 'Infobox with title, image and horizontal group'
+			],
+			[
+				'input' => [
+					[
 						'type' => 'comparison',
 						'data' => [
 							'value' => [
