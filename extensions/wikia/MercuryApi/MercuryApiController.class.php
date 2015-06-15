@@ -77,9 +77,43 @@ class MercuryApiController extends WikiaController {
 		$articleDetails = $this->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
 			->getData()[ 'items' ][ $articleId ];
 
+		$description = $this->getArticleDescription( $articleId );
+
 		$articleDetails[ 'abstract' ] = htmlspecialchars( $articleDetails[ 'abstract' ] );
+		$articleDetails[ 'description' ] = htmlspecialchars( $description );
 
 		return $articleDetails;
+	}
+
+	/**
+	 * @desc Returns description for the article's meta tag.
+	 *
+	 * This is mostly copied from the ArticleMetaDescription extension.
+	 *
+	 * @param int $articleId
+	 * @param int $descLength
+	 * @return string
+	 * @throws WikiaException
+	 */
+	private function getArticleDescription( $articleId, $descLength = 100 ) {
+		$article = Article::newFromID( $articleId );
+		$title = $article->getTitle();
+		$sMessage = null;
+
+		if ( $title->isMainPage() ) {
+			// we're on Main Page, check MediaWiki:Description message
+			$sMessage = wfMessage( 'Description' )->text();
+		}
+
+		if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
+			$articleService = new ArticleService( $article );
+			$description = $articleService->getTextSnippet( $descLength );
+		} else {
+			// MediaWiki:Description message found, use it
+			$description = $sMessage;
+		}
+
+		return $description;
 	}
 
 	/**
@@ -95,8 +129,6 @@ class MercuryApiController extends WikiaController {
 			'id' => $articleId,
 			'redirect' => $redirect
 		] )->getData();
-
-		$articleAsJson[ 'description' ] = htmlspecialchars( $articleAsJson[ 'description' ] );
 
 		$articleType = WikiaPageType::getArticleType( $title );
 
@@ -276,30 +308,29 @@ class MercuryApiController extends WikiaController {
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
-			$articleAsJson = $this->getArticleJson( $articleId, $title );
 
 			$data = [
 				'details' => $this->getArticleDetails( $articleId ),
 				'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
-				),
-				'article' => $articleAsJson
+				)
 			];
+
+			$isMainPage = $title->isMainPage();
+			$data['isMainPage'] = $isMainPage;
+
+			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) ) {
+				$data['mainPageData'] = $this->getMainPageData();
+			} else {
+				$articleAsJson = $this->getArticleJson( $articleId, $title );
+				$data['article'] = $articleAsJson;
+			}
 
 			$relatedPages = $this->getRelatedPages( $articleId );
 
 			if ( !empty( $relatedPages ) ) {
-				$data[ 'relatedPages' ] = $relatedPages;
+				$data['relatedPages'] = $relatedPages;
 			}
-
-			if ( $title->isMainPage() ) {
-				$data['isMainPage'] = true;
-
-				if ( !empty( $wgEnableMainPageDataMercuryApi ) ) {
-					$data['mainPageData'] = $this->getMainPageData();
-				}
-			}
-
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
@@ -314,7 +345,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $title );
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
