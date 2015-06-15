@@ -5,7 +5,7 @@ namespace Wikia\AbPerformanceTesting\Criteria;
 use Wikia\AbPerformanceTesting\Criterion;
 
 /**
- * Define a "oasisArticles" criterion
+ * Define an "oasisArticles" criterion
  *
  * Applies to Oasis content namespaces articles only
  */
