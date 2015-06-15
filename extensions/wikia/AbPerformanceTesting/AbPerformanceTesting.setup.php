@@ -80,7 +80,7 @@ $wgAbPerformanceTestingExperiments['backend_delay_0'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 0,
+		'traffic' => [0, 9], // enable for 1% of a traffic (10 out of 1000 buckets)
 	]
 ];
 
@@ -91,7 +91,7 @@ $wgAbPerformanceTestingExperiments['backend_delay_1'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 1,
+		'traffic' => [10, 19],
 	]
 ];
 
@@ -102,7 +102,7 @@ $wgAbPerformanceTestingExperiments['backend_delay_2'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 2,
+		'traffic' => [20, 29],
 	]
 ];
 
@@ -113,7 +113,7 @@ $wgAbPerformanceTestingExperiments['backend_delay_3'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 3,
+		'traffic' => [30, 39],
 	]
 ];
 
@@ -127,7 +127,7 @@ $wgAbPerformanceTestingExperiments['frontend_delay_0'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 500,
+		'traffic' => [500, 509],
 	]
 ];
 
@@ -138,7 +138,7 @@ $wgAbPerformanceTestingExperiments['frontend_delay_1'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 501,
+		'traffic' => [510, 519],
 	]
 ];
 
@@ -149,7 +149,7 @@ $wgAbPerformanceTestingExperiments['frontend_delay_2'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 502,
+		'traffic' => [520, 529],
 	]
 ];
 
@@ -160,6 +160,6 @@ $wgAbPerformanceTestingExperiments['frontend_delay_3'] = [
 	],
 	'criteria' => [
 		'oasisArticles' => true,
-		'traffic' => 503,
+		'traffic' => [530, 539],
 	]
 ];
