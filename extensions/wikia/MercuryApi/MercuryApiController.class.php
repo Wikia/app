@@ -308,30 +308,29 @@ class MercuryApiController extends WikiaController {
 		try {
 			$title = $this->getTitleFromRequest();
 			$articleId = $title->getArticleId();
-			$articleAsJson = $this->getArticleJson( $articleId, $title );
 
 			$data = [
 				'details' => $this->getArticleDetails( $articleId ),
 				'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
-				),
-				'article' => $articleAsJson
+				)
 			];
+
+			$isMainPage = $title->isMainPage();
+			$data['isMainPage'] = $isMainPage;
+
+			if ( $isMainPage && !empty( $wgEnableMainPageDataMercuryApi ) ) {
+				$data['mainPageData'] = $this->getMainPageData();
+			} else {
+				$articleAsJson = $this->getArticleJson( $articleId, $title );
+				$data['article'] = $articleAsJson;
+			}
 
 			$relatedPages = $this->getRelatedPages( $articleId );
 
 			if ( !empty( $relatedPages ) ) {
-				$data[ 'relatedPages' ] = $relatedPages;
+				$data['relatedPages'] = $relatedPages;
 			}
-
-			if ( $title->isMainPage() ) {
-				$data['isMainPage'] = true;
-
-				if ( !empty( $wgEnableMainPageDataMercuryApi ) ) {
-					$data['mainPageData'] = $this->getMainPageData();
-				}
-			}
-
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
@@ -346,7 +345,7 @@ class MercuryApiController extends WikiaController {
 			$title = $this->wg->Title;
 		}
 
-		$data[ 'adsContext' ] = $this->mercuryApi->getAdsContext( $title );
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
