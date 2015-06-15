@@ -107,7 +107,9 @@ class NodeComparisonTest extends WikiaBaseTest {
 	public function sourceDataProvider() {
 		return [
 			[ '<comparison><set><data source="1"/><data source="2"/></set></comparison>', [ '1', '2' ] ],
-			[ '<comparison><set><data/><data source="2"><default>{{{def}}}</default></data></set></comparison>', [ '2', 'def' ] ],
+			[ '<comparison><set><data source="1"/><data source="1"/></set></comparison>', [ '1' ] ],
+			[ '<comparison><set><data/><data source="2"><default>{{{def}}}</default></data></set></comparison>',
+			  [ '2', 'def' ] ],
 			[ '<comparison><set><data/><data></data></set></comparison>', [ ] ],
 		];
 	}
