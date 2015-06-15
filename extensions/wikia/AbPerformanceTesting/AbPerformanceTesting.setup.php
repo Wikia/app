@@ -57,7 +57,7 @@ $wgAbPerformanceTestingExperiments = [];
  *	'criteria' => [
  *      # all wikis are split into 1000 buckets (modulo of city ID), pick one here
  *		'wikis' => 1,
- *      # all clients are split into 1000 buckets (modulo of beacon_id md5 hash), pick one here
+ *      # all clients are split into 1000 buckets (modulo of beacon_id hash), pick one here
  * 		'traffic' => 1,
  *      # run the test on Oasis and content namespaces only
  * 		'oasisArticles' => true
