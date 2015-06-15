@@ -579,16 +579,29 @@ class EditHubModel extends WikiaModel {
 			$meta = unserialize($file->getMetadata());
 			$videoData['duration'] = isset($meta['duration']) ? $meta['duration'] : null;
 			$videoData['title'] = $title->getText();
-			$videoData['fileUrl'] = GlobalTitle::newFromText(
-				$fileName,
-				NS_FILE,
-				$this->getFileCityId( $file )
-			)->getFullUrl();
+			$videoData['fileUrl'] = $this->getFileUrl($fileName, $file);
 
 			$videoData['thumbUrl'] = $thumb->getUrl();
 		}
 
 		return $videoData;
+	}
+
+	/**
+	 * @desc Create a full url to a file using global title
+	 * as wfFindFile may return a foreign file
+	 *
+	 * @param $fileName
+	 * @param File $file
+	 * @return string
+	 * @throws Exception
+	 */
+	private function getFileUrl ($fileName, File $file) {
+		return GlobalTitle::newFromText(
+			$fileName,
+			NS_FILE,
+			$this->getFileCityId( $file )
+		)->getFullUrl();
 	}
 
 	/**
