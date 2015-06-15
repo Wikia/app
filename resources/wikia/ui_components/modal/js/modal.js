@@ -28,7 +28,8 @@ define( 'wikia.ui.modal', [
 		modalDefaults = {
 			type: 'default',
 			vars: {
-				closeText: $.msg( 'close' )
+				closeText: $.msg( 'close' ),
+				escapeToClose: true
 			}
 		},
 		// default modal buttons rendering params
@@ -208,6 +209,15 @@ define( 'wikia.ui.modal', [
 			this.trigger( 'close', event );
 		}, that ) );
 
+		// Close modal when the escape key is pressed
+		if (params.vars.escapeToClose) {
+			$(window).bind('keydown.modal' + id, function(event) {
+				if (event.keyCode === 27) {
+					this.trigger('close', event);
+				}
+			}.bind(this));
+		}
+
 		// object containing modal event listeners
 		this.listeners = {
 			'close': [
@@ -222,6 +232,9 @@ define( 'wikia.ui.modal', [
 						if (activeModalsNumb === 1) {
 							unblockPageScrolling();
 						}
+
+						// Remove any event listeners for this modal
+						$(window).unbind('.modal' + id);
 					}, that ) );
 				}
 			]
