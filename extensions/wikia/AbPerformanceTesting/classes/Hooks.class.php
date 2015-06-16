@@ -21,11 +21,10 @@ class Hooks {
 		// mark a transaction with an experiment name
 		\Transaction::getInstance()->set( \Transaction::PARAM_AB_PERFORMANCE_TEST, $experimentName );
 
-		// mark a transaction using UA's custom dimensions
+		// set a global JS variable with an experiment name
 		global $wgHooks;
 		$wgHooks['WikiaSkinTopScripts'][] = function( Array &$vars, &$scripts ) use ( $experimentName ) {
-			$val = \Xml::encodeJsVar( $experimentName );
-			$scripts .= \Html::inlineScript( "_gaq.push(['set', 'dimension20', {$val}]);" );
+			$vars['wgABPerformanceTest'] = $experimentName;
 			return true;
 		} ;
 

@@ -21,7 +21,7 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockWindow(document, hostname, amzn_targs, transaction_context) {
+	function mockWindow(document, hostname, amzn_targs, perfab) {
 
 		hostname = hostname || 'example.org';
 
@@ -30,7 +30,7 @@ describe('AdLogicPageParams', function () {
 			location: { origin: 'http://' + hostname, hostname: hostname },
 			amzn_targs: amzn_targs,
 			wgCookieDomain: hostname.substr(hostname.indexOf('.')),
-			wgTransactionContext: transaction_context || {}
+			wgABPerformanceTest: perfab
 		};
 	}
 
@@ -93,7 +93,7 @@ describe('AdLogicPageParams', function () {
 				},
 				getGroup: function () { return; }
 			} : undefined,
-			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs, opts.transaction_context);
+			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs, opts.perfab);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			mockAdContext(targeting),
@@ -258,11 +258,8 @@ describe('AdLogicPageParams', function () {
 		params = getParams();
 		expect(params.perfab).toEqual(undefined);
 
-		params = getParams({}, {transaction_context: {perf_test: 'foo'}});
+		params = getParams({}, {perfab: 'foo'});
 		expect(params.perfab).toEqual('foo');
-
-		params = getParams({}, {transaction_context: {perf_test: true}});
-		expect(params.perfab).toEqual(undefined);
 	});
 
 	it('getPageLevelParams includeRawDbName', function () {
