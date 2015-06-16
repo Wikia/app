@@ -708,7 +708,8 @@ class UncycloUserMigrator extends Maintenance {
 	 */
 	public function execute() {
 		global $wgUser;
-		$wgUser = $this->getGlobalUserByName( 'WikiaBot' );
+		$wgUser = User::newFromName( 'WikiaBot' );
+		$this->output( sprintf( "User %s will be used, with the following rights: %s\n", $wgUser->getName(), join(', ', $wgUser->getRights()) ) );
 
 		// do not use ulimit4 when calling wfShellExec()
 		global $wgMaxShellTime;
