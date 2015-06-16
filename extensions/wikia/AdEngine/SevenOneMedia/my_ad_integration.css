@@ -33,7 +33,7 @@
 #ad-skyscraper1-outer {
 	position: absolute;
 	z-index: 1;
-	right: -187px;
+	right: -170px;
 	width: 160px;
 }
 #ad-skyscraper1 {
@@ -77,27 +77,64 @@
 	Oasis breakpoints
 	keep width and horizontal margins synced with .WikiaPage
 */
-#ads-outer {
-	max-width: 1600px;
+.oasis-breakpoints #ads-outer {
+	width: auto;
 }
-@media screen and (max-width: 1575px) {
-	#ads-outer {
-		width: auto;
+/* $small-range @see breakpoints-variables.scss */
+@media screen and (max-width: 1083px) {
+	.oasis-breakpoints #ad-skyscraper1-outer {
+		right: -170px;
 	}
 }
-@media screen and (min-width: 1575px) {
-	#ads-outer {
-		width: auto;
-		margin: 0 190px;
+/* $small-plus-range @see breakpoints-variables.scss */
+@media screen and (min-width: 1024px) and (max-width: 1083px) {
+	.oasis-breakpoints #ad-skyscraper1-outer {
+		right: -170px;
 	}
 }
-@media screen and (min-width: 1596px) {
-	#ads-outer {
+/* $medium-range @see breakpoints-variables.scss */
+@media screen and (min-width: 1084px) and (max-width: 1595px) {
+	.oasis-breakpoints #ads-outer {
 		margin: 0 auto;
 	}
 
-	#ad-skyscraper1-outer {
+	.oasis-breakpoints #ad-skyscraper1-outer {
+		right: -190px;
+	}
+}
+/* $large-range @see breakpoints-variables.scss */
+@media screen and (min-width: 1596px) {
+	.oasis-breakpoints #ads-outer {
+		margin: 0 auto;
+	}
+
+	.oasis-breakpoints #ad-skyscraper1-outer {
 		right: -274px;
+	}
+}
+
+/*
+	responsive fluid design
+	keep width and horizontal margins synced with .WikiaPage
+	// TODO: remove after breakpoints are released sitwide (July 2015)
+*/
+#ads-outer {
+	max-width: 1600px;
+}
+@media screen and (max-width: 1030px) {
+	#ads-outer {
+		width: auto;
+	}
+}
+@media screen and (min-width: 1370px) {
+	#ads-outer {
+		width: auto;
+		margin: 0 170px;
+	}
+}
+@media screen and (min-width: 1940px) {
+	#ads-outer {
+		margin: 0 auto;
 	}
 }
 
