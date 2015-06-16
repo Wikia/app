@@ -99,9 +99,6 @@ class EventsCleanup extends Maintenance {
 		$this->output( "Starting in 5 seconds...\n" );
 		sleep( 5 );
 
-		$this->output( "Starting in 5 seconds...\n" );
-		sleep(5);
-
 		foreach ( $batches as $n => $batch ) {
 			$this->cleanupBatch( $batch );
 		}
