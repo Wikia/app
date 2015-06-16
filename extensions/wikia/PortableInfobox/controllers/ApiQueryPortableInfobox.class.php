@@ -1,7 +1,7 @@
 <?php
 
 
-class ApiQueryPortableInfobox extends ApiQueryGeneratorBase {
+class ApiQueryPortableInfobox extends ApiQueryBase {
 
 	public function __construct( $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'ib' );
@@ -13,16 +13,6 @@ class ApiQueryPortableInfobox extends ApiQueryGeneratorBase {
 
 	public function getVersion() {
 		return __CLASS__ . '$Id$';
-	}
-
-	/**
-	 * Execute this module as a generator
-	 *
-	 * @param $resultPageSet ApiPageSet: All output should be appended to
-	 *  this object
-	 */
-	public function executeGenerator( $resultPageSet ) {
-		$this->runOnPageSet( $resultPageSet );
 	}
 
 	protected function runOnPageSet( ApiPageSet $pageSet ) {
