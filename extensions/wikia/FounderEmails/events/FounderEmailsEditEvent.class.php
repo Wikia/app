@@ -224,6 +224,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			'pageNs' => $eventData['titleNs'],
 			'previousRevId' => $eventData['previousRevId'],
 			'currentRevId' => $eventData['currentRevId'],
+			// TODO: Remove the next two lines when SOC-530 has been merged (these will then be default)
 			'fromAddress' => \F::app()->wg->PasswordSender,
 			'fromName' => \F::app()->wg->PasswordSenderName,
 		];
