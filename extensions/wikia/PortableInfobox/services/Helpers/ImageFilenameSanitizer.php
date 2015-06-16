@@ -2,6 +2,10 @@
 
 namespace Wikia\PortableInfobox\Helpers;
 
+/**
+ * Class ImageFilenameSanitizer
+ * @package Wikia\PortableInfobox\Helpers
+ */
 class ImageFilenameSanitizer {
 	private static $instance = null;
 	private $filePrefixRegex = [ ];
@@ -44,15 +48,45 @@ class ImageFilenameSanitizer {
 	 * @return mixed
 	 */
 	public function sanitizeImageFileName( $filename, $contLang ) {
-		// replace the MW square brackets and surrounding whitespace
-		$trimmedFilename = trim( $filename, "\t\n\r[]" );
-
+		$plainText = $this->convertToPlainText( $filename );
 		$filePrefixRegex = $this->getFilePrefixRegex( $contLang );
+		$textLines = explode( PHP_EOL, $plainText );
+
+		foreach ( $textLines as $potentialFilename ) {
+			$filename = $this->extractFilename( $potentialFilename, $filePrefixRegex );
+			if ($filename) {
+				return $filename;
+			}
+
+		}
+		return $plainText;
+	}
+
+	/**
+	 * @param $filename
+	 * @return string
+	 */
+	private function convertToPlainText( $filename ) {
+		// strip HTML tags
+		$filename = strip_tags( $filename );
+		// replace the surrounding whitespace
+		$filename = trim( $filename, "\t\n\r" );
+		return $filename;
+	}
+
+	/**
+	 * @param $potentialFilename
+	 * @param $filePrefixRegex
+	 * @return null
+	 */
+	private function extractFilename( $potentialFilename, $filePrefixRegex ) {
+		$trimmedFilename = trim( $potentialFilename, "[]" );
 		$unprefixedFilename = mb_ereg_replace( $filePrefixRegex, "", $trimmedFilename );
-		// strip
 		$filenameParts = explode( '|', $unprefixedFilename );
 		if ( !empty( $filenameParts[0] ) ) {
 			$filename = $filenameParts[0];
+		} else {
+			$filename = null;
 		}
 		return $filename;
 	}

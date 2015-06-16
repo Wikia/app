@@ -91,6 +91,51 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 				'es',
 				'image.jpg',
 				'Link to filename with canonical namespace and caption on a non-EN wiki '
+			],
+			[
+				'<gallery>' . PHP_EOL .
+				'</gallery>' . PHP_EOL,
+				'en',
+				'',
+				'Empty gallery'
+			],
+			[
+				'<gallery></gallery>',
+				'en',
+				'',
+				'Empty gallery'
+			],
+			[
+				'<gallery />',
+				'en',
+				'',
+				'Empty gallery'
+			],
+			[
+				'<gallery>' . PHP_EOL .
+				'image.jpg' . PHP_EOL .
+				'</gallery>' . PHP_EOL,
+				'en',
+				'image.jpg',
+				'Gallery with one image'
+			],
+			[
+				'<gallery>' . PHP_EOL .
+				'File:image.jpg' . PHP_EOL .
+				'</gallery>' . PHP_EOL,
+				'en',
+				'image.jpg',
+				'Gallery with one image with canonical namespace',
+			],
+			[
+				'<gallery>' . PHP_EOL .
+				'文件名óśłżźćńę?.jpg' . PHP_EOL .
+				'Image010.jpg' . PHP_EOL .
+				'Image009.jpg' . PHP_EOL .
+				'</gallery>' . PHP_EOL,
+				'en',
+				'文件名óśłżźćńę?.jpg',
+				'Gallery with diacritics and UTF characters'
 			]
 		];
 	}
