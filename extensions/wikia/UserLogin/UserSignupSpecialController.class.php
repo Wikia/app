@@ -137,8 +137,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		\Wikia\Logger\WikiaLogger::instance()->info(
 			'OPS-6556',
 			[
-				'i18n' => $this->wg->Lang->getCode(),
-				'skin' => $this->wg->User->getSkin()->getSkinName()
+				'i18n' => RequestContext::getMain()->getLanguage()->getCode(),
+				'skin' => RequestContext::getMain()->getSkin()->getSkinName()
 			]
 		);
 	}
