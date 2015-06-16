@@ -1,6 +1,6 @@
 require(
-	['jquery', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
-	function ($, loader, nirvana, mustache, mw, tracker)
+	['jquery', 'wikia.document', 'wikia.loader', 'wikia.nirvana', 'wikia.mustache', 'mw', 'wikia.tracker'],
+	function ($, document, loader, nirvana, mustache, mw, tracker)
 {
 	'use strict';
 
@@ -29,7 +29,7 @@ require(
 		}
 	}],
 
-	/* Modal close button config*/
+	/* Modal close button config */
 	buttonForEmptyState = [{
 		vars: {
 			value: mw.message('flags-edit-modal-close-button-text').escaped(),
@@ -65,6 +65,7 @@ require(
 
 	function init() {
 		$('#ca-flags').on('click', showModal);
+		addFlagsButton();
 	}
 
 	/**
@@ -222,6 +223,20 @@ require(
 				});
 			}
 		}
+	}
+
+	/**
+	 * Adds edit flags button before and after generated flags in view
+	 */
+	function addFlagsButton() {
+		var $a = $(document.createElement('a'))
+				.addClass('flags-icon')
+				.html(mw.message('flags-edit-flags-button-text').escaped())
+				.click(showModal),
+			$div = $(document.createElement('div'))
+				.addClass('flags-edit')
+				.html($a);
+		$('.portable-flags').prepend($div).append($div.clone(true));
 	}
 
 	// Run initialization method on DOM ready

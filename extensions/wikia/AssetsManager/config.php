@@ -2438,6 +2438,7 @@ $config['flags_view_scss'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/Flags/styles/Flags.scss',
+		'//extensions/wikia/Flags/styles/FlagsViewEditEntryPoint.scss',
 	],
 ];
 
