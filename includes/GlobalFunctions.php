@@ -3523,6 +3523,15 @@ function wfSetupSession( $sessionId = false ) {
 	wfSuppressWarnings();
 	session_start();
 	wfRestoreWarnings();
+
+	// Wikia change - start
+	// log all sessions started with 1% sampling (PLATFORM-1266)
+	if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'caller' => wfGetCaller(),
+		] );
+	}
+	// Wikia change - end
 }
 
 /**
