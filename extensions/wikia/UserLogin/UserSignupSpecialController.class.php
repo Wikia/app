@@ -21,9 +21,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$skin = $this->wg->User->getSkin();
+		$skin = RequestContext::getMain()->getSkin();
 		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
-		$this->isEn = ( $this->wg->Lang->getCode() == 'en' );
+		$this->isEn = ( RequestContext::getMain()->getLanguage()->getCode() == 'en' );
 		$this->userLoginHelper = ( new UserLoginHelper );
 	}
 
