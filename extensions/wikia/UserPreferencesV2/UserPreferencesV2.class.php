@@ -106,7 +106,6 @@ class UserPreferencesV2 {
 		// Tab 2: Email
 		unset( $defaultPreferences['imagesize'] );
 		unset( $defaultPreferences['thumbsize'] );
-		unset( $defaultPreferences['math'] );
 		if ( isset( $defaultPreferences['emailaddress'] ) ) {
 			$defaultPreferences['emailaddress']['type'] = $wgAuth->allowPropChange( 'emailaddress' ) ? 'email' : 'info' ;
 			$defaultPreferences['emailaddress']['default'] = $user->getEmail() ? htmlspecialchars( $user->getEmail() ) : '' ;

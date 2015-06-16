@@ -3307,7 +3307,7 @@ class User {
 		// since it disables the parser cache, its value will always
 		// be 0 when this function is called by parsercache.
 
-		$confstr =        $this->getOption( 'math' );
+		$confstr = '';
 		$confstr .= '!' . $this->getStubThreshold();
 		if ( $wgUseDynamicDates ) { # This is wrong (bug 24714)
 			$confstr .= '!' . $this->getDatePreference();
