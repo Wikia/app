@@ -65,36 +65,25 @@ class Hooks {
 	}
 
 	/**
-	 * Hooks into the internalParse() process and injects a wikitext
-	 * with notices for the given page.
-	 * @param \Parser $parser
-	 * @param string $text
-	 * @param \StripState $stripState
+	 * Injects a wikitext with notices for the given page.
+	 * @param \Article $article
+	 * @param string $content
 	 * @return bool
 	 */
-	public static function onParserBeforeInternalParse( \Parser $parser, &$text, &$stripState ) {
-		/**
-		 * Don't check for flags if:
-		 * - you've already checked
-		 * - a user is on an edit page
-		 * - the request is from VE
-		 */
+	public static function onArticleAfterFetchContent( \Article &$article, &$content ) {
 		$helper = new FlagsHelper();
-		if ( !$parser->mFlagsParsed && $helper->shouldInjectFlags() ) {
-			$addText = ( new \FlagsController )->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
-
+		if ( $helper->shouldInjectFlags() ) {
+			$addText = ( new \FlagsController )
+				->getFlagsForPageWikitext( $article->getID() );
 			if ( $addText !== null ) {
 				$mwf = \MagicWord::get( 'flags' );
-				if ( $mwf->match( $text ) ) {
-					$text = $mwf->replace( $addText, $text );
+				if ( $mwf->match( $content ) ) {
+					$content = $mwf->replace( $addText, $content );
 				} else {
-					$text = $addText . $text;
+					$content = $addText . $content;
 				}
 			}
-
-			$parser->mFlagsParsed = true;
 		}
-
 		return true;
 	}
 
