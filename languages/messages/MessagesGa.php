@@ -849,7 +849,6 @@ Bain triail as ''all:'' a chur roimh d'iarratas chun an t-inneachar ar fad (leat
 'columns'                     => 'Colúin',
 'searchresultshead'           => 'Cuardaigh',
 'resultsperpage'              => 'Torthaí le taispeáint ó leathanach:',
-'stub-threshold-disabled'     => 'Díchumasaithe',
 'recentchangesdays'           => 'Méid laethanta le taispeáint sna hathruithe is déanaí:',
 'recentchangesdays-max'       => '(uasmhéid $1 {{PLURAL:$1|lá|lá}})',
 'recentchangescount'          => 'Méid athrú le taispeáint:',

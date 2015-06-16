@@ -1135,8 +1135,6 @@ Asegúrate de qu'esti cambéu caltenga la continuidá del históricu de la páxi
 'columns'                       => 'Columnes:',
 'searchresultshead'             => 'Guetar',
 'resultsperpage'                => 'Resultaos por páxina:',
-'stub-threshold'                => 'Llímite superior pa considerar como <a href="#" class="stub">enllaz a entamu</a> (bytes):',
-'stub-threshold-disabled'       => 'Desactivao',
 'recentchangesdays'             => "Díes que s'amuesen nos cambios recientes:",
 'recentchangesdays-max'         => '(máximo $1 {{PLURAL:$1|día|díes}})',
 'recentchangescount'            => "Númberu d'ediciones p'amosar de mou predetermináu:",

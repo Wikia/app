@@ -1305,8 +1305,6 @@ Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados
 'columns'                       => 'Columnas:',
 'searchresultshead'             => 'Procurar',
 'resultsperpage'                => 'Número de resultados por páxina:',
-'stub-threshold'                => 'Límite superior para o formato de <a href="#" class="stub">ligazóns de bosquexo</a> (bytes):',
-'stub-threshold-disabled'       => 'Desactivado',
 'recentchangesdays'             => 'Número de días a mostrar nos cambios recentes:',
 'recentchangesdays-max'         => 'Máximo $1 {{PLURAL:$1|día|días}}',
 'recentchangescount'            => 'Número de edicións a mostrar por defecto:',

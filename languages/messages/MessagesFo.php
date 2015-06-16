@@ -1088,7 +1088,6 @@ Legg til merkis, at teirra innihaldsyvirlit av {{SITENAME}} kann vera gamalt og 
 'columns' => 'Teigar:',
 'searchresultshead' => 'Leita',
 'resultsperpage' => 'Úrslit fyri hvørja síðu:',
-'stub-threshold-disabled' => 'Er gjørt óvirki',
 'recentchangesdays' => 'Dagar av vísa í seinastu broytingum:',
 'recentchangesdays-max' => 'Í mesta lagi $1 {{PLURAL:$1|dagur|dagar}}',
 'recentchangescount' => 'Tal av rættingum at vísa í standard:',

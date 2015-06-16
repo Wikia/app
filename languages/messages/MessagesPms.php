@@ -1091,8 +1091,6 @@ Ch'a preuva a gionté dnans a soa arserca ël prefiss ''all:'' për sërché an 
 'columns'                       => 'Colòne:',
 'searchresultshead'             => "Specifiché soe preferense d'arserca",
 'resultsperpage'                => 'Arzultà da mostré për vira pàgina:',
-'stub-threshold'                => 'Valor mìnim për j\'<a href="#" class="stub">anliure a jë sbòss</a>:',
-'stub-threshold-disabled'       => 'Disabilità',
 'recentchangesdays'             => "Vàire dì smon-e ant j'ùltime modìfiche:",
 'recentchangesdays-max'         => '(al pì $1 {{PLURAL:$1|di|di}})',
 'recentchangescount'            => 'Nùmer ëd modìfiche da smon-e për stàndard:',

@@ -954,8 +954,6 @@ Ningen Rika kudu eling nek indeks Google kanggo {{SITENAME}} bisa baen isine anu
 'rows'                          => 'Baris:',
 'searchresultshead'             => 'Goleti',
 'resultsperpage'                => 'Hasil saben kaca:',
-'stub-threshold'                => 'Ambang wates kanggo format <a href="#" class="stub">pranala rintisan</a> (bita):',
-'stub-threshold-disabled'       => 'Dinonaktifna',
 'recentchangesdays'             => 'Jumlah dina sing ditidokna nang Owahan anyar:',
 'recentchangesdays-max'         => 'Maksimum $1 {{PLURAL:$1|dina|dina}}',
 'recentchangescount'            => 'Standar jumlah suntingan sing ditampilna:',

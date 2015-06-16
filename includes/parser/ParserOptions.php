@@ -145,11 +145,6 @@ class ParserOptions {
 	var $mThumbSize;
 	
 	/**
-	 * Maximum article size of an article to be marked as "stub"
-	 */
-	private $mStubThreshold;
-	
-	/**
 	 * Language object of the User language.
 	 */
 	var $mUserLang;
@@ -216,8 +211,6 @@ class ParserOptions {
 												  return $this->mMath; }
 	function getThumbSize()                     { $this->optionUsed( 'thumbsize' );
 												  return $this->mThumbSize; }
-	function getStubThreshold()                 { $this->optionUsed( 'stubthreshold' );
-												  return $this->mStubThreshold; }
 
 	function getIsPreview()                     { return $this->mIsPreview; }
 	function getIsSectionPreview()              { return $this->mIsSectionPreview; }
@@ -309,7 +302,6 @@ class ParserOptions {
 		return wfSetVar( $this->mUserLang, $x );
 	}
 	function setThumbSize( $x )                 { return wfSetVar( $this->mThumbSize, $x ); }
-	function setStubThreshold( $x )             { return wfSetVar( $this->mStubThreshold, $x ); }
 	function setPreSaveTransform( $x )          { return wfSetVar( $this->mPreSaveTransform, $x ); }
 
 	function setIsPreview( $x )                 { return wfSetVar( $this->mIsPreview, $x ); }
@@ -412,7 +404,6 @@ class ParserOptions {
 		$this->mNumberHeadings = $user->getOption( 'numberheadings' );
 		$this->mMath = $user->getOption( 'math' );
 		$this->mThumbSize = $user->getOption( 'thumbsize' );
-		$this->mStubThreshold = $user->getStubThreshold();
 		$this->mUserLang = $lang;
 
 		wfProfileOut( __METHOD__ );
@@ -433,20 +424,6 @@ class ParserOptions {
 		if ( $this->onAccessCallback ) {
 			call_user_func( $this->onAccessCallback, $optionName );
 		}
-	}
-
-	/**
-	 * Returns the full array of options that would have been used by
-	 * in 1.16.
-	 * Used to get the old parser cache entries when available.
-	 */
-	public static function legacyOptions() {
-		global $wgUseDynamicDates;
-		$legacyOpts = array( 'math', 'stubthreshold', 'numberheadings', 'userlang', 'thumbsize', 'editsection', 'printable' );
-		if ( $wgUseDynamicDates ) {
-			$legacyOpts[] = 'dateformat';
-		}
-		return $legacyOpts;
 	}
 
 	/**
@@ -479,14 +456,10 @@ class ParserOptions {
 		}
 
 
-		// Space assigned for the stubthreshold but unused
-		// since it disables the parser cache, its value will always
-		// be 0 when this function is called by parsercache.
-		if ( in_array( 'stubthreshold', $forOptions ) ) {
-			$confstr .= '!' . $this->mStubThreshold;
-		} else {
-			$confstr .= '!*' ;
-		}
+		// Space assigned for the stubthreshold property, removed
+		// since it disables the parser cache, its value was always
+		// 0 when this function is called by parsercache.
+		$confstr .= '!*' ;
 
 		if ( in_array( 'dateformat', $forOptions ) ) {
 			$confstr .= '!' . $this->getDateFormat();

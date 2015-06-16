@@ -1364,8 +1364,6 @@ Aramanızın başına '''all:''' önekini ekleyerek tüm içeriği aramayı (tar
 'columns'                       => 'Sütun',
 'searchresultshead'             => 'Arama',
 'resultsperpage'                => 'Sayfada gösterilecek bulunan madde sayısı',
-'stub-threshold'                => '<a href="#" class="stub">Taslak bağlantısı</a> formatı için baraj (byte):',
-'stub-threshold-disabled'       => 'Devre dışı',
 'recentchangesdays'             => 'Son değişikliklerde gösterilecek günler:',
 'recentchangesdays-max'         => '(maksimum $1 {{PLURAL:$1|gün|gün}})',
 'recentchangescount'            => 'Varsayılan olarak gösterilecek değişiklik sayısı:',

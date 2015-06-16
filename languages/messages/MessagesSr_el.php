@@ -1185,7 +1185,6 @@ Pokušajte sa prefiksom '''sve:''' da pretražite ceo sadržaj (uključujući st
 'resultsperpage'              => 'Pogodaka po stranici:',
 'contextlines'                => 'Linija po pogotku:',
 'contextchars'                => 'Karaktera konteksta po liniji:',
-'stub-threshold'              => 'Prag za formatiranje <a href="#" class="stub">linka kao klice</a> (u bajtovima):',
 'recentchangesdays'           => 'Broj dana za prikaz u skorašnjim izmenema:',
 'recentchangesdays-max'       => '(mmaksimum $1 {{PLURAL:$1|dan|dana}})',
 'recentchangescount'          => 'Podrazumevani broj izmena, koji će biti prikazan:',

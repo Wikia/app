@@ -998,7 +998,6 @@ Pagaidām vari meklēt, izmantojot Google vai Yahoo.
 'columns'                       => 'Simbolu skaits rindiņā:',
 'searchresultshead'             => 'Meklēšana',
 'resultsperpage'                => 'Lappusē parādāmo rezultātu skaits',
-'stub-threshold-disabled'       => 'Atslēgts',
 'recentchangesdays'             => 'Dienu skaits, kuru rādīt pēdējajās izmaiņās:',
 'recentchangesdays-max'         => 'Ne vairāk kā $1 {{PLURAL:$1|diena|dienas}}',
 'recentchangescount'            => 'Izmaiņu skaits, kuru rāda pēc noklusējuma:',

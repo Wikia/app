@@ -1407,8 +1407,6 @@ Essayez en utilisant le préfixe ''all:'' pour rechercher dans tout le contenu (
 'columns'                       => 'Colonnes :',
 'searchresultshead'             => 'Recherches',
 'resultsperpage'                => 'Nombre de réponses par page :',
-'stub-threshold'                => 'Limite supérieure pour les <a href="#" class="stub">liens vers les ébauches</a> (octets) :',
-'stub-threshold-disabled'       => 'Désactivé',
 'recentchangesdays'             => 'Nombre de jours à afficher dans les modifications récentes :',
 'recentchangesdays-max'         => '(maximum $1 jour{{PLURAL:$1||s}})',
 'recentchangescount'            => 'Nombre de modifications à afficher par défaut :',

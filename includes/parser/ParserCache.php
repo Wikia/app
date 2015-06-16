@@ -11,7 +11,6 @@
  */
 class ParserCache {
 	private $mMemc;
-	const try116cache = false; /* Only useful $wgParserCacheExpireTime after updating to 1.17 */
 
 	/**
 	 * Get an instance of this object
@@ -77,20 +76,20 @@ class ParserCache {
 	 *
 	 * @param $article Article
 	 * @param $popts ParserOptions
+	 *
+	 * @return bool|string
 	 */
 	function getETag( $article, $popts ) {
 		// Wikia change - begin
 		// @author macbre - BAC-1227
 		$eTag = false;
 		wfRunHooks( 'ParserCacheGetETag', [ $article, $popts, &$eTag ] );
-		if ($eTag !== false) {
+		if ( $eTag !== false ) {
 			return $eTag;
 		}
 		// Wikia change - end
 
-		return 'W/"' . $this->getParserOutputKey( $article,
-			$popts->optionsHash( ParserOptions::legacyOptions(), $article->getTitle() ) ) .
-				"--" . $article->getTouched() . '"';
+		return '';
 	}
 
 	/**
@@ -113,6 +112,9 @@ class ParserCache {
 	 *
 	 * @param $article Article
 	 * @param $popts ParserOptions
+	 * @param bool $useOutdated
+	 *
+	 * @return bool|mixed|string
 	 */
 	public function getKey( $article, $popts, $useOutdated = true ) {
 		global $wgCacheEpoch;
@@ -124,22 +126,19 @@ class ParserCache {
 
 		// Determine the options which affect this article
 		$optionsKey = $this->mMemc->get( $this->getOptionsKey( $article ) );
-		if ( $optionsKey != false ) {
-			if ( !$useOutdated && $optionsKey->expired( $article->getTouched() ) ) {
-				wfIncrStats( "pcache_miss_expired" );
-				$cacheTime = $optionsKey->getCacheTime();
-				wfDebug( "Parser options key expired, touched " . $article->getTouched() . ", epoch $wgCacheEpoch, cached $cacheTime\n" );
-				return false;
-			}
-
-			$usedOptions = $optionsKey->mUsedOptions;
-			wfDebug( "Parser cache options found.\n" );
-		} else {
-			if ( !$useOutdated && !self::try116cache ) {
-				return false;
-			}
-			$usedOptions = ParserOptions::legacyOptions();
+		if ( $optionsKey == false ) {
+			return false;
 		}
+
+		if ( !$useOutdated && $optionsKey->expired( $article->getTouched() ) ) {
+			wfIncrStats( "pcache_miss_expired" );
+			$cacheTime = $optionsKey->getCacheTime();
+			wfDebug( "Parser options key expired, touched " . $article->getTouched() . ", epoch $wgCacheEpoch, cached $cacheTime\n" );
+			return false;
+		}
+
+		$usedOptions = $optionsKey->mUsedOptions;
+		wfDebug( "Parser cache options found.\n" );
 
 		return $this->getParserOutputKey( $article, $popts->optionsHash( $usedOptions, $article->getTitle() ) );
 	}
@@ -175,12 +174,6 @@ class ParserCache {
 		}
 
 		$value = $this->mMemc->get( $parserOutputKey );
-		if ( self::try116cache && !$value && strpos( $value, '*' ) !== -1 ) {
-			wfDebug( "New format parser cache miss.\n" );
-			$parserOutputKey = $this->getParserOutputKey( $article,
-				$popts->optionsHash( ParserOptions::legacyOptions(), $article->getTitle() ) );
-			$value = $this->mMemc->get( $parserOutputKey );
-		}
 		if ( !$value ) {
 			wfDebug( "ParserOutput cache miss.\n" );
 			wfIncrStats( "pcache_miss_absent" );

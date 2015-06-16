@@ -1386,8 +1386,6 @@ Note que os índices do sistema de busca externo poderão conter referências de
 'columns' => 'Colunas:',
 'searchresultshead' => 'Pesquisar',
 'resultsperpage' => 'Resultados por página:',
-'stub-threshold' => 'Links para páginas de conteúdo aparecerão <a href="#" class="stub">desta forma</a> se elas possuírem menos de (bytes):',
-'stub-threshold-disabled' => 'Desabilitado',
 'recentchangesdays' => 'Dias a serem exibidos nas Mudanças recentes:',
 'recentchangesdays-max' => '(máximo: $1 {{PLURAL:$1|dia|dias}})',
 'recentchangescount' => 'Número de edições a serem exibidas por padrão:',

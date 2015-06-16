@@ -2477,22 +2477,6 @@ class User {
 	}
 
 	/**
-	 * Get the user preferred stub threshold
-	 *
-	 * @return int
-	 */
-	public function getStubThreshold() {
-		global $wgMaxArticleSize; # Maximum article size, in Kb
-		$threshold = intval( $this->getOption( 'stubthreshold' ) );
-		if ( $threshold > $wgMaxArticleSize * 1024 ) {
-			# If they have set an impossible value, disable the preference
-			# so we can use the parser cache again.
-			$threshold = 0;
-		}
-		return $threshold;
-	}
-
-	/**
 	 * Get the permissions this user has.
 	 * @return Array of String permission names
 	 */
@@ -3303,12 +3287,8 @@ class User {
 			return $this->mHash;
 		}
 
-		// stubthreshold is only included below for completeness,
-		// since it disables the parser cache, its value will always
-		// be 0 when this function is called by parsercache.
-
 		$confstr =        $this->getOption( 'math' );
-		$confstr .= '!' . $this->getStubThreshold();
+		$confstr .= '!' . '0'; // space holder for old stubthreshold property
 		if ( $wgUseDynamicDates ) { # This is wrong (bug 24714)
 			$confstr .= '!' . $this->getDatePreference();
 		}

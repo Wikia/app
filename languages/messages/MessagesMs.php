@@ -1245,8 +1245,6 @@ Cuba berikan awalan ''all:'' untuk mencari semua kandungan (termasuk laman perbi
 'columns'                       => 'Lajur:',
 'searchresultshead'             => 'Cari',
 'resultsperpage'                => 'Jumlah padanan bagi setiap halaman:',
-'stub-threshold'                => 'Ambang bagi pemformatan <a href="#" class="stub">pautan ke rencana ringkas</a> (bait):',
-'stub-threshold-disabled'       => 'Dimatikan',
 'recentchangesdays'             => 'Bilangan hari dalam perubahan terkini:',
 'recentchangesdays-max'         => '(had $1 hari)',
 'recentchangescount'            => 'Bilangan suntingan yang dipaparkan mengikut tetapan asali:',

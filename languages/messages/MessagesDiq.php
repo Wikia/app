@@ -1001,7 +1001,6 @@ Pe verbendi ''all:'', vaceyê xo bıvurni ki contenti hemi cıgeyro (pelanê mı
 'columns'                       => 'Estûni:',
 'searchresultshead'             => 'Cı geyre',
 'resultsperpage'                => 'Serê pele  amarê cıkewtoğan:',
-'stub-threshold'                => 'Baraj ke <a href="#" class="stub">stub link</a> ho şekil dano (bîtî):',
 'recentchangesdays'             => 'Rocê ke vurnayışanê peyênan de bıasê:',
 'recentchangesdays-max'         => 'Tewr zaf $1 {{PLURAL:$1|roc|roci}}',
 'recentchangescount'            => 'Amarê vurnayışiê ke standard bıasê:',

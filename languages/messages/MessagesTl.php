@@ -1201,8 +1201,6 @@ Subuking lagyan ng unlapi/paunang ''all:'' upang hanapin ang lahat ng mga nialal
 'columns'                       => 'Mga pahabang hanay:',
 'searchresultshead'             => 'Hanapin',
 'resultsperpage'                => 'Bilang ng pagtama sa bawat pahina:',
-'stub-threshold'                => 'Kakayanan para sa pagpopormat ng <a href="#" class="usbong">kawing ng usbong</a> (mga \'\'byte\'\'):',
-'stub-threshold-disabled'       => 'Hindi pinagagana',
 'recentchangesdays'             => 'Mga araw na ipapakita sa kamakailan lamang na mga pagbabago:',
 'recentchangesdays-max'         => '(pinakamataas na ang $1 {{PLURAL:$1|araw|mga araw}})',
 'recentchangescount'            => 'Bilang ng mga pagbabagong ipapakita sa pamamagitan ng likas na katakdaan:',

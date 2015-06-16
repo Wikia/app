@@ -801,7 +801,6 @@ An ibang mga administrador sa ining wiki pwede pang maghiling kan mga nakatagong
 'columns'                   => 'Mga taytay:',
 'searchresultshead'         => 'Hanápon',
 'resultsperpage'            => 'Mga tamà kada pahina:',
-'stub-threshold'            => 'Kasagkoran kan <a href="#" class="stub">takod kan tambô</a> pigpopormato:',
 'recentchangesdays'         => 'Mga aldáw na ipapahilíng sa mga nakakaági pa sanáng pagbabàgó:',
 'recentchangescount'        => 'Bilang nin mga paghirá na ipapahilíng sa mga nakakaági pa sanáng pagbabàgó:',
 'savedprefs'                => 'Itinagama na an mga kabôtan mo.',

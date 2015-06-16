@@ -1373,8 +1373,6 @@ Jednak informacje o treści {{GRAMMAR:D.lp|{{SITENAME}}}} mogą być w Google ni
 'columns'                       => 'Kolumny',
 'searchresultshead'             => 'Wyszukiwanie',
 'resultsperpage'                => 'Liczba wyników na stronie',
-'stub-threshold'                => 'Maksymalny (w bajtach) rozmiar strony oznaczanej jako <a href="#" class="stub">zalążek (stub)</a>',
-'stub-threshold-disabled'       => 'Wyłączone',
 'recentchangesdays'             => 'Liczba dni prezentowanych w ostatnich zmianach',
 'recentchangesdays-max'         => '(maksymalnie $1 {{PLURAL:$1|dzień|dni}})',
 'recentchangescount'            => 'Domyślna liczba wyświetlanych edycji',

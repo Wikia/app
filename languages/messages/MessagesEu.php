@@ -1132,8 +1132,6 @@ Saia zaitez zure eskeraren aurretik ''all:'' jartzen eduki guztien artean bilatz
 'columns'                       => 'Zutabeak:',
 'searchresultshead'             => 'Bilaketa',
 'resultsperpage'                => 'Emaitza orrialdeko:',
-'stub-threshold'                => '<a href="#" class="stub">stub link</a> formaturako atalasea (byteak):',
-'stub-threshold-disabled'       => 'Ezgaitua',
 'recentchangesdays'             => 'Aldaketa berrietan erakutsi beharreko egun kopurua:',
 'recentchangesdays-max'         => '(gehienez {{PLURAL:$1|egun bat|$1 egun}})',
 'recentchangescount'            => 'Erakusteko aldaketa kopurua, lehenetsita:',
