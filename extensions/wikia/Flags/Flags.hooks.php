@@ -82,7 +82,7 @@ class Hooks {
 		 */
 		$helper = new FlagsHelper();
 		if ( $parser->getOptions()->getIsMain()
-			&& $parser->mFlagsParsed !== true
+			//&& $parser->mFlagsParsed !== true
 			&& $helper->shouldInjectFlags() ) {
 			$addText = ( new \FlagsController )
 				->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
@@ -99,6 +99,25 @@ class Hooks {
 			$parser->mFlagsParsed = true;
 		}
 
+		return true;
+	}
+
+	public static function onArticleAfterFetchContent( \Article &$article, &$content ) {
+		$helper = new FlagsHelper();
+
+		if ( $helper->shouldInjectFlags() ) {
+			$addText = ( new \FlagsController )
+				->getFlagsForPageWikitext( $article->getID() );
+
+			if ( $addText !== null ) {
+				$mwf = \MagicWord::get( 'flags' );
+				if ( $mwf->match( $content ) ) {
+					$content = $mwf->replace( $addText, $content );
+				} else {
+					$content = $addText . $content;
+				}
+			}
+		}
 		return true;
 	}
 }
