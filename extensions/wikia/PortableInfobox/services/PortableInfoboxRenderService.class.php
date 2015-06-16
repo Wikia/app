@@ -88,6 +88,11 @@ class PortableInfoboxRenderService extends WikiaService {
 		foreach ($comparisonData as $set) {
 			$setHTMLContent = '';
 
+			//only 'set' node can be a direct child of the comparison tag.
+			if ($set['type'] !== 'set') {
+				continue;
+			}
+
 			foreach ($set['data']['value'] as $item) {
 				$type = $item['type'];
 
@@ -108,7 +113,6 @@ class PortableInfoboxRenderService extends WikiaService {
 
 			$comparisonHTMLContent .= $this->renderItem( 'comparison-set', [ 'content' => $setHTMLContent ] );
 		}
-
 		if ( !empty( $comparisonHTMLContent ) ) {
 			$output = $this->renderItem('comparison', [ 'content' => $comparisonHTMLContent ] );
 		} else {
