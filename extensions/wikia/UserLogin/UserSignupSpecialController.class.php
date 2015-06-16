@@ -129,6 +129,18 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		} else {
 			$this->track( 'signup-start' );
 		}
+
+		/**
+		 * OPS-6556 Special:UserSignup daily vists
+		 * Contact: ruggero@wikia-inc.com or michal@wikia-inc.com
+		 */
+		\Wikia\Logger\WikiaLogger::instance()->info(
+			'OPS-6556',
+			[
+				'i18n' => $this->wg->Lang->getCode(),
+				'skin' => $this->wg->User->getSkin()->getSkinName()
+			]
+		);
 	}
 
 	public function handleSignupFormSubmit() {
