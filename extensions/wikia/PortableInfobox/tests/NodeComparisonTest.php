@@ -9,6 +9,7 @@ class NodeComparisonTest extends WikiaBaseTest {
 	 */
 	public function testIsEmpty( $val1, $val2, $val3, $expectedOutput ) {
 		$string = '<comparison>
+			<header>Sometimes users use headers here</header>
 			<set>
 				<header>Comparison1</header>
 				<data source="val1" />

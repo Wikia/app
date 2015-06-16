@@ -14,8 +14,14 @@ class NodeComparison extends Node {
 	}
 
 	public function isEmpty( $data ) {
-		foreach ( $data[ 'value' ] as $group ) {
-			if ( $group[ 'isEmpty' ] == false ) {
+		foreach ( $data[ 'value' ] as $set ) {
+
+			//only 'set' node can be a direct child of the comparison tag.
+			if ($set['type'] !== 'set') {
+				continue;
+			}
+
+			if ( $set[ 'isEmpty' ] == false ) {
 				return false;
 			}
 		}
