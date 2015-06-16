@@ -7,6 +7,9 @@ use Email\EmailController;
 use Email\Fatal;
 
 abstract class FounderController extends EmailController {
+	// Defaults; will be overridden in subclasses
+	const TRACKING_CATEGORY_EN = self::TRACKING_CATEGORY;
+	const TRACKING_CATEGORY_INT = self::TRACKING_CATEGORY;
 
 	/** @var \Title */
 	protected $pageTitle;
@@ -162,6 +165,18 @@ abstract class FounderController extends EmailController {
 	}
 
 	/**
+	 * Determine which sendgrid category to send based on target language and specific
+	 * founder email being sent. See dependent classes for overridden values
+	 *
+	 * @return string
+	 */
+	public function getSendGridCategory() {
+		return strtolower( $this->targetLang ) == 'en'
+			? static::TRACKING_CATEGORY_EN
+			: static::TRACKING_CATEGORY_INT;
+	}
+
+	/**
 	 * Form fields required for this email for Special:SendEmail. See
 	 * EmailController::getEmailSpecificFormFields for more info.
 	 * @return array
@@ -177,9 +192,21 @@ abstract class FounderController extends EmailController {
 				],
 				[
 					'type' => 'hidden',
-					'name' => 'namespace',
+					'name' => 'pageNs',
 					'value' => NS_MAIN
-				]
+				],
+				[
+					'type' => 'text',
+					'name' => 'previousRevId',
+					'label' => "Previous revision ID",
+					'tooltip' => "Use the 'oldid' parameter from an article diff"
+				],
+				[
+					'type' => 'text',
+					'name' => 'currentRevId',
+					'label' => "Current revision ID",
+					'tooltip' => "Use the 'diff' parameter from an article diff"
+				],
 			]
 		];
 
@@ -187,15 +214,23 @@ abstract class FounderController extends EmailController {
 	}
 }
 
-class FounderEditController extends FounderController { }
+class FounderEditController extends FounderController {
+	const TRACKING_CATEGORY_EN = 'FounderEmailsFirstEditUserEN';
+	const TRACKING_CATEGORY_INT = 'FounderEmailsFirstEditUserEN';
+}
 
 class FounderMultiEditController extends FounderController {
+	const TRACKING_CATEGORY_EN = 'FounderEmailsEditUserEN';
+	const TRACKING_CATEGORY_INT = 'FounderEmailsEditUserINT';
+
 	protected function getFooterEncouragementKey() {
 		return 'emailext-founder-multi-encourage';
 	}
 }
 
 class FounderAnonEditController extends FounderController {
+	const TRACKING_CATEGORY_EN = 'FounderEmailsEditAnonEN';
+	const TRACKING_CATEGORY_INT = 'FounderEmailsEditAnonINT';
 
 	public function getSubject() {
 		$articleTitle = $this->pageTitle->getText();
@@ -205,7 +240,7 @@ class FounderAnonEditController extends FounderController {
 	}
 
 	protected function getFooterEncouragement() {
-		return $this->getMessage( 'emailext-founder-encourage' )
+		return $this->getMessage( 'emailext-founder-anon-encourage' )
 			->parse();
 	}
 }

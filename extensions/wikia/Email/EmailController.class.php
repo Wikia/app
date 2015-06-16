@@ -162,7 +162,7 @@ abstract class EmailController extends \WikiaController {
 					$body,
 					$replyToAddress,
 					$contentType = null,
-					static::TRACKING_CATEGORY
+					$this->getSendGridCategory()
 				);
 				$this->assertGoodStatus( $status );
 			}
@@ -298,6 +298,16 @@ abstract class EmailController extends \WikiaController {
 		// Get rid of leading spacing/indenting
 		$bodyText = preg_replace( '/^[\t ]+/m', '', $bodyText );
 		return $bodyText;
+	}
+
+	/**
+	 * Returns the category string we'll send to sendgrid with this email for
+	 * tracking purposes.
+	 *
+	 * @return string
+	 */
+	public function getSendGridCategory() {
+		return static::TRACKING_CATEGORY;
 	}
 
 	/**
