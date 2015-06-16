@@ -31,6 +31,18 @@ class FlagsController extends WikiaController {
 	private
 		$params;
 
+	public function init() {
+		global $wgLang;
+
+		/**
+		 * $wgLang (and some other global variables) is initialized after first use
+		 * We need to force creating proper Language object, because of check
+		 * $wgLang instanceof Language (in MWException::useMessageCache)
+		 * which has impact on showing or hiding SQL query for DatabaseError exception
+		 */
+		$wgLang->getLangObj();
+	}
+
 	/**
 	 * Sends a request for all instances of flags for the given page.
 	 * A result of the request is transformed into a set of wikitext templates calls
@@ -54,6 +66,7 @@ class FlagsController extends WikiaController {
 
 				foreach ( $flags as $flagId => $flag ) {
 					$templatesCalls[] = $flagView->wrapSingleFlag(
+						$flag['flag_type_id'],
 						$flag['flag_targeting'],
 						$flag['flag_view'],
 						$flag['params']
@@ -179,7 +192,7 @@ class FlagsController extends WikiaController {
 			$this->response->redirect( $pageUrl );
 
 			wfProfileOut( __METHOD__ );
-		} catch ( Exception $exception ) {
+		} catch ( MWException $exception ) {
 			if ( $title === null ) {
 				throw $exception;
 			}
@@ -189,7 +202,7 @@ class FlagsController extends WikiaController {
 			 */
 			BannerNotificationsController::addConfirmation(
 				wfMessage( 'flags-edit-modal-post-exception' )
-					->params( $exception->getMessage() )
+					->params( $exception->getText() )
 					->parse(),
 				BannerNotificationsController::CONFIRMATION_ERROR,
 				true

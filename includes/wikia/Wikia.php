@@ -1599,8 +1599,10 @@ class Wikia {
 
 		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
 		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
-		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
+		$wgAllowUserJs = $request->getBool( 'useuserjs',
+			$request->getBool( 'allowuserjs', $wgAllowUserJs ) ) !== false;
+		$wgAllowUserCss = $request->getBool( 'useusercss',
+			$request->getBool( 'allowusercss', $wgAllowUserCss ) ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
 		return true;

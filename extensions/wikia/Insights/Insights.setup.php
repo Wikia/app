@@ -42,8 +42,8 @@ $wgAutoloadClasses['UnconvertedInfoboxesPage'] = $dir . 'specials/UnconvertedInf
  */
 $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['Insights'] = 'wikia';
-$wgSpecialPages['UnconvertedInfoboxes'] = 'UnconvertedInfoboxesPage';
-$wgSpecialPageGroups['UnconvertedInfoboxes'] = 'wikia';
+$wgSpecialPages['Nonportableinfoboxes'] = 'UnconvertedInfoboxesPage';
+$wgSpecialPageGroups['Nonportableinfoboxes'] = 'wikia';
 
 /**
  * Permissions
