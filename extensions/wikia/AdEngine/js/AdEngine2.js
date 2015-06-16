@@ -27,8 +27,14 @@ define('ext.wikia.adEngine.adEngine', [
 	}
 
 	function cleanProviderContainers(slotName) {
-		var containers = doc.getElementById(slotName).childNodes;
+		var slotContainer = doc.getElementById(slotName),
+			containers;
 
+		if (!slotContainer) {
+			return;
+		}
+
+		containers = slotContainer.childNodes;
 		for (var i = 0; i < containers.length; i++) {
 			containers[i].innerHTML = '';
 		}
