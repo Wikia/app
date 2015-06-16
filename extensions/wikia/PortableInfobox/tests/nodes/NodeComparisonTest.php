@@ -51,6 +51,11 @@ class NodeComparisonTest extends WikiaBaseTest {
 					  'source' => [ '2' ] ]
 				] ], 'isEmpty' => false, 'source' => [ '1', '2' ] ] ]
 			  ] ],
+			[ '<comparison><data source="1"><label>Test</label></data></comparison>', [ '1' => 'one' ],
+			  [ 'value' => [
+				  [ 'type' => 'data', 'data' => [ 'value' => 'one', 'label' => 'Test' ], 'isEmpty' => false,
+					'source' => [ '1' ] ]
+			  ] ] ]
 		];
 	}
 
