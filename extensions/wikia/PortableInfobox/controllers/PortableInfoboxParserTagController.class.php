@@ -156,6 +156,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			//make sure no whitespaces, prevents side effects
 			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
 		}
+
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
 	}
 
