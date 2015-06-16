@@ -70,24 +70,23 @@ class ImageFilenameSanitizer {
 		// strip HTML tags
 		$filename = strip_tags( $filename );
 		// replace the surrounding whitespace
-		$filename = trim( $filename, "\t\n\r" );
+		$filename = trim( $filename );
 		return $filename;
 	}
 
 	/**
 	 * @param $potentialFilename
 	 * @param $filePrefixRegex
-	 * @return null
+	 * @return string|null
 	 */
 	private function extractFilename( $potentialFilename, $filePrefixRegex ) {
 		$trimmedFilename = trim( $potentialFilename, "[]" );
 		$unprefixedFilename = mb_ereg_replace( $filePrefixRegex, "", $trimmedFilename );
 		$filenameParts = explode( '|', $unprefixedFilename );
 		if ( !empty( $filenameParts[0] ) ) {
-			$filename = $filenameParts[0];
-		} else {
-			$filename = null;
+			return $filenameParts[0];
 		}
-		return $filename;
+
+		return null;
 	}
 }
