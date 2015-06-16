@@ -4,12 +4,12 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
-use Email\Fatal;
+use Email\Tracking\TrackingCategories;
 
 abstract class FounderController extends EmailController {
 	// Defaults; will be overridden in subclasses
-	const TRACKING_CATEGORY_EN = self::TRACKING_CATEGORY;
-	const TRACKING_CATEGORY_INT = self::TRACKING_CATEGORY;
+	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
+	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
 	/** @var \Title */
 	protected $pageTitle;
@@ -215,13 +215,13 @@ abstract class FounderController extends EmailController {
 }
 
 class FounderEditController extends FounderController {
-	const TRACKING_CATEGORY_EN = 'FounderEmailsFirstEditUserEN';
-	const TRACKING_CATEGORY_INT = 'FounderEmailsFirstEditUserEN';
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_FIRST_EDIT_USER_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_FIRST_EDIT_USER_INT;
 }
 
 class FounderMultiEditController extends FounderController {
-	const TRACKING_CATEGORY_EN = 'FounderEmailsEditUserEN';
-	const TRACKING_CATEGORY_INT = 'FounderEmailsEditUserINT';
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_EDIT_USER_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_EDIT_USER_INT;
 
 	protected function getFooterEncouragementKey() {
 		return 'emailext-founder-multi-encourage';
@@ -229,8 +229,8 @@ class FounderMultiEditController extends FounderController {
 }
 
 class FounderAnonEditController extends FounderController {
-	const TRACKING_CATEGORY_EN = 'FounderEmailsEditAnonEN';
-	const TRACKING_CATEGORY_INT = 'FounderEmailsEditAnonINT';
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_EDIT_ANON_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_EDIT_ANON_INT;
 
 	public function getSubject() {
 		$articleTitle = $this->pageTitle->getText();

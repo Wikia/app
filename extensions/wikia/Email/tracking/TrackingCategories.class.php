@@ -5,4 +5,11 @@ namespace Email\Tracking;
 class TrackingCategories {
 	const DEFAULT_CATEGORY = "UserMailer";
 	const WALL_NOTIFICATION = "WallNotification";
+
+	const FOUNDER_FIRST_EDIT_USER_EN = 'FounderEmailsFirstEditUserEN';
+	const FOUNDER_FIRST_EDIT_USER_INT = 'FounderEmailsFirstEditUserINT';
+	const FOUNDER_EDIT_USER_EN = 'FounderEmailsEditUserEN';
+	const FOUNDER_EDIT_USER_INT = 'FounderEmailsEditUserINT';
+	const FOUNDER_EDIT_ANON_EN = 'FounderEmailsEditAnonEN';
+	const FOUNDER_EDIT_ANON_INT = 'FounderEmailsEditAnonINT';
 }
