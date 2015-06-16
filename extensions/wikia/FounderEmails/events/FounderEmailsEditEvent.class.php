@@ -205,7 +205,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 		$today = date( 'Y-m-d' );
 		$wikiCounter = $counter[F::app()->wg->CityId];
-		return empty( $wikiCounter['date'] ) || $wikiCounter['date'] !== $today;
+		return $wikiCounter['date'] !== $today;
 	}
 
 	private function updateUserNotificationCount( User $user ) {

@@ -21,6 +21,9 @@ abstract class EmailController extends \WikiaController {
 	 * of $wgAutoLoadClasses */
 	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
 
+	// Used when needing to specify an anonymous user from the external API
+	const ANONYMOUS_USER_ID = -1;
+
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
 
@@ -459,7 +462,7 @@ abstract class EmailController extends \WikiaController {
 		}
 
 		// Allow an anonymous user to be specified
-		if ( $userName == -1 ) {
+		if ( $userName == self::ANONYMOUS_USER_ID ) {
 			return \User::newFromId( 0 );
 		}
 
