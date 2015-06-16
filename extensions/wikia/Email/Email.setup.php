@@ -49,6 +49,7 @@ $wgAutoloadClasses['Email\Controller\WeeklyDigestController'] =  $dir . 'Control
 $wgAutoloadClasses['Email\Controller\FounderEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderAnonEditController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\Controller\FounderMultiEditController'] =  $dir . 'Controller/FounderController.class.php';
+$wgAutoloadClasses['Email\Controller\FounderActiveController'] =  $dir . 'Controller/FounderController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
 $wgAutoloadClasses['Email\Tracking\TrackingCategories'] = $dir .  'tracking/TrackingCategories.class.php';
 

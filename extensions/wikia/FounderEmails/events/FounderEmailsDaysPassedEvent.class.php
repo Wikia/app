@@ -6,9 +6,9 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wikiId, User $user ) {
+	public function enabled ( User $admin, $wikiId = null ) {
 		// disable if all Wikia email disabled
-		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+		if ( $admin->getBoolOption( 'unsubscribed' ) ) {
 			return false;
 		}
 
@@ -49,7 +49,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 					$user = User::newFromId( $user_id );
 
 					// skip if not enable
-					if ( !$this->enabled( $wikiId, $user ) ) {
+					if ( !$this->enabled( $user, $wikiId ) ) {
 						continue;
 					}
 					self::addParamsUser( $wikiId, $user->getName(), $emailParams );
@@ -97,7 +97,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 	}
 
 	public static function register( $wikiParams, $debugMode = false ) {
-		global $wgFounderEmailsExtensionConfig, $wgCityId;
+		global $wgFounderEmailsEvents, $wgCityId;
 		wfProfileIn( __METHOD__ );
 
 		$founderEmailObj = FounderEmails::getInstance();
@@ -111,7 +111,7 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 
 		$wikiFounder->saveSettings();
 
-		foreach ( $wgFounderEmailsExtensionConfig['events']['daysPassed']['days'] as $daysToActivate ) {
+		foreach ( $wgFounderEmailsEvents['daysPassed']['days'] as $daysToActivate ) {
 			switch( $daysToActivate ) {
 				case 0:
 					$dayName = 'DayZero';
