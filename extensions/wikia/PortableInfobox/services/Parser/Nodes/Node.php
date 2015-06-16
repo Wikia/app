@@ -222,7 +222,7 @@ class Node {
 	protected function extractSourceFromNode( \SimpleXMLElement $xmlNode ) {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
 		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			preg_match_all( '/{{{(.*)}}}/s', (string)$xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
+			preg_match_all( '/{{{([^\|}]*?)\|?.*}}}/sU', (string)$xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
 
 			return $source ? array_unique( array_merge( [ $source ], $sources[ 1 ] ) ) : array_unique( $sources[ 1 ] );
 		}

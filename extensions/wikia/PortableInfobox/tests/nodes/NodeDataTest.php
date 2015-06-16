@@ -26,7 +26,11 @@ class NodeDataTest extends WikiaBaseTest {
 			[ '<data source="test"><label source="test">{{{test}}}</label><default>{{{test}}}</default></data>',
 			  [ ], [ 'test' ] ],
 			[ '<data source="test"><default>{{{test 2}}}</default></data>', [ ], [ 'test', 'test 2' ] ],
-			[ '<data></data>', [ ], [ ] ]
+			[ '<data></data>', [ ], [ ] ],
+			[ '<data source="test1"><default>{{#if: {{{test2|}}}| [[{{{test2}}} with some text]] }}</default></data>',
+			  [ ], [ 'test1', 'test2' ] ],
+			[ '<data><default>{{#switch: {{{test2|}}}|{{{test3}}}|{{{test4|kdjk|sajdkfj|}}}]] }}</default></data>',
+			  [ ], [ 'test2', 'test3', 'test4' ] ],
 		];
 	}
 
