@@ -6,10 +6,11 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.document',
 	'wikia.location',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.services'),
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, log, doc, loc, lookups, abTest, krux) {
+], function (adContext, pvCounter, log, doc, loc, win, lookups, abTest, krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
@@ -77,6 +78,21 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			for (i = 0; i < experimentsNumber; i += 1) {
 				ab.push(experiments[i].id + '_' + experiments[i].group.id);
 			}
+		}
+
+		return ab;
+	}
+
+	/**
+	 * Get the AbPerformanceTesting experiment name
+	 *
+	 * @returns {string}
+	 */
+	function getPerformanceAb() {
+		var ab;
+
+		if (win.wgTransactionContext && typeof win.wgTransactionContext.perf_test === 'string') {
+			ab = win.wgTransactionContext.perf_test;
 		}
 
 		return ab;
@@ -220,6 +236,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s1: zone1,
 			s2: zone2,
 			ab: getAb(),
+			perfab: getPerformanceAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			cat: getCategories(),
 			dmn: getDomain(),

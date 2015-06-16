@@ -197,7 +197,7 @@ class RequestContext implements IContextSource {
 	public function getUser() {
 		// Wikia change - begin - @author: Michał Roszka
 		global $wgEnableHeliosExt;
-		if ( $wgEnableHeliosExt ) {
+		if ( $this->user === null && $wgEnableHeliosExt ) {
 			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
 		}
 		// Wikia change - end
@@ -336,7 +336,7 @@ class RequestContext implements IContextSource {
 	public function getSkin() {
 		if ( $this->skin === null ) {
 			wfProfileIn( __METHOD__ . '-createskin' );
-			
+
 			$skin = null;
 			wfRunHooks( 'RequestContextCreateSkin', array( $this, &$skin ) );
 

@@ -456,6 +456,18 @@ class Article extends Page {
 		$parserCache = ParserCache::singleton();
 
 		$parserOptions = $this->getParserOptions();
+
+		/**
+		 * Wikia change begin
+		 */
+		$skin = $wgOut->getSkin();
+		if ( in_array( $skin->getSkinName(), [ 'oasis', 'monobook' ] ) ) {
+			$parserOptions->setIsMain( true );
+		}
+		/**
+		 * Wikia change end
+		 */
+
 		# Render printable version, use printable version cache
 		if ( $wgOut->isPrintable() ) {
 			$parserOptions->setIsPrintable( true );

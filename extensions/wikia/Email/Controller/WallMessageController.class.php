@@ -4,8 +4,11 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
+use Email\Tracking\TrackingCategories;
 
 abstract class WallMessageController extends EmailController {
+
+	const TRACKING_CATEGORY = TrackingCategories::WALL_NOTIFICATION;
 
 	protected $titleUrl;
 	protected $titleText;
@@ -28,8 +31,7 @@ abstract class WallMessageController extends EmailController {
 
 		// Anon's have IPs for usernames so choose something more appropriate in that case
 		if ( $this->currentUser->isAnon() ) {
-			$this->authorUserName = wfMessage( 'emailext-anonymous-editor' )
-				->inLanguage( $this->targetLang )->text();
+			$this->authorUserName = $this->getMessage( 'emailext-anonymous-editor' )->text();
 		} else {
 			$this->authorUserName = $this->currentUser->getName();
 		}
@@ -100,9 +102,7 @@ abstract class WallMessageController extends EmailController {
 	 * @return string
 	 */
 	protected function getButtonText() {
-		return wfMessage( 'emailext-wallmessage-full-conversation' )
-			->inLanguage( $this->targetLang )
-			->text();
+		return $this->getMessage( 'emailext-wallmessage-full-conversation' )->text();
 	}
 
 	/**
@@ -111,11 +111,11 @@ abstract class WallMessageController extends EmailController {
 	 * @return string
 	 */
 	protected function getRecentMessagesText() {
-		return wfMessage(
+		return $this->getMessage(
 			'emailext-wallmessage-recent-messages',
 			$this->wallTitle->getFullURL(),
-			$this->wallTitle->getPrefixedText() )
-		->inLanguage( $this->targetLang )->parse();
+			$this->wallTitle->getPrefixedText()
+		)->parse();
 	}
 
 	protected static function getEmailSpecificFormFields() {
@@ -161,12 +161,12 @@ class OwnWallMessageController extends WallMessageController {
 	 */
 	protected function getSummary() {
 		if ( $this->currentUser->isAnon() ) {
-			return wfMessage( 'emailext-wallmessage-anon-owned-summary' )
-				->inLanguage( $this->targetLang )->parse();
+			return $this->getMessage( 'emailext-wallmessage-anon-owned-summary' )
+				->parse();
 		} else {
-			return wfMessage( 'emailext-wallmessage-owned-summary',
+			return $this->getMessage( 'emailext-wallmessage-owned-summary',
 				$this->getCurrentProfilePage(), $this->authorUserName
-			)->inLanguage( $this->targetLang )->parse();
+			)->parse();
 		}
 	}
 
@@ -177,12 +177,12 @@ class OwnWallMessageController extends WallMessageController {
 	 */
 	protected function getSubject() {
 		if ( $this->currentUser->isAnon() ) {
-			return wfMessage( 'emailext-wallmessage-anon-owned-subject' )
-				->inLanguage( $this->targetLang )->text();
+			return $this->getMessage( 'emailext-wallmessage-anon-owned-subject' )
+				->text();
 		} else {
-			return wfMessage( 'emailext-wallmessage-owned-subject',
+			return $this->getMessage( 'emailext-wallmessage-owned-subject',
 				$this->authorUserName
-			)->inLanguage( $this->targetLang )->text();
+			)->text();
 		}
 	}
 }
@@ -203,8 +203,8 @@ class ReplyWallMessageController extends OwnWallMessageController {
 		] );
 
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text', $unwatchUrl, $this->title->getPrefixedText() )
-				->inLanguage( $this->targetLang )->parse()
+			$this->getMessage( 'emailext-unfollow-text', $unwatchUrl, $this->title->getPrefixedText() )
+				->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
@@ -219,15 +219,15 @@ class FollowedWallMessageController extends WallMessageController {
 	 */
 	protected function getSummary() {
 		if ( $this->currentUser->isAnon() ) {
-			return wfMessage( 'emailext-wallmessage-anon-following-summary',
+			return $this->getMessage( 'emailext-wallmessage-anon-following-summary',
 				$this->wallUserName
-			)->inLanguage( $this->targetLang )->parse();
+			)->parse();
 		} else {
-			return wfMessage( 'emailext-wallmessage-following-summary',
+			return $this->getMessage( 'emailext-wallmessage-following-summary',
 				$this->getCurrentProfilePage(),
 				$this->authorUserName,
 				$this->wallUserName
-			)->inLanguage( $this->targetLang )->parse();
+			)->parse();
 		}
 	}
 
@@ -238,14 +238,14 @@ class FollowedWallMessageController extends WallMessageController {
 	 */
 	protected function getSubject() {
 		if ( $this->currentUser->isAnon() ) {
-			return wfMessage( 'emailext-wallmessage-anon-following-subject',
+			return $this->getMessage( 'emailext-wallmessage-anon-following-subject',
 				$this->wallUserName
-			)->inLanguage( $this->targetLang )->text();
+			)->text();
 		} else {
-			return wfMessage( 'emailext-wallmessage-following-subject',
+			return $this->getMessage( 'emailext-wallmessage-following-subject',
 				$this->authorUserName,
 				$this->wallUserName
-			)->inLanguage( $this->targetLang )->text();
+			)->text();
 		}
 	}
 
@@ -255,8 +255,8 @@ class FollowedWallMessageController extends WallMessageController {
 		] );
 
 		$footerMessages = [
-			wfMessage( 'emailext-unfollow-text', $unwatchUrl, $this->wallTitle->getPrefixedText() )
-				->inLanguage( $this->targetLang )->parse()
+			$this->getMessage( 'emailext-unfollow-text', $unwatchUrl, $this->wallTitle->getPrefixedText() )
+				->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}

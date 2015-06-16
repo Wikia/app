@@ -73,7 +73,6 @@ class User {
 	const USER_TOKEN_LENGTH = USER_TOKEN_LENGTH;
 	const MW_USER_VERSION = MW_USER_VERSION;
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
-	const EDIT_TOKEN_LOGGING_RATE = 10;
 
 	/**
 	 * Array of Strings List of member variables which are saved to the
@@ -3513,26 +3512,10 @@ class User {
 			if ( $token === null ) {
 				$token = MWCryptRand::generateHex( 32 );
 				$request->setSessionData( 'wsEditToken', $token );
-				
-				// MAIN-4660 logging begin
-				if ( rand( 1, 100 ) <= self::EDIT_TOKEN_LOGGING_RATE ) {
-					Wikia\Logger\WikiaLogger::instance()->debug(
-						'MAIN-4660::'. __METHOD__,
-						[
-							'wsEditToken' => $token,
-							'user_id'     => $this->getId(),
-							'user_name'   => $this->getName()
-						]
-					);
-					global $wgSessionDebugData;
-					$wgSessionDebugData['wsEditToken'][] = $token;
-				}
-				// MAIN-4660 logging end
 			}
 			if( is_array( $salt ) ) {
 				$salt = implode( '|', $salt );
 			}
-
 			return md5( $token . $salt ) . EDIT_TOKEN_SUFFIX;
 		}
 	}
@@ -3561,20 +3544,25 @@ class User {
 	public function matchEditToken( $val, $salt = '', $request = null ) {
 		$sessionToken = $this->getEditToken( $salt, $request );
 		if ( $val != $sessionToken ) {
-			// MAIN-4660 logging begin
-			if ( rand( 1, 100 ) <= self::EDIT_TOKEN_LOGGING_RATE ) {
-				Wikia\Logger\WikiaLogger::instance()->debug(
-					'MAIN-4660::' . __METHOD__,
+			wfDebug( "User::matchEditToken: broken session data\n" );
+
+			// Wikia change - begin
+			// @see MAIN-4660 log edit tokens mismatches
+			if ($val != '') {
+				Wikia\Logger\WikiaLogger::instance()->error(
+					__METHOD__ . '::tokenMismatch',
 					[
 						'client_val'  => $val,
 						'session_val' => $sessionToken,
+						'session_id'  => session_id(),
+						'salt'        => $salt,
 						'user_id'     => $this->getId(),
-						'user_name'   => $this->getName()
+						'user_name'   => $this->getName(),
+						'exception'   => new Exception(),
 					]
 				);
 			}
-			// MAIN-4660 logging end
-			wfDebug( "User::matchEditToken: broken session data\n" );
+			// Wikia change - end
 		}
 		return $val == $sessionToken;
 	}

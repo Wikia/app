@@ -291,19 +291,19 @@ $WikiNavWidth: $width-outside - 271px;
 	}
 
 	.buttons {
-		right: 10px;
-		position: absolute;
-		text-align: right;
-		width: 270px;
 		height: 10px;
+		position: absolute;
+		right: 0;
+		text-align: right;
 		top: 22px;
+		width: 270px;
 		z-index: 4;
 
 		.wikia-button,
 		.wikia-menu-button {
 			height: 20px;
 			font-size: 11px;
-			margin-top: 0px;
+			margin-top: 0;
 			vertical-align: top;
 			z-index: 3;
 			&[data-id=edit],
