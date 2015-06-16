@@ -34,6 +34,10 @@ class GamestarApiWrapperTest extends WikiaBaseTest {
 	 * @group Infrastructure
 	 */
 	public function testgetDataFromValidHtmlResponse() {
+		$this->markTestSkipped(
+			'2015-06-15 test started to fail randomly; The 3rd party link returned 503 - should it be integration test?'
+		);
+
 		// setup
 		$this->setUpMock();
 
