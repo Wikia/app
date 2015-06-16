@@ -175,7 +175,7 @@ class FlagsController extends WikiaController {
 			$currentFlags = $this->getResponseData( $this->requestGetFlagsForPageForEdit( $pageId ) );
 
 			$helper = new FlagsHelper();
-			$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
+			$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params['editFlags'] );
 
 			if ( !empty( $flagsToChange ) ) {
 				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );

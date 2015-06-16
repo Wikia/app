@@ -35,21 +35,19 @@ class FlagsHelper {
 		$flagsToAdd = $flagsToRemove = $flagsToUpdate = [];
 
 		foreach ( $currentFlags as $flagTypeId => $flag ) {
-			$keyCheckbox = $this->composeInputName( $flagTypeId, self::FLAGS_INPUT_NAME_CHECKBOX );
-
-			if ( !isset( $flag['flag_id'] ) && !isset( $postData[$keyCheckbox] ) ) {
+			if ( !isset( $flag['flag_id'] ) && !isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 1. The flag type DOES NOT have an instance on this page and WAS NOT posted - continue
 				 */
 				continue;
 
-			} elseif ( !isset( $flag['flag_id'] ) && isset( $postData[$keyCheckbox] ) ) {
+			} elseif ( !isset( $flag['flag_id'] ) && isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 2. The flag type DOES NOT have an instance on this page and WAS posted - new flag
 				 */
 				$flagsToAdd[$flagTypeId] = $this->getFlagFromPostData( $flag, $postData );
 
-			} elseif ( isset( $flag['flag_id'] ) && !isset( $postData[$keyCheckbox] ) ) {
+			} elseif ( isset( $flag['flag_id'] ) && !isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 3. The flag type HAS an instance on this page and WAS NOT posted - remove flag
 				 */
@@ -109,13 +107,12 @@ class FlagsHelper {
 			 * This is a protection from users modifying names of parameters in the DOM.
 			 */
 			foreach ( $paramNames as $paramName => $paramDescription ) {
-				$key = $this->composeInputName( $flagTypeId, $paramName );
-				if ( isset( $postData[$key] ) ) {
+				if ( isset( $postData[$flagTypeId][$paramName] ) ) {
 					/**
 					 * Use a value from the form if it is provided.
 					 * It will be escaped by default mechanism from FluentSQL.
 					 */
-					$flagFromPost['params'][$paramName] = $postData[$key];
+					$flagFromPost['params'][$paramName] = $postData[$flagTypeId][$paramName];
 				} else {
 					/**
 					 * Insert an empty string if a value is not provided.
