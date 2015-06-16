@@ -49,6 +49,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return string
 	 * @throws UnimplementedNodeException when node used in markup does not exists
 	 * @throws XmlMarkupParseErrorException xml not well formatted
+	 * @throws InvalidInfoboxParamsException when unsupported attributes exist in params array
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
 		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $this->getFrameParams( $frame ) );
@@ -58,6 +59,10 @@ class PortableInfoboxParserTagController extends WikiaController {
 		if ( !isset( $params ) ) {
 			$params = $infoboxParser->getInfoboxParams( $markup );
 		}
+
+		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboParamsValidator();
+		$infoboxParamsValidator->validateParams( $params );
+
 		$data = $infoboxParser->getDataFromXmlString( $markup );
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $data );
@@ -85,7 +90,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
 			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
-			return $this->handleXmlParseError( $infoboxParser->getXmlParseErrors(), $text );
+			return $this->handleXmlParseError( $e->getErrors(), $text );
+		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException $e ) {
+			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
 		if ( $wgArticleAsJson ) {

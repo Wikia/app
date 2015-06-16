@@ -43,6 +43,8 @@ foreach ( $wgInfoboxParserNodes as $parserNode ) {
 // helpers
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer' ] = $dir . 'services/Helpers/ImageFilenameSanitizer.php';
 $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\SimpleXmlUtil' ] = $dir . 'services/Helpers/SimpleXmlUtil.php';
+$wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboParamsValidator' ] = $dir . 'services/Helpers/InfoboParamsValidator.php';
+
 
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
