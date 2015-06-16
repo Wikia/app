@@ -26,7 +26,6 @@ class  WikiaMobileNavigationService extends WikiaService {
 			return false;
 		}
 
-
 		$this->setupLoginLink();
 
 		$themeSettings = new ThemeSettings();
