@@ -18,7 +18,6 @@ function (
 
 	var d = w.document,
 		loginButton = d.getElementById('wkPrfTgl'),
-		$loginButton = $(loginButton),
 		navBar = d.getElementById('wkTopNav'),
 		$navBar = $(navBar),
 		wkPrf = d.getElementById('wkPrf'),
@@ -122,7 +121,7 @@ function (
 	//end search setup
 
 	//profile/login setup
-	if (loginButton && !$loginButton.hasClass('new-login')) {
+	if (loginButton && !loginButton.classList.contains('new-login')) {
 		//Fix for ios 4.x not respecting fully event.preventDefault()
 		// (it shows url bar for a second (and this is ugly (really)))
 		loginButton.href = '';
