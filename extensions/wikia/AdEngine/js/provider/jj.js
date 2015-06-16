@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.provider.jj', [
         var container = doc.getElementById( slotName );
 
         var catApiCode = '<a href="http://thecatapi.com">' +
-            '               <img src="http://thecatapi.com/api/images/get?format=src&type=gif&size=small">' +
+            '               <img src="http://thecatapi.com/api/images/get?format=src&size=small">' +
                          '</a>';
         if ( container ) {
             container.innerHtml = catApiCode;
