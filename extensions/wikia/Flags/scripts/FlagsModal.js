@@ -80,7 +80,7 @@ require(
 					controller: 'Flags',
 					method: 'editForm',
 					data: {
-						page_id: window.wgArticleId
+						'page_id': window.wgArticleId
 					},
 					type: 'get'
 				}),
@@ -115,7 +115,7 @@ require(
 		var flagTypeId, paramName, paramsNames,
 			param, params, flags = [];
 
-		for( flagTypeId in flagsData) {
+		for (flagTypeId in flagsData) {
 			params = [];
 			if (flagsData[flagTypeId]['flag_params_names']) {
 				paramsNames  = JSON.parse(flagsData[flagTypeId]['flag_params_names']);
@@ -168,14 +168,14 @@ require(
 			/* Track clicks on modal form */
 			$flagsEditForm.bind('click', trackModalFormClicks);
 			/* Detect form change */
-			$flagsEditForm.on('change', function() {
+			$flagsEditForm.on('change', function () {
 				labelForSubmitAction = 'submit-form-touched';
 				$flagsEditForm.off('change');
 			});
 		}
 
 		/* Track all ways of closing modal */
-		modalInstance.bind('close', function() {
+		modalInstance.bind('close', function () {
 			track({
 				label: 'modal-close'
 			});
@@ -216,7 +216,7 @@ require(
 		/* Track links clicks */
 		if ($target.is('a')) {
 			$targetLinkDataId = $target.data('id');
-			if($targetLinkDataId) {
+			if ($targetLinkDataId) {
 				track({
 					action: tracker.ACTIONS.CLICK_LINK_TEXT,
 					label: $targetLinkDataId
