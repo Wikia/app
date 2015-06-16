@@ -17,17 +17,33 @@ class FlagsLogTask extends BaseTask {
 	 * @param string $actionType Type of action performed on flag represented by constants in \FlagsApiController class
 	 */
 	public function logFlagChange( array $flags, $pageId, $actionType ) {
-		global $wgCityId;
+		$app = \F::app();
+		$wikiaFlagTypesResponse = $app->sendRequest(
+			'FlagsApiController',
+			'getFlagTypes',
+			[],
+			true,
+			\WikiaRequest::EXCEPTION_MODE_RETURN
+		);
+		$wikiaFlagTypes = $wikiaFlagTypesResponse->getData();
 
-		foreach ( $flags as $i => $flag ) {
-			$flagTypeId = $flag['flag_type_id'];
-			$title = \Title::newFromID( $pageId );
-			$flagType = new FlagType();
-			$wikiaFlagTypes = $flagType->getFlagTypesForWikia( $wgCityId );
+		if ( $wikiaFlagTypes['status'] === true ) {
+			foreach ( $flags as $i => $flag ) {
+				$flagTypeId = $flag['flag_type_id'];
+				$title = \Title::newFromID( $pageId );
 
-			/* Log info about changes */
-			$log = new \LogPage( 'flags' );
-			$log->addEntry( $actionType, $title, '', [ $wikiaFlagTypes[$flagTypeId]['flag_name'] ], $this->createdByUser() );
+				/* Log info about changes */
+				$log = new \LogPage( 'flags' );
+				$log->addEntry(
+					$actionType,
+					$title,
+					'',
+					[ $wikiaFlagTypes['data'][$flagTypeId]['flag_name'] ],
+					$this->createdByUser()
+				);
+			}
+		} else {
+			$this->error( "No flags types found for wikia (city_id:{$this->getWikiId()})" );
 		}
 
 	}

@@ -12,6 +12,7 @@ require([
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.slot.adInContentPlayer',
+	'ext.wikia.adEngine.slot.skyScraper3',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.krux',
@@ -28,6 +29,7 @@ require([
 	messageListener,
 	providerEvolve,
 	adInContentPlayer,
+	skyScraper3,
 	slotTracker,
 	slotTweaker,
 	krux,
@@ -74,8 +76,6 @@ require([
 	// Custom ads (skins, footer, etc)
 	window.loadCustomAd = customAdsLoader.loadCustomAd;
 
-	adInContentPlayer.init();
-
 	// Everything starts after content and JS
 	window.wgAfterContentAndJS.push(function () {
 		// Ads
@@ -87,26 +87,20 @@ require([
 		krux.load(kruxSiteId);
 	});
 
-	// Start loading in content slots
-	if (inContentDesktop) {
-		window.addEventListener('load', inContentDesktop.init);
-	}
+	// Inject extra slots:
+	adInContentPlayer.init();
 
-	// Start loading in content slots
-	if (exitstitial) {
-		window.addEventListener('load', exitstitial.init);
-	}
-});
+	window.addEventListener('load', function () {
+		skyScraper3.init();
 
-require(['ext.wikia.adEngine.adContext', 'wikia.abTest', 'wikia.document'], function (adContext, abTest, doc) {
-	'use strict';
+		if (inContentDesktop) {
+			inContentDesktop.init();
+		}
 
-	var group = abTest.getGroup('ADS_VIEWABILITY_MEDREC'),
-		medrec = doc.getElementById('TOP_RIGHT_BOXAD');
-
-	if (group && medrec && !adContext.getContext().providers.sevenOneMedia) {
-		medrec.className += ' ads-viewability-test ' + group;
-	}
+		if (exitstitial) {
+			exitstitial.init();
+		}
+	});
 });
 
 // FPS meter

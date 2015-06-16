@@ -127,7 +127,7 @@ class InsightsController extends WikiaSpecialPageController {
 	private function getInProgressNotificationParams( $subpage ) {
 		$params = $this->getInsightListLinkParams( $subpage );
 		$params['notificationMessage'] = wfMessage( InsightsHelper::INSIGHT_INPROGRESS_MSG_PREFIX . $subpage )->plain()
-			. wfMessage( 'insights-notification-message-fixit' )->plain();
+			. ' ' . wfMessage( 'insights-notification-message-fixit' )->plain();
 
 		return $params;
 	}

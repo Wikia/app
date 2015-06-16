@@ -133,7 +133,7 @@ class WikiaPhotoGallery extends ImageGallery {
 							return !empty($var);
 						}
 					),
-					array_merge,
+					"array_merge",
 					[]
 				)
 			)
@@ -650,7 +650,7 @@ class WikiaPhotoGallery extends ImageGallery {
 		}
 
 		// TODO: If Parsoid is the client always return "old gallery" so "alternative rendering" can work
-		// like a charm. This is meant to be deleted when "new galleries" are the only galleries. 
+		// like a charm. This is meant to be deleted when "new galleries" are the only galleries.
 		if ( strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Parsoid' ) !== false ) {
 			return false;
 		}

@@ -13,4 +13,8 @@ class SimpleParser implements ExternalParser {
 	public function replaceVariables( $text ) {
 		return $text;
 	}
+
+	public function addImage( $title ) {
+		//do nothing
+	}
 }

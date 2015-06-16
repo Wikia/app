@@ -21,7 +21,8 @@ class ArticleAsJson extends WikiaService {
 
 	private static function createMediaObj( $details, $imageName, $caption = '', $link = null ) {
 		wfProfileIn( __METHOD__ );
-
+		
+		$context = '';
 		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
@@ -30,6 +31,14 @@ class ArticleAsJson extends WikiaService {
 			'caption' => $caption,
 			'user' => $details['userName']
 		];
+
+		if ( isset( $details['context'] ) ) {
+			$context = $details['context'];
+		}
+
+		if ( is_string( $context ) && $context !== '' ) {
+			$media['context'] = $context;
+		}
 
 		if ( is_string( $link ) && $link !== '' ) {
 			$media['link'] = $link;
@@ -118,6 +127,8 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 		if ( $title ) {
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
+			//TODO: When there will be more image contexts, move strings to const
+			$details['context'] = 'infobox-big';
 			self::$media[] = self::createMediaObj( $details, $title->getText(), $alt );
 			$ref = count( self::$media ) - 1;
 		}
@@ -199,13 +210,8 @@ class ArticleAsJson extends WikiaService {
 				}
 			}
 
-			//because we take caption out of main parser flow
-			//we have to replace links manually
-			//gallery caption we parse ourselves so they are ok here
 			foreach ( self::$media as &$media ) {
-				if ( !empty( $media['caption'] ) && is_string( $media['caption'] ) ) {
-					$parser->replaceLinkHolders( $media['caption'] );
-				}
+				self::linkifyMediaCaption( $parser, $media );
 			}
 
 			$text = json_encode( [
@@ -247,5 +253,25 @@ class ArticleAsJson extends WikiaService {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Because we take captions out of main parser flow we have to replace links manually
+	 *
+	 * @param Parser $parser
+	 * @param $media
+	 */
+	private static function linkifyMediaCaption( Parser $parser, &$media ) {
+		$caption = $media['caption'];
+		if (
+			!empty( $caption ) &&
+			is_string( $caption ) &&
+			(
+				strpos( $caption, '<!--LINK' ) !== false ||
+				strpos( $caption, '<!--IWLINK' ) !== false
+			)
+		) {
+			$parser->replaceLinkHolders( $media['caption'] );
+		}
 	}
 }

@@ -65,7 +65,6 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdDecoratorLegacyParamFormat.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
-		'//extensions/wikia/AdEngine/js/AdInContentPlayer.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
@@ -91,6 +90,8 @@ $config['adengine2_desktop_js'] = array(
 		'//extensions/wikia/AdEngine/js/provider/openX.targeting.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
+		'//extensions/wikia/AdEngine/js/slot/inContentPlayer.js',
+		'//extensions/wikia/AdEngine/js/slot/skyScraper3.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
@@ -352,7 +353,6 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/WikiaNotifications.js',
 		'//skins/oasis/js/FirefoxFindFix.js',
 		'//skins/oasis/js/tabs.js',
-		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
 		'//skins/oasis/js/Tracking.js',
 
 		'//skins/shared/scripts/onScroll.js',
@@ -560,6 +560,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/instantGlobals.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
@@ -694,7 +695,6 @@ $config['mobile_base_ads_js'] = array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/iframeWriter.js',
-		'//resources/wikia/modules/instantGlobals.js',
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/AdContext.js',
@@ -740,6 +740,7 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/instantGlobals.js',
 
 		'#group_mobile_base_ads_js',
 		'//resources/wikia/modules/cache.js',
@@ -1747,16 +1748,6 @@ $config['special_videos_css_mobile'] = array(
 	'assets' => array(
 		'//skins/oasis/css/core/thumbnails.scss',
 		'//extensions/wikia/SpecialVideos/styles/mobile.scss',
-	)
-);
-
-/* SharingToolbar */
-$config['sharingtoolbar_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//skins/oasis/js/SharingToolbar/SharingToolbar.js',
-		'//extensions/wikia/ShareButtons/js/ShareButtons.js',
-		'#function_SharingToolbarController::getAssets'
 	)
 );
 

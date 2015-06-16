@@ -44,6 +44,11 @@
 					"type" : "string",
 					"description" : "styleguide-description-modal-close-text"
 				},
+				"escapeToClose" : {
+					"templateVar" : "escapeToClose",
+					"type" : "boolean",
+					"description" : "styleguide-description-modal-escape-to-close"
+				},
 				"altLink" : {
 					"templateVar" : "altLink",
 					"type" : "object",
