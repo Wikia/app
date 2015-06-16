@@ -276,7 +276,7 @@
             }
             abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
             if (abSlot >= 40 && abSlot <= 49) {
-                abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'CONTROL');
+                abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'NOT_IN_ANY_GROUP');
                 _gaWikiaPush(['set', 'dimension' + abSlot, abGroupName]);
                 abCustomVarsForAds.push(['ads.set', 'dimension' + abSlot, abGroupName]);
             }
