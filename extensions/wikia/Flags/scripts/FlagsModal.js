@@ -86,7 +86,7 @@ require(
 				loader({
 					type: loader.MULTI,
 					resources: {
-						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache',
+						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormEmpty.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormException.mustache',
 						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
 					}
 				})
@@ -94,9 +94,15 @@ require(
 				var template;
 
 				loader.processStyle(res.styles);
-				template = res.mustache[0];
 
-				flagsData[0].flags = prepareFlagsData(flagsData[0].flags);
+				if (flagsData[0].flags) {
+					template = res.mustache[0];
+					flagsData[0].flags = prepareFlagsData(flagsData[0].flags);
+				} else if (flagsData[0].emptyMessage) {
+					template = res.mustache[1];
+				} else if (flagsData[0].exceptionMessage) {
+					template = res.mustache[2];
+				}
 
 				modalConfig.vars.content = mustache.render(template, flagsData[0]);
 
