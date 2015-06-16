@@ -591,11 +591,11 @@ class WikiPage extends Page {
 	 * The target will be fetched from the redirect table if possible.
 	 * If this page doesn't have an entry there, call insertRedirect()
 	 *
-	 * @param bool $userMaster
+	 * @param int $useMasterDb
 	 * @return Title|mixed object, or null if this page is not a redirect
 	 */
-	public function getRedirectTarget( $userMaster = false ) {
-		if ( !$this->mTitle->isRedirect() ) {
+	public function getRedirectTarget( $useMasterDb = 0 ) {
+		if ( !$this->mTitle->isRedirect( $useMasterDb ) ) {
 			return null;
 		}
 
@@ -604,7 +604,7 @@ class WikiPage extends Page {
 		}
 
 		# Query the redirect table
-		$dbr = $userMaster ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+		$dbr = $useMasterDb ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'redirect',
 			array( 'rd_namespace', 'rd_title', 'rd_fragment', 'rd_interwiki' ),
 			array( 'rd_from' => $this->getId() ),

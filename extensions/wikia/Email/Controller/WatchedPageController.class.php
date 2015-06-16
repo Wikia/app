@@ -299,7 +299,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	public function initEmail() {
 		parent::initEmail();
 
-		$this->newTitle = \WikiPage::factory( $this->title )->getRedirectTarget( $userMaster = true );
+		$this->newTitle = \WikiPage::factory( $this->title )->getRedirectTarget( $useMasterDb = \Title::GAID_FOR_UPDATE );
 		$this->assertValidNewTitle();
 	}
 
