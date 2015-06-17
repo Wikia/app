@@ -23,7 +23,7 @@ class FlagView {
 	 * Parses the wrapped wikitext and returns an HTML block of code with rendered flags.
 	 * @param array $templateCalls
 	 * @param $pageId
-	 * @return mixed
+	 * @return ParserOutput
 	 */
 	public function renderFlags( Array $templateCalls, $pageId ) {
 		global $wgUser;
@@ -31,7 +31,7 @@ class FlagView {
 		$wikitext = $this->wrapAllFlags( $templateCalls );
 		$title = \Title::newFromID( $pageId );
 
-		return \ParserPool::parse( $wikitext, $title, \ParserOptions::newFromUser( $wgUser ) )->getText();
+		return \ParserPool::parse( $wikitext, $title, \ParserOptions::newFromUser( $wgUser ) );
 	}
 
 	/**

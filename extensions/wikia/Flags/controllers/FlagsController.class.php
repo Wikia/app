@@ -43,19 +43,43 @@ class FlagsController extends WikiaController {
 		$wgLang->getLangObj();
 	}
 
+	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, Article $article ) {
+		/**
+		 * First, get ParserOutput for flags for the article.
+		 * If it's null - return the original $parserOutput.
+		 */
+		$flagsParserOutput = $this->getFlagsParserOutputForPage( $article->getID() );
+		if ( $flagsParserOutput === null ) {
+			return $parserOutput;
+		}
+
+		/**
+		 * Update the mText of the original ParserOutput object and merge other properties
+		 */
+
+		$mwf = \MagicWord::get( 'flags' );
+		if ( $mwf->match( $parserOutput->mText ) ) {
+			$parserOutput->setText( $mwf->replace( $flagsParserOutput->getText(), $parserOutput->getText() ) );
+		} else {
+			$parserOutput->setText( $flagsParserOutput->getText() . $parserOutput->getText() );
+		}
+
+		$parserOutput->mergeExternalParserOutputVars( $flagsParserOutput );
+
+		return $parserOutput;
+	}
+
 	/**
 	 * Sends a request for all instances of flags for the given page.
 	 * A result of the request is transformed into a set of wikitext templates calls
 	 * that are supposed to be injected into Parser before expanding templates.
 	 * @param $pageId
-	 * @return string
+	 * @return ParserOutput|null
 	 */
-	public function getFlagsHTMLForPage( $pageId ) {
+	public function getFlagsParserOutputForPage( $pageId ) {
 		wfProfileIn( __METHOD__ );
 
 		try {
-			$flagsHTML = '';
-
 			$response = $this->requestGetFlagsForPage( $pageId );
 
 			if ( $this->getResponseStatus( $response ) ) {
@@ -73,11 +97,11 @@ class FlagsController extends WikiaController {
 					);
 				}
 
-				$flagsHTML = $flagView->renderFlags( $templatesCalls, $pageId );
+				return $flagView->renderFlags( $templatesCalls, $pageId );
+			} else {
+				return null;
 			}
 
-			wfProfileOut( __METHOD__ );
-			return $flagsHTML;
 		} catch ( Exception $exception ) {
 			$this->logResponseException( $exception, $response->getRequest() );
 		}
@@ -173,10 +197,15 @@ class FlagsController extends WikiaController {
 				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
 
 				/**
-				 * Purge article after updating flags
+				 * Purge article after updating flags and update links
 				 */
 				$wikiPage = WikiPage::factory( $title );
 				$wikiPage->doPurge();
+
+				$parserOptions = ParserOptions::newFromUser( $this->wg->User );
+				( new LinksUpdate(
+					$wikiPage->getTitle(), $wikiPage->getParserOutput( $parserOptions ) )
+				)->doUpdate();
 			}
 
 			/**

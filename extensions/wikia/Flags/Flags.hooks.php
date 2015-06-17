@@ -65,25 +65,15 @@ class Hooks {
 	}
 
 	/**
-	 * Injects an HTML code of flags for the given article. If the __FLAGS__ magic word is found
-	 * it becomes a target of the injection. If not, the flags are attached in the beginning.
+	 * Modifies the original ParserOutput object using the one returned from FlagView.
+	 * The modification
 	 * @param \ParserOutput $parserOutput
 	 * @param \Article $article
 	 * @return bool
 	 */
-
 	public static function onBeforeParserCacheSave( \ParserOutput $parserOutput, \Article $article ) {
-		$addText = ( new \FlagsController )
-			->getFlagsHTMLForPage( $article->getId() );
-
-		if ( $addText !== null ) {
-			$mwf = \MagicWord::get( 'flags' );
-			if ( $mwf->match( $parserOutput->mText ) ) {
-				$parserOutput->mText = $mwf->replace( $addText, $parserOutput->mText );
-			} else {
-				$parserOutput->mText = $addText . $parserOutput->mText;
-			}
-		}
+		$parserOutput = ( new \FlagsController )
+			->modifyParserOutputWithFlags( $parserOutput, $article );
 
 		return true;
 	}
