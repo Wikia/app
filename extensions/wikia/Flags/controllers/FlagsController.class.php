@@ -105,7 +105,6 @@ class FlagsController extends WikiaController {
 		$response = $this->requestGetFlagsForPageForEdit( $pageId );
 
 		if ( $response->hasException() ) {
-			$this->overrideTemplate( 'editFormException' );
 			$exceptionDetails = $response->getException()->getDetails();
 			$this->setVal(
 				'exceptionMessage',
@@ -121,7 +120,6 @@ class FlagsController extends WikiaController {
 			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->escaped() );
 			$this->setVal( 'pageId', $pageId );
 		} else {
-			$this->overrideTemplate( 'editFormEmpty' );
 			$this->setVal(
 				'emptyMessage',
 				wfMessage( 'flags-edit-modal-no-flags-on-community' )->parse()
