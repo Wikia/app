@@ -1,7 +1,9 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-class NodeComparison extends Node {
+class NodeInfobox extends Node {
+
+	protected $params;
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
@@ -12,10 +14,7 @@ class NodeComparison extends Node {
 	}
 
 	public function getRenderData() {
-		return [
-			'type' => $this->getType(),
-			'data' => [ 'value' => $this->getRenderDataForChildren() ],
-		];
+		return $this->getRenderDataForChildren();
 	}
 
 	public function isEmpty() {
@@ -27,6 +26,18 @@ class NodeComparison extends Node {
 		}
 
 		return true;
+	}
+
+	public function getParams() {
+		if ( !isset( $this->params ) ) {
+			$result = [ ];
+			foreach ( $this->xmlNode->attributes() as $k => $v ) {
+				$result[ $k ] = (string)$v;
+			}
+			$this->params = $result;
+		}
+
+		return $this->params;
 	}
 
 	public function getSource() {

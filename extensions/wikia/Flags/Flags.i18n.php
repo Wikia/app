@@ -18,6 +18,7 @@ $messages['en'] = [
 	'flags-special-list-header-template' => 'Template name',
 	'flags-special-list-header-group' => 'Flag group',
 	'flags-special-list-header-target' => 'Target',
+	'flags-edit-flags-button-text' => 'Edit flags',
 	'flags-edit-form-more-info' => 'More info >',
 	'flags-edit-modal-cancel-button-text' => 'Cancel',
 	'flags-edit-modal-close-button-text' => 'Close',
@@ -57,6 +58,7 @@ $messages['qqq'] = [
 	'flags-special-list-header-template' => 'A column name for an associated Template name.',
 	'flags-special-list-header-group' => 'A column name for a Flag group.',
 	'flags-special-list-header-target' => 'A column name for a Flag targeting (who should we display the flag to - everybody or only contributors).',
+	'flags-edit-flags-button-text' => 'Text on button that opens edit flags modal; button contains flag icon; button is displayed near generated flags',
 	'flags-edit-form-more-info' => 'A link that is displayed next to a checkbox in the edit form of Flags. It links to a template used by the flag that it is next to.',
 	'flags-edit-modal-cancel-button-text' => 'Text on the button that closes flags edit modal and ignores changes.',
 	'flags-edit-modal-close-button-text' => 'Text on the button that closes flags edit modal.',
@@ -92,7 +94,8 @@ $messages['qqq'] = [
  * Polish (pl)
  */
 $messages['pl'] = [
-	'flags-description' => 'Flagi to informacje o artykule dla czytających lub edytorów, które opisują treść artykułu lub wymaganą akcję',
+	'flags-description' => 'Flagi to informacje o artykule dla czytających lub edytorów, które opisują treść artykułu lib wymaganą akcję',
+	'flags-edit-flags-button-text' => 'Edytuj flagi',
 	'flags-edit-form-more-info' => 'Więcej informacji >',
 	'flags-edit-modal-cancel-button-text' => 'Anuluj',
 	'flags-edit-modal-close-button-text' => 'Zamknij',
