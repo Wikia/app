@@ -5,7 +5,7 @@ namespace Email\Controller;
 use Email\Check;
 use Email\ControllerException;
 use Email\EmailController;
-use Email\Fatal;
+use Wikia\Logger;
 
 abstract class FounderController extends EmailController {
 
@@ -254,6 +254,10 @@ class FounderActiveController extends FounderController {
 			try {
 				$eventUser = $this->getUserFromName( $event[ 'user' ] );
 			} catch ( ControllerException $e ) {
+				Logger\WikiaLogger::instance()->warning( 'User from recent activity not found', [
+					'method' => __METHOD__,
+					'username' => $event['user'],
+				] );
 				continue;
 			}
 
@@ -283,7 +287,7 @@ class FounderActiveController extends FounderController {
 	private function getRecentActivity( $num = 5 ) {
 		$wg = \F::app()->wg;
 
-		$params = [
+		$data = \ApiService::call( [
 			'action' => 'query',
 			'list' => 'recentchanges',
 			'rctype' => implode( '|', [ 'new', 'edit' ] ),
@@ -293,13 +297,7 @@ class FounderActiveController extends FounderController {
 			'rcshow' => implode( '|', [ '!minor', '!bot', '!anon', '!redirect' ] ),
 			'rclimit' => $num,
 			'rctoponly' => 1,
-		];
-
-		$req = new \FauxRequest( $params );
-		$api = new \ApiMain( $req );
-
-		$api->execute();
-		$data = $api->getResultData();
+		] );
 
 		if ( !empty( $data['query']['recentchanges'] ) ) {
 			return $data['query']['recentchanges'];
