@@ -17,6 +17,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
+	'ext.wikia.adEngine.provider.jj',
 	require.optional('ext.wikia.adEngine.provider.taboola')
 ], function (
 	// regular dependencies
@@ -36,6 +37,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
+    adProviderJJ,
 	adProviderTaboola
 ) {
 	'use strict';
@@ -73,8 +75,16 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderOpenX];
 		}
 
-		if (context.forceProviders.liftium) {
-			return [adProviderLiftium];
+        if (context.forceProviders.liftium) {
+            return [adProviderLiftium];
+        }
+
+		if (context.forceProviders.jj) {
+            if (instantGlobals.wgSitewideDisableJJProvider) {
+                log('JJProvider diabled by disaster recovery. No ads', 'warn', logGroup);
+                return [];
+            }
+			return [adProviderJJ];
 		}
 
 		// SevenOne Media
@@ -108,7 +118,12 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderMonetizationService];
 		}
 
-		// First provider: Turtle, Evolve or Direct GPT?
+        // First provider: JJ ;-)
+        if (context.providers.jj && !instantGlobals.wgSitewideDisableJJProvider) {
+            providerList.push(adProviderJJ);
+        }
+
+		// Second provider: Turtle, Evolve or Direct GPT?
 		if (context.providers.turtle) {
 			providerList.push(adProviderTurtle);
 		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
@@ -117,7 +132,7 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderDirectGpt);
 		}
 
-		// Second provider: Remnant GPT
+		// Third provider: Remnant GPT
 		if (dartEnabled) {
 			providerList.push(adProviderRemnantGpt);
 		}
