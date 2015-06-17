@@ -6,24 +6,11 @@ $messages['en'] = array(
 	'founderemails-desc' => 'Helps informing founders about changes on their wiki',
 	'tog-founderemailsenabled' => 'E-mail me updates on what other people are doing (founders only)',
 // registered
-	'founderemails-email-user-registered-subject' => 'Someone new joined $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hi $USERNAME,
-
-Congratulations! $EDITORNAME has just joined $WIKINAME.
-
-Take this opportunity to welcome them to your wiki and encourage them to help edit. The more the merrier, and the faster your wiki will grow.
-
-$EDITORPAGEURL
-
-The Wikia Team',
 	'founderemails-email-user-registered-greeting' => 'Hi $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Congratulations! $EDITORNAME has just joined $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Take this opportunity to welcome them to your wiki and encourage them to help edit. The more the merrier, and the faster your wiki will grow.',
 	'founderemails-email-user-registered-signature' => 'The Wikia Team',
 	'founderemails-email-user-registered-button' => 'Welcome Them',
-	'founderemails-email-user-registered-body-HTML' => 'Hey $USERNAME,<br /><br />
-It looks like $EDITORNAME has registered on your wiki! Why don\'t you drop by their <a href="$EDITORTALKPAGEURL">talkpage</a> to say hello?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Welcome to Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Nice to meet you $USERNAME,
 
@@ -364,9 +351,7 @@ You can always head over to wiki activity to view all of the exciting changes be
  */
 $messages['qqq'] = array(
 	'founderemails-desc' => '{{desc}}',
-	'founderemails-email-user-registered-body' => '{{doc-singularthey}}',
 	'founderemails-email-user-registered-content' => '{{doc-singularthey}}',
-	'founderemails-email-user-registered-body-HTML' => '{{doc-singularthey}}',
 	'founderemails-email-page-edited-reg-user-first-edit-body' => '{{doc-singularthey}}',
 	'founderemails-email-first-edit-headline' => '{{doc-singularthey}}',
 	'founderemails-email-first-edit-content' => '{{doc-singularthey}}',
@@ -412,24 +397,11 @@ $messages['af'] = array(
 $messages['ar'] = array(
 	'founderemails-desc' => 'يساعد على إعلام المؤسسين حول التغييرات في الويكي الخاصة بهم',
 	'tog-founderemailsenabled' => 'أرسل لي بريدا إلكترونيا حول التحديثات عما يقوم به الأشخاص الآخرون (للمؤسسين فقط)',
-	'founderemails-email-user-registered-subject' => 'لقد انضم شخص جديد إلى $WIKINAME',
-	'founderemails-email-user-registered-body' => 'مرحبًا $USERNAME،
-
-تهانينا! $EDITORNAME قد انضم للتو إلى $WIKINAME.
-
-انتهز هذه الفرصة للترحيب بهم على الويكي الخاصة بك وتشجيعهم على المساعدة بالتحرير. كلما زادت الفرحة، كلما نمت الويكي الخاصة بك أسرع.
-
-$EDITORPAGEURL
-
-فريق ويكيا',
 	'founderemails-email-user-registered-greeting' => 'مرحبا يا $USERNAME،',
 	'founderemails-email-user-registered-headline' => 'تهانينا! $EDITORNAME قد {{GERNDER:$EDITORNAME|انضم|انضمت|انضم}} إلى $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'انتهز هذه الفرصة للترحيب بهم في الويكي الخاصة بك وتشجيعهم على المساعدة بالتحرير. كلما زادت الفرحة، كلما نمت الويكي الخاصة بك أسرع.',
 	'founderemails-email-user-registered-signature' => 'فريق ويكيا',
 	'founderemails-email-user-registered-button' => 'رحب بهم',
-	'founderemails-email-user-registered-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
-يبدو أن $EDITORNAME قد {{GENDER:$EDITORNAME|سجل|سجلت|سجل}} على الويكي الخاصة بك! لمَ لا تزور <a href="$EDITORTALKPAGEURL"> صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}}</a> للترحيب؟<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-email-0-days-passed-subject' => 'مرحبا بك في ويكيا!',
 	'founderemails-email-0-days-passed-body' => 'تشرفت بمقابلتك يا $USERNAME،
 
@@ -745,7 +717,6 @@ $messages['az'] = array(
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'founderemails-email-user-registered-subject' => 'Нов потребител се присъедини към $WIKINAME',
 	'founderemails-email-user-registered-signature' => 'Екипът на Wikia',
 	'founderemails-email-0-days-passed-subject' => 'Добре дошли в Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Поздравления за създаването на $WIKINAME - вече сте част от общността на Wikia!
@@ -783,19 +754,10 @@ $PAGEURL
 $messages['br'] = array(
 	'founderemails-desc' => 'Skoazellañ a ra da gelaouiñ ar grouerien pa vez degaset kemmoù en o wikioù',
 	'tog-founderemailsenabled' => 'Kas din hizivadennoù eus ar pezh a ra an dud all (diazezerien hepken)',
-	'founderemails-email-user-registered-subject' => 'Unan bennak a zo aet da-gaout $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Ac\'hanta $USERNAME,
-
-Evit doare eo bet an implijer $EDITORNAME oc\'h en em enrollañ war ho wiki ! Perak ned afec\'h ket da saludiñ anezhañ war e bajenn gaozeal $EDITORTALKPAGEURL ?
-
--- Skipailh Wikia',
 	'founderemails-email-user-registered-greeting' => 'Ac\'hanta $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Gourc\'hemennoù ! $EDITORNAME zo o paouez en em gavout gant $WIKINAME.',
 	'founderemails-email-user-registered-signature' => 'Skipailh Wikia',
 	'founderemails-email-user-registered-button' => 'Degemerit anezho',
-	'founderemails-email-user-registered-body-HTML' => 'Ac\'hanta $USERNAME,<br /><br />
-Evit doare eo bet an implijer $EDITORNAME oc\'h en em enrollañ war ho wiki ! Perak ned afec\'h ket da saludi anezhañ war <a href="$EDITORTALKPAGEURL">e bajenn kaozeal</a> ?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => "Deuet mat oc'h war Wikia !",
 	'founderemails-email-0-days-passed-body' => "Gourc'hemennoù evit bezañ krouet \$WIKINAME - e kumuniezh Wikia emaoc'h bremañ !
 
@@ -993,24 +955,11 @@ Skipailh Wikia',
 $messages['ca'] = array(
 	'founderemails-desc' => 'Ajuda a informar els fundadors sobre els canvis que van ocórrer al seu wiki',
 	'tog-founderemailsenabled' => 'Envieu-me per correu electrònic les actualitzacions que fan altres persones (només fundadors)',
-	'founderemails-email-user-registered-subject' => 'Algú nou s\'ha unit a $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hola $USERNAME,
-
-Felicitats! $EDITORNAME s\'ha registrat a $WIKINAME.
-
-Aprofita aquesta oportunitat per donar-li la benvinguda i animar-lo a que editi al wiki. Com més gent, millor i més ràpid creixerà el teu wiki.
-
-$EDITORPAGEURL
-
-L\'equip de Wikia',
 	'founderemails-email-user-registered-greeting' => 'Hola $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Felicitats! $EDITORNAME s\'ha registrat a $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Aprofita aquesta oportunitat per donar-li la benvinguda i animar-lo a que editi al wiki. Com més gent, millor i més ràpid creixerà el teu wiki.',
 	'founderemails-email-user-registered-signature' => "L'Equip de Wikia",
 	'founderemails-email-user-registered-button' => 'Dona-li la benvinguda',
-	'founderemails-email-user-registered-body-HTML' => 'Ei $USERNAME,<br /><br />
-Sembla que $EDITORNAME s\'ha registrat al teu wiki! Per què no et passes per la seva <a href="$EDITORTALKPAGEURL">pàgina de discussió</a> per saludar-lo?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- L\'equip de Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Benvingut/da a Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Encantat de conèixer-te $USERNAME,
 
@@ -1314,16 +1263,6 @@ $messages['ce'] = array(
 $messages['cs'] = array(
 	'founderemails-desc' => 'Pomáhá informování zakladatelů o změnách na jejich wiki',
 	'tog-founderemailsenabled' => 'Pošlete mi e-mailem aktualizace o tom, co dělají ostatní lidé (pouze zakladatelé)',
-	'founderemails-email-user-registered-subject' => 'Nový uživatel se připojil k $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Ahoj uživateli $USERNAME,
-
-Gratulujeme! $EDITORNAME se zrovna připojil $WIKINAME.
-
-Využijte této příležitosti a přivítejte je na své wiki. Veďte je k editování. Čím více, tím lépe a vaše Wiki tak rychle poroste.
-
-$EDITORPAGEURL
-
-Tým Wikia',
 	'founderemails-email-user-registered-greeting' => 'Ahoj $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Gratulujeme! $EDITORNAME se přávě připojil k $WIKINAME.',
 	'founderemails-email-user-registered-signature' => 'Wikia Tým',
@@ -1399,30 +1338,11 @@ $messages['cy'] = array(
 $messages['de'] = array(
 	'founderemails-desc' => 'Hilft dabei, Gründer über Änderungen in ihrem Wiki zu informieren',
 	'tog-founderemailsenabled' => 'Maile mir Berichte über Tätigkeiten anderer Leute (nur Gründer).',
-	'founderemails-email-user-registered-subject' => 'Jemand hat sich beim $WIKINAME angemeldet!',
-	'founderemails-email-user-registered-body' => 'Hey $USERNAME,
-
-Herzlichen Glückwunsch! $EDITORNAME hat sich gerade beim $WIKINAME angemeldet.
-
-Nutze die Gelegenheit, um ihn in deinem Wiki zu begrüßen und ihn zu ermutigen, dir beim Bearbeiten zu helfen. Je mehr, desto besser, und umso schneller wird dein Wiki wachsen.
-
-$EDITORPAGEURL
-
-Das Wikia-Team
-
-___________________________________________
-
-Um die aktuellsten Informationen zu Wikia zu lesen, besuche http://de.community.wikia.com
-Du möchtest anpassen, welche E-Mails du bekommst? Rufe http://de.community.wikia.com/wiki/Special:Preferences auf.
-Klicke den folgenden Link, um dich von allen Wikia-Mails abzumelden: $UNSUBSCRIBEURL',
 	'founderemails-email-user-registered-greeting' => 'Hey $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Herzlichen Glückwunsch! $EDITORNAME hat sich gerade beim $WIKINAME angemeldet.',
 	'founderemails-email-user-registered-content' => 'Nutze die Gelegenheit, um ihn in deinem Wiki zu begrüßen, und ermutige ihn, dir beim Bearbeiten zu helfen. Je mehr, desto besser, und umso schneller wird dein Wiki wachsen.',
 	'founderemails-email-user-registered-signature' => 'Das Wikia-Team',
 	'founderemails-email-user-registered-button' => 'Begrüßen',
-	'founderemails-email-user-registered-body-HTML' => 'Hey $USERNAME,<br /><br />
-Es sieht so aus, als ob sich $EDITORNAME in deinem Wiki registriert hat! Warum besuchst du nicht seine <a href="$EDITORTALKPAGEURL">Diskussionsseite</a>, um Hallo zu sagen?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Das Wikia-Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Willkommen bei Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Schön, dich kennen zu lernen, $USERNAME!
 
@@ -1767,15 +1687,6 @@ Das Wikia-Team', # Fuzzy
  * @author Umherirrender
  */
 $messages['de-formal'] = array(
-	'founderemails-email-user-registered-subject' => 'Jemand hat sich im $WIKINAME angemeldet!',
-	'founderemails-email-user-registered-body' => 'Hallo $USERNAME,
-
-Es sieht so aus, als ob sich $EDITORNAME bei Ihrem Wiki registriert hat! Warum besuchen Sie nicht seine Diskussionsseite $EDITORTALKPAGEURL, um Hallo zu sagen?
-
--- Das Wikia Team', # Fuzzy
-	'founderemails-email-user-registered-body-HTML' => 'Hallo $USERNAME,<br /><br />
-Es sieht so aus als ob sich $EDITORNAME bei Ihrem Wiki registriert hat! Warum besuchen Sie nicht seine <a href="$EDITORTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-email-0-days-passed-body' => 'Schön, Sie kennen zu lernen, $USERNAME!
 
 ... und herzlichen Glückwunsch zur Erstellung von $WIKINAME, $WIKIURL!
@@ -1940,24 +1851,11 @@ $messages['diq'] = array(
 $messages['en-gb'] = array(
 	'founderemails-desc' => 'Helps informing founders about changes on their wiki',
 	'tog-founderemailsenabled' => 'E-mail me updates on what other people are doing (founders only)',
-	'founderemails-email-user-registered-subject' => 'Someone new joined $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hi $USERNAME,
-
-Congratulations! $EDITORNAME has just joined $WIKINAME.
-
-Take this opportunity to welcome them to your wiki and encourage them to help edit. The more the merrier, and the faster your wiki will grow.
-
-$EDITORPAGEURL
-
-The Wikia Team',
 	'founderemails-email-user-registered-greeting' => 'Hi $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Congratulations! $EDITORNAME has just joined $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Take this opportunity to welcome them to your wiki and encourage them to help edit. The more the merrier, and the faster your wiki will grow.',
 	'founderemails-email-user-registered-signature' => 'The Wikia Team',
 	'founderemails-email-user-registered-button' => 'Welcome Them',
-	'founderemails-email-user-registered-body-HTML' => 'Hey $USERNAME,<br /><br />
-It looks like $EDITORNAME has registered on your wiki! Why don\'t you drop by their <a href="$EDITORTALKPAGEURL">talkpage</a> to say hello?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Welcome to Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Nice to meet you $USERNAME,
 
@@ -2078,24 +1976,11 @@ It looks like registered user $EDITORNAME has edited your wiki for the first tim
 $messages['es'] = array(
 	'founderemails-desc' => 'Ayuda a informar a los fundadores sobre los cambios que ocurrieron en su wiki',
 	'tog-founderemailsenabled' => 'Enviarme por correo electrónico las actualizaciones que hacen otras personas (solamente fundadores)',
-	'founderemails-email-user-registered-subject' => 'Alguien nuevo se unió a $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hola $USERNAME,
-
-¡Felicitaciones! $EDITORNAME se ha registrado en $WIKINAME.
-
-Aprovecha esta oportunidad para darle la bienvenida y animarlo a que edite en el wiki. Cuantos más, mejor y más rápido sean los usuarios, tu wiki crecerá.
-
-$EDITORPAGEURL
-
--- El equipo de Wikia',
 	'founderemails-email-user-registered-greeting' => 'Hola $USERNAME,',
 	'founderemails-email-user-registered-headline' => '¡Felicitaciones! $EDITORNAME se ha registrado en $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Aprovecha esta oportunidad para darle la bienvenida y animarlo a que edite el wiki. Cuantos más, mejor y más rápido crecerá tu wiki.',
 	'founderemails-email-user-registered-signature' => '-- El equipo de Wikia',
 	'founderemails-email-user-registered-button' => 'Dale la bienvenida',
-	'founderemails-email-user-registered-body-HTML' => 'Ey $USERNAME,<br /><br />
-¡Parece que $EDITORNAME se ha registrado en tu wiki! ¿Por qué no te pasas por su <a href="$EDITORTALKPAGEURL">página de discusión</a> para saludarle?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => '¡Te damos la bienvenida a Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Encantado de conocerte $USERNAME,
 
@@ -2438,24 +2323,11 @@ $messages['fa'] = array(
 $messages['fi'] = array(
 	'founderemails-desc' => 'Auttaa tiedottamaan perustajille muutoksista heidän wikeihinsä',
 	'tog-founderemailsenabled' => 'Lähetä minulle sähköpostipäivityksiä muiden tekemisistä (vain perustajille)',
-	'founderemails-email-user-registered-subject' => 'Joku on liittynyt $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hei $USERNAME,
-
-Onnittelut! $EDITORNAME on juuri liittynyt sivustolle $WIKINAME.
-
-Tartu tilaisuuteen ja toivota hänet tervetulleeksi wikiisi ja rohkaise häntä auttamaan muokkaamisessa. Mitä enemmän, sitä paremmin ja nopeammin wikisi kasvaa.
-
-$EDITORTALKPAGEURL
-
-Wikia-tiimi',
 	'founderemails-email-user-registered-greeting' => 'Hei $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Onnittelut! $EDITORNAME on juuri liittynyt $WIKINAMEin.',
 	'founderemails-email-user-registered-content' => 'Tartu tilaisuuteen toivottaa häntä tervetulleeksi ja rohkaisemaan häntä muokkaaman. Enempi parempi, ja wikisi myös kasvaa nopeammin.',
 	'founderemails-email-user-registered-signature' => 'Wikia-tiimi',
 	'founderemails-email-user-registered-button' => 'Toivota hänet tervetulleeksi',
-	'founderemails-email-user-registered-body-HTML' => 'Hei $USERNAME,<br /><br />
-$EDITORNAME näyttäisi rekisteröityneen wikiisi! Miksipä et kävisi hänen <a href="$EDITORTALKPAGEURL">keskustelusivullaan</a> tervehtimässä häntä?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia-tiimi</div>',
 	'founderemails-email-0-days-passed-subject' => 'Tervetuloa Wikiaan!',
 	'founderemails-email-0-days-passed-body' => 'Hauska tavata, $USERNAME,
 
@@ -2635,7 +2507,6 @@ Joku näyttäisi muokanneen wikiäsi! Miksipä et <a href="$MYHOMEURL">tarkistai
 $messages['fo'] = array(
 	'founderemails-desc' => 'Hjálpir við at kunna stovnarar um broytingar á teirra wiki',
 	'tog-founderemailsenabled' => 'Send mær dagføringar við telduposti um hvat ið onnur fólk gera (bert stovnarar)',
-	'founderemails-email-user-registered-subject' => 'Onkur nýggjur skrásetti seg á $WIKINAME',
 	'founderemails-email-user-registered-greeting' => 'Hey $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Tillukku! $EDITORNAME er júst blivin limur á $WIKINAME.',
 	'founderemails-email-user-registered-signature' => 'Wikia-toymið',
@@ -2684,33 +2555,11 @@ $messages['fo'] = array(
 $messages['fr'] = array(
 	'founderemails-desc' => 'Aide les fondateurs en les informant des changements sur leur wiki',
 	'tog-founderemailsenabled' => 'M’envoyer des mises à jour par courriel sur ce que font les autres personnes (fondateurs uniquement)',
-	'founderemails-email-user-registered-subject' => 'Une nouvelle personne a rejoint $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Bonjour $USERNAME,
-
-Félicitations! $EDITORNAME vient de rejoindre $WIKINAME.
-
-Profitez de cette occasion pour lui souhaiter la bienvenue sur votre wiki et l’encourager pour l\'aider à contribuer. Plus vous serez de fous et plus rapidement votre wiki se développera.
-
-$EDITORPAGEURL
-
-— L’équipe Wikia',
 	'founderemails-email-user-registered-greeting' => 'Bonjour $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Félicitations ! $EDITORNAME vient de rejoindre $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Profitez de cette occasion pour leur souhaiter la bienvenue sur votre wiki et les encourager à vous aider à éditer. Plus on est de fous, plus on rit, et plus rapidement votre wiki va se développer.',
 	'founderemails-email-user-registered-signature' => 'L’équipe Wikia',
 	'founderemails-email-user-registered-button' => 'Leur souhaiter la bienvenue',
-	'founderemails-email-user-registered-body-HTML' => 'Bonjour $USERNAME,<br /><br />
-On dirait que $EDITORNAME a créé un compte sur votre wiki ! Pourquoi ne pas passer lui dire bonjour sur sa <a href="$EDITORTALKPAGEURL">page de discussion</a> ?<br /><br />
-
-<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">– L’équipe Wikia</p>
-<br /><hr />
-<p>
-<ul>
-<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
-<li>Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
-</ul>
-</p>
-<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner à tous les courriels de Wikia.</div>',
 	'founderemails-email-0-days-passed-subject' => 'Bienvenue sur Wikia !',
 	'founderemails-email-0-days-passed-body' => 'Enchanté $USERNAME,
 
@@ -3174,24 +3023,11 @@ $messages['fy'] = array(
 $messages['gl'] = array(
 	'founderemails-desc' => 'Axuda a informar aos fundadores sobre os cambios que acontecen no seu wiki',
 	'tog-founderemailsenabled' => 'Enviádeme actualizacións por correo electrónico sobre o que acontece no wiki (só fundadores)',
-	'founderemails-email-user-registered-subject' => 'Alguén novo uniuse a $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Boas, $USERNAME:
-
-Parabéns! $EDITORNAME uniuse a $WIKINAME.
-
-Esta é a oportunidade para darlle a benvida ao wiki e animar o novo usuario a que axude a editar. Cantos máis, mellor e máis rápido medrará o wiki.
-
-$EDITORPAGEURL
-
-O equipo de Wikia',
 	'founderemails-email-user-registered-greeting' => 'Boas, $USERNAME:',
 	'founderemails-email-user-registered-headline' => 'Parabéns! $EDITORNAME acaba de unirse a $WIKINAME',
 	'founderemails-email-user-registered-content' => 'Esta é a oportunidade para darlles a benvida ao wiki e animar os novos a que axuden a editar. Cantos máis, mellor e máis rápido medrará o wiki.',
 	'founderemails-email-user-registered-signature' => 'O equipo de Wikia',
 	'founderemails-email-user-registered-button' => 'Déalles a benvida',
-	'founderemails-email-user-registered-body-HTML' => 'Boas, $USERNAME:<br /><br />
-Semella que $EDITORNAME rexistrou unha conta no seu wiki! Por que non se achega ata a súa páxina de conversa <a href="$EDITORTALKPAGEURL">páxina de conversa</a> para darlle a benvida?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- O equipo de Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Benvido a Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Estamos encantados coa súa incorporación, $USERNAME:
 
@@ -3499,16 +3335,6 @@ Sempre pode pasar pola actividade do wiki para ollar todos os cambios que se est
  */
 $messages['he'] = array(
 	'tog-founderemailsenabled' => 'לשלוח אליי בדואר אלקטרוני עדכונים על דברים שאנשים אחרים עושים (רק למייסדים)',
-	'founderemails-email-user-registered-subject' => 'משתמש חדש הצטרף ל$WIKINAME',
-	'founderemails-email-user-registered-body' => 'שלום, $USERNAME.
-
-מזל טוב! $EDITORNAME הצטרף ל$WIKINAME.
-
-אנא {{GENDER:תנצל|תנצלי}} את ההזדמנות לקבל את פניהם לוויקיה ו{{GENDER:תעודד|תעודדי}} אותם לעזור. כמה שיותר מרץ, ואתריך יצמח מהר יותר.
-
-$EDITORPAGEURL
-
-צוות ויקיה',
 	'founderemails-email-user-registered-greeting' => 'שלום, $USERNAME.',
 	'founderemails-email-user-registered-headline' => 'מזל טוב! $EDITORNAME הצטרף ל$WIKINAME.',
 	'founderemails-email-user-registered-content' => 'אנא {{GENDER:תנצל|תנצלי}} את ההזדמנות לקבל את פניהם לוויקיה ו{{GENDER:תעודד|תעודדי}} אותם לעזור. כמה שיותר מרץ, ואתריך יצמח מהר יותר.',
@@ -3539,24 +3365,11 @@ $EDITORPAGEURL
 $messages['hu'] = array(
 	'founderemails-desc' => 'Segít tájékoztatni a wiki alapítóit a rajta történt változásokról',
 	'tog-founderemailsenabled' => 'Küldj emailt róla, mit csinálnak a többiek (csak alapítók)',
-	'founderemails-email-user-registered-subject' => 'Valaki csatlakozott a(z) $WIKINAME wikihez',
-	'founderemails-email-user-registered-body' => 'Szia, $USERNAME!
-
-Gratulálunk! $EDITORNAME éppen most csatlakozott a(z) $WIKINAME wikihez.
-
-Használd ki a lehetőséget, hogy üdvözöld és szerkesztésre bátorítsd őt. Minél többször teszed ezt, annál vígabban és gyorsabban fog nőni a wikid.
-
-$EDITORPAGEURL
-
-A Wikia csapat',
 	'founderemails-email-user-registered-greeting' => 'Szia, $USERNAME!',
 	'founderemails-email-user-registered-headline' => 'Gratulálunk! $EDITORNAME éppen most csatlakozott a(z) $WIKINAME wikihez.',
 	'founderemails-email-user-registered-content' => 'Használd ki a lehetőséget, hogy üdvözöld és szerkesztésre bátorítsd őt. Minél többször teszed ezt, annál vígabban és gyorsabban fog nőni a wikid.',
 	'founderemails-email-user-registered-signature' => 'A Wikia csapat',
 	'founderemails-email-user-registered-button' => 'Üdvözöld őt!',
-	'founderemails-email-user-registered-body-HTML' => 'Szia, $USERNAME!<br /><br />
-Úgy tűnik, $EDITORNAME regisztrált a wikidre! Ugorj be <a href="$EDITORTALKPAGEURL">a vitalapjára</a> és köszönj neki!<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- A Wikia csapat</div>',
 	'founderemails-email-0-days-passed-subject' => 'Üdvözlünk a Wikián!',
 	'founderemails-email-0-days-passed-body' => 'Gratulálunk a(z) $WIKINAME létrehozásához ‒ tagja lettél a Wikia közösségnek!
 
@@ -3584,24 +3397,11 @@ A Wikia csapat',
 $messages['ia'] = array(
 	'founderemails-desc' => 'Adjuta a informar le fundatores super le modificationes in lor wiki',
 	'tog-founderemailsenabled' => 'Inviar me actualisationes super lo que le altere personas face (fundatores solmente)',
-	'founderemails-email-user-registered-subject' => 'Un nove usator in $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Salute $USERNAME,
-
-Felicitationes! Le nove usator $EDITORNAME ha justo create su conto in $WIKINAME.
-
-Per favor da le un benvenita a tu wiki e incoragia le a adjutar. Quanto plus contributores tanto plus gaudio, e tanto plus rapidemente tu wiki crescera.
-
-$EDITORPAGEURL
-
-Le equipa de Wikia',
 	'founderemails-email-user-registered-greeting' => 'Salute $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Felicitationes! Le nove usator $EDITORNAME ha justo create su conto in $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Per favor da le un benvenita a tu wiki e incoragia le a adjutar. Quanto plus contributores tanto plus gaudio, e tanto plus rapidemente tu wiki crescera.',
 	'founderemails-email-user-registered-signature' => 'Le equipa de Wikia',
 	'founderemails-email-user-registered-button' => 'Dar le un benvenita',
-	'founderemails-email-user-registered-body-HTML' => 'Hallo $USERNAME,<br /><br />
-Il pare que $EDITORNAME ha create un conto in tu wiki! Proque non visitar su <a href="$EDITORTALKPAGEURL">pagina de discussion</a> pro salutar le?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Benvenite a Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Placer de cognoscer te, $USERNAME!
 
@@ -3903,16 +3703,6 @@ Tu pote sempre visitar Wiki Activitate pro vider tote le modificationes que es f
 $messages['id'] = array(
 	'founderemails-desc' => 'Membantu memberikan informasi kepada pendiri tentang perubahan di wiki mereka',
 	'tog-founderemailsenabled' => 'Beritahukan saya melalui surel tentang kegiatan orang lain. (hanya pendiri)',
-	'founderemails-email-user-registered-subject' => 'Orang yang baru saja bergabung dengan $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hai $USERNAME,
-
-Selamat! $EDITORNAME baru saja bergabung di $WIKINAME.
-
-Ambil kesempatan ini untuk menyambut mereka ke wiki Anda dan mendorong mereka untuk membantu menyunting. Semakin meriah, dan semakin cepat wiki Anda akan tumbuh.
-
-$EDITORPAGEURL
-
-Tim Wikia',
 	'founderemails-email-user-registered-headline' => 'Selamat! $EDITORNAME baru saja bergabung ke $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Gunakan kesempatan ini untuk menyambut mereka di wiki Anda dan memotivasi mereka untuk membantu menyunting. Lebih rame lebih menyenangkan, dan semakin cepat wiki anda akan berkembang',
 	'founderemails-email-user-registered-signature' => 'Tim wikia',
@@ -4149,24 +3939,11 @@ Anda selalu dapat menuju ke aktivitas wiki untuk melihat seluruh perubahan menar
 $messages['it'] = array(
 	'founderemails-desc' => 'Aiuta a informare i fondatori sulle modifiche nella loro wiki',
 	'tog-founderemailsenabled' => 'Mandami una mail degli aggiornamenti su quello che le altre persone stanno facendo (solo fondatori)',
-	'founderemails-email-user-registered-subject' => 'Un nuovo utente ha visitato $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Ciao $USERNAME,
-
-Congratulazioni! $EDITORNAME si è appena registrato su $WIKINAME.
-
-Cogli l\'occasione per dargli/le il benvenuto nella tua wiki e incoraggiarlo/la a fare modifiche. Più siete meglio è, e più velocemente la tua wiki crescerà.
-
-$EDITORPAGEURL
-
-Il Team di Wikia',
 	'founderemails-email-user-registered-greeting' => 'Ciao $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Congratulazioni! $EDITORNAME è appena entrato in $WIKINAME.',
 	'founderemails-email-user-registered-content' => "Cogli l'occasione per dargli/le il benvenuto e incoraggiarlo/a a fare modifiche. Più siete meglio è, e più velocemente la tua wiki crescerà.",
 	'founderemails-email-user-registered-signature' => 'Il Team di Wikia',
 	'founderemails-email-user-registered-button' => 'Dai il benvenuto',
-	'founderemails-email-user-registered-body-HTML' => 'Ehi $USERNAME,<br /><br />
-Sembra che $EDITORNAME si sia registrato nella tua wiki! Perché non fai un salto nella sua <a href="$EDITORTALKPAGEURL">pagina delle discussioni</a> per dirgli ciao?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Il Team di Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Benvenuto su Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Piacere di conoscerti $USERNAME, 
 
@@ -4462,26 +4239,10 @@ Puoi sempre visualizzare la wiki activity per conoscere tutte le modifiche effet
 $messages['ja'] = array(
 	'founderemails-desc' => 'ウィキで行われた変更について設立者に通知する',
 	'tog-founderemailsenabled' => 'ウィキで変更が行われたときにメールを受け取る（設立者のみ）',
-	'founderemails-email-user-registered-subject' => '$WIKINAMEでアカウントが登録されました',
-	'founderemails-email-user-registered-body' => '$USERNAME さん、
-
-$EDITORNAME が $WIKINAME に参加しました。
-
-歓迎のメッセージを送るなどして、編集してもらえるように誘導してきましょう。参加者が多ければ多いほど、ウィキの成長は早まります。
-
-トークページ:
-$EDITORTALKPAGEURL
-
--- ウィキアチーム',
 	'founderemails-email-user-registered-greeting' => '$USERNAMEさん、こんにちは。',
 	'founderemails-email-user-registered-headline' => 'おめでとうございます！$EDITORNAMEが$WIKINAMEに参加しました。',
 	'founderemails-email-user-registered-signature' => 'ウィキアチーム',
 	'founderemails-email-user-registered-button' => 'ようこそみなさん',
-	'founderemails-email-user-registered-body-HTML' => '$USERNAME さん、<br /><br />
-$EDITORNAME がウィキにアカウントを登録しました。<br /><br />
-トークページ:<br />
-<a href="$EDITORTALKPAGEURL">$EDITORTALKPAGEURL</a><br /><br />
--- ウィキアチーム',
 	'founderemails-email-0-days-passed-subject' => 'ウィキアにようこそ！',
 	'founderemails-email-0-days-passed-body' => '$USERNAMEさん、はじめまして。
 
@@ -4563,24 +4324,11 @@ $messages['kn'] = array(
 $messages['ko'] = array(
 	'founderemails-desc' => '위키에 바뀜에 대해 창립자에게 알리는 데 도움을 줍니다',
 	'tog-founderemailsenabled' => '다른 사람이 무엇을 하고 있는지에 대한 업데이트를 내게 이메일로 보내기 (창립자만)',
-	'founderemails-email-user-registered-subject' => '누군가가 $WIKINAME에 새로 가입했습니다',
-	'founderemails-email-user-registered-body' => '$USERNAME님 안녕하세요,
-
-축하합니다! $EDITORNAME 사용자가 $WIKINAME에 가입했습니다.
-
-이번 기회에 위키에 새 사용자가 온 것을 환영해주시고 편집하는 데 도움이 될 수 있도록 격려해주세요. 위키가 더 화끈하게, 그리고 더 빨리 성장할 것입니다.
-
-$EDITORPAGEURL
-
-위키아 팀',
 	'founderemails-email-user-registered-greeting' => '$USERNAME님 안녕하세요,',
 	'founderemails-email-user-registered-headline' => '축하합니다! $EDITORNAME 사용자가 $WIKINAME에 가입했습니다.',
 	'founderemails-email-user-registered-content' => '이번 기회에 위키에 새 사용자가 온 것을 환영해주시고 편집하는 데 도움이 될 수 있도록 격려해주세요. 위키가 더 화끈하게, 그리고 더 빨리 성장할 것입니다.',
 	'founderemails-email-user-registered-signature' => '위키아 팀',
 	'founderemails-email-user-registered-button' => '환영합니다',
-	'founderemails-email-user-registered-body-HTML' => '$USERNAME님,<br /><br />
-$EDITORNAME 사용자가 위키에 등록되어 있는 것 같습니다! <a href="$EDITORTALKPAGEURL">토론문서</a>에 안녕하세요라고 말하러 가지 않겠습니까?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
 	'founderemails-email-0-days-passed-subject' => '위키아에 오신 것을 환영합니다!',
 	'founderemails-email-0-days-passed-body' => '만나서 반갑습니다, $USERNAME 사용자 님.
 
@@ -4977,24 +4725,11 @@ $messages['map-bms'] = array(
 $messages['mk'] = array(
 	'founderemails-desc' => 'Ги информира основачите за промените на нивното вики',
 	'tog-founderemailsenabled' => 'Испраќај ми по е-пошта што прават другите (само основачи)',
-	'founderemails-email-user-registered-subject' => 'Некој се зачлени на $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Здраво $USERNAME,
-
-Честитаме! Корисникот $EDITORNAME штотуку се зачлени на вики $WIKINAME.
-
-Искористете ја оваа прилика за да му посакате добредојде на вашето вики и да го поттикнете да уредува. Што повеќе, тоа повесело, и така ќе се развива вашето вики.
-
-$EDITORPAGEURL
-
--- Екипата на Викија',
 	'founderemails-email-user-registered-greeting' => 'Здраво $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Честитаме! $EDITORNAME штотуку се зачлени на $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Искористете ја оваа прилика да им посакате добредојде и да ги поттикнете да уредуваат. Што повеќе уредници, тоа повесело, а така побрзо ќе се развива викито.',
 	'founderemails-email-user-registered-signature' => 'Екипата на Викија',
 	'founderemails-email-user-registered-button' => 'Посакајте му добредојде',
-	'founderemails-email-user-registered-body-HTML' => 'Здраво $USERNAME,<br /><br />
-Корисникот $EDITORNAME се регистрираше на вашето вики! Зошто не пуштите поздрав на неговата <a href="$EDITORTALKPAGEURL">страница за разговор</a>?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
 	'founderemails-email-0-days-passed-subject' => 'Добре дојдовте на Викија!',
 	'founderemails-email-0-days-passed-body' => 'Чест ни е што ни се придруживте, $USERNAME
 
@@ -5317,24 +5052,11 @@ $messages['ml'] = array(
 $messages['ms'] = array(
 	'founderemails-desc' => 'Membantu memaklumkan pengasas mengenai perubahan pada wikinya',
 	'tog-founderemailsenabled' => 'E-melkan perkembangan kegiatan orang lain kepada saya (pengasas sahaja)',
-	'founderemails-email-user-registered-subject' => 'Ada orang baru di $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Apa khabar $USERNAME,
-
-Syabas! $EDITORNAME baru menyertai $WIKINAME.
-
-Ambillah peluang ini untuk menyambut kedatangannya ke wiki anda serta menggalakkannya supaya tolong menyunting. Makin ramai makin meriah, dan makin pesatlah perkembangan wiki anda.
-
-$EDITORPAGEURL
-
-Pasukan Wikia',
 	'founderemails-email-user-registered-greeting' => 'Apa khabar $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Syabas! $EDITORNAME baru menyertai $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Ambillah peluang ini untuk menyambut kedatangannya ke wiki anda serta menggalakkannya supaya tolong menyunting. Makin ramai makin meriah, dan makin pesatlah perkembangan wiki anda.',
 	'founderemails-email-user-registered-signature' => 'Pasukan Wikia',
 	'founderemails-email-user-registered-button' => 'Sambut Mereka',
-	'founderemails-email-user-registered-body-HTML' => 'Hai $USERNAME,<br /><br />
-Nampaknya $EDITORNAME sudah berdaftar di wki anda! Apa kata tuan/puan ke <a href="$EDITORTALKPAGEURL">laman perbincangannya</a> untuk beramah mesra?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Pasukan Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Selamat Datang ke Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Apa khabar $USERNAME,
 
@@ -5639,24 +5361,11 @@ Anda boleh sentiasa pergi ke Kegiatan Wiki untuk melihat semua perubahan yang di
 $messages['nb'] = array(
 	'founderemails-desc' => 'Hjelper til med å informere grunnleggere om endringer på deres wiki',
 	'tog-founderemailsenabled' => 'Send meg oppdateringer på e-post om hva andre personer gjør (kun grunnleggere)',
-	'founderemails-email-user-registered-subject' => 'Noen registrerte seg på $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hei $USERNAME,
-
-Gratulerer! $EDITORNAME registrerte seg nettopp på $WIKINAME.
-
-Grip sjansen og ønsk nykommeren velkommen til wikien og oppfordre til å hjelpe til med redigeringen. Jo mer, jo bedre, og dess raskere vil wikien din vokse.
-
-$EDITORPAGEURL
-
-Wikia-teamet',
 	'founderemails-email-user-registered-greeting' => 'Hei $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Gratulerer! $EDITORNAME har akkurat blitt med i $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Benytt denne muligheten til å ønske dem velkommen til din wiki og oppmuntre dem til å hjelpe å redigere. Jo flere jo bedre, og desto raskere vil wikien din vokse.',
 	'founderemails-email-user-registered-signature' => 'Wikia-teamet',
 	'founderemails-email-user-registered-button' => 'Ønsk dem velkommen',
-	'founderemails-email-user-registered-body-HTML' => 'Hei $USERNAME,<br /><br />
-Det ser ut til at $EDITORNAME har registrert seg på wikien din! Hvorfor ikke stikke innom <a href="$EDITORTALKPAGEURL">diskusjonssiden</a> deres for å si hei?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia-teamet</div>',
 	'founderemails-email-0-days-passed-subject' => 'Velkommen til Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Hyggelig å treffe deg, $USERNAME,
 
@@ -5960,25 +5669,11 @@ Du kan alltids stikke over til wiki-aktivitet for å se alle endringene gjort p�
 $messages['nl'] = array(
 	'founderemails-desc' => 'Informeert oprichters over wijzigingen in hun wiki',
 	'tog-founderemailsenabled' => 'Mij informatie mailen over wat andere gebruikers doen (alleen voor oprichters)',
-	'founderemails-email-user-registered-subject' => 'Iemand heeft een gebruiker geregistreerd op $WIKINAME!',
-	'founderemails-email-user-registered-body' => 'Hallo $USERNAME,
-
-Gefeliciteerd! $EDITORNAME heeft zich geregistreerd bij $WIKINAME.
-
-Maak gebruik van deze kans om de gebruiker welkom te heten en te motiveren om in uw wiki te blijven bewerken. Hoe meer gebruikers hoe beter, en hoe sneller uw wiki groeit.
-
-$EDITORPAGEURL
-
-Het Wikia-team',
 	'founderemails-email-user-registered-greeting' => 'Hallo $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Gefeliciteerd! $EDITORNAME heeft zich aangemeld bij $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Maak gebruik van de gelegenheid om de gebruiker te verwelkomen op uw wiki en aan te moedigen om te blijven bewerken. Hoe meer gebruikers hoe beter en hoe sneller uw wiki zal groeien.',
 	'founderemails-email-user-registered-signature' => 'Het Wikia-team',
 	'founderemails-email-user-registered-button' => 'Heet ze welkom',
-	'founderemails-email-user-registered-body-HTML' => 'Hallo $USERNAME,<br /><br />
-$EDITORNAME heeft zich geregistreerd bij uw wiki! Waarom gaat u niet even naar de <a href="$EDITORTALKPAGEURL">overlegpagina</a> van de gebruiker om goedendag te zeggen?
-
-<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Welkom bij Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Leuk u te ontmoeten, $USERNAME.
 
@@ -6277,20 +5972,6 @@ U kunt altijd naar de wiki gaan om alle interessante wijzigingen van $WIKINAME t
  * @author Siebrand
  */
 $messages['nl-informal'] = array(
-	'founderemails-email-user-registered-subject' => 'Iemand heeft een gebruiker geregistreerd op $WIKINAME!',
-	'founderemails-email-user-registered-body' => 'Hallo $USERNAME,
-
-Gefeliciteerd! $EDITORNAME heeft zich geregistreerd bij $WIKINAME.
-
-Maak gebruik van deze kans om de gebruiker welkom te heten en te motiveren om in je wiki te blijven bewerken. Hoe meer gebruikers hoe beter, en hoe sneller je wiki groeit.
-
-$EDITORPAGEURL
-
-Het Wikia-team',
-	'founderemails-email-user-registered-body-HTML' => 'Hoi $USERNAME,<br /><br />
-$EDITORNAME heeft zich geregistreerd bij je wiki! Waarom ga je niet even naar de <a href="$EDITORTALKPAGEURL">overlegpagina</a> van de gebruiker om hoi te zeggen?
-
-<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
 	'founderemails-email-0-days-passed-body' => 'Leuk je te ontmoeten, $USERNAME.
 
 Gefeliciteerd met het aanmaken van $WIKINAME, $WIKIURL!
@@ -6493,14 +6174,10 @@ Er gebeurt veel op je wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er alle
 $messages['oc'] = array(
 	'founderemails-desc' => 'Ajuda los fondators en los informant dels cambiaments sus lor wiki',
 	'tog-founderemailsenabled' => 'Me mandar de mesas a jorn per corrièr electronic sus çò que fan las autras personas (fondators unicament)',
-	'founderemails-email-user-registered-subject' => 'Una novèla persona a rejunt $WIKINAME',
 	'founderemails-email-user-registered-greeting' => 'Bonjorn $USERNAME,',
 	'founderemails-email-user-registered-content' => "Prenètz aquela oportunitat per li desirar la venvenguda sus vòstre wikia e l'encoratjar a vos ajudar a modificar. Mai sèm, mai es agradiu, e  mai rapidament vòstre wikia espelirà !",
 	'founderemails-email-user-registered-signature' => 'L’equipa Wikia',
 	'founderemails-email-user-registered-button' => 'Lor desirar la benvenguda',
-	'founderemails-email-user-registered-body-HTML' => 'Adieu $USERNAME,<br /><br />
-Sembla que $EDITORNAME aja creat un compte sus vòstre wikia ! Perque pas passar per sa <a href="$EDITORTALKPAGEURL">pagina de discussion</a> per dire bonjorn ?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- L\'equipa Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Benvenguda sus Wikia !',
 	'founderemails-email-0-days-passed-body' => "Encantat de far la vòstra coneisença \$USERNAME,
 
@@ -6597,24 +6274,11 @@ $messages['pfl'] = array(
 $messages['pl'] = array(
 	'founderemails-desc' => 'Pomaga w informowaniu założycieli o zmianach na wiki',
 	'tog-founderemailsenabled' => 'Chcę otrzymywać e-mail z zestawieniem aktywności innych użytkowników (tylko dla założycieli)',
-	'founderemails-email-user-registered-subject' => 'Ktoś nowy dołączył do $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Witaj $USERNAME,
-
-Gratulacje! $WIKINAME ma nowego użytkownika - $EDITORNAME !
-
-Wykorzystaj tę okazję do przywitania się i zachęcenia do współedytowania. Dzięki temu, Twoja wiki będzie rosła szybciej.
-
-$EDITORPAGEURL
-
-Zespół Wikii',
 	'founderemails-email-user-registered-greeting' => 'Witaj $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Gratulacje! $WIKINAME ma nowego użytkownika - $EDITORNAME !',
 	'founderemails-email-user-registered-content' => 'Wykorzystaj tę okazję do przywitania się i zachęcenia do współedytowania. Dzięki temu, Twoja wiki będzie rosła szybciej.',
 	'founderemails-email-user-registered-signature' => 'Zespół Wikii',
 	'founderemails-email-user-registered-button' => 'Powitaj ich',
-	'founderemails-email-user-registered-body-HTML' => 'Witaj $USERNAME,<br /><br />
-$EDITORNAME zarejestrował(a) się na Twojej wiki! Możesz wykorzystać tę okazję aby przywitać się na jego/jej <a href="$EDITORTALKPAGEURL">stronie dyskusji</a><br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Zespół Wikii</div>',
 	'founderemails-email-0-days-passed-subject' => 'Witamy na Wikii!',
 	'founderemails-email-0-days-passed-body' => 'Witaj $USERNAME,
 
@@ -6925,17 +6589,6 @@ Możesz zawsze odwiedzić rejestr aktywności na wiki aby zobaczyć zmiany na $W
 $messages['pms'] = array(
 	'founderemails-desc' => 'A giuta anformand ij fondator an sij cambi dzora soa wiki',
 	'tog-founderemailsenabled' => "Mandeme për pòsta eletrònica le modìfiche dzora lòn che d'àutre përson-e a fan (mach ai fondator)",
-	'founderemails-email-user-registered-subject' => "Cheidun a l'ha registrà un cont dzora toa wiki!", # Fuzzy
-	'founderemails-email-user-registered-body' => "Cerea \$USERNAME,
-
-Congratulassion! \$EDITORNAME a l'é pen-a registrasse su \$WIKINAME.
-
-Ch'a ciapa l'ocasion për deje ël bin-ëvnù ansima a soa wiki e ancoragelo a contribuì. Pì i seve pì iv amuse, e pì an pressa soa wiki a chërsrà.
-
--- L'Echip ëd Wikia", # Fuzzy
-	'founderemails-email-user-registered-body-HTML' => 'Cerea $USERNAME,<br /><br />
-A smija che $EDITORNAME a sia registrasse su soa wiki! Përchè a fa nen un sàut su soa <a href="$EDITORTALKPAGEURL">pàgine dle ciaciarade</a> për dije cerea? <br /><br />
-<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Bin ëvnù su Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Congratulassion për la creassion ëd $WIKINAME - adess a fa part ëd la comunità Wikia!
 
@@ -7054,7 +6707,6 @@ A-i é un mucc ëd ròba capità su soa wiki ancheuj! Ch\'a vada ansima a $MYHOM
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'founderemails-email-user-registered-subject' => 'يو نوی غړی د $WIKINAME سره يوځای شو',
 	'founderemails-email-user-registered-greeting' => 'سلامونه $USERNAME،',
 	'founderemails-email-user-registered-signature' => 'د ويکيا ډله',
 	'founderemails-email-0-days-passed-subject' => 'ويکييا ته ښه راغلئ!',
@@ -7105,24 +6757,11 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'founderemails-desc' => 'Ajuda a informar os fundadores acerca das mudanças na sua wiki',
 	'tog-founderemailsenabled' => 'Enviar-me por correio eletrónico atualizações sobre aquilo que os outros fazem (só para fundadores)',
-	'founderemails-email-user-registered-subject' => 'Alguém novo registou-se na $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Olá $USERNAME,
-
-Parabéns! O utilizador $EDITORNAME registou-se na wiki $WIKINAME.
-
-Aproveite a oportunidade para lhe dar as boas-vindas à sua wiki e encorajá-lo a ajudar a editar. Quantos mais, melhor e mais depressa a sua wiki crescerá.
-
-$EDITORPAGEURL
-
-A Equipa da Wikia',
 	'founderemails-email-user-registered-greeting' => 'Olá $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Parabéns! O utilizador $EDITORNAME registou-se na wiki $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Aproveite a oportunidade para lhe dar as boas-vindas à sua wiki e encorajá-lo a ajudar a editar. Quantos mais, melhor e mais depressa a sua wiki crescerá.',
 	'founderemails-email-user-registered-signature' => 'A Equipa da Wikia',
 	'founderemails-email-user-registered-button' => 'Dar-lhes Boas-Vindas',
-	'founderemails-email-user-registered-body-HTML' => 'Olá $USERNAME,<br /><br />
-Parece que o utilizador $EDITORNAME se registou na sua wiki! Que tal ir à <a href="$EDITORTALKPAGEURL">página de discussão</a> e dizer-lhe olá?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Bem-vindo(a) à Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Olá $USERNAME,
 
@@ -7413,24 +7052,11 @@ A equipa da Wikia',
 $messages['pt-br'] = array(
 	'founderemails-desc' => 'Ajuda a informar os fundadores sobre mudanças em sua wiki',
 	'tog-founderemailsenabled' => 'Envie-me atualizações sobre o que outras pessoas estão fazendo (apenas fundadores)',
-	'founderemails-email-user-registered-subject' => 'Alguém novo uniu-se à $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Olá $USERNAME,
-
-Parabéns! $EDITORNAME juntou-se a $WIKINAME.
-
-Aproveite esta oportunidade para recebê-los em seu wiki e incentivá-los a ajudar a editar. Quanto mais colaboradores melhor e mais rápido sua wiki irá crescer.
-
-$EDITORPAGEURL
-
-A Equipe Wikia',
 	'founderemails-email-user-registered-greeting' => 'Olá $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Parabéns! $EDITORNAME se juntou a $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Aproveite esta oportunidade para recebê-los em seu wiki e incentivá-los a editá-la. Quanto mais colaboradores melhor e mais rápido sua wiki irá crescer.',
 	'founderemails-email-user-registered-signature' => 'A Equipe Wikia',
 	'founderemails-email-user-registered-button' => 'Recebê-los',
-	'founderemails-email-user-registered-body-HTML' => 'Ei $USERNAME,<br /><br />
-Parece que $EDITORNAME se registrou na sua wiki! Porque você não visita a sua <a href="$EDITORTALKPAGEURL">página de discussão</a> para dizer "Olá"?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- A Equipe da Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Bem-vindo à Wikia!',
 	'founderemails-email-0-days-passed-body' => 'É um prazer te conhecer $USERNAME,
 
@@ -7712,24 +7338,11 @@ $messages['roa-tara'] = array(
 $messages['ru'] = array(
 	'founderemails-desc' => 'Helps informing founders about changes on their wiki',
 	'tog-founderemailsenabled' => 'Отправлять мне письма об изменениях, производимых другими людьми (только для основателей)',
-	'founderemails-email-user-registered-subject' => 'Кто-то новый присоединился к вашей $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Привет $USERNAME,
-
-Поздравляем! $EDITORNAME только что присоединился к $WIKINAME.
-
-Воспользуйся этой возможностью, чтобы поприветствовать его на вашей вики и призвать помочь вам с правками. Чем больше новых участников, тем лучше, и тем быстрее будет расти ваша вики.
-
-$EDITORPAGEURL
-
-Команда Викия',
 	'founderemails-email-user-registered-greeting' => 'Привет $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Поздравляем! $EDITORNAME только что присоединился к $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Воспользуйтесь этой возможностью, чтобы поприветствовать его на вики и призвать его помочь вам с правками. Чем больше новых участников, тем лучше, и тем быстрее вики будет расти.',
 	'founderemails-email-user-registered-signature' => 'Команда Викия',
 	'founderemails-email-user-registered-button' => 'Приветствовать его',
-	'founderemails-email-user-registered-body-HTML' => 'Привет, $USERNAME,<br /><br />
-Похоже, что $EDITORNAME зарегистрировался в вашей вики! Почему бы вам не зайти на его <a href="$EDITORTALKPAGEURL">страницу обсуждения</a> и не сказать "Привет"?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Команда Викия</div>',
 	'founderemails-email-0-days-passed-subject' => 'Добро пожаловать на Викия!',
 	'founderemails-email-0-days-passed-body' => 'Очень приятно встретиться с вами $USERNAME,
 
@@ -8039,24 +7652,11 @@ $3 {{PLURAL:$3|участник присоединился|участника п
 $messages['sv'] = array(
 	'founderemails-desc' => 'Hjälper till att informera grundarna om ändringar på sin wiki',
 	'tog-founderemailsenabled' => 'Skicka uppdateringar till mig via e-post vad andra personer gör (endast grundare)',
-	'founderemails-email-user-registered-subject' => 'Någon registrerade sig på $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Hej $USERNAME,
-
-Grattis! $EDITORNAME har just registrerat sig på $WIKINAME.
-
-Ta denna möjlighet att välkomna denna person till din wiki och uppmuntra denne till att hjälp till och redigera. Ju fler desto roligare, och då kommer din wiki växa snabbare.
-
-$EDITORPAGEURL
-
-Wikia-teamet',
 	'founderemails-email-user-registered-greeting' => 'Hej $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Grattis! $EDITORNAME har just blivit medlem på $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Ta möjligheten och välkomna dem till din wiki och uppmuntra dem att hjälp till och redigera. Ju fler desto roligare, och då kommer din wiki växa snabbare.',
 	'founderemails-email-user-registered-signature' => 'Wikia-teamet',
 	'founderemails-email-user-registered-button' => 'Välkomna dem',
-	'founderemails-email-user-registered-body-HTML' => 'Hej $USERNAME,<br /><br />
-Det ser ut som $EDITORNAME har registrerat sig på din wiki! Varför tittar du inte in på <a href="$EDITORTALKPAGEURL">diskussionssidan</a> för att säga hej?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia-teamet</div>',
 	'founderemails-email-0-days-passed-subject' => 'Välkommen till Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Trevligt att träffas, $USERNAME, $WIKIURL.
 
@@ -8365,24 +7965,11 @@ $messages['ta'] = array(
 $messages['te'] = array(
 	'founderemails-desc' => 'వ్యవస్థాపకులకు తమ వికీలో జరిగిన మార్పుల గురించి తెలియజెయ్యడంలో తోడ్పడుతుంది',
 	'tog-founderemailsenabled' => 'ఇతరులు ఏం చేస్తున్నారో నాకు ఈమెయిలు చెయ్యి (వ్యవస్థాపకులకు మాత్రమే)',
-	'founderemails-email-user-registered-subject' => '$WIKINAME లో ఎవరో చేరారు',
-	'founderemails-email-user-registered-body' => 'హలో $USERNAME,
-
-అభినందనలు! $EDITORNAME ఇప్పుడే $WIKINAME లో చేరారు.
-
-ఈ సందర్భంగా వారిని మీ వికీలోకి ఆహ్వానించి అక్కడ మార్పుచేర్పులు చేసేలా వారిని ప్రోత్సహించండి. ఎంత ఎక్కువమంది ఉంటే, అంత ఊపు. ఎంత ఊపు ఉంటే అంత వేగంగా వికీ విస్తరిస్తుంది.
-
-$EDITORPAGEURL
-
-వికియా బృందం',
 	'founderemails-email-user-registered-greeting' => 'హలో $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'అభినందనలు! $EDITORNAME ఇప్పుడే $WIKINAME లో చేరారు.',
 	'founderemails-email-user-registered-content' => 'ఈ సందర్భంగా వాళ్ళను మీ వికీకి ఆహ్వానించి మార్పుచేర్పులు చేసేందుకు ప్రోత్సహించండి. ఎంత మంది ఉంటే అంత ఊపు వస్తుంది, అంత త్వరగా మీ వికీ విస్తరిస్తుంది.',
 	'founderemails-email-user-registered-signature' => 'వికియా బృందం',
 	'founderemails-email-user-registered-button' => 'వారిని ఆహ్వానించండి',
-	'founderemails-email-user-registered-body-HTML' => '$USERNAME గారూ,<br /><br />
-$EDITORNAME మీ వికీలో నమోదైనట్లుగా కనిపిస్తోంది! ఓసారి వారి <a href="$EDITORTALKPAGEURL">చర్చాపేజీకి</a>వెళ్ళి పలకరించకూడదూ?<br /><br /> 
-<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
 	'founderemails-email-0-days-passed-subject' => 'వికియాకు స్వాగతం!',
 	'founderemails-email-0-days-passed-body-HTML' => '<strong>$WIKINAME</strong> ను సృష్టించిన సందర్భంగా మిమ్మల్ని అభినందిస్తున్నాం - మీరిప్పుడు వికియా సముదాయంలో ఒక భాగం!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
@@ -8545,24 +8132,11 @@ $PAGEURL
 $messages['tl'] = array(
 	'founderemails-desc' => 'Tumutulong sa pagpapabatid sa mga tagapagtatag tungkol sa mga pagbabago sa kanilang wiki',
 	'tog-founderemailsenabled' => 'Padalhan ako ng mga pagsasapanahon sa pamamagitan ng e-liham kung ano ang ginagawa ng ibang mga tao (mga tagapagtatag lamang)',
-	'founderemails-email-user-registered-subject' => 'May isang bagong tao na sumali sa $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Kumusta $USERNAME,
-
-Maligayang bati! Sumali na si $EDITORNAME sa $WIKINAME.
-
-Gamitin ang pagkakataong ito upang tanggapin sila nang malugod sa wiki mo at hikayatin silang tumulong sa pamamatnugot. Mas masaya ang marami, at mas matulin ang paglaki ng wiki.
-
-$EDITORPAGEURL
-
-Ang Pangkat ng Wikia',
 	'founderemails-email-user-registered-greeting' => 'Kumusta $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Maligayang bati! Sumali na si $EDITORNAME sa $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Gamitin ang pagkakataong ito upang tanggapin sila ng malugod sa wiki mo at himukin silang tumulong sa pamamatnugot. Mas marami mas masaya, at mas mabilis na lalaki ang wiki mo.',
 	'founderemails-email-user-registered-signature' => 'Ang Pangkat ng Wikia',
 	'founderemails-email-user-registered-button' => 'Tanggapin Sila Nang Malugod',
-	'founderemails-email-user-registered-body-HTML' => 'Hoy $USERNAME,<br /><br />
-Tila nagpatala si $EDITORNAME sa iyong wiki! Bakit hindi ka dumalaw sa kanilang<a href="$EDITORTALKPAGEURL">pahina ng usapan</a> upang magsabi ng pagbati?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-email-0-days-passed-subject' => 'Maligayang pagdating sa Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Ikinagagalak ka naming makilala $USERNAME,
 
@@ -8918,24 +8492,11 @@ $messages['tyv'] = array(
 $messages['uk'] = array(
 	'founderemails-desc' => 'Допомагає інформувати засновників про зміни на їхніх вікі',
 	'tog-founderemailsenabled' => 'Надсилати мені листи про зміни, зроблені іншими користувачами (тільки для адміністраторів вікі)',
-	'founderemails-email-user-registered-subject' => 'Новий користувач приєднався до $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Привіт, $USERNAME!
-
-Користувач $EDITORNAME щойно приєднався до $WIKINAME.
-
-Скористайтеся цією можливістю, щоб привітати його на вашій вікі і закликати допомогти вам із написанням нових статей. Чим більше нових учасників, тим краще, і тим швидше зростатиме ваша вікі.
-
-$EDITORPAGEURL
-
-Команда Вікії',
 	'founderemails-email-user-registered-greeting' => 'Привіт, $USERNAME!',
 	'founderemails-email-user-registered-headline' => 'Користувач $EDITORNAME щойно приєднався до $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Скористайтеся цією можливістю, щоб привітати його на вашій вікі і закликати допомогти вам із написанням нових статей. Чим більше нових учасників, тим краще, і тим швидше зростатиме ваша вікі.',
 	'founderemails-email-user-registered-signature' => 'Команда Вікії',
 	'founderemails-email-user-registered-button' => 'Привітати його',
-	'founderemails-email-user-registered-body-HTML' => 'Привіт, $USERNAME!<br /><br />
-Користувач $EDITORNAME щойно зареєструвався на вашій вікі! Ви можете зайти на його <a href="$EDITORTALKPAGEURL">сторінку обговорення</a> і привітати його.<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Команда Вікії</div>',
 	'founderemails-email-0-days-passed-subject' => 'Ласкаво просимо на Вікія!',
 	'founderemails-email-0-days-passed-body' => 'Привіт, $USERNAME!
 
@@ -9242,24 +8803,11 @@ $3 {{PLURAL:$3|особа приєдналася|особи приєдналис
 $messages['vi'] = array(
 	'founderemails-desc' => 'Giúp thông báo cho sáng lập viên về những thay đổi trên wiki của họ',
 	'tog-founderemailsenabled' => 'Gửi thư điện tử cập nhật cho tôi trên những gì người khác đang làm (chỉ sáng lập viên)',
-	'founderemails-email-user-registered-subject' => 'Một người mới vừa tham gia $WIKINAME',
-	'founderemails-email-user-registered-body' => 'Chào $USERNAME,
-
-Chúc mừng! $EDITORNAME đã tham gia $WIKINAME.
-
-Hãy nhân cơ hội này để chào đón người đó đến wiki của bạn và khuyến khích người đó trợ giúp sửa đổi. Càng nhiều càng tốt, wiki của bạn sẽ nhanh chóng phát triển và hoàn thiện hơn.
-
-$EDITORPAGEURL
-
-Wikia Team',
 	'founderemails-email-user-registered-greeting' => 'Chào $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Xin chúc mừng! $EDITORNAME đã tham gia $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Hãy nhân cơ hội này để chào đón họ đến wiki của bạn và khuyến khích họ trợ giúp sửa đổi. Càng nhiều càng tốt, wiki của bạn sẽ phát triển nhanh hơn.',
 	'founderemails-email-user-registered-signature' => 'Wikia Team',
 	'founderemails-email-user-registered-button' => 'Chào đón họ',
-	'founderemails-email-user-registered-body-HTML' => 'Chào $USERNAME,<br /><br />
-Trông giống như $EDITORNAME đã đăng ký tài khoản tại wiki của bạn! Tại sao bạn không ghé qua <a href="$EDITORTALKPAGEURL">trang thảo luận</a> của họ để gửi lời chào nhỉ?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia Team</div>',
 	'founderemails-email-0-days-passed-subject' => 'Chào mừng bạn đến với Wikia!',
 	'founderemails-email-0-days-passed-body' => 'Rất vui được gặp bạn $USERNAME,
 
@@ -9574,21 +9122,11 @@ Bạn luôn luôn có thể ghé qua hoạt động của wiki để xem tất c
 $messages['zh-hans'] = array(
 	'founderemails-desc' => '帮助通知创始人有关在他们的wiki上的变更',
 	'tog-founderemailsenabled' => '通过电子邮件告诉我其他人在做什么（仅创建者）',
-	'founderemails-email-user-registered-subject' => '有新用户加入$WIKINAME',
-	'founderemails-email-user-registered-body' => '嗨！$USERNAME，
-祝贺！$EDITORNAME刚刚加入了$WIKINAME。
-利用这个机会欢迎他们加入，鼓励他们协助编辑吧。多多益善，您的维基也会更快的成长。
-$EDITORPAGEURL
-
-Wikia团队',
 	'founderemails-email-user-registered-greeting' => '嗨！$USERNAME，',
 	'founderemails-email-user-registered-headline' => '恭喜！$EDITORNAME刚刚加入了$WIKINAME。',
 	'founderemails-email-user-registered-content' => '抓住机会欢迎他们到您的Wiki来并鼓励他们帮助编辑。越多人参与，您的Wiki就会成长得越快。',
 	'founderemails-email-user-registered-signature' => 'Wikia团队',
 	'founderemails-email-user-registered-button' => '欢迎他们',
-	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
-$EDITORNAME在你的维基上注册了！何不访问一下新成员的<a href="$EDITORTALKPAGEURL">对话页</a>去打个招呼呢？<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia团队</div>',
 	'founderemails-email-0-days-passed-subject' => '欢迎来到Wikia！',
 	'founderemails-email-0-days-passed-body' => '$USERNAME，很高兴见到您：
 恭喜您成功创建 $WIKINAME, $WIKIURL。
@@ -9822,7 +9360,6 @@ Wikia团队',
  * @author LNDDYL
  */
 $messages['zh-hant'] = array(
-	'founderemails-email-user-registered-subject' => '有人新加入 $WIKINAME',
 	'founderemails-email-user-registered-greeting' => 'Hi $USERNAME,',
 	'founderemails-email-user-registered-headline' => '恭喜 ！$EDITORNAME 剛剛加入了 $WIKINAME。',
 	'founderemails-email-user-registered-content' => '藉此機會歡迎他們到你的 wiki ，並鼓勵他們幫忙編輯。愈多人參與，你的 wiki 將增長越快。',
