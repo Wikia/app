@@ -60,7 +60,7 @@ class Hooks {
 	 * @param \MediaWiki $wiki
 	 * @return bool it's a hook
 	 */
-	static function onAfterInitialize( \Title $title, \Article $article, \OutputPage $output, \User $user, \WebRequest $request, \MediaWiki $wiki ) {
+	static function onAfterInitialize( $title, $article, $output, $user, $request, $wiki ) {
 		global $wgAbPerformanceTestingExperiments;
 		wfDebug( sprintf( "%s - checking experiments (with beacon ID set to '%s')...\n", __METHOD__, wfGetBeaconId() ) );
 
