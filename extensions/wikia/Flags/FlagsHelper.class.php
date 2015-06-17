@@ -216,14 +216,4 @@ class FlagsHelper {
 
 		return $flagGroupsFullNames;
 	}
-
-	/**
-	 * Composes the name of a flags edit form input from the $field parameter and a $flagTypeId
-	 * @param int $flagTypeId
-	 * @param string $field
-	 * @return string
-	 */
-	private function composeInputName( $flagTypeId, $field ) {
-		return self::FLAGS_INPUT_NAME_PREFIX . ":{$flagTypeId}:{$field}";
-	}
 }
