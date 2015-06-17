@@ -34,8 +34,6 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 			$eventData = $events[rand( 0, count( $events ) -1 )];
 
 			$founderEmailObj = FounderEmails::getInstance();
-			$wikiService = ( new WikiService );
-			$user_ids = $wikiService->getWikiAdminIds();
 			$foundingWiki = WikiFactory::getWikiById( $wgCityId );
 
 			$emailParams = [
@@ -45,10 +43,10 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				'$WIKINAME' => $foundingWiki->city_title,
 				'$WIKIURL' => $foundingWiki->city_url,
 			];
-			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
 
-			foreach ( $user_ids as $user_id ) {
-				$user = User::newFromId( $user_id );
+			$wikiService = ( new WikiService );
+			foreach ( $wikiService->getWikiAdminIds() as $adminId ) {
+				$user = User::newFromId( $adminId );
 
 				// skip if not enable
 				if ( !$this->enabled( $wgCityId, $user ) ) {
@@ -57,8 +55,8 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 				self::addParamsUser( $wgCityId, $user->getName(), $emailParams );
 
 				$langCode = $user->getOption( 'language' );
-				$mailSubject = strtr( wfMsgExt( 'founderemails' . $wikiType . '-email-user-registered-subject', [ 'content' ] ), $emailParams );
-				$mailBody = strtr( wfMsgExt( 'founderemails' . $wikiType . '-email-user-registered-body', [ 'content' ] ), $emailParams );
+				$mailSubject = strtr( wfMsgExt( 'founderemails-email-user-registered-subject', [ 'content' ] ), $emailParams );
+				$mailBody = strtr( wfMsgExt( 'founderemails-email-user-registered-body', [ 'content' ] ), $emailParams );
 
 				if ( empty( $wgEnableAnswers ) ) { // FounderEmailv2.1
 					$links = [
@@ -68,7 +66,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 					$mailBodyHTML = F::app()->renderView( 'FounderEmails', 'GeneralUpdate', array_merge( $emailParams, [ 'language' => 'en', 'type' => 'user-registered' ] ) );
 					$mailBodyHTML = strtr( $mailBodyHTML, FounderEmails::addLink( $emailParams, $links ) );
 				} else {
-					$mailBodyHTML = $this->getLocalizedMsg( 'founderemails' . $wikiType . '-email-user-registered-body-HTML', $emailParams );
+					$mailBodyHTML = $this->getLocalizedMsg( 'founderemails-email-user-registered-body-HTML', $emailParams );
 				}
 
 				$mailCategory = FounderEmailsEvent::CATEGORY_REGISTERED . ( !empty( $langCode ) && $langCode == 'en' ? 'EN' : 'INT' );

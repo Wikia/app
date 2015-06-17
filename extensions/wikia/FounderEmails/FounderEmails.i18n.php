@@ -163,15 +163,6 @@ The Wikia Team',
 It looks like someone has edited your wiki! Why don\'t you <a href="$MYHOMEURL">check it out</a> to see what changed?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 // answers
-	'founderemails-answers-email-user-registered-subject' => 'Someone registered an account on your QA wiki!',
-	'founderemails-answers-email-user-registered-body' => 'Hey $USERNAME,
-
-It looks like $EDITORNAME has registered on your wiki! Why don\'t you drop by their talkpage $EDITORTALKPAGEURL to say hello?
-
--- The Wikia Team',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hey $USERNAME,<br /><br />
-It looks like $EDITORNAME has registered on your wiki! Why don\'t you drop by their <a href="$EDITORTALKPAGEURL">talkpage</a> to say hello?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Welcome to QA Wikia!',
 	'founderemails-answers-email-0-days-passed-body' => 'Congratulations on creating $WIKINAME - you\'re now part of the Wikia community!
 
@@ -386,8 +377,6 @@ $messages['qqq'] = array(
 	'founderemails-email-general-edit-button' => '{{Identical|Check it out}}',
 	'founderemails-email-page-edited-reg-user-body-HTML' => '{{doc-singularthey}}',
 	'founderemails-email-anon-edit-button' => '{{Identical|Check it out}}',
-	'founderemails-answers-email-user-registered-body' => '{{doc-singularthey}}',
-	'founderemails-answers-email-user-registered-body-HTML' => '{{doc-singularthey}}',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => '{{doc-singularthey}}',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body-HTML' => '{{doc-singularthey}}',
 	'founderemails-answers-email-page-edited-reg-user-body' => '{{doc-singularthey}}',
@@ -568,15 +557,6 @@ $PAGEURL
 	'founderemails-email-anon-edit-button' => 'التحقق من ذلك!',
 	'founderemails-email-page-edited-anon-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
 يبدو أن شخصًا ما قد قام بتحرير الويكي الخاصة بك! لمَ لا <a href="$MYHOMEURL">تفحص الأمر</a> لترى ما الذي تغير؟<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
-	'founderemails-answers-email-user-registered-subject' => 'أحد ما أنشئ حسابًا على ويكي الأسئلة الخاصة بك!',
-	'founderemails-answers-email-user-registered-body' => 'مرحبًا $USERNAME،
-
-يبدو أن $EDITORNAME {{GENDER:$EDITORNAME|سجل|سجلت|سجل}} على الويكي الخاصة بك! لمَ لا تزور صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}} $EDITORTALKPAGEURL للترحيب؟
-
--- فريق ويكيا',
-	'founderemails-answers-email-user-registered-body-HTML' => 'مرحبًا $USERNAME،<br /><br />
-يبدو أن $EDITORNAME قد {{GENDER:$EDITORNAME|سجل|سجلت|سجل}} على الويكي الخاصة بك! لمَ لا تزور <a href="$EDITORTALKPAGEURL"> صفحة {{GENDER:$EDITORNAME|نقاشه|نقاشها|نقاشه}}</a> للترحيب؟<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- فريق ويكيا</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'مرحبا بك في أسئلة و إجابات ويكيا!',
 	'founderemails-answers-email-0-days-passed-body' => 'تهانينا على إنشاء $WIKINAME - أنت الآن جزء من مجتمع ويكيا!
@@ -878,15 +858,6 @@ Evit doare eo bet kemmet ho wiki gant an implijer enrollet $USERNAME ! Perak ned
 	'founderemails-email-page-edited-anon-body-HTML' => 'Ac\'hanta $USERNAME,
 Evit doare eo bet kemmet ho wiki gant an implijer enrollet $USERNAME ! Perak ned afec\'h ket <a href="$MYHOMEURL">da welet ar pezh zo kemmet</a> ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Unan bennak en deus krouet ur gont war ho wiki G&R !',
-	'founderemails-answers-email-user-registered-body' => 'Ac\'hanta $USERNAME,
-
-Evit doare eo bet an implijer $EDITORNAME oc\'h en em enrollañ war ho wiki ! Perak ned afec\'h ket da saludi anezhañ war e bajenn kaozeal $EDITORTALKPAGEURL ?
-
--- Skipailh Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Ac\'hanta $USERNAME,<br /><br />
-Evit doare eo bet an implijer $EDITORNAME oc\'h en em enrollañ war ho wiki ! Perak ned afec\'h ket da saludi anezhañ war <a href="$EDITORTALKPAGEURL">e bajenn kaozeal</a> ?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Skipailh Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => "Deuet mat oc'h war G&R Wikia !",
 	'founderemails-answers-email-0-days-passed-body' => "Gourc'hemennoù evit bezañ krouet \$WIKINAME - Ezel eus ar gumuniezh Wikia oc'h bremañ !
 
@@ -1160,15 +1131,6 @@ Els col·laboradors de Wikia són persones que fan edicions sense iniciar sessi�
 	'founderemails-email-anon-edit-button' => "Fes-li un cop d'ull!",
 	'founderemails-email-page-edited-anon-body-HTML' => 'Ei $USERNAME,<br /><br />
 Sembla que algú ha editat al teu wiki! Per què no <a href="$MYHOMEURL">fas un cop d\'ull< a>per veure què ha canviat?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- L\'equip de Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Algú va registrar un compte al teu wiki QA!',
-	'founderemails-answers-email-user-registered-body' => 'Ei $USERNAME,
-
-Sembla que $EDITORNAME s\'ha registrat al teu wiki! Per què no vas a la pàgina de discussió $EDITORTALKPAGEURL per saludar?
-
--- L\'equip de Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Ei $USERNAME,<br /><br />
-Sembla que $EDITORNAME s\'ha registrat al teu wiki! Per què no vas a la seva <a href="$EDITORTALKPAGEURL">pàgina de discussió</a> per saludar-lo?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- L\'equip de Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Benvingut a Wikia QA!',
 	'founderemails-answers-email-0-days-passed-body' => 'Felicitacions per crear $WIKINAME, ara ets part de la comunitat de Wikia!
@@ -1599,15 +1561,6 @@ Das Wikia-Team',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Hey $USERNAME,<br /><br />
 es sieht so aus, als ob jemand dein Wiki bearbeitet hat! Warum <a href="$MYHOMEURL">besuchst</a> du es nicht mal, um zu sehen, was sich verändert hat?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia-Team</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Jemand hat ein Benutzerkonto in deinem QA-Wiki registriert!',
-	'founderemails-answers-email-user-registered-body' => 'Hey $USERNAME,
-
-es sieht so aus, als ob sich $EDITORNAME bei deinem Wiki angemeldet hat! Warum besuchst du nicht seine Diskussionsseite $EDITORTALKPAGEURL, um Hallo zu sagen?
-
--- Das Wikia-Team',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hey $USERNAME,<br /><br />
-es sieht so aus, als ob sich $EDITORNAME bei deinem Wiki angemeldet hat! Warum besuchst du nicht seine <a href="$EDITORTALKPAGEURL">Diskussionsseite</a>, um Hallo zu sagen?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Das Wikia-Team</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Willkommen bei QA-Wikia!',
 	'founderemails-answers-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - du bist nun Teil der Wikia-Gemeinschaft!
 
@@ -1887,15 +1840,6 @@ Es sieht so aus als ob jemand Ihr Wiki verändert hat! Warum besuchen Sie nicht 
 -- Das Wikia Team', # Fuzzy
 	'founderemails-email-page-edited-anon-body-HTML' => 'Hallo $USERNAME,<br /><br />
 Es sieht so aus als ob jemand Ihr Wiki verändert hat! Warum <a href="$MYHOMEURL">besuchen</a> Sie es nicht mal um zu sehen was sich verändert hat?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Jemand hat einen Account auf Ihrem QA Wiki registriert!',
-	'founderemails-answers-email-user-registered-body' => 'Hallo $USERNAME,
-
-Es sieht so aus als ob sich $EDITORNAME bei Ihrem Wiki registriert hat! Warum besuchen Sie nicht seine Diskussionsseite $EDITORTALKPAGEURL um Hallo zu sagen?
-
--- Das Wikia Team',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hallo $USERNAME,<br /><br />
-Es sieht so aus als ob sich $EDITORNAME bei Ihrem Wiki registriert hat! Warum besuchen Sie nicht seine <a href="$EDITORTALKPAGEURL">Diskussionsseite</a> um Hallo zu sagen?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Das Wikia Team</div>',
 	'founderemails-answers-email-0-days-passed-body' => 'Herzlichen Glückwunsch zum Erstellen von $WIKINAME - Sie sind nun Teil der Wikia-Gemeinschaft!
 
@@ -2279,15 +2223,6 @@ $PAGEURL
 	'founderemails-email-page-edited-anon-body-HTML' => 'Ey $USERNAME,<br /><br />
 ¡Parece que alguien ha editado en tu wiki! ¿Por qué no <a href="$MYHOMEURL">echas un vistazo</a> para ver qué ha cambiado?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => '¡Alguien registró una cuenta en tu wiki de respuestas!',
-	'founderemails-answers-email-user-registered-body' => 'Ey $USERNAME,
-
-¡Parece que $EDITORNAME se ha registrado en tu wiki! ¿Por qué no vas a su página de discusión $EDITORTALKPAGEURL para saludarle?
-
--- El equipo de Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Ey $USERNAME,<br /><br />
-¡Parece que $EDITORNAME se ha registrado en tu wiki! ¿Por qué no vas a su <a href="$EDITORTALKPAGEURL">página de discusión</a> para saludarle?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- El equipo de Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => '¡Bienvenido a Wikia Respuestas!',
 	'founderemails-answers-email-0-days-passed-body' => '¡Felicitaciones por crear $WIKINAME, ahora eres parte de la comunidad de Wikia!
 
@@ -2624,15 +2559,6 @@ Wikia-tiimi',
 	'founderemails-email-anon-edit-content' => 'Wikia-avustajat ovat henkilöitä, jotka tekevät muokkauksia kirjautumatta Wikiaan. Käy katsomassa, mitä tämä salaperäinen ystävä lisäsi!',
 	'founderemails-email-anon-edit-signature' => 'Wikia-tiimi',
 	'founderemails-email-anon-edit-button' => 'Katso, mitä muokattiin!',
-	'founderemails-answers-email-user-registered-subject' => 'Joku rekisteröityi QA-wikillesi!',
-	'founderemails-answers-email-user-registered-body' => 'Hei $USERNAME,
-
-Näyttäisi siltä, että $EDITORNAME on rekisteröitynyt wikiisi! Miksipä et kävisi hänen keskustelusivullaan $EDITORTALKPAGEURL tervehtimässä häntä?
-
--- Wikia-tiimi',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hei $USERNAME,<br /><br />
-$EDITORNAME näyttäisi rekisteröityneen wikiisi! Miksipä et kävisi hänen <a href="$EDITORTALKPAGEURL">keskustelusivullaan</a> tervehtimässä häntä?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia-tiimi</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Tervetuloa QA Wikiaan!',
 	'founderemails-answers-email-0-days-passed-body' => 'Onnittelut sivustion $WIKINAME luomisen johdosta - olet nyt osa Wikian yhteisöä!
 
@@ -2930,24 +2856,6 @@ L’équipe Wikia',
 	'founderemails-email-page-edited-anon-body-HTML' => '<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Bonjour $USERNAME,</p>
 
 <p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">Un contributeur Wikia a modifié $WIKINAME ! Rendez vous sur <a href="$MYHOMEURL">l\'activité</a> de votre wiki pour voir ce qu’il(elle) a ajouté.</p>
-
-<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">– L’équipe Wikia</p>
-<br /><hr />
-<p>
-<ul>
-<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
-<li>Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
-</ul>
-</p>
-<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Quelqu’un a créé un compte sur votre wiki !',
-	'founderemails-answers-email-user-registered-body' => 'Bonjour $USERNAME,
-
-On dirait que $EDITORNAME a créé un compte sur votre wiki ! Pourquoi ne pas passer lui dire bonjour sur sa page de discussion $EDITORTALKPAGEURL ?
-
-— L’équipe Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Bonjour $USERNAME,<br /><br />
-On dirait que $EDITORNAME a créé un compte sur votre wiki ! Pourquoi ne pas passer lui dire bonjour sur sa <a href="$EDITORTALKPAGEURL">page de discussion</a> ?<br /><br />
 
 <p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">– L’équipe Wikia</p>
 <br /><hr />
@@ -3418,15 +3326,6 @@ O equipo de Wikia',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Boas, $USERNAME:<br /><br />
 Semella que alguén fixo unha edición no seu wiki! Por que non <a href="$MYHOMEURL">comproba</a> o que fixo?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- O equipo de Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Alguén rexistrou unha conta no seu wiki de preguntas e respostas!',
-	'founderemails-answers-email-user-registered-body' => 'Boas, $USERNAME:
-
-Semella que $EDITORNAME rexistrou unha conta no seu wiki! Por que non se achega ata a súa páxina de conversa $EDITORTALKPAGEURL para saudalo?
-
--- O equipo de Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Boas, $USERNAME:<br /><br />
-Semella que $EDITORNAME rexistrou unha conta no seu wiki! Por que non se achega ata a súa <a href="$EDITORTALKPAGEURL">páxina de conversa</a> para saudalo?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- O equipo de Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Benvido ao Wikia de preguntas e respostas!',
 	'founderemails-answers-email-0-days-passed-body' => 'Parabéns pola creación de $WIKINAME. Agora xa é parte da comunidade de Wikia!
 
@@ -3829,15 +3728,6 @@ Le equipa de Wikia',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Salute $USERNAME,<br /><br />
 Il pare que alcuno ha modificate tu wiki! Proque non visitar $MYHOMEURL pro vider lo que ha cambiate?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Alcuno ha create un conto in tu wiki Q&R!',
-	'founderemails-answers-email-user-registered-body' => 'Salute $USERNAME,
-
-Pare que $EDITORNAME ha create un conto in tu wiki! Proque non visitar su pagina de discussion $EDITORTALKPAGEURL pro salutar le?
-
--- Le equipa de Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Salute $USERNAME,<br /><br />
-Pare que $EDITORNAME ha create un conto in tu wiki! Proque non visitar su pagina de discussion $EDITORTALKPAGEURL pro salutar le?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Le equipa de Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Benvenite a Wikia Q&R!',
 	'founderemails-answers-email-0-days-passed-body' => 'Felicitationes pro haber create $WIKINAME - tu face ora parte del communitate Wikia!
 
@@ -4147,15 +4037,6 @@ Tim Wikia',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Hai $USERNAME, <br /><br />
 Kelihatannya seseorang telah menyunting wiki Anda! Mengapa Anda tidak <a href="$MYHOMEURL"> memeriksanya</a> untuk melihat apa yang berubah?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Seseorang mendaftar sebuah akun di QA wiki Anda!',
-	'founderemails-answers-email-user-registered-body' => 'Hai $USERNAME,
-
-Kelihatannya $EDITORNAME telah menyunting wiki Anda! Mengapa Anda tidak mampir ke halaman pembicaraannya $EDITORTALKPAGEURL untuk menyapa?
-
---Tim Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hai $USERNAME,<br /><br />
-Kelihatannya pengguna terdaftar $EDITORNAME telah mendaftar di wiki Anda! Mengapa Anda tidak mengunjungi <a href="$EDITORTALKPAGEURL">halaman pembicaraannya</a> untuk menyapa?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Tim Wikia</div>',
 	'founderemails-answers-email-0-days-passed-body' => 'Selamat atas pembuatan $WIKINAME - Anda sekarang menjadi bagian dari komunitas Wikia!
 
 -- Tim Wikia',
@@ -4409,15 +4290,6 @@ Il Team di Wikia',
 	'founderemails-email-anon-edit-button' => 'Controlla!',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Ehi $USERNAME,<br /><br />
 Sembra che qualcuno abbia modificato la tua wiki! Perché non <a href="$MYHOMEURL">controlli</a> per vedere cosa è cambiato?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Il Team di Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Qualcuno ha registrato un account nella tua QA wiki!',
-	'founderemails-answers-email-user-registered-body' => 'Ehi $USERNAME,
-
-Sembra che $EDITORNAME si sia registrato nella tua wiki! Perché non fai un salto nella sua pagina delle discussioni $EDITORTALKPAGEURL per dirgli ciao?
-
--- Il Team di Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Ehi $USERNAME,<br /><br />
-Sembra che $EDITORNAME si sia registrato nella tua wiki! Perché non fai un salto nella sua <a href="$EDITORTALKPAGEURL">pagina delle discussioni</a> per dirgli ciao?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Il Team di Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Benvenuto a QA Wikia!',
 	'founderemails-answers-email-0-days-passed-body' => 'Complimenti per la creazione di $WIKINAME - ora sei parte della Community di Wikia!
@@ -4830,15 +4702,6 @@ $PAGEURL
 	'founderemails-email-anon-edit-button' => '확인하세요!',
 	'founderemails-email-page-edited-anon-body-HTML' => '$USERNAME 사용자 님!<br /><br />
 누군가 당신의 위키에 기여를 한 것 같습니다. 가서 <a href="$MYHOMEURL">확인</a>해보시는 건 어떤가요?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
-	'founderemails-answers-email-user-registered-subject' => '누군가 당신의 QA 위키에 계정을 등록했습니다!',
-	'founderemails-answers-email-user-registered-body' => '$USERNAME 사용자 님!
-
-$EDITORNAME 사용자가 당신의 위키에 가입했습니다! $EDITORTALKPAGEURL 사용자 담벼락에 간단한 인사라도 남겨보는 건 어떨까요?
-
--- 위키아 팀',
-	'founderemails-answers-email-user-registered-body-HTML' => '$USERNAME 사용자 님!<br /><br />
-$EDITORNAME 사용자가 당신의 위키에 가입했습니다! <a href="$EDITORTALKPAGEURL">사용자 담벼락</a>에 간단한 인사라도 남겨보는 건 어떨까요?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- 위키아 팀</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'QA 위키아에 오신 것을 환영합니다!',
 	'founderemails-answers-email-0-days-passed-body' => '$WIKINAME 위키를 만드신 것을 축하드립니다 - 이제 위키아 커뮤니티의 일원이 되셨습니다!
@@ -5266,15 +5129,6 @@ $PAGEURL
 	'founderemails-email-page-edited-anon-body-HTML' => 'Здраво $USERNAME,<br /><br />
 Некој ви го уредил вашето вики! Зошто не <a href="$MYHOMEURL">проверите</a> да видите што е изменето?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Некој регистрираше сметка на вашето вики „Прашања и одговори“!',
-	'founderemails-answers-email-user-registered-body' => 'Здраво $USERNAME,
-
-Корисникот $EDITORNAME се регистрираше на вашето вики! Зошто не пуштите поздрав на неговата страница за разговор $EDITORTALKPAGEURL?
-
--- Екипата на Викија',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Здраво $USERNAME,<br /><br />
-Корисникот $EDITORNAME се регистрираше на вашето вики! Зошто не пуштите поздрав на неговата <a href="$EDITORTALKPAGEURL">страница ра разговор</a>?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Екипата на Викија</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Добре дојдовте на викијата „Прашања и одговори“!',
 	'founderemails-answers-email-0-days-passed-body' => 'Ви го честитаме создавањето на $WIKINAME - сега сте дел од заедницата на Викија!
 
@@ -5609,15 +5463,6 @@ Pasukan Wikia',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Apa khabar $USERNAME,<br /><br />
 Nampaknya wiki anda telah disunting oleh seseorang! Apa anda anda <a href="$MYHOMEURL">jenguk di situ</a> untuk melihat perubahannya?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Pasukan Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Ada orang mendaftarkan akaun di wiki QA anda!',
-	'founderemails-answers-email-user-registered-body' => 'Apa khabar $USERNAME,
-
-Nampaknya $EDITORNAME telah berdaftar di wiki anda! Apa kata anda singgah di laman perbincangannya ($EDITORTALKPAGEURL) untuk bersalaman?
-
---Pasukan Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Apa khabar $USERNAME,<br /><br />
-Nampaknya $EDITORNAME telah berdaftar di wiki anda! Apa kata anda singgah di <a href="$EDITORTALKPAGEURL">laman perbincangannya</a> untuk bersalaman?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Pasukan Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Selamat datang ke Wikia QA!',
 	'founderemails-answers-email-0-days-passed-body' => 'Syabas kerana membuka $WIKINAME, kini anda menyertai komuniti Wikia!
 
@@ -5938,15 +5783,6 @@ Wikia-teamet',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Hei $USERNAME,<br /><br />
 Det ser ut til at noen redigerte wikien din! Hvorfor ikke stikke innom $MYHOMEURL for å se hva som ble endret?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia-teamet</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Noen registrerte en konto på SS-wikien din!',
-	'founderemails-answers-email-user-registered-body' => 'Hei $USERNAME,
-
-Det ser ut til at $EDITORNAME har registrert seg på wikien din! Hvorfor stikker du ikke til diskusjonssiden hans $EDITORTALKPAGEURL for å si hallo?
-
--- Wikia Teamet',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hei $USERNAME,<br /><br />
-Det ser ut til at $EDITORNAME har registrert seg på wikien din! Hvorfor stikker du ikke til <a href="$EDITORTALKPAGEURL">diskusjonssiden hans</a> for å si hallo?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia Teamet</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Velkommen til SS-Wikia!',
 	'founderemails-answers-email-0-days-passed-body' => 'Gratulerer med $WIKINAME - du er nå en del av Wikia-fellesskapet!
 
@@ -6271,15 +6107,6 @@ Het Wikia-team',
 Het ziet ernaar uit dat iemand uw wiki heeft bewerkt! Waarom gaat u niet even kijken <a href="$MYHOMEURL">wat er is gewijzigd</a>?<br /><br />
 
 <div style="font-style: italic; font-size: 120%;">Het Wikia-team</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Iemand heeft zich geregistreerd op uw QA-wiki!',
-	'founderemails-answers-email-user-registered-body' => 'Hallo $USERNAME,
-
-De gebruiker $EDITORNAME heeft zich geregistreerd op uw wiki! Waarom zegt u niet even goedendag op de overlegpagina? $EDITORTALKPAGEURL
-
--- Het Wikia-team',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hallo $USERNAME,<br /><br />
-De gebruiker $EDITORNAME heeft zich geregistreerd op uw wiki! Waarom zegt u niet even goedendag op de <a href="$EDITORTALKPAGEURL">overlegpagina</a>?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Welkom bij QA Wikia!',
 	'founderemails-answers-email-0-days-passed-body' => 'Gefeliciteerd met het aanmaken van $WIKINAME. U bent nu lid van de Wikia-gemeenschap!
 
@@ -6574,15 +6401,6 @@ Het Wikia-team',
 Het ziet ernaar uit dat iemand je wiki heeft bewerkt! Waarom ga je niet even kijken <a href="$MYHOMEURL">wat er is gewijzigd</a>?<br /><br />
 
 <div style="font-style: italic; font-size: 120%;">Het Wikia-team</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Iemand heeft zich geregistreerd op je QA-wiki!',
-	'founderemails-answers-email-user-registered-body' => 'Hoi $USERNAME,
-
-De gebruiker $EDITORNAME heeft zich geregistreerd op je wiki! Waarom zeg je niet even hoi op de overlegpagina? $EDITORTALKPAGEURL
-
--- Het Wikia-team',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hoi $USERNAME,<br /><br />
-De gebruiker $EDITORNAME heeft zich geregistreerd op je wiki! Waarom zeg je niet even hoi op de <a href="$EDITORTALKPAGEURL">overlegpagina</a>?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- The Wikia Team</div>',
 	'founderemails-answers-email-0-days-passed-body' => 'Gefeliciteerd met het aanmaken van $WIKINAME. Je bent nu lid van de Wikia-gemeenschap!
 
 -- Het Wikia-team',
@@ -6932,15 +6750,6 @@ Zespół Wikii',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Witaj $USERNAME,<br /><br />
 Wygląda na to, że ktoś dokonał zmiany na Twojej wiki! Może <a href="$MYHOMEURL">sprawdzisz</a> co się zmieniło?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Zespół Wikii</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Ktoś zarejestrował się na Twojej wiki!',
-	'founderemails-answers-email-user-registered-body' => 'Witaj $USERNAME,
-
-Wygląda na to, że $EDITORNAME został zarejestrowany na Twojej wiki! Czy nie fajnie byłoby zapuścić się na jego stronę dyskusji $EDITORTALKPAGEURL i się przywitać?
-
---Zespół Wikii',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Witaj $USERNAME,<br /><br />
-$EDITORNAME zarejestrował(a) się na Twojej wiki! Możesz wykorzystać tę okazję aby przywitać się na jego/jej <a href="$EDITORTALKPAGEURL">stronie dyskusji</a><br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Zespół Wikii</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Witamy na QA Wikia!',
 	'founderemails-answers-email-0-days-passed-body' => 'Gratulacje z okazji utworzenia $WIKINAME - teraz jesteś częścią społeczności Wikia!
 
@@ -7178,15 +6987,6 @@ A smija che quaidun a l'abia modificà soa wiki! Përchè a controle nen \$MYHOM
 -- L'Echip Wikia", # Fuzzy
 	'founderemails-email-page-edited-anon-body-HTML' => 'Cerea $USERNAME,<br /><br />
 A smija che quaidun a l\'abia modificà soa wiki! Përchè <a href="$MYHOMEURL">it controle nen</a> për vëdde lòn ch\'a l\'é cangià?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => "Quaidun a l'ha registrà un cont dzora soa wiki D&R!",
-	'founderemails-answers-email-user-registered-body' => 'Cerea $USERNAME,
-
-A smija che $EDITORNAME a sia registrasse su soa wiki! Përchè a fa nen un sàut su soa pàgina dle ciaciarade $EDITORTALKPAGEURL për salutelo?
-
--- L\'Echip Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Cerea $USERNAME,<br /><br />
-A smija che $EDITORNAME a sia registrasse su soa wiki! Përchè a fa nen un sàut su soa <a href="$EDITORTALKPAGEURL">pàgine dle ciaciarade</a> për dije cerea? <br /><br />
 <div style="font-style: italic; font-size: 120%;">-- L\'Echip Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Bin ëvnù su Wikia C&R!',
 	'founderemails-answers-email-0-days-passed-body' => 'Congratulassion për avèj creà $WIKINAME - adess a fa part ëd la comunità Wikia!
@@ -7459,15 +7259,6 @@ A Equipa da Wikia',
 	'founderemails-email-anon-edit-button' => 'Ver!',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Olá $USERNAME,<br /><br />
 Parece que alguém editou a sua wiki! Que tal <a href="$MYHOMEURL">visitá-la</a> e ver o que foi alterado?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Alguém registou uma conta na sua wiki de Perguntas e Respostas!',
-	'founderemails-answers-email-user-registered-body' => 'Olá $USERNAME,
-
-Parece que o utilizador $EDITORNAME se registou na sua wiki! Que tal visitar a página de discussão $EDITORTALKPAGEURL e dizer-lhe olá?
-
--- A Equipa da Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Olá $USERNAME,<br /><br />
-Parece que o utilizador $EDITORNAME se registou na sua wiki! Que tal visitar a <a href="$EDITORTALKPAGEURL">página de discussão</a> e dizer-lhe olá?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipa da Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Bem-vindo(a) à WikiaRespostas!',
 	'founderemails-answers-email-0-days-passed-body' => 'Parabéns por ter criado a wiki $WIKINAME - agora faz parte da comunidade Wikia!
@@ -7766,15 +7557,6 @@ A Equipe Wikia',
 	'founderemails-email-anon-edit-button' => 'Confira só!',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Ei $USERNAME,<br /><br />
 Parece que alguém editou sua wiki! Por que você não <a href="$MYHOMEURL">vê isso</a> para ver o que ele mudou?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- A Equipe Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Alguém registrou-se na sua WikiRespostas!',
-	'founderemails-answers-email-user-registered-body' => 'Ei $USERNAME,
-
-Parece que $EDITORNAME se registrou em sua wiki! Por que você não vai à sua página de discussão $EDITORTALKPAGEURL para saudá-lo?
-
--- A Equipe Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Ei, $USERNAME,<br /><br />
-Parece que $EDITORNAME se registrou na sua wiki! Porque você não visita a sua <a href="$EDITORTALKPAGEURL">página de discussão</a> para dizer "Olá"? <br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipe Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Bem-vindo à Wikia Respostas!',
 	'founderemails-answers-email-0-days-passed-body' => 'Parabéns pela criação da $WIKINAME - agora você faz parte da comunidade da Wikia!
@@ -8081,16 +7863,6 @@ $PAGEURL
 	'founderemails-email-page-edited-anon-body-HTML' => 'Привет, $USERNAME.<br /><br />
 
 Похоже, что кто-то внёс правки в вашу вики! Почему бы вам <a href="$MYHOMEURL">не проверить,</a> что было изменено?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Команда Викия</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Кто-то зарегистрировал учётную запись на вашей QA-вики!',
-	'founderemails-answers-email-user-registered-body' => 'Привет, $USERNAME.
-
-Похоже, что $EDITORNAME зарегистрировался в вашей вики! Почему бы вам не зайти на его страницу обсуждения $EDITORTALKPAGEURL и не сказать привет?
-
--- Команда Викия',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Привет, $USERNAME.<br /><br />
-
-Похоже, что $EDITORNAME зарегистрировался в вашей вики! Почему бы вам не зайти <a href="$EDITORTALKPAGEURL">страницу обсуждения</a> и не сказать привет?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Викия</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Добро пожаловать на QA Викия!',
 	'founderemails-answers-email-0-days-passed-body' => 'Поздравляем с созданием $WIKINAME, теперь вы являетесь частью сообщества Викия!
@@ -8410,15 +8182,6 @@ Wikia-teamet',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Hej $USERNAME,<br /><br />
 Det ser ut som någon har redigerat din wiki! Varför inte <a href="$MYHOMEURL">kolla in den</a> för att se vad som har förändrats?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia-teamet</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Någon registrerade ett konto på din Frågor-och-svar-wiki!',
-	'founderemails-answers-email-user-registered-body' => 'Hej $USERNAME,
-
-Det ser ut som $EDITORNAME har registrerat ett konto på din wiki! Varför går du inte och besöker dem på deras diskussionssida $EDITORTALKPAGEURL och säger hej?
-
--- Wikia-teamet',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hej $USERNAME,<br /><br />
-Det ser ut som $EDITORNAME har registrerat sig på din wiki! Varför tittar du inte in på <a href="$EDITORTALKPAGEURL">diskussionssidan</a> för att säga hej?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia-teamet</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Välkommen till QA-Wikia!',
 	'founderemails-answers-email-0-days-passed-body' => 'Grattis till att skapa $WIKINAME - nu är du en del av Wikia-gemenskapen!
 
@@ -8667,14 +8430,6 @@ $PAGEURL
 	'founderemails-email-anon-edit-button' => 'దాన్ని చూడండి!',
 	'founderemails-email-page-edited-anon-body-HTML' => '$USERNAME గారూ,<br /><br />
 ఎవరో మీ వికీలో మార్పు చేసినట్లుగా కనిపిస్తోంది! ఓసారి <a href="$MYHOMEURL">వెళ్ళి</a> ఏం మార్చారో చూడకూడదూ?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
-	'founderemails-answers-email-user-registered-subject' => 'మీ ప్రజ వికీలో ఎవరో ఓ ఖాతాను నమోదు చేసుకున్నారు!',
-	'founderemails-answers-email-user-registered-body' => '$USERNAME గారూ,
-$EDITORNAME మీ వికీలో నమోదైనట్లుగా కనిపిస్తోంది! ఓసారి వారి చర్చాపేజీకి ($EDITORTALKPAGEURL) వెళ్ళి పలకరించకూడదూ?
-
--- వికియా బృందం',
-	'founderemails-answers-email-user-registered-body-HTML' => '$USERNAME గారూ,<br /><br />
-$EDITORNAME మీ వికీలో నమోదైనట్లుగా కనిపిస్తోంది! ఓసారి వారి <a href="$EDITORTALKPAGEURL">చర్చాపేజీకి</a>వెళ్ళి పలకరించకూడదూ?<br /><br /> 
 <div style="font-style: italic; font-size: 120%;">-- వికియా బృందం</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'ప్రజ వికియాకు స్వాగతం!',
 	'founderemails-answers-email-0-days-passed-body' => '$WIKINAME ను సృష్టించినందుకు అభినందనలు - మీరిప్పుడు వికియా సముదాయంలో భాగమయ్యారు!
@@ -8951,15 +8706,6 @@ Ang Pangkat ng Wikia',
 	'founderemails-email-anon-edit-button' => 'Tingnan at suriin ito!',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Hoy $USERNAME,<br /><br />
 Mukhang mayroong isang tao na namatnugot sa wiki mo! Bakit hindi mo kaya <a href="$MYHOMEURL">siyasatin ito</a> upang makita kung ano ang nabago?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
-	'founderemails-answers-email-user-registered-subject' => 'May isang taong nagpatala ng isang akawnt sa iyong wiki ng QA!',
-	'founderemails-answers-email-user-registered-body' => 'Hoy $USERNAME,
-
-Mukhang nagparehistro na si $EDITORNAME sa wiki mo! E kung dumalaw ka kaya sa kanilang pahina ng usapan na $EDITORTALKPAGEURL upang mangumusta?
-
--- Ang Pangkat ng Wikia',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Hoy $USERNAME,<br /><br />
-Tila nagpatala si $EDITORNAME sa iyong wiki! Bakit hindi ka dumalaw sa kanilang<a href="$EDITORTALKPAGEURL">pahina ng usapan</a> upang magsabi ng pagbati?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Ang Pangkat ng Wikia</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Maligayang pagdating sa Wikia ng QA!',
 	'founderemails-answers-email-0-days-passed-body' => 'Maligayang pagbati sa paglikha ng $WIKINAME - bahagi ka na ngayon ng pamayanan ng Wikia!
@@ -9320,15 +9066,6 @@ $PAGEURL
 
 Здається, що хтось вніс правки у вашу вікі! Чому б вам <a href="$MYHOMEURL">не перевірити,</a> що змінено?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Команда Вікія</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Хтось зареєстрував обліковий запис на вашому QA-вікі!',
-	'founderemails-answers-email-user-registered-body' => 'Привіт, $USERNAME!
-
-Користувач $EDITORNAME щойно зареєструвався на вашій вікі! Ви можете зайти на його сторінку обговорення $EDITORTALKPAGEURL і привітати його.
-
--- Команда Вікія',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Привіт, $USERNAME!<br /><br />
-Користувач $EDITORNAME щойно зареєструвався на вашій вікі! Ви можете зайти на його <a href="$EDITORTALKPAGEURL">сторінку обговорення</a> і привітати його.<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Команда Вікії</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Ласкаво просимо до QA-Вікія!',
 	'founderemails-answers-email-0-days-passed-body' => 'Вітаємо зі створенням $WIKINAME - ви тепер частина спільноти Вікія!
 
@@ -9653,15 +9390,6 @@ Wikia Team',
 	'founderemails-email-page-edited-anon-body-HTML' => 'Chào $USERNAME,<br /><br />
 Trông giống như $USERNAME đã đăng ký tài khoản tại wiki của bạn và tạo ra sửa đổi! Tại sao bạn không <a href="$MYHOMEURL">kiểm tra</a> để xem thay đổi thế nào nhỉ?<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia Team</div>',
-	'founderemails-answers-email-user-registered-subject' => 'Ai đó đã đăng ký tài khoản trên wiki của bạn!',
-	'founderemails-answers-email-user-registered-body' => 'Chào $USERNAME,
-
-Trông giống như $EDITORNAME đã đăng ký tài khoản tại wiki của bạn! Tại sao bạn không ghé qua trang thảo luận của họ $EDITORTALKPAGEURL để gửi lời chào nhỉ?
-
--- Wikia Team',
-	'founderemails-answers-email-user-registered-body-HTML' => 'Chào $USERNAME,<br /><br />
-Trông giống như $EDITORNAME đã đăng ký tài khoản tại wiki của bạn! Tại sao bạn không ghé qua <a href="$EDITORTALKPAGEURL">trang thảo luận</a> của họ để gửi lời chào nhỉ?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Wikia Team</div>',
 	'founderemails-answers-email-0-days-passed-subject' => 'Chào mừng bạn đến với Wikia!',
 	'founderemails-answers-email-0-days-passed-body' => 'Xin chúc mừng về việc tạo ra $WIKINAME - bây giờ bạn đã là một phần của cộng đồng Wikia!
 
@@ -9977,14 +9705,6 @@ Wikia团队',
 	'founderemails-email-anon-edit-button' => '去查看！',
 	'founderemails-email-page-edited-anon-body-HTML' => '嗨！$USERNAME<br /><br />
 看起来有人编辑了您的wiki！为何不<a href="$MYHOMEURL">检查</a>更改了什么？<br /><br /><div style="font-style: italic; font-size: 120%;">--Wikia团队</div>',
-	'founderemails-answers-email-user-registered-subject' => '某人在您的问答wiki注册了一个账户！',
-	'founderemails-answers-email-user-registered-body' => '嘿！$USERNAME，
-
-看来$EDITORNAME已经在你的维基上注册了！何不踩踩他们的讨论页$EDITORTALKPAGEURL，和他们打个招呼呢？
-
--- Wikia团队',
-	'founderemails-answers-email-user-registered-body-HTML' => '嗨！$USERNAME<br /><br />
-看起来$EDITORNAME在您的wiki注册了！为何不在他们的<a href="$EDITORTALKPAGEURL">讨论页</a>欢迎他们？<br /><br /><div style="font-style: italic; font-size: 120%;">--Wikia团队</div>',
 	'founderemails-answers-email-0-days-passed-subject' => '欢迎来到Wikia问答！',
 	'founderemails-answers-email-0-days-passed-body' => '祝贺创建$WIKINAME——您现在是Wikia社区的一部分了！',
 	'founderemails-answers-email-0-days-passed-body-HTML' => '祝贺您创建了<strong>$WIKINAME</strong>——您现在是Wikia社群一员了！<br /><br /><div style="font-style: italic; font-size: 120%;">--Wikia团队</div>',
@@ -10123,8 +9843,6 @@ $messages['zh-hant'] = array(
 	'founderemails-email-anon-edit-greeting' => 'Hi $USERNAME,',
 	'founderemails-email-anon-edit-headline' => '一個Wikia參與者剛才編輯了 $WIKINAME.上的  $PAGETITLE',
 	'founderemails-email-anon-edit-signature' => 'Wikia 團隊',
-	'founderemails-answers-email-user-registered-subject' => '有人在您的問答網站上註冊了一個帳戶 ！',
-	'founderemails-answers-email-0-days-passed-subject' => '歡迎來到 Wikia問答網站 ！',
 	'founderemails-answers-email-0-days-passed-body' => '恭喜創建了 $WIKINAME - 您現在是Wikia社群的一份子！
 
 -- Wikia團隊',
