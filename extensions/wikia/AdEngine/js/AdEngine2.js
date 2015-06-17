@@ -1,12 +1,13 @@
 /*global define*/
 define('ext.wikia.adEngine.adEngine', [
+	'wikia.document',
 	'wikia.log',
 	'wikia.lazyqueue',
 	'ext.wikia.adEngine.adDecoratorLegacyParamFormat',
 	'ext.wikia.adEngine.eventDispatcher',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker'
-], function (log, lazyQueue, adDecoratorLegacyParamFormat, eventDispatcher, slotTracker, slotTweaker) {
+], function (doc, log, lazyQueue, adDecoratorLegacyParamFormat, eventDispatcher, slotTracker, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';
@@ -25,6 +26,36 @@ define('ext.wikia.adEngine.adEngine', [
 		return func;
 	}
 
+	function cleanProviderContainers(slotName) {
+		var slotContainer = doc.getElementById(slotName),
+			containers;
+
+		if (!slotContainer) {
+			return;
+		}
+
+		containers = slotContainer.childNodes;
+		for (var i = 0; i < containers.length; i++) {
+			containers[i].innerHTML = '';
+		}
+	}
+
+	function prepareAdProviderContainer(providerName, slotName) {
+		// TODO: remove after Liftium-era
+		var providerContainerId = providerName + '_' + slotName.split('.')[0],
+			adContainer = doc.getElementById(slotName),
+			providerContainer = doc.getElementById(providerContainerId);
+
+		if (!providerContainer && adContainer) {
+			providerContainer = doc.createElement('div');
+			providerContainer.id = providerContainerId;
+			adContainer.appendChild(providerContainer);
+		}
+
+		log(['prepareAdProviderContainer', providerName, slotName, providerContainer], 'debug', logGroup);
+		return providerContainer;
+	}
+
 	function run(adConfig, adslots, queueName) {
 		log(['run', adslots, queueName], 'debug', logGroup);
 
@@ -32,12 +63,13 @@ define('ext.wikia.adEngine.adEngine', [
 			log(['fillInSlotUsingProvider', provider.name, slot], 'debug', logGroup);
 
 			var slotName = slot.slotName,
+				slotElement = prepareAdProviderContainer(provider.name, slotName),
 				aSlotTracker = slotTracker(provider.name, slotName, queueName);
 
 			// Notify people there's the slot handled
 			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotName, provider);
 
-			provider.fillInSlot(slotName, function (extra) {
+			provider.fillInSlot(slotName, slotElement, function (extra) {
 				// Success callback
 				log(['success', provider.name, slotName, extra], 'debug', logGroup);
 				aSlotTracker.track('success', extra);
@@ -90,6 +122,7 @@ define('ext.wikia.adEngine.adEngine', [
 				} while (provider);
 			}
 
+			cleanProviderContainers(slotName);
 			nextProvider();
 		}
 
