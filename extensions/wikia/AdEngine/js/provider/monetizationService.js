@@ -1,12 +1,15 @@
 define('ext.wikia.adEngine.provider.monetizationService', [
 	'ext.wikia.adEngine.adContext',
-	'wikia.loader',
+	'ext.wikia.adEngine.monetizationsServiceHelper',
+	'jquery',
 	'wikia.log',
-	'wikia.scriptwriter',
-], function (adContext, loader, log, scriptWriter) {
+	'wikia.nirvana',
+	'wikia.window',
+], function (adContext, monetizationsServiceHelper, $, log, nirvana, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
+		isLoaded = false,
 		slotMap = {
 			MON_ABOVE_TITLE: 'above_title',
 			MON_BELOW_TITLE: 'below_title',
@@ -31,18 +34,51 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	function fillInSlot(slot, success, hop) {
 		log(['fillInSlot', slot], 'debug', logGroup);
 
-		var slotName = slotMap[slot],
-			context = adContext.getContext();
-
-		if (context.providers.monetizationServiceAds && context.providers.monetizationServiceAds[slotName]) {
-			log(['fillInSlot', slot, 'injectScript'], 'debug', logGroup);
-
-			scriptWriter.injectHtml(slot, context.providers.monetizationServiceAds[slotName], function () {
-				success();
-			});
-		} else {
-			hop();
+		if (!isLoaded) {
+			log(['fillInSlot', slot, 'getModules'], 'debug', logGroup);
+			getModules(success, hop);
+			isLoaded = true;
 		}
+	}
+
+	function getModules(success, hop) {
+		log(['getModules', 'Send request'], 'debug', logGroup);
+		nirvana.getJson(
+			'MonetizationModule',
+			'getModules',
+			{
+				adEngine: true,
+				articleId: window.wgArticleId,
+				fromSearch: window.fromsearch,
+				max: monetizationsServiceHelper.getMaxAds(),
+				geo: monetizationsServiceHelper.getCountryCode()
+			}
+		).done(function (json) {
+			var modules = json.data;
+			if (modules) {
+				$.each(slotMap, function (slot, slotName) {
+					if (modules[slotName] && validateSlot(slotName)) {
+						log(['getModules', slot, 'injectScript'], 'debug', logGroup);
+						monetizationsServiceHelper.injectContent(slot, modules[slotName], success);
+					} else {
+						log(['getModules', slot, 'Empty data'], 'debug', logGroup);
+						hop();
+					}
+				});
+			}
+		});
+	}
+
+	function validateSlot(slot) {
+		log(['validateSlot', slot], 'debug', logGroup);
+
+		if (slot === 'MON_BELOW_CATEGORY' && $('#MON_IN_CONTENT').hasClass('end-content')) {
+			log(['validateSlot', slot, false], 'debug', logGroup);
+			return false;
+		}
+
+		log(['validateSlot', slot, true], 'debug', logGroup);
+		return true;
 	}
 
 	return {

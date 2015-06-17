@@ -2,34 +2,31 @@
 
 class MonetizationModuleController extends WikiaController {
 
-	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-
 	/**
 	 * Monetization Module
 	 * @responseParam array data - list of modules
 	 */
-	public function index() {
-		wfProfileIn( __METHOD__ );
+	public function getModules() {
+		$articleId = $this->request->getInt( 'articleId' );
+		if ( empty( $articleId ) ) {
+			$title = $this->wg->Title;
+		} else {
+			$title = Title::newFromID( $articleId );
+			if ( !$title instanceof Title ) {
+				$this->data = '';
+				return true;
+			}
+		}
 
-		if ( !MonetizationModuleHelper::canShowModule() ) {
+		if ( !MonetizationModuleHelper::canShowModule( $title ) ) {
 			$this->data = '';
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
-
-		if ( empty( $this->wg->OasisBreakpoints ) ) {
-			$this->response->addAsset( 'monetization_module_css_no_breakpoints' );
-		} else {
-			$this->response->addAsset( 'monetization_module_css' );
-		}
-
-		$this->response->addAsset( 'monetization_module_js' );
 
 		$helper = new MonetizationModuleHelper();
 
 		$params = [
 			's_id' => $this->wg->CityId,
-			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
 			'vertical' => $helper->getWikiVertical(),
 			'cache' => $helper->getCacheVersion(),
 		];
@@ -39,14 +36,40 @@ class MonetizationModuleController extends WikiaController {
 			$params['mcache'] = $mcachePurge;
 		}
 
-		$this->data = $helper->getMonetizationUnits( $params );
+		$adEngine = $this->request->getBool( 'adEngine', false );
+		if ( $adEngine ) {
+			$params['ad_engine'] = $adEngine;
+			$params['geo'] = $this->request->getVal( 'geo', MonetizationModuleHelper::COUNTRY_CODE_REST_OF_THE_WORLD );
+			$params['max'] = $this->request->getInt( 'max' );
 
-		// check if the article page is blocked
-		if ( !empty( $this->data['blocked_pages'] ) && in_array( $this->wg->title->getArticleID(), $this->data['blocked_pages'] ) ) {
-			$this->data = '';
+			$fromSearch = $this->request->getBool( 'fromSearch', false );
+			if ( $fromSearch ) {
+				$params['from_search'] = $fromSearch;
+			}
+		} else {
+			$params['max'] = MonetizationModuleHelper::calculateNumberOfAds( $title->mLength );
+
+			$this->addStyleAssets();
+			$this->response->addAsset( 'monetization_module_js' );
 		}
 
-		wfProfileOut( __METHOD__ );
+		$this->data = $helper->getMonetizationUnits( $title, $params );
+
+		// check if the article page is blocked
+		if ( !empty( $this->data['blocked_pages'] ) && in_array( $title->getArticleID(), $this->data['blocked_pages'] ) ) {
+			$this->data = '';
+		}
+	}
+
+	/**
+	 * Add style assets
+	 */
+	public function addStyleAssets() {
+		if ( empty( $this->wg->OasisBreakpoints ) ) {
+			$this->response->addAsset( 'monetization_module_css_no_breakpoints' );
+		} else {
+			$this->response->addAsset( 'monetization_module_css' );
+		}
 	}
 
 }
