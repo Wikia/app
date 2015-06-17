@@ -18,8 +18,10 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 */
 	const FIRST_EDIT_REVISION_THRESHOLD = 2;
 
+	const DAILY_NOTIFICATION_LIMIT = 15;
+
 	/**
-	 * Constansts for describing Users edit status for purpose of sending founder notification
+	 * Constants for describing Users edit status for purpose of sending founder notification
 	 * on first edit
 	 */
 	const NO_EDITS = 0;
@@ -32,7 +34,109 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		$this->setData( $data );
 	}
 
-	public function enabled ( $wgCityId, User $user ) {
+	public function process( Array $events ) {
+		global $wgCityId, $wgMemc;
+
+		if ( !$this->isThresholdMet( count( $events ) ) ) {
+			return false;
+		}
+
+		// get just one event when we have more... for now, just randomly
+		$event = $events[ rand( 0, count( $events ) -1 ) ];
+		$eventData = $event['data'];
+
+		// quit if this particular user has generated an edit email in the last hour
+		$memcKey = wfMemcKey( 'FounderEmail', 'EditEvent', $eventData['editorName'] );
+		if ( $wgMemc->get( $memcKey ) == '1' ) {
+			return true;
+		}
+		// Set flag so this user won't generate edit notifications for given period of time
+		$wgMemc->set( $memcKey, '1', self::USER_EMAILS_THROTTLE_EXPIRY_TIME );
+
+		$foundingWiki = WikiFactory::getWikiById( $wgCityId );
+		$wikiService = new WikiService();
+		$user_ids = $wikiService->getWikiAdminIds();
+		$emailParams = [
+			'$EDITORNAME' => $eventData['editorName'],
+			'$EDITORPAGEURL' => $eventData['editorPageUrl'],
+			'$EDITORTALKPAGEURL' => $eventData['editorTalkPageUrl'],
+			'$MYHOMEURL' => $eventData['myHomeUrl'],
+			'$WIKINAME' => $foundingWiki->city_title,
+			'$PAGETITLE' => $eventData['titleText'],
+			'$PAGENS' => $eventData['titleNs'],
+			'$PAGEURL' => $eventData['titleUrl'],
+			'$WIKIURL' => $foundingWiki->city_url,
+		];
+
+		foreach ( $user_ids as $user_id ) {
+			$user = User::newFromId( $user_id );
+			if ( $this->shouldSkipUser( $user, $eventData ) ) {
+				continue;
+			}
+
+			// Increase the count of notifications we've made on this wiki
+			$this->updateUserNotificationCount( $user );
+
+			self::addParamsUser( $wgCityId, $user->getName(), $emailParams );
+			$mailCategory = $mailKey = '';
+			$msgKeys = [];
+
+			if ( $this->hasHitNotificationLimit( $user ) ) {
+				$msgKeys['subject'] = 'founderemails-lot-happening-subject';
+				$msgKeys['body'] = 'founderemails-lot-happening-body';
+				$msgKeys['body-html'] = 'founderemails-lot-happening-body-HTML';
+				$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_HIGH_ACTIVITY;
+				$mailKey = 'lot-happening';
+			} elseif ( $eventData['registeredUserFirstEdit'] ) {
+				$controller = 'Email\Controller\FounderEdit';
+			} elseif ( $eventData['registeredUser'] ) {
+				$controller = 'Email\Controller\FounderMultiEdit';
+			} else {
+				$controller = 'Email\Controller\FounderAnonEdit';
+			}
+
+			if ( !empty( $controller ) ) {
+				$this->sendUsingEmailExtension( $controller, $user, $eventData );
+			} else {
+				$this->sendEmailDirectly( $user, $mailCategory, $emailParams, $msgKeys, $mailKey );
+			}
+		}
+
+		return true;
+	}
+
+	private function shouldSkipUser( User $user, array $eventData ) {
+		// skip if not enabled
+		if ( !$this->enabled( F::app()->wg->CityId, $user ) ) {
+			return true;
+		}
+
+		// skip if receiver is the editor
+		if ( $user->getName() == $eventData['editorName'] ) {
+			return true;
+		}
+
+		// BugID: 1961 Quit if the founder email is not confirmed
+		if ( !$user->isEmailConfirmed() ) {
+			return true;
+		}
+
+		if ( $this->hasExceededNotificationLimit( $user ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns whether founder emails are available for this user
+	 *
+	 * @param int $wikiId
+	 * @param User $user
+	 *
+	 * @return bool
+	 */
+	public function enabled ( $wikiId, User $user ) {
 		if ( self::isAnswersWiki() ) {
 			return false;
 		}
@@ -43,151 +147,122 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		}
 
 		// If digest mode is enabled, do not create edit event notifications
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+		if ( $user->getOption( "founderemails-complete-digest-$wikiId" ) ) {
 			return false;
 		}
-		if ( $user->getOption( "founderemails-edits-$wgCityId" ) ) {
+
+		if ( $user->getOption( "founderemails-edits-$wikiId" ) ) {
 			return true;
 		}
+
 		return false;
 	}
 
-	public function process( Array $events ) {
-		global $wgCityId, $wgEnableAnswers, $wgMemc;
-		wfProfileIn( __METHOD__ );
+	private function hasExceededNotificationLimit( User $user ) {
+		$count = $this->getUserNotificationCount( $user );
+		return $count > self::DAILY_NOTIFICATION_LIMIT;
+	}
 
-		if ( $this->isThresholdMet( count( $events ) ) ) {
-			// get just one event when we have more... for now, just randomly
-			$eventData = $events[ rand( 0, count( $events ) -1 ) ];
+	private function hasHitNotificationLimit( User $user ) {
+		$count = $this->getUserNotificationCount( $user );
+		return $count == self::DAILY_NOTIFICATION_LIMIT;
+	}
 
-			// quit if this particular user has generated an edit email in the last hour
-			$memcKey = wfMemcKey( 'FounderEmail', 'EditEvent', $eventData['data']['editorName'] );
-			if ( $wgMemc->get( $memcKey ) == '1' ) {
-				wfProfileOut( __METHOD__ );
-				return true;
+	private function getUserNotificationCount( User $user ) {
+		$counter = $this->getNotificationCounter( $user );
+		return $counter[F::app()->wg->CityId]['count'];
+	}
+
+	/**
+	 * Keeps a per request cache of the 'founderemails-counter' user option
+	 *
+	 * @param User $user
+	 *
+	 * @return mixed
+	 */
+	private function getNotificationCounter( User $user ) {
+		static $counter = null;
+
+		if ( empty( $counter[$user->getId()] ) ) {
+			$allCounter = unserialize( $user->getOption( 'founderemails-counter' ) );
+			if ( $this->userCounterNeedsReset( $allCounter ) ) {
+				$allCounter[F::app()->wg->CityId] = [
+					'date'  => date( 'Y-m-d' ),
+					'count' => 0,
+				];
 			}
 
-			$foundingWiki = WikiFactory::getWikiById( $wgCityId );
-			$founderEmailObj = FounderEmails::getInstance();
-			$wikiService = ( new WikiService );
-			$user_ids = $wikiService->getWikiAdminIds();
-			$emailParams = array(
-				'$EDITORNAME' => $eventData['data']['editorName'],
-				'$EDITORPAGEURL' => $eventData['data']['editorPageUrl'],
-				'$EDITORTALKPAGEURL' => $eventData['data']['editorTalkPageUrl'],
-				'$MYHOMEURL' => $eventData['data']['myHomeUrl'],
-				'$WIKINAME' => $foundingWiki->city_title,
-				'$PAGETITLE' => $eventData['data']['titleText'],
-				'$PAGEURL' => $eventData['data']['titleUrl'],
-				'$WIKIURL' => $foundingWiki->city_url,
-			);
+			$counter[$user->getId()] = $allCounter;
+		}
 
-			$msgKeys = array();
-			$today = date( 'Y-m-d' );
-			$wikiType = !empty( $wgEnableAnswers ) ? '-answers' : '';
+		return $counter[$user->getId()];
+	}
 
-			foreach ( $user_ids as $user_id ) {
-				$user = User::newFromId( $user_id );
-
-				// skip if not enable
-				if ( !$this->enabled( $wgCityId, $user ) ) {
-					continue;
-				}
-
-				// skip if reciever is the editor
-				if ( $user->getName() == $eventData['data']['editorName'] ) {
-					continue;
-				}
-
-				// BugID: 1961 Quit if the founder email is not confirmed
-				if ( !$user->isEmailConfirmed() ) {
-					wfProfileOut( __METHOD__ );
-					return true;
-				}
-
-				$aAllCounter = unserialize( $user->getOption( 'founderemails-counter' ) );
-				if ( empty( $aAllCounter ) ) {
-					$aAllCounter = array();
-				}
-
-				// quit if the Founder has recieved enough emails today
-
-				$aWikiCounter = empty( $aAllCounter[$wgCityId] ) ? array() : $aAllCounter[$wgCityId];
-
-				if ( !empty( $aWikiCounter[0] ) && $aWikiCounter[0] == $today && $aWikiCounter[1] === 'full' ) {
-					wfProfileOut( __METHOD__ );
-					return true;
-				}
-
-				// initialize or reset counter for today
-				if ( empty( $aWikiCounter[0] ) || $aWikiCounter[0] !== $today ) {
-					$aWikiCounter[0] = $today;
-					$aWikiCounter[1] = 0;
-				}
-				self::addParamsUser( $wgCityId, $user->getName(), $emailParams );
-				$mailCategory = FounderEmailsEvent::CATEGORY_DEFAULT;
-				// @FIXME magic number, move to config
-				if ( $aWikiCounter[1] === 15 ) {
-					$msgKeys['subject'] = 'founderemails-lot-happening-subject';
-					$msgKeys['body'] = 'founderemails-lot-happening-body';
-					$msgKeys['body-html'] = 'founderemails-lot-happening-body-HTML';
-					$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_HIGH_ACTIVITY;
-					$mailKey = 'lot-happening';
-				} elseif ( $eventData['data']['registeredUserFirstEdit'] ) {
-					$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-subject';
-					$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body';
-					$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-first-edit-body-HTML';
-					$mailCategory = FounderEmailsEvent::CATEGORY_FIRST_EDIT_USER;
-					$mailKey = 'first-edit';
-				} elseif ( $eventData['data']['registeredUser'] ) {
-					$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-subject';
-					$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body';
-					$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-reg-user-body-HTML';
-					$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_USER;
-					$mailKey = 'general-edit';
-				} else {
-					$msgKeys['subject'] = 'founderemails' . $wikiType . '-email-page-edited-anon-subject';
-					$msgKeys['body'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body';
-					$msgKeys['body-html'] = 'founderemails' . $wikiType . '-email-page-edited-anon-body-HTML';
-					$mailCategory = FounderEmailsEvent::CATEGORY_EDIT_ANON;
-					$mailKey = 'anon-edit';
-				}
-
-				// Set flag so this user won't generate edit notifications for given period of time
-				$wgMemc->set( $memcKey, '1', self::USER_EMAILS_THROTTLE_EXPIRY_TIME );
-
-				// Increment counter for daily notification limit
-				$aWikiCounter[1] = ( $aWikiCounter[1] === 15 ) ? 'full' : $aWikiCounter[1] + 1;
-				$aAllCounter[$wgCityId] = $aWikiCounter;
-
-				$user->setOption( 'founderemails-counter', serialize( $aAllCounter ) );
-				$user->saveSettings();
-
-				$langCode = $user->getOption( 'language' );
-				$mailCategory .= ( !empty( $langCode ) && $langCode == 'en' ? 'EN' : 'INT' );
-				$mailSubject = strtr( wfMsgExt( $msgKeys['subject'], array( 'content' ) ), $emailParams );
-				$mailBody = strtr( wfMsgExt( $msgKeys['body'], array( 'content' ) ), $emailParams );
-
-				if ( empty( $wgEnableAnswers ) ) { // FounderEmailv2.1
-					$links = array(
-						'$EDITORNAME' => $emailParams['$EDITORPAGEURL'],
-						'$PAGETITLE' => $emailParams['$PAGEURL'],
-						'$WIKINAME' => $emailParams['$WIKIURL'],
-					);
-					$mailBodyHTML = F::app()->renderView( 'FounderEmails', 'GeneralUpdate', array_merge( $emailParams, array( 'language' => 'en', 'type' => $mailKey ) ) );
-					$mailBodyHTML = strtr( $mailBodyHTML, FounderEmails::addLink( $emailParams, $links ) );
-				} else {	// old emails
-					$mailBodyHTML = $this->getLocalizedMsg( $msgKeys['body-html'], $emailParams );
-				}
-
-				wfProfileOut( __METHOD__ );
-				$founderEmailObj->notifyFounder( $user, $this, $mailSubject, $mailBody, $mailBodyHTML, $wgCityId, $mailCategory );
-			}
+	private function userCounterNeedsReset( array $counter ) {
+		if ( empty( $counter[F::app()->wg->CityId] ) ) {
 			return true;
 		}
 
-		wfProfileOut( __METHOD__ );
-		return false;
+		$today = date( 'Y-m-d' );
+		$wikiCounter = $counter[F::app()->wg->CityId];
+		return $wikiCounter['date'] !== $today;
+	}
+
+	private function updateUserNotificationCount( User $user ) {
+		$counter = $this->getNotificationCounter( $user );
+		$counter[F::app()->wg->CityId]['count']++;
+
+		$user->setOption( 'founderemails-counter', serialize( $counter ) );
+		$user->saveSettings();
+	}
+
+	private function sendUsingEmailExtension( $controller, User $user, array $eventData ) {
+		$params = [
+			'targetUser' => $user->getName(),
+			'currentUser' => $eventData['editorName'],
+			'pageTitle' => $eventData['titleText'],
+			'pageNs' => $eventData['titleNs'],
+			'previousRevId' => $eventData['previousRevId'],
+			'currentRevId' => $eventData['currentRevId'],
+			// TODO: Remove the next two lines when SOC-530 has been merged (these will then be default)
+			'fromAddress' => \F::app()->wg->PasswordSender,
+			'fromName' => \F::app()->wg->PasswordSenderName,
+		];
+
+		F::app()->sendRequest( $controller, 'handle', $params );
+	}
+
+	private function sendEmailDirectly( User $user, $mailCategory, array $emailParams, array $msgKeys, $mailKey ) {
+		$langCode = $user->getOption( 'language' );
+		$mailCategory .= ( !empty( $langCode ) && $langCode == 'en' ? 'EN' : 'INT' );
+		$mailSubject = strtr( wfMsgExt( $msgKeys['subject'], array( 'content' ) ), $emailParams );
+		$mailBody = strtr( wfMsgExt( $msgKeys['body'], array( 'content' ) ), $emailParams );
+
+		if ( empty( F::app()->wg->EnableAnswers ) ) { // FounderEmailv2.1
+			$links = array(
+				'$EDITORNAME' => $emailParams['$EDITORPAGEURL'],
+				'$PAGETITLE' => $emailParams['$PAGEURL'],
+				'$WIKINAME' => $emailParams['$WIKIURL'],
+			);
+			$mailBodyHTML = F::app()->renderView(
+				'FounderEmails',
+				'GeneralUpdate',
+				array_merge( $emailParams, [ 'language' => 'en', 'type' => $mailKey ] )
+			);
+			$mailBodyHTML = strtr( $mailBodyHTML, FounderEmails::addLink( $emailParams, $links ) );
+		} else {	// old emails
+			$mailBodyHTML = $this->getLocalizedMsg( $msgKeys['body-html'], $emailParams );
+		}
+
+		FounderEmails::getInstance()->notifyFounder(
+			$user,
+			$this,
+			$mailSubject,
+			$mailBody,
+			$mailBodyHTML,
+			F::app()->wg->CityId,
+			$mailCategory
+		);
 	}
 
 	/**
@@ -202,8 +277,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 * 		FounderEmailsEditEvent::MULTIPLE_EDITS
 	 */
 	static public function getUserEditsStatus( $user, $useMasterDb = false ) {
-		wfProfileIn( __METHOD__ );
-
 		$recentEditsCount = 0;
 		$dbr = wfGetDB( $useMasterDb ? DB_MASTER : DB_SLAVE );
 
@@ -232,8 +305,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 			$recentEditsCount++;
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $recentEditsCount;
 	}
 
@@ -245,8 +316,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	 * @throws Exception
 	 */
 	public static function register( $oRecentChange = null ) {
-		global $wgUser, $wgCityId;
-		wfProfileIn( __METHOD__ );
+		global $wgUser;
 
 		if ( is_null( $oRecentChange ) ) {
 			throw new \Exception( 'Invalid $oRecentChange value.' );
@@ -254,7 +324,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 
 		if ( FounderEmails::getInstance()->getLastEventType() == 'register' ) {
 			// special case: creating userpage after user registration, ignore event
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -277,7 +346,6 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 				 */
 				switch ( $userEditStatus ) {
 					case self::NO_EDITS:
-						wfProfileOut( __METHOD__ );
 						return true;
 						break;
 					case self::FIRST_EDIT:
@@ -296,27 +364,24 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		$config = FounderEmailsEvent::getConfig( 'edit' );
 		if ( in_array( 'staff', $editor->getGroups() ) || in_array( $editor->getId(), $config['skipUsers'] ) ) {
 			// page edited by founder, staff member or excluded user, skipping..
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if ( $editor->isAllowed( 'bot' ) ) {
 			// skip bots
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		$eventData = static::getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit );
 		FounderEmails::getInstance()->registerEvent( new FounderEmailsEditEvent( $eventData ) );
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
-	 * @desc Sets flag that founder received first edit notification for a given user
+	 * Sets flag that founder received first edit notification for a given user
 	 *
-	 * @param $userName
+	 * @param string $userName
 	 */
 	public static function setFirstEmailSentFlag( $userName ) {
 		global $wgMemc;
@@ -329,10 +394,11 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	}
 
 	/**
-	 * @desc Returns memecache key for storing email sent flag
+	 * Returns memcache key for storing email sent flag
 	 *
-	 * @param $userName
-	 * @return String
+	 * @param string $userName
+	 *
+	 * @return string
 	 */
 	public static function getFirstEmailSentFlagMemcKey( $userName ) {
 		return wfMemcKey( self::FIRST_EDIT_NOTIFICATION_SENT_MEMC_PREFIX, $userName );
@@ -341,28 +407,29 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 	/**
 	 * Generates and returns data for edit event to be processed
 	 *
-	 * @param $editor User
-	 * @param $oRecentChange RecentChange
-	 * @param $isRegisteredUser boolean
-	 * @param $isRegisteredUserFirstEdit boolean
+	 * @param User $editor
+	 * @param RecentChange $oRecentChange
+	 * @param boolean $isRegisteredUser
+	 * @param boolean $isRegisteredUserFirstEdit
 	 * @return array
 	 */
 	public static function getEventData( $editor, $oRecentChange, $isRegisteredUser, $isRegisteredUserFirstEdit ) {
-		wfProfileIn( __METHOD__ );
-
 		$oTitle = Title::makeTitle( $oRecentChange->getAttribute( 'rc_namespace' ), $oRecentChange->getAttribute( 'rc_title' ) );
-		$eventData = array(
+
+		$eventData = [
 			'titleText' => $oTitle->getText(),
+			'titleNs' => $oRecentChange->getAttribute( 'rc_namespace' ),
 			'titleUrl' => $oTitle->getFullUrl(),
+			'currentRevId' => $oRecentChange->getAttribute( 'rc_this_oldid' ),
+			'previousRevId' => $oRecentChange->getAttribute( 'rc_last_oldid' ),
 			'editorName' => $editor->getName(),
 			'editorPageUrl' => $editor->getUserPage()->getFullUrl(),
 			'editorTalkPageUrl' => $editor->getTalkPage()->getFullUrl(),
 			'registeredUser' => $isRegisteredUser,
 			'registeredUserFirstEdit' => $isRegisteredUserFirstEdit,
 			'myHomeUrl' => Title::newFromText( 'WikiActivity', NS_SPECIAL )->getFullUrl()
-		);
+		];
 
-		wfProfileOut( __METHOD__ );
 		return $eventData;
 	}
 }

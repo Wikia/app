@@ -21,6 +21,9 @@ abstract class EmailController extends \WikiaController {
 	 * of $wgAutoLoadClasses */
 	const EMAIL_CONTROLLER_REGEX = "/^Email\\\\Controller\\\\(.+)Controller$/";
 
+	// Used when needing to specify an anonymous user from the external API
+	const ANONYMOUS_USER_ID = -1;
+
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
 
@@ -59,6 +62,11 @@ abstract class EmailController extends \WikiaController {
 		try {
 			$this->assertCanAccessController();
 
+			// If we're calling an internal handler, don't go through this init again
+			if ( $this->getVal( 'disableInit', false ) ) {
+				return;
+			}
+
 			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
 			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
 			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getOption( 'language' ) );
@@ -92,7 +100,7 @@ abstract class EmailController extends \WikiaController {
 	 * @throws \Email\Fatal
 	 */
 	public function assertCanAccessController() {
-		if ( $this->wg->User->isStaff() ) {
+		if ( Helper::userCanAccess() ) {
 			return;
 		}
 
@@ -105,7 +113,7 @@ abstract class EmailController extends \WikiaController {
 
 	protected function assertValidFromAddress( $email ) {
 		if ( !\Sanitizer::validateEmail( $email ) ) {
-			throw new Check( "Invalid from address" );
+			throw new Check( "Invalid from address '$email'" );
 		}
 
 		return true;
@@ -157,7 +165,7 @@ abstract class EmailController extends \WikiaController {
 					$body,
 					$replyToAddress,
 					$contentType = null,
-					static::TRACKING_CATEGORY
+					$this->getSendGridCategory()
 				);
 				$this->assertGoodStatus( $status );
 			}
@@ -268,6 +276,7 @@ abstract class EmailController extends \WikiaController {
 				'hubsMessages' => $this->getHubsMessages(),
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
+				'disableInit' => true,
 			]
 		);
 
@@ -292,6 +301,16 @@ abstract class EmailController extends \WikiaController {
 		// Get rid of leading spacing/indenting
 		$bodyText = preg_replace( '/^[\t ]+/m', '', $bodyText );
 		return $bodyText;
+	}
+
+	/**
+	 * Returns the category string we'll send to sendgrid with this email for
+	 * tracking purposes.
+	 *
+	 * @return string
+	 */
+	public function getSendGridCategory() {
+		return static::TRACKING_CATEGORY;
 	}
 
 	/**
@@ -360,20 +379,20 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getHubsMessages() {
 		return [
-			'tv' => wfMessage( 'oasis-label-wiki-vertical-id-1' )->inLanguage( $this->targetLang )->text(),
-			'tvURL' => wfMessage( 'oasis-label-wiki-vertical-id-1-link' )->inLanguage( $this->targetLang )->text(),
-			'videoGames' => wfMessage( 'oasis-label-wiki-vertical-id-2' )->inLanguage( $this->targetLang )->text(),
-			'videoGamesURL' => wfMessage( 'oasis-label-wiki-vertical-id-2-link' )->inLanguage( $this->targetLang )->text(),
-			'books' => wfMessage( 'oasis-label-wiki-vertical-id-3' )->inLanguage( $this->targetLang )->text(),
-			'booksURL' => wfMessage( 'oasis-label-wiki-vertical-id-3-link' )->inLanguage( $this->targetLang )->text(),
-			'comics' => wfMessage( 'oasis-label-wiki-vertical-id-4' )->inLanguage( $this->targetLang )->text(),
-			'comicsURL' => wfMessage( 'oasis-label-wiki-vertical-id-4-link' )->inLanguage( $this->targetLang )->text(),
-			'lifestyle' => wfMessage( 'oasis-label-wiki-vertical-id-5' )->inLanguage( $this->targetLang )->text(),
-			'lifestyleURL' => wfMessage( 'oasis-label-wiki-vertical-id-5-link' )->inLanguage( $this->targetLang )->text(),
-			'music' => wfMessage( 'oasis-label-wiki-vertical-id-6' )->inLanguage( $this->targetLang )->text(),
-			'musicURL' => wfMessage( 'oasis-label-wiki-vertical-id-6-link' )->inLanguage( $this->targetLang )->text(),
-			'movies' => wfMessage( 'oasis-label-wiki-vertical-id-7' )->inLanguage( $this->targetLang )->text(),
-			'moviesURL' => wfMessage( 'oasis-label-wiki-vertical-id-7-link' )->inLanguage( $this->targetLang )->text(),
+			'tv' => $this->getMessage( 'oasis-label-wiki-vertical-id-1' )->text(),
+			'tvURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-1-link' )->text(),
+			'videoGames' => $this->getMessage( 'oasis-label-wiki-vertical-id-2' )->text(),
+			'videoGamesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-2-link' )->text(),
+			'books' => $this->getMessage( 'oasis-label-wiki-vertical-id-3' )->text(),
+			'booksURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-3-link' )->text(),
+			'comics' => $this->getMessage( 'oasis-label-wiki-vertical-id-4' )->text(),
+			'comicsURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-4-link' )->text(),
+			'lifestyle' => $this->getMessage( 'oasis-label-wiki-vertical-id-5' )->text(),
+			'lifestyleURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-5-link' )->text(),
+			'music' => $this->getMessage( 'oasis-label-wiki-vertical-id-6' )->text(),
+			'musicURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-6-link' )->text(),
+			'movies' => $this->getMessage( 'oasis-label-wiki-vertical-id-7' )->text(),
+			'moviesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-7-link' )->text(),
 		];
 	}
 
@@ -384,12 +403,12 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getSocialMessages() {
 		return [
-			'facebook' => wfMessage( 'oasis-social-facebook' )->inLanguage( $this->targetLang )->text(),
-			'facebook-link' => wfMessage( 'oasis-social-facebook-link' )->inLanguage( $this->targetLang )->text(),
-			'twitter' => wfMessage( 'oasis-social-twitter' )->inLanguage( $this->targetLang )->text(),
-			'twitter-link' => wfMessage( 'oasis-social-twitter-link' )->inLanguage( $this->targetLang )->text(),
-			'youtube' => wfMessage( 'oasis-social-youtube' )->inLanguage( $this->targetLang )->text(),
-			'youtube-link' => wfMessage( 'oasis-social-youtube-link' )->inLanguage( $this->targetLang )->text(),
+			'facebook' => $this->getMessage( 'oasis-social-facebook' )->text(),
+			'facebook-link' => $this->getMessage( 'oasis-social-facebook-link' )->text(),
+			'twitter' => $this->getMessage( 'oasis-social-twitter' )->text(),
+			'twitter-link' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
+			'youtube' => $this->getMessage( 'oasis-social-youtube' )->text(),
+			'youtube-link' => $this->getMessage( 'oasis-social-youtube-link' )->text(),
 		];
 	}
 
@@ -440,6 +459,11 @@ abstract class EmailController extends \WikiaController {
 		$userName = $this->getRequest()->getVal( $paramName );
 		if ( empty( $userName ) ) {
 			return $default;
+		}
+
+		// Allow an anonymous user to be specified
+		if ( $userName == self::ANONYMOUS_USER_ID ) {
+			return \User::newFromId( 0 );
 		}
 
 		return $this->getUserFromName( $userName );
@@ -561,6 +585,7 @@ abstract class EmailController extends \WikiaController {
 
 	/**
 	 * Get the common form fields used by all emails on Special:SendEmail.
+	 *
 	 * @return array
 	 */
 	private static function getBaseFormFields() {
@@ -630,6 +655,7 @@ abstract class EmailController extends \WikiaController {
 	 * form fields which are specific to that email and are required for it's form found on
 	 * Special:SendEmail (eg, the WatchedPage email requires a Title and 2 revision IDs, in addition
 	 * to all of the fields from EmailController::getBaseFormFields).
+	 *
 	 * @return array
 	 */
 	protected static function getEmailSpecificFormFields() {
@@ -639,6 +665,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * Get the legend to display over this emails Special:SendEmail form. eg "WatchedPage Email" or
 	 * "ForgottenPassword Email"
+	 *
 	 * @return string
 	 */
 	private static function getLegendName() {
@@ -653,7 +680,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * A wrapper for wfMessage() which removes the possibility of messages being overridden in the MediaWiki namespace
 	 *
-	 * @return Message
+	 * @return \Message
 	 */
 	protected function getMessage() {
 		return call_user_func_array( 'wfMessage', func_get_args() )

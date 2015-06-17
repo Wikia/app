@@ -71,14 +71,14 @@ abstract class FounderEmailsEvent {
 		$this->mData = $data;
 	}
 
-	abstract public function enabled ( $wgCityId, User $user );
+	abstract public function enabled ( $wikiId, User $user );
 
-	public function enabled_wiki($wgCityId) {
-		$wikiService = (new WikiService);
+	public function enabled_wiki( $wgCityId ) {
+		$wikiService = ( new WikiService );
 		$user_ids = $wikiService->getWikiAdminIds( $wgCityId );
-		foreach ($user_ids as $user_id) {
-			$user = User::newFromId($user_id);
-			if ($this->enabled($wgCityId, $user))
+		foreach ( $user_ids as $user_id ) {
+			$user = User::newFromId( $user_id );
+			if ( $this->enabled( $wgCityId, $user ) )
 				return true;
 		}
 		return false;
@@ -87,7 +87,7 @@ abstract class FounderEmailsEvent {
 	public static function isAnswersWiki() {
 		global $wgEnableAnswers;
 
-		if (empty($wgEnableAnswers)) {
+		if ( empty( $wgEnableAnswers ) ) {
 			return false;
 		} else {
 			return true;
@@ -125,7 +125,7 @@ abstract class FounderEmailsEvent {
 				__METHOD__
 			);
 			$this->id = $dbw->insertId();
-			wfDebug(__METHOD__ . ": id# {$this->id}\n");
+			wfDebug( __METHOD__ . ": id# {$this->id}\n" );
 		} else {
 			$this->id = 0;
 		}
@@ -145,13 +145,13 @@ abstract class FounderEmailsEvent {
 
 	protected function getLocalizedMsg( $sMsgKey, $params = array() ) {
 
-		$sBody = wfMsgExt( $sMsgKey, array( 'content') );
+		$sBody = wfMsgExt( $sMsgKey, array( 'content' ) );
 		return strtr( $sBody, $params );
 	}
 
-	protected static function addParamsUser($wiki_id, $user_name, &$params) {
-		$hash_url = Wikia::buildUserSecretKey($user_name, 'sha256');
-		$unsubscribe_url = GlobalTitle::newFromText('Unsubscribe', NS_SPECIAL, $wiki_id)->getFullURL(array('key' => $hash_url));
+	protected static function addParamsUser( $wiki_id, $user_name, &$params ) {
+		$hash_url = Wikia::buildUserSecretKey( $user_name, 'sha256' );
+		$unsubscribe_url = GlobalTitle::newFromText( 'Unsubscribe', NS_SPECIAL, $wiki_id )->getFullURL( array( 'key' => $hash_url ) );
 
 		$params['$USERNAME'] = $user_name;
 		$params['$UNSUBSCRIBEURL'] = $unsubscribe_url;
