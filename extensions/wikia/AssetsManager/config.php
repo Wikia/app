@@ -740,6 +740,7 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/geo.js',
+		'//resources/wikia/modules/instantGlobals.js',
 
 		'#group_mobile_base_ads_js',
 		'//resources/wikia/modules/cache.js',
@@ -2438,6 +2439,7 @@ $config['flags_view_scss'] = [
 	'skin' => [ 'oasis', 'monobook' ],
 	'assets' => [
 		'//extensions/wikia/Flags/styles/Flags.scss',
+		'//extensions/wikia/Flags/styles/FlagsViewEditEntryPoint.scss',
 	],
 ];
 

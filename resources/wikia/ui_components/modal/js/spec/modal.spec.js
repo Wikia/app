@@ -31,7 +31,7 @@ describe('Modal module', function () {
 
 	jQuery.msg = function () {};
 	jQuery.isArray = function () {};
-	jQuery.extend = function () {};
+	jQuery.extend = window.jQuery.extend;
 	jQuery.proxy = function () {};
 
 	modal = modules['wikia.ui.modal'](jQuery, win, browserDetect);
@@ -357,6 +357,7 @@ describe('Modal buttons', function () {
 				type: 'default',
 				vars: {
 					closeText: 'close',
+					escapeToClose: true,
 					title: 'Test',
 					size: 'small',
 					buttons: [{

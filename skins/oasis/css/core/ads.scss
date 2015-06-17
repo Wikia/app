@@ -8,11 +8,10 @@
 @import 'ads-in-content';
 
 /** Hide invisible slots and 1x1 iframes **/
-.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
-	display: none !important;
-}
-
-.wikia-ad.hidden {
+.wikia-ad[id^="INVISIBLE_"],
+.wikia-ad.hidden,
+.wikia-ad iframe[width="1"][height="1"],
+.wikia-ad .hidden {
 	display: none !important;
 }
 
@@ -44,7 +43,7 @@
 }
 
 #TOP_BUTTON_WIDE {
-  margin-right: 10px;
+	margin-right: 10px;
 }
 
 #LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
@@ -92,7 +91,7 @@
 }
 
 .home-top-right-ads.hidden {
-  display: none;
+	display: none;
 }
 
 #HOME_TOP_RIGHT_BOXAD {
@@ -236,7 +235,7 @@ body >a >img[src$="noad.gif"] {
 }
 
 #NATIVE_TABOOLA {
-  max-width: 700px;
+	max-width: 700px;
 }
 
 .wikia-ad-interactive-map {
@@ -249,5 +248,14 @@ body >a >img[src$="noad.gif"] {
 	& > iframe {
 		width: 320px;
 		height: 50px;
+	}
+}
+
+
+//@TODO remove .oasis-responsive after deprecating responsive (July 2015)
+.oasis-breakpoints, .oasis-responsive {
+	#WikiaArticleBottomAd {
+		clear: both;
+		margin: 0;
 	}
 }

@@ -73,17 +73,19 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onParserBeforeInternalParse( \Parser $parser, &$text, &$stripState ) {
-		global $wgRequest;
-
 		/**
 		 * Don't check for flags if:
-		 * - you've already checked
+		 * - Parser is not used for the main content
+		 * - Flags have already been parsed
 		 * - a user is on an edit page
 		 * - the request is from VE
 		 */
 		$helper = new FlagsHelper();
-		if ( !$parser->mFlagsParsed && $helper->shouldInjectFlags() ) {
-			$addText = ( new \FlagsController )->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
+		if ( $parser->getOptions()->getIsMain()
+			&& $parser->mFlagsParsed !== true
+			&& $helper->shouldInjectFlags() ) {
+			$addText = ( new \FlagsController )
+				->getFlagsForPageWikitext( $parser->getTitle()->getArticleID() );
 
 			if ( $addText !== null ) {
 				$mwf = \MagicWord::get( 'flags' );

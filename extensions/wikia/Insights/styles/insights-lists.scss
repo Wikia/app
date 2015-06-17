@@ -75,6 +75,7 @@
 
 .insights-container-nav {
 	float: left;
+	padding-right: $width-insights-nav-content-space;
 	width: $width-insights-nav;
 
 	.insights-nav-list {
@@ -131,7 +132,7 @@
 .insights-container-main {
 	box-sizing: border-box;
 	float: right;
-	width: calc(100% - #{$width-insights-nav});
+	width: calc(100% - #{$width-insights-nav + $width-insights-nav-content-space});
 
 }
 

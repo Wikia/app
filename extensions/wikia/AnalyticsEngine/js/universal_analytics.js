@@ -246,7 +246,8 @@
         ['set', 'dimension16', getKruxSegment()],                              // Krux Segment
         ['set', 'dimension17', window.wgWikiVertical],                         // Vertical
         ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
-        ['set', 'dimension19', window.wgArticleType]                          // ArticleType
+        ['set', 'dimension19', window.wgArticleType],                          // ArticleType
+        ['set', 'dimension20', window.wgABPerformanceTest || 'not set']        // Performance A/B testing
     );
 
     /*
@@ -276,7 +277,7 @@
             }
             abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
             if (abSlot >= 40 && abSlot <= 49) {
-                abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'CONTROL');
+                abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'NOT_IN_ANY_GROUP');
                 _gaWikiaPush(['set', 'dimension' + abSlot, abGroupName]);
                 abCustomVarsForAds.push(['ads.set', 'dimension' + abSlot, abGroupName]);
             }

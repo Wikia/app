@@ -145,9 +145,22 @@ abstract class BlogPostController extends EmailController {
 			"inputs" => [
 				[
 					'type' => 'text',
-					'name' => 'currentRevId',
-					'label' => "Post Revision ID"
-				]
+					'name' => 'pageTitle',
+					'label' =>'Blog Page Title',
+					'tooltip' => 'The User_blog:XXX or Blog:YYY page where this post appears',
+				],
+				[
+					'type' => 'text',
+					'name' => 'namespace',
+					'label' => 'Namespace',
+					'tooltip' => 'Use '.NS_BLOG_ARTICLE.' for "User_blog:XXX" and '.NS_BLOG_LISTING.' for "Blog:YYY"',
+				],
+				[
+					'type' => 'text',
+					'name' => 'childArticleID',
+					'label' => 'Article ID for the new post',
+					'tooltip' => 'View the post page source and look for wgArticleId=XXX',
+				],
 			]
 		];
 

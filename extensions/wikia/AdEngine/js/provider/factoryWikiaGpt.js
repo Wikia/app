@@ -32,8 +32,8 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			return ret;
 		}
 
-		function fillInSlot(slotName, success, hop) {
-			log(['fillInSlot', slotName, success, hop], 'debug', logGroup);
+		function fillInSlot(slotName, slotElement, success, hop) {
+			log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
 
 			var extraParams = {
 					sraEnabled: extra.sraEnabled
@@ -65,8 +65,8 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				lookups.extendSlotTargeting(slotName, slotTargeting);
 			}
 
-			gptHelper.pushAd(slotName, slotPath, slotTargeting, doSuccess, doHop, extraParams);
-			log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
+			gptHelper.pushAd(slotName, slotElement, slotPath, slotTargeting, doSuccess, doHop, extraParams);
+			log(['fillInSlot', slotName, slotElement, success, hop, 'done'], 'debug', logGroup);
 		}
 
 		return {
