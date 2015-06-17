@@ -65,25 +65,26 @@ class Hooks {
 	}
 
 	/**
-	 * Injects a wikitext with notices for the given page.
+	 * Injects an HTML code of flags for the given article. If the __FLAGS__ magic word is found
+	 * it becomes a target of the injection. If not, the flags are attached in the beginning.
+	 * @param \ParserOutput $parserOutput
 	 * @param \Article $article
-	 * @param string $content
 	 * @return bool
 	 */
-	public static function onArticleAfterFetchContent( \Article &$article, &$content ) {
-		$helper = new FlagsHelper();
-		if ( $helper->shouldInjectFlags() ) {
-			$addText = ( new \FlagsController )
-				->getFlagsForPageWikitext( $article->getID() );
-			if ( $addText !== null ) {
-				$mwf = \MagicWord::get( 'flags' );
-				if ( $mwf->match( $content ) ) {
-					$content = $mwf->replace( $addText, $content );
-				} else {
-					$content = $addText . $content;
-				}
+
+	public static function onBeforeParserCacheSave( \ParserOutput $parserOutput, \Article $article ) {
+		$addText = ( new \FlagsController )
+			->getFlagsHTMLForPage( $article->getId() );
+
+		if ( $addText !== null ) {
+			$mwf = \MagicWord::get( 'flags' );
+			if ( $mwf->match( $parserOutput->mText ) ) {
+				$parserOutput->mText = $mwf->replace( $addText, $parserOutput->mText );
+			} else {
+				$parserOutput->mText = $addText . $parserOutput->mText;
 			}
 		}
+
 		return true;
 	}
 

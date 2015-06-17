@@ -37,7 +37,7 @@ $messages['en'] = [
 	'flags-target-readers' => 'Readers',
 	'flags-target-contributors' => 'Contributors',
 
-	'flags-notification-templates-extraction' => 'The following templates: \'\'$1\'\' are mapped as [[Special:Flags|Flags]] and will be automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].',
+	'flags-notification-templates-extraction' => 'The following templates: \'\'$1\'\' were recognized as [[Special:Flags|Flags]] and automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].',
 
 	'flags-log-name' => 'Flags log',
 	'logentry-flags-flag-added' => '$1 added flag \'$4\' to page $3',

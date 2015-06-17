@@ -75,7 +75,7 @@ $wgAutoloadClasses['Flags\FlagsExtractTemplatesTask'] = __DIR__ . '/tasks/FlagsE
 $wgAutoloadClasses['Flags\Hooks'] = __DIR__ . '/Flags.hooks.php';
 $wgHooks['BeforePageDisplay'][] = 'Flags\Hooks::onBeforePageDisplay';
 $wgHooks['PageHeaderDropdownActions'][] = 'Flags\Hooks::onPageHeaderDropdownActions';
-$wgHooks['ArticleAfterFetchContent'][] = 'Flags\Hooks::onArticleAfterFetchContent';
+$wgHooks['BeforeParserCacheSave'][] = 'Flags\Hooks::onBeforeParserCacheSave';
 $wgHooks['SkinTemplateNavigation'][] = 'Flags\Hooks::onSkinTemplateNavigation';
 $wgHooks['LinksUpdateInsertTemplates'][] = 'Flags\Hooks::onLinksUpdateInsertTemplates';
 

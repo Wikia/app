@@ -213,7 +213,10 @@ class ParserCache {
 	 * @param $article Article
 	 * @param $popts ParserOptions
 	 */
-	public function save( $parserOutput, $article, $popts ) {
+	public function save( ParserOutput $parserOutput, Article $article, ParserOptions $popts ) {
+
+		wfRunHooks( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
+
 		$expire = $parserOutput->getCacheExpiry();
 
 		if( $expire > 0 ) {

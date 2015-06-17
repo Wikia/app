@@ -50,11 +50,11 @@ class FlagsController extends WikiaController {
 	 * @param $pageId
 	 * @return string
 	 */
-	public function getFlagsForPageWikitext( $pageId ) {
+	public function getFlagsHTMLForPage( $pageId ) {
 		wfProfileIn( __METHOD__ );
 
 		try {
-			$flagsWikitext = '';
+			$flagsHTML = '';
 
 			$response = $this->requestGetFlagsForPage( $pageId );
 
@@ -73,11 +73,11 @@ class FlagsController extends WikiaController {
 					);
 				}
 
-				$flagsWikitext = $flagView->wrapAllFlags( $templatesCalls );
+				$flagsHTML = $flagView->renderFlags( $templatesCalls, $pageId );
 			}
 
 			wfProfileOut( __METHOD__ );
-			return $flagsWikitext;
+			return $flagsHTML;
 		} catch ( Exception $exception ) {
 			$this->logResponseException( $exception, $response->getRequest() );
 		}
@@ -171,12 +171,6 @@ class FlagsController extends WikiaController {
 
 			if ( !empty( $flagsToChange ) ) {
 				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
-
-				/**
-				 * Purge cache values for the page
-				 */
-				$flagsCache = new FlagsCache();
-				$flagsCache->purgeFlagsForPage( $pageId );
 
 				/**
 				 * Purge article after updating flags

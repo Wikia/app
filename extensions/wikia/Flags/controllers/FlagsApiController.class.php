@@ -154,6 +154,8 @@ class FlagsApiController extends WikiaApiController {
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->addFlagsToPage( $this->params );
 
+			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
+
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_ADDED );
 		} catch ( Exception $e ) {
@@ -172,8 +174,11 @@ class FlagsApiController extends WikiaApiController {
 	public function removeFlagsFromPage() {
 		try {
 			$this->processRequest();
+
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
+
+			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logFlagChange( $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'], self::LOG_ACTION_FLAG_REMOVED );
@@ -193,6 +198,8 @@ class FlagsApiController extends WikiaApiController {
 
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
+
+			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 		} catch ( Exception $e ) {
