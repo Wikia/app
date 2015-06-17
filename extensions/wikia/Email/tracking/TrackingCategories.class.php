@@ -12,4 +12,6 @@ class TrackingCategories {
 	const FOUNDER_EDIT_USER_INT = 'FounderEmailsEditUserINT';
 	const FOUNDER_EDIT_ANON_EN = 'FounderEmailsEditAnonEN';
 	const FOUNDER_EDIT_ANON_INT = 'FounderEmailsEditAnonINT';
+	const FOUNDER_NEW_MEMBER_EN = 'FounderEmailsRegisterdEN';
+	const FOUNDER_NEW_MEMBER_INT = 'FounderEmailsRegisterdINT';
 }

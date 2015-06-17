@@ -244,3 +244,40 @@ class FounderAnonEditController extends FounderController {
 			->parse();
 	}
 }
+
+class FounderNewMemberController extends FounderController {
+	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_NEW_MEMBER_EN;
+	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_NEW_MEMBER_INT;
+
+	public function getSubject() {
+		return "Foo subject";
+	}
+
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+		$this->assertFounderSubscribedToDigest();
+	}
+
+	/**
+	 * If the founder is subscribed to the founder's digest, don't send them an individual informing them
+	 * a new user joined their wiki. They'll learn about that in the digest.
+	 * @throws \Email\Check
+	 */
+	public function assertFounderSubscribedToDigest() {
+		$wikiId = \F::app()->wg->CityId;
+		if ( $this->targetUser->getBoolOption( "founderemails-complete-digest-$wikiId" ) ) {
+			throw new Check( 'Digest mode is enabled, do not create user registration event notifications' );
+		}
+	}
+
+	/**
+	 * TODO figure out what the intent of this user option is.
+	 * @throws \Email\Check
+	 */
+	public function assertFounderJoinsOptionSet() {
+		$wikiId = \F::app()->wg->CityId;
+		if ( !$this->targetUser->getBoolOption( "founderemails-joins-$wikiId"  ) ) {
+			throw new Check( 'Who knows wtf this option does' );
+		}
+	}
+}
