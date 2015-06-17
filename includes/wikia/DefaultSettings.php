@@ -1431,6 +1431,36 @@ $wgAdDriverForceLiftiumAd = false;
 $wgAdDriverForceOpenXAd = false;
 
 /**
+ * @name $wgAdDriverForceJJ
+ * Forces to use JJProvider for slots that JJProvider can handle and disables other providers
+ */
+$wgAdDriverForceJJ = false;
+
+/**
+ * @name $wgAdDriverUseJJProvider
+ * Enables JJProvider on wiki
+ */
+$wgAdDriverUseJJProvider = false;
+
+/**
+ * @name $wgAdDriverJJCountries
+ * List of countries to call JJProvider ad in
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverJJCountries = null;
+
+/**
+ * @name $wgSitewideDisableJJProvider
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableJJProvider
+ *
+ * Disable JJProvider sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableJJProvider = false;
+
+/**
  * @name $wgAdDriverEnableAdsInMaps
  * Whether to display ads within interactive maps
  */
