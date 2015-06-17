@@ -77,7 +77,7 @@ $messages['qqq'] = [
 	'flags-groups-other' => 'A name of a Other group of flags',
 	'flags-target-readers' => 'Target for displaying flags - Readers',
 	'flags-target-contributors' => 'Target for displaying flags - Contributors',
-
+	
 	'flags-notification-templates-extraction' => 'A message shown as a banner notification when a user inserts a template mapped as a Flag. It notifies them that these templates were removed from the content and converted into Flags.',
 
 	'flags-log-name' => 'Name of log type displayed on Special:Log',
