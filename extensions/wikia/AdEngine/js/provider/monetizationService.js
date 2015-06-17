@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 	'wikia.log',
 	'wikia.nirvana',
 	'wikia.window',
-], function (adContext, monetizationService, $, log, nirvana, window) {
+], function (adContext, monetizationsServiceHelper, $, log, nirvana, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.monetizationService',
@@ -50,8 +50,8 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 				adEngine: true,
 				articleId: window.wgArticleId,
 				fromSearch: window.fromsearch,
-				max: monetizationService.getMaxAds(),
-				geo: monetizationService.getCountryCode()
+				max: monetizationsServiceHelper.getMaxAds(),
+				geo: monetizationsServiceHelper.getCountryCode()
 			}
 		).done(function (json) {
 			var modules = json.data;
@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.provider.monetizationService', [
 				$.each(slotMap, function (slot, slotName) {
 					if (modules[slotName] && validateSlot(slotName)) {
 						log(['getModules', slot, 'injectScript'], 'debug', logGroup);
-						monetizationService.injectContent(slot, modules[slotName], success);
+						monetizationsServiceHelper.injectContent(slot, modules[slotName], success);
 					} else {
 						log(['getModules', slot, 'Empty data'], 'debug', logGroup);
 						hop();

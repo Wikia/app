@@ -63,7 +63,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @param Title $title
 	 * @return boolean
 	 */
-	public static function canShowModule( $title ) {
+	public static function canShowModule( Title $title ) {
 		$app = F::app();
 		$status = false;
 		$showableNameSpaces = array_merge( $app->wg->ContentNamespaces, [ NS_FILE ] );
@@ -71,8 +71,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			&& $title->exists()
 			&& !$title->isMainPage()
 			&& in_array( $title->getNamespace(), $showableNameSpaces )
-			&& in_array( $app->wg->request->getVal( 'action' ), [ 'view', null ] )
-			&& $app->wg->request->getVal( 'diff' ) === null
+			&& !WikiaPageType::isActionPage()
 			&& $app->wg->User->isAnon()
 			&& $app->checkSkin( 'oasis' )
 		) {
@@ -103,7 +102,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @param array $params
 	 * @return array|false $result
 	 */
-	public function getMonetizationUnits( $title, $params ) {
+	public function getMonetizationUnits( Title $title, $params ) {
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
@@ -160,7 +159,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @param boolean $setMemc - set to true to set to memcache
 	 * @return mixed
 	 */
-	public function processData( $title, $data, $params, $setMemc = true ) {
+	public function processData( Title $title, $data, $params, $setMemc = true ) {
 		$found = strpos( $data, self::KEYWORD_PREFIX );
 		$data = json_decode( $data, true );
 		if ( !is_array( $data ) ) {

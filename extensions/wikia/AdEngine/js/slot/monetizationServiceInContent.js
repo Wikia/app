@@ -16,13 +16,13 @@ define('ext.wikia.adEngine.slot.monetizationServiceInContent', [
 		log(['init', slotName, slotInContent], 'debug', logGroup);
 
 		if (adContext.getContext().providers.monetizationService) {
-			var elementName = '#mw-content-text > h2',
+			var $element = $('#mw-content-text > h2'),
 				$content = $('<div/>').attr({'id': slotName, 'class': 'wikia-ad noprint default-height'});
 
 			// Insert the ad above the 2nd <H2> tag. (Insert the ad above the 3rd <H2> tag if TOC exists)
-			if ($(elementName).size() >= 2) {
+			if ($element.size() >= 2) {
 				log(['init', slotName, 'Add slot'], 'debug', logGroup);
-				$(elementName).eq(1).before($content);
+				$element.eq(1).before($content);
 			// Otherwise, insert to the end of content
 			} else {
 				log(['init', slotName, 'Add slot (end content)'], 'debug', logGroup);
