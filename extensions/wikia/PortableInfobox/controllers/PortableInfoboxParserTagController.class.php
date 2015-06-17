@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\PortableInfobox\Parser\Nodes;
+
 class PortableInfoboxParserTagController extends WikiaController {
 	const PARSER_TAG_NAME = 'infobox';
 	const INFOBOXES_PROPERTY_NAME = 'infoboxes';
@@ -24,6 +26,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		if ( !isset( static::$instance ) ) {
 			static::$instance = new PortableInfoboxParserTagController();
 		}
+
 		return static::$instance;
 	}
 
@@ -31,20 +34,25 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @desc Parser hook: used to register parser tag in MW
 	 *
 	 * @param Parser $parser
+	 *
 	 * @return bool
 	 */
 	public static function parserTagInit( Parser $parser ) {
 		$parser->setHook( self::PARSER_TAG_NAME, [ static::getInstance(), 'renderInfobox' ] );
+
 		return true;
 	}
 
 	/**
 	 * Parser hook: used to replace infobox markes put on rendering
+	 *
 	 * @param $text
+	 *
 	 * @return string
 	 */
 	public static function replaceInfoboxMarkers( &$parser, &$text ) {
 		$text = static::getInstance()->replaceMarkers( $text );
+
 		return true;
 	}
 
@@ -52,21 +60,24 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @param $markup
 	 * @param Parser $parser
 	 * @param PPFrame $frame
+	 * @param array $params
+	 *
 	 * @return string
 	 * @throws UnimplementedNodeException when node used in markup does not exists
 	 * @throws XmlMarkupParseErrorException xml not well formatted
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
-		$infoboxParser = new Wikia\PortableInfobox\Parser\XmlParser( $this->getFrameParams( $frame ) );
-		$infoboxParser->setExternalParser( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) );
+		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $this->getFrameParams( $frame ) );
+		$infoboxNode->setExternalParser( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) );
 
 		//get params if not overridden
 		if ( !isset( $params ) ) {
-			$params = $infoboxParser->getInfoboxParams( $markup );
+			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
-		$data = $infoboxParser->getDataFromXmlString( $markup );
+		$data = $infoboxNode->getRenderData();
+
 		//save for later api usage
-		$this->saveToParserOutput( $parser->getOutput(), $data );
+		$this->saveToParserOutput( $parser->getOutput(), $infoboxNode );
 
 		$theme = $this->getThemeWithDefault( $params, $frame );
 		$layout = $this->getLayout( $params );
@@ -80,6 +91,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @param Array $params
 	 * @param Parser $parser
 	 * @param PPFrame $frame
+	 *
 	 * @returns String $html
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
@@ -102,6 +114,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}\x7f-QINU";
 		$this->markers[ $marker ] = $renderedValue;
+
 		return [ $marker, 'markerType' => 'nowiki' ];
 	}
 
@@ -109,22 +122,24 @@ class PortableInfoboxParserTagController extends WikiaController {
 		return strtr( $text, $this->markers );
 	}
 
-	protected function saveToParserOutput( \ParserOutput $parserOutput, $raw ) {
-		if ( !empty( $raw ) ) {
+	protected function saveToParserOutput( \ParserOutput $parserOutput, Nodes\NodeInfobox $raw ) {
+		if ( $raw ) {
 			$infoboxes = $parserOutput->getProperty( self::INFOBOXES_PROPERTY_NAME );
-			$infoboxes[ ] = $raw;
+			$infoboxes[ ] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
 			$parserOutput->setProperty( self::INFOBOXES_PROPERTY_NAME, $infoboxes );
 		}
 	}
 
 	private function handleError( $message ) {
 		$renderedValue = '<strong class="error"> ' . $message . '</strong>';
+
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}
 
 	private function getThemeWithDefault( $params, PPFrame $frame ) {
 		$value = isset( $params[ 'theme-source' ] ) ? $frame->getArgument( $params[ 'theme-source' ] ) : false;
 		$themeName = $this->getThemeName( $params, $value );
+
 		//make sure no whitespaces, prevents side effects
 		return Sanitizer::escapeClass( self::INFOBOX_THEME_PREFIX . preg_replace( '|\s+|s', '-', $themeName ) );
 	}
@@ -141,12 +156,15 @@ class PortableInfoboxParserTagController extends WikiaController {
 			//make sure no whitespaces, prevents side effects
 			return self::INFOBOX_LAYOUT_PREFIX . $layoutName;
 		}
+
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
 	}
 
 	/**
 	 * Function ensures that arrays are used for merging
+	 *
 	 * @param PPFrame $frame
+	 *
 	 * @return array
 	 */
 	protected function getFrameParams( PPFrame $frame ) {
@@ -155,6 +173,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		$namedArgs = isset( $namedArgs ) ? ( is_array( $namedArgs ) ? $namedArgs : [ $namedArgs ] ) : [ ];
 		$args = $frame->getArguments();
 		$args = isset( $args ) ? ( is_array( $args ) ? $args : [ $args ] ) : [ ];
+
 		return array_merge( $namedArgs, $args );
 	}
 }
