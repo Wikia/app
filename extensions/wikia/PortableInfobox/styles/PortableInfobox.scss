@@ -177,13 +177,13 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 		.portable-infobox-item-label {
 			@include flex-basis($infobox-width / 3);
 			line-height: 20px;
-			margin-bottom: 0;
+			margin-bottom: inherit;
 		}
 
 		.portable-infobox-item-value {
 			@include flex-basis($infobox-width * 2 / 3);
 			font-size: 14px;
-			line-height: 21px;
+			line-height: 19px;
 		}
 
 	}
