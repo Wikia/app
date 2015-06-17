@@ -67,6 +67,7 @@ class AdEngine2ContextService {
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola,
+					'jj' => $wg->AdDriverUseJJProvider,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'exitstitial' => $wg->EnableOutboundScreenExt,
@@ -78,6 +79,7 @@ class AdEngine2ContextService {
 					'liftium' => $wg->AdDriverForceLiftiumAd,
 					'openX' => $wg->AdDriverForceOpenXAd,
 					'turtle' => $wg->AdDriverForceTurtleAd,
+					'jj' => $wg->AdDriverForceJJ
 				] ),
 			];
 		} );
