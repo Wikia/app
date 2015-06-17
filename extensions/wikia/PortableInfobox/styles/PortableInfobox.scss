@@ -98,12 +98,12 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 		}
 	}
 
-	.item-type-group {
+	.item-type-group,
+	.item-type-comparison {
 		border-bottom: 1px solid $infobox-section-header-background;
 	}
 
 	.portable-infobox-comparison {
-		border-bottom: 1px solid $infobox-section-header-background;
 		border-collapse: collapse;
 		width: 100%;
 	}
