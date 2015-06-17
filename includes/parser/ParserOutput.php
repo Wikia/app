@@ -148,6 +148,27 @@ class ParserOutput extends CacheTime {
 	public $mPerformanceStats = array();
 	function getPerformanceStats( $k )     { return @$this->mPerformanceStats[$k]; }
 	function setPerformanceStats( $k, $v ) { $this->mPerformanceStats[$k] = $v; }
+
+	/**
+	 * @var Names of vars that we are able to merge from another ParserOutput object
+	 */
+	public static $varsToMerge = [
+		'mCategories',
+		'mLinks',
+		'mTemplates',
+		'mTemplateIds',
+		'mImages',
+		'mFileSearchOptions',
+		'mExternalLinks',
+		'mInterwikiLinks',
+		'mModules',
+		'mModuleScripts',
+		'mModuleStyles',
+		'mModuleMessages',
+		'mWarnings',
+		'mLanguageLinks',
+	];
+
 	# </Wikia>
 
 	const EDITSECTION_REGEX = '#<(?:mw:)?editsection page="(.*?)" section="(.*?)"(?:/>|>(.*?)(</(?:mw:)?editsection>))#';
@@ -465,5 +486,38 @@ class ParserOutput extends CacheTime {
 	 */
 	public function preventClickjacking( $flag = null ) {
 		return wfSetVar( $this->mPreventClickjacking, $flag );
+	}
+
+	/**
+	 * Merge vars from another ParserOutput object. Allows you to parse some wikitext separately
+	 * but still include information on added categories, templates etc.
+	 * @param ParserOutput $externalParserOutput
+	 */
+	public function mergeExternalParserOutputVars( ParserOutput $externalParserOutput ) {
+		foreach( self::$varsToMerge as $var ) {
+			$this->$var = $this->mergeVars(
+				$this->$var, $externalParserOutput->$var );
+		}
+	}
+
+	/**
+	 * Function for safe-merge of vars of two ParserOutput objects
+	 * @param $source
+	 * @param $new
+	 * @return array
+	 */
+	private function mergeVars( $source, $new ) {
+		$result = [];
+		$keys = array_replace( array_keys( $source ), array_keys( $new ) );
+		foreach ( $keys as $key ) {
+			if ( !isset( $source[$key] ) ) {
+				$result[$key] = $new[$key];
+			} elseif ( is_array( $source[$key] ) && is_array( $new[$key] ) ) {
+				$result[$key] = $source[$key] + $new[$key];
+			} else {
+				$result[$key] = $source[$key];
+			}
+		}
+		return $result;
 	}
 }
