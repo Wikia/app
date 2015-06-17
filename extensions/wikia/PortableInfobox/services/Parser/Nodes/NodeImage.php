@@ -8,27 +8,47 @@ class NodeImage extends Node {
 	const CAPTION_TAG_NAME = 'caption';
 
 	public function getData() {
-		$imageName = $this->getRawValueWithDefault( $this->xmlNode );
-		$title = $this->getImageAsTitleObject( $imageName );
-		$this->getExternalParser()->addImage( $title ? $title->getDBkey() : $imageName );
-		$ref = null;
-		$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
-		$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
+		if ( !isset( $this->data ) ) {
+			$imageName = $this->getRawValueWithDefault( $this->xmlNode );
+			$title = $this->getImageAsTitleObject( $imageName );
+			$this->getExternalParser()->addImage( $title ? $title->getDBkey() : $imageName );
+			$ref = null;
+			$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
+			$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );
 
-		wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
+			wfRunHooks( 'PortableInfoboxNodeImage::getData', [ $title, &$ref, $alt ] );
 
-		return [
-			'url' => $this->resolveImageUrl( $title ),
-			'name' => ( $title ) ? $title->getText() : '',
-			'key' => ( $title ) ? $title->getDBKey() : '',
-			'alt' => $alt,
-			'caption' => $caption,
-			'ref' => $ref
-		];
+			$this->data = [
+				'url' => $this->resolveImageUrl( $title ),
+				'name' => ( $title ) ? $title->getText() : '',
+				'key' => ( $title ) ? $title->getDBKey() : '',
+				'alt' => $alt,
+				'caption' => $caption,
+				'ref' => $ref
+			];
+		}
+
+		return $this->data;
 	}
 
-	public function isEmpty( $data ) {
-		return !( isset( $data[ 'url' ] ) ) || empty( $data[ 'url' ] );
+	public function isEmpty() {
+		$data = $this->getData();
+
+		return empty( $data[ 'url' ] );
+	}
+
+	public function getSource() {
+		$sources = $this->extractSourceFromNode( $this->xmlNode );
+		if ( $this->xmlNode->{self::ALT_TAG_NAME} ) {
+			$sources = array_merge( $sources,
+				$this->extractSourceFromNode( $this->xmlNode->{self::ALT_TAG_NAME} ) );
+		}
+		if ( $this->xmlNode->{self::CAPTION_TAG_NAME} ) {
+			$sources = array_merge( $sources,
+				$this->extractSourceFromNode( $this->xmlNode->{self::CAPTION_TAG_NAME} ) );
+		}
+
+		return array_unique( $sources );
 	}
 
 	private function getImageAsTitleObject( $imageName ) {

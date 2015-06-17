@@ -32,10 +32,12 @@ $wgInfoboxParserNodes = [
 	'NodeGroup',
 	'NodeHeader',
 	'NodeImage',
+	'NodeInfobox',
 	'NodeData',
 	'NodeTitle',
 	'NodeUnimplemented'
 ];
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\NodeFactory' ] = $dir . 'services/Parser/Nodes/NodeFactory.class.php';
 foreach ( $wgInfoboxParserNodes as $parserNode ) {
 	$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\'.$parserNode ] = $dir . 'services/Parser/Nodes/'.$parserNode.'.php';
 }
@@ -47,6 +49,7 @@ $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\SimpleXmlUtil' ] = $dir . 'se
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
 $wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfobox.class.php';
+$wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 
 // hooks
@@ -59,3 +62,4 @@ $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.ph
 
 // MW API
 $wgAPIModules['infobox'] = 'ApiPortableInfobox';
+$wgAPIPropModules[ 'infobox' ] = 'ApiQueryPortableInfobox';

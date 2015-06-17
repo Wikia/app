@@ -590,10 +590,12 @@ class WikiPage extends Page {
 	 *
 	 * The target will be fetched from the redirect table if possible.
 	 * If this page doesn't have an entry there, call insertRedirect()
+	 *
+	 * @param int $flags
 	 * @return Title|mixed object, or null if this page is not a redirect
 	 */
-	public function getRedirectTarget() {
-		if ( !$this->mTitle->isRedirect() ) {
+	public function getRedirectTarget( $flags = 0 ) {
+		if ( !$this->mTitle->isRedirect( $flags ) ) {
 			return null;
 		}
 
@@ -602,7 +604,8 @@ class WikiPage extends Page {
 		}
 
 		# Query the redirect table
-		$dbr = wfGetDB( DB_SLAVE );
+		$useMasterDb = $flags & Title::GAID_FOR_UPDATE;
+		$dbr = $useMasterDb ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow( 'redirect',
 			array( 'rd_namespace', 'rd_title', 'rd_fragment', 'rd_interwiki' ),
 			array( 'rd_from' => $this->getId() ),
@@ -1538,6 +1541,13 @@ class WikiPage extends Page {
 		$edit->newText = $text;
 		$edit->pst = $wgParser->preSaveTransform( $text, $this->mTitle, $user, $popts );
 		$edit->popts = $this->makeParserOptions( 'canonical' );
+		/**
+		 * Wikia change begin
+		 */
+		$edit->popts->setIsMain( true );
+		/**
+		 * Wikia change end
+		 */
 		$edit->output = $wgParser->parse( $edit->pst, $this->mTitle, $edit->popts, true, true, $revid );
 		$edit->oldText = $this->getRawText();
 

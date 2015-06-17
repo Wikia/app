@@ -12,4 +12,9 @@ class TrackingCategories {
 	const FOUNDER_EDIT_USER_INT = 'FounderEmailsEditUserINT';
 	const FOUNDER_EDIT_ANON_EN = 'FounderEmailsEditAnonEN';
 	const FOUNDER_EDIT_ANON_INT = 'FounderEmailsEditAnonINT';
+
+	const EMAIL_CONFIRMATION = "ConfirmationMail";
+	const EMAIL_CONFIRMATION_REMINDER = "ConfirmationReminderMail";
+	const CHANGED_EMAIL_CONFIRMATION = "ReConfirmationMail";
+	const WEEKLY_DIGEST = "GlobalWatchlist";
 }

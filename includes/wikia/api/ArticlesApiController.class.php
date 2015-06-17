@@ -1042,8 +1042,7 @@ class ArticlesApiController extends WikiaApiController {
 			'content' => $articleContent->content,
 			'media' => $articleContent->media,
 			'users' => $articleContent->users,
-			'categories' => $categories,
-			'description' => $this->getArticleDescription( $article )
+			'categories' => $categories
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
@@ -1366,35 +1365,5 @@ class ArticlesApiController extends WikiaApiController {
 			$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
 			throw new BadRequestApiException( $message );
 		}
-	}
-
-	/**
-	 * Returns description for the article's meta tag.
-	 *
-	 * This is mostly copied from the ArticleMetaDescription extension.
-	 *
-	 * @param Article $article
-	 * @param int $descLength
-	 * @return string
-	 * @throws WikiaException
-	 */
-	protected function getArticleDescription( Article $article, $descLength = 100 ) {
-		$title = $article->getTitle();
-		$sMessage = null;
-
-		if ( $title->isMainPage() ) {
-			// we're on Main Page, check MediaWiki:Description message
-			$sMessage = wfMessage( 'Description' )->text();
-		}
-
-		if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
-			$articleService = new ArticleService( $article );
-			$description = $articleService->getTextSnippet( $descLength );
-		} else {
-			// MediaWiki:Description message found, use it
-			$description = $sMessage;
-		}
-
-		return $description;
 	}
 }
