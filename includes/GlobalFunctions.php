@@ -3532,7 +3532,8 @@ function wfSetupSession( $sessionId = false ) {
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'caller' => wfGetAllCallers(),
 			'has_session_id' => ( $sessionId !== false ),
-			'is_anon' => $wgUser->isAnon()
+			'has_user' => is_object( $wgUser ),
+			'is_anon' => $wgUser && $wgUser->isAnon()
 		] );
 	}
 	// Wikia change - end
