@@ -23,6 +23,7 @@ $dir = dirname( __FILE__ ) . '/';
  * classes
  */
 $wgAutoloadClasses['Email\EmailController'] =  $dir . 'EmailController.class.php';
+$wgAutoloadClasses['Email\Helper'] =  $dir . 'EmailHelper.class.php';
 $wgAutoloadClasses['Email\ImageHelper'] =  $dir . 'EmailImageHelper.class.php';
 $wgAutoloadClasses['Email\ControllerException'] =  $dir . 'EmailExceptions.class.php';
 $wgAutoloadClasses['Email\Fatal'] =  $dir . 'EmailExceptions.class.php';
@@ -36,12 +37,15 @@ $wgAutoloadClasses['Email\Controller\WatchedPageRenamedController'] =  $dir . 'C
 $wgAutoloadClasses['Email\Controller\WatchedPageDeletedController'] =  $dir . 'Controller/WatchedPageController.class.php';
 $wgAutoloadClasses['Email\Controller\ArticleCommentController'] =  $dir . 'Controller/CommentController.class.php';
 $wgAutoloadClasses['Email\Controller\BlogCommentController'] =  $dir . 'Controller/CommentController.class.php';
+$wgAutoloadClasses['Email\Controller\UserBlogPostController'] =  $dir . 'Controller/BlogPostController.class.php';
+$wgAutoloadClasses['Email\Controller\ListBlogPostController'] =  $dir . 'Controller/BlogPostController.class.php';
 $wgAutoloadClasses['Email\Controller\WallMessageController'] =  $dir . 'Controller/WallMessageController.class.php';
 $wgAutoloadClasses['Email\Controller\FollowedWallMessageController'] =  $dir . 'Controller/WallMessageController.class.php';
 $wgAutoloadClasses['Email\Controller\OwnWallMessageController'] =  $dir . 'Controller/WallMessageController.class.php';
 $wgAutoloadClasses['Email\Controller\ReplyWallMessageController'] =  $dir . 'Controller/WallMessageController.class.php';
 $wgAutoloadClasses['Email\Controller\ForumController'] =  $dir . 'Controller/ForumController.class.php';
 $wgAutoloadClasses['Email\Controller\ReplyForumController'] =  $dir . 'Controller/ForumController.class.php';
+$wgAutoloadClasses['Email\Controller\WeeklyDigestController'] =  $dir . 'Controller/WeeklyDigestController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir .  'SpecialSendEmailController.class.php';
 $wgAutoloadClasses['Email\Tracking\TrackingCategories'] = $dir .  'tracking/TrackingCategories.class.php';
 
@@ -56,10 +60,11 @@ $wgSpecialPages[ 'SendEmail' ] =  'Email\SpecialSendEmailController';
 $wgExtensionMessagesFiles['Email'] = $dir . 'Email.i18n.php';
 $wgExtensionMessagesFiles['EmailWatchedPage'] = $dir . 'i18n/WatchedPage.i18n.php';
 $wgExtensionMessagesFiles['EmailComment'] = $dir . 'i18n/Comment.i18n.php';
+$wgExtensionMessagesFiles['EmailBlogPost'] = $dir . 'i18n/BlogPost.i18n.php';
 $wgExtensionMessagesFiles['EmailForum'] = $dir . 'i18n/Forum.i18n.php';
 $wgExtensionMessagesFiles['EmailWallMessage'] = $dir . 'i18n/WallMessage.i18n.php';
+$wgExtensionMessagesFiles['EmailWeeklyDigest'] = $dir . 'i18n/WeeklyDigest.i18n.php';
 $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i18n.php';
-
 
 /**
  * permissions
@@ -67,3 +72,7 @@ $wgExtensionMessagesFiles['SpecialSendEmail'] = $dir . 'i18n/specialSendEmail.i1
 $wgGroupPermissions['*']['access-sendemail'] = false;
 $wgGroupPermissions['staff']['access-sendemail'] = true;
 $wgGroupPermissions['helper']['access-sendemail'] = true;
+$wgGroupPermissions['translator']['access-sendemail'] = true;
+
+$wgAddGroups['staff'][] = 'translator';
+$wgRemoveGroups['staff'][] = 'translator';
