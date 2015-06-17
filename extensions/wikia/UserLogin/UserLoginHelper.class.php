@@ -280,8 +280,7 @@ class UserLoginHelper extends WikiaModel {
 			return $result;
 		}
 
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'confirmation-email' ) );
-		$response = $user->sendConfirmationMail( false, 'ConfirmationMail', 'usersignup-confirmation-email', true, $emailTextTemplate );
+		$response = $user->sendConfirmationMail( false, 'ConfirmationMail' );
 		if ( !$response->isGood() ) {
 			$result['result'] = 'error';
 			$result['msg'] = wfMessage( 'userlogin-error-mail-error' )->escaped();
@@ -292,15 +291,6 @@ class UserLoginHelper extends WikiaModel {
 		}
 
 		return $result;
-	}
-
-	/**
-	 * @param User $user
-	 * @return string
-	 */
-	public function getReconfirmationEmailTempalte( $user ) {
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'reconfirmation-email' ) );
-		return $emailTextTemplate;
 	}
 
 	/**
@@ -334,13 +324,12 @@ class UserLoginHelper extends WikiaModel {
 	 * @param User $user
 	 * @return Status object
 	 */
-	public function sendConfirmationReminderEmail( &$user ) {
+	public function sendConfirmationReminderEmail( $user ) {
 		if ( ( $user->getOption( "cr_mailed", 0 ) == 1 ) ) {
 			return Status::newFatal( 'userlogin-error-confirmation-reminder-already-sent' );
 		}
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'confirmation-reminder-email' ) );
 		$user->setOption( "cr_mailed", "1" );
-		return $user->sendConfirmationMail( false, 'ConfirmationReminderMail', 'usersignup-confirmation-reminder-email', true, $emailTextTemplate );
+		return $user->sendConfirmationMail( false, 'ConfirmationReminderMail' );
 	}
 
 	/**
