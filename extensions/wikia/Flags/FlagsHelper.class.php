@@ -83,11 +83,11 @@ class FlagsHelper {
 		$flagFromPost = [];
 
 		/**
-		 * If the flag exists - use flag_id for update
+		 * flag_id is used for update
 		 */
 		$flagFromPost['flag_id'] = isset( $flag['flag_id'] ) ? $flag['flag_id'] : null;
 		/**
-		 * If the flag does not exist - use flag_type_id for insert
+		 * flag_type_id is used for insert
 		 */
 		$flagFromPost['flag_type_id'] = $flagTypeId;
 
