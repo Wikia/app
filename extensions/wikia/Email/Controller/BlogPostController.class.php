@@ -145,8 +145,15 @@ abstract class BlogPostController extends EmailController {
 			"inputs" => [
 				[
 					'type' => 'text',
-					'name' => 'currentRevId',
-					'label' => "Post Revision ID"
+					'name' => 'pageTitle',
+					'label' =>'Blog Page Title',
+					'tooltip' => 'The User_blog:XXX or Blog:YYY page where this post appears'
+				],
+				[
+					'type' => 'text',
+					'name' => 'postTitle',
+					'label' => 'Post Title',
+					'tooltip' => 'The full post title, e.g. User_blog:XXX/ZZZ'
 				]
 			]
 		];
