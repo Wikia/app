@@ -94,8 +94,7 @@ class Hooks {
 				$flagTypesToExtract = $flagTypesToExtractNames = [ ];
 				foreach ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA] as $flagType ) {
 					if ( isset( $templates[$flagType['flag_view']] ) ) {
-						$flagTypesToExtract[] = $flagType;
-						$flagTypesToExtractNames[] = $flagType['flag_view'];
+						$flagTypesToExtract[$flagType['flag_view']] = $flagType;
 					}
 				}
 
@@ -107,7 +106,7 @@ class Hooks {
 
 					\BannerNotificationsController::addConfirmation(
 						wfMessage( 'flags-notification-templates-extraction' )
-							->params( implode( ', ', $flagTypesToExtractNames ) )
+							->params( implode( ', ', array_keys( $flagTypesToExtract ) ) )
 							->parse(),
 						\BannerNotificationsController::CONFIRMATION_WARN,
 						true
