@@ -117,7 +117,7 @@ class FlagsController extends WikiaController {
 			$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
 			$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
 			$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
-			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->escaped() );
+			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->plain() );
 			$this->setVal( 'pageId', $pageId );
 		} else {
 			$this->setVal(
