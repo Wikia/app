@@ -61,12 +61,12 @@ class AdEngine2ContextService {
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
+					'jj' => $wg->AdDriverUseJJProvider,
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => $wg->AdDriverUseTaboola,
-					'jj' => $wg->AdDriverUseJJProvider,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 					'exitstitial' => $wg->EnableOutboundScreenExt,
@@ -75,10 +75,10 @@ class AdEngine2ContextService {
 				] ),
 				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [
+					'jj' => $wg->AdDriverForceJJ,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
 					'openX' => $wg->AdDriverForceOpenXAd,
 					'turtle' => $wg->AdDriverForceTurtleAd,
-					'jj' => $wg->AdDriverForceJJ
 				] ),
 			];
 		} );
