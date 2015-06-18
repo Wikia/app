@@ -61,7 +61,11 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				},
 				turtle: {
 					name: 'turtle'
-				}
+				},
+                jj: {
+                    name: 'jj',
+                    canHandleSlot: noop
+                }
 			}
 		};
 
@@ -90,6 +94,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.providers.remnantGpt,
 			mocks.providers.sevenOneMedia,
 			mocks.providers.turtle,
+            mocks.providers.jj,
 			mocks.providers.taboola
 		);
 	}
