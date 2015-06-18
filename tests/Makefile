@@ -29,7 +29,7 @@ prepare:
 # runs unit tests
 phpunit: prepare
 	${CMD_PHPUNIT} \
-		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack
+		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack,ExternalIntegration
 
 # runs integration tests only
 phpunit-infrastructure: prepare
