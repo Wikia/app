@@ -3,6 +3,7 @@ class WikiaStatsController extends WikiaController {
 
 	const WIKIA_STATS_MEMC_VERSION = "1";
 	const WIKIA_STATS_CACHE_VALIDITY = 86400;
+	const CURATED_CONTENT_WG_VAR_ID_PROD = 1460;
 
 	/**
 	 * get stats
@@ -31,6 +32,24 @@ class WikiaStatsController extends WikiaController {
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * Return number of communities
+	 * and number of communities with curated content wg variable set to not falsy value.
+	 *
+	 * @responseParam integer totalCommunities
+	 * @responseParam integer communitiesWithCuratedContent
+	 */
+	public function getCuratedContentStats() {
+		$data = $this->sendRequest('WikiaStats', 'getWikiaStats')->getData();
+		$this->getResponse()->setFormat(WikiaResponse::FORMAT_JSON);
+		$communitiesWithCuratedContent = WikiFactory::getCountOfWikisWithVar(
+			self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
+		);
+
+		$this->setVal('communitiesWithCuratedContent', $communitiesWithCuratedContent);
+		$this->setVal('totalCommunities', $data['communities']);
 	}
 
 	public function getWikiaStatsFromWF() {
