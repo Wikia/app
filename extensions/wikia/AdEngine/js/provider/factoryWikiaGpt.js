@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'wikia.log',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.provider.gptHelper',
+	'ext.wikia.adEngine.provider.gpt.helper',
 	require.optional('ext.wikia.adEngine.lookup.services')
 ], function (log, adLogicPageParams, gptHelper, lookups) {
 	'use strict';

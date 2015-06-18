@@ -1,13 +1,13 @@
 /*global define,setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define('ext.wikia.adEngine.provider.gptAdElement', [
+define('ext.wikia.adEngine.provider.gpt.adElement', [
 	'wikia.document',
 	'wikia.log',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.provider.gptAdSizeConverter'
+	'ext.wikia.adEngine.provider.gpt.adSizeConverter'
 ], function (doc, log, adLogicPageParams, adSizeConverter) {
 
-	var logGroup = 'ext.wikia.adEngine.provider.gptAdElement',
+	var logGroup = 'ext.wikia.adEngine.provider.gpt.adElement',
 		pageLevelParams = adLogicPageParams.getPageLevelParams();
 
 	function AdElement(adDivId) {
@@ -77,7 +77,7 @@ define('ext.wikia.adEngine.provider.gptAdElement', [
 		this.node.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
 	};
 
-	AdElement.prototype.setResponseLevelParams = function (event) {
+	AdElement.prototype.updateDataParams = function (event) {
 		this.node.setAttribute('data-gpt-line-item-id', JSON.stringify(event.lineItemId));
 		this.node.setAttribute('data-gpt-creative-id', JSON.stringify(event.creativeId));
 		this.node.setAttribute('data-gpt-creative-size', JSON.stringify(event.size));

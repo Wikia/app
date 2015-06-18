@@ -1,11 +1,11 @@
 /*global define,setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define('ext.wikia.adEngine.provider.gptAdSizeConverter', [
+define('ext.wikia.adEngine.provider.gpt.adSizeConverter', [
 	'wikia.document',
 	'wikia.log'
 ], function (doc, log) {
 
-	var logGroup = 'ext.wikia.adEngine.provider.gptAdSizeConverter',
+	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeConverter',
 		fallbackSize = [1, 1];
 
 	function filterOutSizesBiggerThanScreenSize(sizes) {

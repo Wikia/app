@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, spyOn, document*/
-describe('ext.wikia.adEngine.provider.gptAdSizeConverter', function () {
+describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	'use strict';
 
 	function noop() {}
@@ -43,7 +43,7 @@ describe('ext.wikia.adEngine.provider.gptAdSizeConverter', function () {
 		};
 
 	beforeEach(function() {
-		googleTag = modules['ext.wikia.adEngine.provider.googleTag'](document, mocks.log, mocks.window);
+		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](document, mocks.log, mocks.window);
 	});
 
 	it('Initialization should prepare googletag object and configure pubads', function () {

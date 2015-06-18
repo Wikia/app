@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, spyOn*/
-describe('ext.wikia.adEngine.provider.gptHelper', function () {
+describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	'use strict';
 
 	function noop() {}
@@ -38,11 +38,11 @@ describe('ext.wikia.adEngine.provider.gptHelper', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.gptHelper'](
+		return modules['ext.wikia.adEngine.provider.gpt.helper'](
 			mocks.log,
-			mocks.googleTag,
 			mocks.adDetect,
 			AdElement,
+			mocks.googleTag,
 			mocks.slotTweaker,
 			mocks.sraHelper
 		);
@@ -59,7 +59,7 @@ describe('ext.wikia.adEngine.provider.gptHelper', function () {
 			return {};
 		};
 
-		AdElement.prototype.setResponseLevelParams = noop;
+		AdElement.prototype.updateDataParams = noop;
 
 		spyOn(document, 'getElementById').and.returnValue({
 			appendChild: noop
@@ -124,16 +124,6 @@ describe('ext.wikia.adEngine.provider.gptHelper', function () {
 
 		expect(mocks.googleTag.push).not.toHaveBeenCalled();
 		expect(mocks.googleTag.flush).toHaveBeenCalled();
-	});
-
-	it('Add and show slot on push', function () {
-		spyOn(mocks.googleTag, 'addSlot');
-		spyOn(mocks.slotTweaker, 'show');
-
-		getModule().pushAd('TOP_RIGHT_BOXAD', mocks.slotElement, '/foo/slot/path', {}, {});
-
-		expect(mocks.googleTag.addSlot).toHaveBeenCalled();
-		expect(mocks.slotTweaker.show).toHaveBeenCalled();
 	});
 
 	it('Register slot callback on push', function () {

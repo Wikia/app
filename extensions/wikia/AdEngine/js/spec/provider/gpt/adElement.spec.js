@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, spyOn, document*/
-describe('ext.wikia.adEngine.provider.gptAdSizeConverter', function () {
+describe('ext.wikia.adEngine.provider.gpt.adSizeConverter', function () {
 	'use strict';
 
 	function noop() {}
@@ -32,7 +32,7 @@ describe('ext.wikia.adEngine.provider.gptAdSizeConverter', function () {
 		slot;
 
 	beforeEach(function() {
-		AdElement = modules['ext.wikia.adEngine.provider.gptAdElement'](document, mocks.log, mocks.adLogicPageParams, mocks.adSizeConverter);
+		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](document, mocks.log, mocks.adLogicPageParams, mocks.adSizeConverter);
 		slot = {
 			setTargeting: noop
 		};
@@ -81,7 +81,7 @@ describe('ext.wikia.adEngine.provider.gptAdSizeConverter', function () {
 	it('Add response event details as json to attribute', function () {
 		var element = new AdElement('ELEMENT_ID');
 
-		element.setResponseLevelParams({
+		element.updateDataParams({
 			lineItemId: 123,
 			creativeId: 456,
 			size: [728, 90]

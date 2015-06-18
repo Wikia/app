@@ -1,11 +1,11 @@
 /*global define,setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define('ext.wikia.adEngine.provider.gptSraHelper', [
+define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 	'wikia.log'
 ], function (log) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.gptSraHelper',
+	var logGroup = 'ext.wikia.adEngine.provider.gpt.sraHelper',
 		flushed = false,
 		sraSlots = [
 			'CORP_TOP_LEADERBOARD',

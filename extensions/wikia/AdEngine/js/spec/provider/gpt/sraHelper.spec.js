@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, spyOn*/
-describe('ext.wikia.adEngine.provider.gptSraHelper', function () {
+describe('ext.wikia.adEngine.provider.gpt.sraHelper', function () {
 	'use strict';
 
 	function noop() {}
@@ -9,7 +9,7 @@ describe('ext.wikia.adEngine.provider.gptSraHelper', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.gptSraHelper'](
+		return modules['ext.wikia.adEngine.provider.gpt.sraHelper'](
 			mocks.log
 		);
 	}

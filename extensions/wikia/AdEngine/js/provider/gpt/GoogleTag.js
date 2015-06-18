@@ -1,12 +1,12 @@
 /*global define,setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
-define('ext.wikia.adEngine.provider.googleTag', [
+define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
 ], function (doc, log, window) {
 
-	var logGroup = 'ext.wikia.adEngine.provider.googleTag',
+	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
 		initialized = false,
 		registeredCallbacks = {},
 		slots = {},

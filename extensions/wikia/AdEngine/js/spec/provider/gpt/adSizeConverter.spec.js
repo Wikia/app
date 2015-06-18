@@ -1,5 +1,5 @@
 /*global describe, it, expect, modules, spyOn*/
-describe('ext.wikia.adEngine.provider.gptAdSizeConverter', function () {
+describe('ext.wikia.adEngine.provider.gpt.adSizeConverter', function () {
 	'use strict';
 
 	function noop() {}
@@ -14,7 +14,7 @@ describe('ext.wikia.adEngine.provider.gptAdSizeConverter', function () {
 		};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.provider.gptAdSizeConverter'](mocks.doc, mocks.log);
+		return modules['ext.wikia.adEngine.provider.gpt.adSizeConverter'](mocks.doc, mocks.log);
 	}
 
 	it('Converts two sizes to array with to elements', function () {
