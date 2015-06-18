@@ -10,16 +10,11 @@ class PreferenceService implements PreferenceServiceInterface {
 		$this->gateway = $gateway;
 	}
 
-	public function setPreference( $userId, \Wikia\Domain\User\Preference $preference ) {
-
+	public function setPreferences( $userId, $preferences ) {
 		return false;
 	}
 
-	public function setPreferences( $userId, $preferences ) {
-
-	}
-
-	public function getPreference( $userId ) {
+	public function getPreferences( $userId ) {
 
 	}
 }

@@ -24,7 +24,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, [$this->testPreference] );
 
 		$service = new PreferenceService( $gateway );
-		$ret = $service->setPreference( $this->userId, $this->testPreference );
+		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->assertTrue( $ret, "the preference was not set" );
 	}
