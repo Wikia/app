@@ -461,7 +461,7 @@ class FlagsApiController extends WikiaApiController {
 	 * @param int $pageId ID of article where flags were changed
 	 * @param string $actionType Type of action performed on flag represented by constants in \FlagsApiController class
 	 */
-	private function logFlagChange( $flags, $wikiId, $pageId, $actionType ) {
+	private function logFlagChange( Array $flags, $wikiId, $pageId, $actionType ) {
 		$task = new FlagsLogTask();
 		$task->wikiId( $wikiId );
 		$task->call( 'logFlagChange', $flags, $pageId, $actionType );
@@ -476,7 +476,7 @@ class FlagsApiController extends WikiaApiController {
 	 * @param int $wikiId
 	 * @param int $pageId
 	 */
-	private function logParametersChange( $oldFlags, $flags, $wikiId, $pageId ) {
+	private function logParametersChange( Array $oldFlags, Array $flags, $wikiId, $pageId ) {
 		$task = new FlagsLogTask();
 		$task->wikiId( $wikiId );
 		$task->call( 'logParametersChange', $oldFlags, $flags, $pageId );
