@@ -191,10 +191,17 @@ class FlagsApiController extends WikiaApiController {
 		try {
 			$this->processRequest();
 
+			$oldFlags = $this->app->sendRequest(
+				'FlagsApiController',
+				'getFlagsForPage',
+				[ 'page_id' => $this->params['page_id'] ]
+			)->getData();
+
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
 
 			$this->makeSuccessResponse( $modelResponse );
+			$this->logParametersChange( $oldFlags, $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'] );
 		} catch ( Exception $e ) {
 			$this->logResponseException( $e, $this->request );
 			$this->response->setException( $e );
@@ -454,10 +461,25 @@ class FlagsApiController extends WikiaApiController {
 	 * @param int $pageId ID of article where flags were changed
 	 * @param string $actionType Type of action performed on flag represented by constants in \FlagsApiController class
 	 */
-	private function logFlagChange( $flags, $wikiId, $pageId, $actionType ) {
+	private function logFlagChange( Array $flags, $wikiId, $pageId, $actionType ) {
 		$task = new FlagsLogTask();
 		$task->wikiId( $wikiId );
 		$task->call( 'logFlagChange', $flags, $pageId, $actionType );
+		$task->queue();
+	}
+
+	/**
+	 * Queue task for logging flag parameters change
+	 *
+	 * @param Array $oldFlags flags values before update
+	 * @param Array $flags new flags values
+	 * @param int $wikiId
+	 * @param int $pageId
+	 */
+	private function logParametersChange( Array $oldFlags, Array $flags, $wikiId, $pageId ) {
+		$task = new FlagsLogTask();
+		$task->wikiId( $wikiId );
+		$task->call( 'logParametersChange', $oldFlags, $flags, $pageId );
 		$task->queue();
 	}
 }
