@@ -301,10 +301,11 @@ class FounderNewMemberController extends FounderController {
 	public function assertCanEmail() {
 		parent::assertCanEmail();
 		$this->assertFounderSubscribedToDigest();
+		$this->assertFounderWantsNewMembersEmail();
 	}
 
 	/**
-	 * If the founder is subscribed to the founder's digest, don't send them an individual informing them
+	 * If the founder is subscribed to the founder's digest, don't send them an individual email informing them
 	 * a new user joined their wiki. They'll learn about that in the digest.
 	 * @throws \Email\Check
 	 */
@@ -316,13 +317,12 @@ class FounderNewMemberController extends FounderController {
 	}
 
 	/**
-	 * TODO figure out what the intent of this user option is.
 	 * @throws \Email\Check
 	 */
-	public function assertFounderJoinsOptionSet() {
+	public function assertFounderWantsNewMembersEmail() {
 		$wikiId = \F::app()->wg->CityId;
 		if ( !$this->targetUser->getBoolOption( "founderemails-joins-$wikiId"  ) ) {
-			throw new Check( 'Who knows wtf this option does' );
+			throw new Check( "Founder doesn't want to be emailed about new members joining this wiki" );
 		}
 	}
 
