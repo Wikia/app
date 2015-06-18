@@ -191,7 +191,7 @@ class MoveNotice extends Maintenance {
 				}
 
 				if ( strcmp( $content, $text ) !== 0 ) {
-					$wiki->doEdit( $text, self::EDIT_SUMMARY );
+					$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
 				}
 			}
 
