@@ -23,10 +23,8 @@ class ParserOutputTest extends WikiaBaseTest {
 
 	public function getParserOutputVars() {
 		return [
-			// 1st test case
-			[
-				// $sourceVars
-				[
+			'Test case #1' => [
+				'sourceVars' => [
 					// Test merge of two flat arrays
 					'mLanguageLinks' => [
 						'es:Ayuda:Enlace interwiki',
@@ -95,8 +93,7 @@ class ParserOutputTest extends WikiaBaseTest {
 					'mModuleMessages' => [],
 					'mWarnings' => [],
 				],
-				// $externalVars
-				[
+				'externalVars' => [
 					// Test merge of two flat arrays
 					'mLanguageLinks' => [
 						'nl:Help:Interwiki links',
@@ -221,8 +218,7 @@ class ParserOutputTest extends WikiaBaseTest {
 						'Warning no 2' => 1,
 					],
 				],
-				// $expectedVars
-				[
+				'expectedVars' => [
 					// Test merge of two flat arrays
 					'mLanguageLinks' => [
 						'es:Ayuda:Enlace interwiki',
