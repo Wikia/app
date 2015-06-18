@@ -4,6 +4,8 @@
  * Email
  *
  * @author Garth Webb
+ * @author James Sutterfield
+ * @author Matt Klucsarits
  *
  * @date 2015-03-10
  */
@@ -11,7 +13,9 @@
 $wgExtensionCredits['Email'][] = [
 	'name' => 'Email',
 	'author' => [
-		"Garth Webb <garth@wikia-inc.com>"
+		'Garth Webb <garth@wikia-inc.com>',
+		'James Sutterfield <james@wikia-inc.com>',
+		'Matt Klucsarits <mattk@wikia-inc.com>',
 	],
 	'descriptionmsg' => 'email-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Email'

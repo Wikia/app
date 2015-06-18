@@ -14,6 +14,7 @@ class TrackingCategories {
 	const FOUNDER_EDIT_ANON_INT = 'FounderEmailsEditAnonINT';
 	const FOUNDER_NEW_MEMBER_EN = 'FounderEmailsRegisterdEN';
 	const FOUNDER_NEW_MEMBER_INT = 'FounderEmailsRegisterdINT';
+
 	const EMAIL_CONFIRMATION = "ConfirmationMail";
 	const EMAIL_CONFIRMATION_REMINDER = "ConfirmationReminderMail";
 	const CHANGED_EMAIL_CONFIRMATION = "ReConfirmationMail";
