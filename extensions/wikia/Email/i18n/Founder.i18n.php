@@ -12,6 +12,9 @@ $messages['en'] = array(
 	'emailext-founder-encourage' => 'This is [$1 $2]’s first edit on your wikia. Help them feel like they are a part of the community and encourage them to keep that good stuff coming!',
 	'emailext-founder-anon-encourage' => 'Wikia fans are people who make edits without logging in to a registered account. Go see what this mysterious friend added to your wikia!',
 	'emailext-founder-multi-encourage' => '[$1 $2] has made multiple edits on your wikia. Thank them for their contributions. It’s all about community-building!',
+	'emailext-founder-new-member-subject' => '$1 just joined {{SITENAME}}. Congrats!',
+	'emailext-founder-new-member-details' => 'Take a few minutes to welcome $1 and encourage them to get involved. The more the merrier, and the faster your wikia will grow!',
+	'emailext-founder-new-member-link-label' => 'SEND A MESSAGE',
 );
 
 $messages['qqq'] = array(
@@ -25,4 +28,7 @@ $messages['qqq'] = array(
 	'emailext-founder-encourage' => 'Encouragement text for the founder to support the user who just edited.  $1 -> author profile URL, $2-> author name',
 	'emailext-founder-anon-encourage' => 'Text explaining what an anonymous edit is',
 	'emailext-founder-multi-encourage' => 'Text letting the founder know a contributor has made multiple edits.  $1 -> author profile URL, $2 -> author name',
+	'emailext-founder-new-member-subject' => 'Subject of the email send to founders when a user registers on their wiki. $1 -> new username',
+	'emailext-founder-new-member-details' => 'Text encouraging the founder to reach out to the new member and encourage them to get involved on the wiki. $1 -> new username',
+	'emailext-founder-new-member-link-label' => "Button label linking to the new member's talk page where the founder can welcome them to the wiki",
 );
