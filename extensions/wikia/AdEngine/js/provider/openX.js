@@ -42,16 +42,15 @@ define('ext.wikia.adEngine.provider.openX', [
 		return firstScript + secondScript;
 	}
 
-	function fillInSlot(slotName, success) {
+	function fillInSlot(slotName, slotElement, success) {
 		log(['fillInSlot', slotName], 'info', logGroup);
 
-		var slot = doc.getElementById(slotName),
-			slotItem = targeting.getItem(slotName),
+		var slotItem = targeting.getItem(slotName),
 			size = slotItem.size.split('x'),
 			width = size[0],
 			height = size[1];
 
-		slot.appendChild(iframeWriter.getIframe({
+		slotElement.appendChild(iframeWriter.getIframe({
 			code: getCode(slotItem.auid),
 			width: width,
 			height: height

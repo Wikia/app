@@ -15,6 +15,7 @@ class SimpleXmlUtil {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self;
 		}
+
 		return self::$instance;
 	}
 
@@ -23,11 +24,13 @@ class SimpleXmlUtil {
 	 * Will return empty string for a non-node argument
 	 *
 	 * @param $node
+	 *
 	 * @return string
 	 */
 	public function getInnerXML( $node ) {
 		$innerXML = '';
-		if ( $node instanceof \SimpleXMLElement ) {
+		// check for empty nodes, strlen used for "0" strings match
+		if ( $node instanceof \SimpleXMLElement && ( strlen( (string)$node ) || $node->count() ) ) {
 			$domElement = dom_import_simplexml( $node );
 
 			if ( ( $domElement instanceof \DOMElement ) && ( $domElement->hasChildNodes() ) ) {
@@ -36,6 +39,7 @@ class SimpleXmlUtil {
 				}
 			}
 		}
+
 		return $innerXML;
 	}
 }

@@ -14,6 +14,12 @@ class PortableInfoboxParserTagControllerTest extends WikiaBaseTest {
 		$this->controller = new PortableInfoboxParserTagController();
 	}
 
+	protected function tearDown() {
+		// we use libxml only for tests here
+		libxml_clear_errors();
+		parent::tearDown();
+	}
+
 	protected function setUpParser() {
 		$parser = new Parser();
 		$options = new ParserOptions();
