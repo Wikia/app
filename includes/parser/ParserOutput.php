@@ -527,7 +527,7 @@ class ParserOutput extends CacheTime {
 				$result[$key] = $new[$key];
 
 			// There is no such key in the new array OR
-			// the source has an array under this key and the new one does not.
+			// types of values under the key in source and new differ.
 			// Treat it as an invalid input and use only the source.
 			} elseif ( !isset( $new[$key] )
 				|| gettype( $source[$key] ) !== gettype( $new[$key] ) ) {
