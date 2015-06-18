@@ -62,10 +62,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				turtle: {
 					name: 'turtle'
 				},
-                jj: {
-                    name: 'jj',
-                    canHandleSlot: noop
-                }
+				jj: {
+					name: 'jj',
+					canHandleSlot: noop
+				}
 			}
 		};
 
@@ -86,15 +86,15 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				}
 			},
 			mocks.adDecoratorPageDimensions,
-			mocks.providers.evolve,
 			mocks.providers.directGpt,
+			mocks.providers.evolve,
+			mocks.providers.jj,
 			mocks.providers.liftium,
 			mocks.providers.monetizationService,
 			mocks.providers.openX,
 			mocks.providers.remnantGpt,
 			mocks.providers.sevenOneMedia,
 			mocks.providers.turtle,
-            mocks.providers.jj,
 			mocks.providers.taboola
 		);
 	}
@@ -195,7 +195,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 
 	it('any country, JJProvider off, JJProvider slot: JJProvider', function () {
 		spyOn(mocks.providers.jj, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo').indexOf('jj') == -1).toEqual(true);
+		expect(getProviders('foo').indexOf('jj') === -1).toEqual(true);
 	});
 
 	it('any country, forcejj=1', function () {

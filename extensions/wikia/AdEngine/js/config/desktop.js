@@ -1,4 +1,3 @@
-/*global define,require*/
 define('ext.wikia.adEngine.config.desktop', [
 	// regular dependencies
 	'wikia.log',
@@ -29,15 +28,15 @@ define('ext.wikia.adEngine.config.desktop', [
 	adDecoratorPageDimensions,
 
 	// AdProviders
-	adProviderEvolve,
 	adProviderDirectGpt,
+	adProviderEvolve,
+	adProviderJJ,
 	adProviderLiftium,
 	adProviderMonetizationService,
 	adProviderOpenX,
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
-	adProviderJJ,
 	adProviderTaboola
 ) {
 	'use strict';
@@ -148,3 +147,4 @@ define('ext.wikia.adEngine.config.desktop', [
 		getProviderList: getProviderList
 	};
 });
+/*global define,require*/
