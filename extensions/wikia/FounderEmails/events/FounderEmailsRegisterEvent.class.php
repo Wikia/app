@@ -2,17 +2,21 @@
 
 class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 
-	const EMAIL_CONTROLLER = 'Email\Controller\FounderNewMemberController';
+	const EMAIL_CONTROLLER = 'Email\Controller\FounderNewMember';
 
-	private $newUserName;
-
-	public function __construct( $newUserName ) {
+	public function __construct( Array $eventData = [] ) {
 		parent::__construct( 'register' );
-		$this->newUserName = $newUserName;
+		$this->setData( $eventData );
 	}
 
 	public function enabled( $wikiId, User $user ) {
-		// Define this cause we have to, we don't actually need it.
+
+		// don't send if we're on an answersWiki
+		if ( self::isAnswersWiki() ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function process( Array $events ) {
@@ -21,21 +25,17 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 			return false;
 		}
 
-		$foundingWiki = WikiFactory::getWikiById( F::app()->wg->CityId );
+		// This event is triggered when a new user registers, so we
+		// know there's only one event in the events array
+		$eventData = $events[0]['data'];
 		$emailParams = [
-			'wikiName' => $foundingWiki->city_url,
-			'currentUser' => $this->newUserName
+			'currentUser' => $eventData['newUserName'],
 		];
 
 		foreach ( ( new WikiService )->getWikiAdminIds() as $adminId ) {
-
-			// don't send if we're on an answersWiki
-			if ( self::isAnswersWiki() ) {
-				continue;
-			}
-
 			$admin = User::newFromId( $adminId );
 			$emailParams['targetUser'] = $admin->getName();
+
 			F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $emailParams );
 		}
 
@@ -43,7 +43,10 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 	}
 
 	public static function register( User $user ) {
-		FounderEmails::getInstance()->registerEvent( new FounderEmailsRegisterEvent( $user->getName() ) );
+		$eventData = [
+			'newUserName' => $user->getName()
+		];
+		FounderEmails::getInstance()->registerEvent( new FounderEmailsRegisterEvent( $eventData ) );
 		return true;
 	}
 }

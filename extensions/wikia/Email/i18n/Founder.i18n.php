@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'emailext-founder-multi-encourage' => '[$1 $2] has made multiple edits on your wikia. Thank them for their contributions. It’s all about community-building!',
 	'emailext-founder-new-member-subject' => '$1 just joined {{SITENAME}}. Congrats!',
 	'emailext-founder-new-member-details' => 'Take a few minutes to welcome $1 and encourage them to get involved. The more the merrier, and the faster your wikia will grow!',
-	'emailext-founder-new-member-link-label' => 'SEND A MESSAGE',
+	'emailext-founder-new-member-link-label' => 'Send a message',
 );
 
 $messages['qqq'] = array(

@@ -249,8 +249,53 @@ class FounderNewMemberController extends FounderController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_NEW_MEMBER_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_NEW_MEMBER_INT;
 
+	public function initEmail() {
+		// noop
+	}
+
+	/**
+	 * @template avatarLayout
+	 */
+	public function body() {
+		$this->response->setData( [
+			'salutation' => $this->getSalutation(),
+			'editorProfilePage' => $this->getCurrentProfilePage(),
+			'editorUserName' => $this->getCurrentUserName(),
+			'editorAvatarURL' => $this->getCurrentAvatarURL(),
+			'summary' => $this->getSummary(),
+			'buttonText' => $this->getButtonText(),
+			'buttonLink' => $this->getButtonLink(),
+			'contentFooterMessages' => [
+				$this->getWikiaCommunitySignature()
+			],
+			'hasContentFooterMessages' => true,
+			'details' => $this->getDetails(),
+		] );
+	}
+
 	public function getSubject() {
-		return "Foo subject";
+		return $this->getMessage( 'emailext-founder-new-member-subject', $this->currentUser->getName() )->parse();
+	}
+
+	// Same message use for subject and summary
+	public function getSummary() {
+		return $this->getSubject();
+	}
+
+	public function getDetails() {
+		return $this->getMessage( 'emailext-founder-new-member-details', $this->currentUser->getName() )->parse();
+	}
+
+	public function getWikiaCommunitySignature() {
+		return $this->getMessage( 'emailext-emailconfirmation-community-team' )->text();
+	}
+
+	public function getButtonText() {
+		return $this->getMessage( 'emailext-founder-new-member-link-label' )->text();
+	}
+
+	public function getButtonLink() {
+		return $this->currentUser->getTalkPage()->getFullURL();
 	}
 
 	public function assertCanEmail() {
@@ -279,5 +324,9 @@ class FounderNewMemberController extends FounderController {
 		if ( !$this->targetUser->getBoolOption( "founderemails-joins-$wikiId"  ) ) {
 			throw new Check( 'Who knows wtf this option does' );
 		}
+	}
+
+	protected function getFooterMessages() {
+		// noop
 	}
 }
