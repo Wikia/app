@@ -187,6 +187,30 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).not.toEqual('taboola');
 	});
 
+	it('any country, JJProvider on, JJProvider slot: JJProvider', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({jj: true});
+		spyOn(mocks.providers.jj, 'canHandleSlot').and.returnValue(true);
+		expect(getProviders('foo')).toEqual('jj,direct,remnant,liftium');
+	});
+
+	it('any country, JJProvider off, JJProvider slot: JJProvider', function () {
+		spyOn(mocks.providers.jj, 'canHandleSlot').and.returnValue(true);
+		expect(getProviders('foo').indexOf('jj') == -1).toEqual(true);
+	});
+
+	it('any country, forcejj=1', function () {
+		spyOn(mocks, 'getAdContextForceProviders').and.returnValue({jj: true});
+		spyOn(mocks.providers.jj, 'canHandleSlot').and.returnValue(true);
+		expect(getProviders('foo')).toEqual('jj');
+	});
+
+	it('any country, JJProvider on, wgSitewideDisableJJ on', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({jj: true});
+		spyOn(mocks.providers.jj, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableJJProvider: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+	});
+
 	it('default setup, wgSitewideDisableGpt on: just Liftium', function () {
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
 		expect(getProviders('foo')).toEqual('liftium');
