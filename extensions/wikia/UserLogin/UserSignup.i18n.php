@@ -931,10 +931,10 @@ $messages['es'] = array(
 	'usersignup-confirmation-heading-wikiamobile' => 'Revisa tu correo electrónico',
 	'usersignup-confirmation-heading-email-resent' => 'Enviado nuevo correo electrónico',
 	'usersignup-confirmation-subheading' => 'Revisa tu correo electrónico',
-	'usersignup-confirmation-email-sent' => "Enviamos un correo electrónico a '''$1'''. 
+	'usersignup-confirmation-email-sent' => "Enviamos un correo electrónico a '''$1'''.
 
 Haz clic en el enlace de confirmación en el correo electrónico para terminar el proceso de creación de tu cuenta.",
-	'usersignup-confirmation-email-sent-wikiamobile' => "Enviamos un correo electrónico a '''$1'''. 
+	'usersignup-confirmation-email-sent-wikiamobile' => "Enviamos un correo electrónico a '''$1'''.
 
 Haz clic en el enlace de confirmación en el correo electrónico para terminar el proceso de creación de tu cuenta. ¡Gracias!",
 	'usersignup-reconfirmation-email-sent' => 'Tu correo electrónico ha sido cambiado a $1. Hemos enviado un nuevo mensaje de confirmación. Por favor confirma la nueva dirección de correo electrónico.',
@@ -956,32 +956,32 @@ Haz clic en el enlace de confirmación en el correo electrónico para terminar e
 
 ¡Estamos felices de darte la bienvenida a Wikia y a {{SITENAME}}! Aquí hay algunas cosas que puedes hacer para comenzar.
 
-Edita tu perfil. 
+Edita tu perfil.
 
 Añade una imagen de perfil y otras cosas sobre ti en tu perfil de {{SITENAME}}.
 
-Ve a $EDITPROFILEURL 
+Ve a $EDITPROFILEURL
 
-Aprende conceptos básicos. 
+Aprende conceptos básicos.
 
-Hazte con los consejos básicos de Wikia: cómo editar una página, tu perfil de usuario, cambiar tus preferencias y mucho más. 
+Hazte con los consejos básicos de Wikia: cómo editar una página, tu perfil de usuario, cambiar tus preferencias y mucho más.
 
-Échale un vistazo a ($LEARNBASICURL) 
+Échale un vistazo a ($LEARNBASICURL)
 
-Explora más wikias. 
+Explora más wikias.
 
 Hay miles de comunidades en Wikia, encuentra más wikias que te interesen revisando nuestras categorías: Videojuegos (http://es.wikia.com/Videojuegos), Entretenimiento (http://es.wikia.com/Entretenimiento), o Estilo de vida (http://es.wikia.com/Estilo_de_vida).
 
-Ir a $EXPLOREWIKISURL 
+Ir a $EXPLOREWIKISURL
 
 ¿Quieres más información? Encuentra consejos y respuestas en la comunidad central de Wikia (http://www.comunidad.wikia.com). ¡Diviértete editando!
 
-El Equipo de Wikia 
+El Equipo de Wikia
 
 
-___________________________________________ 
+___________________________________________
 
-Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com 
+Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com
 ¿Quieres controlar los mensajes que recibes?? Ve a: {{fullurl:{{ns:special}}:Preferencias}}',
 	'usersignup-heading' => 'Únete hoy a Wikia',
 	'usersignup-heading-byemail' => 'Crear una cuenta para alguien más',
@@ -998,33 +998,33 @@ Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com
 	'usersignup-error-captcha' => 'La respuesta del reto ha fallado, ¡por favor inténtalo de nuevo!',
 	'usersignup-account-creation-heading' => '¡Conseguido!',
 	'usersignup-account-creation-subheading' => 'Hemos enviado un correo electrónico a $1',
-	'usersignup-account-creation-email-sent' => 'Has comenzado el proceso de creación de una cuenta de usuario con el nombre $2. Hemos enviado un correo electrónico a $1 con una contraseña temporal y un enlace de confirmación. 
+	'usersignup-account-creation-email-sent' => 'Has comenzado el proceso de creación de una cuenta de usuario con el nombre $2. Hemos enviado un correo electrónico a $1 con una contraseña temporal y un enlace de confirmación.
 
-El nuevo usuario, $2, necesitará hacer clic en el enlace del correo electrónico que le hemos enviado para confirmar su cuenta y cambiar su contraseña temporal para finalizar la creación de su cuenta. 
+El nuevo usuario, $2, necesitará hacer clic en el enlace del correo electrónico que le hemos enviado para confirmar su cuenta y cambiar su contraseña temporal para finalizar la creación de su cuenta.
 
 [{{fullurl:{{ns:special}}:UserSignup|byemail=1}} Crear más cuentas] en {{SITENAME}}',
 	'usersignup-account-creation-email-subject' => '¡Ha sido creada una cuenta de usuario para ti en Wikia!',
 	'usersignup-account-creation-email-greeting' => 'Hola,',
-	'usersignup-account-creation-email-content' => 'Has creado una nueva cuenta de usuario en {{SITENAME}}. Para acceder a tu cuenta y cambiar tu contraseña temporal, haz clic en el enlace de abajo e identifícate con tu nombre de usuario "$USERNAME" y la contraseña "$NEWPASSWORD". 
+	'usersignup-account-creation-email-content' => 'Has creado una nueva cuenta de usuario en {{SITENAME}}. Para acceder a tu cuenta y cambiar tu contraseña temporal, haz clic en el enlace de abajo e identifícate con tu nombre de usuario "$USERNAME" y la contraseña "$NEWPASSWORD".
 
 Por favor, identifícate en <a style="color:#2C85D5;" href="{{fullurl:{{ns:special}}:UserLogin}}">{{fullurl:{{ns:special}}:UserLogin}}</a>
 
 Si no querías que esta cuenta fuese creada, puedes simplemente ignorar este correo electrónico o contactar con nuestro equipo de Soporte Comunitario y preguntarles.',
 	'usersignup-account-creation-email-signature' => 'El equipo de Wikia',
-	'usersignup-account-creation-email-body' => 'Hola, 
+	'usersignup-account-creation-email-body' => 'Hola,
 
-Has creado una nueva cuenta de usuario en {{SITENAME}}. Para acceder a tu cuenta y cambiar tu contraseña temporal, haz clic en el enlace de abajo e identifícate con tu el nombre de usuario "$2" y la contraseña "$3". 
+Has creado una nueva cuenta de usuario en {{SITENAME}}. Para acceder a tu cuenta y cambiar tu contraseña temporal, haz clic en el enlace de abajo e identifícate con tu el nombre de usuario "$2" y la contraseña "$3".
 
-Por favor, identifícate en {{fullurl:{{ns:special}}:UserLogin}} 
+Por favor, identifícate en {{fullurl:{{ns:special}}:UserLogin}}
 
-Si no querías que esta cuenta fuese creada, puedes simplemente ignorar este correo electrónico o contactar con nuestro equipo de Soporte Comunitario y preguntarles. 
+Si no querías que esta cuenta fuese creada, puedes simplemente ignorar este correo electrónico o contactar con nuestro equipo de Soporte Comunitario y preguntarles.
 
-El equipo de Wikia 
+El equipo de Wikia
 
 
-___________________________________________ 
+___________________________________________
 
-Para revisar qué es lo último que ha sucedido en Wikia, visita http://comunidad.wikia.com/ 
+Para revisar qué es lo último que ha sucedido en Wikia, visita http://comunidad.wikia.com/
 ¿Quieres controlar qué correos electrónicos vas a recibir? Ve a: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Hubo un problema de comunicación con Facebook. Inténtalo de nuevo más tarde.',
 	'usersignup-facebook-signup-header' => '¿Creando una nueva cuenta?',
@@ -3224,10 +3224,10 @@ $messages['pt'] = array(
 	'usersignup-confirmation-heading-wikiamobile' => 'Verifique o seu e-mail',
 	'usersignup-confirmation-heading-email-resent' => 'Novo e-mail enviado',
 	'usersignup-confirmation-subheading' => 'Verifique o seu e-mail',
-	'usersignup-confirmation-email-sent' => "Nós enviamos um e-mail para '''$1'''. 
+	'usersignup-confirmation-email-sent' => "Nós enviamos um e-mail para '''$1'''.
 
 Clique no link de confirmação no seu e-mail para concluir a criação de sua conta.",
-	'usersignup-confirmation-email-sent-wikiamobile' => "Nós enviamos um e-mail para '''$1'''. 
+	'usersignup-confirmation-email-sent-wikiamobile' => "Nós enviamos um e-mail para '''$1'''.
 
 Clique no link de confirmação no seu e-mail para concluir a criação de sua conta. Obrigado!",
 	'usersignup-reconfirmation-email-sent' => 'O seu endereço de e-mail foi alterado para $1. Enviamos-lhe um novo e-mail de confirmação. Por favor, confirme o novo endereço de e-mail.',
@@ -3247,17 +3247,17 @@ Clique no link de confirmação no seu e-mail para concluir a criação de sua c
 	'usersignup-welcome-email-signature' => 'A equipe da Wikia',
 	'usersignup-welcome-email-body' => 'Olá $USERNAME,
 
-Nós estamos felizes em recebê-lo na Wikia e na {{SITENAME}}! Aqui estão algumas coisas que você pode fazer para começar. 
+Nós estamos felizes em recebê-lo na Wikia e na {{SITENAME}}! Aqui estão algumas coisas que você pode fazer para começar.
 
-Edite o seu perfil. 
+Edite o seu perfil.
 
-Adicione uma foto e alguns fatos sobre você no seu perfil na {{SITENAME}}. 
+Adicione uma foto e alguns fatos sobre você no seu perfil na {{SITENAME}}.
 
 Vá para $EDITPROFILEURL
 
-Aprenda o básico. 
+Aprenda o básico.
 
-Veja um tutorial rápido sobre o básico na Wikia: como editar uma página, o seu perfil de usuário, mude as suas preferências, e mais. 
+Veja um tutorial rápido sobre o básico na Wikia: como editar uma página, o seu perfil de usuário, mude as suas preferências, e mais.
 
 Confira ($LEARNBASICURL)
 
@@ -3290,9 +3290,9 @@ Quer controlar quais emails você recebe? Vá para: {{fullurl:{{ns:special}}:Pre
 	'usersignup-error-captcha' => 'A resposta do captcha falhou, por favor, tente novamente!',
 	'usersignup-account-creation-heading' => 'Sucesso!',
 	'usersignup-account-creation-subheading' => 'Enviamos um e-mail para $1',
-	'usersignup-account-creation-email-sent' => 'Você começou o processo de criação de conta para $2. Nós enviamos um e-mail para $1 com uma senha temporária e um link de confirmação. 
+	'usersignup-account-creation-email-sent' => 'Você começou o processo de criação de conta para $2. Nós enviamos um e-mail para $1 com uma senha temporária e um link de confirmação.
 
-$2 precisará clicar no link no e-mail que nós enviamos para confirmar sua conta e alterar sua senha temporária para terminar de criar sua conta.  
+$2 precisará clicar no link no e-mail que nós enviamos para confirmar sua conta e alterar sua senha temporária para terminar de criar sua conta.
 
 
 [{{fullurl: {{ns:special}}: UserSignup|byemail=1}} Criar mais contas] em {{SITENAME}}',
@@ -4319,7 +4319,7 @@ $messages['zh-hans'] = array(
 Wikia团队
 
 ___________________________________________
-想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com 
+想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com
 点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => '加入Wikia',
 	'usersignup-heading-byemail' => '为其他人创建帐户',
@@ -4357,10 +4357,10 @@ $2需要点击相关链接完成帐户注册，并且需要更改临时密码。
 
 如果您不想创建这个帐户，请忽略这封邮件或者联系我们的社区支持部门团队。
 
-Wikia团队 
-___________________________________________ 
+Wikia团队
+___________________________________________
 
-想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com 
+想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com
 点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => '链接Facebook出现问题。请稍后再试。',
 	'usersignup-facebook-signup-header' => '创建帐户',
@@ -4489,7 +4489,7 @@ $messages['zh-tw'] = array(
 Wikia團隊
 
 ___________________________________________
-想了解Wikia最近發生了什麼嗎？請訪問http://zh.community.wikia.com 
+想了解Wikia最近發生了什麼嗎？請訪問http://zh.community.wikia.com
 點擊以下連結設定收取通知郵件方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-heading' => '立即加入Wikia',
 	'usersignup-heading-byemail' => '幫其他人創建帳戶',
@@ -4528,9 +4528,9 @@ ___________________________________________
 如果您不想創建這個帳戶，請忽略這封郵件或者聯繫我們的社區支持部門團隊解決任何疑問。
 
 Wikia團隊
-___________________________________________ 
+___________________________________________
 
-想了解Wikia最近有什麼新消息嗎？請訪問http://zh.community.wikia.com 
+想了解Wikia最近有什麼新消息嗎？請訪問http://zh.community.wikia.com
 點擊以下連結設定電子郵件收取方式: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => '連接Facebook出現問題。請稍後再試。',
 	'usersignup-facebook-signup-header' => '要創建新的帳戶嗎？',
