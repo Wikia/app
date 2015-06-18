@@ -21,10 +21,10 @@ class AdEngine2Hooks {
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
 		global
+			$wgAdDriverForceJJ,
 			$wgAdDriverForceLiftiumAd,
 			$wgAdDriverForceOpenXAd,
 			$wgAdDriverForceTurtleAd,
-			$wgAdDriverForceJJ,
 			$wgAdDriverUseSevenOneMedia,
 			$wgEnableKruxOnMobile,
 			$wgEnableKruxTargeting,

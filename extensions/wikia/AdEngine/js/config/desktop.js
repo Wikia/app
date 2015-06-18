@@ -9,15 +9,15 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 
 	// adProviders
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.directGpt',
+	'ext.wikia.adEngine.provider.evolve',
+	'ext.wikia.adEngine.provider.jj',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	'ext.wikia.adEngine.provider.turtle',
-	'ext.wikia.adEngine.provider.jj',
 	require.optional('ext.wikia.adEngine.provider.taboola')
 ], function (
 	// regular dependencies
@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia,
 	adProviderTurtle,
-    adProviderJJ,
+	adProviderJJ,
 	adProviderTaboola
 ) {
 	'use strict';
@@ -75,15 +75,11 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderOpenX];
 		}
 
-        if (context.forceProviders.liftium) {
-            return [adProviderLiftium];
-        }
+		if (context.forceProviders.liftium) {
+			return [adProviderLiftium];
+		}
 
 		if (context.forceProviders.jj) {
-            if (instantGlobals.wgSitewideDisableJJProvider) {
-                log('JJProvider diabled by disaster recovery. No ads', 'warn', logGroup);
-                return [];
-            }
 			return [adProviderJJ];
 		}
 
@@ -118,10 +114,10 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [adProviderMonetizationService];
 		}
 
-        // First provider: JJ ;-)
-        if (context.providers.jj && !instantGlobals.wgSitewideDisableJJProvider) {
-            providerList.push(adProviderJJ);
-        }
+		// First provider: JJ ;-)
+		if (context.providers.jj && !instantGlobals.wgSitewideDisableJJProvider) {
+			providerList.push(adProviderJJ);
+		}
 
 		// Second provider: Turtle, Evolve or Direct GPT?
 		if (context.providers.turtle) {
