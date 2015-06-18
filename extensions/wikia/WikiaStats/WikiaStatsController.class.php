@@ -48,8 +48,9 @@ class WikiaStatsController extends WikiaController {
 			self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
 		);
 
-		$this->setVal('communitiesWithCuratedContent', $communitiesWithCuratedContent);
-		$this->setVal('totalCommunities', $data['communities']);
+		$this->setVal('item', $communitiesWithCuratedContent);
+		$this->setVal('min', ['value'=>0]);
+		$this->setVal('max', ['value' => $data['communities']]);
 	}
 
 	public function getWikiaStatsFromWF() {
