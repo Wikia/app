@@ -153,6 +153,7 @@ class ParserOutput extends CacheTime {
 	 * @var Names of vars that we are able to merge from another ParserOutput object
 	 */
 	public static $varsToMerge = [
+		'mLanguageLinks',
 		'mCategories',
 		'mLinks',
 		'mTemplates',
@@ -166,8 +167,9 @@ class ParserOutput extends CacheTime {
 		'mModuleStyles',
 		'mModuleMessages',
 		'mWarnings',
-		'mLanguageLinks',
 	];
+
+	const INVALID_MERGE_MESSAGE = 'A trial of merging an invalid ParserOutput object (all vars should be arrays).';
 
 	# </Wikia>
 
@@ -491,31 +493,57 @@ class ParserOutput extends CacheTime {
 	/**
 	 * Merge vars from another ParserOutput object. Allows you to parse some wikitext separately
 	 * but still include information on added categories, templates etc.
+	 * Throws an exception if any of the source or external vars is not an array
+	 * what makes the objects invalid.
 	 * @param ParserOutput $externalParserOutput
+	 * @throws Exception
 	 */
 	public function mergeExternalParserOutputVars( ParserOutput $externalParserOutput ) {
-		foreach( self::$varsToMerge as $var ) {
-			$this->$var = $this->mergeVars(
-				$this->$var, $externalParserOutput->$var );
+		foreach ( self::$varsToMerge as $var ) {
+			if ( is_array( $this->$var ) && is_array( $externalParserOutput->$var ) ) {
+				$this->$var = $this->mergeVars(
+					$this->$var, $externalParserOutput->$var );
+				var_dump( $this->$var );
+			} else {
+				throw new Exception( self::INVALID_MERGE_MESSAGE );
+			}
 		}
 	}
 
 	/**
-	 * Function for safe-merge of vars of two ParserOutput objects
+	 * Function for safe-merge of vars of two ParserOutput objects. It only accepts arrays.
 	 * @param $source
 	 * @param $new
 	 * @return array
 	 */
 	private function mergeVars( $source, $new ) {
 		$result = [];
-		$keys = array_replace( array_keys( $source ), array_keys( $new ) );
+
+		// Retrieve unique keys from both arrays and iterate over them
+		$keys = array_unique( array_merge( array_keys( $source ), array_keys( $new ) ) );
+
 		foreach ( $keys as $key ) {
+			// The source does not have this key, so use only the new one
 			if ( !isset( $source[$key] ) ) {
 				$result[$key] = $new[$key];
+
+			// There is no such key in the new array OR
+			// the source has an array under this key and the new one does not.
+			// Treat it as an invalid input and use only the source.
+			} elseif ( !isset( $new[$key] )
+				|| ( is_array( $source[$key] ) && !is_array( $new[$key] ) ) ) {
+				$result[$key] = $source[$key];
+
+			// The key exists in both arrays and values are also arrays. Use the unite
+			// operator to use values from both arrays.
 			} elseif ( is_array( $source[$key] ) && is_array( $new[$key] ) ) {
 				$result[$key] = $source[$key] + $new[$key];
+
+			// If we get to this point it means that both arrays are non-associative
+			// and we can safely merge them because preserving indexes is not important.
 			} else {
-				$result[$key] = $source[$key];
+				$result = array_merge( $source, $new );
+				return $result;
 			}
 		}
 		return $result;
