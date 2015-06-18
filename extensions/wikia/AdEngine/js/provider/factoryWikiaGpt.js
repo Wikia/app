@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				lookups.extendSlotTargeting(slotName, slotTargeting);
 			}
 
-			gptHelper.pushAd(slotName, slotPath, slotTargeting, extraParams);
+			gptHelper.pushAd(slotName, slotElement, slotPath, slotTargeting, extraParams);
 			log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
 		}
 

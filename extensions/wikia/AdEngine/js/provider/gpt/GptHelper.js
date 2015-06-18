@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.provider.gptHelper', [
 		}
 
 		function queueAd() {
-			log(['queueAd', slotName, slotDiv, element], 'debug', logGroup);
+			log(['queueAd', slotName, slotElement, element], 'debug', logGroup);
 			slotElement.appendChild(element.getNode());
 
 			googleTag.addSlot(slotName, slotPath, slotTargeting, element);
