@@ -503,7 +503,6 @@ class ParserOutput extends CacheTime {
 			if ( is_array( $this->$var ) && is_array( $externalParserOutput->$var ) ) {
 				$this->$var = $this->mergeVars(
 					$this->$var, $externalParserOutput->$var );
-				var_dump( $this->$var );
 			} else {
 				throw new Exception( self::INVALID_MERGE_MESSAGE );
 			}
@@ -516,7 +515,7 @@ class ParserOutput extends CacheTime {
 	 * @param $new
 	 * @return array
 	 */
-	private function mergeVars( $source, $new ) {
+	private function mergeVars( Array $source, Array $new ) {
 		$result = [];
 
 		// Retrieve unique keys from both arrays and iterate over them
