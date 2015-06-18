@@ -128,7 +128,7 @@ class MoveNotices extends Maintenance {
 				}
 			}
 
-			$this->log = "Processing template: $this->templateName completed \n";
+			$this->log .= "Processing template: $this->templateName from CSV file completed \n";
 			$this->addToLog( "================================================== \n\n\n" );
 
 			fwrite( $this->logFile, $this->log );
