@@ -181,9 +181,10 @@ class ParserOptions {
 	var $mExtraKey = '';
 
 	/**
-	 * Parsing part of wikitext (should turn off global context)
+	 * Parsing the main content? BEWARE! This might not be set to true in all contexts, always
+	 * check it before using.
 	 */
-	var $mIsPartialParse = false;
+	var $mIsMain = false;
 
 	/**
 	 * Function to be called when an option is accessed.
@@ -220,9 +221,11 @@ class ParserOptions {
 
 	function getIsPreview()                     { return $this->mIsPreview; }
 	function getIsSectionPreview()              { return $this->mIsSectionPreview; }
-	function getIsPartialParse()                { return $this->mIsPartialParse; }
 	function getIsPrintable()                   { $this->optionUsed( 'printable' );
 												  return $this->mIsPrintable; }
+
+	function getIsMain()                        { return $this->mIsMain; }
+
 	function getUser()                          { return $this->mUser; }
 	function getPreSaveTransform()              { return $this->mPreSaveTransform; }
 
@@ -311,8 +314,9 @@ class ParserOptions {
 
 	function setIsPreview( $x )                 { return wfSetVar( $this->mIsPreview, $x ); }
 	function setIsSectionPreview( $x )          { return wfSetVar( $this->mIsSectionPreview, $x ); }
-	function setIsPartialParse( $x )            { return wfSetVar( $this->mIsPartialParse, $x ); }
 	function setIsPrintable( $x )               { return wfSetVar( $this->mIsPrintable, $x ); }
+
+	function setIsMain( $x )                    { return wfSetVar( $this->mIsMain, $x ); }
 
 	/**
 	 * Extra key that should be present in the parser cache key.

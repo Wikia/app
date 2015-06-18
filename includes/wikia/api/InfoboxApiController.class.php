@@ -8,7 +8,11 @@ class InfoboxApiController extends WikiaApiController {
 
 		$dataService = new PortableInfoboxDataService();
 		$data = $dataService->getInfoboxDataByTitle( $title );
+		$output = isset( $data ) && is_array( $data ) ?
+			array_map( function ( $infobox ) {
+				return isset( $infobox[ 'data' ] ) ? $infobox[ 'data' ] : $infobox;
+			}, $data ) : [ ];
 
-		$this->setResponseData( [ 'items' => $data ] );
+		$this->setResponseData( [ 'items' => $output ] );
 	}
 }

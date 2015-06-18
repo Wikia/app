@@ -1,11 +1,15 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/columns';
+@import 'skins/shared/mixins/flexbox';
 
 $infobox-width: 270px; // temporary value used to mach with Khal Drogo Infobox
 $infobox-margin: 15px;
 $infobox-item-margin: 5px;
-$infobox-background: mix($color-page, $color-links, 92%);
-$infobox-section-header-background: transparentize($color-links, 0.9);
+$infobox-background: mix($color-page, $color-links, 90%);
+@if ($is-dark-wiki) {
+	$infobox-background: mix($color-page, $color-links, 85%);
+}
+$infobox-section-header-background: mix($color-page, $color-links, 75%);
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -50,7 +54,6 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 
 	.portable-infobox-header-background {
 		background-color: $infobox-section-header-background;
-		color: $color-alternate-text;
 	}
 
 	.portable-infobox-header-font {
@@ -125,4 +128,62 @@ $infobox-section-header-background: transparentize($color-links, 0.9);
 			padding-right: $infobox-item-margin * 2;
 		}
 	}
+
+	.group-layout-horizontal {
+
+		&.item-type-group {
+			display: table;
+			table-layout: fixed;
+			width: 100%;
+		}
+
+		.item-type-header {
+			display: table-caption;
+		}
+
+		.item-type-key-val {
+			border-bottom: 0;
+			display: table-cell;
+			padding: $infobox-item-margin;
+			text-align: center;
+		}
+
+		.item-type-key-val:not(:last-of-type) {
+			border-right: 1px solid $infobox-section-header-background;
+		}
+
+		.portable-infobox-item-label {
+			overflow: hidden;
+			vertical-align: top;
+			white-space: nowrap;
+		}
+
+		.portable-infobox-item-value {
+			padding-left: 0;
+		}
+	}
 }
+
+.portable-infobox-layout-tabular {
+	> .item-type-key-val,
+	.item-type-group:not(.group-layout-horizontal) .item-type-key-val {
+		@include flexbox;
+		@include flex-direction(row);
+		box-sizing: border-box;
+		overflow: hidden;
+		width: 100%;
+
+		.portable-infobox-item-label {
+			@include flex-basis($infobox-width / 3);
+			line-height: 18px;
+			margin-top: inherit;
+		}
+
+		.portable-infobox-item-value {
+			@include flex-basis($infobox-width * 2 / 3);
+			font-size: 14px;
+			line-height: 20px;
+		}
+	}
+}
+

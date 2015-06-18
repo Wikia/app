@@ -7,7 +7,7 @@ class InsightsHelper {
 	 * 'insights-list-subtitle-uncategorizedpages',
 	 * 'insights-list-subtitle-withoutimages',
 	 * 'insights-list-subtitle-deadendpages',
-	 * 'insights-list-subtitle-wantedpages' 
+	 * 'insights-list-subtitle-wantedpages'
 	 */
 	const INSIGHT_SUBTITLE_MSG_PREFIX = 'insights-list-subtitle-';
 
@@ -38,15 +38,37 @@ class InsightsHelper {
 	 * 'insights-notification-message-fixed-withoutimages',
 	 * 'insights-notification-message-fixed-deadendpages',
 	 * 'insights-notification-message-fixed-wantedpages'
+	 * 'insights-notification-message-fixed-nonportableinfoboxes'
 	 */
 	const INSIGHT_FIXED_MSG_PREFIX = 'insights-notification-message-fixed-';
 
 	public static $insightsPages = [
 		InsightsUncategorizedModel::INSIGHT_TYPE	=> 'InsightsUncategorizedModel',
 		InsightsWithoutimagesModel::INSIGHT_TYPE	=> 'InsightsWithoutimagesModel',
-		InsightsDeadendModel::INSIGHT_TYPE			=> 'InsightsDeadendModel',
+		InsightsDeadendModel::INSIGHT_TYPE		=> 'InsightsDeadendModel',
 		InsightsWantedpagesModel::INSIGHT_TYPE		=> 'InsightsWantedpagesModel'
 	];
+
+
+	/**
+	 * Prepare array with all available insights pages
+	 *
+	 * @return array
+	 */
+	public static function getInsightsPages() {
+		global $wgEnableInsightsInfoboxes;
+
+		if ( !empty( $wgEnableInsightsInfoboxes )
+			&& !isset( self::$insightsPages[InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE] )
+		) {
+			self::$insightsPages = array_merge(
+				[ InsightsUnconvertedInfoboxesModel::INSIGHT_TYPE => 'InsightsUnconvertedInfoboxesModel' ],
+				self::$insightsPages
+			);
+		}
+
+		return self::$insightsPages;
+	}
 
 	/**
 	 * Returns a full URL for a known subpage and a NULL for an unknown one.
@@ -54,7 +76,9 @@ class InsightsHelper {
 	 * @return String|null
 	 */
 	public static function getSubpageLocalUrl( $subpage ) {
-		if ( isset( self::$insightsPages[$subpage] ) ) {
+		$insightsPages = self::getInsightsPages();
+
+		if ( isset( $insightsPages[$subpage] ) ) {
 			return SpecialPage::getTitleFor( 'Insights', $subpage )->getLocalURL();
 		}
 		return null;
@@ -67,7 +91,8 @@ class InsightsHelper {
 	 * @return bool
 	 */
 	public static function isInsightPage( $subpage ) {
-		return !empty( $subpage ) && isset( self::$insightsPages[$subpage] );
+		$insightsPages = self::getInsightsPages();
+		return !empty( $subpage ) && isset( $insightsPages[$subpage] );
 	}
 
 	/**
@@ -96,7 +121,8 @@ class InsightsHelper {
 	 */
 	public static function getInsightModel( $subpage ) {
 		if ( self::isInsightPage( $subpage ) ) {
-			$modelName = self::$insightsPages[$subpage];
+			$insightsPages = self::getInsightsPages();
+			$modelName = $insightsPages[$subpage];
 			if ( class_exists( $modelName ) ) {
 				return new $modelName();
 			}
@@ -138,7 +164,8 @@ class InsightsHelper {
 	 */
 	public static function getMessageKeys() {
 		$messageKeys = [];
-		foreach ( self::$insightsPages as $key => $class ) {
+		$insightsPages = self::getInsightsPages();
+		foreach ( $insightsPages as $key => $class ) {
 			$messageKeys[$key] = [
 				'subtitle' => self::INSIGHT_SUBTITLE_MSG_PREFIX . $key,
 				'description' => self::INSIGHT_DESCRIPTION_MSG_PREFIX . $key,
