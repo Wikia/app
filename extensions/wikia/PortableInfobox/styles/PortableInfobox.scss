@@ -167,7 +167,7 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 
 .portable-infobox-layout-tabular {
 	> .item-type-key-val,
-	.item-type-group .item-type-key-val {
+	.item-type-group:not(.group-layout-horizontal) .item-type-key-val {
 		@include flexbox;
 		@include flex-direction(row);
 		box-sizing: border-box;
@@ -185,7 +185,6 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 			font-size: 14px;
 			line-height: 20px;
 		}
-
 	}
 }
 
