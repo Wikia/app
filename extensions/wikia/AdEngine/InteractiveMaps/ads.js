@@ -41,7 +41,8 @@ var ads = (function (window, document) {
 
 	function fillAd() {
 		require(['ext.wikia.adEngine.provider.directGptMaps'], function (gpt) {
-			gpt.fillInSlot('MAPS_BUTTON', noop, noop);
+			var slotElement = document.getElementById('MAPS_BUTTON');
+			gpt.fillInSlot('MAPS_BUTTON', slotElement, noop, noop);
 		});
 	}
 

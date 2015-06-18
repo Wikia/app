@@ -127,17 +127,6 @@
     // Enable Demographics and Interests Reports
     window.ga('require', 'displayfeatures');
 
-    // Setting up the cross domain autolink
-    // [@see: https://developers.google.com/analytics/devguides/collection/analyticsjs/cross-domain#autolink]
-    _gaWikiaPush(
-        ['require', 'linker'],
-        ['linker:autoLink', [
-            'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
-            'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
-            'websitewiki.de', 'wowwiki.com', 'yoyowiki.org']
-        ]
-    );
-
     /**
      * Wrapper function to a generic ga() function call.
      *
@@ -257,7 +246,8 @@
         ['set', 'dimension16', getKruxSegment()],                              // Krux Segment
         ['set', 'dimension17', window.wgWikiVertical],                         // Vertical
         ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
-        ['set', 'dimension19', window.wgArticleType]                          // ArticleType
+        ['set', 'dimension19', window.wgArticleType],                          // ArticleType
+        ['set', 'dimension20', window.wgABPerformanceTest || 'not set']        // Performance A/B testing
     );
 
     /*
@@ -287,7 +277,7 @@
             }
             abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
             if (abSlot >= 40 && abSlot <= 49) {
-                abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'CONTROL');
+                abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'NOT_IN_ANY_GROUP');
                 _gaWikiaPush(['set', 'dimension' + abSlot, abGroupName]);
                 abCustomVarsForAds.push(['ads.set', 'dimension' + abSlot, abGroupName]);
             }
@@ -343,9 +333,6 @@
 
     // Enable Demographics and Interests Reports
     window.ga('ads.require', 'displayfeatures');
-
-    window.ga('ads.require', 'linker');
-    window.ga('ads.linker:autoLink', [document.location.hostname]);
 
     /* Ads Account Custom Dimensions */
     window.ga('ads.set', 'dimension1', window.wgDBname);                                // DBname

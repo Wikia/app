@@ -51,13 +51,10 @@ class AdEngine2Controller extends WikiaController {
 	 * Action to display an ad (or not)
 	 */
 	public function ad() {
-		$slotName = $this->request->getVal('slotName');
-		$pageTypes = $this->request->getVal('pageTypes');
-		$includeLabel = $this->request->getVal('includeLabel');
-
-		$this->showAd = AdEngine2Service::shouldShowAd($pageTypes);
-		$this->slotName = $slotName;
-		$this->pageTypes = $pageTypes;
-		$this->includeLabel = $includeLabel;
+		$this->includeLabel = $this->request->getVal('includeLabel');
+		$this->onLoad = $this->request->getVal('onLoad');
+		$this->pageTypes = $this->request->getVal('pageTypes');
+		$this->slotName = $this->request->getVal('slotName');
+		$this->showAd = AdEngine2Service::shouldShowAd($this->pageTypes);
 	}
 }

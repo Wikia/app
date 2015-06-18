@@ -64,14 +64,14 @@ define('ext.wikia.adEngine.provider.taboola', [
 		libraryLoaded = true;
 	}
 
-	function fillInSlot(slotname, success) {
-		log(['fillInSlot', slotname], 'debug', logGroup);
+	function fillInSlot(slotname, slotElement, success) {
+		log(['fillInSlot', slotname, slotElement], 'debug', logGroup);
 
 		loadTaboola();
 
 		window._taboola.push({
 			mode: isMobile ? 'thumbnails-b' : 'thumbnails-a',
-			container: slotname,
+			container: slotElement.id,
 			placement: ['Read More on', pageType, '@', (isMobile ? 'mobile' : 'desktop')].join(' '),
 			target_type: 'mix'
 		});

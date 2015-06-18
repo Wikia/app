@@ -476,6 +476,10 @@ class EmailNotification {
 			$controller = 'Email\Controller\ArticleComment';
 		} elseif ( $this->isBlogComment() ) {
 			$controller = 'Email\Controller\BlogComment';
+		} elseif ( $this->isListBlogPost() ) {
+			$controller = 'Email\Controller\ListBlogPost';
+		} elseif ( $this->isUserBlogPost() ) {
+			$controller = 'Email\Controller\UserBlogPost';
 		}
 
 		return $controller;
@@ -490,6 +494,13 @@ class EmailNotification {
 		$controller = $this->getEmailExtensionController();
 
 		if ( !empty( $controller ) ) {
+			$childArticleID = '';
+			if ( !empty( $this->otherParam['childTitle'] ) ) {
+				/** @var Title $childTitleObj */
+				$childTitleObj = $this->otherParam['childTitle'];
+				$childArticleID = $childTitleObj->getArticleID();
+			}
+
 			$params = [
 				'targetUser' => $user->getName(),
 				'pageTitle' => $this->title->getText(),
@@ -499,7 +510,8 @@ class EmailNotification {
 				'previousRevId' => $this->previousRevId,
 				'replyToAddress' => $this->replyto,
 				'fromAddress' => $this->from->address,
-				'fromName' => $this->from->name
+				'fromName' => $this->from->name,
+				'childArticleID' => $childArticleID,
 			];
 
 			F::app()->sendRequest( $controller, 'handle', $params );
@@ -575,6 +587,22 @@ class EmailNotification {
 		return (
 			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
 			( $this->title->getNamespace() == NS_BLOG_ARTICLE )
+		);
+	}
+
+	private function isUserBlogPost() {
+		$ns = $this->title->getNamespace();
+		return (
+			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
+			( $ns == NS_BLOG_ARTICLE )
+		);
+	}
+
+	private function isListBlogPost() {
+		$ns = $this->title->getNamespace();
+		return (
+			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
+			( $ns == NS_BLOG_LISTING )
 		);
 	}
 

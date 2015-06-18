@@ -29,9 +29,9 @@
 	<a href=#wkNavMenu id=wkNavTgl class=tgl></a>
 	<? if ( $loggedIn ) {
 		// This gives me image 50x50 but adds html attributes width and height with values 25
-		echo '<a id=wkPrfTgl class="tgl lgdin" href=#>' . AvatarService::renderAvatar( $userName, 25 ) . '</a>';
+		echo '<a id="wkPrfTgl" class="tgl lgdin" href="#">' . AvatarService::renderAvatar( $userName, 25 ) . '</a>';
 	} else {
-		echo '<a id=wkPrfTgl class="tgl lgdout" href="' . Sanitizer::encodeAttribute( SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() ) . '#"></a>';
+		echo '<a id="wkPrfTgl" class="tgl lgdout ' . $loginButtonClass .'" href="' . Sanitizer::encodeAttribute( $loginUrl ) . '"></a>';
 	}	?>
 	</div>
 	<div id=wkSrh>

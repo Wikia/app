@@ -47,17 +47,17 @@ class FounderEmails {
 	public function getFoundersWithPreference( $prefPrefix ) {
 		wfProfileIn( __METHOD__ );
 
-		$prefixLength = strlen($prefPrefix) + 2;
-		$db = wfGetDB(DB_SLAVE, array(), 'wikicities');
+		$prefixLength = strlen( $prefPrefix ) + 2;
+		$db = wfGetDB( DB_SLAVE, array(), 'wikicities' );
 		$cityList = array();
 		$oRes = $db->select (
-			array ('wikicities.user_properties'),
-			array ("distinct substring(up_property, $prefixLength) city_id"),
+			array ( 'wikicities.user_properties' ),
+			array ( "distinct substring(up_property, $prefixLength) city_id" ),
 			array (
 					"up_property like '$prefPrefix-%'",
-					'up_value' => 1)
+					'up_value' => 1 )
 		);
-		while ( $oRow = $db->fetchObject ( $oRes )) {
+		while ( $oRow = $db->fetchObject ( $oRes ) ) {
 				$cityList[] = $oRow->city_id;
 		}
 		wfProfileOut( __METHOD__ );
@@ -112,7 +112,7 @@ class FounderEmails {
 		$aEventsData = array();
 
 		// Digest event types do not have records in the event table so just process them.
-		if ($eventType == 'viewsDigest' || $eventType == "completeDigest") {
+		if ( $eventType == 'viewsDigest' || $eventType == "completeDigest" ) {
 			$oEvent = FounderEmailsEvent::newFromType( $eventType );
 			$result = $oEvent->process( $aEventsData );
 		} else {
@@ -145,14 +145,14 @@ class FounderEmails {
 		return $this->mLastEventType;
 	}
 
-	public static function onGetPreferences($user, &$defaultPreferences) {
+	public static function onGetPreferences( $user, &$defaultPreferences ) {
 		global $wgUser, $wgCityId, $wgSitename, $wgEnableUserPreferencesV2Ext;
 		wfProfileIn( __METHOD__ );
 
-		$wikiService = (new WikiService);
-		if ( !FounderEmailsEvent::isAnswersWiki() && in_array($wgUser->getId(), $wikiService->getWikiAdminIds()) ) {
+		$wikiService = ( new WikiService );
+		if ( !FounderEmailsEvent::isAnswersWiki() && in_array( $wgUser->getId(), $wikiService->getWikiAdminIds() ) ) {
 
-			if ( empty($wgEnableUserPreferencesV2Ext) ) {
+			if ( empty( $wgEnableUserPreferencesV2Ext ) ) {
 				$section = 'personal/wikiemail';
 				$prefVersion = '';
 			} else {
@@ -161,7 +161,7 @@ class FounderEmails {
 			}
 
 			// If we are in digest mode, grey out the individual email options
-			$disableEmailPrefs = $wgUser->getOption("founderemails-complete-digest-$wgCityId");
+			$disableEmailPrefs = $wgUser->getOption( "founderemails-complete-digest-$wgCityId" );
 
 			/*  This is the old preference, no longer used
 			 *  TODO: Write conversion script from old to new
@@ -174,30 +174,30 @@ class FounderEmails {
 			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
 				'type' => 'info',
 				'label' => '',
-				'help' => wfMsg('wikiadoption-pref-label', $wgSitename),
+				'help' => wfMsg( 'wikiadoption-pref-label', $wgSitename ),
 				'section' => $section,
 			);
 			$defaultPreferences["founderemails-joins-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('founderemails-pref-joins'.$prefVersion, $wgSitename),
+				'label-message' => array( 'founderemails-pref-joins' . $prefVersion, $wgSitename ),
 				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-edits-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('founderemails-pref-edits'.$prefVersion, $wgSitename),
+				'label-message' => array( 'founderemails-pref-edits' . $prefVersion, $wgSitename ),
 				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-views-digest-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('founderemails-pref-views-digest'.$prefVersion, $wgSitename),
+				'label-message' => array( 'founderemails-pref-views-digest' . $prefVersion, $wgSitename ),
 				'section' => $section,
 				'disabled' => $disableEmailPrefs,
 			);
 			$defaultPreferences["founderemails-complete-digest-$wgCityId"] = array(
 				'type' => 'toggle',
-				'label-message' => array('founderemails-pref-complete-digest'.$prefVersion, $wgSitename),
+				'label-message' => array( 'founderemails-pref-complete-digest' . $prefVersion, $wgSitename ),
 				'section' => $section,
 			);
 		}
@@ -213,18 +213,18 @@ class FounderEmails {
 	 * @param array $removegroup
 	 * @return true
 	 */
-	public static function onUserRightsChange($user, $addgroup, $removegroup) {
+	public static function onUserRightsChange( $user, $addgroup, $removegroup ) {
 		global $wgCityId, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		if (!empty($wgCityId)) {
-			if (($addgroup && (in_array('sysop', $addgroup) || in_array('bureaucrat', $addgroup)))
-				|| ($removegroup && (in_array('sysop', $removegroup) || in_array('bureaucrat', $removegroup)))) {
-				$wikiService = (new WikiService); /* @var $wikiService WikiService */
+		if ( !empty( $wgCityId ) ) {
+			if ( ( $addgroup && ( in_array( 'sysop', $addgroup ) || in_array( 'bureaucrat', $addgroup ) ) )
+				|| ( $removegroup && ( in_array( 'sysop', $removegroup ) || in_array( 'bureaucrat', $removegroup ) ) ) ) {
+				$wikiService = ( new WikiService ); /* @var $wikiService WikiService */
 				$memKey  = $wikiService->getMemKeyAdminIds( $wgCityId );
-				$wgMemc->delete($memKey);
+				$wgMemc->delete( $memKey );
 				$memKey  = $wikiService->getMemKeyAdminIds( $wgCityId, true );
-				$wgMemc->delete($memKey);
+				$wgMemc->delete( $memKey );
 				$wikiService->getWikiAdminIds( $wgCityId, true );
 			}
 		}
@@ -239,24 +239,24 @@ class FounderEmails {
 		global $wgStatsDB, $wgStatsDBEnabled, $wgDevelEnvironment;
 		wfProfileIn( __METHOD__ );
 
-		$today = date( 'Y-m-d', strtotime('-1 day') );
+		$today = date( 'Y-m-d', strtotime( '-1 day' ) );
 
 		$pageviews = DataMartService::getPageviewsDaily( $today, null, $cityID );
-		$views = ( isset($pageviews[$today]) ) ? $pageviews[$today] : 0 ;
+		$views = ( isset( $pageviews[$today] ) ) ? $pageviews[$today] : 0 ;
 
 		wfProfileOut( __METHOD__ );
 		return $views;
 	}
 
-	public function getDailyEdits ($cityID, /*Y-m-d*/ $day = null) {
+	public function getDailyEdits ( $cityID, /*Y-m-d*/ $day = null ) {
 		global $wgStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 
 		$edits = 0;
 		if ( !empty( $wgStatsDBEnabled ) ) {
-			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime('-1 day') ) : $day;
+			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
 
-			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$db = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 
 			$oRow = $db->selectRow(
 				array( 'events' ),
@@ -272,21 +272,21 @@ class FounderEmails {
 		return $edits;
 	}
 
-	public function getUserEdits ($cityID, $day = null) {
+	public function getUserEdits ( $cityID, $day = null ) {
 
 		wfProfileIn( __METHOD__ );
 
 		$userEdits = array();
-		$today = ( empty( $day ) ) ? date( 'Ymd', strtotime('-1 day') ) : str_replace( "-", "", $day );
+		$today = ( empty( $day ) ) ? date( 'Ymd', strtotime( '-1 day' ) ) : str_replace( "-", "", $day );
 
 		$dbname = WikiFactory::IDtoDB( $cityID );
 
-		if ( empty($dbname) ) {
+		if ( empty( $dbname ) ) {
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
-		$db = wfGetDB(DB_SLAVE, 'vslow', $dbname);
+		$db = wfGetDB( DB_SLAVE, 'vslow', $dbname );
 		$oRes = $db->select(
 			array( 'revision' ),
 			array( 'rev_user', 'min(rev_timestamp) as min_ts' ),
@@ -304,16 +304,16 @@ class FounderEmails {
 		return $userEdits;
 	}
 
-	public function getJoinedUsers ($cityID, $day = null) {
+	public function getJoinedUsers ( $cityID, $day = null ) {
 		global $wgStatsDB, $wgStatsDBEnabled;
 
 		wfProfileIn( __METHOD__ );
 
 		$userJoined = array();
 		if ( !empty( $wgStatsDBEnabled ) ) {
-			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime('-1 day') ) : $day;
+			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
 
-			$db = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+			$db = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
 			$oRes = $db->select(
 				array( 'user_login_history' ),
 				array( 'user_id', 'min(ulh_timestamp) as min_ts' ),
@@ -361,11 +361,11 @@ class FounderEmails {
 	 * @param array $links
 	 * @return array
 	 */
-	public static function addLink($params, $links, $color='#2C85D5') {
-		if (is_array($params) && is_array($links)) {
-			foreach($links as $key => $value) {
-				if (array_key_exists($key, $params))
-					$params[$key] = '<a href="'.$value.'" style="color:'.$color.';">'.$params[$key].'</a>';
+	public static function addLink( $params, $links, $color = '#2C85D5' ) {
+		if ( is_array( $params ) && is_array( $links ) ) {
+			foreach ( $links as $key => $value ) {
+				if ( array_key_exists( $key, $params ) )
+					$params[$key] = '<a href="' . $value . '" style="color:' . $color . ';">' . $params[$key] . '</a>';
 			}
 		}
 		return $params;
