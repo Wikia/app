@@ -61,6 +61,10 @@ $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
 # don't purge all thumbs - PLATFORM-161
 $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsUrls';
 
+# restrict movable namespaces
+$wgHooks['MWNamespace:isMovable'][] = 'Wikia::isNamespaceMovable';
+
+
 /**
  * This class have only static methods so they can be used anywhere
  *
@@ -2260,5 +2264,31 @@ class Wikia {
 		}
 
 		return $countryNames;
+	}
+
+	/**
+	 * Hide certain namespaces from list of movable ones
+	 *
+	 * @author pgroland
+	 * @see CE-1378
+	 *
+	 * @param index Index of namespace
+	 * @return bool
+	 */
+	static public function isNamespaceMovable( &$result, $index ) {
+		// namespace ids from extensions are hardcoded here
+		$filter = array(
+			NS_USER_TALK, // 3 - User_talk
+			501, // User_blog_comment
+			700, // Top_10_list
+			1200, // Message_Wall
+			1201, // Thread
+			2000, // Board
+			2001  // Board_Thread
+		);
+
+		$result = !in_array( $index, $filter );
+
+		return true;
 	}
 }

@@ -10,10 +10,6 @@ class VideoHandlerHooks {
 		return true;
 	}
 
-	static public function WikiaVideo_isMovable( $result, $index ) {
-		return true;
-	}
-
 	static public function WikiaVideoParserBeforeStrip( $parser, &$text, $strip_state ) {
 
 		global $wgWikiaVideoGalleryId, $wgRTEParserEnabled;
