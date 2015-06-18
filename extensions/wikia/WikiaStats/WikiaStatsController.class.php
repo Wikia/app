@@ -42,7 +42,7 @@ class WikiaStatsController extends WikiaController {
 	 * @responseParam integer communitiesWithCuratedContent
 	 */
 	public function getCuratedContentStats() {
-		$data = $this->sendRequest( 'WikiaStats', 'getWikiaStats' )->getData();
+		$data = $this->sendSelfRequest( 'getWikiaStats' )->getData();
 		$this->getResponse()->setFormat( WikiaResponse::FORMAT_JSON );
 		$communitiesWithCuratedContent = WikiFactory::getCountOfWikisWithVar(
 			self::CURATED_CONTENT_WG_VAR_ID_PROD, "full", "LIKE", null, "true"
