@@ -105,8 +105,11 @@ class FlagsController extends WikiaController {
 		$response = $this->requestGetFlagsForPageForEdit( $pageId );
 
 		if ( $response->hasException() ) {
-			$this->overrideTemplate( 'editFormException' );
-			$this->setVal( 'exceptionMessage', $response->getException()->getDetails() );
+			$exceptionDetails = $response->getException()->getDetails();
+			$this->setVal(
+				'exceptionMessage',
+				wfMessage( 'flags-edit-modal-exception' )->params( $exceptionDetails )->parse()
+			);
 		} elseif ( $this->getResponseStatus( $response ) ) {
 			$flags = array_values( $this->getResponseData( $response ) );
 			$this->setVal( 'editToken', $this->wg->User->getEditToken() );
@@ -114,10 +117,13 @@ class FlagsController extends WikiaController {
 			$this->setVal( 'formSubmitUrl', $this->getLocalUrl( 'postFlagsEditForm' ) );
 			$this->setVal( 'inputNamePrefix', FlagsHelper::FLAGS_INPUT_NAME_PREFIX );
 			$this->setVal( 'inputNameCheckbox', FlagsHelper::FLAGS_INPUT_NAME_CHECKBOX );
-			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->escaped() );
+			$this->setVal( 'moreInfo', wfMessage( 'flags-edit-form-more-info' )->plain() );
 			$this->setVal( 'pageId', $pageId );
 		} else {
-			$this->overrideTemplate( 'editFormEmpty' );
+			$this->setVal(
+				'emptyMessage',
+				wfMessage( 'flags-edit-modal-no-flags-on-community' )->parse()
+			);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -167,7 +173,7 @@ class FlagsController extends WikiaController {
 			$currentFlags = $this->getResponseData( $this->requestGetFlagsForPageForEdit( $pageId ) );
 
 			$helper = new FlagsHelper();
-			$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params );
+			$flagsToChange = $helper->compareDataAndGetFlagsToChange( $currentFlags, $this->params['editFlags'] );
 
 			if ( !empty( $flagsToChange ) ) {
 				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );

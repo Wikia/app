@@ -153,7 +153,6 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 		}
 
 		.portable-infobox-item-label {
-			font-size: inherit;
 			overflow: hidden;
 			vertical-align: top;
 			white-space: nowrap;
@@ -167,7 +166,7 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 
 .portable-infobox-layout-tabular {
 	> .item-type-key-val,
-	.item-type-group .item-type-key-val {
+	.item-type-group:not(.group-layout-horizontal) .item-type-key-val {
 		@include flexbox;
 		@include flex-direction(row);
 		box-sizing: border-box;
