@@ -530,8 +530,8 @@ class ParserOutput extends CacheTime {
 			// the source has an array under this key and the new one does not.
 			// Treat it as an invalid input and use only the source.
 			} elseif ( !isset( $new[$key] )
-				|| ( is_array( $source[$key] ) && !is_array( $new[$key] ) ) ) {
-				$result[$key] = $source[$key];
+				|| gettype( $source[$key] ) !== gettype( $new[$key] ) ) {
+					$result[$key] = $source[$key];
 
 			// The key exists in both arrays and values are also arrays. Use the unite
 			// operator to use values from both arrays.
