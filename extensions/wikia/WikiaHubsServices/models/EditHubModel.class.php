@@ -617,11 +617,10 @@ class EditHubModel extends WikiaModel {
 		$repo = $file->getRepo();
 
 		/**
-		 * If file is from WikiaLocalRepo then city id
-		 * will equal to wiki from current context
-		 *
+		 * Only fetch city_id if the file is coming from
+		 * WikiaForeignDBViaLBRepo
 		 */
-		if ( !( $repo instanceof WikiaLocalRepo ) ) {
+		if ( $repo instanceof WikiaForeignDBViaLBRepo  ) {
 			$dbName = $repo->getDBName();
 			$wiki = WikiFactory::getWikiByDB( $dbName );
 
