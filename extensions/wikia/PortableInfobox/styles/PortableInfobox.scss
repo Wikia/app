@@ -82,7 +82,7 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 		border-bottom: 1px solid $infobox-section-header-background;
 	}
 
-	.portable-infobox-item:last-of-type {
+	> .portable-infobox-item:last-child {
 		border-bottom: 0;
 	}
 
