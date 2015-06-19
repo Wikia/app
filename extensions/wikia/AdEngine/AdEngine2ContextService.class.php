@@ -73,11 +73,7 @@ class AdEngine2ContextService {
 					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
-				'forceProviders' => $this->filterOutEmptyItems( [
-					'liftium' => $wg->AdDriverForceLiftiumAd,
-					'openX' => $wg->AdDriverForceOpenXAd,
-					'turtle' => $wg->AdDriverForceTurtleAd,
-				] ),
+				'forcedAdProvider' => null,
 			];
 		} );
 	}

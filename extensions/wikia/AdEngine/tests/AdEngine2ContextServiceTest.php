@@ -57,7 +57,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [],
 				'expectedProviders' => [],
-				'expectedForceProviders' => [],
+				'expectedForceProviders' => null,
 				'expectedSlots' => ['invisibleHighImpact' => true]
 			],
 			[
@@ -66,7 +66,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [],
 				'expectedProviders' => [],
-				'expectedForceProviders' => ['turtle' => true]
+				'expectedForceProviders' => 'turtle'
 			],
 			[
 				'titleMockType' => 'article',
@@ -111,7 +111,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [],
 				'expectedProviders' => [],
-				'expectedForceProviders' => [],
+				'expectedForceProviders' => null,
 				'expectedSlots' => ['exitstitial' => true]
 			],
 			[
@@ -120,7 +120,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [],
 				'expectedProviders' => [],
-				'expectedForceProviders' => [],
+				'expectedForceProviders' => null,
 				'expectedSlots' => ['exitstitialRedirectDelay' => true]
 			],
 			[
@@ -175,7 +175,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedOpts = [],
 		$expectedTargeting = [],
 		$expectedProviders = [],
-		$expectedForceProviders = [],
+		$expectedForcedAdProvider = null,
 		$expectedSlots = []
 	) {
 		$langCode = 'xx';
@@ -258,8 +258,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			'slots' => [
 			],
-			'forceProviders' => [
-			]
+			'forcedAdProvider' => $expectedForcedAdProvider
 		];
 
 		foreach ( $expectedOpts as $var => $val ) {
@@ -272,10 +271,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		foreach ( $expectedProviders as $var => $val ) {
 			$expected['providers'][$var] = $val;
-		}
-
-		foreach ( $expectedForceProviders as $var => $val ) {
-			$expected['forceProviders'][$var] = $val;
 		}
 
 		foreach ( $expectedSlots as $var => $val ) {
