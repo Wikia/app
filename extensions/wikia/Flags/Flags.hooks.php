@@ -71,7 +71,7 @@ class Hooks {
 	 * @param \Article $article
 	 * @return bool
 	 */
-	public static function onBeforeParserCacheSave( \ParserOutput $parserOutput, \Article $article ) {
+	public static function onBeforeParserCacheSave( \ParserOutput $parserOutput, \Page $article ) {
 		$parserOutput = ( new \FlagsController )
 			->modifyParserOutputWithFlags( $parserOutput, $article );
 
