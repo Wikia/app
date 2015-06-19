@@ -14,6 +14,8 @@ class UrlGenerator {
 	const MODE_FIXED_ASPECT_RATIO = 'fixed-aspect-ratio';
 	const MODE_FIXED_ASPECT_RATIO_DOWN = 'fixed-aspect-ratio-down';
 	const MODE_SCALE_TO_WIDTH = 'scale-to-width';
+	const MODE_SCALE_TO_WIDTH_DOWN = 'scale-to-width-down';
+	const MODE_SCALE_TO_HEIGHT_DOWN = 'scale-to-height-down';
 	const MODE_TOP_CROP = 'top-crop';
 	const MODE_TOP_CROP_DOWN = 'top-crop-down';
 	const MODE_WINDOW_CROP = 'window-crop';
