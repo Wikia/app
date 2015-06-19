@@ -41,7 +41,7 @@ class FlagsExtractTemplatesTask extends BaseTask {
 		 */
 		$flagsToAdd = $flagsToUpdate = [];
 
-		foreach( $flagTypesToExtract as $flagType ) {
+		foreach ( $flagTypesToExtract as $flagType ) {
 			$actionParams = [
 				'wiki_id' => $wikiId,
 				'page_id' => $pageId,
@@ -111,7 +111,7 @@ class FlagsExtractTemplatesTask extends BaseTask {
 			$wikiPage->doEdit(
 				$content,
 				'Templates converted to the new Flags feature.',
-				EDIT_FORCE_BOT & EDIT_MINOR,
+				EDIT_FORCE_BOT | EDIT_MINOR,
 				false,
 				$user
 			);
