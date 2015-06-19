@@ -73,7 +73,7 @@ class AdEngine2ContextService {
 					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
-				'forcedAdProvider' => null,
+				'forcedAdProvider' => $this->getForcedAdProvider(),
 			];
 		} );
 	}
@@ -86,5 +86,23 @@ class AdEngine2ContextService {
 			}
 		}
 		return $output;
+	}
+
+	private function getForcedAdProvider() {
+		$wg = F::app()->wg;
+
+		$possibleForcedAdProviders = [
+			'AdDriverForceLiftiumAd' => 'liftium',
+			'AdDriverForceOpenXAd' => 'openx',
+			'AdDriverForceTurtleAd' => 'turtle'
+		];
+
+		foreach( $possibleForcedAdProviders as $enableFlag => $provider) {
+			if( $wg->$enableFlag === true ) {
+				return $provider;
+			}
+		}
+
+		return null;
 	}
 }
