@@ -4,13 +4,15 @@ $dir = dirname( __FILE__ ) . "/../../../../";
 require_once( $dir . 'maintenance/Maintenance.php' );
 
 use Flags\FlagsExtractor;
+use Flags\FlagsCache;
 
 class MoveNotice extends Maintenance {
 
 	const
 		SECTION_DEFAULT = 0,
 		SECTION_ALL = 'all',
-		EDIT_SUMMARY = 'Moving content notices to flags.';
+		EDIT_SUMMARY = 'Moving notices templates to our new Flags feature.',
+		EDIT_USER = 'WikiaBot';
 
 	private
 		$log = '',
@@ -48,7 +50,7 @@ class MoveNotice extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgCityId, $wgParser;
+		global $wgCityId, $wgParser, $wgUser;
 
 		$this->app = F::app();
 
@@ -87,14 +89,16 @@ class MoveNotice extends Maintenance {
 			exit();
 		}
 
-		$templateNames = $this->getTemplateNames();
+		$flags = $this->getFlagsForWiki();
 
-		if ( empty( $templateNames ) ) {
+		if ( empty( $flags ) ) {
 			$this->addToLog( "[ERROR] Cannot find flags for this wiki [$this->wikiId].\n" );
 			$this->writeToLog();
 			$this->closeLogFile();
 			exit();
 		}
+
+		$templateNames = array_keys( $flags );
 
 		$flagsExtractor = new FlagsExtractor();
 
@@ -112,7 +116,7 @@ class MoveNotice extends Maintenance {
 
 		$title = Title::newFromText( 'Template:' . $this->templateName );
 
-		$rows = $this->showIndirectLinks( 0, $title, 0 );
+		$rows = $title->getIndirectLinks();
 
 		if ( empty( $rows ) ) {
 			$this->addToLog( "[WARNING] This template is not used \n" );
@@ -133,9 +137,22 @@ class MoveNotice extends Maintenance {
 
 		$this->writeToLog();
 
+		/**
+		 * Perform all edits as WikiaBot
+		 */
+		$wgUser = User::newFromName( self::EDIT_USER );
+
 		foreach ( $rows as $row ) {
 			$this->log = '';
 			$this->pageId = $row->page_id;
+
+			$flagsOnPage = $this->getFlagsOnPage();
+
+			if ( isset( $flagsOnPage[$this->flagTypeId] ) ) {
+				continue;
+			}
+
+			$firstTemplate = null;
 
 			$page = Title::makeTitle( $row->page_namespace, $row->page_title );
 			$this->pageName = $page->getPrefixedText();
@@ -144,31 +161,68 @@ class MoveNotice extends Maintenance {
 			$content = $wiki->getText();
 			$textToParse = $content;
 
+			$this->addToLog( "Start processing page $this->pageName [$this->pageId]\n");
+
 			if ( $section !== self::SECTION_ALL ) {
 				$textToParse = $wgParser->getSection( $content, $section );
 			}
 
-			if ( $replaceTop && !$list ) {
-				$this->addToLog( "Looking for top template on $this->pageName [" . $this->pageId . "]\n" );
+			$textToParse = ltrim( $textToParse );
 
-				if ( !$flagsExtractor->isTagAdded( FlagsExtractor::FLAGS_DEFAULT_TAG, $textToParse ) ) {
-					$firstTemplate = $flagsExtractor->findFirstTemplateFromList( $templateNames, $textToParse );
-					$this->addToLog( "First template on $this->pageName [" . $this->pageId . "] is $firstTemplate\n" );
-					if ( !is_null( $firstTemplate ) && $this->templateName == $firstTemplate ) {
-						$actions[] = FlagsExtractor::ACTION_REPLACE_FIRST_FLAG;
-						$actionsSum = array_sum( $actions );
-					}
-				} else {
-					$this->addToLog( "Tag is already added on $this->pageName [" . $this->pageId . "]\n" );
+			if ( $replaceTop && !$list ) {
+				$this->addToLog( "Looking for top template on $this->pageName [$this->pageId]\n" );
+
+				$firstTemplate = $this->checkFirstTemplate( $flagsExtractor, $textToParse, $templateNames );
+				if ( !is_null( $firstTemplate ) && $this->templateName == $firstTemplate ) {
+					$actions[] = FlagsExtractor::ACTION_REPLACE_FIRST_FLAG;
+					$actionsSum = array_sum( $actions );
 				}
 			}
 
-			$this->addToLog( "Looking for template on $this->pageName [" . $this->pageId . "]\n" );
+			$this->addToLog( "Looking for template $this->templateName on $this->pageName [$this->pageId]\n" );
 
 			$actionParams = $this->prepareActionParams( $actionsSum, $tag );
 
 			$flagsExtractor->init( $textToParse, $this->templateName, $actions, $actionParams );
 			$templates = $flagsExtractor->getAllTemplates();
+
+			$this->logTemplatesInfo( $templates, $actionsSum, $actionParams, $list );
+
+			$this->addToLog( "Looking for other templates on $this->pageName [$this->pageId]\n");
+
+			foreach( $templateNames as $templateName ) {
+				if ( $this->templateName == $templateName ) {
+					continue;
+				}
+
+				$flagTypeId = $flags[$templateName]['flag_type_id'];
+				if ( isset( $flagsOnPage[$flagTypeId] ) ) {
+					continue;
+				}
+
+				$position = $flagsExtractor->findTemplatePosition( $templateName, 0 );
+				if ( $position !== false ) {
+					$this->addToLog( "Template $templateName found on $this->pageName [$this->pageId]\n");
+
+					if ( $replaceTop && !$list ) {
+						$actions = $this->prepareActionOptions();
+						$actionsSum = array_sum( $actions );
+
+						if ( !is_null( $firstTemplate ) && $templateName == $firstTemplate ) {
+							$actions[] = FlagsExtractor::ACTION_REPLACE_FIRST_FLAG;
+							$actionsSum = array_sum( $actions );
+						}
+					}
+
+					$actionParams = $this->prepareActionParams( $actionsSum, $tag, $flagTypeId );
+
+					$text = $flagsExtractor->getText();
+					$flagsExtractor->init( $text, $templateName, $actions, $actionParams );
+					$templates = $flagsExtractor->getAllTemplates();
+
+					$this->logTemplatesInfo( $templates, $actionsSum, $actionParams, $list );
+				}
+			}
 
 			if ( $actionsSum & (
 					FlagsExtractor::ACTION_REPLACE_FIRST_FLAG
@@ -184,8 +238,10 @@ class MoveNotice extends Maintenance {
 					$text = str_replace( $textToParse, $text, $content );
 				}
 
+				$text = ltrim( $text );
+
 				if ( strcmp( $content, $text ) !== 0 ) {
-					$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_SUPPRESS_RC | EDIT_FORCE_BOT );
+					$wiki->doEdit( $text, self::EDIT_SUMMARY, EDIT_FORCE_BOT );
 				}
 			}
 
@@ -194,12 +250,13 @@ class MoveNotice extends Maintenance {
 				$actionsSum = array_sum( $actions );
 			}
 
-			$this->logTemplatesInfo( $templates, $actionsSum, $actionParams, $list );
+			$this->log .= "Processing template: $this->templateName on page $this->pageName [$this->pageId] completed \n";
+			$this->addToLog( "================================================== \n\n\n" );
 
 			$this->writeToLog();
 		}
 
-		$this->log = "Processing template: $this->templateName completed \n";
+		$this->log .= "Processing template: $this->templateName completed \n";
 		$this->addToLog( "================================================== \n\n\n" );
 
 		$this->writeToLog();
@@ -207,6 +264,21 @@ class MoveNotice extends Maintenance {
 		$this->closeLogFile();
 
 		$this->output( "Processing completed\n" );
+	}
+
+	private function checkFirstTemplate( FlagsExtractor $flagsExtractor, $textToParse, $templateNames ) {
+		if ( !$flagsExtractor->isTagAdded( FlagsExtractor::FLAGS_DEFAULT_TAG, $textToParse ) ) {
+			$firstTemplate = $flagsExtractor->findFirstTemplateFromList( $templateNames, $textToParse );
+			$position = $flagsExtractor->findTemplatePosition( $firstTemplate, 0 );
+			if ( $position === 2 ) {
+				$this->addToLog( "Template $firstTemplate is on the top of the page $this->pageName [" . $this->pageId . "]\nNo magic word replacement needed.\n" );
+				return null;
+			}
+
+			return $firstTemplate;
+		}
+
+		return null;
 	}
 
 	/**
@@ -315,8 +387,8 @@ class MoveNotice extends Maintenance {
 	 *
 	 * @return array
 	 */
-	private function getTemplateNames() {
-		$templateNames = [];
+	private function getFlagsForWiki() {
+		$flags = [];
 
 		$response = $this->app->sendRequest( 'FlagsApiController',
 			'getFlagTypes',
@@ -327,11 +399,33 @@ class MoveNotice extends Maintenance {
 
 		if ( $response['status'] && !empty( $response['data'] ) ) {
 			foreach ( $response['data'] as $flagType ) {
-				$templateNames[] = $flagType['flag_view'];
+				$flags[$flagType['flag_view']] = $flagType;
 			}
 		}
 
-		return $templateNames;
+		return $flags;
+	}
+
+	private function getFlagsOnPage() {
+		$pageFlags = [];
+
+		(new FlagsCache())->purgeFlagsForPage( $this->pageId );
+
+		$response = $this->app->sendRequest( 'FlagsApiController',
+			'getFlagsForPage',
+			[
+				'wiki_id' => $this->wikiId,
+				'page_id' => $this->pageId
+			]
+		)->getData();
+
+		if ( $response['status'] && !empty( $response['data'] ) ) {
+			foreach ( $response['data'] as $flag ) {
+				$pageFlags[$flag['flag_type_id']] = $flag;
+			}
+		}
+
+		return $pageFlags;
 	}
 
 	/**
@@ -380,14 +474,14 @@ class MoveNotice extends Maintenance {
 	 * @param string $tag replacement tag
 	 * @return array
 	 */
-	private function prepareActionParams( $actionsSum, $tag ) {
+	private function prepareActionParams( $actionsSum, $tag, $flagTypeId = null ) {
 		$actionParams = [];
 
 		if ( $actionsSum & ( FlagsExtractor::ACTION_ADD_FIRST_FLAG | FlagsExtractor::ACTION_ADD_ALL_FLAGS ) ) {
 			$actionParams = [
 				'wiki_id' => $this->wikiId,
 				'page_id' => $this->pageId,
-				'flag_type_id' => $this->flagTypeId
+				'flag_type_id' => !is_null( $flagTypeId ) ? $flagTypeId : $this->flagTypeId
 			];
 		}
 
@@ -410,153 +504,6 @@ class MoveNotice extends Maintenance {
 			$this->logFile = fopen( $logName, 'a' );
 		}
 	}
-
-	/**
-	 * Get list of pages with searched template
-	 * Based on Special:Whatlinkshere showIndirectLinks method
-	 */
-	public function showIndirectLinks( $level, $target ) {
-		global $wgContentNamespaces;
-
-		$rows = [];
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$options = [];
-
-		$hidelinks = false;
-		$hideredirs = false;
-		$hidetrans = false;
-		$hideimages = false; //$target->getNamespace() != NS_FILE;
-
-		$fetchlinks = ( !$hidelinks || !$hideredirs );
-
-		// Make the query
-		$plConds = [
-			'page_id=pl_from',
-			'pl_namespace' => $target->getNamespace(),
-			'pl_title' => $target->getDBkey(),
-		];
-		if( $hideredirs ) {
-			$plConds['rd_from'] = null;
-		} elseif( $hidelinks ) {
-			$plConds[] = 'rd_from is NOT NULL';
-		}
-
-		$tlConds = [
-			'page_id=tl_from',
-			'tl_namespace' => $target->getNamespace(),
-			'tl_title' => $target->getDBkey(),
-		];
-
-		$ilConds = [
-			'page_id=il_from',
-			'il_to' => $target->getDBkey(),
-		];
-
-		if ( is_array( $wgContentNamespaces ) && !empty( $wgContentNamespaces ) ) {
-			$namespaces = implode( ',', $wgContentNamespaces );
-
-			$plConds[] = 'page_namespace IN (' . $namespaces . ')';
-			$tlConds[] = 'page_namespace IN (' . $namespaces . ')';
-			$ilConds[] = 'page_namespace IN (' . $namespaces . ')';
-		} elseif ( is_int( $wgContentNamespaces ) ) {
-			$plConds['page_namespace'] = $wgContentNamespaces;
-			$tlConds['page_namespace'] = $wgContentNamespaces;
-			$ilConds['page_namespace'] = $wgContentNamespaces;
-		}
-
-		// Enforce join order, sometimes namespace selector may
-		// trigger filesorts which are far less efficient than scanning many entries
-		$options[] = 'STRAIGHT_JOIN';
-
-		//$options['LIMIT'] = $queryLimit;
-		$fields = [ 'page_id', 'page_namespace', 'page_title', 'rd_from' ];
-
-		$joinConds = [
-			'redirect' => [
-				'LEFT JOIN',
-				[
-					'rd_from = page_id',
-					'rd_namespace' => $target->getNamespace(),
-					'rd_title' => $target->getDBkey(),
-					'(rd_interwiki is NULL) or (rd_interwiki = \'\')',
-				]
-			]
-		];
-
-		if( $fetchlinks ) {
-			$options['ORDER BY'] = 'pl_from';
-			$plRes = $dbr->select(
-				[ 'pagelinks', 'page', 'redirect' ],
-				$fields,
-				$plConds,
-				__METHOD__,
-				$options,
-				$joinConds
-			);
-		}
-
-		if( !$hidetrans ) {
-			$options['ORDER BY'] = 'tl_from';
-			$tlRes = $dbr->select(
-				[ 'templatelinks', 'page', 'redirect' ],
-				$fields,
-				$tlConds,
-				__METHOD__,
-				$options,
-				$joinConds
-			);
-		}
-
-		if( !$hideimages ) {
-			$options['ORDER BY'] = 'il_from';
-			$ilRes = $dbr->select(
-				[ 'imagelinks', 'page', 'redirect' ],
-				$fields,
-				$ilConds,
-				__METHOD__,
-				$options,
-				$joinConds
-			);
-		}
-
-		// Read the rows into an array and remove duplicates
-		// templatelinks comes second so that the templatelinks row overwrites the
-		// pagelinks row, so we get (inclusion) rather than nothing
-		if( $fetchlinks ) {
-			foreach ( $plRes as $row ) {
-				$row->is_template = 0;
-				$row->is_image = 0;
-				$rows[$row->page_id] = $row;
-			}
-		}
-		if( !$hidetrans ) {
-			foreach ( $tlRes as $row ) {
-				$row->is_template = 1;
-				$row->is_image = 0;
-				$rows[$row->page_id] = $row;
-			}
-		}
-		if( !$hideimages ) {
-			foreach ( $ilRes as $row ) {
-				$row->is_template = 0;
-				$row->is_image = 1;
-				$rows[$row->page_id] = $row;
-			}
-		}
-
-		foreach ( $rows as $row ) {
-
-			$nt = Title::makeTitle( $row->page_namespace, $row->page_title );
-
-			if ( $row->rd_from && $level < 2 ) {
-				$this->showIndirectLinks( $level + 1, $nt );
-			}
-		}
-
-		return $rows;
-	}
-
 }
 
 $maintClass = 'MoveNotice';

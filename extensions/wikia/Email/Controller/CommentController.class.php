@@ -63,7 +63,7 @@ abstract class CommentController extends EmailController {
 			throw new Check( "Could not find comment for revision ID given by currentRevId" );
 		}
 
-		if ( !$this->pageTitle->exists() ) {
+		if ( !$this->commentTitle->exists() ) {
 			throw new Check( "Comment doesn't exist." );
 		}
 	}

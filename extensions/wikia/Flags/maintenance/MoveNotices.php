@@ -95,12 +95,6 @@ class MoveNotices extends Maintenance {
 
 		$this->output( "Start processing\n" );
 
-		/**
-		* Perform all edits as WikiaBot and overwrite wgUser so it is
-		* available in the Flags logs
-		*/
-		$this->app->wg->User = $user = User::newFromName( 'WikiaBot' );
-
 		$flagTypeModel = new FlagType();
 
 		fwrite($this->logFile, $this->log);
@@ -134,7 +128,7 @@ class MoveNotices extends Maintenance {
 				}
 			}
 
-			$this->log = "Processing template: $this->templateName completed \n";
+			$this->log .= "Processing template: $this->templateName from CSV file completed \n";
 			$this->addToLog( "================================================== \n\n\n" );
 
 			fwrite( $this->logFile, $this->log );

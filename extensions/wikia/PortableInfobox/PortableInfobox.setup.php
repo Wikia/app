@@ -5,6 +5,7 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 	'name' => 'Portable Infobox',
 	'author' => [
 		'Adam Robak',
+		'Diana Falkowska',
 		'Jacek Jursza',
 		'Mateusz Rybarski',
 		'Rafał Leszczyński',
@@ -17,6 +18,7 @@ $wgExtensionCredits[ 'parserhook' ][] = [
 
 $wgAutoloadClasses[ 'PortableInfoboxRenderService' ] = $dir . 'services/PortableInfoboxRenderService.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxErrorRenderService' ] = $dir . 'services/PortableInfoboxErrorRenderService.class.php';
+$wgAutoloadClasses[ 'PortableInfoboxDataService' ] = $dir . 'services/PortableInfoboxDataService.class.php';
 
 // parser
 $wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\ExternalParser'] = $dir . 'services/Parser/ExternalParser.php';
@@ -32,10 +34,12 @@ $wgInfoboxParserNodes = [
 	'NodeGroup',
 	'NodeHeader',
 	'NodeImage',
+	'NodeInfobox',
 	'NodeData',
 	'NodeTitle',
 	'NodeUnimplemented'
 ];
+$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\NodeFactory' ] = $dir . 'services/Parser/Nodes/NodeFactory.class.php';
 foreach ( $wgInfoboxParserNodes as $parserNode ) {
 	$wgAutoloadClasses[ 'Wikia\\PortableInfobox\\Parser\\Nodes\\'.$parserNode ] = $dir . 'services/Parser/Nodes/'.$parserNode.'.php';
 }
@@ -49,15 +53,18 @@ $wgAutoloadClasses[ 'Wikia\PortableInfobox\Helpers\InfoboParamsValidator' ] = $d
 // controller classes
 $wgAutoloadClasses[ 'PortableInfoboxParserTagController' ] = $dir . 'controllers/PortableInfoboxParserTagController.class.php';
 $wgAutoloadClasses[ 'ApiPortableInfobox' ] = $dir . 'controllers/ApiPortableInfobox.class.php';
+$wgAutoloadClasses[ 'ApiQueryPortableInfobox' ] = $dir . 'controllers/ApiQueryPortableInfobox.class.php';
 $wgAutoloadClasses[ 'PortableInfoboxHooks' ] = $dir . 'PortableInfoboxHooks.class.php';
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'PortableInfoboxParserTagController::parserTagInit';
 $wgHooks['BeforePageDisplay'][] = 'PortableInfoboxHooks::onBeforePageDisplay';
 $wgHooks['ParserAfterTidy'][] = 'PortableInfoboxParserTagController::replaceInfoboxMarkers';
+$wgHooks['ImageServing::buildAndGetIndex'][] = 'PortableInfoboxHooks::onImageServingCollectImages';
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'PortableInfobox' ] = $dir . 'PortableInfobox.i18n.php';
 
 // MW API
 $wgAPIModules['infobox'] = 'ApiPortableInfobox';
+$wgAPIPropModules[ 'infobox' ] = 'ApiQueryPortableInfobox';

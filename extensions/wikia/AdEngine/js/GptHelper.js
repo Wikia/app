@@ -73,6 +73,24 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 	}
 
+	function setSlotLevelParams(slot, slotTargeting) {
+		var name,
+			value;
+
+		log(['setSlotLevelParams', slotTargeting], 'debug', logGroup);
+
+		slot.clearTargeting();
+		for (name in slotTargeting) {
+			if (slotTargeting.hasOwnProperty(name)) {
+				value = slotTargeting[name];
+				if (value) {
+					log(['defineSlot', 'slot.setTargeting', name, value], 'debug', logGroup);
+					slot.setTargeting(name, value);
+				}
+			}
+		}
+	}
+
 	function registerGptCallback(adDivId, gptCallback) {
 		log(['registerGptCallback', adDivId], 'info', logGroup);
 		gptCallbacks[adDivId] = gptCallback;
@@ -138,6 +156,7 @@ define('ext.wikia.adEngine.gptHelper', [
 	 * Push ad to queue and flush if it should be
 	 *
 	 * @param {string}   slotName           - slot name
+	 * @param {Object}   slotElement        - slot div container
 	 * @param {string}   slotPath           - slot path
 	 * @param {Object}   slotTargeting      - slot targeting details
 	 * @param {function} success            - on success callback
@@ -146,9 +165,8 @@ define('ext.wikia.adEngine.gptHelper', [
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
-	function pushAd(slotName, slotPath, slotTargeting, success, error, extra) {
-		var slotDiv = document.getElementById(slotName),
-			adDiv, // set in queueAd
+	function pushAd(slotName, slotElement, slotPath, slotTargeting, success, error, extra) {
+		var adDiv, // set in queueAd
 			adDivId = 'wikia_gpt_helper' + slotPath;
 
 		extra = extra || {};
@@ -169,33 +187,21 @@ define('ext.wikia.adEngine.gptHelper', [
 			}
 		}
 
-		function hideOldDivs() {
-			var oldDivs = slotDiv.querySelectorAll('[id^="wikia_gpt_helper"]'),
-				i,
-				len;
-
-			for (i = 0, len = oldDivs.length; i < len; i += 1) {
-				slotTweaker.hide(oldDivs[i].id);
-			}
-		}
-
 		function queueAd() {
-			var name,
-				value,
-				sizes,
+			var sizes,
 				slot,
 				pageLevelParams = adLogicPageParams.getPageLevelParams();
 
 			setPageLevelParams(pageLevelParams);
 
 			adDiv = document.getElementById(adDivId);
-			log(['queueAd', slotName, slotDiv, adDiv], 'debug', logGroup);
+			log(['queueAd', slotName, slotElement, adDiv], 'debug', logGroup);
 
 			if (!adDiv) {
 				// Create a div for the GPT ad
 				adDiv = document.createElement('div');
 				adDiv.id = adDivId;
-				slotDiv.appendChild(adDiv);
+				slotElement.appendChild(adDiv);
 			}
 
 			if (!gptSlots[adDivId]) {
@@ -209,18 +215,6 @@ define('ext.wikia.adEngine.gptHelper', [
 				slot = googletag.defineSlot(slotPath, sizes, adDivId);
 				slot.addService(pubads);
 
-				delete slotTargeting.size;
-
-				for (name in slotTargeting) {
-					if (slotTargeting.hasOwnProperty(name)) {
-						value = slotTargeting[name];
-						if (value) {
-							log(['defineSlot', 'slot.setTargeting', name, value], 'debug', logGroup);
-							slot.setTargeting(name, value);
-						}
-					}
-				}
-
 				// Display div through GPT
 				log(['googletag.display', adDivId], 'debug', logGroup);
 				googletag.display(adDivId);
@@ -228,15 +222,17 @@ define('ext.wikia.adEngine.gptHelper', [
 				gptSlots[adDivId] = slot;
 			}
 
+			delete slotTargeting.size;
+
+			// Set it after we are sure slot is defined
+			setSlotLevelParams(gptSlots[adDivId], slotTargeting);
+
 			// Save slot level params for easier ad delivery debugging
 			adDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));
 			adDiv.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
 
 			// Save page level params for easier ad delivery debugging
 			adDiv.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
-
-			// Quick hack/fix for Mercury:
-			hideOldDivs();
 
 			// Some broken ads never fire "success" event, so we show the div now (and maybe hide later)
 			slotTweaker.show(adDivId);

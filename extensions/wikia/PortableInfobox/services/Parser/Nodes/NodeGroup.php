@@ -1,24 +1,54 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Parser\XmlParser;
-
 class NodeGroup extends Node {
+	const DATA_LAYOUT_ATTR_NAME = 'layout';
+	const DEFAULT_TAG_NAME = 'default';
+
+	private $supportedGroupLayouts = [
+		'default',
+		'horizontal'
+	];
 
 	public function getData() {
-		$nodeFactory = new XmlParser( $this->infoboxData );
-		if ( $this->externalParser ) {
-			$nodeFactory->setExternalParser( $this->externalParser );
+		if ( !isset( $this->data ) ) {
+			$this->data = [ 'value' => $this->getDataForChildren(),
+							'layout' => $this->getLayout() ];
 		}
-		return [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode, $this ) ];
+
+		return $this->data;
 	}
 
-	public function isEmpty( $data ) {
-		foreach ( $data[ 'value' ] as $elem ) {
-			if ( $elem[ 'type' ] != 'header' && !( $elem[ 'isEmpty' ] ) ) {
+	public function getRenderData() {
+		return [
+			'type' => $this->getType(),
+			'data' => [ 'value' => $this->getRenderDataForChildren(),
+						'layout' => $this->getLayout() ],
+		];
+	}
+
+	public function isEmpty() {
+		/** @var Node $item */
+		foreach ( $this->getChildNodes() as $item ) {
+			if ( !$item->isType( 'header' ) && !$item->isEmpty() ) {
 				return false;
 			}
 		}
+
 		return true;
+	}
+
+	public function getSource() {
+		return $this->getSourceForChildren();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getLayout() {
+		$layout = $this->getXmlAttribute( $this->xmlNode, self::DATA_LAYOUT_ATTR_NAME );
+
+		return ( isset( $layout ) && in_array( $layout, $this->supportedGroupLayouts ) ) ? $layout
+			: self::DEFAULT_TAG_NAME;
 	}
 }

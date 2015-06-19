@@ -31,10 +31,7 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
-	 * Adds entries for watched pages in the global_watchlist table. This
-	 * also kicks off a job to send the weekly digest 7 days from now. Since
-	 * that job does a dedup check, any subsequent attempts to schedule that
-	 * weekly digest job will be ignored until the initial one is sent.
+	 * Adds entries for watched pages in the global_watchlist table.
 	 * @param String $databaseKey
 	 * @param String $nameSpace
 	 * @param array $watchers
