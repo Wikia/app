@@ -160,7 +160,6 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 		}
 
 		.portable-infobox-item-label {
-			font-size: inherit;
 			overflow: hidden;
 			vertical-align: top;
 			white-space: nowrap;
@@ -174,7 +173,7 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 
 .portable-infobox-layout-tabular {
 	> .item-type-key-val,
-	.item-type-group .item-type-key-val {
+	.item-type-group:not(.group-layout-horizontal) .item-type-key-val {
 		@include flexbox;
 		@include flex-direction(row);
 		box-sizing: border-box;
@@ -183,16 +182,20 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 
 		.portable-infobox-item-label {
 			@include flex-basis($infobox-width / 3);
-			line-height: 18px;
-			margin-top: inherit;
+			line-height: 20px;
+			margin-bottom: inherit;
 		}
 
 		.portable-infobox-item-value {
 			@include flex-basis($infobox-width * 2 / 3);
 			font-size: 14px;
-			line-height: 20px;
+			line-height: 19px;
 		}
 
+		li {
+			line-height: 19px;
+			margin: 0;
+		}
 	}
 }
 
