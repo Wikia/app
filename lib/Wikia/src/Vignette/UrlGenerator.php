@@ -211,10 +211,14 @@ class UrlGenerator {
 	/**
 	 * dictate width, let height auto scale
 	 * @param null $width
+	 * @param bool $upsample allow thumbnails larger than originals
 	 * @return $this
 	 */
-	public function scaleToWidth($width = null) {
-		$this->mode(self::MODE_SCALE_TO_WIDTH);
+	public function scaleToWidth($width = null, $upsample = false) {
+
+		$upsample
+			? $this->mode(self::MODE_SCALE_TO_WIDTH)
+			: $this->mode(self::MODE_SCALE_TO_WIDTH_DOWN);
 
 		if ($width != null) {
 			$this->width($width);
