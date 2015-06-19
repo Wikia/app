@@ -34,7 +34,7 @@ class FlagsExtractTemplatesTask extends BaseTask {
 		/**
 		 * Prepare actions for the extraction and check which flags should be updated
 		 */
-		$actions = [ FlagsExtractor::ACTION_REMOVE_FIRST_FLAG ];
+		$actions = [ FlagsExtractor::ACTION_REMOVE_ALL_FLAGS ];
 
 		/**
 		 * Check which flags should be added and which should be updated
