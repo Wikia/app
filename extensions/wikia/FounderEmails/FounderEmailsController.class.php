@@ -84,7 +84,7 @@ class FounderEmailsController extends WikiaController {
 		if ( isset( $params['$PAGEURL'] ) ) {
 			$this->buttonUrl = $params['$PAGEURL'];
 		}
-		switch($this->type) {
+		switch( $this->type ) {
 			case 'anon-edit':
 				break;
 			case 'general-edit':

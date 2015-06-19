@@ -21,7 +21,7 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 
 	public function process( Array $events ) {
 
-		if ( !$this->isThresholdMet( count( $events ) ) ) {
+		if ( count( $events ) == 0 ) {
 			return false;
 		}
 
