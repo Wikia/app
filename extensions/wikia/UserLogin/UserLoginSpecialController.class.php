@@ -630,18 +630,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			'targetUser' => $user,
 			'tempPass' => $tempPass,
 		] );
-
-		/*
-		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'password-email' ) );
-		$result = $loginForm->mailPasswordInternal( $user, true, 'userlogin-password-email-subject', 'userlogin-password-email-body', $emailTextTemplate );
-		if ( !$result->isGood() ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse();
-		} else {
-			$this->result = 'ok';
-			$this->msg = wfMessage( 'userlogin-password-email-sent', $loginForm->mUsername )->escaped();
-		}
-		*/
 	}
 
 	private function setErrorResponse( $key ) {
