@@ -43,6 +43,24 @@ class UserService extends Service {
 		return array_unique( $result );
 	}
 
+	public function resetPassword( User $targetUser ) {
+		$context = RequestContext::getMain();
+		$currentUser = $context->getUser();
+		$currentIp = $context->getRequest()->getIP();
+
+		wfRunHooks( 'User::mailPasswordInternal', [
+			$currentUser,
+			$currentIp,
+			$targetUser,
+		] );
+
+		$tempPass = $targetUser->randomPassword();
+		$targetUser->setNewpassword( $tempPass, $resetThrottle = true );
+		$targetUser->saveSettings();
+
+		return $tempPass;
+	}
+
 	/** Helper methods for getUsers */
 
 	/**

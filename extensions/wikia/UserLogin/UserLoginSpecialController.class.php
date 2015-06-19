@@ -231,7 +231,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->overrideTemplate( 'forgotPassword' );
 			// set page title
 			$this->wg->Out->setPageTitle( wfMessage( 'userlogin-forgot-password' )->plain() );
-			return;
+			return true;
 		}
 
 		// we're sure at this point we'll need the private fields'
@@ -257,6 +257,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$this->overrideTemplate( 'WikiaMobileIndex' );
 			}
 		}
+
+		return true;
 	}
 
 	public function getUnconfirmedUserRedirectUrl() {
@@ -589,37 +591,66 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( $loginForm->mUsername == '' ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
-		} else if ( !$this->wg->Auth->allowPasswordChange() ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-resetpass_forbidden' )->escaped();
-		} else if ( $this->wg->User->isBlocked() ) {
-			$this->result = 'error';
-			$this->msg = wfMessage( 'userlogin-error-blocked-mailpassword' )->escaped();
-		} else {
-			$user = User::newFromName( $loginForm->mUsername );
-			if ( !$user instanceof User ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'userlogin-error-noname' )->escaped();
-			} else if ( $user->getID() == 0 ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'userlogin-error-nosuchuser' )->escaped();
-			} else if ( $user->isPasswordReminderThrottled() ) {
-				$this->result = 'error';
-				$this->msg = wfMessage( 'userlogin-error-throttled-mailpassword', round( $this->wg->PasswordReminderResendTime, 3 ) )->escaped();
-			} else {
-				$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'password-email' ) );
-				$result = $loginForm->mailPasswordInternal( $user, true, 'userlogin-password-email-subject', 'userlogin-password-email-body', $emailTextTemplate );
-				if ( !$result->isGood() ) {
-					$this->result = 'error';
-					$this->msg = wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse();
-				} else {
-					$this->result = 'ok';
-					$this->msg = wfMessage( 'userlogin-password-email-sent', $loginForm->mUsername )->escaped();
-				}
-			}
+			$this->setErrorResponse( 'userlogin-error-noname' );
+			return;
 		}
+
+		if ( !$this->wg->Auth->allowPasswordChange() ) {
+			$this->setErrorResponse( 'userlogin-error-resetpass_forbidden' );
+			return;
+		}
+
+		if ( $this->wg->User->isBlocked() ) {
+			$this->setErrorResponse( 'userlogin-error-blocked-mailpassword' );
+			return;
+		}
+
+		$user = User::newFromName( $loginForm->mUsername );
+		if ( !$user instanceof User ) {
+			$this->setErrorResponse( 'userlogin-error-noname' );
+			return;
+		}
+
+		if ( $user->getID() == 0 ) {
+			$this->setErrorResponse( 'userlogin-error-nosuchuser' );
+			return;
+		}
+
+		if ( $user->isPasswordReminderThrottled() ) {
+			$throttleTTL = round( $this->wg->PasswordReminderResendTime, 3 );
+			$this->setErrorResponse( 'userlogin-error-throttled-mailpassword', $throttleTTL );
+			return;
+		}
+
+		/// Get a temporary password
+		$userService = new \UserService();
+		$tempPass = $userService->resetPassword( $user );
+
+		F::app()->sendRequest( '\Email\Controller\ForgotPassword', 'handle', [
+			'targetUser' => $user,
+			'tempPass' => $tempPass,
+		] );
+
+		/*
+		$emailTextTemplate = $this->app->renderView( "UserLogin", "GeneralMail", array( 'language' => $user->getOption( 'language' ), 'type' => 'password-email' ) );
+		$result = $loginForm->mailPasswordInternal( $user, true, 'userlogin-password-email-subject', 'userlogin-password-email-body', $emailTextTemplate );
+		if ( !$result->isGood() ) {
+			$this->result = 'error';
+			$this->msg = wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse();
+		} else {
+			$this->result = 'ok';
+			$this->msg = wfMessage( 'userlogin-password-email-sent', $loginForm->mUsername )->escaped();
+		}
+		*/
+	}
+
+	private function setErrorResponse( $key ) {
+		$msg = call_user_func_array( 'wfMessage', func_get_args() )->escaped();
+
+		$this->response->setData([
+			'result' => 'error',
+			'msg' => $msg,
+		] );
 	}
 
 	/**
