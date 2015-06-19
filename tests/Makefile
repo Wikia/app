@@ -36,6 +36,11 @@ phpunit-infrastructure: prepare
 	${CMD_PHPUNIT} \
 		--group Infrastructure,Integration
 
+# runs external partners api integration tests only
+phpunit-externals: prepare
+	${CMD_PHPUNIT} \
+		--group ExternalIntegration
+
 # runs all (i.e. both unit and integration) tests from a given directory or a file
 phpunit-single: prepare
 	${CMD_PHPUNIT} \
