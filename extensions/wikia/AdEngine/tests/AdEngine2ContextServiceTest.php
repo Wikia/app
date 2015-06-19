@@ -46,24 +46,120 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return [
 			[ ],
 
-			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
-			[ 'article', ['wgAdDriverEnableInvisibleHighImpactSlot'], [], [], [], [], ['invisibleHighImpact' => true] ],
-			[ 'article', ['wgAdDriverForceTurtleAd'], [], [], [], ['turtle' => true] ],
-			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
-			[ 'article', ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'], [], [], ['monetizationService' => true] ],
-			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
-			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
-			[ 'article', ['wgEnableAdsInContent'], ['adsInContent' => true] ],
-			[ 'article', ['wgEnableKruxTargeting'], [], ['enableKruxTargeting' => true] ],
-			[ 'article', ['wgEnableOutboundScreenExt'], [], [], [], [], ['exitstitial' => true] ],
-			[ 'article', ['wgOutboundScreenRedirectDelay'], [], [], [], [], ['exitstitialRedirectDelay' => true] ],
-			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], ['wikiIsCorporate' => true] ],
-			[ 'article', ['wgEnableWikiaHubsV3Ext'], ['pageType' => 'corporate'], ['pageIsHub' => true, 'wikiIsCorporate' => true] ],
-			[ 'article', ['wgWikiDirectedAtChildrenByFounder'], [], ['wikiDirectedAtChildren' => true] ],
-			[ 'article', ['wgWikiDirectedAtChildrenByStaff'], [], ['wikiDirectedAtChildren' => true] ],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverEnableAdsInMaps'],
+				'expectedOpts' => ['enableAdsInMaps' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverEnableInvisibleHighImpactSlot'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => [],
+				'expectedSlots' => ['invisibleHighImpact' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverForceTurtleAd'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => ['turtle' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverTrackState'],
+				'expectedOpts' => ['trackSlotState' => true],
+				'expectedTargeting' => []
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverUseMonetizationService', 'wgEnableMonetizationModuleExt'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => ['monetizationService' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverUseSevenOneMedia'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => ['sevenOneMedia' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgAdDriverWikiIsTop1000'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiIsTop1000' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableAdsInContent'],
+				'expectedOpts' => ['adsInContent' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableKruxTargeting'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['enableKruxTargeting' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableOutboundScreenExt'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => [],
+				'expectedSlots' => ['exitstitial' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgOutboundScreenRedirectDelay'],
+				'expectedOpts' => [],
+				'expectedTargeting' => [],
+				'expectedProviders' => [],
+				'expectedForceProviders' => [],
+				'expectedSlots' => ['exitstitialRedirectDelay' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableWikiaHomePageExt'],
+				'expectedOpts' => ['pageType' => 'corporate'],
+				'expectedTargeting' => ['wikiIsCorporate' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgEnableWikiaHubsV3Ext'],
+				'expectedOpts' => ['pageType' => 'corporate'],
+				'expectedTargeting' => ['pageIsHub' => true, 'wikiIsCorporate' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgWikiDirectedAtChildrenByFounder'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
+			],
+			[
+				'titleMockType' => 'article',
+				'flags' => ['wgWikiDirectedAtChildrenByStaff'],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['wikiDirectedAtChildren' => true]
+			],
 
-			[ 'mainpage', [], [], ['pageType' => 'home'] ],
-			[ 'search', [], ['pageType' => 'search'], ['pageType' => 'search', 'pageName' => 'Special:Search'] ],
+			[
+				'titleMockType' => 'mainpage',
+				'flags' => [],
+				'expectedOpts' => [],
+				'expectedTargeting' => ['pageType' => 'home']
+			],
+			[
+				'titleMockType' => 'search',
+				'flags' => [],
+				'expectedOpts' => ['pageType' => 'search'],
+				'expectedTargeting' => ['pageType' => 'search', 'pageName' => 'Special:Search']
+			],
 		];
 	}
 
@@ -163,7 +259,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			'slots' => [
 			],
 			'forceProviders' => [
-			],
+			]
 		];
 
 		foreach ( $expectedOpts as $var => $val ) {
