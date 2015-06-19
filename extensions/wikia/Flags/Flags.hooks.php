@@ -90,9 +90,16 @@ class Hooks {
 			)->getData();
 
 			if ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_STATUS] ) {
-				$flagTypesToExtract = $flagTypesToExtractNames = [ ];
+				$flagTypesToExtract = $flagTypesToExtractNames = [];
+
+				/**
+				 * We need modified versions of names of templates and flag_view values to
+				 * compare in a case-insensitive and space-underscore-insensitive way.
+				 */
+				$templatesKeys = array_map( 'strtolower', array_keys( $templates ) );
 				foreach ( $flagTypesResponse[\FlagsApiController::FLAGS_API_RESPONSE_DATA] as $flagType ) {
-					if ( isset( $templates[$flagType['flag_view']] ) ) {
+					$flagViewKey = strtolower( str_replace( ' ', '_', $flagType['flag_view'] ) );
+					if ( in_array( $flagViewKey, $templatesKeys ) ) {
 						$flagTypesToExtract[$flagType['flag_view']] = $flagType;
 					}
 				}
