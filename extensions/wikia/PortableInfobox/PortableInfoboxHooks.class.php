@@ -23,6 +23,8 @@ class PortableInfoboxHooks {
 				$imageNamesArray = array_merge( $infoboxImages, (array)$imageNamesArray );
 			}
 		}
+
+		return true;
 	}
 
 	/**
