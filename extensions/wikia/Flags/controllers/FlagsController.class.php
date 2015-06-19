@@ -77,8 +77,6 @@ class FlagsController extends WikiaController {
 	 * @return ParserOutput|null
 	 */
 	public function getFlagsParserOutputForPage( $pageId ) {
-		wfProfileIn( __METHOD__ );
-
 		try {
 			$response = $this->requestGetFlagsForPage( $pageId );
 
@@ -111,8 +109,6 @@ class FlagsController extends WikiaController {
 	 * Generates html contents for Flags modal for editing flags
 	 */
 	public function editForm() {
-		wfProfileIn( __METHOD__ );
-
 		$pageId = $this->request->getVal( 'page_id' );
 		if ( empty( $pageId ) ) {
 			throw new MissingParameterApiException( 'page_id' );
@@ -149,8 +145,6 @@ class FlagsController extends WikiaController {
 				wfMessage( 'flags-edit-modal-no-flags-on-community' )->parse()
 			);
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -169,7 +163,6 @@ class FlagsController extends WikiaController {
 	 * @throws Exception
 	 */
 	public function postFlagsEditForm() {
-		wfProfileIn( __METHOD__ );
 		try {
 			$this->skipRendering();
 
@@ -219,8 +212,6 @@ class FlagsController extends WikiaController {
 			 */
 			$pageUrl = $title->getFullURL();
 			$this->response->redirect( $pageUrl );
-
-			wfProfileOut( __METHOD__ );
 		} catch ( MWException $exception ) {
 			if ( $title === null ) {
 				throw $exception;
