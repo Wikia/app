@@ -23,7 +23,10 @@ class ArticleCommentsController extends WikiaController {
 					$result
 				);
 
-				if ( $canComment && $sSubmit && $sComment && $iArticleId ) {
+
+				if ( !$canComment ) {
+					$this->response->setVal( 'error', $result['msg'] );
+				} else if ( $sSubmit && $sComment && $iArticleId ) {
 					$oTitle = Title::newFromID( $iArticleId );
 
 					if ( $oTitle instanceof Title ) {
@@ -32,7 +35,7 @@ class ArticleCommentsController extends WikiaController {
 						if ( !$isMobile ) {
 							$this->wg->Out->redirect( $oTitle->getLocalURL() );
 						} else {
-							if ( empty( $response[2]['error'] ) ) {
+							if ( empty( $response[2]['msg'] ) ) {
 									//wgOut redirect doesn't work when running fully under the
 									//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
 									$this->response->redirect( $oTitle->getLocalURL( array( 'page' => 1 ) ) . '#article-comments' );
@@ -41,10 +44,6 @@ class ArticleCommentsController extends WikiaController {
 							}
 						}
 					}
-				}
-
-				if ( !$canComment ) {
-					$this->response->setVal( 'error', $result['msg'] );
 				}
 			}
 
