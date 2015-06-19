@@ -10,13 +10,12 @@ class FlagsExtractTemplatesTask extends BaseTask {
 		$actionsStatus = false;
 
 	public function extractTemplatesFromPage( $pageId, Array $flagTypesToExtract ) {
-		global $wgUser;
-
 		$app = \F::app();
+
 		$wikiId = $this->getWikiId();
 
 		$wikiPage = \WikiPage::newFromID( $pageId );
-		$wgUser = \User::newFromId( $wikiPage->getUser() );
+		$app->wg->User = \User::newFromId( $wikiPage->getUser() );
 
 		$content = $wikiPage->getText();
 

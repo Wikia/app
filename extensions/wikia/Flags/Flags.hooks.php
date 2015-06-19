@@ -79,10 +79,9 @@ class Hooks {
 	}
 
 	public static function onLinksUpdateInsertTemplates( $pageId, Array $templates ) {
-		global $wgHideFlagsExt;
+		$app = \F::app();
 
-		if ( $wgHideFlagsExt !== true ) {
-			$app = \F::app();
+		if ( $app->wg->HideFlagsExt !== true ) {
 			$flagTypesResponse = $app->sendRequest( 'FlagsApiController',
 				'getFlagTypes',
 				[
