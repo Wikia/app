@@ -346,6 +346,7 @@ class MercuryApi {
 			}
 		} else if ( $item['article_id'] === 0 ) {
 			// We need this because there is a bug in CuratedContent, categories are saved with article_id = 0
+			// This will be fixed in CONCF-698
 			global $wgArticlePath;
 			$item['article_local_url'] = str_replace( "$1",  $item['title'], $wgArticlePath );
 			return $item;
