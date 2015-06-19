@@ -331,7 +331,7 @@ class UrlGenerator {
 		if ($this->mode != self::MODE_ORIGINAL) {
 			$modePath .= "/{$this->mode}";
 
-			if ($this->mode == self::MODE_SCALE_TO_WIDTH) {
+			if ($this->mode == self::MODE_SCALE_TO_WIDTH || $this->mode == self::MODE_SCALE_TO_WIDTH_DOWN) {
 				$modePath .= "/{$this->width}";
 			} elseif ($this->mode == self::MODE_WINDOW_CROP || $this->mode == self::MODE_WINDOW_CROP_FIXED) {
 				$modePath .= "/width/{$this->width}";
