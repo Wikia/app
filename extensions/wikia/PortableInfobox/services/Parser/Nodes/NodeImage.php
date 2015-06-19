@@ -2,6 +2,7 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 use Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag;
 
 class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';

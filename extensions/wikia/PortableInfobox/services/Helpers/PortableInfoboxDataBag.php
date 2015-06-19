@@ -27,11 +27,14 @@ class PortableInfoboxDataBag {
 		$this->galleries[$marker] = $content;
 	}
 
+	/**
+	 * Retrieve source content of a gallery identified by Parser marker id
+	 */
 	public function getGallery( $marker ) {
-		if(isset($this->galleries[$marker])) {
+		if ( isset( $this->galleries[$marker] ) ) {
 			return $this->galleries[$marker];
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 }

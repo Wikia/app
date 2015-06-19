@@ -1,6 +1,8 @@
 <?php
 
 class PortableInfoboxHooks {
+	const PARSER_TAG_GALLERY = 'gallery';
+
 	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 		if ( F::app()->checkSkin( 'monobook', $skin ) ) {
 			Wikia::addAssetsToOutput( 'portable_infobox_monobook_scss' );
@@ -34,7 +36,7 @@ class PortableInfoboxHooks {
 	 * @param $frame
 	 */
 	static public function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
-		if ( $name === 'gallery' ) {
+		if ( $name === self::PARSER_TAG_GALLERY ) {
 			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
 		}
 
