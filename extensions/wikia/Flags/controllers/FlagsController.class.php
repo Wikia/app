@@ -43,7 +43,7 @@ class FlagsController extends WikiaController {
 		$wgLang->getLangObj();
 	}
 
-	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, Article $article ) {
+	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, Page $article ) {
 		/**
 		 * First, get ParserOutput for flags for the article.
 		 * If it's null - return the original $parserOutput.
