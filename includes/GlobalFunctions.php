@@ -3526,14 +3526,10 @@ function wfSetupSession( $sessionId = false ) {
 
 	// Wikia change - start
 	// log all sessions started with 1% sampling (PLATFORM-1266)
-	global $wgUser;
-
 	if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
 			'caller' => wfGetAllCallers(),
-			'has_session_id' => ( $sessionId !== false ),
-			'has_user' => is_object( $wgUser ),
-			'is_anon' => $wgUser && $wgUser->isAnon()
+			'exception' => new Exception()
 		] );
 	}
 	// Wikia change - end

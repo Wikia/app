@@ -85,22 +85,23 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 	function pushDelayedQueue() {
 		delayedSlotsQueue.forEach(function (slot) {
-			fillInSlotWithDelay(slot.slotName, slot.success, slot.hop);
+			fillInSlotWithDelay(slot.slotName, slot.slotElement, slot.success, slot.hop);
 		});
 	}
 
-	function delayBtfSlot(slotName, success, hop) {
+	function delayBtfSlot(slotName, slotElement, success, hop) {
 		if (atfSlots.indexOf(slotName) > -1) {
 			if (!atfFlushed) {
 				pendingSlots.push(slotName);
 			}
-			provider.fillInSlot(slotName, success, hop);
+			provider.fillInSlot(slotName, slotElement, success, hop);
 			return;
 		}
 
 		atfFlushed = true;
 		delayedSlotsQueue.push({
 			slotName: slotName,
+			slotElement: slotElement,
 			success: success,
 			hop: hop
 		});
@@ -113,10 +114,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		slotTweaker.hide(slotName);
 	}
 
-	function fillInSlotWithDelay(slotName, success, hop) {
+	function fillInSlotWithDelay(slotName, slotElement, success, hop) {
 		if (context.opts.delayBtf) {
 			if (!atfFlushed || pendingSlots.length > 0) {
-				delayBtfSlot(slotName, success, hop);
+				delayBtfSlot(slotName, slotElement, success, hop);
 				return;
 			} else if (window.ads.runtime.disableBtf && atfSlots.indexOf(slotName) === -1) {
 				blockBtfSlot(slotName, success);
@@ -124,11 +125,11 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			}
 		}
 
-		provider.fillInSlot(slotName, success, hop);
+		provider.fillInSlot(slotName, slotElement, success, hop);
 	}
 
 	return {
-		name: provider.providerName,
+		name: provider.name,
 		canHandleSlot: provider.canHandleSlot,
 		fillInSlot: fillInSlotWithDelay
 	};

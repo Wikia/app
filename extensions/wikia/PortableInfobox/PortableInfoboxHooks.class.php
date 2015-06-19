@@ -10,4 +10,17 @@ class PortableInfoboxHooks {
 
 		return true;
 	}
+
+	static public function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
+		if ( $articleTitle ) {
+
+			$dataService = new PortableInfoboxDataService();
+			$infoboxData = $dataService->getInfoboxDataByTitle( $articleTitle );
+			$infoboxImages = $dataService->getImageListFromInfoboxesData( $infoboxData );
+			if ( !empty( $infoboxImages ) ) {
+				$imageNamesArray = array_merge( $infoboxImages, (array) $imageNamesArray );
+			}
+		}
+		return true;
+	}
 }

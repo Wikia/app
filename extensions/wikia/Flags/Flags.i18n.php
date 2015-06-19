@@ -42,7 +42,10 @@ $messages['en'] = [
 
 	'flags-log-name' => 'Flags log',
 	'logentry-flags-flag-added' => '$1 added flag \'$4\' to page $3',
-	'logentry-flags-flag-removed' => '$1 removed flag \'$4\' from page $3'
+	'logentry-flags-flag-removed' => '$1 removed flag \'$4\' from page $3',
+	'logentry-flags-flag-parameter-added' => '$1 added value \'$7\' for parameter \'$5\' of flag \'$4\' on page $3',
+	'logentry-flags-flag-parameter-modified' => '$1 modified parameter \'$5\' of flag \'$4\' on page $3 from \'$6\' to \'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1 removed value \'$6\' for parameter \'$5\' of flag \'$4\' on page $3',
 ];
 
 /**

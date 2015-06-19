@@ -422,7 +422,26 @@ class FlagsExtractor {
 
 		$templateLength = strlen( $template['template'] );
 
+		if ( $this->shouldRemoveAdditionalWhitespace( $templateLength ) ) {
+			$templateLength++;
+		}
+
 		$this->text = substr_replace( $this->text, $tag, $this->templateOffsetStart, $templateLength );
+	}
+
+	private function shouldRemoveAdditionalWhitespace( $templateLength ) {
+		if ( $this->templateOffsetStart == 0 && $this->text[$templateLength + 1] == ' ' ) {
+			return true;
+		}
+
+		if ( $this->templateOffsetStart > 0 && $this->text[$this->templateOffsetStart - 1] == ' ' ) {
+			$textLength = strlen( $this->text ) - 1;
+			if ( $templateLength + 1 <= $textLength && $this->text[$templateLength + 1] == ' ' ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -490,7 +509,7 @@ class FlagsExtractor {
 	 * @param string $templateName template name
 	 * @param int $offset
 	 */
-	private function findTemplatePosition( $templateName, $offset ) {
+	public function findTemplatePosition( $templateName, $offset ) {
 		while ( ( $offsetStart = stripos( $this->text, $templateName, $offset ) ) !== false ) {
 			$offset = $offsetStart + strlen( $templateName );
 			if ( $this->isSearchedTemplate( $templateName, $offsetStart ) ) {
