@@ -224,6 +224,21 @@ class UrlGenerator {
 	}
 
 	/**
+	 * dicate height, let the width auto scale
+	 * @param null $width
+	 * @return $this
+	 */
+	public function scaleToHeight($height = null) {
+		$this->mode(self::MODE_SCALE_TO_HEIGHT_DOWN);
+
+		if ($height != null) {
+			$this->height($height);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * crop a window into the image, scale the result to $this->width with auto height
 	 * @return $this
 	 */
