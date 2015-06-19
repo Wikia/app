@@ -380,17 +380,15 @@ class MercuryApi {
 		$items = [];
 
 		foreach ( $videosData as $item ) {
-			if ( !empty( $item ) ) {
-				$items[] = ArticleAsJson::createMediaObject(
-					WikiaFileHelper::getMediaDetail(
-						Title::newFromText( $item['title'], NS_FILE ),
-						[
-							'imageMaxWidth' => false
-						]
-					),
-					$item['title']
-				);
-			}
+			$items[] = ArticleAsJson::createMediaObject(
+				WikiaFileHelper::getMediaDetail(
+					Title::newFromText( $item['title'], NS_FILE ),
+					[
+						'imageMaxWidth' => false
+					]
+				),
+				$item['title']
+			);
 		}
 
 		return $items;
