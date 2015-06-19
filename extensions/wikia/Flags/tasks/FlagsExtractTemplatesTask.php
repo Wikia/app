@@ -107,8 +107,14 @@ class FlagsExtractTemplatesTask extends BaseTask {
 		 * If the actions succeeded - make the actual edit as WikiaBot
 		 */
 		if ( $this->actionsStatus ) {
-			$wgUser = \User::newFromName( 'WikiaBot' );
-			$wikiPage->doEdit( $content, 'Templates converted to the new Flags feature.' );
+			$user = \User::newFromName( 'WikiaBot' );
+			$wikiPage->doEdit(
+				$content,
+				'Templates converted to the new Flags feature.',
+				EDIT_FORCE_BOT & EDIT_MINOR,
+				false,
+				$user
+			);
 		}
 	}
 
