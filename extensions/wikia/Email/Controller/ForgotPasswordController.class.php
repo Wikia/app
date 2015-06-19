@@ -2,9 +2,8 @@
 
 namespace Email\Controller;
 
-use Email\Check;
-use Email\Fatal;
 use Email\EmailController;
+use Email\Tracking\TrackingCategories;
 
 /**
  * Class ForgotPasswordController
@@ -14,6 +13,9 @@ use Email\EmailController;
  * @package Email\Controller
  */
 class ForgotPasswordController extends EmailController {
+
+	const TRACKING_CATEGORY = TrackingCategories::FORGOT_PASSWORD;
+
 	private $tempPass;
 
 	public function initEmail() {
