@@ -136,6 +136,45 @@ class ImageFilenameSanitizerTest extends WikiaBaseTest {
 				'en',
 				'文件名óśłżźćńę?.jpg',
 				'Gallery with diacritics and UTF characters'
+			],
+			[
+				PHP_EOL .
+				PHP_EOL,
+				'en',
+				'',
+				'Content of empty gallery with newlines'
+			],
+			[
+				'',
+				'en',
+				'',
+				'Content of empty gallery'
+			],
+			[
+				PHP_EOL .
+				'image.jpg' . PHP_EOL .
+				PHP_EOL,
+				'en',
+				'image.jpg',
+				'Content of gallery with one image'
+			],
+			[
+				PHP_EOL .
+				'File:image.jpg' . PHP_EOL .
+				PHP_EOL,
+				'en',
+				'image.jpg',
+				'Content of gallery with one image with canonical namespace',
+			],
+			[
+				PHP_EOL .
+				'文件名óśłżźćńę?.jpg' . PHP_EOL .
+				'Image010.jpg' . PHP_EOL .
+				'Image009.jpg' . PHP_EOL .
+				PHP_EOL,
+				'en',
+				'文件名óśłżźćńę?.jpg',
+				'Content of gallery with diacritics and UTF characters'
 			]
 		];
 	}

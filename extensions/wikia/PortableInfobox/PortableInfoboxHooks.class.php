@@ -18,9 +18,26 @@ class PortableInfoboxHooks {
 			$infoboxData = $dataService->getInfoboxDataByTitle( $articleTitle );
 			$infoboxImages = $dataService->getImageListFromInfoboxesData( $infoboxData );
 			if ( !empty( $infoboxImages ) ) {
-				$imageNamesArray = array_merge( $infoboxImages, (array) $imageNamesArray );
+				$imageNamesArray = array_merge( $infoboxImages, (array)$imageNamesArray );
 			}
 		}
+	}
+
+	/**
+	 * Store information about raw content of all galleries in article to handle images in infoboxes
+	 *
+	 * @param $name Parser tag name
+	 * @param $marker substitution marker
+	 * @param $content raw tag contents
+	 * @param $attributes
+	 * @param $parser
+	 * @param $frame
+	 */
+	static public function onParserTagHooksBeforeInvoke( $name, $marker, $content, $attributes, $parser, $frame ) {
+		if ( $name === 'gallery' ) {
+			\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setGallery( $marker, $content );
+		}
+
 		return true;
 	}
 }
