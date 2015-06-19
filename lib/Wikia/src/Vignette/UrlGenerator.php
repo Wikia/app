@@ -15,7 +15,6 @@ class UrlGenerator {
 	const MODE_FIXED_ASPECT_RATIO_DOWN = 'fixed-aspect-ratio-down';
 	const MODE_SCALE_TO_WIDTH = 'scale-to-width';
 	const MODE_SCALE_TO_WIDTH_DOWN = 'scale-to-width-down';
-	const MODE_SCALE_TO_HEIGHT_DOWN = 'scale-to-height-down';
 	const MODE_TOP_CROP = 'top-crop';
 	const MODE_TOP_CROP_DOWN = 'top-crop-down';
 	const MODE_WINDOW_CROP = 'window-crop';
@@ -222,21 +221,6 @@ class UrlGenerator {
 
 		if ($width != null) {
 			$this->width($width);
-		}
-
-		return $this;
-	}
-
-	/**
-	 * dicate height, let the width auto scale
-	 * @param null $width
-	 * @return $this
-	 */
-	public function scaleToHeight($height = null) {
-		$this->mode(self::MODE_SCALE_TO_HEIGHT_DOWN);
-
-		if ($height != null) {
-			$this->height($height);
 		}
 
 		return $this;
