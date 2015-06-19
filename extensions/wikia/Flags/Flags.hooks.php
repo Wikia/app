@@ -68,7 +68,7 @@ class Hooks {
 	 * Modifies the original ParserOutput object using the one returned from FlagView.
 	 * The modification
 	 * @param \ParserOutput $parserOutput
-	 * @param \Article $article
+	 * @param \Page $article
 	 * @return bool
 	 */
 	public static function onBeforeParserCacheSave( \ParserOutput $parserOutput, \Page $article ) {
