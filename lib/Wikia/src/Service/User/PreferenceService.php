@@ -29,12 +29,12 @@ class PreferenceService implements PreferenceServiceInterface {
 	}
 
 	public function setPreferences( $userId, $preferences ) {
-		if (!is_array($preferences) || empty($preferences)) {
+		if ( !is_array( $preferences ) || empty( $preferences ) ) {
 			return false;
 		}
 
-		if ($userId !== $this->gateway->getWikiaUserId()) {
-			throw new \Wikia\Service\GatewayUnauthorizedException("Unauthorized to set preferences.");
+		if ( $userId !== $this->gateway->getWikiaUserId() ) {
+			throw new \Wikia\Service\GatewayUnauthorizedException( "Unauthorized to set preferences." );
 		}
 
 		return $this->gateway->save( $userId, $preferences );

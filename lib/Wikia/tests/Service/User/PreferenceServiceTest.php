@@ -53,7 +53,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'save' )
 			->with( $this->userId, [$this->testPreference] )
-			->will( $this->throwException( new \Wikia\Service\GatewayInternalErrorException() ));
+			->will( $this->throwException( new \Wikia\Service\GatewayInternalErrorException() ) );
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId );
@@ -61,17 +61,17 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 		$service = new PreferenceService( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
-		$this->fail("exception was not thrown");
+		$this->fail( "exception was not thrown" );
 	}
 
 	/**
 	 * @expectedException	\Wikia\Service\GatewayUnauthorizedException
 	 */
 	public function testSetWithUnauthorizedError() {
-		$this->gatewayMock->expects( $this->exactly(0) )
+		$this->gatewayMock->expects( $this->exactly( 0 ) )
 			->method( 'save' )
 			->with( $this->userId, [$this->testPreference] )
-			->will( $this->throwException( new \Wikia\Service\GatewayInternalErrorException() ));
+			->will( $this->throwException( new \Wikia\Service\GatewayInternalErrorException() ) );
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId + 1 );
@@ -79,7 +79,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 		$service = new PreferenceService( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
-		$this->fail("exception was not thrown");
+		$this->fail( "exception was not thrown" );
 	}
 
 
