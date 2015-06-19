@@ -3,7 +3,6 @@
 namespace Email;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
-use Wikia\Helios\Exception;
 use Wikia\Logger\WikiaLogger;
 use Email\Tracking\TrackingCategories;
 
