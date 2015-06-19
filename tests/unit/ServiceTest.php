@@ -23,7 +23,7 @@ class ServiceTest extends WikiaBaseTest {
 
 		// users
 		$this->assertContains('width="32"', AvatarService::render($userName, 32));
-		$this->assertContains('/scale-to-width-down/20"', AvatarService::render($userName, 16));
+		$this->assertContains('/scale-to-width-down/20', AvatarService::render($userName, 16));
 		$this->assertContains('User:WikiaBot', AvatarService::renderLink($userName));
 		$this->assertRegExp('/^<img src="http:\/\/images/', AvatarService::renderAvatar($userName));
 
