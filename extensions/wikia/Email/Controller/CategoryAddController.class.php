@@ -75,7 +75,7 @@ class CategoryAddController extends EmailController {
 	}
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-categoryadd-subject', $this->pageAddedToCategory->getText() )->parse();
+		return $this->getMessage( 'emailext-categoryadd-subject', $this->categoryPage->getText() )->parse();
 	}
 
 	protected function getDetails() {
@@ -96,5 +96,34 @@ class CategoryAddController extends EmailController {
 				$this->categoryPage->getPrefixedText() )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
+	}
+
+	public static function getEmailSpecificFormFields() {
+		$form = [
+			'inputs' => [
+				[
+					'type' => 'text',
+					'name' => 'pageTitle',
+					'label' => "Article Title",
+					'tooltip' => "The title of the page added to the category"
+				],
+				[
+					'type' => 'text',
+					'name' => 'namespace',
+					'label' => "Page Namespace",
+					'tooltip' => "The Namespace of the page added to the categorty. (0 = Main, 10 = Category, 6 = File).",
+					'value' => NS_MAIN
+				],
+				[
+					'type' => 'text',
+					'name' => 'childArticleID',
+					'label' => "Category Page ID",
+					'tooltip' => 'The ID of the category page added to.'
+				],
+			]
+		];
+
+		return $form;
+
 	}
 }
