@@ -174,6 +174,7 @@ class FlagsApiController extends WikiaApiController {
 	public function removeFlagsFromPage() {
 		try {
 			$this->processRequest();
+
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
@@ -203,6 +204,8 @@ class FlagsApiController extends WikiaApiController {
 
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
+
+			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logParametersChange( $oldFlags, $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'] );

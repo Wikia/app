@@ -17,8 +17,6 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		wfProfileIn( __METHOD__ );
-
 		$this->wg->Out->setPageTitle( wfMessage( 'flags-special-title' )->escaped() );
 
 		$this->flagTypes = [];
@@ -30,8 +28,6 @@ class SpecialFlagsController extends WikiaSpecialPageController {
 			$this->flagTargeting = $helper->getFlagTargetFullNames();
 			$this->flagTypes = $responseData['data'];
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	private function requestGetFlagTypesForWikia( $wikiId ) {
