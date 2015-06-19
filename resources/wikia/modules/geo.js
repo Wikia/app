@@ -44,12 +44,10 @@
 		}
 
 		/**
-		 * Returns the code for the country
+		 * Set the country code
 		 *
 		 * @public
 		 * @param {String} countryCode
-		 *
-		 * @return {String} The country code
 		 */
 		function setCountryCode(countryCode) {
 			var data = getGeoData();
