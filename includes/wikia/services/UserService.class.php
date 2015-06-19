@@ -43,6 +43,18 @@ class UserService extends Service {
 		return array_unique( $result );
 	}
 
+	/**
+	 * Given a user object, this method will create a temporary password and save it to the
+	 * user's account.  Every time this is called, the reset password throttle is reset, which
+	 * means the method User::isPasswordReminderThrottled will return true for the next
+	 * $wgPasswordReminderResendTime hours
+	 *
+	 * @param User $targetUser
+	 *
+	 * @return String
+	 *
+	 * @throws MWException
+	 */
 	public function resetPassword( User $targetUser ) {
 		$context = RequestContext::getMain();
 		$currentUser = $context->getUser();
