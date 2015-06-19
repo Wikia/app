@@ -21,7 +21,8 @@ class Mail_wikiadb extends Mail {
 		if (isset($headers['X-Priority'])) {
 			$priority = $headers['X-Priority'];
 		}
-		
+
+		$category = '';
 		if (isset($headers['X-Msg-Category'])) {
 			$category = $headers['X-Msg-Category'];
 		}
@@ -62,6 +63,5 @@ class Mail_wikiadb extends Mail {
 			wfDebugLog( "enotif", __METHOD__ . ": email added to database with data: $recipient $from {$headers['Subject']}", true );
 		}
 		$dbw->commit(__METHOD__);
-
 	}
 }
