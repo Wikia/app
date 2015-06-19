@@ -102,12 +102,16 @@ class FlagsExtractor {
 	 * @return array|bool
 	 */
 	public function getTemplate() {
+		global $wgContLang;
+
 		if ( empty( $this->text ) || empty ( $this->templateName ) ) {
 			return false;
 		}
 
 		$template = [];
 		$templateParams = [];
+
+		$nsPrefix = $wgContLang->getNsText( NS_TEMPLATE ) . ':';
 
 		$templateBracketsCounter = self::BRACKETS_NUMBER;
 		$linkBracketsCounter = 0;
@@ -119,9 +123,17 @@ class FlagsExtractor {
 		$paramsCounter = 1;
 
 		$templateBegin = '{{' . $this->templateName;
+		$templateWithNSBegin = '{{' . $nsPrefix . $this->templateName;
+
+		$position = $this->findTemplatePosition( $templateBegin, $this->offset );
+		$positionWithNS = $this->findTemplatePosition( $templateWithNSBegin, $this->offset );
 
 		// Position of template begin
-		$this->templateOffsetStart = $this->findTemplatePosition( $templateBegin, $this->offset );
+		if ( $position !== false && $positionWithNS !== false ) {
+			$this->templateOffsetStart = $position <= $positionWithNS ? $position : $positionWithNS;
+		} else {
+			$this->templateOffsetStart = $position !== false ? $position : $positionWithNS;
+		}
 
 		if ( $this->templateOffsetStart !== false ) {
 			$this->offset = $this->templateOffsetStart + strlen( $templateBegin );
@@ -414,7 +426,7 @@ class FlagsExtractor {
 			$tag = $this->getReplacementTag();
 		}
 
-		if ( $tag == '' ) {
+		if ( $tag === '' ) {
 			$this->logInfoMessage( 'Template removed from text', [ 'template' => $template['template'] ] );
 		} else {
 			$this->logInfoMessage( 'Template replaced in text', [ 'template' => $template['template'] ] );
@@ -422,7 +434,26 @@ class FlagsExtractor {
 
 		$templateLength = strlen( $template['template'] );
 
+		if ( $this->shouldRemoveAdditionalWhitespace( $templateLength ) ) {
+			$templateLength++;
+		}
+
 		$this->text = substr_replace( $this->text, $tag, $this->templateOffsetStart, $templateLength );
+	}
+
+	private function shouldRemoveAdditionalWhitespace( $templateLength ) {
+		if ( $this->templateOffsetStart == 0 && $this->text[$templateLength + 1] == ' ' ) {
+			return true;
+		}
+
+		if ( $this->templateOffsetStart > 0 && $this->text[$this->templateOffsetStart - 1] == ' ' ) {
+			$textLength = strlen( $this->text ) - 1;
+			if ( $templateLength + 1 <= $textLength && $this->text[$templateLength + 1] == ' ' ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -490,7 +521,7 @@ class FlagsExtractor {
 	 * @param string $templateName template name
 	 * @param int $offset
 	 */
-	private function findTemplatePosition( $templateName, $offset ) {
+	public function findTemplatePosition( $templateName, $offset ) {
 		while ( ( $offsetStart = stripos( $this->text, $templateName, $offset ) ) !== false ) {
 			$offset = $offsetStart + strlen( $templateName );
 			if ( $this->isSearchedTemplate( $templateName, $offsetStart ) ) {

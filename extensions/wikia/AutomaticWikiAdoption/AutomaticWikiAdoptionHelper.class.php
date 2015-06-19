@@ -275,24 +275,22 @@ class AutomaticWikiAdoptionHelper {
 	 * @return boolean success/fail
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
-	private static function countUserEditsOnWiki($wikiId, $user) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+	private static function countUserEditsOnWiki($wikiId, User $user) {
+		global $wgSpecialsDB;
 		wfProfileIn(__METHOD__);
 
 		$result = 0;
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 
-			$row = $dbr->selectRow(
-				'specials.events_local_users',
-				'edits',
-				array('wiki_id' => $wikiId, 'user_id' => $user->getId()),
-				__METHOD__
-			);
+		$row = $dbr->selectRow(
+			'events_local_users',
+			'edits',
+			array('wiki_id' => $wikiId, 'user_id' => $user->getId()),
+			__METHOD__
+		);
 
-			if ($row !== false) {
-				$result = $row->edits;
-			}
+		if ($row !== false) {
+			$result = $row->edits;
 		}
 
 		wfProfileOut(__METHOD__);

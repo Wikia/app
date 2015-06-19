@@ -317,13 +317,9 @@ class MercuryApi {
 		$data = [];
 		if ( !empty( $items ) ) {
 			foreach ( $items as $item ) {
-				if ( $item[ 'type' ] === 'article' ) {
-					$processedItem = $this->processCuratedContentArticle($item);
-					if ( !empty( $processedItem ) ) {
-						$data[] = $processedItem;
-					}
-				} else {
-					$data[] = $item;
+				$processedItem = $this->processCuratedContentItem($item);
+				if ( !empty( $processedItem ) ) {
+					$data[] = $processedItem;
 				}
 			}
 		}
@@ -340,14 +336,20 @@ class MercuryApi {
 	 * @param $item
 	 * @return mixed
 	 */
-	private function processCuratedContentArticle( $item ) {
-		if ( !empty( $item[ 'article_id' ] ) ) {
-			$title = Title::newFromID( $item[ 'article_id' ] );
+	private function processCuratedContentItem( $item ) {
+		if ( !empty( $item['article_id'] ) ) {
+			$title = Title::newFromID( $item['article_id'] );
 
 			if ( !empty( $title ) ) {
-				$item[ 'article_local_url' ] = $title->getLocalURL();
+				$item['article_local_url'] = $title->getLocalURL();
 				return $item;
 			}
+		} else if ( $item['article_id'] === 0 ) {
+			// We need this because there is a bug in CuratedContent, categories are saved with article_id = 0
+			// This will be fixed in CONCF-698
+			global $wgArticlePath;
+			$item['article_local_url'] = str_replace( "$1",  $item['title'], $wgArticlePath );
+			return $item;
 		}
 		return null;
 	}
