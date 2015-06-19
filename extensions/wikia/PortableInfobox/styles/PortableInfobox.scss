@@ -80,8 +80,14 @@ $infobox-debug-error-msg-bg: black;
 		line-height: 28px;
 	}
 
-	.item-type-key-val:not(:last-of-type) {
+	.item-type-key-val:not(:last-of-type),
+	.item-type-group,
+	.item-type-comparison {
 		border-bottom: 1px solid $infobox-section-header-background;
+	}
+
+	> .portable-infobox-item:last-child {
+		border-bottom: 0;
 	}
 
 	.portable-infobox-item-label {
@@ -114,6 +120,7 @@ $infobox-debug-error-msg-bg: black;
 	.portable-infobox-comparison-set-header {
 		box-sizing: border-box;
 		display: block;
+		padding: 0;
 		text-align: left;
 		width: 100%;
 	}
