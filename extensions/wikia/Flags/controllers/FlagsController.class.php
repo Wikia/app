@@ -58,7 +58,7 @@ class FlagsController extends WikiaController {
 		 */
 
 		$mwf = \MagicWord::get( 'flags' );
-		if ( $mwf->match( $parserOutput->mText ) ) {
+		if ( $mwf->match( $parserOutput->getText() ) ) {
 			$parserOutput->setText( $mwf->replace( $flagsParserOutput->getText(), $parserOutput->getText() ) );
 		} else {
 			$parserOutput->setText( $flagsParserOutput->getText() . $parserOutput->getText() );
