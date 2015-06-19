@@ -45,7 +45,7 @@ phpunit-single: prepare
 # runs fast unit tests only
 phpunit-fast: prepare
 	${CMD_PHPUNIT} \
-		--exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB
+		--exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB,ExternalIntegration
 
 # lists all slow test cases with execution time
 phpunit-slow-list: prepare
