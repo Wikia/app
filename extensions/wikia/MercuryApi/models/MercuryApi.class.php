@@ -337,13 +337,18 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	private function processCuratedContentItem( $item ) {
-		if ( !empty( $item[ 'article_id' ] ) ) {
-			$title = Title::newFromID( $item[ 'article_id' ] );
+		if ( !empty( $item['article_id'] ) ) {
+			$title = Title::newFromID( $item['article_id'] );
 
 			if ( !empty( $title ) ) {
-				$item[ 'article_local_url' ] = $title->getLocalURL();
+				$item['article_local_url'] = $title->getLocalURL();
 				return $item;
 			}
+		} else if ( $item['article_id'] === 0 ) {
+			// We need this because there is a bug in CuratedContent, categories are saved with article_id = 0
+			global $wgArticlePath;
+			$item['article_local_url'] = str_replace( "$1",  $item['title'], $wgArticlePath );
+			return $item;
 		}
 		return null;
 	}
