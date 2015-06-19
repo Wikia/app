@@ -50,7 +50,7 @@ class FlagsExtractTemplatesTask extends BaseTask {
 			];
 
 			$flagsExtractor->init( $content, $flagType['flag_view'], $actions, $actionParams );
-			$template = $flagsExtractor->getAllTemplates();
+			$template = $flagsExtractor->getTemplate()[0];
 
 			if ( isset( $existingFlags[$flagType['flag_type_id']] ) ) {
 				$flagsToUpdate[] = [
