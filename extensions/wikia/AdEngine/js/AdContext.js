@@ -7,14 +7,16 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.querystring',
 	require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, abTest) {
+], function (w, doc, geo, instantGlobals, Querystring, abTest) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
 
 	var context,
-		callbacks = [];
+		callbacks = [],
+		qs = new Querystring();
 
 	function getContext() {
 		return context;
@@ -44,7 +46,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
-		context.forceProviders = context.forceProviders || {};
+		context.forcedAdProvider = getForcedAdProvider(context);
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
@@ -68,7 +70,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// Turtle
-		if (context.forceProviders.turtle) {
+		if (context.forcedAdProvider === 'turtle') {
 			context.providers.turtle = true;
 		}
 
@@ -102,6 +104,24 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
+	}
+
+	function getForcedAdProvider (context) {
+		var possibleForcedAdProviders = ['liftium', 'openx', 'turtle'],
+			possibleForcedAdProvidersNo = possibleForcedAdProviders.length - 1,
+			i, forced;
+
+		for (i = possibleForcedAdProvidersNo; i >= 0; i--) {
+			if (possibleForcedAdProviders.hasOwnProperty(i)) {
+				forced = !!qs.getVal('force' + possibleForcedAdProviders[i], false);
+
+				if (forced) {
+					return possibleForcedAdProviders[i];
+				}
+			}
+		}
+
+		return context.forcedAdProvider || null;
 	}
 
 	function addCallback(callback) {
