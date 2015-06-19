@@ -108,6 +108,7 @@ class Hooks {
 					$task = new FlagsExtractTemplatesTask();
 					$task->wikiId( $app->wg->CityId );
 					$task->call( 'extractTemplatesFromPage', $pageId, $flagTypesToExtract );
+					$task->prioritize();
 					$task->queue();
 
 					\BannerNotificationsController::addConfirmation(
