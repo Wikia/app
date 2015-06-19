@@ -3,21 +3,27 @@
 define('ext.wikia.adEngine.provider.gpt.adElement', [
 	'wikia.document',
 	'wikia.log',
-	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.adSizeConverter'
-], function (doc, log, adLogicPageParams, adSizeConverter) {
+], function (doc, log, adSizeConverter) {
 
-	var logGroup = 'ext.wikia.adEngine.provider.gpt.adElement',
-		pageLevelParams = adLogicPageParams.getPageLevelParams();
+	var logGroup = 'ext.wikia.adEngine.provider.gpt.adElement';
 
-	function AdElement(adDivId) {
-		this.id = adDivId;
-		this.node = doc.getElementById(adDivId);
+	function AdElement(slotName, slotPath, slotTargeting) {
+		this.id = 'wikia_gpt' + slotPath;
+		this.node = doc.getElementById(this.id);
+		this.slotPath = slotPath;
 
 		if (!this.node) {
 			this.node = doc.createElement('div');
-			this.node.id = adDivId;
+			this.node.id = this.id;
 		}
+		if (!!slotTargeting.size) {
+			this.sizes = adSizeConverter.convert(slotName, slotTargeting.size);
+			delete slotTargeting.size;
+		}
+
+		this.slotTargeting = slotTargeting;
+		this.node.setAttribute('data-gpt-slot-sizes', JSON.stringify(this.sizes));
 		log(['AdElement', this], 'debug', logGroup);
 	}
 
@@ -29,52 +35,35 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		return this.node;
 	};
 
-	AdElement.prototype.setPageLevelParams = function (pubads) {
-		var name,
-			value;
-
-		for (name in pageLevelParams) {
-			if (pageLevelParams.hasOwnProperty(name)) {
-				value = pageLevelParams[name];
-				if (value) {
-					log(['setPageLevelParams', 'pubads.setTargeting', name, value], 'debug', logGroup);
-					pubads.setTargeting(name, value);
-				}
-			}
-		}
-
-		log(['setPageLevelParams', pageLevelParams], 'debug', logGroup);
-		this.node.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
-	};
-
-	AdElement.prototype.setSizes = function (slotName, sizes) {
-		this.sizes = adSizeConverter.convert(slotName, sizes);
-		this.node.setAttribute('data-gpt-slot-sizes', JSON.stringify(this.sizes));
-
-		log(['setSizes', this.sizes], 'debug', logGroup);
+	AdElement.prototype.getSlotPath = function () {
+		return this.slotPath;
 	};
 
 	AdElement.prototype.getSizes = function () {
 		return this.sizes;
 	};
 
-	AdElement.prototype.setSlotLevelParams = function (slot, slotTargeting) {
+	AdElement.prototype.configureSlot = function (slot) {
 		var name,
 			value;
 
-		delete slotTargeting.size;
-		for (name in slotTargeting) {
-			if (slotTargeting.hasOwnProperty(name)) {
-				value = slotTargeting[name];
+		for (name in this.slotTargeting) {
+			if (this.slotTargeting.hasOwnProperty(name)) {
+				value = this.slotTargeting[name];
 				if (value) {
-					log(['setSlotLevelParams', 'slot.setTargeting', name, value], 'debug', logGroup);
+					log(['setSlot', 'slot.setTargeting', name, value], 'debug', logGroup);
 					slot.setTargeting(name, value);
 				}
 			}
 		}
 
-		log(['setSlotLevelParams', slotTargeting], 'debug', logGroup);
-		this.node.setAttribute('data-gpt-slot-params', JSON.stringify(slotTargeting));
+		log(['setSlot', slot], 'debug', logGroup);
+		this.node.setAttribute('data-gpt-slot-params', JSON.stringify(this.slotTargeting));
+	};
+
+	AdElement.prototype.setPageLevelParams = function (pageLevelParams) {
+		log(['setPageLevelParams', pageLevelParams], 'debug', logGroup);
+		this.node.setAttribute('data-gpt-page-params', JSON.stringify(pageLevelParams));
 	};
 
 	AdElement.prototype.updateDataParams = function (event) {

@@ -11,6 +11,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		registeredCallbacks = {},
 		slots = {},
 		slotQueue = [],
+		pageLevelParams,
 		googleTag,
 		pubAds;
 
@@ -53,6 +54,24 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		return initialized;
 	}
 
+	function setPageLevelParams(params) {
+		var name,
+			value;
+
+		googleTag.cmd.push(function () {
+			pageLevelParams = params;
+			for (name in pageLevelParams) {
+				if (pageLevelParams.hasOwnProperty(name)) {
+					value = pageLevelParams[name];
+					if (value) {
+						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], 'debug', logGroup);
+						pubAds.setTargeting(name, value);
+					}
+				}
+			}
+		});
+	}
+
 	function push(callback) {
 		googleTag.cmd.push(callback);
 	}
@@ -76,18 +95,16 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	}
 
-	function addSlot(slotName, slotPath, slotTargeting, element) {
+	function addSlot(element) {
 		var slot = slots[element.getId()];
 
-		log(['addSlot', slotName, slotPath, slotTargeting, element], 'debug', logGroup);
+		log(['addSlot', element], 'debug', logGroup);
 
-		element.setPageLevelParams(pubAds);
+		element.setPageLevelParams(pageLevelParams);
 		if (!slot) {
-			element.setSizes(slotName, slotTargeting.size);
-
-			slot = googleTag.defineSlot(slotPath, element.getSizes(), element.getId());
+			slot = googleTag.defineSlot(element.getSlotPath(), element.getSizes(), element.getId());
 			slot.addService(pubAds);
-			element.setSlotLevelParams(slot, slotTargeting);
+			element.configureSlot(slot);
 
 			googleTag.display(element.getId());
 
@@ -126,6 +143,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		push: push,
 		flush: flush,
 		addSlot: addSlot,
-		registerCallback: registerCallback
+		registerCallback: registerCallback,
+		setPageLevelParams: setPageLevelParams
 	};
 });

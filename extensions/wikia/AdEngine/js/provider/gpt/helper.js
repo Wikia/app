@@ -2,12 +2,14 @@
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
 	'wikia.log',
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
-], function (log, adDetect, AdElement, googleTag, slotTweaker, sraHelper) {
+], function (log, adContext, adLogicPageParams, adDetect, AdElement, googleTag, slotTweaker, sraHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper';
@@ -26,10 +28,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
 	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
-		var element = new AdElement('wikia_gpt_helper' + slotPath);
+		var element;
 
 		extra = extra || {};
 		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
+		element = new AdElement(slotName, slotPath, slotTargeting);
 
 		function callSuccess(adInfo) {
 			if (typeof extra.success === 'function') {
@@ -50,7 +53,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['queueAd', slotName, slotElement, element], 'debug', logGroup);
 			slotElement.appendChild(element.getNode());
 
-			googleTag.addSlot(slotName, slotPath, slotTargeting, element);
+			googleTag.addSlot(element);
 		}
 
 		function gptCallback(gptEvent) {
@@ -68,6 +71,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		if (!googleTag.isInitialized()) {
 			googleTag.init();
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
 		log(['pushAd', slotName], 'info', logGroup);
@@ -80,6 +84,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.flush();
 		}
 	}
+
+	adContext.addCallback(function () {
+		if (googleTag.isInitialized()) {
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		}
+	});
 
 	return {
 		pushAd: pushAd

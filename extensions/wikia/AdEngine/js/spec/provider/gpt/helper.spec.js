@@ -20,9 +20,18 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					callback();
 				},
 				addSlot: noop,
-				flush: noop
+				flush: noop,
+				setPageLevelParams: noop
+			},
+			adContext: {
+				addCallback: noop
 			},
 			adDetect: {},
+			adLogicPageParams: {
+				getPageLevelParams: function () {
+					return [];
+				}
+			},
 			slotTweaker: {
 				show: noop,
 				hide: noop
@@ -40,6 +49,8 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.helper'](
 			mocks.log,
+			mocks.adContext,
+			mocks.adLogicPageParams,
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,

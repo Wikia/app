@@ -9,77 +9,69 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeConverter', function () {
 			[300, 250],
 			[300, 600]
 		],
-		pageLevelParamsMock = {
-			pageParam1: 'value1',
-			pageParam2: 'value2'
-		},
 		mocks = {
-			adLogicPageParams: {
-				getPageLevelParams: function () {
-					return pageLevelParamsMock;
-				}
-			},
 			adSizeConverter: {
 				convert: function () {
 					return adSizes;
 				}
 			},
-			log: noop,
-			pubads: {
-				setTargeting: noop
-			}
+			log: noop
 		},
-		slot;
+		slot,
+		slotTargeting;
 
 	beforeEach(function() {
-		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](document, mocks.log, mocks.adLogicPageParams, mocks.adSizeConverter);
+		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](document, mocks.log, mocks.adSizeConverter);
 		slot = {
 			setTargeting: noop
+		};
+		slotTargeting = {
+			foo: 12,
+			bar: 34,
+			baz: 56
 		};
 	});
 
 	it('New instance created with given id and dom object', function () {
-		var element = new AdElement('ELEMENT_ID');
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
 
-		expect(element.getId()).toEqual('ELEMENT_ID');
-		expect(element.getNode().id).toEqual('ELEMENT_ID');
-	});
-
-	it('Set page level params on pubads object and add as json to attribute', function () {
-		var element = new AdElement('ELEMENT_ID');
-		spyOn(mocks.pubads, 'setTargeting');
-
-		element.setPageLevelParams(mocks.pubads);
-
-		expect(mocks.pubads.setTargeting.calls.count()).toEqual(2);
-		expect(element.getNode().getAttribute('data-gpt-page-params')).toEqual('{"pageParam1":"value1","pageParam2":"value2"}');
+		expect(element.getId()).toEqual('wikia_gpt/ELEMENT_SLOTPATH');
+		expect(element.getSlotPath()).toEqual('/ELEMENT_SLOTPATH');
+		expect(element.getNode().id).toEqual('wikia_gpt/ELEMENT_SLOTPATH');
 	});
 
 	it('Set sizes and add as json to attribute', function () {
-		var element = new AdElement('ELEMENT_ID');
+		slotTargeting.size = '300x250,300x600';
 
-		element.setSizes('TOP_RIGHT_BOXAD', '300x250,300x600');
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
 
 		expect(element.getSizes()).toEqual(adSizes);
 		expect(element.getNode().getAttribute('data-gpt-slot-sizes')).toEqual('[[300,250],[300,600]]');
 	});
 
+	it('Set page level params as json on attribute', function () {
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
+
+		element.setPageLevelParams({
+			pageParam1: 'value1',
+			pageParam2: 'value2'
+		});
+
+		expect(element.getNode().getAttribute('data-gpt-page-params')).toEqual('{"pageParam1":"value1","pageParam2":"value2"}');
+	});
+
 	it('Set slot level params on slot object and add as json to attribute', function () {
-		var element = new AdElement('ELEMENT_ID');
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
 		spyOn(slot, 'setTargeting');
 
-		element.setSlotLevelParams(slot, {
-			foo: 12,
-			bar: 34,
-			baz: 56
-		});
+		element.configureSlot(slot);
 
 		expect(slot.setTargeting.calls.count()).toEqual(3);
 		expect(element.getNode().getAttribute('data-gpt-slot-params')).toEqual('{"foo":12,"bar":34,"baz":56}');
 	});
 
 	it('Add response event details as json to attribute', function () {
-		var element = new AdElement('ELEMENT_ID');
+		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
 
 		element.updateDataParams({
 			lineItemId: 123,

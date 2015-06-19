@@ -10,8 +10,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				getId: noop,
 				setSizes: noop,
 				getSizes: noop,
+				getSlotPath: noop,
 				setPageLevelParams: noop,
-				setSlotLevelParams: noop
+				configureSlot: noop
 			},
 			log: noop,
 			pubads: {
@@ -19,7 +20,8 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				enableSingleRequest: noop,
 				disableInitialLoad: noop,
 				addEventListener: noop,
-				refresh: noop
+				refresh: noop,
+				setTargeting: noop
 			},
 			window: {
 				googletag: {
@@ -92,7 +94,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	it('Flush with not empty slots queue should refresh pubads', function () {
 		spyOn(mocks.pubads, 'refresh');
 		googleTag.init();
-		googleTag.addSlot('TOP_RIGHT_BOXAD', 'wikia_gpt_helper/foo/bar', { size: [300, 250] }, mocks.element);
+		googleTag.addSlot(mocks.element);
 
 		googleTag.flush();
 
@@ -103,9 +105,21 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.window.googletag, 'display');
 		googleTag.init();
 
-		googleTag.addSlot('TOP_RIGHT_BOXAD', 'wikia_gpt_helper/foo/bar', { size: [300, 250] }, mocks.element);
-		googleTag.addSlot('TOP_RIGHT_BOXAD', 'wikia_gpt_helper/baz/123', { size: [300, 250] }, mocks.element);
+		googleTag.addSlot(mocks.element);
+		googleTag.addSlot(mocks.element);
 
 		expect(mocks.window.googletag.display.calls.count()).toEqual(1);
+	});
+
+	it('Set page targeting params using pubads', function () {
+		spyOn(mocks.pubads, 'setTargeting');
+		googleTag.init();
+
+		googleTag.setPageLevelParams({
+			foo: 7,
+			bar: 6
+		});
+
+		expect(mocks.pubads.setTargeting.calls.count()).toEqual(2);
 	});
 });
