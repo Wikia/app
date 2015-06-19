@@ -76,8 +76,14 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 		line-height: 28px;
 	}
 
-	.item-type-key-val:not(:last-of-type) {
+	.item-type-key-val:not(:last-of-type),
+	.item-type-group,
+	.item-type-comparison {
 		border-bottom: 1px solid $infobox-section-header-background;
+	}
+
+	.portable-infobox-item:last-of-type {
+		border-bottom: 0;
 	}
 
 	.portable-infobox-item-label {
@@ -98,11 +104,6 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 		}
 	}
 
-	.item-type-group,
-	.item-type-comparison {
-		border-bottom: 1px solid $infobox-section-header-background;
-	}
-
 	.portable-infobox-comparison {
 		border-collapse: collapse;
 		width: 100%;
@@ -115,6 +116,7 @@ $infobox-section-header-background: mix($color-page, $color-links, 75%);
 	.portable-infobox-comparison-set-header {
 		box-sizing: border-box;
 		display: block;
+		padding: 0;
 		text-align: left;
 		width: 100%;
 	}
