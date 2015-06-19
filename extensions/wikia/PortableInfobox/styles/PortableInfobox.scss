@@ -9,12 +9,11 @@ $infobox-background: mix($color-page, $color-links, 90%);
 @if ($is-dark-wiki) {
 	$infobox-background: mix($color-page, $color-links, 85%);
 }
+
 $infobox-section-header-background: mix($color-page, $color-links, 75%);
 $infobox-debug-line-number-width: 50px;
 $infobox-debug-error-msg-color: white;
 $infobox-debug-error-msg-bg: black;
-
-
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -133,38 +132,38 @@ $infobox-debug-error-msg-bg: black;
 			padding-right: $infobox-item-margin * 2;
 		}
 	}
-  	.group-layout-horizontal {
+	.group-layout-horizontal {
 		&.item-type-group {
-		  display: table;
-		  table-layout: fixed;
-		  width: 100%;
+			display: table;
+			table-layout: fixed;
+			width: 100%;
 		}
-	
+
 		.item-type-header {
-		  display: table-caption;
+			display: table-caption;
 		}
-	
+
 		.item-type-key-val {
-		  border-bottom: 0;
-		  display: table-cell;
-		  padding: $infobox-item-margin;
-		  text-align: center;
+			border-bottom: 0;
+			display: table-cell;
+			padding: $infobox-item-margin;
+			text-align: center;
 		}
-	
+
 		.item-type-key-val:not(:last-of-type) {
-		  border-right: 1px solid $infobox-section-header-background;
+			border-right: 1px solid $infobox-section-header-background;
 		}
-	
+
 		.portable-infobox-item-label {
-		  overflow: hidden;
-		  vertical-align: top;
-		  white-space: nowrap;
+			overflow: hidden;
+			vertical-align: top;
+			white-space: nowrap;
 		}
-	
+
 		.portable-infobox-item-value {
-		  padding-left: 0;
+			padding-left: 0;
 		}
-  	}
+	}
 }
 
 .WikiaArticle {
