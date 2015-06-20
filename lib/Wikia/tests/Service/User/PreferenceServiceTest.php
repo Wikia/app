@@ -84,7 +84,75 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 
 
 	public function testGetPreferencesSuccess() {
+		$this->gatewayMock->expects( $this->once() )
+			->method( 'get' )
+			->with( $this->userId )
+			->willReturn( [
+			[ $this->testPreference->getName() => $this->testPreference->getValue() ]
+			] );
+		$this->gatewayMock->expects( $this->once() )
+			->method( 'getWikiaUserId' )
+			->willReturn( $this->userId );
+
+		$service = new PreferenceService( $this->gatewayMock );
+		$preferences = $service->getPreferences( $this->userId );
+
+		$this->assertTrue( is_array($preferences), "expecting an array" );
 	}
 
+	public function testGetPreferencesEmpty() {
+		$this->gatewayMock->expects( $this->once() )
+			->method( 'get' )
+			->with( $this->userId )
+			->willReturn( false );
+		$this->gatewayMock->expects( $this->once() )
+			->method( 'getWikiaUserId' )
+			->willReturn( $this->userId );
+
+		$service = new PreferenceService( $this->gatewayMock );
+		$preferences = $service->getPreferences( $this->userId );
+
+		$this->assertTrue( is_array($preferences), "expecting an array" );
+		$this->assertTrue( empty($preferences), "expecting an empty array" );
+	}
+
+
+	/**
+	 * @expectedException	\Wikia\Service\GatewayUnauthorizedException
+	 */
+	public function testGetWithUnauthorizedError() {
+		$this->gatewayMock->expects( $this->exactly( 0 ) )
+			->method( 'get' )
+			->with( $this->userId )
+			->will( $this->throwException( new \Wikia\Service\GatewayInternalErrorException() ) );
+		$this->gatewayMock->expects( $this->once() )
+			->method( 'getWikiaUserId' )
+			->willReturn( $this->userId + 1 );
+
+		$service = new PreferenceService( $this->gatewayMock );
+		$ret = $service->getPreferences( $this->userId );
+
+		$this->fail( "exception was not thrown" );
+	}
+
+	/**
+	 * If the gateway throws a NotFound exception, meaning no preferences for this user,
+	 * we shouldn't consider that exceptional.
+	 */
+	public function testNotFoundException() {
+		$this->gatewayMock->expects( $this->exactly( 1 ) )
+			->method( 'get' )
+			->with( $this->userId )
+			->will( $this->throwException( new \Wikia\Service\GatewayNotFoundException ) );
+		$this->gatewayMock->expects( $this->once() )
+			->method( 'getWikiaUserId' )
+			->willReturn( $this->userId );
+
+		$service = new PreferenceService( $this->gatewayMock );
+		$preferences = $service->getPreferences( $this->userId );
+
+		$this->assertTrue( is_array($preferences), "expecting an array" );
+		$this->assertTrue( empty($preferences), "expecting an empty array" );
+	}
 
 }

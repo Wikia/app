@@ -20,6 +20,8 @@
  */
 namespace Wikia\Service\User;
 
+use Wikia\Domain\User\Preference;
+
 class PreferenceService implements PreferenceServiceInterface {
 
 	private $gateway;
@@ -33,14 +35,42 @@ class PreferenceService implements PreferenceServiceInterface {
 			return false;
 		}
 
-		if ( $userId !== $this->gateway->getWikiaUserId() ) {
-			throw new \Wikia\Service\GatewayUnauthorizedException( "Unauthorized to set preferences." );
-		}
+		$this->authenticateUser( $userId );
 
 		return $this->gateway->save( $userId, $preferences );
 	}
 
 	public function getPreferences( $userId ) {
+		$this->authenticateUser( $userId );
 
+		$result = $this->gateway->get( $userId );
+		if (!is_array($result)) {
+			return [];
+		}
+
+		$preferences = [];
+		try {
+		 $preferences = $this->gatewayResultToPreferenceArray( $result );
+		} catch ( \Wikia\Service\GatewayNotFoundException $e ) {
+		}
+
+		return $preferences;
+	}
+
+	protected function authenticateUser( $userId ) {
+		if ( $userId !== $this->gateway->getWikiaUserId() ) {
+			throw new \Wikia\Service\GatewayUnauthorizedException( "Unauthorized to set preferences." );
+		}
+	}
+
+	public function gatewayResultToPreferenceArray(array $result) {
+		$preferences = [];
+		foreach( $result as $index => $row ) {
+			if (isset($row["name"]) && isset($row["value"])) {
+				$preferences[] = new Preference($row["name"], $row["value"]);
+			}
+		}
+
+		return $preferences;
 	}
 }
