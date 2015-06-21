@@ -265,8 +265,8 @@ $infobox-debug-error-msg-bg: black;
 		}
 
 		.portable-infobox-item-value:not(:first-child) {
-				@include flex-basis($infobox-width * 2 / 3);
-				padding-left: 10px;
+			@include flex-basis($infobox-width * 2 / 3);
+			padding-left: 10px;
 		}
 
 		li {
