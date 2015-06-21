@@ -139,6 +139,7 @@ $infobox-debug-error-msg-bg: black;
 			padding-right: $infobox-item-margin * 2;
 		}
 	}
+
 	.group-layout-horizontal {
 		&.item-type-group {
 			display: table;
@@ -258,9 +259,14 @@ $infobox-debug-error-msg-bg: black;
 		}
 
 		.portable-infobox-item-value {
-			@include flex-basis($infobox-width * 2 / 3);
 			font-size: 14px;
 			line-height: 19px;
+			padding-left: 0;
+		}
+
+		.portable-infobox-item-value:not(:first-child) {
+				@include flex-basis($infobox-width * 2 / 3);
+				padding-left: 10px;
 		}
 
 		li {
