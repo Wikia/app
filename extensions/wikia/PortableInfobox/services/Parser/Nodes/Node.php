@@ -11,6 +11,7 @@ class Node {
 	const DEFAULT_TAG_NAME = 'default';
 	const VALUE_TAG_NAME = 'value';
 	const LABEL_TAG_NAME = 'label';
+	const FORMAT_TAG_NAME = 'format';
 
 	protected $xmlNode;
 	protected $children;
@@ -143,9 +144,12 @@ class Node {
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
+
 		$value = $this->extractDataFromSource( $xmlNode );
 		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
 			$value = $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
+		} elseif ( $value && $xmlNode->{self::FORMAT_TAG_NAME} ) {
+			$value = $this->extractDataFromNode( $xmlNode->{self::FORMAT_TAG_NAME} );
 		}
 
 		return $value;
