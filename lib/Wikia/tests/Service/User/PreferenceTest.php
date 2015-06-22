@@ -47,13 +47,13 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 
 
 	/**
-	 * @expectedException	\Wikia\Service\GatewayInternalErrorException
+	 * @expectedException	\Wikia\Service\PersistenceException
 	 */
 	public function testSetWithDatabaseError() {
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'save' )
 			->with( $this->userId, [$this->testPreference] )
-			->will( $this->throwException( new \Wikia\Service\GatewayInternalErrorException() ) );
+			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId );
@@ -71,7 +71,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 		$this->gatewayMock->expects( $this->exactly( 0 ) )
 			->method( 'save' )
 			->with( $this->userId, [$this->testPreference] )
-			->will( $this->throwException( new \Wikia\Service\GatewayInternalErrorException() ) );
+			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId + 1 );
@@ -124,7 +124,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 		$this->gatewayMock->expects( $this->exactly( 0 ) )
 			->method( 'get' )
 			->with( $this->userId )
-			->will( $this->throwException( new \Wikia\Service\GatewayInternalErrorException() ) );
+			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId + 1 );
