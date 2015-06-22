@@ -23,12 +23,10 @@ class AdEngine2Hooks {
 		global $wgAdDriverUseSevenOneMedia,
 			$wgEnableKruxOnMobile,
 			$wgEnableKruxTargeting,
-			$wgLiftiumOnLoad,
 			$wgNoExternals,
 			$wgUsePostScribe;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
-		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
 
 		$wgEnableKruxTargeting = !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
