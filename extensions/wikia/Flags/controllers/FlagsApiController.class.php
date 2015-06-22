@@ -190,11 +190,19 @@ class FlagsApiController extends WikiaApiController {
 
 	/**
 	 * Updates flags on the given page using a `flags` array passed as a request parameter.
+	 *
+	 * @requestParam int page_id
+	 * @requestParam int flag_id
+	 *
 	 * @return bool
 	 */
 	public function updateFlagsForPage() {
 		try {
 			$this->processRequest();
+
+			if ( !isset( $this->params['page_id'] ) ) {
+				throw new \MissingParameterApiException( 'page_id' );
+			}
 
 			$oldFlags = $this->app->sendRequest(
 				'FlagsApiController',
