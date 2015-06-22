@@ -20,14 +20,14 @@
  * @file
  * @ingroup SpecialPage
  */
-
+use Wikia\Logger\Loggable;
 /**
  * Implements Special:Allpages
  *
  * @ingroup SpecialPage
  */
 class SpecialAllpages extends IncludableSpecialPage {
-
+	use Loggable;
 	/**
 	 * Maximum number of pages to show on single subpage.
 	 */
@@ -58,6 +58,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 	 * @param $par String: becomes "FOO" when called like Special:Allpages/FOO (default NULL)
 	 */
 	function execute( $par ) {
+		$this->debug(['context'=>'kamilk']);
 wfDebug('kamilktestlog '.__METHOD__."\n");
 
 		global $wgContLang;
