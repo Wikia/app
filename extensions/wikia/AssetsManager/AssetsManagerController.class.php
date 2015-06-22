@@ -31,7 +31,7 @@ class AssetsManagerController extends WikiaController {
 	 */
 	public function getMultiTypePackage() {
 		wfProfileIn( __METHOD__ );
-
+wfDebug('kamilktestlog '.__METHOD__."\n");
 		$this->response->setFormat( 'json' );
 
 		$key = null;
@@ -79,10 +79,13 @@ class AssetsManagerController extends WikiaController {
 
 				foreach( $styleFiles as $styleFile ) {
 					$builder = $this->getBuilder( 'sass', $styleFile );
-
+					wfDebug('kamilktestlog 2'.__METHOD__."\n");
 					if ( !is_null( $builder ) ) {
 						if ( $this->app->checkSkin( 'oasis' ) ) {
-							$builder->addParams( SassUtil::getOasisSettings() );
+							wfDebug('kamilktestlog '.print_r(SassUtil::getOasisSettings(),true)."\n");
+							$params = SassUtil::getOasisSettings();
+							$params['color-page'] = '#ff0000';
+							$builder->addParams( $params );
 						}
 						$data .= $builder->getContent();
 					}

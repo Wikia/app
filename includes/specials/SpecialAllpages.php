@@ -58,6 +58,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 	 * @param $par String: becomes "FOO" when called like Special:Allpages/FOO (default NULL)
 	 */
 	function execute( $par ) {
+wfDebug('kamilktestlog '.__METHOD__."\n");
+
 		global $wgContLang;
 		$request = $this->getRequest();
 		$out = $this->getOutput();
