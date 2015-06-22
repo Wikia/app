@@ -56,6 +56,8 @@ FluentSql\StaticSQL::setClass("\\WikiaSQL");
  */
 require_once ( $IP."/lib/Wikia/autoload.php");
 
+require_once ( $IP."/lib/Swagger/autoload.php");
+
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
