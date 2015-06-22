@@ -232,4 +232,24 @@ class FounderAnonEditController extends FounderController {
 		return $this->getMessage( 'emailext-founder-anon-encourage' )
 			->parse();
 	}
+
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			'inputs' => [
+				[
+					'type' => 'hidden',
+					'name' => 'currentUser',
+					'value' => -1
+				],
+			]
+		];
+
+		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
+	}
 }
