@@ -9,9 +9,9 @@ class Node {
 
 	const DATA_SRC_ATTR_NAME = 'source';
 	const DEFAULT_TAG_NAME = 'default';
-	const VALUE_TAG_NAME = 'value';
-	const LABEL_TAG_NAME = 'label';
 	const FORMAT_TAG_NAME = 'format';
+	const LABEL_TAG_NAME = 'label';
+	const VALUE_TAG_NAME = 'value';
 
 	protected $xmlNode;
 	protected $children;
@@ -144,7 +144,6 @@ class Node {
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
-
 		$value = $this->extractDataFromSource( $xmlNode );
 		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
 			return $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
