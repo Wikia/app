@@ -26,10 +26,13 @@ class AdEngine2Hooks {
 			$wgNoExternals,
 			$wgUsePostScribe;
 
+		// TODO: we shouldn't have it in AdEngine - ticket for Platform: PLATFORM-1296
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 
-		$wgEnableKruxTargeting = !$wgNoExternals && $wgEnableKruxTargeting;
-		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
+		if( $wgNoExternals ) {
+			$wgEnableKruxTargeting = false;
+			$wgEnableKruxOnMobile = false;
+		}
 
 		// use PostScribe with 71Media - check scriptwriter.js:35
 		if ( $wgAdDriverUseSevenOneMedia ) {
