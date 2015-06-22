@@ -318,4 +318,13 @@ class FounderActiveController extends FounderController {
 	protected function getFooterMessages() {
 		return EmailController::getFooterMessages();
 	}
+
+	/**
+	 * Form fields required for this email for Special:SendEmail. See
+	 * EmailController::getEmailSpecificFormFields for more info.
+	 * @return array
+	 */
+	protected static function getEmailSpecificFormFields() {
+		return EmailController::getEmailSpecificFormFields();
+	}
 }
