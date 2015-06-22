@@ -270,7 +270,7 @@ class RequestContext implements IContextSource {
 				[
 					'caller'    => wfGetAllCallers(),
 					'exception' => new Exception(),
-					'language'  => json_encode( $l )
+					'language'  => serialize( $l )
 				]
 			);
 		}
@@ -315,7 +315,7 @@ class RequestContext implements IContextSource {
 				[
 					'caller'    => wfGetAllCallers(),
 					'exception' => new Exception(),
-					'language'  => json_encode( $this->lang )
+					'language'  => serialize( $this->lang )
 				]
 			);
 		} elseif ( $this->lang === null ) {
