@@ -19,22 +19,27 @@ describe('AdContext', function () {
 	}
 
 	var mocks = {
-		abTesting: {},
-		geo: {
-			getCountryCode: function () {
-				return 'XX';
-			}
+			abTesting: {},
+			geo: {
+				getCountryCode: function () {
+					return 'XX';
+				}
+			},
+			instantGlobals: {},
+			win: {},
+			Querystring: function () {
+				return mocks.querystring;
+			},
+			querystring: {
+				getVal: noop
+			},
+			callback: noop
 		},
-		instantGlobals: {},
-		win: {},
-		Querystring: function () {
-			return mocks.querystring;
-		},
-		querystring: {
-			getVal: noop
-		},
-		callback: noop
-	};
+		forcedAdProviders = [
+		'openx',
+		'turtle',
+		'liftium'
+	];
 
 	it(
 		'fills getContext() with context, targeting, providers and forcedAdProvider ' +
@@ -247,21 +252,21 @@ describe('AdContext', function () {
 	});
 
 	it('forces provider if the query parameter set', function () {
-		var adContext;
+		spyOn(mocks.querystring, 'getVal');
 
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (paramName) {
-			if (paramName === 'forceturtle') {
-				return true;
-			}
+		Object.keys(forcedAdProviders).forEach(function (k) {
+			var adContext;
+
+			mocks.win = {};
+			mocks.instantGlobals = {};
+			mocks.querystring.getVal.and.returnValue(forcedAdProviders[k]);
+
+			adContext = getModule();
+			expect(mocks.querystring.getVal).toHaveBeenCalled();
+
+			adContext = adContext.getContext();
+			expect(adContext.forcedAdProvider).toEqual(forcedAdProviders[k]);
+			expect(adContext.providers[forcedAdProviders[k]]).toBeTruthy();
 		});
-
-		mocks.win = {};
-		mocks.instantGlobals = {};
-		adContext = getModule();
-		expect(mocks.querystring.getVal).toHaveBeenCalled();
-
-		adContext = adContext.getContext();
-		expect(adContext.forcedAdProvider).toEqual('turtle');
-		expect(adContext.providers.turtle).toBeTruthy();
 	});
 });

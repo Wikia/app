@@ -46,7 +46,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
-		context.forcedAdProvider = getForcedAdProvider(context);
+		context.forcedAdProvider = qs.getVal('forcead', null) || context.forcedAdProvider || null;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
@@ -72,6 +72,16 @@ define('ext.wikia.adEngine.adContext', [
 		// Turtle
 		if (context.forcedAdProvider === 'turtle') {
 			context.providers.turtle = true;
+		}
+
+		// OpenX
+		if (context.forcedAdProvider === 'openx') {
+			context.providers.openx = true;
+		}
+
+		// Liftium
+		if (context.forcedAdProvider === 'liftium') {
+			context.providers.liftium = true;
 		}
 
 		if (instantGlobals.wgAdDriverTurtleCountries &&
@@ -104,24 +114,6 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
-	}
-
-	function getForcedAdProvider (context) {
-		var possibleForcedAdProviders = ['liftium', 'openx', 'turtle'],
-			possibleForcedAdProvidersNo = possibleForcedAdProviders.length - 1,
-			i, forced;
-
-		for (i = possibleForcedAdProvidersNo; i >= 0; i--) {
-			if (possibleForcedAdProviders.hasOwnProperty(i)) {
-				forced = !!qs.getVal('force' + possibleForcedAdProviders[i], false);
-
-				if (forced) {
-					return possibleForcedAdProviders[i];
-				}
-			}
-		}
-
-		return context.forcedAdProvider || null;
 	}
 
 	function addCallback(callback) {
