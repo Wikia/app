@@ -13,14 +13,12 @@ class PortableInfoboxHooks {
 
 	static public function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
 		if ( $articleTitle ) {
-
-			$dataService = new PortableInfoboxDataService();
-			$infoboxData = $dataService->getInfoboxDataByTitle( $articleTitle );
-			$infoboxImages = $dataService->getImageListFromInfoboxesData( $infoboxData );
+			$infoboxImages = ( new PortableInfoboxDataService( $articleTitle ) )->getImages();
 			if ( !empty( $infoboxImages ) ) {
-				$imageNamesArray = array_merge( $infoboxImages, (array) $imageNamesArray );
+				$imageNamesArray = array_merge( $infoboxImages, (array)$imageNamesArray );
 			}
 		}
+
 		return true;
 	}
 }

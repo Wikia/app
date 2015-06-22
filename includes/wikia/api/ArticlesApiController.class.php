@@ -830,6 +830,8 @@ class ArticlesApiController extends WikiaApiController {
 		$result = [];
 		if ( $width > 0 && $height > 0 ) {
 			$is = $this->getImageServing( $ids, $width, $height );
+			d($is->getImages());
+			dd($is);
 			//only one image max is returned
 			$images = $is->getImages( 1 );
 			//parse results
