@@ -3,20 +3,8 @@
 	{{# details}}
 		{{> digestDetail}}
 	{{/ details}}
-	<tr>
-		<td colspan="2">
-			<a class="button" href="{{buttonLink}}">{{buttonText}}</a>
-		</td>
-	</tr>
+	{{> button}}
 	{{# hasContentFooterMessages}}
-		<tr>
-			<td colspan="2">
-				<div class="content-footer-messages">
-					{{# contentFooterMessages}}
-						<p>{{{.}}}</p>
-					{{/ contentFooterMessages}}
-				</div>
-			</td>
-		</tr>
+		{{> contentFooterMessages}}
 	{{/ hasContentFooterMessages}}
 </table>
