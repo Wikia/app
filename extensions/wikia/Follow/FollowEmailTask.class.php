@@ -43,6 +43,6 @@ class FollowEmailTask extends BaseTask {
 			$msg = 'WatchlistLogs: Sending other watchlist updates';
 		}
 
-		$this->info( $msg, [ 'watchedPages' => $watchers, 'action' => $action ] );
+		$this->info( $msg, [ 'watchers' => $watchers, 'action' => $action ] );
 	}
 }
