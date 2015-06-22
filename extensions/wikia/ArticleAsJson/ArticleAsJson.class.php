@@ -39,18 +39,27 @@ class ArticleAsJson extends WikiaService {
 			$media['context'] = $context;
 		}
 
-		if ( is_string( $caption ) && $caption !== '' ) {
-			$media['caption'] = $caption;
-		}
-
 		if ( is_string( $link ) && $link !== '' ) {
 			$media['link'] = $link;
+		}
+
+		if ( !empty( $details['width'] ) ) {
+			$media['width'] = (int) $details['width'];
+		}
+
+		if ( !empty( $details['height'] ) ) {
+			$media['height'] = (int) $details['height'];
+		}
+
+		if ( is_string( $caption ) && $caption !== '' ) {
+			$media['caption'] = $caption;
 		}
 
 		if ( $details['mediaType'] == 'video' ) {
 			$media['views'] = (int) $details['videoViews'];
 			$media['embed'] = $details['videoEmbedCode'];
 			$media['duration'] = $details['duration'];
+			$media['provider'] = $details['providerName'];
 		}
 
 		wfProfileOut( __METHOD__ );
