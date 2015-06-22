@@ -58,8 +58,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 	 * @param $par String: becomes "FOO" when called like Special:Allpages/FOO (default NULL)
 	 */
 	function execute( $par ) {
-		$this->error('test');
-		$this->error('test',['context'=>'kamilktest']);
+		$this->info('test');
+		$this->info('test',['context'=>'kamilktest']);
 		exit;
 wfDebug('kamilktestlog '.__METHOD__."\n");
 

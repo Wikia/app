@@ -10,8 +10,9 @@
  *
  * @author Macbre
  */
-
+use Wikia\Logger\Loggable;
 class AssetsManagerController extends WikiaController {
+	use Loggable;
 	const MEMCKEY_PREFIX = 'multitypepackage';
 	const MEMC_TTL = 604800;
 
@@ -31,7 +32,9 @@ class AssetsManagerController extends WikiaController {
 	 */
 	public function getMultiTypePackage() {
 		wfProfileIn( __METHOD__ );
-wfDebug('kamilktestlog '.__METHOD__."\n");
+		$this->error(__METHOD__,['context'=>'kamilktest']);
+
+		wfDebug('kamilktestlog '.__METHOD__."\n");
 		$this->response->setFormat( 'json' );
 
 		$key = null;
@@ -79,9 +82,11 @@ wfDebug('kamilktestlog '.__METHOD__."\n");
 
 				foreach( $styleFiles as $styleFile ) {
 					$builder = $this->getBuilder( 'sass', $styleFile );
+					$this->error(__METHOD__."2",['context'=>'kamilktest']);
 					wfDebug('kamilktestlog 2'.__METHOD__."\n");
 					if ( !is_null( $builder ) ) {
 						if ( $this->app->checkSkin( 'oasis' ) ) {
+							$this->error(__METHOD__,['context'=>'kamilktest', 'data'=>json_encode(SassUtil::getOasisSettings())]);
 							wfDebug('kamilktestlog '.print_r(SassUtil::getOasisSettings(),true)."\n");
 							$params = SassUtil::getOasisSettings();
 							$params['color-page'] = '#ff0000';
