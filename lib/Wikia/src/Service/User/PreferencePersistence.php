@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User;
 
-interface PreferenceGatewayInterface {
+interface PreferencePersistence {
 
 	/**
 	 * Get the Wikia user id on the gateway. This represents the authenticated

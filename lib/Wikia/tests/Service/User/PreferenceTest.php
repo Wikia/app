@@ -1,17 +1,17 @@
 <?php
 
 namespace Wikia\Service\User;
-use Wikia\Domain\User\Preference;
+use Wikia\Domain\User\PreferenceValue;
 
-class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
+class PreferenceTest extends \PHPUnit_Framework_TestCase {
 
 	protected $userId = 1;
 	protected $testPreference;
 	protected $gatewayMock;
 
 	protected function setUp() {
-		$this->testPreference = new Preference( "pref-name", "pref-value" );
-		$this->gatewayMock = $this->getMockBuilder( '\Wikia\Service\User\PreferenceGatewayInterface' )
+		$this->testPreference = new PreferenceValue( "pref-name", "pref-value" );
+		$this->gatewayMock = $this->getMockBuilder( '\Wikia\Service\User\PreferencePersistence' )
 			->setMethods( ['save', 'getWikiaUserId', 'get'] )
 			->disableOriginalConstructor()
 			->disableAutoload()
@@ -27,7 +27,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId );
 
-		$service = new PreferenceService( $this->gatewayMock );
+		$service = new Preference( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->assertTrue( $ret, "the preference was not set" );
@@ -39,7 +39,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, [] )
 			->willReturn( null );
 
-		$service = new PreferenceService( $this->gatewayMock );
+		$service = new Preference( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ ] );
 
 		$this->assertFalse( $ret, "expected false when providing an empty preference set" );
@@ -58,7 +58,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId );
 
-		$service = new PreferenceService( $this->gatewayMock );
+		$service = new Preference( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->fail( "exception was not thrown" );
@@ -76,7 +76,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId + 1 );
 
-		$service = new PreferenceService( $this->gatewayMock );
+		$service = new Preference( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->fail( "exception was not thrown" );
@@ -94,7 +94,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId );
 
-		$service = new PreferenceService( $this->gatewayMock );
+		$service = new Preference( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
 		$this->assertTrue( is_array($preferences), "expecting an array" );
@@ -109,7 +109,7 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId );
 
-		$service = new PreferenceService( $this->gatewayMock );
+		$service = new Preference( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
 		$this->assertTrue( is_array($preferences), "expecting an array" );
@@ -129,26 +129,22 @@ class PreferenceServiceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId + 1 );
 
-		$service = new PreferenceService( $this->gatewayMock );
+		$service = new Preference( $this->gatewayMock );
 		$ret = $service->getPreferences( $this->userId );
 
 		$this->fail( "exception was not thrown" );
 	}
 
-	/**
-	 * If the gateway throws a NotFound exception, meaning no preferences for this user,
-	 * we shouldn't consider that exceptional.
-	 */
-	public function testNotFoundException() {
+	public function testEmptyGet() {
 		$this->gatewayMock->expects( $this->exactly( 1 ) )
 			->method( 'get' )
 			->with( $this->userId )
-			->will( $this->throwException( new \Wikia\Service\GatewayNotFoundException ) );
+			->willReturn( [] );
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'getWikiaUserId' )
 			->willReturn( $this->userId );
 
-		$service = new PreferenceService( $this->gatewayMock );
+		$service = new Preference( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
 		$this->assertTrue( is_array($preferences), "expecting an array" );
