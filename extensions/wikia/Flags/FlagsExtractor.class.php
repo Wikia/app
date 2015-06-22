@@ -102,12 +102,16 @@ class FlagsExtractor {
 	 * @return array|bool
 	 */
 	public function getTemplate() {
+		global $wgContLang;
+
 		if ( empty( $this->text ) || empty ( $this->templateName ) ) {
 			return false;
 		}
 
 		$template = [];
 		$templateParams = [];
+
+		$nsPrefix = $wgContLang->getNsText( NS_TEMPLATE ) . ':';
 
 		$templateBracketsCounter = self::BRACKETS_NUMBER;
 		$linkBracketsCounter = 0;
@@ -119,9 +123,17 @@ class FlagsExtractor {
 		$paramsCounter = 1;
 
 		$templateBegin = '{{' . $this->templateName;
+		$templateWithNSBegin = '{{' . $nsPrefix . $this->templateName;
+
+		$position = $this->findTemplatePosition( $templateBegin, $this->offset );
+		$positionWithNS = $this->findTemplatePosition( $templateWithNSBegin, $this->offset );
 
 		// Position of template begin
-		$this->templateOffsetStart = $this->findTemplatePosition( $templateBegin, $this->offset );
+		if ( $position !== false && $positionWithNS !== false ) {
+			$this->templateOffsetStart = $position <= $positionWithNS ? $position : $positionWithNS;
+		} else {
+			$this->templateOffsetStart = $position !== false ? $position : $positionWithNS;
+		}
 
 		if ( $this->templateOffsetStart !== false ) {
 			$this->offset = $this->templateOffsetStart + strlen( $templateBegin );
@@ -414,7 +426,7 @@ class FlagsExtractor {
 			$tag = $this->getReplacementTag();
 		}
 
-		if ( $tag == '' ) {
+		if ( $tag === '' ) {
 			$this->logInfoMessage( 'Template removed from text', [ 'template' => $template['template'] ] );
 		} else {
 			$this->logInfoMessage( 'Template replaced in text', [ 'template' => $template['template'] ] );

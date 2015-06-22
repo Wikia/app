@@ -43,19 +43,48 @@ class FlagsController extends WikiaController {
 		$wgLang->getLangObj();
 	}
 
+	public function modifyParserOutputWithFlags( ParserOutput $parserOutput, $pageId ) {
+		$mwf = \MagicWord::get( 'flags' );
+
+		/**
+		 * First, get ParserOutput for flags for the article.
+		 * If it's null - return the original $parserOutput.
+		 */
+		$flagsParserOutput = $this->getFlagsParserOutputForPage( $pageId );
+		if ( $flagsParserOutput === null ) {
+			/**
+			 * If there is __FLAGS__ magic word present in the content
+			 * replace it with an empty string
+			 */
+			if ( $mwf->match( $parserOutput->getText() ) ) {
+				$parserOutput->setText( $mwf->replace( '', $parserOutput->getText() ) );
+			}
+			return $parserOutput;
+		}
+
+		/**
+		 * Update the mText of the original ParserOutput object and merge other properties
+		 */
+		if ( $mwf->match( $parserOutput->getText() ) ) {
+			$parserOutput->setText( $mwf->replace( $flagsParserOutput->getText(), $parserOutput->getText() ) );
+		} else {
+			$parserOutput->setText( $flagsParserOutput->getText() . $parserOutput->getText() );
+		}
+
+		$parserOutput->mergeExternalParserOutputVars( $flagsParserOutput );
+
+		return $parserOutput;
+	}
+
 	/**
 	 * Sends a request for all instances of flags for the given page.
 	 * A result of the request is transformed into a set of wikitext templates calls
 	 * that are supposed to be injected into Parser before expanding templates.
 	 * @param $pageId
-	 * @return string
+	 * @return ParserOutput|null
 	 */
-	public function getFlagsForPageWikitext( $pageId ) {
-		wfProfileIn( __METHOD__ );
-
+	public function getFlagsParserOutputForPage( $pageId ) {
 		try {
-			$flagsWikitext = '';
-
 			$response = $this->requestGetFlagsForPage( $pageId );
 
 			if ( $this->getResponseStatus( $response ) ) {
@@ -73,11 +102,11 @@ class FlagsController extends WikiaController {
 					);
 				}
 
-				$flagsWikitext = $flagView->wrapAllFlags( $templatesCalls );
+				return $flagView->renderFlags( $templatesCalls, $pageId );
+			} else {
+				return null;
 			}
 
-			wfProfileOut( __METHOD__ );
-			return $flagsWikitext;
 		} catch ( Exception $exception ) {
 			$this->logResponseException( $exception, $response->getRequest() );
 		}
@@ -87,8 +116,6 @@ class FlagsController extends WikiaController {
 	 * Generates html contents for Flags modal for editing flags
 	 */
 	public function editForm() {
-		wfProfileIn( __METHOD__ );
-
 		$pageId = $this->request->getVal( 'page_id' );
 		if ( empty( $pageId ) ) {
 			throw new MissingParameterApiException( 'page_id' );
@@ -125,8 +152,6 @@ class FlagsController extends WikiaController {
 				wfMessage( 'flags-edit-modal-no-flags-on-community' )->parse()
 			);
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -145,7 +170,6 @@ class FlagsController extends WikiaController {
 	 * @throws Exception
 	 */
 	public function postFlagsEditForm() {
-		wfProfileIn( __METHOD__ );
 		try {
 			$this->skipRendering();
 
@@ -179,16 +203,15 @@ class FlagsController extends WikiaController {
 				$this->sendRequestsUsingPostedData( $pageId, $flagsToChange );
 
 				/**
-				 * Purge cache values for the page
-				 */
-				$flagsCache = new FlagsCache();
-				$flagsCache->purgeFlagsForPage( $pageId );
-
-				/**
-				 * Purge article after updating flags
+				 * Purge article after updating flags and update links
 				 */
 				$wikiPage = WikiPage::factory( $title );
 				$wikiPage->doPurge();
+
+				$parserOptions = ParserOptions::newFromUser( $this->wg->User );
+				( new LinksUpdate(
+					$wikiPage->getTitle(), $wikiPage->getParserOutput( $parserOptions ) )
+				)->doUpdate();
 			}
 
 			/**
@@ -196,8 +219,6 @@ class FlagsController extends WikiaController {
 			 */
 			$pageUrl = $title->getFullURL();
 			$this->response->redirect( $pageUrl );
-
-			wfProfileOut( __METHOD__ );
 		} catch ( MWException $exception ) {
 			if ( $title === null ) {
 				throw $exception;

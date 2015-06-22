@@ -174,6 +174,7 @@ class FlagsApiController extends WikiaApiController {
 	public function removeFlagsFromPage() {
 		try {
 			$this->processRequest();
+
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
 
@@ -189,11 +190,19 @@ class FlagsApiController extends WikiaApiController {
 
 	/**
 	 * Updates flags on the given page using a `flags` array passed as a request parameter.
+	 *
+	 * @requestParam int page_id
+	 * @requestParam int flag_id
+	 *
 	 * @return bool
 	 */
 	public function updateFlagsForPage() {
 		try {
 			$this->processRequest();
+
+			if ( !isset( $this->params['page_id'] ) ) {
+				throw new \MissingParameterApiException( 'page_id' );
+			}
 
 			$oldFlags = $this->app->sendRequest(
 				'FlagsApiController',
@@ -203,6 +212,8 @@ class FlagsApiController extends WikiaApiController {
 
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->updateFlagsForPage( $this->params['flags'] );
+
+			$this->getCache()->purgeFlagsForPage( $this->params['page_id'] );
 
 			$this->makeSuccessResponse( $modelResponse );
 			$this->logParametersChange( $oldFlags, $this->params['flags'], $this->params['wiki_id'], $this->params['page_id'] );

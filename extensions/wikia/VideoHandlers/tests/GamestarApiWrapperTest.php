@@ -31,7 +31,7 @@ class GamestarApiWrapperTest extends WikiaBaseTest {
 	 * get data with valid response - check html response
 	 * please contact video team if test is failed
 	 *
-	 * @group Infrastructure
+	 * @group ExternalIntegration
 	 */
 	public function testgetDataFromValidHtmlResponse() {
 		// setup
