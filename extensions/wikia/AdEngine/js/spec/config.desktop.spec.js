@@ -23,7 +23,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			},
 			getAdContextTargeting: returnEmpty,
 			getAdContextProviders: returnEmpty,
-			getAdContextForceProviders: returnEmpty,
 			getInstantGlobals: returnEmpty,
 			getUserAgent: noop,
 			geo: {
@@ -77,7 +76,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 						opts: mocks.getAdContextOpts(),
 						targeting: mocks.getAdContextTargeting(),
 						providers: mocks.getAdContextProviders(),
-						forceProviders: mocks.getAdContextForceProviders()
+						forcedAdProvider: null
 					};
 				}
 			},
