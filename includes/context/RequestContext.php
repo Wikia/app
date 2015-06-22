@@ -303,6 +303,12 @@ class RequestContext implements IContextSource {
 	 * @since 1.19
 	 */
 	public function getLanguage() {
+		/**
+		 * The following block of code (between if and elseif) has been added in
+		 * order to force setting $this->lang to some value. Apparently there was
+		 * something wrong with the following block (the one inside elseif) that would
+		 * cause an infinite loop or other issues.
+		 */
 		if ( $this->recursion > 0 ) {
 			$this->recursion++;
 			global $wgLanguageCode;
