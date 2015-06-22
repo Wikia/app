@@ -121,17 +121,6 @@ abstract class FounderController extends EmailController {
 		] );
 	}
 
-	protected function getFooterMessages() {
-		$parentUrl = $this->pageTitle->getFullURL( 'action=unwatch' );
-		$parentTitleText = $this->pageTitle->getPrefixedText();
-
-		$footerMessages = [
-			$this->getMessage( 'emailext-unfollow-text', $parentUrl, $parentTitleText )
-				->parse()
-		];
-		return array_merge( $footerMessages, parent::getFooterMessages() );
-	}
-
 	protected function getFooterEncouragement() {
 		$name = $this->getCurrentUserName();
 		$profileUrl = $this->getCurrentProfilePage();
