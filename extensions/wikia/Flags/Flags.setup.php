@@ -42,6 +42,7 @@ $wgGroupPermissions['*']['flagshq'] = true;
 $wgAutoloadClasses['SpecialFlagsController'] = __DIR__ . '/controllers/SpecialFlagsController.class.php';
 $wgAutoloadClasses['FlagsController'] = __DIR__ . '/controllers/FlagsController.class.php';
 $wgAutoloadClasses['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
+$wgWikiaApiControllers['FlagsApiController'] = __DIR__ . '/controllers/FlagsApiController.class.php';
 
 /**
  * Models
