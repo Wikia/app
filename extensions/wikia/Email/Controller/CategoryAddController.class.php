@@ -87,7 +87,7 @@ class CategoryAddController extends EmailController {
 	}
 
 	protected function getContentFooterMessages() {
-		return $this->getMessage( 'emailext-categoryadd-footer-1',
+		return $this->getMessage( 'emailext-categoryadd-see-all-pages',
 			$this->categoryPage->getFullURL(),
 			$this->categoryPage->getText()
 		)->parse();
