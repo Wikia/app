@@ -457,7 +457,7 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$rawData = $this->sendRequest( 'SpecialVideosSpecial', 'getVideos', $params )->getData();
-			$data = $this->mercuryApi->processTrendingData( $rawData, 'videos', [ 'title', 'fileUrl', 'duration', 'thumbUrl' ] );
+			$data = $this->mercuryApi->processTrendingVideoData( $rawData );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending videos data is empty' );
 		}
