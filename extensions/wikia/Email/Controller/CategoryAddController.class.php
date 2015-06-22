@@ -54,7 +54,11 @@ class CategoryAddController extends EmailController {
 		}
 
 		if ( !$this->pageAddedToCategory->exists() ) {
-			throw new Check( "pageAddedToCategory doesn't exist." );
+			// Check master DB just in case the page was just created and it
+			// hasn't been replicated to the slave yet
+			if ( $this->pageAddedToCategory->getArticleID( \Title::GAID_FOR_UPDATE ) == 0 ) {
+				throw new Check( "pageAddedToCategory doesn't exist." );
+			}
 		}
 	}
 
