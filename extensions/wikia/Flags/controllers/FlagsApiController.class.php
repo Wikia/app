@@ -483,8 +483,8 @@ class FlagsApiController extends WikiaApiController {
 	private function logFlagChange( Array $flags, $wikiId, $pageId, $actionType ) {
 		$task = new FlagsLogTask();
 		$task->wikiId( $wikiId );
-		$task->call( 'logFlagChange', $flags, $pageId, $actionType );
-		$task->queue();
+		$task->createdBy( $this->wg->User->getId() );
+		$task->execute( 'logFlagChange', [ $flags, $pageId, $actionType ] );
 	}
 
 	/**
@@ -498,7 +498,7 @@ class FlagsApiController extends WikiaApiController {
 	private function logParametersChange( Array $oldFlags, Array $flags, $wikiId, $pageId ) {
 		$task = new FlagsLogTask();
 		$task->wikiId( $wikiId );
-		$task->call( 'logParametersChange', $oldFlags, $flags, $pageId );
-		$task->queue();
+		$task->createdBy( $this->wg->User->getId() );
+		$task->execute( 'logParametersChange', [ $oldFlags, $flags, $pageId ] );
 	}
 }
