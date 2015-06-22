@@ -147,8 +147,9 @@ class Node {
 
 		$value = $this->extractDataFromSource( $xmlNode );
 		if ( !$value && $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			$value = $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
-		} elseif ( $value && $xmlNode->{self::FORMAT_TAG_NAME} ) {
+			return $this->extractDataFromNode( $xmlNode->{self::DEFAULT_TAG_NAME} );
+		}
+		if ( $value && $xmlNode->{self::FORMAT_TAG_NAME} ) {
 			$value = $this->extractDataFromNode( $xmlNode->{self::FORMAT_TAG_NAME} );
 		}
 
