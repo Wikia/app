@@ -58,7 +58,7 @@ class Preference implements PreferenceService {
 		// works we should at least ensure that the service does not get a request that we know it can't
 		// handle
 		if ( $userId !== $this->gateway->getWikiaUserId() ) {
-			throw new \Wikia\Service\GatewayUnauthorizedException( "Unauthorized to set preferences." );
+			throw new \Wikia\Service\UnauthorizedException( "Unauthorized to set preferences." );
 		}
 	}
 

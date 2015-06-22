@@ -65,7 +65,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expectedException	\Wikia\Service\GatewayUnauthorizedException
+	 * @expectedException	\Wikia\Service\UnauthorizedException
 	 */
 	public function testSetWithUnauthorizedError() {
 		$this->gatewayMock->expects( $this->exactly( 0 ) )
@@ -118,7 +118,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 
 
 	/**
-	 * @expectedException	\Wikia\Service\GatewayUnauthorizedException
+	 * @expectedException	\Wikia\Service\UnauthorizedException
 	 */
 	public function testGetWithUnauthorizedError() {
 		$this->gatewayMock->expects( $this->exactly( 0 ) )
