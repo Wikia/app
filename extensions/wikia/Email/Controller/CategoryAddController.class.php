@@ -2,7 +2,7 @@
 
 namespace Email\Controller;
 
-use \Email\EmailController;
+use Email\EmailController;
 use Email\Check;
 
 class CategoryAddController extends EmailController {
