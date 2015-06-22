@@ -12,7 +12,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->testPreference = new PreferenceValue( "pref-name", "pref-value" );
 		$this->gatewayMock = $this->getMockBuilder( '\Wikia\Service\User\PreferencePersistence' )
-			->setMethods( ['save', 'getWikiaUserId', 'get'] )
+			->setMethods( ['save', 'get'] )
 			->disableOriginalConstructor()
 			->disableAutoload()
 			->getMock();
@@ -23,9 +23,6 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'save' )
 			->with( $this->userId, [$this->testPreference] )
 			->willReturn( true );
-		$this->gatewayMock->expects( $this->once() )
-			->method( 'getWikiaUserId' )
-			->willReturn( $this->userId );
 
 		$service = new Preference( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
@@ -54,27 +51,6 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'save' )
 			->with( $this->userId, [$this->testPreference] )
 			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
-		$this->gatewayMock->expects( $this->once() )
-			->method( 'getWikiaUserId' )
-			->willReturn( $this->userId );
-
-		$service = new Preference( $this->gatewayMock );
-		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
-
-		$this->fail( "exception was not thrown" );
-	}
-
-	/**
-	 * @expectedException	\Wikia\Service\UnauthorizedException
-	 */
-	public function testSetWithUnauthorizedError() {
-		$this->gatewayMock->expects( $this->exactly( 0 ) )
-			->method( 'save' )
-			->with( $this->userId, [$this->testPreference] )
-			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
-		$this->gatewayMock->expects( $this->once() )
-			->method( 'getWikiaUserId' )
-			->willReturn( $this->userId + 1 );
 
 		$service = new Preference( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
@@ -90,9 +66,6 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->willReturn( [
 			[ $this->testPreference->getName() => $this->testPreference->getValue() ]
 			] );
-		$this->gatewayMock->expects( $this->once() )
-			->method( 'getWikiaUserId' )
-			->willReturn( $this->userId );
 
 		$service = new Preference( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
@@ -105,9 +78,6 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->method( 'get' )
 			->with( $this->userId )
 			->willReturn( false );
-		$this->gatewayMock->expects( $this->once() )
-			->method( 'getWikiaUserId' )
-			->willReturn( $this->userId );
 
 		$service = new Preference( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
@@ -116,33 +86,11 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( empty($preferences), "expecting an empty array" );
 	}
 
-
-	/**
-	 * @expectedException	\Wikia\Service\UnauthorizedException
-	 */
-	public function testGetWithUnauthorizedError() {
-		$this->gatewayMock->expects( $this->exactly( 0 ) )
-			->method( 'get' )
-			->with( $this->userId )
-			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
-		$this->gatewayMock->expects( $this->once() )
-			->method( 'getWikiaUserId' )
-			->willReturn( $this->userId + 1 );
-
-		$service = new Preference( $this->gatewayMock );
-		$ret = $service->getPreferences( $this->userId );
-
-		$this->fail( "exception was not thrown" );
-	}
-
 	public function testEmptyGet() {
 		$this->gatewayMock->expects( $this->exactly( 1 ) )
 			->method( 'get' )
 			->with( $this->userId )
 			->willReturn( [] );
-		$this->gatewayMock->expects( $this->once() )
-			->method( 'getWikiaUserId' )
-			->willReturn( $this->userId );
 
 		$service = new Preference( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );

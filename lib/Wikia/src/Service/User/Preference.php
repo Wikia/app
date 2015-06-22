@@ -35,14 +35,10 @@ class Preference implements PreferenceService {
 			return false;
 		}
 
-		$this->authenticateUser( $userId );
-
 		return $this->gateway->save( $userId, $preferences );
 	}
 
 	public function getPreferences( $userId ) {
-		$this->authenticateUser( $userId );
-
 		$result = $this->gateway->get( $userId );
 		if (!is_array($result)) {
 			return [];
@@ -51,15 +47,6 @@ class Preference implements PreferenceService {
 		$preferences = $this->gatewayResultToPreferenceArray( $result );
 
 		return $preferences;
-	}
-
-	protected function authenticateUser( $userId ) {
-		// Arguably this doesn't belong here. Until we have a better understanding of how this currently
-		// works we should at least ensure that the service does not get a request that we know it can't
-		// handle
-		if ( $userId !== $this->gateway->getWikiaUserId() ) {
-			throw new \Wikia\Service\UnauthorizedException( "Unauthorized to set preferences." );
-		}
 	}
 
 	public function gatewayResultToPreferenceArray(array $result) {
