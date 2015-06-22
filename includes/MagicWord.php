@@ -197,7 +197,12 @@ class MagicWord {
 	);
 
 	static public $mObjects = array();
+
 	static public $mDoubleUnderscoreArray = null;
+
+	static public $mWhitelistedIDs = [
+		'flags',
+	];
 
 	/**#@-*/
 
@@ -266,7 +271,17 @@ class MagicWord {
 	 */
 	static function getDoubleUnderscoreArray() {
 		if ( is_null( self::$mDoubleUnderscoreArray ) ) {
-			self::$mDoubleUnderscoreArray = new MagicWordArray( self::$mDoubleUnderscoreIDs );
+			self::$mDoubleUnderscoreArray = new MagicWordArray(
+				/**
+				 * Wikia change begin
+				 *
+				 * Allow different behavior for some magic words from a white list
+				 */
+				array_diff( self::$mDoubleUnderscoreIDs, self::$mWhitelistedIDs )
+				/**
+				 * Wikia change end
+				 */
+			);
 		}
 		return self::$mDoubleUnderscoreArray;
 	}
