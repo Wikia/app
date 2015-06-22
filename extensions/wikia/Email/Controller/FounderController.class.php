@@ -2,6 +2,7 @@
 
 namespace Email\Controller;
 
+use Email;
 use Email\Check;
 use Email\EmailController;
 use Email\Tracking\TrackingCategories;
@@ -328,5 +329,9 @@ class FounderNewMemberController extends FounderController {
 
 	protected function getFooterMessages() {
 		// noop
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		return EmailController::getEmailSpecificFormFields();
 	}
 }
