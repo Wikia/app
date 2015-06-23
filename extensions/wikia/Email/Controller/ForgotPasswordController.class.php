@@ -56,12 +56,4 @@ class ForgotPasswordController extends EmailController {
 	protected function getDetails() {
 		return $this->getMessage( 'emailext-password-details' )->text();
 	}
-
-	protected function getContentFooterMessages() {
-		$contactUrl = '';
-		return [
-			$this->getMessage( 'emailext-password-footer-1', $contactUrl )->parse(),
-			$this->getMessage( 'emailext-password-footer-2' )->escaped(),
-		];
-	}
 }
