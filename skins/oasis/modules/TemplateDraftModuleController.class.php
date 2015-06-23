@@ -6,5 +6,11 @@ class TemplateDraftModuleController extends WikiaController {
 		$this->wg->Out->addStyle(
 			AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/modules/TemplateDraftModule.scss" )
 		);
+
+		/**
+		 * TODO: Make a better URL composing script
+		 */
+		$title = $this->app->wg->Title;
+		$this->draftUrl = $title->getFullURL() . '/Draft?action=edit';
 	}
 }
