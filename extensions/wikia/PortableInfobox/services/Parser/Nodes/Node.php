@@ -11,7 +11,6 @@ class Node {
 	const DEFAULT_TAG_NAME = 'default';
 	const FORMAT_TAG_NAME = 'format';
 	const LABEL_TAG_NAME = 'label';
-	const VALUE_TAG_NAME = 'value';
 	const EXTRACT_SOURCE_REGEX = '/{{{([^\|}]*?)\|?.*}}}/sU';
 
 	protected $xmlNode;
