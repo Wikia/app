@@ -10,5 +10,7 @@ return array(
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'PhpAmqpLib' => array($vendorDir . '/videlalvaro/php-amqplib'),
+    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
+    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     '' => array($vendorDir . '/cssjanus/cssjanus/src'),
 );
