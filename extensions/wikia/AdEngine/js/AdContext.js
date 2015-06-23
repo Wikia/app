@@ -74,16 +74,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
-		// OpenX
-		if (context.forcedAdProvider === 'openx') {
-			context.providers.openx = true;
-		}
-
-		// Liftium
-		if (context.forcedAdProvider === 'liftium') {
-			context.providers.liftium = true;
-		}
-
 		if (instantGlobals.wgAdDriverTurtleCountries &&
 				instantGlobals.wgAdDriverTurtleCountries.indexOf &&
 				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1
