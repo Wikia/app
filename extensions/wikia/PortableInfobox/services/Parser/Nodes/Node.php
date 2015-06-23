@@ -12,6 +12,7 @@ class Node {
 	const FORMAT_TAG_NAME = 'format';
 	const LABEL_TAG_NAME = 'label';
 	const VALUE_TAG_NAME = 'value';
+	const EXTRACT_SOURCE_REGEX = '/{{{([^\|}]*?)\|?.*}}}/sU';
 
 	protected $xmlNode;
 	protected $children;
@@ -227,16 +228,17 @@ class Node {
 		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ? [$this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME )] : [];
 
 		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
-			preg_match_all( '/{{{([^\|}]*?)\|?.*}}}/sU', (string)$xmlNode->{self::FORMAT_TAG_NAME}, $sources );
-
-			$source = array_unique( array_merge( $source, $sources[ 1 ] ) );
+			$source = $this->matchVariables( $xmlNode->{self::FORMAT_TAG_NAME}, $source );
 		}
 		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
-			preg_match_all( '/{{{([^\|}]*?)\|?.*}}}/sU', (string)$xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
-
-			$source = array_unique( array_merge( $source , $sources[ 1 ] ) );
+			$source = $this->matchVariables( $xmlNode->{self::DEFAULT_TAG_NAME}, $source );
 		}
 
 		return $source;
+	}
+
+	protected function matchVariables( \SimpleXMLElement $node, array $source ) {
+		preg_match_all( self::EXTRACT_SOURCE_REGEX, (string)$node, $sources );
+		return array_unique( array_merge( $source , $sources[ 1 ] ) );
 	}
 }
