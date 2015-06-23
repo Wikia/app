@@ -83,6 +83,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		if (!extra.sraEnabled || sraHelper.shouldFlush(slotName)) {
 			googleTag.flush();
 		}
+
+		if (slotTargeting.flushOnly) {
+			callSuccess();
+		}
 	}
 
 	adContext.addCallback(function () {

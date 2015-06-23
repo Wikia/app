@@ -49,7 +49,8 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			'INVISIBLE_SKIN',
 			'CORP_TOP_RIGHT_BOXAD',
 			'TOP_RIGHT_BOXAD',
-			'HOME_TOP_RIGHT_BOXAD'
+			'HOME_TOP_RIGHT_BOXAD',
+			'GPT_FLUSH'
 		],
 		provider = factory.createProvider(
 			logGroup,
