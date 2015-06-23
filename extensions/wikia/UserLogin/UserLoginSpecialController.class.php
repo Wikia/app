@@ -639,18 +639,42 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
+	/**
+	 * Given a message key and any params for that key (exactly the same signature as wfMessage),
+	 * set the error response for this request
+	 *
+	 * @param array ...$params The first element of this array will always be the message key
+	 */
 	private function setErrorResponse( ...$params ) {
 		$this->setResponseGeneric( 'error', 'escaped', $params );
 	}
 
+	/**
+	 * Same as setErrorResponse except the message key is parsed for wikitext
+	 *
+	 * @param array ...$params The first element of this array will always be the message key
+	 */
 	private function setParsedErrorResponse( ...$params ) {
 		$this->setResponseGeneric( 'error', 'parse', $params );
 	}
 
+	/**
+	 * Given a message key and any params for that key (exactly the same signature as wfMessage),
+	 * set a success response for this request
+	 *
+	 * @param array ...$params The first element of this array will always be the message key
+	 */
 	private function setSuccessResponse( ...$params ) {
 		$this->setResponseGeneric( 'ok', 'escaped', $params );
 	}
 
+	/**
+	 * Set a success or fail status for the request.
+	 *
+	 * @param string $result This is the status code ("ok" or "error") for the request
+	 * @param callable $postProcess This is the method to call to stringify the message key
+	 * @param array $params Any params to be passed to wfMessage for the key given
+	 */
 	private function setResponseGeneric( $result, $postProcess, $params ) {
 		$msg = call_user_func_array( 'wfMessage', $params )->$postProcess();
 
