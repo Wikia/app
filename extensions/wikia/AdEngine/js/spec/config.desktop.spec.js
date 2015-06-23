@@ -76,7 +76,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 						opts: mocks.getAdContextOpts(),
 						targeting: mocks.getAdContextTargeting(),
 						providers: mocks.getAdContextProviders(),
-						forcedAdProvider: null
+						forcedProvider: null
 					};
 				}
 			},

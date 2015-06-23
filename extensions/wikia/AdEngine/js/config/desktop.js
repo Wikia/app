@@ -68,12 +68,12 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		// Force OpenX
-		if (context.forcedAdProvider === 'openx') {
+		if (context.forcedProvider === 'openx') {
 			log(['getProvider', slotName, 'OpenX (wgAdDriverForceOpenXAd)'], 'info', logGroup);
 			return [adProviderOpenX];
 		}
 
-		if (context.forcedAdProvider === 'liftium') {
+		if (context.forcedProvider === 'liftium') {
 			return [adProviderLiftium];
 		}
 
