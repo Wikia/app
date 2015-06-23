@@ -4404,29 +4404,14 @@ class User {
 			}
 		} else {
 			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
-			// Load from database
-			// wikia change, load always from first cluster when we use
-			// shared users database
-			// @author Krzysztof Krzyżaniak (eloy)
-			global $wgExternalSharedDB, $wgSharedDB;
-			if( isset( $wgSharedDB ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			}
-			else {
-				$dbr = wfGetDB( DB_SLAVE );
-			}
 
-			$res = $dbr->select(
-				'user_properties',
-				'*',
-				array( 'up_user' => $this->getId() ),
-				__METHOD__
-			);
+			// SERVICES-442
+			$preferences = $preferenceService->getPreferences($this->getId());
 
 			$this->mOptionOverrides = array();
-			foreach ( $res as $row ) {
-				$this->mOptionOverrides[$row->up_property] = $row->up_value;
-				$this->mOptions[$row->up_property] = $row->up_value;
+			foreach ( $preferences as $preference ) {
+				$this->mOptionOverrides[$preference->getName()] = $preference->getValue();
+				$this->mOptions[$preference->getName()] = $preference->getValue();
 			}
 		}
 
