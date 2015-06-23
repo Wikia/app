@@ -224,13 +224,19 @@ class Node {
 	 *
 	 */
 	protected function extractSourceFromNode( \SimpleXMLElement $xmlNode ) {
-		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME );
+		$source = $this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME ) ? [$this->getXmlAttribute( $xmlNode, self::DATA_SRC_ATTR_NAME )] : [];
+
+		if ( $xmlNode->{self::FORMAT_TAG_NAME} ) {
+			preg_match_all( '/{{{([^\|}]*?)\|?.*}}}/sU', (string)$xmlNode->{self::FORMAT_TAG_NAME}, $sources );
+
+			$source = array_unique( array_merge( $source, $sources[ 1 ] ) );
+		}
 		if ( $xmlNode->{self::DEFAULT_TAG_NAME} ) {
 			preg_match_all( '/{{{([^\|}]*?)\|?.*}}}/sU', (string)$xmlNode->{self::DEFAULT_TAG_NAME}, $sources );
 
-			return $source ? array_unique( array_merge( [ $source ], $sources[ 1 ] ) ) : array_unique( $sources[ 1 ] );
+			$source = array_unique( array_merge( $source , $sources[ 1 ] ) );
 		}
 
-		return $source ? [ $source ] : [ ];
+		return $source;
 	}
 }
