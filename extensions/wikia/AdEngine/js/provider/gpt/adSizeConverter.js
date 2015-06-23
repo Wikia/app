@@ -51,5 +51,5 @@ define('ext.wikia.adEngine.provider.gpt.adSizeConverter', [
 
 	return {
 		convert: convertSize
-	}
+	};
 });

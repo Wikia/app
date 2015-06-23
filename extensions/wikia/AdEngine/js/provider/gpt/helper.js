@@ -1,4 +1,4 @@
-/*global define,setTimeout*/
+/*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
 	'wikia.log',
@@ -81,6 +81,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		if (!extra.sraEnabled || sraHelper.shouldFlush(slotName)) {
+			log('flushing', 'debug', logGroup);
 			googleTag.flush();
 		}
 

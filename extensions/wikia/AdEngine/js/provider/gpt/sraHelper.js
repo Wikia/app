@@ -1,4 +1,4 @@
-/*global define,setTimeout*/
+/*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 	'wikia.log'
@@ -27,5 +27,5 @@ define('ext.wikia.adEngine.provider.gpt.sraHelper', [
 
 	return {
 		shouldFlush: shouldFlush
-	}
+	};
 });
