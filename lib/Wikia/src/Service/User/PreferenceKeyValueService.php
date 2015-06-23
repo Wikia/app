@@ -40,16 +40,16 @@ class PreferenceKeyValueService implements PreferenceService {
 
 	public function getPreferences( $userId ) {
 		$preferences = $this->persistenceAdapter->get( $userId );
-		if (!is_array($preferences)) {
+		if ( !is_array( $preferences ) ) {
 			return [];
 		}
 
-		$filtered = array_filter($preferences, function($v, $k) {
-			return ($v instanceof Preference);
-		}, ARRAY_FILTER_USE_BOTH);
+		$filtered = array_filter( $preferences, function( $v, $k ) {
+			return ( $v instanceof Preference );
+		} , ARRAY_FILTER_USE_BOTH );
 
-		if (count($filtered) != count($preferences)) {
-			 throw new \UnexpectedValueException("Error, expected all \"Preference\" objects.");
+		if ( count( $filtered ) != count( $preferences ) ) {
+			 throw new \UnexpectedValueException( "Error, expected all \"Preference\" objects." );
 		}
 
 		return $preferences;

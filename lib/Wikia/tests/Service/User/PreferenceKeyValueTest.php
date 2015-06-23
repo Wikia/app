@@ -69,7 +69,7 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
-		$this->assertTrue( is_array($preferences), "expecting an array" );
+		$this->assertTrue( is_array( $preferences ), "expecting an array" );
 		$this->assertEquals( $this->testPreference, $preferences[0], "expecting an array" );
 	}
 
@@ -82,8 +82,8 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
-		$this->assertTrue( is_array($preferences), "expecting an array" );
-		$this->assertTrue( empty($preferences), "expecting an empty array" );
+		$this->assertTrue( is_array( $preferences ), "expecting an array" );
+		$this->assertTrue( empty( $preferences ), "expecting an empty array" );
 	}
 
 	public function testEmptyGet() {
@@ -95,8 +95,8 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
-		$this->assertTrue( is_array($preferences), "expecting an array" );
-		$this->assertTrue( empty($preferences), "expecting an empty array" );
+		$this->assertTrue( is_array( $preferences ), "expecting an array" );
+		$this->assertTrue( empty( $preferences ), "expecting an empty array" );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
-		$this->fail("we should not make it here");
+		$this->fail( "we should not make it here" );
 	}
 
 }
