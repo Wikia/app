@@ -74,7 +74,8 @@ class AssetsManagerController extends WikiaController {
 			wfProfileIn( $profileId );
 
 			$key = $this->getComponentMemcacheKey( $styles );
-			$data = $this->wg->Memc->get( $key );
+			$data = '';
+//			$data = $this->wg->Memc->get( $key );
 
 			if ( empty( $data ) ) {
 				$styleFiles = explode( ',', $styles );
