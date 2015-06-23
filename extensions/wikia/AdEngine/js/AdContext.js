@@ -69,11 +69,6 @@ define('ext.wikia.adEngine.adContext', [
 				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
-		// Turtle
-		if (context.forcedProvider === 'turtle') {
-			context.providers.turtle = true;
-		}
-
 		if (instantGlobals.wgAdDriverTurtleCountries &&
 				instantGlobals.wgAdDriverTurtleCountries.indexOf &&
 				instantGlobals.wgAdDriverTurtleCountries.indexOf(geo.getCountryCode()) > -1

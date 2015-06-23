@@ -34,7 +34,12 @@ describe('AdContext', function () {
 				getVal: noop
 			},
 			callback: noop
-		};
+		},
+		queryParams = [
+			'liftium',
+			'openx',
+			'turtle'
+		];
 
 	it(
 		'fills getContext() with context, targeting, providers and forcedProvider ' +
@@ -246,19 +251,21 @@ describe('AdContext', function () {
 		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
 
-	it('forces turtle provider if the query parameter set', function () {
+	it('query param is being passed to the adContext properly', function () {
 		spyOn(mocks.querystring, 'getVal');
-		var adContext;
 
-		mocks.win = {};
-		mocks.instantGlobals = {};
-		mocks.querystring.getVal.and.returnValue('turtle');
+		Object.keys(queryParams).forEach(function (k) {
+			var adContext;
 
-		adContext = getModule();
-		expect(mocks.querystring.getVal).toHaveBeenCalled();
+			mocks.win = {};
+			mocks.instantGlobals = {};
+			mocks.querystring.getVal.and.returnValue(queryParams[k]);
 
-		adContext = adContext.getContext();
-		expect(adContext.forcedProvider).toEqual('turtle');
-		expect(adContext.providers.turtle).toBeTruthy();
+			adContext = getModule();
+			expect(mocks.querystring.getVal).toHaveBeenCalled();
+
+			adContext = adContext.getContext();
+			expect(adContext.forcedProvider).toEqual(queryParams[k]);
+		});
 	});
 });

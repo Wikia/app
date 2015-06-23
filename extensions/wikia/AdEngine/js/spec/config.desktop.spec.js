@@ -23,10 +23,21 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			},
 			getAdContextTargeting: returnEmpty,
 			getAdContextProviders: returnEmpty,
+			getAdContextForcedProvider: returnEmpty,
 			getInstantGlobals: returnEmpty,
 			getUserAgent: noop,
 			geo: {
 				getCountryCode: noop
+			},
+			adsContext: {
+				getContext: function () {
+					return {
+						opts: mocks.getAdContextOpts(),
+						targeting: mocks.getAdContextTargeting(),
+						providers: mocks.getAdContextProviders(),
+						forcedProvider: mocks.getAdContextForcedProvider()
+					};
+				}
 			},
 			log: noop,
 			providers: {
@@ -62,6 +73,11 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					name: 'turtle'
 				}
 			}
+		},
+		forcedProvidersMap = {
+			'liftium': mocks.providers.liftium.name,
+			'openx': mocks.providers.openX.name,
+			'turtle': mocks.providers.turtle.name
 		};
 
 	function getModule() {
@@ -70,16 +86,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			{navigator: {userAgent: mocks.getUserAgent()}},
 			mocks.getInstantGlobals(),
 			mocks.geo,
-			{
-				getContext: function () {
-					return {
-						opts: mocks.getAdContextOpts(),
-						targeting: mocks.getAdContextTargeting(),
-						providers: mocks.getAdContextProviders(),
-						forcedProvider: null
-					};
-				}
-			},
+			mocks.adsContext,
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.evolve,
 			mocks.providers.directGpt,
@@ -219,5 +226,14 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	it('any country, OpenX on but cannot handle slot: Direct, Remnant, Liftium', function () {
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({openX: true});
 		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+	});
+
+	it('returns correct providers depending on forcedProvider', function () {
+		spyOn(mocks, 'getAdContextForcedProvider');
+
+		Object.keys(forcedProvidersMap).forEach(function (k) {
+			mocks.getAdContextForcedProvider.and.returnValue(k);
+			expect(getProviders('foo')).toEqual(forcedProvidersMap[k]);
+		});
 	});
 });

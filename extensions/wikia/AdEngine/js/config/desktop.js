@@ -67,13 +67,21 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [];
 		}
 
+		// Force Turtle
+		if (context.forcedProvider === 'turtle') {
+			log(['getProvider', slotName, 'Turtle (wgAdDriverForcedProvider)'], 'info', logGroup);
+			return [adProviderTurtle];
+		}
+
 		// Force OpenX
 		if (context.forcedProvider === 'openx') {
-			log(['getProvider', slotName, 'OpenX (wgAdDriverForceOpenXAd)'], 'info', logGroup);
+			log(['getProvider', slotName, 'OpenX (wgAdDriverForcedProvider)'], 'info', logGroup);
 			return [adProviderOpenX];
 		}
 
+		// Force Liftium
 		if (context.forcedProvider === 'liftium') {
+			log(['getProvider', slotName, 'Liftium (wgAdDriverForcedProvider)'], 'info', logGroup);
 			return [adProviderLiftium];
 		}
 
