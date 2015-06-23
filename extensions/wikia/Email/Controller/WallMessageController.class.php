@@ -18,6 +18,8 @@ abstract class WallMessageController extends EmailController {
 	/** @var \Title */
 	protected $wallTitle;
 	protected $authorUserName;
+	/** @var \Title */
+	protected $wallMessageTitle;
 
 	/**
 	 * Get the summary text immediately following the salutation in the email
@@ -43,6 +45,7 @@ abstract class WallMessageController extends EmailController {
 		$this->titleUrl = $this->request->getVal( 'titleUrl' );
 		$this->titleText = $this->request->getVal( 'titleText' );
 		$this->details = $this->request->getVal( 'details' );
+		$this->wallMessageTitle = \Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE );
 
 		$this->assertMessageDetails();
 	}
@@ -125,19 +128,19 @@ abstract class WallMessageController extends EmailController {
 					'type' => 'text',
 					'name' => 'wallUserName',
 					'label' => 'Wall Username',
-					'tooltip' => 'Name of the board, eg <wikiName>.wikia.com/wiki/Board:<wallUserName>'
+					'tooltip' => 'Name of the board, eg <wikiName>.wikia.com/wiki/Message_Wall:<wallUserName>'
 				],
 				[
 					'type' => 'text',
 					'name' => 'titleUrl',
 					'label' => 'Title URL',
-					'tooltip' => 'URL of the specific forum thread, eg http://community.wikia.com/wiki/Thread:841030#2'
+					'tooltip' => 'URL of the specific wall thread, eg http://community.wikia.com/wiki/Thread:8410302'
 				],
 				[
 					'type' => 'text',
 					'name' => 'titleText',
 					'label' => 'Title Text',
-					'tooltip' => 'The title of the forum thread, eg "Changing the Font Size of Headings" from Title URL listed above'
+					'tooltip' => 'The title of the wall thread, eg "Changing the Font Size of Headings" from Title URL listed above'
 				],
 				[
 					'type' => 'text',
@@ -149,7 +152,7 @@ abstract class WallMessageController extends EmailController {
 					'type' => 'text',
 					'name' => 'threadId',
 					'label' => 'Thread ID',
-					'tooltip' => 'Message thread ID'
+					'tooltip' => 'Message thread ID, eg. http://community.wikia.com/wiki/Thread:<threadId>'
 				],
 			]
 		];
@@ -167,7 +170,7 @@ class OwnWallMessageController extends WallMessageController {
 	 */
 	protected function getSummary() {
 		return $this->getMessage( 'emailext-wallmessage-owned-summary',
-			\Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE )->getFullURL(),
+			$this->wallMessageTitle->getFullURL(),
 			$this->titleText
 		)->parse();
 	}
@@ -183,14 +186,6 @@ class OwnWallMessageController extends WallMessageController {
 }
 
 class ReplyWallMessageController extends OwnWallMessageController {
-	/** @var \Title */
-	protected $title;
-
-	public function initEmail() {
-		parent::initEmail();
-
-		$this->title = \Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE );
-	}
 
 	/**
 	 * Get the summary text immediately following the salutation in the email
@@ -199,7 +194,7 @@ class ReplyWallMessageController extends OwnWallMessageController {
 	 */
 	protected function getSummary() {
 		return $this->getMessage( 'emailext-wallmessage-reply-summary',
-			\Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE )->getFullURL(),
+			$this->wallMessageTitle->getFullURL(),
 			$this->titleText
 		)->parse();
 	}
@@ -214,12 +209,12 @@ class ReplyWallMessageController extends OwnWallMessageController {
 	}
 
 	protected function getFooterMessages() {
-		$unwatchUrl = $this->title->getFullURL( [
+		$unwatchUrl = $this->wallMessageTitle->getFullURL( [
 			'action' => 'unwatch'
 		] );
 
 		$footerMessages = [
-			$this->getMessage( 'emailext-unfollow-text', $unwatchUrl, $this->title->getPrefixedText() )
+			$this->getMessage( 'emailext-unfollow-text', $unwatchUrl, $this->wallMessageTitle->getPrefixedText() )
 				->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
@@ -236,7 +231,7 @@ class FollowedWallMessageController extends WallMessageController {
 	protected function getSummary() {
 		return $this->getMessage( 'emailext-wallmessage-following-summary',
 			$this->wallUserName,
-			\Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE )->getFullURL(),
+			$this->wallMessageTitle->getFullURL(),
 			$this->titleText
 		)->parse();
 	}
