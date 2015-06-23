@@ -12,12 +12,7 @@ abstract class FounderDigestController extends EmailController {
 	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
 	protected $wikiId;
-
 	protected $pageViews;
-
-	protected $pageEdits;
-
-	protected $newUsers;
 
 	public function initEmail() {
 		$this->wikiId = $this->request->getVal( 'wikiId' );
@@ -96,6 +91,9 @@ abstract class FounderDigestController extends EmailController {
 class FounderActivityDigestController extends FounderDigestController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
+
+	protected $pageEdits;
+	protected $newUsers;
 
 	public function initEmail() {
 		$this->pageEdits = $this->request->getVal( 'pageEdits' );
