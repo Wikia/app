@@ -1,7 +1,7 @@
 <?php
 
 namespace Wikia\Service\User;
-use Wikia\Domain\User\PreferenceValue;
+use Wikia\Domain\User\Preference;
 
 class PreferenceTest extends \PHPUnit_Framework_TestCase {
 
@@ -10,7 +10,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 	protected $gatewayMock;
 
 	protected function setUp() {
-		$this->testPreference = new PreferenceValue( "pref-name", "pref-value" );
+		$this->testPreference = new Preference( "pref-name", "pref-value" );
 		$this->gatewayMock = $this->getMockBuilder( '\Wikia\Service\User\PreferencePersistence' )
 			->setMethods( ['save', 'get'] )
 			->disableOriginalConstructor()
@@ -24,7 +24,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, [$this->testPreference] )
 			->willReturn( true );
 
-		$service = new Preference( $this->gatewayMock );
+		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->assertTrue( $ret, "the preference was not set" );
@@ -36,7 +36,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, [] )
 			->willReturn( null );
 
-		$service = new Preference( $this->gatewayMock );
+		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ ] );
 
 		$this->assertFalse( $ret, "expected false when providing an empty preference set" );
@@ -52,7 +52,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, [$this->testPreference] )
 			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
 
-		$service = new Preference( $this->gatewayMock );
+		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->fail( "exception was not thrown" );
@@ -67,7 +67,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			[ $this->testPreference->getName() => $this->testPreference->getValue() ]
 			] );
 
-		$service = new Preference( $this->gatewayMock );
+		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
 		$this->assertTrue( is_array($preferences), "expecting an array" );
@@ -79,7 +79,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId )
 			->willReturn( false );
 
-		$service = new Preference( $this->gatewayMock );
+		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
 		$this->assertTrue( is_array($preferences), "expecting an array" );
@@ -92,7 +92,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId )
 			->willReturn( [] );
 
-		$service = new Preference( $this->gatewayMock );
+		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
 		$this->assertTrue( is_array($preferences), "expecting an array" );

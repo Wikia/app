@@ -20,9 +20,9 @@
  */
 namespace Wikia\Service\User;
 
-use Wikia\Domain\User\PreferenceValue;
+use Wikia\Domain\User\Preference;
 
-class Preference implements PreferenceService {
+class PreferenceKeyValueService implements PreferenceService {
 
 	private $gateway;
 
@@ -53,7 +53,7 @@ class Preference implements PreferenceService {
 		$preferences = [];
 		foreach( $result as $index => $row ) {
 			if (isset($row["name"]) && isset($row["value"])) {
-				$preferences[] = new Preference($row["name"], $row["value"]);
+				$preferences[] = new PreferenceKeyValueService($row["name"], $row["value"]);
 			}
 		}
 

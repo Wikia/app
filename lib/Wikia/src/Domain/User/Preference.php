@@ -2,7 +2,7 @@
 
 namespace Wikia\Domain\User;
 
-class PreferenceValue {
+class Preference {
 
 	private $name;
 	private $value;
