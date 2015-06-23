@@ -635,21 +635,20 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
 			$this->setSuccessResponse( 'userlogin-password-email-sent', $loginForm->mUsername );
 		} else {
-			echo "DATA ERROR RESULT: ".$data['msg']."\n";
 			$this->setParsedErrorResponse( 'userlogin-error-mail-error' );
 		}
 	}
 
-	private function setErrorResponse() {
-		$this->setResponseGeneric( 'error', 'escaped', func_get_args() );
+	private function setErrorResponse( ...$params ) {
+		$this->setResponseGeneric( 'error', 'escaped', $params );
 	}
 
-	private function setParsedErrorResponse( $key ) {
-		$this->setResponseGeneric( 'error', 'parse', func_get_args() );
+	private function setParsedErrorResponse( ...$params ) {
+		$this->setResponseGeneric( 'error', 'parse', $params );
 	}
 
-	private function setSuccessResponse( $key ) {
-		$this->setResponseGeneric( 'ok', 'escaped', func_get_args() );
+	private function setSuccessResponse( ...$params ) {
+		$this->setResponseGeneric( 'ok', 'escaped', $params );
 	}
 
 	private function setResponseGeneric( $result, $postProcess, $params ) {
