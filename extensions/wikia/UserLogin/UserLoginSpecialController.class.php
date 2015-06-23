@@ -626,17 +626,37 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$userService = new \UserService();
 		$tempPass = $userService->resetPassword( $user );
 
-		F::app()->sendRequest( '\Email\Controller\ForgotPassword', 'handle', [
+		$resp = F::app()->sendRequest( 'Email\Controller\ForgotPassword', 'handle', [
 			'targetUser' => $user,
 			'tempPass' => $tempPass,
 		] );
+
+		$data = $resp->getData();
+		if ( !empty( $data['result'] ) && $data['result'] == 'ok' ) {
+			$this->setSuccessResponse( 'userlogin-password-email-sent', $loginForm->mUsername );
+		} else {
+			echo "DATA ERROR RESULT: ".$data['msg']."\n";
+			$this->setParsedErrorResponse( 'userlogin-error-mail-error' );
+		}
 	}
 
-	private function setErrorResponse( $key ) {
-		$msg = call_user_func_array( 'wfMessage', func_get_args() )->escaped();
+	private function setErrorResponse() {
+		$this->setResponseGeneric( 'error', 'escaped', func_get_args() );
+	}
+
+	private function setParsedErrorResponse( $key ) {
+		$this->setResponseGeneric( 'error', 'parse', func_get_args() );
+	}
+
+	private function setSuccessResponse( $key ) {
+		$this->setResponseGeneric( 'ok', 'escaped', func_get_args() );
+	}
+
+	private function setResponseGeneric( $result, $postProcess, $params ) {
+		$msg = call_user_func_array( 'wfMessage', $params )->$postProcess();
 
 		$this->response->setData([
-			'result' => 'error',
+			'result' => $result,
 			'msg' => $msg,
 		] );
 	}
