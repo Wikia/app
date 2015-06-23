@@ -86,11 +86,15 @@ class AssetsManagerController extends WikiaController {
 					wfDebug('kamilktestlog 2'.__METHOD__."\n");
 					if ( !is_null( $builder ) ) {
 						if ( $this->app->checkSkin( 'oasis' ) ) {
-							$this->error(__METHOD__,['context'=>'kamilktest', 'data'=>json_encode(SassUtil::getOasisSettings())]);
+							$this->error(__METHOD__."foreach-beg",['context'=>'kamilktest']);
+							$this->error(__METHOD__."foreach-data",['context'=>'kamilktest', 'data'=>json_encode(SassUtil::getOasisSettings())]);
+							$this->error(__METHOD__."foreach-data",['context'=>'kamilktest', 'dataaaa'=>json_encode(SassUtil::getOasisSettings())]);
+							$this->error(__METHOD__."foreach-data2".json_encode(SassUtil::getOasisSettings()),['context'=>'kamilktest']);
 							wfDebug('kamilktestlog '.print_r(SassUtil::getOasisSettings(),true)."\n");
 							$params = SassUtil::getOasisSettings();
 							$params['color-page'] = '#ff0000';
 							$builder->addParams( $params );
+							$this->error(__METHOD__."foreach-end",['context'=>'kamilktest']);
 						}
 						$data .= $builder->getContent();
 					}
