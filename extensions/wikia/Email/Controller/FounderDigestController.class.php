@@ -11,15 +11,18 @@ abstract class FounderDigestController extends EmailController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
 	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
+	/** @var \Language */
+	protected $language;
 	protected $wikiId;
 	protected $pageViews;
 
 	public function initEmail() {
+		$this->language = \Language::factory( $this->targetLang );
 		$this->wikiId = $this->request->getVal( 'wikiId' );
 		$this->pageViews = $this->request->getVal( 'pageViews' );
 		$this->assertValidParams();
 
-		$this->pageViews = number_format( $this->pageViews );
+		$this->pageViews = $this->language->formatNum( $this->pageViews );
 	}
 
 	protected function getSummary() {
@@ -100,8 +103,8 @@ class FounderActivityDigestController extends FounderDigestController {
 		$this->newUsers = $this->request->getVal( 'newUsers' );
 		// Parent method is called here so that assertion of parameters is done at the right time
 		parent::initEmail();
-		$this->pageEdits = number_format( $this->pageEdits );
-		$this->newUsers = number_format( $this->newUsers );
+		$this->pageEdits = $this->language->formatNum( $this->pageEdits );
+		$this->newUsers = $this->language->formatNum( $this->newUsers );
 	}
 
 	protected function getSubject() {
