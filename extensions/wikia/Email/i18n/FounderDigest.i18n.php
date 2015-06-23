@@ -2,7 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-founder-activity-digest-subject' => 'The lastest activity on {{SITENAME}}',
+	'emailext-founder-activity-digest-subject' => 'The latest activity on {{SITENAME}}',
 	'emailext-founder-views-digest-subject' => "Today's views on {{SITENAME}}",
 	'emailext-founder-digest-summary' => "It's time for your daily dose of activity from {{SITENAME}}.",
 	'emailext-founder-activity-digest-link-label' => 'Recent Wikia Activity',
