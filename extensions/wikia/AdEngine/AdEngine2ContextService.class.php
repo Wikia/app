@@ -73,7 +73,7 @@ class AdEngine2ContextService {
 					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
-				'forcedAdProvider' => $wg->AdDriverForcedProvider
+				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
 		} );
 	}

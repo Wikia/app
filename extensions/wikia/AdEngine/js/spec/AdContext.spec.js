@@ -34,15 +34,10 @@ describe('AdContext', function () {
 				getVal: noop
 			},
 			callback: noop
-		},
-		forcedAdProviders = [
-		'openx',
-		'turtle',
-		'liftium'
-	];
+		};
 
 	it(
-		'fills getContext() with context, targeting, providers and forcedAdProvider ' +
+		'fills getContext() with context, targeting, providers and forcedProvider ' +
 		'even for empty (or missing) ads.context',
 		function () {
 			var adContext = getModule();
@@ -50,14 +45,14 @@ describe('AdContext', function () {
 			expect(adContext.getContext().opts).toEqual({});
 			expect(adContext.getContext().targeting).toEqual({});
 			expect(adContext.getContext().providers).toEqual({});
-			expect(adContext.getContext().forcedAdProvider).toEqual(null);
+			expect(adContext.getContext().forcedProvider).toEqual(null);
 
 			mocks.win = {ads: {context: {}}};
 			adContext = getModule();
 			expect(adContext.getContext().opts).toEqual({});
 			expect(adContext.getContext().targeting).toEqual({});
 			expect(adContext.getContext().providers).toEqual({});
-			expect(adContext.getContext().forcedAdProvider).toEqual(null);
+			expect(adContext.getContext().forcedProvider).toEqual(null);
 		}
 	);
 
@@ -251,22 +246,19 @@ describe('AdContext', function () {
 		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
 
-	it('forces provider if the query parameter set', function () {
+	it('forces turtle provider if the query parameter set', function () {
 		spyOn(mocks.querystring, 'getVal');
+		var adContext;
 
-		Object.keys(forcedAdProviders).forEach(function (k) {
-			var adContext;
+		mocks.win = {};
+		mocks.instantGlobals = {};
+		mocks.querystring.getVal.and.returnValue('turtle');
 
-			mocks.win = {};
-			mocks.instantGlobals = {};
-			mocks.querystring.getVal.and.returnValue(forcedAdProviders[k]);
+		adContext = getModule();
+		expect(mocks.querystring.getVal).toHaveBeenCalled();
 
-			adContext = getModule();
-			expect(mocks.querystring.getVal).toHaveBeenCalled();
-
-			adContext = adContext.getContext();
-			expect(adContext.forcedAdProvider).toEqual(forcedAdProviders[k]);
-			expect(adContext.providers[forcedAdProviders[k]]).toBeTruthy();
-		});
+		adContext = adContext.getContext();
+		expect(adContext.forcedProvider).toEqual('turtle');
+		expect(adContext.providers.turtle).toBeTruthy();
 	});
 });

@@ -66,7 +66,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'expectedOpts' => [],
 				'expectedTargeting' => [],
 				'expectedProviders' => [],
-				'expectedForceProviders' => 'turtle'
+				'expectedForcedProvider' => 'turtle'
 			],
 			[
 				'titleMockType' => 'article',
@@ -175,7 +175,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$expectedOpts = [],
 		$expectedTargeting = [],
 		$expectedProviders = [],
-		$expectedForcedAdProvider = null,
+		$expectedForcedProvider = null,
 		$expectedSlots = []
 	) {
 		$langCode = 'xx';
@@ -202,14 +202,13 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgDBname', $dbName );
 		$this->mockGlobalVariable( 'wgAdDriverSevenOneMediaOverrideSub2Site', $sevenOneMediaSub2Site );
 
-		if ( !is_null( $expectedForcedAdProvider ) ) {
-			$this->mockGlobalVariable( 'wgAdDriverForcedProvider', $expectedForcedAdProvider );
+		if ( !is_null( $expectedForcedProvider ) ) {
+			$this->mockGlobalVariable( 'wgAdDriverForcedProvider', $expectedForcedProvider );
 		}
 
 		// Flags
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableInvisibleHighImpactSlot', false );
-		$this->mockGlobalVariable( 'wgAdDriverForceTurtleAd', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseMonetizationService', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
@@ -262,7 +261,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 			'slots' => [
 			],
-			'forcedAdProvider' => $expectedForcedAdProvider
+			'forcedProvider' => $expectedForcedProvider
 		];
 
 		foreach ( $expectedOpts as $var => $val ) {

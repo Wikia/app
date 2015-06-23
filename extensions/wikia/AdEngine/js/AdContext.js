@@ -46,7 +46,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
-		context.forcedAdProvider = qs.getVal('forcead', null) || context.forcedAdProvider || null;
+		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 
 		// Don't show ads when Sony requests the page
 		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// Turtle
-		if (context.forcedAdProvider === 'turtle') {
+		if (context.forcedProvider === 'turtle') {
 			context.providers.turtle = true;
 		}
 
