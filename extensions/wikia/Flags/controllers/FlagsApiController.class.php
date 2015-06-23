@@ -65,12 +65,7 @@ class FlagsApiController extends WikiaApiController {
 	public function getFlagsForPage() {
 		try {
 			$this->getRequestParams();
-			if ( !isset( $this->params['page_id'] ) ) {
-				throw new MissingParameterApiException( 'page_id' );
-			}
-			if ( !is_numeric( $this->params['page_id'] ) ) {
-				throw new InvalidParameterApiException( 'page_id' );
-			}
+			$this->validatePageId();
 
 			$flagsForPage = $this->getFlagsForPageRawData( $this->params['wiki_id'], $this->params['page_id'] );
 
@@ -114,12 +109,7 @@ class FlagsApiController extends WikiaApiController {
 	public function getFlagsForPageForEdit() {
 		try {
 			$this->getRequestParams();
-			if ( !isset( $this->params['page_id'] ) ) {
-				throw new MissingParameterApiException( 'page_id' );
-			}
-			if ( !is_numeric( $this->params['page_id'] ) ) {
-				throw new InvalidParameterApiException( 'page_id' );
-			}
+			$this->validatePageId();
 
 			$allFlagTypes = $this->getAllFlagTypes( $this->params['wiki_id'], $this->params['page_id'] );
 
@@ -170,10 +160,12 @@ class FlagsApiController extends WikiaApiController {
 	 *
 	 * Required parameters:
 	 * @requestParam array flags_ids An array of IDs of flags to remove
+	 * @requestParam int page_id
 	 */
 	public function removeFlagsFromPage() {
 		try {
 			$this->processRequest();
+			$this->validatePageId();
 
 			$flagModel = new Flag();
 			$modelResponse = $flagModel->removeFlagsFromPage( $this->params['flags'] );
@@ -190,11 +182,15 @@ class FlagsApiController extends WikiaApiController {
 
 	/**
 	 * Updates flags on the given page using a `flags` array passed as a request parameter.
+	 *
+	 * @requestParam int page_id
+	 * @requestParam array $flags Should have flag_id values as indexes
 	 * @return bool
 	 */
 	public function updateFlagsForPage() {
 		try {
 			$this->processRequest();
+			$this->validatePageId();
 
 			$oldFlags = $this->app->sendRequest(
 				'FlagsApiController',
@@ -230,7 +226,7 @@ class FlagsApiController extends WikiaApiController {
 	 * @requestParam int flag_targeting A level of targeting: 0 -> readers, 1 -> contibutors, 2 -> admins
 	 *
 	 * Optional parameters:
-	 * @requestParam string flagParamsNames A JSON-encoded array of names of parameters
+	 * @requestParam string flag_params_names A JSON-encoded array of names of parameters
 	 * 		It's used for rendering inputs in the "Add a flag" form.
 	 */
 	public function addFlagType() {
@@ -311,8 +307,8 @@ class FlagsApiController extends WikiaApiController {
 		try {
 			$this->getRequestParams();
 
-			if ( !isset( $this->params['flag_view'] ) ) {
-				return null;
+			if ( empty( $this->params['flag_view'] ) ) {
+				throw new MissingParameterApiException( 'page_id' );
 			}
 
 			$flagTypeModel = new FlagType();
@@ -350,6 +346,15 @@ class FlagsApiController extends WikiaApiController {
 		$this->params = $this->request->getParams();
 		if ( !isset( $this->params['wiki_id'] ) ) {
 			$this->params['wiki_id'] = $this->wg->CityId;
+		}
+	}
+
+	private function validatePageId() {
+		if ( !isset( $this->params['page_id'] ) ) {
+			throw new MissingParameterApiException( 'page_id' );
+		}
+		if ( !is_numeric( $this->params['page_id'] ) ) {
+			throw new InvalidParameterApiException( 'page_id' );
 		}
 	}
 
