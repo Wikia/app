@@ -16,13 +16,8 @@ class TemplateDraftHooks {
 	public static function onGetRailModuleList( Array &$railModuleList ) {
 		global $wgTitle;
 
-		// quit early if page was marked by user as not an infobox
-		if ( Wikia::getProps( $wgTitle->getId(), self::TEMPLATE_INFOBOX_PROP ) === 0 ) {
-			return true;
-		}
-
-		// only display rail module on template namespace
-		if ( $wgTitle->getNamespace() === NS_TEMPLATE ) {
+		if ( $wgTitle->getNamespace() === NS_TEMPLATE
+		&& Wikia::getProps( $wgTitle->getId(), self::TEMPLATE_INFOBOX_PROP ) !== 0 ) {
 			$railModuleList[1502] = [ 'TemplateDraftModule', Index, null ];
 		}
 
