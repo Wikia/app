@@ -175,7 +175,7 @@ class FlagType extends FlagsBaseModel {
 	 * If the passed params have been verified,
 	 * performs an INSERT query that adds a new type of flags.
 	 * @param array $params
-	 * @return bool
+	 * @return int id of inserted flag type
 	 */
 	public function addFlagType( $params ) {
 		$this->verifyParamsForAdd( $params );
