@@ -102,16 +102,12 @@ class FlagsExtractor {
 	 * @return array|bool
 	 */
 	public function getTemplate() {
-		global $wgContLang;
-
 		if ( empty( $this->text ) || empty ( $this->templateName ) ) {
 			return false;
 		}
 
 		$template = [];
 		$templateParams = [];
-
-		$nsPrefix = $wgContLang->getNsText( NS_TEMPLATE ) . ':';
 
 		$templateBracketsCounter = self::BRACKETS_NUMBER;
 		$linkBracketsCounter = 0;
@@ -122,17 +118,14 @@ class FlagsExtractor {
 		$isParamWithName = false;
 		$paramsCounter = 1;
 
-		$templateBegin = '{{' . $this->templateName;
-		$templateWithNSBegin = '{{' . $nsPrefix . $this->templateName;
-
-		$position = $this->findTemplatePosition( $templateBegin, $this->offset );
-		$positionWithNS = $this->findTemplatePosition( $templateWithNSBegin, $this->offset );
+		$templateFormat = $this->getTemplateFormat();
 
 		// Position of template begin
-		if ( $position !== false && $positionWithNS !== false ) {
-			$this->templateOffsetStart = $position <= $positionWithNS ? $position : $positionWithNS;
+		if ( is_null( $templateFormat ) ) {
+			$this->templateOffsetStart = false;
 		} else {
-			$this->templateOffsetStart = $position !== false ? $position : $positionWithNS;
+			$templateBegin = '{{' . $templateFormat['template'];
+			$this->templateOffsetStart = $templateFormat['position'];
 		}
 
 		if ( $this->templateOffsetStart !== false ) {
@@ -529,6 +522,39 @@ class FlagsExtractor {
 			}
 		}
 		return false;
+	}
+
+	private function getTemplateFormat() {
+		global $wgContLang;
+
+		$nsPrefix = $wgContLang->getNsText( NS_TEMPLATE ) . ':';
+		$nsPrefixCommon = \MWNamespace::getCanonicalName( NS_TEMPLATE ) . ':';
+
+		$templates = [
+			$this->templateName => 0,
+			$nsPrefix . $this->templateName => 0,
+			$nsPrefixCommon . $this->templateName => 0
+		];
+
+		foreach ( $templates as $templateFormat => $position ) {
+			$pos = $this->findTemplatePosition( '{{' . $templateFormat, $this->offset );
+			if ( $pos === false ) {
+				unset( $templates[$templateFormat] );
+			} else {
+				$templates[$templateFormat] = $pos;
+			}
+		}
+
+		if ( empty( $templates ) ) {
+			return null;
+		}
+
+		$template = array_keys( $templates, min( $templates ) )[0];
+
+		return [
+			'template' => $template,
+			'position' => $templates[$template]
+		];
 	}
 
 	/**
