@@ -4,16 +4,17 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, slotTweaker, log, win) {
+], function (adContext, factory, slotTweaker, lazyQueue, log, win) {
 	'use strict';
 
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.provider.directGpt',
-		atfFlushed = false,
-		pendingSlots = [],
-		delayedSlotsQueue = [],
+		pendingAtfSlots = [], // ATF slots pending for response
+		btfQueue = [],
+		btfQueueStarted = false,
 		slotMap = {
 			CORP_TOP_LEADERBOARD:       {size: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 			CORP_TOP_RIGHT_BOXAD:       {size: '300x250,300x600,300x1050', loc: 'top'},
@@ -56,18 +57,23 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		],
 		provider;
 
-	function delayBtfSlot(slotName, slotElement, success, hop) {
-		log(['delayBtfSlot', slotName], 'debug', logGroup);
-		if (atfSlots.indexOf(slotName) > -1) {
-			if (!atfFlushed) {
-				pendingSlots.push(slotName);
-			}
+	function fillInSlotWithDelay(slotName, slotElement, success, hop) {
+		log(['fillInSlotWithDelay', slotName], 'debug', logGroup);
+
+		if (!context.opts.delayBtf) {
 			provider.fillInSlot(slotName, slotElement, success, hop);
 			return;
 		}
 
-		atfFlushed = true;
-		delayedSlotsQueue.push({
+		// For the above the fold slot:
+		if (atfSlots.indexOf(slotName) > -1) {
+			pendingAtfSlots.push(slotName);
+			provider.fillInSlot(slotName, slotElement, success, hop);
+			return;
+		}
+
+		// For the below the fold slot:
+		btfQueue.push({
 			slotName: slotName,
 			slotElement: slotElement,
 			success: success,
@@ -75,48 +81,42 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		});
 	}
 
-	function blockBtfSlot(slotName, success) {
-		log(['blockBtfSlot', slotName], 'debug', logGroup);
-		success({
-			adType: 'blocked'
-		});
-		slotTweaker.hide(slotName);
-	}
+	function processBtfSlot(slot) {
+		log(['processBtfSlot', slot.slotName], 'debug', logGroup);
 
-	function fillInSlotWithDelay(slotName, slotElement, success, hop) {
-		log(['fillInSlotWithDelay', slotName], 'debug', logGroup);
-		if (context.opts.delayBtf) {
-			if (!atfFlushed || pendingSlots.length > 0) {
-				delayBtfSlot(slotName, slotElement, success, hop);
-				return;
-			}
-
-			if (win.ads.runtime.disableBtf && atfSlots.indexOf(slotName) === -1) {
-				blockBtfSlot(slotName, success);
-				return;
-			}
-		}
-
-		provider.fillInSlot(slotName, slotElement, success, hop);
-	}
-
-	function pushDelayedQueue() {
-		log('pushDelayedQueue', 'debug', logGroup);
-		delayedSlotsQueue.forEach(function (slot) {
-			fillInSlotWithDelay(slot.slotName, slot.slotElement, slot.success, slot.hop);
-		});
-	}
-
-	function removePendingSlotAndPushDelayedQueue(slotName) {
-		log('pushDelayedQueue', 'debug', logGroup);
-		if (!context.opts.delayBtf) {
+		if (!win.ads.runtime.disableBtf) {
+			provider.fillInSlot(slot.slotName, slot.slotElement, slot.success, slot.hop);
 			return;
 		}
-		var index = pendingSlots.indexOf(slotName);
+
+		slot.success({adType: 'blocked'});
+		slotTweaker.hide(slot.slotName);
+	}
+
+	function startBtfQueue() {
+		log('startBtfQueue', 'debug', logGroup);
+
+		if (btfQueueStarted) {
+			return;
+		}
+
+		lazyQueue.makeQueue(btfQueue, processBtfSlot);
+		btfQueue.start();
+
+		btfQueueStarted = true;
+	}
+
+	function onSlotResponse(slotName) {
+		log(['onSlotResponse', slotName], 'debug', logGroup);
+
+		// Remove slot from pendingAtfSlots
+		var index = pendingAtfSlots.indexOf(slotName);
 		if (index > -1) {
-			pendingSlots.splice(index, 1);
-			if (pendingSlots.length === 0 && delayedSlotsQueue.length) {
-				pushDelayedQueue();
+			pendingAtfSlots.splice(index, 1);
+
+			// If pendingAtfSlots is empty, start BTF slots
+			if (pendingAtfSlots.length === 0) {
+				startBtfQueue();
 			}
 		}
 	}
@@ -132,11 +132,11 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				slotTweaker.removeDefaultHeight(slotName);
 				slotTweaker.removeTopButtonIfNeeded(slotName);
 				slotTweaker.adjustLeaderboardSize(slotName);
-				removePendingSlotAndPushDelayedQueue(slotName);
+				onSlotResponse(slotName);
 			},
 			beforeHop: function (slotName) {
 				log(['beforeHop', slotName], 'debug', logGroup);
-				removePendingSlotAndPushDelayedQueue(slotName);
+				onSlotResponse(slotName);
 			},
 			sraEnabled: true
 		}
