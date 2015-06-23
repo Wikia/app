@@ -63,17 +63,17 @@ class MultipleLookupCore {
 	}
 
 	public function countUserActivity() {
-		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
+		global $wgMemc, $wgSpecialsDB;
 
 		$countActivity = 0;
 		$ip = ip2long( $this->mUsername );
 		$memkey = __METHOD__ . ":all:" . $ip;
 		$cached = $wgMemc->get( $memkey );
-		if ( ( empty( $cached ) || MULTILOOKUP_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
+		if ( ( empty( $cached ) || MULTILOOKUP_NO_CACHE ) ) {
 
-			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 			$oRow = $dbs->selectRow(
-				array( '`specials`.`multilookup`' ),
+				array( 'multilookup' ),
 				array( 'count(ml_city_id) as cnt' ),
 				array( 'ml_ip' => $ip ),
 				__METHOD__
@@ -94,15 +94,15 @@ class MultipleLookupCore {
 	}
 
 	function checkUserActivity( $order = null ) {
-		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled, $wgLang;
+		global $wgMemc, $wgSpecialsDB, $wgLang;
 
 		$userActivity = array();
 
 		$ip = ip2long( $this->mUsername );
 		$memkey = __METHOD__ . ":all:ip:" . $ip . ":limit:" . intval($this->mLimit) . ":offset:" . intval($this->mOffset) . ":order:" . $order;
 		$cached = $wgMemc->get( $memkey );
-		if ( ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) && !empty( $wgStatsDBEnabled ) ) {
-			$dbs = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+		if ( ( !is_array ( $cached ) || MULTILOOKUP_NO_CACHE ) ) {
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
 
 			$qOptions = array( 'ORDER BY' => 'ml_count DESC, ml_ts DESC', 'LIMIT' => $this->mLimit, 'OFFSET' => $this->mOffset );
 
@@ -113,7 +113,7 @@ class MultipleLookupCore {
 			}
 
 			$oRes = $dbs->select(
-				array( '`specials`.`multilookup`' ),
+				array( 'multilookup' ),
 				array( 'ml_city_id', 'ml_ts' ),
 				array( 'ml_ip' => $ip ),
 				__METHOD__,

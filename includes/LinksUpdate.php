@@ -521,6 +521,7 @@ class LinksUpdate {
 				);
 			}
 		}
+
 		return $arr;
 	}
 
@@ -540,6 +541,8 @@ class LinksUpdate {
 					'tl_title'     => $dbk
 				);
 			}
+
+			wfRunHooks( 'LinksUpdateInsertTemplates', [ $this->mId, $diffs ] );
 		}
 		return $arr;
 	}

@@ -10,7 +10,7 @@
 
 namespace Flags;
 
-use Flags\Views\FlagView;
+use Flags\Models\FlagType;
 
 class FlagsHelper {
 
@@ -20,6 +20,7 @@ class FlagsHelper {
 	 */
 	const FLAGS_INPUT_NAME_PREFIX = 'editFlags';
 	const FLAGS_INPUT_NAME_CHECKBOX = 'checkbox';
+	const FLAGS_LOG_PREFIX = 'FlagsLog';
 
 	/**
 	 * Compares the data posted from the edit form with the database results.
@@ -34,25 +35,23 @@ class FlagsHelper {
 		$flagsToAdd = $flagsToRemove = $flagsToUpdate = [];
 
 		foreach ( $currentFlags as $flagTypeId => $flag ) {
-			$keyCheckbox = $this->composeInputName( $flagTypeId, self::FLAGS_INPUT_NAME_CHECKBOX );
-
-			if ( !isset( $flag['flag_id'] ) && !isset( $postData[$keyCheckbox] ) ) {
+			if ( !isset( $flag['flag_id'] ) && !isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 1. The flag type DOES NOT have an instance on this page and WAS NOT posted - continue
 				 */
 				continue;
 
-			} elseif ( !isset( $flag['flag_id'] ) && isset( $postData[$keyCheckbox] ) ) {
+			} elseif ( !isset( $flag['flag_id'] ) && isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 2. The flag type DOES NOT have an instance on this page and WAS posted - new flag
 				 */
 				$flagsToAdd[$flagTypeId] = $this->getFlagFromPostData( $flag, $postData );
 
-			} elseif ( isset( $flag['flag_id'] ) && !isset( $postData[$keyCheckbox] ) ) {
+			} elseif ( isset( $flag['flag_id'] ) && !isset( $postData[$flagTypeId][self::FLAGS_INPUT_NAME_CHECKBOX] ) ) {
 				/**
 				 * 3. The flag type HAS an instance on this page and WAS NOT posted - remove flag
 				 */
-				$flagsToRemove[] = $flag['flag_id'];
+				$flagsToRemove[$flag['flag_id']] = $flag; // Pass old flag data to enable logging it
 
 			} elseif ( $flag['flag_params_names'] !== null ) {
 				/**
@@ -66,9 +65,9 @@ class FlagsHelper {
 		}
 
 		return [
-			'toAdd' => $flagsToAdd,
-			'toRemove' => $flagsToRemove,
-			'toUpdate' => $flagsToUpdate,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_ADD => $flagsToAdd,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_REMOVE => $flagsToRemove,
+			\FlagsController::FLAGS_CONTROLLER_ACTION_UPDATE => $flagsToUpdate,
 		];
 	}
 
@@ -83,17 +82,14 @@ class FlagsHelper {
 
 		$flagFromPost = [];
 
-		if ( isset( $flag['flag_id'] ) ) {
-			/**
-			 * If the flag exists - use flag_id for update
-			 */
-			$flagFromPost['flag_id'] = $flag['flag_id'];
-		} else {
-			/**
-			 * If the flag does not exist - use flag_type_id for insert
-			 */
-			$flagFromPost['flag_type_id'] = $flagTypeId;
-		}
+		/**
+		 * flag_id is used for update
+		 */
+		$flagFromPost['flag_id'] = isset( $flag['flag_id'] ) ? $flag['flag_id'] : null;
+		/**
+		 * flag_type_id is used for insert
+		 */
+		$flagFromPost['flag_type_id'] = $flagTypeId;
 
 		$flagFromPost['params'] = [];
 
@@ -108,13 +104,12 @@ class FlagsHelper {
 			 * This is a protection from users modifying names of parameters in the DOM.
 			 */
 			foreach ( $paramNames as $paramName => $paramDescription ) {
-				$key = $this->composeInputName( $flagTypeId, $paramName );
-				if ( isset( $postData[$key] ) ) {
+				if ( isset( $postData[$flagTypeId][$paramName] ) ) {
 					/**
 					 * Use a value from the form if it is provided.
 					 * It will be escaped by default mechanism from FluentSQL.
 					 */
-					$flagFromPost['params'][$paramName] = $postData[$key];
+					$flagFromPost['params'][$paramName] = $postData[$flagTypeId][$paramName];
 				} else {
 					/**
 					 * Insert an empty string if a value is not provided.
@@ -129,9 +124,10 @@ class FlagsHelper {
 
 	/**
 	 * Checks if a request for flags does not come from an edit page
+	 * Used for determining whether flags should be injected to parsed output
 	 * @return bool
 	 */
-	public function shouldDisplayFlags() {
+	public function shouldInjectFlags() {
 		global $wgTitle, $wgRequest;
 
 		return
@@ -142,17 +138,82 @@ class FlagsHelper {
 			/* Don't display flags on edit pages that are content namespaces */
 			&& !in_array(
 				$wgRequest->getVal( 'action', 'view' ),
-				[ 'edit', 'formedit' , 'history' ]
+				[ 'edit', 'formedit' , 'history', 'visualeditor' ]
 			);
 	}
 
 	/**
-	 * Composes the name of a flags edit form input from the $field parameter and a $flagTypeId
-	 * @param int $flagTypeId
-	 * @param string $field
-	 * @return string
+	 * Checks if flags should be displayed on a page
+	 * @return bool
 	 */
-	private function composeInputName( $flagTypeId, $field ) {
-		return self::FLAGS_INPUT_NAME_PREFIX . ":{$flagTypeId}:{$field}";
+	public function shouldDisplayFlags() {
+		global $wgTitle;
+
+		return
+			/* Don't display flags for non existent pages */
+			$wgTitle->exists()
+			/* Display flags only on content namespaces */
+			&& \Wikia::isContentNamespace();
+	}
+
+	/**
+	 * Checks if flags can be edited on current page to decide whether include edit modal
+	 * @return bool
+	 */
+	public function areFlagsEditable() {
+		global $wgHideFlagsExt, $wgTitle;
+		return
+			/* Should signs of Flags extension be hidden? */
+			$wgHideFlagsExt !== true
+			/* Check condition for view */
+			&& $this->shouldDisplayFlags()
+			/* Don't display flags when user is not allowed to edit */
+			&& $wgTitle->userCan( 'edit' );
+	}
+
+	/**
+	 * Get a localized and human-readable names of Flags targets (readers and contibutors)
+	 *
+	 * @return array An array of localized names of targets of Flags
+	 */
+	public function getFlagTargetFullNames() {
+		$flagTargetFullNames = [];
+
+		/**
+		 * Generates the following messages:
+		 * flags-target-readers
+		 * flags-target-contributors
+		 */
+		foreach ( FlagType::$flagTargeting as $flagTargetId => $flagTargetKey ) {
+			$flagTargetFullNames[$flagTargetId] = wfMessage( "flags-target-{$flagTargetKey}" )->escaped();
+		}
+
+		return $flagTargetFullNames;
+	}
+
+	/**
+	 * Get a localized and human-readable names of Flags groups
+	 *
+	 * @return array An array of localized names of groups of Flags
+	 */
+	public function getFlagGroupsFullNames() {
+		$flagGroupsFullNames = [];
+
+		/**
+		 * Generates the following messages:
+		 * flags-groups-spoiler
+		 * flags-groups-disambig
+		 * flags-groups-canon
+		 * flags-groups-stub
+		 * flags-groups-delete
+		 * flags-groups-improvements
+		 * flags-groups-status
+		 * flags-groups-other
+		 */
+		foreach ( FlagType::$flagGroups as $flagGroupId => $flagGroupKey ) {
+			$flagGroupsFullNames[$flagGroupId] = wfMessage( "flags-groups-{$flagGroupKey}" )->escaped();
+		}
+
+		return $flagGroupsFullNames;
 	}
 }

@@ -11,6 +11,10 @@
 	width: 50px;
 }
 
+.greeting p:last-child {
+	font-weight: bold;
+}
+
 .username {
 	font-size: 12px;
 }

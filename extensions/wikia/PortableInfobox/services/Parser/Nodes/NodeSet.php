@@ -1,24 +1,42 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Parser\XmlParser;
-
 class NodeSet extends Node {
 
 	public function getData() {
-		$nodeFactory = new XmlParser( $this->infoboxData );
-		if ( $this->externalParser ) {
-			$nodeFactory->setExternalParser( $this->externalParser );
+		if ( !isset( $this->data ) ) {
+			$this->data = [ 'value' => $this->getDataForChildren() ];
 		}
-		return [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode, $this ) ];
+
+		return $this->data;
 	}
 
-	public function isEmpty( $data ) {
-		foreach ( $data[ 'value' ] as $elem ) {
-			if ( $elem[ 'type' ] != 'header' && !( $elem[ 'isEmpty' ] ) ) {
+	public function getRenderData() {
+		return [
+			'type' => $this->getType(),
+			'data' => [
+				'value' => array_map(
+					function ( Node $item ) {
+						return $item->getRenderData();
+					},
+					$this->getChildNodes()
+				)
+			],
+		];
+	}
+
+	public function isEmpty() {
+		/** @var Node $item */
+		foreach ( $this->getChildNodes() as $item ) {
+			if ( !$item->isType( 'header' ) && !$item->isEmpty() ) {
 				return false;
 			}
 		}
+
 		return true;
+	}
+
+	public function getSource() {
+		return $this->getSourceForChildren();
 	}
 }

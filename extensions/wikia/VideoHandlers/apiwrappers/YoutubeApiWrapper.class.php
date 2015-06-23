@@ -80,6 +80,10 @@ class YoutubeApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	public function videoExists() {
+		return !empty( $this->interfaceObj['snippet']['title'] );
+	}
+
 	/**
 	 * returns array of thumbnail data. Thumbnails taken from different
 	 * points of video. Elements: time, height, width, url
@@ -235,5 +239,4 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 		return self::$API_URL . '?' . http_build_query( $params );
 	}
-
 }

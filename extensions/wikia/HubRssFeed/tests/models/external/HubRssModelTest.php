@@ -134,7 +134,7 @@ class HubRssModelTest extends WikiaBaseTest {
 
 
 		$mock = $this->getMockBuilder( 'HubRssFeedModel' )
-			->disableOriginalConstructor()
+			->setConstructorArgs( [ 'en' ] )
 			->setMethods( [ 'getServicesV3', 'getThumbData' ] )
 			->getMock();
 
