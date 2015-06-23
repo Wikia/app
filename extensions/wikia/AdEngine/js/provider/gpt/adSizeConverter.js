@@ -4,11 +4,12 @@ define('ext.wikia.adEngine.provider.gpt.adSizeConverter', [
 	'wikia.document',
 	'wikia.log'
 ], function (doc, log) {
+	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeConverter',
 		fallbackSize = [1, 1];
 
-	function filterOutSizesBiggerThanScreenSize(sizes) {
+	function filterOutLeaderboardSizes(sizes) {
 		log(['filterOutSizesBiggerThanScreenSize', sizes], 'debug', logGroup);
 		var goodSizes = [], i, len, minWidth;
 
@@ -29,6 +30,20 @@ define('ext.wikia.adEngine.provider.gpt.adSizeConverter', [
 		return goodSizes;
 	}
 
+	function filterOutInvisibleSkinSizes(sizes) {
+		log(['filterOutInvisibleSkinSizes', sizes], 'debug', logGroup);
+
+		if (doc.documentElement.offsetWidth >= 1064) {
+			log(['filterOutInvisibleSkinSizes', 'Skin allowed', sizes], 'debug', logGroup);
+			return sizes;
+		}
+
+		sizes = [fallbackSize];
+
+		log(['filterOutInvisibleSkinSizes', 'Skin not allowed', sizes], 'info', logGroup);
+		return sizes;
+	}
+
 	function convertSize(slotName, slotSizes) {
 		log(['convertSizeToGpt', slotName, slotSizes], 'debug', logGroup);
 		var tmp1 = slotSizes.split(','),
@@ -40,9 +55,13 @@ define('ext.wikia.adEngine.provider.gpt.adSizeConverter', [
 			tmp2 = tmp1[i].split('x');
 			sizes.push([parseInt(tmp2[0], 10), parseInt(tmp2[1], 10)]);
 		}
-
+		
 		if (slotName.match(/TOP_LEADERBOARD/)) {
-			sizes = filterOutSizesBiggerThanScreenSize(sizes);
+			sizes = filterOutLeaderboardSizes(sizes);
+		}
+
+		if (slotName === 'INVISIBLE_SKIN') {
+			sizes = filterOutInvisibleSkinSizes(sizes);
 		}
 
 		log(['convertSize', slotName, sizes], 'debug', logGroup);
