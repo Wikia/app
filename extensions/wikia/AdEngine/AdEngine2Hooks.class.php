@@ -29,7 +29,7 @@ class AdEngine2Hooks {
 		// TODO: we shouldn't have it in AdEngine - ticket for Platform: PLATFORM-1296
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 
-		if( $wgNoExternals ) {
+		if ( $wgNoExternals ) {
 			$wgEnableKruxTargeting = false;
 			$wgEnableKruxOnMobile = false;
 		}

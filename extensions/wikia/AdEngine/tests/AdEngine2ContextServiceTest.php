@@ -203,7 +203,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverSevenOneMediaOverrideSub2Site', $sevenOneMediaSub2Site );
 
 		if ( !is_null( $expectedForcedAdProvider ) ) {
-			$this->mockGlobalVariable( 'wgAdDriverForcedProvider', $expectedForcedAdProvider);
+			$this->mockGlobalVariable( 'wgAdDriverForcedProvider', $expectedForcedAdProvider );
 		}
 
 		// Flags
