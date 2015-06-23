@@ -368,7 +368,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			'getId' => $testUserId,
 			'isPasswordReminderThrottled' => false,
 			'params' => [
-				//'mId' => $testUserId,
 				'mName' => 'WikiaUser',
 				'mEmail' => self::TEST_EMAIL,
 			],
@@ -390,7 +389,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			'getId' => $testUserId,
 			'isPasswordReminderThrottled' => false,
 			'params' => [
-				//'mId' => $testUserId,
 				'mName' => 'WikiaUser',
 				'mEmail' => self::TEST_EMAIL,
 			],
