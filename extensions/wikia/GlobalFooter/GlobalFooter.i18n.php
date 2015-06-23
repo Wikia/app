@@ -358,7 +358,7 @@ $messages['zh-hans'] = array(
 		*http://www.wikia.com/Advertising|<span>广告服务</span>
 		*Special:Contact|联系我们
 		*http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE|<span>使用条款</span>
-		*http://zh.wikia.com/wiki/%E9%9A%90%E7%A7%81%E6%9D%83%E6%96%B9%E9%92%88y|<span>隐私政策</span>
+		*http://zh.wikia.com/wiki/%E9%9A%90%E7%A7%81%E6%9D%83%E6%96%B9%E9%92%88|<span>隐私政策</span>
 		*http://www.wikia.com/Special:CreateWiki|<span>创建维基</span>
 		*http://www.wikia.com/Sitemap|网站地图
 		*_LICENSE_',
