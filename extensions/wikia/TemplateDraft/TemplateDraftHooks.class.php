@@ -17,7 +17,7 @@ class TemplateDraftHooks {
 		global $wgTitle;
 
 		if ( $wgTitle->getNamespace() === NS_TEMPLATE
-		&& Wikia::getProps( $wgTitle->getId(), self::TEMPLATE_INFOBOX_PROP ) !== 0 ) {
+			&& Wikia::getProps( $wgTitle->getId(), self::TEMPLATE_INFOBOX_PROP ) !== 0 ) {
 			$railModuleList[1502] = [ 'TemplateDraftModule', Index, null ];
 		}
 
