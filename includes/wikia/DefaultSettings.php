@@ -40,7 +40,6 @@ require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
-
 /**
  * Add composer dependencies before proceeding to lib/Wikia. For now, we are committing
  * dependencies added via composer to lib/composer until external dependencies with composer/packagist
@@ -55,6 +54,12 @@ FluentSql\StaticSQL::setClass("\\WikiaSQL");
  * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
  */
 require_once ( $IP."/lib/Wikia/autoload.php");
+
+/**
+ * initialize dependency injection, must be done after Wikia/autoload
+ */
+require_once ( $IP."/includes/wikia/injector/InjectorInitializer.php");
+InjectorInitializer::init();
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
