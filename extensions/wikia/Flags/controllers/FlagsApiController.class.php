@@ -185,12 +185,17 @@ class FlagsApiController extends WikiaApiController {
 	 *
 	 * @requestParam int page_id
 	 * @requestParam array $flags Should have flag_id values as indexes
+	 *
 	 * @return bool
 	 */
 	public function updateFlagsForPage() {
 		try {
 			$this->processRequest();
 			$this->validatePageId();
+
+			if ( !isset( $this->params['page_id'] ) ) {
+				throw new \MissingParameterApiException( 'page_id' );
+			}
 
 			$oldFlags = $this->app->sendRequest(
 				'FlagsApiController',
@@ -480,8 +485,8 @@ class FlagsApiController extends WikiaApiController {
 	private function logFlagChange( Array $flags, $wikiId, $pageId, $actionType ) {
 		$task = new FlagsLogTask();
 		$task->wikiId( $wikiId );
-		$task->call( 'logFlagChange', $flags, $pageId, $actionType );
-		$task->queue();
+		$task->createdBy( $this->wg->User->getId() );
+		$task->execute( 'logFlagChange', [ $flags, $pageId, $actionType ] );
 	}
 
 	/**
@@ -495,7 +500,7 @@ class FlagsApiController extends WikiaApiController {
 	private function logParametersChange( Array $oldFlags, Array $flags, $wikiId, $pageId ) {
 		$task = new FlagsLogTask();
 		$task->wikiId( $wikiId );
-		$task->call( 'logParametersChange', $oldFlags, $flags, $pageId );
-		$task->queue();
+		$task->createdBy( $this->wg->User->getId() );
+		$task->execute( 'logParametersChange', [ $oldFlags, $flags, $pageId ] );
 	}
 }

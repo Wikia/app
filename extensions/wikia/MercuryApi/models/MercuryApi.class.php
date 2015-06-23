@@ -354,19 +354,45 @@ class MercuryApi {
 		return null;
 	}
 
-	public function processTrendingData( $data, $itemArrayName, $paramsToInclude = [] ) {
-		if ( !isset( $data[ $itemArrayName ] ) || !is_array( $data[ $itemArrayName ] ) ) {
+	public function processTrendingArticlesData( $data, $paramsToInclude = [] ) {
+		$data = $data[ 'items' ];
+
+		if ( !isset( $data ) || !is_array( $data ) ) {
 			return null;
 		}
 
 		$items = [];
 
-		foreach ( $data[ $itemArrayName ] as $item ) {
+		foreach ( $data as $item ) {
 			$processedItem = $this->processTrendingDataItem( $item, $paramsToInclude );
 
 			if ( !empty( $processedItem ) ) {
 				$items[] = $processedItem;
 			}
+		}
+
+		return $items;
+	}
+
+	public function processTrendingVideoData( $data ) {
+		$videosData = $data[ 'videos' ];
+
+		if ( !isset( $videosData ) || !is_array( $videosData ) ) {
+			return null;
+		}
+
+		$items = [];
+
+		foreach ( $videosData as $item ) {
+			$items[] = ArticleAsJson::createMediaObject(
+				WikiaFileHelper::getMediaDetail(
+					Title::newFromText( $item['title'], NS_FILE ),
+					[
+						'imageMaxWidth' => false
+					]
+				),
+				$item['title']
+			);
 		}
 
 		return $items;

@@ -38,7 +38,7 @@ $messages['en'] = array(
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
 
 	'insights-list-subtitle-nonportableinfoboxes' => 'Non-portable infoboxes',
-	'insights-list-description-nonportableinfoboxes' => 'The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors.',
+	'insights-list-description-nonportableinfoboxes' => 'The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors. If you\'re stuck you can also [[w:c:community:Thread:841717|visit our forum thread and ask questions there]].',
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'This infobox needs to be updated with the new infobox markup.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'Awesome! The infobox on this page has been converted.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'Convert the next infobox.',
