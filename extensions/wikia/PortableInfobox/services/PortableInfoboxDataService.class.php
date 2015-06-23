@@ -9,8 +9,12 @@ class PortableInfoboxDataService {
 	 */
 	protected $title;
 
-	public function __construct( $title ) {
+	protected function __construct( $title ) {
 		$this->title = $title;
+	}
+
+	public static function newFromTitle( Title $title ) {
+		return new PortableInfoboxDataService( $title );
 	}
 
 	public static function newFromPageID( $pageid ) {

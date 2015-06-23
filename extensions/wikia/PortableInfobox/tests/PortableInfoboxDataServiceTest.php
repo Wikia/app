@@ -56,6 +56,7 @@ class PortableInfoboxDataServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function testImageListRemoveDuplicates() {
 		$mock = $this->getMockBuilder( 'PortableInfoboxDataService' )
+			->disableOriginalConstructor()
 			->setMethods( [ 'getData' ] )
 			->getMock();
 		$mock->expects( $this->any() )->method( 'getData' )->will( $this->returnValue( $this->getInfoboxData() ) );
@@ -64,15 +65,16 @@ class PortableInfoboxDataServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( count( $images ) === 2 );
 	}
 
-		public function testImageListFetchImages() {
-			$mock = $this->getMockBuilder( 'PortableInfoboxDataService' )
-				->setMethods( [ 'getData' ] )
-				->getMock();
-			$mock->expects( $this->any() )->method( 'getData' )->will( $this->returnValue( $this->getInfoboxData() ) );
+	public function testImageListFetchImages() {
+		$mock = $this->getMockBuilder( 'PortableInfoboxDataService' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getData' ] )
+			->getMock();
+		$mock->expects( $this->any() )->method( 'getData' )->will( $this->returnValue( $this->getInfoboxData() ) );
 
-			$images = $mock->getImages();
-			$this->assertTrue( in_array( "Test.jpg", $images ), "Test.jpg should be in images array" );
-			$this->assertTrue( in_array( "Test2.jpg", $images ), "Test2.jpg should be in images array");
-		}
+		$images = $mock->getImages();
+		$this->assertTrue( in_array( "Test.jpg", $images ), "Test.jpg should be in images array" );
+		$this->assertTrue( in_array( "Test2.jpg", $images ), "Test2.jpg should be in images array" );
+	}
 
 }

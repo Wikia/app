@@ -13,7 +13,7 @@ class PortableInfoboxHooks {
 
 	static public function onImageServingCollectImages( &$imageNamesArray, $articleTitle ) {
 		if ( $articleTitle ) {
-			$infoboxImages = ( new PortableInfoboxDataService( $articleTitle ) )->getImages();
+			$infoboxImages = PortableInfoboxDataService::newFromTitle( $articleTitle )->getImages();
 			if ( !empty( $infoboxImages ) ) {
 				$imageNamesArray = array_merge( $infoboxImages, (array)$imageNamesArray );
 			}
