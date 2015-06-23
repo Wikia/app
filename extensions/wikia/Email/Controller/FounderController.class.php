@@ -12,6 +12,22 @@ abstract class FounderController extends EmailController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
 	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
+	/**
+	 * Determine which sendgrid category to send based on target language and specific
+	 * founder email being sent. See dependent classes for overridden values
+	 *
+	 * @return string
+	 */
+	public function getSendGridCategory() {
+		return strtolower( $this->targetLang ) == 'en'
+			? static::TRACKING_CATEGORY_EN
+			: static::TRACKING_CATEGORY_INT;
+	}
+
+}
+
+class AbstractFounderEditController extends FounderController {
+
 	/** @var \Title */
 	protected $pageTitle;
 
@@ -166,18 +182,6 @@ abstract class FounderController extends EmailController {
 	}
 
 	/**
-	 * Determine which sendgrid category to send based on target language and specific
-	 * founder email being sent. See dependent classes for overridden values
-	 *
-	 * @return string
-	 */
-	public function getSendGridCategory() {
-		return strtolower( $this->targetLang ) == 'en'
-			? static::TRACKING_CATEGORY_EN
-			: static::TRACKING_CATEGORY_INT;
-	}
-
-	/**
 	 * Form fields required for this email for Special:SendEmail. See
 	 * EmailController::getEmailSpecificFormFields for more info.
 	 * @return array
@@ -213,14 +217,15 @@ abstract class FounderController extends EmailController {
 
 		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
+
 }
 
-class FounderEditController extends FounderController {
+class FounderEditController extends AbstractFounderEditController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_FIRST_EDIT_USER_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_FIRST_EDIT_USER_INT;
 }
 
-class FounderMultiEditController extends FounderController {
+class FounderMultiEditController extends AbstractFounderEditController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_EDIT_USER_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_EDIT_USER_INT;
 
@@ -229,7 +234,7 @@ class FounderMultiEditController extends FounderController {
 	}
 }
 
-class FounderAnonEditController extends FounderController {
+class FounderAnonEditController extends AbstractFounderEditController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_EDIT_ANON_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_EDIT_ANON_INT;
 
@@ -250,10 +255,6 @@ class FounderNewMemberController extends FounderController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_NEW_MEMBER_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_NEW_MEMBER_INT;
 
-	public function initEmail() {
-		// noop
-	}
-
 	/**
 	 * @template avatarLayout
 	 */
@@ -266,10 +267,6 @@ class FounderNewMemberController extends FounderController {
 			'summary' => $this->getSummary(),
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
-			'contentFooterMessages' => [
-				$this->getWikiaCommunitySignature()
-			],
-			'hasContentFooterMessages' => true,
 			'details' => $this->getDetails(),
 		] );
 	}
@@ -285,10 +282,6 @@ class FounderNewMemberController extends FounderController {
 
 	public function getDetails() {
 		return $this->getMessage( 'emailext-founder-new-member-details', $this->currentUser->getName() )->parse();
-	}
-
-	public function getWikiaCommunitySignature() {
-		return $this->getMessage( 'emailext-emailconfirmation-community-team' )->text();
 	}
 
 	public function getButtonText() {
@@ -325,13 +318,5 @@ class FounderNewMemberController extends FounderController {
 		if ( !$this->targetUser->getBoolOption( "founderemails-joins-$wikiId"  ) ) {
 			throw new Check( "Founder doesn't want to be emailed about new members joining this wiki" );
 		}
-	}
-
-	protected function getFooterMessages() {
-		// noop
-	}
-
-	protected static function getEmailSpecificFormFields() {
-		return EmailController::getEmailSpecificFormFields();
 	}
 }
