@@ -1,16 +1,16 @@
 <?php
 
 namespace Wikia\Service\User;
-use Wikia\Domain\User\PreferenceValue;
+use Wikia\Domain\User\Preference;
 
-class PreferenceTest extends \PHPUnit_Framework_TestCase {
+class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 
 	protected $userId = 1;
 	protected $testPreference;
 	protected $persistenceMock;
 
 	protected function setUp() {
-		$this->testPreference = new PreferenceValue( "pref-name", "pref-value" );
+		$this->testPreference = new Preference( "pref-name", "pref-value" );
 		$this->persistenceMock = $this->getMockBuilder( '\Wikia\Service\User\PreferencePersistence' )
 			->setMethods( ['save', 'get'] )
 			->disableOriginalConstructor()
@@ -24,7 +24,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, [$this->testPreference] )
 			->willReturn( true );
 
-		$service = new Preference( $this->persistenceMock );
+		$service = new PreferenceKeyValueService( $this->persistenceMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->assertTrue( $ret, "the preference was not set" );
@@ -36,7 +36,7 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, [] )
 			->willReturn( null );
 
-		$service = new Preference( $this->persistenceMock );
+		$service = new PreferenceKeyValueService( $this->persistenceMock );
 		$ret = $service->setPreferences( $this->userId, [ ] );
 
 		$this->assertFalse( $ret, "expected false when providing an empty preference set" );
@@ -52,25 +52,25 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, [$this->testPreference] )
 			->will( $this->throwException( new \Wikia\Service\PersistenceException() ) );
 
-		$service = new Preference( $this->persistenceMock );
+		$service = new PreferenceKeyValueService( $this->persistenceMock );
 		$ret = $service->setPreferences( $this->userId, [ $this->testPreference ] );
 
 		$this->fail( "exception was not thrown" );
 	}
 
-
 	public function testGetPreferencesSuccess() {
 		$this->persistenceMock->expects( $this->once() )
 			->method( 'get' )
 			->with( $this->userId )
-			->willReturn( [
-			[ $this->testPreference->getName() => $this->testPreference->getValue() ]
-			] );
+			->willReturn(
+				[ $this->testPreference ]
+			);
 
-		$service = new Preference( $this->persistenceMock );
+		$service = new PreferenceKeyValueService( $this->persistenceMock );
 		$preferences = $service->getPreferences( $this->userId );
 
-		$this->assertTrue( is_array($preferences), "expecting an array" );
+		$this->assertTrue( is_array( $preferences ), "expecting an array" );
+		$this->assertEquals( $this->testPreference, $preferences[0], "expecting an array" );
 	}
 
 	public function testGetPreferencesEmpty() {
@@ -79,11 +79,11 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId )
 			->willReturn( false );
 
-		$service = new Preference( $this->persistenceMock );
+		$service = new PreferenceKeyValueService( $this->persistenceMock );
 		$preferences = $service->getPreferences( $this->userId );
 
-		$this->assertTrue( is_array($preferences), "expecting an array" );
-		$this->assertTrue( empty($preferences), "expecting an empty array" );
+		$this->assertTrue( is_array( $preferences ), "expecting an array" );
+		$this->assertTrue( empty( $preferences ), "expecting an empty array" );
 	}
 
 	public function testEmptyGet() {
@@ -92,11 +92,28 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId )
 			->willReturn( [] );
 
-		$service = new Preference( $this->persistenceMock );
+		$service = new PreferenceKeyValueService( $this->persistenceMock );
 		$preferences = $service->getPreferences( $this->userId );
 
-		$this->assertTrue( is_array($preferences), "expecting an array" );
-		$this->assertTrue( empty($preferences), "expecting an empty array" );
+		$this->assertTrue( is_array( $preferences ), "expecting an array" );
+		$this->assertTrue( empty( $preferences ), "expecting an empty array" );
+	}
+
+	/**
+	 * @expectedException \UnexpectedValueException
+	 */
+	public function testGetPreferencesBadData() {
+		$this->persistenceMock->expects( $this->once() )
+			->method( 'get' )
+			->with( $this->userId )
+			->willReturn(
+				[ $this->testPreference, "this should cause an exception" ]
+			);
+
+		$service = new PreferenceKeyValueService( $this->persistenceMock );
+		$preferences = $service->getPreferences( $this->userId );
+
+		$this->fail( "we should not make it here" );
 	}
 
 }

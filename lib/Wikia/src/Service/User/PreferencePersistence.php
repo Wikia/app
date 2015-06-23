@@ -8,7 +8,7 @@ interface PreferencePersistence {
 	 * Save the users preferences.
 	 *
 	 * @param int $userId
-	 * @param array [\Wikia\Domain\User\PreferenceValue, ... ]
+	 * @param Preference[]
 	 * @return true success, false or exception otherwise
 	 */
 	public function save( $userId, array $preferences );
@@ -17,7 +17,7 @@ interface PreferencePersistence {
 	 * Get the users preferences.
 	 *
 	 * @param int $userId
-	 * @return array of maps of the form {"name": <name>, "value", <value>}
+	 * @return array of Preference objects
 	 */
 	public function get( $userId );
 
