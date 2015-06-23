@@ -118,7 +118,7 @@ class FlagsExtractor {
 		$isParamWithName = false;
 		$paramsCounter = 1;
 
-		$templateFormat = $this->getNextTemplateFormat();
+		$templateFormat = $this->getTemplateFormat();
 
 		// Position of template begin
 		if ( is_null( $templateFormat ) ) {
@@ -524,11 +524,11 @@ class FlagsExtractor {
 		return false;
 	}
 
-	private function getNextTemplateFormat() {
+	private function getTemplateFormat() {
 		global $wgContLang;
 
 		$nsPrefix = $wgContLang->getNsText( NS_TEMPLATE ) . ':';
-		$nsPrefixCommon = 'Template:';
+		$nsPrefixCommon = \MWNamespace::getCanonicalName( NS_TEMPLATE ) . ':';
 
 		$templates = [
 			$this->templateName => 0,
