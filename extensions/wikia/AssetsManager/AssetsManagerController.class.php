@@ -92,7 +92,7 @@ class AssetsManagerController extends WikiaController {
 							$this->error(__METHOD__."foreach-data2".json_encode(SassUtil::getOasisSettings()),['context'=>'kamilktest']);
 							wfDebug('kamilktestlog '.print_r(SassUtil::getOasisSettings(),true)."\n");
 							$params = SassUtil::getOasisSettings();
-							$params['color-page'] = '#ff0000';
+//							$params['color-page'] = '#ff0000';
 							$builder->addParams( $params );
 							$this->error(__METHOD__."foreach-end",['context'=>'kamilktest']);
 						}
