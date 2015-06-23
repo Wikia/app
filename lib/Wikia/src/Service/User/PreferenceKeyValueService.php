@@ -24,37 +24,32 @@ use Wikia\Domain\User\Preference;
 
 class PreferenceKeyValueService implements PreferenceService {
 
-	private $gateway;
+	private $persistenceAdapter;
 
-	function __construct( PreferencePersistence $gateway ) {
-		$this->gateway = $gateway;
+	function __construct( PreferencePersistence $persistenceAdapter ) {
+		$this->persistenceAdapter = $persistenceAdapter;
 	}
 
-	public function setPreferences( $userId, $preferences ) {
+	public function setPreferences( $userId, array $preferences ) {
 		if ( !is_array( $preferences ) || empty( $preferences ) ) {
 			return false;
 		}
 
-		return $this->gateway->save( $userId, $preferences );
+		return $this->persistenceAdapter->save( $userId, $preferences );
 	}
 
 	public function getPreferences( $userId ) {
-		$result = $this->gateway->get( $userId );
-		if (!is_array($result)) {
+		$preferences = $this->persistenceAdapter->get( $userId );
+		if (!is_array($preferences)) {
 			return [];
 		}
 
-		$preferences = $this->gatewayResultToPreferenceArray( $result );
+		$filtered = array_filter($preferences, function($v, $k) {
+			return ($v instanceof Preference);
+		}, ARRAY_FILTER_USE_BOTH);
 
-		return $preferences;
-	}
-
-	public function gatewayResultToPreferenceArray(array $result) {
-		$preferences = [];
-		foreach( $result as $index => $row ) {
-			if (isset($row["name"]) && isset($row["value"])) {
-				$preferences[] = new PreferenceKeyValueService($row["name"], $row["value"]);
-			}
+		if (count($filtered) != count($preferences)) {
+			 throw new \UnexpectedValueException("Error, expected all \"Preference\" objects.");
 		}
 
 		return $preferences;

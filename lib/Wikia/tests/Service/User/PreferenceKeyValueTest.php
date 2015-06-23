@@ -3,7 +3,7 @@
 namespace Wikia\Service\User;
 use Wikia\Domain\User\Preference;
 
-class PreferenceTest extends \PHPUnit_Framework_TestCase {
+class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 
 	protected $userId = 1;
 	protected $testPreference;
@@ -58,19 +58,19 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 		$this->fail( "exception was not thrown" );
 	}
 
-
 	public function testGetPreferencesSuccess() {
 		$this->gatewayMock->expects( $this->once() )
 			->method( 'get' )
 			->with( $this->userId )
-			->willReturn( [
-			[ $this->testPreference->getName() => $this->testPreference->getValue() ]
-			] );
+			->willReturn(
+				[ $this->testPreference ]
+			);
 
 		$service = new PreferenceKeyValueService( $this->gatewayMock );
 		$preferences = $service->getPreferences( $this->userId );
 
 		$this->assertTrue( is_array($preferences), "expecting an array" );
+		$this->assertEquals( $this->testPreference, $preferences[0], "expecting an array" );
 	}
 
 	public function testGetPreferencesEmpty() {
@@ -97,6 +97,23 @@ class PreferenceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( is_array($preferences), "expecting an array" );
 		$this->assertTrue( empty($preferences), "expecting an empty array" );
+	}
+
+	/**
+	 * @expectedException \UnexpectedValueException
+	 */
+	public function testGetPreferencesBadData() {
+		$this->gatewayMock->expects( $this->once() )
+			->method( 'get' )
+			->with( $this->userId )
+			->willReturn(
+				[ $this->testPreference, "this should cause an exception" ]
+			);
+
+		$service = new PreferenceKeyValueService( $this->gatewayMock );
+		$preferences = $service->getPreferences( $this->userId );
+
+		$this->fail("we should not make it here");
 	}
 
 }
