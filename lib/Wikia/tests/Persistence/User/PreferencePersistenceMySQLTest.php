@@ -14,13 +14,13 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->testPreference = new Preference( "pref-name", "pref-value" );
 		$this->mysqliMockSlave = $this->getMockBuilder( '\DatabaseMysqli' )
-			->setMethods( ['select' ] )
+			->setMethods( [ 'select' ] )
 			->disableOriginalConstructor()
 			->disableAutoload()
 			->getMock();
 
 		$this->mysqliMockMaster = $this->getMockBuilder( '\DatabaseMysqli' )
-			->setMethods( ['update', 'delete' ] )
+			->setMethods( [ 'upsert' ] )
 			->disableOriginalConstructor()
 			->disableAutoload()
 			->getMock();
@@ -57,4 +57,42 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( is_array($preferences), "expecting an array" );
 		$this->assertTrue( empty($preferences), "expecting an empty array" );
 	}
+
+	public function testSave() {
+		$preferences = [$this->testPreference];
+		$this->mysqliMockMaster->expects($this->once())
+			->method('upsert')
+			->with(
+				PreferencePersistenceMySQL::USER_PREFERENCE_TABLE,
+				PreferencePersistenceMySQL::createTuplesFromPreferences($this->userId, $preferences),
+				[],
+			 	PreferencePersistenceMySQL::$UPSERT_SET_BLOCK)
+			->willReturn(true);
+
+		$persistence = new PreferencePersistenceMySQL($this->mysqliMockMaster, $this->mysqliMockSlave);
+		$ret = $persistence->save( $this->userId, [$this->testPreference] );
+
+		$this->assertTrue( $ret, "expected true" );
+	}
+
+	public function testCreateTuples() {
+		$input = [ new Preference('name-a', 'value-a'), new Preference('name-b', 'value-b') ];
+
+		$output = PreferencePersistenceMySQL::createTuplesFromPreferences($this->userId, $input);
+
+		$this->assertTrue( is_array($output), "failed to create tuple array" );
+		$this->assertEquals( 1, $output[0]['up_user'], "user failed to match" );
+		$this->assertEquals( 'name-a', $output[0]['up_property'], "name failed to match" );
+		$this->assertEquals( 'value-a', $output[0]['up_value'], "value failed to match" );
+	}
+
+	public function testCreateTuplesEmpty() {
+		$persistence = new PreferencePersistenceMySQL($this->mysqliMockMaster, $this->mysqliMockSlave);
+		$input = [ ];
+		$output = PreferencePersistenceMySQL::createTuplesFromPreferences($this->userId, $input);
+
+		$this->assertTrue( is_array($output), "unexpected output" );
+		$this->assertEquals( [], $output, "result failed to match" );
+	}
+
 }
