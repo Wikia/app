@@ -1,7 +1,7 @@
 <?php
 
 namespace Wikia\Persistence\User;
-use Wikia\Domain\User\PreferenceValue;
+use Wikia\Domain\User\Preference;
 use Wikia\Persistence\User\PreferencePersistenceMySQL;
 
 class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
@@ -12,7 +12,7 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 	protected $mysqliMockMaster;
 
 	protected function setUp() {
-		$this->testPreference = new PreferenceValue( "pref-name", "pref-value" );
+		$this->testPreference = new Preference( "pref-name", "pref-value" );
 		$this->mysqliMockSlave = $this->getMockBuilder( '\DatabaseMysqli' )
 			->setMethods( ['select' ] )
 			->disableOriginalConstructor()
@@ -33,12 +33,21 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 				//array( 'up_user' => $this->getId() ),
 				//__METHOD__
 			//);
-		$persistence = new PreferencePersistenceMySQL($this->mysqliMockMaster, $this->mysqliMockSlave);
-		$result = $persistence->get( $this->userId );
+		$this->mysqliMockSlave->expects($this->once())
+			->method('select')
+			->with('user_properties', '*', array( 'up_user' => $this->userId ), $this->anything())
+			->willReturn([
+			 [ 'up_user' => $this->userId, 'up_property' => $this->testPreference->getName(), 'up_value' => $this->testPreference->getValue() ],
+			 [ 'up_user' => $this->userId, 'up_property' => 'autopatrol', 'up_value' => '0' ],
+			 [ 'up_user' => $this->userId, 'up_property' => 'date', 'up_value' => '1' ],
+			]);
 
-		$this->assertTrue( is_array($result), "expecting an array" );
-		$this->assertTrue( !empty($result), "expecting an array" );
-		$this->assertEquals( $result[0]->getName(), $this->testPreference->getName(), "expecting the test preference name" );
-		$this->assertEquals( $result[0]->getValue(), $this->testPreference->getValue(), "expecting the test preference value" );
+		$persistence = new PreferencePersistenceMySQL($this->mysqliMockMaster, $this->mysqliMockSlave);
+		$preferences = $persistence->get( $this->userId );
+
+		$this->assertTrue( is_array($preferences), "expecting an array" );
+		$this->assertTrue( !empty($preferences), "expecting a non-empty array" );
+		$this->assertEquals( $preferences[0]->getName(), $this->testPreference->getName(), "expecting the test preference name" );
+		$this->assertEquals( $preferences[0]->getValue(), $this->testPreference->getValue(), "expecting the test preference value" );
 	}
 }
