@@ -27,12 +27,6 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetSuccess() {
-			//$res = $dbr->select(
-				//'user_properties',
-				//'*',
-				//array( 'up_user' => $this->getId() ),
-				//__METHOD__
-			//);
 		$this->mysqliMockSlave->expects($this->once())
 			->method('select')
 			->with('user_properties', '*', array( 'up_user' => $this->userId ), $this->anything())
@@ -49,5 +43,18 @@ class PreferencePersistenceMySQLTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue( !empty($preferences), "expecting a non-empty array" );
 		$this->assertEquals( $preferences[0]->getName(), $this->testPreference->getName(), "expecting the test preference name" );
 		$this->assertEquals( $preferences[0]->getValue(), $this->testPreference->getValue(), "expecting the test preference value" );
+	}
+
+	public function testGetEmpty() {
+		$this->mysqliMockSlave->expects($this->once())
+			->method('select')
+			->with('user_properties', '*', array( 'up_user' => $this->userId ), $this->anything())
+			->willReturn([]);
+
+		$persistence = new PreferencePersistenceMySQL($this->mysqliMockMaster, $this->mysqliMockSlave);
+		$preferences = $persistence->get( $this->userId );
+
+		$this->assertTrue( is_array($preferences), "expecting an array" );
+		$this->assertTrue( empty($preferences), "expecting an empty array" );
 	}
 }
