@@ -22,27 +22,30 @@
  *
  */
 
-namespace Swagger\UserPreferences\Models;
+namespace Swagger\Client\User\Preferences\Models;
 
 use \ArrayAccess;
 
 class Problem implements ArrayAccess {
+  /** @var string[] Array of property to type mappings. Used for (de)serialization */
   static $swaggerTypes = array(
-    'title' => 'string',
-    'status' => 'int',
-    'type' => 'string',
-    'detail' => 'string',
-    'instance' => 'string'
+      'title' => 'string',
+      'status' => 'int',
+      'type' => 'string',
+      'detail' => 'string',
+      'instance' => 'string'
   );
 
+  /** @var string[] Array of attributes where the key is the local name, and the value is the original name */
   static $attributeMap = array(
-    'title' => 'title',
-    'status' => 'status',
-    'type' => 'type',
-    'detail' => 'detail',
-    'instance' => 'instance'
+      'title' => 'title',
+      'status' => 'status',
+      'type' => 'type',
+      'detail' => 'detail',
+      'instance' => 'instance'
   );
 
+  /** @var string[] Array of attributes to setter functions (for deserialization of responses) */
   static $setters = array(
     'title' => 'setTitle',
     'status' => 'setStatus',
@@ -51,6 +54,7 @@ class Problem implements ArrayAccess {
     'instance' => 'setInstance'
   );
 
+  /** @var string[] Array of attributes to getter functions (for serialization of requests) */
   static $getters = array(
     'title' => 'getTitle',
     'status' => 'getStatus',
@@ -60,29 +64,19 @@ class Problem implements ArrayAccess {
   );
 
   
-  /**
-   * @var string
-   */
+  /** @var string $title */
   protected $title;
   
-  /**
-   * @var int
-   */
+  /** @var int $status */
   protected $status;
   
-  /**
-   * @var string
-   */
+  /** @var string $type */
   protected $type;
   
-  /**
-   * @var string
-   */
+  /** @var string $detail */
   protected $detail;
   
-  /**
-   * @var string
-   */
+  /** @var string $instance */
   protected $instance;
   
   public function __construct(array $data = null) {
@@ -199,5 +193,13 @@ class Problem implements ArrayAccess {
 
   public function offsetUnset($offset) {
     unset($this->$offset);
+  }
+
+  public function __toString() {
+    if (defined('JSON_PRETTY_PRINT')) {
+      return json_encode($this, JSON_PRETTY_PRINT);
+    } else {
+      return json_encode($this);
+    }
   }
 }

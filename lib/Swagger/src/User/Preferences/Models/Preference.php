@@ -22,40 +22,40 @@
  *
  */
 
-namespace Swagger\UserPreferences\Models;
+namespace Swagger\Client\User\Preferences\Models;
 
 use \ArrayAccess;
 
 class Preference implements ArrayAccess {
+  /** @var string[] Array of property to type mappings. Used for (de)serialization */
   static $swaggerTypes = array(
-    'name' => 'string',
-    'value' => 'string'
+      'name' => 'string',
+      'value' => 'string'
   );
 
+  /** @var string[] Array of attributes where the key is the local name, and the value is the original name */
   static $attributeMap = array(
-    'name' => 'name',
-    'value' => 'value'
+      'name' => 'name',
+      'value' => 'value'
   );
 
+  /** @var string[] Array of attributes to setter functions (for deserialization of responses) */
   static $setters = array(
     'name' => 'setName',
     'value' => 'setValue'
   );
 
+  /** @var string[] Array of attributes to getter functions (for serialization of requests) */
   static $getters = array(
     'name' => 'getName',
     'value' => 'getValue'
   );
 
   
-  /**
-   * @var string
-   */
+  /** @var string $name */
   protected $name;
   
-  /**
-   * @var string
-   */
+  /** @var string $value */
   protected $value;
   
   public function __construct(array $data = null) {
@@ -115,5 +115,13 @@ class Preference implements ArrayAccess {
 
   public function offsetUnset($offset) {
     unset($this->$offset);
+  }
+
+  public function __toString() {
+    if (defined('JSON_PRETTY_PRINT')) {
+      return json_encode($this, JSON_PRETTY_PRINT);
+    } else {
+      return json_encode($this);
+    }
   }
 }

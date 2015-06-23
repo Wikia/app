@@ -17,64 +17,44 @@
 
 namespace Swagger\Client;
 
-class ApiClientConfiguration {
+class Configuration {
 
   private static $defaultConfiguration = null;
 
-  /**
-   * Associate array to store API key(s)
-   */
+  /** @var string[] Associate array to store API key(s) */
   protected $apiKeys = array();
 
-  /**
-   * Associate array to store API prefix (e.g. Bearer)
-   */
+  /** string[] Associate array to store API prefix (e.g. Bearer) */
   protected $apiKeyPrefixes = array();
 
-  /**
-   * Username for HTTP basic authentication
-   */
+  /** @var string Username for HTTP basic authentication */
   protected $username = '';
 
-  /**
-   * Password for HTTP basic authentication
-   */
+  /** @var string Password for HTTP basic authentication */
   protected $password = '';
 
-  /**
-   * default headers for requests this conf
-   */
+  /** @var \Swagger\Client\ApiClient The default instance of ApiClient */
   protected $defaultHeaders = array();
 
-  /**
-   * The host
-   */
+  /** @var string The host */
   protected $host = 'http://localhost';
 
-  /*
-   * @var string timeout (second) of the HTTP request, by default set to 0, no timeout
-   */
+  /** @var string timeout (second) of the HTTP request, by default set to 0, no timeout */
   protected $curlTimeout = 0;
 
-  /*
-   * @var string user agent of the HTTP request, set to "PHP-Swagger" by default
-   */
+  /** @var string user agent of the HTTP request, set to "PHP-Swagger" by default */
   protected $userAgent = "PHP-Swagger";
 
-  /**
-   * Debug switch (default set to false)
-   */
+  /** @var bool Debug switch (default set to false) */
   protected $debug = false;
 
-  /**
-   * Debug file location (log to STDOUT by default)
-   */
+  /** @var string Debug file location (log to STDOUT by default) */
   protected $debugFile = 'php://output';
 
   /**
    * @param string $key
    * @param string $value
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public function setApiKey($key, $value) {
     $this->apiKeys[$key] = $value;
@@ -92,7 +72,7 @@ class ApiClientConfiguration {
   /**
    * @param string $key
    * @param string $value
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public function setApiKeyPrefix($key, $value) {
     $this->apiKeyPrefixes[$key] = $value;
@@ -109,7 +89,7 @@ class ApiClientConfiguration {
 
   /**
    * @param string $username
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public function setUsername($username) {
     $this->username = $username;
@@ -125,7 +105,7 @@ class ApiClientConfiguration {
 
   /**
    * @param string $password
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public function setPassword($password) {
     $this->password = $password;
@@ -165,8 +145,17 @@ class ApiClientConfiguration {
   }
 
   /**
+   * delete a default header
+   * @param string $headerName the header to delete
+   * @return Configuration
+   */
+  public function deleteDefaultHeader($headerName) {
+    unset($this->defaultHeaders[$headerName]);
+  }
+
+  /**
    * @param string $host
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public function setHost($host) {
     $this->host = $host;
@@ -230,7 +219,7 @@ class ApiClientConfiguration {
 
   /**
    * @param bool $debug
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public function setDebug($debug) {
     $this->debug = $debug;
@@ -246,7 +235,7 @@ class ApiClientConfiguration {
 
   /**
    * @param string $debugFile
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public function setDebugFile($debugFile) {
     $this->debugFile = $debugFile;
@@ -261,17 +250,17 @@ class ApiClientConfiguration {
   }
 
   /**
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public static function getDefaultConfiguration() {
     if (self::$defaultConfiguration == null) {
-      return new ApiClientConfiguration();
+      return new Configuration();
     }
 
     return self::$defaultConfiguration;
   }
 
-  public static function setDefaultConfiguration(ApiClientConfiguration $config) {
+  public static function setDefaultConfiguration(Configuration $config) {
     self::$defaultConfiguration = $config;
   }
 }

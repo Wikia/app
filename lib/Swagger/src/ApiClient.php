@@ -25,28 +25,38 @@ class ApiClient {
   public static $PUT = "PUT";
   public static $DELETE = "DELETE";
 
-  /**
-   * @var ApiClientConfiguration
-   */
+  /** @var Configuration */
   protected $config;
 
+  /** @var ObjectSerializer */
+  protected $serializer;
+
   /**
-   * @param ApiClientConfiguration $config config for this ApiClient
+   * @param Configuration $config config for this ApiClient
    */
-  function __construct(ApiClientConfiguration $config = null) {
+  function __construct(Configuration $config = null) {
     if ($config == null) {
-      $config = ApiClientConfiguration::getDefaultConfiguration();
+      $config = Configuration::getDefaultConfiguration();
     }
     
     $this->config = $config;
+    $this->serializer = new ObjectSerializer();
   }
 
   /**
    * get the config
-   * @return ApiClientConfiguration
+   * @return Configuration
    */
   public function getConfig() {
     return $this->config;
+  }
+
+  /**
+   * get the serializer
+   * @return ObjectSerializer
+   */
+  public function getSerializer() {
+    return $this->serializer;
   }
 
   /**
@@ -96,7 +106,7 @@ class ApiClient {
       $postData = http_build_query($postData);
     }
     else if ((is_object($postData) or is_array($postData)) and !in_array('Content-Type: multipart/form-data', $headers)) { // json model
-      $postData = json_encode(ObjectSerializer::sanitizeForSerialization($postData));
+      $postData = json_encode($this->serializer->sanitizeForSerialization($postData));
     }
 
     $url = $this->config->getHost() . $resourcePath;
@@ -194,7 +204,7 @@ class ApiClient {
   /*
    * return the content type based on an array of content-type provided
    *
-   * @param array[string] content_type_array Array fo content-type
+   * @param string[] content_type_array Array fo content-type
    * @return string Content-Type (e.g. application/json)
    */
   public static function selectHeaderContentType($content_type) {
@@ -207,4 +217,3 @@ class ApiClient {
     }
   }
 }
-
