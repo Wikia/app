@@ -145,6 +145,12 @@ abstract class WallMessageController extends EmailController {
 					'label' => 'Details',
 					'tooltip' => 'The text of post'
 				],
+				[
+					'type' => 'text',
+					'name' => 'threadId',
+					'label' => 'Thread ID',
+					'tooltip' => 'Message thread ID'
+				],
 			]
 		];
 
@@ -160,14 +166,10 @@ class OwnWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSummary() {
-		if ( $this->currentUser->isAnon() ) {
-			return $this->getMessage( 'emailext-wallmessage-anon-owned-summary' )
-				->parse();
-		} else {
-			return $this->getMessage( 'emailext-wallmessage-owned-summary',
-				$this->getCurrentProfilePage(), $this->authorUserName
-			)->parse();
-		}
+		return $this->getMessage( 'emailext-wallmessage-owned-summary',
+			\Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE )->getFullURL(),
+			$this->titleText
+		)->parse();
 	}
 
 	/**
@@ -176,14 +178,7 @@ class OwnWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSubject() {
-		if ( $this->currentUser->isAnon() ) {
-			return $this->getMessage( 'emailext-wallmessage-anon-owned-subject' )
-				->text();
-		} else {
-			return $this->getMessage( 'emailext-wallmessage-owned-subject',
-				$this->authorUserName
-			)->text();
-		}
+		return $this->getMessage( 'emailext-wallmessage-owned-subject', $this->titleText )->parse();
 	}
 }
 
@@ -195,6 +190,27 @@ class ReplyWallMessageController extends OwnWallMessageController {
 		parent::initEmail();
 
 		$this->title = \Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE );
+	}
+
+	/**
+	 * Get the summary text immediately following the salutation in the email
+	 *
+	 * @return string
+	 */
+	protected function getSummary() {
+		return $this->getMessage( 'emailext-wallmessage-reply-summary',
+			\Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE )->getFullURL(),
+			$this->titleText
+		)->parse();
+	}
+
+	/**
+	 * Get the email subject line
+	 *
+	 * @return string
+	 */
+	protected function getSubject() {
+		return $this->getMessage( 'emailext-wallmessage-reply-subject', $this->titleText )->parse();
 	}
 
 	protected function getFooterMessages() {
@@ -218,17 +234,11 @@ class FollowedWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSummary() {
-		if ( $this->currentUser->isAnon() ) {
-			return $this->getMessage( 'emailext-wallmessage-anon-following-summary',
-				$this->wallUserName
-			)->parse();
-		} else {
-			return $this->getMessage( 'emailext-wallmessage-following-summary',
-				$this->getCurrentProfilePage(),
-				$this->authorUserName,
-				$this->wallUserName
-			)->parse();
-		}
+		return $this->getMessage( 'emailext-wallmessage-following-summary',
+			$this->wallUserName,
+			\Title::newFromText( $this->getVal( 'threadId' ), NS_USER_WALL_MESSAGE )->getFullURL(),
+			$this->titleText
+		)->parse();
 	}
 
 	/**
@@ -237,16 +247,10 @@ class FollowedWallMessageController extends WallMessageController {
 	 * @return string
 	 */
 	protected function getSubject() {
-		if ( $this->currentUser->isAnon() ) {
-			return $this->getMessage( 'emailext-wallmessage-anon-following-subject',
-				$this->wallUserName
-			)->text();
-		} else {
-			return $this->getMessage( 'emailext-wallmessage-following-subject',
-				$this->authorUserName,
-				$this->wallUserName
-			)->text();
-		}
+		return $this->getMessage( 'emailext-wallmessage-following-subject',
+			$this->wallUserName,
+			$this->titleText
+		)->text();
 	}
 
 	protected function getFooterMessages() {
