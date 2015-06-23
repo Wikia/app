@@ -94,7 +94,7 @@ class MultipleLookupCore {
 	}
 
 	function checkUserActivity( $order = null ) {
-		global $wgMemc, $wgSpecialsDB;
+		global $wgMemc, $wgSpecialsDB, $wgLang;
 
 		$userActivity = array();
 
