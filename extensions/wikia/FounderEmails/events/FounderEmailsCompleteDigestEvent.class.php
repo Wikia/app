@@ -1,6 +1,8 @@
 <?php
 
 class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
+	const EMAIL_CONTROLLER = 'Email\Controller\FounderActivityDigest';
+
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'completeDigest' );
 		$this->setData( $data );
@@ -51,7 +53,7 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 				}
 
 				$emailParams['targetUser'] = $user->getName();
-				F::app()->sendRequest( 'Email\Controller\FounderActivityDigest', 'handle', $emailParams );
+				F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $emailParams );
 			}
 		}
 

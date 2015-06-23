@@ -1,5 +1,7 @@
 <?php
 class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
+	const EMAIL_CONTROLLER = 'Email\Controller\FounderPageViewsDigest';
+
 	public function __construct( Array $data = array() ) {
 		parent::__construct( 'viewsDigest' );
 		$this->setData( $data );
@@ -10,13 +12,6 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 			return false;
 		}
 
-		// If complete digest mode is enabled, do not send views only digest
-		if ( $user->getOption( "founderemails-complete-digest-$wikiId" ) ) {
-			return false;
-		}
-		if ( $user->getOption( "founderemails-views-digest-$wikiId" ) ) {
-			return true;
-		}
 		return true;
 	}
 
@@ -51,7 +46,7 @@ class FounderEmailsViewsDigestEvent extends FounderEmailsEvent {
 				}
 
 				$emailParams['targetUser'] = $user->getName();
-				F::app()->sendRequest( 'Email\Controller\FounderPageViewsDigest', 'handle', $emailParams );
+				F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', $emailParams );
 			}
 		}
 		wfProfileOut( __METHOD__ );

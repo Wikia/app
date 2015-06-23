@@ -11,6 +11,22 @@ abstract class FounderDigestController extends EmailController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::DEFAULT_CATEGORY;
 	const TRACKING_CATEGORY_INT = TrackingCategories::DEFAULT_CATEGORY;
 
+	protected $wikiId;
+
+	protected $pageViews;
+
+	protected $pageEdits;
+
+	protected $newUsers;
+
+	public function initEmail() {
+		$this->wikiId = $this->request->getVal( 'wikiId' );
+		$this->pageViews = $this->request->getVal( 'pageViews' );
+		$this->assertValidParams();
+
+		$this->pageViews = number_format( $this->pageViews );
+	}
+
 	protected function getSummary() {
 		return $this->getMessage( 'emailext-founder-digest-summary',
 			\WikiMap::getWikiName( $this->wikiId ) )->parse();
@@ -27,7 +43,7 @@ abstract class FounderDigestController extends EmailController {
 	 * @throws \Email\Check
 	 */
 	protected function assertValidWikiId() {
-		if ( (int) $this->wikiId < 1 ) {
+		if ( $this->wikiId < 1 ) {
 			throw new Check( 'Invalid value passed for `wikiId`' );
 		}
 	}
@@ -82,13 +98,10 @@ class FounderActivityDigestController extends FounderDigestController {
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_ACTIVITY_DIGEST_INT;
 
 	public function initEmail() {
-		$this->wikiId = $this->request->getVal( 'wikiId' );
-		$this->pageViews = $this->request->getVal( 'pageViews' );
 		$this->pageEdits = $this->request->getVal( 'pageEdits' );
 		$this->newUsers = $this->request->getVal( 'newUsers' );
-		$this->assertValidParams();
-
-		$this->pageViews = number_format( $this->pageViews );
+		// Parent method is called here so that assertion of parameters is done at the right time
+		parent::initEmail();
 		$this->pageEdits = number_format( $this->pageEdits );
 		$this->newUsers = number_format( $this->newUsers );
 	}
@@ -225,14 +238,6 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	const TRACKING_CATEGORY_EN = TrackingCategories::FOUNDER_VIEWS_DIGEST_EN;
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_VIEWS_DIGEST_INT;
 
-	public function initEmail() {
-		$this->wikiId = $this->request->getVal( 'wikiId' );
-		$this->pageViews = $this->request->getVal( 'pageViews' );
-		$this->assertValidParams();
-
-		$this->pageViews = number_format( $this->pageViews );
-	}
-
 	protected function getSubject() {
 		return $this->getMessage( 'emailext-founder-views-digest-subject',
 			\WikiMap::getWikiName( $this->wikiId ) )->parse();
@@ -301,7 +306,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	}
 
 	public function getButtonLink() {
-		return \GlobalTitle::newFromText( 'CreatePage', NS_SPECIAL, $this->wikiId )->getFullURL( array( 'modal' => 'AddPage' ) );
+		return \GlobalTitle::newFromText( 'CreatePage', NS_SPECIAL, $this->wikiId )->getFullURL( [ 'modal' => 'AddPage' ] );
 	}
 }
 
