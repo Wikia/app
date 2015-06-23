@@ -21,7 +21,8 @@ class Hooks {
 		/* Assets for flags view */
 		if ( $helper->shouldDisplayFlags()
 			|| $out->getTitle()->isSpecial( 'Flags' ) ) {
-			\Wikia::addAssetsToOutput( 'flags_view_scss' );
+			// Cached per wikia as it contains some wikia dependant colors
+			\Wikia::addAssetsToOutput( 'flags_view_scss', true );
 		}
 		/* Assets for flags edit form */
 		if ( $helper->areFlagsEditable() ) {
