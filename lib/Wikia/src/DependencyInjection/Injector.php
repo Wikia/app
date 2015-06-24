@@ -4,6 +4,7 @@ namespace Wikia\DependencyInjection;
 
 use DI\Container;
 use DI\ContainerBuilder;
+use Doctrine\Common\Cache\CacheProvider;
 use Wikia\Service\User\PreferenceService;
 use function DI\object;
 
@@ -36,6 +37,14 @@ class Injector {
 	 */
 	public function addModule(Module $module) {
 		$this->builder->addDefinitions($module->configure());
+		return $this;
+	}
+
+	public function withCache(CacheProvider $cacheProvider = null) {
+		if ($cacheProvider != null) {
+			$this->builder->setDefinitionCache($cacheProvider);
+		}
+
 		return $this;
 	}
 

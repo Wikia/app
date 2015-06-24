@@ -59,7 +59,6 @@ require_once ( $IP."/lib/Wikia/autoload.php");
  * initialize dependency injection, must be done after Wikia/autoload
  */
 require_once ( $IP."/includes/wikia/injector/InjectorInitializer.php");
-InjectorInitializer::init();
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
