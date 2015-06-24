@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.provider.jj', [
 		}
 	};
 
-	fillInSlot = function (slotname, success, hop) {
+	fillInSlot = function (slotname, slotElement, success, hop) {
 		var doRandomHop = Math.random() < 0.2;
 
 		if (doRandomHop) {
