@@ -72,9 +72,11 @@ class AssetsManagerController extends WikiaController {
 		if ( !is_null( $styles ) ) {
 			$profileId = __METHOD__ . "::styles::{$styles}";
 			wfProfileIn( $profileId );
-$this->debug('$styles in '.__METHOD__, ['context' => print_r($styles,true)]);
+$this->debug('$styles in '.__METHOD__, ['context' => 'kamilktest', 'dataa' => print_r($styles,true)]);
 			$key = $this->getComponentMemcacheKey( $styles );
-$this->debug('memc $key in '.__METHOD__, ['context' => print_r($key,true)]);
+$this->debug('memc $key in '.__METHOD__, ['context' => 'kamilktest', 'dataa' => print_r($key,true)]);
+			wfDebug('kamilktestlog 2 '.__METHOD__.' .print_r($key,true)."\n");
+
 			$data = '';
 //			$data = $this->wg->Memc->get( $key );
 
