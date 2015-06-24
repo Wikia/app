@@ -12,7 +12,8 @@ class TemplateDraftHooks {
 		global $wgTitle;
 
 		if ( $wgTitle->getNamespace() === NS_TEMPLATE
-			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== 0 ) {
+			&& Wikia::getProps( $wgTitle->getArticleID(), TemplateDraftController::TEMPLATE_INFOBOX_PROP ) !== 0
+		) {
 			$railModuleList[1502] = [ 'TemplateDraftModule', 'Index', null ];
 		}
 
@@ -29,10 +30,7 @@ class TemplateDraftHooks {
 	 */
 	public static function onEditFormPreloadText( &$text, Title $title ) {
 		$helper = new TemplateDraftHelper();
-		if ( $title->isSubpage()
-			&& $title->getNamespace() === NS_TEMPLATE
-			&& $helper->isTitleDraft( $title ) )
-		{
+		if ( $helper->isTitleDraft( $title ) ) {
 			$parentTitleId = $helper->getParentTitleId( $title );
 
 			if ( $parentTitleId > 0 ) {

@@ -12,7 +12,9 @@ class TemplateDraftHelper {
 		/**
 		 * TODO: Improve this check (i18n)
 		 */
-		return strpos( $title->getText(), '/Draft' ) !== false;
+		return $title->getNamespace() === NS_TEMPLATE
+			&& $title->isSubpage()
+			&& $title->getSubpageText() === 'Draft';
 	}
 
 	/**
