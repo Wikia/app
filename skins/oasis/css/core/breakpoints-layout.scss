@@ -41,6 +41,12 @@
 		@media #{$breakpoint-not-supported} {
 			overflow: auto;
 		}
+
+		// CONCF-612: large modal sizes are hidden by small (and overflown) body
+		// solution: show scrollbar on body if nessesary
+		&.modalShown {
+			overflow-y: auto;
+		}
 	}
 
 	.WikiaMainContent {

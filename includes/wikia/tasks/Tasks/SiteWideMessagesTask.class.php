@@ -843,7 +843,7 @@ class SiteWideMessagesTask extends BaseTask {
 	 * @return bool
 	 */
 	private function sendMessageHelperToGroup(&$wikisDB, &$params) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgSpecialsDB;
 
 		$result = true;
 		$this->info('get list of users that belong to specific group on specific wikis', [
@@ -851,21 +851,18 @@ class SiteWideMessagesTask extends BaseTask {
 			'group' => $params['groupName'],
 		]);
 
-		$sqlValues = [];
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-			$sqlValues = (new \WikiaSQL())
-				->SELECT('user_id', 'wiki_id')
-				->FROM('specials.events_local_users')
-				->WHERE('wiki_id')->IN(array_keys($wikisDB))
-					->AND_(StaticSQL::RAW(
-						'(single_group = ? OR all_groups LIKE ?)', [$params['groupName'], "%{$params['groupName']}%"]
-					))
-				->GROUP_BY('wiki_id', 'user_id')
-				->runLoop($dbr, function(&$results, $row) USE ($params) {
-					$results []= [$row->wiki_id, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
-				});
-		}
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
+		$sqlValues = (new \WikiaSQL())
+			->SELECT('user_id', 'wiki_id')
+			->FROM('events_local_users')
+			->WHERE('wiki_id')->IN(array_keys($wikisDB))
+				->AND_(StaticSQL::RAW(
+					'(single_group = ? OR all_groups LIKE ?)', [$params['groupName'], "%{$params['groupName']}%"]
+				))
+			->GROUP_BY('wiki_id', 'user_id')
+			->runLoop($dbr, function(&$results, $row) USE ($params) {
+				$results []= [$row->wiki_id, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
+			});
 
 		if (count($sqlValues)) {
 			$this->info('add records about new message to users', [

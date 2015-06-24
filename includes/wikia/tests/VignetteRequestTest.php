@@ -71,7 +71,7 @@ class VignetteRequestTest extends WikiaBaseTest {
 	public function legacyThumbDefinitions() {
 		return [
 			[
-				'scale-to-width/400?cb=123&format=webp',
+				'scale-to-width-down/400?cb=123&format=webp',
 				'400px-filename.jpg.webp'
 			],
 			[

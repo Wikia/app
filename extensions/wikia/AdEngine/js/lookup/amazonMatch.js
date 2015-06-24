@@ -14,6 +14,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		amazonResponse,
 		amazonTiming,
 		amazonCalled = false,
+		amazonRendered = false,
 		amazonParamPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
 		sizeMapping = {
 			'1x6': ['LEFT_SKYSCRAPER_2', 'LEFT_SKYSCRAPER_3'],
@@ -109,7 +110,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 	}
 
 	function renderAd(doc, adId) {
-		log(['getPageParams', doc, adId, 'available: ' + !!amazonResponse[adId]], 'debug', logGroup);
+		log(['renderAd', doc, adId, 'available: ' + !!amazonResponse[adId]], 'debug', logGroup);
+		amazonRendered = true;
 		doc.write(amazonResponse[adId]);
 	}
 
@@ -145,21 +147,30 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		return amazonCalled;
 	}
 
+	function hasResponse() {
+		log(['hasResponse', amazonResponse], 'debug', logGroup);
+		return (amazonResponse) ? true : false;
+	}
+
 	function getSlotParams(slotName) {
 		log(['getSlotParams', slotName], 'debug', logGroup);
 
 		var amznSlots = [];
 
-		Object.keys(sizeMapping).forEach(function (amazonSize) {
-			var validSlotNames = sizeMapping[amazonSize],
-				amazonPricePoint = bestPricePointForSize[amazonSize];
+		if (!amazonRendered) {
+			Object.keys(sizeMapping).forEach(function (amazonSize) {
+				var validSlotNames = sizeMapping[amazonSize],
+					amazonPricePoint = bestPricePointForSize[amazonSize];
 
-			if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
-				amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
-			}
-		});
+				if (validSlotNames.indexOf(slotName) !== -1 && amazonPricePoint) {
+					amznSlots.push('a' + amazonSize + 'p' + amazonPricePoint);
+				}
+			});
 
-		log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
+			log(['getSlotParams - amznSlots: ', amznSlots], 'debug', logGroup);
+		} else {
+			log(['getSlotParams - no amznSlots since ads has been already displayed', slotName], 'debug', logGroup);
+		}
 
 		if (amznSlots.length) {
 			return {
@@ -181,7 +192,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 		trackState: function () {
 			log('fake trackState - module is not supported in IE8', 'debug', logGroup);
 		},
-		wasCalled: wasCalled
+		wasCalled: wasCalled,
+		hasResponse: hasResponse
 	};
 
 	if (!Object.keys) {

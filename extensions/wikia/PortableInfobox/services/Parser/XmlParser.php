@@ -24,7 +24,7 @@ class XmlParser {
 				self::logXmlParseError( $xmlerror->level, $xmlerror->code, trim( $xmlerror->message ) );
 			}
 			libxml_clear_errors();
-			throw new XmlMarkupParseErrorException();
+			throw new XmlMarkupParseErrorException( $errors );
 		}
 
 		return $xml;
@@ -40,4 +40,14 @@ class XmlParser {
 }
 
 class XmlMarkupParseErrorException extends \Exception {
+	private $errors;
+
+	public function __construct( $errors ) {
+		$this->errors = $errors;
+		return parent::__construct();
+	}
+
+	public function getErrors() {
+		return $this->errors;
+	}
 }

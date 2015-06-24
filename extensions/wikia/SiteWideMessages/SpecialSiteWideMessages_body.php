@@ -298,7 +298,7 @@ class SiteWideMessages extends SpecialPage {
 
 	//DB functions
 	private function sendMessage( $mSender, $mText, $formData ) {
-		global $wgExternalSharedDB, $wgStatsDB, $wgUser;
+		global $wgExternalSharedDB, $wgSpecialsDB, $wgUser;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
 		$mWikiId = null;
@@ -700,10 +700,10 @@ class SiteWideMessages extends SpecialPage {
 							switch ($mSendModeUsers) {
 								case 'ALL':
 								case 'ACTIVE':
-									$dbr = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+									$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 
 									$dbResult = $dbr->select(
-										array('`specials`.`events_local_users`'),
+										array('events_local_users'),
 										array('user_id'),
 										array('wiki_id' => $mWikiId),
 										__METHOD__,
