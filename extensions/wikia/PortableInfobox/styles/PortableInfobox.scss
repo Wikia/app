@@ -23,10 +23,13 @@ $infobox-debug-error-msg-bg: black;
 	width: $infobox-width;
 
 	// TODO: experimental wide infobox styles (remove or refactor)
-	&.wide-infobox {
-		@include column-count(3);
-		@include column-gap($infobox-item-margin * 2);
+	&.portable-infobox-layout-full-width {
+		@include column-count(2);
+		@include column-gap(0);
+		@include column-rule(1px solid $infobox-section-header-background);
 
+		-webkit-column-fill: balance;
+		column-fill: balance;
 		clear: both;
 		float: none;
 		margin: 0;
@@ -36,7 +39,8 @@ $infobox-debug-error-msg-bg: black;
 			@include column-break-inside(avoid);
 		}
 
-		.item-type-title {
+		> .item-type-title,
+		> .item-type-image {
 			@include column-span(all);
 		}
 	}
