@@ -407,7 +407,7 @@
 		renderPreview: function (extraData, type) {
 			var self = this;
 
-			require([ 'wikia.breakpointsLayout' ], function (fluidlayout) {
+			require([ 'wikia.breakpointsLayout' ], function (breakpointsLayout) {
 				var previewPadding = 22, // + 2px for borders
 					articleWidth = 660,
 					width = articleWidth + (self.isGridLayout ? 30 : 0),
@@ -426,7 +426,7 @@
 
 				if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 					var pageWidth = $('#WikiaPage').width(),
-						minWidth = fluidlayout.getMinArticleWidth();
+						minWidth = breakpointsLayout.getMinArticleWidth();
 
 					// don't go below minimum width
 					if (pageWidth <= minWidth) {
@@ -451,13 +451,6 @@
 						});
 					}
 				};
-
-				console.log(config.isWidePage);
-				// pass info about dropped rail to preview module
-				if (config.isWidePage && (window.wgOasisResponsive || window.wgOasisBreakpoints)) {
-					// if it's a small screen or wide page pass to preview a flag to drop rail
-					previewOptions.isRailDropped = true;
-				}
 
 				// pass info about if it's a wide page (main page or page without right rail)
 				previewOptions.isWidePage = config.isWidePage;
@@ -523,10 +516,11 @@
 		},
 
 		getSummary: function () {
-			var summary = $('#wpSummary').val();
+			var $wpSummary = $('#wpSummary');
+			var summary = $wpSummary.val();
 
 			// bugid-93498: IE fakes placeholder functionality by setting a real val
-			if (summary === $('#wpSummary').attr('placeholder')) {
+			if (summary === $wpSummary.attr('placeholder')) {
 				summary = '';
 			}
 

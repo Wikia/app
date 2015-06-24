@@ -27,12 +27,6 @@ define('wikia.preview', [
 	var $article,
 		$previewTypeDropdown = $(), // in case preview loaded quicker than switchPreview
 		previewTemplate, // current design of preview has this margins to emulate page margins
-		// TODO: when we will redesign preview to meet darwin design directions -
-		// TODO: this should be done differently and refactored
-		// values for min and max are Darwin minimum and maximum supported article width.
-		articleMargin = fluidlayout.getWidthPadding() + fluidlayout.getArticleBorderWidth(),
-		rightRailWidth = fluidlayout.getRightRailWidth(),
-		isRailDropped = false,
 		isWidePage = false,
 		articleWrapperWidth, // width of article wrapper needed as reference for preview scaling
 		// pixels to be removed from modal width to fit modal on small screens,
@@ -173,7 +167,6 @@ define('wikia.preview', [
 			}
 
 			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-				var noRail = isWidePage || isRailDropped;
 				if (opening) {
 
 					// set current width of the article
@@ -185,7 +178,7 @@ define('wikia.preview', [
 				}
 
 				if (currentTypeName) {
-					var articleWidth = fluidlayout.getArticleWidth(currentTypeName ,noRail);
+					var articleWidth = fluidlayout.getArticleWidth(currentTypeName ,isWidePage);
 					$article.width(articleWidth);
 				}
 
@@ -265,7 +258,6 @@ define('wikia.preview', [
 	/**
 	 * Display a dialog with article preview. Options passed in the object are:
 	 *  - 'width' - dialog width in pixels
-	 *  - 'isRailDropped' - flag set to true for window size 1023 and below when responsive layout is enabled
 	 *  - 'scrollbarWidth' - width of the scrollbar
 	 *                      (need do be subtracted from article wrapper width as reference for scaling)
 	 *  - 'onPublishButton' - callback function launched when user presses the 'Publish' button on the dialog
@@ -278,7 +270,6 @@ define('wikia.preview', [
 	 */
 	function renderPreview(options) {
 		editPageOptions = options;
-		isRailDropped = !!options.isRailDropped;
 		isWidePage = !!options.isWidePage;
 		getPreviewTypes();
 		if (typeof options.currentTypeName !== 'undefined') {
@@ -300,8 +291,7 @@ define('wikia.preview', [
 				handler: options.onPublishButton
 			}],
 			// set modal width based on screen size
-			width: ((isRailDropped === false && isWidePage === false) || !window.wgOasisResponsive || !window.wgOasisBreakpoints) ?
-				options.width : options.width - FIT_SMALL_SCREEN,
+			width: ((isWidePage === false) || !window.wgOasisResponsive || !window.wgOasisBreakpoints) ? options.width : options.width - FIT_SMALL_SCREEN,
 			className: 'preview',
 			onClose: function () {
 				previewLoaded = false;
@@ -455,15 +445,15 @@ define('wikia.preview', [
 			previewTypes = {
 				current: {
 					name: 'current',
-					value: fluidlayout.getArticleWidth('current', isRailDropped)
+					value: fluidlayout.getArticleWidth('current', isWidePage)
 				},
 				min: {
 					name: 'min',
-					value: fluidlayout.getArticleWidth('min', isRailDropped)
+					value: fluidlayout.getArticleWidth('min', isWidePage)
 				},
 				max: {
 					name: 'max',
-					value: fluidlayout.getArticleWidth('max', isRailDropped)
+					value: fluidlayout.getArticleWidth('max', isWidePage)
 				},
 				mobile: {
 					name: 'mobile',
