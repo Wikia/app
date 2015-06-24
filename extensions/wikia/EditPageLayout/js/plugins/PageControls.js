@@ -2,11 +2,6 @@
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
-	// Returns the width of the browsers scrollbar
-	function getScrollbarWidth () {
-		return 20;
-	}
-
 	WE.plugins.pagecontrols = $.createClass(WE.plugin, {
 
 		hiddenFields: false,
@@ -33,7 +28,6 @@
 
 			this.categories = $('#categories');
 			this.textarea = $pageControls.find('textarea');
-			this.scrollbarWidth = getScrollbarWidth();
 
 			// set up the caption of summary field
 			this.textarea.placeholder();
@@ -441,7 +435,10 @@
 
 				var previewOptions = {
 					width: width,
-					scrollbarWidth: self.scrollbarWidth,
+					//Most browsers have 17px wide scrollbars, 20px here is for safty net and round number
+					//ie: http://www.textfixer.com/tutorials/browser-scrollbar-width.php
+					//No need to run extra fancy JS to return value between 17 and 20
+					scrollbarWidth: 20,
 					onPublishButton: function () {
 						$('#wpSave').click();
 					},
@@ -516,8 +513,8 @@
 		},
 
 		getSummary: function () {
-			var $wpSummary = $('#wpSummary');
-			var summary = $wpSummary.val();
+			var $wpSummary = $('#wpSummary'),
+				summary = $wpSummary.val();
 
 			// bugid-93498: IE fakes placeholder functionality by setting a real val
 			if (summary === $wpSummary.attr('placeholder')) {
