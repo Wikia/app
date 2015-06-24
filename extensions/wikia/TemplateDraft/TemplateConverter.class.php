@@ -4,20 +4,58 @@ class TemplateConverter {
 
 	const TEMPLATE_VARIABLE_REGEX = '/{{{([^\|}]*?)\|?.*}}}/sU';
 
+	/**
+	 * Names of variables that should be converted to a <title> tag
+	 * @var array
+	 */
+	public static $titleAliases = [
+		'name',
+		'title',
+	];
+
+	/**
+	 * Names of variables that should be converted to an <image> tag
+	 * @var array
+	 */
+	public static $imageAliases = [
+		'image',
+		'picture',
+		'photo',
+		'mainimage',
+	];
+
+	/**
+	 * Performs a conversion to a template with a portable infobox.
+	 *
+	 * @param $content
+	 * @return string
+	 */
 	public function convertAsInfobox( $content ) {
-		$draft = '<infobox>';
+		$draft = "<infobox>\n";
 
 		$variables = $this->findTemplateVariables( $content );
 
 		foreach ( $variables as $variable ) {
-			$draft .= $this->createDataTag( $variable );
+			if ( in_array( $variable, self::$titleAliases ) ) {
+				$draft .= $this->createTitleTag( $variable );
+			} elseif ( in_array( $variable, self::$imageAliases ) ) {
+				$draft .= $this->createImageTag( $variable );
+			} else {
+				$draft .= $this->createDataTag( $variable );
+			}
 		}
 
-		$draft .= '</infobox>';
+		$draft .= "</infobox>\n";
 
 		return $draft;
 	}
 
+	/**
+	 * Extracts variables used in a content of a template.
+	 *
+	 * @param $content
+	 * @return array
+	 */
 	public function findTemplateVariables( $content ) {
 		$variables = [];
 
@@ -27,10 +65,41 @@ class TemplateConverter {
 		return $variables;
 	}
 
-	private function createDataTag( $source, $label = '' ) {
+	/**
+	 * Creates a <title> tag.
+	 *
+	 * @param $source
+	 * @param string $default
+	 * @return string
+	 */
+	public function createTitleTag( $source, $default = '' ) {
+		if ( empty( $default ) ) {
+			$default = '{{PAGENAME}}';
+		}
+		return "\t<title source=\"{$source}\"><default>{$default}</default></title>\n";
+	}
+
+	/**
+	 * Creates an <image> tag.
+	 *
+	 * @param $source
+	 * @return string
+	 */
+	public function createImageTag( $source ) {
+		return "\t<image source=\"{$source}\"/>\n";
+	}
+
+	/**
+	 * Creates a <data> tag.
+	 *
+	 * @param $source
+	 * @param string $label
+	 * @return string
+	 */
+	public function createDataTag( $source, $label = '' ) {
 		if ( empty( $label ) ) {
 			$label = $source;
 		}
-		return "<data source='$source'><label>$label</label></data>";
+		return "\t<data source=\"{$source}\"><label>{$label}</label></data>\n";
 	}
 } 
