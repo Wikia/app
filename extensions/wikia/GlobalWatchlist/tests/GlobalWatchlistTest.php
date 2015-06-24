@@ -6,30 +6,6 @@ class GlobalWatchlistBotTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	private function mockUser( $userName, $email) {
-		$userMock = $this->mockClassWithMethods( 'User',
-			[
-				'isAnon' => true,
-				'getName' => $userName,
-				'getEmail' => $email,
-				'getOption' => "en"
-			]
-		);
-
-		return $userMock;
-	}
-
-	/**
-	 * @group UsingDB
-	 */
-	public function testBlogsSection() {
-		$bot = new GlobalWatchlistBot(true, [], []);
-		$mail = $bot->composeMail($this->mockUser("test", "test@example.com"), [], false);
-		$plaintext = $mail[0];
-		$this->assertNotContains("No blog page found", $plaintext);
-		$this->assertNotContains("list of blog pages", $plaintext);
-	}
-
 	/**
 	 * Tests that the checkIfValidUser throws the expected exception when an invalid user
 	 * object is passed in.

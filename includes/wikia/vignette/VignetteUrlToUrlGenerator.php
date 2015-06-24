@@ -83,7 +83,7 @@ class VignetteUrlToUrlGenerator {
 		$mode = array_shift($parts);
 		$generator->mode($mode);
 
-		if ($mode == UrlGenerator::MODE_SCALE_TO_WIDTH) {
+		if ($mode == UrlGenerator::MODE_SCALE_TO_WIDTH || $mode == UrlGenerator::MODE_SCALE_TO_WIDTH_DOWN) {
 			$generator->width(array_shift($parts));
 			return;
 		}

@@ -347,10 +347,16 @@ $messages['ce'] = array(
 );
 
 /** Czech (čeština)
+ * @author Aktron
  * @author Chmee2
  * @author Mormegil
  */
 $messages['cs'] = array(
+	'lookupcontribs-desc' => 'Zobrazení příspěvků uživatele na několika wiki najednou.',
+	'lookupcontribs' => 'Vyhledání příspěvků uživatele.',
+	'lookupcontribstitle' => 'Vyhledání příspěvků uživatele.',
+	'lookupcontribsrecentcontributions' => 'Poslední příspěvky uživatele $1',
+	'lookupcontribusernotspecify' => 'Ještě jste nespecifikovali uživatele.',
 	'lookupcontribsselectuser' => 'Vyberte uživatele:',
 	'lookupcontribsselectfor' => 'Vyberte pro:',
 	'lookupcontribsdisplaymode' => 'Režim zobrazení:',
@@ -1075,7 +1081,7 @@ Vergewëssert Iech datt Dir Iech beim Benotzernumm net vertippt hutt.</p>',
 	'lookupcontribsall' => 'All',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -1412,14 +1418,14 @@ $messages['oc'] = array(
 	'lookupcontribsall' => 'tot',
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(
 	'lookupcontribsgo' => 'Zeige',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -1980,7 +1986,7 @@ Suriin ang ibinigay na pangalan ng tagagamit para sa maaaring mga kamalian.</p>'
 	'lookupcontribsall' => 'lahat',
 );
 
-/** толышә зывон (толышә зывон)
+/** Talysh (толышә зывон)
  * @author Erdemaslancan
  * @author Гусейн
  */

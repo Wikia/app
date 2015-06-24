@@ -40,6 +40,14 @@ $messages['ar'] = array(
 	'wikianewfiles-more' => 'المزيد...',
 );
 
+/** Assamese (অসমীয়া)
+ * @author Bishnu Saikia
+ */
+$messages['as'] = array(
+	'wikianewfiles-uploadby' => '{{GENDER:$2|$1}}ৰ দ্বাৰা',
+	'wikianewfiles-more' => 'অধিক...',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */

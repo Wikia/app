@@ -3,11 +3,17 @@ window.Krux || ((Krux = function () {
 	Krux.q.push(arguments);
 }).q = []);
 
-define('wikia.krux', ['wikia.window', 'wikia.document'], function (win, doc) {
+define('wikia.krux', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker',
+	'wikia.document',
+	'wikia.window'
+], function (adContext, adTracker, doc, win) {
 	'use strict';
 
 	var maxNumberOfKruxSegments = 27,
-		kruxScriptId = 'krux-control-tag';
+		kruxScriptId = 'krux-control-tag',
+		segmentsCountTracked = false;
 
 	function exportPageParams(adLogicPageParams) {
 		var params, value;
@@ -70,15 +76,30 @@ define('wikia.krux', ['wikia.window', 'wikia.document'], function (win, doc) {
 		}
 	}
 
+	function trackNumberOfSegments(numberOfSegments) {
+		if (segmentsCountTracked) {
+			return;
+		}
+		var label = numberOfSegments + '';
+		while (label.length < 4) {
+			label = '0' + label;
+		}
+
+		adTracker.track('krux/segments_count', {}, numberOfSegments, label);
+		segmentsCountTracked = true;
+	}
+
 	function getSegments() {
 		var segments = getParams('segs'),
 			segsArray;
 
 		if (segments === '') {
+			trackNumberOfSegments(0);
 			return [];
 		}
 
 		segsArray = segments.split(',');
+		trackNumberOfSegments(segsArray.length);
 		if (segsArray.indexOf('ph3uhzc41') > maxNumberOfKruxSegments - 1) {
 			segsArray.unshift('ph3uhzc41');
 		}
@@ -89,6 +110,11 @@ define('wikia.krux', ['wikia.window', 'wikia.document'], function (win, doc) {
 	function getUser() {
 		return getParams('user');
 	}
+
+	// Mercury solution to track number of segments on each page view
+	adContext.addCallback(function () {
+		segmentsCountTracked = false;
+	});
 
 	return {
 		load: load,

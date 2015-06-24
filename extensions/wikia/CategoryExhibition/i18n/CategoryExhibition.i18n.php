@@ -698,12 +698,17 @@ $messages['ru'] = array(
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
+ * @author Aktron
+ * @author Milicevic01
  * @author Rancher
  */
 $messages['sr-ec'] = array(
 	'category-exhibition-sorttype' => 'Тип сврставања:',
 	'category-exhibition-mostvisited' => 'Најпосећеније',
+	'category-exhibition-recentedits' => 'Недавно уређивано',
+	'category-exhibition-page-header' => 'Странице у категорији „$1“',
 	'category-exhibition-subcategories-header' => 'Поткатегорије',
+	'category-exhibition-media-header' => 'Датотеке у категорији „$1“',
 	'category-exhibition-blogs-header' => 'Поруке на блогу',
 );
 
@@ -760,15 +765,19 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Boracasli2
  * @author Sayginer
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetik',
+	'category-exhibition-mostvisited' => 'En çok ziyaret edilen',
+	'category-exhibition-recentedits' => 'Son düzenlenen',
 	'category-exhibition-page-header' => '"$1" kategorisindeki sayfalar',
 	'category-exhibition-subcategories-header' => 'Alt kategoriler',
 	'category-exhibition-media-header' => '"$1" kategorisindeki dosyalar',
 	'category-exhibition-blogs-header' => 'Blog yazıları',
+	'category-exhibition-display-old' => 'Kategori Liste görünümü',
 );
 
 /** Ukrainian (українська)

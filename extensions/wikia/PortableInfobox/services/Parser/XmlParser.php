@@ -1,89 +1,53 @@
 <?php
 namespace Wikia\PortableInfobox\Parser;
 
+use Wikia\Logger\WikiaLogger;
+
 class XmlParser {
-
-	protected $infoboxData;
-	protected $externalParser;
-
-	public function __construct( $infoboxData ) {
-		$this->infoboxData = $infoboxData;
-	}
-
 	/**
-	 * @return mixed
+	 * @param string $xmlString XML to parse
+	 *
+	 * @param array $errors this array will be filled with errors if any found
+	 *
+	 * @return \SimpleXMLElement
+	 * @throws XmlMarkupParseErrorException
 	 */
-	public function getExternalParser() {
-		return $this->externalParser;
-	}
-
-	/**
-	 * @param mixed $externalParser
-	 */
-	public function setExternalParser( ExternalParser $externalParser ) {
-		$this->externalParser = $externalParser;
-	}
-
-	/**
-	 * @param \SimpleXMLElement $xmlIterable
-	 * @return array
-	 */
-	public function getDataFromNodes( \SimpleXMLElement $xmlIterable ) {
-		wfProfileIn(__METHOD__);
-		$data = [ ];
-		foreach ( $xmlIterable as $node ) {
-			$nodeHandler = $this->getNode( $node );
-			$nodeData = $nodeHandler->getData();
-			if ( !$nodeHandler->isEmpty( $nodeData ) ) {
-				$data[ ] = [
-					'type' => $nodeHandler->getType(),
-					'data' => $nodeData
-				];
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return $data;
-	}
-
-	/**
-	 * @param $xml String
-	 * @return array
-	 */
-	public function getDataFromXmlString( $xmlString ) {
-		wfProfileIn( __METHOD__ );
+	public static function parseXmlString( $xmlString, &$errors = [ ] ) {
+		$global_libxml_setting = libxml_use_internal_errors();
+		libxml_use_internal_errors( true );
 		$xml = simplexml_load_string( $xmlString );
+		$errors = libxml_get_errors();
+		libxml_use_internal_errors( $global_libxml_setting );
+
 		if ( $xml === false ) {
-			throw new XmlMarkupParseErrorException();
+			foreach ( $errors as $xmlerror ) {
+				self::logXmlParseError( $xmlerror->level, $xmlerror->code, trim( $xmlerror->message ) );
+			}
+			libxml_clear_errors();
+			throw new XmlMarkupParseErrorException( $errors );
 		}
 
-		$data = $this->getDataFromNodes( $xml );
-
-		wfProfileOut( __METHOD__ );
-		return $data;
+		return $xml;
 	}
 
-	/**
-	 * @param \SimpleXMLElement $xmlNode
-	 * @return \Wikia\PortableInfobox\Parser\Nodes\Node
-	 */
-	public function getNode( \SimpleXMLElement $xmlNode ) {
-		wfProfileIn(__METHOD__);
-		$tagType = $xmlNode->getName();
-		$className = 'Wikia\\PortableInfobox\\Parser\\Nodes\\' . 'Node' . ucfirst( strtolower( $tagType ) );
-		if ( class_exists( $className ) ) {
-			/* @var $instance \Wikia\PortableInfobox\Parser\Nodes\Node */
-			$instance = new $className( $xmlNode, $this->infoboxData );
-			if ( !empty( $this->externalParser ) ) {
-				$instance->setExternalParser( $this->externalParser );
-			}
-			wfProfileOut(__METHOD__);
-			return $instance;
-		}
-		wfProfileOut(__METHOD__);
-		return new Nodes\NodeUnimplemented( $xmlNode, $this->infoboxData );
+	protected static function logXmlParseError( $level, $code, $message ) {
+		WikiaLogger::instance()->info( "PortableInfobox XML Parser problem", [
+			"level" => $level,
+			"code" => $code,
+			"message" => $message ] );
 	}
 
 }
 
 class XmlMarkupParseErrorException extends \Exception {
+	private $errors;
+
+	public function __construct( $errors ) {
+		$this->errors = $errors;
+		return parent::__construct();
+	}
+
+	public function getErrors() {
+		return $this->errors;
+	}
 }

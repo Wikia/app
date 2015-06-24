@@ -119,6 +119,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  * @author Tauhid16
  */
 $messages['bn'] = array(
@@ -402,7 +403,7 @@ $messages['gsw'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte e Wyyli. Am Ibermittle vu Dyyre Stimm ...',
 );
 
-/** Hakka (客家語/Hak-kâ-ngî)
+/** Hakka Chinese (客家語/Hak-kâ-ngî)
  * @author Anson2812
  */
 $messages['hak'] = array(
@@ -580,7 +581,7 @@ $messages['lb'] = array(
 	'ajaxpoll-submitting' => 'Waart w.e.g., Är Stëmm gëtt elo geschéckt ...',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -774,7 +775,7 @@ $messages['oc'] = array(
 	'ajaxpoll-submitting' => 'Pacientatz pendent lo mandadís de vòstre vòte...',
 );
 
-/** Pälzisch (Pälzisch)
+/** Palatine German (Pälzisch)
  * @author Manuae
  */
 $messages['pfl'] = array(
@@ -896,6 +897,13 @@ $messages['ru'] = array(
 	'ajaxpoll-submit' => 'Проголосовать!',
 	'ajaxpoll-closed' => 'Опрос закрыт. Наслаждайтесь результатами.',
 	'ajaxpoll-submitting' => 'Пожалуйста, подождите, передаётся информация о вашем голосе…',
+);
+
+/** Sanskrit (संस्कृतम्)
+ * @author NehalDaveND
+ */
+$messages['sa'] = array(
+	'ajaxpoll-submit' => 'मतम् !',
 );
 
 /** Sinhala (සිංහල)
@@ -1027,10 +1035,12 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author KhangND
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
+	'ajaxpoll-desc' => 'Phần mở rộng bảng phiếu của MediaWiki do yêu cầu của Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;trên tổng số phiếu',
 	'ajaxpoll-thankyou' => 'Cảm ơn bạn đã bình chọn!',
 	'ajaxpoll-error' => 'Có trục trặc trong quá trình bình chọn của bạn, xin vui lòng thử lại.',

@@ -1024,6 +1024,7 @@ $messages['fy'] = array(
 	'manage-wikia-home-modal-button-no' => 'Nee',
 	'manage-wikia-home-modal-button-yes' => 'Ja',
 	'manage-wikia-home-modal-button-okay' => 'OK',
+	'manage-wikia-home-collections-setup-save-button' => 'Bewarje',
 );
 
 /** Galician (galego)
@@ -1307,7 +1308,7 @@ $messages['lb'] = array(
 	'manage-wikia-home-stats-failure' => "D'Donnéeë goufen net gespäichert. Verbessert w.e.g. d'Feeler am Formulaire a probéiert nach eng Kéier.",
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -2242,8 +2243,16 @@ $messages['vi'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'Cài đặt slot',
 	'manage-wikia-home-wikis-in-slots-total' => 'Tổng số slot: $1',
 	'manage-wikia-home-hubs-slot-empty-option' => '--Slot rỗng--',
+	'manage-wikia-home-collections-success' => 'Các bộ sưu tập đã được lưu.',
+	'manage-wikia-home-collections-add-success' => 'Wiki được thêm thành công vào bộ sưu tập.',
 	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki đã tồn tại trong bộ sưu tập này.',
+	'manage-wikia-home-collections-remove-success' => 'Wiki gỡ bỏ thành công từ bộ sưu tập.',
 	'manage-wikia-home-collections-invalid-action' => 'Hành động này không tồn tại',
+	'manage-wikia-home-marketing-invalid-width' => 'Chiều rộng ảnh phải là $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'Chiều cao ảnh phải là $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-size' => 'Kích thước ảnh phải là $maxWidth x $maxHeight  px.',
+	'manage-wikia-home-verticals-proportions' => 'Số wiki mỗi trục dọc',
+	'manage-wikia-home-collections-validation-error' => 'Có một lỗi trong quá trình lưu, hãy kiểm tra lại.',
 	'manage-wikia-home-change-button' => 'Thay đổi',
 	'manage-wikia-home-wikis-in-visualization-heading' => 'Danh sách trực quan các wiki',
 	'manage-wikia-home-wiki-name-filter' => 'Bắt đầu đánh tên wiki và danh sách sẽ được cập nhật ngay sau đó:',

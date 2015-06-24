@@ -217,6 +217,7 @@ class ParserOptions {
 	function getIsSectionPreview()              { return $this->mIsSectionPreview; }
 	function getIsPrintable()                   { $this->optionUsed( 'printable' );
 												  return $this->mIsPrintable; }
+
 	function getUser()                          { return $this->mUser; }
 	function getPreSaveTransform()              { return $this->mPreSaveTransform; }
 

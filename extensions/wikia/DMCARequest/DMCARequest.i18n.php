@@ -33,7 +33,7 @@ Please ensure the accuracy of your notice before sending it, and please note tha
 	'dmcarequest-request-links-wikia-label' => 'Link(s) to the allegedly infringing material on Wikia (one per line):',
 	'dmcarequest-request-comments-label' => 'Additional comments:',
 	'dmcarequest-request-good-faith-label' => 'I have a good faith belief that the copyright holder, its agent, or the law do not authorize the use of the material in the manner I have complained of.',
-	'dmcarequest-request-perjury-label' => 'I swear, under penalty of perjury, that I am the copyright holder or that I am the authorized representative of the copyright holder.',
+	'dmcarequest-request-perjury-label' => 'I swear, under penalty of perjury, that the information in this notice is accurate and that I am the copyright holder or an authorized representative of the copyright holder.',
 	'dmcarequest-request-wikiarights-label' => 'I acknowledge that Wikia reserves the right to release, in accordance with the Digital Millennium Copyright Act and the company’s discretion, this takedown notice, with appropriate redactions to private information, to: the individual(s) that the notice alleges infringed upon my intellectual property; the administrators of relevant Wikia communities; transparency websites, such as Chilling Effects; and the public at large.',
 	'dmcarequest-request-signature-label' => 'Electronic signature:',
 	'dmcarequest-request-send-label' => 'Send to Wikia',

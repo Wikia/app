@@ -904,7 +904,7 @@ $messages['vi'] = array(
 	'dump-database-last-unknown' => 'Không rõ',
 );
 
-/** Wu (吴语)
+/** Wu Chinese (吴语)
  * @author 十弌
  */
 $messages['wuu'] = array(

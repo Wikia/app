@@ -26,4 +26,8 @@ class WallNotificationAdminEntity {
 		$this->data->reason = $data['reason'];
 
 	}
+
+	public function getData() {
+		return $this->data;
+	}
 }

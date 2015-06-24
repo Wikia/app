@@ -46,7 +46,7 @@ body {
 
 .WikiaPage {
 	border-bottom: 0;
-	@if ($responsive-layout-enabled == false) {
+	@if (not $responsive-or-breakpoints-layout-enabled) {
 		margin: 0 auto;
 	}
 	padding: 0;
@@ -475,7 +475,7 @@ body {
 	@include sprite-edit-mw-toolbar-deep-embed(23px, 23px);
 }
 
-@if ($responsive-layout-enabled) {
+@if ($responsive-or-breakpoints-layout-enabled) {
 	// START - edit page fixes
 	.editor .WikiaMainContent {
 		float: none;
@@ -517,7 +517,7 @@ body {
 			padding-right: $width-rail;
 
 			.cke_toolbar_expand > a {
-				right: $width-rail + $width-padding;
+				right: $width-rail + 5px;
 			}
 		}
 	}

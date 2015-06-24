@@ -127,17 +127,6 @@
     // Enable Demographics and Interests Reports
     window.ga('require', 'displayfeatures');
 
-    // Setting up the cross domain autolink
-    // [@see: https://developers.google.com/analytics/devguides/collection/analyticsjs/cross-domain#autolink]
-    _gaWikiaPush(
-        ['require', 'linker'],
-        ['linker:autoLink', [
-            'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
-            'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
-            'websitewiki.de', 'wowwiki.com', 'yoyowiki.org']
-        ]
-    );
-
     /**
      * Wrapper function to a generic ga() function call.
      *
@@ -215,11 +204,13 @@
     }
 
     /**** High-Priority Custom Dimensions ****/
-    window.ga('set', 'dimension1', window.wgDBname);                        // DBname
-    window.ga('set', 'dimension2', window.wgContentLanguage);               // ContentLanguage
-    window.ga('set', 'dimension3', window.cscoreCat);                       // Hub
-    window.ga('set', 'dimension4', window.skin);                            // Skin
-    window.ga('set', 'dimension5', !!window.wgUserName ? 'user' : 'anon');  // LoginStatus
+    _gaWikiaPush(
+        ['set', 'dimension1', window.wgDBname],                        // DBname
+        ['set', 'dimension2', window.wgContentLanguage],               // ContentLanguage
+        ['set', 'dimension3', window.cscoreCat],                       // Hub
+        ['set', 'dimension4', window.skin],                            // Skin
+        ['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
+    );
 
     /*
      * Remove when SOC-217 ABTest is finished
@@ -247,18 +238,22 @@
          */
 
     /**** Medium-Priority Custom Dimensions ****/
-    window.ga('set', 'dimension8', window.wikiaPageType);                           // PageType
-    window.ga('set', 'dimension9', window.wgCityId);                                // CityId
-    window.ga('set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No');              // HasAds
-    window.ga('set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No');    // IsCorporatePage
-    window.ga('set', 'dimension16', getKruxSegment());                              // Krux Segment
-    window.ga('set', 'dimension17', window.wgWikiVertical);                         // Vertical
-    window.ga('set', 'dimension18', window.wgWikiCategories.join(','));             // Categories
-    window.ga('set', 'dimension19', window.wgArticleType);                          // ArticleType
+    _gaWikiaPush(
+        ['set', 'dimension8', window.wikiaPageType],                           // PageType
+        ['set', 'dimension9', window.wgCityId],                                // CityId
+        ['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],              // HasAds
+        ['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],    // IsCorporatePage
+        ['set', 'dimension16', getKruxSegment()],                              // Krux Segment
+        ['set', 'dimension17', window.wgWikiVertical],                         // Vertical
+        ['set', 'dimension18', window.wgWikiCategories.join(',')],             // Categories
+        ['set', 'dimension19', window.wgArticleType],                          // ArticleType
+        ['set', 'dimension20', window.wgABPerformanceTest || 'not set']        // Performance A/B testing
+    );
+
     /*
      * Remove when SOC-217 ABTest is finished
      */
-    window.ga('set', 'dimension39', getUnconfirmedEmailUserType());                 // UnconfirmedEmailUserType
+    _gaWikiaPush(['set', 'dimension39', getUnconfirmedEmailUserType()]);      // UnconfirmedEmailUserType
     /*
      * end remove
      */
@@ -282,7 +277,7 @@
             }
             abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
             if (abSlot >= 40 && abSlot <= 49) {
-                abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'CONTROL');
+                abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'NOT_IN_ANY_GROUP');
                 _gaWikiaPush(['set', 'dimension' + abSlot, abGroupName]);
                 abCustomVarsForAds.push(['ads.set', 'dimension' + abSlot, abGroupName]);
             }
@@ -338,9 +333,6 @@
 
     // Enable Demographics and Interests Reports
     window.ga('ads.require', 'displayfeatures');
-
-    window.ga('ads.require', 'linker');
-    window.ga('ads.linker:autoLink', [document.location.hostname]);
 
     /* Ads Account Custom Dimensions */
     window.ga('ads.set', 'dimension1', window.wgDBname);                                // DBname

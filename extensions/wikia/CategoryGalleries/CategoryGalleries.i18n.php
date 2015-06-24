@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'categorygalleries-desc' => 'Shows a pages gallery on category pages',
 );
 
-/** Tunisian Spoken Arabic (   زَوُن)
+/** Tunisian Arabic (تونسي/Tûnsî)
  * @author Csisc
  */
 $messages['aeb'] = array(

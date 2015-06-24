@@ -7,55 +7,88 @@ class XmlParserTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
-	public function testIsEmpty() {
-		$parser = new \Wikia\PortableInfobox\Parser\XmlParser( [
-			'elem2' => 'ELEM2',
-			'lado2' => 'LALALA',
-			'nonempty' => '111'
-		]);
-		$markup = '
-			<infobox>
-				<comparison>
-				   <set>
-					  <header>Combatientes</header>
-					  <data source="lado1" />
-					  <data source="lado2" />
-				   </set>
-				</comparison>
-				<data source="empty" />
-				<data source="nonempty"><label>nonemepty</label></data>
-			</infobox>
-		';
-		$data = $parser->getDataFromXmlString( $markup );
-		$this->assertTrue( $data[0]['data']['value'][0]['data']['value'][0]['data']['value'] == 'Combatientes' );
-		// '111' should be at [1] position, becasue <data source="empty"> should be ommited
-		$this->assertTrue( $data[1]['data']['value'] == '111' );
+	/**
+	 * @dataProvider errorHandlingDataProvider
+	 */
+	public function testErrorHandling( $markup, $expectedErrors ) {
+		$parser = $this->getMockBuilder( 'Wikia\PortableInfobox\Parser\XmlParser' )
+			->setMethods( [ 'logXmlParseError' ] )
+			->getMock();
+
+		$errors = [ ];
+		try {
+			$data = $parser->parseXmlString( $markup, $errors );
+		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
+			// parseXmlString should throw an exception, but we want to proceed in order to check parameters
+			// from logXmlParseError
+		}
+
+		$this->assertEquals( $expectedErrors, array_map(
+			function ( LibXMLError $error ) {
+				return [ 'level' => $error->level, 'code' => $error->code, 'msg' => trim( $error->message ) ];
+			},
+			$errors
+		) );
 	}
 
-	public function testExternalParser() {
-		$parser = new \Wikia\PortableInfobox\Parser\XmlParser( [
-			'elem2' => 'ELEM2',
-			'lado2' => 'LALALA'
-		] );
-		$externalParser = new \Wikia\PortableInfobox\Parser\DummyParser();
-		$parser->setExternalParser( $externalParser );
-		$markup = '
-			<infobox>
-			    <title><default>ABB</default></title>
-				<comparison>
-				   <set>
-					  <header>Combatientes</header>
-					  <data source="lado1" />
-					  <data source="lado2" />
-				   </set>
-				</comparison>
-				<footer>[[aaa]]</footer>
-			</infobox>
-		';
-		$data = $parser->getDataFromXmlString( $markup );
+	public function errorHandlingDataProvider() {
 
-		$this->assertTrue( $data[0]['data']['value'] == 'parseRecursive(ABB)' );
-		// ledo1 ommited, ledo2 at [1] position
-		$this->assertTrue( $data[1]['data']['value'][0]['data']['value'][2]['data']['value'] == 'parseRecursive(LALALA)');
+		/*
+		 * Error codes are defined on official xml API documentation:
+		 * http://www.xmlsoft.org/html/libxml-xmlerror.html
+		 */
+		return [
+			[
+				'<data>d</dat/a>',
+				[
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 73, 'msg' => "expected '>'" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 76, 'msg' => "Opening and ending tag mismatch: data line 1 and dat" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 5, 'msg' => "Extra content at the end of the document" ],
+				]
+			],
+			[
+				'<data> x </data></data>',
+				[
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 5, 'msg' => "Extra content at the end of the document" ],
+				]
+			],
+			[
+				'<data> > ddd < a ></data>',
+				[
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 68, 'msg' => "StartTag: invalid element name" ],
+				]
+			],
+			[
+				'<data>',
+				[
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 77, 'msg' => "Premature end of data in tag data line 1" ],
+				]
+			],
+			[
+				'<infobox><data source=caption></infobox>',
+				[
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 39, 'msg' => "AttValue: \" or ' expected" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 65, 'msg' => "attributes construct error" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 73, 'msg' => "Couldn't find end of Start Tag data line 1" ],
+				]
+			],
+			[
+				'<infobox><data source="caption"></infobox>',
+				[
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 76, 'msg' => "Opening and ending tag mismatch: data line 1 and infobox" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 77, 'msg' => "Premature end of data in tag infobox line 1" ],
+				]
+			],
+			[
+				'<infobox><data source="caption></data></infobox>',
+				[
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 38, 'msg' => "Unescaped '<' not allowed in attributes values" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 65, 'msg' => "attributes construct error" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 73, 'msg' => "Couldn't find end of Start Tag data line 1" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 76, 'msg' => "Opening and ending tag mismatch: infobox line 1 and data" ],
+					[ 'level' => LIBXML_ERR_FATAL, 'code' => 5, 'msg' => "Extra content at the end of the document" ]
+				]
+			]
+		];
 	}
 }

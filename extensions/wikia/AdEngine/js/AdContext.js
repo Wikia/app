@@ -41,6 +41,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Always have objects in all categories
 		context.opts = context.opts || {};
+		context.slots = context.slots || {};
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
 		context.forceProviders = context.forceProviders || {};
@@ -78,11 +79,18 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.turtle = true;
 		}
 
-		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
-			instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
-			instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
+		if (instantGlobals.wgAdDriverOpenXCountries &&
+			instantGlobals.wgAdDriverOpenXCountries.indexOf &&
+			instantGlobals.wgAdDriverOpenXCountries.indexOf(geo.getCountryCode()) > -1
 		) {
-			context.opts.enableInvisibleHighImpactSlot = true;
+			context.providers.openX = true;
+		}
+
+		if (instantGlobals.wgAdDriverHighImpactSlotCountries &&
+				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf &&
+				instantGlobals.wgAdDriverHighImpactSlotCountries.indexOf(geo.getCountryCode()) > -1
+					) {
+			context.slots.invisibleHighImpact = true;
 		}
 
 		// Export the context back to ads.context

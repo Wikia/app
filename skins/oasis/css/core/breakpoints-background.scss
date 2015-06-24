@@ -83,8 +83,6 @@ body.skin-oasis {
 @if ($widthType == 0) {
 	body.background-dynamic.skin-oasis {
 		background: $color-body;
-		overflow: hidden;
-		position: relative;
 
 		&::after,
 		&::before {

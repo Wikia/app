@@ -447,7 +447,7 @@ $messages['lb'] = array(
 	'feed-title-recentchanges' => 'Rezent Ännerungen',
 );
 
-/** لوری (لوری)
+/** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
 $messages['lrc'] = array(
@@ -584,6 +584,10 @@ $messages['nl'] = array(
  */
 $messages['oc'] = array(
 	'partner-feed-recent-changes' => 'Darrièrs cambiaments',
+	'partnerfeed' => 'Partenari de flux',
+	'feed-title-blogposts' => 'Darrièrs bilhets',
+	'feed-main-title' => 'Flux de partenari Wikia',
+	'feed-title-blogcomments' => 'Comentaris a $1',
 	'feed-title-recentchanges' => 'Darrièrs cambiaments',
 );
 

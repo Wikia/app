@@ -10,7 +10,7 @@ class FollowHelper {
 	const LOG_ACTION_CATEGORY_ADD = 'categoryadd';
 
 	/**
-	 * watchCategory -- static hook/entry for foolow article category
+	 * watchCategory -- static hook/entry for follow article category
 	 *
 	 * @static
 	 * @access public
@@ -44,7 +44,7 @@ class FollowHelper {
 	}
 
 	/**
-	 * emailNotification -- sent Notification for all related article  ,
+	 * emailNotification -- sent Notification for all related article
 	 *
 	 * @static
 	 * @access public
@@ -120,7 +120,15 @@ class FollowHelper {
 			$oTask = new FollowEmailTask();
 			$oTask->title( $childTitle );
 			$oTask->wikiId( F::app()->wg->CityId );
-			$oTask->call( 'emailFollowNotifications', $watchers, $user->getId(), $namespace, $message, $action );
+			$oTask->call(
+				'emailFollowNotifications',
+				F::app()->wg->User->getId(),
+				$watchers,
+				$user->getId(),
+				$namespace,
+				$message,
+				$action
+			);
 			$oTask->queue();
 		}
 
@@ -184,7 +192,7 @@ class FollowHelper {
 	}
 
 	/**
-	 * saveListingRelation -- hook for ,
+	 * saveListingRelation -- hook for
 	 *
 	 * @static
 	 * @access public
@@ -210,8 +218,10 @@ class FollowHelper {
 		}
 		wfProfileIn( __METHOD__ );
 
+		$postTitle = $article->getTitle();
+
 		$dbw = wfGetDB( DB_SLAVE );
-		if ( defined( 'NS_BLOG_ARTICLE' ) && $article->getTitle()->getNamespace() == NS_BLOG_ARTICLE ) {
+		if ( defined( 'NS_BLOG_ARTICLE' ) && $postTitle->getNamespace() == NS_BLOG_ARTICLE ) {
 			$cat =  array_keys( Wikia::getVar( 'categoryInserts' ) );
 			$catIn = array();
 
@@ -243,14 +253,30 @@ class FollowHelper {
 				$title = Title::makeTitle( NS_BLOG_LISTING, $title );
 				$related[] = ucfirst( $title->getDBKey() );
 			}
+
 			self::emailNotification(
-				$article->getTitle(),
+				$postTitle,
 				$related,
 				NS_BLOG_LISTING,
 				$user,
 				self::LOG_ACTION_BLOG_POST,
 				wfMessage( 'follow-bloglisting-summary' )->text()
 			);
+
+			$userBlogTitleText = $postTitle->getBaseText();
+			$userBlogTitle = Title::makeTitle( NS_BLOG_ARTICLE, $userBlogTitleText );
+			if ( $userBlogTitle->exists() ) {
+				$userBlog[] = ucfirst( $userBlogTitle->getDBKey() );
+
+				self::emailNotification(
+					$postTitle,
+					$userBlog,
+					NS_BLOG_ARTICLE,
+					$user,
+					self::LOG_ACTION_BLOG_POST,
+					wfMessage( 'follow-bloglisting-summary' )->text()
+				);
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return true;

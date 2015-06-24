@@ -276,7 +276,7 @@ $messages['oc'] = array(
 	'randomwiki' => "Un wiki a l'azard",
 );
 
-/** Deitsch (Deitsch)
+/** Pennsylvania German (Deitsch)
  * @author Xqt
  */
 $messages['pdc'] = array(

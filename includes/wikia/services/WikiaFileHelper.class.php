@@ -303,7 +303,7 @@ class WikiaFileHelper extends Service {
 				$fileTitle = Title::newFromText( $fileTitle->getDBKey(), NS_FILE );
 			}
 
-			$file = wfFindFile( $fileTitle );
+			$file = self::getFileFromTitle( $fileTitle, true );
 
 			if ( !empty( $file ) ) {
 				$config = self::getMediaDetailConfig( $config );

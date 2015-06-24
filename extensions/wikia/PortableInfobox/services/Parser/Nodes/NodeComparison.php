@@ -1,24 +1,35 @@
 <?php
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
-use Wikia\PortableInfobox\Parser\XmlParser;
-
 class NodeComparison extends Node {
 
 	public function getData() {
-		$nodeFactory = new XmlParser( $this->infoboxData );
-		if ( $this->externalParser ) {
-			$nodeFactory->setExternalParser( $this->externalParser );
+		if ( !isset( $this->data ) ) {
+			$this->data = [ 'value' => $this->getDataForChildren() ];
 		}
-		return [ 'value' => $nodeFactory->getDataFromNodes( $this->xmlNode ) ];
+
+		return $this->data;
 	}
 
-	public function isEmpty( $data ) {
-		foreach ( $data[ 'value' ] as $group ) {
-			if ( $group[ 'isEmpty' ] == false ) {
+	public function getRenderData() {
+		return [
+			'type' => $this->getType(),
+			'data' => [ 'value' => $this->getRenderDataForChildren() ],
+		];
+	}
+
+	public function isEmpty() {
+		/** @var Node $child */
+		foreach ( $this->getChildNodes() as $child ) {
+			if ( !$child->isEmpty() ) {
 				return false;
 			}
 		}
+
 		return true;
+	}
+
+	public function getSource() {
+		return $this->getSourceForChildren();
 	}
 }

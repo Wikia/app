@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"M.M.S.",
+			"Martinwiss",
+			"Per"
+		]
+	},
+	"semanticdrilldown-desc": "Ett gränssnitt för att navigera sig igenom semantiska data",
+	"specialpages-group-sd_group": "Semantic Drilldown",
+	"browsedata": "Bläddra genom data",
+	"sd_browsedata_choosecategory": "Välj en kategori",
+	"sd_browsedata_viewcategory": "visa kategori",
+	"sd_browsedata_docu": "Klocka på minst ett av flera val här nedanför för att avgränsa ditt sökresultat",
+	"sd_browsedata_subcategory": "Subkategori",
+	"sd_browsedata_other": "Andra",
+	"sd_browsedata_none": "Ingen",
+	"sd_browsedata_filterbyvalue": "Filtrera efter det här värdet",
+	"sd_browsedata_filterbysubcategory": "Filtrera efter den här underkategorin",
+	"sd_browsedata_otherfilter": "Visa sidor med ett annat värde för det här filtret",
+	"sd_browsedata_nonefilter": "Visa sidor utan några värden för detta filter",
+	"sd_browsedata_or": "eller",
+	"sd_browsedata_removefilter": "Ta bort detta filter",
+	"sd_browsedata_removesubcategoryfilter": "Ta bort detta underkategorifiltret",
+	"sd_browsedata_resetfilters": "Återställ filter",
+	"sd_browsedata_addanothervalue": "Klicka på pilen för att lägga till ytterligare värde",
+	"sd_browsedata_daterangestart": "Start:",
+	"sd_browsedata_daterangeend": "Slut:",
+	"sd_browsedata_novalues": "Det finns inga värden för detta filter",
+	"sd_createfilter_usepropertyvalues": "Använd alla värden av den här egenskapen för filtret",
+	"sd_createfilter_usecategoryvalues": "Hämta värden för filtret från den här kategorin:",
+	"sd_createfilter_requirefilter": "Kräv att ett annat filter väljs före detta visas:",
+	"sd-pageschemas-filter": "Filter",
+	"sd-pageschemas-values": "Värden"
+}

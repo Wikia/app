@@ -39,7 +39,7 @@ class AdEngine2ExitstitialHooks {
 	}
 
 	/**
-	 * Export variables necessary for Exitstitial.js to work
+	 * Export variables necessary for exitstitial.js to work
 	 *
 	 * @param array $vars
 	 *
@@ -73,8 +73,8 @@ class AdEngine2ExitstitialHooks {
 
 		if ( !$wgEnableOutboundScreenExt
 			|| $wgRTEParserEnabled    // skip logic when in FCK
-			|| empty( $wgTitle )        // setup functions can call MakeExternalLink before wgTitle is set RT#144229
-			|| $wgUser->isLoggedIn()  // logged in users have no exit stitial ads
+			|| empty( $wgTitle )      // setup functions can call MakeExternalLink before wgTitle is set
+			|| filter_var( $url, FILTER_VALIDATE_URL ) === false
 			|| strpos( $url, 'http://' ) !== 0
 		) {
 			return;
@@ -125,5 +125,15 @@ class AdEngine2ExitstitialHooks {
 		}
 
 		return $whiteList;
+	}
+
+	public static function onOasisSkinAssetGroups( &$jsAssets ) {
+		global $wgEnableOutboundScreenExt;
+
+		if ( !empty( $wgEnableOutboundScreenExt ) ) {
+			$jsAssets[] = 'adengine2_oasis_exitstitial_js';
+		}
+
+		return true;
 	}
 }

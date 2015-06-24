@@ -41,8 +41,13 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				liftium: {
 					name: 'liftium'
 				},
+				monetizationService: {
+					name: 'monetizationService',
+					canHandleSlot: noop
+				},
 				openX: {
-					name: 'openX'
+					name: 'openX',
+					canHandleSlot: noop
 				},
 				remnantGpt: {
 					name: 'remnant'
@@ -78,8 +83,9 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			},
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.evolve,
-			mocks.providers.liftium,
 			mocks.providers.directGpt,
+			mocks.providers.liftium,
+			mocks.providers.monetizationService,
 			mocks.providers.openX,
 			mocks.providers.remnantGpt,
 			mocks.providers.sevenOneMedia,
@@ -192,5 +198,27 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
 		expect(getProviders('foo')).toEqual('turtle,liftium');
+	});
+
+	it('any country, Monetization Service on, Monetization Service slot', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
+		spyOn(mocks.providers.monetizationService, 'canHandleSlot').and.returnValue(true);
+		expect(getProviders('foo')).toEqual('monetizationService');
+	});
+
+	it('any country, Monetization Service on, non Monetization Service slot', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
+		expect(getProviders('foo')).not.toEqual('monetizationService');
+	});
+
+	it('any country, OpenX on and can handle slot: Direct, Remnant, OpenX', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({openX: true});
+		spyOn(mocks.providers.openX, 'canHandleSlot').and.returnValue(true);
+		expect(getProviders('foo')).toEqual('direct,remnant,openX');
+	});
+
+	it('any country, OpenX on but cannot handle slot: Direct, Remnant, Liftium', function () {
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({openX: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
 	});
 });

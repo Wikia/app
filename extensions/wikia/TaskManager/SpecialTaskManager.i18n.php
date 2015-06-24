@@ -279,6 +279,15 @@ $messages['ja'] = array(
 	'right-taskmanager-action' => 'バックグラウンド・タスク管理可能',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'taskmanager' => '백그라운드 작업 관리',
+	'taskmanager_title' => '백그라운드 작업 관리',
+	'action-taskmanager' => '백그라운드 작업 관리',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
