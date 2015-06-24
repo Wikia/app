@@ -20,7 +20,7 @@ define('wikia.preview', [
 	msg,
 	tracker,
 	cssPropHelper,
-	fluidlayout
+	breakpointsLayout
 ) {
 	'use strict';
 
@@ -178,7 +178,7 @@ define('wikia.preview', [
 				}
 
 				if (currentTypeName) {
-					var articleWidth = fluidlayout.getArticleWidth(currentTypeName ,isWidePage);
+					var articleWidth = breakpointsLayout.getArticleWidth(currentTypeName ,isWidePage);
 					$article.width(articleWidth);
 				}
 
@@ -445,15 +445,15 @@ define('wikia.preview', [
 			previewTypes = {
 				current: {
 					name: 'current',
-					value: fluidlayout.getArticleWidth('current', isWidePage)
+					value: breakpointsLayout.getArticleWidth('current', isWidePage)
 				},
 				min: {
 					name: 'min',
-					value: fluidlayout.getArticleWidth('min', isWidePage)
+					value: breakpointsLayout.getArticleWidth('min', isWidePage)
 				},
 				max: {
 					name: 'max',
-					value: fluidlayout.getArticleWidth('max', isWidePage)
+					value: breakpointsLayout.getArticleWidth('max', isWidePage)
 				},
 				mobile: {
 					name: 'mobile',
