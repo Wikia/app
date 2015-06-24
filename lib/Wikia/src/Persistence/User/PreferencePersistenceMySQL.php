@@ -2,48 +2,57 @@
 
 namespace Wikia\Persistence\User;
 
-use Wikia\Service\User\PreferencePersistence;
 use Wikia\Domain\User\Preference;
 
 class PreferencePersistenceMySQL implements PreferencePersistence {
 
 	const USER_PREFERENCE_TABLE = 'user_properties';
-	public static $UPSERT_SET_BLOCK = ["up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)"];
+	const UP_USER = 'up_user';
+	const UP_PROPERTY = 'up_property';
+	const UP_VALUE = 'up_value';
+
+	public static $UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
 	private $master;
 	private $slave;
+	private $whiteList;
 
-	function __construct( \DatabaseMysqli $master, \DatabaseMysqli $slave ) {
+	function __construct( \DatabaseMysqli $master, \DatabaseMysqli $slave, $whiteList = [ ] ) {
 		$this->master = $master;
 		$this->slave = $slave;
+		$this->whiteList = $whiteList;
 	}
 
 	public function save( $userId, array $preferences ) {
 		$tuples = $this->createTuplesFromPreferences( $userId, $preferences );
-		return $this->master->upsert( self::USER_PREFERENCE_TABLE, $tuples, [], self::$UPSERT_SET_BLOCK );
+		return $this->master->upsert( self::USER_PREFERENCE_TABLE, $tuples, [ ], self::$UPSERT_SET_BLOCK );
 	}
 
 	public static function createTuplesFromPreferences( $userId, array $preferences ) {
 		$userId = intval( $userId );
-		return array_map( function( Preference $e ) use ( $userId ) {
+		return array_map( function ( Preference $e ) use ( $userId ) {
 			return [
-				'up_user' =>  $userId,
-				'up_property' => $e->getName(),
-				'up_value' => $e->getValue()
-				];
-		} , $preferences );
+				self::UP_USER => $userId,
+				self::UP_PROPERTY => $e->getName(),
+				self::UP_VALUE => $e->getValue()
+			];
+		}, $preferences );
 	}
 
 	public function get( $userId ) {
 		$userId = intval( $userId );
+		$cond = [ self::UP_USER => $userId ];
+		if ( !empty( $this->whiteList ) ) {
+			$cond[ self::UP_PROPERTY ] = $this->whiteList;
+		}
 		$result = $this->slave->select(
 			self::USER_PREFERENCE_TABLE,
-			'*',
-			array( 'up_user' => $userId ),
+			[ self::UP_PROPERTY, self::UP_VALUE ],
+			$cond,
 			__METHOD__
 		);
 
-		$preferences = [];
+		$preferences = [ ];
 		if ( is_array( $result ) && !empty( $result ) ) {
 			$preferences = $this->userPropertiesResultToPreferenceArray( $result );
 		}
@@ -58,10 +67,10 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	 * @return Preference[]
 	 */
 	public function userPropertiesResultToPreferenceArray( array $result ) {
-		$preferences = [];
+		$preferences = [ ];
 		foreach ( $result as $index => $row ) {
-			if ( isset( $row["up_property"] ) && isset( $row["up_value"] ) ) {
-				$preferences[] = new Preference( $row["up_property"], $row["up_value"] );
+			if ( isset( $row[ "up_property" ] ) && isset( $row[ "up_value" ] ) ) {
+				$preferences[ ] = new Preference( $row[ "up_property" ], $row[ "up_value" ] );
 			}
 		}
 

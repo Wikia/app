@@ -11,7 +11,7 @@ class PreferenceKeyValueTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->testPreference = new Preference( "pref-name", "pref-value" );
-		$this->persistenceMock = $this->getMockBuilder( '\Wikia\Service\User\PreferencePersistence' )
+		$this->persistenceMock = $this->getMockBuilder( '\Wikia\Persistence\User\PreferencePersistence' )
 			->setMethods( ['save', 'get'] )
 			->disableOriginalConstructor()
 			->disableAutoload()

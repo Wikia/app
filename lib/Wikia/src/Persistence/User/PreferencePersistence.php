@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikia\Service\User;
+namespace Wikia\Persistence\User;
 
 interface PreferencePersistence {
 
