@@ -10,7 +10,7 @@ define('wikia.preview', [
 	'JSMessages',
 	'wikia.tracker',
 	'wikia.csspropshelper',
-	'wikia.fluidlayout'
+	'wikia.breakpointsLayout'
 ], function (
 	window,
 	nirvana,
@@ -173,12 +173,8 @@ define('wikia.preview', [
 			}
 
 			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
+				var noRail = isWidePage || isRailDropped;
 				if (opening) {
-
-					if (isRailDropped || isWidePage) {
-						// set proper preview width for shrinken modal
-						$article.width(editPageOptions.width - articleMargin * 2);
-					}
 
 					// set current width of the article
 					previewTypes.current.value = previewTypes.mobile.value = $article.width();
@@ -186,10 +182,11 @@ define('wikia.preview', [
 					// get width of article Wrapper
 					// subtract scrollbar width to get correct width needed as reference point for scaling
 					articleWrapperWidth = $article.parent().width() - editPageOptions.scrollbarWidth;
+				}
 
-					if (currentTypeName) {
-						$article.width(previewTypes[currentTypeName].value);
-					}
+				if (currentTypeName) {
+					var articleWidth = fluidlayout.getArticleWidth(currentTypeName ,noRail);
+					$article.width(articleWidth);
 				}
 
 				// initial scale of article preview
@@ -283,7 +280,7 @@ define('wikia.preview', [
 		editPageOptions = options;
 		isRailDropped = !!options.isRailDropped;
 		isWidePage = !!options.isWidePage;
-		getPreviewTypes(isWidePage);
+		getPreviewTypes();
 		if (typeof options.currentTypeName !== 'undefined') {
 			currentTypeName = options.currentTypeName;
 		}
@@ -451,28 +448,22 @@ define('wikia.preview', [
 
 	/**
 	 * Returns previewTypes object which depends on the type of previewing page
-	 *
-	 * @param {boolean} isWidePage - type of previewing article page
-	 *                               is it mainpage / a page without right rail or not (DAR-2366)
 	 */
 
-	function getPreviewTypes(isWidePage) {
+	function getPreviewTypes() {
 		if (!previewTypes) {
-			var articleMinWidth = fluidlayout.getMinArticleWidth(),
-				articleMaxWidth = fluidlayout.getMaxArticleWidth();
-
 			previewTypes = {
 				current: {
 					name: 'current',
-					value: null
+					value: fluidlayout.getArticleWidth('current', isRailDropped)
 				},
 				min: {
 					name: 'min',
-					value: articleMinWidth - 2 * articleMargin
+					value: fluidlayout.getArticleWidth('min', isRailDropped)
 				},
 				max: {
 					name: 'max',
-					value: articleMaxWidth - 2 * articleMargin
+					value: fluidlayout.getArticleWidth('max', isRailDropped)
 				},
 				mobile: {
 					name: 'mobile',
@@ -481,10 +472,6 @@ define('wikia.preview', [
 					value: null
 				}
 			};
-
-			if (isWidePage) {
-				previewTypes.max.value += rightRailWidth;
-			}
 		}
 
 		//Set base currentTypeName as a current - if it is there that means that preview was reopened
