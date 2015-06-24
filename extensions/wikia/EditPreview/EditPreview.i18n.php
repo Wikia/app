@@ -17,9 +17,9 @@ $messages['en'] = array(
 /** Message Documentation */
 $messages['qqq'] = array(
 	'wikia-editor-preview-desc' => '{{desc}}',
-	'wikia-editor-preview-current-width' => 'select option; after choosing it a user see preview of the article in his/her current screen width',
-	'wikia-editor-preview-min-width' => 'select option; after choosing it a user see preview of the article in minimum supported width (1024px)',
-	'wikia-editor-preview-max-width' => 'select option; after choosing it a user see preview of the article in maximum supported width (1600px)',
+	'wikia-editor-preview-current-width' => 'select option; after choosing it a user is shown a preview of the article in his/her current screen width',
+	'wikia-editor-preview-min-width' => 'select option; after choosing it a user is shown a preview of the article in minimum supported width (768px)',
+	'wikia-editor-preview-max-width' => 'select option; after choosing it a user is shown a preview of the article in the lower bound of the maximum supported width range (1596px)',
 	'wikia-editor-preview-type-tooltip' => 'content of a comics bubble displayed after hovering over small icon with a question mark; it explains what preview type select does',
 	'wikia-editor-preview-best-practices-notice' => 'A notice shown at the top of the preview dialog, with a button (link) next to the notice',
 	'wikia-editor-preview-best-practices-button' => 'A button (link) label which leads to a separate page describing best practices and advice on how to create content for mobile and desktop',
@@ -30,8 +30,7 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'wikia-editor-preview-current-width' => 'Desktop-Ansicht',
 	'wikia-editor-preview-min-width' => 'Tablet-Porträtansicht',
-	'wikia-editor-preview-max-width' => 'Desktop XL-Ansicht
-',
+	'wikia-editor-preview-max-width' => 'Desktop XL-Ansicht',
 	'wikia-editor-preview-type-tooltip' => 'Das Ändern dieser Option zeigt dir, wie dieser Artikel in in Browsern mit kleinen und großen Bildschirmen, auf Mobil-Geräten oder auf deinem jetzigen Bildschirm aussieht.',
 	'wikia-editor-preview-desc' => 'Ermöglicht den Benutzern ihre Änderungen vor dem Speichern in der Vorschau anzusehen',
 	'wikia-editor-preview-mobile-width' => 'Mobile Geräte',
