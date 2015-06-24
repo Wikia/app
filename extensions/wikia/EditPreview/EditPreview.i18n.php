@@ -158,7 +158,7 @@ $messages['zh-hans'] = array(
 	'wikia-editor-preview-type-tooltip' => "更改这个选项将为您展示这篇文章在不同电脑屏幕、手机以及平板电脑上的样式。",
 	'wikia-editor-preview-best-practices-notice' => '你知道吗？超过50%的Wikia访问用户都是通过手机或者平板电脑查阅内容的。某些模版在这些移动设备上或许不能正常显示。为了确保一切正常，请关注我们的最佳实践。',
 	'wikia-editor-preview-best-practices-button' => '最佳实践',
-	'wikia-editor-preview-best-practices-button-link' => 'Help:Wikitext_best_practices',
+	'wikia-editor-preview-best-practices-button-link' => 'Help:Wiki文本最佳實踐',
 );
 
 $messages['zh-tw'] = array(
@@ -170,6 +170,6 @@ $messages['zh-tw'] = array(
 	'wikia-editor-preview-type-tooltip' => "更改這個選項將為您展示這篇文章在不同電腦銀幕、手機以及平板電腦上的樣式。",
 	'wikia-editor-preview-best-practices-notice' => '你知道嗎？超過50%的Wikia訪問使用者都是通過手機或者平板電腦查閱內容的。某些模版在這些行動裝置上或許不能正常顯示。為了確保一切正常，請關注我們的最佳實踐。',
 	'wikia-editor-preview-best-practices-button' => '最佳實踐',
-	'wikia-editor-preview-best-practices-button-link' => 'Help:Wikitext_best_practices',
+	'wikia-editor-preview-best-practices-button-link' => 'Help:Wiki文本最佳實踐',
 );
 
