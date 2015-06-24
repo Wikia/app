@@ -10,7 +10,8 @@ class TemplateDraftModuleController extends WikiaController {
 		/**
 		 * TODO: Make a better URL composing script
 		 */
-		$title = $this->app->wg->Title;
-		$this->draftUrl = $title->getFullURL() . '/Draft?action=edit';
+		$titleUrl = $this->app->wg->Title->getFullURL();
+		$subpage = wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped();
+		$this->draftUrl = "{$titleUrl}/{$subpage}?action=edit";
 	}
 }

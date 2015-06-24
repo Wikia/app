@@ -21,10 +21,10 @@ class TemplateDraftController extends WikiaController {
 	 * Converts the content of the template according to certain flags
 	 *
 	 * @param $content
-	 * @param $flags
+	 * @param $flags Array
 	 * @return string
 	 */
-	public function createDraftContent( $content, $flags ) {
+	public function createDraftContent( $content, Array $flags ) {
 
 		/**
 		 * This is just a placeholder method
