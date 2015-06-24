@@ -358,7 +358,6 @@ define('wikia.preview', [
 	 */
 
 	function switchPreview(type) {
-		console.log(previewTypes);
 		var lastTypeName = currentTypeName;
 
 		currentTypeName = type;
