@@ -4,14 +4,17 @@ define('ext.wikia.adEngine.gptHelper', [
 	'wikia.log',
 	'wikia.window',
 	'wikia.document',
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptAdDetect',
 	require.optional('ext.wikia.adEngine.gptSraHelper')
-], function (log, window, document, adLogicPageParams, slotTweaker, gptAdDetect, sraHelper) {
+], function (log, window, document, adContext, adLogicPageParams, adTracker, slotTweaker, gptAdDetect, sraHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
+		context = adContext.getContext(),
 		gptLoaded = false,
 		slotQueue = [],
 		gptSlots = {},
@@ -79,6 +82,11 @@ define('ext.wikia.adEngine.gptHelper', [
 
 		log(['setSlotLevelParams', slotTargeting], 'debug', logGroup);
 
+		// @TODO: Think about clearing only specific targeting keys
+		if (slot.getTargeting('sp.block').length) {
+			slotTargeting['sp.block'] = 1;
+		}
+
 		slot.clearTargeting();
 		for (name in slotTargeting) {
 			if (slotTargeting.hasOwnProperty(name)) {
@@ -129,6 +137,10 @@ define('ext.wikia.adEngine.gptHelper', [
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
+			if (context.opts.sourcePointUrl) {
+				gads.src = context.opts.sourcePointUrl;
+				gads.setAttribute('data-client-id', 'rMbenHBwnMyAMhR');
+			}
 
 			log('Appending GPT script to head', 'debug', logGroup);
 
@@ -148,6 +160,10 @@ define('ext.wikia.adEngine.gptHelper', [
 				googletag.enableServices();
 
 				log(['loadGpt', 'googletag.cmd.push', 'done'], 'debug', logGroup);
+			});
+
+			document.addEventListener('sp.blocking', function () {
+				adTracker('sourcepoint/blocked');
 			});
 		}
 	}
