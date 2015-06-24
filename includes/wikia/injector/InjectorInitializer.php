@@ -14,7 +14,7 @@ class InjectorInitializer {
 		}
 
 		Injector::getInjector()
-			->bind(PreferenceService::class, PreferenceKeyValueService::class)
+			->bindClass(PreferenceService::class, PreferenceKeyValueService::class)
 			->addModule(self::getPreferencePersistenceModule())
 			->build();
 	}
