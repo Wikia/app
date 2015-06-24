@@ -1,11 +1,4 @@
 <?php
-/**
- * InjectorBuilder
- *
- * <insert description here>
- *
- * @author Nelson Monterroso <nelson@wikia-inc.com>
- */
 
 namespace Wikia\DependencyInjection;
 
