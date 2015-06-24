@@ -21,8 +21,12 @@ class Injector {
 			->useAnnotations(true);
 	}
 
-	public function bind($from, $to) {
-		$this->builder->addDefinitions([$from => object($to)]);
+	public function bindClass($key, $class) {
+		return $this->bind($key, object($class));
+	}
+
+	public function bind($key, $value) {
+		$this->builder->addDefinitions([$key => $value]);
 		return $this;
 	}
 
@@ -55,7 +59,7 @@ class Injector {
 	 * @return PreferenceService
 	 */
 	public function userPreferenceService() {
-		return $this->get('Wikia\Service\User\PreferenceService');
+		return $this->get(PreferenceService::class);
 	}
 
 	/**
