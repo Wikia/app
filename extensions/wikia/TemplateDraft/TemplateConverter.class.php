@@ -4,7 +4,7 @@ class TemplateConverter {
 
 	const TEMPLATE_VARIABLE_REGEX = '/{{{([^\|}]*?)\|?.*}}}/sU';
 
-	public function convert( $content ) {
+	public function convertAsInfobox( $content ) {
 		$draft = '<infobox>';
 
 		$variables = $this->findTemplateVariables( $content );
