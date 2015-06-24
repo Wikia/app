@@ -21,6 +21,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onAfterInitialize( $title, $article, $output, $user, WebRequest $request, $wiki ) {
 		global
+			$wgAdDriverForceJJ,
 			$wgAdDriverForceLiftiumAd,
 			$wgAdDriverForceOpenXAd,
 			$wgAdDriverForceTurtleAd,
@@ -37,6 +38,7 @@ class AdEngine2Hooks {
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
 		$wgAdDriverForceOpenXAd = $request->getBool( 'forceopenx', $wgAdDriverForceOpenXAd );
 		$wgAdDriverForceTurtleAd = $request->getBool( 'forceturtle', $wgAdDriverForceTurtleAd );
+		$wgAdDriverForceJJ = $request->getBool( 'forcejj', $wgAdDriverForceJJ );
 
 		$wgEnableKruxTargeting = !$wgNoExternals && $wgEnableKruxTargeting;
 		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile && !$wgNoExternals );
@@ -64,6 +66,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchCountriesMobile';
 		$vars[] = 'wgAmazonMatchOldCountries';
+		$vars[] = 'wgAdDriverJJCountries';
 		$vars[] = 'wgHighValueCountries'; // Used by Liftium only
 
 		/**
@@ -76,6 +79,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableMonetizationService';
 		$vars[] = 'wgSitewideDisableRubiconRTP';
 		$vars[] = 'wgSitewideDisableSevenOneMedia';
+		$vars[] = 'wgSitewideDisableJJProvider';
 
 		return true;
 	}

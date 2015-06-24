@@ -61,6 +61,7 @@ class AdEngine2ContextService {
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
+					'jj' => $wg->AdDriverUseJJProvider,
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,
 					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
@@ -74,6 +75,7 @@ class AdEngine2ContextService {
 				] ),
 				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [
+					'jj' => $wg->AdDriverForceJJ,
 					'liftium' => $wg->AdDriverForceLiftiumAd,
 					'openX' => $wg->AdDriverForceOpenXAd,
 					'turtle' => $wg->AdDriverForceTurtleAd,
