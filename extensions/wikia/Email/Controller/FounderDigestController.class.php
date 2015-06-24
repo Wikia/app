@@ -15,6 +15,7 @@ abstract class FounderDigestController extends EmailController {
 	/** @var \Language */
 	protected $language;
 	protected $wikiId;
+	protected $wikiName;
 	protected $pageViews;
 
 	public function initEmail() {
@@ -22,12 +23,14 @@ abstract class FounderDigestController extends EmailController {
 		$this->wikiId = $this->request->getVal( 'wikiId' );
 		$this->pageViews = $this->request->getVal( 'pageViews' );
 		$this->assertValidParams();
-
+		// Get the name of the wiki, because this email is not associated with the current wiki
+		$wikiObj = \WikiFactory::getWikiByID( $this->wikiId );
+		$this->wikiName = empty( $wikiObj ) ? '' : $wikiObj->city_title;
 		$this->pageViews = $this->language->formatNum( $this->pageViews );
 	}
 
 	protected function getSummary() {
-		return $this->getMessage( 'emailext-founder-digest-summary' )->parse();
+		return $this->getMessage( 'emailext-founder-digest-summary', $this->wikiName )->parse();
 	}
 
 	protected function assertValidParams() {
@@ -108,7 +111,7 @@ class FounderActivityDigestController extends FounderDigestController {
 	}
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-activity-digest-subject' )->parse();
+		return $this->getMessage( 'emailext-founder-activity-digest-subject', $this->wikiName )->parse();
 	}
 
 	/**
@@ -236,7 +239,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_VIEWS_DIGEST_INT;
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-views-digest-subject' )->parse();
+		return $this->getMessage( 'emailext-founder-views-digest-subject', $this->wikiName )->parse();
 	}
 
 	/**

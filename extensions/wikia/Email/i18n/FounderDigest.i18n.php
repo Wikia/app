@@ -2,9 +2,9 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-founder-activity-digest-subject' => 'The latest activity on {{SITENAME}}',
-	'emailext-founder-views-digest-subject' => "Today's views on {{SITENAME}}",
-	'emailext-founder-digest-summary' => "It's time for your daily dose of activity from {{SITENAME}}.",
+	'emailext-founder-activity-digest-subject' => 'The latest activity on $1',
+	'emailext-founder-views-digest-subject' => "Today's views on $1",
+	'emailext-founder-digest-summary' => "It's time for your daily dose of activity from $1.",
 	'emailext-founder-activity-digest-link-label' => 'Recent Wikia Activity',
 	'emailext-founder-activity-digest-footer' => 'Get more tips on building your wikia and ask questions on [http://community.wikia.com/ Community Central].',
 	'emailext-founder-views-digest-link-label' => 'Add Pages',
@@ -18,9 +18,9 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'emailext-founder-activity-digest-subject' => 'Subject of the activity digest email sent to founders',
-	'emailext-founder-views-digest-subject' => 'Subject of the page views digest email sent to founders',
-	'emailext-founder-digest-summary' => 'Summary text in body of email for founder digests.',
+	'emailext-founder-activity-digest-subject' => 'Subject of the activity digest email sent to founders. $1 is the title of the wiki.',
+	'emailext-founder-views-digest-subject' => 'Subject of the page views digest email sent to founders. $1 is the title of the wiki.',
+	'emailext-founder-digest-summary' => 'Summary text in body of email for founder digests. $1 is the title of the wiki.',
 	'emailext-founder-activity-digest-link-label' => 'Button label linking to recent wiki activity page',
 	'emailext-founder-activity-digest-footer' => 'Footer text for activity digest that suggests visiting the Community Central wiki for help. The link here should go to Community Central for the language of the message.',
 	'emailext-founder-views-digest-link-label' => 'Button label linking to the wiki inviting the user to add new pages.',
