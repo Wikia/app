@@ -16,10 +16,10 @@ class CategoryAddController extends EmailController {
 	public function initEmail() {
 		$pageTitle = $this->request->getVal( 'pageTitle' );
 		$titleNamespace = $this->request->getVal( 'namespace', NS_MAIN );
-		$categoryPageId = $this->getVal( 'childArticleID' );
+		$pageAddedToCategoryId = $this->getVal( 'childArticleID' );
 
-		$this->pageAddedToCategory = \Title::newFromText( $pageTitle, $titleNamespace );
-		$this->categoryPage = \Title::newFromID( $categoryPageId );
+		$this->categoryPage = \Title::newFromText( $pageTitle, $titleNamespace );
+		$this->pageAddedToCategory = \Title::newFromID( $pageAddedToCategoryId );
 
 		$this->assertValidParams();
 	}
@@ -96,7 +96,7 @@ class CategoryAddController extends EmailController {
 	protected function getFooterMessages() {
 		$footerMessages = [
 			$this->getMessage( 'emailext-unfollow-text',
-				$this->categoryPage->getCanonicalUrl( 'action=unwatch' ),
+				$this->categoryPage->getFullURL( 'action=unwatch' ),
 				$this->categoryPage->getPrefixedText() )->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
