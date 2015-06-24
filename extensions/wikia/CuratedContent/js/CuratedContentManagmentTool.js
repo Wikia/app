@@ -12,6 +12,7 @@ $(function () {
 			orphanError = msg('wikiacuratedcontent-content-orphaned-error'),
 			articleNotFoundError = msg('wikiacuratedcontent-content-articlenotfound-error'),
 			emptyLabelError = msg('wikiacuratedcontent-content-emptylabel-error'),
+			tooLongLabelError = msg('wikiacuratedcontent-content-toolonglabel-error'),
 			videoNotSupportedError = msg('wikiacuratedcontent-content-videonotsupported-error'),
 			notSupportedType = msg('wikiacuratedcontent-content-notsupportedtype-error'),
 			noCategoryInTag = msg('wikiacuratedcontent-content-nocategoryintag-error'),
@@ -250,6 +251,9 @@ $(function () {
 							if (errReason === 'emptyLabel') {
 								return emptyLabelError;
 							}
+							if (errReason === 'tooLongLabel') {
+								return tooLongLabelError;
+							}
 							if (errReason === 'videoNotSupportProvider') {
 								return videoNotSupportedError;
 							}
@@ -274,7 +278,7 @@ $(function () {
 								items.each(function () {
 
 									if (this.value === errTitle) {
-										if (errReason != 'emptyLabel') {
+										if (errReason !== 'emptyLabel' && errReason !== 'tooLongLabel') {
 											$(this)
 												.addClass('error')
 												.popover('destroy')
