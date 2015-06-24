@@ -49,24 +49,27 @@ class FlagsExtractTemplatesTask extends BaseTask {
 			];
 
 			$flagsExtractor->init( $content, $flagType['flag_view'], $actions, $actionParams );
-			$template = $flagsExtractor->getTemplate()[0];
 
-			if ( isset( $existingFlags[$flagType['flag_type_id']] ) ) {
-				$flagsToUpdate[] = [
-					'flag_id' => $existingFlags[$flagType['flag_type_id']]['flag_id'],
-					'params' => $template['params'],
-				];
-			} else {
-				$flagsToAdd[] = [
-					'flag_type_id' => $flagType['flag_type_id'],
-					'params' => $template['params'],
-				];
+			if ( $templates = $flagsExtractor->getTemplate() ) {
+				$template = $templates[0];
+
+				if ( isset( $existingFlags[$flagType['flag_type_id']] ) ) {
+					$flagsToUpdate[] = [
+						'flag_id' => $existingFlags[$flagType['flag_type_id']]['flag_id'],
+						'params' => $template['params'],
+					];
+				} else {
+					$flagsToAdd[] = [
+						'flag_type_id' => $flagType['flag_type_id'],
+						'params' => $template['params'],
+					];
+				}
+
+				/**
+				 * Modify the content for the next template
+				 */
+				$content = $flagsExtractor->getText();
 			}
-
-			/**
-			 * Modify the content for the next template
-			 */
-			$content = $flagsExtractor->getText();
 		}
 
 		/**

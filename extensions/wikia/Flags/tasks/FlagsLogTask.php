@@ -60,7 +60,7 @@ class FlagsLogTask extends BaseTask {
 				$title = \Title::newFromID( $pageId );
 				$log = new \LogPage( 'flags' );
 
-				if ( !empty( $oldFlags['data'][$flag['flag_type_id']]['flag_params_names'] ) ) {
+				if ( !empty($flag['flag_type_id']) && !empty( $oldFlags['data'][$flag['flag_type_id']]['flag_params_names'] ) ) {
 					$this->logParameters( $oldFlags['data'][$flag['flag_type_id']], $flag, $log, $title );
 				}
 			}
