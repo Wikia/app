@@ -55,11 +55,6 @@ FluentSql\StaticSQL::setClass("\\WikiaSQL");
  */
 require_once ( $IP."/lib/Wikia/autoload.php");
 
-/**
- * initialize dependency injection, must be done after Wikia/autoload
- */
-require_once ( $IP."/includes/wikia/injector/InjectorInitializer.php");
-
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
