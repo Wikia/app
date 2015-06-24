@@ -97,9 +97,11 @@ class MercuryApiController extends WikiaController {
 	 */
 	private function getArticleDescription( $articleId, $descLength = 100 ) {
 		$article = Article::newFromID( $articleId );
-		if ($article === null) {
+
+		if ( $article instanceof Article ) {
 			throw new NotFoundApiException();
 		}
+
 		$title = $article->getTitle();
 		$sMessage = null;
 
