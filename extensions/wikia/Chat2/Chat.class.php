@@ -291,17 +291,24 @@ class Chat {
 
 		$userID = $banUser->getId();
 		$key = self::getBanInfoCacheKey( $cityID, $userID );
+		$memc = F::app()->wg->Memc;
 
-		$banInfo = WikiaDataAccess::cache( $key, self::BAN_INFO_TTL, function () use ( $cityID, $userID ) {
-			ChatHelper::info( __METHOD__ . ': Cache miss - querying DB', [
-				'cityId' => $cityID,
-				'userID' => $userID,
-			] );
+		$banInfo = $memc->get( $key );
+		if ( empty( $banInfo ) ) {
+			$banInfo = self::getBanInfoFromDB( $cityID, $userID );
 
-			return self::getBanInfoFromDB( $cityID, $userID );
-		} );
+			// Only cache for as long as we have left in the ban, or a default if the ban has expired
+			if ( empty( $banInfo ) ) {
+				$ttl = self::BAN_INFO_TTL;
+				$banInfo = -1;
+			} else {
+				$ttl = $banInfo->end_date - time();
+			}
 
-		return empty( $banInfo ) ? false : $banInfo;
+			$memc->set( $key, $banInfo, $ttl );
+		}
+
+		return $banInfo == -1 ? false : $banInfo;
 	}
 
 	private static function getBanInfoFromDB( $cityID, $userID ) {
