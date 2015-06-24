@@ -14,6 +14,7 @@ use Doctrine\Common\Cache\CacheProvider;
 use function DI\object;
 
 class InjectorBuilder {
+	/** @var ContainerBuilder */
 	private $builder;
 
 	public function __construct() {
@@ -21,13 +22,8 @@ class InjectorBuilder {
 			->useAnnotations(true);
 	}
 
-	public function bindClass($key, $class) {
-		return $this->bind($key, object($class));
-	}
-
-	public function bind($key, $value) {
-		$this->builder->addDefinitions([$key => $value]);
-		return $this;
+	public function bind($key) {
+		return new InjectionBinding($key, $this);
 	}
 
 	/**
@@ -45,6 +41,10 @@ class InjectorBuilder {
 		}
 
 		return $this;
+	}
+
+	public function builder() {
+		return $this->builder;
 	}
 
 	/**

@@ -12,7 +12,7 @@ class InjectorInitializer {
 		Injector::setInjector(
 			(new InjectorBuilder())
 				->withCache($cacheProvider)
-				->bindClass(PreferenceService::class, PreferenceKeyValueService::class)
+				->bind(PreferenceService::class)->toClass(PreferenceKeyValueService::class)
 				->addModule(self::getPreferencePersistenceModule())
 				->build());
 	}
