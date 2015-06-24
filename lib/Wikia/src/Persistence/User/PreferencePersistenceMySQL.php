@@ -5,7 +5,7 @@ namespace Wikia\Persistence\User;
 use Wikia\Service\User\PreferencePersistence;
 use Wikia\Domain\User\Preference;
 
-class MySQLPreferencePersistence implements PreferencePersistence {
+class PreferencePersistenceMySQL implements PreferencePersistence {
 	const USER_PREFERENCE_TABLE = 'user_properties';
 	const CONNECTION_MASTER = "user_preferences_mysql_persistence_master";
 	const CONNECTION_SLAVE = "user_preferences_mysql_persistence_slave";
@@ -17,8 +17,8 @@ class MySQLPreferencePersistence implements PreferencePersistence {
 
 	/**
 	 * @Inject({
-	 *   Wikia\Persistence\User\MySQLPreferencePersistence::CONNECTION_MASTER,
-	 *   Wikia\Persistence\User\MySQLPreferencePersistence::CONNECTION_SLAVE})
+	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_MASTER,
+	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_SLAVE})
 	 * @param \DatabaseMysqli $master
 	 * @param \DatabaseMysqli $slave
 	 */

@@ -15,7 +15,7 @@ use Wikia\DependencyInjection\Module;
 use Wikia\Service\User\PreferencePersistence;
 
 
-class MySQLPreferencePersistenceModule implements Module {
+class PreferencePersistenceModuleMySQL implements Module {
 	/** @var callable */
 	private $masterProvider;
 
@@ -29,9 +29,9 @@ class MySQLPreferencePersistenceModule implements Module {
 
 	public function configure() {
 		return [
-			PreferencePersistence::class => object(MySQLPreferencePersistence::class),
-			MySQLPreferencePersistence::CONNECTION_MASTER => $this->masterProvider,
-			MySQLPreferencePersistence::CONNECTION_SLAVE => $this->slaveProvider,
+			PreferencePersistence::class => object(PreferencePersistenceMySQL::class),
+			PreferencePersistenceMySQL::CONNECTION_MASTER => $this->masterProvider,
+			PreferencePersistenceMySQL::CONNECTION_SLAVE => $this->slaveProvider,
 		];
 	}
 }

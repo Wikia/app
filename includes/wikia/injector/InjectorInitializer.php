@@ -1,7 +1,7 @@
 <?php
 
 use Wikia\DependencyInjection\Injector;
-use Wikia\Persistence\User\MySQLPreferencePersistenceModule;
+use Wikia\Persistence\User\PreferencePersistenceModuleMySQL;
 use Wikia\Service\User\PreferenceKeyValueService;
 use Wikia\Service\User\PreferenceService;
 
@@ -29,6 +29,6 @@ class InjectorInitializer {
 			return wfGetDB(DB_SLAVE, [], $wgExternalSharedDB);
 		};
 
-		return new MySQLPreferencePersistenceModule($masterProvider, $slaveProvider);
+		return new PreferencePersistenceModuleMySQL($masterProvider, $slaveProvider);
 	}
 }
