@@ -91,7 +91,8 @@ require(
 						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
 						params: {
 							sassParams: window.wgSassParams// Ensure per-theme colors Varnish cache
-						}
+						},
+						wikiaThemeDependent: true
 					}
 				})
 			).done(function (flagsData, res) {

@@ -40,6 +40,9 @@ class AssetsManagerController extends WikiaController {
 		$key = null;
 		$data = null;
 		$templates = $this->request->getVal( 'templates', null );
+		$themeDesignerDependent = $this->request->getVal( 'wikiaThemeDependent', null );
+		$wikiaDependent = $this->request->getVal( 'wikiaDependent', null );
+		$sassParams = $this->request->getVal( 'sassParams', null );
 		$styles = $this->request->getVal( 'styles', null );
 		$scripts = $this->request->getVal( 'scripts', null );
 		$messages = $this->request->getVal( 'messages', null );
@@ -72,10 +75,12 @@ class AssetsManagerController extends WikiaController {
 		if ( !is_null( $styles ) ) {
 			$profileId = __METHOD__ . "::styles::{$styles}";
 			wfProfileIn( $profileId );
-$this->debug('$styles in '.__METHOD__, ['context' => 'kamilktest', 'dataa' => print_r($styles,true)]);
-			$key = $this->getComponentMemcacheKey( $styles );
-$this->debug('memc $key in '.__METHOD__, ['context' => 'kamilktest', 'dataa' => print_r($key,true)]);
-			wfDebug('kamilktestlog 2 '.__METHOD__.' '.print_r($key,true)."\n");
+
+			if ( $themeDesignerDependent ) {
+				$key = $this->getComponentMemcacheKey( json_encode( [ $styles, $sassParams ] ), $wikiaDependent );
+			} else {
+				$key = $this->getComponentMemcacheKey( $styles, $wikiaDependent );
+			}
 
 			$data = '';
 //			$data = $this->wg->Memc->get( $key );
@@ -172,8 +177,12 @@ $this->debug('memc $key in '.__METHOD__, ['context' => 'kamilktest', 'dataa' => 
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getComponentMemcacheKey( $par ) {
-		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion;
+	private function getComponentMemcacheKey( $par, $wikiaDependent = false ) {
+		$cityId = '';
+		if ( $wikiaDependent ) {
+			$cityId = '::' . $this->wg->cityId;
+		}
+		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion . $cityId;
 	}
 
 	/**
