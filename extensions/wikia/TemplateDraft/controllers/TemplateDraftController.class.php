@@ -33,10 +33,9 @@ class TemplateDraftController extends WikiaController {
 		 */
 		$flagsSum = array_sum( $flags );
 
-		if ( !is_array( $flags ) || self::TEMPLATE_GENERAL & $flagsSum ) {
-			return $content;
-		} elseif ( self::TEMPLATE_INFOBOX & $flagsSum ) {
-			return $content;
+		if ( self::TEMPLATE_INFOBOX & $flagsSum ) {
+			$templateConverter = new TemplateConverter();
+			$content = $templateConverter->convert( $content );
 		}
 
 		return $content;

@@ -37,6 +37,7 @@ $wgHooks['EditFormPreloadText'][] = 'TemplateDraftHooks::onEditFormPreloadText';
  * Helpers
  */
 $wgAutoloadClasses['TemplateDraftHelper'] = __DIR__ . '/TemplateDraftHelper.class.php';
+$wgAutoloadClasses['TemplateConverter'] = __DIR__ . '/TemplateConverter.class.php';
 
 /**
  * Right rail module
