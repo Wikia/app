@@ -22,10 +22,21 @@ $wgExtensionCredits['other'][] = [
 $wgExtensionMessagesFiles['TemplateDraft'] = __DIR__ . '/TemplateDraft.i18n.php';
 
 /**
+ * Controllers
+ */
+$wgAutoloadClasses['TemplateDraftController'] = __DIR__ . '/controllers/TemplateDraftController.class.php';
+
+/**
  * Hooks
  */
 $wgAutoloadClasses['TemplateDraftHooks'] = __DIR__ . '/TemplateDraftHooks.class.php';
 $wgHooks['GetRailModuleList'][] = 'TemplateDraftHooks::onGetRailModuleList';
+$wgHooks['EditFormPreloadText'][] = 'TemplateDraftHooks::onEditFormPreloadText';
+
+/**
+ * Helpers
+ */
+$wgAutoloadClasses['TemplateDraftHelper'] = __DIR__ . '/TemplateDraftHelper.class.php';
 
 /**
  * Right rail module
