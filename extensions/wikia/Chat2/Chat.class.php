@@ -14,6 +14,9 @@ class Chat {
 	// Cache ban info for 24h, 24*60*60 = 86400
 	const BAN_INFO_TTL = 86400;
 
+	// Value to store in memcache when no ban information is found
+	const NO_BAN_INFORMATION = -1;
+
 	/**
 	 * The return value of this method gets passed to Javascript as the global wgChatKey.  It then becomes the 'key'
 	 * parameter sent with every chat request to the Node.js server.
@@ -299,8 +302,9 @@ class Chat {
 
 			// Only cache for as long as we have left in the ban, or a default if the ban has expired
 			if ( empty( $banInfo ) ) {
+				// Cache the absense of ban information since this will be the case most often
 				$ttl = self::BAN_INFO_TTL;
-				$banInfo = -1;
+				$banInfo = self::NO_BAN_INFORMATION;
 			} else {
 				$ttl = $banInfo->end_date - time();
 			}
@@ -308,7 +312,7 @@ class Chat {
 			$memc->set( $key, $banInfo, $ttl );
 		}
 
-		return $banInfo == -1 ? false : $banInfo;
+		return $banInfo == self::NO_BAN_INFORMATION ? false : $banInfo;
 	}
 
 	private static function getBanInfoFromDB( $cityID, $userID ) {
