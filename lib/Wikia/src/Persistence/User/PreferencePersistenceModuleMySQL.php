@@ -9,11 +9,9 @@
 
 namespace Wikia\Persistence\User;
 
-use function DI\object;
-
+use Wikia\DependencyInjection\InjectorBuilder;
 use Wikia\DependencyInjection\Module;
 use Wikia\Service\User\PreferencePersistence;
-
 
 class PreferencePersistenceModuleMySQL implements Module {
 	/** @var callable */
@@ -27,11 +25,10 @@ class PreferencePersistenceModuleMySQL implements Module {
 		$this->slaveProvider = $slaveProvider;
 	}
 
-	public function configure() {
-		return [
-			PreferencePersistence::class => object(PreferencePersistenceMySQL::class),
-			PreferencePersistenceMySQL::CONNECTION_MASTER => $this->masterProvider,
-			PreferencePersistenceMySQL::CONNECTION_SLAVE => $this->slaveProvider,
-		];
+	public function configure(InjectorBuilder $builder) {
+		$builder
+			->bind(PreferencePersistence::class)->toClass(PreferencePersistenceMySQL::class)
+			->bind(PreferencePersistenceMySQL::CONNECTION_MASTER)->to($this->masterProvider)
+			->bind(PreferencePersistenceMySQL::CONNECTION_SLAVE)->to($this->slaveProvider);
 	}
 }

@@ -31,7 +31,7 @@ class InjectorBuilder {
 	 * @return InjectorBuilder
 	 */
 	public function addModule(Module $module) {
-		$this->builder->addDefinitions($module->configure());
+		$module->configure($this);
 		return $this;
 	}
 
