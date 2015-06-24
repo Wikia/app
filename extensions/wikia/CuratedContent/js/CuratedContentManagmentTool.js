@@ -1,5 +1,10 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
+/* jshint maxlen: false */
+/* jshint loopfunc: false */
+/* jshint camelcase: false */
 $(function () {
+	'use strict';
+
 	require(['wikia.window', 'jquery', 'wikia.nirvana', 'wikia.tracker', 'JSMessages'], function (window, $, nirvana, tracker, msg) {
 		'use strict';
 
@@ -45,6 +50,7 @@ $(function () {
 					minLength: 3,
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
+				checkForm();
 			},
 			addNew = function (row, elem) {
 				var cat;
@@ -62,28 +68,46 @@ $(function () {
 
 				$ul.sortable('refresh');
 			},
-			checkInputs = function (elements, checkEmpty, required) {
-				var names = [];
+			/**
+			 * Validate input elements
+			 *
+			 * @param elements
+			 * @param options array consists of ['checkEmpty', 'required', 'limit']
+			 */
+			checkInputs = function (elements, options) {
+				var names = [],
+					optionCheckEmpty, optionRequired, optionLimit;
+
+				optionCheckEmpty = typeof options !== 'undefined' ? (options.indexOf('checkEmpty') !== -1) : false;
+				optionRequired = typeof options !== 'undefined' ? (options.indexOf('required') !== -1) : false;
+				optionLimit = typeof options !== 'undefined' ? (options.indexOf('limit') !== -1) : false;
 
 				elements.each(function () {
 					var val = this.value,
 						$this = $(this);
 
-					if (required && val === '') {
+					if (optionRequired && val === '') {
 						$this
 							.addClass('error')
 							.popover('destroy')
 							.popover({
 								content: requiredError
 							});
-					} else if (!~names.indexOf(val)) {
+					} else if (optionLimit && val.length > 48) {
+						$this
+							.addClass('error')
+							.popover('destroy')
+							.popover({
+								content: tooLongLabelError
+							});
+					} else if (names.indexOf(val) === -1) {
 						names.push(val);
 
 						$this
 							.removeClass('error')
 							.popover('destroy');
 
-					} else if (checkEmpty || val !== '') {
+					} else if (optionCheckEmpty || val !== '') {
 						$this
 							.addClass('error')
 							.popover('destroy')
@@ -96,8 +120,8 @@ $(function () {
 			checkForm = function () {
 				$save.removeClass();
 
-				checkInputs($ul.find('.section-input'), true);
-				checkInputs($ul.find('.item-input'), true, true);
+				checkInputs($ul.find('.section-input'), ['required']);
+				checkInputs($ul.find('.item-input'), ['required', 'checkEmpty']);
 
 				// validate orphans
 				$ul.find('.section ~ .item.error').removeClass('error');
@@ -123,7 +147,7 @@ $(function () {
 								content: emptySectionError
 							});
 					} else {
-						checkInputs($items.find('.name'))
+						checkInputs($items.find('.name'), ['limit']);
 					}
 				});
 
@@ -152,7 +176,7 @@ $(function () {
 			.on('blur', 'input', function () {
 				var val = $.trim(this.value);
 
-				if (this.className == 'item-input') {
+				if (this.className === 'item-input') {
 					val = val.replace(/ /g, '_');
 				}
 				this.value = val;
@@ -168,7 +192,7 @@ $(function () {
 				if (ev.keyCode === 13) {
 					$(this).next().focus();
 				}
-			}).keyup(function (ev) {
+			}).keyup(function () {
 				setTimeout(checkForm, 0);
 			});
 
@@ -186,7 +210,7 @@ $(function () {
 				title: $lia.find('.item-input').val(),
 				label: $lia.find('.name').val(),
 				image_id: $lia.find('.image').data('id') || 0
-			}
+			};
 		}
 
 		function getSectionData(li) {
@@ -205,9 +229,9 @@ $(function () {
 				title: name,
 				image_id: imageId,
 				items: items
-			}
+			};
 			if (featured) {
-				result['featured'] = true;
+				result.featured = true;
 			}
 			return result;
 		}
@@ -340,7 +364,7 @@ $(function () {
 				).done(
 					function (data) {
 						if (data.url && data.id) {
-							$currentImage.css('backgroundImage', 'url(' + data.url + ')')
+							$currentImage.css('backgroundImage', 'url(' + data.url + ')');
 							$currentImage.data('id', data.id);
 							$currentImage.attr('data-id', data.id);
 
