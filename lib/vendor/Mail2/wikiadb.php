@@ -7,7 +7,7 @@
  * @author Sean Colombo
  */
 
-class Mail2_wikiadb extends Mail2{
+class Mail2_wikiadb extends Mail2 {
 
 	public static $MAIL_TABLE_NAME = "wikia_mailer.mail";
 
@@ -21,11 +21,12 @@ class Mail2_wikiadb extends Mail2{
 		if (isset($headers['X-Priority'])) {
 			$priority = $headers['X-Priority'];
 		}
-		
+
+		$category = '';
 		if (isset($headers['X-Msg-Category'])) {
 			$category = $headers['X-Msg-Category'];
 		}
-		
+
 		global $wgCityId, $wgWikiaMailerDB;
 		$wgCityId = ($wgCityId == null?0:$wgCityId); // fake city-id for contractor/staff.
 		// FB:4431 Write mail to archive database now
@@ -48,7 +49,7 @@ class Mail2_wikiadb extends Mail2{
 				),
 				__METHOD__
 			);
-			
+
 			// Add postback token so that we can verify that any postback actually comes from SendGrid.
 			$emailId = $dbw->insertId();
 			$postbackToken = wfGetEmailPostbackToken($emailId, $recipient);
@@ -62,6 +63,5 @@ class Mail2_wikiadb extends Mail2{
 			wfDebugLog( "enotif", __METHOD__ . ": email added to database with data: $recipient $from {$headers['Subject']}", true );
 		}
 		$dbw->commit(__METHOD__);
-
 	}
 }
