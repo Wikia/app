@@ -5,6 +5,7 @@ namespace Email\Controller;
 use Email\EmailController;
 use Email\Check;
 use Email\Tracking\TrackingCategories;
+use Email\ImageHelper;
 
 abstract class FounderDigestController extends EmailController {
 	// Defaults; will be overridden in subclasses
@@ -26,8 +27,7 @@ abstract class FounderDigestController extends EmailController {
 	}
 
 	protected function getSummary() {
-		return $this->getMessage( 'emailext-founder-digest-summary',
-			\WikiMap::getWikiName( $this->wikiId ) )->parse();
+		return $this->getMessage( 'emailext-founder-digest-summary' )->parse();
 	}
 
 	protected function assertValidParams() {
@@ -41,7 +41,7 @@ abstract class FounderDigestController extends EmailController {
 	 * @throws \Email\Check
 	 */
 	protected function assertValidWikiId() {
-		if ( $this->wikiId < 1 ) {
+		if ( empty( $this->wikiId ) ) {
 			throw new Check( 'Invalid value passed for `wikiId`' );
 		}
 	}
@@ -108,8 +108,7 @@ class FounderActivityDigestController extends FounderDigestController {
 	}
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-activity-digest-subject',
-			\WikiMap::getWikiName( $this->wikiId ) )->parse();
+		return $this->getMessage( 'emailext-founder-activity-digest-subject' )->parse();
 	}
 
 	/**
@@ -181,17 +180,17 @@ class FounderActivityDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => \GlobalFile::newFromText( 'Page-views.png', \Wikia::NEWSLETTER_WIKI_ID )->getUrlGenerator()->url(),
+				'iconSrc' => ImageHelper::getFileInfo( 'Page-views.png' )['url'],
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-1' )->text()
 			],
 			[
-				'iconSrc' => \GlobalFile::newFromText( 'Number-of-edits.png', \Wikia::NEWSLETTER_WIKI_ID )->getUrlGenerator()->url(),
+				'iconSrc' => ImageHelper::getFileInfo( 'Number-of-edits.png' )['url'],
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-edits-header', $this->pageEdits )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-edits-description' )->text()
 			],
 			[
-				'iconSrc' => \GlobalFile::newFromText( 'New-users.png', \Wikia::NEWSLETTER_WIKI_ID )->getUrlGenerator()->url(),
+				'iconSrc' => ImageHelper::getFileInfo( 'New-users.png' )['url'],
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-users-header', $this->newUsers )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-users-description' )->text()
 			] 
@@ -240,8 +239,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	const TRACKING_CATEGORY_INT = TrackingCategories::FOUNDER_VIEWS_DIGEST_INT;
 
 	protected function getSubject() {
-		return $this->getMessage( 'emailext-founder-views-digest-subject',
-			\WikiMap::getWikiName( $this->wikiId ) )->parse();
+		return $this->getMessage( 'emailext-founder-views-digest-subject' )->parse();
 	}
 
 	/**
@@ -295,7 +293,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => \GlobalFile::newFromText( 'Page-views.png', \Wikia::NEWSLETTER_WIKI_ID )->getUrlGenerator()->url(),
+				'iconSrc' => ImageHelper::getFileInfo( 'Page-views.png' )['url'],
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-2' )->text()
 			] 
