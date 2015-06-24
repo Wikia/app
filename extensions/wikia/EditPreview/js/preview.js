@@ -370,6 +370,12 @@ define('wikia.preview', [
 			loadPreview(previewTypes[currentTypeName].name);
 		}
 
+		if (type === 'max' && !$article.hasClass('large-typography')) {
+			$article.addClass('large-typography');
+		} else if (type !== 'max') {
+			$article.removeClass('large-typography');
+		}
+
 		$article.width(previewTypes[currentTypeName].value);
 		scalePreview(currentTypeName);
 

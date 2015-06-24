@@ -28,6 +28,7 @@
 @import 'core/tabs';
 @import 'core/toolbar';
 @import 'core/wide';
+@import 'skins/oasis/css/core/breakpoints-large-typography';
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
@@ -346,6 +347,10 @@ body {
 
 			.ArticlePreviewInner {
 				height: 100%;
+
+				&.large-typography {
+					@include breakpoints-large-typography;
+				}
 			}
 
 			.preview-modal-msg-wrapper {
