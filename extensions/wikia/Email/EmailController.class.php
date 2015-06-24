@@ -161,6 +161,16 @@ abstract class EmailController extends \WikiaController {
 			];
 
 			if ( !$this->test ) {
+				WikiaLogger::instance()->info( 'Submitting email via UserMailer', [
+					'issue' => 'SOC-910',
+					'method' => __METHOD__,
+					'controller' => get_class( $this ),
+					'toAddress' => $toAddress->toString(),
+					'fromAddress' => $fromAddress->toString(),
+					'subject' => $subject,
+					'category' => static::TRACKING_CATEGORY,
+				] );
+
 				$status = \UserMailer::send(
 					$toAddress,
 					$fromAddress,
@@ -173,6 +183,14 @@ abstract class EmailController extends \WikiaController {
 				$this->assertGoodStatus( $status );
 			}
 		} catch ( \Exception $e ) {
+			WikiaLogger::instance()->info( 'Failed to submit email via UserMailer', [
+				'issue' => 'SOC-910',
+				'method' => __METHOD__,
+				'controller' => get_class( $this ),
+				'category' => static::TRACKING_CATEGORY,
+				'errorMessage' => $e->getMessage(),
+			] );
+
 			$this->setErrorResponse( $e );
 			return;
 		}

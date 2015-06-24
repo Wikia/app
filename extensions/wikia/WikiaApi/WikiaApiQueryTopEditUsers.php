@@ -47,8 +47,8 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 	}
 
 	protected function getDB() {
-		global $wgStatsDB;
-		return wfGetDB(DB_SLAVE, array(), $wgStatsDB);
+		global $wgSpecialsDB;
+		return wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
 	}
 
 	#---
@@ -71,7 +71,7 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 		$this->initCacheKey($lcache_key, __METHOD__);
 		try {
 			#--- database instance
-			$db =& $this->getDB();
+			$db = $this->getDB();
 
 			if ( is_null($db) ) {
 				throw new WikiaApiQueryError(0);
@@ -79,7 +79,7 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 
 			$cid = (empty($wgCityId)) ? WikiFactory::DBtoID($wgDBname) : $wgCityId;
 
-			$this->addTables( array( "`specials`.`events_local_users`" ) );
+			$this->addTables( array( "events_local_users" ) );
 			$this->addFields( array('user_id', 'user_name', 'edits'));
 			$this->addWhere ( "user_id > 0 and user_is_blocked = 0 and user_is_closed = 0" );
 			if ( !empty($cid) ) {

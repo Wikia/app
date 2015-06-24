@@ -65,6 +65,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return string
 	 * @throws UnimplementedNodeException when node used in markup does not exists
 	 * @throws XmlMarkupParseErrorException xml not well formatted
+	 * @throws InvalidInfoboxParamsException when unsupported attributes exist in params array
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
 		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $this->getFrameParams( $frame ) );
@@ -74,8 +75,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 		if ( !isset( $params ) ) {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
-		$data = $infoboxNode->getRenderData();
 
+		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboParamsValidator();
+		$infoboxParamsValidator->validateParams( $params );
+
+		$data = $infoboxNode->getRenderData();
 		//save for later api usage
 		$this->saveToParserOutput( $parser->getOutput(), $infoboxNode );
 
@@ -102,9 +106,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 		try {
 			$renderedValue = $this->render( $markup, $parser, $frame, $params );
 		} catch ( \Wikia\PortableInfobox\Parser\Nodes\UnimplementedNodeException $e ) {
-			return $this->handleError( wfMessage( 'unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
+			return $this->handleError( wfMessage( 'portable-infobox-unimplemented-infobox-tag', [ $e->getMessage() ] )->escaped() );
 		} catch ( \Wikia\PortableInfobox\Parser\XmlMarkupParseErrorException $e ) {
-			return $this->handleError( wfMessage( 'xml-parse-error' ) );
+			return $this->handleXmlParseError( $e->getErrors(), $text );
+		} catch ( \Wikia\PortableInfobox\Helpers\InvalidInfoboxParamsException $e ) {
+			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
 		if ( $wgArticleAsJson ) {
@@ -132,6 +138,16 @@ class PortableInfoboxParserTagController extends WikiaController {
 
 	private function handleError( $message ) {
 		$renderedValue = '<strong class="error"> ' . $message . '</strong>';
+		return [ $renderedValue, 'markerType' => 'nowiki' ];
+	}
+
+	private function handleXmlParseError( $errors, $xmlMarkup ) {
+		$errorRenderer = new PortableInfoboxErrorRenderService( $errors );
+		if ( $this->wg->Title && $this->wg->Title->getNamespace() == NS_TEMPLATE ) {
+			$renderedValue = $errorRenderer->renderMarkupDebugView( $xmlMarkup );
+		} else {
+			$renderedValue = $errorRenderer->renderArticleMsgView();
+		}
 
 		return [ $renderedValue, 'markerType' => 'nowiki' ];
 	}

@@ -18,6 +18,7 @@ $messages['en'] = [
 	'flags-special-list-header-template' => 'Template name',
 	'flags-special-list-header-group' => 'Flag group',
 	'flags-special-list-header-target' => 'Target',
+	'flags-special-list-header-parameters' => 'Parameters',
 	'flags-edit-flags-button-text' => 'Edit flags',
 	'flags-edit-form-more-info' => 'More info >',
 	'flags-edit-modal-cancel-button-text' => 'Cancel',
@@ -42,7 +43,10 @@ $messages['en'] = [
 
 	'flags-log-name' => 'Flags log',
 	'logentry-flags-flag-added' => '$1 added flag \'$4\' to page $3',
-	'logentry-flags-flag-removed' => '$1 removed flag \'$4\' from page $3'
+	'logentry-flags-flag-removed' => '$1 removed flag \'$4\' from page $3',
+	'logentry-flags-flag-parameter-added' => '$1 added value \'$7\' for parameter \'$5\' of flag \'$4\' on page $3',
+	'logentry-flags-flag-parameter-modified' => '$1 modified parameter \'$5\' of flag \'$4\' on page $3 from \'$6\' to \'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1 removed value \'$6\' for parameter \'$5\' of flag \'$4\' on page $3',
 ];
 
 /**
@@ -58,6 +62,7 @@ $messages['qqq'] = [
 	'flags-special-list-header-template' => 'A column name for an associated Template name.',
 	'flags-special-list-header-group' => 'A column name for a Flag group.',
 	'flags-special-list-header-target' => 'A column name for a Flag targeting (who should we display the flag to - everybody or only contributors).',
+	'flags-special-list-header-parameters' => 'A column name for a Flag parameters.',
 	'flags-edit-flags-button-text' => 'Text on button that opens edit flags modal; button contains flag icon; button is displayed near generated flags',
 	'flags-edit-form-more-info' => 'A link that is displayed next to a checkbox in the edit form of Flags. It links to a template used by the flag that it is next to.',
 	'flags-edit-modal-cancel-button-text' => 'Text on the button that closes flags edit modal and ignores changes.',

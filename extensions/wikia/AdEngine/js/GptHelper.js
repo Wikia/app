@@ -73,6 +73,24 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 	}
 
+	function setSlotLevelParams(slot, slotTargeting) {
+		var name,
+			value;
+
+		log(['setSlotLevelParams', slotTargeting], 'debug', logGroup);
+
+		slot.clearTargeting();
+		for (name in slotTargeting) {
+			if (slotTargeting.hasOwnProperty(name)) {
+				value = slotTargeting[name];
+				if (value) {
+					log(['defineSlot', 'slot.setTargeting', name, value], 'debug', logGroup);
+					slot.setTargeting(name, value);
+				}
+			}
+		}
+	}
+
 	function registerGptCallback(adDivId, gptCallback) {
 		log(['registerGptCallback', adDivId], 'info', logGroup);
 		gptCallbacks[adDivId] = gptCallback;
@@ -170,9 +188,7 @@ define('ext.wikia.adEngine.gptHelper', [
 		}
 
 		function queueAd() {
-			var name,
-				value,
-				sizes,
+			var sizes,
 				slot,
 				pageLevelParams = adLogicPageParams.getPageLevelParams();
 
@@ -199,24 +215,17 @@ define('ext.wikia.adEngine.gptHelper', [
 				slot = googletag.defineSlot(slotPath, sizes, adDivId);
 				slot.addService(pubads);
 
-				delete slotTargeting.size;
-
-				for (name in slotTargeting) {
-					if (slotTargeting.hasOwnProperty(name)) {
-						value = slotTargeting[name];
-						if (value) {
-							log(['defineSlot', 'slot.setTargeting', name, value], 'debug', logGroup);
-							slot.setTargeting(name, value);
-						}
-					}
-				}
-
 				// Display div through GPT
 				log(['googletag.display', adDivId], 'debug', logGroup);
 				googletag.display(adDivId);
 
 				gptSlots[adDivId] = slot;
 			}
+
+			delete slotTargeting.size;
+
+			// Set it after we are sure slot is defined
+			setSlotLevelParams(gptSlots[adDivId], slotTargeting);
 
 			// Save slot level params for easier ad delivery debugging
 			adDiv.setAttribute('data-gpt-slot-sizes', JSON.stringify(sizes));

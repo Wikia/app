@@ -614,11 +614,19 @@ class EditHubModel extends WikiaModel {
 	private function getFileCityId(File $file) {
 		global $wgCityId;
 
-		$dbName = $file->getRepo()->getDBName();
-		$wiki = WikiFactory::getWikiByDB( $dbName );
+		$repo = $file->getRepo();
 
-		if ( !empty ( $wiki ) ) {
-			return $wiki->city_id;
+		/**
+		 * Only fetch city_id if the file is coming from
+		 * WikiaForeignDBViaLBRepo
+		 */
+		if ( $repo instanceof WikiaForeignDBViaLBRepo  ) {
+			$dbName = $repo->getDBName();
+			$wiki = WikiFactory::getWikiByDB( $dbName );
+
+			if ( !empty ( $wiki ) ) {
+				return $wiki->city_id;
+			}
 		}
 
 		return $wgCityId;
