@@ -310,6 +310,10 @@ class Chat {
 			}
 
 			$memc->set( $key, $banInfo, $ttl );
+		} else {
+			if ( $banInfo->end_date < time() ) {
+				$banInfo = self::NO_BAN_INFORMATION;
+			}
 		}
 
 		return $banInfo == self::NO_BAN_INFORMATION ? false : $banInfo;
