@@ -427,7 +427,7 @@
 						pageWidth = minWidth;
 					}
 
-					width = pageWidth;
+					width = pageWidth - breakpointsLayout.getArticlePadding();
 				}
 
 				// add article preview padding width

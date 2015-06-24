@@ -169,8 +169,7 @@ define('wikia.preview', [
 			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 				if (opening) {
 
-					// set current width of the article
-					previewTypes.current.value = previewTypes.mobile.value = $article.width();
+					previewTypes.mobile.value = $article.width();
 
 					// get width of article Wrapper
 					// subtract scrollbar width to get correct width needed as reference point for scaling
@@ -359,6 +358,7 @@ define('wikia.preview', [
 	 */
 
 	function switchPreview(type) {
+		console.log(previewTypes);
 		var lastTypeName = currentTypeName;
 
 		currentTypeName = type;
@@ -368,12 +368,6 @@ define('wikia.preview', [
 			lastTypeName === previewTypes.mobile.name
 		) {
 			loadPreview(previewTypes[currentTypeName].name);
-		}
-
-		if (type === 'max' && !$article.hasClass('large-typography')) {
-			$article.addClass('large-typography');
-		} else if (type !== 'max') {
-			$article.removeClass('large-typography');
 		}
 
 		$article.width(previewTypes[currentTypeName].value);
@@ -437,6 +431,12 @@ define('wikia.preview', [
 			break;
 		default:
 			dataSize = '';
+		}
+
+		if (type === 'max' && !$article.hasClass('large-typography')) {
+			$article.addClass('large-typography');
+		} else if (type !== 'max') {
+			$article.removeClass('large-typography');
 		}
 
 		$article.attr('data-size', dataSize);

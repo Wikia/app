@@ -29,6 +29,7 @@
 @import 'core/toolbar';
 @import 'core/wide';
 @import 'skins/oasis/css/core/breakpoints-large-typography';
+@import 'skins/oasis/css/core/breakpoints-below-large-typography';
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
@@ -347,6 +348,7 @@ body {
 
 			.ArticlePreviewInner {
 				height: 100%;
+				@include breakpoints-below-large-typography;
 
 				&.large-typography {
 					@include breakpoints-large-typography;

@@ -22,16 +22,20 @@ define('wikia.breakpointsLayout',  function() {
 
 	function getArticleContentMaxWidth(isWidePage) {
 		var articleWidth = BREAKPOINT_LARGE_CONTENT_WIDTH - 2 * BREAKPOINT_LARGE_PADDING_WIDTH;
-		return isWidePage ? articleWidth - RIGHT_RAIL_WIDTH_PLUS_SPACING : articleWidth;
+		return isWidePage ? articleWidth : articleWidth - RIGHT_RAIL_WIDTH_PLUS_SPACING;
 	}
 
 	function getArticleContentMediumWidth(isWidePage) {
 		var articleWidth = BREAKPOINT_MEDIUM_CONTENT_WIDTH - 2 * BREAKPOINT_MEDIUM_PADDING_WIDTH;
-		return isWidePage ? articleWidth - RIGHT_RAIL_WIDTH_PLUS_SPACING : articleWidth;
+		return isWidePage ? articleWidth : articleWidth - RIGHT_RAIL_WIDTH_PLUS_SPACING;
 	}
 
 	function getArticleContentMinWidth() {
 		return BREAKPOINT_MIN_CONTENT_WIDTH - 2 * (BREAKPOINT_MIN_PADDING_WIDTH + CONTENT_BORDER);
+	}
+
+	function getArticlePadding() {
+		return BREAKPOINT_MEDIUM_PADDING_WIDTH;
 	}
 
 	function getArticleWidth(breakpoint, isWidePage) {
@@ -51,7 +55,8 @@ define('wikia.breakpointsLayout',  function() {
 
 	return {
 		getMinArticleWidth: getMinArticleWidth,
-		getArticleWidth: getArticleWidth
+		getArticleWidth: getArticleWidth,
+		getArticlePadding: getArticlePadding
 	};
 
 });
