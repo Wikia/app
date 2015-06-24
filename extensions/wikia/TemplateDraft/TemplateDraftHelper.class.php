@@ -14,7 +14,8 @@ class TemplateDraftHelper {
 		 */
 		return $title->getNamespace() === NS_TEMPLATE
 			&& $title->isSubpage()
-			&& $title->getSubpageText() === 'Draft';
+			&& ( $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inContentLanguage()->escaped()
+				|| $title->getSubpageText() === wfMessage( 'templatedraft-subpage' )->inLanguage( 'en' )->escaped() );
 	}
 
 	/**
@@ -25,9 +26,6 @@ class TemplateDraftHelper {
 	 * @throws MWException
 	 */
 	public function getParentTitleId( Title $title ) {
-		$prefix = MWNamespace::getCanonicalName( NS_TEMPLATE );
-		$baseText = $title->getBaseText();
-		$prefixedText = "{$prefix}:{$baseText}";
-		return Title::newFromText( $prefixedText, NS_TEMPLATE )->getArticleID();
+		return Title::newFromText( $title->getBaseText(), NS_TEMPLATE )->getArticleID();
 	}
 }
