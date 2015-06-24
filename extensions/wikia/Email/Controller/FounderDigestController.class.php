@@ -206,10 +206,7 @@ class FounderActivityDigestController extends FounderDigestController {
 	}
 
 	protected function getCommunityFooterMessage() {
-		return $this->getMessage(
-			'emailext-founder-activity-digest-footer',
-			\GlobalTitle::newMainPage( \Wikia::COMMUNITY_WIKI_ID )->getFullURL()
-		)->parse();
+		return $this->getMessage( 'emailext-founder-activity-digest-footer' )->parse();
 	}
 
 	protected static function getEmailSpecificFormFields() {
