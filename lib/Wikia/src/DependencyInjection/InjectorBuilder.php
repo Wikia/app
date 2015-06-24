@@ -49,7 +49,6 @@ class InjectorBuilder {
 
 	/**
 	 * @return Injector
-	 * @throws \Exception when trying to build an already-built injector
 	 */
 	public function build() {
 		return new Injector($this->builder->build());
