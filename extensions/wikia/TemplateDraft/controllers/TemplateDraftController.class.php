@@ -18,25 +18,18 @@ class TemplateDraftController extends WikiaController {
 	const TEMPLATE_INFOBOX = 2;
 
 	/**
-	 * Converts the content of the template according to certain flags
+	 * Converts the content of the template according to the given flags.
 	 *
 	 * @param $content
 	 * @param $flags Array
 	 * @return string
 	 */
 	public function createDraftContent( $content, Array $flags ) {
-
-		/**
-		 * This is just a placeholder method
-		 *
-		 * TODO: Add methods converting the content based on $flags
-		 */
 		$flagsSum = array_sum( $flags );
 
-		if ( self::TEMPLATE_GENERAL & $flagsSum ) {
-			return $content;
-		} elseif ( self::TEMPLATE_INFOBOX & $flagsSum ) {
-			return $content;
+		if ( self::TEMPLATE_INFOBOX & $flagsSum ) {
+			$templateConverter = new TemplateConverter();
+			$content = $templateConverter->convertAsInfobox( $content );
 		}
 
 		return $content;
