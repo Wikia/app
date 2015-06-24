@@ -21,10 +21,10 @@ class TemplateDraftController extends WikiaController {
 	 * Converts the content of the template according to certain flags
 	 *
 	 * @param $content
-	 * @param $flags
+	 * @param $flags Array
 	 * @return string
 	 */
-	public function createDraftContent( $content, $flags ) {
+	public function createDraftContent( $content, Array $flags ) {
 
 		/**
 		 * This is just a placeholder method
@@ -33,7 +33,7 @@ class TemplateDraftController extends WikiaController {
 		 */
 		$flagsSum = array_sum( $flags );
 
-		if ( !is_array( $flags ) || self::TEMPLATE_GENERAL & $flagsSum ) {
+		if ( self::TEMPLATE_GENERAL & $flagsSum ) {
 			return $content;
 		} elseif ( self::TEMPLATE_INFOBOX & $flagsSum ) {
 			return $content;
