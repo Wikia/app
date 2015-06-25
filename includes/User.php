@@ -2482,10 +2482,11 @@ class User {
 	 * Get a global user attribute.
 	 *
 	 * @param string $attribute
+	 * @param mixed $default
 	 * @return string
 	 */
-	public function getGlobalAttribute($attribute) {
-		return $this->getOption($attribute);
+	public function getGlobalAttribute($attribute, $default=null) {
+		return $this->getOption($attribute, $default);
 	}
 
 	/**
