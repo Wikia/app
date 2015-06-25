@@ -2,6 +2,7 @@
 namespace Wikia\PortableInfobox\Parser\Nodes;
 
 use Wikia\PortableInfobox\Helpers\ImageFilenameSanitizer;
+use Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag;
 
 class NodeImage extends Node {
 	const ALT_TAG_NAME = 'alt';
@@ -9,9 +10,14 @@ class NodeImage extends Node {
 
 	public function getData() {
 		if ( !isset( $this->data ) ) {
-			$imageName = $this->getRawValueWithDefault( $this->xmlNode );
-			$title = $this->getImageAsTitleObject( $imageName );
-			$this->getExternalParser()->addImage( $title ? $title->getDBkey() : $imageName );
+			$imageData = $this->getRawValueWithDefault( $this->xmlNode );
+
+			if( is_string($imageData) && PortableInfoboxDataBag::getInstance()->getGallery($imageData)) {
+				$imageData = PortableInfoboxDataBag::getInstance()->getGallery($imageData);
+			}
+
+			$title = $this->getImageAsTitleObject( $imageData );
+			$this->getExternalParser()->addImage( $title ? $title->getDBkey() : $imageData );
 			$ref = null;
 			$alt = $this->getValueWithDefault( $this->xmlNode->{self::ALT_TAG_NAME} );
 			$caption = $this->getValueWithDefault( $this->xmlNode->{self::CAPTION_TAG_NAME} );

@@ -1,4 +1,5 @@
 <?php
+
 class ImageServingDriverMainNS extends ImageServingDriverBase {
 	const QUERY_LIMIT = 50;
 	/**
@@ -57,6 +58,9 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 	protected function loadImagesFromDb( $articleIds = array() ) {
 		wfProfileIn( __METHOD__ );
+
+		//load infobox images at start
+		$this->loadImagesFromInfoboxes( $articleIds );
 
 		$articleImageIndex = $this->getImageIndex( $articleIds, 2 * self::QUERY_LIMIT );
 		foreach ( $articleImageIndex as $articleId => $imageIndex ) {
@@ -128,50 +132,60 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 		// collect metadata about images
 		if ( !empty( $imageNames ) ) {
-			$result = $this->db->select(
-				array( 'image' ),
-				array( 'img_name', 'img_height', 'img_width', 'img_minor_mime' ),
-				array(
-					'img_name' => $imageNames,
-				),
-				__METHOD__
-			);
+			$imageDetails = $this->loadImagesMetadata( $imageNames );
 
 			// if query was terminated - return and abort the process
-			if ( !$result ) {
+			if ( !$imageDetails ) {
 				wfProfileOut( __METHOD__ );
 
 				return;
 			}
-
-			foreach ( $result as $row ) {
-				/* @var mixed $row */
-				if ( $row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth ) {
-					if ( !in_array( $row->img_minor_mime, self::$mimeTypesBlacklist ) ) {
-						$imageDetails[$row->img_name] = $row;
-					} else {
-						wfDebug( __METHOD__ . ": {$row->img_name} - filtered out because of {$row->img_minor_mime} minor MIME type\n" );
-					}
-				}
-			}
-
-			$result->free();
-
 			$imageNames = array_keys( $imageDetails );
 		}
-
 		// finally record all the information gathered in previous steps
 		foreach ( $imageNames as $imageName ) {
-			$row = $imageDetails[$imageName];
-			$this->addImageDetails( $row->img_name, $imagePopularity[$imageName],
+			$row = $imageDetails[ $imageName ];
+			$this->addImageDetails( $row->img_name, $imagePopularity[ $imageName ],
 				$row->img_width, $row->img_height, $row->img_minor_mime );
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
 
+	protected function loadImagesMetadata( $images ) {
+		$imageDetails = [ ];
+		$result = $this->db->select(
+			[ 'image' ],
+			[ 'img_name', 'img_height', 'img_width', 'img_minor_mime' ],
+			[
+				'img_name' => $images,
+			],
+			__METHOD__
+		);
+		// if query was terminated - return and abort the process
+		if ( !$result ) {
+
+			return false;
+		}
+
+		foreach ( $result as $row ) {
+			/* @var mixed $row */
+			if ( $row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth ) {
+				if ( !in_array( $row->img_minor_mime, self::$mimeTypesBlacklist ) ) {
+					$imageDetails[ $row->img_name ] = $row;
+				} else {
+					wfDebug( __METHOD__ . ": {$row->img_name} - filtered out because of {$row->img_minor_mime} minor MIME type\n" );
+				}
+			}
+		}
+		$result->free();
+
+		return $imageDetails;
+	}
+
 	/**
-	 * Returns the popularity of given set of images (popularity = the number of articles in content namespaces that use an image)
+	 * Returns the popularity of given set of images (popularity = the number of articles in content namespaces that
+	 * use an image)
 	 *
 	 * $limit is applied - images that have popularity that is higher than $limit will not be returned
 	 *
@@ -182,6 +196,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	 *
 	 * @param string[] $imageNames
 	 * @param int $limit
+	 *
 	 * @return array associative array [image name] => [popularity]
 	 */
 	protected function getImagesPopularity( Array $imageNames, $limit ) {
@@ -224,4 +239,20 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		return $result;
 	}
 
+	protected function loadImagesFromInfoboxes( $articleIds ) {
+		wfProfileIn( __METHOD__ );
+		$images = [ ];
+		foreach ( $articleIds as $id ) {
+			$images = array_merge( $images, PortableInfoboxDataService::newFromPageID( $id )->getImages() );
+		}
+
+		if ( $images ) {
+			$details = $this->loadImagesMetadata( $images );
+			foreach ( $details as $name => $row ) {
+				//set popularity to one, to trick image serving
+				$this->addImageDetails( $row->img_name, '1', $row->img_width, $row->img_height, $row->img_minor_mime );
+			}
+		}
+		wfProfileOut( __METHOD__ );
+	}
 }
