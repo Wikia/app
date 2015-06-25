@@ -348,6 +348,7 @@ body {
 
 			.ArticlePreviewInner {
 				height: 100%;
+				margin: 0 auto;
 				@include breakpoints-small-medium-typography;
 
 				&.large-typography {

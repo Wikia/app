@@ -11,27 +11,51 @@ define('wikia.breakpointsLayout',  function() {
 		BREAKPOINT_MIN_PADDING_WIDTH = 24,
 		RIGHT_RAIL_WIDTH_PLUS_SPACING = 320;
 
+	/**
+	 * @param {boolean} isWidePage
+	 * @returns {number}
+	 */
 	function getArticleContentMaxWidth(isWidePage) {
 		var articleWidth = BREAKPOINT_LARGE_CONTENT_WIDTH - 2 * BREAKPOINT_LARGE_PADDING_WIDTH;
 		return isWidePage ? articleWidth : articleWidth - RIGHT_RAIL_WIDTH_PLUS_SPACING;
 	}
+
+	/**
+	 * @param {boolean} isWidePage
+	 * @returns {number}
+	 */
 	function getArticleContentMediumWidth(isWidePage) {
 		var articleWidth = BREAKPOINT_MEDIUM_CONTENT_WIDTH - 2 * BREAKPOINT_MEDIUM_PADDING_WIDTH;
 		return isWidePage ? articleWidth : articleWidth - RIGHT_RAIL_WIDTH_PLUS_SPACING;
 	}
 
+	/**
+	 * @returns {number}
+	 */
 	function getArticleContentMinWidth() {
 		return BREAKPOINT_MIN_CONTENT_WIDTH - 2 * (BREAKPOINT_MIN_PADDING_WIDTH + CONTENT_BORDER);
 	}
 
+	/**
+	 * @returns {number}
+	 */
 	function getArticlePadding() {
 		return BREAKPOINT_MEDIUM_PADDING_WIDTH;
 	}
 
+	/**
+	 * @returns {number}
+	 */
 	function getRailWidthWithSpacing() {
 		return RIGHT_RAIL_WIDTH_PLUS_SPACING;
 	}
 
+	/**
+	 *
+	 * @param {string} breakpoint
+	 * @param {boolean} isWidePage
+	 * @returns {number}
+	 */
 	function getArticleWidth(breakpoint, isWidePage) {
 		switch(breakpoint) {
 			case 'current':
@@ -47,9 +71,7 @@ define('wikia.breakpointsLayout',  function() {
 	}
 
 	/**
-	 * Get minimum supported article width in pixels
-	 *
-	 * @return {number} Maximum article width in pixels
+	 * @return {number}
 	 */
 	function getArticleMinWidth() {
 		return WIDTH_OUTSIDE_MIN;
