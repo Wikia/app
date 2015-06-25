@@ -10,7 +10,9 @@
 namespace Wikia\Tasks\Tasks;
 
 class CreateNewWikiTask extends BaseTask {
-	const DEFAULT_USER = 'Default';
+	const
+		DEFAULT_USER = 'Default',
+		WIKIA_USER = 'Wikia';
 
 	/** @var \User */
 	private $founder;
@@ -147,7 +149,7 @@ class CreateNewWikiTask extends BaseTask {
 				];
 				if ( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
 					$saveUser = $wgUser;
-					$wgUser = \User::newFromName( 'Wikia' );
+					$wgUser = \User::newFromName( self::WIKIA_USER );
 
 					$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
 					if ( $err !== true ) {
@@ -353,7 +355,7 @@ class CreateNewWikiTask extends BaseTask {
 		global $wgUser, $wgWikiaKeyPages;
 
 		$saveUser = $wgUser;
-		$wgUser = \User::newFromName( "Wikia" );
+		$wgUser = \User::newFromName( self::WIKIA_USER );
 
 		if ( empty( $wgWikiaKeyPages ) ) {
 			$wgWikiaKeyPages = array( 'File:Wiki.png', 'File:Favicon.ico' );
