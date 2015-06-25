@@ -70,7 +70,7 @@ class UserChangesHistory {
 							WScribeClient::singleton('trigger')->send($data);
 						}
 						catch( TException $e ) {
-							Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+							Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, ' - scribeClient exception', [
 								'exception' => $e
 							] );
 						}
