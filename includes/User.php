@@ -2439,6 +2439,7 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalPreference($preference) {
+		return $this->getOption($preference);
 	}
 
 
@@ -2449,7 +2450,6 @@ class User {
 	 * @param string $value
 	 */
 	public function setGlobalPreference($preference, $value) {
-
 	}
 
 	/**
@@ -2474,6 +2474,7 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute($attribute) {
+		return $this->getOption($attribute);
 	}
 
 	/**
