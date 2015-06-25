@@ -1,6 +1,6 @@
 @import 'breakpoints-variables';
 
-@mixin breakpoints-below-large-typography {
+@mixin breakpoints-small-medium-typography {
 	.WikiaArticle {
 		font-size: $default-body-font-size;
 		line-height: $default-body-line-height;

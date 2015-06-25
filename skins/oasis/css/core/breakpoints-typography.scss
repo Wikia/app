@@ -1,11 +1,11 @@
 @import 'breakpoints-variables';
 @import 'breakpoints-large-typography';
-@import 'breakpoints-below-large-typography';
+@import 'breakpoints-small-medium-typography';
 
 @if $oasisTypography == 1 {
 	@media #{$breakpoint-below-large} {
 		.WikiaPage {
-			@include breakpoints-below-large-typography;
+			@include breakpoints-small-medium-typography;
 		}
 	}
 

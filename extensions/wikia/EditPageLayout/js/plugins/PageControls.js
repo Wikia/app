@@ -409,8 +409,7 @@
 
 				//See logic: \EditPageLayoutHelper::isWidePage
 				if (config.isWidePage) {
-					// 980 px of content width on main pages / pages without right rail
-					width += 320 + (self.isGridLayout ? 20 : 0);
+					width += breakpointsLayout.getRailWidthWithSpacing() + (self.isGridLayout ? 20 : 0);
 				}
 
 				if (config.extraPageWidth) {
