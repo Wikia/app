@@ -11,20 +11,10 @@ define('wikia.breakpointsLayout',  function() {
 		BREAKPOINT_MIN_PADDING_WIDTH = 24,
 		RIGHT_RAIL_WIDTH_PLUS_SPACING = 320;
 
-	/**
-	 * Public API method for getting the maximum width to which an article can be resized
-	 *
-	 * @return {number} Maximum article width in pixels
-	 */
-	function getMinArticleWidth() {
-		return WIDTH_OUTSIDE_MIN;
-	}
-
 	function getArticleContentMaxWidth(isWidePage) {
 		var articleWidth = BREAKPOINT_LARGE_CONTENT_WIDTH - 2 * BREAKPOINT_LARGE_PADDING_WIDTH;
 		return isWidePage ? articleWidth : articleWidth - RIGHT_RAIL_WIDTH_PLUS_SPACING;
 	}
-
 	function getArticleContentMediumWidth(isWidePage) {
 		var articleWidth = BREAKPOINT_MEDIUM_CONTENT_WIDTH - 2 * BREAKPOINT_MEDIUM_PADDING_WIDTH;
 		return isWidePage ? articleWidth : articleWidth - RIGHT_RAIL_WIDTH_PLUS_SPACING;
@@ -50,12 +40,25 @@ define('wikia.breakpointsLayout',  function() {
 				return maxArticleWidth;
 			case 'min':
 				return minArticleWidth;
+			default:
+				//Return medium for default because it's the most used scenario
+				return mediumArticleWidth;
 		}
 	}
 
+	/**
+	 * Get minimum supported article width in pixels
+	 *
+	 * @return {number} Maximum article width in pixels
+	 */
+	function getArticleMinWidth() {
+		return WIDTH_OUTSIDE_MIN;
+	}
+
+
 	return {
-		getMinArticleWidth: getMinArticleWidth,
 		getArticleWidth: getArticleWidth,
+		getArticleMinWidth: getArticleMinWidth,
 		getArticlePadding: getArticlePadding
 	};
 

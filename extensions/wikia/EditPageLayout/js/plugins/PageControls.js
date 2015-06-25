@@ -420,7 +420,7 @@
 
 				if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
 					var pageWidth = $('#WikiaPage').width(),
-						minWidth = breakpointsLayout.getMinArticleWidth();
+						minWidth = breakpointsLayout.getArticleMinWidth();
 
 					// don't go below minimum width
 					if (pageWidth <= minWidth) {
