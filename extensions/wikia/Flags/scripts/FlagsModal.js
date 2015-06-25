@@ -88,10 +88,7 @@ require(
 					type: loader.MULTI,
 					resources: {
 						mustache: '/extensions/wikia/Flags/controllers/templates/FlagsController_editForm.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormEmpty.mustache,/extensions/wikia/Flags/controllers/templates/FlagsController_editFormException.mustache',
-						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss',
-						params: {
-							sassParams: window.wgSassParams // Ensure per-theme colors Varnish cache and mcache
-						}
+						styles: '/extensions/wikia/Flags/styles/EditFormModal.scss'
 					}
 				})
 			).done(function (flagsData, res) {
