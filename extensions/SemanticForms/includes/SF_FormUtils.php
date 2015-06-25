@@ -95,7 +95,7 @@ END;
 		global $sfgTabIndex, $wgUser, $wgParser;
 
 		$sfgTabIndex++;
-		$checked = $wgUser->getOption( 'minordefault' );
+		$checked = $wgUser->getGlobalPreference( 'minordefault' );
 
 		if ( $label == null ) {
 			$label = $wgParser->recursiveTagParse( wfMsg( 'minoredit' ) );
@@ -126,10 +126,10 @@ END;
 		$checked = "";
 		// figure out if the checkbox should be checked -
 		// this code borrowed from /includes/EditPage.php
-		if ( $wgUser->getOption( 'watchdefault' ) ) {
+		if ( $wgUser->getGlobalPreference( 'watchdefault' ) ) {
 			# Watch all edits
 			$checked = true;
-		} elseif ( $wgUser->getOption( 'watchcreations' ) && !$wgTitle->exists() ) {
+		} elseif ( $wgUser->getGlobalPreference( 'watchcreations' ) && !$wgTitle->exists() ) {
 			# Watch creations
 			$checked = true;
 		} elseif ( $wgTitle->userIsWatching() ) {
@@ -375,17 +375,17 @@ END;
 		}
 
 		$showFCKEditor = 0;
-		if ( !$wgUser->getOption( 'riched_start_disabled' ) ) {
+		if ( !$wgUser->getGlobalPreference( 'riched_start_disabled' ) ) {
 			$showFCKEditor += RTE_VISIBLE;
 		}
-		if ( $wgUser->getOption( 'riched_use_popup' ) ) {
+		if ( $wgUser->getGlobalPreference( 'riched_use_popup' ) ) {
 			$showFCKEditor += RTE_POPUP;
 		}
-		if ( $wgUser->getOption( 'riched_use_toggle' ) ) {
+		if ( $wgUser->getGlobalPreference( 'riched_use_toggle' ) ) {
 			$showFCKEditor += RTE_TOGGLE_LINK;
 		}
 
-		if ( ( !empty( $_SESSION['showMyFCKeditor'] ) ) && ( $wgUser->getOption( 'riched_toggle_remember_state' ) ) )
+		if ( ( !empty( $_SESSION['showMyFCKeditor'] ) ) && ( $wgUser->getGlobalPreference( 'riched_toggle_remember_state' ) ) )
 		{
 			// clear RTE_VISIBLE flag
 			$showFCKEditor &= ~RTE_VISIBLE ;
@@ -421,7 +421,7 @@ var firstLoad = true;
 var editorMsgOn = "' . wfMsg( 'textrichditor' ) . '";
 var editorMsgOff = "' . wfMsg( 'tog-riched_disable' ) . '";
 var editorLink = "' . ( ( $showFCKEditor & RTE_VISIBLE ) ? wfMsg( 'tog-riched_disable' ): wfMsg( 'textrichditor' ) ) . '";
-var saveSetting = ' . ( $wgUser->getOption( 'riched_toggle_remember_state' ) ?  1 : 0 ) . ';
+var saveSetting = ' . ( $wgUser->getGlobalPreference( 'riched_toggle_remember_state' ) ?  1 : 0 ) . ';
 var RTE_VISIBLE = ' . RTE_VISIBLE . ';
 var RTE_TOGGLE_LINK = ' . RTE_TOGGLE_LINK . ';
 var RTE_POPUP = ' . RTE_POPUP . ';
