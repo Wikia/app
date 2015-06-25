@@ -5,11 +5,13 @@ namespace Wikia\Persistence\User;
 use Wikia\Domain\User\Preference;
 
 class PreferencePersistenceMySQL implements PreferencePersistence {
-
 	const USER_PREFERENCE_TABLE = 'user_properties';
 	const UP_USER = 'up_user';
 	const UP_PROPERTY = 'up_property';
 	const UP_VALUE = 'up_value';
+	
+	const CONNECTION_MASTER = "user_preferences_mysql_persistence_master";
+	const CONNECTION_SLAVE = "user_preferences_mysql_persistence_slave";
 
 	public static $UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
@@ -17,6 +19,14 @@ class PreferencePersistenceMySQL implements PreferencePersistence {
 	private $slave;
 	private $whiteList;
 
+	/**
+	 * @Inject({
+	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_MASTER,
+	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_SLAVE})
+	 * @param \DatabaseMysqli $master
+	 * @param \DatabaseMysqli $slave
+	 * @param array           $whiteList of user preference
+	 */
 	function __construct( \DatabaseMysqli $master, \DatabaseMysqli $slave, $whiteList = [ ] ) {
 		$this->master = $master;
 		$this->slave = $slave;
