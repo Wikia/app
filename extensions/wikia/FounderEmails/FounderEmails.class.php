@@ -305,31 +305,29 @@ class FounderEmails {
 	}
 
 	public function getJoinedUsers ( $cityID, $day = null ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgSpecialsDB;
 
 		wfProfileIn( __METHOD__ );
 
 		$userJoined = array();
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
+		$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
 
-			$db = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
-			$oRes = $db->select(
-				array( 'user_login_history' ),
-				array( 'user_id', 'min(ulh_timestamp) as min_ts' ),
-				array(
-					'city_id' => $cityID,
-					'user_id > 0'
-				),
-				__METHOD__,
-				array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp)" .  $db->buildLike( $today, $db->anyString() ) )
-			);
+		$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
+		$oRes = $db->select(
+			array( 'user_login_history' ),
+			array( 'user_id', 'min(ulh_timestamp) as min_ts' ),
+			array(
+				'city_id' => $cityID,
+				'user_id > 0'
+			),
+			__METHOD__,
+			array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp)" .  $db->buildLike( $today, $db->anyString() ) )
+		);
 
-			while ( $oRow = $db->fetchObject ( $oRes ) ) {
-				$userJoined[ $oRow->user_id ] = $oRow->min_ts;
-			}
-			$db->freeResult( $oRes );
+		while ( $oRow = $db->fetchObject ( $oRes ) ) {
+			$userJoined[ $oRow->user_id ] = $oRow->min_ts;
 		}
+		$db->freeResult( $oRes );
 
 		wfProfileOut( __METHOD__ );
 		return $userJoined;
