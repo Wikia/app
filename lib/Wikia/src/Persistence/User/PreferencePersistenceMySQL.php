@@ -6,13 +6,22 @@ use Wikia\Service\User\PreferencePersistence;
 use Wikia\Domain\User\Preference;
 
 class PreferencePersistenceMySQL implements PreferencePersistence {
-
 	const USER_PREFERENCE_TABLE = 'user_properties';
+	const CONNECTION_MASTER = "user_preferences_mysql_persistence_master";
+	const CONNECTION_SLAVE = "user_preferences_mysql_persistence_slave";
+
 	public static $UPSERT_SET_BLOCK = ["up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)"];
 
 	private $master;
 	private $slave;
 
+	/**
+	 * @Inject({
+	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_MASTER,
+	 *   Wikia\Persistence\User\PreferencePersistenceMySQL::CONNECTION_SLAVE})
+	 * @param \DatabaseMysqli $master
+	 * @param \DatabaseMysqli $slave
+	 */
 	function __construct( \DatabaseMysqli $master, \DatabaseMysqli $slave ) {
 		$this->master = $master;
 		$this->slave = $slave;

@@ -172,6 +172,16 @@ class UserTest extends \WikiaBaseTest {
 
 		$this->mockClass( 'Wikia\Helios\Client', $oClientMock );
 
+		$userMock = $this->getMockBuilder( 'User' )
+			->setMethods( [ 'getBoolOption' ] )
+			->getMock();
+		$userMock->expects( $this->once() )
+			->method( 'getBoolOption' )
+			->with( $this->equalTo( 'disabled' ) )
+			->will( $this->returnValue( false ) );
+
+		$this->mockClass( 'User', $userMock );
+
 		$this->assertEquals( User::newFromToken( $this->webRequestMock ), \User::newFromId( 1 ) );
 	}
 
