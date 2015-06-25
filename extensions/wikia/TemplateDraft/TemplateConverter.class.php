@@ -2,7 +2,7 @@
 
 class TemplateConverter {
 
-	const TEMPLATE_VARIABLE_REGEX = '/{{{([^\|}]*?)\|?(.*)}}}/sU';
+	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|}]+)(\|([^{]*|.*{{.*}}.*)?)?}}}/';
 
 	/**
 	 * Names of variables that should be converted to a <title> tag
