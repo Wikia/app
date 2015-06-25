@@ -2,7 +2,7 @@
 
 class TemplateConverter {
 
-	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|}]+)(\|([^{]*|.*{{.*}}.*)?)?}}}/';
+	const TEMPLATE_VARIABLE_REGEX = '/{{{([^|{}]+)(\|([^{}]*|.*{{.*}}.*))?}}}/';
 
 	/**
 	 * Names of variables that should be converted to a <title> tag
@@ -33,17 +33,22 @@ class TemplateConverter {
 	public function convertAsInfobox( $content ) {
 		$draft = "<infobox>\n";
 
+		$draftTop = '';
+		$draftData = '';
+
 		$variables = $this->getTemplateVariables( $content );
 
 		foreach ( $variables as $variable ) {
 			if ( in_array( $variable['name'], self::$titleAliases ) ) {
-				$draft .= $this->createTitleTag( $variable );
+				$draftTop .= $this->createTitleTag( $variable );
 			} elseif ( in_array( $variable['name'], self::$imageAliases ) ) {
-				$draft .= $this->createImageTag( $variable );
+				$draftTop .= $this->createImageTag( $variable );
 			} else {
-				$draft .= $this->createDataTag( $variable );
+				$draftData .= $this->createDataTag( $variable );
 			}
 		}
+
+		$draft .= $draftTop . $draftData;
 
 		$draft .= "</infobox>\n";
 
