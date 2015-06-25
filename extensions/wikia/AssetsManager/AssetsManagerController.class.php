@@ -10,8 +10,9 @@
  *
  * @author Macbre
  */
-
+use Wikia\Logger\Loggable;
 class AssetsManagerController extends WikiaController {
+	use Loggable;
 	const MEMCKEY_PREFIX = 'multitypepackage';
 	const MEMC_TTL = 604800;
 
@@ -31,12 +32,17 @@ class AssetsManagerController extends WikiaController {
 	 */
 	public function getMultiTypePackage() {
 		wfProfileIn( __METHOD__ );
+		$this->error(__METHOD__,['context'=>'kamilktest']);
 
+		wfDebug('kamilktestlog '.__METHOD__."\n");
 		$this->response->setFormat( 'json' );
 
 		$key = null;
 		$data = null;
 		$templates = $this->request->getVal( 'templates', null );
+		$themeDesignerDependent = $this->request->getVal( 'wikiaThemeDependent', null );
+		$wikiaDependent = $this->request->getVal( 'wikiaDependent', null );
+		$sassParams = $this->request->getVal( 'sassParams', null );
 		$styles = $this->request->getVal( 'styles', null );
 		$scripts = $this->request->getVal( 'scripts', null );
 		$messages = $this->request->getVal( 'messages', null );
@@ -70,8 +76,14 @@ class AssetsManagerController extends WikiaController {
 			$profileId = __METHOD__ . "::styles::{$styles}";
 			wfProfileIn( $profileId );
 
-			$key = $this->getComponentMemcacheKey( $styles );
-			$data = $this->wg->Memc->get( $key );
+			if ( $themeDesignerDependent ) {
+				$key = $this->getComponentMemcacheKey( json_encode( [ $styles, $sassParams ] ), $wikiaDependent );
+			} else {
+				$key = $this->getComponentMemcacheKey( $styles, $wikiaDependent );
+			}
+
+			$data = '';
+//			$data = $this->wg->Memc->get( $key );
 
 			if ( empty( $data ) ) {
 				$styleFiles = explode( ',', $styles );
@@ -79,10 +91,19 @@ class AssetsManagerController extends WikiaController {
 
 				foreach( $styleFiles as $styleFile ) {
 					$builder = $this->getBuilder( 'sass', $styleFile );
-
+					$this->error(__METHOD__."2",['context'=>'kamilktest']);
+					wfDebug('kamilktestlog 2'.__METHOD__."\n");
 					if ( !is_null( $builder ) ) {
 						if ( $this->app->checkSkin( 'oasis' ) ) {
-							$builder->addParams( SassUtil::getOasisSettings() );
+							$this->error(__METHOD__."foreach-beg",['context'=>'kamilktest']);
+							$this->error(__METHOD__."foreach-data",['context'=>'kamilktest', 'data'=>json_encode(SassUtil::getOasisSettings())]);
+							$this->error(__METHOD__."foreach-data",['context'=>'kamilktest', 'dataaaa'=>json_encode(SassUtil::getOasisSettings())]);
+							$this->error(__METHOD__."foreach-data2".json_encode(SassUtil::getOasisSettings()),['context'=>'kamilktest']);
+							wfDebug('kamilktestlog '.print_r(SassUtil::getOasisSettings(),true)."\n");
+							$params = SassUtil::getOasisSettings();
+//							$params['color-page'] = '#ff0000';
+							$builder->addParams( $params );
+							$this->error(__METHOD__."foreach-end",['context'=>'kamilktest']);
 						}
 						$data .= $builder->getContent();
 					}
@@ -156,8 +177,12 @@ class AssetsManagerController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getComponentMemcacheKey( $par ) {
-		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion;
+	private function getComponentMemcacheKey( $par, $wikiaDependent = false ) {
+		$cityId = '';
+		if ( $wikiaDependent ) {
+			$cityId = '::' . $this->wg->cityId;
+		}
+		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion . $cityId;
 	}
 
 	/**
