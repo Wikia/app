@@ -282,4 +282,14 @@ describe('AdContext', function () {
 		});
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
+
+	it('disables krux when country in instantGlobals.wgAdDriverKruxCountries but disaster recovery is on', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgAdDriverKruxCountries: ['XX', 'ZZ'],
+			wgSitewideDisableKrux: true
+		});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
+	});
 });
