@@ -2439,6 +2439,16 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalPreference($preference) {
+	}
+
+
+	/**
+	 * Set a global user preference.
+	 *
+	 * @param string $preference
+	 * @param string $value
+	 */
+	public function setGlobalPreference($preference, $value) {
 
 	}
 
@@ -2464,6 +2474,16 @@ class User {
 	 * @return string
 	 */
 	public function getGlobalAttribute($attribute) {
+	}
+
+	/**
+	 * Set a global user attribute.
+	 *
+	 * @param string $attribute
+	 * @param string $value
+	 */
+	public function setGlobalAttribute($attribute, $value) {
+
 	}
 
 
