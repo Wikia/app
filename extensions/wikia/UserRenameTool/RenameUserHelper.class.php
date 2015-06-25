@@ -75,7 +75,7 @@ class RenameUserHelper {
 	 * @param String $ipAddress The IP address to lookup
 	 */
 	public static function lookupIPActivity( $ipAddress ) {
-		global $wgDevelEnvironment, $wgStatsDB, $wgStatsDBEnabled;
+		global $wgDevelEnvironment, $wgSpecialsDB;
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( $ipAddress ) || !IP::isIPAddress( $ipAddress ) ) {
@@ -86,27 +86,25 @@ class RenameUserHelper {
 		$result = [];
 		$ipLong = ip2long( $ipAddress );
 		if ( empty( $wgDevelEnvironment ) ) {
-			if ( !empty( $wgStatsDBEnabled ) ) {
-				$dbr = wfGetDB( DB_SLAVE, [], $wgStatsDB );
-				$res = $dbr->select(
-					[ '`specials`.`multilookup`' ],
-					[ 'ml_city_id' ],
-					[
-						'ml_ip' => $ipLong,
-					],
-					__METHOD__
-				);
+			$dbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
+			$res = $dbr->select(
+				[ 'multilookup' ],
+				[ 'ml_city_id' ],
+				[
+					'ml_ip' => $ipLong,
+				],
+				__METHOD__
+			);
 
-				foreach ( $res as $row ) {
-					if ( !in_array( $row->ml_city_id, self::$excludedWikis ) ) {
-						if ( WikiFactory::isPublic( $row->ml_city_id ) ) {
-							$result[] = (int)$row->ml_city_id;
-						}
+			foreach ( $res as $row ) {
+				if ( !in_array( $row->ml_city_id, self::$excludedWikis ) ) {
+					if ( WikiFactory::isPublic( $row->ml_city_id ) ) {
+						$result[] = (int)$row->ml_city_id;
 					}
 				}
-
-				$dbr->freeResult( $res );
 			}
+
+			$dbr->freeResult( $res );
 		} else { // on devbox - set up the list manually
 			$result = [
 				165, // firefly

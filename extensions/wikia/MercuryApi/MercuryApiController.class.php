@@ -97,6 +97,11 @@ class MercuryApiController extends WikiaController {
 	 */
 	private function getArticleDescription( $articleId, $descLength = 100 ) {
 		$article = Article::newFromID( $articleId );
+
+		if ( !( $article instanceof Article ) ) {
+			throw new NotFoundApiException();
+		}
+
 		$title = $article->getTitle();
 		$sMessage = null;
 
@@ -439,7 +444,7 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$rawData = $this->sendRequest( 'ArticlesApi', 'getTop', $params )->getData();
-			$data = $this->mercuryApi->processTrendingData( $rawData, 'items', [ 'title', 'thumbnail', 'url' ] );
+			$data = $this->mercuryApi->processTrendingArticlesData( $rawData, [ 'title', 'thumbnail', 'url' ] );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending articles data is empty' );
 		}
@@ -457,7 +462,7 @@ class MercuryApiController extends WikiaController {
 
 		try {
 			$rawData = $this->sendRequest( 'SpecialVideosSpecial', 'getVideos', $params )->getData();
-			$data = $this->mercuryApi->processTrendingData( $rawData, 'videos', [ 'title', 'fileUrl', 'duration', 'thumbUrl' ] );
+			$data = $this->mercuryApi->processTrendingVideoData( $rawData );
 		} catch ( NotFoundException $ex ) {
 			WikiaLogger::instance()->info( 'Trending videos data is empty' );
 		}

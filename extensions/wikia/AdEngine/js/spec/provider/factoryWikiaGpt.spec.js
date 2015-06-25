@@ -16,9 +16,9 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				}
 			},
 			gptHelper: {
-				pushAd: function (slotName, slotElement, slotPath, slotTargeting, doSuccess, doHop) {
-					doSuccess();
-					doHop();
+				pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
+					extra.success();
+					extra.error();
 				}
 			},
 			lookups: {
