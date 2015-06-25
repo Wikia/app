@@ -28,6 +28,11 @@ class AdEngine2ContextService {
 				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
 			}
 
+			$sourcePointUrl = null;
+			if ($wg->AdDriverSourcePointEnabled) {
+				$sourcePointUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sourcepoint'], 'scripts' );
+			}
+
 			$langCode = $title->getPageLanguage()->getCode();
 
 			return [
@@ -40,6 +45,7 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
+					'sourcePointUrl' => $sourcePointUrl,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,

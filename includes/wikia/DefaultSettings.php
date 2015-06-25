@@ -1303,6 +1303,12 @@ $wgAdDriverUseTaboola = false;
  */
 $wgAdDriverUseTopInContentBoxad = true;
 
+/**
+ * @name $wgAdDriverSourcePointEnabled
+ * Whether to enable SourcePoint scripts
+ */
+$wgAdDriverSourcePointEnabled = false;
+
 /** @name $wgSitewideDisableAdsOnMercury
  * Disable ads on Mercury if set to true.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
