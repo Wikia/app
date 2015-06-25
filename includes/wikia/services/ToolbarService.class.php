@@ -160,7 +160,7 @@ abstract class ToolbarService {
 			return array();
 		}
 
-		$seenPromotions = $wgUser->getOption( $this->getPromotionsOptionName(), false );
+		$seenPromotions = $wgUser->getGlobalPreference( $this->getPromotionsOptionName() );
 		$seenPromotions = $seenPromotions ? unserialize( $seenPromotions ) : array();
 		$promotionsDiff = array_intersect( $this->getPromotions(), $seenPromotions );
 
@@ -223,7 +223,7 @@ abstract class ToolbarService {
 	protected function loadToolbarList() {
 		global $wgUser;
 		if ( !$wgUser->isAnon() ) {
-			$toolbar = $wgUser->getOption( $this->getToolbarOptionName(), null );
+			$toolbar = $wgUser->getGlobalPreference( $this->getToolbarOptionName() );
 			if ( is_string( $toolbar ) ) {
 				$toolbar = @unserialize( $toolbar );
 				if ( is_array( $toolbar ) ) {
