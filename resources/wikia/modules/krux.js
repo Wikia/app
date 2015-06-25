@@ -52,7 +52,7 @@ define('wikia.krux', [
 		) {
 			var script;
 
-			if (adContext.getContext().targeting.enableKruxTargeting) {
+			if (adContext.getContext().targeting.enableKruxTargeting === true) {
 				// Export page level params, so Krux can read them
 				exportPageParams(adLogicPageParams);
 
