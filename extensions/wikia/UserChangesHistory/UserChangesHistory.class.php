@@ -119,7 +119,7 @@ class UserChangesHistory {
 	 * @return bool true		process other hooks
 	 */
 	static public function SavePreferencesHook($formData, $error) {
-		global $$wgSpecialsDB, $wgEnableScribeReport, $wgUser;
+		global $wgSpecialsDB, $wgEnableScribeReport, $wgUser;
 
 		if( wfReadOnly() ) { return true; }
 
