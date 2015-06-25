@@ -1461,12 +1461,6 @@ $wgAdDriverRubiconRTPCountries = null;
 $wgAdDriverKruxCountries = null;
 
 /**
- * @name $wgEnableKruxOnMobile
- * Whether to enable Krux on wikiamobile skin
- */
-$wgEnableKruxOnMobile = true;
-
-/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
