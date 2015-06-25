@@ -2416,6 +2416,81 @@ class User {
 		return intval( $val );
 	}
 
+
+	/**
+	 * Get a preference local to this wikia.
+	 *
+	 * @param string $preference the preference name
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @return string
+	 */
+	public function getLocalPreference($pref, $cityId = null, $sep = "-") {
+		global $wgCityId;
+		if (!isset($cityId)) {
+			$cityId = $wgCityId;
+		}
+	}
+
+	/**
+	 * Get a global user preference.
+	 *
+	 * @param string $preference
+	 * @return string
+	 */
+	public function getGlobalPreference($preference) {
+
+	}
+
+	/**
+	 * Get a user attribute local to this wikia.
+	 *
+	 * @param string $attribute the attribute name
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @return string
+	 */
+	public function getLocalAttribute($attr, $cityId = null, $sep = "-") {
+		global $wgCityId;
+		if (!isset($cityId)) {
+			$cityId = $wgCityId;
+		}
+	}
+
+	/**
+	 * Get a global user attribute.
+	 *
+	 * @param string $attribute
+	 * @return string
+	 */
+	public function getGlobalAttribute($attribute) {
+	}
+
+
+	/**
+	 * Get a user flag local to this wikia.
+	 *
+	 * @param string $flag the flag name
+	 * @param int $cityId the city id
+	 * @param string $sep the separator between the name and the city id
+	 * @return string
+	 */
+	public function getLocalFlag($flag, $cityId = null, $sep = "-") {
+		global $wgCityId;
+		if (!isset($cityId)) {
+			$cityId = $wgCityId;
+		}
+	}
+
+	/**
+	 * Get a global user flag.
+	 *
+	 * @param string $flag
+	 * @return bool
+	 */
+	public function getGlobalFlag($flag) {
+	}
+
 	/**
 	 * Set the given option for a user.
 	 *
