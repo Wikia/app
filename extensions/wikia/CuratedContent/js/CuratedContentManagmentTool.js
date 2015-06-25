@@ -80,11 +80,11 @@ $(function () {
 				var cachedVals = [],
 					optionCheckEmpty, optionRequired, optionLimit;
 
-				options = Array.isArray(options) ? options : [];
-
-				optionCheckEmpty = options.indexOf('checkEmpty') !== -1;
-				optionRequired = options.indexOf('required') !== -1;
-				optionLimit = options.indexOf('limit') !== -1;
+				if (Array.isArray(options)) {
+					optionCheckEmpty = options.indexOf('checkEmpty') !== -1;
+					optionRequired = options.indexOf('required') !== -1;
+					optionLimit = options.indexOf('limit') !== -1;
+				}
 
 				elements.each(function () {
 					var val = this.value,
