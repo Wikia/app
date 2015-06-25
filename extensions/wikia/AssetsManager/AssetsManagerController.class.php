@@ -43,7 +43,6 @@ class AssetsManagerController extends WikiaController {
 		$mustache = $this->request->getVal( 'mustache', null );
 		$handlebars = $this->request->getVal( 'handlebars', null );
 		$sassParams = $this->request->getVal( 'sassParams', null );
-		$wikiaId = $this->request->getVal( 'wikiaId', null );
 
 		// handle templates via sendRequest
 		if ( !is_null( $templates ) ) {
@@ -72,7 +71,7 @@ class AssetsManagerController extends WikiaController {
 			$profileId = __METHOD__ . "::styles::{$styles}";
 			wfProfileIn( $profileId );
 
-			$key = $this->getComponentMemcacheKey( $styles, $sassParams, $wikiaId );
+			$key = $this->getComponentMemcacheKey( $styles, $sassParams );
 			$data = $this->wg->Memc->get( $key );
 
 			if ( empty( $data ) ) {
@@ -158,17 +157,11 @@ class AssetsManagerController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function getComponentMemcacheKey( $par, $sassParams = null, $wikiaId = null ) {
-		$key = self::MEMCKEY_PREFIX;
+	private function getComponentMemcacheKey( $par, $sassParams = null ) {
 		if ( $sassParams ) {
 			$par = json_encode( [ $par, $sassParams ] );
 		}
-		$key .= '::' . md5( $par );
-		$key .= '::' . $this->wg->StyleVersion;
-		if ( $wikiaId ) {
-			$key .= '::' . $wikiaId;
-		}
-		return $key;
+		return self::MEMCKEY_PREFIX . '::' . md5( $par ) . '::' . $this->wg->StyleVersion;
 	}
 
 	/**
