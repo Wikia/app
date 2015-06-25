@@ -124,7 +124,7 @@ class CreateNewWikiTask extends BaseTask {
 	 * move main page to SEO-friendly name
 	 */
 	private function moveMainPage() {
-		global $wgSitename, $parserMemc, $wgContLanguageCode, $wgUser;
+		global $wgSitename, $parserMemc, $wgContLanguageCode;
 
 		$source = wfMsgForContent( 'Mainpage' );
 		$target = $wgSitename;
@@ -187,7 +187,9 @@ class CreateNewWikiTask extends BaseTask {
 								'source' => $sourceTalkTitle->getPrefixedText(),
 								'target' => $targetTalkTitle->getPrefixedText(),
 							];
-							$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO" );
+							$err = $wrapper->wrap( function() use( $sourceTalkTitle, $targetTitle ) {
+								return $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO" );
+							} );
 							if ( $err === true ) {
 								$this->info( 'talk page moved', $moveContext );
 							} else {
@@ -195,7 +197,6 @@ class CreateNewWikiTask extends BaseTask {
 							}
 						}
 					}
-					$wgUser = $saveUser;
 				} else {
 					$this->info( 'talk page not moved. source, destination are the same', $moveContext );
 				}
