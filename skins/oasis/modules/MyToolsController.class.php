@@ -26,7 +26,7 @@ class MyToolsController extends WikiaController {
 		global $wgUser;
 
 		$out = array();
-		$tools = json_decode($wgUser->getOption('myTools'), true);
+		$tools = json_decode($wgUser->getGlobalPreference('myTools'), true);
 
 		if(is_array($tools)) {
 			foreach($tools as $tool) {
@@ -114,7 +114,7 @@ class MyToolsController extends WikiaController {
 		global $wgUser;
 
 		$out = array();
-		$tools = json_decode($wgUser->getOption('myTools'), true);
+		$tools = json_decode($wgUser->getGlobalPreference('myTools'), true);
 
 		if(is_array($tools)) {
 			foreach($tools as $tool) {
