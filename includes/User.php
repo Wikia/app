@@ -2436,10 +2436,11 @@ class User {
 	 * Get a global user preference.
 	 *
 	 * @param string $preference
+	 * @param mixed $default
 	 * @return string
 	 */
-	public function getGlobalPreference($preference) {
-		return $this->getOption($preference);
+	public function getGlobalPreference($preference, $default = null) {
+		return $this->getOption($preference, $default);
 	}
 
 
